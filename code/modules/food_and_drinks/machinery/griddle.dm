@@ -212,7 +212,7 @@
 	for(var/obj/item/griddled_item as anything in griddled_objects)
 		if(SEND_SIGNAL(griddled_item, COMSIG_ITEM_GRILL_PROCESS, src, seconds_per_tick) & COMPONENT_HANDLED_GRILLING)
 			continue
-		griddled_item.fire_act(1000) //Hot hot hot!
+		griddled_item.fire_act(COOKING_FIRE_ACT_TEMP) //Hot hot hot!
 		if(prob(10))
 			visible_message(span_danger("[griddled_item] doesn't seem to be doing too great on the [src]!"))
 

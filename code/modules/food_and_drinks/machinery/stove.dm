@@ -289,7 +289,7 @@
 	for(var/obj/item/griddled_item in contents)
 		if(SEND_SIGNAL(griddled_item, COMSIG_ITEM_GRILL_PROCESS, src, seconds_per_tick) & COMPONENT_HANDLED_GRILLING)
 			continue
-		griddled_item.fire_act(1000) //Hot hot hot!
+		griddled_item.fire_act(COOKING_FIRE_ACT_TEMP) //Hot hot hot!
 
 /obj/item/frying_pan/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(tool.w_class > biggest_w_class)
@@ -306,7 +306,7 @@
 	tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -max_x_offset, max_x_offset)
 	tool.pixel_y = min(text2num(LAZYACCESS(modifiers, ICON_Y)) + placement_offset, max_height_offset)
 	to_chat(user, span_notice("You place [tool] on [src]."))
-	AddToPan(tool, user)
+	add_to_pan(tool, user)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/frying_pan/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
@@ -325,17 +325,17 @@
 	return TRUE
 
 ///This proc adds the food to viscontents and makes sure it can deregister if this changes.
-/obj/item/frying_pan/proc/AddToPan(obj/item/item_to_pan, mob/user)
+/obj/item/frying_pan/proc/add_to_pan(obj/item/item_to_pan, mob/user)
 	vis_contents += item_to_pan
 	item_to_pan.vis_flags |= VIS_INHERIT_PLANE
 
 	SEND_SIGNAL(item_to_pan, COMSIG_ITEM_GRILL_PLACED, user)
 	if(HAS_TRAIT(src, TRAIT_ON_HEATED_STOVE))
 		SEND_SIGNAL(item_to_pan, COMSIG_ITEM_GRILL_TURNED_ON)
-	RegisterSignal(item_to_pan, COMSIG_ITEM_GRILLED, PROC_REF(GrillCompleted))
+	RegisterSignal(item_to_pan, COMSIG_ITEM_GRILLED, PROC_REF(grill_completed))
 
-	RegisterSignal(item_to_pan, COMSIG_MOVABLE_MOVED, PROC_REF(ItemMoved))
-	RegisterSignal(item_to_pan, COMSIG_QDELETING, PROC_REF(ItemMoved))
+	RegisterSignal(item_to_pan, COMSIG_MOVABLE_MOVED, PROC_REF(item_moved))
+	RegisterSignal(item_to_pan, COMSIG_QDELETING, PROC_REF(item_moved))
 
 	// We gotta offset ourselves via pixel_w/z, so we don't end up z fighting with the plane
 	item_to_pan.pixel_w = item_to_pan.pixel_x
@@ -351,7 +351,7 @@
 	update_grill_audio()
 
 ///This proc cleans up any signals on the item when it is removed from a pan, and ensures it has the correct state again.
-/obj/item/frying_pan/proc/ItemRemovedFromPan(obj/item/removed_item)
+/obj/item/frying_pan/proc/item_removed_from_pan(obj/item/removed_item)
 	removed_item.vis_flags &= ~VIS_INHERIT_PLANE
 	vis_contents -= removed_item
 	UnregisterSignal(removed_item, list(
@@ -379,13 +379,13 @@
 	update_grill_audio()
 
 ///This proc is called by signals that remove the food from the pan.
-/obj/item/frying_pan/proc/ItemMoved(obj/item/moved_item, atom/OldLoc, Dir, Forced)
+/obj/item/frying_pan/proc/item_moved(obj/item/moved_item, atom/OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
-	ItemRemovedFromPan(moved_item)
+	item_removed_from_pan(moved_item)
 
-/obj/item/frying_pan/proc/GrillCompleted(obj/item/source, atom/grilled_result)
+/obj/item/frying_pan/proc/grill_completed(obj/item/source, atom/grilled_result)
 	SIGNAL_HANDLER
-	AddToPan(grilled_result)
+	add_to_pan(grilled_result)
 
 /obj/item/frying_pan/proc/update_stove_status(atom/source)
 	SIGNAL_HANDLER

@@ -44,14 +44,17 @@
 	tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -max_x_offset, max_x_offset)
 	tool.pixel_y = min(text2num(LAZYACCESS(modifiers, ICON_Y)) + placement_offset, max_height_offset)
 	to_chat(user, span_notice("You place [tool] on [src]."))
-	AddToPlate(tool, user)
+	add_to_plate(tool, user)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/plate/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	if(.)
+		return .
 	if(!iscarbon(target))
-		return
+		return .
 	if(!contents.len)
-		return
+		return .
 	var/obj/item/object_to_eat = contents[1]
 	object_to_eat.melee_attack_chain(user, target)
 	return TRUE //No normal attack
@@ -60,11 +63,11 @@
 	return TRUE
 
 ///This proc adds the food to viscontents and makes sure it can deregister if this changes.
-/obj/item/plate/proc/AddToPlate(obj/item/item_to_plate)
+/obj/item/plate/proc/add_to_plate(obj/item/item_to_plate)
 	vis_contents += item_to_plate
 	item_to_plate.vis_flags |= VIS_INHERIT_PLANE
-	RegisterSignal(item_to_plate, COMSIG_MOVABLE_MOVED, PROC_REF(ItemMoved))
-	RegisterSignal(item_to_plate, COMSIG_QDELETING, PROC_REF(ItemMoved))
+	RegisterSignal(item_to_plate, COMSIG_MOVABLE_MOVED, PROC_REF(item_moved))
+	RegisterSignal(item_to_plate, COMSIG_QDELETING, PROC_REF(item_moved))
 	// We gotta offset ourselves via pixel_w/z, so we don't end up z fighting with the plane
 	item_to_plate.pixel_w = item_to_plate.pixel_x
 	item_to_plate.pixel_z = item_to_plate.pixel_y
@@ -76,7 +79,7 @@
 		update_weight_class(w_class + 1)
 
 ///This proc cleans up any signals on the item when it is removed from a plate, and ensures it has the correct state again.
-/obj/item/plate/proc/ItemRemovedFromPlate(obj/item/removed_item)
+/obj/item/plate/proc/item_removed_from_plate(obj/item/removed_item)
 	removed_item.vis_flags &= ~VIS_INHERIT_PLANE
 	vis_contents -= removed_item
 	UnregisterSignal(removed_item, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING))
@@ -96,9 +99,9 @@
 	update_weight_class(new_w_class)
 
 ///This proc is called by signals that remove the food from the plate.
-/obj/item/plate/proc/ItemMoved(obj/item/moved_item, atom/OldLoc, Dir, Forced)
+/obj/item/plate/proc/item_moved(obj/item/moved_item, atom/OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
-	ItemRemovedFromPlate(moved_item)
+	item_removed_from_plate(moved_item)
 
 /obj/item/plate/large
 	name = "buffet plate"

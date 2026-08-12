@@ -93,7 +93,7 @@
 			continue
 
 		worst_cooked_food_state = OVEN_SMOKE_STATE_BAD
-		baked_item.fire_act(1000) //Hot hot hot!
+		baked_item.fire_act(COOKING_FIRE_ACT_TEMP) //Hot hot hot!
 
 		if(SPT_PROB(10, seconds_per_tick))
 			var/list/asomnia_hadders = list()

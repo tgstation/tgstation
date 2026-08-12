@@ -4,12 +4,18 @@
 	///Result atom type of baking this object
 	var/atom/crack_result
 
-/datum/component/grill_crackable/Initialize(crack_result, required_bake_time, positive_result, use_large_steam_sprit, list/added_reagents)
+/datum/component/grill_crackable/Initialize(crack_result)
 	. = ..()
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.crack_result = crack_result
+
+/datum/component/grill_crackable/InheritComponent(datum/component/bakeable/new_comp, original, crack_result)
+	if(!original)
+		return
+	if(crack_result)
+		src.crack_result = crack_result
 
 /datum/component/grill_crackable/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_INTERACTING_WITH_ATOM_SECONDARY, PROC_REF(on_attempt_crack))

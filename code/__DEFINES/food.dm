@@ -264,6 +264,7 @@ DEFINE_BITFIELD(food_flags, list(
 /// Point at which soups begin to burn at
 #define SOUP_BURN_TEMP 540
 #define STOVE_TEMP SOUP_BURN_TEMP + 80
+#define COOKING_FIRE_ACT_TEMP 1000
 
 /// Serving size of soup. Plus or minus five units.
 #define SOUP_SERVING_SIZE 25
