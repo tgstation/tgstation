@@ -56,3 +56,17 @@
 	item.item_flags |= ACTIVE_ONFLOOR_ICON
 
 	item.update_appearance(UPDATE_ICON)
+
+
+/obj/item/clothing/head/collectable/flatcap/onfloor_example
+	name = "developer gags onfloor example"
+	desc = "Hi im Abby! This is an example type to show how to do gags for onfloors. And to ensure the unit test works!"
+	greyscale_config_onfloor = /datum/greyscale_config/beret/onfloor_example
+
+/datum/greyscale_config/beret/onfloor_example
+	name = "Badged (Onfloor)"
+	icon_file = 'icons/obj/clothing/head/beret_onfloor_example.dmi'
+
+/datum/greyscale_config/beret_badge/onfloor_example
+	name = "Badged Beret (Onfloor)"
+	icon_file = 'icons/obj/clothing/head/beret_onfloor_example.dmi'
