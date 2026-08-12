@@ -175,6 +175,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 		/obj/item/spear = 1,
 		/obj/item/weldingtool/largetank = 1,
 		/obj/item/market_uplink/blackmarket = 1,
+		/obj/item/frying_pan/tall = 1,
 		) = 8,
 
 	list(//equipment

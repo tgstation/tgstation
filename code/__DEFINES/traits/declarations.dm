@@ -1725,4 +1725,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Turfs with this trait allow whispers to be projected over it when the whisperer is facing it
 #define TRAIT_TURF_PROJECTS_WHISPERS  "turf_projects_whispers"
 
+/// Allowe item to be placed on stove despite not being a open container
+#define TRAIT_ALLOWED_ON_STOVE "allowed_on_stove"
+/// Added to any item placed onto a stove
+#define TRAIT_ON_HEATED_STOVE "on_heated_stove"
+
 // END TRAIT DEFINES

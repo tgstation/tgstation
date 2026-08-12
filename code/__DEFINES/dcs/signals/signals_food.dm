@@ -79,6 +79,8 @@
 ///Sent to the newly spawned object when it's baked in an oven.
 #define COMSIG_ITEM_BAKED_RESULT "item_baked_result"
 
+#define COMSIG_ITEM_STOVE_PROCESS "item_stove_process"
+
 ///When an object is used in a food processor recipe: (atom/movable/result, datum/food_processor_process/recipe)
 #define SIGNAL_USED_IN_FOOD_PROCESSOR "movable_used_in_food_processor"
 

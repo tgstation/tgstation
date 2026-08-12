@@ -11,6 +11,7 @@
 			"products" = list(
 				/obj/item/storage/bag/tray = 8,
 				/obj/item/reagent_containers/cup/soup_pot = 3,
+				/obj/item/frying_pan = 3,
 				/obj/item/kitchen/spoon/soup_ladle = 3,
 				/obj/item/clothing/suit/apron/chef = 2,
 				/obj/item/kitchen/rollingpin = 2,
@@ -58,7 +59,8 @@
 	)
 
 	premium = list(
-		/obj/item/skillchip/chefs_kiss = 2
+		/obj/item/skillchip/chefs_kiss = 2,
+		/obj/item/frying_pan/tall = 1,
 	)
 	contraband = list(
 		/obj/item/kitchen/rollingpin/illegal = 2,

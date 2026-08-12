@@ -1006,6 +1006,11 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 
 	return SEND_SIGNAL(src, COMSIG_ITEM_MICROWAVE_ACT, microwave_source, microwaver, randomize_pixel_offset)
 
+/obj/item/proc/stove_process(obj/machinery/stove_source, seconds_per_tick, heat_temp, heat_coeff)
+	SHOULD_CALL_PARENT(TRUE)
+
+	return SEND_SIGNAL(src, COMSIG_ITEM_STOVE_PROCESS, seconds_per_tick, stove_source, heat_coeff)
+
 ///Used to check for extra requirements for blending(grinding or juicing) an object
 /obj/item/proc/blend_requirements(atom/movable/grinder, mob/living/user)
 	return TRUE

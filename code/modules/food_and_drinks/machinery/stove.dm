@@ -27,7 +27,7 @@
 // - Tasting the pot to learn its exact contents w/o sci goggles (chef skillchip?)
 /obj/item/reagent_containers/cup/soup_pot
 	name = "soup pot"
-	desc = "A tall soup designed to mix and cook all kinds of soup."
+	desc = "A tall pot designed to mix and cook all kinds of soup."
 	icon = 'icons/obj/service/kitchen.dmi'
 	icon_state = "pot"
 	base_icon_state = "pot"
@@ -243,3 +243,156 @@
 
 	filled_overlay.color = mix_color_from_reagents(reagents.reagent_list + food_reagents)
 	. += filled_overlay
+
+/obj/item/reagent_containers/cup/soup_pot/stove_process(obj/machinery/stove_source, seconds_per_tick, heat_temp, heat_coeff)
+	. = ..()
+
+	reagents.expose_temperature(heat_temp, heat_coeff)
+
+
+/obj/item/frying_pan
+	name = "frying pan"
+	desc = "A nice pan for all your frying needs. Sizzle sizzle."
+	icon = 'icons/obj/service/kitchen.dmi'
+	icon_state = "frying_pan"
+	custom_materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 1.5)
+	custom_price = PAYCHECK_LOWER * 8
+	sound_vary = TRUE
+	pickup_sound = SFX_POT_PICKUP
+	drop_sound = SFX_POT_DROP
+
+	force = 12
+
+	///How many things fit on this plate?
+	var/max_items = 3
+	///The offset from side to side the food items can have on the plate
+	var/max_x_offset = 4
+	///The max height offset the food can reach on the plate
+	var/max_height_offset = 5
+	///Offset of where the click is calculated from, due to how food is positioned in their DMIs.
+	var/placement_offset = -15
+	/// The largest weight class we can carry, inclusive.
+	/// IE, if we this is normal, we can carry normal items or smaller.
+	var/biggest_w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/frying_pan/Initialize(mapload)
+	. = ..()
+
+	ADD_TRAIT(src, TRAIT_ALLOWED_ON_STOVE, INNATE_TRAIT)
+	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_ON_HEATED_STOVE), SIGNAL_REMOVETRAIT(TRAIT_ON_HEATED_STOVE)), PROC_REF(update_stove_status))
+
+/obj/item/frying_pan/stove_process(obj/machinery/stove_source, seconds_per_tick, heat_temp, heat_coeff)
+	. = ..()
+	for(var/obj/item/griddled_item in contents)
+		if(SEND_SIGNAL(griddled_item, COMSIG_ITEM_GRILL_PROCESS, src, seconds_per_tick) & COMPONENT_HANDLED_GRILLING)
+			continue
+		griddled_item.fire_act(1000) //Hot hot hot!
+
+/obj/item/frying_pan/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	/*
+	if(!IS_EDIBLE(tool))
+		return NONE
+	*/
+	if(tool.w_class > biggest_w_class)
+		balloon_alert(user, "too big!")
+		return ITEM_INTERACT_BLOCKING
+	if(contents.len >= max_items)
+		balloon_alert(user, "can't fit!")
+		return ITEM_INTERACT_BLOCKING
+	//Center the icon where the user clicked.
+	if(!LAZYACCESS(modifiers, ICON_X) || !LAZYACCESS(modifiers, ICON_Y))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src, silent = FALSE))
+		return ITEM_INTERACT_BLOCKING
+	tool.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -max_x_offset, max_x_offset)
+	tool.pixel_y = min(text2num(LAZYACCESS(modifiers, ICON_Y)) + placement_offset, max_height_offset)
+	to_chat(user, span_notice("You place [tool] on [src]."))
+	AddToPan(tool, user)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/frying_pan/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(!iscarbon(target))
+		return
+	if(!contents.len)
+		return
+	var/obj/item/object_to_eat = contents[1]
+	object_to_eat.melee_attack_chain(user, target)
+	return TRUE //No normal attack
+
+/obj/item/frying_pan/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	return TRUE
+
+///This proc adds the food to viscontents and makes sure it can deregister if this changes.
+/obj/item/frying_pan/proc/AddToPan(obj/item/item_to_pan, mob/user)
+	vis_contents += item_to_pan
+	item_to_pan.vis_flags |= VIS_INHERIT_PLANE
+
+	SEND_SIGNAL(item_to_pan, COMSIG_ITEM_GRILL_PLACED, user)
+	if(HAS_TRAIT(src, TRAIT_ON_HEATED_STOVE))
+		SEND_SIGNAL(item_to_pan, COMSIG_ITEM_GRILL_TURNED_ON)
+	RegisterSignal(item_to_pan, COMSIG_ITEM_GRILLED, PROC_REF(GrillCompleted))
+
+	RegisterSignal(item_to_pan, COMSIG_MOVABLE_MOVED, PROC_REF(ItemMoved))
+	RegisterSignal(item_to_pan, COMSIG_QDELETING, PROC_REF(ItemMoved))
+
+	// We gotta offset ourselves via pixel_w/z, so we don't end up z fighting with the plane
+	item_to_pan.pixel_w = item_to_pan.pixel_x
+	item_to_pan.pixel_z = item_to_pan.pixel_y
+	item_to_pan.pixel_x = 0
+	item_to_pan.pixel_y = 0
+
+	update_appearance()
+	// If the incoming item is the same weight class as the plate, bump us up a class
+	if(item_to_pan.w_class == w_class)
+		update_weight_class(w_class + 1)
+
+///This proc cleans up any signals on the item when it is removed from a plate, and ensures it has the correct state again.
+/obj/item/frying_pan/proc/ItemRemovedFromPan(obj/item/removed_item)
+	removed_item.vis_flags &= ~VIS_INHERIT_PLANE
+	vis_contents -= removed_item
+	UnregisterSignal(removed_item, list(
+		COMSIG_ITEM_GRILL_PLACED,
+		COMSIG_ITEM_GRILL_TURNED_ON,
+		COMSIG_ITEM_GRILLED,
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_QDELETING))
+	// Reset item offsets
+	removed_item.pixel_x = removed_item.pixel_w
+	removed_item.pixel_y = removed_item.pixel_z
+	removed_item.pixel_w = 0
+	removed_item.pixel_z = 0
+
+	// We need to ensure the weight class is accurate now that we've lost something
+	// that may or may not have been of equal weight
+	var/new_w_class = initial(w_class)
+	for(var/obj/item/on_board in src)
+		if(on_board.w_class == w_class)
+			new_w_class += 1
+			break
+
+	update_weight_class(new_w_class)
+
+///This proc is called by signals that remove the food from the plate.
+/obj/item/frying_pan/proc/ItemMoved(obj/item/moved_item, atom/OldLoc, Dir, Forced)
+	SIGNAL_HANDLER
+	ItemRemovedFromPan(moved_item)
+
+/obj/item/frying_pan/proc/GrillCompleted(obj/item/source, atom/grilled_result)
+	SIGNAL_HANDLER
+	AddToPan(grilled_result)
+
+/obj/item/frying_pan/proc/update_stove_status(atom/source)
+	SIGNAL_HANDLER
+
+	for(var/obj/item/griddled_item in contents)
+		if(HAS_TRAIT(src, TRAIT_ON_HEATED_STOVE))
+			SEND_SIGNAL(griddled_item, COMSIG_ITEM_GRILL_TURNED_ON)
+		else
+			SEND_SIGNAL(griddled_item, COMSIG_ITEM_GRILL_TURNED_OFF)
+
+/obj/item/frying_pan/tall
+	name = "small pot"
+	desc = "Despite its namesake, its mostly just used for frying."
+	icon_state = "small_pot"
+	max_items = 5
+	custom_price = PAYCHECK_LOWER * 20

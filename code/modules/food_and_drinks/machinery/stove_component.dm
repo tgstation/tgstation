@@ -82,12 +82,12 @@
 		turn_off()
 		return
 
-	container?.reagents.expose_temperature(SOUP_BURN_TEMP + 80, heat_coefficient)
+	container?.stove_process(parent, seconds_per_tick, STOVE_TEMP, heat_coefficient)
 	real_parent.use_energy(real_parent.active_power_usage)
 
 	var/turf/stove_spot = real_parent.loc
 	if(isturf(stove_spot))
-		stove_spot.hotspot_expose(SOUP_BURN_TEMP + 80, 100)
+		stove_spot.hotspot_expose(STOVE_TEMP, 100)
 
 /datum/component/stove/proc/turn_on()
 	var/obj/machinery/real_parent = parent
@@ -96,12 +96,16 @@
 	START_PROCESSING(SSmachines, src)
 	on = TRUE
 	real_parent.update_appearance(UPDATE_OVERLAYS)
+	if(container)
+		ADD_TRAIT(container, TRAIT_ON_HEATED_STOVE, type)
 
 /datum/component/stove/proc/turn_off()
 	var/obj/machinery/real_parent = parent
 	STOP_PROCESSING(SSmachines, src)
 	on = FALSE
 	real_parent.update_appearance(UPDATE_OVERLAYS)
+	if(container)
+		REMOVE_TRAIT(container, TRAIT_ON_HEATED_STOVE, type)
 
 /datum/component/stove/proc/on_attack_hand_secondary(obj/machinery/source)
 	SIGNAL_HANDLER
@@ -138,13 +142,13 @@
 
 	if(istype(source, /obj/machinery/oven/range) && istype(attacking_item, /obj/item/storage/bag/tray) && container)
 		var/obj/machinery/oven/range/range = source
-		var/obj/item/reagent_containers/cup/soup_pot/soup_pot = container
+		var/obj/item/reagent_containers/cup/soup_pot/soup_pot = astype(container)
 
-		if(!range.open)
+		if(!range.open && soup_pot)
 			soup_pot.transfer_from_container_to_pot(attacking_item, user)
 			return COMPONENT_NO_AFTERATTACK
 
-	if(!attacking_item.is_open_container())
+	if(!(attacking_item.is_open_container() || HAS_TRAIT(attacking_item, TRAIT_ALLOWED_ON_STOVE)))
 		return
 	if(!isnull(container))
 		to_chat(user, span_warning("You wouldn't dare try to cook two things on the same stove simultaneously. \
@@ -199,6 +203,9 @@
 	if(held_item.is_open_container())
 		context[SCREENTIP_CONTEXT_LMB] = "Place container"
 		return CONTEXTUAL_SCREENTIP_SET
+	else if(HAS_TRAIT(held_item, TRAIT_ALLOWED_ON_STOVE))
+		context[SCREENTIP_CONTEXT_LMB] = "Place item"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /datum/component/stove/proc/on_examine(obj/machinery/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -218,6 +225,8 @@
 	var/obj/real_parent = parent
 	real_parent.vis_contents += new_container
 	ADD_TRAIT(new_container, TRAIT_SKIP_BASIC_REACH_CHECK, REF(src))
+	if(on && new_container)
+		ADD_TRAIT(new_container, TRAIT_ON_HEATED_STOVE, type)
 	new_container.vis_flags |= VIS_INHERIT_PLANE
 
 	container = new_container
@@ -225,16 +234,20 @@
 	container.pixel_y = container_y
 
 	update_smoke_type()
-	RegisterSignal(container.reagents, COMSIG_REAGENTS_TEMP_CHANGE, PROC_REF(update_smoke_type))
+	if(container.reagents)
+		RegisterSignal(container.reagents, COMSIG_REAGENTS_TEMP_CHANGE, PROC_REF(update_smoke_type))
 	real_parent.update_appearance(UPDATE_OVERLAYS)
 
 /datum/component/stove/proc/remove_container()
 	var/obj/real_parent = parent
 	REMOVE_TRAIT(container, TRAIT_SKIP_BASIC_REACH_CHECK, REF(src))
+	if(container)
+		REMOVE_TRAIT(container, TRAIT_ON_HEATED_STOVE, type)
 	container.vis_flags &= ~VIS_INHERIT_PLANE
 	real_parent.vis_contents -= container
 
-	UnregisterSignal(container.reagents, COMSIG_REAGENTS_TEMP_CHANGE)
+	if(container.reagents)
+		UnregisterSignal(container.reagents, COMSIG_REAGENTS_TEMP_CHANGE)
 
 	container.pixel_x = container.base_pixel_x
 	container.pixel_y = container.base_pixel_y
@@ -246,7 +259,7 @@
 /datum/component/stove/proc/update_smoke_type(datum/source, ...)
 	SIGNAL_HANDLER
 
-	var/existing_temp = container?.reagents.chem_temp || 0
+	var/existing_temp = container?.reagents?.chem_temp || 0
 	var/old_type = particle_type
 	if(existing_temp >= SOUP_BURN_TEMP)
 		particle_type = /particles/smoke/steam/bad
@@ -263,7 +276,7 @@
 	if (old_type)
 		obj_parent.remove_shared_particles("[old_type]_stove_[container_x]")
 
-	if(!on || !container?.reagents.total_volume)
+	if(!on || !container?.reagents?.total_volume)
 		soup_sound?.stop()
 		if (!isnull(particle_type))
 			obj_parent.remove_shared_particles("[particle_type]_stove_[container_x]")

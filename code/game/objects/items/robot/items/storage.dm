@@ -345,6 +345,7 @@ GAME_VERB(/obj/item/borg/apparatus, verb_dropHeld, "Drop", null)
 		/obj/item/plate/oven_tray,
 		/obj/item/reagent_containers/cup/bowl,
 		/obj/item/reagent_containers/cup/soup_pot,
+		/obj/item/frying_pan,
 		/obj/item/seeds,
 		/obj/item/graft,
 	)
