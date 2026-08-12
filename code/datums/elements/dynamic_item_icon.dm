@@ -42,19 +42,17 @@
 
 	item.item_flags &= ~ACTIVE_ONFLOOR_ICON
 
+	if(item.greyscale_config)
+		item.update_greyscale() // Helps reset our icon back to the right one
 	item.update_appearance(UPDATE_ICON)
-	if(item.greyscale_config_onfloor)
-		item.update_greyscale()
 
 /datum/element/dynamic_item_icon/proc/apply_onfloor_icon(obj/item/item)
 	item.icon = item.onflooricon
 	item.pixel_w = 0
-	item.cut_overlays()
+
 	if (item.onflooricon_state)
 		item.icon_state = item.onflooricon_state
 
 	item.item_flags |= ACTIVE_ONFLOOR_ICON
 
 	item.update_appearance(UPDATE_ICON)
-	if(item.greyscale_config_onfloor)
-		item.update_greyscale()
