@@ -97,7 +97,7 @@
 	on = TRUE
 	real_parent.update_appearance(UPDATE_OVERLAYS)
 	if(container)
-		ADD_TRAIT(container, TRAIT_ON_HEATED_STOVE, type)
+		ADD_TRAIT(container, TRAIT_ON_HEATED_STOVE, REF(src))
 
 /datum/component/stove/proc/turn_off()
 	var/obj/machinery/real_parent = parent
@@ -105,7 +105,7 @@
 	on = FALSE
 	real_parent.update_appearance(UPDATE_OVERLAYS)
 	if(container)
-		REMOVE_TRAIT(container, TRAIT_ON_HEATED_STOVE, type)
+		REMOVE_TRAIT(container, TRAIT_ON_HEATED_STOVE, REF(src))
 
 /datum/component/stove/proc/on_attack_hand_secondary(obj/machinery/source)
 	SIGNAL_HANDLER
@@ -225,8 +225,8 @@
 	var/obj/real_parent = parent
 	real_parent.vis_contents += new_container
 	ADD_TRAIT(new_container, TRAIT_SKIP_BASIC_REACH_CHECK, REF(src))
-	if(on && new_container)
-		ADD_TRAIT(new_container, TRAIT_ON_HEATED_STOVE, type)
+	if(on)
+		ADD_TRAIT(new_container, TRAIT_ON_HEATED_STOVE, REF(src))
 	new_container.vis_flags |= VIS_INHERIT_PLANE
 
 	container = new_container
@@ -241,8 +241,7 @@
 /datum/component/stove/proc/remove_container()
 	var/obj/real_parent = parent
 	REMOVE_TRAIT(container, TRAIT_SKIP_BASIC_REACH_CHECK, REF(src))
-	if(container)
-		REMOVE_TRAIT(container, TRAIT_ON_HEATED_STOVE, type)
+	REMOVE_TRAIT(container, TRAIT_ON_HEATED_STOVE, REF(src))
 	container.vis_flags &= ~VIS_INHERIT_PLANE
 	real_parent.vis_contents -= container
 
