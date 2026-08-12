@@ -761,20 +761,6 @@
 	attack_verb_continuous = list("gnaws", "gnashes", "chews")
 	attack_verb_simple = list("gnaw", "gnash", "chew")
 
-/obj/item/toy/plush/argemia
-	name = "strange plushie"
-	desc = "Voiding..."
-	icon_state = "argemia"
-	ONFLOOR_ICON_HELPER('icons/obj/toys/plushes_onfloor.dmi')
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/toy/plush/argemia/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
-	. = ..()
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/toy/plush/argemia, microwave_explode), microwave_source), 5 SECONDS)
-
-/obj/item/toy/plush/argemia/proc/microwave_explode(obj/machinery/microwave/microwave_source)
-	explosion(microwave_source.loc, 0, 1, 2)
-
 /obj/item/toy/plush/donkpocket
 	name = "donk pocket plushie"
 	desc = "The stuffed companion of choice for the seasoned traitor."

@@ -307,7 +307,6 @@
 		/obj/item/toy/plush/narplush = 2,
 		/obj/item/toy/plush/whiny_plushie = 2,
 		/obj/item/toy/plush/rouny = 2,
-		/obj/item/toy/plush/argemia = 1,
 	)
 
 /obj/effect/spawner/random/entertainment/colorful_grenades
