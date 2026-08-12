@@ -338,7 +338,20 @@
   - bugfix: Fix spawn text appearing over HUD. Move spawn text to the top left of
       the screen
 2026-08-12:
+  JohnFulpWillard:
+  - qol: Alien larva's 'Evolve' button now says when it's ready, rather than being
+      in the stat panel.
   Melbert:
   - qol: Gizmos pulsed by assembies give feedback sounds
   - qol: Gizmo feedback alerts are shown to all nearby mobs, rather than just the
       pulser
+  - bugfix: If a cuffed item enters an anchored object like a closet, the cuffee become
+      stuck to the anchored object, rather than the anchored object being stuck to
+      the cuffee.
+  - bugfix: You can no longer put cuffed objects in any object manually (i.e. by clicking
+      on it). This affects objects like grinders, deep fryers, and soup pots.
+  - qol: Cuffed item examine text is now shown in examine, rather than double-examine
+  - balance: Any mob can attempt to remove someone's cuffed item, rather than just
+      the cuffee. However it takes double the amount of time for non-cuffees.
+  lelandkemble:
+  - map: Added several holopads to Kilostation

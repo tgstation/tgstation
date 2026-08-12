@@ -1,7 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "If a cuffed item enters an anchored object like a closet, the cuffee become stuck to the anchored object, rather than the anchored object being stuck to the cuffee."
-  - bugfix: "You can no longer put cuffed objects in any object manually (i.e. by clicking on it). This affects objects like grinders, deep fryers, and soup pots."
-  - qol: "Cuffed item examine text is now shown in examine, rather than double-examine"
-  - balance: "Any mob can attempt to remove someone's cuffed item, rather than just the cuffee. However it takes double the amount of time for non-cuffees."
