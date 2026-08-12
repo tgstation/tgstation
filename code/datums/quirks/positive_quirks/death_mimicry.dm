@@ -1,6 +1,6 @@
 /datum/quirk/death_mimicry
 	name = "Death Mimicry"
-	desc = "You've mastered the art of faking your demise. Performing a death gasp tricks anyone examining you into believing you've succumbed to your injuries for a short time."
+	desc = "You've mastered the art of faking your demise. Performing a death gasp knocks you unconscious and tricks anyone examining you into believing you've succumbed to your injuries for a short time."
 	icon = FA_ICON_GHOST
 	value = 16
 	gain_text = span_notice("You know how to put on a convincing death scene.")
