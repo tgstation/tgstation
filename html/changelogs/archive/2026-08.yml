@@ -353,5 +353,9 @@
   - qol: Cuffed item examine text is now shown in examine, rather than double-examine
   - balance: Any mob can attempt to remove someone's cuffed item, rather than just
       the cuffee. However it takes double the amount of time for non-cuffees.
+  SmArtKar:
+  - balance: Crusher trophies are now small and can be stowed in explorer webbings
+  - balance: Crusher trophies are slightly cheaper to craft
+  - balance: Icewing trophy backstep distance reduced from 2 to 1 to be less disorienting
   lelandkemble:
   - map: Added several holopads to Kilostation
