@@ -105,17 +105,10 @@ const BlueScreen = () => {
         System Failure
       </Box>
       <Box mt={2}>
-        A fatal exception 0xE has occurred at 0028:C0011E36 in VXD_SYSPURGE(01)
+        A fatal exception 0xE has occurred at 0028:C0011E36 in VXD_SYSCALLRM(01)
         + 00002B9C. The current application will be terminated.
       </Box>
-      <Box mt={2}>
-        * Press any key to terminate the current application.
-        <br />
-        You will lose any unsaved information in all applications.
-      </Box>
-      <Box mt={4} italic>
-        Press any key to continue...
-      </Box>
+      <Box mt={2}>* Press any key to terminate the current application.</Box>
     </Box>
   );
 };
