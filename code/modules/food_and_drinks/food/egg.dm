@@ -32,6 +32,10 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 	/// How likely is it that a chicken will come out of here if we throw it?
 	var/chick_throw_prob = 13
 
+/obj/item/food/egg/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/grill_crackable, /obj/item/food/rawegg)
+
 /obj/item/food/egg/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/boiledegg, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
 
@@ -123,28 +127,6 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE
-
-/obj/item/food/egg/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!istype(interacting_with, /obj/machinery/griddle))
-		return NONE
-
-	var/obj/machinery/griddle/hit_griddle = interacting_with
-	if(length(hit_griddle.griddled_objects) >= hit_griddle.max_items)
-		interacting_with.balloon_alert(user, "no room!")
-		return ITEM_INTERACT_BLOCKING
-	var/atom/broken_egg = new /obj/item/food/rawegg(interacting_with.loc)
-	if(LAZYACCESS(modifiers, ICON_X))
-		broken_egg.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), ICON_SIZE_X/2)
-	if(LAZYACCESS(modifiers, ICON_Y))
-		broken_egg.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
-	playsound(user, 'sound/items/sheath.ogg', 40, TRUE)
-	reagents.trans_to(broken_egg, reagents.total_volume, copy_only = TRUE)
-
-	hit_griddle.AddToGrill(broken_egg, user)
-	interacting_with.balloon_alert(user, "cracks [src] open")
-
-	qdel(src)
-	return ITEM_INTERACT_BLOCKING
 
 /obj/item/food/egg/blue
 	icon_state = "egg-blue"
@@ -375,28 +357,7 @@ GLOBAL_VAR_INIT(chicks_from_eggs, 0)
 		icon_state = "[base_icon_state]2"
 
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BLOBSPORE, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
-
-/obj/item/food/spore_sack/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!istype(interacting_with, /obj/machinery/griddle))
-		return NONE
-
-	var/obj/machinery/griddle/hit_griddle = interacting_with
-	if(length(hit_griddle.griddled_objects) >= hit_griddle.max_items)
-		interacting_with.balloon_alert(user, "no room!")
-		return ITEM_INTERACT_BLOCKING
-	var/atom/broken_egg = new /obj/item/food/rawegg/spore(interacting_with.loc)
-	if(LAZYACCESS(modifiers, ICON_X))
-		broken_egg.pixel_x = clamp(text2num(LAZYACCESS(modifiers, ICON_X)) - 16, -(ICON_SIZE_X/2), ICON_SIZE_X/2)
-	if(LAZYACCESS(modifiers, ICON_Y))
-		broken_egg.pixel_y = clamp(text2num(LAZYACCESS(modifiers, ICON_Y)) - 16, -(ICON_SIZE_Y/2), ICON_SIZE_Y/2)
-	playsound(user, 'sound/items/sheath.ogg', 40, TRUE)
-	reagents.trans_to(broken_egg, reagents.total_volume, copy_only = TRUE)
-
-	hit_griddle.AddToGrill(broken_egg, user)
-	interacting_with.balloon_alert(user, "cracks [src] open")
-
-	qdel(src)
-	return ITEM_INTERACT_BLOCKING
+	AddComponent(/datum/component/grill_crackable, /obj/item/food/rawegg/spore)
 
 /obj/item/food/spore_sack/independent
 	icon_state = "spore_sack_independent"

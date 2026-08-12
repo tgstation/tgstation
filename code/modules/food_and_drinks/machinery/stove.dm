@@ -244,11 +244,6 @@
 	filled_overlay.color = mix_color_from_reagents(reagents.reagent_list + food_reagents)
 	. += filled_overlay
 
-/obj/item/reagent_containers/cup/soup_pot/stove_process(obj/machinery/stove_source, seconds_per_tick, heat_temp, heat_coeff)
-	. = ..()
-
-	reagents.expose_temperature(heat_temp, heat_coeff)
-
 
 /obj/item/frying_pan
 	name = "frying pan"
@@ -261,7 +256,7 @@
 	pickup_sound = SFX_POT_PICKUP
 	drop_sound = SFX_POT_DROP
 
-	force = 12
+	force = 13
 
 	///How many things fit on this plate?
 	var/max_items = 3
@@ -275,11 +270,19 @@
 	/// IE, if we this is normal, we can carry normal items or smaller.
 	var/biggest_w_class = WEIGHT_CLASS_NORMAL
 
+	///Looping sound for the grill
+	var/datum/looping_sound/grill/grill_loop
+
 /obj/item/frying_pan/Initialize(mapload)
 	. = ..()
+	grill_loop = new(src, FALSE)
 
 	ADD_TRAIT(src, TRAIT_ALLOWED_ON_STOVE, INNATE_TRAIT)
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_ON_HEATED_STOVE), SIGNAL_REMOVETRAIT(TRAIT_ON_HEATED_STOVE)), PROC_REF(update_stove_status))
+
+/obj/item/frying_pan/Destroy(force)
+	QDEL_NULL(grill_loop)
+	return ..()
 
 /obj/item/frying_pan/stove_process(obj/machinery/stove_source, seconds_per_tick, heat_temp, heat_coeff)
 	. = ..()
@@ -289,10 +292,6 @@
 		griddled_item.fire_act(1000) //Hot hot hot!
 
 /obj/item/frying_pan/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	/*
-	if(!IS_EDIBLE(tool))
-		return NONE
-	*/
 	if(tool.w_class > biggest_w_class)
 		balloon_alert(user, "too big!")
 		return ITEM_INTERACT_BLOCKING
@@ -346,6 +345,8 @@
 	if(item_to_pan.w_class == w_class)
 		update_weight_class(w_class + 1)
 
+	update_grill_audio()
+
 ///This proc cleans up any signals on the item when it is removed from a plate, and ensures it has the correct state again.
 /obj/item/frying_pan/proc/ItemRemovedFromPan(obj/item/removed_item)
 	removed_item.vis_flags &= ~VIS_INHERIT_PLANE
@@ -372,6 +373,8 @@
 
 	update_weight_class(new_w_class)
 
+	update_grill_audio()
+
 ///This proc is called by signals that remove the food from the plate.
 /obj/item/frying_pan/proc/ItemMoved(obj/item/moved_item, atom/OldLoc, Dir, Forced)
 	SIGNAL_HANDLER
@@ -389,6 +392,14 @@
 			SEND_SIGNAL(griddled_item, COMSIG_ITEM_GRILL_TURNED_ON)
 		else
 			SEND_SIGNAL(griddled_item, COMSIG_ITEM_GRILL_TURNED_OFF)
+
+	update_grill_audio()
+
+/obj/item/frying_pan/proc/update_grill_audio()
+	if(HAS_TRAIT(src, TRAIT_ON_HEATED_STOVE) && length(contents))
+		grill_loop.start()
+	else
+		grill_loop.stop()
 
 /obj/item/frying_pan/tall
 	name = "small pot"

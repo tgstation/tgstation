@@ -1009,6 +1009,8 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 /obj/item/proc/stove_process(obj/machinery/stove_source, seconds_per_tick, heat_temp, heat_coeff)
 	SHOULD_CALL_PARENT(TRUE)
 
+	reagents?.expose_temperature(heat_temp, heat_coeff)
+
 	return SEND_SIGNAL(src, COMSIG_ITEM_STOVE_PROCESS, seconds_per_tick, stove_source, heat_coeff)
 
 ///Used to check for extra requirements for blending(grinding or juicing) an object

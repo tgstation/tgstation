@@ -336,7 +336,7 @@ GAME_VERB(/obj/item/borg/apparatus, verb_dropHeld, "Drop", null)
 
 /obj/item/borg/apparatus/service
 	name = "service apparatus"
-	desc = "A special apparatus for carrying food, seeds, grafts, bowls, plates, oven trays, soup pots and paper."
+	desc = "A special apparatus for carrying food, seeds, grafts, bowls, plates, oven trays, pots and paper."
 	icon_state = "borg_service_apparatus"
 	storable = list(
 		/obj/item/food,
