@@ -337,3 +337,8 @@
   timothymtorres:
   - bugfix: Fix spawn text appearing over HUD. Move spawn text to the top left of
       the screen
+2026-08-12:
+  Melbert:
+  - qol: Gizmos pulsed by assembies give feedback sounds
+  - qol: Gizmo feedback alerts are shown to all nearby mobs, rather than just the
+      pulser
