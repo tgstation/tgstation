@@ -1,4 +1,5 @@
-/// Indicates this item can be cracked onto a surface to produce a diffrent item (designed for eggs)
+/// Indicates this item can be cracked onto a surface to produce a different item
+/// For example, cracking an egg producing an egg yolk
 /datum/component/grill_crackable
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	///Result atom type of baking this object
