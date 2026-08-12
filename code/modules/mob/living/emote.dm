@@ -123,9 +123,10 @@
 
 	if(user.has_quirk(/datum/quirk/death_mimicry))
 		if(TIMER_COOLDOWN_FINISHED(user, COOLDOWN_DEATHGASP))
+			user.Unconscious(cooldown, ignore_canstun=TRUE)
 			ADD_TRAIT(user, TRAIT_FAKEDEATH, QUIRK_TRAIT)
-			addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_FAKEDEATH, QUIRK_TRAIT), 5 SECONDS)
-			TIMER_COOLDOWN_START(user, COOLDOWN_DEATHGASP, cooldown * 4)
+			addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_FAKEDEATH, QUIRK_TRAIT), cooldown)
+			TIMER_COOLDOWN_START(user, COOLDOWN_DEATHGASP, cooldown * 20)
 
 	. = ..()
 	message_animal_or_basic = initial(message_animal_or_basic)
