@@ -58,19 +58,3 @@
 
 	item.update_icon()
 	//item.update_greyscale()
-
-#warn proof of concept. Likely does not belong in this pr.
-/obj/item/toy/plush/argemia
-	name = "strange plushie"
-	desc = "Voiding..."
-	icon_state = "argemia"
-	ONFLOOR_ICON_HELPER('icons/obj/toys/plushes_onfloor.dmi')
-	w_class = WEIGHT_CLASS_SMALL
-
-/obj/item/toy/plush/argemia/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
-	. = ..()
-	// playsound(microwave_source.loc, 'sounds/aeaeae.ogg', 100, FALSE)
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/toy/plush/argemia, microwave_explode), microwave_source), 5 SECONDS)
-
-/obj/item/toy/plush/argemia/proc/microwave_explode(obj/machinery/microwave/microwave_source)
-	explosion(microwave_source.loc, 0, 1, 2)
