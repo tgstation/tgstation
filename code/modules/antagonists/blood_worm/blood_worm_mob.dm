@@ -452,7 +452,7 @@
 
 /mob/living/basic/blood_worm/adult/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE, hole_making_time = 10 SECONDS)
+	AddElement(/datum/element/pressure_sensitive, min_pressure = 20, max_pressure = 0, low_pressure_damage = 2, high_pressure_damage = 0)
 
 /mob/living/basic/blood_worm/hatchling/polymorph
 	cocoon_action = /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/hatchling/polymorph
