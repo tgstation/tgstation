@@ -32,7 +32,6 @@
 	. = ..()
 
 	GLOB.new_player_list += src
-	ASSIGN_GAME_VERB(src, /mob/dead/new_player, reset_menu_hud)
 
 /mob/dead/new_player/Destroy()
 	GLOB.new_player_list -= src
