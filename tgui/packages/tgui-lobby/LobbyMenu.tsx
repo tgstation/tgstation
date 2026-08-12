@@ -87,7 +87,7 @@ async function getApngDuration(url: string): Promise<number> {
     decoder.close();
     return total;
   } catch {
-    return 300;
+    return FALLBACK_APNG_DURATION_MS;
   }
 }
 
@@ -201,7 +201,7 @@ function TraitFeedback({ text }: { text: string }) {
 
   useEffect(() => {
     setVisible(true);
-    const timer = setTimeout(() => setVisible(false), 1500);
+    const timer = setTimeout(() => setVisible(false), TRAIT_FEEDBACK_MS);
     return () => clearTimeout(timer);
   }, [text]);
 
@@ -217,6 +217,12 @@ function TraitFeedback({ text }: { text: string }) {
 const SHUTTER_TRAVEL_PX = 143;
 const SHUTTER_MOVE_MS = 400;
 const SHUTTER_WAIT_MS = 200;
+const COLLAPSE_SLIDE_PX = 134;
+const LOCALHOST_HANDLE_SHIFT_PX = 50;
+const LOCALHOST_HANDLE_SHIFT_MS = 200;
+const TRAIT_FEEDBACK_MS = 1500;
+const MAX_TRAITS_PER_COLUMN = 3;
+const FALLBACK_APNG_DURATION_MS = 300;
 const EASE_OUT = 'cubic-bezier(0.33, 1, 0.68, 1)';
 const EASE_IN = 'cubic-bezier(0.32, 0, 0.67, 0)';
 
@@ -231,6 +237,7 @@ export function LobbyMenu() {
   const [animating, setAnimating] = useState(false);
   const [tvActive, setTvActive] = useState(true);
   const shutterRef = useRef<HTMLDivElement>(null);
+  const collapseRef = useRef<HTMLDivElement>(null);
 
   const ss = state.serverState;
 
@@ -313,8 +320,46 @@ export function LobbyMenu() {
       if (shutter) {
         for (const a of shutter.getAnimations()) a.cancel();
       }
+
+      if (ss?.isLocalhost && collapseRef.current) {
+        const shift = LOCALHOST_HANDLE_SHIFT_PX * getLobbyScale();
+        collapseRef.current.animate(
+          [
+            {
+              transform: `translateY(${-COLLAPSE_SLIDE_PX * getLobbyScale()}px)`,
+            },
+            {
+              transform: `translateY(${-COLLAPSE_SLIDE_PX * getLobbyScale()}px) translateX(${-shift}px)`,
+            },
+          ],
+          {
+            duration: LOCALHOST_HANDLE_SHIFT_MS,
+            easing: EASE_OUT,
+            fill: 'forwards',
+          },
+        );
+      }
     } else {
       playExpandSound();
+
+      if (ss?.isLocalhost && collapseRef.current) {
+        const scale = getLobbyScale();
+        const shift = 50 * scale;
+        const yOff = -COLLAPSE_SLIDE_PX * scale;
+        for (const a of collapseRef.current.getAnimations()) a.cancel();
+        await collapseRef.current.animate(
+          [
+            { transform: `translateY(${yOff}px) translateX(${-shift}px)` },
+            { transform: `translateY(${yOff}px)` },
+          ],
+          {
+            duration: LOCALHOST_HANDLE_SHIFT_MS,
+            easing: EASE_IN,
+            fill: 'forwards',
+          },
+        ).finished;
+        for (const a of collapseRef.current.getAnimations()) a.cancel();
+      }
 
       if (shutter) {
         const dist = SHUTTER_TRAVEL_PX * getLobbyScale();
@@ -443,6 +488,7 @@ export function LobbyMenu() {
         </div>
 
         <div
+          ref={collapseRef}
           className={`lobby__el lobby__el--collapse ${collapsed ? 'lobby__el--collapse-slide' : ''}`}
         >
           <button
@@ -525,8 +571,8 @@ export function LobbyMenu() {
             className={`lobby__el lobby__el--trait ${collapsed ? 'lobby__el--collapse-up' : ''}`}
             style={
               {
-                '--trait-col': Math.floor(i / 3),
-                '--trait-row': i % 3,
+                '--trait-col': Math.floor(i / MAX_TRAITS_PER_COLUMN),
+                '--trait-row': i % MAX_TRAITS_PER_COLUMN,
               } as React.CSSProperties
             }
           >
