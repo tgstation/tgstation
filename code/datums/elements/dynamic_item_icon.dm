@@ -69,7 +69,7 @@
 
 /obj/item/toy/plush/argemia/microwave_act(obj/machinery/microwave/microwave_source, mob/microwaver, randomize_pixel_offset)
 	. = ..()
-	playsound(microwave_source.loc, 'modular_darkpack/modules/toys/sounds/aeaeae.ogg', 100, FALSE)
+	// playsound(microwave_source.loc, 'sounds/aeaeae.ogg', 100, FALSE)
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/toy/plush/argemia, microwave_explode), microwave_source), 5 SECONDS)
 
 /obj/item/toy/plush/argemia/proc/microwave_explode(obj/machinery/microwave/microwave_source)
