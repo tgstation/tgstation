@@ -359,3 +359,5 @@
   - balance: Icewing trophy backstep distance reduced from 2 to 1 to be less disorienting
   lelandkemble:
   - map: Added several holopads to Kilostation
+  siliconOpossum:
+  - bugfix: Wall signs will no longer say you're changing them when someone else is

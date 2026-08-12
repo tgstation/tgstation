@@ -1,4 +1,0 @@
-author: "siliconOpossum"
-delete-after: True
-changes:
-  - bugfix: "Wall signs will no longer say you're changing them when someone else is"
