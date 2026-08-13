@@ -728,18 +728,19 @@ SUBSYSTEM_DEF(dynamic)
 			data += "\]\n"
 		else
 			data += "blacklisted_roles = \[\]\n"
-		if(islist(ruleset.min_antag_cap))
-			for(var/ruleset_min_antag_cap in ruleset.min_antag_cap)
-				data += "min_antag_cap.[ruleset_min_antag_cap] = [ruleset.min_antag_cap[ruleset_min_antag_cap]]\n"
-		else
-			data += "min_antag_cap = [ruleset.min_antag_cap || 0]\n"
-		if(islist(ruleset.max_antag_cap))
-			for(var/ruleset_max_antag_cap in ruleset.max_antag_cap)
-				data += "max_antag_cap.[ruleset_max_antag_cap] = [ruleset.max_antag_cap[ruleset_max_antag_cap]]\n"
-		else if(!isnull(ruleset.max_antag_cap))
-			data += "max_antag_cap = [ruleset.max_antag_cap]\n"
-		else
-			data += "# max_antag_cap = min_antag_cap\n"
+		if(!istype(ruleset, /datum/dynamic_ruleset/latejoin))
+			if(islist(ruleset.min_antag_cap))
+				for(var/ruleset_min_antag_cap in ruleset.min_antag_cap)
+					data += "min_antag_cap.[ruleset_min_antag_cap] = [ruleset.min_antag_cap[ruleset_min_antag_cap]]\n"
+			else
+				data += "min_antag_cap = [ruleset.min_antag_cap || 0]\n"
+			if(islist(ruleset.max_antag_cap))
+				for(var/ruleset_max_antag_cap in ruleset.max_antag_cap)
+					data += "max_antag_cap.[ruleset_max_antag_cap] = [ruleset.max_antag_cap[ruleset_max_antag_cap]]\n"
+			else if(!isnull(ruleset.max_antag_cap))
+				data += "max_antag_cap = [ruleset.max_antag_cap]\n"
+			else
+				data += "# max_antag_cap = min_antag_cap\n"
 		data += "repeatable_weight_decrease = [ruleset.repeatable_weight_decrease]\n"
 		data += "repeatable = [ruleset.repeatable]\n"
 		data += "minimum_required_age = [ruleset.minimum_required_age]\n"

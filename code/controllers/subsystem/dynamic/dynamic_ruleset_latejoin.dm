@@ -3,6 +3,16 @@
 	max_antag_cap = 1
 	repeatable = TRUE
 
+/datum/dynamic_ruleset/latejoin/set_config_value(nvar, nval)
+	if(nvar == NAMEOF(src, min_antag_cap) || nvar == NAMEOF(src, max_antag_cap))
+		return FALSE
+	return ..()
+
+/datum/dynamic_ruleset/latejoin/vv_edit_var(var_name, var_value)
+	if(var_name == NAMEOF(src, min_antag_cap) || var_name == NAMEOF(src, max_antag_cap))
+		return FALSE
+	return ..()
+
 /datum/dynamic_ruleset/latejoin/is_valid_candidate(mob/candidate, client/candidate_client)
 	if(isnull(candidate.mind))
 		return FALSE
