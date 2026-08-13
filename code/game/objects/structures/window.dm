@@ -930,11 +930,18 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/titanium/spawner, 0
 	glass_amount = 1
 	glass_material_datum = /datum/material/alloy/plastitaniumglass
 
+/obj/structure/window/reinforced/shuttle/survival_pod/unanchored
+	anchored = FALSE
+	state = WINDOW_OUT_OF_FRAME
+
 /obj/structure/window/reinforced/survival_pod
 	name = "pod window"
 	icon_state = "plastitanium_window"
 	glass_type = /obj/item/stack/sheet/plastitaniumglass
 	glass_material_datum = /datum/material/alloy/plastitaniumglass
+
+/obj/structure/window/reinforced/survival_pod/unanchored
+	anchored = FALSE
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawner, 0)
 
