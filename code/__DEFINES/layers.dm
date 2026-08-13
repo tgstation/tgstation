@@ -69,79 +69,85 @@
 #define RENDER_PLANE_SPECULAR_MASK 17
 #define SPECULAR_MASK_RENDER_TARGET "*RENDER_PLANE_SPECULAR_MASK"
 
-#define RENDER_PLANE_PARTICLE_WEATHER 18
-#define RENDER_PLANE_EMISSIVE_PARTICLE_WEATHER 19
+#define RENDER_PLANE_EMISSIVE_UV_OBJECTS 18
+// Needs to be above EMISSIVE_UV_OBJECTS to multiply and mask its output properly
+#define UV_LIGHTING_PLANE 19
+#define UV_LIGHTING_RENDER_TARGET "*UV_LIGHTING_PLANE"
+#define RENDER_PLANE_EMISSIVE_UV 20
+
+#define RENDER_PLANE_PARTICLE_WEATHER 21
+#define RENDER_PLANE_EMISSIVE_PARTICLE_WEATHER 22
 
 //-------------------- Lighting ---------------------
 
 /// Main game plane to which everything renders, which then is multiplied by light
 /// Should not be lit directly as it is sourced for emissive bloom
-#define RENDER_PLANE_UNLIT_GAME 20
+#define RENDER_PLANE_UNLIT_GAME 30
 
-#define RENDER_PLANE_O_LIGHTING 21
+#define RENDER_PLANE_O_LIGHTING 31
 
-#define RENDER_PLANE_LIGHTING 22
+#define RENDER_PLANE_LIGHTING 32
 
 /// Masks the lighting plane with turfs, so we never light up the void
 /// Failing that, masks emissives and the overlay lighting plane
-#define RENDER_PLANE_LIGHT_MASK 23
+#define RENDER_PLANE_LIGHT_MASK 33
 #define LIGHT_MASK_RENDER_TARGET "*RENDER_PLANE_LIGHT_MASK"
 
-/// We cannot render speculars to ABOVE_LIGHTING, as then they give it alpha and end up masking things in darkness
+/// We cannot render speculars to ABOVE_LIGHTING_PLANE, as then they give it alpha and end up masking things in darkness
 /// So we need to render it directly to RENDER_PLANE_GAME above RENDER_PLANE_LIGHTING
-#define RENDER_PLANE_SPECULAR 24
+#define RENDER_PLANE_SPECULAR 34
 
 /// Things that should render ignoring lighting
-#define ABOVE_LIGHTING_PLANE 25
+#define ABOVE_LIGHTING_PLANE 35
 
-#define WEATHER_GLOW_PLANE 26
+#define WEATHER_GLOW_PLANE 36
 
 ///---------------- MISC -----------------------
 
 ///Pipecrawling images
-#define PIPECRAWL_IMAGES_PLANE 30
+#define PIPECRAWL_IMAGES_PLANE 40
 
 ///AI Camera Static
-#define CAMERA_STATIC_PLANE 31
+#define CAMERA_STATIC_PLANE 41
 
 ///Anything that wants to be part of the game plane, but also wants to draw above literally everything else
-#define HIGH_GAME_PLANE 32
+#define HIGH_GAME_PLANE 42
 
-#define FULLSCREEN_PLANE 33
+#define FULLSCREEN_PLANE 43
 
 ///--------------- FULLSCREEN RUNECHAT BUBBLES ------------
 
 ///Popup Chat Messages
-#define RUNECHAT_PLANE 34
+#define RUNECHAT_PLANE 44
 /// Plane for balloon text (text that fades up)
-#define BALLOON_CHAT_PLANE 35
+#define BALLOON_CHAT_PLANE 45
 
 //-------------------- HUD ---------------------
 //HUD layer defines
-#define HUD_PLANE 40
-#define ABOVE_HUD_PLANE 41
+#define HUD_PLANE 50
+#define ABOVE_HUD_PLANE 51
 
 ///Plane of the "splash" icon used that shows on the lobby screen
-#define SPLASHSCREEN_PLANE 42
+#define SPLASHSCREEN_PLANE 52
 
 // The largest plane here must still be less than RENDER_PLANE_GAME
 
 //-------------------- Rendering ---------------------
-#define RENDER_PLANE_GAME 50
+#define RENDER_PLANE_GAME 60
 /// If fov is enabled we'll draw game to this and do shit to it
-#define RENDER_PLANE_GAME_MASKED 51
+#define RENDER_PLANE_GAME_MASKED 61
 /// The bit of the game plane that is let alone is sent here
-#define RENDER_PLANE_GAME_UNMASKED 52
+#define RENDER_PLANE_GAME_UNMASKED 62
 
-#define RENDER_PLANE_NON_GAME 55
+#define RENDER_PLANE_NON_GAME 65
 
 // Only VERY special planes should be here, as they are above not just the game, but the UI planes as well.
 
 /// Plane related to the menu when pressing Escape.
 /// Needed so that we can apply a blur effect to EVERYTHING, and guarantee we are above all UI.
-#define ESCAPE_MENU_PLANE 56
+#define ESCAPE_MENU_PLANE 70
 
-#define RENDER_PLANE_MASTER 57
+#define RENDER_PLANE_MASTER 71
 
 // Lummox I swear to god I will find you
 // NOTE! You can only ever have planes greater then -10000, if you add too many with large offsets you will brick multiz

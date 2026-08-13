@@ -403,6 +403,17 @@
 	render_relay_planes = list(RENDER_PLANE_O_LIGHTING)
 	critical = PLANE_CRITICAL_DISPLAY
 
+/atom/movable/screen/plane_master/uv_lighting
+	name = "UV lighting visuals"
+	documentation = "Holds overlay lights that create UV light. Instead of rendering to overlay lighting plate, we mask and multiply UV light plane by this plane before rendering it above lighting."
+	plane = UV_LIGHTING_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_planes = list(RENDER_PLANE_EMISSIVE_UV)
+	render_target = UV_LIGHTING_RENDER_TARGET
+	blend_mode = BLEND_MULTIPLY
+	critical = PLANE_CRITICAL_DISPLAY
+
 /atom/movable/screen/plane_master/above_lighting
 	name = "Above lighting"
 	plane = ABOVE_LIGHTING_PLANE
@@ -440,15 +451,72 @@
 
 /atom/movable/screen/plane_master/emissive/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
 	. = ..()
-	/// Okay, so what we're doing here is making all emissives convert to white for actual emissive masking (i.e. adding light so objects glow)
-	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE, offset), relay_color = list(1,1,1,0, 1,1,1,0, 0,0,0,0, 0,0,0,1, 0,0,0,0))
-	/// But for the bloom plate we convert only the red color into full white, this way we can have emissives in green channel unaffected by bloom
-	/// which allows us to selectively bloom only a part of our emissives
-	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE_BLOOM, offset), relay_color = list(255,255,255,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0))
-	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE_BLOOM_MASK, offset), relay_color = list(1,1,1,1, 0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,0))
+	// Okay, sorry for this insanity but here's the theory
+	// We're limited to a single emissive plane due to needing to mirror all objects onto it as emissive blockers
+	// and adding a second plane would be hellishly expensive as it'd double our overlay count on most objects
+	// What we can do instead is treat the plane as three separate greyscale planes, rather than a single RGB plane, which is what emissives 2.0 did
+	// However, we can take this a step further: since no emissive effects can overlap (in sane circumstances), we know that
+	// color combinations cannot occur unless drawn directly onto the plane, which lets us treat them as *another* possible emissive type
+	// This way we get access to 4 more emissive variants: R/G, G/B, R/B, R/G/B
+	// Only thing we need to do after is filter out other channels from our desired one, which is very simple for single-channel types and a bit more complex for bi-channel ones
+
+	// Okay, so what we're doing here is making all emissives convert to white for actual emissive masking (i.e. adding light so objects glow)
+	// Need these two as separate relays with -255 in alpha so we can cherrypick R and G but not R/G
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE, offset), relay_color = list(
+		1, 1, 1, 0,
+		-255, -255, -255, -255,
+		-255, -255, -255, -255,
+		0, 0, 0, 1,
+		0, 0, 0, 0
+	))
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE, offset), relay_color = list(
+		-255, -255, -255, -255,
+		1 ,1, 1, 0,
+		-255, -255, -255, -255,
+		0, 0, 0, 1,
+		0, 0, 0, 0
+	))
+	// But for the bloom plate we convert only the red color into full white, this way we can have emissives in green channel unaffected by bloom
+	// which allows us to selectively bloom only a part of our emissives
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE_BLOOM, offset), relay_color = list(
+		255, 255, 255, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 1,
+		0, 0, 0, 0
+	))
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE_BLOOM_MASK, offset), relay_color = list(
+		1, 1, 1, 1,
+		-255, -255, -255, -255,
+		-255, -255, -255, -255,
+		0, 0, 0, 0,
+		0, 0, 0, 0
+	))
 	// Blue channel is dedicated to specular, i.e. our bootleg implementation of shiny objects
 	// We map it onto alpha so we can use the mask plate in an alpha mask filter to cut out only the shiny bits
-	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_SPECULAR_MASK, offset), relay_color = list(0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,0,0, 1,1,1,0))
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_SPECULAR_MASK, offset), relay_color = list(
+		-255, -255, -255, -255,
+		-255, -255, -255, -255,
+		0, 0, 0, 1,
+		0, 0, 0, 0,
+		1, 1, 1, 0
+	))
+	// UV emissive uses R/G bi-channel, so we first pick out reds, then mask it by green and cut away everything that has any blue in it
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE_UV_OBJECTS, offset), relay_color = list(
+		1, 1, 1, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 1,
+		0, 0, 0, 0
+	))
+	add_relay_to(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE_UV_OBJECTS, offset), blend_override = BLEND_MULTIPLY, relay_color = list(
+		0, 0, 0, 0,
+		255, 255, 255, 0,
+		-255, -255, -255, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 1,
+	))
 
 /atom/movable/screen/plane_master/pipecrawl
 	name = "Pipecrawl"

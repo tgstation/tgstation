@@ -14,6 +14,8 @@
 				appearance.color = GLOB.emissive_color
 			if (EMISSIVE_SPECULAR)
 				appearance.color = GLOB.specular_color
+			if (EMISSIVE_UV)
+				appearance.color = GLOB.emissive_uv_color
 	else
 		var/alpha_ratio = alpha/255
 		switch(effect_type)
@@ -23,6 +25,8 @@
 				appearance.color = _EMISSIVE_COLOR(alpha_ratio)
 			if (EMISSIVE_SPECULAR)
 				appearance.color = _SPECULAR_COLOR(alpha_ratio)
+			if (EMISSIVE_UV)
+				appearance.color = _EMISSIVE_UV_COLOR(alpha_ratio)
 
 	//Test to make sure emissives with broken or missing icon states are created
 	if(PERFORM_ALL_TESTS(focus_only/invalid_emissives))
@@ -42,7 +46,7 @@
 	// So we need to force it to render at a saner layer
 	if(IS_TOPDOWN_PLANE(make_blocker.plane))
 		blocker.layer = TOPDOWN_TO_EMISSIVE_LAYER(make_blocker.layer)
-	blocker.appearance_flags |= make_blocker.appearance_flags | EMISSIVE_APPEARANCE_FLAGS
+	blocker.appearance_flags |= make_blocker.appearance_flags | EMISSIVE_BLOCKER_FLAGS
 	blocker.dir = make_blocker.dir
 	if(make_blocker.alpha == 255)
 		blocker.color = GLOB.em_block_color
@@ -62,7 +66,7 @@
 			layer = TOPDOWN_TO_EMISSIVE_LAYER(offset_spokesman.layer)
 		else
 			layer = FLOAT_LAYER
-	var/mutable_appearance/appearance = mutable_appearance(icon, icon_state, layer, offset_spokesman, EMISSIVE_PLANE, alpha, appearance_flags | EMISSIVE_APPEARANCE_FLAGS, offset_const)
+	var/mutable_appearance/appearance = mutable_appearance(icon, icon_state, layer, offset_spokesman, EMISSIVE_PLANE, alpha, appearance_flags | EMISSIVE_BLOCKER_FLAGS, offset_const)
 	if(alpha == 255)
 		appearance.color = GLOB.em_block_color
 	else

@@ -312,7 +312,7 @@ GLOBAL_LIST_EMPTY(nebula_vomits)
 	. = ..()
 	if(. == INITIALIZE_HINT_QDEL)
 		return
-	add_overlay(mutable_appearance('icons/effects/glitter.dmi', "glitter_sparkle[rand(1,9)]", appearance_flags = EMISSIVE_APPEARANCE_FLAGS))
+	add_overlay(mutable_appearance('icons/effects/glitter.dmi', "glitter_sparkle[rand(1,9)]", appearance_flags = KEEP_APART | RESET_COLOR))
 
 /obj/effect/decal/cleanable/plasma
 	name = "stabilized plasma"

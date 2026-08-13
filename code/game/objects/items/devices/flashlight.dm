@@ -1056,6 +1056,16 @@
 	color = LIGHT_COLOR_PINK
 	fuel_type = /datum/reagent/luminescent_fluid/pink
 
+/obj/item/flashlight/glowstick/uv
+	name = "ultraviolet glowstick"
+	color = LIGHT_COLOR_ULTRAVIOLET
+	fuel_type = /datum/reagent/luminescent_fluid/uv
+
+/obj/item/flashlight/glowstick/uv/Initialize(mapload, fuel_override, fuel_type_override)
+	. = ..()
+	// Add a second lighting component which handles UV plane lighting
+	AddComponent(/datum/component/overlay_lighting, plane = UV_LIGHTING_PLANE, lum_power = 0)
+
 /obj/item/flashlight/spotlight //invisible lighting source
 	name = "disco light"
 	desc = "Groovy..."

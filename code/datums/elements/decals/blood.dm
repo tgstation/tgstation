@@ -3,18 +3,21 @@
 	var/uses_filter = FALSE
 	/// Emissive alpha of our parent
 	var/emissive_alpha = null
+	/// Emissive type of our parent
+	var/emissive_type = NONE
 
-/datum/element/decal/blood/Attach(datum/target, _icon, _icon_state, _dir, _plane, _layer, _alpha, _color, _smoothing, _cleanable = CLEAN_TYPE_BLOOD, _description, mutable_appearance/_pic, _uses_filter, _emissive)
+/datum/element/decal/blood/Attach(datum/target, _icon, _icon_state, _dir, _plane, _layer, _alpha, _color, _smoothing, _cleanable = CLEAN_TYPE_BLOOD, _description, mutable_appearance/_pic, _uses_filter, _emissive, _emissive_type)
 	if (!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
 	var/obj/item/as_item = target
 	if (_uses_filter != !isnull(as_item.cached_color_filter))
-		as_item.AddElement(type, _icon, _icon_state, _dir, _plane, _layer, _alpha, _color, _smoothing, _cleanable, _description, _pic, !isnull(as_item.cached_color_filter), _emissive)
+		as_item.AddElement(type, _icon, _icon_state, _dir, _plane, _layer, _alpha, _color, _smoothing, _cleanable, _description, _pic, !isnull(as_item.cached_color_filter), _emissive, _emissive_type)
 		return
 
 	uses_filter = _uses_filter
 	emissive_alpha = _emissive
+	emissive_type = _emissive_type
 	. = ..()
 	RegisterSignal(as_item, COMSIG_ATOM_GET_EXAMINE_NAME, PROC_REF(get_examine_name), TRUE)
 	RegisterSignal(as_item, COMSIG_ATOM_COLOR_UPDATED, PROC_REF(on_color_update), TRUE)
@@ -36,8 +39,8 @@
 	blood_splatter.blend_mode = BLEND_INSET_OVERLAY
 	blood_splatter.color = _color
 	var/mutable_appearance/emissive_splatter = null
-	if (emissive_alpha)
-		emissive_splatter = emissive_appearance('icons/effects/blood.dmi', "itemblood", as_item, alpha = emissive_alpha, effect_type = EMISSIVE_NO_BLOOM)
+	if (emissive_alpha && emissive_type)
+		emissive_splatter = emissive_appearance('icons/effects/blood.dmi', "itemblood", as_item, alpha = emissive_alpha, effect_type = emissive_type)
 		emissive_splatter.blend_mode = BLEND_INSET_OVERLAY
 	if (uses_filter)
 		blood_splatter.appearance_flags |= KEEP_APART

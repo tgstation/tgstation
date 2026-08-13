@@ -293,3 +293,11 @@
 /obj/item/storage/box/evidence/PopulateContents()
 	for(var/i in 1 to 6)
 		new /obj/item/evidencebag(src)
+
+/obj/item/storage/box/uv_glowsticks
+	name = "UV glowstick box"
+	desc = "A box claiming to contain UV glowsticks."
+
+/obj/item/storage/box/uv_glowsticks/PopulateContents()
+	for(var/i in 1 to 5)
+		new /obj/item/flashlight/glowstick/uv(src)

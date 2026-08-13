@@ -85,24 +85,50 @@
 	return cached_blood_color
 
 /// Check if we have any emissive blood on us
+/// Returns the highest priority (lowest value) emissive type's alpha, as emissives cannot be combined together due to channel encoding
 /// is_worn - When TRUE, we're fetching the value for mob overlays, in which case we bypass the cache
-/atom/proc/get_blood_emissive_alpha(is_worn = FALSE)
+/// is_dry - Is the blood dry? Only used for blood decals as of now
+/// only_visible - When TRUE we fetch only blood decals, otherwise fetch all blood DNA present
+/atom/proc/get_blood_emissive_alpha(is_worn = FALSE, is_dry = FALSE, only_visible = TRUE)
 	if (cached_blood_emissive && !is_worn)
 		return cached_blood_emissive
 
-	var/list/blood_DNA = GET_ATOM_BLOOD_DECALS(src)
+	var/list/blood_DNA = only_visible ? GET_ATOM_BLOOD_DECALS(src) : GET_ATOM_BLOOD_DNA(src)
 	if (!length(blood_DNA))
 		return 0
 
 	var/blood_alpha = 0
+	var/emissive_type = NONE
 	for (var/blood_key in blood_DNA)
 		var/datum/blood_type/blood_type = blood_DNA[blood_key]
-		blood_alpha += blood_type.get_emissive_alpha(src, is_worn)
+		var/blood_emissive_type = blood_type.get_emissive_type(src, is_worn, is_dry)
+		if (!blood_emissive_type)
+			continue
+		if (blood_emissive_type != emissive_type)
+			if (emissive_type > blood_emissive_type)
+				continue
+			emissive_type = blood_emissive_type
+			blood_alpha = 0
+		blood_alpha += blood_type.get_emissive_alpha(src, is_worn, is_dry)
 
 	blood_alpha /= length(blood_DNA)
 	if (!is_worn)
 		cached_blood_emissive = blood_alpha
 	return blood_alpha
+
+/// Check what emissive effect type we should use for ourselves
+/// Returns the highest priority (lowest value) emissive type, as emissives cannot be combined together due to channel encoding
+/// is_worn - When TRUE, we're fetching the value for mob overlays, in which case we bypass the cache
+/// only_visible - When TRUE we fetch only blood decals, otherwise fetch all blood DNA present
+/atom/proc/get_blood_emissive_type(is_worn = FALSE, is_dry = FALSE, only_visible = TRUE)
+	var/list/blood_DNA = only_visible ? GET_ATOM_BLOOD_DECALS(src) : GET_ATOM_BLOOD_DNA(src)
+	if (!length(blood_DNA))
+		return NONE
+	var/emissive_type = NONE
+	for (var/blood_key in blood_DNA)
+		var/datum/blood_type/blood_type = blood_DNA[blood_key]
+		emissive_type = max(emissive_type, blood_type.get_emissive_type(src, is_worn, is_dry))
+	return emissive_type
 
 /// Adds blood dna to the atom
 /atom/proc/add_blood_DNA(list/blood_DNA_to_add, list/datum/disease/diseases) //ASSOC LIST DNA = BLOODTYPE

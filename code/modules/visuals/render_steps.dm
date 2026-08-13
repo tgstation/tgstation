@@ -71,7 +71,7 @@
 /atom/movable/render_step/emissive_blocker
 	name = "emissive blocker"
 	plane = EMISSIVE_PLANE
-	appearance_flags = EMISSIVE_APPEARANCE_FLAGS|RESET_TRANSFORM
+	appearance_flags = EMISSIVE_BLOCKER_FLAGS|RESET_TRANSFORM
 
 /atom/movable/render_step/emissive_blocker/Initialize(mapload, atom/source)
 	. = ..()
@@ -85,7 +85,7 @@
 /atom/movable/render_step/emissive
 	name = "emissive"
 	plane = EMISSIVE_PLANE
-	appearance_flags = EMISSIVE_APPEARANCE_FLAGS|RESET_TRANSFORM
+	appearance_flags = EMISSIVE_BLOCKER_FLAGS|RESET_TRANSFORM
 
 /atom/movable/render_step/emissive/Initialize(mapload, source)
 	. = ..()

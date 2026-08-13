@@ -244,6 +244,36 @@
 	render_relay_planes = list()
 	critical = PLANE_CRITICAL_DISPLAY
 
+/atom/movable/screen/plane_master/rendering_plate/emissive_uv_objects
+	name = "UV Emissive Objects plate"
+	documentation = "A plate containing R/G channel from the emissive plane as a backdrop for game plane to multiply against to form UV emissives."
+	plane = RENDER_PLANE_EMISSIVE_UV_OBJECTS
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_planes = list(RENDER_PLANE_EMISSIVE_UV)
+	critical = PLANE_CRITICAL_DISPLAY
+	// Fullbright and transfer emissive strength into alpha, so we don't end up darkening whatever we're supposed to be lighting up
+	color = list(
+		0, 0, 0, 1,
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		0, 0, 0, 0,
+		1, 1, 1, 0
+	)
+
+/atom/movable/screen/plane_master/rendering_plate/emissive_uv
+	name = "UV Emissives plate"
+	documentation = "Final plane for UV emissives, multiplying the mask by UV lights color and then masking it by them to get the final result to render to ABOVE_LIGHTING_PLANE."
+	plane = RENDER_PLANE_EMISSIVE_UV
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	render_relay_planes = list(ABOVE_LIGHTING_PLANE)
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/rendering_plate/emissive_uv/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	add_filter("uv_lights_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(UV_LIGHTING_RENDER_TARGET, offset)))
+
 /atom/movable/screen/plane_master/rendering_plate/overlay_light
 	name = "Overlight plate"
 	documentation = "Combines overlay lights with emissives.\
@@ -621,7 +651,7 @@
 /// Helper for out of system code, shouldn't be used in this file
 /// Build system to differenchiate between generated and non generated render relays
 /atom/movable/screen/plane_master/proc/add_relay_to(target_plane, blend_override, relay_layer, relay_color)
-	if(get_relay_to(target_plane))
+	if(get_relay_to(target_plane, blend_override, relay_layer, relay_color))
 		return
 	if(!offset_already_updated)
 		CRASH("Attempted to draw a render relay before our offset has been applied, this WILL break")
@@ -683,8 +713,15 @@
 		lad.screen -= existing_relay
 
 /// Gets the relay atom we're using to connect to the target plane, if one exists
-/atom/movable/screen/plane_master/proc/get_relay_to(target_plane)
+/// If additional arguments are passed, we filter existing relays based on those parameters
+/atom/movable/screen/plane_master/proc/get_relay_to(target_plane, blend_override, relay_layer, relay_color)
 	for(var/atom/movable/render_plane_relay/relay in relays)
+		if(!isnull(blend_override) && blend_override != relay.blend_mode)
+			continue
+		if(!isnull(relay_layer) && relay_layer != relay.layer)
+			continue
+		if(!isnull(relay_color) && (istext(relay_color) ? relay_color != relay.color : (!islist(relay.color) || !(relay_color ~= relay.color))))
+			continue
 		if(relay.plane == target_plane)
 			return relay
 

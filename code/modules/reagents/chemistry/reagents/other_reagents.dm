@@ -3575,6 +3575,10 @@
 	name = "Pink Luminiscent Fluid"
 	color = LIGHT_COLOR_PINK
 
+/datum/reagent/luminescent_fluid/uv
+	name = "Ultraviolet Luminiscent Fluid"
+	color = LIGHT_COLOR_ULTRAVIOLET
+
 /// Reagent that polymorphs you
 /datum/reagent/polyjuice
 	name = "Polyjuice"

@@ -165,6 +165,7 @@
 /obj/structure/closet/secure_closet/detective/PopulateContents()
 	..()
 	new /obj/item/storage/box/evidence(src)
+	new /obj/item/storage/box/uv_glowsticks(src)
 	new /obj/item/radio/headset/headset_sec(src)
 	new /obj/item/detective_scanner(src)
 	new /obj/item/flashlight/seclite(src)

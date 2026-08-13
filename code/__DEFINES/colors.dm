@@ -314,6 +314,8 @@
 #define LIGHT_COLOR_HALOGEN "#F0FAFA"
 /// Nearly red. rgb(226, 78, 118)
 #define LIGHT_COLOR_BUBBLEGUM "#e24e76"
+/// Ultraviolet. rgb(111, 108, 255)
+#define LIGHT_COLOR_ULTRAVIOLET "#6F6CFF"
 
 //The GAGS greyscale_colors for each department's computer/machine circuits
 #define CIRCUIT_COLOR_GENERIC "#1A7A13"

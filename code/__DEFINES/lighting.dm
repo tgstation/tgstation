@@ -88,22 +88,27 @@
 #define _EMISSIVE_COLOR(val) list(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, val,0,0,0)
 #define _EMISSIVE_COLOR_NO_BLOOM(val) list(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,val,0,0)
 #define _SPECULAR_COLOR(val) list(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, 0,0,val,0)
+#define _EMISSIVE_UV_COLOR(val) list(0,0,0,0, 0,0,0,0, 0,0,0,0, 0,0,0,1, val,val,0,0)
 /// The color matrix applied to all emissive overlays. Should be solely dependent on alpha and not have RGB overlap with [EM_BLOCK_COLOR].
 #define EMISSIVE_COLOR _EMISSIVE_COLOR(1)
 #define EMISSIVE_COLOR_NO_BLOOM _EMISSIVE_COLOR_NO_BLOOM(1)
 #define SPECULAR_COLOR _SPECULAR_COLOR(1)
+#define EMISSIVE_UV_COLOR _EMISSIVE_UV_COLOR(1)
 /// A globally cached version of [EMISSIVE_COLOR] for quick access.
 GLOBAL_LIST_INIT(emissive_color, EMISSIVE_COLOR)
 GLOBAL_LIST_INIT(emissive_color_no_bloom, EMISSIVE_COLOR_NO_BLOOM)
 GLOBAL_LIST_INIT(specular_color, SPECULAR_COLOR)
+GLOBAL_LIST_INIT(emissive_uv_color, EMISSIVE_UV_COLOR)
 
 // Types of emissives
-/// Emissive that will not have bloom applied to it, encoded into the green channel
-#define EMISSIVE_NO_BLOOM 0
 /// Emissive that will get bloom applied to it, encoded into the red channel
 #define EMISSIVE_BLOOM 1
+/// Emissive that will not have bloom applied to it, encoded into the green channel
+#define EMISSIVE_NO_BLOOM 2
 /// Mimics a highly reflective surface, will not have any glow by itself but will amplify any lighting applied to it, encoded into the blue channel
-#define EMISSIVE_SPECULAR 2
+#define EMISSIVE_SPECULAR 3
+/// Invisible to the naked eye unless lit with a special light source
+#define EMISSIVE_UV 4
 
 /// Light cutoff of specular emissives, controls how sharp a light must be before it starts reflecting
 #define SPECULAR_EMISSIVE_CUTOFF 0.3
@@ -119,7 +124,9 @@ GLOBAL_LIST_INIT(em_block_color, EM_BLOCK_COLOR)
 
 /// A set of appearance flags applied to all emissive and emissive blocker overlays.
 /// KEEP_APART to prevent parent hooking, KEEP_TOGETHER for children, and we reset the color of our parent so emissives get proper coloring based on [EMISSIVE_COLOR]
-#define EMISSIVE_APPEARANCE_FLAGS (KEEP_APART|KEEP_TOGETHER|RESET_COLOR)
+#define EMISSIVE_APPEARANCE_FLAGS (KEEP_APART|KEEP_TOGETHER|RESET_COLOR|RESET_ALPHA)
+/// Flags for emissive blockers, unlike emissive appearances these inherit parent's alpha
+#define EMISSIVE_BLOCKER_FLAGS (KEEP_APART|KEEP_TOGETHER|RESET_COLOR)
 /// The color matrix used to mask out emissive blockers on the emissive plane. Alpha should default to zero, be solely dependent on the RGB value of [EMISSIVE_COLOR], and be independent of the RGB value of [EM_BLOCK_COLOR].
 #define EM_MASK_MATRIX list(0,0,0,1/3, 0,0,0,1/3, 0,0,0,1/3, 0,0,0,0, 1,1,1,0)
 /// A globally cached version of [EM_MASK_MATRIX] for quick access.

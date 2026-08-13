@@ -187,7 +187,7 @@
 		blocker.icon = icon
 		blocker.icon_state = icon_state
 		blocker.dir = dir
-		blocker.appearance_flags = appearance_flags | EMISSIVE_APPEARANCE_FLAGS
+		blocker.appearance_flags = appearance_flags | EMISSIVE_BLOCKER_FLAGS
 		blocker.plane = GET_NEW_PLANE(EMISSIVE_PLANE, PLANE_TO_OFFSET(plane)) // Takes a light path through the normal macro for a microop
 		if (IS_TOPDOWN_PLANE(plane))
 			blocker.layer = TOPDOWN_TO_EMISSIVE_LAYER(layer)

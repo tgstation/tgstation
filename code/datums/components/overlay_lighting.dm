@@ -24,6 +24,7 @@
  * * For small objects this is good (you can't see them behind a wall), but for big ones this quickly becomes prety clumsy.
 */
 /datum/component/overlay_lighting
+	dupe_mode = COMPONENT_DUPE_ALLOWED
 	///How far the light reaches, float.
 	var/range = 1
 	///Ceiling of range, integer without decimal entries.
@@ -72,8 +73,10 @@
 	var/directional_offset_y
 	///Cast range for the directional cast (how far away the atom is moved)
 	var/cast_range = 2
+	///Plane we're rendering to
+	var/light_plane = O_LIGHTING_VISUAL_PLANE
 
-/datum/component/overlay_lighting/Initialize(_range, _power, _color, starts_on, is_directional, is_beam, force)
+/datum/component/overlay_lighting/Initialize(_range, _power, _color, starts_on, is_directional, is_beam, force, plane = O_LIGHTING_VISUAL_PLANE, lum_power = 0.5)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -83,16 +86,17 @@
 		return COMPONENT_INCOMPATIBLE
 
 	. = ..()
-
+	if(!isnull(plane))
+		light_plane = plane
 	visible_mask = image('icons/effects/light_overlays/light_32.dmi', icon_state = "light")
-	SET_PLANE_EXPLICIT(visible_mask, O_LIGHTING_VISUAL_PLANE, movable_parent)
+	SET_PLANE_EXPLICIT(visible_mask, light_plane, movable_parent)
 	visible_mask.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	visible_mask.alpha = 0
 	visible_mask.blend_mode = BLEND_ADD
 	if(is_directional)
 		directional = TRUE
 		cone = image('icons/effects/light_overlays/light_cone.dmi', icon_state = "light")
-		SET_PLANE_EXPLICIT(cone, O_LIGHTING_VISUAL_PLANE, movable_parent)
+		SET_PLANE_EXPLICIT(cone, light_plane, movable_parent)
 		cone.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 		cone.alpha = 110
 		cone.blend_mode = BLEND_ADD
@@ -102,6 +106,8 @@
 		beam = TRUE
 	if(!isnull(_range))
 		movable_parent.set_light_range(_range)
+	if(!isnull(lum_power))
+		src.lum_power = lum_power
 	set_range(parent, movable_parent.light_range)
 	if(!isnull(_power))
 		movable_parent.set_light_power(_power)
@@ -355,9 +361,9 @@
 /datum/component/overlay_lighting/proc/on_z_move(atom/source)
 	SIGNAL_HANDLER
 	hide_from_holder()
-	SET_PLANE_EXPLICIT(visible_mask, O_LIGHTING_VISUAL_PLANE, source)
+	SET_PLANE_EXPLICIT(visible_mask, light_plane, source)
 	if(cone)
-		SET_PLANE_EXPLICIT(cone, O_LIGHTING_VISUAL_PLANE, source)
+		SET_PLANE_EXPLICIT(cone, light_plane, source)
 	show_to_holder()
 
 /// Avoids duplicate overlays (one from our NEXT holder, selected after the animation, one from the pickup animation)

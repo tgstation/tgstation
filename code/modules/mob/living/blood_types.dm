@@ -75,8 +75,16 @@
 
 /// Returns emissive value for an atom
 /// is_worn - Emissive is being fetched for a mob overlay and not the item itself
-/datum/blood_type/proc/get_emissive_alpha(atom/source, is_worn = FALSE)
+/// is_dry - Is the blood dried?
+/datum/blood_type/proc/get_emissive_alpha(atom/source, is_worn = FALSE, is_dry = FALSE)
 	return 0
+
+/// Returns emissive effect type for an atom
+/// Higher values have lower priority, so bloom glowing blood will overtake bloom-less, and bloom-less blood will overtake UV glowing blood
+/// is_worn - Emissive is being fetched for a mob overlay and not the item itself
+/// is_dry - Is the blood dried?
+/datum/blood_type/proc/get_emissive_type(atom/source, is_worn = FALSE, is_dry = FALSE)
+	return NONE
 
 /**
  * Used to handle any unique facets of blood spawned of this blood type
@@ -172,6 +180,12 @@
 	dna_string = "Human DNA"
 	abstract_type = /datum/blood_type/human
 
+/datum/blood_type/human/get_emissive_alpha(atom/source, is_worn = FALSE, is_dry = FALSE)
+	return is_worn ? 172 : 255
+
+/datum/blood_type/human/get_emissive_type(atom/source, is_worn = FALSE, is_dry = FALSE)
+	return EMISSIVE_UV
+
 /datum/blood_type/human/a_minus
 	name = "A-"
 	compatible_types = list(
@@ -248,6 +262,12 @@
 	. = ..()
 	compatible_types = subtypesof(/datum/blood_type)
 
+/datum/blood_type/universal/get_emissive_alpha(atom/source, is_worn = FALSE, is_dry = FALSE)
+	return is_worn ? 172 : 255
+
+/datum/blood_type/universal/get_emissive_type(atom/source, is_worn = FALSE, is_dry = FALSE)
+	return EMISSIVE_UV
+
 /datum/blood_type/universal/vampire
 	name = "V"
 	dna_string = "Hemovore DNA"
@@ -257,6 +277,13 @@
 	desc = /datum/blood_type/human::desc
 	dna_string = "Animal DNA"
 
+/datum/blood_type/animal/get_emissive_alpha(atom/source, is_worn = FALSE, is_dry = FALSE)
+	return is_worn ? 172 : 255
+
+/datum/blood_type/animal/get_emissive_type(atom/source, is_worn = FALSE, is_dry = FALSE)
+	return EMISSIVE_UV
+
+// Lizards lack lipids that make blood luminesce under UV light or something
 /datum/blood_type/lizard
 	name = "L"
 	desc = "Green sulfhemoglobin subtype-based blood, which while less effective at transporting oxygen, \
@@ -275,15 +302,20 @@
 	// Unenriched by default to prevent Ethereals from going crazy with syringe guns
 	.[BLOOD_DATA_ENRICHED_ETHEREAL] = FALSE
 
-/datum/blood_type/ethereal/get_emissive_alpha(atom/source, is_worn = FALSE)
+/datum/blood_type/ethereal/get_emissive_alpha(atom/source, is_worn = FALSE, is_dry = FALSE)
+	if (is_dry)
+		return 0
 	return is_worn ? 102 : 125
+
+/datum/blood_type/ethereal/get_emissive_type(atom/source, is_worn = FALSE, is_dry = FALSE)
+	if (is_dry)
+		return NONE
+	return EMISSIVE_NO_BLOOM
 
 /datum/blood_type/ethereal/set_up_blood(obj/effect/decal/cleanable/blood/blood, new_splat = FALSE)
 	. = ..()
-	blood.emissive_alpha = max(blood.emissive_alpha, new_splat ? 125 : 63)
 	if (new_splat)
-		return
-	blood.can_dry = FALSE
+		blood.can_dry = FALSE
 
 /datum/blood_type/oil
 	name = "Oil"

@@ -25,8 +25,6 @@
 	var/drying_time = 5 MINUTES
 	/// How much time it took us to dry from the start to the end
 	var/total_dry_time = null
-	/// Emissive value of the blood pool, if any
-	var/emissive_alpha = 0
 
 	/// The "base name" of the blood, IE the "pool of" in "pool of blood"
 	var/base_name = "pool of"
@@ -120,11 +118,12 @@
 
 /obj/effect/decal/cleanable/blood/update_overlays()
 	. = ..()
-	if(icon_state && emissive_alpha && emissive_alpha < alpha && !dried)
-		. += blood_emissive(icon, icon_state)
+	var/emissive_alpha = get_blood_emissive_alpha(is_dry = dried, only_visible = FALSE)
+	if(icon_state && emissive_alpha)
+		. += blood_emissive(icon, icon_state, emissive_alpha, get_blood_emissive_type(is_dry = dried, only_visible = FALSE))
 
-/obj/effect/decal/cleanable/blood/proc/blood_emissive(icon_to_use, icon_state_to_use)
-	return emissive_appearance(icon_to_use, icon_state_to_use, src, alpha = 255 * emissive_alpha / alpha, effect_type = EMISSIVE_NO_BLOOM)
+/obj/effect/decal/cleanable/blood/proc/blood_emissive(icon_to_use, icon_state_to_use, emissive_alpha, emissive_type)
+	return emissive_appearance(icon_to_use, icon_state_to_use, src, alpha = 255 * min(1, emissive_alpha / alpha), effect_type = emissive_type)
 
 /obj/effect/decal/cleanable/blood/lazy_init_reagents()
 	if (reagents)
@@ -175,6 +174,7 @@
 /// This is what actually "dries" the blood
 /obj/effect/decal/cleanable/blood/proc/dry()
 	dried = TRUE
+	cached_blood_emissive = null
 	// Not deleting as doing so would cause reagents to get lazyloaded again
 	reagents?.clear_reagents()
 	update_appearance()
@@ -471,7 +471,7 @@
 	// Despite having VIS_INHERIT_PLANE, our emissives still inherit our plane offset, so we need to inherit our parent's offset to have them render correctly
 	if(istype(loc, /obj/effect/decal/cleanable/blood/trail_holder))
 		SET_PLANE_EXPLICIT(src, initial(plane), loc)
-		if (emissive_alpha && !dried)
+		if (get_blood_emissive_alpha(is_dry = dried, only_visible = FALSE))
 			update_appearance() // correct our emissive
 		return
 
@@ -730,6 +730,8 @@
 	else if(LAZYACCESS(species_types, "bot"))
 		icon_state_to_use += "bot"
 
+	var/emissive_alpha = get_blood_emissive_alpha(is_dry = dried, only_visible = FALSE)
+	var/emissive_type = get_blood_emissive_type(is_dry = dried, only_visible = FALSE)
 	for(var/Ddir in GLOB.cardinals)
 		if(entered_dirs & Ddir)
 			var/enter_state = "entered-[icon_state_to_use]-[Ddir]"
@@ -739,11 +741,11 @@
 				bloody_footprints_cache[enter_state] = bloodstep_overlay
 			. += bloodstep_overlay
 
-			if(emissive_alpha && emissive_alpha < alpha && !dried)
-				var/enter_emissive_state = "[enter_state]_emissive-[Ddir]-[emissive_alpha]"
+			if(emissive_alpha)
+				var/enter_emissive_state = "[enter_state]_emissive-[Ddir]-[emissive_alpha]-[emissive_type]"
 				var/image/emissive_overlay = bloody_footprints_cache[enter_emissive_state]
 				if(!emissive_overlay)
-					emissive_overlay = image(blood_emissive(icon, "[icon_state_to_use]1"), dir = Ddir)
+					emissive_overlay = image(blood_emissive(icon, "[icon_state_to_use]1", emissive_alpha, emissive_type), dir = Ddir)
 					bloody_footprints_cache[enter_emissive_state] = emissive_overlay
 				. += emissive_overlay
 
@@ -755,11 +757,11 @@
 				bloody_footprints_cache[exit_state] = bloodstep_overlay
 			. += bloodstep_overlay
 
-			if(emissive_alpha && emissive_alpha < alpha && !dried)
-				var/exit_emissive_state = "[exit_state]_emissive-[Ddir]-[emissive_alpha]"
+			if(emissive_alpha)
+				var/exit_emissive_state = "[exit_state]_emissive-[Ddir]-[emissive_alpha]-[emissive_type]"
 				var/image/emissive_overlay = bloody_footprints_cache[exit_emissive_state]
 				if(!emissive_overlay)
-					emissive_overlay = image(blood_emissive(icon, "[icon_state_to_use]2"), dir = Ddir)
+					emissive_overlay = image(blood_emissive(icon, "[icon_state_to_use]2", emissive_alpha, emissive_type), dir = Ddir)
 					bloody_footprints_cache[exit_emissive_state] = emissive_overlay
 				. += emissive_overlay
 
