@@ -48,6 +48,8 @@
 // Color priorities for bodyparts
 /// Abductor team recoloring priority
 #define LIMB_COLOR_AYYLMAO 5
+/// Ethereal bodypart effect (emag, flicker) color priority
+#define LIMB_COLOR_ETHEREAL 7
 /// Hulk effect color priority
 #define LIMB_COLOR_HULK 10
 /// Fish infusion color priority
@@ -228,3 +230,6 @@ DEFINE_BITFIELD(surgery_state, list(
 #define LIMB_ITEM_GAUZE "gauze"
 /// Tourniquet slot
 #define LIMB_ITEM_TOURNIQUET "tourniquet"
+
+/// For scaling the effectiveness of certain effects to the total bodypart count
+#define GET_BODYPART_COEFFICIENT(X) round(X.len / BODYPARTS_DEFAULT_MAXIMUM , 0.1)

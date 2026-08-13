@@ -332,7 +332,7 @@
 		/datum/reagent/consumable/nutriment = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 2,
 		/datum/reagent/consumable/caramel = 3,
-		/datum/reagent/consumable/liquidelectricity/enriched = 3,
+		/datum/reagent/consumable/liquidelectricity = 3,
 	)
 	tastes = list("cake" = 3, "caramel" = 2, "zap" = 1)
 	foodtypes = GRAIN|DAIRY|VEGETABLES|SUGAR

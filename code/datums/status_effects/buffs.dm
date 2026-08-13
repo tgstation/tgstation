@@ -307,7 +307,7 @@
 	QDEL_NULL(aura_healing)
 	owner.remove_traits(list(TRAIT_PACIFISM, TRAIT_HIPPOCRATIC_OATH, TRAIT_MEDICAL_HUD), HIPPOCRATIC_OATH_TRAIT)
 
-/datum/status_effect/hippocratic_oath/get_examine_text()
+/datum/status_effect/hippocratic_oath/get_examine_text(mob/examiner)
 	return span_notice("[owner.p_They()] seem[owner.p_s()] to have an aura of healing and helpfulness about [owner.p_them()].")
 
 /datum/status_effect/hippocratic_oath/tick(seconds_between_ticks)

@@ -426,6 +426,9 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	flags_cover = MASKCOVERSEYES
 	resistance_flags = FLAMMABLE
 	fishing_modifier = 0
+	emote_sounds = list(
+		/datum/emote/living/scream::key = SFX_SCREECH,
+	)
 
 /obj/item/clothing/mask/gas/sexymime
 	name = "sexy mime mask"
