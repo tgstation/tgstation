@@ -104,6 +104,7 @@
 #include "code/items/storage/surgery_kit.dm"
 #include "code/items/storage/tape_box.dm"
 #include "code/items/storage/ringbox.dm"
+#include "code/items/storage/reagent_containers.dm"
 #include "code/items/machine_designs.dm"
 #include "code/items/maintenance_loot.dm"
 #include "code/items/bodyparts/strongarm_bodypart.dm"
