@@ -73,10 +73,9 @@
 // Needs to be above EMISSIVE_UV_OBJECTS to multiply and mask its output properly
 #define UV_LIGHTING_PLANE 19
 #define UV_LIGHTING_RENDER_TARGET "*UV_LIGHTING_PLANE"
-#define RENDER_PLANE_EMISSIVE_UV 20
 
-#define RENDER_PLANE_PARTICLE_WEATHER 21
-#define RENDER_PLANE_EMISSIVE_PARTICLE_WEATHER 22
+#define RENDER_PLANE_PARTICLE_WEATHER 20
+#define RENDER_PLANE_EMISSIVE_PARTICLE_WEATHER 21
 
 //-------------------- Lighting ---------------------
 
@@ -97,10 +96,11 @@
 /// So we need to render it directly to RENDER_PLANE_GAME above RENDER_PLANE_LIGHTING
 #define RENDER_PLANE_SPECULAR 34
 
-/// Things that should render ignoring lighting
-#define ABOVE_LIGHTING_PLANE 35
+#define RENDER_PLANE_EMISSIVE_UV 35
 
-#define WEATHER_GLOW_PLANE 36
+/// Things that should render ignoring lighting
+#define ABOVE_LIGHTING_PLANE 36
+#define WEATHER_GLOW_PLANE 37
 
 ///---------------- MISC -----------------------
 

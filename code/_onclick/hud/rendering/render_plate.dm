@@ -267,7 +267,7 @@
 	plane = RENDER_PLANE_EMISSIVE_UV
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	render_relay_planes = list(ABOVE_LIGHTING_PLANE)
+	render_relay_planes = list(RENDER_PLANE_GAME)
 	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/rendering_plate/emissive_uv/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
