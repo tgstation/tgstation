@@ -524,15 +524,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	)
 
 	var/turf/user_turf = get_turf(user)
-	var/list/levels = SSmapping.levels_by_trait(ZTRAIT_SPACE_RUINS)
-	var/turf/dest
-	if(length(levels))
-		dest = locate(user_turf.x, user_turf.y, pick(levels))
-
-	user_turf.ChangeTurf(/turf/open/chasm, flags = CHANGETURF_INHERIT_AIR)
-	var/turf/open/chasm/new_chasm = user_turf
-	new_chasm.set_target(dest)
-	new_chasm.drop(user)
+	var/turf/open/chasm/pride/new_chasm = user_turf.ChangeTurf(/turf/open/chasm/pride, flags = CHANGETURF_INHERIT_AIR)
+	// `ChangeTurf()` can itself lead to `drop()` if there's lattice present, so
+	// we only force the user down if they're still on the same turf.
+	if(get_turf(user) == user_turf)
+		new_chasm.drop(user)
 
 #undef CHANGE_HAIR
 #undef CHANGE_BEARD
