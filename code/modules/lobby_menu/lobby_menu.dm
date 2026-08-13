@@ -102,8 +102,7 @@ ADMIN_VERB(toggle_lobby_transparency, R_ADMIN, "Toggle Lobby Transparency", "Tog
 	)
 	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/lobby_menu_font))
 	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/lobby_menu_sounds))
-	window.send_asset(get_asset_datum(/datum/asset/spritesheet/lobby_menu_icons))
-	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/lobby_menu_animated))
+	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/lobby_menu_icons))
 	SSassets.transport.send_assets(client, LOBBY_TITLE_ASSET_NAME)
 
 /// Toggle the lobby browser between opaque (own pane) and transparent (overlaying map).

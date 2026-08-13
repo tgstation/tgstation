@@ -38,7 +38,7 @@ body,
   user-select: none;
 }
 
-[class*='lobby-icons'] {
+img {
   image-rendering: pixelated;
 }
 
@@ -63,74 +63,6 @@ body,
 
 .lobby__el {
   position: absolute;
-}
-
-.lobby__el--bg {
-  top: 0;
-  left: s(-61px);
-  z-index: 1;
-}
-.lobby__el--ready {
-  top: s(8px);
-  left: s(-65px);
-  z-index: 3;
-}
-.lobby__el--join {
-  top: s(13px);
-  left: s(-58px);
-  z-index: 3;
-}
-.lobby__el--observe {
-  top: s(40px);
-  left: s(-54px);
-  z-index: 3;
-}
-.lobby__el--character {
-  top: s(70px);
-  left: s(-54px);
-  z-index: 3;
-}
-.lobby__el--collapse {
-  top: s(82px);
-  left: s(-54px);
-}
-.lobby__el--shutter {
-  top: s(-143px);
-  left: s(-73px);
-  z-index: 5;
-  pointer-events: none;
-}
-.lobby__el--start-now {
-  top: s(146px);
-  left: s(-54px);
-  z-index: 3;
-}
-
-.lobby__el--bottom-poll {
-  top: s(122px);
-  left: s(-26px);
-  z-index: 6;
-}
-.lobby__el--bottom-manifest {
-  top: s(122px);
-  left: s(2px);
-  z-index: 6;
-}
-.lobby__el--bottom-settings {
-  top: s(122px);
-  left: s(29px);
-  z-index: 6;
-}
-.lobby__el--bottom-changelog {
-  top: s(122px);
-  left: s(57px);
-  z-index: 6;
-}
-
-.lobby__el--trait {
-  top: calc(#{s(40px)} + var(--trait-row) * #{s(27px)});
-  left: calc(#{s(-85px)} - var(--trait-col) * #{s(27px)});
-  z-index: 3;
 }
 
 .lobby__el--collapse-up {

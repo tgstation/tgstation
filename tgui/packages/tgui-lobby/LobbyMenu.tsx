@@ -146,15 +146,18 @@ function useFlick(assetKey: string): [() => void, React.ReactNode] {
   return [trigger, element];
 }
 
+/** Helper to get an icon URL from the asset map */
+function icon(name: string): string | undefined {
+  return assetMap[`${name}.png`];
+}
+
 function SpriteButton({
-  spriteClass,
   iconState,
   enabled = true,
   onClick,
   children,
   pressedKey,
 }: {
-  spriteClass: string;
   iconState: string;
   enabled?: boolean;
   onClick?: React.MouseEventHandler;
@@ -185,14 +188,63 @@ function SpriteButton({
       }}
       disabled={!enabled}
     >
-      <span className={`${spriteClass} ${displayState} sprite-btn__normal`} />
-      <span
-        className={`${spriteClass} ${iconState}_highlighted sprite-btn__hover`}
+      <img className="sprite-btn__normal" src={icon(displayState)} alt="" />
+      <img
+        className="sprite-btn__hover"
+        src={icon(`${iconState}_highlighted`)}
+        alt=""
       />
       {flickElement}
       {enabledElement}
       {children}
     </button>
+  );
+}
+
+const scaleCss = (px: number) => `calc(${px}px * var(--lobby-scale, 1))`;
+
+/** Wrapper for absolutely-positioned lobby elements that collapse with the menu. */
+function LobbyElement({
+  top,
+  left,
+  zIndex,
+  collapsed,
+  slide,
+  children,
+  elRef,
+  style,
+  noCollapse,
+}: {
+  top: number;
+  left: number;
+  zIndex?: number;
+  collapsed: boolean;
+  slide?: boolean;
+  children: React.ReactNode;
+  elRef?: React.Ref<HTMLDivElement>;
+  style?: React.CSSProperties;
+  /** Don't apply collapse animation (e.g. shutter is JS-animated) */
+  noCollapse?: boolean;
+}) {
+  const collapseClass =
+    !noCollapse && collapsed
+      ? slide
+        ? 'lobby__el--collapse-slide'
+        : 'lobby__el--collapse-up'
+      : '';
+  return (
+    <div
+      ref={elRef}
+      className={`lobby__el ${collapseClass}`}
+      style={{
+        top: scaleCss(top),
+        left: scaleCss(left),
+        zIndex,
+        ...style,
+      }}
+    >
+      {children}
+    </div>
   );
 }
 
@@ -431,168 +483,146 @@ export function LobbyMenu() {
       style={backgroundStyle}
     >
       <div className="lobby__anchor">
-        <div
-          className={`lobby__el lobby__el--bg ${collapsed ? 'lobby__el--collapse-up' : ''}`}
-        >
-          <span className="lobby-icons151x123 background lobby__sprite" />
-        </div>
+        <LobbyElement top={0} left={-61} zIndex={1} collapsed={collapsed}>
+          <img className="lobby__sprite" src={icon('background')} alt="" />
+        </LobbyElement>
 
         {!!ss.canReady && (
-          <div
-            className={`lobby__el lobby__el--ready ${collapsed ? 'lobby__el--collapse-up' : ''}`}
-          >
+          <LobbyElement top={8} left={-65} zIndex={3} collapsed={collapsed}>
             <SpriteButton
-              spriteClass="lobby-icons160x28"
               iconState={ss.isReady ? 'ready' : 'not_ready'}
               onClick={() => sendAction('ready_toggle')}
             />
-          </div>
+          </LobbyElement>
         )}
 
         {!!ss.canJoin && (
-          <div
-            className={`lobby__el lobby__el--join ${collapsed ? 'lobby__el--collapse-up' : ''}`}
-          >
+          <LobbyElement top={13} left={-58} zIndex={3} collapsed={collapsed}>
             <SpriteButton
-              spriteClass="lobby-icons145x21"
               iconState="join_game"
               onClick={(e) => sendAction('join', { ctrlClick: e.ctrlKey })}
             />
-          </div>
+          </LobbyElement>
         )}
 
-        <div
-          className={`lobby__el lobby__el--observe ${collapsed ? 'lobby__el--collapse-up' : ''}`}
-        >
+        <LobbyElement top={40} left={-54} zIndex={3} collapsed={collapsed}>
           <SpriteButton
-            spriteClass="lobby-icons139x22"
             iconState="observe"
             enabled={!!ss.canObserve}
             onClick={() => sendAction('observe')}
           />
-        </div>
+        </LobbyElement>
 
-        <div
-          className={`lobby__el lobby__el--character ${collapsed ? 'lobby__el--collapse-up' : ''}`}
-        >
+        <LobbyElement top={70} left={-54} zIndex={3} collapsed={collapsed}>
           <SpriteButton
-            spriteClass="lobby-icons139x37"
             iconState="character_setup"
             enabled={!!ss.assetsReady}
             onClick={() => sendAction('character_setup')}
           />
-        </div>
+        </LobbyElement>
 
-        <div className="lobby__el lobby__el--shutter" ref={shutterRef}>
-          <span className="lobby-icons175x130 shutter lobby__sprite" />
-        </div>
+        <LobbyElement
+          top={-143}
+          left={-73}
+          zIndex={5}
+          collapsed={collapsed}
+          noCollapse
+          elRef={shutterRef}
+        >
+          <img className="lobby__sprite" src={icon('shutter')} alt="" />
+        </LobbyElement>
 
-        <div
-          ref={collapseRef}
-          className={`lobby__el lobby__el--collapse ${collapsed ? 'lobby__el--collapse-slide' : ''}`}
+        <LobbyElement
+          top={82}
+          left={-54}
+          collapsed={collapsed}
+          slide
+          elRef={collapseRef}
         >
           <button
             className="sprite-btn sprite-btn--no-press"
             onClick={handleToggleCollapse}
             disabled={animating}
           >
-            <span
-              className={`lobby-icons26x66 ${collapseIcon} sprite-btn__normal`}
+            <img
+              className="sprite-btn__normal"
+              src={icon(collapseIcon)}
+              alt=""
             />
-            <span
-              className={`lobby-icons26x66 ${collapseIcon}_highlighted sprite-btn__hover`}
+            <img
+              className="sprite-btn__hover"
+              src={icon(`${collapseIcon}_highlighted`)}
+              alt=""
             />
-            <span className={`lobby-icons26x66 ${blipState} lobby__blip`} />
+            <img className="lobby__blip" src={icon(blipState)} alt="" />
           </button>
-        </div>
+        </LobbyElement>
 
-        <div
-          className={`lobby__el lobby__el--bottom-poll ${collapsed ? 'lobby__el--collapse-up' : ''}`}
-        >
-          <SpriteButton
-            spriteClass="lobby-icons24x24"
-            iconState="bottom-poll"
-            pressedKey="poll"
-            enabled={!!ss.canPoll}
-            onClick={() => sendAction('poll')}
-          >
-            {!!ss.hasNewPoll && (
-              <span className="lobby-icons24x26 new_poll lobby__badge" />
-            )}
-          </SpriteButton>
-        </div>
-        <div
-          className={`lobby__el lobby__el--bottom-manifest ${collapsed ? 'lobby__el--collapse-up' : ''}`}
-        >
-          <SpriteButton
-            spriteClass="lobby-icons24x24"
-            iconState="bottom-crew_manifest"
-            pressedKey="crew_manifest"
-            onClick={() => sendAction('crew_manifest')}
-          />
-        </div>
-        <div
-          className={`lobby__el lobby__el--bottom-settings ${collapsed ? 'lobby__el--collapse-up' : ''}`}
-        >
-          <SpriteButton
-            spriteClass="lobby-icons24x24"
-            iconState="bottom-settings"
-            pressedKey="settings"
-            enabled={!!ss.assetsReady}
-            onClick={() => sendAction('settings')}
-          />
-        </div>
-        <div
-          className={`lobby__el lobby__el--bottom-changelog ${collapsed ? 'lobby__el--collapse-up' : ''}`}
-        >
-          <SpriteButton
-            spriteClass="lobby-icons24x24"
-            iconState="bottom-changelog"
-            pressedKey="changelog"
-            onClick={() => sendAction('changelog')}
-          />
-        </div>
-
-        {!!ss.isLocalhost && (
-          <div
-            className={`lobby__el lobby__el--start-now ${collapsed ? 'lobby__el--collapse-up' : ''}`}
+        {[
+          {
+            id: 'poll',
+            left: -26,
+            enabled: !!ss.canPoll,
+            badge: ss.hasNewPoll,
+          },
+          { id: 'crew_manifest', left: 2 },
+          { id: 'settings', left: 29, enabled: !!ss.assetsReady },
+          { id: 'changelog', left: 57 },
+        ].map(({ id, left, enabled, badge }) => (
+          <LobbyElement
+            key={id}
+            top={122}
+            left={left}
+            zIndex={6}
+            collapsed={collapsed}
           >
             <SpriteButton
-              spriteClass="lobby-icons138x48"
+              iconState={id}
+              enabled={enabled}
+              onClick={() => sendAction(id)}
+            >
+              {!!badge && (
+                <img className="lobby__badge" src={icon('new_poll')} alt="" />
+              )}
+            </SpriteButton>
+          </LobbyElement>
+        ))}
+
+        {!!ss.isLocalhost && (
+          <LobbyElement top={146} left={-54} zIndex={3} collapsed={collapsed}>
+            <SpriteButton
               iconState="start_now"
               onClick={() => sendAction('start_now')}
             />
-          </div>
+          </LobbyElement>
         )}
 
         {ss.stationTraits.map((trait, i) => (
-          <div
+          <LobbyElement
             key={trait.ref}
-            className={`lobby__el lobby__el--trait ${collapsed ? 'lobby__el--collapse-up' : ''}`}
-            style={
-              {
-                '--trait-col': Math.floor(i / MAX_TRAITS_PER_COLUMN),
-                '--trait-row': i % MAX_TRAITS_PER_COLUMN,
-              } as React.CSSProperties
-            }
+            top={40 + (i % MAX_TRAITS_PER_COLUMN) * 27}
+            left={-85 - Math.floor(i / MAX_TRAITS_PER_COLUMN) * 27}
+            zIndex={3}
+            collapsed={collapsed}
           >
             <Tooltip content={trait.description} position="left">
               <div className="lobby__trait-wrapper">
                 <SpriteButton
-                  spriteClass="lobby-icons24x24"
                   iconState={trait.iconState}
                   onClick={() => sendAction('sign_up', { ref: trait.ref })}
                 >
                   {trait.overlays.map((overlay) => (
-                    <span
+                    <img
                       key={overlay}
-                      className={`lobby-icons24x24 ${overlay} lobby__trait-overlay`}
+                      className="lobby__trait-overlay"
+                      src={icon(overlay)}
+                      alt=""
                     />
                   ))}
                 </SpriteButton>
               </div>
             </Tooltip>
-          </div>
+          </LobbyElement>
         ))}
 
         {!!ss.traitFeedback && <TraitFeedback text={ss.traitFeedback} />}
@@ -600,8 +630,12 @@ export function LobbyMenu() {
 
       <div className={`lobby__tv ${collapsed ? 'lobby__tv--collapsed' : ''}`}>
         <div className="info-tv">
-          <span className="lobby-icons128x96 tv-newplayer info-tv__layer" />
-          <span className="lobby-icons128x96 tv-newplayer_overlay info-tv__layer info-tv__overlay" />
+          <img className="info-tv__layer" src={icon('newplayer')} alt="" />
+          <img
+            className="info-tv__layer info-tv__overlay"
+            src={icon('newplayer_overlay')}
+            alt=""
+          />
           {tvActive && (
             <div className="info-tv__text">
               {tvLines.map((line, i) => (
