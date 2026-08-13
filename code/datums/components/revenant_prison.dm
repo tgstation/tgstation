@@ -37,7 +37,7 @@
 			continue
 		REMOVE_TRAIT(new_home, TRAIT_COZY_REVENANT_HOME, INNATE_TRAIT)
 		new_home.TakeComponent(src)
-		new_home.visible_message(span_revenwarning("A dismal moan echoes as particles of [src] fall onto [new_home]!"))
+		new_home.visible_message(span_revenwarning("A dismal moan echoes as particles of [parent] fall onto [new_home]!"))
 		log_game("A revenant was trapped inside [new_home]")
 		message_admins("A revenant was trapped inside [new_home] [ADMIN_JMP(new_home)]")
 		return
