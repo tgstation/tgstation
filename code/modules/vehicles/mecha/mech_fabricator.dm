@@ -427,6 +427,7 @@
 				return
 
 			for(var/design_path in designs)
+				design_path = text2path(design_path)
 				if(!stored_research.researched_designs[design_path])
 					continue
 
