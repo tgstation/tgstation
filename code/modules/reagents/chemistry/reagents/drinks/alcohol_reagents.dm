@@ -3564,6 +3564,31 @@
 	taste_description = "the knowledge that something else is tasting with you"
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	//Creates an illusory(?) star gazer that wants a sippy, and which only the drinker can see. Similar to the stalking phantom brain trauma
+	var/gazer_type = /obj/effect/client_image_holder/thirsty_gazer
+	var/obj/effect/client_image_holder/thirsty_gazer/gazer
+
+/obj/effect/client_image_holder/thirsty_gazer
+	name = "???"
+	desc = "It looks... thirsty?"
+	image_icon = 'icons/mob/nonhuman-player/96x96eldritch_mobs.dmi' //TODO: figure out how to center this properly
+	image_state = "star_gazer"
+	pixel_x = -32
+	base_pixel_x = -32
+	//TODO: Give this a wibbly wobbly semi-transparent effect. Also, should probably fade in rather than suddenly appear.
+
+/datum/reagent/consumable/ethanol/farstar_amrita/proc/create_gazer(mob/living/carbon/drinker)
+	var/turf/gazer_source = get_step(drinker, REVERSE_DIR(drinker.dir)) //directly behind the drinker.
+	gazer = new gazer_type(gazer_source, drinker)
+
+/datum/reagent/consumable/ethanol/farstar_amrita/on_mob_add(mob/living/carbon/drinker)
+	. = ..()
+	create_gazer(drinker)
+
+/datum/reagent/consumable/ethanol/farstar_amrita/on_mob_delete(mob/living/carbon/drinker)
+	. = ..()
+	QDEL_NULL(gazer)
+
 
 //Flesh
 /datum/reagent/consumable/ethanol/rubywise_ruin
@@ -3579,7 +3604,7 @@
 /datum/reagent/consumable/ethanol/rubywise_ruin/on_mob_add(mob/living/drinker)
 	if(HAS_TRAIT(drinker, TRAIT_NOHUNGER))
 		return
-	drinker.add_traits(list(TRAIT_VORACIOUS,TRAIT_FLESH_PECKISH), type)
+	drinker.add_traits(list(TRAIT_VORACIOUS,TRAIT_FLESH_PECKISH), type) //makes the user eat faster and like meat and gore
 
 /datum/reagent/consumable/ethanol/rubywise_ruin/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
 	if(SPT_PROB(2.5, seconds_per_tick))
@@ -3620,7 +3645,7 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/lunacy/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
+/datum/reagent/consumable/ethanol/lunacy/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio) //makes the drinker hallucinate everyone else as a heretic.
 	.= ..()
 	if(HAS_TRAIT(drinker, TRAIT_HALLUCINATION_IMMUNE))
 		return
