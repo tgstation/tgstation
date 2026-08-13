@@ -23,7 +23,7 @@
 		/obj/item/organ/cloth_wrap = /datum/sprite_accessory/skrell_cloth_wrap/short::name,
 		/obj/item/organ/tentacle_ornament = /datum/sprite_accessory/skrell_tentacle_ornament/none::name,
 	)
-	exotic_bloodtype = BLOOD_TYPE_SKRELL
+	exotic_bloodtype = /datum/blood_type/skrell
 
 	bodypart_overrides = list(
 		BODY_ZONE_HEAD = /obj/item/bodypart/head/skrell,

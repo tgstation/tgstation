@@ -25,11 +25,12 @@
 /datum/reagent/blood/on_new(list/data)
 	. = ..()
 	// If we were artificially created without blood data, we still want to have the blood_reagent element for exposure effects
-	if(!istype(data) || !data["blood_type"])
-		AddElement(/datum/element/blood_reagent, null, get_blood_type(BLOOD_TYPE_UNIVERSAL))
+	if(isnull(LAZYACCESS(data, BLOOD_DATA_TYPE)))
+		RegisterSignal(src, COMSIG_REAGENT_GROWN_IN_PLANT, PROC_REF(grown_in_plant))
+		AddElement(/datum/element/blood_reagent, null, get_blood_type(/datum/blood_type/universal))
 		return
 
-	var/datum/blood_type/blood_type = data["blood_type"]
+	var/datum/blood_type/blood_type = data[BLOOD_DATA_TYPE]
 	if(!istype(blood_type))
 		return
 
@@ -42,10 +43,16 @@
 		return ..()
 	if(!HAS_TRAIT(taster, TRAIT_DETECTIVES_TASTE))
 		return ..()
-	var/blood_type = data?["blood_type"]
+	var/blood_type = data?[BLOOD_DATA_TYPE]
 	if(!blood_type)
 		return ..()
 	return list("[blood_type] type blood" = 1)
+
+/// All blood grown in plants defaults to O-
+/datum/reagent/blood/proc/grown_in_plant(datum/source, obj/item/seeds/our_seeds, obj/item/our_plant)
+	SIGNAL_HANDLER
+
+	LAZYSET(data, BLOOD_DATA_TYPE, get_blood_type(/datum/blood_type/human/o_minus))
 
 /datum/reagent/consumable/liquidgibs
 	name = "Liquid Gibs"

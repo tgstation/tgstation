@@ -13,7 +13,8 @@
 // We also make SURE to fail loud, IE: if something stops the message from reaching the recipient, the sender HAS to know
 // If you "refactor" this to make it "cleaner" I will send you to hell
 
-ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_pm_context, R_ADMIN, "Admin PM Mob", mob/target) // BANDASTATION EDIT: Verbs permission
+ADMIN_VERB_ONLY_CONTEXT_MENU(cmd_admin_pm_context, R_ADMIN, "Admin PM Mob", /mob) // BANDASTATION EDIT: Verbs permission
+	VERB_ARG_TYPED(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	if(!ismob(target))
 		to_chat(
 			src,

@@ -810,6 +810,22 @@
 	trait_ids = CONTENTS_CHANGE_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
+/datum/plant_gene/trait/brewing/on_new_plant(obj/item/our_plant, newloc)
+	. = ..()
+	if(!.)
+		return
+
+	RegisterSignal(our_plant, COMSIG_PLANT_ON_HARVEST, PROC_REF(brewing_harvest))
+
+/datum/plant_gene/trait/brewing/proc/brewing_harvest(obj/item/our_plant, obj/item/seeds/our_seed)
+	SIGNAL_HANDLER
+
+	if(!istype(our_plant, /obj/item/food/grown))
+		return
+
+	var/obj/item/food/grown/grown_plant = our_plant
+	grown_plant.ferment()
+
 /**
  * Similar to auto-distilling, but instead of brewing the plant's contents it juices it.
  *
@@ -821,6 +837,19 @@
 	icon = FA_ICON_GLASS_WATER
 	trait_ids = CONTENTS_CHANGE_ID
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
+
+/datum/plant_gene/trait/juicing/on_new_plant(obj/item/our_plant, newloc)
+	. = ..()
+	if(!.)
+		return
+
+	RegisterSignal(our_plant, COMSIG_PLANT_ON_HARVEST, PROC_REF(juicing_harvest))
+
+/datum/plant_gene/trait/juicing/proc/juicing_harvest(obj/item/our_plant, obj/item/seeds/our_seed)
+	SIGNAL_HANDLER
+
+	// FALSE is used to differentiate from null
+	our_plant.juice(juicer = FALSE)
 
 /**
  * Plays a laughter sound when someone slips on it.
@@ -931,6 +960,23 @@
 	trait_flags = TRAIT_HALVES_YIELD
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
 
+/datum/plant_gene/trait/chem_heating/on_new_plant(obj/item/our_plant, newloc)
+	. = ..()
+	if(!.)
+		return
+
+	RegisterSignal(our_plant, COMSIG_PLANT_ON_HARVEST, PROC_REF(chem_heating_harvest))
+
+/datum/plant_gene/trait/chem_heating/proc/chem_heating_harvest(obj/item/our_plant, obj/item/seeds/our_seed)
+	SIGNAL_HANDLER
+
+	var/num_nutriment = our_plant.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
+	our_plant.visible_message(span_notice("[our_plant] releases freezing air, consuming its nutriments to heat its contents."))
+	our_plant.reagents.remove_reagent(/datum/reagent/consumable/nutriment, num_nutriment)
+	our_plant.reagents.chem_temp = min(1000, (our_plant.reagents.chem_temp + num_nutriment * 25))
+	our_plant.reagents.handle_reactions()
+	playsound(our_plant, 'sound/effects/wounds/sizzle2.ogg', 5)
+
 /**
  * This trait is the opposite of above - it cools down the plant's chemical contents on harvest.
  * This requires nutriment to fuel. 1u nutriment = -5 K.
@@ -942,6 +988,23 @@
 	trait_ids = TEMP_CHANGE_ID
 	trait_flags = TRAIT_HALVES_YIELD
 	mutability_flags = PLANT_GENE_REMOVABLE | PLANT_GENE_MUTATABLE | PLANT_GENE_GRAFTABLE
+
+/datum/plant_gene/trait/chem_cooling/on_new_plant(obj/item/our_plant, newloc)
+	. = ..()
+	if(!.)
+		return
+
+	RegisterSignal(our_plant, COMSIG_PLANT_ON_HARVEST, PROC_REF(chem_cooling_harvest))
+
+/datum/plant_gene/trait/chem_cooling/proc/chem_cooling_harvest(obj/item/our_plant, obj/item/seeds/our_seed)
+	SIGNAL_HANDLER
+
+	var/num_nutriment = our_plant.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
+	our_plant.visible_message(span_notice("[our_plant] releases a blast of hot air, consuming its nutriments to cool its contents."))
+	our_plant.reagents.remove_reagent(/datum/reagent/consumable/nutriment, num_nutriment)
+	our_plant.reagents.chem_temp = max(3, (our_plant.reagents.chem_temp + num_nutriment * -5))
+	our_plant.reagents.handle_reactions()
+	playsound(our_plant, 'sound/effects/space_wind.ogg', 50)
 
 /// Prevents species mutation, while still allowing wild mutation harvest and Floral Somatoray species mutation.  Trait acts as a tag for hydroponics.dm to recognise.
 /datum/plant_gene/trait/never_mutate

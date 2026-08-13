@@ -75,6 +75,7 @@
 		"comp_speech",
 		"comp_split",
 		"comp_string_contains",
+		"comp_string_replace",
 		"comp_tempsensor",
 		"comp_textcase",
 		"comp_timepiece",

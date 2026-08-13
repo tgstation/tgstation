@@ -1,3 +1,6 @@
+#define PKA_COOLDOWN_INCREMENT 3.2
+#define STANDARD_RECHARGE_TIME 16
+
 /obj/item/gun/energy/recharge/kinetic_accelerator
 	name = "proto-kinetic accelerator"
 	desc = "A self recharging, ranged mining tool that does increased damage in low pressure."
@@ -10,6 +13,7 @@
 	resistance_flags = FIRE_PROOF
 	weapon_weight = WEAPON_LIGHT
 	gun_flags = NOT_A_REAL_GUN
+	recharge_time = STANDARD_RECHARGE_TIME
 	///List of all mobs that projectiles fired from this gun will ignore.
 	var/list/ignored_mob_types
 	///List of all modkits currently in the kinetic accelerator.
@@ -417,7 +421,7 @@
 /obj/item/borg/upgrade/modkit/cooldown
 	name = "cooldown decrease"
 	desc = "Decreases the cooldown of a kinetic accelerator. Not rated for minebot use."
-	modifier = 3.2
+	modifier = -PKA_COOLDOWN_INCREMENT
 	minebot_upgrade = FALSE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT)
 
@@ -426,7 +430,7 @@
 	var/new_recharge_time = initial(KA.recharge_time)
 	for(var/obj/item/borg/upgrade/modkit/modkit_upgrade as anything in KA.modkits)
 		if(istype(modkit_upgrade, src))
-			new_recharge_time -= modifier
+			new_recharge_time += modkit_upgrade.modifier
 
 	return new_recharge_time
 
@@ -515,7 +519,7 @@
 	turf_aoe = TRUE
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4, /datum/material/silver = SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.75)
 	// Negates one CD modifier
-	modifier = -/obj/item/borg/upgrade/modkit/cooldown::modifier
+	modifier = PKA_COOLDOWN_INCREMENT
 
 /obj/item/borg/upgrade/modkit/cooldown/aoe/mobs
 	name = "offensive explosion"
@@ -747,3 +751,6 @@
 
 	var/new_color = tgui_color_picker(user, "", "Выбор цвета", bolt_color)
 	bolt_color = new_color || bolt_color
+
+#undef PKA_COOLDOWN_INCREMENT
+#undef STANDARD_RECHARGE_TIME

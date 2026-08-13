@@ -171,13 +171,6 @@
 	. = ..()
 	. += "Its master ID string seems to be [(!master_name || emagged) ? "empty" : master_name]."
 
-/mob/living/silicon/pai/get_status_tab_items()
-	. = ..()
-	if(!stat)
-		. += "Emitter Integrity: [holochassis_health * (100 / HOLOCHASSIS_MAX_HEALTH)]."
-	else
-		. += "Systems nonfunctional."
-
 /mob/living/silicon/pai/Exited(atom/movable/gone, direction)
 	if(gone == atmos_analyzer)
 		atmos_analyzer = null
@@ -250,7 +243,9 @@
 	laws.name = "PAI Directives"
 
 /mob/living/silicon/pai/process(seconds_per_tick)
-	holochassis_health = clamp((holochassis_health + (HOLOCHASSIS_REGEN_PER_SECOND * seconds_per_tick)), -50, HOLOCHASSIS_MAX_HEALTH)
+	if(holochassis_health != HOLOCHASSIS_MAX_HEALTH)
+		holochassis_health = clamp((holochassis_health + (HOLOCHASSIS_REGEN_PER_SECOND * seconds_per_tick)), -50, HOLOCHASSIS_MAX_HEALTH)
+		update_health_hud()
 
 /mob/living/silicon/pai/Process_Spacemove(movement_dir = 0, continuous_move = FALSE)
 	. = ..()
@@ -494,3 +489,7 @@
 /mob/living/silicon/pai/proc/on_tried_access(datum/source, obj/door_attempt, list/player_access)
 	SIGNAL_HANDLER
 	return ACCESS_DISALLOWED
+
+/mob/living/silicon/pai/update_health_hud(healthpercent)
+	healthpercent = (holochassis_health / HOLOCHASSIS_MAX_HEALTH) * 100
+	return ..()

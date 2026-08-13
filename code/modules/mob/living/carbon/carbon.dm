@@ -1280,7 +1280,7 @@
 	if(isnull(dna))
 		return
 
-	if(istext(new_blood_type))
+	if(istext(new_blood_type) || ispath(new_blood_type, /datum/blood_type))
 		new_blood_type = get_blood_type(new_blood_type)
 	if(!istype(new_blood_type))
 		return

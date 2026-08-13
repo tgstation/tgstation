@@ -269,6 +269,8 @@
 	limb.owner?.synchronize_bodytypes()
 	limb.owner?.synchronize_bodyshapes()
 
+	SEND_SIGNAL(src, COMSIG_ORGAN_BODYPART_REMOVED, limb)
+
 	if(!bodypart_overlay)
 		return
 

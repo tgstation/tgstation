@@ -132,31 +132,16 @@
 	SetInvisibility(INVISIBILITY_MAXIMUM)
 	return ..()
 
-/mob/living/carbon/human/AIize(client/preference_source, transfer_after = TRUE)
-	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+/mob/proc/Robotize(delete_items = FALSE)
+	var/mob/living/silicon/robot/new_borg = transform_into_mob(/mob/living/silicon/robot, delete_items)
+
+	if(!new_borg)
 		return
 
-	return ..()
-
-/mob/proc/Robotize(delete_items = 0, transfer_after = TRUE)
-	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
-		return
-	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
-	var/mob/living/silicon/robot/new_borg = new /mob/living/silicon/robot(loc)
-
-	if(client)
-		new_borg.set_gender(client)
-	new_borg.SetInvisibility(INVISIBILITY_NONE)
-
-	if(client?.prefs.read_preference(/datum/preference/name/cyborg) != DEFAULT_CYBORG_NAME)
-		new_borg.apply_pref_name(/datum/preference/name/cyborg, client)
-
-	if(mind) //TODO //TODO WHAT
-		if(!transfer_after)
-			mind.active = FALSE
-		mind.transfer_to(new_borg, TRUE)
-	else if(transfer_after)
-		new_borg.PossessByPlayer(key)
+	if(new_borg.client)
+		new_borg.set_gender(new_borg.client)
+		if(new_borg.client.prefs.read_preference(/datum/preference/name/cyborg) != DEFAULT_CYBORG_NAME)
+			new_borg.apply_pref_name(/datum/preference/name/cyborg, new_borg.client)
 
 	if(new_borg.mmi)
 		new_borg.mmi.name = "[initial(new_borg.mmi.name)]: [real_name]"
@@ -169,25 +154,9 @@
 	new_borg.job = JOB_CYBORG
 	new_borg.notify_ai(AI_NOTIFICATION_NEW_BORG)
 
-	. = new_borg
 	if(new_borg.ckey && is_banned_from(new_borg.ckey, JOB_CYBORG))
 		INVOKE_ASYNC(new_borg, TYPE_PROC_REF(/mob/living/silicon/robot, replace_banned_cyborg))
-	qdel(src)
-
-/mob/living/Robotize(delete_items = 0, transfer_after = TRUE)
-	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
-		return
-	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
-	Paralyze(1, ignore_canstun = TRUE)
-
-	drop_everything(delete_items)
-
-	regenerate_icons()
-	icon = null
-	SetInvisibility(INVISIBILITY_MAXIMUM)
-
-	REMOVE_TRAIT(src, TRAIT_NO_TRANSFORM, TEMPORARY_TRANSFORMATION_TRAIT)
-	return ..()
+	return new_borg
 
 /mob/living/silicon/robot/proc/replace_banned_cyborg()
 	to_chat(src, "<b>У вас имеется бан на киборгов! Обжалуйте ваш джоббан, чтобы такого не случилось в будущем!</b>")
@@ -198,238 +167,89 @@
 		message_admins("[key_name_admin(chosen_one)] has taken control of ([key_name_admin(src)]) to replace a jobbanned player.")
 		key = chosen_one.key
 
-//human -> alien
-/mob/living/carbon/human/proc/Alienize()
-	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
-		return
-	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
-	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_GENERIC)
-	for(var/obj/item/W in src)
-		dropItemToGround(W)
-	regenerate_icons()
-	icon = null
-	SetInvisibility(INVISIBILITY_MAXIMUM)
-	for(var/t in bodyparts)
-		qdel(t)
-
-	var/alien_caste = pick("Hunter","Sentinel","Drone")
-	var/mob/living/carbon/alien/adult/new_xeno
-	switch(alien_caste)
-		if("Hunter")
-			new_xeno = new /mob/living/carbon/alien/adult/hunter(loc)
-		if("Sentinel")
-			new_xeno = new /mob/living/carbon/alien/adult/sentinel(loc)
-		if("Drone")
-			new_xeno = new /mob/living/carbon/alien/adult/drone(loc)
-
-	new_xeno.set_combat_mode(TRUE)
-	new_xeno.PossessByPlayer(key)
-
-	to_chat(new_xeno, span_boldnotice("Вы теперь ксеноморф."))
-	qdel(src)
-	return new_xeno
-
-/mob/living/carbon/human/proc/slimeize(reproduce as num)
-	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
-		return
-	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
-	add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), TRAIT_GENERIC)
-	for(var/obj/item/W in src)
-		dropItemToGround(W)
-	regenerate_icons()
-	icon = null
-	SetInvisibility(INVISIBILITY_MAXIMUM)
-	for(var/t in bodyparts)
-		qdel(t)
-
-	var/mob/living/basic/slime/new_slime
-	if(reproduce)
-		var/number = pick(14;2,3,4) //reproduce (has a small chance of producing 3 or 4 offspring)
-		var/list/babies = list()
-		for(var/i in 1 to number)
-			var/mob/living/basic/slime/M = new/mob/living/basic/slime(loc)
-			M.set_nutrition(round(nutrition/number))
-			step_away(M,src)
-			babies += M
-		new_slime = pick(babies)
-	else
-		new_slime = new /mob/living/basic/slime(loc)
-	new_slime.set_combat_mode(TRUE)
-	new_slime.PossessByPlayer(key)
-
-	to_chat(new_slime, span_boldnotice("Вы теперь слайм. Скриии!"))
-	qdel(src)
-	return new_slime
-
 /mob/proc/become_overmind(starting_points = OVERMIND_STARTING_POINTS)
 	var/mob/eye/blob/B = new /mob/eye/blob(get_turf(src), starting_points)
 	B.PossessByPlayer(key)
 	. = B
 	qdel(src)
 
-
-/mob/living/carbon/human/proc/corgize()
-	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+//human -> alien
+/mob/proc/Alienize()
+	var/mob/living/carbon/alien/adult/new_xeno = transform_into_mob(pick(/mob/living/carbon/alien/adult/hunter, /mob/living/carbon/alien/adult/sentinel, /mob/living/carbon/alien/adult/drone))
+	if(!new_xeno)
 		return
-	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
-	Paralyze(1, ignore_canstun = TRUE)
-	for(var/obj/item/W in src)
-		dropItemToGround(W)
-	regenerate_icons()
-	icon = null
-	SetInvisibility(INVISIBILITY_MAXIMUM)
-	for(var/t in bodyparts) //this really should not be necessary
-		qdel(t)
 
-	var/mob/living/basic/pet/dog/corgi/new_corgi = new /mob/living/basic/pet/dog/corgi (loc)
+	to_chat(new_xeno, span_boldnotice("Вы теперь ксеноморф."))
+
+/mob/proc/slimeize(reproduce)
+	var/mob/living/basic/slime/new_slime = transform_into_mob(/mob/living/basic/slime)
+	if(!new_slime)
+		return
+	if(reproduce)
+		var/number = pick(1400;2, 3, 4) //reproduce (has a small chance of producing 3 or 4 offspring)
+		for(var/i in 2 to number)
+			var/mob/living/basic/slime/brainless_child = new /mob/living/basic/slime(new_slime.loc)
+			brainless_child.set_nutrition(round(nutrition/number))
+			step_away(brainless_child, new_slime)
+
+	new_slime.set_combat_mode(TRUE)
+	to_chat(new_slime, span_boldnotice("Вы теперь слайм. Скриии!"))
+
+/mob/proc/corgize()
+	var/mob/living/basic/pet/dog/corgi/new_corgi = transform_into_mob(/mob/living/basic/pet/dog/corgi)
+	if(!new_corgi)
+		return
 	new_corgi.set_combat_mode(TRUE)
-	new_corgi.PossessByPlayer(key)
-
 	to_chat(new_corgi, span_boldnotice("Вы теперь корги. Йап-йап!"))
-	qdel(src)
-	return new_corgi
 
 /**
  * Turns the source atom into a crab crab, the peak of evolutionary design.
  */
-/mob/living/carbon/human/proc/crabize()
-	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+/mob/proc/crabize()
+	var/mob/living/basic/crab/new_crab = transform_into_mob(/mob/living/basic/crab)
+	if(!new_crab)
 		return
-	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
-	Paralyze(1, ignore_canstun = TRUE)
-	for(var/obj/item/objeto in src)
-		dropItemToGround(objeto)
-	regenerate_icons()
-	icon = null
-	SetInvisibility(INVISIBILITY_MAXIMUM)
-
-	var/mob/living/basic/crab/new_crab = new (loc)
-	new_crab.set_combat_mode(TRUE) // snip snip
-	if(mind)
-		mind.transfer_to(new_crab)
-
 	to_chat(new_crab, span_boldnotice("Вы эволюционировали в краба!"))
-	qdel(src)
-	return new_crab
+	new_crab.set_combat_mode(TRUE)
 
-/mob/living/carbon/proc/gorillize(genetics_gorilla = FALSE)
-	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+/mob/proc/gorillize(genetics_gorilla = FALSE)
+	var/mob/living/basic/gorilla/ideal_body = transform_into_mob(genetics_gorilla ? /mob/living/basic/gorilla/genetics : /mob/living/basic/gorilla)
+	if(!ideal_body)
 		return
-	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
-	Paralyze(1, ignore_canstun = TRUE)
-
 	SSblackbox.record_feedback("amount", "gorillas_created", 1)
-
-	var/Itemlist = get_equipped_items(INCLUDE_POCKETS)
-	Itemlist += held_items
-	for(var/obj/item/W in Itemlist)
-		dropItemToGround(W, TRUE)
-
-	regenerate_icons()
-	icon = null
-	SetInvisibility(INVISIBILITY_MAXIMUM)
-	var/gorilla_type = genetics_gorilla ? /mob/living/basic/gorilla/genetics : /mob/living/basic/gorilla
-	var/mob/living/basic/gorilla/new_gorilla = new gorilla_type(get_turf(src))
-	new_gorilla.set_combat_mode(TRUE)
-	if(mind)
-		mind.transfer_to(new_gorilla)
-	else
-		new_gorilla.PossessByPlayer(key)
-	to_chat(new_gorilla, span_boldnotice("Вы теперь горилла. Уга-уга!"))
-	qdel(src)
-	return new_gorilla
-
-/mob/living/carbon/human/Animalize()
-
-	var/list/mobtypes = typesof(/mob/living/simple_animal) + typesof(/mob/living/basic)
-	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", sort_list(mobtypes, GLOBAL_PROC_REF(cmp_typepaths_asc)))
-	if(isnull(mobpath))
-		return
-	if(!safe_animal(mobpath))
-		to_chat(usr, span_danger("Sorry but this mob type is currently unavailable."))
-		return
-
-	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
-		return
-	ADD_TRAIT(src, TRAIT_NO_TRANSFORM, PERMANENT_TRANSFORMATION_TRAIT)
-	Paralyze(1, ignore_canstun = TRUE)
-
-	for(var/obj/item/W in src)
-		dropItemToGround(W)
-
-	regenerate_icons()
-	icon = null
-	SetInvisibility(INVISIBILITY_MAXIMUM)
-
-	for(var/t in bodyparts)
-		qdel(t)
-
-	var/mob/living/new_mob = new mobpath(src.loc)
-
-	new_mob.PossessByPlayer(key)
-	new_mob.set_combat_mode(TRUE)
-
-	to_chat(new_mob, span_boldnotice("Вы чувствуете себя более... животноподобно."))
-	qdel(src)
-	return new_mob
+	to_chat(ideal_body, span_boldnotice("Вы теперь горилла. Уга-уга!"))
+	ideal_body.set_combat_mode(TRUE)
+	return ideal_body
 
 /mob/proc/Animalize()
-
-	var/list/mobtypes = typesof(/mob/living/simple_animal) + typesof(/mob/living/basic)
+	var/list/mobtypes = valid_typesof(/mob/living/simple_animal) + valid_typesof(/mob/living/basic)
 	var/mobpath = tgui_input_list(usr, "Which type of mob should [src] turn into?", "Choose a type", sort_list(mobtypes, GLOBAL_PROC_REF(cmp_typepaths_asc)))
 	if(isnull(mobpath))
 		return
-	if(!safe_animal(mobpath))
-		to_chat(usr, span_danger("Sorry but this mob type is currently unavailable."))
+
+	var/mob/living/new_mob = transform_into_mob(mobpath)
+	if(!new_mob)
 		return
-
-	var/mob/living/new_mob = new mobpath(src.loc)
-
-	new_mob.PossessByPlayer(key)
 	new_mob.set_combat_mode(TRUE)
 	to_chat(new_mob, span_boldnotice("Вы чувствуете себя более... животноподобно."))
 
-	. = new_mob
+///Creates a new mob, deletes the old one, transfers old mob into new mob
+/mob/proc/transform_into_mob(mob_path, delete_items = FALSE)
+	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
+		return
+
+	if(!delete_items)
+		for(var/obj/item/detritus in get_equipped_items(INCLUDE_POCKETS|INCLUDE_HELD))
+			dropItemToGround(detritus, TRUE)
+
+	var/mob/new_mob = new mob_path(get_turf(src))
+	if(mind)
+		mind.transfer_to(new_mob)
+	else
+		new_mob.PossessByPlayer(key)
+
 	qdel(src)
-
-/* Certain mob types have problems and should not be allowed to be controlled by players.
- *
- * This proc is here to force coders to manually place their mob in this list, hopefully tested.
- * This also gives a place to explain -why- players shouldn't be turn into certain mobs and hopefully someone can fix them.
- */
-/mob/proc/safe_animal(MP)
-
-//Bad mobs! - Remember to add a comment explaining what's wrong with the mob
-	if(!MP)
-		return FALSE //Sanity, this should never happen.
-
-	if(ispath(MP, /mob/living/basic/construct))
-		return FALSE //Verbs do not appear for players.
-
-//Good mobs!
-	if(ispath(MP, /mob/living/basic/pet/cat))
-		return TRUE
-	if(ispath(MP, /mob/living/basic/pet/dog/corgi))
-		return TRUE
-	if(ispath(MP, /mob/living/basic/crab))
-		return TRUE
-	if(ispath(MP, /mob/living/basic/carp))
-		return TRUE
-	if(ispath(MP, /mob/living/basic/mushroom))
-		return TRUE
-	if(ispath(MP, /mob/living/basic/shade))
-		return TRUE
-	if(ispath(MP, /mob/living/basic/killer_tomato))
-		return TRUE
-	if(ispath(MP, /mob/living/basic/mouse))
-		return TRUE
-	if(ispath(MP, /mob/living/basic/bear))
-		return TRUE
-	if(ispath(MP, /mob/living/basic/parrot))
-		return TRUE //Parrots are no longer unfinished! -Nodrak
-
-	//Not in here? Must be untested!
-	return FALSE
+	return new_mob
 
 #undef PERMANENT_TRANSFORMATION_TRAIT
 #undef TEMPORARY_TRANSFORMATION_TRAIT

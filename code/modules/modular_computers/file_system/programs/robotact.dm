@@ -137,12 +137,7 @@
 	switch(action)
 		if("coverunlock")
 			if(cyborg.locked)
-				cyborg.locked = FALSE
-				cyborg.update_icons()
-				if(cyborg.emagged)
-					cyborg.logevent("ChÃ¥vÃis cover lock has been [cyborg.locked ? "engaged" : "released"]") //"The cover interface glitches out for a split second"
-				else
-					cyborg.logevent("Chassis cover lock has been [cyborg.locked ? "engaged" : "released"]")
+				cyborg.toggle_cover()
 
 		if("lawchannel")
 			cyborg.set_autosay()

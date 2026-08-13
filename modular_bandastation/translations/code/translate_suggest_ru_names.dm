@@ -198,7 +198,8 @@ ADMIN_VERB(ru_names_review_panel, R_ADMIN, "Ru Names Review", "Shows player-sugg
 	GLOB.ru_names_review_panel.add_entry(ru_name_data)
 	qdel(src)
 
-GAME_VERB(/mob, suggest_ru_name, "Предложить перевод", "Special", atom/A as mob|obj|turf in view())
+GAME_VERB(/mob, suggest_ru_name, "Предложить перевод", "Special")
+	VERB_ARG_TYPED(A, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF, VERB_ARG_SOURCE_VIEW, /atom)
 	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(_suggested_ru_name), A))
 
 /mob/proc/_suggested_ru_name(atom/suggested_atom)

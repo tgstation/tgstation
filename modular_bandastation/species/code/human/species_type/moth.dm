@@ -1,2 +1,2 @@
 /datum/species/moth
-	exotic_bloodtype = BLOOD_TYPE_MOTH
+	exotic_bloodtype = /datum/blood_type/moth

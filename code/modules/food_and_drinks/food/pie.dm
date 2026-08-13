@@ -503,7 +503,7 @@
 	icon_state = "bacid_pie"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 18,
-		/datum/reagent/consumable/liquidelectricity/enriched = 18
+		/datum/reagent/consumable/liquidelectricity = 18
 	)
 	tastes = list("battery acid" = 2, "electricity" = 2, "a cyber world" = 2)
 	foodtypes = GRAIN|DAIRY|TOXIC
@@ -518,7 +518,7 @@
 	icon_state = "bacid_pie_slice"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 4.5,
-		/datum/reagent/consumable/liquidelectricity/enriched = 4.5
+		/datum/reagent/consumable/liquidelectricity = 4.5
 	)
 	tastes = list("battery acid" = 1, "electricity" = 1, "a cyber world" = 1)
 	foodtypes = TOXIC

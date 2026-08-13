@@ -1,5 +1,9 @@
-// BANDASTATION EDIT: Original - ADMIN_VERB_AND_CONTEXT_MENU(possess, R_POSSESS, "Possess Obj", "Possess an object.", ADMIN_CATEGORY_OBJECT, obj/target in world)
-ADMIN_VERB_ONLY_CONTEXT_MENU(possess, R_POSSESS, "Possess Obj", obj/target)
+
+ADMIN_VERB_AND_CONTEXT_MENU(possess, R_POSSESS, "Possess Obj", "Possess an object.", ADMIN_CATEGORY_HIDDEN, /obj) // BANDASTATION EDIT: No category
+	VERB_ARG_TYPED(target, VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_WORLD, /obj)
+	if(isnull(target.loc))
+		return
+
 	var/result = user.mob.AddComponent(/datum/component/object_possession, target)
 
 	if(isnull(result)) // trigger a safety movement just in case we yonk

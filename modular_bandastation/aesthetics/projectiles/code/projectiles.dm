@@ -1,6 +1,13 @@
 // Actual icon replace
 /obj/projectile/bullet
 	icon = 'modular_bandastation/aesthetics/projectiles/icons/projectiles.dmi'
+	icon_state = "bullet"
+
+/obj/projectile/bullet/incendiary
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
+
+/obj/projectile/bullet/p50/incendiary
+	icon = 'icons/obj/weapons/guns/projectiles.dmi'
 
 // Override to default
 /obj/projectile/bullet/lollipop

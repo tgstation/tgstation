@@ -1,6 +1,7 @@
 //MARK: Debug Outfit
 
-ADMIN_VERB_ONLY_CONTEXT_MENU(spawn_debug_outfit, R_SPAWN, "(Debug) Debug Outfit", mob/admin in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(spawn_debug_outfit, R_SPAWN, "(Debug) Debug Outfit", /mob)
+	VERB_ARG_TYPED(admin, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	if(tgui_alert(admin,"Это заспавнит вас в специальном Debug прикиде, удаляя при этом ваше старое тело если оно было. Вы уверены?", "Debug Outfit", list("Да", "Нет")) != "Да")
 		return
 	var/mob/living/carbon/human/admin_body = admin.change_mob_type(/mob/living/carbon/human, delete_old_mob = TRUE)
@@ -8,7 +9,8 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(spawn_debug_outfit, R_SPAWN, "(Debug) Debug Outfit"
 
 //MARK: Download Icon
 
-ADMIN_VERB_ONLY_CONTEXT_MENU(download_flaticon, R_ADMIN, "(Special) Download Icon", atom/thing in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(download_flaticon, R_ADMIN, "(Special) Download Icon", /atom)
+	VERB_ARG_TYPED(thing, VERB_ARG_TYPE_ATOM, VERB_ARG_SOURCE_WORLD, /atom)
 	var/icon/image = getFlatIcon(thing, no_anim = TRUE)
 	var/image_width = max(image.Width(), 32)
 	var/image_height = max(image.Height(), 32)
@@ -35,7 +37,8 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(download_flaticon, R_ADMIN, "(Special) Download Ico
 
 //MARK: Man Up
 
-ADMIN_VERB_AND_CONTEXT_MENU(man_up, R_ADMIN, "Man Up", "Tells mob to man up and deal with it.", ADMIN_CATEGORY_FUN, mob/living/target in world)
+ADMIN_VERB_AND_CONTEXT_MENU(man_up, R_ADMIN, "Man Up", "Tells mob to man up and deal with it.", ADMIN_CATEGORY_FUN, /mob/living)
+	VERB_ARG_TYPED(target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob/living)
 	if(QDELETED(target))
 		return
 	to_chat(target, boxed_message(span_notice("<div align='center'><b><font size=8>Man up.<br>Deal with it.</font></b><br>Move on.</div>")))
@@ -57,7 +60,8 @@ ADMIN_VERB(global_man_up, R_ADMIN, "Global Man Up", "Tells everyone to man up an
 
 //MARK: Play Z-level Sound
 
-ADMIN_VERB(play_zlevel_sound, R_SOUND, "Play Z-level Sound", "Plays a sound only on your z-level.", ADMIN_CATEGORY_FUN, sound as sound)
+ADMIN_VERB(play_zlevel_sound, R_SOUND, "Play Z-level Sound", "Plays a sound only on your z-level.", ADMIN_CATEGORY_FUN)
+	VERB_ARG(sound, VERB_ARG_TYPE_SOUND, VERB_ARG_SOURCE_INPUT)
 	var/volume = tgui_input_number(user, "На какой громкости воспроизвести звук (1-100)?", default = 100, max_value = 100, min_value = 1)
 
 	var/sound/admin_sound = prepare_admin_sound(volume, sound)
@@ -79,7 +83,8 @@ ADMIN_VERB(play_zlevel_sound, R_SOUND, "Play Z-level Sound", "Plays a sound only
 
 //MARK: Play Sound in View
 
-ADMIN_VERB(play_sound_in_view, R_SOUND, "Play Sound in View", "Plays a sound to all player in view.", ADMIN_CATEGORY_FUN, sound as sound)
+ADMIN_VERB(play_sound_in_view, R_SOUND, "Play Sound in View", "Plays a sound to all player in view.", ADMIN_CATEGORY_FUN)
+	VERB_ARG(sound, VERB_ARG_TYPE_SOUND, VERB_ARG_SOURCE_INPUT)
 	var/volume = tgui_input_number(user, "На какой громкости воспроизвести звук (1-100)?", default = 100, max_value = 100, min_value = 1)
 
 	var/sound/admin_sound = prepare_admin_sound(volume, sound)
