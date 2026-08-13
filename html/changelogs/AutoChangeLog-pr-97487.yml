@@ -1,0 +1,5 @@
+author: "rkz/tsar-salat"
+delete-after: True
+changes:
+  - bugfix: "fixed a screaming icon stacktrace proc designed to scream, not screaming."
+  - bugfix: "stumps continue to not render, as they should, as opposed to not rendering because their rendering was broken"

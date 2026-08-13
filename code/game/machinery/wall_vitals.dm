@@ -310,7 +310,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 /obj/machinery/vitals_reader/proc/get_ekg_and_resp(hp_color)
 	var/ekg_icon_state = "ekg"
 	var/resp_icon_state = "resp"
-	if(!patient.appears_alive())
+	if(IS_DEAD_OR_FAKING(patient))
 		ekg_icon_state = "ekg_flat"
 		resp_icon_state = "resp_flat"
 
@@ -424,7 +424,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 
 	var/patient_stat = patient.stat
 	if(machine_stat & (EMPED|EMAGGED))
-		patient_stat = pick(CONSCIOUS, SOFT_CRIT, HARD_CRIT, DEAD, DEAD, DEAD)
+		patient_stat = pick(STABLE, SOFT_CRIT, HARD_CRIT, DEAD, DEAD, DEAD)
 
 	switch(patient_stat)
 		if(DEAD)
@@ -444,9 +444,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 				last_reported_stat = SOFT_CRIT
 		else
 			COOLDOWN_START(src, beep_cd, 7 SECONDS)
-			if(last_reported_stat != CONSCIOUS)
+			if(last_reported_stat != STABLE)
 				beep_message("lets out a beep.")
-				last_reported_stat = CONSCIOUS
+				last_reported_stat = STABLE
 
 /obj/machinery/vitals_reader/proc/beep_message(message)
 	for(var/mob/viewer as anything in viewers(src))

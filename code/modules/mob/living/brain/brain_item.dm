@@ -63,7 +63,7 @@
 
 	// Special check for if you're trapped in a body you can't control because it's owned by a ling.
 	if(IS_CHANGELING(brain_owner) && !(movement_flags & NO_ID_TRANSFER))
-		if(brainmob && !(brain_owner.stat == DEAD || (HAS_TRAIT(brain_owner, TRAIT_DEATHCOMA))))
+		if(brainmob && !IS_DEAD_OR_FAKING(brain_owner))
 			to_chat(brainmob, span_danger("You can't feel your body! You're still just a brain!"))
 		forceMove(brain_owner)
 		brain_owner.update_body_parts()
@@ -169,37 +169,40 @@
 		L.mind.transfer_to(brainmob)
 		to_chat(brainmob, span_notice("You feel slightly disoriented. That's normal when you're just a brain."))
 
-/obj/item/organ/brain/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	user.changeNext_move(CLICK_CD_MELEE)
+/obj/item/organ/brain/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/borg/apparatus/organ_storage))
+		return NONE//Borg organ bags shouldn't be killing brains
 
-	if(istype(item, /obj/item/borg/apparatus/organ_storage))
-		return //Borg organ bags shouldn't be killing brains
-
-	if (check_for_repair(item, user))
-		return TRUE
+	if (check_for_repair(tool, user))
+		return ITEM_INTERACT_SUCCESS
 
 	// Cutting out skill chips.
-	if(length(skillchips) && item.get_sharpness() == SHARP_EDGED)
-		to_chat(user,span_notice("You begin to excise skillchips from [src]."))
-		if(do_after(user, 15 SECONDS, target = src))
-			for(var/chip in skillchips)
-				var/obj/item/skillchip/skillchip = chip
+	if(!length(skillchips) || tool.get_sharpness() != SHARP_EDGED)
+		return NONE
 
-				if(!istype(skillchip))
-					stack_trace("Item of type [skillchip.type] qdel'd from [src] skillchip list.")
-					qdel(skillchip)
-					continue
+	to_chat(user,span_notice("You begin to excise skillchips from [src]."))
+	if(!do_after(user, 15 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
 
-				remove_skillchip(skillchip)
+	for(var/obj/item/skillchip/skillchip as anything in skillchips)
+		if(!istype(skillchip, /obj/item/skillchip))
+			stack_trace("Item of type [skillchip.type] qdel'd from [src] skillchip list.")
+			qdel(skillchip)
+			continue
 
-				if(skillchip.removable)
-					skillchip.forceMove(drop_location())
-					continue
+		remove_skillchip(skillchip)
 
-				qdel(skillchip)
+		if(skillchip.removable)
+			skillchip.forceMove(drop_location())
+			continue
 
-			skillchips = null
-		return
+		qdel(skillchip)
+
+	skillchips = null
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/organ/brain/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+	user.changeNext_move(CLICK_CD_MELEE)
 
 	if(brainmob) //if we aren't trying to heal the brain, pass the attack onto the brainmob.
 		item.attack(brainmob, user) //Oh noooeeeee
@@ -490,14 +493,6 @@
 	else
 		set_organ_damage(BRAIN_DAMAGE_DEATH)
 
-/obj/item/organ/brain/zombie
-	name = "zombie brain"
-	desc = "This glob of green mass can't have much intelligence inside it."
-	icon_state = "brain-x"
-	variant_traits_added = list(TRAIT_PRIMITIVE)
-	variant_traits_removed = list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER)
-	shade_color = "green"
-
 /obj/item/organ/brain/alien
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
@@ -556,6 +551,10 @@
 
 /obj/item/organ/brain/felinid //A bit smaller than average
 	brain_size = 0.8
+	variant_traits_added = list(
+		TRAIT_CATLIKE_INSTINCT,
+		TRAIT_WATER_HATER,
+	)
 
 // Sometimes, felinids go a bit haywire and bite people. Based entirely on mania and hunger.
 /obj/item/organ/brain/felinid/get_attacking_limb(mob/living/carbon/human/target)
@@ -583,8 +582,24 @@
 	desc = "A piece of juicy meat found in an ayy lmao's head."
 	icon_state = "brain-x"
 	brain_size = 1.3
-	variant_traits_added = list(TRAIT_REMOTE_TASTING)
+	variant_traits_added = list(TRAIT_REMOTE_TASTING, TRAIT_ABDUCTOR_KNOWLEDGE)
 	shade_color = "grey"
+
+/obj/item/organ/brain/abductor/on_mob_insert(mob/living/carbon/brain_owner, special = FALSE, movement_flags)
+	. = ..()
+	RegisterSignal(brain_owner, COMSIG_MOB_REAGENT_TICK, PROC_REF(handle_peanut_butter))
+
+/obj/item/organ/brain/abductor/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	UnregisterSignal(organ_owner, COMSIG_MOB_REAGENT_TICK)
+
+/obj/item/organ/brain/abductor/proc/handle_peanut_butter(mob/living/carbon/organ_owner, datum/reagent/reagent, seconds_per_tick, metabolization_ratio)
+	SIGNAL_HANDLER
+	if(!istype(reagent, /datum/reagent/consumable/peanut_butter))
+		return
+	organ_owner.add_mood_event("ET_pieces", /datum/mood_event/et_pieces, reagent.name)
+	organ_owner.set_drugginess_if_lower(15 SECONDS * metabolization_ratio * seconds_per_tick)
+
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 

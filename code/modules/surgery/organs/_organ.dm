@@ -84,7 +84,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /obj/item/organ/Initialize(mapload)
 	. = ..()
-	blood_dna_info = list("Unknown DNA" = get_blood_type(BLOOD_TYPE_O_PLUS))
+	blood_dna_info = list("Unknown DNA" = get_blood_type(/datum/blood_type/human/o_plus))
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponentFrom(
 			SOURCE_EDIBLE_INNATE, \
@@ -259,7 +259,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	var/message = check_damage_thresholds()
 	prev_damage = damage
 
-	if(message && owner && owner.stat <= SOFT_CRIT)
+	if(message && owner && !IS_UNCONSCIOUS(owner))
 		to_chat(owner, message)
 
 ///SETS an organ's damage to the amount "damage_amount", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken

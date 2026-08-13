@@ -12,10 +12,11 @@
 		TRAIT_BLOOD_CLANS,
 		TRAIT_USES_SKINTONES,
 		TRAIT_NO_MIRROR_REFLECTION,
+		TRAIT_UNHOLY_BANEABLE, //still baned by silver even if they get a different heart
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	changesource_flags = MIRROR_BADMIN | MIRROR_PRIDE | WABBAJACK | ERT_SPAWN
-	exotic_bloodtype = BLOOD_TYPE_VAMPIRE
+	exotic_bloodtype = /datum/blood_type/universal/vampire
 	blood_deficiency_drain_rate = BLOOD_DEFICIENCY_MODIFIER // vampires already passively lose blood, so this just makes them lose it slightly more quickly when they have blood deficiency.
 	mutantheart = /obj/item/organ/heart/vampire
 	mutanttongue = /obj/item/organ/tongue/vampire
@@ -263,6 +264,7 @@
 	name = "vampire heart"
 	icon_state = "heart_vampire"
 	desc = "Some guy stabbed his brother 6,000 years ago so now you have this."
+	organ_traits = list(TRAIT_UNHOLY_BANEABLE)
 
 #undef VAMPIRES_PER_HOUSE
 #undef VAMP_DRAIN_AMOUNT

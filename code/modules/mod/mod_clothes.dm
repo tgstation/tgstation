@@ -1,5 +1,5 @@
 /obj/item/clothing/head/mod
-	name = "MOD helmet"
+	name = "\improper MOD helmet"
 	desc = "A helmet for a MODsuit."
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "standard-helmet"
@@ -17,7 +17,7 @@
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
 
 /obj/item/clothing/suit/mod
-	name = "MOD chestplate"
+	name = "\improper MOD chestplate"
 	desc = "A chestplate for a MODsuit."
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "standard-chestplate"
@@ -40,7 +40,7 @@
 	ADD_TRAIT(src, TRAIT_NO_SPEED_POTION, INNATE_TRAIT)
 
 /obj/item/clothing/gloves/mod
-	name = "MOD gauntlets"
+	name = "\improper MOD gauntlets"
 	desc = "A pair of gauntlets for a MODsuit."
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "standard-gauntlets"
@@ -59,7 +59,7 @@
 	ADD_TRAIT(src, TRAIT_NO_SPEED_POTION, INNATE_TRAIT)
 
 /obj/item/clothing/shoes/mod
-	name = "MOD boots"
+	name = "\improper MOD boots"
 	desc = "A pair of boots for a MODsuit."
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "standard-boots"
@@ -78,7 +78,7 @@
 	ADD_TRAIT(src, TRAIT_NO_SPEED_POTION, INNATE_TRAIT)
 
 /obj/item/clothing/glasses/mod
-	name = "MOD glasses"
+	name = "\improper MOD glasses"
 	desc = "A pair of glasses for a MODsuit."
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "standard-glasses"
@@ -94,7 +94,7 @@
 	ADD_TRAIT(src, TRAIT_NO_SPEED_POTION, INNATE_TRAIT)
 
 /obj/item/clothing/neck/mod
-	name = "MOD tie"
+	name = "\improper MOD tie"
 	desc = "An tie for a MODsuit."
 	icon = 'icons/obj/clothing/modsuit/mod_clothing.dmi'
 	icon_state = "standard-tie"

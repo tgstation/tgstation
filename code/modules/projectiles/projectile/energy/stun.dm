@@ -222,7 +222,7 @@
 
 	owner.adjust_stutter_up_to(10 SECONDS, 20 SECONDS)
 	owner.adjust_jitter_up_to(20 SECONDS, 30 SECONDS)
-	if(owner.stat <= SOFT_CRIT)
+	if(!IS_UNCONSCIOUS(owner))
 		owner.do_jitter_animation(INFINITY) // maximum POWER
 
 	// You are damp, that's bad when you're being tased

@@ -481,7 +481,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	self_consuming = TRUE //No pesky liver shenanigans
 	chemical_flags = REAGENT_DEAD_PROCESS
 	affected_organ_flags = NONE
-	///If we brought someone back from the dead
+	/// If we brought someone back from the dead
 	var/back_from_the_dead = FALSE
 	/// List of trait buffs to give to the affected mob, and remove as needed.
 	var/static/list/trait_buffs = list(
@@ -503,15 +503,11 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 	affected_mob.add_traits(trait_buffs, type)
-	affected_mob.set_stat(CONSCIOUS) //This doesn't touch knocked out
-	affected_mob.updatehealth()
-	affected_mob.update_sight()
-	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, STAT_TRAIT)
-	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT) //Because these are normally updated using set_health() - but we don't want to adjust health, and the addition of NOHARDCRIT blocks it being added after, but doesn't remove it if it was added before
-	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT) //As above, removes unconsciousness if it was added before the reagent was administered
-	affected_mob.set_resting(FALSE) //Please get up, no one wants a deaththrows juggernaught that lies on the floor all the time
-	affected_mob.SetAllImmobility(0)
-	affected_mob.grab_ghost(force = FALSE) //Shoves them back into their freshly reanimated corpse.
+	if(!affected_mob.revive(force_grab_ghost = TRUE))
+		return
+
+	affected_mob.set_resting(FALSE, TRUE) // Please get up, no one wants a deaththrows juggernaught that lies on the floor all the time
+	affected_mob.SetAllImmobility(0 SECONDS)
 	back_from_the_dead = TRUE
 	affected_mob.emote("gasp")
 	affected_mob.playsound_local(affected_mob, 'sound/effects/health/fastbeat.ogg', 65)
@@ -522,19 +518,17 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		return
 	//Following is for those brought back from the dead only
 	var/creation_impurity = 1 - creation_purity
-	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, CRIT_HEALTH_TRAIT)
-	REMOVE_TRAIT(affected_mob, TRAIT_KNOCKEDOUT, OXYLOSS_TRAIT)
 	for(var/datum/wound/iter_wound as anything in affected_mob.all_wounds)
 		iter_wound.adjust_blood_flow(4 * creation_impurity * metabolization_ratio * seconds_per_tick)
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_brute_loss(20 * creation_impurity * metabolization_ratio * seconds_per_tick, required_bodytype = affected_bodytype)
+	need_mob_update += affected_mob.adjust_brute_loss(20 * creation_impurity * metabolization_ratio * seconds_per_tick, required_bodytype = affected_bodytype)
 	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, 4 * ((1 + creation_impurity) * metabolization_ratio * seconds_per_tick), required_organ_flag = affected_organ_flags)
 	if(affected_mob.health < HEALTH_THRESHOLD_CRIT)
 		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	if(affected_mob.health < HEALTH_THRESHOLD_FULLCRIT)
 		affected_mob.add_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
 	var/obj/item/organ/heart/heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
-	if(!heart || heart.organ_flags & ORGAN_FAILING)
+	if(isnull(heart) || (heart.organ_flags & ORGAN_FAILING))
 		remove_buffs(affected_mob)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
@@ -543,30 +537,28 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	remove_buffs(affected_mob)
 	var/obj/item/organ/heart/heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
-	if(affected_mob.health < -500 || heart.organ_flags & ORGAN_FAILING)//Honestly commendable if you get -500
+	if(affected_mob.health < (5 * HEALTH_THRESHOLD_DEAD) || (heart?.organ_flags & ORGAN_FAILING)) // Honestly commendable if you get -500
 		explosion(affected_mob, light_impact_range = 1, explosion_cause = src)
-		qdel(heart)
 		affected_mob.visible_message(span_boldwarning("[affected_mob]'s heart explodes!"))
+		qdel(heart)
 
 /datum/reagent/inverse/penthrite/overdose_start(mob/living/carbon/affected_mob, metabolization_ratio)
-	. = ..()
 	if(!back_from_the_dead)
 		return ..()
+
 	var/obj/item/organ/heart/heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
-	if(!heart) //No heart? No life!
+	if(isnull(heart)) // No heart? No life!
 		REMOVE_TRAIT(affected_mob, TRAIT_NODEATH, type)
-		affected_mob.stat = DEAD
-		return ..()
-	explosion(affected_mob, light_impact_range = 1, explosion_cause = src)
-	qdel(heart)
-	affected_mob.visible_message(span_boldwarning("[affected_mob]'s heart explodes!"))
+	else
+		explosion(affected_mob, light_impact_range = 1, explosion_cause = src)
+		affected_mob.visible_message(span_boldwarning("[affected_mob]'s heart explodes!"))
+		qdel(heart)
 	return..()
 
 /datum/reagent/inverse/penthrite/proc/remove_buffs(mob/living/carbon/affected_mob)
 	affected_mob.remove_traits(trait_buffs, type)
 	affected_mob.remove_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
 	affected_mob.remove_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
-	affected_mob.update_sight()
 
 /*				Non c2 medicines 				*/
 

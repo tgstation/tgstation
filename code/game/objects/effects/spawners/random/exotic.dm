@@ -118,7 +118,7 @@
 	)
 
 /obj/item/mod/module/energy_shield/prototype
-	name = "MOD prototype energy shield"
+	name = "\improper MOD prototype energy shield"
 	desc = "An early prototype of energy shield adapted for use inside of a MOD, the energy shield before this saw \
 	extensive use in now defunct construction, combat, and mining exosuits with exosuits being something between a \
 	modsuit and a mech with most still functioning exosuits either being in a museaum or a military parade"
@@ -137,4 +137,15 @@
 		/obj/item/mod/module/magnetic_harness,
 		/obj/item/mod/module/jetpack,
 		/obj/item/mod/module/pathfinder,
+	)
+
+/obj/effect/spawner/random/exotic/grave
+	name = "grave spawner"
+	icon_state = "loot"
+	spawn_loot_chance = 50
+	loot = list(
+		/obj/effect/mob_spawn/corpse/human/skeleton = 27,
+		/obj/item/instrument/trumpet/spectral/one_doot = 1,
+		/obj/item/instrument/saxophone/spectral/one_doot = 1,
+		/obj/item/instrument/trombone/spectral/one_doot = 1,
 	)

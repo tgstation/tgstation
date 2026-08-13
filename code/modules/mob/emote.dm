@@ -77,7 +77,7 @@
 /datum/emote/flip
 	key = "flip"
 	key_third_person = "flips"
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/eye/imaginary_friend)
 	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/living/silicon/ai, /mob/eye/imaginary_friend)
 	/// The probability we fall our our arse
@@ -120,7 +120,7 @@
 /datum/emote/spin
 	key = "spin"
 	key_third_person = "spins"
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 	mob_type_allowed_typecache = list(/mob/living, /mob/dead/observer, /mob/eye/imaginary_friend)
 	mob_type_ignore_stat_typecache = list(/mob/dead/observer, /mob/eye/imaginary_friend)
 

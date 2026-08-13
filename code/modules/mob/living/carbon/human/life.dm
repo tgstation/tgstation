@@ -277,15 +277,8 @@
 	return min(1, round(thermal_protection, 0.001))
 
 /mob/living/carbon/human/has_smoke_protection()
-	if(isclothing(wear_mask))
-		if(wear_mask.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
-			return TRUE
-	if(isclothing(glasses))
-		if(glasses.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
-			return TRUE
-	if(isclothing(head))
-		var/obj/item/clothing/CH = head
-		if(CH.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
+	for (var/obj/item/clothing/equip in get_equipped_items())
+		if(equip.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
 	return ..()
 

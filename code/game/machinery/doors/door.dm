@@ -257,7 +257,7 @@
 		return
 	if(ismob(AM))
 		var/mob/B = AM
-		if((isdrone(B) || iscyborg(B)) && B.stat)
+		if((isdrone(B) || iscyborg(B)) && IS_UNCONSCIOUS_OR_CRIT(B))
 			return
 		if(isliving(AM))
 			var/mob/living/M = AM

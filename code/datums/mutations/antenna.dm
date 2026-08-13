@@ -144,7 +144,7 @@
 	INVOKE_ASYNC(src, PROC_REF(read_mind), examiner, examining)
 
 /datum/action/cooldown/spell/pointed/mindread/proc/read_mind(mob/living/examiner, mob/living/examined)
-	if(examined.stat >= UNCONSCIOUS || isnull(examined.mind) || (examined.mob_biotypes & MOB_ROBOTIC))
+	if(IS_UNCONSCIOUS(examined) || isnull(examined.mind) || (examined.mob_biotypes & MOB_ROBOTIC))
 		return
 
 	var/antimagic = examined.can_block_magic(antimagic_flags, charge_cost = 0)

@@ -64,7 +64,7 @@
 	if(!client && !HAS_TRAIT(src, TRAIT_PRESERVE_UI_WITHOUT_CLIENT))
 		return UI_CLOSE
 	// Disable UIs if unconscious.
-	else if(stat)
+	else if(IS_UNCONSCIOUS_OR_CRIT(src))
 		return UI_DISABLED
 	// Update UIs if incapicitated but conscious.
 	else if(incapacitated)

@@ -708,3 +708,273 @@
       injectors, blood bags all lose their identity (name/desc/icon_state). Gas canisters
       lose their identity (name/desc/icon_state). Lockboxes and crates all lose their
       identity (name). Locked closets no longer open.'
+2026-07-25:
+  Absolucy:
+  - bugfix: Fixed potential issues when connecting via Wine.
+  CabinetOnFire:
+  - code_imp: Improved performance of corpse spawners
+  Dmeto:
+  - qol: Some museum away mission hints have been tweeked.
+  - bugfix: The museum away mission should suffer less decompressions now.
+  Ghommie:
+  - balance: Crafted pipe guns and pistols no longer come preloaded with junk shells
+      out of the blue when crafted. As for the regal pipegun, it will instead inherit
+      the junk shells present in the pipegun used to craft it.
+  - balance: The regal condor no longer has a magazine when crafted. I've reduced
+      the amount of items and time needed to craft it to make up for it.
+  Kryson (Sprites), CabinetOnFire (Code):
+  - rscadd: Adds a new station trait where Pun Pun injects a massive amount of steroids
+  Melbert:
+  - spellcheck: Rewrote (almost, if not all) genetic mutation descriptions
+  - rscadd: Adds six new mutations
+  - rscdel: Several "extremely niche" reagents can no longer roll as a medicine allergy,
+      such as changeling adrenaline, muscle stimulant, or virus rations
+  - code_imp: RPED storage UI only updates when it's done replacing parts rather than
+      part by part, in practice you should see no change
+  - code_imp: Mass pickup also waits to update when it's done picking up, you MIIIGHT
+      notice if you're picking up an especially large amount of things but probably
+      not?
+  - bugfix: Attempting to use the right click menu to input some command (like point)
+      at an entity that you are hallucinating won't spit out a weird broken command
+      in your command bar.
+  - admin: Several verbs no longer show a list of every X in the game world when you
+      enter them via command line or verb panel. They will instead limit themselves
+      to every X in view of your character.
+  - rscadd: Being unconscious conceals the identity of nearby humans/silicons
+  - refactor: Refactored how mob's health is tracked, ie being in crit, unconscious,
+      or dead. There is a high chance I missed some niche interactions and suddenly,
+      you can wavedash while asleep, or backflip while in crit, so please report them
+      as you find them.
+  - refactor: Inverse Penthrite now goes through the proper channels for handing revival,
+      report anything weird with it
+  - rscdel: Sign language mobs are no longer immune to forced whisper effects (such
+      as the soft spoken quirk).
+  PapaMichael:
+  - bugfix: The Ghost Menu's Extra View Distance field now remembers your current
+      extra view distance between openings
+  SmArtKar:
+  - code_imp: Optimized some hot atmos procs
+  - code_imp: Optimized object TGUI code
+  - code_imp: Optimized bodypart code
+  - code_imp: Further optimized crafting UI
+  - code_imp: Optimized damage and wound code
+  - refactor: Brought down all inventory slots on humans to /obj/item
+  SmArtKar, Kapu1178:
+  - refactor: Datumized do_after()s
+  TealSeer:
+  - bugfix: Glasses will always smash when thrown around, not just if thrown by a
+      mob
+  TheRealSpriteMan1337:
+  - map: Moved Loader MODsuit outside of QM's office in DeltaStation
+  antropod:
+  - bugfix: Fix scrubber not updating turfs
+  timothymtorres:
+  - rscadd: Add Tombstone Escape Shuttle that can be unlocked via a biohazard event.
+      (Blob, zombies, or a severe enough disease)
+  - map: Add Tombstone Escape Shuttle that can be unlocked via a biohazard event.
+      (Blob, zombies, or a severe enough disease)
+2026-07-26:
+  CabinetOnFire:
+  - code_imp: Adds debug flags that can be selected when building in VS code
+  Fghj240:
+  - balance: Disease stage speed and advanced disease symptom delay RNG has been reduced
+  - balance: Recovering from an advanced disease makes you more resistant to similar
+      advanced diseases.
+  - spellcheck: Viral adaptation and Viral evolution are always neutered.
+  - qol: Spacers can choose their height a little
+  Hatterhat:
+  - spellcheck: Adjusted some descriptions on some rifles (the Sakhno bolt-action,
+      the SKS, the anti-materiel sniper) and nudged extended lore bits to examining
+      twice.
+  Iajret:
+  - bugfix: Defeating Hiero now gives style point multiplier
+  - bugfix: Successfully tapping a vent will grant a style point multiplication too,
+      as it was supposed to
+  Melbert:
+  - rscadd: The AI and Cyborg upload computers have been replaced with module racks,
+      a physical manifestation of AI laws.
+  - rscadd: To subvert an AI, you can print a "broadcaster law rack" to remotely link
+      to the station's "core law rack". Modules in the portable law rack will be applied
+      on top of the core law rack's laws. Don't worry, hacked laws are still applied
+      with priority.
+  - rscadd: Upgrades for the AI, like combat upgrades, are now applied via a module
+      rack instead of hitting the AI core.
+  - rscadd: Ion storms will now damage law modules housed in module racks, requiring
+      manual maintenance (a multitool).
+  - rscdel: You can no longer upload a AI laws directly to AI cores, active or mid
+      construction. You can use a multitool to pre-link AIs to racks, otherwise they
+      will automatically connect to the station's core rack (or nothing, if offstation).
+  - rscdel: Removed "law priority" from freeform laws
+  - rscadd: TGUI "state laws" window
+  - refactor: Refactored silicon laws in its entirely, report any oddities
+  - bugfix: Fix perma stun from grabs
+  PapaMichael:
+  - bugfix: Departmental photo albums now properly save their photos between rounds
+  SmArtKar:
+  - bugfix: Fixed hair gradients, again
+  YesterdaysPromise:
+  - bugfix: Scythes, shovels, flasks, shears and secutors will now display their worn
+      sprites when in belt/suit storage.
+  - bugfix: Tiles, circuit components, wands, types of leather and door remotes no
+      longer display missing/incorrect sprites when worn on belt/suit storage.
+  - image: Added missing metalhydrogen inhand sprite, and fixed the colours of the
+      adamantine one.
+  - image: Added missing belt/suit storage sprites for all basic material and glass
+      types, flash, shards, light tubes, light bulbs, drapes, and surgery tools which
+      can be put in those slots.
+  - image: Hatchets, beakers, secutors, shears etc. had their sprites corrected, as
+      despite showing on left side of front-facing sprite, they also showed up on
+      left facing profile (with right side of the body to the front)
+  - image: Added unique belt/suit storage sprites for carp, ratvar, and narsie plushies.
+  hry-gh:
+  - qol: the escape menu now runs clientside, and should be considerably more responsive
+  lelandkemble:
+  - bugfix: the firepit structure that spawns somewhere(probably on icebox) can now
+      be lit
+  - bugfix: you can hit a griddle on combat mode
+  - bugfix: you no longer succeed at digging up a hydroponics tray after failing the
+      do_after()
+  - code_imp: 50 files have been converted from attackby() to item_interaction
+2026-07-27:
+  Aliceee2ch:
+  - image: Added more tools to engi toolbelt overlays.
+  Melbert:
+  - balance: Heretics no longer need a focus to cast spells.
+  - balance: (Almost) all heretic spells are now limited to a number of charges. Once
+      you are out of charges, you need to replenish them. For some spells, there are
+      special conditions to fulfill to recharge them, but for most of them you must
+      simply complete a condition according to your path (like rusting tiles as rust).
+  - balance: Holywater will purge spell charges from heretics.
+  - balance: '"Amber Focus" is now a tier one side knowledge that slooowwwly replenishes
+      spell charges over time.'
+  - balance: Codex Cicatrix is now a T1 knowledge. Its drain speed has been increased
+      (1.5x slower) as has its draw speed (1.875x slower). Codex Morbus has also seen
+      an increase to drain speed (2x slower) and draw speed (2x slower).
+  - balance: Warren King's Welcome is now a T1 knowedge and has additional effects
+      - restricting nearby airlocks to "heretic" access and granting your ID "heretic"
+      access.
+  - balance: Ash heretics can no longer empower their spells while on fire.
+  - balance: Wolves Among Sheep heretic healing has been reduced by 75% (60 -> 15)
+  - qol: Heretic rituals now use a radial for deciding which to invoke
+  - qol: Tooltips for heretics are now formatted, easier to read
+  - rscadd: Adds a tier two knowledge to heretic, "Unwrap Minds", which allows them
+      to hypnotize someone.
+  - rscadd: Adds a tier one knowledge to heretic, "The Miraculous Mirror", which allow
+      them to change their appearance (including species).
+  - rscadd: Adds a tier three knowledge to heretic, "Keys to the Backdoor", which
+      effectively gives them a pocket dimension accessible via closet to do... things
+      in.
+  - rscadd: Mask of Madness is now a tier three side knowledge, allowing any heretic
+      access to it. Also now requires lit candles.
+  - rscadd: Ash Heretics now have a new main path node, "Nightwatcher's Lantern",
+      which causes negative effects to mobs who are in the light's radius.
+  - balance: Shadow Cloak is no longer an innate heretic knowledge, but is guaranteed
+      to show up for free in the first draft pool (in addition to the three other
+      options).
+  - bugfix: Performing an action with an internal cooldown (like resisting) will no
+      longer cancel timed actions
+  PapaMichael:
+  - bugfix: Bar, Library, and Chapel photo albums can now be found on all stations
+  - bugfix: Removed duplicate photo albums from Catwalk and Nebula
+  lelandkemble:
+  - bugfix: fixed a runtime when deconstructing a bookshelf
+  - bugfix: you can now change your mind at the very last second about making a modsuit
+  - code_imp: 30 files have been converted from attackby() to item_interaction()
+  - bugfix: You can now load printed mech generators
+  tigercat2000:
+  - bugfix: ByondUi/TGUI Map elements should never have the small map bug again
+  - bugfix: ByondUi/TGUI Map elements will no longer layout incorrectly if you refresh
+      the page in some circumstances
+2026-07-28:
+  ArcaneMusic:
+  - bugfix: Selling organs in cargo once again works properly. As a reminder, Normal
+      human organs sell for 20 credits. The organs of a roundstart human are worth
+      10x as much, however.
+  Melbert:
+  - code_imp: Slightly changed the logic for blindness and unconscious hud effects,
+      report any oddities
+  - code_imp: Slightly changed logic for selecting random reagents for stuff like
+      toxic bees, report anything weird with it
+  - rscdel: Mobs will no longer log their initial name change (I.e. "name changed
+      from (nothing) to John Doe")
+  - spellcheck: Renames "Hot Chili" to "Chili Con Carne"
+  - spellcheck: Renames "Cold Chili" to "Chili Frio"
+  - qol: Chili Con Carne, Chili Sin Carne, Chili Con Carnival, and Chili Frio are
+      now all in the "Mexican" cuisine category
+  - qol: You can now use ghost chilis in the chili recipes, making "Ghost Chili Con
+      Carne" or "Ghost Chili Sin Carne".
+  PapaMichael:
+  - balance: Pirates prioritize spawning their leaders
+  - admin: Admins can configure Heavy Pirates
+  SmArtKar:
+  - bugfix: Fixed cardboard cutouts having an incorrect assistant sprite
+  - bugfix: Fixed some effects not updating hair when they should
+  lelandkemble:
+  - bugfix: You can place items within bodybags by clicking on them again
+2026-07-29:
+  Justice12354:
+  - bugfix: Reloading your lionhunter's rifle no longer makes your ammo box invisible
+  - bugfix: Nightwatcher's Lantern now costs what it should cost (2 knowledge points)
+  Melbert:
+  - bugfix: Fix slot assigned job saving
+  - map: '[Kilostation] Redid lighting over the whole station to be more ambient/moody
+      and less overlit'
+  - map: '[Kilostation] Many small tweaks and nudges, primarily with decals or pipe
+      runs'
+  SmArtKar:
+  - code_imp: Optimized revenant abilities
+  - code_imp: Improves gas tank window performance
+2026-07-30:
+  Absolucy:
+  - bugfix: Jellypeople can speak Slime language again.
+  Aliceee2ch:
+  - bugfix: Bardrobe is now using service budget instead of medical.
+  Fghj240:
+  - qol: IDC-27 contains symptom levels
+  Melbert:
+  - bugfix: Fix heretic transmutation fail text
+  - bugfix: Fix lesser magic mirror (and friends) race selection
+  QuiteLiterallyAnything:
+  - qol: Bluespace Artillery Cannons now indicate the space they will occupy prior
+      to deployment.
+  SmArtKar:
+  - code_imp: Optimized particle lighting
+  Thunder12345:
+  - bugfix: High frequency blades kept in the suit storage slot no longer look outdated.
+  - bugfix: Point-based bitrunning domains will no longer mysteriously complete themselves
+      on reruns.
+  antropod:
+  - rscadd: Added cement and concrete, walls, floors and pavements. Check your crafting
+      guide under category Construction.
+  flleeppyy:
+  - rscadd: you can now have unlimited TGUI windows in preferences
+  hry-gh:
+  - bugfix: escape menu has map feedback links again
+  - bugfix: escape menu does not jump around sometimes when re-opening
+  kyunkyunkyun:
+  - bugfix: You can once again scan pod people's health with advanced/debug health
+      analyzers.
+  - bugfix: Regal condor's magazine now properly accepts .45 instead of 10mm.
+2026-07-31:
+  Fghj240:
+  - qol: You can see what bodyparts a piece of clothing with armor covers by examining
+      its tag.
+  Melbert:
+  - qol: Surplus crate items show up in roundend report
+  - qol: Stasis bodybags don't decay in freezing temperatures, such as those present
+      in morgue slabs
+  QuiteLiterallyAnything:
+  - bugfix: Fixed missing texture fish suicide.
+  - bugfix: Stray Syndicate cargo pods now drop with Syndicate-styled crates rather
+      than generic grey ones.
+  lelandkemble:
+  - bugfix: All slapcrafting recipes now work again
+  mcbalaam:
+  - bugfix: The Big Manipulator now uses filters more correctly and spoofs the monkeys
+      location to interact with some machines.
+  - bugfix: The Big Manipulator now doesn't reset the priorities when upgraded.
+  - rscadd: The Big Manipulator now knows how to Move (TM) and Stop (TM).
+  - rscadd: The Big Manipulator can now interact with turfs properly.
+  san7890:
+  - bugfix: Jellypeople are now no longer able to cannibalize limbs that were not
+      originally generated by them (AKA belonging to their set species).

@@ -111,7 +111,7 @@
 
 	var/mob/living/living_parent = parent
 	// Heal bonus for being in crit. Only applies to carbons
-	var/heal_mod = HAS_TRAIT(living_parent, TRAIT_CRITICAL_CONDITION) ? 2 : 1
+	var/heal_mod = living_parent.stat >= SOFT_CRIT ? 2 : 1
 
 	var/need_mob_update = FALSE
 	if(brute_per_second)

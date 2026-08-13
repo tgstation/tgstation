@@ -15,7 +15,7 @@
 		trigger_seizure()
 
 /datum/mutation/epilepsy/proc/trigger_seizure()
-	if(owner.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(owner))
 		return
 	owner.visible_message(span_danger("[owner] starts having a seizure!"), span_userdanger("You have a seizure!"))
 	owner.Unconscious(200 * GET_MUTATION_POWER(src))
@@ -90,7 +90,7 @@
 	power_coeff = 1
 
 /datum/mutation/cough/on_life(seconds_per_tick)
-	if(SPT_PROB(2.5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && owner.stat == CONSCIOUS)
+	if(SPT_PROB(2.5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(owner))
 		owner.drop_all_held_items()
 		owner.emote("cough")
 		if(GET_MUTATION_POWER(src) > 1)
@@ -107,7 +107,7 @@
 	text_lose_indication = span_notice("The screaming in your mind fades.")
 
 /datum/mutation/paranoia/on_life(seconds_per_tick)
-	if(SPT_PROB(2.5, seconds_per_tick) && owner.stat == CONSCIOUS)
+	if(SPT_PROB(2.5, seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(owner))
 		owner.emote("scream")
 		if(prob(25))
 			owner.adjust_hallucinations(40 SECONDS)
@@ -215,7 +215,7 @@
 	synchronizer_coeff = 1
 
 /datum/mutation/tourettes/on_life(seconds_per_tick)
-	if(SPT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && owner.stat == CONSCIOUS && !owner.IsStun())
+	if(SPT_PROB(5 * GET_MUTATION_SYNCHRONIZER(src), seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(owner) && !owner.IsStun())
 		switch(rand(1, 3))
 			if(1)
 				owner.emote("twitch")
@@ -504,7 +504,7 @@
 /datum/mutation/martyrdom/proc/bloody_shower(datum/source, new_stat)
 	SIGNAL_HANDLER
 
-	if(new_stat != HARD_CRIT)
+	if(new_stat < HARD_CRIT)
 		return
 	var/list/organs = owner.get_organs_for_zone(BODY_ZONE_HEAD, TRUE)
 
@@ -662,13 +662,6 @@
 	conflicts = list(/datum/mutation/rock_eater)
 	locked = TRUE
 
-/datum/mutation/rock_absorber/on_losing(mob/living/carbon/human/owner)
-	. = ..()
-	if(. || QDELING(owner) || HAS_TRAIT(owner, TRAIT_ROCK_METAMORPHIC))
-		return
-	owner.remove_status_effect(/datum/status_effect/golem)
-	owner.remove_status_effect(/datum/status_effect/golem_lightbulb)
-
 // Soft crit is disabed
 /datum/mutation/inexorable
 	name = "Inexorable"
@@ -693,17 +686,17 @@
 	if(.)
 		return
 	UnregisterSignal(owner, COMSIG_LIVING_HEALTH_UPDATE)
-	REMOVE_TRAIT(owner, TRAIT_SOFTSPOKEN, REF(src))
+	REMOVE_TRAIT(owner, TRAIT_FORCE_WHISPER, REF(src))
 
 /datum/mutation/inexorable/proc/check_health(...)
 	SIGNAL_HANDLER
-	if(owner.health > owner.crit_threshold || owner.stat != CONSCIOUS)
-		REMOVE_TRAIT(owner, TRAIT_SOFTSPOKEN, REF(src))
+	if(owner.health > owner.crit_threshold || IS_UNCONSCIOUS_OR_CRIT(owner))
+		REMOVE_TRAIT(owner, TRAIT_FORCE_WHISPER, REF(src))
 	else
-		ADD_TRAIT(owner, TRAIT_SOFTSPOKEN, REF(src))
+		ADD_TRAIT(owner, TRAIT_FORCE_WHISPER, REF(src))
 
 /datum/mutation/inexorable/on_life(seconds_per_tick)
-	if(owner.health > owner.crit_threshold || owner.stat != CONSCIOUS || HAS_TRAIT(owner, TRAIT_STASIS))
+	if(owner.health > owner.crit_threshold || IS_UNCONSCIOUS_OR_CRIT(owner) || HAS_TRAIT(owner, TRAIT_STASIS))
 		return
 	if(HAS_TRAIT(owner, TRAIT_NOCRITDAMAGE) && owner.health <= owner.hardcrit_threshold + 10)
 		return
@@ -736,6 +729,8 @@
 	return !HAS_TRAIT(acquirer, TRAIT_NOHUNGER)
 
 /datum/mutation/limb_regeneration/on_life(seconds_per_tick)
+	if(owner.stat >= HARD_CRIT)
+		return
 	if(!SPT_PROB(5 * (notified_of_ability ? 4 : 1) * (GET_MUTATION_POWER(src) ** 2), seconds_per_tick))
 		return
 
@@ -750,11 +745,11 @@
 		return
 
 	if(owner.nutrition <= nutrition_threshold)
-		if(owner.stat == UNCONSCIOUS && !notified_of_ability)
+		if(IS_UNCONSCIOUS(owner) && !notified_of_ability)
 			to_chat(owner, span_green("You feel a strange tingling, as if your body is trying to do something - though you feel like you could use a meal first."))
 			notified_of_ability = TRUE
 		return
-	if(owner.stat != UNCONSCIOUS)
+	if(!IS_UNCONSCIOUS(owner))
 		if(owner.nutrition > nutrition_threshold && !notified_of_ability)
 			to_chat(owner, span_green("You feel a strange tingling, as if your body is trying to do something - though you feel like you could use a nap first."))
 			notified_of_ability = TRUE
@@ -767,12 +762,12 @@
 			var/replacement_type = owner.dna.species.get_mutant_organ_type_for_slot(pick(missing_important_organs))
 			var/obj/item/organ/replacement = new replacement_type()
 			replacement.Insert(owner, special = TRUE)
-			to_chat(owner, span_green("The tingingling feeling builds to a climax, until ultimately you feel a new [replacement] where your old one was!"))
+			to_chat(owner, span_green("The tingling feeling builds to a climax, until ultimately you feel [replacement.gender == PLURAL ? "some" : "a"] new [replacement.name] where your old one[replacement.gender == PLURAL ? "s were" : " was"]!"))
 		else
 			var/replacing_zone = pick(missing_limbs)
 			owner.regenerate_limb(replacing_zone)
 			var/obj/item/bodypart/replacement = owner.get_bodypart(replacing_zone)
-			to_chat(owner, span_green("The tingling feeling builds to a climax, until ultimately you feel a new [replacement.plaintext_zone] where your old one was!"))
+			to_chat(owner, span_green("The tingling feeling builds to a climax, until ultimately you feel [replacement.gender == PLURAL ? "some" : "a"] new [replacement.plaintext_zone] where your old one[replacement.gender == PLURAL ? "s were" : " was"]!"))
 			owner.visible_message(span_warning("[owner]'s [replacement.plaintext_zone] reforms, making a loud, grotesque sound!"), ignored_mobs = list(owner))
 		owner.adjust_nutrition(-NUTRITION_LEVEL_FULL * 0.5 * GET_MUTATION_SYNCHRONIZER(src))
 		playsound(owner, 'sound/effects/magic/demon_consume.ogg', 33, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -783,9 +778,9 @@
 		var/replacement_type = pick(missing_special_organs)
 		var/obj/item/organ/replacement = new replacement_type()
 		replacement.Insert(owner, special = TRUE)
-		to_chat(owner, span_green("The tingling feeling builds to a climax, until ultimately you feel a new [replacement] where your old one was!"))
+		to_chat(owner, span_green("The tingling feeling builds to a climax, until ultimately you feel [replacement.gender == PLURAL ? "some" : "a"] new [replacement.name] where your old one[replacement.gender == PLURAL ? "s were" : " was"]!"))
 		if(replacement.organ_flags & ORGAN_EXTERNAL)
-			owner.visible_message(span_warning("[owner]'s [replacement] reforms, making a loud, grotesque sound!"), ignored_mobs = list(owner))
+			owner.visible_message(span_warning("[owner]'s [replacement.name] reforms, making a loud, grotesque sound!"), ignored_mobs = list(owner))
 		owner.adjust_nutrition(-NUTRITION_LEVEL_FULL * 0.3 * GET_MUTATION_SYNCHRONIZER(src))
 		playsound(owner, 'sound/effects/magic/demon_consume.ogg', 33, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return

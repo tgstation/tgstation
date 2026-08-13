@@ -157,7 +157,7 @@
 	if(affected_mob.bodytemperature >= T0C)
 		return
 	var/power = -0.00003 * (affected_mob.bodytemperature ** 2) + 3
-	if(HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT)) //Significantly more effective when unconscious
+	if(IS_UNCONSCIOUS(affected_mob)) //Significantly more effective when unconscious
 		power *= 2
 	var/need_mob_update
 	need_mob_update = affected_mob.adjust_oxy_loss(-1.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)

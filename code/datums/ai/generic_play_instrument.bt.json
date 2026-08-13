@@ -65,7 +65,7 @@
 						"behavior": "/datum/bt_node/ai_behavior/setup_instrument",
 						"vars": {
 							"song_instrument_key": "BB_SONG_INSTRUMENT",
-							"song_lines_key": "song_lines"
+							"song_lines_key": "BB_SONG_LINES"
 						}
 					},
 					{

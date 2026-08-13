@@ -180,7 +180,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/dna_infuser/relaymove(mob/living/user, direction)
-	if(user.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(user))
 		if(COOLDOWN_FINISHED(src, message_cooldown))
 			COOLDOWN_START(src, message_cooldown, 4 SECONDS)
 			to_chat(user, span_warning("[src]'s door won't budge!"))

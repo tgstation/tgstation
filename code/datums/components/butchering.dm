@@ -138,7 +138,7 @@
 	var/speed_modifier = 1
 	if (!target.owner)
 		speed_modifier = 0.5
-	else if (target.owner.stat < UNCONSCIOUS)
+	else if (!IS_UNCONSCIOUS(target))
 		speed_modifier = 1.5 // yeowch
 
 	var/limb_descriptor = (target.owner ? "[target.owner]'s [target.plaintext_zone]" : target)
@@ -161,14 +161,17 @@
 		target.drop_organs(user, TRUE)
 		return
 
-	if (!length(target.butcher_drops))
+	var/list/target_butcher_drops = target.get_butcher_drops()
+	if (!LAZYLEN(target_butcher_drops))
 		to_chat(user, span_warning("There is nothing left inside [limb_descriptor]!"))
 		return
 
 	if (target.body_zone == BODY_ZONE_CHEST && target.owner)
 		// Cannot butcher the chest until we hack off all the other limbs
 		for (var/obj/item/bodypart/limb as anything in target.owner.get_bodyparts())
-			if (limb != target && limb.butcher_drops && limb.butcher_replacement)
+			if(limb == target)
+				continue
+			if (LAZYLEN(limb.get_butcher_drops()) && limb.butcher_replacement)
 				to_chat(user, span_warning("You need to butcher all other limbs first!"))
 				return
 
@@ -187,8 +190,8 @@
 	var/list/failures = list()
 	var/list/bonuses = list()
 
-	for (var/obj/item/drop_type as anything in target.butcher_drops)
-		var/amount = target.butcher_drops[drop_type] || 1
+	for (var/obj/item/drop_type as anything in target_butcher_drops)
+		var/amount = target_butcher_drops[drop_type] || 1
 		var/is_stack = ispath(drop_type, /obj/item/stack)
 
 		for (var/i in 1 to amount)

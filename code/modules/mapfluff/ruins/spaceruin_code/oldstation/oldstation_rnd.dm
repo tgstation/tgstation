@@ -4,7 +4,8 @@
 	req_access = list(ACCESS_AWAY_SCIENCE)
 
 /obj/machinery/rnd/server/oldstation/Initialize(mapload)
-	var/datum/techweb/oldstation_web = locate(/datum/techweb/oldstation) in SSresearch.techwebs
+	var/datum/techweb/oldstation/oldstation_web = locate(/datum/techweb/oldstation) in SSresearch.techwebs
+	oldstation_web ||= new()
 	stored_research = oldstation_web
 	return ..()
 
@@ -26,7 +27,7 @@
 /obj/machinery/rnd/server/oldstation/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/research_notes) && stored_research)
 		var/obj/item/research_notes/research_notes = tool
-		stored_research.add_point_list(list(TECHWEB_POINT_TYPE_GENERIC = research_notes.value))
+		stored_research.adjust_points(TECHWEB_POINT_TYPE_GENERIC, research_notes.value)
 		playsound(src, 'sound/machines/copier.ogg', 50, TRUE)
 		qdel(research_notes)
 		return ITEM_INTERACT_SUCCESS

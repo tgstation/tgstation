@@ -186,7 +186,7 @@
 
 /mob/living/basic/bot/cleanbot/examine(mob/user)
 	. = ..()
-	if(ascended && user.stat == CONSCIOUS && user.client)
+	if(ascended && !IS_UNCONSCIOUS_OR_CRIT(user) && user.client)
 		user.client.give_award(/datum/award/achievement/misc/cleanboss, user)
 	if(isnull(weapon))
 		return

@@ -206,7 +206,7 @@
 /mob/living/basic/blood_worm/set_stat(new_stat)
 	. = ..()
 
-	if (host && stat != CONSCIOUS)
+	if (host && IS_UNCONSCIOUS_OR_CRIT(src))
 		leave_host()
 
 /mob/living/basic/blood_worm/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
@@ -268,6 +268,14 @@
 /obj/effect/temp_visual/blood_worm_invade_host/Initialize(mapload, effect_name)
 	. = ..()
 	icon_state = "invade-[effect_name]"
+
+/mob/living/basic/blood_worm/lazarus_revive(mob/living/reviver, malfunctioning)
+	if(!IS_BLOODWORM(src)) //checks to see if this isn't just a poly'd bloodworm
+		return ..()
+
+	revive(HEAL_ALL)
+	to_chat(reviver, span_userdanger("[src] resists the control of the injector!"))
+	balloon_alert(reviver, "can't control!")
 
 /mob/living/basic/blood_worm/hatchling
 	name = "hatchling blood worm"

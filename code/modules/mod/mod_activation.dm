@@ -79,7 +79,7 @@
 		playsound(src, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	if(part_datum.can_overslot)
 		var/obj/item/overslot = wearer.get_item_by_slot(part.slot_flags)
-		if(istype(overslot, /obj/item/clothing))
+		if(isclothing(overslot))
 			part_datum.overslotting = overslot
 			transfer_part_to_loc(overslot, part, force = TRUE, preserve_suit_storage = can_preserve_suit_storage(part, wearer.s_store))
 			RegisterSignal(part, COMSIG_ATOM_EXITED, PROC_REF(on_overslot_exit))
@@ -113,7 +113,7 @@
 	return FALSE
 
 /obj/item/mod/control/proc/can_preserve_suit_storage(obj/item/new_suit, obj/item/stored_item)
-	if(!istype(new_suit, /obj/item/clothing) || !stored_item)
+	if(!isclothing(new_suit) || !stored_item)
 		return FALSE
 	if(HAS_TRAIT(stored_item, TRAIT_NODROP))
 		return FALSE
