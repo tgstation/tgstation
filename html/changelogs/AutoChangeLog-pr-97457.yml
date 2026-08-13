@@ -1,5 +1,0 @@
-author: "SirNightKnight, JohnFulpWillard"
-delete-after: True
-changes:
-  - qol: "Decreased the volume of slime footsteps."
-  - qol: "Slimes now have new HUD entries from the information that was previously in the stat panel."

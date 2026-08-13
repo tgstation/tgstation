@@ -1,5 +1,0 @@
-author: "mrmanlikesbt"
-delete-after: True
-changes:
-  - refactor: "Techweb and design code has been refactored."
-  - bugfix: "Fixed anomaly cores not granting research points in the destructive analyzer."

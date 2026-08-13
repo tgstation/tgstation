@@ -361,3 +361,31 @@
   - map: Added several holopads to Kilostation
   siliconOpossum:
   - bugfix: Wall signs will no longer say you're changing them when someone else is
+2026-08-13:
+  Aliceee2ch:
+  - qol: Medical Records console now uses dropdowns for blood type field instead of
+      manual typing
+  ArcaneMusic:
+  - balance: Golems now have slightly less aggressive metabolism.
+  - bugfix: Golem foods now offer different levels of nutrition! Finally!
+  - balance: Golems now offer more nutrition from rarer ores.
+  - balance: Golems now get further additional nutrition from eating processed ore
+      sheets instead of raw ore.
+  - map: The free golem ship now has shutters to block wildlife from attacking while
+      inside.
+  PapaMichael:
+  - bugfix: You no longer hear radio TTS while unconscious
+  SirNightKnight, JohnFulpWillard:
+  - qol: Decreased the volume of slime footsteps.
+  - qol: Slimes now have new HUD entries from the information that was previously
+      in the stat panel.
+  Y0SH1M4S73R:
+  - bugfix: revenants should far less frequently be rendered vulnerable for far longer
+      than they should be
+  lelandkemble:
+  - bugfix: General Beepsky no longer provides an extra free esword when destroyed
+  - qol: Added an examine hint on clogged vents that tells you about using a plunger
+      on it
+  mrmanlikesbt:
+  - refactor: Techweb and design code has been refactored.
+  - bugfix: Fixed anomaly cores not granting research points in the destructive analyzer.

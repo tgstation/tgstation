@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "General Beepsky no longer provides an extra free esword when destroyed"

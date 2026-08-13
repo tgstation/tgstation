@@ -1,8 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - balance: "Golems now have slightly less aggressive metabolism."
-  - bugfix: "Golem foods now offer different levels of nutrition! Finally!"
-  - balance: "Golems now offer more nutrition from rarer ores."
-  - balance: "Golems now get further additional nutrition from eating processed ore sheets instead of raw ore."
-  - map: "The free golem ship now has shutters to block wildlife from attacking while inside."
