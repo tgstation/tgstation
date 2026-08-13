@@ -1,0 +1,6 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "Weakpoints, and weakpoints spawned by weakpoints being detonated, should no longer be spawning invisible."
+  - balance: "The number of weakpoints that spawn on regular maps has increased from 3 to 5."
+  - balance: "The number of weakpoints that spawn on the \"Structural Weaknesses\" station trait now spawns 6 to 12, instead of 4 to 8 weakpoints."
