@@ -1,0 +1,10 @@
+author: "Fghj240"
+delete-after: True
+changes:
+  - rscadd: "Added a new virus chem, Exotic Agar, that gives you level 9 symptoms"
+  - balance: "Reorganized virus symptoms among 9 levels instead of 8."
+  - balance: "The dizziness virus symptom has higher stats and slightly shorter status effect duration"
+  - balance: "aggressive healing is now cured by spaceacillin like every other healing symptom"
+  - rscadd: "Added a new symptom, Hypertension. Unlike regular hypertension, this one causes blood vessels to violently rupture all across your body."
+  - rscadd: "Added a new symptom, Mutated Regeneration. It heals you."
+  - code_imp: "improved code around suppressing virology symptom fluff text"
