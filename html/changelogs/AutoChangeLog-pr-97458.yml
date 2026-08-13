@@ -1,0 +1,4 @@
+author: "RusselNotSCP"
+delete-after: True
+changes:
+  - bugfix: "Flesh heretics now benefit from eating the organs of non-meaty victims, such as fish and podpeople."
