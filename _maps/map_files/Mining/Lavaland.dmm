@@ -1726,6 +1726,13 @@
 	dir = 1
 	},
 /area/mine/production)
+"jy" = (
+/obj/machinery/biogenerator,
+/obj/effect/turf_decal/trimline/green/filled/line{
+	dir = 5
+	},
+/turf/open/floor/iron/dark,
+/area/mine/laborcamp)
 "jA" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -4113,9 +4120,6 @@
 /area/mine/laborcamp/security)
 "vO" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/green/filled/corner{
-	dir = 4
-	},
 /obj/machinery/hydroponics/constructable,
 /obj/item/seeds/tomato,
 /turf/open/floor/iron/dark,
@@ -5025,6 +5029,7 @@
 /obj/effect/turf_decal/trimline/green/filled/line{
 	dir = 6
 	},
+/obj/item/kirbyplants/random,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "BK" = (
@@ -5246,9 +5251,8 @@
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "Dj" = (
-/obj/machinery/biogenerator,
-/obj/effect/turf_decal/trimline/green/filled/line{
-	dir = 1
+/obj/effect/turf_decal/trimline/green/filled/corner{
+	dir = 4
 	},
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
@@ -8403,10 +8407,10 @@
 "VS" = (
 /obj/machinery/hydroponics/constructable,
 /obj/effect/decal/cleanable/dirt,
-/obj/effect/turf_decal/trimline/green/filled/line{
+/obj/item/seeds/potato,
+/obj/effect/turf_decal/trimline/green/filled/corner{
 	dir = 4
 	},
-/obj/item/seeds/potato,
 /turf/open/floor/iron/dark,
 /area/mine/laborcamp)
 "VU" = (
@@ -8765,7 +8769,7 @@
 /turf/open/floor/iron/textured_large,
 /area/mine/living_quarters)
 "XW" = (
-/obj/item/kirbyplants/random,
+/obj/machinery/produceporter,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp)
 "XX" = (
@@ -28883,7 +28887,7 @@ aj
 aj
 rX
 rX
-rX
+jy
 Dj
 oN
 Jf
@@ -29139,7 +29143,7 @@ aj
 pU
 aj
 aj
-aj
+rX
 rX
 OO
 BH

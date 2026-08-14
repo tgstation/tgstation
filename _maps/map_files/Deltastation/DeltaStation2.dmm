@@ -43424,6 +43424,7 @@
 	},
 /obj/item/paper_bin,
 /obj/item/pen,
+/obj/effect/mapping_helpers/produce_delivery,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "kGA" = (
@@ -71332,6 +71333,7 @@
 	},
 /obj/item/storage/bag/plants,
 /obj/item/reagent_containers/cup/watering_can,
+/obj/effect/mapping_helpers/produce_delivery,
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "rES" = (

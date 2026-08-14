@@ -64748,6 +64748,7 @@
 	pixel_x = 5;
 	pixel_y = 2
 	},
+/obj/effect/mapping_helpers/produce_delivery,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "rkM" = (
@@ -65362,6 +65363,7 @@
 	id = "hydropony_shutters";
 	name = "Hydroponics Shutters"
 	},
+/obj/effect/mapping_helpers/produce_delivery,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/kitchen)
 "rtf" = (

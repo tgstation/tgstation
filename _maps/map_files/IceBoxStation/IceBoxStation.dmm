@@ -47030,9 +47030,10 @@
 "ntE" = (
 /obj/machinery/status_display/ai/directional/north,
 /obj/item/aquarium_kit,
-/obj/structure/rack,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/siding/dark,
+/obj/structure/table,
+/obj/effect/mapping_helpers/produce_delivery,
 /turf/open/floor/iron/checker,
 /area/station/hallway/secondary/service)
 "ntF" = (
@@ -67110,6 +67111,7 @@
 /obj/item/pen{
 	pixel_x = -5
 	},
+/obj/effect/mapping_helpers/produce_delivery,
 /turf/open/floor/iron,
 /area/station/service/kitchen/coldroom)
 "sTb" = (

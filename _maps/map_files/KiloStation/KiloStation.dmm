@@ -3166,6 +3166,7 @@
 	name = "Hydroponics Desk";
 	req_access = list("hydroponics")
 	},
+/obj/effect/mapping_helpers/produce_delivery,
 /turf/open/floor/iron,
 /area/station/service/hydroponics)
 "aXS" = (
@@ -25106,6 +25107,7 @@
 	name = "Kitchen Service Desk";
 	req_access = list("hydroponics")
 	},
+/obj/effect/mapping_helpers/produce_delivery,
 /turf/open/floor/iron,
 /area/station/service/kitchen)
 "ibi" = (

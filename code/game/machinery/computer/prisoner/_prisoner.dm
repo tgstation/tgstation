@@ -26,7 +26,9 @@
 	id_eject(user)
 	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/computer/prisoner/proc/id_insert(mob/user, obj/item/card/id/advanced/prisoner/new_id)
+/obj/machinery/computer/prisoner/proc/id_insert(mob/living/user, obj/item/card/id/advanced/prisoner/new_id)
+	if(!new_id)
+		new_id = user.get_idcard(TRUE)
 	if(!istype(new_id))
 		return
 	if(!isnull(contained_id))
