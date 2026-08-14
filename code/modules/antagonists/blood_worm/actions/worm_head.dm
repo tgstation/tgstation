@@ -38,9 +38,9 @@
 
 
 	if(istype(current_host_head, /obj/item/bodypart/head/blood_worm))
-		worm.remove_bloodworm_head(host) // how to place here retract_head proc?
+		retract_head(host, worm) // how to place here retract_head proc?
 	else
-		worm.grant_bloodworm_head(host) // same but for another
+		extend_head(host, worm) // same but for another
 	return ..()
 
 // okay, here will be the actually grow, not the action, but actuall process, which can be called by different ways
