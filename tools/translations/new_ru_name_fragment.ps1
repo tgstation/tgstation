@@ -25,5 +25,6 @@ gender = "plural"
 "@
 
 [IO.File]::WriteAllText($path, $body + "`n", [Text.UTF8Encoding]::new($false))
-Write-Host "[ru_names] $path"
-$path
+
+Write-Host "New translation fragment created at:"
+[Uri]::new($path).AbsoluteUri

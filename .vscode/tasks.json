@@ -1,5 +1,12 @@
 {
 	"version": "2.0.0",
+	"inputs": [
+		{
+			"id": "ruNameFragment",
+			"type": "promptString",
+			"description": "Enter original name of the object to translate"
+		}
+	],
 	"tasks": [
 		{
 			"type": "process",
@@ -229,9 +236,16 @@
 			"label": "tgui: rebuild tgfont"
 		},
 		{
-			"type": "shell",
-			"command": ".\\tools\\translations\\new_ru_name_fragment.cmd",
-			"args": ["${selectedText}"],
+			"type": "process",
+			"command": "powershell.exe",
+			"args": [
+				"-NoLogo",
+				"-ExecutionPolicy",
+				"Bypass",
+				"-File",
+				"${workspaceFolder}\\tools\\translations\\new_ru_name_fragment.ps1",
+				"${input:ruNameFragment}"
+			],
 			"presentation": {
 				"reveal": "always",
 				"panel": "dedicated",
