@@ -59,14 +59,14 @@
 
 	var/list/saved_head_content = list() // organs, implants, huds
 	var/obj/item/bodypart/head/new_host_head_to_attach = new() // will it work?
-	var/current_worm_head = target:get_bodypart(BODY_ZONE_HEAD)
+	var/current_worm_head = host.get_bodypart(BODY_ZONE_HEAD)
 
 	for(var/obj/item/organ/organ_to_juggle in current_worm_head:contents)
 		if(istype(organ_to_juggle, /obj/item/organ))
 			saved_head_content += organ_to_juggle
 			organ_to_juggle.Remove(target, special = TRUE)
 
-	current_worm_head:drop_limb(special = TRUE)
+	current_worm_head.drop_limb(special = TRUE)
 
 	// now it will be with DNA of the owner, but also
 	// it will not loose the implants, cause they will be inserted
