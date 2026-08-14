@@ -1,6 +1,8 @@
 #define GET_TARGETING_STRATEGY(targeting_type) SSai_controllers.targeting_strategies[targeting_type]
 #define GET_TARGET_PRIORITY_STRATEGY(targeting_type) SSai_controllers.target_priority_strategies[targeting_type]
 #define GET_TARGET_SOURCE(source_type) SSai_controllers.target_sources[source_type]
+/// Clears the blackboard latch used by a [/datum/bt_node/decorator/do_once].
+#define UNLOCK_DO_ONCE(controller, lock_key) ##controller.clear_blackboard_key(lock_key)
 
 /**
  * Returns TRUE if the target should be rejected based on factions.
@@ -21,6 +23,9 @@
 #define TARGET_KEEP_IF_SET 2
 /// Always run the full candidate search, ignoring any existing target.
 #define TARGET_ALWAYS_SEARCH 3
+/// Revalidate an existing target, and only search for a replacement while it remains valid if a target priority strategy is configured.
+#define TARGET_RESELECT_WITH_SELECTION 4
+
 #define HAS_AI_CONTROLLER_TYPE(thing, type) istype(thing?.ai_controller, type)
 
 //AI controller flags

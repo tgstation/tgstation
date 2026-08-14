@@ -1095,7 +1095,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	user.log_message("used [src] on [key_name(renaming_mob)], letting them rename themselves into [new_name].", LOG_GAME)
 
 	// pass null as first arg to not update records or ID/PDA
-	renaming_mob.fully_replace_character_name(null, new_name)
+	renaming_mob.fully_replace_character_name(null, new_name, log_new_name = TRUE)
 
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS

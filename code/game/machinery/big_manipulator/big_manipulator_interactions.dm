@@ -48,7 +48,7 @@
 	step_tasks()
 
 /// Safely schedules the next step to prevent overlapping.
-/obj/machinery/big_manipulator/proc/schedule_next_cycle(time_seconds = BASE_INTERACTION_TIME)
+/obj/machinery/big_manipulator/proc/schedule_next_cycle(time_seconds = BASE_TASK_DELAY)
 	if(next_cycle_scheduled || stopping)
 		return
 
@@ -116,42 +116,57 @@
 	finish_manipulation()
 	return TRUE
 
-/obj/machinery/big_manipulator/proc/try_use_thing(datum/manipulator_task/cargo/interact/destination_task, work_done_at_point = FALSE)
-	if(stopping)
+/obj/machinery/big_manipulator/proc/try_use_thing(datum/manipulator_task/cargo/interact/destination_task)
+	if(stopping || use_in_progress)
 		return
+
+	use_in_progress = TRUE
 
 	var/obj/obj_resolve = held_object?.resolve()
 	var/mob/living/carbon/human/species/monkey/monkey_resolve = monkey_worker?.resolve()
 	var/destination_turf = destination_task.interaction_turf
 
 	if(!obj_resolve || QDELETED(obj_resolve) || obj_resolve.loc != src)
+		use_in_progress = FALSE
 		finish_manipulation()
-		return FALSE
+		return
 
 	if(!monkey_resolve || !destination_turf)
+		use_in_progress = FALSE
 		finish_manipulation()
-		return FALSE
+		return
 
 	if(monkey_resolve.loc != src)
+		use_in_progress = FALSE
 		finish_manipulation()
-		return FALSE
+		return
 
 	var/obj/item/held_item = obj_resolve
-	var/atom/type_to_use = destination_task.find_type_priority(destination_task.skip_anchored)
+	var/atom/type_to_use = destination_task.find_type_priority(destination_task.skip_anchored, TRUE)
 
 	if(isnull(type_to_use))
-		drop_held_after_use(destination_task)
-		return FALSE
+		use_in_progress = FALSE
+		finish_manipulation()
+		return
 
 	if(isitem(type_to_use) && !destination_task.check_filters_for_atom(type_to_use))
-		drop_held_after_use(destination_task)
-		return FALSE
+		use_in_progress = FALSE
+		finish_manipulation()
+		return
 
 	if(istype(destination_task, /datum/manipulator_task/cargo/interact) && destination_task.should_use_filters && isitem(type_to_use) && !destination_task.check_filters_for_atom(type_to_use))
-		drop_held_after_use(destination_task)
-		return FALSE
+		use_in_progress = FALSE
+		finish_manipulation()
+		return
 
 	var/original_loc = held_item.loc
+	var/turf/target_turf = get_turf(type_to_use)
+
+	// Temporarily move monkey adjacent to target for Adjacency() checks
+	if(target_turf && get_turf(src) != target_turf)
+		var/turf/adjacent_turf = get_step(target_turf, get_dir(target_turf, get_turf(src)))
+		if(adjacent_turf && !isclosedturf(adjacent_turf))
+			monkey_resolve.forceMove(adjacent_turf)
 
 	monkey_resolve.put_in_active_hand(held_item)
 	if(held_item.GetComponent(/datum/component/two_handed))
@@ -164,65 +179,25 @@
 	do_attack_animation(destination_turf)
 	manipulator_arm.do_attack_animation(destination_turf)
 
+	restore_monkey_tracking(monkey_resolve)
+
 	if(QDELETED(held_item) || !held_item || (held_item.loc != monkey_resolve && held_item.loc != original_loc))
 		held_object = null
 		manipulator_arm.update_claw(null)
+		use_in_progress = FALSE
 		finish_manipulation()
-		return TRUE
+		return
 
 	if(held_item.loc == monkey_resolve)
 		held_item.forceMove(original_loc)
 
-	check_for_cycle_end_drop(destination_task, TRUE, TRUE)
-
-/obj/machinery/big_manipulator/proc/check_for_cycle_end_drop(datum/manipulator_task/cargo/interact/destination_task, item_used_this_iteration, work_done_at_point = FALSE)
-	var/obj/obj_resolve = held_object?.resolve()
-	var/turf/drop_turf = destination_task.interaction_turf
-
-	if(!obj_resolve || obj_resolve.loc != src || QDELETED(obj_resolve))
-		finish_manipulation()
+	use_in_progress = FALSE
+	current_task = null
+	SStgui.update_uis(src)
+	if(stopping)
+		complete_stopping_task()
 		return
-
-	if(destination_task.worker_interaction == WORKER_SINGLE_USE && item_used_this_iteration)
-		obj_resolve.forceMove(drop_turf)
-		obj_resolve.dir = get_dir(get_turf(obj_resolve), get_turf(src))
-		finish_manipulation()
-		return
-
-	if(!on)
-		finish_manipulation()
-		return
-
-	if(item_used_this_iteration)
-		addtimer(CALLBACK(src, PROC_REF(try_use_thing), destination_task, TRUE), BASE_INTERACTION_TIME * 2)
-		return
-
-	drop_held_after_use(destination_task)
-
-/obj/machinery/big_manipulator/proc/drop_held_after_use(datum/manipulator_task/cargo/interact/destination_task)
-	var/obj/obj_resolve = held_object?.resolve()
-	var/turf/drop_turf = destination_task.interaction_turf
-
-	switch(destination_task.use_post_interaction)
-		if(POST_INTERACTION_DROP_AT_POINT)
-			obj_resolve.forceMove(drop_turf)
-			obj_resolve.dir = get_dir(get_turf(obj_resolve), get_turf(src))
-			finish_manipulation()
-
-		if(POST_INTERACTION_DROP_AT_MACHINE)
-			obj_resolve.forceMove(get_turf(src))
-			finish_manipulation()
-
-		if(POST_INTERACTION_DROP_NEXT_FITTING)
-			var/datum/manipulator_task/next = master_tasking.get_next_task(tasks, src)
-			if(istype(next, /datum/manipulator_task/cargo/dropoff_base))
-				rotate_to_point(next, next, TYPE_PROC_REF(/datum/manipulator_task/cargo/dropoff_base, try_dropoff))
-				return
-			obj_resolve.forceMove(drop_turf)
-			obj_resolve.dir = get_dir(get_turf(obj_resolve), get_turf(src))
-			finish_manipulation()
-		else
-			addtimer(CALLBACK(src, PROC_REF(try_use_thing), destination_task, TRUE), BASE_INTERACTION_TIME * 2)
+	schedule_next_cycle()
 
 /obj/machinery/big_manipulator/proc/throw_thing(datum/manipulator_task/cargo/dropoff_base/throw/throw_task)
 	var/drop_turf = throw_task.interaction_turf
@@ -246,14 +221,21 @@
 		finish_manipulation()
 		return
 
-	var/atom/type_to_use = destination_task.find_type_priority(destination_task.skip_anchored)
+	var/atom/type_to_use = destination_task.find_type_priority(destination_task.skip_anchored, TRUE)
 	if(isnull(type_to_use))
-		check_end_of_use_for_use_with_empty_hand(destination_task, FALSE)
+		finish_manipulation()
 		return
 
 	if(destination_task.should_use_filters && isitem(type_to_use) && !destination_task.check_filters_for_atom(type_to_use))
-		check_end_of_use_for_use_with_empty_hand(destination_task, FALSE)
+		finish_manipulation()
 		return
+
+	// temporarily move monkey adjacent to target for Adjacency() checks
+	var/turf/target_turf = get_turf(type_to_use)
+	if(target_turf && get_turf(src) != target_turf)
+		var/turf/adjacent_turf = get_step(target_turf, get_dir(target_turf, get_turf(src)))
+		if(adjacent_turf && !isclosedturf(adjacent_turf))
+			monkey_resolve.forceMove(adjacent_turf)
 
 	var/old_combat_mode = monkey_resolve.combat_mode
 	monkey_resolve.combat_mode = destination_task.worker_combat_mode
@@ -265,25 +247,26 @@
 		do_attack_animation(dest_turf)
 		manipulator_arm.do_attack_animation(dest_turf)
 
-	check_end_of_use_for_use_with_empty_hand(destination_task, TRUE)
+	restore_monkey_tracking(monkey_resolve)
 
-/obj/machinery/big_manipulator/proc/check_end_of_use_for_use_with_empty_hand(datum/manipulator_task/cargo/interact/destination_task, item_was_used = TRUE)
-	if(!on || destination_task.worker_interaction != WORKER_EMPTY_USE)
-		finish_manipulation()
+	finish_manipulation()
+
+/// Restores monkey tracking after a temporary move outside src cleared it via Exited.
+/obj/machinery/big_manipulator/proc/restore_monkey_tracking(mob/living/carbon/human/species/monkey/monkey)
+	if(monkey.loc != src)
+		monkey.forceMove(src)
+	if(monkey_worker?.resolve())
 		return
-
-	if(!item_was_used)
-		finish_manipulation()
-		return
-
-	addtimer(CALLBACK(src, PROC_REF(use_thing_with_empty_hand), destination_task), BASE_INTERACTION_TIME)
+	monkey_worker = WEAKREF(monkey)
+	manipulator_arm.vis_contents += monkey
+	monkey.add_offsets(
+		type,
+		x_add = 32 + manipulator_arm.calculate_item_offset(TRUE, pixels_to_offset = 16),
+		y_add = 32 + manipulator_arm.calculate_item_offset(FALSE, pixels_to_offset = 16)
+	)
 
 /// Completes the current manipulation action and schedules the next step.
 /obj/machinery/big_manipulator/proc/finish_manipulation()
-	if(held_object)
-		var/obj/resolved = held_object.resolve()
-		if(resolved && resolved.loc == src)
-			resolved.forceMove(drop_location())
 	held_object = null
 	manipulator_arm.update_claw(null)
 	current_task = null

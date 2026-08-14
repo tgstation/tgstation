@@ -2,7 +2,7 @@
 	name = "biological battery"
 	icon_state = "stomach-p" //Welp. At least it's more unique in functionaliy.
 	desc = "A crystal-like organ that stores the electric charge of ethereals."
-	organ_traits = list(TRAIT_NOHUNGER) // We have our own hunger mechanic.
+	organ_traits = list(TRAIT_NOHUNGER, TRAIT_ETHEREAL_METABOLISM) // We have our own hunger mechanic.
 	/// Where the energy of the stomach is stored.
 	var/obj/item/stock_parts/power_store/cell
 	///used to keep ethereals from spam draining power sources
@@ -53,6 +53,17 @@
 
 /obj/item/organ/stomach/ethereal/proc/on_multitool_act(atom/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
+
+	// Checks to ensure we're not doing surgery on a robotic part.
+	if(!owner)
+		return multitool_act(user, tool)
+
+	var/obj/item/bodypart/targeted_part = owner.get_bodypart(user.zone_selected)
+	if(isnull(targeted_part) || targeted_part.bodytype != BODYTYPE_ROBOTIC)
+		return multitool_act(user, tool)
+
+	if(HAS_TRAIT(targeted_part, TRAIT_READY_TO_OPERATE))
+		return
 
 	return multitool_act(user, tool)
 

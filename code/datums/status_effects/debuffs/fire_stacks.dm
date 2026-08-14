@@ -140,7 +140,7 @@
 	/// Cached particle type
 	var/cached_state
 
-/datum/status_effect/fire_handler/fire_stacks/get_examine_text()
+/datum/status_effect/fire_handler/fire_stacks/get_examine_text(mob/examiner)
 	if(owner.on_fire)
 		return
 
@@ -174,7 +174,7 @@
 	if(!on_fire)
 		return TRUE
 
-	var/decay_multiplier = HAS_TRAIT(owner, TRAIT_HUSK) ? 2 : 1 // husks decay twice as fast
+	var/decay_multiplier = HAS_TRAIT_NOT_FROM(owner, TRAIT_HUSK, /datum/status_effect/zombie::id) ? 2 : 1 // husks decay twice as fast
 	adjust_stacks(owner.fire_stack_decay_rate * decay_multiplier * seconds_between_ticks)
 	SEND_SIGNAL(owner, COMSIG_FIRE_STACKS_UPDATED, stacks)
 
@@ -338,7 +338,7 @@
 	QDEL_NULL(slipperiness)
 	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
 
-/datum/status_effect/fire_handler/wet_stacks/get_examine_text()
+/datum/status_effect/fire_handler/wet_stacks/get_examine_text(mob/examiner)
 	return "[owner.p_They()] look[owner.p_s()] a little soaked."
 
 /datum/status_effect/fire_handler/wet_stacks/tick(seconds_between_ticks)

@@ -41,6 +41,9 @@
 	if(.)
 		return
 
+	if(book_open)
+		return
+
 	open_animation()
 	update_weight_class(WEIGHT_CLASS_NORMAL)
 	addtimer(CALLBACK(src, PROC_REF(close_book)), 30 SECONDS)
@@ -127,7 +130,7 @@
 	for(var/datum/reagent/blood/usable_reagent as anything in held_offhand.reagents?.reagent_list)
 		if(!istype(usable_reagent, /datum/reagent/blood))
 			continue
-		blood_samples += usable_reagent.data["blood_DNA"]
+		blood_samples += usable_reagent.data[BLOOD_DATA_DNA]
 	if(isnull(blood_samples))
 		user.balloon_alert(user, "no blood!")
 		return ITEM_INTERACT_BLOCKING

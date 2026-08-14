@@ -133,6 +133,7 @@
 	transmute_text = "Transmute a lamp, lantern, or seclight, a pair of eyes, a flash, and four lit candles."
 	gain_text = "The Nightwatcher did not venture out in the dark. That was foolish, even the Watch knew that. \
 		Their lantern burned with a light that could burn the sun."
+	cost = 2
 	result_atoms = list(/obj/item/flashlight/lantern/heretic)
 	required_atoms = list(
 		list(/obj/item/flashlight/lamp, /obj/item/flashlight/lantern, /obj/item/flashlight/seclite) = 1,

@@ -1,9 +1,11 @@
-import { useMemo } from 'react';
+import { useAtomValue } from 'jotai';
+import { useMemo, useRef } from 'react';
 import {
   Box,
   Button,
   ColorBox,
   Divider,
+  Floating,
   Icon,
   Input,
   Section,
@@ -11,6 +13,7 @@ import {
   TextArea,
 } from 'tgui-core/components';
 import { chatRenderer } from '../chat/renderer';
+import { characterProfilesAtom, currentCharacterAtom } from '../game/atoms';
 import { WARN_AFTER_HIGHLIGHT_AMT } from './constants';
 import { useHighlights } from './use-highlights';
 
@@ -92,7 +95,33 @@ function TextHighlightSetting(props) {
     highlightWholeMessage,
     matchWord,
     matchCase,
+    jobFilter,
+    characterFilter,
   } = highlightSettingById[id];
+  const currentCharacter = useAtomValue(currentCharacterAtom);
+  const characterProfiles = useAtomValue(characterProfilesAtom);
+  const jobsPopover = useRef<{ close: () => void }>(null);
+  const jobCount = jobFilter.split(',').filter((str) => str.trim()).length;
+
+  // Known characters plus any selected names no longer in the save slots,
+  // so stale selections stay visible and can be unchecked
+  const selectableCharacters = useMemo(() => {
+    const known = new Set([...characterProfiles, ...characterFilter]);
+    if (currentCharacter) {
+      known.add(currentCharacter);
+    }
+    return [...known];
+  }, [characterProfiles, characterFilter, currentCharacter]);
+
+  function toggleCharacter(name: string): void {
+    const draft = characterFilter.includes(name)
+      ? characterFilter.filter((entry) => entry !== name)
+      : [...characterFilter, name];
+    updateHighlight({
+      id,
+      characterFilter: draft,
+    });
+  }
 
   const highlightRegex = useMemo(
     () => extractRegex(highlightText),
@@ -125,13 +154,6 @@ function TextHighlightSetting(props) {
           >
             Enabled
           </Button.Checkbox>
-          <Button
-            color="transparent"
-            icon="times"
-            onClick={() => removeHighlight(id)}
-          >
-            Delete
-          </Button>
         </Stack.Item>
         <Stack.Item>
           <Button.Checkbox
@@ -191,6 +213,86 @@ function TextHighlightSetting(props) {
               })
             }
           />
+        </Stack.Item>
+      </Stack>
+      <Stack mb={1} color="label" align="baseline">
+        <Stack.Item grow>
+          <Floating
+            placement="bottom-start"
+            contentClasses="Dropdown__menu--wrapper"
+            content={
+              <div className="Dropdown__menu">
+                {selectableCharacters.map((name) => (
+                  <div key={name}>
+                    <Button.Checkbox
+                      checked={characterFilter.includes(name)}
+                      onClick={() => toggleCharacter(name)}
+                    >
+                      {name}
+                    </Button.Checkbox>
+                  </div>
+                ))}
+                {selectableCharacters.length === 0 && (
+                  <Box p={0.5} fontSize="0.9em" color="label">
+                    No known characters yet.
+                    <br />
+                    Join the game once to fill this list.
+                  </Box>
+                )}
+              </div>
+            }
+          >
+            <Box inline>
+              <Button color="transparent" icon="user">
+                {characterFilter.length
+                  ? `Characters: ${characterFilter.length}`
+                  : 'Characters: all'}
+              </Button>
+            </Box>
+          </Floating>
+          <Floating
+            ref={jobsPopover}
+            placement="bottom-start"
+            contentClasses="Dropdown__menu--wrapper"
+            contentStyles={{ width: '20em' }}
+            content={
+              <div className="Dropdown__menu">
+                <Input
+                  fluid
+                  placeholder="Job titles, e.g. (Captain, Assistant)"
+                  value={jobFilter}
+                  onBlur={(value) =>
+                    updateHighlight({
+                      id,
+                      jobFilter: value,
+                    })
+                  }
+                  onEnter={(value) => {
+                    updateHighlight({
+                      id,
+                      jobFilter: value,
+                    });
+                    jobsPopover.current?.close();
+                  }}
+                />
+              </div>
+            }
+          >
+            <Box inline>
+              <Button color="transparent" icon="user-tag">
+                {jobCount ? `Jobs: ${jobCount}` : 'Jobs: all'}
+              </Button>
+            </Box>
+          </Floating>
+        </Stack.Item>
+        <Stack.Item>
+          <Button
+            color="transparent"
+            icon="times"
+            onClick={() => removeHighlight(id)}
+          >
+            Delete
+          </Button>
         </Stack.Item>
       </Stack>
       <TextArea

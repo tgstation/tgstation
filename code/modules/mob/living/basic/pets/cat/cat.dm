@@ -61,27 +61,6 @@
 	///callback for after a kitten is born
 	var/datum/callback/post_birth_callback
 
-/datum/emote/cat
-	abstract_type = /datum/emote/cat
-	mob_type_allowed_typecache = /mob/living/basic/pet/cat
-	mob_type_blacklist_typecache = list()
-
-/datum/emote/cat/meow
-	key = "meow"
-	key_third_person = "meows"
-	message = "meows!"
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	vary = TRUE
-	sound = SFX_CAT_MEOW
-
-/datum/emote/cat/purr
-	key = "purr"
-	key_third_person = "purrs"
-	message = "purrs."
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-	vary = TRUE
-	sound = SFX_CAT_PURR
-
 /mob/living/basic/pet/cat/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/obeys_commands, pet_commands)
@@ -93,7 +72,7 @@
 	AddElement(/datum/element/can_be_held)
 	add_cell_sample()
 	add_verb(src, /mob/living/proc/toggle_resting)
-	add_traits(list(TRAIT_CATLIKE_GRACE, TRAIT_VENTCRAWLER_ALWAYS, TRAIT_WOUND_LICKER, TRAIT_COLORBLIND), INNATE_TRAIT)
+	add_traits(list(TRAIT_CAT_EMOTES_ALLOWED, TRAIT_CATLIKE_INSTINCT, TRAIT_VENTCRAWLER_ALWAYS, TRAIT_WOUND_LICKER, TRAIT_COLORBLIND), INNATE_TRAIT)
 	ai_controller.set_blackboard_key(BB_HUNTABLE_PREY, typecacheof(huntable_items))
 	if(can_breed)
 		add_breeding_component()

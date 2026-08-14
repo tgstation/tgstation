@@ -83,8 +83,8 @@
 	blink_spell.Grant(src)
 	ai_controller.set_blackboard_key(BB_WIZARD_BLINK_SPELL, blink_spell)
 
-/mob/living/basic/wizard/init_unconscious_appearance()
-	add_generic_humanoid_static_appearance()
+/mob/living/basic/wizard/get_unconscious_appearance()
+	return get_generic_humanoid_static_appearance()
 
 /// Uses the colors and loadout of the original wizard simplemob
 /mob/living/basic/wizard/classic
