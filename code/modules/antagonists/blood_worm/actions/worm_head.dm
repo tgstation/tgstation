@@ -21,8 +21,8 @@
 	. = ..()
 	RegisterSignal(target, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(update_status_on_signal))
 
-/datum/action/cooldown/mob_cooldown/blood_worm/worm_head/Destroy()
-	UnregisterSignal(target, COMSIG_LIVING_HEALTH_UPDATE)
+/datum/action/cooldown/mob_cooldown/blood_worm/worm_head/Remove(remove_from)
+	UnregisterSignal(remove_from, COMSIG_LIVING_HEALTH_UPDATE)
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/IsAvailable(feedback)
