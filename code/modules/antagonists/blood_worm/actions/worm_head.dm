@@ -41,9 +41,9 @@
 	else
 		worm.grant_bloodworm_head(host)
 	return ..()
-
+// why did i made that proc
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/extend_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
 	worm.grant_bloodworm_head(host)
-
+// and that why, i am not even using them, maybe it was used before? actually, its can be usefull... yeah?
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/retract_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
 	worm.remove_bloodworm_head(host)
