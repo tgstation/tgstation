@@ -25,9 +25,8 @@
 	for(var/obj/item/bodypart/other_part as anything in owner.get_bodyparts())
 		if(other_part.pass_flags & PASSGRILLE)
 			continue
-		if(!IS_ROBOTIC_LIMB(other_part) && (other_part.biological_state & BIO_JELLY))
-			continue
-		return FALSE
+		if(IS_ROBOTIC_LIMB(other_part) || !(other_part.biological_state & BIO_JELLY))
+			return FALSE
 
 	for(var/obj/item/organ/other_organ as anything in astype(owner, /mob/living/carbon).organs) // safe assertion
 		if(other_organ.pass_flags & PASSGRILLE)
