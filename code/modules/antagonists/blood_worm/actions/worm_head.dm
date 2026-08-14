@@ -1,17 +1,10 @@
-// Blood worm head, which can be retracted
-// More social sign, then a actual ability
-// But who is more dangerous, the few, with a leader, or the many, but without one?
+/// Extends or retracts a worm head. More of a social sign than an actual ability.
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head
-
 	name = "Worm head"
 	desc = "Extend or retract worm head on your host"
-
 	button_icon_state = "worm_head"
-
 	cooldown_time = 5 SECONDS
-
 	click_to_activate = FALSE
-
 	check_flags = NONE
 
 	// blood beam actions, grans with a worm head, same as brim demon beam but with some changes(actually no heh)
