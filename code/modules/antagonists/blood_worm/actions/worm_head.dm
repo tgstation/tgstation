@@ -44,7 +44,7 @@
 	)
 
 
-	if(istype(current_host_head, /obj/item/bodypart/head/blood_worm)) // or better istype ?
+	if(istype(current_host_head, /obj/item/bodypart/head/blood_worm))
 		worm.remove_bloodworm_head(host)
 		blood_worm_beam.Remove(host)
 	else
