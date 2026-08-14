@@ -45,7 +45,6 @@
 
 // okay, here will be the actually grow, not the action, but actuall process, which can be called by different ways
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/extend_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
-	// worm.grant_bloodworm_head(host)
 
 	var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
 	var/obj/item/bodypart/head/current_host_head = host.get_bodypart(BODY_ZONE_HEAD)
@@ -55,7 +54,6 @@
 
 // same, but for retract worm head process
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/retract_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
-	// worm.remove_bloodworm_head(host)
 
 	var/list/saved_head_content = list() // organs, implants, huds
 	var/obj/item/bodypart/head/new_host_head_to_attach = new() // will it work?
