@@ -23,6 +23,7 @@
 
 	return ..()
 
+// Activation of ability of grow of the blood worm head
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/Activate(atom/target) // logic on click
 	var/mob/living/basic/blood_worm/worm = target
 	var/mob/living/carbon/human/host = worm.host
@@ -37,13 +38,21 @@
 
 
 	if(istype(current_host_head, /obj/item/bodypart/head/blood_worm))
-		worm.remove_bloodworm_head(host)
+		worm.remove_bloodworm_head(host) // how to place here retract_head proc?
 	else
-		worm.grant_bloodworm_head(host)
+		worm.grant_bloodworm_head(host) // same but for another
 	return ..()
-// why did i made that proc
+
+// okay, here will be the actually grow, not the action, but actuall process, which can be called by different ways
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/extend_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
 	worm.grant_bloodworm_head(host)
-// and that why, i am not even using them, maybe it was used before? actually, its can be usefull... yeah?
+
+	var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
+	var/current_host_head = target:get_bodypart(BODY_ZONE_HEAD)
+	current_host_head:blood_worm_head_growth_animation()
+	new_worm_head_to_attach.replace_limb(target, TRUE)
+	target.update_body()
+
+// same, but for retract worm head process
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/retract_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
 	worm.remove_bloodworm_head(host)
