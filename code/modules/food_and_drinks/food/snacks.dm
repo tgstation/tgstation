@@ -217,7 +217,7 @@
 	trash_type = /obj/item/trash/energybar
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 3,
-		/datum/reagent/consumable/liquidelectricity/enriched = 3,
+		/datum/reagent/consumable/liquidelectricity = 3,
 	)
 	tastes = list("pure electricity" = 3, "fitness" = 2)
 	foodtypes = TOXIC
@@ -644,7 +644,7 @@ GLOBAL_LIST_INIT(safe_peanut_types, populate_safe_peanut_types())
 	icon_state = "shok_roks_candy"
 	trash_type = /obj/item/trash/shok_roks
 	food_reagents = list(
-		/datum/reagent/consumable/liquidelectricity/enriched = 2,
+		/datum/reagent/consumable/liquidelectricity = 2,
 		/datum/reagent/consumable/sugar = 3
 	)
 	food_flags = FOOD_FINGER_FOOD

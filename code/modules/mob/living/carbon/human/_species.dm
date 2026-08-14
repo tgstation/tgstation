@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/digitigrade_customization = DIGITIGRADE_NEVER
 	///If your race uses a non standard bloodtype (A+, O-, AB-, etc). For example, lizards have L type blood.
 	///Reagent that your species bleeds, and what chemical can be used to recover lost blood depend on this
-	var/exotic_bloodtype
+	var/datum/blood_type/exotic_bloodtype
 	///The rate at which blood is passively drained by having the blood deficiency quirk. Some races such as slimepeople can regen their blood at different rates so this is to account for that
 	var/blood_deficiency_drain_rate = BLOOD_REGEN_FACTOR + BLOOD_DEFICIENCY_MODIFIER // slightly above the regen rate so it slowly drains instead of regenerates.
 	///What the species drops when gibbed by a gibber machine.
@@ -1053,7 +1053,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
  * * humi (required) The mob we will stabilize
  */
 /datum/species/proc/body_temperature_core(mob/living/carbon/human/humi, seconds_per_tick)
-	var/natural_change = get_temp_change_amount(humi.get_body_temp_normal() - humi.coretemperature, 0.06 * seconds_per_tick)
+	var/natural_change = get_temp_change_amount(humi.get_body_temp_normal() - humi.coretemperature, BODYTEMP_CORE_CHANGE_RATE * seconds_per_tick)
 	humi.adjust_coretemperature(humi.metabolism_efficiency * natural_change)
 
 /**
@@ -1070,8 +1070,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 	// change the core based on the skin temp
 	var/skin_core_diff = humi.bodytemperature - humi.coretemperature
-	// change rate of 0.04 per second to be slightly below area to skin change rate and still have a solid curve
-	var/skin_core_change = get_temp_change_amount(skin_core_diff, 0.04 * seconds_per_tick)
+	// change rate of slightly below area to skin change rate and still having a solid curve
+	var/skin_core_change = get_temp_change_amount(skin_core_diff, BODYTEMP_SKIN_CORE_CHANGE_RATE * seconds_per_tick)
 
 	humi.adjust_coretemperature(skin_core_change)
 
@@ -1089,8 +1089,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	// Changes to the skin temperature based on the area
 	var/area_skin_diff = area_temp - humi.bodytemperature
 	if(!humi.on_fire || area_skin_diff > 0)
-		// change rate of 0.05 as area temp has large impact on the surface
-		var/area_skin_change = get_temp_change_amount(area_skin_diff, 0.05 * seconds_per_tick)
+		// change rate near full speed as area temp has large impact on the surface
+		var/area_skin_change = get_temp_change_amount(area_skin_diff, BODYTEMP_AREA_SKIN_CHANGE_RATE * seconds_per_tick)
 
 		// We need to apply the thermal protection of the clothing when applying area to surface change
 		// If the core bodytemp goes over the normal body temp you are overheating and becom sweaty
@@ -1108,8 +1108,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(!humi.on_fire)
 		// Get the changes to the skin from the core temp
 		var/core_skin_diff = humi.coretemperature - humi.bodytemperature
-		// change rate of 0.045 to reflect temp back to the skin at the slight higher rate then core to skin
-		var/core_skin_change = (1 + thermal_protection) * get_temp_change_amount(core_skin_diff, 0.045 * seconds_per_tick)
+		// change rate to reflect temp back to the skin at a slightly higher rate than skin to core
+		var/core_skin_change = (1 + thermal_protection) * get_temp_change_amount(core_skin_diff, BODYTEMP_CORE_SKIN_CHANGE_RATE * seconds_per_tick)
 
 		// We do not want to over shoot after using protection
 		if(core_skin_diff > 0)

@@ -50,10 +50,8 @@
 	thermic_constant = 50
 
 /datum/chemical_reaction/sodiumchloride/pre_reaction_other_checks(datum/reagents/holder)
-	. = ..()
-	if(holder.has_reagent(/datum/reagent/consumable/liquidelectricity) || holder.has_reagent(/datum/reagent/consumable/liquidelectricity/enriched))
-		return FALSE
-
+	// Snowflake check to allow electrolysis to work
+	return !holder.has_reagent(/datum/reagent/consumable/liquidelectricity)
 
 /datum/chemical_reaction/stable_plasma
 	results = list(/datum/reagent/stable_plasma = 1)
@@ -229,6 +227,10 @@
 	results = list(/datum/reagent/uranium/uraniumvirusfood/stable = 1)
 	required_reagents = list(/datum/reagent/uranium = 10, /datum/reagent/silver = 10, /datum/reagent/toxin/plasma = 1)
 
+/datum/chemical_reaction/virus_food_wittel
+	results = list(/datum/reagent/wittelvirusfood = 2)
+	required_reagents = list(/datum/reagent/toxin/mutagen/mutagenvirusfood = 5, /datum/reagent/wittel = 1)
+
 /datum/chemical_reaction/mix_virus
 	results = list(/datum/reagent/blood = 1)
 	required_reagents = list(/datum/reagent/consumable/virus_food = 1)
@@ -312,6 +314,11 @@
 	required_reagents = list(/datum/reagent/uranium/uraniumvirusfood/stable = 1)
 	level_min = 8
 	level_max = 8
+
+/datum/chemical_reaction/mix_virus/mix_virus_13
+	required_reagents = list(/datum/reagent/wittelvirusfood = 1)
+	level_min = 9
+	level_max = 9
 
 /datum/chemical_reaction/mix_virus/rem_virus
 	required_reagents = list(/datum/reagent/medicine/synaptizine = 1)
@@ -701,21 +708,12 @@
 	required_reagents = list(/datum/reagent/consumable/liquidelectricity = 1, /datum/reagent/water = 5)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
 
-/datum/chemical_reaction/electrolysis2
-	results = list(/datum/reagent/oxygen = 2.5, /datum/reagent/hydrogen = 5)
-	required_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 1, /datum/reagent/water = 5)
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
-
 //salt electrolysis
 /datum/chemical_reaction/saltelectrolysis
 	results = list(/datum/reagent/chlorine = 2.5, /datum/reagent/sodium = 2.5)
 	required_reagents = list(/datum/reagent/consumable/salt = 5)
 	required_catalysts = list(/datum/reagent/consumable/liquidelectricity = 1)
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_UNIQUE
-
-/datum/chemical_reaction/saltelectrolysis/enriched
-	required_catalysts = list(/datum/reagent/consumable/liquidelectricity/enriched = 1)
-
 
 //butterflium
 /datum/chemical_reaction/butterflium
@@ -1156,7 +1154,7 @@
 	var/datum/reagent/toxin/carnivorousblood/hungryblood = holder.has_reagent(/datum/reagent/toxin/carnivorousblood)
 	var/list/new_blood_dna = list()
 	for(var/datum/reagent/blood/bloodinstance in holder.reagent_list)
-		new_blood_dna += bloodinstance.data["blood_DNA"]
+		new_blood_dna += bloodinstance.data[BLOOD_DATA_DNA]
 	hungryblood.feed_dna_list(new_blood_dna)
 
 /datum/chemical_reaction/feed_carnivorous_blood

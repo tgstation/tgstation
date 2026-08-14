@@ -24,8 +24,6 @@
 	var/id = ""
 	///Base chance of sending warning messages, so it can be modified
 	var/base_message_chance = 10
-	///If the early warnings are suppressed or not
-	var/suppress_warning = FALSE
 	///Ticks between each activation
 	var/next_activation = 0
 	var/symptom_delay = 1 // Measured in seconds, not ticks or life ticks

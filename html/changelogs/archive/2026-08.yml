@@ -187,6 +187,8 @@
   Wisemonster:
   - balance: The electrodistruptive diode disk has been moved from energy manipulation
       research to experimental tools research
+  - spellcheck: Removed "portable" from the portable chem dispenser board (it was
+      just a normal dispensor anyways)
   YesterdaysPromise:
   - bugfix: Walls now remember what kind of grider was used to build them to return
       to upon deconstruction.
@@ -205,3 +207,219 @@
       to the direction they face
   - bugfix: fixes a 4 year old projectile code bug that mirrored the angle across
       the diagonal
+2026-08-07:
+  FalloutFalcon:
+  - code_imp: Adds mirror to download byond versions for CLI
+  Metek:
+  - refactor: Thanks to cutting edge technological advances, check_breath() calculations
+      have been optimized by approximately 41% ( using alist() instead of list() )
+  SmArtKar:
+  - refactor: Rewrote dynamic lighting lumcount to use spatial-grid based requests
+  hry-gh:
+  - refactor: the backend for verbs has been changed ... again, please report any
+      issues on the bug tracker
+  - qol: the command bar is now a bit prettier, and also autocompletes things like
+      typepaths and mob targets (primarily useful for admins)
+  vinylspiders:
+  - bugfix: birdboat will no longer try to eat everything in sight at all times, in
+      exchange their range for noticing food has been increased...
+2026-08-08:
+  Gboster-0:
+  - code_imp: fixed chasms ignoring lattices on top of them in some scenario's, creating
+      a lot of runtimes
+  Ghommie:
+  - rscadd: Added a replace text circuit component.
+  JohnFulpWillard:
+  - code_imp: Converted Changelog to typescript.
+  LT3:
+  - bugfix: Players on Icebox should now take cold damage when naked outside
+  Melbert:
+  - rscdel: Voltaic heart no longer grants EMP immunity, though is still EMP immune
+      itself.
+  - rscdel: Voltaic heart no longer deletes itself if you remove it, though it is
+      still otherwise rendered unusable.
+  PapaMichael:
+  - bugfix: You are now able to rip manifests off of all locked cargo crates
+  hry-gh:
+  - bugfix: fixes tgui say, among other things, not working
+  lelandkemble:
+  - bugfix: Resetting a crate's access no longer repeatedly appends the new authority
+      to the description
+  - bugfix: The relic power that charges items charges items
+  levels0:
+  - bugfix: distributed neurons blob zombies no longer cost twice as much as they
+      should
+2026-08-09:
+  Aliceee2ch:
+  - bugfix: Removed AI tracking beacon from Ripley subcategory.
+  ArcaneMusic:
+  - code_imp: We now unit test to confirm that crates, and crate subtypes sell for
+      their expected value. Also checks for exports whose export_type is explicitly
+      called out in excluded types.
+  - bugfix: Coffins and various crate subtypes now sell again. For the first time
+      in 4 years.
+  JohnFulpWillard:
+  - bugfix: Legacy chat's command bar works nicely again.
+  LT3:
+  - bugfix: Tram controls now work properly after deconstruction/reconstruction
+  - bugfix: Tram control circuitboards now remember their tram ID, change it with
+      a multitool
+  PapaMichael:
+  - bugfix: Runtime no longer looks calico when held in-hand.
+  QuiteLiterallyAnything:
+  - bugfix: The academy gateway's immovable rod will no longer constantly show itself
+      to ghosts.
+  - code_imp: The augury subsystem has been cleaned up.
+  SmArtKar:
+  - bugfix: Fixed paper being unreadable and other light-based interactions being
+      broken
+  - bugfix: OverFlayer should now correctly display weather related planes
+  Swan:
+  - bugfix: Fixes round lobby timers not working at all.
+  - bugfix: Fixes the lobby time not being precise when joining a freshly started,
+      empty server
+  lelandkemble:
+  - bugfix: Gluon frag grenades now output radiation, like they've been trying and
+      failing to do for at least 4 years.
+  - balance: Conveyor belts don't rotate you
+2026-08-10:
+  Aliceee2ch:
+  - bugfix: Fixed private orders (goodies).
+  ArcaneMusic:
+  - bugfix: Cooldown modkits and AOE modkits now work as intended. Cooldowns make
+      the gun shoot faster, and AOE modkits will make the gun slightly slower, regardless
+      of the order they're installed in.
+  ArrisFairburne:
+  - image: most ballistics bullets have a flashy look to them, which aids readability
+  Fabian272:
+  - bugfix: Black broth no longer requires ice to make.
+  Gboster-0:
+  - bugfix: if a headset starts with a 2nd key in it, it will have that key inside
+      of itself instead of in nullspace (this has no gameplay effect)
+  JohnFulpWillard:
+  - bugfix: Borg sheet numbers now updates properly between items sharing the same
+      material type.
+  - qol: pAIs now have a health hud instead of it being tucked away in the stat panel.
+  - bugfix: Health HUDs exact HP % text now update as you heal/injure.
+  Melbert:
+  - rscdel: Deleted "Enriched Liquid Electricity". It's now just "Liquid Electricity",
+      though it can still be enriched to shock people. Ethereal blood is still un-enriched.
+      Some recipes may still demand enriched Liquid Electricity.
+  - rscadd: Botany plants producing Liquid Electricity now produce un-enriched Liquid
+      Electricity unless the plant has Electrical Activity.
+  - rscadd: Jupiter Cups now have Electrical Activity by default, in order to produce
+      enriched Liquid Electricity.
+  - refactor: Refactored the way botany plants set up their reagents. Report any oddities,
+      particularly with traits that activate on harvest (like auto-distilling composition),
+      their tastes, or with special reagents (like blood or vitamins).
+  - rscadd: You can use food items in place of some organs for "organ manipulation"...It
+      won't work, but y'know, you can do it
+  - qol: Organ manipulation will cancel mid operation if it suddenly becomes invalid,
+      rather than allow it to continue
+  PapaMichael:
+  - config: Maintenance Drone laws and flavortext can be modified by the server config
+  hry-gh:
+  - bugfix: classic hotkey mode will work when focused on the input bar
+  - bugfix: you can navigate recently input commands with ctrl+up/down again
+  - bugfix: pressing space in the input autocompletes to the next shared verb name
+      prefix
+2026-08-11:
+  JohnFulpWillard:
+  - qol: Borgs can now unlock their cover in their self-examine text.
+  PapaMichael:
+  - bugfix: The enter key now closes the job text-highlight field
+  Wisemonster:
+  - bugfix: Antag Bloodworms can't be hypno'd with lazarus injectors
+  - code_imp: Added a IS_BLOODWORM check
+  lelandkemble:
+  - code_imp: Some primarily admin-only procs that transform a mob into another mob
+      are now all doing the same thing.
+  timothymtorres:
+  - bugfix: Fix spawn text appearing over HUD. Move spawn text to the top left of
+      the screen
+2026-08-12:
+  JohnFulpWillard:
+  - qol: Alien larva's 'Evolve' button now says when it's ready, rather than being
+      in the stat panel.
+  Melbert:
+  - qol: Gizmos pulsed by assembies give feedback sounds
+  - qol: Gizmo feedback alerts are shown to all nearby mobs, rather than just the
+      pulser
+  - bugfix: If a cuffed item enters an anchored object like a closet, the cuffee become
+      stuck to the anchored object, rather than the anchored object being stuck to
+      the cuffee.
+  - bugfix: You can no longer put cuffed objects in any object manually (i.e. by clicking
+      on it). This affects objects like grinders, deep fryers, and soup pots.
+  - qol: Cuffed item examine text is now shown in examine, rather than double-examine
+  - balance: Any mob can attempt to remove someone's cuffed item, rather than just
+      the cuffee. However it takes double the amount of time for non-cuffees.
+  SmArtKar:
+  - balance: Crusher trophies are now small and can be stowed in explorer webbings
+  - balance: Crusher trophies are slightly cheaper to craft
+  - balance: Icewing trophy backstep distance reduced from 2 to 1 to be less disorienting
+  lelandkemble:
+  - map: Added several holopads to Kilostation
+  siliconOpossum:
+  - bugfix: Wall signs will no longer say you're changing them when someone else is
+2026-08-13:
+  Aliceee2ch:
+  - qol: Medical Records console now uses dropdowns for blood type field instead of
+      manual typing
+  ArcaneMusic:
+  - balance: Golems now have slightly less aggressive metabolism.
+  - bugfix: Golem foods now offer different levels of nutrition! Finally!
+  - balance: Golems now offer more nutrition from rarer ores.
+  - balance: Golems now get further additional nutrition from eating processed ore
+      sheets instead of raw ore.
+  - map: The free golem ship now has shutters to block wildlife from attacking while
+      inside.
+  - bugfix: Weakpoints, and weakpoints spawned by weakpoints being detonated, should
+      no longer be spawning invisible.
+  - balance: The number of weakpoints that spawn on regular maps has increased from
+      3 to 5.
+  - balance: The number of weakpoints that spawn on the "Structural Weaknesses" station
+      trait now spawns 6 to 12, instead of 4 to 8 weakpoints.
+  Fghj240:
+  - rscadd: Added a new virus chem, Exotic Agar, that gives you level 9 symptoms
+  - balance: Reorganized virus symptoms among 9 levels instead of 8.
+  - balance: The dizziness virus symptom has higher stats and slightly shorter status
+      effect duration
+  - balance: aggressive healing is now cured by spaceacillin like every other healing
+      symptom
+  - rscadd: Added a new symptom, Hypertension. Unlike regular hypertension, this one
+      causes blood vessels to violently rupture all across your body.
+  - rscadd: Added a new symptom, Mutated Regeneration. It heals you.
+  - code_imp: improved code around suppressing virology symptom fluff text
+  PapaMichael:
+  - bugfix: You no longer hear radio TTS while unconscious
+  SirNightKnight, JohnFulpWillard:
+  - qol: Decreased the volume of slime footsteps.
+  - qol: Slimes now have new HUD entries from the information that was previously
+      in the stat panel.
+  Y0SH1M4S73R:
+  - bugfix: revenants should far less frequently be rendered vulnerable for far longer
+      than they should be
+  lelandkemble:
+  - bugfix: General Beepsky no longer provides an extra free esword when destroyed
+  - qol: Added an examine hint on clogged vents that tells you about using a plunger
+      on it
+  mrmanlikesbt:
+  - refactor: Techweb and design code has been refactored.
+  - bugfix: Fixed anomaly cores not granting research points in the destructive analyzer.
+  - bugfix: Fixed exosuit fabricators
+2026-08-14:
+  FalloutFalcon:
+  - bugfix: Ants and shade mobs are plural is seemingly intended
+  JohnFulpWillard:
+  - bugfix: The Escape menu has Webmap URLs again.
+  RusselNotSCP:
+  - bugfix: Flesh heretics now benefit from eating the organs of non-meaty victims,
+      such as fish and podpeople.
+  SmArtKar:
+  - code_imp: Optimized /datum/gas_mixture/proc/archive() by ~42%
+  rkz/tsar-salat:
+  - bugfix: fixed a screaming icon stacktrace proc designed to scream, not screaming.
+  - bugfix: stumps continue to not render, as they should, as opposed to not rendering
+      because their rendering was broken
+  timothymtorres:
+  - bugfix: Fix helmets being flammable when armor is not

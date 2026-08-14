@@ -268,7 +268,7 @@ GLOBAL_LIST_EMPTY(unconscious_appearances)
 					sleep_quality = -0.2
 
 		var/turf/rest_turf = get_turf(owner)
-		var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= LIGHTING_TILE_IS_DARK
+		var/is_sleeping_in_darkness = !rest_turf.check_lumcount_above(LIGHTING_TILE_IS_DARK)
 
 		// sleeping with a blindfold or in the dark helps us rest
 		if(owner.is_blind_from(EYES_COVERED) || is_sleeping_in_darkness)
@@ -583,7 +583,7 @@ GLOBAL_LIST_EMPTY(unconscious_appearances)
 	if(prob(10))
 		owner.emote(pick("gasp", "gag", "choke"))
 
-/datum/status_effect/neck_slice/get_examine_text()
+/datum/status_effect/neck_slice/get_examine_text(mob/examiner)
 	return span_warning("[owner.p_Their()] neck is cut and is bleeding profusely!")
 
 /// Applies a curse with various possible effects
@@ -724,7 +724,7 @@ GLOBAL_LIST_EMPTY(unconscious_appearances)
 	owner.remove_client_colour(REF(src))
 	to_chat(owner, span_warning("You snap out of your trance!"))
 
-/datum/status_effect/trance/get_examine_text()
+/datum/status_effect/trance/get_examine_text(mob/examiner)
 	return span_warning("[owner.p_They()] seem[owner.p_s()] slow and unfocused.")
 
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
@@ -1014,7 +1014,7 @@ GLOBAL_LIST_EMPTY(unconscious_appearances)
 	if(owner.remove_status_effect(/datum/status_effect/ants))
 		return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
-/datum/status_effect/ants/get_examine_text()
+/datum/status_effect/ants/get_examine_text(mob/examiner)
 	return span_warning("[owner.p_They()] [owner.p_are()] covered in ants!")
 
 /datum/status_effect/ants/tick(seconds_between_ticks)
