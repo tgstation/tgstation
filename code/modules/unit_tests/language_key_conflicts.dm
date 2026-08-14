@@ -3,10 +3,10 @@
 
 /datum/unit_test/language_key_conflicts/Run()
 	var/list/used_keys = list()
-	for(var/datum/language/language as anything in subtypesof(/datum/language))
+	for(var/datum/language/language as anything in valid_subtypesof(/datum/language))
 		var/name = language::name
 		var/key = language::key
-		if(!key)
+		if(!key && !language::key_optional)
 			TEST_FAIL("[name] ([language]) does not have a prefix!")
 		else if(used_keys[key])
 			var/datum/language/conflicting_language = used_keys[key]
