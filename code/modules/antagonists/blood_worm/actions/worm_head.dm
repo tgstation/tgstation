@@ -50,8 +50,8 @@
 	var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
 	var/current_host_head = host.get_bodypart(BODY_ZONE_HEAD)
 	// current_host_head.blood_worm_head_growth_animation() it was supposed to be animation
-	new_worm_head_to_attach.replace_limb(target, TRUE)
-	target.update_body()
+	new_worm_head_to_attach.replace_limb(host, TRUE)
+	host.update_body()
 
 // same, but for retract worm head process
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/retract_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
