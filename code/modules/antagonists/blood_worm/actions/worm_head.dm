@@ -38,11 +38,10 @@
 	var/current_host_head = host.get_bodypart(BODY_ZONE_HEAD)
 
 	host.visible_message(
-		message = span_danger("[host]'s head start covering with unnatural red flesh!"),
+		message = span_danger("[host]'s head is suddenly consumed by pulsing red flesh!"),
+		self_message = span_notice("You extend your worm head from your host."),
 		ignored_mobs = owner
 	)
-
-	to_chat(owner, span_notice("You grew worm head into your host."))
 
 
 	if(istype(current_host_head, /obj/item/bodypart/head/blood_worm)) // or better istype ?
