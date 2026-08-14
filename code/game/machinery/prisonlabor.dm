@@ -83,7 +83,6 @@
 	var/obj/item/card/id/advanced/prisoner/prison_id = id_card
 	prison_id.points += PRISON_LABOR_PLATE
 	to_chat(user, span_notice("[PRISON_LABOR_PLATE] points added!"))
-	return
 
 /// Global list of all locations where produce can be dropped off.
 GLOBAL_LIST_EMPTY(produce_dropoff)
