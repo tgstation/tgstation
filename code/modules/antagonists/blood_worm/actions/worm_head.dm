@@ -45,8 +45,8 @@
 		worm.grant_bloodworm_head(host)
 	return ..()
 
-/datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/extend_head(mob/living/carbon/human/host)
-	grant_bloodworm_head(host)
+/datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/extend_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
+	worm.grant_bloodworm_head(host)
 
-/datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/retract_head(mob/living/carbon/human/host)
-	remove_bloodworm_head(host)
+/datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/retract_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
+	worm.remove_bloodworm_head(host)
