@@ -153,10 +153,9 @@
 	if(!. || !ishuman(target))
 		return
 	var/mob/living/living_target = target
-	switch(living_target.stat)
-		if(UNCONSCIOUS, HARD_CRIT)
-			var/mob/living/basic/mining/legion_brood/legion = new(loc)
-			legion.infest(living_target)
+	if(IS_UNCONSCIOUS_AND_ALIVE(living_target))
+		var/mob/living/basic/mining/legion_brood/legion = new(loc)
+		legion.infest(living_target)
 
 ///Special snowflake death() here. Can only die if size is 1 or lower and HP is 0 or below.
 /mob/living/simple_animal/hostile/megafauna/legion/death()

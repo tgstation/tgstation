@@ -99,6 +99,7 @@
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "hatchet"
 	inhand_icon_state = "hatchet"
+	worn_icon_state = "hatchet"
 	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
@@ -151,6 +152,7 @@
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "scythe0"
 	inhand_icon_state = "scythe0"
+	worn_icon_state = "scythe0"
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
@@ -213,7 +215,7 @@
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "secateurs"
 	inhand_icon_state = null
-	worn_icon_state = "cutters"
+	worn_icon_state = "secateurs"
 	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
@@ -251,7 +253,7 @@
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "genesheers"
 	inhand_icon_state = null
-	worn_icon_state = "cutters"
+	worn_icon_state = "geneshears"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -259,7 +261,7 @@
 	throwforce = 8
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_BELT
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2, /datum/material/uranium=HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold=SMALL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/uranium = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 	attack_verb_continuous = list("slashes", "slices", "cuts")
 	attack_verb_simple = list("slash", "slice", "cut")
 	hitsound = 'sound/items/weapons/bladeslice.ogg'

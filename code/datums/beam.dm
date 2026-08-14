@@ -512,6 +512,68 @@
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_SIGNAL(owner, COMSIG_BEAM_TURFS_CHANGED, post_change_callbacks)
 
+/// For beams that might be from a held item.
+/datum/beam/held
+	// Is the fishing rod held in left side hand
+	var/lefthand = FALSE
+
+	// Make these inline with final sprites
+	var/righthand_s_px = 13
+	var/righthand_s_py = 16
+
+	var/righthand_e_px = 18
+	var/righthand_e_py = 16
+
+	var/righthand_w_px = -20
+	var/righthand_w_py = 18
+
+	var/righthand_n_px = -14
+	var/righthand_n_py = 16
+
+	var/lefthand_s_px = -13
+	var/lefthand_s_py = 15
+
+	var/lefthand_e_px = 24
+	var/lefthand_e_py = 18
+
+	var/lefthand_w_px = -17
+	var/lefthand_w_py = 16
+
+	var/lefthand_n_px = 13
+	var/lefthand_n_py = 15
+
+/datum/beam/held/Start()
+	update_offsets(origin.dir)
+	. = ..()
+	RegisterSignal(origin, COMSIG_ATOM_DIR_CHANGE, PROC_REF(handle_dir_change))
+
+/datum/beam/held/Destroy()
+	UnregisterSignal(origin, COMSIG_ATOM_DIR_CHANGE)
+	. = ..()
+
+/datum/beam/held/proc/handle_dir_change(atom/movable/source, olddir, newdir)
+	SIGNAL_HANDLER
+	update_offsets(newdir)
+	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/beam, redrawing))
+
+/datum/beam/held/proc/update_offsets(user_dir)
+	switch(user_dir)
+		if(SOUTH)
+			override_origin_pixel_x = lefthand ? lefthand_s_px : righthand_s_px
+			override_origin_pixel_y = lefthand ? lefthand_s_py : righthand_s_py
+		if(EAST)
+			override_origin_pixel_x = lefthand ? lefthand_e_px : righthand_e_px
+			override_origin_pixel_y = lefthand ? lefthand_e_py : righthand_e_py
+		if(WEST)
+			override_origin_pixel_x = lefthand ? lefthand_w_px : righthand_w_px
+			override_origin_pixel_y = lefthand ? lefthand_w_py : righthand_w_py
+		if(NORTH)
+			override_origin_pixel_x = lefthand ? lefthand_n_px : righthand_n_px
+			override_origin_pixel_y = lefthand ? lefthand_n_py : righthand_n_py
+
+	override_origin_pixel_x += origin.pixel_x
+	override_origin_pixel_y += origin.pixel_y
+
 /**
  * This is what you use to start a beam. Example: origin.Beam(target, args). **Store the return of this proc if you don't set maxdist or time, you need it to delete the beam.**
  *

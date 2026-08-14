@@ -17,7 +17,6 @@
 	)
 
 	inherent_biotypes = MOB_HUMANOID|MOB_MINERAL|MOB_SKELETAL
-	inherent_respiration_type = RESPIRATION_PLASMA
 	mutantlungs = /obj/item/organ/lungs/plasmaman
 	smoker_lungs = /obj/item/organ/lungs/plasmaman/plasmaman_smoker
 	mutanttongue = /obj/item/organ/tongue/bone/plasmaman
@@ -27,7 +26,6 @@
 	mutantheart = null
 	heatmod = 1.5
 	payday_modifier = 1.0
-	breathid = GAS_PLASMA
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN
 	species_cookie = /obj/item/reagent_containers/condiment/milk
 	outfit_important_for_life = /datum/outfit/plasmaman
@@ -72,13 +70,6 @@
 		equipping.equipOutfit(job.plasmaman_outfit, visuals_only)
 	else
 		give_important_for_life(equipping)
-
-/datum/species/plasmaman/get_scream_sound(mob/living/carbon/human)
-	return pick(
-		'sound/mobs/humanoids/plasmaman/plasmeme_scream_1.ogg',
-		'sound/mobs/humanoids/plasmaman/plasmeme_scream_2.ogg',
-		'sound/mobs/humanoids/plasmaman/plasmeme_scream_3.ogg',
-	)
 
 /datum/species/plasmaman/get_physical_attributes()
 	return "Plasmamen literally breathe and live plasma. They spontaneously combust on contact with oxygen, and besides all the quirks that go with that, \

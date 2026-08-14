@@ -118,8 +118,7 @@
 	rat_heal = 35
 	crafting_complexity = FOOD_COMPLEXITY_2
 
-/obj/item/food/cheese/cheese_curds/Initialize(mapload)
-	. = ..()
+/obj/item/food/cheese/cheese_curds/make_dryable()
 	AddElement(/datum/element/dryable,  /obj/item/food/cheese/firm_cheese)
 
 /obj/item/food/cheese/firm_cheese

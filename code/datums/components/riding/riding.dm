@@ -399,7 +399,7 @@
 		return
 
 	rider.visible_message(
-		span_warning("As [disarmer] shoves [rider] around, [rider.p_they()] lose [rider.p_their()] [pick("balance", "grip", "hold")] and fall off [parent]!"),
+		span_warning("As [disarmer] shoves [rider] around, [rider.p_they()] lose[rider.p_s()] [rider.p_their()] [pick("balance", "grip", "hold")] and fall[rider.p_s()] off [parent]!"),
 		span_warning("As [disarmer] shoves you around, you lose your [pick("balance", "grip", "hold")] and fall off [parent]!")
 	)
 	if(rider.is_blind())

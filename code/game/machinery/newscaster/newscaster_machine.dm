@@ -442,7 +442,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 
 		if("clearWantedIssue")
 			clear_wanted_issue(user)
-			for(var/obj/machinery/newscaster/other_newscaster in GLOB.allCasters)
+			for(var/obj/machinery/newscaster/other_newscaster as anything in GLOB.allCasters)
 				other_newscaster.update_appearance()
 				return TRUE
 
@@ -490,15 +490,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	. = ..()
 	update_appearance()
 
-/obj/machinery/newscaster/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/paper))
-		if(!user.temporarilyRemoveItemFromInventory(attacking_item))
-			return
-		paper_remaining++
-		to_chat(user, span_notice("You insert [attacking_item] into [src]! It now holds [paper_remaining] sheet\s of paper."))
-		qdel(attacking_item)
-		return
-	return ..()
+/obj/machinery/newscaster/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/paper))
+		return NONE
+	if(!user.temporarilyRemoveItemFromInventory(tool))
+		return ITEM_INTERACT_BLOCKING
+	paper_remaining++
+	to_chat(user, span_notice("You insert [tool] into [src]! It now holds [paper_remaining] sheet\s of paper."))
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
 
 ///returns (machine_stat & broken)
 /obj/machinery/newscaster/proc/needs_repair()
@@ -634,18 +634,17 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 /**
  * When a new feed message is made that will alert all newscasters, this causes the newscasters to sent out a spoken message as well as create a sound.
  */
-/obj/machinery/newscaster/proc/news_alert(channel, update_alert = TRUE)
+/obj/machinery/newscaster/proc/news_alert(channel)
 	if(channel)
-		if(update_alert)
-			say("Breaking news from [channel]!")
-			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', 75, TRUE)
 		alert = TRUE
+		say("Breaking news from [channel]!")
+		playsound(src, 'sound/machines/beep/twobeep_high.ogg', 75, TRUE)
 		update_appearance()
 		addtimer(CALLBACK(src, PROC_REF(remove_alert)), ALERT_DELAY, TIMER_UNIQUE|TIMER_OVERRIDE)
 
-	else if(!channel && update_alert)
+	else
 		say("Attention! Wanted issue distributed!")
-		playsound(loc, 'sound/machines/warning-buzzer.ogg', 75, TRUE)
+		playsound(src, 'sound/machines/warning-buzzer.ogg', 75, TRUE)
 
 /**
  * Performs a series of sanity checks before giving the user confirmation to create a new feed_channel using channel_name, and channel_desc.

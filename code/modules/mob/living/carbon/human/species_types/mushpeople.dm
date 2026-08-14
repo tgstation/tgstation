@@ -102,11 +102,12 @@
 
 /// Bodypart overlay for the mushroom cap organ
 /datum/bodypart_overlay/mutant/mushroom_cap
-	layers = EXTERNAL_ADJACENT
+	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
 	feature_key = FEATURE_MUSH_CAP
 	dyable = TRUE
+	offset_location = UPPER_BODY
 
-/datum/bodypart_overlay/mutant/mushroom_cap/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner, is_husked = FALSE)
+/datum/bodypart_overlay/mutant/mushroom_cap/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)
 
 /datum/bodypart_overlay/mutant/mushroom_cap/override_color(obj/item/bodypart/bodypart_owner)

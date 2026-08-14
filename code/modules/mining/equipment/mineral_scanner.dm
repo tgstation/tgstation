@@ -64,6 +64,7 @@
 	icon_state = "mining0"
 	range = 4
 	cooldown = 50
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/t_scanner/adv_mining_scanner/scan()
 	if(current_cooldown <= world.time)

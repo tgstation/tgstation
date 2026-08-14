@@ -12,9 +12,9 @@
 		/obj/item/stack/sheet/bronze/thirty = 20,
 		/obj/item/stack/tile/noslip{amount = 20} = 10,
 		/obj/item/stack/sheet/plastic{amount = 30} = 10,
-		/obj/item/stack/tile/pod{amount = 20} = 4,
-		/obj/item/stack/tile/pod/light{amount = 20} = 3,
-		/obj/item/stack/tile/pod/dark{amount = 20} = 3,
+		/obj/item/stack/tile/mineral/plastitanium/pod{amount = 20} = 4,
+		/obj/item/stack/tile/mineral/plastitanium/pod/light{amount = 20} = 3,
+		/obj/item/stack/tile/mineral/plastitanium/pod/dark{amount = 20} = 3,
 	)
 
 /obj/effect/spawner/random/decoration/carpet
@@ -144,9 +144,9 @@
 	name = "random flower spawner"
 	icon_state = "flower"
 	loot = list(
-		/obj/item/food/grown/poppy,
-		/obj/item/food/grown/harebell,
-		/obj/item/food/grown/trumpet,
-		/obj/item/food/grown/sunflower,
-		/obj/item/food/grown/rose,
+		/obj/item/food/grown/flower/poppy,
+		/obj/item/food/grown/flower/harebell,
+		/obj/item/food/grown/flower/trumpet,
+		/obj/item/food/grown/flower/sunflower,
+		/obj/item/food/grown/flower/rose,
 	)

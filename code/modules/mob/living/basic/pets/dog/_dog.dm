@@ -7,9 +7,9 @@
 /datum/pet_command/good_boy/dog
 	speech_commands = list("good dog")
 
-// Set correct attack behaviour
+// Use dog-specific melee attack (paws harmlessly when BB_DOG_HARASS_HARM is false)
 /datum/pet_command/attack/dog
-	attack_behaviour = /datum/ai_behavior/basic_melee_attack/dog
+	attack_subtree = /datum/bt_node/subtree/pet_command/attack/dog
 
 /datum/pet_command/attack/dog/set_command_active(mob/living/parent, mob/living/commander)
 	. = ..()
@@ -27,7 +27,6 @@
 	response_harm_simple = "kick"
 	speak_emote = list("barks", "woofs")
 	faction = list(FACTION_NEUTRAL)
-	can_be_held = TRUE
 	ai_controller = /datum/ai_controller/basic_controller/dog
 	// The dog attack pet command can raise melee attack above 0
 	attack_verb_continuous = "bites"
@@ -74,6 +73,7 @@
 	AddElement(/datum/element/pet_bonus, "woof")
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW)
 	AddElement(/datum/element/unfriend_attacker, untamed_reaction = "%SOURCE% fixes %TARGET% with a look of betrayal.")
+	AddElement(/datum/element/can_be_held)
 	var/static/list/food_types = list(
 		/obj/item/food/meat/slab/human/mutant/skeleton,
 		/obj/item/stack/sheet/bone,
@@ -86,10 +86,21 @@
 			break
 
 ///Updates dog speech and emotes
-/mob/living/basic/pet/dog/proc/update_dog_speech(datum/ai_planning_subtree/random_speech/speech)
-	speech.speak = string_list(list("YAP", "Woof!", "Bark!", "AUUUUUU"))
-	speech.emote_hear = string_list(list("barks!", "woofs!", "yaps.","pants."))
-	speech.emote_see = string_list(list("shakes [p_their()] head.", "chases [p_their()] tail.","shivers."))
+/mob/living/basic/pet/dog/proc/update_dog_speech(list/speech_data)
+	speech_data[BB_EMOTE_SAY] = string_list(list("YAP", "Woof!", "Bark!", "AUUUUUU"))
+	speech_data[BB_EMOTE_HEAR] = string_list(list("barks!", "woofs!", "yaps.","pants."))
+	speech_data[BB_EMOTE_SEE] = string_list(list("shakes [p_their()] head.", "chases [p_their()] tail.","shivers."))
+
+
+/// Populates BB_BASIC_MOB_SPEAK_LINES with the dog's current speech data for BT random speech.
+/// Subtypes override this to apply fashion accessories or variant speech.
+/mob/living/basic/pet/dog/proc/update_dog_speak_blackboard(datum/ai_controller/controller)
+	var/list/speech_data = list()
+	speech_data[BB_EMOTE_SAY] = list("YAP", "Woof!", "Bark!", "AUUUUUU")
+	speech_data[BB_EMOTE_HEAR] = list("barks!", "woofs!", "yaps.", "pants.")
+	speech_data[BB_EMOTE_SEE] = list("shakes [p_their()] head.", "chases [p_their()] tail.", "shivers.")
+	speech_data[BB_SPEAK_CHANCE] = 1
+	controller.override_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, speech_data)
 
 ///Proc to run on a successful taming attempt
 /mob/living/basic/pet/dog/tamed(mob/living/tamer, atom/food)
@@ -113,7 +124,7 @@
 	if (!isdog(target) || user.combat_mode)
 		return ..()
 	var/mob/living/basic/pet/dog/dog_target = target
-	if (dog_target.stat != CONSCIOUS)
+	if (IS_UNCONSCIOUS_OR_CRIT(dog_target))
 		return ..()
 	dog_target.emote("spin")
 	dog_target.fully_heal()

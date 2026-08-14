@@ -56,7 +56,7 @@
 	if(!(equipped_slot & ITEM_SLOT_ICLOTHING))
 		return FALSE
 
-	return !isnull(wielder.shoes)
+	return !isnull(wielder.get_item_by_slot(ITEM_SLOT_FEET))
 
 /**
  * Run to update the icon of the parent
@@ -331,7 +331,7 @@
 			LAZYSET(footprint.species_types, affecting.limb_id, TRUE)
 
 /datum/component/bloodysoles/feet/is_under_feet_covered()
-	return !isnull(wielder.shoes)
+	return !isnull(wielder.get_item_by_slot(ITEM_SLOT_FEET))
 
 /datum/component/bloodysoles/feet/on_moved(datum/source, OldLoc, Dir, Forced)
 	if(wielder.num_legs >= 2)

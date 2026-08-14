@@ -184,7 +184,7 @@
 	gas_type = null //it starts empty
 	full_speed = FALSE
 	drift_force = 1 NEWTONS
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4.4, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.8, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
 
 /obj/item/tank/jetpack/improvised/allow_thrust(num)
 	if(!ismob(loc))

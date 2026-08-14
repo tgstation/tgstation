@@ -6,7 +6,7 @@
 
 ///Health Analyzer - Gives the user a ranged health analyzer and their health status in the panel.
 /obj/item/mod/module/health_analyzer
-	name = "MOD health analyzer module"
+	name = "\improper MOD health analyzer module"
 	desc = "A module installed into the glove of the suit. This is a high-tech biological scanning suite, \
 		allowing the user indepth information on the vitals and injuries of others even at a distance, \
 		all with the flick of the wrist. Data is displayed in a convenient package, but it's up to you to do something with it."
@@ -18,6 +18,7 @@
 	cooldown_time = 0.5 SECONDS
 	tgui_id = "health_analyzer"
 	required_slots = list(ITEM_SLOT_GLOVES)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
 	/// Scanning mode, changes how we scan something.
 	var/mode = HEALTH_SCAN
 
@@ -65,7 +66,7 @@
 
 ///Quick Carry - Lets the user carry bodies quicker.
 /obj/item/mod/module/quick_carry
-	name = "MOD quick carry module"
+	name = "\improper MOD quick carry module"
 	desc = "A suite of advanced servos, redirecting power from the suit's arms to help carry the wounded; \
 		or simply for fun. However, Nanotrasen has locked the module's ability to assist in hand-to-hand combat."
 	icon_state = "carry"
@@ -73,6 +74,7 @@
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/quick_carry, /obj/item/mod/module/constructor)
 	required_slots = list(ITEM_SLOT_GLOVES)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 5)
 	var/quick_carry_trait = TRAIT_QUICK_CARRY
 
 /obj/item/mod/module/quick_carry/on_part_activation()
@@ -86,14 +88,14 @@
 	REMOVE_TRAIT(mod.wearer, quick_carry_trait, REF(src))
 
 /obj/item/mod/module/quick_carry/advanced
-	name = "MOD advanced quick carry module"
+	name = "\improper MOD advanced quick carry module"
 	removable = FALSE
 	complexity = 0
 	quick_carry_trait = TRAIT_QUICKER_CARRY
 
 ///Injector - Gives the suit an extendable large-capacity piercing syringe.
 /obj/item/mod/module/injector
-	name = "MOD injector module"
+	name = "\improper MOD injector module"
 	desc = "A module installed into the wrist of the suit, this functions as a high-capacity syringe, \
 		with a tip fine enough to locate the emergency injection ports on any suit of armor, \
 		penetrating it with ease. Even yours."
@@ -105,9 +107,10 @@
 	incompatible_modules = list(/obj/item/mod/module/injector)
 	cooldown_time = 0.5 SECONDS
 	required_slots = list(ITEM_SLOT_GLOVES)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/reagent_containers/syringe/mod
-	name = "MOD injector syringe"
+	name = "\improper MOD injector syringe"
 	desc = "A high-capacity syringe, with a tip fine enough to locate \
 		the emergency injection ports on any suit of armor, penetrating it with ease. Even yours."
 	icon_state = "mod_0"
@@ -116,6 +119,7 @@
 	possible_transfer_amounts = list(5, 10, 15, 20, 30)
 	volume = 30
 	inject_flags = INJECT_CHECK_PENETRATE_THICK
+	custom_materials = null
 
 /obj/item/reagent_containers/syringe/mod/update_reagent_overlay()
 	if(reagents?.total_volume)
@@ -125,7 +129,7 @@
 
 ///Organizer - Lets you shoot organs, immediately replacing them if the target has the organ manipulation surgery.
 /obj/item/mod/module/organizer
-	name = "MOD organizer module"
+	name = "\improper MOD organizer module"
 	desc = "A device recovered from a crashed Interdyne Pharmaceuticals vessel, \
 		this module has been unearthed for better or for worse. \
 		It's an arm-mounted device utilizing technology similar to modern rapid part exchange devices, \
@@ -138,6 +142,7 @@
 	incompatible_modules = list(/obj/item/mod/module/organizer, /obj/item/mod/module/microwave_beam)
 	cooldown_time = 0.5 SECONDS
 	required_slots = list(ITEM_SLOT_GLOVES)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 5)
 	/// How many organs the module can hold.
 	var/max_organs = 5
 	/// A list of all our organs.
@@ -214,7 +219,7 @@
 
 ///Patrient Transport - Generates hardlight bags you can put people in.
 /obj/item/mod/module/criminalcapture/patienttransport
-	name = "MOD patient transport module"
+	name = "\improper MOD patient transport module"
 	desc = "A module built into the forearm of the suit. Countless waves of mostly-lost mining teams being sent to \
 		Indecipheries and other hazardous locations have taught the DeForest Medical Company many lessons. \
 		Physical bodybags are difficult to store, hard to deploy, and even worse to keep intact in tough scenarios. \
@@ -225,10 +230,11 @@
 	bodybag_type = /obj/structure/closet/body_bag/environmental/hardlight
 	capture_time = 1.5 SECONDS
 	packup_time = 0.5 SECONDS
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 5)
 
 ///Defibrillator - Gives the suit an extendable pair of shock paddles.
 /obj/item/mod/module/defibrillator
-	name = "MOD defibrillator module"
+	name = "\improper MOD defibrillator module"
 	desc = "A module built into the gauntlets of the suit; commonly known as the 'Healing Hands' by medical professionals. \
 		The user places their palms above the patient. Onboard computers in the suit calculate the necessary voltage, \
 		and a modded targeting computer determines the best position for the user to push. \
@@ -245,6 +251,7 @@
 	incompatible_modules = list(/obj/item/mod/module/defibrillator)
 	cooldown_time = 0.5 SECONDS
 	required_slots = list(ITEM_SLOT_GLOVES)
+	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2.5)
 	var/defib_cooldown = 5 SECONDS
 
 /obj/item/mod/module/defibrillator/Initialize(mapload)
@@ -257,14 +264,14 @@
 	return COMPONENT_DEFIB_STOP
 
 /obj/item/shockpaddles/mod
-	name = "MOD defibrillator gauntlets"
+	name = "\improper MOD defibrillator gauntlets"
 	req_defib = FALSE
 	icon_state = "defibgauntlets0"
 	inhand_icon_state = "defibgauntlets0"
 	base_icon_state = "defibgauntlets"
 
 /obj/item/mod/module/defibrillator/combat
-	name = "MOD combat defibrillator module"
+	name = "\improper MOD combat defibrillator module"
 	desc = "A module built into the gauntlets of the suit; commonly known as the 'Healing Hands' by medical professionals. \
 		The user places their palms above the patient. Onboard computers in the suit calculate the necessary voltage, \
 		and a modded targeting computer determines the best position for the user to push. \
@@ -282,7 +289,7 @@
 	defib_cooldown = 2.5 SECONDS
 
 /obj/item/shockpaddles/syndicate/mod
-	name = "MOD combat defibrillator gauntlets"
+	name = "\improper MOD combat defibrillator gauntlets"
 	req_defib = FALSE
 	icon_state = "syndiegauntlets0"
 	inhand_icon_state = "syndiegauntlets0"
@@ -290,7 +297,7 @@
 
 ///Thread Ripper - Temporarily rips apart clothing to make it not cover the body.
 /obj/item/mod/module/thread_ripper
-	name = "MOD thread ripper module"
+	name = "\improper MOD thread ripper module"
 	desc = "A custom-built module integrated with the suit's wrist. The thread ripper is built from \
 		recent technology dating back to the start of 2562, after an attempt by a well-known Nanotrasen researcher to \
 		expand on the rapid-tailoring technology found in Autodrobes. Rather than being capable of creating \
@@ -307,6 +314,7 @@
 	cooldown_time = 1.5 SECONDS
 	overlay_state_inactive = "module_threadripper"
 	required_slots = list(ITEM_SLOT_GLOVES)
+	custom_materials = list(/datum/material/silver = SMALL_MATERIAL_AMOUNT * 7.5, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 5, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2.5)
 	/// An associated list of ripped clothing and the body part covering slots they covered before
 	var/list/ripped_clothing = list()
 
@@ -370,7 +378,7 @@
 
 ///Surgical Processor - Lets you do advanced surgeries portably.
 /obj/item/mod/module/surgical_processor
-	name = "MOD surgical processor module"
+	name = "\improper MOD surgical processor module"
 	desc = "A module using an onboard surgical computer which can be connected to other computers to download and \
 		perform advanced surgeries on the go."
 	icon_state = "surgical_processor"
@@ -380,9 +388,11 @@
 	device = /obj/item/surgical_processor/mod
 	incompatible_modules = list(/obj/item/mod/module/surgical_processor)
 	cooldown_time = 0.5 SECONDS
+	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/surgical_processor/mod
-	name = "MOD surgical processor"
+	name = "\improper MOD surgical processor"
+	custom_materials = null
 
 /obj/item/mod/module/surgical_processor/preloaded
 	desc = "A module using an onboard surgical computer which can be connected to other computers to download and \

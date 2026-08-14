@@ -64,7 +64,7 @@
  * * extra_classes - Extra classes to apply to the span that holds the text
  * * lifespan - The lifespan of the message in deciseconds
  */
-/datum/chatmessage/New(text, atom/target, mob/owner, datum/language/language, list/extra_classes = list(), lifespan = CHAT_MESSAGE_LIFESPAN)
+/datum/chatmessage/New(text, atom/target, mob/owner, datum/language/language, list/extra_classes = list(), lifespan = CHAT_MESSAGE_LIFESPAN, list/message_mods)
 	. = ..()
 	if (!istype(target))
 		CRASH("Invalid target given for chatmessage")
@@ -72,7 +72,7 @@
 		stack_trace("/datum/chatmessage created with [isnull(owner) ? "null" : "invalid"] mob owner")
 		qdel(src)
 		return
-	INVOKE_ASYNC(src, PROC_REF(generate_image), text, target, owner, language, extra_classes, lifespan)
+	INVOKE_ASYNC(src, PROC_REF(generate_image), text, target, owner, language, extra_classes, lifespan, message_mods)
 
 /datum/chatmessage/Destroy()
 	if (!QDELING(owned_by))
@@ -109,8 +109,9 @@
  * * language - The language this message was spoken in
  * * extra_classes - Extra classes to apply to the span that holds the text
  * * lifespan - The lifespan of the message in deciseconds
+ * * message_mods - All mods from whatever message triggered this (if applicable)
  */
-/datum/chatmessage/proc/generate_image(text, atom/target, mob/owner, datum/language/language, list/extra_classes, lifespan)
+/datum/chatmessage/proc/generate_image(text, atom/target, mob/owner, datum/language/language, list/extra_classes, lifespan, list/message_mods)
 	/// Cached icons to show what language the user is speaking
 	var/static/list/language_icons
 
@@ -171,12 +172,16 @@
 
 	// Append language icon if the language uses one
 	var/datum/language/language_instance = GLOB.language_datum_instances[language]
-	if (language_instance?.display_icon(owner))
-		var/icon/language_icon = LAZYACCESS(language_icons, language)
+	var/language_icon_type = language_instance?.display_icon_type(owner, message_mods) || DISPLAY_LANGUAGE_ICON_NONE
+	if(language_icon_type != DISPLAY_LANGUAGE_ICON_NONE)
+		var/language_icon_key = "[language][language_icon_type == DISPLAY_LANGUAGE_ICON_PARTIAL ? "-partial" : ""]"
+		var/icon/language_icon = LAZYACCESS(language_icons, language_icon_key)
 		if (isnull(language_icon))
 			language_icon = icon(language_instance.icon, icon_state = language_instance.icon_state)
+			if(language_icon_type == DISPLAY_LANGUAGE_ICON_PARTIAL)
+				language_icon.Blend(icon('icons/ui/chat/language.dmi', "unknown"), ICON_OVERLAY)
 			language_icon.Scale(CHAT_MESSAGE_ICON_SIZE, CHAT_MESSAGE_ICON_SIZE)
-			LAZYSET(language_icons, language, language_icon)
+			LAZYSET(language_icons, language_icon_key, language_icon)
 		LAZYADD(prefixes, "\icon[language_icon]")
 
 	text = "[prefixes?.Join("&nbsp;")][text]"
@@ -319,30 +324,34 @@
  * * raw_message - The text content of the message
  * * spans - Additional classes to be added to the message
  */
-/mob/proc/create_chat_message(atom/movable/speaker, datum/language/message_language, raw_message, list/spans, runechat_flags = NONE)
+/mob/proc/create_chat_message(atom/movable/speaker, datum/language/message_language, raw_message, list/spans, runechat_flags = NONE, list/message_mods)
 	if(SSlag_switch.measures[DISABLE_RUNECHAT] && !HAS_TRAIT(speaker, TRAIT_BYPASS_MEASURES))
 		return
 	if(HAS_TRAIT(speaker, TRAIT_RUNECHAT_HIDDEN))
 		return
 	// Ensure the list we are using, if present, is a copy so we don't modify the list provided to us
-	spans = spans ? spans.Copy() : list()
+	var/list/classes = (runechat_flags & EMOTE_MESSAGE) ? list("emote", "italics") : LAZYCOPY(spans)
 
 	// Check for virtual speakers (aka hearing a message through a radio)
-	var/atom/movable/originalSpeaker = speaker
-	if (istype(speaker, /atom/movable/virtualspeaker))
-		var/atom/movable/virtualspeaker/v = speaker
-		speaker = v.source
-		spans |= "virtual-speaker"
+	var/atom/movable/original_speaker = speaker
+	if (!(runechat_flags & EMOTE_MESSAGE) && istype(speaker, /atom/movable/virtualspeaker))
+		var/atom/movable/virtualspeaker/virtual_speaker = speaker
+		speaker = virtual_speaker.source
+		classes |= "virtual-speaker"
 
 	// Ignore virtual speaker (most often radio messages) from ourselves
-	if (originalSpeaker != src && speaker == src)
+	if (original_speaker != src && speaker == src)
 		return
 
 	// Display visual above source
-	if(runechat_flags & EMOTE_MESSAGE)
-		new /datum/chatmessage(raw_message, speaker, src, message_language, list("emote", "italics"))
-	else
-		new /datum/chatmessage(raw_message, speaker, src, message_language, spans)
+	new /datum/chatmessage(
+		text = raw_message,
+		target = speaker,
+		owner = src,
+		language = message_language,
+		extra_classes = classes,
+		message_mods = message_mods,
+	)
 
 #undef CHAT_LAYER_MAX_Z
 #undef CHAT_LAYER_Z_STEP

@@ -33,6 +33,11 @@
 	start_button.RegisterSignal(src, COMSIG_HUD_LOBBY_COLLAPSED, TYPE_PROC_REF(/atom/movable/screen/lobby, collapse_button))
 	start_button.RegisterSignal(src, COMSIG_HUD_LOBBY_EXPANDED, TYPE_PROC_REF(/atom/movable/screen/lobby, expand_button))
 
+/datum/hud/new_player/show_hud(version = 0, mob/viewmob)
+	. = ..()
+	if(.)
+		show_station_trait_buttons()
+
 /datum/hud/new_player/on_viewdata_update()
 	. = ..()
 	place_station_trait_buttons()
@@ -47,7 +52,7 @@
 			continue
 		if(LAZYACCESS(shown_station_trait_buttons, trait))
 			continue
-		var/atom/movable/screen/lobby/button/sign_up/sign_up_button = add_screen_object(/atom/movable/screen/lobby/button/sign_up, HUD_NEW_PLAYER_SIGN_UP)
+		var/atom/movable/screen/lobby/button/sign_up/sign_up_button = add_screen_object(/atom/movable/screen/lobby/button/sign_up, HUD_NEW_PLAYER_LOBBY_BUTTON(trait.type))
 		trait.setup_lobby_button(sign_up_button)
 		LAZYSET(shown_station_trait_buttons, trait, sign_up_button)
 		RegisterSignal(trait, COMSIG_QDELETING, PROC_REF(remove_station_trait_button))

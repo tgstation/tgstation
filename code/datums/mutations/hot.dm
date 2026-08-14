@@ -1,6 +1,6 @@
 /datum/mutation/cindikinesis
 	name = "Cindikinesis"
-	desc = "Allows the user to concentrate nearby heat into a pile of ash. Wow. Very interesting."
+	desc = "The subject can draw heat out of the air to produce a pile of ash at will."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your hand feels warm.")
 	instability = POSITIVE_INSTABILITY_MINOR
@@ -23,7 +23,7 @@
 
 /datum/mutation/pyrokinesis
 	name = "Pyrokinesis"
-	desc = "Draws positive energy from the surroundings to heat surrounding temperatures at subject's will."
+	desc = "The subject can draw positive energy from the environment to fire a bolt of hot energy at will."
 	quality = POSITIVE
 	text_gain_indication = span_notice("Your hand feels hot!")
 	instability = POSITIVE_INSTABILITY_MODERATE

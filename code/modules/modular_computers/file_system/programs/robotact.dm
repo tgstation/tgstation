@@ -52,7 +52,7 @@
 	data["designation"] = cyborg.model
 	data["masterAI"] = cyborg.connected_ai
 	data["MasterAI_connected"] = !!cyborg.connected_ai //Need a bool for this on the other side
-	data["masterAI_online"] = (cyborg.connected_ai?.stat == CONSCIOUS)
+	data["masterAI_online"] = (cyborg.connected_ai?.stat == STABLE)
 
 	var/charge = 0
 	var/maxcharge = 1
@@ -137,12 +137,7 @@
 	switch(action)
 		if("coverunlock")
 			if(cyborg.locked)
-				cyborg.locked = FALSE
-				cyborg.update_icons()
-				if(cyborg.emagged)
-					cyborg.logevent("ChÃ¥vÃis cover lock has been [cyborg.locked ? "engaged" : "released"]") //"The cover interface glitches out for a split second"
-				else
-					cyborg.logevent("Chassis cover lock has been [cyborg.locked ? "engaged" : "released"]")
+				cyborg.toggle_cover()
 
 		if("lawchannel")
 			cyborg.set_autosay()
@@ -151,7 +146,7 @@
 			cyborg.checklaws()
 
 		if("alertPower")
-			if(cyborg.stat == CONSCIOUS)
+			if(!IS_UNCONSCIOUS_OR_CRIT(cyborg))
 				if(!cyborg.cell || !cyborg.cell.charge)
 					cyborg.visible_message(span_notice("The power warning light on [span_name("[cyborg]")] flashes urgently."), \
 						"You announce you are operating in low power mode.")
@@ -178,7 +173,7 @@
 			cyborg.toggle_headlamp(FALSE, TRUE)
 
 		if("selfDestruct")
-			if(cyborg.stat || cyborg.lockcharge) //No detonation while stunned or locked down
+			if(IS_UNCONSCIOUS_OR_CRIT(cyborg) || cyborg.lockcharge) //No detonation while stunned or locked down
 				return
 			if(cyborg.emagged || istype(cyborg, /mob/living/silicon/robot/model/syndicate)) //This option shouldn't even be showing otherwise
 				cyborg.self_destruct(cyborg)

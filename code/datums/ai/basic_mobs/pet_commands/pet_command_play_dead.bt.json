@@ -1,0 +1,14 @@
+{
+	"dm_type": "/datum/bt_node/subtree/pet_command/play_dead",
+	"type": "sequence",
+	"children": [
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/play_dead"
+		},
+		{
+			"type": "leaf",
+			"behavior": "/datum/bt_node/ai_behavior/clear_pet_command"
+		}
+	]
+}

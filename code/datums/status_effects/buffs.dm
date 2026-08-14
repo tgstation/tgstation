@@ -240,7 +240,7 @@
 	if(duration + bonus_time >= exhaustion_limit)
 		duration = exhaustion_limit
 		to_chat(new_owner, span_userdanger("Your muscles are exhausted! Might be a good idea to sleep..."))
-		new_owner.emote("scream")
+		INVOKE_ASYNC(new_owner, TYPE_PROC_REF(/mob, emote), "scream")
 		return // exhaustion_limit
 
 	return bonus_time
@@ -307,7 +307,7 @@
 	QDEL_NULL(aura_healing)
 	owner.remove_traits(list(TRAIT_PACIFISM, TRAIT_HIPPOCRATIC_OATH, TRAIT_MEDICAL_HUD), HIPPOCRATIC_OATH_TRAIT)
 
-/datum/status_effect/hippocratic_oath/get_examine_text()
+/datum/status_effect/hippocratic_oath/get_examine_text(mob/examiner)
 	return span_notice("[owner.p_They()] seem[owner.p_s()] to have an aura of healing and helpfulness about [owner.p_them()].")
 
 /datum/status_effect/hippocratic_oath/tick(seconds_between_ticks)

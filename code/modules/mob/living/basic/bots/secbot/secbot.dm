@@ -27,7 +27,7 @@
 	possessed_message = "You are a securitron! Guard the station to the best of your ability!"
 	additional_access = /datum/id_trim/job/detective
 
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3.2)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 6.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3.2)
 	ai_controller = /datum/ai_controller/basic_controller/bot/secbot
 	///Whether this secbot is considered 'commissioned' and given the trait on Initialize.
 	var/commissioned = FALSE
@@ -175,7 +175,7 @@
 
 /mob/living/basic/bot/secbot/proc/post_stun(mob/living/carbon/current_target, harm = FALSE)
 	flick("[base_icon_state]-c", src)
-	var/threat = 5 || ai_controller.blackboard[BB_CURRENT_CRIMINAL_ASSESSMENT]
+	var/threat = ai_controller.blackboard[BB_CURRENT_CRIMINAL_ASSESSMENT] || 5
 	if(security_mode_flags & SECBOT_DECLARE_ARRESTS)
 		var/area/location = get_area(src)
 		speak("[security_mode_flags & SECBOT_HANDCUFF_TARGET ? "Arresting" : "Detaining"] level [threat] scumbag [RUNECHAT_BOLD("[current_target]")] in [location].", radio_channel)
@@ -198,7 +198,7 @@
 
 /mob/living/basic/bot/secbot/proc/on_entered(datum/source, atom/movable/to_be_tripped)
 	SIGNAL_HANDLER
-	var/mob/living/possible_target = ai_controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
+	var/mob/living/possible_target = ai_controller.blackboard[BB_CURRENT_TARGET]
 	if(!has_gravity() || !ismob(to_be_tripped) || !possible_target)
 		return
 	var/mob/living/carbon/tripped_mob = to_be_tripped

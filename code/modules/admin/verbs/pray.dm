@@ -1,6 +1,5 @@
-/mob/verb/pray(message as text)
-	set name = VERB_PRAY
-
+GAME_VERB(/mob, pray, VERB_PRAY, null)
+	VERB_ARG(message, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(src, span_danger("Speech is currently admin-disabled."), confidential = TRUE)
 		return

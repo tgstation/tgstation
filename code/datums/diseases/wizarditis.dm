@@ -113,11 +113,11 @@
 
 
 	var/mob/living/carbon/human/human_mob = affected_mob
-	if(prob(chance) && !(human_mob.head?.item_flags & CASTING_CLOTHES))
+	if(prob(chance) && !HAS_TRAIT(human_mob.get_item_by_slot(ITEM_SLOT_HEAD), TRAIT_CASTING_CLOTHING))
 		if(human_mob.dropItemToGround(human_mob.head))
 			human_mob.equip_to_slot_or_del(new hat_type(human_mob), ITEM_SLOT_HEAD)
 
-	if(prob(chance) && !(human_mob.wear_suit?.item_flags & CASTING_CLOTHES))
+	if(prob(chance) && !HAS_TRAIT(human_mob.get_item_by_slot(ITEM_SLOT_OCLOTHING), TRAIT_CASTING_CLOTHING))
 		if(human_mob.dropItemToGround(human_mob.wear_suit))
 			human_mob.equip_to_slot_or_del(new robe_type(human_mob), ITEM_SLOT_OCLOTHING)
 

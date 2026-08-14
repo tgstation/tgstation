@@ -52,7 +52,6 @@
 
 // Block tied
 #define FEATURE_MUTANT_COLOR "mcolor"
-#define FEATURE_ETHEREAL_COLOR "ethcolor"
 #define FEATURE_EARS "ears"
 #define FEATURE_TAIL_CAT "tail_cat"
 #define FEATURE_TAIL_LIZARD "tail_lizard"

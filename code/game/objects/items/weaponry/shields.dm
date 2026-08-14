@@ -17,6 +17,7 @@
 	attack_verb_simple = list("shove", "bash")
 	armor_type = /datum/armor/item_shield
 	block_sound = 'sound/items/weapons/block_shield.ogg'
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.55, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4.8)
 	/// makes beam projectiles pass through the shield
 	var/transparent = FALSE
 	/// if the shield will break by sustaining damage
@@ -186,17 +187,19 @@
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
-/obj/item/shield/riot/attackby(obj/item/attackby_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attackby_item, /obj/item/stack/sheet/mineral/titanium))
-		if (atom_integrity >= max_integrity)
-			to_chat(user, span_warning("[src] is already in perfect condition."))
-			return
-		var/obj/item/stack/sheet/mineral/titanium/titanium_sheet = attackby_item
-		titanium_sheet.use(1)
-		atom_integrity = max_integrity
-		to_chat(user, span_notice("You repair [src] with [titanium_sheet]."))
-		return
-	return ..()
+/obj/item/shield/riot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/sheet/mineral/titanium))
+		return NONE
+
+	if (atom_integrity >= max_integrity)
+		to_chat(user, span_warning("[src] is already in perfect condition."))
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/sheet/mineral/titanium/titanium_sheet = tool
+	titanium_sheet.use(1)
+	atom_integrity = max_integrity
+	to_chat(user, span_notice("You repair [src] with [titanium_sheet]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/shield/riot/flash
 	name = "strobe shield"
@@ -204,7 +207,7 @@
 	icon_state = "flashshield"
 	inhand_icon_state = "flashshield"
 	var/obj/item/assembly/flash/handheld/embedded_flash = /obj/item/assembly/flash/handheld
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.1, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 4.35)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5.55, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 4.8)
 
 /obj/item/shield/riot/flash/Initialize(mapload)
 	. = ..()
@@ -262,22 +265,26 @@
 	owner?.update_held_items()
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.5 SECONDS, (TIMER_UNIQUE|TIMER_OVERRIDE)) //.5 second delay so the inhands sprite finishes its anim since inhands don't support flick().
 
-/obj/item/shield/riot/flash/attackby(obj/item/attackby_item, mob/user)
-	if(istype(attackby_item, /obj/item/assembly/flash/handheld))
-		var/obj/item/assembly/flash/handheld/flash = attackby_item
-		if(flash.burnt_out)
-			to_chat(user, span_warning("No sense replacing it with a broken bulb!"))
-			return
-		else
-			to_chat(user, span_notice("You begin to replace the bulb..."))
-			if(do_after(user, 2 SECONDS, target = user))
-				if(QDELETED(flash) || flash.burnt_out)
-					return
-				playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
-				qdel(embedded_flash)
-				flash.forceMove(src)
-				return
-	return ..()
+/obj/item/shield/riot/flash/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/assembly/flash/handheld))
+		return ..()
+
+	var/obj/item/assembly/flash/handheld/flash = tool
+	if(flash.burnt_out)
+		to_chat(user, span_warning("No sense replacing it with a broken bulb!"))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You begin to replace the bulb..."))
+	if(!do_after(user, 2 SECONDS, target = user))
+		return ITEM_INTERACT_BLOCKING
+
+	if(QDELETED(flash) || flash.burnt_out)
+		return ITEM_INTERACT_BLOCKING
+
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	qdel(embedded_flash)
+	flash.forceMove(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/shield/riot/flash/emp_act(severity)
 	. = ..()
@@ -393,7 +400,7 @@
 	icon_state = "teleriot"
 	inhand_icon_state = "teleriot"
 	worn_icon_state = "teleriot"
-	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 3.6, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT * 3.6, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 2.7, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 1.8)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 3, /datum/material/titanium = SMALL_MATERIAL_AMOUNT * 2)
 	slot_flags = null
 	force = 3
 	throwforce = 3
@@ -459,17 +466,19 @@
 	shield_break_leftover = /obj/item/stack/rods/ten
 	armor_type = /datum/armor/item_shield/ballistic
 
-/obj/item/shield/ballistic/attackby(obj/item/attackby_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attackby_item, /obj/item/stack/sheet/mineral/titanium))
-		if (atom_integrity >= max_integrity)
-			to_chat(user, span_warning("[src] is already in perfect condition."))
-			return
-		var/obj/item/stack/sheet/mineral/titanium/titanium_sheet = attackby_item
-		titanium_sheet.use(1)
-		atom_integrity = max_integrity
-		to_chat(user, span_notice("You repair [src] with [titanium_sheet]."))
-		return
-	return ..()
+/obj/item/shield/ballistic/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/sheet/mineral/titanium))
+		return NONE
+
+	if (atom_integrity >= max_integrity)
+		to_chat(user, span_warning("[src] is already in perfect condition."))
+		return ITEM_INTERACT_BLOCKING
+
+	var/obj/item/stack/sheet/mineral/titanium/titanium_sheet = tool
+	titanium_sheet.use(1)
+	atom_integrity = max_integrity
+	to_chat(user, span_notice("You repair [src] with [titanium_sheet]."))
+	return ITEM_INTERACT_SUCCESS
 
 /datum/armor/item_shield/improvised
 	melee = 40
@@ -481,7 +490,7 @@
 	desc = "A crude shield made out of several sheets of iron taped together, not very durable."
 	icon_state = "improvised"
 	inhand_icon_state = "improvised"
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2)
 	max_integrity = 35
 	shield_break_leftover = /obj/item/stack/rods/two
 	armor_type = /datum/armor/item_shield/improvised

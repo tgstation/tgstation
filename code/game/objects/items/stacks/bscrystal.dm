@@ -38,6 +38,7 @@
 	return 1
 
 /obj/item/stack/ore/bluespace_crystal/attack_self(mob/user)
+	SEND_SIGNAL(user, COMSIG_MOB_CRUSHED_BLUESPACE_CRYSTAL, src)
 	user.visible_message(span_warning("[user] crushes [src]!"), span_danger("You crush [src]!"))
 	new /obj/effect/particle_effect/sparks(loc)
 	playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -80,7 +81,7 @@
 	icon_state = "polycrystal"
 	inhand_icon_state = null
 	material_flags = MATERIAL_NO_DESCRIPTORS
-	gulag_valid = TRUE
+	gulag_value = 100
 	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT)
 	attack_verb_continuous = list("bluespace polybashes", "bluespace polybatters", "bluespace polybludgeons", "bluespace polythrashes", "bluespace polysmashes")
 	attack_verb_simple = list("bluespace polybash", "bluespace polybatter", "bluespace polybludgeon", "bluespace polythrash", "bluespace polysmash")

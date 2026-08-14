@@ -30,16 +30,20 @@
 /datum/mind/proc/remove_antag_datum(datum_type)
 	if(!datum_type)
 		return
-	var/datum/antagonist/A = has_antag_datum(datum_type)
-	if(A)
-		A.on_removal()
-		current?.log_message("has lost antag datum [A.name]([A.type]).", LOG_GAME)
-		return TRUE
+	var/datum/antagonist/antag = has_antag_datum(datum_type)
+	if(isnull(antag))
+		return
+
+	antag.on_removal()
+	qdel(antag)
+	current?.log_message("has lost antag datum [antag] ([antag.type]).", LOG_GAME)
+	return TRUE
 
 /datum/mind/proc/remove_all_antag_datums() //For the Lazy amongst us.
-	for(var/a in antag_datums)
-		var/datum/antagonist/A = a
-		A.on_removal()
+	for(var/datum/antagonist/antag as anything in antag_datums)
+		antag.on_removal()
+		qdel(antag)
+
 	current?.log_message("has lost all antag datums.", LOG_GAME)
 
 /datum/mind/proc/has_antag_datum(datum_type, check_subtypes = TRUE)

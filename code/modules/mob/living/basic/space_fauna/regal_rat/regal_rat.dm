@@ -99,9 +99,9 @@
 
 /mob/living/basic/regal_rat/handle_environment(datum/gas_mixture/environment)
 	. = ..()
-	if(stat == DEAD || isnull(environment) || isnull(environment.gases[/datum/gas/miasma]))
+	if(stat == DEAD || isnull(environment) || isnull(environment.moles[/datum/gas/miasma]))
 		return
-	var/miasma_percentage = environment.gases[/datum/gas/miasma][MOLES] / environment.total_moles()
+	var/miasma_percentage = environment.moles[/datum/gas/miasma] / environment.total_moles()
 	if(miasma_percentage >= 0.25)
 		heal_bodypart_damage(1)
 
@@ -197,7 +197,7 @@
 		return TRUE // it might be possible to attack this? we'll find out soon enough
 
 	var/mob/living/living_target = the_target
-	if(HAS_TRAIT_NOT_FROM(living_target, TRAIT_FAKEDEATH, SPECIES_TRAIT) || living_target.stat == DEAD)
+	if(IS_DEAD_OR_FAKING(living_target))
 		balloon_alert(src, "already dead!")
 		return FALSE
 

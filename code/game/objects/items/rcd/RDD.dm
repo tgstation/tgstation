@@ -1,7 +1,7 @@
 //RAPID DECORATION DEVICE
 
 /// Multiplier applied to cost when using RDD — each decoration costs this many matter units
-#define RDD_COST_MULTIPLIER 2
+#define RDD_COST_MULTIPLIER 1
 
 /// All decoration designs available in the RDD
 GLOBAL_LIST_INIT(rdd_designs, list(
@@ -149,6 +149,18 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 		list("name" = "Large Plastic Rocks (Alt)", "path" = /obj/structure/decoration/rock/pile/jungle/large/second),
 		list("name" = "Large Plastic Rocks (Alt 2)", "path" = /obj/structure/decoration/rock/pile/jungle/large/third),
 		list("name" = "Large Plastic Rocks (Random)", "path" = /obj/structure/decoration/rock/pile/jungle/large/style_random),
+		list("name" = "Plastic Volcano Pore", "path" = /obj/structure/decoration/rock/volcano/first),
+		list("name" = "Plastic Volcano Pore (Alt)", "path" = /obj/structure/decoration/rock/volcano/second),
+		list("name" = "Plastic Volcano Pore (Alt2)", "path" = /obj/structure/decoration/rock/volcano/third),
+		list("name" = "Plastic Volcano Pore (Alt3)", "path" = /obj/structure/decoration/rock/volcano/fourth),
+		list("name" = "Plastic Volcano Pore (Alt4)", "path" = /obj/structure/decoration/rock/volcano/fifth),
+		list("name" = "Plastic Volcano Pore (Random)", "path" = /obj/structure/decoration/rock/volcano/style_random/),
+	),
+	"Misc" = list(
+		list("name" = "Plastic Glowgrowth Colony", "path" = /obj/structure/decoration/misc/glowgrowth/first),
+		list("name" = "Plastic Glowgrowth Colony (Alt)", "path" = /obj/structure/decoration/misc/glowgrowth/second),
+		list("name" = "Plastic Glowgrowth Colony (Alt2)", "path" = /obj/structure/decoration/misc/glowgrowth/third),
+		list("name" = "Plastic Glowgrowth Colony (Random)", "path" = /obj/structure/decoration/misc/glowgrowth/style_random),
 	),
 ))
 
@@ -162,7 +174,7 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	custom_premium_price = PAYCHECK_COMMAND * 1
-	max_matter = 200
+	max_matter = 60
 	slot_flags = ITEM_SLOT_BELT
 	item_flags = NO_MAT_REDEMPTION | NOBLUDGEON
 	has_ammobar = TRUE
@@ -171,6 +183,7 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 	drop_sound = 'sound/items/handling/tools/rcd_drop.ogg'
 	pickup_sound = 'sound/items/handling/tools/rcd_pickup.ogg'
 	sound_vary = TRUE
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 3, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.5)
 
 	/// Currently selected decoration path
 	var/obj/structure/decoration/selected_decoration
@@ -311,8 +324,9 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 
 /obj/item/construction/rdd/borg
 	desc = "A device used to rapidly deploy plastic decorative flora. Uses the cyborg's internal cell."
+	custom_materials = null
 	/// energy usage per decoration
-	var/energyfactor = 0.05 * STANDARD_CELL_CHARGE
+	var/energyfactor = 0.1 * STANDARD_CELL_CHARGE
 
 /obj/item/construction/rdd/borg/get_matter(mob/user)
 	if(!iscyborg(user))
@@ -339,6 +353,6 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 	return TRUE
 
 /obj/item/construction/rdd/loaded
-	matter = 200
+	matter = /obj/item/construction/rdd::max_matter
 
 #undef RDD_COST_MULTIPLIER

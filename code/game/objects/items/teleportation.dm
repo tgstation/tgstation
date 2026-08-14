@@ -23,7 +23,7 @@
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	throw_speed = 3
 	throw_range = 7
-	custom_materials = list(/datum/material/iron= SMALL_MATERIAL_AMOUNT * 4)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 	var/tracking_range = 35
 
 /obj/item/locator/ui_interact(mob/user, datum/tgui/ui)
@@ -94,6 +94,8 @@
 	var/list/active_portal_pairs = list()
 	///Maximum concurrent active portal pairs allowed
 	var/max_portal_pairs = 3
+	///Whether this can be used to teleport to and from away levels
+	var/away_restricted = TRUE
 
 	/**
 	 * Represents the last place we teleported to, for making quick portals.
@@ -206,7 +208,7 @@
 
 	if (teleport_location == PORTAL_LOCATION_DANGEROUS)
 		var/list/dangerous_turfs = list()
-		for(var/turf/dangerous_turf in urange(10, orange=1))
+		for(var/turf/dangerous_turf in urange(10, get_turf(src), TRUE))
 			if(dangerous_turf.x > world.maxx - PORTAL_DANGEROUS_EDGE_LIMIT || dangerous_turf.x < PORTAL_DANGEROUS_EDGE_LIMIT)
 				continue //putting them at the edge is dumb
 			if(dangerous_turf.y > world.maxy - PORTAL_DANGEROUS_EDGE_LIMIT || dangerous_turf.y < PORTAL_DANGEROUS_EDGE_LIMIT)
@@ -234,7 +236,7 @@
 	if (!can_teleport_notifies(user))
 		return
 
-	var/list/obj/effect/portal/created = create_portal_pair(get_turf(user), get_teleport_turf(get_turf(teleport_target)), 300, 1, null)
+	var/list/obj/effect/portal/created = create_portal_pair(get_turf(user), get_turf(teleport_target), 300, 1, null)
 	if(LAZYLEN(created) != 2)
 		return
 
@@ -262,7 +264,7 @@
 ///Is, for some reason, separate from the teleport target's check in try_create_portal_to()
 /obj/item/hand_tele/proc/can_teleport_notifies(mob/user)
 	var/turf/current_location = get_turf(user)
-	if (!current_location || !check_teleport_valid(src, current_location) || is_away_level(current_location.z) || !isturf(user.loc))
+	if (!current_location || !check_teleport_valid(src, current_location) || !isturf(user.loc) || (away_restricted && is_away_level(current_location.z)))
 		to_chat(user, span_notice("[src] is malfunctioning."))
 		return FALSE
 

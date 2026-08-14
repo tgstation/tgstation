@@ -166,7 +166,7 @@
 	if(!can_buy(BLOB_UPGRADE_REFLECTOR_COST))
 		return
 
-	to_chat(src, span_warning("You secrete a reflective ooze over the shield blob, allowing it to reflect projectiles at the cost of reduced integrity."))
+	to_chat(src, span_warning("You secrete a reflective ooze over the shield blob, allowing it to reflect projectiles at the cost of reduced resistance to explosions."))
 	shield = shield.change_to(/obj/structure/blob/shield/reflective, src)
 	shield.balloon_alert(src, "upgraded to [shield.name]!")
 
@@ -353,7 +353,7 @@
 	for(var/mob/living/basic/blob_mob as anything in blob_mobs)
 		if(!isturf(blob_mob.loc) || get_dist(blob_mob, tile) > 35 || blob_mob.key)
 			continue
-		blob_mob.ai_controller.clear_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET)
+		blob_mob.ai_controller.clear_blackboard_key(BB_CURRENT_TARGET)
 		blob_mob.ai_controller.set_blackboard_key(BB_TRAVEL_DESTINATION, pick(surrounding_turfs))
 
 /** Opens the reroll menu to change strains */

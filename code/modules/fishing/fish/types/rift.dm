@@ -202,11 +202,11 @@
 	//gas check
 	var/datum/gas_mixture/turf_gasmix = onturf.return_air()
 	// likes water, gets sleepy, gets very sleepy
-	if(turf_gasmix.gases[/datum/gas/water_vapor] && turf_gasmix.gases[/datum/gas/water_vapor][MOLES] >= 5)
+	if(turf_gasmix.moles[/datum/gas/water_vapor] >= 5)
 		patience_reduction *= 0.5
-	if(turf_gasmix.gases[/datum/gas/nitrous_oxide] && turf_gasmix.gases[/datum/gas/nitrous_oxide][MOLES] >= 5)
+	if(turf_gasmix.moles[/datum/gas/nitrous_oxide] >= 5)
 		patience_reduction *= 0.25
-	if(turf_gasmix.gases[/datum/gas/healium] && turf_gasmix.gases[/datum/gas/healium][MOLES] >= 5)
+	if(turf_gasmix.moles[/datum/gas/healium] >= 5)
 		patience_reduction *= 0.1
 
 	if(!ismob(loc))
@@ -396,7 +396,7 @@
 	visible_message(span_suicide("[user] swallows [src] whole! It looks like they're trying to commit suicide!"))
 	forceMove(user)
 	var/datum/gas_mixture/environment = user.loc.return_air()
-	var/oxygen_in_air = locate(/datum/gas/oxygen) in environment.gases
+	var/oxygen_in_air = locate(/datum/gas/oxygen) in environment.moles
 	if(!oxygen_in_air || (status == FISH_DEAD))
 		visible_message(span_suicide("[user] chokes and dies! (Wait, from the fish or from lack of air?)"))
 		return OXYLOSS
@@ -722,8 +722,9 @@
 /datum/bodypart_overlay/simple/babbearfish
 	icon_state = "babbearfish"
 	draw_on_husks = HUSK_OVERLAY_NORMAL
+	offset_location = UPPER_BODY
 
-/datum/bodypart_overlay/simple/babbearfish/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner, is_husked = FALSE)
+/datum/bodypart_overlay/simple/babbearfish/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEEARS)
 
 /obj/item/organ/ears/babbelfish/Initialize(mapload)

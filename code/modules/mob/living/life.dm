@@ -49,6 +49,8 @@
 		if(stat != DEAD)
 			//Breathing, if applicable
 			handle_breathing(seconds_per_tick)
+			if(isnull(loc)) // Mice can die and become items from breathing
+				return
 
 		// Handle temperature/pressure differences between body and environment
 		var/datum/gas_mixture/environment = loc.return_air()
@@ -137,9 +139,9 @@
 	adjust_brute_loss(min(GRAVITY_DAMAGE_SCALING * grav_strength, GRAVITY_DAMAGE_MAXIMUM) * seconds_per_tick)
 
 /// Proc used for custom metabolization of reagents, if any
-/mob/living/proc/reagent_tick(datum/reagent/chem, seconds_per_tick)
+/mob/living/proc/reagent_tick(datum/reagent/chem, seconds_per_tick, metabolization_ratio)
 	SHOULD_CALL_PARENT(TRUE)
-	return SEND_SIGNAL(src, COMSIG_MOB_REAGENT_TICK, chem, seconds_per_tick)
+	return SEND_SIGNAL(src, COMSIG_MOB_REAGENT_TICK, chem, seconds_per_tick, metabolization_ratio)
 
 /// Proc used for custom reagent exposure effects, if any
 /mob/living/proc/reagent_expose(datum/reagent/chem, methods = TOUCH, reac_volume, show_message = TRUE, touch_protection = 0)

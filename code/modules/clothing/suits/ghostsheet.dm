@@ -18,7 +18,7 @@
 		update_icon(UPDATE_OVERLAYS)
 	AddElement(/datum/element/adjust_fishing_difficulty, 8)
 
-/obj/item/clothing/suit/costume/ghost_sheet/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/suit/costume/ghost_sheet/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands && check_holidays(HALLOWEEN))
 		. += emissive_appearance('icons/mob/simple/mob.dmi', "ghost", offset_spokesman = src, alpha = src.alpha)

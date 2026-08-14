@@ -1,6 +1,6 @@
 /datum/mutation/shock
 	name = "Shock Touch"
-	desc = "The affected can channel excess electricity through their hands without shocking themselves, allowing them to shock others. Mostly harmless! Mostly... "
+	desc = "The subject gains the ability to channel excess ambient electricity through their hands, allowing them to shock others in a mostly harmless manner."
 	quality = POSITIVE
 	locked = TRUE
 	difficulty = 16
@@ -84,7 +84,7 @@
 
 /datum/mutation/lay_on_hands
 	name = "Mending Touch"
-	desc = "The affected can lay their hands on other people to transfer a small amount of their injuries to themselves."
+	desc = "The subject gains the ability to lay their hands on others to transfer a small amount of their injuries to themselves."
 	quality = POSITIVE
 	locked = FALSE
 	difficulty = 16

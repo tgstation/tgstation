@@ -78,9 +78,6 @@
 	if(!psyker_head.replace_limb(src))
 		return FALSE
 	psyker_head.species_id = dna?.species?.id
-	var/list/our_drops = psyker_head.get_butcher_drops(force = TRUE)
-	if (length(our_drops))
-		psyker_head.butcher_drops = string_list(our_drops)
 	qdel(old_head)
 	var/obj/item/organ/brain/psyker/psyker_brain = new() /// turns out if you make a flashing monochromatic outline against black background that refreshes on inconsistant intervals, it hurts peoples eyes. Who'da thunk.
 	old_brain.before_organ_replacement(psyker_brain)
@@ -190,10 +187,10 @@
 /obj/item/gun/ballistic/revolver/chaplain/attack_self(mob/living/user)
 	pray_refill(user)
 
-/obj/item/gun/ballistic/revolver/chaplain/attackby(obj/item/possibly_ammo, mob/user, list/modifiers, list/attack_modifiers)
-	if (isammocasing(possibly_ammo) || istype(possibly_ammo, /obj/item/ammo_box))
+/obj/item/gun/ballistic/revolver/chaplain/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (isammocasing(tool) || istype(tool, /obj/item/ammo_box))
 		user.balloon_alert(user, "no manual reloads!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	return ..()
 

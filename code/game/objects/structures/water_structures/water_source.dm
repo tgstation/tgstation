@@ -57,26 +57,28 @@
 		span_notice("You wash your [washing_face ? "face" : "hands"] using [src]."),
 	)
 
-/obj/structure/water_source/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/structure/water_source/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(busy)
 		to_chat(user, span_warning("Someone's already washing here!"))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(attacking_item.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
-		return
+	if(tool.item_flags & ABSTRACT) //Abstract items like grabs won't wash. No-drop items will though because it's still technically an item in your hand.
+		return ITEM_INTERACT_BLOCKING
 
-	if(is_reagent_container(attacking_item))
-		var/obj/item/reagent_containers/container = attacking_item
-		if(container.is_refillable())
-			if(!container.reagents.holder_full())
-				container.reagents.add_reagent(dispensedreagent, min(container.volume - container.reagents.total_volume, container.amount_per_transfer_from_this))
-				to_chat(user, span_notice("You fill [container] from [src]."))
-				return TRUE
-			to_chat(user, span_notice("\The [container] is full."))
-			return FALSE
+	if(is_reagent_container(tool))
+		var/obj/item/reagent_containers/container = tool
+		if(container.is_refillable()) // no early return, we want items that cannot perform their unique interactions to wash
+			if(container.reagents.holder_full())
+				to_chat(user, span_notice("\The [container] is full."))
+				return ITEM_INTERACT_BLOCKING
 
-	if(istype(attacking_item, /obj/item/melee/baton/security))
-		var/obj/item/melee/baton/security/baton = attacking_item
+			container.reagents.add_reagent(dispensedreagent, min(container.volume - container.reagents.total_volume, container.amount_per_transfer_from_this))
+			to_chat(user, span_notice("You fill [container] from [src]."))
+			return ITEM_INTERACT_SUCCESS
+
+
+	if(istype(tool, /obj/item/melee/baton/security))
+		var/obj/item/melee/baton/security/baton = tool
 		if(baton.cell?.charge && baton.active)
 			flick("baton_active", src)
 			user.Paralyze(baton.knockdown_time)
@@ -86,29 +88,29 @@
 				span_warning("[user] shocks [user.p_them()]self while attempting to wash the active [baton.name]!"),
 				span_userdanger("You unwisely attempt to wash [baton] while it's still on."))
 			playsound(src, baton.on_stun_sound, 50, TRUE)
-			return
+			return ITEM_INTERACT_SUCCESS
 
-	if(istype(attacking_item, /obj/item/mop))
-		attacking_item.reagents.add_reagent(dispensedreagent, 5)
-		to_chat(user, span_notice("You wet [attacking_item] in [src]."))
+	if(istype(tool, /obj/item/mop))
+		tool.reagents.add_reagent(dispensedreagent, 5)
+		to_chat(user, span_notice("You wet [tool] in [src]."))
 		playsound(loc, 'sound/effects/slosh.ogg', 25, TRUE)
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(!user.combat_mode || (attacking_item.item_flags & NOBLUDGEON))
-		to_chat(user, span_notice("You start washing [attacking_item]..."))
+	if(!user.combat_mode || (tool.item_flags & NOBLUDGEON))
+		to_chat(user, span_notice("You start washing [tool]..."))
 		busy = TRUE
 		if(!do_after(user, 4 SECONDS, target = src))
 			busy = FALSE
-			return TRUE
+			return ITEM_INTERACT_BLOCKING
 		busy = FALSE
-		attacking_item.wash(CLEAN_WASH)
-		reagents.expose(attacking_item, TOUCH, 5 / max(reagents.total_volume, 5))
+		tool.wash(CLEAN_WASH)
+		reagents.expose(tool, TOUCH, 5 / max(reagents.total_volume, 5))
 		user.visible_message(
-			span_notice("[user] washes [attacking_item] using [src]."),
-			span_notice("You wash [attacking_item] using [src]."))
-		return TRUE
+			span_notice("[user] washes [tool] using [src]."),
+			span_notice("You wash [tool] using [src]."))
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/structure/water_source/puddle //splishy splashy ^_^
 	name = "puddle"
@@ -132,7 +134,7 @@
 	. = ..()
 	icon_state = base_icon_state
 
-/obj/structure/water_source/puddle/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/water_source/puddle/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	icon_state = "[base_icon_state]-splash"
 	. = ..()
 	icon_state = base_icon_state

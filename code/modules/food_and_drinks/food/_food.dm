@@ -24,8 +24,12 @@
 	var/list/food_reagents
 	///Extra flags for things such as if the food is in a container or not
 	var/food_flags
-	///Bitflag of the types of food this food is
+	///Bitflag of the types of food this food is made of by default (for food recipes, it depends on the ingredients)
 	var/foodtypes
+	///Bitflag of the types of food that have to be removed when the food is baked/microwaved/grilled/dried etc.
+	var/foodtypes_removed_when_cooked = RAW
+	///Bitflag of the types of food that have to be added when cooked
+	var/foodtypes_added_when_cooked = NONE
 	///Amount of volume the food can contain
 	var/max_volume
 	///How long it will take to eat this food without any other modifiers
@@ -84,13 +88,28 @@
 		eatverbs = string_list(eatverbs)
 	if(venue_value)
 		AddElement(/datum/element/venue_price, venue_value)
+
 	make_edible()
 	make_processable()
 	make_leave_trash()
-	make_grillable()
 	make_germ_sensitive(mapload)
+
+	make_grillable()
 	make_bakeable()
 	make_microwaveable()
+	make_dryable()
+
+	if(HAS_TRAIT(src, TRAIT_GRILLABLE))
+		RegisterSignal(src, COMSIG_ITEM_GRILLED, PROC_REF(food_grilled))
+	if(HAS_TRAIT(src, TRAIT_BAKEABLE))
+		RegisterSignal(src, COMSIG_ITEM_BAKED, PROC_REF(food_baked))
+	if(HAS_TRAIT(src, TRAIT_MICROWAVABLE))
+		RegisterSignal(src, COMSIG_ITEM_MICROWAVE_COOKED, PROC_REF(food_microwaved))
+	if(HAS_TRAIT(src, TRAIT_DRYABLE))
+		RegisterSignal(src, COMSIG_ITEM_DRIED, PROC_REF(food_dried))
+
+	RegisterSignal(src, SIGNAL_USED_IN_FOOD_PROCESSOR, PROC_REF(used_in_food_processor))
+
 	ADD_TRAIT(src, TRAIT_FISHING_BAIT, INNATE_TRAIT)
 
 /obj/item/food/apply_material_effects(list/materials)
@@ -136,6 +155,39 @@
 	if(istype(user) && !isnull(user.mind))
 		ADD_TRAIT(src, TRAIT_HANDMADE, REF(user.mind))
 
+	if(!istype(current_recipe, /datum/crafting_recipe/food))
+		return
+
+	var/datum/crafting_recipe/food/food_recipe = current_recipe
+
+	var/made_with_food = FALSE
+	var/final_foodtypes = food_recipe.added_foodtypes
+	for(var/obj/item/ingredient in components)
+		var/datum/component/edible/edible = ingredient.GetComponent(/datum/component/edible)
+		if(!edible)
+			continue
+		made_with_food = TRUE
+		var/ingredient_foodtypes = edible.foodtypes_by_source?[SOURCE_EDIBLE_INNATE]
+		final_foodtypes |= ingredient_foodtypes
+	if(!made_with_food)
+		return
+	final_foodtypes &= ~food_recipe.removed_foodtypes
+	///Update the foodtypes
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, foodtypes = final_foodtypes)
+
+/obj/item/food/OnCreatedFromProcessing(mob/living/user, obj/item/work_tool, list/chosen_option, atom/original_atom)
+	. = ..()
+	if(!istype(original_atom, /obj/item/food))
+		return
+	var/obj/item/food/original_food = original_atom
+	if(original_food.intrinsic_food_materials)
+		LAZYADD(intrinsic_food_materials, original_food.intrinsic_food_materials)
+
+	///Update the foodtypes
+	var/datum/component/edible/edible = original_food.GetComponent(/datum/component/edible)
+	var/og_food_types = edible.foodtypes_by_source[SOURCE_EDIBLE_INNATE]
+	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, foodtypes = og_food_types)
+
 ///This proc handles processable elements, overwrite this if you want to add behavior such as slicing, forking, spooning, whatever, to turn the item into something else
 /obj/item/food/proc/make_processable()
 	return
@@ -150,10 +202,14 @@
 	AddComponent(/datum/component/bakeable, /obj/item/food/badrecipe, rand(25 SECONDS, 40 SECONDS), FALSE)
 	return
 
-/// This proc handles the microwave component. Overwrite if you want special microwave results.
+/// This proc handles the microwavable element. Overwrite if you want special microwave results.
 /// By default, all food is microwavable. However, they will be microwaved into a bad recipe (burnt mess).
 /obj/item/food/proc/make_microwaveable()
 	AddElement(/datum/element/microwavable, /obj/item/food/badrecipe, bad_recipe = TRUE)
+
+/// This proc handles the dryable element. Overwrite if you want special drying rack results.
+/obj/item/food/proc/make_dryable()
+	return
 
 ///This proc handles trash components, overwrite this if you want the object to spawn trash
 /obj/item/food/proc/make_leave_trash()
@@ -172,26 +228,46 @@
 	if(!preserved_food)
 		AddComponent(/datum/component/decomposition, mapload, decomp_req_handle, decomp_flags = foodtypes, decomp_result = decomp_type, ant_attracting = ant_attracting, custom_time = decomposition_time, stink_particles = decomposition_particles)
 
-/obj/item/food/on_craft_completion(list/components, datum/crafting_recipe/food/current_recipe, atom/crafter)
-	. = ..()
-	if(!istype(current_recipe))
+/obj/item/food/proc/food_baked(datum/source, obj/item/food/baked_result)
+	SIGNAL_HANDLER
+	pass_down_foodtypes(baked_result)
+
+/obj/item/food/proc/food_microwaved(datum/source, obj/item/food/result)
+	SIGNAL_HANDLER
+	pass_down_foodtypes(result)
+
+/obj/item/food/proc/food_grilled(datum/source, obj/item/food/grill_result)
+	SIGNAL_HANDLER
+	pass_down_foodtypes(grill_result)
+
+/obj/item/food/proc/food_dried(datum/source, obj/item/food/result)
+	SIGNAL_HANDLER
+	if(src != result)
+		pass_down_foodtypes(result)
+
+/obj/item/food/proc/used_in_food_processor(datum/source, obj/item/food/result, datum/food_processor_process/recipe)
+	SIGNAL_HANDLER
+	pass_down_foodtypes(result, recipe.added_foodtypes, recipe.removed_foodtypes)
+
+/**
+ * Proc called when the food is cooked (and the result is obviously still food)
+ *
+ * This proc handles passing down the foodtype flags of the source to the result, usually because it has been cooked.
+ * This way we can preserve the food types of the ingredients this dish is made of. Crafting and processing are handled separately.
+ *
+ * Oh by the by, if you want to have foodtypes added/removed for a specific cooking method, then you should
+ * override the signal proc for that cooking method and call this proc but with 'added_foodtypes' and 'removed_foodtypes' args
+ * set to the wanted values in the proccall
+ *
+ */
+/obj/item/food/proc/pass_down_foodtypes(obj/item/food/result, added_foodtypes = foodtypes_added_when_cooked, removed_foodtypes = foodtypes_removed_when_cooked)
+	if(!istype(result))
 		return
 
-	var/made_with_food = FALSE
-	var/final_foodtypes = current_recipe.added_foodtypes
-	for(var/obj/item/food/ingredient in components)
-		made_with_food = TRUE
-		final_foodtypes |= ingredient.foodtypes
-	if(!made_with_food)
-		return
-	final_foodtypes &= ~current_recipe.removed_foodtypes
-	///Update the foodtypes
-	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, foodtypes = final_foodtypes)
+	var/datum/component/edible/edible = GetComponent(/datum/component/edible)
+	var/inherited_foodtypes = edible.foodtypes_by_source?[SOURCE_EDIBLE_INNATE]
 
-/obj/item/food/OnCreatedFromProcessing(mob/living/user, obj/item/work_tool, list/chosen_option, atom/original_atom)
-	. = ..()
-	if(!istype(original_atom, /obj/item/food))
-		return
-	var/obj/item/food/original_food = original_atom
-	if(original_food.intrinsic_food_materials)
-		LAZYADD(intrinsic_food_materials, original_food.intrinsic_food_materials)
+	inherited_foodtypes &= ~removed_foodtypes
+	inherited_foodtypes |= added_foodtypes
+
+	result.AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, foodtypes = inherited_foodtypes)

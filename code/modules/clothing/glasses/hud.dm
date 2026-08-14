@@ -4,6 +4,7 @@
 	desc = "A heads-up display that provides important info in (almost) real time."
 	flags_1 = null //doesn't protect eyes because it's a monocle, duh
 	actions_types = list(/datum/action/item_action/toggle_wearable_hud)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	/// Whether the HUD info is on or off
 	var/display_active = TRUE
 
@@ -77,6 +78,7 @@
 	color_cutoffs = list(20, 20, 45)
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 	actions_types = list(/datum/action/item_action/toggle_nv)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 3.5)
 
 /obj/item/clothing/glasses/hud/health/night/update_icon_state()
 	. = ..()
@@ -102,7 +104,7 @@
 	flags_cover = GLASSESCOVERSEYES
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/blue
-	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.55, /datum/material/iron = SMALL_MATERIAL_AMOUNT / 2)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.8, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.55)
 
 /obj/item/clothing/glasses/hud/health/sunglasses/Initialize(mapload)
 	. = ..()
@@ -131,6 +133,7 @@
 	color_cutoffs = list(25, 15, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/lightyellow
 	actions_types = list(/datum/action/item_action/toggle_nv)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 3)
 
 /obj/item/clothing/glasses/hud/diagnostic/night/update_icon_state()
 	. = ..()
@@ -145,7 +148,7 @@
 	flash_protect = FLASH_PROTECTION_FLASH
 	flags_cover = GLASSESCOVERSEYES
 	tint = 1
-	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.55, /datum/material/iron = SMALL_MATERIAL_AMOUNT / 2)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.8, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.55)
 
 /obj/item/clothing/glasses/hud/diagnostic/sunglasses/Initialize(mapload)
 	. = ..()
@@ -190,7 +193,7 @@
 	flags_cover = GLASSESCOVERSEYES
 	tint = 1
 	glass_colour_type = /datum/client_colour/glass_colour/darkred
-	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.55, /datum/material/iron = SMALL_MATERIAL_AMOUNT / 2)
+	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.8, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.55)
 
 /obj/item/clothing/glasses/hud/security/sunglasses/Initialize(mapload)
 	. = ..()
@@ -211,6 +214,7 @@
 	color_cutoffs = list(40, 15, 10)
 	glass_colour_type = /datum/client_colour/glass_colour/lightred
 	actions_types = list(/datum/action/item_action/toggle_nv)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 3.5)
 
 /obj/item/clothing/glasses/hud/security/night/update_icon_state()
 	. = ..()

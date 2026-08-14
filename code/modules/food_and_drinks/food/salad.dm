@@ -77,6 +77,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 4)
 	tastes = list("rice" = 1)
 	foodtypes = GRAIN | RAW
+	foodtypes_added_when_cooked = BREAKFAST
 
 /obj/item/food/uncooked_rice/make_bakeable()
 	AddComponent(/datum/component/bakeable, /obj/item/food/boiledrice, rand(15 SECONDS, 20 SECONDS), TRUE, TRUE)
@@ -308,7 +309,7 @@
 		/datum/reagent/consumable/nutriment/protein = 4,
 	)
 	tastes = list("creamy potatoes" = 2, "eggs" = 2, "mayonnaise" = 1, "onions" = 1)
-	foodtypes = MEAT|VEGETABLES|BREAKFAST|EGG
+	foodtypes = MEAT|VEGETABLES|EGG
 	crafting_complexity = FOOD_COMPLEXITY_3
 
 /obj/item/food/salad/spinach_fruit_salad

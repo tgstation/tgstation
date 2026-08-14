@@ -91,69 +91,71 @@
 	crystal_lens = null
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/laser_pointer/attackby(obj/item/attack_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attack_item, /obj/item/stock_parts/micro_laser))
+/obj/item/laser_pointer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stock_parts/micro_laser))
 		if(diode)
 			balloon_alert(user, "already has a diode!")
-			return
-		var/obj/item/stock_parts/attack_diode = attack_item
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/stock_parts/attack_diode = tool
 		if(crystal_lens && attack_diode.rating < 3) //only tier 3 and up are small enough to fit
-			to_chat(user, span_warning("You try to jam \the [attack_item.name] in place, but \the [crystal_lens.name] is in the way!"))
+			to_chat(user, span_warning("You try to jam \the [tool.name] in place, but \the [crystal_lens.name] is in the way!"))
 			playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 20)
-			if(do_after(user, 2 SECONDS, src))
-				var/atom/atom_to_teleport = pick(user, attack_item)
-				if(atom_to_teleport == user)
-					to_chat(user, span_warning("You jam \the [attack_item.name] in too hard and break \the [crystal_lens.name] inside, teleporting you away!"))
-					user.drop_all_held_items()
-				else if(atom_to_teleport == attack_item)
-					attack_item.forceMove(drop_location())
-					to_chat(user, span_warning("You jam \the [attack_item.name] in too hard and break \the [crystal_lens.name] inside, teleporting \the [attack_item.name] away!"))
-				do_teleport(atom_to_teleport, get_turf(src), crystal_lens.blink_range, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
-				qdel(crystal_lens)
-			return
-		if(!user.transferItemToLoc(attack_item, src))
-			return
+			if(!do_after(user, 2 SECONDS, src))
+				return ITEM_INTERACT_BLOCKING
+			var/atom/atom_to_teleport = pick(user, tool)
+			if(atom_to_teleport == user)
+				to_chat(user, span_warning("You jam \the [tool.name] in too hard and break \the [crystal_lens.name] inside, teleporting you away!"))
+				user.drop_all_held_items()
+			else if(atom_to_teleport == tool)
+				tool.forceMove(drop_location())
+				to_chat(user, span_warning("You jam \the [tool.name] in too hard and break \the [crystal_lens.name] inside, teleporting \the [tool.name] away!"))
+			do_teleport(atom_to_teleport, get_turf(src), crystal_lens.blink_range, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+			qdel(crystal_lens)
+			return ITEM_INTERACT_SUCCESS
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
 		playsound(src, 'sound/items/tools/screwdriver.ogg', 30)
-		diode = attack_item
+		diode = tool
 		balloon_alert(user, "installed \the [diode.name]")
 		//we have a diode now, try starting a charge sequence in case the pointer was charging when we took out the diode
 		recharging = TRUE
 		START_PROCESSING(SSobj, src)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(attack_item, /obj/item/stack/ore/bluespace_crystal))
+	if(istype(tool, /obj/item/stack/ore/bluespace_crystal))
 		if(crystal_lens)
 			balloon_alert(user, "already has a lens!")
-			return
+			return ITEM_INTERACT_BLOCKING
 		//the crystal stack we're trying to install a crystal from
-		var/obj/item/stack/ore/bluespace_crystal/crystal_stack = attack_item
+		var/obj/item/stack/ore/bluespace_crystal/crystal_stack = tool
 		if(diode && diode.rating < 3) //only lasers of tier 3 and up can house a lens
 			to_chat(user, span_warning("You try to jam \the [crystal_stack.name] in front of the diode, but it's a bad fit!"))
 			playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 20)
-			if(do_after(user, 2 SECONDS, src))
-				var/atom/atom_to_teleport = pick(user, src)
-				if(atom_to_teleport == user)
-					to_chat(user, span_warning("You press on \the [crystal_stack.name] too hard and are teleported away!"))
-					user.drop_all_held_items()
-				else if(atom_to_teleport == src)
-					forceMove(drop_location())
-					to_chat(user, span_warning("You press on \the [crystal_stack.name] too hard and \the [src] is teleported away!"))
-				do_teleport(atom_to_teleport, get_turf(src), crystal_stack.blink_range, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
-				crystal_stack.use_tool(src, user, amount = 1) //use only one if we were installing from a stack of crystals
-			return
+			if(!do_after(user, 2 SECONDS, src))
+				return ITEM_INTERACT_BLOCKING
+			var/atom/atom_to_teleport = pick(user, src)
+			if(atom_to_teleport == user)
+				to_chat(user, span_warning("You press on \the [crystal_stack.name] too hard and are teleported away!"))
+				user.drop_all_held_items()
+			else if(atom_to_teleport == src)
+				forceMove(drop_location())
+				to_chat(user, span_warning("You press on \the [crystal_stack.name] too hard and \the [src] is teleported away!"))
+			do_teleport(atom_to_teleport, get_turf(src), crystal_stack.blink_range, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
+			crystal_stack.use_tool(src, user, amount = 1) //use only one if we were installing from a stack of crystals
+			return ITEM_INTERACT_SUCCESS
 		//the single crystal that we actually install
 		var/obj/item/stack/ore/bluespace_crystal/single_crystal = crystal_stack.split_stack(1)
 		if(isnull(single_crystal))
-			return
+			return ITEM_INTERACT_BLOCKING
 		single_crystal.forceMove(src)
 		crystal_lens = single_crystal
 		playsound(src, 'sound/items/tools/screwdriver2.ogg', 30)
 		balloon_alert(user, "installed \the [crystal_lens.name]")
 		to_chat(user, span_notice("You install a [crystal_lens.name] in [src]. \
 			It can now be used to shine through obstacles at the cost of double the energy drain."))
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/item/laser_pointer/examine(mob/user)
 	. = ..()
@@ -235,7 +237,7 @@
 			//Intensity of the laser dot to pass to flash_act
 			var/severity = pick(0, 1, 2)
 			var/always_fail = FALSE
-			if(istype(target_humanoid.glasses, /obj/item/clothing/glasses/eyepatch) && prob(50))
+			if(istype(target_humanoid.get_item_by_slot(ITEM_SLOT_EYES), /obj/item/clothing/glasses/eyepatch) && prob(50))
 				always_fail = TRUE
 
 			//chance to actually hit the eyes depends on internal component
@@ -273,20 +275,20 @@
 		else
 			outmsg = span_warning("You miss the lens of [target_camera] with [src]!")
 
-	//catpeople: make any felinid near the target to face the target, chance for felinids to pounce at the light, stepping to the target
-	for(var/mob/living/carbon/human/target_felinid in view(1, targloc))
-		if(!isfelinid(target_felinid) || target_felinid.stat == DEAD || target_felinid.is_blind() || target_felinid.incapacitated)
+	//Make any mob with catlike instincts near the target face the target, with a chance of pouncing (moving) toward it.
+	for(var/mob/living/target_cat in view(1, targloc))
+		if(!HAS_TRAIT(target_cat, TRAIT_CATLIKE_INSTINCT) || target_cat.is_blind() || target_cat.incapacitated)
 			continue
-		if(target_felinid.body_position == STANDING_UP)
-			target_felinid.setDir(get_dir(target_felinid, targloc)) // kitty always looks at the light
+		target_cat.setDir(get_dir(target_cat, targloc)) // kitty always looks at the light
+		if(target_cat.body_position == STANDING_UP)
 			if(prob(effectchance * diode.rating))
-				target_felinid.visible_message(span_warning("[target_felinid] makes a grab for the light!"), span_userdanger("LIGHT!"))
-				target_felinid.Move(targloc, get_dir(target_felinid, targloc))
-				log_combat(user, target_felinid, "moved with a laser pointer", src)
+				target_cat.visible_message(span_warning("[target_cat] makes a grab for the light!"), span_userdanger("LIGHT!"))
+				target_cat.Move(targloc, get_dir(target_cat, targloc))
+				log_combat(user, target_cat, "moved with a laser pointer", src)
 			else
-				target_felinid.visible_message(span_notice("[target_felinid] looks briefly distracted by the light."), span_warning("You're briefly tempted by the shiny light..."))
+				target_cat.visible_message(span_notice("[target_cat] looks briefly distracted by the light."), span_warning("You're briefly tempted by the shiny light..."))
 		else
-			target_felinid.visible_message(span_notice("[target_felinid] stares at the light."), span_warning("You stare at the light..."))
+			target_cat.visible_message(span_notice("[target_cat] stares at the light."), span_warning("You stare at the light..."))
 	//The pointer is shining, change its sprite to show
 	icon_state = "pointer_[pointer_icon_state]"
 

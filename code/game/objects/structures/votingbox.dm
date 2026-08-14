@@ -19,18 +19,22 @@
 	var/list/voted //List of ID's that already voted.
 	COOLDOWN_DECLARE(vote_print_cooldown)
 
-/obj/structure/votebox/attackby(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(I,/obj/item/card/id))
-		if(!owner)
-			register_owner(I,user)
-			return
-	if(istype(I,/obj/item/paper))
-		if(voting_active)
-			apply_vote(I,user)
-		else
+/obj/structure/votebox/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/card/id))
+		if(owner)
+			return ITEM_INTERACT_BLOCKING
+
+		register_owner(tool ,user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/paper))
+		if(!voting_active)
 			to_chat(user,span_warning("[src] is in maintenance mode. Voting is not possible at the moment."))
-		return
-	return ..()
+			return ITEM_INTERACT_BLOCKING
+		apply_vote(tool ,user)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/structure/votebox/interact(mob/user)
 	..()

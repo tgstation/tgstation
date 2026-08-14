@@ -14,12 +14,12 @@
 /obj/item/sparkler/fire_act(exposed_temperature, exposed_volume)
 	light()
 
-/obj/item/sparkler/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	var/ignition_msg = item.ignition_effect(src, user)
-	if(ignition_msg)
-		light(user, ignition_msg)
-	else
-		return ..()
+/obj/item/sparkler/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	var/ignition_msg = tool.ignition_effect(src, user)
+	if(!ignition_msg)
+		return NONE
+	light(user, ignition_msg)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/sparkler/proc/light(mob/user, message)
 	if(lit)
@@ -75,13 +75,15 @@
 /obj/item/grenade/firecracker/attack_self(mob/user) // You need to light it manually.
 	return
 
-/obj/item/grenade/firecracker/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	var/ignition_msg = item.ignition_effect(src, user)
-	if(ignition_msg && !active)
-		visible_message(ignition_msg)
-		arm_grenade(user)
-	else
-		return ..()
+/obj/item/grenade/firecracker/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(active)
+		return NONE
+	var/ignition_msg = tool.ignition_effect(src, user)
+	if(!ignition_msg)
+		return NONE
+	visible_message(ignition_msg)
+	arm_grenade(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/grenade/firecracker/fire_act(exposed_temperature, exposed_volume)
 	detonate()

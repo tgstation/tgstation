@@ -15,10 +15,7 @@ SUBSYSTEM_DEF(sound_tokens)
 		var/client/client = currentrun[currentrun.len]
 		currentrun.len--
 		var/mob/owned_mob = client.mob
-		if(!owned_mob)
-			continue
-		for(var/datum/sound_token/token in client.sound_tokens)
+		for(var/datum/sound_token/token as anything in owned_mob?.sound_tokens)
 			token.update_listener(owned_mob)
 		if(MC_TICK_CHECK)
 			break
-

@@ -14,7 +14,7 @@
 	var/list/connected_faxes = list()
 
 /**
- * Proc for subscribing to faxes. Registers needed signal and updates fax related vars for program. Includes type checking.
+ * Proc for subscribing to faxes. Adds weakref to fax's listeners and updates fax related vars for program. Includes type checking.
  * Arguments:
  * * target - [/datum/computer_file/program/proc/tap] proc target, can be anything
  */
@@ -25,7 +25,7 @@
 	var/our_id = target.fax_id
 
 	if(!connected_faxes[our_id])
-		RegisterSignal(target, COMSIG_FAX_MESSAGE_RECEIVED, PROC_REF(on_fax_message_received))
+		LAZYSET(target.fax_listeners, REF(src), WEAKREF(src))
 
 	var/list/fax_info = list()
 	var/area/our_area = get_area(target)
@@ -38,7 +38,7 @@
 	return TRUE
 
 /**
- * Disconnects a fax given its ID (if it was connected before), removing it from a list and unregistering relevant signal
+ * Disconnects a fax given its ID (if it was connected before), removing it from the relevant lists.
  * Arguments:
  * * fax_id - fax id to disconnect from our PDA
  */
@@ -50,35 +50,9 @@
 	var/datum/weakref/fax_ref = fax_info["ref"]
 	var/obj/machinery/fax/our_fax = fax_ref.resolve()
 	if (our_fax)
-		UnregisterSignal(our_fax, COMSIG_FAX_MESSAGE_RECEIVED)
+		LAZYREMOVE(our_fax.fax_listeners, REF(src))
 
 	connected_faxes -= fax_id
-
-
-/**
- * Signal handler for [COMSIG_FAX_MESSAGE_RECEIVED].
- * Arguments:
- * * receiver - [/obj/machinery/fax] that received a message
- * * message_source - name of a sender
- */
-/datum/computer_file/program/faxbond/proc/on_fax_message_received(obj/machinery/fax/receiver, message_source)
-	SIGNAL_HANDLER
-
-	var/id = receiver.fax_id
-	var/list/fax_info = connected_faxes[id]
-
-	if (fax_info["muted"])
-		return
-
-	var/datum/computer_file/program/messenger/messenger = locate() in computer.stored_files
-	var/datum/signal/subspace/messaging/tablet_message/signal = new(receiver, list(
-		"fakename" = "Fax Notificator",
-		"fakejob" = "PDA Program",
-		"message" = "Your fax [receiver.fax_name] has received a new message from [message_source]",
-		"targets" = list(messenger),
-		"automated" = TRUE
-	))
-	INVOKE_ASYNC(signal, TYPE_PROC_REF(/datum/signal/subspace, send_to_receivers))
 
 /datum/computer_file/program/faxbond/Destroy()
 	. = ..()

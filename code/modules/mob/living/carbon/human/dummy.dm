@@ -7,7 +7,7 @@
 
 INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
-/mob/living/carbon/human/dummy/Initialize(mapload)
+/mob/living/carbon/human/dummy/Initialize(mapload, datum/species/species)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_GODMODE, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_PREVENT_BLINKING, INNATE_TRAIT)
@@ -88,6 +88,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 	delete_equipment()
 	update_lips(null, null, null, update = FALSE)
 	cut_overlays(TRUE)
+	clear_filters()
 
 /mob/living/carbon/human/dummy/setup_human_dna()
 	randomize_human_normie(src, randomize_mutations = FALSE)
@@ -95,18 +96,12 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 /mob/living/carbon/human/dummy/log_mob_tag(text)
 	return
 
-// To speed up the preference menu, we apply 1 filter to the entire mob
-/mob/living/carbon/human/dummy/regenerate_icons()
-	. = ..()
-	apply_height_filters(src, TRUE)
-
-/mob/living/carbon/human/dummy/apply_height_filters(image/appearance, only_apply_in_prefs = FALSE)
-	if(only_apply_in_prefs)
+// To speed up the preference menu, we apply one height filter to the entire mob,
+// rather than independently applying offsets and filters to each individual overlay
+// This looks good enough to pass the sniff test and saves a lot of time
+/mob/living/carbon/human/dummy/apply_height(image/appearance, body_area)
+	if(appearance == src)
 		return ..()
-
-// Not necessary with above
-/mob/living/carbon/human/dummy/apply_height_offsets(image/appearance, upper_torso)
-	return
 
 /// Takes in an accessory list and returns the first entry from that list, ensuring that we dont return SPRITE_ACCESSORY_NONE in the process.
 /proc/get_consistent_feature_entry(list/accessory_feature_list)
@@ -116,10 +111,9 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /proc/create_consistent_human_dna(mob/living/carbon/human/target)
 	target.dna.features[FEATURE_MUTANT_COLOR] = COLOR_VIBRANT_LIME
-	target.dna.features[FEATURE_ETHEREAL_COLOR] = COLOR_WHITE
 	for(var/feature_key in SSaccessories.feature_list)
 		target.dna.features[feature_key] = get_consistent_feature_entry(SSaccessories.feature_list[feature_key])
-	target.dna.initialize_dna(newblood_type = get_blood_type(BLOOD_TYPE_O_MINUS), create_mutation_blocks = FALSE, randomize_features = FALSE)
+	target.dna.initialize_dna(newblood_type = get_blood_type(/datum/blood_type/human/o_minus), create_mutation_blocks = FALSE, randomize_features = FALSE)
 	// UF and UI are nondeterministic, even though the features are the same some blocks will randomize slightly
 	// In practice this doesn't matter, but this is for the sake of 100%(ish) consistency
 	var/static/consistent_UF

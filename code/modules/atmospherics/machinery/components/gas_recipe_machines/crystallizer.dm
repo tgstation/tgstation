@@ -106,19 +106,19 @@
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/inject_gases()
 	var/datum/gas_mixture/contents = airs[2]
 	for(var/gas_type in selected_recipe.requirements)
-		if(!contents.gases[gas_type] || !contents.gases[gas_type][MOLES])
+		if(!contents.moles[gas_type])
 			continue
-		if(internal.gases[gas_type] && internal.gases[gas_type][MOLES] >= selected_recipe.requirements[gas_type] * 2)
+		if(internal.moles[gas_type] >= selected_recipe.requirements[gas_type] * 2)
 			continue
-		internal.merge(contents.remove_specific(gas_type, contents.gases[gas_type][MOLES] * gas_input))
+		internal.merge(contents.remove_specific(gas_type, contents.moles[gas_type] * gas_input))
 
 ///Checks if the gases required are all inside
 /obj/machinery/atmospherics/components/binary/crystallizer/proc/internal_check()
 	var/gas_check = 0
 	for(var/gas_type in selected_recipe.requirements)
-		if(!internal.gases[gas_type] || !internal.gases[gas_type][MOLES])
+		if(!internal.moles[gas_type])
 			return FALSE
-		if(internal.gases[gas_type][MOLES] >= selected_recipe.requirements[gas_type])
+		if(internal.moles[gas_type] >= selected_recipe.requirements[gas_type])
 			gas_check++
 	if(gas_check == selected_recipe.requirements.len)
 		return TRUE
@@ -190,7 +190,7 @@
 	for(var/gas_type in selected_recipe.requirements)
 		var/required_gas_moles = selected_recipe.requirements[gas_type]
 		var/amount_consumed = required_gas_moles + (required_gas_moles * (quality_loss * 0.01))
-		if(internal.gases[gas_type][MOLES] < amount_consumed)
+		if(internal.moles[gas_type] < amount_consumed)
 			quality_loss = min(quality_loss + 10, 100)
 		internal.remove_specific(gas_type, amount_consumed)
 
@@ -257,18 +257,20 @@
 		data["selected"] = ""
 
 	var/list/internal_gas_data = list()
+	var/list/cached_gas_name = GAS_META[META_GAS_NAME]
+	var/list/cached_gas_id = GAS_META[META_GAS_ID]
 	if(internal.total_moles())
-		for(var/gasid in internal.gases)
+		for(var/gasid, amount in internal.moles)
 			internal_gas_data.Add(list(list(
-			"name"= internal.gases[gasid][GAS_META][META_GAS_NAME],
-			"id" = internal.gases[gasid][GAS_META][META_GAS_ID],
-			"amount" = round(internal.gases[gasid][MOLES], 0.01),
+			"name"= cached_gas_name[gasid],
+			"id" = cached_gas_id[gasid],
+			"amount" = round(amount, 0.01),
 			)))
 	else
-		for(var/gasid in internal.gases)
+		for(var/gasid in internal.moles)
 			internal_gas_data.Add(list(list(
-				"name"= internal.gases[gasid][GAS_META][META_GAS_NAME],
-				"id" = internal.gases[gasid][GAS_META][META_GAS_ID],
+				"name"= cached_gas_name[gasid],
+				"id" = cached_gas_id[gasid],
 				"amount" = 0,
 				)))
 	data["internal_gas_data"] = internal_gas_data

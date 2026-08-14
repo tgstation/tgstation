@@ -78,6 +78,14 @@ GLOBAL_PROTECT(investigate_signaler)
 GLOBAL_LIST_EMPTY(lawchanges)
 GLOBAL_PROTECT(lawchanges)
 
+/// Adds something to the law change log
+/proc/log_law_change(mob/living/changer, log_message)
+	if(isnull(changer))
+		log_message = capitalize(log_message)
+
+	GLOB.lawchanges += "[round_timestamp()] <b>:</b> [changer ? key_name(changer) : "(No mob)"] [log_message]"
+	log_silicon("Law change: [changer ? key_name(changer) : "(No mob)"] [log_message]")
+
 #undef DECLARE_LOG
 #undef DECLARE_LOG_NAMED
 #undef START_LOG

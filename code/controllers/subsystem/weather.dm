@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(weather)
 	var/list/eligible_zlevels = list()
 	/// Used by barometers to know when the next storm is coming
 	var/list/next_hit_by_zlevel = list()
-	/// Alist of all particle holders per Z-stack offset for particle weather to be shown to clients
+	/// Alist of all particle holders per Z-stack offset for particle weather, each particle holder associated with z-levels it should be displayed on, to be shown to clients
 	var/alist/particle_holders = alist()
 	/// List of all RENDER_PLANE_PARTICLE_WEATHER and RENDER_PLANE_EMISSIVE_PARTICLE_WEATHER planes
 	var/list/particle_planemasters = list()
@@ -103,9 +103,19 @@ SUBSYSTEM_DEF(weather)
 		// We add it to vis_contents of planemasters rather than client screen as planemasters already
 		// manage their own visibility based on owner's z level
 		for (var/atom/movable/screen/plane_master/plane_master as anything in particle_planemasters)
+			var/mob/owner = plane_master.home.our_hud?.mymob
+			if (!owner) // Vibecheck
+				continue
+			// Could be caching these per-mob but its basically just a list lookup wrapper
+			var/list/stack_levels = SSmapping.get_connected_levels(get_turf(owner.client?.eye || owner))
 			for (var/obj/effect/abstract/weather_holder/holder as anything in holder_list)
-				if (holder.plane == plane_master.plane)
-					plane_master.vis_contents |= holder
+				if (holder.plane != plane_master.plane)
+					continue
+
+				if (!length(holder_list[holder] & stack_levels))
+					continue
+
+				plane_master.vis_contents |= holder
 
 /datum/controller/subsystem/weather/proc/remove_weather_objects(list/old_holders)
 	for (var/offset in 1 to length(old_holders))

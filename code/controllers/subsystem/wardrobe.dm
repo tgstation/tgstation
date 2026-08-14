@@ -41,6 +41,9 @@ SUBSYSTEM_DEF(wardrobe)
 	var/stock_hit = 0
 	/// How many items would we make just by loading the master list once?
 	var/one_go_master = 0
+	// Hit/Miss Tracking
+	var/list/hit_map = list()
+	var/list/miss_map = list()
 	/// Item types that should not ever be recycled, only generated (like modsuits)
 	var/static/list/recycle_blacklist = typecacheof(list(
 		/obj/item/mod/control/pre_equipped,
@@ -98,7 +101,7 @@ SUBSYSTEM_DEF(wardrobe)
 				order_list[type_to_stock] = (amount_to_stock - (i - 1)) // Account for types we've already created
 				return
 			var/atom/movable/new_member = new type_to_stock()
-			stash_object(new_member)
+			yield_object(new_member)
 
 		order_list -= type_to_stock
 		if(MC_TICK_CHECK)
@@ -163,7 +166,7 @@ SUBSYSTEM_DEF(wardrobe)
  * * type to stock - What type exactly do you want us to remember?
  *
 */
-/datum/controller/subsystem/wardrobe/proc/canonize_type(type_to_stock)
+/datum/controller/subsystem/wardrobe/proc/canonize_type(type_to_stock, amount = 1)
 	if(!type_to_stock)
 		return
 	if(!ispath(type_to_stock))
@@ -179,7 +182,7 @@ SUBSYSTEM_DEF(wardrobe)
 			master_info[WARDROBE_CACHE_CALL_INSERT] = callback_info[WARDROBE_CALLBACK_INSERT]
 			master_info[WARDROBE_CACHE_CALL_REMOVAL] = callback_info[WARDROBE_CALLBACK_REMOVE]
 		canon_minimum[type_to_stock] = master_info
-	master_info[WARDROBE_CACHE_COUNT] += 1
+	master_info[WARDROBE_CACHE_COUNT] += amount
 	one_go_master++
 
 /datum/controller/subsystem/wardrobe/proc/add_queue_item(queued_type, amount)
@@ -217,17 +220,21 @@ SUBSYSTEM_DEF(wardrobe)
 	if(is_type_in_typecache(object, recycle_blacklist))
 		qdel(object)
 		return
-	stash_object(object)
+	yield_object(object)
 
-/// Take an existing object, and insert it into our storage
-/// If we can't or won't take it, it's deleted. You do not own this object after passing it in
+/// Yields an object to the wardrobe subsystem, you no longer own it after calling this proc
+/datum/controller/subsystem/wardrobe/proc/yield_object(obj/item/object)
+	if(!stash_object(object))
+		qdel(object)
+
+/// Take an existing object, and tries to insert it into our storage
+/// Returns TRUE if we've taken it (you no longer own it), FALSE if we have not
 /datum/controller/subsystem/wardrobe/proc/stash_object(obj/item/object)
 	var/object_type = object.type
 	var/list/master_info = canon_minimum[object_type]
 	// I will not permit objects you didn't reserve ahead of time
 	if(!master_info)
-		qdel(object)
-		return
+		return FALSE
 
 	var/stock_target = master_info[WARDROBE_CACHE_COUNT] * cache_intensity
 	var/amount_held = 0
@@ -237,12 +244,11 @@ SUBSYSTEM_DEF(wardrobe)
 
 	// Doublely so for things we already have too much of
 	if(amount_held - stock_target >= overflow_lienency)
-		qdel(object)
-		return
+		return FALSE
 	// Fuck off
 	if(QDELETED(object))
 		stack_trace("We tried to stash a qdeleted object, what did you do")
-		return
+		return FALSE
 
 	if(!stock_info)
 		stock_info = new /list(WARDROBE_STOCK_CALL_REMOVAL)
@@ -251,20 +257,26 @@ SUBSYSTEM_DEF(wardrobe)
 		stock_info[WARDROBE_STOCK_CALL_REMOVAL] = master_info[WARDROBE_CACHE_CALL_REMOVAL]
 		preloaded_stock[object_type] = stock_info
 
+	if(object.loc != null)
+		object.moveToNullspace()
 	var/datum/callback/do_on_insert = stock_info[WARDROBE_STOCK_CALL_INSERT]
 	if(do_on_insert)
 		do_on_insert.object = object
 		do_on_insert.Invoke()
 		do_on_insert.object = null
 
-	object.moveToNullspace()
 	stock_info[WARDROBE_STOCK_CONTENTS] += object
+	return TRUE
 
 /datum/controller/subsystem/wardrobe/proc/provide_type(datum/requested_type, atom/movable/location)
 	var/atom/movable/requested_object
+	if(!canon_minimum[requested_type])
+		return new requested_type(location)
+
 	var/list/stock_info = preloaded_stock[requested_type]
 	if(!stock_info)
 		stock_miss++
+		miss_map[requested_type]++
 		requested_object = new requested_type(location)
 		return requested_object
 
@@ -289,6 +301,7 @@ SUBSYSTEM_DEF(wardrobe)
 		do_on_removal.object = null
 
 	stock_hit++
+	hit_map[requested_type]++
 	add_queue_item(requested_type, 1) // Requeue the item, under the assumption we'll never see it again
 	if(!(contents_length - 1))
 		preloaded_stock -= requested_type
@@ -312,6 +325,113 @@ SUBSYSTEM_DEF(wardrobe)
 
 	if(!length(stock_info[WARDROBE_STOCK_CONTENTS]))
 		preloaded_stock -= unload_type
+
+/// Runs a speed test for all our various types
+/// Measures the average cost of providing vs spawning, and deletion vs stashing
+/datum/controller/subsystem/wardrobe/proc/speed_test(turf/spawn_on, attempt_count = 200)
+	var/old_overflow_lienency = overflow_lienency
+	overflow_lienency = INFINITY
+
+	// Stock everything I want IMMEDIATELY
+	force_stock_wardrobe(attempt_count)
+
+	// List of lists in the form list(type, new_cost, provide_cost, qdel_cost, stash_cost)
+	var/list/type_info = list()
+	for(var/atom/movable/type_to_test as anything in preloaded_stock)
+		var/new_cost = 0
+		var/provide_cost = 0
+		var/qdel_cost = 0
+		var/stash_cost = 0
+		var/stash_success = FALSE
+		for(var/i in 1 to attempt_count)
+			// Stopwatches are one per proc, so lets give them their own scope
+			do {
+				STAT_START_STOPWATCH
+				var/atom/hh = new type_to_test(spawn_on)
+				STAT_STOP_STOPWATCH
+				new_cost += STAT_TIME
+				qdel(hh)
+			} while(FALSE)
+			// In case subobjects are also tracked, this avoids any mistakes
+			force_stock_wardrobe(attempt_count)
+			// Now provide()
+			do {
+				STAT_START_STOPWATCH
+				var/atom/hh = SSwardrobe.provide_type(type_to_test, spawn_on)
+				STAT_STOP_STOPWATCH
+				provide_cost += STAT_TIME
+				qdel(hh)
+			} while(FALSE)
+			force_stock_wardrobe(attempt_count)
+			// qdel()
+			do {
+				var/atom/hh = SSwardrobe.provide_type(type_to_test, spawn_on)
+				STAT_START_STOPWATCH
+				/// Assignment is meaningless, just to make the comparison the same for stashing
+				stash_success = qdel(hh)
+				STAT_STOP_STOPWATCH
+				qdel_cost += STAT_TIME
+			} while(FALSE)
+			force_stock_wardrobe(attempt_count)
+			// stash_object()
+			do {
+				var/atom/hh = SSwardrobe.provide_type(type_to_test, spawn_on)
+				STAT_START_STOPWATCH
+				stash_success = SSwardrobe.stash_object(hh)
+				STAT_STOP_STOPWATCH
+				if(!stash_success)
+					qdel(hh)
+				stash_cost += STAT_TIME
+			} while(FALSE)
+			force_stock_wardrobe(attempt_count)
+		type_info += list(list(type_to_test, new_cost, provide_cost, qdel_cost, stash_cost))
+
+	overflow_lienency = old_overflow_lienency
+	// Ok now we have our data, time to print it
+	var/list/wardrobe_info = list("<B>Performance information ([attempt_count] runs)</B><BR><BR><ol>")
+	sortTim(type_info, cmp=/proc/cmp_wardrobe_performance)
+	for(var/list/deets in type_info)
+		wardrobe_info += "<li><u>[deets[1]]</u><ul>"
+		wardrobe_info += "<li>New: [deets[2]]ms</li>"
+		wardrobe_info += "<li>Provide: [deets[3]]ms</li>"
+		wardrobe_info += "<li>Qdel: [deets[4]]ms</li>"
+		wardrobe_info += "<li>Stash: [deets[5]]ms</li>"
+		wardrobe_info += "</ul></li>"
+	wardrobe_info += "</ol>"
+
+	usr << browse(wardrobe_info.Join(), "window=wardrobe_perf")
+
+/proc/cmp_wardrobe_performance(list/A, list/B)
+	var/create_delta_a = A[3] - A[2]
+	var/create_delta_b = B[3] - B[2]
+	var/del_delta_a = A[5] - A[4]
+	var/del_delta_b = B[5] - B[4]
+	if((create_delta_a + del_delta_a) / 2 > (create_delta_b + del_delta_b) / 2)
+		return 1
+	return -1
+
+/// Stocks the wardrobe to stock_to items, no more no less
+/// Only usable for testing, will not work well in production as it'll likely just get run over by other code
+/datum/controller/subsystem/wardrobe/proc/force_stock_wardrobe(stock_to)
+	for(var/datum/loaded_type as anything in canon_minimum)
+		var/list/stock_info = preloaded_stock[loaded_type]
+		var/amount_held = 0
+		if(stock_info)
+			amount_held = length(stock_info[WARDROBE_STOCK_CONTENTS])
+
+		var/target_delta = amount_held - stock_to
+
+		// If we've got anything over the line, cut it back down
+		if(target_delta > 0)
+			unload_stock(loaded_type, target_delta, force = TRUE)
+			continue
+		// If we have more then we target, just don't you feel me?
+		else if (target_delta == 0)
+			continue
+
+		// If we don't have enough, queue enough to make up the remainder
+		for(var/i in 1 to abs(target_delta))
+			yield_object(new loaded_type())
 
 /// Sets up insertion and removal callbacks by typepath
 /// We will always use the deepest path. So /obj/item/blade/knife superceeds the entries of /obj/item and /obj/item/blade
@@ -343,8 +463,8 @@ SUBSYSTEM_DEF(wardrobe)
 			continue
 		var/datum/species/fossil_record = new to_record()
 		for(var/obj/item/species_request as anything in fossil_record.get_types_to_preload())
-			for(var/i in 1 to 5) // Store 5 of each species, since that seems on par with 1 of each outfit
-				canonize_type(species_request)
+			// Store 5 of each species, since that seems on par with 1 of each outfit
+			canonize_type(species_request, 5)
 		CHECK_TICK
 
 /datum/controller/subsystem/wardrobe/proc/load_storage_contents()

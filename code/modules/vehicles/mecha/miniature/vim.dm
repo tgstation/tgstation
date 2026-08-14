@@ -17,7 +17,7 @@
 	light_range = 4
 	light_power = 1.5
 	light_on = FALSE
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.55, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10.55, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
 	stepsound = 'sound/effects/servostep.ogg'
 	pivot_step = TRUE
 	step_energy_drain = 4

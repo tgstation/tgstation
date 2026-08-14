@@ -4,6 +4,7 @@
 	icon_state = "reactiveoff"
 	icon = 'icons/obj/clothing/suits/armor.dmi'
 	w_class = WEIGHT_CLASS_BULKY
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/uranium = SHEET_MATERIAL_AMOUNT * 4, /datum/material/diamond = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/reactive_armor_shell/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
@@ -232,6 +233,7 @@
 	cooldown_message = span_danger("The tesla capacitors on the reactive tesla armor are still recharging! The armor merely emits some sparks.")
 	emp_message = span_warning("The tesla capacitors beep ominously for a moment.")
 	clothing_traits = list(TRAIT_TESLA_SHOCKIMMUNE)
+	emp_protection = EMP_PROTECTION_MODERATE
 	/// How strong are the zaps we give off?
 	var/zap_power = 2.5e4
 	/// How far to the zaps we give off go?

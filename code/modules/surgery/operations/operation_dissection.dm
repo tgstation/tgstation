@@ -77,7 +77,7 @@
 				reward /= 5
 			else if(isabductor(human_target))
 				reward *= 4
-			else if(isgolem(human_target) || iszombie(human_target))
+			else if(isgolem(human_target) || human_target.has_status_effect(/datum/status_effect/zombie))
 				reward *= 3
 			else if(isjellyperson(human_target) || ispodperson(human_target))
 				reward *= 2
@@ -126,13 +126,13 @@
 
 /// proc that changes name and icon depending on value
 /obj/item/research_notes/proc/change_vol()
-	if(value >= 10000)
+	if(value >= TECHWEB_TIER_5_POINTS)
 		name = "revolutionary discovery in the field of [origin_type]"
 		icon_state = "docs_verified"
-	else if(value >= 2500)
+	else if(value >= TECHWEB_TIER_3_POINTS)
 		name = "essay about [origin_type]"
 		icon_state = "paper_words"
-	else if(value >= 100)
+	else if(value >= TECHWEB_TIER_1_POINTS)
 		name = "notes of [origin_type]"
 		icon_state = "paperslip_words"
 	else

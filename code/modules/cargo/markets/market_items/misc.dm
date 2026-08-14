@@ -230,3 +230,23 @@
 	price_max = PAYCHECK_CREW * 3
 	stock_max = 3
 	availability_prob = 25
+
+/datum/market_item/misc/nutrient_pump
+	name = "Nutriment Pump Implant Plus Plus Plus"
+	desc = "We turned this thing up as far as it'll go, and then some. Guaranteed to keep you well fed at all times."
+	price_min = CARGO_CRATE_VALUE * 2
+	price_max = CARGO_CRATE_VALUE * 3
+	item = /obj/item/organ/cyberimp/chest/nutriment/black_market
+	stock_max = 2
+	availability_prob = 60
+
+/datum/market_item/misc/hexacrete
+	name = "Jerrycan of Hexacrete"
+	desc = "Need to make a blacksite in a jiffy? Skip the fuss with this 200u jerrycan of hexacrete!"
+	item = /obj/item/reagent_containers/cup/jerrycan/hexacrete
+
+	price_min = CARGO_CRATE_VALUE * 3
+	price_max = CARGO_CRATE_VALUE * 5
+	stock_min = 2
+	stock_max = 5
+	availability_prob = 100

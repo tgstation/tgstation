@@ -160,8 +160,8 @@
 	if(flags & MECH_DO_AFTER_ADJACENCY_FLAG && !(chassis.Adjacent(target)))
 		return FALSE
 
-/obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/vehicle/sealed/mecha/M, attach_right = FALSE, mob/user)
-	return default_can_attach(M, attach_right, user)
+/obj/item/mecha_parts/mecha_equipment/proc/can_attach(obj/vehicle/sealed/mecha/mech, attach_right = FALSE, mob/user)
+	return default_can_attach(mech, attach_right, user)
 
 /obj/item/mecha_parts/mecha_equipment/proc/default_can_attach(obj/vehicle/sealed/mecha/mech, attach_right = FALSE, mob/user)
 	if(!(mech_flags & mech.mech_type))

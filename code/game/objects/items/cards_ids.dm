@@ -35,7 +35,7 @@
 	///What is our honorific name/title combo to be displayed?
 	var/honorific_title
 
-/obj/item/card/suicide_act(mob/living/carbon/user)
+/obj/item/card/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to swipe [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
@@ -68,6 +68,8 @@
 	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	armor_type = /datum/armor/card_id
 	resistance_flags = FIRE_PROOF | ACID_PROOF
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
+	item_flags = parent_type::item_flags | NO_MAT_REDEMPTION // A little clemency to the people who fumble and misclick stuff, even if it's already easy enough to destroy one.
 
 	/// The name registered on the card (for example: Dr Bryan See)
 	var/registered_name = null
@@ -906,7 +908,7 @@
 	if(user.is_holding(src))
 		user.dropItemToGround(src)
 	for(var/mob/living/carbon/human/viewing_mob in viewers(2, user))
-		if(viewing_mob.stat || viewing_mob == user)
+		if(IS_UNCONSCIOUS_OR_CRIT(viewing_mob) || viewing_mob == user)
 			continue
 		viewing_mob.say("Is something wrong? [first_name(user.name)]... you're sweating.", forced = "psycho")
 		break
@@ -1757,7 +1759,7 @@
 	if(ishuman(interacting_with))
 		interacting_with.balloon_alert(user, "scanning ID card...")
 
-		if(!do_after(user, 2 SECONDS, interacting_with, hidden = TRUE))
+		if(!do_after(user, 2 SECONDS, interacting_with, cog_icon = null))
 			interacting_with.balloon_alert(user, "interrupted!")
 			return ITEM_INTERACT_BLOCKING
 

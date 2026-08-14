@@ -78,6 +78,7 @@ GLOBAL_LIST_INIT(scan_conditions,init_scan_conditions())
 /obj/machinery/computer/exoscanner_control
 	name = "scanner array control console"
 	desc = "Controls scanner arrays to initiate scans for exodrones."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/piratepad_control")
 	circuit = /obj/item/circuitboard/computer/exoscanner_console
 	/// If scan was interrupted show a popup until dismissed.
 	var/failed_popup = FALSE

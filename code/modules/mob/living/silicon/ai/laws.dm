@@ -1,16 +1,8 @@
 
-/mob/living/silicon/ai/proc/show_laws_verb()
-	set category = "AI Commands"
-	set name = "Show Laws"
-	set desc = "Check what your laws are privately. \
-		Also ensures all synced cyborgs are up to date with your laws, reminds them of your laws."
+GAME_VERB_PROC_DESC(/mob/living/silicon/ai, show_laws_verb, "Show Laws", "Check what your laws are privately. Also ensures all synced cyborgs are up to date with your laws, reminds them of your laws.", "AI Commands")
 	if(usr.stat == DEAD)
 		return //won't work if dead
 	src.show_laws()
-
-/mob/living/silicon/ai/show_laws()
-	. = ..()
-	try_sync_laws() // Yes we lawsync borgs EVERY TIME WE CHECK LAWS
 
 /mob/living/silicon/ai/try_sync_laws()
 	for(var/mob/living/silicon/robot/borgo in connected_robots)

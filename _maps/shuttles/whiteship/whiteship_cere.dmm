@@ -215,7 +215,7 @@
 /area/shuttle/abandoned/crew)
 "gK" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "hj" = (
 /obj/machinery/door/airlock/hatch{
@@ -315,12 +315,12 @@
 	},
 /obj/item/storage/box/lights/mixed,
 /obj/item/storage/box/lights/bulbs,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "mV" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "nf" = (
 /obj/machinery/door/airlock{
@@ -343,7 +343,7 @@
 /obj/item/mining_scanner,
 /obj/machinery/airalarm/directional/south,
 /obj/effect/mapping_helpers/airalarm/unlocked,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "ns" = (
 /obj/structure/cable,
@@ -458,7 +458,7 @@
 "rZ" = (
 /obj/effect/decal/cleanable/dirt,
 /mob/living/basic/migo,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "su" = (
 /obj/effect/spawner/structure/window/reinforced/shuttle,
@@ -508,7 +508,7 @@
 "wN" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/reagent_dispensers/fueltank,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "yA" = (
 /obj/structure/cable,
@@ -548,7 +548,7 @@
 	req_access = list()
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "Ah" = (
 /obj/structure/cable,
@@ -564,7 +564,7 @@
 "Bq" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/firecloset/full,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "BN" = (
 /obj/structure/cable,
@@ -578,7 +578,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "CC" = (
 /obj/machinery/vending/boozeomat,
@@ -591,14 +591,14 @@
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/machinery/suit_storage_unit/spaceruin,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "Dr" = (
 /obj/effect/spawner/random/exotic/ripley,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/mapping_helpers/airalarm/unlocked,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "Dy" = (
 /obj/structure/cable,
@@ -673,14 +673,14 @@
 /obj/machinery/firealarm/directional/south,
 /obj/structure/closet/crate,
 /obj/effect/spawner/random/maintenance/six,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "Ha" = (
 /obj/machinery/computer/mech_bay_power_console{
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "Hw" = (
 /obj/machinery/light/small/directional/east,
@@ -713,7 +713,7 @@
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/machinery/suit_storage_unit/spaceruin,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "HZ" = (
 /obj/machinery/microwave,
@@ -743,7 +743,7 @@
 "Km" = (
 /obj/effect/spawner/random/structure/crate,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "Ko" = (
 /obj/machinery/power/shuttle_engine/propulsion/right{
@@ -771,7 +771,7 @@
 /obj/item/gun/energy/laser/retro,
 /obj/structure/closet/crate/secure/weapon,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "Li" = (
 /obj/structure/closet/secure_closet/freezer/meat/open,
@@ -888,7 +888,7 @@
 /obj/item/stack/sheet/mineral/plasma,
 /obj/structure/closet/crate,
 /obj/machinery/light/broken/directional/north,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "Sx" = (
 /obj/machinery/door/airlock/command{
@@ -942,38 +942,38 @@
 "TD" = (
 /obj/machinery/suit_storage_unit/spaceruin,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "TG" = (
 /obj/structure/window/reinforced/spawner/directional/west,
 /obj/structure/tank_dispenser/oxygen,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "US" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 4
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "Vx" = (
 /obj/structure/window/reinforced/spawner/directional/east,
 /obj/structure/tank_dispenser/oxygen,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "VD" = (
 /obj/effect/spawner/random/structure/crate,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/directional/south,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "WF" = (
 /obj/machinery/light/broken/directional/north,
 /obj/machinery/mech_bay_recharge_port,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/abandoned/cargo)
 "XT" = (
 /obj/machinery/door/airlock/external/glass/ruin,

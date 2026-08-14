@@ -176,12 +176,12 @@
 	return ITEM_INTERACT_SUCCESS
 
 ///By the by, helmets have the update_icon_updates_onmob element, so we don't have to call mob.update_worn_head()
-/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands)
+/obj/item/clothing/head/helmet/space/plasmaman/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands && !up)
 		. += mutable_appearance('icons/mob/clothing/head/plasmaman_head.dmi', visor_icon)
 
-/obj/item/clothing/head/helmet/space/plasmaman/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file)
+/obj/item/clothing/head/helmet/space/plasmaman/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands && smile)
 		var/mutable_appearance/smiley = mutable_appearance('icons/mob/clothing/head/plasmaman_head.dmi', smile_state)

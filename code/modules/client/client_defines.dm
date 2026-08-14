@@ -75,13 +75,6 @@
 	///The visual delay to use for the current client.Move(), mostly used for making a client based move look like it came from some other slower source
 	var/visual_delay = 0
 
-		///////////////
-		//SOUND STUFF//
-		///////////////
-
-	/// Sound tokens currently playing for this client. Managed by /datum/sound_token and the soundtoken subsystem!! SOUND TOKENS 2026
-	var/list/datum/sound_token/sound_tokens = list()
-
 		////////////
 		//SECURITY//
 		////////////
@@ -252,6 +245,8 @@
 
 	/// Loot panel for the client
 	var/datum/lootpanel/loot_panel
+
+	var/datum/admin_verb_panel/admin_verb_panel
 
 	///Which ambient sound this client is currently being provided.
 	var/current_ambient_sound

@@ -105,7 +105,7 @@ Medical HUD! Basic mode needs suit sensors on.
 
 //helper for getting the appropriate health status
 /proc/RoundHealth(mob/living/M)
-	if(M.stat == DEAD || (HAS_TRAIT(M, TRAIT_FAKEDEATH)))
+	if(IS_DEAD_OR_FAKING(M))
 		return "health-100" //what's our health? it doesn't matter, we're dead, or faking
 	var/maxi_health = M.maxHealth
 	if(iscarbon(M) && M.health < 0)
@@ -177,7 +177,7 @@ Medical HUD! Basic mode needs suit sensors on.
 // Called when a carbon changes stat, virus or XENO_HOST
 // Returns TRUE if the mob is considered "perfectly healthy", FALSE otherwise
 /mob/living/proc/med_hud_set_status()
-	if(stat == DEAD || (HAS_TRAIT(src, TRAIT_FAKEDEATH)))
+	if(IS_DEAD_OR_FAKING(src))
 		set_hud_image_state(STATUS_HUD, "huddead")
 		return FALSE
 
@@ -189,7 +189,7 @@ Medical HUD! Basic mode needs suit sensors on.
 		set_hud_image_state(STATUS_HUD, "hudxeno")
 		return FALSE
 
-	if(!appears_alive())
+	if(IS_DEAD_OR_FAKING(src))
 		if(can_defib_client())
 			set_hud_image_state(STATUS_HUD, "huddefib")
 		else if(HAS_TRAIT(src, TRAIT_GHOSTROLE_ON_REVIVE))
@@ -375,13 +375,13 @@ Diagnostic HUDs!
 		set_hud_image_state(DIAG_HUD, "huddiag[RoundDiagBar(health/maxHealth)]")
 
 /mob/living/silicon/proc/diag_hud_set_status()
-	switch(stat)
-		if(CONSCIOUS)
-			set_hud_image_state(DIAG_STAT_HUD, "hudstat")
-		if(UNCONSCIOUS, HARD_CRIT)
-			set_hud_image_state(DIAG_STAT_HUD, "hudoffline")
-		else
-			set_hud_image_state(DIAG_STAT_HUD, "huddead2")
+	if(IS_UNCONSCIOUS(src))
+		set_hud_image_state(DIAG_STAT_HUD, "hudoffline")
+		return
+	if(stat == DEAD)
+		set_hud_image_state(DIAG_STAT_HUD, "huddead2")
+		return
+	set_hud_image_state(DIAG_STAT_HUD, "hudstat")
 
 //Borgie battery tracking!
 /mob/living/silicon/robot/proc/diag_hud_set_borgcell()
@@ -497,6 +497,18 @@ Diagnostic HUDs!
 	var/list/dimensions = get_icon_dimensions(icon)
 	return dimensions[CACHED_HEIGHT_INDEX]
 
+/image/proc/get_cached_width()
+	if (isnull(icon))
+		return 0
+	var/list/dimensions = get_icon_dimensions(icon)
+	return dimensions[CACHED_WIDTH_INDEX]
+
+/image/proc/get_cached_height()
+	if (isnull(icon))
+		return 0
+	var/list/dimensions = get_icon_dimensions(icon)
+	return dimensions[CACHED_HEIGHT_INDEX]
+
 #undef CACHED_WIDTH_INDEX
 #undef CACHED_HEIGHT_INDEX
 
@@ -522,12 +534,18 @@ Diagnostic HUDs!
 	)
 	return max(scale_list) - min(scale_list)
 
+/atom/proc/get_hud_x_offset()
+	return -(get_cached_width() - ICON_SIZE_X) / 2
+
+/atom/proc/get_hud_y_offset()
+	return get_cached_height() - ICON_SIZE_Y
+
 /atom/proc/adjust_hud_position(image/holder, animate_time = null)
 	if (animate_time)
-		animate(holder, pixel_w = -(get_cached_width() - ICON_SIZE_X) / 2, pixel_z = get_cached_height() - ICON_SIZE_Y, time = animate_time)
+		animate(holder, pixel_w = get_hud_x_offset(), pixel_z = get_hud_y_offset(), time = animate_time)
 		return
-	holder.pixel_w = -(get_cached_width() - ICON_SIZE_X) / 2
-	holder.pixel_z = get_cached_height() - ICON_SIZE_Y
+	holder.pixel_w = get_hud_x_offset()
+	holder.pixel_z = get_hud_y_offset()
 
 /atom/proc/set_hud_image_state(hud_type, hud_state, x_offset = 0, y_offset = 0)
 	if (!hud_list) // Still initializing

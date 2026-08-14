@@ -2,13 +2,14 @@
 #define HOLDING_MODULE_CHECK_CONFIRMED 2
 
 /obj/item/mod/module/storage/holding
-	name = "MOD storage module of holding"
+	name = "\improper MOD storage module of holding"
 	desc = "A prototype storage module utilizing the power of anomalous bluespace phenomena \
 		to store copious amounts of matter. Unfortunately, it suffers from the same drawbacks as its standalone counterpart, \
 		including <b>tearing catastrophic rifts in reality</b> when nested inside bluespace pockets produced through similar means."
 	icon_state = "storage_holding"
 	complexity = 4
 	storage_type = null // core-less modules should be safe to insert into bags of holding
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SMALL_MATERIAL_AMOUNT * 7.5, /datum/material/uranium = SMALL_MATERIAL_AMOUNT * 2.5)
 	var/prebuilt = FALSE
 	var/core_removable = TRUE
 	var/datum/component/anomaly_locked_module/anomalock

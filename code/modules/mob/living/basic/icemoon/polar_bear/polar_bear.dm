@@ -43,7 +43,6 @@
 	. = ..()
 
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_SWIMMER, TRAIT_FENCE_CLIMBER, TRAIT_SNOWSTORM_IMMUNE), INNATE_TRAIT)
-	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_BEAR, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	AddElement(/datum/element/change_force_on_death, move_force = MOVE_FORCE_DEFAULT, move_resist = MOVE_RESIST_DEFAULT, pull_force = PULL_FORCE_DEFAULT)
 	AddElement(/datum/element/footstep, footstep_type = FOOTSTEP_MOB_CLAW)
@@ -54,6 +53,7 @@
 	faction = list(FACTION_NEUTRAL)
 
 /datum/ai_controller/basic_controller/polar
+	behavior_tree_json = "code/modules/mob/living/basic/icemoon/polar_bear/polar.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
@@ -61,12 +61,3 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/enrage,
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/random_speech/bear,
-	)

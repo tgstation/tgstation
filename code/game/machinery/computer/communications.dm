@@ -10,6 +10,7 @@
 /obj/machinery/computer/communications
 	name = "communications console"
 	desc = "A console used for high-priority announcements and emergencies."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/communications")
 	icon_screen = "comm"
 	icon_keyboard = "tech_key"
 	req_access = list(ACCESS_COMMAND)
@@ -59,6 +60,7 @@
 	var/last_toggled
 
 /obj/machinery/computer/communications/syndicate
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/communications/syndicate")
 	icon_screen = "commsyndie"
 	circuit = /obj/item/circuitboard/computer/communications/syndicate
 	req_access = list(ACCESS_SYNDICATE_LEADER)
@@ -110,11 +112,11 @@
 		return TRUE
 	return authenticated
 
-/obj/machinery/computer/communications/attackby(obj/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(isidcard(I))
-		attack_hand(user)
-	else
-		return ..()
+/obj/machinery/computer/communications/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isidcard(tool))
+		return NONE
+	attack_hand(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/communications/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(istype(emag_card, /obj/item/card/emag/battlecruiser))

@@ -69,8 +69,8 @@
 	src.target = target
 	return ..()
 
-/datum/status_effect/dream_projection/get_examine_text()
-	return "[owner.p_They()] are in a deep slumber, yet [owner.p_their()] eyes show a distant look, as if [owner.p_they()] are somewhere far away..."
+/datum/status_effect/dream_projection/get_examine_text(mob/examiner)
+	return "[owner.p_They()] [owner.p_are()] in a deep slumber, yet [owner.p_their()] eyes show a distant look, as if [owner.p_they()] [owner.p_are()] somewhere far away..."
 
 /datum/status_effect/dream_projection/on_apply()
 	if(!owner.SetSleeping(20 SECONDS))
@@ -168,10 +168,7 @@
 	return
 
 // The IC tab was removed recently as of commenting. This should probably be adjusted.
-/mob/eye/imaginary_friend/dream_projection/verb/stop_projection()
-	set category = "IC"
-	set name = "Stop Projection"
-	set desc = "Stop astrally projecting and return to your body."
+GAME_VERB_DESC(/mob/eye/imaginary_friend/dream_projection, stop_projection, "Stop Projection", "Stop astrally projecting and return to your body.", "IC")
 
 	qdel(src)
 

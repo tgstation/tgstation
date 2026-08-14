@@ -140,7 +140,7 @@
 	/// Cached particle type
 	var/cached_state
 
-/datum/status_effect/fire_handler/fire_stacks/get_examine_text()
+/datum/status_effect/fire_handler/fire_stacks/get_examine_text(mob/examiner)
 	if(owner.on_fire)
 		return
 
@@ -174,7 +174,7 @@
 	if(!on_fire)
 		return TRUE
 
-	var/decay_multiplier = HAS_TRAIT(owner, TRAIT_HUSK) ? 2 : 1 // husks decay twice as fast
+	var/decay_multiplier = HAS_TRAIT_NOT_FROM(owner, TRAIT_HUSK, /datum/status_effect/zombie::id) ? 2 : 1 // husks decay twice as fast
 	adjust_stacks(owner.fire_stack_decay_rate * decay_multiplier * seconds_between_ticks)
 	SEND_SIGNAL(owner, COMSIG_FIRE_STACKS_UPDATED, stacks)
 
@@ -183,7 +183,7 @@
 		return TRUE
 
 	var/datum/gas_mixture/air = owner.loc.return_air()
-	if(!air.gases[/datum/gas/oxygen] || air.gases[/datum/gas/oxygen][MOLES] < 1)
+	if(air.moles[/datum/gas/oxygen] < 1)
 		qdel(src)
 		return TRUE
 
@@ -338,13 +338,21 @@
 	QDEL_NULL(slipperiness)
 	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
 
-/datum/status_effect/fire_handler/wet_stacks/get_examine_text()
+/datum/status_effect/fire_handler/wet_stacks/get_examine_text(mob/examiner)
 	return "[owner.p_They()] look[owner.p_s()] a little soaked."
 
 /datum/status_effect/fire_handler/wet_stacks/tick(seconds_between_ticks)
 	var/decay = HAS_TRAIT(owner, TRAIT_WET_FOR_LONGER) ? -0.035 : -0.5
 	adjust_stacks(decay * seconds_between_ticks)
 	if(stacks <= 0)
+		qdel(src)
+		return
+
+	if(HAS_TRAIT(owner, TRAIT_RESISTCOLD))
+		return
+
+	if(owner.bodytemperature <= WATER_VAPOR_DEPOSITION_POINT)
+		owner.apply_status_effect(/datum/status_effect/freon, stacks SECONDS)
 		qdel(src)
 
 /datum/status_effect/fire_handler/wet_stacks/check_basic_mob_immunity(mob/living/basic/basic_owner)

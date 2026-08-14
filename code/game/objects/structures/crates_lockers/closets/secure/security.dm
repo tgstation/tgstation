@@ -12,12 +12,13 @@
 	new /obj/item/radio/headset/heads/captain/alt(src)
 	new /obj/item/radio/headset/heads/captain(src)
 	new /obj/item/door_remote/captain(src)
-	new /obj/item/storage/photo_album/captain(src)
 	new /obj/item/megaphone/command(src)
 
 /obj/structure/closet/secure_closet/captains/populate_contents_immediate()
 	new /obj/item/gun/energy/e_gun(src)
 	new /obj/item/storage/belt/sheath/sabre(src)
+
+	new /obj/item/storage/photo_album/captain(src)
 
 /obj/structure/closet/secure_closet/hop
 	name = "head of personnel's locker"
@@ -39,12 +40,13 @@
 	new /obj/item/pet_carrier(src)
 	new /obj/item/door_remote/head_of_personnel(src)
 	new /obj/item/circuitboard/machine/techfab/department/service(src)
-	new /obj/item/storage/photo_album/hop(src)
 	new /obj/item/storage/lockbox/medal/hop(src)
 	new /obj/item/storage/box/stamps(src)
 
 /obj/structure/closet/secure_closet/hop/populate_contents_immediate()
 	new /obj/item/gun/energy/e_gun(src)
+
+	new /obj/item/storage/photo_album/hop(src)
 
 /obj/structure/closet/secure_closet/hos
 	name = "head of security's locker"
@@ -66,7 +68,6 @@
 	new /obj/item/shield/riot/tele(src)
 	new /obj/item/storage/belt/security/full(src)
 	new /obj/item/circuitboard/machine/techfab/department/security(src)
-	new /obj/item/storage/photo_album/hos(src)
 
 /obj/structure/closet/secure_closet/hos/populate_contents_immediate()
 	. = ..()
@@ -74,6 +75,8 @@
 	// Traitor steal objectives
 	new /obj/item/gun/energy/e_gun/hos(src)
 	new /obj/item/pinpointer/nuke(src)
+
+	new /obj/item/storage/photo_album/hos(src)
 
 /obj/structure/closet/secure_closet/warden
 	name = "warden's locker"
@@ -202,14 +205,25 @@
 	. = ..()
 	. += span_notice("<b>Right-click</b> with a Security-level ID to reset [src]'s registered ID.")
 
-/obj/structure/closet/secure_closet/brig/genpop/attackby(obj/item/card/id/advanced/prisoner/user_id, mob/user, list/modifiers, list/attack_modifiers)
-	if(!secure || !istype(user_id))
+/obj/structure/closet/secure_closet/brig/genpop/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!secure || !istype(tool, /obj/item/card/id))
 		return ..()
 
-	if(isnull(id_card))
-		say("Prisoner ID linked to locker.")
-		id_card = WEAKREF(user_id)
-		name = "genpop storage locker - [user_id.registered_name]"
+	if(!isnull(id_card))
+		return ITEM_INTERACT_BLOCKING
+
+	say("Prisoner ID linked to locker.")
+	id_card = WEAKREF(tool)
+	name = "genpop storage locker - [astype(tool, /obj/item/card/id/advanced/prisoner).registered_name]"
+	return ITEM_INTERACT_SUCCESS
+
+/obj/structure/closet/secure_closet/brig/genpop/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	var/list/id_access = astype(tool, /obj/item/card/id).GetAccess()
+	if(!id_card || !(ACCESS_BRIG in id_access))
+		return NONE
+
+	clear_access()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/closet/secure_closet/brig/genpop/proc/clear_access()
 	say("Authorized ID detected. Unlocking locker and resetting ID.")
@@ -217,16 +231,6 @@
 	id_card = null
 	name = initial(name)
 	update_appearance()
-
-/obj/structure/closet/secure_closet/brig/genpop/attackby_secondary(obj/item/card/id/advanced/used_id, mob/user, list/modifiers, list/attack_modifiers)
-	if(!secure || !istype(used_id))
-		return ..()
-
-	var/list/id_access = used_id.GetAccess()
-	if(!isnull(id_card) && (ACCESS_BRIG in id_access))
-		clear_access()
-
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/structure/closet/secure_closet/evidence
 	anchored = TRUE

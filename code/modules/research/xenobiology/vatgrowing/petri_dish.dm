@@ -5,6 +5,7 @@
 	icon = 'icons/obj/science/vatgrowing.dmi'
 	icon_state = "petri_dish"
 	w_class = WEIGHT_CLASS_TINY
+	custom_materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	///The sample stored on the dish
 	var/datum/biological_sample/sample
 

@@ -538,7 +538,7 @@ SUBSYSTEM_DEF(shuttle)
 			var/mob/living/silicon/ai/AI = thing
 			if(AI.deployed_shell && !AI.deployed_shell.client)
 				continue
-			if(AI.stat || !AI.client)
+			if(IS_UNCONSCIOUS_OR_CRIT(AI) || !AI.client)
 				continue
 		else if(istype(thing, /obj/machinery/computer/communications))
 			var/obj/machinery/computer/communications/C = thing

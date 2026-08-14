@@ -72,30 +72,34 @@
 	loaded = null
 	update_appearance()
 
-/obj/item/rcl/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/stack/pipe_cleaner_coil))
-		var/obj/item/stack/pipe_cleaner_coil/C = W
+/obj/item/rcl/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/pipe_cleaner_coil))
+		return NONE
 
-		if(!loaded)
-			if(!user.transferItemToLoc(W, src))
-				to_chat(user, span_warning("[src] is stuck to your hand!"))
-				return
-			else
-				loaded = W //W.loc is src at this point.
-				loaded.set_pipecleaner_color(colors[current_color_index])
-				loaded.max_amount = max_amount //We store a lot.
-				return
 
-		if(loaded.amount < max_amount)
-			var/transfer_amount = min(max_amount - loaded.amount, C.amount)
-			C.use(transfer_amount)
-			loaded.amount += transfer_amount
-		else
-			return
+	if(!loaded)
+		if(!user.transferItemToLoc(tool, src))
+			to_chat(user, span_warning("[src] is stuck to your hand!"))
+			return ITEM_INTERACT_BLOCKING
+
+		loaded = tool //tool.loc is src at this point.
+		loaded.set_pipecleaner_color(colors[current_color_index])
+		loaded.max_amount = max_amount //We store a lot.
 		update_appearance()
-		to_chat(user, span_notice("You add the pipe cleaners to [src]. It now contains [loaded.amount]."))
-	else
-		..()
+		return ITEM_INTERACT_SUCCESS
+
+	var/obj/item/stack/pipe_cleaner_coil/loading_coil = tool
+
+	if(loaded.amount >= max_amount)
+		return ITEM_INTERACT_BLOCKING
+
+	var/transfer_amount = min(max_amount - loaded.amount, loading_coil.amount)
+	loading_coil.use(transfer_amount)
+	loaded.amount += transfer_amount
+
+	update_appearance()
+	to_chat(user, span_notice("You add the pipe cleaners to [src]. It now contains [loaded.amount]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/rcl/examine(mob/user)
 	. = ..()

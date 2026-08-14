@@ -111,34 +111,42 @@ GLOBAL_VAR(command_name)
 
 /proc/new_station_name()
 	var/random = rand(1,5)
-	var/name = ""
 	var/new_station_name = ""
+
+	var/prefix = ""
+	var/main = ""
 
 	//Rare: Pre-Prefix
 	if (prob(10))
-		name = pick(GLOB.station_prefixes)
-		new_station_name = name + " "
-		name = ""
+		prefix = pick(GLOB.station_prefixes)
 
 	if(prob(0.1))
 		random = 999999999 //ridiculously long name in written numbers
 
 	// Prefix
-	var/holiday_name = length(GLOB.holidays) && pick(GLOB.holidays)
-	if(holiday_name)
-		var/datum/holiday/holiday = GLOB.holidays[holiday_name]
+	var/picked_holiday = length(GLOB.holidays) && pick(GLOB.holidays)
+	if(picked_holiday)
+		var/datum/holiday/holiday = GLOB.holidays[picked_holiday]
 		if(istype(holiday, /datum/holiday/friday_thirteenth))
 			random = 13
-		name = holiday.getStationPrefix()
-		//get normal name
-	if(!name)
-		name = pick(GLOB.station_names)
-	if(name)
-		new_station_name += name + " "
+
+		var/holiday_prefix = holiday.get_station_prefix()
+		if(holiday_prefix)
+			prefix = holiday_prefix
+
+		var/holiday_base_name = holiday.get_station_name()
+		if(holiday_base_name)
+			main = holiday_base_name
+
+	// Prefix
+	if(prefix)
+		new_station_name += "[prefix] "
+
+	// Normal name
+	new_station_name += "[main || pick(GLOB.station_names)] "
 
 	// Suffix
-	name = pick(GLOB.station_suffixes)
-	new_station_name += name + " "
+	new_station_name += "[pick(GLOB.station_suffixes)] "
 
 	// ID Number
 	switch(random)

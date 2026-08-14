@@ -3207,6 +3207,7 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/ore_box,
 /obj/structure/sign/poster/official/do_not_question/directional/north,
+/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/production)
 "qd" = (
@@ -3375,6 +3376,7 @@
 "rm" = (
 /obj/structure/sign/warning/gas_mask/directional/west,
 /obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/directional/west,
 /turf/open/floor/iron/smooth,
 /area/mine/laborcamp/production)
 "ro" = (
@@ -3577,7 +3579,6 @@
 /obj/effect/turf_decal/bot,
 /obj/structure/sign/departments/medbay/alt/directional/north,
 /obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/north,
 /turf/open/floor/iron/smooth_edge,
 /area/mine/laborcamp/production)
 "sH" = (
@@ -8054,7 +8055,6 @@
 /area/lavaland/surface/outdoors)
 "Ub" = (
 /obj/item/kirbyplants/random,
-/obj/machinery/light/small/directional/west,
 /obj/machinery/airalarm/directional/north,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
@@ -8806,7 +8806,7 @@
 /turf/open/floor/plating,
 /area/mine/laborcamp/security/maintenance)
 "Yc" = (
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/random/food_or_drink/keg,
 /turf/open/floor/iron/white/smooth_edge{
 	dir = 1
 	},
@@ -24775,7 +24775,7 @@ Nz
 Ez
 pQ
 uq
-Jw
+jU
 ff
 Gc
 RV
@@ -25289,7 +25289,7 @@ oq
 fe
 yu
 uq
-jU
+Jw
 ff
 Ge
 dr

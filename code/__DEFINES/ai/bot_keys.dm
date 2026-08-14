@@ -9,6 +9,8 @@
 #define BB_SALUTE_MESSAGES "salute_messages"
 ///the beepsky we will salute
 #define BB_SALUTE_TARGET "salute_target"
+///cooldown key for authority saluting
+#define BB_SALUTE_COOLDOWN "salute_cooldown"
 ///our announcement ability
 #define BB_ANNOUNCE_ABILITY "announce_ability"
 ///list of our radio channels
@@ -19,8 +21,6 @@
 #define BB_BOT_BEACON_COOLDOWN "bot_beacon_cooldown"
 
 // medbot keys
-///the patient we must heal
-#define BB_PATIENT_TARGET "patient_target"
 ///list holding our wait dialogue
 #define BB_WAIT_SPEECH "wait_speech"
 ///what we will say to our patient after we heal them
@@ -53,12 +53,13 @@
 #define BB_CLEANBOT_EMAGGED_PHRASES "emagged_phrases"
 ///key that holds drawings we hunt
 #define BB_CLEANABLE_DRAWINGS "cleanable_drawings"
-///Key that holds our clean target
-#define BB_CLEAN_TARGET "clean_target"
+
 ///key that holds the janitor we will befriend
 #define BB_FRIENDLY_JANITOR "friendly_janitor"
 ///key that holds the victim we will spray
 #define BB_ACID_SPRAY_TARGET "acid_spray_target"
+///key that holds our acid spray attack cooldown
+#define BB_ACID_SPRAY_COOLDOWN "acid_spray_cooldown"
 ///key that holds trash we will burn
 #define BB_HUNTABLE_TRASH "huntable_trash"
 
@@ -75,6 +76,8 @@
 #define BB_WASH_FRUSTRATION "wash_frustration"
 ///key that holds cooldown after we finish cleaning something, so we dont immediately run off to patrol
 #define BB_POST_CLEAN_COOLDOWN "post_clean_cooldown"
+///key that holds cooldown after trash talk
+#define BB_TRASH_TALK_COOLDOWN "trash_talk_cooldown"
 
 //secbots
 ///threat of our current target
@@ -99,8 +102,6 @@
 //firebot keys
 ///things we can extinguish
 #define BB_FIREBOT_CAN_EXTINGUISH "can_extinguish"
-///the target we will extinguish
-#define BB_FIREBOT_EXTINGUISH_TARGET "extinguish_target"
 ///lines we say when we detect a fire
 #define BB_FIREBOT_FIRE_DETECTED_LINES "fire_detected_lines"
 ///lines we say when we are idle
@@ -123,33 +124,23 @@
 #define BB_VIBEBOT_INSTRUMENT "instrument"
 
 //repairbots
-///key that holds the floor we should tile over
-#define BB_TILELESS_FLOOR "tileless_floor"
-///key that holds the turf we should place a girder over
-#define BB_GIRDER_TARGET "girder_target"
-///key that holds the girder we should place a wall over
-#define BB_GIRDER_TO_WALL_TARGET "girder_to_wall"
-///key that holds the grille we must fix
-#define BB_WINDOW_FRAMETARGET "grille_target"
-///key that holds the machinery we repair with a welder
-#define BB_WELDER_TARGET "welder_target"
 ///our wall girder ability
 #define BB_GIRDER_BUILD_ABILITY "girder_build_ability"
-///key that holds breached floors we should repair
-#define BB_BREACHED_FLOOR "breached_floor"
 ///key that holds our emagged speech
 #define BB_REPAIRBOT_EMAGGED_SPEECH "emagged_speech"
 ///key that holds our normal speech
 #define BB_REPAIRBOT_NORMAL_SPEECH "normal_speech"
-///key that holds the thing we should deconstruct
-#define BB_DECONSTRUCT_TARGET "deconstruct_target"
 ///key that holds our speech timer
 #define BB_REPAIRBOT_SPEECH_COOLDOWN "speech_cooldown"
-///key that holds our target borg
-#define BB_ROBOT_TARGET "robot_target"
-///key that holds materials we can refill
-#define BB_REFILLABLE_TARGET "refillable_target"
+///Key that holds our current interaction type, to determine how we will interact with this object
+#define BB_REPAIRBOT_INTERACTION_TYPE "interaction_type"
+///Key that hold robot target
+#define BB_ROBOT_TARGET "robot target"
+///Key thast holds thingt to deconstruct
+#define BB_DECONSTRUCT_TARGET "deconstruct_target"
 
+#define REPAIRBOT_INTERACTION_INTERACT 1
+#define REPAIRBOT_INTERACTION_BUILD_GIRDERS 2
 
 //mulebots
 ///key that holds our delivery destination's name

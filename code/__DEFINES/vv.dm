@@ -88,6 +88,7 @@
 
 // /atom
 #define VV_HK_MODIFY_TRANSFORM "atom_transform"
+#define VV_HK_DOWNLOAD_SPRITE "download_sprite"
 #define VV_HK_SPIN_ANIMATION "atom_spin"
 #define VV_HK_STOP_ALL_ANIMATIONS "stop_animations"
 #define VV_HK_MODIFY_GREYSCALE "modify_greyscale"

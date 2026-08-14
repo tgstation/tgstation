@@ -575,6 +575,12 @@
 		total_static_energy_usage += APC_CHANNEL_IS_ON(environ) * area.energy_usage[AREA_USAGE_STATIC_ENVIRON]
 	area.clear_usage()
 
+	if(malfai && COOLDOWN_FINISHED(src, malf_ai_pt_generation) && !(machine_stat & (BROKEN|MAINT)) && !failure_timer && (total_static_energy_usage + 60 KILO JOULES) <= (terminal?.surplus() + cell.charge) && malfai.malf_picker.processing_time < MALF_MAX_PP)
+	//if we're hacked, we're off point cooldown, we're not broken or off temporarily, we can gather enough power, and our ai can take more points
+		total_static_energy_usage += 60 KILO JOULES
+		COOLDOWN_START(src, malf_ai_pt_generation, 30 SECONDS)
+		malfai.malf_picker.processing_time += 1
+
 	if(total_static_energy_usage) //Use power from static power users.
 		var/grid_used = min(terminal?.surplus(), total_static_energy_usage)
 		terminal?.add_load(grid_used)
@@ -597,10 +603,6 @@
 		hacked_flicker_counter = hacked_flicker_counter - 1
 		if(hacked_flicker_counter <= 0)
 			flicker_hacked_icon()
-
-	if(malfai && COOLDOWN_FINISHED(src, malf_ai_pt_generation) && cell.use(60 KILO JOULES) > 0 && malfai.malf_picker.processing_time < MALF_MAX_PP) // Over time generation of malf points for the ai controlling it, costs a bit of power
-		COOLDOWN_START(src, malf_ai_pt_generation, 30 SECONDS)
-		malfai.malf_picker.processing_time += 1
 
 	//dont use any power from that channel if we shut that power channel off
 	if(operating)
@@ -660,11 +662,12 @@
 			equipment = autoset(equipment, AUTOSET_ON)
 			lighting = autoset(lighting, AUTOSET_ON)
 			environ = autoset(environ, AUTOSET_ON)
-			//If nightlights are on, and we're recovering from low power/nightlight event, we'll remove it.
-			var/nightshift_disabled = !(locate(/datum/round_event/nightshift) in SSevents.running)
-			if(nightshift_lights && (nightshift_disabled || low_power_nightshift_lights))
+			//At this point the APC is fully powered. If we've swapped to night lights because of low power then
+			//that gets undone here. The night lights are disabled depending on nightshift or security level.
+			if(nightshift_lights && low_power_nightshift_lights)
 				low_power_nightshift_lights = FALSE
-				if(nightshift_disabled)
+				var/nightshift_disabled = !(locate(/datum/round_event/nightshift) in SSevents.running)
+				if(nightshift_disabled || SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED)
 					INVOKE_ASYNC(src, PROC_REF(set_nightshift), FALSE)
 			if(cell_percent > APC_CHANNEL_ALARM_TRESHOLD)
 				alarm_manager.clear_alarm(ALARM_POWER)
@@ -807,6 +810,7 @@
 	name = "power control module"
 	icon_state = "power_mod"
 	desc = "Heavy-duty switching circuits for power control."
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 
 /// Returns the amount of time it will take the APC at its current trickle charge rate to reach a charge level. If the APC is functionally not charging, returns null.
 /obj/machinery/power/apc/proc/time_to_charge(joules)

@@ -9,6 +9,7 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
+	custom_materials = list(/datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 	/// Cooldown for usage
 	var/cooldown = 30 SECONDS
 	/// Next available time
@@ -27,22 +28,22 @@
 	icon_state = "swapper[linked_swapper ? "-linked" : null]"
 	return ..()
 
-/obj/item/swapper/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/swapper))
-		var/obj/item/swapper/other_swapper = I
-		if(other_swapper.linked_swapper)
-			to_chat(user, span_warning("[other_swapper] is already linked. Break the current link to establish a new one."))
-			return
-		if(linked_swapper)
-			to_chat(user, span_warning("[src] is already linked. Break the current link to establish a new one."))
-			return
-		to_chat(user, span_notice("You establish a quantum link between the two devices."))
-		linked_swapper = other_swapper
-		other_swapper.linked_swapper = src
-		update_appearance()
-		linked_swapper.update_appearance()
-	else
-		return ..()
+/obj/item/swapper/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/swapper))
+		return NONE
+	var/obj/item/swapper/other_swapper = tool
+	if(other_swapper.linked_swapper)
+		to_chat(user, span_warning("[other_swapper] is already linked. Break the current link to establish a new one."))
+		return ITEM_INTERACT_BLOCKING
+	if(linked_swapper)
+		to_chat(user, span_warning("[src] is already linked. Break the current link to establish a new one."))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You establish a quantum link between the two devices."))
+	linked_swapper = other_swapper
+	other_swapper.linked_swapper = src
+	update_appearance()
+	linked_swapper.update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/swapper/attack_self(mob/living/user)
 	if(world.time < next_use)

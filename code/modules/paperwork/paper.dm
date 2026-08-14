@@ -325,9 +325,7 @@
 		icon_state = initial(icon_state)
 	return ..()
 
-/obj/item/paper/verb/rename()
-	set name = "Rename paper"
-	set src in usr
+GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 
 	if(!usr.can_read(src) || usr.is_blind() || INCAPACITATED_IGNORING(usr, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB) || (isobserver(usr) && !isAdminGhostAI(usr)))
 		return
@@ -341,7 +339,7 @@
 	var/n_name = tgui_input_text(usr, "Enter a paper label", "Paper Labelling", max_length = MAX_NAME_LEN)
 	if(isnull(n_name) || n_name == "")
 		return
-	if(((loc == usr || istype(loc, /obj/item/clipboard)) && usr.stat == CONSCIOUS))
+	if(((loc == usr || istype(loc, /obj/item/clipboard)) && !IS_UNCONSCIOUS_OR_CRIT(usr)))
 		name = "paper[(n_name ? "- '[n_name]'" : null)]"
 	add_fingerprint(usr)
 	update_static_data()
@@ -417,44 +415,44 @@
 		user.put_in_hands(new_plane)
 	return new_plane
 
-/obj/item/paper/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	// Enable picking paper up by clicking on it with the clipboard or paper bin
-	if(istype(attacking_item, /obj/item/clipboard) || istype(attacking_item, /obj/item/paper_bin))
-		attacking_item.attackby(src, user)
-		return
+/obj/item/paper/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	// Enable picking paper up by clicking on it with a clipboard, paper bin, or folder
+	if(istype(tool, /obj/item/clipboard) || istype(tool, /obj/item/paper_bin) || istype(tool, /obj/item/folder))
+		tool.item_interaction(user, src)
+		return ITEM_INTERACT_SUCCESS
 
 	// Handle writing items.
-	var/writing_stats = attacking_item.get_writing_implement_details()
+	var/writing_stats = tool.get_writing_implement_details()
 
 	if(!writing_stats)
 		ui_interact(user)
-		return ..()
+		return NONE
 
 	if(writing_stats["interaction_mode"] == MODE_WRITING)
-		if(!user.can_write(attacking_item))
-			return
+		if(!user.can_write(tool))
+			return ITEM_INTERACT_BLOCKING
 		if(get_total_length() >= MAX_PAPER_LENGTH)
 			to_chat(user, span_warning("This sheet of paper is full!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		ui_interact(user)
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	// Handle stamping items.
 	if(writing_stats["interaction_mode"] == MODE_STAMPING)
 		if(!user.can_read(src) || user.is_blind())
 			//The paper's stampable window area is assumed approx 300x400
 			add_stamp(writing_stats["stamp_class"], rand(0, 300), rand(0, 400), rand(0, 360), writing_stats["stamp_icon_state"], stamp_icon = writing_stats["stamp_icon"])
-			user.visible_message(span_notice("[user] blindly stamps [src] with \the [attacking_item]!"))
-			to_chat(user, span_notice("You stamp [src] with \the [attacking_item] the best you can!"))
+			user.visible_message(span_notice("[user] blindly stamps [src] with \the [tool]!"))
+			to_chat(user, span_notice("You stamp [src] with \the [tool] the best you can!"))
 			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 		else
 			to_chat(user, span_notice("You ready your stamp over the paper! "))
 			ui_interact(user)
-		return
+		return ITEM_INTERACT_SUCCESS
 
 	ui_interact(user)
-	return ..()
+	return NONE
 
 /// Secondary right click interaction to quickly stamp things
 /obj/item/paper/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
@@ -511,6 +509,8 @@
 	)
 
 /obj/item/paper/ui_interact(mob/user, datum/tgui/ui)
+	if(!user.client) //bro stop trying to open UI on AI man ur gonna drive me nuts man comeon man
+		return
 	if(resistance_flags & ON_FIRE)
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -695,6 +695,7 @@
 			playsound(src, 'sound/items/handling/standard_stamp.ogg', 50, vary = TRUE)
 
 			update_appearance()
+			ui.close()
 			update_static_data_for_all_viewers()
 			return TRUE
 		if("add_text")
