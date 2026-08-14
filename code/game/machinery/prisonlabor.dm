@@ -194,3 +194,4 @@ GLOBAL_LIST_EMPTY(produce_dropoff)
 		return // No bonus effects if we're not a prisoner or there's no ID.
 	var/obj/item/card/id/advanced/prisoner/prison_id = id_card
 	prison_id.points += PRISON_LABOR_CROPS * sent
+	to_chat(user, span_notice("[PRISON_LABOR_CROPS * sent] points added!"))
