@@ -18,7 +18,7 @@
 		if(1)
 			atk_verb = "dragged"
 			var/obj/item/organ/tail/tail = attacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
-			if(isnull(tail) && defender.stat != CONSCIOUS || defender.IsParalyzed())
+			if(isnull(tail) && IS_UNCONSCIOUS_OR_CRIT(defender) || defender.IsParalyzed())
 				return MARTIAL_ATTACK_INVALID
 
 			attacker.do_attack_animation(defender, ATTACK_EFFECT_CLAW)

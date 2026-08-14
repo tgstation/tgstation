@@ -31,6 +31,10 @@
 	. = ..()
 	soundloop = new (src)
 
+/obj/machinery/experimental_cloner_scanner/Destroy(force)
+	QDEL_NULL(soundloop)
+	return ..()
+
 /// Scan the occupant, eventually producing a [/datum/experimental_cloning_record]. Returns FALSE if unsuccessful.
 /obj/machinery/experimental_cloner_scanner/proc/start_scan()
 	if (machine_stat & BROKEN || machine_stat & NOPOWER || isnull(occupant))
@@ -110,7 +114,7 @@
 	balloon_alert(user, "breaking out...")
 	if (!do_after(user,(breakout_time), target = src))
 		return
-	if (!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked)
+	if (!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src || state_open || !locked)
 		return
 
 	locked = FALSE
@@ -119,7 +123,7 @@
 	open_machine()
 
 /obj/machinery/experimental_cloner_scanner/relaymove(mob/living/user, direction)
-	if (user.stat || locked)
+	if (IS_UNCONSCIOUS_OR_CRIT(user) || locked)
 		if (COOLDOWN_FINISHED(src, message_cooldown))
 			COOLDOWN_START(src, message_cooldown, breakout_time)
 			balloon_alert(user, "door locked!")

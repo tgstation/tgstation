@@ -1,0 +1,29 @@
+{
+	"dm_type": "/datum/bt_node/subtree/bot_respond_to_summon",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"key": "BB_BOT_SUMMON_TARGET"
+	},
+	"child": {
+		"type": "sequence",
+		"children": [
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+				"vars": {
+					"target_key": "BB_BOT_SUMMON_TARGET",
+					"required_dist": 0,
+					"finish_on_arrival": true
+				}
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/complete_summon_travel",
+				"vars": {
+					"target_key": "BB_BOT_SUMMON_TARGET"
+				}
+			}
+		]
+	}
+}

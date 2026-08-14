@@ -1499,11 +1499,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 	icon_state = "basic_mob_flammable"
 	flag_to_give = FLAMMABLE_MOB
 
-/obj/effect/mapping_helpers/basic_mob_flags/immune_to_fists
-	name = "Basic mob immune to fists flag helper"
-	icon_state = "basic_mob_immune_to_fists"
-	flag_to_give = IMMUNE_TO_FISTS
-
 /obj/effect/mapping_helpers/basic_mob_flags/immune_to_getting_wet
 	name = "Basic mob immune to getting wet flag helper"
 	icon_state = "basic_mob_immune_to_getting_wet"
@@ -1548,3 +1543,21 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 	. = ..()
 	var/turf/our_turf = get_turf(src)
 	ADD_TRAIT(our_turf, TRAIT_NO_TELEPORT, INNATE_TRAIT)
+
+/// Blesses turfs it is created on, then deletes itself
+/obj/effect/mapping_helpers/blessing
+	name = "holy blessing"
+	desc = "Holy energies interfere with ethereal travel at this location."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "blessed"
+	/// Is this blessing visible to those with the ability to see blessed tiles? (chaplains)
+	var/invisible = FALSE
+
+/obj/effect/mapping_helpers/blessing/Initialize(mapload)
+	. = ..()
+	if (isturf(loc))
+		loc.AddElement(/datum/element/blessed_turf, invisible)
+	return INITIALIZE_HINT_QDEL
+
+/obj/effect/mapping_helpers/blessing/invisible
+	invisible = TRUE

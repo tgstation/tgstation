@@ -20,9 +20,9 @@
 	. = ..()
 	set_drunk_value(drunk_value)
 
-/datum/status_effect/inebriated/get_examine_text()
+/datum/status_effect/inebriated/get_examine_text(mob/examiner)
 	// Dead people don't look drunk
-	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_FAKEDEATH))
+	if(IS_DEAD_OR_FAKING(owner))
 		return null
 
 	// Having your face covered conceals your drunkness
@@ -208,14 +208,14 @@
 	// Over 81, we will gain constant toxloss
 	if(drunk_value >= 81)
 		owner.adjust_tox_loss(1)
-		if(owner.stat == CONSCIOUS && prob(5))
+		if(!IS_UNCONSCIOUS_OR_CRIT(owner) && prob(5))
 			to_chat(owner, span_warning("Maybe you should lie down for a bit..."))
 
 	// Over 91, we gain even more toxloss, brain damage, and have a chance of dropping into a long sleep
 	if(drunk_value >= 91)
 		owner.adjust_tox_loss(1)
 		owner.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.4)
-		if(owner.stat == CONSCIOUS)
+		if(!IS_UNCONSCIOUS_OR_CRIT(owner))
 			attempt_to_blackout()
 
 	// And finally, over 100 - let's be honest, you shouldn't be alive by now.

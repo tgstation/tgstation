@@ -140,14 +140,14 @@
 	if(current_cycle != 36 || creation_purity > 0.6)
 		return
 
-	if(istype(affected_mob.dna.species, /datum/species/human/krokodil_addict))
+	if(HAS_TRAIT(affected_mob, TRAIT_HUSK))
 		return
 
 	to_chat(affected_mob, span_userdanger("Your skin falls off easily!"))
 	var/mob/living/carbon/human/affected_human = affected_mob
 	affected_human.set_facial_hairstyle("Shaved", update = FALSE)
 	affected_human.set_hairstyle("Bald", update = FALSE)
-	affected_mob.set_species(/datum/species/human/krokodil_addict)
+	affected_mob.become_husk(/datum/status_effect/zombie::id)
 
 	if(affected_mob.adjust_brute_loss(25, updating_health = FALSE, required_bodytype = affected_bodytype)) // holy shit your skin just FELL THE FUCK OFF
 		return UPDATE_MOB_HEALTH
@@ -583,7 +583,7 @@
 		psychonaut.apply_status_effect(/datum/status_effect/tower_of_babel)
 
 /datum/reagent/drug/blastoff
-	name = "bLaStOoF"
+	name = "bLaSToFF"
 	description = "A drug for the hardcore party crowd said to enhance one's abilities on the dance floor.\nMost old heads refuse to touch this stuff, perhaps because memories of the luna discotheque incident are seared into their brains."
 	color = "#9015a9"
 	taste_description = "holodisk cleaner"
@@ -849,7 +849,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 	kronkaine_fiend.remove_actionspeed_modifier(/datum/actionspeed_modifier/kronkaine)
 	kronkaine_fiend.sound_environment_override = NONE
 	//Stop the rapid heartneats, we make sure we are not in crit as to not mess with the heartbeats from organ/heart.
-	if(!kronkaine_fiend.stat)
+	if(!IS_UNCONSCIOUS_OR_CRIT(kronkaine_fiend))
 		kronkaine_fiend.stop_sound_channel(CHANNEL_HEARTBEAT)
 
 /datum/reagent/drug/kronkaine/expose_mob(mob/living/carbon/druggo, methods, trans_volume, show_message, touch_protection)

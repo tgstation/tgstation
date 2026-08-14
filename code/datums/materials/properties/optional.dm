@@ -120,18 +120,18 @@
 	if (isliving(target))
 		target.adjust_fire_stacks(source.get_property(id))
 
-/// Deals additional burn damage to vampires, property value determines damage
-/datum/material_property/vampires_bane
-	name = "Vampires' Bane"
-	id = MATERIAL_VAMPIRES_BANE
+/// Deals additional burn damage to mobs with the UNHOLY_BANEABLE trait (just vampires right now), property times material volume value determines damage
+/datum/material_property/unholy_bane
+	name = "Unholy Creatures' Bane"
+	id = MATERIAL_UNHOLY_BANE
 
-/datum/material_property/vampires_bane/get_descriptor(value)
-	return "vampires' bane"
+/datum/material_property/unholy_bane/get_descriptor(value)
+	return "unholy creatures' bane"
 
-/datum/material_property/vampires_bane/get_tooltip(value)
-	return "Deals [value] additional burn damage to vampires on contact"
+/datum/material_property/unholy_bane/get_tooltip(value)
+	return "Deals [value * 0.5] to [value * 2] additional burn damage to unholy creatures such as vampires (based on material volume) on contact"
 
-/datum/material_property/vampires_bane/attach_to(datum/material/material)
+/datum/material_property/unholy_bane/attach_to(datum/material/material)
 	. = ..()
 	material.track_flags |= MATERIAL_TRACK_CONTACT | MATERIAL_TRACK_IMPACT
 	var/static/list/interaction_signals = list(
@@ -142,14 +142,23 @@
 	)
 	RegisterSignals(material, interaction_signals, PROC_REF(on_contact))
 
-/datum/material_property/vampires_bane/proc/on_contact(datum/material/source, atom/object, mob/living/target, mob/living/user, def_zone, skin_contact)
+/datum/material_property/unholy_bane/proc/on_contact(datum/material/source, atom/object, mob/living/target, mob/living/user, def_zone, skin_contact)
 	SIGNAL_HANDLER
 
-	if (!isvampire(target) || (!skin_contact && !source.get_property(MATERIAL_PENETRATING)))
+	if (!HAS_TRAIT(target, TRAIT_UNHOLY_BANEABLE))
+		return
+
+	var/burn_damage = source.get_property(id) * clamp((object.custom_materials[source] / (2 * SHEET_MATERIAL_AMOUNT)), 0.5, 2)
+	var/armor_block = 0
+	if(!skin_contact && !source.get_property(MATERIAL_PENETRATING))
+		armor_block = target.run_armor_check(def_zone, WOUND, armour_penetration = astype(object, /obj/item)?.armour_penetration || 0, silent = TRUE, weak_against_armour = TRUE)
+
+	if(armor_block > 50)
 		return
 
 	to_chat(target, span_userdanger("Contact with [object] sears your undead flesh!"))
-	target.apply_damage(source.get_property(id), BURN, def_zone, wound_bonus = 10, wound_clothing = FALSE)
+	playsound(target, SFX_SIZZLE, 33, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	target.apply_damage(burn_damage, BURN, def_zone, armor_block, wound_bonus = 10, attacking_item = object, attack_direction = get_dir(user, target), wound_clothing = FALSE)
 
 /// Teleports targets who come into active contact with the material around, property value determines teleport radius and damage taken per teleport
 /datum/material_property/teleporting

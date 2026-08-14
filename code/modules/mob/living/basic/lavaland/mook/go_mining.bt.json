@@ -1,0 +1,213 @@
+{
+	"dm_type": "/datum/bt_node/subtree/go_mining",
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"repeat_secondary_delay": "1 SECONDS",
+	"finish_on_primary": true,
+	"children": [
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": {
+						"key": "BB_SIMPLE_CARRY_ITEM"
+					},
+					"child": {
+						"type": "decorator",
+						"decorator": "/datum/bt_node/decorator/bb_key_set",
+						"vars": {
+							"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+							"key": "BB_DEPOSIT_POSITION"
+						},
+						"child": {
+							"type": "sequence",
+							"children": [
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+									"vars": {
+										"target_key": "BB_DEPOSIT_POSITION",
+										"required_dist": 0
+									}
+								},
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/clear_key",
+									"vars": {
+										"key": "BB_DEPOSIT_POSITION"
+									}
+								},
+								{
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/ai_interact",
+									"vars": {
+										"target_key": "BB_MATERIAL_STAND_TARGET"
+									}
+								}
+							]
+						}
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": {
+						"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+						"invert": true,
+						"key": "BB_SIMPLE_CARRY_ITEM"
+					},
+					"child": {
+						"type": "selector",
+						"children": [
+							{
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/bb_key_set",
+								"vars": {
+									"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+									"invert": false,
+									"key": "BB_ORE_TARGET"
+								},
+								"child": {
+									"type": "sequence",
+									"children": [
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+											"vars": {
+												"target_key": "BB_ORE_TARGET"
+											}
+										},
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/pick_up_item_virtual",
+											"vars": {
+												"target_key": "BB_ORE_TARGET",
+												"storage_key": "BB_SIMPLE_CARRY_ITEM"
+											}
+										}
+									]
+								}
+							},
+							{
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/bb_key_set",
+								"vars": {
+									"observer_abort": "BT_ABORT_LOWER_PRIORITY",
+									"invert": false,
+									"key": "BB_TARGET_MINERAL_WALL"
+								},
+								"child": {
+									"type": "sequence",
+									"children": [
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+											"vars": {
+												"target_key": "BB_TARGET_MINERAL_WALL"
+											}
+										},
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/mine_wall",
+											"vars": {
+												"target_key": "BB_TARGET_MINERAL_WALL",
+												"time_between_perform": "1 SECONDS"
+											}
+										},
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/set_bb_cooldown",
+											"vars": {
+												"cooldown_key": "BB_MOOK_MINING_COOLDOWN",
+												"cooldown_duration": "10 SECONDS"
+											}
+										},
+										{
+											"type": "leaf",
+											"behavior": "/datum/bt_node/ai_behavior/find_ore",
+											"vars": {
+												"time_between_perform": "0.5 SECONDS"
+											}
+										}
+									]
+								}
+							},
+							{
+								"type": "sequence",
+								"children": [
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/calculate_wander_destination"
+									},
+									{
+										"type": "leaf",
+										"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+										"vars": {
+											"target_key": "BB_WANDER_DESTINATION",
+											"required_dist": 0
+										}
+									}
+								]
+							},
+							{
+								"type": "subtree",
+								"subtype": "/datum/bt_node/subtree/random_walk"
+							}
+						]
+					}
+				}
+			]
+		},
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": {
+						"key": "BB_SIMPLE_CARRY_ITEM"
+					},
+					"child": {
+						"type": "leaf",
+						"behavior": "/datum/bt_node/ai_behavior/find_deposit_position"
+					}
+				},
+				{
+					"type": "decorator",
+					"decorator": "/datum/bt_node/decorator/bb_key_set",
+					"vars": {
+						"invert": true,
+						"key": "BB_SIMPLE_CARRY_ITEM"
+					},
+					"child": {
+						"type": "selector",
+						"children": [
+							{
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/find_ore"
+							},
+							{
+								"type": "decorator",
+								"decorator": "/datum/bt_node/decorator/key_off_cooldown",
+								"vars": {
+									"cooldown_key": "BB_MOOK_MINING_COOLDOWN"
+								},
+								"child": {
+									"type": "leaf",
+									"behavior": "/datum/bt_node/ai_behavior/find_mineral_wall/mook",
+									"vars": {
+										"target_key": "BB_TARGET_MINERAL_WALL"
+									}
+								}
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

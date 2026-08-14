@@ -14,11 +14,10 @@
 	resistance = -2
 	stage_speed = -3
 	transmittable = -2
-	level = 5
+	level = 8
 	severity = 5
 	base_message_chance = 50
-	symptom_delay_min = 25
-	symptom_delay_max = 80
+	symptom_delay = 52.5
 	required_organ = ORGAN_SLOT_EYES
 	symptom_cure = /datum/reagent/medicine/oculine
 	cure_color = "yellow"
@@ -28,6 +27,7 @@
 	)
 	/// At max stage: If FALSE, cause blindness. If TRUE, cause their eyes to fall out.
 	var/remove_eyes = FALSE
+	var/suppress_warning = FALSE
 
 /datum/symptom/visionloss/Start(datum/disease/advance/A)
 	. = ..()

@@ -153,7 +153,7 @@
 	if (!(bot_owner.bot_mode_flags & BOT_MODE_ON))
 		return
 
-	bot_owner.say(line)
+	INVOKE_ASYNC(bot_owner, TYPE_PROC_REF(/atom/movable, say), line)
 	if (channel && bot_owner.internal_radio.channels[channel])
 		bot_owner.internal_radio.talk_into(bot_owner, message = line, channel = channel)
 

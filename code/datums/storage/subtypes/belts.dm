@@ -156,6 +156,7 @@
 		/obj/item/wrench,
 		/obj/item/wormhole_jaunter,
 		/obj/item/skeleton_key,
+		/obj/item/crusher_trophy,
 	))
 
 ///Primitive mining belt
@@ -387,8 +388,8 @@
 		/obj/item/clothing/neck/heretic_focus,
 		/obj/item/codex_cicatrix,
 		/obj/item/eldritch_potion,
-		/obj/item/food/grown/poppy, // Used to regain a Living Heart.
-		/obj/item/food/grown/harebell, // Used to reroll targets
+		/obj/item/food/grown/flower/poppy, // Used to regain a Living Heart.
+		/obj/item/food/grown/flower/harebell, // Used to reroll targets
 		/obj/item/melee/rune_carver,
 		/obj/item/melee/sickly_blade,
 		/obj/item/organ, // Organs are also often used in rituals.

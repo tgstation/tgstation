@@ -1,5 +1,4 @@
 /obj/item/food/grown/carrotlike
-	seed = /obj/item/seeds/carrot
 	name = "carrot?"
 	desc = "What is this? It's not a carrot, that's for sure. You should tell someone about this."
 	icon_state = "carrot"

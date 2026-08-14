@@ -21,7 +21,7 @@
 	mutanteyes = /obj/item/organ/eyes/jelly
 	mutantheart = null
 	meat = /obj/item/food/meat/slab/human/mutant/slime
-	exotic_bloodtype = BLOOD_TYPE_TOX
+	exotic_bloodtype = /datum/blood_type/slime
 	blood_deficiency_drain_rate = JELLY_REGEN_RATE + BLOOD_DEFICIENCY_MODIFIER
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
@@ -86,24 +86,41 @@
 
 	// Saline can prevent you from cannibalizing yourself.
 	if(slime.get_blood_volume(apply_modifiers = TRUE) < BLOOD_VOLUME_BAD)
-		Cannibalize_Body(slime)
+		cannibalize_body(slime)
 
 	regenerate_limbs?.build_all_button_icons(UPDATE_BUTTON_STATUS)
 	return HANDLE_BLOOD_NO_NUTRITION_DRAIN|HANDLE_BLOOD_NO_OXYLOSS
 
-/datum/species/jelly/proc/Cannibalize_Body(mob/living/carbon/human/H)
-	var/list/limbs_to_consume = list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM, BODY_ZONE_R_LEG, BODY_ZONE_L_LEG) - H.get_missing_limbs()
-	var/obj/item/bodypart/consumed_limb
+/datum/species/jelly/proc/cannibalize_body(mob/living/carbon/human/target)
+	var/list/limbs_to_consume = list()
+
+	for(var/body_zone, untyped_limb in target.get_bodyparts_by_zones())
+		var/obj/item/bodypart/limb = untyped_limb
+		if(isnull(limb))
+			continue
+
+		var/limb_zone = limb.body_zone
+
+		if(IS_STUMP(limb) || limb_zone == BODY_ZONE_CHEST || limb_zone == BODY_ZONE_HEAD)
+			continue
+
+		if(limb.biological_state & BIO_JELLY) // can only cannibalize limbs that are comprised of jelly (this is a last gasp to keep going, let's assume we can't digest out non-jelly limbs)
+			limbs_to_consume += limb_zone
+
 	if(!length(limbs_to_consume))
-		H.losebreath++
+		target.losebreath++
 		return
-	if(H.num_legs) //Legs go before arms
+
+	if(target.num_legs > 0) //Legs go before arms
 		limbs_to_consume -= list(BODY_ZONE_R_ARM, BODY_ZONE_L_ARM)
-	consumed_limb = H.get_bodypart(pick(limbs_to_consume))
+
+	var/obj/item/bodypart/consumed_limb = target.get_bodypart(pick(limbs_to_consume))
 	consumed_limb.drop_limb()
-	to_chat(H, span_userdanger("Your [consumed_limb] is drawn back into your body, unable to maintain its shape!"))
+
+	to_chat(target, span_userdanger("Your [consumed_limb.name] is drawn back into your body, unable to maintain its shape!"))
 	qdel(consumed_limb)
-	H.adjust_blood_volume(20 * H.physiology.blood_regen_mod)
+
+	target.adjust_blood_volume(20 * target.physiology.blood_regen_mod)
 
 /datum/species/jelly/get_species_description()
 	return "Jellypeople are a strange and alien species with three eyes, made entirely out of gel."
@@ -388,10 +405,10 @@
 		L["area"] = get_area_name(body, TRUE)
 		var/stat = "error"
 		switch(body.stat)
-			if(CONSCIOUS)
-				stat = "Conscious"
-			if(SOFT_CRIT to HARD_CRIT) // Also includes UNCONSCIOUS
-				stat = "Unconscious"
+			if(STABLE)
+				stat = "Stable"
+			if(SOFT_CRIT, HARD_CRIT)
+				stat = "Critical"
 			if(DEAD)
 				stat = "Dead"
 		var/occupied
@@ -459,7 +476,7 @@
 	if(dupe.stat == DEAD) //Is it alive?
 		return FALSE
 
-	if(dupe.stat != CONSCIOUS) //Is it awake?
+	if(IS_UNCONSCIOUS_OR_CRIT(dupe)) //Is it awake?
 		return FALSE
 
 	if(dupe.mind && dupe.mind.active) //Is it unoccupied?
@@ -473,7 +490,7 @@
 /datum/action/innate/swap_body/proc/swap_to_dupe(datum/mind/M, mob/living/carbon/human/dupe)
 	if(!can_swap(dupe)) //sanity check
 		return
-	if(M.current.stat == CONSCIOUS)
+	if(!IS_UNCONSCIOUS_OR_CRIT(M.current))
 		M.current.visible_message(span_notice("[M.current] stops moving and starts staring vacantly into space."),
 			span_notice("You stop moving this body..."))
 	else

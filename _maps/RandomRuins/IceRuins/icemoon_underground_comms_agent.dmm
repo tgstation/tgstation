@@ -657,9 +657,6 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/wood/parquet,
 /area/ruin/comms_agent)
-"KQ" = (
-/turf/open/genturf,
-/area/template_noop)
 "KR" = (
 /obj/effect/baseturf_helper/asteroid/snow,
 /turf/closed/wall,
@@ -2875,7 +2872,7 @@ MH
 MH
 MH
 MH
-KQ
+OM
 tl
 YX
 YX
@@ -2931,8 +2928,8 @@ MH
 MH
 MH
 MH
-KQ
-KQ
+OM
+OM
 tl
 tl
 MH
@@ -2988,9 +2985,9 @@ MH
 MH
 MH
 MH
-KQ
-KQ
-KQ
+OM
+OM
+OM
 tl
 tl
 MH
@@ -3046,8 +3043,8 @@ PC
 MH
 MH
 MH
-KQ
-KQ
+OM
+OM
 tl
 MH
 MH
@@ -3104,7 +3101,7 @@ sB
 MH
 MH
 MH
-KQ
+OM
 MH
 MH
 OM

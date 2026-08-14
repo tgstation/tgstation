@@ -156,8 +156,8 @@
 
 //Notify all scrubbers to forget us
 /obj/machinery/portable_atmospherics/gas_receiver/proc/lose_senders()
-	//Copy the list since each scrubber removes itself from senders as we go
-	for(var/obj/machinery/portable_atmospherics/scrubber/bluespace/scrubber as anything in senders.Copy())
+	// For loops in this format copy implicitly, so this is fine even though scrubbers remove themselves as we iterate
+	for(var/obj/machinery/portable_atmospherics/scrubber/bluespace/scrubber as anything in senders)
 		scrubber.set_teleport_target(null)
 
 // wirecutter makes it lose all its senders

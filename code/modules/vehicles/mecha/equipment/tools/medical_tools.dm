@@ -98,10 +98,8 @@
 		return data
 	var/patient_state
 	switch(patient.stat)
-		if(CONSCIOUS)
-			patient_state = "Conscious"
-		if(UNCONSCIOUS)
-			patient_state = "Unconscious"
+		if(STABLE)
+			patient_state = "Stable"
 		if(DEAD)
 			patient_state = "*Dead*"
 		if(SOFT_CRIT, HARD_CRIT)

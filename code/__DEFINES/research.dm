@@ -1,5 +1,12 @@
-/// For instances where we don't want a design showing up due to it being for debug/sanity purposes
-#define DESIGN_ID_IGNORE "IGNORE_THIS_DESIGN"
+// Techweb node flags
+/// Every techweb starts off with this node
+#define TECHWEB_NODE_STARTER (1<<0)
+/// This node cannot be seen in the techweb
+#define TECHWEB_NODE_HIDDEN (1<<1)
+/// This is a BEPIS node. Only exists so we can add/remove from the pool of bepis nodes in the middle of a round
+#define TECHWEB_NODE_EXPERIMENTAL (1<<2)
+/// This node shows up on the autowiki
+#define TECHWEB_NODE_WIKI (1<<3)
 
 ///The object printed from this design won't get the mats used to make it. Default setting for stacks unless specified otherwise
 #define DESIGN_DONT_INHERIT_MATS 0
@@ -11,20 +18,20 @@
 ///The object printed from this design gets the mats used to make it but skips the unit test.
 #define DESIGN_INHERIT_MATS_SPECIAL 2
 
-//! Techweb names for new point types. Can be used to define specific point values for specific types of research (science, security, engineering, etc.)
+/// Techweb names for new point types. Can be used to define specific point values for specific types of research (science, security, engineering, etc.)
 #define TECHWEB_POINT_TYPE_GENERIC "General Research"
 
-//!  Amount of points required to unlock nodes of corresponding tiers
+// Amount of points required to unlock nodes of corresponding tiers
 #define TECHWEB_TIER_1_POINTS 40
 #define TECHWEB_TIER_2_POINTS 80
 #define TECHWEB_TIER_3_POINTS 120
 #define TECHWEB_TIER_4_POINTS 160
 #define TECHWEB_TIER_5_POINTS 200
 
-//! Amount of points gained per second by a single R&D server, see: [research][code/controllers/subsystem/research.dm]
+// Amount of points gained per second by a single R&D server, see: [research][code/controllers/subsystem/research.dm]
 #define TECHWEB_SINGLE_SERVER_INCOME 1
 
-//! Swab cell line types
+// Swab cell line types
 #define CELL_LINE_TABLE_SLUDGE "cell_line_sludge_table"
 #define CELL_LINE_TABLE_MOLD "cell_line_mold_table"
 #define CELL_LINE_TABLE_MOIST "cell_line_moist_table"
@@ -32,7 +39,7 @@
 #define CELL_LINE_TABLE_CLOWN "cell_line_clown_table"
 #define CELL_LINE_TABLE_ALGAE "cell_line_algae_table"
 
-//! Biopsy cell line types
+// Biopsy cell line types
 #define CELL_LINE_TABLE_BEAR "cell_line_bear_table"
 #define CELL_LINE_TABLE_BLOBBERNAUT "cell_line_blobbernaut_table"
 #define CELL_LINE_TABLE_BLOBSPORE "cell_line_blobspore_table"
@@ -48,24 +55,31 @@
 #define CELL_LINE_TABLE_GRAPE "cell_line_grape_table"
 #define CELL_LINE_TABLE_HAUBEROACH "cell_line_hauberoach_table"
 #define CELL_LINE_TABLE_MEGACARP "cell_line_megacarp_table"
+#define CELL_LINE_TABLE_PENGUIN "cell_line_penguin_table"
 #define CELL_LINE_TABLE_MOUSE "cell_line_mouse_table"
 #define CELL_LINE_TABLE_PINE "cell_line_pine_table"
 #define CELL_LINE_TABLE_PUG "cell_line_pug_table"
+#define CELL_LINE_TABLE_FOX "cell_line_fox_table"
+#define CELL_LINE_TABLE_STOAT "cell_line_stoat_table"
+#define CELL_LINE_TABLE_RABBIT "cell_line_rabbit_table"
+#define CELL_LINE_TABLE_MOTHROACH "cell_line_mothroach_table"
 #define CELL_LINE_TABLE_SLIME "cell_line_slime_table"
 #define CELL_LINE_TABLE_SNAKE "cell_line_snake_table"
+#define CELL_LINE_TABLE_LIZARD "cell_line_lizard_table"
 #define CELL_LINE_TABLE_SNAIL "cell_line_snail_table"
 #define CELL_LINE_TABLE_VATBEAST "cell_line_vatbeast_table"
 #define CELL_LINE_TABLE_NETHER "cell_line_nether_table"
 #define CELL_LINE_TABLE_GLUTTON "cell_line_glutton_table"
 #define CELL_LINE_TABLE_CLOWNANA "cell_line_clownana_table"
 #define CELL_LINE_TABLE_LONGFACE "cell_line_longface_table"
-#define CELL_LINE_TABLE_FROG	"cell_line_frog_table"
+#define CELL_LINE_TABLE_FROG "cell_line_frog_table"
 #define CELL_LINE_TABLE_AXOLOTL	"cell_line_axolotl_table"
 #define CELL_LINE_TABLE_WALKING_MUSHROOM "cell_line_walking_mushroom_table"
 #define CELL_LINE_TABLE_QUEEN_BEE "cell_line_bee_queen_table"
 #define CELL_LINE_TABLE_BUTTERFLY "cell_line_butterfly_table"
 #define CELL_LINE_TABLE_MEGA_ARACHNID "cell_line_table_mega_arachnid"
 #define CELL_LINE_TABLE_GOAT "cell_line_table_goat"
+#define CELL_LINE_TABLE_SHEEP "cell_line_table_SHEEP"
 #define CELL_LINE_TABLE_PIG "cell_line_table_pig"
 
 //! Biopsy cell line organ types

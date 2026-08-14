@@ -57,6 +57,10 @@
 			to_chat(owner, span_danger("You feel something tearing its way out of your chest..."))
 			owner.adjust_tox_loss(5 * seconds_per_tick) // Why is this [TOX]?
 
+/obj/item/organ/body_egg/alien_embryo/get_status_appendix(scanpower, add_tooltips)
+	if(scanpower >= SCANPOWER_SUPER)
+		return "Stage: [stage]/6"
+
 /// Controls Xenomorph Embryo growth. If embryo is fully grown (or overgrown), stop the proc. If not, increase the stage by one and if it's not fully grown (stage 6), add a timer to do this proc again after however long the growth time variable is.
 /obj/item/organ/body_egg/alien_embryo/proc/advance_embryo_stage()
 	if(stage >= 6)

@@ -2,13 +2,10 @@
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_UNREACHABLE_LIST_COOLDOWN = 1 MINUTES,
+		BB_RANGED_SKIRMISH_MIN_DISTANCE = 2,
+		BB_RANGED_SKIRMISH_MAX_DISTANCE = 3
 	)
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity/pacifist,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_ranged_attack_subtree,
-		/datum/ai_planning_subtree/find_patrol_beacon,
-	)
+	behavior_tree_json = "code/modules/mob/living/basic/bots/ed209/ed209_syndicate.bt.json"
 	reset_keys = list(
 		BB_BEACON_TARGET,
 		BB_PREVIOUS_BEACON_TARGET,

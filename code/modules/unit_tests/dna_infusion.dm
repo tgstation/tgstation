@@ -7,7 +7,7 @@
 			if(ispath(input_type, /mob/living))
 				continue
 			if(input_type == input_type::abstract_type)
-				input_type = pick(subtypesof(input_type))
+				input_type = pick(valid_subtypesof(input_type))
 
 			var/atom/movable/movable = allocate(input_type)
 			if(!HAS_TRAIT(movable, TRAIT_VALID_DNA_INFUSION))

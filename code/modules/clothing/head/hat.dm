@@ -94,10 +94,8 @@
 
 	var/mob/living/carbon/human/human_user = user
 	var/obj/item/clothing/suit/costume/bear_suit/our_suit = human_user.wear_suit
-	if(!our_suit || !istype(our_suit))
-		return
-
-	our_suit.make_friendly(user, src)
+	if(istype(our_suit))
+		our_suit.make_friendly(user, src)
 
 /obj/item/clothing/head/flatcap
 	name = "flat cap"

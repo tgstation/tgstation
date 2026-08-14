@@ -1,0 +1,1 @@
+{"type":"/datum/bt_node/decorator/cooldown","children":[{"type":"/datum/bt_node/ai_behavior/lay_alien_egg"}],"observer_abort":2,"cooldown_key":"BB_ALIEN_PLANT_COOLDOWN","cooldown_duration":300}

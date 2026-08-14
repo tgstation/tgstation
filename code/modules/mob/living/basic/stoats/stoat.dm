@@ -21,6 +21,7 @@
 	verb_ask = "chips curiously"
 	verb_exclaim = "chips loudly"
 	verb_yell = "chips loudly"
+	speed = -0.25
 	faction = list(FACTION_NEUTRAL)
 	ai_controller = /datum/ai_controller/basic_controller/stoat
 	///some commands we obey
@@ -48,6 +49,7 @@
 	AddElement(/datum/element/wears_collar)
 	AddElement(/datum/element/can_be_held)
 	AddComponent(/datum/component/obeys_commands, pet_commands)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_STOAT, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	if(can_breed)
 		add_breeding_component()
 

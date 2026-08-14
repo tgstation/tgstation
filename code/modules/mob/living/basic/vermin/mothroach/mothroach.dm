@@ -40,17 +40,6 @@
 		/datum/pet_command/perform_trick_sequence,
 	)
 
-/datum/emote/mothroach
-	abstract_type = /datum/emote/mothroach
-	mob_type_allowed_typecache = /mob/living/basic/mothroach
-	mob_type_blacklist_typecache = list()
-
-/datum/emote/mothroach/squeaks
-	key = "squeaks"
-	key_third_person = "squeaks"
-	message = "squeaks!"
-	emote_type = EMOTE_VISIBLE | EMOTE_AUDIBLE
-
 /mob/living/basic/mothroach/Initialize(mapload)
 	. = ..()
 	var/static/list/food_types = list(/obj/item/clothing)
@@ -60,8 +49,9 @@
 	AddElement(/datum/element/ai_retaliate)
 	AddElement(/datum/element/pet_bonus, "squeak")
 	AddElement(/datum/element/can_be_held)
+	AddElement(/datum/element/swabable, CELL_LINE_TABLE_MOTHROACH, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 	add_verb(src, /mob/living/proc/toggle_resting)
-	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
+	add_traits(list(TRAIT_MOTH_EMOTES_ALLOWED, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
 
 /mob/living/basic/mothroach/toggle_resting()
 	. = ..()

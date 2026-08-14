@@ -1,0 +1,10 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/trooper/ranged",
+	"type": "subtree",
+	"subtype": "/datum/bt_node/subtree/trooper_ranged",
+	"bindings": {
+		"b4kar3zl": "1 SECONDS",
+		"beslksyc": "5",
+		"bnr1aazo": "TRUE"
+	}
+}

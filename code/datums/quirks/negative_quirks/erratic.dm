@@ -29,7 +29,7 @@
 /datum/quirk/erratic/process(seconds_per_tick)
 	if(!COOLDOWN_FINISHED(src, randomize_cooldown))
 		return
-	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS) || quirk_holder.stat >= UNCONSCIOUS)
+	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS) || IS_UNCONSCIOUS(quirk_holder))
 		return
 
 	COOLDOWN_START(src, randomize_cooldown, rand(6, 12) MINUTES)

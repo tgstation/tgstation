@@ -212,14 +212,13 @@
 /obj/item/dualsaber/purple
 	possible_colors = list("purple")
 
-/obj/item/dualsaber/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(!hacked)
-			hacked = TRUE
-			to_chat(user, span_warning("2XRNBW_ENGAGE"))
-			saber_color = "rainbow"
-			update_appearance()
-		else
-			to_chat(user, span_warning("It's starting to look like a triple rainbow - no, nevermind."))
-	else
-		return ..()
+/obj/item/dualsaber/multitool_act(mob/living/user, obj/item/tool)
+	if(hacked)
+		to_chat(user, span_warning("It's starting to look like a triple rainbow - no, nevermind."))
+		return ITEM_INTERACT_BLOCKING
+	hacked = TRUE
+	to_chat(user, span_warning("2XRNBW_ENGAGE"))
+	saber_color = "rainbow"
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+

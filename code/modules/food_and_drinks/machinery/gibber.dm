@@ -147,7 +147,7 @@
 
 GAME_VERB_SRC(/obj/machinery/gibber, eject, oview(1), "Empty gibber", null)
 
-	if (usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
+	if (IS_UNCONSCIOUS_OR_CRIT(usr) || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 	if(!usr.can_perform_action(src))
 		return
@@ -232,11 +232,9 @@ GAME_VERB_SRC(/obj/machinery/gibber, eject, oview(1), "Empty gibber", null)
 	var/mob/living/carbon/human/agent_whiskey = victim
 	var/drop_chance = 0
 	for (var/obj/item/bodypart/limb as anything in agent_whiskey.get_bodyparts())
-		if (!limb.butcher_drops)
-			continue
-
-		for (var/obj/item/drop_type as anything in limb.butcher_drops)
-			var/amount = limb.butcher_drops[drop_type] || 1
+		var/list/limb_butcher_drops = limb.get_butcher_drops()
+		for (var/obj/item/drop_type as anything in limb_butcher_drops)
+			var/amount = limb_butcher_drops[drop_type] || 1
 			drop_chance += amount * efficiency
 			if (drop_chance > 1)
 				amount = floor(drop_chance)
