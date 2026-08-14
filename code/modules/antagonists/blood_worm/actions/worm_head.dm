@@ -41,14 +41,8 @@
 
 	if(istype(current_host_head, /obj/item/bodypart/head/blood_worm))
 		worm.remove_bloodworm_head(host)
-		blood_worm_beam.Remove(host)
 	else
 		worm.grant_bloodworm_head(host)
-		blood_worm_beam = new(src)
-		blood_worm_beam.button_icon = 'icons/mob/actions/actions_blood_worm.dmi'
-		blood_worm_beam.button_icon_state = "worm_beam"
-		blood_worm_beam.Grant(host)
-
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/extend_head(host)
