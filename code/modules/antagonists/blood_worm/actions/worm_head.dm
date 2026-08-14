@@ -25,7 +25,8 @@
 
 // Activation of ability of grow of the blood worm head
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/Activate(atom/target) // logic on click
-	var/mob/living/basic/blood_worm/worm = target
+	// this whole shit proce needs to be redone
+	var/mob/living/basic/blood_worm/worm = worm
 	var/mob/living/carbon/human/host = worm.host
 
 	var/current_host_head = host.get_bodypart(BODY_ZONE_HEAD)
@@ -36,7 +37,7 @@
 		ignored_mobs = owner
 	)
 
-
+	// todo: is it workng
 	if(istype(current_host_head, /obj/item/bodypart/head/blood_worm))
 		retract_head(host, worm) // how to place here retract_head proc?
 	else
