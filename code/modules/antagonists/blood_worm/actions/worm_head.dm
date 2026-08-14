@@ -7,9 +7,6 @@
 	click_to_activate = FALSE
 	check_flags = NONE
 
-	// blood beam actions, grans with a worm head, same as brim demon beam but with some changes(actually no heh)
-	var/datum/action/cooldown/mob_cooldown/blood_worm/blood_beam/blood_worm_beam
-
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/Grant(mob/grant_to)
 	. = ..()
 	if (!owner)
