@@ -531,6 +531,8 @@
 	. = ..()
 
 	psychonaut.add_mood_event("tripping", /datum/mood_event/high)
+	if(!psychonaut.client)
+		return // No need to mess with a mob's plane masters if they physically can't see it.
 	if(!psychonaut.hud_used)
 		return
 
