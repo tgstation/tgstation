@@ -407,3 +407,19 @@
   - refactor: Techweb and design code has been refactored.
   - bugfix: Fixed anomaly cores not granting research points in the destructive analyzer.
   - bugfix: Fixed exosuit fabricators
+2026-08-14:
+  FalloutFalcon:
+  - bugfix: Ants and shade mobs are plural is seemingly intended
+  JohnFulpWillard:
+  - bugfix: The Escape menu has Webmap URLs again.
+  RusselNotSCP:
+  - bugfix: Flesh heretics now benefit from eating the organs of non-meaty victims,
+      such as fish and podpeople.
+  SmArtKar:
+  - code_imp: Optimized /datum/gas_mixture/proc/archive() by ~42%
+  rkz/tsar-salat:
+  - bugfix: fixed a screaming icon stacktrace proc designed to scream, not screaming.
+  - bugfix: stumps continue to not render, as they should, as opposed to not rendering
+      because their rendering was broken
+  timothymtorres:
+  - bugfix: Fix helmets being flammable when armor is not

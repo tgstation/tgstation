@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - code_imp: "Optimized /datum/gas_mixture/proc/archive() by ~42%"
