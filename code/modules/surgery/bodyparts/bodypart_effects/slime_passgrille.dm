@@ -31,9 +31,8 @@
 	for(var/obj/item/organ/other_organ as anything in astype(owner, /mob/living/carbon).organs) // safe assertion
 		if(other_organ.pass_flags & PASSGRILLE)
 			continue
-		if(!IS_ROBOTIC_ORGAN(other_organ)) // no check for jelly organs (yet), as half of their organs are normal fleshy things.
-			continue
-		return FALSE
+		if(IS_ROBOTIC_ORGAN(other_organ)) // no check for jelly organs (yet), as half of their organs are normal fleshy things.
+			return FALSE
 
 	return TRUE
 
