@@ -73,7 +73,7 @@
 	// ALSO if worm-player got into EMP or emag or something, and implants are now fucked
 	// so new head will get these fucked implants and organs
 	host.regenerate_limb(BODY_ZONE_HEAD)
-	var/new_host_head = target:get_bodypart(BODY_ZONE_HEAD)
+	var/new_host_head = host.get_bodypart(BODY_ZONE_HEAD)
 	for(var/obj/item/organ/organ_to_trash in new_host_head:contents) // clean new head from organs
 		if(istype(organ_to_trash, /obj/item/organ))
 			organ_to_trash.Remove(target, special = TRUE)
