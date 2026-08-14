@@ -1,0 +1,7 @@
+author: "YesterdaysPromise"
+delete-after: True
+changes:
+  - rscadd: "Plastitatnanium glass now makes pod directional windows, regular pod windows, plastitaniumglass windowfilling which shall allow you to make such on a grille, and its own plastitanium glass tiles."
+  - rscadd: "Titanium glass now makes unique directional windows, and its own titanium glass tiles."
+  - rscadd: "Bronze tiles can now be reskinned into bronze glass tiles."
+  - rscadd: "Runed metal can now make directional windows and fulltile windows, and its tiles can be reskinned into runed glass tiles."
