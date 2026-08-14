@@ -253,7 +253,7 @@
 	new_worm_head_to_attach.replace_limb(target, TRUE)
 	target.update_body()
 
-/mob/living/basic/blood_worm/proc/remove_bloodworm_head(mob/target)
+/mob/living/basic/blood_worm/proc/remove_bloodworm_head(mob/living/carbon/target)
 	var/list/saved_head_content = list() // organs, implants, huds
 	var/obj/item/bodypart/head/new_host_head_to_attach = new() // will it work?
 	var/current_worm_head = target:get_bodypart(BODY_ZONE_HEAD)
