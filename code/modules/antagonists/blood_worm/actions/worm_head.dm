@@ -32,7 +32,7 @@
 	return ..()
 
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/Activate(atom/target) // logic on click
-	var/mob/living/basic/blood_worm/worm = src.target
+	var/mob/living/basic/blood_worm/worm = target
 	var/mob/living/carbon/human/host = worm.host
 
 	var/current_host_head = host.get_bodypart(BODY_ZONE_HEAD)
