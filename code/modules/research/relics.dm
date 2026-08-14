@@ -466,14 +466,12 @@
 		run_hit_callback = CALLBACK(src, PROC_REF(shield_hit)), \
 	)
 	light_system = OVERLAY_LIGHT
-	var/datum/component/light = AddComponent( \
-		/datum/component/overlay_lighting, \
-		_range = 2.5, \
-		_power = 1.5, \
-		_color = COLOR_BIOLUMINESCENCE_YELLOW, \
-		starts_on = TRUE, \
+	var/datum/component/light = add_light_system(
+		_range = 2.5,
+		_power = 1.5,
+		_color = COLOR_BIOLUMINESCENCE_YELLOW,
+		starts_on = TRUE
 	)
-
 	addtimer(CALLBACK(src, PROC_REF(remove_shield), list(shield, light)), cooldown_timer * 0.5)
 	add_filter("block_shield", 1, outline_filter(0, COLOR_BIOLUMINESCENCE_YELLOW), shield)
 	transition_filter("block_shield", outline_filter(2, COLOR_BIOLUMINESCENCE_YELLOW), cooldown_timer * 0.5)
@@ -495,12 +493,11 @@
 		run_hit_callback = CALLBACK(src, PROC_REF(shield_hit)), \
 	)
 	light_system = OVERLAY_LIGHT
-	var/datum/component/light = AddComponent( \
-		/datum/component/overlay_lighting, \
-		_range = 3, \
-		_power = 1.5, \
-		_color = COLOR_BIOLUMINESCENCE_YELLOW, \
-		starts_on = TRUE, \
+	var/datum/component/light = add_light_system(
+		_range = 3,
+		_power = 1.5,
+		_color = COLOR_BIOLUMINESCENCE_YELLOW,
+		starts_on = TRUE,
 	)
 
 	addtimer(CALLBACK(src, PROC_REF(remove_shield), list(shield, light)), cooldown_timer * 0.5)

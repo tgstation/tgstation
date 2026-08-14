@@ -1064,7 +1064,7 @@
 /obj/item/flashlight/glowstick/uv/Initialize(mapload, fuel_override, fuel_type_override)
 	. = ..()
 	// Add a second lighting component which handles UV plane lighting
-	AddComponent(/datum/component/overlay_lighting, plane = UV_LIGHTING_PLANE, lum_power = 0)
+	add_light_system(plane = UV_LIGHTING_PLANE, lum_power_mult = 0, power_mult = 2, forced_color = LIGHT_COLOR_ULTRAVIOLET_GLOW)
 
 /obj/item/flashlight/spotlight //invisible lighting source
 	name = "disco light"
@@ -1110,7 +1110,7 @@
 
 /obj/item/flashlight/flashdark/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/overlay_lighting, dark_light_range, dark_light_power, force = TRUE)
+	add_light_system(dark_light_range, dark_light_power, force = TRUE)
 
 /obj/item/flashlight/flashdark/update_brightness()
 	. = ..()

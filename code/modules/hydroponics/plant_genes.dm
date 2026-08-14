@@ -402,7 +402,7 @@
 
 	var/obj/item/seeds/our_seed = our_plant.get_plant_seed()
 	our_plant.light_system = OVERLAY_LIGHT
-	our_plant.AddComponent(/datum/component/overlay_lighting, glow_range(our_seed), glow_power(our_seed), glow_color)
+	our_plant.add_light_system(glow_range(our_seed), glow_power(our_seed), glow_color)
 
 /*
  * Makes plant emit darkness. (Purple-ish shadows)

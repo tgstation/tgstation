@@ -25,15 +25,15 @@
 */
 /datum/component/overlay_lighting
 	dupe_mode = COMPONENT_DUPE_ALLOWED
-	///How far the light reaches, float.
+	/// How far the light reaches, float.
 	var/range = 1
-	///Ceiling of range, integer without decimal entries.
+	/// Ceiling of range, integer without decimal entries.
 	var/lumcount_range = 0
-	///How much this light affects the dynamic_lumcount of turfs.
+	/// How much this light affects the dynamic_lumcount of turfs.
 	var/lum_power = 0.5
-	///Transparency value.
+	/// Transparency value.
 	var/set_alpha = 0
-	///For light sources that can be turned on and off.
+	/// For light sources that can be turned on and off.
 	var/overlay_lighting_flags = NONE
 
 	///Cache of the possible light overlays, according to size.
@@ -51,32 +51,40 @@
 		"352" = 'icons/effects/light_overlays/light_352.dmi',
 		)
 
-	///Overlay effect to cut into the darkness and provide light.
+	/// Overlay effect to cut into the darkness and provide light.
 	var/image/visible_mask
-	///Movable atom currently holding the light. Parent might be a flashlight, for example, but that might be held by a mob or something else.
+	/// Movable atom currently holding the light. Parent might be a flashlight, for example, but that might be held by a mob or something else.
 	var/atom/movable/current_holder
-	///Movable atom the parent is attached to. For example, a flashlight into a helmet or gun. We'll need to track the thing the parent is attached to as if it were the parent itself.
+	/// Movable atom the parent is attached to. For example, a flashlight into a helmet or gun. We'll need to track the thing the parent is attached to as if it were the parent itself.
 	var/atom/movable/parent_attached_to
-	///Whether we're a directional light
+	/// Whether we're a directional light
 	var/directional = FALSE
-	///Whether we're a beam light
+	/// Whether we're a beam light
 	var/beam = FALSE
-	///A cone overlay for directional light, its alpha and color are dependent on the light
+	/// A cone overlay for directional light, its alpha and color are dependent on the light
 	var/image/cone
 	/// Are we currently displaying light on our holder?
 	var/currently_displaying = FALSE
-	///Current tracked direction for the directional cast behaviour
+	/// Current tracked direction for the directional cast behaviour
 	var/current_direction
-	///Tracks current directional x offset so we don't update unnecessarily
+	/// Tracks current directional x offset so we don't update unnecessarily
 	var/directional_offset_x
-	///Tracks current directional y offset so we don't update unnecessarily
+	/// Tracks current directional y offset so we don't update unnecessarily
 	var/directional_offset_y
-	///Cast range for the directional cast (how far away the atom is moved)
+	/// Cast range for the directional cast (how far away the atom is moved)
 	var/cast_range = 2
-	///Plane we're rendering to
+	/// Plane we're rendering to
 	var/light_plane = O_LIGHTING_VISUAL_PLANE
+	/// Multiplier for light_range
+	var/range_mult = 1
+	/// Multiplier for light_power
+	var/power_mult = 1
+	/// Forced color override
+	var/forced_color = null
+	/// Multiplier for lum_power
+	var/lum_power_mult = 1
 
-/datum/component/overlay_lighting/Initialize(_range, _power, _color, starts_on, is_directional, is_beam, force, plane = O_LIGHTING_VISUAL_PLANE, lum_power = 0.5)
+/datum/component/overlay_lighting/Initialize(_range, _power, _color, starts_on, is_directional, is_beam, force, plane = O_LIGHTING_VISUAL_PLANE, lum_power_mult = 1, range_mult = 1, power_mult = 1, forced_color = null)
 	if(!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
@@ -88,6 +96,10 @@
 	. = ..()
 	if(!isnull(plane))
 		light_plane = plane
+	src.range_mult = range_mult
+	src.power_mult = power_mult
+	src.lum_power_mult = lum_power_mult
+	src.forced_color = forced_color
 	visible_mask = image('icons/effects/light_overlays/light_32.dmi', icon_state = "light")
 	SET_PLANE_EXPLICIT(visible_mask, light_plane, movable_parent)
 	visible_mask.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
@@ -106,8 +118,6 @@
 		beam = TRUE
 	if(!isnull(_range))
 		movable_parent.set_light_range(_range)
-	if(!isnull(lum_power))
-		src.lum_power = lum_power
 	set_range(parent, movable_parent.light_range)
 	if(!isnull(_power))
 		movable_parent.set_light_power(_power)
@@ -125,7 +135,8 @@
 		RegisterSignal(parent, COMSIG_ATOM_DIR_CHANGE, PROC_REF(on_parent_dir_change))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_RANGE, PROC_REF(set_range))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_POWER, PROC_REF(set_power))
-	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_COLOR, PROC_REF(set_color))
+	if(isnull(forced_color))
+		RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_COLOR, PROC_REF(set_color))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_ON, PROC_REF(on_toggle))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_FLAGS, PROC_REF(on_light_flags_change))
 	RegisterSignal(parent, COMSIG_ATOM_UPDATE_LIGHT_RENDER_SOURCE, PROC_REF(set_light_render_source))
@@ -397,7 +408,7 @@
 ///Changes the range which the light reaches. 0 means no light, 6 is the maximum value.
 /datum/component/overlay_lighting/proc/set_range(atom/source, old_range)
 	SIGNAL_HANDLER
-	var/new_range = source.light_range
+	var/new_range = source.light_range * range_mult
 	if(range == new_range)
 		return
 	if(new_range == 0)
@@ -428,8 +439,8 @@
 /// Changes the intensity/brightness of the light by altering the visual object's alpha.
 /datum/component/overlay_lighting/proc/set_power(atom/source, old_power)
 	SIGNAL_HANDLER
-	var/new_power = source.light_power
-	lum_power = new_power >= 0 ? 0.5 : -0.5
+	var/new_power = source.light_power * power_mult
+	lum_power = (new_power >= 0 ? 0.5 : -0.5) * lum_power_mult
 	set_alpha = min(230, (abs(new_power) * 120) + 30)
 	hide_from_holder()
 	visible_mask.alpha = set_alpha
@@ -442,7 +453,7 @@
 /// Changes the light's color, pretty straightforward.
 /datum/component/overlay_lighting/proc/set_color(atom/source, old_color)
 	SIGNAL_HANDLER
-	var/new_color = source.light_color
+	var/new_color = forced_color || source.light_color
 	hide_from_holder()
 	visible_mask.color = new_color
 	if(directional)

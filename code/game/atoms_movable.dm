@@ -207,13 +207,9 @@
 
 	if(opacity)
 		AddElement(/datum/element/light_blocking)
-	switch(light_system)
-		if(OVERLAY_LIGHT)
-			AddComponent(/datum/component/overlay_lighting)
-		if(OVERLAY_LIGHT_DIRECTIONAL)
-			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE)
-		if(OVERLAY_LIGHT_BEAM)
-			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE)
+
+	if(light_system == OVERLAY_LIGHT || light_system == OVERLAY_LIGHT_DIRECTIONAL || light_system == OVERLAY_LIGHT_BEAM)
+		add_light_system()
 
 /atom/movable/Destroy(force)
 	QDEL_NULL(language_holder)
@@ -296,6 +292,17 @@
 	// EMISSIVE_BLOCK_GENERIC == 0
 	else
 		return fast_emissive_blocker(src)
+
+/// Wrapper that automatically adjusts overlay_lighting component args based on light system assigned to the object
+/atom/movable/proc/add_light_system(_range, _power, _color, starts_on, is_directional, is_beam, force, plane, lum_power_mult, range_mult, power_mult, forced_color)
+	var/list/passed_args = list(/datum/component/overlay_lighting) + args
+	switch(light_system)
+		if(OVERLAY_LIGHT_DIRECTIONAL)
+			passed_args["is_directional"] = TRUE
+		if(OVERLAY_LIGHT_BEAM)
+			passed_args["is_directional"] = TRUE
+			passed_args["is_beam"] = TRUE
+	return _AddComponent(passed_args) // AddComponent is a wrapper that converts args into a list, so we need to use the raw version
 
 /// Generates a space underlay for a turf
 /// This provides proper lighting support alongside just looking nice
