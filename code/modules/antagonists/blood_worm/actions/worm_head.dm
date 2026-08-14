@@ -35,7 +35,7 @@
 	var/mob/living/basic/blood_worm/worm = src.target
 	var/mob/living/carbon/human/host = worm.host
 
-	var/current_host_head = host:get_bodypart(BODY_ZONE_HEAD)
+	var/current_host_head = host.get_bodypart(BODY_ZONE_HEAD)
 
 	host.visible_message(
 		message = span_danger("[host]'s head start covering with unnatural red flesh!"),
