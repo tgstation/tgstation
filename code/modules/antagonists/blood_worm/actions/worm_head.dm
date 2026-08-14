@@ -48,8 +48,8 @@
 	worm.grant_bloodworm_head(host)
 
 	var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
-	var/current_host_head = target:get_bodypart(BODY_ZONE_HEAD)
-	current_host_head:blood_worm_head_growth_animation()
+	var/current_host_head = host.get_bodypart(BODY_ZONE_HEAD)
+	// current_host_head.blood_worm_head_growth_animation() it was supposed to be animation
 	new_worm_head_to_attach.replace_limb(target, TRUE)
 	target.update_body()
 
