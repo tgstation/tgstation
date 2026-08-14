@@ -59,12 +59,12 @@
 
 	var/list/saved_head_content = list() // organs, implants, huds
 	var/obj/item/bodypart/head/new_host_head_to_attach = new() // will it work?
-	var/current_worm_head = host.get_bodypart(BODY_ZONE_HEAD)
+	var/obj/item/bodypart/head/current_worm_head = host.get_bodypart(BODY_ZONE_HEAD)
 
 	for(var/obj/item/organ/organ_to_juggle in current_worm_head:contents)
 		if(istype(organ_to_juggle, /obj/item/organ))
 			saved_head_content += organ_to_juggle
-			organ_to_juggle.Remove(target, special = TRUE)
+			organ_to_juggle.Remove(host, special = TRUE)
 
 	current_worm_head.drop_limb(special = TRUE)
 
@@ -76,11 +76,11 @@
 	var/new_host_head = host.get_bodypart(BODY_ZONE_HEAD)
 	for(var/obj/item/organ/organ_to_trash in new_host_head:contents) // clean new head from organs
 		if(istype(organ_to_trash, /obj/item/organ))
-			organ_to_trash.Remove(target, special = TRUE)
+			organ_to_trash.Remove(host, special = TRUE)
 
 	for(var/obj/item/organ/organ_to_juggle in saved_head_content) // inserting at worm head
-		organ_to_juggle.Insert(target, special = TRUE)
+		organ_to_juggle.Insert(host, special = TRUE)
 
 	qdel(current_worm_head)
 
-	target.update_body()
+	host.update_body()
