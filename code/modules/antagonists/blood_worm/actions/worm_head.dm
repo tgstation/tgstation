@@ -10,9 +10,11 @@
 	// blood beam actions, grans with a worm head, same as brim demon beam but with some changes(actually no heh)
 	var/datum/action/cooldown/mob_cooldown/blood_worm/blood_beam/blood_worm_beam
 
-/datum/action/cooldown/mob_cooldown/blood_worm/worm_head/New(Target, original)
+/datum/action/cooldown/mob_cooldown/blood_worm/worm_head/Grant(mob/grant_to)
 	. = ..()
-	RegisterSignal(target, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(update_status_on_signal))
+	if (!owner)
+		return
+	RegisterSignal(owner, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(update_status_on_signal))
 
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/Remove(remove_from)
 	UnregisterSignal(remove_from, COMSIG_LIVING_HEALTH_UPDATE)
