@@ -56,7 +56,7 @@
 	qdel(src)
 	if(!our_guy)
 		return FALSE
-	message_admins("[our_guy] [ADMIN_FLW(our_guy)] has been released from [old_home]] [ADMIN_JMP(old_home)]. Cause: [cause]")
+	message_admins("[our_guy] [ADMIN_FLW(our_guy)] has been released from [old_home] [ADMIN_JMP(old_home)]. Cause: [cause]")
 	if(!our_guy.reform(old_ckey))
 		message_admins("Failed to reform [our_guy].")
 		return FALSE
