@@ -107,7 +107,8 @@ GLOBAL_LIST_EMPTY(produce_dropoff)
 	register_context()
 	update_appearance()
 
-/obj/machinery/produceporter/LateInitialize()
+/obj/machinery/produceporter/post_machine_initialize()
+	. = ..()
 	if(!length(GLOB.produce_dropoff))
 		CRASH("A produceporter was spawned, however, there were no dropoff landmarks to send produce to!")
 
