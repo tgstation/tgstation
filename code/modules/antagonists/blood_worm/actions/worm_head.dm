@@ -57,7 +57,7 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/retract_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
 	// worm.remove_bloodworm_head(host)
 
-		var/list/saved_head_content = list() // organs, implants, huds
+	var/list/saved_head_content = list() // organs, implants, huds
 	var/obj/item/bodypart/head/new_host_head_to_attach = new() // will it work?
 	var/current_worm_head = target:get_bodypart(BODY_ZONE_HEAD)
 
@@ -72,7 +72,7 @@
 	// it will not loose the implants, cause they will be inserted
 	// ALSO if worm-player got into EMP or emag or something, and implants are now fucked
 	// so new head will get these fucked implants and organs
-	target:regenerate_limb(BODY_ZONE_HEAD)
+	host.regenerate_limb(BODY_ZONE_HEAD)
 	var/new_host_head = target:get_bodypart(BODY_ZONE_HEAD)
 	for(var/obj/item/organ/organ_to_trash in new_host_head:contents) // clean new head from organs
 		if(istype(organ_to_trash, /obj/item/organ))
