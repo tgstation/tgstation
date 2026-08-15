@@ -55,6 +55,7 @@
 		current_host_head.blood_worm_head_growth_animation() // it was supposed to be animation
 		// timer
 		addtimer(CALLBACK(src, PROC_REF(swap_to_worm_head), host, worm), 2.20 SECONDS)
+	current_host_head.remove_bodypart_overlay(/datum/bodypart_overlay/simple/growth_blood_worm_head, update = TRUE)
 
 // proc for swaping to worm head, when timer(so animation can animate) will finish
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/swap_to_worm_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
