@@ -84,7 +84,10 @@ GLOBAL_DATUM_INIT(communications_controller, /datum/communciations_controller, n
 	// Ensure NT logo asset is registered before we reference it in the report HTML
 	get_asset_datum(/datum/asset/simple/logos)
 
-	SSstation.generate_station_goals(CONFIG_GET(number/station_goal_budget))
+	// BANDASTATION EDIT START: Enhance goal management: add toggle completion functionality and update UI links
+	if(!length(SSstation.get_station_goals()))
+		SSstation.generate_station_goals(CONFIG_GET(number/station_goal_budget))
+	// BANDASTATION EDIT START: Enhance goal management: add toggle completion functionality and update UI links
 
 	var/station_report_template = file2text(STATION_REPORT_TEMPLATE_PATH)
 

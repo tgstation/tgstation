@@ -496,8 +496,11 @@ ADMIN_VERB(modify_goals, R_ADMIN, "Modify Goals", "Modify the station goals for 
 
 /datum/admins/proc/modify_goals()
 	var/dat = ""
+	// BANDASTATION EDIT START - Enhance goal management: add toggle completion functionality and update UI links
 	for(var/datum/station_goal/goal as anything in SSstation.get_station_goals())
-		dat += "[goal.name] - <a href='byond://?src=[REF(goal)];[HrefToken()];announce=1'>Announce</a> | <a href='byond://?src=[REF(goal)];[HrefToken()];remove=1'>Remove</a><br>"
+		var/completion_color = goal.completed ? "green" : "red"
+		dat += "[goal.name] - <a href='byond://?src=[REF(goal)];[HrefToken()];announce=1'>Announce</a> | <a href='byond://?src=[REF(goal)];[HrefToken()];toggle_complete=1' style='color: [completion_color]; font-weight: bold;'>Mark As Complete</a> | <a href='byond://?src=[REF(goal)];[HrefToken()];remove=1'>Remove</a><br>"
+	// BANDASTATION EDIT END - Enhance goal management: add toggle completion functionality and update UI links
 	dat += "<br><a href='byond://?src=[REF(src)];[HrefToken()];add_station_goal=1'>Add New Goal</a>"
 	var/datum/browser/browser = new(usr, "goals", "Modify Goals", 400, 400)
 	browser.set_content(dat)

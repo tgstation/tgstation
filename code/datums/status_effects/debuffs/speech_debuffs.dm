@@ -94,7 +94,7 @@
 	// BANDASTATION EDIT START: Enhance social anxiety quirk
 	if(stutter_regex_cyrillic.Find(original_word))
 		return "[stutter_regex_cyrillic.group[1]][stutter_char(stutter_regex_cyrillic.group[2])][stutter_regex_cyrillic.group[3]]"
-	// BANDASTATION EDIT START: Enhance social anxiety quirk
+	// BANDASTATION EDIT END: Enhance social anxiety quirk
 	return original_word // i give up
 
 /datum/status_effect/speech/stutter/proc/stutter_char(some_char)

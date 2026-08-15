@@ -21,6 +21,14 @@
 /datum/station_goal/proc/check_completion()
 	return completed
 
+// BANDASTATION EDIT START - Enhance goal management: add toggle completion functionality and update UI links
+/datum/station_goal/proc/set_completed(state)
+	completed = state
+
+/datum/station_goal/proc/toggle_completed()
+	set_completed(!completed)
+// BANDASTATION EDIT END - Enhance goal management: add toggle completion functionality and update UI links
+
 /datum/station_goal/proc/get_result()
 	if(check_completion())
 		return "<li>[name] : [span_greentext("Выполнена!")]</li>"
@@ -29,12 +37,22 @@
 
 /datum/station_goal/Topic(href, href_list)
 	..()
+	// BANDASTATION EDIT START: Enhance goal management: add toggle completion functionality and update UI links
+	if(!usr.client?.holder)
+		return
+	// BANDASTATION EDIT END: Enhance goal management: add toggle completion functionality and update UI links
+
 	if(!check_rights(R_ADMIN) || !usr.client.holder.CheckAdminHref(href, href_list))
 		return
 
 	if(href_list["announce"])
 		on_report()
 		send_report()
+	// BANDASTATION EDIT START - Enhance goal management: add toggle completion functionality and update UI links
+	else if(href_list["toggle_complete"])
+		toggle_completed()
+		usr.client?.holder?.modify_goals()
+		// BANDASTATION EDIT END - Enhance goal management: add toggle completion functionality and update UI links
 	else if(href_list["remove"])
 		qdel(src)
 
