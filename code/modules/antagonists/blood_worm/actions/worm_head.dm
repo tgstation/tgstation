@@ -26,8 +26,8 @@
 // Activation of ability of grow of the blood worm head
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/Activate(atom/target) // logic on click
 	// this whole shit proce needs to be redone
-	var/mob/living/basic/blood_worm/worm = worm
-	var/mob/living/carbon/human/host = worm.host
+	var/mob/living/basic/blood_worm/worm = src.target // maybe like that, again? cause there is no worm, there is only target, and src of it is a worm\another being, who called ability
+	var/mob/living/carbon/human/host = worm?.host // todo: remove ?
 
 	var/current_host_head = host.get_bodypart(BODY_ZONE_HEAD)
 
