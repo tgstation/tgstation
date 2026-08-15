@@ -29,6 +29,7 @@ export const defaultHighlightSetting: HighlightSetting = {
   matchWord: false,
   matchCase: false,
   enabled: true,
+  playSound: true,
   jobFilter: '',
   characterFilter: [],
 };

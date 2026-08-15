@@ -96,6 +96,7 @@ function TextHighlightSetting(props) {
     highlightWholeMessage,
     matchWord,
     matchCase,
+    playSound,
     jobFilter,
     characterFilter,
   } = highlightSettingById[id];
@@ -201,16 +202,20 @@ function TextHighlightSetting(props) {
           </Button.Checkbox>
         </Stack.Item>
 
-        <Button
-          icon="volume-up"
-          onClick={() => {
-            Byond.sendMessage('play_chatPing-sound', {
-              sound_file: 'sound/items/pillow/pillow_hit.ogg',
-            });
-          }}
-        >
-          Test Sound
-        </Button>
+        <Stack.Item>
+          <Button.Checkbox
+            checked={!!playSound}
+            tooltip="If this option is selected, a sound will play when the highlight is triggered."
+            onClick={() =>
+              updateHighlight({
+                id,
+                playSound: !playSound,
+              })
+            }
+          >
+            Sound
+          </Button.Checkbox>
+        </Stack.Item>
 
         <Stack.Item>
           <ColorBox mr={1} color={highlightColor} />

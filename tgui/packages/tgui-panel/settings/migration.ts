@@ -69,6 +69,9 @@ function migrateHighlights(next: HighlightState): HighlightState {
     if (setting.enabled === undefined) {
       setting.enabled = true;
     }
+    if (setting.playSound === undefined) {
+      setting.playSound = true;
+    }
     if (setting.jobFilter === undefined) {
       setting.jobFilter = '';
     }

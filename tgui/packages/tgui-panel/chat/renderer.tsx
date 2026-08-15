@@ -186,7 +186,9 @@ class ChatRenderer {
 
   tryFlushQueue() {
     if (this.isReady() && this.queue.length > 0) {
-      this.processBatch(this.queue);
+      this.processBatch(this.queue, {
+        suppressHighlightSound: true,
+      });
       this.queue = [];
     }
   }
@@ -239,6 +241,7 @@ class ChatRenderer {
       const matchWord = setting.matchWord;
       const matchCase = setting.matchCase;
       const enabled = setting.enabled;
+      const playSound = Boolean(setting.playSound);
       const jobs = String(setting.jobFilter || '')
         .split(',')
         .map((str) => str.trim().toLowerCase())
@@ -321,6 +324,7 @@ class ChatRenderer {
         highlightRegex,
         highlightColor,
         highlightWholeMessage,
+        playSound,
         jobs,
         characters,
       });
@@ -383,9 +387,17 @@ class ChatRenderer {
 
   processBatch(
     batch,
-    options: { prepend?: boolean; notifyListeners?: boolean } = {},
+    options: {
+      prepend?: boolean;
+      notifyListeners?: boolean;
+      suppressHighlightSound?: boolean;
+    } = {},
   ) {
-    const { prepend, notifyListeners = true } = options;
+    const {
+      prepend,
+      notifyListeners = true,
+      suppressHighlightSound = false,
+    } = options;
     const now = Date.now();
     // Queue up messages until chat is ready
     if (!this.isReady()) {
@@ -489,6 +501,7 @@ class ChatRenderer {
 
         // Highlight text
         if (!message.avoidHighlighting && this.highlightParsers) {
+          let messageHighlighted = false;
           this.highlightParsers
             .filter((parser) => parser.enabled && this.matchesFilters(parser))
             .forEach((parser) => {
@@ -504,6 +517,15 @@ class ChatRenderer {
                   '--highlight-color',
                   parser.highlightColor,
                 );
+              }
+              // Highlight sounds - Plays a sound once per message if enabled, will not play if the text was prased. (aka when relogging or reapplying chat).
+              if (highlighted && parser.playSound && !messageHighlighted) {
+                messageHighlighted = true;
+                if (!suppressHighlightSound) {
+                  Byond.sendMessage('play_chatPing-sound', {
+                    sound_file: 'sound/items/pillow/pillow_hit.ogg',
+                  });
+                }
               }
             });
         }
@@ -623,6 +645,7 @@ class ChatRenderer {
     // Repopulate the chat log
     this.processBatch(messages, {
       notifyListeners: false,
+      suppressHighlightSound: true,
     });
   }
 

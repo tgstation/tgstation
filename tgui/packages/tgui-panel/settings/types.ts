@@ -30,6 +30,7 @@ export type HighlightSetting = {
   matchCase: boolean;
   matchWord: boolean;
   enabled: boolean;
+  playSound: boolean;
   /** Comma-separated job titles this highlight is limited to. Empty = all jobs. */
   jobFilter: string;
   /** Character names this highlight is limited to. Empty = all characters. */
