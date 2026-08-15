@@ -183,6 +183,13 @@
 		send_metadata()
 		return TRUE
 
+	if(type == "play_chatPing-sound")
+		var/sound_file = payload["sound_file"]
+		world.log << "[client] requested to play sound [sound_file]"
+		if(sound_file)
+			SEND_SOUND(client, sound(sound_file, volume = 75))
+		return TRUE
+
 /datum/tgui_panel/proc/resolve_invoke_args(list/raw_args, list/arg_metadata)
 	if(!islist(raw_args))
 		raw_args = list()

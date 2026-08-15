@@ -12,6 +12,7 @@ import {
   Stack,
   TextArea,
 } from 'tgui-core/components';
+
 import { chatRenderer } from '../chat/renderer';
 import { characterProfilesAtom, currentCharacterAtom } from '../game/atoms';
 import { WARN_AFTER_HIGHLIGHT_AMT } from './constants';
@@ -199,6 +200,18 @@ function TextHighlightSetting(props) {
             Case
           </Button.Checkbox>
         </Stack.Item>
+
+        <Button
+          icon="volume-up"
+          onClick={() => {
+            Byond.sendMessage('play_chatPing-sound', {
+              sound_file: 'sound/items/pillow/pillow_hit.ogg',
+            });
+          }}
+        >
+          Test Sound
+        </Button>
+
         <Stack.Item>
           <ColorBox mr={1} color={highlightColor} />
           <Input
