@@ -131,9 +131,6 @@
 	host.physiology.bleed_mod /= BLOOD_WORM_BLEED_MOD
 	host.RemoveElement(/datum/element/hand_organ_insertion)
 
-	// yes or no?
-	REMOVE_TRAITS_IN(host, ADULT_BLOOD_WORM_HOST_TRAIT)
-
 	remove_actions(src, host_actions)
 	grant_actions(src, innate_actions)
 
