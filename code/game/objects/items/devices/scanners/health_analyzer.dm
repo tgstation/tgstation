@@ -182,6 +182,9 @@
 				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("desiccation", "Irreparable. Under normal circumstances, revival can only proceed via brain transplant.", tochat)].</span><br>"
 			else if(HAS_TRAIT_FROM(target, TRAIT_HUSK, SKELETON_TRAIT))
 				render_list += "<span class='alert ml-1'>Subject has been husked due to severe flesh loss.</span><br>"
+			else if(HAS_TRAIT_FROM(target, TRAIT_HUSK, /datum/status_effect/zombie::id))
+				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("zombification", \
+					"Surgically remove the source of the infection, typically located in the head. If no source is found, it is otherwise irreparable.", tochat)].</span><br>"
 			else if(!HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN)) // prioritize showing unknown causes over burns
 				render_list += "<span class='alert ml-1'>Subject has been husked by mysterious causes.</span><br>"
 			else

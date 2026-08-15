@@ -767,10 +767,10 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			if("Personal") //only the player who swiped their id has access.
 				id_card = WEAKREF(card)
 				name = "[card.registered_name]'s locker"
-				desc += " It has been ID locked to [card.registered_name]."
+				desc = initial(desc) + " It has been ID locked to [card.registered_name]."
 			if("Job") //anyone who has the same access permissions as this id has access. Does NOT apply to the whole department.
 				name = "[card.assignment]'s locker"
-				desc += " It has been access locked to [card.assignment]s."
+				desc = initial(desc) + " It has been access locked to [card.assignment]s."
 				set_access(card.GetAccess())
 			if("None") //free for all
 				name = initial(name)

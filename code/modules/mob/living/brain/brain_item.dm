@@ -493,14 +493,6 @@
 	else
 		set_organ_damage(BRAIN_DAMAGE_DEATH)
 
-/obj/item/organ/brain/zombie
-	name = "zombie brain"
-	desc = "This glob of green mass can't have much intelligence inside it."
-	icon_state = "brain-x"
-	variant_traits_added = list(TRAIT_PRIMITIVE)
-	variant_traits_removed = list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER)
-	shade_color = "green"
-
 /obj/item/organ/brain/alien
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"

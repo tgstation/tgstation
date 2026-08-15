@@ -485,7 +485,7 @@
 		. += limb_gender
 	. += limb_id
 	. += husk_type
-	. += "husk"
+	. += is_husked == HUSKED_ZOMBIE ? "zombie_husk" : "burn_husk"
 	. += body_zone
 	if(is_invisible)
 		. += "invisible"

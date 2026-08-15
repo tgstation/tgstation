@@ -133,16 +133,10 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 /datum/gas_mixture/proc/thermal_energy()
 	return THERMAL_ENERGY(src) //see code/__DEFINES/atmospherics.dm; use the define in performance critical areas
 
-///Update archived versions of variables. Returns: 1 in all cases
+/// Update archived versions of variables
 /datum/gas_mixture/proc/archive()
-	var/list/cached_moles = moles
-	var/list/cached_moles_archive = moles_archive
-
+	moles_archive = moles.Copy()
 	temperature_archived = temperature
-	for(var/gas_id, value in cached_moles)
-		cached_moles_archive[gas_id] = value
-
-	return TRUE
 
 ///Merges all air from giver into self. Deletes giver. Returns: 1 if we are mutable, 0 otherwise
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)

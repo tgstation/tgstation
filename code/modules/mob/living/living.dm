@@ -528,7 +528,8 @@
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
-GAME_VERB(/mob/living, pulled, "Pull", null, atom/movable/thing_pulled as mob|obj in oview(1))
+GAME_VERB_CONTEXT(/mob/living, pulled, "Pull", "", null, /atom/movable)
+	VERB_ARG_TYPED(thing_pulled, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_VIEW, /atom/movable)
 	if(istype(thing_pulled) && Adjacent(thing_pulled))
 		start_pulling(thing_pulled)
 
@@ -552,7 +553,8 @@ GAME_VERB(/mob/living, pulled, "Pull", null, atom/movable/thing_pulled as mob|ob
 	log_message("points at [pointing_at]", LOG_EMOTE)
 	visible_message(span_infoplain("[span_name("[src]")] points at [pointing_at]."), span_notice("You point at [pointing_at]."))
 
-GAME_VERB_HIDDEN(/mob/living, succumb, "succumb", whispered as num|null)
+GAME_VERB_HIDDEN(/mob/living, succumb, "succumb")
+	VERB_ARG(whispered, VERB_ARG_TYPE_NUM, VERB_ARG_SOURCE_INPUT)
 	if (!CAN_SUCCUMB(src))
 		if(HAS_TRAIT(src, TRAIT_SUCCUMB_OVERRIDE))
 			if(whispered)
@@ -832,9 +834,10 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 	update_stamina()
 	SEND_SIGNAL(src, COMSIG_LIVING_HEALTH_UPDATE)
 
-/mob/living/update_health_hud()
+/mob/living/update_health_hud(healthpercent)
 	var/severity = 0
-	var/healthpercent = (health/maxHealth) * 100
+	if(!healthpercent)
+		healthpercent = (health/maxHealth) * 100
 	var/atom/movable/screen/healthdoll/living/livingdoll = hud_used?.screen_objects[HUD_MOB_HEALTHDOLL]
 	if(istype(livingdoll)) //to really put you in the boots of a simplemob
 		switch(healthpercent)
@@ -862,6 +865,8 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 			livingdoll.add_filter("mob_shape_mask", 1, alpha_mask_filter(icon = mob_mask))
 			livingdoll.add_filter("inset_drop_shadow", 2, drop_shadow_filter(size = -1))
 		livingdoll.health_overlay.maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative'>[round(healthpercent, 1)]%</div>")
+		if(livingdoll.hovering)
+			livingdoll.update_appearance(UPDATE_ICON)
 
 	if(severity > 0)
 		overlay_fullscreen("brute", /atom/movable/screen/fullscreen/brute, severity)
@@ -2373,8 +2378,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	var/turf/check_turf = get_step_multiz(src, direction == DOWN ? NONE : direction)
 	if(!get_step_multiz(src, direction)) //We are at the edge z-level.
 		to_chat(src, span_warning("There's nothing interesting there."))
-		return
-	else if(!istransparentturf(check_turf)) //There is no turf we can look through above us
+		return null
+	if(!istransparentturf(check_turf) && !HAS_TRAIT(src, TRAIT_XRAY_VISION)) //There is no turf we can look through above us
 		var/turf/front_hole = get_step(check_turf, dir)
 		if(istransparentturf(front_hole))
 			check_turf = front_hole
@@ -2385,7 +2390,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 					break
 		if(!istransparentturf(check_turf))
 			to_chat(src, span_warning("You can't see through the floor [direction == DOWN ? "below" : "above"] you."))
-			return
+			return null
 	return direction == DOWN ? get_step_multiz(check_turf, DOWN) : check_turf
 
 /**

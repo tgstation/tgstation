@@ -14,7 +14,7 @@
 	resistance = 1
 	stage_speed = 2
 	transmittable = 2
-	level = 4
+	level = 5
 	severity = 1
 	symptom_cure = /datum/reagent/barbers_aid
 	cure_color = "yellow"

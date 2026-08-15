@@ -219,9 +219,9 @@
 		return clamp(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
 	return 0 // plays no sound
 
-/mob/living/proc/set_combat_mode(new_mode, silent = TRUE)
+/mob/living/proc/set_combat_mode(new_mode, silent = TRUE, force = FALSE)
 
-	if(HAS_TRAIT(src, TRAIT_COMBAT_MODE_LOCK))
+	if(HAS_TRAIT(src, TRAIT_COMBAT_MODE_LOCK) && !force)
 		return
 
 	if(combat_mode == new_mode)

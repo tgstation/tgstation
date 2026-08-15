@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Some personalities like Empathetic or Misanthropic no longer react to their own mood changing"

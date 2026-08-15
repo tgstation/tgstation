@@ -3,7 +3,7 @@
 	. = ..()
 	if(. & EMP_PROTECT_SELF)
 		return
-	powerlevel = 0 // oh no, the power!
+	adjust_power_level(-SLIME_MAX_POWER) // oh no, the power!
 
 ///If a slime is attack with an empty hand, shoves included, try to wrestle them off the mob they are on
 /mob/living/basic/slime/proc/on_attack_hand(mob/living/basic/slime/defender_slime, mob/living/attacker)

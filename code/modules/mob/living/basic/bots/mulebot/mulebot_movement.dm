@@ -14,7 +14,7 @@
 	cell?.use(cell_move_power_usage)
 	set_cell_hud()
 
-	if(has_gravity())
+	if(isnull(buckled) && isnull(pulledby) && isnull(throwing) && has_gravity())
 		for(var/mob/living/carbon/human/future_pancake in loc)
 			if(future_pancake.body_position == LYING_DOWN)
 				run_over(future_pancake)

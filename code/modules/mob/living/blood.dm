@@ -37,10 +37,11 @@
 	// Handled here instead of in the saline reagent datum, because this way the modification order is consistent.
 	// E.g. if you have an effect that modifies blood volume over the dilution cap, then saline should do nothing.
 	var/datum/reagent/medicine/salglu_solution/saline = reagents?.has_reagent(/datum/reagent/medicine/salglu_solution)
-	if (saline && amount < saline.dilution_cap)
+	if (saline && amount < SALINE_DILUTION_CAP)
 		var/datum/blood_type/blood_type = get_bloodtype()
+		var/datum/status_effect/stacking/saline_glucose_dilution/dilution = has_status_effect(/datum/status_effect/stacking/saline_glucose_dilution)
 		if (blood_type?.restoration_chem == saline.required_restoration_chem)
-			amount = min(amount + saline.volume * saline.dilution_per_unit, BLOOD_VOLUME_NORMAL)
+			amount = min(amount + saline.volume * dilution.get_blood_multiplier(), BLOOD_VOLUME_NORMAL)
 
 	return amount
 
@@ -438,9 +439,7 @@
 	if (!blood_type || !can_bleed())
 		return
 
-	var/blood_data = list()
-	blood_data["blood_type"] = blood_type
-	blood_data["blood_DNA"] = blood_type.dna_string
+	var/list/blood_data = blood_type.get_default_blood_data()
 
 	if (reagents)
 		var/list/temp_chem = list()
@@ -499,7 +498,7 @@
 	blood_data["gender"] = gender
 	blood_data["real_name"] = real_name
 	if (dna)
-		blood_data["blood_DNA"] = dna.unique_enzymes
+		blood_data[BLOOD_DATA_DNA] = dna.unique_enzymes
 		blood_data["features"] = dna.features
 
 	blood_data["quirks"] = list()
@@ -515,20 +514,20 @@
 
 	if (!(mob_biotypes & MOB_ORGANIC))
 		if (mob_biotypes & MOB_ROBOTIC)
-			return get_blood_type(BLOOD_TYPE_OIL)
+			return get_blood_type(/datum/blood_type/oil)
 		return
 
 	if (mob_biotypes & MOB_SLIME)
-		return get_blood_type(BLOOD_TYPE_TOX)
-	else if (mob_biotypes & MOB_PLANT)
-		return get_blood_type(BLOOD_TYPE_H2O)
-	else if (mob_biotypes & MOB_REPTILE)
-		return get_blood_type(BLOOD_TYPE_LIZARD)
-	else if (mob_biotypes & MOB_HUMANOID)
+		return get_blood_type(/datum/blood_type/slime)
+	if (mob_biotypes & MOB_PLANT)
+		return get_blood_type(/datum/blood_type/water)
+	if (mob_biotypes & MOB_REPTILE)
+		return get_blood_type(/datum/blood_type/lizard)
+	if (mob_biotypes & MOB_HUMANOID)
 		// O+ as to avoid mobs bleeding all human bloodtypes under the sun, and its statistically the most common one
-		return get_blood_type(BLOOD_TYPE_O_PLUS)
+		return get_blood_type(/datum/blood_type/human/o_plus)
 
-	return get_blood_type(BLOOD_TYPE_ANIMAL)
+	return get_blood_type(/datum/blood_type/animal)
 
 /// Returns the reagent type this mob has for blood
 /mob/living/proc/get_blood_reagent()
@@ -561,14 +560,18 @@
 /// Returns the blood_type datum that corresponds to the string id key in GLOB.blood_types
 /proc/get_blood_type(id)
 	RETURN_TYPE(/datum/blood_type)
+	if(ispath(id, /datum/blood_type))
+		var/datum/blood_type/bloodtype_type = id
+		return GLOB.blood_types[bloodtype_type::name]
+
 	return GLOB.blood_types[id]
 
 /// Returns the hex color string, or a color matrix, of a given blood_type datum given an assoc list of blood_DNA e.g. ("Unknown Blood Type", "*X")
 /proc/get_color_from_blood_list(list/blood_DNA)
 	var/datum/blood_type/blood_type
 	if(!length(blood_DNA))
-		return get_blood_type(BLOOD_TYPE_O_PLUS).get_color()
-	else if (length(blood_DNA) == 1) // Microop for when we don't need to do color mixing
+		return get_blood_type(/datum/blood_type/human/o_plus).get_color()
+	if(length(blood_DNA) == 1) // Microop for when we don't need to do color mixing
 		blood_type = blood_DNA[blood_DNA[length(blood_DNA)]]
 		return blood_type.get_color()
 
@@ -588,7 +591,7 @@
 		valid_colors += 1
 
 	if (valid_colors == 0)
-		return get_blood_type(BLOOD_TYPE_O_PLUS).get_color()
+		return get_blood_type(/datum/blood_type/human/o_plus).get_color()
 
 	r_color /= valid_colors
 	g_color /= valid_colors
