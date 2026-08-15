@@ -430,6 +430,8 @@
   Momiko:
   - spellcheck: Fixed incorrect threshold numbers in the heal symptom descriptions
       to match their actual stats.
+  PapaMichael:
+  - bugfix: Ghosts no longer trigger the AI's motion-sensitive camera alerts
   YesterdaysPromise:
   - rscadd: Plastitatnanium glass now makes pod directional windows, regular pod windows,
       plastitaniumglass windowfilling which shall allow you to make such on a grille,
