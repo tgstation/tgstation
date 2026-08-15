@@ -57,7 +57,7 @@
 		current_host_head.blood_worm_head_growth_animation() // it was supposed to be animation
 
 		// timer
-		addtimer(CALLBACK(src, PROC_REF(swap_to_worm_head), host, worm), 2 SECONDS)
+		addtimer(CALLBACK(src, PROC_REF(swap_to_worm_head), host, worm), 2.5 SECONDS)
 
 	message_admins("extend head activation")
 	message_admins("worm: [worm]")
