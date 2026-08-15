@@ -245,46 +245,6 @@
 	for (var/datum/action/action as anything in actions)
 		action.Remove(target)
 
-
-// its must collect\save all old organs, rip off head, then attach blood worm head, then insert all organs(brain, implants, hud, damaged ears and stuff)
-// all organs\content from the head must be saved with their state(damage or another vars)
-// so its must be the same content, which is collected and then inserted
-// /mob/living/basic/blood_worm/proc/grant_bloodworm_head(mob/target)
-// 	var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
-// 	var/current_host_head = target:get_bodypart(BODY_ZONE_HEAD)
-// 	current_host_head:blood_worm_head_growth_animation()
-// 	new_worm_head_to_attach.replace_limb(target, TRUE)
-// 	target.update_body()
-
-// /mob/living/basic/blood_worm/proc/remove_bloodworm_head(mob/living/carbon/target)
-// 	var/list/saved_head_content = list() // organs, implants, huds
-// 	var/obj/item/bodypart/head/new_host_head_to_attach = new() // will it work?
-// 	var/current_worm_head = target:get_bodypart(BODY_ZONE_HEAD)
-
-// 	for(var/obj/item/organ/organ_to_juggle in current_worm_head:contents)
-// 		if(istype(organ_to_juggle, /obj/item/organ))
-// 			saved_head_content += organ_to_juggle
-// 			organ_to_juggle.Remove(target, special = TRUE)
-
-// 	current_worm_head:drop_limb(special = TRUE)
-
-// 	// now it will be with DNA of the owner, but also
-// 	// it will not loose the implants, cause they will be inserted
-// 	// ALSO if worm-player got into EMP or emag or something, and implants are now fucked
-// 	// so new head will get these fucked implants and organs
-// 	target:regenerate_limb(BODY_ZONE_HEAD)
-// 	var/new_host_head = target:get_bodypart(BODY_ZONE_HEAD)
-// 	for(var/obj/item/organ/organ_to_trash in new_host_head:contents) // clean new head from organs
-// 		if(istype(organ_to_trash, /obj/item/organ))
-// 			organ_to_trash.Remove(target, special = TRUE)
-
-// 	for(var/obj/item/organ/organ_to_juggle in saved_head_content) // inserting at worm head
-// 		organ_to_juggle.Insert(target, special = TRUE)
-
-// 	qdel(current_worm_head)
-
-// 	target.update_body()
-
 /mob/living/basic/blood_worm/proc/sync_health(already_ejecting = FALSE)
 	if (!host)
 		return
