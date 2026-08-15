@@ -423,3 +423,17 @@
       because their rendering was broken
   timothymtorres:
   - bugfix: Fix helmets being flammable when armor is not
+2026-08-15:
+  YesterdaysPromise:
+  - rscadd: Plastitatnanium glass now makes pod directional windows, regular pod windows,
+      plastitaniumglass windowfilling which shall allow you to make such on a grille,
+      and its own plastitanium glass tiles.
+  - rscadd: Titanium glass now makes unique directional windows, and its own titanium
+      glass tiles.
+  - rscadd: Bronze tiles can now be reskinned into bronze glass tiles.
+  - rscadd: Runed metal can now make directional windows and fulltile windows, and
+      its tiles can be reskinned into runed glass tiles.
+  lelandkemble:
+  - balance: General Beepsky has regained its 100% projectile block chance
+  - balance: Saline-Glucose Solution's blood replacement effect loses effectiveness
+      over time.
