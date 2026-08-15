@@ -69,7 +69,7 @@
 	// 		saved_head_content += organ_to_juggle
 	// 		organ_to_juggle.Remove(host, special = TRUE)
 
-	current_worm_head.drop_limb(special = TRUE)
+	// current_worm_head.drop_limb(special = TRUE)
 
 	// now it will be with DNA of the owner, but also
 	// it will not loose the implants, cause they will be inserted
