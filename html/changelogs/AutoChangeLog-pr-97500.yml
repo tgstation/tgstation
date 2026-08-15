@@ -1,0 +1,4 @@
+author: "Momiko"
+delete-after: True
+changes:
+  - spellcheck: "Fixed incorrect threshold numbers in the heal symptom descriptions to match their actual stats."
