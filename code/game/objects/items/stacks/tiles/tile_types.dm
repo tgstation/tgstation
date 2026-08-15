@@ -1599,6 +1599,13 @@
 	turf_type = /turf/open/floor/bronze/filled
 	merge_type = /obj/item/stack/tile/bronze/filled
 
+/obj/item/stack/tile/bronze/window
+	name = "bronze window tile"
+	singular_name = "bronze window floor tile"
+	icon_state = "tile_glass_bronze"
+	turf_type = /turf/open/floor/glass/bronze
+	merge_type = /obj/item/stack/tile/bronze/window
+
 /obj/item/stack/tile/cult
 	name = "engraved tile"
 	singular_name = "engraved floor tile"
@@ -1607,6 +1614,19 @@
 	turf_type = /turf/open/floor/cult
 	mats_per_unit = list(/datum/material/runedmetal=SMALL_MATERIAL_AMOUNT*5)
 	merge_type = /obj/item/stack/tile/cult
+	tile_reskin_types = list(
+		/obj/item/stack/tile/cult,
+		/obj/item/stack/tile/cult/window,
+	)
+
+/obj/item/stack/tile/cult/window
+	name = "engraved window tile"
+	singular_name = "engraved window tile"
+	desc = "A strange window tile made from runed metal. Doesn't seem to actually have any paranormal powers."
+	icon_state = "tile_glass_runic"
+	turf_type = /turf/open/floor/glass/cult
+	mats_per_unit = list(/datum/material/runedmetal=SMALL_MATERIAL_AMOUNT*5)
+	merge_type = /obj/item/stack/tile/cult/window
 
 /// Plasteel
 
@@ -1793,24 +1813,22 @@
 	merge_type = /obj/item/stack/tile/rglass/plasma
 	mats_per_unit = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.125, /datum/material/alloy/plasmaglass = SHEET_MATERIAL_AMOUNT * 0.25)
 
-/obj/item/stack/tile/titanium_glass
+/obj/item/stack/tile/glass/titanium
 	name = "titanium glass floor"
 	singular_name = "titanium glass floor tile"
-	desc = "Titanium glass window floor, because whatever that is down there is probably space."
-	icon_state = "tile_titaniumglass"
-	turf_type = /turf/open/floor/glass
-	inhand_icon_state = "tile-tglass"
-	merge_type = /obj/item/stack/tile/titanium_glass
+	desc = "Titanium glass window floors, for when you need something to separate you from the vast void of space."
+	icon_state = "tile_glass_titanium"
+	turf_type = /turf/open/floor/glass/titatanium
+	merge_type = /obj/item/stack/tile/glass/titanium
 	mats_per_unit = list(/datum/material/alloy/titaniumglass = SHEET_MATERIAL_AMOUNT * 0.25)
 
-/obj/item/stack/tile/plastitanium_glass
+/obj/item/stack/tile/glass/plastitanium
 	name = "plastitanium glass floor"
-	singular_name = "plastitanium glass floor tile"
-	desc = "Plastitanium glass window floor, because whatever that is down there is not meant to be comprehanded."
-	icon_state = "tile_plastitaniumglass"
-	turf_type = /turf/open/floor/glass
-	inhand_icon_state = "tile-ptglass"
-	merge_type = /obj/item/stack/tile/plastitanium_glass
+	singular_name = "plasma glass floor tile"
+	desc = "Plastitatanium glass window floors, for when you don't want lava to burn your feet, but still like to see it."
+	icon_state = "tile_glass_plastitanium"
+	turf_type = /turf/open/floor/glass/plastitatanium
+	merge_type = /obj/item/stack/tile/glass/plastitanium
 	mats_per_unit = list(/datum/material/alloy/plastitaniumglass = SHEET_MATERIAL_AMOUNT * 0.25)
 
 /obj/item/stack/tile/stained_glass
