@@ -69,7 +69,7 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/retract_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
 	var/obj/item/bodypart/head/stored_head = worm.storage_for_head[1]
 
-	// todo: is it actually will remove the overlay?
+	// removing the overlay of head grow from the head
 	for (var/datum/bodypart_overlay/overlay in stored_head.bodypart_overlays)
 		if (istype(overlay, /datum/bodypart_overlay/simple/growth_blood_worm_head))
 			stored_head.remove_bodypart_overlay(overlay, update = TRUE)
