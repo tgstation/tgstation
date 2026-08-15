@@ -116,6 +116,7 @@
 		var/browse_type = text2path(parent_text)
 		if(isnull(browse_type))
 			browse_type = /datum
+			parent_text = "/datum"
 		var/list/children = list()
 		for(var/child_type in typesof(browse_type))
 			if(child_type == browse_type)
