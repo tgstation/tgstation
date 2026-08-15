@@ -140,8 +140,8 @@
 	revive_action = new(src)
 	host_actions += revive_action
 
-	worm_head_action = new(src)
-	host_actions += worm_head_action
+	// worm_head_action = new(src)
+	// host_actions += worm_head_action
 
 	grant_actions(src, innate_actions)
 
