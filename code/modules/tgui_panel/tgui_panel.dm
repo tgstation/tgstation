@@ -183,11 +183,14 @@
 		send_metadata()
 		return TRUE
 
-	if(type == "play_chatPing-sound")
+	if(type == "audio/playHighlightSound")
 		var/sound_file = payload["sound_file"]
-		world.log << "[client] requested to play sound [sound_file]"
+		var/volume = payload["volume"]
+		if(isnull(volume))
+			volume = 0.50
+		volume = clamp(text2num(volume), 0, 1)
 		if(sound_file)
-			SEND_SOUND(client, sound(sound_file, volume = 75))
+			SEND_SOUND(client, sound(sound_file, volume = volume * 100))
 		return TRUE
 
 /datum/tgui_panel/proc/resolve_invoke_args(list/raw_args, list/arg_metadata)

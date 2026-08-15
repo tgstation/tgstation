@@ -242,6 +242,7 @@ class ChatRenderer {
       const matchCase = setting.matchCase;
       const enabled = setting.enabled;
       const playSound = Boolean(setting.playSound);
+      const soundVolume = Number(setting.soundVolume ?? 0.5);
       const jobs = String(setting.jobFilter || '')
         .split(',')
         .map((str) => str.trim().toLowerCase())
@@ -325,6 +326,7 @@ class ChatRenderer {
         highlightColor,
         highlightWholeMessage,
         playSound,
+        soundVolume,
         jobs,
         characters,
       });
@@ -522,8 +524,9 @@ class ChatRenderer {
               if (highlighted && parser.playSound && !messageHighlighted) {
                 messageHighlighted = true;
                 if (!suppressHighlightSound) {
-                  Byond.sendMessage('play_chatPing-sound', {
+                  Byond.sendMessage('audio/playHighlightSound', {
                     sound_file: 'sound/items/pillow/pillow_hit.ogg',
+                    volume: parser.soundVolume,
                   });
                 }
               }

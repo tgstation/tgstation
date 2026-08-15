@@ -8,10 +8,12 @@ import {
   Floating,
   Icon,
   Input,
+  Knob,
   Section,
   Stack,
   TextArea,
 } from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
 
 import { chatRenderer } from '../chat/renderer';
 import { characterProfilesAtom, currentCharacterAtom } from '../game/atoms';
@@ -97,6 +99,7 @@ function TextHighlightSetting(props) {
     matchWord,
     matchCase,
     playSound,
+    soundVolume,
     jobFilter,
     characterFilter,
   } = highlightSettingById[id];
@@ -215,6 +218,30 @@ function TextHighlightSetting(props) {
           >
             Sound
           </Button.Checkbox>
+        </Stack.Item>
+
+        <Stack.Item>
+          <Knob
+            minValue={0}
+            maxValue={1}
+            value={soundVolume}
+            step={0.01}
+            stepPixelSize={1}
+            style={{
+              opacity: playSound ? 1 : 0.45,
+              pointerEvents: playSound ? 'auto' : 'none',
+            }}
+            format={(value) => `${toFixed(value * 100)}%`}
+            onChange={(_event, value) => {
+              if (!playSound) {
+                return;
+              }
+              updateHighlight({
+                id,
+                soundVolume: value,
+              });
+            }}
+          />
         </Stack.Item>
 
         <Stack.Item>

@@ -30,6 +30,7 @@ export const defaultHighlightSetting: HighlightSetting = {
   matchCase: false,
   enabled: true,
   playSound: true,
+  soundVolume: 0.5,
   jobFilter: '',
   characterFilter: [],
 };
