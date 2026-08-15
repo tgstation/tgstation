@@ -9,7 +9,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/bot/secbot/super_beepsky
 	baton_type = /obj/item/melee/energy/sword/saber
 	speed = 4 //he's a fast fucker
-	///chance we block bullets
+	///chance we block melee attacks
 	var/block_chance = 50
 	///is our sword currently active?
 	var/sword_active = FALSE
@@ -48,7 +48,7 @@
 	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		return NONE
 
-	if(!sword_active || !prob(block_chance))
+	if(!sword_active)
 		return NONE
 
 	visible_message(span_warning("[source] deflects [hitting_projectile] with its energy swords!"))
@@ -97,3 +97,6 @@
 	maxHealth = 50
 	block_chance = 0
 	baton_type = /obj/item/toy/sword
+
+/mob/living/basic/bot/secbot/grievous/toy/block_bullets(datum/source, obj/projectile/hitting_projectile)
+	return NONE
