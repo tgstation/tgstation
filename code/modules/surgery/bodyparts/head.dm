@@ -306,5 +306,5 @@
 	add_bodypart_overlay(growth_overlay, update = TRUE)
 
 	// will it animation grow?
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/bodypart, remove_bodypart_overlay), growth_overlay, TRUE), 2 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/bodypart, remove_bodypart_overlay), growth_overlay, TRUE), 2.20 SECONDS)
 
