@@ -49,7 +49,8 @@
 
 	var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
 	var/obj/item/bodypart/head/current_host_head = host.get_bodypart(BODY_ZONE_HEAD)
-	// current_host_head.blood_worm_head_growth_animation() it was supposed to be animation
+	// todo: animation of grow, sprite is done, but code is not doing animation
+	current_host_head.blood_worm_head_growth_animation() it was supposed to be animation
 
 	message_admins("extend head activation")
 	message_admins("worm: [worm]")
