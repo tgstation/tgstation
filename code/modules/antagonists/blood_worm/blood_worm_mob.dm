@@ -131,7 +131,6 @@
 		host_actions += transfuse_action
 
 	if (ispath(worm_head_action, /datum/action/cooldown/mob_cooldown/blood_worm/worm_head))
-		if (istype(src, /mob/living/basic/blood_worm/adult)) // worm head available only for adult worm's host
 			message_admins("istype of adult worm action adder HAVE BEEN TRIGGERED")
 			worm_head_action = new worm_head_action(src)
 			adult_host_actions += worm_head_action
