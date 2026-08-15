@@ -141,6 +141,7 @@ ADMIN_VERB(admin_verb_panel, R_NONE, "Admin Verb Panel", "Browse and invoke admi
 			var/browse_type = text2path(parent_text)
 			if(isnull(browse_type))
 				browse_type = /datum
+				parent_text = "/datum"
 			typepath_parent = parent_text || "/datum"
 			typepath_children = list()
 			for(var/child_type in typesof(browse_type))
