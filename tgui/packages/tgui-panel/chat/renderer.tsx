@@ -242,6 +242,8 @@ class ChatRenderer {
       const matchCase = setting.matchCase;
       const enabled = setting.enabled;
       const playSound = Boolean(setting.playSound);
+      const soundFile =
+        setting.soundFile || 'sound/items/pillow/pillow_hit.ogg';
       const soundVolume = Number(setting.soundVolume ?? 0.5);
       const jobs = String(setting.jobFilter || '')
         .split(',')
@@ -326,6 +328,7 @@ class ChatRenderer {
         highlightColor,
         highlightWholeMessage,
         playSound,
+        soundFile,
         soundVolume,
         jobs,
         characters,
@@ -525,7 +528,7 @@ class ChatRenderer {
                 messageHighlighted = true;
                 if (!suppressHighlightSound) {
                   Byond.sendMessage('audio/playHighlightSound', {
-                    sound_file: 'sound/items/pillow/pillow_hit.ogg',
+                    sound_file: parser.soundFile,
                     volume: parser.soundVolume,
                   });
                 }

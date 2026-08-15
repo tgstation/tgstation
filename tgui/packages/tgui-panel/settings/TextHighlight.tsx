@@ -5,6 +5,7 @@ import {
   Button,
   ColorBox,
   Divider,
+  Dropdown,
   Floating,
   Icon,
   Input,
@@ -68,6 +69,13 @@ export function TextHighlightSettings(props) {
   );
 }
 
+const HIGHLIGHT_SOUND_OPTIONS = [
+  { label: 'Pillow Hit', value: 'sound/items/pillow/pillow_hit.ogg' },
+  { label: 'Coin Flip', value: 'sound/items/coinflip.ogg' },
+  { label: 'Pen Click', value: 'sound/items/pen_click.ogg' },
+  { label: 'Rattling Keys', value: 'sound/items/rattling_keys.ogg' },
+];
+
 const oneCharacterRegex = /^(\[.*\]|\\.|.)$/;
 
 function extractRegex(highlight: string): string | null {
@@ -99,6 +107,7 @@ function TextHighlightSetting(props) {
     matchWord,
     matchCase,
     playSound,
+    soundFile,
     soundVolume,
     jobFilter,
     characterFilter,
@@ -218,6 +227,33 @@ function TextHighlightSetting(props) {
           >
             Sound
           </Button.Checkbox>
+        </Stack.Item>
+
+        <Stack.Item>
+          <Box>
+            <Dropdown
+              width="160px"
+              options={HIGHLIGHT_SOUND_OPTIONS.map((option) => option.label)}
+              selected={
+                HIGHLIGHT_SOUND_OPTIONS.find(
+                  (option) => option.value === soundFile,
+                )?.label ?? 'Pillow Hit'
+              }
+              disabled={!playSound}
+              onSelected={(label) => {
+                const option = HIGHLIGHT_SOUND_OPTIONS.find(
+                  (item) => item.label === label,
+                );
+                if (!option) {
+                  return;
+                }
+                updateHighlight({
+                  id,
+                  soundFile: option.value,
+                });
+              }}
+            />
+          </Box>
         </Stack.Item>
 
         <Stack.Item>
