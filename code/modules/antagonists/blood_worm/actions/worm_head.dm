@@ -61,10 +61,6 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/swap_to_worm_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
 	var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
 	new_worm_head_to_attach.replace_limb(host, TRUE)
-	// todo: is it actually will remove the overlay?
-	for (var/datum/bodypart_overlay/overlay in current_host_head.bodypart_overlays)
-		if (istype(overlay, /datum/bodypart_overlay/simple/growth_blood_worm_head))
-			current_host_head.remove_bodypart_overlay(overlay, update = TRUE)
 	host.update_body()
 
 
@@ -72,6 +68,11 @@
 // same, but for retract worm head process
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/retract_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
 	var/obj/item/bodypart/head/stored_head = worm.storage_for_head[1]
+
+	// todo: is it actually will remove the overlay?
+	for (var/datum/bodypart_overlay/overlay in stored_head.bodypart_overlays)
+		if (istype(overlay, /datum/bodypart_overlay/simple/growth_blood_worm_head))
+			stored_head.remove_bodypart_overlay(overlay, update = TRUE)
 
 	message_admins("before worm.storage_for_head: [worm.storage_for_head]")
 	stored_head.replace_limb(host, TRUE)
