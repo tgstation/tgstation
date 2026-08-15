@@ -243,7 +243,7 @@ class ChatRenderer {
       const enabled = setting.enabled;
       const playSound = Boolean(setting.playSound);
       const soundFile =
-        setting.soundFile || 'sound/items/pillow/pillow_hit.ogg';
+        setting.soundFile || 'sound/misc/highlight_sounds/Beep.ogg';
       const soundVolume = Number(setting.soundVolume ?? 0.5);
       const jobs = String(setting.jobFilter || '')
         .split(',')

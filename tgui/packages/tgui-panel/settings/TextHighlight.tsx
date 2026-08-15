@@ -239,7 +239,7 @@ function TextHighlightSetting(props) {
               selected={
                 HIGHLIGHT_SOUND_OPTIONS.find(
                   (option) => option.value === soundFile,
-                )?.label ?? 'Pillow Hit'
+                )?.label ?? 'Beep'
               }
               disabled={!playSound}
               onSelected={(label) => {
