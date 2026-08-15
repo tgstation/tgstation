@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import {
   BlockQuote,
   Box,
@@ -501,10 +502,17 @@ type ReactionDisplayProps = {
   reaction: ReagentReaction;
   pinnedReactions: ReactionTypepath[];
   setPinnedReactions: (reactions: ReactionTypepath[]) => void;
+  setParentForceFloating?: (force: boolean) => void;
 };
 
 const ReactionDisplay = (props: ReactionDisplayProps) => {
-  const { noDropdown, reaction, pinnedReactions, setPinnedReactions } = props;
+  const {
+    noDropdown,
+    reaction,
+    pinnedReactions,
+    setPinnedReactions,
+    setParentForceFloating,
+  } = props;
 
   const recipeList = (
     <BlockQuote>
@@ -518,6 +526,7 @@ const ReactionDisplay = (props: ReactionDisplayProps) => {
               reagentComponent={reagent}
               pinnedReactions={pinnedReactions}
               setPinnedReactions={setPinnedReactions}
+              setParentForceFloating={setParentForceFloating}
             />
           </Stack.Item>
         ))}
@@ -534,6 +543,7 @@ const ReactionDisplay = (props: ReactionDisplayProps) => {
                   reagentComponent={catalyst}
                   pinnedReactions={pinnedReactions}
                   setPinnedReactions={setPinnedReactions}
+                  setParentForceFloating={setParentForceFloating}
                 />
               </Stack.Item>
             ))}
@@ -666,6 +676,7 @@ type ReactionComponentDisplayProps = {
   reagentComponent: ReactionComponent;
   pinnedReactions: ReactionTypepath[];
   setPinnedReactions: (reactions: ReactionTypepath[]) => void;
+  setParentForceFloating?: (force: boolean) => void;
 };
 
 // linkifies a reagent name in the reaction display
@@ -673,7 +684,12 @@ type ReactionComponentDisplayProps = {
 // if it's another recipe, it will put that recipe in the search box
 // if it's nothing, it's not a button
 const ReactionComponentDisplay = (props: ReactionComponentDisplayProps) => {
-  const { reagentComponent, pinnedReactions, setPinnedReactions } = props;
+  const {
+    reagentComponent,
+    pinnedReactions,
+    setPinnedReactions,
+    setParentForceFloating,
+  } = props;
   const { data } = useBackend<Data>();
   const { chemicals, reaction_list } = data;
 
@@ -707,12 +723,24 @@ const ReactionComponentDisplay = (props: ReactionComponentDisplayProps) => {
       </Button>
     );
 
+  const [forceFloating, setForceFloating] = useState(false);
+
   return (
     <Floating
+      handleOpen={forceFloating || undefined}
+      disabled={forceFloating || undefined}
       placement="left"
       closeAfterInteract={false}
       hoverOpen={true}
       hoverSafePolygon={true}
+      onOpenChange={(state) => {
+        if (setParentForceFloating) {
+          setParentForceFloating(state);
+        }
+        if (!state) {
+          setForceFloating(false);
+        }
+      }}
       content={
         <Stack
           vertical
@@ -729,6 +757,7 @@ const ReactionComponentDisplay = (props: ReactionComponentDisplayProps) => {
               reaction={foundRecipe}
               pinnedReactions={pinnedReactions}
               setPinnedReactions={setPinnedReactions}
+              setParentForceFloating={setForceFloating}
             />
           </Stack.Item>
         </Stack>
