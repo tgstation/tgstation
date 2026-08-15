@@ -1,4 +1,0 @@
-author: "san7890"
-delete-after: True
-changes:
-  - bugfix: "Latejoining as an AI on CatwalkStation should now work."

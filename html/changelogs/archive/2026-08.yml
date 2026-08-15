@@ -437,3 +437,5 @@
   - balance: General Beepsky has regained its 100% projectile block chance
   - balance: Saline-Glucose Solution's blood replacement effect loses effectiveness
       over time.
+  san7890:
+  - bugfix: Latejoining as an AI on CatwalkStation should now work.
