@@ -7,7 +7,10 @@
 
 // For vim
 // :%s/\(\(.*\)\.ogg\)/"\2" = 'sound\/vox_fem\/\1',/g
-GLOBAL_LIST_INIT(vox_sounds, list(
+GLOBAL_LIST_INIT(vox_sounds, generate_vox_sounds())
+
+/proc/generate_vox_sounds()
+	. = list(
 	"," = 'sound/announcer/vox_fem/,.ogg',
 	"." = 'sound/announcer/vox_fem/..ogg',
 	"a" = 'sound/announcer/vox_fem/a.ogg',
@@ -707,6 +710,8 @@ GLOBAL_LIST_INIT(vox_sounds, list(
 	"lower" = 'sound/announcer/vox_fem/lower.ogg',
 	"lowest" = 'sound/announcer/vox_fem/lowest.ogg',
 	"lusty" = 'sound/announcer/vox_fem/lusty.ogg',
+	)
+	. += list(
 	"m" = 'sound/announcer/vox_fem/m.ogg',
 	"machine" = 'sound/announcer/vox_fem/machine.ogg',
 	"made" = 'sound/announcer/vox_fem/made.ogg',
@@ -1326,5 +1331,5 @@ GLOBAL_LIST_INIT(vox_sounds, list(
 	"zombie" = 'sound/announcer/vox_fem/zombie.ogg',
 	"zone" = 'sound/announcer/vox_fem/zone.ogg',
 	"zulu" = 'sound/announcer/vox_fem/zulu.ogg',
-))
+	)
 #endif
