@@ -38,8 +38,7 @@
 	TRAIT_NO_WITHDRAWALS, // Prevents OOC quirk choices from impacting blood worms as much. Stops withdrawals instead of addictions since the latter can be metagamed.
 	TRAIT_NO_SPLIT_PERSONALITY, // How about no?
 	TRAIT_BLOOD_HUD, // Self-explanatory, allows blood worms to seek prey even while in a host.
-	TRAIT_BLOOD_WORM_HOST,// Used in code for recognizing blood worm hosts with a simple trait check.
-	ADULT_BLOOD_WORM_HOST_TRAIT), // For only Adult worm stuff - tearing the walls and blood worm head overlay on host's body
+	TRAIT_BLOOD_WORM_HOST), // Used in code for recognizing blood worm hosts with a simple trait check.
 	BLOOD_WORM_HOST_TRAIT)
 
 	if (istype(src, /mob/living/basic/blood_worm/adult))

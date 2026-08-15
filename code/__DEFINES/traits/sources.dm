@@ -331,7 +331,7 @@
 /// Trait from a blood worm being in a host
 #define BLOOD_WORM_HOST_TRAIT "blood_worm_host_trait"
 
-/// Trait from a ADULT blood worm beiong in a host
+/// Trait from a ADULT blood worm being in a host
 #define ADULT_BLOOD_WORM_HOST_TRAIT "adult_blood_worm_host_trait"
 
 /// Trait from being under a door via [/datum/component/slide_under_doors]
