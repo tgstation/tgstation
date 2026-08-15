@@ -46,7 +46,7 @@
 /datum/chemical_reaction/sodiumchloride
 	results = list(/datum/reagent/consumable/salt = 2)
 	required_reagents = list(/datum/reagent/sodium = 1, /datum/reagent/chlorine = 1) // That's what I said! Sodium Chloride!
-	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_FOOD | REACTION_TAG_COMPONENT
+	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_CHEMICAL | REACTION_TAG_COMPONENT
 	thermic_constant = 50
 
 /datum/chemical_reaction/sodiumchloride/pre_reaction_other_checks(datum/reagents/holder)

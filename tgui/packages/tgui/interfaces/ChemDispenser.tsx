@@ -1,8 +1,10 @@
+import { useEffect, useRef, useState } from 'react';
 import {
   BlockQuote,
   Box,
   Button,
   Collapsible,
+  Floating,
   Icon,
   Input,
   LabeledList,
@@ -14,7 +16,6 @@ import {
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 import { createSearch, toTitleCase } from 'tgui-core/string';
-
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 import { type Beaker, BeakerDisplay } from './common/BeakerDisplay';
@@ -156,6 +157,28 @@ export const ChemDispenser = (props) => {
   const mainWidth = 565;
   const reactionWidth = 245;
   const windowWidth = mainWidth + (showReactionList ? reactionWidth : 0);
+
+  const [frozenRecipes, setFrozenRecipes] = useState<string[]>([]);
+  const [hoveredRecipe, setHoveredRecipe] = useState<string | null>(null);
+
+  const recipeButtonRefs = useRef<HTMLDivElement[]>([]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        !recipeButtonRefs.current.some((ref) =>
+          ref.contains(event.target as Node),
+        )
+      ) {
+        setFrozenRecipes([]);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [recipeButtonRefs]);
 
   return (
     <Window width={windowWidth} height={620}>
@@ -421,7 +444,18 @@ export const ChemDispenser = (props) => {
                   </Stack.Item>
                   <Stack.Divider />
                   <Stack.Item grow mt={1}>
-                    <Section scrollable fill>
+                    <Section
+                      scrollable
+                      fill
+                      onScroll={() => {
+                        if (hoveredRecipe) {
+                          setHoveredRecipe(null);
+                        }
+                        if (frozenRecipes.length > 0) {
+                          setFrozenRecipes([]);
+                        }
+                      }}
+                    >
                       <Stack vertical>
                         {filteredReactions.length > 0 ? (
                           filteredReactions.map((reaction) => (
@@ -430,7 +464,11 @@ export const ChemDispenser = (props) => {
                                 reaction={reaction}
                                 pinnedReactions={pinnedReactions}
                                 setPinnedReactions={setPinnedReactions}
-                                setSearchTerm={setSearchTerm}
+                                frozenRecipes={frozenRecipes}
+                                setFrozenRecipes={setFrozenRecipes}
+                                hoveredRecipe={hoveredRecipe}
+                                setHoveredRecipe={setHoveredRecipe}
+                                recipeButtonRefs={recipeButtonRefs}
                               />
                             </Stack.Item>
                           ))
@@ -498,14 +536,92 @@ const ReagentDispenseButton = (props: ReagentDispenseButtonProps) => {
 };
 
 type ReactionDisplayProps = {
+  noDropdown?: boolean;
   reaction: ReagentReaction;
   pinnedReactions: ReactionTypepath[];
   setPinnedReactions: (reactions: ReactionTypepath[]) => void;
-  setSearchTerm: (term: string) => void;
+  frozenRecipes: string[];
+  setFrozenRecipes: (reactions: string[]) => void;
+  hoveredRecipe: string | null;
+  setHoveredRecipe: (recipe: string | null) => void;
+  recipeButtonRefs: React.RefObject<HTMLDivElement[]>;
 };
 
 const ReactionDisplay = (props: ReactionDisplayProps) => {
-  const { reaction, pinnedReactions, setPinnedReactions } = props;
+  const {
+    noDropdown,
+    reaction,
+    pinnedReactions,
+    setPinnedReactions,
+    frozenRecipes,
+    setFrozenRecipes,
+    hoveredRecipe,
+    setHoveredRecipe,
+    recipeButtonRefs,
+  } = props;
+
+  const recipeList = (
+    <BlockQuote>
+      <Stack vertical>
+        <Stack.Item>
+          <HorizontalBarWithText text="Formula" />
+        </Stack.Item>
+        {reaction.reaction.required_reagents.map((reagent) => (
+          <Stack.Item key={`${reaction.name}-${reagent.name}-req`}>
+            <ReactionComponentDisplay
+              reagentComponent={reagent}
+              pinnedReactions={pinnedReactions}
+              setPinnedReactions={setPinnedReactions}
+              frozenRecipes={frozenRecipes}
+              setFrozenRecipes={setFrozenRecipes}
+              hoveredRecipe={hoveredRecipe}
+              setHoveredRecipe={setHoveredRecipe}
+              recipeButtonRefs={recipeButtonRefs}
+            />
+          </Stack.Item>
+        ))}
+        {reaction.reaction.required_catalysts.length > 0 && (
+          <>
+            <Stack.Item>
+              <HorizontalBarWithText
+                text={`Catalyst${reaction.reaction.required_reagents.length === 1 ? '' : 's'}`}
+              />
+            </Stack.Item>
+            {reaction.reaction.required_catalysts.map((catalyst) => (
+              <Stack.Item key={`${reaction.name}-${catalyst.name}-cat`}>
+                <ReactionComponentDisplay
+                  reagentComponent={catalyst}
+                  pinnedReactions={pinnedReactions}
+                  setPinnedReactions={setPinnedReactions}
+                  frozenRecipes={frozenRecipes}
+                  setFrozenRecipes={setFrozenRecipes}
+                  hoveredRecipe={hoveredRecipe}
+                  setHoveredRecipe={setHoveredRecipe}
+                  recipeButtonRefs={recipeButtonRefs}
+                />
+              </Stack.Item>
+            ))}
+          </>
+        )}
+        <Stack.Item>
+          <HorizontalBarWithText text="Optimal temperature" />
+        </Stack.Item>
+        <Stack.Item fontSize="0.9em">
+          {getTemperatureMessage(
+            reaction.reaction.lower_temperature,
+            reaction.reaction.upper_temperature,
+          )}
+        </Stack.Item>
+        <Stack.Item>
+          <HorizontalBarWithText text="Optimal pH range" />
+        </Stack.Item>
+        <Stack.Item fontSize="0.9em">
+          {getPHMessage(reaction.reaction.lower_ph, reaction.reaction.upper_ph)}
+        </Stack.Item>
+      </Stack>
+    </BlockQuote>
+  );
+
   return (
     <Stack
       p={1}
@@ -569,65 +685,16 @@ const ReactionDisplay = (props: ReactionDisplayProps) => {
         </Stack>
       </Stack.Item>
       <Stack.Item>
-        <Collapsible
-          title="Recipe"
-          open={pinnedReactions.includes(reaction.name)}
-        >
-          <BlockQuote>
-            <Stack vertical>
-              <Stack.Item>
-                <HorizontalBarWithText text="Formula" />
-              </Stack.Item>
-              {reaction.reaction.required_reagents.map((reagent) => (
-                <Stack.Item key={`${reaction.name}-${reagent.name}-req`}>
-                  <ReactionComponentDisplay
-                    reagentComponent={reagent}
-                    setSearchTerm={props.setSearchTerm}
-                    pinnedReactions={pinnedReactions}
-                    setPinnedReactions={props.setPinnedReactions}
-                  />
-                </Stack.Item>
-              ))}
-              {reaction.reaction.required_catalysts.length > 0 && (
-                <>
-                  <Stack.Item>
-                    <HorizontalBarWithText
-                      text={`Catalyst${reaction.reaction.required_reagents.length === 1 ? '' : 's'}`}
-                    />
-                  </Stack.Item>
-                  {reaction.reaction.required_catalysts.map((catalyst) => (
-                    <Stack.Item key={`${reaction.name}-${catalyst.name}-cat`}>
-                      <ReactionComponentDisplay
-                        reagentComponent={catalyst}
-                        setSearchTerm={props.setSearchTerm}
-                        pinnedReactions={pinnedReactions}
-                        setPinnedReactions={props.setPinnedReactions}
-                      />
-                    </Stack.Item>
-                  ))}
-                </>
-              )}
-              <Stack.Item>
-                <HorizontalBarWithText text="Optimal temperature" />
-              </Stack.Item>
-              <Stack.Item fontSize="0.9em">
-                {getTemperatureMessage(
-                  reaction.reaction.lower_temperature,
-                  reaction.reaction.upper_temperature,
-                )}
-              </Stack.Item>
-              <Stack.Item>
-                <HorizontalBarWithText text="Optimal pH range" />
-              </Stack.Item>
-              <Stack.Item fontSize="0.9em">
-                {getPHMessage(
-                  reaction.reaction.lower_ph,
-                  reaction.reaction.upper_ph,
-                )}
-              </Stack.Item>
-            </Stack>
-          </BlockQuote>
-        </Collapsible>
+        {noDropdown ? (
+          recipeList
+        ) : (
+          <Collapsible
+            title="Recipe"
+            open={pinnedReactions.includes(reaction.name)}
+          >
+            {recipeList}
+          </Collapsible>
+        )}
       </Stack.Item>
     </Stack>
   );
@@ -661,9 +728,13 @@ function getPHMessage(lower: number, upper: number): string {
 
 type ReactionComponentDisplayProps = {
   reagentComponent: ReactionComponent;
-  setSearchTerm: (term: string) => void;
   pinnedReactions: ReactionTypepath[];
   setPinnedReactions: (reactions: ReactionTypepath[]) => void;
+  frozenRecipes: string[];
+  setFrozenRecipes: (reactions: string[]) => void;
+  hoveredRecipe: string | null;
+  setHoveredRecipe: (recipe: string | null) => void;
+  recipeButtonRefs: React.RefObject<HTMLDivElement[]>;
 };
 
 // linkifies a reagent name in the reaction display
@@ -673,9 +744,13 @@ type ReactionComponentDisplayProps = {
 const ReactionComponentDisplay = (props: ReactionComponentDisplayProps) => {
   const {
     reagentComponent,
-    setSearchTerm,
     pinnedReactions,
     setPinnedReactions,
+    frozenRecipes,
+    setFrozenRecipes,
+    hoveredRecipe,
+    setHoveredRecipe,
+    recipeButtonRefs,
   } = props;
   const { data } = useBackend<Data>();
   const { chemicals, reaction_list } = data;
@@ -697,49 +772,92 @@ const ReactionComponentDisplay = (props: ReactionComponentDisplayProps) => {
   const reactionReagentList = reagentListToArray(reaction_list);
 
   // check if it's a recipe
-  const isRecipe = reactionReagentList
+  const foundRecipe = reactionReagentList
     .filter((reaction) => {
       return reaction.name === reagentComponent.name;
     })
     .find((reaction) => reaction.name === reagentComponent.name);
 
-  if (isRecipe) {
+  if (!foundRecipe)
     return (
-      <Button
-        icon="book"
-        fluid
-        ellipsis
-        backgroundColor="default"
-        onContextMenu={() => {
-          // put recipe name in search box
-          setSearchTerm(reagentComponent.name);
-        }}
-        onClick={() => {
-          // pin recipe
-          setPinnedReactions([...pinnedReactions, isRecipe.name]);
-        }}
-        selected={pinnedReactions.includes(isRecipe.name)}
-        tooltip={
-          <Stack vertical>
-            <Stack.Item fontSize="0.9em">
-              Left click to pin this recipe.
-            </Stack.Item>
-            <Stack.Item fontSize="0.9em">
-              Right click to search for this recipe.
-            </Stack.Item>
-          </Stack>
-        }
-      >
+      <Button fluid ellipsis disabled icon="question">
         {formatReagentName(reagentComponent.amount, reagentComponent.name)}
       </Button>
     );
-  }
 
-  // otherwise, just display the name
   return (
-    <Button fluid ellipsis disabled icon="question">
-      {formatReagentName(reagentComponent.amount, reagentComponent.name)}
-    </Button>
+    <Floating
+      handleOpen={
+        frozenRecipes.includes(foundRecipe.name) ||
+        hoveredRecipe === foundRecipe.name
+      }
+      disabled
+      placement="left"
+      closeAfterInteract={false}
+      content={
+        <Stack
+          vertical
+          backgroundColor="black"
+          p={1}
+          style={{
+            borderRadius: '4px',
+            flexDirection: 'column',
+          }}
+        >
+          <Stack.Item fontSize="0.9em" align="center" italic>
+            Click reagent to{' '}
+            {frozenRecipes.includes(foundRecipe.name) ? 'unfreeze' : 'freeze'}{' '}
+            tooltip.
+          </Stack.Item>
+          <Stack.Item>
+            <ReactionDisplay
+              noDropdown={true}
+              reaction={foundRecipe}
+              pinnedReactions={pinnedReactions}
+              setPinnedReactions={setPinnedReactions}
+              frozenRecipes={frozenRecipes}
+              setFrozenRecipes={setFrozenRecipes}
+              hoveredRecipe={hoveredRecipe}
+              setHoveredRecipe={setHoveredRecipe}
+              recipeButtonRefs={recipeButtonRefs}
+            />
+          </Stack.Item>
+        </Stack>
+      }
+    >
+      <div
+        ref={(node) => {
+          if (node && !recipeButtonRefs.current.includes(node)) {
+            recipeButtonRefs.current.push(node);
+          }
+        }}
+      >
+        <Button
+          icon="book"
+          fluid
+          ellipsis
+          backgroundColor="default"
+          onClick={() => {
+            setFrozenRecipes(
+              frozenRecipes.includes(foundRecipe.name)
+                ? frozenRecipes.filter(
+                    (reaction) => reaction !== foundRecipe.name,
+                  )
+                : [...frozenRecipes, foundRecipe.name],
+            );
+          }}
+          onMouseEnter={() => {
+            setHoveredRecipe(foundRecipe.name);
+          }}
+          onMouseLeave={() => {
+            setHoveredRecipe(null);
+          }}
+          selected={frozenRecipes.includes(foundRecipe.name)}
+        >
+          {formatReagentName(reagentComponent.amount, reagentComponent.name)}
+        </Button>
+      </div>
+    </Floating>
   );
 };
 
