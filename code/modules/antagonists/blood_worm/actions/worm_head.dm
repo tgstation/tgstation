@@ -60,7 +60,8 @@
 // same, but for retract worm head process
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/retract_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
 	var/obj/item/bodypart/head/stored_head = worm.storage_for_head[1]
-	worm.storage_for_head -= stored_head
+
 	stored_head.replace_limb(host, special = TRUE)
+	worm.storage_for_head -= stored_head
 
 	host.update_body()
