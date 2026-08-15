@@ -1,4 +1,0 @@
-author: "ArrisFairburne"
-delete-after: True
-changes:
-  - refactor: "Stray cargo pod event now has its code divided up into smaller functions, so it should be easier to create new subtypes of this event"

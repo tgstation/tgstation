@@ -424,6 +424,12 @@
   timothymtorres:
   - bugfix: Fix helmets being flammable when armor is not
 2026-08-15:
+  ArrisFairburne:
+  - refactor: Stray cargo pod event now has its code divided up into smaller functions,
+      so it should be easier to create new subtypes of this event
+  Momiko:
+  - spellcheck: Fixed incorrect threshold numbers in the heal symptom descriptions
+      to match their actual stats.
   YesterdaysPromise:
   - rscadd: Plastitatnanium glass now makes pod directional windows, regular pod windows,
       plastitaniumglass windowfilling which shall allow you to make such on a grille,
