@@ -7,6 +7,8 @@
 	click_to_activate = FALSE
 	check_flags = NONE
 
+	var/list/storage_for_head = []
+
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/Grant(mob/grant_to)
 	. = ..()
 	if (!owner)
@@ -50,7 +52,10 @@
 	var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
 	var/obj/item/bodypart/head/current_host_head = host.get_bodypart(BODY_ZONE_HEAD)
 	// current_host_head.blood_worm_head_growth_animation() it was supposed to be animation
-	new_worm_head_to_attach.replace_limb(host, TRUE)
+
+	storage_for_head += current_host_head
+
+	new_worm_head_to_attach.replace_limb(host, TRUE) // this also moves the content from old head, to new head, yeah?
 	host.update_body()
 
 // same, but for retract worm head process
