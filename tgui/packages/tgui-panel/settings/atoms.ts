@@ -30,7 +30,7 @@ export const defaultHighlightSetting: HighlightSetting = {
   matchCase: false,
   enabled: true,
   playSound: true,
-  soundFile: 'sound/items/pillow/pillow_hit.ogg',
+  soundFile: 'sound/misc/highlight_sounds/Beep.ogg',
   soundVolume: 0.5,
   jobFilter: '',
   characterFilter: [],

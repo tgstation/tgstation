@@ -70,10 +70,12 @@ export function TextHighlightSettings(props) {
 }
 
 const HIGHLIGHT_SOUND_OPTIONS = [
+  { label: 'Beep', value: 'sound/misc/highlight_sounds/Beep.ogg' },
   { label: 'Pillow Hit', value: 'sound/items/pillow/pillow_hit.ogg' },
   { label: 'Coin Flip', value: 'sound/items/coinflip.ogg' },
   { label: 'Pen Click', value: 'sound/items/pen_click.ogg' },
   { label: 'Rattling Keys', value: 'sound/items/rattling_keys.ogg' },
+  { label: 'Honk!', value: 'sound/items/bikehorn.ogg' },
 ];
 
 const oneCharacterRegex = /^(\[.*\]|\\.|.)$/;
