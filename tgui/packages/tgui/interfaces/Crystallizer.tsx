@@ -157,7 +157,13 @@ const Gases = (props) => {
               minValue={0}
               maxValue={1000}
             >
-              {`${toFixed(amount, 2)} moles`}
+              {id === 'hydrogen' ? (
+                <Box inline color="black">
+                  {`${toFixed(amount, 2)} moles`}
+                </Box>
+              ) : (
+                `${toFixed(amount, 2)} moles`
+              )}
             </ProgressBar>
           </LabeledList.Item>
         ))}
