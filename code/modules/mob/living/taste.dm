@@ -96,10 +96,10 @@
 		return GORE | MEAT
 	var/obj/item/organ/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
 	. = tongue.liked_foodtypes
+	if(HAS_TRAIT(src, TRAIT_FLESH_PECKISH))
+		return tongue.liked_foodtypes | GORE | MEAT
 	if(HAS_TRAIT(src, TRAIT_VEGETARIAN))
 		. &= ~MEAT
-	if(HAS_TRAIT(src, TRAIT_FLESH_PECKISH))
-		. |= GORE | MEAT
 
 /**
  * Gets food flags that this mob dislikes
@@ -130,6 +130,8 @@
 		return ..()
 	if(HAS_TRAIT(src, TRAIT_FLESH_DESIRE))
 		return VEGETABLES | DAIRY | FRUIT | FRIED
+	if(HAS_TRAIT(src, TRAIT_FLESH_PECKISH))
+		return tongue.toxic_foodtypes & ~MEAT & ~GORE
 	return tongue.toxic_foodtypes
 
 /**

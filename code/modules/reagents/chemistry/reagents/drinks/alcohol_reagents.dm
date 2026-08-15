@@ -3600,18 +3600,43 @@
 	taste_description = "wine that writhes"
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_VORACIOUS, TRAIT_FLESH_PECKISH) //makes the user eat faster and like meat and gore
 
 /datum/reagent/consumable/ethanol/rubywise_ruin/on_mob_add(mob/living/drinker)
-	if(HAS_TRAIT(drinker, TRAIT_NOHUNGER))
+	. = ..()
+	if(HAS_TRAIT(drinker, TRAIT_NOHUNGER)) //I kinda feel like this should do something special to bloodworms since they have NOHUNGER and are sorta thematically adjacent, but ehh.
 		return
-	drinker.add_traits(list(TRAIT_VORACIOUS,TRAIT_FLESH_PECKISH), type) //makes the user eat faster and like meat and gore
+	RegisterSignal(drinker, COMSIG_LIVING_EAT_FOOD, PROC_REF(on_eat))
+
+	if(drinker.mob_mood?.has_mood_of_category("rubywise_satisfied")) //satisfaction can last between exposures
+		return
+	ADD_TRAIT(drinker, TRAIT_GLUTTON, type)
+	to_chat(drinker, span_warning("An urge, almost like a whisper, bestows you with a desire for flesh! It's so hard to say no..."))
+
+/datum/reagent/consumable/ethanol/rubywise_ruin/proc/on_eat(mob/living/drinker, atom/food, foodtypes)
+	SIGNAL_HANDLER
+	if(drinker.mob_mood?.has_mood_of_category("rubywise_satisfied") || HAS_TRAIT(drinker, TRAIT_NOHUNGER))
+		return
+	if(foodtypes & (MEAT | GORE))
+		drinker.add_mood_event("rubywise_satisfied", /datum/mood_event/rubywise_satisfied) //grants mood buff, also used to prevent hunger debuff effects. Lasts for 3 min.
+		drinker.clear_mood_event("rubywise_unsatisfied")
+		REMOVE_TRAIT(drinker, TRAIT_GLUTTON, type)
+		to_chat(drinker, span_warning("An delightful sense of satisfaction fills you as your uncanny hunger abates... But a little more wouldn't hurt, surely?"))
 
 /datum/reagent/consumable/ethanol/rubywise_ruin/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
-	if(SPT_PROB(2.5, seconds_per_tick))
+	. = ..()
+	drinker.overeatduration = 0
+	if(SPT_PROB(4, seconds_per_tick)) //still drool even when satisfied.
 		drinker.emote("drool")
 
+	if(drinker.mob_mood?.has_mood_of_category("rubywise_satisfied") || HAS_TRAIT(drinker, TRAIT_NOHUNGER))
+		return
+	drinker.add_mood_event("rubywise_unsatisfied", /datum/mood_event/rubywise_unsatisfied) //short duration mood debuff to remind people to eat meat
+	drinker.adjust_nutrition(-5 * metabolization_ratio * seconds_per_tick)
+
 /datum/reagent/consumable/ethanol/rubywise_ruin/on_mob_delete(mob/living/drinker)
-	drinker.remove_traits(list(TRAIT_VORACIOUS,TRAIT_FLESH_PECKISH), type)
+	REMOVE_TRAIT(drinker, TRAIT_GLUTTON, type)
+	drinker.clear_mood_event("rubywise_unsatisfied")
 
 //Lock
 /datum/reagent/consumable/ethanol/openthroat_draught
