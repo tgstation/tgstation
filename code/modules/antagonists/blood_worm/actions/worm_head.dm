@@ -73,10 +73,7 @@
 	for (var/datum/bodypart_overlay/overlay in stored_head.bodypart_overlays)
 		if (istype(overlay, /datum/bodypart_overlay/simple/growth_blood_worm_head))
 			stored_head.remove_bodypart_overlay(overlay, update = TRUE)
-
-	message_admins("before worm.storage_for_head: [worm.storage_for_head]")
 	stored_head.replace_limb(host, TRUE)
+	playsound(src, 'sound/effects/blob/blobattack.ogg', 80, TRUE)
 	worm.storage_for_head -= stored_head
-	message_admins("after worm.storage_for_head: [worm.storage_for_head]")
-
 	host.update_body()
