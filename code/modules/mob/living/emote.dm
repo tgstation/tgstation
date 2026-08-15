@@ -122,9 +122,9 @@
 		message_animal_or_basic = custom_message
 
 	if(user.has_quirk(/datum/quirk/death_mimicry))
-			user.Unconscious(30 SECONDS, ignore_canstun=TRUE)
-			ADD_TRAIT(user, TRAIT_FAKEDEATH, QUIRK_TRAIT)
-			addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_FAKEDEATH, QUIRK_TRAIT), 30 SECONDS)
+		user.Unconscious(30 SECONDS, ignore_canstun=TRUE)
+		ADD_TRAIT(user, TRAIT_FAKEDEATH, QUIRK_TRAIT)
+		addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_FAKEDEATH, QUIRK_TRAIT), 30 SECONDS)
 
 	. = ..()
 	message_animal_or_basic = initial(message_animal_or_basic)
