@@ -112,7 +112,6 @@
 			window.send_asset(asset)
 		return TRUE
 
-
 	if(type == "verbs/request_targets")
 		var/verb_path = text2path(payload["verb_type"])
 		if(!verb_path)
