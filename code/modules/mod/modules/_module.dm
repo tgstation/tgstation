@@ -1,6 +1,6 @@
 ///MOD Module - A special device installed in a MODsuit allowing the suit to do new stuff.
 /obj/item/mod/module
-	name = "MOD module"
+	name = "\improper MOD module"
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
 	icon_state = "module"
 	abstract_type = /obj/item/mod/module
@@ -465,7 +465,7 @@
 
 ///Anomaly Locked - Mostly just a wrapper for modules that don't need to descend from any other module but need the anomaly_locked_module component
 /obj/item/mod/module/anomaly_locked
-	name = "MOD anomaly locked module"
+	name = "\improper MOD anomaly locked module"
 	desc = "A form of a module, locked behind an anomalous core to function."
 	/// Accepted types of anomaly cores.
 	var/list/accepted_anomalies = list(/obj/item/assembly/signaler/anomaly)

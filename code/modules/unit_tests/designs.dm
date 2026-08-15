@@ -1,81 +1,73 @@
 /datum/unit_test/designs
 
 /datum/unit_test/designs/Run()
-//Can't use allocate because of bug with certain datums
-	var/datum/design/default_design = new /datum/design()
-
-	for(var/design_id in SSresearch.techweb_designs) //We are checking surgery design separatly later since they work differently
-		var/datum/design/current_design = SSresearch.techweb_designs[design_id]
+	for(var/design_path, _design in SSresearch.techweb_designs) //We are checking surgery design separatly later since they work differently
+		var/datum/design/current_design = _design
 		if(istype(current_design, /datum/design/surgery))
-			return
-		if (isnull(current_design.name) || current_design.name == default_design.name) //Designs with ID must have non default/null Name
-			TEST_FAIL("Design [current_design.type] has default or null name var but has an ID")
-		if ((!isnull(current_design.materials) && LAZYLEN(current_design.materials)) || (!isnull(current_design.reagents_list) && LAZYLEN(current_design.reagents_list))) //Design requires materials
-			if ((isnull(current_design.build_path) || current_design.build_path == default_design.build_path) && (isnull(current_design.make_reagent) || current_design.make_reagent == default_design.make_reagent)) //Check if design gives any output
-				TEST_FAIL("Design [current_design.type] requires materials but does not have either build_path or make_reagent set")
-		else if (!isnull(current_design.build_path) || !isnull(current_design.build_path)) // //Design requires no materials but creates stuff
-			TEST_FAIL("Design [current_design.type] requires NO materials but has build_path or make_reagent set")
-		if (length(current_design.reagents_list) && !(current_design.build_type & LIMBGROWER))
-			TEST_FAIL("Design [current_design.type] requires reagents but isn't a limb grower design. Reagent costs are only supported by limb grower designs")
-
-	for(var/datum/design/surgery/path as anything in subtypesof(/datum/design/surgery))
-		if (path::id == DESIGN_ID_IGNORE)
-			TEST_FAIL("Surgery Design [path] has no ID set")
-		if (isnull(path::surgery))
-			TEST_FAIL("Surgery Design [path] has null surgery var")
+			var/datum/design/surgery/surgery_design = current_design
+			if (isnull(surgery_design.surgery))
+				TEST_FAIL("Surgery Design [design_path] has null surgery var")
+				continue
+			if (isnull(surgery_design.name) && isnull(surgery_design.surgery::rnd_name) && isnull(surgery_design.surgery::name))
+				TEST_FAIL("Surgery Design [design_path] has no name set or inferable from surgery type")
+			if (isnull(surgery_design.desc) && isnull(surgery_design.surgery::rnd_desc) && isnull(surgery_design.surgery::desc))
+				TEST_FAIL("Surgery Design [design_path] has no desc set or inferable from surgery type")
 			continue
-		if (isnull(path::name) && isnull(path::surgery::rnd_name) && isnull(path::surgery::name))
-			TEST_FAIL("Surgery Design [path] has no name set or inferable from surgery type")
-		if (isnull(path::desc) && isnull(path::surgery::rnd_desc) && isnull(path::surgery::desc))
-			TEST_FAIL("Surgery Design [path] has no desc set or inferable from surgery type")
+
+		//Designs with ID must have non default/null Name
+		if (isnull(current_design.name))
+			TEST_FAIL("Design [design_path] has no name")
+
+		// Design requires materials
+		if (LAZYLEN(current_design.materials) || LAZYLEN(current_design.reagents_list))
+			// Check if design gives any output
+			if (isnull(current_design.build_path) && isnull(current_design.make_reagent))
+				TEST_FAIL("Design [design_path] requires materials but does not have either build_path or make_reagent set")
+		// Design requires no materials but creates stuff
+		else if (!isnull(current_design.build_path) || !isnull(current_design.build_path))
+			TEST_FAIL("Design [design_path] requires NO materials but has build_path or make_reagent set")
+
+		// Only limbgrowers can use reagents
+		if (LAZYLEN(current_design.reagents_list) && !(current_design.build_type & LIMBGROWER))
+			TEST_FAIL("Design [design_path] requires reagents but isn't a limb grower design. Reagent costs are only supported by limb grower designs")
 
 ///Check that all designs have a corresponding id and viceversa, and that they're actually implemented (techweb or disks)
 /datum/unit_test/design_source
 
 /datum/unit_test/design_source/Run()
-	var/list/all_designs = list()
+	var/list/all_designs = assoc_to_keys(SSresearch.techweb_designs)
 
-	for(var/id in SSresearch.techweb_designs)
-		var/datum/design/design = SSresearch.techweb_designs[id]
-		all_designs[design.id] = design.type
-
-	for (var/node_id in SSresearch.techweb_nodes)
-		var/datum/techweb_node/node = SSresearch.techweb_nodes[node_id]
-		for (var/design_id in node.design_ids)
-			if (!all_designs[design_id])
-				TEST_FAIL("Techweb node [node.display_name] ([node.id]) has a design_id \"[design_id]\" which doesn't correspond to any existing design!")
-				continue
-			all_designs -= design_id
+	for (var/node_path, _node in SSresearch.techweb_nodes)
+		var/datum/techweb_node/node = _node
+		all_designs -= node.unlocked_designs
 
 	// Designs can also be disk-exclusive
 	for (var/obj/item/disk/design_disk/design_disk as anything in subtypesof(/obj/item/disk/design_disk))
 		design_disk = new design_disk()
-		for (var/datum/design/design as anything in design_disk.blueprints)
-			all_designs -= design.id
+		all_designs -= design_disk.blueprints
 		qdel(design_disk)
 
 	for (var/obj/item/disk/surgery/design_disk as anything in subtypesof(/obj/item/disk/surgery))
 		design_disk = new design_disk()
-		for (var/surgery_type in design_disk.surgeries)
-			for (var/design_id in all_designs)
-				var/datum/design/surgery/design = all_designs[design_id]
-				if (ispath(design, /datum/design/surgery) && design::surgery == surgery_type)
-					all_designs -= design::id
+		for(var/datum/surgery_operation/surgery_type as anything in design_disk.surgeries)
+			for(var/datum/design/surgery/design_path as anything in all_designs)
+				if(ispath(design_path, /datum/design/surgery) && design_path::surgery == surgery_type)
+					all_designs -= design_path
 		qdel(design_disk)
 
 	// Or machine-exclusive
 	for (var/datum/techweb/autounlocking/techweb as anything in subtypesof(/datum/techweb/autounlocking))
-		techweb = new techweb()
-		for (var/design_id in techweb.researched_designs + techweb.hacked_designs)
-			var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+		GLOB.autounlock_techwebs[techweb] ||= new techweb()
+		techweb = GLOB.autounlock_techwebs[techweb]
+		for (var/design_path in techweb.researched_designs + techweb.hacked_designs)
+			var/datum/design/design = SSresearch.techweb_designs[design_path]
 			// If we have a design thats supposed to be printable from a protolathe and an autolathe, but only autolathes can print it
-			// then we still should error because then we either have a missing design_id or redundant build flags
+			// then we still should error because then we either have a missing design_path or redundant build flags
 			if (!(design.build_type & (~techweb.allowed_buildtypes)))
-				all_designs -= design_id
-		qdel(techweb)
+				all_designs -= design_path
 
-	for (var/missing_id in all_designs)
-		TEST_FAIL("Design [all_designs[missing_id]] has an ID \"[missing_id]\" which is not in any of the techweb nodes or tech disks, or it is possibly misconfigured!")
+	for (var/missing_path in all_designs)
+		TEST_FAIL("Design [missing_path] is not in any of the techweb nodes or tech disks.")
 
 ///Check that the materials present in the printed objects are consistent with the materials used in techweb design that prints said object.
 /datum/unit_test/design_mats
@@ -83,8 +75,8 @@
 /datum/unit_test/design_mats/Run()
 	var/list/special_types = typesof(/datum/material_requirement) + typesof(/datum/material_slot) //we skip designs that can be printed with non-specific materials.
 
-	for (var/design_id in SSresearch.techweb_designs)
-		var/datum/design/design = SSresearch.techweb_designs[design_id]
+	for (var/design_path, _design in SSresearch.techweb_designs)
+		var/datum/design/design = _design
 
 		var/mat_requirement_design = length(special_types & design.materials)
 
