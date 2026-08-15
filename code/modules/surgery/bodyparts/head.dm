@@ -302,7 +302,7 @@
 
 /obj/item/bodypart/head/proc/blood_worm_head_growth_animation()
 	var/growth_overlay = new /datum/bodypart_overlay/simple/growth_blood_worm_head
-	playsound(src, 'sound/items/airhorn/airhorn.ogg', 100, TRUE)
+	playsound(src, 'sound/effects/blob/blobattack.ogg', 100, TRUE)
 	add_bodypart_overlay(growth_overlay, update = TRUE)
 
 	// will it animation grow?
