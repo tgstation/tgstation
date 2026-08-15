@@ -21,6 +21,12 @@ import { Window } from '../layouts';
 import { type Beaker, BeakerDisplay } from './common/BeakerDisplay';
 import { bitflagInfo } from './Reagents/types';
 
+enum DropdownState {
+  NO_DROPDOWN = 0,
+  DROPDOWN_CLOSED = 1,
+  DROPDOWN_OPEN = 2,
+}
+
 type DispensableReagent = {
   title: string;
   id: string;
@@ -428,6 +434,11 @@ export const ChemDispenser = (props) => {
                           filteredReactions.map((reaction) => (
                             <Stack.Item key={reaction.name}>
                               <ReactionDisplay
+                                dropdownState={
+                                  pinnedReactions.includes(reaction.name)
+                                    ? DropdownState.DROPDOWN_OPEN
+                                    : DropdownState.DROPDOWN_CLOSED
+                                }
                                 reaction={reaction}
                                 pinnedReactions={pinnedReactions}
                                 setPinnedReactions={setPinnedReactions}
@@ -498,16 +509,25 @@ const ReagentDispenseButton = (props: ReagentDispenseButtonProps) => {
 };
 
 type ReactionDisplayProps = {
-  noDropdown?: boolean;
+  /// Determines how the collapsible/dropdown is displayed.
+  /// NO_DROPDOWN: no dropdown is displayed, just the recipe list is shown
+  /// DROPDOWN_CLOSED: dropdown is displayed, but closed by default
+  /// DROPDOWN_OPEN: dropdown is displayed and open by default
+  /// If undefined, the default behavior is DROPDOWN_CLOSED.
+  dropdownState?: DropdownState;
+  /// The reaction to display.
   reaction: ReagentReaction;
+  /// List of reactions that are pinned to the top of the list.
   pinnedReactions: ReactionTypepath[];
+  /// Callback to update the list of pinned reactions.
   setPinnedReactions: (reactions: ReactionTypepath[]) => void;
+  /// Callback to force the parent component to keep their floating window open.
   setParentForceFloating?: (force: boolean) => void;
 };
 
 const ReactionDisplay = (props: ReactionDisplayProps) => {
   const {
-    noDropdown,
+    dropdownState,
     reaction,
     pinnedReactions,
     setPinnedReactions,
@@ -631,12 +651,12 @@ const ReactionDisplay = (props: ReactionDisplayProps) => {
         </Stack>
       </Stack.Item>
       <Stack.Item>
-        {noDropdown ? (
+        {dropdownState === DropdownState.NO_DROPDOWN ? (
           recipeList
         ) : (
           <Collapsible
             title="Recipe"
-            open={pinnedReactions.includes(reaction.name)}
+            open={dropdownState === DropdownState.DROPDOWN_OPEN}
           >
             {recipeList}
           </Collapsible>
@@ -673,9 +693,13 @@ function getPHMessage(lower: number, upper: number): string {
 }
 
 type ReactionComponentDisplayProps = {
+  /// What component of the reaction is being displayed.
   reagentComponent: ReactionComponent;
+  /// List of reactions that are pinned to the top of the list.
   pinnedReactions: ReactionTypepath[];
+  /// Callback to update the list of pinned reactions.
   setPinnedReactions: (reactions: ReactionTypepath[]) => void;
+  /// Callback to force the parent component to keep their floating window open.
   setParentForceFloating?: (force: boolean) => void;
 };
 
@@ -727,12 +751,23 @@ const ReactionComponentDisplay = (props: ReactionComponentDisplayProps) => {
 
   return (
     <Floating
+      // `|| undefined` is used to avoid passing `false`.
+      // The component treats `false` as `closed`,
+      // whereas `undefined` means "not controlled",
+      // allowing it to open and close normally.
       handleOpen={forceFloating || undefined}
-      disabled={forceFloating || undefined}
+      // No similar handling is necessary for `disabled`.
+      // If we don't disable it it will close on unhover, for some reason.
+      disabled={forceFloating}
       placement="left"
       closeAfterInteract={false}
+      // `hoverOpen` is obvious, but `hoverSafePolygon` is what is needed
+      // to allow the user to move their mouse over to the floating window.
       hoverOpen={true}
       hoverSafePolygon={true}
+      // When the window state changes, we go up the chain to inform the parent.
+      // At the same time we *always* reset forced state on close,
+      // to prevent it from being stuck in limbo if it somehow closes otherwise.
       onOpenChange={(state) => {
         if (setParentForceFloating) {
           setParentForceFloating(state);
@@ -742,25 +777,33 @@ const ReactionComponentDisplay = (props: ReactionComponentDisplayProps) => {
         }
       }}
       content={
-        <Stack
-          vertical
-          backgroundColor="black"
-          p={1}
+        <Box
+          p={0.5}
+          backgroundColor={`hsl(0, 0%, 15%)`}
           style={{
             borderRadius: '4px',
-            flexDirection: 'column',
+            backdropFilter: 'blur(12px)',
           }}
         >
-          <Stack.Item>
-            <ReactionDisplay
-              noDropdown={true}
-              reaction={foundRecipe}
-              pinnedReactions={pinnedReactions}
-              setPinnedReactions={setPinnedReactions}
-              setParentForceFloating={setForceFloating}
-            />
-          </Stack.Item>
-        </Stack>
+          <Stack
+            backgroundColor="black"
+            p={1}
+            style={{
+              borderRadius: '4px',
+              flexDirection: 'column',
+            }}
+          >
+            <Stack.Item>
+              <ReactionDisplay
+                dropdownState={DropdownState.NO_DROPDOWN}
+                reaction={foundRecipe}
+                pinnedReactions={pinnedReactions}
+                setPinnedReactions={setPinnedReactions}
+                setParentForceFloating={setForceFloating}
+              />
+            </Stack.Item>
+          </Stack>
+        </Box>
       }
     >
       <Button icon="book" fluid ellipsis backgroundColor="default">
