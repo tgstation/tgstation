@@ -66,7 +66,7 @@
 	// worm.storage_for_head += current_host_head
 	message_admins("worm.storage_for_head: [worm.storage_for_head]")
 
-	new_worm_head_to_attach.replace_limb(host, TRUE) // this also moves the content from old head, to new head, yeah?
+	// new_worm_head_to_attach.replace_limb(host, TRUE) // this also moves the content from old head, to new head, yeah?
 	// host.update_body()
 
 // proc for swaping to worm head, when timer(so animation can animate) will finish
