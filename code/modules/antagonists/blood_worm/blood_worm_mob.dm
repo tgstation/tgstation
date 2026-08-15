@@ -129,9 +129,9 @@
 		host_actions += transfuse_action
 
 	if (ispath(worm_head_action, /datum/action/cooldown/mob_cooldown/blood_worm/worm_head))
-		if (HAS_TRAIT(host, ADULT_BLOOD_WORM_HOST_TRAIT)) // worm head available only for adult worm's host
-		worm_head_action = new worm_head_action(src)
-		host_actions += worm_head_action
+		if (istype(src, /mob/living/basic/blood_worm/adult)) // worm head available only for adult worm's host
+			worm_head_action = new worm_head_action(src)
+			host_actions += worm_head_action
 
 
 	eject_action = new(src)
