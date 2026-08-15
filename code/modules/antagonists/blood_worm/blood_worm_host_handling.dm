@@ -42,6 +42,9 @@
 	ADULT_BLOOD_WORM_HOST_TRAIT), // For only Adult worm stuff - tearing the walls and blood worm head overlay on host's body
 	BLOOD_WORM_HOST_TRAIT)
 
+	if (istype(src, /mob/living/basic/blood_worm/adult))
+		ADD_TRAIT(host, ADULT_BLOOD_WORM_HOST_TRAIT) // For only Adult worm stuff - blood worm head overlay on host's body, or another stuff
+
 	if (client)
 		ADD_TRAIT(host, TRAIT_MIND_TEMPORARILY_GONE, BLOOD_WORM_HOST_TRAIT)
 
