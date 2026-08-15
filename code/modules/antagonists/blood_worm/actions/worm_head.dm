@@ -89,6 +89,6 @@
 	// for(var/obj/item/organ/organ_to_juggle in saved_head_content) // inserting at worm head
 	// 	organ_to_juggle.Insert(host, special = TRUE)
 
-	qdel(current_worm_head)
+	// qdel(current_worm_head)
 
 	host.update_body()
