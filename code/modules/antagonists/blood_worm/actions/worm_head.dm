@@ -59,36 +59,8 @@
 
 // same, but for retract worm head process
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/retract_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
-
-	// var/list/saved_head_content = list() // organs, implants, huds
-	// var/obj/item/bodypart/head/new_host_head_to_attach = new() // will it work?
-	// var/obj/item/bodypart/head/current_worm_head = host.get_bodypart(BODY_ZONE_HEAD)
-
-	// for(var/obj/item/organ/organ_to_juggle in current_worm_head:contents)
-	// 	if(istype(organ_to_juggle, /obj/item/organ))
-	// 		saved_head_content += organ_to_juggle
-	// 		organ_to_juggle.Remove(host, special = TRUE)
-
-	// current_worm_head.drop_limb(special = TRUE)
-
-	// now it will be with DNA of the owner, but also
-	// it will not loose the implants, cause they will be inserted
-	// ALSO if worm-player got into EMP or emag or something, and implants are now fucked
-	// so new head will get these fucked implants and organs
 	var/obj/item/bodypart/head/stored_head = worm.storage_for_head[1]
-
 	worm.storage_for_head -= stored_head
-
-
 	stored_head.replace_limb(host, special = TRUE)
-	// var/new_host_head = host.get_bodypart(BODY_ZONE_HEAD)
-	// for(var/obj/item/organ/organ_to_trash in new_host_head:contents) // clean new head from organs
-	// 	if(istype(organ_to_trash, /obj/item/organ))
-	// 		organ_to_trash.Remove(host, special = TRUE)
-
-	// for(var/obj/item/organ/organ_to_juggle in saved_head_content) // inserting at worm head
-	// 	organ_to_juggle.Insert(host, special = TRUE)
-
-	// qdel(current_worm_head)
 
 	host.update_body()
