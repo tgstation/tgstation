@@ -161,5 +161,64 @@
 		return TRUE
 	return FALSE
 
+/obj/item/chainsaw/dual
+	name = "double-ended chainsaw spear"
+	desc = "A dangerous, crazy contraption that could fall apart from a slight breeze. WHAT WERE THEY THINKING?!"
+	icon_state = "chainsawdual"
+	base_icon_state = "chainsawdual"
+	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
+	throw_range = 0
+	force_on = 40
+	armour_penetration = 20
+	block_chance = 50
+	block_sound = 'sound/items/weapons/parry.ogg'
+	item_flags = SLOWS_WHILE_IN_HAND
+	slowdown = 2
+
+/obj/item/chainsaw/dual/attack(mob/target, mob/living/carbon/human/user)
+	if(HAS_TRAIT(user, TRAIT_HULK))
+		to_chat(user, span_warning("You grip the weapon too hard and accidentally drop it!"))
+		user.dropItemToGround(src, force=TRUE)
+		return
+
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return..()
+
+	if(prob(50))
+		impale(user)
+		return
+
+	..()
+	if(prob(50))
+		INVOKE_ASYNC(src, PROC_REF(jedi_spin), user)
+
+/obj/item/chainsaw/dual/proc/jedi_spin(mob/living/user)
+	dance_rotate(user, CALLBACK(user, TYPE_PROC_REF(/mob, dance_flip)))
+
+/obj/item/chainsaw/dual/proc/impale(mob/living/user)
+	to_chat(user, span_warning("You horrifically tear yourself with [src]!"))
+	user.take_bodypart_damage(45,check_armor = TRUE, wound_bonus = 20, sharpness = SHARP_EDGED)
+	user.do_attack_animation(user)
+	user.Stun(1 SECONDS)
+	user.Knockdown(5 SECONDS)
+
+/obj/item/chainsaw/dual/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
+		final_block_chance = 0
+	if(attack_type != PROJECTILE_ATTACK && prob(30))
+		atom_destruction(MELEE)
+		return
+
+	return ..()
+
+/obj/item/chainsaw/dual/atom_destruction(damage_flag)
+	playsound(src, 'sound/effects/grillehit.ogg', 50)
+	new /obj/item/chainsaw(get_turf(src))
+	new /obj/item/restraints/handcuffs/cable(get_turf(src))
+	if(isliving(loc))
+		loc.balloon_alert(loc, "weapon broken!")
+	return ..()
+
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"
