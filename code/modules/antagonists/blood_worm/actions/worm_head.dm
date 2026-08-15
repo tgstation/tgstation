@@ -60,7 +60,7 @@
 // same, but for retract worm head process
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/retract_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
 
-	var/list/saved_head_content = list() // organs, implants, huds
+	// var/list/saved_head_content = list() // organs, implants, huds
 	var/obj/item/bodypart/head/new_host_head_to_attach = new() // will it work?
 	var/obj/item/bodypart/head/current_worm_head = host.get_bodypart(BODY_ZONE_HEAD)
 
