@@ -56,14 +56,11 @@
 		// timer
 		addtimer(CALLBACK(src, PROC_REF(swap_to_worm_head), host, worm), 2.20 SECONDS)
 
-
 // proc for swaping to worm head, when timer(so animation can animate) will finish
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/swap_to_worm_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
 	var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
 	new_worm_head_to_attach.replace_limb(host, TRUE)
 	host.update_body()
-
-
 
 // same, but for retract worm head process
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/retract_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
