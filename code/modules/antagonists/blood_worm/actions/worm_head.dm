@@ -47,19 +47,32 @@
 // okay, here will be the actually grow, not the action, but actuall process, which can be called by different ways
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/extend_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
 
-	var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
+	// var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
 	var/obj/item/bodypart/head/current_host_head = host.get_bodypart(BODY_ZONE_HEAD)
 	// todo: animation of grow, sprite is done, but code is not doing animation
-	current_host_head.blood_worm_head_growth_animation() // it was supposed to be animation
+	message_admins("attempt to start worm head grow animation")
+	if (current_host_head)
+		worm.storage_for_head += current_host_head
+		message_admins("host head is real, starting worm head grow animation")
+		current_host_head.blood_worm_head_growth_animation() // it was supposed to be animation
+
+		// timer
+		addtimer(CALLBACK(src, PROC_REF(swap_to_worm_head), host, worm), 2 SECONDS)
 
 	message_admins("extend head activation")
 	message_admins("worm: [worm]")
 	message_admins("host: [host]")
 	// store the head on the worm mob
-	worm.storage_for_head += current_host_head
+	// worm.storage_for_head += current_host_head
 	message_admins("worm.storage_for_head: [worm.storage_for_head]")
 
 	new_worm_head_to_attach.replace_limb(host, TRUE) // this also moves the content from old head, to new head, yeah?
+	// host.update_body()
+
+// proc for swaping to worm head, when timer(so animation can animate) will finish
+/datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/swap_to_worm_head(mob/living/carbon/human/host, mob/living/basic/blood_worm/worm)
+	var/obj/item/bodypart/head/blood_worm/new_worm_head_to_attach = new()
+	new_worm_head_to_attach.replace_limb(host, TRUE)
 	host.update_body()
 
 // same, but for retract worm head process
