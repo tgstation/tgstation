@@ -5963,7 +5963,6 @@
 #include "code\modules\modular_computers\computers\item\computer.dm"
 #include "code\modules\modular_computers\computers\item\computer_circuit.dm"
 #include "code\modules\modular_computers\computers\item\computer_power.dm"
-#include "code\modules\modular_computers\computers\item\computer_ui.dm"
 #include "code\modules\modular_computers\computers\item\laptop.dm"
 #include "code\modules\modular_computers\computers\item\laptop_presets.dm"
 #include "code\modules\modular_computers\computers\item\pda.dm"

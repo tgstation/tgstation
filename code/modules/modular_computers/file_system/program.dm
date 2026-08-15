@@ -218,11 +218,8 @@
 	if(program_flags & PROGRAM_HEADER || length(os.idle_threads) > os.max_idle_programs)
 		return os.kill_program(src)
 
-	os.idle_threads.Add(src)
-	computer.active_program = null
-
 	if(user)
-		INVOKE_ASYNC(computer, TYPE_PROC_REF(/obj/item/modular_computer, update_tablet_open_uis), user)
+		INVOKE_ASYNC(os, TYPE_PROC_REF(/datum/operating_system/sosix, user_interact), user)
 	computer.update_appearance(UPDATE_ICON)
 	return TRUE
 

@@ -31,9 +31,6 @@
 	/// Better create new OS type (revision) for each type of computer. NOT THAT
 	var/list/datum/computer_file/starting_programs = list()
 
-	///The program currently active on the tablet.
-	var/datum/computer_file/program/active_program
-
 	///List of stored files on this drive. Use `os.store_file` and `os.remove_file` instead of modifying directly!
 	var/list/datum/computer_file/stored_files = list()
 
@@ -124,6 +121,10 @@
 	laser = 20
 	energy = 100
 
+/obj/item/modular_computer/New(loc, ...)
+	. = ..()
+	os = new os_type(src)
+
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
@@ -144,7 +145,8 @@
 
 	AddElement(/datum/element/drag_to_activate)
 
-	os = new os_type
+	if(!os)
+		os = new os_type(src)
 	os.install()
 
 	for(var/programs in starting_programs)
@@ -200,11 +202,12 @@
 	return ..()
 
 /obj/item/modular_computer/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(active_program?.tap(interacting_with, user, modifiers))
-		user.do_attack_animation(interacting_with) //Emulate this animation since we kill the attack in three lines
-		playsound(loc, 'sound/items/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
-		addtimer(CALLBACK(src, PROC_REF(play_ping)), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
-		return ITEM_INTERACT_SUCCESS
+	for(var/datum/computer_file/program/program as anything in os.active_threads)
+		if(program?.tap(interacting_with, user, modifiers))
+			user.do_attack_animation(interacting_with) //Emulate this animation since we kill the attack in three lines
+			playsound(loc, 'sound/items/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
+			addtimer(CALLBACK(src, PROC_REF(play_ping)), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
+			return ITEM_INTERACT_SUCCESS
 	return ..()
 
 // shameless copy of newscaster photo saving
@@ -405,7 +408,7 @@
 	if(.)
 		return
 	if(enabled)
-		ui_interact(user)
+		os.ui_interact(user)
 	else if(isAdminGhostAI(user))
 		var/response = tgui_alert(user, "This computer is turned off. Would you like to turn it on?", "Admin Override", list("Yes", "No"))
 		if(response == "Yes")
@@ -524,11 +527,18 @@
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()
+	var/datum/computer_file/program/active_program = os.get_active_thread(1)
 	if(enabled)
 		. += active_program ? mutable_appearance(overlays_icon, active_program.program_open_overlay) : mutable_appearance(overlays_icon, icon_state_menu)
 	if(atom_integrity <= integrity_failure * max_integrity)
 		. += mutable_appearance(overlays_icon, "bsod")
 		. += mutable_appearance(overlays_icon, "broken")
+
+/obj/item/modular_computer/interact(mob/user)
+	if(enabled)
+		os.user_interact(user)
+	else
+		turn_on(user)
 
 /obj/item/modular_computer/Exited(atom/movable/gone, direction)
 	if(internal_cell == gone)
@@ -581,7 +591,7 @@
 			else
 				to_chat(user, span_notice("You press the power button and start up \the [src]."))
 			if(open_ui)
-				update_tablet_open_uis(user)
+				os.user_interact(user)
 		SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_TURNED_ON, user)
 		return TRUE
 	else // Unpowered
@@ -601,8 +611,10 @@
 		shutdown_computer()
 		return
 
-	if(active_program && (active_program.program_flags & PROGRAM_REQUIRES_NTNET) && !get_ntnet_status())
-		active_program.event_networkfailure(FALSE) // Active program requires NTNet to run but we've just lost connection. Crash.
+
+	for(var/datum/computer_file/program/program as anything in os.active_threads)
+		if(program && (program.program_flags & PROGRAM_REQUIRES_NTNET) && !get_ntnet_status())
+			program.event_networkfailure(FALSE) // Active program requires NTNet to run but we've just lost connection. Crash.
 
 	for(var/datum/computer_file/program/idle_programs as anything in os.idle_threads)
 		idle_programs.process_tick(seconds_per_tick)
@@ -610,9 +622,9 @@
 		if((idle_programs.program_flags & PROGRAM_REQUIRES_NTNET) && !idle_programs.ntnet_status)
 			idle_programs.event_networkfailure(TRUE)
 
-	if(active_program)
-		active_program.process_tick(seconds_per_tick)
-		active_program.ntnet_status = get_ntnet_status()
+	for(var/datum/computer_file/program/program as anything in os.active_threads)
+		program.process_tick(seconds_per_tick)
+		program.ntnet_status = get_ntnet_status()
 
 	handle_power(seconds_per_tick) // Handles all computer power interaction
 
@@ -702,7 +714,7 @@
 
 	data["PC_stationtime"] = round_timestamp()
 	data["PC_stationdate"] = "[time2text(world.realtime, "DDD, Month DD", NO_TIMEZONE)], [CURRENT_STATION_YEAR]"
-	data["PC_showexitprogram"] = !!active_program // Hides "Exit Program" button on mainscreen
+	data["PC_showexitprogram"] = !!os.get_active_thread(1) // Hides "Exit Program" button on mainscreen
 	return data
 
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)

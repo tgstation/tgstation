@@ -12,13 +12,8 @@
 		return TRUE
 	if(!check_programs)
 		return FALSE
-	internal_cell.use(min(amount, internal_cell.charge)) //drain it anyways.
-	if(active_program?.program_flags & PROGRAM_RUNS_WITHOUT_POWER)
-		return TRUE
+
 	INVOKE_ASYNC(os, TYPE_PROC_REF(/datum/operating_system/sosix, shutdown_os))
-	for(var/datum/computer_file/program/programs as anything in stored_files)
-		if((programs.program_flags & PROGRAM_RUNS_WITHOUT_POWER) && os.run_program(program = programs))
-			return TRUE
 	return FALSE
 
 /obj/item/modular_computer/proc/give_power(amount)
@@ -30,12 +25,12 @@
 /obj/item/modular_computer/proc/power_failure()
 	if(!enabled)
 		return
-	if(active_program)
-		active_program.event_powerfailure()
+	for(var/datum/computer_file/program/program as anything in os.active_threads)
+		program.event_powerfailure()
 	if(light_on)
 		set_light_on(FALSE)
-	for(var/datum/computer_file/program/programs as anything in os.idle_threads)
-		programs.event_powerfailure()
+	for(var/datum/computer_file/program/program as anything in os.idle_threads)
+		program.event_powerfailure()
 	shutdown_computer()
 
 ///Takes the charge necessary from the Computer, shutting it off if it's unable to provide it.
@@ -44,13 +39,14 @@
 	var/power_usage = screen_on ? base_active_power_usage : base_idle_power_usage
 	if(light_on)
 		power_usage *= FLASHLIGHT_DRAIN_MULTIPLIER
-	if(active_program)
-		power_usage += active_program.power_cell_use
-	for(var/datum/computer_file/program/open_programs as anything in os.idle_threads)
-		if(!open_programs.power_cell_use)
+	for(var/datum/computer_file/program/program as anything in os.active_threads)
+		power_usage += program.power_cell_use
+
+	for(var/datum/computer_file/program/program as anything in os.idle_threads)
+		if(!program.power_cell_use)
 			continue
-		if(open_programs in os.idle_threads)
-			power_usage += (open_programs.power_cell_use / 2)
+		if(program in os.idle_threads)
+			power_usage += (program.power_cell_use / 2)
 
 	if(use_energy(power_usage * seconds_per_tick))
 		return TRUE

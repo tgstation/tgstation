@@ -229,7 +229,7 @@
 
 /// Converts active/idle/closed to a numerical status for sorting clients by.
 /datum/computer_file/program/chatclient/proc/get_numerical_status()
-	if(src == computer.active_program)
+	if(src in os.active_threads)
 		return STATUS_ONLINE
 	if(src in os.idle_threads)
 		return STATUS_AWAY
@@ -267,7 +267,7 @@
 				authed = TRUE
 			clients.Add(list(list(
 				"name" = channel_client.username,
-				"online" = (channel_client == channel_client.computer.active_program),
+				"online" = (channel_client in channel_client.os.active_threads),
 				"away" = (channel_client in channel_client.os.idle_threads),
 				"muted" = (channel_client in channel.muted_clients),
 				"operator" = (channel.channel_operator == channel_client),

@@ -71,7 +71,7 @@
 	if(associated_program.program_flags & PROGRAM_CIRCUITS_RUN_WHEN_CLOSED || COMPONENT_TRIGGERED_BY(start, port))
 		return TRUE
 	var/obj/item/modular_computer/computer = associated_program.computer
-	if(computer.active_program == associated_program || (associated_program in associated_program.os.idle_threads))
+	if((associated_program in computer.os.active_threads) || (associated_program in associated_program.os.idle_threads))
 		return TRUE
 	return FALSE
 

@@ -192,7 +192,7 @@
 
 //We use SSfastprocess for the program icon state because it runs faster than process_tick() does.
 /datum/computer_file/program/radar/process()
-	if(computer.active_program != src)
+	if(!(src in os.active_threads))
 		//We're not the active program, it's time to stop.
 		return PROCESS_KILL
 	if(!selected)
@@ -226,7 +226,7 @@
 
 //We can use process_tick to restart fast processing, since the computer will be running this constantly either way.
 /datum/computer_file/program/radar/process_tick(seconds_per_tick)
-	if(computer.active_program == src)
+	if(!(src in os.active_threads))
 		START_PROCESSING(SSfastprocess, src)
 
 ///////////////////

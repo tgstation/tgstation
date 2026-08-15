@@ -28,69 +28,6 @@
 		var/datum/computer_file/program_type = new programs
 		store_file(program_type)
 
-/datum/operating_system/sosix/ntos/run_program(mob/user, datum/computer_file/program/program, open_ui = TRUE)
-	..()
-	if(program.computer != hardware)
-		CRASH("tried to open program that does not belong to this computer")
-
-	if(isnull(program) || !istype(program)) // Program not found or it's not executable program.
-		if(user)
-			to_chat(user, span_danger("\The [hardware]'s screen shows \"I/O ERROR - Unable to run program\" warning."))
-		return FALSE
-
-	// The program is already running. Resume it.
-	if(program in idle_threads)
-		activate_program(program)
-		program.alert_pending = FALSE
-		idle_threads.Remove(program)
-		if(open_ui)
-			INVOKE_ASYNC(hardware, TYPE_PROC_REF(/obj/item/modular_computer, update_tablet_open_uis), user)
-		hardware.update_appearance(UPDATE_ICON)
-		return TRUE
-
-	if(!program.is_supported_by_hardware(hardware.hardware_flag, loud = TRUE, user = user))
-		return FALSE
-
-	if(idle_threads.len > max_idle_programs)
-		if(user)
-			to_chat(user, span_danger("\The [hardware] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
-		return FALSE
-
-	if(program.program_flags & PROGRAM_REQUIRES_NTNET && !hardware.get_ntnet_status()) // The program requires NTNet connection, but we are not connected to NTNet.
-		if(user)
-			to_chat(user, span_danger("\The [hardware]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
-		return FALSE
-
-	if(!program.on_start(user))
-		return FALSE
-
-	activate_program(program)
-	program.alert_pending = FALSE
-	if(open_ui)
-		INVOKE_ASYNC(hardware, TYPE_PROC_REF(/obj/item/modular_computer, update_tablet_open_uis), user)
-	hardware.update_appearance(UPDATE_ICON)
-	return TRUE
-
-/datum/operating_system/sosix/ntos/kill_program(datum/computer_file/program/program)
-	..()
-	var/mob/user = usr
-	program.on_kill(user)
-	if(program == hardware.active_program)
-		hardware.active_program = null
-		if(!QDELETED(hardware) && hardware.enabled && user)
-			INVOKE_ASYNC(hardware, TYPE_PROC_REF(/obj/item/modular_computer, update_tablet_open_uis), user)
-	else if(program in idle_threads)
-		idle_threads.Remove(program)
-	else
-		return FALSE
-
-	if(program.program_flags & PROGRAM_REQUIRES_NTNET)
-		var/obj/item/card/id/ID = hardware.stored_id?.GetID()
-		program.generate_network_log("Connection closed -- Program ID: [program.filename] User:[ID ? "[ID.registered_name]" : "None"]")
-
-	hardware.update_appearance(UPDATE_ICON)
-	SEND_SIGNAL(program, COMSIG_COMPUTER_PROGRAM_KILL, user)
-
 /**
  * store_file
  *
@@ -109,6 +46,7 @@
 		return FALSE
 
 	file_storing.computer = hardware
+	file_storing.os = hardware.os
 	hardware.used_capacity += file_storing.size
 	SEND_SIGNAL(file_storing, COMSIG_COMPUTER_FILE_STORE, hardware, user)
 	SEND_SIGNAL(hardware, COMSIG_MODULAR_COMPUTER_FILE_STORE, file_storing, user)

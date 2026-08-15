@@ -16,6 +16,7 @@
 		return FALSE
 
 	file_storing.computer = src
+	file_storing.os = os
 	used_capacity += file_storing.size
 	SEND_SIGNAL(file_storing, COMSIG_COMPUTER_FILE_STORE, src, user)
 	SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_FILE_STORE, file_storing, user)

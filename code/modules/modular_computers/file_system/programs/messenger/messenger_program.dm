@@ -743,7 +743,7 @@
 	// send an activation message and open the messenger
 	if(!(computer.enabled || computer.turn_on(usr, open_ui = FALSE)))
 		return
-	if(!(computer.active_program == src || computer.os.run_program(usr, src, open_ui = FALSE)))
+	if(!((src in os.active_threads) || computer.os.run_program(usr, src, open_ui = FALSE)))
 		return
 
 	var/target_href = href_list["target"]
@@ -757,7 +757,7 @@
 		if("open")
 			if(target_href in saved_chats)
 				viewing_messages_of = target_href
-			computer.update_tablet_open_uis(usr)
+			os.user_interact(usr)
 
 		if("explode")
 			if(!HAS_TRAIT(computer, TRAIT_PDA_CAN_EXPLODE))

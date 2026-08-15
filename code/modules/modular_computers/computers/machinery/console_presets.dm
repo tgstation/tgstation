@@ -125,7 +125,7 @@
 
 	var/datum/computer_file/program/department_order/orderprogram = cpu.os.find_file_by_name("dept_order")
 	orderprogram.set_linked_department(department_type)
-	cpu.active_program = orderprogram
+	cpu.os.activate_program(null, orderprogram)
 	update_appearance(UPDATE_ICON)
 
 /obj/machinery/modular_computer/preset/cargochat/service
@@ -156,7 +156,7 @@
 
 /obj/machinery/modular_computer/preset/cargochat/cargo/setup_starting_software()
 	var/datum/computer_file/program/chatclient/chatprogram = cpu.os.find_file_by_name("ntnrc_client")
-	cpu.active_program = chatprogram
+	cpu.os.activate_program(null, chatprogram)
 	update_appearance(UPDATE_ICON)
 	// Rest of the chat program setup is done in LateInit
 

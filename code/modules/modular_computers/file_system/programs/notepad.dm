@@ -32,9 +32,9 @@
 	var/obj/item/disk/computer/target_disk = get_target_disk(opened_on_disk)
 	var/datum/computer_file/data/text/file
 	if(uid)
-		file = computer.find_file_by_uid(uid, target_disk)
+		file = os.find_file_by_uid(uid, target_disk)
 	if(!file && length(name))
-		file = computer.find_file_by_full_name("[name].TXT", target_disk)
+		file = os.find_file_by_full_name("[name].TXT", target_disk)
 	return file
 
 /datum/computer_file/program/notepad/proc/load_text_file(datum/computer_file/data/text/file)
@@ -56,7 +56,7 @@
 	new_file.filename = name
 	new_file.stored_text = note
 	new_file.calculate_size()
-	var/file_stored = target_disk ? target_disk.add_file(new_file) : computer.store_file(new_file, user)
+	var/file_stored = target_disk ? target_disk.add_file(new_file) : os.store_file(new_file, user)
 	if(!file_stored)
 		to_chat(user, span_warning("Error occured while saving the file!"))
 		qdel(new_file)

@@ -28,6 +28,7 @@
 	machinery_computer.cpu = src
 	hardware_flag = machinery_computer.hardware_flag
 	steel_sheet_cost = machinery_computer.steel_sheet_cost
+	os = new os_type(src)
 	os.max_idle_programs = machinery_computer.max_idle_programs
 	update_integrity(machinery_computer.get_integrity())
 	max_integrity = machinery_computer.max_integrity
