@@ -114,3 +114,43 @@
 
 /turf/open/floor/glass/reinforced/plasma/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/glass/bronze
+	name = "bronze glass floor"
+	desc = "Do jump on it, there's no rat'var cultists around to give you smack for it."
+	icon = 'icons/turf/floors/glass_bronze.dmi'
+	icon_state = "glass_bronze-0"
+	base_icon_state = "glass_bronze"
+	floor_tile = /obj/item/stack/tile/bronze/window
+	starlight_color = COLOR_THEME_CLOCKWORK
+	alpha_to_leave = 206
+
+/turf/open/floor/glass/cult
+	name = "cult glass floor"
+	desc = "If you jump on it, there's no guarantee you won't fall into some kinf of nightmare dimension."
+	icon = 'icons/turf/floors/glass_runic.dmi'
+	icon_state = "glass_runic-0"
+	base_icon_state = "glass_runic"
+	floor_tile = /obj/item/stack/tile/cult/window
+	starlight_color = COLOR_CULT_RED
+	alpha_to_leave = 206
+
+/turf/open/floor/glass/titatanium
+	name = "titatanium glass floor"
+	desc = "Do jump on it, it can take it."
+	icon = 'icons/turf/floors/glass_titanium.dmi'
+	icon_state = "glass_titanium-0"
+	base_icon_state = "glass_titanium"
+	floor_tile = /obj/item/stack/tile/glass/titanium
+	starlight_color = COLOR_ASSISTANT_GRAY
+	alpha_to_leave = 206
+
+/turf/open/floor/glass/plastitatanium
+	name = "plastitatanium glass floor"
+	desc = "Do jump on it, it can take it."
+	icon = 'icons/turf/floors/glass_plastitanium.dmi'
+	icon_state = "glass_plastitanium-0"
+	base_icon_state = "glass_plastitanium"
+	floor_tile = /obj/item/stack/tile/glass/plastitanium
+	starlight_color = COLOR_ASSISTANT_GRAY
+	alpha_to_leave = 206
