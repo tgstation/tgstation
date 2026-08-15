@@ -51,6 +51,9 @@
 	var/obj/item/bodypart/head/current_host_head = host.get_bodypart(BODY_ZONE_HEAD)
 	// current_host_head.blood_worm_head_growth_animation() it was supposed to be animation
 
+	message_admins("extend head activation")
+	message_admins("worm: [worm]")
+	message_admins("host: [host]")
 	// store the head on the worm mob
 	worm.storage_for_head += current_host_head
 	message_admins("worm.storage_for_head: [worm.storage_for_head]")
@@ -63,7 +66,7 @@
 	var/obj/item/bodypart/head/stored_head = worm.storage_for_head[1]
 
 	message_admins("before worm.storage_for_head: [worm.storage_for_head]")
-	stored_head.replace_limb(host, special = TRUE)
+	stored_head.replace_limb(host, TRUE)
 	worm.storage_for_head -= stored_head
 	message_admins("after worm.storage_for_head: [worm.storage_for_head]")
 
