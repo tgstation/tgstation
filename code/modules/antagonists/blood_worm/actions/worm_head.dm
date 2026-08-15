@@ -75,7 +75,12 @@
 	// it will not loose the implants, cause they will be inserted
 	// ALSO if worm-player got into EMP or emag or something, and implants are now fucked
 	// so new head will get these fucked implants and organs
-	host.regenerate_limb(BODY_ZONE_HEAD)
+	var/obj/item/bodypart/head/stored_head = worm.storage_for_head[1]
+
+	worm.storage_for_head -= stored_head
+
+
+	stored_head.replace_limb(host, special = TRUE)
 	var/new_host_head = host.get_bodypart(BODY_ZONE_HEAD)
 	for(var/obj/item/organ/organ_to_trash in new_host_head:contents) // clean new head from organs
 		if(istype(organ_to_trash, /obj/item/organ))
