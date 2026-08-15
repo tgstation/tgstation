@@ -55,6 +55,9 @@
 	/// How efficient ingesting synthetic blood is compared to normal blood. (ingested amount is multiplied by this)
 	var/synth_blood_efficiency = 0.7
 
+	/// Stored host's head for blood worm head grow action
+	var/list/storage_for_head
+
 	/// The current host of the blood worm, if any.
 	/// You can use this to check if the blood worm has a host.
 	var/mob/living/carbon/human/host
