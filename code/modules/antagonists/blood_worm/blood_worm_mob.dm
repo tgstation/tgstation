@@ -56,7 +56,7 @@
 	var/synth_blood_efficiency = 0.7
 
 	/// Stored host's head for blood worm head grow action
-	var/list/storage_for_head
+	var/list/storage_for_head = list()
 
 	/// The current host of the blood worm, if any.
 	/// You can use this to check if the blood worm has a host.
