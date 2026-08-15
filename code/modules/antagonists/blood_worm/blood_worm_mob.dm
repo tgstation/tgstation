@@ -91,6 +91,8 @@
 	var/list/innate_actions = list()
 	/// List of actions inside of a host.
 	var/list/host_actions = list()
+	/// List of actions inside of a host, for Adult worm only.
+	var/list/adult_host_actions = list()
 
 	/// Whether the blood worm has a host AND is currently in control of that host.
 	var/is_possessing_host = FALSE
@@ -132,7 +134,7 @@
 		if (istype(src, /mob/living/basic/blood_worm/adult)) // worm head available only for adult worm's host
 			message_admins("istype of adult worm action adder HAVE BEEN TRIGGERED")
 			worm_head_action = new worm_head_action(src)
-			host_actions += worm_head_action
+			adult_host_actions += worm_head_action
 
 
 	eject_action = new(src)
@@ -143,7 +145,7 @@
 
 	message_admins("without if adult worm action adder HAVE BEEN TRIGGERED")
 	worm_head_action = new(src)
-	host_actions += worm_head_action
+	adult_host_actions += worm_head_action
 
 	grant_actions(src, innate_actions)
 
@@ -176,6 +178,7 @@
 	innate_actions = null
 	host_actions = null
 	worm_head_action = null
+	adult_host_actions = null
 
 	return ..()
 

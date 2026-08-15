@@ -53,6 +53,9 @@
 
 	remove_actions(src, innate_actions)
 	grant_actions(src, host_actions) // todo: needs for begginning to give the action to every worm, but then only to adult
+	if(HAS_TRAIT(host, ADULT_BLOOD_WORM_HOST_TRAIT))
+		grant_actions(src, adult_host_actions) // for adult only
+
 
 	var/cached_blood_volume = host.get_blood_volume()
 
@@ -132,6 +135,8 @@
 	host.RemoveElement(/datum/element/hand_organ_insertion)
 
 	remove_actions(src, host_actions)
+	if(HAS_TRAIT(host, ADULT_BLOOD_WORM_HOST_TRAIT))
+		remove_actions(src, adult_host_actions)
 	grant_actions(src, innate_actions)
 
 	host.remove_blood_volume_modifier(REF(src))
