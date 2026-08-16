@@ -1,0 +1,4 @@
+author: "Maximal08"
+delete-after: True
+changes:
+  - bugfix: "Ashen Eyes description no longer states that they are a focus"
