@@ -1,6 +1,7 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon
 	cooldown_time = 30 SECONDS
 	shared_cooldown = NONE
+	transparent_when_unavailable = FALSE
 
 	click_to_activate = FALSE
 
@@ -14,6 +15,18 @@
 	var/timer_id = null
 
 	var/cocoon_time = 30 SECONDS
+
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/create_button(mob/viewer)
+	var/atom/movable/screen/movable/action_button/button = ..()
+	button.maptext_x = 1
+	return button
+
+/datum/action/cooldown/mob_cooldown/blood_worm/cocoon/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
+	. = ..()
+	var/mob/living/basic/blood_worm/worm = owner
+	var/percentage_shown = "[round((worm.get_consumed_blood() / total_blood_required) * 100, 0.1)]"
+	button.maptext_x = (length(percentage_shown) >= 3) ? 0 : 1
+	button.maptext = MAPTEXT_TINY_UNICODE("<span style='text-align: center'>[percentage_shown]%</span>")
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/Grant(mob/granted_to)
 	. = ..()
