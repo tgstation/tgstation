@@ -1,4 +1,5 @@
 import {
+  filterTypepaths,
   isEntityArg,
   isListArg,
   isTextArg,
@@ -129,25 +130,10 @@ function useSuggestions(
     return [...prefix, ...substring].slice(0, 8);
   })();
 
-  const typepathSuggestions = (() => {
-    if (!selectedVerb || !isCurrentTypepath || !currentToken.startsWith('/'))
-      return [];
-    const query = currentToken.toLowerCase();
-    const parentPrefix = query.endsWith('/')
-      ? query
-      : query.slice(0, query.lastIndexOf('/') + 1);
-    const results: string[] = [];
-    for (const p of typepaths) {
-      const lower = p.toLowerCase();
-      if (!lower.startsWith(parentPrefix)) continue;
-      const remainder = lower.slice(parentPrefix.length);
-      if (remainder.includes('/')) continue;
-      if (!lower.startsWith(query)) continue;
-      results.push(p);
-      if (results.length >= 8) break;
-    }
-    return results;
-  })();
+  const typepathSuggestions =
+    selectedVerb && isCurrentTypepath && currentToken.startsWith('/')
+      ? filterTypepaths(typepaths, currentToken, 8)
+      : [];
 
   const targetSuggestions =
     selectedVerb && isCurrentEntity && targets.length > 0
