@@ -107,9 +107,10 @@
 
 	if(type == "verbs/request_verbs")
 		client.init_verbs()
-		if(client.holder)
-			var/datum/asset/json/spawn_menu/asset = get_asset_datum(/datum/asset/json/spawn_menu)
-			window.send_asset(asset)
+		if(!client?.holder)
+			return TRUE
+
+		window.send_asset(get_asset_datum(/datum/asset/json/spawn_menu))
 		return TRUE
 
 	if(type == "verbs/request_targets")
