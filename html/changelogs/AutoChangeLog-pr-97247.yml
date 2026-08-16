@@ -1,5 +1,0 @@
-author: "Fghj240"
-delete-after: True
-changes:
-  - balance: "viruses with a positive severity can't be lost by starving"
-  - balance: "satiety has no effect on natural disease recovery"

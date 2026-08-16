@@ -448,6 +448,9 @@
   san7890:
   - bugfix: Latejoining as an AI on CatwalkStation should now work.
 2026-08-16:
+  Fghj240:
+  - balance: viruses with a positive severity can't be lost by starving
+  - balance: satiety has no effect on natural disease recovery
   Maximal08:
   - bugfix: Ashen Eyes description no longer states that they are a focus
   PapaMichael:
