@@ -187,6 +187,15 @@
 
 	//the path of the fish_source datum to use for the fishing_spot component
 	var/fish_source_path = /datum/fish_source/vending
+	var/static/alist/boss_trims = alist(
+		/datum/id_trim/job/chief_engineer = TRUE,
+		/datum/id_trim/job/chief_medical_officer = TRUE,
+		/datum/id_trim/job/head_of_security = TRUE,
+		/datum/id_trim/job/head_of_personnel = TRUE,
+		/datum/id_trim/job/research_director = TRUE,
+		/datum/id_trim/job/quartermaster = TRUE
+		)
+	var/static/datum/id_trim/job/big_boss_trim = /datum/id_trim/job/captain
 
 /datum/armor/machinery_vending
 	melee = 20
