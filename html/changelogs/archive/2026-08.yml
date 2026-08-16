@@ -447,3 +447,10 @@
       over time.
   san7890:
   - bugfix: Latejoining as an AI on CatwalkStation should now work.
+2026-08-16:
+  Maximal08:
+  - bugfix: Ashen Eyes description no longer states that they are a focus
+  PapaMichael:
+  - bugfix: The Destructive Analyzer properly unlocks research nodes again
+  TealSeer:
+  - bugfix: fixed icons in the biogenerator UI being broken

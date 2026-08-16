@@ -1,4 +1,0 @@
-author: "TealSeer"
-delete-after: True
-changes:
-  - bugfix: "fixed icons in the biogenerator UI being broken"
