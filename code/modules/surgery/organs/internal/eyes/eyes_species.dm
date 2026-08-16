@@ -92,7 +92,8 @@
 	name = "reptile eyes"
 	desc = "A pair of reptile eyes with thin vertical slits for pupils."
 	icon_state = "lizard_eyes"
-	synchronized_blinking = FALSE
+	// unsynced blinking is bugged and causes eyelids to get stuck closed.
+	synchronized_blinking = TRUE
 	pupils_name = "slit pupils"
 	penlight_message = "have vertically slit pupils and tinted whites"
 
