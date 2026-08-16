@@ -15,7 +15,6 @@
 /datum/design/board/mediator
 	name = "Mediator Module"
 	desc = "Allows for the construction of an Mediator AI Core Module."
-	id = "mediator_module"
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/ai_module/law/core/full/mediator
 	category = list(
@@ -25,4 +24,4 @@
 
 /datum/techweb_node/ai_laws/New()
 	. = ..()
-	design_ids += "mediator_module"
+	unlocked_designs += /datum/design/board/mediator

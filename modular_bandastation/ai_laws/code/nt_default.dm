@@ -15,7 +15,6 @@
 /datum/design/board/nt_default
 	name = "NT Default Module"
 	desc = "Allows for the construction of an NT Default AI Core Module."
-	id = "nt_default_module"
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/ai_module/law/core/full/nt_default
 	category = list(
@@ -25,4 +24,4 @@
 
 /datum/techweb_node/ai_laws/New()
 	. = ..()
-	design_ids += "nt_default_module"
+	unlocked_designs += /datum/design/board/nt_default

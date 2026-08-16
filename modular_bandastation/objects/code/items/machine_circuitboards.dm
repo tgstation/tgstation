@@ -12,4 +12,4 @@
 
 /datum/techweb_node/cafeteria_equip/New()
 	. = ..()
-	design_ids += "teapot"
+	unlocked_designs += /datum/design/board/teapot
