@@ -39,7 +39,7 @@
 
 	var/used_capacity
 
-	var/os_type = /datum/operating_system/default/ntos
+	var/os_type = /datum/operating_system/default/ntos/desktop
 
 	var/datum/operating_system/default/os
 
@@ -536,7 +536,7 @@
 
 /obj/item/modular_computer/interact(mob/user)
 	if(enabled)
-		os.user_interact(user)
+		os.interact(user)
 	else
 		turn_on(user)
 
@@ -591,7 +591,7 @@
 			else
 				to_chat(user, span_notice("You press the power button and start up \the [src]."))
 			if(open_ui)
-				os.user_interact(user)
+				os.interact(user)
 		SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_TURNED_ON, user)
 		return TRUE
 	else // Unpowered

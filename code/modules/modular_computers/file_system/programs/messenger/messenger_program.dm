@@ -757,7 +757,7 @@
 		if("open")
 			if(target_href in saved_chats)
 				viewing_messages_of = target_href
-			os.user_interact(usr)
+			os.interact(usr)
 
 		if("explode")
 			if(!HAS_TRAIT(computer, TRAIT_PDA_CAN_EXPLODE))

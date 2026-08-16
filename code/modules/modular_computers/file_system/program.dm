@@ -219,7 +219,7 @@
 		return os.kill_program(src)
 
 	if(user)
-		INVOKE_ASYNC(os, TYPE_PROC_REF(/datum/operating_system/default, user_interact), user)
+		INVOKE_ASYNC(os, TYPE_PROC_REF(/datum/operating_system/default, interact), user)
 	computer.update_appearance(UPDATE_ICON)
 	return TRUE
 
