@@ -277,7 +277,7 @@
 	/// The limb we're making with our buildpath, so we can edit it.
 	//i need to create a body part manually using a set icon (otherwise it doesn't appear)
 	var/obj/item/bodypart/limb = new buildpath(loc)
-	limb.name = "\improper synthetic [selected_category] [limb.ru_plaintext_zone[PREPOSITIONAL]
+	limb.name = "\improper synthetic [selected_category] [limb.ru_plaintext_zone[PREPOSITIONAL]]"
 	limb.limb_id = selected_category
 	limb.species_color = "#62A262"
 	limb.update_icon_dropped()
