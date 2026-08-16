@@ -37,7 +37,7 @@
 
 
 /// Valid if the target is a conscious human with bloodied clothing (or anyone, while emagged).
-/datum/targeting_strategy/conscious_human/washable_human/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+/datum/targeting_strategy/capable_human/washable_human/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
 	. = ..()
 	if(!.)
 		return FALSE

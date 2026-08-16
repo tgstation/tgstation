@@ -8,7 +8,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/mob/living/rider = living_mob.buckled_mobs[1]
-	if (rider.stat == CONSCIOUS || rider.stat == DEAD || rider.health >= rider.maxHealth)
+	if (rider.stat == STABLE || rider.stat == DEAD || rider.health >= rider.maxHealth)
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	controller.set_blackboard_key(target_key, rider)

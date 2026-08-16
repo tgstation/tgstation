@@ -22,7 +22,7 @@
 
 /obj/item/detective_scanner/interact(mob/user)
 	. = ..()
-	if(user.stat != CONSCIOUS || !user.can_read(src) || user.is_blind())
+	if(IS_UNCONSCIOUS_OR_CRIT(user) || !user.can_read(src) || user.is_blind())
 		return ITEM_INTERACT_BLOCKING
 	ui_interact(user)
 	return ITEM_INTERACT_SUCCESS
@@ -150,8 +150,8 @@
 			if(!istype(present_reagent, /datum/reagent/blood))
 				continue
 
-			var/blood_DNA = present_reagent.data["blood_DNA"]
-			var/blood_type = present_reagent.data["blood_type"]
+			var/blood_DNA = present_reagent.data[BLOOD_DATA_DNA]
+			var/blood_type = present_reagent.data[BLOOD_DATA_TYPE]
 			if(!blood_DNA || !blood_type)
 				continue
 

@@ -6,7 +6,6 @@
 	abstract_type = /obj/item/food/grown/citrus
 	foodtypes = FRUIT
 	wine_power = 30
-	seed = /obj/item/seeds/lime
 
 // Lime
 /obj/item/seeds/lime

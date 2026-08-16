@@ -199,10 +199,11 @@
 		if(as_part.tier > print_tier)
 			print_tier = as_part.tier
 
+	var/datum/design/item_design = SSresearch.techweb_designs[LAZYACCESS(SSresearch.item_to_design[comp_type], 1)]
 	var/list/mat_list
 	var/obj/item/null_comp
-	if(!isnull(SSresearch.item_to_design[comp_type]))
-		mat_list = SSresearch.item_to_design[comp_type][1].materials
+	if(istype(item_design))
+		mat_list = item_design.materials
 	else
 		var/datum/stock_part/part = GLOB.stock_part_datums_per_object[comp_type]
 		if(part)
@@ -211,8 +212,8 @@
 			null_comp = new comp_type
 			mat_list = null_comp.custom_materials
 
-	for(var/atom/mat as anything in mat_list)
-		CREATE_AND_INCREMENT(costs, mat.type, mat_list[mat] * count)
+	for(var/datum/material/required_material, required_amount in mat_list)
+		CREATE_AND_INCREMENT(costs, required_material.type, required_amount * count)
 
 	if(null_comp)
 		qdel(null_comp)
@@ -230,16 +231,15 @@
 			return ITEM_INTERACT_BLOCKING
 
 		// If insertion was successful and there's already a diskette in the console, eject the old one.
-		if(inserted_board)
-			inserted_board.forceMove(drop_location())
+		inserted_board?.forceMove(drop_location())
 		inserted_board = attacking_item
 
 		//compute the needed mats from its stock parts
-		for(var/type in inserted_board.req_components)
+		for(var/required_component, required_amount in inserted_board.req_components)
 			//these don't count to the final cost as they have to inserted manually
-			if(type in inserted_board.flatpack_components)
+			if(required_component in inserted_board.flatpack_components)
 				continue
-			needed_mats = analyze_cost(type, needed_mats, inserted_board.req_components[type])
+			needed_mats = analyze_cost(required_component, needed_mats, required_amount)
 
 		// 5 sheets of iron and 5 of cable coil
 		CREATE_AND_INCREMENT(needed_mats, /datum/material/iron, (SHEET_MATERIAL_AMOUNT * 5 + (SHEET_MATERIAL_AMOUNT / 20)))

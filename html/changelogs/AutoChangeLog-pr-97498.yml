@@ -1,0 +1,4 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - bugfix: "The server should obey the config's `min_antag_cap` and `max_antag_cap` for midround rulesets now."

@@ -6,17 +6,16 @@
 	var/list/gas_types = subtypesof(/datum/gas)
 	ASSERT(GAS_TYPE_COUNT == length(gas_types),\
 		"GAS_TYPE_COUNT != length(subtypesof(gas_types)), if you added new gas please increment GAS_TYPE_COUNT")
-	for(var/gas_path in gas_types)
-		var/datum/gas/gas = gas_path
-		gas_info[META_GAS_SPECIFIC_HEAT][gas_path] = initial(gas.specific_heat)
-		gas_info[META_GAS_NAME][gas_path] = initial(gas.name)
-		gas_info[META_GAS_MOLES_VISIBLE][gas_path] = initial(gas.moles_visible)
+	for(var/datum/gas/gas_path as anything in gas_types)
+		gas_info[META_GAS_SPECIFIC_HEAT][gas_path] = initial(gas_path.specific_heat)
+		gas_info[META_GAS_NAME][gas_path] = initial(gas_path.name)
+		gas_info[META_GAS_MOLES_VISIBLE][gas_path] = initial(gas_path.moles_visible)
 		if (gas_info[META_GAS_MOLES_VISIBLE][gas_path])
-			gas_info[META_GAS_OVERLAY][gas_path] += generate_gas_overlays(0, SSmapping.max_plane_offset, gas)
-		gas_info[META_GAS_FUSION_POWER][gas_path] = initial(gas.fusion_power)
-		gas_info[META_GAS_DANGER][gas_path] = initial(gas.dangerous)
-		gas_info[META_GAS_ID][gas_path] = initial(gas.id)
-		gas_info[META_GAS_DESC][gas_path] = initial(gas.desc)
+			gas_info[META_GAS_OVERLAY][gas_path] += generate_gas_overlays(0, SSmapping.max_plane_offset, gas_path)
+		gas_info[META_GAS_FUSION_POWER][gas_path] = initial(gas_path.fusion_power)
+		gas_info[META_GAS_DANGER][gas_path] = initial(gas_path.dangerous)
+		gas_info[META_GAS_ID][gas_path] = initial(gas_path.id)
+		gas_info[META_GAS_DESC][gas_path] = initial(gas_path.desc)
 
 	/datum/gas_mixture::gas_meta = gas_info // save the reference to the list
 	return gas_info
@@ -35,8 +34,8 @@
 	var/list/meta_gas_id = GLOB.meta_gas_info[META_GAS_ID]
 	if(id in meta_gas_id)
 		return id
-	for(var/path in meta_gas_id)
-		if(meta_gas_id[path] == id)
+	for(var/path, meta_id in meta_gas_id)
+		if(meta_id == id)
 			return path
 	return ""
 

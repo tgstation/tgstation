@@ -62,7 +62,7 @@
 		demon.icon_state = demon.firing_icon_state
 		demon.update_appearance(UPDATE_OVERLAYS)
 
-	do_after(owner, delay = beam_duration, target = owner, hidden = TRUE, extra_checks = CALLBACK(src, PROC_REF(beam_charge_check)))
+	do_after(owner, delay = beam_duration, target = owner, cog_icon = null, extra_checks = CALLBACK(src, PROC_REF(beam_charge_check)))
 	UnregisterSignal(owner, COMSIG_ATOM_WAS_ATTACKED)
 	extinguish_laser()
 	StartCooldown()

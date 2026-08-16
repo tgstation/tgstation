@@ -84,7 +84,7 @@
 
 
 /// Valid if the target is a conscious human janitor-whisperer the cleanbot hasn't already befriended.
-/datum/targeting_strategy/conscious_human/cleanbot_whisperer/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
+/datum/targeting_strategy/capable_human/cleanbot_whisperer/is_valid_target(mob/living/living_mob, atom/target, vision_range, datum/ai_controller/controller = null)
 	. = ..()
 	if(!.)
 		return FALSE

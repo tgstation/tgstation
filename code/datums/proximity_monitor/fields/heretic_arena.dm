@@ -163,16 +163,22 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 		human_head?.worn_head_offset?.apply_offset(crown_overlay)
 	owner.add_overlay(crown_overlay)
 	owner.remove_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), TRAIT_STATUS_EFFECT(id))
+	crit_count++
 
 	// The mansus celebrates your efforts
 	if(IS_HERETIC(owner))
-		owner.heal_overall_damage(60, 60, 60)
-		owner.adjust_tox_loss(-60, forced = TRUE) // Slime heretics everywhere...
-		owner.adjust_oxy_loss(-60)
+		// enemies are given 17 force 0 ap blades, heretics have 50 armor: meaning 30 healing reverses about 4 hits of damage
+		owner.heal_overall_damage(round(30 / crit_count, DAMAGE_PRECISION), round(30 / crit_count, DAMAGE_PRECISION))
+		owner.adjust_tox_loss(round(-20 / crit_count, DAMAGE_PRECISION), forced = TRUE) // Slime heretics everywhere...
+		owner.adjust_oxy_loss(round(-20 / crit_count, DAMAGE_PRECISION), forced = TRUE)
 		if(iscarbon(owner))
 			var/mob/living/carbon/carbon_owner = owner
 			for(var/datum/wound/wound as anything in carbon_owner.all_wounds)
 				wound.remove_wound()
+		if(crit_count == 3)
+			var/datum/antagonist/heretic/our_heretic = GET_HERETIC(owner)
+			var/datum/heretic_knowledge/spell/wolves_among_sheep/our_knowledge = our_heretic.get_knowledge(__IMPLIED_TYPE__)
+			our_knowledge?.add_charges(1)
 
 	if(arena_victor) // No need to spam if we've already killed at least 1 person
 		return
@@ -194,6 +200,8 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	tick_interval = STATUS_EFFECT_NO_TICK
 	status_type = STATUS_EFFECT_UNIQUE
 	alert_type = null
+	/// Tracks number of people crit
+	var/crit_count = 0
 	/// Tracks the last person who dealt damage to this mob
 	var/datum/weakref/last_attacker
 	/// If our mob is free to leave, set to true
@@ -202,7 +210,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	var/mutable_appearance/crown_overlay
 
 /datum/status_effect/arena_tracker/on_apply()
-	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), PROC_REF(on_enter_crit))
+	RegisterSignal(owner, COMSIG_MOB_STATCHANGE, PROC_REF(on_enter_crit))
 	RegisterSignal(owner, COMSIG_MOVABLE_IMPACT_ZONE, PROC_REF(on_impact_zone))
 	RegisterSignal(owner, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_taken))
 	owner.add_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), TRAIT_STATUS_EFFECT(id))
@@ -217,14 +225,16 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	return TRUE
 
 /datum/status_effect/arena_tracker/on_remove()
-	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_CRITICAL_CONDITION), COMSIG_MOB_APPLY_DAMAGE))
+	UnregisterSignal(owner, list(COMSIG_MOB_STATCHANGE, COMSIG_MOB_APPLY_DAMAGE))
 	owner.remove_traits(list(TRAIT_ELDRITCH_ARENA_PARTICIPANT, TRAIT_NO_TELEPORT), TRAIT_STATUS_EFFECT(id))
 	owner.cut_overlay(crown_overlay)
 	crown_overlay = null
 
 // If our last attacker is an arena participant, we let them know they've scored a critical hit
-/datum/status_effect/arena_tracker/proc/on_enter_crit(mob/owner)
+/datum/status_effect/arena_tracker/proc/on_enter_crit(mob/owner, new_stat, old_stat)
 	SIGNAL_HANDLER
+	if(new_stat < SOFT_CRIT)
+		return
 	if(!last_attacker)
 		return // Safety check in case they somehow enter crit with *nobody* attacking them
 	var/mob/living/our_attacker = last_attacker.resolve()

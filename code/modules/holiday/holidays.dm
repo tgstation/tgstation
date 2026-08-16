@@ -156,7 +156,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	holiday_mail = list(
 		/obj/item/food/bonbon/chocolate_truffle,
 		/obj/item/food/candyheart,
-		/obj/item/food/grown/rose,
+		/obj/item/food/grown/flower/rose,
 		)
 
 /datum/holiday/valentines/get_station_name()
@@ -333,7 +333,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	timezones = list(TIMEZONE_TKT, TIMEZONE_TOT, TIMEZONE_NZST, TIMEZONE_NFT, TIMEZONE_LHST, TIMEZONE_AEST, TIMEZONE_ACST, TIMEZONE_ACWST, TIMEZONE_AWST, TIMEZONE_CXT, TIMEZONE_CCT, TIMEZONE_CKT, TIMEZONE_NUT)
 	begin_day = 25
 	begin_month = APRIL
-	holiday_hat = /obj/item/food/grown/poppy
+	holiday_hat = /obj/item/food/grown/flower/poppy
 
 /datum/holiday/anz/get_station_name()
 	return pick("Australian","New Zealand","Poppy", "Southern Cross")
@@ -476,7 +476,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 		/obj/item/clothing/under/color/jumpskirt/rainbow,
 		/obj/item/clothing/under/color/rainbow,
 		/obj/item/food/egg/rainbow,
-		/obj/item/food/grown/rainbow_flower,
+		/obj/item/food/grown/flower/rainbow_flower,
 		/obj/item/food/snowcones/rainbow,
 		/obj/item/toy/crayon/rainbow,
 	)
@@ -760,10 +760,10 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	name = "Remembrance Day"
 	begin_month = NOVEMBER
 	begin_day = 11
-	holiday_hat = /obj/item/food/grown/poppy
+	holiday_hat = /obj/item/food/grown/flower/poppy
 	holiday_mail = list(
-		/obj/item/food/grown/harebell,
-		/obj/item/food/grown/poppy,
+		/obj/item/food/grown/flower/harebell,
+		/obj/item/food/grown/flower/poppy,
 		/obj/item/storage/fancy/candle_box,
 	)
 
@@ -790,16 +790,16 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 	name = "Flowers Day"
 	begin_day = 19
 	begin_month = NOVEMBER
-	holiday_hat = /obj/item/food/grown/moonflower
+	holiday_hat = /obj/item/food/grown/flower/moonflower
 	holiday_mail = list(
-		/obj/item/food/grown/harebell,
-		/obj/item/food/grown/moonflower,
-		/obj/item/food/grown/poppy,
-		/obj/item/food/grown/poppy/geranium,
-		/obj/item/food/grown/poppy/geranium/fraxinella,
-		/obj/item/food/grown/poppy/lily,
-		/obj/item/food/grown/rose,
-		/obj/item/food/grown/sunflower,
+		/obj/item/food/grown/flower/harebell,
+		/obj/item/food/grown/flower/moonflower,
+		/obj/item/food/grown/flower/poppy,
+		/obj/item/food/grown/flower/poppy/geranium,
+		/obj/item/food/grown/flower/poppy/geranium/fraxinella,
+		/obj/item/food/grown/flower/poppy/lily,
+		/obj/item/food/grown/flower/rose,
+		/obj/item/food/grown/flower/sunflower,
 		/obj/item/grown/carbon_rose,
 		/obj/item/grown/novaflower,
 	)

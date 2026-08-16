@@ -54,13 +54,6 @@
 		return TRUE
 	return ..()
 
-/datum/species/monkey/get_scream_sound(mob/living/carbon/human/monkey)
-	return get_sfx(SFX_SCREECH)
-
-/datum/species/monkey/get_hiss_sound(mob/living/carbon/human/monkey)
-	return 'sound/mobs/humanoids/human/hiss/human_hiss.ogg'
-	// we're both great apes, or something..
-
 /datum/species/monkey/get_physical_attributes()
 	return "Monkeys are slippery, can crawl into vents, and are more dextrous than humans.. but only when stealing things. \
 		Natural monkeys cannot operate machinery or most tools with their paws, but unusually clever monkeys or those that were once something else can."
@@ -163,6 +156,12 @@
 	SIGNAL_HANDLER
 	if(!tripping || !crossing_mob.combat_mode)
 		return
+	if(crossing_mob.mob_size < MOB_SIZE_HUMAN)
+		return
+	if(ishuman(crossing_mob))
+		var/mob/living/carbon/human/crossing_humie = crossing_mob
+		if(crossing_humie.mob_height <= HUMAN_HEIGHT_SHORTEST)
+			return
 	crossing_mob.knockOver(owner)
 
 /obj/item/organ/brain/primate/get_attacking_limb(mob/living/carbon/human/target)

@@ -533,18 +533,21 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		icon_state = base_icon_state
 	return ..()
 
-/obj/item/fish/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(!istype(item, /obj/item/reagent_containers/cup/fish_feed))
-		return ..()
-	if(!item.reagents.total_volume)
-		balloon_alert(user, "[item.name] is empty!")
-		return TRUE
+/obj/item/fish/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/reagent_containers/cup/fish_feed))
+		return NONE
+
+	if(!tool.reagents.total_volume)
+		balloon_alert(user, "[tool.name] is empty!")
+		return ITEM_INTERACT_BLOCKING
+
 	if(status == FISH_DEAD)
 		balloon_alert(user, "[name] [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "isn't hungry" : "is dead!"]")
-		return TRUE
-	feed(item.reagents)
+		return ITEM_INTERACT_BLOCKING
+
+	feed(tool.reagents)
 	balloon_alert(user, "fed [name]")
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/fish/examine(mob/user)
 	. = ..()
@@ -552,25 +555,25 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		. += span_boldnicegreen("Caught by [catcher_name] on [catch_date].")
 
 	if(HAS_MIND_TRAIT(user, TRAIT_EXAMINE_FISH) || HAS_TRAIT(loc, TRAIT_EXAMINE_FISH))
-		. += span_notice("[p_theyre(TRUE)] [size] cm long.")
-		. += span_notice("[p_they(TRUE)] weighs [weight] [span_tooltip("the standard unit of measurement for space age fish", "kiloclam")].")
+		. += span_notice("[p_Theyre()] [size] cm long.")
+		. += span_notice("[p_They()] weigh[p_s()] [weight] [span_tooltip("the standard unit of measurement for space age fish", "kiloclam")].")
 
 		if(HAS_TRAIT(src, TRAIT_FISH_GENEGUNNED))
-			. += span_warning("[p_theyve(TRUE)] been edited by a fish genegun. [p_they(TRUE)]'ll die if edited again.")
+			. += span_warning("[p_Theyve()] been edited by a fish genegun. [p_They()]'ll die if edited again.")
 
 	. += get_health_warnings(user, always_deep = FALSE)
 
 	if(HAS_TRAIT(src, TRAIT_FISHING_BAIT))
-		. += span_smallnoticeital("[p_they(TRUE)] can be used as a fishing bait.")
+		. += span_smallnoticeital("[p_They()] can be used as a fishing bait.")
 
 	if(bites_amount)
-		. += span_warning("[p_theyve(TRUE)] been bitten by someone.")
+		. += span_warning("[p_Theyve()] been bitten by someone.")
 
 /obj/item/fish/proc/get_health_warnings(mob/user, always_deep = FALSE)
 	if(!HAS_MIND_TRAIT(user, TRAIT_EXAMINE_DEEPER_FISH) && !always_deep)
 		return
 	if(status == FISH_DEAD)
-		return span_deadsay("[p_theyre(TRUE)] [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "taking the big snooze" : "dead"].")
+		return span_deadsay("[p_Theyre()] [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "taking the big snooze" : "dead"].")
 
 	var/list/warnings = list()
 	if(get_starvation_mult())
@@ -590,7 +593,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 			warnings += "mostly healthy"
 
 	if(length(warnings))
-		. += span_warning("[p_theyre(TRUE)] [english_list(warnings)].")
+		. += span_warning("[p_Theyre()] [english_list(warnings)].")
 
 	return .
 
@@ -1114,7 +1117,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		balloon_alert(user, "invalid creature!")
 		return
 	if(status != FISH_DEAD)
-		balloon_alert(user, "[p_theyre(TRUE)] not dead!")
+		balloon_alert(user, "[p_theyre()] not dead!")
 		return
 	set_status(FISH_ALIVE)
 	injector.expend(src, user)
@@ -1580,7 +1583,7 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		if(in_aquarium)
 			to_chat(user, span_warning("[src] runs away from your finger as you dip it into the water!"))
 		else
-			to_chat(user, span_warning("You try to pet [src] but [p_they()] squirms away!"))
+			to_chat(user, span_warning("You try to pet [src] but [p_they()] squirm[p_s()] away!"))
 		return FALSE
 	if(HAS_TRAIT(src, TRAIT_FISH_ELECTROGENESIS) && GET_FISH_ELECTROGENESIS(src) > 15 MEGA JOULES)
 		user.electrocute_act(5, src) //was it all worth it?

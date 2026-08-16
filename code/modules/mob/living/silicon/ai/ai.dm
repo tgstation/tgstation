@@ -2,36 +2,52 @@
 #define CHARACTER_TYPE_SELF "My Character"
 #define CHARACTER_TYPE_CREWMEMBER "Station Member"
 
-/mob/living/silicon/ai/Initialize(mapload, datum/ai_laws/L, mob/target_ai, latejoining = FALSE)
+/**
+ * Init args
+ * * target_ai - The mob taking control of the AI
+ * * base_laws - An instance or typepath of a law datum, if provided the AI will use that lawset instead of making its own
+ * * default_link - An ai_law_rack object to link to on spawn, if possible. Base laws is preferred over this.
+ * * force_mind_move - If TRUE, forces the mind to move even if it is inactive.
+ */
+/mob/living/silicon/ai/Initialize(mapload, mob/target_ai, datum/ai_laws/base_laws, obj/machinery/ai_law_rack/base/default_link, force_mind_move = FALSE)
 	. = ..()
-	if(!target_ai) //If there is no player/brain inside.
+	if(isnull(target_ai)) //If there is no player/brain inside.
 		new/obj/structure/ai_core(loc, CORE_STATE_FINISHED) //New empty terminal.
 		return INITIALIZE_HINT_QDEL //Delete AI.
+
+	if(target_ai.client)
+		set_gender(target_ai.client)
 
 	ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 	status_flags &= ~CANPUSH //AI starts anchored, so dont push it
 
-	if(L && istype(L, /datum/ai_laws))
-		laws = L
-		laws.associate(src)
-		for (var/law in laws.inherent)
-			lawcheck += law
+	if(istype(base_laws, /datum/ai_laws))
+		laws = base_laws.copy_lawset()
+	else if(ispath(base_laws, /datum/ai_laws))
+		laws = new base_laws()
 	else
 		make_laws()
-		for (var/law in laws.inherent)
-			lawcheck += law
+		if(default_link?.can_link_to(src))
+			default_link.link_silicon(src, announce = FALSE)
+		else
+			link_to_first_rack()
+
+	var/datum/antagonist/malf_ai/malf_datum = IS_MALF_AI(target_ai)
+	malf_datum?.add_law_zero()
+
+	law_ui.update_inherent_stated_laws(laws)
 
 	create_eye()
 
-	if((target_ai.mind && target_ai.mind.active) || SSticker.current_state == GAME_STATE_SETTING_UP || latejoining)
+	if(target_ai.mind && (target_ai.mind.active || force_mind_move))
 		target_ai.mind.transfer_to(src)
 		if(is_antag())
 			to_chat(src, span_userdanger("You have been installed as an AI! "))
 			to_chat(src, span_danger("You must obey your silicon laws above all else. Your objectives will consider you to be dead."))
-		if(!mind.has_ever_been_ai)
-			mind.has_ever_been_ai = TRUE
-	else if(target_ai.key)
-		key = target_ai.key
+		mind.has_ever_been_ai = TRUE
+
+	else if(target_ai.ckey)
+		PossessByPlayer(target_ai.ckey)
 
 	to_chat(src, span_bold("You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras)."))
 	to_chat(src, span_bold("To look at other parts of the station, click on yourself to get a camera menu."))
@@ -106,6 +122,12 @@
 			if(!McMobby.binarycheck())
 				continue
 			to_chat(McMobby,span_binarysay("<span class=[SPAN_COMMAND]>\[ SYSTEM \] NEW REMOTE HOST HAS CONNECTED TO THIS CHANNEL -- ID: [src]</span>"), type = MESSAGE_TYPE_RADIO)
+
+	RegisterSignal(src, COMSIG_SILICON_MODULE_RACK_LAWSET_UPDATE, PROC_REF(lawset_updated_sync_borgs))
+
+/mob/living/silicon/ai/mind_initialize()
+	. = ..()
+	mind.has_ever_been_ai = TRUE
 
 /mob/living/silicon/ai/weak_syndie
 	radio = /obj/item/radio/headset/silicon/ai/evil
@@ -249,7 +271,7 @@ GAME_VERB_DESC(/mob/living/silicon/ai, pick_status_display, "Set AI Status Displ
 
 /mob/living/silicon/ai/get_status_tab_items()
 	. = ..()
-	if(stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		. += "Systems nonfunctional"
 		return
 	. += "System integrity: [(health + 100) * 0.5]%"
@@ -261,7 +283,7 @@ GAME_VERB_DESC(/mob/living/silicon/ai, pick_status_display, "Set AI Status Displ
 		var/robot_status = "Nominal"
 		if(connected_robot.shell)
 			robot_status = "AI SHELL"
-		else if(connected_robot.stat != CONSCIOUS || !connected_robot.client)
+		else if(IS_UNCONSCIOUS_OR_CRIT(connected_robot) || !connected_robot.client)
 			robot_status = "OFFLINE"
 		else if(!connected_robot.cell || connected_robot.cell.charge <= 0)
 			robot_status = "DEPOWERED"
@@ -404,7 +426,7 @@ GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "AI Comma
 	copied_mmi.brain?.suicided = suicided // we can't guarantee that the MMI has a brain... sigh
 
 	if(copied_mmi.brainmob.stat == DEAD && !suicided)
-		copied_mmi.brainmob.set_stat(CONSCIOUS)
+		copied_mmi.brainmob.set_stat(STABLE)
 
 	copied_mmi.update_appearance()
 	return copied_mmi
@@ -611,6 +633,15 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, ai_hologram_change, "Change Hologram
 
 	if(incapacitated)
 		return
+
+	ai_holocolor = tgui_color_picker(usr, "Choose a color for your hologram", "Hologram Color")
+	if(ai_holocolor)
+		var/ai_holo_hsv = rgb2hsv(ai_holocolor)
+		var/default_hsv = rgb2hsv(COLOR_AI_HOLOGRAM_BLUE)
+
+		default_hsv[1] = ai_holo_hsv[1]
+
+		ai_holocolor = hsv2rgb(default_hsv)
 
 	var/static/list/choices = assoc_to_keys(GLOB.ai_hologram_category_options) + HOLOGRAM_CHOICE_CHARACTER
 	var/choice = tgui_input_list(usr, "What kind of hologram do you want?",	"Customize", choices)
@@ -837,19 +868,20 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto
 	var/rendered = "<i><span class='game say'>[start][span_name("[hrefpart][namepart] ([jobpart])</a> ")]<span class='message'>[treated_message]</span></span></i>"
 
 	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
-		create_chat_message(speaker, message_language, raw_message, spans)
+		create_chat_message(speaker, message_language, raw_translation, spans)
 	show_message(rendered, 2)
 
-/mob/living/silicon/ai/fully_replace_character_name(oldname,newname)
-	..()
-	if(oldname != real_name)
-		if(eyeobj)
-			eyeobj.name = "[newname] (AI Eye)"
-			modularInterface.imprint_id(name = real_name)
+/mob/living/silicon/ai/fully_replace_character_name(oldname, newname, log_new_name = FALSE)
+	. = ..()
+	if(!.)
+		return
+	if(eyeobj)
+		eyeobj.name = "[newname] (AI Eye)"
+		modularInterface.imprint_id(name = real_name)
 
-		// Notify Cyborgs
-		for(var/mob/living/silicon/robot/Slave in connected_robots)
-			Slave.show_laws()
+	// Notify Cyborgs
+	for(var/mob/living/silicon/robot/slave as anything in connected_robots)
+		slave.show_laws()
 
 /datum/action/innate/choose_modules
 	name = "Malfunction Modules"
@@ -1042,11 +1074,6 @@ GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Tran
 /mob/living/silicon/ai/resist()
 	return
 
-/mob/living/silicon/ai/spawned/Initialize(mapload, datum/ai_laws/L, mob/target_ai)
-	if(!target_ai)
-		target_ai = src //cheat! just give... ourselves as the spawned AI, because that's technically correct
-	. = ..()
-
 /mob/living/silicon/ai/proc/camera_visibility(mob/eye/camera/ai/moved_eye)
 	SScameras.update_eye_chunk(moved_eye)
 
@@ -1101,6 +1128,18 @@ GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Tran
 	if(ai_voicechanger?.changing_voice)
 		return ai_voicechanger.say_name
 	return ..()
+
+/mob/living/silicon/ai/get_unconscious_appearance()
+	var/image/static_overlay = image('icons/effects/effects.dmi', null, "static_base")
+	static_overlay.blend_mode = BLEND_INSET_OVERLAY
+
+	var/image/static_image = image('icons/mob/silicon/ai.dmi', src, "ai-empty")
+	static_image.appearance_flags |= KEEP_TOGETHER
+	static_image.overlays += static_overlay
+	static_image.override = TRUE
+	static_image.name = "unknown AI"
+
+	return static_image
 
 /mob/living/silicon/ai/proc/set_control_disabled(control_disabled)
 	SEND_SIGNAL(src, COMSIG_SILICON_AI_SET_CONTROL_DISABLED, control_disabled)
@@ -1256,6 +1295,13 @@ GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Tran
 
 	. += emissive_appearance(icon, lights_state, src)
 
+/mob/living/silicon/ai/proc/lawset_updated_sync_borgs(datum/source, obj/machinery/ai_law_rack/rack, announce = TRUE)
+	SIGNAL_HANDLER
+
+	for(var/mob/living/silicon/robot/bot as anything in connected_robots)
+		if(bot.try_sync_laws() && announce)
+			bot.show_laws()
+			bot.law_change_counter++
 
 /mob/living/silicon/ai/point_at(atom/pointed_atom, intentional = FALSE)
 	if(pointed_atom in src)

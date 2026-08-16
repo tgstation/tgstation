@@ -625,7 +625,7 @@
 			to_chat(chap, span_cyan("[GLOB.deity] approves of [target]'s slumber."))
 		return result
 
-	if(target.stat == UNCONSCIOUS)
+	if(IS_UNCONSCIOUS(target))
 		if(iscarbon(target))
 			var/mob/living/carbon/sleeper = target
 			sleeper.dream()

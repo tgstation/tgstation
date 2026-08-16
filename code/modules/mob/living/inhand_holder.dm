@@ -85,7 +85,8 @@
 		if(display_messages)
 			to_chat(captor, span_warning("[released_mob] wriggles free!"))
 		captor.dropItemToGround(src)
-	released_mob.forceMove(drop_location())
+	else
+		released_mob.forceMove(drop_location())
 	released_mob.reset_perspective()
 	released_mob.setDir(SOUTH)
 	if(display_messages)

@@ -84,7 +84,7 @@
 
 /datum/personality/process(seconds_per_tick)
 	for(var/mob/living/subject as anything in SSpersonalities.processing_personalities[src])
-		if(subject.stat >= UNCONSCIOUS || HAS_TRAIT(subject, TRAIT_NO_TRANSFORM))
+		if(IS_UNCONSCIOUS(subject) || HAS_TRAIT(subject, TRAIT_NO_TRANSFORM))
 			continue
 		if(on_tick(subject, seconds_per_tick) != PROCESS_KILL)
 			continue

@@ -115,11 +115,11 @@
 			new /obj/item/implanter/storage(src) // 8 tc
 
 		if(KIT_HACKER) //L-L--LOOK AT YOU, HACKER
-			new /obj/item/ai_module/syndicate(src) // 4 tc
+			new /obj/item/ai_module/law/syndicate(src) // 4 tc
 			new /obj/item/card/emag(src) // 4 tc
 			new /obj/item/card/emag/doorjack(src) // 3 tc
 			new /obj/item/encryptionkey/binary(src) // 5 tc
-			new /obj/item/ai_module/toy_ai(src) // ~6 tc
+			new /obj/item/ai_module/law/toy_ai(src) // ~6 tc
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/disk/computer/syndicate/camera_app(src) // 1 tc
@@ -495,6 +495,7 @@
 	new /obj/item/reagent_containers/cup/bottle/carnivorous_blood(src)
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/food/meat/slab/human(src)
+	new /obj/item/paper/guides/carnivorous_blood(src)
 
 /obj/item/storage/box/syndie_kit/nuke
 	name = "nuke core extraction kit"

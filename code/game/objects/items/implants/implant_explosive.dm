@@ -140,7 +140,7 @@
 	playsound(loc, 'sound/items/timer.ogg', 30, FALSE)
 	if(!panic_beep_sound)
 		sleep(delay * 0.25)
-	if(imp_in && !imp_in.stat && !no_paralyze)
+	if(imp_in && !IS_UNCONSCIOUS_OR_CRIT(imp_in) && !no_paralyze)
 		imp_in.visible_message(span_warning("[imp_in] doubles over in pain!"))
 		imp_in.Paralyze(14 SECONDS)
 

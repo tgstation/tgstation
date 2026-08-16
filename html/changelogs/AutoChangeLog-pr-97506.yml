@@ -1,0 +1,5 @@
+author: "thegrb93"
+delete-after: True
+changes:
+  - qol: "Right clicking sink with beaker in hand drains it"
+  - bugfix: "Fixes mop interaction with sink"

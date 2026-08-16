@@ -23,7 +23,7 @@ GAME_VERB(/client, who, "Who", "OOC")
 				else
 					entry += " - Playing as [client.mob.real_name]"
 					switch(client.mob.stat)
-						if(UNCONSCIOUS, HARD_CRIT)
+						if(HARD_CRIT)
 							entry += " - <font color='darkgray'><b>Unconscious</b></font>"
 						if(DEAD)
 							if(isobserver(client.mob))

@@ -91,7 +91,7 @@
 
 /obj/item/organ/tongue/carp/on_life(seconds_per_tick)
 	. = ..()
-	if(owner.stat != CONSCIOUS || !prob(0.1))
+	if(IS_UNCONSCIOUS_OR_CRIT(owner) || !prob(0.1))
 		return
 	owner.emote("cough")
 	var/turf/tooth_fairy = get_turf(owner)

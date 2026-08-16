@@ -1,16 +1,3 @@
-
-/mob/living/silicon/ai/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/ai_module))
-		var/obj/item/ai_module/MOD = W
-		disconnect_shell()
-		if(!mind) //A player mind is required for law procs to run antag checks.
-			to_chat(user, span_warning("[src] is entirely unresponsive!"))
-			return
-		MOD.install(laws, user) //Proc includes a success mesage so we don't need another one
-		return
-
-	return ..()
-
 /mob/living/silicon/ai/blob_act(obj/structure/blob/B)
 	if (stat != DEAD)
 		adjust_brute_loss(60)
@@ -60,13 +47,10 @@
 	return TRUE
 
 /mob/living/silicon/ai/wrench_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(user.combat_mode)
-		return
-	if(stat != DEAD && !incapacitated && (client || deployed_shell?.client))
+	if(!incapacitated && (client || deployed_shell?.client))
 		// alive and well AIs control their floor bolts
-		balloon_alert(user, "the AI's bolt motors resist.")
-		return ITEM_INTERACT_SUCCESS
+		balloon_alert(user, "the AI's bolt motors resist!")
+		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "[!is_anchored ? "tightening" : "loosening"] bolts...")
 	balloon_alert(src, "bolts being [!is_anchored ? "tightened" : "loosened"]...")
 	if(!tool.use_tool(src, user, 4 SECONDS))

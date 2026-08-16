@@ -44,7 +44,7 @@
 	if(QDELETED(our_slime))
 		qdel(src)
 		return
-	if(our_slime.stat != CONSCIOUS || !owner)
+	if(IS_UNCONSCIOUS_OR_CRIT(our_slime) || !owner)
 		our_slime.stop_feeding(silent = TRUE)
 		return
 

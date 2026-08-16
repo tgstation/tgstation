@@ -1,115 +1,108 @@
 /datum/techweb_node/augmentation
-	id = TECHWEB_NODE_AUGMENTATION
-	starting_node = TRUE
 	display_name = "Augmentation"
 	description = "For those who prefer shiny metal over squishy flesh."
-	prereq_ids = list(TECHWEB_NODE_ROBOTICS)
-	design_ids = list(
-		"borg_chest",
-		"borg_head",
-		"borg_l_arm",
-		"borg_l_leg",
-		"borg_r_arm",
-		"borg_r_leg",
-		"borg_suit",
-		"cybernetic_eyes",
-		"cybernetic_eyes_moth",
-		"cybernetic_ears",
-		"cybernetic_ears_cat",
-		"cybernetic_lungs",
-		"cybernetic_stomach",
-		"cybernetic_liver",
-		"cybernetic_heart",
+	node_flags = parent_type::node_flags | TECHWEB_NODE_STARTER
+	prerequisite_nodes = list(/datum/techweb_node/robotics)
+	unlocked_designs = list(
+		/datum/design/borg_chest,
+		/datum/design/borg_head,
+		/datum/design/borg_l_arm,
+		/datum/design/borg_l_leg,
+		/datum/design/borg_r_arm,
+		/datum/design/borg_r_leg,
+		/datum/design/borg_suit,
+		/datum/design/cybernetic_eyes,
+		/datum/design/cybernetic_eyes/moth,
+		/datum/design/cybernetic_ears,
+		/datum/design/cybernetic_ears/cat,
+		/datum/design/cybernetic_lungs,
+		/datum/design/cybernetic_stomach,
+		/datum/design/cybernetic_liver,
+		/datum/design/cybernetic_heart,
 	)
 	experiments_to_unlock = list(
 		/datum/experiment/scanning/people/android,
 	)
 
 /datum/techweb_node/cybernetics
-	id = TECHWEB_NODE_CYBERNETICS
 	display_name = "Cybernetics"
 	description = "Sapient robots with preloaded tool modules and programmable laws."
-	prereq_ids = list(TECHWEB_NODE_AUGMENTATION)
-	design_ids = list(
-		"robocontrol",
-		"borgupload",
-		"cyborgrecharger",
-		"mmi_posi",
-		"mmi",
-		"mmi_m",
-		"advanced_l_arm",
-		"advanced_r_arm",
-		"advanced_l_leg",
-		"advanced_r_leg",
-		"borg_upgrade_rename",
-		"borg_upgrade_restart",
+	prerequisite_nodes = list(/datum/techweb_node/augmentation)
+	unlocked_designs = list(
+		/datum/design/board/robocontrol,
+		/datum/design/board/cyborgrecharger,
+		/datum/design/posibrain,
+		/datum/design/mmi,
+		/datum/design/mmi/medical,
+		/datum/design/advanced_l_arm,
+		/datum/design/advanced_r_arm,
+		/datum/design/advanced_l_leg,
+		/datum/design/advanced_r_leg,
+		/datum/design/borg_upgrade_rename,
+		/datum/design/borg_upgrade_restart,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/borg_service
-	id = TECHWEB_NODE_BORG_SERVICES
 	display_name = "Service Cyborg Upgrades"
 	description = "Let them do the cookin' by the book."
-	prereq_ids = list(TECHWEB_NODE_CYBERNETICS)
-	design_ids = list(
-		"borg_upgrade_rolling_table",
-		"borg_upgrade_condiment_synthesizer",
-		"borg_upgrade_silicon_knife",
-		"borg_upgrade_service_apparatus",
-		"borg_upgrade_drink_apparatus",
-		"borg_upgrade_service_cookbook",
-		"borg_upgrade_botany",
+	prerequisite_nodes = list(/datum/techweb_node/cybernetics)
+	unlocked_designs = list(
+		/datum/design/borg_upgrade_rolling_table,
+		/datum/design/borg_upgrade_condiment_synthesizer,
+		/datum/design/borg_upgrade_silicon_knife,
+		/datum/design/borg_upgrade_service_apparatus,
+		/datum/design/borg_upgrade_drink_apparatus,
+		/datum/design/borg_upgrade_service_cookbook,
+		/datum/design/borg_upgrade_botany,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/borg_mining
-	id = TECHWEB_NODE_BORG_MINING
 	display_name = "Mining Cyborg Upgrades"
 	description = "To mine places too dangerous for humans."
-	prereq_ids = list(TECHWEB_NODE_CYBERNETICS)
-	design_ids = list(
-		"borg_upgrade_lavaproof",
-		"borg_upgrade_holding",
-		"borg_upgrade_diamonddrill",
+	prerequisite_nodes = list(/datum/techweb_node/cybernetics)
+	unlocked_designs = list(
+		/datum/design/borg_upgrade_lavaproof,
+		/datum/design/borg_upgrade_holding,
+		/datum/design/borg_upgrade_diamonddrill,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/borg_medical
-	id = TECHWEB_NODE_BORG_MEDICAL
 	display_name = "Medical Cyborg Upgrades"
 	description = "Let them follow Asimov's First Law."
-	prereq_ids = list(TECHWEB_NODE_BORG_SERVICES, TECHWEB_NODE_SURGERY_ADV)
-	design_ids = list(
-		"borg_upgrade_pinpointer",
-		"borg_upgrade_beakerapp",
-		"borg_upgrade_defibrillator",
-		"borg_upgrade_expandedsynthesiser",
-		"borg_upgrade_piercinghypospray",
-		"borg_upgrade_surgicalprocessor",
-		"borg_upgrade_surgicalomnitool",
-		"borg_upgrade_syringe",
+	prerequisite_nodes = list(/datum/techweb_node/borg_service, /datum/techweb_node/surgery_adv)
+	unlocked_designs = list(
+		/datum/design/borg_upgrade_pinpointer,
+		/datum/design/borg_upgrade_beaker_app,
+		/datum/design/borg_upgrade_defibrillator,
+		/datum/design/borg_upgrade_expandedsynthesiser,
+		/datum/design/borg_upgrade_piercinghypospray,
+		/datum/design/borg_upgrade_surgicalprocessor,
+		/datum/design/borg_upgrade_surgicalomnitool,
+		/datum/design/borg_upgrade_syringe,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/borg_utility
-	id = TECHWEB_NODE_BORG_UTILITY
 	display_name = "Utility Cyborg Upgrades"
 	description = "Let them wipe our floors for us."
-	prereq_ids = list(TECHWEB_NODE_BORG_SERVICES, TECHWEB_NODE_SANITATION)
-	design_ids = list(
-		"borg_upgrade_advancedmop",
-		"borg_upgrade_broomer",
-		"borg_upgrade_expand",
-		"borg_upgrade_prt",
-		"borg_upgrade_plunger",
-		"borg_upgrade_high_capacity_replacer",
-		"borg_upgrade_selfrepair",
-		"borg_upgrade_thrusters",
-		"borg_upgrade_trashofholding",
+	prerequisite_nodes = list(/datum/techweb_node/borg_service, /datum/techweb_node/sanitation)
+	unlocked_designs = list(
+		/datum/design/borg_upgrade_advancedmop,
+		/datum/design/borg_upgrade_broomer,
+		/datum/design/borg_upgrade_expand,
+		/datum/design/borg_upgrade_prt,
+		/datum/design/borg_upgrade_plunger,
+		/datum/design/borg_upgrade_high_capacity_replacer,
+		/datum/design/borg_upgrade_selfrepair,
+		/datum/design/borg_upgrade_thrusters,
+		/datum/design/borg_upgrade_trashofholding,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
@@ -117,144 +110,136 @@
 /datum/techweb_node/borg_utility/New()
 	. = ..()
 	if(!CONFIG_GET(flag/disable_secborg))
-		design_ids += "borg_upgrade_disablercooler"
+		unlocked_designs += /datum/design/borg_upgrade_disablercooler
 
 /datum/techweb_node/borg_engi
-	id = TECHWEB_NODE_BORG_ENGI
 	display_name = "Engineering Cyborg Upgrades"
 	description = "To slack even more."
-	prereq_ids = list(TECHWEB_NODE_BORG_MINING, TECHWEB_NODE_PARTS_UPG)
-	design_ids = list(
-		"borg_upgrade_rped",
-		"borg_upgrade_engineeringomnitool",
-		"borg_upgrade_engineeringapp",
-		"borg_upgrade_inducer",
+	prerequisite_nodes = list(/datum/techweb_node/borg_mining, /datum/techweb_node/parts_upg)
+	unlocked_designs = list(
+		/datum/design/borg_upgrade_rped,
+		/datum/design/borg_upgrade_engineeringomnitool,
+		/datum/design/borg_upgrade_engineering_app,
+		/datum/design/borg_upgrade_inducer,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 // Implants root node
 /datum/techweb_node/passive_implants
-	id = TECHWEB_NODE_PASSIVE_IMPLANTS
 	display_name = "Passive Implants"
 	description = "Implants designed to operate seamlessly without active user input, enhancing various physiological functions or providing continuous benefits."
-	prereq_ids = list(TECHWEB_NODE_AUGMENTATION)
-	design_ids = list(
-		"skill_station",
-		"implant_trombone",
-		"implant_chem",
-		"implant_tracking",
-		"implant_exile",
-		"implant_beacon",
-		"implant_bluespace",
-		"implantcase",
-		"implanter",
-		"locator",
+	prerequisite_nodes = list(/datum/techweb_node/augmentation)
+	unlocked_designs = list(
+		/datum/design/board/skill_station,
+		/datum/design/implant_sadtrombone,
+		/datum/design/implant_chem,
+		/datum/design/implant_tracking,
+		/datum/design/implant_exile,
+		/datum/design/implant_beacon,
+		/datum/design/implant_bluespace,
+		/datum/design/implantcase,
+		/datum/design/implanter,
+		/datum/design/locator,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SECURITY, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/cyber/cyber_implants
-	id = TECHWEB_NODE_CYBER_IMPLANTS
 	display_name = "Cybernetic Implants"
 	description = "Advanced technological enhancements integrated into the body, offering improved physical capabilities."
-	prereq_ids = list(TECHWEB_NODE_PASSIVE_IMPLANTS, TECHWEB_NODE_CYBERNETICS)
-	design_ids = list(
-		"ci-breather",
-		"ci-nutriment",
-		"ci-thrusters",
-		"ci-herculean",
-		"ci-connector",
+	prerequisite_nodes = list(/datum/techweb_node/passive_implants, /datum/techweb_node/cybernetics)
+	unlocked_designs = list(
+		/datum/design/cyberimp_breather,
+		/datum/design/cyberimp_nutriment,
+		/datum/design/cyberimp_thrusters,
+		/datum/design/cyberimp_herculean,
+		/datum/design/cyberimp_connector,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/cyber/New()
-	..()
+	. = ..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_CYBERNETIC_REVOLUTION))
 		research_costs[TECHWEB_POINT_TYPE_GENERIC] /= 2
 
 /datum/techweb_node/cyber/combat_implants
-	id = TECHWEB_NODE_COMBAT_IMPLANTS
 	display_name = "Combat Implants"
 	description = "To make sure that you can wake the f*** up, samurai."
-	prereq_ids = list(TECHWEB_NODE_CYBER_IMPLANTS)
-	design_ids = list(
-		"ci-reviver",
-		"ci-antidrop",
-		"ci-antistun",
-		"ci-tacvisor",
+	prerequisite_nodes = list(/datum/techweb_node/cyber/cyber_implants)
+	unlocked_designs = list(
+		/datum/design/cyberimp_reviver,
+		/datum/design/cyberimp_antidrop,
+		/datum/design/cyberimp_antistun,
+		/datum/design/cyberimp_tacvisor,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/cyber/integrated_toolsets
-	id = TECHWEB_NODE_INTERGRATED_TOOLSETS
 	display_name = "Integrated Toolsets"
 	description = "Decades of contraband smuggling by assistants have led to the development of a full toolbox that fits seamlessly into your arm."
-	prereq_ids = list(TECHWEB_NODE_COMBAT_IMPLANTS, TECHWEB_NODE_EXP_TOOLS)
-	design_ids = list(
-		"ci-nutrimentplus",
-		"ci-surgery",
-		"ci-surgery-brain",
-		"ci-toolset",
+	prerequisite_nodes = list(/datum/techweb_node/cyber/combat_implants, /datum/techweb_node/exp_tools)
+	unlocked_designs = list(
+		/datum/design/cyberimp_nutriment_plus,
+		/datum/design/cyberimp_surgical,
+		/datum/design/cyberimp_surgery_brain,
+		/datum/design/cyberimp_toolset,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/cyber/cyber_organs
-	id = TECHWEB_NODE_CYBER_ORGANS
 	display_name = "Cybernetic Organs"
 	description = "We have the technology to rebuild him."
-	prereq_ids = list(TECHWEB_NODE_CYBERNETICS)
-	design_ids = list(
-		"cybernetic_eyes_improved",
-		"cybernetic_eyes_improved_moth",
-		"cybernetic_ears_u",
-		"cybernetic_ears_u_cat",
-		"cybernetic_lungs_tier2",
-		"cybernetic_stomach_tier2",
-		"cybernetic_liver_tier2",
-		"cybernetic_heart_tier2",
+	prerequisite_nodes = list(/datum/techweb_node/cybernetics)
+	unlocked_designs = list(
+		/datum/design/cybernetic_eyes/improved,
+		/datum/design/cybernetic_eyes/improved/moth,
+		/datum/design/cybernetic_ears_u,
+		/datum/design/cybernetic_ears_u/cat,
+		/datum/design/cybernetic_lungs/tier2,
+		/datum/design/cybernetic_stomach/tier2,
+		/datum/design/cybernetic_liver/tier2,
+		/datum/design/cybernetic_heart/tier2,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/cyber/cyber_organs_upgraded
-	id = TECHWEB_NODE_CYBER_ORGANS_UPGRADED
 	display_name = "Upgraded Cybernetic Organs"
 	description = "We have the technology to upgrade him."
-	prereq_ids = list(TECHWEB_NODE_CYBER_ORGANS)
-	design_ids = list(
-		"ci-gloweyes",
-		"ci-welding",
-		"ci-gloweyes-moth",
-		"ci-welding-moth",
-		"cybernetic_ears_whisper",
-		"cybernetic_ears_whisper_cat",
-		"cybernetic_ears_volume",
-		"cybernetic_ears_volume_cat",
-		"cybernetic_lungs_tier3",
-		"cybernetic_stomach_tier3",
-		"cybernetic_liver_tier3",
-		"cybernetic_heart_tier3",
+	prerequisite_nodes = list(/datum/techweb_node/cyber/cyber_organs)
+	unlocked_designs = list(
+		/datum/design/cyberimp_gloweyes,
+		/datum/design/cyberimp_welding,
+		/datum/design/cyberimp_gloweyes/moth,
+		/datum/design/cyberimp_welding/moth,
+		/datum/design/cybernetic_ears_whisper,
+		/datum/design/cybernetic_ears_whisper/cat,
+		/datum/design/cybernetic_ears_volume,
+		/datum/design/cybernetic_ears_volume/cat,
+		/datum/design/cybernetic_lungs/tier3,
+		/datum/design/cybernetic_stomach/tier3,
+		/datum/design/cybernetic_liver/tier3,
+		/datum/design/cybernetic_heart/tier3,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	required_experiments = list(/datum/experiment/scanning/people/augmented_organs)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/cyber/cyber_organs_adv
-	id = TECHWEB_NODE_CYBER_ORGANS_ADV
 	display_name = "Advanced Cybernetic Organs"
 	description = "Cutting-edge cybernetic organs offering enhanced sensory capabilities, making it easier than ever to detect ERP."
-	prereq_ids = list(TECHWEB_NODE_CYBER_ORGANS_UPGRADED, TECHWEB_NODE_NIGHT_VISION)
-	design_ids = list(
-		"cybernetic_ears_xray",
-		"cybernetic_ears_xray_cat",
-		"ci-thermals",
-		"ci-xray",
-		"ci-thermals-moth",
-		"ci-xray-moth",
+	prerequisite_nodes = list(/datum/techweb_node/cyber/cyber_organs_upgraded, /datum/techweb_node/night_vision)
+	unlocked_designs = list(
+		/datum/design/cybernetic_ears_xray,
+		/datum/design/cybernetic_ears_xray/cat,
+		/datum/design/cyberimp_thermals,
+		/datum/design/cyberimp_xray,
+		/datum/design/cyberimp_thermals/moth,
+		/datum/design/cyberimp_xray/moth,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/people/android = TECHWEB_TIER_5_POINTS)

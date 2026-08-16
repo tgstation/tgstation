@@ -16,7 +16,11 @@
 		controller.clear_blackboard_key(BB_CURRENT_PET_TARGET)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	var/minimum_stat = controller.blackboard[BB_TARGET_MINIMUM_STAT]
-	if((!isnull(minimum_stat) && victim.stat > minimum_stat) || victim == controller.pawn)
+	var/checked_stat = victim.stat
+	if(controller.blackboard[BB_TREAT_UNCONSCIOUS_AS_HARDCRIT] && IS_UNCONSCIOUS(victim))
+		checked_stat = max(checked_stat, HARD_CRIT)
+
+	if((isnum(minimum_stat) && checked_stat > minimum_stat) || victim == controller.pawn)
 		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 		controller.clear_blackboard_key(BB_CURRENT_PET_TARGET)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED

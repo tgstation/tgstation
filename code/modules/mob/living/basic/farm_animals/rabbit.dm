@@ -13,7 +13,6 @@
 	icon_state = "rabbit_white"
 	icon_living = "rabbit_white"
 	icon_dead = "rabbit_white_dead"
-	gender = PLURAL
 	mob_biotypes = MOB_ORGANIC | MOB_BEAST
 	health = 15
 	maxHealth = 15
@@ -90,7 +89,7 @@
 	. = ..()
 	//passed to the egg_layer component as how many eggs it gets when it eats something.
 	var/eggs_added_from_eating = rand(1, 4)
-	var/list/feed_messages = list("[p_they()] nibbles happily.", "[p_they()] noms happily.")
+	var/list/feed_messages = list("[p_they()] nibble[p_s()] happily.", "[p_they()] nom[p_s()] happily.")
 	AddComponent(/datum/component/egg_layer,\
 		/obj/item/surprise_egg,\
 		list(/obj/item/food/grown/carrotlike/carrot),\

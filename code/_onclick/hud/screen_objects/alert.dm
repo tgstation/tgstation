@@ -557,7 +557,7 @@
 	SIGNAL_HANDLER
 
 	if(QDELETED(offer.offered_item))
-		examine_list += span_warning("[source]'s arm appears tensed up, as if [source.p_they()] plan on pulling it back suddenly...")
+		examine_list += span_warning("[source]'s arm appears tensed up, as if [source.p_they()] plan[source.p_s()] on pulling it back suddenly...")
 
 /atom/movable/screen/alert/give/hand
 	screentip_override_text = "Take Hand"
@@ -608,7 +608,7 @@
 		return
 	if(length(last_whisper))
 		living_owner.say("#[last_whisper]")
-	living_owner.succumb(whispered = length(last_whisper) > 0)
+	INVOKE_GAME_VERB(living_owner, usr, /mob/living, succumb, whisper = length(last_whisper) > 0)
 
 //ALIENS
 
@@ -1162,13 +1162,12 @@
 	if(!.)
 		return
 
-	var/mob/living/carbon/human/human_owner = owner
-
-	if(!human_owner.can_resist() || !human_owner.shoes)
+	var/obj/item/clothing/shoes/shoes = owner.get_item_by_slot(ITEM_SLOT_FEET)
+	if(!owner.can_resist() || !istype(shoes, /obj/item/clothing/shoes))
 		return
 
-	human_owner.changeNext_move(CLICK_CD_RESIST)
-	human_owner.shoes.handle_tying(human_owner)
+	owner.changeNext_move(CLICK_CD_RESIST)
+	shoes.handle_tying(owner)
 
 /atom/movable/screen/alert/shoes/untied
 	name = "Untied Shoes"

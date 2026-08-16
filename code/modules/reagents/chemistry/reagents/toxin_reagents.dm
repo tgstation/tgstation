@@ -299,6 +299,22 @@
 			continue
 		data += dna
 
+/obj/item/paper/guides/carnivorous_blood
+	name = "Thank you for your purchase!"
+	default_raw_text = "We thank you for your purchase of a sample of Carnivorous Blood for your \[MEDICAL RESEARCH\].\
+	<br>We at Interdyne Pharmaceuticals love to see passion for the field of \[BLOODOLOGY\].\
+	<br>We hope to see you succeed in your goal of \[JUSTGIVEIT\].\
+	<br>Please exercise caution. Interdyne Pharmaceuticals is not responsible for bodily harm caused by the substance.\
+	<br>\
+	<br>☣BIOHAZARD WARNING☣\
+	<ul>\
+	<li>NEVER allow Carnivorous Blood to enter a living being's bloodstream. The substance has been found to rapidly deplete blood cell counts.\
+	<li>NEVER mix Carnivorous Blood with actual blood outside a living being. Doing so will greatly increase the risk to the blood's donor if the substance finds itself within their bloodstream.\
+	<li>If three or more beings have had their blood mixed with a sample of Carnivorous Blood, this additional risk no longer applies, though the sample should be disposed of immediately.\
+	<li>NEVER mix liquified meat, or any other high-protein liquid, with Carnivorous Blood. Doing so will cause the substance to rapidly self-replicate.\
+	</ul>\
+	"
+
 /datum/reagent/toxin/slimejelly
 	name = "Slime Jelly"
 	description = "A gooey semi-liquid produced from one of the deadliest lifeforms in existence. SO REAL."
@@ -993,7 +1009,7 @@
 		if(3)
 			if(!affected_mob.undergoing_cardiac_arrest() && affected_mob.can_heartattack())
 				affected_mob.set_heartattack(TRUE)
-				if(affected_mob.stat == CONSCIOUS)
+				if(!IS_UNCONSCIOUS_OR_CRIT(affected_mob))
 					affected_mob.visible_message(span_userdanger("[affected_mob] clutches at [affected_mob.p_their()] chest as if [affected_mob.p_their()] heart stopped!"))
 			else
 				affected_mob.losebreath += 10

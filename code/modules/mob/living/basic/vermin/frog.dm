@@ -65,7 +65,7 @@
 
 /mob/living/basic/frog/proc/on_entered(datum/source, entered as mob|obj)
 	SIGNAL_HANDLER
-	if(stat || !isliving(entered))
+	if(IS_UNCONSCIOUS_OR_CRIT(src) || !isliving(entered))
 		return
 	var/mob/living/entered_mob = entered
 	if(entered_mob.mob_size > MOB_SIZE_TINY)
