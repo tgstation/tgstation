@@ -107,3 +107,9 @@
 	description = "An Appetite... SATISFIED."
 	mood_change = 5
 	timeout = 3 MINUTES
+
+//Completed Farstar Amarita communion
+/datum/mood_event/farstar_shared
+	description = "I can feel a sense of appreciation from somewhere very, very far away."
+	mood_change = 3
+	timeout = 10 MINUTES

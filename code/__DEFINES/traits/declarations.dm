@@ -1237,6 +1237,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait for if you've recently had a Footsoldier's Razor cocktail
 #define TRAIT_HAD_FOOTSOLDIERS_RAZOR "had_footsoldiers_razor"
 
+/// Trait for if you've completed the farstar amarita's communion
+#define TRAIT_FARSTAR_SHARED "farstar_shared"
+
 /// Whether bots will salute this mob.
 #define TRAIT_COMMISSIONED "commissioned"
 

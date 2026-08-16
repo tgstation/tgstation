@@ -3561,7 +3561,7 @@
 	boozepwr = 50
 	color = "#76276b"
 	quality = DRINK_FANTASTIC
-	taste_description = "the knowledge that something else is tasting with you"
+	taste_description = "something else tasting with you"
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	//Creates an illusory(?) star gazer that wants a sippy, and which only the drinker can see. Similar to the stalking phantom brain trauma
@@ -3571,19 +3571,53 @@
 /obj/effect/client_image_holder/thirsty_gazer
 	name = "???"
 	desc = "It looks... thirsty?"
-	image_icon = 'icons/mob/nonhuman-player/96x96eldritch_mobs.dmi' //TODO: figure out how to center this properly
+	image_icon = 'icons/mob/nonhuman-player/96x96eldritch_mobs.dmi'
 	image_state = "star_gazer"
 	pixel_x = -32
 	base_pixel_x = -32
-	//TODO: Give this a wibbly wobbly semi-transparent effect. Also, should probably fade in rather than suddenly appear.
+	alpha = 0
 
 /datum/reagent/consumable/ethanol/farstar_amrita/proc/create_gazer(mob/living/carbon/drinker)
+	if(HAS_TRAIT(drinker, TRAIT_FARSTAR_SHARED)) //If you've already fed one, you can't see new ones
+		return
 	var/turf/gazer_source = get_step(drinker, REVERSE_DIR(drinker.dir)) //directly behind the drinker.
 	gazer = new gazer_type(gazer_source, drinker)
+
+/obj/effect/client_image_holder/thirsty_gazer/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_ATTACKBY, PROC_REF(on_attacked)) //Do I need to specify where to unregister this?
+	animate(src, alpha = 80, time = 3 SECONDS, easing = CIRCULAR_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
+
+/obj/effect/client_image_holder/thirsty_gazer/generate_image()
+	. = ..()
+	var/atom/image = .
+	var/static/list/wave_filter = list(type = "wave", x = 2, size = 4)
+	image.add_filter("wave_filter_gazer", 3, wave_filter)
+	return image
+
+/obj/effect/client_image_holder/thirsty_gazer/proc/on_attacked(atom/target, obj/item/thing, mob/living/attacker, list/modifiers)
+	SIGNAL_HANDLER
+	if(!istype(thing, /obj/item/reagent_containers/cup/glass/drinkingglass)) //a good host serves their guests with proper glasware
+		return
+	if(thing.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/farstar_amrita) < 5) //need at least 5u for a proper sippy
+		return
+	playsound(src,'sound/items/drink.ogg', rand(10,50), TRUE)
+	to_chat(attacker, span_notice("You blink. There's nothing there, and there never was. And yet, you feel like you've established some kind of connection, and your glass feels a bit lighter."))
+	attacker.add_mood_event("farstar_shared", /datum/mood_event/farstar_shared)
+	ADD_TRAIT(attacker, TRAIT_FARSTAR_SHARED, type)
+	thing.reagents.remove_reagent(/datum/reagent/consumable/ethanol/farstar_amrita, 5)
+	QDEL_NULL(target)
 
 /datum/reagent/consumable/ethanol/farstar_amrita/on_mob_add(mob/living/carbon/drinker)
 	. = ..()
 	create_gazer(drinker)
+
+/datum/reagent/consumable/ethanol/farstar_amrita/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
+	if(get_dist(drinker, gazer) >= 7 || gazer.z != drinker.z) //deletes if you get too far away
+		QDEL_NULL(gazer)
+		if(SPT_PROB(20, seconds_per_tick)) //unpredictably spawns a new one
+			create_gazer(drinker)
 
 /datum/reagent/consumable/ethanol/farstar_amrita/on_mob_delete(mob/living/carbon/drinker)
 	. = ..()
