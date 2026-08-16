@@ -454,3 +454,7 @@
   - bugfix: The Destructive Analyzer properly unlocks research nodes again
   TealSeer:
   - bugfix: fixed icons in the biogenerator UI being broken
+  timothymtorres:
+  - rscadd: Add "Death Mimicry" positive quirk. Performing a death gasp knocks you
+      unconscious and tricks anyone examining you into believing you've succumbed
+      to your injuries for a short time.
