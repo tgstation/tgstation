@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Deleted Bloodworm's stat panel entry and instead moved it to their action button & a new screen alert."
