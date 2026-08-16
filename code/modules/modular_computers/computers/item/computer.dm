@@ -39,9 +39,9 @@
 
 	var/used_capacity
 
-	var/os_type = /datum/operating_system/sosix/ntos
+	var/os_type = /datum/operating_system/default/ntos
 
-	var/datum/operating_system/sosix/os
+	var/datum/operating_system/default/os
 
 	///Flag of the type of device the modular computer is, deciding what types of apps it can run.
 	var/hardware_flag = PROGRAM_ALL
@@ -438,8 +438,8 @@
 		add_log("manual overriding of permissions and modification of device firmware detected. Reboot and reinstall required.")
 	obj_flags |= EMAGGED
 	// TODO: REFACTOR THAT IS NOT CORRECT
-	if(istype(os, /datum/operating_system/sosix/ntos))
-		var/datum/operating_system/sosix/ntos/ntos = os
+	if(istype(os, /datum/operating_system/default/ntos))
+		var/datum/operating_system/default/ntos/ntos = os
 		ntos.device_theme = PDA_THEME_SYNDICATE
 	if(user)
 		balloon_alert(user, "syndieOS loaded")
@@ -668,8 +668,8 @@
 /obj/item/modular_computer/proc/get_header_data()
 	var/list/data = list()
 
-	if(istype(os, /datum/operating_system/sosix/ntos))
-		var/datum/operating_system/sosix/ntos/ntos = os
+	if(istype(os, /datum/operating_system/default/ntos))
+		var/datum/operating_system/default/ntos/ntos = os
 		data["PC_device_theme"] = ntos.device_theme
 
 	if(internal_cell)

@@ -1,4 +1,4 @@
-/datum/operating_system/sosix/ntos/mobile
+/datum/operating_system/default/ntos/mobile
 	name = "NTOS Mobile"
 	description = "A streamlined version of NTOS designed for mobile modular computers."
 	max_idle_programs = 2
@@ -12,13 +12,13 @@
 		/datum/computer_file/program/crew_manifest,
 	)
 
-/datum/operating_system/sosix/ntos/mobile/install(mob/user)
+/datum/operating_system/default/ntos/mobile/install(mob/user)
 	..()
 	for(var/programs in pda_programs)
 		var/datum/computer_file/program_type = new programs
 		store_file(program_type)
 
-/datum/operating_system/sosix/ntos/mobile/activate_program(mob/user, datum/computer_file/program/program)
+/datum/operating_system/default/ntos/mobile/activate_program(mob/user, datum/computer_file/program/program)
 	..()
 	if(!program)
 		return
@@ -31,7 +31,7 @@
 		active_threads[1] = program
 	program.on_made_active_program(user)
 
-/datum/operating_system/sosix/ntos/mobile/run_program(mob/user, datum/computer_file/program/program, open_ui = TRUE)
+/datum/operating_system/default/ntos/mobile/run_program(mob/user, datum/computer_file/program/program, open_ui = TRUE)
 	..()
 
 	if(isnull(program) || !istype(program)) // Program not found or it's not executable program.
@@ -47,7 +47,7 @@
 		program.alert_pending = FALSE
 		idle_threads.Remove(program)
 		if(open_ui)
-			INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/operating_system/sosix/ntos/mobile, user_interact), user)
+			INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/operating_system/default/ntos/mobile, user_interact), user)
 		hardware.update_appearance(UPDATE_ICON)
 		return TRUE
 
@@ -70,18 +70,18 @@
 	activate_program(user, program)
 	program.alert_pending = FALSE
 	if(open_ui)
-		INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/operating_system/sosix/ntos/mobile, user_interact), user)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/operating_system/default/ntos/mobile, user_interact), user)
 	hardware.update_appearance(UPDATE_ICON)
 	return TRUE
 
-/datum/operating_system/sosix/ntos/mobile/kill_program(datum/computer_file/program/program)
+/datum/operating_system/default/ntos/mobile/kill_program(datum/computer_file/program/program)
 	..()
 	var/mob/user = usr
 	program.on_kill(user)
 	if(program == get_active_thread(1))
 		active_threads[1] = null
 		if(!QDELETED(hardware) && hardware.enabled && user)
-			INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/operating_system/sosix/ntos/mobile, user_interact), user)
+			INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/operating_system/default/ntos/mobile, user_interact), user)
 	else if(program in idle_threads)
 		idle_threads.Remove(program)
 	else
@@ -95,13 +95,13 @@
 	SEND_SIGNAL(program, COMSIG_COMPUTER_PROGRAM_KILL, user)
 
 
-/datum/operating_system/sosix/ntos/mobile/ui_state(mob/user)
+/datum/operating_system/default/ntos/mobile/ui_state(mob/user)
 	if(hardware.inserted_pai && (user == hardware.inserted_pai.pai))
 		return GLOB.contained_state
 	return ..()
 
 // Operates TGUI
-/datum/operating_system/sosix/ntos/mobile/ui_interact(mob/user, datum/tgui/ui)
+/datum/operating_system/default/ntos/mobile/ui_interact(mob/user, datum/tgui/ui)
 	if(!hardware.enabled || !user.can_read(hardware, READING_CHECK_LITERACY))
 		ui?.close()
 		return
@@ -122,7 +122,7 @@
 	else if(active_program?.always_update_ui)
 		active_program.ui_interact(user, ui)
 
-/datum/operating_system/sosix/ntos/mobile/ui_assets(mob/user)
+/datum/operating_system/default/ntos/mobile/ui_assets(mob/user)
 	var/list/data = list()
 	data += get_asset_datum(/datum/asset/simple/headers)
 	//TODO: ALL ACTIVE PROGRMAS SEND IT
@@ -131,7 +131,7 @@
 		data += active_program.ui_assets(user)
 	return data
 
-/datum/operating_system/sosix/ntos/mobile/ui_static_data(mob/user)
+/datum/operating_system/default/ntos/mobile/ui_static_data(mob/user)
 	var/list/data = list()
 	var/datum/computer_file/program/active_program = get_active_thread(1)
 	if(active_program)
@@ -141,7 +141,7 @@
 	data["show_imprint"] = istype(hardware, /obj/item/modular_computer/pda)
 	return data
 
-/datum/operating_system/sosix/ntos/mobile/ui_data(mob/user)
+/datum/operating_system/default/ntos/mobile/ui_data(mob/user)
 	var/list/data = hardware.get_header_data()
 	var/datum/computer_file/program/active_program = get_active_thread(1)
 	if(active_program)
@@ -189,7 +189,7 @@
 	return data
 
 // Handles user's GUI input
-/datum/operating_system/sosix/ntos/mobile/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+/datum/operating_system/default/ntos/mobile/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
@@ -299,17 +299,17 @@
 	if(active_program)
 		return active_program.ui_act(action, params, ui, state)
 
-/datum/operating_system/sosix/ntos/mobile/ui_host()
+/datum/operating_system/default/ntos/mobile/ui_host()
 	if(hardware.physical)
 		return hardware.physical
 	return hardware
 
-/datum/operating_system/sosix/ntos/mobile/ui_close(mob/user)
+/datum/operating_system/default/ntos/mobile/ui_close(mob/user)
 	. = ..()
 	var/datum/computer_file/program/active_program = get_active_thread(1)
 	active_program?.ui_close(user)
 
-/datum/operating_system/sosix/ntos/mobile/user_interact(mob/user)
+/datum/operating_system/default/ntos/mobile/user_interact(mob/user)
 	if(user)
 		var/datum/tgui/active_ui = SStgui.get_open_ui(user, src)
 		if(!active_ui)

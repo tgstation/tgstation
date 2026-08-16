@@ -13,7 +13,7 @@
 	if(!check_programs)
 		return FALSE
 
-	INVOKE_ASYNC(os, TYPE_PROC_REF(/datum/operating_system/sosix, shutdown_os))
+	INVOKE_ASYNC(os, TYPE_PROC_REF(/datum/operating_system/default, shutdown_os))
 	return FALSE
 
 /obj/item/modular_computer/proc/give_power(amount)

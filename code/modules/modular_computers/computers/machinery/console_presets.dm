@@ -40,13 +40,13 @@
 		/datum/computer_file/program/scipaper_program,
 	)
 
-/datum/operating_system/sosix/ntos/old
+/datum/operating_system/default/ntos/old
 	device_theme = PDA_THEME_RETRO
 
 /obj/machinery/modular_computer/preset/research/away/Initialize(mapload)
 	. = ..()
 
-	cpu.os_type = /datum/operating_system/sosix/ntos/old
+	cpu.os_type = /datum/operating_system/default/ntos/old
 
 // ===== COMMAND CONSOLE =====
 /obj/machinery/modular_computer/preset/command

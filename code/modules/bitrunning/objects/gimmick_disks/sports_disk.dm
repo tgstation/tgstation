@@ -80,7 +80,7 @@
 		/obj/item/storage/cans/sixgamerdrink,
 	)
 
-/datum/operating_system/sosix/ntos/gamer
+/datum/operating_system/default/ntos/gamer
 	description = "NanoTrasen Operating System specially for gamers"
 	device_theme = PDA_THEME_TERMINAL
 	starting_programs = list(
@@ -91,7 +91,7 @@
 		/datum/computer_file/program/mafia,
 	)
 
-/datum/operating_system/sosix/ntos/gamer/install()
+/datum/operating_system/default/ntos/gamer/install()
 	for(var/programs in starting_programs)
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
@@ -99,4 +99,4 @@
 /obj/item/modular_computer/laptop/gamer
 	desc = "A high-end laptop often used for metagaming."
 	start_open = FALSE
-	os_type = /datum/operating_system/sosix/ntos/gamer
+	os_type = /datum/operating_system/default/ntos/gamer

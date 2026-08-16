@@ -34,7 +34,7 @@
 	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
 	drop_sound = SFX_GENERIC_DEVICE_DROP
 
-	os_type = /datum/operating_system/sosix/ntos/mobile
+	os_type = /datum/operating_system/default/ntos/mobile
 
 	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen
@@ -241,8 +241,8 @@
 				LAZYOR(theme_app.imported_themes, theme_name)
 
 	var/new_theme = owner_client.prefs.read_preference(/datum/preference/choiced/pda_theme)
-	if(new_theme && istype(os, /datum/operating_system/sosix/ntos))
-		var/datum/operating_system/sosix/ntos/ntos = os
+	if(new_theme && istype(os, /datum/operating_system/default/ntos))
+		var/datum/operating_system/default/ntos/ntos = os
 		ntos.device_theme = GLOB.pda_name_to_theme[new_theme]
 
 /// A simple proc to set the ringtone from a pda.
@@ -259,15 +259,15 @@
  * PDA that doesn't come with the default apps but has Fission360
  * Resistant to emags, these are given to nukies for disk pinpointer stuff.
  */
-/datum/operating_system/sosix/ntos/syndie
+/datum/operating_system/default/ntos/syndie
 	device_theme = PDA_THEME_SYNDICATE
 
-/datum/operating_system/sosix/ntos/syndie/nuke
+/datum/operating_system/default/ntos/syndie/nuke
 	starting_programs = list(
 		/datum/computer_file/program/radar/fission360,
 	)
 
-/datum/operating_system/sosix/ntos/syndie/uplink
+/datum/operating_system/default/ntos/syndie/uplink
 	starting_programs = list(
 		/datum/computer_file/program/contract_uplink,
 		/datum/computer_file/program/secureye/syndicate,
@@ -281,7 +281,7 @@
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#a80001#5C070F#000000"
 	long_ranged = TRUE
-	os_type = /datum/operating_system/sosix/ntos/syndie/nuke
+	os_type = /datum/operating_system/default/ntos/syndie/nuke
 
 /obj/item/modular_computer/pda/nukeops/Initialize(mapload)
 	. = ..()
@@ -298,7 +298,7 @@
 	has_pda_programs = FALSE
 	greyscale_config = /datum/greyscale_config/tablet/stripe_double
 	greyscale_colors = "#696969#000000#FFA500"
-	os_type = /datum/operating_system/sosix/ntos/syndie/uplink
+	os_type = /datum/operating_system/default/ntos/syndie/uplink
 
 
 /**
@@ -441,7 +441,7 @@
 
 /obj/item/modular_computer/pda/silicon/cyborg/syndicate
 	icon_state = "tablet-silicon-syndicate"
-	os_type = /datum/operating_system/sosix/ntos/syndie
+	os_type = /datum/operating_system/default/ntos/syndie
 
 /obj/item/modular_computer/pda/silicon/cyborg/syndicate/Initialize(mapload)
 	. = ..()

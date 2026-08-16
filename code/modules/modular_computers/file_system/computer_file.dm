@@ -14,7 +14,7 @@
 	///The modular computer hosting the file.
 	var/obj/item/modular_computer/computer
 
-	var/datum/operating_system/sosix/os
+	var/datum/operating_system/default/os
 
 	///The computer disk hosting the file.
 	var/obj/item/disk/computer/disk_host

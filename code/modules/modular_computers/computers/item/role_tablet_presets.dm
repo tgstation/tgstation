@@ -499,7 +499,7 @@
 	greyscale_colors = "#891417#80FF80"
 	saved_identification = "John Doe"
 	saved_job = "Citizen"
-	os_type = /datum/operating_system/sosix/ntos/syndie/uplink
+	os_type = /datum/operating_system/default/ntos/syndie/uplink
 
 /obj/item/modular_computer/pda/syndicate/Initialize(mapload)
 	. = ..()

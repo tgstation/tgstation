@@ -1,4 +1,4 @@
-/datum/operating_system/sosix/ntos
+/datum/operating_system/default/ntos
 	name = "Nanotrasen Operating System"
 
 	description = "A modern operating system developed by Nanotrasen for use on their modular computer systems."
@@ -17,12 +17,12 @@
 	var/device_theme = PDA_THEME_NTOS
 
 
-/datum/operating_system/sosix/ntos/shutdown_os()
+/datum/operating_system/default/ntos/shutdown_os()
 	..()
 	for(var/datum/computer_file/program/idle as anything in idle_threads)
 		kill_program(idle)
 
-/datum/operating_system/sosix/ntos/install(mob/user)
+/datum/operating_system/default/ntos/install(mob/user)
 	..()
 	for(var/programs in default_programs + starting_programs)
 		var/datum/computer_file/program_type = new programs
@@ -35,7 +35,7 @@
  * Returns TRUE if successfully stored, FALSE otherwise.
  * user is optional: If set, the action was done by a mob/player
  */
-/datum/operating_system/sosix/ntos/store_file(datum/computer_file/file_storing, mob/user)
+/datum/operating_system/default/ntos/store_file(datum/computer_file/file_storing, mob/user)
 	if(!file_storing || !istype(file_storing))
 		return FALSE
 	if(!can_store_file(file_storing))
@@ -59,7 +59,7 @@
  * Properly checking if the file even exists and is in the computer.
  * Returns TRUE if successfully completed, FALSE otherwise
  */
-/datum/operating_system/sosix/ntos/remove_file(datum/computer_file/file_removing)
+/datum/operating_system/default/ntos/remove_file(datum/computer_file/file_removing)
 	if(!file_removing || !istype(file_removing))
 		return FALSE
 	if(!(file_removing in hardware.stored_files))
@@ -81,7 +81,7 @@
  * Checks if a computer can store a file, as computers can only store unique files.
  * returns TRUE if possible, FALSE otherwise.
  */
-/datum/operating_system/sosix/ntos/can_store_file(datum/computer_file/file)
+/datum/operating_system/default/ntos/can_store_file(datum/computer_file/file)
 	if(!file || !istype(file))
 		return FALSE
 	if(file in hardware.stored_files)
@@ -106,7 +106,7 @@
  * the same filename (disregarding extension), will return it.
  * If a computer disk is passed instead, it will check the disk over the computer.
  */
-/datum/operating_system/sosix/ntos/find_file_by_name(filename, obj/item/disk/computer/target_disk)
+/datum/operating_system/default/ntos/find_file_by_name(filename, obj/item/disk/computer/target_disk)
 	if(!istext(filename))
 		return null
 	if(isnull(target_disk))
@@ -126,7 +126,7 @@
  * the same filename AND extension, will return it.
  * If a computer disk is passed instead, it will check the disk over the computer.
  */
-/datum/operating_system/sosix/ntos/find_file_by_full_name(full_path, obj/item/disk/computer/target_disk)
+/datum/operating_system/default/ntos/find_file_by_full_name(full_path, obj/item/disk/computer/target_disk)
 	if(!istext(full_path))
 		return null
 	if(isnull(target_disk))
@@ -146,7 +146,7 @@
  * A file's uid is always unique to them, so this proc is sometimes preferable over find_file_by_name.
  * If a computer disk is passed instead, it will check the disk over the computer.
  */
-/datum/operating_system/sosix/ntos/find_file_by_uid(uid, obj/item/disk/computer/target_disk)
+/datum/operating_system/default/ntos/find_file_by_uid(uid, obj/item/disk/computer/target_disk)
 	if(!isnum(uid))
 		return null
 	if(isnull(target_disk))

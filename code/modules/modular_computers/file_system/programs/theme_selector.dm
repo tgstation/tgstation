@@ -36,8 +36,8 @@
 				!(computer.obj_flags & EMAGGED) \
 			)
 				return FALSE
-			if(!istype(os, /datum/operating_system/sosix/ntos))
+			if(!istype(os, /datum/operating_system/default/ntos))
 				return FALSE
-			var/datum/operating_system/sosix/ntos/ntos = os
+			var/datum/operating_system/default/ntos/ntos = os
 			ntos.device_theme = GLOB.pda_name_to_theme[selected_theme]
 			return TRUE

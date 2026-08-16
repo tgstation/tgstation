@@ -6037,7 +6037,7 @@
 #include "code\modules\modular_computers\file_system\programs\messenger\messenger_circuit.dm"
 #include "code\modules\modular_computers\file_system\programs\messenger\messenger_data.dm"
 #include "code\modules\modular_computers\file_system\programs\messenger\messenger_program.dm"
-#include "code\modules\modular_computers\operating_system\sosix.dm"
+#include "code\modules\modular_computers\operating_system\default.dm"
 #include "code\modules\modular_computers\operating_system\operating_system.dm"
 #include "code\modules\modular_computers\operating_system\ntos\ntos_mobile.dm"
 #include "code\modules\modular_computers\operating_system\ntos\ntos.dm"
