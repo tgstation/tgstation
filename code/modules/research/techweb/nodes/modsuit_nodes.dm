@@ -1,160 +1,150 @@
 /datum/techweb_node/mod_suit
-	id = TECHWEB_NODE_MOD_SUIT
-	starting_node = TRUE
 	display_name = "Модульные костюмы"
 	description = "Специализированные силовые костюмы, устанавливаемые на спине, с различными МОДулями."
-	prereq_ids = list(TECHWEB_NODE_ROBOTICS)
-	design_ids = list(
-		"suit_storage_unit",
-		"mod_shell",
-		"mod_chestplate",
-		"mod_helmet",
-		"mod_gauntlets",
-		"mod_boots",
-		"mod_plating_standard",
-		"mod_plating_civilian",
-		"mod_paint_kit",
-		"mod_storage",
-		"mod_plasma",
-		"mod_flashlight",
+	node_flags = parent_type::node_flags | TECHWEB_NODE_STARTER
+	prerequisite_nodes = list(/datum/techweb_node/robotics)
+	unlocked_designs = list(
+		/datum/design/board/suit_storage_unit,
+		/datum/design/mod_shell,
+		/datum/design/mod_chestplate,
+		/datum/design/mod_helmet,
+		/datum/design/mod_gauntlets,
+		/datum/design/mod_boots,
+		/datum/design/mod_plating,
+		/datum/design/mod_plating/civilian,
+		/datum/design/mod_paint_kit,
+		/datum/design/module/mod_storage,
+		/datum/design/module/mod_plasma_stabilizer,
+		/datum/design/module/mod_flashlight,
 	)
 
 /datum/techweb_node/mod_equip
-	id = TECHWEB_NODE_MOD_EQUIP
 	display_name = "Оборудование для модульных костюмов"
 	description = "Более совершенные МОДули для улучшения модульных костюмов."
-	prereq_ids = list(TECHWEB_NODE_MOD_SUIT)
-	design_ids = list(
-		"modlink_scryer",
-		"mod_tether",
-		"mod_welding",
-		"mod_longfall",
-		"mod_thermal_regulator",
-		"mod_sign_radio",
-		"mod_storage_expanded",
+	prerequisite_nodes = list(/datum/techweb_node/mod_suit)
+	unlocked_designs = list(
+		/datum/design/modlink_scryer,
+		/datum/design/module/mod_tether,
+		/datum/design/module/mod_visor_welding,
+		/datum/design/module/mod_longfall,
+		/datum/design/module/mod_thermal_regulator,
+		/datum/design/module/mod_glove_translator,
+		/datum/design/module/mod_storage_expanded,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)
 
 /datum/techweb_node/mod_service
-	id = TECHWEB_NODE_MOD_SERVICE
 	display_name = "Гражданские МОДули"
 	description = "Гражданские модульные костюмы для достойной жизни."
-	prereq_ids = list(TECHWEB_NODE_MOD_SUIT)
-	design_ids = list(
-		"mod_clamp",
-		"mod_safety",
-		"mod_mouthhole",
-		"mod_mister_janitor",
-		"mod_plating_portable_suit"
+	prerequisite_nodes = list(/datum/techweb_node/mod_suit)
+	unlocked_designs = list(
+		/datum/design/module/mod_clamp,
+		/datum/design/module/mod_head_protection,
+		/datum/design/module/mod_mouthhole,
+		/datum/design/module/mister_janitor,
+		/datum/design/mod_plating/portable_suit
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS / 2)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SERVICE)
 
 /datum/techweb_node/mod_entertainment
-	id = TECHWEB_NODE_MOD_ENTERTAINMENT
 	display_name = "Развлекательные МОДули"
 	description = "Модульные костюмы для защиты против среды с низким содержанием юмора."
-	prereq_ids = list(TECHWEB_NODE_MOD_SUIT)
-	design_ids = list(
-		"mod_plating_cosmohonk",
-		"mod_bikehorn",
-		"mod_microwave_beam",
-		"mod_waddle",
+	prerequisite_nodes = list(/datum/techweb_node/mod_suit)
+	unlocked_designs = list(
+		/datum/design/mod_plating/cosmohonk,
+		/datum/design/module/mod_bikehorn,
+		/datum/design/module/mod_microwave_beam,
+		/datum/design/module/mod_waddle,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SERVICE)
 
 /datum/techweb_node/mod_medical
-	id = TECHWEB_NODE_MOD_MEDICAL
 	display_name = "Медицинские МОДули"
 	description = "Медицинский МОДкостюм для быстрых спасательных операций."
-	prereq_ids = list(TECHWEB_NODE_MOD_SUIT, TECHWEB_NODE_CHEM_SYNTHESIS)
-	design_ids = list(
-		"mod_plating_medical",
-		"mod_quick_carry",
-		"mod_injector",
-		"mod_organizer",
-		"mod_patienttransport",
+	prerequisite_nodes = list(/datum/techweb_node/mod_suit, /datum/techweb_node/chem_synthesis)
+	unlocked_designs = list(
+		/datum/design/mod_plating/medical,
+		/datum/design/module/mod_quick_carry,
+		/datum/design/module/mod_injector,
+		/datum/design/module/mod_organizer,
+		/datum/design/module/patienttransport,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/mod_engi
-	id = TECHWEB_NODE_MOD_ENGI
 	display_name = "Инженерные МОДули"
 	description = "Инженерный МОДкостюм для работ в особо опасных условиях."
-	prereq_ids = list(TECHWEB_NODE_MOD_EQUIP)
-	design_ids = list(
-		"mod_plating_engineering",
-		"mod_t_ray",
-		"mod_magboot",
-		"mod_constructor",
-		"mod_mister_atmos",
+	prerequisite_nodes = list(/datum/techweb_node/mod_equip)
+	unlocked_designs = list(
+		/datum/design/mod_plating/engineering,
+		/datum/design/module/mod_t_ray,
+		/datum/design/module/mod_magboot,
+		/datum/design/module/mod_constructor,
+		/datum/design/module/mister_atmos,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_ENGINEERING)
 
 /datum/techweb_node/mod_security
-	id = TECHWEB_NODE_MOD_SECURITY
 	display_name = "МОДули службы безопасности"
 	description = "МОДкостюмы службы безопасности для ловли криминальных косманавтов."
-	prereq_ids = list(TECHWEB_NODE_MOD_EQUIP)
-	design_ids = list(
-		"mod_mirage_grenade",
-		"mod_stealth",
-		"mod_mag_harness",
-		"mod_pathfinder",
-		"mod_holster",
-		"mod_sonar",
-		"mod_projectile_dampener",
-		"mod_criminalcapture",
+	prerequisite_nodes = list(/datum/techweb_node/mod_equip)
+	unlocked_designs = list(
+		/datum/design/module/mirage,
+		/datum/design/module/mod_stealth,
+		/datum/design/module/mod_mag_harness,
+		/datum/design/module/mod_pathfinder,
+		/datum/design/module/mod_holster,
+		/datum/design/module/mod_sonar,
+		/datum/design/module/projectile_dampener,
+		/datum/design/module/criminalcapture,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_SECURITY)
 
 /datum/techweb_node/mod_medical_adv
-	id = TECHWEB_NODE_MOD_MEDICAL_ADV
 	display_name = "МОДули полевой хирургии"
 	description = "Медицинские МОДули, разработанное для проведения хирургических операций в полевых условиях."
-	prereq_ids = list(TECHWEB_NODE_MOD_MEDICAL, TECHWEB_NODE_SURGERY_ADV)
-	design_ids = list(
-		"mod_defib",
-		"mod_threadripper",
-		"mod_surgicalprocessor",
-		"mod_statusreadout",
+	prerequisite_nodes = list(/datum/techweb_node/mod_medical, /datum/techweb_node/surgery_adv)
+	unlocked_designs = list(
+		/datum/design/module/defibrillator,
+		/datum/design/module/threadripper,
+		/datum/design/module/surgicalprocessor,
+		/datum/design/module/statusreadout,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_MEDICAL)
 
 /datum/techweb_node/mod_engi_adv
-	id = TECHWEB_NODE_MOD_ENGI_ADV
 	display_name = "Продвинутые инженерные МОДули"
 	description = "Продвинутые инженерные МОДули для работы в особо опасных условиях."
-	prereq_ids = list(TECHWEB_NODE_MOD_ENGI)
-	design_ids = list(
-		"mod_plating_atmospheric",
-		"mod_jetpack",
-		"mod_rad_protection",
-		"mod_emp_shield",
+	prerequisite_nodes = list(/datum/techweb_node/mod_engi)
+	unlocked_designs = list(
+		/datum/design/mod_plating/atmospheric,
+		/datum/design/module/mod_jetpack,
+		/datum/design/module/mod_rad_protection,
+		/datum/design/module/mod_emp_shield,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE, RADIO_CHANNEL_ENGINEERING)
 
 /datum/techweb_node/mod_engi_adv/New()
+	. = ..()
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA)) //we'll really need the rad protection modsuit module
-		starting_node = TRUE
-	return ..()
+		node_flags |= TECHWEB_NODE_STARTER
 
 /datum/techweb_node/mod_anomaly
-	id = TECHWEB_NODE_MOD_ANOMALY
 	display_name = "Аномалок МОДули"
 	description = "МОДули для МОДкостюмов, что требуют аномальные ядра для функциональности."
-	prereq_ids = list(TECHWEB_NODE_MOD_ENGI_ADV, TECHWEB_NODE_ANOMALY_RESEARCH)
-	design_ids = list(
-		"mod_antigrav",
-		"mod_teleporter",
-		"mod_kinesis",
+	prerequisite_nodes = list(/datum/techweb_node/mod_engi_adv, /datum/techweb_node/anomaly_research)
+	unlocked_designs = list(
+		/datum/design/module/mod_antigrav,
+		/datum/design/module/mod_teleporter,
+		/datum/design/module/mod_kinesis,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)

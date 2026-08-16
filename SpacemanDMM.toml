@@ -12,3 +12,7 @@ use_typepath_names = true
 
 [debugger]
 engine = "auxtools"
+
+[map_renderer.render_passes]
+icon-smoothing = false
+icon-smoothing-2025 = true

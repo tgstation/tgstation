@@ -388,16 +388,11 @@
 	tongue.disliked_foodtypes = NONE
 	tongue.toxic_foodtypes = NONE
 
-/// Any time you take a bite of something, if it's meat or an organ you will heal some damage
-/datum/status_effect/heretic_passive/flesh/proc/on_eat(mob/eater, atom/food)
+/// Any time you take a bite of something, if it's meat or gory (probably an organ) you will heal some damage
+/datum/status_effect/heretic_passive/flesh/proc/on_eat(mob/eater, atom/food, foodtypes)
 	SIGNAL_HANDLER
-	var/obj/item/organ/consumed_organ = food
-	if(istype(consumed_organ) && consumed_organ.foodtype_flags & MEAT)
-		heal_glutton() // Heal the owner if they eat meat
-		return
-	var/obj/item/food/consumed_food = food
-	if(istype(consumed_food) && consumed_food.foodtypes & MEAT)
-		heal_glutton() // Heal the owner if they eat meat
+	if(foodtypes & (MEAT | GORE)) //All edible organs are gory, but not all of them are meat (podpeople, fishpeople.) If someone adds edible non-meat, non-gory organs, then I guess back to the drawing board.
+		heal_glutton()
 
 /datum/status_effect/heretic_passive/flesh/proc/heal_glutton()
 	var/healed_amount = owner.heal_overall_damage(2, 2, updating_health = FALSE)

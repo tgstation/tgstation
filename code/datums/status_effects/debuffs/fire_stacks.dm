@@ -140,7 +140,7 @@
 	/// Cached particle type
 	var/cached_state
 
-/datum/status_effect/fire_handler/fire_stacks/get_examine_text()
+/datum/status_effect/fire_handler/fire_stacks/get_examine_text(mob/examiner)
 	if(owner.on_fire)
 		return
 
@@ -338,7 +338,7 @@
 	QDEL_NULL(slipperiness)
 	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
 
-/datum/status_effect/fire_handler/wet_stacks/get_examine_text()
+/datum/status_effect/fire_handler/wet_stacks/get_examine_text(mob/examiner)
 	return "[capitalize(owner.ru_p_they())] выглядит немного [genderize_ru(owner.gender, "мокрым", "мокрой", "мокрым", "мокрыми")]."
 
 /datum/status_effect/fire_handler/wet_stacks/tick(seconds_between_ticks)

@@ -167,6 +167,7 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 		"timeDilation" = "[round(SStime_track.time_dilation_current, 1)]",
 		"mapName" = SSmapping.current_map?.map_name || "Loading...",
 		"mapFeedbackLink" = SSmapping.current_map?.feedback_link,
+		"mapWebmap" = SSmapping.current_map?.mapping_url,
 		"canLeaveBody" = isliving(client?.mob),
 		"canSeeNotes" = CONFIG_GET(flag/see_own_notes),
 		"admins" = build_admin_list(),

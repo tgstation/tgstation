@@ -18,7 +18,7 @@
 	if(owner.has_limbs)
 		stack_trace("Применил базовое хирургическое состояние к [owner.declent_ru(GENITIVE)], у которого есть конечности. Этот эффект предназначен для существ без конечностей.")
 
-/datum/status_effect/basic_surgery_state/get_examine_text()
+/datum/status_effect/basic_surgery_state/get_examine_text(mob/examiner)
 	if(HAS_SURGERY_STATE(surgery_state, SURGERY_SKIN_OPEN))
 		return "Кожа у [owner.declent_ru(GENITIVE)] открыта [HAS_SURGERY_STATE(surgery_state, SURGERY_BONE_SAWED) ? " и кости распилены и открыты" : ""]."
 	// other states are not yet supported

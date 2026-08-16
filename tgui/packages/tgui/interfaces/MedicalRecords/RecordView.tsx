@@ -2,6 +2,7 @@ import { useState } from 'react';
 import {
   Box,
   Button,
+  Dropdown,
   Input,
   LabeledList,
   NoticeBox,
@@ -31,7 +32,13 @@ export const MedicalRecordView = (props) => {
   if (!foundRecord) return <NoticeBox>Ничего не выбрано.</NoticeBox>;
 
   const { act, data } = useBackend<MedicalRecordData>();
-  const { assigned_view, physical_statuses, mental_statuses, station_z } = data;
+  const {
+    assigned_view,
+    physical_statuses,
+    mental_statuses,
+    station_z,
+    blood_types,
+  } = data;
 
   const { min_age, max_age } = data;
 
@@ -132,10 +139,16 @@ export const MedicalRecordView = (props) => {
               />
             </LabeledList.Item>
             <LabeledList.Item color="bad" label="Тип крови">
-              <EditableText
-                field="blood_type"
-                target_ref={crew_ref}
-                text={blood_type}
+              <Dropdown
+                selected={blood_type}
+                options={blood_types}
+                width="6rem"
+                onSelected={(value) =>
+                  act('set_blood_type', {
+                    crew_ref: crew_ref,
+                    blood_type: value,
+                  })
+                }
               />
             </LabeledList.Item>
             <LabeledList.Item

@@ -6,7 +6,7 @@
 	health = 20
 	maxHealth = 20
 	max_stamina = BASIC_MOB_STAMINA_MATCH_HEALTH
-	gender = PLURAL
+	gender = PLURAL // Plural means we randomize by default.
 	living_flags = MOVES_ON_ITS_OWN
 	status_flags = CANPUSH | CANSTUN
 	fire_stack_decay_rate = -5 // Reasonably fast as NPCs will not usually actively extinguish themselves
@@ -85,6 +85,9 @@
 	///We only try to show a gibbing animation if this exists.
 	var/icon_gib = null
 
+	/// If we randomize our gender when its default is set to plural
+	var/randomize_gender = TRUE
+
 	///If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
 	var/gold_core_spawnable = NO_SPAWN
 	///Sentience type, for slime potions. SHOULD BE AN ELEMENT BUT I DONT CARE ABOUT IT FOR NOW
@@ -107,7 +110,7 @@
 /mob/living/basic/Initialize(mapload)
 	. = ..()
 
-	if(gender == PLURAL)
+	if((gender == PLURAL) && randomize_gender)
 		gender = pick(MALE,FEMALE)
 
 	if(!real_name)

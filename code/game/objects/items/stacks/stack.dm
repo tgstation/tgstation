@@ -99,7 +99,10 @@
 	update_appearance()
 
 	if(is_path_in_list(merge_type, GLOB.golem_stack_food_directory))
-		AddComponent(/datum/component/golem_food, golem_food_key = merge_type)
+		var/processing_bonus = 1
+		if(ispath(merge_type, /obj/item/stack/sheet))
+			processing_bonus = GOLEMFOOD_PREPARED_MEAL
+		AddComponent(/datum/component/golem_food, golem_food_key = merge_type, food_multiplier = processing_bonus)
 
 /obj/item/stack/LateInitialize()
 	merge_with_loc()

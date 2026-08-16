@@ -25,7 +25,7 @@
 	///Designs related to the autolathe
 	var/datum/techweb/autounlocking/stored_research
 	///Designs imported from technology disks that we can print.
-	var/list/imported_designs = list()
+	var/list/imported_designs
 	///The container to hold materials
 	var/datum/material_container/materials
 	///direction we output onto (if 0, on top of us)
@@ -45,8 +45,7 @@
 	. = ..()
 
 	set_wires(new /datum/wires/autolathe(src))
-	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe])
-		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe] = new /datum/techweb/autounlocking/autolathe
+	GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe] ||= new /datum/techweb/autounlocking/autolathe()
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/autolathe]
 
 	register_context()
@@ -143,21 +142,21 @@
 	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
-	for(var/design_id in designs)
-		var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+	for(var/design_path in designs)
+		var/datum/design/design = SSresearch.techweb_designs[design_path]
 		if(design.make_reagent)
 			continue
 
 		//compute cost & maximum number of printable items
 		var/coeff = (ispath(design.build_path, /obj/item/stack) ? 1 : creation_efficiency)
 		var/list/cost = list()
-		var/customMaterials = FALSE
+		var/custom_materials = FALSE
 		for(var/datum/material/mat as anything in design.materials)
 			var/mat_cost = design.materials[mat]
 			var/design_cost = OPTIMAL_COST(mat_cost * coeff)
 			if(istype(mat))
 				cost[mat.name] = design_cost
-				customMaterials = FALSE
+				custom_materials = FALSE
 				continue
 
 			var/datum/material_requirement/requirement = null
@@ -172,19 +171,19 @@
 				continue
 
 			cost[requirement.get_description()] = design_cost
-			customMaterials = TRUE
+			custom_materials = TRUE
 
 		//create & send ui data
-		var/icon_size = spritesheet.icon_size_id(design.id)
+		var/icon_size = spritesheet.icon_size_id(design.asset_id)
 		var/list/design_data = list(
 			"name" = design.name,
 			"original_name" = design.original_name, // BANDASTATION EDIT - Design Translate
 			"desc" = design.get_description(),
 			"cost" = cost,
-			"id" = design.id,
+			"path" = design_path,
 			"categories" = design.category,
-			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]",
-			"customMaterials" = customMaterials
+			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.asset_id]",
+			"customMaterials" = custom_materials,
 		)
 
 		output += list(design_data)
@@ -195,7 +194,7 @@
 	var/list/data = materials.ui_static_data()
 
 	data["designs"] = handle_designs(stored_research.researched_designs)
-	if(imported_designs.len)
+	if(LAZYLEN(imported_designs))
 		data["designs"] += handle_designs(imported_designs)
 	if(hacked)
 		data["designs"] += handle_designs(stored_research.hacked_designs)
@@ -228,11 +227,7 @@
 		if(!istype(material))
 			return
 
-		var/amount = params["amount"]
-		if(isnull(amount))
-			return
-
-		amount = text2num(amount)
+		var/amount = text2num(params["amount"])
 		if(isnull(amount))
 			return
 
@@ -258,27 +253,24 @@
 		return
 
 	//validate design
-	var/design_id = params["id"]
-	if(!design_id)
+	var/design_path = text2path(params["design_path"])
+	if(!design_path)
 		return
-	var/valid_design = stored_research.researched_designs[design_id]
-	valid_design ||= stored_research.hacked_designs[design_id]
-	valid_design ||= imported_designs[design_id]
+	var/valid_design = stored_research.researched_designs[design_path]
+	valid_design ||= stored_research.hacked_designs[design_path]
+	valid_design ||= imported_designs?[design_path]
 	if(!valid_design)
 		return
-	var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+	var/datum/design/design = SSresearch.techweb_designs[design_path]
 	if(isnull(design))
-		stack_trace("got passed an invalid design id: [design_id] and somehow made it past all checks")
+		stack_trace("Autolathe ui_act() got passed an invalid design: \[[design_path]\] and somehow made it past all checks")
 		return
 	if(!(design.build_type & AUTOLATHE))
 		say("This fabricator does not have the necessary keys to decrypt this design.")
 		return
 
 	//validate print quantity
-	var/build_count = params["multiplier"]
-	if(isnull(build_count))
-		return
-	build_count = text2num(build_count)
+	var/build_count = text2num(params["multiplier"])
 	if(isnull(build_count))
 		return
 	build_count = clamp(build_count, 1, 50)
@@ -314,7 +306,7 @@
 			"Material Selection",
 			sort_list(choices),
 		)
-		if(isnull(chosen))
+		if(isnull(chosen) || QDELING(src))
 			return // user cancelled
 
 		material = choices[chosen]
@@ -497,9 +489,8 @@
 		balloon_alert(user, "close the panel first!")
 		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] begins to load \the [tool] in \the [src]..."),
-		balloon_alert(user, "uploading design..."),
-		span_hear("You hear the chatter of a floppy drive."))
+	user.visible_message(span_notice("[user] begins to load \the [tool] in \the [src]..."), blind_message = span_hear("You hear the chatter of a floppy drive."))
+	balloon_alert(user, "uploading design...")
 	busy = TRUE
 
 	if(!do_after(user, 1.5 SECONDS, target = src))
@@ -510,16 +501,15 @@
 
 	var/obj/item/disk/design_disk/disky = tool
 	var/list/not_imported
-	for(var/datum/design/blueprint as anything in disky.blueprints)
-		if(!blueprint)
-			continue
-		if(blueprint.build_type & AUTOLATHE)
-			imported_designs[blueprint.id] = TRUE
+	for(var/design_path in disky.blueprints)
+		var/datum/design/disk_design = SSresearch.techweb_designs[design_path]
+		if(disk_design.build_type & AUTOLATHE)
+			LAZYSET(imported_designs, design_path, TRUE)
 		else
-			LAZYADD(not_imported, blueprint.name)
+			LAZYADD(not_imported, disk_design.name)
 
 	if(not_imported)
-		to_chat(user, span_warning("The following design[length(not_imported) > 1 ? "s" : ""] couldn't be imported: [english_list(not_imported)]"))
+		to_chat(user, span_warning("The following design[LAZYLEN(not_imported) > 1 ? "s" : ""] couldn't be imported: [english_list(not_imported)]"))
 
 	busy = FALSE
 	update_static_data_for_all_viewers()
