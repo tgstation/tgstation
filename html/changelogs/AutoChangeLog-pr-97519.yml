@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Adds height preference, allowing you to pick between \"Short\", \"Average\", or \"Tall\". This doesn't override the height of Settlers or Spacers."
+  - bugfix: "Fixes height resetting to average from dna swapping shenanigans like transformation sting."
