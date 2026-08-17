@@ -10,7 +10,7 @@
 
 /datum/loadout_item/shoes/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE)
 	// This prevents clown shoes from being destroyed, for such would be SACRILEGE.
-	if(!isnull(equipper) && is_clown_job(equipper.mind?.assigned_role))
+	if(istype(outfit, /datum/outfit/job/clown))
 		return ..() // Parent calling puts them into the clown's backpack (as a test of character).
 
 	outfit.shoes = item_path
