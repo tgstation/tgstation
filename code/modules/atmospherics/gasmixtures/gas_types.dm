@@ -99,6 +99,7 @@
 	cargo_flags = GAS_PURCHASABLE | GAS_DANGEROUS
 	base_value = 0.2
 	desc = "What the fuck is Carbon Dioxide?"
+	// desc = "A colorless, odorless gas commonly produced by respiration and combustion. Potentially dangerous when inhaled in high concentrations."
 	primary_color = COLOR_GRAY
 
 /datum/gas/plasma
