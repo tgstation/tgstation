@@ -133,16 +133,16 @@ GLOBAL_LIST_EMPTY(produce_dropoff)
 	. += span_notice("The lever can be pulled with [span_boldnotice("Right Click")] to send produce back to the station.")
 
 /obj/machinery/produceporter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, /obj/item/food/grown))
-		if(current_produce >= max_produce)
-			balloon_alert(user, "bin's full!")
-			return ITEM_INTERACT_FAILURE
-		tool.forceMove(src)
-		playsound(src, 'sound/items/handling/component_drop.ogg', 30)
-		update_produce()
-		balloon_alert(user, "holding [current_produce] / [max_produce]")
-		return ITEM_INTERACT_SUCCESS
-	return ..()
+	if(!istype(tool, /obj/item/food/grown))
+		return NONE
+	if(current_produce >= max_produce)
+		balloon_alert(user, "bin's full!")
+		return ITEM_INTERACT_FAILURE
+	tool.forceMove(src)
+	playsound(src, 'sound/items/handling/component_drop.ogg', 30)
+	update_produce()
+	balloon_alert(user, "holding [current_produce] / [max_produce]")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/produceporter/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
@@ -155,14 +155,22 @@ GLOBAL_LIST_EMPTY(produce_dropoff)
 	flick("produceporter_active", src)
 	use_energy(active_power_usage)
 	playsound(src, 'sound/items/weapons/emitter2.ogg', 50)
-	var/sent = 0
+	var/points = 0
+	var/produce_count = 0
 	for(var/obj/item/food/grown/produce in contents)
 		do_teleport(produce, pick(GLOB.produce_dropoff), 0, asoundout = 'sound/machines/woosh.ogg')
-		sent++
+		points += (produce.seed?.potency > 50 ? (PRISON_LABOR_CROPS * 2) : PRISON_LABOR_CROPS)
+		produce_count ++
 	balloon_alert_to_viewers("kachunk!")
-	post_delivery(user, sent)
+	post_delivery(user, points, produce_count)
 	update_produce()
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/machinery/produceporter/ShiftClick(mob/user)
+	. = ..()
+	for(var/obj/item/food/grown/crops in contents)
+		crops.forceMove(drop_location())
+	visible_message("\The [src]'s bin empties out onto the floor.")
 
 /obj/machinery/produceporter/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -186,12 +194,26 @@ GLOBAL_LIST_EMPTY(produce_dropoff)
 		current_produce++
 	return current_produce
 
-/obj/machinery/produceporter/proc/post_delivery(mob/living/user, sent = 0)
-	if(!user)
+/obj/machinery/produceporter/proc/post_delivery(mob/living/user, labor_points, produce_count)
+	if(!user || !labor_points || !produce_count)
 		return
 	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
 	if(!istype(id_card, /obj/item/card/id/advanced/prisoner))
 		return // No bonus effects if we're not a prisoner or there's no ID.
 	var/obj/item/card/id/advanced/prisoner/prison_id = id_card
-	prison_id.points += PRISON_LABOR_CROPS * sent
-	to_chat(user, span_notice("[PRISON_LABOR_CROPS * sent] points added!"))
+	prison_id.points += labor_points
+	to_chat(user, span_notice("[labor_points] points added!"))
+
+	aas_config_announce(/datum/aas_config_entry/gulag_produce, list(
+		"LOCATION" = get_area_name(src),
+		"COUNT" = produce_count
+	), src, list(RADIO_CHANNEL_SUPPLY))
+
+/datum/aas_config_entry/gulag_produce
+	name = "Service Alert: Produce from Gulag Sent!"
+	announcement_lines_map = list(
+		"Message" = "A shipment of produce (%COUNT items) has been sent to %LOCATION from the Gulag.")
+	vars_and_tooltips_map = list(
+		"LOCATION" = "will be replaced with the location of the produce delivery.",
+		"COUNT" = "Will be replaced with the quantity of produce recieved"
+	)
