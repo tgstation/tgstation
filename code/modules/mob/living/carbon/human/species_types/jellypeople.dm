@@ -152,6 +152,19 @@
 
 	return to_add
 
+/datum/species/jelly/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+		SPECIES_PERK_ICON = FA_ICON_PERSON_RUNNING,
+		SPECIES_PERK_NAME = "Jelly Body",
+		SPECIES_PERK_DESC = "[plural_form] have bodies of malleable Jelly. \
+			You can squeeze through small cracks like grilles, provided you're not wearing clothes.",
+	))
+
+	return to_add
+
 /datum/action/innate/regenerate_limbs
 	name = "Regenerate Limbs"
 	check_flags = AB_CHECK_CONSCIOUS

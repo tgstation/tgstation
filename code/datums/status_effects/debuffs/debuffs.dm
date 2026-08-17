@@ -538,11 +538,11 @@ GLOBAL_LIST_EMPTY(unconscious_appearances)
 	new /obj/effect/temp_visual/bleed(get_turf(owner))
 
 /datum/status_effect/stacking/saw_bleed/threshold_cross_effect()
-	owner.adjust_brute_loss(bleed_damage)
 	new /obj/effect/temp_visual/bleed/explode(get_turf(owner))
+	playsound(owner, SFX_DESECRATION, 100, TRUE, -1)
 	for(var/splatter_dir in GLOB.alldirs)
 		owner.create_splatter(splatter_dir)
-	playsound(owner, SFX_DESECRATION, 100, TRUE, -1)
+	owner.adjust_brute_loss(bleed_damage)
 
 /datum/status_effect/stacking/saw_bleed/bloodletting
 	id = "bloodletting"
