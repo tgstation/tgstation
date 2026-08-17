@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Slimepeople can squeeze through grilles and similar, allowing them to walk through them (though they can't carry augments or equipment along with them)."
