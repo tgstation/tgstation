@@ -115,7 +115,7 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 		/datum/gas/bz = MINIMUM_MOLE_COUNT,
 	)
 	factor = list(
-		/datum/gas/bz = "All mols of BZ are consumed.",
+		/datum/gas/bz = "All moles of BZ are consumed.",
 		/datum/gas/oxygen = "0.2 moles of oxygen is produced per mole of BZ consumed.",
 		/datum/gas/halon = "2 moles of Halon is produced per mole of BZ consumed.",
 		"Energy" = "91.2321 kJ of thermal energy is released per mole of BZ consumed.",
