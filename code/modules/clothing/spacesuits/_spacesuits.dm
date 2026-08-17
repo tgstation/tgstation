@@ -91,8 +91,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	allowed = list(
 		/obj/item/flashlight,
-		/obj/item/tank/internals,
-		/obj/item/tank/jetpack/captain,
 		)
 	slowdown = 1
 	armor_type = /datum/armor/suit_space
@@ -126,6 +124,7 @@
 
 /obj/item/clothing/suit/space/Initialize(mapload)
 	. = ..()
+	allowed |= list(/obj/item/tank)
 	if(ispath(cell))
 		cell = new cell(src)
 
