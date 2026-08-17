@@ -146,7 +146,7 @@ const LanguageRow = (props: LanguageProps) => {
       <Table.Cell>
         <LangUnderstandIcon language={language} />
       </Table.Cell>
-      <Table.Cell>{language.key ? `,${language.key}` : 'Unset'}</Table.Cell>
+      <Table.Cell>{language.key ? `,${language.key}` : 'N/A'}</Table.Cell>
       {!!is_living && (
         <Table.Cell>
           <Button.Checkbox
