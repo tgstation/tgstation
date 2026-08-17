@@ -11,10 +11,8 @@
 	/// Short description for 'Check Languages'.
 	var/desc = "A language."
 	/// Character used to speak in language
-	/// Unit tests prevent overlaping keys
+	/// If `null`, the language cannot be spoken with a key, requires being set as a default language or forced speech.
 	var/key
-	/// Required if you want to unset the key.
-	var/key_optional = FALSE
 	/// Various language flags.
 	var/flags = NONE
 	/// Used when scrambling text for a non-speaker.
