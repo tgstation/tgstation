@@ -977,8 +977,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HAS_BEEN_KIDNAPPED "has_been_kidnapped"
 /// An item still plays its hitsound even if it has 0 force, instead of the tap
 #define TRAIT_CUSTOM_TAP_SOUND "no_tap_sound"
-/// Makes the feedback message when someone else is putting this item on you more noticeable
-#define TRAIT_DANGEROUS_OBJECT "dangerous_object"
+/// This item is potentially dangerous or disavantaged to have equipped
+#define TRAIT_DANGEROUS_EQUIP "dangerous_equip"
+/// This item is potentially dangerous or disavantaged to have unequipped
+#define TRAIT_DANGEROUS_UNEQUIP "dangerous_unequip"
 /// determines whether or not objects are haunted and teleport/attack randomly
 #define TRAIT_HAUNTED "haunted"
 /// An item that, if it has contents, will ignore its contents when scanning for contraband.
