@@ -461,3 +461,25 @@
   - rscadd: Add "Death Mimicry" positive quirk. Performing a death gasp knocks you
       unconscious and tricks anyone examining you into believing you've succumbed
       to your injuries for a short time.
+2026-08-17:
+  JohnFulpWillard:
+  - qol: Deleted Bloodworm's stat panel entry and instead moved it to their action
+      button & a new screen alert.
+  Melbert:
+  - rscadd: Adds height preference, allowing you to pick between "Short", "Average",
+      or "Tall". This doesn't override the height of Settlers or Spacers.
+  - bugfix: Fixes height resetting to average from dna swapping shenanigans like transformation
+      sting.
+  MelokG000:
+  - rscadd: Sometimes there is a worm inside an apple.
+  PapaMichael:
+  - bugfix: The server should obey the config's `min_antag_cap` and `max_antag_cap`
+      for midround rulesets now.
+  QuiteLiterallyAnything:
+  - bugfix: The Pride ruin will no longer cause those standing on latticed chasms
+      to fall down normal chasms.
+  lelandkemble:
+  - qol: Put a guide explaining Carnivorous Blood in the Carnivorous Blood kit
+  thegrb93:
+  - qol: Right clicking sink with beaker in hand drains it
+  - bugfix: Fixes mop interaction with sink
