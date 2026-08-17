@@ -337,3 +337,113 @@
   timothymtorres:
   - bugfix: Fix spawn text appearing over HUD. Move spawn text to the top left of
       the screen
+2026-08-12:
+  JohnFulpWillard:
+  - qol: Alien larva's 'Evolve' button now says when it's ready, rather than being
+      in the stat panel.
+  Melbert:
+  - qol: Gizmos pulsed by assembies give feedback sounds
+  - qol: Gizmo feedback alerts are shown to all nearby mobs, rather than just the
+      pulser
+  - bugfix: If a cuffed item enters an anchored object like a closet, the cuffee become
+      stuck to the anchored object, rather than the anchored object being stuck to
+      the cuffee.
+  - bugfix: You can no longer put cuffed objects in any object manually (i.e. by clicking
+      on it). This affects objects like grinders, deep fryers, and soup pots.
+  - qol: Cuffed item examine text is now shown in examine, rather than double-examine
+  - balance: Any mob can attempt to remove someone's cuffed item, rather than just
+      the cuffee. However it takes double the amount of time for non-cuffees.
+  SmArtKar:
+  - balance: Crusher trophies are now small and can be stowed in explorer webbings
+  - balance: Crusher trophies are slightly cheaper to craft
+  - balance: Icewing trophy backstep distance reduced from 2 to 1 to be less disorienting
+  lelandkemble:
+  - map: Added several holopads to Kilostation
+  siliconOpossum:
+  - bugfix: Wall signs will no longer say you're changing them when someone else is
+2026-08-13:
+  Aliceee2ch:
+  - qol: Medical Records console now uses dropdowns for blood type field instead of
+      manual typing
+  ArcaneMusic:
+  - balance: Golems now have slightly less aggressive metabolism.
+  - bugfix: Golem foods now offer different levels of nutrition! Finally!
+  - balance: Golems now offer more nutrition from rarer ores.
+  - balance: Golems now get further additional nutrition from eating processed ore
+      sheets instead of raw ore.
+  - map: The free golem ship now has shutters to block wildlife from attacking while
+      inside.
+  - bugfix: Weakpoints, and weakpoints spawned by weakpoints being detonated, should
+      no longer be spawning invisible.
+  - balance: The number of weakpoints that spawn on regular maps has increased from
+      3 to 5.
+  - balance: The number of weakpoints that spawn on the "Structural Weaknesses" station
+      trait now spawns 6 to 12, instead of 4 to 8 weakpoints.
+  Fghj240:
+  - rscadd: Added a new virus chem, Exotic Agar, that gives you level 9 symptoms
+  - balance: Reorganized virus symptoms among 9 levels instead of 8.
+  - balance: The dizziness virus symptom has higher stats and slightly shorter status
+      effect duration
+  - balance: aggressive healing is now cured by spaceacillin like every other healing
+      symptom
+  - rscadd: Added a new symptom, Hypertension. Unlike regular hypertension, this one
+      causes blood vessels to violently rupture all across your body.
+  - rscadd: Added a new symptom, Mutated Regeneration. It heals you.
+  - code_imp: improved code around suppressing virology symptom fluff text
+  PapaMichael:
+  - bugfix: You no longer hear radio TTS while unconscious
+  SirNightKnight, JohnFulpWillard:
+  - qol: Decreased the volume of slime footsteps.
+  - qol: Slimes now have new HUD entries from the information that was previously
+      in the stat panel.
+  Y0SH1M4S73R:
+  - bugfix: revenants should far less frequently be rendered vulnerable for far longer
+      than they should be
+  lelandkemble:
+  - bugfix: General Beepsky no longer provides an extra free esword when destroyed
+  - qol: Added an examine hint on clogged vents that tells you about using a plunger
+      on it
+  mrmanlikesbt:
+  - refactor: Techweb and design code has been refactored.
+  - bugfix: Fixed anomaly cores not granting research points in the destructive analyzer.
+  - bugfix: Fixed exosuit fabricators
+2026-08-14:
+  FalloutFalcon:
+  - bugfix: Ants and shade mobs are plural is seemingly intended
+  JohnFulpWillard:
+  - bugfix: The Escape menu has Webmap URLs again.
+  RusselNotSCP:
+  - bugfix: Flesh heretics now benefit from eating the organs of non-meaty victims,
+      such as fish and podpeople.
+  SmArtKar:
+  - code_imp: Optimized /datum/gas_mixture/proc/archive() by ~42%
+  rkz/tsar-salat:
+  - bugfix: fixed a screaming icon stacktrace proc designed to scream, not screaming.
+  - bugfix: stumps continue to not render, as they should, as opposed to not rendering
+      because their rendering was broken
+  timothymtorres:
+  - bugfix: Fix helmets being flammable when armor is not
+2026-08-15:
+  ArrisFairburne:
+  - refactor: Stray cargo pod event now has its code divided up into smaller functions,
+      so it should be easier to create new subtypes of this event
+  Momiko:
+  - spellcheck: Fixed incorrect threshold numbers in the heal symptom descriptions
+      to match their actual stats.
+  PapaMichael:
+  - bugfix: Ghosts no longer trigger the AI's motion-sensitive camera alerts
+  YesterdaysPromise:
+  - rscadd: Plastitatnanium glass now makes pod directional windows, regular pod windows,
+      plastitaniumglass windowfilling which shall allow you to make such on a grille,
+      and its own plastitanium glass tiles.
+  - rscadd: Titanium glass now makes unique directional windows, and its own titanium
+      glass tiles.
+  - rscadd: Bronze tiles can now be reskinned into bronze glass tiles.
+  - rscadd: Runed metal can now make directional windows and fulltile windows, and
+      its tiles can be reskinned into runed glass tiles.
+  lelandkemble:
+  - balance: General Beepsky has regained its 100% projectile block chance
+  - balance: Saline-Glucose Solution's blood replacement effect loses effectiveness
+      over time.
+  san7890:
+  - bugfix: Latejoining as an AI on CatwalkStation should now work.

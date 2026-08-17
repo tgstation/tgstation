@@ -250,7 +250,7 @@
 	if(check_block(worm, damage, "[worm.declent_ru(ACCUSATIVE)]", attack_type = UNARMED_ATTACK))
 		return FALSE
 	if(stat != DEAD)
-		worm.amount_grown = min(worm.amount_grown + damage, worm.max_grown)
+		worm.amount_grown = min(worm.amount_grown + damage, XENOMORPH_MAX_GROWTH)
 		var/obj/item/bodypart/affecting = get_bodypart(get_random_valid_zone(worm.zone_selected))
 		var/armor_block = run_armor_check(affecting, MELEE)
 		apply_damage(damage, BRUTE, affecting, armor_block)

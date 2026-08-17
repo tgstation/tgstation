@@ -1,6 +1,5 @@
 /// Adds a newline to the examine list if the above entry is not empty and it is not the first element in the list
 #define ADD_NEWLINE_IF_NECESSARY(list) if(length(list) > 0 && list[length(list)]) { list += "" }
-#define CARBON_EXAMINE_EMBEDDING_MAX_DIST 4
 
 /mob/living/carbon/human/get_examine_icon(mob/user)
 	return null
@@ -42,7 +41,7 @@
 			. += generate_death_examine_text()
 
 	//Status effects
-	var/list/status_examines = get_status_effect_examinations()
+	var/list/status_examines = get_status_effect_examinations(user)
 	if (length(status_examines))
 		. += status_examines
 
@@ -303,11 +302,11 @@
 /**
  * Shows any and all examine text related to any status effects the user has.
  */
-/mob/living/proc/get_status_effect_examinations()
+/mob/living/proc/get_status_effect_examinations(mob/examiner)
 	var/list/examine_list = list()
 
 	for(var/datum/status_effect/effect as anything in status_effects)
-		var/effect_text = effect.get_examine_text()
+		var/effect_text = effect.get_examine_text(examiner)
 		if(!effect_text)
 			continue
 
@@ -609,4 +608,3 @@
 	return span_notice("[ru_p_they(TRUE)] выглядит [age_text].")
 
 #undef ADD_NEWLINE_IF_NECESSARY
-#undef CARBON_EXAMINE_EMBEDDING_MAX_DIST

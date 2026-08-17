@@ -17,7 +17,6 @@
 /datum/design/board/researcher
 	name = "Researcher Module"
 	desc = "Allows for the construction of a Researcher AI Core Module."
-	id = "researcher_module"
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/ai_module/law/core/full/researcher
 	category = list(
@@ -27,4 +26,4 @@
 
 /datum/techweb_node/ai_laws/New()
 	. = ..()
-	design_ids += "researcher_module"
+	unlocked_designs += /datum/design/board/researcher

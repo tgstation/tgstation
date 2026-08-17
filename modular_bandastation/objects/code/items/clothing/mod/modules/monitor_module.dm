@@ -16,7 +16,6 @@
 
 /datum/design/module/mod_monitor
 	name = "Crew Monitor Module"
-	id = "mod_monitor"
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.75,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.5,
@@ -25,4 +24,4 @@
 
 /datum/techweb_node/medbay_equip/New()
 	. = ..()
-	design_ids += "mod_monitor"
+	unlocked_designs += /datum/design/module/mod_monitor

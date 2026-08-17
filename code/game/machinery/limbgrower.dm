@@ -25,12 +25,11 @@
 	/// All the categories of organs we can print.
 	var/list/categories = list(SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL, RND_CATEGORY_LIMBS_OTHER, RND_CATEGORY_LIMBS_DIGITIGRADE)
 	///Designs imported from technology disks that we can print.
-	var/list/imported_designs = list()
+	var/list/imported_designs
 
 /obj/machinery/limbgrower/Initialize(mapload)
 	create_reagents(100, OPENCONTAINER)
-	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/limbgrower])
-		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/limbgrower] = new /datum/techweb/autounlocking/limbgrower
+	GLOB.autounlock_techwebs[/datum/techweb/autounlocking/limbgrower] ||= new /datum/techweb/autounlocking/limbgrower()
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/limbgrower]
 	. = ..()
 	AddComponent(/datum/component/plumbing/simple_demand)
@@ -95,41 +94,41 @@
 	var/list/data = list()
 	data["categories"] = list()
 
-	var/species_categories = categories.Copy()
+	var/list/species_categories = categories.Copy()
 	for(var/species in species_categories)
 		species_categories[species] = list()
 
 	var/list/available_nodes = stored_research.researched_designs.Copy()
-	if(imported_designs.len)
+	if(LAZYLEN(imported_designs))
 		available_nodes |= imported_designs
 	if(obj_flags & EMAGGED)
 		available_nodes |= stored_research.hacked_designs
 
-	for(var/design_id in available_nodes)
-		var/datum/design/limb_design = SSresearch.techweb_design_by_id(design_id)
+	for(var/design_path in available_nodes)
+		var/datum/design/limb_design = SSresearch.techweb_designs[design_path]
 		for(var/found_category in species_categories)
 			if(found_category in limb_design.category)
 				species_categories[found_category] += limb_design
 
-	for(var/category in species_categories)
+	for(var/category, category_designs in species_categories)
 		var/list/category_data = list(
-			name = category,
-			designs = list(),
+			"name" = category,
+			"designs" = list(),
 		)
-		for(var/datum/design/found_design in species_categories[category])
+		for(var/datum/design/found_design in category_designs)
 			var/list/all_reagents = list()
-			for(var/datum/reagent/reagent_id as anything in found_design.reagents_list)
-				var/list/reagent_data = list(
-					name = reagent_id::name,
-					amount = (found_design.reagents_list[reagent_id] * production_coefficient),
-				)
-				all_reagents += list(reagent_data)
+			for(var/_reagent_path, reagent_amount in found_design.reagents_list)
+				var/datum/reagent/reagent_path = _reagent_path
+				all_reagents += list(list(
+					"name" = reagent_path::name,
+					"amount" = reagent_amount * production_coefficient,
+				))
 
 			category_data["designs"] += list(list(
-				parent_category = category,
-				name = found_design.name,
-				id = found_design.id,
-				needed_reagents = all_reagents,
+				"parent_category" = category,
+				"name" = found_design.name,
+				"path" = found_design.type,
+				"needed_reagents" = all_reagents,
 			))
 
 		data["categories"] += list(category_data)
@@ -152,12 +151,13 @@
 	if(istype(tool, /obj/item/disk/design_disk/limbs))
 		user.visible_message(span_notice("[user] begins to load \the [tool] in \the [src]..."),
 			span_notice("You begin to load designs from \the [tool]..."),
-			span_hear("You hear the clatter of a floppy drive."))
+			span_hear("You hear the clatter of a floppy drive."),
+		)
 		busy = TRUE
 		var/obj/item/disk/design_disk/limbs/limb_design_disk = tool
 		if(do_after(user, 2 SECONDS, target = src))
-			for(var/datum/design/found_design in limb_design_disk.blueprints)
-				imported_designs[found_design.id] = TRUE
+			for(var/found_design in limb_design_disk.blueprints)
+				LAZYSET(imported_designs, found_design, TRUE)
 			update_static_data(user)
 		busy = FALSE
 		return ITEM_INTERACT_SUCCESS
@@ -200,34 +200,33 @@
 		return
 
 	switch(action)
-
 		if("empty_reagent")
 			reagents.del_reagent(text2path(params["reagent_type"]))
-			. = TRUE
+			return TRUE
 
 		if("make_limb")
-			var/design_id = params["design_id"]
+			var/design_path = text2path(params["design_path"])
 			var/temp_category = params["active_tab"]
-			if(!stored_research.researched_designs[design_id] && !stored_research.hacked_designs[design_id] && !imported_designs[design_id])
+			if(!stored_research.researched_designs[design_path] && !stored_research.hacked_designs[design_path] && !imported_designs?[design_path])
 				return
-			if(!(obj_flags & EMAGGED) && stored_research.hacked_designs.Find(design_id))
+			if(!(obj_flags & EMAGGED) && stored_research.hacked_designs[design_path])
 				return
 			if(!(temp_category in categories))
 				return
-			being_built = SSresearch.techweb_design_by_id(design_id)
+			being_built = SSresearch.techweb_designs[design_path]
 			// All the reagents we're using to make our organ.
-			var/list/consumed_reagents_list = being_built.reagents_list.Copy()
+			var/list/consumed_reagents_list = LAZYCOPY(being_built.reagents_list)
 			/// The amount of power we're going to use, based on how much reagent we use.
 			var/power = 0
 
-			for(var/reagent_id in consumed_reagents_list)
-				consumed_reagents_list[reagent_id] *= production_coefficient
-				if(!reagents.has_reagent(reagent_id, consumed_reagents_list[reagent_id]))
+			for(var/required_reagent, required_amount in consumed_reagents_list)
+				consumed_reagents_list[required_reagent] *= production_coefficient
+				if(!reagents.has_reagent(required_reagent, required_amount))
 					audible_message(span_notice("[src] buzzes."))
 					playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 					return
 
-				power = max(active_power_usage, (power + consumed_reagents_list[reagent_id]))
+				power = max(active_power_usage, (power + required_amount))
 
 			busy = TRUE
 			use_energy(power)
@@ -247,13 +246,13 @@
  * modified_consumed_reagents_list - the list of reagents we will consume on build, modified by the production coefficient.
  */
 /obj/machinery/limbgrower/proc/build_item(list/modified_consumed_reagents_list)
-	for(var/reagent_id in modified_consumed_reagents_list)
-		if(!reagents.has_reagent(reagent_id, modified_consumed_reagents_list[reagent_id]))
+	for(var/required_reagent, required_amount in modified_consumed_reagents_list)
+		if(!reagents.has_reagent(required_reagent, required_amount))
 			audible_message(span_notice("The [src] buzzes."))
 			playsound(src, 'sound/machines/buzz/buzz-sigh.ogg', 50, FALSE)
 			break
 
-		reagents.remove_reagent(reagent_id, modified_consumed_reagents_list[reagent_id])
+		reagents.remove_reagent(required_reagent, required_amount)
 
 	var/built_typepath = being_built.build_path
 	if(ispath(built_typepath, /obj/item/bodypart))
@@ -277,8 +276,7 @@
 /obj/machinery/limbgrower/proc/build_limb(buildpath)
 	/// The limb we're making with our buildpath, so we can edit it.
 	//i need to create a body part manually using a set icon (otherwise it doesn't appear)
-	var/obj/item/bodypart/limb
-	limb = new buildpath(loc)
+	var/obj/item/bodypart/limb = new buildpath(loc)
 	limb.name = "\improper synthetic [selected_category] [limb.ru_plaintext_zone[PREPOSITIONAL]]"
 	limb.limb_id = selected_category
 	limb.species_color = "#62A262"
@@ -286,14 +284,10 @@
 
 ///Returns a valid limb typepath based on the selected option
 /obj/machinery/limbgrower/proc/create_buildpath()
-	var/part_type = being_built.id //their ids match bodypart typepaths
-	var/species = selected_category
-	var/path
-	if(species == SPECIES_HUMAN) //Humans use the parent type.
-		path = "/obj/item/bodypart/[part_type]"
+	if(selected_category == SPECIES_HUMAN) // Humans use the parent type
+		return being_built.build_path
 	else
-		path = "/obj/item/bodypart/[part_type]/[species]"
-	return text2path(path)
+		return text2path("[being_built.build_path]/[selected_category]")
 
 /obj/machinery/limbgrower/RefreshParts()
 	. = ..()
@@ -331,8 +325,8 @@
  * returns TRUE if we have enough reagent to build it. Returns FALSE if we do not.
  */
 /obj/machinery/limbgrower/proc/can_build(datum/design/limb_design)
-	for(var/datum/reagent/reagent_id in limb_design.reagents_list)
-		if(!reagents.has_reagent(reagent_id, limb_design.reagents_list[reagent_id] * production_coefficient))
+	for(var/required_reagent, required_amount in limb_design.reagents_list)
+		if(!reagents.has_reagent(required_reagent, required_amount * production_coefficient))
 			return FALSE
 	return TRUE
 
@@ -342,7 +336,7 @@
 
 /obj/machinery/limbgrower/fullupgrade/Initialize(mapload)
 	. = ..()
-	for(var/id in SSresearch.techweb_designs)
-		var/datum/design/found_design = SSresearch.techweb_design_by_id(id)
+	for(var/design_path, _design in SSresearch.techweb_designs)
+		var/datum/design/found_design = _design
 		if((found_design.build_type & LIMBGROWER) && !(RND_CATEGORY_HACKED in found_design.category))
-			imported_designs[found_design.id] = TRUE
+			LAZYSET(imported_designs, design_path, TRUE)

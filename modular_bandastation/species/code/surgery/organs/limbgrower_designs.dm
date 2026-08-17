@@ -1,7 +1,6 @@
 // MARK: Vulpkanin designs
 /datum/design/vulpkanin_tail
 	name = "Vulpkanin Tail"
-	id = "vulptail"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	build_path = /obj/item/organ/tail/vulpkanin
@@ -9,7 +8,6 @@
 
 /datum/design/vulpkanin_tongue
 	name = "Vulpkanin Tongue"
-	id = "vulptongue"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
 	build_path = /obj/item/organ/tongue/vulpkanin
@@ -18,7 +16,6 @@
 // MARK: Tajaran designs
 /datum/design/tajaran_tail
 	name = "Tajaran Tail"
-	id = "tajtail"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	build_path = /obj/item/organ/tail/tajaran
@@ -26,7 +23,6 @@
 
 /datum/design/tajaran_tongue
 	name = "Tajaran Tongue"
-	id = "tajtongue"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
 	build_path = /obj/item/organ/tongue/tajaran
@@ -34,7 +30,6 @@
 
 /datum/design/tajaran_l_digi_leg
 	name = "Tajaran Left Digitigrade Leg"
-	id = "tajldigileg"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	build_path = /obj/item/bodypart/leg/left/digitigrade/tajaran
@@ -42,7 +37,6 @@
 
 /datum/design/tajaran_r_digi_leg
 	name = "Tajaran Right Digitigrade Leg"
-	id = "tajrdigileg"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	build_path = /obj/item/bodypart/leg/right/digitigrade/tajaran
@@ -51,7 +45,6 @@
 // MARK: Tajaran designs
 /datum/design/tajaran_tail
 	name = "Tajaran Tail"
-	id = "tajtail"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	build_path = /obj/item/organ/tail/tajaran
@@ -59,7 +52,6 @@
 
 /datum/design/tajaran_tongue
 	name = "Tajaran Tongue"
-	id = "tajtongue"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
 	build_path = /obj/item/organ/tongue/tajaran
@@ -67,7 +59,6 @@
 
 /datum/design/tajaran_l_digi_leg
 	name = "Tajaran Left Digitigrade Leg"
-	id = "tajldigileg"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	build_path = /obj/item/bodypart/leg/left/digitigrade/tajaran
@@ -75,7 +66,6 @@
 
 /datum/design/tajaran_r_digi_leg
 	name = "Tajaran Right Digitigrade Leg"
-	id = "tajrdigileg"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 20)
 	build_path = /obj/item/bodypart/leg/right/digitigrade/tajaran
@@ -84,7 +74,6 @@
 // MARK: Tajaran designs
 /datum/design/skrell_tongue
 	name = "Skrell Tongue"
-	id = "skrelltongue"
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 10)
 	build_path = /obj/item/organ/tongue/skrell

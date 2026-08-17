@@ -16,7 +16,6 @@
 /datum/design/board/petrovich
 	name = "Petrovich Module"
 	desc = "Allows for the construction of an Petrovich AI Core Module."
-	id = "petrovich_module"
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/ai_module/law/core/full/petrovich
 	category = list(
@@ -26,4 +25,4 @@
 
 /datum/techweb_node/ai_laws/New()
 	. = ..()
-	design_ids += "petrovich_module"
+	unlocked_designs += /datum/design/board/petrovich

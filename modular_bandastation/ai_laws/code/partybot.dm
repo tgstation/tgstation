@@ -16,7 +16,6 @@
 /datum/design/board/partybot
 	name = "PartyBot Module"
 	desc = "Allows for the construction of an PartyBot AI Core Module."
-	id = "partybot_module"
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/ai_module/law/core/full/partybot
 	category = list(
@@ -26,4 +25,4 @@
 
 /datum/techweb_node/ai_laws/New()
 	. = ..()
-	design_ids += "partybot_module"
+	unlocked_designs += /datum/design/board/partybot

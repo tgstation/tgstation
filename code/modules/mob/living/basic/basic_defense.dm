@@ -99,7 +99,7 @@
 	if(. && stat != DEAD) //successful larva bite
 		var/damage_done = apply_damage(rand(attacking_larva.melee_damage_lower, attacking_larva.melee_damage_upper), BRUTE)
 		if(damage_done > 0)
-			attacking_larva.amount_grown = min(attacking_larva.amount_grown + damage_done, attacking_larva.max_grown)
+			attacking_larva.amount_grown = min(attacking_larva.amount_grown + damage_done, XENOMORPH_MAX_GROWTH)
 
 /mob/living/basic/attack_drone(mob/living/basic/drone/attacking_drone)
 	if(attacking_drone.combat_mode) //No kicking dogs even as a rogue drone. Use a weapon.

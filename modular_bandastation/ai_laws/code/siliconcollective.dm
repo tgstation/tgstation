@@ -17,7 +17,6 @@
 /datum/design/board/siliconcollective
 	name = "Silicon Collective Module"
 	desc = "Allows for the construction of a Silicon Collective AI Core Module."
-	id = "siliconcollective_module"
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/ai_module/law/core/full/siliconcollective
 	category = list(
@@ -27,4 +26,4 @@
 
 /datum/techweb_node/ai_laws/New()
 	. = ..()
-	design_ids += "siliconcollective_module"
+	unlocked_designs += /datum/design/board/siliconcollective

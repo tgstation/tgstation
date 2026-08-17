@@ -16,7 +16,6 @@
 /datum/design/board/chapai
 	name = "ChapAI Module"
 	desc = "Allows for the construction of an ChapAI AI Core Module."
-	id = "chapai_module"
 	materials = list(/datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/ai_module/law/core/full/chapai
 	category = list(
@@ -26,4 +25,4 @@
 
 /datum/techweb_node/ai_laws/New()
 	. = ..()
-	design_ids += "chapai_module"
+	unlocked_designs += /datum/design/board/chapai
