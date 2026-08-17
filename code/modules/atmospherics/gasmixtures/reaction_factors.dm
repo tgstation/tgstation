@@ -2,8 +2,8 @@
 	factor = list(
 		/datum/gas/water_vapor = "Condensation will consume [MOLES_GAS_VISIBLE] moles. \
 			Freezing will not consume any. Both requires a minimum of [MOLES_GAS_VISIBLE] moles to occur.",
-		"Temperature" = "Freezes a tile at [WATER_VAPOR_DEPOSITION_POINT] kelvins or below, \
-			wets it at [WATER_VAPOR_CONDENSATION_POINT] kelvins or below.",
+		"Temperature" = "Freezes a tile at [WATER_VAPOR_DEPOSITION_POINT]K or below, \
+			wets it at [WATER_VAPOR_CONDENSATION_POINT]K or below.",
 		"Location" = "Can only happen on tiles.",
 	)
 
@@ -19,8 +19,8 @@
 /datum/gas_reaction/standard/plasmafire/init_factors()
 	factor = list(
 		/datum/gas/oxygen = "[/datum/gas/oxygen::name] consumption is determined by the temperature, \
-			ranging from [OXYGEN_BURN_RATIO_BASE] moles per mole of [/datum/gas/plasma::name] consumed at [PLASMA_MINIMUM_BURN_TEMPERATURE] kelvins \
-			to [OXYGEN_BURN_RATIO_BASE-1] moles per mole of [/datum/gas/plasma::name] consumed at [PLASMA_UPPER_TEMPERATURE] kelvins. \
+			ranging from [OXYGEN_BURN_RATIO_BASE] moles per mole of [/datum/gas/plasma::name] consumed at [PLASMA_MINIMUM_BURN_TEMPERATURE]K \
+			to [OXYGEN_BURN_RATIO_BASE-1] moles per mole of [/datum/gas/plasma::name] consumed at [PLASMA_UPPER_TEMPERATURE]K. \
 			Higher [/datum/gas/oxygen::name] concentration up to [PLASMA_OXYGEN_FULLBURN] times the [/datum/gas/plasma::name] \
 			increases the speed of [/datum/gas/plasma::name] consumption.",
 		/datum/gas/plasma = "[/datum/gas/plasma::name] is consumed at a rate that scales with the difference between the temperature \
@@ -31,7 +31,7 @@
 			if [/datum/gas/tritium::name] isn't being formed.",
 		/datum/gas/carbon_dioxide = "[/datum/gas/carbon_dioxide::name] is formed at 0.75 moles per mole of [/datum/gas/plasma::name] consumed \
 			if [/datum/gas/tritium::name] isn't being formed.",
-		"Temperature" = "Minimum temperature of [PLASMA_MINIMUM_BURN_TEMPERATURE] kelvin to occur. \
+		"Temperature" = "Minimum temperature of [PLASMA_MINIMUM_BURN_TEMPERATURE]K to occur. \
 			Higher temperature up to [PLASMA_UPPER_TEMPERATURE]K increases the [/datum/gas/oxygen::name] efficiency \
 			and also the [/datum/gas/plasma::name] consumption rate.",
 		"Energy" = "[FIRE_PLASMA_ENERGY_RELEASED] joules of energy is released per mole of [/datum/gas/plasma::name] consumed.",
@@ -44,7 +44,7 @@
 			the [/datum/gas/hydrogen::name] increases the [/datum/gas/hydrogen::name] consumption rate.",
 		/datum/gas/hydrogen = "[/datum/gas/hydrogen::name] is consumed rapidly fast as long as there's enough [/datum/gas/oxygen::name] to allow combustion.",
 		/datum/gas/water_vapor = "[/datum/gas/water_vapor::name] is produced at 1 mole per mole of [/datum/gas/hydrogen::name] combusted.",
-		"Temperature" = "Minimum temperature of [FIRE_MINIMUM_TEMPERATURE_TO_EXIST] kelvin to occur",
+		"Temperature" = "Minimum temperature of [FIRE_MINIMUM_TEMPERATURE_TO_EXIST]K to occur",
 		"Energy" = "[FIRE_HYDROGEN_ENERGY_RELEASED] joules of energy is released per mol of [/datum/gas/hydrogen::name] consumed.",
 	)
 
@@ -55,7 +55,7 @@
 			the [/datum/gas/tritium::name] increases the [/datum/gas/tritium::name] consumption rate.",
 		/datum/gas/tritium = "[/datum/gas/tritium::name] is consumed at rapidly fast as long as there's enough [/datum/gas/oxygen::name] to allow combustion.",
 		/datum/gas/water_vapor = "[/datum/gas/water_vapor::name] is produced at 1 mole per mole of [/datum/gas/tritium::name] combusted.",
-		"Temperature" = "Minimum temperature of [FIRE_MINIMUM_TEMPERATURE_TO_EXIST] kelvin to occur",
+		"Temperature" = "Minimum temperature of [FIRE_MINIMUM_TEMPERATURE_TO_EXIST]K to occur",
 		"Energy" = "[FIRE_TRITIUM_ENERGY_RELEASED] joules of energy is released per mol of [/datum/gas/tritium::name] consumed.",
 		"Radiation" = "This reaction emits radiation proportional to the amount of energy released.",
 	)
@@ -63,16 +63,16 @@
 /datum/gas_reaction/standard/freonfire/init_factors()
 	factor = list(
 		/datum/gas/oxygen = "[/datum/gas/oxygen::name] consumption is determined by the temperature, \
-			ranging from [OXYGEN_BURN_RATIO_BASE] moles per mole of [/datum/gas/freon::name] consumed at [FREON_LOWER_TEMPERATURE] kelvins \
-			to [OXYGEN_BURN_RATIO_BASE - 1] moles per mole of [/datum/gas/freon::name] consumed at [FREON_MAXIMUM_BURN_TEMPERATURE] kelvins. \
+			ranging from [OXYGEN_BURN_RATIO_BASE] moles per mole of [/datum/gas/freon::name] consumed at [FREON_LOWER_TEMPERATURE]K \
+			to [OXYGEN_BURN_RATIO_BASE - 1] moles per mole of [/datum/gas/freon::name] consumed at [FREON_MAXIMUM_BURN_TEMPERATURE]K. \
 			Higher [/datum/gas/oxygen::name] concentration up to [FREON_OXYGEN_FULLBURN] times \
 			the [/datum/gas/freon::name] increases [/datum/gas/freon::name] consumption rate.",
 		/datum/gas/freon = "[/datum/gas/freon::name] is consumed at a rate that scales with the distance of the temperature \
 			from [FREON_MAXIMUM_BURN_TEMPERATURE]K. Its relationship with [/datum/gas/oxygen::name] also determines consumption rate.",
 		/datum/gas/carbon_dioxide = "[/datum/gas/carbon_dioxide::name] is formed at 1 mole per mole of [/datum/gas/freon::name] consumed.",
-		"Temperature" = "Can only occur between [FREON_LOWER_TEMPERATURE] - [FREON_MAXIMUM_BURN_TEMPERATURE] kelvin.",
+		"Temperature" = "Can only occur between [FREON_LOWER_TEMPERATURE] - [FREON_MAXIMUM_BURN_TEMPERATURE]K.",
 		"Energy" = "[FIRE_FREON_ENERGY_CONSUMED] joules of energy is absorbed per mole of [/datum/gas/freon::name] consumed.",
-		"Hot Ice" = "This reaction produces \"hot ice\" when occurring between [HOT_ICE_FORMATION_MINIMUM_TEMPERATURE]-[HOT_ICE_FORMATION_MAXIMUM_TEMPERATURE] kelvins.",
+		"Hot Ice" = "This reaction produces \"hot ice\" when occurring between [HOT_ICE_FORMATION_MINIMUM_TEMPERATURE]-[HOT_ICE_FORMATION_MAXIMUM_TEMPERATURE]K.",
 	)
 
 
@@ -84,7 +84,7 @@
 			[/datum/gas/nitrogen::name] is consumed at 1 mole per mole of [/datum/gas/nitrous_oxide::name] formed.",
 		/datum/gas/bz = "5 moles of [/datum/gas/bz::name] needs to be present for the reaction to occur. Not consumed.",
 		/datum/gas/nitrous_oxide = "[/datum/gas/nitrous_oxide::name] gets produced rapidly.",
-		"Temperature" = "Can only occur between [N2O_FORMATION_MIN_TEMPERATURE] - [N2O_FORMATION_MAX_TEMPERATURE] kelvin",
+		"Temperature" = "Can only occur between [N2O_FORMATION_MIN_TEMPERATURE] - [N2O_FORMATION_MAX_TEMPERATURE]K",
 		"Energy" = "[N2O_FORMATION_ENERGY] joules of energy is released per mole of [/datum/gas/nitrous_oxide::name] formed.",
 	)
 
@@ -95,7 +95,7 @@
 			Minimum of [MINIMUM_MOLE_COUNT * 2] to occur.", //okay this one isn't made into a define yet.
 		/datum/gas/oxygen = "[/datum/gas/oxygen::name] is formed at 0.5 moles per mole of [/datum/gas/nitrous_oxide::name] decomposed.",
 		/datum/gas/nitrogen = "[/datum/gas/nitrogen::name] is formed at 1 mole per mole of [/datum/gas/nitrous_oxide::name] decomposed.",
-		"Temperature" = "The decomposition rate scales with the product of the distances between temperature and minimum and maximum temperature. Can only happen between [N2O_DECOMPOSITION_MIN_TEMPERATURE] - [N2O_DECOMPOSITION_MAX_TEMPERATURE] kelvin.",
+		"Temperature" = "The decomposition rate scales with the product of the distances between temperature and minimum and maximum temperature. Can only happen between [N2O_DECOMPOSITION_MIN_TEMPERATURE] - [N2O_DECOMPOSITION_MAX_TEMPERATURE]K.",
 		"Energy" = "[N2O_DECOMPOSITION_ENERGY] joules of energy is released per mole of [/datum/gas/nitrous_oxide::name] decomposed.",
 	)
 
@@ -126,7 +126,7 @@
 		/datum/gas/pluoxium = "[/datum/gas/pluoxium::name] is produced at a constant rate in any given mixture.",
 		/datum/gas/hydrogen = "[/datum/gas/hydrogen::name] is formed from the [/datum/gas/tritium::name] losing their neutrons.",
 		"Energy" = "[PLUOXIUM_FORMATION_ENERGY] joules of energy is released per mole of [/datum/gas/pluoxium::name] formed.",
-		"Temperature" = "Can only occur between [PLUOXIUM_FORMATION_MIN_TEMP] - [PLUOXIUM_FORMATION_MAX_TEMP] kelvin",
+		"Temperature" = "Can only occur between [PLUOXIUM_FORMATION_MIN_TEMP] - [PLUOXIUM_FORMATION_MAX_TEMP]K",
 	)
 
 /datum/gas_reaction/standard/nitrium_formation/init_factors()
@@ -138,7 +138,7 @@
 		/datum/gas/nitrogen = "10 moles of [/datum/gas/nitrogen::name] needs to be present for the reaction to occur. \
 			[/datum/gas/nitrogen::name] is consumed at 1 mole per mole of [/datum/gas/nitrium::name] formed.",
 		/datum/gas/nitrium = "[/datum/gas/nitrium::name] is produced at a rate that scales with the temperature.",
-		"Temperature" = "Can only occur above [NITRIUM_FORMATION_MIN_TEMP] kelvins",
+		"Temperature" = "Can only occur above [NITRIUM_FORMATION_MIN_TEMP]K",
 		"Energy" = "[NITRIUM_FORMATION_ENERGY] joules of energy is absorbed per mole of [/datum/gas/nitrium::name] formed.",
 	)
 
@@ -160,12 +160,12 @@
 			[/datum/gas/carbon_dioxide::name] is consumed at 0.3 moles per mole of [/datum/gas/freon::name] formed.",
 		/datum/gas/bz = "At least 0.01 moles of [/datum/gas/bz::name] needs to be present. \
 			[/datum/gas/bz::name] is consumed at 0.1 moles per mole of [/datum/gas/freon::name] formed.",
-		/datum/gas/freon = "[/datum/gas/freon::name] is produced at a rate that scales with temperature, \
-			peaking first at 800 kelvin, then peaking again, 3 times higher, at 5,500 kelvin.",
+		/datum/gas/freon = "[/datum/gas/freon::name] is produced at a rate that scales with temperature. \
+			See temperature factor for more information.",
 		"Energy" = "Between 100 and 800 joules of energy is absorbed per mole of [/datum/gas/freon::name] produced", // I don't know why the energy release is also a sigmoidal function, but it should really just be constant to be honest.
-		"Temperature" = "Minimum temperature of [FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100] kelvin to occur, \
-			with production peak at 800 K. However at temperatures above 5500 K higher rates are possible \
-			maxing out at three times the low temperature rate at over 8500 K.",
+		"Temperature" = "Minimum temperature of [FIRE_MINIMUM_TEMPERATURE_TO_EXIST + 100]K to occur. \
+			Production speed peaks at 800K - However, at temperatures above 5500K, \
+			production speed can exceed the low temperature peak (reaching up to three times fast at 8500K).",
 	)
 
 /datum/gas_reaction/standard/nobliumformation/init_factors()
@@ -181,7 +181,7 @@
 		/datum/gas/bz = "[/datum/gas/bz::name] is not consumed in the reaction but will lower the amount of energy released. \
 			It also reduces amount of [/datum/gas/tritium::name] consumed by a ratio \
 			between [/datum/gas/tritium::name] and [/datum/gas/bz::name], greater [/datum/gas/bz::name] than [/datum/gas/tritium::name] will reduce more.",
-		"Temperature" = "Can only occur between [NOBLIUM_FORMATION_MIN_TEMP] - [NOBLIUM_FORMATION_MAX_TEMP] kelvin",
+		"Temperature" = "Can only occur between [NOBLIUM_FORMATION_MIN_TEMP] - [NOBLIUM_FORMATION_MAX_TEMP]K",
 	)
 
 /datum/gas_reaction/standard/halon_o2removal/init_factors()
@@ -190,7 +190,7 @@
 		/datum/gas/oxygen = "20 moles of [/datum/gas/oxygen::name] is consumed per mole of [/datum/gas/halon::name] combusted.",
 		/datum/gas/carbon_dioxide = "[/datum/gas/carbon_dioxide::name] is produced at 5 moles per mole of [/datum/gas/halon::name] consumed.",
 		"Energy" = "[HALON_COMBUSTION_ENERGY] joules of energy is absorbed per mole of [/datum/gas/halon::name] consumed.",
-		"Temperature" = "Can only occur above [FIRE_MINIMUM_TEMPERATURE_TO_EXIST] kelvin. Higher temperature increases [/datum/gas/halon::name] consumption rate.",
+		"Temperature" = "Can only occur above [FIRE_MINIMUM_TEMPERATURE_TO_EXIST]K. Higher temperature increases [/datum/gas/halon::name] consumption rate.",
 	)
 
 /datum/gas_reaction/standard/healium_formation/init_factors()
@@ -208,7 +208,7 @@
 		/datum/gas/hypernoblium = "[/datum/gas/hypernoblium::name] is consumed at 0.02 moles per mole of [/datum/gas/zauker::name] formed.",
 		/datum/gas/nitrium = "[/datum/gas/nitrium::name] is consumed at 1 mole per mole of [/datum/gas/zauker::name] formed.",
 		/datum/gas/zauker = "[/datum/gas/zauker::name] is produced at a rate that scales with the temperature.",
-		"Temperature" = "Can only occur between [ZAUKER_FORMATION_MIN_TEMPERATURE] - [ZAUKER_FORMATION_MAX_TEMPERATURE] kelvin. [/datum/gas/zauker::name] formation rate is proportional to the temperature.",
+		"Temperature" = "Can only occur between [ZAUKER_FORMATION_MIN_TEMPERATURE] - [ZAUKER_FORMATION_MAX_TEMPERATURE]K. [/datum/gas/zauker::name] formation rate is proportional to the temperature.",
 		"Energy" = "[2 * ZAUKER_FORMATION_ENERGY] joules of energy is absorbed per mole of [/datum/gas/zauker::name] formed.",
 	)
 
@@ -227,7 +227,7 @@
 		/datum/gas/hydrogen = "[/datum/gas/hydrogen::name] is consumed at 10/11th of a mole per mole of [/datum/gas/proto_nitrate::name] formed.",
 		/datum/gas/proto_nitrate = "[/datum/gas/proto_nitrate::name] is produced at a rate that scales with the temperature.",
 		"Energy" = "[PN_FORMATION_ENERGY / 2.2] joules of energy is released per mole of [/datum/gas/proto_nitrate::name] formed.",
-		"Temperature" = "Can only occur between [PN_FORMATION_MIN_TEMPERATURE] - [PN_FORMATION_MAX_TEMPERATURE] kelvin. \
+		"Temperature" = "Can only occur between [PN_FORMATION_MIN_TEMPERATURE] - [PN_FORMATION_MAX_TEMPERATURE]K. \
 			Higher temperature increases [/datum/gas/proto_nitrate::name] formation rate.",
 	)
 
@@ -265,12 +265,12 @@
 		"Hallucinations" = "This reaction can cause various carbon based lifeforms in the vicinity to hallucinate.",
 		"Nuclear Particles" = "This reaction emits extremely high energy nuclear particles, \
 			up to [2 * PN_BZASE_NUCLEAR_PARTICLE_MAXIMUM] per second per unique gas mixture.",
-		"Temperature" = "Can only occur between [PN_BZASE_MIN_TEMP] - [PN_BZASE_MAX_TEMP] kelvin.",
+		"Temperature" = "Can only occur between [PN_BZASE_MIN_TEMP] - [PN_BZASE_MAX_TEMP]K.",
 	)
 
 /datum/gas_reaction/standard/antinoblium_replication/init_factors()
 	factor = list(
 		/datum/gas/antinoblium = "[MOLES_GAS_VISIBLE] moles of [/datum/gas/antinoblium::name] is needed to replicate itself. \
 			Requires other gases to be converted to [/datum/gas/antinoblium::name].",
-		"Temperature" = "Can only occur above [REACTION_OPPRESSION_MIN_TEMP] kelvin."
+		"Temperature" = "Can only occur above [REACTION_OPPRESSION_MIN_TEMP]K."
 	)
