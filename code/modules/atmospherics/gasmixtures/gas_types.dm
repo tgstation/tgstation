@@ -13,7 +13,7 @@
 		if (gas_info[META_GAS_MOLES_VISIBLE][gas_path])
 			gas_info[META_GAS_OVERLAY][gas_path] += generate_gas_overlays(0, SSmapping.max_plane_offset, gas_path)
 		gas_info[META_GAS_FUSION_POWER][gas_path] = initial(gas_path.fusion_power)
-		gas_info[META_GAS_DANGER][gas_path] = initial(gas_path.dangerous)
+		gas_info[META_GAS_DANGER][gas_path] = initial(gas_path.cargo_flags) & GAS_DANGEROUS
 		gas_info[META_GAS_ID][gas_path] = initial(gas_path.id)
 		gas_info[META_GAS_DESC][gas_path] = initial(gas_path.desc)
 
@@ -39,44 +39,44 @@
 			return path
 	return ""
 
-/*||||||||||||||/----------\||||||||||||||*\
-||||||||||||||||[GAS DATUMS]||||||||||||||||
-||||||||||||||||\__________/||||||||||||||||
-|||| These should never be instantiated. ||||
-|||| They exist only to make it easier   ||||
-|||| to add a new gas. They are accessed ||||
-|||| only by meta_gas_list().            ||||
-\*||||||||||||||||||||||||||||||||||||||||*/
-
-//This is a plot created using the values for gas exports. Each gas has a value that works as its kind of soft-cap, which limits you from making billions of credits per sale, based on the base_value variable on the gasses themselves. Most of these gasses as a result have a rather low value when sold, like nitrogen and oxygen at 1500 and 600 respectively at their maximum value. The
+/**
+ * # Gas datums
+ *
+ * These are never and should never be instantiated,
+ * they just exist to hold data which is passed into the gas metadata list.
+ *
+ * They are templates for how gases should generally act.
+ */
 /datum/gas
 	var/id = ""
 	var/specific_heat = 0
 	var/name = ""
+	var/desc
 	///icon_state in icons/effects/atmospherics.dmi
 	var/gas_overlay = ""
 	var/moles_visible = null
-	///currently used by canisters
-	var/dangerous = FALSE
 	///How much the gas accelerates a fusion reaction
 	var/fusion_power = 0
 	/// relative rarity compared to other gases, used when setting up the reactions list.
 	var/rarity = 0
-	///Can gas of this type can purchased through cargo?
-	var/purchaseable = FALSE
-	///How does a single mole of this gas sell for? Formula to calculate maximum value is in code\modules\cargo\exports\large_objects.dm. Doesn't matter for roundstart gasses.
+	/// Flags that relate to how the gas is handled in cargo
+	/// GAS_PURCHASABLE - Can be purchased in cargo
+	/// GAS_EXPORTABLE - Can be sold in cargo
+	/// GAS_DANGEROUS - Is considered dangerous, requires elevated access to purchase
+	var/cargo_flags = NONE
+	/// How does a single mole of this gas buy/sell for?
+	/// Formula to calculate maximum value is in [code\modules\cargo\exports\large_objects.dm].
+	/// Only necessary for exportable or purchasable gases, otherwise meaningless.
 	var/base_value = 0
-	var/desc
-	///RGB code for use when a generic color representing the gas is needed. Colors taken from contants.ts
+	/// RGB code for use when a generic color representing the gas is needed. Colors taken from contants.ts
 	var/primary_color
-
 
 /datum/gas/oxygen
 	id = GAS_O2
 	specific_heat = 20
 	name = "Oxygen"
 	rarity = 900
-	purchaseable = TRUE
+	cargo_flags = GAS_PURCHASABLE
 	base_value = 0.2
 	desc = "The gas most life forms need to be able to survive. Also an oxidizer."
 	primary_color = "#0000ff"
@@ -86,7 +86,7 @@
 	specific_heat = 20
 	name = "Nitrogen"
 	rarity = 1000
-	purchaseable = TRUE
+	cargo_flags = GAS_PURCHASABLE
 	base_value = 0.1
 	desc = "A very common gas that used to pad artificial atmospheres to habitable pressure."
 	primary_color = "#ffff00"
@@ -95,9 +95,8 @@
 	id = GAS_CO2
 	specific_heat = 30
 	name = "Carbon Dioxide"
-	dangerous = TRUE
 	rarity = 700
-	purchaseable = TRUE
+	cargo_flags = GAS_PURCHASABLE | GAS_DANGEROUS
 	base_value = 0.2
 	desc = "What the fuck is carbon dioxide?"
 	primary_color = COLOR_GRAY
@@ -108,7 +107,7 @@
 	name = "Plasma"
 	gas_overlay = "plasma"
 	moles_visible = MOLES_GAS_VISIBLE
-	dangerous = TRUE
+	cargo_flags = GAS_DANGEROUS
 	rarity = 800
 	base_value = 1.5
 	desc = "A flammable gas with many other curious properties. Its research is one of NT's primary objective."
@@ -122,7 +121,7 @@
 	moles_visible = MOLES_GAS_VISIBLE
 	fusion_power = 8
 	rarity = 500
-	purchaseable = TRUE
+	cargo_flags = GAS_PURCHASABLE
 	base_value = 0.5
 	desc = "Water, in gas form. Makes floors slippery and washes items on them."
 	primary_color = "#b0c4de"
@@ -130,11 +129,12 @@
 /datum/gas/hypernoblium
 	id = GAS_HYPER_NOBLIUM
 	specific_heat = 2000
-	name = "Hyper-noblium"
+	name = "Hyper-Noblium"
 	gas_overlay = "freon"
 	moles_visible = MOLES_GAS_VISIBLE
 	fusion_power = 10
 	rarity = 50
+	cargo_flags = GAS_EXPORTABLE
 	base_value = 2.5
 	desc = "The most noble gas of them all. High quantities of hyper-noblium actively prevents reactions from occurring."
 	primary_color = COLOR_TEAL
@@ -146,9 +146,8 @@
 	gas_overlay = "nitrous_oxide"
 	moles_visible = MOLES_GAS_VISIBLE * 2
 	fusion_power = 10
-	dangerous = TRUE
 	rarity = 600
-	purchaseable = TRUE
+	cargo_flags = GAS_PURCHASABLE | GAS_DANGEROUS
 	base_value = 1.5
 	desc = "Causes drowsiness, euphoria, and eventually unconsciousness."
 	primary_color = "#ffe4c4"
@@ -160,7 +159,7 @@
 	fusion_power = 7
 	gas_overlay = "nitrium"
 	moles_visible = MOLES_GAS_VISIBLE
-	dangerous = TRUE
+	cargo_flags = GAS_PURCHASABLE | GAS_DANGEROUS
 	rarity = 1
 	base_value = 6
 	desc = "An experimental performance enhancing gas. Nitrium can have amplified effects as more of it gets into your bloodstream."
@@ -172,7 +171,7 @@
 	name = "Tritium"
 	gas_overlay = "tritium"
 	moles_visible = MOLES_GAS_VISIBLE
-	dangerous = TRUE
+	cargo_flags = GAS_DANGEROUS | GAS_EXPORTABLE
 	fusion_power = 5
 	rarity = 300
 	base_value = 2.5
@@ -183,10 +182,9 @@
 	id = GAS_BZ
 	specific_heat = 20
 	name = "BZ"
-	dangerous = TRUE
 	fusion_power = 8
 	rarity = 400
-	purchaseable = TRUE
+	cargo_flags = GAS_PURCHASABLE | GAS_EXPORTABLE | GAS_DANGEROUS
 	base_value = 1.5
 	desc = "A powerful hallucinogenic nerve agent able to induce cognitive damage."
 	primary_color = "#9370db"
@@ -197,6 +195,7 @@
 	name = "Pluoxium"
 	fusion_power = -10
 	rarity = 200
+	cargo_flags = GAS_EXPORTABLE
 	base_value = 2.5
 	desc = "A gas that could supply even more oxygen to the bloodstream when inhaled, without being an oxidizer."
 	primary_color = "#7b68ee"
@@ -205,7 +204,7 @@
 	id = GAS_MIASMA
 	specific_heat = 20
 	name = "Miasma"
-	dangerous = TRUE
+	cargo_flags = GAS_DANGEROUS | GAS_EXPORTABLE
 	gas_overlay = "miasma"
 	moles_visible = MOLES_GAS_VISIBLE * 60
 	rarity = 250
@@ -217,7 +216,7 @@
 	id = GAS_FREON
 	specific_heat = 600
 	name = "Freon"
-	dangerous = TRUE
+	cargo_flags = GAS_DANGEROUS | GAS_EXPORTABLE
 	gas_overlay = "freon"
 	moles_visible = MOLES_GAS_VISIBLE *30
 	fusion_power = -5
@@ -230,7 +229,7 @@
 	id = GAS_HYDROGEN
 	specific_heat = 15
 	name = "Hydrogen"
-	dangerous = TRUE
+	cargo_flags = GAS_DANGEROUS | GAS_EXPORTABLE
 	fusion_power = 2
 	rarity = 600
 	base_value = 1
@@ -241,7 +240,7 @@
 	id = GAS_HEALIUM
 	specific_heat = 10
 	name = "Healium"
-	dangerous = TRUE
+	cargo_flags = GAS_DANGEROUS | GAS_EXPORTABLE
 	gas_overlay = "healium"
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 300
@@ -252,8 +251,8 @@
 /datum/gas/proto_nitrate
 	id = GAS_PROTO_NITRATE
 	specific_heat = 30
-	name = "Proto Nitrate"
-	dangerous = TRUE
+	name = "Proto-Nitrate"
+	cargo_flags = GAS_DANGEROUS | GAS_EXPORTABLE
 	gas_overlay = "proto_nitrate"
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 200
@@ -265,7 +264,7 @@
 	id = GAS_ZAUKER
 	specific_heat = 350
 	name = "Zauker"
-	dangerous = TRUE
+	cargo_flags = GAS_DANGEROUS | GAS_EXPORTABLE
 	gas_overlay = "zauker"
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 1
@@ -277,12 +276,12 @@
 	id = GAS_HALON
 	specific_heat = 175
 	name = "Halon"
-	dangerous = TRUE
+	cargo_flags = GAS_DANGEROUS | GAS_EXPORTABLE
 	gas_overlay = "halon"
 	moles_visible = MOLES_GAS_VISIBLE
 	rarity = 300
 	base_value = 4
-	desc = "A potent fire suppressant. Removes oxygen from high temperature fires and cools down the area"
+	desc = "A potent fire suppressant. Removes oxygen from high temperature fires and cools down the area."
 	primary_color = COLOR_PURPLE
 
 /datum/gas/helium
@@ -291,6 +290,7 @@
 	name = "Helium"
 	fusion_power = 7
 	rarity = 50
+	cargo_flags = GAS_EXPORTABLE
 	base_value = 3.5
 	desc = "A very inert gas produced by the fusion of hydrogen and its derivatives."
 	primary_color = "#f0f8ff"
@@ -298,8 +298,8 @@
 /datum/gas/antinoblium
 	id = GAS_ANTINOBLIUM
 	specific_heat = 1
-	name = "Antinoblium"
-	dangerous = TRUE
+	name = "Anti-Noblium"
+	cargo_flags = GAS_DANGEROUS | GAS_EXPORTABLE
 	gas_overlay = "antinoblium"
 	moles_visible = MOLES_GAS_VISIBLE
 	fusion_power = 20
@@ -329,4 +329,3 @@
 /obj/effect/overlay/gas/Initialize(mapload)
 	. = ..()
 	SET_PLANE_W_SCALAR(src, initial(plane), plane_offset)
-

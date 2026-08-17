@@ -179,3 +179,7 @@
 #define ATMOS_PRESSURE_ERROR_TOLERANCE 0.01
 /// Helper function for retrieving gas meta info for use in performace critical places
 #define GAS_META /datum/gas_mixture::gas_meta
+
+#define GAS_EXPORTABLE (1 << 0)
+#define GAS_PURCHASABLE (1 << 1)
+#define GAS_DANGEROUS (1 << 2)

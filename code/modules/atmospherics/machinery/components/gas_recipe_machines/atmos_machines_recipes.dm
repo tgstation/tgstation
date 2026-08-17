@@ -65,7 +65,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 
 /datum/gas_recipe/crystallizer/proto_nitrate_grenade
 	id = "proto_nitrate_g"
-	name = "Proto nitrate crystal"
+	name = "\improper Proto-Nitrate crystal"
 	min_temp = 200
 	max_temp = 400
 	energy_release = 1500000
