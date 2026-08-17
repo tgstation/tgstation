@@ -27,7 +27,6 @@
 
 	for(var/datum/data/vending_product/product_record as anything in product_records + coin_records + hidden_records)
 		product_record.amount = 0
-		credits_contained = 0
 
 /obj/item/vending_refill/coffee
 	machine_name = "Solar's Best Hot Drinks"
