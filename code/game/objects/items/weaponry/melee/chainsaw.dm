@@ -176,9 +176,9 @@
 	item_flags = SLOWS_WHILE_IN_HAND
 	slowdown = 2
 	custom_materials = list(
-		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 12,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 12.3,
 		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 10,
-		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 6,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 6.3,
 		/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2
 	)
 
