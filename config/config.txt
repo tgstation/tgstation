@@ -400,10 +400,10 @@ AUTOADMIN_RANK Game Master
 #CLIENT_WARN_BUILD 1635
 #CLIENT_WARN_POPUP
 #CLIENT_WARN_MESSAGE Byond released 515 as the stable release. This comes bundled with a host of niceties, including image generation for UIs and :: operators.
-CLIENT_ERROR_VERSION 515
+CLIENT_ERROR_VERSION 516
 CLIENT_ERROR_MESSAGE Your version of byond is not supported. Please upgrade.
 ## The minimum build needed for joining the server.
-CLIENT_ERROR_BUILD 1590
+CLIENT_ERROR_BUILD 1687
 
 ## TOPIC RATE LIMITING
 ## This allows you to limit how many topic calls (clicking on an interface window) the client can do in any given game second and/or game minute.
