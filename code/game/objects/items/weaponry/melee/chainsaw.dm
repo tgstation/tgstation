@@ -175,6 +175,12 @@
 	block_sound = 'sound/items/weapons/parry.ogg'
 	item_flags = SLOWS_WHILE_IN_HAND
 	slowdown = 2
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 12,
+		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 6,
+		/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2
+	)
 
 /obj/item/chainsaw/dual/attack(mob/target, mob/living/carbon/human/user)
 	if(HAS_TRAIT(user, TRAIT_HULK))
