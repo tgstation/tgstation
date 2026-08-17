@@ -49,6 +49,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_UNNATURAL_ATMOSPHERE "station_trait_unnatural_atmosphere"
 #define STATION_TRAIT_SPIKED_DRINKS "station_trait_spiked_drinks"
 #define STATION_TRAIT_SPAWN_WEAKPOINTS "station_trait_spawn_weakpoints"
+#define STATION_TRAIT_VENDING_SHORTAGE "station_trait_vending_shortage"
 
 // Hud traits
 /// This hud is owned by a client with an open escape menu
