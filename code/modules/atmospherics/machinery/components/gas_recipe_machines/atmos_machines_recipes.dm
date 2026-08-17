@@ -138,7 +138,7 @@ GLOBAL_LIST_INIT(gas_recipe_meta, gas_recipes_list())
 
 /datum/gas_recipe/crystallizer/zaukerite
 	id = "zaukerite"
-	name = "Solidified Zaukerite"
+	name = "Solidified Zauker"
 	min_temp = 5
 	max_temp = 20
 	energy_release = 2900000
