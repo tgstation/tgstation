@@ -462,6 +462,8 @@
       unconscious and tricks anyone examining you into believing you've succumbed
       to your injuries for a short time.
 2026-08-17:
+  FalloutFalcon:
+  - code_imp: Adds support for a key of a language to be unset
   JohnFulpWillard:
   - qol: Deleted Bloodworm's stat panel entry and instead moved it to their action
       button & a new screen alert.
@@ -470,6 +472,9 @@
       or "Tall". This doesn't override the height of Settlers or Spacers.
   - bugfix: Fixes height resetting to average from dna swapping shenanigans like transformation
       sting.
+  - rscadd: Slimepeople can squeeze through grilles and similar, allowing them to
+      walk through them (though they can't carry augments or equipment along with
+      them).
   MelokG000:
   - rscadd: Sometimes there is a worm inside an apple.
   PapaMichael:
@@ -480,6 +485,9 @@
       to fall down normal chasms.
   lelandkemble:
   - qol: Put a guide explaining Carnivorous Blood in the Carnivorous Blood kit
+  - bugfix: fixed two ways damaging basic mobs that disappear when they die could
+      cause a runtime error
+  - bugfix: you can stack disks on holodisks
   thegrb93:
   - qol: Right clicking sink with beaker in hand drains it
   - bugfix: Fixes mop interaction with sink

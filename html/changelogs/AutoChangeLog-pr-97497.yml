@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "you can stack disks on holodisks"
