@@ -42,11 +42,11 @@
 	playsound(wing_owner, flap_sound, 50, TRUE)
 
 /obj/item/organ/wings/Initialize(mapload)
-	. = ..()
 	setup_jetpack()
 	if(flight_level > WINGS_FLIGHTLESS)
 		// only flightful wings get orange juice
 		food_reagents = list(/datum/reagent/flightpotion = 5)
+	. = ..()
 
 /**
  * update proc to kick our jetpack component whenever circumstances change
