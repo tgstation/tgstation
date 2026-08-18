@@ -194,8 +194,6 @@
 	equip_delay_other = 6 SECONDS
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
 	resistance_flags = NONE
-	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
-	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
 
 /obj/item/clothing/head/utility/radiation/Initialize(mapload)
 	. = ..()

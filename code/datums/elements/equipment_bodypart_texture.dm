@@ -46,6 +46,9 @@
 /datum/element/equipment_bodypart_texture/proc/item_dropped(obj/item/dropped_item, mob/living/carbon/dropper)
 	SIGNAL_HANDLER
 
+	if(dropper.get_item_by_slot(dropped_item.slot_flags) != dropped_item)
+		return
+
 	var/obj/item/bodypart/affected_bodypart = dropper.get_bodypart(body_zone)
 	affected_bodypart?.remove_bodypart_texture(bodypart_overlay_type)
 	UnregisterSignal(dropper, COMSIG_CARBON_POST_REMOVE_LIMB)
