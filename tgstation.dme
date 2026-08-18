@@ -5758,6 +5758,7 @@
 #include "code\modules\mob\living\brain\emote.dm"
 #include "code\modules\mob\living\brain\life.dm"
 #include "code\modules\mob\living\brain\skillchip.dm"
+#include "code\modules\mob\living\brain\processor\_processor.dm"
 #include "code\modules\mob\living\brain\processor\MMI.dm"
 #include "code\modules\mob\living\brain\processor\posibrain.dm"
 #include "code\modules\mob\living\carbon\carbon.dm"
