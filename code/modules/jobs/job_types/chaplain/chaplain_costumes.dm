@@ -255,12 +255,20 @@
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
+/obj/item/clothing/head/helmet/chaplain/heretic/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/heretic)
+
 /obj/item/clothing/suit/chaplainsuit/armor/heretic
 	name = "occultist's robes"
 	desc = "Shields your body from the things others fail to notice."
 	icon_state = "hereticrobe"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS
+
+/obj/item/clothing/suit/chaplainsuit/armor/heretic/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/heretic)
 
 /obj/item/clothing/suit/hooded/chaplain_hoodie
 	name = "follower hoodie"

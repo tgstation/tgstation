@@ -309,7 +309,7 @@
 	AddComponent(/datum/component/item_equipped_movement_rustle)
 
 /obj/item/clothing/suit/armor/riot/proc/init_equipment_overlay()
-	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/biosuit_dark)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/black)
 
 /datum/armor/armor_riot
 	melee = 50
