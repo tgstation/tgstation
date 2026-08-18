@@ -105,6 +105,22 @@ function updateMessageBadge(message) {
   }
 }
 
+/**
+ * Highlight chat sounds - Cooldown check + play sound for client.
+ */
+const HIGHLIGHT_SOUND_COOLDOWN_SECONDS = 3;
+let lastHighlightSoundAt = 0;
+
+function playHighlightSound(soundFile: string, volume: number) {
+  const now = Date.now();
+  if (now - lastHighlightSoundAt < HIGHLIGHT_SOUND_COOLDOWN_SECONDS * 1000) {
+    return;
+  }
+
+  lastHighlightSoundAt = now;
+  Byond.command(`.sound '${soundFile}' volume=${Math.round(volume * 100)}`);
+}
+
 class ChatRenderer {
   loaded: boolean;
   rootNode: HTMLElement | null;
@@ -527,10 +543,10 @@ class ChatRenderer {
               if (highlighted && parser.playSound && !messageHighlighted) {
                 messageHighlighted = true;
                 if (!suppressHighlightSound) {
-                  Byond.sendMessage('audio/playHighlightSound', {
-                    sound_file: parser.soundFile,
-                    volume: parser.soundVolume,
-                  });
+                  playHighlightSound(
+                    parser.soundFile,
+                    parser.soundVolume ?? 0.5,
+                  );
                 }
               }
             });

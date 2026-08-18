@@ -40,3 +40,12 @@
 	if(!is_ready())
 		return
 	window.send_message("audio/stopMusic")
+
+/**
+ * Chat Hightlight Sounds
+ * --------------------------------
+ * This is a dummy list to be used for loading chat highlight sounds into the client.
+ * This is used for sounds which are only mentioned in the UI and are not in any DM files,
+ * Otherwise they won't be loaded and will not play when the client tries to play them.
+ */
+var/static/list/_chat_highlight_sounds = list('sound/misc/highlight_sounds/Beep.ogg')
