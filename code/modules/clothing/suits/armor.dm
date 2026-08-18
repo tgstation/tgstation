@@ -303,9 +303,13 @@
 	. = ..()
 	AddElement(/datum/element/adjust_fishing_difficulty, 5)
 	init_rustle_component()
+	init_equipment_overlay()
 
 /obj/item/clothing/suit/armor/riot/proc/init_rustle_component()
 	AddComponent(/datum/component/item_equipped_movement_rustle)
+
+/obj/item/clothing/suit/armor/riot/proc/init_equipment_overlay()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/black)
 
 /datum/armor/armor_riot
 	melee = 50
@@ -535,6 +539,9 @@
 		)
 /obj/item/clothing/suit/armor/riot/knight/init_rustle_component()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
+
+/obj/item/clothing/suit/armor/riot/knigh/init_equipment_overlay()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/biosuit_dark)
 
 /obj/item/clothing/suit/armor/riot/knight/yellow
 	icon_state = "knight_yellow"
