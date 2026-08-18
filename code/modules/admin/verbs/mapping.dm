@@ -203,9 +203,10 @@ ADMIN_VERB(create_mapping_job_icons, R_DEBUG, "Generate job landmarks icons", "G
 				final.Insert(icon('icons/mob/silicon/ai.dmi', "ai", SOUTH, 1), "AI")
 			if(JOB_CYBORG)
 				final.Insert(icon('icons/mob/silicon/robots.dmi', "robot", SOUTH, 1), "Cyborg")
-			else if(JB.outfit) //only screenshot icons with an outfit
-				var/icon/I = get_flat_human_icon(null, JB, null, "landmark_icons", list(SOUTH))
-				final.Insert(I, JB.title)
+			else
+				if(JB.outfit) //only screenshot icons with an outfit
+					var/icon/I = get_flat_human_icon(null, JB, null, "landmark_icons", list(SOUTH))
+					final.Insert(I, JB.title)
 	//Also add the x
 	for(var/x_number in 1 to 4)
 		final.Insert(icon('icons/hud/screen_gen.dmi', "x[x_number == 1 ? "" : x_number]"), "x[x_number == 1 ? "" : x_number]")
