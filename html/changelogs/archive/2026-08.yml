@@ -495,9 +495,18 @@
   PapaMichael:
   - bugfix: Using shady skillchips to flip really fast is dangerous to your body's
       temperature
+  QuiteLiterallyAnything:
+  - qol: Clown shoes are no longer destroyed by character loadouts.
+  Richard Blonski:
+  - rscadd: Chat Highlight sounds.
+  - qol: You can now enable chat highlight sounds.
+  - sound: added `sound/misc/highlight_sounds/Beep.ogg`
   SmArtKar:
   - bugfix: Fixed mirrors giving you bad luck with each hit, rather only when broken
   - bugfix: Fixed Filterrific bluescreening when creating a color filter
+  levels0:
+  - balance: when ectoplasm residue is dispersed in hand, revenant gets sucked into
+      a mirror at the same range as when thrown
   tontyGH:
   - bugfix: Lizards and brain-damaged animals no longer suffer from unintended spontaneous
       aneurysms
