@@ -518,7 +518,7 @@ GLOBAL_DATUM_INIT(operations, /datum/operation_holder, new)
 		return 0
 
 	var/obj/item/realtool = tool
-	return (realtool.toolspeed) * (implements[realtool.tool_behaviour] || is_type_in_list(realtool, implements, zebra = TRUE) || 0)
+	return (realtool.toolspeed) * (implements[realtool.tool_behaviour] || is_type_in_list(realtool, implements, zebra = TRUE, return_first_match = TRUE) || 0)
 
 /**
  * Return a radial slice, a list of radial slices, or an assoc list of radial slice to operation info

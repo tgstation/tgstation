@@ -398,23 +398,23 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 		if (!length(GLOB.stickybanadminexemptions))
 			restore_stickybans()
 
-	if (byond_version >= 512)
-		if (!byond_build || byond_build < 1386)
-			message_admins(span_adminnotice("[key_name(src)] has been detected as spoofing their byond version. Connection rejected."))
-			add_system_note("Spoofed-Byond-Version", "Detected as using a spoofed byond version.")
-			log_suspicious_login("Failed Login: [key] - Spoofed byond version")
-			qdel(src)
+	if (!byond_build)
+		message_admins(span_adminnotice("[key_name(src)] has been detected as spoofing their BYOND version. Connection rejected."))
+		add_system_note("Spoofed-BYOND-Version", "Detected as using a spoofed BYOND version.")
+		log_suspicious_login("Failed Login: [key] - Spoofed BYOND version")
+		qdel(src)
+		return
 
-		if (num2text(byond_build) in GLOB.blacklisted_builds)
-			log_access("Failed login: [key] - blacklisted byond version")
-			to_chat_immediate(src, span_userdanger("Your version of byond is blacklisted."))
-			to_chat_immediate(src, span_danger("Byond build [byond_build] ([byond_version].[byond_build]) has been blacklisted for the following reason: [GLOB.blacklisted_builds[num2text(byond_build)]]."))
-			to_chat_immediate(src, span_danger("Please download a new version of byond. If [byond_build] is the latest, you can go to <a href=\"https://secure.byond.com/download/build\">BYOND's website</a> to download other versions."))
-			if(connecting_admin)
-				to_chat_immediate(src, "As an admin, you are being allowed to continue using this version, but please consider changing byond versions")
-			else
-				qdel(src)
-				return
+	if (num2text(byond_build) in GLOB.blacklisted_builds)
+		log_access("Failed login: [key] - blacklisted BYOND version")
+		to_chat_immediate(src, span_userdanger("Your version of BYOND is blacklisted."))
+		to_chat_immediate(src, span_danger("BYOND build [byond_build] ([byond_version].[byond_build]) has been blacklisted for the following reason: [GLOB.blacklisted_builds[num2text(byond_build)]]."))
+		to_chat_immediate(src, span_danger("Please download a new version of BYOND. If [byond_build] is the latest, you can go to <a href=\"https://secure.byond.com/download/build\">BYOND's website</a> to download other versions."))
+		if(connecting_admin)
+			to_chat_immediate(src, "As an admin, you are being allowed to continue using this version, but please consider changing BYOND versions.")
+		else
+			qdel(src)
+			return
 
 	if(SSinput.initialized)
 		set_macros()
@@ -1118,6 +1118,15 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 		panel_tabs |= verb_to_init.category
 		verblist[++verblist.len] = list(verb_to_init.category, verb_to_init.name)
 	src.stat_panel.send_message("init_verbs", list(panel_tabs = panel_tabs, verblist = verblist))
+
+	var/list/panel_verbs = list()
+	for(var/procpath/verb_to_init as anything in verbstoprocess)
+		if(!verb_to_init || verb_to_init.hidden)
+			continue
+		if(!SSverbs.verbs_by_verb_path[verb_to_init] && !SSadmin_verbs.admin_verbs_by_verb_path[verb_to_init])
+			continue
+		panel_verbs += list(SSverbs.serialize_verb(verb_to_init))
+	tgui_panel?.window?.send_message("verbs/init", list("verbs" = panel_verbs))
 
 /client/proc/check_panel_loaded()
 	if(stat_panel.is_ready())

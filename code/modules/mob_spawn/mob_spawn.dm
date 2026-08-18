@@ -86,22 +86,25 @@
 	SHOULD_CALL_PARENT(TRUE)
 	if(faction)
 		spawned_mob.set_faction(faction)
-	if(ishuman(spawned_mob))
-		var/mob/living/carbon/human/spawned_human = spawned_mob
-		spawned_human.dna.species.give_important_for_life(spawned_human) // for preventing plasmamen from combusting immediately upon spawning
-		spawned_human.underwear = "Nude"
-		spawned_human.undershirt = "Nude"
-		spawned_human.socks = "Nude"
-		randomize_human_normie(spawned_human)
-		if(hairstyle)
-			spawned_human.set_hairstyle(hairstyle, update = FALSE)
-		if(facial_hairstyle)
-			spawned_human.set_facial_hairstyle(facial_hairstyle, update = FALSE)
-		if(haircolor)
-			spawned_human.set_haircolor(haircolor, update = FALSE)
-		if(facial_haircolor)
-			spawned_human.set_facial_haircolor(facial_haircolor, update = FALSE)
-		spawned_human.update_body(is_creating = TRUE)
+	if(!ishuman(spawned_mob))
+		return
+	var/mob/living/carbon/human/spawned_human = spawned_mob
+	spawned_human.dna.species.give_important_for_life(spawned_human) // for preventing plasmamen from combusting immediately upon spawning
+	spawned_human.underwear = "Nude"
+	spawned_human.undershirt = "Nude"
+	spawned_human.socks = "Nude"
+	randomize_human_normie(spawned_human)
+	if(hairstyle)
+		spawned_human.set_hairstyle(hairstyle, update = FALSE)
+	if(facial_hairstyle)
+		spawned_human.set_facial_hairstyle(facial_hairstyle, update = FALSE)
+	if(haircolor)
+		spawned_human.set_haircolor(haircolor, update = FALSE)
+	if(facial_haircolor)
+		spawned_human.set_facial_haircolor(facial_haircolor, update = FALSE)
+	if(skin_tone)
+		spawned_human.skin_tone = skin_tone
+	spawned_human.update_body(is_creating = TRUE)
 
 /obj/effect/mob_spawn/proc/name_mob(mob/living/spawned_mob, forced_name)
 	var/chosen_name

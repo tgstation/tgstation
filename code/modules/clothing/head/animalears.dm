@@ -3,7 +3,7 @@
 	desc = "A pair of kitty ears. Meow!"
 	icon_state = "kitty"
 	color = "#999999"
-
+	clothing_traits = list(TRAIT_CAT_EMOTES_ALLOWED)
 	dog_fashion = /datum/dog_fashion/head/kitty
 
 /obj/item/clothing/head/costume/kitty/visual_equipped(mob/living/carbon/human/user, slot)

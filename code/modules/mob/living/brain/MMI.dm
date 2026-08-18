@@ -60,69 +60,77 @@
 	if(brain)
 		. += "mmi_dead"
 
-/obj/item/mmi/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/mmi/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	user.changeNext_move(CLICK_CD_MELEE)
-	if(istype(O, /obj/item/organ/brain)) //Time to stick a brain in it --NEO
-		var/obj/item/organ/brain/newbrain = O
-		if(brain)
-			to_chat(user, span_warning("There's already a brain in the MMI!"))
-			return
-		if(newbrain.suicided)
-			to_chat(user, span_warning("[newbrain] is completely useless."))
-			return
-		if(!newbrain.brainmob)
-			var/install = tgui_alert(user, "[newbrain] is inactive, slot it in anyway?", "Installing Brain", list("Yes", "No"))
-			if(install != "Yes")
-				return
-			if(!user.transferItemToLoc(newbrain, src))
-				return
-			user.visible_message(span_notice("[user] sticks [newbrain] into [src]."), span_notice("[src]'s indicator light turns red as you insert [newbrain]. Its brainwave activity alarm buzzes."))
-			brain = newbrain
-			brain.organ_flags |= ORGAN_FROZEN
-			name = "[initial(name)]: [copytext(newbrain.name, 1, -8)]"
-			update_appearance()
-			return
+	if(!istype(tool, /obj/item/organ/brain)) //Time to stick a brain in it --NEO
+		return NONE
 
-		if(!user.transferItemToLoc(O, src))
-			return
-		var/mob/living/brain/B = newbrain.brainmob
-		if(!B.key && !newbrain.decoy_override)
-			B.notify_revival("Someone has put your brain in a MMI!", source = src)
-		user.visible_message(span_notice("[user] sticks \a [newbrain] into [src]."), span_notice("[src]'s indicator light turn on as you insert [newbrain]."))
+	var/obj/item/organ/brain/newbrain = tool
+	if(brain)
+		to_chat(user, span_warning("There's already a brain in the MMI!"))
+		return ITEM_INTERACT_BLOCKING
 
-		set_brainmob(newbrain.brainmob)
-		newbrain.brainmob = null
-		brainmob.forceMove(src)
-		brainmob.container = src
-		var/fubar_brain = newbrain.suicided || HAS_TRAIT(brainmob, TRAIT_SUICIDED) //brain is from a suicider
-		if(!fubar_brain && !(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death, nor was from a suicider.
-			brainmob.set_stat(STABLE) //we manually revive the brain mob
-		else if(!fubar_brain && newbrain.organ_flags & ORGAN_FAILING) // the brain is damaged, but not from a suicider
-			to_chat(user, span_warning("[src]'s indicator light turns yellow and its brain integrity alarm beeps softly. Perhaps you should check [newbrain] for damage."))
-			playsound(src, 'sound/machines/synth/synth_no.ogg', 5, TRUE)
-		else
-			to_chat(user, span_warning("[src]'s indicator light turns red and its brainwave activity alarm beeps softly. Perhaps you should check [newbrain] again."))
-			playsound(src, 'sound/machines/beep/triple_beep.ogg', 5, TRUE)
+	if(newbrain.suicided)
+		to_chat(user, span_warning("[newbrain] is completely useless."))
+		return ITEM_INTERACT_BLOCKING
 
-		brainmob.reset_perspective()
+	if(!newbrain.brainmob)
+		var/install = tgui_alert(user, "[newbrain] is inactive, slot it in anyway?", "Installing Brain", list("Yes", "No"))
+		if(install != "Yes")
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(newbrain, src))
+			return ITEM_INTERACT_BLOCKING
+
+		user.visible_message(span_notice("[user] sticks [newbrain] into [src]."), span_notice("[src]'s indicator light turns red as you insert [newbrain]. Its brainwave activity alarm buzzes."))
 		brain = newbrain
 		brain.organ_flags |= ORGAN_FROZEN
-
-		name = "[initial(name)]: [brainmob.real_name]"
+		name = "[initial(name)]: [copytext(newbrain.name, 1, -8)]"
 		update_appearance()
-		if(istype(brain, /obj/item/organ/brain/alien))
-			braintype = "Xenoborg" //HISS....Beep.
-		else
-			braintype = "Cyborg"
+		return ITEM_INTERACT_SUCCESS
 
-		SSblackbox.record_feedback("amount", "mmis_filled", 1)
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
 
-		user.log_message("has put the brain of [key_name(brainmob)] into an MMI", LOG_GAME)
+	var/mob/living/brain/other_brainmob = newbrain.brainmob
+	if(!other_brainmob.key && !newbrain.decoy_override)
+		other_brainmob.notify_revival("Someone has put your brain in a MMI!", source = src)
+	user.visible_message(span_notice("[user] sticks \a [newbrain] into [src]."), span_notice("[src]'s indicator light turn on as you insert [newbrain]."))
 
-	else if(brainmob)
-		O.attack(brainmob, user) //Oh noooeeeee
+	set_brainmob(newbrain.brainmob)
+	newbrain.brainmob = null
+	brainmob.forceMove(src)
+	brainmob.container = src
+	var/fubar_brain = newbrain.suicided || HAS_TRAIT(brainmob, TRAIT_SUICIDED) //brain is from a suicider
+	if(!fubar_brain && !(newbrain.organ_flags & ORGAN_FAILING)) // the brain organ hasn't been beaten to death, nor was from a suicider.
+		brainmob.set_stat(STABLE) //we manually revive the brain mob
+	else if(!fubar_brain && newbrain.organ_flags & ORGAN_FAILING) // the brain is damaged, but not from a suicider
+		to_chat(user, span_warning("[src]'s indicator light turns yellow and its brain integrity alarm beeps softly. Perhaps you should check [newbrain] for damage."))
+		playsound(src, 'sound/machines/synth/synth_no.ogg', 5, TRUE)
 	else
+		to_chat(user, span_warning("[src]'s indicator light turns red and its brainwave activity alarm beeps softly. Perhaps you should check [newbrain] again."))
+		playsound(src, 'sound/machines/beep/triple_beep.ogg', 5, TRUE)
+
+	brainmob.reset_perspective()
+	brain = newbrain
+	brain.organ_flags |= ORGAN_FROZEN
+
+	name = "[initial(name)]: [brainmob.real_name]"
+	update_appearance()
+	if(istype(brain, /obj/item/organ/brain/alien))
+		braintype = "Xenoborg" //HISS....Beep.
+	else
+		braintype = "Cyborg"
+
+	SSblackbox.record_feedback("amount", "mmis_filled", 1)
+
+	user.log_message("has put the brain of [key_name(brainmob)] into an MMI", LOG_GAME)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/mmi/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!brainmob)
 		return ..()
+	attacking_item.attack(brainmob, user) //Oh noooeeeee
 
 /**
  * Forces target brain into the MMI. Mainly intended for admin purposes, as this allows transfer without a mob or user.

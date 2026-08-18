@@ -375,6 +375,10 @@ Moving interrupts
 		prepared_block.set_target(interacting_with, user)
 		return ITEM_INTERACT_SUCCESS
 
+	else if(istype(interacting_with, /turf/open/floor/concrete))
+		var/turf/open/floor/concrete/concrete_floor = interacting_with
+		return concrete_floor.handle_shape(user)
+
 	return NONE
 
 // We aim at something distant.

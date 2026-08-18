@@ -28,10 +28,13 @@
 	var/dnd_style_level_up = TRUE
 	/// Whether the rod can loop across other z-levels. The rod will still loop when the z-level is self-looping even if this is FALSE.
 	var/loopy_rod = FALSE
+	/// Whether or not this rod should be shown to ghosts for auto-orbiting.
+	var/should_augury = TRUE
 
 /obj/effect/immovablerod/Initialize(mapload, atom/target_atom, atom/specific_target, force_looping = FALSE)
 	. = ..()
-	SSaugury.register_doom(src, 2000)
+	if(should_augury)
+		SSaugury.register_doom(src, SEVERITY_ROD)
 
 	var/turf/real_destination = get_turf(target_atom)
 	destination_turf = real_destination

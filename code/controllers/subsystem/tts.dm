@@ -670,7 +670,7 @@ SUBSYSTEM_DEF(tts)
 	if(!SStts.tts_enabled)
 		return FALSE
 
-	if(HAS_TRAIT(hearer, TRAIT_DEAF))
+	if(HAS_TRAIT(hearer, TRAIT_DEAF) || IS_UNCONSCIOUS(hearer))
 		return FALSE
 
 	var/tts_pref = hearer.client?.prefs.read_preference(/datum/preference/choiced/sound_tts) || TTS_SOUND_OFF

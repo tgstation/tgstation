@@ -44,16 +44,12 @@
 		var/mob/living/carbon/human/humie = new_owner
 		humie.update_mob_height()
 
-/obj/item/bodypart/chest/get_butcher_drops(force = FALSE)
+/obj/item/bodypart/chest/get_butcher_drops()
 	. = ..()
-	if(!isnull(butcher_drops) && !force)
-		return
 	var/datum/species/species = GLOB.species_list[species_id || limb_id]
-	if (!species || !species.skinned_type)
-		return
-	if (!islist(.))
-		. = list()
-	.[species.skinned_type] = 1
+	if (!isnull(species?.skinned_type))
+		. ||= list()
+		.[species.skinned_type] = 1
 
 /obj/item/bodypart/chest/grind_results()
 	return null
