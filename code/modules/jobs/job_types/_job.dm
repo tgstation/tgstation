@@ -668,7 +668,7 @@
 	var/icon = job_trim::sechud_icon
 	var/icon_state = job_trim::sechud_icon_state
 	if(!icon || !icon_state || icon_state == SECHUD_UNKNOWN)
-		CRASH("[src.type] has no job icon state.")
+		CRASH("[src.type] has no job icon or icon state.")
 
 	return icon(icon, icon_state)
 
