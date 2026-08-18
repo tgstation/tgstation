@@ -30,7 +30,7 @@
 		if(TELEPORT_CHANNEL_BLUESPACE)
 			var/interference = 0
 			for(var/obj/item/check as anything in teleatom.get_all_contents_type(/obj/item))
-				if(check.item_flags & BLUESPACE_INTERFERENCE)
+				if(HAS_TRAIT(check, TRAIT_BLUESPACE_INTERFERENCE))
 					interference += 1
 			if(interference)
 				precision = max(rand(1,100)*interference,100)

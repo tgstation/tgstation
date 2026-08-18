@@ -1725,4 +1725,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Turfs with this trait allow whispers to be projected over it when the whisperer is facing it
 #define TRAIT_TURF_PROJECTS_WHISPERS  "turf_projects_whispers"
 
+/// Items with this trait interfere with bluespace teleportation
+#define TRAIT_BLUESPACE_INTERFERENCE "bluespace_interference"
+
 // END TRAIT DEFINES
