@@ -23,6 +23,7 @@
 	TEST_ASSERT_NOTEQUAL(replacer.uses, initial(replacer.uses), "Light replacer did not consume resources replacing a tube")
 
 	janitor.put_in_active_hand(rangedreplacer, TRUE)
+	qdel(current_close_light)
 	current_close_light = allocate(/obj/machinery/light/floor, run_loc_floor_bottom_left)
 	current_close_light.burn_out()
 
