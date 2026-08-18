@@ -639,8 +639,8 @@
 	transmittable = -4
 	level = 9
 	threshold_descs = list(
-		"Resistance 8" = "Doubles healing speed from stable genetics.",
-		"Stage Speed 7" = "Slightly increases healing speed for all hosts without negative genetic stability.",
+		"Resistance 9" = "Doubles healing speed from stable genetics.",
+		"Stage Speed 6" = "Slightly increases healing speed for all hosts without negative genetic stability.",
 	)
 	power = 0
 	var/stability_divisor = 25
