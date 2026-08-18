@@ -137,6 +137,9 @@
 /atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/z_changed(datum/source, new_z)
 	SIGNAL_HANDLER
 
+	if(!(src in SSweather.particle_planemasters))
+		return
+
 	if(!SSmapping.initialized)
 		return
 
