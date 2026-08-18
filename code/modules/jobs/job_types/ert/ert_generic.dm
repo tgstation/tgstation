@@ -1,13 +1,13 @@
 /datum/job/ert
 	title = "ERT Generic"
-	tgui_icon = "pen-alt"
+	tgui_icon = FA_ICON_PEN_ALT
 
 /datum/job/ert/deatsquad
 	title = JOB_ERT_DEATHSQUAD
 
 /datum/job/ert/commander
 	title = JOB_ERT_COMMANDER
-	tgui_icon = "star"
+	tgui_icon = FA_ICON_CROWN
 
 /datum/job/ert/officer
 	title = JOB_ERT_OFFICER
@@ -35,12 +35,11 @@
 
 /datum/job/ert/official
 	title = "CentCom Official"
-	tgui_icon = "medal"
+	tgui_icon = FA_ICON_MEDAL
 
 /datum/job/ert/intern
 	title = "CentCom Intern"
-	tgui_icon = "pen-alt"
 
 /datum/job/ert/intern/leader
 	title = "CentCom Head Intern"
-	tgui_icon = "pen-fancy"
+	tgui_icon = FA_ICON_PEN_FANCY

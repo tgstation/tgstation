@@ -37,7 +37,7 @@
 	)
 	rpg_title = "Cleric"
 	job_flags = STATION_JOB_FLAGS
-	tgui_icon = "staff-snake"
+	tgui_icon = FA_ICON_STAFF_SNAKE
 
 
 /datum/outfit/job/doctor

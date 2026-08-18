@@ -29,7 +29,7 @@
 	)
 	rpg_title = "Recluse"
 	job_flags = STATION_JOB_FLAGS
-	tgui_icon = "gamepad"
+	tgui_icon = FA_ICON_GAMEPAD
 
 /datum/outfit/job/bitrunner
 	name = "Bitrunner"
@@ -42,4 +42,4 @@
 
 /datum/job/bit_avatar
 	title = "Bit Avatar"
-	tgui_icon = "code"
+	tgui_icon = FA_ICON_CODE

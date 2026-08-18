@@ -34,7 +34,7 @@
 	voice_of_god_silence_power = 3
 
 	job_tone = "silence"
-	tgui_icon = "comment-slash"
+	tgui_icon = FA_ICON_COMMENT_SLASH
 
 /datum/job/mime/after_spawn(mob/living/spawned, client/player_client)
 	if (ishuman(spawned))

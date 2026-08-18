@@ -36,7 +36,7 @@
 	job_flags = STATION_JOB_FLAGS
 
 	job_tone = "honk"
-	tgui_icon = "face-grin-tears"
+	tgui_icon = FA_ICON_FACE_GRIN_TEARS
 
 /datum/job/clown/after_spawn(mob/living/spawned, client/player_client)
 	if (ishuman(spawned))

@@ -44,7 +44,7 @@
 	)
 	rpg_title = "Crystallomancer"
 	job_flags = STATION_JOB_FLAGS
-	tgui_icon = "gears"
+	tgui_icon = FA_ICON_GEARS
 
 
 /datum/outfit/job/engineer

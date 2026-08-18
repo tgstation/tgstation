@@ -37,7 +37,7 @@
 	voice_of_god_power = 2 //Chaplains are very good at speaking with the voice of god
 
 	job_tone = "holy"
-	tgui_icon = "cross"
+	tgui_icon = FA_ICON_CROSS
 
 
 /datum/job/chaplain/after_spawn(mob/living/spawned, client/player_client)
