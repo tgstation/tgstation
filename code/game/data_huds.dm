@@ -549,7 +549,7 @@ Diagnostic HUDs!
 	holder.pixel_w = get_hud_x_offset()
 	holder.pixel_z = get_hud_y_offset()
 
-/atom/proc/set_hud_image_state(hud_type, hud_icon, hud_state, x_offset = 0, y_offset = 0)
+/atom/proc/set_hud_image_state(hud_type, hud_icon = DEFAULT_HUDS_DMI, hud_state, x_offset = 0, y_offset = 0)
 	if (!hud_list) // Still initializing
 		return
 	var/image/holder = hud_list[hud_type]
