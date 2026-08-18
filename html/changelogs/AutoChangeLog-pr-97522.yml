@@ -1,0 +1,8 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscdel: "Chem dispenser: Left clicking sub-recipes in the recipe browser no longer pins the recipe"
+  - rscdel: "Chem dispenser: Right clicking sub-recipes in the recipe browser no longer puts the recipe in the search bar"
+  - qol: "Chem dispenser: Hovering over sub-recipes shows the sub-recipe in the tooltip itself"
+  - qol: "Chem dispenser: You can move your mouse over sub-recipe tooltips to view sub-sub-recipes (like how the wiki works)"
+  - qol: "Chem dispenser: Sodium Chloride recipe is now shown in the recipe browser. In case you somehow forget it like me, despite the name literally being the recipe to make it"
