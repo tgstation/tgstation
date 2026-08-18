@@ -1,0 +1,4 @@
+author: "QuiteLiterallyAnything"
+delete-after: True
+changes:
+  - qol: "Clown shoes are no longer destroyed by character loadouts."
