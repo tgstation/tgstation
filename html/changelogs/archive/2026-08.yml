@@ -492,6 +492,12 @@
   - qol: Right clicking sink with beaker in hand drains it
   - bugfix: Fixes mop interaction with sink
 2026-08-18:
+  PapaMichael:
+  - bugfix: Using shady skillchips to flip really fast is dangerous to your body's
+      temperature
+  SmArtKar:
+  - bugfix: Fixed mirrors giving you bad luck with each hit, rather only when broken
+  - bugfix: Fixed Filterrific bluescreening when creating a color filter
   tontyGH:
   - bugfix: Lizards and brain-damaged animals no longer suffer from unintended spontaneous
       aneurysms
