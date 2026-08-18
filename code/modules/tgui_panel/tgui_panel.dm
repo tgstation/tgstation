@@ -189,8 +189,10 @@
 		if(isnull(volume))
 			volume = 0.50
 		volume = clamp(text2num(volume), 0, 1)
-		if(sound_file)
-			SEND_SOUND(client, sound(sound_file, volume = volume * 100))
+		if(!COOLDOWN_FINISHED(client, highlight_sound_cooldown))
+			return TRUE
+		COOLDOWN_START(client, highlight_sound_cooldown, 3 SECONDS)
+		client << sound(sound_file, volume = volume * 100)
 		return TRUE
 
 /datum/tgui_panel/proc/resolve_invoke_args(list/raw_args, list/arg_metadata)

@@ -64,6 +64,8 @@
 	COOLDOWN_DECLARE(say_slowmode)
 	/// The last urgent ahelp that this player sent
 	COOLDOWN_DECLARE(urgent_ahelp_cooldown)
+	///Cooldown for chat highlight sounds, to prevent spam.
+	COOLDOWN_DECLARE(highlight_sound_cooldown)
 
 		/////////
 		//OTHER//
