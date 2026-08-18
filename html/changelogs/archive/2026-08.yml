@@ -491,3 +491,7 @@
   thegrb93:
   - qol: Right clicking sink with beaker in hand drains it
   - bugfix: Fixes mop interaction with sink
+2026-08-18:
+  tontyGH:
+  - bugfix: Lizards and brain-damaged animals no longer suffer from unintended spontaneous
+      aneurysms
