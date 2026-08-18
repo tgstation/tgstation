@@ -61,6 +61,7 @@
 
 	for(var/datum/data/vending_product/product_record as anything in product_records + coin_records + hidden_records)
 		product_record.amount = 0
+		credits_contained += rand(1, 5)
 
 /obj/machinery/vending/cola/on_dispense(obj/item/vended_item, dispense_returned = FALSE)
 	// Only apply to newly dispensed items
