@@ -1,0 +1,6 @@
+author: "Richard Blonski"
+delete-after: True
+changes:
+  - rscadd: "Chat Highlight sounds."
+  - qol: "You can now enable chat highlight sounds."
+  - sound: "added `sound/misc/highlight_sounds/Beep.ogg`"
