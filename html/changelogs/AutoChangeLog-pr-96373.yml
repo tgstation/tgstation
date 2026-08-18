@@ -1,0 +1,4 @@
+author: "rkz/tsar-salat"
+delete-after: True
+changes:
+  - refactor: "refactored wing code significantly. Any wing organ is capable of any level of flight now (as set by a var). Kindly indicate any inexplicable changes to wings should they occur ingame."
