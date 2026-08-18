@@ -495,6 +495,9 @@
   PapaMichael:
   - bugfix: Using shady skillchips to flip really fast is dangerous to your body's
       temperature
+  - bugfix: Unequipping jet boots while flying now puts you back on the ground instead
+      of bugging you out
+  - bugfix: Showers and destructive scanners now render on their proper layers
   QuiteLiterallyAnything:
   - qol: Clown shoes are no longer destroyed by character loadouts.
   Richard Blonski:
@@ -507,6 +510,8 @@
   levels0:
   - balance: when ectoplasm residue is dispersed in hand, revenant gets sucked into
       a mirror at the same range as when thrown
+  timothymtorres:
+  - sound: Add droplet sound to dropper
   tontyGH:
   - bugfix: Lizards and brain-damaged animals no longer suffer from unintended spontaneous
       aneurysms
