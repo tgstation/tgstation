@@ -19,7 +19,7 @@
 
 /datum/job/ert/medical_doctor
 	title = JOB_ERT_MEDICAL_DOCTOR
-	tgui_icon = /datum/job/medical_doctor::tgui_icon
+	tgui_icon = /datum/job/doctor::tgui_icon
 
 /datum/job/ert/chaplain
 	title = JOB_ERT_CHAPLAIN
