@@ -557,10 +557,7 @@ Diagnostic HUDs!
 		return
 	if (!istype(holder)) // Can contain lists for HUD_LIST_LIST hinted HUDs, if someone fucks up and passes this here we wanna know about it
 		CRASH("[src] ([type]) had a HUD_LIST_LIST hud_type [hud_type] passed into set_hud_image_state!")
-	if(hud_icon)
-		holder.icon = hud_icon
-	else
-		holder.icon = DEFAULT_HUDS_DMI
+	holder.icon = hud_icon
 	holder.icon_state = hud_state
 	adjust_hud_position(holder)
 	if (x_offset || y_offset)
