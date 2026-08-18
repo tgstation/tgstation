@@ -1,0 +1,5 @@
+author: "Glamyr"
+delete-after: True
+changes:
+  - rscadd: "Department Specific Shuttles! If you captain and one of departments has most employees, you can buy that in communication console."
+  - code_imp: "Improved the BuyingShuttle UI File."

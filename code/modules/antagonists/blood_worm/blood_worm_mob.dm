@@ -168,11 +168,14 @@
 		return FALSE
 	if (host)
 		ADD_TRAIT(host, TRAIT_MIND_TEMPORARILY_GONE, BLOOD_WORM_HOST_TRAIT)
+	var/atom/movable/screen/alert/bloodworm_info/info_alert = throw_alert(ALERT_BLOODWORM_INFO, /atom/movable/screen/alert/bloodworm_info)
+	info_alert.worm_owner = src
 
 /mob/living/basic/blood_worm/Logout()
 	. = ..()
 	if (host)
 		REMOVE_TRAIT(host, TRAIT_MIND_TEMPORARILY_GONE, BLOOD_WORM_HOST_TRAIT)
+	clear_alert(ALERT_BLOODWORM_INFO)
 
 /mob/living/basic/blood_worm/process(seconds_per_tick, times_fired)
 	if (!host)
