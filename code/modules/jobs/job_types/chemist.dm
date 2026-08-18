@@ -35,6 +35,7 @@
 	)
 	rpg_title = "Alchemist"
 	job_flags = STATION_JOB_FLAGS
+	tgui_icon = "prescription-bottle"
 
 
 /datum/outfit/job/chemist

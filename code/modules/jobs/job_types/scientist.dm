@@ -34,6 +34,7 @@
 	job_flags = STATION_JOB_FLAGS
 
 	job_tone = "boom"
+	tgui_icon = "flask"
 
 
 /datum/outfit/job/scientist

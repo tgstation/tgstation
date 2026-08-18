@@ -30,6 +30,7 @@
 	job_flags = STATION_JOB_FLAGS
 
 	job_tone = "slip"
+	tgui_icon = "soap"
 
 /datum/outfit/job/janitor
 	name = "Janitor"

@@ -37,6 +37,7 @@
 	)
 	rpg_title = "Corpse Runner"
 	job_flags = STATION_JOB_FLAGS
+	tgui_icon = "truck-medical"
 
 
 /datum/outfit/job/paramedic
