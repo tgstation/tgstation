@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed mirrors giving you bad luck with each hit, rather only when broken"
