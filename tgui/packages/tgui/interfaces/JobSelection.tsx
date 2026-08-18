@@ -157,6 +157,7 @@ function DepartmentEntry(props: DepartmentEntryProps) {
                 key={name}
                 jobName={name}
                 job={job}
+                jobIcon={job.jobIcon}
                 department={department}
                 onClick={() => {
                   act('select_job', { job: name });
