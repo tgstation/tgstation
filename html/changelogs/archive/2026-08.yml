@@ -461,3 +461,52 @@
   - rscadd: Add "Death Mimicry" positive quirk. Performing a death gasp knocks you
       unconscious and tricks anyone examining you into believing you've succumbed
       to your injuries for a short time.
+2026-08-17:
+  FalloutFalcon:
+  - code_imp: Adds support for a key of a language to be unset
+  JohnFulpWillard:
+  - qol: Deleted Bloodworm's stat panel entry and instead moved it to their action
+      button & a new screen alert.
+  Melbert:
+  - rscadd: Adds height preference, allowing you to pick between "Short", "Average",
+      or "Tall". This doesn't override the height of Settlers or Spacers.
+  - bugfix: Fixes height resetting to average from dna swapping shenanigans like transformation
+      sting.
+  - rscadd: Slimepeople can squeeze through grilles and similar, allowing them to
+      walk through them (though they can't carry augments or equipment along with
+      them).
+  MelokG000:
+  - rscadd: Sometimes there is a worm inside an apple.
+  PapaMichael:
+  - bugfix: The server should obey the config's `min_antag_cap` and `max_antag_cap`
+      for midround rulesets now.
+  QuiteLiterallyAnything:
+  - bugfix: The Pride ruin will no longer cause those standing on latticed chasms
+      to fall down normal chasms.
+  lelandkemble:
+  - qol: Put a guide explaining Carnivorous Blood in the Carnivorous Blood kit
+  - bugfix: fixed two ways damaging basic mobs that disappear when they die could
+      cause a runtime error
+  - bugfix: you can stack disks on holodisks
+  thegrb93:
+  - qol: Right clicking sink with beaker in hand drains it
+  - bugfix: Fixes mop interaction with sink
+2026-08-18:
+  PapaMichael:
+  - bugfix: Using shady skillchips to flip really fast is dangerous to your body's
+      temperature
+  QuiteLiterallyAnything:
+  - qol: Clown shoes are no longer destroyed by character loadouts.
+  Richard Blonski:
+  - rscadd: Chat Highlight sounds.
+  - qol: You can now enable chat highlight sounds.
+  - sound: added `sound/misc/highlight_sounds/Beep.ogg`
+  SmArtKar:
+  - bugfix: Fixed mirrors giving you bad luck with each hit, rather only when broken
+  - bugfix: Fixed Filterrific bluescreening when creating a color filter
+  levels0:
+  - balance: when ectoplasm residue is dispersed in hand, revenant gets sucked into
+      a mirror at the same range as when thrown
+  tontyGH:
+  - bugfix: Lizards and brain-damaged animals no longer suffer from unintended spontaneous
+      aneurysms

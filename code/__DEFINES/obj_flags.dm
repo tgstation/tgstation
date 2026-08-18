@@ -99,22 +99,20 @@
 #define VOICEBOX_DISABLED (1<<6)
 /// Prevents knock-off from things like hat-throwing.
 #define SNUG_FIT (1<<7)
-/// Clothes that cause a larger notification when placed on a person.
-#define DANGEROUS_OBJECT (1<<8)
 /// Clothes that use large icons, for applying the proper overlays like blood
-#define LARGE_WORN_ICON (1<<9)
+#define LARGE_WORN_ICON (1<<8)
 /// prevents from placing on plasmaman helmet or modsuit hat holder
-#define STACKABLE_HELMET_EXEMPT (1<<10)
+#define STACKABLE_HELMET_EXEMPT (1<<9)
 /// Prevents plasmamen from igniting when wearing this
-#define PLASMAMAN_PREVENT_IGNITION (1<<11)
+#define PLASMAMAN_PREVENT_IGNITION (1<<10)
 /// Headgear/helmet allows internals
-#define HEADINTERNALS (1<<13)
+#define HEADINTERNALS (1<<11)
 /// Prevents masks from getting adjusted from enabling internals
-#define INTERNALS_ADJUST_EXEMPT (1<<14)
+#define INTERNALS_ADJUST_EXEMPT (1<<12)
 /// Indicates that the piece of clothing contributes towards Sleeping Carp's style factor, which determines evasion probabilities. See /datums/martial/sleeping_carp/carp_style_check().
-#define CARP_STYLE_FACTOR (1<<15)
+#define CARP_STYLE_FACTOR (1<<13)
 /// Prevents clothing from losing bodyparts coverage when shredded
-#define NO_ZONE_DISABLING (1<<16)
+#define NO_ZONE_DISABLING (1<<14)
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing
