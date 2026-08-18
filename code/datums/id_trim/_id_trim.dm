@@ -42,7 +42,7 @@
 /obj/item/proc/get_sechud_job_icon()
 	var/obj/item/card/id/id_card = GetID()
 
-	return id_card?.get_trim_sechud_icon() || SECHUD_NO_ID
+	return id_card?.get_trim_sechud_icon() || DEFAULT_HUDS_DMI
 
 
 /// Returns the SecHUD job icon state for whatever this object's ID card is, if it has one.

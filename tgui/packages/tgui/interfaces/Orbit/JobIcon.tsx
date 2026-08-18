@@ -8,22 +8,16 @@ type Props = {
   realNameDisplay: boolean;
 };
 
-type JobIconSettings = {
+type IconSettings = {
   transform: string;
 };
 
-type AntagIconSettings = {
-  dmi: string;
-  transform: string;
-};
-
-const normalIcon: JobIconSettings = {
+const normalIcon: IconSettings = {
   transform: 'scale(2.3) translateX(9px) translateY(1px)',
 };
 
-const antagIcon: AntagIconSettings = {
-  dmi: 'icons/mob/huds/antag_hud.dmi',
-  transform: 'scale(1.8) translateX(-16px) translateY(7px)',
+const antagIcon: IconSettings = {
+  transform: 'scale(2) translateX(-15px) translateY(8px)',
 };
 
 export function JobIcon(props: Props) {
@@ -38,16 +32,15 @@ export function JobIcon(props: Props) {
     mind_icon_state = '',
   } = item;
   const usedIcon = realNameDisplay ? mind_icon || icon : icon;
-  let usedIconState = realNameDisplay
+  const usedIconState = realNameDisplay
     ? mind_icon_state || icon_state
     : icon_state;
   let usedJob = realNameDisplay ? mind_icon || job : job;
 
-  let iconSettings: AntagIconSettings | JobIconSettings;
+  let iconSettings: IconSettings;
   if ('antag' in item && !realNameDisplay) {
     iconSettings = antagIcon;
     usedJob = item.antag;
-    usedIconState = item.antag_icon;
   } else {
     iconSettings = normalIcon;
   }

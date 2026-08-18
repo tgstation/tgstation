@@ -268,6 +268,7 @@ Security HUDs! Basic mode shows only the job.
 	var/sechud_icon = wear_id?.get_sechud_job_icon()
 	var/sechud_icon_state = wear_id?.get_sechud_job_icon_state()
 	if(!sechud_icon_state || HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
+		sechud_icon = DEFAULT_HUDS_DMI
 		sechud_icon_state = "hudno_id"
 	set_hud_image_state(ID_HUD, sechud_icon, sechud_icon_state)
 	sec_hud_set_security_status()
