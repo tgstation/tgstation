@@ -1,0 +1,4 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - bugfix: "Unequipping jet boots while flying now puts you back on the ground instead of bugging you out"
