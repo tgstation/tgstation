@@ -128,7 +128,11 @@
 
 /datum/bodypart_texture/mesh/drake
 	texture_icon_state = "mesh_mask_drake"
-	outline_color = "#615C5A"
+	outline_color = "#2B1B17"
+
+/datum/bodypart_texture/mesh/cult
+	texture_icon_state = "mesh_mask_cult"
+	outline_color = "#413F3B"
 
 /datum/bodypart_texture/mesh/heretic
 	texture_icon_state = "mesh_mask_heretic"

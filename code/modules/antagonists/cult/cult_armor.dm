@@ -60,7 +60,7 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/alt/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/drake)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/cult)
 
 /obj/item/clothing/head/hooded/cult_hoodie/alt
 	name = "cultist hood"
@@ -70,7 +70,7 @@
 
 /obj/item/clothing/head/hooded/cult_hoodie/alt/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/drake)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/cult)
 
 ///'Ghost' subtype, given to cultists spawned by Spirit Realm. Can't be dropped.
 /obj/item/clothing/suit/hooded/cultrobes/alt/ghost
@@ -103,7 +103,7 @@
 /obj/item/clothing/suit/hooded/cultrobes/hardened/Initialize(mapload)
 	. = ..()
 	RegisterSignal(src, COMSIG_BIBLE_SMACKED, PROC_REF(on_bible_smacked))
-	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/drake)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/cult)
 
 /obj/item/clothing/suit/hooded/cultrobes/hardened/proc/on_bible_smacked(obj/item/book/bible/source, mob/user)
 	SIGNAL_HANDLER
@@ -185,7 +185,7 @@
 
 /obj/item/clothing/head/hooded/cult_hoodie/hardened/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/drake)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/cult)
 
 /**
  * Shielded armor
