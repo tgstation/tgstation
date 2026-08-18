@@ -452,7 +452,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	"robots" = typecacheof(list(
 		/obj/item/ai_module,
 		/obj/item/aicard,
-		/obj/item/mmi/posibrain,
+		/obj/item/brain_processor/mmi/posibrain,
 		/obj/item/toy/figure/borg,
 		/obj/item/toy/talking/ai,
 		/obj/machinery/ai_law_rack,

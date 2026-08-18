@@ -401,15 +401,15 @@ GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "AI Comma
 		ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 
 /// Creates an MMI of the AI based on its configuration.
-/mob/living/silicon/ai/proc/make_mmi(atom/destination) as /obj/item/mmi
-	RETURN_TYPE(/obj/item/mmi)
+/mob/living/silicon/ai/proc/make_mmi(atom/destination) as /obj/item/brain_processor/mmi
+	RETURN_TYPE(/obj/item/brain_processor/mmi)
 	//FIXME: this code is really bad, we shouldn't be doing most of this ourselves. MMI code needs a good refactoring....
-	var/obj/item/mmi/copied_mmi
+	var/obj/item/brain_processor/mmi/copied_mmi
 	if(posibrain_inside)
-		copied_mmi = new /obj/item/mmi/posibrain(destination, FALSE)
+		copied_mmi = new /obj/item/brain_processor/mmi/posibrain(destination, FALSE)
 		copied_mmi.name = "[initial(copied_mmi.name)] ([real_name])"
 	else
-		copied_mmi = new /obj/item/mmi(destination)
+		copied_mmi = new /obj/item/brain_processor/mmi(destination)
 		copied_mmi.name = "[initial(copied_mmi.name)]: [real_name]"
 		copied_mmi.brain = new /obj/item/organ/brain(copied_mmi)
 		copied_mmi.brain.organ_flags |= ORGAN_FROZEN
@@ -1228,8 +1228,8 @@ GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Tran
 /mob/living/silicon/ai/proc/on_core_exited(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 
-	if(istype(gone, /obj/item/mmi))
-		var/obj/item/mmi/mmi_gone = gone
+	if(istype(gone, /obj/item/brain_processor/mmi))
+		var/obj/item/brain_processor/mmi/mmi_gone = gone
 		on_core_destroyed(source, NONE)
 		if(!IS_MALF_AI(src)) //don't pull back shunted malf AIs
 			death(gibbed = TRUE, drop_mmi = FALSE)

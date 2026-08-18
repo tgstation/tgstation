@@ -1636,7 +1636,7 @@
 		/datum/material/glass =SMALL_MATERIAL_AMOUNT*5,
 	)
 	construction_time = 7.5 SECONDS
-	build_path = /obj/item/mmi
+	build_path = /obj/item/brain_processor/mmi
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
 	)
@@ -1659,7 +1659,7 @@
 		/datum/material/gold =SMALL_MATERIAL_AMOUNT*5
 	)
 	construction_time = 7.5 SECONDS
-	build_path = /obj/item/mmi/posibrain
+	build_path = /obj/item/brain_processor/mmi/posibrain
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
 	)
@@ -2537,7 +2537,7 @@
 		/datum/material/gold =SMALL_MATERIAL_AMOUNT * 2.5
 	)
 	construction_time = 7.5 SECONDS
-	build_path = /obj/item/mmi/posibrain/sphere
+	build_path = /obj/item/brain_processor/mmi/posibrain/sphere
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
 	)

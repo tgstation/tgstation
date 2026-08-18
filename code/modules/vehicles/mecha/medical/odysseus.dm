@@ -22,7 +22,7 @@
 	REMOVE_TRAIT(human, TRAIT_MEDICAL_HUD, VEHICLE_TRAIT)
 	return ..()
 
-/obj/vehicle/sealed/mecha/odysseus/mmi_moved_inside(obj/item/mmi/MMI, mob/user)
+/obj/vehicle/sealed/mecha/odysseus/mmi_moved_inside(obj/item/brain_processor/mmi/MMI, mob/user)
 	. = ..()
 	if(!. || isnull(MMI.brainmob))
 		return

@@ -161,7 +161,7 @@
 	if(istype(tool, /obj/item/stack/cable_coil))
 		return add_cabling(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
-	if(istype(tool, /obj/item/mmi))
+	if(istype(tool, /obj/item/brain_processor/mmi))
 		return install_mmi(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 	if(istype(tool, /obj/item/stack/sheet/rglass))
 		return install_glass(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
@@ -194,7 +194,7 @@
 	UPDATE_STATE(CORE_STATE_CABLED)
 	return TRUE
 
-/obj/structure/ai_core/proc/install_mmi(mob/living/user, obj/item/mmi/mmi)
+/obj/structure/ai_core/proc/install_mmi(mob/living/user, obj/item/brain_processor/mmi/mmi)
 	if(state != CORE_STATE_CABLED)
 		return FALSE
 

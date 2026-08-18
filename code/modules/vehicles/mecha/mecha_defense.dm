@@ -239,7 +239,7 @@
 		weapon.melee_attack_chain(user, hitmob, modifiers, list("[FORCE_MULTIPLIER]" = (peeling_the_onion/100), "[SILENCE_DEFAULT_MESSAGES]" = TRUE)) //Perform an extra attack on the occupant if all the above conditions pass
 
 /obj/vehicle/sealed/mecha/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, /obj/item/mmi))
+	if(istype(tool, /obj/item/brain_processor/mmi))
 		if(!mmi_move_inside(tool,user))
 			balloon_alert(user, "initialization of MMI failed!")
 			return ITEM_INTERACT_BLOCKING

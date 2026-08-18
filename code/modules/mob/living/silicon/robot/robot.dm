@@ -587,7 +587,7 @@
 	if(isnull(mmi))
 		return
 
-	var/obj/item/mmi/removing = mmi
+	var/obj/item/brain_processor/mmi/removing = mmi
 	mmi.forceMove(at_location) // Nulls it out via exited
 
 	if(isnull(mind)) // no one to transfer, just leave the MMI.

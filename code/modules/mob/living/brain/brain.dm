@@ -1,5 +1,5 @@
 /mob/living/brain
-	var/obj/item/mmi/container = null
+	var/obj/item/brain_processor/mmi/container = null
 	var/emp_damage = 0//Handles a type of MMI damage
 	var/datum/dna/stored/stored_dna // dna var for brain. Used to store dna, brain dna is not considered like actual dna, brain.has_dna() returns FALSE.
 	stat = DEAD //we start dead by default
@@ -87,7 +87,7 @@
 		B.forceMove(destination)
 	else if (istype(destination, /obj/item/organ/brain))
 		doMove(destination)
-	else if (istype(destination, /obj/item/mmi))
+	else if (istype(destination, /obj/item/brain_processor/mmi))
 		doMove(destination)
 	else
 		CRASH("Brainmob without a container [src] attempted to move to [destination].")

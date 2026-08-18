@@ -48,7 +48,7 @@
 	var/datum/port/output/secondary_attack
 
 	/// The current MMI/posibrain
-	var/obj/item/mmi/brain
+	var/obj/item/brain_processor/mmi/brain
 
 	/// The current B.O.R.I.S. module
 	var/obj/item/borg/upgrade/ai/boris
@@ -129,10 +129,10 @@
 
 /obj/item/circuit_component/mmi/proc/handle_interaction(atom/movable/shell, mob/living/user, obj/item/item)
 	SIGNAL_HANDLER
-	var/obj/item/mmi/target_mmi
+	var/obj/item/brain_processor/mmi/target_mmi
 	var/mob/living/new_occupant
 	var/obj/item/borg/upgrade/ai/target_boris
-	if(istype(item, /obj/item/mmi))
+	if(istype(item, /obj/item/brain_processor/mmi))
 		target_mmi = item
 		if(!target_mmi.brainmob)
 			shell.balloon_alert(user, "no consciousness detected!")
@@ -202,7 +202,7 @@
 		removing = boris
 	if(!removing)
 		return
-	if(istype(removing, /obj/item/mmi))
+	if(istype(removing, /obj/item/brain_processor/mmi))
 		brain = null
 	if(istype(removing, /obj/item/borg/upgrade/ai))
 		boris = null

@@ -40,7 +40,7 @@
 	// Parts
 	var/custom_name = ""
 	var/braintype = "Cyborg"
-	var/obj/item/mmi/mmi = null
+	var/obj/item/brain_processor/mmi/mmi = null
 	///Used for deconstruction to remember what the borg was constructed out of.
 	var/obj/item/robot_suit/robot_suit = null
 	///If this is a path, this gets created as an object in Initialize.
