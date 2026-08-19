@@ -52,15 +52,20 @@
 
 /datum/wound_pregen_data/blunt_metal/superstructure
 	abstract = FALSE
-	wound_path_to_generate = /datum/wound/blunt/robotic/secures_internals/critical
+	wound_path_to_generate = /datum/wound/blunt/robotic/critical
 	threshold_minimum = 125
 
 /datum/wound/blunt/robotic/critical/limb_malleable()
 	return
 
 /datum/wound/blunt/robotic/critical/treat(obj/item/item, mob/user)
-	if(limb.get_wound(series = WOUND_SERIES_METAL_BURN_OVERHEAT, severity = WOUND_SEVERITY_MODERATE) && item.tool_behaviour == TOOL_CROWBAR)
+	if(item.tool_behaviour == TOOL_CROWBAR)
 		return bend_metal(item, user)
 	return ..()
 
-/datum/wound/blunt/robotic/critical/bend_metal(obj/item/item, mob/bender)
+/datum/wound/blunt/robotic/critical/bend_metal(obj/item/item, mob/treater)
+	if(!limb.get_wound(series = WOUND_SERIES_METAL_BURN_OVERHEAT, severity = WOUND_SEVERITY_MODERATE) || victim?.bodytemperature >= BODYTEMP_HEAT_WARNING_3 )
+		to_chat(treater, span_warning("The metal isn't hot enough to bend back into place!"))
+		return
+	if(item.use_tool(target = victim, user = treater, delay = 4 SECONDS, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+		replace_wound(new /datum/wound/blunt/robotic/severe)

@@ -882,7 +882,7 @@
 		var/datum/wound_pregen_data/pregen_data = found_wound.get_pregen_data()
 		if (pregen_data.wound_series == series)
 			if(severity && found_wound.severity >= severity)
-			return found_wound
+				return found_wound
 	return null
 
 //Heals brute and burn damage for the organ. Returns 1 if the damage-icon states changed at all.

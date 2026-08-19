@@ -49,18 +49,16 @@
 /datum/wound_pregen_data/blunt_metal/fastenings
 	abstract = FALSE
 
-	wound_path_to_generate = /datum/wound/blunt/robotic/secures_internals/severe
+	wound_path_to_generate = /datum/wound/blunt/robotic/severe
 
 	threshold_minimum = 65
 
 /datum/wound/blunt/robotic/severe/modify_desc_before_span(desc)
 	. = ..()
 
-	var/use_exclamation = FALSE
-
 	if (!LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)) // gauze covers it up
 		if (crowbarred_open)
-			. += ", [span_notice("and is torn open, internals visible to the outside")]"
+			. += ", [span_notice("and is torn open, internals visible to the outside!")]"
 
 /datum/wound/blunt/robotic/severe/get_scanner_description(mob/user)
 	. = ..()
@@ -187,7 +185,7 @@
 	if (HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
 		chance *= 2
 	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
-		chance *= 1.5
+		chance *= 2
 		delay_mult *= 0.5
 
 	var/their_or_other = (user == victim ? "[user.p_their()]" : "[victim]'s")
