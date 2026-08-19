@@ -1,0 +1,5 @@
+author: "lelandkemble"
+delete-after: True
+changes:
+  - bugfix: "door remotes function in melee range"
+  - bugfix: "light replacers function in melee range"

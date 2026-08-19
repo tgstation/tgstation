@@ -84,6 +84,28 @@
 	custom_materials = list(/datum/material/sandstone = SHEET_MATERIAL_AMOUNT*2)
 	rust_resistance = RUST_RESISTANCE_BASIC
 
+/turf/closed/wall/mineral/sandstone/wall_fill
+	sheet_type = /obj/item/stack/wall_filling/sandstone/basic
+	sheet_amount = 1
+
+/turf/closed/wall/mineral/sandstone/ornate
+	name = "ornate sandstone wall"
+	desc = "A wall with ornate sandstone plating. Smooth."
+	icon = 'icons/turf/walls/sandstone_ornate_wall.dmi'
+	icon_state = "sandstone_ornate_wall-0"
+	base_icon_state = "sandstone_ornate_wall"
+	sheet_type = /obj/item/stack/wall_filling/sandstone/ornate
+	sheet_amount = 1
+
+/turf/closed/wall/mineral/sandstone/basalt
+	name = "basalt wall"
+	desc = "A wall with basalt plating. The orange is from other colours of sand that make up for it."
+	icon = 'icons/turf/walls/sandbasalt_wall.dmi'
+	icon_state = "sandbasalt_wall-0"
+	base_icon_state = "sandbasalt_wall"
+	sheet_type = /obj/item/stack/wall_filling/sandstone/basalt
+	sheet_amount = 1
+
 /turf/closed/wall/mineral/uranium
 	article = "a"
 	name = "uranium wall"
@@ -260,6 +282,90 @@
 	canSmoothWith = SMOOTH_GROUP_ABDUCTOR_WALLS
 	custom_materials = list(/datum/material/alloy/alien = SHEET_MATERIAL_AMOUNT*2)
 	rust_resistance = RUST_RESISTANCE_ORGANIC
+
+/turf/closed/wall/mineral/runite
+	name = "runite wall"
+	desc = "A runite wall. How... magical."
+	icon = 'icons/turf/walls/runite_wall.dmi'
+	icon_state = "runite_wall-0"
+	base_icon_state = "runite_wall"
+	sheet_type = /obj/item/stack/sheet/mineral/runite
+	hardness = 40
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_RUNITE_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_RUNITE_WALLS
+	custom_materials = list(/datum/material/runite = SHEET_MATERIAL_AMOUNT*2)
+	rust_resistance = RUST_RESISTANCE_REINFORCED
+
+/turf/closed/wall/mineral/bone
+	name = "bone wall"
+	desc = "A bone wall. That's a lot of calcium."
+	icon = 'icons/turf/walls/bone_wall.dmi'
+	icon_state = "bone_wall-0"
+	base_icon_state = "bone_wall"
+	sheet_type = /obj/item/stack/sheet/bone
+	hardness = 30
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_BONE_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_BONE_WALLS
+	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT*2)
+	rust_resistance = RUST_RESISTANCE_ORGANIC
+
+/turf/closed/wall/mineral/adamantine
+	name = "adamantine wall"
+	desc = "A adamantine wall. Quite industrial."
+	icon = 'icons/turf/walls/adamantine_wall.dmi'
+	icon_state = "adamantine_wall-0"
+	base_icon_state = "adamantine_wall"
+	sheet_type = /obj/item/stack/sheet/mineral/adamantine
+	hardness = 30
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_ADAMANTINE_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_ADAMANTINE_WALLS
+	custom_materials = list(/datum/material/adamantine = SHEET_MATERIAL_AMOUNT*2)
+	rust_resistance = RUST_RESISTANCE_REINFORCED
+
+/turf/closed/wall/mineral/metalhydrogen
+	name = "metal hydrogen wall"
+	desc = "A metal hydrogen wall. Long live atmosia!"
+	icon = 'icons/turf/walls/metal_hydrogen_wall.dmi'
+	icon_state = "metal_hydrogen_wall-0"
+	base_icon_state = "metal_hydrogen_wall"
+	sheet_type = /obj/item/stack/sheet/mineral/metal_hydrogen
+	hardness = 30
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_METALHYDROGEN_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_METALHYDROGEN_WALLS
+	custom_materials = list(/datum/material/metalhydrogen = SHEET_MATERIAL_AMOUNT*2)
+	rust_resistance = RUST_RESISTANCE_REINFORCED
+
+/turf/closed/wall/mineral/hauntium
+	name = "hauntium wall"
+	desc = "A hauntium wall. Are you spooked yet?"
+	icon = 'icons/turf/walls/hauntium_wall.dmi'
+	icon_state = "hauntium_wall-0"
+	base_icon_state = "hauntium_wall"
+	sheet_type = /obj/item/stack/sheet/hauntium
+	hardness = 20
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_HAUNTIUM_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_HAUNTIUM_WALLS
+	custom_materials = list(/datum/material/hauntium = SHEET_MATERIAL_AMOUNT*2)
+	rust_resistance = RUST_RESISTANCE_ORGANIC
+
+/turf/closed/wall/mineral/mythril
+	name = "mythril wall"
+	desc = "A mythril wall. You are in the deep end, huh?"
+	icon = 'icons/turf/walls/mythril_wall.dmi'
+	icon_state = "mythril_wall-0"
+	base_icon_state = "mythril_wall"
+	sheet_type = /obj/item/stack/sheet/mineral/mythril
+	hardness = 1
+	smoothing_flags = SMOOTH_BITMASK
+	smoothing_groups = SMOOTH_GROUP_MYTHRIL_WALLS + SMOOTH_GROUP_WALLS + SMOOTH_GROUP_CLOSED_TURFS
+	canSmoothWith = SMOOTH_GROUP_MYTHRIL_WALLS
+	custom_materials = list(/datum/material/mythril = SHEET_MATERIAL_AMOUNT*2)
+	rust_resistance = RUST_RESISTANCE_REINFORCED
 
 /////////////////////Titanium walls/////////////////////
 

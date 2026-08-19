@@ -37,10 +37,11 @@
 	// Handled here instead of in the saline reagent datum, because this way the modification order is consistent.
 	// E.g. if you have an effect that modifies blood volume over the dilution cap, then saline should do nothing.
 	var/datum/reagent/medicine/salglu_solution/saline = reagents?.has_reagent(/datum/reagent/medicine/salglu_solution)
-	if (saline && amount < saline.dilution_cap)
+	if (saline && amount < SALINE_DILUTION_CAP)
 		var/datum/blood_type/blood_type = get_bloodtype()
+		var/datum/status_effect/stacking/saline_glucose_dilution/dilution = has_status_effect(/datum/status_effect/stacking/saline_glucose_dilution)
 		if (blood_type?.restoration_chem == saline.required_restoration_chem)
-			amount = min(amount + saline.volume * saline.dilution_per_unit, BLOOD_VOLUME_NORMAL)
+			amount = min(amount + saline.volume * dilution.get_blood_multiplier(), BLOOD_VOLUME_NORMAL)
 
 	return amount
 
@@ -152,7 +153,7 @@
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood(seconds_per_tick)
 	// Under these circumstances blood handling is not necessary
-	if(bodytemperature < BLOOD_STOP_TEMP || HAS_TRAIT(src, TRAIT_FAKEDEATH))
+	if(bodytemperature < BLOOD_STOP_TEMP || HAS_TRAIT_NOT_FROM(src, TRAIT_FAKEDEATH, QUIRK_TRAIT))
 		return
 
 	// Run the signal, still allowing mobs with noblood to "handle blood" in their own way
