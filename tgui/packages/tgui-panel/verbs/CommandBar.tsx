@@ -7,6 +7,7 @@ import {
 import { useAtomValue } from 'jotai';
 import { type KeyboardEvent, useEffect, useRef, useState } from 'react';
 
+import { settingsAtom } from '../settings/atoms';
 import {
   adminTargetsAtom,
   adminVerbsAtom,
@@ -191,6 +192,7 @@ export function CommandBar() {
   const focusSignal = useAtomValue(focusCommandBarAtom);
   const clearSignal = useAtomValue(clearCommandBarAtom);
   const hotkeys = useAtomValue(hotkeysAtom);
+  const { eagerCommandBarSuggestions } = useAtomValue(settingsAtom);
   const [input, setInput] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedVerb, setSelectedVerb] = useState<Verb | null>(null);
@@ -200,6 +202,7 @@ export function CommandBar() {
   const inputRef = useRef<HTMLInputElement>(null);
   const historyRef = useRef<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const verbArgs = selectedVerb?.args || [];
   const currentArgIndex = selectedVerb ? filledArgs.length : -1;
@@ -224,6 +227,8 @@ export function CommandBar() {
     allSuggestions,
   } = useSuggestions(input, selectedVerb, currentArg, currentToken);
   const hasSuggestions = allSuggestions.length > 0;
+  const displaySuggestions =
+    hasSuggestions && (eagerCommandBarSuggestions || showSuggestions);
   const isCurrentArgTypepath = currentArg ? isTypepathArg(currentArg) : false;
   const isCurrentArgList = currentArg ? isListArg(currentArg) : false;
 
@@ -290,6 +295,7 @@ export function CommandBar() {
     setFilledArgs([]);
     setSelectedIndex(0);
     setLastTypepathRequest('');
+    setShowSuggestions(false);
   };
 
   const enterChatMode = (chatMode: Mode) => {
@@ -456,7 +462,7 @@ export function CommandBar() {
             setHistoryIndex(-1);
             resetState();
           }
-        } else if (hasSuggestions) {
+        } else if (displaySuggestions) {
           e.preventDefault();
           setSelectedIndex((i) => Math.min(i + 1, allSuggestions.length - 1));
         } else {
@@ -472,7 +478,7 @@ export function CommandBar() {
             setHistoryIndex(newIndex);
             restoreFromHistory(historyRef.current[newIndex]);
           }
-        } else if (hasSuggestions) {
+        } else if (displaySuggestions) {
           e.preventDefault();
           setSelectedIndex((i) => Math.max(i - 1, 0));
         } else {
@@ -494,23 +500,27 @@ export function CommandBar() {
         return;
       case ' ':
         if (inQuotedArg) return;
-        if (selectedVerb && hasSuggestions) {
+        if (selectedVerb && displaySuggestions) {
           e.preventDefault();
           selectCurrentSuggestion();
           return;
         }
         if (!selectedVerb && verbSuggestions.length > 0) {
           e.preventDefault();
-          if (selectedIndex > 0) {
-            selectVerb(verbSuggestions[selectedIndex]);
-            return;
-          }
           const query = input.toLowerCase();
           const exactMatch = verbSuggestions.find(
             (v) => toKebab(v.name).toLowerCase() === query,
           );
           if (exactMatch) {
             selectVerb(exactMatch);
+            return;
+          }
+          if (!displaySuggestions) {
+            setShowSuggestions(true);
+            return;
+          }
+          if (selectedIndex > 0) {
+            selectVerb(verbSuggestions[selectedIndex]);
             return;
           }
           const prefixMatches = verbSuggestions.filter((v) =>
@@ -537,7 +547,11 @@ export function CommandBar() {
         return;
       case 'Tab':
         e.preventDefault();
-        if (!hasSuggestions || !selectCurrentSuggestion()) {
+        if (!hasSuggestions) {
+          blurToMap();
+        } else if (!displaySuggestions) {
+          setShowSuggestions(true);
+        } else if (!selectCurrentSuggestion()) {
           blurToMap();
         }
         return;
@@ -555,7 +569,7 @@ export function CommandBar() {
           } else {
             selectVerb(verb);
           }
-        } else if (selectedVerb && hasSuggestions && !isCurrentArgTypepath) {
+        } else if (selectedVerb && displaySuggestions && !isCurrentArgTypepath) {
           selectCurrentSuggestion();
         } else if (selectedVerb) {
           invokeVerb();
@@ -584,6 +598,8 @@ export function CommandBar() {
   };
 
   const handleChange = (value: string) => {
+    setShowSuggestions(false);
+
     if (!selectedVerb) {
       value = value.replaceAll(' ', '');
     }
@@ -654,7 +670,7 @@ export function CommandBar() {
   return (
     <div className="CommandBar">
       <div className="CommandBar__input-wrap">
-        {hasSuggestions && (
+        {displaySuggestions && (
           <div className="CommandBar__suggestions">
             {!selectedVerb
               ? verbSuggestions.map((verb, i) => (
