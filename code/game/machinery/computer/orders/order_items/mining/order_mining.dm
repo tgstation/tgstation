@@ -3,6 +3,10 @@
 
 /datum/orderable_item/mining/marker_beacon
 	purchase_path = /obj/item/stack/marker_beacon/ten
+	cost_per_order = 60
+
+/datum/orderable_item/mining/candela_beacon
+	purchase_path = /obj/item/stack/candela_beacon/ten
 	cost_per_order = 80
 
 /datum/orderable_item/mining/skeleton_key
