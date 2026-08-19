@@ -323,6 +323,7 @@
 			Pixel_y %= 32
 		segment.forceMove(locate(final_x, final_y, segment.z))
 		segment.alpha = alpha
+		segment.layer = beam_layer
 		var/new_pixel_x = origin_px + Pixel_x
 		var/new_pixel_y = origin_py + Pixel_y
 		if(animate_time)

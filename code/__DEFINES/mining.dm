@@ -71,3 +71,6 @@
 #define ACTION_MULTIPLIER_PER_VENT_VALUE 0.1
 /// Permanent style multiplier modifier earned from killing a megafauna.
 #define ACTION_MULTIPLIER_MAJOR_KILL 0.1
+
+/// Maximum distance between Candela beacons
+#define MINING_BEACON_MAX_REACH 9

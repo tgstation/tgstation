@@ -1287,7 +1287,7 @@
 #include "code\datums\components\callouts.dm"
 #include "code\datums\components\caltrop.dm"
 #include "code\datums\components\can_flash_from_behind.dm"
-#include "code\datums\components\candela_network_node.dm"
+#include "code\datums\components\candela_node.dm"
 #include "code\datums\components\chasm.dm"
 #include "code\datums\components\chuunibyou.dm"
 #include "code\datums\components\cleaner.dm"
