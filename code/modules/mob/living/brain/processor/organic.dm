@@ -78,7 +78,7 @@
 		..()
 	else
 		var/obj/item/organ/brain/dumped_brain = remove_brain()
-		var/caught_brain = user.put_in_hand(dumped_brain)
+		var/caught_brain = user.put_in_hands(dumped_brain)
 		var/fate_of_brain = caught_brain \
 			? "[span_italics("gently")] scooping [dumped_brain] into your hand" \
 			: "spilling [dumped_brain] onto the floor"
