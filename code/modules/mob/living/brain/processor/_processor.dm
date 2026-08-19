@@ -102,16 +102,15 @@ GAME_VERB_SRC_DESC(/obj/item/brain_processor, Toggle_Listening, usr.loc, "Toggle
 	to_chat(user, span_notice("You switch [src]'s radio system [span_bold(new_state)]."))
 	balloon_alert(user, "radio turned [new_state]")
 
-/obj/item/brain_processor/proc/transfer_identity(mob/living/L) //Same deal as the regular brain proc. Used for human-->robot people.
+/// Transfers the user into the brain processor, preserving its information (such as name and DNA if applicable)
+/obj/item/brain_processor/proc/transfer_identity(mob/living/transferred_user)
 	if(!brainmob)
 		set_brainmob(new /mob/living/brain(src))
-	brainmob.name = L.real_name
-	brainmob.real_name = L.real_name
-	if(astype(L, /mob/living/carbon)?.has_dna())
-		var/mob/living/carbon/carbon_target = L
-		if(!brainmob.stored_dna)
-			brainmob.stored_dna = new /datum/dna/stored(brainmob)
-		carbon_target.dna.copy_dna(brainmob.stored_dna)
+	set_name(transferred_user.real_name)
+	if(astype(transferred_user, /mob/living/carbon)?.has_dna())
+		var/mob/living/carbon/carbon_user = transferred_user
+		brainmob.stored_dna ||= new /datum/dna/stored(brainmob)
+		carbon_user.dna.copy_dna(brainmob.stored_dna)
 
 /obj/item/brain_processor/emp_act(severity)
 	. = ..()

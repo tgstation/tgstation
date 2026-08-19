@@ -146,13 +146,13 @@
 
 	update_appearance()
 
-/obj/item/brain_processor/organic/transfer_identity(mob/living/target) //Same deal as the regular brain proc. Used for human-->robot people.
-	var/obj/item/organ/brain/new_brain = astype(target, /mob/living/carbon)?.get_organ_by_type(/obj/item/organ/brain)
+/obj/item/brain_processor/organic/transfer_identity(mob/living/transferred_user) //Same deal as the regular brain proc. Used for human-->robot people.
+	var/obj/item/organ/brain/new_brain = astype(transferred_user, /mob/living/carbon)?.get_organ_by_type(/obj/item/organ/brain)
 	if(!new_brain)
 		new_brain = new(src)
-		new_brain.transfer_identity(target)
+		new_brain.transfer_identity(transferred_user)
 	else
-		new_brain.Remove(target, special = TRUE)
+		new_brain.Remove(transferred_user, special = TRUE)
 		new_brain.forceMove(src)
 
 	insert_brain(new_brain)
