@@ -158,7 +158,7 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 
 	linked_nodes[new_node] = list()
 	if (new_node.power_source && !powered)
-		powered = TRUE
+		set_powered_state(TRUE)
 
 	if (merging)
 		return
@@ -224,18 +224,21 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 		qdel(src)
 		return
 
-	if (node.power_source)
-		powered = FALSE
-		for (var/datum/component/candela_node/other_node as anything in linked_nodes)
-			if (other_node.power_source)
-				powered = TRUE
-				break
-
 	var/list/connections = linked_nodes[node]
 	if (length(connections) == 1) // End node, no need to run separation calculations
 		var/datum/component/candela_node/other_node = connections[1]
 		linked_nodes[other_node] -= node
+		linked_nodes -= node
 		other_node.update_connections()
+
+		if (!node.power_source || !powered)
+			return
+
+		for (var/datum/component/candela_node/other_node as anything in linked_nodes)
+			if (other_node.power_source)
+				return
+
+		set_powered_state(FALSE)
 		return
 
 	for (var/datum/component/candela_node/other_node as anything in connections)
@@ -244,6 +247,20 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 
 	linked_nodes -= node
 	check_network_separation(connections)
+
+	if (!powered)
+		return
+
+	for (var/datum/component/candela_node/other_node as anything in linked_nodes)
+		if (other_node.power_source)
+			return
+
+	set_powered_state(FALSE)
+
+/datum/mining_beacon_network/proc/set_powered_state(new_power_state)
+	. = powered
+	powered = new_power_state
+	SEND_SIGNAL(src, COMSIG_CANDELA_NETWORK_POWER_CHANGED, ., powered)
 
 /// Try to reassemble the network in case of possible separation
 /// - connections - List of all connections of the node that caused the separation

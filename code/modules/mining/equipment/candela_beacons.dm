@@ -293,8 +293,24 @@
 	. = ..()
 	if (isnull(new_network))
 		new_network = new()
+	RegisterSignal(src, COMSIG_CANDELA_NODE_NETWORK_CHANGED, PROC_REF(on_network_changed))
 	AddComponent(/datum/component/candela_node, new_network, beacon_stack, connection_pixel_x = base_pixel_w, connection_pixel_y = base_pixel_z + 3)
 	update_appearance()
+
+/obj/structure/candela_beacon/proc/on_network_changed(datum/source, datum/mining_beacon_network/old_network, datum/mining_beacon_network/new_network)
+	SIGNAL_HANDLER
+
+	if (old_network)
+		UnregisterSignal(old_network, COMSIG_CANDELA_NETWORK_POWER_CHANGED)
+	on_power_changed(new_powered = new_network?.powered)
+	if (new_network)
+		RegisterSignal(new_network, COMSIG_CANDELA_NETWORK_POWER_CHANGED, PROC_REF(on_power_changed))
+
+/obj/structure/candela_beacon/proc/on_power_changed(datum/source, old_powered, new_powered)
+	SIGNAL_HANDLER
+
+	set_light_power(new_powered ? 1.7 : 1.3)
+	set_light_range(new_powered ? 2 : MINIMUM_USEFUL_LIGHT_RANGE)
 
 /obj/structure/candela_beacon/update_overlays()
 	. = ..()
