@@ -21,8 +21,8 @@
 /obj/item/brain_processor/organic/update_icon_state()
 	if(!brain)
 		icon_state = "[base_icon_state]_off"
-		return ..()
-	icon_state = "[base_icon_state]_brain[istype(brain, /obj/item/organ/brain/alien) ? "_alien" : null]"
+	else
+		icon_state = "[base_icon_state]_brain[istype(brain, /obj/item/organ/brain/alien) ? "_alien" : null]"
 	return ..()
 
 /obj/item/brain_processor/organic/update_overlays()
