@@ -159,7 +159,7 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 				if(!opened_file_name)
 					dialog = list("type" = "select", "title" = "Save As", "confirmText" = "Save", "action" = "saveAs")
 					return TRUE
-				actual_file = computer.os.filesystem.find_file_by_full_name("[opened_file_name].[opened_file_type::filetype]")
+				actual_file = os.filesystem.find_file_by_full_name("[opened_file_name].[opened_file_type::filetype]")
 			if(actual_file && actual_file.computer != computer && actual_file.disk_host != computer.inserted_disk)
 				actual_file = null
 			if(actual_file)
@@ -188,14 +188,14 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 					dialog = list("type" = "error", "message" = "[new_file_name] - The disk has been removed.")
 					return TRUE
 				if(uid)
-					existing_file = computer.os.filesystem.find_file_by_uid(uid, computer.inserted_disk)
+					existing_file = os.filesystem.find_file_by_uid(uid, computer.inserted_disk)
 				else
-					existing_file = computer.os.filesystem.find_file_by_full_name("[new_file_name].[extension]", computer.inserted_disk)
+					existing_file = os.filesystem.find_file_by_full_name("[new_file_name].[extension]", computer.inserted_disk)
 			else
 				if(uid)
-					existing_file = computer.os.filesystem.find_file_by_uid(uid)
+					existing_file = os.filesystem.find_file_by_uid(uid)
 				else
-					existing_file = computer.os.filesystem.find_file_by_full_name("[new_file_name].[extension]")
+					existing_file = os.filesystem.find_file_by_full_name("[new_file_name].[extension]")
 			if(existing_file)
 				if(action == "saveAs")
 					dialog = list(
@@ -231,14 +231,14 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 			dialog = list("type" = "error", "message" = "[full_file_name] - The disk has been removed.")
 			return
 		if(uid)
-			file_being_opened = computer.os.filesystem.find_file_by_uid(uid, computer.inserted_disk)
+			file_being_opened = os.filesystem.find_file_by_uid(uid, computer.inserted_disk)
 		else
-			file_being_opened = computer.os.filesystem.find_file_by_full_name(full_file_name, computer.inserted_disk)
+			file_being_opened = os.filesystem.find_file_by_full_name(full_file_name, computer.inserted_disk)
 	else
 		if(uid)
-			file_being_opened = computer.os.filesystem.find_file_by_uid(uid)
+			file_being_opened = os.filesystem.find_file_by_uid(uid)
 		else
-			file_being_opened = computer.os.filesystem.find_file_by_full_name(full_file_name)
+			file_being_opened = os.filesystem.find_file_by_full_name(full_file_name)
 	if(!file_being_opened)
 		dialog = list("type" = "error", "message" = "[full_file_name] - The selected file could not be found")
 		return
@@ -297,7 +297,7 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 	if(target_disk)
 		file_stored = target_disk.add_file(file)
 	else
-		file_stored = computer.os.filesystem.store_file(file)
+		file_stored = os.filesystem.store_file(file)
 	if(file_stored)
 		write_to_file(user, file)
 	else

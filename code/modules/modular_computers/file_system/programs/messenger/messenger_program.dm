@@ -309,7 +309,7 @@
 
 			var/photo_uid = text2num(params["uid"])
 
-			var/datum/computer_file/image/selected_image_file = computer.os.filesystem.find_file_by_uid(photo_uid)
+			var/datum/computer_file/image/selected_image_file = os.filesystem.find_file_by_uid(photo_uid)
 
 			if(!istype(selected_image_file))
 				return FALSE
@@ -743,7 +743,7 @@
 	// send an activation message and open the messenger
 	if(!(computer.enabled || computer.turn_on(usr, open_ui = FALSE)))
 		return
-	if(!((src in os.active_threads) || computer.os.run_program(usr, src)))
+	if(!((src in os.active_threads) || os.run_program(usr, src)))
 		return
 
 	var/target_href = href_list["target"]

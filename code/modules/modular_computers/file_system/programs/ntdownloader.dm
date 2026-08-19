@@ -51,7 +51,7 @@
 	if((PRG.program_flags & PROGRAM_ON_SYNDINET_STORE) && !(computer.obj_flags & EMAGGED))
 		return FALSE
 
-	if(!computer || !computer.os.filesystem.can_store_file(PRG))
+	if(!computer || !os.filesystem.can_store_file(PRG))
 		return FALSE
 
 	ui_header = "downloader_running.gif"
@@ -86,7 +86,7 @@
 	if(!downloaded_file)
 		return
 	generate_network_log("Completed download of file [hacked_download ? "**ENCRYPTED**" : "[downloaded_file.filename].[downloaded_file.filetype]"].")
-	if(!computer || !computer.os.filesystem.store_file(downloaded_file, download_user?.resolve()))
+	if(!computer || !os.filesystem.store_file(downloaded_file, download_user?.resolve()))
 		// The download failed
 		downloaderror = "I/O ERROR - Unable to save file. Check whether you have enough free space on your hard drive and whether your hard drive is properly connected. If the issue persists contact your system administrator for assistance."
 	downloaded_file = null
@@ -160,7 +160,7 @@
 			"filedesc" = programs.filedesc,
 			"fileinfo" = programs.extended_desc,
 			"category" = programs.downloader_category,
-			"installed" = !!computer.os.filesystem.find_file_by_name(programs.filename),
+			"installed" = !!os.filesystem.find_file_by_name(programs.filename),
 			"compatible" = check_compatibility(programs),
 			"size" = programs.size,
 			"access" = programs.can_run(user, downloading = TRUE, access = access),

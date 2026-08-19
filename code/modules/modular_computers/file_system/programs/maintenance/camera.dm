@@ -157,7 +157,7 @@
 				display_name = internal_picture.picture_name || "photo[picture_number]",
 				source_photo_or_painting = internal_picture
 			)
-			if(computer.os.filesystem.store_file(photo_file, ui.user))
+			if(os.filesystem.store_file(photo_file, ui.user))
 				return FALSE
 			commit_metadata()
 			return TRUE

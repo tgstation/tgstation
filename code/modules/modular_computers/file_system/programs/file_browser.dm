@@ -102,21 +102,21 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 	. = ..()
 	switch(action)
 		if("PRG_deletefile")
-			var/datum/computer_file/file = computer.os.filesystem.find_file_by_name(params["name"])
+			var/datum/computer_file/file = os.filesystem.find_file_by_name(params["name"])
 			if(!file || file.undeletable)
 				return
-			computer.os.filesystem.remove_file(file)
+			os.filesystem.remove_file(file)
 			return TRUE
 		if("PRG_usbdeletefile")
 			if(!computer.inserted_disk)
 				return
-			var/datum/computer_file/file = computer.os.filesystem.find_file_by_name(params["name"], computer.inserted_disk)
+			var/datum/computer_file/file = os.filesystem.find_file_by_name(params["name"], computer.inserted_disk)
 			if(!file || file.undeletable)
 				return
 			computer.inserted_disk.remove_file(file)
 			return TRUE
 		if("PRG_renamefile")
-			var/datum/computer_file/file = computer.os.filesystem.find_file_by_name(params["name"])
+			var/datum/computer_file/file = os.filesystem.find_file_by_name(params["name"])
 			if(!file)
 				return
 			var/newname = trim(params["new_name"], MAX_MESSAGE_LEN)
@@ -128,7 +128,7 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 		if("PRG_usbrenamefile")
 			if(!computer.inserted_disk)
 				return
-			var/datum/computer_file/file = computer.os.filesystem.find_file_by_name(params["name"], computer.inserted_disk)
+			var/datum/computer_file/file = os.filesystem.find_file_by_name(params["name"], computer.inserted_disk)
 			if(!file)
 				return
 			var/newname = trim(params["new_name"], MAX_MESSAGE_LEN)
@@ -140,10 +140,10 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 		if("PRG_copytousb")
 			if(!computer.inserted_disk)
 				return
-			var/datum/computer_file/F = computer.os.filesystem.find_file_by_name(params["name"])
+			var/datum/computer_file/F = os.filesystem.find_file_by_name(params["name"])
 			if(!F)
 				return
-			if(computer.os.filesystem.find_file_by_name(params["name"], computer.inserted_disk))
+			if(os.filesystem.find_file_by_name(params["name"], computer.inserted_disk))
 				return
 			var/datum/computer_file/C = F.clone(FALSE)
 			computer.inserted_disk.add_file(C)
@@ -151,28 +151,28 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 		if("PRG_copyfromusb")
 			if(!computer.inserted_disk)
 				return
-			var/datum/computer_file/F = computer.os.filesystem.find_file_by_name(params["name"], computer.inserted_disk)
+			var/datum/computer_file/F = os.filesystem.find_file_by_name(params["name"], computer.inserted_disk)
 			if(!F || !istype(F))
 				return
-			if(!computer.os.filesystem.can_store_file(F))
+			if(!os.filesystem.can_store_file(F))
 				return FALSE
 			var/datum/computer_file/C = F.clone(FALSE)
-			computer.os.filesystem.store_file(C, usr)
+			os.filesystem.store_file(C, usr)
 			return TRUE
 		if("PRG_togglesilence")
-			var/datum/computer_file/program/binary = computer.os.filesystem.find_file_by_name(params["name"])
+			var/datum/computer_file/program/binary = os.filesystem.find_file_by_name(params["name"])
 			if(!binary || !istype(binary))
 				return
 			binary.alert_silenced = !binary.alert_silenced
 		if("PRG_print")
-			var/datum/computer_file/image/picture = computer.os.filesystem.find_file_by_name(params["name"])
+			var/datum/computer_file/image/picture = os.filesystem.find_file_by_name(params["name"])
 			if(!istype(picture))
 				return
 			try_print(picture, params["width"], params["height"], params["offsetX"], params["offsetY"], params["typepath"], usr)
 		if("PRG_usbprint")
 			if(!computer.inserted_disk)
 				return
-			var/datum/computer_file/image/picture = computer.os.filesystem.find_file_by_name(params["name"], computer.inserted_disk)
+			var/datum/computer_file/image/picture = os.filesystem.find_file_by_name(params["name"], computer.inserted_disk)
 			if(!istype(picture))
 				return
 			try_print(picture, params["width"], params["height"], params["offsetX"], params["offsetY"], params["typepath"], usr)
