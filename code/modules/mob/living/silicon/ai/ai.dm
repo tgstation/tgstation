@@ -406,7 +406,7 @@ GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "AI Comma
 	//FIXME: this code is really bad, we shouldn't be doing most of this ourselves. MMI code needs a good refactoring....
 	var/obj/item/brain_processor/mmi/copied_mmi
 	if(posibrain_inside)
-		copied_mmi = new /obj/item/brain_processor/mmi/posibrain(destination, FALSE)
+		copied_mmi = new /obj/item/brain_processor/positronic(destination, FALSE)
 		copied_mmi.name = "[initial(copied_mmi.name)] ([real_name])"
 	else
 		copied_mmi = new /obj/item/brain_processor/mmi(destination)

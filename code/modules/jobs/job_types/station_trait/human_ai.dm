@@ -28,7 +28,7 @@
 	)
 
 	family_heirlooms = list(
-		/obj/item/brain_processor/mmi/posibrain/display,
+		/obj/item/brain_processor/positronic/display,
 	)
 
 	mail_goodies = list(

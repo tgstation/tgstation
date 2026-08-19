@@ -1,9 +1,8 @@
 GLOBAL_VAR(posibrain_notify_cooldown)
 
-/obj/item/brain_processor/mmi/posibrain
+/obj/item/brain_processor/positronic
 	name = "positronic brain"
 	desc = "A cube of shining metal, four inches to a side and covered in shallow grooves."
-	icon = 'icons/obj/devices/assemblies.dmi'
 	icon_state = "posibrain"
 	base_icon_state = "posibrain"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -35,14 +34,14 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	///One of these names is randomly picked as the posibrain's name on possession. If left blank, it will use the global posibrain names
 	var/list/possible_names
 	///Picked posibrain name
-	var/picked_name
+	VAR_FINAL/picked_name
 	///Whether this positronic brain is currently looking for a ghost to enter it.
-	var/searching = FALSE
+	VAR_FINAL/searching = FALSE
 	///List of all ckeys who has already entered this posibrain once before.
-	var/list/ckeys_entered = list()
+	VAR_FINAL/list/ckeys_entered = list()
 
 ///Notify ghosts that the posibrain is up for grabs
-/obj/item/brain_processor/mmi/posibrain/proc/ping_ghosts(msg, newlymade)
+/obj/item/brain_processor/positronic/proc/ping_ghosts(msg, newlymade)
 	if(newlymade || GLOB.posibrain_notify_cooldown <= world.time)
 		notify_ghosts(
 			"[name] [msg] in [get_area(src)]! [ask_role ? "Personality requested: \[[ask_role]\]" : ""]",
@@ -57,7 +56,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		if(!newlymade)
 			GLOB.posibrain_notify_cooldown = world.time + ask_delay
 
-/obj/item/brain_processor/mmi/posibrain/attack_self(mob/user)
+/obj/item/brain_processor/positronic/attack_self(mob/user)
 	if(!brainmob)
 		set_brainmob(new /mob/living/brain(src))
 	if(!(GLOB.ghost_role_flags & GHOSTROLE_SILICONS))
@@ -76,7 +75,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	update_appearance()
 	addtimer(CALLBACK(src, PROC_REF(check_success)), ask_delay)
 
-/obj/item/brain_processor/mmi/posibrain/click_alt(mob/living/user)
+/obj/item/brain_processor/positronic/click_alt(mob/living/user)
 	var/input_seed = tgui_input_text(user, "Enter a personality seed", "Enter seed", ask_role, max_length = MAX_NAME_LEN)
 	if(isnull(input_seed) || !user.can_perform_action(src))
 		return CLICK_ACTION_BLOCKING
@@ -85,7 +84,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
-/obj/item/brain_processor/mmi/posibrain/proc/check_success()
+/obj/item/brain_processor/positronic/proc/check_success()
 	searching = FALSE
 	update_appearance()
 	if(QDELETED(brainmob))
@@ -97,10 +96,10 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		visible_message(fail_message)
 
 ///ATTACK GHOST IGNORING PARENT RETURN VALUE
-/obj/item/brain_processor/mmi/posibrain/attack_ghost(mob/user)
+/obj/item/brain_processor/positronic/attack_ghost(mob/user)
 	activate(user)
 
-/obj/item/brain_processor/mmi/posibrain/proc/is_occupied()
+/obj/item/brain_processor/positronic/proc/is_occupied()
 	if(brainmob.key)
 		return TRUE
 	if(iscyborg(loc))
@@ -110,7 +109,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	return FALSE
 
 ///Two ways to activate a positronic brain. A clickable link in the ghost notif, or simply clicking the object itself.
-/obj/item/brain_processor/mmi/posibrain/proc/activate(mob/user)
+/obj/item/brain_processor/positronic/proc/activate(mob/user)
 	if(QDELETED(brainmob))
 		return
 	if(user.ckey in ckeys_entered)
@@ -125,15 +124,13 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		brainmob.set_suicide(FALSE)
 	transfer_personality(user)
 
-/obj/item/brain_processor/mmi/posibrain/transfer_identity(mob/living/carbon/transferred_user)
-	name = "[initial(name)] ([transferred_user])"
+/obj/item/brain_processor/positronic/transfer_identity(mob/living/carbon/transferred_user)
 	brainmob.name = transferred_user.real_name
 	brainmob.real_name = transferred_user.real_name
-	if(transferred_user.has_dna())
-		if(!brainmob.stored_dna)
-			brainmob.stored_dna = new /datum/dna/stored(brainmob)
-		transferred_user.dna.copy_dna(brainmob.stored_dna)
 	brainmob.timeofdeath = transferred_user.timeofdeath
+	if(transferred_user.has_dna())
+		brainmob.stored_dna ||= new /datum/dna/stored(brainmob)
+		transferred_user.dna.copy_dna(brainmob.stored_dna)
 	brainmob.set_stat(STABLE)
 	if(brainmob.mind)
 		brainmob.mind.set_assigned_role(SSjob.get_job_type(posibrain_job_path))
@@ -145,7 +142,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	update_appearance()
 
 ///Moves the candidate from the ghost to the posibrain
-/obj/item/brain_processor/mmi/posibrain/proc/transfer_personality(mob/candidate)
+/obj/item/brain_processor/positronic/proc/transfer_personality(mob/candidate)
 	if(QDELETED(brainmob))
 		return
 	if(is_occupied()) //Prevents hostile takeover if two ghosts get the prompt or link for the same brain.
@@ -169,7 +166,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	return TRUE
 
 
-/obj/item/brain_processor/mmi/posibrain/examine(mob/user)
+/obj/item/brain_processor/positronic/examine(mob/user)
 	. = ..()
 	if(brainmob?.key)
 		switch(brainmob.stat)
@@ -184,7 +181,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 			. += span_notice("Current consciousness seed: \"[ask_role]\"")
 		. += span_boldnotice("Alt-click to set a consciousness seed, specifying what [src] will be used for. This can help generate a personality interested in that role.")
 
-/obj/item/brain_processor/mmi/posibrain/Initialize(mapload, autoping = TRUE)
+/obj/item/brain_processor/positronic/Initialize(mapload, autoping = TRUE)
 	. = ..()
 	set_brainmob(new /mob/living/brain(src))
 	var/new_name
@@ -199,7 +196,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(autoping)
 		ping_ghosts("created", TRUE)
 
-/obj/item/brain_processor/mmi/posibrain/update_icon_state()
+/obj/item/brain_processor/positronic/update_icon_state()
 	. = ..()
 	if(searching)
 		icon_state = "[base_icon_state]-searching"
@@ -210,24 +207,21 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	icon_state = "[base_icon_state]"
 	return
 
-/obj/item/brain_processor/mmi/posibrain/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/item/brain_processor/positronic/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/brain_processor/mmi/posibrain/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/brain_processor/positronic/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	return
 
-/obj/item/brain_processor/mmi/posibrain/add_mmi_overlay()
-	return
-
-/obj/item/brain_processor/mmi/posibrain/display
+/obj/item/brain_processor/positronic/display
 	name = "display positronic brain"
 	desc = "A small positronic brain that doesn't allow the downloading of personalities."
 
-/obj/item/brain_processor/mmi/posibrain/display/is_occupied()
+/obj/item/brain_processor/positronic/display/is_occupied()
 	return TRUE
 
 /// Posibrains but spherical. They can roll around and you can kick them
-/obj/item/brain_processor/mmi/posibrain/sphere
+/obj/item/brain_processor/positronic/sphere
 	name = "positronic sphere"
 	desc = "Recent developments on cost-cutting measures have allowed us to cut positronic brain cubes into twice-as-cheap spheres. \
 	Unfortunately, it also allows them to move around the lab via rolling maneuvers."
@@ -240,7 +234,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	/// when can we move again?
 	var/can_move
 
-/obj/item/brain_processor/mmi/posibrain/sphere/Initialize(mapload, autoping)
+/obj/item/brain_processor/positronic/sphere/Initialize(mapload, autoping)
 	. = ..()
 
 	var/matrix/matrix = matrix()
@@ -248,7 +242,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 
 	brainmob.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
 
-/obj/item/brain_processor/mmi/posibrain/sphere/relaymove(mob/living/user, direction)
+/obj/item/brain_processor/positronic/sphere/relaymove(mob/living/user, direction)
 	if(isspaceturf(loc) || !direction || mecha)
 		return
 
@@ -270,7 +264,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		try_step_multiz(direction)
 		SpinAnimation(move_delay, 1, direction == NORTH || direction == EAST)
 
-/obj/item/brain_processor/mmi/posibrain/sphere/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+/obj/item/brain_processor/positronic/sphere/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
 	if(brainmob && isturf(loc))
 		anchored = TRUE //anchor so we dont broom ourselves.
@@ -278,7 +272,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		anchored = FALSE
 
 /// Punt the shit across the room
-/obj/item/brain_processor/mmi/posibrain/sphere/attack_hand_secondary(mob/user, list/modifiers)
+/obj/item/brain_processor/positronic/sphere/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return .

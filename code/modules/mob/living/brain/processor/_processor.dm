@@ -10,7 +10,7 @@
 	/// The current occupant.
 	VAR_FINAL/mob/living/brain/brainmob = null
 	/// The processor's built-in radio.
-	VAR_FINAL/obj/item/radio/radio = null
+	VAR_FINAL/obj/item/radio/brain_processor/radio = null
 	/// The mech that the MMI is slotted inside.
 	VAR_FINAL/obj/vehicle/sealed/mecha = null
 	/// If supplied with a law datum, the laws will be transferred to whatever it's placed in.
@@ -24,9 +24,12 @@
 	/// Whether the brainmob can move. Doesnt usually matter but SPHERICAL POSIBRAINSSS
 	var/immobilize = TRUE
 
+/obj/item/radio/brain_processor
+	custom_materials = null
+
 /obj/item/brain_processor/Initialize(mapload)
 	. = ..()
-	radio = new /obj/item/radio{custom_materials = null}(src)
+	radio = new(src)
 	radio.set_broadcasting(FALSE) //researching radio mmis turned the robofabs into radios because this didnt start as FALSE.
 
 /obj/item/brain_processor/Destroy(force)
@@ -98,6 +101,17 @@ GAME_VERB_SRC_DESC(/obj/item/brain_processor, Toggle_Listening, usr.loc, "Toggle
 	if(!brainmob)
 		return ..()
 	attacking_item.attack(brainmob, user) //Oh noooeeeee
+
+/obj/item/brain_processor/proc/transfer_identity(mob/living/L) //Same deal as the regular brain proc. Used for human-->robot people.
+	if(!brainmob)
+		set_brainmob(new /mob/living/brain(src))
+	brainmob.name = L.real_name
+	brainmob.real_name = L.real_name
+	if(astype(L, /mob/living/carbon)?.has_dna())
+		var/mob/living/carbon/carbon_target = L
+		if(!brainmob.stored_dna)
+			brainmob.stored_dna = new /datum/dna/stored(brainmob)
+		carbon_target.dna.copy_dna(brainmob.stored_dna)
 
 /obj/item/brain_processor/emp_act(severity)
 	. = ..()

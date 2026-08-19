@@ -1,7 +1,6 @@
 /obj/item/brain_processor/mmi
 	name = "\improper Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity, that nevertheless has become standard-issue on Nanotrasen stations."
-	icon = 'icons/obj/devices/assemblies.dmi'
 	icon_state = "mmi_off"
 	base_icon_state = "mmi"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -56,7 +55,7 @@
 	user.visible_message(
 		span_notice("[user] sticks \a [newbrain] into [src]..."),
 		span_notice("You stick [newbrain] into [src]..."),
-		span_hear("You hear something wet squelch..."),
+		span_hear("You hear a wet squelch..."),
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE
 		)
 
@@ -125,6 +124,9 @@
 /obj/item/brain_processor/mmi/proc/remove_brain(atom/destination = drop_location()) as /obj/item/organ/brain
 	SHOULD_NOT_OVERRIDE(TRUE)
 
+	if(!brain)
+		return
+
 	if(brainmob)
 		var/mob/living/brain/old_brainmob = brainmob
 		set_brainmob(null)
@@ -140,42 +142,22 @@
 
 	update_appearance()
 
-/obj/item/brain_processor/mmi/proc/transfer_identity(mob/living/L) //Same deal as the regular brain proc. Used for human-->robot people.
-	if(!brainmob)
-		set_brainmob(new /mob/living/brain(src))
-	brainmob.name = L.real_name
-	brainmob.real_name = L.real_name
-	if(L.has_dna())
-		var/mob/living/carbon/C = L
-		if(!brainmob.stored_dna)
-			brainmob.stored_dna = new /datum/dna/stored(brainmob)
-		C.dna.copy_dna(brainmob.stored_dna)
-	brainmob.container = src
-
-	if(ishuman(L))
-		var/mob/living/carbon/human/H = L
-		var/obj/item/organ/brain/newbrain = H.get_organ_by_type(/obj/item/organ/brain)
-		newbrain.Remove(H, special = TRUE, movement_flags = NO_ID_TRANSFER)
-		newbrain.forceMove(src)
-		brain = newbrain
-	else if(!brain)
-		brain = new(src)
-		brain.name = "[L.real_name]'s brain"
-	brain.organ_flags |= ORGAN_FROZEN
-
-	name = "[initial(name)]: [brainmob.real_name]"
-	update_appearance()
-	if(istype(brain, /obj/item/organ/brain/alien))
-		braintype = "Xenoborg" //HISS....Beep.
+/obj/item/brain_processor/mmi/transfer_identity(mob/living/target) //Same deal as the regular brain proc. Used for human-->robot people.
+	var/obj/item/organ/brain/new_brain = astype(target, /mob/living/carbon)?.get_organ_by_type(/obj/item/organ/brain)
+	if(!new_brain)
+		new_brain = new(src)
+		new_brain.transfer_identity(target)
 	else
-		braintype = "Cyborg"
+		new_brain.Remove(target, special = TRUE)
+		new_brain.forceMove(src)
+
+	insert_brain(new_brain)
 
 /obj/item/brain_processor/mmi/proc/replacement_ai_name()
 	return brainmob.name
 
 /obj/item/brain_processor/mmi/atom_deconstruct(disassembled = TRUE)
-	if(brain)
-		remove_brain()
+	remove_brain()
 
 /obj/item/brain_processor/mmi/examine(mob/user)
 	. = ..()
