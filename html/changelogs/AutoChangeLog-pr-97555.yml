@@ -1,0 +1,4 @@
+author: "Richard Blonski"
+delete-after: True
+changes:
+  - bugfix: "Fixed Fancy Weather preference, not being applied upon Z-Level change."
