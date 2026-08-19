@@ -1,4 +1,0 @@
-author: "FalloutFalcon"
-delete-after: True
-changes:
-  - code_imp: "Adds support for a key of a language to be unset"

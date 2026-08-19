@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "fixed two ways damaging basic mobs that disappear when they die could cause a runtime error"

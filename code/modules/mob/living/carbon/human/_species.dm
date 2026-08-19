@@ -1347,8 +1347,10 @@ GLOBAL_LIST_EMPTY(features_by_species)
 
 /datum/species/proc/spec_stun(mob/living/carbon/human/H, amount)
 	if((H.movement_type & FLYING) && !H.buckled)
-		var/obj/item/organ/wings/functional/wings = H.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
-		if(wings)
+		var/obj/item/organ/wings/wings = H.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+		//Only allow folding wings that are holding us up.
+		//Otherwise, the toggle may get flipped and skip flightworthiness checks :P
+		if(wings && HAS_TRAIT_FROM(H, TRAIT_MOVE_FLOATING, SPECIES_FLIGHT_TRAIT))
 			wings.toggle_flight(H)
 			wings.fly_slip(H)
 	. = min(stunmod * H.physiology.stun_mod * amount, LAZYMIN(H.physiology.max_stun_len, INFINITY))
