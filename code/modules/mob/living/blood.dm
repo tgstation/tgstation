@@ -153,7 +153,7 @@
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood(seconds_per_tick)
 	// Under these circumstances blood handling is not necessary
-	if(bodytemperature < BLOOD_STOP_TEMP || HAS_TRAIT(src, TRAIT_FAKEDEATH))
+	if(bodytemperature < BLOOD_STOP_TEMP || HAS_TRAIT_NOT_FROM(src, TRAIT_FAKEDEATH, QUIRK_TRAIT))
 		return
 
 	// Run the signal, still allowing mobs with noblood to "handle blood" in their own way

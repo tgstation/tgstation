@@ -115,7 +115,7 @@ export const DestructiveAnalyzer = (props) => {
                   : 'This node has already been researched.'
               }
               onClick={() =>
-                act('deconstruct', { deconstruct_id: node.node_path })
+                act('deconstruct', { deconstruct_path: node.node_path })
               }
             >
               {node.node_name}

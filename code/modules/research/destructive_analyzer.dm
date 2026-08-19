@@ -94,7 +94,7 @@
 			var/datum/techweb_node/unlockable_node = SSresearch.techweb_nodes[node_path]
 			data["node_data"] += list(list(
 				"node_name" = unlockable_node.display_name,
-				"node_id" = node_path,
+				"node_path" = node_path,
 				"node_hidden" = !!stored_research.hidden_nodes[node_path],
 			))
 	else
@@ -207,9 +207,10 @@
 	var/datum/techweb_node/node_to_discover = SSresearch.techweb_nodes[node_path]
 	if(!istype(node_to_discover))
 		return FALSE
+	var/item_type = loaded_item.type
 	if(!destroy_item())
 		return FALSE
-	SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[node_path]", "[loaded_item.type]"))
+	SSblackbox.record_feedback("nested tally", "item_deconstructed", 1, list("[node_path]", "[item_type]"))
 	stored_research.unhide_node(node_to_discover)
 	return TRUE
 
