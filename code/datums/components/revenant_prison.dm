@@ -5,6 +5,8 @@
 	var/mob/living/basic/revenant/revenant
 	// ckey of the player who controlled it when it was imprisoned
 	var/old_ckey
+	// ability that is granted to revenants trapped in mirrors
+	var/datum/action/mirror_talk
 
 /datum/component/revenant_prison/Initialize(mob/living/basic/revenant/revenant, create_on_release = FALSE)
 	if(create_on_release)
@@ -87,3 +89,8 @@
 
 /datum/component/revenant_prison/PostTransfer(datum/new_parent)
 	revenant.forceMove(new_parent)
+	if(istype(new_parent, /obj/structure/mirror))
+		mirror_talk = new
+		mirror_talk.Grant(revenant)
+	else
+		qdel(mirror_talk)
