@@ -83,35 +83,7 @@
 		//ID card, not a head of staff: can request items from cargo using departmental budget.
 		//No ID card, can request items from cargo using the cargo budget.
 
-	//Otherwise static data, that is being applied in ui_data as the crates visible and buyable are not static, and are determined by inserted ID.
 	data["requestonly"] = requestonly
-	data["supplies"] = list()
-	for(var/pack in SSshuttle.supply_packs)
-		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-		if(P.order_flags & ORDER_INVISIBLE)
-			continue
-		if(!is_visible_pack(user, P.access_view , null, (P.order_flags & ORDER_CONTRABAND)) || (P.order_flags & ORDER_EMAG_ONLY))
-			continue
-		if(!data["supplies"][P.group])
-			data["supplies"][P.group] = list(
-				"name" = P.group,
-				"packs" = list()
-			)
-		if(((P.order_flags & ORDER_EMAG_ONLY) && ((P.order_flags & ORDER_CONTRABAND) && !contraband) || ((P.order_flags & ORDER_SPECIAL) && !(P.order_flags & ORDER_SPECIAL_ENABLED)) || (P.order_flags & ORDER_POD_ONLY)))
-			continue
-
-		var/obj/item/first_item = length(P.contains) > 0 ? P.contains[1] : null
-		data["supplies"][P.group]["packs"] += list(list(
-			"name" = P.name,
-			"cost" = P.get_cost(),
-			"id" = pack,
-			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
-			"first_item_icon" = first_item?.icon,
-			"first_item_icon_state" = first_item?.icon_state,
-			"goody" = P.order_flags & ORDER_GOODY,
-			"access" = P.access,
-			"contains" = P.get_contents_ui_data(),
-		))
 
 	//Data regarding the User's capability to buy things.
 	data["away"] = SSshuttle.supply.getDockedId() == docking_away
@@ -174,6 +146,48 @@
 	data["max_order"] = CARGO_MAX_ORDER
 	data["displayed_currency_full_name"] = " [MONEY_NAME]"
 	data["displayed_currency_name"] = " [MONEY_SYMBOL]"
+// This is a list of all the supply packs that are available to the user. It is filtered by the user's access level and whether or not the machine is emagged.
+	data["supplies"] = list()
+	var/list/packs_by_group = list()
+	for(var/pack_id in SSshuttle.supply_packs)
+		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
+		if(pack.order_flags & ORDER_INVISIBLE)
+			continue
+		if((pack.order_flags & ORDER_EMAG_ONLY) && !(computer.obj_flags & EMAGGED))
+			continue
+		if((pack.order_flags & ORDER_SPECIAL) && !(pack.order_flags & ORDER_SPECIAL_ENABLED))
+			continue
+		if((pack.order_flags & ORDER_CONTRABAND) && !contraband)
+			continue
+		if(pack.order_flags & ORDER_POD_ONLY)
+			continue
+
+		var/obj/item/first_item = length(pack.contains) > 0 ? pack.contains[1] : null
+		var/list/packs = packs_by_group[pack.group]
+		if(isnull(packs))
+			packs = list()
+			packs_by_group[pack.group] = packs
+
+		packs += list(list(
+			"name" = pack.name,
+			"cost" = pack.get_cost(),
+			"id" = pack_id,
+			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
+			"first_item_icon" = first_item?.icon,
+			"first_item_icon_state" = first_item?.icon_state,
+			"goody" = pack.order_flags & ORDER_GOODY,
+			"access" = pack.access,
+			"contraband" = pack.order_flags & ORDER_CONTRABAND,
+			"contains" = pack.get_contents_ui_data(),
+		))
+
+	for(var/group in packs_by_group)
+		var/list/available_packs = packs_by_group[group]
+		data["supplies"][group] = list(
+			"name" = group,
+			"packs" = available_packs,
+		)
+
 	return data
 
 /datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
@@ -282,6 +296,12 @@
 
 			if(!self_paid)
 				account = personal_department
+
+			// If the user is attempting to purchase a pack that requires a certain access level, check it.
+			var/list/access = id_card_customer?.GetAccess()
+			if(!is_visible_pack(user, pack.access_view, access, pack.order_flags & ORDER_CONTRABAND))
+				computer.say("ERROR: User lacks the requisite access for this purchase request.")
+				return
 
 			var/turf/T = get_turf(computer)
 			var/datum/supply_order/SO = new(pack, name, rank, ckey, reason, account)
