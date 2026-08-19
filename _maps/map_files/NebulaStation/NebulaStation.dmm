@@ -63325,15 +63325,15 @@
 	dir = 9
 	},
 /obj/structure/table/glass,
-/obj/item/mmi{
+/obj/item/brain_processor/organic{
 	pixel_y = 8;
 	pixel_x = 4
 	},
-/obj/item/mmi{
+/obj/item/brain_processor/organic{
 	pixel_y = 4;
 	pixel_x = 2
 	},
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/structure/window/reinforced/spawner/directional/north,
 /turf/open/floor/iron/dark/small,
 /area/station/science/robotics/augments)
@@ -74788,7 +74788,7 @@
 /area/station/hallway/secondary/exit/departure_lounge)
 "kYF" = (
 /obj/structure/table,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 6
 	},

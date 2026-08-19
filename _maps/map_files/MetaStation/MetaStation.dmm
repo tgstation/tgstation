@@ -46769,7 +46769,7 @@
 /area/station/command/heads_quarters/cmo)
 "pXV" = (
 /obj/structure/table,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer4,
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/camera/autoname/directional/south,
@@ -52197,7 +52197,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "rPG" = (
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer5,
@@ -67345,9 +67345,9 @@
 /area/station/service/hydroponics/garden)
 "wRD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/mmi,
-/obj/item/mmi,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
 /obj/structure/table,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
