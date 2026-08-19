@@ -30,7 +30,7 @@ type Data = {
   error: string;
   emagged: BooleanLike;
   categories: string[];
-  programs: ProgramData[];
+  downloadable_programs: ProgramData[];
 };
 
 type ProgramData = {
@@ -58,7 +58,7 @@ export const NtosNetDownloader = (props) => {
     error,
     emagged,
     categories = [],
-    programs = [],
+    downloadable_programs = [],
   } = data;
   const all_categories = categories;
   const downloadpercentage = toFixed(
@@ -73,9 +73,12 @@ export const NtosNetDownloader = (props) => {
   let items =
     searchItem.length > 0
       ? // If we have a query, search everything for it.
-        filter(programs, search)
+        filter(downloadable_programs, search)
       : // Otherwise, show respective programs for the category.
-        filter(programs, (program) => program.category === selectedCategory);
+        filter(
+          downloadable_programs,
+          (program) => program.category === selectedCategory,
+        );
   // This sorts all programs in the lists by name and compatibility
   items = sortBy(items, [
     (program: ProgramData) => !program.compatible,

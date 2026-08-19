@@ -154,7 +154,8 @@
 	var/list/repo = SSmodular_computers.available_antag_software | SSmodular_computers.available_station_software
 
 	for(var/datum/computer_file/program/programs as anything in repo)
-		data["programs"] += list(list(
+		// TODO: Revert this to programs
+		data["downloadable_programs"] += list(list(
 			"icon" = programs.program_icon,
 			"filename" = programs.filename,
 			"filedesc" = programs.filedesc,
