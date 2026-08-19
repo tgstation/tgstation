@@ -38,6 +38,6 @@
 				return FALSE
 			if(!istype(os, /datum/operating_system/default/ntos))
 				return FALSE
-			var/datum/operating_system/default/ntos/ntos = os
+			var/datum/operating_system/default/ntos/ntos = computer.os
 			ntos.device_theme = GLOB.pda_name_to_theme[selected_theme]
 			return TRUE

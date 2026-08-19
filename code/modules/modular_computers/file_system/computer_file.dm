@@ -11,7 +11,7 @@
 	var/uid
 	///Static ID to ensure all IDs are unique.
 	var/static/file_uid = 0
-	///The modular computer hosting the file.
+	///The modular computer hosting the file. TODO: MUST BE DELETED
 	var/obj/item/modular_computer/computer
 
 	var/datum/operating_system/default/os
