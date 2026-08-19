@@ -293,12 +293,8 @@
 
 /obj/machinery/vending/proc/discount_check(obj/item/card/id/paying_id_card, premium)
 	PROTECTED_PROC(TRUE)
-	var/big_boss_that_makes_all_the_rules = istype(paying_id_card.trim, big_boss_trim)
-	var/is_the_boss = big_boss_that_makes_all_the_rules || boss_trims[paying_id_card.trim?.type]
+	if(premium)
+		return FALSE
 	var/datum/bank_account/account = paying_id_card.registered_account
-	//captain gets a dicount in every department
-	if(big_boss_that_makes_all_the_rules || account.account_job?.paycheck_department == payment_department)
-	//heads of staff get a discount even on premium goods; it's good to be the king
-		if(!premium || is_the_boss)
-			return TRUE
-	return FALSE
+	//captain gets a discount in every department
+	return istype(paying_id_card.trim, big_boss_trim) || account.account_job?.paycheck_department == payment_department

@@ -38,7 +38,6 @@ type UserData = {
   job: string;
   department: string;
   is_captain_card: boolean;
-  is_boss: boolean;
 };
 
 type Category = {
@@ -261,8 +260,8 @@ const Product = (props: ProductProps) => {
   const colorable = !!product.colorable;
   const free = all_products_free || productStock.free || product.price === 0;
   const discount =
-    user?.is_captain_card ||
-    (department === user?.department && (!product.premium || user?.is_boss));
+    !product.premium &&
+    (user?.is_captain_card || department === user?.department);
   const remaining = productStock.amount;
   const redPrice = Math.round(product.price * jobDiscount);
   const disabled =
