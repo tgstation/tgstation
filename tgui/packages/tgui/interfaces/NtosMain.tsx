@@ -44,7 +44,7 @@ export const NtosMain = (props) => {
       <NtosWindow.Content scrollable>
         {Boolean(
           removable_media.length ||
-            programs.some((program) => program.header_program),
+          programs.some((program) => program.header_program),
         ) && (
           <Section>
             <Stack>
@@ -225,7 +225,7 @@ const ProgramsTable = (props) => {
               />
             </Table.Cell>
             <Table.Cell collapsing width="18px">
-              {!!program.running && (
+              {!!program.idle && (
                 <Button
                   color="transparent"
                   icon="times"

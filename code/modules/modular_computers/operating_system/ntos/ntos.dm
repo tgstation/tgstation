@@ -28,6 +28,68 @@
 		var/datum/computer_file/program_type = new programs
 		store_file(program_type)
 
+/datum/operating_system/default/ntos/run_program(mob/user, datum/computer_file/program/program)
+	..()
+
+	// Program not found or it's not executable program.
+	if(isnull(program) || !istype(program))
+		if(user)
+			to_chat(user, span_danger("\The [hardware]'s screen shows \"I/O ERROR - Unable to run program\" warning."))
+		return FALSE
+
+	if(program.computer != hardware)
+		CRASH("tried to open program that does not belong to this computer")
+
+	if(program in active_threads)
+		return FALSE
+
+	// The program is already running. Resume it.
+	if(program in idle_threads)
+		activate_program(user, program)
+		program.alert_pending = FALSE
+		idle_threads.Remove(program)
+		hardware.update_appearance(UPDATE_ICON)
+		return TRUE
+
+	if(!program.is_supported_by_hardware(hardware.hardware_flag, loud = TRUE, user = user))
+		return FALSE
+
+	if(idle_threads.len > max_idle_programs)
+		if(user)
+			to_chat(user, span_danger("\The [hardware] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
+		return FALSE
+
+	if(program.program_flags & PROGRAM_REQUIRES_NTNET && !hardware.get_ntnet_status()) // The program requires NTNet connection, but we are not connected to NTNet.
+		if(user)
+			to_chat(user, span_danger("\The [hardware]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
+		return FALSE
+
+	if(!program.on_start(user))
+		return FALSE
+
+	activate_program(user, program)
+	program.alert_pending = FALSE
+	hardware.update_appearance(UPDATE_ICON)
+	return TRUE
+
+/datum/operating_system/default/ntos/kill_program(datum/computer_file/program/program)
+	..()
+	var/mob/user = usr
+	program.on_kill(user)
+	if(program in active_threads)
+		active_threads.Remove(program)
+	else if(program in idle_threads)
+		idle_threads.Remove(program)
+	else
+		return FALSE
+
+	if(program.program_flags & PROGRAM_REQUIRES_NTNET)
+		var/obj/item/card/id/ID = hardware.stored_id?.GetID()
+		program.generate_network_log("Connection closed -- Program ID: [program.filename] User:[ID ? "[ID.registered_name]" : "None"]")
+
+	hardware.update_appearance(UPDATE_ICON)
+	SEND_SIGNAL(program, COMSIG_COMPUTER_PROGRAM_KILL, user)
+
 /**
  * store_file
  *
@@ -167,9 +229,7 @@
 /datum/operating_system/default/ntos/ui_assets(mob/user)
 	var/list/data = list()
 	data += get_asset_datum(/datum/asset/simple/headers)
-	//TODO: ALL ACTIVE PROGRMAS SEND IT
-	var/datum/computer_file/program/active_program = get_active_thread(1)
-	if(active_program)
+	for(var/datum/computer_file/program/active_program in active_threads)
 		data += active_program.ui_assets(user)
 	return data
 
@@ -183,12 +243,25 @@
 	data["show_imprint"] = istype(hardware, /obj/item/modular_computer/pda)
 	return data
 
+/datum/operating_system/default/ntos/ui_interact(mob/user, datum/tgui/ui)
+	if(!hardware.enabled || !user.can_read(hardware, READING_CHECK_LITERACY))
+		ui?.close()
+		return
+
+	// Robots don't really need to see the screen, their wireless connection works as long as computer is on.
+	if(!hardware.screen_on && !issilicon(user))
+		ui?.close()
+		return
+
+	// EXTRA annoying, huh!
+	if(hardware.honkvirus_amount > 0)
+		hardware.honkvirus_amount--
+		playsound(hardware, 'sound/items/bikehorn.ogg', 30, TRUE)
+
 /datum/operating_system/default/ntos/ui_data(mob/user)
 	var/list/data = hardware.get_header_data()
-	var/datum/computer_file/program/active_program = get_active_thread(1)
-	if(active_program)
+	for(var/datum/computer_file/program/active_program in active_threads)
 		data += active_program.ui_data(user)
-		return data
 
 	data["pai"] = hardware.inserted_pai
 	data["has_light"] = hardware.has_light
@@ -216,10 +289,12 @@
 	data["programs"] = list()
 	for(var/datum/computer_file/program/program in hardware.stored_files)
 		data["programs"] += list(list(
+			"tgui_id" = program.tgui_id,
 			"name" = program.filename,
 			"desc" = program.filedesc,
 			"header_program" = !!(program.program_flags & PROGRAM_HEADER),
-			"running" = !!(program in idle_threads),
+			"active" = !!(program in active_threads),
+			"idle" = !!(program in idle_threads),
 			"icon" = program.program_icon,
 			"alert" = program.alert_pending,
 		))
@@ -230,14 +305,15 @@
 
 	return data
 
-// Handles user's GUI input
 /datum/operating_system/default/ntos/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 
-	if(ishuman(usr) && !hardware.allow_chunky)
-		var/mob/living/carbon/human/human_user = usr
+	var/mob/user = ui.user
+	//TODO: MOVE TO THE COMPUTER CODE. OS CANT CHECK YOUR FINGERS
+	if(ishuman(user) && !hardware.allow_chunky)
+		var/mob/living/carbon/human/human_user = user
 		if(human_user.check_chunky_fingers())
 			hardware.balloon_alert(human_user, "fingers are too big!")
 			return TRUE
@@ -255,7 +331,7 @@
 			if(!get_active_thread(1) || (!isnull(hardware.internal_cell) && !hardware.internal_cell.charge))
 				return
 			var/datum/computer_file/program/active_program = get_active_thread(1)
-			active_program.background_program(usr)
+			active_program.background_program(user)
 			active_threads.Remove(active_program)
 			idle_threads.Add(active_program)
 			return TRUE
@@ -268,11 +344,11 @@
 				return
 
 			kill_program(killed_program)
-			to_chat(usr, span_notice("Program [killed_program.filename].[killed_program.filetype] with PID [rand(100,999)] has been killed."))
+			to_chat(user, span_notice("Program [killed_program.filename].[killed_program.filetype] with PID [rand(100,999)] has been killed."))
 			return TRUE
 
 		if("PC_runprogram")
-			run_program(usr, find_file_by_name(params["name"]))
+			run_program(user, find_file_by_name(params["name"]))
 			return TRUE
 
 		if("PC_toggle_light")
@@ -280,7 +356,6 @@
 			return TRUE
 
 		if("PC_light_color")
-			var/mob/user = usr
 			var/new_color
 			while(!new_color)
 				new_color = tgui_color_picker(user, "Choose a new color for [hardware]'s flashlight.", "Light Color",hardware.light_color)
@@ -294,7 +369,6 @@
 
 		if("PC_Eject_Disk")
 			var/param = params["name"]
-			var/mob/user = usr
 			switch(param)
 				if("Eject Disk")
 					if(!hardware.inserted_disk)
@@ -330,16 +404,15 @@
 		if("PC_Pai_Interact")
 			switch(params["option"])
 				if("eject")
-					if(!ishuman(usr))
+					if(!ishuman(user))
 						return
-					hardware.remove_pai(usr)
+					hardware.remove_pai(user)
 				if("interact")
-					hardware.inserted_pai.attack_self(usr)
+					hardware.inserted_pai.attack_self(user)
 			return TRUE
 
-	var/datum/computer_file/program/active_program = get_active_thread(1)
-	if(active_program)
-		return active_program.ui_act(action, params, ui, state)
+	for(var/datum/computer_file/program/active_program in active_threads)
+		. |= active_program.ui_act(action, params, ui, state)
 
 /datum/operating_system/default/ntos/ui_host()
 	if(hardware.physical)

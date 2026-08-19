@@ -2,7 +2,7 @@
 
 /datum/operating_system/default
 
-	var/obj/item/modular_computer/hardware
+	VAR_PROTECTED/obj/item/modular_computer/hardware
 
 	///Idle programs on background. They still receive process calls but can't be interacted with.
 	var/list/datum/computer_file/program/idle_threads = list()
@@ -19,7 +19,7 @@
 
 /datum/operating_system/default/proc/activate_program(mob/user, datum/computer_file/program/program)
 
-/datum/operating_system/default/proc/run_program(mob/user, datum/computer_file/program/program, open_ui = TRUE)
+/datum/operating_system/default/proc/run_program(mob/user, datum/computer_file/program/program)
 
 /datum/operating_system/default/proc/kill_program(datum/computer_file/program/program)
 
