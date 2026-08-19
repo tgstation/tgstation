@@ -182,20 +182,24 @@
 		/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2
 	)
 
-/obj/item/chainsaw/dual/attack(mob/target, mob/living/carbon/human/user)
+/obj/item/chainsaw/dual/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	. = ..()
 	if(HAS_TRAIT(user, TRAIT_HULK))
 		to_chat(user, span_warning("You grip the weapon too hard and accidentally drop it!"))
 		user.dropItemToGround(src, force=TRUE)
-		return
+		return TRUE
 
+/obj/item/chainsaw/dual/attack(mob/target, mob/living/carbon/human/user)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-		return..()
+		return ..()
 
 	if(prob(50))
 		impale(user)
-		return
+		return TRUE
 
-	..()
+	return ..()
+
+/obj/item/chainsaw/dual/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	if(prob(50))
 		INVOKE_ASYNC(src, PROC_REF(jedi_spin), user)
 
@@ -214,14 +218,15 @@
 		final_block_chance = 0
 	if(attack_type != PROJECTILE_ATTACK && prob(30))
 		atom_destruction(MELEE)
-		return
+		return FALSE
 
 	return ..()
 
 /obj/item/chainsaw/dual/atom_destruction(damage_flag)
 	playsound(src, 'sound/effects/grillehit.ogg', 50)
-	new /obj/item/chainsaw(get_turf(src))
-	new /obj/item/restraints/handcuffs/cable(get_turf(src))
+	new /obj/item/chainsaw(drop_location())
+	new /obj/item/chainsaw(drop_location())
+	new /obj/item/restraints/handcuffs/cable(drop_location())
 	if(isliving(loc))
 		loc.balloon_alert(loc, "weapon broken!")
 	return ..()
