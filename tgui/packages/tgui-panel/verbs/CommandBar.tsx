@@ -183,7 +183,7 @@ export function CommandBar() {
   const [selectedVerb, setSelectedVerb] = useState<Verb | null>(null);
   const [filledArgs, setFilledArgs] = useState<string[]>([]);
   const [lastTypepathRequest, setLastTypepathRequest] = useState('');
-  const [mode, setMode] = useState<Mode>('Command');
+  const [mode, setMode] = useState<Mode>('Say');
   const inputRef = useRef<HTMLInputElement>(null);
   const historyRef = useRef<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
@@ -219,6 +219,14 @@ export function CommandBar() {
   }, []);
 
   useEffect(() => {
+    if (mode === 'Command') {
+      resetState();
+    } else {
+      enterChatMode(mode);
+    }
+  }, []);
+
+  useEffect(() => {
     if (focusSignal > 0) {
       inputRef.current?.focus();
     }
@@ -232,11 +240,7 @@ export function CommandBar() {
 
   useEffect(() => {
     if (clearSignal > 0) {
-      if (mode !== 'Command') {
-        enterChatMode(mode);
-      } else {
-        resetState();
-      }
+      resetState();
     }
   }, [clearSignal]);
 
