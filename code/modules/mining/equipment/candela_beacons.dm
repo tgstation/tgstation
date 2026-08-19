@@ -25,9 +25,7 @@
 	return ..()
 
 /obj/item/stack/candela_beacon/attack_self(mob/user, modifiers)
-	. = ..()
-	if (!.)
-		place_beacon(user)
+	place_beacon(user)
 
 /obj/item/stack/candela_beacon/merge_without_del(obj/item/stack/candela_beacon/target_stack, limit)
 	. = ..()

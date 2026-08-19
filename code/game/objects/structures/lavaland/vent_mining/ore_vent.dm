@@ -92,8 +92,7 @@
 	))
 	if(tapped)
 		SSore_generation.processed_vents += src
-		update_appearance(UPDATE_ICON_STATE)
-		add_tapped_visual()
+		become_tapped()
 
 	RegisterSignal(src, COMSIG_SPAWNER_SPAWNED_DEFAULT, PROC_REF(anti_cheese))
 	RegisterSignal(src, COMSIG_SPAWNER_SPAWNED, PROC_REF(log_mob_spawned))
@@ -342,7 +341,7 @@
  * Handles winning the event, gives everyone a payout and start boulder production
  */
 /obj/structure/ore_vent/proc/initiate_wave_win(forced = FALSE)
-	tapped = TRUE //The Node Drone has survived the wave defense, and the ore vent is tapped.
+	become_tapped() //The Node Drone has survived the wave defense, and the ore vent is tapped.
 	SSore_generation.processed_vents += src
 	if(!forced)
 		log_game("Ore vent [key_name_and_tag(src)] was tapped")
@@ -379,6 +378,7 @@
 	vent_visual.icon_state = "well"
 	vent_visual.layer = ABOVE_MOB_LAYER
 	vent_visual.vis_flags = VIS_INHERIT_PLANE | VIS_INHERIT_ID
+	vent_visual.overlays += emissive_appearance('icons/obj/mining_zones/terrain.dmi', "well_e", src, alpha = 192)
 	vis_contents += vent_visual
 
 /obj/structure/ore_vent/update_icon_state()
@@ -644,6 +644,12 @@
 			boulder_size = BOULDER_SIZE_SMALL //Might as well set a default value
 			wave_timer = WAVE_DURATION_SMALL
 			name = initial(name)
+
+/obj/structure/ore_vent/proc/become_tapped()
+	tapped = TRUE
+	AddComponent(/datum/component/candela_node, new /datum/mining_beacon_network(), null, connection_pixel_x = base_pixel_w, connection_pixel_y = base_pixel_z + 36, power_source = TRUE)
+	update_appearance(UPDATE_ICON_STATE)
+	add_tapped_visual()
 
 //comes with the station, and is already tapped.
 /obj/structure/ore_vent/starter_resources

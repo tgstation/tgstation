@@ -8,14 +8,17 @@
 	var/connection_pixel_x = null
 	/// Y offset for our beam connection point
 	var/connection_pixel_y = null
+	/// Is this node a valid network power source?
+	var/power_source = FALSE
 
-/datum/component/candela_node/Initialize(datum/mining_beacon_network/new_network = null, obj/item/stack/candela_beacon/beacon_stack = null, connection_pixel_x = null, connection_pixel_y = null)
+/datum/component/candela_node/Initialize(datum/mining_beacon_network/new_network = null, obj/item/stack/candela_beacon/beacon_stack = null, connection_pixel_x = null, connection_pixel_y = null, power_source = FALSE)
 	. = ..()
 	if (!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.connection_pixel_x = connection_pixel_x
 	src.connection_pixel_y = connection_pixel_y
+	src.power_source = power_source
 
 	set_network(new_network)
 	if (beacon_stack)
@@ -29,6 +32,16 @@
 /datum/component/candela_node/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+
+/datum/component/candela_node/proc/on_examine(atom/movable/source, mob/viewer, list/examine_list)
+	SIGNAL_HANDLER
+
+	examine_list += span_notice("[source.p_Theyre()] a \"Candela\" mining navigation node, capable of syncronizing various prospecting machinery and equipment, and repelling hostile fauna.")
+	if (power_source)
+		examine_list += span_notice("[source.p_They()] additionally act[source.p_s()] as a power source for the network, keeping all connected beacons and equipment active.")
+	else
+		examine_list += span_notice("The network is currently [network.powered ? "fully operational" : "missing a power source"].")
 
 /datum/component/candela_node/proc/on_item_interaction(atom/movable/source, mob/living/user, obj/item/tool, list/modifiers)
 	SIGNAL_HANDLER
@@ -126,6 +139,8 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 	var/list/datum/component/candela_node/linked_nodes = list()
 	/// List of beacon items tracking our network
 	var/list/obj/item/stack/candela_beacon/linked_beacon_items = list()
+	/// Do we have a power connector in the network (vents, etc)
+	var/powered = FALSE
 
 /datum/mining_beacon_network/New()
 	. = ..()
@@ -142,6 +157,8 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 		return
 
 	linked_nodes[new_node] = list()
+	if (new_node.power_source && !powered)
+		powered = TRUE
 
 	if (merging)
 		return
@@ -206,6 +223,13 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 	if (length(linked_nodes) == 1)
 		qdel(src)
 		return
+
+	if (node.power_source)
+		powered = FALSE
+		for (var/datum/component/candela_node/other_node as anything in linked_nodes)
+			if (other_node.power_source)
+				powered = TRUE
+				break
 
 	var/list/connections = linked_nodes[node]
 	if (length(connections) == 1) // End node, no need to run separation calculations
