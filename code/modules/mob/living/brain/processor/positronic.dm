@@ -152,7 +152,6 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		candidate.mind.transfer_to(brainmob)
 	else
 		brainmob.PossessByPlayer(candidate.ckey)
-	name = "[initial(name)] ([brainmob.name])"
 	var/policy = get_policy(ROLE_POSIBRAIN)
 	if(policy)
 		to_chat(brainmob, policy)
