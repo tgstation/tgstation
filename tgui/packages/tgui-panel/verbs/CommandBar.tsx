@@ -456,6 +456,13 @@ export function CommandBar() {
             return;
           }
           const query = input.toLowerCase();
+          const exactMatch = verbSuggestions.find(
+            (v) => toKebab(v.name).toLowerCase() === query,
+          );
+          if (exactMatch) {
+            selectVerb(exactMatch);
+            return;
+          }
           const prefixMatches = verbSuggestions.filter((v) =>
             toKebab(v.name).toLowerCase().startsWith(query),
           );
