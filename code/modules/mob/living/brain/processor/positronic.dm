@@ -204,12 +204,6 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	icon_state = "[base_icon_state]"
 	return
 
-/obj/item/brain_processor/positronic/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	return ITEM_INTERACT_BLOCKING
-
-/obj/item/brain_processor/positronic/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	return
-
 /obj/item/brain_processor/positronic/display
 	name = "display positronic brain"
 	desc = "A small positronic brain that doesn't allow the downloading of personalities."

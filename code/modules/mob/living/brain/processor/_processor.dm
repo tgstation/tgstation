@@ -102,11 +102,6 @@ GAME_VERB_SRC_DESC(/obj/item/brain_processor, Toggle_Listening, usr.loc, "Toggle
 	to_chat(user, span_notice("You switch [src]'s radio system [span_bold(new_state)]."))
 	balloon_alert(user, "radio turned [new_state]")
 
-/obj/item/brain_processor/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!brainmob)
-		return ..()
-	attacking_item.attack(brainmob, user) //Oh noooeeeee
-
 /obj/item/brain_processor/proc/transfer_identity(mob/living/L) //Same deal as the regular brain proc. Used for human-->robot people.
 	if(!brainmob)
 		set_brainmob(new /mob/living/brain(src))

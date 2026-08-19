@@ -72,6 +72,11 @@
 	user.log_message("has put the brain of [key_name(brainmob)] into an MMI", LOG_GAME)
 	return ITEM_INTERACT_SUCCESS
 
+/obj/item/brain_processor/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!brainmob)
+		return ..()
+	attacking_item.attack(brainmob, user) //Oh noooeeeee
+
 /obj/item/brain_processor/organic/attack_self(mob/user)
 	if(!brain)
 		..()
