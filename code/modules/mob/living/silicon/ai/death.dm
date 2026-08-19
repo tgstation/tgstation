@@ -56,7 +56,7 @@
 	ShutOffDoomsdayDevice()
 
 	if(gibbed && drop_mmi)
-		var/obj/item/brain_processor/mmi/loose_cpu = make_mmi(get_turf(src))
+		var/obj/item/brain_processor/loose_cpu = make_mmi(get_turf(src))
 		mind?.transfer_to(loose_cpu.brainmob)
 
 	if(explodes_on_death)

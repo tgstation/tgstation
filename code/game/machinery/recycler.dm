@@ -234,8 +234,8 @@
 	if(isbrain(target) || istype(target, /obj/item/dullahan_relay))
 		return TRUE
 
-	if(istype(target, /obj/item/brain_processor/mmi))
-		var/obj/item/brain_processor/mmi/mmi_thing = target
+	if(istype(target, /obj/item/brain_processor/organic))
+		var/obj/item/brain_processor/organic/mmi_thing = target
 		return !!(mmi_thing.brain)
 
 	return FALSE

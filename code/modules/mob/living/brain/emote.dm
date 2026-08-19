@@ -7,7 +7,7 @@
 /datum/emote/brain/can_run_emote(mob/user, status_check = TRUE, intentional, params)
 	. = ..()
 	var/mob/living/brain/B = user
-	if(!istype(B) || (!(B.container && istype(B.container, /obj/item/brain_processor/mmi))))
+	if(!istype(B) || (!(B.container && istype(B.container, /obj/item/brain_processor))))
 		return FALSE
 
 /datum/emote/brain/alarm

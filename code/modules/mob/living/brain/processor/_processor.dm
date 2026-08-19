@@ -23,6 +23,8 @@
 	var/braintype = "Cyborg"
 	/// Whether the brainmob can move. Doesnt usually matter but SPHERICAL POSIBRAINSSS
 	var/immobilize = TRUE
+	/// If TRUE, and placed in an AI, calls replacement_ai_name() and uses that as the AI's name.
+	var/force_replace_ai_name = FALSE
 
 /obj/item/radio/brain_processor
 	custom_materials = null
@@ -76,6 +78,7 @@
 		brainmob.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
 
 GAME_VERB_SRC_DESC(/obj/item/brain_processor, Toggle_Listening, usr.loc, "Toggle Listening", "Toggle listening channel on or off.", "MMI")
+
 	if(IS_UNCONSCIOUS_OR_CRIT(brainmob))
 		to_chat(brainmob, span_warning("Can't do that while incapacitated or dead!"))
 		return
@@ -131,3 +134,41 @@ GAME_VERB_SRC_DESC(/obj/item/brain_processor, Toggle_Listening, usr.loc, "Toggle
 
 /obj/item/brain_processor/relaymove(mob/living/user, direction)
 	return //so that the MMI won't get a warning about not being able to move if it tries to move
+
+/obj/item/brain_processor/proc/brain_check(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(!brainmob)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that there is no mind present!"))
+		return FALSE
+	if(!brainmob.key || !brainmob.mind)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that their mind is completely unresponsive!"))
+		return FALSE
+	if(!brainmob.client)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that their mind is currently inactive."))
+		return FALSE
+	if(suicided())
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that their mind has no will to live!"))
+		return FALSE
+	if(brainmob.stat >= DEAD)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that the brain is dead!"))
+		return FALSE
+	return TRUE
+
+/obj/item/brain_processor/proc/replacement_ai_name()
+	return brainmob.name
+
+/obj/item/brain_processor/proc/suicided()
+	return HAS_TRAIT(brainmob, TRAIT_SUICIDED)
+
+/obj/item/brain_processor/proc/set_name(new_name)
+	brainmob.name = new_name
+	brainmob.real_name = new_name
+
+/obj/item/brain_processor/proc/set_suicide(suicided)
+	brainmob.set_suicide(suicided)

@@ -76,16 +76,8 @@
 	else
 		//MMI stuff. Held togheter by magic. ~Miauw
 		if(!mmi?.brainmob)
-			mmi = new (src)
-			mmi.brain = new /obj/item/organ/brain(mmi)
-			mmi.brain.organ_flags |= ORGAN_FROZEN
-			mmi.brain.name = "[real_name]'s brain"
-			mmi.name = "[initial(mmi.name)]: [real_name]"
-			mmi.set_brainmob(new /mob/living/brain(mmi))
-			mmi.brainmob.name = src.real_name
-			mmi.brainmob.real_name = src.real_name
-			mmi.brainmob.container = mmi
-			mmi.update_appearance()
+			mmi = new /obj/item/brain_processor/organic(src, new /obj/item/organ/brain())
+			mmi.set_name(real_name)
 		setup_default_name()
 
 		if(mmi.brainmob)
@@ -113,11 +105,7 @@
 
 /mob/living/silicon/robot/set_suicide(suicide_state)
 	. = ..()
-	if(mmi)
-		if(mmi.brain)
-			mmi.brain.suicided = suicide_state
-		if(suicide_state && mmi.brainmob)
-			ADD_TRAIT(mmi.brainmob, TRAIT_SUICIDED, REF(src))
+	mmi?.set_suicide(suicide_state)
 
 /**
  * Sets the tablet theme and icon
@@ -587,7 +575,7 @@
 	if(isnull(mmi))
 		return
 
-	var/obj/item/brain_processor/mmi/removing = mmi
+	var/obj/item/brain_processor/removing = mmi
 	mmi.forceMove(at_location) // Nulls it out via exited
 
 	if(isnull(mind)) // no one to transfer, just leave the MMI.

@@ -12,11 +12,11 @@
 	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 4)
 	var/state = CORE_STATE_EMPTY
 	var/obj/item/circuitboard/aicore/circuit
-	var/obj/item/brain_processor/mmi/core_mmi
+	var/obj/item/brain_processor/core_mmi
 	/// Weakref to an ai module rack, if present we will try to link new AI to it instead of the station core
 	var/datum/weakref/default_link_ref
 
-/obj/structure/ai_core/Initialize(mapload, state = src.state, obj/item/brain_processor/mmi/core_mmi = null)
+/obj/structure/ai_core/Initialize(mapload, state = src.state, obj/item/brain_processor/core_mmi = null)
 	. = ..()
 	if(core_mmi && state < CORE_STATE_CABLED)
 		stack_trace("supplied a core_mmi as constructor argument, but core state wouldn't have accepted it!")
@@ -26,12 +26,7 @@
 		circuit = new(src)
 	if(state >= CORE_STATE_CABLED)
 		if(!core_mmi)
-			core_mmi = new /obj/item/brain_processor/mmi(src)
-			core_mmi.brain = new(core_mmi)
-			core_mmi.brain.organ_flags |= ORGAN_FROZEN
-			core_mmi.set_brainmob(new /mob/living/brain())
-			core_mmi.brainmob.container = core_mmi
-			core_mmi.update_appearance()
+			core_mmi = new /obj/item/brain_processor/organic(src, new /obj/item/organ/brain())
 		core_mmi.forceMove(src)
 		src.core_mmi = core_mmi
 		set_anchored(TRUE)

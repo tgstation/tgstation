@@ -60,7 +60,7 @@
 	return TRUE
 
 ///proc called when a new mmi mob tries to enter this mech
-/obj/vehicle/sealed/mecha/proc/mmi_move_inside(obj/item/brain_processor/mmi/brain_obj, mob/user)
+/obj/vehicle/sealed/mecha/proc/mmi_move_inside(obj/item/brain_processor/brain_obj, mob/user)
 	if(!(mecha_flags & MMI_COMPATIBLE))
 		to_chat(user, span_warning("This mecha is not compatible with MMIs!"))
 		return FALSE
@@ -85,7 +85,7 @@
 	return FALSE
 
 ///proc called when a new mmi mob enters this mech
-/obj/vehicle/sealed/mecha/proc/mmi_moved_inside(obj/item/brain_processor/mmi/brain_obj, mob/user)
+/obj/vehicle/sealed/mecha/proc/mmi_moved_inside(obj/item/brain_processor/brain_obj, mob/user)
 	if(!(Adjacent(brain_obj) && Adjacent(user)))
 		return FALSE
 	if(!brain_obj.brain_check(user))
@@ -165,8 +165,8 @@
 	mob_container.forceMove(newloc)//ejecting mob container
 	log_message("[mob_container] moved out.", LOG_MECHA)
 	SStgui.close_user_uis(M, src)
-	if(istype(mob_container, /obj/item/brain_processor/mmi))
-		var/obj/item/brain_processor/mmi/mmi = mob_container
+	if(istype(mob_container, /obj/item/brain_processor))
+		var/obj/item/brain_processor/mmi = mob_container
 		if(mmi.brainmob)
 			ejector.forceMove(mmi)
 			ejector.reset_perspective()

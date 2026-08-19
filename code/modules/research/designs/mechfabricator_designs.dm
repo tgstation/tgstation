@@ -1636,7 +1636,7 @@
 		/datum/material/glass =SMALL_MATERIAL_AMOUNT*5,
 	)
 	construction_time = 7.5 SECONDS
-	build_path = /obj/item/brain_processor/mmi
+	build_path = /obj/item/brain_processor/organic
 	category = list(
 		RND_CATEGORY_MECHFAB_CYBORG + RND_SUBCATEGORY_MECHFAB_CYBORG_CONTROL_INTERFACES
 	)

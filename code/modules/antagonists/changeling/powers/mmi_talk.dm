@@ -46,7 +46,7 @@
 	if(isnull(brain_ref))
 		stack_trace("[type] can_sting was called with a null brain!")
 		return FALSE
-	if(!istype(brain_ref.loc, /obj/item/brain_processor/mmi))
+	if(!istype(brain_ref.loc, /obj/item/brain_processor/organic))
 		stack_trace("[type] can_sting was called with a brain not located in an MMI!")
 		return FALSE
 	return TRUE
@@ -89,7 +89,7 @@
 	update_mmi_view()
 	// Makes the MMI relay heard messages
 	if(!HAS_TRAIT_FROM(brain_ref.loc, TRAIT_HEARING_SENSITIVE, REF(src)))
-		var/obj/item/brain_processor/mmi/mmi = brain_ref.loc
+		var/obj/item/brain_processor/organic/mmi = brain_ref.loc
 		mmi.become_hearing_sensitive(REF(src))
 		RegisterSignal(mmi, COMSIG_MOVABLE_HEAR, PROC_REF(relay_hearing))
 	// Actually open the UI
@@ -101,7 +101,7 @@
 		mmi_view.display_to(user, ui.window)
 
 /datum/action/changeling/mmi_talk/ui_close(mob/user)
-	var/obj/item/brain_processor/mmi/mmi = brain_ref.loc
+	var/obj/item/brain_processor/organic/mmi = brain_ref.loc
 	UnregisterSignal(mmi, COMSIG_MOVABLE_HEAR)
 	mmi.lose_hearing_sensitivity(REF(src))
 
@@ -113,7 +113,7 @@
 	if(action != "send_mmi_message")
 		return FALSE
 
-	var/obj/item/brain_processor/mmi/mmi = brain_ref.loc
+	var/obj/item/brain_processor/organic/mmi = brain_ref.loc
 	if(IS_UNCONSCIOUS_OR_CRIT(mmi.brainmob))
 		to_chat(usr, span_warning("Our decoy brain is too damaged to speak."))
 	else
@@ -129,7 +129,7 @@
 
 /// Signal proc for [COMSIG_MOVABLE_HEAR] to relay stuff the MMI hears to the ling.
 /// Not super good, but it works.
-/datum/action/changeling/mmi_talk/proc/relay_hearing(obj/item/brain_processor/mmi/source, list/hear_args)
+/datum/action/changeling/mmi_talk/proc/relay_hearing(obj/item/brain_processor/organic/source, list/hear_args)
 	SIGNAL_HANDLER
 
 	// We can likely already hear them, so do not bother

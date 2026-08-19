@@ -1,4 +1,4 @@
-/obj/item/brain_processor/mmi
+/obj/item/brain_processor/organic
 	name = "\improper Man-Machine Interface"
 	desc = "The Warrior's bland acronym, MMI, obscures the true horror of this monstrosity, that nevertheless has become standard-issue on Nanotrasen stations."
 	icon_state = "mmi_off"
@@ -8,32 +8,32 @@
 
 	VAR_FINAL/obj/item/organ/brain/brain = null //The actual brain
 
-	/// If TRUE, and placed in an AI, calls replacement_ai_name() and uses that as the AI's name.
-	var/force_replace_ai_name = FALSE
+/obj/item/brain_processor/organic/Initialize(mapload, obj/item/organ/brain/initial_brain = null)
+	. = ..()
+	if(initial_brain)
+		initial_brain.brainmob ||= new(initial_brain)
+		insert_brain(initial_brain)
 
-/obj/item/brain_processor/mmi/Destroy()
+/obj/item/brain_processor/organic/Destroy()
 	QDEL_NULL(brain)
 	return ..()
 
-/obj/item/brain_processor/mmi/update_icon_state()
+/obj/item/brain_processor/organic/update_icon_state()
 	if(!brain)
 		icon_state = "[base_icon_state]_off"
 		return ..()
 	icon_state = "[base_icon_state]_brain[istype(brain, /obj/item/organ/brain/alien) ? "_alien" : null]"
 	return ..()
 
-/obj/item/brain_processor/mmi/update_overlays()
+/obj/item/brain_processor/organic/update_overlays()
 	. = ..()
-	. += add_mmi_overlay()
+	if(brain) // doing it like this will make it extremely apparent that something went wrong
+		if(brainmob?.stat <= DEAD)
+			. += "mmi_alive"
+		else
+			. += "mmi_dead"
 
-/obj/item/brain_processor/mmi/proc/add_mmi_overlay()
-	if(brainmob && brainmob.stat != DEAD)
-		. += "mmi_alive"
-		return
-	if(brain)
-		. += "mmi_dead"
-
-/obj/item/brain_processor/mmi/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+/obj/item/brain_processor/organic/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/organ/brain)) //Time to stick a brain in it --NEO
 		return NONE
 
@@ -59,7 +59,7 @@
 		visible_message_flags = ALWAYS_SHOW_SELF_MESSAGE
 		)
 
-	if(brain.suicided || HAS_TRAIT(brainmob, TRAIT_SUICIDED))
+	if(suicided())
 		to_chat(user, span_warning("[src]'s indicator light turns red and its brainwave activity alarm beeps softly."))
 		playsound(src, 'sound/machines/beep/triple_beep.ogg', 5, TRUE)
 	else if(newbrain.organ_flags & ORGAN_FAILING) // the brain is damaged, but not from a suicider
@@ -73,7 +73,7 @@
 	user.log_message("has put the brain of [key_name(brainmob)] into an MMI", LOG_GAME)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/brain_processor/mmi/attack_self(mob/user)
+/obj/item/brain_processor/organic/attack_self(mob/user)
 	if(!brain)
 		..()
 	else
@@ -92,7 +92,7 @@
 		if(dumped_brain.brainmob)
 			user.log_message("has ejected the brain of [key_name(brainmob)] from \a [src]", LOG_GAME)
 
-/obj/item/brain_processor/mmi/proc/insert_brain(obj/item/organ/brain/new_brain)
+/obj/item/brain_processor/organic/proc/insert_brain(obj/item/organ/brain/new_brain)
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(!istype(new_brain))
@@ -121,7 +121,7 @@
 	update_appearance()
 
 /// Removes the currently inserted brain from the MMI.
-/obj/item/brain_processor/mmi/proc/remove_brain(atom/destination = drop_location()) as /obj/item/organ/brain
+/obj/item/brain_processor/organic/proc/remove_brain(atom/destination = drop_location()) as /obj/item/organ/brain
 	SHOULD_NOT_OVERRIDE(TRUE)
 
 	if(!brain)
@@ -142,7 +142,7 @@
 
 	update_appearance()
 
-/obj/item/brain_processor/mmi/transfer_identity(mob/living/target) //Same deal as the regular brain proc. Used for human-->robot people.
+/obj/item/brain_processor/organic/transfer_identity(mob/living/target) //Same deal as the regular brain proc. Used for human-->robot people.
 	var/obj/item/organ/brain/new_brain = astype(target, /mob/living/carbon)?.get_organ_by_type(/obj/item/organ/brain)
 	if(!new_brain)
 		new_brain = new(src)
@@ -153,13 +153,10 @@
 
 	insert_brain(new_brain)
 
-/obj/item/brain_processor/mmi/proc/replacement_ai_name()
-	return brainmob.name
-
-/obj/item/brain_processor/mmi/atom_deconstruct(disassembled = TRUE)
+/obj/item/brain_processor/organic/atom_deconstruct(disassembled = TRUE)
 	remove_brain()
 
-/obj/item/brain_processor/mmi/examine(mob/user)
+/obj/item/brain_processor/organic/examine(mob/user)
 	. = ..()
 	if(brain)
 		if((!brainmob || !brainmob.mind) && !brain.decoy_override) // covers suicide and ghosting
@@ -167,35 +164,17 @@
 		else if((brain.organ_flags & ORGAN_FAILING) || brainmob?.stat >= DEAD)
 			. += span_warning("[src]'s indicator light glows yellow.")
 		else if(!brainmob.client && !brain.decoy_override)
-			. += span_notice("[src]'s indicator light slowly pulses blue...")
+			. += span_notice("[src]'s indicator light slowly pulses green...")
 		else
 			. += span_nicegreen("[src]'s indicator light glows green!")
 
-/obj/item/brain_processor/mmi/proc/brain_check(mob/user)
-	var/mob/living/brain/B = brainmob
-	if(!B)
-		if(user)
-			to_chat(user, span_warning("\The [src] indicates that there is no mind present!"))
+/obj/item/brain_processor/organic/brain_check(mob/user)
+	. = ..()
+	if(!.)
 		return FALSE
 	if(brain?.decoy_override)
 		if(user)
 			to_chat(user, span_warning("This [name] does not seem to fit!"))
-		return FALSE
-	if(!B.key || !B.mind)
-		if(user)
-			to_chat(user, span_warning("\The [src] indicates that their mind is completely unresponsive!"))
-		return FALSE
-	if(!B.client)
-		if(user)
-			to_chat(user, span_warning("\The [src] indicates that their mind is currently inactive."))
-		return FALSE
-	if(HAS_TRAIT(B, TRAIT_SUICIDED) || brain?.suicided)
-		if(user)
-			to_chat(user, span_warning("\The [src] indicates that their mind has no will to live!"))
-		return FALSE
-	if(B.stat == DEAD)
-		if(user)
-			to_chat(user, span_warning("\The [src] indicates that the brain is dead!"))
 		return FALSE
 	if(brain?.organ_flags & ORGAN_FAILING)
 		if(user)
@@ -203,17 +182,28 @@
 		return FALSE
 	return TRUE
 
-/obj/item/brain_processor/mmi/syndie
+/obj/item/brain_processor/organic/suicided()
+	return brain.suicided || HAS_TRAIT(brainmob, TRAIT_SUICIDED)
+
+/obj/item/brain_processor/organic/set_name(new_name)
+	. = ..()
+	brain.name = "[new_name]'s brain"
+
+/obj/item/brain_processor/organic/set_suicide(suicided)
+	. = ..()
+	brain.suicided = suicided
+
+/obj/item/brain_processor/organic/syndie
 	name = "\improper Syndicate Man-Machine Interface"
 	desc = "Syndicate's own brand of MMI. \
 		It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs and AIs created with it."
 
-/obj/item/brain_processor/mmi/syndie/Initialize(mapload)
+/obj/item/brain_processor/organic/syndie/Initialize(mapload)
 	. = ..()
 	laws = new /datum/ai_laws/syndicate_override()
 	radio.set_on(FALSE)
 
-/obj/item/brain_processor/mmi/syndie/examine(mob/user)
+/obj/item/brain_processor/organic/syndie/examine(mob/user)
 	. = ..()
 	. += span_notice("If used to create a cyborg, it will be unlinked from the station's AI. \
 		The lawset cannot be modified until it is synced to a module rack or an AI.")
