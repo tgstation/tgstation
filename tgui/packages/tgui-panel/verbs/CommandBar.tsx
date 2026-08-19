@@ -219,9 +219,7 @@ export function CommandBar() {
   }, []);
 
   useEffect(() => {
-    if (mode === 'Command') {
-      resetState();
-    } else {
+    if (mode !== 'Command') {
       enterChatMode(mode);
     }
   }, []);
