@@ -46,7 +46,6 @@
 		var/install = tgui_alert(user, "[newbrain] is inactive, slot it in anyway?", "Installing Brain", list("Yes", "No"))
 		if(install != "Yes")
 			return ITEM_INTERACT_BLOCKING
-		// user.visible_message(span_notice("[user] sticks [newbrain] into [src]."), span_notice("[src]'s indicator light turns red as you insert [newbrain]. Its brainwave activity alarm buzzes."))
 
 	if(!user.transferItemToLoc(newbrain, src))
 		return ITEM_INTERACT_BLOCKING
