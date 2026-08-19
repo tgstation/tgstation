@@ -6,7 +6,7 @@
 	// ckey of the player who controlled it when it was imprisoned
 	var/old_ckey
 	// ability that is granted to revenants trapped in mirrors
-	var/datum/action/mirror_talk
+	var/datum/action/mirror_talk/mirror_talk
 
 /datum/component/revenant_prison/Initialize(mob/living/basic/revenant/revenant, create_on_release = FALSE)
 	if(create_on_release)
@@ -21,6 +21,7 @@
 	revenant.forceMove(parent)
 
 /datum/component/revenant_prison/Destroy()
+	QDEL_NULL(mirror_talk)
 	if(revenant?.client)
 		revenant.ghostize(can_reenter_corpse = FALSE)
 	QDEL_NULL(revenant)
@@ -52,6 +53,8 @@
 /datum/component/revenant_prison/proc/release_revenant(cause)
 	if(create_on_release)
 		revenant = new(get_turf(parent))
+	if(mirror_talk)
+		mirror_talk.Remove(revenant)
 	var/mob/living/basic/revenant/our_guy = revenant
 	var/obj/old_home = parent
 	revenant = null
@@ -88,9 +91,12 @@
 	UnregisterSignal(parent, COMSIG_REFLECTED_IMAGE_UPDATED)
 
 /datum/component/revenant_prison/PostTransfer(datum/new_parent)
+	if(!revenant)
+		return
 	revenant.forceMove(new_parent)
 	if(istype(new_parent, /obj/structure/mirror))
 		mirror_talk = new
 		mirror_talk.Grant(revenant)
 	else
-		qdel(mirror_talk)
+		mirror_talk.Remove(revenant)
+		QDEL_NULL(mirror_talk)
