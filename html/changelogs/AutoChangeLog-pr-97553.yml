@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - balance: "Watchers and legions no longer keep facing the target when retreating, allowing for backstabs"
