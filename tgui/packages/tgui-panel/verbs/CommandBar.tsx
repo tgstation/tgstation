@@ -66,15 +66,28 @@ function serializeInput(verb: Verb, filled: string[], suffix = ''): string {
   if (filled.length === 0) return kebab + suffix;
   const parts = filled.map((a, i) => {
     const arg = verb.args[i];
-    return arg && isTextArg(arg) ? `"${a}"` : a;
+    return arg && isTextArg(arg) && i < verb.args.length - 1 ? `"${a}"` : a;
   });
   return `${kebab} ${parts.join(' ')}${suffix}`;
 }
 
-function suffixForArg(arg: VerbArg | undefined): string {
+function suffixForArg(
+  arg: VerbArg | undefined,
+  isLastArg: boolean,
+): string {
   if (!arg) return '';
-  if (isTextArg(arg)) return ' "';
+  if (isTextArg(arg) && !isLastArg) return ' "';
   return ' ';
+}
+
+function skipTokens(raw: string, count: number): number {
+  let pos = 0;
+  for (let j = 0; j < count; j++) {
+    while (pos < raw.length && raw[pos] === ' ') pos++;
+    while (pos < raw.length && raw[pos] !== ' ') pos++;
+  }
+  while (pos < raw.length && raw[pos] === ' ') pos++;
+  return pos;
 }
 
 const MODES = ['Command', 'Say', 'Me', 'OOC'] as const;
@@ -256,7 +269,13 @@ export function CommandBar() {
     if (verb) {
       setSelectedVerb(verb);
       const argPart = entry.slice(toKebab(verb.name).length + 1);
-      setFilledArgs(parseArgs(argPart));
+      const parsed = parseArgs(argPart);
+      const filled: string[] = [];
+      for (let i = 0; i < verb.args.length && i < parsed.length; i++) {
+        if (isTextArg(verb.args[i]) && i === verb.args.length - 1) break;
+        filled.push(parsed[i]);
+      }
+      setFilledArgs(filled);
     } else {
       setSelectedVerb(null);
       setFilledArgs([]);
@@ -280,7 +299,13 @@ export function CommandBar() {
     setFilledArgs([]);
     setSelectedIndex(0);
     setLastTypepathRequest('');
-    setInput(serializeInput(verb, [], suffixForArg(verb.args[0])));
+    setInput(
+      serializeInput(
+        verb,
+        [],
+        suffixForArg(verb.args[0], verb.args.length === 1),
+      ),
+    );
   };
 
   const cycleMode = () => {
@@ -300,7 +325,13 @@ export function CommandBar() {
     setFilledArgs([]);
     setSelectedIndex(0);
     setLastTypepathRequest('');
-    setInput(serializeInput(verb, [], suffixForArg(verb.args[0])));
+    setInput(
+      serializeInput(
+        verb,
+        [],
+        suffixForArg(verb.args[0], verb.args.length === 1),
+      ),
+    );
     const firstArg = verb.args[0];
     if (firstArg && isEntityArg(firstArg)) {
       Byond.sendMessage('verbs/request_targets', { verb_type: verb.type });
@@ -313,7 +344,13 @@ export function CommandBar() {
     setFilledArgs(newFilled);
     setSelectedIndex(0);
     const nextArg = verbArgs[newFilled.length];
-    setInput(serializeInput(selectedVerb, newFilled, suffixForArg(nextArg)));
+    setInput(
+      serializeInput(
+        selectedVerb,
+        newFilled,
+        suffixForArg(nextArg, newFilled.length === verbArgs.length - 1),
+      ),
+    );
   };
 
   const selectTypepath = (path: string) => {
@@ -328,7 +365,20 @@ export function CommandBar() {
   const invokeVerb = () => {
     if (!selectedVerb) return;
     const argValues: Record<string, string> = {};
-    for (let i = 0; i < verbArgs.length && i < parsedArgs.length; i++) {
+    for (let i = 0; i < verbArgs.length; i++) {
+      if (isTextArg(verbArgs[i]) && i === verbArgs.length - 1) {
+        const offset = skipTokens(argPortion, i);
+        let val = argPortion.slice(offset);
+        if (val.startsWith('"') && val.endsWith('"') && val.length > 1) {
+          val = val.slice(1, -1);
+        } else if (val.startsWith('"')) {
+          val = val.slice(1);
+        }
+        val = val.trim();
+        if (val) argValues[verbArgs[i].name] = val;
+        break;
+      }
+      if (i >= parsedArgs.length) break;
       let val = parsedArgs[i];
       if (isTypepathArg(verbArgs[i])) {
         val = val.replace(/\/+$/, '');
@@ -550,7 +600,12 @@ export function CommandBar() {
     setInput(value);
     setSelectedIndex(0);
 
-    if (selectedVerb && currentArg && isTextArg(currentArg)) {
+    if (
+      selectedVerb &&
+      currentArg &&
+      isTextArg(currentArg) &&
+      currentArgIndex < verbArgs.length - 1
+    ) {
       const afterVerb = value.slice(toKebab(selectedVerb.name).length + 1);
       const parsed = parseArgs(afterVerb);
       if (parsed.length > filledArgs.length && !isInQuotedArg(afterVerb)) {
@@ -559,7 +614,14 @@ export function CommandBar() {
         const nextArg = verbArgs[newFilled.length];
         if (nextArg) {
           setInput(
-            serializeInput(selectedVerb, newFilled, suffixForArg(nextArg)),
+            serializeInput(
+              selectedVerb,
+              newFilled,
+              suffixForArg(
+                nextArg,
+                newFilled.length === verbArgs.length - 1,
+              ),
+            ),
           );
         }
       }
