@@ -13,6 +13,7 @@ import {
   clearCommandBarAtom,
   focusCommandBarAtom,
   hotkeysAtom,
+  initializeCommandBarAtom,
   typepathsAtom,
   type Verb,
   type VerbArg,
@@ -178,6 +179,7 @@ export function CommandBar() {
   const focusSignal = useAtomValue(focusCommandBarAtom);
   const clearSignal = useAtomValue(clearCommandBarAtom);
   const hotkeys = useAtomValue(hotkeysAtom);
+  const initializeSignal = useAtomValue(initializeCommandBarAtom);
   const [input, setInput] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedVerb, setSelectedVerb] = useState<Verb | null>(null);
@@ -219,12 +221,10 @@ export function CommandBar() {
   }, []);
 
   useEffect(() => {
-    if (mode === 'Command') {
-      resetState();
-    } else {
+    if (mode !== 'Command') {
       enterChatMode(mode);
     }
-  }, []);
+  }, [initializeSignal]);
 
   useEffect(() => {
     if (focusSignal > 0) {

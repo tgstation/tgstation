@@ -5,6 +5,7 @@ import {
   clearCommandBarAtom,
   focusCommandBarAtom,
   hotkeysAtom,
+  initializeCommandBarAtom,
   type Target,
   typepathsAtom,
   type Verb,
@@ -12,6 +13,7 @@ import {
 
 export function handleVerbsInit(payload: { verbs: Verb[] }) {
   store.set(adminVerbsAtom, payload.verbs || []);
+  store.set(initializeCommandBarAtom, (n) => n + 1);
 }
 
 export function handleAddVerbs(payload: { verbs: Verb[] }) {
