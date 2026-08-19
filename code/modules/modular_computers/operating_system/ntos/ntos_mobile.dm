@@ -16,7 +16,7 @@
 	..()
 	for(var/programs in pda_programs)
 		var/datum/computer_file/program_type = new programs
-		store_file(program_type)
+		filesystem.store_file(program_type)
 
 /datum/operating_system/default/ntos/mobile/activate_program(mob/user, datum/computer_file/program/program)
 	..()

@@ -397,12 +397,12 @@
 /obj/item/modular_computer/pda/silicon/proc/get_robotact()
 	if(robotact)
 		return robotact
-	robotact = os.find_file_by_name("robotact")
+	robotact = os.filesystem.find_file_by_name("robotact")
 	if(robotact)
 		return robotact
 	stack_trace("Cyborg [silicon_owner] ( [silicon_owner.type] ) was somehow missing their self-manage app in their tablet. A new copy has been created.")
 	robotact = new(src)
-	if(os.store_file(robotact))
+	if(os.filesystem.store_file(robotact))
 		return robotact
 	qdel(robotact)
 	robotact = null

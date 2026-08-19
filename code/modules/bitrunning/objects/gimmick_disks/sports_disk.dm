@@ -94,7 +94,7 @@
 /datum/operating_system/default/ntos/gamer/install()
 	for(var/programs in starting_programs)
 		var/datum/computer_file/program/program_type = new programs
-		store_file(program_type)
+		filesystem.store_file(program_type)
 
 /obj/item/modular_computer/laptop/gamer
 	desc = "A high-end laptop often used for metagaming."

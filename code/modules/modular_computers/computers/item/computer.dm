@@ -31,7 +31,7 @@
 	/// Better create new OS type (revision) for each type of computer. NOT THAT
 	var/list/datum/computer_file/starting_programs = list()
 
-	///List of stored files on this drive. Use `os.store_file` and `os.remove_file` instead of modifying directly!
+	///List of stored files on this drive. Use `os.filesystem.store_file` and `os.filesystem.remove_file` instead of modifying directly!
 	var/list/datum/computer_file/stored_files = list()
 
 	///The amount of storage space the computer starts with.
@@ -151,7 +151,7 @@
 
 	for(var/programs in starting_programs)
 		var/datum/computer_file/program_type = new programs
-		os.store_file(program_type)
+		os.filesystem.store_file(program_type)
 
 	register_context()
 	update_appearance()
@@ -940,7 +940,7 @@
 /obj/item/modular_computer/proc/photo_act(mob/user, obj/item/photo/scanned_photo)
 	var/datum/picture/source_picture = scanned_photo.picture
 	var/datum/computer_file/image/image_file = new /datum/computer_file/image(source_picture.picture_image, display_name = source_picture.picture_name, source_photo_or_painting = source_picture)
-	if(!os.store_file(image_file, user))
+	if(!os.filesystem.store_file(image_file, user))
 		balloon_alert(user, "no space!")
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "photo scanned")

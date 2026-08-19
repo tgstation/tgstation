@@ -82,7 +82,7 @@
 				warez.size = min(rand(1, 4), computer.max_capacity - computer.used_capacity)
 				if(prob(25))
 					warez.undeletable = TRUE
-				computer.os.store_file(warez)
+				computer.os.filesystem.store_file(warez)
 
 /**
  * Normally, modular PCs can be print paper already, but I find this additional step

@@ -85,7 +85,7 @@
 	var/datum/painting/chosen_portrait = locate(selected_painting) in SSpersistent_paintings.paintings
 	var/icon/portrait_icon = chosen_portrait.get_icon()
 	var/datum/computer_file/image/image_file = new(portrait_icon, display_name = chosen_portrait.title, source_photo_or_painting = chosen_portrait)
-	if(!computer.os.store_file(image_file, usr))
+	if(!computer.os.filesystem.store_file(image_file, usr))
 		to_chat(usr, span_notice("Unable to download [chosen_portrait.title].[/datum/computer_file/image::filetype]."))
 		return
 	to_chat(usr, span_notice("Downloaded [chosen_portrait.title].[/datum/computer_file/image::filetype]."))

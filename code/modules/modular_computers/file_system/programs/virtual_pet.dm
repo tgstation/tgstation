@@ -195,7 +195,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 
 	if(isnull(photo))
 		return
-	computer.os.store_file(new /datum/computer_file/image(photo.picture_image, display_name = photo.picture_name))
+	computer.os.filesystem.store_file(new /datum/computer_file/image(photo.picture_image, display_name = photo.picture_name))
 
 /datum/computer_file/program/virtual_pet/proc/set_hat_offsets(new_dir)
 	var/direction_text = dir2text(new_dir)
@@ -352,7 +352,7 @@ GLOBAL_LIST_EMPTY(virtual_pets_list)
 	pet = null
 	if(QDELETED(src))
 		return
-	computer.os.remove_file(src) //all is lost we no longer have a reason to exist
+	computer.os.filesystem.remove_file(src) //all is lost we no longer have a reason to exist
 
 /datum/computer_file/program/virtual_pet/on_kill(mob/user)
 	if(pet && pet.loc != computer)

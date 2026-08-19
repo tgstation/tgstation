@@ -137,7 +137,7 @@
 				logfile.stored_text = "[logfile.stored_text][channel.messages[message_id]]\[BR\]"
 			logfile.stored_text = "[logfile.stored_text]\[b\]Logfile dump completed.\[/b\]"
 			logfile.calculate_size()
-			if(!computer || !computer.os.store_file(logfile))
+			if(!computer || !computer.os.filesystem.store_file(logfile))
 				if(!computer)
 					// This program shouldn't even be runnable without computer.
 					CRASH("Var computer is null!")

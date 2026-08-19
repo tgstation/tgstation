@@ -9,7 +9,7 @@
 
 	for(var/programs in starting_programs)
 		var/datum/computer_file/program_type = new programs
-		cpu.os.store_file(program_type)
+		cpu.os.filesystem.store_file(program_type)
 
 // ===== ENGINEERING CONSOLE =====
 /obj/machinery/modular_computer/preset/engineering
@@ -73,7 +73,7 @@
 
 /obj/machinery/modular_computer/preset/id/centcom/Initialize(mapload)
 	. = ..()
-	var/datum/computer_file/program/card_mod/card_mod_centcom = cpu.os.find_file_by_name("plexagonidwriter")
+	var/datum/computer_file/program/card_mod/card_mod_centcom = cpu.os.filesystem.find_file_by_name("plexagonidwriter")
 	card_mod_centcom.is_centcom = TRUE
 
 // ===== CIVILIAN CONSOLE =====
@@ -119,11 +119,11 @@
 	if(!department_type)
 		return
 
-	var/datum/computer_file/program/chatclient/chatprogram = cpu.os.find_file_by_name("ntnrc_client")
+	var/datum/computer_file/program/chatclient/chatprogram = cpu.os.filesystem.find_file_by_name("ntnrc_client")
 	chatprogram.username = "[LOWER_TEXT(initial(department_type.department_name))]_department"
 	cpu.os.idle_threads += chatprogram
 
-	var/datum/computer_file/program/department_order/orderprogram = cpu.os.find_file_by_name("dept_order")
+	var/datum/computer_file/program/department_order/orderprogram = cpu.os.filesystem.find_file_by_name("dept_order")
 	orderprogram.set_linked_department(department_type)
 	cpu.os.activate_program(null, orderprogram)
 	update_appearance(UPDATE_ICON)
@@ -155,20 +155,20 @@
 	starting_programs += /datum/computer_file/program/restock_tracker
 
 /obj/machinery/modular_computer/preset/cargochat/cargo/setup_starting_software()
-	var/datum/computer_file/program/chatclient/chatprogram = cpu.os.find_file_by_name("ntnrc_client")
+	var/datum/computer_file/program/chatclient/chatprogram = cpu.os.filesystem.find_file_by_name("ntnrc_client")
 	cpu.os.activate_program(null, chatprogram)
 	update_appearance(UPDATE_ICON)
 	// Rest of the chat program setup is done in LateInit
 
 /obj/machinery/modular_computer/preset/cargochat/cargo/post_machine_initialize()
 	. = ..()
-	var/datum/computer_file/program/chatclient/chatprogram = cpu.os.find_file_by_name("ntnrc_client")
+	var/datum/computer_file/program/chatclient/chatprogram = cpu.os.filesystem.find_file_by_name("ntnrc_client")
 	chatprogram.username = "cargo_requests_operator"
 
 	var/datum/ntnet_conversation/cargochat = chatprogram.create_new_channel("#cargobus", strong = TRUE)
 	for(var/obj/machinery/modular_computer/preset/cargochat/cargochat_console as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/modular_computer/preset/cargochat))
 		if(cargochat_console == src)
 			continue
-		var/datum/computer_file/program/chatclient/other_chatprograms = cargochat_console.cpu.os.find_file_by_name("ntnrc_client")
+		var/datum/computer_file/program/chatclient/other_chatprograms = cargochat_console.cpu.os.filesystem.find_file_by_name("ntnrc_client")
 		other_chatprograms.active_channel = chatprogram.active_channel
 		cargochat.add_client(other_chatprograms, silent = TRUE)

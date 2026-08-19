@@ -94,7 +94,7 @@
 	temp.can_run_on_flags = can_run_on_flags
 	if(program_flags & PROGRAM_UNIQUE_COPY)
 		if(computer)
-			computer.os.remove_file(src)
+			computer.os.filesystem.remove_file(src)
 		if(disk_host)
 			disk_host.remove_file(src)
 	return temp

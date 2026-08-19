@@ -40,7 +40,7 @@
 	///The integrated circuit was loaded/duplicated
 	if(isnull(found_program))
 		associated_program = new associated_program()
-		computer.os.store_file(associated_program)
+		computer.os.filesystem.store_file(associated_program)
 	else
 		associated_program = found_program
 

@@ -22,7 +22,7 @@
 	. = ..()
 	for(var/programs in head_programs)
 		var/datum/computer_file/program/program_type = new programs
-		os.store_file(program_type)
+		os.filesystem.store_file(program_type)
 
 	if (ispath(fax_type, /obj/machinery/fax))
 		var/datum/computer_file/program/faxbond/fax_notifier = locate() in stored_files
