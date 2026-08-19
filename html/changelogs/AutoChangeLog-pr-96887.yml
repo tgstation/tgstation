@@ -1,0 +1,10 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - refactor: "The way Lavaland Ore Vents spawn mobs have been completely reworked."
+  - rscadd: "Lavaland ore vents spawn mobs in discrete waves that need to be fully defeated before you can continue."
+  - qol: "Lavaland vents now give a small visual indicator of where mobs are spawning before they arrive."
+  - qol: "Mobs spawned from ore vents now have a visual indicator above their head to indicate if the mob must be defeated to complete the wave."
+  - balance: "Vents now spawn 5/10/15 waves of mobs, consisting of 2 mob types each, while still scaling to the size of the vent for difficulty. The mining point rewards upon wave defense completion has been adjusted accordingly."
+  - rscdel: "Node drones no longer have progress lights, as the wave progress is now directly shown to the player as they complete waves."
+  - bugfix: "Vent waves no longer spawn mobs straight into walls."
