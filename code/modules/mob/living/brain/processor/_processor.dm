@@ -52,11 +52,13 @@
 		old_brainmob.container = null
 		old_brainmob.emp_damage = 0 // okay?
 		old_brainmob.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
+		REMOVE_TRAIT(old_brainmob, TRAIT_SILICON_EMOTES_ALLOWED, MMI_ASSISTED)
 
 	brainmob = new_brainmob
 
 	if(new_brainmob)
 		new_brainmob.container = src
+		ADD_TRAIT(new_brainmob, TRAIT_SILICON_EMOTES_ALLOWED, MMI_ASSISTED)
 		if(mecha)
 			new_brainmob.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
 		else

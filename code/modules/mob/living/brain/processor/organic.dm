@@ -27,7 +27,7 @@
 
 /obj/item/brain_processor/organic/update_overlays()
 	. = ..()
-	if(brain) // doing it like this will make it extremely apparent that something went wrong
+	if(brain) // doing it like this will make it extremely apparent if something goes wrong
 		if(brainmob?.stat <= DEAD)
 			. += "mmi_alive"
 		else
@@ -60,7 +60,7 @@
 		)
 
 	if(suicided())
-		to_chat(user, span_warning("[src]'s indicator light turns red and its brainwave activity alarm beeps softly."))
+		to_chat(user, span_warning("[src]'s indicator light turns red and its brainwave activity alarm beeps harshly."))
 		playsound(src, 'sound/machines/beep/triple_beep.ogg', 5, TRUE)
 	else if(newbrain.organ_flags & ORGAN_FAILING) // the brain is damaged, but not from a suicider
 		to_chat(user, span_warning("[src]'s indicator light turns yellow and its brain integrity alarm beeps softly."))
@@ -87,7 +87,7 @@
 		if(caught_brain)
 			balloon_alert(user, "scooped up brain")
 		else
-			user.balloon_alert_to_viewers("dropped a brain!", "dropped the brain!") // better be ready if you're being subtle
+			user.balloon_alert_to_viewers("dropped a brain!", "dropped the brain!")
 
 		if(dumped_brain.brainmob)
 			user.log_message("has ejected the brain of [key_name(brainmob)] from \a [src]", LOG_GAME)

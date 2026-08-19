@@ -77,7 +77,6 @@
 		//MMI stuff. Held togheter by magic. ~Miauw
 		if(!mmi?.brainmob)
 			mmi = new /obj/item/brain_processor/organic(src, new /obj/item/organ/brain())
-			mmi.set_name(real_name)
 		setup_default_name()
 
 		if(mmi.brainmob)
@@ -734,6 +733,7 @@
 		builtInCamera.c_tag = real_name
 		modularInterface.imprint_id(name = real_name)
 	custom_name = newname
+	mmi?.set_name(newname)
 
 
 /mob/living/silicon/robot/proc/ResetModel()

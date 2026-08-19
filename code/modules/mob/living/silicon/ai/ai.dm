@@ -403,15 +403,15 @@ GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "AI Comma
 /// Creates an MMI of the AI based on its configuration.
 /mob/living/silicon/ai/proc/make_mmi(atom/destination) as /obj/item/brain_processor
 	RETURN_TYPE(/obj/item/brain_processor)
-	//FIXME: this code is really bad, we shouldn't be doing most of this ourselves. MMI code needs a good refactoring....
 	var/obj/item/brain_processor/copied_mmi
 	if(posibrain_inside)
 		copied_mmi = new /obj/item/brain_processor/positronic(destination, FALSE)
+		copied_mmi.brainmob.set_stat(STABLE) // posis are dead by default
 	else
 		copied_mmi = new /obj/item/brain_processor/organic(destination, new /obj/item/organ/brain())
 
-	copied_mmi.set_name(real_name)
 	copied_mmi.brainmob.gender = gender
+	copied_mmi.set_name(real_name)
 	copied_mmi.set_suicide(HAS_TRAIT(src, TRAIT_SUICIDED))
 
 	copied_mmi.update_appearance()

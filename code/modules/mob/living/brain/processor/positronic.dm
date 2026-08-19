@@ -189,7 +189,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 		new_name = pick(GLOB.posibrain_names)
 	else
 		new_name = pick(possible_names)
-	set_name(new_name)
+	set_name("[new_name]-[rand(100, 999)]")
 	if(autoping)
 		ping_ghosts("created", TRUE)
 
