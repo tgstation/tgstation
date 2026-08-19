@@ -1120,10 +1120,17 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	src.stat_panel.send_message("init_verbs", list(panel_tabs = panel_tabs, verblist = verblist))
 
 	var/list/panel_verbs = list()
+	var/list/seen_verb_paths = list()
 	for(var/procpath/verb_to_init as anything in verbstoprocess)
 		if(!verb_to_init || verb_to_init.hidden)
 			continue
-		if(!SSverbs.verbs_by_verb_path[verb_to_init] && !SSadmin_verbs.admin_verbs_by_verb_path[verb_to_init])
+		if(seen_verb_paths["[verb_to_init]"])
+			continue
+		seen_verb_paths["[verb_to_init]"] = TRUE
+		var/datum/verb_metadata/meta = SSverbs.verbs_by_verb_path[verb_to_init]
+		if(!meta && !SSadmin_verbs.admin_verbs_by_verb_path[verb_to_init])
+			continue
+		if(meta?.src_based)
 			continue
 		panel_verbs += list(SSverbs.serialize_verb(verb_to_init))
 	tgui_panel?.window?.send_message("verbs/init", list("verbs" = panel_verbs))
