@@ -202,12 +202,8 @@
 
 		if ("refreshAppearance")
 			update_warning = FALSE
-			for (var/datum/thing in appearance_copies) // nullcheck
-				UnregisterSignal(thing, COMSIG_AFTER_VV_TOPIC)
 			appearance_copies = list()
 			appearance_cache = list()
-			appearance_ui_data = list()
-			vv_edit_log = list()
 			for (var/ref_id in fake_vis)
 				var/list/all_fakes = fake_vis[ref_id]
 				QDEL_LIST(all_fakes)
