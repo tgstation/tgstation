@@ -23,6 +23,8 @@
 	. = ..()
 	hardware = null
 	QDEL_NULL(filesystem)
+	QDEL_LIST(idle_threads)
+	QDEL_LIST(active_threads)
 
 /datum/operating_system/default/proc/activate_program(mob/user, datum/computer_file/program/program)
 
