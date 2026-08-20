@@ -9,6 +9,9 @@
 	purchase_path = /obj/item/reagent_containers/hypospray/medipen/survival/luxury
 	cost_per_order = 750
 
+/datum/orderable_item/consumables/luxury_pen/slime
+	purchase_path = /obj/item/reagent_containers/hypospray/medipen/survival/luxury/slime
+
 /datum/orderable_item/consumables/medkit
 	purchase_path = /obj/item/storage/medkit/brute
 	cost_per_order = 400
