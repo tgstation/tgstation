@@ -100,95 +100,14 @@
 	if(SSshuttle.supply_blocked)
 		message = blockade_warning
 	data["message"] = message
-	var/cart_list = list()
-	for(var/datum/supply_order/order in SSshuttle.shopping_list)
-		if(cart_list[order.pack.name])
-			cart_list[order.pack.name][1]["amount"]++
-			cart_list[order.pack.name][1]["cost"] += order.get_final_cost()
-			if(order.department_destination)
-				cart_list[order.pack.name][1]["dep_order"]++
-			if(!isnull(order.paying_account))
-				cart_list[order.pack.name][1]["paid"]++
-			continue
 
-		cart_list[order.pack.name] = list(list(
-			"cost_type" = order.cost_type,
-			"object" = order.pack.name,
-			"cost" = order.get_final_cost(),
-			"id" = order.id,
-			"amount" = 1,
-			"orderer" = order.orderer,
-			"paid" = !isnull(order.paying_account), //number of orders purchased privatly
-			"dep_order" = !!order.department_destination, //number of orders purchased by a department
-			"can_be_cancelled" = order.can_be_cancelled,
-		))
-	data["cart"] = list()
-	for(var/item_id in cart_list)
-		data["cart"] += cart_list[item_id]
-
-
-	data["requests"] = list()
-	for(var/datum/supply_order/order in SSshuttle.request_list)
-		var/datum/supply_pack/pack = order.pack
-		data["requests"] += list(list(
-			"object" = pack.name,
-			"cost" = pack.get_cost(),
-			"orderer" = order.orderer,
-			"reason" = order.reason,
-			"id" = order.id,
-			"account" = order.paying_account ? order.paying_account.account_holder : "Cargo Department"
-		))
+	data["cart"] = get_supply_cart_ui_data()
+	data["requests"] = get_supply_requests_ui_data()
 
 	return data
 
 /datum/computer_file/program/budgetorders/ui_static_data(mob/user)
-	var/list/data = list()
-	data["max_order"] = CARGO_MAX_ORDER
-	data["displayed_currency_full_name"] = " [MONEY_NAME]"
-	data["displayed_currency_name"] = " [MONEY_SYMBOL]"
-// This is a list of all the supply packs that are available to the user. It is filtered by the user's access level and whether or not the machine is emagged.
-	data["supplies"] = list()
-	var/list/packs_by_group = list()
-	for(var/pack_id in SSshuttle.supply_packs)
-		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
-		if(pack.order_flags & ORDER_INVISIBLE)
-			continue
-		if((pack.order_flags & ORDER_EMAG_ONLY) && !(computer.obj_flags & EMAGGED))
-			continue
-		if((pack.order_flags & ORDER_SPECIAL) && !(pack.order_flags & ORDER_SPECIAL_ENABLED))
-			continue
-		if((pack.order_flags & ORDER_CONTRABAND) && !contraband)
-			continue
-		if(pack.order_flags & ORDER_POD_ONLY)
-			continue
-
-		var/obj/item/first_item = length(pack.contains) > 0 ? pack.contains[1] : null
-		var/list/packs = packs_by_group[pack.group]
-		if(isnull(packs))
-			packs = list()
-			packs_by_group[pack.group] = packs
-
-		packs += list(list(
-			"name" = pack.name,
-			"cost" = pack.get_cost(),
-			"id" = pack_id,
-			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
-			"first_item_icon" = first_item?.icon,
-			"first_item_icon_state" = first_item?.icon_state,
-			"goody" = pack.order_flags & ORDER_GOODY,
-			"access" = pack.access,
-			"contraband" = pack.order_flags & ORDER_CONTRABAND,
-			"contains" = pack.get_contents_ui_data(),
-		))
-
-	for(var/group in packs_by_group)
-		var/list/available_packs = packs_by_group[group]
-		data["supplies"][group] = list(
-			"name" = group,
-			"packs" = available_packs,
-		)
-
-	return data
+	return get_supply_ui_static_data(computer.obj_flags & EMAGGED, contraband, FALSE)
 
 /datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -299,7 +218,7 @@
 
 			// If the user is attempting to purchase a pack that requires a certain access level, check it.
 			var/list/access = id_card_customer?.GetAccess()
-			if(!is_visible_pack(user, pack.access_view, access, pack.order_flags & ORDER_CONTRABAND))
+			if(!is_visible_pack(user, pack.access_view || pack.access, access, pack.order_flags & ORDER_CONTRABAND))
 				computer.say("ERROR: User lacks the requisite access for this purchase request.")
 				return
 

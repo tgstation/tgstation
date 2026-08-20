@@ -104,109 +104,13 @@
 		message = blockade_warning
 	data["message"] = message
 
-	var/cart_list = list()
-	for(var/datum/supply_order/order in SSshuttle.shopping_list)
-		if(cart_list[order.pack.name])
-			cart_list[order.pack.name][1]["amount"]++
-			cart_list[order.pack.name][1]["cost"] += order.get_final_cost()
-			if(order.department_destination)
-				cart_list[order.pack.name][1]["dep_order"]++
-			if(!isnull(order.paying_account))
-				cart_list[order.pack.name][1]["paid"]++
-			continue
-
-		cart_list[order.pack.name] = list(list(
-			"cost_type" = order.cost_type,
-			"object" = order.pack.name,
-			"cost" = order.get_final_cost(),
-			"id" = order.id,
-			"amount" = 1,
-			"orderer" = order.orderer,
-			"paid" = !isnull(order.paying_account), //number of orders purchased privatly
-			"dep_order" = !!order.department_destination, //number of orders purchased by a department
-			"can_be_cancelled" = order.can_be_cancelled,
-		))
-	data["cart"] = list()
-	for(var/item_id in cart_list)
-		data["cart"] += cart_list[item_id]
-
-
-	data["requests"] = list()
-	for(var/datum/supply_order/order in SSshuttle.request_list)
-		var/datum/supply_pack/pack = order.pack
-		data["requests"] += list(list(
-			"object" = pack.name,
-			"cost" = pack.get_cost(),
-			"orderer" = order.orderer,
-			"reason" = order.reason,
-			"id" = order.id,
-			"account" = order.paying_account ? order.paying_account.account_holder : "Cargo Department"
-		))
+	data["cart"] = get_supply_cart_ui_data()
+	data["requests"] = get_supply_requests_ui_data()
 
 	return data
 
 /obj/machinery/computer/cargo/ui_static_data(mob/user)
-	var/list/data = list()
-	data["max_order"] = CARGO_MAX_ORDER
-	data["supplies"] = list()
-
-	var/list/packs_by_group = get_packs_data_by_group()
-	for(var/group in packs_by_group)
-		var/list/available_packs = packs_by_group[group]
-		if(!length(available_packs)) // Somehow????
-			continue
-		data["supplies"][group] = list(
-			"name" = group,
-			"packs" = available_packs,
-		)
-
-	data["displayed_currency_full_name"] = " [MONEY_NAME]"
-	data["displayed_currency_name"] = " [MONEY_SYMBOL]"
-
-	return data
-
-/**
- * returns a list of supply pack ui data by group
- */
-/obj/machinery/computer/cargo/proc/get_packs_data_by_group()
-	var/list/packs_by_group = list()
-	for(var/pack_id in SSshuttle.supply_packs)
-		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
-
-		if(pack.order_flags & ORDER_INVISIBLE)
-			continue
-
-		if((pack.order_flags & ORDER_EMAG_ONLY) && !(obj_flags & EMAGGED))
-			continue
-		if((pack.order_flags & ORDER_SPECIAL) && !(pack.order_flags & ORDER_SPECIAL_ENABLED))
-			continue
-
-		if((pack.order_flags & ORDER_CONTRABAND) && !contraband)
-			continue
-
-		if(!is_express && (pack.order_flags & ORDER_POD_ONLY))
-			continue
-
-		var/obj/item/first_item = length(pack.contains) > 0 ? pack.contains[1] : null
-		var/list/packs = packs_by_group[pack.group]
-		if(isnull(packs))
-			packs = list()
-			packs_by_group[pack.group] = packs
-
-		packs += list(list(
-			"name" = pack.name,
-			"cost" = pack.get_cost() * get_discount(),
-			"id" = pack_id,
-			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
-			"first_item_icon" = first_item?.icon,
-			"first_item_icon_state" = first_item?.icon_state,
-			"goody" = (pack.order_flags & ORDER_GOODY),
-			"access" = pack.access,
-			"contraband" = (pack.order_flags & ORDER_CONTRABAND),
-			"contains" = pack.get_contents_ui_data(),
-		))
-
-	return packs_by_group
+	return get_supply_ui_static_data(obj_flags & EMAGGED, contraband, is_express, get_discount())
 
 /**
  * returns the discount multiplier applied to all supply packs,
@@ -267,7 +171,8 @@
 				say("Invalid bank account.")
 				return
 			var/list/access = id_card.GetAccess()
-			if((pack.access_view && !(pack.access_view in access)) && !bypass)
+			var/required_access = pack.access_view || pack.access
+			if((required_access && !(required_access in access)) && !bypass)
 				say("[id_card] lacks the requisite access for this purchase.")
 				return
 
@@ -299,7 +204,8 @@
 			if(!id_card || !living_user || !access)
 				living_user = user
 				id_card = living_user.get_idcard(TRUE)
-			if(pack.access_view && !(pack.access_view in access) && personal_department)
+			var/required_access = pack.access_view || pack.access
+			if(required_access && !(required_access in access) && personal_department)
 				// We want to block cargo requests when a player is requesting a restricted pack that they don't have access to.
 				// BUT only when it's requested with non-cargo funds, as cargo had direct oversight over their own purchases with their own budget.
 				// HOWEVER, this shouldn't prevent someone from buying something using their own personal funds.
@@ -529,3 +435,106 @@
 	vars_and_tooltips_map = list(
 		"AMOUNT" = "will be replaced wuth number of orders.",
 	)
+
+// Builds the list of purchasable/requestable supply packs, grouped by category.
+/proc/get_supply_packs_by_group(emagged, contraband, is_express, discount = 1)
+	var/list/packs_by_group = list()
+	for(var/pack_id in SSshuttle.supply_packs)
+		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
+
+		if(pack.order_flags & ORDER_INVISIBLE)
+			continue
+		if((pack.order_flags & ORDER_EMAG_ONLY) && !emagged)
+			continue
+		if((pack.order_flags & ORDER_SPECIAL) && !(pack.order_flags & ORDER_SPECIAL_ENABLED))
+			continue
+		if((pack.order_flags & ORDER_CONTRABAND) && !contraband)
+			continue
+		if(!is_express && (pack.order_flags & ORDER_POD_ONLY))
+			continue
+
+		var/obj/item/first_item = length(pack.contains) > 0 ? pack.contains[1] : null
+		var/list/packs = packs_by_group[pack.group]
+		if(isnull(packs))
+			packs = list()
+			packs_by_group[pack.group] = packs
+
+		packs += list(list(
+			"name" = pack.name,
+			"cost" = pack.get_cost() * discount,
+			"id" = pack_id,
+			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
+			"first_item_icon" = first_item?.icon,
+			"first_item_icon_state" = first_item?.icon_state,
+			"goody" = (pack.order_flags & ORDER_GOODY),
+			"access" = pack.access,
+			"contraband" = (pack.order_flags & ORDER_CONTRABAND),
+			"contains" = pack.get_contents_ui_data(),
+		))
+
+	return packs_by_group
+
+// Builds the static "supplies" ui_static_data blob.
+/proc/get_supply_ui_static_data(emagged, contraband, is_express, discount = 1)
+	var/list/data = list()
+	data["max_order"] = CARGO_MAX_ORDER
+	data["displayed_currency_full_name"] = " [MONEY_NAME]"
+	data["displayed_currency_name"] = " [MONEY_SYMBOL]"
+	data["supplies"] = list()
+
+	var/list/packs_by_group = get_supply_packs_by_group(emagged, contraband, is_express, discount)
+	for(var/group in packs_by_group)
+		var/list/available_packs = packs_by_group[group]
+		if(!length(available_packs)) // Somehow????
+			continue
+		data["supplies"][group] = list(
+			"name" = group,
+			"packs" = available_packs,
+		)
+
+	return data
+
+// Builds the "cart" ui_data blob (current shopping list).
+/proc/get_supply_cart_ui_data()
+	var/list/cart_list = list()
+	for(var/datum/supply_order/order in SSshuttle.shopping_list)
+		if(cart_list[order.pack.name])
+			cart_list[order.pack.name][1]["amount"]++
+			cart_list[order.pack.name][1]["cost"] += order.get_final_cost()
+			if(order.department_destination)
+				cart_list[order.pack.name][1]["dep_order"]++
+			if(!isnull(order.paying_account))
+				cart_list[order.pack.name][1]["paid"]++
+			continue
+
+		cart_list[order.pack.name] = list(list(
+			"cost_type" = order.cost_type,
+			"object" = order.pack.name,
+			"cost" = order.get_final_cost(),
+			"id" = order.id,
+			"amount" = 1,
+			"orderer" = order.orderer,
+			"paid" = !isnull(order.paying_account), //number of orders purchased privatly
+			"dep_order" = !!order.department_destination, //number of orders purchased by a department
+			"can_be_cancelled" = order.can_be_cancelled,
+		))
+
+	var/list/cart = list()
+	for(var/item_id in cart_list)
+		cart += cart_list[item_id]
+	return cart
+
+// Builds the "requests" ui_data blob.
+/proc/get_supply_requests_ui_data()
+	var/list/requests = list()
+	for(var/datum/supply_order/order in SSshuttle.request_list)
+		var/datum/supply_pack/pack = order.pack
+		requests += list(list(
+			"object" = pack.name,
+			"cost" = pack.get_cost(),
+			"orderer" = order.orderer,
+			"reason" = order.reason,
+			"id" = order.id,
+			"account" = order.paying_account ? order.paying_account.account_holder : "Cargo Department"
+		))
+	return requests
