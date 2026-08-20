@@ -529,7 +529,8 @@
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()
-	var/datum/computer_file/program/active_program = os.get_active_thread(1)
+	//TODO: Fix runtime after modular computer destroying, when OS is null
+	var/datum/computer_file/program/active_program = os?.get_active_thread(1)
 	if(enabled)
 		. += active_program ? mutable_appearance(overlays_icon, active_program.program_open_overlay) : mutable_appearance(overlays_icon, icon_state_menu)
 	if(atom_integrity <= integrity_failure * max_integrity)
