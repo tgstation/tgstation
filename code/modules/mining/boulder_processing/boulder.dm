@@ -84,7 +84,7 @@
 	if(.)
 		return
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
-		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER)
+		manual_process(null, user, INNATE_BOULDER_SPEED_MULTIPLIER)
 		return
 
 /obj/item/boulder/attack_hand_secondary(mob/user, list/modifiers)
@@ -92,12 +92,12 @@
 	if(.)
 		return
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
-		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER)
+		manual_process(null, user, INNATE_BOULDER_SPEED_MULTIPLIER)
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 /obj/item/boulder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if (HAS_TRAIT(tool, TRAIT_BOULDER_BREAKER))
-		manual_process(tool, user, INATE_BOULDER_SPEED_MULTIPLIER)
+		manual_process(tool, user, INNATE_BOULDER_SPEED_MULTIPLIER)
 		return ITEM_INTERACT_SUCCESS
 	if (tool.tool_behaviour == TOOL_MINING)
 		manual_process(tool, user)
@@ -109,7 +109,7 @@
 	if(.)
 		return
 	if(HAS_TRAIT(user, TRAIT_BOULDER_BREAKER))
-		manual_process(null, user, INATE_BOULDER_SPEED_MULTIPLIER) //A little hacky but it works around the speed of the blackboard task selection process for now.
+		manual_process(null, user, INNATE_BOULDER_SPEED_MULTIPLIER) //A little hacky but it works around the speed of the blackboard task selection process for now.
 		return TRUE
 
 /obj/item/boulder/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -168,7 +168,7 @@
 		else if(override_speed_multiplier)
 			process_speed = override_speed_multiplier
 		else
-			process_speed = INATE_BOULDER_SPEED_MULTIPLIER
+			process_speed = INNATE_BOULDER_SPEED_MULTIPLIER
 		playsound(src, 'sound/effects/rock/rocktap1.ogg', 50)
 		if(!continued)
 			to_chat(user, span_notice("You scrape away at \the [src]..."))

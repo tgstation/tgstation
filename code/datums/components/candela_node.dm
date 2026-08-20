@@ -8,17 +8,17 @@
 	var/connection_pixel_x = null
 	/// Y offset for our beam connection point
 	var/connection_pixel_y = null
-	/// Is this node a valid network power source?
-	var/power_source = FALSE
+	/// Is this node a valid network power source? If yes, what type?
+	var/power_flags = NONE
 
-/datum/component/candela_node/Initialize(datum/mining_beacon_network/new_network = null, obj/item/stack/candela_beacon/beacon_stack = null, connection_pixel_x = null, connection_pixel_y = null, power_source = FALSE)
+/datum/component/candela_node/Initialize(datum/mining_beacon_network/new_network = null, obj/item/stack/candela_beacon/beacon_stack = null, connection_pixel_x = null, connection_pixel_y = null, power_flags = NONE)
 	. = ..()
 	if (!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.connection_pixel_x = connection_pixel_x
 	src.connection_pixel_y = connection_pixel_y
-	src.power_source = power_source
+	src.power_flags = power_flags
 
 	set_network(new_network)
 	if (beacon_stack)
@@ -38,10 +38,12 @@
 	SIGNAL_HANDLER
 
 	examine_list += span_notice("[source.p_Theyre()] a \"Candela\" mining navigation node, capable of syncronizing various prospecting machinery and equipment, and repelling hostile fauna.")
-	if (power_source)
+	if (power_flags & CANDELA_NETWORK_BOOSTED)
+		examine_list += span_notice("[source.p_They()] additionally act[source.p_s()] as an energy booster for the network, [power_flags & CANDELA_NETWORK_POWERED ? "keeping all connected beacons and equipment active and " : ""]increasing ore vent outputs.")
+	else if (power_flags & CANDELA_NETWORK_POWERED)
 		examine_list += span_notice("[source.p_They()] additionally act[source.p_s()] as a power source for the network, keeping all connected beacons and equipment active.")
 	else
-		examine_list += span_notice("The network is currently [network.powered ? "fully operational" : "missing a power source"].")
+		examine_list += span_notice("The network is currently [(network.powered & CANDELA_NETWORK_POWERED) ? "fully operational" : "missing a power source"].")
 
 /datum/component/candela_node/proc/on_item_interaction(atom/movable/source, mob/living/user, obj/item/tool, list/modifiers)
 	SIGNAL_HANDLER
@@ -51,7 +53,7 @@
 
 	var/obj/item/stack/candela_beacon/beacon = tool
 	beacon.set_network(network)
-	beacon.set_closest_node(parent)
+	beacon.set_closest_node(src)
 	beacon.balloon_alert(user, "network linked!")
 	return ITEM_INTERACT_SUCCESS
 
@@ -59,18 +61,18 @@
 	if (network == new_network)
 		return
 
+	. = network
 	if (network)
 		network.remove_node(src)
-
-	. = network
 	network = new_network
+	// Before add_node, as network can change from merging
+	SEND_SIGNAL(parent, COMSIG_CANDELA_NODE_NETWORK_CHANGED, ., network)
 
 	if (network)
 		network.add_node(src, merging = merging)
 
 	if (!destroying)
 		update_connections()
-	SEND_SIGNAL(parent, COMSIG_CANDELA_NODE_NETWORK_CHANGED, ., network)
 
 /datum/component/candela_node/proc/update_connections(keep_links = FALSE)
 	if (!network)
@@ -78,13 +80,13 @@
 		return
 
 	var/list/draw_to = null
+	var/our_index = network.linked_nodes.Find(src)
 	if (keep_links)
 		draw_to = assoc_to_keys(beam_visuals)
 		QDEL_LIST_ASSOC_VAL(beam_visuals)
 	else
 		var/list/linked_to = network.linked_nodes[src]
 		draw_to = linked_to.Copy()
-		var/our_index = network.linked_nodes.Find(src)
 		var/turf/our_turf = get_turf(parent)
 		for (var/datum/component/candela_node/link_node as anything in linked_to)
 			var/turf/link_turf = get_turf(link_node.parent)
@@ -115,7 +117,7 @@
 			override_target_pixel_x = new_node.connection_pixel_x,
 			override_target_pixel_y = new_node.connection_pixel_y,
 			emissive_alpha = 192,
-			alpha = network.powered ? 192 : 128
+			alpha = (network.powered & CANDELA_NETWORK_POWERED) ? 192 : 128
 		)
 
 // Costly, but should not be called often (if at all) as all nodes should be anchored
@@ -157,8 +159,8 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 	var/list/datum/component/candela_node/linked_nodes = list()
 	/// List of beacon items tracking our network
 	var/list/obj/item/stack/candela_beacon/linked_beacon_items = list()
-	/// Do we have a power connector in the network (vents, etc)
-	var/powered = FALSE
+	/// What types of power providers we have in the network
+	var/powered = NONE
 
 /datum/mining_beacon_network/New()
 	. = ..()
@@ -175,8 +177,8 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 		return
 
 	linked_nodes[new_node] = list()
-	if (new_node.power_source && !powered)
-		set_powered_state(TRUE)
+	if (!(new_node.power_flags & powered))
+		set_powered_state(powered | new_node.power_flags)
 
 	if (merging)
 		return
@@ -253,14 +255,14 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 		linked_nodes -= node
 		other_node.update_connections()
 
-		if (!node.power_source || !powered)
+		if (!(node.power_flags & powered) || !powered)
 			return
 
+		var/new_state = NONE
 		for (var/datum/component/candela_node/power_node as anything in linked_nodes)
-			if (power_node.power_source)
-				return
+			new_state |= power_node.power_flags
 
-		set_powered_state(FALSE)
+		set_powered_state(new_state)
 		return
 
 	for (var/datum/component/candela_node/other_node as anything in connections)
@@ -273,19 +275,20 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 	if (!powered)
 		return
 
-	for (var/datum/component/candela_node/other_node as anything in linked_nodes)
-		if (other_node.power_source)
-			return
+	var/new_state = NONE
+	for (var/datum/component/candela_node/power_node as anything in linked_nodes)
+		new_state |= power_node.power_flags
 
-	set_powered_state(FALSE)
+	set_powered_state(new_state)
 
 /datum/mining_beacon_network/proc/set_powered_state(new_power_state)
 	if (powered == new_power_state)
 		return
+	. = powered
 	powered = new_power_state
 	for (var/datum/component/candela_node/node as anything in linked_nodes)
-		linked_nodes.update_connections(keep_links = TRUE)
-	SEND_SIGNAL(src, COMSIG_CANDELA_NETWORK_POWER_CHANGED)
+		node.update_connections(keep_links = TRUE)
+	SEND_SIGNAL(src, COMSIG_CANDELA_NETWORK_POWER_CHANGED, ., powered)
 
 /// Try to reassemble the network in case of possible separation
 /// - connections - List of all connections of the node that caused the separation

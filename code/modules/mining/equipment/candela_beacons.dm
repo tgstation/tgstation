@@ -305,15 +305,16 @@
 
 	if (old_network)
 		UnregisterSignal(old_network, COMSIG_CANDELA_NETWORK_POWER_CHANGED)
-	on_power_changed(new_powered = new_network?.powered)
+	on_power_changed(old_state = old_network?.powered, new_state = new_network?.powered)
 	if (new_network)
 		RegisterSignal(new_network, COMSIG_CANDELA_NETWORK_POWER_CHANGED, PROC_REF(on_power_changed))
 
-/obj/structure/candela_beacon/proc/on_power_changed(datum/source)
+/obj/structure/candela_beacon/proc/on_power_changed(datum/source, old_state, new_state)
 	SIGNAL_HANDLER
 
-	set_light_power(network.powered ? 1.7 : 1.3)
-	set_light_range(network.powered ? 2 : MINIMUM_USEFUL_LIGHT_RANGE)
+	var/powered = (new_state & CANDELA_NETWORK_POWERED)
+	set_light_power(powered ? 1.7 : 1.3)
+	set_light_range(powered ? 2 : MINIMUM_USEFUL_LIGHT_RANGE)
 
 /obj/structure/candela_beacon/update_overlays()
 	. = ..()
