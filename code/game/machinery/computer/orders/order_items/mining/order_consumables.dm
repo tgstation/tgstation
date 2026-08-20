@@ -11,7 +11,7 @@
 
 // slime accounts get ourple pen :3
 /datum/orderable_item/consumables/luxury_pen/get_purchased_item(mob/living/user, obj/item/card/id/card)
-	if(find_record(card.registered_account?.account_holder)?.species == /datum/species/jelly::name)
+	if(cmptext(trimtext(find_record(card.registered_account?.account_holder)?.species), /datum/species/jelly::name))
 		return /obj/item/reagent_containers/hypospray/medipen/survival/luxury/purple
 	return ..()
 
