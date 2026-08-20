@@ -1,0 +1,4 @@
+author: "Iajret"
+delete-after: True
+changes:
+  - bugfix: "if theres more than one vent in line of sight between each other, node drone would not fly away failing wave defence instantly."
