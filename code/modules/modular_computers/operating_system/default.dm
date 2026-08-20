@@ -21,6 +21,7 @@
 
 /datum/operating_system/default/Destroy(force)
 	. = ..()
+	hardware = null
 	QDEL_NULL(filesystem)
 
 /datum/operating_system/default/proc/activate_program(mob/user, datum/computer_file/program/program)
