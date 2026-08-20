@@ -43,7 +43,7 @@
 	else if (power_flags & CANDELA_NETWORK_POWERED)
 		examine_list += span_notice("[source.p_They()] additionally act[source.p_s()] as a power source for the network, keeping all connected beacons and equipment active.")
 	else
-		examine_list += span_notice("The network is currently [(network.powered & CANDELA_NETWORK_POWERED) ? "fully operational" : "missing a power source"].")
+		examine_list += span_notice("The network is currently [(network.powered & CANDELA_NETWORK_POWERED) ? "fully operational[(network.powered & CANDELA_NETWORK_BOOSTED) ? " and overclocked" : ""]" : "missing a power source"].")
 
 /datum/component/candela_node/proc/on_item_interaction(atom/movable/source, mob/living/user, obj/item/tool, list/modifiers)
 	SIGNAL_HANDLER
@@ -191,7 +191,7 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 			atoms_to_nodes[node.parent] = node
 
 	var/list/merged_networks = list()
-	var/list/need_updates = list()
+	var/list/need_updates = list(new_node)
 	for (var/atom/movable/thing in view(MINING_BEACON_MAX_REACH, new_node.parent))
 		var/datum/component/candela_node/actual_node = atoms_to_nodes[thing]
 		if (!actual_node || actual_node == new_node)
@@ -236,6 +236,9 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 			linked_nodes[node] |= connections
 		else
 			linked_nodes[node] = connections
+
+	for (var/datum/component/candela_node/node as anything in to_merge.linked_nodes)
+		node.update_connections()
 
 	linked_beacon_items |= to_merge.linked_beacon_items
 	qdel(to_merge)
