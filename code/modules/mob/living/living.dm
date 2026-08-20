@@ -528,8 +528,8 @@
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
-GAME_VERB_CONTEXT(/mob/living, pulled, "Pull", "", null, /atom/movable)
-	VERB_ARG_TYPED(thing_pulled, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_VIEW, /atom/movable)
+GAME_VERB_CONTEXT_RANGE(/mob/living, pulled, "Pull", "", null, /atom/movable, oview(1))
+	VERB_ARG_TYPED_RANGE(thing_pulled, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_VIEW, /atom/movable, 1)
 	if(istype(thing_pulled) && Adjacent(thing_pulled))
 		start_pulling(thing_pulled)
 
