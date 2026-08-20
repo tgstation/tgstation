@@ -593,6 +593,8 @@
   SmArtKar:
   - balance: Watchers and legions no longer keep facing the target when retreating,
       allowing for backstabs
+  - rscadd: Every 5 minutes 2-4 random cargo exports get tripled in price, lets go
+      gambling!
   lelandkemble:
   - bugfix: door remotes function in melee range
   - bugfix: light replacers function in melee range
