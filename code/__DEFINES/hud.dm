@@ -113,7 +113,6 @@
 #define HUD_PAI_HOST_MONITOR "paimonitor"
 #define HUD_PAI_GPS "paigps"
 
-#define HUD_GHOST_RESPAWN "ghost_respawn"
 #define HUD_GHOST_SPAWNERS "ghost_spawners"
 #define HUD_GHOST_ORBIT "ghost_orbit"
 #define HUD_GHOST_REENTER_CORPSE "ghost_corpse"
@@ -367,13 +366,12 @@
 #define ui_pai_memories_menu "SOUTH:5:50,EAST-1:28"
 
 //Ghosts
-#define ui_ghost_orbit "SOUTH:6,CENTER-4:24"
-#define ui_ghost_reenter_corpse "SOUTH:6,CENTER-3:24"
-#define ui_ghost_respawn "SOUTH:6,CENTER-2:24"
-#define ui_ghost_dnr "SOUTH:6,CENTER-1:24"
-#define ui_ghost_teleport "SOUTH:6,CENTER:24"
-#define ui_ghost_settings "SOUTH:6,CENTER+1:24"
-#define ui_ghost_spawners_menu "SOUTH:6,CENTER+2:24"
+#define ui_ghost_spawners_menu "SOUTH:6,CENTER-3:24"
+#define ui_ghost_orbit "SOUTH:6,CENTER-2:24"
+#define ui_ghost_reenter_corpse "SOUTH:6,CENTER-1:24"
+#define ui_ghost_dnr "SOUTH:6,CENTER:24"
+#define ui_ghost_teleport "SOUTH:6,CENTER+1:24"
+#define ui_ghost_settings "SOUTH:6,CENTER+2:24"
 #define ui_ghost_minigames "SOUTH:6,CENTER+3:24"
 #define ui_ghost_language_menu "SOUTH:6,CENTER+4:22"
 #define ui_ghost_floor_changer "SOUTH:6,CENTER+4:7"
