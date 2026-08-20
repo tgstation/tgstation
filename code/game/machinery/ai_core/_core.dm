@@ -25,8 +25,7 @@
 	if(state >= CORE_STATE_CIRCUIT)
 		circuit = new(src)
 	if(state >= CORE_STATE_CABLED)
-		if(!core_mmi)
-			core_mmi = new /obj/item/brain_processor/organic(src, new /obj/item/organ/brain())
+		core_mmi ||= new /obj/item/brain_processor/organic(src, new /obj/item/organ/brain())
 		core_mmi.forceMove(src)
 		src.core_mmi = core_mmi
 		set_anchored(TRUE)
@@ -181,8 +180,6 @@
 
 	var/mob/living/silicon/ai/ai_mob = new(loc, the_brainmob, core_mmi.laws, default_link_ref?.resolve())
 
-	if(core_mmi.force_replace_ai_name)
-		ai_mob.fully_replace_character_name(ai_mob.name, core_mmi.replacement_ai_name())
 	ai_mob.posibrain_inside = core_mmi.braintype == "Android"
 	deadchat_broadcast(" has been brought online at <b>[get_area_name(ai_mob, format_text = TRUE)]</b>.", span_name("[ai_mob]"), follow_target = ai_mob, message_type = DEADCHAT_ANNOUNCEMENT)
 	qdel(src)

@@ -22,8 +22,6 @@
 	VAR_FINAL/datum/ai_laws/laws = null
 
 	var/braintype = "Cyborg"
-	/// If TRUE, and placed in an AI, calls replacement_ai_name() and uses that as the AI's name.
-	var/force_replace_ai_name = FALSE
 
 /obj/item/radio/brain_processor
 	custom_materials = null
@@ -43,7 +41,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 
 	if(brainmob == new_brainmob)
-		return brainmob
+		return
 
 	var/mob/living/brain/old_brainmob = brainmob
 	if(old_brainmob)
@@ -60,7 +58,6 @@
 	SEND_SIGNAL(src, COMSIG_MMI_SET_BRAINMOB, old_brainmob)
 
 GAME_VERB_SRC_DESC(/obj/item/brain_processor, Toggle_Listening, usr.loc, "Toggle Listening", "Toggle listening channel on or off.", "MMI")
-
 	if(IS_UNCONSCIOUS_OR_CRIT(brainmob))
 		to_chat(brainmob, span_warning("Can't do that while incapacitated or dead!"))
 		return
