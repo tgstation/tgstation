@@ -5,8 +5,8 @@
 	var/mob/living/carbon/human/consistent/janitor = EASY_ALLOCATE()
 	var/obj/item/lightreplacer/replacer = EASY_ALLOCATE()
 	var/obj/item/lightreplacer/blue/rangedreplacer = EASY_ALLOCATE()
-	var/obj/machinery/light/current_close_light = EASY_ALLOCATE()
-	var/obj/machinery/light/far_bulb = allocate(/obj/machinery/light/small, run_loc_floor_top_right)
+	var/obj/machinery/light/current_close_light = allocate(/obj/machinery/light/unbroken, run_loc_floor_bottom_left)
+	var/obj/machinery/light/far_bulb = allocate(/obj/machinery/light/small/unbroken, run_loc_floor_top_right)
 
 	janitor.put_in_active_hand(replacer)
 	far_bulb.break_light_tube(TRUE)
@@ -24,7 +24,7 @@
 
 	janitor.put_in_active_hand(rangedreplacer, TRUE)
 	qdel(current_close_light)
-	current_close_light = allocate(/obj/machinery/light/floor, run_loc_floor_bottom_left)
+	current_close_light = allocate(/obj/machinery/light/floor/unbroken, run_loc_floor_bottom_left)
 	current_close_light.burn_out()
 
 	click_wrapper(janitor, far_bulb)
@@ -32,3 +32,12 @@
 
 	click_wrapper(janitor, current_close_light)
 	TEST_ASSERT_EQUAL(current_close_light.status, LIGHT_OK, "Ranged light replacer failed to replace burnt floor bulb in melee")
+
+/obj/machinery/light/unbroken
+	allow_break_on_init = FALSE
+
+/obj/machinery/light/floor/unbroken
+	allow_break_on_init = FALSE
+
+/obj/machinery/light/small/unbroken
+	allow_break_on_init = FALSE
