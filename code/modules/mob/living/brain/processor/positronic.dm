@@ -217,7 +217,6 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	Unfortunately, it also allows them to move around the lab via rolling maneuvers."
 	icon_state = "spheribrain"
 	base_icon_state = "spheribrain"
-	immobilize = FALSE
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 4.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3.2, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 2.5)
 	/// Delay between movements
 	var/move_delay = 0.5 SECONDS
@@ -230,10 +229,8 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	var/matrix/matrix = matrix()
 	transform = matrix.Scale(0.8, 0.8)
 
-	brainmob.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
-
 /obj/item/brain_processor/positronic/sphere/relaymove(mob/living/user, direction)
-	if(isspaceturf(loc) || !direction || mecha)
+	if(isspaceturf(loc) || !direction)
 		return
 
 	if(can_move >= world.time)
@@ -241,11 +238,10 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	can_move = world.time + move_delay
 
 	// ESCAPE PRISON
-	if(ismovable(loc) && prob(25))
+	if(istype(loc, /obj/item/storage) && prob(25))
 		var/obj/item/item = pick(loc.contents)
-		if(istype(loc, /obj/item/storage))
-			item.forceMove(loc.drop_location()) //throw stuff out of the inventory till we free ourselves!
-			playsound(src, SFX_RUSTLE, 30, TRUE)
+		item.forceMove(loc.drop_location()) //throw stuff out of the inventory till we free ourselves!
+		playsound(src, SFX_RUSTLE, 30, TRUE)
 		return
 
 	// MOVE US

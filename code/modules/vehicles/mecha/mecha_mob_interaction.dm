@@ -96,7 +96,6 @@
 		to_chat(user, span_warning("[brain_obj] is stuck to your hand, you cannot put it in [src]!"))
 		return FALSE
 
-	brain_obj.set_mecha(src)
 	add_occupant(brain_mob)//Note this forcemoves the brain into the mech to allow relaymove
 	mecha_flags &= ~PANEL_OPEN //Close panel if open
 	mecha_flags |= SILICON_PILOT
@@ -171,7 +170,6 @@
 			ejector.forceMove(mmi)
 			ejector.reset_perspective()
 			remove_occupant(ejector)
-		mmi.set_mecha(null)
 		mmi.update_appearance()
 	setDir(SOUTH)
 	SEND_SIGNAL(src, COMSIG_MECHA_MOB_EXIT)

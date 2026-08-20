@@ -14,8 +14,6 @@
 		var/obj/item/organ/brain/OB = new(loc) //we create a new brain organ for it.
 		OB.brainmob = src
 		forceMove(OB)
-	if(!container?.mecha && (!container || container.immobilize)) //Unless inside a mecha, brains are rather helpless.
-		add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
 	ADD_TRAIT(src, TRAIT_NEVER_CONSIDERED_ALIVE, INNATE_TRAIT)
 
 /mob/living/brain/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -94,21 +92,14 @@
 		CRASH("Brainmob without a container [src] attempted to move to [destination].")
 
 /mob/living/brain/update_mouse_pointer()
-	if (!client)
+	// This kind of sucks
+	if(!client)
 		return
-	client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
-	if(!container)
-		return
-	if (container.mecha)
-		var/obj/vehicle/sealed/mecha/M = container.mecha
-		if(M.mouse_pointer)
-			client.mouse_pointer_icon = M.mouse_pointer
-
-/mob/living/brain/proc/get_traumas()
-	. = list()
-	if(istype(loc, /obj/item/organ/brain))
-		var/obj/item/organ/brain/B = loc
-		. = B.traumas
+	. = ..()
+	if(istype(loc?.loc, /obj/vehicle/sealed) && !client.mouse_override_icon)
+		var/obj/vehicle/sealed/probably_mech = loc.loc
+		if(probably_mech.mouse_pointer)
+			client.mouse_pointer_icon = probably_mech.mouse_pointer
 
 /mob/living/brain/get_policy_keywords()
 	. = ..()
