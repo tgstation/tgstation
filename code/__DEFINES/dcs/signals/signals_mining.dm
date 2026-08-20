@@ -13,5 +13,5 @@
 #define COMSIG_BRIMDUST_EXPLOSION "comsig_brimdust_explosion"
 /// From /datum/component/candela_node/set_network() : (old_network, new_network)
 #define COMSIG_CANDELA_NODE_NETWORK_CHANGED "candela_node_network_changed"
-/// From /datum/mining_beacon_network/set_power_state() : (old_powered, new_powered)
+/// From /datum/mining_beacon_network/set_power_state() : ()
 #define COMSIG_CANDELA_NETWORK_POWER_CHANGED "candela_network_power_changed"

@@ -44,6 +44,8 @@
 			to_chat(user, span_warning("There is already a [singular_name] here."))
 		return FALSE
 
+	// In case use() deletes ourselves
+	var/datum/mining_beacon_network/our_network = network
 	if (!use(1))
 		return FALSE
 
@@ -51,7 +53,7 @@
 		to_chat(user, span_notice("You activate and anchor [amount ? "a":"the"] [singular_name] in place."))
 
 	playsound(user, 'sound/machines/click.ogg', 50, TRUE)
-	var/obj/structure/candela_beacon/beacon = new(loc_override || user.loc, network, src)
+	var/obj/structure/candela_beacon/beacon = new(loc_override || user.loc, our_network, src)
 	transfer_fingerprints_to(beacon)
 	return TRUE
 
@@ -65,8 +67,9 @@
 
 /obj/item/stack/candela_beacon/examine(mob/user)
 	. = ..()
-	. += "Use in-hand to plant a beacon, [EXAMINE_HINT("right-click")] in-hand to sever network link. Click on a placed beacon to form a network connection."
-	. += "Automatically deployed upon reaching maximum distance or breaking line-of-sight to the network when placed in pocket or belt slots."
+	. += "Use in-hand to plant a beacon, [EXAMINE_HINT("right-click")] in-hand to sever network link."
+	. += "Click on a placed beacon to form a network connection, or [EXAMINE_HINT("right-click")] to pick it up."
+	. += "Automatically deployed upon reaching maximum distance or breaking line-of-sight to the network when placed in pocket or belt slots, or in storage in pocket or belt slots."
 
 /obj/item/stack/candela_beacon/update_overlays()
 	. = ..()
@@ -306,12 +309,40 @@
 	if (new_network)
 		RegisterSignal(new_network, COMSIG_CANDELA_NETWORK_POWER_CHANGED, PROC_REF(on_power_changed))
 
-/obj/structure/candela_beacon/proc/on_power_changed(datum/source, old_powered, new_powered)
+/obj/structure/candela_beacon/proc/on_power_changed(datum/source)
 	SIGNAL_HANDLER
 
-	set_light_power(new_powered ? 1.7 : 1.3)
-	set_light_range(new_powered ? 2 : MINIMUM_USEFUL_LIGHT_RANGE)
+	set_light_power(network.powered ? 1.7 : 1.3)
+	set_light_range(network.powered ? 2 : MINIMUM_USEFUL_LIGHT_RANGE)
 
 /obj/structure/candela_beacon/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, "[icon_state]_e", src, alpha = 192)
+
+/obj/structure/candela_beacon/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if (.)
+		return
+	balloon_alert(user, "picking up the beacon...")
+	if (!do_after(user, 2 SECONDS, src))
+		return
+
+	var/obj/item/stack/candela_beacon/beacon = new(loc)
+	transfer_fingerprints_to(beacon)
+	if (user.put_in_hands(beacon, del_on_fail = TRUE))
+		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+		qdel(src)
+
+/obj/structure/candela_beacon/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if (!istype(tool, /obj/item/stack/candela_beacon))
+		return NONE
+
+	var/obj/item/stack/candela_beacon/collection = tool
+	to_chat(user, span_notice("You start picking [src] up..."))
+	if(!do_after(user, 2 SECONDS, src) || collection.amount + 1 > collection.max_amount)
+		return ITEM_INTERACT_BLOCKING
+
+	collection.add(1)
+	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS

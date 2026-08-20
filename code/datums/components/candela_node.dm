@@ -72,19 +72,37 @@
 		update_connections()
 	SEND_SIGNAL(parent, COMSIG_CANDELA_NODE_NETWORK_CHANGED, ., network)
 
-/datum/component/candela_node/proc/update_connections()
+/datum/component/candela_node/proc/update_connections(keep_links = FALSE)
 	if (!network)
 		QDEL_LIST_ASSOC_VAL(beam_visuals)
 		return
 
-	var/list/datum/component/candela_node/linked_to = network.linked_nodes[src]
-	for (var/lost_node, old_beam in beam_visuals - linked_to)
+	var/list/draw_to = null
+	if (keep_links)
+		draw_to = assoc_to_keys(beam_visuals)
+		QDEL_LIST_ASSOC_VAL(beam_visuals)
+	else
+		var/list/linked_to = network.linked_nodes[src]
+		draw_to = linked_to.Copy()
+		var/our_index = network.linked_nodes.Find(src)
+		var/turf/our_turf = get_turf(parent)
+		for (var/datum/component/candela_node/link_node as anything in linked_to)
+			var/turf/link_turf = get_turf(link_node.parent)
+			var/link_index = network.linked_nodes.Find(link_node)
+			// Don't render connections to shared nodes if there's another one that's closer to them than us (in case of equal distance, use index)
+			for (var/datum/component/candela_node/shared_node as anything in (draw_to & link_node.beam_visuals))
+				var/our_dist = get_dist_euclidean(get_turf(shared_node.parent), our_turf)
+				var/link_dist = get_dist_euclidean(get_turf(shared_node.parent), link_turf)
+				if (our_dist > link_dist || our_dist == link_dist && link_index < our_index)
+					draw_to -= shared_node
+
+	for (var/lost_node, old_beam in beam_visuals - draw_to)
 		beam_visuals -= lost_node
 		qdel(old_beam)
 
 	var/atom/movable/movable_parent = parent
-	for (var/datum/component/candela_node/new_node as anything in linked_to - beam_visuals)
-		if (new_node.beam_visuals[src])
+	for (var/datum/component/candela_node/new_node as anything in draw_to - beam_visuals)
+		if (network.linked_nodes.Find(new_node) < our_index) // Older nodes draw connections to younger ones
 			continue
 		beam_visuals[new_node] = movable_parent.Beam(
 			new_node.parent,
@@ -97,7 +115,7 @@
 			override_target_pixel_x = new_node.connection_pixel_x,
 			override_target_pixel_y = new_node.connection_pixel_y,
 			emissive_alpha = 192,
-			alpha = 192
+			alpha = network.powered ? 192 : 128
 		)
 
 // Costly, but should not be called often (if at all) as all nodes should be anchored
@@ -171,6 +189,7 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 			atoms_to_nodes[node.parent] = node
 
 	var/list/merged_networks = list()
+	var/list/need_updates = list()
 	for (var/atom/movable/thing in view(MINING_BEACON_MAX_REACH, new_node.parent))
 		var/datum/component/candela_node/actual_node = atoms_to_nodes[thing]
 		if (!actual_node || actual_node == new_node)
@@ -179,7 +198,7 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 		if (linked_nodes[actual_node])
 			linked_nodes[new_node] |= actual_node
 			linked_nodes[actual_node] |= new_node
-			actual_node.update_connections()
+			need_updates |= actual_node
 			continue
 
 		if (!all_nodes[actual_node])
@@ -188,9 +207,12 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 		var/datum/mining_beacon_network/network = all_nodes[actual_node]
 		linked_nodes[new_node] |= actual_node
 		network.linked_nodes[actual_node] |= new_node
-		actual_node.update_connections()
+		need_updates |= actual_node
 
 		merged_networks |= network
+
+	for (var/datum/component/candela_node/update_node as anything in need_updates)
+		update_node.update_connections()
 
 	if (!length(merged_networks))
 		return
@@ -234,8 +256,8 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 		if (!node.power_source || !powered)
 			return
 
-		for (var/datum/component/candela_node/other_node as anything in linked_nodes)
-			if (other_node.power_source)
+		for (var/datum/component/candela_node/power_node as anything in linked_nodes)
+			if (power_node.power_source)
 				return
 
 		set_powered_state(FALSE)
@@ -258,9 +280,12 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 	set_powered_state(FALSE)
 
 /datum/mining_beacon_network/proc/set_powered_state(new_power_state)
-	. = powered
+	if (powered == new_power_state)
+		return
 	powered = new_power_state
-	SEND_SIGNAL(src, COMSIG_CANDELA_NETWORK_POWER_CHANGED, ., powered)
+	for (var/datum/component/candela_node/node as anything in linked_nodes)
+		linked_nodes.update_connections(keep_links = TRUE)
+	SEND_SIGNAL(src, COMSIG_CANDELA_NETWORK_POWER_CHANGED)
 
 /// Try to reassemble the network in case of possible separation
 /// - connections - List of all connections of the node that caused the separation
@@ -279,7 +304,9 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 				connected_to += i
 
 		if (!length(connected_to))
-			new_networks += list(list(to_poll = TRUE))
+			var/list/new_net = list()
+			new_net[to_poll] = TRUE
+			new_networks += list(new_net)
 			continue
 
 		var/list/first_net = new_networks[connected_to[1]]
