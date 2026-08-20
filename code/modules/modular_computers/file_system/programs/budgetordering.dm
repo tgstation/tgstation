@@ -64,18 +64,18 @@
 
 	var/datum/bank_account/buyer = SSeconomy.get_dep_account(cargo_account)
 	var/obj/item/card/id/id_card = computer.stored_id?.GetID()
+	var/is_cargo = has_cargo_authority(user)
 	if(id_card?.registered_account?.account_job?.paycheck_department)
 		buyer = SSeconomy.get_dep_account(id_card?.registered_account.account_job.paycheck_department)
 		if((ACCESS_BUDGET in id_card.access))
 			requestonly = FALSE
-			can_approve_requests = TRUE
 			// If buyer is a departmental budget, replaces "Cargo" with that budget - we're not using the cargo budget here
 			data["department"] = "[buyer.account_holder] Requisitions"
 		else
 			requestonly = TRUE
-			can_approve_requests = FALSE
 	else
 		requestonly = TRUE
+	can_approve_requests = is_cargo || (id_card && (ACCESS_BUDGET in id_card.access))
 	if(buyer)
 		data["points"] = buyer.account_balance
 	// To recap above because it's kind of a mess, here's all the options:
@@ -102,7 +102,7 @@
 	data["message"] = message
 
 	data["cart"] = get_supply_cart_ui_data()
-	data["requests"] = get_supply_requests_ui_data()
+	data["requests"] = get_visible_requests_ui_data(user)
 
 	return data
 
@@ -258,6 +258,8 @@
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.request_list)
 				if(SO.id == id)
+					if(!can_manage_request(user, SO))
+						return
 					var/obj/item/card/id/id_card = computer.stored_id?.GetID()
 					if(id_card && id_card?.registered_account)
 						SO.paying_account = SSeconomy.get_dep_account(id_card?.registered_account?.account_job.paycheck_department)
@@ -269,11 +271,18 @@
 			var/id = text2num(params["id"])
 			for(var/datum/supply_order/SO in SSshuttle.request_list)
 				if(SO.id == id)
+					if(!can_manage_request(user, SO))
+						return
 					SSshuttle.request_list -= SO
 					. = TRUE
 					break
 		if("denyall")
-			SSshuttle.request_list.Cut()
+			if(has_cargo_authority(user))
+				SSshuttle.request_list.Cut()
+			else
+				for(var/datum/supply_order/SO in SSshuttle.request_list.Copy())
+					if(can_manage_request(user, SO))
+						SSshuttle.request_list -= SO
 			. = TRUE
 		if("toggleprivate")
 			self_paid = !self_paid
@@ -290,3 +299,49 @@
 
 	var/datum/signal/status_signal = new(list("command" = command))
 	frequency.post_signal(src, status_signal)
+
+/// Whether this user has full cargo authority (can see/approve/deny every request).
+/datum/computer_file/program/budgetorders/proc/has_cargo_authority(mob/user)
+	if(isAdminGhostAI(user))
+		return TRUE
+	var/obj/item/card/id/id_card = computer.stored_id?.GetID()
+	if(!id_card && ishuman(user))
+		var/mob/living/carbon/human/human_user = user
+		id_card = human_user.get_idcard(TRUE)
+	return id_card && (ACCESS_CARGO in id_card.GetAccess())
+
+/// The department budget account tied to the currently inserted/held ID card, if any.
+/datum/computer_file/program/budgetorders/proc/get_own_department_account()
+	var/obj/item/card/id/id_card = computer.stored_id?.GetID()
+	if(!id_card?.registered_account?.account_job)
+		return null
+	return SSeconomy.get_dep_account(id_card.registered_account.account_job.paycheck_department)
+
+/// Requests visible to this user - department heads only see their own department's requests, cargo see all.
+/datum/computer_file/program/budgetorders/proc/get_visible_requests_ui_data(mob/user)
+	var/is_cargo = has_cargo_authority(user)
+	var/datum/bank_account/own_department = get_own_department_account()
+	var/list/requests = list()
+	for(var/datum/supply_order/order in SSshuttle.request_list)
+		if(!is_cargo && order.paying_account != own_department)
+			continue
+		var/datum/supply_pack/pack = order.pack
+		requests += list(list(
+			"object" = pack.name,
+			"cost" = pack.get_cost(),
+			"orderer" = order.orderer,
+			"reason" = order.reason,
+			"id" = order.id,
+			"account" = order.paying_account ? order.paying_account.account_holder : "Cargo Department"
+		))
+	return requests
+
+/// Rather or not the user can approve/deny requests - Department heads can approve their own department, while cargo can approve all.
+/datum/computer_file/program/budgetorders/proc/can_manage_request(mob/user, datum/supply_order/SO)
+	if(has_cargo_authority(user))
+		return TRUE
+	var/obj/item/card/id/id_card = computer.stored_id?.GetID()
+	if(!id_card || !(ACCESS_BUDGET in id_card.GetAccess()))
+		return FALSE
+	var/datum/bank_account/own_department = get_own_department_account()
+	return own_department && SO.paying_account == own_department
