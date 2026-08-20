@@ -381,6 +381,58 @@ GAME_VERB(/mob/dead/observer, reenter_corpse, "Re-enter Corpse", null)
 	mind.current.client.init_verbs()
 	return TRUE
 
+/**
+ * Allows you to respawn, abandoning your current mob
+ *
+ * This sends you back to the lobby creating a new dead mob
+ *
+ * Only works if flag/allow_respawn is allowed in config
+ */
+GAME_VERB(/mob/dead/observer, abandon_mob, "Respawn", null)
+
+	switch(CONFIG_GET(flag/allow_respawn))
+		if(RESPAWN_FLAG_NEW_CHARACTER)
+			if(tgui_alert(usr, "Note, respawning is only allowed as another character. If you don't have another free slot you may not be able to respawn.", "Respawn", list("Ok", "Nevermind")) != "Ok")
+				return
+
+		if(RESPAWN_FLAG_FREE)
+			pass() // Normal respawn
+
+		if(RESPAWN_FLAG_DISABLED)
+			if (!check_rights_for(usr.client, R_ADMIN))
+				to_chat(usr, span_boldnotice("Respawning is not enabled!"))
+				return
+			if (tgui_alert(usr, "Respawning is currently disabled, do you want to use your permissions to circumvent it?", "Respawn", list("Yes", "No")) != "Yes")
+				return
+
+	if (stat != DEAD)
+		to_chat(usr, span_boldnotice("You must be dead to use this!"))
+		return
+
+	if(!check_respawn_delay())
+		return
+
+	usr.log_message("used the respawn button.", LOG_GAME)
+
+	to_chat(usr, span_boldnotice("Please roleplay correctly!"))
+
+	if(!client)
+		usr.log_message("respawn failed due to disconnect.", LOG_GAME)
+		return
+	client.screen.Cut()
+	client.screen += client.void
+	if(!client)
+		usr.log_message("respawn failed due to disconnect.", LOG_GAME)
+		return
+
+	var/mob/dead/new_player/M = new /mob/dead/new_player()
+	if(!client)
+		usr.log_message("respawn failed due to disconnect.", LOG_GAME)
+		qdel(M)
+		return
+
+	M.PossessByPlayer(key)
+
 GAME_VERB(/mob/dead/observer, do_not_resuscitate, "Do Not Resuscitate", null)
 
 	if(!can_reenter_corpse)

@@ -4,6 +4,7 @@
 
 /datum/hud/ghost/initialize_screen_objects()
 	. = ..()
+	add_screen_object(/atom/movable/screen/ghost/respawn, HUD_GHOST_RESPAWN)
 	add_screen_object(/atom/movable/screen/ghost/spawners_menu, HUD_GHOST_SPAWNERS)
 	add_screen_object(/atom/movable/screen/ghost/orbit, HUD_GHOST_ORBIT)
 	add_screen_object(/atom/movable/screen/ghost/reenter_corpse, HUD_GHOST_REENTER_CORPSE)
