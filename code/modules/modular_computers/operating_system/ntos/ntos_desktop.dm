@@ -17,6 +17,7 @@
 	active_threads.Add(program)
 	programs_metadata[program.filename] = list("x" = 10, "y" = 10, "width" = 575, "height" = 400)
 	program.on_made_active_program(user)
+	update_static_data_for_all_viewers()
 
 /datum/operating_system/default/ntos/desktop/ui_data(mob/user)
 	. = ..()

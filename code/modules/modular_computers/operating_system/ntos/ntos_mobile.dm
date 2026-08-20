@@ -31,6 +31,7 @@
 		active_threads.Cut()
 		active_threads.Add(program)
 	program.on_made_active_program(user)
+	update_static_data_for_all_viewers()
 
 /datum/operating_system/default/ntos/mobile/interact(mob/user)
 	ui_interact(user)
@@ -47,4 +48,3 @@
 		ui = new(user, src, "NtosMobile")
 		ui.open()
 		ui.set_autoupdate(FALSE)
-	update_static_data_for_all_viewers()

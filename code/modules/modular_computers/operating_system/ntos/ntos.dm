@@ -16,7 +16,6 @@
 	///The theme, used for the main menu and file browser apps.
 	var/device_theme = PDA_THEME_NTOS
 
-
 /datum/operating_system/default/ntos/New(obj/item/modular_computer/computer)
 	. = ..()
 	filesystem = new /datum/driver/filesystem/ntfs(computer)
@@ -108,10 +107,8 @@
 
 /datum/operating_system/default/ntos/ui_static_data(mob/user)
 	var/list/data = list()
-	var/datum/computer_file/program/active_program = get_active_thread(1)
-	if(active_program)
+	for(var/datum/computer_file/program/active_program in active_threads)
 		data += active_program.ui_static_data(user)
-		return data
 
 	data["show_imprint"] = istype(hardware, /obj/item/modular_computer/pda)
 	return data
