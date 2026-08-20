@@ -326,7 +326,7 @@
 	desc = "Cutting edge bluespace technology allowed Nanotrasen to compact 60u of volume into a single medipen. Contains rare and powerful chemicals used to aid in exploration of very hard environments. This one is purple. WARNING: DO NOT MIX WITH EPINEPHRINE OR ATROPINE."
 	icon_state = "slimepen"
 	base_icon_state = "slimepen"
-	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10 ,/datum/reagent/medicine/regen_jelly/diluted = 10 ,/datum/reagent/medicine/leporazine = 10)
+	list_reagents = list(/datum/reagent/medicine/salbutamol = 10, /datum/reagent/medicine/c2/penthrite = 10, /datum/reagent/medicine/oxandrolone = 10, /datum/reagent/medicine/sal_acid = 10 ,/datum/reagent/medicine/regen_jelly/diluted = 5 ,/datum/reagent/toxin = 5 ,/datum/reagent/medicine/leporazine = 10)
 
 /obj/item/reagent_containers/hypospray/medipen/survival/luxury/purple/Initialize(mapload)
 	. = ..()
