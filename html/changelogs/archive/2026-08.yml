@@ -585,6 +585,9 @@
       level of flight now (as set by a var). Kindly indicate any inexplicable changes
       to wings should they occur ingame.
 2026-08-20:
+  Iajret:
+  - bugfix: if theres more than one vent in line of sight between each other, node
+      drone would not fly away failing wave defence instantly.
   Richard Blonski:
   - bugfix: Fixed Fancy Weather preference, not being applied upon Z-Level change.
   SmArtKar:
