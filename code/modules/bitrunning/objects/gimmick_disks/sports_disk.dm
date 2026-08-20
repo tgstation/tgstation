@@ -81,7 +81,7 @@
 	)
 
 /datum/operating_system/default/ntos/gamer
-	description = "NanoTrasen Operating System specially for gamers"
+	description = "Nanotrasen Operating System specially for gamers"
 	device_theme = PDA_THEME_TERMINAL
 	starting_programs = list(
 		/datum/computer_file/program/themeify,
