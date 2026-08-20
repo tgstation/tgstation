@@ -4,27 +4,22 @@
 	name = "KA Mod Disk"
 	desc = "A design disc containing the design for a unique kinetic accelerator modkit. It's compatible with a research console."
 	icon_state = "datadisk1"
-	var/modkit_design = /datum/design/unique_modkit
-
-/obj/item/disk/design_disk/modkit_disc/Initialize(mapload)
-	. = ..()
-	blueprints += new modkit_design
 
 /obj/item/disk/design_disk/modkit_disc/mob_and_turf_aoe
 	name = "Offensive Mining Explosion Mod Disk"
-	modkit_design = /datum/design/unique_modkit/offensive_turf_aoe
+	blueprints = list(/datum/design/unique_modkit/offensive_turf_aoe)
 
 /obj/item/disk/design_disk/modkit_disc/rapid_repeater
 	name = "Rapid Repeater Mod Disk"
-	modkit_design = /datum/design/unique_modkit/rapid_repeater
+	blueprints = list(/datum/design/unique_modkit/rapid_repeater)
 
 /obj/item/disk/design_disk/modkit_disc/resonator_blast
 	name = "Resonator Blast Mod Disk"
-	modkit_design = /datum/design/unique_modkit/resonator_blast
+	blueprints = list(/datum/design/unique_modkit/resonator_blast)
 
 /obj/item/disk/design_disk/modkit_disc/bounty
 	name = "Death Syphon Mod Disk"
-	modkit_design = /datum/design/unique_modkit/bounty
+	blueprints = list(/datum/design/unique_modkit/bounty)
 
 // Wisp Lantern
 /obj/item/wisp_lantern
@@ -200,7 +195,7 @@
 	var/wing_type = get_wing_choice(exposed_human, chest)
 	if(!wing_type)
 		return
-	var/obj/item/organ/wings/functional/wings = new wing_type()
+	var/obj/item/organ/wings/wings = new wing_type()
 	wings.Insert(exposed_human)
 	if(had_wings)
 		to_chat(exposed_human, span_userdanger("A terrible pain travels down your back as your wings change shape!"))
@@ -216,7 +211,7 @@
 		return wing_types[1]
 	var/list/radial_wings = list()
 	var/list/name2type = list()
-	for(var/obj/item/organ/wings/functional/possible_type as anything in wing_types)
+	for(var/obj/item/organ/wings/possible_type as anything in wing_types)
 		var/datum/sprite_accessory/accessory = SSaccessories.feature_list[FEATURE_WINGS][possible_type::sprite_accessory_override::name] //get the singleton instance
 		var/image/img = image(icon = accessory.icon, icon_state = "m_wingsopen_[accessory.icon_state]_BEHIND") //Process the HUD elements
 		img.transform *= 0.5

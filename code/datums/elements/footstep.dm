@@ -43,7 +43,7 @@
 			src.volume = 90*volume
 		if(FOOTSTEP_MOB_SLIME)
 			footstep_sounds = 'sound/effects/footstep/slime1.ogg'
-			src.volume = 90*volume
+			src.volume = 20*volume
 		if(FOOTSTEP_OBJ_MACHINE)
 			footstep_sounds = 'sound/effects/bang.ogg'
 			src.volume = 90*volume

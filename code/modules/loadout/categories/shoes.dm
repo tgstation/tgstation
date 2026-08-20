@@ -9,6 +9,10 @@
 	abstract_type = /datum/loadout_item/shoes
 
 /datum/loadout_item/shoes/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE)
+	// This prevents clown shoes from being destroyed, for such would be SACRILEGE.
+	if(istype(outfit, /datum/outfit/job/clown))
+		return ..() // Parent calling puts them into the clown's backpack (as a test of character).
+
 	outfit.shoes = item_path
 
 /datum/loadout_item/shoes/sneakers

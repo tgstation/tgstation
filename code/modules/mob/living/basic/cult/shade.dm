@@ -3,6 +3,7 @@
 	real_name = "Shade"
 	desc = "A bound spirit."
 	gender = PLURAL
+	randomize_gender = FALSE
 	icon = 'icons/mob/nonhuman-player/cult.dmi'
 	icon_state = "shade_cult"
 	icon_living = "shade_cult"
