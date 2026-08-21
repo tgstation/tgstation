@@ -22,6 +22,8 @@ SUBSYSTEM_DEF(navmap)
 	var/topology_generation = 0
 	var/topology_rebuild_in_progress = FALSE
 	var/alist/nav_links = alist()
+	/// Cross-z links indexed by their source turf for the DM fallback search.
+	var/alist/nav_links_by_source = alist()
 	var/next_nav_link_id = 1
 
 /// Initializes bake representatives, blocker caches, and existing z-level data.
@@ -79,6 +81,7 @@ SUBSYSTEM_DEF(navmap)
 	z_to_nav_layer = SSnavmap.z_to_nav_layer
 	topology_generation = SSnavmap.topology_generation
 	nav_links = SSnavmap.nav_links
+	nav_links_by_source = SSnavmap.nav_links_by_source
 	next_nav_link_id = SSnavmap.next_nav_link_id
 
 /// Enables automatic dirtying for a newly relevant z-level.
@@ -161,6 +164,9 @@ SUBSYSTEM_DEF(navmap)
 	if(!link.id)
 		link.id = next_nav_link_id++
 	nav_links[link.id] = link
+	if(!nav_links_by_source[link.source])
+		nav_links_by_source[link.source] = alist()
+	nav_links_by_source[link.source][link.id] = link
 	topology_generation++
 	sync_native_state()
 	return link.id
@@ -170,6 +176,11 @@ SUBSYSTEM_DEF(navmap)
 	if(link.id && nav_links[link.id] == link)
 		nav_links[link.id] = null
 		nav_links.Remove(link.id)
+		var/alist/source_links = nav_links_by_source[link.source]
+		if(source_links)
+			source_links[link.id] = null
+			if(!length(source_links))
+				nav_links_by_source[link.source] = null
 		topology_generation++
 		sync_native_state()
 

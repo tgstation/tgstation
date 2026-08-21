@@ -48,8 +48,12 @@
 	var/list/navmap_astar_edge_cache
 	/// Cached simulated-turf results.
 	var/list/navmap_astar_simulated_cache
+	/// Cached relaxed lower-bound estimates for multi-z A*.
+	var/list/navmap_astar_heuristic_cache
 	/// Whether the mover uses flying navigation.
 	var/navmap_astar_is_flying = FALSE
+	/// Cheapest registered link, used as a constant admissible cross-z lower bound.
+	var/navmap_astar_min_link_cost = 0
 
 /// Configures a navmap search from a requester and access list.
 /datum/pathfind/navmap/proc/setup(atom/movable/requester, atom/goal, max_distance, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, list/datum/callback/on_finish, allow_multiz = FALSE, max_path_cost = 0)
@@ -145,6 +149,14 @@
 	navmap_astar_closed = list()
 	navmap_astar_edge_cache = list()
 	navmap_astar_simulated_cache = list()
+	navmap_astar_heuristic_cache = list()
+	navmap_astar_min_link_cost = 0
+	for(var/link_id in SSnavmap.nav_links)
+		var/datum/nav_link/link = SSnavmap.nav_links[link_id]
+		if(link && link.source && link.destination)
+			navmap_astar_min_link_cost = navmap_astar_min_link_cost \
+				? min(navmap_astar_min_link_cost, link.cost) \
+				: link.cost
 	navmap_astar_is_flying = NAV_IS_FLYING(pass_info)
 	path = null
 	complete = FALSE
@@ -160,13 +172,44 @@
 
 /// Estimates the remaining cost to the target.
 /datum/pathfind/navmap/proc/navmap_astar_heuristic(turf/tile)
-	if(allow_multiz)
-		return 0
+	var/cached = navmap_astar_heuristic_cache[tile]
+	if(!isnull(cached))
+		return cached
 	// Horizontal distance remaining to the goal.
-	var/dx = max(abs(tile.x - end.x) - minimum_distance, 0)
-	// Vertical distance remaining to the goal.
-	var/dy = max(abs(tile.y - end.y) - minimum_distance, 0)
-	return 14 * min(dx, dy) + 10 * abs(dx - dy)
+	var/estimate = 0
+	var/has_estimate = FALSE
+	var/direct_distance = navmap_astar_relaxed_distance(tile, end, minimum_distance)
+	if(!isnull(direct_distance))
+		estimate = direct_distance
+		has_estimate = TRUE
+	if(allow_multiz)
+		// A route that uses a link costs at least the cheapest registered link. This is weaker
+		// than the native portal graph but remains O(1) per node in the DM fallback.
+		if(navmap_astar_min_link_cost)
+			if(!has_estimate || navmap_astar_min_link_cost < estimate)
+				estimate = navmap_astar_min_link_cost
+			has_estimate = TRUE
+	navmap_astar_heuristic_cache[tile] = estimate
+	return estimate
+
+/// Returns a relaxed geometric cost between two turfs, or null for disconnected layers.
+/datum/pathfind/navmap/proc/navmap_astar_relaxed_distance(turf/source, turf/destination, target_distance = 0)
+	if(!source || !destination)
+		return null
+	var/list/source_layer = SSnavmap.z_to_nav_layer[source.z]
+	var/list/destination_layer = SSnavmap.z_to_nav_layer[destination.z]
+	if(!source_layer || !destination_layer || source_layer["group"] != destination_layer["group"])
+		return null
+	if(!allow_multiz && source.z != destination.z)
+		return null
+	if(!navmap_astar_is_flying && source.z != destination.z)
+		return null
+	var/dx = max(abs(source.x - destination.x) - target_distance, 0)
+	var/dy = max(abs(source.y - destination.y) - target_distance, 0)
+	var/cost = 14 * min(dx, dy) + 10 * abs(dx - dy)
+	if(navmap_astar_is_flying)
+		cost += abs(source_layer["layer"] - destination_layer["layer"]) * 10
+	return cost
 
 /// Resolves and caches horizontal edges from a turf.
 /datum/pathfind/navmap/proc/navmap_astar_resolve_edges(turf/tile)
@@ -201,9 +244,24 @@
 	navmap_astar_resolve_edges(tile)
 	return !simulated_only || navmap_astar_simulated_cache[tile]
 
+/// Checks the cheap occupancy constraints without resolving the candidate's outgoing edges.
+/// Incoming cardinal/diagonal edges already validate the destination's passability; the full
+/// edge set is resolved when the candidate is popped and expanded.
+/datum/pathfind/navmap/proc/navmap_astar_turf_occupiable(turf/tile)
+	if(isnull(tile) || tile == avoid || (max_distance && max(abs(start.x - tile.x), abs(start.y - tile.y)) > max_distance))
+		return FALSE
+	if(isnull(tile.nav_pass))
+		tile.nav_bake()
+	var/nav_pass = tile.nav_pass
+	if(isnull(nav_pass) || !(nav_pass & NAV_BAKED))
+		return FALSE
+	var/is_simulated = !!(nav_pass & NAV_SIMULATED)
+	navmap_astar_simulated_cache[tile] = is_simulated
+	return !simulated_only || is_simulated
+
 /// Checks whether a vertical edge can be traversed.
 /datum/pathfind/navmap/proc/navmap_astar_vertical_open(turf/source, turf/destination, direction)
-	if(!allow_multiz || !navmap_astar_is_flying || !source || !destination || !navmap_astar_turf_open(destination))
+	if(!allow_multiz || !navmap_astar_is_flying || !source || !destination || !navmap_astar_turf_occupiable(destination))
 		return FALSE
 	if(!(navmap_astar_resolve_vertical_edges(source) & direction))
 		return FALSE
@@ -237,7 +295,7 @@
 		return FALSE
 	// Turf reached by the first cardinal step.
 	var/turf/middle = get_step(source, source_dir)
-	if(!navmap_astar_turf_open(middle))
+	if(!navmap_astar_turf_occupiable(middle))
 		return FALSE
 	return !!(navmap_astar_resolve_edges(middle) & destination_dir)
 
@@ -251,7 +309,7 @@
 	var/source_edges = navmap_astar_resolve_edges(source)
 	if(!(source_edges & north_south_dir) && !(source_edges & east_west_dir))
 		return 0
-	if(!navmap_astar_turf_open(destination))
+	if(!navmap_astar_turf_occupiable(destination))
 		return 0
 	// Bitmask of valid cardinal routes.
 	var/routes = 0
@@ -432,7 +490,7 @@
 				if(navmap_astar_diagonal_routes(current, next, dir, TRUE))
 					navmap_astar_action[next] = 0
 					navmap_astar_queue_update(next, current, navmap_astar_g_score[current] + 14)
-			else if((source_edges & dir) && navmap_astar_turf_open(next))
+			else if((source_edges & dir) && navmap_astar_turf_occupiable(next))
 				navmap_astar_action[next] = 0
 				navmap_astar_queue_update(next, current, navmap_astar_g_score[current] + 10)
 		if(allow_multiz && navmap_astar_is_flying)
@@ -445,14 +503,15 @@
 					navmap_astar_queue_update(vertical_next, current, navmap_astar_g_score[current] + 10)
 		if(allow_multiz)
 			// Explore registered cross-z navigation links.
-			for(var/link_id in SSnavmap.nav_links)
+			var/alist/source_links = SSnavmap.nav_links_by_source[current]
+			for(var/link_id in source_links)
 				// Link being evaluated.
-				var/datum/nav_link/link = SSnavmap.nav_links[link_id]
-				if(link.source != current || !link.can_plan(pass_info))
+				var/datum/nav_link/link = source_links[link_id]
+				if(!link || !link.can_plan(pass_info))
 					continue
 				// Destination turf for this link.
 				var/turf/link_destination = link.destination
-				if(!navmap_astar_turf_open(link_destination))
+				if(!navmap_astar_turf_occupiable(link_destination))
 					continue
 				if(max_path_cost && navmap_astar_g_score[current] + link.cost > max_path_cost)
 					continue

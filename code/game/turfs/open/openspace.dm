@@ -167,6 +167,28 @@
 		return TRUE
 	return FALSE
 
+/// Bakes the static part of openspace's ground passability.
+/turf/open/openspace/nav_bake_pathing_pass(dir, list/edge_blockers)
+	// Ground movers may path across openspace when its downward fall path is
+	// already blocked (for example by a lattice or catwalk). Flying movers can
+	// always use the horizontal edge.
+	var/turf/below = GET_TURF_BELOW(src)
+	if(zPassOut(DOWN) && below?.zPassIn(DOWN))
+		return NAV_FLIGHT(dir)
+	return NAV_GROUND(dir) | NAV_FLIGHT(dir)
+
+/turf/open/openspace/nav_dirty_vertical_dependents()
+	// Ground edges on our horizontal neighbours depend on whether our downward
+	// fall path is blocked, so a change below us invalidates those edges too.
+	for(var/horizontal_dir in GLOB.cardinals)
+		var/turf/edge_neighbor = get_step(src, horizontal_dir)
+		if(!edge_neighbor)
+			continue
+		edge_neighbor.nav_pass = null
+		edge_neighbor.nav_blockers = null
+		SSnavmap.queue_turf_bake(edge_neighbor)
+		navmap_pathfinder_update(edge_neighbor.x, edge_neighbor.y, edge_neighbor.z, 0)
+
 /turf/open/openspace/replace_floor(turf/open/new_floor_path, flags)
 	if (!initial(new_floor_path.overfloor_placed))
 		ChangeTurf(new_floor_path, flags = flags)

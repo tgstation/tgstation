@@ -910,6 +910,15 @@ GLOBAL_LIST_EMPTY(station_turfs)
 			neighbor.nav_pass = null
 			SSnavmap.queue_turf_bake(neighbor)
 			navmap_pathfinder_update(neighbor.x, neighbor.y, neighbor.z, 0)
+			// Proc-based turfs may have passability that depends on the adjacent z-level.
+			// Avoid a virtual call for the overwhelmingly common density-based turfs.
+			if(neighbor.pathing_pass_method == TURF_PATHING_PASS_PROC)
+				neighbor.nav_dirty_vertical_dependents()
+
+/// Invalidates nav edges whose passability depends on this turf's vertical neighbours.
+/// Most turfs have no such dependencies; specialized proc-based turfs can override this.
+/turf/proc/nav_dirty_vertical_dependents()
+	return
 
 /// Bakes this turf's outgoing edges and publishes them to the DLL navmap cache.
 /turf/proc/nav_bake(skip_navmap_push = FALSE)
@@ -952,9 +961,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		if(TURF_PATHING_PASS_NO)
 			return NONE
 		if(TURF_PATHING_PASS_PROC)
-			// Evaluate mover-dependent turf passage at pathing time.
-			edge_blockers += dest
-			has_cond = TRUE
+			var/pathing_bits = dest.nav_bake_pathing_pass(dir, edge_blockers)
+			ground_ok = !!(pathing_bits & NAV_GROUND(dir))
+			flight_ok = !!(pathing_bits & NAV_FLIGHT(dir))
+			has_cond = !!(pathing_bits & NAV_COND(dir))
 
 	// border objects :(
 	for(var/obj/border in src)
@@ -993,6 +1003,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(has_cond)
 		bits |= NAV_COND(dir)
 	return bits
+
+/// Returns the packed edge bits for a turf whose pathing pass method is proc-based.
+/// The default keeps the turf conditional, matching the normal CanAStarPass behavior.
+/turf/proc/nav_bake_pathing_pass(dir, list/edge_blockers)
+	edge_blockers += src
+	return NAV_GROUND(dir) | NAV_FLIGHT(dir) | NAV_COND(dir)
 
 /// Stores a static pass-flag mask or a live mover-dependent blocker.
 /turf/proc/nav_classify_atom(atom/movable/blocker, list/edge_blockers)
