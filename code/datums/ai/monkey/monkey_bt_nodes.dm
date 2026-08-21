@@ -150,7 +150,7 @@
 	return ..()
 
 /// Prefers any gun once gun neurons are activated, else the strongest candidate that beats our current best held item.
-/datum/bt_node/ai_behavior/acquire_target/update_interaction_target/monkey_find_weapon/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
+/datum/bt_node/ai_behavior/acquire_target/update_interaction_target/monkey_find_weapon/pick_final_target(datum/ai_controller/controller, list/filtered_targets, datum/target_priority_strategy/priority_strategy, atom/current_target)
 	var/mob/living/living_pawn = controller.pawn
 
 	if(controller.blackboard[BB_MONKEY_GUN_NEURONS_ACTIVATED])

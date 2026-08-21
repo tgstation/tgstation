@@ -135,7 +135,7 @@
 	. = ..()
 	if(!owner || . & EMP_PROTECT_SELF)
 		return
-	var/range = severity ? 10 : 5
+	var/range = 10 / severity
 	var/atom/throw_target
 	if(active)
 		release_items()
@@ -240,7 +240,7 @@
 	if((organ_flags & ORGAN_FAILING) || . & EMP_PROTECT_SELF)
 		return
 	organ_flags |= ORGAN_FAILING
-	addtimer(CALLBACK(src, PROC_REF(reboot)), 90 / severity)
+	addtimer(CALLBACK(src, PROC_REF(reboot)), 9 SECONDS / severity)
 
 /obj/item/organ/cyberimp/brain/anti_stun/proc/reboot()
 	organ_flags &= ~ORGAN_FAILING

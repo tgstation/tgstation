@@ -29,30 +29,11 @@
 /// Determines the rate at which humans lose blood when they have the blood deficiency quirk. The default is BLOOD_REGEN_FACTOR + BLOOD_DEFICIENCY_MODIFIER.
 #define BLOOD_DEFICIENCY_MODIFIER 0.025
 
+/// Determines how high saline can bring up your blood volume
+#define SALINE_DILUTION_CAP BLOOD_VOLUME_NORMAL
+
 /// Temperature at which blood loss and regen stops. [/mob/living/carbon/human/proc/handle_blood]
 #define BLOOD_STOP_TEMP 225
-
-// Bloodtype defines
-#define BLOOD_TYPE_A_MINUS "A-"
-#define BLOOD_TYPE_A_PLUS "A+"
-#define BLOOD_TYPE_B_MINUS "B-"
-#define BLOOD_TYPE_B_PLUS "B+"
-#define BLOOD_TYPE_AB_MINUS "AB-"
-#define BLOOD_TYPE_AB_PLUS "AB+"
-#define BLOOD_TYPE_O_MINUS "O-"
-#define BLOOD_TYPE_O_PLUS "O+"
-#define BLOOD_TYPE_UNIVERSAL "U"
-#define BLOOD_TYPE_LIZARD "L"
-#define BLOOD_TYPE_VAMPIRE "V"
-#define BLOOD_TYPE_ANIMAL "Y-"
-#define BLOOD_TYPE_ETHEREAL "LE"
-#define BLOOD_TYPE_TOX "TOX"
-#define BLOOD_TYPE_OIL "Oil"
-#define BLOOD_TYPE_MEAT "MT-"
-#define BLOOD_TYPE_CLOWN "C"
-#define BLOOD_TYPE_XENO "X*"
-#define BLOOD_TYPE_H2O "H2O"
-#define BLOOD_TYPE_SNAIL "S"
 
 // Blood exposure behavior flag defines
 /// Add our DNA to turfs/mobs/items, does not correlate with adding decals/overlays
@@ -224,9 +205,6 @@
 #define SPECIES_SNAIL "snail"
 #define SPECIES_VAMPIRE "vampire"
 #define SPECIES_ZOMBIE "zombie"
-#define SPECIES_ZOMBIE_INFECTIOUS "memezombie"
-#define SPECIES_ZOMBIE_INFECTIOUS_MINDLESS "mindless_memezombie"
-#define SPECIES_ZOMBIE_KROKODIL "krokodil_zombie"
 #define SPECIES_VOIDWALKER "voidwalker"
 
 // Like species IDs, but not specifically attached a species.
@@ -379,6 +357,9 @@
 #define CRYSTALIZE_STAGE_ENGULFING 100 //Can't use second defines
 #define CRYSTALIZE_STAGE_ENCROACHING 300 //In switches
 #define CRYSTALIZE_STAGE_SMALL 600 //Because they're not static
+
+///Max growth for a xeno larva to evolve into a regular xeno. This is used as % based.
+#define XENOMORPH_MAX_GROWTH 100
 
 //Slime evolution threshold. Controls how fast slimes can split/grow
 #define SLIME_EVOLUTION_THRESHOLD 10
@@ -544,6 +525,14 @@
 #define EAR_PROTECTION_HEAVY 2
 #define EAR_PROTECTION_VACUUM 3
 #define EAR_PROTECTION_FULL INFINITY
+
+/**
+ * EMP protection
+ * These values are additive to determine your overall emp protection
+ */
+#define EMP_PROTECTION_NONE 0
+#define EMP_PROTECTION_MODERATE 1
+#define EMP_PROTECTION_HIGH 2
 
 /**
  * Soundbang defines
@@ -1106,6 +1095,8 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 /// Distance which you can see someone's ID card
 /// Short enough that you can inspect over tables (bartender checking age)
 #define ID_EXAMINE_DISTANCE 3
+/// Distance which you can get the href to remove embeds or similar from someone
+#define CARBON_EXAMINE_EMBEDDING_MAX_DIST 4
 
 GLOBAL_LIST_INIT(regal_rat_minion_commands, list(
 	/datum/pet_command/idle,

@@ -2545,7 +2545,7 @@
 /datum/reagent/consumable/ethanol/protein_blend/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
 	. =	..()
 	drinker.adjust_nutrition(2 * metabolization_ratio * seconds_per_tick)
-	if(!islizard(drinker))
+	if(!HAS_TRAIT(drinker, TRAIT_LIZARD_METABOLISM))
 		drinker.adjust_disgust(5 * metabolization_ratio * seconds_per_tick)
 	else
 		drinker.adjust_disgust(2 * metabolization_ratio * seconds_per_tick)
@@ -2572,7 +2572,7 @@
 
 /datum/reagent/consumable/ethanol/triumphal_arch/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(islizard(drinker))
+	if(HAS_TRAIT(drinker, TRAIT_LIZARD_METABOLISM))
 		drinker.add_mood_event("triumph", /datum/mood_event/memories_of_home, name)
 
 /datum/reagent/consumable/ethanol/the_juice

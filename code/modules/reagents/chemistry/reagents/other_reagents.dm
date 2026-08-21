@@ -25,11 +25,12 @@
 /datum/reagent/blood/on_new(list/data)
 	. = ..()
 	// If we were artificially created without blood data, we still want to have the blood_reagent element for exposure effects
-	if(!istype(data) || !data["blood_type"])
-		AddElement(/datum/element/blood_reagent, null, get_blood_type(BLOOD_TYPE_UNIVERSAL))
+	if(isnull(LAZYACCESS(data, BLOOD_DATA_TYPE)))
+		RegisterSignal(src, COMSIG_REAGENT_GROWN_IN_PLANT, PROC_REF(grown_in_plant))
+		AddElement(/datum/element/blood_reagent, null, get_blood_type(/datum/blood_type/universal))
 		return
 
-	var/datum/blood_type/blood_type = data["blood_type"]
+	var/datum/blood_type/blood_type = data[BLOOD_DATA_TYPE]
 	if(!istype(blood_type))
 		return
 
@@ -42,10 +43,16 @@
 		return ..()
 	if(!HAS_TRAIT(taster, TRAIT_DETECTIVES_TASTE))
 		return ..()
-	var/blood_type = data?["blood_type"]
+	var/blood_type = data?[BLOOD_DATA_TYPE]
 	if(!blood_type)
 		return ..()
 	return list("[blood_type] type blood" = 1)
+
+/// All blood grown in plants defaults to O-
+/datum/reagent/blood/proc/grown_in_plant(datum/source, obj/item/seeds/our_seeds, obj/item/our_plant)
+	SIGNAL_HANDLER
+
+	LAZYSET(data, BLOOD_DATA_TYPE, get_blood_type(/datum/blood_type/human/o_minus))
 
 /datum/reagent/consumable/liquidgibs
 	name = "Liquid Gibs"
@@ -409,7 +416,7 @@
 	if(reac_volume >= 10)
 		for(var/obj/effect/rune/R in exposed_turf)
 			qdel(R)
-	exposed_turf.Bless()
+	exposed_turf.bless_turf()
 
 /datum/reagent/water/hollowwater
 	name = "Hollow Water"
@@ -802,7 +809,7 @@
 	if(!ishuman(affected_mob))
 		return ..()
 	var/mob/living/carbon/affected_human = affected_mob
-	if(isjellyperson(affected_human))
+	if(affected_human.mob_biotypes & MOB_SLIME)
 		var/datum/species/species_type = pick(subtypesof(race))
 		affected_human.set_species(species_type)
 		holder.del_reagent(type)
@@ -2635,6 +2642,13 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
+/datum/reagent/wittelvirusfood
+	name = "Exotic Agar"
+	color = "#C3CF7C" // rgb: 195, 207, 124
+	taste_description = "sourness"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
 // Bee chemicals
 
 /datum/reagent/royal_bee_jelly
@@ -3353,7 +3367,7 @@
 
 /datum/reagent/brimdust/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(affected_mob.adjust_fire_loss((ispodperson(affected_mob) ? -1 : 1 * seconds_per_tick), updating_health = FALSE))
+	if(affected_mob.adjust_fire_loss((affected_mob.mob_biotypes & MOB_PLANT) ? -1 : 1 * seconds_per_tick, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
 
 /datum/reagent/brimdust/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)

@@ -60,6 +60,7 @@
 /obj/item/ai_module/law
 	desc = "An AI Module for programming laws to an AI."
 	/// This is where our laws get put at for the module
+	/// Assoc list, key = law text, value = is this an ion law
 	var/list/laws = list()
 	/// The laws list last time save_laws() was called
 	VAR_PRIVATE/list/saved_laws
@@ -71,22 +72,20 @@
 
 /obj/item/ai_module/law/Initialize(mapload)
 	. = ..()
-	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI) && is_station_level(z))
-		var/delete_module = handle_unique_ai()
-		if(delete_module)
-			return INITIALIZE_HINT_QDEL
+	if(mapload && HAS_TRAIT(SSstation, STATION_TRAIT_UNIQUE_AI) && is_station_level(z) && handle_unique_ai() == SHOULD_QDEL_MODULE)
+		return INITIALIZE_HINT_QDEL
 
 /// Logs the installation of this module to the law change log and silicon log.
 /obj/item/ai_module/law/log_install(mob/living/user, obj/machinery/ai_law_rack/rack)
 	. = ..()
-	for(var/law in laws)
-		log_law_change(user, "added law to [rack] ([rack.log_status()], text: [law])")
+	for(var/law, is_ioned in laws)
+		log_law_change(user, "added law to [rack] ([rack.log_status()], text: [law], ioned: [is_ioned])")
 
 /// Logs the uninstallation of this module to the law change log and silicon log.
 /obj/item/ai_module/law/log_uninstall(mob/living/user, obj/machinery/ai_law_rack/rack)
 	. = ..()
-	for(var/law in laws)
-		log_law_change(user, "removed law from [rack] ([rack.log_status()], text: [law])")
+	for(var/law, is_ioned in laws)
+		log_law_change(user, "removed law from [rack] ([rack.log_status()], text: [law], ioned: [is_ioned])")
 
 /obj/item/ai_module/law/examine(mob/user)
 	. = ..()
@@ -121,15 +120,15 @@
 
 /// Adds a law to the module and updates any racks we're installed in.
 /obj/item/ai_module/law/proc/add_law(law_text)
-	laws += law_text
+	laws[law_text] = FALSE
 	update_rack_laws()
 
 /// Adds a law to the module at a specific index and updates any racks we're installed in.
 /obj/item/ai_module/law/proc/add_law_to_index(law_text, index)
-	if(length(laws) <= index)
-		laws += law_text
-	else
+	if(isnum(index) && index <= length(laws))
+		laws -= law_text
 		laws.Insert(index, law_text)
+	laws[law_text] = FALSE
 	update_rack_laws()
 
 /// Update any racks we're installed in
@@ -204,8 +203,8 @@
 	custom_materials = list(/datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/ai_module/law/core/apply_to_combined_lawset(datum/ai_laws/combined_lawset)
-	for(var/law in laws)
-		combined_lawset.add_inherent_law(law)
+	for(var/law_text, is_ioned in laws)
+		combined_lawset.add_inherent_law(law_text, ioned = is_ioned)
 
 /obj/item/ai_module/law/core/pre_user_uninstall_from_rack(mob/living/user, obj/machinery/ai_law_rack/rack)
 	var/obj/machinery/ai_law_rack/base/parent_rack = rack.get_parent_rack()
@@ -214,9 +213,8 @@
 
 	for(var/mob/living/bot in assoc_to_values(parent_rack.linked_mobs))
 		// removing core laws temporarily stuns the silicon to let people swap cores without immediately getting blasted
-		if(bot.AmountStun() > 5 SECONDS || parent_rack.is_rack_stun_immune(bot))
+		if(!parent_rack.rack_stun(bot))
 			continue
-		bot.Stun(10 SECONDS, ignore_canstun = TRUE)
 		to_chat(bot, span_userdanger("Core module removed. Recalculating directives..."))
 
 /obj/item/ai_module/law/core/full

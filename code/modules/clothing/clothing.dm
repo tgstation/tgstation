@@ -23,6 +23,8 @@
 	var/toggle_message
 	///chat message when the visor is toggled up.
 	var/alt_toggle_message
+	/// What level of emp protection item has
+	var/emp_protection = EMP_PROTECTION_NONE
 
 	var/clothing_flags = NONE
 	///List of items that can be equipped in the suit storage slot while we're worn.
@@ -104,7 +106,7 @@
 		qdel(src)
 
 /obj/item/clothing/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(user.combat_mode || !ismoth(target) || ispickedupmob(src))
+	if(user.combat_mode || !HAS_TRAIT(user, TRAIT_CLOTH_EATER) || ispickedupmob(src))
 		return ..()
 	if((clothing_flags & INEDIBLE_CLOTHING) || (resistance_flags & INDESTRUCTIBLE))
 		return ..()
@@ -396,6 +398,8 @@
 		.["sterile"] = "Increases the speed at which reagents are administered to others by [round((1/NITRILE_GLOVES_MULTIPLIER-1)*100, 1)]%."
 	if(TRAIT_FAST_CUFFING in clothing_traits)
 		.["secure"] = "Increases the speed at which you apply restraints."
+	if(emp_protection > EMP_PROTECTION_NONE)
+		.["emp resistant"] = "Reduces the effects of incoming electromagnetic pulses on the wearer."
 
 /obj/item/clothing/examine_descriptor(mob/user)
 	return "clothing"

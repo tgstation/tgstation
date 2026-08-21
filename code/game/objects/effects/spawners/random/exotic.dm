@@ -118,7 +118,7 @@
 	)
 
 /obj/item/mod/module/energy_shield/prototype
-	name = "MOD prototype energy shield"
+	name = "\improper MOD prototype energy shield"
 	desc = "An early prototype of energy shield adapted for use inside of a MOD, the energy shield before this saw \
 	extensive use in now defunct construction, combat, and mining exosuits with exosuits being something between a \
 	modsuit and a mech with most still functioning exosuits either being in a museaum or a military parade"

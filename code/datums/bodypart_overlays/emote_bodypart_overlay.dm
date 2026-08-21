@@ -56,7 +56,7 @@
 	attached_body_zone = BODY_ZONE_HEAD
 
 /datum/bodypart_overlay/simple/emote/blush/color_image(image/overlay, obj/item/bodypart/limb, layer_index)
-	var/base_color = limb.owner?.get_bloodtype()?.get_damage_color()
+	var/base_color = limb.owner?.get_bloodtype()?.get_damage_color(limb.owner)
 	if(!base_color)
 		return ..()
 

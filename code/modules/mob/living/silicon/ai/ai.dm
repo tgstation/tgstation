@@ -634,6 +634,15 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, ai_hologram_change, "Change Hologram
 	if(incapacitated)
 		return
 
+	ai_holocolor = tgui_color_picker(usr, "Choose a color for your hologram", "Hologram Color")
+	if(ai_holocolor)
+		var/ai_holo_hsv = rgb2hsv(ai_holocolor)
+		var/default_hsv = rgb2hsv(COLOR_AI_HOLOGRAM_BLUE)
+
+		default_hsv[1] = ai_holo_hsv[1]
+
+		ai_holocolor = hsv2rgb(default_hsv)
+
 	var/static/list/choices = assoc_to_keys(GLOB.ai_hologram_category_options) + HOLOGRAM_CHOICE_CHARACTER
 	var/choice = tgui_input_list(usr, "What kind of hologram do you want?",	"Customize", choices)
 	if(!choice)
@@ -859,7 +868,7 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto
 	var/rendered = "<i><span class='game say'>[start][span_name("[hrefpart][namepart] ([jobpart])</a> ")]<span class='message'>[treated_message]</span></span></i>"
 
 	if (client?.prefs.read_preference(/datum/preference/toggle/enable_runechat) && (client.prefs.read_preference(/datum/preference/toggle/enable_runechat_non_mobs) || ismob(speaker)))
-		create_chat_message(speaker, message_language, raw_message, spans)
+		create_chat_message(speaker, message_language, raw_translation, spans)
 	show_message(rendered, 2)
 
 /mob/living/silicon/ai/fully_replace_character_name(oldname, newname, log_new_name = FALSE)

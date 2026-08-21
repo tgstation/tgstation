@@ -14,7 +14,7 @@
 	if (!exclusive)
 		return TRUE
 	var/datum/status_effect/golem/existing = consumer.has_status_effect(/datum/status_effect/golem)
-	return !existing || istype(existing, status_effect)
+	return !existing || !existing.exclusive || istype(existing, status_effect)
 
 /// Called when someone actually eats this
 /datum/golem_food_buff/proc/on_consumption(mob/living/carbon/consumer, atom/movable/consumed, multiplier = 1)
@@ -50,44 +50,54 @@
 
 /datum/golem_food_buff/uranium
 	status_effect = /datum/status_effect/golem/uranium
+	nutrition = 5
 	added_info = "If consumed this mineral will power you in place of food, pausing your digestion for five minutes."
 
 /datum/golem_food_buff/silver
 	status_effect = /datum/status_effect/golem/silver
+	nutrition = 4
 	added_info = "If consumed this mineral will repel the supernatural, affording you resistance to mystical effects."
 
 /datum/golem_food_buff/plasma
 	status_effect = /datum/status_effect/golem/plasma
+	nutrition = 6
 	added_info = "If consumed this mineral will allow you to absorb heat and convert it into power."
 
 /datum/golem_food_buff/plasteel
 	status_effect = /datum/status_effect/golem/plasteel
+	nutrition = 7
 	added_info = "If consumed this mineral will harden you against the hazards of space."
 
 /datum/golem_food_buff/gold
 	status_effect = /datum/status_effect/golem/gold
+	nutrition = 5
 	added_info = "If consumed this mineral will grant you a shiny coating which reflects projectiles."
 
 /datum/golem_food_buff/diamond
 	status_effect = /datum/status_effect/golem/diamond
+	nutrition = 9
 	added_info = "If consumed this mineral will reflact light around you, making you faster and harder to see."
 
 /datum/golem_food_buff/titanium
 	status_effect = /datum/status_effect/golem/titanium
+	nutrition = 5
 	added_info = "If consumed this mineral will make you tougher and punch harder."
 
 /datum/golem_food_buff/bananium
 	status_effect = /datum/status_effect/golem/bananium
+	nutrition = 10
 	added_info = "If consumed this mineral will make you funnier."
 
 /datum/golem_food_buff/lightbulb
 	nutrition = 0
 	exclusive = FALSE
-	status_effect = /datum/status_effect/golem_lightbulb
+	status_effect = /datum/status_effect/golem/lightbulb
 	added_info = "Not nutritious, but gives you a healthy glow if eaten."
+	exclusive = FALSE
 
 /datum/golem_food_buff/gibtonite
 	exclusive = FALSE
+	nutrition = 5
 	added_info = "After consumption, you can launch this mineral like a rocket. It's a little hard to keep down."
 
 /datum/golem_food_buff/gibtonite/apply_effects(mob/living/carbon/human/consumer, atom/movable/consumed, multiplier = 1)
@@ -106,6 +116,7 @@
 
 /datum/golem_food_buff/bluespace
 	exclusive = FALSE
+	nutrition = 10
 	added_info = "After consumption, you can use the stored power to teleport yourself."
 
 /datum/golem_food_buff/bluespace/apply_effects(mob/living/carbon/human/consumer, atom/movable/consumed, multiplier = 1)

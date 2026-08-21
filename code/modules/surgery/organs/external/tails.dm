@@ -146,13 +146,22 @@
 	)
 	dyable = TRUE
 	offset_location = ENTIRE_BODY
+	/// Tracks if it's currently wagging or not
 	var/wagging = FALSE
+	/// If TRUE the tail is shown when over supported suits like space suits
+	var/mesh_in_suits = FALSE
 
 /datum/bodypart_overlay/mutant/tail/get_base_icon_state()
 	return "[wagging ? "wagging_" : ""][sprite_datum.icon_state]" //add the wagging tag if we be wagging
 
 /datum/bodypart_overlay/mutant/tail/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
-	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEJUMPSUIT)
+	if(!(bodypart_owner.owner?.obscured_slots & HIDEJUMPSUIT))
+		return ..()
+	if(!mesh_in_suits)
+		return FALSE
+	if(locate(/datum/bodypart_texture/mesh) in bodypart_owner.bodypart_textures)
+		return ..()
+	return FALSE
 
 /obj/item/organ/tail/cat
 	name = "tail"
@@ -248,6 +257,7 @@
 /datum/bodypart_overlay/mutant/tail/lizard
 	feature_key = FEATURE_TAIL_LIZARD
 	draw_on_husks = HUSK_OVERLAY_GRAYSCALE
+	mesh_in_suits = TRUE
 
 /obj/item/organ/tail/lizard/fake
 	name = "fabricated lizard tail"

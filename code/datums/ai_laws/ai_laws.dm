@@ -85,7 +85,7 @@ GLOBAL_VAR(round_default_lawset)
 		switch(CONFIG_GET(number/default_laws))
 			if(CONFIG_ASIMOV)
 				law_weights -= AI_LAWS_ASIMOV
-			if(CONFIG_CUSTOM)
+			if(CONFIG_SPECIFIED)
 				law_weights -= specified_law_ids
 
 	while(!lawtype && law_weights.len)
@@ -119,22 +119,24 @@ GLOBAL_VAR(round_default_lawset)
 	/// If TRUE, the zeroth law of this AI is protected and cannot be removed by players under normal circumstances.
 	var/protected_zeroth = FALSE
 
-	/// Zeroth law
+	/// Zeroth law - String
 	/// A lawset can only have 1 zeroth law, it's the top dog.
 	/// Removed by things that remove core/inherent laws, but only if protected_zeroth is false. Otherwise, cannot be removed except by admins
 	var/zeroth = null
-	/// Zeroth borg law
+	/// Zeroth borg law - String
 	/// It's just a zeroth law but specially themed for cyborgs
 	/// ("follow your master" vs "accomplish your objectives")
 	var/zeroth_borg = null
-	/// Core Laws
+	/// Core Laws - Assoc list
 	/// These laws are usually applied by an ai lawset, or a law rack
+	/// This one is assoc, key = law text, value = is this an ion law
 	var/list/inherent = list()
-	/// Supplied laws
+	/// Supplied laws - Assoc list
 	/// These laws are usually applied by adminbus or niche circumstances
 	/// In the case of AIs, they will always stick around, law rack or no
+	/// This one is assoc, key = law text, value = is this an ion law
 	var/list/supplied = list()
-	/// Hacked laws
+	/// Hacked laws - Flat list
 	/// Can be supplied by a law rack, or can be added naturally
 	/// Their priority is always pushed above inherent laws
 	var/list/hacked = list()
@@ -220,13 +222,11 @@ GLOBAL_VAR(round_default_lawset)
 /// Adds the passed law as an inherent law.
 /// Can optionally be supplied an index to insert the law at.
 /// No duplicate laws allowed.
-/datum/ai_laws/proc/add_inherent_law(law, index)
-	if(isnull(index) || index > length(inherent))
-		inherent |= law
-		return
-	if(law in inherent)
+/datum/ai_laws/proc/add_inherent_law(law, index, ioned = FALSE)
+	if(isnum(index) && index <= length(inherent))
 		inherent -= law
-	inherent.Insert(index, law)
+		inherent.Insert(index, law)
+	inherent[law] = ioned
 
 /// Removes the passed law from the inherent law list.
 /datum/ai_laws/proc/remove_inherent_law(law)
@@ -281,15 +281,18 @@ GLOBAL_VAR(round_default_lawset)
 			data += "[show_numbers ? "[ion_num()]:" : ""] [render_html ? "<font color='#c00000'>[law]</font>" : law]"
 
 	var/number = 1
-	for(var/law in inherent)
+	for(var/law, is_ioned in inherent)
 		if (length(law) > 0)
-			data += "[show_numbers ? "[number]:" : ""] [law]"
-			number++
+			data += "[show_numbers ? "[is_ioned ? ion_num() : number]:" : ""] [law]"
+			if(!is_ioned)
+				number++
 
-	for(var/law in supplied)
+	for(var/law, is_ioned in supplied)
 		if (length(law) > 0)
-			data += "[show_numbers ? "[number]:" : ""] [render_html ? "<font color='#990099'>[law]</font>" : law]"
-			number++
+			data += "[show_numbers ? "[is_ioned ? ion_num() : number]:" : ""] [render_html ? "<font color='#990099'>[law]</font>" : law]"
+			if(!is_ioned)
+				number++
+
 	return data
 
 #undef AI_LAWS_ASIMOV

@@ -14,14 +14,12 @@
 #define REMAIN_DENSE_WHILE_DEAD (1<<2)
 /// Mob can be set on fire
 #define FLAMMABLE_MOB (1<<3)
-/// Mob never takes damage from unarmed attacks
-#define IMMUNE_TO_FISTS (1<<4)
 /// Mob is immune to getting wet
-#define IMMUNE_TO_GETTING_WET (1<<5)
+#define IMMUNE_TO_GETTING_WET (1<<4)
 /// Disables the function of attacking random body zones
-#define PRECISE_ATTACK_ZONES (1<<6)
+#define PRECISE_ATTACK_ZONES (1<<5)
 /// People would be sad to see this mob die
-#define SENDS_DEATH_MOODLETS (1<<7)
+#define SENDS_DEATH_MOODLETS (1<<6)
 
 /// Temporary trait applied when an attack forecast animation has completed
 #define TRAIT_BASIC_ATTACK_FORECAST "trait_basic_attack_forecast"
