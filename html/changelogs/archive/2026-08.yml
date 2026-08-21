@@ -602,3 +602,5 @@
   DeltaFire15:
   - bugfix: Cable-based robotic limb repairs are no longer impossible while not wearing
       an uniform.
+  hry-gh:
+  - bugfix: typepath suggestions are now filtered on the frontend
