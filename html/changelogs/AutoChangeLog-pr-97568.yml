@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Magboots (and similar forms of gravity negation) prevent you from falling on shuttle movement"
