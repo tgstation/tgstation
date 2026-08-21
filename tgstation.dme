@@ -3430,8 +3430,6 @@
 #include "code\modules\admin\verbs\mapping.dm"
 #include "code\modules\admin\verbs\maprotation.dm"
 #include "code\modules\admin\verbs\nav_debug.dm"
-#include "code\modules\admin\verbs\nav_debug_run_path.local.dm"
-#include "code\modules\admin\verbs\nav_debug_set_goal.local.dm"
 #include "code\modules\admin\verbs\panicbunker.dm"
 #include "code\modules\admin\verbs\path_debugger.dm"
 #include "code\modules\admin\verbs\plane_debugger.dm"
