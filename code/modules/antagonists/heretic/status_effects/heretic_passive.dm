@@ -92,7 +92,7 @@
 		"Resistance to high and low pressure."
 	)
 	/// Tracks total seconds nearby mobs are on fire, used to determine when to recharge spells
-	var/seconds_of_fire = 0
+	VAR_PRIVATE/seconds_of_fire = 0
 
 /datum/status_effect/heretic_passive/ash/on_apply()
 	. = ..()
@@ -113,8 +113,8 @@
 /datum/status_effect/heretic_passive/ash/tick(seconds_between_ticks)
 	. = ..()
 	var/seconds_gained = 0
-	for(var/mob/living/nearby_guy in view(owner, 3))
-		if(!nearby_guy.on_fire || nearby_guy.stat == DEAD || nearby_guy == owner)
+	for(var/mob/living/nearby_guy in oview(owner, 3))
+		if(nearby_guy.stat == DEAD || !nearby_guy.on_fire)
 			continue
 		if(ismonkey(nearby_guy) && isnull(nearby_guy.mind))
 			continue
@@ -318,7 +318,7 @@
 	if(!isliving(target) || target == source || target.stat <= HARD_CRIT)
 		return
 
-	if(locate(/obj/effect/forcefield/cosmic_field) in target.loc)
+	if(locate(/obj/effect/forcefield/cosmic_field) in range(1, target))
 		addtimer(CALLBACK(src, PROC_REF(check_crit), target), 0.2 SECONDS, TIMER_DELETE_ME|TIMER_UNIQUE)
 
 /datum/status_effect/heretic_passive/cosmic/proc/check_crit(mob/living/target)
@@ -699,19 +699,18 @@
 /datum/status_effect/heretic_passive/void
 	name = "Aristocrat's Way"
 	id = "void_passive"
-	recharge_description = "Recharge spells by knocking foes who are exposed to sub-zero temperature into critical condition."
+	recharge_description = "Recharge spells by freezing nearby foes."
 	passive_descriptions = list(
 		"Cold and low pressure immunity.",
 		"You no longer need to breathe.",
 		"Water, ice and slippery surfaces no slip you."
 	)
-
-	var/list/gained_charges_from
+	/// Tracks total seconds nearby mobs are exposed to cold temperature, used to determine when to recharge spells
+	VAR_PRIVATE/seconds_of_cold = 0
 
 /datum/status_effect/heretic_passive/void/on_apply()
 	. = ..()
 	owner.add_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE), REF(src))
-	RegisterSignal(owner, COMSIG_USER_PRE_ITEM_ATTACK, PROC_REF(hit_someone))
 
 /datum/status_effect/heretic_passive/void/heretic_level_upgrade()
 	. = ..()
@@ -724,27 +723,27 @@
 /datum/status_effect/heretic_passive/void/on_remove()
 	. = ..()
 	owner.remove_traits(list(TRAIT_RESISTCOLD, TRAIT_RESISTLOWPRESSURE, TRAIT_NOBREATH, TRAIT_NO_SLIP_WATER, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE), REF(src))
-	UnregisterSignal(owner, COMSIG_USER_PRE_ITEM_ATTACK)
 
-/datum/status_effect/heretic_passive/void/proc/hit_someone(mob/living/source, mob/living/target, obj/item/used_weapon)
-	SIGNAL_HANDLER
+/datum/status_effect/heretic_passive/void/tick(seconds_between_ticks)
+	. = ..()
+	var/seconds_gained = 0
+	for(var/mob/living/nearby_guy in oview(owner, 4))
+		// -75c required - easily achievable with void chill but can also be achieved via spacing (even on icebox)
+		if(nearby_guy.stat == DEAD || nearby_guy.bodytemperature > T0C - 75)
+			continue
+		if(ismonkey(nearby_guy) && isnull(nearby_guy.mind))
+			continue
 
-	if(!isliving(target) || target == source || target.stat <= HARD_CRIT || LAZYFIND(gained_charges_from, REF(target)))
+		seconds_gained += seconds_between_ticks
+		if(seconds_gained >= 6)
+			break
+
+	seconds_of_cold += seconds_gained
+	if(seconds_of_cold < 30)
 		return
 
-	var/turf/target_turf = get_turf(target)
-	if(target_turf?.GetTemperature() <= T0C)
-		addtimer(CALLBACK(src, PROC_REF(check_crit), target), 0.2 SECONDS, TIMER_DELETE_ME|TIMER_UNIQUE)
-
-/datum/status_effect/heretic_passive/void/proc/check_crit(mob/living/target)
-	if(QDELETED(target) || target.stat == STABLE)
-		return
-	LAZYADD(gained_charges_from, REF(target))
-	addtimer(CALLBACK(src, PROC_REF(remove_gained_from), REF(target)), 5 MINUTES, TIMER_DELETE_ME|TIMER_UNIQUE)
+	seconds_of_cold = 0
 	recharge_spells()
-
-/datum/status_effect/heretic_passive/void/proc/remove_gained_from(target_ref)
-	LAZYREMOVE(gained_charges_from, target_ref)
 
 #undef HERETIC_LEVEL_START
 #undef HERETIC_LEVEL_UPGRADE
