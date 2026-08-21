@@ -6,13 +6,12 @@
 
 import { getRoutedComponent } from 'tgui/routes';
 import { Box, Button } from 'tgui-core/components';
-import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import type { NTOSData } from '../../layouts/NtosWindow';
 import { NtosHeader, NtosHeaderIcon } from './NtosHeader';
+import { useNtos } from './ntos';
 
 export const NtosCoreMobile = (props) => {
-  const { act, data } = useBackend<NTOSData>();
+  const { system, api } = useNtos(props);
   const {
     PC_device_theme,
     PC_batteryicon,
@@ -21,15 +20,15 @@ export const NtosCoreMobile = (props) => {
     PC_stationdate,
     PC_stationtime,
     PC_programheaders = [],
-    PC_showexitprogram,
     PC_lowpower_mode,
-    programs,
-  } = data;
+    programs = [],
+  } = system;
+  const { shutdown, minimize_program, exit_program } = api;
 
   const active_program = programs.find((program) => program.active);
-  const Component = getRoutedComponent(
-    active_program ? active_program.tgui_id : 'NtosMain',
-  );
+  const component_id = active_program ? active_program.tgui_id : 'NtosMain';
+
+  const Component = getRoutedComponent(component_id);
 
   return (
     <Window
@@ -80,38 +79,38 @@ export const NtosCoreMobile = (props) => {
           }
           buttons={
             <>
-              {!!PC_showexitprogram && (
+              {active_program && (
                 <Button
                   color="transparent"
                   icon="window-minimize-o"
                   tooltip="Minimize"
                   tooltipPosition="bottom"
-                  onClick={() => act('PC_minimize')}
+                  onClick={() => minimize_program(active_program.name)}
                 />
               )}
-              {!!PC_showexitprogram && (
+              {active_program && (
                 <Button
                   color="transparent"
                   icon="window-close-o"
                   tooltip="Close"
                   tooltipPosition="bottom-start"
-                  onClick={() => act('PC_exit')}
+                  onClick={() => exit_program(active_program.name)}
                 />
               )}
-              {!PC_showexitprogram && (
+              {!active_program && (
                 <Button
                   textAlign="center"
                   color="transparent"
                   icon="power-off"
                   tooltip="Power off"
                   tooltipPosition="bottom-start"
-                  onClick={() => act('PC_shutdown')}
+                  onClick={() => shutdown()}
                 />
               )}
             </>
           }
         />
-        <Component />
+        <Component tgui_id={component_id} />
       </div>
     </Window>
   );

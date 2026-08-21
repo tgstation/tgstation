@@ -13,14 +13,13 @@ import {
 } from 'react';
 import { getRoutedComponent } from 'tgui/routes';
 import { Box, Button, ImageButton } from 'tgui-core/components';
-import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import type { NTOSData } from '../../layouts/NtosWindow';
 import type { Coordinates } from '../common/Connections';
 import { NtosHeader, NtosHeaderIcon } from './NtosHeader';
+import { useNtos } from './ntos';
 
 export const NtosCoreDesktop = (props) => {
-  const { act, data } = useBackend<NTOSData>();
+  const { act, system, api } = useNtos(props);
   const {
     PC_device_theme,
     PC_batteryicon,
@@ -31,17 +30,18 @@ export const NtosCoreDesktop = (props) => {
     PC_programheaders = [],
     PC_lowpower_mode,
     programs,
-  } = data;
+  } = system;
+  const { run_program, minimize_program, exit_program, shutdown } = api;
 
   const handleWindowMove = useCallback(
     (x: number, y: number, name: string) =>
-      act('PC_move_window', { x, y, name: name }),
+      act('move_window', { x, y, name: name }),
     [],
   );
 
   const handleWindowResize = useCallback(
     (width: number, height: number, name: string) =>
-      act('PC_resize_window', { width, height, name: name }),
+      act('resize_window', { width, height, name: name }),
     [],
   );
 
@@ -61,11 +61,7 @@ export const NtosCoreDesktop = (props) => {
             fallbackIcon={program.icon}
             key={program.name}
             tooltip={program.desc}
-            onClick={() =>
-              act('PC_runprogram', {
-                name: program.name,
-              })
-            }
+            onClick={() => run_program(program.name)}
           >
             {program.desc}
           </ImageButton>
@@ -92,14 +88,14 @@ export const NtosCoreDesktop = (props) => {
                         icon="window-minimize-o"
                         tooltip="Minimize"
                         tooltipPosition="bottom"
-                        onClick={() => act('PC_minimize')}
+                        onClick={() => minimize_program(program.name)}
                       />
                       <Button
                         color="transparent"
                         icon="window-close-o"
                         tooltip="Close"
                         tooltipPosition="bottom-start"
-                        onClick={() => act('PC_exit')}
+                        onClick={() => exit_program(program.name)}
                       />
                     </>
                   }
@@ -117,7 +113,7 @@ export const NtosCoreDesktop = (props) => {
               icon="power-off"
               tooltip="Power off"
               tooltipPosition="bottom-start"
-              onClick={() => act('PC_shutdown')}
+              onClick={() => shutdown()}
             />
             {programs
               .filter((program) => program.active || program.idle)
@@ -126,11 +122,7 @@ export const NtosCoreDesktop = (props) => {
                   key={`footer-${program.name}`}
                   color={program.idle ? 'yellow' : 'blue'}
                   icon={program.icon}
-                  onClick={() =>
-                    act('PC_runprogram', {
-                      name: program.name,
-                    })
-                  }
+                  onClick={() => run_program(program.name)}
                 >
                   {program.desc}
                 </Button>
@@ -321,7 +313,7 @@ const NtosDesktopWindow = (props: NtosDesktopWindowProps) => {
         onMouseDown={handleMouseDown}
       />
 
-      <Component />
+      <Component tgui_id={interface_id} />
       <ResizeHandle onMouseDown={handleResizeMouseDown} direction="right" />
       <ResizeHandle onMouseDown={handleResizeMouseDown} direction="bottom" />
       <ResizeHandle

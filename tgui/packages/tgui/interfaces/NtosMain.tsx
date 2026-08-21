@@ -1,8 +1,7 @@
 import { Button, ColorBox, Section, Stack, Table } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
-import type { NTOSData } from '../layouts/NtosWindow';
+import { useNtos } from './NtosCore/ntos';
 
 export enum alert_relevancies {
   ALERT_RELEVANCY_SAFE,
@@ -11,7 +10,7 @@ export enum alert_relevancies {
 }
 
 export const NtosMain = (props) => {
-  const { act, data } = useBackend<NTOSData>();
+  const { system, api } = useNtos(props);
   const {
     alert_style,
     alert_color,
@@ -26,7 +25,16 @@ export const NtosMain = (props) => {
     login,
     proposed_login,
     pai,
-  } = data;
+  } = system;
+  const {
+    run_program,
+    eject_disk,
+    switch_light_color,
+    toggle_light,
+    imprint_id,
+    interact_pai,
+  } = api;
+
   const filtered_programs = programs.filter(
     (program) => program.header_program,
   );
@@ -53,11 +61,7 @@ export const NtosMain = (props) => {
                   <Button
                     content={app.desc}
                     icon={app.icon}
-                    onClick={() =>
-                      act('PC_runprogram', {
-                        name: app.name,
-                      })
-                    }
+                    onClick={() => run_program(app.name)}
                   />
                 </Stack.Item>
               ))}
@@ -91,7 +95,7 @@ export const NtosMain = (props) => {
                     fluid
                     icon="eject"
                     content={device}
-                    onClick={() => act('PC_Eject_Disk', { name: device })}
+                    onClick={() => eject_disk(device)}
                     disabled={!device}
                   />
                 </Stack.Item>
@@ -105,14 +109,14 @@ export const NtosMain = (props) => {
             <>
               {!!has_light && (
                 <>
-                  <Button onClick={() => act('PC_light_color')}>
+                  <Button onClick={() => switch_light_color()}>
                     <ColorBox color={comp_light_color} />
                   </Button>
                   <Button
                     icon="lightbulb"
                     color={light_on ? 'good' : 'bad'}
                     selected={light_on}
-                    onClick={() => act('PC_toggle_light')}
+                    onClick={() => toggle_light()}
                   />
                 </>
               )}
@@ -120,7 +124,7 @@ export const NtosMain = (props) => {
                 icon="eject"
                 content="Eject ID"
                 disabled={!proposed_login.IDInserted}
-                onClick={() => act('PC_Eject_Disk', { name: 'ID' })}
+                onClick={() => eject_disk('ID')}
               />
               {!!show_imprint && (
                 <Button
@@ -131,7 +135,7 @@ export const NtosMain = (props) => {
                     (proposed_login.IDName === login.IDName &&
                       proposed_login.IDJob === login.IDJob)
                   }
-                  onClick={() => act('PC_Imprint_ID', { name: 'ID' })}
+                  onClick={() => imprint_id()}
                 />
               )}
             </>
@@ -166,11 +170,7 @@ export const NtosMain = (props) => {
                     icon="eject"
                     color="transparent"
                     content="Eject pAI"
-                    onClick={() =>
-                      act('PC_Pai_Interact', {
-                        option: 'eject',
-                      })
-                    }
+                    onClick={() => interact_pai('eject')}
                   />
                 </Table.Cell>
               </Table.Row>
@@ -181,11 +181,7 @@ export const NtosMain = (props) => {
                     icon="cat"
                     color="transparent"
                     content="Configure pAI"
-                    onClick={() =>
-                      act('PC_Pai_Interact', {
-                        option: 'interact',
-                      })
-                    }
+                    onClick={() => interact_pai('interact')}
                   />
                 </Table.Cell>
               </Table.Row>
@@ -199,8 +195,10 @@ export const NtosMain = (props) => {
 };
 
 const ProgramsTable = (props) => {
-  const { act, data } = useBackend<NTOSData>();
-  const { programs = [] } = data;
+  const { system, api } = useNtos(props);
+  const { programs = [] } = system;
+  const { kill_program, run_program } = api;
+
   // add the program filename to this list to have it excluded from the main menu program list table
   const filtered_programs = programs.filter(
     (program) => !program.header_program,
@@ -217,11 +215,7 @@ const ProgramsTable = (props) => {
                 color={program.alert ? 'yellow' : 'transparent'}
                 icon={program.icon}
                 content={program.desc}
-                onClick={() =>
-                  act('PC_runprogram', {
-                    name: program.name,
-                  })
-                }
+                onClick={() => run_program(program.name)}
               />
             </Table.Cell>
             <Table.Cell collapsing width="18px">
@@ -231,11 +225,7 @@ const ProgramsTable = (props) => {
                   icon="times"
                   tooltip="Close program"
                   tooltipPosition="left"
-                  onClick={() =>
-                    act('PC_killprogram', {
-                      name: program.name,
-                    })
-                  }
+                  onClick={() => kill_program(program.name)}
                 />
               )}
             </Table.Cell>

@@ -106,11 +106,12 @@
 	return data
 
 /datum/operating_system/default/ntos/ui_static_data(mob/user)
-	var/list/data = list()
-	for(var/datum/computer_file/program/active_program in active_threads)
-		data += active_program.ui_static_data(user)
+	var/list/data = list("static_programs_data" = list(), "static_system" = list())
 
-	data["show_imprint"] = istype(hardware, /obj/item/modular_computer/pda)
+	for(var/datum/computer_file/program/active_program in active_threads)
+		data["static_programs_data"][active_program.tgui_id] = active_program.ui_static_data(user)
+
+	data["static_system"]["show_imprint"] = istype(hardware, /obj/item/modular_computer/pda)
 	return data
 
 /datum/operating_system/default/ntos/ui_interact(mob/user, datum/tgui/ui)
@@ -129,36 +130,37 @@
 		playsound(hardware, 'sound/items/bikehorn.ogg', 30, TRUE)
 
 /datum/operating_system/default/ntos/ui_data(mob/user)
-	var/list/data = hardware.get_header_data()
+	var/list/data = list("programs_data" = list(), "system" = list())
 	for(var/datum/computer_file/program/active_program in active_threads)
-		data += active_program.ui_data(user)
+		data["programs_data"][active_program.tgui_id] = active_program.ui_data(user)
 
-	data["pai"] = hardware.inserted_pai
-	data["has_light"] = hardware.has_light
-	data["light_on"] = hardware.light_on
-	data["comp_light_color"] = hardware.comp_light_color
+	var/list/system_data = hardware.get_header_data()
+	system_data["pai"] = hardware.inserted_pai
+	system_data["has_light"] = hardware.has_light
+	system_data["light_on"] = hardware.light_on
+	system_data["comp_light_color"] = hardware.comp_light_color
 
-	data["login"] = list(
+	system_data["login"] = list(
 		IDName = hardware.saved_identification || "Unknown",
 		IDJob = hardware.saved_job || "Unknown",
 	)
 
-	data["proposed_login"] = list(
+	system_data["proposed_login"] = list(
 		IDInserted = hardware.stored_id ? TRUE : FALSE,
 		IDName = hardware.stored_id?.registered_name,
 		IDJob = hardware.stored_id?.assignment,
 	)
 
-	data["removable_media"] = list()
+	system_data["removable_media"] = list()
 	if(hardware.inserted_disk)
-		data["removable_media"] += "Eject Disk"
+		system_data["removable_media"] += "Eject Disk"
 	var/datum/computer_file/program/ai_restorer/airestore_app = locate() in hardware.stored_files
 	if(airestore_app?.stored_card)
-		data["removable_media"] += "intelliCard"
+		system_data["removable_media"] += "intelliCard"
 
-	data["programs"] = list()
+	system_data["programs"] = list()
 	for(var/datum/computer_file/program/program in hardware.stored_files)
-		data["programs"] += list(list(
+		system_data["programs"] += list(list(
 			"tgui_id" = program.tgui_id,
 			"name" = program.filename,
 			"desc" = program.filedesc,
@@ -169,16 +171,26 @@
 			"alert" = program.alert_pending,
 		))
 
-	data["alert_style"] = hardware.get_security_level_relevancy()
-	data["alert_color"] = SSsecurity_level?.current_security_level?.announcement_color
-	data["alert_name"] = SSsecurity_level?.current_security_level?.name_shortform
+	system_data["alert_style"] = hardware.get_security_level_relevancy()
+	system_data["alert_color"] = SSsecurity_level?.current_security_level?.announcement_color
+	system_data["alert_name"] = SSsecurity_level?.current_security_level?.name_shortform
 
+	data["system"] = system_data
 	return data
 
 /datum/operating_system/default/ntos/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
+	var/ntos_sender_id = params["ntos_sender_id"]
+	if(!ntos_sender_id)
+		return FALSE
+
+	if(ntos_sender_id != "system")
+		for(var/datum/computer_file/program/active_program in active_threads)
+			if(active_program.tgui_id == ntos_sender_id)
+				return active_program.ui_act(action, params, ui, state)
+		return FALSE
 
 	var/mob/user = ui.user
 	//TODO: MOVE TO THE COMPUTER CODE. OS CANT CHECK YOUR FINGERS
@@ -188,44 +200,61 @@
 			hardware.balloon_alert(human_user, "fingers are too big!")
 			return TRUE
 
+	if(handle_ui_system_call(action, params, ui, state))
+		return TRUE
+
 	switch(action)
-		if("PC_exit")
-			//you can't close apps in emergency mode.
+		if("exit_program")
+			var/program_name = params["name"]
+			var/datum/computer_file/program/program = filesystem.find_file_by_name(program_name)
+			if(!program)
+				return FALSE
+
+			// You can't close apps in emergency mode.
 			if(isnull(hardware.internal_cell) || hardware.internal_cell.charge)
-				kill_program(get_active_thread(1))
+				kill_program(program)
 			return TRUE
-		if("PC_shutdown")
+
+		if("shutdown")
 			hardware.shutdown_computer()
 			return TRUE
-		if("PC_minimize")
-			if(!get_active_thread(1) || (!isnull(hardware.internal_cell) && !hardware.internal_cell.charge))
-				return
-			var/datum/computer_file/program/active_program = get_active_thread(1)
-			active_program.background_program(user)
-			active_threads.Remove(active_program)
-			idle_threads.Add(active_program)
+
+		if("minimize_program")
+			var/program_name = params["name"]
+			var/datum/computer_file/program/program = filesystem.find_file_by_name(program_name)
+			if(!program || (!isnull(hardware.internal_cell) && !hardware.internal_cell.charge))
+				return FALSE
+
+			program.background_program(user)
+			active_threads.Remove(program)
+			idle_threads.Add(program)
 			return TRUE
 
-		if("PC_killprogram")
-			var/prog = params["name"]
-			var/datum/computer_file/program/killed_program = filesystem.find_file_by_name(prog)
+		if("kill_program")
+			var/program_name = params["name"]
+			var/datum/computer_file/program/program = filesystem.find_file_by_name(program_name)
 
-			if(!istype(killed_program))
-				return
+			if(!istype(program))
+				return FALSE
 
-			kill_program(killed_program)
-			to_chat(user, span_notice("Program [killed_program.filename].[killed_program.filetype] with PID [rand(100,999)] has been killed."))
+			kill_program(program)
+			to_chat(user, span_notice("Program [program.filename].[program.filetype] with PID [rand(100, 999)] has been killed."))
 			return TRUE
 
-		if("PC_runprogram")
-			run_program(user, filesystem.find_file_by_name(params["name"]))
+		if("run_program")
+			var/program_name = params["name"]
+			var/datum/computer_file/program/program = filesystem.find_file_by_name(program_name)
+			if(!program)
+				return FALSE
+
+			run_program(user, program)
 			return TRUE
 
-		if("PC_toggle_light")
+		if("toggle_light")
 			hardware.toggle_flashlight()
 			return TRUE
 
-		if("PC_light_color")
+		if("switch_light_color")
 			var/new_color
 			while(!new_color)
 				new_color = tgui_color_picker(user, "Choose a new color for [hardware]'s flashlight.", "Light Color",hardware.light_color)
@@ -237,12 +266,12 @@
 			hardware.set_flashlight_color(new_color)
 			return TRUE
 
-		if("PC_Eject_Disk")
+		if("eject_disk")
 			var/param = params["name"]
 			switch(param)
 				if("Eject Disk")
 					if(!hardware.inserted_disk)
-						return
+						return FALSE
 
 					if(!user || !hardware.Adjacent(user))
 						hardware.inserted_disk.forceMove(hardware.drop_location())
@@ -255,7 +284,7 @@
 				if("intelliCard")
 					var/datum/computer_file/program/ai_restorer/airestore_app = locate() in hardware.stored_files
 					if(!airestore_app)
-						return
+						return FALSE
 
 					if(airestore_app.try_eject(user))
 						playsound(hardware, 'sound/machines/card_slide.ogg', 50)
@@ -266,23 +295,24 @@
 						playsound(hardware, 'sound/machines/card_slide.ogg', 50)
 						return TRUE
 
-		if("PC_Imprint_ID")
+		if("imprint_id")
 			hardware.imprint_id()
 			hardware.UpdateDisplay()
 			playsound(hardware, 'sound/machines/terminal/terminal_processing.ogg', 15, TRUE)
 
-		if("PC_Pai_Interact")
+		if("interact_pai")
 			switch(params["option"])
 				if("eject")
 					if(!ishuman(user))
-						return
+						return FALSE
 					hardware.remove_pai(user)
 				if("interact")
 					hardware.inserted_pai.attack_self(user)
 			return TRUE
 
-	for(var/datum/computer_file/program/active_program in active_threads)
-		. |= active_program.ui_act(action, params, ui, state)
+/datum/operating_system/default/ntos/proc/handle_ui_system_call(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	PROTECTED_PROC(TRUE)
+
 
 /datum/operating_system/default/ntos/ui_host()
 	if(hardware.physical)

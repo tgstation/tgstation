@@ -12,8 +12,8 @@ import {
 } from 'tgui-core/components';
 import { clamp } from 'tgui-core/math';
 import type { BooleanLike } from 'tgui-core/react';
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore/ntos';
 
 type FileEntry = {
   name: string;
@@ -209,7 +209,7 @@ const PrintDialog = (props: PrintDialogProps) => {
 };
 
 export const NtosFileManager = (props) => {
-  const { act, data } = useBackend<NtosFileManagerData>();
+  const { act, data } = useNtos<NtosFileManagerData>(props);
   const { usbconnected, files = [], usbfiles = [], printTypes } = data;
   const [toPrint, setToPrint] = useState<FileEntry>();
   const [printingFromUsb, setPrintingFromUsb] = useState(false);
