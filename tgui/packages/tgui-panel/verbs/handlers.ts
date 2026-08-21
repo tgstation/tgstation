@@ -1,3 +1,5 @@
+import { fetchRetry } from 'tgui-core/http';
+import { resolveAsset } from '../events/handlers/assets';
 import { store } from '../events/store';
 import {
   adminTargetsAtom,
@@ -10,8 +12,24 @@ import {
   type Verb,
 } from './atoms';
 
+let typepathsLoaded = false;
+
+function loadTypepaths() {
+  if (typepathsLoaded) return;
+  typepathsLoaded = true;
+  fetchRetry(resolveAsset('spawn_menu_atom_data.json'))
+    .then((response) => response.json())
+    .then((data: { types: Record<string, string> }) => {
+      store.set(typepathsAtom, Object.keys(data.types));
+    })
+    .catch(() => {
+      typepathsLoaded = false;
+    });
+}
+
 export function handleVerbsInit(payload: { verbs: Verb[] }) {
   store.set(adminVerbsAtom, payload.verbs || []);
+  loadTypepaths();
 }
 
 export function handleAddVerbs(payload: { verbs: Verb[] }) {
@@ -37,9 +55,6 @@ export function handleTargets(payload: { targets: Target[] }) {
   store.set(adminTargetsAtom, payload.targets || []);
 }
 
-export function handleTypepaths(payload: { paths: string[] }) {
-  store.set(typepathsAtom, payload.paths || []);
-}
 
 export function handleFocusCommandBar() {
   store.set(focusCommandBarAtom, (n) => n + 1);

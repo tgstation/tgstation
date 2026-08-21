@@ -145,6 +145,7 @@
 /obj/item/clothing/suit/chaplainsuit/armor/clock/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/drake)
 
 /obj/item/clothing/head/helmet/chaplain
 	name = "crusader helmet"
@@ -169,6 +170,7 @@
 /obj/item/clothing/suit/chaplainsuit/armor/templar/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/biosuit_dark)
 
 /obj/item/clothing/head/helmet/chaplain/cage
 	name = "cage"
@@ -184,6 +186,10 @@
 	icon_state = "knight_ancient"
 	inhand_icon_state = null
 
+/obj/item/clothing/head/helmet/chaplain/ancient/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/biosuit_dark)
+
 /obj/item/clothing/suit/chaplainsuit/armor/ancient
 	name = "ancient armour"
 	desc = "Defend the treasure..."
@@ -194,6 +200,7 @@
 /obj/item/clothing/suit/chaplainsuit/armor/ancient/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/biosuit_dark)
 
 /obj/item/clothing/head/helmet/chaplain/witchunter_hat
 	name = "witchunter hat"
@@ -255,12 +262,20 @@
 	flags_cover = HEADCOVERSEYES
 	flags_inv = HIDEHAIR|HIDEFACE|HIDEEARS
 
+/obj/item/clothing/head/helmet/chaplain/heretic/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/heretic)
+
 /obj/item/clothing/suit/chaplainsuit/armor/heretic
 	name = "occultist's robes"
 	desc = "Shields your body from the things others fail to notice."
 	icon_state = "hereticrobe"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS
+
+/obj/item/clothing/suit/chaplainsuit/armor/heretic/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/heretic)
 
 /obj/item/clothing/suit/hooded/chaplain_hoodie
 	name = "follower hoodie"
