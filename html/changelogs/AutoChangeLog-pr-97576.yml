@@ -1,0 +1,5 @@
+author: "FalloutFalcon"
+delete-after: True
+changes:
+  - refactor: "breaks up navigate code into a proc for the choice vs the line creation"
+  - admin: "Admin VV topic to navigate a player to a marked object"
