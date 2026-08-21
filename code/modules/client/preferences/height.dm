@@ -17,7 +17,7 @@
 /datum/preference/choiced/mob_height/init_possible_values()
 	return assoc_to_keys(height_to_actual)
 
-/datum/preference/choiced/mob_height/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/mob_height/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	target.set_mob_height(height_to_actual[value] || DEFAULT_HEIGHT)
 
 /datum/preference/choiced/mob_height/is_accessible(datum/preferences/preferences)
