@@ -84,7 +84,7 @@
 	var/datum/action/cooldown/mob_cooldown/blood_worm/eject/eject_action
 	/// Not typed, please leave empty.
 	var/datum/action/cooldown/mob_cooldown/blood_worm/revive/revive_action
-	/// So typed or not?
+	/// Typed
 	var/datum/action/cooldown/mob_cooldown/blood_worm/worm_head/worm_head_action
 
 	/// List of actions outside of a host.
