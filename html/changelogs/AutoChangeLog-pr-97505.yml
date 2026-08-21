@@ -1,4 +1,0 @@
-author: "QuiteLiterallyAnything"
-delete-after: True
-changes:
-  - bugfix: "Research discounts from toxins can now be purchased again."

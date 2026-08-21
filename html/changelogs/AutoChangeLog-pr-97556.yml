@@ -1,8 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscdel: "Spacesuits no longer fully conceal lizard tails"
-  - rscadd: "Species features like wings and tails will appear \"meshed over\" when wearing certain equipment like spacesuits or biosuits."
-  - rscadd: "Biosuits and beepeeker suit sprites now altar when worn by digitigrade mobs."
-  - rscadd: "Aprons and Overall sprites now altar when worn by digitigrade mobs."
-  - spellcheck: "All heretic armor hoods are consistently known by their name, rather than \"ominous hood\""

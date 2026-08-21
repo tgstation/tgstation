@@ -1,5 +1,0 @@
-author: "Metek"
-delete-after: True
-changes:
-  - balance: "The Captain is now treated as a member of every department, for the purpose of department-related vendor discounts."
-  - code_imp: "The logic for determining a discount has been cleaned up a bit."

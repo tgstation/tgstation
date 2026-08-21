@@ -1,5 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - bugfix: "Orbit menu should now show antag HUDs as it was seemingly supposed to from the start, instead of some antags simply showing a rev icon."
-  - refactor: "De-hardcoded HUDs for jobs & antags, report any icons missing."

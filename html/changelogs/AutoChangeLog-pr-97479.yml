@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fixes space phase deducting a charge on entrance and edit. Now only deducts a charge on exit"
-  - balance: "Cosmic spell recharge condition changed to \"crit targets within a tile of a cosmic field\" instead of \"on a cosmic field\""
-  - balance: "Void spell recharge condition changed to \"Stand near freezing enemies\" instead of \"Crit freezing enemies\""

@@ -1,4 +1,0 @@
-author: "PapaMichael"
-delete-after: True
-changes:
-  - bugfix: "AI tracking from the crew monitoring console now works for people who have set an ID card honorific too"
