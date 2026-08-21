@@ -14,7 +14,7 @@
 	button_icon = 'icons/mob/actions/actions_ecult.dmi'
 	button_icon_state = "space_crawl"
 
-	school = SCHOOL_FORBIDDEN
+	school = SCHOOL_TRANSLOCATION
 
 	invocation_type = INVOCATION_NONE
 	spell_requirements = NONE
@@ -49,7 +49,7 @@
 /datum/action/cooldown/spell/jaunt/space_crawl/before_cast(atom/cast_on)
 	if(is_jaunting(owner) && is_valid_turf())
 		return NONE
-	. = ..()
+	return ..()
 
 /datum/action/cooldown/spell/jaunt/space_crawl/proc/is_valid_turf()
 	var/turf/my_turf = get_turf(owner)

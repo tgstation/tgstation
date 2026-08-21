@@ -6,6 +6,7 @@
 	id = "heretic_passive"
 	duration = STATUS_EFFECT_PERMANENT
 	status_type = STATUS_EFFECT_REPLACE
+	processing_speed = STATUS_EFFECT_PRIORITY
 	alert_type = null
 	on_remove_on_mob_delete = TRUE
 	/// Reference to the owning heretic datum
@@ -291,40 +292,32 @@
 /datum/status_effect/heretic_passive/cosmic
 	name = "Chosen of the Stars"
 	id = "cosmic_passive"
-	recharge_description = "Recharge spells by knocking foes standing in cosmic fields into critical condition."
+	recharge_description = "Recharge spells by staying near living people with star marks."
 	passive_descriptions = list(
 		"Cosmic fields speed you up and regenerate stamina.",
 		"Cosmic fields disrupt grenades or signalers from being activated and turn off already primed grenades.",
 		"Cosmic fields slow projectiles down."
 	)
+	/// Tracks total seconds nearby mobs have star marks, used to determine when to recharge spells
+	VAR_PRIVATE/seconds_marked = 0
 
 /datum/status_effect/heretic_passive/cosmic/tick(seconds_between_ticks)
 	. = ..()
 	if(locate(/obj/effect/forcefield/cosmic_field) in get_turf(owner))
-		var/delta_time = DELTA_WORLD_TIME(SSmobs) * 0.5 // SSmobs.wait is 2 secs, so this should be halved.
-		owner.adjust_stamina_loss(-15 * delta_time, updating_stamina = FALSE)
+		owner.adjust_stamina_loss(-15 * seconds_between_ticks)
 
-/datum/status_effect/heretic_passive/cosmic/on_apply()
-	. = ..()
-	RegisterSignal(owner, COMSIG_USER_PRE_ITEM_ATTACK, PROC_REF(hit_someone))
+	for(var/mob/living/carbon/human/nearby_human in oview(owner, 4))
+		if(nearby_human.stat == DEAD)
+			continue
+		if(!nearby_human.has_status_effect(/datum/status_effect/star_mark))
+			continue
+		if(ismonkey(nearby_human) && isnull(nearby_human.mind))
+			continue
+		seconds_marked += seconds_between_ticks
 
-/datum/status_effect/heretic_passive/cosmic/on_remove()
-	. = ..()
-	UnregisterSignal(owner, COMSIG_USER_PRE_ITEM_ATTACK)
-
-/datum/status_effect/heretic_passive/cosmic/proc/hit_someone(mob/living/source, mob/living/target, obj/item/used_weapon)
-	SIGNAL_HANDLER
-
-	if(!isliving(target) || target == source || target.stat <= HARD_CRIT)
-		return
-
-	if(locate(/obj/effect/forcefield/cosmic_field) in range(1, target))
-		addtimer(CALLBACK(src, PROC_REF(check_crit), target), 0.2 SECONDS, TIMER_DELETE_ME|TIMER_UNIQUE)
-
-/datum/status_effect/heretic_passive/cosmic/proc/check_crit(mob/living/target)
-	if(QDELETED(target) || target.stat == STABLE)
-		return
-	recharge_spells()
+	if(seconds_marked >= 25)
+		seconds_marked = 0
+		recharge_spells()
 
 /**
  * Creates a cosmic field at a given loc
@@ -699,13 +692,13 @@
 /datum/status_effect/heretic_passive/void
 	name = "Aristocrat's Way"
 	id = "void_passive"
-	recharge_description = "Recharge spells by freezing nearby foes."
+	recharge_description = "Recharge spells by freezing and inflicting void chill on nearby foes."
 	passive_descriptions = list(
 		"Cold and low pressure immunity.",
 		"You no longer need to breathe.",
 		"Water, ice and slippery surfaces no slip you."
 	)
-	/// Tracks total seconds nearby mobs are exposed to cold temperature, used to determine when to recharge spells
+	/// Tracks total seconds nearby mobs are exposed to cold temperature or void chilled, used to determine when to recharge spells
 	VAR_PRIVATE/seconds_of_cold = 0
 
 /datum/status_effect/heretic_passive/void/on_apply()
@@ -729,21 +722,23 @@
 	var/seconds_gained = 0
 	for(var/mob/living/nearby_guy in oview(owner, 4))
 		// -75c required - easily achievable with void chill but can also be achieved via spacing (even on icebox)
-		if(nearby_guy.stat == DEAD || nearby_guy.bodytemperature > T0C - 75)
+		if(nearby_guy.stat == DEAD)
 			continue
 		if(ismonkey(nearby_guy) && isnull(nearby_guy.mind))
 			continue
 
-		seconds_gained += seconds_between_ticks
+		if(nearby_guy.bodytemperature <= T0C - 75)
+			seconds_gained += seconds_between_ticks
+		else if(nearby_guy.has_status_effect(/datum/status_effect/void_chill)) // void chill counts for half idk
+			seconds_gained += seconds_between_ticks / 2
+
 		if(seconds_gained >= 6)
 			break
 
 	seconds_of_cold += seconds_gained
-	if(seconds_of_cold < 30)
-		return
-
-	seconds_of_cold = 0
-	recharge_spells()
+	if(seconds_of_cold >= 30)
+		seconds_of_cold = 0
+		recharge_spells()
 
 #undef HERETIC_LEVEL_START
 #undef HERETIC_LEVEL_UPGRADE

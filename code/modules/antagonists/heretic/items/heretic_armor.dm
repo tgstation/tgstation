@@ -352,7 +352,7 @@
 	clothing_flags = THICKMATERIAL | PLASMAMAN_PREVENT_IGNITION | STOPSPRESSUREDAMAGE
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
-	actions_types = list(/datum/action/item_action/toggle/gravity)
+	actions_types = list(/datum/action/item_action/toggle/gravity, /datum/action/cooldown/spell/jaunt/space_crawl)
 	texture_type = null
 	/// If our robes are making us weightless
 	var/weightless_enabled = FALSE
@@ -388,10 +388,10 @@
 /// Gives us free movement in 0 gravity when enabled
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/cosmic/proc/toggle_gravity(mob/living/user)
 	if(!weightless_enabled)
-		user.add_traits(list(TRAIT_NEGATES_GRAVITY, TRAIT_MOVE_FLYING, TRAIT_FREE_HYPERSPACE_MOVEMENT), REF(src))
+		user.add_traits(list(TRAIT_NEGATES_GRAVITY, TRAIT_MOVE_FLYING, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_PASSTABLE), REF(src))
 		user.balloon_alert(user, "enabled")
 	else
-		user.remove_traits(list(TRAIT_NEGATES_GRAVITY, TRAIT_MOVE_FLYING, TRAIT_FREE_HYPERSPACE_MOVEMENT), REF(src))
+		user.remove_traits(list(TRAIT_NEGATES_GRAVITY, TRAIT_MOVE_FLYING, TRAIT_FREE_HYPERSPACE_MOVEMENT, TRAIT_PASSTABLE), REF(src))
 		user.balloon_alert(user, "disabled")
 	weightless_enabled = !weightless_enabled
 
