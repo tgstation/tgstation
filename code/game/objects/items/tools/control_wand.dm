@@ -17,6 +17,7 @@
 	w_class = WEIGHT_CLASS_TINY
 	drop_sound = 'sound/items/door_remote/door_remote_drop1.ogg'
 	pickup_sound = 'sound/items/door_remote/door_remote_pick_up1.ogg'
+	item_flags = NOBLUDGEON
 
 	var/department = "civilian"
 	var/mode = WAND_OPEN
