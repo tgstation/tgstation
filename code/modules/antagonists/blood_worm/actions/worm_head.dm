@@ -32,6 +32,7 @@
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/run_checks(mob/living/basic/blood_worm/worm, mob/living/carbon/human/host, feedback = FALSE)
 	if (!worm.host)
 		return FALSE
+	return TRUE
 
 // Activation of ability of grow of the blood worm head
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/Activate(atom/target) // logic on click
