@@ -2205,10 +2205,8 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 		if(!usr.client.holder.marked_datum)
 			to_chat(usr, span_warning("You don't have any object marked."))
-			return
-		else if(!istype(usr.client.holder.marked_datum, /atom))
-			to_chat(usr, span_warning("The object you have marked cannot be used as a target. Target must be of type /atom."))
-			return
+		else if(!isatom(usr.client.holder.marked_datum))
+			to_chat(usr, span_warning("The object you have marked cannot be used as a target. Target must be an atom."))
 		else
 			create_navigation_line(usr.client.holder.marked_datum)
 
