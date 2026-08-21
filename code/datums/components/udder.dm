@@ -217,3 +217,33 @@
 	var/minimum_bound = happiness_percentage > 0.6 ? 10 : 5
 	var/upper_bound = minimum_bound + 5
 	reagents.add_reagent(reagent_produced_typepath, rand(minimum_bound, upper_bound), added_purity = 1)
+
+// Udder with an added dead hand switch. Used for the gizmoo
+/datum/component/udder/explosive
+
+/datum/component/udder/explosive/RegisterWithParent()
+	..()
+	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(deploy_udderbomb))
+
+/datum/component/udder/explosive/UnregisterFromParent()
+	..()
+	UnregisterSignal(parent, COMSIG_LIVING_DEATH)
+
+/datum/component/udder/explosive/proc/deploy_udderbomb(datum/source, gibbed)
+	SIGNAL_HANDLER()
+	if(gibbed)
+		return
+	new /obj/item/udderbomb(get_turf(source), udder)
+	source.visible_message(span_danger("The udder pops off."))
+	qdel(src)
+
+/obj/item/udderbomb
+	name = "udder explosive device"
+	desc = "It's furiously hot and doesn't seem to cool off.."
+
+/obj/item/udderbomb/Initialize(mapload, obj/item/udder/abstract_udder)
+	var/udder_size = abstract_udder.reagents.total_volume
+	create_reagents(udder_size, INJECTABLE | DRAWABLE)
+	// It's furiously hot (all reagents that are injected will instantly heat up to 1000K)
+	RegisterSignal(src.reagents, COMSIG_REAGENTS_TEMP_CHANGE, VARSET_CALLBACK(src.reagents, chem_temp, 1000))
+	abstract_udder.reagents.trans_to(reagents, udder_size)
