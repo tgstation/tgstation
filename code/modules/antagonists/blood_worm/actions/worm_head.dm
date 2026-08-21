@@ -21,7 +21,17 @@
 	if (!ishuman(owner) && !istype(owner, /mob/living/basic/blood_worm))
 		return FALSE
 
+	var/mob/living/basic/blood_worm/worm = target
+	var/mob/living/carbon/human/host = worm.host
+
+	if (!run_checks(worm, host, feedback))
+		return FALSE
+
 	return ..()
+
+/datum/action/cooldown/mob_cooldown/blood_worm/worm_head/proc/run_checks(mob/living/basic/blood_worm/worm, mob/living/carbon/human/host, feedback = FALSE)
+	if (!worm.host)
+		return FALSE
 
 // Activation of ability of grow of the blood worm head
 /datum/action/cooldown/mob_cooldown/blood_worm/worm_head/Activate(atom/target) // logic on click
