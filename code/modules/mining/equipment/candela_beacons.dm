@@ -99,8 +99,10 @@
 	for (var/datum/component/candela_node/node as anything in network.linked_nodes)
 		atoms_to_nodes[node.parent] = node
 
-	for (var/atom/movable/thing in view(MINING_BEACON_MAX_REACH, get_turf(src)))
-		if (!atoms_to_nodes[thing])
+	var/turf/our_turf = get_turf(src)
+	for (var/atom/movable/thing in view(MINING_BEACON_MAX_REACH, our_turf))
+		// view() is not a raycast and can go through walls, but this is more optimized than iterating through all nodes
+		if (!atoms_to_nodes[thing] || !can_see(our_turf, thing, MINING_BEACON_MAX_REACH) || !can_see(thing, our_turf, MINING_BEACON_MAX_REACH))
 			continue
 		set_closest_node(atoms_to_nodes[thing])
 		return atoms_to_nodes[thing]
@@ -116,8 +118,9 @@
 		for (var/datum/component/candela_node/node as anything in network.linked_nodes)
 			atoms_to_nodes[node.parent] = node
 
-	for (var/atom/movable/thing in view(MINING_BEACON_MAX_REACH, get_turf(src)))
-		if (!atoms_to_nodes[thing])
+	var/turf/our_turf = get_turf(src)
+	for (var/atom/movable/thing in view(MINING_BEACON_MAX_REACH, our_turf))
+		if (!atoms_to_nodes[thing] || !can_see(our_turf, thing, MINING_BEACON_MAX_REACH) || !can_see(thing, our_turf, MINING_BEACON_MAX_REACH))
 			continue
 		var/datum/component/candela_node/node = atoms_to_nodes[thing]
 		set_network(node.network)
@@ -134,14 +137,18 @@
 
 /obj/item/stack/candela_beacon/equipped(mob/user, slot, initial)
 	. = ..()
-	if (!(slot & (ITEM_SLOT_HANDS | ITEM_SLOT_POCKETS | ITEM_SLOT_BELT)))
-		return
-
-	RegisterSignal(user, COMSIG_MOB_CLIENT_MOVED, PROC_REF(on_user_moved))
-	locate_nearest_node(silent = TRUE)
+	if (slot & (ITEM_SLOT_HANDS | ITEM_SLOT_POCKETS | ITEM_SLOT_BELT))
+		track_user(user)
 
 /obj/item/stack/candela_beacon/dropped(mob/user, silent)
 	. = ..()
+	drop_user(user)
+
+/obj/item/stack/candela_beacon/proc/track_user(mob/living/user)
+	RegisterSignal(user, COMSIG_MOB_CLIENT_MOVED, PROC_REF(on_user_moved))
+	locate_nearest_node(silent = TRUE)
+
+/obj/item/stack/candela_beacon/proc/drop_user(mob/living/user)
 	UnregisterSignal(user, COMSIG_MOB_CLIENT_MOVED)
 	set_closest_node(null)
 
@@ -150,8 +157,7 @@
 	if (isitem(old_loc))
 		UnregisterSignal(old_loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 		if (isliving(old_loc.loc))
-			UnregisterSignal(old_loc.loc, COMSIG_MOB_CLIENT_MOVED)
-			set_closest_node(null)
+			drop_user(old_loc.loc)
 
 	if (!isitem(loc))
 		return
@@ -163,20 +169,17 @@
 
 	var/mob/living/owner = loc.loc
 	if (owner.get_slot_by_item(loc) & (ITEM_SLOT_POCKETS | ITEM_SLOT_BELT))
-		RegisterSignal(owner, COMSIG_MOB_CLIENT_MOVED, PROC_REF(on_user_moved))
-		locate_nearest_node(silent = TRUE)
+		track_user(owner)
 
 /obj/item/stack/candela_beacon/proc/on_container_equipped(obj/item/source, mob/equipper, slot)
 	SIGNAL_HANDLER
 
 	if (slot & (ITEM_SLOT_POCKETS | ITEM_SLOT_BELT))
-		RegisterSignal(equipper, COMSIG_MOB_CLIENT_MOVED, PROC_REF(on_user_moved))
-		locate_nearest_node(silent = TRUE)
+		track_user(equipper)
 
 /obj/item/stack/candela_beacon/proc/on_container_dropped(obj/item/source, mob/user)
 	SIGNAL_HANDLER
-	UnregisterSignal(user, COMSIG_MOB_CLIENT_MOVED)
-	set_closest_node(null)
+	drop_user(user)
 
 /obj/item/stack/candela_beacon/proc/set_closest_node(datum/component/candela_node/new_node)
 	if (new_node == closest_node)
@@ -234,7 +237,7 @@
 		return
 
 	var/datum/component/candela_node/current_closest = null
-	if (source in viewers(MINING_BEACON_MAX_REACH, closest_node.parent))
+	if (closest_node && can_see(source, closest_node.parent, MINING_BEACON_MAX_REACH) && can_see(closest_node.parent, source, MINING_BEACON_MAX_REACH))
 		current_closest = closest_node
 
 	for (var/datum/component/candela_node/network_node as anything in network.linked_nodes)
@@ -244,8 +247,8 @@
 		if (current_closest && get_dist_euclidean(new_loc, get_turf(network_node.parent)) >= get_dist_euclidean(new_loc, get_turf(current_closest.parent)))
 			continue
 
-		// viewers() is much faster than view(), so we iterate through closer nodes and check if the owner can see it instead of looking for nearby nodes from the owner
-		if (source in viewers(MINING_BEACON_MAX_REACH, network_node.parent))
+		// Need a can_see rather than viewers() to avoid beams going through walls
+		if (can_see(source, network_node.parent, MINING_BEACON_MAX_REACH) && can_see(network_node.parent, source, MINING_BEACON_MAX_REACH))
 			current_closest = network_node
 
 	if (current_closest)
@@ -285,11 +288,11 @@
 	max_integrity = 90
 
 /datum/armor/structure_candela_beacon
-	melee = 50
-	bullet = 75
-	laser = 75
-	energy = 75
-	bomb = 25
+	melee = 25
+	bullet = 25
+	laser = 25
+	energy = 25
+	bomb = 75
 	fire = 25
 
 /obj/structure/candela_beacon/Initialize(mapload, datum/mining_beacon_network/new_network, obj/item/stack/candela_beacon/beacon_stack)
