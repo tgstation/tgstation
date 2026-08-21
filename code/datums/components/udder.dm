@@ -229,8 +229,8 @@
 	..()
 	UnregisterSignal(parent, COMSIG_LIVING_DEATH)
 
-/datum/component/udder/explosive/proc/deploy_udderbomb(datum/source, gibbed)
-	SIGNAL_HANDLER()
+/datum/component/udder/explosive/proc/deploy_udderbomb(mob/living/source, gibbed)
+	SIGNAL_HANDLER
 	if(gibbed)
 		return
 	new /obj/item/udderbomb(get_turf(source), udder)
@@ -240,10 +240,21 @@
 /obj/item/udderbomb
 	name = "udder explosive device"
 	desc = "It's furiously hot and doesn't seem to cool off.."
+	icon = 'icons/obj/udderbomb.dmi'
+	icon_state = "udderbomb"
+	resistance_flags = FIRE_PROOF
 
 /obj/item/udderbomb/Initialize(mapload, obj/item/udder/abstract_udder)
+	if(!istype(abstract_udder))
+		return ..()
 	var/udder_size = abstract_udder.reagents.total_volume
 	create_reagents(udder_size, INJECTABLE | DRAWABLE)
-	// It's furiously hot (all reagents that are injected will instantly heat up to 1000K)
-	RegisterSignal(src.reagents, COMSIG_REAGENTS_TEMP_CHANGE, VARSET_CALLBACK(src.reagents, chem_temp, 1000))
+	// It's furiously hot (any added reagents will instantly heat up to 1000K)
+	RegisterSignal(reagents, COMSIG_REAGENTS_TEMP_CHANGE, PROC_REF(furiously_hot))
 	abstract_udder.reagents.trans_to(reagents, udder_size)
+	return ..()
+
+/obj/item/udderbomb/proc/furiously_hot()
+	SIGNAL_HANDLER
+	reagents.chem_temp = 1000
+	reagents.handle_reactions()
