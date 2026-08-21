@@ -14,6 +14,8 @@
 	var/update_movement_for_moving_target = FALSE
 	/// Movable target whose movement signal we are following.
 	VAR_PRIVATE/atom/movable/tracked_movable_target
+	/// Should we keep facing the target while retreating?
+	var/face_target = TRUE
 
 /datum/bt_node/ai_behavior/maintain_distance/setup(datum/ai_controller/controller)
 	var/atom/target = controller.blackboard[target_key]
@@ -82,7 +84,8 @@
 /datum/bt_node/ai_behavior/maintain_distance/proc/retreat(datum/ai_controller/controller, atom/target, minimum_distance)
 	controller.change_ai_movement_type(/datum/ai_movement/basic_avoidance/backstep)
 	var/mob/pawn = controller.pawn
-	pawn.face_atom(target)
+	if(face_target)
+		pawn.face_atom(target)
 	var/turf/next_step = get_step_away(pawn, target)
 	if(!isnull(next_step) && !next_step.is_blocked_turf(exclude_mobs = TRUE))
 		controller.ai_movement.start_moving_towards(controller, next_step, 0, controller.movement_delay * 2)

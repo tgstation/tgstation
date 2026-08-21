@@ -23,6 +23,9 @@
 #define TARGET_KEEP_IF_SET 2
 /// Always run the full candidate search, ignoring any existing target.
 #define TARGET_ALWAYS_SEARCH 3
+/// Revalidate an existing target, and only search for a replacement while it remains valid if a target priority strategy is configured.
+#define TARGET_RESELECT_WITH_SELECTION 4
+
 #define HAS_AI_CONTROLLER_TYPE(thing, type) istype(thing?.ai_controller, type)
 
 //AI controller flags

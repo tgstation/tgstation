@@ -29,6 +29,8 @@ GLOBAL_LIST_INIT(bitfields, generate_bitfields())
 
 /// Returns null if no such field exists, a list of all matching flags by name otherwise
 /proc/get_matching_bitflags(var_name, value)
+	if(isnum(var_name))
+		return null
 	var/list/valid_bitflags = get_valid_bitflags(var_name)
 	if(!length(valid_bitflags))
 		return null
@@ -121,7 +123,6 @@ DEFINE_BITFIELD(clothing_flags, list(
 	"ANTI_TINFOIL_MANEUVER" = ANTI_TINFOIL_MANEUVER,
 	"BLOCK_GAS_SMOKE_EFFECT" = BLOCK_GAS_SMOKE_EFFECT,
 	"CARP_STYLE_FACTOR" = CARP_STYLE_FACTOR,
-	"DANGEROUS_OBJECT" = DANGEROUS_OBJECT,
 	"GAS_FILTERING" = GAS_FILTERING,
 	"HEADINTERNALS" = HEADINTERNALS,
 	"INEDIBLE_CLOTHING" = INEDIBLE_CLOTHING,

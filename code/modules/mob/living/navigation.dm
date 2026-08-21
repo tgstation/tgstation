@@ -1,6 +1,8 @@
 #define MAX_NAVIGATE_RANGE 125
 
 /mob/living
+	/// Are we currently pathfinding for the navigate verb?
+	var/navigating = FALSE
 	/// Cooldown of the navigate() verb.
 	COOLDOWN_DECLARE(navigate_cooldown)
 
@@ -15,6 +17,9 @@ GAME_VERB_HIDDEN(/mob/living, navigate, "Navigate")
 	if(length(client.navigation_images))
 		addtimer(CALLBACK(src, PROC_REF(cut_navigation)), world.tick_lag)
 		balloon_alert(src, "navigation path removed")
+		return
+	if(navigating)
+		balloon_alert(src, "busy navigating!")
 		return
 	if(!COOLDOWN_FINISHED(src, navigate_cooldown))
 		balloon_alert(src, "navigation on cooldown!")
@@ -47,10 +52,13 @@ GAME_VERB_HIDDEN(/mob/living, navigate, "Navigate")
 
 	var/platform_code = tgui_input_list(src, "Select a location", "Navigate", sort_list(destination_list))
 	var/atom/navigate_target = destination_list[platform_code]
+	create_navigation_line(navigate_target)
 
+/mob/living/proc/create_navigation_line(atom/navigate_target)
 	if(isnull(navigate_target) || incapacitated)
 		return
 
+	cut_navigation()
 
 	COOLDOWN_START(src, navigate_cooldown, 15 SECONDS)
 	if(navigate_target == UP || navigate_target == DOWN)
@@ -68,11 +76,21 @@ GAME_VERB_HIDDEN(/mob/living, navigate, "Navigate")
 		navigate_target = new_target
 
 	if(!isatom(navigate_target))
-		stack_trace("Navigate target ([navigate_target]) is not an atom, somehow.")
-		return
+		CRASH("Navigate target ([navigate_target]) is not an atom, somehow.")
 
-	var/list/actions = list()
-	var/list/path = get_path_to(src, navigate_target, MAX_NAVIGATE_RANGE, mintargetdist = 0, access = get_access(), skip_first = FALSE, allow_multiz = TRUE, max_path_cost = MAX_NAVIGATE_RANGE * 10, action_sidecar = actions)
+	navigating = TRUE
+	var/list/datum/callback/await = list(CALLBACK(src, PROC_REF(finish_navigation)))
+	if(!SSpathfinder.pathfind(src, navigate_target, MAX_NAVIGATE_RANGE, mintargetdist = 0, access = get_access(), skip_first = FALSE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, on_finish = await, allow_multiz = TRUE, max_path_cost = MAX_NAVIGATE_RANGE * 10))
+		// An unreachable multi-z search invokes the callback before returning FALSE.
+		// Avoid reporting two failures in that case.
+		if(navigating)
+			navigating = FALSE
+			balloon_alert(src, "failed to begin navigation!")
+
+/mob/living/proc/finish_navigation(list/path, list/actions)
+	navigating = FALSE
+	if(!client)
+		return
 	if(!length(path))
 		balloon_alert(src, "no valid path with current access!")
 		return
@@ -117,6 +135,9 @@ GAME_VERB_HIDDEN(/mob/living, navigate, "Navigate")
 
 /mob/living/proc/cut_navigation()
 	SIGNAL_HANDLER
+	if(!length(client.navigation_images))
+		return
+
 	for(var/image/navigation_path in client.navigation_images)
 		client.images -= navigation_path
 	client.navigation_images.Cut()

@@ -44,7 +44,7 @@
 /datum/status_effect/proc/on_creation(mob/living/new_owner, ...)
 	if(new_owner)
 		owner = new_owner
-	if(QDELETED(owner) || !on_apply())
+	if(QDELETED(owner) || !on_apply(arglist(args.Copy(2))))
 		qdel(src)
 		return
 	if(owner)
@@ -132,7 +132,7 @@
 
 /// Gets and formats examine text associated with our status effect.
 /// Return 'null' to have no examine text appear (default behavior).
-/datum/status_effect/proc/get_examine_text()
+/datum/status_effect/proc/get_examine_text(mob/examiner)
 	return null
 
 /**

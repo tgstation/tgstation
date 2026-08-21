@@ -67,7 +67,8 @@
 	vary = FALSE
 
 /datum/emote/living/carbon/human/screech/get_sound(mob/living/carbon/human/user)
-	return user.dna.species.get_scream_sound(user)
+	var/datum/emote/scream_emote = GLOB.emote_list[/datum/emote/living/scream::key][1]
+	return scream_emote.get_sound(user)
 
 /datum/emote/living/carbon/human/pale
 	key = "pale"
@@ -211,7 +212,7 @@
 
 /datum/emote/living/carbon/human/wing/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	var/obj/item/organ/wings/functional/wings = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+	var/obj/item/organ/wings/wings = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 	if(isnull(wings))
 		CRASH("[type] ran on a mob that has no wings!")
 	if(wings.wings_open)
@@ -220,12 +221,13 @@
 		wings.open_wings()
 
 /datum/emote/living/carbon/human/wing/select_message_type(mob/user, intentional)
-	var/obj/item/organ/wings/functional/wings = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+	var/obj/item/organ/wings/wings = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 	var/emote_verb = wings.wings_open ? "closes" : "opens"
 	return "[emote_verb] [message]"
 
 /datum/emote/living/carbon/human/wing/can_run_emote(mob/user, status_check = TRUE, intentional, params)
-	if(!istype(user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS), /obj/item/organ/wings/functional))
+	var/obj/item/organ/wings/wings = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+	if(!istype(wings) || !wings.has_open_sprite)
 		return FALSE
 	return ..()
 
@@ -322,15 +324,15 @@
 	message = "glows brightly!"
 	emote_type = EMOTE_VISIBLE
 
-/datum/emote/living/carbon/human/glow/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
-	if(!isethereal(user))
+/datum/emote/living/carbon/human/glow/can_run_emote(mob/living/carbon/human/user, status_check = TRUE, intentional, params)
+	if(!user.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow))
 		return FALSE
 	return ..()
 
 /datum/emote/living/carbon/human/glow/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
 	. = ..()
-	var/datum/species/ethereal/goober = user.dna.species
-	goober.handle_glow_emote(user, 1.75, 1.2)
+	var/datum/status_effect/grouped/bodypart_effect/ethereal_glow/glow = user.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow)
+	glow.handle_glow_emote(1.75, 1.2)
 
 /datum/emote/living/carbon/human/flare
 	key = "flare"
@@ -339,15 +341,15 @@
 	emote_type = EMOTE_VISIBLE
 	sound = 'sound/mobs/humanoids/ethereal/ethereal_hiss.ogg'
 
-/datum/emote/living/carbon/human/flare/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
-	if(!isethereal(user))
+/datum/emote/living/carbon/human/flare/can_run_emote(mob/living/carbon/human/user, status_check = TRUE, intentional, params)
+	if(!user.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow))
 		return FALSE
 	return ..()
 
 /datum/emote/living/carbon/human/flare/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
 	. = ..()
-	var/datum/species/ethereal/goober = user.dna.species
-	goober.handle_glow_emote(user, 12, 6, flare = TRUE, duration = 2 SECONDS, flare_time = 10 SECONDS)
+	var/datum/status_effect/grouped/bodypart_effect/ethereal_glow/glow = user.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow)
+	glow.handle_glow_emote(12, 6, flare = TRUE, duration = 2 SECONDS, flare_time = 10 SECONDS)
 
 /datum/emote/living/carbon/human/flicker
 	key = "flicker"
@@ -357,11 +359,11 @@
 	sound = 'sound/effects/sparks/sparks4.ogg'
 
 /datum/emote/living/carbon/human/flicker/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
-	if(!isethereal(user))
+	if(!user.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow))
 		return FALSE
 	return ..()
 
 /datum/emote/living/carbon/human/flicker/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
 	. = ..()
-	var/datum/species/ethereal/goober = user.dna.species
-	goober.start_flicker(user)
+	var/datum/status_effect/grouped/bodypart_effect/ethereal_glow/glow = user.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow)
+	glow.start_flicker()

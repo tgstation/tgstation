@@ -55,6 +55,7 @@
 	merge_type = /obj/item/stack/sheet/animalhide/carbon/human
 
 GLOBAL_LIST_INIT(human_recipes, list( \
+	new/datum/stack_recipe("human skin carpet", /obj/item/stack/tile/carpet/human, 1, 4, 20, category = CAT_TILES), \
 	new/datum/stack_recipe("bloated human costume", /obj/item/clothing/suit/hooded/bloated_human, 5, crafting_flags = NONE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("human skin hat", /obj/item/clothing/head/fedora/human_leather, 1, crafting_flags = NONE, category = CAT_CLOTHING), \
 	))
@@ -94,6 +95,14 @@ GLOBAL_LIST_INIT(human_recipes, list( \
 
 /obj/item/stack/sheet/animalhide/mothroach/five
 	amount = 5
+
+GLOBAL_LIST_INIT(mothroach_recipes, list( \
+	new/datum/stack_recipe("moth fur carpet", /obj/item/stack/tile/carpet/moth, 1, 4, 20, category = CAT_TILES), \
+	))
+
+/obj/item/stack/sheet/animalhide/mothroach/get_main_recipes()
+	. = ..()
+	. += GLOB.mothroach_recipes
 
 GLOBAL_LIST_INIT(gondola_recipes, list ( \
 	new/datum/stack_recipe("gondola mask", /obj/item/clothing/mask/gondola, 1, crafting_flags = NONE, category = CAT_CLOTHING), \
@@ -167,6 +176,14 @@ GLOBAL_LIST_INIT(monkey_recipes, list ( \
 /obj/item/stack/sheet/animalhide/carbon/lizard/five
 	amount = 5
 
+GLOBAL_LIST_INIT(lizard_recipes, list( \
+	new/datum/stack_recipe("lizard scale carpet", /obj/item/stack/tile/carpet/moth, 1, 4, 20, category = CAT_TILES), \
+	))
+
+/obj/item/stack/sheet/animalhide/carbon/lizard/get_main_recipes()
+	. = ..()
+	. += GLOB.lizard_recipes
+
 /obj/item/stack/sheet/animalhide/xeno
 	name = "alien chitin"
 	singular_name = "alien chitin piece"
@@ -196,6 +213,7 @@ GLOBAL_LIST_INIT(xeno_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/animalhide/carp
 
 GLOBAL_LIST_INIT(carp_recipes, list ( \
+	new/datum/stack_recipe("carp scale carpet", /obj/item/stack/tile/carpet/carp, 1, 4, 20, category = CAT_TILES), \
 	new/datum/stack_recipe("carp costume", /obj/item/clothing/suit/hooded/carp_costume, 4, crafting_flags = NONE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("carp mask", /obj/item/clothing/mask/gas/carp, 1, crafting_flags = NONE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("carpskin chair", /obj/structure/chair/comfy/carp, 2, crafting_flags = NONE, category = CAT_FURNITURE), \
@@ -362,6 +380,14 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	singular_name = "polar bear hide"
 	merge_type = /obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide
 
+GLOBAL_LIST_INIT(polar_bear_recipes, list( \
+	new/datum/stack_recipe("polar bear fur carpet", /obj/item/stack/tile/carpet/polar_bear, 1, 4, 20, category = CAT_TILES), \
+	))
+
+/obj/item/stack/sheet/animalhide/goliath_hide/polar_bear_hide/get_main_recipes()
+	. = ..()
+	. += GLOB.polar_bear_recipes
+
 /obj/item/stack/sheet/animalhide/ashdrake
 	name = "ash drake hide"
 	desc = "The strong, scaled hide of an ash drake."
@@ -394,6 +420,7 @@ GLOBAL_LIST_INIT(sinew_recipes, list ( \
 	novariants = FALSE
 
 GLOBAL_LIST_INIT(bear_pelt_recipes, list ( \
+	new/datum/stack_recipe(" bear fur carpet", /obj/item/stack/tile/carpet/bear, 1, 4, 20, category = CAT_TILES), \
 	new/datum/stack_recipe("bear costume", /obj/item/clothing/suit/costume/bear_suit, 5, crafting_flags = NONE, category = CAT_CLOTHING), \
 	new/datum/stack_recipe("bear hat", /obj/item/clothing/head/costume/bearpelt, 2, crafting_flags = NONE, category = CAT_CLOTHING), \
 ))

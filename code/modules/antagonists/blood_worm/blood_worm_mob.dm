@@ -168,11 +168,14 @@
 		return FALSE
 	if (host)
 		ADD_TRAIT(host, TRAIT_MIND_TEMPORARILY_GONE, BLOOD_WORM_HOST_TRAIT)
+	var/atom/movable/screen/alert/bloodworm_info/info_alert = throw_alert(ALERT_BLOODWORM_INFO, /atom/movable/screen/alert/bloodworm_info)
+	info_alert.worm_owner = src
 
 /mob/living/basic/blood_worm/Logout()
 	. = ..()
 	if (host)
 		REMOVE_TRAIT(host, TRAIT_MIND_TEMPORARILY_GONE, BLOOD_WORM_HOST_TRAIT)
+	clear_alert(ALERT_BLOODWORM_INFO)
 
 /mob/living/basic/blood_worm/process(seconds_per_tick, times_fired)
 	if (!host)
@@ -268,6 +271,14 @@
 /obj/effect/temp_visual/blood_worm_invade_host/Initialize(mapload, effect_name)
 	. = ..()
 	icon_state = "invade-[effect_name]"
+
+/mob/living/basic/blood_worm/lazarus_revive(mob/living/reviver, malfunctioning)
+	if(!IS_BLOODWORM(src)) //checks to see if this isn't just a poly'd bloodworm
+		return ..()
+
+	revive(HEAL_ALL)
+	to_chat(reviver, span_userdanger("[src] resists the control of the injector!"))
+	balloon_alert(reviver, "can't control!")
 
 /mob/living/basic/blood_worm/hatchling
 	name = "hatchling blood worm"

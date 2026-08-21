@@ -347,6 +347,7 @@
 	var/satchel = /obj/item/storage/backpack/satchel
 	var/duffelbag = /obj/item/storage/backpack/duffelbag
 	var/messenger = /obj/item/storage/backpack/messenger
+	var/wintercoat = /obj/item/clothing/suit/hooded/wintercoat
 
 	var/pda_slot = ITEM_SLOT_BELT
 
@@ -648,6 +649,7 @@
 /datum/job/proc/after_latejoin_spawn(mob/living/spawning)
 	SHOULD_CALL_PARENT(TRUE)
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_JOB_AFTER_LATEJOIN_SPAWN, src, spawning)
+	spawning.client.show_spawn_text_overlay()
 
 /// Called when a mob that has this job is admin respawned
 /datum/job/proc/on_respawn(mob/new_character)
@@ -663,11 +665,12 @@
 	if(!job_outfit || !job_outfit::id_trim)
 		CRASH("[src.type] has no job outfit but isn't overwriting get_lobby_icon().")
 	var/datum/id_trim/job_trim = job_outfit::id_trim
+	var/icon = job_trim::sechud_icon
 	var/icon_state = job_trim::sechud_icon_state
-	if(!icon_state || icon_state == SECHUD_UNKNOWN)
-		CRASH("[src.type] has no job icon state.")
+	if(!icon || !icon_state || icon_state == SECHUD_UNKNOWN)
+		CRASH("[src.type] has no job icon or icon state.")
 
-	return icon('icons/mob/huds/hud.dmi', icon_state)
+	return icon(icon, icon_state)
 
 /datum/job/proc/display_order_with_department()
 	var/datum/job_department/main_department = departments_list?[1]

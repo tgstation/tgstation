@@ -9,7 +9,6 @@
 	icon = 'icons/obj/machines/destructive_scanner.dmi'
 	icon_state = "tube_open"
 	circuit = /obj/item/circuitboard/machine/destructive_scanner
-	layer = MOB_LAYER
 	var/scanning = FALSE
 
 // Late load to ensure the component initialization occurs after the machines are initialized

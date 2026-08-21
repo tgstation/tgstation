@@ -96,6 +96,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_CURSED "cursed"
 /// Emotemute. Can't... emote.
 #define TRAIT_EMOTEMUTE "emotemute"
+/// Mobs with this trait are allowed to use silicon emotes
+#define TRAIT_SILICON_EMOTES_ALLOWED "silicon_emotes_allowed"
+/// Mobs with this trait are allowed to use cat emotes
+#define TRAIT_CAT_EMOTES_ALLOWED "cat_emotes_allowed"
+/// Mobs with this trait are allowed to use moth emotes
+#define TRAIT_MOTH_EMOTES_ALLOWED "moth_emotes_allowed"
 #define TRAIT_DEAF "deaf"
 #define TRAIT_FAT "fat"
 /// If you are fat, you no longer get the slowdown from it
@@ -229,8 +235,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LIVERLESS_METABOLISM "liverless_metabolism"
 /// This carbon can't be overdosed by chems
 #define TRAIT_OVERDOSEIMMUNE "overdose_immune"
-/// Humans with this trait cannot be turned into zombies
-#define TRAIT_NO_ZOMBIFY "no_zombify"
 /// Carbons with this trait can't have their DNA copied by diseases nor changelings
 #define TRAIT_NO_DNA_COPY "no_dna_copy"
 /// Carbons with this trait can't have their DNA scrambled by genetics or a disease retrovirus.
@@ -333,8 +337,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_EXAMINE_FITNESS "reveal_power_level"
 /// These mobs have particularly hygienic tongues
 #define TRAIT_WOUND_LICKER "wound_licker"
-/// Mobs with this trait are allowed to use silicon emotes
-#define TRAIT_SILICON_EMOTES_ALLOWED "silicon_emotes_allowed"
 /// Mobs with this trait can tell when other mobs whisper even if their mouth is covered. They still can't tell what was whispered though.
 #define TRAIT_SEE_MASK_WHISPER "see_mask_whisper"
 
@@ -975,8 +977,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HAS_BEEN_KIDNAPPED "has_been_kidnapped"
 /// An item still plays its hitsound even if it has 0 force, instead of the tap
 #define TRAIT_CUSTOM_TAP_SOUND "no_tap_sound"
-/// Makes the feedback message when someone else is putting this item on you more noticeable
-#define TRAIT_DANGEROUS_OBJECT "dangerous_object"
+/// This item is potentially dangerous or disavantaged to have equipped
+#define TRAIT_DANGEROUS_EQUIP "dangerous_equip"
+/// This item is potentially dangerous or disavantaged to have unequipped
+#define TRAIT_DANGEROUS_UNEQUIP "dangerous_unequip"
 /// determines whether or not objects are haunted and teleport/attack randomly
 #define TRAIT_HAUNTED "haunted"
 /// An item that, if it has contents, will ignore its contents when scanning for contraband.
@@ -1691,6 +1695,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mobs with this trait will always have be a priority target for mining mobs
 #define TRAIT_MINING_AGGRO "mining_aggro"
 
+/// Mob does not regulate core temperature
+#define TRAIT_COLD_BLOODED "cold_blooded"
+
+/// Mob is always considered dead when checking objectives
+#define TRAIT_NEVER_CONSIDERED_ALIVE "never_considered_alive"
+
 /// Don't show the thinking indicator and therefore the typing indicator when we are about to type something...
 #define TRAIT_HIDE_THINKING_INDICATOR "hide_thinking_indicator"
 
@@ -1716,5 +1726,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Turfs with this trait allow whispers to be projected over it when the whisperer is facing it
 #define TRAIT_TURF_PROJECTS_WHISPERS  "turf_projects_whispers"
+
+/// Objects with this trait may become a new prison for a revenant, in the event of its ectoplasm dispersing
+#define TRAIT_COZY_REVENANT_HOME "cozy_revenant_home"
 
 // END TRAIT DEFINES
