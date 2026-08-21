@@ -166,7 +166,8 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 		serialized["antag"] = antag.name
 		serialized["antag_group"] = antag.antagpanel_category
-		serialized["antag_icon"] = antag.antag_hud_name
+		serialized["icon"] = antag.hud_icon
+		serialized["icon_state"] = antag.antag_hud_name
 
 		return serialized
 
@@ -215,12 +216,14 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 	serialized["health"] = FLOOR((player.health / player.maxHealth * 100), 1)
 	if(issilicon(player))
 		serialized["job"] = player.job
-		serialized["icon"] = "borg"
+		serialized["icon"] = DEFAULT_HUDS_DMI
+		serialized["icon_state"] = "borg"
 		return serialized
 
 	var/obj/item/card/id/id_card = player.get_idcard(hand_first = FALSE)
 	serialized["job"] = id_card?.get_trim_assignment()
-	serialized["icon"] = id_card?.get_trim_sechud_icon_state()
+	serialized["icon"] = id_card?.get_trim_sechud_icon()
+	serialized["icon_state"] = id_card?.get_trim_sechud_icon_state()
 
 	var/datum/job/job = player.mind?.assigned_role
 	if (isnull(job))
@@ -233,7 +236,8 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 
 	var/datum/id_trim/trim = outfit.id_trim
 	if (!isnull(trim))
-		serialized["mind_icon"] = trim::sechud_icon_state
+		serialized["mind_icon"] = trim::sechud_icon
+		serialized["mind_icon_state"] = trim::sechud_icon_state
 	return serialized
 
 /// Gets a list: Misc data and whether it's critical. Handles all snowflakey type cases
