@@ -5463,6 +5463,7 @@
 #include "code\modules\mob\living\basic\farm_animals\cow\cow_ai.dm"
 #include "code\modules\mob\living\basic\farm_animals\cow\cow_moonicorn.dm"
 #include "code\modules\mob\living\basic\farm_animals\cow\cow_wisdom.dm"
+#include "code\modules\mob\living\basic\farm_animals\cow\gizmoo.dm"
 #include "code\modules\mob\living\basic\farm_animals\deer\deer.dm"
 #include "code\modules\mob\living\basic\farm_animals\deer\deer_ai.dm"
 #include "code\modules\mob\living\basic\farm_animals\goat\_goat.dm"

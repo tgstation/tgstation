@@ -34,9 +34,9 @@
 		/datum/gizpulse/mode_controle/direct_activate,
 	)
 	// Sound that plays upon puzzle activation
-	var/init_jingle = "sound/machines/terminal/terminal_processing.ogg"
-	// How many times you can activate the code-cracking puzzle
-	var/puzzles_left = 3
+	var/init_jingle = 'sound/machines/terminal/terminal_processing.ogg'
+	// How many times you can get a reward from the code-cracking puzzle
+	var/rewards_left = 3
 	// How many attempts the user has to crack the code before the gizmo starts punishing them
 	var/attempts_left = 10
 
@@ -84,7 +84,7 @@
 	SHOULD_CALL_PARENT(TRUE)
 	var/loot = pick_weight_recursive(loot_table)
 	new loot(get_turf(holder))
-	playsound(holder,"sound/machines/machine_vend.ogg", 100)
+	playsound(holder, 'sound/machines/machine_vend.ogg', 100)
 
 // Proc that punishes the user when they go over the attempt limit
 // Technically, user can try to crack the code as many times as they want, as long as they can endure the punishment
@@ -119,15 +119,14 @@
 	if(!puzzle_holder)
 		return
 	// If the puzzle cannot be retried, produce a bad buzz and stop
-	if(puzzle_holder.puzzles_left <= 0)
-		playsound(holder, "sound/machines/uplink/uplinkerror.ogg", 100)
+	if(puzzle_holder.rewards_left <= 0)
+		playsound(holder, 'sound/machines/uplink/uplinkerror.ogg', 100)
 		return
 	// If it can be tried again (or is launched for the first time), do what we gotta do
 	if(!puzzle_holder.generate_code()) // Code generation may fail, if the restrictions are too severe
-		playsound(holder, "sound/items/ceramic_break.ogg", 100)
+		playsound(holder, 'sound/items/ceramic_break.ogg', 100)
 		return
 	playsound(holder, puzzle_holder.init_jingle, 100)
-	puzzle_holder.puzzles_left--
 	puzzle_holder.active = TRUE
 	puzzle_holder.reset_input()
 	puzzle_holder.attempts_left = initial(puzzle_holder.attempts_left)
@@ -141,17 +140,17 @@
 	if(!puzzle_holder)
 		return
 	if(!puzzle_holder.active) // If the puzzle is inactive, produce a loud buzz and get out
-		playsound(holder,"sound/machines/scanner/scanbuzz.ogg", 100)
+		playsound(holder, 'sound/machines/scanner/scanbuzz.ogg', 100)
 		return
 	// Cycle position: 0 -> 1 -> 2 -> .. -> (code_length - 1) -> reset back to 0
 	puzzle_holder.position = (puzzle_holder.position + 1) % puzzle_holder.code_length
 
 	// If we simply bumped the position by 1, produce a single piston-move sound
 	if(puzzle_holder.position != 0)
-		playsound(holder, "sound/machines/eject.ogg", 100)
+		playsound(holder, 'sound/machines/eject.ogg', 100)
 		return
 	// Otherwise, produce a different sound, indicating the position has been reset
-	playsound(holder, "sound/items/weapons/autoguninsert.ogg", 100)
+	playsound(holder, 'sound/items/weapons/autoguninsert.ogg', 100)
 
 // Gizpulse to cycle the currently selected digit
 // Example (if second digit is selected and code_input is 0000):
@@ -162,7 +161,7 @@
 	if(!puzzle_holder)
 		return
 	if(!puzzle_holder.active) // If the puzzle is inactive, produce a loud buzz and get out
-		playsound(holder,"sound/machines/scanner/scanbuzz.ogg", 100)
+		playsound(holder, 'sound/machines/scanner/scanbuzz.ogg', 100)
 		return
 
 	// List indices start with 1, so we add 1 here
@@ -173,10 +172,10 @@
 
 	// If we simply bumped the digit by 1, produce a single click
 	if(previous_digit != DIGIT_COUNT - 1)
-		playsound(holder, "sound/machines/creak.ogg", 100)
+		playsound(holder, 'sound/machines/creak.ogg', 100)
 		return
 	// Otherwise, produce a different sound, indicating the digit has been reset
-	playsound(holder, "sound/items/reel/reel4.ogg", 100)
+	playsound(holder, 'sound/items/reel/reel4.ogg', 100)
 
 // Gizpulse that actually cracks the code
 /datum/gizpulse/try_crack/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
@@ -184,19 +183,20 @@
 	if(!puzzle_holder)
 		return
 	if(!puzzle_holder.active) // If the puzzle is inactive, produce a loud buzz and get out
-		playsound(holder,"sound/machines/scanner/scanbuzz.ogg", 100)
+		playsound(holder,'sound/machines/scanner/scanbuzz.ogg', 100)
 		return
 
 	// If the input is invalid, emit an invalid-input sound and let the user make corrections
 	var/validity = puzzle_holder.validate_code(puzzle_holder.code_input)
 	if(!validity)
-		playsound(holder, "sound/machines/terminal/terminal_error.ogg", 100)
+		playsound(holder, 'sound/machines/terminal/terminal_error.ogg', 100)
 		return
 
 	// If the input is correct, dispense a reward and reset the puzzle
 	var/correctness = puzzle_holder.check_code()
 	if(correctness)
 		puzzle_holder.dispense_reward(holder)
+		puzzle_holder.rewards_left--
 		puzzle_holder.active = FALSE
 		return
 
@@ -207,13 +207,13 @@
 	puzzle_holder.feedback(holder)
 	puzzle_holder.reset_input()
 	// Play the input reset sound
-	playsound(holder, "sound/machines/terminal/terminal_eject.ogg", 100)
+	playsound(holder, 'sound/machines/terminal/terminal_eject.ogg', 100)
 
 // Tutorial version
 // Restrictions: none
 // Code length: 2
 // Feedback: over/under
-// Punishment: evil rat
+// Punishment: evil rat (gizmouse)
 // Loot: cheese
 // Also, dispenses a hard-mode code-crack gizmo upon completion
 /datum/gizmodes/code_crack/tutorial
@@ -232,6 +232,7 @@
 		/obj/item/food/cheese/royal = 1, // Royal
 	)
 	var/dispensed_hardmode = FALSE
+	init_jingle = 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg'
 
 /datum/gizmodes/code_crack/tutorial/dispense_reward(atom/movable/holder)
 	if(!dispensed_hardmode)
@@ -243,33 +244,33 @@
 /datum/gizmodes/code_crack/tutorial/feedback(atom/movable/holder)
 	for(var/i in 1 to code_length)
 		if(code_input[i] < solution[i])
-			playsound(holder, "sound/machines/defib/defib_saftyOff.ogg", 100)
+			playsound(holder, 'sound/machines/defib/defib_saftyOff.ogg', 100)
 			holder.visible_message(span_notice("[holder] pings low."))
 		else if(code_input[i] > solution[i])
-			playsound(holder, "sound/machines/defib/defib_saftyOn.ogg", 100)
+			playsound(holder, 'sound/machines/defib/defib_saftyOn.ogg', 100)
 			holder.visible_message(span_notice("[holder] pings high."))
 		else
-			playsound(holder, "sound/machines/defib/defib_ready.ogg", 100)
+			playsound(holder, 'sound/machines/defib/defib_ready.ogg', 100)
 			holder.visible_message(span_notice("[holder] pings affirmatively."))
 		sleep(0.5 SECONDS)
 	..()
 
 /datum/gizmodes/code_crack/tutorial/punishment(atom/movable/holder)
 	// Evil rat
-	new /mob/living/basic/mouse/rat(get_turf(holder))
+	var/mob/gizmouse = new /mob/living/basic/mouse/rat(get_turf(holder))
+	gizmouse.name = "gizmouse"
 
 // Hardmode
 // Restrictions: all digits must be unique
-// Code length: 2-3
+// Code length: 3
 // Feedback: bulls and cows (number of correctly placed digits, number of incorrectly placed digits that are included in the code)
-// Punishment: explosion
+// Punishment: exploding cow (gizmoo)
 // Loot: all sorts of stuff
 /datum/gizmodes/code_crack/moo
 	// Moo
-	init_jingle = "sound/mobs/non-humanoids/cow/cow.ogg"
+	init_jingle = 'sound/mobs/non-humanoids/cow/cow.ogg'
 	loot_table = /obj/structure/closet/crate/secure/loot::possible_loot
-	var/min_code_length = 2
-	var/max_code_length = 3
+	code_length = 3
 
 // All digits must be unique
 /datum/gizmodes/code_crack/moo/validate_code(code)
@@ -278,10 +279,6 @@
 			if(code[i] == code[j])
 				return FALSE
 	return TRUE
-
-/datum/gizmodes/code_crack/moo/generate_code()
-	code_length = rand(min_code_length, max_code_length)
-	return ..()
 
 /datum/gizmodes/code_crack/moo/feedback(atom/movable/holder)
 	var/bulls = 0
@@ -296,10 +293,10 @@
 				break
 	// Bull beeps, cow beeps and the sound from parent call shouldn't play simultaneously, so sleep() is probably unavoidable here
 	for(var/i in 1 to bulls)
-		playsound(holder, "sound/machines/synth/synth_yes.ogg", 100)
+		playsound(holder, 'sound/machines/synth/synth_yes.ogg', 100)
 		sleep(0.25 SECONDS)
 	for(var/i in 1 to cows)
-		playsound(holder, "sound/machines/synth/synth_no.ogg", 100)
+		playsound(holder, 'sound/machines/synth/synth_no.ogg', 100)
 		sleep(0.25 SECONDS)
 
 	holder.visible_message(span_notice("[holder] emits [bulls] high-pitched beeps and [cows] low-pitched ones."))
@@ -307,9 +304,9 @@
 	..()
 
 /datum/gizmodes/code_crack/moo/punishment(atom/movable/holder)
-	var/obj/item/grenade/syndieminibomb/punishment = new(get_turf(holder))
-	punishment.arm_grenade(null, 5 SECONDS)
-	qdel(holder)
+	new /mob/living/basic/cow/gizmoo(get_turf(holder))
+	active = FALSE // deactivate the puzzle to prevent megaspam
+	playsound(holder, 'sound/machines/woosh.ogg', 100)
 
 #undef MAX_CODEGEN_RETRY_ATTEMPTS
 #undef DIGIT_COUNT
