@@ -15,6 +15,7 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_SPEED_POTION, INNATE_TRAIT)
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/space)
 
 /obj/item/clothing/suit/mod
 	name = "\improper MOD chestplate"
@@ -38,6 +39,7 @@
 /obj/item/clothing/suit/mod/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_SPEED_POTION, INNATE_TRAIT)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/space)
 
 /obj/item/clothing/gloves/mod
 	name = "\improper MOD gauntlets"
