@@ -224,8 +224,8 @@
 	action_to_add = /datum/action/cooldown/spell/conjure/cosmic_expansion
 	cost = 2
 	is_final_knowledge = TRUE
-	max_charges = 2
-	path_recharge_amount = 0.25
+	max_charges = 6
+	path_recharge_amount = 0.50
 	holywater_drain_amount = 0.25
 
 /datum/heretic_knowledge/ultimate/cosmic_final
