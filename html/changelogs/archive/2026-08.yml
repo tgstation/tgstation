@@ -598,3 +598,7 @@
   lelandkemble:
   - bugfix: door remotes function in melee range
   - bugfix: light replacers function in melee range
+2026-08-21:
+  DeltaFire15:
+  - bugfix: Cable-based robotic limb repairs are no longer impossible while not wearing
+      an uniform.

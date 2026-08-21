@@ -1,4 +1,0 @@
-author: "DeltaFire15"
-delete-after: True
-changes:
-  - bugfix: "Cable-based robotic limb repairs are no longer impossible while not wearing an uniform."
