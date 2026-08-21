@@ -29,7 +29,7 @@
 	var/datum/wound/burn/robotic/demotes_to
 	// The temperature we need to be under in order to begin passively cooling.
 	var/temperature_limit = BODYTEMP_NORMAL + 200
-	// Divisor for how much reagents cool the chassis. 100 means 100 units of water at 0K chassis_temperature by 1.
+	// Divisor for how much reagents cool the chassis. 100 means 100 units of water at 0K will reduce chassis_temperature by 1.
 	var/reagent_volume_coeff = 30
 	// The color of the light we will generate.
 	var/light_color
@@ -64,7 +64,7 @@
 	if(passive_cooling)
 		chassis_temperature -= 0.2 * passive_cooling
 	if(victim.stat != DEAD) // So we don't husk anyone with a burn
-		victim.adjust_bodytemperature((chassis_temperature + overheat_bonus) * 0.4) // This is how burns actually hurt you, our (very simple) version of infection
+		victim.adjust_bodytemperature((chassis_temperature + overheat_bonus) * 0.4) // This is how burns actually hurt you, our (very simple and much weaker) version of infection
 	if (chassis_temperature <= 0)
 		if (demotes_to)
 			victim.visible_message(span_green("[victim]'s [limb.plaintext_zone] turns a more pleasant thermal color as it cools down a little..."), span_green("Your [limb.plaintext_zone] seems to cool down a little!"))
@@ -117,9 +117,9 @@
 	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
 	victim.visible_message(span_warning("[victim]'s [limb.plaintext_zone] strains from the thermal shock[(!victim.is_location_accessible(limb.body_zone) ? ", [victim.p_their()] clothing absorbing some of the liquid" : "")][(!isnull(current_gauze) ? ", but the [current_gauze.name] helps to keep it together" : "")]!"))
 	playsound(victim, 'sound/items/tools/welder.ogg', 25)
-	if(thermal_shock <= 30)
+	if(thermal_shock >= 30)
 		INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
-		limb.receive_damage(brute = thermal_shock, wound_bonus = CANT_WOUND)
+	limb.receive_damage(brute = thermal_shock, wound_bonus = CANT_WOUND)
 
 // this wound is unaffected by cryoxadone and pyroxadone
 /datum/wound/burn/robotic/overheat/on_xadone(power)
@@ -143,7 +143,7 @@
 	sound_volume = 18
 
 	chassis_temperature = 15
-	thermal_shock_mult = 1.25
+	thermal_shock_mult = 1
 	light_color = COLOR_RED
 	light_power = 0.1
 	light_range = 0.5
@@ -170,8 +170,8 @@
 	sound_volume = 20
 
 	chassis_temperature = 15
-	thermal_shock_mult = 1.5
-	overheat_bonus = 20
+	thermal_shock_mult = 1.25
+	overheat_bonus = 15
 	demotes_to = /datum/wound/burn/robotic/overheat/moderate
 	light_color = COLOR_BRIGHT_ORANGE
 	light_power = 0.8
@@ -200,8 +200,8 @@
 	wound_flags = (ACCEPTS_GAUZE|CAN_BE_GRASPED)
 
 	chassis_temperature = 15
-	thermal_shock_mult = 2
-	overheat_bonus = 40
+	thermal_shock_mult = 1.5
+	overheat_bonus = 30
 	demotes_to = /datum/wound/burn/robotic/overheat/severe
 	light_color = COLOR_VERY_SOFT_YELLOW
 	light_power = 1.3

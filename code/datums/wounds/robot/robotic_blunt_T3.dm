@@ -1,7 +1,7 @@
 /datum/wound/blunt/robotic/critical
 	name = "Collapsed Superstructure"
 	desc = "The superstructure has totally collapsed in one or more locations, causing extreme internal oscillation with every move and massive limb dysfunction"
-	treat_text = "Immediately bind the affected limb with gauze or a splint. Repair surgically."
+	treat_text = "Bind the affected limb with gauze or a splint. Repair surgically."
 	occur_text = "caves in on itself, damaged solder and shrapnel flying out in a miniature explosion"
 	examine_desc = "has caved in, with internal components visible through gaps in the metal"
 	severity = WOUND_SEVERITY_CRITICAL
@@ -28,7 +28,7 @@
 
 	wound_flags = (ACCEPTS_GAUZE|MANGLES_INTERIOR|CAN_BE_GRASPED)
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/critical
-	treatable_tools = list(TOOL_WELDER, TOOL_CROWBAR)
+	treatable_tools = list(TOOL_CROWBAR)
 
 	base_movement_stagger_score = 50
 
@@ -47,25 +47,18 @@
 
 	a_or_from = "a"
 
-	/// Has the first stage of our treatment been completed?
-	VAR_FINAL/reset = FALSE
-
 /datum/wound_pregen_data/blunt_metal/superstructure
 	abstract = FALSE
 	wound_path_to_generate = /datum/wound/blunt/robotic/critical
 	threshold_minimum = 125
 
-/datum/wound/blunt/robotic/critical/limb_malleable()
-	return
-
-/datum/wound/blunt/robotic/critical/treat(obj/item/item, mob/user)
-	if(item.tool_behaviour == TOOL_CROWBAR)
-		return bend_metal(item, user)
-	return ..()
-
-/datum/wound/blunt/robotic/critical/bend_metal(obj/item/item, mob/treater)
-	if(!limb.get_wound(series = WOUND_SERIES_METAL_BURN_OVERHEAT, severity = WOUND_SEVERITY_MODERATE) || victim?.bodytemperature >= BODYTEMP_HEAT_WARNING_3 )
+/datum/wound/blunt/robotic/critical/treat(obj/item/item, mob/treater)
+	var/delay = 4 SECONDS / (HAS_TRAIT(src, TRAIT_WOUND_SCANNED) ? 2 : 1)
+	if(!limb.get_wound(series = WOUND_SERIES_METAL_BURN_OVERHEAT, severity = WOUND_SEVERITY_MODERATE) && victim?.bodytemperature < BODYTEMP_HEAT_WARNING_3)
 		to_chat(treater, span_warning("The metal isn't hot enough to bend back into place!"))
 		return
-	if(item.use_tool(target = victim, user = treater, delay = 4 SECONDS, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+	if(item.use_tool(target = victim, user = treater, delay = delay, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		replace_wound(new /datum/wound/blunt/robotic/severe)
+	return ..()
+
+/datum/wound/blunt/robotic/critical/proc/bend_metal(obj/item/item, mob/treater)

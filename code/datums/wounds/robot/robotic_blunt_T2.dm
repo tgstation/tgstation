@@ -1,10 +1,10 @@
 /datum/wound/blunt/robotic/severe
 	name = "Detached Fastenings"
-	desc = "Various fastening devices are extremely loose and solder has disconnected at multiple points, causing significant jostling of internal components and \
+	desc = "Various fastening devices are extremely loose and wires within have been disconnected, causing significant jostling of internal components and \
 	noticable limb dysfunction."
-	treat_text = "Fastening of bolts and screws by a qualified technician (though bone gel may suffice in the absence of one) followed by re-soldering."
-	examine_desc = "jostles with every move, solder visibly broken"
-	occur_text = "visibly cracks open, solder flying everywhere"
+	treat_text = "Fastening of bolts and screws (though bone gel may suffice in the absence of one) followed by rebooting the limb's electronics."
+	examine_desc = "jostles with every move, wires visible through cracks in the metal"
+	occur_text = "visibly cracks open, metal pieces flying everywhere"
 	severity = WOUND_SEVERITY_SEVERE
 
 	simple_treat_text = "<b>If on the <b>chest</b>, <b>walk</b>, <b>grasp it</b>, <b>splint</b>, <b>rest</b> or <b>buckle yourself</b> to something to reduce movement effects. \
@@ -12,12 +12,11 @@
 	homemade_treat_text = "If <b>unable to screw/wrench</b>, <b>bone gel</b> can, over time, secure inner components at risk of <b>corrossion</b>. \
 	Alternatively, <b>crowbar</b> the limb open to expose the internals - this will make it <b>easier</b> to re-secure them, but has a <b>high risk</b> of <b>shocking</b> you, \
 	so use insulated gloves. This will <b>cripple the limb</b>, so use it only as a last resort!"
-	treat_text_short = "Use a screwdriver or wrench, and then a welder or cautery."
+	treat_text_short = "Use a screwdriver or wrench, and then a multitool."
 
 	wound_flags = (ACCEPTS_GAUZE|MANGLES_INTERIOR|CAN_BE_GRASPED)
 	treatable_by = list(/obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/severe
-	treatable_tools = list(TOOL_WELDER, TOOL_CROWBAR)
 
 	interaction_efficiency_penalty = 2
 	limp_slowdown = 6
@@ -43,8 +42,8 @@
 
 	/// If our external plating has been torn open and we can access our internals without a tool
 	var/crowbarred_open = FALSE
-	/// If internals are secured, and we are ready to weld our limb closed and end the wound
-	var/ready_to_resolder = FALSE
+	/// If internals are secured, and we are ready to restart electronics in the limb and end the wound
+	var/ready_to_restart = FALSE
 
 /datum/wound_pregen_data/blunt_metal/fastenings
 	abstract = FALSE
@@ -78,12 +77,12 @@
 /datum/wound/blunt/robotic/severe/proc/get_wound_status(mob/user)
 	if (crowbarred_open)
 		. += "The limb has been torn open, allowing ease of access to internal components, but also disabling it. "
-	if (ready_to_resolder)
-		. += "The limb has been partially secured, allowing resoldering with a welder."
+	if (ready_to_restart)
+		. += "The limb has been partially secured, allowing the electronics within to be restarted by a multitool."
 
 /datum/wound/blunt/robotic/severe/item_can_treat(obj/item/potential_treater, mob/user)
-	if (ready_to_resolder)
-		if(potential_treater.tool_behaviour == TOOL_WELDER)
+	if (ready_to_restart)
+		if(potential_treater.tool_behaviour == TOOL_MULTITOOL)
 			return TRUE
 		return FALSE
 	if(potential_treater.tool_behaviour == TOOL_CROWBAR && !crowbarred_open)
@@ -92,8 +91,8 @@
 		return TRUE
 
 /datum/wound/blunt/robotic/severe/treat(obj/item/potential_treater, mob/user)
-	if (potential_treater.tool_behaviour == TOOL_WELDER)
-		return resolder(potential_treater, user)
+	if (potential_treater.tool_behaviour == TOOL_MULTITOOL)
+		return restart(potential_treater, user)
 	if (istype(potential_treater, /obj/item/stack/medical/bone_gel))
 		return apply_gel(potential_treater, user)
 	if (potential_treater.tool_behaviour == TOOL_CROWBAR)
@@ -177,7 +176,7 @@
 		return TRUE
 
 	var/chance = 50
-	var/delay_mult = 1
+	var/delay_mult = 1.5
 
 	if (user == victim)
 		chance /= 2
@@ -200,7 +199,7 @@
 		user?.visible_message(span_green("[user] finishes securing the internals of [their_or_other] [limb.plaintext_zone]!"), \
 			span_green("You finish securing the internals of [your_or_other] [limb.plaintext_zone]!"))
 		to_chat(user, span_green("[capitalize(your_or_other)] [limb.plaintext_zone]'s internals are now secure, but still need to be welded into place."))
-		ready_to_resolder = TRUE
+		ready_to_restart = TRUE
 	else
 		user?.visible_message(span_danger("[user] screws up and accidentally damages [their_or_other] [limb.plaintext_zone]!"))
 		limb.receive_damage(brute = 5, damage_source = securing_item, wound_bonus = CANT_WOUND)
@@ -209,7 +208,7 @@
 
 // Alternative to securing the wires. Requires bone gel. Guaranteed to work.
 /datum/wound/blunt/robotic/severe/proc/apply_gel(obj/item/stack/medical/bone_gel/gel, mob/user)
-	var/delay_mult = 1
+	var/delay_mult = 1.5
 	if (victim == user)
 		delay_mult *= 1.5
 	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
@@ -226,39 +225,39 @@
 	else
 		victim.visible_message(span_notice("[victim] finishes applying [gel] to [victim.p_their()] [limb.plaintext_zone]!"), span_notice("You finish applying [gel] to your [limb.plaintext_zone]."))
 
-	to_chat(victim, span_green("The gel within your [limb.plaintext_zone] is holding down its components, allowing you to re-solder it!"))
-	ready_to_resolder = TRUE
+	to_chat(victim, span_green("The gel within your [limb.plaintext_zone] is holding down its components, allowing you to restart it!"))
+	ready_to_restart = TRUE
 
 /**
  * The final step of T2/T3, requires a welder. Guaranteed to work. Cautery is slower.
  * Once complete, removes the wound entirely.
  */
-/datum/wound/blunt/robotic/severe/proc/resolder(obj/item/welding_item, mob/user)
-	if (!welding_item.tool_start_check())
+/datum/wound/blunt/robotic/severe/proc/restart(obj/item/multitool, mob/user)
+	if (!multitool.tool_start_check())
 		return TRUE
 
 	var/their_or_other = (user == victim ? "[user.p_their()]" : "[victim]'s")
 	var/your_or_other = (user == victim ? "your" : "[victim]'s")
 	victim.visible_message(span_notice("[user] begins re-soldering [their_or_other] [limb.plaintext_zone]..."), \
-		span_notice("You begin re-soldering [your_or_other] [limb.plaintext_zone]..."))
+		span_notice("You begin restarting the electronics in [your_or_other] [limb.plaintext_zone]..."))
 
 	var/delay = 4 SECONDS
 	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
 		delay *= 0.5
 
-	if (!welding_item.use_tool(target = victim, user = user, delay = delay, volume = 50,  extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+	if (!multitool.use_tool(target = victim, user = user, delay = delay, volume = 50,  extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
 
 	victim.visible_message(span_green("[user] finishes re-soldering [their_or_other] [limb.plaintext_zone]!"), \
-		span_notice("You finish re-soldering [your_or_other] [limb.plaintext_zone]!"))
+		span_notice("You succesfully restart the electronics in [your_or_other] [limb.plaintext_zone]!"))
 	remove_wound()
 	return TRUE
 
 /// Returns a string with our current treatment step for use in health analyzers.
 /datum/wound/blunt/robotic/severe/proc/get_wound_step_info()
 
-	if (ready_to_resolder)
-		. = "Apply a welder to the limb to finalize repairs."
+	if(ready_to_restart)
+		. = "Apply a multitool to the limb to finalize repairs."
 	else
 		. = "Use a screwdriver, wrench, or bone gel to secure the internals of the limb. A diagnostic hud or wound scanner will help. \
 		In absence of those, a crowbar may be used."
