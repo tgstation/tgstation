@@ -41,7 +41,7 @@
 	var/message = tgui_input_text(clicker, "What do you wish to say?", "Mirror Talk", max_length = MAX_MESSAGE_LEN, encode = FALSE)
 	if(!message || QDELETED(src) || QDELETED(clicker) || !IsAvailable())
 		return FALSE
-	clicker.log_message(message, LOG_SAY)
+	clicker.log_message("\"[message]\"", LOG_SAY)
 	mirror.say(message, spans = list(SPAN_REVENWARNING))
 	return TRUE
 
