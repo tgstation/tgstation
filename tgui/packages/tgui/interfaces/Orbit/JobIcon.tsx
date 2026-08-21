@@ -48,7 +48,7 @@ export function JobIcon(props: Props) {
   return (
     <div className="JobIcon">
       {icon_state === 'borg' ? (
-        <Icon color="lightblue" name={usedJob} ml={0.3} mt={0.4} />
+        <Icon color="lightblue" name={mind_job_icon} ml={0.3} mt={0.4} />
       ) : (
         <DmIcon
           icon={usedIcon}
