@@ -26,7 +26,6 @@ export function JobIcon(props: Props) {
   const {
     icon = '',
     icon_state = '',
-    job = '',
     mind_job_icon = '',
     mind_icon = '',
     mind_icon_state = '',
@@ -35,12 +34,10 @@ export function JobIcon(props: Props) {
   const usedIconState = realNameDisplay
     ? mind_icon_state || icon_state
     : icon_state;
-  let usedJob = realNameDisplay ? mind_icon_state || job : job;
 
   let iconSettings: IconSettings;
   if ('antag' in item && !realNameDisplay) {
     iconSettings = antagIcon;
-    usedJob = item.antag;
   } else {
     iconSettings = normalIcon;
   }

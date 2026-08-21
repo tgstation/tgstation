@@ -10,7 +10,7 @@ type Props = {
 /** Displays some info on the mob as a tooltip. */
 export function OrbitTooltip(props: Props) {
   const { item, realNameDisplay } = props;
-  const { extra, full_name, health, job, mind_job_icon } = item;
+  const { extra, full_name, health, job, mind_job } = item;
 
   let antag;
   if ('antag' in item) {
@@ -20,7 +20,7 @@ export function OrbitTooltip(props: Props) {
   const extraInfo = extra?.split(':');
   const displayHealth = health && health >= 0 ? `${health}%` : 'Critical';
   const showAFK = 'client' in item && !item.client;
-  const displayJob = realNameDisplay ? mind_job_icon : job;
+  const displayJob = realNameDisplay ? mind_job : job;
 
   return (
     <>

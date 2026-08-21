@@ -17,7 +17,7 @@ type Props = {
 /** Each button on the observable section */
 export function OrbitItem(props: Props) {
   const { item, realNameDisplay, viewMode, color } = props;
-  const { full_name, icon_state, job, name, orbiters, ref } = item;
+  const { full_name, icon_state, name, orbiters, ref } = item;
 
   const { data } = useBackend<OrbitData>();
   const { orbiting } = data;
