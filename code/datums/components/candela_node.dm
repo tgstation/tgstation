@@ -138,7 +138,7 @@
 			override_origin_pixel_y = connection_pixel_y,
 			override_target_pixel_x = new_node.connection_pixel_x,
 			override_target_pixel_y = new_node.connection_pixel_y,
-			emissive_alpha = 192,
+			emissive_alpha = (network.powered & CANDELA_NETWORK_BOOSTED) ? 255 : 192,
 			alpha = (network.powered & CANDELA_NETWORK_POWERED) ? 192 : 128
 		)
 
