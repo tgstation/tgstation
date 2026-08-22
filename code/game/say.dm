@@ -183,7 +183,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/messagepart = speaker.generate_messagepart(raw_message, spans, message_mods)
 	messagepart = " <span class='message'>[messagepart]</span></span>"
 
-	var/speaker_voice_description = get_voice_description(speaker)
+	var/speaker_voice_description = speaker.get_voice_description()
 
 	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][span_tooltip_subtle(speaker_voice_description, namepart)][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
 
@@ -255,6 +255,28 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/processed_say_mod = apply_message_emphasis(say_mod)
 
 	return "[processed_say_mod], \"[processed_input]\""
+
+/atom/movable/proc/get_voice_description()
+	switch(gender)
+		if(MALE)
+			return VOICE_DESCRIPTION_MASCULINE
+		if(FEMALE)
+			return VOICE_DESCRIPTION_FEMININE
+		if(PLURAL)
+			return VOICE_DESCRIPTION_PLURAL
+		else
+			return VOICE_DESCRIPTION_NEUTER
+
+/obj/get_voice_description()
+	return VOICE_DESCRIPTION_NEUTER
+
+/mob/living/carbon/human/get_voice_description()
+	//If they're human and their voice isn't their 'real_name' then we'll just default to 'PLURAL'.
+	//This isn't ideal at all (and could be metagamed), but no 'voice_gender' exists.
+	var/mob/living/carbon/human/human_speaker = speaker
+	if(speaker.get_voice() != human_speaker.real_name)
+		return VOICE_DESCRIPTION_PLURAL
+	return ..()
 
 /// Transforms the message emphasis mods from [/atom/proc/apply_message_emphasis] into the appropriate HTML tags. Includes escaping.
 #define ENCODE_HTML_EMPHASIS(input, char, html, varname) \
