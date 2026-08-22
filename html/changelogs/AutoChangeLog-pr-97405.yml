@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - rscdel: "Goldgrub no longer reproduce unless hand fed ores"
