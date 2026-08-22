@@ -667,6 +667,7 @@
 	name = "\improper MOD luminetworked core"
 	desc = "A light, low-capacity networked MOD core capable of recharging from the \"Candela\" navigation network, offering a consistent supply of power for forward-operating miners."
 	icon_state = "mod-core-candela"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.05, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.05, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT)
 	/// How much charge we can store.
 	var/max_charge = 3 * STANDARD_CELL_CHARGE
 	/// How much charge we are currently storing.

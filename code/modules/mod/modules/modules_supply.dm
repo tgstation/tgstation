@@ -802,6 +802,7 @@
 	incompatible_modules = list(/obj/item/mod/module/candela_spool)
 	cooldown_time = 1 SECONDS
 	required_slots = list(ITEM_SLOT_BACK, ITEM_SLOT_GLOVES)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.75)
 	/// Our network handler datum
 	/// We handle the network separately from the beacons we deploy, and supercede all of its' behaviors
 	var/datum/candela_item_handler/handler = null
