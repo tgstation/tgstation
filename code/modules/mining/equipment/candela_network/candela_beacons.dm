@@ -16,7 +16,7 @@
 	. = ..()
 	handler = new(
 		src,
-		active_slots = ITEM_SLOT_HANDS | ITEM_SLOT_POCKETS | ITEM_SLOT_BELT,
+		active_slots = ITEM_SLOT_HANDS | ITEM_SLOT_POCKETS,
 		storage_active_slots = ITEM_SLOT_POCKETS | ITEM_SLOT_BELT,
 		on_network_cut_callback = CALLBACK(src, PROC_REF(on_network_cut)),
 	)
