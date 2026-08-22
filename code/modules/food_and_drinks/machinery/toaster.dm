@@ -18,6 +18,23 @@
 	/// Bread currently inside
 	var/list/loaded_bread = list()
 
+/obj/machinery/toaster/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_ATOM_DESTRUCTION, PROC_REF(kaboom))
+
+/obj/machinery/toaster/proc/kaboom()
+	SIGNAL_HANDLER
+
+	explosion(
+		src,
+		heavy_impact_range = 2,
+		light_impact_range = 4,
+		flame_range = 2,
+		flash_range = 3,
+		adminlog = TRUE,
+		smoke = TRUE,
+	)
+
 /obj/machinery/toaster/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/obj/item/food/food = tool
 
@@ -69,15 +86,3 @@
 	if(gone in loaded_bread)
 		loaded_bread -= gone
 		update_appearance()
-
-/obj/machinery/toaster/Destroy(datum/source)
-	explosion(
-		src,
-		heavy_impact_range = 2,
-		light_impact_range = 4,
-		flame_range = 2,
-		flash_range = 3,
-		adminlog = TRUE,
-		smoke = TRUE,
-	)
-	return ..()
