@@ -73,7 +73,6 @@
 /obj/machinery/toaster/Destroy(datum/source)
 	explosion(
 		src,
-		devastation_range = 1,
 		heavy_impact_range = 2,
 		light_impact_range = 3,
 		flame_range = 2,
