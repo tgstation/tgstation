@@ -18,7 +18,7 @@
 		src,
 		active_slots = ITEM_SLOT_HANDS | ITEM_SLOT_POCKETS | ITEM_SLOT_BELT,
 		storage_active_slots = ITEM_SLOT_POCKETS | ITEM_SLOT_BELT,
-		on_network_cut_callback = CALLBACK(src, PROC_REF(on_network_break)),
+		on_network_cut_callback = CALLBACK(src, PROC_REF(on_network_cut)),
 	)
 	update_appearance()
 
@@ -34,7 +34,9 @@
 	if (.)
 		target_stack.handler.set_network(handler.network, handler.closest_node)
 
-/obj/item/stack/candela_beacon/proc/place_beacon(mob/user, atom/loc_override, silent = FALSE)
+/// Deploy a beacon at user's feet, or at a given location if passed
+/// Can deploy a beacon for another handler, using its network instead
+/obj/item/stack/candela_beacon/proc/place_beacon(mob/user, atom/loc_override = null, datum/candela_item_handler/handler_override = null, silent = FALSE)
 	if (!isturf(user.loc))
 		if (!silent)
 			to_chat(user, span_warning("You need more space to place a [singular_name] here."))
@@ -45,8 +47,9 @@
 			to_chat(user, span_warning("There is already a [singular_name] here."))
 		return FALSE
 
+	var/datum/candela_item_handler/used_handler = handler_override || handler
 	// In case use() deletes ourselves
-	var/datum/mining_beacon_network/our_network = handler.network
+	var/datum/mining_beacon_network/our_network = used_handler.network
 	if (!use(1))
 		return FALSE
 
@@ -54,15 +57,15 @@
 		to_chat(user, span_notice("You activate and anchor [amount ? "a":"the"] [singular_name] in place."))
 
 	playsound(user, 'sound/machines/click.ogg', 50, TRUE)
-	var/obj/structure/candela_beacon/beacon = new(loc_override || user.loc, our_network, src)
+	var/obj/structure/candela_beacon/beacon = new(loc_override || user.loc, our_network, used_handler)
 	transfer_fingerprints_to(beacon)
 	return TRUE
 
 /// Callback to react to breaking LOS/reaching maximum distance with a beacon
-/obj/item/stack/candela_beacon/proc/on_network_break(atom/old_loc, old_dir)
+/obj/item/stack/candela_beacon/proc/on_network_cut(atom/old_loc, old_dir)
 	// If we did not change current_closest, there is a chance we cannot see any nodes near us, in which case we want to place a beacon on the previous turf where we *did* see one
-	if (handler.closest_node && place_beacon(handler.owner, old_loc, silent = TRUE))
-		return TRUE
+	if (handler.closest_node)
+		return place_beacon(handler.owner, old_loc, silent = TRUE)
 	return FALSE
 
 /obj/item/stack/candela_beacon/attack_self_secondary(mob/user, modifiers)
@@ -114,12 +117,12 @@
 	bomb = 75
 	fire = 25
 
-/obj/structure/candela_beacon/Initialize(mapload, datum/mining_beacon_network/new_network, obj/item/stack/candela_beacon/beacon_stack)
+/obj/structure/candela_beacon/Initialize(mapload, datum/mining_beacon_network/new_network, datum/candela_item_handler/deployer)
 	. = ..()
 	if (isnull(new_network))
 		new_network = new()
 	RegisterSignal(src, COMSIG_CANDELA_NODE_NETWORK_CHANGED, PROC_REF(on_network_changed))
-	AddComponent(/datum/component/candela_node, new_network, beacon_stack, connection_pixel_x = base_pixel_w, connection_pixel_y = base_pixel_z + 3)
+	AddComponent(/datum/component/candela_node, new_network, deployer, connection_pixel_x = base_pixel_w, connection_pixel_y = base_pixel_z + 3)
 	update_appearance()
 
 /obj/structure/candela_beacon/proc/on_network_changed(datum/source, datum/mining_beacon_network/old_network, datum/mining_beacon_network/new_network)

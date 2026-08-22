@@ -159,6 +159,7 @@
 	else
 		locate_closest_node()
 
+/// Locates the closest node within our network, or cuts the connection if none could be found
 /datum/candela_item_handler/proc/locate_closest_node(silent = FALSE)
 	if (!network)
 		return null
@@ -186,6 +187,7 @@
 	if (owner && !silent)
 		parent.balloon_alert(owner, "connection lost!")
 
+/// Locates the closest node within any network to ourselves, and links to it and its network
 /datum/candela_item_handler/proc/locate_closest_network()
 	var/turf/our_turf = get_turf(parent)
 	var/cur_dist = MINING_BEACON_MAX_REACH + 1

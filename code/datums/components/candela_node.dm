@@ -11,7 +11,7 @@
 	/// Is this node a valid network power source? If yes, what type?
 	var/power_flags = NONE
 
-/datum/component/candela_node/Initialize(datum/mining_beacon_network/new_network = null, obj/item/stack/candela_beacon/beacon_stack = null, connection_pixel_x = null, connection_pixel_y = null, power_flags = NONE)
+/datum/component/candela_node/Initialize(datum/mining_beacon_network/new_network = null, datum/candela_item_handler/deployer = null, connection_pixel_x = null, connection_pixel_y = null, power_flags = NONE)
 	. = ..()
 	if (!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -21,8 +21,8 @@
 	src.power_flags = power_flags
 
 	set_network(new_network)
-	if (beacon_stack)
-		beacon_stack.handler.set_network(network, src)
+	if (!QDELETED(deployer))
+		deployer.set_network(network, src)
 
 /datum/component/candela_node/Destroy(force)
 	set_network(null, update = FALSE)
@@ -32,6 +32,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_item_interaction))
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(parent, COMSIG_ATOM_MOD_MODULE_USED, PROC_REF(on_module_used))
 
 /datum/component/candela_node/proc/on_examine(atom/movable/source, mob/viewer, list/examine_list)
 	SIGNAL_HANDLER
@@ -54,6 +55,20 @@
 	beacon.handler.set_network(network, src)
 	beacon.balloon_alert(user, "network linked!")
 	return ITEM_INTERACT_SUCCESS
+
+/datum/component/candela_node/proc/on_module_used(atom/movable/source, obj/item/mod/module/module)
+	SIGNAL_HANDLER
+
+	if (!istype(module, /obj/item/mod/module/candela_spool))
+		return NONE
+
+	var/obj/item/mod/module/candela_spool/spool = module
+	if (!spool.mod.wearer.Adjacent(parent))
+		return NONE
+
+	spool.handler.set_network(network, src)
+	spool.mod.wearer.balloon_alert(spool.mod.wearer, "network linked!")
+	return COMPONENT_INTERRUPT_MODULE_USE
 
 /datum/component/candela_node/proc/set_network(datum/mining_beacon_network/new_network, merging = FALSE, update = TRUE, separating = FALSE)
 	if (network == new_network)
