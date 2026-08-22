@@ -22,8 +22,7 @@
 
 	set_network(new_network)
 	if (beacon_stack)
-		beacon_stack.set_network(network)
-		beacon_stack.set_closest_node(src)
+		beacon_stack.handler.set_network(network, src)
 
 /datum/component/candela_node/Destroy(force)
 	set_network(null, update = FALSE)
@@ -52,8 +51,7 @@
 		return NONE
 
 	var/obj/item/stack/candela_beacon/beacon = tool
-	beacon.set_network(network)
-	beacon.set_closest_node(src)
+	beacon.handler.set_network(network, src)
 	beacon.balloon_alert(user, "network linked!")
 	return ITEM_INTERACT_SUCCESS
 
@@ -138,14 +136,15 @@
 			atoms_to_nodes[node.parent] = node
 
 	// We use can_see rather than view() because view() is not a raycast and can end up putting beams through walls, as it sees around corners in a weird fasion
-	for (var/datum/component/candela_node/other_node as anything in network.linked_nodes[src])
+	var/list/our_links = network.linked_nodes[src]
+	for (var/datum/component/candela_node/other_node as anything in our_links)
 		if (!can_see(parent, other_node.parent, MINING_BEACON_MAX_REACH) || !can_see(other_node.parent, parent, MINING_BEACON_MAX_REACH))
 			continue
 		located_nodes |= other_node
 
 	if (length(located_nodes))
 		// No nodes were cut, don't do anything
-		if (length(network.linked_nodes[src]) == length(located_nodes))
+		if (length(our_links) == length(located_nodes))
 			return
 		// Otherwise, cut ourselves from the network and try to link back to refresh connections or find another one
 		var/datum/mining_beacon_network/old_network = network
@@ -179,7 +178,7 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 	/// List of all beacon nodes within our network -> their connections
 	var/list/datum/component/candela_node/linked_nodes = list()
 	/// List of beacon items tracking our network
-	var/list/obj/item/stack/candela_beacon/linked_beacon_items = list()
+	var/list/datum/candela_item_handler/linked_beacon_items = list()
 	/// What types of power providers we have in the network
 	var/powered = NONE
 
@@ -262,7 +261,7 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 	for (var/datum/component/candela_node/node as anything in to_merge.linked_nodes)
 		node.set_network(src, merging = TRUE, update = FALSE)
 
-	for (var/obj/item/stack/candela_beacon/beacon as anything in to_merge.linked_beacon_items)
+	for (var/datum/candela_item_handler/beacon as anything in to_merge.linked_beacon_items)
 		beacon.set_network(src, merging = TRUE)
 
 	for (var/node, connections in to_merge.linked_nodes)
@@ -351,7 +350,7 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 
 	// No separation occured, ignore
 	if (length(new_networks) <= 1)
-		return
+		return FALSE
 
 	linked_nodes = new_networks[1]
 	var/list/all_nodes = linked_nodes.Copy()
@@ -371,6 +370,6 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 	for (var/datum/component/candela_node/node as anything in all_nodes)
 		node.update_connections()
 
-	for (var/obj/item/stack/candela_beacon/beacon as anything in linked_beacon_items)
-		beacon.locate_nearest_network()
+	for (var/datum/candela_item_handler/beacon as anything in linked_beacon_items)
+		beacon.locate_closest_network()
 	return TRUE
