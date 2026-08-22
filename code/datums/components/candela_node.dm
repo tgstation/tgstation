@@ -10,8 +10,10 @@
 	var/connection_pixel_y = null
 	/// Is this node a valid network power source? If yes, what type?
 	var/power_flags = NONE
+	/// Can this node be teleported to using fultons?
+	var/fulton_point = FALSE
 
-/datum/component/candela_node/Initialize(datum/mining_beacon_network/new_network = null, datum/candela_item_handler/deployer = null, connection_pixel_x = null, connection_pixel_y = null, power_flags = NONE)
+/datum/component/candela_node/Initialize(datum/mining_beacon_network/new_network = null, datum/candela_item_handler/deployer = null, connection_pixel_x = null, connection_pixel_y = null, power_flags = NONE, fulton_point = FALSE)
 	. = ..()
 	if (!ismovable(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -19,6 +21,7 @@
 	src.connection_pixel_x = connection_pixel_x
 	src.connection_pixel_y = connection_pixel_y
 	src.power_flags = power_flags
+	src.fulton_point = fulton_point
 
 	set_network(new_network)
 	if (!QDELETED(deployer))
@@ -263,9 +266,6 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 
 		merged_networks |= network
 
-	for (var/datum/component/candela_node/update_node as anything in need_updates)
-		update_node.update_connections()
-
 	if (!length(merged_networks))
 		return
 
@@ -276,6 +276,9 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 
 	for (var/datum/mining_beacon_network/network as anything in merged_networks - first_net)
 		first_net.merge_network(network)
+
+	for (var/datum/component/candela_node/update_node as anything in need_updates)
+		update_node.update_connections()
 
 /datum/mining_beacon_network/proc/merge_network(datum/mining_beacon_network/to_merge)
 	for (var/datum/component/candela_node/node as anything in to_merge.linked_nodes)

@@ -18,6 +18,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	var/safe_for_living_creatures = TRUE
 	/// Maximum force that can be used to extract
 	var/max_force_fulton = MOVE_FORCE_STRONG
+	/// How long will the mob be paralyzed for?
+	var/paralyze_duration = 32 SECONDS
 
 /obj/item/extraction_pack/examine()
 	. = ..()
@@ -62,10 +64,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(thing.anchored)
 		return NONE
 
-	var/obj/structure/extraction_point/beacon = beacon_ref?.resolve()
+	var/atom/movable/beacon = get_beacon(user)
 	if(isnull(beacon))
-		balloon_alert(user, "not linked!")
-		beacon_ref = null
 		return ITEM_INTERACT_BLOCKING
 	var/area/area = get_area(thing)
 	if(!can_use_indoors)
@@ -111,7 +111,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 	if(isliving(thing))
 		var/mob/living/creature = thing
-		creature.Paralyze(32 SECONDS) // Keep them from moving during the duration of the extraction
+		creature.Paralyze(paralyze_duration) // Keep them from moving during the duration of the extraction
 		ADD_TRAIT(creature, TRAIT_FORCED_STANDING, FULTON_PACK_TRAIT) // Prevents animation jank from happening
 		if(creature.buckled)
 			creature.buckled.unbuckle_mob(creature, TRUE) // Unbuckle them to prevent anchoring problems
@@ -125,11 +125,17 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	var/mutable_appearance/balloon2 = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_expand", layer = VEHICLE_LAYER, appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART)
 	balloon2.pixel_z = 10
 	holder_obj.add_overlay(balloon2)
-	addtimer(CALLBACK(src, PROC_REF(create_balloon), thing, user, holder_obj, balloon2), 0.4 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(create_balloon), thing, user, holder_obj, balloon2, get_turf(beacon)), 0.4 SECONDS)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/extraction_pack/proc/create_balloon(atom/movable/thing, mob/living/user, obj/effect/extraction_holder/holder_obj, mutable_appearance/balloon2)
-	var/turf/beacon_turf = get_turf(beacon_ref.resolve())
+/obj/item/extraction_pack/proc/get_beacon(mob/living/user)
+	var/obj/structure/extraction_point/beacon = beacon_ref?.resolve()
+	if (isnull(beacon))
+		balloon_alert(user, "not linked!")
+		beacon_ref = null
+	return beacon
+
+/obj/item/extraction_pack/proc/create_balloon(atom/movable/thing, mob/living/user, obj/effect/extraction_holder/holder_obj, mutable_appearance/balloon2, turf/beacon_turf)
 	var/mutable_appearance/balloon = mutable_appearance('icons/effects/fulton_balloon.dmi', "fulton_balloon", layer = VEHICLE_LAYER, appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART)
 	balloon.pixel_z = 10
 	holder_obj.cut_overlay(balloon2)
@@ -190,11 +196,67 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(uses_left <= 0)
 		qdel(src)
 
+/obj/item/extraction_pack/networked
+	name = "networked fulton extraction pack"
+	desc = "A balloon that can be used to extract equipment or personnel to any fulton beacon or tapped ore vent within nearby \"Candela\" mining navigation networks. Anything not bolted down can be moved."
+	icon_state = "extraction_pack_networked"
+	paralyze_duration = 18 SECONDS
+
+// Does not require a prior link, instead locates all nearby networks and fetches their fulton points when used
+/obj/item/extraction_pack/networked/attack_self(mob/user)
+	balloon_alert(user, "select target!")
+
+/obj/item/extraction_pack/networked/get_beacon(mob/living/user)
+	var/list/atom/movable/beacons = list()
+	var/network_located = FALSE
+	for (var/datum/mining_beacon_network/network as anything in GLOB.mining_beacon_networks)
+		var/list/fulton_points = list()
+		var/node_located = FALSE
+		for (var/datum/component/candela_node/node as anything in network.linked_nodes)
+			if (node.fulton_point)
+				fulton_points[node.parent] = node
+
+			if (node_located)
+				continue
+
+			if (get_dist(node.parent, user) <= MINING_BEACON_MAX_REACH && (user in viewers(MINING_BEACON_MAX_REACH, node.parent)))
+				node_located = TRUE
+
+		if (node_located)
+			network_located = TRUE
+			beacons |= fulton_points
+
+	if (!network_located)
+		balloon_alert(user, "no nearby networks!")
+		return null
+
+	if (!length(beacons))
+		balloon_alert(user, "no valid beacons!")
+		return null
+
+	var/choice = tgui_input_list(user, "Select your destination:", "Select Beacon", beacons)
+	if (!choice)
+		return null
+
+	var/datum/component/candela_node/chosen_beacon = beacons[choice]
+	if (QDELETED(chosen_beacon) || !chosen_beacon.network)
+		return null
+
+	// Make sure that we can still see the network that the beacon belongs to
+	for (var/datum/component/candela_node/node as anything in chosen_beacon.network.linked_nodes)
+		if (get_dist(node.parent, user) <= MINING_BEACON_MAX_REACH && (user in viewers(MINING_BEACON_MAX_REACH, node.parent)))
+			return chosen_beacon.parent
+
+	balloon_alert(user, "out of reach!")
+	return null
+
 /obj/item/fulton_core
 	name = "extraction beacon assembly kit"
 	desc = "When built, emits a signal which fulton recovery devices can lock onto. Activate in hand to unfold into a beacon."
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "folded_extraction"
+	/// Structure to spawn
+	var/point_type = /obj/structure/extraction_point
 
 /obj/item/fulton_core/attack_self(mob/user)
 	var/area/user_area = get_area(user)
@@ -205,9 +267,18 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(!do_after(user, 1.5 SECONDS, target = user) || QDELETED(src))
 		return
 
-	new /obj/structure/extraction_point(get_turf(user))
+	new point_type(get_turf(user), user)
 	playsound(src, 'sound/items/deconstruct.ogg', vol = 50, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
 	qdel(src)
+
+/obj/item/fulton_core/networked
+	name = "networked extraction beacon assembly kit"
+	desc = "When built, emits a signal which fulton recovery devices within the same \"Candela\" navigation network can lock onto. Activate in hand to unfold into a beacon."
+	point_type = /obj/structure/extraction_point/networked
+
+/obj/item/fulton_core/syndicate
+	name = "suspicious extraction beacon assembly kit"
+	point_type = /obj/structure/extraction_point/syndicate
 
 /obj/structure/extraction_point
 	name = "fulton recovery beacon"
@@ -217,26 +288,54 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	anchored = TRUE
 	density = FALSE
 	obj_flags = CAN_BE_HIT | UNIQUE_RENAME
+	/// String key used to check if a beacon can be accessed by a pack
 	var/beacon_network = "station"
+	/// What type of core do we drop when picked up
+	var/core_type = /obj/item/fulton_core
+	/// Do we add ourselves to the global fulton list?
+	var/use_global_network = TRUE
 
-/obj/structure/extraction_point/Initialize(mapload)
+/obj/structure/extraction_point/Initialize(mapload, mob/creator)
 	. = ..()
 	name += " ([rand(100,999)]) ([get_area_name(src, TRUE)])"
-	GLOB.total_extraction_beacons.Add(WEAKREF(src))
+	var/name_input = tgui_input_text(creator, "What would you like to name the beacon?", "Fulton Beacon", default = name, max_length = MAX_LABEL_LEN)
+	if (name_input)
+		name = name_input
+	if (use_global_network)
+		GLOB.total_extraction_beacons.Add(WEAKREF(src))
 	update_appearance(UPDATE_OVERLAYS)
+
+/obj/structure/extraction_point/Destroy(force)
+	GLOB.total_extraction_beacons -= WEAKREF(src)
+	return ..()
 
 /obj/structure/extraction_point/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
 	balloon_alert_to_viewers("undeploying...")
 	if(!do_after(user, 1.5 SECONDS, src))
 		return
-	new /obj/item/fulton_core(drop_location())
+	new core_type(drop_location())
 	playsound(src, 'sound/items/deconstruct.ogg', vol = 50, vary = TRUE, extrarange = MEDIUM_RANGE_SOUND_EXTRARANGE)
 	qdel(src)
 
 /obj/structure/extraction_point/update_overlays()
 	. = ..()
 	. += emissive_appearance(icon, "[icon_state]_light", src, alpha = src.alpha)
+
+/obj/structure/extraction_point/syndicate
+	beacon_network = "syndicate"
+	core_type = /obj/item/fulton_core/syndicate
+
+/obj/structure/extraction_point/networked
+	name = "networked fulton recovery beacon"
+	desc = "A beacon for the fulton recovery system, capable of broadcasting its location through \"Candela\" navigation networks."
+	icon_state = "extraction_point_networked"
+	core_type = /obj/item/fulton_core/networked
+	use_global_network = FALSE
+
+/obj/structure/extraction_point/networked/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/candela_node, new /datum/mining_beacon_network(), null, connection_pixel_x = base_pixel_w, connection_pixel_y = base_pixel_z - 2, fulton_point = TRUE)
 
 /obj/effect/extraction_holder
 	name = "extraction holder"
@@ -264,3 +363,4 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 /obj/item/extraction_pack/syndicate
 	name = "syndicate fulton extraction pack"
 	can_use_indoors = TRUE
+	beacon_networks = list("station", "syndicate")

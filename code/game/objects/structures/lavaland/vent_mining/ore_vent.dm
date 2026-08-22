@@ -652,7 +652,7 @@
 /obj/structure/ore_vent/proc/become_tapped()
 	tapped = TRUE
 	RegisterSignal(src, COMSIG_CANDELA_NODE_NETWORK_CHANGED, PROC_REF(on_network_changed))
-	AddComponent(/datum/component/candela_node, new /datum/mining_beacon_network(), connection_pixel_x = base_pixel_w, connection_pixel_y = base_pixel_z + 36, power_flags = network_power_flags)
+	AddComponent(/datum/component/candela_node, new /datum/mining_beacon_network(), connection_pixel_x = base_pixel_w, connection_pixel_y = base_pixel_z + 36, power_flags = network_power_flags, fulton_point = TRUE)
 	update_appearance(UPDATE_ICON_STATE)
 	add_tapped_visual()
 
