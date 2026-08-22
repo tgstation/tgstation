@@ -3,6 +3,7 @@
 	desc = "This one smells of ash and brimstone."
 	icon_state = "gizmoo"
 	icon_dead = "gizmoo_dead"
+	icon_gib = "gizmoo_gib"
 	melee_damage_lower = 10
 	melee_damage_upper = 10
 	faction = list(FACTION_HOSTILE)
