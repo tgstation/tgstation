@@ -70,7 +70,7 @@
 		loaded_bread -= gone
 		update_appearance()
 
-/obj/machinery/toaster/Destroy(datum/source) /// Infinite power comes with a cost - it explodes if destroyed
+/obj/machinery/toaster/Destroy(datum/source)
 	explosion(
 		src,
 		devastation_range = 1,
