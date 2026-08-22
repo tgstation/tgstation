@@ -86,6 +86,7 @@
 	icon_state = "griddle_toast"
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("toast" = 1)
+	toaster_result = /obj/item/food/griddle_toast/toastest
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_MASK
@@ -95,6 +96,12 @@
 	name = "toaster toast"
 	desc = "Thick cut bread, toasted to perfection."
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 2)
+
+/obj/item/food/griddle_toast/toastest
+	name = "toastest toast"
+	desc = "Double toasted... or burnt..."
+	icon_state = "burned_toast"
+	food_reagents = list(/datum/reagent/consumable/char = 2)
 
 /obj/item/food/butteredtoast
 	name = "buttered toast"

@@ -10,7 +10,7 @@
 	anchored_tabletop_offset = 8
 	max_integrity = 250
 	use_power = NO_POWER_USE
-	circuit = null /// Nanotrasen only allows one toaster per station. Those are extremely expensive for their ability to work without power at all. Plus they explode like a syndicate minibomb.
+	circuit = null /// Nanotrasen only allows one toaster per station. Those are extremely expensive for their ability to work without power at all. Plus they explode like a syndicate minibomb but without the gib.
 	///Time it takes to make a toast
 	var/toasting_time = 5 SECONDS
 	///Max amount of bread at one time
@@ -74,7 +74,7 @@
 	explosion(
 		src,
 		heavy_impact_range = 2,
-		light_impact_range = 3,
+		light_impact_range = 4,
 		flame_range = 2,
 		flash_range = 3,
 		adminlog = TRUE,
