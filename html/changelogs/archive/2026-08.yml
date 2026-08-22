@@ -642,3 +642,9 @@
   - bugfix: ore vents now reset properly on losses.
   uaioy:
   - rscadd: The double-ended chainsaw  spear
+2026-08-22:
+  JohnFulpWillard:
+  - qol: Pressing backspace while unfocused now clears your command bar.
+  - qol: The Command bar now starts on Say instead of Command mode.
+  Melbert:
+  - bugfix: Humans can take CSL
