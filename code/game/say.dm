@@ -273,8 +273,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 /mob/living/carbon/human/get_voice_description()
 	//If they're human and their voice isn't their 'real_name' then we'll just default to 'PLURAL'.
 	//This isn't ideal at all (and could be metagamed), but no 'voice_gender' exists.
-	var/mob/living/carbon/human/human_speaker = speaker
-	if(speaker.get_voice() != human_speaker.real_name)
+	if(get_voice() != real_name)
 		return VOICE_DESCRIPTION_PLURAL
 	return ..()
 
