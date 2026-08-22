@@ -818,7 +818,7 @@
 	. = ..()
 	RegisterSignal(mod, COMSIG_ATOM_STORED_ITEM, PROC_REF(on_stored_item))
 
-/obj/item/mod/module/candela_spool/on_uninstall()
+/obj/item/mod/module/candela_spool/on_uninstall(deleting = FALSE)
 	. = ..()
 	UnregisterSignal(mod, COMSIG_ATOM_STORED_ITEM)
 

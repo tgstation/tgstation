@@ -298,12 +298,15 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 /obj/structure/extraction_point/Initialize(mapload, mob/creator)
 	. = ..()
 	name += " ([rand(100,999)]) ([get_area_name(src, TRUE)])"
-	var/name_input = tgui_input_text(creator, "What would you like to name the beacon?", "Fulton Beacon", default = name, max_length = MAX_LABEL_LEN)
-	if (name_input)
-		name = name_input
+	INVOKE_ASYNC(src, PROC_REF(poll_name), creator)
 	if (use_global_network)
 		GLOB.total_extraction_beacons.Add(WEAKREF(src))
 	update_appearance(UPDATE_OVERLAYS)
+
+/obj/structure/extraction_point/proc/poll_name(mob/creator)
+	var/name_input = tgui_input_text(creator, "What would you like to name the beacon?", "Fulton Beacon", default = name, max_length = MAX_LABEL_LEN)
+	if (name_input && !QDELETED(src) && !QDELETED(creator) && creator.Adjacent(src))
+		name = name_input
 
 /obj/structure/extraction_point/Destroy(force)
 	GLOB.total_extraction_beacons -= WEAKREF(src)
