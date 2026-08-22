@@ -235,6 +235,7 @@
 /datum/bodypart_overlay/mutant/cat_ears/cybernetic
 	color_source = null
 	dyable = FALSE
+	overlay_flags = LIMB_OVERLAY_SEPARATE
 	/// Color of the inner ear
 	var/inner_color = "#F0004A"
 
@@ -252,7 +253,7 @@
 	var/list/all_images = ..()
 	var/mutable_appearance/ear_holder = all_images[1]
 	var/mutable_appearance/inner = ear_holder.overlays[2]
-	all_images += emissive_appearance(inner.icon, inner.icon_state, limb, layer = inner.layer, alpha = inner.alpha * 0.75)
+	all_images[emissive_appearance(inner.icon, inner.icon_state, limb, layer = inner.layer, alpha = inner.alpha * 0.75)] = LIMB_OVERLAY_META
 	return all_images
 
 /datum/bodypart_overlay/mutant/cat_ears/cybernetic/green

@@ -22,6 +22,10 @@
 	var/draw_on_husks = HUSK_OVERLAY_NONE
 	/// Determines body area of the overlay for height offsets
 	var/offset_location = NO_MODIFY
+	/// Flags that determine how the overlay is handled by the bodypart.
+	/// For example, [LIMB_OVERLAY_BASE] indicates that it's a a part of the bodypart itself,
+	/// while [LIMB_OVERLAY_SEPARATE] indicates that it's entirely separate from the bodypart, like cream pie
+	var/overlay_flags = LIMB_OVERLAY_BASE
 
 /datum/bodypart_overlay/New()
 	. = ..()
@@ -81,9 +85,10 @@
 	else
 		color_image(main_image, limb, layer_index)
 
-	var/list/created_overlays = list(main_image)
+	var/list/created_overlays = list()
+	created_overlays[main_image] = overlay_flags
 	if(blocks_emissive != EMISSIVE_BLOCK_NONE && !isnull(limb))
-		created_overlays += emissive_blocker(main_image.icon, main_image.icon_state, limb, layer = main_image.layer, alpha = main_image.alpha)
+		created_overlays[emissive_blocker(main_image.icon, main_image.icon_state, limb, layer = main_image.layer, alpha = main_image.alpha)] = LIMB_OVERLAY_META
 
 	return created_overlays
 

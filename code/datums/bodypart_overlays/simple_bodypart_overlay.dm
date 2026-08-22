@@ -37,3 +37,4 @@
 	icon_state = "soul_pending_eyes"
 	layers = list(EXTERNAL_FRONT = BODY_FRONT_LAYER)
 	offset_location = UPPER_BODY
+	overlay_flags = LIMB_OVERLAY_SEPARATE

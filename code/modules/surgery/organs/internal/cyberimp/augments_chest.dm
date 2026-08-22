@@ -207,6 +207,7 @@
 		CALLBACK(src, PROC_REF(allow_thrust), 0.01), \
 		/datum/effect_system/trail_follow/ion, \
 	)
+	bodypart_aug?.set_layer(EXTERNAL_ADJACENT, BODYPARTS_HIGH_LAYER)
 
 /obj/item/organ/cyberimp/chest/thrusters/Remove(mob/living/carbon/thruster_owner, special, movement_flags)
 	if(on)
@@ -252,6 +253,7 @@
 
 /obj/item/organ/cyberimp/chest/thrusters/update_icon_state()
 	icon_state = "[base_icon_state][on ? "-on" : null]"
+	bodypart_aug?.icon_state = get_overlay_state()
 	return ..()
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/allow_thrust(num, use_fuel = TRUE)
@@ -291,11 +293,6 @@
 
 /obj/item/organ/cyberimp/chest/thrusters/get_overlay_state(image_layer, obj/item/bodypart/limb)
 	return "[aug_overlay][on ? "_on" : ""]"
-
-/obj/item/organ/cyberimp/chest/thrusters/get_overlay(image_layer, obj/item/bodypart/limb)
-	. = ..()
-	for (var/image/overlay as anything in .)
-		overlay.layer = -BODYPARTS_HIGH_LAYER // makes absolutely zero sense why it would layer ontop of jumpsuits but it looks cool
 
 /obj/item/organ/cyberimp/chest/spine
 	name = "\improper Herculean gravitronic spinal implant"

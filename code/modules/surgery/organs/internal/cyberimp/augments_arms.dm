@@ -73,6 +73,8 @@
 		var/atom/new_item = new typepath(src)
 		new_item.set_custom_materials(null)
 		items_list += WEAKREF(new_item)
+	// melbert todo
+	bodypart_aug?.set_layer("hand", BODYPARTS_HIGH_LAYER)
 
 /obj/item/organ/cyberimp/arm/toolkit/Destroy()
 	hand = null
@@ -119,22 +121,6 @@
 		to_chat(owner, span_warning("The electromagnetic pulse causes [src] to malfunction!"))
 		// give the owner an idea about why his implant is glitching
 		Retract()
-
-/obj/item/organ/cyberimp/arm/toolkit/get_overlay(image_layer, obj/item/bodypart/limb)
-	if (!hand_state)
-		return ..()
-
-	var/mutable_appearance/arm_overlay = mutable_appearance(
-		icon = aug_icon,
-		icon_state = get_overlay_state(),
-		layer = image_layer,
-	)
-	var/mutable_appearance/hand_overlay = mutable_appearance(
-		icon = aug_icon,
-		icon_state = "[get_overlay_state()]_hand",
-		layer = -BODYPARTS_HIGH_LAYER,
-	)
-	return list(arm_overlay, hand_overlay)
 
 /**
  * Called when the mob uses the "drop item" hotkey

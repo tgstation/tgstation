@@ -39,6 +39,7 @@
 			qdel(src)
 			return
 		bodypart_overlay = new()
+		bodypart_overlay.overlay_flags = LIMB_OVERLAY_SEPARATE
 		bodypart_overlay.set_layers(layers)
 		if(carbon_parent.bodyshape & BODYSHAPE_SNOUTED) //stupid, but external organ bodytypes are not stored on the limb
 			bodypart_overlay.icon_state = "[icon_state]_lizard"
