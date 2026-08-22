@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Pressing backspace while unfocused now clears your command bar."
+  - qol: "The Command bar now starts on Say instead of Command mode."
