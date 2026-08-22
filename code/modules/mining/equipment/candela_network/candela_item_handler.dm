@@ -9,7 +9,7 @@
 	var/active_slots = NONE
 	/// Slots in which the storage containing this item can be in order for the item to keep the connection
 	var/storage_active_slots = NONE
-	/// Callback called when we're about to get cut from the network due to user movement
+	/// Callback called when we're about to get cut from the network due to user movement : (atom/old_loc, old_dir, interrupt)
 	var/datum/callback/on_network_cut_callback = null
 
 	// Runtime variables
@@ -80,59 +80,21 @@
 	SIGNAL_HANDLER
 	set_owner(null)
 
-/datum/candela_item_handler/proc/on_owner_moved(mob/living/source, direction, old_dir, atom/old_loc)
-	SIGNAL_HANDLER
-
-	if (!network)
-		return
-
-	var/turf/new_loc = owner.loc
-	// Check if this was a valid step with no teleportation involved
-	if (!isturf(new_loc) || !isturf(old_loc) || get_step(old_loc, direction) != new_loc)
-		set_closest_node(null)
-		set_network(null)
-		return
-
-	var/datum/component/candela_node/current_closest = null
-	if (closest_node && can_see(owner, closest_node.parent, MINING_BEACON_MAX_REACH) && can_see(closest_node.parent, owner, MINING_BEACON_MAX_REACH))
-		current_closest = closest_node
-
-	for (var/datum/component/candela_node/network_node as anything in network.linked_nodes)
-		if (network_node == closest_node || get_dist_euclidean(get_turf(network_node.parent), new_loc) > MINING_BEACON_MAX_REACH)
-			continue
-
-		if (current_closest && get_dist_euclidean(new_loc, get_turf(network_node.parent)) >= get_dist_euclidean(new_loc, get_turf(current_closest.parent)))
-			continue
-
-		// Need a can_see rather than viewers() to avoid beams going through walls
-		if (can_see(owner, network_node.parent, MINING_BEACON_MAX_REACH) && can_see(network_node.parent, owner, MINING_BEACON_MAX_REACH))
-			current_closest = network_node
-
-	if (current_closest)
-		if (current_closest != closest_node)
-			set_closest_node(current_closest)
-		return
-
-	if (on_network_cut_callback?.Invoke(old_loc, old_dir))
-		return
-
-	set_network(null)
-	parent.balloon_alert(owner, "connection lost!")
-
 /datum/candela_item_handler/proc/set_owner(mob/living/new_owner)
 	if (owner == new_owner)
 		return
 
 	if (owner)
-		UnregisterSignal(owner, list(COMSIG_MOB_CLIENT_MOVED))
+		network?.unlink_mob(src, owner)
 
 	owner = new_owner
+	network?.linked_beacon_items |= src
 	if (!owner)
 		set_closest_node(null)
 		return
 
-	RegisterSignal(owner, COMSIG_MOB_CLIENT_MOVED, PROC_REF(on_owner_moved))
 	if (network)
+		network.link_mob(src, owner)
 		locate_closest_node(silent = TRUE)
 
 /datum/candela_item_handler/proc/set_network(datum/mining_beacon_network/new_network, datum/component/candela_node/new_closest_node = null, merging = FALSE)
@@ -142,6 +104,8 @@
 		return
 
 	if (network)
+		if (owner)
+			network.unlink_mob(src, owner)
 		network.linked_beacon_items -= src
 
 	network = new_network
@@ -149,6 +113,9 @@
 	if (!network)
 		set_closest_node(null)
 		return
+
+	if (owner)
+		network.link_mob(src, owner)
 
 	if (merging)
 		return
@@ -234,6 +201,19 @@
 	if (!owner)
 		return
 
+	// Don't render a beam if another handler (added to the network before us) is already rendering one to the same node as to avoid spam/overlaps
+	var/list/handlers = network.linked_mobs[owner]
+	for (var/datum/candela_item_handler/other_handler as anything in handlers)
+		if (other_handler == src || other_handler.closest_node != closest_node) // shouldn't have a different closest node but just in case
+			continue
+
+		if (handlers.Find(other_handler) < handlers.Find(src))
+			return
+
+	redraw_beam()
+
+/datum/candela_item_handler/proc/redraw_beam()
+	QDEL_NULL(beam_visual)
 	beam_visual = owner.Beam(
 		closest_node.parent,
 		"1-full", 'icons/effects/beam.dmi',

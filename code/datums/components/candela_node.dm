@@ -75,7 +75,7 @@
 		return
 
 	. = network
-	if (network && !separating)
+	if (network && !separating && !merging)
 		network.remove_node(src)
 	network = new_network
 	// Before add_node, as network can change from merging
@@ -96,10 +96,10 @@
 
 	var/list/draw_to = null
 	var/our_index = network.linked_nodes.Find(src)
-//#ifdef TESTING
+#ifdef TESTING
 	var/atom/movable/as_atom = parent
 	as_atom.maptext = MAPTEXT("[our_index] - [GLOB.mining_beacon_networks.Find(network)]")
-//#endif
+#endif
 	if (keep_links)
 		draw_to = assoc_to_keys(beam_visuals)
 		QDEL_LIST_ASSOC_VAL(beam_visuals)
@@ -190,10 +190,12 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 
 /// Candela beacon network datum
 /datum/mining_beacon_network
-	/// List of all beacon nodes within our network -> their connections
+	/// List of all beacon nodes within our network (node -> its connections)
 	var/list/datum/component/candela_node/linked_nodes = list()
 	/// List of beacon items tracking our network
 	var/list/datum/candela_item_handler/linked_beacon_items = list()
+	/// List of mobs currently attached to the network via handler items for centralized movement tracking (mob -> all handlers on them)
+	var/list/mob/living/linked_mobs = list()
 	/// What types of power providers we have in the network
 	var/powered = NONE
 
@@ -203,7 +205,10 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 
 /datum/mining_beacon_network/Destroy(force)
 	linked_nodes.Cut()
+	for (var/datum/candela_item_handler/handler as anything in linked_beacon_items)
+		handler.locate_closest_network()
 	linked_beacon_items.Cut()
+	linked_mobs.Cut()
 	GLOB.mining_beacon_networks -= src
 	return ..()
 
@@ -388,3 +393,64 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 	for (var/datum/candela_item_handler/beacon as anything in linked_beacon_items)
 		beacon.locate_closest_network()
 	return TRUE
+
+/datum/mining_beacon_network/proc/link_mob(datum/candela_item_handler/handler, mob/living/new_user)
+	if (!linked_mobs[new_user])
+		linked_mobs[new_user] = list()
+		RegisterSignal(new_user, COMSIG_MOB_CLIENT_MOVED, PROC_REF(on_user_moved))
+	linked_mobs[new_user] |= handler
+
+/datum/mining_beacon_network/proc/unlink_mob(datum/candela_item_handler/handler, mob/living/user)
+	linked_mobs[user] -= handler
+	if (length(linked_mobs[user]))
+		return
+	linked_mobs -= user
+	UnregisterSignal(user, COMSIG_MOB_CLIENT_MOVED)
+
+/// A mob linked to the network moved, check if they still can connect to us and if not, check if any handlers object and then cut the connection
+/datum/mining_beacon_network/proc/on_user_moved(mob/living/source, direction, old_dir, atom/old_loc)
+	SIGNAL_HANDLER
+
+	var/turf/new_loc = source.loc
+	var/list/all_handlers = linked_mobs[source]
+	// Check if this was a valid step with no teleportation involved
+	if (!isturf(new_loc) || !isturf(old_loc) || get_step(old_loc, direction) != new_loc)
+		for (var/datum/candela_item_handler/handler as anything in all_handlers)
+			handler.set_network(null)
+		return
+
+	var/datum/component/candela_node/current_closest = null
+	var/datum/candela_item_handler/master = all_handlers[1]
+	var/datum/component/candela_node/closest_node = master.closest_node
+	if (closest_node && can_see(source, closest_node.parent, MINING_BEACON_MAX_REACH) && can_see(closest_node.parent, source, MINING_BEACON_MAX_REACH))
+		current_closest = closest_node
+
+	for (var/datum/component/candela_node/network_node as anything in linked_nodes)
+		if (network_node == closest_node || get_dist_euclidean(get_turf(network_node.parent), new_loc) > MINING_BEACON_MAX_REACH)
+			continue
+
+		if (current_closest && get_dist_euclidean(new_loc, get_turf(network_node.parent)) >= get_dist_euclidean(new_loc, get_turf(current_closest.parent)))
+			continue
+
+		// Need a can_see rather than viewers() to avoid beams going through walls
+		if (can_see(source, network_node.parent, MINING_BEACON_MAX_REACH) && can_see(network_node.parent, source, MINING_BEACON_MAX_REACH))
+			current_closest = network_node
+
+	if (current_closest)
+		if (current_closest == closest_node)
+			return
+		for (var/datum/candela_item_handler/handler as anything in all_handlers)
+			handler.set_closest_node(current_closest)
+		return
+
+	var/interrupt = FALSE
+	for (var/datum/candela_item_handler/handler as anything in all_handlers)
+		if (handler.on_network_cut_callback?.Invoke(old_loc, old_dir, interrupt))
+			interrupt = TRUE
+
+	if (interrupt)
+		return
+
+	for (var/datum/candela_item_handler/handler as anything in all_handlers)
+		handler.set_network(null)
+	source.balloon_alert(source, "connection lost!")

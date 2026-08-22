@@ -846,8 +846,8 @@
 		handler.set_network(beacons.handler.network, beacons.handler.closest_node)
 
 /// Callback to react to breaking LOS/reaching maximum distance with a beacon
-/obj/item/mod/module/candela_spool/proc/on_network_cut(atom/old_loc, old_dir)
-	if (mod.wearer && handler.closest_node)
+/obj/item/mod/module/candela_spool/proc/on_network_cut(atom/old_loc, old_dir, interrupt)
+	if (mod.wearer && handler.closest_node && !interrupt)
 		return attempt_deploy(mod.wearer, old_loc, silent = TRUE)
 	return FALSE
 

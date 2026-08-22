@@ -29,6 +29,9 @@
 /obj/item/stack/candela_beacon/attack_self(mob/user, modifiers)
 	place_beacon(user)
 
+/obj/item/stack/candela_beacon/interact(mob/user)
+	return
+
 /obj/item/stack/candela_beacon/merge_without_del(obj/item/stack/candela_beacon/target_stack, limit)
 	. = ..()
 	if (.)
@@ -62,9 +65,9 @@
 	return TRUE
 
 /// Callback to react to breaking LOS/reaching maximum distance with a beacon
-/obj/item/stack/candela_beacon/proc/on_network_cut(atom/old_loc, old_dir)
+/obj/item/stack/candela_beacon/proc/on_network_cut(atom/old_loc, old_dir, interrupt)
 	// If we did not change current_closest, there is a chance we cannot see any nodes near us, in which case we want to place a beacon on the previous turf where we *did* see one
-	if (handler.closest_node)
+	if (handler.closest_node && !interrupt)
 		return place_beacon(handler.owner, old_loc, silent = TRUE)
 	return FALSE
 
