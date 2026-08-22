@@ -680,6 +680,10 @@
 	. = ..()
 	handler = new(src)
 
+/obj/item/mod/core/candela/Destroy()
+	QDEL_NULL(handler)
+	return ..()
+
 /obj/item/mod/core/candela/install(obj/item/mod/control/mod_unit)
 	. = ..()
 	RegisterSignal(mod_unit, COMSIG_MOD_WEARER_SET, PROC_REF(on_mod_wearer_set))
