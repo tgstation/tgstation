@@ -813,6 +813,7 @@
 /obj/machinery/door/firedoor,
 /obj/structure/noticeboard/directional/south,
 /obj/effect/turf_decal/bot,
+/obj/machinery/toaster,
 /turf/open/floor/iron,
 /area/centcom/tdome/observation)
 "dj" = (
@@ -7276,6 +7277,13 @@
 	},
 /turf/open/floor/iron/dark,
 /area/centcom/central_command_areas/admin)
+"EU" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/effect/turf_decal/bot,
+/obj/machinery/toaster,
+/turf/open/floor/iron,
+/area/centcom/tdome/observation)
 "EV" = (
 /obj/structure/table/wood,
 /obj/machinery/microwave{
@@ -57344,7 +57352,7 @@ dV
 cS
 uB
 QC
-Ot
+EU
 Ot
 di
 QC

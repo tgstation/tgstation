@@ -41828,14 +41828,7 @@
 "leB" = (
 /obj/structure/transport/linear/public,
 /obj/structure/table,
-/obj/item/plate{
-	pixel_x = 6;
-	pixel_y = 9
-	},
-/obj/item/plate{
-	pixel_x = -11;
-	pixel_y = -2
-	},
+/obj/machinery/toaster,
 /turf/open/floor/plating/elevatorshaft,
 /area/station/service/kitchen)
 "leK" = (
@@ -48134,6 +48127,23 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/central)
+"mNk" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen_counter";
+	name = "Kitchen Counter Shutters"
+	},
+/obj/item/plate{
+	pixel_x = 6;
+	pixel_y = 9
+	},
+/obj/item/plate{
+	pixel_x = -11;
+	pixel_y = -2
+	},
+/turf/open/floor/wood/large,
+/area/station/service/kitchen)
 "mNn" = (
 /obj/structure/chair/stool/directional/south{
 	dir = 8
@@ -119977,7 +119987,7 @@ hRX
 sOJ
 wwR
 qNV
-mTx
+mNk
 nbC
 wjW
 djA

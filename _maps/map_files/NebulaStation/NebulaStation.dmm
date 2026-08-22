@@ -6116,6 +6116,9 @@
 	pixel_y = 4
 	},
 /obj/machinery/door/firedoor,
+/obj/structure/closet/mini_fridge{
+	anchored = 0
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/kitchen)
 "aVA" = (
@@ -86740,10 +86743,8 @@
 "mRk" = (
 /obj/effect/turf_decal/tile/dark/diagonal_centre,
 /obj/structure/table/reinforced/rglass,
-/obj/structure/closet/mini_fridge{
-	anchored = 0
-	},
 /obj/structure/railing,
+/obj/machinery/toaster,
 /turf/open/floor/iron/white/diagonal,
 /area/station/service/kitchen)
 "mRt" = (

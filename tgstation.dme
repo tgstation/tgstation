@@ -4730,6 +4730,7 @@
 #include "code\modules\food_and_drinks\machinery\smartfridge.dm"
 #include "code\modules\food_and_drinks\machinery\stove.dm"
 #include "code\modules\food_and_drinks\machinery\stove_component.dm"
+#include "code\modules\food_and_drinks\machinery\toaster.dm"
 #include "code\modules\food_and_drinks\recipes\food_mixtures.dm"
 #include "code\modules\food_and_drinks\recipes\processor_recipes.dm"
 #include "code\modules\food_and_drinks\recipes\soup_guide.dm"

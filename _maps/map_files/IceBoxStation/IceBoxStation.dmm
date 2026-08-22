@@ -47661,6 +47661,9 @@
 /obj/item/book/manual/chef_recipes,
 /obj/item/holosign_creator/robot_seat/restaurant,
 /obj/structure/rack,
+/obj/effect/spawner/random/food_or_drink/donkpockets{
+	pixel_y = 6
+	},
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen)
 "nBE" = (
@@ -48962,9 +48965,7 @@
 	dir = 4
 	},
 /obj/structure/table,
-/obj/effect/spawner/random/food_or_drink/donkpockets{
-	pixel_y = 6
-	},
+/obj/machinery/toaster,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen)
 "nRX" = (

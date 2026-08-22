@@ -17842,6 +17842,11 @@
 	},
 /turf/open/floor/wood/large,
 /area/station/command/corporate_showroom)
+"etC" = (
+/obj/machinery/toaster,
+/obj/structure/table,
+/turf/open/floor/iron/cafeteria,
+/area/station/service/kitchen)
 "etR" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -49206,7 +49211,6 @@
 	dir = 4
 	},
 /obj/machinery/duct,
-/obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "meL" = (
@@ -53874,6 +53878,7 @@
 	pixel_x = -6;
 	pixel_y = 6
 	},
+/obj/machinery/status_display/evac/directional/west,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "noS" = (
@@ -129310,7 +129315,7 @@ dyb
 eTy
 trC
 lZa
-xtp
+etC
 xtp
 xtp
 nFX

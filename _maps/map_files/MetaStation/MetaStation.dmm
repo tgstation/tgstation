@@ -19224,6 +19224,7 @@
 /obj/structure/table,
 /obj/structure/extinguisher_cabinet/directional/east,
 /obj/effect/turf_decal/tile/bar,
+/obj/machinery/toaster,
 /turf/open/floor/iron/cafeteria,
 /area/station/service/kitchen)
 "gIt" = (

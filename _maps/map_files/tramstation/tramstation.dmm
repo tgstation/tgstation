@@ -35096,6 +35096,11 @@
 /obj/machinery/telecomms/server/presets/security,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
+"lip" = (
+/obj/structure/table,
+/obj/machinery/toaster,
+/turf/open/floor/iron/white,
+/area/station/service/kitchen)
 "liB" = (
 /obj/effect/spawner/structure/window,
 /obj/structure/curtain/cloth{
@@ -170641,7 +170646,7 @@ qXa
 kWH
 uzM
 uuB
-mdp
+lip
 mdp
 mUL
 spp

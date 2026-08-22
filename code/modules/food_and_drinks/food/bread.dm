@@ -52,6 +52,7 @@
 	venue_value = FOOD_PRICE_CHEAP
 	slice_type = /obj/item/food/breadslice/plain
 	crafting_complexity = FOOD_COMPLEXITY_1
+
 /obj/item/food/bread/plain/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/ingredients_holder, /obj/item/food/bread/empty, CUSTOM_INGREDIENT_ICON_FILL, max_ingredients = 8)
@@ -64,6 +65,7 @@
 	food_reagents = list(/datum/reagent/consumable/nutriment = 2)
 	venue_value = FOOD_PRICE_TRASH
 	decomp_type = /obj/item/food/breadslice/moldy
+	toaster_result = /obj/item/food/griddle_toast/toaster
 	crafting_complexity = FOOD_COMPLEXITY_1
 
 /obj/item/food/breadslice/plain/Initialize(mapload)

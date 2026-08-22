@@ -91,6 +91,11 @@
 	slot_flags = ITEM_SLOT_MASK
 	crafting_complexity = FOOD_COMPLEXITY_2
 
+/obj/item/food/griddle_toast/toaster
+	name = "toaster toast"
+	desc = "Thick cut bread, toasted to perfection."
+	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 2)
+
 /obj/item/food/butteredtoast
 	name = "buttered toast"
 	desc = "Butter lightly spread over a piece of toast."
