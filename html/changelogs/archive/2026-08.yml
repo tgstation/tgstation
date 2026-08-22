@@ -648,3 +648,5 @@
   - qol: The Command bar now starts on Say instead of Command mode.
   Melbert:
   - bugfix: Humans can take CSL
+  SmArtKar:
+  - rscdel: Goldgrub no longer reproduce unless hand fed ores
