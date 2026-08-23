@@ -32,12 +32,14 @@
 
 	name = "Sample #[rand(1,10000)]"
 
-#define SYMPTOM_KILLER_LEVEL 8 // Level minimum for our killer symptoms
-#define SYMPTOM_KILLER_SEVERITY 5 // Severity minimum for our killer symptoms
-#define SYMPTOM_BUFFER_LEVEL 3 // Level maximum for other symptoms.
-#define SYMPTOM_BUFFER_SEVERITY 1 // Severity minimum for other symptoms.
-#define SYMPTOM_BUFFER_NEUTER_PROB 50 // Chance of other symptoms being neutered
-#define SYMPTOM_BUFFER_STEALTH_MIN -1 // Minimum stealth stat in other symptoms for stealthy viruses
+#define SYMPTOM_KILLER_LEVEL 8 /// Level minimum for our killer symptoms
+#define SYMPTOM_KILLER_SEVERITY 5 /// Severity minimum for our killer symptoms
+#define SYMPTOM_KILLER_LEVEL_PENALTY 2 /// Level minimum and maximum penalty for picking two symptoms so we don't trash our stats.
+#define SYMPTOM_KILLER_SEVERITY_PENALTY 2 /// Severity minimum penalty for picking two symptoms.
+#define SYMPTOM_BUFFER_LEVEL 3 /// Level maximum for other symptoms.
+#define SYMPTOM_BUFFER_SEVERITY 1 /// Severity minimum for other symptoms.
+#define SYMPTOM_BUFFER_NEUTER_PROB 50 /// Chance of other symptoms being neutered
+#define SYMPTOM_BUFFER_STEALTH_MIN -1 /// Minimum stealth stat in other symptoms for stealthy viruses
 
 /datum/disease/advance/antag
 	name = "Antagonist Disease"
@@ -54,7 +56,7 @@
 	for(var/datum/symptom/possible_symptom in symptom_list)
 		if(symptoms.len >= VIRUS_SYMPTOM_LIMIT)
 			break
-		if(possible_symptom.level >= SYMPTOM_KILLER_LEVEL && possible_symptom.severity >= SYMPTOM_KILLER_SEVERITY && killer_symptoms >= 0)
+		if((!stealthy && possible_symptom.level >= SYMPTOM_KILLER_LEVEL && possible_symptom.severity >= SYMPTOM_KILLER_SEVERITY) || (stealthy && SYMPTOM_KILLER_LEVEL > possible_symptom.level >= SYMPTOM_KILLER_LEVEL - SYMPTOM_KILLER_LEVEL_PENALTY && possible_symptom.severity >= SYMPTOM_KILLER_SEVERITY - SYMPTOM_KILLER_SEVERITY_PENALTY ) && killer_symptoms >= 0)
 			killer_symptoms--
 			symptoms += new possible_symptom()
 			continue
