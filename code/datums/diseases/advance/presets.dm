@@ -71,8 +71,6 @@
 				NeuterSymptom(new_symptom)
 			continue
 
-	if(prob(75))
-		name = pick(GLOB.virus_prefixes) + pick(GLOB.virus_suffixes)
-	else
-		name = pick(GLOB.virus_names)
+	name = generate_virus_name()
 	Refresh()
+

@@ -401,3 +401,10 @@ GLOBAL_VAR(command_name)
 		numbers += "[i]"
 		numbers += "\Roman[i]"
 	return numbers
+
+/// Generates virus names
+/proc/generate_virus_name()
+	if(prob(75))
+		return pick(GLOB.virus_prefixes) + pick(GLOB.virus_suffixes)
+	else
+		return pick(GLOB.virus_names)

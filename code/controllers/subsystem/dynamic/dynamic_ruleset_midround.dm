@@ -256,14 +256,14 @@
 		if(infected_count >= patient_zeroes)
 			break
 
-	addtimer(CALLBACK(src, PROC_REF(announce_disease)), rand(75, 100) SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(announce_disease, our_disease.name)), rand(75, 100) SECONDS)
 
-/datum/dynamic_ruleset/midround/disease/proc/announce_disease()
-	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK7)
+/datum/dynamic_ruleset/midround/disease/proc/announce_disease(disease_name)
+	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "[disease_name] Alert", ANNOUNCER_OUTBREAK7)
 	send_status_display_biohazard_alert()
 
 /datum/dynamic_ruleset/midround/disease/false_alarm()
-	announce_disease()
+	announce_disease(generate_virus_name)
 
 /**
  * ### Ghost rulesets

@@ -409,8 +409,8 @@
 	//Viral modifiers to slow down/resist or go fast and loud.
 	if(prob(66))
 		var/list/datum/symptom/possible_modifiers = list(
-			/datum/symptom/viraladaptation,
-			/datum/symptom/viralevolution,
+			/datum/symptom/stats/adaptation,
+			/datum/symptom/stats/evolution,
 		)
 		var/datum/symptom/chosen_modifier = pick(possible_modifiers)
 		symptoms += new chosen_modifier
