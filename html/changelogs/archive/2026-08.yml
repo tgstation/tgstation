@@ -423,3 +423,242 @@
       because their rendering was broken
   timothymtorres:
   - bugfix: Fix helmets being flammable when armor is not
+2026-08-15:
+  ArrisFairburne:
+  - refactor: Stray cargo pod event now has its code divided up into smaller functions,
+      so it should be easier to create new subtypes of this event
+  Momiko:
+  - spellcheck: Fixed incorrect threshold numbers in the heal symptom descriptions
+      to match their actual stats.
+  PapaMichael:
+  - bugfix: Ghosts no longer trigger the AI's motion-sensitive camera alerts
+  YesterdaysPromise:
+  - rscadd: Plastitatnanium glass now makes pod directional windows, regular pod windows,
+      plastitaniumglass windowfilling which shall allow you to make such on a grille,
+      and its own plastitanium glass tiles.
+  - rscadd: Titanium glass now makes unique directional windows, and its own titanium
+      glass tiles.
+  - rscadd: Bronze tiles can now be reskinned into bronze glass tiles.
+  - rscadd: Runed metal can now make directional windows and fulltile windows, and
+      its tiles can be reskinned into runed glass tiles.
+  lelandkemble:
+  - balance: General Beepsky has regained its 100% projectile block chance
+  - balance: Saline-Glucose Solution's blood replacement effect loses effectiveness
+      over time.
+  san7890:
+  - bugfix: Latejoining as an AI on CatwalkStation should now work.
+2026-08-16:
+  Fghj240:
+  - balance: viruses with a positive severity can't be lost by starving
+  - balance: satiety has no effect on natural disease recovery
+  Maximal08:
+  - bugfix: Ashen Eyes description no longer states that they are a focus
+  PapaMichael:
+  - bugfix: The Destructive Analyzer properly unlocks research nodes again
+  TealSeer:
+  - bugfix: fixed icons in the biogenerator UI being broken
+  timothymtorres:
+  - rscadd: Add "Death Mimicry" positive quirk. Performing a death gasp knocks you
+      unconscious and tricks anyone examining you into believing you've succumbed
+      to your injuries for a short time.
+2026-08-17:
+  FalloutFalcon:
+  - code_imp: Adds support for a key of a language to be unset
+  JohnFulpWillard:
+  - qol: Deleted Bloodworm's stat panel entry and instead moved it to their action
+      button & a new screen alert.
+  Melbert:
+  - rscadd: Adds height preference, allowing you to pick between "Short", "Average",
+      or "Tall". This doesn't override the height of Settlers or Spacers.
+  - bugfix: Fixes height resetting to average from dna swapping shenanigans like transformation
+      sting.
+  - rscadd: Slimepeople can squeeze through grilles and similar, allowing them to
+      walk through them (though they can't carry augments or equipment along with
+      them).
+  MelokG000:
+  - rscadd: Sometimes there is a worm inside an apple.
+  PapaMichael:
+  - bugfix: The server should obey the config's `min_antag_cap` and `max_antag_cap`
+      for midround rulesets now.
+  QuiteLiterallyAnything:
+  - bugfix: The Pride ruin will no longer cause those standing on latticed chasms
+      to fall down normal chasms.
+  lelandkemble:
+  - qol: Put a guide explaining Carnivorous Blood in the Carnivorous Blood kit
+  - bugfix: fixed two ways damaging basic mobs that disappear when they die could
+      cause a runtime error
+  - bugfix: you can stack disks on holodisks
+  thegrb93:
+  - qol: Right clicking sink with beaker in hand drains it
+  - bugfix: Fixes mop interaction with sink
+2026-08-18:
+  PapaMichael:
+  - bugfix: Using shady skillchips to flip really fast is dangerous to your body's
+      temperature
+  - bugfix: Unequipping jet boots while flying now puts you back on the ground instead
+      of bugging you out
+  - bugfix: Showers and destructive scanners now render on their proper layers
+  QuiteLiterallyAnything:
+  - qol: Clown shoes are no longer destroyed by character loadouts.
+  Richard Blonski:
+  - rscadd: Chat Highlight sounds.
+  - qol: You can now enable chat highlight sounds.
+  - sound: added `sound/misc/highlight_sounds/Beep.ogg`
+  SmArtKar:
+  - bugfix: Fixed mirrors giving you bad luck with each hit, rather only when broken
+  - bugfix: Fixed Filterrific bluescreening when creating a color filter
+  levels0:
+  - balance: when ectoplasm residue is dispersed in hand, revenant gets sucked into
+      a mirror at the same range as when thrown
+  timothymtorres:
+  - sound: Add droplet sound to dropper
+  tontyGH:
+  - bugfix: Lizards and brain-damaged animals no longer suffer from unintended spontaneous
+      aneurysms
+2026-08-19:
+  ArcaneMusic:
+  - refactor: The way Lavaland Ore Vents spawn mobs have been completely reworked.
+  - rscadd: Lavaland ore vents spawn mobs in discrete waves that need to be fully
+      defeated before you can continue.
+  - qol: Lavaland vents now give a small visual indicator of where mobs are spawning
+      before they arrive.
+  - qol: Mobs spawned from ore vents now have a visual indicator above their head
+      to indicate if the mob must be defeated to complete the wave.
+  - balance: Vents now spawn 5/10/15 waves of mobs, consisting of 2 mob types each,
+      while still scaling to the size of the vent for difficulty. The mining point
+      rewards upon wave defense completion has been adjusted accordingly.
+  - rscdel: Node drones no longer have progress lights, as the wave progress is now
+      directly shown to the player as they complete waves.
+  - bugfix: Vent waves no longer spawn mobs straight into walls.
+  Glamyr:
+  - rscadd: Department Specific Shuttles! If you captain and one of departments has
+      most employees, you can buy that in communication console.
+  - code_imp: Improved the BuyingShuttle UI File.
+  Melbert:
+  - rscdel: 'Chem dispenser: Left clicking sub-recipes in the recipe browser no longer
+      pins the recipe'
+  - rscdel: 'Chem dispenser: Right clicking sub-recipes in the recipe browser no longer
+      puts the recipe in the search bar'
+  - qol: 'Chem dispenser: Hovering over sub-recipes shows the sub-recipe in the tooltip
+      itself'
+  - qol: 'Chem dispenser: You can move your mouse over sub-recipe tooltips to view
+      sub-sub-recipes (like how the wiki works)'
+  - qol: 'Chem dispenser: Sodium Chloride recipe is now shown in the recipe browser.
+      In case you somehow forget it like me, despite the name literally being the
+      recipe to make it'
+  YesterdaysPromise:
+  - rscadd: 'Following floors have recieved tiled variants: silver, gold, diamond,
+      plasma, uranium, bananium.'
+  - rscadd: Silver and gold tiles recieved additional variants representing moon and
+      sun respectively.
+  - rscadd: 'Following materials now make unique floors: bones (8 variants), plasteel
+      (6 variants), sandstone (4 variants), bluespace crystal (3 variants), telecrystal
+      (3 variants), adamantium (2 variants), metal hydrogen (2 variants), hauntium
+      (2 variants), runite, myhtril.'
+  - rscadd: 'Following materials now make unique wallls, including fake walls: bones,
+      adamantine, runite, metal hydrogen, hauntium, mythril.'
+  - rscadd: 'Following materials now make unique carpets: goliath hide, bear skin,
+      polar bear skin, carp scales, lizard scales, moth fur, human skin.'
+  - rscadd: Sandstone recieved a wall filling making two additional wall types.
+  - rscadd: Wood tiles recieved light and dark variants for all of their subtypes
+      (8 variants added).
+  - rscadd: Meat tiles exist properly now and recieved a fresh variant, matching with
+      variants of bone tiles.
+  - rscadd: Fake basalt tiles recieved a fake sand, red sand and moon sand variants,
+      all of which you can rake! Using the rake made from wood, already in game.
+  - rscadd: '"Recharge floor" recieved variants to match up with other styles of iron
+      flooring; white, dark and smooth.'
+  - rscadd: Bamboo tiles recieved a variant that's just bamboo, not a mat..
+  - rscadd: Added neo tiles. Grab 4 iron floor tiles and some  oil, radium and phosphorous
+      from chem to craft them. (4 variants)
+  - rscadd: Added silver-gold tiles. Grab a sheet of silver and gold each to craft
+      them. (4 variants)
+  - rscadd: Added ashen forge tiles. Grab a sheet of plastitanium, a plenty of ash
+      and some phosphorous from chem to craft them. (2 variants)
+  - rscadd: Added stained glass tiles. Grab 40 glass tiles, 20 iron rods, and a crayon
+      (mime's and rainbow excluded) to craft them. (8 types)
+  - rscadd: Plastic tiles recieved a 'puzzles' variant for that kitschy kids pen aesthetic
+      you'd expect out of plastic, and have inhands now instead of showing 'missing
+      texture'.
+  rkz/tsar-salat:
+  - refactor: refactored wing code significantly. Any wing organ is capable of any
+      level of flight now (as set by a var). Kindly indicate any inexplicable changes
+      to wings should they occur ingame.
+2026-08-20:
+  Iajret:
+  - bugfix: if theres more than one vent in line of sight between each other, node
+      drone would not fly away failing wave defence instantly.
+  Richard Blonski:
+  - bugfix: Fixed Fancy Weather preference, not being applied upon Z-Level change.
+  SmArtKar:
+  - balance: Watchers and legions no longer keep facing the target when retreating,
+      allowing for backstabs
+  - rscadd: Every 5 minutes 2-4 random cargo exports get tripled in price, lets go
+      gambling!
+  lelandkemble:
+  - bugfix: door remotes function in melee range
+  - bugfix: light replacers function in melee range
+2026-08-21:
+  DeltaFire15:
+  - bugfix: Cable-based robotic limb repairs are no longer impossible while not wearing
+      an uniform.
+  FalloutFalcon:
+  - refactor: breaks up navigate code into a proc for the choice vs the line creation
+  - admin: Admin VV topic to navigate a player to a marked object
+  JohnFulpWillard:
+  - bugfix: Orbit menu should now show antag HUDs as it was seemingly supposed to
+      from the start, instead of some antags simply showing a rev icon.
+  - refactor: De-hardcoded HUDs for jobs & antags, report any icons missing.
+  Melbert:
+  - rscdel: Spacesuits no longer fully conceal lizard tails
+  - rscadd: Species features like wings and tails will appear "meshed over" when wearing
+      certain equipment like spacesuits or biosuits.
+  - rscadd: Biosuits and beepeeker suit sprites now altar when worn by digitigrade
+      mobs.
+  - rscadd: Aprons and Overall sprites now altar when worn by digitigrade mobs.
+  - spellcheck: All heretic armor hoods are consistently known by their name, rather
+      than "ominous hood"
+  - balance: Donk. Flechette rounds aren't stealthy embeds and can be hand removed
+  - balance: Magboots (and similar forms of gravity negation) prevent you from falling
+      on shuttle movement
+  - bugfix: Fixes space phase deducting a charge on entrance and edit. Now only deducts
+      a charge on exit
+  - balance: Cosmic spell recharge condition changed to "crit targets within a tile
+      of a cosmic field" instead of "on a cosmic field"
+  - balance: Void spell recharge condition changed to "Stand near freezing enemies"
+      instead of "Crit freezing enemies"
+  Metek:
+  - balance: The Captain is now treated as a member of every department, for the purpose
+      of department-related vendor discounts.
+  - code_imp: The logic for determining a discount has been cleaned up a bit.
+  PapaMichael:
+  - bugfix: AI tracking from the crew monitoring console now works for people who
+      have set an ID card honorific too
+  QuiteLiterallyAnything:
+  - bugfix: Research discounts from toxins can now be purchased again.
+  hry-gh:
+  - bugfix: typepath suggestions are now filtered on the frontend
+  sqnztb:
+  - bugfix: ore vents now reset properly on losses.
+  uaioy:
+  - rscadd: The double-ended chainsaw  spear
+2026-08-22:
+  JohnFulpWillard:
+  - qol: Pressing backspace while unfocused now clears your command bar.
+  - qol: The Command bar now starts on Say instead of Command mode.
+  Melbert:
+  - bugfix: Humans can take CSL
+  SmArtKar:
+  - rscdel: Goldgrub no longer reproduce unless hand fed ores
+2026-08-23:
+  Absolucy:
+  - rscadd: Added purple luxury medipens. These are given instead when bought with
+      a jellyperson's bank account. They are jelly-friendly, however heal less than
+      normal luxury pens. They also make you more purple. Sprite by Bieyes.
+  FalloutFalcon:
+  - bugfix: Anchored Items cant be looted with quick inserting from bags
+  Richard Blonski:
+  - bugfix: Chat Highlight sounds are off by default now.
+  - qol: Chat Highlights won't trigger on self-actions or radio channel names.
+  levels0:
+  - rscadd: certain cursed mirrors might now talk

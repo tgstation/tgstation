@@ -54,3 +54,27 @@ export function isListArg(arg: VerbArgBase): boolean {
     arg.options.length > 0
   );
 }
+
+/**
+ * Filters typepaths to show direct children matching the query.
+ */
+export function filterTypepaths(
+  allPaths: string[],
+  query: string,
+  limit = 0,
+): string[] {
+  const lower = query.toLowerCase();
+  const parentPrefix = lower.endsWith('/')
+    ? lower
+    : lower.slice(0, lower.lastIndexOf('/') + 1);
+  const results: string[] = [];
+  for (const p of allPaths) {
+    const pl = p.toLowerCase();
+    if (!pl.startsWith(parentPrefix)) continue;
+    if (pl.slice(parentPrefix.length).includes('/')) continue;
+    if (!pl.startsWith(lower)) continue;
+    results.push(p);
+    if (limit > 0 && results.length >= limit) break;
+  }
+  return results;
+}

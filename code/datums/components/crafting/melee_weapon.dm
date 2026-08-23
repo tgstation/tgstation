@@ -134,6 +134,19 @@
 	time = 5 SECONDS
 	category = CAT_WEAPON_MELEE
 
+/datum/crafting_recipe/chainsaw/dual
+	name = "Double-ended chainsaw spear"
+	result = /obj/item/chainsaw/dual
+	reqs = list(
+		/datum/reagent/consumable/ethanol/beer = 20,
+		/obj/item/restraints/handcuffs/cable = 2,
+		/obj/item/chainsaw = 2,
+		/obj/item/stack/rods = 4,
+		/obj/item/stack/medical/wrap/sticky_tape = 2,
+	)
+	time = 5 SECONDS
+	category = CAT_WEAPON_MELEE
+
 /datum/crafting_recipe/spear
 	name = "Spear"
 	result = /obj/item/spear

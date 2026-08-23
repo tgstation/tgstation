@@ -50,10 +50,13 @@ GAME_VERB_HIDDEN(/mob/living, navigate, "Navigate")
 
 	var/platform_code = tgui_input_list(src, "Select a location", "Navigate", sort_list(destination_list))
 	var/atom/navigate_target = destination_list[platform_code]
+	create_navigation_line(navigate_target)
 
+/mob/living/proc/create_navigation_line(atom/navigate_target)
 	if(isnull(navigate_target) || incapacitated)
 		return
 
+	cut_navigation()
 
 	var/finding_zchange = FALSE
 	COOLDOWN_START(src, navigate_cooldown, 15 SECONDS)
@@ -127,6 +130,9 @@ GAME_VERB_HIDDEN(/mob/living, navigate, "Navigate")
 
 /mob/living/proc/cut_navigation()
 	SIGNAL_HANDLER
+	if(!length(client.navigation_images))
+		return
+
 	for(var/image/navigation_path in client.navigation_images)
 		client.images -= navigation_path
 	client.navigation_images.Cut()

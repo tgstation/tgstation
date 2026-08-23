@@ -1,4 +1,5 @@
 import {
+  filterTypepaths,
   isEntityArg,
   isListArg,
   isTextArg,
@@ -13,6 +14,7 @@ import {
   clearCommandBarAtom,
   focusCommandBarAtom,
   hotkeysAtom,
+  initializeCommandBarAtom,
   typepathsAtom,
   type Verb,
   type VerbArg,
@@ -131,9 +133,7 @@ function useSuggestions(
 
   const typepathSuggestions =
     selectedVerb && isCurrentTypepath && currentToken.startsWith('/')
-      ? typepaths
-          .filter((p) => p.toLowerCase().startsWith(currentToken.toLowerCase()))
-          .slice(0, 8)
+      ? filterTypepaths(typepaths, currentToken, 8)
       : [];
 
   const targetSuggestions =
@@ -178,12 +178,13 @@ export function CommandBar() {
   const focusSignal = useAtomValue(focusCommandBarAtom);
   const clearSignal = useAtomValue(clearCommandBarAtom);
   const hotkeys = useAtomValue(hotkeysAtom);
+  const initializeSignal = useAtomValue(initializeCommandBarAtom);
   const [input, setInput] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedVerb, setSelectedVerb] = useState<Verb | null>(null);
   const [filledArgs, setFilledArgs] = useState<string[]>([]);
   const [lastTypepathRequest, setLastTypepathRequest] = useState('');
-  const [mode, setMode] = useState<Mode>('Command');
+  const [mode, setMode] = useState<Mode>('Say');
   const inputRef = useRef<HTMLInputElement>(null);
   const historyRef = useRef<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
@@ -219,6 +220,12 @@ export function CommandBar() {
   }, []);
 
   useEffect(() => {
+    if (mode !== 'Command') {
+      enterChatMode(mode);
+    }
+  }, [initializeSignal]);
+
+  useEffect(() => {
     if (focusSignal > 0) {
       inputRef.current?.focus();
     }
@@ -232,11 +239,7 @@ export function CommandBar() {
 
   useEffect(() => {
     if (clearSignal > 0) {
-      if (mode !== 'Command') {
-        enterChatMode(mode);
-      } else {
-        resetState();
-      }
+      resetState();
     }
   }, [clearSignal]);
 
@@ -270,7 +273,6 @@ export function CommandBar() {
     setSelectedVerb(null);
     setFilledArgs([]);
     setSelectedIndex(0);
-    setLastTypepathRequest('');
   };
 
   const enterChatMode = (chatMode: Mode) => {
@@ -279,7 +281,6 @@ export function CommandBar() {
     setSelectedVerb(verb);
     setFilledArgs([]);
     setSelectedIndex(0);
-    setLastTypepathRequest('');
     setInput(serializeInput(verb, [], suffixForArg(verb.args[0])));
   };
 
@@ -299,7 +300,6 @@ export function CommandBar() {
     setSelectedVerb(verb);
     setFilledArgs([]);
     setSelectedIndex(0);
-    setLastTypepathRequest('');
     setInput(serializeInput(verb, [], suffixForArg(verb.args[0])));
     const firstArg = verb.args[0];
     if (firstArg && isEntityArg(firstArg)) {
@@ -317,8 +317,6 @@ export function CommandBar() {
   };
 
   const selectTypepath = (path: string) => {
-    Byond.sendMessage('verbs/request_typepaths', { parent: path });
-    setLastTypepathRequest(`${path}/`);
     if (!selectedVerb) return;
     const prefix = filledArgs.length > 0 ? `${filledArgs.join(' ')} ` : '';
     setInput(`${toKebab(selectedVerb.name)} ${prefix}${path}/`);
@@ -558,24 +556,6 @@ export function CommandBar() {
       }
     }
 
-    if (selectedVerb && isCurrentArgTypepath) {
-      const token = value.slice(
-        toKebab(selectedVerb.name).length +
-          1 +
-          filledArgs.join(' ').length +
-          (filledArgs.length > 0 ? 1 : 0),
-      );
-      const lastSlash = token.lastIndexOf('/');
-      if (lastSlash >= 0) {
-        const parentPrefix = token.slice(0, lastSlash + 1);
-        if (parentPrefix !== lastTypepathRequest) {
-          setLastTypepathRequest(parentPrefix);
-          Byond.sendMessage('verbs/request_typepaths', {
-            parent: token.slice(0, lastSlash) || '/datum',
-          });
-        }
-      }
-    }
   };
 
   const placeholder = selectedVerb

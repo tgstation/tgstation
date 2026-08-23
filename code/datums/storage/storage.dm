@@ -437,6 +437,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			user.balloon_alert(user, "no room!")
 		return FALSE
 
+	if(to_insert.anchored)
+		if(messages && user && !silent_for_user)
+			user.balloon_alert(user, "anchored!")
+		return FALSE
+
 	var/can_hold_it = isnull(can_hold) || is_type_in_typecache(to_insert, can_hold) || is_type_in_typecache(to_insert, exception_hold)
 	var/cant_hold_it = is_type_in_typecache(to_insert, cant_hold)
 	var/trait_says_no = HAS_TRAIT(to_insert, TRAIT_NO_STORAGE_INSERT)

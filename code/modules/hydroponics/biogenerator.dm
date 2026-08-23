@@ -512,6 +512,7 @@
 			cat["items"] += list(list(
 				"path" = design.type,
 				"name" = design.name,
+				"icon" = design.asset_id,
 				"is_reagent" = !isnull(design.make_reagent),
 				"cost" = design.materials[SSmaterials.get_material(/datum/material/biomass)] / efficiency,
 			))
