@@ -267,6 +267,8 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 		merged_networks |= network
 
 	if (!length(merged_networks))
+		for (var/datum/component/candela_node/update_node as anything in need_updates)
+			update_node.update_connections()
 		return
 
 	// Merge ourselves into the closest network, then merge all other located networks into it as well
