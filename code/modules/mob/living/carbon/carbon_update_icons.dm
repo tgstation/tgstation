@@ -329,35 +329,6 @@
 	overlays_standing[WOUND_LAYER] = wound_overlay
 	apply_overlay(WOUND_LAYER)
 
-/mob/living/carbon/update_worn_mask()
-	remove_overlay(FACEMASK_LAYER)
-	hud_used?.update_inventory_slot(ITEM_SLOT_MASK)
-
-	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
-		return
-
-	if(wear_mask && !(obscured_slots & HIDEMASK))
-		overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/clothing/mask.dmi', bodyshape = bodyshape)
-
-	apply_overlay(FACEMASK_LAYER)
-
-/mob/living/carbon/update_worn_neck()
-	remove_overlay(NECK_LAYER)
-	hud_used?.update_inventory_slot(ITEM_SLOT_NECK)
-
-	if(wear_neck && !(obscured_slots & HIDENECK))
-		overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(default_layer = NECK_LAYER, default_icon_file = 'icons/mob/clothing/neck.dmi', bodyshape = bodyshape)
-	apply_overlay(NECK_LAYER)
-
-/mob/living/carbon/update_worn_back()
-	remove_overlay(BACK_LAYER)
-	hud_used?.update_inventory_slot(ITEM_SLOT_BACK)
-
-	if(back)
-		overlays_standing[BACK_LAYER] = back.build_worn_icon(default_layer = BACK_LAYER, default_icon_file = 'icons/mob/clothing/back.dmi', bodyshape = bodyshape)
-
-	apply_overlay(BACK_LAYER)
-
 /mob/living/carbon/update_worn_legcuffs()
 	remove_overlay(LEGCUFF_LAYER)
 	clear_alert("legcuffed")
@@ -368,19 +339,6 @@
 		overlays_standing[LEGCUFF_LAYER] = mutable_appearance('icons/mob/simple/mob.dmi', cuffs.legcuff_state, -LEGCUFF_LAYER)
 	apply_overlay(LEGCUFF_LAYER)
 	throw_alert("legcuffed", /atom/movable/screen/alert/restrained/legcuffed, new_master = src.legcuffed)
-
-/mob/living/carbon/update_worn_head()
-	remove_overlay(HEAD_LAYER)
-	hud_used?.update_inventory_slot(ITEM_SLOT_HEAD)
-
-	if(!get_bodypart(BODY_ZONE_HEAD)) //Decapitated
-		return
-
-	if(head && !(obscured_slots & HIDEHEADGEAR))
-		overlays_standing[HEAD_LAYER] = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/clothing/head/default.dmi', bodyshape = bodyshape)
-
-	apply_overlay(HEAD_LAYER)
-
 
 /mob/living/carbon/update_worn_handcuffs()
 	remove_overlay(HANDCUFF_LAYER)
@@ -441,7 +399,6 @@
 
 		if(new_key == old_key)
 			new_limbs += limb_icon_cache[new_key]
-
 		else
 			if(body_zone == BODY_ZONE_HEAD)
 				head_update = TRUE
@@ -461,7 +418,8 @@
 
 	apply_overlay(BODYPARTS_LAYER)
 	// for legacy support, head changes triggers an eye/hair update
-	if(head_update)
+	// also run hair/eyes update on mob creation and other forced data updates to apply any custom changes made
+	if(head_update || update_limb_data)
 		update_eyes()
 		update_hair()
 
@@ -527,7 +485,7 @@
 		. += limb_gender
 	. += limb_id
 	. += husk_type
-	. += "husk"
+	. += is_husked == HUSKED_ZOMBIE ? "zombie_husk" : "burn_husk"
 	. += body_zone
 	if(is_invisible)
 		. += "invisible"

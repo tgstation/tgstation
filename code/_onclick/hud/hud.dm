@@ -474,6 +474,9 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /// Rebuilds our mob's hand slot screen elements
 /datum/hud/proc/build_hand_slots(update_hud = FALSE)
+	// Clean up existing hand slot objects
+	for (var/atom/movable/screen/inventory/hand/hand in screen_groups[HUD_GROUP_STATIC])
+		remove_screen_object(hand, FALSE)
 
 	for(var/i in 1 to length(mymob.held_items))
 		var/atom/movable/screen/inventory/hand/hand_box = add_screen_object(/atom/movable/screen/inventory/hand, HUD_KEY_HAND_SLOT(i), HUD_GROUP_STATIC, ui_style, ui_hand_position(i))

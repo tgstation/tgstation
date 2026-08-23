@@ -110,7 +110,7 @@
 /datum/species/golem/proc/on_examine(mob/living/carbon/human/source, mob/living/examiner, list/examine_text)
 	SIGNAL_HANDLER
 
-	if(source.appears_alive())
+	if(!IS_DEAD_OR_FAKING(source))
 		return
 
 	examine_text += span_warning("This golem appears to be in a state of disrepair. \
@@ -119,7 +119,7 @@
 /datum/species/golem/proc/rebuild_check(mob/living/carbon/human/source, mob/living/user, obj/item/tool, ...)
 	SIGNAL_HANDLER
 
-	if(source.appears_alive())
+	if(!IS_DEAD_OR_FAKING(source))
 		return NONE
 
 	if(!isstack(tool) || !is_type_in_list(tool, GLOB.golem_stack_food_directory))
@@ -218,7 +218,7 @@
 	SIGNAL_HANDLER
 
 	if(source.nutrition < NUTRITION_LEVEL_STARVING)
-		if(!early_warning && COOLDOWN_FINISHED(src, warning_cd) && source.stat < UNCONSCIOUS)
+		if(!early_warning && COOLDOWN_FINISHED(src, warning_cd) && !IS_UNCONSCIOUS(source))
 			source.visible_message(
 				span_warning("[source] shudders weakly as their form begins to destabilize!"),
 				span_bolddanger("You feel your form destabilizing as you run low on material to sustain yourself! \
@@ -232,7 +232,7 @@
 		early_warning = FALSE
 
 	if(source.nutrition < 50)
-		if(!final_warning && COOLDOWN_FINISHED(src, warning_cd) && source.stat < UNCONSCIOUS)
+		if(!final_warning && COOLDOWN_FINISHED(src, warning_cd) && !IS_UNCONSCIOUS(source))
 			source.visible_message(
 				span_warning("[source] looks like they're on the verge of falling apart!"),
 				span_userdanger("Your form shudders violently as you near complete destabilization! \

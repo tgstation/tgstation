@@ -107,7 +107,6 @@
 	health = 130
 	projectile_type = /obj/projectile/temp/watcher/ice_wing
 	gaze_attack = /datum/action/cooldown/mob_cooldown/watcher_gaze/ice
-	butcher_results = list(/obj/item/stack/ore/diamond = 5, /obj/item/stack/sheet/bone = 1)
 	butcher_results = list(
 		/obj/item/stack/sheet/bone = 1,
 		/obj/item/stack/ore/diamond = 5,

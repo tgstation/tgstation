@@ -1,11 +1,11 @@
 /mob/living/basic/bot/mulebot/proc/set_cell_hud()
 	if(!has_power())
-		set_hud_image_state(DIAG_BATT_HUD, "hudnobatt")
+		set_hud_image_state(DIAG_BATT_HUD, hud_state = "hudnobatt")
 		return
 
 	var/atom/movable/screen/mob_charge/charge_hud = hud_used?.screen_objects[HUD_MULEBOT_CHARGE]
 	charge_hud?.calculate_charge()
-	set_hud_image_state(DIAG_BATT_HUD, "hudbatt[RoundDiagBar(cell.charge/cell.maxcharge)]")
+	set_hud_image_state(DIAG_BATT_HUD, hud_state = "hudbatt[RoundDiagBar(cell.charge/cell.maxcharge)]")
 
 /atom/movable/screen/mob_charge
 	icon = 'icons/obj/machines/cell_charger.dmi'

@@ -9,7 +9,7 @@
 	hud_type = /datum/hud/human
 	pressure_resistance = 25
 	buckle_lying = 0
-	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID
+	mob_biotypes = NONE // The current mob biotypes of human mobs are dependent on the human species (and the organ set bonus)
 	can_be_shoved_into = TRUE
 	initial_language_holder = /datum/language_holder/empty // We get stuff from our species
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
@@ -57,8 +57,16 @@
 	var/jumpsuit_style = PREF_SUIT //suit/skirt
 
 	//Equipment slots
-	var/obj/item/clothing/wear_suit = null
-	var/obj/item/clothing/w_uniform = null
+	var/obj/item/back = null
+	var/obj/item/head = null
+	var/obj/item/gloves = null
+	var/obj/item/ears = null
+	var/obj/item/glasses = null
+	var/obj/item/shoes = null
+	var/obj/item/wear_neck = null
+	var/obj/item/wear_mask = null
+	var/obj/item/wear_suit = null
+	var/obj/item/w_uniform = null
 	var/obj/item/belt = null
 	var/obj/item/wear_id = null
 	var/obj/item/r_store = null

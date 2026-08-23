@@ -257,7 +257,7 @@
 	if(!(message_mods[MODE_CUSTOM_SAY_ERASE_INPUT]))
 		if(message_mods[WHISPER_MODE] == MODE_WHISPER)
 			spans |= SPAN_ITALICS
-			eavesdrop_range = EAVESDROP_EXTRA_RANGE
+			eavesdrop_range = EAVESDROP_RANGE
 			range = WHISPER_RANGE
 
 	log_sayverb_talk(message, message_mods, tag = "imaginary friend", forced_by = forced)

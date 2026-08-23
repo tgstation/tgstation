@@ -635,7 +635,7 @@
 	return list(/datum/reagent/medicine/c2/lenturi = 10)
 
 /obj/item/stack/medical/ointment/suicide_act(mob/living/user)
-	user.visible_message(span_suicide("[user] is squeezing [src] into [user.p_their()] mouth! [user.p_do(TRUE)]n't [user.p_they()] know that stuff is toxic?"))
+	user.visible_message(span_suicide("[user] is squeezing [src] into [user.p_their()] mouth! [capitalize(user.p_do())]n't [user.p_they()] know that stuff is toxic?"))
 	return TOXLOSS
 
 /obj/item/stack/medical/mesh

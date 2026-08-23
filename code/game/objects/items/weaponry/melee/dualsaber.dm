@@ -192,10 +192,8 @@
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		return ""
 	var/in_mouth = ""
-	if(iscarbon(user))
-		var/mob/living/carbon/C = user
-		if(C.wear_mask)
-			in_mouth = ", barely missing [user.p_their()] nose"
+	if(iscarbon(user) && user.get_item_by_slot(ITEM_SLOT_MASK))
+		in_mouth = ", barely missing [user.p_their()] nose"
 	. = span_rose("[user] swings [user.p_their()] [name][in_mouth]. [user.p_They()] light[user.p_s()] [A.loc == user ? "[user.p_their()] [A.name]" : A] in the process.")
 	playsound(loc, hitsound, get_clamped_volume(), TRUE, -1)
 	add_fingerprint(user)
@@ -214,14 +212,13 @@
 /obj/item/dualsaber/purple
 	possible_colors = list("purple")
 
-/obj/item/dualsaber/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(W.tool_behaviour == TOOL_MULTITOOL)
-		if(!hacked)
-			hacked = TRUE
-			to_chat(user, span_warning("2XRNBW_ENGAGE"))
-			saber_color = "rainbow"
-			update_appearance()
-		else
-			to_chat(user, span_warning("It's starting to look like a triple rainbow - no, nevermind."))
-	else
-		return ..()
+/obj/item/dualsaber/multitool_act(mob/living/user, obj/item/tool)
+	if(hacked)
+		to_chat(user, span_warning("It's starting to look like a triple rainbow - no, nevermind."))
+		return ITEM_INTERACT_BLOCKING
+	hacked = TRUE
+	to_chat(user, span_warning("2XRNBW_ENGAGE"))
+	saber_color = "rainbow"
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+

@@ -74,7 +74,7 @@
 		span_notice("You struggle to break free from the gelatinous resin... (Stay still for about a minute and a half.)"),
 		span_hear("You hear squelching..."))
 
-	if(!do_after(captive, 100 SECONDS, target = src, hidden = TRUE))
+	if(!do_after(captive, 100 SECONDS, target = src, cog_icon = null))
 		if(captive.buckled)
 			to_chat(captive, span_warning("You fail to unbuckle yourself!"))
 		return

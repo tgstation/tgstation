@@ -1,6 +1,7 @@
 ///AI controller for vending machine gone rogue, Don't try using this on anything else, it wont work.
 /datum/ai_controller/vending_machine
 	movement_delay = 0.4 SECONDS
+	behavior_tree_json = "code/datums/ai/objects/vending_machines/vending_machine.bt.json"
 	blackboard = list(
 		BB_VENDING_CURRENT_TARGET = null,
 		BB_VENDING_TILT_COOLDOWN = 0,
@@ -10,10 +11,6 @@
 	)
 	/// If TRUE stops mobs from buying things from active machines
 	var/block_usage = FALSE
-	/// Range to search for mobs to crunch
-	var/vision_range = 7
-	/// Seconds between attempts to find a new mob to crunch
-	var/search_for_enemy_cooldown = 2 SECONDS
 
 /datum/ai_controller/vending_machine/TryPossessPawn(atom/new_pawn)
 	if(!istype(new_pawn, /obj/machinery/vending))
@@ -34,26 +31,6 @@
 	RemoveElement(/datum/element/footstep, FOOTSTEP_OBJ_MACHINE, 1, -6, sound_vary = TRUE)
 	UnregisterSignal(vendor_pawn, COMSIG_VENDING_UI_INTERACT)
 	return ..() //Run parent at end
-
-/datum/ai_controller/vending_machine/SelectBehaviors(seconds_per_tick)
-	current_behaviors = list()
-	var/obj/machinery/vending/vendor_pawn = pawn
-
-	if(vendor_pawn.tilted) //We're tilted, try to untilt
-		if(blackboard[BB_VENDING_UNTILT_COOLDOWN] > world.time)
-			return
-		queue_behavior(/datum/ai_behavior/vendor_rise_up)
-		return
-	else //Not tilted, try to find target to tilt onto.
-		if(blackboard[BB_VENDING_TILT_COOLDOWN] > world.time)
-			return
-		for(var/mob/living/living_target in oview(vision_range, pawn))
-			if(living_target.stat || living_target.incorporeal_move) //They're already fucked up or incorporeal
-				continue
-			set_blackboard_key(BB_VENDING_CURRENT_TARGET, living_target)
-			queue_behavior(/datum/ai_behavior/vendor_crush, BB_VENDING_CURRENT_TARGET)
-			return
-		set_blackboard_key(BB_VENDING_TILT_COOLDOWN, world.time + search_for_enemy_cooldown)
 
 /datum/ai_controller/vending_machine/proc/deny_vending_interact(obj/machinery/vending/vending_machine, mob/user, datum/tgui/ui)
 	SIGNAL_HANDLER

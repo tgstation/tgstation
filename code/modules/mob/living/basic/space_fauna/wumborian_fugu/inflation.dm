@@ -66,7 +66,7 @@
 	fugu.melee_damage_upper = 20
 	fugu.obj_damage = 60
 	fugu.ai_controller.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, TRUE)
-	fugu.ai_controller.CancelActions()
+	fugu.ai_controller.cancel_current_plan()
 
 /datum/status_effect/inflated/on_remove()
 	. = ..()
@@ -84,7 +84,7 @@
 		fugu.icon_state = "Fugu0"
 	fugu.obj_damage = 0
 	fugu.ai_controller.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, FALSE)
-	fugu.ai_controller.CancelActions()
+	fugu.ai_controller.cancel_current_plan()
 
 /// Remove status effect if we die
 /datum/status_effect/inflated/proc/check_death(mob/living/source, new_stat)

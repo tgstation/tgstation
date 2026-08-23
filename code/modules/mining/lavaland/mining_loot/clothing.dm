@@ -33,6 +33,7 @@
 	RegisterSignal(user, COMSIG_LIVING_HEALTH_UPDATE, PROC_REF(check_health))
 	icon_state = "memento_mori_active"
 	active_owner = user
+	ADD_TRAIT(src, TRAIT_DANGEROUS_UNEQUIP, TRAIT_GENERIC)
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/mori()
 	icon_state = "memento_mori"
@@ -43,6 +44,7 @@
 	active_owner = null
 	to_chat(stored_owner, span_userdanger("You feel your life rapidly slipping away from you!"))
 	stored_owner.dust(just_ash = TRUE, drop_items = TRUE)
+	REMOVE_TRAIT(src, TRAIT_DANGEROUS_UNEQUIP, TRAIT_GENERIC)
 
 /obj/item/clothing/neck/necklace/memento_mori/proc/check_health(mob/living/source)
 	SIGNAL_HANDLER
@@ -140,5 +142,5 @@
 		return NONE
 	if(!ismineralturf(rocks) && !isasteroidturf(rocks))
 		return NONE
-	rocks.attackby(src, user)
+	INVOKE_ASYNC(src, PROC_REF(melee_attack_chain), user, rocks)
 	return COMPONENT_CANCEL_ATTACK_CHAIN

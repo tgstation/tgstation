@@ -157,7 +157,7 @@
 	if(affected_mob.bodytemperature >= T0C)
 		return
 	var/power = -0.00003 * (affected_mob.bodytemperature ** 2) + 3
-	if(HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT)) //Significantly more effective when unconscious
+	if(IS_UNCONSCIOUS(affected_mob)) //Significantly more effective when unconscious
 		power *= 2
 	var/need_mob_update
 	need_mob_update = affected_mob.adjust_oxy_loss(-1.5 * power * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype)
@@ -317,14 +317,18 @@
 	/// Add about half this much extra blood regen per second.
 	var/extra_regen = 0.25
 
-	/// Add many extra units of blood per unit of saline.
-	var/dilution_per_unit = 5
-
-	/// Doesn't dilute blood beyond this point.
-	var/dilution_cap = BLOOD_VOLUME_NORMAL
-
 	/// Only supplements blood types that use this restoration chem.
 	var/required_restoration_chem = /datum/reagent/iron
+
+/datum/reagent/medicine/salglu_solution/on_mob_add(mob/living/affected_mob, amount)
+	. = ..()
+	if(affected_mob.get_bloodtype()?.restoration_chem != required_restoration_chem)
+		return
+
+	if(affected_mob.has_status_effect(/datum/status_effect/stacking/saline_glucose_dilution))
+		return
+
+	affected_mob.apply_status_effect(/datum/status_effect/stacking/saline_glucose_dilution)
 
 /datum/reagent/medicine/salglu_solution/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -1422,6 +1426,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_PLANT // no healing ghosts
+	var/healing = 0.75
 
 /datum/reagent/medicine/regen_jelly/expose_mob(mob/living/exposed_mob, reac_volume)
 	. = ..()
@@ -1434,7 +1439,7 @@
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	var/heal = -0.75 * metabolization_ratio * seconds_per_tick
+	var/heal = -healing * metabolization_ratio * seconds_per_tick
 	var/need_mob_update
 	need_mob_update = affected_mob.adjust_brute_loss(heal, updating_health = FALSE, required_bodytype = affected_bodytype)
 	need_mob_update += affected_mob.adjust_fire_loss(heal, updating_health = FALSE, required_bodytype = affected_bodytype)
@@ -1442,6 +1447,13 @@
 	need_mob_update += affected_mob.adjust_tox_loss(heal, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype) //heals TOXINLOVERs
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
+
+// purple
+/datum/reagent/medicine/regen_jelly/diluted
+	name = "Diluted Regenerative Jelly"
+	description = "Regenerative slime jelly thas has been diluted, resulting in it regenerating tissues slower, but lasting longer with the same volume."
+	metabolization_rate = 0.125 * REAGENTS_METABOLISM
+	healing = 0.45 // less than omnizine, actually
 
 /datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
 	name = "Restorative Nanites"
@@ -1999,14 +2011,3 @@
 	if(affected_mob.losebreath >= 1)
 		affected_mob.losebreath -= 1 * metabolization_ratio * seconds_per_tick
 		return UPDATE_MOB_HEALTH
-
-/datum/reagent/medicine/immunosilence
-	name = "ImmunoSilence"
-	description = "Prevents viruses from being naturally cured."
-	metabolization_rate = 0.25 * REAGENTS_METABOLISM
-	metabolized_traits = list(TRAIT_NO_SELF_CURE)
-	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	ph = 5.5
-	color = "#C8A5DC"
-	taste_description = "plastic"
-	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS

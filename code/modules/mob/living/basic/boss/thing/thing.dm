@@ -69,8 +69,8 @@
 	if(!maploaded)
 		return
 	spawn_loc = loc
-	RegisterSignal(src, COMSIG_AI_BLACKBOARD_KEY_SET(BB_BASIC_MOB_CURRENT_TARGET), PROC_REF(target_gained))
-	RegisterSignal(src, COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_BASIC_MOB_CURRENT_TARGET), PROC_REF(target_lost))
+	RegisterSignal(src, COMSIG_AI_BLACKBOARD_KEY_SET(BB_CURRENT_TARGET), PROC_REF(target_gained))
+	RegisterSignal(src, COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_CURRENT_TARGET), PROC_REF(target_lost))
 	SSqueuelinks.add_to_queue(src, RUIN_QUEUE, 0)
 	return INITIALIZE_HINT_LATELOAD
 
@@ -79,14 +79,14 @@
 
 /mob/living/basic/boss/thing/update_icon_state()
 	. = ..()
-	if(stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		icon_state = "dead"
 		return
 	icon_state = "p[phase]"
 	icon_living = icon_state
 
 /mob/living/basic/boss/thing/adjust_health(amount, updating_health = TRUE, forced = FALSE)
-	if(phase_invulnerability_timer || phase == 3 || stat || amount <= 0)
+	if(phase_invulnerability_timer || phase == 3 || IS_UNCONSCIOUS_OR_CRIT(src) || amount <= 0)
 		return ..()
 	var/potential_excess = bruteloss + amount - (maxHealth/3)*phase
 	if(potential_excess > 0)
@@ -126,13 +126,13 @@
 /// If we started premapped, and we lost our target, start a 3 minute timer to return to spawn turf unless we gain aggro again
 /mob/living/basic/boss/thing/proc/target_lost(datum/source)
 	SIGNAL_HANDLER
-	if(stat || client || loc == spawn_loc || return_timer)
+	if(IS_UNCONSCIOUS_OR_CRIT(src) || client || loc == spawn_loc || return_timer)
 		return
 	return_timer = addtimer(CALLBACK(src, PROC_REF(return_to_spawn_check)), 3 MINUTES, TIMER_STOPPABLE | TIMER_DELETE_ME)
 
 /// Return us to our spawn loc (ruin boss only) if we are alive and have an ai controller and our loc isnt the spawn loc
 /mob/living/basic/boss/thing/proc/return_to_spawn_check()
-	if(isnull(ai_controller) || QDELETED(src) || loc == spawn_loc || stat || client)
+	if(isnull(ai_controller) || QDELETED(src) || loc == spawn_loc || IS_UNCONSCIOUS_OR_CRIT(src) || client)
 		return
 	return_to_spawnloc()
 
@@ -179,9 +179,9 @@
 /// Immediately set out blackboard target key (if empty) to whoever attacks us; this is primarily because it has a lowered aggro range and a high sight range
 /mob/living/basic/boss/thing/proc/immediate_aggro(datum/source, mob/attacker, flags)
 	SIGNAL_HANDLER
-	if(isnull(ai_controller) || stat || !istype(attacker) || ai_controller.blackboard_key_exists(BB_BASIC_MOB_CURRENT_TARGET))
+	if(isnull(ai_controller) || IS_UNCONSCIOUS_OR_CRIT(src) || !istype(attacker) || ai_controller.blackboard_key_exists(BB_CURRENT_TARGET))
 		return
-	ai_controller?.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, attacker)
+	ai_controller?.set_blackboard_key(BB_CURRENT_TARGET, attacker)
 
 /mob/living/basic/boss/thing/vv_edit_var(vname, vval)
 	. = ..()
@@ -303,7 +303,7 @@
 	/// queue id
 	var/queue_id = RUIN_QUEUE
 	/// blackboard key for target
-	var/target_bb_key = BB_BASIC_MOB_CURRENT_TARGET
+	var/target_bb_key = BB_CURRENT_TARGET
 
 /obj/structure/aggro_gate/Initialize(mapload)
 	. = ..()

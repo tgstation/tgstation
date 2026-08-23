@@ -153,6 +153,8 @@
 #define COMSIG_MOB_DROPPED_ITEM "mob_dropped_item"
 ///from base of obj/item/pickup(): (/mob/taker)
 #define COMSIG_ITEM_PICKUP "item_pickup"
+///from base of mob/put_in_hand(), after forceMove  item is now in the mob's hand: (mob/holder, hand_index)
+#define COMSIG_ITEM_ENTERED_HANDS "item_entered_hands"
 ///from base of obj/item/on_outfit_equip(): (mob/equipper, visuals_only, slot)
 #define COMSIG_ITEM_EQUIPPED_AS_OUTFIT "item_equip_as_outfit"
 ///from base of datum/storage/handle_enter(): (datum/storage/storage)
@@ -255,6 +257,13 @@
 #define COMSIG_CLOSET_INSERT "closet_insert"
 	///used to interrupt insertion
 	#define COMPONENT_CLOSET_INSERT_INTERRUPT (1<<0)
+
+/// From closet_teleporter_controller when something is teleporting through a closet
+#define COMSIG_CLOSET_TELEPORTER_PRE_SENDING "closet_teleporter_pre_sending"
+	/// Blocks the item from teleporting
+	#define CLOSET_TELEPORT_BLOCKED (1<<0)
+	/// Ignores the can_teleport check
+	#define CLOSET_TELEPORT_FORCED (1<<1)
 
 ///From open: (forced)
 #define COMSIG_CLOSET_PRE_OPEN "closet_pre_open"
@@ -592,9 +601,9 @@
 /// from /obj/machinery/computer/camera_advanced/shuttle_docker/gatherNavComputerOverlays() : (list/images_out)
 #define COMSIG_SHUTTLE_NAV_COMPUTER_IMAGE_REQUESTED "shuttle_nav_computer_image_requested"
 
-/// Sent from /obj/item/organ/wings/functional/proc/open_wings(): (mob/living/carbon/owner)
+/// Sent from /obj/item/organ/wings/proc/open_wings(): (mob/living/carbon/owner)
 #define COMSIG_WINGS_OPENED "wings_opened"
-/// Sent from /obj/item/organ/wings/functional/proc/close_wings(): (mob/living/carbon/owner)
+/// Sent from /obj/item/organ/wings/proc/close_wings(): (mob/living/carbon/owner)
 #define COMSIG_WINGS_CLOSED "wings_closed"
 
 /// Sent from /obj/item/clothing/shoes/bhop/rocket/jet, specifically it's toggle action /datum/action/item_action/toggle_flight

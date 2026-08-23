@@ -1,4 +1,0 @@
-author: "Fghj240"
-delete-after: True
-changes:
-  - bugfix: "cyberheart blood regeneration properly scales with heart damage"

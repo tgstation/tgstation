@@ -40,7 +40,7 @@
 	dir = 1
 	},
 /obj/effect/landmark/bitrunning/hololadder_spawn,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/virtual_domain/safehouse)
 "n" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -82,7 +82,7 @@
 	dir = 5
 	},
 /obj/effect/landmark/bitrunning/hololadder_spawn,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/virtual_domain/safehouse)
 "x" = (
 /obj/effect/turf_decal/weather/snow/corner{
@@ -136,7 +136,7 @@
 	dir = 9
 	},
 /obj/effect/landmark/bitrunning/hololadder_spawn,
-/turf/open/floor/pod,
+/turf/open/floor/mineral/plastitanium/pod,
 /area/virtual_domain/safehouse)
 "I" = (
 /obj/effect/decal/cleanable/dirt/dust,

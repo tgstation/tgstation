@@ -1,6 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - qol: "crowbarring a transit tube pod out of a transit tube now provides messaging when successful or unsuccessful"
-  - bugfix: "reinforcing plating that is then reinforced into reinforced plating no longer reinforces the reinforced plating what was reinforced mid-reinforcement"
-  - code_imp: "30 files (maybe 29) (maybe 28) (depends what order you're seeing these changelogs in) have been converted from attackby() to item_interaction()"

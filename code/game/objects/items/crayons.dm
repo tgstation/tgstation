@@ -609,7 +609,7 @@
 		return NONE
 
 	var/mob/living/carbon/human/pwned_human = interacting_with
-	if(!(pwned_human.stat == DEAD || HAS_TRAIT(pwned_human, TRAIT_FAKEDEATH)))
+	if(!IS_DEAD_OR_FAKING(pwned_human))
 		return NONE
 
 	interacting_with.balloon_alert(user, "drawing outline...")

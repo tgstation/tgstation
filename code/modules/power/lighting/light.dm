@@ -416,7 +416,7 @@
 		return ITEM_INTERACT_SUCCESS
 
 	// attempt to stick weapon into light socket
-	if(status != LIGHT_EMPTY || user.combat_mode)
+	if(status != LIGHT_EMPTY || user.combat_mode || istype(tool, /obj/item/lightreplacer))
 		return NONE
 
 	if(tool.item_flags & ABSTRACT)
@@ -427,6 +427,7 @@
 		do_sparks(3, TRUE, src)
 		if (prob(75))
 			electrocute_mob(user, get_area(src), src, (rand(7,10) * 0.1), TRUE)
+
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/light/screwdriver_act(mob/living/user, obj/item/tool)
@@ -502,13 +503,13 @@
 // if a light is turned off, it won't activate emergency power
 /obj/machinery/light/proc/turned_off()
 	var/area/local_area = get_room_area()
-	return !local_area.lightswitch && local_area.power_light || flickering
+	return (local_area && !local_area.lightswitch && local_area.power_light) || flickering
 
 // returns whether this light has power
 // true if area has power and lightswitch is on
 /obj/machinery/light/proc/has_power()
 	var/area/local_area = get_room_area()
-	return local_area.lightswitch && local_area.power_light
+	return local_area && local_area.lightswitch && local_area.power_light
 
 // returns whether this light has emergency power
 // can also return if it has access to a certain amount of that power

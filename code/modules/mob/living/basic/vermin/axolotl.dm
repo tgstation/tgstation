@@ -37,6 +37,6 @@
 	AddElement(/datum/element/can_be_held)
 
 /datum/ai_controller/basic_controller/axolotl
+	behavior_tree_json = "code/modules/mob/living/basic/vermin/axolotl.bt.json"
 	ai_traits = PASSIVE_AI_FLAGS
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk

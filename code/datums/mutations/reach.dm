@@ -1,7 +1,7 @@
 ///Telekinesis lets you interact with objects from range, and gives you a light blue halo around your head.
 /datum/mutation/telekinesis
 	name = "Telekinesis"
-	desc = "A strange mutation that allows the holder to interact with objects through thought."
+	desc = "The subject gains the ability to interact with objects through thought."
 	quality = POSITIVE
 	difficulty = 18
 	text_gain_indication = span_notice("You feel smarter!")
@@ -34,7 +34,8 @@
 
 /datum/mutation/elastic_arms
 	name = "Elastic Arms"
-	desc = "Subject's arms have become elastic, allowing them to stretch up to a meter away. However, this elasticity makes it difficult to wear gloves, handle complex tasks, or grab large objects."
+	desc = "The subject's arms become elastic, allowing them to stretch up to a meter away. \
+		However, this elasticity makes it difficult to wear gloves, handle complex tasks, or grab large objects."
 	quality = POSITIVE
 	instability = POSITIVE_INSTABILITY_MAJOR
 	text_gain_indication = span_warning("You feel armstrong!")

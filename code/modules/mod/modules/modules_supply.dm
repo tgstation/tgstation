@@ -2,7 +2,7 @@
 
 ///Internal GPS - Extends a GPS you can use.
 /obj/item/mod/module/gps
-	name = "MOD internal GPS module"
+	name = "\improper MOD internal GPS module"
 	desc = "This module uses common Nanotrasen technology to calculate the user's position anywhere in space, \
 		down to the exact coordinates. This information is fed to a central database viewable from the device itself, \
 		though using it to help people is up to you."
@@ -24,7 +24,7 @@
 
 ///Hydraulic Clamp - Lets you pick up and drop crates.
 /obj/item/mod/module/clamp
-	name = "MOD hydraulic clamp module"
+	name = "\improper MOD hydraulic clamp module"
 	desc = "A series of actuators installed into both arms of the suit, boasting a lifting capacity of almost a ton. \
 		However, this design has been locked by Nanotrasen to be primarily utilized for lifting various crates. \
 		A lot of people would say that loading cargo is a dull job, but you could not disagree more."
@@ -67,7 +67,7 @@
 		if(!check_crate_pickup(picked_crate))
 			return
 		playsound(src, 'sound/vehicles/mecha/hydraulic.ogg', 25, TRUE)
-		if(!do_after(mod.wearer, load_time, target = target))
+		if(!do_after(mod.wearer, load_time, target))
 			balloon_alert(mod.wearer, "interrupted!")
 			return
 		if(!check_crate_pickup(picked_crate))
@@ -76,22 +76,27 @@
 		picked_crate.forceMove(src)
 		balloon_alert(mod.wearer, "picked up crate")
 		drain_power(use_energy_cost)
-	else if(length(stored_crates))
+		return
+
+	if(length(stored_crates))
 		var/turf/target_turf = get_turf(target)
 		if(target_turf.is_blocked_turf())
 			return
 		playsound(src, 'sound/vehicles/mecha/hydraulic.ogg', 25, TRUE)
-		if(!do_after(mod.wearer, load_time, target = target))
+		if(!do_after(mod.wearer, load_time, target))
 			balloon_alert(mod.wearer, "interrupted!")
 			return
 		if(target_turf.is_blocked_turf())
 			return
 		var/atom/movable/dropped_crate = pop(stored_crates)
+		if(!dropped_crate)
+			return
 		dropped_crate.forceMove(target_turf)
 		balloon_alert(mod.wearer, "dropped [dropped_crate]")
 		drain_power(use_energy_cost)
-	else
-		balloon_alert(mod.wearer, "invalid target!")
+		return
+
+	balloon_alert(mod.wearer, "invalid target!")
 
 /obj/item/mod/module/clamp/on_part_deactivation(deleting = FALSE)
 	if(deleting)
@@ -112,7 +117,7 @@
 	return TRUE
 
 /obj/item/mod/module/clamp/loader
-	name = "MOD loader hydraulic clamp module"
+	name = "\improper MOD loader hydraulic clamp module"
 	icon_state = "clamp_loader"
 	complexity = 0
 	removable = FALSE
@@ -125,7 +130,7 @@
 
 ///Drill - Lets you dig through rock and basalt.
 /obj/item/mod/module/drill
-	name = "MOD drill module"
+	name = "\improper MOD drill module"
 	desc = "An arm-mounted drill, typically extending over the user's hand. While useful for drilling through rock, \
 		your drill is surely the one that both pierces and creates the heavens. Integrates with mining MODs' sphere \
 		transformation module, changing it from a mere traversal tool to high-powered excavation unit."
@@ -178,11 +183,11 @@
 	if(!. || !mod.wearer.Adjacent(target))
 		return
 
-	if(!ismineralturf(target) || !isasteroidturf(target))
+	if(!ismineralturf(target) && !isasteroidturf(target))
 		return
 
 	if(drain_power(use_energy_cost))
-		target.attackby(src, mod.wearer)
+		target.base_item_interaction(mod.wearer, src)
 
 /obj/item/mod/module/drill/proc/bump_mine(mob/living/carbon/human/bumper, atom/bumped_into, proximity)
 	SIGNAL_HANDLER
@@ -241,7 +246,7 @@
 
 /// Ore Bag - Lets you pick up ores and drop them from the suit.
 /obj/item/mod/module/orebag
-	name = "MOD ore bag module"
+	name = "\improper MOD ore bag module"
 	desc = "An integrated ore storage system installed into the suit, \
 		this utilizes precise electromagnets and storage compartments to automatically collect and deposit ore. \
 		It's recommended by Nakamura Engineering to actually deposit that ore at local refineries."
@@ -314,7 +319,7 @@
 		playsound(mod.wearer, SFX_RUSTLE, 50, TRUE)
 
 /obj/item/mod/module/hydraulic
-	name = "MOD loader hydraulic arms module"
+	name = "\improper MOD loader hydraulic arms module"
 	desc = "A pair of powerful hydraulic arms installed in a MODsuit."
 	icon_state = "launch_loader"
 	module_type = MODULE_ACTIVE
@@ -367,7 +372,7 @@
 	user.transform = user.transform.Turn(angle)
 
 /obj/item/mod/module/disposal_connector
-	name = "MOD disposal selector module"
+	name = "\improper MOD disposal selector module"
 	desc = "A module that connects to the disposal pipeline, causing the user to go into their config selected disposal. \
 		Only seems to work when the suit is on."
 	icon_state = "disposal"
@@ -405,7 +410,7 @@
 	disposal_holder.destinationTag = disposal_tag
 
 /obj/item/mod/module/magnet
-	name = "MOD loader hydraulic magnet module"
+	name = "\improper MOD loader hydraulic magnet module"
 	desc = "A powerful hydraulic electromagnet able to launch crates and lockers towards the user, and keep 'em attached."
 	icon_state = "magnet_loader"
 	module_type = MODULE_ACTIVE
@@ -459,7 +464,7 @@
 	UnregisterSignal(locker, COMSIG_ATOM_NO_LONGER_PULLED)
 
 /obj/item/mod/module/ash_accretion
-	name = "MOD ash accretion module"
+	name = "\improper MOD ash accretion module"
 	desc = "A module that collects ash from the terrain, covering the suit in a protective layer, this layer is \
 		lost when moving across standard terrain."
 	icon_state = "ash_accretion"
@@ -580,7 +585,7 @@
 		balloon_alert(mod.wearer, "ran out of ash!")
 
 /obj/item/mod/module/sphere_transform
-	name = "MOD sphere transform module"
+	name = "\improper MOD sphere transform module"
 	desc = "A module able to move the suit's parts around, turning it and the user into a sphere. If the modsuit is insulated with bileworm skin, the user will be protected from lava while active. \
 		The sphere can move quickly, even through lava, and launch mining micromissiles to decimate terrain and fauna alike."
 	icon_state = "sphere"
@@ -727,7 +732,7 @@
 
 /obj/item/mod/module/sphere_transform/proc/on_statchange(datum/source)
 	SIGNAL_HANDLER
-	if(mod.wearer.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(mod.wearer))
 		deactivate()
 
 /obj/projectile/bullet/mining_missile

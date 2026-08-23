@@ -58,7 +58,7 @@
 /obj/item/weldingtool/Initialize(mapload)
 	. = ..()
 	if(IS_OVERLAY_LIGHT_SYSTEM(light_system))
-		middleman = new(src, "flashlight")
+		middleman = new(src, "weldingtool")
 		RegisterSignal(middleman, COMSIG_LIGHT_MIDDLEMAN_UPDATED, PROC_REF(light_updated))
 		middleman.being_overriding_light()
 	AddElement(/datum/element/update_icon_updates_onmob)
@@ -122,12 +122,12 @@
 	flamethrower_screwdriver(tool, user)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/item/weldingtool/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(tool, /obj/item/stack/rods))
-		flamethrower_rods(tool, user)
-	else
-		. = ..()
+/obj/item/weldingtool/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stack/rods))
+		return NONE
+	flamethrower_rods(tool, user)
 	update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/weldingtool/cyborg_unequip(mob/user)
 	if(!isOn())

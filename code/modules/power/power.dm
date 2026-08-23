@@ -483,7 +483,7 @@
 		if(!in_range(source, victim))
 			return FALSE
 
-	if(victim.wearing_shock_proof_gloves())
+	if(victim.get_item_by_slot(ITEM_SLOT_GLOVES)?.siemens_coefficient == 0)
 		SEND_SIGNAL(victim, COMSIG_LIVING_SHOCK_PREVENTED, power_source, source, siemens_coeff, dist_check)
 		return FALSE //to avoid spamming with insulated gloves on
 

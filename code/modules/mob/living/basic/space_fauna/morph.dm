@@ -77,14 +77,14 @@
 		return ..()
 
 	//we hide medical hud while in regular state or an item
-	set_hud_image_state(HEALTH_HUD, null)
+	set_hud_image_state(HEALTH_HUD, hud_state = null)
 
 /mob/living/basic/morph/med_hud_set_status()
 	if(isliving(form_typepath))
 		return ..()
 
 	//we hide medical hud while in regular state or an item
-	set_hud_image_state(STATUS_HUD, null)
+	set_hud_image_state(STATUS_HUD, hud_state = null)
 
 /mob/living/basic/morph/death(gibbed)
 	if(HAS_TRAIT(src, TRAIT_DISGUISED))
@@ -200,16 +200,10 @@
 /// No fleshed out AI implementation, just something that make these fellers seem lively if they're just dropped into a station.
 /// Only real human-powered intelligence is capable of playing prop hunt in SS13 (until further notice).
 /datum/ai_controller/basic_controller/morph
+	behavior_tree_json = "code/modules/mob/living/basic/space_fauna/morph.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
 
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)

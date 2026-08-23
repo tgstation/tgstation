@@ -46,9 +46,9 @@
 				return FALSE
 			flick("[base_icon_state]-active", src)
 			if(is_mining_level(z))
-				activation_timer = addtimer(CALLBACK(src, PROC_REF(mining_act), user), 1.2 SECONDS)
+				activation_timer = addtimer(CALLBACK(src, PROC_REF(mining_act), user), 0.8 SECONDS)
 				return TRUE
-			activation_timer = addtimer(CALLBACK(src, PROC_REF(strike_the_earth)), 1.2 SECONDS)
+			activation_timer = addtimer(CALLBACK(src, PROC_REF(strike_the_earth)), 0.8 SECONDS)
 			return TRUE
 		if(EARTHCRACKER_SPENT)
 			balloon_alert(user, "used up!")

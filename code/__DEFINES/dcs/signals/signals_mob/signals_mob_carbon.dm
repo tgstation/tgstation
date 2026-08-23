@@ -62,6 +62,8 @@
 
 /// From /obj/item/bodypart/proc/update_limb(): (dropping_limb, is_creating)
 #define COMSIG_BODYPART_UPDATED "bodypart_updated"
+/// Also from /obj/item/bodypart/proc/update_limb(), sent to the mob: (dropping_limb, is_creating)
+#define COMSIG_CARBON_BODYPART_UPDATED "carbon_bodypart_updated"
 /// From /datum/component/butchering/create_replacement_limb(): (replacement limb)
 #define COMSIG_BODYPART_BUTCHERED "bodypart_butchered"
 
@@ -221,3 +223,5 @@
 #define COMSIG_END_DREAMING "end_dreaming"
 /// From /mob/living/carbon/item_coverage_changed: (added_slots, removed_slots)
 #define COMSIG_CARBON_ITEM_COVERAGE_CHANGED "carbon_item_coverage_changed"
+/// From /mob/living/carbon/proc/get_sight_and_cutoffs(): (list/new_sight_flags)
+#define COMSIG_CARBON_UPDATE_SIGHT_CUTOFFS "carbon_update_sight_cutoffs"

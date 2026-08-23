@@ -58,9 +58,20 @@ GLOBAL_LIST_INIT(turfs_openspace, typecacheof(list(
 
 #define isopenspaceturf(A) (is_type_in_typecache(A, GLOB.turfs_openspace))
 
+GLOBAL_LIST_INIT(turfs_snow, typecacheof(list(
+	/turf/open/floor/fake_snow,
+	/turf/open/misc/asteroid/snow,
+	/turf/open/misc/snow
+)))
+
+#define issnowturf(A) (is_type_in_typecache(A, GLOB.turfs_snow))
+
 #define isopenturf(A) (istype(A, /turf/open))
 
 #define isindestructiblefloor(A) (istype(A, /turf/open/indestructible))
+
+/// Can this turf have machines anchored to it
+#define is_anchorable_floor(A) (isfloorturf(A) || isindestructiblefloor(A))
 
 #define isspaceturf(A) (istype(A, /turf/open/space))
 
@@ -115,7 +126,12 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define isdummy(A) (istype(A, /mob/living/carbon/human/dummy))
 
-//Human sub-species
+/**
+ * Human sub-species checks.
+ * NOTE: our long term objective is to move away from hardcoded species checks in favor of traits, components, organs and bodyparts!
+ * It's more reusable and modulable code overall. If you think you're better off using traits etc. in place of an is_species check,
+ * then do just that.
+ */
 #define isabductor(A) (is_species(A, /datum/species/abductor))
 #define isspirit(A) (is_species(A, /datum/species/spirit))
 #define isgolem(A) (is_species(A, /datum/species/golem))
@@ -126,7 +142,6 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 #define isflyperson(A) (is_species(A, /datum/species/fly))
 #define isjellyperson(A) (is_species(A, /datum/species/jelly))
 #define isslimeperson(A) (is_species(A, /datum/species/jelly/slime))
-#define iszombie(A) (is_species(A, /datum/species/zombie))
 #define isskeleton(A) (is_species(A, /datum/species/skeleton))
 #define ismoth(A) (is_species(A, /datum/species/moth))
 #define isfelinid(A) (is_species(A, /datum/species/human/felinid))
@@ -136,7 +151,6 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 #define ismonkey(A) (is_species(A, /datum/species/monkey))
 #define isandroid(A) (is_species(A, /datum/species/android))
 #define isnightmare(A) (is_species(A, /datum/species/shadow/nightmare))
-
 
 //More carbon mobs
 #define isalien(A) (istype(A, /mob/living/carbon/alien))

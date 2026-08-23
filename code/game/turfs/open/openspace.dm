@@ -124,14 +124,19 @@
 
 	if(istype(tool, /obj/item/stack/rods))
 		build_with_rods(tool, user)
-	else if(ismetaltile(tool))
-		build_with_floor_tiles(tool, user)
-	else if(istype(tool, /obj/item/stack/thermoplastic))
-		build_with_transport_tiles(tool, user)
-	else if(istype(tool, /obj/item/stack/sheet/mineral/titanium))
-		build_with_titanium(tool, user)
+		return ITEM_INTERACT_SUCCESS
 
-	return ITEM_INTERACT_SUCCESS
+	if(ismetaltile(tool))
+		build_with_floor_tiles(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stack/thermoplastic))
+		build_with_transport_tiles(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stack/sheet/mineral/titanium))
+		build_with_titanium(tool, user)
+		return ITEM_INTERACT_SUCCESS
 
 /turf/open/openspace/build_with_floor_tiles(obj/item/stack/tile/iron/used_tiles)
 	if(!CanCoverUp())

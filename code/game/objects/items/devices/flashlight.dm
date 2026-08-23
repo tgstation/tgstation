@@ -674,9 +674,8 @@
 	if(get_temperature())
 		if(istype(tool, /obj/item/cigarette))
 			var/obj/item/cigarette/cig = tool
-			if(cig.lit)
+			if(!cig.attempt_light(user, src, ""))
 				return NONE
-			cig.light()
 			if(cig.loc == user)
 				user.visible_message(
 					span_rose("[user] holds [user.p_their()] [cig.name] to [src] and lights it, like a true romantic."),
@@ -1021,7 +1020,7 @@
 		return SHAME
 	var/obj/item/organ/eyes/eyes = user.get_organ_slot(ORGAN_SLOT_EYES)
 	if(!eyes)
-		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but [user.p_they()] don't have any!"))
+		user.visible_message(span_suicide("[user] is trying to squirt [src]'s fluids into [user.p_their()] eyes... but [user.p_they()] [user.p_do()]n't have any!"))
 		return SHAME
 	user.visible_message(span_suicide("[user] is squirting [src]'s fluids into [user.p_their()] eyes! It looks like [user.p_theyre()] trying to commit suicide!"))
 	burn_loop(get_fuel())
@@ -1192,10 +1191,8 @@
 /obj/item/flashlight/lamp/space_bubble/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
 	if(light_on && istype(tool, /obj/item/cigarette))
-		var/obj/item/cigarette/cig = tool
-		if(cig.lit)
+		if(!astype(tool, /obj/item/cigarette).attempt_light(user, src, "[user] lights up \the [tool] using the burning coming out of the [src]. Damn."))
 			return NONE
-		cig.light(flavor_text = "[user] lights up \the [cig] using the burning coming out of the [src]. Damn.")
 		return ITEM_INTERACT_SUCCESS
 	if(!istype(tool, /obj/item/assembly/signaler/anomaly/pyro) || installed_pyro_core)
 		return NONE

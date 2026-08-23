@@ -132,25 +132,23 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	matchburnout()
 	return ..()
 
-/obj/item/match/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!isliving(M))
+/obj/item/match/attack(mob/living/target_mob, mob/living/carbon/user)
+	if(!isliving(target_mob))
 		return
 
-	if(lit && M.ignite_mob())
-		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(M)] on fire with [src] at [AREACOORD(user)]")
-		user.log_message("set [key_name(M)] on fire with [src]", LOG_ATTACK)
+	if(lit && target_mob.ignite_mob())
+		message_admins("[ADMIN_LOOKUPFLW(user)] set [key_name_admin(target_mob)] on fire with [src] at [AREACOORD(user)]")
+		user.log_message("set [key_name(target_mob)] on fire with [src]", LOG_ATTACK)
 
-	var/obj/item/cigarette/cig = help_light_cig(M)
+	var/obj/item/cigarette/cig = help_light_cig(target_mob)
 	if(!lit || !cig || user.combat_mode)
-		..()
-		return
+		return ..()
 
 	if(cig.lit)
 		to_chat(user, span_warning("[cig] is already lit!"))
-	if(M == user)
-		cig.attackby(src, user)
-	else
-		cig.light(span_notice("[user] holds [src] out for [M], and lights [cig]."))
+		return
+
+	cig.attempt_light(user, src, target_mob == user ? null : span_notice("[user] holds [src] out for [target_mob], and lights [cig]."))
 
 /// Finds a cigarette on another mob to help light.
 /obj/item/proc/help_light_cig(mob/living/M)
@@ -305,11 +303,10 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 /obj/item/cigarette/dropped(mob/dropee)
 	. = ..()
 	// Moving the cigarette from mask to hands (or pocket I guess) will emit a larger puff of smoke
-	if(!QDELETED(src) && !QDELETED(dropee) && how_long_have_we_been_smokin >= 4 SECONDS && iscarbon(dropee) && iscarbon(loc))
-		var/mob/living/carbon/smoker = dropee
+	if(!QDELETED(src) && !QDELETED(dropee) && how_long_have_we_been_smokin >= 4 SECONDS && dropee == loc && iscarbon(dropee))
 		// This relies on the fact that dropped is called before slot is nulled
-		if(src == smoker.wear_mask && !smoker.incapacitated)
-			long_exhale(smoker)
+		if(dropee.get_item_by_slot(ITEM_SLOT_MASK) == src && !dropee.incapacitated)
+			long_exhale(dropee)
 
 	UnregisterSignal(dropee, list(COMSIG_HUMAN_FORCESAY, COMSIG_ATOM_DIR_CHANGE))
 	QDEL_NULL(mob_smoke)
@@ -348,12 +345,17 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	return (TOXLOSS|OXYLOSS)
 
 /obj/item/cigarette/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return attempt_light(user, tool)
+
+/obj/item/cigarette/proc/attempt_light(mob/living/user, obj/item/tool, text_override = null)
 	if(lit)
 		return NONE
 
-	var/lighting_text = tool.ignition_effect(src, user)
-	if(!lighting_text)
-		return NONE
+	if(isnull(text_override))
+		text_override = tool.ignition_effect(src, user)
+		if(!text_override)
+			return NONE
+	// Maybe jank, but the reason it's like this is that you can ignore ignition_effect() and also provide no text by giving an empty string to text_override, while still lighting.
 
 	if(!check_oxygen(user)) //cigarettes need oxygen
 		balloon_alert(user, "no air!")
@@ -363,7 +365,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		to_chat(user, span_warning("There is nothing to smoke!"))
 		return ITEM_INTERACT_BLOCKING
 
-	light(lighting_text)
+	light(text_override)
 	return ITEM_INTERACT_SUCCESS
 
 /// Checks that we have enough air to smoke
@@ -373,9 +375,9 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	var/datum/gas_mixture/air = return_air()
 	if (!isnull(air) && air.has_gas(/datum/gas/oxygen, 1))
 		return TRUE
-	if (!iscarbon(user))
+	if (!ishuman(user))
 		return FALSE
-	var/mob/living/carbon/the_smoker = user
+	var/mob/living/carbon/human/the_smoker = user
 	return the_smoker.can_breathe_helmet()
 
 /obj/item/cigarette/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -466,7 +468,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 
 	if(iscarbon(loc))
 		var/mob/living/carbon/smoker = loc
-		if(src == smoker.wear_mask)
+		if(smoker.get_item_by_slot(ITEM_SLOT_MASK) == src)
 			make_mob_smoke(smoker)
 
 /obj/item/cigarette/extinguish()
@@ -563,7 +565,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 			reagents.remove_all(to_smoke)
 			return
 	else
-		if(src != smoker.wear_mask)
+		if(smoker.get_item_by_slot(ITEM_SLOT_MASK) != src)
 			reagents.remove_all(to_smoke)
 			return
 
@@ -615,22 +617,23 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 	new type_butt(location)
 	qdel(src)
 
-/obj/item/cigarette/attack(mob/living/carbon/M, mob/living/carbon/user)
-	if(!istype(M))
+/obj/item/cigarette/attack(mob/living/target_mob, mob/living/carbon/user)
+	if(!istype(target_mob, /mob/living/carbon))
 		return ..()
-	if(M.on_fire && !lit)
-		light(span_notice("[user] lights [src] with [M]'s burning body. What a cold-blooded badass."))
+
+	var/mob/living/carbon/fire_guy = target_mob
+	if(fire_guy.on_fire && !lit)
+		light(span_notice("[user] lights [src] with [fire_guy]'s burning body. What a cold-blooded badass."))
 		return
-	var/obj/item/cigarette/cig = help_light_cig(M)
+	var/obj/item/cigarette/cig = help_light_cig(fire_guy)
 	if(!lit || !cig || user.combat_mode)
 		return ..()
 
 	if(cig.lit)
 		to_chat(user, span_warning("\The [cig] is already lit!"))
-	if(M == user)
-		cig.attackby(src, user)
-	else
-		cig.light(span_notice("[user] holds \the [src] out for [M], and lights [M.p_their()] [cig.name]."))
+		return
+
+	cig.attempt_light(user, src, fire_guy == user ? null : span_notice("[user] holds \the [src] out for [fire_guy], and lights [fire_guy.p_their()] [cig.name]."))
 
 /obj/item/cigarette/fire_act(exposed_temperature, exposed_volume)
 	light()
@@ -1181,7 +1184,7 @@ CIGARETTE PACKETS ARE IN FANCY.DM
 		return
 
 	var/mob/living/carbon/vaper = loc
-	if(!iscarbon(vaper) || src != vaper.wear_mask)
+	if(!iscarbon(vaper) || vaper.get_item_by_slot(ITEM_SLOT_MASK) != src)
 		reagents.remove_all(REAGENTS_METABOLISM)
 		return
 

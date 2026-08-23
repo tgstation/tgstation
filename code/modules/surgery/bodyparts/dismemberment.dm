@@ -133,26 +133,9 @@
 	SEND_SIGNAL(phantom_owner, COMSIG_CARBON_POST_REMOVE_LIMB, src, special, dismembered)
 
 /**
- * get_mangled_state() is relevant for flesh and bone bodyparts, and returns whether this bodypart has mangled skin, mangled bone, or both (or neither i guess)
- *
- * Dismemberment for flesh and bone requires the victim to have the skin on their bodypart destroyed (either a critical cut or piercing wound), and at least a hairline fracture
- * (severe bone), at which point we can start rolling for dismembering. The attack must also deal at least 10 damage, and must be a brute attack of some kind (sorry for now, cakehat, maybe later)
- *
- * Returns: BODYPART_MANGLED_NONE if we're fine, BODYPART_MANGLED_EXTERIOR if our skin is broken, BODYPART_MANGLED_INTERIOR if our bone is broken, or BODYPART_MANGLED_BOTH if both are broken and we're up for dismembering
- */
-/obj/item/bodypart/proc/get_mangled_state()
-	. = BODYPART_MANGLED_NONE
-
-	for(var/datum/wound/iter_wound as anything in wounds)
-		if((iter_wound.wound_flags & MANGLES_INTERIOR))
-			. |= BODYPART_MANGLED_INTERIOR
-		if((iter_wound.wound_flags & MANGLES_EXTERIOR))
-			. |= BODYPART_MANGLED_EXTERIOR
-
-/**
  * try_dismember() is used, once we've confirmed that a flesh and bone bodypart has both the skin and bone mangled, to actually roll for it
  *
- * Mangling is described in the above proc, [/obj/item/bodypart/proc/get_mangled_state]. This simply makes the roll for whether we actually dismember or not
+ * Mangling is calculated in update_wounds(), this simply makes the roll for whether we actually dismember or not
  * using how damaged the limb already is, and how much damage this blow was for. If we have a critical bone wound instead of just a severe, we add +10% to the roll.
  * Lastly, we choose which kind of dismember we want based on the wounding type we hit with. Note we don't care about all the normal mods or armor for this
  *
@@ -200,7 +183,7 @@
 		arm_owner.dropItemToGround(lost_cuffs, force = TRUE)
 	arm_owner.hud_used?.update_inventory_slot(ITEM_SLOT_HANDS, held_index)
 	if(arm_owner.num_hands == 0)
-		arm_owner.dropItemToGround(arm_owner.gloves, force = TRUE)
+		arm_owner.dropItemToGround(arm_owner.get_item_by_slot(ITEM_SLOT_GLOVES), force = TRUE)
 	arm_owner.update_worn_gloves() //to remove the bloody hands overlay
 
 /obj/item/bodypart/leg/drop_limb(special, dismembered, move_to_floor = TRUE)
@@ -209,12 +192,12 @@
 	if(special || !leg_owner)
 		return
 	leg_owner.dropItemToGround(leg_owner.legcuffed, force = TRUE)
-	leg_owner.dropItemToGround(leg_owner.shoes, force = TRUE)
+	leg_owner.dropItemToGround(leg_owner.get_item_by_slot(ITEM_SLOT_FEET), force = TRUE)
 
 /obj/item/bodypart/head/drop_limb(special, dismembered, move_to_floor = TRUE)
 	if(!special)
 		//Drop all worn head items
-		for(var/obj/item/head_item as anything in list(owner.glasses, owner.ears, owner.wear_mask, owner.head))
+		for(var/obj/item/head_item as anything in owner.get_items_by_slots(ITEM_SLOT_EYES | ITEM_SLOT_EARS | ITEM_SLOT_MASK | ITEM_SLOT_HEAD))
 			owner.dropItemToGround(head_item, force = TRUE)
 
 	//Handle dental implants
@@ -283,7 +266,7 @@
 
 	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special, lazy)
 	SEND_SIGNAL(src, COMSIG_BODYPART_ATTACHED, new_limb_owner, special, lazy)
-	new_limb_owner.add_bodypart(src)
+	new_limb_owner.add_bodypart(src, special, lazy)
 
 	if(!lazy)
 		LAZYREMOVE(new_limb_owner.body_zone_dismembered_by, body_zone)

@@ -38,6 +38,14 @@
 	var/atom/admin_override_turf
 	///Admin setable override to spawn a specific cargo pack type
 	var/admin_override_contents
+	/// Set to use a crate of a specific type irregardless of supply pack.
+	var/crate_type
+	/// Set to TRUE to emag the launched crate rather than just unlocking it.
+	var/emag_crate = FALSE
+	/// Upper bound of how many random seconds to wait before dropping the pod (replaces start_when)
+	var/upper_bound_wait_time = 40
+	/// Lower bound of how many random seconds to wait before dropping the pod (replaces start_when)
+	var/lower_bound_wait_time = 20
 
 /datum/round_event/stray_cargo/announce(fake)
 	if(fake)
@@ -49,13 +57,8 @@
 * Also randomizes the start timer
 */
 /datum/round_event/stray_cargo/setup()
-	start_when = rand(20, 40)
-	if(admin_override_turf)
-		impact_area = get_area(admin_override_turf)
-	else
-		impact_area = find_event_area()
-	if(!impact_area)
-		CRASH("No valid areas for cargo pod found.")
+	start_when = rand(lower_bound_wait_time , upper_bound_wait_time)
+	impact_area = get_impact_area()
 	var/list/turf_test = get_area_turfs(impact_area)
 	if(!turf_test.len)
 		CRASH("Stray Cargo Pod : No valid turfs found for [impact_area] - [impact_area.type]")
@@ -67,8 +70,23 @@
 			if(initial(pack_type.order_flags) & ORDER_SPECIAL)
 				stray_spawnable_supply_packs -= pack
 
+/datum/round_event/stray_cargo/proc/get_impact_area()
+	if(admin_override_turf)
+		. = get_area(admin_override_turf)
+	else
+		. = find_event_area()
+	if(isnull(.))
+		CRASH("No valid areas for cargo pod found.")
+
 ///Spawns a random supply pack, puts it in a pod, and spawns it on a random tile of the selected area
 /datum/round_event/stray_cargo/start()
+	var/turf/landing_zone = get_landing_zone()
+	var/obj/structure/closet/supplypod/pod = make_pod()
+	var/obj/container = get_contents()
+	send_pod(landing_zone, pod, container)
+
+///Selects a place for the pod to land in
+/datum/round_event/stray_cargo/proc/get_landing_zone()
 	var/list/turf/valid_turfs = get_area_turfs(impact_area)
 	//Only target non-dense turfs to prevent wall-embedded pods
 	for(var/i in valid_turfs)
@@ -80,6 +98,14 @@
 		landing_zone = admin_override_turf
 	else
 		landing_zone = pick(valid_turfs)
+	return landing_zone
+
+///Handles the creation of the pod, in case it needs to be modified beforehand
+/datum/round_event/stray_cargo/proc/make_pod()
+	return new /obj/structure/closet/supplypod
+
+///Generates the contents of the pod
+/datum/round_event/stray_cargo/proc/get_contents()
 	var/pack_type
 	if(admin_override_contents)
 		pack_type = admin_override_contents
@@ -100,21 +126,25 @@
 	var/storage_override
 	if(initial(supply_pack.order_flags) & ORDER_GOODY) // We offer goody items inside of briefcases, but regular crates still default to their standard crates.
 		storage_override = /obj/item/storage/briefcase/empty
-	var/obj/container = supply_pack.generate(null, crate_override = storage_override)
 
+	var/obj/container = supply_pack.generate(null, crate_override = (crate_type || storage_override))
 	if(container && istype(container, /obj/structure/closet/crate)) //empty supply packs are a thing! get memed on.
 		var/obj/structure/closet/crate/crate = container
-		crate.locked = FALSE //Unlock secure crates
-		crate.update_appearance()
-	var/obj/structure/closet/supplypod/pod = make_pod()
+		if(emag_crate)
+			crate.emag_act() // `emag_act()` already calls `update_appeance()`
+		else
+			crate.locked = FALSE //Unlock secure crates
+			crate.update_appearance()
+	return container
+
+///Sends the pod to the given location, containing the container
+/datum/round_event/stray_cargo/proc/send_pod(landing_zone, pod, container)
 	var/obj/effect/pod_landingzone/landing_marker = new(landing_zone, pod, container)
+	create_ghost_notification(landing_marker)
+
+/datum/round_event/stray_cargo/proc/create_ghost_notification(landing_marker)
 	var/static/mutable_appearance/target_appearance = mutable_appearance('icons/obj/supplypods_32x32.dmi', "LZ")
 	notify_ghosts("[control.name] has summoned a supply crate!", source = get_turf(landing_marker), header = "Cargo Inbound", alert_overlay = target_appearance)
-
-///Handles the creation of the pod, in case it needs to be modified beforehand
-/datum/round_event/stray_cargo/proc/make_pod()
-	var/obj/structure/closet/supplypod/S = new
-	return S
 
 ///Picks an area that wouldn't risk critical damage if hit by a pod explosion
 /datum/round_event/stray_cargo/proc/find_event_area()
@@ -191,6 +221,8 @@
 
 /datum/round_event/stray_cargo/syndicate
 	possible_pack_types = list(/datum/supply_pack/misc/syndicate)
+	crate_type = /obj/structure/closet/crate/secure/syndicate
+	emag_crate = TRUE
 
 ///Apply the syndicate pod skin
 /datum/round_event/stray_cargo/syndicate/make_pod()

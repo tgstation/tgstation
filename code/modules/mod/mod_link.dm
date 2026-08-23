@@ -106,7 +106,7 @@
 				. = ITEM_INTERACT_SUCCESS
 
 /obj/item/mod/control/proc/can_call()
-	return get_charge() && wearer && wearer.stat < DEAD
+	return get_charge() && wearer && wearer.stat != DEAD
 
 /obj/item/mod/control/proc/make_link_visual()
 	return make_link_visual_generic(mod_link, PROC_REF(on_overlay_change))
@@ -206,14 +206,16 @@
 		return
 	cell.use(0.02 * STANDARD_CELL_RATE * seconds_per_tick, force = TRUE)
 
-/obj/item/clothing/neck/link_scryer/attackby(obj/item/attacked_by, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(cell || !istype(attacked_by, /obj/item/stock_parts/power_store/cell))
-		return
-	if(!user.transferItemToLoc(attacked_by, src))
-		return
-	cell = attacked_by
+/obj/item/clothing/neck/link_scryer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(cell || !istype(tool, /obj/item/stock_parts/power_store/cell))
+		return ..()
+
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+
+	cell = tool
 	balloon_alert(user, "cell installed")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/neck/link_scryer/update_name(updates)
 	. = ..()
@@ -277,12 +279,12 @@
 		call_link(user, mod_link)
 
 /obj/item/clothing/neck/link_scryer/proc/get_user()
-	var/mob/living/carbon/user = loc
-	return istype(user) && user.wear_neck == src ? user : null
+	var/mob/living/user = loc
+	return istype(user) && user.get_item_by_slot(ITEM_SLOT_NECK) == src ? user : null
 
 /obj/item/clothing/neck/link_scryer/proc/can_call()
 	var/mob/living/user = loc
-	return istype(user) && cell?.charge && user.stat < DEAD
+	return istype(user) && cell?.charge && user.stat != DEAD
 
 /obj/item/clothing/neck/link_scryer/proc/make_link_visual()
 	var/mob/living/user = mod_link.get_user_callback.Invoke()

@@ -41,6 +41,8 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	var/list/traits_to_add
 	/// If set, the fish may return this infusion entry when get_infusion_entry is called instead of /datum/infuser_entry/fish
 	var/infusion_entry
+	/// Chance of being added via bioscramble
+	var/bioscramble_weight = 0
 
 /// Difficulty modifier from this mod, needs to return a list with two values
 /datum/fish_trait/proc/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
@@ -130,6 +132,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/wary
 	name = "Wary"
 	catalog_description = "This fish will avoid visible fish lines, cloaked line recommended."
+	bioscramble_weight = 10
 
 /datum/fish_trait/wary/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
@@ -142,6 +145,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/shiny_lover
 	name = "Shiny Lover"
 	catalog_description = "This fish loves shiny things and money, shiny lure recommended."
+	bioscramble_weight = 10
 
 /datum/fish_trait/shiny_lover/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
@@ -158,6 +162,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/picky_eater
 	name = "Picky Eater"
 	catalog_description = "This fish is very picky and will ignore low quality bait (unless it's amongst its favorites)."
+	bioscramble_weight = 10
 
 /datum/fish_trait/picky_eater/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman, atom/location, obj/item/fish/fish_type)
 	. = ..()
@@ -189,14 +194,14 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/nocturnal
 	name = "Nocturnal"
 	catalog_description = "This fish avoids bright lights, fishing and storing in darkness recommended."
+	bioscramble_weight = 10
 
 /datum/fish_trait/nocturnal/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman, atom/location, obj/item/fish/fish_type)
 	. = ..()
 	if(HAS_TRAIT(rod, TRAIT_ROD_IGNORE_ENVIRONMENT))
 		return
 	var/turf/turf = get_turf(location)
-	var/light_amount = turf?.get_lumcount()
-	if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD)
+	if(turf?.check_lumcount_above(SHADOW_SPECIES_LIGHT_THRESHOLD))
 		.[MULTIPLICATIVE_FISHING_MOD] = 0
 
 /datum/fish_trait/nocturnal/apply_to_fish(obj/item/fish/fish, initial = TRUE)
@@ -212,8 +217,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	if(!source.loc || (!HAS_TRAIT(source.loc, TRAIT_IS_AQUARIUM) && !isturf(source.loc)))
 		return
 	var/turf/turf = get_turf(source)
-	var/light_amount = turf.get_lumcount()
-	if(light_amount > SHADOW_SPECIES_LIGHT_THRESHOLD)
+	if(turf.check_lumcount_above(SHADOW_SPECIES_LIGHT_THRESHOLD))
 		source.damage_fish(0.5 * seconds_per_tick)
 
 /datum/fish_trait/nocturnal/apply_to_mob(mob/living/basic/mob)
@@ -231,9 +235,8 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	var/turf/our_turf = mob.loc
 	if(!isturf(our_turf))
 		return
-	var/light_amount = our_turf.get_lumcount()
 
-	if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //heal in the dark
+	if (our_turf.check_lumcount_below(SHADOW_SPECIES_LIGHT_THRESHOLD)) //heal in the dark
 		mob.apply_status_effect(/datum/status_effect/shadow/regeneration)
 
 /datum/fish_trait/heavy
@@ -398,6 +401,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 		/obj/item/fish/fryish/nessie = 0
 	)
 	traits_to_add = list(TRAIT_FISH_NO_MATING)
+	bioscramble_weight = 10
 
 ///Prevent offsprings of fish with this trait from being of the same type (unless self-mating or the partner also has the trait)
 /datum/fish_trait/recessive
@@ -405,11 +409,13 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	catalog_description = "If crossbred, offsprings will always be of the mate species, unless it also possess the trait."
 	inheritability = 0
 	traits_to_add = list(TRAIT_FISH_RECESSIVE)
+	bioscramble_weight = 10
 
 /datum/fish_trait/revival
 	name = "Self-Revival"
 	catalog_description = "This fish shows a peculiar ability of reviving itself a minute or two after death."
 	spontaneous_manifest_types = list(/obj/item/fish/boned = 100, /obj/item/fish/mastodon = 100)
+	bioscramble_weight = 10
 
 /datum/fish_trait/revival/apply_to_fish(obj/item/fish/fish, initial = TRUE)
 	. = ..()
@@ -443,6 +449,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	name = "Predator"
 	catalog_description = "It's a predatory fish. It'll hunt down and eat live fishes of smaller size when hungry."
 	incompatible_traits = list(/datum/fish_trait/vegan)
+	bioscramble_weight = 10
 
 /datum/fish_trait/predator/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman, atom/location, obj/item/fish/fish_type)
 	. = ..()
@@ -474,6 +481,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	catalog_description = "This fish tastes so repulsive, other fishes won't try to eat it."
 	reagents_to_add = list(/datum/reagent/yuck = 1.2)
 	traits_to_add = list(TRAIT_YUCKY_FISH)
+	bioscramble_weight = 10
 
 /datum/fish_trait/toxic
 	name = "Toxic"
@@ -533,11 +541,13 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	reagents_to_add = list(/datum/reagent/toxin/carpotoxin = 4)
 	infusion_entry = null
 	venom_mult = 6
+	bioscramble_weight = 10
 
 /datum/fish_trait/toxin_immunity
 	name = "Toxin Immunity"
 	catalog_description = "This fish has developed an ample-spected immunity to toxins."
 	traits_to_add = list(TRAIT_FISH_TOXIN_IMMUNE)
+	bioscramble_weight = 10
 
 /datum/fish_trait/crossbreeder
 	name = "Crossbreeder"
@@ -545,10 +555,12 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	inheritability = 40
 	incompatible_traits = list(/datum/fish_trait/no_mating)
 	traits_to_add = list(TRAIT_FISH_CROSSBREEDER)
+	bioscramble_weight = 10
 
 /datum/fish_trait/territorial
 	name = "Territorial"
 	catalog_description = "This fish will start attacking other fish if the aquarium has five or more."
+	bioscramble_weight = 10
 
 /datum/fish_trait/territorial/apply_to_fish(obj/item/fish/fish, initial = TRUE)
 	. = ..()
@@ -579,6 +591,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	catalog_description = "This fish exudes a viscous, slippery lubrificant. It's recommended not to step on it."
 	added_difficulty = 5
 	reagents_to_add = list(/datum/reagent/lube = 1.2)
+	bioscramble_weight = 10
 
 /datum/fish_trait/lubed/catch_weight_mod(obj/item/fishing_rod/rod, mob/fisherman, atom/location, obj/item/fish/fish_type)
 	. = ..()
@@ -606,6 +619,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	catalog_description = "This fish has developed a primitive adaptation to life on both land and water."
 	infusion_entry = /datum/infuser_entry/amphibious
 	traits_to_add = list(TRAIT_FISH_AMPHIBIOUS)
+	bioscramble_weight = 10
 
 /datum/fish_trait/amphibious/apply_to_fish(obj/item/fish/fish, initial = TRUE)
 	. = ..()
@@ -653,6 +667,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/anxiety
 	name = "Anxiety"
 	catalog_description = "This fish tends to die of stress when forced to be around too many other fish."
+	bioscramble_weight = 10
 
 /datum/fish_trait/anxiety/difficulty_mod(obj/item/fishing_rod/rod, mob/fisherman)
 	. = ..()
@@ -771,6 +786,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	name = "Toxic Barbs"
 	catalog_description = "The stinger or bill of this fish is coated in a simple, yet effective venom."
 	spontaneous_manifest_types = list(/obj/item/fish/stingray = 35)
+	bioscramble_weight = 10
 
 /datum/fish_trait/toxic_barbs/apply_to_fish(obj/item/fish/fish, initial = TRUE)
 	. = ..()
@@ -802,6 +818,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	name = "Hallucinogenic"
 	catalog_description = "This fish is coated with hallucinogenic neurotoxin. We advise cooking it before consumption."
 	reagents_to_add = list(/datum/reagent/toxin/mindbreaker/fish = 1)
+	bioscramble_weight = 10
 
 /datum/fish_trait/hallucinogenic/add_reagents(obj/item/fish/fish, list/reagents)
 	if(!HAS_TRAIT(src, TRAIT_FOOD_FRIED) && !HAS_TRAIT(src, TRAIT_FOOD_BBQ_GRILLED))
@@ -839,6 +856,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	catalog_description = "This fish possess a sac that produces ink."
 	spontaneous_manifest_types = list(/obj/item/fish/squid = 35)
 	infusion_entry = /datum/infuser_entry/squid
+	bioscramble_weight = 10
 
 /datum/fish_trait/ink/apply_to_fish(obj/item/fish/fish, initial = TRUE)
 	. = ..()
@@ -875,6 +893,7 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 	catalog_description = "This fish possess the ability to blend with its surroundings."
 	spontaneous_manifest_types = list(/obj/item/fish/squid = 35)
 	added_difficulty = 5
+	bioscramble_weight = 10
 
 /datum/fish_trait/camouflage/minigame_mod(obj/item/fishing_rod/rod, mob/fisherman, datum/fishing_challenge/minigame)
 	minigame.special_effects |= FISHING_MINIGAME_RULE_CAMO

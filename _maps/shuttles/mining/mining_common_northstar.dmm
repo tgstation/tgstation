@@ -10,7 +10,7 @@
 	dir = 8
 	},
 /obj/structure/sign/nanotrasen/directional/east,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/mining)
 "e" = (
 /obj/machinery/power/shuttle_engine/heater,
@@ -21,7 +21,7 @@
 /obj/effect/turf_decal/caution/stand_clear/red{
 	dir = 4
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/mining)
 "l" = (
 /obj/effect/spawner/structure/window/survival_pod,
@@ -39,13 +39,13 @@
 /obj/effect/turf_decal/trimline/neutral/line{
 	dir = 8
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/mining)
 "t" = (
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/mining)
 "v" = (
-/turf/closed/wall/mineral/titanium/survival,
+/turf/closed/wall/mineral/plastitanium/survival,
 /area/shuttle/mining)
 "z" = (
 /obj/structure/closet/crate,
@@ -54,7 +54,7 @@
 	dir = 1
 	},
 /obj/machinery/light/small/red/directional/south,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/mining)
 "A" = (
 /obj/structure/chair/comfy/shuttle{
@@ -63,7 +63,7 @@
 /obj/effect/turf_decal/trimline/neutral/corner{
 	dir = 8
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/mining)
 "C" = (
 /obj/machinery/door/airlock/survival_pod/glass{
@@ -76,12 +76,12 @@
 	port_direction = 8;
 	shuttle_id = "mining_common"
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/mining)
 "D" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/emergency,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/mining)
 "G" = (
 /obj/structure/ore_box,
@@ -89,28 +89,28 @@
 /obj/effect/turf_decal/siding/dark{
 	dir = 5
 	},
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/shuttle/mining)
 "J" = (
 /obj/effect/turf_decal/trimline/neutral/line,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/mining)
 "P" = (
 /obj/machinery/computer/shuttle/mining/common,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/mining)
 "T" = (
 /obj/structure/chair/comfy/shuttle{
 	dir = 1
 	},
 /obj/effect/turf_decal/trimline/neutral/line,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/mining)
 "U" = (
 /obj/structure/table/reinforced,
 /obj/item/radio,
 /obj/machinery/light/small/red/directional/north,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/shuttle/mining)
 
 (1,1,1) = {"

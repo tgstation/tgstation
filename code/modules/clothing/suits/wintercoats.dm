@@ -16,6 +16,7 @@
 	var/zipped = FALSE
 	/// Whether alt-clicking this coat zips/unzips it
 	var/can_altclick_zip = TRUE
+	auto_deploy_hood_on_outfit_equip = FALSE
 
 /datum/armor/hooded_wintercoat
 	bio = 10

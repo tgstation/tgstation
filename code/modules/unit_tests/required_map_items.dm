@@ -4,11 +4,17 @@
  * How to add an item to this test:
  * - Add the typepath(s) to setup_expected_types
  * - In the type's initialize, REGISTER_REQUIRED_MAP_ITEM() a minimum and maximum
+ *
+ * How to ban an item from being mapped in:
+ * - Add the typepath(s) to setup_banned_types
+ * - In the type's initialize, REGISTER_REQUIRED_MAP_ITEM(0, 0)
  */
 /datum/unit_test/maptest_required_map_items
 	test_flags = UNIT_TEST_MAP_TEST
 	/// A list of all typepaths that we expect to be in the required items list
 	var/list/expected_types = list()
+	/// A list of all typepaths that should never be mapped in
+	var/list/banned_types = list()
 
 /// Used to fill the expected types list with all the types we look for on the map.
 /// This list will just be full of typepaths that we expect.
@@ -25,8 +31,29 @@
 	expected_types += /obj/machinery/drone_dispenser
 	expected_types += /obj/item/piggy_bank/vault
 
+	// each map should probably have all of them
+	expected_types += /obj/item/storage/photo_album/bar
+	expected_types += /obj/item/storage/photo_album/chapel
+	expected_types += /obj/item/storage/photo_album/library
+	expected_types += /obj/item/storage/photo_album/prison
+
+	expected_types += /obj/item/storage/photo_album/captain
+	expected_types += /obj/item/storage/photo_album/ce
+	expected_types += /obj/item/storage/photo_album/cmo
+	expected_types += /obj/item/storage/photo_album/hop
+	expected_types += /obj/item/storage/photo_album/hos
+	expected_types += /obj/item/storage/photo_album/qm
+	expected_types += /obj/item/storage/photo_album/rd
+
+/// Types that must never be mapped in.
+/// Anything listed here is expected to be spawned by code instead.
+/datum/unit_test/maptest_required_map_items/proc/setup_banned_types()
+// Your typepaths here!
+	return
+
 /datum/unit_test/maptest_required_map_items/Run()
 	setup_expected_types()
+	setup_banned_types()
 
 	var/list/required_map_items = GLOB.required_map_items.Copy()
 	for(var/got_type in expected_types)
@@ -44,6 +71,12 @@
 		if(items_found > item.maximum_amount)
 			TEST_FAIL("Item [got_type] should have at most [item.maximum_amount] mapped in but had [items_found] on mapload!")
 			continue
+
+	for(var/banned_type in banned_types)
+		var/datum/required_item/item = required_map_items[banned_type]
+		required_map_items -= banned_type
+		if(item)
+			TEST_FAIL("Item [banned_type] should never be mapped in, but [item.total_amount] were found on mapload!")
 
 	// This primarily serves as a reminder to include the typepath in the expected types list above.
 	// However we can easily delete this line in the future if it runs into false positives.

@@ -26,7 +26,7 @@
 	/// Prob of getting a clone on attack
 	var/multiply_chance = 0
 	/// The blackboard key we want to set for our target
-	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
+	var/target_key = BB_CURRENT_TARGET
 
 /mob/living/basic/illusion/Initialize(mapload)
 	. = ..()

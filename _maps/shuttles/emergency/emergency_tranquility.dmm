@@ -1731,7 +1731,7 @@
 /obj/item/book/manual/fish_catalog{
 	pixel_x = -4
 	},
-/obj/item/food/grown/poppy/lily{
+/obj/item/food/grown/flower/poppy/lily{
 	pixel_y = 9;
 	pixel_x = 6
 	},

@@ -26,10 +26,8 @@
 #define PROGRAM_UNIQUE_COPY (1<<3)
 ///The program is a header and will show up at the top of the ModPC's UI.
 #define PROGRAM_HEADER (1<<4)
-///The program will run despite the ModPC not having any power in it.
-#define PROGRAM_RUNS_WITHOUT_POWER (1<<5)
 ///The circuit ports of this program can be triggered even if the program is not open
-#define PROGRAM_CIRCUITS_RUN_WHEN_CLOSED (1<<6)
+#define PROGRAM_CIRCUITS_RUN_WHEN_CLOSED (1<<5)
 
 //Program categories
 #define PROGRAM_CATEGORY_DEVICE "Device Tools"

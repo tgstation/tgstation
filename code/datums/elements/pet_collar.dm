@@ -80,7 +80,7 @@
 
 	var/icon_tag = ""
 
-	if(source.stat == DEAD || HAS_TRAIT(source, TRAIT_FAKEDEATH))
+	if(IS_DEAD_OR_FAKING(source))
 		icon_tag = "_dead"
 	else if(collar_resting_icon_state && source.resting)
 		icon_tag =  "_rest"

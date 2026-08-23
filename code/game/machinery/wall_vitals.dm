@@ -45,7 +45,7 @@
 	light_color = LIGHT_COLOR_FAINT_CYAN
 
 	/// Whether we perform an advanced scan on examine or not
-	var/advanced = FALSE
+	var/scanpower = SCANPOWER_BASIC
 	/// If TRUE, also append a chemical scan to the readout
 	var/chemscan = TRUE
 	/// Typepath to spawn when deconstructed
@@ -80,7 +80,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader, 32)
 	desc = "A screen that displays the vitals of a patient. \
 		Performs a more detailed scan of the patient than a basic display."
 	frame = /obj/item/wallframe/status_display/vitals/advanced
-	advanced = TRUE
+	scanpower = SCANPOWER_ADVANCED
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 
@@ -226,7 +226,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 	else if(HAS_TRAIT(user, TRAIT_DUMB) || !user.can_read(src, reading_check_flags = READING_CHECK_LITERACY, silent = TRUE))
 		. += span_warning("You try to comprehend the display, but it's too complex for you to understand.")
 	else
-		. += healthscan(user, patient, mode = SCANNER_CONDENSED, advanced = src.advanced, tochat = FALSE)
+		. += healthscan(user, patient, mode = SCANNER_CONDENSED, scanpower = src.scanpower, tochat = FALSE)
 		. += chemscan(user, patient, tochat = FALSE)
 
 /obj/machinery/vitals_reader/add_context(atom/source, list/context, obj/item/held_item, mob/user)
@@ -310,7 +310,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 /obj/machinery/vitals_reader/proc/get_ekg_and_resp(hp_color)
 	var/ekg_icon_state = "ekg"
 	var/resp_icon_state = "resp"
-	if(!patient.appears_alive())
+	if(IS_DEAD_OR_FAKING(patient))
 		ekg_icon_state = "ekg_flat"
 		resp_icon_state = "resp_flat"
 
@@ -424,7 +424,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 
 	var/patient_stat = patient.stat
 	if(machine_stat & (EMPED|EMAGGED))
-		patient_stat = pick(CONSCIOUS, SOFT_CRIT, HARD_CRIT, DEAD, DEAD, DEAD)
+		patient_stat = pick(STABLE, SOFT_CRIT, HARD_CRIT, DEAD, DEAD, DEAD)
 
 	switch(patient_stat)
 		if(DEAD)
@@ -444,9 +444,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 				last_reported_stat = SOFT_CRIT
 		else
 			COOLDOWN_START(src, beep_cd, 7 SECONDS)
-			if(last_reported_stat != CONSCIOUS)
+			if(last_reported_stat != STABLE)
 				beep_message("lets out a beep.")
-				last_reported_stat = CONSCIOUS
+				last_reported_stat = STABLE
 
 /obj/machinery/vitals_reader/proc/beep_message(message)
 	for(var/mob/viewer as anything in viewers(src))

@@ -16,6 +16,8 @@
 #define COMSIG_ORGAN_SURGICALLY_INSERTED "organ_surgically_inserted"
 /// Called when an organ finishes inserting into a bodypart (obj/item/bodypart/limb, movement_flags)
 #define COMSIG_ORGAN_BODYPART_INSERTED "organ_bodypart_inserted"
+/// Called when an organ finishes removing from a bodypart (obj/item/bodypart/limb, movement_flags)
+#define COMSIG_ORGAN_BODYPART_REMOVED "organ_bodypart_removed"
 /// Called when a organ's damage is adjusted apply_organ_damage (damage_amount, maximum, required_organ_flag)
 #define COMSIG_ORGAN_ADJUST_DAMAGE "organ_adjust_damage"
 
@@ -388,5 +390,14 @@
 /// From /mob/living/on_looking_z_level_change() : (turf/old_turf, turf/new_turf)
 #define COMSIG_LIVING_LOOK_Z_CHANGE "living_look_z_change"
 
+/// From /obj/item/stack/ore/bluespace_crystal/attack_self() : (obj/item/crushed_crystal)
+#define COMSIG_MOB_CRUSHED_BLUESPACE_CRYSTAL "living_crushed_bluespace_crystal"
+
 /// From /mob/living/proc/refresh_gravity() : (new_gravity, old_gravity)
 #define COMSIG_LIVING_GRAVITY_CHANGED "living_gravity_changed"
+
+/// From /mob/living/changeNext_move() : (next_move, delay)
+#define COMSIG_LIVING_CHANGENEXT_MOVE "living_changenext_move"
+
+/// From /mob/living/proc/cause_hallucination(): (datum/hallucination)
+#define COMSIG_LIVING_HALLUCINATING "living_hallucinating"

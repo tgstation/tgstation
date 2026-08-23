@@ -134,14 +134,14 @@
 	viewers = list()
 	UnregisterSignal(remove_from, COMSIG_MOB_KEYDOWN)
 
-	if(isnull(owner))
+	if(isnull(remove_from))
 		return
-	SEND_SIGNAL(src, COMSIG_ACTION_REMOVED, owner)
-	SEND_SIGNAL(owner, COMSIG_MOB_REMOVED_ACTION, src)
-	UnregisterSignal(owner, COMSIG_QDELETING)
+	SEND_SIGNAL(src, COMSIG_ACTION_REMOVED, remove_from)
+	SEND_SIGNAL(remove_from, COMSIG_MOB_REMOVED_ACTION, src)
+	UnregisterSignal(remove_from, COMSIG_QDELETING)
 
 	// Clean up our check_flag signals
-	UnregisterSignal(owner, list(
+	UnregisterSignal(remove_from, list(
 		COMSIG_LIVING_SET_BODY_POSITION,
 		COMSIG_MOB_STATCHANGE,
 		COMSIG_MOVABLE_MOVED,
@@ -155,7 +155,7 @@
 		SIGNAL_REMOVETRAIT(TRAIT_MAGICALLY_PHASED),
 	))
 
-	if(target == owner)
+	if(target == remove_from)
 		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(clear_ref))
 	if (owner == remove_from)
 		owner = null
@@ -179,15 +179,14 @@
 		return FALSE
 	if(action_disabled)
 		return FALSE
-	if((check_flags & AB_CHECK_CONSCIOUS) && owner.stat != CONSCIOUS)
+	if((check_flags & AB_CHECK_CONSCIOUS) && IS_UNCONSCIOUS_OR_CRIT(owner))
 		if (feedback)
-			switch(owner.stat)
-				if(SOFT_CRIT)
-					owner.balloon_alert(owner, "downed!")
-				if(DEAD)
-					owner.balloon_alert(owner, "dead!")
-				else
-					owner.balloon_alert(owner, "unconscious!")
+			if(owner.stat == DEAD)
+				owner.balloon_alert(owner, "dead!")
+			else if(IS_UNCONSCIOUS(owner))
+				owner.balloon_alert(owner, "unconscious!")
+			else
+				owner.balloon_alert(owner, "in critical!")
 		return FALSE
 	if((check_flags & AB_CHECK_HANDS_BLOCKED) && HAS_TRAIT(owner, TRAIT_HANDS_BLOCKED))
 		if (feedback)
@@ -342,6 +341,7 @@
 		current_button.color = rgb(255,255,255,255)
 	else
 		current_button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
+	SEND_SIGNAL(src, COMSIG_ACTION_STATUS_UPDATE, current_button, force)
 
 /// Gives our action to the passed viewer.
 /// Puts our action in their actions list and shows them the button.

@@ -96,6 +96,7 @@
 #define SPAN_SOAPBOX "soapbox"
 #define SPAN_COLOSSUS "colossus"
 #define SPAN_DANGER "danger"
+#define SPAN_REVENWARNING "revenwarning"
 //bitflag #defines for return value of the radio() proc.
 /// Makes the message use italics
 #define ITALICS (1<<0)
@@ -109,7 +110,7 @@
 /// Range to hear whispers normally
 #define WHISPER_RANGE 1
 /// Additional range to partially hear whispers
-#define EAVESDROP_EXTRA_RANGE 1 //how much past the specified message_range does the message get starred, whispering only
+#define EAVESDROP_RANGE 1 //how much past the specified message_range does the message get starred, whispering only
 
 /// How close intercoms can be for radio code use
 #define MODE_RANGE_INTERCOM 1

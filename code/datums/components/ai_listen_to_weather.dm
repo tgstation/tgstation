@@ -26,7 +26,7 @@
 	var/mob/living/basic/source = parent
 	if(!source.ai_controller)
 		return
-	source.ai_controller.CancelActions()
+	source.ai_controller.cancel_current_plan()
 	source.ai_controller.set_blackboard_key(weather_key, TRUE)
 
 /datum/component/ai_listen_to_weather/proc/storm_end()

@@ -173,14 +173,13 @@
 			consume(atom_source, dust_arm)
 			qdel(item)
 			return
-		if(cig.lit || user.combat_mode)
+		if(user.combat_mode || !cig.attempt_light(user, item, ""))
 			user.visible_message(span_danger("A hideous sound echoes as [item] is ashed out on contact with \the [atom_source]. That didn't seem like a good idea..."))
 			playsound(atom_source, 'sound/effects/supermatter.ogg', 150, TRUE)
 			consume(atom_source, item)
 			radiation_pulse(atom_source, max_range = 3, threshold = 0.1, chance = 50)
 			return
 		else
-			cig.light()
 			user.visible_message(span_danger("As [user] lights \their [item] on \the [atom_source], silence fills the room..."),\
 				span_danger("Time seems to slow to a crawl as you touch \the [atom_source] with \the [item].</span>\n<span class='notice'>\The [item] flashes alight with an eerie energy as you nonchalantly lift your hand away from \the [atom_source]. Damn."))
 			playsound(atom_source, 'sound/effects/supermatter.ogg', 50, TRUE)

@@ -304,7 +304,7 @@
 	// nothing to handle
 	if(!chosen_sting)
 		return
-	if(!isliving(ling) || clicked == ling || ling.stat != CONSCIOUS)
+	if(!isliving(ling) || clicked == ling || IS_UNCONSCIOUS_OR_CRIT(ling))
 		return
 	// sort-of hack done here: we use in_given_range here because it's quicker.
 	// actual ling stings do pathfinding to determine whether the target's "in range".
@@ -568,7 +568,8 @@
 	new_profile.profile_snapshot = entry
 
 	// Grab the target's sechut icon.
-	new_profile.id_icon = target.wear_id?.get_sechud_job_icon_state()
+	new_profile.id_icon = target.wear_id?.get_sechud_job_icon()
+	new_profile.id_icon_state = target.wear_id?.get_sechud_job_icon_state()
 
 	var/list/slots = list("head", "wear_mask", "wear_neck", "back", "wear_suit", "w_uniform", "shoes", "belt", "gloves", "glasses", "ears", "wear_id", "s_store")
 	for(var/slot in slots)
@@ -862,6 +863,7 @@
 		if(istype(new_flesh_item, /obj/item/changeling/id) && chosen_profile.id_icon)
 			var/obj/item/changeling/id/flesh_id = new_flesh_item
 			flesh_id.hud_icon = chosen_profile.id_icon
+			flesh_id.hud_icon_state = chosen_profile.id_icon_state
 
 		if(equip)
 			user.equip_to_slot_or_del(new_flesh_item, slot2slot[slot], indirect_action = TRUE)
@@ -919,6 +921,8 @@
 	var/datum/icon_snapshot/profile_snapshot
 	/// ID HUD icon associated with the profile
 	var/id_icon
+	/// ID HUD icon state associated with the profile
+	var/id_icon_state
 	/// The age of the profile source.
 	var/age
 	/// The body type of the profile source.

@@ -9,3 +9,7 @@
 /// Used to prevent health analyzers from switching modes when they shouldn't.
 /// Functions the same as [SCANNER_CONDENSED]
 #define SCANNER_NO_MODE -1
+
+#define SCANPOWER_BASIC 0
+#define SCANPOWER_ADVANCED 1
+#define SCANPOWER_SUPER 2

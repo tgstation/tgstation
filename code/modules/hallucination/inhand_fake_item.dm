@@ -10,7 +10,7 @@
 	var/obj/item/template_item_type
 
 /datum/hallucination/fake_item/start()
-	if(hallucinator.stat >= UNCONSCIOUS)
+	if(IS_UNCONSCIOUS(hallucinator))
 		return FALSE
 
 	var/list/slots_free = list()
