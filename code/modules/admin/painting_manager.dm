@@ -1,6 +1,6 @@
 ADMIN_VERB(painting_manager, R_ADMIN, "Paintings Manager", "View and redact paintings.", ADMIN_CATEGORY_MAIN)
-	var/datum/paintings_manager/ui = new()
-	ui.ui_interact(user.mob)
+	var/datum/paintings_manager/tgui = new()
+	tgui.ui_interact(user.mob)
 
 /// Painting Admin Management Panel
 /datum/paintings_manager
