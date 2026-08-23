@@ -34,11 +34,12 @@
 
 #define SYMPTOM_KILLER_LEVEL 8 /// Level minimum for our killer symptoms
 #define SYMPTOM_KILLER_SEVERITY 5 /// Severity minimum for our killer symptoms
-#define SYMPTOM_KILLER_LEVEL_PENALTY 2 /// Level minimum and maximum penalty for picking two symptoms so we don't trash our stats.
-#define SYMPTOM_KILLER_SEVERITY_PENALTY 2 /// Severity minimum penalty for picking two symptoms.
-#define SYMPTOM_BUFFER_LEVEL 3 /// Level maximum for other symptoms.
-#define SYMPTOM_BUFFER_SEVERITY 1 /// Severity minimum for other symptoms.
+#define SYMPTOM_KILLER_LEVEL_PENALTY 2 /// Level minimum and maximum penalty for picking two symptoms so we don't trash our stats
+#define SYMPTOM_KILLER_SEVERITY_PENALTY 2 /// Severity minimum penalty for picking two symptoms
+#define SYMPTOM_BUFFER_LEVEL 3 /// Level maximum for other symptoms
+#define SYMPTOM_BUFFER_SEVERITY 1 /// Severity minimum for other symptoms
 #define SYMPTOM_BUFFER_NEUTER_PROB 50 /// Chance of other symptoms being neutered
+#define SYMPTOM_BUFFER_NEUTER_PROB_STEALTHY 75 /// Chance of other symptoms being neutered in a stealth virus
 #define SYMPTOM_BUFFER_STEALTH_MIN -1 /// Minimum stealth stat in other symptoms for stealthy viruses
 
 /datum/disease/advance/antag
@@ -65,7 +66,8 @@
 				continue
 			var/new_symptom = new possible_symptom()
 			symptoms += new_symptom
-			if(prob(SYMPTOM_BUFFER_NEUTER_PROB))
+			var/neuter_chance = (stealthy ? SYMPTOM_BUFFER_NEUTER_PROB_STEALTHY : SYMPTOM_BUFFER_NEUTER_PROB)
+			if(prob(neuter_chance))
 				NeuterSymptom(new_symptom)
 			continue
 
