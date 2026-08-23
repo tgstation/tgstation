@@ -79,22 +79,22 @@
 
 /obj/item/brain_processor/organic/attack_self(mob/user)
 	if(!brain)
-		..()
+		return ..()
+
+	var/obj/item/organ/brain/dumped_brain = remove_brain()
+	var/caught_brain = user.put_in_hands(dumped_brain)
+	var/fate_of_brain = caught_brain \
+		? "[span_italics("gently")] scooping [dumped_brain] into your hand" \
+		: "spilling [dumped_brain] onto the floor"
+
+	to_chat(user, span_notice("You unlock and upend [src], [fate_of_brain]."))
+	if(caught_brain)
+		balloon_alert(user, "scooped up brain")
 	else
-		var/obj/item/organ/brain/dumped_brain = remove_brain()
-		var/caught_brain = user.put_in_hands(dumped_brain)
-		var/fate_of_brain = caught_brain \
-			? "[span_italics("gently")] scooping [dumped_brain] into your hand" \
-			: "spilling [dumped_brain] onto the floor"
+		user.balloon_alert_to_viewers("dropped a brain!", "dropped the brain!")
 
-		to_chat(user, span_notice("You unlock and upend [src], [fate_of_brain]."))
-		if(caught_brain)
-			balloon_alert(user, "scooped up brain")
-		else
-			user.balloon_alert_to_viewers("dropped a brain!", "dropped the brain!")
-
-		if(dumped_brain.brainmob)
-			user.log_message("has ejected the brain of [key_name(brainmob)] from \a [src]", LOG_GAME)
+	if(dumped_brain.brainmob)
+		user.log_message("has ejected the brain of [key_name(brainmob)] from \a [src]", LOG_GAME)
 
 /obj/item/brain_processor/organic/proc/insert_brain(obj/item/organ/brain/new_brain)
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -162,15 +162,17 @@
 
 /obj/item/brain_processor/organic/examine(mob/user)
 	. = ..()
-	if(brain)
-		if((!brainmob || !brainmob.mind) && !brain.decoy_override) // covers suicide and ghosting
-			. += span_danger("[src]'s indicator light glows a grim red.")
-		else if((brain.organ_flags & ORGAN_FAILING) || brainmob?.stat >= DEAD)
-			. += span_warning("[src]'s indicator light glows yellow.")
-		else if(!brainmob.client && !brain.decoy_override)
-			. += span_notice("[src]'s indicator light slowly pulses green...")
-		else
-			. += span_nicegreen("[src]'s indicator light glows green!")
+	if(!brain) // no brain means no brainmob
+		return
+
+	if((!brainmob || !brainmob.mind) && !brain.decoy_override) // covers suicide and ghosting
+		. += span_danger("[src]'s indicator light glows a grim red.")
+	else if((brain.organ_flags & ORGAN_FAILING) || brainmob?.stat >= DEAD)
+		. += span_warning("[src]'s indicator light glows yellow.")
+	else if(!brainmob.client && !brain.decoy_override)
+		. += span_notice("[src]'s indicator light slowly pulses green...")
+	else
+		. += span_nicegreen("[src]'s indicator light glows green!")
 
 /obj/item/brain_processor/organic/brain_check(mob/user)
 	. = ..()
@@ -199,7 +201,7 @@
 
 /obj/item/brain_processor/organic/syndie
 	name = "\improper Syndicate Man-Machine Interface"
-	desc = "Syndicate's own brand of MMI. \
+	desc = "The Syndicate's own brand of MMI. \
 		It enforces laws designed to help Syndicate agents achieve their goals upon cyborgs and AIs created with it."
 
 /obj/item/brain_processor/organic/syndie/Initialize(mapload)
