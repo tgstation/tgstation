@@ -89,7 +89,7 @@
 	return image(/obj/item/bonesetter)
 
 /datum/surgery_operation/limb/repair_hairline/all_required_strings()
-	return list("the limb must have a hairline fracture") + ..()
+	return list("the limb must have a [LOWER_TEXT(/datum/wound/blunt/bone/severe::name)]") + ..()
 
 /datum/surgery_operation/limb/repair_hairline/state_check(obj/item/bodypart/limb)
 	if(!(locate(/datum/wound/blunt/bone/severe) in limb.wounds))
@@ -142,7 +142,7 @@
 	return image(/obj/item/bonesetter)
 
 /datum/surgery_operation/limb/reset_compound/all_required_strings()
-	return list("the limb must have a compound fracture") + ..()
+	return list("the limb must have a [LOWER_TEXT(/datum/wound/blunt/bone/critical::name)]") + ..()
 
 /datum/surgery_operation/limb/reset_compound/state_check(obj/item/bodypart/limb)
 	var/datum/wound/blunt/bone/critical/fracture = locate() in limb.wounds
@@ -333,13 +333,12 @@
 	)
 	time = 5 SECONDS
 	all_surgery_states_required = SURGERY_SKIN_OPEN
-	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
 	preop_sound = 'sound/machines/airlock/airlock_alien_prying.ogg'
 
 /datum/surgery_operation/limb/realign_superstructure/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	. = ..()
-	for(var/datum/wound/blunt/robotic/critical/bone_wound in limb.wounds)
-		if(HAS_TRAIT(bone_wound, TRAIT_WOUND_SCANNED))
+	for(var/datum/wound/blunt/robotic/critical/blunt_wound in limb.wounds)
+		if(HAS_TRAIT(blunt_wound, TRAIT_WOUND_SCANNED))
 			. *= 0.5
 
 /datum/surgery_operation/limb/realign_superstructure/get_default_radial_image()
@@ -381,7 +380,6 @@
 	desc = "connect wires and secure internals in a patient's mechanical body part."
 	operation_flags = OPERATION_PRIORITY_NEXT_STEP | OPERATION_NO_PATIENT_REQUIRED | OPERATION_MECHANIC
 	implements = list(
-		TOOL_SCREWDRIVER = 1,
 		TOOL_SCALPEL = 1,
 	)
 	time = 4 SECONDS
@@ -389,8 +387,8 @@
 
 /datum/surgery_operation/limb/attach_fastenings/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	. = ..()
-	for(var/datum/wound/blunt/robotic/severe/bone_wound in limb.wounds)
-		if(HAS_TRAIT(bone_wound, TRAIT_WOUND_SCANNED))
+	for(var/datum/wound/blunt/robotic/severe/blunt_wound in limb.wounds)
+		if(HAS_TRAIT(blunt_wound, TRAIT_WOUND_SCANNED))
 			. *= 0.5
 
 /datum/surgery_operation/limb/attach_fastenings/get_default_radial_image()
@@ -400,7 +398,7 @@
 	return list("the limb must have [LOWER_TEXT(/datum/wound/blunt/robotic/severe::name)]") + ..()
 
 /datum/surgery_operation/limb/attach_fastenings/state_check(obj/item/bodypart/limb)
-	var/datum/wound/blunt/bone/severe/fracture = locate() in limb.wounds
+	var/datum/wound/blunt/robotic/severe/fracture = locate() in limb.wounds
 	if(isnull(fracture))
 		return FALSE
 	return TRUE

@@ -197,7 +197,7 @@
 	if (prob(chance) || crowbarred_open)
 		user?.visible_message(span_green("[user] finishes securing the internals of [their_or_other] [limb.plaintext_zone]!"), \
 			span_green("You finish securing the internals of [your_or_other] [limb.plaintext_zone]!"))
-		to_chat(user, span_green("[capitalize(your_or_other)] [limb.plaintext_zone]'s internals are now secure, but still need to be welded into place."))
+		to_chat(user, span_green("[capitalize(your_or_other)] [limb.plaintext_zone]'s internals are now secure, but still need to be rebooted."))
 		ready_to_restart = TRUE
 	else
 		user?.visible_message(span_danger("[user] screws up and accidentally damages [their_or_other] [limb.plaintext_zone]!"))
@@ -237,7 +237,7 @@
 
 	var/their_or_other = (user == victim ? "[user.p_their()]" : "[victim]'s")
 	var/your_or_other = (user == victim ? "your" : "[victim]'s")
-	victim.visible_message(span_notice("[user] begins re-soldering [their_or_other] [limb.plaintext_zone]..."), \
+	victim.visible_message(span_notice("[user] begins rebooting [their_or_other] [limb.plaintext_zone]..."), \
 		span_notice("You begin restarting the electronics in [your_or_other] [limb.plaintext_zone]..."))
 
 	var/delay = 6 SECONDS / (HAS_TRAIT(src, TRAIT_WOUND_SCANNED) ? 1 : 2)
@@ -245,7 +245,7 @@
 	if (!multitool.use_tool(target = victim, user = user, delay = delay, volume = 50,  extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
 
-	victim.visible_message(span_green("[user] finishes re-soldering [their_or_other] [limb.plaintext_zone]!"), \
+	victim.visible_message(span_green("[user] finishes rebooting [their_or_other] [limb.plaintext_zone]!"), \
 		span_notice("You succesfully restart the electronics in [your_or_other] [limb.plaintext_zone]!"))
 	remove_wound()
 	return TRUE
