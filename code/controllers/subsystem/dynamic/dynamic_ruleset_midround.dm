@@ -209,7 +209,7 @@
 #undef NEGATIVE_ANSWER
 
 /datum/dynamic_ruleset/midround/disease
-	name = "Disease"
+	name = "Advanced Disease Outbreak"
 	config_tag = "Disease"
 	midround_type = LIGHT_MIDROUND
 	false_alarm_able = TRUE
@@ -219,10 +219,10 @@
 		DYNAMIC_TIER_MEDIUMHIGH = 3,
 		DYNAMIC_TIER_HIGH = 3,
 	)
-	min_pop = 30
+	min_pop = 35
 	min_antag_cap = 0
 	/// Determines how many people to infect when the ruleset is executed
-	var/patient_zeroes = 2
+	var/patient_zeroes = 3
 
 /datum/dynamic_ruleset/midround/disease/qualifies_for_infection(/mob/living/carbon/human/candidate)
 	if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER) || candidate.stat == DEAD)
