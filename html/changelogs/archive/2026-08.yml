@@ -660,3 +660,5 @@
   Richard Blonski:
   - bugfix: Chat Highlight sounds are off by default now.
   - qol: Chat Highlights won't trigger on self-actions or radio channel names.
+  levels0:
+  - rscadd: certain cursed mirrors might now talk
