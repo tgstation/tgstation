@@ -244,7 +244,7 @@
 
 /datum/dynamic_ruleset/midround/disease/execute()
 	var/stealthy = (prob(40)) // Is our disease a stealth virus?
-	var/datum/disease/advance = new /datum/disease/advance
+	var/datum/disease/advance = new /datum/disease/advance/random/antag
 	addtimer(CALLBACK(src, PROC_REF(announce_disease)), rand(75, 100) SECONDS)
 
 /datum/dynamic_ruleset/midround/disease/proc/announce_disease()
