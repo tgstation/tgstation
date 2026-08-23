@@ -112,9 +112,6 @@
 	if (!crowbarring_item.tool_start_check())
 		return TRUE
 
-	var/delay_mult = 1
-	if (user == victim)
-		delay_mult *= 2
 
 	var/their_or_other = (user == victim ? "[user.p_their()]" : "[victim]'s")
 	var/your_or_other = (user == victim ? "your" : "[victim]'s")
@@ -132,8 +129,10 @@
 		victim_message = self_message
 	to_chat(victim, victim_message)
 
+	var/delay = 4 SECONDS / (user == victim ? 1 : 2)
+
 	playsound(get_turf(crowbarring_item), 'sound/machines/airlock/airlock_alien_prying.ogg', 30, TRUE)
-	if (!crowbarring_item.use_tool(target = victim, user = user, delay = (7 SECONDS * delay_mult), volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+	if (!crowbarring_item.use_tool(target = victim, user = user, delay = delay, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
 
 	var/message = ""
@@ -241,9 +240,7 @@
 	victim.visible_message(span_notice("[user] begins re-soldering [their_or_other] [limb.plaintext_zone]..."), \
 		span_notice("You begin restarting the electronics in [your_or_other] [limb.plaintext_zone]..."))
 
-	var/delay = 4 SECONDS
-	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
-		delay *= 0.5
+	var/delay = 6 SECONDS / (HAS_TRAIT(src, TRAIT_WOUND_SCANNED) ? 1 : 2)
 
 	if (!multitool.use_tool(target = victim, user = user, delay = delay, volume = 50,  extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE

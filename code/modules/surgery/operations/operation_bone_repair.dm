@@ -334,6 +334,7 @@
 	time = 5 SECONDS
 	all_surgery_states_required = SURGERY_SKIN_OPEN
 	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
+	preop_sound = 'sound/machines/airlock/airlock_alien_prying.ogg'
 
 /datum/surgery_operation/limb/realign_superstructure/get_time_modifiers(obj/item/bodypart/limb, mob/living/surgeon, tool)
 	. = ..()
@@ -354,7 +355,6 @@
 	return TRUE
 
 /datum/surgery_operation/limb/realign_superstructure/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
-	play_operation_sound(limb, surgeon, tool, 'sound/machines/airlock/airlock_alien_prying.ogg')
 	display_results(
 		surgeon,
 		limb.owner,
