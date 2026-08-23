@@ -40,8 +40,6 @@
 	var/list/eatverbs
 	///How much reagents per bite
 	var/bite_consumption
-	///Results of toasting this with a toaster
-	var/toaster_result
 	///Type of atom thats spawned after eating this item
 	var/trash_type
 	///How much junkiness this food has? God I should remove junkiness soon
