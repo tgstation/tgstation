@@ -189,13 +189,14 @@
 	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 	actions_types = list(/datum/action/item_action/pillow_fortify)
 	var/obj/item/pillow/unstoppably_plushed
+	var/hunkered = FALSE
+	///Aura color for juggernaut mode
+	var/outline_colour = "#eb0c07"
 
 /datum/armor/suit_pillow_suit
 	melee = 5
 	acid = 75
-	var/hunkered = FALSE
-	///Aura color for juggernaut mode
-	var/outline_colour = "#eb0c07"
+
 
 /obj/item/clothing/suit/pillow_suit/Initialize(mapload)
 	. = ..()
