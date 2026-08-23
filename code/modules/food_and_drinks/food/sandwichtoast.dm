@@ -101,7 +101,7 @@
 	desc = "Double toasted... or burnt..."
 	icon_state = "burned_toast"
 	food_reagents = list(/datum/reagent/consumable/char = 2)
-	slot_flags = ..() & ~ITEM_SLOT_MASK
+	slot_flags = null
 
 /obj/item/food/butteredtoast
 	name = "buttered toast"
