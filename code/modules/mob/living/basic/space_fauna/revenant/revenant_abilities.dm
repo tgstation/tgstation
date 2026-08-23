@@ -38,8 +38,7 @@
 	var/obj/structure/mirror/mirror = astype(clicker.loc)
 	if(!mirror)
 		return FALSE
-	var/message = tgui_input_text(clicker, "What do you wish to say?", "Mirror Talk", max_length = MAX_MESSAGE_LEN, encode = FALSE)
-	message = sanitize(message)
+	var/message = tgui_input_text(clicker, "What do you wish to say?", "Mirror Talk", max_length = MAX_MESSAGE_LEN)
 	if(!message || QDELETED(src) || QDELETED(clicker) || !IsAvailable())
 		return FALSE
 	clicker.log_message("\"[message]\"", LOG_SAY)
