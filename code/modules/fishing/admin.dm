@@ -1,5 +1,5 @@
 ADMIN_VERB(fishing_calculator, R_DEBUG, "Fishing Calculator", "A calculator... for fishes?", ADMIN_CATEGORY_DEBUG)
-	var/datum/fishing_calculator/ui = new
+	var/datum/fishing_calculator/ui = new()
 	ui.ui_interact(user.mob)
 
 /datum/fishing_calculator
