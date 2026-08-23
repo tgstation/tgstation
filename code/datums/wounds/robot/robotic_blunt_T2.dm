@@ -2,16 +2,16 @@
 	name = "Detached Fastenings"
 	desc = "Various fastening devices are extremely loose and wires within have been disconnected, causing significant jostling of internal components and \
 	noticable limb dysfunction."
-	treat_text = "Fastening of bolts and screws (though bone gel may suffice in the absence of one) followed by rebooting the limb's electronics."
+	treat_text = "Fastening of bolts and screws followed by rebooting the limb's electronics."
 	examine_desc = "jostles with every move, wires visible through cracks in the metal"
 	occur_text = "visibly cracks open, metal pieces flying everywhere"
 	severity = WOUND_SEVERITY_SEVERE
 
 	simple_treat_text = "<b>If on the <b>chest</b>, <b>walk</b>, <b>grasp it</b>, <b>splint</b>, <b>rest</b> or <b>buckle yourself</b> to something to reduce movement effects. \
-	Afterwards, get <b>someone else</b>, ideally a <b>robo/engi</b> to <b>screwdriver/wrench</b> it, and then <b>re-solder it</b>!"
-	homemade_treat_text = "If <b>unable to screw/wrench</b>, <b>bone gel</b> can, over time, secure inner components at risk of <b>corrossion</b>. \
+	Afterwards, <b>screwdriver/wrench</b> it, and then <b>reboot</b> the electronics inside!"
+	homemade_treat_text = "If <b>unable to screw/wrench</b>, <b>bone gel</b> can secure inner components. \
 	Alternatively, <b>crowbar</b> the limb open to expose the internals - this will make it <b>easier</b> to re-secure them, but has a <b>high risk</b> of <b>shocking</b> you, \
-	so use insulated gloves. This will <b>cripple the limb</b>, so use it only as a last resort!"
+	so use insulated gloves. This will also <b>cripple the limb</b>, so use it only as a last resort!"
 	treat_text_short = "Use a screwdriver or wrench, and then a multitool."
 
 	wound_flags = (ACCEPTS_GAUZE|MANGLES_INTERIOR|CAN_BE_GRASPED)
