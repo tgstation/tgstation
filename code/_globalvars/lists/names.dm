@@ -40,6 +40,7 @@ GLOBAL_LIST_INIT(vampire_house_names, world.file2list("strings/names/vampire_hou
 GLOBAL_LIST_INIT(voidwalker_names, world.file2list("strings/names/voidwalker.txt"))
 GLOBAL_LIST_INIT(wizard_first, world.file2list("strings/names/wizardfirst.txt"))
 GLOBAL_LIST_INIT(wizard_second, world.file2list("strings/names/wizardsecond.txt"))
+GLOBAL_LIST_INIT(virus_names, world.file2list("strings/names/virus_names.txt"))
 GLOBAL_LIST_INIT(virus_prefixes, world.file2list("strings/names/virus_prefixes.txt"))
 GLOBAL_LIST_INIT(virus_suffixes, world.file2list("strings/names/virus_suffixes.txt"))
 

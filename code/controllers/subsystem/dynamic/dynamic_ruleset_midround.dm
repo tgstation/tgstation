@@ -243,8 +243,19 @@
 	return ..() && susceptible_players >= patient_zeroes
 
 /datum/dynamic_ruleset/midround/disease/execute()
+	var/infected_count = 0
 	var/stealthy = (prob(40)) // Is our disease a stealth virus?
-	var/datum/disease/advance = new /datum/disease/advance/random/antag
+	var/datum/disease/our_disease = new /datum/disease/advance/antag
+	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list))
+		if(qualifies_for_infection(candidate))
+			candidate.ForceContractDisease(our_disease, FALSE)
+			message_admins("Midround Disease Triggered - [our_disease.name] starting with patient zero [ADMIN_LOOKUPFLW(candidate)]!")
+			log_game("Midround Disease Triggered - [our_disease.name] starting with patient zero [key_name(candidate)].")
+			announce_to_ghosts(candidate)
+		infected_count++
+		if(infected_count >= patient_zeroes)
+			break
+
 	addtimer(CALLBACK(src, PROC_REF(announce_disease)), rand(75, 100) SECONDS)
 
 /datum/dynamic_ruleset/midround/disease/proc/announce_disease()
