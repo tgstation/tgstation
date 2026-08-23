@@ -86,7 +86,6 @@
 	icon_state = "griddle_toast"
 	food_reagents = list(/datum/reagent/consumable/nutriment/vitamin = 3)
 	tastes = list("toast" = 1)
-	toaster_result = /obj/item/food/griddle_toast/toastest
 	foodtypes = GRAIN
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_MASK

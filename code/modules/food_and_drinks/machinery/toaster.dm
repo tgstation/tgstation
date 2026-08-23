@@ -17,6 +17,12 @@
 	var/max_bread = 2
 	/// Bread currently inside
 	var/list/loaded_bread = list()
+	/// Allowed types of bread and their toasting results
+	var/list/toasting_list = list(
+		/obj/item/food/breadslice/plain = /obj/item/food/griddle_toast/toaster,
+		/obj/item/food/griddle_toast = /obj/item/food/griddle_toast/toastest,
+		/obj/item/food/griddle_toast/toaster = /obj/item/food/griddle_toast/toastest
+	)
 
 /obj/machinery/toaster/Initialize(mapload)
 	. = ..()
@@ -24,7 +30,6 @@
 
 /obj/machinery/toaster/proc/kaboom()
 	SIGNAL_HANDLER
-
 	explosion(
 		src,
 		heavy_impact_range = 2,
@@ -38,7 +43,7 @@
 /obj/machinery/toaster/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/obj/item/food/food = tool
 
-	if(!istype(food) || !food.toaster_result)
+	if(!(food.type in toasting_list) || !istype(food))
 		return NONE
 
 	if(loaded_bread.len >= max_bread)
@@ -58,7 +63,7 @@
 	if(QDELETED(src) || QDELETED(ourbread) || !(ourbread in loaded_bread))
 		return
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, FALSE)
-	var/cooked_bread = ourbread.toaster_result
+	var/cooked_bread = toasting_list[ourbread.type]
 	if(!cooked_bread)
 		return
 	new cooked_bread(drop_location())
