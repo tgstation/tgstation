@@ -1,0 +1,4 @@
+author: "Absolucy"
+delete-after: True
+changes:
+  - rscadd: "Added purple luxury medipens. These are given instead when bought with a jellyperson's bank account. They are jelly-friendly, however heal less than normal luxury pens. They also make you more purple. Sprite by Bieyes."
