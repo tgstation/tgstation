@@ -193,6 +193,8 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			switch(prompt)
 				if("Make Your Own")
 					AdminCreateVirus(holder)
+				if("Advanced")
+					event = locate(/datum/round_event_control/disease_outbreak/advanced) in SSevents.control
 				if("Simple")
 					event = locate(/datum/round_event_control/disease_outbreak) in SSevents.control
 			if(isnull(event))
