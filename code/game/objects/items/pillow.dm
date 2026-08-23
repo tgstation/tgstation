@@ -1,3 +1,5 @@
+#define FORTIFY_FILTER "ANGRY_GLOW"
+
 //Pillow and pillow related items
 /obj/item/pillow
 	name = "pillow"
@@ -192,6 +194,8 @@
 	melee = 5
 	acid = 75
 	var/hunkered = FALSE
+	///Aura color for juggernaut mode
+	var/outline_colour = "#eb0c07"
 
 /obj/item/clothing/suit/pillow_suit/Initialize(mapload)
 	. = ..()
