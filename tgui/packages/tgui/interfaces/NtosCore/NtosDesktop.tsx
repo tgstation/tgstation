@@ -21,14 +21,14 @@ import { useNtos } from './ntos';
 export const NtosCoreDesktop = (props) => {
   const { act, system, api } = useNtos(props);
   const {
-    PC_device_theme,
-    PC_batteryicon,
-    PC_batterypercent,
-    PC_ntneticon,
-    PC_stationdate,
-    PC_stationtime,
-    PC_programheaders = [],
-    PC_lowpower_mode,
+    device_theme,
+    battery_icon,
+    is_lowpower_mode_on,
+    battery_percent,
+    ntnet_icon,
+    station_date,
+    station_time,
+    program_headers = [],
     programs,
   } = system;
   const { run_program, minimize_program, exit_program, shutdown } = api;
@@ -47,9 +47,9 @@ export const NtosCoreDesktop = (props) => {
 
   return (
     <Window
-      theme={PC_device_theme}
+      theme={device_theme}
       title={
-        (PC_device_theme === 'syndicate' && 'Syndix Main Menu') ||
+        (device_theme === 'syndicate' && 'Syndix Main Menu') ||
         'NTOS Desktop Edition'
       }
       width={1200}
@@ -80,7 +80,7 @@ export const NtosCoreDesktop = (props) => {
                   initialWidth={program.metadata.width}
                   initialHeight={program.metadata.height}
                   interface_id={program.tgui_id}
-                  theme={PC_device_theme}
+                  theme={device_theme}
                   buttons={
                     <>
                       <Button
@@ -130,27 +130,27 @@ export const NtosCoreDesktop = (props) => {
           </div>
           <div className="NtosDesktop__footer__right">
             <Box inline italic mr={2} opacity={0.33}>
-              {(PC_device_theme === 'syndicate' && 'Syndix') || 'NtOS Desktop'}
-              {!!PC_lowpower_mode && ' - RUNNING ON LOW POWER MODE'}
+              {(device_theme === 'syndicate' && 'Syndix') || 'NtOS Desktop'}
+              {is_lowpower_mode_on && ' - RUNNING ON LOW POWER MODE'}
             </Box>
 
-            {PC_programheaders.map((header) => (
+            {program_headers.map((header) => (
               <NtosHeaderIcon key={header.icon} mr={1} name={''} />
             ))}
-            <NtosHeaderIcon name={PC_ntneticon} />
+            <NtosHeaderIcon name={ntnet_icon} />
 
-            {!!PC_batteryicon && (
-              <NtosHeaderIcon name={PC_batteryicon} mr={1}>
-                {PC_batterypercent}
+            {battery_icon && (
+              <NtosHeaderIcon name={battery_icon} mr={1}>
+                {battery_percent}
               </NtosHeaderIcon>
             )}
             <Box inline bold ml={2}>
-              {PC_stationtime}
+              {station_time}
               <Button
                 width="26px"
                 lineHeight="22px"
                 textAlign="left"
-                tooltip={PC_stationdate}
+                tooltip={station_date}
                 color="transparent"
                 icon="calendar"
                 tooltipPosition="bottom"

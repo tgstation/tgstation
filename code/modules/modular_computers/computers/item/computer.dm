@@ -667,59 +667,6 @@
 /obj/item/modular_computer/proc/send_sound()
 	playsound(src, 'sound/machines/terminal/terminal_success.ogg', 15, TRUE)
 
-// Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
-/obj/item/modular_computer/proc/get_header_data()
-	var/list/data = list()
-
-	if(istype(os, /datum/operating_system/default/ntos))
-		var/datum/operating_system/default/ntos/ntos = os
-		data["PC_device_theme"] = ntos.device_theme
-
-	if(internal_cell)
-		data["PC_lowpower_mode"] = !internal_cell.charge
-		switch(internal_cell.percent())
-			if(80 to INFINITY)
-				data["PC_batteryicon"] = "batt_100.gif"
-			if(60 to 80)
-				data["PC_batteryicon"] = "batt_80.gif"
-			if(40 to 60)
-				data["PC_batteryicon"] = "batt_60.gif"
-			if(20 to 40)
-				data["PC_batteryicon"] = "batt_40.gif"
-			if(5 to 20)
-				data["PC_batteryicon"] = "batt_20.gif"
-			else
-				data["PC_batteryicon"] = "batt_5.gif"
-		data["PC_batterypercent"] = "[round(internal_cell.percent())]%"
-	else
-		data["PC_lowpower_mode"] = FALSE
-		data["PC_batteryicon"] = null
-		data["PC_batterypercent"] = null
-
-	switch(get_ntnet_status())
-		if(NTNET_NO_SIGNAL)
-			data["PC_ntneticon"] = "sig_none.gif"
-		if(NTNET_LOW_SIGNAL)
-			data["PC_ntneticon"] = "sig_low.gif"
-		if(NTNET_GOOD_SIGNAL)
-			data["PC_ntneticon"] = "sig_high.gif"
-		if(NTNET_ETHERNET_SIGNAL)
-			data["PC_ntneticon"] = "sig_lan.gif"
-
-	var/list/program_headers = list()
-	if(length(os.idle_threads))
-		for(var/datum/computer_file/program/idle_programs as anything in os.idle_threads)
-			if(!idle_programs.ui_header)
-				continue
-			program_headers.Add(list(list("icon" = idle_programs.ui_header)))
-
-	data["PC_programheaders"] = program_headers
-
-	data["PC_stationtime"] = round_timestamp()
-	data["PC_stationdate"] = "[time2text(world.realtime, "DDD, Month DD", NO_TIMEZONE)], [CURRENT_STATION_YEAR]"
-	data["PC_showexitprogram"] = !!os.get_active_thread(1) // Hides "Exit Program" button on mainscreen
-	return data
-
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
 /obj/item/modular_computer/proc/get_ntnet_status()
 	// computers are connected through ethernet

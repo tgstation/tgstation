@@ -134,21 +134,62 @@
 	for(var/datum/computer_file/program/active_program in active_threads)
 		data["programs_data"][active_program.tgui_id] = active_program.ui_data(user)
 
-	var/list/system_data = hardware.get_header_data()
+	var/list/system_data = list()
+
+	system_data["device_theme"] = device_theme
+
+	if(hardware.internal_cell)
+		system_data["is_lowpower_mode_on"] = !hardware.internal_cell.charge
+		switch(hardware.internal_cell.percent())
+			if(80 to INFINITY)
+				system_data["battery_icon"] = "batt_100.gif"
+			if(60 to 80)
+				system_data["battery_icon"] = "batt_80.gif"
+			if(40 to 60)
+				system_data["battery_icon"] = "batt_60.gif"
+			if(20 to 40)
+				system_data["battery_icon"] = "batt_40.gif"
+			if(5 to 20)
+				system_data["battery_icon"] = "batt_20.gif"
+			else
+				system_data["battery_icon"] = "batt_5.gif"
+		system_data["battery_percent"] = "[round(hardware.internal_cell.percent())]%"
+
+	switch(hardware.get_ntnet_status())
+		if(NTNET_NO_SIGNAL)
+			system_data["ntnet_icon"] = "sig_none.gif"
+		if(NTNET_LOW_SIGNAL)
+			system_data["ntnet_icon"] = "sig_low.gif"
+		if(NTNET_GOOD_SIGNAL)
+			system_data["ntnet_icon"] = "sig_high.gif"
+		if(NTNET_ETHERNET_SIGNAL)
+			system_data["ntnet_icon"] = "sig_lan.gif"
+
+	var/list/program_headers = list()
+	for(var/datum/computer_file/program/idle_program in idle_threads)
+		if(!idle_program.ui_header)
+			continue
+		program_headers.Add(list(list("icon" = idle_program.ui_header)))
+
+	system_data["program_headers"] = program_headers
+
+	system_data["station_time"] = round_timestamp()
+	system_data["station_date"] = "[time2text(world.realtime, "DDD, Month DD", NO_TIMEZONE)], [CURRENT_STATION_YEAR]"
+
 	system_data["pai"] = hardware.inserted_pai
 	system_data["has_light"] = hardware.has_light
-	system_data["light_on"] = hardware.light_on
-	system_data["comp_light_color"] = hardware.comp_light_color
+	system_data["is_light_on"] = hardware.light_on
+	system_data["light_color"] = hardware.comp_light_color
 
 	system_data["login"] = list(
-		IDName = hardware.saved_identification || "Unknown",
-		IDJob = hardware.saved_job || "Unknown",
+		"id_name" = hardware.saved_identification || "Unknown",
+		"id_job" = hardware.saved_job || "Unknown",
 	)
 
 	system_data["proposed_login"] = list(
-		IDInserted = hardware.stored_id ? TRUE : FALSE,
-		IDName = hardware.stored_id?.registered_name,
-		IDJob = hardware.stored_id?.assignment,
+		"is_id_inserted" = hardware.stored_id ? TRUE : FALSE,
+		"id_name" = hardware.stored_id?.registered_name,
+		"id_job" = hardware.stored_id?.assignment,
 	)
 
 	system_data["removable_media"] = list()

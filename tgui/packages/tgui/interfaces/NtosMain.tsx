@@ -15,12 +15,12 @@ export const NtosMain = (props) => {
     alert_style,
     alert_color,
     alert_name,
-    PC_device_theme,
+    device_theme,
     show_imprint,
     programs = [],
     has_light,
-    light_on,
-    comp_light_color,
+    is_light_on,
+    light_color,
     removable_media = [],
     login,
     proposed_login,
@@ -42,8 +42,7 @@ export const NtosMain = (props) => {
   return (
     <NtosWindow
       title={
-        (PC_device_theme === 'syndicate' && 'Syndix Main Menu') ||
-        'NtOS Main Menu'
+        (device_theme === 'syndicate' && 'Syndix Main Menu') || 'NtOS Main Menu'
       }
       width={400}
       height={500}
@@ -52,7 +51,7 @@ export const NtosMain = (props) => {
       <NtosWindow.Content scrollable>
         {Boolean(
           removable_media.length ||
-          programs.some((program) => program.header_program),
+            programs.some((program) => program.header_program),
         ) && (
           <Section>
             <Stack>
@@ -110,12 +109,12 @@ export const NtosMain = (props) => {
               {!!has_light && (
                 <>
                   <Button onClick={() => switch_light_color()}>
-                    <ColorBox color={comp_light_color} />
+                    <ColorBox color={light_color} />
                   </Button>
                   <Button
                     icon="lightbulb"
-                    color={light_on ? 'good' : 'bad'}
-                    selected={light_on}
+                    color={is_light_on ? 'good' : 'bad'}
+                    selected={is_light_on}
                     onClick={() => toggle_light()}
                   />
                 </>
@@ -123,7 +122,7 @@ export const NtosMain = (props) => {
               <Button
                 icon="eject"
                 content="Eject ID"
-                disabled={!proposed_login.IDInserted}
+                disabled={!proposed_login.is_id_inserted}
                 onClick={() => eject_disk('ID')}
               />
               {!!show_imprint && (
@@ -131,9 +130,9 @@ export const NtosMain = (props) => {
                   icon="dna"
                   content="Imprint ID"
                   disabled={
-                    !proposed_login.IDName ||
-                    (proposed_login.IDName === login.IDName &&
-                      proposed_login.IDJob === login.IDJob)
+                    !proposed_login.id_name ||
+                    (proposed_login.id_name === login.id_name &&
+                      proposed_login.id_job === login.id_job)
                   }
                   onClick={() => imprint_id()}
                 />
@@ -145,18 +144,18 @@ export const NtosMain = (props) => {
             <Table.Row>
               ID Name:{' '}
               {show_imprint
-                ? login.IDName +
+                ? login.id_name +
                   ' ' +
-                  (proposed_login.IDName ? `(${proposed_login.IDName})` : '')
-                : (proposed_login.IDName ?? '')}
+                  (proposed_login.id_name ? `(${proposed_login.id_name})` : '')
+                : (proposed_login.id_name ?? '')}
             </Table.Row>
             <Table.Row>
               Assignment:{' '}
               {show_imprint
-                ? login.IDJob +
+                ? login.id_job +
                   ' ' +
-                  (proposed_login.IDJob ? `(${proposed_login.IDJob})` : '')
-                : (proposed_login.IDJob ?? '')}
+                  (proposed_login.id_job ? `(${proposed_login.id_job})` : '')
+                : (proposed_login.id_job ?? '')}
             </Table.Row>
           </Table>
         </Section>
@@ -188,7 +187,7 @@ export const NtosMain = (props) => {
             </Table>
           </Section>
         )}
-        <ProgramsTable />
+        <ProgramsTable {...props} />
       </NtosWindow.Content>
     </NtosWindow>
   );

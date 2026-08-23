@@ -22,24 +22,23 @@ type NtosApi = {
 };
 
 type NtosSystemData = {
-  comp_light_color: string;
+  light_color: string;
   has_light: BooleanLike;
   id_name: string;
-  light_on: BooleanLike;
+  is_light_on: BooleanLike;
   login: Login;
   pai: string | null;
   alert_style: number;
   alert_color: string;
   alert_name: string;
-  PC_batteryicon: string | null;
-  PC_batterypercent: string | null;
-  PC_device_theme: string;
-  PC_lowpower_mode: BooleanLike;
-  PC_ntneticon: string;
-  PC_programheaders: Program[];
-  PC_showexitprogram: BooleanLike;
-  PC_stationdate: string;
-  PC_stationtime: string;
+  battery_icon: string | null;
+  battery_percent: string | null;
+  device_theme: string;
+  is_lowpower_mode_on: BooleanLike;
+  ntnet_icon: string;
+  program_headers: Program[];
+  station_date: string;
+  station_time: string;
   programs: Program[];
   proposed_login: Login;
   removable_media: string[];
@@ -69,9 +68,9 @@ type ProgramMetadata = {
 };
 
 type Login = {
-  IDInserted?: BooleanLike;
-  IDJob: string | null;
-  IDName: string | null;
+  is_id_inserted?: BooleanLike;
+  id_job: string | null;
+  id_name: string | null;
 };
 
 type UseNtosProps = {

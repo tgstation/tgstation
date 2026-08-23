@@ -13,14 +13,14 @@ import { useNtos } from './ntos';
 export const NtosCoreMobile = (props) => {
   const { system, api } = useNtos(props);
   const {
-    PC_device_theme,
-    PC_batteryicon,
-    PC_batterypercent,
-    PC_ntneticon,
-    PC_stationdate,
-    PC_stationtime,
-    PC_programheaders = [],
-    PC_lowpower_mode,
+    device_theme,
+    battery_icon,
+    battery_percent,
+    ntnet_icon,
+    station_date,
+    station_time,
+    program_headers = [],
+    is_lowpower_mode_on,
     programs = [],
   } = system;
   const { shutdown, minimize_program, exit_program } = api;
@@ -35,12 +35,12 @@ export const NtosCoreMobile = (props) => {
       title={
         active_program
           ? active_program.desc
-          : (PC_device_theme === 'syndicate' && 'Syndix Main Menu') ||
+          : (device_theme === 'syndicate' && 'Syndix Main Menu') ||
             'NtOS Main Menu'
       }
       width={400}
       height={500}
-      theme={PC_device_theme}
+      theme={device_theme}
     >
       <div>
         <NtosHeader
@@ -51,28 +51,28 @@ export const NtosCoreMobile = (props) => {
                   width="26px"
                   lineHeight="22px"
                   textAlign="left"
-                  tooltip={PC_stationdate}
+                  tooltip={station_date}
                   color="transparent"
                   icon="calendar"
                   tooltipPosition="bottom"
                 />
-                {PC_stationtime}
+                {station_time}
               </Box>
               <Box inline italic mr={2} opacity={0.33}>
-                {(PC_device_theme === 'syndicate' && 'Syndix') || 'NtOS'}
-                {!!PC_lowpower_mode && ' - RUNNING ON LOW POWER MODE'}
+                {(device_theme === 'syndicate' && 'Syndix') || 'NtOS'}
+                {is_lowpower_mode_on && ' - RUNNING ON LOW POWER MODE'}
               </Box>
             </>
           }
           right={
             <>
-              {PC_programheaders.map((header) => (
+              {program_headers.map((header) => (
                 <NtosHeaderIcon key={header.icon} name={header.icon} mr={1} />
               ))}
-              <NtosHeaderIcon name={PC_ntneticon} />
-              {!!PC_batteryicon && (
-                <NtosHeaderIcon name={PC_batteryicon} mr={1}>
-                  {PC_batterypercent}
+              <NtosHeaderIcon name={ntnet_icon} />
+              {battery_icon && (
+                <NtosHeaderIcon name={battery_icon} mr={1}>
+                  {battery_percent}
                 </NtosHeaderIcon>
               )}
             </>
