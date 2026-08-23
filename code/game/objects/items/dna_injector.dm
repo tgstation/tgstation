@@ -149,7 +149,7 @@
 			filled = TRUE
 		for(var/datum/disease/advance/disease in target.diseases)
 			for(var/datum/symptom/symp in disease.symptoms)
-				if((symp.type == /datum/symptom/genetic_mutation) || (symp.type == /datum/symptom/viralevolution))
+				if((symp.type == /datum/symptom/genetic_mutation) || (symp.type == /datum/symptom/stats/evolution))
 					crispr_charge = TRUE
 		log_combat(user, target, "[!force_mutate ? "failed to inject" : "injected"]", "[src] ([mutation])[crispr_charge ? " with CRISPR charge" : ""]")
 	return TRUE

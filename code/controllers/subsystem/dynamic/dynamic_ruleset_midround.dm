@@ -251,7 +251,7 @@
 			candidate.ForceContractDisease(our_disease, FALSE)
 			message_admins("Midround Disease Triggered - [our_disease.name] starting with patient zero [ADMIN_LOOKUPFLW(candidate)]!")
 			log_game("Midround Disease Triggered - [our_disease.name] starting with patient zero [key_name(candidate)].")
-			announce_to_ghosts(candidate)
+			notify_ghosts("Midround Disease has been triggered! Patient Zero is [candidate]!", source = candidate)
 		infected_count++
 		if(infected_count >= patient_zeroes)
 			break
