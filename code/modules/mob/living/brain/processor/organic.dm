@@ -78,8 +78,16 @@
 	attacking_item.attack(brainmob, user) //Oh noooeeeee
 
 /obj/item/brain_processor/organic/attack_self(mob/user)
+	. = ..()
+	if(.)
+		return
 	if(!brain)
-		return ..()
+		if(radio)
+			radio.set_on(!radio.is_on())
+			var/new_state = radio.is_on() ? "on" : "off"
+			to_chat(user, span_notice("You switch [src]'s radio system [span_bold(new_state)]."))
+			balloon_alert(user, "radio turned [new_state]")
+		return
 
 	var/obj/item/organ/brain/dumped_brain = remove_brain()
 	var/caught_brain = user.put_in_hands(dumped_brain)
@@ -162,7 +170,9 @@
 
 /obj/item/brain_processor/organic/examine(mob/user)
 	. = ..()
-	if(!brain) // no brain means no brainmob
+	if(!brain)
+		if(radio)
+			. += span_notice("There is a switch to toggle the radio system [radio.is_on() ? "off" : "on"].")
 		return
 
 	if((!brainmob || !brainmob.mind) && !brain.decoy_override) // covers suicide and ghosting

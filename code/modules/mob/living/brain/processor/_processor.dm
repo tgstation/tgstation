@@ -68,17 +68,6 @@ GAME_VERB_SRC_DESC(/obj/item/brain_processor, Toggle_Listening, usr.loc, "Toggle
 	radio.set_listening(!radio.get_listening())
 	to_chat(brainmob, span_notice("Radio is [radio.get_listening() ? "now" : "no longer"] receiving broadcast."))
 
-/obj/item/brain_processor/examine(mob/user)
-	. = ..()
-	if(radio)
-		. += span_notice("There is a switch to toggle the radio system [radio.is_on() ? "off" : "on"].")
-
-/obj/item/brain_processor/attack_self(mob/user)
-	radio.set_on(!radio.is_on())
-	var/new_state = radio.is_on() ? "on" : "off"
-	to_chat(user, span_notice("You switch [src]'s radio system [span_bold(new_state)]."))
-	balloon_alert(user, "radio turned [new_state]")
-
 /// Transfers the user into the brain processor, preserving its information (such as name and DNA if applicable)
 /obj/item/brain_processor/proc/transfer_identity(mob/living/transferred_user)
 	if(!brainmob)
