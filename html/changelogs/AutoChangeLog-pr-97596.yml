@@ -1,4 +1,0 @@
-author: "FalloutFalcon"
-delete-after: True
-changes:
-  - bugfix: "Anchored Items cant be looted with quick inserting from bags"
