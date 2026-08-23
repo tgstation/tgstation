@@ -183,7 +183,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/messagepart = speaker.generate_messagepart(raw_message, spans, message_mods)
 	messagepart = " <span class='message'>[messagepart]</span></span>"
 
-	var/speaker_voice_description = speaker.get_voice_description()
+	var/speaker_voice_description = message_mods[MODE_SPEAKER_GENDER_OVERRIDE] || speaker.get_voice_description()
 
 	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][span_tooltip_subtle(speaker_voice_description, namepart)][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
 
@@ -256,8 +256,8 @@ GLOBAL_LIST_INIT(freqtospan, list(
 
 	return "[processed_say_mod], \"[processed_input]\""
 
-/atom/movable/proc/get_voice_description()
-	switch(gender)
+/atom/movable/proc/get_voice_description(gender_used = gender)
+	switch(gender_used)
 		if(MALE)
 			return VOICE_DESCRIPTION_MASCULINE
 		if(FEMALE)
@@ -267,13 +267,13 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		else
 			return VOICE_DESCRIPTION_NEUTER
 
-/obj/get_voice_description()
-	return VOICE_DESCRIPTION_NEUTER
-
-/mob/living/carbon/human/get_voice_description()
-	//If they're human and their voice isn't their 'real_name' then we'll just default to 'PLURAL'.
-	//This isn't ideal at all (and could be metagamed), but no 'voice_gender' exists.
-	if(get_voice() != real_name)
+/mob/living/carbon/human/get_voice_description(gender_used = gender)
+	var/voice_used = get_voice()
+	if(voice_used != real_name)
+		if(HAS_TRAIT(src, TRAIT_VOICE_MATCHES_ID))
+			var/datum/record/crew/target = find_record(voice_used)
+			if(!isnull(target))
+				return ..(lowertext(target.gender))
 		return VOICE_DESCRIPTION_PLURAL
 	return ..()
 
@@ -414,9 +414,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 			job = found_record.rank
 		else
 			job = "Unknown"
-		var/mob/living/carbon/human/human_speaker = M
-		if(human_speaker.get_voice() != human_speaker.real_name)
-			gender = PLURAL
 	else if(iscarbon(M))  // Carbon nonhuman
 		job = "No ID"
 	else if(isAI(M))  // AI
@@ -439,3 +436,6 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 
 /atom/movable/virtualspeaker/GetRadio()
 	return radio
+
+/atom/movable/virtualspeaker/get_voice_description(gender_used = gender)
+	return source.get_voice_description(gender_used)
