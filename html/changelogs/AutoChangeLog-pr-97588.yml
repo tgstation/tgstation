@@ -1,0 +1,5 @@
+author: "Richard Blonski"
+delete-after: True
+changes:
+  - bugfix: "Chat Highlight sounds are off by default now."
+  - qol: "Chat Highlights won't trigger on self-actions or radio channel names."
