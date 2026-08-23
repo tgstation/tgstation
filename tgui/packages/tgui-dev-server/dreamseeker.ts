@@ -64,7 +64,7 @@ export class DreamSeeker {
     }
 
     const command =
-      process.platform == 'win32'
+      process.platform === 'win32'
         ? 'netstat -ano | findstr TCP | findstr 0.0.0.0:0'
         : "ss -tln | grep '0.0.0.0:\\*'";
 
