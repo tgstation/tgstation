@@ -207,6 +207,53 @@
 #undef NO_ANSWER
 #undef POSITIVE_ANSWER
 #undef NEGATIVE_ANSWER
+
+/datum/dynamic_ruleset/midround/disease
+	name = "Disease"
+	config_tag = "Disease"
+	midround_type = LIGHT_MIDROUND
+	false_alarm_able = TRUE
+	weight = alist(
+		DYNAMIC_TIER_LOW = 0,
+		DYNAMIC_TIER_LOWMEDIUM = 1,
+		DYNAMIC_TIER_MEDIUMHIGH = 3,
+		DYNAMIC_TIER_HIGH = 3,
+	)
+	min_pop = 30
+	min_antag_cap = 0
+	/// Determines how many people to infect when the ruleset is executed
+	var/patient_zeroes = 2
+
+/datum/dynamic_ruleset/midround/disease/qualifies_for_infection(/mob/living/carbon/human/candidate)
+	if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER) || candidate.stat == DEAD)
+		return FALSE
+	if(HAS_TRAIT(candidate, TRAIT_VIRUSIMMUNE))
+		return FALSE
+	if(length(candidate.diseases))
+		return FALSE
+	if(!is_station_level(candidate.z) && !is_mining_level(candidate.z))
+		return FALSE
+	return TRUE
+
+/datum/dynamic_ruleset/midround/disease/can_be_selected()
+	var/susceptible_players = 0
+	for(var/mob/living/carbon/human/candidate in GLOB.player_list)
+		if(qualifies_for_infection(candidate))
+			susceptible_players++
+	return ..() && susceptible_players >= patient_zeroes
+
+/datum/dynamic_ruleset/midround/disease/execute()
+	var/stealthy = (prob(40)) // Is our disease a stealth virus?
+	var/datum/disease/advance = new /datum/disease/advance
+	addtimer(CALLBACK(src, PROC_REF(announce_disease)), rand(75, 100) SECONDS)
+
+/datum/dynamic_ruleset/midround/disease/proc/announce_disease()
+	priority_announce("Confirmed outbreak of level 7 viral biohazard aboard [station_name()]. All personnel must contain the outbreak.", "Biohazard Alert", ANNOUNCER_OUTBREAK7)
+	send_status_display_biohazard_alert()
+
+/datum/dynamic_ruleset/midround/disease/false_alarm()
+	announce_disease()
+
 /**
  * ### Ghost rulesets
  *

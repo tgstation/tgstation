@@ -26,6 +26,8 @@
 	viable_mobtypes = list(/mob/living/carbon/human)
 	cures = null
 	visibility_flags = HIDDEN_BOOK // we have unique handling for advance diseases in the book
+	cure_text = "If you can see this, something has gone wrong."
+	copy_type = /datum/disease/advance
 
 	// NEW VARS
 	var/list/properties = list()
@@ -235,7 +237,6 @@
 		cure_chance = clamp(10 * (0.94 ** properties["resistance"]), 3.5, 12) // Capped at between -3 and 17 resistance
 		stage_prob = max(0.2 * properties["stage_rate"], 0) + 1.5
 		set_severity(round(properties["severity"]), 1)
-		cure_text = "If you can see this, something has gone wrong."
 	else
 		CRASH("Our properties were empty or null!")
 

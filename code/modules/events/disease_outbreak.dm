@@ -30,7 +30,7 @@
 	min_players = 10
 	weight = 5
 	category = EVENT_CATEGORY_HEALTH
-	description = "A 'classic' virus will infect some members of the crew."
+	description = "A simple disease will infect some members of the crew."
 	min_wizard_trigger_potency = 2
 	max_wizard_trigger_potency = 6
 	admin_setup = list(/datum/event_admin_setup/minimum_candidate_requirement/disease_outbreak, /datum/event_admin_setup/listed_options/disease_outbreak)
@@ -169,7 +169,7 @@
 	name = "Disease Outbreak: Advanced"
 	typepath = /datum/round_event/disease_outbreak/advanced
 	category = EVENT_CATEGORY_HEALTH
-	weight = 15
+	weight = 5
 	min_players = 35 // To avoid shafting lowpop
 	earliest_start = 15 MINUTES // give the chemist a chance
 	description = "An 'advanced' disease will infect some members of the crew."
@@ -301,167 +301,6 @@
 	if(isnull(victim))
 		message_admins("Event Disease Outbreak: Advanced attempted to start, but failed to find a candidate target.")
 		log_game("Event Disease Outbreak: Advanced attempted to start, but failed to find a candidate target.")
-
-/datum/disease/advance/random/event
-	name = "Event Disease"
-	copy_type = /datum/disease/advance
-
-/datum/round_event/disease_outbreak/advance/setup()
-	announce_when = ADV_ANNOUNCE_DELAY
-
-/**
- * Generate advanced virus
- *
- * Uses the parameters to create a list of symptoms, picking from various severities
- * Viral Evolution and Eternal Youth are special modifiers, so we roll separately.
- */
-/datum/disease/advance/random/event/New(max_symptoms, requested_severity, requested_transmissibility)
-	var/list/datum/symptom/possible_symptoms = list(
-		/datum/symptom/beard,
-		/datum/symptom/chills,
-		/datum/symptom/confusion,
-		/datum/symptom/cough,
-		/datum/symptom/disfiguration,
-		/datum/symptom/dizzy,
-		/datum/symptom/fever,
-		/datum/symptom/hallucigen,
-		/datum/symptom/headache,
-		/datum/symptom/itching,
-		/datum/symptom/polyvitiligo,
-		/datum/symptom/shedding,
-		/datum/symptom/sneeze,
-		/datum/symptom/voice_change,
-	)
-
-	switch(requested_severity)
-		if(ADV_DISEASE_HARMFUL)
-			possible_symptoms += list(
-				/datum/symptom/choking,
-				/datum/symptom/deafness,
-				/datum/symptom/genetic_mutation,
-				/datum/symptom/narcolepsy,
-				/datum/symptom/vomit,
-				/datum/symptom/weight_loss,
-			)
-
-		if(ADV_DISEASE_DANGEROUS)
-			possible_symptoms += list(
-				/datum/symptom/alkali,
-				/datum/symptom/asphyxiation,
-				/datum/symptom/fire,
-				/datum/symptom/flesh_death,
-				/datum/symptom/flesh_eating,
-				/datum/symptom/visionloss,
-			)
-
-	var/current_severity = 0
-
-	while(symptoms.len < max_symptoms)
-		var/datum/symptom/chosen_symptom = pick_n_take(possible_symptoms)
-
-		if(!chosen_symptom)
-			stack_trace("Advanced disease could not pick a symptom!")
-			return
-
-		//Checks if the chosen symptom is severe enough to meet requested severity. If not, pick a new symptom.
-		//If we've met requested severity already, we don't care and will keep the chosen symptom.
-		var/datum/symptom/new_symptom = new chosen_symptom
-
-		if((current_severity < requested_severity) && (new_symptom.severity < requested_severity))
-			continue
-
-		symptoms += new_symptom
-
-		if(new_symptom.severity > current_severity)
-			current_severity = new_symptom.severity
-
-	visibility_flags |= HIDDEN_SCANNER
-	var/transmissibility = requested_transmissibility
-
-	if(isnull(transmissibility))
-		transmissibility = rand(1,100)
-
-	if(requested_transmissibility == ADV_SPREAD_FORCED_LOW) // Admin forced
-		set_spread(DISEASE_SPREAD_CONTACT_FLUIDS)
-
-	else if(requested_transmissibility == ADV_SPREAD_FORCED_HIGH) // Admin forced
-		set_spread(DISEASE_SPREAD_AIRBORNE)
-
-	//If severe enough, alert immediately on scanners, limit transmissibility
-	else if(current_severity >= ADV_DISEASE_DANGEROUS)
-		visibility_flags &= ~HIDDEN_SCANNER
-		set_spread(DISEASE_SPREAD_CONTACT_SKIN)
-
-	else if(transmissibility < ADV_SPREAD_THRESHOLD)
-		set_spread(DISEASE_SPREAD_CONTACT_SKIN)
-
-	else
-		visibility_flags &= ~HIDDEN_SCANNER
-		set_spread(DISEASE_SPREAD_AIRBORNE)
-
-
-	//Illness name from one of the symptoms
-	var/datum/symptom/picked_name = pick(symptoms)
-	name = picked_name.illness
-
-	//Modifiers to keep the disease base stats above 0 (unless RNG gets a really bad roll.)
-	//Eternal Youth for +4 to resistance and stage speed.
-	//Viral modifiers to slow down/resist or go fast and loud.
-	if(prob(66))
-		var/list/datum/symptom/possible_modifiers = list(
-			/datum/symptom/viraladaptation,
-			/datum/symptom/viralevolution,
-		)
-		var/datum/symptom/chosen_modifier = pick(possible_modifiers)
-		symptoms += new chosen_modifier
-		symptoms += new /datum/symptom/youth
-
-	Refresh()
-
-/**
- * Assign virus properties
- *
- * Now that we've picked our symptoms and severity, we determine the other stats
- * (Stage Speed, Resistance, Transmissibility)
- * The LOW/MID percentiles can be adjusted in the defines.
- * If the virus is severity DANGEROUS we do not hide it from health scanners at event start.
- * If the virus is airborne, also don't hide it.
- */
-/datum/disease/advance/random/event/assign_properties()
-
-	if(!length(properties))
-		stack_trace("Advanced virus properties were empty or null!")
-		return
-
-	incubation_time = round(world.time + (((ADV_ANNOUNCE_DELAY * 2) - 10) SECONDS))
-	properties["transmittable"] = rand(4,7)
-	spreading_modifier = max(CEILING(0.4 * properties["transmittable"], 1), 1)
-	cure_chance = clamp(10 * (0.94 ** properties["resistance"]), 3.5, 12)
-	stage_prob = max(0.4 * properties["stage_rate"], 1) // Faster than regular advanced diseases
-	set_severity(properties["severity"])
-
-	//If we have an advanced (high stage) disease, add it to the name.
-	if(properties["stage_rate"] >= 7)
-		name = "Advanced [name]"
-
-	cure_text = "If you can see this, something has gone wrong."
-
-/**
- * Set the transmission methods on the generated virus
- *
- * Apply the transmission methods we rolled in the assign_properties proc
- */
-/datum/disease/advance/random/event/set_spread(spread_id)
-	switch(spread_id)
-		if(DISEASE_SPREAD_CONTACT_FLUIDS)
-			update_spread_flags(DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS)
-			spread_text = "Fluids"
-		if(DISEASE_SPREAD_CONTACT_SKIN)
-			update_spread_flags(DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN)
-			spread_text = "Skin contact"
-		if(DISEASE_SPREAD_AIRBORNE)
-			update_spread_flags(DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_AIRBORNE)
-			spread_text = "Respiration"
 
 #undef ADV_MIN_SYMPTOMS
 #undef ADV_MAX_SYMPTOMS
