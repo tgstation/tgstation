@@ -191,6 +191,7 @@
 /datum/armor/suit_pillow_suit
 	melee = 5
 	acid = 75
+	var/hunkered = FALSE
 
 /obj/item/clothing/suit/pillow_suit/Initialize(mapload)
 	. = ..()
@@ -203,7 +204,7 @@
 
 /obj/item/clothing/suit/pillow_suit/proc/fortify(mob/living/user)
 	hunkered = TRUE
-	clothing_flags |= BLOCKS_SHOVE_KNOCKDOWN
+	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 	unstoppably_plushed.force += 10
 	user.add_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
 	user.visible_message(span_alert("[user.name] hunkers down into a defensive stance!"))
@@ -214,7 +215,7 @@
 
 /obj/item/clothing/suit/pillow_suit/proc/end_fortify(mob/living/user)
 	hunkered = FALSE
-	clothing_flags &= ~BLOCKS_SHOVE_KNOCKDOWN
+	clothing_traits -= TRAIT_BRAWLING_KNOCKDOWN_BLOCKED
 	unstoppably_plushed.force -= 10
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
 	var/filter = user.get_filter(FORTIFY_FILTER)
@@ -259,3 +260,8 @@
 	desc = "Daww look at that little mime!"
 	icon_state = "pillow_6_t"
 	variation = 6
+
+/obj/item/spear/pillow
+	name = "pillow spear"
+	desc = "Looks like a bodypillow was ducktaped onto a long pole to be used as a blunt spear"
+	damtype = STAMINA
