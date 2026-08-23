@@ -273,7 +273,7 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		if(HAS_TRAIT(src, TRAIT_VOICE_MATCHES_ID))
 			var/datum/record/crew/target = find_record(voice_used)
 			if(!isnull(target))
-				return ..(lowertext(target.gender))
+				return ..(LOWER_TEXT(target.gender))
 		return VOICE_DESCRIPTION_PLURAL
 	return ..()
 
