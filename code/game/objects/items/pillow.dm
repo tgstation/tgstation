@@ -185,6 +185,7 @@
 	icon_state = "pillow_suit"
 	armor_type = /datum/armor/suit_pillow_suit
 	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
+	actions_types = list(/datum/action/item_action/pillow_fortify)
 	var/obj/item/pillow/unstoppably_plushed
 
 /datum/armor/suit_pillow_suit
@@ -199,6 +200,28 @@
 /obj/item/clothing/suit/pillow_suit/Destroy()
 	. = ..()
 	QDEL_NULL(unstoppably_plushed)
+
+/obj/item/clothing/suit/pillow_suit/proc/fortify(mob/living/user)
+	hunkered = TRUE
+	clothing_flags |= BLOCKS_SHOVE_KNOCKDOWN
+	unstoppably_plushed.force += 10
+	user.add_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
+	user.visible_message(span_alert("[user.name] hunkers down into a defensive stance!"))
+	user.add_filter(FORTIFY_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 0, "size" = 1))
+	var/filter = user.get_filter(FORTIFY_FILTER)
+	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
+	animate(alpha = 0, time = 0.5 SECONDS)
+
+/obj/item/clothing/suit/pillow_suit/proc/end_fortify(mob/living/user)
+	hunkered = FALSE
+	clothing_flags &= ~BLOCKS_SHOVE_KNOCKDOWN
+	unstoppably_plushed.force -= 10
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
+	var/filter = user.get_filter(FORTIFY_FILTER)
+	animate(filter)
+	user.remove_filter(FORTIFY_FILTER)
+	user.visible_message(span_alert("[user] loosens up and relaxes a bit."))
+
 
 /obj/item/clothing/head/pillow_hood
 	name = "pillow hood"
