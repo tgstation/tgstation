@@ -44,7 +44,7 @@
 		return NONE
 
 	if(!powered())
-		user.balloon_alert(user, span_warning("[src] has no power!"))
+		user.balloon_alert(user, "[src] has no power!")
 		return ITEM_INTERACT_BLOCKING
 
 	if(loaded_bread.len >= max_bread)
