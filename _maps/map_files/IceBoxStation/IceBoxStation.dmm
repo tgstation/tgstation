@@ -69677,6 +69677,7 @@
 	dir = 4
 	},
 /obj/machinery/power/apc/auto_name/directional/west,
+/obj/structure/cable,
 /turf/open/floor/iron/dark/textured_edge,
 /area/station/security/execution/education)
 "tFs" = (
