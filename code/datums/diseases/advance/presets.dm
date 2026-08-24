@@ -38,7 +38,7 @@
 #define SYMPTOM_KILLER_SEVERITY_PENALTY 2 /// Severity minimum penalty for picking two symptoms
 #define SYMPTOM_BUFFER_LEVEL 3 /// Level maximum for other symptoms
 #define SYMPTOM_BUFFER_SEVERITY 1 /// Severity minimum for other symptoms
-#define SYMPTOM_BUFFER_NEUTER_PROB 50 /// Chance of other symptoms being neutered
+#define SYMPTOM_BUFFER_NEUTER_PROB_LOUD 50 /// Chance of other symptoms being neutered in a non stealth virus
 #define SYMPTOM_BUFFER_NEUTER_PROB_STEALTHY 75 /// Chance of other symptoms being neutered in a stealth virus
 #define SYMPTOM_BUFFER_STEALTH_MIN -1 /// Minimum stealth stat in other symptoms for stealthy viruses
 
@@ -52,22 +52,22 @@
 	else
 		symptoms += new /datum/symptom/stats/antag_loud
 
-	var/symptom_list = shuffle(valid_subtypesof(datum/symptom))
+	var/list/symptom_list = shuffle(valid_subtypesof(/datum/symptom))
 	var/killer_symptoms = (stealthy ? 1 : rand(1,2)) // How many deadly diseases we have
 	var/double_symptom = killer_symptoms >= 1
-	for(var/datum/symptom/possible_symptom in symptom_list)
+	for(var/datum/symptom/possible_symptom as anything in symptom_list)
 		if(symptoms.len >= VIRUS_SYMPTOM_LIMIT)
 			break
 		if((!double_symptom && possible_symptom.level >= SYMPTOM_KILLER_LEVEL && possible_symptom.severity >= SYMPTOM_KILLER_SEVERITY) || (double_symptom && SYMPTOM_KILLER_LEVEL > possible_symptom.level >= SYMPTOM_KILLER_LEVEL - SYMPTOM_KILLER_LEVEL_PENALTY && possible_symptom.severity >= SYMPTOM_KILLER_SEVERITY - SYMPTOM_KILLER_SEVERITY_PENALTY ) && killer_symptoms >= 0)
 			killer_symptoms--
 			symptoms += new possible_symptom
 			continue
-		if(possible_symptom.level <= SYMPTOM_BUFFER_LEVEL && possible_symptom.severity >= SYMPTOM_BUFFER_SEVERITY)
+		if(possible_symptom.level <= SYMPTOM_BUFFER_LEVEL && possible_symptom.severity >= SYMPTOM_BUFFER_SEVERITY && (symptoms.len + killer_symptoms < VIRUS_SYMPTOM_LIMIT))
 			if(stealthy && possible_symptom.stealth < SYMPTOM_BUFFER_STEALTH_MIN)
 				continue
 			var/new_symptom = new possible_symptom
 			symptoms += new_symptom
-			var/neuter_chance = (stealthy ? SYMPTOM_BUFFER_NEUTER_PROB_STEALTHY : SYMPTOM_BUFFER_NEUTER_PROB)
+			var/neuter_chance = (stealthy ? SYMPTOM_BUFFER_NEUTER_PROB_STEALTHY : SYMPTOM_BUFFER_NEUTER_PROB_LOUD)
 			if(prob(neuter_chance))
 				NeuterSymptom(new_symptom)
 			continue
@@ -84,6 +84,6 @@
 #undef SYMPTOM_KILLER_SEVERITY_PENALTY
 #undef SYMPTOM_BUFFER_LEVEL
 #undef SYMPTOM_BUFFER_SEVERITY
-#undef SYMPTOM_BUFFER_NEUTER_PROB
+#undef SYMPTOM_BUFFER_NEUTER_PROB_LOUD
 #undef SYMPTOM_BUFFER_NEUTER_PROB_STEALTHY
 #undef SYMPTOM_BUFFER_STEALTH_MIN
