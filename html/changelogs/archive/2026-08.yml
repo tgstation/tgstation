@@ -662,3 +662,7 @@
   - qol: Chat Highlights won't trigger on self-actions or radio channel names.
   levels0:
   - rscadd: certain cursed mirrors might now talk
+2026-08-24:
+  SmArtKar:
+  - admin: Improved OverFlayer previews by allowing to edit preview plane/backdrop
+      color
