@@ -2324,3 +2324,10 @@
 	)
 	mix_message = "The flower becomes dissolute in the bloody mixture as a carnal pefume wafts from the pot."
 	mix_sound = 'sound/effects/changeling_absorb/changeling_absorb5.ogg'
+
+/datum/glass_style/has_foodtype/soup/rubywise_ruin
+	required_drink_type = /datum/reagent/consumable/ethanol/rubywise_ruin
+	name = "Rubywise Ruin"
+	desc = "A stimulant of appetites; Those oldest, deepest, reddest, most regretable appetites."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi' //Drinking a cocktail out a bowl...?
+	icon_state = "rubywise_ruin"
