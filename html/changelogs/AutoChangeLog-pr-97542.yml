@@ -1,0 +1,14 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Upon scanning a target with a gas analyzer, its UI will update constantly as the target's gas mixture changes (so long as you stay in range). No more spam clicking to see the status of your gas canister."
+  - qol: "Gas analyzer and gas chamber UIs both received facelifts. Both now list out all available gases and gas reactions, and now contain some additional info like export value."
+  - spellcheck: "\"Dumbed down\" some atmos tooltips, for lack of a better word."
+  - spellcheck: "Grammar pass on a lot of atmos related content."
+  - spellcheck: "Hyper-noblium renamed to Hyper-Noblium"
+  - spellcheck: "Proto Nitrate renamed to Proto-Nitrate"
+  - spellcheck: "Antinoblium renamed to Anti-Noblium"
+  - refactor: "Refactored how gas reactions and electrolyzer reactions are setup, report anything weird with them"
+  - refactor: "Refactored buying and selling gas from cargo a tiny bit, report anything weird with them"
+  - qol: "Gas chamber UIs now default to showing information pertaining to whichever gas is held within"
+  - qol: "Blind players can access the gas analyzer UI"
