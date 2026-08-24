@@ -232,7 +232,6 @@
 		/obj/item/food/cheese/royal = 1, // Royal
 	)
 	var/dispensed_hardmode = FALSE
-	init_jingle = 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg'
 
 /datum/gizmodes/code_crack/tutorial/dispense_reward(atom/movable/holder)
 	if(!dispensed_hardmode)
