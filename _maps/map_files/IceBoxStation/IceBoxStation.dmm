@@ -6709,7 +6709,8 @@
 /area/station/security/execution/education)
 "bQV" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/heater,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/bot_red,
+/turf/open/floor/iron/textured,
 /area/station/engineering/atmos)
 "bRb" = (
 /obj/structure/flora/bush/lavendergrass/style_random,
@@ -24769,7 +24770,8 @@
 /area/icemoon/surface/outdoors/nospawn)
 "gZO" = (
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer,
-/turf/open/floor/iron,
+/obj/effect/turf_decal/bot_red,
+/turf/open/floor/iron/textured,
 /area/station/engineering/atmos)
 "gZP" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
@@ -27409,6 +27411,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/primary/central)
+"hNY" = (
+/obj/machinery/atmospherics/pipe/smart/simple/purple/visible,
+/obj/machinery/holopad,
+/obj/effect/turf_decal/bot,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "hOc" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/preopen{
@@ -35376,13 +35384,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
-"kfU" = (
-/obj/structure/cable,
-/obj/structure/disposalpipe/segment,
-/obj/effect/turf_decal/bot,
-/obj/machinery/holopad,
-/turf/open/floor/iron,
-/area/station/engineering/atmos)
 "kgc" = (
 /obj/structure/disposalpipe/junction/flip{
 	dir = 8
@@ -52903,9 +52904,6 @@
 /obj/structure/disposalpipe/segment{
 	dir = 10
 	},
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "oVR" = (
@@ -62477,10 +62475,12 @@
 	},
 /obj/structure/railing,
 /obj/machinery/airalarm/directional/east,
+/obj/effect/turf_decal/bot_red,
 /obj/effect/turf_decal/tile/yellow{
 	dir = 4
 	},
-/turf/open/floor/iron/dark/corner,
+/obj/effect/turf_decal/tile/dark,
+/turf/open/floor/iron/textured,
 /area/station/engineering/atmos/mix)
 "rDZ" = (
 /turf/open/floor/engine,
@@ -72328,6 +72328,8 @@
 /area/station/hallway/primary/central)
 "uxs" = (
 /obj/effect/landmark/start/atmospheric_technician,
+/obj/machinery/holopad,
+/obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
 	},
@@ -78573,19 +78575,6 @@
 /obj/item/toy/figure/paramedic,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/medical/paramedic)
-"wqg" = (
-/obj/effect/turf_decal/bot,
-/obj/machinery/holopad,
-/obj/machinery/door/firedoor/heavy,
-/obj/effect/turf_decal/tile/yellow/fourcorners,
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 8
-	},
-/obj/effect/turf_decal/stripes/white/line{
-	dir = 4
-	},
-/turf/open/floor/iron/dark/textured,
-/area/station/engineering/atmos)
 "wqn" = (
 /obj/effect/turf_decal/tile/blue/anticorner/contrasted{
 	dir = 8
@@ -249211,7 +249200,7 @@ oVN
 uJc
 uJc
 jkW
-kfU
+uJc
 tHj
 hHN
 hHN
@@ -252038,7 +252027,7 @@ okC
 okC
 okC
 okC
-okC
+hNY
 okC
 dVL
 okC
@@ -252295,7 +252284,7 @@ hdG
 eXv
 kfs
 nVW
-wqg
+nVW
 nVW
 kfs
 gpI
