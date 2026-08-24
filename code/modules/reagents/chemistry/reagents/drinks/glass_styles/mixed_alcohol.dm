@@ -1236,7 +1236,7 @@
 /datum/glass_style/drinking_glass/watchmans_nightcap
 	required_drink_type = /datum/reagent/consumable/ethanol/watchmans_nightcap
 	name = "Watchman's Nightcap"
-	desc = "Drink once, and bring light into the world. Drink twice, and bring it inside you."
+	desc = "Fire illuminates, thus we understand our world. Fire purifies, thus we understand our dreams."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "watchmans_nightcap"
 

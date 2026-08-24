@@ -292,6 +292,10 @@ GLOBAL_LIST_EMPTY(unconscious_appearances)
 		if(locate(/obj/item/pillow) in owner.loc)
 			sleep_quality += 0.1
 
+		// A nice drink before sleep is always nice
+		if(HAS_TRAIT(owner, TRAIT_HAD_NIGHTCAP))
+			sleep_quality += 0.1
+
 		var/need_mob_update = FALSE
 		if(sleep_quality > 0)
 			if(iscarbon(owner))

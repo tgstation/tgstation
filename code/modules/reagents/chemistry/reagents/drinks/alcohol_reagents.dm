@@ -3504,22 +3504,29 @@
 	boozepwr = 40
 	color = "#1DA7DD"
 	quality = DRINK_FANTASTIC
-	overdose_threshold = 100 //requires making multiple batches, and ensures that you can't really do this accidentally.
 	taste_description = "all that's in a flame alongside fire"
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_HAD_NIGHTCAP) //Improves sleep quality. Should add this to other drinks like hot milk or something.
 
-/datum/reagent/consumable/ethanol/watchmans_nightcap/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
-	.= ..()
-	//TODO: add flashlight eyes here
-
-/datum/reagent/consumable/ethanol/watchmans_nightcap/overdose_start(mob/living/drinker, metabolization_ratio)
+/datum/reagent/consumable/ethanol/watchmans_nightcap/on_mob_add(mob/living/drinker)
 	. = ..()
-	//TODO: add OD effect here
+	if(prob(50))
+		drinker.emote(pick("scream","moan"))
+	to_chat(drinker, span_userdanger("A searing flame scours your mind, leaving it raw and sensitive to new experiences!"))
+	SEND_SOUND(drinker, sound('sound/effects/wounds/sizzle2.ogg', volume=70))
+	drinker.flash_act(INFINITY, override_blindness_check = TRUE, visual = TRUE) //Cover your eyes, if you like. It will serve no purpose.
 
-/datum/reagent/consumable/ethanol/watchmans_nightcap/overdose_process(mob/living/drinker, seconds_per_tick, metabolization_ratio)
+/datum/reagent/consumable/ethanol/watchmans_nightcap/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	//TODO: add purge effect here, probably?
+	//triples experience gain
+	drinker?.mind?.experience_multiplier_reasons |= type
+	drinker?.mind?.experience_multiplier_reasons[type] = 2 * metabolization_ratio * seconds_per_tick
+
+/datum/reagent/consumable/ethanol/watchmans_nightcap/on_mob_end_metabolize(mob/living/drinker)
+	. = ..()
+	drinker?.mind?.experience_multiplier_reasons[type] = null
+	drinker?.mind?.experience_multiplier_reasons -= type
 
 //Blade
 /datum/reagent/consumable/ethanol/footsoldiers_razor
