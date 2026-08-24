@@ -467,6 +467,8 @@
 	ph = 2.7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	var/spacevine_kill_prob = 75
+	var/weed_damage_multiplier = 1
 
 // Plant-B-Gone is just as bad
 /datum/reagent/toxin/plantbgone/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
@@ -476,17 +478,24 @@
 
 /datum/reagent/toxin/plantbgone/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
 	. = ..()
-	if(istype(exposed_obj, /obj/structure/alien/weeds))
-		var/obj/structure/alien/weeds/alien_weeds = exposed_obj
-		alien_weeds.take_damage(rand(15, 35), BRUTE, 0) // Kills alien weeds pretty fast
+	if(istype(exposed_obj, /obj/structure/alien/weeds)) // alien weeds have low hp so just kill
+		qdel(exposed_obj)
 	if(istype(exposed_obj, /obj/structure/alien/resin/flower_bud))
 		var/obj/structure/alien/resin/flower_bud/flower = exposed_obj
+		if(flower.trait_flags & SPACEVINE_TOXIN_RESISTANT)
+			return
+
+		var/flower_damage = rand(30, 50) * weed_damage_multiplier
 		flower.take_damage(rand(30, 50), BRUTE, 0)
-	else if(istype(exposed_obj, /obj/structure/glowshroom)) //even a small amount is enough to kill it
+	if(istype(exposed_obj, /obj/structure/glowshroom)) //even a small amount is enough to kill it
 		qdel(exposed_obj)
-	else if(istype(exposed_obj, /obj/structure/spacevine))
-		var/obj/structure/spacevine/SV = exposed_obj
-		SV.on_chem_effect(src)
+	if(istype(exposed_obj, /obj/structure/spacevine))
+		var/obj/structure/spacevine/vine = exposed_obj
+		if(vine.trait_flags & SPACEVINE_TOXIN_RESISTANT)
+			return
+
+		if(prob(spacevine_kill_prob))
+			qdel(vine)
 
 /datum/reagent/toxin/plantbgone/expose_mob(mob/living/exposed_mob, methods = TOUCH, reac_volume)
 	. = ..()
@@ -510,6 +519,8 @@
 	ph = 3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	spacevine_kill_prob = 100
+	weed_damage_multiplier = 3
 
 //Weed Spray
 /datum/reagent/toxin/plantbgone/weedkiller/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)

@@ -325,10 +325,26 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define DO_AFTER_CHECK_NEXT_MOVE (1<<5)
 
 // Spacevine-related flags
-/// Is the spacevine / flower bud heat resistant
+/// Is the spacevine heat resistant
 #define SPACEVINE_HEAT_RESISTANT (1 << 0)
-/// Is the spacevine / flower bud cold resistant
+/// Is the spacevine cold resistant
 #define SPACEVINE_COLD_RESISTANT (1 << 1)
+/// Is the spacevine toxin resistant
+#define SPACEVINE_TOXIN_RESISTANT (1 << 2)
+/// Is the spacevine aggressive spreading
+#define SPACEVINE_AGGRESSIVE_SPREADING (1 << 3)
+/// Is the spacevine hardened
+#define SPACEVINE_HARDENED (1 << 4)
+/// Is the spacevine timid
+#define SPACEVINE_TIMID (1 << 5)
+/// Is the spacevine light emitting
+#define SPACEVINE_LIGHT (1 << 6)
+/// Is the spacevine explosive
+#define SPACEVINE_EXPLOSIVE (1 << 7)
+/// Is the spacevine transparent
+#define SPACEVINE_TRANSPARENT (1 << 8)
+/// Is the spacevine thorny
+#define SPACEVINE_THORNY (1 << 9)
 
 // Flags for flora structures
 #define FLORA_HERBAL (1 << 0)

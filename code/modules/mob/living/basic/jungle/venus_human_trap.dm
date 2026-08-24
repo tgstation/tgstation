@@ -156,7 +156,7 @@
 	lighting_cutoff_red = 10
 	lighting_cutoff_green = 35
 	lighting_cutoff_blue = 20
-	faction = list(FACTION_HOSTILE,FACTION_VINES,FACTION_PLANTS)
+	faction = list(FACTION_HOSTILE, FACTION_VINES, FACTION_PLANTS)
 	initial_language_holder = /datum/language_holder/venus
 	unique_name = TRUE
 	speed = 1.2
@@ -168,13 +168,15 @@
 	var/weed_heal = 10
 	///if the balloon alert was shown atleast once, reset after healing in weeds
 	var/alert_shown = FALSE
+	///the distance it can move away from kudzu before taking damage
+	var/kudzu_off_distance_range = 2
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle = BB_TARGETED_ACTION,
+	)
 
 /mob/living/basic/venus_human_trap/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/lifesteal, 5)
-	var/static/list/innate_actions = list(
-		/datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle = BB_TARGETED_ACTION,
-	)
 	grant_actions_by_list(innate_actions)
 
 /mob/living/basic/venus_human_trap/RangedAttack(atom/victim)
@@ -190,7 +192,7 @@
 	if(!.)
 		return FALSE
 
-	var/vines_in_range = locate(/obj/structure/spacevine) in range(2, src)
+	var/vines_in_range = locate(/obj/structure/spacevine) in range(kudzu_off_distance_range, src)
 	if(!vines_in_range && !alert_shown)
 		alert_shown = TRUE
 		balloon_alert(src, "do not leave vines!")

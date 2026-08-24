@@ -65,18 +65,19 @@
 	return ..()
 
 /obj/structure/spacevine/proc/on_chem_effect(datum/reagent/chem)
-	var/override = FALSE
+	var/chem_flags
 	for(var/datum/spacevine_mutation/mutation in mutations)
-		override += mutation.on_chem(src, chem)
-	if(!override && prob(75) && istype(chem, /datum/reagent/toxin/plantbgone))
-		qdel(src)
+		chem_flags |= mutation.on_chem(src, chem)
 
 /obj/structure/spacevine/proc/eat(mob/eater)
-	var/override = FALSE
+	var/eat_flags
 	for(var/datum/spacevine_mutation/mutation in mutations)
-		override += mutation.on_eat(src, eater)
-	if(!override)
-		qdel(src)
+		eat_flags |= mutation.on_eat(src, eater)
+
+	if(eat_flags & BLOCK_EAT_ATTEMPT)
+		return
+
+	qdel(src)
 
 /obj/structure/spacevine/attacked_by(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
 	LAZYSET(attack_modifiers, SILENCE_DEFAULT_MESSAGES, TRUE)

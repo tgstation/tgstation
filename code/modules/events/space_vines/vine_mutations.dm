@@ -9,9 +9,11 @@
 	var/hue
 	/// The quality of our mutation (how good or bad is it?)
 	var/quality
+	/// The trait to add to our vine
+	var/trait
 
 /datum/spacevine_mutation/proc/add_mutation_to_vinepiece(obj/structure/spacevine/holder)
-	holder.mutations |= src
+	holder.mutations |= trait
 	holder.add_atom_colour(hue, FIXED_COLOUR_PRIORITY)
 
 /datum/spacevine_mutation/proc/on_buckle(obj/structure/spacevine/holder, mob/living/buckled)
@@ -70,6 +72,7 @@
 	hue = "#B2EA70"
 	quality = POSITIVE
 	severity = SEVERITY_TRIVIAL
+	trait = SPACEVINE_LIGHT
 
 /datum/spacevine_mutation/light/on_grow(obj/structure/spacevine/holder)
 	if(holder.growth_stage)
@@ -81,6 +84,7 @@
 	hue = "#9B3675"
 	severity = SEVERITY_AVERAGE
 	quality = NEGATIVE
+	trait = SPACEVINE_TOXIN_RESISTANT
 	var/required_coverage = HEAD|CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
 /datum/spacevine_mutation/toxicity/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
@@ -118,6 +122,7 @@
 	hue = "#D83A56"
 	quality = NEGATIVE
 	severity = SEVERITY_MAJOR
+	trait = SPACEVINE_EXPLOSIVE
 
 /datum/spacevine_mutation/explosive/on_explosion(explosion_severity, target, obj/structure/spacevine/holder)
 	if(explosion_severity >= EXPLODE_DEVASTATE)
@@ -136,10 +141,7 @@
 	hue = "#FF616D"
 	quality = MINOR_NEGATIVE
 	severity = SEVERITY_ABOVE_AVERAGE
-
-/datum/spacevine_mutation/fire_proof/add_mutation_to_vinepiece(obj/structure/spacevine/holder)
-	. = ..()
-	holder.trait_flags |= SPACEVINE_HEAT_RESISTANT
+	trait = SPACEVINE_HEAT_RESISTANT
 
 /datum/spacevine_mutation/fire_proof/on_hit(obj/structure/spacevine/holder, mob/hitter, obj/item/attacking_item, expected_damage)
 	if(attacking_item && attacking_item.damtype == BURN)
@@ -152,10 +154,7 @@
 	hue = "#0BD5D9"
 	quality = MINOR_NEGATIVE
 	severity = SEVERITY_AVERAGE
-
-/datum/spacevine_mutation/cold_proof/add_mutation_to_vinepiece(obj/structure/spacevine/holder)
-	. = ..()
-	holder.trait_flags |= SPACEVINE_COLD_RESISTANT
+	trait = SPACEVINE_COLD_RESISTANT
 
 /datum/spacevine_mutation/temp_stabilisation
 	name = "Temperature stabilisation"
@@ -199,6 +198,7 @@
 	hue = "#316b2f"
 	severity = SEVERITY_MAJOR
 	quality = NEGATIVE
+	trait = SPACEVINE_AGGRESSIVE_SPREADING
 
 /// Checks mobs on spread-target's turf to see if they should be hit by a damaging proc or not.
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/structure/spacevine/holder, turf/turf, mob/living)
@@ -226,7 +226,6 @@
 	var/mob/living/carbon/victim = living_mob
 	var/obj/item/bodypart/limb = victim.get_bodypart(victim.get_random_valid_zone(even_weights = TRUE))
 	var/armor = victim.run_armor_check(def_zone = limb, attack_flag = MELEE)
-
 
 	if(!HAS_TRAIT(victim, TRAIT_PIERCEIMMUNE))
 		var/datum/spacevine_mutation/thorns/thorn = locate() in vine.mutations
@@ -264,6 +263,7 @@
 	hue = ""
 	quality = POSITIVE
 	severity = SEVERITY_TRIVIAL
+	trait = SPACEVINE_TRANSPARENT
 
 /datum/spacevine_mutation/transparency/on_birth(obj/structure/spacevine/holder)
 	holder.light_state = PASS_LIGHT
@@ -329,6 +329,7 @@
 	hue = "#9ECCA4"
 	severity = SEVERITY_AVERAGE
 	quality = NEGATIVE
+	trait = SPACEVINE_THORNY
 
 /datum/spacevine_mutation/thorns/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
 	if(isvineimmune(crosser) || HAS_TRAIT(crosser, TRAIT_PIERCEIMMUNE))
@@ -361,6 +362,7 @@
 	hue = "#997700"
 	quality = NEGATIVE
 	severity = SEVERITY_ABOVE_AVERAGE
+	trait = SPACEVINE_HARDENED
 
 /datum/spacevine_mutation/hardened/on_grow(obj/structure/spacevine/holder)
 	if(holder.growth_stage)
