@@ -1,6 +1,6 @@
 /obj/machinery/toaster
 	name = "toaster"
-	desc = "Turns bread slices into toasts. Somehow, it can work even without power. That is still a mystery. Tends to release its energy in a violent explosion if destroyed."
+	desc = "Turns bread slices into toasts. For an unknown reason, every station is only allowed to have one toaster."
 	icon = 'icons/obj/machines/kitchen.dmi'
 	base_icon_state = "toaster"
 	icon_state = "toaster"
@@ -9,8 +9,8 @@
 	pass_flags = PASSTABLE
 	anchored_tabletop_offset = 8
 	max_integrity = 250
-	use_power = NO_POWER_USE
-	circuit = null /// Nanotrasen only allows one toaster per station. Those are extremely expensive for their ability to work without power at all. Plus they explode like a syndicate minibomb but without the gib.
+	use_power = IDLE_POWER_USE
+	circuit = null /// Nanotrasen only allows one toaster per station.
 	///Time it takes to make a toast
 	var/toasting_time = 5 SECONDS
 	///Max amount of bread at one time
@@ -23,13 +23,10 @@
 		/obj/item/food/griddle_toast = /obj/item/food/griddle_toast/toastest,
 		/obj/item/food/griddle_toast/toaster = /obj/item/food/griddle_toast/toastest
 	)
-
-/obj/machinery/toaster/Initialize(mapload)
-	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_DESTRUCTION, PROC_REF(kaboom))
+	///Will it explode?
+	var/rigged = FALSE
 
 /obj/machinery/toaster/proc/kaboom()
-	SIGNAL_HANDLER
 	explosion(
 		src,
 		heavy_impact_range = 2,
@@ -46,6 +43,10 @@
 	if(!(food.type in toasting_list) || !istype(food))
 		return NONE
 
+	if(!powered())
+		user.balloon_alert(user, span_warning("[src] has no power!"))
+		return ITEM_INTERACT_BLOCKING
+
 	if(loaded_bread.len >= max_bread)
 		user.balloon_alert(user, "[src] is already full!")
 		return ITEM_INTERACT_BLOCKING
@@ -55,11 +56,21 @@
 		return ITEM_INTERACT_BLOCKING
 
 	loaded_bread += tool
-	addtimer(CALLBACK(src, PROC_REF(finish_toasting), tool), toasting_time)
+	addtimer(CALLBACK(src, PROC_REF(finish_toasting), tool, user), toasting_time)
+	update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/toaster/proc/finish_toasting(obj/item/food/ourbread)
+/obj/machinery/toaster/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(obj_flags & EMAGGED)
+		return FALSE
+	rigged = TRUE
+	do_sparks(2, TRUE, src)
+	src.balloon_alert(user, "rigged to explode")
+	obj_flags |= EMAGGED
+	return TRUE
+
+/obj/machinery/toaster/proc/finish_toasting(obj/item/food/ourbread, mob/living/user)
 	if(QDELETED(src) || QDELETED(ourbread) || !(ourbread in loaded_bread))
 		return
 	playsound(src, 'sound/machines/microwave/microwave-end.ogg', 50, FALSE)
@@ -68,6 +79,13 @@
 		return
 	new cooked_bread(drop_location())
 	qdel(ourbread)
+	if(loaded_bread.len == 0)
+		update_use_power(IDLE_POWER_USE)
+	if(rigged)
+		src.balloon_alert(user, "[src] toasts its electronics!")
+		do_sparks(2, TRUE, src)
+		sleep(1 SECONDS)
+		kaboom()
 	update_appearance()
 
 /obj/machinery/toaster/update_overlays()
