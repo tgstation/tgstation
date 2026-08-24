@@ -44,17 +44,17 @@
 	level = 4
 
 /datum/symptom/stats/antag_loud
-	name = "Loud Antag Virus Booster"
-	desc = "It makes the antag viruses stronger, and then viros can loot it afterwards"
+	name = "Unknown Symptom A"
+	desc = "An enigmatic trait that causes a virus to spread and advance much more quickly while also becoming harder to cure."
 	stealth = 0
-	resistance = 4
-	stage_speed = 4
-	transmittable = 5
+	resistance = 5
+	stage_speed = 5
+	transmittable = 4
 
 /datum/symptom/stats/antag_stealth
-	name = "Stealthy Antag Virus Booster"
-	desc = "Evil (and yet copyable) antag virus booster: stealth virus edition."
-	stealth = 4
+	name = "Unknown Symptom B"
+	desc = "A henceforth undiscovered trait that causes a virus to become much harder to spot to almost all forms of scanning."
+	stealth = 6
 	resistance = 3
 	stage_speed = 3
-	transmittable = 4
+	transmittable = 2

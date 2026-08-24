@@ -63,7 +63,7 @@
 			killer_symptoms--
 			symptoms += new possible_symptom
 			continue
-		if(possible_symptom.level <= SYMPTOM_BUFFER_LEVEL && possible_symptom.severity >= SYMPTOM_BUFFER_SEVERITY && (symptoms.len + killer_symptoms < VIRUS_SYMPTOM_LIMIT))
+		if(possible_symptom.level <= SYMPTOM_BUFFER_LEVEL && possible_symptom.level > 0 && possible_symptom.severity >= SYMPTOM_BUFFER_SEVERITY && (symptoms.len + killer_symptoms < VIRUS_SYMPTOM_LIMIT))
 			if(stealthy && possible_symptom.stealth < SYMPTOM_BUFFER_STEALTH_MIN)
 				continue
 			var/new_symptom = new possible_symptom
