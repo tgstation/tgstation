@@ -218,6 +218,7 @@ GAME_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", null)
 			It looks like [user.p_theyre()] trying to fly off into the sunset... yet the sky is out of reach for [user.p_them()]..."))
 		return SHAME
 
+	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
 	user.add_traits(list(TRAIT_GODMODE, TRAIT_FORCED_STANDING, TRAIT_UNDENSE, TRAIT_IMMOBILIZED, TRAIT_INCAPACITATED, TRAIT_HANDS_BLOCKED), TRAIT_GENERIC)
 	user.move_resist = INFINITY
 	user.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
