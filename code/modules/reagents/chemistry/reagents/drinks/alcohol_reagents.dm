@@ -3776,6 +3776,8 @@
 
 /datum/reagent/consumable/ethanol/emptiest_glass/on_mob_metabolize(mob/living/carbon/drinker)
 	. = ..()
+	if(!drinker.hud_used)
+		return
 	var/atom/movable/plane_master_controller/game_plane_master_controller = drinker.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 	game_plane_master_controller.add_filter("emptiest_glass_filter", 10, color_matrix_filter(COLOR_MATRIX_IDENTITY))
@@ -3798,6 +3800,8 @@
 
 /datum/reagent/consumable/ethanol/emptiest_glass/on_mob_end_metabolize(mob/living/carbon/drinker)
 	. = ..()
+	if(!drinker.hud_used)
+		return
 	var/atom/movable/plane_master_controller/game_plane_master_controller = drinker.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	game_plane_master_controller.remove_filter("emptiest_glass_filter")
 
