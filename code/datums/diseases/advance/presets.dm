@@ -48,23 +48,24 @@
 
 /datum/disease/advance/antag/New()
 	if(stealthy)
-		symptoms += new /datum/symptom/stats/antag_loud
-	else
 		symptoms += new /datum/symptom/stats/antag_stealth
+	else
+		symptoms += new /datum/symptom/stats/antag_loud
 
-	var/symptom_list = shuffle(valid_subtypesof(/datum/symptom))
+	var/symptom_list = shuffle(valid_subtypesof(datum/symptom))
 	var/killer_symptoms = (stealthy ? 1 : rand(1,2)) // How many deadly diseases we have
+	var/double_symptom = killer_symptoms >= 1
 	for(var/datum/symptom/possible_symptom in symptom_list)
 		if(symptoms.len >= VIRUS_SYMPTOM_LIMIT)
 			break
-		if((!stealthy && possible_symptom.level >= SYMPTOM_KILLER_LEVEL && possible_symptom.severity >= SYMPTOM_KILLER_SEVERITY) || (stealthy && SYMPTOM_KILLER_LEVEL > possible_symptom.level >= SYMPTOM_KILLER_LEVEL - SYMPTOM_KILLER_LEVEL_PENALTY && possible_symptom.severity >= SYMPTOM_KILLER_SEVERITY - SYMPTOM_KILLER_SEVERITY_PENALTY ) && killer_symptoms >= 0)
+		if((!double_symptom && possible_symptom.level >= SYMPTOM_KILLER_LEVEL && possible_symptom.severity >= SYMPTOM_KILLER_SEVERITY) || (double_symptom && SYMPTOM_KILLER_LEVEL > possible_symptom.level >= SYMPTOM_KILLER_LEVEL - SYMPTOM_KILLER_LEVEL_PENALTY && possible_symptom.severity >= SYMPTOM_KILLER_SEVERITY - SYMPTOM_KILLER_SEVERITY_PENALTY ) && killer_symptoms >= 0)
 			killer_symptoms--
-			symptoms += new possible_symptom()
+			symptoms += new possible_symptom
 			continue
 		if(possible_symptom.level <= SYMPTOM_BUFFER_LEVEL && possible_symptom.severity >= SYMPTOM_BUFFER_SEVERITY)
 			if(stealthy && possible_symptom.stealth < SYMPTOM_BUFFER_STEALTH_MIN)
 				continue
-			var/new_symptom = new possible_symptom()
+			var/new_symptom = new possible_symptom
 			symptoms += new_symptom
 			var/neuter_chance = (stealthy ? SYMPTOM_BUFFER_NEUTER_PROB_STEALTHY : SYMPTOM_BUFFER_NEUTER_PROB)
 			if(prob(neuter_chance))
@@ -73,6 +74,9 @@
 
 	name = generate_virus_name()
 	Refresh()
+
+/datum/disease/advance/antag/stealthy
+	stealthy = TRUE
 
 #undef SYMPTOM_KILLER_LEVEL
 #undef SYMPTOM_KILLER_SEVERITY

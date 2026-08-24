@@ -245,7 +245,11 @@
 /datum/dynamic_ruleset/midround/disease/execute()
 	var/infected_count = 0
 	var/stealthy = (prob(40)) // Is our disease a stealth virus?
-	var/datum/disease/our_disease = new /datum/disease/advance/antag
+	var/datum/disease/our_disease
+	if(stealthy)
+		our_disease = new /datum/disease/advance/antag/stealthy
+	else
+		our_disease = new /datum/disease/advance/antag
 	for(var/mob/living/carbon/human/candidate in shuffle(GLOB.player_list))
 		if(qualifies_for_infection(candidate))
 			candidate.ForceContractDisease(our_disease, FALSE)
