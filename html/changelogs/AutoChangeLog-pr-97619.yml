@@ -1,0 +1,4 @@
+author: "FalloutFalcon"
+delete-after: True
+changes:
+  - admin: "Painting and Trophy manager no longer permanently deletes itself after the first close"
