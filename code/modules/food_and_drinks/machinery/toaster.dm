@@ -40,7 +40,7 @@
 /obj/machinery/toaster/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/obj/item/food/food = tool
 
-	if(!is_type_in_list(food) || !istype(food))
+	if(!(food.type in toasting_list) || !istype(food))
 		return NONE
 
 	if(!powered())
