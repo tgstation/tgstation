@@ -64,10 +64,13 @@
 		update_signals = list(COMSIG_ATOM_BREAK), \
 		check_reflect_signals = list(SIGNAL_ADDTRAIT(TRAIT_NO_MIRROR_REFLECTION), SIGNAL_REMOVETRAIT(TRAIT_NO_MIRROR_REFLECTION)), \
 	)
+	if(cursable)
+		if(mapload && prob(ROUNDSTART_CURSED_CHANCE))
+			AddComponent(/datum/component/revenant_prison, create_on_release = TRUE)
+		else
+			ADD_TRAIT(src, TRAIT_COZY_REVENANT_HOME, INNATE_TRAIT)
 	if(mapload)
 		find_and_mount_on_atom()
-		if(prob(ROUNDSTART_CURSED_CHANCE) && cursable)
-			AddComponent(/datum/component/revenant_prison, create_on_release = TRUE)
 	update_choices()
 	register_context()
 
@@ -298,8 +301,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	return .
 
 /obj/structure/mirror/attacked_by(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(broken)
+		return ..()
 	. = ..()
-	if(broken || . <= 0) // breaking a mirror truly gets you bad luck!
+	if(!broken || . <= 0) // breaking a mirror truly gets you bad luck!
 		return
 	to_chat(user, span_warning("A chill runs down your spine as [src] shatters..."))
 	user.AddComponent(/datum/component/omen, incidents_left = 7)
@@ -524,15 +529,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	)
 
 	var/turf/user_turf = get_turf(user)
-	var/list/levels = SSmapping.levels_by_trait(ZTRAIT_SPACE_RUINS)
-	var/turf/dest
-	if(length(levels))
-		dest = locate(user_turf.x, user_turf.y, pick(levels))
-
-	user_turf.ChangeTurf(/turf/open/chasm, flags = CHANGETURF_INHERIT_AIR)
-	var/turf/open/chasm/new_chasm = user_turf
-	new_chasm.set_target(dest)
-	new_chasm.drop(user)
+	var/turf/open/chasm/pride/new_chasm = user_turf.ChangeTurf(/turf/open/chasm/pride, flags = CHANGETURF_INHERIT_AIR)
+	// `ChangeTurf()` can itself lead to `drop()` if there's lattice present, so
+	// we only force the user down if they're still on the same turf.
+	if(get_turf(user) == user_turf)
+		new_chasm.drop(user)
 
 #undef CHANGE_HAIR
 #undef CHANGE_BEARD
