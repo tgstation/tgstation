@@ -1,3 +1,4 @@
+//pillow suit ability
 /datum/action/item_action/pillow_fortify
 	name = "Fortify"
 	desc = "Decrease your speed and goes into a defensive stance countering any incoming shove."
@@ -16,3 +17,8 @@
 			crazy_armor.fortify(owner)
 			return
 	return ..()
+
+/datum/action/item_action/pillow_charge
+	name = "Ramming mode"
+	desc = "While wielding the lance you gain speed as  you continue running in a direction, consuming stamina but dealing more stamina damage once you hit someone"
+

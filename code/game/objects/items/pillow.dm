@@ -187,7 +187,8 @@
 	icon_state = "pillow_suit"
 	armor_type = /datum/armor/suit_pillow_suit
 	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
-	actions_types = list(/datum/action/item_action/pillow_fortify)
+
+
 	var/obj/item/pillow/unstoppably_plushed
 	var/hunkered = FALSE
 	///Aura color for juggernaut mode
@@ -270,3 +271,13 @@
 	name = "pillow spear"
 	desc = "Looks like a bodypillow was ducktaped onto a long pole to be used as a blunt spear"
 	damtype = STAMINA
+	force_unwielded = 12
+	force_wielded = 18
+	icon_state = "pillow_lance0"
+	icon_prefix = "pillow_lance"
+
+
+/obj/item/shield/mattress
+	name = "mattress shield"
+	desc = "A typical twin mattress repurposed into a makeshift shield"
+	icon_state = "mattress_shield"
