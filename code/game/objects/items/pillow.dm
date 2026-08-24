@@ -69,6 +69,7 @@
 		hit_sound = 'sound/items/pillow/pillow_hit.ogg'
 	user.apply_damage(5, STAMINA) //Had to be done so one person cannot keep multiple people stam critted
 	last_fighter = user
+	new /obj/effect/temp_visual/pillow_hit(get_turf(target_mob))
 	playsound(user, hit_sound, 80) //the basic 50 vol is barely audible
 
 /obj/item/pillow/attack_secondary(mob/living/carbon/victim, mob/living/user, list/modifiers, list/attack_modifiers)
@@ -268,13 +269,17 @@
 	variation = 6
 
 /obj/item/spear/pillow
-	name = "pillow spear"
+	name = "pillow lance"
 	desc = "Looks like a bodypillow was ducktaped onto a long pole to be used as a blunt spear"
 	damtype = STAMINA
 	force_unwielded = 12
 	force_wielded = 18
-	icon_state = "pillow_lance0"
+	icon_state = "pillow_lance"
 	icon_prefix = "pillow_lance"
+
+/obj/item/spear/pillow/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	new /obj/effect/temp_visual/pillow_hit(get_turf(target_mob))
 
 
 /obj/item/shield/mattress
