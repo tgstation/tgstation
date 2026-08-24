@@ -38,8 +38,8 @@
 #define SYMPTOM_KILLER_SEVERITY_PENALTY 2 /// Severity minimum penalty for picking two symptoms
 #define SYMPTOM_BUFFER_LEVEL 3 /// Level maximum for other symptoms
 #define SYMPTOM_BUFFER_SEVERITY 1 /// Severity minimum for other symptoms
-#define SYMPTOM_BUFFER_NEUTER_PROB_LOUD 50 /// Chance of other symptoms being neutered in a non stealth virus
-#define SYMPTOM_BUFFER_NEUTER_PROB_STEALTHY 75 /// Chance of other symptoms being neutered in a stealth virus
+#define SYMPTOM_BUFFER_NEUTER_PROB_LOUD 40 /// Chance of other symptoms being neutered in a non stealth virus
+#define SYMPTOM_BUFFER_NEUTER_PROB_STEALTHY 65 /// Chance of other symptoms being neutered in a stealth virus
 #define SYMPTOM_BUFFER_STEALTH_MIN -1 /// Minimum stealth stat in other symptoms for stealthy viruses
 
 /datum/disease/advance/antag
@@ -58,7 +58,7 @@
 	for(var/datum/symptom/possible_symptom as anything in symptom_list)
 		if(symptoms.len >= VIRUS_SYMPTOM_LIMIT)
 			break
-		if((!double_symptom && possible_symptom.level >= SYMPTOM_KILLER_LEVEL && possible_symptom.severity >= SYMPTOM_KILLER_SEVERITY) || (double_symptom && SYMPTOM_KILLER_LEVEL > possible_symptom.level >= SYMPTOM_KILLER_LEVEL - SYMPTOM_KILLER_LEVEL_PENALTY && possible_symptom.severity >= SYMPTOM_KILLER_SEVERITY - SYMPTOM_KILLER_SEVERITY_PENALTY ) && killer_symptoms >= 0)
+		if((!double_symptom && (possible_symptom.level >= SYMPTOM_KILLER_LEVEL) && (possible_symptom.severity >= SYMPTOM_KILLER_SEVERITY)) || (double_symptom && (SYMPTOM_KILLER_LEVEL > possible_symptom.level >= (SYMPTOM_KILLER_LEVEL - SYMPTOM_KILLER_LEVEL_PENALTY)) && (possible_symptom.severity >= SYMPTOM_KILLER_SEVERITY - SYMPTOM_KILLER_SEVERITY_PENALTY)) && killer_symptoms > 0)
 			killer_symptoms--
 			symptoms += new possible_symptom
 			continue
