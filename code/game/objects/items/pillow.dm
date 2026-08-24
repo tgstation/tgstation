@@ -276,6 +276,7 @@
 	force_wielded = 18
 	icon_state = "pillow_lance"
 	icon_prefix = "pillow_lance"
+	hit_sound = 'sound/items/pillow/pillow_hit.ogg'
 
 /obj/item/spear/pillow/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
