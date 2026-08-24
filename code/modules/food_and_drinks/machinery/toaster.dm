@@ -87,6 +87,7 @@
 		do_sparks(2, TRUE, src)
 		sleep(1 SECONDS)
 		kaboom()
+		qdel()
 	update_appearance()
 
 /obj/machinery/toaster/update_overlays()
