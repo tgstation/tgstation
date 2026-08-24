@@ -535,8 +535,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MARTIAL_ARTS_IMMUNE "martial_arts_immune"
 /// Immune to being afflicted by time stop (spell)
 #define TRAIT_TIME_STOP_IMMUNE "time_stop_immune"
-/// Revenants draining you only get a very small benefit.
-#define TRAIT_WEAK_SOUL "weak_soul"
 /// This mob has no soul
 #define TRAIT_NO_SOUL "no_soul"
 /// Prevents mob from riding mobs when buckled onto something
@@ -1682,6 +1680,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Cannot be backstabbed with a crusher
 #define TRAIT_BACKSTAB_IMMUNE "backstab_immune"
+
+/// Mobs that are of a lesser species, like monkeys, compared to other humanoid species
+#define TRAIT_LESSER_HUMANOID "lesser_humanoid"
+/// Is an ape, gorilla, a man of the jungle, an ook ook fellow
+#define TRAIT_SIMIAN "simian"
 
 /// Makes the owner immune from the pacification from synthpax
 #define TRAIT_SYNTHPAX_IMMUNE "synthpax_immune"
