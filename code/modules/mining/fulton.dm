@@ -202,19 +202,22 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	icon_state = "extraction_pack_networked"
 	paralyze_duration = 18 SECONDS
 
-// Does not require a prior link, instead locates all nearby networks and fetches their fulton points when used
 /obj/item/extraction_pack/networked/attack_self(mob/user)
-	balloon_alert(user, "select target!")
+	var/list/possible_beacons = list()
+	for(var/datum/weakref/point_ref as anything in GLOB.total_extraction_beacons)
+		var/obj/structure/extraction_point/extraction_point = point_ref.resolve()
+		if(isnull(extraction_point))
+			GLOB.total_extraction_beacons.Remove(point_ref)
+			continue
+		if(extraction_point.beacon_network in beacon_networks)
+			possible_beacons += extraction_point
 
-/obj/item/extraction_pack/networked/get_beacon(mob/living/user)
-	var/list/atom/movable/beacons = list()
-	var/network_located = FALSE
 	for (var/datum/mining_beacon_network/network as anything in GLOB.mining_beacon_networks)
 		var/list/fulton_points = list()
 		var/node_located = FALSE
 		for (var/datum/component/candela_node/node as anything in network.linked_nodes)
 			if (node.fulton_point)
-				fulton_points[node.parent] = node
+				fulton_points += node.parent
 
 			if (node_located)
 				continue
@@ -223,31 +226,46 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 				node_located = TRUE
 
 		if (node_located)
-			network_located = TRUE
-			beacons |= fulton_points
+			possible_beacons |= fulton_points
 
-	if (!network_located)
-		balloon_alert(user, "no nearby networks!")
+	if(!length(possible_beacons))
+		balloon_alert(user, "no beacons")
+		return
+
+	var/chosen_beacon = tgui_input_list(user, "Beacon to connect to", "Balloon Extraction Pack", sort_names(possible_beacons))
+	if(isnull(chosen_beacon))
+		return
+
+	beacon_ref = WEAKREF(chosen_beacon)
+	balloon_alert(user, "linked!")
+
+/obj/item/extraction_pack/networked/get_beacon(mob/living/user)
+	var/obj/structure/extraction_point/beacon = beacon_ref?.resolve()
+	if (isnull(beacon))
+		balloon_alert(user, "not linked!")
+		beacon_ref = null
 		return null
 
-	if (!length(beacons))
-		balloon_alert(user, "no valid beacons!")
-		return null
+	// Anything that isn't an extraction point must've came from a Candela network, go through all of its nodes check if we can access it
+	if (istype(beacon))
+		return beacon
 
-	var/choice = tgui_input_list(user, "Select your destination:", "Select Beacon", beacons)
-	if (!choice)
-		return null
+	for (var/datum/mining_beacon_network/network as anything in GLOB.mining_beacon_networks)
+		// Check if its even our target's network to begin with
+		var/target_net = FALSE
+		for (var/datum/component/candela_node/node as anything in network.linked_nodes)
+			if (node.parent == beacon)
+				target_net = TRUE
+				break
 
-	var/datum/component/candela_node/chosen_beacon = beacons[choice]
-	if (QDELETED(chosen_beacon) || !chosen_beacon.network)
-		return null
+		if (!target_net)
+			continue
 
-	// Make sure that we can still see the network that the beacon belongs to
-	for (var/datum/component/candela_node/node as anything in chosen_beacon.network.linked_nodes)
-		if (get_dist(node.parent, user) <= MINING_BEACON_MAX_REACH && (user in viewers(MINING_BEACON_MAX_REACH, node.parent)))
-			return chosen_beacon.parent
+		for (var/datum/component/candela_node/node as anything in network.linked_nodes)
+			if (get_dist(node.parent, user) <= MINING_BEACON_MAX_REACH && (user in viewers(MINING_BEACON_MAX_REACH, node.parent)))
+				return beacon
 
-	balloon_alert(user, "out of reach!")
+	balloon_alert(user, "our of network reach!")
 	return null
 
 /obj/item/fulton_core
@@ -292,15 +310,12 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	var/beacon_network = "station"
 	/// What type of core do we drop when picked up
 	var/core_type = /obj/item/fulton_core
-	/// Do we add ourselves to the global fulton list?
-	var/use_global_network = TRUE
 
 /obj/structure/extraction_point/Initialize(mapload, mob/creator)
 	. = ..()
 	name += " ([rand(100,999)]) ([get_area_name(src, TRUE)])"
 	INVOKE_ASYNC(src, PROC_REF(poll_name), creator)
-	if (use_global_network)
-		GLOB.total_extraction_beacons.Add(WEAKREF(src))
+	GLOB.total_extraction_beacons.Add(WEAKREF(src))
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/extraction_point/proc/poll_name(mob/creator)
@@ -334,11 +349,10 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	desc = "A beacon for the fulton recovery system, capable of broadcasting its location through \"Candela\" navigation networks."
 	icon_state = "extraction_point_networked"
 	core_type = /obj/item/fulton_core/networked
-	use_global_network = FALSE
 
 /obj/structure/extraction_point/networked/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/candela_node, new /datum/mining_beacon_network(), null, connection_pixel_x = base_pixel_w, connection_pixel_y = base_pixel_z - 2, fulton_point = TRUE)
+	AddComponent(/datum/component/candela_node, new /datum/mining_beacon_network(), null, connection_pixel_x = base_pixel_w, connection_pixel_y = base_pixel_z - 2)
 
 /obj/effect/extraction_holder
 	name = "extraction holder"
