@@ -296,18 +296,20 @@
 	. = ..()
 	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(mob_move))
 	RegisterSignal(user, COMSIG_LIVING_PRE_MOB_BUMP, PROC_REF(impale))
-	user.remove_movespeed_modifier(/datum/movespeed_modifier/lance_charge)
 
 /obj/item/spear/pillow/on_unwield(obj/item/source, mob/living/carbon/user)
 	. = ..()
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(mob_move))
 	UnregisterSignal(user, COMSIG_LIVING_PRE_MOB_BUMP, PROC_REF(impale))
+	if(user.has_movespeed_modifier(/datum/movespeed_modifier/lance_charge))
+		user.remove_movespeed_modifier(/datum/movespeed_modifier/lance_charge)
 
 /obj/item/spear/pillow/dropped(mob/user, silent)
 	. = ..()
 	UnregisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(mob_move))
 	UnregisterSignal(user, COMSIG_LIVING_PRE_MOB_BUMP, PROC_REF(impale))
-	user.remove_movespeed_modifier(/datum/movespeed_modifier/lance_charge)
+	if(user.has_movespeed_modifier(/datum/movespeed_modifier/lance_charge))
+		user.remove_movespeed_modifier(/datum/movespeed_modifier/lance_charge)
 
 /obj/item/spear/pillow/proc/mob_move(mob/living/user)
 	SIGNAL_HANDLER
@@ -317,7 +319,8 @@
 		current_direction = dir
 	current_tile_charge++
 	if(current_tile_charge >= min_tile_charge)
-		user.add_movespeed_modifier(/datum/movespeed_modifier/lance_charge)
+		if(!user.has_movespeed_modifier(/datum/movespeed_modifier/lance_charge))
+			user.add_movespeed_modifier(/datum/movespeed_modifier/lance_charge)
 		user.adjust_stamina_loss(stamina_per_tile)
 
 /obj/item/spear/pillow/proc/impale(mob/living/target, mob/living/user)
@@ -327,7 +330,9 @@
 		return
 	INVOKE_ASYNC(target, TYPE_PROC_REF(/atom, attackby), src, user)
 	target.adjust_stamina_loss(damage_boost_per_tile * current_tile_charge)
-	user.remove_movespeed_modifier(/datum/movespeed_modifier/lance_charge)
+	playsound(user, 'sound/effects/bang.ogg', 40, TRUE)
+	if(user.has_movespeed_modifier(/datum/movespeed_modifier/lance_charge))
+		user.remove_movespeed_modifier(/datum/movespeed_modifier/lance_charge)
 
 /obj/item/spear/pillow/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
