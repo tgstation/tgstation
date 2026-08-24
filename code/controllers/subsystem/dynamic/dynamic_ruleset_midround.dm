@@ -224,7 +224,7 @@
 	/// Determines how many people to infect when the ruleset is executed
 	var/patient_zeroes = 3
 
-/datum/dynamic_ruleset/midround/disease/qualifies_for_infection(/mob/living/carbon/human/candidate)
+/datum/dynamic_ruleset/midround/disease/proc/qualifies_for_infection(mob/living/carbon/human/candidate)
 	if(!(candidate.mind.assigned_role.job_flags & JOB_CREW_MEMBER) || candidate.stat == DEAD)
 		return FALSE
 	if(HAS_TRAIT(candidate, TRAIT_VIRUSIMMUNE))
