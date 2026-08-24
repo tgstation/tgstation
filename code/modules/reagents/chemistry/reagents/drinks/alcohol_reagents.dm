@@ -3739,6 +3739,7 @@
 	RegisterSignal(drinker, COMSIG_CARBON_VOMITED, PROC_REF(on_vomit))
 
 /datum/reagent/consumable/ethanol/entropic_brew/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
+	. = ..()
 	if(HAS_TRAIT(drinker, TRAIT_APATHETIC)) //if already apathetic, doesn't cause vomiting and rapidly drains disgust
 		drinker.adjust_disgust(-20 * metabolization_ratio * seconds_per_tick)
 		return
@@ -3774,6 +3775,7 @@
 	var/list/col_filter_muted = list(0.7,0.15,0.15,0, 0.15,0.7,0.15,0, 0.15,0.15,0.7,0, 0,0,0,1, 0,0,0,0)
 
 /datum/reagent/consumable/ethanol/emptiest_glass/on_mob_metabolize(mob/living/carbon/drinker)
+	. = ..()
 	var/atom/movable/plane_master_controller/game_plane_master_controller = drinker.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 
 	game_plane_master_controller.add_filter("emptiest_glass_filter", 10, color_matrix_filter(COLOR_MATRIX_IDENTITY))
@@ -3782,6 +3784,7 @@
 		animate(filter, color = col_filter_muted, 5 SECONDS, CIRCULAR_EASING) //I have no clue if this is the right way to do this, but it works.
 
 /datum/reagent/consumable/ethanol/emptiest_glass/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
+	. = ..()
 	var/turf/drinker_turf = get_turf(drinker)
 	drinker_turf.TakeTemperature(-10)
 
@@ -3794,6 +3797,7 @@
 			to_chat(drinker, span_warning("You hear a distant song..."))
 
 /datum/reagent/consumable/ethanol/emptiest_glass/on_mob_end_metabolize(mob/living/carbon/drinker)
+	. = ..()
 	var/atom/movable/plane_master_controller/game_plane_master_controller = drinker.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
 	game_plane_master_controller.remove_filter("emptiest_glass_filter")
 
