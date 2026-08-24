@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "Mushroom hallucinogen does not apply it's drug effect if the target has no client."
