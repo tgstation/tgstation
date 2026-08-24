@@ -138,6 +138,7 @@
 	user.set_suicide(TRUE)
 	user.apply_damage(75, BRUTE, BODY_ZONE_HEAD, wound_bonus = 100, forced = TRUE, sharpness = SHARP_EDGED, attacking_item = src)
 	if(head.dismember())
+		user.death() // anti-ling check
 		return MANUAL_SUICIDE
 
 	user.visible_message(span_suicide("...but fails to separate [user.p_their()] head from [user.p_their()] body! Ouch!"))
