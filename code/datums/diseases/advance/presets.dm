@@ -47,18 +47,19 @@
 	var/stealthy = FALSE // Whether or not we generate a stealth disease
 
 /datum/disease/advance/antag/New()
+	var/free_symptom
 	if(stealthy)
-		symptoms += new /datum/symptom/stats/antag_stealth
+		free_symptom = new /datum/symptom/stats/antag_stealth
 	else
-		symptoms += new /datum/symptom/stats/antag_loud
-
+		free_symptom = new /datum/symptom/stats/antag_loud
+	symptoms += free_symptom
+	NeuterSymptom(free_symptom)
 	var/list/symptom_list = shuffle(valid_subtypesof(/datum/symptom))
-	var/killer_symptoms = (stealthy ? 1 : rand(1,2)) // How many deadly diseases we have
-	var/double_symptom = killer_symptoms >= 1
+	var/killer_symptoms = (stealthy ? 1 : rand(1,2)) // How many deadly symptoms we have
 	for(var/datum/symptom/possible_symptom as anything in symptom_list)
 		if(symptoms.len >= VIRUS_SYMPTOM_LIMIT)
 			break
-		if((!double_symptom && (possible_symptom.level >= SYMPTOM_KILLER_LEVEL) && (possible_symptom.severity >= SYMPTOM_KILLER_SEVERITY)) || (double_symptom && (SYMPTOM_KILLER_LEVEL > possible_symptom.level >= (SYMPTOM_KILLER_LEVEL - SYMPTOM_KILLER_LEVEL_PENALTY)) && (possible_symptom.severity >= SYMPTOM_KILLER_SEVERITY - SYMPTOM_KILLER_SEVERITY_PENALTY)) && killer_symptoms > 0)
+		if((possible_symptom.level >= SYMPTOM_KILLER_LEVEL) && (possible_symptom.severity >= SYMPTOM_KILLER_SEVERITY) && killer_symptoms > 0)
 			killer_symptoms--
 			symptoms += new possible_symptom
 			continue
@@ -70,8 +71,6 @@
 			var/neuter_chance = (stealthy ? SYMPTOM_BUFFER_NEUTER_PROB_STEALTHY : SYMPTOM_BUFFER_NEUTER_PROB_LOUD)
 			if(prob(neuter_chance))
 				NeuterSymptom(new_symptom)
-			continue
-
 	name = generate_virus_name()
 	Refresh()
 
