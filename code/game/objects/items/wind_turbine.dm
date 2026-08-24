@@ -122,24 +122,25 @@
 
 /obj/item/portable_wind_turbine/proc/on_suicide_act(mob/living/source)
 	SIGNAL_HANDLER
-
 	if(source.get_active_held_item())
 		return NONE
 
-	var/obj/item/bodypart/head = source.get_bodypart(BODY_ZONE_HEAD)
+	return suicide_act(source)
+
+/obj/item/portable_wind_turbine/suicide_act(mob/living/user)
+	var/obj/item/bodypart/head = user.get_bodypart(BODY_ZONE_HEAD)
 	if(isnull(head))
 		return NONE
 
-	playsound(source,'sound/items/weapons/bladeslice.ogg', 50)
-	source.visible_message(span_suicide("[source] moves [source.p_their()] head in the way of [src]'s blades! \
-		It looks like [source.p_theyre()] trying to commit suicide!"))
-	source.set_suicide(TRUE)
+	playsound(user,'sound/items/weapons/bladeslice.ogg', 50)
+	user.visible_message(span_suicide("[user] moves [user.p_their()] head in the way of [src]'s blades! \
+		It looks like [user.p_theyre()] trying to commit suicide!"))
+	user.set_suicide(TRUE)
+	user.apply_damage(75, BRUTE, BODY_ZONE_HEAD, wound_bonus = 100, forced = TRUE, sharpness = SHARP_EDGED, attacking_item = src)
 	if(head.dismember())
 		return MANUAL_SUICIDE
 
-	source.apply_damage(75, BRUTE, BODY_ZONE_HEAD, wound_bonus = 100, forced = TRUE)
-	source.visible_message(span_suicide("...but fails to separate [source.p_their()] head from [source.p_their()] body!"))
-	source.set_suicide(FALSE)
+	user.visible_message(span_suicide("...but fails to separate [user.p_their()] head from [user.p_their()] body! Ouch!"))
 	return SHAME
 
 ///Updates the worn back icon for the current loc

@@ -210,8 +210,7 @@ GAME_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", null)
 	if(source.get_active_held_item())
 		return NONE
 
-	INVOKE_ASYNC(src, PROC_REF(suicide_act), source)
-	return MANUAL_SUICIDE
+	return suicide_act(source)
 
 /obj/item/clothing/head/soft/propeller_hat/suicide_act(mob/living/user)
 	user.add_traits(list(TRAIT_GODMODE, TRAIT_FORCED_STANDING, TRAIT_UNDENSE, TRAIT_IMMOBILIZED, TRAIT_INCAPACITATED, TRAIT_HANDS_BLOCKED), TRAIT_GENERIC)
