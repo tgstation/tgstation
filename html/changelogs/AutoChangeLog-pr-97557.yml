@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - refactor: "Changed how TGUI icons for jobs are set, please make a report if any are missing."
