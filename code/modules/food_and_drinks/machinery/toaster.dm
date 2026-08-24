@@ -40,7 +40,7 @@
 /obj/machinery/toaster/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/obj/item/food/food = tool
 
-	if(!(food.type in toasting_list) || !istype(food))
+	if(!is_type_in_list(food) || !istype(food))
 		return NONE
 
 	if(!powered())
@@ -78,6 +78,7 @@
 	if(!cooked_bread)
 		return
 	new cooked_bread(drop_location())
+	loaded_bread -= ourbread
 	qdel(ourbread)
 	if(loaded_bread.len == 0)
 		update_use_power(IDLE_POWER_USE)
