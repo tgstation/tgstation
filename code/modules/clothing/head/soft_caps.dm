@@ -213,6 +213,11 @@ GAME_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", null)
 	return suicide_act(source)
 
 /obj/item/clothing/head/soft/propeller_hat/suicide_act(mob/living/user)
+	if(!isturf(user.loc))
+		user.visible_message(span_suicide("[user] starts spinning [src] as fast as possible! \
+			It looks like [user.p_theyre()] trying to fly off into the sunset... yet the sky is out of reach for [user.p_them()]..."))
+		return SHAME
+
 	user.add_traits(list(TRAIT_GODMODE, TRAIT_FORCED_STANDING, TRAIT_UNDENSE, TRAIT_IMMOBILIZED, TRAIT_INCAPACITATED, TRAIT_HANDS_BLOCKED), TRAIT_GENERIC)
 	user.move_resist = INFINITY
 	user.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -222,6 +227,10 @@ GAME_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", null)
 	playsound(src, 'sound/effects/whirthunk.ogg', 75)
 	animate(user, PROPHAT_SUICIDE_TIME, pixel_z = 256, alpha = 0)
 	QDEL_IN(user, PROPHAT_SUICIDE_TIME)
+	// drop objects that will get flagged by tsa before we board
+	for(var/obj/item/should_keep in user.get_all_contents())
+		if(should_keep.resistance_flags & INDESTRUCTIBLE)
+			should_keep.forceMove(user.drop_location())
 	return MANUAL_SUICIDE
 
 #undef PROPHAT_SUICIDE_TIME
