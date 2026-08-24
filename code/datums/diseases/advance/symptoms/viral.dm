@@ -2,6 +2,7 @@
 /datum/symptom/stats
 	symptom_cure = null
 	abstract_type = /datum/symptom/stats
+	naturally_occuring = FALSE
 
 /datum/symptom/stats/OnAdd(datum/disease/advance/our_disease)
 	. = ..()
@@ -47,14 +48,16 @@
 	name = "Unknown Symptom A"
 	desc = "An enigmatic trait that causes a virus to spread and advance much more quickly while also becoming harder to cure."
 	stealth = 0
-	resistance = 5
+	resistance = 4
 	stage_speed = 5
 	transmittable = 4
+	naturally_occuring = FALSE
 
 /datum/symptom/stats/antag_stealth
 	name = "Unknown Symptom B"
 	desc = "A henceforth undiscovered trait that causes a virus to become much harder to spot to almost all forms of scanning."
-	stealth = 6
-	resistance = 3
+	stealth = 5
+	resistance = 2
 	stage_speed = 3
-	transmittable = 2
+	transmittable = 3
+	naturally_occuring = FALSE
