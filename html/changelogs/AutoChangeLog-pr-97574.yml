@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - admin: "Improved OverFlayer previews by allowing to edit preview plane/backdrop color"

@@ -336,7 +336,7 @@
 	playsound(src, 'sound/effects/rock/rock_break.ogg', 50)
 	update_appearance(UPDATE_ICON_STATE)
 	reset_drone(success = FALSE)
-	reset_cooldown(src, wave_cooldown)
+	COOLDOWN_RESET(src, wave_cooldown)
 
 /**
  * Handles winning the event, gives everyone a payout and start boulder production

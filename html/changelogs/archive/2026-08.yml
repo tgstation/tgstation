@@ -593,6 +593,72 @@
   SmArtKar:
   - balance: Watchers and legions no longer keep facing the target when retreating,
       allowing for backstabs
+  - rscadd: Every 5 minutes 2-4 random cargo exports get tripled in price, lets go
+      gambling!
   lelandkemble:
   - bugfix: door remotes function in melee range
   - bugfix: light replacers function in melee range
+2026-08-21:
+  DeltaFire15:
+  - bugfix: Cable-based robotic limb repairs are no longer impossible while not wearing
+      an uniform.
+  FalloutFalcon:
+  - refactor: breaks up navigate code into a proc for the choice vs the line creation
+  - admin: Admin VV topic to navigate a player to a marked object
+  JohnFulpWillard:
+  - bugfix: Orbit menu should now show antag HUDs as it was seemingly supposed to
+      from the start, instead of some antags simply showing a rev icon.
+  - refactor: De-hardcoded HUDs for jobs & antags, report any icons missing.
+  Melbert:
+  - rscdel: Spacesuits no longer fully conceal lizard tails
+  - rscadd: Species features like wings and tails will appear "meshed over" when wearing
+      certain equipment like spacesuits or biosuits.
+  - rscadd: Biosuits and beepeeker suit sprites now altar when worn by digitigrade
+      mobs.
+  - rscadd: Aprons and Overall sprites now altar when worn by digitigrade mobs.
+  - spellcheck: All heretic armor hoods are consistently known by their name, rather
+      than "ominous hood"
+  - balance: Donk. Flechette rounds aren't stealthy embeds and can be hand removed
+  - balance: Magboots (and similar forms of gravity negation) prevent you from falling
+      on shuttle movement
+  - bugfix: Fixes space phase deducting a charge on entrance and edit. Now only deducts
+      a charge on exit
+  - balance: Cosmic spell recharge condition changed to "crit targets within a tile
+      of a cosmic field" instead of "on a cosmic field"
+  - balance: Void spell recharge condition changed to "Stand near freezing enemies"
+      instead of "Crit freezing enemies"
+  Metek:
+  - balance: The Captain is now treated as a member of every department, for the purpose
+      of department-related vendor discounts.
+  - code_imp: The logic for determining a discount has been cleaned up a bit.
+  PapaMichael:
+  - bugfix: AI tracking from the crew monitoring console now works for people who
+      have set an ID card honorific too
+  QuiteLiterallyAnything:
+  - bugfix: Research discounts from toxins can now be purchased again.
+  hry-gh:
+  - bugfix: typepath suggestions are now filtered on the frontend
+  sqnztb:
+  - bugfix: ore vents now reset properly on losses.
+  uaioy:
+  - rscadd: The double-ended chainsaw  spear
+2026-08-22:
+  JohnFulpWillard:
+  - qol: Pressing backspace while unfocused now clears your command bar.
+  - qol: The Command bar now starts on Say instead of Command mode.
+  Melbert:
+  - bugfix: Humans can take CSL
+  SmArtKar:
+  - rscdel: Goldgrub no longer reproduce unless hand fed ores
+2026-08-23:
+  Absolucy:
+  - rscadd: Added purple luxury medipens. These are given instead when bought with
+      a jellyperson's bank account. They are jelly-friendly, however heal less than
+      normal luxury pens. They also make you more purple. Sprite by Bieyes.
+  FalloutFalcon:
+  - bugfix: Anchored Items cant be looted with quick inserting from bags
+  Richard Blonski:
+  - bugfix: Chat Highlight sounds are off by default now.
+  - qol: Chat Highlights won't trigger on self-actions or radio channel names.
+  levels0:
+  - rscadd: certain cursed mirrors might now talk

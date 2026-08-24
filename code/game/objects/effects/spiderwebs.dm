@@ -99,6 +99,8 @@
 
 /// Drains stamina and shows feedback when you get stuck moving thru a web
 /obj/structure/spider/stickyweb/proc/stuck_react(mob/living/victim)
+	if(QDELETED(victim))
+		return
 	if(victim.get_stamina_loss() > 90)
 		if(victim.body_position != LYING_DOWN)
 			to_chat(victim, span_warning("You trip over \the [src] due to exhaustion!"))
