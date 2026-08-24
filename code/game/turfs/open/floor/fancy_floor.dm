@@ -9,7 +9,7 @@
  */
 
 /turf/open/floor/wood
-	desc = "Stylish dark wood."
+	desc = "Stylish wood."
 	icon_state = "wood"
 	floor_tile = /obj/item/stack/tile/wood
 	footstep = FOOTSTEP_WOOD
@@ -71,6 +71,16 @@
 /turf/open/floor/wood/freezing
 	temperature = ICEBOX_MIN_TEMPERATURE
 
+/turf/open/floor/wood/dark
+	desc = "Stylish dark wood."
+	icon_state = "darkwood"
+	floor_tile = /obj/item/stack/tile/wood/dark
+
+/turf/open/floor/wood/light
+	desc = "Stylish light wood."
+	icon_state = "lightwood"
+	floor_tile = /obj/item/stack/tile/wood/light
+
 /turf/open/floor/wood/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
@@ -81,6 +91,15 @@
 	icon_state = "wood_tile"
 	floor_tile = /obj/item/stack/tile/wood/tile
 
+/turf/open/floor/wood/dark/tile
+	icon_state = "darkwood_tile"
+	floor_tile = /obj/item/stack/tile/wood/dark/tile
+
+/turf/open/floor/wood/light/tile
+	icon_state = "lightwood_tile"
+	floor_tile = /obj/item/stack/tile/wood/light/tile
+
+
 /turf/open/floor/wood/tile/broken_states()
 	return list("wood_tile-broken", "wood_tile-broken2", "wood_tile-broken3")
 
@@ -88,12 +107,28 @@
 	icon_state = "wood_parquet"
 	floor_tile = /obj/item/stack/tile/wood/parquet
 
+/turf/open/floor/wood/light/parquet
+	icon_state = "lightwood_parquet"
+	floor_tile = /obj/item/stack/tile/wood/light/parquet
+
+/turf/open/floor/wood/dark/parquet
+	icon_state = "darkwood_parquet"
+	floor_tile = /obj/item/stack/tile/wood/dark/parquet
+
 /turf/open/floor/wood/parquet/broken_states()
 	return list("wood_parquet-broken", "wood_parquet-broken2", "wood_parquet-broken3", "wood_parquet-broken4", "wood_parquet-broken5", "wood_parquet-broken6", "wood_parquet-broken7")
 
 /turf/open/floor/wood/large
 	icon_state = "wood_large"
 	floor_tile = /obj/item/stack/tile/wood/large
+
+/turf/open/floor/wood/light/large
+	icon_state = "lightwood_large"
+	floor_tile = /obj/item/stack/tile/wood/light/large
+
+/turf/open/floor/wood/dark/large
+	icon_state = "darkwood_large"
+	floor_tile = /obj/item/stack/tile/wood/dark/large
 
 /turf/open/floor/wood/large/broken_states()
 	return list("wood_large-broken", "wood_large-broken2", "wood_large-broken3")
@@ -115,6 +150,13 @@
 
 /turf/open/floor/bamboo/broken_states()
 	return list("bamboodamaged")
+
+/turf/open/floor/bamboo/planks
+	desc = "A floor tile made from cut bamboo pieces."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "bamboo"
+	floor_tile = /obj/item/stack/tile/bamboo/planks
+	smoothing_flags = NONE
 
 /turf/open/floor/bamboo/tatami
 	desc = "A traditional Japanese floor mat."
@@ -269,6 +311,58 @@
 			if("basalt5", "basalt9")
 				set_light(BASALT_LIGHT_RANGE_DIM, BASALT_LIGHT_POWER, LIGHT_COLOR_LAVA)
 
+/turf/open/floor/fakesand
+	name = "aesthetic sand flooring"
+	desc = "Safely recreated turf for your desertplanet-scaping."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "asteroid"
+	var/base_icon = "asteroid"
+	floor_tile = /obj/item/stack/tile/basalt/sand
+	flags_1 = NONE
+	bullet_bounce_sound = null
+	footstep = FOOTSTEP_SAND
+	barefootstep = FOOTSTEP_SAND
+	clawfootstep = FOOTSTEP_SAND
+	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
+	tiled_turf = FALSE
+
+/turf/open/floor/fakesand/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/diggable, /obj/item/stack/ore/glass, 2, worm_chance = 0)
+	if(prob(15))
+		icon_state = "[base_icon][rand(0, 12)]"
+
+/turf/open/floor/fakesand/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/cultivator/rake))
+		return NONE
+	icon_state = "[base_icon]_raked"
+	dir = turn(dir, 45)
+
+	user.visible_message(
+		span_notice("[user] rakes the [name]."),
+		span_notice("You rake the [name]."),
+	)
+
+	playsound(src, 'sound/effects/shovel_dig.ogg', 50, TRUE)
+
+	return ITEM_INTERACT_SUCCESS
+
+/turf/open/floor/fakesand/red
+	name = "aesthetic red sand flooring"
+	desc = "Safely recreated turf for your mars-scaping."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "ironsand"
+	base_icon = "ironsand"
+	floor_tile = /obj/item/stack/tile/basalt/redsand
+
+/turf/open/floor/fakesand/moon
+	name = "aesthetic moon sand flooring"
+	desc = "Safely recreated turf for your moon-scaping."
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "moon"
+	base_icon = "moon"
+	floor_tile = /obj/item/stack/tile/basalt/moonsand
+
 /turf/open/floor/carpet
 	name = "carpet"
 	desc = "Soft velvet carpeting. Feels good between your toes."
@@ -420,6 +514,62 @@
 	floor_tile = /obj/item/stack/tile/carpet/donk
 	smoothing_groups = SMOOTH_GROUP_TURF_OPEN + SMOOTH_GROUP_CARPET_DONK
 	canSmoothWith = SMOOTH_GROUP_CARPET_DONK
+
+/turf/open/floor/carpet/bear
+	name = "bear fur carpet"
+	desc = "Bear fur stretched out into a carpet for you to walk on."
+	icon = 'icons/turf/floors/carpet_bear.dmi'
+	icon_state = "carpet_bear-255"
+	base_icon_state = "carpet_bear"
+	floor_tile = /obj/item/stack/tile/carpet/bear
+
+/turf/open/floor/carpet/polar_bear
+	name = "polar bear fur carpet"
+	desc = "Polar bear fur stretched out into a carpet for you to walk on."
+	icon = 'icons/turf/floors/carpet_bearpolar.dmi'
+	icon_state = "carpet_bearpolar-255"
+	base_icon_state = "carpet_bearpolar"
+	floor_tile = /obj/item/stack/tile/carpet/polar_bear
+
+/turf/open/floor/carpet/moth
+	name = "moth carpet"
+	desc = "Moth fur stretched out into a carpet for you to walk on."
+	icon = 'icons/turf/floors/carpet_moth.dmi'
+	icon_state = "carpet_moth-255"
+	base_icon_state = "carpet_moth"
+	floor_tile = /obj/item/stack/tile/carpet/moth
+
+/turf/open/floor/carpet/goliath
+	name = "goliath hide carpet"
+	desc = "Goliath hide plates woven together with watcher sinew to make something aproximating a carpet."
+	icon = 'icons/turf/floors/carpet_goliath.dmi'
+	icon_state = "carpet_goliath-255"
+	base_icon_state = "carpet_goliath"
+	floor_tile = /obj/item/stack/tile/carpet/goliath
+
+/turf/open/floor/carpet/carp
+	name = "carp scales carpet"
+	desc = "Carpet made with carp scales. A carp carpet. Carp carp carp."
+	icon = 'icons/turf/floors/carpet_carp.dmi'
+	icon_state = "carpet_carp-255"
+	base_icon_state = "carpet_carp"
+	floor_tile = /obj/item/stack/tile/carpet/carp
+
+/turf/open/floor/carpet/lizard
+	name = "lizard scales"
+	desc = "Carpet made with lizard scales. Lizards were most likely harmed making this."
+	icon = 'icons/turf/floors/carpet_lizard.dmi'
+	icon_state = "carpet_lizard-255"
+	base_icon_state = "carpet_lizard"
+	floor_tile = /obj/item/stack/tile/carpet/lizard
+
+/turf/open/floor/carpet/human
+	name = "human flesh carpet"
+	desc = "Carpet made from flayed human skin. Fresh and moist."
+	icon = 'icons/turf/floors/carpet_skin.dmi'
+	icon_state = "carpet_skin-255"
+	base_icon_state = "carpet_skin"
+	floor_tile = /obj/item/stack/tile/carpet/human
 
 //*****Airless versions of all of the above.*****
 /turf/open/floor/carpet/airless

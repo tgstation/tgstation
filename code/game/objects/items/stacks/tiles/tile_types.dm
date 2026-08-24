@@ -137,6 +137,14 @@
 		/obj/item/stack/tile/wood/large,
 		/obj/item/stack/tile/wood/tile,
 		/obj/item/stack/tile/wood/parquet,
+		/obj/item/stack/tile/wood/dark,
+		/obj/item/stack/tile/wood/dark/large,
+		/obj/item/stack/tile/wood/dark/tile,
+		/obj/item/stack/tile/wood/dark/parquet,
+		/obj/item/stack/tile/wood/light,
+		/obj/item/stack/tile/wood/light/large,
+		/obj/item/stack/tile/wood/light/tile,
+		/obj/item/stack/tile/wood/light/parquet,
 	)
 	mats_per_unit = list(/datum/material/wood = HALF_SHEET_MATERIAL_AMOUNT / 2)
 
@@ -161,6 +169,64 @@
 	turf_type = /turf/open/floor/wood/tile
 	merge_type = /obj/item/stack/tile/wood/tile
 
+/obj/item/stack/tile/wood/dark
+	name = "dark wood floor tile"
+	singular_name = "dark wood floor tile"
+	desc = "An easy to fit dark wood floor tile. Use while in your hand to change what pattern you want."
+	icon_state = "tile-darkwood"
+	turf_type = /turf/open/floor/wood
+	merge_type = /obj/item/stack/tile/wood/dark
+
+/obj/item/stack/tile/wood/dark/parquet
+	name = "parquet dark wood floor tile"
+	singular_name = "parquet dark wood floor tile"
+	icon_state = "tile-darkwood_parquet"
+	turf_type = /turf/open/floor/wood/dark/parquet
+	merge_type = /obj/item/stack/tile/wood/dark/parquet
+
+/obj/item/stack/tile/wood/dark/large
+	name = "large dark wood floor tile"
+	singular_name = "large dark wood floor tile"
+	icon_state = "tile-darkwood_large"
+	turf_type = /turf/open/floor/wood/dark/large
+	merge_type = /obj/item/stack/tile/wood/dark/large
+
+/obj/item/stack/tile/wood/dark/tile
+	name = "tiled dark wood floor tile"
+	singular_name = "tiled dark wood floor tile"
+	icon_state = "tile-darkwood_tile"
+	turf_type = /turf/open/floor/wood/dark/tile
+	merge_type = /obj/item/stack/tile/wood/dark/tile
+
+/obj/item/stack/tile/wood/light
+	name = "light wood floor tile"
+	singular_name = "light wood floor tile"
+	desc = "An easy to fit light wood floor tile. Use while in your hand to change what pattern you want."
+	icon_state = "tile-lightwood"
+	turf_type = /turf/open/floor/wood/light
+	merge_type = /obj/item/stack/tile/wood/light
+
+/obj/item/stack/tile/wood/light/parquet
+	name = "parquet light wood floor tile"
+	singular_name = "parquet light wood floor tile"
+	icon_state = "tile-lightwood_parquet"
+	turf_type = /turf/open/floor/wood/light/parquet
+	merge_type = /obj/item/stack/tile/wood/light/parquet
+
+/obj/item/stack/tile/wood/light/large
+	name = "large light wood floor tile"
+	singular_name = "large light wood floor tile"
+	icon_state = "tile-lightwood_large"
+	turf_type = /turf/open/floor/wood/light/large
+	merge_type = /obj/item/stack/tile/wood/light/large
+
+/obj/item/stack/tile/wood/light/tile
+	name = "tiled light wood floor tile"
+	singular_name = "tiled light wood floor tile"
+	icon_state = "tile-lightwood_tile"
+	turf_type = /turf/open/floor/wood/light/tile
+	merge_type = /obj/item/stack/tile/wood/light/tile
+
 //Bamboo
 /obj/item/stack/tile/bamboo
 	name = "bamboo mat pieces"
@@ -173,11 +239,20 @@
 	resistance_flags = FLAMMABLE
 	tile_reskin_types = list(
 		/obj/item/stack/tile/bamboo,
+		/obj/item/stack/tile/bamboo/planks,
 		/obj/item/stack/tile/bamboo/tatami,
 		/obj/item/stack/tile/bamboo/tatami/purple,
 		/obj/item/stack/tile/bamboo/tatami/black,
 	)
 	mats_per_unit = list(/datum/material/bamboo = HALF_SHEET_MATERIAL_AMOUNT / 2)
+
+/obj/item/stack/tile/bamboo/planks
+	name = "bamboo planks tile"
+	singular_name = "planks planks floor tile"
+	icon_state = "tile_bamboo_planks"
+	desc = "Layer after layer of cut bamboo placed like planks."
+	turf_type = /turf/open/floor/bamboo/planks
+	merge_type = /obj/item/stack/tile/bamboo/planks
 
 /obj/item/stack/tile/bamboo/tatami
 	name = "Tatami with green rim"
@@ -211,6 +286,38 @@
 	turf_type = /turf/open/floor/fakebasalt
 	merge_type = /obj/item/stack/tile/basalt
 	mats_per_unit = list(/datum/material/sand = SHEET_MATERIAL_AMOUNT * 2)
+	tile_reskin_types = list(
+		/obj/item/stack/tile/basalt,
+		/obj/item/stack/tile/basalt/sand,
+		/obj/item/stack/tile/basalt/redsand,
+		/obj/item/stack/tile/basalt/moonsand,
+	)
+/obj/item/stack/tile/basalt/sand
+	name = "sand tile"
+	singular_name = "sand floor tile"
+	desc = "Artificially made sand tile."
+	icon_state = "tile_sand"
+	inhand_icon_state = "tile-hay"
+	turf_type = /turf/open/floor/fakesand
+	merge_type = /obj/item/stack/tile/basalt/sand
+
+/obj/item/stack/tile/basalt/redsand
+	name = "red sand tile"
+	singular_name = "red sand floor tile"
+	desc = "Artificially made red sand tile."
+	icon_state = "tile_redsand"
+	inhand_icon_state = "tile-meat"
+	turf_type = /turf/open/floor/fakesand/red
+	merge_type = /obj/item/stack/tile/basalt/redsand
+
+/obj/item/stack/tile/basalt/moonsand
+	name = "moon sand tile"
+	singular_name = "moon sand floor tile"
+	desc = "Artificially made moon sand tile."
+	icon_state = "tile_moonsand"
+	inhand_icon_state = "tile-silver"
+	turf_type = /turf/open/floor/fakesand/moon
+	merge_type = /obj/item/stack/tile/basalt/moonsand
 
 //Carpets
 /obj/item/stack/tile/carpet
@@ -392,6 +499,68 @@
 
 /obj/item/stack/tile/carpet/donk/thirty
 	amount = 30
+
+/obj/item/stack/tile/carpet/bear
+	name = "bear fur carpet"
+	desc = "Bear fur stretched out into a carpet for you to walk on."
+	icon_state = "tile-carpet-bear"
+	turf_type = /turf/open/floor/carpet/bear
+	merge_type = /obj/item/stack/tile/carpet/bear
+	tile_reskin_types = null
+
+/obj/item/stack/tile/carpet/polar_bear
+	name = "polar fur carpet"
+	desc = "Polar bear fur stretched out into a carpet for you to walk on."
+	icon_state = "tile-carpet-bear-polar"
+	inhand_icon_state = "tile-silver"
+	turf_type = /turf/open/floor/carpet/polar_bear
+	merge_type = /obj/item/stack/tile/carpet/polar_bear
+	tile_reskin_types = null
+
+/obj/item/stack/tile/carpet/moth
+	name = "moth fur carpet"
+	desc = "Moth fur stretched out into a carpet for you to walk on."
+	icon_state = "tile-carpet-moth"
+	inhand_icon_state = "tile-bananium"
+	turf_type = /turf/open/floor/carpet/moth
+	merge_type = /obj/item/stack/tile/carpet/moth
+	tile_reskin_types = null
+
+/obj/item/stack/tile/carpet/goliath
+	name = "goliath hide carpet"
+	desc = "Goliath hide plates woven together with watcher sinew to make something aproximating a carpet."
+	icon_state = "tile-carpet-goliath"
+	inhand_icon_state = "tile-carpet-goliath"
+	turf_type = /turf/open/floor/carpet/goliath
+	merge_type = /obj/item/stack/tile/carpet/goliath
+	tile_reskin_types = null
+
+/obj/item/stack/tile/carpet/carp
+	name = "carp scales carpet"
+	desc = "Carpet made with carp scales. A carp carpet. Carp carp carp."
+	icon_state = "tile-carpet-carp"
+	inhand_icon_state = "tile-carpet-carp"
+	turf_type = /turf/open/floor/carpet/carp
+	merge_type = /obj/item/stack/tile/carpet/carp
+	tile_reskin_types = null
+
+/obj/item/stack/tile/carpet/lizard
+	name = "lizard scales carpet"
+	desc = "Carpet made with lizard scales. Lizards were most likely harmed making this."
+	icon_state = "tile-carpet-lizard"
+	inhand_icon_state = "tile-uranium"
+	turf_type = /turf/open/floor/carpet/lizard
+	merge_type = /obj/item/stack/tile/carpet/lizard
+	tile_reskin_types = null
+
+/obj/item/stack/tile/carpet/human
+	name = "human skin carpet"
+	desc = "Carpet made from flayed human skin. Fresh and moist."
+	icon_state = "tile-carpet-skin"
+	inhand_icon_state = "tile-carpet-skin"
+	turf_type = /turf/open/floor/carpet/human
+	merge_type = /obj/item/stack/tile/carpet/human
+	tile_reskin_types = null
 
 /obj/item/stack/tile/carpet/neon
 	name = "neon carpet"
@@ -1111,14 +1280,255 @@
 	turf_type = /turf/open/floor/circuit/red/anim
 	merge_type = /obj/item/stack/tile/circuit/red/anim
 
+/obj/item/stack/tile/circuit/ash
+	name = "ornate ash forge tile"
+	singular_name = "ornate ash forge tile"
+	desc = "An ashen, ornate forge tile. Normaly seen in photos of ethereal homeworld's industrial areas."
+	icon_state = "tile_ash"
+	inhand_icon_state = "tile-rcircuit"
+	turf_type = /turf/open/floor/circuit/red
+	merge_type = /obj/item/stack/tile/circuit/red
+	tile_reskin_types = list(
+		/obj/item/stack/tile/circuit/ash,
+		/obj/item/stack/tile/circuit/ash/alt,
+	)
+	mats_per_unit = list(/datum/material/alloy/plastitanium = HALF_SHEET_MATERIAL_AMOUNT / 3)
+
+/obj/item/stack/tile/circuit/ash/alt
+	name = "ash forge tile"
+	singular_name = "ash forge tile"
+	desc = "An ashen forge tile. Normaly seen in photos of ethereal homeworld's industrial areas."
+	icon_state = "tile_ash_alt"
+	turf_type = /turf/open/floor/circuit/ash/alt
+	merge_type = /obj/item/stack/tile/circuit/ash/alt
+
 /obj/item/stack/tile/plastic
 	name = "plastic tile"
 	singular_name = "plastic floor tile"
 	desc = "A tile of cheap, flimsy plastic flooring."
 	icon_state = "tile_plastic"
+	inhand_icon_state = "tile-bluespace"
 	mats_per_unit = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT / 2)
 	turf_type = /turf/open/floor/plastic
 	merge_type = /obj/item/stack/tile/plastic
+	tile_reskin_types = list(
+		/obj/item/stack/tile/plastic,
+		/obj/item/stack/tile/plastic/puzzle,
+	)
+
+/obj/item/stack/tile/plastic/puzzle
+	name = "puzzle tile"
+	icon_state = "plastic_puzzle"
+	singular_name = "puzzle floor tile"
+	turf_type = /turf/open/floor/plastic/puzzle
+	merge_type = /obj/item/stack/tile/plastic/puzzle
+	desc = "A tile of cheap, puzzling plastic puzzles flooring."
+
+/obj/item/stack/tile/meat
+	name = "meat tile"
+	singular_name = "meat floor tile"
+	desc = "From big Barry's builders best barbecue. This one looks a little stale."
+	icon_state = "tile_meat"
+	inhand_icon_state = "tile-meat"
+	mats_per_unit = list(/datum/material/meat = HALF_SHEET_MATERIAL_AMOUNT / 2)
+	turf_type = /turf/open/floor/meat
+	merge_type = /obj/item/stack/tile/meat
+	tile_reskin_types = list(
+		/obj/item/stack/tile/meat,
+		/obj/item/stack/tile/meat/fresh,
+	)
+
+/obj/item/stack/tile/meat/fresh
+	name = "fresh meat tile"
+	singular_name = "fresh meat floor tile"
+	desc = "Fresh from big Barry's builders best barbecue."
+	icon_state = "tile_meat_fresh"
+	turf_type = /turf/open/floor/meat/fresh
+	merge_type = /obj/item/stack/tile/meat/fresh
+
+/obj/item/stack/tile/bone
+	name = "bone tile"
+	singular_name = "bone floor tile"
+	desc = "Don't question where the dirt around it came from."
+	icon_state = "tile_bone"
+	inhand_icon_state = "tile-sepia"
+	mats_per_unit = list(/datum/material/bone = HALF_SHEET_MATERIAL_AMOUNT / 2)
+	turf_type = /turf/open/floor/bone
+	merge_type = /obj/item/stack/tile/bone
+	tile_reskin_types = list(
+		/obj/item/stack/tile/bone,
+		/obj/item/stack/tile/bone/corner,
+		/obj/item/stack/tile/bone/straight,
+		/obj/item/stack/tile/bone/spine,
+		/obj/item/stack/tile/bone/meaty,
+		/obj/item/stack/tile/bone/meaty/corner,
+		/obj/item/stack/tile/bone/meaty/straight,
+		/obj/item/stack/tile/bone/meaty/spine,
+	)
+
+/obj/item/stack/tile/bone/corner
+	name = "bone corner tile"
+	singular_name = "bone corner floor tile"
+	icon_state = "bone_corner"
+	turf_type = /turf/open/floor/bone/corner
+	merge_type = /obj/item/stack/tile/bone/corner
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
+
+/obj/item/stack/tile/bone/straight
+	name = "bone straight tile"
+	singular_name = "bone straight floor tile"
+	icon_state = "bone_straight"
+	turf_type = /turf/open/floor/bone/straight
+	merge_type = /obj/item/stack/tile/bone/straight
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
+
+/obj/item/stack/tile/bone/spine
+	name = "bone spine tile"
+	singular_name = "bone spine floor tile"
+	icon_state = "bone_spine"
+	turf_type = /turf/open/floor/bone/spine
+	merge_type = /obj/item/stack/tile/bone/spine
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
+
+/obj/item/stack/tile/bone/meaty
+	name = "meaty bone tile"
+	singular_name = "meaty bone floor tile"
+	desc = "Don't question where the meat around it came from."
+	icon_state = "tile_meatbone"
+	inhand_icon_state = "tile-meat"
+	turf_type = /turf/open/floor/bone/meaty
+	merge_type = /obj/item/stack/tile/bone/meaty
+
+/obj/item/stack/tile/bone/meaty/corner
+	name = "meaty bone corner tile"
+	singular_name = "meaty bone corner floor tile"
+	icon_state = "meatbone_corner"
+	turf_type = /turf/open/floor/bone/meaty/corner
+	merge_type = /obj/item/stack/tile/bone/meaty/corner
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
+
+/obj/item/stack/tile/bone/meaty/straight
+	name = "meaty bone straight tile"
+	singular_name = "meaty bone straight floor tile"
+	icon_state = "meatbone_straight"
+	turf_type = /turf/open/floor/bone/meaty/straight
+	merge_type = /obj/item/stack/tile/bone/meaty/straight
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
+
+/obj/item/stack/tile/bone/meaty/spine
+	name = "meaty bone spine tile"
+	singular_name = "meaty bone spine floor tile"
+	icon_state = "meatbone_spine"
+	turf_type = /turf/open/floor/bone/meaty/spine
+	merge_type = /obj/item/stack/tile/bone/meaty/spine
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
+
+/obj/item/stack/tile/hauntium
+	name = "hauntium tile"
+	singular_name = "hauntium floor tile"
+	desc = "Dead men walking? More like walking over dead men."
+	icon_state = "tile_hauntium"
+	inhand_icon_state = "tile-hauntium"
+	mats_per_unit = list(/datum/material/hauntium = HALF_SHEET_MATERIAL_AMOUNT / 2)
+	turf_type = /turf/open/floor/hauntium
+	merge_type = /obj/item/stack/tile/hauntium
+	tile_reskin_types = list(
+		/obj/item/stack/tile/hauntium,
+		/obj/item/stack/tile/hauntium/ghostbricked,
+	)
+
+/obj/item/stack/tile/hauntium/ghostbricked
+	name = "ghostbricked hauntium tile"
+	singular_name = "ghostbricked hauntium floor tile"
+	icon_state = "tile_hauntium_ghostbricked"
+	turf_type = /turf/open/floor/hauntium/ghostbricked
+	merge_type = /obj/item/stack/tile/hauntium/ghostbricked
+
+/obj/item/stack/tile/neo
+	name = "neo tile"
+	singular_name = "neo floor tile"
+	inhand_icon_state = "tile-neon"
+	mats_per_unit = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT / 2)
+	turf_type = /turf/open/floor/neo
+	merge_type = /obj/item/stack/tile/neo
+	tile_reskin_types = list(
+		/obj/item/stack/tile/neo/red,
+		/obj/item/stack/tile/neo/purple,
+		/obj/item/stack/tile/neo/orange,
+		/obj/item/stack/tile/neo/cyan,
+	)
+
+/obj/item/stack/tile/neo/red
+	name = "red neo tile"
+	singular_name = "red neo floor tile"
+	desc =  "A neo tile. Radiates with the power of ketchup."
+	icon_state = "neo_red"
+	turf_type = /turf/open/floor/neo/red
+	merge_type = /obj/item/stack/tile/neo/red
+
+/obj/item/stack/tile/neo/purple
+	name = "purple neo tile"
+	singular_name = "purple neo floor tile"
+	desc = "A neo tile. Radiates with the power of neo. Duh."
+	icon_state = "neo_purple"
+	turf_type = /turf/open/floor/neo/purple
+	merge_type = /obj/item/stack/tile/neo/purple
+
+/obj/item/stack/tile/neo/orange
+	name = "orange neo tile"
+	singular_name = "orange neo floor tile"
+	desc = "A neo tile. Radiates with the power of 80s stylized sunset and tequilla."
+	icon_state = "neo_orange"
+	turf_type = /turf/open/floor/neo/orange
+	merge_type = /obj/item/stack/tile/neo/orange
+
+/obj/item/stack/tile/neo/cyan
+	name = "cyan neo tile"
+	singular_name = "cyan neo floor tile"
+	desc = "A neo tile. Radiates with the power of being pedantic about colour names."
+	icon_state = "neo_cyan"
+	turf_type = /turf/open/floor/neo/cyan
+	merge_type = /obj/item/stack/tile/neo/cyan
+
+/obj/item/stack/tile/silvergold
+	name = "silver and gold floor"
+	desc = "Floor made from silver and gold, in scaly pattern. As if just one or the other wasn't lavish enough."
+	icon_state = "blade"
+	singular_name = "silver and gold tile"
+	inhand_icon_state = "tile-silvergold"
+	mats_per_unit = list(/datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT / 4, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT / 4)
+	turf_type = /turf/open/floor/silvergold
+	merge_type = /obj/item/stack/tile/silvergold
+	tile_reskin_types = list(
+		/obj/item/stack/tile/silvergold,
+		/obj/item/stack/tile/silvergold/sword,
+		/obj/item/stack/tile/silvergold/void,
+		/obj/item/stack/tile/silvergold/flow,
+	)
+
+/obj/item/stack/tile/silvergold/sword
+	name = "sword tile"
+	singular_name = "sword tile"
+	desc = "Floor made from silver and gold, in scaly pattern, with a sword in the middle."
+	icon_state = "blade_sword"
+	turf_type = /turf/open/floor/silvergold/sword
+	merge_type = /obj/item/stack/tile/silvergold/sword
+
+/obj/item/stack/tile/silvergold/void
+	name = "stars tile"
+	singular_name = "stars tile"
+	desc = "Floor made from silver and gold, picturing stars. As opposed to the actual stars you are surrounded by."
+	icon_state = "void"
+	turf_type = /turf/open/floor/silvergold/void
+	merge_type = /obj/item/stack/tile/silvergold/void
+
+/obj/item/stack/tile/silvergold/flow
+	name = "flowing tile"
+	singular_name = "flowing tile"
+	desc = "Floor made from silver and gold, with a flowing pattern. Silver and gold in balance."
+	icon_state = "flow"
+	turf_type = /turf/open/floor/silvergold/flow
+	merge_type = /obj/item/stack/tile/silvergold/flow
 
 /obj/item/stack/tile/material
 	name = "floor tile"
@@ -1217,6 +1627,66 @@
 	turf_type = /turf/open/floor/glass/cult
 	mats_per_unit = list(/datum/material/runedmetal=SMALL_MATERIAL_AMOUNT*5)
 	merge_type = /obj/item/stack/tile/cult/window
+
+/// Plasteel
+
+/obj/item/stack/tile/plasteel
+	name = "plasteel tile"
+	singular_name = "plasteel floor tile"
+	desc = "Industrial plasteel tiles, tough and reinforced."
+	icon_state = "plasteel"
+	inhand_icon_state = "tile-shuttle"
+	turf_type = /turf/open/floor/mineral/plasteel
+	mats_per_unit = list(/datum/material/alloy/plasteel=SHEET_MATERIAL_AMOUNT*0.25)
+	merge_type = /obj/item/stack/tile/plasteel
+	tile_reskin_types = list(
+		/obj/item/stack/tile/plasteel,
+		/obj/item/stack/tile/plasteel/straight,
+		/obj/item/stack/tile/plasteel/corner,
+		/obj/item/stack/tile/plasteel/block,
+		/obj/item/stack/tile/plasteel/lock,
+		/obj/item/stack/tile/plasteel/tiled,
+		)
+
+/obj/item/stack/tile/plasteel/straight
+	name = "straight plasteel tile"
+	singular_name = "straight plasteel floor tile"
+	desc = "Industrial straight plasteel tiles, tough and reinforced."
+	turf_type = /turf/open/floor/mineral/plasteel/straight
+	icon_state = "plasteel_straight"
+	merge_type = /obj/item/stack/tile/plasteel/straight
+
+/obj/item/stack/tile/plasteel/corner
+	name = "corner plasteel tile"
+	singular_name = "corner plasteel floor tile"
+	desc = "Industrial corner plasteel tiles, tough and reinforced."
+	turf_type = /turf/open/floor/mineral/plasteel/corner
+	icon_state = "plasteel_corner"
+	merge_type = /obj/item/stack/tile/plasteel/corner
+
+/obj/item/stack/tile/plasteel/block
+	name = "blocky plasteel tile"
+	singular_name = "blocky plasteel floor tile"
+	desc = "Blocky plasteel tiles, quite futuristic."
+	turf_type = /turf/open/floor/mineral/plasteel/block
+	icon_state = "block"
+	merge_type = /obj/item/stack/tile/plasteel/block
+
+/obj/item/stack/tile/plasteel/lock
+	name = "locked plasteel tile"
+	singular_name = "locked plasteel floor tile"
+	desc = "Locked plasteel tiles, with a keyhole symbol in the middle. Could be a pawn, though?"
+	turf_type = /turf/open/floor/mineral/plasteel/lock
+	icon_state = "lock"
+	merge_type = /obj/item/stack/tile/plasteel/lock
+
+/obj/item/stack/tile/plasteel/tiled
+	name = "plasteel tiled"
+	singular_name = "tiled plasteel"
+	desc = "Plasteel, tiled."
+	turf_type = /turf/open/floor/mineral/plasteel/tiled
+	icon_state = "plasteel_tiled"
+	merge_type = /obj/item/stack/tile/plasteel/tiled
 
 /// Floor tiles used to test emissive turfs.
 /obj/item/stack/tile/emissive_test
@@ -1360,3 +1830,77 @@
 	turf_type = /turf/open/floor/glass/plastitatanium
 	merge_type = /obj/item/stack/tile/glass/plastitanium
 	mats_per_unit = list(/datum/material/alloy/plastitaniumglass = SHEET_MATERIAL_AMOUNT * 0.25)
+
+/obj/item/stack/tile/stained_glass
+	name = "stained glass floor"
+	singular_name = "stained glass floor tile"
+	desc = "This shouldn't exist."
+	icon_state = null
+	turf_type = /turf/open/floor/glass
+	inhand_icon_state = "tile-glass"
+	merge_type = /obj/item/stack/tile/stained_glass
+	mats_per_unit = list(/datum/material/glass=SHEET_MATERIAL_AMOUNT * 0.25, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25,)
+
+/obj/item/stack/tile/stained_glass/red
+	name = "red stained glass floor"
+	singular_name = "red stained glass floor tile"
+	desc = "Glass floor, stained red. Not with blood, hopefuly."
+	icon_state = "tile_sglass_red"
+	turf_type = /turf/open/floor/glass/stained_red
+	merge_type = /obj/item/stack/tile/stained_glass/red
+
+/obj/item/stack/tile/stained_glass/orange
+	name = "orange stained glass floor"
+	singular_name = "orange stained glass floor tile"
+	desc = "Glass floor, stained orange. Somebody spilled their orange juice?"
+	icon_state = "tile_sglass_orange"
+	turf_type = /turf/open/floor/glass/stained_orange
+	merge_type = /obj/item/stack/tile/stained_glass/orange
+
+/obj/item/stack/tile/stained_glass/yellow
+	name = "yellow stained glass floor"
+	singular_name = "yellow stained glass floor tile"
+	desc = "Glass floor, stained yellow. Probably by some mellow fellow."
+	icon_state = "tile_sglass_yellow"
+	turf_type = /turf/open/floor/glass/stained_yellow
+	merge_type = /obj/item/stack/tile/stained_glass/yellow
+
+/obj/item/stack/tile/stained_glass/green
+	name = "green stained glass floor"
+	singular_name = "green stained glass floor tile"
+	desc = "Glass floor, stained green. That's what you get when putting liquid uranium at the edge of your table."
+	icon_state = "tile_sglass_green"
+	turf_type = /turf/open/floor/glass/stained_green
+	merge_type = /obj/item/stack/tile/stained_glass/green
+
+/obj/item/stack/tile/stained_glass/blue
+	name = "blue stained glass floor"
+	singular_name = "blue stained glass floor tile"
+	desc = "Glass floor, stained blue. With tears of someone feeling blue, obviously."
+	icon_state = "tile_sglass_blue"
+	turf_type = /turf/open/floor/glass/stained_blue
+	merge_type = /obj/item/stack/tile/stained_glass/blue
+
+/obj/item/stack/tile/stained_glass/purple
+	name = "purple stained glass floor"
+	singular_name = "purple stained glass floor tile"
+	desc = "Glass floor, stained purple. It tastes purple, too."
+	icon_state = "tile_sglass_purple"
+	turf_type = /turf/open/floor/glass/stained_purple
+	merge_type = /obj/item/stack/tile/stained_glass/purple
+
+/obj/item/stack/tile/stained_glass/white
+	name = "white stained glass floor"
+	singular_name = "white stained glass floor tile"
+	desc = "Glass floor, stained white. Or perhaps it was bleached?"
+	icon_state = "tile_sglass_white"
+	turf_type = /turf/open/floor/glass/stained_white
+	merge_type = /obj/item/stack/tile/stained_glass/white
+
+/obj/item/stack/tile/stained_glass/black
+	name = "black stained glass floor"
+	singular_name = "black stained glass floor tile"
+	desc = "Glass floor, stained black. A space squid inked it."
+	icon_state = "tile_sglass_black"
+	turf_type = /turf/open/floor/glass/stained_black
+	merge_type = /obj/item/stack/tile/stained_glass/black

@@ -1,35 +1,35 @@
 /mob/living/basic/bot/proc/diag_hud_set_bothealth()
-	set_hud_image_state(DIAG_HUD, "huddiag[RoundDiagBar(health/maxHealth)]")
+	set_hud_image_state(DIAG_HUD, hud_state = "huddiag[RoundDiagBar(health/maxHealth)]")
 
 /mob/living/basic/bot/proc/diag_hud_set_botstat() //On (With wireless on or off), Off, EMP'ed
 	if(bot_mode_flags & BOT_MODE_ON)
-		set_hud_image_state(DIAG_STAT_HUD, "hudstat")
+		set_hud_image_state(DIAG_STAT_HUD, hud_state = "hudstat")
 		return
 
 	if(IS_UNCONSCIOUS_OR_CRIT(src))
-		set_hud_image_state(DIAG_STAT_HUD, "hudoffline")
+		set_hud_image_state(DIAG_STAT_HUD, hud_state = "hudoffline")
 		return
 
-	set_hud_image_state(DIAG_STAT_HUD, "huddead2")
+	set_hud_image_state(DIAG_STAT_HUD, hud_state = "huddead2")
 
 /mob/living/basic/bot/proc/diag_hud_set_botmode() //Shows a bot's current operation
 	if(client) //If the bot is player controlled, it will not be following mode logic!
-		set_hud_image_state(DIAG_BOT_HUD, "hudsentient")
+		set_hud_image_state(DIAG_BOT_HUD, hud_state = "hudsentient")
 		return
 
 	switch(mode)
 		if(BOT_SUMMON, BOT_RESPONDING) //Responding to PDA or AI summons
-			set_hud_image_state(DIAG_BOT_HUD, "hudcalled")
+			set_hud_image_state(DIAG_BOT_HUD, hud_state = "hudcalled")
 		if(BOT_CLEANING, BOT_HEALING) //Cleanbot cleaning, Floorbot fixing, or Medibot Healing
-			set_hud_image_state(DIAG_BOT_HUD, "hudworking")
+			set_hud_image_state(DIAG_BOT_HUD, hud_state = "hudworking")
 		if(BOT_PATROL, BOT_START_PATROL) //Patrol mode
-			set_hud_image_state(DIAG_BOT_HUD, "hudpatrol")
+			set_hud_image_state(DIAG_BOT_HUD, hud_state = "hudpatrol")
 		if(BOT_PREP_ARREST, BOT_ARREST, BOT_HUNT) //STOP RIGHT THERE, CRIMINAL SCUM!
-			set_hud_image_state(DIAG_BOT_HUD, "hudalert")
+			set_hud_image_state(DIAG_BOT_HUD, hud_state = "hudalert")
 		if(BOT_MOVING, BOT_DELIVER, BOT_GO_HOME, BOT_NAV) //Moving to target for normal bots, moving to deliver or go home for MULES.
-			set_hud_image_state(DIAG_BOT_HUD, "hudmove")
+			set_hud_image_state(DIAG_BOT_HUD, hud_state = "hudmove")
 		else
-			set_hud_image_state(DIAG_BOT_HUD, "")
+			set_hud_image_state(DIAG_BOT_HUD, hud_state = "")
 
 ///proc that handles drawing and transforming the bot's path onto diagnostic huds
 /mob/living/basic/bot/proc/generate_bot_path(datum/move_loop/has_target/jps/source, list/path)
