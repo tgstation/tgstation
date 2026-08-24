@@ -105,16 +105,42 @@
 	if(slot & slot_flags)
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 		RegisterSignal(user, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(on_dir_change))
+		RegisterSignal(user, COMSIG_LIVING_SUICIDE_ACT, PROC_REF(on_suicide_act))
 	else
 		setDir(SOUTH)
-		UnregisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-		UnregisterSignal(user, COMSIG_ATOM_POST_DIR_CHANGE, PROC_REF(on_dir_change))
+		UnregisterSignal(user, list(
+			COMSIG_MOVABLE_MOVED,
+			COMSIG_ATOM_POST_DIR_CHANGE,
+			COMSIG_LIVING_SUICIDE_ACT
+		))
 
 ///Called when the thing HOLDING the turbine changes direction
 /obj/item/portable_wind_turbine/proc/on_dir_change(datum/source, old_dir, new_dir)
 	SIGNAL_HANDLER
 
 	update_appearance()
+
+/obj/item/portable_wind_turbine/proc/on_suicide_act(mob/living/source)
+	SIGNAL_HANDLER
+
+	if(source.get_active_held_item())
+		return NONE
+
+	var/obj/item/bodypart/head = source.get_bodypart(BODY_ZONE_HEAD)
+	if(isnull(head))
+		return NONE
+
+	playsound(source,'sound/items/weapons/bladeslice.ogg', 50)
+	source.visible_message(span_suicide("[source] moves [source.p_their()] head in the way of [src]'s blades! \
+		It looks like [source.p_theyre()] trying to commit suicide!"))
+	source.set_suicide(TRUE)
+	if(head.dismember())
+		return MANUAL_SUICIDE
+
+	source.apply_damage(75, BRUTE, BODY_ZONE_HEAD, wound_bonus = 100, forced = TRUE)
+	source.visible_message(span_suicide("...but fails to separate [source.p_their()] head from [source.p_their()] body!"))
+	source.set_suicide(FALSE)
+	return SHAME
 
 ///Updates the worn back icon for the current loc
 /obj/item/portable_wind_turbine/proc/update_back()
