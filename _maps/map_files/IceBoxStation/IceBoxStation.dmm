@@ -10358,11 +10358,6 @@
 /obj/structure/grille,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
-"cQr" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/plating,
-/area/station/maintenance/department/medical/central)
 "cQw" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/brown{
@@ -85851,6 +85846,7 @@
 "yby" = (
 /obj/structure/bed/dogbed,
 /obj/effect/decal/cleanable/insectguts,
+/obj/machinery/light/small/dim/directional/north,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/central)
 "ybC" = (
@@ -250066,7 +250062,7 @@ jtE
 ggr
 cvS
 cvS
-bRH
+sDU
 caZ
 hgK
 caZ
@@ -250580,7 +250576,7 @@ flx
 dnq
 aab
 cvS
-sDU
+bRH
 cGA
 qwb
 xfx
@@ -251867,7 +251863,7 @@ nCb
 kWL
 vTc
 sUQ
-cQr
+pNq
 cvS
 gDp
 kRP
