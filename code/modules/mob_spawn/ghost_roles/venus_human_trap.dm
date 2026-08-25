@@ -36,8 +36,8 @@
 		var/list/flavour_mutation_list = list()
 		flavour_mutation_list += "\nYou have the following vine mutations:"
 		for(var/datum/spacevine_mutation/mutation in flower_bud.mutations)
-			flavour_mutation_list += mutation.venus_flavor_text
-		flavour_text += flavour_mutation_list.join("\n")
+			flavour_mutation_list += span_notice(mutation.venus_flavor_text) // double check if spans work here
+		flavour_text += flavour_mutation_list.Join("\n")
 	. = ..()
 	spawned_mob.mind.add_antag_datum(/datum/antagonist/venus_human_trap)
 
