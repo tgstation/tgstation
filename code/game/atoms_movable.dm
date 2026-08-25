@@ -998,8 +998,8 @@
 	if(!QDELETED(throwing))
 		throwing.finalize(hit = TRUE, target = bumped_atom)
 		. = TRUE
-		if(QDELETED(bumped_atom))
-			return
+	if(QDELETED(bumped_atom))
+		return TRUE
 	bumped_atom.Bumped(src)
 
 /atom/movable/Exited(atom/movable/gone, direction)

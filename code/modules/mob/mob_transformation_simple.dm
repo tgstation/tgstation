@@ -52,7 +52,7 @@
 		var/mob/living/carbon/new_mob = desired_mob
 		old_mob.dna.copy_dna(new_mob.dna, NONE)
 		new_mob.updateappearance(icon_update = TRUE, mutcolor_update = TRUE, mutations_overlay_update = TRUE)
-	else if(ishuman(desired_mob) && (!ismonkey(desired_mob)))
+	else if(ishuman(desired_mob) && !HAS_TRAIT(desired_mob, TRAIT_LESSER_HUMANOID))
 		var/mob/living/carbon/human/new_human = desired_mob
 		client?.prefs.safe_transfer_prefs_to(new_human)
 		new_human.dna.update_dna_identity()

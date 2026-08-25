@@ -53,7 +53,7 @@
 /datum/action/cooldown/spell/conjure/simian/post_summon(atom/summoned_object, atom/cast_on)
 	var/mob/living/alive_dude = summoned_object
 	alive_dude.add_faction(list(FACTION_MONKEY))
-	if(ismonkey(alive_dude))
+	if(HAS_TRAIT(alive_dude, TRAIT_LESSER_HUMANOID))
 		equip_monky(alive_dude)
 		return
 
