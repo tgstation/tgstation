@@ -19,3 +19,18 @@
 /// While we're tipped over, plead with nearby people instead of doing anything else.
 /datum/bt_node/subtree/tip_reaction
 	behavior_tree_json = "code/datums/ai/basic_mobs/basic_subtrees/tip_reaction.bt.json"
+
+/// Avoid attacking people holding food for taming.
+/datum/targeting_strategy/basic/allow_items/tameable
+	// Path to required food
+	var/tame_food
+
+/datum/targeting_strategy/basic/allow_items/tameable/is_valid_target(mob/living/living_mob, atom/the_target, vision_range, datum/ai_controller/controller = null)
+	. = ..()
+	if(!.)
+		return FALSE
+
+	if(isliving(the_target)) //Targeting vs living mobs
+		var/mob/living/living_target = the_target
+		for(tame_food in living_target.held_items)
+			return FALSE //heyyy this can tame me! let's NOT fight

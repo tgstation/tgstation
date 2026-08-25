@@ -40,9 +40,9 @@
 	APPLY_FACTION_AND_ALLIES_FROM(src, tamer)
 
 /datum/ai_controller/basic_controller/cow/moonicorn
-	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/cow/cow_moonicorn.bt.json"
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/cow/hostile.bt.json"
 	blackboard = list(
-		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items/moonicorn,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic/allow_items/tameable/moonicorn,
 		BB_BASIC_MOB_TIP_REACTING = FALSE,
 		BB_BASIC_MOB_TIPPER = null,
 		BB_BASIC_MOB_SPEAK_LINES = list(
@@ -54,15 +54,6 @@
 		),
 	)
 
-///moonicorns will not attack people holding something that could tame them.
-/datum/targeting_strategy/basic/allow_items/moonicorn
 
-/datum/targeting_strategy/basic/allow_items/moonicorn/is_valid_target(mob/living/living_mob, atom/the_target, vision_range, datum/ai_controller/controller = null)
-	. = ..()
-	if(!.)
-		return FALSE
-
-	if(isliving(the_target)) //Targeting vs living mobs
-		var/mob/living/living_target = the_target
-		for(var/obj/item/food/grown/galaxythistle/tame_food in living_target.held_items)
-			return FALSE //heyyy this can tame me! let's NOT fight
+/datum/targeting_strategy/basic/allow_items/tameable/moonicorn
+	tame_food = /obj/item/food/grown/galaxythistle
