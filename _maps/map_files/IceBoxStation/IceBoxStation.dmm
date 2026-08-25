@@ -67058,7 +67058,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/landmark/firealarm_sanity,
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/aft/lesser)
 "sKS" = (
 /obj/item/cigbutt/roach{
@@ -79297,7 +79297,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
 /obj/effect/landmark/generic_maintenance_landmark,
-/turf/open/floor/catwalk_floor/iron,
+/turf/open/floor/catwalk_floor/iron_smooth,
 /area/station/maintenance/aft/lesser)
 "woM" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
