@@ -29,8 +29,11 @@
 	/// The countdown ghosts see to when the plant will hatch
 	var/obj/effect/countdown/flower_bud/countdown
 
-	var/trait_flags = 0
+	//var/trait_flags = 0
 
+	/// List of mutations for a specific flower vine
+	var/list/mutations = list()
+	/// List of anchored vines that are attatched to the flower for the bloom/beam effect
 	var/list/vines = list()
 
 	/// The spawner that actually handles spawning the ghost role in
@@ -55,7 +58,7 @@
 	countdown.start()
 
 /obj/structure/alien/resin/flower_bud/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if((trait_flags & SPACEVINE_HEAT_RESISTANT) && damage_type == BURN)
+	if((var/datum/spacevine_mutation/fire_proof/fireproof in mutations) && damage_type == BURN)
 		damage_amount = 0
 	. = ..()
 
