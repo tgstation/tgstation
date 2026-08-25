@@ -42,4 +42,4 @@
 	multiplicative_slowdown = 2
 
 /datum/movespeed_modifier/lance_charge
-	multiplicative_slowdown = -0.8
+	multiplicative_slowdown = -0.5

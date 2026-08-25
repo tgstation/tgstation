@@ -24,6 +24,8 @@
 	var/hit_sound
 	///if we have a brick inside us
 	var/bricked = FALSE
+	///Stamina recoil from hitting
+	var/stam_recoil = 5
 	drop_sound = SFX_CLOTH_DROP
 	pickup_sound = SFX_CLOTH_PICKUP
 
@@ -67,7 +69,7 @@
 		hit_sound = 'sound/items/pillow/pillow_hit2.ogg'
 	else
 		hit_sound = 'sound/items/pillow/pillow_hit.ogg'
-	user.apply_damage(5, STAMINA) //Had to be done so one person cannot keep multiple people stam critted
+	user.apply_damage(stam_recoil, STAMINA) //Had to be done so one person cannot keep multiple people stam critted
 	last_fighter = user
 	new /obj/effect/temp_visual/pillow_hit(get_turf(target_mob))
 	playsound(user, hit_sound, 80) //the basic 50 vol is barely audible
@@ -177,6 +179,9 @@
 	if(prob(1))
 		become_bricked()
 
+/obj/item/pillow/suit_pillow
+	stam_recoil = 0
+
 /obj/item/clothing/suit/pillow_suit
 	name = "pillow suit"
 	desc = "Part man, part pillow. All CARNAGE!"
@@ -188,9 +193,7 @@
 	icon_state = "pillow_suit"
 	armor_type = /datum/armor/suit_pillow_suit
 	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
-
-
-	var/obj/item/pillow/unstoppably_plushed
+	var/obj/item/pillow/suit_pillow/unstoppably_plushed
 	var/hunkered = FALSE
 	///Aura color for juggernaut mode
 	var/outline_colour = "#eb0c07"
@@ -209,27 +212,28 @@
 	. = ..()
 	QDEL_NULL(unstoppably_plushed)
 
-/obj/item/clothing/suit/pillow_suit/proc/fortify(mob/living/user)
-	hunkered = TRUE
-	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
-	unstoppably_plushed.force += 10
-	user.add_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
-	user.visible_message(span_alert("[user.name] hunkers down into a defensive stance!"))
-	user.add_filter(FORTIFY_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 0, "size" = 1))
-	var/filter = user.get_filter(FORTIFY_FILTER)
-	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
-	animate(alpha = 0, time = 0.5 SECONDS)
+/obj/item/clothing/suit/pillow_suit/ui_action_click(mob/user, actiontype)
+	. = ..()
 
-/obj/item/clothing/suit/pillow_suit/proc/end_fortify(mob/living/user)
-	hunkered = FALSE
-	clothing_traits -= TRAIT_BRAWLING_KNOCKDOWN_BLOCKED
-	unstoppably_plushed.force -= 10
-	user.remove_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
-	var/filter = user.get_filter(FORTIFY_FILTER)
-	animate(filter)
-	user.remove_filter(FORTIFY_FILTER)
-	user.visible_message(span_alert("[user] loosens up and relaxes a bit."))
-
+	if(!hunkered)
+		hunkered = TRUE
+		clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
+		unstoppably_plushed.force += 10
+		user.add_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
+		user.visible_message(span_alert("[user.name] hunkers down into a defensive stance!"))
+		user.add_filter(FORTIFY_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 0, "size" = 1))
+		var/filter = user.get_filter(FORTIFY_FILTER)
+		animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
+		animate(alpha = 0, time = 0.5 SECONDS)
+	else
+		hunkered = FALSE
+		clothing_traits -= TRAIT_BRAWLING_KNOCKDOWN_BLOCKED
+		unstoppably_plushed.force -= 10
+		user.remove_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
+		var/filter = user.get_filter(FORTIFY_FILTER)
+		animate(filter)
+		user.remove_filter(FORTIFY_FILTER)
+		user.visible_message(span_alert("[user] loosens up and relaxes a bit."))
 
 /obj/item/clothing/head/pillow_hood
 	name = "pillow hood"
@@ -282,11 +286,15 @@
 	///How many tiles we've charged up thus far
 	var/current_tile_charge = 0
 	///The min amount of tiles before you can joust someone.
-	var/min_tile_charge = 3
+	var/min_tile_charge = 2
 	///How much of an increase in damage is achieved every tile moved during jousting.
 	var/damage_boost_per_tile = 2
 	///How much stamina we lose per tile charge
-	var/stamina_per_tile = 8
+	var/stamina_per_tile = 5
+	///Tracker for when we last moved to ensure its a continous charge
+	var/last_charge_move
+	///Chargine state
+	var/charging = FALSE
 
 
 /obj/item/spear/pillow/Initialize(mapload)
@@ -294,37 +302,46 @@
 
 /obj/item/spear/pillow/on_wield(obj/item/source, mob/living/carbon/user)
 	. = ..()
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(mob_move))
-	RegisterSignal(user, COMSIG_LIVING_PRE_MOB_BUMP, PROC_REF(impale))
+	RegisterSignal(user, COMSIG_MOB_CLIENT_MOVED, PROC_REF(check_move), TRUE)
+	RegisterSignal(user, COMSIG_LIVING_MOB_BUMP, PROC_REF(impale), TRUE)
 
 /obj/item/spear/pillow/on_unwield(obj/item/source, mob/living/carbon/user)
 	. = ..()
-	UnregisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(mob_move))
-	UnregisterSignal(user, COMSIG_LIVING_PRE_MOB_BUMP, PROC_REF(impale))
-	if(user.has_movespeed_modifier(/datum/movespeed_modifier/lance_charge))
-		user.remove_movespeed_modifier(/datum/movespeed_modifier/lance_charge)
+	UnregisterSignal(user, COMSIG_MOB_CLIENT_MOVED, PROC_REF(check_move))
+	UnregisterSignal(user, COMSIG_LIVING_MOB_BUMP)
+	reset_charge(user)
 
 /obj/item/spear/pillow/dropped(mob/user, silent)
 	. = ..()
-	UnregisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(mob_move))
-	UnregisterSignal(user, COMSIG_LIVING_PRE_MOB_BUMP, PROC_REF(impale))
-	if(user.has_movespeed_modifier(/datum/movespeed_modifier/lance_charge))
-		user.remove_movespeed_modifier(/datum/movespeed_modifier/lance_charge)
+	UnregisterSignal(user, COMSIG_MOB_CLIENT_MOVED, PROC_REF(check_move))
+	UnregisterSignal(user, COMSIG_LIVING_MOB_BUMP)
+	reset_charge(user)
 
-/obj/item/spear/pillow/proc/mob_move(mob/living/user)
+
+/obj/item/spear/pillow/proc/reset_charge(mob/living/user)
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/lance_charge)
+	current_tile_charge = initial(current_tile_charge)
+	current_direction = user.dir
+	charging = FALSE
+
+/obj/item/spear/pillow/proc/check_move(mob/living/user)
 	SIGNAL_HANDLER
 
-	if(current_direction != user.dir)
-		current_tile_charge = initial(current_tile_charge)
-		current_direction = dir
-	current_tile_charge++
-	if(current_tile_charge >= min_tile_charge)
-		if(!user.has_movespeed_modifier(/datum/movespeed_modifier/lance_charge))
-			user.add_movespeed_modifier(/datum/movespeed_modifier/lance_charge)
-		user.adjust_stamina_loss(stamina_per_tile)
+	if(current_direction != user.dir || world.time > last_charge_move + 5)
+		reset_charge(user)
+	else
+		if(current_tile_charge >= min_tile_charge)
+			if(!charging)
+				user.add_movespeed_modifier(/datum/movespeed_modifier/lance_charge)
+				user.balloon_alert(user, "charging!")
+				charging = TRUE
+			user.adjust_stamina_loss(stamina_per_tile)
+		current_tile_charge++
+	last_charge_move = world.time
 
-/obj/item/spear/pillow/proc/impale(mob/living/target, mob/living/user)
+/obj/item/spear/pillow/proc/impale(mob/living/user, mob/living/target)
 	SIGNAL_HANDLER
+
 	if(current_tile_charge < min_tile_charge)
 		user.balloon_alert(user, "too slow!")
 		return
