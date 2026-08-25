@@ -405,4 +405,20 @@
 
 /datum/spacevine_mutation/flowering/on_cross(obj/structure/spacevine/holder, mob/living/crosser)
 	if(prob(25))
-		holder.entangle(crosser)
+		vine.entangle(crosser)
+
+/datum/spacevine_mutation/slippery
+	name = "Slippery"
+	description = "Causes the vines to be slippery"
+	hue = "#FFF269"
+	quality = NEGATIVE
+	severity = SEVERITY_MINOR
+
+/datum/spacevine_mutation/slippery/on_grow(obj/structure/spacevine/vine)
+	vine.AddComponent(/datum/component/slippery, 5 SECONDS, NO_SLIP_WHEN_WALKING|SLIDE)
+
+/datum/spacevine_mutation/slippery/on_hit(obj/structure/spacevine/vine, mob/hitter, obj/item/attacking_item, expected_damage)
+	if(prob(15))
+		attacking_item.AddComponent(/datum/component/slippery_item, fall_catch_chance=25, duration=5 SECONDS)
+
+	return expected_damage
