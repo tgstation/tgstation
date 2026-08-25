@@ -49,7 +49,6 @@
 	. = ..()
 	if(feral_mode)
 		add_organ_trait(TRAIT_FERAL_BITER)
-	. = ..()
 
 /obj/item/organ/fangs/cat/on_bodypart_remove(obj/item/bodypart/head)
 	. = ..()
@@ -70,8 +69,10 @@
 	else
 		remove_organ_trait(TRAIT_FERAL_BITER)
 
-/obj/item/organ/fangs/cat/proc/nommies(mob/living/source, mob/living/target, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, biting, kicking, limb_sharpness)
-	if(source != target && biting && (target.mob_biotypes & MOB_ORGANIC)) //Good for you. You probably just ate someone alive.
+/obj/item/organ/fangs/cat/proc/nommies(mob/living/source, mob/living/target, damage, attack_type, atk_effect, obj/item/bodypart/affecting, final_armor_block, limb_sharpness)
+	SIGNAL_HANDLER
+
+	if(source != target && atk_effect == ATTACK_EFFECT_BITE && (target.mob_biotypes & MOB_ORGANIC)) //Good for you. You probably just ate someone alive.
 		var/datum/reagents/tasty_meal = new()
 		tasty_meal.add_reagent(/datum/reagent/consumable/nutriment/protein, round(damage/3, 1))
 		tasty_meal.trans_to(source, tasty_meal.total_volume, transferred_by = source, methods = INGEST)
@@ -89,7 +90,7 @@
 	name = "cybernetic fangs"
 	desc = "A set of fangs made from plastitanium. Extremely lethal."
 	organ_flags = ORGAN_ROBOTIC
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*2.5, /datum/material/plasma = SMALL_MATERIAL_AMOUNT*5, /datum/material/titanium = SMALL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.5)
 	bite_low = 9
 	bite_high = 15
 	bite_effectiveness = 15
@@ -99,7 +100,7 @@
 	name = "cybernetic cat fangs"
 	desc = "A set of fangs made from plastitanium. Extremely lethal. These ones look suited to a felinid. Might leave you feeling a little... feral."
 	organ_flags = ORGAN_ROBOTIC
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*2.5, /datum/material/plasma = SMALL_MATERIAL_AMOUNT*5, /datum/material/titanium = SMALL_MATERIAL_AMOUNT*5)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.5)
 	bite_low = /obj/item/organ/fangs/cybernetic::bite_low
 	bite_high = /obj/item/organ/fangs/cybernetic::bite_high
 	bite_effectiveness = /obj/item/organ/fangs/cybernetic::bite_effectiveness

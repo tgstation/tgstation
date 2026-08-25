@@ -1104,7 +1104,7 @@
 	desc = "A set of plastitanium fangs. For when you want to bite through a ship hull."
 	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
 	construction_time = 3 SECONDS
-	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*2.5, /datum/material/plasma = SMALL_MATERIAL_AMOUNT*5, /datum/material/titanium = SMALL_MATERIAL_AMOUNT*5)
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.5)
 	build_path = /obj/item/organ/fangs/cybernetic
 	category = list(
 		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_1
