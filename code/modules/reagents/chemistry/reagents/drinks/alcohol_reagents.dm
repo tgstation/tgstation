@@ -3553,11 +3553,11 @@
 	drinker.apply_damage(10, BRUTE, BODY_ZONE_HEAD)
 	addtimer(TRAIT_CALLBACK_REMOVE(drinker, TRAIT_HAD_FOOTSOLDIERS_RAZOR, type), 60 SECONDS)
 
-/datum/reagent/consumable/ethanol/footsoldiers_razor/on_mob_add(mob/living/drinker)
+/datum/reagent/consumable/ethanol/footsoldiers_razor/on_mob_metabolize(mob/living/drinker)
 	.=..()
 	drinker.crit_threshold -= 20
 
-/datum/reagent/consumable/ethanol/footsoldiers_razor/on_mob_delete(mob/living/drinker)
+/datum/reagent/consumable/ethanol/footsoldiers_razor/on_mob_end_metabolize(mob/living/drinker)
 	.= ..()
 	drinker.crit_threshold += 20
 
@@ -3690,12 +3690,12 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
-/datum/reagent/consumable/ethanol/openthroat_draught/on_mob_add(mob/living/drinker)
+/datum/reagent/consumable/ethanol/openthroat_draught/on_mob_metabolize(mob/living/drinker)
 	.=..()
 	drinker.grant_all_languages(source = LANGUAGE_DRINK)
 	drinker.apply_status_effect(/datum/status_effect/shadowspeak, 60) //same effect as the tongue corrupted organ
 
-/datum/reagent/consumable/ethanol/openthroat_draught/on_mob_delete(mob/living/drinker)
+/datum/reagent/consumable/ethanol/openthroat_draught/on_mob_end_metabolize(mob/living/drinker)
 	.=..()
 	drinker.remove_all_languages(source = LANGUAGE_DRINK)
 	drinker.apply_status_effect(/datum/status_effect/shadowspeak)
@@ -3735,7 +3735,7 @@
 	. = ..()
 	exposed_turf.rust_heretic_act(RUST_RESISTANCE_BASIC)
 
-/datum/reagent/consumable/ethanol/entropic_brew/on_mob_add(mob/living/carbon/drinker)
+/datum/reagent/consumable/ethanol/entropic_brew/on_mob_metabolize(mob/living/carbon/drinker)
 	RegisterSignal(drinker, COMSIG_CARBON_VOMITED, PROC_REF(on_vomit))
 
 /datum/reagent/consumable/ethanol/entropic_brew/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
@@ -3758,7 +3758,7 @@
 	to_chat(drinker, span_boldwarning("You feel something inside you break as the feeling of illness recedes. In the face of the inevitability of decay, your troubles seem quaint."))
 	drinker.add_traits(list(TRAIT_STRONG_STOMACH,TRAIT_APATHETIC), type)
 
-/datum/reagent/consumable/ethanol/entropic_brew/on_mob_delete(mob/living/carbon/drinker, metabolization_ratio)
+/datum/reagent/consumable/ethanol/entropic_brew/on_mob_end_metabolize(mob/living/carbon/drinker, metabolization_ratio)
 	drinker.remove_traits(list(TRAIT_STRONG_STOMACH,TRAIT_APATHETIC), type)
 	UnregisterSignal(drinker, COMSIG_CARBON_VOMITED)
 

@@ -70,7 +70,7 @@
 
 /obj/item/organ/tongue/corrupt/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	organ_owner.apply_status_effect(/datum/status_effect/shadowspeak)
+	organ_owner.remove_status_effect(/datum/status_effect/shadowspeak)
 
 /// Randomly secretes alcohol or hallucinogens when you're drinking something
 /obj/item/organ/liver/corrupt
