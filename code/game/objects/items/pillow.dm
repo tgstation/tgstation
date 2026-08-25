@@ -373,3 +373,5 @@
 		animate(filter)
 		user.remove_filter(FORTIFY_FILTER)
 		user.visible_message(span_alert("[user] loosens up and relaxes a bit."))
+
+#undef FORTIFY_FILTER "ANGRY_GLOW"
