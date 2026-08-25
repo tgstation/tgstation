@@ -51,6 +51,7 @@
 		JOB_CHEF,
 	)
 	job_flags = STATION_JOB_FLAGS
+	tgui_icon = FA_ICON_UTENSILS
 
 /datum/job/cook/award_service(client/winner, award)
 	winner.give_award(award, winner.mob)
