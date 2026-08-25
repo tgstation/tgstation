@@ -81,6 +81,10 @@
 	for (var/datum/bodypart_overlay/overlay in stored_head.bodypart_overlays)
 		if (istype(overlay, /datum/bodypart_overlay/simple/growth_blood_worm_head))
 			stored_head.remove_bodypart_overlay(overlay, update = TRUE)
+
+	// TODO ON 25 AUG: Make it properly remove animation of head grow, after worm head was retracted
+	// bonus - there is a backward animation of worm head retracting, maybe its can be add also
+
 	stored_head.replace_limb(host, TRUE)
 	playsound(src, 'sound/effects/blob/blobattack.ogg', 80, TRUE)
 	worm.storage_for_head -= stored_head
