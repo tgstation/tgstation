@@ -25,6 +25,8 @@ other types of metals and chemistry for reagents).
 	var/build_type = null
 	/// Associative List of materials required to create one unit of the product.
 	/// e.g: [/datum/material/iron --> SHEET_MATERIAL_AMOUNT]
+	/// OR: [/datum/material_requirement/solid_material --> SHEET_MATERIAL_AMOUNT]
+	/// OR: [/datum/material_slot/weapon_head/speartip --> /datum/material/bone]
 	var/list/materials = list()
 	/// The amount of time required to create one unit of the product.
 	var/construction_time = 3.2 SECONDS
