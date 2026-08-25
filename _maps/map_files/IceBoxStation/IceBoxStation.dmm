@@ -32853,9 +32853,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/heads_quarters/captain)
-"jnB" = (
-/turf/open/floor/plating/snowed/smoothed/icemoon,
-/area/icemoon/underground/unexplored/rivers/deep/shoreline)
 "jnR" = (
 /obj/effect/spawner/structure/window/hollow/reinforced/middle{
 	dir = 4
@@ -70389,7 +70386,7 @@
 "tJl" = (
 /obj/effect/decal/cleanable/blood/tracks,
 /obj/structure/fence/cut/large{
-	dir = 1
+	dir = 4
 	},
 /turf/open/misc/asteroid/snow/icemoon,
 /area/icemoon/underground/explored)
@@ -190704,7 +190701,7 @@ hoM
 xDb
 xMq
 iDt
-aKb
+rcY
 gnX
 iDt
 iDt
@@ -191993,7 +191990,7 @@ thA
 thA
 thA
 thA
-jnB
+scw
 psb
 fwj
 gjq
@@ -192763,7 +192760,7 @@ xMq
 thA
 thA
 thA
-cBY
+iDt
 cUz
 eJf
 cUz
@@ -193020,9 +193017,9 @@ xMq
 xMq
 thA
 thA
-cBY
+iDt
 cUz
-scw
+ppY
 cUz
 xMq
 xMq
