@@ -138,5 +138,6 @@
 /obj/machinery/gizmo/cursed
 	controller = /datum/gizmo_controller/cursed
 
+/// A gizmo with debug interface and all gizmodes available
 /obj/machinery/gizmo/debug
 	controller = /datum/gizmo_controller/debug

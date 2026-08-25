@@ -73,6 +73,7 @@
 	min_modes = 0
 	max_modes = 0
 
+/// With all gizmods for debug controller
 /datum/gizmo_interface/debug
 	guaranteed_active_gizmodes = list(
 		/datum/gizmodes/mood_pulser,
