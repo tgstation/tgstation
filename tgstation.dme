@@ -936,6 +936,7 @@
 #include "code\datums\actions\items\flight.dm"
 #include "code\datums\actions\items\hands_free.dm"
 #include "code\datums\actions\items\organ_action.dm"
+#include "code\datums\actions\items\pillow_weapons.dm"
 #include "code\datums\actions\items\reload_rebar.dm"
 #include "code\datums\actions\items\set_internals.dm"
 #include "code\datums\actions\items\stealth_box.dm"

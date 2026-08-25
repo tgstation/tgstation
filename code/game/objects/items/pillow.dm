@@ -194,9 +194,6 @@
 	armor_type = /datum/armor/suit_pillow_suit
 	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 	var/obj/item/pillow/suit_pillow/unstoppably_plushed
-	var/hunkered = FALSE
-	///Aura color for juggernaut mode
-	var/outline_colour = "#eb0c07"
 
 /datum/armor/suit_pillow_suit
 	melee = 5
@@ -212,28 +209,6 @@
 	. = ..()
 	QDEL_NULL(unstoppably_plushed)
 
-/obj/item/clothing/suit/pillow_suit/ui_action_click(mob/user, actiontype)
-	. = ..()
-
-	if(!hunkered)
-		hunkered = TRUE
-		clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
-		unstoppably_plushed.force += 10
-		user.add_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
-		user.visible_message(span_alert("[user.name] hunkers down into a defensive stance!"))
-		user.add_filter(FORTIFY_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 0, "size" = 1))
-		var/filter = user.get_filter(FORTIFY_FILTER)
-		animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
-		animate(alpha = 0, time = 0.5 SECONDS)
-	else
-		hunkered = FALSE
-		clothing_traits -= TRAIT_BRAWLING_KNOCKDOWN_BLOCKED
-		unstoppably_plushed.force -= 10
-		user.remove_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
-		var/filter = user.get_filter(FORTIFY_FILTER)
-		animate(filter)
-		user.remove_filter(FORTIFY_FILTER)
-		user.visible_message(span_alert("[user] loosens up and relaxes a bit."))
 
 /obj/item/clothing/head/pillow_hood
 	name = "pillow hood"
@@ -359,3 +334,36 @@
 	name = "mattress shield"
 	desc = "A typical twin mattress repurposed into a makeshift shield"
 	icon_state = "mattress_shield"
+	damtype = STAMINA
+	force = 15
+	actions_types = list(/datum/action/item_action/fortify)
+	hitsound = 'sound/items/pillow/pillow_hit.ogg'
+	var/hunkered = FALSE
+	///Aura color for juggernaut mode
+	var/outline_colour = "#eb0c07"
+
+obj/item/shield/mattress/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	new /obj/effect/temp_visual/pillow_hit(get_turf(target_mob))
+
+
+/obj/item/shield/mattress/ui_action_click(mob/user, actiontype)
+	. = ..()
+
+	if(!hunkered)
+		hunkered = TRUE
+		ADD_TRAIT(user, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, HELD_ITEM_TRAIT)
+		user.add_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
+		user.visible_message(span_alert("[user.name] hunkers down into a defensive stance!"))
+		user.add_filter(FORTIFY_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 0, "size" = 1))
+		var/filter = user.get_filter(FORTIFY_FILTER)
+		animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
+		animate(alpha = 0, time = 0.5 SECONDS)
+	else
+		hunkered = FALSE
+		REMOVE_TRAIT(user, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, HELD_ITEM_TRAIT)
+		user.remove_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
+		var/filter = user.get_filter(FORTIFY_FILTER)
+		animate(filter)
+		user.remove_filter(FORTIFY_FILTER)
+		user.visible_message(span_alert("[user] loosens up and relaxes a bit."))

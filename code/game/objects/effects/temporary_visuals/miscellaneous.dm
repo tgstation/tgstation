@@ -840,4 +840,4 @@
 
 /obj/effect/temp_visual/pillow_hit
 	icon_state = "pillow_hit"
-	duration = 1 SECONDS
+	duration = 0.9 SECONDS
