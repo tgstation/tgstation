@@ -82,8 +82,9 @@ GLOBAL_LIST_INIT(vine_mutations_list, init_vine_mutation_list())
 				mutation.add_mutation_to_vinepiece(vine)
 				break
 	if(parent)
-		vine.mutations |= parent.mutations
-		vine.trait_flags |= parent.trait_flags
+		vine.mutations += parent.mutations
+		//vine.trait_flags += parent.trait_flags
+
 		var/parentcolor = parent.atom_colours[FIXED_COLOUR_PRIORITY]
 		vine.add_atom_colour(parentcolor, FIXED_COLOUR_PRIORITY)
 		if(prob(mutativeness))
