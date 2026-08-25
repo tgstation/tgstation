@@ -45,7 +45,7 @@
 /datum/spacevine_mutation/proc/on_death(obj/structure/spacevine/vine)
 	return
 
-/datum/spacevine_mutation/proc/on_hit(obj/structure/spacevine/vine, mob/hitter, obj/item/item, expected_damage)
+/datum/spacevine_mutation/proc/on_hit(obj/structure/spacevine/vine, obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = expected_damage
 
 /datum/spacevine_mutation/proc/on_cross(obj/structure/spacevine/vine, mob/crosser)
@@ -75,7 +75,7 @@
 	hue = "#B2EA70"
 	quality = POSITIVE
 	severity = SEVERITY_TRIVIAL
-	venus_flavor_text = "<b>Light</b> - Your body emits a glowing light"
+	venus_flavor_text = "Light - Your body emits a glowing light"
 
 /datum/spacevine_mutation/light/on_grow(obj/structure/spacevine/vine)
 	if(vine.growth_stage)
@@ -90,7 +90,7 @@
 	hue = "#9B3675"
 	severity = SEVERITY_AVERAGE
 	quality = NEGATIVE
-	venus_flavor_text = "<b>Toxin Resistance</b> - Immune to chemical weedkillers and toxins"
+	venus_flavor_text = "Toxin Resistance - Immune to chemical weedkillers and toxins"
 	var/required_coverage = HEAD|CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 
 /datum/spacevine_mutation/toxicity/on_cross(obj/structure/spacevine/vine, mob/living/crosser)
@@ -131,7 +131,7 @@
 	hue = "#D83A56"
 	quality = NEGATIVE
 	severity = SEVERITY_MAJOR
-	venus_flavor_text = "<b>Explosive</b> - You will violently explode upon death"
+	venus_flavor_text = "Explosive - You will violently explode upon death"
 
 /datum/spacevine_mutation/explosive/on_explosion(explosion_severity, target, obj/structure/spacevine/vine)
 	if(explosion_severity >= EXPLODE_DEVASTATE)
@@ -145,9 +145,9 @@
 	explosion(vine, light_impact_range = EXPLOSION_MUTATION_IMPACT_RADIUS, adminlog = FALSE)
 
 /datum/spacevine_mutation/explosive/equip_venus_trap(mob/living/basic/venus_human_trap/venus_trap)
-	RegisterSignal(venus_trap, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+	RegisterSignal(venus_trap, COMSIG_LIVING_DEATH, PROC_REF(on_venus_trap_death))
 
-/datum/spacevine_mutation/explosive/proc/on_death(mob/living/spawned_mob, mob/mob_possessor, apply_prefs)
+/datum/spacevine_mutation/explosive/proc/on_venus_trap_death(mob/living/spawned_mob, mob/mob_possessor, apply_prefs)
 	SIGNAL_HANDLER
 
 	explosion(spawned_mob, light_impact_range = EXPLOSION_MUTATION_IMPACT_RADIUS, adminlog = FALSE)
@@ -158,7 +158,7 @@
 	hue = "#FF616D"
 	quality = MINOR_NEGATIVE
 	severity = SEVERITY_ABOVE_AVERAGE
-	venus_flavor_text = "<b>Heat Resistance</b> - Immune to extreme heat and fire"
+	venus_flavor_text = "Heat Resistance - Immune to extreme heat and fire"
 
 /datum/spacevine_mutation/fire_proof/on_hit(obj/structure/spacevine/vine, mob/hitter, obj/item/attacking_item, expected_damage)
 	if(attacking_item && attacking_item.damtype == BURN)
@@ -179,7 +179,7 @@
 	hue = "#0BD5D9"
 	quality = MINOR_NEGATIVE
 	severity = SEVERITY_AVERAGE
-	venus_flavor_text = "<b>Cold Resistance</b> - Immune to freezing temperatures"
+	venus_flavor_text = "Cold Resistance - Immune to freezing temperatures"
 
 /datum/spacevine_mutation/cold_proof/on_grow(obj/structure/spacevine/vine)
 	vine.resistance_flags |= FREEZE_PROOF
@@ -219,7 +219,7 @@
 	hue = "#F4A442"
 	quality = MINOR_NEGATIVE
 	severity = SEVERITY_MINOR
-	venus_flavor_text = "<b>Vine Eating</b> - Reduced regeneration while on vines"
+	venus_flavor_text = "Vine Eating - Reduced regeneration while on vines"
 
 /// Destroys any vine on spread-target's tile. The checks for if this should be done are in the spread() proc.
 /datum/spacevine_mutation/vine_eating/on_spread(obj/structure/spacevine/vine, turf/target)
@@ -235,7 +235,7 @@
 	hue = "#316b2f"
 	severity = SEVERITY_MAJOR
 	quality = NEGATIVE
-	venus_flavor_text = "<b>Aggressive Spreading</b> - Can travel farther away from vines before taking damage"
+	venus_flavor_text = "Aggressive Spreading - Can travel farther away from vines before taking damage"
 
 /// Checks mobs on spread-target's turf to see if they should be hit by a damaging proc or not.
 /datum/spacevine_mutation/aggressive_spread/on_spread(obj/structure/spacevine/vine, turf/turf, mob/living)
@@ -303,7 +303,7 @@
 	hue = ""
 	quality = POSITIVE
 	severity = SEVERITY_TRIVIAL
-	venus_flavor_text = "<b>Transparency</b> - Your body is transparent"
+	venus_flavor_text = "Transparency - Your body is transparent"
 
 /datum/spacevine_mutation/transparency/on_birth(obj/structure/spacevine/vine)
 	vine.light_state = PASS_LIGHT
@@ -372,7 +372,7 @@
 	hue = "#9ECCA4"
 	severity = SEVERITY_AVERAGE
 	quality = NEGATIVE
-	venus_flavor_text = "<b>Thorny</b> - Your physical attacks deal reduced damage but cause wounds"
+	venus_flavor_text = "Thorny - Your physical attacks deal reduced damage but cause wounds"
 
 /datum/spacevine_mutation/thorns/on_cross(obj/structure/spacevine/vine, mob/living/crosser)
 	if(isvineimmune(crosser) || HAS_TRAIT(crosser, TRAIT_PIERCEIMMUNE))
@@ -413,7 +413,7 @@
 	hue = "#997700"
 	quality = NEGATIVE
 	severity = SEVERITY_ABOVE_AVERAGE
-	venus_flavor_text = "<b>Hardened</b> - Increased health"
+	venus_flavor_text = "Hardened - Increased health"
 
 /datum/spacevine_mutation/hardened/on_grow(obj/structure/spacevine/vine)
 	if(vine.growth_stage)
@@ -435,7 +435,7 @@
 	hue = "#a4a9ac"
 	quality = POSITIVE
 	severity = SEVERITY_MINOR
-	venus_flavor_text = "<b>Timid</b> - You no longer have the ability to shoot tangling vines at targets"
+	venus_flavor_text = "Timid - You no longer have the ability to shoot tangling vines at targets"
 
 //This specific mutation only covers floors instead of structures, items, mobs and cant tangle mobs
 /datum/spacevine_mutation/timid/on_birth(obj/structure/spacevine/vine)
@@ -470,7 +470,7 @@
 /datum/spacevine_mutation/slippery
 	name = "Slippery"
 	description = "Causes the vines to be slippery"
-	hue = "#FFF269"
+	hue = "#a5980c"
 	quality = NEGATIVE
 	severity = SEVERITY_MINOR
 
