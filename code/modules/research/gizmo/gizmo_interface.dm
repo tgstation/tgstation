@@ -72,3 +72,24 @@
 	guaranteed_active_gizmodes = list(/datum/gizmodes/code_crack/moo)
 	min_modes = 0
 	max_modes = 0
+
+/datum/gizmo_interface/debug
+	guaranteed_active_gizmodes = list(
+		/datum/gizmodes/mood_pulser,
+		/datum/gizmodes/mopper,
+		/datum/gizmodes/teleporter,
+		/datum/gizmodes/electric,
+		/datum/gizmodes/dispenser/food,
+		/datum/gizmodes/sputter,
+		/datum/gizmodes/copier,
+		/datum/gizmodes/bad,
+		/datum/gizmodes/code_crack/tutorial,
+		/datum/gizmodes/code_crack/moo,
+		/datum/gizmodes/pie_thrower,
+		/datum/gizmodes/mover,
+		/datum/gizmodes/lights,
+		/datum/gizmodes/voice,
+	)
+	possible_active_modes = list()
+	min_modes = 0
+	max_modes = 0

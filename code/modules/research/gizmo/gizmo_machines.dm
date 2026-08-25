@@ -137,3 +137,6 @@
 
 /obj/machinery/gizmo/cursed
 	controller = /datum/gizmo_controller/cursed
+
+/obj/machinery/gizmo/debug
+	controller = /datum/gizmo_controller/debug
