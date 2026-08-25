@@ -5975,6 +5975,7 @@
 /area/station/construction)
 "bFl" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/sign/warning/cold_temp/directional/east,
 /turf/open/floor/plating,
 /area/station/maintenance/aft/lesser)
 "bFm" = (
@@ -22892,7 +22893,7 @@
 "gvf" = (
 /obj/machinery/button/door/directional/east{
 	id = "xenobio8";
-	name = "Xenobio Pen 8 Blast DOors";
+	name = "Xenobio Pen 8 Blast Door";
 	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron/white,
@@ -23340,6 +23341,7 @@
 	name = "Atmospherics Blast Door"
 	},
 /obj/machinery/light/small/directional/east,
+/obj/structure/sign/warning/docking/directional/west,
 /turf/open/floor/catwalk_floor/iron_dark,
 /area/station/engineering/atmos/project)
 "gBv" = (
@@ -37446,6 +37448,10 @@
 	},
 /turf/open/floor/iron/white,
 /area/station/medical/virology)
+"kEU" = (
+/obj/structure/sign/warning/cold_temp/directional/west,
+/turf/open/floor/plating,
+/area/station/maintenance/aft/greater)
 "kEY" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -42256,7 +42262,7 @@
 /obj/machinery/button/door/directional/west{
 	pixel_x = -22;
 	id = "xenobia10";
-	name = "Xenobio Pen 10 Blast DOors";
+	name = "Xenobio Pen 10 Blast Door";
 	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron/white,
@@ -43344,7 +43350,7 @@
 "mmG" = (
 /obj/machinery/button/door/directional/east{
 	id = "xenobio7";
-	name = "Xenobio Pen 7 Blast DOors";
+	name = "Xenobio Pen 7 Blast Door";
 	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron/white,
@@ -43604,7 +43610,7 @@
 "mqL" = (
 /obj/machinery/button/door/directional/east{
 	id = "xenobio9";
-	name = "Xenobio Pen 9 Blast DOors";
+	name = "Xenobio Pen 9 Blast Door";
 	req_access = list("xenobiology")
 	},
 /obj/machinery/light/floor,
@@ -48220,13 +48226,6 @@
 	},
 /turf/open/floor/iron/dark/textured,
 /area/station/security/brig/upper)
-"nFz" = (
-/obj/structure/window/reinforced/spawner/directional/north{
-	pixel_y = 2
-	},
-/obj/structure/sign/warning/docking/directional/north,
-/turf/open/floor/engine,
-/area/station/science/xenobiology)
 "nFF" = (
 /obj/structure/table,
 /obj/item/assembly/signaler{
@@ -56847,7 +56846,7 @@
 "pXq" = (
 /obj/machinery/button/door/directional/east{
 	id = "xenobio6";
-	name = "Xenobio Pen 6 Blast DOors";
+	name = "Xenobio Pen 6 Blast Door";
 	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron/white,
@@ -83333,7 +83332,7 @@
 /obj/structure/cable,
 /obj/machinery/button/door/directional/east{
 	id = "xenobio11";
-	name = "Xenobio Pen 11 Blast DOors";
+	name = "Xenobio Pen 11 Blast Doors";
 	req_access = list("xenobiology")
 	},
 /turf/open/floor/iron,
@@ -194404,16 +194403,16 @@ qLY
 eea
 wFN
 abe
-nFz
+cKA
 wFN
 abe
-nFz
+cKA
 abe
 abe
-nFz
+cKA
 abe
 abe
-nFz
+cKA
 abe
 abe
 rnQ
@@ -196457,19 +196456,19 @@ qLY
 eea
 abe
 gLj
-eea
+abe
 wFN
 gLj
-eea
+abe
 abe
 gLj
-eea
+abe
 abe
 gLj
-eea
+abe
 abe
 gLj
-eea
+abe
 abe
 abe
 pjr
@@ -258158,7 +258157,7 @@ sZF
 rLP
 sKf
 vjZ
-sKf
+kEU
 vjZ
 fwx
 fwx
