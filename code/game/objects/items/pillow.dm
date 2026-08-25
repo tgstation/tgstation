@@ -339,6 +339,7 @@
 	hitsound = 'sound/items/pillow/pillow_hit.ogg'
 	block_chance = 20
 	max_integrity = 30
+	custom_materials = list(/datum/material/paper = SHEET_MATERIAL_AMOUNT * 4)
 	var/hunkered = FALSE
 	///Aura color for juggernaut mode
 	var/outline_colour = "#eb0c07"
