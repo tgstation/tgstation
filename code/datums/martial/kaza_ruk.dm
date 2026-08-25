@@ -220,7 +220,7 @@
 
 /// First, determine if we're going to execute our followup attack
 
-/datum/martial_art/kaza_ruk/proc/blow_followup(mob/living/source, mob/living/target, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking, limb_sharpness)
+/datum/martial_art/kaza_ruk/proc/blow_followup(mob/living/source, mob/living/target, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, biting, kicking, limb_sharpness)
 	SIGNAL_HANDLER
 
 	if(!prob(50))
@@ -230,7 +230,7 @@
 
 /// After our delay, do the followup.
 
-/datum/martial_art/kaza_ruk/proc/execute_followup(mob/living/source, mob/living/target, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking, limb_sharpness)
+/datum/martial_art/kaza_ruk/proc/execute_followup(mob/living/source, mob/living/target, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, biting, kicking, limb_sharpness)
 	if(QDELETED(source) || QDELETED(target))
 		return
 

@@ -901,13 +901,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			target.force_say()
 		log_combat(user, target, "punched")
 
-	if(user != target && biting && (target.mob_biotypes & MOB_ORGANIC)) //Good for you. You probably just ate someone alive.
-		var/datum/reagents/tasty_meal = new()
-		tasty_meal.add_reagent(/datum/reagent/consumable/nutriment/protein, round(damage/3, 1))
-		tasty_meal.trans_to(user, tasty_meal.total_volume, transferred_by = user, methods = INGEST)
-
-	SEND_SIGNAL(target, COMSIG_HUMAN_GOT_PUNCHED, user, damage, attack_type, affecting, final_armor_block, kicking, limb_sharpness)
-	SEND_SIGNAL(user, COMSIG_HUMAN_PUNCHED, target, damage, attack_type, affecting, final_armor_block, kicking, limb_sharpness)
+	SEND_SIGNAL(target, COMSIG_HUMAN_GOT_PUNCHED, user, damage, attack_type, affecting, final_armor_block, biting, kicking, limb_sharpness)
+	SEND_SIGNAL(user, COMSIG_HUMAN_PUNCHED, target, damage, attack_type, affecting, final_armor_block, biting, kicking, limb_sharpness)
 
 	// If our target is staggered and has sustained enough damage, we can apply a randomly determined status effect to inflict when we punch them.
 	// The effects are based on the punching effectiveness of our attacker. Some effects are not reachable by the average human, and require augmentation to reach or being a species with a heavy punch effectiveness.

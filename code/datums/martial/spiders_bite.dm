@@ -29,7 +29,7 @@
 	UnregisterSignal(old_holder, COMSIG_HUMAN_PUNCHED)
 	QDEL_NULL(tackle_comp)
 
-/datum/martial_art/spiders_bite/proc/kick_disarm(mob/living/source, mob/living/target, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking, limb_sharpness)
+/datum/martial_art/spiders_bite/proc/kick_disarm(mob/living/source, mob/living/target, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, biting, kicking, limb_sharpness)
 	SIGNAL_HANDLER
 
 	if(!kicking)
