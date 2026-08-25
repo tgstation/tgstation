@@ -120,7 +120,6 @@
 	var/obj/item/note
 	/// The seal on the airlock
 	var/obj/item/seal
-	var/abandoned = FALSE
 	/// Controls if the door closes quickly or not. FALSE = the door autocloses in 1.5 seconds, TRUE = 8 seconds - see autoclose_in()
 	var/normalspeed = TRUE
 	var/cutAiWire = FALSE
