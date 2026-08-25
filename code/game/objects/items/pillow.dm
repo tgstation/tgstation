@@ -333,9 +333,12 @@
 	desc = "A typical twin mattress repurposed into a makeshift shield"
 	icon_state = "mattress_shield"
 	damtype = STAMINA
-	force = 15
+	force = 10
 	actions_types = list(/datum/action/item_action/fortify)
+	action_slots = ALL
 	hitsound = 'sound/items/pillow/pillow_hit.ogg'
+	block_chance = 20
+	max_integrity = 30
 	var/hunkered = FALSE
 	///Aura color for juggernaut mode
 	var/outline_colour = "#eb0c07"
@@ -351,6 +354,8 @@
 
 	if(!hunkered)
 		hunkered = TRUE
+		force += 5
+		block_chance += 20
 		ADD_TRAIT(user, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, HELD_ITEM_TRAIT)
 		user.add_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
 		user.visible_message(span_alert("[user.name] hunkers down into a defensive stance!"))
@@ -360,6 +365,8 @@
 		animate(alpha = 0, time = 0.5 SECONDS)
 	else
 		hunkered = FALSE
+		force -= 5
+		block_chance -= 20
 		REMOVE_TRAIT(user, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, HELD_ITEM_TRAIT)
 		user.remove_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
 		var/filter = user.get_filter(FORTIFY_FILTER)
