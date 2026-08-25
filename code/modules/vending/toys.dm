@@ -16,6 +16,11 @@
 		/obj/item/gun/ballistic/automatic/toy = 8,
 		/obj/item/gun/ballistic/shotgun/toy = 8,
 		/obj/item/ammo_box/foambox/mini = 20,
+		/obj/item/shield/mattress = 10,
+		/obj/item/spear/pillow = 10,
+		/obj/item/spear/pillow = 10,
+		/obj/item/pillow/clown = 10,
+		/obj/item/pillow/mime = 10,
 	)
 	contraband = list(
 		/obj/item/toy/balloon/syndicate = 1,
