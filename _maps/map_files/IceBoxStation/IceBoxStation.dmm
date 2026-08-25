@@ -2841,9 +2841,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/effect/turf_decal/trimline/red/corner,
-/obj/effect/turf_decal/trimline/red/line,
 /obj/effect/turf_decal/trimline/red/line{
 	dir = 4
+	},
+/obj/effect/turf_decal/trimline/red/corner_long{
+	dir = 8
 	},
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
@@ -79339,7 +79341,7 @@
 /obj/effect/turf_decal/trimline/blue/corner{
 	dir = 8
 	},
-/obj/effect/turf_decal/trimline/blue/line,
+/obj/effect/turf_decal/trimline/blue/corner_long,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "wpn" = (
