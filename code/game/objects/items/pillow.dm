@@ -272,9 +272,6 @@
 	var/charging = FALSE
 
 
-/obj/item/spear/pillow/Initialize(mapload)
-	. = ..()
-
 /obj/item/spear/pillow/on_wield(obj/item/source, mob/living/carbon/user)
 	. = ..()
 	RegisterSignal(user, COMSIG_MOB_CLIENT_MOVED, PROC_REF(check_move), TRUE)
@@ -328,6 +325,7 @@
 
 /obj/item/spear/pillow/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
+
 	new /obj/effect/temp_visual/pillow_hit(get_turf(target_mob))
 
 /obj/item/shield/mattress
@@ -342,8 +340,9 @@
 	///Aura color for juggernaut mode
 	var/outline_colour = "#eb0c07"
 
-obj/item/shield/mattress/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/item/shield/mattress/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
+
 	new /obj/effect/temp_visual/pillow_hit(get_turf(target_mob))
 
 
