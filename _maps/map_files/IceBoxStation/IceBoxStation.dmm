@@ -14296,7 +14296,7 @@
 "dXy" = (
 /obj/structure/table,
 /obj/item/stack/medical/ointment,
-/obj/machinery/light/small/directional/west,
+/obj/machinery/light/small/dim/directional/west,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/aft/lesser)
 "dXF" = (
@@ -15285,6 +15285,10 @@
 	dir = 6
 	},
 /area/station/command/heads_quarters/rd)
+"emL" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/aft)
 "emM" = (
 /obj/machinery/door/window/brigdoor/security/cell/left/directional/west{
 	id = "Cell 1";
@@ -20574,6 +20578,7 @@
 "fNa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/emcloset,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft)
 "fNc" = (
@@ -34424,6 +34429,10 @@
 	},
 /turf/closed/wall/r_wall,
 /area/station/engineering/circuit_workshop)
+"jKE" = (
+/obj/effect/turf_decal/stripes/line,
+/turf/open/floor/plating,
+/area/station/maintenance/aft/greater)
 "jKG" = (
 /obj/effect/turf_decal/trimline/yellow/filled/line,
 /obj/machinery/light/directional/south,
@@ -37598,6 +37607,10 @@
 /area/station/medical/virology)
 "kEU" = (
 /obj/structure/sign/warning/cold_temp/directional/west,
+/obj/machinery/light/small/dim/directional/west,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/aft/greater)
 "kEY" = (
@@ -65342,7 +65355,7 @@
 /area/station/maintenance/solars/port/fore)
 "smw" = (
 /obj/structure/closet/emcloset,
-/obj/machinery/light/small/dim/directional/south,
+/obj/machinery/light/small/dim/directional/west,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
 "smx" = (
@@ -75406,6 +75419,10 @@
 	},
 /turf/open/floor/iron,
 /area/station/science/ordnance)
+"vfR" = (
+/obj/machinery/light/small/dim/directional/north,
+/turf/open/floor/plating,
+/area/station/maintenance/aft/greater)
 "vfS" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -258830,10 +258847,10 @@ sKf
 jgL
 eGK
 sZF
-sKf
+vfR
 jgL
 bdx
-sKf
+jKE
 cmq
 fwx
 fwx
@@ -262954,7 +262971,7 @@ utC
 vzD
 fNa
 jCl
-jCl
+emL
 kir
 bzq
 utC
