@@ -44,3 +44,6 @@
 /// Hard-mode code-crack
 /datum/gizmo_controller/moo
 	interfaces = list(GIZMO_INTERFACE_WIRES = /datum/gizmo_interface/moo)
+
+/datum/gizmo_controller/debug
+	interfaces = list(GIZMO_INTERFACE_WIRES = /datum/gizmo_interface/debug)
