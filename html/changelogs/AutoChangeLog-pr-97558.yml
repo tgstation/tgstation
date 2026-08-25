@@ -1,8 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - code_imp: "Cleaned up code that stops you from removing cuffs while removing cuffs. Report any oddities"
-  - code_imp: "Cleaned up code involving Bluespace bags interfering with teleports. Report any oddities"
-  - code_imp: "Cleaned up code that prevents tinfoil hats from being equipped on throw. Report any oddities"
-  - code_imp: "Cleaned up code that determines if masks should filter toxins out of breathed air. Report any oddities"
-  - code_imp: "Cleaned up code that prevents moths from eating certain foods. Report any oddities"
