@@ -2405,9 +2405,8 @@
 	},
 /area/station/science/explab)
 "aIu" = (
-/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/incinerator_input{
-	dir = 8;
-	piping_layer = 4
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/incinerator_input/layer4{
+	dir = 8
 	},
 /turf/open/floor/engine/vacuum,
 /area/station/maintenance/disposal/incinerator)
