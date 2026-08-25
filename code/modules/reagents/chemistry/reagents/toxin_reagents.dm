@@ -482,7 +482,7 @@
 		qdel(exposed_obj)
 	if(istype(exposed_obj, /obj/structure/alien/resin/flower_bud))
 		var/obj/structure/alien/resin/flower_bud/flower = exposed_obj
-		if(flower.trait_flags & SPACEVINE_TOXIN_RESISTANT)
+		if(is_type_in_list(/datum/spacevine_mutation/toxicity, flower.mutations))
 			return
 
 		var/flower_damage = rand(30, 50) * weed_damage_multiplier
@@ -491,7 +491,7 @@
 		qdel(exposed_obj)
 	if(istype(exposed_obj, /obj/structure/spacevine))
 		var/obj/structure/spacevine/vine = exposed_obj
-		if(vine.trait_flags & SPACEVINE_TOXIN_RESISTANT)
+		if(is_type_in_list(/datum/spacevine_mutation/toxicity, vine.mutations))
 			return
 
 		if(prob(spacevine_kill_prob))

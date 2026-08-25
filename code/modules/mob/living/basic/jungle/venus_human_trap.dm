@@ -58,7 +58,7 @@
 	countdown.start()
 
 /obj/structure/alien/resin/flower_bud/run_atom_armor(damage_amount, damage_type, damage_flag = 0, attack_dir)
-	if((var/datum/spacevine_mutation/fire_proof/fireproof in mutations) && damage_type == BURN)
+	if(is_type_in_list(/datum/spacevine_mutation/fire_proof, mutations) && damage_type == BURN)
 		damage_amount = 0
 	. = ..()
 
