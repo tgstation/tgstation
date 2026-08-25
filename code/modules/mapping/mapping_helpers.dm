@@ -251,7 +251,7 @@
 
 /obj/effect/mapping_helpers/airlock/abandoned/Initialize(mapload)
 	. = ..()
-	init_weights()
+	modify_weights()
 	var/max_weight = values_sum(weights)
 	weights[ABANDON_NONE] = 100 - max_weight
 
@@ -292,8 +292,7 @@
 			airlock.set_panel_open(TRUE)
 
 /obj/effect/mapping_helpers/airlock/abandoned/proc/get_wall_type(obj/machinery/door/airlock/airlock)
-	var/turf/closed/wall = null
-	for(var/turf/closed/wall in range(2, airlock))
+	for(var/turf/closed/wall in range(2, airlock)) // uses range to prioritize closest
 		return wall.type
 
 	return /turf/closed/wall
