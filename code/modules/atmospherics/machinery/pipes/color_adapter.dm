@@ -54,7 +54,7 @@
 		pipe.layer = layer + 0.01
 		. += pipe
 
-/obj/machinery/atmospherics/pipe/color_adapter/proc/get_node_color(obj/machinery/atmospherics/node, node_dir)
+/obj/machinery/atmospherics/pipe/color_adapter/proc/get_node_color(obj/machinery/atmospherics/node, node_dir = get_dir(src, node))
 	// If we are omni always use input color
 	if(pipe_color == ATMOS_COLOR_OMNI)
 		return node.pipe_color
