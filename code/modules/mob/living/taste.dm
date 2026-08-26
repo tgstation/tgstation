@@ -96,7 +96,7 @@
 		return GORE | MEAT
 	var/obj/item/organ/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
 	. = tongue.liked_foodtypes
-	if(HAS_TRAIT(src, TRAIT_FLESH_PECKISH))
+	if(HAS_TRAIT(src, TRAIT_FLESH_PECKISH)) //from the Rubywise Ruin cocktail. Sorta like a softer version of Flesh Desire, hence the name.
 		return tongue.liked_foodtypes | GORE | MEAT
 	if(HAS_TRAIT(src, TRAIT_VEGETARIAN))
 		. &= ~MEAT
@@ -114,6 +114,9 @@
 		return NONE
 	var/obj/item/organ/tongue/tongue = get_organ_slot(ORGAN_SLOT_TONGUE)
 	. = tongue.disliked_foodtypes
+	if(HAS_TRAIT(src, TRAIT_FLESH_PECKISH))
+		. &= ~(MEAT | GORE | RAW) //Raw as well so you can eat organs and such, but doesn't add that to liked foods
+		return
 	if(HAS_TRAIT(src, TRAIT_VEGETARIAN))
 		. |= MEAT
 
@@ -131,7 +134,7 @@
 	if(HAS_TRAIT(src, TRAIT_FLESH_DESIRE))
 		return VEGETABLES | DAIRY | FRUIT | FRIED
 	if(HAS_TRAIT(src, TRAIT_FLESH_PECKISH))
-		return tongue.toxic_foodtypes & ~MEAT & ~GORE
+		return tongue.toxic_foodtypes &= ~(MEAT | GORE | RAW)
 	return tongue.toxic_foodtypes
 
 /**

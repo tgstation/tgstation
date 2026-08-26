@@ -3604,10 +3604,10 @@
 
 /obj/effect/client_image_holder/thirsty_gazer/proc/on_attacked(atom/target, obj/item/thing, mob/living/attacker, list/modifiers)
 	SIGNAL_HANDLER
-	if(!istype(thing, /obj/item/reagent_containers/cup/glass/drinkingglass)) //a good host serves their guests with proper glasware
+	if(!istype(thing, /obj/item/reagent_containers/cup/glass/drinkingglass) || thing.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/farstar_amrita) < 5) //a good host serves their guests with proper glassware. need at least 5u for a proper sippy.
+		to_chat(attacker, span_notice("You feel like something's missing..."))
 		return
-	if(thing.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/farstar_amrita) < 5) //need at least 5u for a proper sippy
-		return
+
 	playsound(src,'sound/items/drink.ogg', rand(10,50), TRUE)
 	to_chat(attacker, span_notice("You blink. There's nothing there, and there never was. And yet, you feel like you've established some kind of connection, and your glass feels a bit lighter."))
 	attacker.add_mood_event("farstar_shared", /datum/mood_event/farstar_shared)
