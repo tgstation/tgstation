@@ -52,13 +52,6 @@
 
 	threshold_minimum = 65
 
-/datum/wound/blunt/robotic/severe/modify_desc_before_span(desc)
-	. = ..()
-
-	if (!LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)) // gauze covers it up
-		if (crowbarred_open)
-			. += ", [span_notice("and is torn open, internals visible to the outside!")]"
-
 /datum/wound/blunt/robotic/severe/get_scanner_description(mob/user)
 	. = ..()
 
@@ -78,7 +71,7 @@
 	if (crowbarred_open)
 		. += "The limb has been torn open, allowing ease of access to internal components, but also disabling it. "
 	if (ready_to_restart)
-		. += "The limb has been partially secured, allowing the electronics within to be restarted by a multitool."
+		. += "The components within have been secured, allowing them to be restarted using a multitool."
 
 /datum/wound/blunt/robotic/severe/item_can_treat(obj/item/potential_treater, mob/user)
 	if (ready_to_restart)
@@ -116,9 +109,7 @@
 	var/their_or_other = (user == victim ? "[user.p_their()]" : "[victim]'s")
 	var/your_or_other = (user == victim ? "your" : "[victim]'s")
 
-	var/limb_can_shock_pre_sleep = (victim.stat != DEAD && limb.biological_state & BIO_WIRED)
-	var/shock_or_not = (limb_can_shock_pre_sleep ? ", risking electrocution" : "")
-	var/self_message = span_warning("You start prying open [your_or_other] [limb.plaintext_zone] with [crowbarring_item][shock_or_not]...")
+	var/self_message = span_warning("You start prying open [your_or_other] [limb.plaintext_zone] with [crowbarring_item][can_shock() ? ", risking electrocution" : ""]...")
 
 	user?.visible_message(span_bolddanger("[user] starts prying open [their_or_other] [limb.plaintext_zone] with [crowbarring_item]!"), self_message, ignored_mobs = list(victim))
 
@@ -136,7 +127,6 @@
 		return TRUE
 
 	var/message = ""
-	var/limb_can_shock = (victim.stat != DEAD && limb.biological_state & BIO_WIRED) // re-define the previous shock variable because we slept
 
 	var/shock_damage = 20
 	var/obj/item/stack/medical/wrap/gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
@@ -144,7 +134,7 @@
 		shock_damage *= gauze.splint_factor // yay gauze
 	var/successful_shock = user.electrocute_act(shock_damage, limb, flags = SHOCK_KNOCKDOWN)
 
-	if (successful_shock && user && limb_can_shock)
+	if (successful_shock && user && can_shock())
 		message = span_boldwarning("[user] is shocked by [their_or_other] [limb.plaintext_zone]!")
 		self_message = span_userdanger("You are shocked by [your_or_other] [limb.plaintext_zone]!")
 		if (user != victim)
@@ -168,7 +158,12 @@
 	crowbarred_open = TRUE
 	user.visible_message(message, self_message, ignored_mobs = list(victim))
 	to_chat(victim, victim_message)
+	examine_desc = replacetext(examine_desc, "cracks", "large gaps")
+	set_disabling(TRUE)
 	return TRUE
+
+/datum/wound/blunt/robotic/severe/proc/can_shock()
+	return (victim.stat != DEAD && limb.biological_state & BIO_WIRED)
 
 /datum/wound/blunt/robotic/severe/proc/secure_internals_normally(obj/item/securing_item, mob/user)
 	if (!securing_item.tool_start_check())
@@ -198,12 +193,16 @@
 		user?.visible_message(span_green("[user] finishes securing the internals of [their_or_other] [limb.plaintext_zone]!"), \
 			span_green("You finish securing the internals of [your_or_other] [limb.plaintext_zone]!"))
 		to_chat(user, span_green("[capitalize(your_or_other)] [limb.plaintext_zone]'s internals are now secure, but still need to be rebooted."))
-		ready_to_restart = TRUE
+		make_ready_to_restart()
 	else
 		user?.visible_message(span_danger("[user] screws up and accidentally damages [their_or_other] [limb.plaintext_zone]!"))
 		limb.receive_damage(brute = 5, damage_source = securing_item, wound_bonus = CANT_WOUND)
 
 	return TRUE
+
+/datum/wound/blunt/robotic/severe/proc/make_ready_to_restart()
+	ready_to_restart = TRUE
+	examine_desc = "twitches and sparks erratically."
 
 // Alternative to securing the wires. Requires bone gel. Guaranteed to work.
 /datum/wound/blunt/robotic/severe/proc/apply_gel(obj/item/stack/medical/bone_gel/gel, mob/user)
@@ -225,7 +224,7 @@
 		victim.visible_message(span_notice("[victim] finishes applying [gel] to [victim.p_their()] [limb.plaintext_zone]!"), span_notice("You finish applying [gel] to your [limb.plaintext_zone]."))
 
 	to_chat(victim, span_green("The gel within your [limb.plaintext_zone] is holding down its components, allowing you to restart it!"))
-	ready_to_restart = TRUE
+	make_ready_to_restart()
 
 /**
  * The final step of T2/T3, requires a welder. Guaranteed to work. Cautery is slower.
