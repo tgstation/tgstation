@@ -537,8 +537,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MARTIAL_ARTS_IMMUNE "martial_arts_immune"
 /// Immune to being afflicted by time stop (spell)
 #define TRAIT_TIME_STOP_IMMUNE "time_stop_immune"
-/// Revenants draining you only get a very small benefit.
-#define TRAIT_WEAK_SOUL "weak_soul"
 /// This mob has no soul
 #define TRAIT_NO_SOUL "no_soul"
 /// Prevents mob from riding mobs when buckled onto something
@@ -979,8 +977,10 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_HAS_BEEN_KIDNAPPED "has_been_kidnapped"
 /// An item still plays its hitsound even if it has 0 force, instead of the tap
 #define TRAIT_CUSTOM_TAP_SOUND "no_tap_sound"
-/// Makes the feedback message when someone else is putting this item on you more noticeable
-#define TRAIT_DANGEROUS_OBJECT "dangerous_object"
+/// This item is potentially dangerous or disavantaged to have equipped
+#define TRAIT_DANGEROUS_EQUIP "dangerous_equip"
+/// This item is potentially dangerous or disavantaged to have unequipped
+#define TRAIT_DANGEROUS_UNEQUIP "dangerous_unequip"
 /// determines whether or not objects are haunted and teleport/attack randomly
 #define TRAIT_HAUNTED "haunted"
 /// An item that, if it has contents, will ignore its contents when scanning for contraband.
@@ -1683,6 +1683,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Cannot be backstabbed with a crusher
 #define TRAIT_BACKSTAB_IMMUNE "backstab_immune"
 
+/// Mobs that are of a lesser species, like monkeys, compared to other humanoid species
+#define TRAIT_LESSER_HUMANOID "lesser_humanoid"
+/// Is an ape, gorilla, a man of the jungle, an ook ook fellow
+#define TRAIT_SIMIAN "simian"
+
 /// Makes the owner immune from the pacification from synthpax
 #define TRAIT_SYNTHPAX_IMMUNE "synthpax_immune"
 /// Allow the owner to eat cloth
@@ -1726,5 +1731,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Turfs with this trait allow whispers to be projected over it when the whisperer is facing it
 #define TRAIT_TURF_PROJECTS_WHISPERS  "turf_projects_whispers"
+
+/// Items with this trait interfere with bluespace teleportation
+#define TRAIT_BLUESPACE_INTERFERENCE "bluespace_interference"
+
+/// Objects with this trait may become a new prison for a revenant, in the event of its ectoplasm dispersing
+#define TRAIT_COZY_REVENANT_HOME "cozy_revenant_home"
 
 // END TRAIT DEFINES

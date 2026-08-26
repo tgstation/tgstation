@@ -32,6 +32,7 @@
 	family_heirlooms = list(/obj/item/toy/plush/pkplush)
 	rpg_title = "Necromancer"
 	job_flags = STATION_JOB_FLAGS
+	tgui_icon = FA_ICON_BATTERY_HALF
 
 
 /datum/job/roboticist/New()

@@ -41,6 +41,7 @@
 	)
 	rpg_title = "Jailor"
 	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_ANTAG_PROTECTED
+	tgui_icon = FA_ICON_HANDCUFFS
 
 /datum/job/warden/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
