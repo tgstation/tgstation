@@ -712,3 +712,6 @@
   - bugfix: Fixed a missing wire in Ice Box education chamber.
   PapaMichael:
   - bugfix: Radio encryption keys can once again be inserted into pAI cards
+2026-08-26:
+  vinylspiders:
+  - spellcheck: fixes a typo in diluted regenerative jelly description
