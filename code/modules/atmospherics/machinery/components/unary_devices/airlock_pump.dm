@@ -95,16 +95,16 @@
 
 	. += get_pipe_image(
 		iconfile = icon,
-		iconstate = "pipe_[nodes[1] ? "intact" : "exposed"]",
+		iconstate = "pipe_[isnull(nodes[1]) ? "exposed" : "intact"]",
 		direction = dir,
-		color = nodes[1]?.color || COLOR_BLUE,
+		color = nodes[1]?.color || COLOR_BLUE, // default to blue to indicate input
 		piping_layer = 4,
 	)
 	. += get_pipe_image(
 		iconfile = icon,
-		iconstate = "pipe_[nodes[2] ? "intact" : "exposed"]",
+		iconstate = "pipe_[isnull(nodes[2]) ? "exposed" : "intact"]",
 		direction = dir,
-		color = nodes[2]?.color || COLOR_RED,
+		color = nodes[2]?.color || COLOR_RED, // default to red to indicate output
 		piping_layer = 2,
 	)
 

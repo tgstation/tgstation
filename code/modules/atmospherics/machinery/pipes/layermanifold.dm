@@ -61,18 +61,21 @@
 
 	. = list()
 
+	// Conecting layer manifold to layer manifold will always use omni color pipes in between
 	if(istype(machine_check, /obj/machinery/atmospherics/pipe/layer_manifold))
+		var/preferred_color = machine_check.pipe_color == pipe_color ? pipe_color : ATMOS_COLOR_OMNI
 		for(var/i in PIPING_LAYER_MIN to PIPING_LAYER_MAX)
-			. += get_attached_image(get_dir(src, machine_check), i, machine_check.pipe_color == pipe_color ? pipe_color : ATMOS_COLOR_OMNI)
+			. += get_attached_image(get_dir(src, machine_check), i, preferred_color)
 		return
+
+	// Airlock pump has some snowflake behavior since it has two nodes
 	if(istype(machine_check, /obj/machinery/atmospherics/components/unary/airlock_pump))
 		. += get_attached_image(get_dir(src, machine_check), 4, COLOR_BLUE)
 		//. += get_attached_image(get_dir(src, machine_check), 2, COLOR_RED) // Only the distro node is added currently to the pipenet, it doesn't merge the pipenet with the waste node
 		return
-	var/passed_color = machine_check.pipe_color
-	if(istype(machine_check, /obj/machinery/atmospherics/pipe/color_adapter) || machine_check.pipe_color == ATMOS_COLOR_OMNI)
-		passed_color = pipe_color
-	. += get_attached_image(get_dir(src, machine_check), machine_check.piping_layer, passed_color)
+
+	var/connection_color = SELECT_ATMOS_NODE_COLOR(src, machine_check)
+	. += get_attached_image(get_dir(src, machine_check), machine_check.piping_layer, connection_color)
 
 /obj/machinery/atmospherics/pipe/layer_manifold/proc/get_attached_image(p_dir, p_layer, p_color)
 	var/working_layer = FLOAT_LAYER - HAS_TRAIT(src, TRAIT_UNDERFLOOR) ? 1 : 0.01

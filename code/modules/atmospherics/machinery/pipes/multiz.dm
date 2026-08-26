@@ -38,7 +38,7 @@
 	. = ..()
 
 	pipe.appearance_flags |= RESET_COLOR|KEEP_APART
-	pipe.color = (isnull(nodes[1]) || (nodes[1].pipe_flags & PIPING_DONT_SHARE_COLOR)) ? pipe_color : nodes[1].color
+	pipe.color = SELECT_ATMOS_NODE_COLOR(src, nodes[1])
 	pipe.icon_state = "pipe-[piping_layer]"
 	. += pipe
 

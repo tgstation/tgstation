@@ -113,6 +113,13 @@ DEFINE_BITFIELD(pipe_flags, list(
 	"One Per Turf" = PIPING_ONE_PER_TURF,
 ))
 
+/// When given two atmos nodes, determines which's color should be used for the pipe between them
+#define SELECT_ATMOS_NODE_COLOR(our_node, other_node) ( \
+	(isnull(other_node) || (other_node.pipe_flags & PIPING_DONT_SHARE_COLOR) || other_node.pipe_color == ATMOS_COLOR_OMNI) \
+		? our_node.pipe_color \
+		: other_node.pipe_color \
+)
+
 // Ventcrawling bitflags, handled in var/vent_movement
 ///Allows for ventcrawling to occur. All atmospheric machines have this flag on by default. Cryo is the exception
 #define VENTCRAWL_ALLOWED (1<<0)
