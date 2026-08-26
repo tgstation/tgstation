@@ -99,6 +99,19 @@
 #define PIPING_BRIDGE (1<<5)
 /// intended to connect with layers 2 and 4 only
 #define PIPING_DISTRO_AND_WASTE_LAYERS (1<<6)
+/// Applied to devices to indicate to connected pipes that they should not take this device's color
+#define PIPING_DONT_SHARE_COLOR (1<<7)
+
+DEFINE_BITFIELD(pipe_flags, list(
+	"All Colors" = PIPING_ALL_COLORS,
+	"All Layers" = PIPING_ALL_LAYER,
+	"Bridge" = PIPING_BRIDGE,
+	"Cardinal Auto-Normalize" = PIPING_CARDINAL_AUTONORMALIZE,
+	"Default Layer Only" = PIPING_DEFAULT_LAYER_ONLY,
+	"Distro and Waste Layers Only" = PIPING_DISTRO_AND_WASTE_LAYERS,
+	"Don't Share Color" = PIPING_DONT_SHARE_COLOR,
+	"One Per Turf" = PIPING_ONE_PER_TURF,
+))
 
 // Ventcrawling bitflags, handled in var/vent_movement
 ///Allows for ventcrawling to occur. All atmospheric machines have this flag on by default. Cryo is the exception
