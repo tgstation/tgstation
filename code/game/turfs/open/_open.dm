@@ -231,6 +231,9 @@
 	if(old_loc && leave_footprints && !broken && !burnt && ishuman(arrived))
 		add_footprint(arrived, get_dir(old_loc, src))
 
+	if(istransparentturf(src))
+		arrived.AddComponent(/datum/component/shadow_handler, src)
+
 	if(!destination_z || !destination_x || !destination_y || arrived.pulledby || arrived.currently_z_moving)
 		return
 
@@ -267,6 +270,144 @@
 	. = ..()
 	if(gone && direction && leave_footprints && !broken && !burnt && isturf(gone.loc) && ishuman(gone))
 		add_footprint(gone, direction)
+
+/obj/effect/abstract/shadow
+	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	anchored = TRUE
+
+/// Handles casting a shadow on some lower z-level
+/datum/component/shadow_handler
+	dupe_mode = COMPONENT_DUPE_UNIQUE
+	/**
+	 * List of transparent turfs beneath the parent
+	 * In order from highest to lowest
+	 *
+	 * When the parent moves, this entire list is recalculated for the new turf
+	 * The list will never be empty, if it's empty we're casting no shadows
+	 */
+	VAR_PRIVATE/list/turf/tracked_transparent_turfs = list()
+
+	VAR_PRIVATE/turf/cast_turf
+	/// The actual shadow effect that we manipulate
+	VAR_PRIVATE/obj/effect/abstract/shadow/shadow
+
+	/// Multiplier applied to blur intensity (calculated based number of turfs)
+	var/blur_factor = 4
+	/// Multiplier applied to alpha of shadow (calculated based on brightness of surroundings)
+	var/alpha_factor = 0.8
+
+/datum/component/shadow_handler/Initialize(turf/start_turf)
+	if(!ismovable(parent))
+		return COMPONENT_INCOMPATIBLE
+
+	setup_transparent_turf_stack(start_turf)
+	if(!length(tracked_transparent_turfs) || isnull(cast_turf))
+		return COMPONENT_REDUNDANT
+
+	shadow = new(cast_turf)
+	update_shadow_appearance()
+
+	// Register a bunch of signals that say
+	// "hey we need to update the shadow's appearance copy"
+	RegisterSignals(parent, list(
+		COMSIG_ATOM_POST_DIR_CHANGE,
+		COMSIG_ATOM_UPDATED_ICON,
+		COMSIG_CARBON_APPLY_OVERLAY,
+		COMSIG_CARBON_REMOVE_OVERLAY,
+		COMSIG_LIVING_POST_UPDATE_TRANSFORM,
+	), PROC_REF(update_shadow_appearance))
+
+	RegisterSignals(parent, list(
+		COMSIG_MOVABLE_MOVED,
+	), PROC_REF(refresh_transparent_turf_stack))
+
+/datum/component/shadow_handler/Destroy()
+	clear_transparent_turf_stack()
+	QDEL_NULL(shadow)
+	return ..()
+
+/// Sets up the tracked_transparent_turfs list as well as finds the cast turf
+/datum/component/shadow_handler/proc/setup_transparent_turf_stack(turf/start_turf)
+	var/turf/next_turf = start_turf
+	while(istransparentturf(next_turf))
+		register_transparent_signals(next_turf)
+		tracked_transparent_turfs += next_turf
+		next_turf = get_step_multiz(next_turf, DOWN)
+
+	if(!length(tracked_transparent_turfs))
+		return
+
+	var/turf/cast_on = get_step_multiz(tracked_transparent_turfs[length(tracked_transparent_turfs)], DOWN)
+	if(isopenturf(cast_on))
+		cast_turf = cast_on
+		register_cast_signals(cast_on)
+
+/// Clears the list, then rebuilds the list of transparent turfs beneath the parent, and moves the shadow if necessary
+/datum/component/shadow_handler/proc/refresh_transparent_turf_stack(...)
+	SIGNAL_HANDLER
+
+	var/atom/movable/parent_movable = parent
+	clear_transparent_turf_stack()
+	setup_transparent_turf_stack(parent_movable.loc)
+	if(!length(tracked_transparent_turfs) || isnull(cast_turf))
+		qdel(src)
+		return
+
+	shadow.forceMove(cast_turf)
+
+/// Clears all tracked turfs, including the cast turf
+/datum/component/shadow_handler/proc/clear_transparent_turf_stack()
+	for(var/turf/old_turf as anything in tracked_transparent_turfs)
+		unregister_transparent_signals(old_turf)
+	tracked_transparent_turfs.Cut()
+
+	unregister_cast_signals(cast_turf)
+	cast_turf = null
+
+/// Register relevant signals for turfs that we're projecting a shadow through
+/datum/component/shadow_handler/proc/register_transparent_signals(turf/registering)
+	RegisterSignals(registering, list(
+		SIGNAL_REMOVETRAIT(TURF_Z_TRANSPARENT_TRAIT),
+	), PROC_REF(refresh_transparent_turf_stack))
+
+/// Unregister relevant signals for turfs that we're projecting a shadow through
+/datum/component/shadow_handler/proc/unregister_transparent_signals(turf/unregistering)
+	UnregisterSignal(unregistering, list(
+		SIGNAL_REMOVETRAIT(TURF_Z_TRANSPARENT_TRAIT),
+	))
+
+/// Register relevant signals for the turf that we're casting a shadow on
+/datum/component/shadow_handler/proc/register_cast_signals(turf/registering)
+	RegisterSignals(registering, list(
+		COMSIG_TURF_CHANGE,
+		SIGNAL_ADDTRAIT(TURF_Z_TRANSPARENT_TRAIT)
+	), PROC_REF(refresh_transparent_turf_stack))
+
+/// Unregister relevant signals for the turf that we're casting a shadow on
+/datum/component/shadow_handler/proc/unregister_cast_signals(turf/unregistering)
+	UnregisterSignal(unregistering, list(
+		COMSIG_TURF_CHANGE,
+		SIGNAL_ADDTRAIT(TURF_Z_TRANSPARENT_TRAIT)
+	))
+
+/// Handles updating the appearance of the shadow clone to the parent's current appearance
+/datum/component/shadow_handler/proc/update_shadow_appearance(...)
+	SIGNAL_HANDLER
+
+	var/mutable_appearance/copy_appearance = new(parent)
+	shadow.appearance = strip_appearance_underlays(copy_appearance)
+	shadow.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	shadow.density = FALSE
+	shadow.color = COLOR_BLACK
+	shadow.add_filter("shadowblur", 1, gauss_blur_filter(blur_factor * (tracked_transparent_turfs[1].z - cast_turf.z)))
+	SET_PLANE_IMPLICIT(shadow, GAME_PLANE)
+
+	update_shadow_alpha()
+
+/// Handles updating the alpha of the shadow clone based on the brightness of the surrounding turfs
+/datum/component/shadow_handler/proc/update_shadow_alpha()
+	shadow.alpha *= alpha_factor * (tracked_transparent_turfs[1].get_lumcount()) * (1 - cast_turf.get_dynamic_lumcount())
 
 /**
  * Replace an open turf with another open turf while avoiding the pitfall of replacing plating with a floor tile, leaving a hole underneath.
