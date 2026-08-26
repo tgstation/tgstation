@@ -364,7 +364,7 @@
 	display_pain(limb.owner, "You feel a strong pulling on your [limb.plaintext_zone]!")
 
 /datum/surgery_operation/limb/realign_superstructure/on_success(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
-	var/datum/wound/blunt/bone/critical/fracture = locate() in limb.wounds
+	var/datum/wound/blunt/robotic/critical/fracture = locate() in limb.wounds
 	fracture?.replace_wound(new /datum/wound/blunt/robotic/severe)
 
 	display_results(
