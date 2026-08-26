@@ -19,6 +19,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 /atom/movable/screen/map_view/Destroy()
 	for(var/datum/weakref/client_ref in viewers_to_huds)
 		hide_from_client(client_ref.resolve())
+	display_ref = null
 
 	return ..()
 

@@ -4,10 +4,10 @@
 /datum/component/connect_client_behalf
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 
-	/// alist in the form mob -> list(signal -> procpath to register to the client our mob "owns")
-	var/alist/mob_to_connections = alist()
-	/// alist of tracked mob -> client (if any)
-	var/alist/mob_to_client = alist()
+	/// list in the form mob -> list(signal -> procpath to register to the client our mob "owns")
+	var/list/mob_to_connections = list()
+	/// list of tracked mob -> client (if any)
+	var/list/mob_to_client = list()
 
 /datum/component/connect_client_behalf/Initialize(mob/tracked, list/connections)
 	. = ..()

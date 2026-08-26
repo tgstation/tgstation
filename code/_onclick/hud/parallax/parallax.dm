@@ -232,6 +232,8 @@
 /atom/movable/screen/parallax_home/Destroy()
 	REMOVE_TRAIT(owner, TRAIT_PARALLAX_DISPLAYED(submap), TRAIT_GENERIC)
 	clear_layers()
+	set_perspective(null)
+	current_turf = null
 	owner.screen -= src
 	owner.parallax_instances -= src
 	if(owner.eye_parallax == src)
@@ -247,6 +249,9 @@
 		UnregisterSignal(old_perspective, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_Z_CHANGED))
 	perspective = new_perspective
 
+	if(!perspective)
+		SEND_SIGNAL(src, COMSIG_PARALLAX_PERSPECTIVE_CHANGED, old_perspective, new_perspective)
+		return
 	var/static/list/container_connections = list(
 		COMSIG_MOVABLE_MOVED = PROC_REF(perspective_loc_moved),
 	)
