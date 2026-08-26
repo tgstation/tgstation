@@ -105,10 +105,12 @@
 	var/must_hold_to_load = FALSE
 	///Whether the gun can be sawn off by sawing tools
 	var/can_be_sawn_off = FALSE
+	///Added recoil of sawn off guns
+	var/sawoff_bonus_recoil = 1
 	///Starts presawn-off
 	var/spawn_sawn_off = FALSE
 	///pixel offset for the suppressor overlay on the x axis.
-	var/suppressor_x_offset 
+	var/suppressor_x_offset
 	///pixel offset for the suppressor overlay on the y axis.
 	var/suppressor_y_offset
 	/// Check if you are able to see if a weapon has a bullet loaded in or not.
@@ -631,7 +633,7 @@
 
 /obj/item/gun/ballistic/calculate_recoil(mob/living/user, recoil_amount)
 	if(sawn_off)
-		recoil_amount += SAWN_OFF_RECOIL
+		recoil_amount += sawoff_bonus_recoil
 	. = ..()
 
 /obj/item/gun/ballistic/shoot_live_shot(mob/living/user, pointblank = 0, atom/pbtarget = null, message = 1)
