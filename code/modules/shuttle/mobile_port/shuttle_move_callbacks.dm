@@ -335,7 +335,7 @@ All ShuttleMove procs go here
 		buckled.user_unbuckle_mob(src, src)
 		return
 	if(knockdown > 0)
-		if(buckled)
+		if(buckled || HAS_TRAIT(src, TRAIT_NEGATES_GRAVITY))
 			Immobilize(knockdown * 0.5)
 			return
 		Paralyze(knockdown)

@@ -1,5 +1,6 @@
 /obj/item/stack/ammonia_crystals
 	name = "ammonia crystals"
+	desc = "Crystallized ammonia. Valuable for someone, but probably not you."
 	singular_name = "ammonia crystal"
 	icon = 'icons/obj/stack_objects.dmi'
 	icon_state = "ammonia_crystal"

@@ -593,6 +593,125 @@
   SmArtKar:
   - balance: Watchers and legions no longer keep facing the target when retreating,
       allowing for backstabs
+  - rscadd: Every 5 minutes 2-4 random cargo exports get tripled in price, lets go
+      gambling!
   lelandkemble:
   - bugfix: door remotes function in melee range
   - bugfix: light replacers function in melee range
+2026-08-21:
+  DeltaFire15:
+  - bugfix: Cable-based robotic limb repairs are no longer impossible while not wearing
+      an uniform.
+  FalloutFalcon:
+  - refactor: breaks up navigate code into a proc for the choice vs the line creation
+  - admin: Admin VV topic to navigate a player to a marked object
+  JohnFulpWillard:
+  - bugfix: Orbit menu should now show antag HUDs as it was seemingly supposed to
+      from the start, instead of some antags simply showing a rev icon.
+  - refactor: De-hardcoded HUDs for jobs & antags, report any icons missing.
+  Melbert:
+  - rscdel: Spacesuits no longer fully conceal lizard tails
+  - rscadd: Species features like wings and tails will appear "meshed over" when wearing
+      certain equipment like spacesuits or biosuits.
+  - rscadd: Biosuits and beepeeker suit sprites now altar when worn by digitigrade
+      mobs.
+  - rscadd: Aprons and Overall sprites now altar when worn by digitigrade mobs.
+  - spellcheck: All heretic armor hoods are consistently known by their name, rather
+      than "ominous hood"
+  - balance: Donk. Flechette rounds aren't stealthy embeds and can be hand removed
+  - balance: Magboots (and similar forms of gravity negation) prevent you from falling
+      on shuttle movement
+  - bugfix: Fixes space phase deducting a charge on entrance and edit. Now only deducts
+      a charge on exit
+  - balance: Cosmic spell recharge condition changed to "crit targets within a tile
+      of a cosmic field" instead of "on a cosmic field"
+  - balance: Void spell recharge condition changed to "Stand near freezing enemies"
+      instead of "Crit freezing enemies"
+  Metek:
+  - balance: The Captain is now treated as a member of every department, for the purpose
+      of department-related vendor discounts.
+  - code_imp: The logic for determining a discount has been cleaned up a bit.
+  PapaMichael:
+  - bugfix: AI tracking from the crew monitoring console now works for people who
+      have set an ID card honorific too
+  QuiteLiterallyAnything:
+  - bugfix: Research discounts from toxins can now be purchased again.
+  hry-gh:
+  - bugfix: typepath suggestions are now filtered on the frontend
+  sqnztb:
+  - bugfix: ore vents now reset properly on losses.
+  uaioy:
+  - rscadd: The double-ended chainsaw  spear
+2026-08-22:
+  JohnFulpWillard:
+  - qol: Pressing backspace while unfocused now clears your command bar.
+  - qol: The Command bar now starts on Say instead of Command mode.
+  Melbert:
+  - bugfix: Humans can take CSL
+  SmArtKar:
+  - rscdel: Goldgrub no longer reproduce unless hand fed ores
+2026-08-23:
+  Absolucy:
+  - rscadd: Added purple luxury medipens. These are given instead when bought with
+      a jellyperson's bank account. They are jelly-friendly, however heal less than
+      normal luxury pens. They also make you more purple. Sprite by Bieyes.
+  FalloutFalcon:
+  - bugfix: Anchored Items cant be looted with quick inserting from bags
+  Richard Blonski:
+  - bugfix: Chat Highlight sounds are off by default now.
+  - qol: Chat Highlights won't trigger on self-actions or radio channel names.
+  levels0:
+  - rscadd: certain cursed mirrors might now talk
+2026-08-24:
+  SmArtKar:
+  - admin: Improved OverFlayer previews by allowing to edit preview plane/backdrop
+      color
+2026-08-25:
+  ArcaneMusic:
+  - bugfix: Mushroom hallucinogen does not apply it's drug effect if the target has
+      no client.
+  FalloutFalcon:
+  - admin: Painting and Trophy manager no longer permanently deletes itself after
+      the first close
+  Ghommie:
+  - balance: Other apes, like gorillas, can have fun popping balloons with foam darts
+      as well. They can also perform some monkey emotes now.
+  JohnFulpWillard:
+  - refactor: Changed how TGUI icons for jobs are set, please make a report if any
+      are missing.
+  Melbert:
+  - qol: Upon scanning a target with a gas analyzer, its UI will update constantly
+      as the target's gas mixture changes (so long as you stay in range). No more
+      spam clicking to see the status of your gas canister.
+  - qol: Gas analyzer and gas chamber UIs both received facelifts. Both now list out
+      all available gases and gas reactions, and now contain some additional info
+      like export value.
+  - spellcheck: '"Dumbed down" some atmos tooltips, for lack of a better word.'
+  - spellcheck: Grammar pass on a lot of atmos related content.
+  - spellcheck: Hyper-noblium renamed to Hyper-Noblium
+  - spellcheck: Proto Nitrate renamed to Proto-Nitrate
+  - spellcheck: Antinoblium renamed to Anti-Noblium
+  - refactor: Refactored how gas reactions and electrolyzer reactions are setup, report
+      anything weird with them
+  - refactor: Refactored buying and selling gas from cargo a tiny bit, report anything
+      weird with them
+  - qol: Gas chamber UIs now default to showing information pertaining to whichever
+      gas is held within
+  - qol: Blind players can access the gas analyzer UI
+  - code_imp: Cleaned up code that stops you from removing cuffs while removing cuffs.
+      Report any oddities
+  - code_imp: Cleaned up code involving Bluespace bags interfering with teleports.
+      Report any oddities
+  - code_imp: Cleaned up code that prevents tinfoil hats from being equipped on throw.
+      Report any oddities
+  - code_imp: Cleaned up code that determines if masks should filter toxins out of
+      breathed air. Report any oddities
+  - code_imp: Cleaned up code that prevents moths from eating certain foods. Report
+      any oddities
+  Metek:
+  - bugfix: Fixed a missing wire in Ice Box education chamber.
+  PapaMichael:
+  - bugfix: Radio encryption keys can once again be inserted into pAI cards
+2026-08-26:
+  vinylspiders:
+  - spellcheck: fixes a typo in diluted regenerative jelly description
