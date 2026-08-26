@@ -49,7 +49,7 @@
 			cached_gas_name[gas_path],
 			amount,
 		))
-	for(var/datum/gas_reaction/reaction_result as anything in gasmix.reaction_results)
+	for(var/datum/gas_reaction/standard/reaction_result as anything in gasmix.reaction_results)
 		.["reactions"] += list(list(
 			initial(reaction_result.id),
 			initial(reaction_result.name),
@@ -84,10 +84,11 @@ GLOBAL_LIST_EMPTY(gas_handbook)
 		gas_info["name"] = meta_information[META_GAS_NAME][gas_path]
 		gas_info["description"] = meta_information[META_GAS_DESC][gas_path]
 		gas_info["specific_heat"] = meta_information[META_GAS_SPECIFIC_HEAT][gas_path]
+		gas_info["export_value"] = (gas_path::cargo_flags & GAS_EXPORTABLE) ? gas_path::base_value : 0
 		gas_info["reactions"] = list()
 		momentary_gas_list[gas_path] = gas_info
 
-	for (var/datum/gas_reaction/reaction_path as anything in subtypesof(/datum/gas_reaction))
+	for (var/datum/gas_reaction/standard/reaction_path as anything in valid_subtypesof(/datum/gas_reaction))
 		var/datum/gas_reaction/reaction = new reaction_path
 		var/list/reaction_info = list()
 		reaction_info["id"] = reaction.id
@@ -109,44 +110,13 @@ GLOBAL_LIST_EMPTY(gas_handbook)
 				if(factor == "Temperature" || factor == "Pressure")
 					factor_info["tooltip"] = "Reaction is influenced by the [LOWER_TEXT(factor)] of the place where the reaction is occurring."
 				else if(factor == "Energy")
-					factor_info["tooltip"] = "Energy released by the reaction, may or may not result in linear temperature change depending on a slew of other factors."
+					factor_info["tooltip"] = "Energy released by the reaction. May or may not result in linear temperature change depending on a slew of other factors."
 				else if(factor == "Radiation")
-					factor_info["tooltip"] = "This reaction emits dangerous radiation! Take precautions."
+					factor_info["tooltip"] = "This reaction emits hazardous radiation - take precautions."
 				else if (factor == "Location")
 					factor_info["tooltip"] = "This reaction has special behaviour when occurring in specific locations."
 				else if(factor == "Hot Ice")
 					factor_info["tooltip"] = "Hot ice are solidified stacks of plasma. Ignition of one will result in a raging fire."
-			reaction_info["factors"] += list(factor_info)
-		GLOB.reaction_handbook += list(reaction_info)
-		qdel(reaction)
-
-	for (var/datum/electrolyzer_reaction/reaction_path as anything in subtypesof(/datum/electrolyzer_reaction))
-		var/datum/electrolyzer_reaction/reaction = new reaction_path
-		var/list/reaction_info = list()
-		reaction_info["id"] = reaction.id
-		reaction_info["name"] = reaction.name
-		reaction_info["description"] = reaction.desc
-		reaction_info["factors"] = list()
-		for (var/factor in reaction.factor)
-			var/list/factor_info = list()
-			factor_info["desc"] = reaction.factor[factor]
-
-			if(factor in momentary_gas_list)
-				momentary_gas_list[factor]["reactions"] += list(reaction.id = reaction.name)
-				factor_info["factor_id"] = momentary_gas_list[factor]["id"] //Gas id
-				factor_info["factor_type"] = "gas"
-				factor_info["factor_name"] = momentary_gas_list[factor]["name"] //Common name
-			else
-				factor_info["factor_name"] = factor
-				factor_info["factor_type"] = "misc"
-				if(factor == "Temperature" || factor == "Pressure")
-					factor_info["tooltip"] = "Reaction is influenced by the [LOWER_TEXT(factor)] of the place where the reaction is occurring."
-				else if(factor == "Energy")
-					factor_info["tooltip"] = "Energy released by the reaction, may or may not result in linear temperature change depending on a slew of other factors."
-				else if(factor == "Radiation")
-					factor_info["tooltip"] = "This reaction emits dangerous radiation! Take precautions."
-				else if (factor == "Location")
-					factor_info["tooltip"] = "This reaction has special behaviour when occurring in specific locations."
 			reaction_info["factors"] += list(factor_info)
 		GLOB.reaction_handbook += list(reaction_info)
 		qdel(reaction)
@@ -157,7 +127,7 @@ GLOBAL_LIST_EMPTY(gas_handbook)
 /// Returns an assoc list of the gas handbook and the reaction handbook.
 /// For UIs, simply do data += return_atmos_handbooks() to use.
 /proc/return_atmos_handbooks()
-	return list("gasInfo" = GLOB.gas_handbook, "reactionInfo" = GLOB.reaction_handbook)
+	return list("gasInfo" = GLOB.gas_handbook, "reactionInfo" = GLOB.reaction_handbook, "moneySymbol" = MONEY_SYMBOL, "moneyName" = MONEY_NAME)
 
 /proc/extract_id_tags(list/objects)
 	var/list/tags = list()

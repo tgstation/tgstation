@@ -46,6 +46,7 @@
 	human_authority = JOB_AUTHORITY_HUMANS_ONLY
 
 	voice_of_god_power = 1.4 //Command staff has authority
+	tgui_icon = FA_ICON_USER_MD
 
 
 /datum/job/chief_medical_officer/get_captaincy_announcement(mob/living/captain)
