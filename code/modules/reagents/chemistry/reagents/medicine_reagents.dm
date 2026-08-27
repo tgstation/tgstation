@@ -1451,7 +1451,7 @@
 // purple
 /datum/reagent/medicine/regen_jelly/diluted
 	name = "Diluted Regenerative Jelly"
-	description = "Regenerative slime jelly thas has been diluted, resulting in it regenerating tissues slower, but lasting longer with the same volume."
+	description = "Regenerative slime jelly that has been diluted, resulting in it regenerating tissues slower, but lasting longer with the same volume."
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	healing = 0.45 // less than omnizine, actually
 
