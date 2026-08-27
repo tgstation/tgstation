@@ -75,8 +75,8 @@
 	if(!length(tracked_transparent_turfs))
 		return
 
-	var/turf/cast_on = get_step_multiz(tracked_transparent_turfs[length(tracked_transparent_turfs)], DOWN)
-	if(isfloorturf(cast_on))
+	var/turf/open/cast_on = get_step_multiz(tracked_transparent_turfs[length(tracked_transparent_turfs)], DOWN)
+	if(istype(cast_on) && (cast_on.transparency_flags & TURF_CAN_CAST_SHADOW_ON))
 		cast_turf = cast_on
 		register_cast_signals(cast_on)
 		var/atom/movable/lighting_object/to_update = cast_turf.lighting_object
@@ -140,7 +140,6 @@
 /datum/component/shadow_handler/proc/update_shadow_appearance(...)
 	SIGNAL_HANDLER
 
-	var/z_diff = tracked_transparent_turfs[1].z - cast_turf.z
 	if(!(SEND_SIGNAL(parent, COMSIG_SHADOW_UPDATED, shadow) & CUSTOM_SHADOW_APPEARANCE))
 		var/mutable_appearance/copy_appearance = new(parent)
 		shadow.appearance = strip_appearance_underlays(copy_appearance)
@@ -148,9 +147,8 @@
 	shadow.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	shadow.color = COLOR_BLACK
 	shadow.density = FALSE
-	// shadow.add_filter("shadowblur", 2, gauss_blur_filter(blur_factor * z_diff))
 	for(var/i in 1 to length(shadow_masks))
-		shadow.add_filter("shadowmask[i]", 1, alpha_mask_filter(y = -z_diff, icon = shadow_masks[i], flags = MASK_INVERSE))
+		shadow.add_filter("shadowmask[i]", 1, alpha_mask_filter(icon = shadow_masks[i], flags = MASK_INVERSE))
 	if(shadow.layer >= TOPDOWN_LAYER)
 		shadow.layer = ABOVE_NORMAL_TURF_LAYER
 	SET_PLANE_IMPLICIT(shadow, SHADOW_PLANE)
@@ -161,7 +159,8 @@
 /datum/component/shadow_handler/proc/update_shadow_alpha(...)
 	SIGNAL_HANDLER
 
-	shadow.alpha = base_alpha * alpha_factor * tracked_transparent_turfs[1].get_static_lumcount()
+	var/turf/start_turf = tracked_transparent_turfs[1]
+	shadow.alpha = base_alpha * alpha_factor * (isnull(start_turf.lighting_object) ? 1 : start_turf.get_static_lumcount())
 
 /// Masks the lighting overlay of the turf onto the shadow mask plane
 /// to have lighting on lower z-levels ward off the shadow effect

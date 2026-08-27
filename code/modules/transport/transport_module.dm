@@ -877,6 +877,7 @@
 	transport_id = TRANSPORT_TYPE_TRAM
 	transport_controller_type = /datum/transport_controller/linear/tram
 	radial_travel = FALSE
+	flags_1 = NO_SHADOW_1
 	/// Set by the tram control console in late initialize
 	var/travelling = FALSE
 

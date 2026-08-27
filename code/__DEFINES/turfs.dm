@@ -137,3 +137,9 @@
 #define REMOVE_TURF_TRANSPARENCY(modturf, source) \
 	REMOVE_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT, (source)); \
 	if(!HAS_TRAIT(modturf, TURF_Z_TRANSPARENT_TRAIT)) { modturf.RemoveElement(/datum/element/turf_z_transparency) }
+
+// Open turf transparency flags
+/// Turf can have shadows cast on it
+#define TURF_CAN_CAST_SHADOW_ON (1<<0)
+/// Turf is transparent (gains the trait/element on init)
+#define TURF_TRANSPARENT (1<<1)

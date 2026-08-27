@@ -214,14 +214,6 @@
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE)
 		if(OVERLAY_LIGHT_BEAM)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE)
-	// Lateload if we need to cast a shadow
-	if(islikelyshadowcastingturf(loc))
-		. = INITIALIZE_HINT_LATELOAD
-
-/atom/movable/LateInitialize()
-	if(islikelyshadowcastingturf(loc))
-		var/turf/open/spawn_loc = loc
-		spawn_loc.cast_shadow(src)
 
 /atom/movable/Destroy(force)
 	QDEL_NULL(language_holder)

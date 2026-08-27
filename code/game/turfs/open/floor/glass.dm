@@ -14,6 +14,8 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	floor_tile = /obj/item/stack/tile/glass
+	turf_flags = parent_type::turf_flags | REACTS_TO_ATOM_INIT
+	transparency_flags = TURF_TRANSPARENT
 	/// List of /atom/movable/render_step that are being used to make this glass floor glow
 	/// These are OWNED by this floor, they delete when we delete them, not before not after
 	var/list/glow_stuff
@@ -28,9 +30,6 @@
 /turf/open/floor/glass/Initialize(mapload)
 	icon_state = "" //Prevent the normal icon from appearing behind the smooth overlays
 	..()
-	// We manually handle transparency because atoms care about it being present in LateInit
-	// The actual element is added in /turf/open/LateInitialize
-	ADD_TRAIT(src, TURF_Z_TRANSPARENT_TRAIT, INNATE_TRAIT)
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/floor/glass/LateInitialize()
