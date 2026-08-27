@@ -141,21 +141,18 @@
 	SIGNAL_HANDLER
 
 	var/z_diff = tracked_transparent_turfs[1].z - cast_turf.z
-	var/mutable_appearance/copy_appearance = new(parent)
-	shadow.appearance = strip_appearance_underlays(copy_appearance)
-	shadow.name = "shadow"
+	if(!(SEND_SIGNAL(parent, COMSIG_SHADOW_UPDATED, shadow) & CUSTOM_SHADOW_APPEARANCE))
+		var/mutable_appearance/copy_appearance = new(parent)
+		shadow.appearance = strip_appearance_underlays(copy_appearance)
+	shadow.name = "shadow of [parent]" // primarily for VV
 	shadow.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	shadow.density = FALSE
 	shadow.color = COLOR_BLACK
-
 	shadow.add_filter("shadowblur", 2, gauss_blur_filter(blur_factor * z_diff))
 	for(var/i in 1 to length(shadow_masks))
 		shadow.add_filter("shadowmask[i]", 1, alpha_mask_filter(y = -z_diff, icon = shadow_masks[i], flags = MASK_INVERSE))
-
 	if(shadow.layer >= TOPDOWN_LAYER)
 		shadow.layer = ABOVE_NORMAL_TURF_LAYER
 	SET_PLANE_IMPLICIT(shadow, SHADOW_PLANE)
-
 	base_alpha = shadow.alpha
 	update_shadow_alpha()
 
@@ -206,3 +203,4 @@
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
+	density = FALSE
