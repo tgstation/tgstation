@@ -31,6 +31,8 @@
 		var/datum/computer_file/program_type = new programs
 		filesystem.store_file(program_type)
 
+	install_driver(/datum/driver/id_card)
+
 /datum/operating_system/default/ntos/run_program(mob/user, datum/computer_file/program/program)
 	..()
 

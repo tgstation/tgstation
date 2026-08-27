@@ -14,22 +14,21 @@ import {
 } from 'tgui-core/components';
 import { formatEnergy } from 'tgui-core/format';
 import { formatPower } from 'tgui-core/format';
-
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore/ntos';
 
 export const NtosRobotact = (props) => {
   return (
     <NtosWindow width={800} height={600}>
       <NtosWindow.Content>
-        <NtosRobotactContent />
+        <NtosRobotactContent {...props} />
       </NtosWindow.Content>
     </NtosWindow>
   );
 };
 
 export const NtosRobotactContent = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useNtos(props);
   const [tab_main, setTab_main] = useState(1);
   const [tab_sub, setTab_sub] = useState(1);
   const {

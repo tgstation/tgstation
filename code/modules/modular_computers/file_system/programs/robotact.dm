@@ -13,16 +13,16 @@
 	program_icon = "terminal"
 
 /datum/computer_file/program/robotact/on_start(mob/living/user)
-	if(!istype(computer, /obj/item/modular_computer/pda/silicon))
-		to_chat(user, span_warning("A warning flashes across \the [computer]: Device Incompatible."))
+	if(!os.get_driver(/datum/driver/silicon_power))
+		to_chat(user, span_warning("A warning flashes across \the [os.get_hardware_name()]: Device Incompatible."))
 		return FALSE
 	. = ..()
 	if(.)
-		var/obj/item/modular_computer/pda/silicon/tablet = computer
-		if(istype(tablet.os, /datum/operating_system/default/ntos/syndie))
+		if(istype(os, /datum/operating_system/default/ntos/syndie))
 			program_open_overlay = "command-syndicate"
 		return TRUE
 	return FALSE
+
 /**
  * Checks if we should see a specific cyborg on our "network". Arguments are our borg, and another borg
  *
@@ -43,10 +43,11 @@
 	if(!iscyborg(user))
 		return data
 
-	//Implied, since we can't run on non tablets
-	var/obj/item/modular_computer/pda/silicon/tablet = computer
+	var/datum/driver/silicon_power/driver = os.get_driver(/datum/driver/silicon_power)
+	if(!driver)
+		return data
 
-	var/mob/living/silicon/robot/cyborg = tablet.silicon_owner
+	var/mob/living/silicon/robot/cyborg = driver.silicon_owner
 
 	data["borgName"] = cyborg.name
 	data["designation"] = cyborg.model
@@ -69,7 +70,7 @@
 	data["printerToner"] = cyborg.toner //amount of toner
 	data["printerTonerMax"] = cyborg.tonermax //It's a variable, might as well use it
 	data["thrustersInstalled"] = cyborg.ionpulse //If we have a thruster uprade
-	data["thrustersStatus"] = "[cyborg.ionpulse_on?"ACTIVE":"DISABLED"]" //Feedback for thruster status
+	data["thrustersStatus"] = "[cyborg.ionpulse_on ? "ACTIVE" : "DISABLED"]" //Feedback for thruster status
 	data["selfDestructAble"] = (cyborg.emagged || istype(cyborg, /mob/living/silicon/robot/model/syndicate))
 
 	data["cyborg_groups"] = list()
@@ -101,15 +102,15 @@
 			data["cyborg_groups"] += list(borggroup)
 
 	//Cover, TRUE for locked
-	data["cover"] = "[cyborg.locked? "LOCKED":"UNLOCKED"]"
+	data["cover"] = "[cyborg.locked ? "LOCKED" : "UNLOCKED"]"
 	//Ability to move. FAULT if lockdown wire is cut, DISABLED if borg locked, ENABLED otherwise
-	data["locomotion"] = "[cyborg.wires.is_cut(WIRE_LOCKDOWN)?"FAULT":"[cyborg.lockcharge?"DISABLED":"ENABLED"]"]"
+	data["locomotion"] = "[cyborg.wires.is_cut(WIRE_LOCKDOWN) ? "FAULT" : "[cyborg.lockcharge ? "DISABLED" : "ENABLED"]"]"
 	//Model wire. FAULT if cut, NOMINAL otherwise
-	data["wireModule"] = "[cyborg.wires.is_cut(WIRE_RESET_MODEL)?"FAULT":"NOMINAL"]"
+	data["wireModule"] = "[cyborg.wires.is_cut(WIRE_RESET_MODEL) ? "FAULT" : "NOMINAL"]"
 	//DEBUG -- Camera(net) wire. FAULT if cut (or no cameranet camera), DISABLED if pulse-disabled, NOMINAL otherwise
-	data["wireCamera"] = "[!cyborg.builtInCamera || cyborg.wires.is_cut(WIRE_CAMERA)?"FAULT":"[cyborg.builtInCamera.can_use()?"NOMINAL":"DISABLED"]"]"
+	data["wireCamera"] = "[!cyborg.builtInCamera || cyborg.wires.is_cut(WIRE_CAMERA) ?"FAULT" : "[cyborg.builtInCamera.can_use() ? "NOMINAL" : "DISABLED"]"]"
 	//AI wire. FAULT if wire is cut, CONNECTED if connected to AI, READY otherwise
-	data["wireAI"] = "[cyborg.wires.is_cut(WIRE_AI)?"FAULT":"[cyborg.connected_ai?"CONNECTED":"READY"]"]"
+	data["wireAI"] = "[cyborg.wires.is_cut(WIRE_AI) ? "FAULT" : "[cyborg.connected_ai ? "CONNECTED" : "READY"]"]"
 	//Law sync wire. FAULT if cut, NOMINAL otherwise
 	data["wireLaw"] = "[cyborg.wires.is_cut(WIRE_LAWSYNC)?"FAULT":"NOMINAL"]"
 
@@ -119,31 +120,39 @@
 	var/list/data = list()
 	if(!iscyborg(user))
 		return data
+
+	var/datum/driver/silicon_power/driver = os.get_driver(/datum/driver/silicon_power)
+	if(!driver)
+		return data
+
 	var/mob/living/silicon/robot/cyborg = user
-	//Implied
-	var/obj/item/modular_computer/pda/silicon/tablet = computer
 
 	data["Laws"] = cyborg.laws.get_law_list(TRUE, TRUE, FALSE)
-	data["borgLog"] = tablet.borglog
+	data["borgLog"] = driver.borg_log
 	data["borgUpgrades"] = cyborg.upgrades
 	return data
 
 /datum/computer_file/program/robotact/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	//Implied type, memes
-	var/obj/item/modular_computer/pda/silicon/tablet = computer
-	var/mob/living/silicon/robot/cyborg = tablet.silicon_owner
+	var/datum/driver/silicon_power/driver = os.get_driver(/datum/driver/silicon_power)
+	if(!driver)
+		return FALSE
+
+	var/mob/living/silicon/robot/cyborg = driver.silicon_owner
 
 	switch(action)
 		if("coverunlock")
 			if(cyborg.locked)
 				cyborg.toggle_cover()
+				return TRUE
 
 		if("lawchannel")
 			cyborg.set_autosay()
+			return TRUE
 
 		if("lawstate")
 			cyborg.checklaws()
+			return TRUE
 
 		if("alertPower")
 			if(!IS_UNCONSCIOUS_OR_CRIT(cyborg))
@@ -151,29 +160,50 @@
 					cyborg.visible_message(span_notice("The power warning light on [span_name("[cyborg]")] flashes urgently."), \
 						"You announce you are operating in low power mode.")
 					playsound(cyborg, 'sound/machines/buzz/buzz-two.ogg', 50, FALSE)
+					return TRUE
 
 		if("toggleSensors")
 			cyborg.toggle_sensors()
+			return TRUE
 
 		if("viewImage")
 			if(cyborg.connected_ai)
 				cyborg.connected_ai.aicamera?.viewpictures(usr)
 			else
 				cyborg.aicamera?.viewpictures(usr)
+			return TRUE
 
 		if("printImage")
 			var/obj/item/camera/siliconcam/robot_camera/borgcam = cyborg.aicamera
 			borgcam?.borgprint(usr)
+			return TRUE
 
 		if("toggleThrusters")
 			cyborg.toggle_ionpulse()
+			return TRUE
 
 		if("lampIntensity")
 			cyborg.lamp_intensity = params["ref"]
 			cyborg.toggle_headlamp(FALSE, TRUE)
+			return TRUE
 
 		if("selfDestruct")
 			if(IS_UNCONSCIOUS_OR_CRIT(cyborg) || cyborg.lockcharge) //No detonation while stunned or locked down
-				return
+				return FALSE
+
 			if(cyborg.emagged || istype(cyborg, /mob/living/silicon/robot/model/syndicate)) //This option shouldn't even be showing otherwise
 				cyborg.self_destruct(cyborg)
+
+			return TRUE
+
+/datum/driver/silicon_power
+	///IC log that borgs can view in their personal management app
+	var/list/borg_log = list()
+
+	///Ref to the silicon we're installed in. Set by the silicon itself during its creation.
+	var/mob/living/silicon/silicon_owner
+
+/datum/driver/silicon_power/New(obj/item/modular_computer/computer, mob/living/silicon/borg)
+	. = ..()
+	silicon_owner = borg
+

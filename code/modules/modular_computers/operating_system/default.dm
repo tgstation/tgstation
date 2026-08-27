@@ -15,6 +15,8 @@
 
 	var/datum/driver/filesystem/filesystem
 
+	var/alist/drivers = alist()
+
 /datum/operating_system/default/New(obj/item/modular_computer/computer)
 	..()
 	hardware = computer
@@ -35,3 +37,18 @@
 /datum/operating_system/default/proc/get_active_thread(identifier)
 	if(isnum(identifier) && identifier > 0 && identifier <= active_threads.len)
 		return active_threads[identifier]
+
+/datum/operating_system/default/proc/get_driver(driver_type)
+	return drivers[driver_type]
+
+/datum/operating_system/default/proc/install_driver(driver_type, driver = null)
+	if(driver)
+		drivers[driver_type] = driver
+	else
+		drivers[driver_type] = new driver_type(hardware)
+
+/datum/operating_system/default/proc/get_hardware_name()
+	return "[hardware]"
+
+/datum/operating_system/default/proc/is_hardware_type(type)
+	return istype(hardware, type)

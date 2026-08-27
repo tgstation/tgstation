@@ -410,7 +410,7 @@
 	if(.)
 		return
 	if(enabled)
-		os.ui_interact(user)
+		os.interact(user)
 	else if(isAdminGhostAI(user))
 		var/response = tgui_alert(user, "This computer is turned off. Would you like to turn it on?", "Admin Override", list("Yes", "No"))
 		if(response == "Yes")
