@@ -277,7 +277,7 @@
 
 /// Casts a shadow of the given atom onto a lower turf
 /turf/open/proc/cast_shadow(atom/movable/casting, list/icon/shadow_masks = list())
-	if(isProbablyWallMounted(casting))
+	if(isProbablyWallMounted(casting) || !SSmapping.max_plane_offset)
 		return
 
 	SEND_SIGNAL(src, COMSIG_TURF_CASTING_SHADOW, shadow_masks)
