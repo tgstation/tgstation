@@ -234,8 +234,10 @@ GLOBAL_LIST_EMPTY(starlight)
 	// We make the assumption that the space plane will never be blacklisted, as an optimization
 	if(SSmapping.max_plane_offset)
 		plane = TRANSPARENT_FLOOR_PLANE - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
-	ADD_TURF_TRANSPARENCY(src, INNATE_TRAIT)
 	return INITIALIZE_HINT_LATELOAD
+
+/turf/open/space/openspace/LateInitialize()
+	ADD_TURF_TRANSPARENCY(src, INNATE_TRAIT)
 
 /turf/open/space/openspace/Destroy()
 	// Signals persist through destroy, GO HOME
