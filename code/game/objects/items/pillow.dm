@@ -257,9 +257,9 @@
 	icon_prefix = "pillow_lance"
 	hitsound = 'sound/items/pillow/pillow_hit.ogg'
 	///The current direction of the jousting.
-	var/current_direction = NONE
+	VAR_FINAL/current_direction = NONE
 	///How many tiles we've charged up thus far
-	var/current_tile_charge = 0
+	VAR_FINAL/current_tile_charge = 0
 	///The min amount of tiles before you can joust someone.
 	var/min_tile_charge = 2
 	///How much of an increase in damage is achieved every tile moved during jousting.
@@ -267,25 +267,25 @@
 	///How much stamina we lose per tile charge
 	var/stamina_per_tile = 5
 	///Tracker for when we last moved to ensure its a continous charge
-	var/last_charge_move
+	VAR_FINAL/last_charge_move
 	///Chargine state
-	var/charging = FALSE
+	VAR_FINAL/charging = FALSE
 
 
 /obj/item/spear/pillow/on_wield(obj/item/source, mob/living/carbon/user)
 	. = ..()
-	RegisterSignal(user, COMSIG_MOB_CLIENT_MOVED, PROC_REF(check_move), TRUE)
-	RegisterSignal(user, COMSIG_LIVING_MOB_BUMP, PROC_REF(impale), TRUE)
+	RegisterSignal(user, COMSIG_MOB_CLIENT_MOVED, PROC_REF(check_move))
+	RegisterSignal(user, COMSIG_LIVING_MOB_BUMP, PROC_REF(impale))
 
 /obj/item/spear/pillow/on_unwield(obj/item/source, mob/living/carbon/user)
 	. = ..()
-	UnregisterSignal(user, COMSIG_MOB_CLIENT_MOVED, PROC_REF(check_move))
+	UnregisterSignal(user, COMSIG_MOB_CLIENT_MOVED)
 	UnregisterSignal(user, COMSIG_LIVING_MOB_BUMP)
 	reset_charge(user)
 
 /obj/item/spear/pillow/dropped(mob/user, silent)
 	. = ..()
-	UnregisterSignal(user, COMSIG_MOB_CLIENT_MOVED, PROC_REF(check_move))
+	UnregisterSignal(user, COMSIG_MOB_CLIENT_MOVED)
 	UnregisterSignal(user, COMSIG_LIVING_MOB_BUMP)
 	reset_charge(user)
 
@@ -320,10 +320,9 @@
 	INVOKE_ASYNC(target, TYPE_PROC_REF(/atom, attackby), src, user)
 	target.adjust_stamina_loss(damage_boost_per_tile * current_tile_charge)
 	playsound(user, 'sound/effects/bang.ogg', 40, TRUE)
-	if(user.has_movespeed_modifier(/datum/movespeed_modifier/lance_charge))
-		user.remove_movespeed_modifier(/datum/movespeed_modifier/lance_charge)
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/lance_charge)
 
-/obj/item/spear/pillow/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/item/spear/pillow/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	new /obj/effect/temp_visual/pillow_hit(get_turf(target_mob))
@@ -344,35 +343,45 @@
 	///Aura color for juggernaut mode
 	var/outline_colour = "#eb0c07"
 
-/obj/item/shield/mattress/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/item/shield/mattress/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
 	new /obj/effect/temp_visual/pillow_hit(get_turf(target_mob))
 
+/obj/item/shield/mattress/dropped(mob/user, silent)
+	. = ..()
+	if(hunkered)
+		un_fortify()
 
 /obj/item/shield/mattress/ui_action_click(mob/user, actiontype)
 	. = ..()
 
 	if(!hunkered)
-		hunkered = TRUE
-		force += 5
-		block_chance += 20
-		ADD_TRAIT(user, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, HELD_ITEM_TRAIT)
-		user.add_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
-		user.visible_message(span_alert("[user.name] hunkers down into a defensive stance!"))
-		user.add_filter(FORTIFY_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 0, "size" = 1))
-		var/filter = user.get_filter(FORTIFY_FILTER)
-		animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
-		animate(alpha = 0, time = 0.5 SECONDS)
+		fortify()
 	else
-		hunkered = FALSE
-		force -= 5
-		block_chance -= 20
-		REMOVE_TRAIT(user, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, HELD_ITEM_TRAIT)
-		user.remove_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
-		var/filter = user.get_filter(FORTIFY_FILTER)
-		animate(filter)
-		user.remove_filter(FORTIFY_FILTER)
-		user.visible_message(span_alert("[user] loosens up and relaxes a bit."))
+		un_fortify()
+
+/obj/item/mattress/proc/fortify()
+	hunkered = TRUE
+	force += 5
+	block_chance += 20
+	ADD_TRAIT(user, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, HELD_ITEM_TRAIT)
+	user.add_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
+	user.visible_message(span_alert("[user.name] hunkers down into a defensive stance!"))
+	user.add_filter(FORTIFY_FILTER, 2, list("type" = "outline", "color" = outline_colour, "alpha" = 0, "size" = 1))
+	var/filter = user.get_filter(FORTIFY_FILTER)
+	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
+	animate(alpha = 0, time = 0.5 SECONDS)
+
+/obj/item/mattress/proc/un_fortify()
+	hunkered = FALSE
+	force -= 5
+	block_chance -= 20
+	REMOVE_TRAIT(user, TRAIT_BRAWLING_KNOCKDOWN_BLOCKED, HELD_ITEM_TRAIT)
+	user.remove_movespeed_modifier(/datum/movespeed_modifier/pillow_fortify)
+	var/filter = user.get_filter(FORTIFY_FILTER)
+	animate(filter)
+	user.remove_filter(FORTIFY_FILTER)
+	user.visible_message(span_alert("[user] loosens up and relaxes a bit."))
 
 #undef FORTIFY_FILTER
