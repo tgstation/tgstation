@@ -249,7 +249,7 @@
 
 /obj/item/spear/pillow
 	name = "pillow lance"
-	desc = "Looks like a bodypillow was ducktaped onto a long pole to be used as a blunt spear"
+	desc = "Looks like someone duct-taped a body-pillow onto a long pole, as some kind of blunt spear."
 	damtype = STAMINA
 	force_unwielded = 12
 	force_wielded = 18
@@ -299,7 +299,7 @@
 /obj/item/spear/pillow/proc/check_move(mob/living/user)
 	SIGNAL_HANDLER
 
-	if(current_direction != user.dir || world.time > last_charge_move + 5)
+	if(current_direction != user.dir || world.time > last_charge_move + 0.5 SECONDS)
 		reset_charge(user)
 	else
 		if(current_tile_charge >= min_tile_charge)

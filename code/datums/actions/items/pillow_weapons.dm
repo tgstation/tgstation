@@ -1,7 +1,7 @@
 //pillow ability
 /datum/action/item_action/fortify
 	name = "Juggernaut mode"
-	desc = "Decrease your speed and goes into a defensive stance countering any incoming shove."
+	desc = "Enter a defensive stance, decreasing your speed, but countering any incoming shoves."
 	button_icon = 'icons/mob/actions/actions_items.dmi'
 	button_icon_state = "pillow_fortify"
 
