@@ -3520,12 +3520,10 @@
 /datum/reagent/consumable/ethanol/watchmans_nightcap/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	//triples experience gain
-	drinker?.mind?.experience_multiplier_reasons |= type
-	drinker?.mind?.experience_multiplier_reasons[type] = 2 * metabolization_ratio * seconds_per_tick
+	drinker.mind?.experience_multiplier_reasons[type] = 2 * metabolization_ratio * seconds_per_tick
 
 /datum/reagent/consumable/ethanol/watchmans_nightcap/on_mob_end_metabolize(mob/living/drinker)
 	. = ..()
-	drinker?.mind?.experience_multiplier_reasons[type] = null
 	drinker?.mind?.experience_multiplier_reasons -= type
 
 //Blade
@@ -3608,11 +3606,10 @@
 		to_chat(attacker, span_notice("You feel like something's missing..."))
 		return
 
-	if(IS_HERETIC(attacker)) //gives heretics a knowledge point upon doing this correctly
-		var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(attacker)
-		if(heretic_datum)
-			heretic_datum.adjust_knowledge_points(1)
-			to_chat(attacker, "[span_hear("You hear a whisper...")] [span_mansus("A TOKEN OF APPRECIATION.")]")
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(attacker) //gives heretics a knowledge point upon doing this correctly
+	if(heretic_datum)
+		heretic_datum.adjust_knowledge_points(1)
+		to_chat(attacker, "[span_hear("You hear a whisper...")] [span_mansus("A TOKEN OF APPRECIATION.")]")
 
 	playsound(src,'sound/items/drink.ogg', rand(10,50), TRUE)
 	to_chat(attacker, span_notice("You blink. There's nothing there, and there never was. And yet, you feel like you've established some kind of connection, and your glass feels a bit lighter."))
@@ -3697,14 +3694,14 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
 /datum/reagent/consumable/ethanol/openthroat_draught/on_mob_metabolize(mob/living/drinker)
-	.=..()
+	. = ..()
 	drinker.grant_all_languages(source = LANGUAGE_DRINK)
 	drinker.apply_status_effect(/datum/status_effect/shadowspeak, 60) //same effect as the tongue corrupted organ
 
 /datum/reagent/consumable/ethanol/openthroat_draught/on_mob_end_metabolize(mob/living/drinker)
-	.=..()
+	. = ..()
 	drinker.remove_all_languages(source = LANGUAGE_DRINK)
-	drinker.apply_status_effect(/datum/status_effect/shadowspeak)
+	drinker.remove_status_effect(/datum/status_effect/shadowspeak)
 
 //Moon
 /datum/reagent/consumable/ethanol/lunacy
@@ -3763,11 +3760,11 @@
 
 /datum/reagent/consumable/ethanol/entropic_brew/overdose_start(mob/living/drinker, metabolization_ratio)
 	to_chat(drinker, span_boldwarning("You feel something inside you break as the feeling of illness recedes. In the face of the inevitability of decay, your troubles seem quaint."))
-	drinker.add_traits(list(TRAIT_STRONG_STOMACH,TRAIT_APATHETIC), type)
+	drinker.add_traits(list(TRAIT_STRONG_STOMACH, TRAIT_APATHETIC), type)
 
 /datum/reagent/consumable/ethanol/entropic_brew/on_mob_end_metabolize(mob/living/carbon/drinker, metabolization_ratio)
 	. = ..()
-	drinker.remove_traits(list(TRAIT_STRONG_STOMACH,TRAIT_APATHETIC), type)
+	drinker.remove_traits(list(TRAIT_STRONG_STOMACH, TRAIT_APATHETIC), type)
 	UnregisterSignal(drinker, COMSIG_CARBON_VOMITED)
 
 //Void
