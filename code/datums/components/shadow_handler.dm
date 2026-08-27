@@ -9,7 +9,7 @@
 	 * The list will never be empty, if it's empty we're casting no shadows
 	 */
 	VAR_PRIVATE/list/turf/tracked_transparent_turfs = list()
-
+	/// Turf below the lowest tracked turf, it's the turf that actually gets the shadow
 	VAR_PRIVATE/turf/cast_turf
 	/// The actual shadow effect that we manipulate
 	VAR_PRIVATE/obj/effect/abstract/shadow/shadow
