@@ -215,11 +215,11 @@
 		if(OVERLAY_LIGHT_BEAM)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE)
 	// Lateload if we need to cast a shadow
-	if(istransparentturftype(loc))
+	if(islikelyshadowcastingturf(loc))
 		. = INITIALIZE_HINT_LATELOAD
 
 /atom/movable/LateInitialize()
-	if(istransparentturftype(loc))
+	if(islikelyshadowcastingturf(loc))
 		var/turf/open/spawn_loc = loc
 		spawn_loc.cast_shadow(src)
 

@@ -27,6 +27,9 @@
 	///the maximum of lum_r, lum_g, and lum_b. if this is > 1 then the three cached color values are divided by this
 	var/largest_color_luminosity = 0
 
+	/// Cached value of how much light is coming from other z-levels
+	VAR_PRIVATE/cached_multiz_light_ratio = -1
+
 	///whether we are to be added to SSlighting's corners_queue list for an update
 	var/needs_update = FALSE
 
@@ -100,6 +103,7 @@
 	lum_r += delta_r
 	lum_g += delta_g
 	lum_b += delta_b
+	cached_multiz_light_ratio = -1
 
 	if (!needs_update)
 		needs_update = TRUE
@@ -212,19 +216,24 @@
 /datum/lighting_corner/dummy/display()
 	return
 
+/// Returns the multi-z light ratio; or how much light is coming form other z-levels vs our own z-level.
 /datum/lighting_corner/proc/get_ratio_above()
-	var/total = lum_r + lum_g + lum_b
-	if(total <= 0)
-		return 1
+	if(cached_multiz_light_ratio == -1)
+		var/total = lum_r + lum_g + lum_b
+		if(total <= 0)
+			cached_multiz_light_ratio = 1
 
-	var/remaining = total
-	var/our_z_offset = GET_Z_PLANE_OFFSET(z)
-	for(var/datum/light_source/source in affecting)
-		if(GET_TURF_PLANE_OFFSET(source.source_turf) >= our_z_offset)
-			continue
-		remaining -= source.effect_str[src] * (source.applied_lum_r + source.applied_lum_g + source.applied_lum_b)
-	// This should prob be like, below ratio ro something but I couldn't come up with a good name for it
-	return 1 - (remaining / total)
+		else
+			var/remaining = total
+			var/our_z_offset = GET_Z_PLANE_OFFSET(z)
+			for(var/datum/light_source/source in affecting)
+				if(GET_TURF_PLANE_OFFSET(source.source_turf) >= our_z_offset)
+					continue
+				remaining -= source.effect_str[src] * (source.applied_lum_r + source.applied_lum_g + source.applied_lum_b)
+			// This should prob be like, below ratio ro something but I couldn't come up with a good name for it
+			cached_multiz_light_ratio = 1 - (remaining / total)
+
+	return cached_multiz_light_ratio
 
 /datum/lighting_corner/dummy/get_ratio_above()
 	return 0

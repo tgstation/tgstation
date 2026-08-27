@@ -27,7 +27,7 @@
 	var/above_factor = 0.5
 
 /datum/component/shadow_handler/Initialize(turf/start_turf, list/icon/shadow_masks)
-	if(!ismovable(parent) || !SSmapping.max_plane_offset) // we shouldn't even be TRYING to make this component on non-multi-z maps
+	if(!isatom(parent) || isarea(parent) || !SSmapping.max_plane_offset) // we shouldn't even be TRYING to make this component on non-multi-z maps
 		return COMPONENT_INCOMPATIBLE
 
 	setup_transparent_turf_stack(start_turf)
@@ -76,7 +76,7 @@
 		return
 
 	var/turf/cast_on = get_step_multiz(tracked_transparent_turfs[length(tracked_transparent_turfs)], DOWN)
-	if(isopenturf(cast_on))
+	if(isfloorturf(cast_on))
 		cast_turf = cast_on
 		register_cast_signals(cast_on)
 		var/atom/movable/lighting_object/to_update = cast_turf.lighting_object
@@ -147,7 +147,8 @@
 	shadow.name = "shadow of [parent]" // primarily for VV
 	shadow.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	shadow.color = COLOR_BLACK
-	shadow.add_filter("shadowblur", 2, gauss_blur_filter(blur_factor * z_diff))
+	shadow.density = FALSE
+	// shadow.add_filter("shadowblur", 2, gauss_blur_filter(blur_factor * z_diff))
 	for(var/i in 1 to length(shadow_masks))
 		shadow.add_filter("shadowmask[i]", 1, alpha_mask_filter(y = -z_diff, icon = shadow_masks[i], flags = MASK_INVERSE))
 	if(shadow.layer >= TOPDOWN_LAYER)
@@ -160,15 +161,17 @@
 /datum/component/shadow_handler/proc/update_shadow_alpha(...)
 	SIGNAL_HANDLER
 
-	shadow.alpha = base_alpha * alpha_factor * tracked_transparent_turfs[1].get_lumcount()
+	shadow.alpha = base_alpha * alpha_factor * tracked_transparent_turfs[1].get_static_lumcount()
 
 /// Masks the lighting overlay of the turf onto the shadow mask plane
 /// to have lighting on lower z-levels ward off the shadow effect
-/datum/component/shadow_handler/proc/mask_shadow(turf/source, list/overlays_to_fill)
+/datum/component/shadow_handler/proc/mask_shadow(turf/source, list/mutable_appearance/overlays_to_fill)
 	SIGNAL_HANDLER
 
-	if(length(overlays_to_fill))
-		return // melbert todo : make this not conflict with itself in a less silly way
+	// Multiple shadows on one turf, we only need one mask
+	for(var/i in 1 to length(overlays_to_fill))
+		if(overlays_to_fill[i].plane == SHADOW_MASK_PLANE)
+			return
 
 	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 
@@ -200,7 +203,7 @@
 
 /// Dummy object just for shadow mirroring
 /obj/effect/abstract/shadow
-	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
+	blocks_emissive = EMISSIVE_BLOCK_NONE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	anchored = TRUE
 	density = FALSE

@@ -277,11 +277,14 @@
 
 /// Casts a shadow of the given atom onto a lower turf
 /turf/open/proc/cast_shadow(atom/movable/casting, list/icon/shadow_masks = list())
-	if(isProbablyWallMounted(casting) || !SSmapping.max_plane_offset)
+	if(!SSmapping.max_plane_offset || casting.invisibility >= INVISIBILITY_MAXIMUM || isProbablyWallMounted(casting) || (casting.flags_1 & ON_BORDER_1))
 		return
 
 	SEND_SIGNAL(src, COMSIG_TURF_CASTING_SHADOW, shadow_masks)
 	casting.AddComponent(/datum/component/shadow_handler, src, shadow_masks)
+
+/turf/open/space/cast_shadow(atom/movable/casting, list/icon/shadow_masks)
+	return
 
 /**
  * Replace an open turf with another open turf while avoiding the pitfall of replacing plating with a floor tile, leaving a hole underneath.
