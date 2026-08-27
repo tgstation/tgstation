@@ -37,6 +37,10 @@
 	/// All dirs from which footprints have exited this turf
 	VAR_PRIVATE/footprint_exit_dirs = NONE
 
+/turf/open/LateInitialize()
+	if(HAS_TRAIT_FROM_ONLY(src, TURF_Z_TRANSPARENT_TRAIT, INNATE_TRAIT))
+		AddElement(/datum/element/turf_z_transparency)
+
 /// Returns a list of every turf state considered "broken".
 /// Will be randomly chosen if a turf breaks at runtime.
 /turf/open/proc/broken_states()

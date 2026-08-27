@@ -28,10 +28,13 @@
 /turf/open/floor/glass/Initialize(mapload)
 	icon_state = "" //Prevent the normal icon from appearing behind the smooth overlays
 	..()
+	// We manually handle transparency because atoms care about it being present in LateInit
+	// The actual element is added in /turf/open/LateInitialize
+	ADD_TRAIT(src, TURF_Z_TRANSPARENT_TRAIT, INNATE_TRAIT)
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/floor/glass/LateInitialize()
-	ADD_TURF_TRANSPARENCY(src, INNATE_TRAIT)
+	. = ..()
 	setup_glow()
 
 /turf/open/floor/glass/Destroy()

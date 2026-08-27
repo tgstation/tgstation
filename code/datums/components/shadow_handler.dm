@@ -17,6 +17,8 @@
 	/// List of icons that are applied to the shadow as a mask, to change its shape according to the parent
 	VAR_PRIVATE/list/icon/shadow_masks
 
+	/// Base alpha for use in calculating shadow from light strength
+	VAR_PRIVATE/base_alpha = 255
 	/// Multiplier applied to blur intensity
 	var/blur_factor = 2.0
 	/// Multiplier applied to alpha of shadow
@@ -111,23 +113,19 @@
 
 /// Register relevant signals for turfs that we're projecting a shadow through
 /datum/component/shadow_handler/proc/register_transparent_signals(turf/registering)
-	RegisterSignals(registering, list(
-		SIGNAL_REMOVETRAIT(TURF_Z_TRANSPARENT_TRAIT),
-	), PROC_REF(refresh_transparent_turf_stack))
+	RegisterSignal(registering, SIGNAL_REMOVETRAIT(TURF_Z_TRANSPARENT_TRAIT), PROC_REF(refresh_transparent_turf_stack))
+	RegisterSignal(registering, COMSIG_LIGHTING_OBJECT_UPDATE, PROC_REF(update_shadow_alpha))
 
 /// Unregister relevant signals for turfs that we're projecting a shadow through
 /datum/component/shadow_handler/proc/unregister_transparent_signals(turf/unregistering)
 	UnregisterSignal(unregistering, list(
 		SIGNAL_REMOVETRAIT(TURF_Z_TRANSPARENT_TRAIT),
+		COMSIG_LIGHTING_OBJECT_UPDATE,
 	))
 
 /// Register relevant signals for the turf that we're casting a shadow on
 /datum/component/shadow_handler/proc/register_cast_signals(turf/registering)
-	RegisterSignals(registering, list(
-		COMSIG_TURF_CHANGE,
-		SIGNAL_ADDTRAIT(TURF_Z_TRANSPARENT_TRAIT)
-	), PROC_REF(refresh_transparent_turf_stack))
-
+	RegisterSignals(registering, list(COMSIG_TURF_CHANGE, SIGNAL_ADDTRAIT(TURF_Z_TRANSPARENT_TRAIT)), PROC_REF(refresh_transparent_turf_stack))
 	RegisterSignal(registering, COMSIG_LIGHTING_OBJECT_UPDATE, PROC_REF(mask_shadow))
 
 /// Unregister relevant signals for the turf that we're casting a shadow on
@@ -149,13 +147,23 @@
 	shadow.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	shadow.density = FALSE
 	shadow.color = COLOR_BLACK
-	shadow.alpha *= alpha_factor
+
 	shadow.add_filter("shadowblur", 2, gauss_blur_filter(blur_factor * z_diff))
 	for(var/i in 1 to length(shadow_masks))
 		shadow.add_filter("shadowmask[i]", 1, alpha_mask_filter(y = -z_diff, icon = shadow_masks[i], flags = MASK_INVERSE))
+
 	if(shadow.layer >= TOPDOWN_LAYER)
 		shadow.layer = ABOVE_NORMAL_TURF_LAYER
 	SET_PLANE_IMPLICIT(shadow, SHADOW_PLANE)
+
+	base_alpha = shadow.alpha
+	update_shadow_alpha()
+
+/// When tracked turf lighting changes we need to update the shadow's alpha
+/datum/component/shadow_handler/proc/update_shadow_alpha(...)
+	SIGNAL_HANDLER
+
+	shadow.alpha = base_alpha * alpha_factor * tracked_transparent_turfs[1].get_lumcount()
 
 /// Masks the lighting overlay of the turf onto the shadow mask plane
 /// to have lighting on lower z-levels ward off the shadow effect
