@@ -163,7 +163,7 @@
 	SIGNAL_HANDLER
 
 	if(length(overlays_to_fill))
-		return
+		return // melbert todo : make this not conflict with itself in a less silly way
 
 	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 

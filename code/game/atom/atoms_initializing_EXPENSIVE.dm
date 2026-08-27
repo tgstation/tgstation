@@ -171,5 +171,4 @@
  */
 /atom/proc/LateInitialize()
 	set waitfor = FALSE
-	SHOULD_CALL_PARENT(FALSE)
 	stack_trace("[src] ([type]) called LateInitialize but has nothing on it!")

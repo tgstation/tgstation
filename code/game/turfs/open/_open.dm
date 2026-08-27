@@ -279,10 +279,6 @@
 	SEND_SIGNAL(src, COMSIG_TURF_CASTING_SHADOW, shadow_masks)
 	casting.AddComponent(/datum/component/shadow_handler, src, shadow_masks)
 
-/turf/open/LateInitialize()
-	if(HAS_TRAIT_FROM_ONLY(src, TURF_Z_TRANSPARENT_TRAIT, INNATE_TRAIT))
-		AddElement(/datum/element/turf_z_transparency)
-
 /**
  * Replace an open turf with another open turf while avoiding the pitfall of replacing plating with a floor tile, leaving a hole underneath.
  * This replaces the current turf if it is plating and is passed plating, is tile and is passed tile.

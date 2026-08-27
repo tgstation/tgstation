@@ -101,6 +101,14 @@ GLOBAL_LIST_INIT(turfs_snow, typecacheof(list(
 
 #define istransparentturf(A) (A && HAS_TRAIT(A, TURF_Z_TRANSPARENT_TRAIT))
 
+GLOBAL_LIST_INIT(transparent_turf_types, typecacheof(list(
+	/turf/open/floor/glass,
+	/turf/open/openspace,
+	/turf/open/space,
+)))
+
+#define istransparentturftype(A) (is_type_in_typecache(A, GLOB.transparent_turf_types))
+
 #define iscliffturf(A) (istype(A, /turf/open/cliff))
 
 #define iswaterturf(A) (istype(A, /turf/open/water))
