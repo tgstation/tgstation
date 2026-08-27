@@ -1,7 +1,7 @@
 /obj/item/stack/candela_beacon
 	name = "mining navigation beacon"
 	singular_name = "mining navigation beacon"
-	desc = "\"Candela\"-type extending mining beacon, capable of linking with nearby beacons and devices to form a satellie-free navigation network."
+	desc = "\"Candela\"-type extending mining beacon, capable of linking with nearby beacons and devices to form a satellite-free navigation network."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "candela_beacon"
 	w_class = WEIGHT_CLASS_SMALL
@@ -45,7 +45,7 @@
 			to_chat(user, span_warning("You need more space to place a [singular_name] here."))
 		return FALSE
 
-	if (locate(/obj/structure/candela_beacon) in user.loc)
+	if (locate(/obj/structure/candela_beacon) in (loc_override || user.loc))
 		if (!silent)
 			to_chat(user, span_warning("There is already a [singular_name] here."))
 		return FALSE
@@ -99,7 +99,7 @@
 
 /obj/structure/candela_beacon
 	name = "mining navigation beacon"
-	desc = "\"Candela\"-type extending mining beacon, capable of linking with nearby beacons and devices to form a satellie-free navigation network."
+	desc = "\"Candela\"-type extending mining beacon, capable of linking with nearby beacons and devices to form a satellite-free navigation network."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "candela_deployed"
 	layer = ABOVE_OBJ_LAYER
@@ -167,8 +167,11 @@
 		return NONE
 
 	var/obj/item/stack/candela_beacon/collection = tool
+	if(collection.amount >= collection.max_amount)
+		balloon_alert(user, "stack full!")
+		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You start picking [src] up..."))
-	if(!do_after(user, 2 SECONDS, src) || collection.amount + 1 > collection.max_amount)
+	if(!do_after(user, 2 SECONDS, src) || collection.amount >= collection.max_amount)
 		return ITEM_INTERACT_BLOCKING
 
 	collection.add(1)
