@@ -379,6 +379,27 @@
 	plane = POINT_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+/atom/movable/screen/plane_master/shadow
+	name = "Shadow"
+	documentation = "Holds shadows emitted by objects to lower z-levels."
+	plane = SHADOW_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	critical = PLANE_CRITICAL_DISPLAY
+
+/atom/movable/screen/plane_master/shadow/Initialize(mapload, datum/hud/hud_owner, datum/plane_master_group/home, offset)
+	. = ..()
+	add_filter("shadow_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(SHADOW_MASK_RENDER_TARGET, offset), flags = MASK_INVERSE))
+
+/atom/movable/screen/plane_master/shadow_mask
+	name = "Shadow Mask"
+	documentation = "Holds the shadow mask, which is used to mask shadows on the shadow plane - this makes shadows fade when cast in bright rooms."
+	plane = SHADOW_MASK_PLANE
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	render_target = SHADOW_MASK_RENDER_TARGET
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	critical = PLANE_CRITICAL_DISPLAY
+	render_relay_planes = list()
+
 ///Contains all turf lighting
 /atom/movable/screen/plane_master/turf_lighting
 	name = "Turf Lighting"
@@ -400,7 +421,7 @@
 	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	blend_mode = BLEND_ADD
-	render_relay_planes = list(RENDER_PLANE_O_LIGHTING)
+	render_relay_planes = list(RENDER_PLANE_O_LIGHTING, SHADOW_MASK_PLANE)
 	critical = PLANE_CRITICAL_DISPLAY
 
 /atom/movable/screen/plane_master/above_lighting

@@ -61,3 +61,6 @@
 #define COMSIG_LIGHT_FIXTURE_BROKEN "light_fixture_broken"
 /// Called when a light fixture is toggled on or off, from base of [/obj/machinery/light/toggle_light]: (new_status)
 #define COMSIG_LIGHT_FIXTURE_TOGGLED "light_fixture_toggled"
+
+/// Called when a turf's lighting object updates its appearance, from base of [/atom/movable/lighting_object/proc/update]: (list/overlays_to_add)
+#define COMSIG_LIGHTING_OBJECT_UPDATE "lighting_object_update"

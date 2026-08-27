@@ -212,6 +212,20 @@
 /datum/lighting_corner/dummy/display()
 	return
 
+/datum/lighting_corner/proc/get_ratio_above()
+	var/total = lum_r + lum_g + lum_b
+	var/remaining = total
+	var/our_z_offset = GET_Z_PLANE_OFFSET(z)
+	for(var/datum/light_source/source in affecting)
+		if(GET_TURF_PLANE_OFFSET(source.source_turf) >= our_z_offset)
+			continue
+		remaining -= source.effect_str[src] * (source.applied_lum_r + source.applied_lum_g + source.applied_lum_b)
+// This should prob be like, below ratio ro something but I couldn't come up with a good name for it
+	return 1 - (remaining / total)
+
+/datum/lighting_corner/dummy/get_ratio_above()
+	return 0
+
 /// Makes all lighting corners visible, debug to aid in understanding
 /proc/display_corners()
 	var/list/corners = list()

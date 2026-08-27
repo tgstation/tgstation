@@ -293,7 +293,7 @@
 	VAR_PRIVATE/obj/effect/abstract/shadow/shadow
 
 	/// Multiplier applied to blur intensity (calculated based number of turfs)
-	var/blur_factor = 4
+	var/blur_factor = 2
 	/// Multiplier applied to alpha of shadow (calculated based on brightness of surroundings)
 	var/alpha_factor = 0.8
 
@@ -342,6 +342,10 @@
 	if(isopenturf(cast_on))
 		cast_turf = cast_on
 		register_cast_signals(cast_on)
+		var/atom/movable/lighting_object/to_update = cast_turf.lighting_object
+		if(to_update && !to_update.needs_update)
+			SSlighting.objects_queue += cast_turf.lighting_object
+			to_update.needs_update = TRUE
 
 /// Clears the list, then rebuilds the list of transparent turfs beneath the parent, and moves the shadow if necessary
 /datum/component/shadow_handler/proc/refresh_transparent_turf_stack(...)
@@ -358,12 +362,17 @@
 
 /// Clears all tracked turfs, including the cast turf
 /datum/component/shadow_handler/proc/clear_transparent_turf_stack()
+	if(!isnull(cast_turf))
+		var/atom/movable/lighting_object/to_update = cast_turf.lighting_object
+		if(to_update && !to_update.needs_update)
+			SSlighting.objects_queue += cast_turf.lighting_object
+			to_update.needs_update = TRUE
+		unregister_cast_signals(cast_turf)
+		cast_turf = null
+
 	for(var/turf/old_turf as anything in tracked_transparent_turfs)
 		unregister_transparent_signals(old_turf)
 	tracked_transparent_turfs.Cut()
-
-	unregister_cast_signals(cast_turf)
-	cast_turf = null
 
 /// Register relevant signals for turfs that we're projecting a shadow through
 /datum/component/shadow_handler/proc/register_transparent_signals(turf/registering)
@@ -384,11 +393,14 @@
 		SIGNAL_ADDTRAIT(TURF_Z_TRANSPARENT_TRAIT)
 	), PROC_REF(refresh_transparent_turf_stack))
 
+	RegisterSignal(registering, COMSIG_LIGHTING_OBJECT_UPDATE, PROC_REF(mask_shadow))
+
 /// Unregister relevant signals for the turf that we're casting a shadow on
 /datum/component/shadow_handler/proc/unregister_cast_signals(turf/unregistering)
 	UnregisterSignal(unregistering, list(
+		COMSIG_LIGHTING_OBJECT_UPDATE,
 		COMSIG_TURF_CHANGE,
-		SIGNAL_ADDTRAIT(TURF_Z_TRANSPARENT_TRAIT)
+		SIGNAL_ADDTRAIT(TURF_Z_TRANSPARENT_TRAIT),
 	))
 
 /// Handles updating the appearance of the shadow clone to the parent's current appearance
@@ -400,14 +412,41 @@
 	shadow.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	shadow.density = FALSE
 	shadow.color = COLOR_BLACK
+	shadow.alpha *= alpha_factor
 	shadow.add_filter("shadowblur", 1, gauss_blur_filter(blur_factor * (tracked_transparent_turfs[1].z - cast_turf.z)))
-	SET_PLANE_IMPLICIT(shadow, GAME_PLANE)
+	SET_PLANE_IMPLICIT(shadow, SHADOW_PLANE)
 
-	update_shadow_alpha()
+/// Masks the lighting overlay of the turf onto the shadow mask plane
+/// to have lighting on lower z-levels ward off the shadow effect
+/datum/component/shadow_handler/proc/mask_shadow(turf/source, list/overlays_to_fill)
+	SIGNAL_HANDLER
+	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 
-/// Handles updating the alpha of the shadow clone based on the brightness of the surrounding turfs
-/datum/component/shadow_handler/proc/update_shadow_alpha()
-	shadow.alpha *= alpha_factor * (tracked_transparent_turfs[1].get_lumcount()) * (1 - cast_turf.get_dynamic_lumcount())
+	var/datum/lighting_corner/sw_corner = source.lighting_corner_SW || dummy_lighting_corner
+	var/datum/lighting_corner/se_corner = source.lighting_corner_SE || dummy_lighting_corner
+	var/datum/lighting_corner/nw_corner = source.lighting_corner_NW || dummy_lighting_corner
+	var/datum/lighting_corner/ne_corner = source.lighting_corner_NE || dummy_lighting_corner
+
+	var/sw_below = 1 - sw_corner.get_ratio_above()
+	var/se_below = 1 - se_corner.get_ratio_above()
+	var/nw_below = 1 - nw_corner.get_ratio_above()
+	var/ne_below = 1 - ne_corner.get_ratio_above()
+
+	var/mutable_appearance/dark_overlay = mutable_appearance(
+		icon = LIGHTING_ICON,
+		icon_state = null,
+		offset_spokesman = source,
+		plane = SHADOW_MASK_PLANE,
+		appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM,
+	)
+	dark_overlay.color = list(
+		00, 00, 00, sw_below,
+		00, 00, 00, se_below,
+		00, 00, 00, nw_below,
+		00, 00, 00, ne_below,
+		00, 00, 00, 00
+	)
+	overlays_to_fill += dark_overlay
 
 /**
  * Replace an open turf with another open turf while avoiding the pitfall of replacing plating with a floor tile, leaving a hole underneath.

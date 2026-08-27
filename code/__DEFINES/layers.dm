@@ -42,6 +42,8 @@
 #define GHOST_PLANE 5
 #define POINT_PLANE 6
 
+#define SHADOW_PLANE 9
+
 //---------- LIGHTING -------------
 /// Normal 1 per turf dynamic lighting objects
 #define LIGHTING_PLANE 10
@@ -95,6 +97,9 @@
 #define ABOVE_LIGHTING_PLANE 25
 
 #define WEATHER_GLOW_PLANE 26
+
+#define SHADOW_MASK_PLANE 27
+#define SHADOW_MASK_RENDER_TARGET "*SHADOW_MASK_RENDER_TARGET"
 
 ///---------------- MISC -----------------------
 
