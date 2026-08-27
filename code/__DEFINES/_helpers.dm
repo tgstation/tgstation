@@ -52,3 +52,6 @@
 
 /// Abstraction over using mob.client to just check if there's a connected player.
 #define HAS_CONNECTED_PLAYER(mob) (mob.client)
+
+/// Use in a SHOULD_CALL_PARENT proc to define this proc as "the actual parent" without calling the real parent
+#define IS_BASE_PARENT(...) if(FALSE && ..()) { pass() }

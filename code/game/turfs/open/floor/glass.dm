@@ -28,10 +28,11 @@
 /turf/open/floor/glass/Initialize(mapload)
 	icon_state = "" //Prevent the normal icon from appearing behind the smooth overlays
 	..()
+	ADD_TRAIT(src, TURF_Z_TRANSPARENT_TRAIT, INNATE_TRAIT)
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/floor/glass/LateInitialize()
-	ADD_TURF_TRANSPARENCY(src, INNATE_TRAIT)
+	. = ..()
 	setup_glow()
 
 /turf/open/floor/glass/Destroy()
@@ -226,4 +227,3 @@
 	base_icon_state = "glass_stained_black"
 	floor_tile = /obj/item/stack/tile/stained_glass/black
 	starlight_color = COLOR_CRAYON_BLACK
-

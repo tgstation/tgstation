@@ -32,10 +32,8 @@
 	var/area/our_area = loc
 	if(istype(our_area, /area/space))
 		force_no_gravity = TRUE
+	ADD_TRAIT(src, TURF_Z_TRANSPARENT_TRAIT, INNATE_TRAIT)
 	return INITIALIZE_HINT_LATELOAD
-
-/turf/open/openspace/LateInitialize()
-	ADD_TURF_TRANSPARENCY(src, INNATE_TRAIT)
 
 /turf/open/openspace/ChangeTurf(path, list/new_baseturfs, flags)
 	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)

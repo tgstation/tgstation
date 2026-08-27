@@ -201,6 +201,7 @@
 
 /obj/machinery/LateInitialize()
 	SHOULD_NOT_OVERRIDE(TRUE)
+	. = ..()
 	post_machine_initialize()
 
 /**

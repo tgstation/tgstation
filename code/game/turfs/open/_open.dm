@@ -232,7 +232,7 @@
 		add_footprint(arrived, get_dir(old_loc, src))
 
 	if(istransparentturf(src))
-		arrived.AddComponent(/datum/component/shadow_handler, src)
+		cast_shadow(arrived)
 
 	if(!destination_z || !destination_x || !destination_y || arrived.pulledby || arrived.currently_z_moving)
 		return
@@ -271,6 +271,18 @@
 	if(gone && direction && leave_footprints && !broken && !burnt && isturf(gone.loc) && ishuman(gone))
 		add_footprint(gone, direction)
 
+/// Casts a shadow of the given atom onto a lower turf
+/turf/open/proc/cast_shadow(atom/movable/casting, list/icon/shadow_masks = list())
+	if(casting.pixel_x >= 32 || casting.pixel_x <= -32 || casting.pixel_y >= 32 || casting.pixel_y <= -32)
+		return
+
+	SEND_SIGNAL(src, COMSIG_TURF_CASTING_SHADOW, shadow_masks)
+	casting.AddComponent(/datum/component/shadow_handler, src, shadow_masks)
+
+/turf/open/LateInitialize()
+	if(HAS_TRAIT_FROM_ONLY(src, TURF_Z_TRANSPARENT_TRAIT, INNATE_TRAIT))
+		AddElement(/datum/element/turf_z_transparency)
+
 /obj/effect/abstract/shadow
 	blocks_emissive = EMISSIVE_BLOCK_UNIQUE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
@@ -278,7 +290,7 @@
 
 /// Handles casting a shadow on some lower z-level
 /datum/component/shadow_handler
-	dupe_mode = COMPONENT_DUPE_UNIQUE
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	/**
 	 * List of transparent turfs beneath the parent
 	 * In order from highest to lowest
@@ -292,19 +304,25 @@
 	/// The actual shadow effect that we manipulate
 	VAR_PRIVATE/obj/effect/abstract/shadow/shadow
 
-	/// Multiplier applied to blur intensity (calculated based number of turfs)
-	var/blur_factor = 2
-	/// Multiplier applied to alpha of shadow (calculated based on brightness of surroundings)
-	var/alpha_factor = 0.8
+	/// List of icons that are applied to the shadow as a mask, to change its shape according to the parent
+	VAR_PRIVATE/list/icon/shadow_masks
 
-/datum/component/shadow_handler/Initialize(turf/start_turf)
-	if(!ismovable(parent))
+	/// Multiplier applied to blur intensity (calculated based number of turfs)
+	var/blur_factor = 2.0
+	/// Multiplier applied to alpha of shadow (calculated based on brightness of surroundings)
+	var/alpha_factor = 1.0
+	/// Multiplier applied to how much of the shadow is diminished by same-level lighting
+	var/above_factor = 0.5
+
+/datum/component/shadow_handler/Initialize(turf/start_turf, list/icon/shadow_masks)
+	if(!ismovable(parent) || !SSmapping.max_plane_offset) // we shouldn't even be TRYING to make this component on non-multi-z maps
 		return COMPONENT_INCOMPATIBLE
 
 	setup_transparent_turf_stack(start_turf)
 	if(!length(tracked_transparent_turfs) || isnull(cast_turf))
 		return COMPONENT_REDUNDANT
 
+	src.shadow_masks = shadow_masks
 	shadow = new(cast_turf)
 	update_shadow_appearance()
 
@@ -326,6 +344,13 @@
 	clear_transparent_turf_stack()
 	QDEL_NULL(shadow)
 	return ..()
+
+/datum/component/shadow_handler/InheritComponent(datum/component/new_comp, i_am_original, turf/new_start_turf, list/icon/new_shadow_masks)
+	for(var/i in 1 to length(shadow_masks))
+		shadow.remove_filter("shadowmask[i]")
+
+	shadow_masks = new_shadow_masks
+	update_shadow_appearance()
 
 /// Sets up the tracked_transparent_turfs list as well as finds the cast turf
 /datum/component/shadow_handler/proc/setup_transparent_turf_stack(turf/start_turf)
@@ -407,19 +432,29 @@
 /datum/component/shadow_handler/proc/update_shadow_appearance(...)
 	SIGNAL_HANDLER
 
+	var/z_diff = tracked_transparent_turfs[1].z - cast_turf.z
 	var/mutable_appearance/copy_appearance = new(parent)
 	shadow.appearance = strip_appearance_underlays(copy_appearance)
+	shadow.name = "shadow"
 	shadow.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	shadow.density = FALSE
 	shadow.color = COLOR_BLACK
 	shadow.alpha *= alpha_factor
-	shadow.add_filter("shadowblur", 1, gauss_blur_filter(blur_factor * (tracked_transparent_turfs[1].z - cast_turf.z)))
+	shadow.add_filter("shadowblur", 2, gauss_blur_filter(blur_factor * z_diff))
+	for(var/i in 1 to length(shadow_masks))
+		shadow.add_filter("shadowmask[i]", 1, alpha_mask_filter(y = -z_diff, icon = shadow_masks[i], flags = MASK_INVERSE))
+	if(shadow.layer >= TOPDOWN_LAYER)
+		shadow.layer = ABOVE_NORMAL_TURF_LAYER
 	SET_PLANE_IMPLICIT(shadow, SHADOW_PLANE)
 
 /// Masks the lighting overlay of the turf onto the shadow mask plane
 /// to have lighting on lower z-levels ward off the shadow effect
 /datum/component/shadow_handler/proc/mask_shadow(turf/source, list/overlays_to_fill)
 	SIGNAL_HANDLER
+
+	if(length(overlays_to_fill))
+		return
+
 	var/static/datum/lighting_corner/dummy/dummy_lighting_corner = new
 
 	var/datum/lighting_corner/sw_corner = source.lighting_corner_SW || dummy_lighting_corner
@@ -427,10 +462,10 @@
 	var/datum/lighting_corner/nw_corner = source.lighting_corner_NW || dummy_lighting_corner
 	var/datum/lighting_corner/ne_corner = source.lighting_corner_NE || dummy_lighting_corner
 
-	var/sw_below = 1 - sw_corner.get_ratio_above()
-	var/se_below = 1 - se_corner.get_ratio_above()
-	var/nw_below = 1 - nw_corner.get_ratio_above()
-	var/ne_below = 1 - ne_corner.get_ratio_above()
+	var/sw_below = 1 - (above_factor * sw_corner.get_ratio_above())
+	var/se_below = 1 - (above_factor * se_corner.get_ratio_above())
+	var/nw_below = 1 - (above_factor * nw_corner.get_ratio_above())
+	var/ne_below = 1 - (above_factor * ne_corner.get_ratio_above())
 
 	var/mutable_appearance/dark_overlay = mutable_appearance(
 		icon = LIGHTING_ICON,
