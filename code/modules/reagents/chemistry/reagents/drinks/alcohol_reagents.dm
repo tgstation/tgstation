@@ -3507,7 +3507,7 @@
 	taste_description = "all that's in a flame alongside fire"
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	metabolized_traits = list(TRAIT_HAD_NIGHTCAP) //Improves sleep quality. Should add this to other drinks like hot milk or something.
+	metabolized_traits = list(TRAIT_HAD_SLEEPY_DRINK) //Improves sleep quality. Should add this to other drinks like hot milk or something.
 
 /datum/reagent/consumable/ethanol/watchmans_nightcap/on_mob_add(mob/living/drinker)
 	. = ..()

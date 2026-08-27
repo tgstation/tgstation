@@ -1234,7 +1234,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_DREAMING "currently_dreaming"
 
 /// Trait for if you've recently had drink that helps you sleep
-#define TRAIT_HAD_NIGHTCAP "had_nightcap"
+#define TRAIT_HAD_SLEEPY_DRINK "had_sleepy_drink"
 
 /// Trait for if you've recently had a Last Word cocktail
 #define TRAIT_HAD_LAST_WORD "had_last_word"

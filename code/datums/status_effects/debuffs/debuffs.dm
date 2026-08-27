@@ -293,7 +293,7 @@ GLOBAL_LIST_EMPTY(unconscious_appearances)
 			sleep_quality += 0.1
 
 		// A nice drink before sleep is always nice
-		if(HAS_TRAIT(owner, TRAIT_HAD_NIGHTCAP))
+		if(HAS_TRAIT(owner, TRAIT_HAD_SLEEPY_DRINK))
 			sleep_quality += 0.1
 
 		var/need_mob_update = FALSE
