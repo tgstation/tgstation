@@ -729,3 +729,6 @@
       Candela networks in addition to extraction beacons, and both cost significantly
       less points
   - balance: Syndicate extraction beacons can only be reached by syndicate fultons
+  timothymtorres:
+  - rscadd: Add reworked vending shortage negative station trait. All station snack,
+      soda, and coffee vending machines start empty.
