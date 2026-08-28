@@ -198,9 +198,9 @@ ADMIN_VERB(create_mapping_job_icons, R_DEBUG, "Generate job landmarks icons", "G
 	var/icon/final = icon()
 
 	var/list/landmark_iconstates = list()
-		for(var/obj/effect/landmark/start/landmark as anything in valid_subtypesof(/obj/effect/landmark/start))
-			if(landmark::icon_state)
-				landmark_iconstates |= landmark::icon_state
+	for(var/obj/effect/landmark/start/landmark as anything in valid_subtypesof(/obj/effect/landmark/start))
+		if(landmark::icon_state)
+			landmark_iconstates |= landmark::icon_state
 
 	for(var/job_type in valid_subtypesof(/datum/job))
 		var/datum/job/job_datum = SSjob.get_job_type(job_type)
