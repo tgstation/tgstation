@@ -860,8 +860,6 @@
 	var/rusted = FALSE
 	/// Atom used to animate our overlay
 	var/atom/movable/rust_overlay
-	/// The mutable that is actually overlayed on the mob
-	var/mutable_appearance/rust_appearance
 	/// identifier for the overlay
 	var/static/overlay_id = 0
 	/// Overlay for the armor object
@@ -889,8 +887,6 @@
 	rust_overlay.vis_flags |= VIS_INHERIT_DIR | VIS_INHERIT_LAYER | VIS_INHERIT_ID
 	user.vis_contents += rust_overlay // Should be invisible, we just update the sprite as needed
 
-	rust_appearance = new /mutable_appearance()
-	rust_appearance.render_source = "*rust_overlay_[overlay_id]"
 	update_appearance(UPDATE_ICON)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
@@ -908,7 +904,6 @@
 	REMOVE_TRAIT(user, TRAIT_PIERCEIMMUNE, REF(src))
 	cut_overlay(object_overlay)
 	QDEL_NULL(rust_overlay)
-	QDEL_NULL(rust_appearance)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/robes_side_effect(mob/living/user)
 	. = ..()
@@ -1010,6 +1005,8 @@
 		rust_overlay?.icon_state = "[worn_icon_state]" + "_overlay"
 	else
 		rust_overlay?.icon_state = null
+	var/mutable_appearance/rust_appearance = mutable_appearance()
+	rust_appearance.render_source = "*rust_overlay_[overlay_id]"
 	. += rust_appearance
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/rust

@@ -51,11 +51,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_SPAWN_WEAKPOINTS "station_trait_spawn_weakpoints"
 #define STATION_TRAIT_VENDING_SHORTAGE "station_trait_vending_shortage"
 
+// Client traits
+/// This client has parallax displayed on it on the specified map
+#define TRAIT_PARALLAX_DISPLAYED(submap) "parallax_displayed_[submap]_map"
+
 // Hud traits
 /// This hud is owned by a client with an open escape menu
 #define TRAIT_ESCAPE_MENU_OPEN "escape_menu_open"
-/// This hud has parallax displayed on it
-#define TRAIT_PARALLAX_DISPLAYED "parallax_displayed"
 
 // Mob traits
 /// Forces the user to stay unconscious.
