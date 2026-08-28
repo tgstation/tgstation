@@ -1,0 +1,4 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - rscadd: "Add reworked vending shortage negative station trait. All station snack, soda, and coffee vending machines start empty."
