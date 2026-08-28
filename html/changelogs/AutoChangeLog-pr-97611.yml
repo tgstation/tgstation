@@ -1,7 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - rscadd: "Added \"Candela\" navigation networks and beacons, acting as a way for miners to mark their paths, boost vent outputs and protect their routes from fauna respawns"
-  - rscdel: "Miners no longer spawn with marker beacons"
-  - balance: "Mining fultons can now transport miners to tapped ore vents within nearby Candela networks in addition to extraction beacons, and both cost significantly less points"
-  - balance: "Syndicate extraction beacons can only be reached by syndicate fultons"
