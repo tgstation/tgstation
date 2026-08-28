@@ -8,7 +8,9 @@
 /// How many boulders can a single ore vent have on its tile before it stops producing more?
 #define MAX_BOULDERS_PER_VENT 10
 /// Time multiplier
-#define INATE_BOULDER_SPEED_MULTIPLIER 3
+#define INNATE_BOULDER_SPEED_MULTIPLIER 3
+/// Multiplier for mineral amt in boulders when a vent is boosted by the Candela network
+#define BOULDER_MAT_MULT_BOOSTED 1.33
 
 // Vent type
 /// Large vents, giving large boulders.
@@ -71,3 +73,11 @@
 #define ACTION_MULTIPLIER_PER_VENT_VALUE 0.1
 /// Permanent style multiplier modifier earned from killing a megafauna.
 #define ACTION_MULTIPLIER_MAJOR_KILL 0.1
+
+/// Maximum distance between Candela beacons
+#define MINING_BEACON_MAX_REACH 9
+// Different Candela network power states
+/// Connected to a regular ore vent
+#define CANDELA_NETWORK_POWERED (1<<0)
+/// Connected to a roundstart ore vent, boosting boulder rates
+#define CANDELA_NETWORK_BOOSTED (1<<1)
