@@ -133,8 +133,6 @@
 	icon_state = "cola"
 	resistance_flags = NONE
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*2)
-	hitsound = 'sound/items/can/can_hit.ogg'
-	item_flags = SKIP_FANTASY_ON_SPAWN
 
 /obj/item/trash/can/grind_results()
 	return list(/datum/reagent/aluminium = 10)
@@ -142,6 +140,8 @@
 /obj/item/trash/can/food
 	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "peachcan_empty"
+	hitsound = 'sound/items/can/can_hit.ogg'
+	item_flags = SKIP_FANTASY_ON_SPAWN
 
 /obj/item/trash/can/food/peaches
 	name = "canned peaches"
