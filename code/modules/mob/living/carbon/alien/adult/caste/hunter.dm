@@ -18,7 +18,6 @@
 		ORGAN_SLOT_EXTERNAL_TAIL = /obj/item/organ/tail/xeno,
 	)
 
-	var/atom/movable/screen/leap_icon = null
 	///How fast does our pounce move us?
 	var/pounce_speed = 2
 
@@ -26,7 +25,8 @@
 
 /mob/living/carbon/alien/adult/hunter/proc/toggle_leap(message = 1)
 	leap_on_click = !leap_on_click
-	leap_icon.icon_state = "leap_[leap_on_click ? "on":"off"]"
+	var/atom/movable/screen/leap_icon = hud_used?.screen_objects[HUD_ALIEN_HUNTER_LEAP]
+	leap_icon?.icon_state = "leap_[leap_on_click ? "on":"off"]"
 	update_icons()
 	if(message)
 		to_chat(src, span_noticealien("You will now [leap_on_click ? "leap at":"slash at"] enemies!"))

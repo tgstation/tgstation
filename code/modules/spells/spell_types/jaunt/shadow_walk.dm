@@ -33,7 +33,7 @@
 	if(is_jaunting(owner))
 		return TRUE
 	var/turf/cast_turf = get_turf(owner)
-	if(cast_turf.get_lumcount() >= light_threshold)
+	if(!cast_turf.check_lumcount_below(light_threshold))
 		if(feedback)
 			to_chat(owner, span_warning("It isn't dark enough here!"))
 		return FALSE
@@ -123,7 +123,7 @@
 
 /obj/effect/dummy/phased_mob/shadow/proc/check_light_level(atom/location_to_check)
 	var/turf/light_turf = get_turf(location_to_check)
-	return light_turf.get_lumcount() > light_max // jaunt ends on TRUE
+	return light_turf.check_lumcount_above(light_max) // jaunt ends on TRUE
 
 /**
  * Checks if the user should receive a warning that they're moving into light.

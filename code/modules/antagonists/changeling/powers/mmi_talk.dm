@@ -4,6 +4,7 @@
 		In order to maintain our secrecy, we can speak through the decoy as if a normal brain. \
 		The decoy brain will relay speech it hears to us in purple."
 	button_icon = 'icons/obj/devices/assemblies.dmi'
+	category = "stealth"
 	button_icon_state = "mmi_off"
 	dna_cost = CHANGELING_POWER_UNOBTAINABLE
 	ignores_fakedeath = TRUE // Can be used while fake dead
@@ -113,7 +114,7 @@
 		return FALSE
 
 	var/obj/item/mmi/mmi = brain_ref.loc
-	if(mmi.brainmob.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(mmi.brainmob))
 		to_chat(usr, span_warning("Our decoy brain is too damaged to speak."))
 	else
 		// Say will perform input sanitization and such for us

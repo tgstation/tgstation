@@ -44,13 +44,15 @@
 	 */
 	var/obj/item/paper/top_paper
 
-/obj/item/clipboard/suicide_act(mob/living/carbon/user)
+/obj/item/clipboard/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins putting [user.p_their()] head into the clip of \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS //The clipboard's clip is very strong. Industrial duty. Can kill a man easily.
 
 /obj/item/clipboard/Initialize(mapload)
 	update_appearance()
 	. = ..()
+
+/obj/item/clipboard/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/clipboard)
 
 /obj/item/clipboard/Destroy()
@@ -60,8 +62,8 @@
 /obj/item/clipboard/examine()
 	. = ..()
 	if(!integrated_pen && pen)
-		. += span_notice("Alt-click to remove [pen].")
-	if(top_paper)
+		. += span_notice("Right-click to remove [pen].")
+	else if(top_paper)
 		. += span_notice("Right-click to remove [top_paper].")
 
 /// Take out the topmost paper
@@ -73,6 +75,7 @@
 	to_chat(user, span_notice("You remove [paper] from [src]."))
 
 /obj/item/clipboard/proc/remove_pen(mob/user)
+	var/obj/item/pen/pen = src.pen
 	pen.forceMove(user.loc)
 	user.put_in_hands(pen)
 	to_chat(user, span_notice("You remove [pen] from [src]."))
@@ -90,17 +93,6 @@
 	UnregisterSignal(top_paper, COMSIG_ATOM_UPDATED_ICON)
 	top_paper = locate(/obj/item/paper) in src
 	update_icon()
-
-/obj/item/clipboard/click_alt(mob/user)
-	if(isnull(pen))
-		return CLICK_ACTION_BLOCKING
-
-	if(integrated_pen)
-		to_chat(user, span_warning("You can't seem to find a way to remove [src]'s [pen]."))
-		return CLICK_ACTION_BLOCKING
-
-	remove_pen(user)
-	return CLICK_ACTION_SUCCESS
 
 /obj/item/clipboard/update_overlays()
 	. = ..()
@@ -122,29 +114,46 @@
 
 /obj/item/clipboard/attack_hand(mob/user, list/modifiers)
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		remove_paper(top_paper, user)
+		if(!integrated_pen && pen)
+			remove_pen(user)
+		else
+			remove_paper(top_paper, user)
 		return TRUE
 	. = ..()
 
-/obj/item/clipboard/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(weapon, /obj/item/paper))
+/obj/item/clipboard/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/paper))
 		//Add paper into the clipboard
-		if(!user.transferItemToLoc(weapon, src))
-			return
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
 		if(top_paper)
 			UnregisterSignal(top_paper, COMSIG_ATOM_UPDATED_ICON)
-		RegisterSignal(weapon, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_top_paper_change))
-		top_paper = weapon
-		to_chat(user, span_notice("You clip [weapon] onto [src]."))
-	else if(istype(weapon, /obj/item/pen) && !pen)
+		RegisterSignal(tool, COMSIG_ATOM_UPDATED_ICON, PROC_REF(on_top_paper_change))
+		top_paper = tool
+		to_chat(user, span_notice("You clip [tool] onto [src]."))
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/pen) && !pen)
 		//Add a pen into the clipboard, attack (write) if there is already one
-		if(!usr.transferItemToLoc(weapon, src))
-			return
-		pen = weapon
-		to_chat(usr, span_notice("You slot [weapon] into [src]."))
-	else if(top_paper)
-		top_paper.attackby(user.get_active_held_item(), user)
-	update_appearance()
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		pen = tool
+		to_chat(user, span_notice("You slot [tool] into [src]."))
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	// Always label the clipboard so all of the papers don't have to be taken out.
+	if(istype(tool, /obj/item/hand_labeler))
+		return tool.interact_with_atom(src, user)
+
+	if(top_paper)
+		top_paper.item_interaction(user, user.get_active_held_item())
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
 
 /obj/item/clipboard/attack_self(mob/user)
 	add_fingerprint(usr)
@@ -181,7 +190,7 @@
 	if(.)
 		return
 
-	if(usr.stat != CONSCIOUS || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
+	if(IS_UNCONSCIOUS_OR_CRIT(usr) || HAS_TRAIT(usr, TRAIT_HANDS_BLOCKED))
 		return
 
 	switch(action)
@@ -228,3 +237,6 @@
 /obj/item/clipboard/proc/on_top_paper_change()
 	SIGNAL_HANDLER
 	update_appearance()
+
+/obj/item/clipboard/IsContainedAtomAccessible(atom/contained, atom/movable/user)
+	return ..() || (contained == top_paper)

@@ -3,6 +3,7 @@
 	desc = "We debase ourselves and become lesser. We become a monkey. Costs 5 chemicals."
 	helptext = "The transformation greatly reduces our size, allowing us to slip out of cuffs and climb through vents."
 	button_icon_state = "lesser_form"
+	category = "stealth"
 	chemical_cost = 5
 	dna_cost = 1
 	/// Whether to allow the transformation animation to play

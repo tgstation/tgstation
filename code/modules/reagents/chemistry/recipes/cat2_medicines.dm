@@ -190,7 +190,7 @@
 	else
 		reaction.delta_t = delta_t/10 //slow without oxygen
 
-/datum/chemical_reaction/medicine/convermol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, impure = FALSE)
+/datum/chemical_reaction/medicine/convermol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added, impure = FALSE)
 	var/range = impure ? 4 : 3
 	if(holder.has_reagent(/datum/reagent/oxygen))
 		explode_shockwave(holder, equilibrium, range) //damage 5
@@ -199,7 +199,7 @@
 
 /datum/chemical_reaction/medicine/convermol/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	. = ..()
-	overheated(holder, equilibrium, impure = TRUE)
+	overheated(holder, equilibrium, step_volume_added, impure = TRUE)
 	if(holder.has_reagent(/datum/reagent/oxygen))
 		clear_reactants(holder, step_volume_added*2)
 	else
@@ -226,7 +226,7 @@
 	reaction_tags = REACTION_TAG_EASY | REACTION_TAG_HEALING | REACTION_TAG_OXY
 
 //Sleepytime for chem
-/datum/chemical_reaction/medicine/tirimol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, impure = FALSE)
+/datum/chemical_reaction/medicine/tirimol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added, impure = FALSE)
 	var/bonus = impure ? 2 : 1
 	if(holder.has_reagent(/datum/reagent/oxygen))
 		explode_attack_chem(holder, equilibrium, /datum/reagent/inverse/healing/tirimol, 7.5*bonus, 2, ignore_eyes = TRUE) //since we're smoke/air based
@@ -237,7 +237,7 @@
 
 /datum/chemical_reaction/medicine/tirimol/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added)
 	. = ..()
-	overheated(holder, equilibrium, TRUE)
+	overheated(holder, equilibrium, step_volume_added, impure = TRUE)
 	clear_reactants(holder, 2)
 
 /*****TOX*****/

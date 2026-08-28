@@ -187,6 +187,11 @@
 
 	//the path of the fish_source datum to use for the fishing_spot component
 	var/fish_source_path = /datum/fish_source/vending
+	/**
+	 * used to check for discounting and for displaying discounted prices in the UI; not a static proc-local var because the code for displaying and applying
+	 * discounts isn't unified across DM and tgui
+	 */
+	var/static/datum/id_trim/job/big_boss_trim = /datum/id_trim/job/captain
 
 /datum/armor/machinery_vending
 	melee = 20
@@ -213,9 +218,8 @@
 	set_wires(new /datum/wires/vending(src))
 
 	if(SStts.tts_enabled)
-		var/static/vendor_voice_by_type = list()
-		if(!vendor_voice_by_type[type])
-			vendor_voice_by_type[type] = pick(SStts.available_speakers)
+		var/static/list/vendor_voice_by_type = list()
+		vendor_voice_by_type[type] ||= SStts.random_tts_voice()
 		voice = vendor_voice_by_type[type]
 
 	slogan_list = splittext(product_slogans, ";")
@@ -234,6 +238,7 @@
 					all_products_free = TRUE
 			if(circuit)
 				circuit.all_products_free = all_products_free //sync up the circuit so the pricing schema is carried over if it's reconstructed.
+				circuit.desc = "This board's card reader component has been cut out, along with its brand selection dial."
 
 	else if(circuit)
 		all_products_free = circuit.all_products_free //if it was constructed outside mapload, sync the vendor up with the circuit's var so you can't bypass price requirements by moving / reconstructing it off station.
@@ -359,7 +364,7 @@
 	if(isnull(refill_canister))
 		return // you can add the comment here instead
 
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"]")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "open"].")
 	if(panel_open)
 		. += span_notice("The machine may be [EXAMINE_HINT("pried")] apart.")
 

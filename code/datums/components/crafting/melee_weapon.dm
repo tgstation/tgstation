@@ -89,7 +89,6 @@
 	time = 4 SECONDS
 	category = CAT_WEAPON_MELEE
 
-
 /datum/crafting_recipe/balloon_mallet
 	name = "Balloon Mallet"
 	result = /obj/item/balloon_mallet
@@ -135,6 +134,19 @@
 	time = 5 SECONDS
 	category = CAT_WEAPON_MELEE
 
+/datum/crafting_recipe/chainsaw/dual
+	name = "Double-ended chainsaw spear"
+	result = /obj/item/chainsaw/dual
+	reqs = list(
+		/datum/reagent/consumable/ethanol/beer = 20,
+		/obj/item/restraints/handcuffs/cable = 2,
+		/obj/item/chainsaw = 2,
+		/obj/item/stack/rods = 4,
+		/obj/item/stack/medical/wrap/sticky_tape = 2,
+	)
+	time = 5 SECONDS
+	category = CAT_WEAPON_MELEE
+
 /datum/crafting_recipe/spear
 	name = "Spear"
 	result = /obj/item/spear
@@ -144,6 +156,16 @@
 		/obj/item/stack/rods = 1,
 	)
 	time = 4 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/wireprod
+	name = "Wireprod assembly"
+	result = /obj/item/wireprod
+	reqs = list(
+		/obj/item/restraints/handcuffs/cable = 1,
+		/obj/item/stack/rods = 1,
+	)
+	time = 2 SECONDS
 	category = CAT_WEAPON_MELEE
 
 /datum/crafting_recipe/toysword
@@ -255,3 +277,89 @@
 	)
 	time = 120 SECONDS
 	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/dragonator_spear_untreated
+	name = "Untreated Giant-Killer Spear"
+	result = /obj/item/spear/dragonator_untreated
+	reqs = list(
+		/obj/item/stack/sheet/plasteel = 15,
+		/obj/item/stack/sheet/mineral/titanium = 5,
+		/obj/item/knife = 7,
+	)
+	time = 5 SECONDS
+	category = CAT_WEAPON_MELEE
+
+// Crusher trophies
+/datum/crafting_recipe/crusher_trophy
+	abstract_type = /datum/crafting_recipe/crusher_trophy
+	tool_paths = list(/obj/item/kinetic_crusher)
+	time = 5 SECONDS
+	category = CAT_WEAPON_MELEE
+
+/datum/crafting_recipe/crusher_trophy/watcher_wing
+	name = "Watcher Wing Trophy"
+	result = /obj/item/crusher_trophy/watcher_wing
+	reqs = list(
+		/obj/item/stack/sheet/sinew = 5,
+		/obj/item/stack/ore/diamond = 6,
+		/obj/item/stack/sheet/bone = 5,
+	)
+
+/datum/crafting_recipe/crusher_trophy/icewing_watcher_wing
+	name = "Icewing Watcher Wing Trophy"
+	result = /obj/item/crusher_trophy/ice_wing
+	reqs = list(
+		/obj/item/stack/sheet/sinew/icewing = 3,
+		/obj/item/stack/ore/diamond = 5,
+		/obj/item/stack/sheet/bone = 3,
+	)
+
+/datum/crafting_recipe/crusher_trophy/magmawing_watcher_wing
+	name = "Magmawing Watcher Wing Trophy"
+	result = /obj/item/crusher_trophy/magma_wing
+	reqs = list(
+		/obj/item/stack/sheet/sinew/magmawing = 3,
+		/obj/item/stack/ore/diamond = 2,
+		/obj/item/stack/sheet/bone = 3,
+	)
+
+/datum/crafting_recipe/crusher_trophy/goliath_tentacle
+	name = "Goliath Tentacle Trophy"
+	result = /obj/item/crusher_trophy/goliath_tentacle
+	reqs = list(
+		/obj/item/stack/sheet/animalhide/goliath_hide = 3,
+		/obj/item/stack/sheet/bone = 6,
+	)
+
+/datum/crafting_recipe/crusher_trophy/legion_skull
+	name = "Legion Skull Trophy"
+	result = /obj/item/crusher_trophy/legion_skull
+	reqs = list(
+		/obj/item/organ/monster_core/regenerative_core/legion = 3, // Good sink for expired cores
+		/obj/item/stack/sheet/bone = 4,
+	)
+
+/datum/crafting_recipe/crusher_trophy/lobster_claw
+	name = "Lobster Claw Trophy"
+	result = /obj/item/crusher_trophy/lobster_claw
+	reqs = list(
+		/obj/item/organ/monster_core/rush_gland = 2,
+		/obj/item/stack/sheet/bone = 4,
+		/obj/item/food/meat/slab/rawcrab = 2,
+	)
+
+/datum/crafting_recipe/crusher_trophy/brimdemon_fang
+	name = "Brimdemon Fang Trophy"
+	result = /obj/item/crusher_trophy/brimdemon_fang
+	reqs = list(
+		/obj/item/organ/monster_core/brimdust_sac = 2,
+		/datum/reagent/brimdust = 45,
+	)
+
+/datum/crafting_recipe/crusher_trophy/bileworm_spewlet
+	name = "Bileworm Spewlet Trophy"
+	result = /obj/item/crusher_trophy/bileworm_spewlet
+	reqs = list(
+		/obj/item/stack/sheet/animalhide/bileworm = 3,
+		/obj/item/stack/ore/gold = 8,
+	)

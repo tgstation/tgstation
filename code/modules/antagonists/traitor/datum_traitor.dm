@@ -208,8 +208,8 @@
 
 	handle_clown_mutation(datum_owner, mob_override ? null : "Your training has allowed you to overcome your clownish nature, allowing you to wield weapons without harming yourself.")
 	if(should_give_codewords)
-		datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_phrase_regex, "blue", src)
-		datum_owner.AddComponent(/datum/component/codeword_hearing, GLOB.syndicate_code_response_regex, "red", src)
+		datum_owner.AddComponent(/datum/component/codeword_hearing, SStraitor.syndicate_code_phrase_regex, "blue", src)
+		datum_owner.AddComponent(/datum/component/codeword_hearing, SStraitor.syndicate_code_response_regex, "red", src)
 
 /datum/antagonist/traitor/remove_innate_effects(mob/living/mob_override)
 	var/mob/living/datum_owner = mob_override || owner.current
@@ -229,8 +229,8 @@
 	var/list/data = list()
 	data["has_codewords"] = should_give_codewords
 	if(should_give_codewords)
-		data["phrases"] = jointext(GLOB.syndicate_code_phrase, ", ")
-		data["responses"] = jointext(GLOB.syndicate_code_response, ", ")
+		data["phrases"] = jointext(SStraitor.syndicate_code_phrase, ", ")
+		data["responses"] = jointext(SStraitor.syndicate_code_response, ", ")
 	data["theme"] = traitor_flavor["ui_theme"]
 	data["code"] = uplink?.unlock_code
 	data["failsafe_code"] = uplink?.failsafe_code
@@ -315,8 +315,8 @@
 	return sent_data
 
 /datum/antagonist/traitor/roundend_report_footer()
-	var/phrases = jointext(GLOB.syndicate_code_phrase, ", ")
-	var/responses = jointext(GLOB.syndicate_code_response, ", ")
+	var/phrases = jointext(SStraitor.syndicate_code_phrase, ", ")
+	var/responses = jointext(SStraitor.syndicate_code_response, ", ")
 
 	var/message = "<br><b>The code phrases were:</b> <span class='bluetext'>[phrases]</span><br>\
 					<b>The code responses were:</b> [span_redtext("[responses]")]<br>"

@@ -28,7 +28,7 @@
 /atom/movable/screen/alert/status_effect/italian_speech
 	name = "Linguini Embrace"
 	desc = "You feel a sudden urge to gesticulate wildly."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "food_italian"
 
 /datum/status_effect/food/speech/french
@@ -57,5 +57,5 @@
 /atom/movable/screen/alert/status_effect/french_speech
 	name = "Café Chic"
 	desc = "Suddenly, everything seems worthy of a passionate debate."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "food_french"

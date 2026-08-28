@@ -45,12 +45,12 @@
 
 	register_context()
 	update_appearance(UPDATE_OVERLAYS)
-	AddComponent(/datum/component/climb_walkable)
+	AddElement(/datum/element/climb_walkable)
 	AddElement(/datum/element/climbable)
 	AddElement(/datum/element/elevation, pixel_shift = 12)
 	AddElement(/datum/element/give_turf_traits, string_list(turf_traits))
 	AddElement(/datum/element/footstep_override, footstep = footstep, priority = STEP_SOUND_TABLE_PRIORITY)
-	AddComponent(/datum/component/table_smash)
+	AddElement(/datum/element/table_smash)
 
 /obj/structure/platform/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()

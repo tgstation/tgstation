@@ -6,7 +6,7 @@
 	button_icon = 'icons/mob/actions/actions_AI.dmi'
 	button_icon_state = "ai_core"
 
-/datum/action/innate/mmi_comp_disconnect/Trigger(trigger_flags)
+/datum/action/innate/mmi_comp_disconnect/Trigger(mob/clicker, trigger_flags)
 	. = ..()
 	if(!.)
 		return

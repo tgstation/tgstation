@@ -59,9 +59,7 @@
 		//Remove from their hands and put back "into" the tank
 		remove_noz()
 
-/obj/item/watertank/verb/toggle_mister_verb()
-	set name = "Toggle Mister"
-	set category = "Object"
+GAME_VERB(/obj/item/watertank, toggle_mister_verb, "Toggle Mister", null)
 	toggle_mister(usr)
 
 /obj/item/watertank/proc/make_noz()
@@ -91,12 +89,11 @@
 	else
 		return ..()
 
-/obj/item/watertank/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item == noz)
-		remove_noz()
-		return TRUE
-	else
-		return ..()
+/obj/item/watertank/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool != noz)
+		return NONE
+	remove_noz()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/watertank/dropped(mob/user)
 	..()
@@ -236,6 +233,7 @@
 	w_class = WEIGHT_CLASS_HUGE
 	item_flags = ABSTRACT  // don't put in storage
 	chem = null //holds no chems of its own, it takes from the tank.
+	custom_materials = null
 	var/obj/item/tank
 	var/nozzle_mode = 0
 	var/metal_synthesis_cooldown = 0
@@ -358,9 +356,7 @@
 	anchored = TRUE
 
 /obj/effect/resin_container/proc/Smoke()
-	var/datum/effect_system/fluid_spread/foam/metal/resin/foaming = new
-	foaming.set_up(4, holder = src, location = loc)
-	foaming.start()
+	do_foam(4, src, loc, foam_type = /datum/effect_system/fluid_spread/foam/metal/resin)
 	playsound(src,'sound/effects/bamf.ogg',100,TRUE)
 	qdel(src)
 
@@ -412,7 +408,7 @@
 		turn_on()
 
 //Todo : cache these.
-/obj/item/reagent_containers/chemtank/worn_overlays(mutable_appearance/standing, isinhands = FALSE) //apply chemcolor and level
+/obj/item/reagent_containers/chemtank/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE) //apply chemcolor and level
 	. = ..()
 	//inhands + reagent_filling
 	if(isinhands || !reagents.total_volume)

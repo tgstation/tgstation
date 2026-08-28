@@ -1,6 +1,6 @@
 /datum/job/bitrunner
 	title = JOB_BITRUNNER
-	description = "Surf the virtual domain for gear and loot. Decrypt your rewards on station."
+	description = "Surf the virtual domain for gear and loot, decrypt your rewards on station."
 	faction = FACTION_STATION
 	total_positions = 3
 	spawn_positions = 3
@@ -29,6 +29,7 @@
 	)
 	rpg_title = "Recluse"
 	job_flags = STATION_JOB_FLAGS
+	tgui_icon = FA_ICON_GAMEPAD
 
 /datum/outfit/job/bitrunner
 	name = "Bitrunner"
@@ -41,3 +42,4 @@
 
 /datum/job/bit_avatar
 	title = "Bit Avatar"
+	tgui_icon = FA_ICON_CODE

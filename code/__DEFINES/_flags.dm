@@ -13,6 +13,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define DF_ISPROCESSING (1<<2)
 /// Placed on datums that have a static, constant reference. Primarily only used for turfs.
 #define DF_STATIC_OBJECT (1<<3)
+/// Set on datums that should be tracked by the event logger.
+#define DF_EVLOGGING (1<<4)
 
 //FLAGS BITMASK
 // scroll down before changing the numbers on these
@@ -234,6 +236,7 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define ZAP_DEFAULT_FLAGS ZAP_MOB_STUN | ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 #define ZAP_FUSION_FLAGS ZAP_OBJ_DAMAGE | ZAP_MOB_DAMAGE | ZAP_MOB_STUN
 #define ZAP_SUPERMATTER_FLAGS ZAP_GENERATES_POWER
+#define ZAP_GIZMO_FLAGS ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE
 
 ///Object will protect itself.
 #define EMP_PROTECT_SELF (1<<0)
@@ -318,6 +321,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IGNORE_INCAPACITATED (1<<3)
 /// Used to prevent important slowdowns from being abused by drugs like kronkaine
 #define IGNORE_SLOWDOWNS (1<<4)
+/// Cancel the action if the user does another action (mainly via clicking)
+#define DO_AFTER_CHECK_NEXT_MOVE (1<<5)
 
 // Spacevine-related flags
 /// Is the spacevine / flower bud heat resistant
@@ -339,6 +344,18 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMOTE_IMPORTANT (1<<2)
 /// Emote only prints to runechat, not to the chat window
 #define EMOTE_RUNECHAT (1<<3)
+
+// Emote usability flags
+/// Emote can be used while unconscious
+#define EMOTE_CANUSE_UNCONSCIOUS (1<<0)
+/// Emote can be used while in soft crit
+#define EMOTE_CANUSE_SOFTCRIT (1<<1)
+/// Emote can be used while in hard crit
+#define EMOTE_CANUSE_HARDCRIT (1<<2)
+/// Emote can be used while dead
+#define EMOTE_CANUSE_DEAD (1<<3)
+/// Emote requires that the user has at least one usable hand
+#define EMOTE_CANUSE_REQUIRE_HANDS (1<<4)
 
 // Flags for the empath component
 /// Can the empath see if a living mob has combat mode on

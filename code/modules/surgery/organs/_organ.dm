@@ -84,16 +84,18 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /obj/item/organ/Initialize(mapload)
 	. = ..()
-	blood_dna_info = list("Unknown DNA" = get_blood_type(BLOOD_TYPE_O_PLUS))
+	blood_dna_info = list("Unknown DNA" = get_blood_type(/datum/blood_type/human/o_plus))
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponentFrom(
 			SOURCE_EDIBLE_INNATE, \
-			/datum/component/edible,\
-			initial_reagents = food_reagents,\
-			foodtypes = foodtype_flags,\
-			volume = reagent_vol,\
-			tastes = food_tastes,\
-			after_eat = CALLBACK(src, PROC_REF(OnEatFrom)))
+			/datum/component/edible, \
+			initial_reagents = food_reagents, \
+			foodtypes = foodtype_flags, \
+			volume = reagent_vol, \
+			tastes = food_tastes, \
+			after_eat = CALLBACK(src, PROC_REF(OnEatFrom)), \
+		)
+		RegisterSignal(src, COMSIG_FOOD_ATTEMPT_EAT, PROC_REF(block_nom))
 
 	if(bodypart_overlay)
 		setup_bodypart_overlay()
@@ -154,7 +156,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(!IS_ROBOTIC_ORGAN(src) && (clean_types & CLEAN_TYPE_BLOOD))
 		add_blood_DNA(blood_dna_info)
 
-/obj/item/organ/proc/on_death(seconds_per_tick, times_fired) //runs decay when outside of a person
+/obj/item/organ/proc/on_death(seconds_per_tick) //runs decay when outside of a person
 	if(organ_flags & (ORGAN_ROBOTIC | ORGAN_FROZEN))
 		return
 
@@ -168,7 +170,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			var/air_temperature_factor = min((exposed_air.temperature - T0C) / 20, 1)
 			apply_organ_damage(decay_factor * maxHealth * seconds_per_tick * air_temperature_factor)
 
-/obj/item/organ/proc/on_life(seconds_per_tick, times_fired) //repair organ damage if the organ is not failing
+/obj/item/organ/proc/on_life(seconds_per_tick) //repair organ damage if the organ is not failing
+	SHOULD_CALL_PARENT(TRUE)
+
 	if(organ_flags & ORGAN_FAILING)
 		handle_failing_organs(seconds_per_tick)
 		return
@@ -230,11 +234,12 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/enter_wardrobe()
 	STOP_PROCESSING(SSobj, src)
 
-/obj/item/organ/process(seconds_per_tick, times_fired)
-	on_death(seconds_per_tick, times_fired) //Kinda hate doing it like this, but I really don't want to call process directly.
+/obj/item/organ/process(seconds_per_tick)
+	on_death(seconds_per_tick) //Kinda hate doing it like this, but I really don't want to call process directly.
 
 /obj/item/organ/proc/OnEatFrom(eater, feeder)
-	useable = FALSE //You can't use it anymore after eating it you spaztic
+	// You can't use it anymore after eating it
+	organ_flags |= ORGAN_UNUSABLE
 
 /obj/item/organ/item_action_slot_check(slot,mob/user)
 	return //so we don't grant the organ's action to mobs who pick up the organ.
@@ -254,7 +259,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	var/message = check_damage_thresholds()
 	prev_damage = damage
 
-	if(message && owner && owner.stat <= SOFT_CRIT)
+	if(message && owner && !IS_UNCONSCIOUS(owner))
 		to_chat(owner, message)
 
 ///SETS an organ's damage to the amount "damage_amount", and in doing so clears or sets the failing flag, good for when you have an effect that should fix an organ if broken
@@ -341,6 +346,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	// Delegate to species if possible.
 	if(dna?.species)
 		for(var/obj/item/organ/organ as anything in organs)
+			if(organ.organ_flags & ORGAN_EMP)
+				organ.organ_flags &= ~ORGAN_EMP
 			if(remove_hazardous && (organ.organ_flags & ORGAN_HAZARDOUS))
 				qdel(organ)
 				continue
@@ -424,6 +431,26 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return TRUE
 
+/**
+ * Perform a series of get to see if this organ is elegible to be replaced by regenerate_orgas. While get_availability is for the new_organ
+ * this one is, conversely, for the old organ.
+ *
+ * * new_organ_type - the type of the new organ we ought to replace this with.
+ * * expected_organ_type - the old organ for this slot that the old species is supposed to have, which may or may not match what the mob currently has.
+ * * species - the old species datum, present if the regenerate_organs proc has been called as a result of a species change.
+ * * replace_current - boolean, *generally* force the organ to be deleted whether or not they pass the species' ability to keep that organ.
+ */
+/obj/item/organ/proc/get_replaceability(obj/item/organ/new_organ_type, obj/item/organ/expected_organ_type, datum/species/old_species, replace_current = TRUE)
+	// we don't want to remove organs that are the same as the new one
+	if(type == new_organ_type)
+		return FALSE
+
+	// we dont want to remove organs that were not from the old species (such as from freak surgery or prosthetics)
+	if(replace_current || type == expected_organ_type)
+		return TRUE
+
+	return FALSE
+
 /// Called before organs are replaced in regenerate_organs with new ones
 /obj/item/organ/proc/before_organ_replacement(obj/item/organ/replacement)
 	SHOULD_CALL_PARENT(TRUE)
@@ -435,8 +462,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		replacement.set_organ_damage(damage)
 
 /// Called by medical scanners to get a simple summary of how healthy the organ is. Returns an empty string if things are fine.
-/obj/item/organ/proc/get_status_text(advanced, add_tooltips, colored = TRUE)
-	if(advanced && (organ_flags & ORGAN_HAZARDOUS))
+/obj/item/organ/proc/get_status_text(scanpower, add_tooltips, colored = TRUE)
+	if(scanpower >= SCANPOWER_ADVANCED && (organ_flags & ORGAN_HAZARDOUS))
 		return conditional_tooltip("[colored ? "<font color='#cc3333'>" : ""]Harmful Foreign Body[colored ? "</font>" : ""]", "Remove surgically.", add_tooltips)
 
 	if(organ_flags & ORGAN_EMP)
@@ -466,7 +493,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	return (organ_flags & (ORGAN_PROMINENT|ORGAN_HAZARDOUS|ORGAN_FAILING|ORGAN_VITAL))
 
 /// Similar to get_status_text, but appends the text after the damage report, for additional status info
-/obj/item/organ/proc/get_status_appendix(advanced, add_tooltips)
+/obj/item/organ/proc/get_status_appendix(scanpower, add_tooltips)
 	return
 
 /**
@@ -495,6 +522,16 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/replace_into(mob/living/carbon/new_owner)
 	Insert(new_owner, special = TRUE, movement_flags = DELETE_IF_REPLACED)
 
+/// Signal proc for [COMSIG_FOOD_ATTEMPT_EAT], block feeding an organ to a mob if they are marked as ready to operate - to prevent mistakenly feeding your patient
+/obj/item/organ/proc/block_nom(datum/source, mob/living/carbon/eater, mob/living/carbon/feeder)
+	SIGNAL_HANDLER
+	if(!HAS_TRAIT(eater, TRAIT_READY_TO_OPERATE))
+		return NONE
+	if(eater == feeder)
+		to_chat(feeder, span_warning("You feel it unwise to eat [source] while you're undergoing surgery."))
+	else
+		to_chat(feeder, span_warning("The only thing you could think of doing with [source] right now is feeding it to [eater], but that doesn't seem right."))
+	return BLOCK_EAT_ATTEMPT
 
 /// Get all possible organ slots by checking every organ, and then store it and give it whenever needed
 /proc/get_all_slots()

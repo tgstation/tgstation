@@ -1,5 +1,6 @@
 
 /datum/ai_controller/haunted
+	behavior_tree_json = "code/datums/ai/hauntium/haunted.bt.json"
 	movement_delay = 0.4 SECONDS
 	blackboard = list(
 		BB_TO_HAUNT_LIST = list(),
@@ -7,8 +8,6 @@
 		BB_HAUNT_TARGET,
 		BB_HAUNTED_THROW_ATTEMPT_COUNT,
 	)
-	planning_subtrees = list(/datum/ai_planning_subtree/haunted)
-	idle_behavior = /datum/idle_behavior/idle_ghost_item
 
 /datum/ai_controller/haunted/TryPossessPawn(atom/new_pawn)
 	if(!isitem(new_pawn))

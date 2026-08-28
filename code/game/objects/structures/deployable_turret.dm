@@ -57,7 +57,7 @@
 		return ITEM_INTERACT_SKIP_TO_ATTACK
 	used_wrench.play_tool_sound(user)
 	user.balloon_alert(user, "undeploying...")
-	if(!do_after(user, undeploy_time))
+	if(!do_after(user, undeploy_time, src))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/undeployed_object = new spawned_on_undeploy()
 	//Keeps the health the same even if you redeploy the gun

@@ -62,14 +62,28 @@
 	if(our_stack.get_amount() < 1)
 		balloon_alert(user, "need more material!")
 		return ITEM_INTERACT_BLOCKING
-	if(locate(/obj/structure/table) in loc)
-		balloon_alert(user, "can't stack tables!")
-		return ITEM_INTERACT_BLOCKING
+
+	// Check if the turf is blocked by dense objects or objects that block construction
+	for(var/obj/object in loc)
+		if(object.pass_flags & PASSTABLE)
+			continue
+		if((object.density && !(object.obj_flags & IGNORE_DENSITY)) || object.obj_flags & BLOCKS_CONSTRUCTION)
+			balloon_alert(user, "[object.name] is in the way!")
+			return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "constructing table...")
 	if(!do_after(user, 2 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING
-	if((locate(/obj/structure/table) in loc) || !our_stack.use(1))
+
+	// Check again after the delay in case something was placed during construction
+	for(var/obj/object in loc)
+		if(object.pass_flags & PASSTABLE)
+			continue
+		if((object.density && !(object.obj_flags & IGNORE_DENSITY)) || object.obj_flags & BLOCKS_CONSTRUCTION)
+			balloon_alert(user, "[object.name] is in the way!")
+			return ITEM_INTERACT_BLOCKING
+
+	if(!our_stack.use(1))
 		return ITEM_INTERACT_BLOCKING
 
 	new table_type(loc, src, our_stack)

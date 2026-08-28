@@ -10,6 +10,9 @@
 	caliber = CALIBER_40MM
 	max_ammo = 1
 
+/obj/item/ammo_box/magazine/internal/grenadelauncher/tear
+	ammo_type = /obj/item/ammo_casing/a40mm/tear_gas
+
 /obj/item/ammo_box/magazine/internal/rocketlauncher
 	name = "rocket launcher internal magazine"
 	ammo_type = /obj/item/ammo_casing/rocket

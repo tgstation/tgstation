@@ -93,8 +93,9 @@
 
 /obj/item/fish/chasm_crab/proc/on_growth(datum/source, mob/living/basic/mining/lobstrosity/juvenile/result)
 	SIGNAL_HANDLER
+	if(/datum/fish_trait/territorial in fish_traits)
+		return
 	if(!prob(anger))
-		result.AddElement(/datum/element/ai_retaliate)
 		qdel(result.ai_controller)
 		result.ai_controller = new /datum/ai_controller/basic_controller/lobstrosity/juvenile/calm(result)
 	else if(anger < 30) //not really that mad, just a bit unstable.
@@ -126,7 +127,6 @@
 	min_pressure = HAZARD_LOW_PRESSURE
 	max_integrity = 300
 	stable_population = 3
-	grind_results = list(/datum/reagent/bone_dust = 10)
 	fillet_type = /obj/item/stack/sheet/bone
 	num_fillets = 2
 	fish_traits = list(/datum/fish_trait/revival, /datum/fish_trait/carnivore)
@@ -139,6 +139,9 @@
 /obj/item/fish/boned/Initialize(mapload, apply_qualities = TRUE)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_FISH_MADE_OF_BONE, INNATE_TRAIT)
+
+/obj/item/fish/boned/fish_grind_results()
+	return list(/datum/reagent/bone_dust = 10)
 
 /obj/item/fish/boned/make_edible(weight_val)
 	return //it's all bones and no meat.

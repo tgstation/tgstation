@@ -65,6 +65,7 @@
 	flags_cover = NONE
 	dirt_state = null
 	alternate_worn_layer = HAIR_LAYER
+	texture_type = /datum/bodypart_texture/mesh/black
 
 /datum/armor/bio_hood_plague
 	bio = 100
@@ -94,10 +95,8 @@
 
 	var/mob/living/carbon/human/human_user = user
 	var/obj/item/clothing/suit/costume/bear_suit/our_suit = human_user.wear_suit
-	if(!our_suit || !istype(our_suit))
-		return
-
-	our_suit.make_friendly(user, src)
+	if(istype(our_suit))
+		our_suit.make_friendly(user, src)
 
 /obj/item/clothing/head/flatcap
 	name = "flat cap"
@@ -226,7 +225,13 @@
 /obj/item/clothing/head/costume/jesteralt
 	name = "jester hat"
 	desc = "A hat with bells, to add some merriness to the suit."
-	icon_state = "jester2"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/jesteralt"
+	post_init_icon_state = "jester_alt"
+	greyscale_config = /datum/greyscale_config/jester_hat_alt
+	greyscale_config_worn = /datum/greyscale_config/jester_hat_alt/worn
+	greyscale_colors = "#E10000#E1E100"
+	flags_1 = IS_PLAYER_COLORABLE_1
 
 /obj/item/clothing/head/costume/rice_hat
 	name = "rice hat"
@@ -244,7 +249,19 @@
 /obj/item/clothing/head/costume/lizard
 	name = "lizardskin cloche hat"
 	desc = "How many lizards died to make this hat? Not enough."
-	icon_state = "lizard"
+	icon = 'icons/map_icons/clothing/head/_head.dmi'
+	icon_state = "/obj/item/clothing/head/costume/lizard"
+	post_init_icon_state = "lizard_hat"
+	greyscale_config = /datum/greyscale_config/lizard_hat
+	greyscale_config_worn = /datum/greyscale_config/lizard_hat/worn
+	greyscale_colors = "#859333"
+
+/obj/item/clothing/head/costume/lizard/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
+	var/obj/item/stack/sheet/animalhide/carbon/lizard/skin = locate() in components
+	if (isnull(skin) || !length(skin.skin_color)) // what
+		return ..()
+	set_greyscale(skin.skin_color)
+	return ..()
 
 /obj/item/clothing/head/costume/scarecrow_hat
 	name = "scarecrow hat"
@@ -304,7 +321,7 @@
 /obj/item/clothing/head/hats/centcom_cap
 	name = "\improper CentCom commander cap"
 	icon_state = "centcom_cap"
-	desc = "Worn by the finest of CentCom commanders. Inside the lining of the cap, lies two faint initials."
+	desc = "Worn by the finest of CentCom commanders. Two faint initials lie inside the lining of the cap."
 	inhand_icon_state = "that"
 	flags_inv = 0
 	armor_type = /datum/armor/hats_centcom_cap
@@ -392,3 +409,9 @@
 	worn_icon_state = "paper"
 	dog_fashion = /datum/dog_fashion/head
 	custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)
+
+/obj/item/clothing/head/costume/paper_hat/savior
+	name = "ancient paper hat"
+	desc = "An ancient hat made of paper. \"Savior of the Universe\" is spelled out on the rim in orange marker. "
+	icon_state = "paper_savior"
+	worn_icon_state = "paper_savior"

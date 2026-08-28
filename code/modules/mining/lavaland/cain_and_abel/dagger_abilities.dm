@@ -10,11 +10,15 @@
 
 /datum/action/cooldown/dagger_swing/Activate(atom/target_atom)
 	var/mob/living/living_owner = owner
-	var/obj/item/cain_and_abel = target
+	var/obj/item/cain_and_abel/cain_and_abel = target
 
 	if(!living_owner.is_holding(cain_and_abel))
 		owner.balloon_alert(owner, "must be held")
 		return FALSE
+
+	if(!cain_and_abel.check_wield(owner))
+		owner.balloon_alert(owner, "offhand busy!")
+		return TRUE
 
 	living_owner.apply_status_effect(/datum/status_effect/dagger_swinging)
 

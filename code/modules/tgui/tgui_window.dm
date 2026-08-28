@@ -147,10 +147,11 @@
  * return bool
  */
 /datum/tgui_window/proc/can_be_suspended()
+	var/unlimited_windows = client?.prefs?.read_preference(/datum/preference/toggle/tgui_unlimited_windows)
 	return !fatally_errored \
 		&& pooled \
 		&& pool_index > 0 \
-		&& pool_index <= TGUI_WINDOW_SOFT_LIMIT \
+		&& (unlimited_windows || pool_index <= TGUI_WINDOW_SOFT_LIMIT) \
 		&& status == TGUI_WINDOW_READY
 
 /**
@@ -359,6 +360,8 @@
 	switch(type)
 		if("ping")
 			send_message("ping/reply", payload)
+		if("ping/set")
+			client?.avgping = payload["ping"]
 		if("visible")
 			visible = TRUE
 			SEND_SIGNAL(src, COMSIG_TGUI_WINDOW_VISIBLE, client)
@@ -382,7 +385,7 @@
 		if("payloadChunk")
 			var/payload_id = payload["id"]
 			append_payload_chunk(payload_id, payload["chunk"])
-			send_message("acknowlegePayloadChunk", list("id" = payload_id))
+			send_message("acknowledgePayloadChunk", list("id" = payload_id))
 
 /datum/tgui_window/vv_edit_var(var_name, var_value)
 	return var_name != NAMEOF(src, id) && ..()

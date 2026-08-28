@@ -1,0 +1,70 @@
+{
+	"short_short": [
+		{
+			"type": "icon_state",
+			"icon_state": "short_short_digi",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"short": [
+		{
+			"type": "icon_state",
+			"icon_state": "short_digi",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"boxers": [
+		{
+			"type": "icon_state",
+			"icon_state": "male_boxers_digi",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"midway": [
+		{
+			"type": "icon_state",
+			"icon_state": "male_midway_digi",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"longjohns": [
+		{
+			"type": "icon_state",
+			"icon_state": "male_longjohns_digi",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"boxers_stripe": [
+		{
+			"type": "icon_state",
+			"icon_state": "male_boxers_stripe_digi",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		}
+	],
+	"boxers_stripe_threecolor": [
+		{
+			"type": "icon_state",
+			"icon_state": "male_boxers_stripe_twocolor_digi_a",
+			"blend_mode": "overlay",
+			"color_ids": [ 1 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "male_boxers_stripe_twocolor_digi_b",
+			"blend_mode": "overlay",
+			"color_ids": [ 2 ]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "male_boxers_stripe_twocolor_digi_c",
+			"blend_mode": "overlay",
+			"color_ids": [ 3 ]
+		}
+	]
+}

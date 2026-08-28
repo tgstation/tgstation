@@ -13,14 +13,14 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 
 /// Increments every time WE update the library db table, causes all existing consoles to repull when they next check
 /proc/library_updated()
-	GLOB.library_table_modified = (GLOB.library_table_modified + 1) % (SHORT_REAL_LIMIT - 1)
+	GLOB.library_table_modified = WRAP_UID(GLOB.library_table_modified + 1)
 
 /*
  * Library Public Computer
  */
 /obj/machinery/computer/libraryconsole
 	name = "library visitor console"
-	icon_state = "oldcomp"
+	icon_state = MAP_SWITCH("oldcomp", "/obj/machinery/computer/pod/old")
 	icon_screen = "library"
 	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/libraryconsole
@@ -282,7 +282,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	verb_exclaim = "beeps"
 	pass_flags = PASSTABLE
 
-	icon_state = "oldcomp"
+	icon_state = MAP_SWITCH("oldcomp", "/obj/machinery/computer/pod/old")
 	icon_screen = "library"
 	icon_keyboard = null
 	circuit = /obj/item/circuitboard/computer/libraryconsole
@@ -309,6 +309,8 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	var/dynamic_inv_load = FALSE
 	///Book scanner that will be used when uploading books to the Archive
 	var/datum/weakref/scanner
+	///Name of the book we're checking out, given by barcodes or the UI.
+	var/datum/book_info/checking_out_book
 	///Our cooldown on using the printer
 	COOLDOWN_DECLARE(printer_cooldown)
 	///Our cooldown on publishing books to the newscaster's "book club" channel
@@ -370,6 +372,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			data["has_checkout"] = !!checkout_len
 			data["checkout_page"] = checkout_page + 1
 			data["checkout_page_count"] = checkout_page_count + 1
+			data["checkout_title"] = checking_out_book?.get_title() || null
 
 		//Copypasta from the visitor console
 		if(LIBRARY_ARCHIVE)
@@ -449,6 +452,19 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			update_static_data_for_all_viewers()
 			return TRUE
 		if("checkout")
+			if(isnull(checking_out_book))
+				return TRUE
+			var/datum/borrowbook/loan = new /datum/borrowbook
+			var/loan_to = copytext(sanitize(params["loaned_to"]), 1, MAX_NAME_LEN)
+			var/checkoutperiod = max(params["checkout_time"], 1)
+			loan.book_data = checking_out_book.return_copy()
+			loan.loanedto = loan_to
+			loan.checkout = world.time
+			loan.duedate = world.time + (checkoutperiod MINUTES)
+			checkouts[ref(loan)] = loan
+			checkout_update()
+			return TRUE
+		if("set_checkout")
 			var/list/available = list()
 			for(var/id in inventory)
 				var/datum/book_info/book_infos = inventory[id]
@@ -459,17 +475,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			var/datum/book_info/book_info = available[book_name]
 			if(!istype(book_info))
 				return
-			var/datum/borrowbook/loan = new /datum/borrowbook
-
-			var/loan_to = copytext(sanitize(params["loaned_to"]), 1, MAX_NAME_LEN)
-			var/checkoutperiod = max(params["checkout_time"], 1)
-
-			loan.book_data = book_info.return_copy()
-			loan.loanedto = loan_to
-			loan.checkout = world.time
-			loan.duedate = world.time + (checkoutperiod MINUTES)
-			checkouts[ref(loan)] = loan
-			checkout_update()
+			checking_out_book = book_info
 			return TRUE
 		if("checkin")
 			var/id = params["checked_out_id"]
@@ -541,16 +547,19 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			set_screen_state(MIN_LIBRARY)
 			return TRUE
 
-/obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(weapon, /obj/item/barcodescanner))
-		return ..()
-	var/obj/item/barcodescanner/scanner = weapon
+/obj/machinery/computer/libraryconsole/bookmanagement/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/barcodescanner))
+		return NONE
+
+	var/obj/item/barcodescanner/scanner = tool
 	if(scanner.computer_ref?.resolve() == src)
 		balloon_alert(user, "already connected!")
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	scanner.computer_ref = WEAKREF(src)
 	balloon_alert(user, "scanner connected")
 	audible_message(span_hear("[src] lets out a low, short blip."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!density || obj_flags & EMAGGED)
@@ -685,6 +694,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	name = "scanner control interface"
 	icon = 'icons/obj/service/library.dmi'
 	icon_state = "bigscanner"
+	base_icon_state = "bigscanner"
 	desc = "It's an industrial strength book scanner. Perfect!"
 	circuit = /obj/item/circuitboard/machine/libraryscanner
 	density = TRUE
@@ -693,29 +703,30 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	var/datum/book_info/cache
 
 /obj/machinery/libraryscanner/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(default_deconstruction_screwdriver(user, "bigscanner2", "bigscanner", tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/libraryscanner/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
+
+/obj/machinery/libraryscanner/update_icon_state()
 	. = ..()
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	icon_state = panel_open ? "[base_icon_state]2" : base_icon_state
 
 /obj/machinery/libraryscanner/Destroy()
 	held_book = null
 	cache = null
 	return ..()
 
-/obj/machinery/libraryscanner/attackby(obj/hitby, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(hitby, /obj/item/book))
-		user.transferItemToLoc(hitby, src)
-		if(held_book)
-			user.put_in_hands(held_book)
-		held_book = hitby
-		playsound(src, 'sound/machines/eject.ogg', 70)
-		return TRUE
-	return ..()
+/obj/machinery/libraryscanner/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/book))
+		return NONE
+
+	user.transferItemToLoc(tool, src)
+	if(held_book)
+		user.put_in_hands(held_book)
+	held_book = tool
+	playsound(src, 'sound/machines/eject.ogg', 70)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/libraryscanner/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -768,6 +779,7 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	name = "book binder"
 	icon = 'icons/obj/service/library.dmi'
 	icon_state = "binder"
+	base_icon_state = "binder"
 	desc = "Only intended for binding paper products."
 	circuit = /obj/item/circuitboard/machine/bookbinder
 	density = TRUE
@@ -779,27 +791,27 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	var/scanned_name
 
 /obj/machinery/bookbinder/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ..()
-	if(default_deconstruction_screwdriver(user, "binder2", "binder", tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/bookbinder/crowbar_act(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
+
+/obj/machinery/bookbinder/update_icon_state()
 	. = ..()
-	if(default_deconstruction_crowbar(tool))
+	icon_state = panel_open ? "[base_icon_state]2" : base_icon_state
+
+/obj/machinery/bookbinder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/paper))
+		prebind_book(user, tool)
 		return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/bookbinder/attackby(obj/hitby, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(hitby, /obj/item/paper))
-		prebind_book(user, hitby)
-		return TRUE
-
-	if(isidcard(hitby))
-		var/obj/item/card/id/idcard = hitby
+	if(isidcard(tool))
+		var/obj/item/card/id/idcard = tool
 		scanned_name = idcard.registered_name
 		balloon_alert(user, "scanned")
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/machinery/bookbinder/proc/prebind_book(mob/user, obj/item/paper/draw_from)
 	if(machine_stat)

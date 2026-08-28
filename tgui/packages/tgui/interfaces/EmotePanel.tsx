@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Box, Button, Flex, Icon, Section } from 'tgui-core/components';
+import { useMemo, useState } from 'react';
+import { Box, Button, Flex, Icon, Section, Stack } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 import { capitalizeFirst } from 'tgui-core/string';
 
@@ -42,6 +42,34 @@ export const EmotePanelContent = (props) => {
   const [showNames, toggleShowNames] = useState(true);
 
   const [showIcons, toggleShowIcons] = useState(false);
+
+  const filteredEmotes = useMemo(
+    () =>
+      emotes
+        .filter(
+          (emote) =>
+            emote.key &&
+            (searchText.length > 0
+              ? emote.key.toLowerCase().includes(searchText.toLowerCase()) ||
+                emote.name.toLowerCase().includes(searchText.toLowerCase())
+              : true) &&
+            (filterVisible ? emote.visible : true) &&
+            (filterAudible ? emote.audible : true) &&
+            (filterSound ? emote.sound : true) &&
+            (filterHands ? emote.hands : true) &&
+            (filterUseParams ? emote.use_params : true),
+        )
+        .sort((a, b) => (a.name > b.name ? 1 : -1)),
+    [
+      emotes,
+      searchText,
+      filterVisible,
+      filterAudible,
+      filterSound,
+      filterHands,
+      filterUseParams,
+    ],
+  );
 
   return (
     <Section>
@@ -136,71 +164,99 @@ export const EmotePanelContent = (props) => {
       >
         <Flex>
           <Flex.Item>
-            {emotes
-              .filter(
-                (emote) =>
-                  emote.key &&
-                  (searchText.length > 0
-                    ? emote.key
-                        .toLowerCase()
-                        .includes(searchText.toLowerCase()) ||
-                      emote.name
-                        .toLowerCase()
-                        .includes(searchText.toLowerCase())
-                    : true) &&
-                  (filterVisible ? emote.visible : true) &&
-                  (filterAudible ? emote.audible : true) &&
-                  (filterSound ? emote.sound : true) &&
-                  (filterHands ? emote.hands : true) &&
-                  (filterUseParams ? emote.use_params : true),
-              )
-              .sort((a, b) => (a.name > b.name ? 1 : -1))
-              .map((emote) => (
-                <Button
-                  width={showIcons ? 16 : 8}
-                  key={emote.name}
-                  tooltip={
-                    showIcons ? undefined : (
-                      <EmoteIcons
-                        visible={emote.visible}
-                        audible={emote.audible}
-                        sound={emote.sound}
-                        hands={emote.hands}
-                        use_params={emote.use_params}
-                        margin={0.5}
-                      />
-                    )
-                  }
-                  onClick={() =>
-                    act('play_emote', {
-                      emote_key: emote.key,
-                      use_params: useParams,
-                    })
-                  }
-                >
-                  <Box inline width="50%">
-                    {showNames
-                      ? capitalizeFirst(emote.name.toLowerCase())
-                      : emote.key}
-                  </Box>
-                  {showIcons ? (
-                    <EmoteIcons
-                      visible={emote.visible}
-                      audible={emote.audible}
-                      sound={emote.sound}
-                      hands={emote.hands}
-                      use_params={emote.use_params}
-                      margin={0}
-                    />
-                  ) : (
-                    ''
-                  )}
-                </Button>
-              ))}
+            {filteredEmotes.map((emote) => (
+              <EmoteButton
+                emote={emote}
+                key={emote.name}
+                showIcons={showIcons}
+                showNames={showNames}
+                onPlay={() =>
+                  act('play_emote', {
+                    emote_key: emote.key,
+                    use_params: useParams,
+                  })
+                }
+                onPreview={() =>
+                  act('preview_sound', {
+                    emote_key: emote.key,
+                  })
+                }
+              />
+            ))}
           </Flex.Item>
         </Flex>
       </Section>
     </Section>
+  );
+};
+
+type EmoteButtonProps = {
+  emote: Emote;
+  showIcons: boolean;
+  showNames: boolean;
+  onPlay: () => void;
+  onPreview: () => void;
+};
+
+const EmoteButton = (props: EmoteButtonProps) => {
+  const { emote, showIcons, showNames, onPlay, onPreview } = props;
+
+  return (
+    <Stack
+      inlineFlex
+      align="center"
+      width={showIcons ? 16 : 8}
+      mb={0.5}
+      mr={0.5}
+      style={{ gap: '0.25em' }}
+    >
+      <Stack.Item grow basis={0}>
+        <Button
+          fluid
+          tooltip={
+            showIcons ? undefined : (
+              <EmoteIcons
+                visible={emote.visible}
+                audible={emote.audible}
+                sound={emote.sound}
+                hands={emote.hands}
+                use_params={emote.use_params}
+                margin={0.5}
+              />
+            )
+          }
+          onClick={onPlay}
+        >
+          <Box inline width="50%">
+            {showNames ? capitalizeFirst(emote.name.toLowerCase()) : emote.key}
+          </Box>
+          {showIcons ? (
+            <EmoteIcons
+              visible={emote.visible}
+              audible={emote.audible}
+              sound={emote.sound}
+              hands={emote.hands}
+              use_params={emote.use_params}
+              margin={0}
+            />
+          ) : (
+            ''
+          )}
+        </Button>
+      </Stack.Item>
+      {emote.sound ? (
+        <Stack.Item width={1.75}>
+          <Button
+            fluid
+            icon="volume-up"
+            tooltip="Preview Sound"
+            onClick={onPreview}
+          />
+        </Stack.Item>
+      ) : (
+        ''
+      )}
+    </Stack>
   );
 };
 

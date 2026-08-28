@@ -1,21 +1,14 @@
-/obj/item/disk
-	icon = 'icons/obj/devices/circuitry_n_data.dmi'
-	w_class = WEIGHT_CLASS_TINY
-	inhand_icon_state = "card-id"
-	lefthand_file = 'icons/mob/inhands/equipment/idcards_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/equipment/idcards_righthand.dmi'
-	icon_state = "datadisk0"
-	drop_sound = 'sound/items/handling/disk_drop.ogg'
-	pickup_sound = 'sound/items/handling/disk_pickup.ogg'
-
 // DAT FUKKEN DISK.
 /obj/item/disk/nuclear
 	name = "nuclear authentication disk"
 	desc = "Better keep this safe."
 	icon_state = "nucleardisk"
 	max_integrity = 250
+	sticker_icon_state = null
 	armor_type = /datum/armor/disk_nuclear
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	read_only = TRUE
+	read_only_locked = TRUE
 	/// Whether we're a real nuke disk or not.
 	var/fake = FALSE
 
@@ -32,9 +25,13 @@
 		AddComponent(/datum/component/stationloving, !fake)
 		AddComponent(/datum/component/keep_me_secure, CALLBACK(src, PROC_REF(secured_process)), CALLBACK(src, PROC_REF(unsecured_process)), 10)
 		SSpoints_of_interest.make_point_of_interest(src)
+		add_minimap_blip(src, MINIMAP_NUKEDISK_BLIP, "green_disk_off", 'icons/ui_icons/minimap/map_blips_large.dmi', TRUE)
 	else
 		// Ensure fake disks still have examine text, but dont actually do anything
 		AddComponent(/datum/component/keep_me_secure)
+
+/obj/item/disk/nuclear/setup_reskins()
+	return
 
 /obj/item/disk/nuclear/proc/secured_process(last_move)
 	var/turf/new_turf = get_turf(src)
@@ -82,24 +79,24 @@
 
 	return discover_after
 
-/obj/item/disk/nuclear/attackby(obj/item/weapon, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(weapon, /obj/item/claymore/highlander) && !fake)
-		var/obj/item/claymore/highlander/claymore = weapon
-		if(claymore.nuke_disk)
-			to_chat(user, span_notice("Wait... what?"))
-			qdel(claymore.nuke_disk)
-			claymore.nuke_disk = null
-			return
+/obj/item/disk/nuclear/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/claymore/highlander) || fake)
+		return ..()
 
-		user.visible_message(
-			span_warning("[user] captures [src]!"),
-			span_userdanger("You've got the disk! Defend it with your life!"),
-		)
-		forceMove(claymore)
-		claymore.nuke_disk = src
-		return TRUE
+	var/obj/item/claymore/highlander/claymore = tool
+	if(claymore.nuke_disk)
+		to_chat(user, span_notice("Wait... what?"))
+		qdel(claymore.nuke_disk)
+		claymore.nuke_disk = null
+		return ITEM_INTERACT_BLOCKING
 
-	return ..()
+	user.visible_message(
+		span_warning("[user] captures [src]!"),
+		span_userdanger("You've got the disk! Defend it with your life!"),
+	)
+	forceMove(claymore)
+	claymore.nuke_disk = src
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/disk/nuclear/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is going delta! It looks like [user.p_theyre()] trying to commit suicide!"))

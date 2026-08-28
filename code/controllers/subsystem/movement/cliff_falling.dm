@@ -2,7 +2,7 @@
 MOVEMENT_SUBSYSTEM_DEF(cliff_falling)
 	name = "Cliff Falling"
 	priority = FIRE_PRIORITY_CLIFF_FALLING
-	flags = SS_NO_INIT|SS_TICKER
+	ss_flags = SS_NO_INIT|SS_TICKER
 	runlevels = RUNLEVEL_GAME | RUNLEVEL_POSTGAME
 
 	/// Who are currently falling and with which movemanager?

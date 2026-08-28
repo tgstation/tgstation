@@ -34,7 +34,6 @@ export const MarkdownRenderer = (props: MarkdownRendererProps) => {
     content = sanitizeText(content, /* advHtml = */ false);
   }
 
-  // biome-ignore lint/security/noDangerouslySetInnerHtml: ignore
   return <div dangerouslySetInnerHTML={{ __html: content }} />;
 };
 

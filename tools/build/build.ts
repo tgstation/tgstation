@@ -10,7 +10,7 @@
 import fs from 'node:fs';
 import Bun from 'bun';
 import Juke from './juke/index.js';
-import { bun, bunRoot } from './lib/bun';
+import { bun } from './lib/bun';
 import { DreamDaemon, DreamMaker, NamedVersionFile } from './lib/byond';
 import { downloadFile } from './lib/download';
 import { formatDeps } from './lib/helpers';
@@ -22,7 +22,7 @@ export const DME_NAME = 'tgstation';
 
 Juke.chdir('../..', import.meta.url);
 
-const dependencies: Record<string, any> = await Bun.file('dependencies.sh')
+const dependencies: Record<string, string> = await Bun.file('dependencies.sh')
   .text()
   .then(formatDeps)
   .catch((err) => {
@@ -43,6 +43,21 @@ function getCutterPath() {
 }
 
 const cutter_path = getCutterPath();
+
+const define_params_file = 'data/last_define_params.json'
+
+// Have compilation defines changed since last build?
+async function defineParametersChanged(defines: string[]): Promise<boolean> {
+  const defines_string = JSON.stringify(defines);
+  const params_file = Bun.file(define_params_file);
+  if(!await params_file.exists()) {
+    await params_file.write(defines_string);
+    return true;
+  }
+  const last_params = await params_file.text();
+  await params_file.write(defines_string);
+  return last_params !== defines_string;
+}
 
 export const DefineParameter = new Juke.Parameter({
   type: 'string[]',
@@ -90,7 +105,11 @@ export const CutterTarget = new Juke.Target({
     const ver = dependencies.CUTTER_VERSION;
     const suffix = process.platform === 'win32' ? '.exe' : '';
     const download_from = `https://github.com/${repo}/releases/download/${ver}/hypnagogic${suffix}`;
-    await downloadFile(download_from, cutter_path);
+    // We're delaying "comitting" to the final filename here in case downloading fails/is interrupted
+    const temp_path = `${cutter_path}_temp`; // yes this means its file extension is .exe_temp I don't really care
+    await downloadFile(download_from, temp_path);
+    fs.copyFileSync(temp_path, cutter_path);
+    fs.rmSync(temp_path);
     if (process.platform !== 'win32') {
       await Juke.exec('chmod', ['+x', cutter_path]);
     }
@@ -147,12 +166,29 @@ export const DmMapsIncludeTarget = new Juke.Target({
       ...Juke.glob('_maps/shuttles/**/*.dmm'),
       ...Juke.glob('_maps/templates/**/*.dmm'),
     ];
-    const content =
-      folders
-        .map((file) => file.replace('_maps/', ''))
-        .map((file) => `#include "${file}"`)
-        .join('\n') + '\n';
+    const content = `${folders
+      .map((file) => file.replace('_maps/', ''))
+      .map((file) => `#include "${file}"`)
+      .join('\n')}\n`;
     fs.writeFileSync('_maps/templates.dm', content);
+  },
+});
+
+export const BehaviorTreeCompilerTarget = new Juke.Target({
+  inputs: [
+    'code/**/*.bt.json',
+    'code/__DEFINES/**/*.dm',
+    'tools/build_bt.py',
+  ],
+  outputs: () => {
+    return Juke.glob('code/**/*.bt.json').map((file) => {
+      const rel = file.replace(/\.bt\.json$/, '');
+      return `build/behavior_trees/${rel}.bt.compiled.json`;
+    });
+  },
+  executes: async () => {
+    const suffix = process.platform == 'win32' ? '.bat' : '';
+    await Juke.exec(`tools/bootstrap/python${suffix}`, ['tools/build_bt.py']);
   },
 });
 
@@ -167,6 +203,7 @@ export const DmTarget = new Juke.Target({
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('ALL_TEMPLATES') && DmMapsIncludeTarget,
     !get(SkipIconCutter) && IconCutterTarget,
+    BehaviorTreeCompilerTarget,
   ],
   inputs: [
     '_maps/map_files/generic/**',
@@ -180,9 +217,10 @@ export const DmTarget = new Juke.Target({
     `${DME_NAME}.dme`,
     NamedVersionFile,
   ],
-  outputs: ({ get }) => {
-    if (get(DmVersionParameter)) {
-      return []; // Always rebuild when dm version is provided
+  outputs: async ({ get }) => {
+    if (get(DmVersionParameter) || await defineParametersChanged(get(DefineParameter))) {
+      // Always rebuild when a dm version is provided or CLI defines have changed from last run
+      return [];
     }
     return [`${DME_NAME}.dmb`, `${DME_NAME}.rsc`];
   },
@@ -287,43 +325,29 @@ export const BunTarget = new Juke.Target({
   parameters: [CiParameter],
   inputs: ['tgui/**/package.json'],
   executes: () => {
-    return bun('install', '--frozen-lockfile', '--ignore-scripts');
+    return bun('./tgui', 'install', '--frozen-lockfile', '--ignore-scripts');
   },
 });
 
 export const BiomeInstallTarget = new Juke.Target({
   dependsOn: [BunTarget],
   inputs: ['package.json', 'bun.lock'],
-  onlyWhen: () => {
-    return Juke.glob('node_modules/@biomejs/**').length === 0;
-  },
   executes: () => {
-    return bunRoot('install');
+    return bun('.', 'install');
   },
 });
 
 export const TgFontTarget = new Juke.Target({
   dependsOn: [BunTarget],
   inputs: [
-    'tgui/packages/tgfont/**/*.+(js|mjs|svg)',
+    'tgui/packages/tgfont/**/*.+(js|ts|svg)',
     'tgui/packages/tgfont/package.json',
   ],
   outputs: [
     'tgui/packages/tgfont/dist/tgfont.css',
     'tgui/packages/tgfont/dist/tgfont.woff2',
   ],
-  executes: async () => {
-    await bun('tgfont:build');
-    fs.mkdirSync('tgui/packages/tgfont/static', { recursive: true });
-    fs.copyFileSync(
-      'tgui/packages/tgfont/dist/tgfont.css',
-      'tgui/packages/tgfont/static/tgfont.css',
-    );
-    fs.copyFileSync(
-      'tgui/packages/tgfont/dist/tgfont.woff2',
-      'tgui/packages/tgfont/static/tgfont.woff2',
-    );
-  },
+  executes: () => bun('./tgui/packages/tgfont', 'tgfont:build'),
 });
 
 export const TguiTarget = new Juke.Target({
@@ -341,23 +365,23 @@ export const TguiTarget = new Juke.Target({
     'tgui/public/tgui-say.bundle.css',
     'tgui/public/tgui-say.bundle.js',
   ],
-  executes: () => bun('tgui:build'),
+  executes: () => bun('./tgui', 'tgui:build'),
 });
 
 export const TguiTscTarget = new Juke.Target({
   dependsOn: [BunTarget],
-  executes: () => bun('tgui:tsc'),
+  executes: () => bun('./tgui', 'tgui:tsc'),
 });
 
 export const TguiTestTarget = new Juke.Target({
   parameters: [CiParameter],
   dependsOn: [BunTarget],
-  executes: () => bun('tgui:test'),
+  executes: () => bun('./tgui', 'tgui:test'),
 });
 
 export const BiomeCheckTarget = new Juke.Target({
   dependsOn: [BunTarget, BiomeInstallTarget],
-  executes: () => bunRoot('tgui:lint'),
+  executes: () => bun('.', 'tgui:lint'),
 });
 
 export const TguiLintTarget = new Juke.Target({
@@ -366,12 +390,12 @@ export const TguiLintTarget = new Juke.Target({
 
 export const TguiDevTarget = new Juke.Target({
   dependsOn: [BunTarget],
-  executes: ({ args }) => bun('tgui:dev', ...args),
+  executes: ({ args }) => bun('./tgui', 'tgui:dev', ...args),
 });
 
 export const TguiAnalyzeTarget = new Juke.Target({
   dependsOn: [BunTarget],
-  executes: () => bun('tgui:analyze'),
+  executes: () => bun('./tgui', 'tgui:analyze'),
 });
 
 export const TestTarget = new Juke.Target({
@@ -383,7 +407,7 @@ export const LintTarget = new Juke.Target({
 });
 
 export const BuildTarget = new Juke.Target({
-  dependsOn: [TguiTarget, DmTarget],
+  dependsOn: [TguiTarget, TgFontTarget, DmTarget],
 });
 
 export const ServerTarget = new Juke.Target({
@@ -405,11 +429,13 @@ export const AllTarget = new Juke.Target({
 
 export const TguiCleanTarget = new Juke.Target({
   executes: async () => {
+    Juke.rm('node_modules', { recursive: true });
     Juke.rm('tgui/public/.tmp', { recursive: true });
     Juke.rm('tgui/public/*.map');
     Juke.rm('tgui/public/*.{chunk,bundle,hot-update}.*');
     Juke.rm('tgui/packages/tgfont/dist', { recursive: true });
     Juke.rm('tgui/node_modules', { recursive: true });
+    Juke.rm('tgui/packages/*/node_modules', { recursive: true });
   },
 });
 
@@ -433,7 +459,7 @@ export const CleanAllTarget = new Juke.Target({
 });
 
 export const TgsTarget = new Juke.Target({
-  dependsOn: [TguiTarget],
+  dependsOn: [TguiTarget, TgFontTarget],
   executes: async () => {
     Juke.logger.info('Prepending TGS define');
     prependDefines('TGS');

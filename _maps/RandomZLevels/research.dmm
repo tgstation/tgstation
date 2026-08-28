@@ -1678,7 +1678,7 @@
 /turf/open/floor/iron/white,
 /area/awaymission/research/interior/security)
 "ij" = (
-/mob/living/simple_animal/bot/secbot/genesky,
+/mob/living/basic/bot/secbot/genesky,
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},

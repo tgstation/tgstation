@@ -60,14 +60,17 @@
 		award.load(src)
 
 ///Unlocks an achievement of a specific type. achievement type is a typepath to the award, user is the mob getting the award, and value is an optional value to be used for defining a score to add to the leaderboard
-/datum/achievement_data/proc/unlock(achievement_type, mob/user, value = 1)
+/datum/achievement_data/proc/unlock(achievement_type, mob/user, value = 1, ...)
 	set waitfor = FALSE
 
 	if(!SSachievements.achievements_enabled)
 		return
 	var/datum/award/award = SSachievements.awards[achievement_type]
 	get_data(achievement_type) //Get the current status first if necessary
-	award.unlock(user, src, value)
+	var/list/unlock_args = list(user, src, value)
+	if(length(args) > 3)
+		unlock_args += args.Copy(4)
+	award.unlock(arglist(unlock_args))
 	update_static_data(user)
 
 ///Getter for the status/score of an achievement
@@ -126,9 +129,6 @@
 			continue
 		.["highscores"] += list(list("name" = score.name, "scores" = score.high_scores))
 
-/client/verb/checkachievements()
-	set category = "OOC"
-	set name = "Check achievements"
-	set desc = "See all of your achievements!"
+GAME_VERB_DESC(/client, checkachievements, "Check achievements", "See all of your achievements!", "OOC")
 
 	persistent_client.achievements.ui_interact(usr)

@@ -13,6 +13,7 @@
 	icon = 'icons/obj/weapons/khopesh.dmi'
 	icon_state = "render"
 	inhand_icon_state = "cultdagger"
+	worn_icon = null
 	worn_icon_state = "render"
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
@@ -88,6 +89,7 @@ Striking a noncultist, however, will tear their flesh."}
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "cultblade"
 	inhand_icon_state = "cultblade"
+	worn_icon = 'icons/mob/clothing/back.dmi'
 	worn_icon_state = "cultblade"
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/64x64_lefthand.dmi'
@@ -192,7 +194,7 @@ Striking a noncultist, however, will tear their flesh."}
 		// Void
 		PATH_VOID = list(
 			WIELDER_SPELLS = list(/datum/action/cooldown/spell/pointed/void_phase),
-			SWORD_SPELLS = list(/datum/action/cooldown/spell/pointed/void_prison),
+			SWORD_SPELLS = list(/datum/action/cooldown/spell/aoe/void_pull),
 			SWORD_PREFIX = "tenebrous",
 		),
 		// Blade
@@ -375,8 +377,6 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/item/melee/cultblade/haunted/Initialize(mapload, mob/soul_to_bind, mob/awakener, do_bind = TRUE)
 	. = ..()
-
-	AddElement(/datum/element/heretic_focus)
 	add_traits(list(TRAIT_CASTABLE_LOC, TRAIT_SPELLS_TRANSFER_TO_LOC), INNATE_TRAIT)
 	if(do_bind && !mapload)
 		bind_soul(soul_to_bind, awakener)
@@ -422,10 +422,6 @@ Striking a noncultist, however, will tear their flesh."}
 	var/datum/antagonist/soultrapped_heretic/bozo = new()
 	bozo.objectives |= copied_objectives
 	trapped_entity.mind.add_antag_datum(bozo)
-
-	// Assigning the spells to give to the wielder and spirit.
-	// Let them cast the given spell.
-	ADD_TRAIT(trapped_entity, TRAIT_ALLOW_HERETIC_CASTING, INNATE_TRAIT)
 
 	var/list/path_spells = heretic_paths_to_haunted_sword_abilities[heretic_path]
 
@@ -591,6 +587,7 @@ Striking a noncultist, however, will tear their flesh."}
 	lefthand_file = 'icons/mob/inhands/items/drinks_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/drinks_righthand.dmi'
 	list_reagents = list(/datum/reagent/fuel/unholywater = 50)
+	can_lid = FALSE
 
 /obj/item/reagent_containers/cup/beaker/unholywater/Initialize(mapload)
 	. = ..()
@@ -1045,33 +1042,41 @@ Striking a noncultist, however, will tear their flesh."}
 		playsound(src, 'sound/effects/magic/exit_blood.ogg', 75, TRUE)
 		new /obj/effect/temp_visual/dir_setting/cult/phase(user.loc, user.dir)
 		var/turf/temp_target = get_turf_in_angle(set_angle, targets_from, 40)
-		for(var/turf/T in get_line(targets_from,temp_target))
-			if (locate(/obj/effect/blessing, T))
-				temp_target = T
-				playsound(T, 'sound/effects/parry.ogg', 50, TRUE)
-				new /obj/effect/temp_visual/at_shield(T, T)
+		for(var/turf/target_turf in get_line(targets_from,temp_target))
+			if (HAS_TRAIT(target_turf, TRAIT_TURF_BLESSED))
+				temp_target = target_turf
+				playsound(target_turf, 'sound/effects/parry.ogg', 50, TRUE)
+				new /obj/effect/temp_visual/at_shield(target_turf, target_turf)
 				break
-			T.narsie_act(TRUE, TRUE)
-			for(var/mob/living/target in T.contents)
-				if(IS_CULTIST(target))
-					new /obj/effect/temp_visual/cult/sparks(T)
-					if(ishuman(target))
-						var/mob/living/carbon/human/H = target
-						if(H.stat != DEAD)
-							H.reagents.add_reagent(/datum/reagent/fuel/unholywater, 7)
-					if(isshade(target) || isconstruct(target))
-						var/mob/living/basic/construct/healed_guy = target
-						if(healed_guy.health + 15 < healed_guy.maxHealth)
-							healed_guy.adjust_health(-15)
-						else
-							healed_guy.health = healed_guy.maxHealth
+
+			target_turf.narsie_act(TRUE, TRUE)
+			for(var/mob/living/target in target_turf)
+				if(!IS_CULTIST(target))
+					var/mob/living/victim = target
+					if(!victim.density)
+						continue
+					victim.Paralyze(20)
+					victim.adjust_brute_loss(45)
+					playsound(victim, 'sound/effects/hallucinations/wail.ogg', 50, TRUE)
+					victim.emote("scream")
+					continue
+
+				new /obj/effect/temp_visual/cult/sparks(target_turf)
+				if(ishuman(target))
+					var/mob/living/carbon/human/cultie = target
+					if(cultie.stat != DEAD)
+						cultie.reagents.add_reagent(/datum/reagent/fuel/unholywater, 7)
+					continue
+
+				if(!isshade(target) && !isconstruct(target))
+					continue
+
+				var/mob/living/basic/construct/healed_guy = target
+				if(healed_guy.health + 15 < healed_guy.maxHealth)
+					healed_guy.adjust_health(-15)
 				else
-					var/mob/living/L = target
-					if(L.density)
-						L.Paralyze(20)
-						L.adjust_brute_loss(45)
-						playsound(L, 'sound/effects/hallucinations/wail.ogg', 50, TRUE)
-						L.emote("scream")
+					healed_guy.health = healed_guy.maxHealth
+
 		user.Beam(temp_target, icon_state="blood_beam", time = 7, beam_type = /obj/effect/ebeam/blood)
 
 
@@ -1101,7 +1106,7 @@ Striking a noncultist, however, will tear their flesh."}
 	if(!IS_CULTIST(owner))
 		if(prob(50))
 			var/mob/living/basic/illusion/bizarro = new(owner.loc)
-			bizarro.full_setup(owner, target_mob = owner, faction = list(FACTION_CULT), life = 10 SECONDS, damage = 20, replicate = 5)
+			bizarro.full_setup(owner, target_mob = owner, faction_override = list(FACTION_CULT), life = 10 SECONDS, damage = 20, replicate = 5)
 
 			to_chat(owner, span_bolddanger("You're betrayed by \"yourself\"!"))
 		return FALSE
@@ -1129,11 +1134,11 @@ Striking a noncultist, however, will tear their flesh."}
 		addtimer(CALLBACK(src, TYPE_PROC_REF(/obj/item/shield/mirror, readd)), 45 SECONDS)
 		if(prob(60)) // make a potentially slower, but replicable apparation
 			var/mob/living/basic/illusion/apparation = new(owner.loc)
-			apparation.full_setup(owner, target_mob = null, faction = list(FACTION_CULT), life = 7 SECONDS, damage = 10, replicate = 5)
+			apparation.full_setup(owner, target_mob = null, faction_override = list(FACTION_CULT), life = 7 SECONDS, damage = 10, replicate = 5)
 			apparation.cached_multiplicative_slowdown = owner.cached_multiplicative_slowdown
 		else // normal apparation designed to escape
 			var/mob/living/basic/illusion/escape/decoy = new(owner.loc)
-			decoy.full_setup(owner, target_mob = owner, faction = list(FACTION_CULT), life = 7 SECONDS, damage = 10) // Damage for retaliation
+			decoy.full_setup(owner, target_mob = owner, faction_override = list(FACTION_CULT), life = 7 SECONDS, damage = 10) // Damage for retaliation
 	return TRUE
 
 

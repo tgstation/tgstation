@@ -98,6 +98,7 @@
 				\
 				<b>Dough:</b> 10u water + 15u flour for simple dough.<br>\
 				6u egg yolk + 12 egg white + 15u flour + 5u sugar for cake batter.<br>\
+				(15u soy milk can be substituted for the eggs.)<br>\
 				Doughs can be transformed by using a knife and rolling pin.<br>\
 				All doughs can be baked.<br>\
 				<b>Bowl:</b> Add recipe ingredients and liquid to make soups.<br>\

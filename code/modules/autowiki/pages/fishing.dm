@@ -50,7 +50,7 @@
 			"name" = full_capitalize(escape_value(fish::name)),
 			"icon" = filename,
 			"description" = description,
-			"size_weight" = "[fish::average_size]cm / [fish::average_weight]g",
+			"size_weight" = "[fish::average_size] cm / [fish::average_weight] kiloclam",
 			"fluid" = escape_value(fish::required_fluid_type),
 			"temperature" = "Doesn't matter",
 			"stable_population" = fish::stable_population,
@@ -332,6 +332,7 @@
 
 	var/list/generated_icons = list()
 	var/datum/techweb/techweb = locate(/datum/techweb/admin) in SSresearch.techwebs
+	techweb ||= new /datum/techweb/admin()
 	for(var/scan_type in typesof(/datum/experiment/scanning/fish))
 		techweb.add_experiment(scan_type) //Make sure each followup experiment is available
 		var/datum/experiment/scanning/fish/scan = locate(scan_type) in techweb.available_experiments

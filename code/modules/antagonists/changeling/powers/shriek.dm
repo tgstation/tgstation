@@ -4,6 +4,7 @@
 		Best used to stop prey from escaping. Doesn't work well in a vacuum. Costs 20 chemicals."
 	helptext = "Emits a high-frequency sound that confuses and deafens humans to hamper their movement, blows out nearby lights and overloads cyborg sensors."
 	button_icon_state = "resonant_shriek"
+	category = "combat"
 	chemical_cost = 20
 	dna_cost = 1
 	req_human = TRUE
@@ -34,7 +35,8 @@
 /datum/action/changeling/dissonant_shriek
 	name = "Technophagic Shriek"
 	desc = "We shift our vocal cords to release a high-frequency sound that overloads nearby electronics. Breaks headsets and cameras, and can sometimes break laser weaponry, doors, and modsuits. Costs 20 chemicals."
-	button_icon_state = "dissonant_shriek"
+	button_icon_state = "technophagic_shriek"
+	category = "combat"
 	chemical_cost = 20
 	dna_cost = 1
 	disabled_by_fire = FALSE

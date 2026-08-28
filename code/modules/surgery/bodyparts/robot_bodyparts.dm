@@ -27,6 +27,7 @@
 	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
@@ -44,6 +45,12 @@
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	disabling_threshold_percentage = 1
 	bodypart_flags = BODYPART_UNHUSKABLE
+	butcher_replacement = null
+
+/obj/item/bodypart/arm/left/robot/generate_icon_key()
+	. = ..()
+	if(limb_id == BODYPART_ID_ROBOTIC)
+		. += should_draw_greyscale ? icon_greyscale : icon_static
 
 /obj/item/bodypart/arm/right/robot
 	name = "cyborg right arm"
@@ -61,6 +68,7 @@
 	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
@@ -79,6 +87,12 @@
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	bodypart_flags = BODYPART_UNHUSKABLE
+	butcher_replacement = null
+
+/obj/item/bodypart/arm/right/robot/generate_icon_key()
+	. = ..()
+	if(limb_id == BODYPART_ID_ROBOTIC)
+		. += should_draw_greyscale ? icon_greyscale : icon_static
 
 /obj/item/bodypart/leg/left/robot
 	name = "cyborg left leg"
@@ -96,6 +110,7 @@
 	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
@@ -114,20 +129,26 @@
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	bodypart_flags = BODYPART_UNHUSKABLE
+	butcher_replacement = null
+
+/obj/item/bodypart/leg/left/robot/generate_icon_key()
+	. = ..()
+	if(limb_id == BODYPART_ID_ROBOTIC)
+		. += should_draw_greyscale ? icon_greyscale : icon_static
 
 /obj/item/bodypart/leg/left/robot/emp_effect(severity, protection)
 	. = ..()
 	if(!. || isnull(owner))
 		return
-
-	var/knockdown_time = AUGGED_LEG_EMP_KNOCKDOWN_TIME
-	if (severity == EMP_HEAVY)
-		knockdown_time *= 2
-	owner.Knockdown(knockdown_time)
-	if(INCAPACITATED_IGNORING(owner, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
-		return
-	to_chat(owner, span_danger("As your [plaintext_zone] unexpectedly malfunctions, it causes you to fall to the ground!"))
-	return
+	if(prob(80 / severity))
+		if(owner.body_position == LYING_DOWN) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
+			to_chat(owner, span_danger("Your [plaintext_zone] suddenly malfunctions!"))
+		else
+			to_chat(owner, span_danger("As your [plaintext_zone] suddenly malfunctions, it causes you to fall to the ground!"))
+		owner.Knockdown(AUGGED_LEG_EMP_KNOCKDOWN_TIME)
+	owner.adjust_staggered(STAGGERED_SLOWDOWN_LENGTH * 3 / severity)
+	owner.client?.move_delay = max(owner.client?.move_delay, world.time)
+	owner.client?.move_delay += 0.6 SECONDS / severity
 
 /obj/item/bodypart/leg/right/robot
 	name = "cyborg right leg"
@@ -145,6 +166,7 @@
 	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
@@ -163,20 +185,26 @@
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	bodypart_flags = BODYPART_UNHUSKABLE
+	butcher_replacement = null
+
+/obj/item/bodypart/leg/right/robot/generate_icon_key()
+	. = ..()
+	if(limb_id == BODYPART_ID_ROBOTIC)
+		. += should_draw_greyscale ? icon_greyscale : icon_static
 
 /obj/item/bodypart/leg/right/robot/emp_effect(severity, protection)
 	. = ..()
 	if(!. || isnull(owner))
 		return
-
-	var/knockdown_time = AUGGED_LEG_EMP_KNOCKDOWN_TIME
-	if (severity == EMP_HEAVY)
-		knockdown_time *= 2
-	owner.Knockdown(knockdown_time)
-	if(INCAPACITATED_IGNORING(owner, INCAPABLE_RESTRAINTS|INCAPABLE_GRAB)) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
-		return
-	to_chat(owner, span_danger("As your [plaintext_zone] unexpectedly malfunctions, it causes you to fall to the ground!"))
-	return
+	if(prob(80 / severity))
+		if(owner.body_position == LYING_DOWN) // So the message isn't duplicated. If they were stunned beforehand by something else, then the message not showing makes more sense anyways.
+			to_chat(owner, span_danger("Your [plaintext_zone] suddenly malfunctions!"))
+		else
+			to_chat(owner, span_danger("As your [plaintext_zone] suddenly malfunctions, it causes you to fall to the ground!"))
+		owner.Knockdown(AUGGED_LEG_EMP_KNOCKDOWN_TIME)
+	owner.adjust_staggered(STAGGERED_SLOWDOWN_LENGTH * 3 / severity)
+	owner.client?.move_delay = max(owner.client?.move_delay, world.time)
+	owner.client?.move_delay += 0.6 SECONDS / severity
 
 /obj/item/bodypart/chest/robot
 	name = "cyborg torso"
@@ -193,6 +221,7 @@
 	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 20)
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
@@ -209,36 +238,31 @@
 
 	damage_examines = list(BRUTE = ROBOTIC_BRUTE_EXAMINE_TEXT, BURN = ROBOTIC_BURN_EXAMINE_TEXT)
 	bodypart_flags = BODYPART_UNHUSKABLE
+	butcher_replacement = null
 
 	robotic_emp_paralyze_damage_percent_threshold = 0.6
 
-	wing_types = list(/obj/item/organ/wings/functional/robotic)
+	wing_types = list(/obj/item/organ/wings/robotic)
 
 	var/wired = FALSE
 	var/obj/item/stock_parts/power_store/cell = null
+
+/obj/item/bodypart/chest/robot/generate_icon_key()
+	. = ..()
+	// When we reskin cybernetic limbs, we solely change their icon, nothing else
+	// So we need to include the relevant icon in the cache key
+	if(limb_id == BODYPART_ID_ROBOTIC)
+		. += should_draw_greyscale ? icon_greyscale : icon_static
 
 /obj/item/bodypart/chest/robot/emp_effect(severity, protection)
 	. = ..()
 	if(!. || isnull(owner))
 		return
-
-	var/stun_time = 0
-	var/shift_x = 3
-	var/shift_y = 0
-	var/shake_duration = AUGGED_CHEST_EMP_SHAKE_TIME
-
-	if(severity == EMP_HEAVY)
-		stun_time = AUGGED_CHEST_EMP_STUN_TIME
-
-		shift_x = 5
-		shift_y = 2
-
 	var/damage_percent_to_max = (get_damage() / max_damage)
-	if (stun_time && (damage_percent_to_max >= robotic_emp_paralyze_damage_percent_threshold))
+	if(damage_percent_to_max >= robotic_emp_paralyze_damage_percent_threshold)
 		to_chat(owner, span_danger("Your [plaintext_zone]'s logic boards temporarily become unresponsive!"))
-		owner.Stun(stun_time)
-	owner.Shake(pixelshiftx = shift_x, pixelshifty = shift_y, duration = shake_duration)
-	return
+		owner.Stun(AUGGED_CHEST_EMP_STUN_TIME / severity)
+	owner.adjust_jitter(AUGGED_CHEST_EMP_SHAKE_TIME / severity)
 
 /obj/item/bodypart/chest/robot/get_cell()
 	return cell
@@ -272,7 +296,7 @@
 	SIGNAL_HANDLER
 
 	var/all_robotic = TRUE
-	for(var/obj/item/bodypart/part in owner.bodyparts)
+	for(var/obj/item/bodypart/part as anything in owner.get_bodyparts())
 		all_robotic = all_robotic && IS_ROBOTIC_LIMB(part)
 
 	if(all_robotic)
@@ -290,28 +314,29 @@
 			TRAIT_RESISTHIGHPRESSURE,
 			), AUGMENTATION_TRAIT)
 
-/obj/item/bodypart/chest/robot/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(weapon, /obj/item/stock_parts/power_store/cell))
+/obj/item/bodypart/chest/robot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stock_parts/power_store/cell))
 		if(cell)
-			to_chat(user, span_warning("You have already inserted a cell!"))
-			return
-		else
-			if(!user.transferItemToLoc(weapon, src))
-				return
-			cell = weapon
-			to_chat(user, span_notice("You insert the cell."))
-	else if(istype(weapon, /obj/item/stack/cable_coil))
+			to_chat(user, span_warning("A cell is already present in [src]!"))
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		cell = tool
+		to_chat(user, span_notice("You insert [cell] into [src]."))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stack/cable_coil))
 		if(wired)
-			to_chat(user, span_warning("You have already inserted wire!"))
-			return
-		var/obj/item/stack/cable_coil/coil = weapon
-		if (coil.use(1))
-			wired = TRUE
-			to_chat(user, span_notice("You insert the wire."))
-		else
+			to_chat(user, span_warning("[src] is already wired up!"))
+			return ITEM_INTERACT_BLOCKING
+		var/obj/item/stack/cable_coil/coil = tool
+		if (!coil.use(1))
 			to_chat(user, span_warning("You need one length of coil to wire it!"))
-	else
-		return ..()
+			return ITEM_INTERACT_BLOCKING
+		wired = TRUE
+		to_chat(user, span_notice("You wire the cell inside of [src]."))
+		return ITEM_INTERACT_SUCCESS
+	return NONE
 
 /obj/item/bodypart/chest/robot/wirecutter_act(mob/living/user, obj/item/cutter)
 	. = ..()
@@ -369,6 +394,7 @@
 	bodyshape = BODYSHAPE_HUMANOID
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5)
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
@@ -387,26 +413,24 @@
 
 	head_flags = HEAD_EYESPRITES
 	bodypart_flags = BODYPART_UNHUSKABLE
+	butcher_replacement = null
 
 	var/obj/item/assembly/flash/handheld/flash1 = null
 	var/obj/item/assembly/flash/handheld/flash2 = null
 
-#define EMP_GLITCH "EMP_GLITCH"
+/obj/item/bodypart/head/robot/generate_icon_key()
+	. = ..()
+	if(limb_id == BODYPART_ID_ROBOTIC)
+		. += should_draw_greyscale ? icon_greyscale : icon_static
+
 
 /obj/item/bodypart/head/robot/emp_effect(severity, protection)
 	. = ..()
 	if(!. || isnull(owner))
 		return
-
-	to_chat(owner, span_danger("Your [plaintext_zone]'s optical transponders glitch out and malfunction!"))
-
-	var/glitch_duration = AUGGED_HEAD_EMP_GLITCH_DURATION
-	if (severity == EMP_HEAVY)
-		glitch_duration *= 2
-
-	QDEL_IN(owner.add_client_colour(/datum/client_colour/malfunction, HEAD_TRAIT), glitch_duration)
-
-#undef EMP_GLITCH
+	to_chat(owner, span_danger("Your [plaintext_zone] hurts..."))
+	QDEL_IN(owner.add_client_colour(/datum/client_colour/malfunction, HEAD_TRAIT), (AUGGED_HEAD_EMP_GLITCH_DURATION / severity))
+	owner.adjust_confusion(AUGGED_HEAD_EMP_GLITCH_DURATION / severity)
 
 /obj/item/bodypart/head/robot/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -434,25 +458,28 @@
 			. += "It has two eye sockets occupied by flashes."
 		. += span_notice("You can remove the seated flash[single_flash ? "":"es"] with a <b>crowbar</b>.")
 
-/obj/item/bodypart/head/robot/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(weapon, /obj/item/assembly/flash/handheld))
-		var/obj/item/assembly/flash/handheld/flash = weapon
-		if(flash1 && flash2)
-			to_chat(user, span_warning("You have already inserted the eyes!"))
-			return
-		else if(flash.burnt_out)
-			to_chat(user, span_warning("You can't use a broken flash!"))
-			return
-		else
-			if(!user.transferItemToLoc(flash, src))
-				return
-			if(flash1)
-				flash2 = flash
-			else
-				flash1 = flash
-			to_chat(user, span_notice("You insert the flash into the eye socket."))
-			return
-	return ..()
+/obj/item/bodypart/head/robot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/assembly/flash/handheld))
+		return NONE
+
+	var/obj/item/assembly/flash/handheld/flash = tool
+	if(flash1 && flash2)
+		to_chat(user, span_warning("[src] already has both flash-eyes present!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(flash.burnt_out)
+		to_chat(user, span_warning("You can't use a broken flash!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(flash, src))
+		return ITEM_INTERACT_BLOCKING
+
+	if(flash1)
+		flash2 = flash
+	else
+		flash1 = flash
+	to_chat(user, span_notice("You insert the flash into the eye socket."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/bodypart/head/robot/crowbar_act(mob/living/user, obj/item/prytool)
 	..()
@@ -548,6 +575,7 @@
 	max_damage = LIMB_MAX_HP_ADVANCED
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
 	is_emissive = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/item/bodypart/arm/right/robot/advanced
 	name = "advanced robotic right arm"
@@ -560,6 +588,7 @@
 	max_damage = LIMB_MAX_HP_ADVANCED
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
 	is_emissive = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/item/bodypart/leg/left/robot/advanced
 	name = "advanced robotic left leg"
@@ -572,6 +601,7 @@
 	max_damage = LIMB_MAX_HP_ADVANCED
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
 	is_emissive = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
 
 /obj/item/bodypart/leg/right/robot/advanced
 	name = "advanced robotic right leg"
@@ -584,6 +614,7 @@
 	max_damage = LIMB_MAX_HP_ADVANCED
 	body_damage_coeff = LIMB_BODY_DAMAGE_COEFFICIENT_ADVANCED
 	is_emissive = TRUE
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 10, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 3, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 3)
 
 #undef ROBOTIC_LIGHT_BRUTE_MSG
 #undef ROBOTIC_MEDIUM_BRUTE_MSG

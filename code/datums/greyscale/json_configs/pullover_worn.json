@@ -1,0 +1,24 @@
+{
+	"pullover": [
+		{
+			"type": "icon_state",
+			"icon_state": "pullover",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		},
+		{
+			"type": "icon_state",
+			"icon_state": "pullover_hood",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	],
+	"pullover_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "pullover_t",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	]
+}

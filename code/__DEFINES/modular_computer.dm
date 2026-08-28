@@ -26,10 +26,8 @@
 #define PROGRAM_UNIQUE_COPY (1<<3)
 ///The program is a header and will show up at the top of the ModPC's UI.
 #define PROGRAM_HEADER (1<<4)
-///The program will run despite the ModPC not having any power in it.
-#define PROGRAM_RUNS_WITHOUT_POWER (1<<5)
 ///The circuit ports of this program can be triggered even if the program is not open
-#define PROGRAM_CIRCUITS_RUN_WHEN_CLOSED (1<<6)
+#define PROGRAM_CIRCUITS_RUN_WHEN_CLOSED (1<<5)
 
 //Program categories
 #define PROGRAM_CATEGORY_DEVICE "Device Tools"
@@ -39,6 +37,7 @@
 #define PROGRAM_CATEGORY_ENGINEERING "Engineering"
 #define PROGRAM_CATEGORY_SUPPLY "Supply"
 #define PROGRAM_CATEGORY_SCIENCE "Science"
+#define PROGRAM_CATEGORY_SERVICE "Service"
 
 ///The default amount a program should take in cell use.
 #define PROGRAM_BASIC_CELL_USE 2 WATTS
@@ -83,6 +82,12 @@
 /// The maximum length of the ringtone of the Messenger app.
 #define MESSENGER_RINGTONE_MAX_LENGTH 20
 
+///how much paper it takes from the printer to create a canvas.
+#define CANVAS_PAPER_COST 10
+
+///how much paper it takes from the printer to create a photo.
+#define PHOTO_PAPER_COST 1
+
 /**
  * PDA Themes
  * For these to work, the defines must be defined in tgui/styles/themes/[define].scss
@@ -94,19 +99,30 @@
 #define PDA_THEME_RETRO "ntOS95"
 #define PDA_THEME_SYNTH "ntos_synth"
 #define PDA_THEME_TERMINAL "ntos_terminal"
+#define PDA_THEME_BIRD "neutral"
 
 ///Emagged/Syndicate NtOS (SyndiOS) PDA theme
 #define PDA_THEME_SYNDICATE "syndicate"
 
-//Maintenance-loot themes
+//Maintenance-loot themes: you only need to get them once for them to be available on future rounds
 #define PDA_THEME_CAT "ntos_cat"
 #define PDA_THEME_LIGHT_MODE "ntos_lightmode"
 #define PDA_THEME_SPOOKY "ntos_spooky"
 #define PDA_THEME_HACKERMAN "hackerman"
 #define PDA_THEME_ROULETTE "cardtable"
 #define PDA_THEME_ABDUCTOR "abductor"
-#define PDA_THEME_BIRD "neutral"
 
+/**
+ * Database IDs for unlockable themes (just maintenance-loot for now).
+ * Distinct from declarations for both theme and name because having to retroactively change DB IDs is bad
+ * So don't change the values of pre-existing IDs
+ */
+#define PDA_THEME_ID_CAT "ntos_cat"
+#define PDA_THEME_ID_LIGHT_MODE "ntos_lightmode"
+#define PDA_THEME_ID_SPOOKY "ntos_spooky"
+#define PDA_THEME_ID_HACKERMAN "hackerman"
+#define PDA_THEME_ID_ROULETTE "cardtable"
+#define PDA_THEME_ID_ABDUCTOR "abductor"
 
 //Defines for the names of all the themes
 #define PDA_THEME_NTOS_NAME "NtOS"
@@ -122,6 +138,7 @@
 #define PDA_THEME_ROULETTE_NAME "Roulette Table"
 #define PDA_THEME_ABDUCTOR_NAME "Alien"
 #define PDA_THEME_BIRD_NAME "Bird"
+
 
 ///List of PDA themes that are accessible to everyone by default.
 GLOBAL_LIST_INIT(default_pda_themes, list(
@@ -148,4 +165,14 @@ GLOBAL_LIST_INIT(pda_name_to_theme, list(
 	PDA_THEME_ROULETTE_NAME = PDA_THEME_ROULETTE,
 	PDA_THEME_ABDUCTOR_NAME = PDA_THEME_ABDUCTOR,
 	PDA_THEME_BIRD_NAME = PDA_THEME_BIRD,
+))
+
+///List of unlockable PDA themes, keyed by their database ID.
+GLOBAL_LIST_INIT(pda_id_to_name, list(
+	PDA_THEME_ID_CAT = PDA_THEME_CAT_NAME,
+	PDA_THEME_ID_LIGHT_MODE = PDA_THEME_LIGHT_MODE_NAME,
+	PDA_THEME_ID_SPOOKY = PDA_THEME_SPOOKY_NAME,
+	PDA_THEME_ID_HACKERMAN = PDA_THEME_HACKERMAN_NAME,
+	PDA_THEME_ID_ROULETTE = PDA_THEME_ROULETTE_NAME,
+	PDA_THEME_ABDUCTOR = PDA_THEME_ABDUCTOR_NAME,
 ))

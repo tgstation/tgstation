@@ -11,6 +11,8 @@ at the cost of risking a vicious bite.**/
 	var/obj/item/hidden_item
 	///This var determines if there is a chance to receive a bite when sticking your hand into the water.
 	var/critter_infested = TRUE
+	///A subtle loop which plays a drop of water sound every once in a while
+	var/datum/looping_sound/drip/drip_sfx
 	///weighted loot table for what loot you can find inside the moisture trap.
 	///the actual loot isn't that great and should probably be improved and expanded later.
 	var/static/list/loot_table = list(
@@ -45,11 +47,14 @@ at the cost of risking a vicious bite.**/
 		fish_source.fish_table[picked_item] = 5
 		fish_source.fish_counts[picked_item] = 1;
 	AddComponent(/datum/component/fishing_spot, fish_source)
+	drip_sfx = new(src)
+	drip_sfx.start()
 
 
 /obj/structure/moisture_trap/Destroy()
 	if(hidden_item)
 		QDEL_NULL(hidden_item)
+	drip_sfx?.stop(TRUE)
 	return ..()
 
 
@@ -71,6 +76,7 @@ at the cost of risking a vicious bite.**/
 		to_chat(user, span_warning("You need to lie down to reach into [src]."))
 		return
 	to_chat(user, span_notice("You reach down into the cold water of the basin."))
+	playsound(src,'sound/effects/submerge.ogg', 25, TRUE)
 	if(!do_after(user, 2 SECONDS, target = src))
 		return
 	if(hidden_item)
@@ -87,28 +93,35 @@ at the cost of risking a vicious bite.**/
 		return
 	to_chat(user, span_warning("You find nothing of value..."))
 
-/obj/structure/moisture_trap/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/moisture_trap/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(iscyborg(user) || isalien(user) || !CanReachInside(user))
-		return ..()
+		return NONE
+
 	add_fingerprint(user)
-	if(is_reagent_container(I))
-		if(istype(I, /obj/item/food/monkeycube))
-			var/obj/item/food/monkeycube/cube = I
+	if(is_reagent_container(tool))
+		if(istype(tool, /obj/item/food/monkeycube))
+			var/obj/item/food/monkeycube/cube = tool
 			cube.Expand()
-			return
-		var/obj/item/reagent_containers/reagent_container = I
+			return ITEM_INTERACT_SUCCESS
+
+		var/obj/item/reagent_containers/reagent_container = tool
 		if(reagent_container.is_open_container())
 			reagent_container.reagents.add_reagent(/datum/reagent/water, min(reagent_container.volume - reagent_container.reagents.total_volume, reagent_container.amount_per_transfer_from_this))
 			to_chat(user, span_notice("You fill [reagent_container] from [src]."))
-			return
+			return ITEM_INTERACT_SUCCESS
+
 	if(hidden_item)
 		to_chat(user, span_warning("There is already something inside [src]."))
-		return
-	if(!user.transferItemToLoc(I, src))
-		to_chat(user, span_warning("\The [I] is stuck to your hand, you cannot put it in [src]!"))
-		return
-	hidden_item = I
-	to_chat(user, span_notice("You hide [I] inside the basin."))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
+		to_chat(user, span_warning("\The [tool] is stuck to your hand, you cannot put it in [src]!"))
+		return ITEM_INTERACT_BLOCKING
+
+	hidden_item = tool
+	to_chat(user, span_notice("You hide [tool] inside the basin."))
+	playsound(src,'sound/effects/splash.ogg', 55, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 #define ALTAR_INACTIVE 0
 #define ALTAR_STAGEONE 1
@@ -131,11 +144,11 @@ at the cost of risking a vicious bite.**/
 	/// Stage of the pants making process
 	var/status = ALTAR_INACTIVE
 
-/obj/structure/destructible/cult/pants_altar/attackby(obj/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/melee/cultblade/dagger) && IS_CULTIST(user) && status)
-		to_chat(user, span_notice("[src] is creating something, you can't move it!"))
-		return
-	return ..()
+/obj/structure/destructible/cult/pants_altar/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/melee/cultblade/dagger) || !IS_CULTIST(user) || !status)
+		return NONE
+	to_chat(user, span_notice("[src] is creating something, you can't move it!"))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/destructible/cult/pants_altar/attack_hand(mob/living/user, list/modifiers)
 	. = ..()
@@ -148,7 +161,7 @@ at the cost of risking a vicious bite.**/
 	var/altar_result = show_radial_menu(user, src, altar_options, custom_check = CALLBACK(src, PROC_REF(check_menu), user), require_near = TRUE, tooltips = TRUE)
 	switch(altar_result)
 		if("Change Color")
-			var/chosen_color = input(user, "", "Choose Color", pants_color) as color|null
+			var/chosen_color = tgui_color_picker(user, "", "Choose Color", pants_color)
 			if(!isnull(chosen_color) && user.can_perform_action(src))
 				pants_color = chosen_color
 		if("Create Artefact")
@@ -318,9 +331,7 @@ at the cost of risking a vicious bite.**/
 		return
 	if(!ismob(leaving))
 		return
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(range = 1, amount = 1, location = src)
-	smoke.start()
+	do_smoke(1, src, loc)
 	playsound(src, 'sound/machines/steam_hiss.ogg', 75, TRUE, -2)
 	COOLDOWN_START(src, steam_vent_interact, steam_speed)
 

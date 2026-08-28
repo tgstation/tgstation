@@ -48,7 +48,7 @@
 
 /obj/item/clothing/head/beanie/durathread
 	name = "durathread beanie"
-	desc = "A beanie made from durathread, its resilient fibres provide some protection to the wearer."
+	desc = "A beanie made from durathread. Its resilient fibres provide some protection to the wearer."
 	icon_state = "/obj/item/clothing/head/beanie/durathread"
 	greyscale_colors = "#8291A1#8291A1"
 	armor_type = /datum/armor/beanie_durathread

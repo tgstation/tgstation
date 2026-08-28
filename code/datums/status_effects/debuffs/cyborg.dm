@@ -20,7 +20,7 @@
 /datum/status_effect/borg_slow/on_remove()
 	owner.remove_movespeed_modifier(/datum/movespeed_modifier/borg_slowdown)
 
-/datum/status_effect/borg_slow/refresh(mob/living/new_owner, slowdown = 1)
+/datum/status_effect/borg_slow/refresh(effect, slowdown = 1)
 	. = ..()
 	if(src.slowdown <= slowdown)
 		return

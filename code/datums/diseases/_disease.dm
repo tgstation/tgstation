@@ -5,11 +5,19 @@
 	var/spread_flags = DISEASE_SPREAD_AIRBORNE | DISEASE_SPREAD_CONTACT_FLUIDS | DISEASE_SPREAD_CONTACT_SKIN
 
 	//Fluff
+
+	/// What type of disease this is
 	var/form = "Virus"
+	/// The name of the disease (this one's kind of important)
 	var/name = "No disease"
+	/// The description of what the disease is and does
 	var/desc = ""
-	var/agent = "some microbes"
+	/// The agent that causes the disease, for example "virus", "bacteria", "parasite", "curse"
+	var/agent = "Unknown"
+	/// A string describing how the disease spreads, for example "Airborne", "Blood", "Skin contact", "Magic"
+	/// (Keep this strictly for how it spreads BETWEEN hosts, NOT how it affected the initial host. Use agent var for that)
 	var/spread_text = ""
+	/// A string describing how the disease can be cured, for example "Toxin remover", "Antibiotics", "Rest and hydration", "Prayers to the gods"
 	var/cure_text = ""
 
 	//Stages
@@ -49,6 +57,7 @@
 	var/infectable_biotypes = MOB_ORGANIC //if the disease can spread on organics, synthetics, or undead
 	var/process_dead = FALSE //if this ticks while the host is dead
 	var/copy_type = null //if this is null, copies will use the type of the instance being copied
+	var/half_stage = FALSE // Acts as a counter for half stages
 
 /datum/disease/Destroy()
 	. = ..()
@@ -69,11 +78,14 @@
 	SSdisease.active_diseases += D //Add it to the active diseases list, now that it's actually in a mob and being processed.
 
 	D.after_add()
+	D.register_disease_signals()
 	infectee.med_hud_set_status()
-	register_disease_signals()
 
 	var/turf/source_turf = get_turf(infectee)
 	log_virus("[key_name(infectee)] was infected by virus: [src.admin_details()] at [loc_name(source_turf)]")
+
+	if(severity >= DISEASE_SEVERITY_BIOHAZARD)
+		SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_TOMBSTONE] = TRUE
 
 /// Updates the spread flags set, ensuring signals are updated as necessary
 /datum/disease/proc/update_spread_flags(new_flags)
@@ -88,6 +100,7 @@
 /datum/disease/proc/register_disease_signals()
 	if(isnull(affected_mob))
 		return
+	RegisterSignal(affected_mob, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 	if(spread_flags & DISEASE_SPREAD_AIRBORNE)
 		RegisterSignal(affected_mob, COMSIG_CARBON_PRE_BREATHE, PROC_REF(on_breath))
 
@@ -95,24 +108,40 @@
 /datum/disease/proc/unregister_disease_signals()
 	if(isnull(affected_mob))
 		return
-	UnregisterSignal(affected_mob, COMSIG_CARBON_PRE_BREATHE)
+	UnregisterSignal(affected_mob, list(COMSIG_LIVING_LIFE, COMSIG_CARBON_PRE_BREATHE))
+
+// Proc to determine if the virus can resist natural recovery
+/datum/disease/proc/get_recovery_failure_chance()
+	return 0
+
+/datum/disease/proc/on_life(datum/source, seconds_per_tick)
+	SIGNAL_HANDLER
+	PRIVATE_PROC(TRUE)
+
+	if(HAS_TRAIT(affected_mob, TRAIT_STASIS) || QDELETED(src) || (affected_mob.stat == DEAD && !process_dead))
+		return
+
+	stage_act(seconds_per_tick)
 
 ///Proc to process the disease and decide on whether to advance, cure or make the symptoms appear. Returns a boolean on whether to continue acting on the symptoms or not.
-/datum/disease/proc/stage_act(seconds_per_tick, times_fired)
+/datum/disease/proc/stage_act(seconds_per_tick)
 	var/slowdown = HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) ? 0.5 : 1 // spaceacillin slows stage speed by 50%
 	var/recovery_prob = 0
 	var/cure_mod
 	var/bad_immune = HAS_TRAIT(affected_mob, TRAIT_IMMUNODEFICIENCY) ? 2 : 1
+	var/is_sleeping = !!affected_mob.IsSleeping()
+	var/malnourished = !HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) && (affected_mob.nutrition <= NUTRITION_LEVEL_STARVING)
 
 	if(required_organ)
 		if(!has_required_infectious_organ(affected_mob, required_organ))
 			cure(add_resistance = FALSE)
 			return FALSE
 
-	if(has_cure())
+	var/cure_status = has_cure()
+	if(cure_status)
 		cure_mod = cure_chance / bad_immune
 		if(istype(src, /datum/disease/advance))
-			cure_mod = max(cure_chance, DISEASE_MINIMUM_CHEMICAL_CURE_CHANCE)
+			cure_mod = cure_mod * 2 * cure_status // Advanced diseases can be cured up to 2x as fast if all symptoms are remedied
 		if(disease_flags & CHRONIC && SPT_PROB(cure_mod, seconds_per_tick))
 			update_stage(1)
 			to_chat(affected_mob, span_notice("Your chronic illness is alleviated a little, though it can't be cured!"))
@@ -128,14 +157,20 @@
 	if(stage == max_stages && stage_peaked != TRUE) //mostly a sanity check in case we manually set a virus to max stages
 		stage_peaked = TRUE
 
-	if(SPT_PROB(stage_prob*slowdown*bad_immune, seconds_per_tick))
-		update_stage(min(stage + 1, max_stages))
+	if(SPT_PROB(stage_prob * slowdown * bad_immune * 2, seconds_per_tick))
+		if(half_stage)
+			half_stage = FALSE
+			update_stage(min(stage + 1, max_stages))
+		else if(stage <= max_stages)
+			half_stage = TRUE
 
 	if(!(disease_flags & CHRONIC) && disease_flags & CURABLE && bypasses_immunity != TRUE)
 		switch(severity)
-			if(DISEASE_SEVERITY_POSITIVE) //good viruses don't go anywhere after hitting max stage - you can try to get rid of them by sleeping earlier
-				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_POSITIVE) //because of the way we later check for recovery_prob, we need to floor this at least equal to the scaling to avoid infinitely getting less likely to cure
-				if(((HAS_TRAIT(affected_mob, TRAIT_NOHUNGER)) || ((affected_mob.nutrition > NUTRITION_LEVEL_STARVING) && (affected_mob.satiety >= 0))) && slowdown == 1) //any sort of malnourishment/immunosuppressant opens you to losing a good virus
+			if(DISEASE_SEVERITY_POSITIVE)
+				if(slowdown < 1 || malnourished)
+					cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_POSITIVE)
+				else
+					recovery_prob = 0
 					return TRUE
 			if(DISEASE_SEVERITY_NONTHREAT)
 				cycles_to_beat = max(DISEASE_RECOVERY_SCALING, DISEASE_CYCLES_NONTHREAT)
@@ -155,15 +190,12 @@
 		recovery_prob += DISEASE_RECOVERY_CONSTANT + (peaked_cycles / (cycles_to_beat / DISEASE_RECOVERY_SCALING)) //more severe viruses are beaten back more aggressively after the peak
 		if(stage_peaked)
 			recovery_prob *= DISEASE_PEAKED_RECOVERY_MULTIPLIER
-		if(slowdown != 1) //using spaceacillin can help get them over the finish line to kill a virus with decreasing effect over time
+		if(slowdown < 1) //using spaceacillin can help get them over the finish line to kill a virus with decreasing effect over time
 			recovery_prob += clamp((((1 - slowdown)*(DISEASE_SLOWDOWN_RECOVERY_BONUS * 2)) * ((DISEASE_SLOWDOWN_RECOVERY_BONUS_DURATION - chemical_offsets) / DISEASE_SLOWDOWN_RECOVERY_BONUS_DURATION)), 0, DISEASE_SLOWDOWN_RECOVERY_BONUS)
 			chemical_offsets = min(chemical_offsets + 1, DISEASE_SLOWDOWN_RECOVERY_BONUS_DURATION)
-		if(!HAS_TRAIT(affected_mob, TRAIT_NOHUNGER))
-			if(affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING) //being malnourished makes it a lot harder to defeat your illness
-				recovery_prob -= DISEASE_MALNUTRITION_RECOVERY_PENALTY
-			else
-				if(affected_mob.satiety >= 0)
-					recovery_prob += round((DISEASE_SATIETY_RECOVERY_MULTIPLIER * (affected_mob.satiety/MAX_SATIETY)), 0.1)
+		if(malnourished) //being malnourished makes it a lot harder to defeat your illness
+			recovery_prob -= DISEASE_MALNUTRITION_RECOVERY_PENALTY
+
 
 		if(affected_mob.mob_mood) // this and most other modifiers below a shameless rip from sleeping healing buffs, but feeling good helps make it go away quicker
 			switch(affected_mob.mob_mood.sanity_level)
@@ -180,9 +212,11 @@
 				if(SANITY_LEVEL_INSANE)
 					recovery_prob += -0.4
 
-		if((HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) || !(affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING)) && HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT)) //resting starved won't help, but resting helps
+		recovery_prob += get_immunity_recovery()
+
+		if(!malnourished && is_sleeping) //resting starved won't help, but resting helps
 			var/turf/rest_turf = get_turf(affected_mob)
-			var/is_sleeping_in_darkness = rest_turf.get_lumcount() <= LIGHTING_TILE_IS_DARK
+			var/is_sleeping_in_darkness = !rest_turf.check_lumcount_above(LIGHTING_TILE_IS_DARK)
 
 			if(affected_mob.is_blind_from(EYES_COVERED) || is_sleeping_in_darkness)
 				recovery_prob += DISEASE_GOOD_SLEEPING_RECOVERY_BONUS
@@ -209,10 +243,13 @@
 
 		recovery_prob = clamp(recovery_prob / bad_immune, 0, 100)
 
-		if(recovery_prob)
-			if(SPT_PROB(recovery_prob, seconds_per_tick))
+		if(recovery_prob && (bad_immune == 1))
+			var/failure_chance = (1 - get_recovery_failure_chance() / 100)
+			if(SPT_PROB(recovery_prob * failure_chance, seconds_per_tick))
 				if(stage == 1 && prob(cure_chance * DISEASE_FINAL_CURE_CHANCE_MULTIPLIER)) //if we reduce FROM stage == 1, cure the virus - after defeating its cure_chance in a final battle
-					if(!HAS_TRAIT(affected_mob, TRAIT_NOHUNGER) && (affected_mob.satiety < 0 || affected_mob.nutrition < NUTRITION_LEVEL_STARVING))
+					if(severity == DISEASE_SEVERITY_POSITIVE && slowdown < 1)
+						return TRUE
+					if(malnourished)
 						if(stage_peaked == FALSE) //if you didn't ride out the virus from its peak, if you're malnourished when it cures, you don't get resistance
 							cure(add_resistance = FALSE)
 							return FALSE
@@ -224,7 +261,7 @@
 						return FALSE
 				update_stage(max(stage - 1, 1))
 
-		if(HAS_TRAIT(affected_mob, TRAIT_KNOCKEDOUT) || slowdown != 1) //sleeping and using spaceacillin lets us nosell applicable virus symptoms firing with decreasing effectiveness over time
+		if(is_sleeping || slowdown != 1) //sleeping and using spaceacillin lets us nosell applicable virus symptoms firing with decreasing effectiveness over time
 			if(prob(100 - min((100 * (symptom_offsets / DISEASE_SYMPTOM_OFFSET_DURATION)), 100 - cure_chance * DISEASE_FINAL_CURE_CHANCE_MULTIPLIER))) //viruses with higher cure_chance will ultimately be more possible to offset symptoms on
 				symptom_offsets = min(symptom_offsets + 1, DISEASE_SYMPTOM_OFFSET_DURATION)
 				return FALSE
@@ -269,7 +306,7 @@
 		return FALSE
 	if(!has_required_infectious_organ(affected_mob, ORGAN_SLOT_LUNGS)) //also if you lack lungs
 		return FALSE
-	if(HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE) || (affected_mob.satiety > 0 && prob(affected_mob.satiety / 2))) //being full or on spaceacillin makes you less likely to spread a virus
+	if(HAS_TRAIT(affected_mob, TRAIT_VIRUS_RESISTANCE)) //being full or on spaceacillin makes you less likely to spread a virus
 		return FALSE
 	var/turf/mob_loc = affected_mob.loc
 	if(!istype(mob_loc))
@@ -385,6 +422,10 @@
 	if(SPT_PROB(infectivity * 4, seconds_per_tick))
 		airborne_spread()
 
+// Increases natural recovery based on prior immunities
+/datum/disease/proc/get_immunity_recovery()
+	return 0
+
 //Use this to compare severities
 /proc/get_disease_severity_value(severity)
 	switch(severity)
@@ -404,3 +445,16 @@
 			return 6
 		if(DISEASE_SEVERITY_BIOHAZARD)
 			return 7
+
+/proc/get_disease_spread_text(spread_flags)
+	if(spread_flags & DISEASE_SPREAD_AIRBORNE)
+		return "Airborne"
+	if(spread_flags & DISEASE_SPREAD_CONTACT_SKIN)
+		return "Skin contact"
+	if(spread_flags & DISEASE_SPREAD_CONTACT_FLUIDS)
+		return "Fluid contact"
+	if(spread_flags & DISEASE_SPREAD_BLOOD)
+		return "Blood"
+	if(spread_flags & DISEASE_SPREAD_NON_CONTAGIOUS)
+		return "None"
+	return "Unknown"

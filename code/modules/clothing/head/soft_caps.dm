@@ -20,9 +20,7 @@
 	flipped = FALSE
 	..()
 
-/obj/item/clothing/head/soft/verb/flipcap()
-	set category = "Object"
-	set name = "Flip cap"
+GAME_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", null)
 
 	flip(usr)
 
@@ -166,7 +164,7 @@
 	. = ..()
 	AddComponent(/datum/component/speechmod, replacements = strings("crustacean_replacement.json", "crustacean")) //you asked for this.
 	AddElement(/datum/element/skill_reward, /datum/skill/fishing)
-	AddComponent(/datum/component/adjust_fishing_difficulty, -5)
+	AddElement(/datum/element/adjust_fishing_difficulty, -5)
 
 #define PROPHAT_MOOD "prophat"
 

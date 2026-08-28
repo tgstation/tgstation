@@ -66,7 +66,7 @@ GLOBAL_LIST_INIT(ore_probability, list(
 /obj/structure/spawner/ice_moon/polarbear
 	max_mobs = 1
 	spawn_time = 60 SECONDS
-	mob_types = list(/mob/living/simple_animal/hostile/asteroid/polarbear)
+	mob_types = list(/mob/living/basic/mining/polarbear)
 	mob_gps_id = "BR" // bear
 
 /obj/structure/spawner/ice_moon/polarbear/clear_rock()
@@ -146,6 +146,6 @@ GLOBAL_LIST_INIT(ore_probability, list(
 		if(1 to 80)
 			new /obj/structure/closet/crate/necropolis/tendril/demonic(loc)
 		if(81 to 90)
-			new /mob/living/simple_animal/hostile/megafauna/blood_drunk_miner/doom(loc)
+			new /mob/living/basic/boss/blood_drunk_miner/doom(loc)
 		if(91 to INFINITY)
 			new /obj/structure/elite_tumor(loc)

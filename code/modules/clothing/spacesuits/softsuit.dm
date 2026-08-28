@@ -1,25 +1,25 @@
 	//NASA Voidsuit
 /obj/item/clothing/head/helmet/space/nasavoid
-	name = "NASA Void Helmet"
+	name = "\improper NASA void helmet"
 	desc = "An old, NASA CentCom branch designed, dark red space suit helmet."
 	icon_state = "void"
 	inhand_icon_state = "void_helmet"
 
 /obj/item/clothing/suit/space/nasavoid
-	name = "NASA Voidsuit"
+	name = "\improper NASA voidsuit"
 	icon_state = "void"
 	inhand_icon_state = "void_suit"
 	desc = "An old, NASA CentCom branch designed, dark red space suit."
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)
 
 /obj/item/clothing/head/helmet/space/nasavoid/old
-	name = "Engineering Void Helmet"
+	name = "\improper engineering void helmet"
 	desc = "A CentCom engineering dark red space suit helmet. While old and dusty, it still gets the job done."
 	icon_state = "void"
 	visor_dirt = "void_dirt"
 
 /obj/item/clothing/suit/space/nasavoid/old
-	name = "Engineering Voidsuit"
+	name = "\improper engineering voidsuit"
 	icon_state = "void"
 	inhand_icon_state = "void_suit"
 	desc = "A CentCom engineering dark red space suit. Age has degraded the suit making it difficult to move around in."
@@ -28,20 +28,21 @@
 
 	//EVA suit
 /obj/item/clothing/suit/space/eva
-	name = "EVA suit"
+	name = "\improper EVA suit"
 	icon_state = "space"
 	inhand_icon_state = "s_suit"
 	desc = "A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies."
 	armor_type = /datum/armor/space_eva
 
 /obj/item/clothing/head/helmet/space/eva
-	name = "EVA helmet"
+	name = "\improper EVA helmet"
 	icon_state = "space"
 	inhand_icon_state = "space_helmet"
 	desc = "A lightweight space helmet with the basic ability to protect the wearer from the vacuum of space during emergencies."
 	flash_protect = FLASH_PROTECTION_NONE
 	armor_type = /datum/armor/space_eva
 	visor_dirt = "space_dirt"
+	has_visor = TRUE
 
 /datum/armor/space_eva
 	bio = 100
@@ -52,19 +53,19 @@
 	. = ..()
 	. += span_notice("You can start constructing a critter sized mecha with a [span_bold("cyborg leg")].")
 
-/obj/item/clothing/head/helmet/space/eva/attackby(obj/item/attacked_with, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(.)
-		return
-	if(!istype(attacked_with, /obj/item/bodypart/leg/left/robot) && !istype(attacked_with, /obj/item/bodypart/leg/right/robot))
-		return
+/obj/item/clothing/head/helmet/space/eva/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/bodypart/leg/left/robot) && !istype(tool, /obj/item/bodypart/leg/right/robot))
+		return ..()
+
 	if(ismob(loc))
 		user.balloon_alert(user, "drop the helmet first!")
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	user.balloon_alert(user, "leg attached")
 	new /obj/item/bot_assembly/vim(loc)
-	qdel(attacked_with)
+	qdel(tool)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 	//Emergency suit
 /obj/item/clothing/head/helmet/space/fragile

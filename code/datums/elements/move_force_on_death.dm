@@ -39,11 +39,11 @@
 	if(!isnull(move_resist))
 		source.move_resist = move_resist
 	if(!isnull(pull_force))
-		source.pull_force = pull_force
+		source.set_pull_force(pull_force)
 
 /datum/element/change_force_on_death/proc/on_revive(mob/living/source)
 	SIGNAL_HANDLER
 
 	source.move_force = initial(source.move_force)
 	source.move_resist = initial(source.move_resist)
-	source.pull_force = initial(source.pull_force)
+	source.set_pull_force(initial(source.pull_force))

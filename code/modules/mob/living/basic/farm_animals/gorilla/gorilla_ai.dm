@@ -1,30 +1,16 @@
 /// Pretty basic, just click people to death. Also hunt and eat bananas.
 /datum/ai_controller/basic_controller/gorilla
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/gorilla/gorilla.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-		BB_TARGET_MINIMUM_STAT = UNCONSCIOUS,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_TREAT_UNCONSCIOUS_AS_HARDCRIT = TRUE,
 		BB_EMOTE_KEY = "ooga",
 		BB_EMOTE_CHANCE = 40,
 	)
 
 	ai_traits = DEFAULT_AI_FLAGS | STOP_MOVING_WHEN_PULLED
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/run_emote,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/gorilla,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-		/datum/ai_planning_subtree/find_food,
-	)
-
-/datum/ai_planning_subtree/attack_obstacle_in_path/gorilla
-	attack_behaviour = /datum/ai_behavior/attack_obstructions/gorilla
-
-/datum/ai_behavior/attack_obstructions/gorilla
-	can_attack_turfs = TRUE
 
 /datum/ai_controller/basic_controller/gorilla/lesser
 	blackboard = list(
@@ -32,3 +18,6 @@
 		BB_EMOTE_KEY = "ooga",
 		BB_EMOTE_CHANCE = 60,
 	)
+
+/datum/bt_node/subtree/bar_gorilla_combat
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/gorilla/bar_gorilla_combat.bt.json"

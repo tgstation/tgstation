@@ -44,3 +44,17 @@
 		"10u of reactant to open the relic... Is this even real science anymore?",
 		"Making them all sleep in the cold below? This is a disabler, not a lethal weapon.",
 	)
+/obj/item/book/granter/crafting_recipe/dusting/detached_ratvarian_repeater
+	name = "memoirs of a former cultist"
+	desc = "A strange-looking book. The cover is warm to the touch."
+	crafting_recipe_types = list(
+		/datum/crafting_recipe/detached_ratvarian_repeater
+	)
+	remarks = list(
+		"It's amazing that they used to be able to mass produce these.",
+		"A welder? Well, that's surprisingly simple.",
+		"The many gears and cogs of the recharging system are making my head spin...",
+		"The tone of the author is devout, almost reverent.",
+		"The designs are all laid out in a circle, resembling a clock.",
+		"With a few modifications, this wouldn't be that heavy...",
+	)

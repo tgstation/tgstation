@@ -3,7 +3,7 @@
  */
 
 /datum/heretic_knowledge/curse
-	abstract_parent_type = /datum/heretic_knowledge/curse
+	abstract_type = /datum/heretic_knowledge/curse
 	/// How far can we curse people?
 	var/max_range = 64
 	/// The duration of the curse
@@ -28,7 +28,7 @@
 		for(var/datum/reagent/blood/usable_reagent as anything in requirement.reagents?.reagent_list)
 			if(!istype(usable_reagent, /datum/reagent/blood))
 				continue
-			blood_samples[usable_reagent.data["blood_DNA"]] = TRUE
+			blood_samples[usable_reagent.data[BLOOD_DATA_DNA]] = TRUE
 
 	return TRUE
 
@@ -80,7 +80,7 @@
 	log_combat(user, to_curse, "cursed via heretic ritual", addition = "([name])")
 	var/obj/item/codex_cicatrix/morbus/cursed_book = locate() in selected_atoms
 	curse(to_curse, cursed_book)
-	to_chat(user, span_hierophant("You cast a [name] upon [to_curse.real_name]."))
+	to_chat(user, span_mansus("You cast a [name] upon [to_curse.real_name]."))
 
 	fingerprints = null
 	blood_samples = null
@@ -90,7 +90,7 @@
 		if(!to_drain.reagents?.reagent_list)
 			continue
 		for(var/datum/reagent/to_match in to_drain.reagents.reagent_list)
-			if(to_match.data["blood_DNA"] != to_curse.dna.unique_enzymes)
+			if(to_match.data[BLOOD_DATA_DNA] != to_curse.dna.unique_enzymes)
 				continue
 			to_drain.reagents.remove_reagent(to_match.type, 5)
 	return TRUE
@@ -134,11 +134,12 @@
 //---- Curse of Paralysis
 
 /datum/heretic_knowledge/curse/paralysis
-	abstract_parent_type = /datum/heretic_knowledge/curse/paralysis
+	abstract_type = /datum/heretic_knowledge/curse/paralysis
 	name = "Curse of Paralysis"
-	desc = "Allows you to transmute a hatchet and both a left and right leg to cast a curse of immobility on a crew member. \
+	desc = "Casts a curse of immobility on a crew member.<br>\
 		While cursed, the victim will be unable to walk. You can additionally supply an item that a victim has touched \
 		or is covered in the victim's blood to make the curse last longer."
+	transmute_text = "Transmute a hatchet, and both a left and right leg."
 	gain_text = "The flesh of humanity is weak. Make them bleed. Show them their fragility."
 
 	duration = 5 MINUTES
@@ -169,11 +170,12 @@
 //---- Curse of Corrosion
 
 /datum/heretic_knowledge/curse/corrosion
-	abstract_parent_type = /datum/heretic_knowledge/curse/corrosion
+	abstract_type = /datum/heretic_knowledge/curse/corrosion
 	name = "Curse of Corrosion"
-	desc = "Allows you to transmute wirecutters, a pool of vomit, and a heart to cast a curse of sickness on a crew member. \
+	desc = "Cast a curse of sickness on a crew member.<br>\
 		While cursed, the victim will repeatedly vomit while their organs will take constant damage. You can additionally supply an item \
 		that a victim has touched or is covered in the victim's blood to make the curse last longer."
+	transmute_text = "Transmute a pair of wirecutters, a pool of vomit, and a heart."
 	gain_text = "The body of humanity is temporary. Their weaknesses cannot be stopped, like iron falling to rust. Show them all."
 
 	duration = 3 MINUTES
@@ -198,7 +200,7 @@
 //---- Curse of Transmutation
 
 /datum/heretic_knowledge/curse/transmutation
-	abstract_parent_type = /datum/heretic_knowledge/curse/transmutation
+	abstract_type = /datum/heretic_knowledge/curse/transmutation
 	name = "Curse of Transmutation"
 	duration = 0 // Infinite curse, it breaks when our codex is destroyed
 	curse_color = NONE
@@ -266,7 +268,7 @@
 //---- Curse of Indulgence
 
 /datum/heretic_knowledge/curse/indulgence
-	abstract_parent_type = /datum/heretic_knowledge/curse/indulgence
+	abstract_type = /datum/heretic_knowledge/curse/indulgence
 	name = "Curse of Indulgence"
 	duration = 8 MINUTES
 	curse_color = COLOR_MAROON

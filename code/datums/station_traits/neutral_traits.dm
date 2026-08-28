@@ -24,6 +24,18 @@
 	// This station trait modifies the atmosphere, which is too far past the time admins are able to revert it
 	can_revert = FALSE
 
+/// Upgrades pun-pun into a big ass gorrilla.
+/datum/station_trait/pun_pun_gym_day
+	name = "Pun Pun Gym Day"
+	trait_type = STATION_TRAIT_NEUTRAL
+	weight = 1
+	cost = STATION_TRAIT_COST_LOW
+	show_in_report = TRUE
+	report_message = "Following a clerical error in our primate requisition form, your bar's simian has been upgraded to a bigger primate. We have elected not to correct this."
+	trait_to_give = STATION_TRAIT_PUN_PUN_GYM_DAY
+	blacklist = list(/datum/station_trait/job/pun_pun) //We should make these two work together later, itd be funny.
+
+
 /datum/station_trait/spider_infestation
 	name = "Spider Infestation"
 	trait_type = STATION_TRAIT_NEUTRAL
@@ -377,7 +389,8 @@
 	trait_type = STATION_TRAIT_NEUTRAL
 	show_in_report = TRUE
 	weight = 1
-	report_message = "We've reports of high amount of trace eigenstasium on your station. Ensure that your closets are working correctly."
+	report_message = "We've reports of loose bluespace streams affecting your station's lockers and closets. \
+		You might lose some of your belongings... or gain some new ones!"
 
 /datum/station_trait/linked_closets/on_round_start()
 	. = ..()
@@ -392,7 +405,7 @@
 		var/list/targets = list()
 		for(var/how_many in 1 to rand(2,3))
 			targets += pick_n_take(roundstart_closets)
-		GLOB.eigenstate_manager.create_new_link(targets)
+		GLOB.closet_teleport_controller.create_new_link(targets)
 
 
 #define PRO_SKUB "pro-skub"

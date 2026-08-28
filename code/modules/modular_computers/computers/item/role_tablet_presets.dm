@@ -7,11 +7,15 @@
 	greyscale_config = /datum/greyscale_config/tablet/head
 	greyscale_colors = "#67A364#a92323"
 	max_capacity = parent_type::max_capacity * 2
+	/// Fax type for a relevant head's tp connect their PDA to (for use with fax notification app)
+	var/fax_type = null
+
 	var/static/list/datum/computer_file/head_programs = list(
 		/datum/computer_file/program/status,
 		/datum/computer_file/program/science,
 		/datum/computer_file/program/robocontrol,
 		/datum/computer_file/program/budgetorders,
+		/datum/computer_file/program/faxbond,
 	)
 
 /obj/item/modular_computer/pda/heads/Initialize(mapload)
@@ -20,12 +24,19 @@
 		var/datum/computer_file/program/program_type = new programs
 		store_file(program_type)
 
+	if (ispath(fax_type, /obj/machinery/fax))
+		var/datum/computer_file/program/faxbond/fax_notifier = locate() in stored_files
+		var/list/faxes_list = SSmachines.get_machines_by_type(fax_type)
+		var/obj/machinery/fax/heads_fax = length(faxes_list) ? pick(faxes_list) : null //there really shouldnt be more than one
+		fax_notifier.connect_fax(heads_fax)
+
 /obj/item/modular_computer/pda/heads/captain
 	name = "captain PDA"
 	icon_state = "/obj/item/modular_computer/pda/heads/captain"
 	greyscale_config = /datum/greyscale_config/tablet/captain
 	greyscale_colors = "#2C7CB2#FF0000#FFFFFF#FFD55B"
 	inserted_item = /obj/item/pen/fountain/captain
+	fax_type = /obj/machinery/fax/heads/captain
 
 /obj/item/modular_computer/pda/heads/captain/Initialize(mapload)
 	. = ..()
@@ -42,6 +53,7 @@
 	icon_state = "/obj/item/modular_computer/pda/heads/hop"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#374f7e#a52f29#a52f29"
+	fax_type = /obj/machinery/fax/heads/hop
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
 		/datum/computer_file/program/job_management,
@@ -53,6 +65,7 @@
 	greyscale_config = /datum/greyscale_config/tablet/head
 	greyscale_colors = "#EA3232#0000CC"
 	inserted_item = /obj/item/pen/red/security
+	fax_type = /obj/machinery/fax/heads/hos
 	starting_programs = list(
 		/datum/computer_file/program/records/security,
 	)
@@ -62,6 +75,7 @@
 	icon_state = "/obj/item/modular_computer/pda/heads/ce"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#D99A2E#69DBF3#FAFAFA"
+	fax_type = /obj/machinery/fax/heads/ce
 	starting_programs = list(
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/alarm_monitor,
@@ -73,6 +87,7 @@
 	icon_state = "/obj/item/modular_computer/pda/heads/cmo"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#FAFAFA#000099#3F96CC"
+	fax_type = /obj/machinery/fax/heads/cmo
 	starting_programs = list(
 		/datum/computer_file/program/maintenance/phys_scanner,
 		/datum/computer_file/program/records/medical,
@@ -84,6 +99,7 @@
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick/head
 	greyscale_colors = "#FAFAFA#000099#B347BC"
 	inserted_item = /obj/item/pen/fountain
+	fax_type = /obj/machinery/fax/heads/rd
 	starting_programs = list(
 		/datum/computer_file/program/borg_monitor,
 		/datum/computer_file/program/scipaper_program,
@@ -97,6 +113,7 @@
 	greyscale_colors = "#c4b787#18191e#8b4c31"
 	inserted_item = /obj/item/pen/survival
 	stored_paper = 20
+	fax_type = /obj/machinery/fax/heads/qm
 	starting_programs = list(
 		/datum/computer_file/program/shipping,
 		/datum/computer_file/program/restock_tracker,
@@ -309,6 +326,9 @@
 	icon_state = "/obj/item/modular_computer/pda/botanist"
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#50E193#E26F41#71A7CA"
+	starting_programs = list(
+		/datum/computer_file/program/botanical_encyclopedia
+	)
 
 /obj/item/modular_computer/pda/cook
 	name = "cook PDA"
@@ -326,7 +346,7 @@
 	icon = 'icons/obj/devices/modular_pda.dmi'
 	icon_state = "pda-clown"
 	post_init_icon_state = null
-	inserted_disk = /obj/item/computer_disk/virus/clown
+	inserted_disk = /obj/item/disk/computer/virus/clown
 	greyscale_config = null
 	greyscale_colors = null
 	inserted_item = /obj/item/toy/crayon/rainbow
@@ -358,7 +378,7 @@
 
 /obj/item/modular_computer/pda/clown/proc/AfterSlip(mob/living/carbon/human/M)
 	if (istype(M) && (M.real_name != saved_identification))
-		var/obj/item/computer_disk/virus/clown/cart = inserted_disk
+		var/obj/item/disk/computer/virus/clown/cart = inserted_disk
 		if(istype(cart) && cart.charges < 5)
 			cart.charges++
 			playsound(src,'sound/machines/ping.ogg',30,TRUE)
@@ -368,7 +388,7 @@
 
 /obj/item/modular_computer/pda/mime
 	name = "mime PDA"
-	inserted_disk = /obj/item/computer_disk/virus/mime
+	inserted_disk = /obj/item/disk/computer/virus/mime
 	icon_state = "/obj/item/modular_computer/pda/mime"
 	greyscale_config = /datum/greyscale_config/tablet/mime
 	greyscale_colors = "#FAFAFA#EA3232"
@@ -501,7 +521,7 @@
 	var/datum/computer_file/program/themeify/theme_app = locate() in stored_files
 	if(theme_app)
 		for(var/theme_key in GLOB.pda_name_to_theme - GLOB.default_pda_themes)
-			theme_app.imported_themes += theme_key
+			LAZYADD(theme_app.imported_themes, theme_key)
 
 /obj/item/modular_computer/pda/clear/get_messenger_ending()
 	return "Sent from my crystal PDA"

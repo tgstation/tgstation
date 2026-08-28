@@ -1,4 +1,5 @@
 /obj/machinery/computer/sat_control
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/piratepad_control")
 	name = "satellite control"
 	desc = "Used to control the satellite network."
 	circuit = /obj/item/circuitboard/computer/sat_control

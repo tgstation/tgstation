@@ -28,7 +28,7 @@
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/structure/table,
-/obj/item/food/pizza{
+/obj/item/food/pizza/margherita{
 	pixel_y = 6
 	},
 /turf/open/floor/iron/kitchen,
@@ -226,7 +226,7 @@
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/effect/turf_decal/tile/dark_red/opposingcorners,
 /obj/structure/table,
-/obj/item/food/pizza,
+/obj/item/food/pizza/margherita,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "mX" = (
@@ -250,7 +250,7 @@
 /obj/structure/closet/gmcloset,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
 /obj/effect/turf_decal/tile/blue/opposingcorners,
-/obj/item/clothing/mask/animal/small/bear/cursed,
+/obj/item/clothing/mask/animal/small/bear,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "nX" = (
@@ -362,7 +362,7 @@
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "sk" = (
-/obj/machinery/computer/slot_machine,
+/obj/effect/spawner/random/entertainment/slot_machine,
 /turf/open/floor/iron/kitchen,
 /area/virtual_domain)
 "sl" = (

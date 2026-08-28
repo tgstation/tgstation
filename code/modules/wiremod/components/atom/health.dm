@@ -37,7 +37,7 @@
 	burn = add_output_port("Burn Damage", PORT_TYPE_NUMBER)
 	toxin = add_output_port("Toxin Damage", PORT_TYPE_NUMBER)
 	oxy = add_output_port("Suffocation Damage", PORT_TYPE_NUMBER)
-	health = add_output_port("Health", PORT_TYPE_NUMBER)
+	health = add_output_port("Overall Health", PORT_TYPE_NUMBER)
 
 /obj/item/circuit_component/health/input_received(datum/port/input/port)
 
@@ -57,4 +57,3 @@
 	toxin.set_output(organism.get_tox_loss())
 	oxy.set_output(organism.get_oxy_loss())
 	health.set_output(organism.health)
-

@@ -1,0 +1,9 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/mook/bard",
+	"type": "subtree",
+	"subtype": "/datum/bt_node/subtree/generic_mook_behavior",
+	"bindings": {
+		"b1kiiayf": "/datum/bt_node/subtree/bard_play_music",
+		"b0ymbjo1": "/datum/bt_node/subtree/bard_find_targets"
+	}
+}

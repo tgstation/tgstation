@@ -16,6 +16,8 @@
 #define COMSIG_ORGAN_SURGICALLY_INSERTED "organ_surgically_inserted"
 /// Called when an organ finishes inserting into a bodypart (obj/item/bodypart/limb, movement_flags)
 #define COMSIG_ORGAN_BODYPART_INSERTED "organ_bodypart_inserted"
+/// Called when an organ finishes removing from a bodypart (obj/item/bodypart/limb, movement_flags)
+#define COMSIG_ORGAN_BODYPART_REMOVED "organ_bodypart_removed"
 /// Called when a organ's damage is adjusted apply_organ_damage (damage_amount, maximum, required_organ_flag)
 #define COMSIG_ORGAN_ADJUST_DAMAGE "organ_adjust_damage"
 
@@ -36,6 +38,8 @@
 	#define DOORCRUSH_NO_WOUND (1<<0)
 ///from base of mob/living/resist() (/mob/living)
 #define COMSIG_LIVING_RESIST "living_resist"
+	// Block execute_resist()
+	#define COMPONENT_BLOCK_RESIST (1<<0)
 ///from base of mob/living/ignite_mob() (/mob/living)
 #define COMSIG_LIVING_IGNITED "living_ignite"
 ///from base of mob/living/extinguish_mob() (/mob/living)
@@ -60,22 +64,17 @@
 #define COMSIG_LIVING_TRY_SYRINGE_WITHDRAW "living_try_syringe_withdraw"
 ///from base of mob/living/set_usable_legs()
 #define COMSIG_LIVING_LIMBLESS_SLOWDOWN  "living_limbless_slowdown"
-///From living/Life(). (deltatime, times_fired)
-#define COMSIG_LIVING_LIFE "living_life"
+///From living/Life(). (deltatime)
+#define COMSIG_LIVING_PRE_LIFE "living_pre_life"
 	/// Block the Life() proc from proceeding... this should really only be done in some really wacky situations.
 	#define COMPONENT_LIVING_CANCEL_LIFE_PROCESSING (1<<0)
+///From living/Life(). (deltatime)
+#define COMSIG_LIVING_LIFE "living_life"
 ///From living/set_resting(): (new_resting, silent, instant)
 #define COMSIG_LIVING_RESTING "living_resting"
 
 ///from base of element/bane/activate(): (item/weapon, mob/user)
 #define COMSIG_LIVING_BANED "living_baned"
-
-///from base of element/bane/activate(): (item/weapon, mob/user)
-#define COMSIG_OBJECT_PRE_BANING "obj_pre_baning"
-	#define COMPONENT_CANCEL_BANING (1<<0)
-
-///from base of element/bane/activate(): (item/weapon, mob/user)
-#define COMSIG_OBJECT_ON_BANING "obj_on_baning"
 
 // adjust_x_loss messages sent from /mob/living/proc/adjust[x]Loss
 /// Returned from all the following messages if you actually aren't going to apply any change
@@ -146,7 +145,7 @@
 	#define COMPONENT_CANT_TRACK (1<<0)
 ///from end of fully_heal(): (heal_flags)
 #define COMSIG_LIVING_POST_FULLY_HEAL "living_post_fully_heal"
-/// from start of /mob/living/handle_breathing(): (seconds_per_tick, times_fired)
+/// from start of /mob/living/handle_breathing(): (seconds_per_tick)
 #define COMSIG_LIVING_HANDLE_BREATHING "living_handle_breathing"
 ///from /obj/item/hand_item/slapper/attack_atom(): (source=mob/living/slammer, obj/structure/table/slammed_table)
 #define COMSIG_LIVING_SLAM_TABLE "living_slam_table"
@@ -255,6 +254,9 @@
 /// From /obj/structure/geyser/attackby() : (obj/structure/geyser/geyser)
 #define COMSIG_LIVING_DISCOVERED_GEYSER "living_discovered_geyser"
 
+/// From /obj/structure/ore_vent/proc/initiate_wave_win() : (obj/structure/ore_vent/vent)
+#define COMSIG_LIVING_ON_VENT_WIN "living_on_vent_win"
+
 /// From /datum/ai/behavior/climb_tree/perform() : (mob/living/basic/living_pawn)
 #define COMSIG_LIVING_CLIMB_TREE "living_climb_tree"
 
@@ -318,7 +320,7 @@
 /// From /obj/item/melee/baton/baton_effect(): (datum/source, mob/living/user, /obj/item/melee/baton)
 #define COMSIG_MOB_BATONED "mob_batoned"
 
-/// From /obj/machinery/gibber/startgibbing(): (mob/living/user, /obj/machinery/gibber, list/results)
+/// From /obj/machinery/gibber/start_gibbing(): (mob/living/user, /obj/machinery/gibber, list/results)
 #define COMSIG_LIVING_GIBBER_ACT "living_gibber_act"
 
 /// From /mob/living/get_eye_protection() (list/reflist)
@@ -345,14 +347,6 @@
 /// From /obj/item/book/bible/attack() : (mob/living/user, obj/item/book/bible/bible, bless_result)
 #define COMSIG_LIVING_BLESSED "living_blessed"
 
-/// From /datum/surgery_step/initiate() : (mob/living/user, mob/living/target, target_zone, obj/item/tool, datum/surgery/surgery, datum/surgery_step/step, list/modifiers)
-#define COMSIG_LIVING_INITIATE_SURGERY_STEP "living_initiate_surgery_step"
-#define COMSIG_LIVING_SURGERY_STEP_INITIATED_ON "living_surgery_step_initiated_on"
-	/// Index in modifiers containing the modifier to failure chance
-	#define FAIL_PROB_INDEX 1
-	/// Index in modifiers containing the modifer to surgery speed
-	#define SPEED_MOD_INDEX 2
-
 /// From /datum/status_effect/proc/on_creation() : (datum/status_effect/effect)
 #define COMSIG_LIVING_STATUS_APPLIED "living_status_applied"
 
@@ -378,5 +372,32 @@
 /// From /mob/living/proc/mob_pickup() : (mob/living/user, obj/item/mob_holder/holder)
 #define COMSIG_LIVING_SCOOPED_UP "living_scooped_up"
 
+/// From /mob/living/proc/update_blood_status(), sent when the return value of /mob/living/proc/can_have_blood() changes, but before the new blood status is applied : (had_blood, has_blood, old_blood_volume)
+#define COMSIG_LIVING_PRE_UPDATE_BLOOD_STATUS "living_pre_update_blood_status"
+
 /// From /mob/living/proc/update_blood_status(), sent when the return value of /mob/living/proc/can_have_blood() changes : (had_blood, has_blood, old_blood_volume, new_blood_volume)
 #define COMSIG_LIVING_UPDATE_BLOOD_STATUS "living_update_blood_status"
+
+/// From /mob/living/proc/update_nutrition()
+#define COMSIG_LIVING_UPDATE_NUTRITION "living_update_nutrition"
+
+/// Sent to a mob when one of their bodypart's surgery state changes, OR sent from the basic_surgery_state holder when its surgery state changes (old_state, new_state, changed_states)
+#define COMSIG_LIVING_UPDATING_SURGERY_STATE "carbon_updating_surgery_state"
+
+/// Sent to a mob when its player DNRs
+#define COMSIG_LIVING_DNR "living_dnr"
+
+/// From /mob/living/on_looking_z_level_change() : (turf/old_turf, turf/new_turf)
+#define COMSIG_LIVING_LOOK_Z_CHANGE "living_look_z_change"
+
+/// From /obj/item/stack/ore/bluespace_crystal/attack_self() : (obj/item/crushed_crystal)
+#define COMSIG_MOB_CRUSHED_BLUESPACE_CRYSTAL "living_crushed_bluespace_crystal"
+
+/// From /mob/living/proc/refresh_gravity() : (new_gravity, old_gravity)
+#define COMSIG_LIVING_GRAVITY_CHANGED "living_gravity_changed"
+
+/// From /mob/living/changeNext_move() : (next_move, delay)
+#define COMSIG_LIVING_CHANGENEXT_MOVE "living_changenext_move"
+
+/// From /mob/living/proc/cause_hallucination(): (datum/hallucination)
+#define COMSIG_LIVING_HALLUCINATING "living_hallucinating"

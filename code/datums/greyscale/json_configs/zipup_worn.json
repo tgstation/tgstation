@@ -1,0 +1,34 @@
+{
+	"zipup": [
+		{
+			"type": "icon_state",
+			"icon_state": "zipup",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	],
+	"zipup_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "zipup_t",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	],
+	"zipup_hood": [
+		{
+			"type": "icon_state",
+			"icon_state": "zipup_hood",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	],
+	"zipup_hood_t": [
+		{
+			"type": "icon_state",
+			"icon_state": "zipup_hood_t",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	]
+}

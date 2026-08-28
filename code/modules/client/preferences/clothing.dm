@@ -62,7 +62,7 @@
 		if (DMESSENGER)
 			return /obj/item/storage/backpack/messenger/med
 
-/datum/preference/choiced/backpack/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/backpack/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	target.backpack = value
 
 /// Jumpsuit preference
@@ -90,7 +90,7 @@
 		if (PREF_SKIRT)
 			return /obj/item/clothing/under/color/jumpskirt/grey
 
-/datum/preference/choiced/jumpsuit/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/jumpsuit/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	target.jumpsuit_style = value
 
 /// Socks preference
@@ -106,7 +106,7 @@
 	return assoc_to_keys_features(SSaccessories.socks_list)
 
 /datum/preference/choiced/socks/create_default_value()
-	return /datum/sprite_accessory/socks/nude::name
+	return /datum/sprite_accessory/clothing/socks/nude::name
 
 /datum/preference/choiced/socks/icon_for(value)
 	var/static/datum/universal_icon/lower_half
@@ -118,7 +118,7 @@
 
 	return generate_underwear_icon(SSaccessories.socks_list[value], lower_half)
 
-/datum/preference/choiced/socks/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/socks/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	target.socks = value
 
 /// Undershirt preference
@@ -135,14 +135,14 @@
 	return assoc_to_keys_features(SSaccessories.undershirt_list)
 
 /datum/preference/choiced/undershirt/create_default_value()
-	return /datum/sprite_accessory/undershirt/nude::name
+	return /datum/sprite_accessory/clothing/undershirt/nude::name
 
 /datum/preference/choiced/undershirt/create_informed_default_value(datum/preferences/preferences)
 	switch(preferences.read_preference(/datum/preference/choiced/gender))
 		if(MALE)
-			return /datum/sprite_accessory/undershirt/nude::name
+			return /datum/sprite_accessory/clothing/undershirt/nude::name
 		if(FEMALE)
-			return /datum/sprite_accessory/undershirt/sports_bra::name
+			return /datum/sprite_accessory/clothing/undershirt/sports_bra::name
 
 	return ..()
 
@@ -167,7 +167,7 @@
 	icon_with_undershirt.scale(32, 32)
 	return icon_with_undershirt
 
-/datum/preference/choiced/undershirt/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/undershirt/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	target.undershirt = value
 
 /// Underwear preference
@@ -183,7 +183,7 @@
 	return assoc_to_keys_features(SSaccessories.underwear_list)
 
 /datum/preference/choiced/underwear/create_default_value()
-	return /datum/sprite_accessory/underwear/male_hearts::name
+	return /datum/sprite_accessory/clothing/underwear/male_hearts::name
 
 /datum/preference/choiced/underwear/icon_for(value)
 	var/static/datum/universal_icon/lower_half
@@ -196,7 +196,7 @@
 
 	return generate_underwear_icon(SSaccessories.underwear_list[value], lower_half, COLOR_ALMOST_BLACK)
 
-/datum/preference/choiced/underwear/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/underwear/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	target.underwear = value
 
 /datum/preference/choiced/underwear/is_accessible(datum/preferences/preferences)

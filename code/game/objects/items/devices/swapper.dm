@@ -9,6 +9,7 @@
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
+	custom_materials = list(/datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 0.75, /datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 	/// Cooldown for usage
 	var/cooldown = 30 SECONDS
 	/// Next available time
@@ -27,22 +28,22 @@
 	icon_state = "swapper[linked_swapper ? "-linked" : null]"
 	return ..()
 
-/obj/item/swapper/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(I, /obj/item/swapper))
-		var/obj/item/swapper/other_swapper = I
-		if(other_swapper.linked_swapper)
-			to_chat(user, span_warning("[other_swapper] is already linked. Break the current link to establish a new one."))
-			return
-		if(linked_swapper)
-			to_chat(user, span_warning("[src] is already linked. Break the current link to establish a new one."))
-			return
-		to_chat(user, span_notice("You establish a quantum link between the two devices."))
-		linked_swapper = other_swapper
-		other_swapper.linked_swapper = src
-		update_appearance()
-		linked_swapper.update_appearance()
-	else
-		return ..()
+/obj/item/swapper/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/swapper))
+		return NONE
+	var/obj/item/swapper/other_swapper = tool
+	if(other_swapper.linked_swapper)
+		to_chat(user, span_warning("[other_swapper] is already linked. Break the current link to establish a new one."))
+		return ITEM_INTERACT_BLOCKING
+	if(linked_swapper)
+		to_chat(user, span_warning("[src] is already linked. Break the current link to establish a new one."))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You establish a quantum link between the two devices."))
+	linked_swapper = other_swapper
+	other_swapper.linked_swapper = src
+	update_appearance()
+	linked_swapper.update_appearance()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/swapper/attack_self(mob/living/user)
 	if(world.time < next_use)
@@ -78,36 +79,23 @@
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
-//Gets the topmost teleportable container
-/obj/item/swapper/proc/get_teleportable_container()
-	var/atom/movable/teleportable = src
-	while(ismovable(teleportable.loc))
-		var/atom/movable/AM = teleportable.loc
-		if(AM.anchored)
-			break
-		if(isliving(AM))
-			var/mob/living/L = AM
-			if(L.buckled)
-				if(L.buckled.anchored)
-					break
-				else
-					var/obj/buckled_obj = L.buckled
-					buckled_obj.unbuckle_mob(L)
-		teleportable = AM
-	return teleportable
-
+/**
+ * Swaps two atoms following the activation of a swapper item.
+ * If a mob is holding a swapper, it will carry the mob as-per the rules of do_teleport().
+ */
 /obj/item/swapper/proc/swap(mob/user)
 	if(QDELETED(linked_swapper) || isnull(linked_swapper.loc) || world.time < linked_swapper.cooldown)
 		return
 
-	var/atom/movable/A = get_teleportable_container()
-	var/atom/movable/B = linked_swapper.get_teleportable_container()
-	var/target_A = A.drop_location()
-	var/target_B = B.drop_location()
+	var/atom/movable/container_A = get_teleportable_container(src)
+	var/atom/movable/container_B = get_teleportable_container(linked_swapper)
+	var/target_A = container_A.drop_location()
+	var/target_B = container_B.drop_location()
 
-	//TODO: add a sound effect or visual effect
-	if(do_teleport(A, target_B, channel = TELEPORT_CHANNEL_QUANTUM))
-		do_teleport(B, target_A, channel = TELEPORT_CHANNEL_QUANTUM)
-		if(ismob(B))
-			var/mob/M = B
-			to_chat(M, span_warning("[linked_swapper] activates, and you find yourself somewhere else."))
+	playsound(target_A, 'sound/effects/swapper/swap_a.ogg', 30, TRUE)
+	playsound(target_B, 'sound/effects/swapper/swap_b.ogg', 30, TRUE)
+	if(do_teleport(container_A, target_B, channel = TELEPORT_CHANNEL_QUANTUM))
+		do_teleport(container_B, target_A, channel = TELEPORT_CHANNEL_QUANTUM)
+		if(ismob(container_B))
+			var/mob/swapped_mob = container_B
+			to_chat(swapped_mob, span_warning("[linked_swapper] activates, and you find yourself somewhere else."))

@@ -21,6 +21,11 @@ type StorageBackend = {
   clear(): Promise<void>;
 };
 
+export type StorageDiagnostic = {
+  level: 'info' | 'warn' | 'error';
+  message: string;
+};
+
 const testGeneric = (testFn: () => boolean) => (): boolean => {
   try {
     return Boolean(testFn());
@@ -32,6 +37,10 @@ const testGeneric = (testFn: () => boolean) => (): boolean => {
 const testHubStorage = testGeneric(
   () => window.hubStorage && !!window.hubStorage.getItem,
 );
+
+const STORAGE_CDN_TIMEOUT = 5000;
+const persistedStorageKeys = ['panel-settings', 'chat-state', 'chat-messages'];
+const legacyHubMigrationKeys = ['panel-settings'];
 
 class HubStorageBackend implements StorageBackend {
   public impl: StorageImplementation;
@@ -74,23 +83,39 @@ class IFrameIndexedDbBackend implements StorageBackend {
   async ready(): Promise<boolean | null> {
     const iframe = document.createElement('iframe');
     iframe.style.display = 'none';
+    iframe.allow = 'storage-access';
     iframe.src = Byond.storageCdn;
 
     const completePromise: Promise<boolean> = new Promise((resolve) => {
-      fetch(Byond.storageCdn, { method: "HEAD" }).then((response) => {
-        if (response.status !== 200) {
-          resolve(false);
+      const listener = (message: MessageEvent) => {
+        if (
+          message.source === iframe.contentWindow &&
+          message.data === 'ready'
+        ) {
+          resolveReady(true);
         }
+      };
+      const resolveReady = (ready: boolean) => {
+        clearTimeout(timeout);
+        window.removeEventListener('message', listener);
+        resolve(ready);
+      };
+      const timeout = setTimeout(
+        () => resolveReady(false),
+        STORAGE_CDN_TIMEOUT,
+      );
 
-      }).catch(() => {
-        resolve(false);
-      })
+      fetch(Byond.storageCdn, { method: 'HEAD' })
+        .then((response) => {
+          if (response.status !== 200) {
+            resolveReady(false);
+          }
+        })
+        .catch(() => {
+          resolveReady(false);
+        });
 
-      window.addEventListener('message', (message) => {
-        if (message.data === "ready") {
-          resolve(true);
-        }
-      })
+      window.addEventListener('message', listener);
     });
 
     this.documentElement = document.body.appendChild(iframe);
@@ -105,11 +130,23 @@ class IFrameIndexedDbBackend implements StorageBackend {
 
   async get(key: string): Promise<any> {
     const promise = new Promise((resolve) => {
-      window.addEventListener('message', (message) => {
-        if (message.data.key && message.data.key === key) {
+      const listener = (message: MessageEvent) => {
+        if (
+          message.source === this.iframeWindow &&
+          message.data.key &&
+          message.data.key === key
+        ) {
+          clearTimeout(timeout);
+          window.removeEventListener('message', listener);
           resolve(message.data.value);
         }
-      });
+      };
+      const timeout = setTimeout(() => {
+        window.removeEventListener('message', listener);
+        resolve(undefined);
+      }, STORAGE_CDN_TIMEOUT);
+
+      window.addEventListener('message', listener);
     });
 
     this.iframeWindow.postMessage({ type: 'get', key: key }, '*');
@@ -140,68 +177,105 @@ class IFrameIndexedDbBackend implements StorageBackend {
 class StorageProxy implements StorageBackend {
   private backendPromise: Promise<StorageBackend>;
   public impl: StorageImplementation = IMPL_IFRAME_INDEXED_DB;
+  public diagnostics: StorageDiagnostic[] = [];
+
+  private log(level: StorageDiagnostic['level'], message: string) {
+    this.diagnostics.push({ level, message });
+  }
 
   constructor() {
     this.backendPromise = (async () => {
+      // Prefer the configured iframe storage when available. hubStorage may
+      // already be enabled by another window/server, but the iframe origin is
+      // the server-configured storage boundary.
+      if (Byond.storageCdn) {
+        const iframe = new IFrameIndexedDbBackend();
 
-      // If we have not enabled byondstorage yet, we need to check
-      // if we can use the IFrame, or if we need to enable byondstorage
-      if (!testHubStorage()) {
+        if ((await iframe.ready()) === true) {
+          this.log('info', `Using iframe storage (${Byond.storageCdn})`);
 
-        // If we have an IFrame URL we can use, and we haven't already enabled
-        // byondstorage, we should use the IFrame backend
-        if (Byond.storageCdn) {
-          const iframe = new IFrameIndexedDbBackend();
+          if (await iframe.get('byondstorage-migrated')) return iframe;
 
-          if ((await iframe.ready()) === true) {
-            if (await iframe.get('byondstorage-migrated')) return iframe;
+          const iframeHasPersistedStorage = (
+            await Promise.all(
+              persistedStorageKeys.map((setting) => iframe.get(setting)),
+            )
+          ).some((settings) => settings !== undefined);
 
-            Byond.winset(null, 'browser-options', '+byondstorage');
+          if (!iframeHasPersistedStorage) {
+            this.log('info', 'No existing iframe data, migrating from byondstorage');
+            const hubStorageWasEnabled = testHubStorage();
+            if (!hubStorageWasEnabled) {
+              Byond.winset(null, 'browser-options', '+byondstorage');
 
-            await new Promise<void>((resolve) => {
-              document.addEventListener('byondstorageupdated', async () => {
-                setTimeout(() => {
-                  const hub = new HubStorageBackend();
-
-                  // Migrate these existing settings from byondstorage to the IFrame
-                  for (const setting of ['panel-settings', 'chat-state', 'chat-messages']) {
-                    hub
-                      .get(setting)
-                      .then((settings) => iframe.set(setting, settings));
-                  }
-
-                  iframe.set('byondstorage-migrated', true);
-                  Byond.winset(null, 'browser-options', '-byondstorage');
-
-                  resolve();
-                }, 1);
+              await new Promise<void>((resolve) => {
+                document.addEventListener(
+                  'byondstorageupdated',
+                  () => {
+                    // This event is emitted *before* byondstorage is actually
+                    // created, so we have to wait a little bit before using it.
+                    setTimeout(resolve, 1);
+                  },
+                  { once: true },
+                );
               });
-            });
+            }
 
-            return iframe;
+            const hub = new HubStorageBackend();
+
+            // Migrate safe legacy settings from byondstorage to the IFrame.
+            // Chat history may contain server-specific HTML/components from
+            // other codebases that shared the old byondstorage namespace.
+            await Promise.all(
+              legacyHubMigrationKeys.map(async (setting) => {
+                try {
+                  const settings = await hub.get(setting);
+                  if (settings !== undefined) {
+                    await iframe.set(setting, settings);
+                    this.log('info', `Migrated '${setting}' from byondstorage`);
+                  }
+                } catch {
+                  this.log('warn', `Failed to migrate '${setting}' from byondstorage`);
+                }
+              }),
+            );
+
+            if (!hubStorageWasEnabled) {
+              Byond.winset(null, 'browser-options', '-byondstorage');
+            }
           }
 
-          iframe.destroy();
-        };
+          await iframe.set('byondstorage-migrated', true);
 
-        // IFrame hasn't worked out for us, we'll need to enable byondstorage
-        Byond.winset(null, 'browser-options', '+byondstorage');
+          return iframe;
+        }
 
-        return new Promise((resolve) => {
-          const listener = () => {
-            document.removeEventListener('byondstorageupdated', listener);
-
-            // This event is emitted *before* byondstorage is actually created
-            // so we have to wait a little bit before we can use it
-            setTimeout(() => resolve(new HubStorageBackend()), 1);
-          };
-
-          document.addEventListener('byondstorageupdated', listener);
-        });
+        this.log('warn', `Iframe storage failed to load from ${Byond.storageCdn}`);
+        iframe.destroy();
+      } else {
+        this.log('info', 'No storage CDN configured');
       }
 
-      // byondstorage is already enabled, we can use it straight away
-      return new HubStorageBackend();
+      if (testHubStorage()) {
+        this.log('warn', 'Falling back to hubStorage (byondstorage)');
+        return new HubStorageBackend();
+      }
+
+      // IFrame hasn't worked out for us, we'll need to enable byondstorage
+      this.log('warn', 'Enabling byondstorage as last resort');
+      Byond.winset(null, 'browser-options', '+byondstorage');
+
+      return new Promise((resolve) => {
+        const listener = () => {
+          document.removeEventListener('byondstorageupdated', listener);
+
+          // This event is emitted *before* byondstorage is actually created
+          // so we have to wait a little bit before we can use it
+          setTimeout(() => resolve(new HubStorageBackend()), 1);
+        };
+
+        document.addEventListener('byondstorageupdated', listener);
+      });
     })();
   }
 

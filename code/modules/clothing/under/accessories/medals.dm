@@ -22,7 +22,7 @@
 	commendation_message = tgui_input_text(user, "Reason for this commendation? It will be recorded by Nanotrasen.", "Commendation", max_length = 140)
 	return !!commendation_message
 
-/obj/item/clothing/accessory/medal/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
+/obj/item/clothing/accessory/medal/try_attach(obj/item/clothing/under/attach_to, mob/living/attacher)
 	var/mob/living/distinguished = attach_to.loc
 	if(isnull(attacher) || !istype(distinguished) || distinguished == attacher || awarded_to)
 		// You can't be awarded by nothing, you can't award yourself, and you can't be awarded someone else's medal

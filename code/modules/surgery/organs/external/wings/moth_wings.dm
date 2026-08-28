@@ -10,27 +10,17 @@
 	bodypart_overlay = /datum/bodypart_overlay/mutant/wings/moth
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
+	//Not very capable under normal circumstances, try as they might.
+	flight_level = WINGS_FLIGHTLESS
+	has_open_sprite = FALSE
+	flap_sound = 'sound/mobs/humanoids/moth/moth_flutter.ogg'
+
 	///Are we burned?
 	var/burnt = FALSE
 	///Store our old datum here for if our burned wings are healed
 	var/original_sprite_datum
 
-	var/drift_force = MOTH_WING_FORCE
-	var/stabilizer_force = MOTH_WING_FORCE
-
-/obj/item/organ/wings/moth/Initialize(mapload)
-	. = ..()
-	AddComponent( \
-		/datum/component/jetpack, \
-		TRUE, \
-		drift_force, \
-		stabilizer_force, \
-		COMSIG_ORGAN_IMPLANTED, \
-		COMSIG_ORGAN_REMOVED, \
-		null, \
-		CALLBACK(src, PROC_REF(allow_flight)), \
-		null, \
-	)
+	drift_force = MOTH_WING_FORCE
 
 /obj/item/organ/wings/moth/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()
@@ -41,23 +31,14 @@
 	. = ..()
 	UnregisterSignal(organ_owner, list(COMSIG_HUMAN_BURNING, COMSIG_LIVING_POST_FULLY_HEAL))
 
-/obj/item/organ/wings/moth/make_flap_sound(mob/living/carbon/wing_owner)
-	playsound(wing_owner, 'sound/mobs/humanoids/moth/moth_flutter.ogg', 50, TRUE)
-
 /obj/item/organ/wings/moth/can_soften_fall()
 	return !burnt
 
-/obj/item/organ/wings/moth/proc/allow_flight()
-	if(!owner || !owner.client)
+/obj/item/organ/wings/moth/allow_flight()
+	if(burnt)
 		return FALSE
-	if(owner.has_gravity())
-		return FALSE
-	if((owner.obscured_slots & HIDEMUTWINGS) || burnt)
-		return FALSE
-	var/datum/gas_mixture/current = owner.loc.return_air()
-	if(current && (current.return_pressure() >= ONE_ATMOSPHERE*0.85))
-		return TRUE
-	return FALSE
+	return ..()
+
 
 ///check if our wings can burn off ;_;
 /obj/item/organ/wings/moth/proc/try_burn_wings(mob/living/carbon/human/human)
@@ -96,7 +77,11 @@
 ///Moth wing bodypart overlay, including burn functionality!
 /datum/bodypart_overlay/mutant/wings/moth
 	feature_key = FEATURE_MOTH_WINGS
-	layers = EXTERNAL_BEHIND | EXTERNAL_FRONT
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
+	slot_blocker = HIDEMUTWINGS
 	///Accessory datum of the burn sprite
 	var/datum/sprite_accessory/burn_datum = /datum/sprite_accessory/moth_wings/burnt_off
 	///Are we burned? If so we draw differently
@@ -104,13 +89,27 @@
 
 /datum/bodypart_overlay/mutant/wings/moth/New()
 	. = ..()
-
 	burn_datum = fetch_sprite_datum(burn_datum)
-
-/datum/bodypart_overlay/mutant/wings/moth/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner)
-	return !(bodypart_owner.owner?.obscured_slots & HIDEMUTWINGS)
 
 /datum/bodypart_overlay/mutant/wings/moth/get_base_icon_state()
 	return burnt ? burn_datum.icon_state : sprite_datum.icon_state
 
 #undef MOTH_WING_FORCE
+
+
+// These look like moth wings. They sound like moth wings. They are not moth wings by any shared interaction besides their flap sounds.
+// Don't try it. Burn states, driftability, forced sprite accessory overrides...
+
+///mothra wings, which relate to moths.
+/obj/item/organ/wings/mothra
+	name = "mothra wings"
+	desc = "Fly like the mighty mothra of legend once did."
+	sprite_accessory_override = /datum/sprite_accessory/wings/mothra
+	flap_sound = 'sound/mobs/humanoids/moth/moth_flutter.ogg'
+
+///megamoth wings, which relate to moths as an alternate choice. they're both pretty cool.
+/obj/item/organ/wings/megamoth
+	name = "megamoth wings"
+	desc = "Don't get murderous."
+	sprite_accessory_override = /datum/sprite_accessory/wings/megamoth
+	flap_sound = 'sound/mobs/humanoids/moth/moth_flutter.ogg'

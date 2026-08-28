@@ -16,6 +16,11 @@
 | Codedocs            | https://codedocs.tgstation13.org/                     |
 | /tg/station Discord | https://tgstation13.org/phpBB/viewforum.php?f=60      |
 | Coderbus Discord    | https://discord.gg/Vh8TJp9                            |
+| Contribution Guide  | https://github.com/tgstation/tgstation/blob/master/.github/CONTRIBUTING.md |
+| Getting Started With Development | https://hackmd.io/@tgstation/HJ8OdjNBc#tgstation-Development-Guide |
+| Maintainer-Approved Design Docs | https://hackmd.io/@tgstation |
+| Common Core Lore | https://github.com/tgstation/common_core |
+
 
 This is the codebase for the /tg/station flavoured fork of SpaceStation 13.
 
@@ -40,16 +45,6 @@ _All github inquiries (such as moderation actions) may be handled via the /tg/st
 **Building tgstation in DreamMaker directly is deprecated and might produce errors**, such as `'tgui.bundle.js': cannot find file`.
 
 **[How to compile in VSCode and other build options](tools/build/README.md).**
-
-## Getting started
-
-For contribution guidelines refer to the [Guides for Contributors](.github/CONTRIBUTING.md).
-
-For getting started (dev env, compilation) see the HackMD document [here](https://hackmd.io/@tgstation/HJ8OdjNBc#tgstation-Development-Guide).
-
-For overall design documentation see [HackMD](https://hackmd.io/@tgstation).
-
-For lore, [see Common Core](https://github.com/tgstation/common_core).
 
 ## LICENSE
 

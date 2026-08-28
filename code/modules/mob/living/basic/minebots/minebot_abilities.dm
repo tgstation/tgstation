@@ -116,7 +116,7 @@
 	if(isgroundlessturf(my_turf))
 		return FALSE
 	var/obj/effect/mine/minebot/my_mine = new(my_turf)
-	my_mine.ignore_list = owner.faction.Copy()
+	my_mine.ignore_list = owner.get_faction()
 	playsound(my_turf, 'sound/items/weapons/armbomb.ogg', 20)
 	StartCooldown()
 	return TRUE
@@ -153,9 +153,7 @@
 
 /obj/effect/temp_visual/falling_rocket/proc/create_explosion()
 	playsound(src, 'sound/items/weapons/minebot_rocket.ogg', 100, FALSE)
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(1, holder = src)
-	smoke.start()
+	do_smoke(1, src, loc)
 	for(var/mob/living/living_target in oview(explosion_radius, src))
 		if(living_target.incorporeal_move)
 			continue
@@ -171,9 +169,7 @@
 /obj/effect/mine/minebot/mineEffect(mob/living/victim)
 	if(!istype(victim))
 		return
-	var/datum/effect_system/fluid_spread/smoke/smoke = new
-	smoke.set_up(0, holder = src)
-	smoke.start()
+	do_smoke(0, src, loc)
 	playsound(src, 'sound/effects/explosion/explosion3.ogg', 100)
 	victim.apply_damage(damage_to_apply)
 
@@ -183,6 +179,6 @@
 	if(!isliving(on_who))
 		return ..()
 	var/mob/living/stepped_mob = on_who
-	if(FACTION_NEUTRAL in stepped_mob.faction)
+	if(stepped_mob.has_faction(FACTION_NEUTRAL))
 		return FALSE
 	return ..()

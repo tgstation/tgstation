@@ -4,6 +4,7 @@
 	name = "power connector"
 	desc = "A user-safe high-current contact port, used for connecting and interfacing with portable power storage units. Practically useless without one."
 	icon_state = "battery_port"
+	base_icon_state = "battery_port"
 	circuit = /obj/item/circuitboard/machine/smes/connector
 	density = FALSE
 	input_attempt = FALSE
@@ -110,6 +111,7 @@
 	desc = "A portable, high-capacity superconducting magnetic energy storage (SMES) unit. Requires a separate power connector port to actually interface with power networks."
 	icon = 'icons/obj/machines/engine/other.dmi'
 	icon_state = "port_smes"
+	base_icon_state = "port_smes"
 	circuit = /obj/item/circuitboard/machine/smesbank
 	use_power = NO_POWER_USE // well, technically
 	density = TRUE
@@ -228,19 +230,19 @@
 	investigate_log("was connected to [possible_connector] by [key_name(user)].", INVESTIGATE_ENGINE)
 	return ITEM_INTERACT_SUCCESS
 
+/obj/machinery/smesbank/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]-o" : base_icon_state
+
 /obj/machinery/smesbank/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_FAILURE
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), tool))
-		update_appearance(UPDATE_OVERLAYS)
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/smesbank/crowbar_act(mob/living/user, obj/item/tool)
 	if(connected_port)
 		balloon_alert(user, "disconnect from [connected_port] first!")
 		return ITEM_INTERACT_FAILURE
 
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /**
  * Attempt to connect the portable SMES to a given connector. Adapted from portable atmos connection code.

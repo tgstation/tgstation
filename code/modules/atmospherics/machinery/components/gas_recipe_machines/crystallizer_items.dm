@@ -1,6 +1,6 @@
 /obj/item/hypernoblium_crystal
-	name = "Hypernoblium Crystal"
-	desc = "Crystallized oxygen and hypernoblium stored in a bottle to pressure-proof your clothes or stop reactions occurring in portable atmospheric devices."
+	name = "\improper Hyper-Noblium crystal"
+	desc = "Crystallized Oxygen and Hyper-Noblium stored in a bottle. Pressure-proofs clothing or stop reactions occurring in portable atmospheric devices."
 	icon = 'icons/obj/pipes_n_cables/atmos.dmi'
 	icon_state = "hypernoblium_crystal"
 	var/uses = 1
@@ -40,20 +40,13 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/nitrium_crystal
-	desc = "A weird brown crystal, it smokes when broken"
-	name = "nitrium crystal"
+	name = "\improper Nitrium crystal"
+	desc = "A strange brown crystal that emits a foul smoke when chipped."
 	icon = 'icons/obj/pipes_n_cables/atmos.dmi'
 	icon_state = "nitrium_crystal"
 	var/cloud_size = 1
 
 /obj/item/nitrium_crystal/attack_self(mob/user)
 	. = ..()
-	var/datum/effect_system/fluid_spread/smoke/chem/smoke = new
-	var/turf/location = get_turf(src)
-	create_reagents(5)
-	reagents.add_reagent(/datum/reagent/nitrium_low_metabolization, 3)
-	reagents.add_reagent(/datum/reagent/nitrium_high_metabolization, 2)
-	smoke.attach(location)
-	smoke.set_up(cloud_size, holder = src, location = location, carry = reagents, silent = TRUE)
-	smoke.start()
+	do_chem_smoke(cloud_size, src, get_turf(src), list(/datum/reagent/nitrium_low_metabolization = 3, /datum/reagent/nitrium_high_metabolization = 2))
 	qdel(src)

@@ -41,7 +41,7 @@
 
 	dude.Immobilize(5 SECONDS)
 	for (var/wound_bonus_rep in 1 to repetitions)
-		for (var/_limb in dude.bodyparts)
+		for (var/_limb in dude.get_bodyparts())
 			var/obj/item/bodypart/limb = _limb
 			var/shots_this_limb = 0
 			for (var/_iter_turf in shuffle(open_adj_turfs))

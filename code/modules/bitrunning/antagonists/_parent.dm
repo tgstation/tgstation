@@ -1,5 +1,6 @@
 /datum/job/bitrunning_glitch
 	title = ROLE_GLITCH
+	tgui_icon = FA_ICON_QRCODE
 
 /datum/antagonist/bitrunning_glitch
 	name = "Generic Bitrunning Glitch"
@@ -85,7 +86,7 @@
 	if(isnull(outfit_id))
 		return
 
-	outfit_id.registered_account = new()
+	outfit_id.set_account(new /datum/bank_account)
 	outfit_id.registered_account.replaceable = FALSE
 	outfit_id.registered_account.account_id = null
 	outfit_id.registered_name = player.name

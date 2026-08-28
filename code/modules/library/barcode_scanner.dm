@@ -1,3 +1,7 @@
+#define BARCODE_SCANNER_CHECKIN "check_in"
+#define BARCODE_SCANNER_CHECKOUT "check_out"
+#define BARCODE_SCANNER_INVENTORY "inventory"
+
 /obj/item/barcodescanner
 	name = "barcode scanner"
 	icon = 'icons/obj/service/library.dmi'
@@ -9,7 +13,7 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 	///Weakref to the library computer we are connected to.
 	var/datum/weakref/computer_ref
-	///The current scanning mode (BARCODE_SCANNER_CHECKIN|BARCODE_SCANNER_INVENTORY)
+	///The current scanning mode (BARCODE_SCANNER_CHECKIN|BARCODE_SCANNER_CHECKOUT|BARCODE_SCANNER_INVENTORY)
 	var/scan_mode = BARCODE_SCANNER_CHECKIN
 
 /obj/item/barcodescanner/Initialize(mapload)
@@ -24,6 +28,8 @@
 	switch(scan_mode)
 		if(BARCODE_SCANNER_CHECKIN)
 			context[SCREENTIP_CONTEXT_LMB] = "Check in"
+		if(BARCODE_SCANNER_CHECKOUT)
+			context[SCREENTIP_CONTEXT_LMB] = "Check out"
 		if(BARCODE_SCANNER_INVENTORY)
 			context[SCREENTIP_CONTEXT_LMB] = "Add to inventory"
 	return CONTEXTUAL_SCREENTIP_SET
@@ -61,6 +67,23 @@
 			user.balloon_alert(user, "isn't checked out!")
 			return ITEM_INTERACT_BLOCKING
 
+		if(BARCODE_SCANNER_CHECKOUT)
+			var/list/checkouts = linked_computer.checkouts
+			for(var/checkout_ref in checkouts)
+				var/datum/borrowbook/maybe_ours = checkouts[checkout_ref]
+				if(target_book.book_data.compare(maybe_ours.book_data))
+					user.balloon_alert(user, "already checked out!")
+					return ITEM_INTERACT_BLOCKING
+			for(var/copy_ref in linked_computer.inventory)
+				if(!target_book.book_data.compare(linked_computer.inventory[copy_ref]))
+					continue
+				linked_computer.checking_out_book = target_book.book_data
+				balloon_alert(user, "set for check out")
+				playsound(src, 'sound/items/barcodebeep.ogg', 20, FALSE)
+				return ITEM_INTERACT_SUCCESS
+			user.balloon_alert(user, "not in inventory!")
+			return ITEM_INTERACT_BLOCKING
+
 		if(BARCODE_SCANNER_INVENTORY)
 			var/datum/book_info/our_copy = target_book.book_data.return_copy()
 			linked_computer.inventory[ref(our_copy)] = our_copy
@@ -80,9 +103,16 @@
 		return
 	switch(scan_mode)
 		if(BARCODE_SCANNER_CHECKIN)
+			scan_mode = BARCODE_SCANNER_CHECKOUT
+			balloon_alert(user, "check-out mode")
+		if(BARCODE_SCANNER_CHECKOUT)
 			scan_mode = BARCODE_SCANNER_INVENTORY
 			balloon_alert(user, "inventory adding mode")
 		if(BARCODE_SCANNER_INVENTORY)
 			scan_mode = BARCODE_SCANNER_CHECKIN
 			balloon_alert(user, "check-in mode")
 	playsound(loc, 'sound/items/click.ogg', 20, TRUE)
+
+#undef BARCODE_SCANNER_CHECKIN
+#undef BARCODE_SCANNER_CHECKOUT
+#undef BARCODE_SCANNER_INVENTORY

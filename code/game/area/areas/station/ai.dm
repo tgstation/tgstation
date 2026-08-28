@@ -45,6 +45,10 @@
 	icon_state = "ai_chamber"
 	annoying_ambience = null
 
+/area/station/ai/satellite/chamber/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/block_area_power_fail)
+
 /area/station/ai/satellite/exterior
 	name = "\improper AI Satellite Exterior"
 	secure = FALSE

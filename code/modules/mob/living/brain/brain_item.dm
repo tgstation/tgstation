@@ -63,7 +63,7 @@
 
 	// Special check for if you're trapped in a body you can't control because it's owned by a ling.
 	if(IS_CHANGELING(brain_owner) && !(movement_flags & NO_ID_TRANSFER))
-		if(brainmob && !(brain_owner.stat == DEAD || (HAS_TRAIT(brain_owner, TRAIT_DEATHCOMA))))
+		if(brainmob && !IS_DEAD_OR_FAKING(brain_owner))
 			to_chat(brainmob, span_danger("You can't feel your body! You're still just a brain!"))
 		forceMove(brain_owner)
 		brain_owner.update_body_parts()
@@ -130,9 +130,8 @@
 	if((!QDELETED(src) || !QDELETED(owner)) && !(movement_flags & NO_ID_TRANSFER))
 		transfer_identity(organ_owner)
 	if(!special)
-		if(!(organ_owner.living_flags & STOP_OVERLAY_UPDATE_BODY_PARTS))
-			organ_owner.update_body_parts()
 		organ_owner.clear_mood_event("brain_damage")
+		organ_owner.med_hud_set_status()
 
 /obj/item/organ/brain/update_icon_state()
 	icon_state = "[initial(icon_state)][smooth_brain ? "-smooth" : ""]"
@@ -170,37 +169,40 @@
 		L.mind.transfer_to(brainmob)
 		to_chat(brainmob, span_notice("You feel slightly disoriented. That's normal when you're just a brain."))
 
-/obj/item/organ/brain/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	user.changeNext_move(CLICK_CD_MELEE)
+/obj/item/organ/brain/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/borg/apparatus/organ_storage))
+		return NONE//Borg organ bags shouldn't be killing brains
 
-	if(istype(item, /obj/item/borg/apparatus/organ_storage))
-		return //Borg organ bags shouldn't be killing brains
-
-	if (check_for_repair(item, user))
-		return TRUE
+	if (check_for_repair(tool, user))
+		return ITEM_INTERACT_SUCCESS
 
 	// Cutting out skill chips.
-	if(length(skillchips) && item.get_sharpness() == SHARP_EDGED)
-		to_chat(user,span_notice("You begin to excise skillchips from [src]."))
-		if(do_after(user, 15 SECONDS, target = src))
-			for(var/chip in skillchips)
-				var/obj/item/skillchip/skillchip = chip
+	if(!length(skillchips) || tool.get_sharpness() != SHARP_EDGED)
+		return NONE
 
-				if(!istype(skillchip))
-					stack_trace("Item of type [skillchip.type] qdel'd from [src] skillchip list.")
-					qdel(skillchip)
-					continue
+	to_chat(user,span_notice("You begin to excise skillchips from [src]."))
+	if(!do_after(user, 15 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
 
-				remove_skillchip(skillchip)
+	for(var/obj/item/skillchip/skillchip as anything in skillchips)
+		if(!istype(skillchip, /obj/item/skillchip))
+			stack_trace("Item of type [skillchip.type] qdel'd from [src] skillchip list.")
+			qdel(skillchip)
+			continue
 
-				if(skillchip.removable)
-					skillchip.forceMove(drop_location())
-					continue
+		remove_skillchip(skillchip)
 
-				qdel(skillchip)
+		if(skillchip.removable)
+			skillchip.forceMove(drop_location())
+			continue
 
-			skillchips = null
-		return
+		qdel(skillchip)
+
+	skillchips = null
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/organ/brain/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+	user.changeNext_move(CLICK_CD_MELEE)
 
 	if(brainmob) //if we aren't trying to heal the brain, pass the attack onto the brainmob.
 		item.attack(brainmob, user) //Oh noooeeeee
@@ -242,8 +244,6 @@
 		. += span_notice("It is a bit on the smaller side...")
 	if(brain_size > 1)
 		. += span_notice("It is bigger than average...")
-	if(GetComponent(/datum/component/ghostrole_on_revive))
-		. += span_notice("Its soul might yet come back...")
 
 /// Needed so subtypes can override examine text while still calling parent
 /obj/item/organ/brain/proc/brain_damage_examine()
@@ -259,7 +259,7 @@
 	else
 		return span_info("This one is completely devoid of life.")
 
-/obj/item/organ/brain/get_status_appendix(advanced, add_tooltips)
+/obj/item/organ/brain/get_status_appendix(scanpower, add_tooltips)
 	var/list/trauma_text
 	for(var/datum/brain_trauma/trauma as anything in traumas)
 		var/trauma_desc = ""
@@ -337,7 +337,9 @@
 	owner?.mind?.set_current(null) //You aren't allowed to return to brains that don't exist
 	return ..()
 
-/obj/item/organ/brain/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/brain/on_life(seconds_per_tick)
+	. = ..()
+
 	if(HAS_TRAIT(src, TRAIT_BRAIN_DAMAGE_NODEATH))
 		return
 	if(damage >= BRAIN_DAMAGE_DEATH) //rip
@@ -345,24 +347,36 @@
 		owner.investigate_log("has been killed by brain damage.", INVESTIGATE_DEATHS)
 		owner.death()
 
+/obj/item/organ/brain/on_bodypart_insert(obj/item/bodypart/limb)
+	. = ..()
+	if(ishuman(limb.owner))
+		limb.owner.update_hair()
+	else
+		limb.update_icon_dropped()
+
 /obj/item/organ/brain/on_bodypart_remove(obj/item/bodypart/limb, movement_flags)
 	. = ..()
-	update_brain_color(animate = FALSE) // once it's out in the world we need to make sure it's the right color
+	if(ishuman(limb.owner))
+		limb.owner.update_hair()
+	else
+		limb.update_icon_dropped()
+	// once it's out in the world we need to make sure it's the right color
+	update_brain_color(animate = FALSE)
 
 /obj/item/organ/brain/apply_organ_damage(damage_amount, maximum = maxHealth, required_organ_flag = NONE)
 	. = ..()
 	var/delta_dam = . //for the sake of clarity
 	if(isnull(bodypart_owner)) // no need to color it if it's in someone's noggin
 		update_brain_color()
-	if(delta_dam > 0 && damage > BRAIN_DAMAGE_MILD)
-		roll_for_brain_trauma(delta_dam)
+	if(delta_dam < 0 && damage > BRAIN_DAMAGE_MILD)
+		roll_for_brain_trauma(-delta_dam) // parent call returns negative numbers if take damage and positive if we heal
 
 /// Rolls a random chance to gain a brain trauma based on damage taken and current damage level
 /obj/item/organ/brain/proc/roll_for_brain_trauma(delta_dam)
 	if(prob(delta_dam * (1 + max(0, (damage - BRAIN_DAMAGE_MILD)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1% //learn how to do your bloody math properly goddamnit
 		gain_trauma_type(BRAIN_TRAUMA_MILD, natural_gain = TRUE)
 
-	var/is_boosted = (owner && HAS_TRAIT(owner, TRAIT_SPECIAL_TRAUMA_BOOST))
+	var/is_boosted = (owner && HAS_TRAIT(src, TRAIT_SPECIAL_TRAUMA_BOOST))
 	if(damage < BRAIN_DAMAGE_SEVERE)
 		return
 	if(prob(delta_dam * (1 + max(0, (damage - BRAIN_DAMAGE_SEVERE)/100)))) //Base chance is the hit damage; for every point of damage past the threshold the chance is increased by 1%
@@ -438,7 +452,7 @@
 
 	// If we have some sort of brain type or subtype change and have skillchips, engage the failsafe procedure!
 	if(owner && length(skillchips) && (replacement_brain.type != type))
-		activate_skillchip_failsafe(silent = TRUE)
+		activate_skillchip_failsafe()
 
 	// Check through all our skillchips, remove them from this brain, add them to the replacement brain.
 	for(var/chip in skillchips)
@@ -479,14 +493,6 @@
 	else
 		set_organ_damage(BRAIN_DAMAGE_DEATH)
 
-/obj/item/organ/brain/zombie
-	name = "zombie brain"
-	desc = "This glob of green mass can't have much intelligence inside it."
-	icon_state = "brain-x"
-	variant_traits_added = list(TRAIT_PRIMITIVE)
-	variant_traits_removed = list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER)
-	shade_color = "green"
-
 /obj/item/organ/brain/alien
 	name = "alien brain"
 	desc = "We barely understand the brains of terrestial animals. Who knows what we may find in the brain of such an advanced species?"
@@ -504,6 +510,7 @@
 		TRAIT_EXPERT_FISHER, // live off land, fish from river
 		TRAIT_ROUGHRIDER, // ride beast, chase down prey, flee from danger
 		TRAIT_BEAST_EMPATHY, // know the way of beast, calm with food
+		TRAIT_NECROPOLIS_WORSHIP,
 		TRAIT_TACKLING_TAILED_DEFENDER,
 	)
 
@@ -544,6 +551,10 @@
 
 /obj/item/organ/brain/felinid //A bit smaller than average
 	brain_size = 0.8
+	variant_traits_added = list(
+		TRAIT_CATLIKE_INSTINCT,
+		TRAIT_WATER_HATER,
+	)
 
 // Sometimes, felinids go a bit haywire and bite people. Based entirely on mania and hunger.
 /obj/item/organ/brain/felinid/get_attacking_limb(mob/living/carbon/human/target)
@@ -571,8 +582,24 @@
 	desc = "A piece of juicy meat found in an ayy lmao's head."
 	icon_state = "brain-x"
 	brain_size = 1.3
-	variant_traits_added = list(TRAIT_REMOTE_TASTING)
+	variant_traits_added = list(TRAIT_REMOTE_TASTING, TRAIT_ABDUCTOR_KNOWLEDGE)
 	shade_color = "grey"
+
+/obj/item/organ/brain/abductor/on_mob_insert(mob/living/carbon/brain_owner, special = FALSE, movement_flags)
+	. = ..()
+	RegisterSignal(brain_owner, COMSIG_MOB_REAGENT_TICK, PROC_REF(handle_peanut_butter))
+
+/obj/item/organ/brain/abductor/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+	. = ..()
+	UnregisterSignal(organ_owner, COMSIG_MOB_REAGENT_TICK)
+
+/obj/item/organ/brain/abductor/proc/handle_peanut_butter(mob/living/carbon/organ_owner, datum/reagent/reagent, seconds_per_tick, metabolization_ratio)
+	SIGNAL_HANDLER
+	if(!istype(reagent, /datum/reagent/consumable/peanut_butter))
+		return
+	organ_owner.add_mood_event("ET_pieces", /datum/mood_event/et_pieces, reagent.name)
+	organ_owner.set_drugginess_if_lower(15 SECONDS * metabolization_ratio * seconds_per_tick)
+
 
 ////////////////////////////////////TRAUMAS////////////////////////////////////////
 

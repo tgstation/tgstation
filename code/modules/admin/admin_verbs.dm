@@ -1,3 +1,6 @@
+
+#define STEALTH_MODE_TRAIT "stealth_mode"
+
 /client/proc/add_admin_verbs()
 	control_freak = CONTROL_FREAK_SKIN | CONTROL_FREAK_MACROS
 	SSadmin_verbs.assosciate_admin(src)
@@ -8,7 +11,7 @@
 
 ADMIN_VERB(hide_verbs, R_NONE, "Adminverbs - Hide All", "Hide most of your admin verbs.", ADMIN_CATEGORY_MAIN)
 	user.remove_admin_verbs()
-	add_verb(user, /client/proc/show_verbs)
+	ASSIGN_GAME_VERB(user, /client, show_verbs)
 
 	to_chat(user, span_interface("Almost all of your adminverbs have been hidden."), confidential = TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Hide All Adminverbs")
@@ -27,31 +30,93 @@ ADMIN_VERB(admin_ghost, R_ADMIN, "AGhost", "Become a ghost without DNR.", ADMIN_
 		ghost.reenter_corpse()
 		BLACKBOX_LOG_ADMIN_VERB("Admin Reenter")
 	else if(isnewplayer(user.mob))
-		to_chat(user, "<font color='red'>Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first.</font>", confidential = TRUE)
+		to_chat(user, span_warning("Error: Aghost: Can't admin-ghost whilst in the lobby. Join or Observe first."), confidential = TRUE)
 		return FALSE
 	else
 		//ghostize
 		log_admin("[key_name(user)] admin ghosted.")
 		message_admins("[key_name_admin(user)] admin ghosted.")
 		var/mob/body = user.mob
-		body.ghostize(TRUE, TRUE)
+		var/mob/dead/observer/ghost = body.ghostize(TRUE, TRUE)
 		user.init_verbs()
 		if(body && !body.key)
 			body.key = "@[user.key]" //Haaaaaaaack. But the people have spoken. If it breaks; blame adminbus
+		// Carry over invisimin to their aghost
+		var/is_stealth_mode = user.holder.fakekey
+		var/is_invisimin = HAS_TRAIT_FROM(body, TRAIT_INVISIMIN, ADMIN_TRAIT)
+		if(is_stealth_mode || is_invisimin)
+			if(is_invisimin)
+				ADD_TRAIT(ghost, TRAIT_INVISIMIN, ADMIN_TRAIT)
+				ghost.SetInvisibility(INVISIBILITY_ADMIN, INVISIBILITY_SOURCE_INVISIMIN, INVISIBILITY_PRIORITY_ADMIN)
+			else
+				ghost.SetInvisibility(INVISIBILITY_ABSTRACT, INVISIBILITY_SOURCE_STEALTHMODE, INVISIBILITY_PRIORITY_ADMIN)
+				ghost.name = " "
+				ghost.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+			ghost.alpha = 0
+			ghost.remove_from_all_data_huds()
+			ADD_TRAIT(ghost, TRAIT_ORBITING_FORBIDDEN, is_invisimin ? ADMIN_TRAIT : STEALTH_MODE_TRAIT)
+			QDEL_NULL(ghost.orbiters)
+
 		BLACKBOX_LOG_ADMIN_VERB("Admin Ghost")
 
 ADMIN_VERB(invisimin, R_ADMIN, "Invisimin", "Toggles ghost-like invisibility.", ADMIN_CATEGORY_GAME)
+	// Toggle OFF
 	if(HAS_TRAIT(user.mob, TRAIT_INVISIMIN))
-		REMOVE_TRAIT(user.mob, TRAIT_INVISIMIN, ADMIN_TRAIT)
+		user.mob.remove_traits(list(
+				TRAIT_INVISIMIN,
+				TRAIT_ORBITING_FORBIDDEN,
+				TRAIT_MOVE_PHASING,
+				TRAIT_PIERCEIMMUNE,
+				TRAIT_INVISIBLE_TO_CAMERA,
+			), ADMIN_TRAIT)
 		user.mob.add_to_all_human_data_huds()
 		user.mob.RemoveInvisibility(INVISIBILITY_SOURCE_INVISIMIN)
 		to_chat(user, span_adminnotice(span_bold("Invisimin off. Invisibility reset.")), confidential = TRUE)
+		if(isobserver(user.mob) && !user.holder.fakekey) // Set the alpha back if we're not still stealth mode
+			user.mob.alpha = initial(user.mob.alpha)
 		return
 
-	ADD_TRAIT(user.mob, TRAIT_INVISIMIN, ADMIN_TRAIT)
+	// Toggle ON
+	user.mob.add_traits(list(
+			TRAIT_INVISIMIN,
+			TRAIT_ORBITING_FORBIDDEN,
+			TRAIT_MOVE_PHASING,
+			TRAIT_PIERCEIMMUNE,
+			TRAIT_INVISIBLE_TO_CAMERA,
+		), ADMIN_TRAIT)
 	user.mob.remove_from_all_data_huds()
-	user.mob.SetInvisibility(INVISIBILITY_OBSERVER, INVISIBILITY_SOURCE_INVISIMIN, INVISIBILITY_PRIORITY_ADMIN)
-	to_chat(user, span_adminnotice(span_bold("Invisimin on. You are now as invisible as a ghost.")), confidential = TRUE)
+	user.mob.SetInvisibility(INVISIBILITY_ADMIN, INVISIBILITY_SOURCE_INVISIMIN, INVISIBILITY_PRIORITY_ADMIN)
+	if(isobserver(user.mob))
+		user.mob.alpha = 0
+	QDEL_NULL(user.mob.orbiters)
+	to_chat(user, span_adminnotice(span_bold("Invisimin on. You are now invisible to players and ghosts.")), confidential = TRUE)
+
+ADMIN_VERB(toggle_admin_esp, R_ADMIN, "Toggle Admin ESP", "Toggle to be able to see ghosts and invisimins.", ADMIN_CATEGORY_GAME)
+	// Toggle OFF
+	if(HAS_TRAIT(user.mob, TRAIT_ADMIN_ESP))
+		if(isliving(user.mob))
+			var/mob/living/living_user = user.mob
+			living_user.remove_status_effect(/datum/status_effect/admin_esp)
+		else if(isobserver(user.mob))
+			user.mob.set_invis_see(SEE_INVISIBLE_OBSERVER)
+		else
+			user.mob.set_invis_see(SEE_INVISIBLE_LIVING)
+		REMOVE_TRAIT(user.mob, TRAIT_ADMIN_ESP, ADMIN_TRAIT)
+		to_chat(user.mob, span_adminnotice("Admin ESP off. You will no longer see [isliving(user.mob) ? "ghosts or " : ""]invisimins."), confidential = TRUE)
+		return
+
+	// Toggle ON
+	if(isliving(user.mob))
+		var/mob/living/living_user = user.mob
+		living_user.apply_status_effect(/datum/status_effect/admin_esp)
+	else if(ismob(user.mob))
+		user.mob.set_invis_see(SEE_INVISIBLE_ADMIN)
+	else
+		to_chat(user.mob, span_warning("Admin ESP only works if you are in a mob!"), confidential = TRUE)
+		return
+
+	ADD_TRAIT(user.mob, TRAIT_ADMIN_ESP, ADMIN_TRAIT)
+	to_chat(user.mob, span_adminnotice("Admin ESP on. You will now be able to see [isliving(user.mob) ? "ghosts and " : ""]invisimins."), confidential = TRUE)
 
 ADMIN_VERB(check_antagonists, R_ADMIN, "Check Antagonists", "See all antagonists for the round.", ADMIN_CATEGORY_GAME)
 	user.holder.check_antagonists()
@@ -141,8 +206,6 @@ ADMIN_VERB(stealth, R_STEALTH, "Stealth Mode", "Toggle stealth.", ADMIN_CATEGORY
 
 	BLACKBOX_LOG_ADMIN_VERB("Stealth Mode")
 
-#define STEALTH_MODE_TRAIT "stealth_mode"
-
 /client/proc/enable_stealth_mode()
 	var/new_key = ckeyEx(stripped_input(usr, "Enter your desired display name.", "Fake Key", key, 26))
 	if(!new_key)
@@ -165,7 +228,8 @@ ADMIN_VERB(stealth, R_STEALTH, "Stealth Mode", "Toggle stealth.", ADMIN_CATEGORY
 	holder.fakekey = null
 	if(isobserver(mob))
 		mob.RemoveInvisibility(INVISIBILITY_SOURCE_STEALTHMODE)
-		mob.alpha = initial(mob.alpha)
+		if(!HAS_TRAIT_FROM(mob, TRAIT_INVISIMIN, ADMIN_TRAIT)) // Don't reset our alpha if we're also invisimin'd
+			mob.alpha = initial(mob.alpha)
 		if(mob.mind)
 			if(mob.mind.ghostname)
 				mob.name = mob.mind.ghostname
@@ -179,8 +243,6 @@ ADMIN_VERB(stealth, R_STEALTH, "Stealth Mode", "Toggle stealth.", ADMIN_CATEGORY
 
 	log_admin("[key_name(usr)] has turned stealth mode OFF")
 	message_admins("[key_name_admin(usr)] has turned stealth mode OFF")
-
-#undef STEALTH_MODE_TRAIT
 
 ADMIN_VERB(drop_bomb, R_FUN, "Drop Bomb", "Cause an explosion of varying strength at your location", ADMIN_CATEGORY_FUN)
 	var/list/choices = list("Small Bomb (1, 2, 3, 3)", "Medium Bomb (2, 3, 4, 4)", "Big Bomb (3, 5, 7, 5)", "Maxcap", "Custom Bomb")
@@ -287,7 +349,8 @@ ADMIN_VERB(test_cardpack_distribution, R_DEBUG, "Test Cardpack Distribution", "T
 ADMIN_VERB(print_cards, R_DEBUG, "Print Cards", "Print all cards to chat.", ADMIN_CATEGORY_DEBUG)
 	SStrading_card_game.printAllCards()
 
-ADMIN_VERB(give_mob_action, R_FUN, "Give Mob Action", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/ability_recipient)
+ADMIN_VERB(give_mob_action, R_FUN, "Give Mob Action", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+	VERB_ARG_TYPED(ability_recipient, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/static/list/all_mob_actions = sort_list(subtypesof(/datum/action/cooldown/mob_cooldown), GLOBAL_PROC_REF(cmp_typepaths_asc))
 	var/static/list/actions_by_name = list()
 	if (!length(actions_by_name))
@@ -333,7 +396,8 @@ ADMIN_VERB(give_mob_action, R_FUN, "Give Mob Action", ADMIN_VERB_NO_DESCRIPTION,
 	log_admin("[key_name(user)] added mob ability [ability_type] to mob [ability_recipient].")
 	BLACKBOX_LOG_ADMIN_VERB("Add Mob Ability")
 
-ADMIN_VERB(remove_mob_action, R_FUN, "Remove Mob Action", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/removal_target)
+ADMIN_VERB(remove_mob_action, R_FUN, "Remove Mob Action", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+	VERB_ARG_TYPED(removal_target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/list/target_abilities = list()
 	for(var/datum/action/cooldown/mob_cooldown/ability in removal_target.actions)
 		target_abilities[ability.name] = ability
@@ -353,7 +417,8 @@ ADMIN_VERB(remove_mob_action, R_FUN, "Remove Mob Action", ADMIN_VERB_NO_DESCRIPT
 	message_admins("[key_name_admin(user)] removed the ability [chosen_ability] from [key_name_admin(removal_target)].")
 	BLACKBOX_LOG_ADMIN_VERB("Remove Mob Ability")
 
-ADMIN_VERB(give_spell, R_FUN, "Give Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/spell_recipient)
+ADMIN_VERB(give_spell, R_FUN, "Give Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+	VERB_ARG_TYPED(spell_recipient, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/which = tgui_alert(user, "Chose by name or by type path?", "Chose option", list("Name", "Typepath"))
 	if(!which)
 		return
@@ -400,7 +465,8 @@ ADMIN_VERB(give_spell, R_FUN, "Give Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CAT
 		to_chat(user, span_userdanger("Spells given to mindless mobs will belong to the mob and not their mind, \
 			and as such will not be transferred if their mind changes body (Such as from Mindswap)."))
 
-ADMIN_VERB(remove_spell, R_FUN, "Remove Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/removal_target)
+ADMIN_VERB(remove_spell, R_FUN, "Remove Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+	VERB_ARG_TYPED(removal_target, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/list/target_spell_list = list()
 	for(var/datum/action/cooldown/spell/spell in removal_target.actions)
 		target_spell_list[spell.name] = spell
@@ -420,16 +486,18 @@ ADMIN_VERB(remove_spell, R_FUN, "Remove Spell", ADMIN_VERB_NO_DESCRIPTION, ADMIN
 	message_admins("[key_name_admin(user)] removed the spell [chosen_spell] from [key_name_admin(removal_target)].")
 	BLACKBOX_LOG_ADMIN_VERB("Remove Spell")
 
-ADMIN_VERB(give_disease, R_FUN, "Give Disease", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/victim)
-	var/datum/disease/D = input(user, "Choose the disease to give to that guy", "ACHOO") as null|anything in sort_list(SSdisease.diseases, GLOBAL_PROC_REF(cmp_typepaths_asc))
-	if(!D)
+ADMIN_VERB(give_disease, R_FUN, "Give Disease", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+	VERB_ARG_TYPED(victim, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob/living)
+	var/datum/disease/disease = tgui_input_list(user, "Choose the disease to give to that guy", "ACHOO", sort_list(SSdisease.diseases, GLOBAL_PROC_REF(cmp_typepaths_asc)))
+	if(!disease)
 		return
-	victim.ForceContractDisease(new D, FALSE, TRUE)
+	victim.ForceContractDisease(new disease, FALSE, TRUE)
 	BLACKBOX_LOG_ADMIN_VERB("Give Disease")
-	log_admin("[key_name(user)] gave [key_name(victim)] the disease [D].")
-	message_admins(span_adminnotice("[key_name_admin(user)] gave [key_name_admin(victim)] the disease [D]."))
+	log_admin("[key_name(user)] gave [key_name(victim)] the disease [disease].")
+	message_admins(span_adminnotice("[key_name_admin(user)] gave [key_name_admin(victim)] the disease [disease]."))
 
-ADMIN_VERB_AND_CONTEXT_MENU(object_say, R_FUN, "OSay", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, obj/speaker in world)
+ADMIN_VERB_AND_CONTEXT_MENU(object_say, R_FUN, "OSay", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, /obj)
+	VERB_ARG_TYPED(speaker, VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_WORLD, /obj)
 	var/message = tgui_input_text(user, "What do you want the message to be?", "Make Sound", encode = FALSE)
 	if(!message)
 		return
@@ -476,7 +544,8 @@ ADMIN_VERB(deadmin, R_NONE, "DeAdmin", "Shed your admin powers.", ADMIN_CATEGORY
 	message_admins("[key_name_admin(user)] deadminned themselves.")
 	BLACKBOX_LOG_ADMIN_VERB("Deadmin")
 
-ADMIN_VERB(populate_world, R_DEBUG, "Populate World", "Populate the world with test mobs.", ADMIN_CATEGORY_DEBUG, amount = 50 as num)
+ADMIN_VERB(populate_world, R_DEBUG, "Populate World", "Populate the world with test mobs.", ADMIN_CATEGORY_DEBUG)
+	VERB_ARG(amount, VERB_ARG_TYPE_NUM, VERB_ARG_SOURCE_INPUT)
 	for (var/i in 1 to amount)
 		var/turf/tile = get_safe_random_station_turf_equal_weight()
 		var/mob/living/carbon/human/hooman = new(tile)
@@ -665,7 +734,8 @@ ADMIN_VERB(create_mob_worm, R_FUN, "Create Mob Worm", "Attach a linked list of m
 		segment.AddComponent(/datum/component/mob_chain, front = previous)
 		previous = segment
 
-ADMIN_VERB(give_ai_controller, R_FUN, "Give AI Controller", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/my_guy)
+ADMIN_VERB(give_ai_controller, R_FUN, "Give AI Controller", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN)
+	VERB_ARG_TYPED(my_guy, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob/living)
 	var/static/list/controllers = subtypesof(/datum/admin_ai_template)
 	var/static/list/controllers_by_name = list()
 	if (!length(controllers_by_name))
@@ -685,10 +755,8 @@ ADMIN_VERB(clear_legacy_asset_cache, R_DEBUG, "Clear Legacy Asset Cache", "Clear
 		to_chat(user, span_warning("Asset caching is disabled in the config!"))
 		return
 	var/regenerated = 0
-	for(var/datum/asset/target_spritesheet as anything in subtypesof(/datum/asset))
+	for(var/datum/asset/target_spritesheet as anything in valid_subtypesof(/datum/asset))
 		if(!initial(target_spritesheet.cross_round_cachable))
-			continue
-		if(target_spritesheet == initial(target_spritesheet._abstract))
 			continue
 		var/datum/asset/asset_datum = GLOB.asset_datums[target_spritesheet]
 		asset_datum.regenerate()
@@ -700,109 +768,64 @@ ADMIN_VERB(clear_smart_asset_cache, R_DEBUG, "Clear Smart Asset Cache", "Clear t
 		to_chat(user, span_warning("Smart asset caching is disabled in the config!"))
 		return
 	var/cleared = 0
-	for(var/datum/asset/spritesheet_batched/target_spritesheet as anything in subtypesof(/datum/asset/spritesheet_batched))
-		if(target_spritesheet == initial(target_spritesheet._abstract))
-			continue
+	for(var/datum/asset/spritesheet_batched/target_spritesheet as anything in valid_subtypesof(/datum/asset/spritesheet_batched))
 		fdel("[ASSET_CROSS_ROUND_SMART_CACHE_DIRECTORY]/spritesheet_cache.[initial(target_spritesheet.name)].json")
 		cleared++
 	to_chat(user, span_notice("Cleared [cleared] asset\s."))
 
-ADMIN_VERB(give_ai_speech, R_FUN, "Give Random AI Speech", ADMIN_VERB_NO_DESCRIPTION, ADMIN_CATEGORY_HIDDEN, mob/living/my_guy)
-	if (isnull(my_guy.ai_controller))
-		var/create_controller = tgui_alert(user, "Target has no AI controller, add one?", "Give AI?", list("Yes", "No")) == "Yes"
-		if (!create_controller)
-			return
-		var/run_with_mind = tgui_alert(user, "Run AI controller while the target has a client?", "Override Client?", list("Yes", "No"))
-		if (isnull(run_with_mind))
-			return
-		if (QDELETED(my_guy))
-			to_chat(user, span_warning("Target ceased to exist."))
-			return
-		my_guy.ai_controller = new /datum/ai_controller/basic_controller/talk(my_guy)
-		if (run_with_mind == "Yes")
-			var/datum/ai_controller/guy_controller = my_guy.ai_controller
-			guy_controller.continue_processing_when_client = TRUE
-			guy_controller.reset_ai_status()
+ADMIN_VERB(open_event_logger, R_DEBUG, "Open Event Logger", "Open the event logger interface.", ADMIN_CATEGORY_DEBUG)
+	GLOB.event_logger.ui_interact(user.mob)
 
-	var/speech_chance
-	var/list/spoken_lines
-	var/list/audible_emotes
-	var/list/visible_emotes
-	var/list/sounds
+ADMIN_VERB(view_behavior_tree, R_DEBUG, "View Behavior Tree", "Inspect the AI behavior tree of a mob.", ADMIN_CATEGORY_DEBUG)
+	GLOB.bt_viewer.ui_interact(user.mob)
 
-	speech_chance = tgui_input_number(user, "Enter chance per second to say something", "Speech Chance", default = 2, min_value = 0, max_value = 100, round_value = FALSE)
-	if (isnull(speech_chance))
+ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an item to the black market for purchase.", ADMIN_CATEGORY_EVENTS)
+	VERB_ARG(object, VERB_ARG_TYPE_TYPEPATH, VERB_ARG_SOURCE_INPUT)
+	if(!object)
+		to_chat(user, span_boldwarning("Failed! Provide a full or partial typepath!"))
+		return
+	//first: have admins select a typepath for the item they want to offer.
+	var/obj/chosen = pick_closest_path(object, make_types_fancy(subtypesof(/obj)))
+	// second: poll admins for the name, description, price, and quantity.
+	if(isnull(chosen))
+		return
+	var/name = tgui_input_text(user, "Name of the item to sell?", "Item listing name", "Arcane Object", max_length = MAX_NAME_LEN)
+	if(isnull(name))
+		return
+	var/description = tgui_input_text(user, "Custom description of the item to sell?", "Item listing description", "[chosen::desc]", max_length = 200)
+	if(isnull(description))
+		return
+	var/price = tgui_input_number(user, "Price for the item listing?", "Item listing price", max_value = INFINITY, min_value = 1, round_value = TRUE)
+	if(isnull(price))
+		return
+	var/quantity = tgui_input_number(user, "Quantity of the item to sell?", "Item listing quantity", default = 1, max_value = 100, min_value = 1, round_value = TRUE)
+	if(isnull(quantity))
+		return
+	//lastly: pick a category for the item to go under
+	var/category = tgui_input_list(user, "Category to list the item under?", "Item listing category", BLACKMARKET_CATEGORIES)
+	if(isnull(category))
 		return
 
-	var/add_another
-	var/next_line
+	var/datum/market_item/admin_item = new /datum/market_item()
+	// Making a note here that we don't need to assign to blackmarket because we still only have one market type, but if we ever start using multiple we'll want to poll admins.
+	admin_item.item = chosen
+	SSblackbox.record_feedback("tally", "admin blackmarket items", 1, chosen)
 
-	add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] spoken line?", "Spoken Lines", list("Yes", "No"))
-	while (add_another  == "Yes")
-		next_line = tgui_input_text(user, "Enter [length(spoken_lines) ? "another" : "a"] thing spoken out loud.", "Spoken Lines")
-		if (isnull(next_line))
-			return
-		LAZYADD(spoken_lines, next_line)
-		add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] spoken line?", "Spoken Lines", list("Yes", "No"))
-	if (isnull(add_another))
-		return
+	admin_item.name = name
+	admin_item.desc = description
+	admin_item.price = price
+	admin_item.stock = quantity
+	admin_item.category = category
+	admin_item.restockable = FALSE
 
-	add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] emote which people can hear?", "Audible Emotes", list("Yes", "No"))
-	while (add_another == "Yes")
-		next_line = tgui_input_text(user, "Enter [length(spoken_lines) ? "another" : "an"] emote which people can hear.", "Audible Emotes")
-		if (isnull(next_line))
-			return
-		LAZYADD(audible_emotes, next_line)
-		add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] emote which people can hear?", "Audible Emotes", list("Yes", "No"))
-	if (isnull(add_another))
-		return
+	SSmarket.admin_items_spawned++
+	admin_item.identifier = "admin_[SSmarket.admin_items_spawned]"
 
-	add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] emote which people can see?", "Visible Emotes", list("Yes", "No"))
-	while (add_another == "Yes")
-		next_line = tgui_input_text(user, "Enter [length(spoken_lines) ? "another" : "an"] emote which people can see.", "Visible Emotes")
-		if (isnull(next_line))
-			return
-		LAZYADD(visible_emotes, next_line)
-		add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] emote which people can see?", "Visible Emotes", list("Yes", "No"))
-	if (isnull(add_another))
-		return
+	SSmarket.initialize_admin_item(admin_item)
+	log_admin("[key_name(user)] created a new black market item: [name] ([chosen]) for [price] credits, of quantity [quantity].")
+	message_admins("[key_name(user)] created a new black market item: [name] ([chosen]) for [price] credits, of quantity [quantity].")
 
-	if (!length(spoken_lines) && !length(audible_emotes) && !length(visible_emotes))
-		return // Well you didn't tell it to say anything...
+	BLACKBOX_LOG_ADMIN_VERB("Create Black Market Item")
 
-	if (length(spoken_lines) || length(audible_emotes))
-		add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] sound to play when doing something audible?", "Sounds", list("Yes", "No"))
-		while (add_another == "Yes")
-			next_line = input("", "Select sound",) as null|sound
-			if (isnull(next_line))
-				return
-			LAZYADD(sounds, next_line)
-			add_another = tgui_alert(user, "Add [length(spoken_lines) ? "another" : "a"] sound to play when doing something audible?", "Sounds", list("Yes", "No"))
-		if (isnull(add_another))
-			return
 
-	if (QDELETED(my_guy))
-		to_chat(user, span_warning("Target stopped existing."))
-		return
-
-	var/datum/ai_controller/our_controller = my_guy.ai_controller
-	if (length(spoken_lines))
-		spoken_lines = string_list(spoken_lines)
-	if (length(audible_emotes))
-		audible_emotes = string_list(audible_emotes)
-	if (length(visible_emotes))
-		visible_emotes = string_list(visible_emotes)
-
-	var/list/emotes = list(
-		BB_EMOTE_SAY = spoken_lines,
-		BB_EMOTE_HEAR = audible_emotes,
-		BB_EMOTE_SEE = visible_emotes,
-		BB_EMOTE_SOUND = sounds,
-		BB_SPEAK_CHANCE = speech_chance,
-	)
-	our_controller.set_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, emotes)
-
-	var/behaviour_exists = !!(locate(/datum/ai_planning_subtree/random_speech/blackboard) in our_controller.planning_subtrees)
-	if (behaviour_exists)
-		return
-	our_controller.planning_subtrees = list(GLOB.ai_subtrees[/datum/ai_planning_subtree/random_speech/blackboard]) + our_controller.planning_subtrees
+#undef STEALTH_MODE_TRAIT

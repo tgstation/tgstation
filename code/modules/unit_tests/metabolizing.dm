@@ -6,7 +6,7 @@
 	var/list/blacklisted_reagents = list(
 		/datum/reagent/eigenstate, //Creates clones after a delay which get into other tests
 	)
-	var/list/reagents_to_check = subtypesof(/datum/reagent) - blacklisted_reagents - GLOB.fake_reagent_blacklist
+	var/list/reagents_to_check = valid_subtypesof(/datum/reagent) - blacklisted_reagents
 	for (var/reagent_type in reagents_to_check)
 		test_reagent(human, reagent_type)
 

@@ -8,6 +8,9 @@
 	var/hazard_type = /obj/effect/client_image_holder/hallucination/danger
 
 /datum/hallucination/hazard/start()
+	if(IS_UNCONSCIOUS(hallucinator))
+		return FALSE
+
 	var/list/possible_points = list()
 	for(var/turf/open/floor/floor_in_view in view(hallucinator))
 		possible_points += floor_in_view

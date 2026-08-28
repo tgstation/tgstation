@@ -36,13 +36,14 @@
 	job_flags = STATION_JOB_FLAGS
 
 	job_tone = "honk"
+	tgui_icon = FA_ICON_FACE_GRIN_TEARS
 
 /datum/job/clown/after_spawn(mob/living/spawned, client/player_client)
 	if (ishuman(spawned))
 		spawned.apply_pref_name(/datum/preference/name/clown, player_client)
 		if(check_holidays(APRIL_FOOLS)) // Clown blood is real
 			var/mob/living/carbon/human/human_clown = spawned
-			human_clown.set_blood_type(BLOOD_TYPE_CLOWN)
+			human_clown.set_blood_type(/datum/blood_type/clown)
 
 	return ..()
 
@@ -101,4 +102,4 @@
 	H.fully_replace_character_name(H.real_name, pick(GLOB.clown_names)) //rename the mob AFTER they're equipped so their ID gets updated properly.
 	H.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_CLOWN_CLUMSINESS)
 	ADD_TRAIT(H, TRAIT_CLOWN_ENJOYER, INNATE_TRAIT)
-	H.faction |= FACTION_CLOWN
+	H.add_faction(FACTION_CLOWN)

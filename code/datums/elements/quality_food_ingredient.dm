@@ -16,8 +16,9 @@
 
 	RegisterSignal(target, COMSIG_ATOM_USED_IN_CRAFT, PROC_REF(used_in_craft))
 	RegisterSignal(target, COMSIG_ITEM_BAKED, PROC_REF(item_baked))
-	RegisterSignal(target, COMSIG_ITEM_MICROWAVE_COOKED_FROM, PROC_REF(microwaved_from))
+	RegisterSignal(target, COMSIG_ITEM_MICROWAVE_COOKED, PROC_REF(microwaved_from))
 	RegisterSignal(target, COMSIG_ITEM_GRILLED, PROC_REF(item_grilled))
+	RegisterSignal(target, COMSIG_ITEM_DRIED, PROC_REF(item_dried))
 	RegisterSignals(target, list(COMSIG_ITEM_BARBEQUE_GRILLED, COMSIG_ITEM_FRIED), PROC_REF(simply_cooked))
 	RegisterSignal(target, COMSIG_ITEM_USED_AS_INGREDIENT, PROC_REF(used_as_ingredient))
 
@@ -25,11 +26,12 @@
 	UnregisterSignal(source, list(
 		COMSIG_ATOM_USED_IN_CRAFT,
 		COMSIG_ITEM_BAKED,
-		COMSIG_ITEM_MICROWAVE_COOKED_FROM,
+		COMSIG_ITEM_MICROWAVE_COOKED,
 		COMSIG_ITEM_GRILLED,
 		COMSIG_ITEM_BARBEQUE_GRILLED,
 		COMSIG_ITEM_FRIED,
 		COMSIG_ITEM_USED_AS_INGREDIENT,
+		COMSIG_ITEM_DRIED,
 		COMSIG_FOOD_GET_EXTRA_COMPLEXITY,
 	))
 	REMOVE_TRAIT(source, TRAIT_QUALITY_FOOD_INGREDIENT, REF(src))
@@ -51,6 +53,10 @@
 	SIGNAL_HANDLER
 	add_quality(grill_result)
 
+/datum/element/quality_food_ingredient/proc/item_dried(datum/source, atom/result)
+	SIGNAL_HANDLER
+	add_quality(result)
+
 /datum/element/quality_food_ingredient/proc/simply_cooked(datum/source)
 	SIGNAL_HANDLER
 	//The target of the food quality and the source are the same, there's no need to re-add the whole element.
@@ -66,6 +72,6 @@
 	RegisterSignal(target, COMSIG_FOOD_GET_EXTRA_COMPLEXITY, PROC_REF(add_complexity), TRUE)
 	ADD_TRAIT(target, TRAIT_QUALITY_FOOD_INGREDIENT, REF(src))
 
-/datum/element/quality_food_ingredient/proc/add_complexity(datum/source, list/extra_complexity)
+/datum/element/quality_food_ingredient/proc/add_complexity(datum/source, list/complexity)
 	SIGNAL_HANDLER
-	extra_complexity[1] += complexity_increase
+	complexity[1] += complexity_increase

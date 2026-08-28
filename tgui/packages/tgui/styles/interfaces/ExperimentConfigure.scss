@@ -3,6 +3,10 @@
   background: var(--color-black);
   border: var(--border-thickness-tiny) solid var(--color-primary);
   margin: var(--space-s) 0;
+
+  &--selected {
+    border: var(--border-thickness-tiny) solid var(--button-background-selected);
+  }
 }
 
 .ExperimentTechwebServer__WebHeader {
@@ -27,6 +31,26 @@
   border-radius: 0;
 }
 
+.ExperimentConfigure__ExperimentNameFakeButton {
+  background-color: var(--color-primary);
+  font-weight: bold;
+  border-radius: 0;
+  position: relative;
+  display: block;
+  margin-left: 0;
+  margin-right: 0;
+  white-space: nowrap;
+  line-height: var(--button-height);
+  padding: 0 var(--space-m);
+  margin-bottom: var(--space-xs);
+  border-radius: var(--button-border-radius);
+  outline: none;
+  &__content {
+    display: block;
+    align-self: stretch;
+  }
+}
+
 .ExperimentConfigure__ExperimentContent {
   /* prettier-ignore */
   padding: var(--space-s) calc(var(--space-xl) * 1.5) var(--space-s) var(--space-s);
@@ -34,7 +58,6 @@
 
 .ExperimentStage__Indicator {
   font-weight: bold;
-  margin-right: var(--space-xl);
   text-align: center;
 }
 

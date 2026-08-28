@@ -96,11 +96,11 @@
 					return
 				switch(SSshuttle.emergency.mode)
 					if(SHUTTLE_CALL)
-						SSshuttle.emergency.cancel()
+						SSshuttle.cancel_evac(usr) // note that this does provide logging/feedback of its own but it's better for backcompatibility to retain the following logging lines
 						log_admin("[key_name(usr)] sent the Emergency Shuttle back.")
 						message_admins(span_adminnotice("[key_name_admin(usr)] sent the Emergency Shuttle back."))
 					else
-						SSshuttle.emergency.cancel()
+						SSshuttle.emergency.request()
 						log_admin("[key_name(usr)] called the Emergency Shuttle.")
 						message_admins(span_adminnotice("[key_name_admin(usr)] called the Emergency Shuttle to the station."))
 
@@ -703,14 +703,12 @@
 			var/mob/living/lifer = subject
 			var/status
 			switch (subject.stat)
-				if(CONSCIOUS)
+				if(STABLE)
 					status = "Alive"
 				if(SOFT_CRIT)
-					status = "<font color='orange'><b>Dying</b></font>"
-				if(UNCONSCIOUS)
-					status = "<font color='orange'><b>Unconscious</b></font>"
+					status = "<font color='orange'><b>Critical</b></font>"
 				if(HARD_CRIT)
-					status = "<font color='orange'><b>Unconscious and Dying</b></font>"
+					status = "<font color='orange'><b>Unconscious</b></font>"
 				if(DEAD)
 					status = "<font color='red'><b>Dead</b></font>"
 			health_description = "Status: [status]"

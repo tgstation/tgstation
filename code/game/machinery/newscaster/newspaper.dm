@@ -62,7 +62,7 @@
 		if(IS_WRITING_UTENSIL(held_item))
 			context[SCREENTIP_CONTEXT_LMB] = "Scribble"
 			return CONTEXTUAL_SCREENTIP_SET
-		if(held_item.get_temperature())
+		if(held_item.get_temperature() >= FIRE_MINIMUM_TEMPERATURE_TO_EXIST)
 			context[SCREENTIP_CONTEXT_LMB] = "Burn"
 			return CONTEXTUAL_SCREENTIP_SET
 

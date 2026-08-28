@@ -64,7 +64,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav)
 "r" = (
-/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
 /obj/machinery/door/airlock/external/ruin,
 /turf/open/misc/asteroid/airless,
 /area/ruin/space/has_grav)

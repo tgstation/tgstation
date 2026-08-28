@@ -39,7 +39,7 @@
 	cur_dist = max_dist
 	if (start_distance != null)
 		cur_dist = start_distance
-	var/datum/beam/beam = tether_target.Beam(parent, "line", 'icons/obj/clothing/modsuit/mod_modules.dmi', emissive = FALSE, beam_type = /obj/effect/ebeam/tether)
+	var/datum/beam/beam = tether_target.Beam(parent, "line", 'icons/obj/clothing/modsuit/mod_modules.dmi', emissive = NONE, beam_type = /obj/effect/ebeam/tether)
 	tether_beam = beam
 	if (ispath(tether_name, /atom))
 		var/atom/tmp = tether_name
@@ -123,13 +123,6 @@
 		if (!try_adjust_position(anchor, new_loc, source))
 			to_chat(source, span_warning("[tether_name] catches on [blocker] and prevents you from moving!"))
 			return COMPONENT_MOVABLE_BLOCK_PRE_MOVE
-
-	if (get_dist(anchor, new_loc) != cur_dist || !ismovable(source) || force_moving_target)
-		return
-
-	var/datum/drift_handler/handler = movable_source.drift_handler
-	if (handler)
-		handler.remove_angle_force(get_angle(anchor, source))
 
 /// Try adjust the anchor's position to move closer to the target or regain LOS
 /// true_source is an optional argument in case we're looking for a LOS/closer turf to a new location rather than the actual owner, and need to ignore them

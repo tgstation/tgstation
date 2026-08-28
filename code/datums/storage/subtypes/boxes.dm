@@ -183,3 +183,14 @@
 	max_total_storage = WEIGHT_CLASS_SMALL * slots
 	. = ..()
 	set_holdable(/obj/item/fishing_lure) //can only hold lures
+
+/datum/storage/box/ramen_beef
+	max_slots = 2
+
+/datum/storage/box/ramen_beef/New(atom/parent, max_slots, max_specific_storage, max_total_storage, rustle_sound, remove_rustle_sound)
+	. = ..()
+	set_holdable(list(
+		/obj/item/reagent_containers/condiment/pack/beef_flavour,
+		/obj/item/food/spaghetti/ramen_dry,
+	))
+

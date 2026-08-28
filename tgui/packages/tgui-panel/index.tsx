@@ -4,46 +4,23 @@
  * @license MIT
  */
 
-// Themes
 import './styles/main.scss';
 import './styles/themes/light.scss';
 
-import { perf } from 'common/perf';
-import { combineReducers } from 'common/redux';
-import { setGlobalStore } from 'tgui/backend';
-import { captureExternalLinks } from 'tgui/links';
-import { render } from 'tgui/renderer';
-import { configureStore } from 'tgui/store';
+import { createRoot } from 'react-dom/client';
 import { setupGlobalEvents } from 'tgui-core/events';
+import { captureExternalLinks } from 'tgui-core/links';
 import { setupHotReloading } from 'tgui-dev-server/link/client';
 import { App } from './app';
-import { audioMiddleware, audioReducer } from './audio';
-import { chatMiddleware, chatReducer } from './chat';
-import { gameMiddleware, gameReducer } from './game';
+import { bus } from './events/listeners';
 import { setupPanelFocusHacks } from './panelFocus';
-import { pingMiddleware, pingReducer } from './ping';
-import { telemetryMiddleware } from './telemetry';
+import { wsSend } from './websocket/helpers';
 
-perf.mark('inception', window.performance?.timeOrigin);
-perf.mark('init');
+const root = createRoot(document.getElementById('react-root')!);
 
-const store = configureStore({
-  reducer: combineReducers({
-    audio: audioReducer,
-    chat: chatReducer,
-    game: gameReducer,
-    ping: pingReducer,
-  }),
-  middleware: {
-    pre: [
-      chatMiddleware,
-      pingMiddleware,
-      telemetryMiddleware,
-      audioMiddleware,
-      gameMiddleware,
-    ],
-  },
-});
+function render(component: React.ReactElement) {
+  root.render(component);
+}
 
 function setupApp() {
   // Delay setup
@@ -52,8 +29,6 @@ function setupApp() {
     return;
   }
 
-  setGlobalStore(store);
-
   setupGlobalEvents({
     ignoreWindowFocus: true,
   });
@@ -61,19 +36,20 @@ function setupApp() {
   setupPanelFocusHacks();
   captureExternalLinks();
 
-  // Re-render UI on store updates
-  store.subscribe(() => render(<App />));
+  render(<App />);
 
   // Dispatch incoming messages as store actions
-  Byond.subscribe((type, payload) => store.dispatch({ type, payload }));
+  Byond.subscribe((type, payload) => {
+    bus.dispatch({ type, payload });
+    wsSend({ type, payload });
+  });
 
   // Unhide the panel
   Byond.winset('output_selector.legacy_output_selector', {
     left: 'output_browser',
   });
 
-  // Resize the panel to match the non-browser output
-  Byond.winget('output').then((output: { size: string }) => {
+  Byond.winget('output_browser').then((output: { size: string }) => {
     Byond.winset('browseroutput', {
       size: output.size,
     });
@@ -83,20 +59,9 @@ function setupApp() {
   if (import.meta.webpackHot) {
     setupHotReloading();
 
-    import.meta.webpackHot.accept(
-      [
-        './audio',
-        './chat',
-        './game',
-        './Notifications',
-        './Panel',
-        './ping',
-        './telemetry',
-      ],
-      () => {
-        render(<App />);
-      },
-    );
+    import.meta.webpackHot.accept(['./app'], () => {
+      render(<App />);
+    });
   }
 }
 

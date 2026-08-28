@@ -28,6 +28,8 @@
 	cells_minimum = 1
 	cells_maximum = 2
 
+	visual = FALSE
+
 	///The rate that disgust decays
 	var/disgust_metabolism = 1
 
@@ -56,14 +58,14 @@
 	QDEL_LAZYLIST(stomach_contents)
 	return ..()
 
-/obj/item/organ/stomach/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/stomach/on_life(seconds_per_tick)
 	. = ..()
 
 	//Manage species digestion
 	if(ishuman(owner))
 		var/mob/living/carbon/human/humi = owner
 		if(!(organ_flags & ORGAN_FAILING))
-			handle_hunger(humi, seconds_per_tick, times_fired)
+			handle_hunger(humi, seconds_per_tick)
 
 	var/mob/living/carbon/body = owner
 
@@ -99,7 +101,7 @@
 
 	//Handle disgust
 	if(body)
-		handle_disgust(body, seconds_per_tick, times_fired)
+		handle_disgust(body, seconds_per_tick)
 
 	//If the stomach is not damage exit out
 	if(damage < low_threshold)
@@ -132,18 +134,18 @@
 		body.vomit(VOMIT_CATEGORY_DEFAULT, lost_nutrition = damage)
 		to_chat(body, span_warning("Your stomach reels in pain as you're incapable of holding down all that food!"))
 
-/obj/item/organ/stomach/proc/handle_hunger(mob/living/carbon/human/human, seconds_per_tick, times_fired)
+/obj/item/organ/stomach/proc/handle_hunger(mob/living/carbon/human/human, seconds_per_tick)
 	if(HAS_TRAIT(human, TRAIT_NOHUNGER))
 		return //hunger is for BABIES
 
 	//The fucking TRAIT_FAT mutation is the dumbest shit ever. It makes the code so difficult to work with
 	if(HAS_TRAIT_FROM(human, TRAIT_FAT, OBESITY))//I share your pain, past coder.
-		if(human.overeatduration < (200 SECONDS))
+		if(human.overeatduration < (OVEREAT_TIME_LIMIT))
 			to_chat(human, span_notice("You feel fit again!"))
 			human.remove_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)
 
 	else
-		if(human.overeatduration >= (200 SECONDS))
+		if(human.overeatduration >= (OVEREAT_TIME_LIMIT))
 			to_chat(human, span_danger("You suddenly feel blubbery!"))
 			human.add_traits(list(TRAIT_FAT, TRAIT_OFF_BALANCE_TACKLER), OBESITY)
 
@@ -266,7 +268,7 @@
 		owner.apply_damage(damage, BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND, wound_clothing = FALSE)
 	return emptied
 
-/obj/item/organ/stomach/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/stomach/on_life(seconds_per_tick)
 	. = ..()
 	if (!owner || SSmobs.times_fired % 3 != 0)
 		return
@@ -339,7 +341,7 @@
 		return 10
 	return 0
 
-/obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/disgusted, seconds_per_tick, times_fired)
+/obj/item/organ/stomach/proc/handle_disgust(mob/living/carbon/human/disgusted, seconds_per_tick)
 	var/old_disgust = disgusted.old_disgust
 	var/disgust = disgusted.disgust
 
@@ -349,7 +351,7 @@
 			if(SPT_PROB(5, seconds_per_tick))
 				disgusted.adjust_stutter(2 SECONDS)
 				disgusted.adjust_confusion(2 SECONDS)
-			if(SPT_PROB(5, seconds_per_tick) && !disgusted.stat)
+			if(SPT_PROB(5, seconds_per_tick) && !IS_UNCONSCIOUS_OR_CRIT(disgusted))
 				to_chat(disgusted, span_warning("You feel kind of iffy..."))
 			disgusted.adjust_jitter(-6 SECONDS)
 		if(disgust >= DISGUST_LEVEL_VERYGROSS)
@@ -388,7 +390,9 @@
 
 /obj/item/organ/stomach/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
-	receiver.hud_used?.hunger?.update_hunger_bar()
+	var/atom/movable/screen/hunger/hunger_bar = receiver.hud_used?.screen_objects[HUD_MOB_HUNGER]
+	if(hunger_bar)
+		hunger_bar.update_hunger_bar()
 	RegisterSignal(receiver, COMSIG_CARBON_VOMITED, PROC_REF(on_vomit))
 	RegisterSignal(receiver, COMSIG_HUMAN_GOT_PUNCHED, PROC_REF(on_punched))
 
@@ -397,7 +401,9 @@
 		var/mob/living/carbon/human/human_owner = stomach_owner
 		human_owner.clear_alert(ALERT_DISGUST)
 		human_owner.clear_mood_event("disgust")
-	stomach_owner.hud_used?.hunger?.update_hunger_bar()
+	var/atom/movable/screen/hunger/hunger_bar = stomach_owner.hud_used?.screen_objects[HUD_MOB_HUNGER]
+	if(hunger_bar)
+		hunger_bar.update_hunger_bar()
 	UnregisterSignal(stomach_owner, list(COMSIG_CARBON_VOMITED, COMSIG_HUMAN_GOT_PUNCHED))
 	return ..()
 
@@ -467,8 +473,8 @@
 /obj/item/organ/stomach/apply_organ_damage(damage_amount, maximum, required_organ_flag)
 	. = ..()
 	// So after a while, or a bunch of stomach meds, even a cut stomach can recover
-	if (. < 0)
-		cut_open_damage = max(0, cut_open_damage + .)
+	if (. > 0)
+		cut_open_damage = max(0, cut_open_damage - .)
 
 /obj/item/organ/stomach/examine(mob/user)
 	. = ..()
@@ -481,6 +487,13 @@
 	icon_state = "stomach-bone"
 	metabolism_efficiency = 0.025 //very bad
 	organ_traits = list(TRAIT_NOHUNGER)
+
+/obj/item/organ/stomach/moth
+	name = "moth stomach"
+	desc = "An insectoid stomach adapted to the digestion of textile fibers from the get go. It's estimated that a young mothperson will eat 30 times their body weight in cloth \
+		before their stomach can fully produce the enzymes required to digest other matter as well."
+	icon_state = "spinner-x"
+	organ_traits = list(TRAIT_CLOTH_EATER)
 
 /obj/item/organ/stomach/bone/plasmaman
 	name = "digestive crystal"
@@ -497,6 +510,7 @@
 	organ_flags = ORGAN_ROBOTIC
 	maxHealth = STANDARD_ORGAN_THRESHOLD * 0.5
 	metabolism_efficiency = 0.035 // not as good at digestion
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 	var/emp_vulnerability = 80 //Chance of permanent effects if emp-ed.
 
 /obj/item/organ/stomach/cybernetic/emp_act(severity)
@@ -504,7 +518,8 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
-		owner.vomit(vomit_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM))
+		if(prob(100/severity))
+			owner.vomit(vomit_flags = (MOB_VOMIT_MESSAGE | MOB_VOMIT_HARM))
 		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
 		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
@@ -533,6 +548,7 @@
 	disgust_metabolism = 3
 	emp_vulnerability = 20
 	metabolism_efficiency = 0.1
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/organ/stomach/cybernetic/tier3/stomach_acid_power(atom/movable/nomnom)
 	if (isliving(nomnom))

@@ -166,12 +166,12 @@
 
 		if("pick_color")
 			var/group = params["color_index"]
-			var/new_color = input(
+			var/new_color = tgui_color_picker(
 				usr,
 				"Choose color for greyscale color group [group]:",
 				"Greyscale Modification Menu",
 				split_colors[group]
-			) as color|null
+			)
 			if(new_color)
 				split_colors[group] = new_color
 				queue_refresh()
@@ -346,7 +346,7 @@ This is highly likely to cause massive amounts of lag as every object in the gam
 		return
 	while(initial(current.greyscale_config) == initial(parent.greyscale_config))
 		current = parent
-		parent = type2parent(current)
+		parent = current::parent_type
 	config_owner_type = current
 
 /// Used for spray painting items in the gags_recolorable component

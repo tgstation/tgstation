@@ -2,14 +2,6 @@
 /////Initial Building/////
 //////////////////////////
 
-/// Inits GLOB.surgeries
-/proc/init_surgeries()
-	var/surgeries = list()
-	for(var/path in subtypesof(/datum/surgery))
-		surgeries += new path()
-	sort_list(surgeries, GLOBAL_PROC_REF(cmp_typepaths_asc))
-	return surgeries
-
 /// Legacy procs that really should be replaced with proper _INIT macros
 /proc/make_datum_reference_lists()
 	// I tried to eliminate this proc but I couldn't untangle their init-order interdependencies -Dominion/Cyberboss
@@ -19,18 +11,27 @@
 	init_crafting_recipes_atoms()
 
 /// Inits crafting recipe lists
-/proc/init_crafting_recipes(list/crafting_recipes)
-	for(var/path in subtypesof(/datum/crafting_recipe))
-		if(ispath(path, /datum/crafting_recipe/stack))
+/proc/init_crafting_recipes()
+	for(var/datum/crafting_recipe_path as anything in valid_subtypesof(/datum/crafting_recipe))
+		var/datum/crafting_recipe/recipe = new crafting_recipe_path()
+		if(recipe.name == "" || !recipe.result)
+			qdel(recipe)
 			continue
-		var/datum/crafting_recipe/recipe = new path()
+
 		var/is_cooking = (recipe.category in GLOB.crafting_category_food)
 		recipe.reqs = sort_list(recipe.reqs, GLOBAL_PROC_REF(cmp_crafting_req_priority))
-		if(recipe.name != "" && recipe.result)
-			if(is_cooking)
-				GLOB.cooking_recipes += recipe
-			else
-				GLOB.crafting_recipes += recipe
+
+		if(is_cooking)
+			GLOB.cooking_recipes += recipe
+			GLOB.cooking_recipes_by_typepath[crafting_recipe_path] = recipe
+			if(!(recipe.crafting_flags & CRAFT_MUST_BE_LEARNED))
+				GLOB.cooking_recipes_default += recipe
+
+		else
+			GLOB.crafting_recipes += recipe
+			GLOB.crafting_recipes_by_typepath[crafting_recipe_path] = recipe
+			if(!(recipe.crafting_flags & CRAFT_MUST_BE_LEARNED))
+				GLOB.crafting_recipes_default += recipe
 
 	var/list/global_stack_recipes = list(
 		/obj/item/stack/sheet/glass = GLOB.glass_recipes,
@@ -39,7 +40,7 @@
 		/obj/item/stack/sheet/plasmarglass = GLOB.prglass_recipes,
 		/obj/item/stack/sheet/animalhide/gondola = GLOB.gondola_recipes,
 		/obj/item/stack/sheet/animalhide/corgi = GLOB.corgi_recipes,
-		/obj/item/stack/sheet/animalhide/monkey = GLOB.monkey_recipes,
+		/obj/item/stack/sheet/animalhide/carbon/monkey = GLOB.monkey_recipes,
 		/obj/item/stack/sheet/animalhide/xeno = GLOB.xeno_recipes,
 		/obj/item/stack/sheet/leather = GLOB.leather_recipes,
 		/obj/item/stack/sheet/sinew = GLOB.sinew_recipes,
@@ -198,6 +199,7 @@ GLOBAL_LIST_INIT(WALLITEMS_EXTERIOR, typecacheof(list(
 	/obj/machinery/camera,
 	/obj/machinery/light,
 	/obj/structure/light_construct,
+	/obj/structure/sink,
 )))
 
 /// A static typecache of all the money-based items that can be actively used as currency.

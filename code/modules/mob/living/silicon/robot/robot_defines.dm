@@ -13,7 +13,6 @@
 	health = 100
 	bubble_icon = "robot"
 	designation = "Default" //used for displaying the prefix & getting the current model of cyborg
-	has_limbs = TRUE
 	hud_type = /datum/hud/robot
 	unique_name = TRUE
 	mouse_drop_zone = TRUE
@@ -69,29 +68,14 @@
 	// Overlay for borg hat
 	var/mutable_appearance/hat_overlay
 
-
-	// Hud
-	var/atom/movable/screen/inv1 = null
-	var/atom/movable/screen/inv2 = null
-	var/atom/movable/screen/inv3 = null
-	var/atom/movable/screen/hands = null
-
-	///Lamp button reference
-	var/atom/movable/screen/robot/lamp/lampButton
-
-	///The reference to the built-in tablet that borgs carry.
-	var/atom/movable/screen/robot/modpc/interfaceButton
-
 	var/sight_mode = 0
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD)
-
 
 	// Modules (tool slots)
 	var/obj/item/module_active = null
 
 	///For checking which modules are disabled or not.
 	var/disabled_modules
-
 
 	// Status
 	var/mob/living/silicon/ai/connected_ai = null
@@ -116,7 +100,7 @@
 	///Whether the robot has no charge left.
 	var/low_power_mode = FALSE
 	///So they can initialize sparks whenever/N
-	var/datum/effect_system/spark_spread/spark_system
+	var/datum/effect_system/basic/spark_spread/spark_system
 	///Smoke particle type for brute damage
 	var/smoke_particles
 	///Spark particle type for burn damage
@@ -160,7 +144,7 @@
 /mob/living/silicon/robot/model
 	var/set_model = /obj/item/robot_model
 
-/mob/living/silicon/robot/model/Initialize(mapload)
+/mob/living/silicon/robot/model/Initialize(mapload, datum/ai_laws/innate_laws, mob/living/silicon/master_ai, aisync, lawsync)
 	. = ..()
 	INVOKE_ASYNC(model, TYPE_PROC_REF(/obj/item/robot_model, transform_to), set_model, TRUE)
 
@@ -212,11 +196,13 @@
 	cell = /obj/item/stock_parts/power_store/cell/hyper
 	radio = /obj/item/radio/borg/syndicate
 
-/mob/living/silicon/robot/model/syndicate/Initialize(mapload)
-	laws = new /datum/ai_laws/syndicate_override()
-	laws.associate(src)
+/mob/living/silicon/robot/model/syndicate/Initialize(mapload, datum/ai_laws/innate_laws, mob/living/silicon/master_ai, aisync, lawsync)
+	aisync = FALSE
 	. = ..()
 	addtimer(CALLBACK(src, PROC_REF(show_playstyle)), 0.5 SECONDS)
+
+/mob/living/silicon/robot/model/syndicate/make_laws()
+	laws = new /datum/ai_laws/syndicate_override()
 
 /mob/living/silicon/robot/model/syndicate/create_modularInterface()
 	if(!modularInterface)

@@ -112,7 +112,7 @@
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
 	},
-/obj/item/stack/medical/gauze,
+/obj/item/stack/medical/wrap/gauze,
 /obj/item/retractor,
 /obj/item/cautery,
 /turf/open/floor/holofloor{
@@ -473,6 +473,10 @@
 	dir = 1
 	},
 /obj/structure/closet/crate/freezer/organ,
+/obj/item/bodypart/leg/left,
+/obj/item/bodypart/leg/right,
+/obj/item/bodypart/arm/right,
+/obj/item/bodypart/arm/left,
 /turf/open/floor/holofloor{
 	icon_state = "white"
 	},

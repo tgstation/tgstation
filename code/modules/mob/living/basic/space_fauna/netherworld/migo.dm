@@ -56,15 +56,15 @@
 
 /mob/living/basic/migo/send_speech(message_raw, message_range, obj/source, bubble_type, list/spans, datum/language/message_language, list/message_mods, forced, tts_message, list/tts_filter)
 	. = ..()
-	if(stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		return
 	make_migo_sound()
 
-/mob/living/basic/migo/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/basic/migo/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(!.) //dead or deleted
 		return
-	if(stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		return
 	if(SPT_PROB(5, seconds_per_tick))
 		make_migo_sound()

@@ -1,7 +1,10 @@
+// Needs to be constant because we need to know how many turfs out to update chunks from our source
+#define MAX_CAMERA_RANGE 7
+
 /// We only want chunk sizes that are to the power of 2. E.g: 2, 4, 8, 16, etc..
-#define CHUNK_SIZE 16
+#define CHUNK_SIZE 8
 /// Takes a position, transforms it into a chunk bounded position. Indexes at 1 so it'll land on actual turfs always
-#define GET_CHUNK_COORD(v) (max((FLOOR(v, CHUNK_SIZE)), 1))
+#define GET_CHUNK_COORD(v) max((FLOOR((v), CHUNK_SIZE)), 1)
 
 //List of different camera nets, cameras are given this in the map and camera consoles can only view them if
 //they share this network with them.
@@ -33,6 +36,7 @@
 #define CAMERANET_NETWORK_CURATOR "curator"
 #define CAMERANET_NETWORK_FILMSTUDIO "filmstudio"
 #define CAMERANET_NETWORK_MONASTERY "monastery"
+#define CAMERANET_NETWORK_TRADINGPOST "donk"
 
 // Ruins/Away missiosn/Misc camera nets
 #define CAMERANET_NETWORK_MOON19_XENO "mo19x"
@@ -40,3 +44,4 @@
 #define CAMERANET_NETWORK_UGO45_RESEARCH "uo45r"
 #define CAMERANET_NETWORK_FSCI "fsci"
 #define CAMERA_NETWORK_BUNKER "bunker1"
+#define CAMERA_NETWORK_HERETIC_GATEWAY "heretic_gate"

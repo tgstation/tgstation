@@ -51,7 +51,7 @@
 	desc = "When inserted into a tablet, this cartridge gives you four opportunities to \
 			detonate tablets of crewmembers who have their message feature enabled. \
 			The concussive effect from the explosion will knock the recipient out for a short period, and deafen them for longer."
-	item = /obj/item/computer_disk/virus/detomatix
+	item = /obj/item/disk/computer/virus/detomatix
 	cost = 6
 	restricted = TRUE
 
@@ -120,6 +120,15 @@
 	cost = 11
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS /// Ops get their own version.
 	limited_discount_stock = 4
+
+/datum/uplink_item/explosives/earthcracker
+	name = "E-2 Earthcracker"
+	desc = "The E-2 Earthcracker makes for a great partner to any conventional explosive. Set the device up on any station hull, arm, and activate.\
+		What remains is a conventionally dangerous weakpoint, that will crack open a random pattern of floors upon being hit with an explosive force.\
+		That pattern of cracks will in-turn also create additional cracks, ad-finimum if not repaired. It can also be used for mining out rock, though that's less advised."
+	item = /obj/item/earthcracker
+	cost = 2
+	limited_discount_stock = 2
 
 /datum/uplink_item/explosives/syndicate_bomb/New()
 	. = ..()

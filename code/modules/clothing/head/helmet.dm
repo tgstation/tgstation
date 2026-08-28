@@ -16,6 +16,7 @@
 	flags_cover = HEADCOVERSEYES|EARS_COVERED
 	flags_inv = HIDEHAIR
 	dog_fashion = /datum/dog_fashion/head/helmet
+	resistance_flags = NONE
 
 /datum/armor/head_helmet
 	melee = 35
@@ -45,30 +46,30 @@
 	. = ..()
 	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
-/obj/item/clothing/head/helmet/sec/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(issignaler(attacking_item))
-		var/obj/item/assembly/signaler/attached_signaler = attacking_item
-		// There's a flashlight in us. Remove it first, or it'll be lost forever!
-		var/obj/item/flashlight/seclite/blocking_us = locate() in src
-		if(blocking_us)
-			to_chat(user, span_warning("[blocking_us] is in the way, remove it first!"))
-			return TRUE
+/obj/item/clothing/head/helmet/sec/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!issignaler(tool))
+		return ..()
 
-		if(!attached_signaler.secured)
-			to_chat(user, span_warning("Secure [attached_signaler] first!"))
-			return TRUE
+	var/obj/item/assembly/signaler/attached_signaler = tool
+	// There's a flashlight in us. Remove it first, or it'll be lost forever!
+	var/obj/item/flashlight/seclite/blocking_us = locate() in src
+	if(blocking_us)
+		to_chat(user, span_warning("[blocking_us] is in the way, remove it first!"))
+		return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_notice("You add [attached_signaler] to [src]."))
+	if(!attached_signaler.secured)
+		to_chat(user, span_warning("Secure [attached_signaler] first!"))
+		return ITEM_INTERACT_BLOCKING
 
-		qdel(attached_signaler)
-		var/obj/item/bot_assembly/secbot/secbot_frame = new(drop_location())
-		var/held_index = user.is_holding(src)
-		qdel(src)
-		if (held_index)
-			user.put_in_hand(secbot_frame, held_index)
-		return TRUE
+	to_chat(user, span_notice("You add [attached_signaler] to [src]."))
 
-	return ..()
+	qdel(attached_signaler)
+	var/obj/item/bot_assembly/secbot/secbot_frame = new(drop_location())
+	var/held_index = user.is_holding(src)
+	qdel(src)
+	if (held_index)
+		user.put_in_hand(secbot_frame, held_index)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/head/helmet/sec/attack_self(mob/user)
 	. = ..()
@@ -98,7 +99,7 @@
 
 /obj/item/clothing/head/helmet/press
 	name = "press helmet"
-	desc = "A blue helmet used to distinguish <i>non-combatant</i> \"PRESS\" members, like if anyone cares."
+	desc = "A blue helmet used to distinguish <i>non-combatant</i> \"PRESS\" members, like anyone cares."
 	icon_state = "helmet_press"
 	base_icon_state = "helmet_press"
 	sound_vary = TRUE
@@ -110,7 +111,7 @@
 	. = ..()
 	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
-/obj/item/clothing/head/helmet/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file)
+/obj/item/clothing/head/helmet/press/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
 		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
@@ -190,7 +191,7 @@
 
 /obj/item/clothing/head/helmet/marine/pmc
 	icon_state = "marine"
-	desc = "A tactical black helmet, designed to protect one's head from various injuries sustained in operations. Its stellar survivability making up is for its lack of space worthiness"
+	desc = "A tactical black helmet, designed to protect one's head from various injuries sustained in operations. Its stellar survivability makes up for its lack of space worthiness"
 	min_cold_protection_temperature = HELMET_MIN_TEMP_PROTECT
 	max_heat_protection_temperature = HELMET_MAX_TEMP_PROTECT
 	clothing_flags = null
@@ -240,8 +241,8 @@
 	icon_state = "riot"
 	base_icon_state = "riot"
 	inhand_icon_state = "riot_helmet"
-	toggle_message = "You pull the visor down"
-	alt_toggle_message = "You push the visor up"
+	toggle_message = "You pull the visor down."
+	alt_toggle_message = "You push the visor up."
 	armor_type = /datum/armor/toggleable_riot
 	flags_inv = HIDEHAIR|HIDEEARS|HIDEFACE|HIDESNOUT
 	strip_delay = 8 SECONDS
@@ -263,7 +264,7 @@
 
 /obj/item/clothing/head/helmet/toggleable/riot/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 2)
+	AddElement(/datum/element/adjust_fishing_difficulty, 2)
 
 /datum/armor/toggleable_riot
 	melee = 50
@@ -276,13 +277,14 @@
 
 /obj/item/clothing/head/helmet/balloon
 	name = "balloon helmet"
-	desc = "A helmet made out of balloons. Its likes saw great usage in the Great Clown - Mime War. Surprisingly resistant to fire. Mimes were doing unspeakable things."
+	desc = "A helmet made out of balloons. The like saw great usage in the Great Clown - Mime War. Surprisingly resistant to fire. Mimes were doing unspeakable things."
 	icon_state = "helmet_balloon"
 	inhand_icon_state = "helmet_balloon"
 	armor_type = /datum/armor/balloon
 	flags_inv = HIDEHAIR|HIDEEARS|HIDESNOUT
 	resistance_flags = FIRE_PROOF
 	dog_fashion = null
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 3.6)
 
 /datum/armor/balloon
 	melee = 10
@@ -295,8 +297,8 @@
 	icon_state = "justice"
 	base_icon_state = "justice"
 	inhand_icon_state = "justice_helmet"
-	toggle_message = "You turn off the lights on"
-	alt_toggle_message = "You turn on the lights on"
+	toggle_message = "You turn off the lights."
+	alt_toggle_message = "You turn on the lights."
 	actions_types = list(/datum/action/item_action/toggle_helmet_light)
 	///Cooldown for toggling the visor.
 	COOLDOWN_DECLARE(visor_toggle_cooldown)
@@ -358,7 +360,7 @@
 
 /obj/item/clothing/head/helmet/swat/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 3)
+	AddElement(/datum/element/adjust_fishing_difficulty, 3)
 
 /datum/armor/helmet_swat
 	melee = 40
@@ -509,7 +511,7 @@
 
 /obj/item/clothing/head/helmet/knight/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 3)
+	AddElement(/datum/element/adjust_fishing_difficulty, 3)
 
 /datum/armor/helmet_knight
 	melee = 50
@@ -607,7 +609,7 @@
 	icon_state = "h2helmet"
 	inhand_icon_state = "h2_helmet"
 	armor_type = /datum/armor/helmet_elder_atmosian
-	material_flags = MATERIAL_EFFECTS | MATERIAL_COLOR | MATERIAL_AFFECT_STATISTICS //Can change color and add prefix
+	material_flags = MATERIAL_EFFECTS
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 
@@ -624,7 +626,7 @@
 
 /obj/item/clothing/head/helmet/military
 	name = "Crude Helmet"
-	desc = "A cheaply made kettle helmet with an added faceplate to protect your eyes and mouth."
+	desc = "A cheaply made kettle helmet with an added faceplate to protect the eyes and mouth."
 	icon_state = "military"
 	inhand_icon_state = "knight_helmet"
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDESNOUT
@@ -674,7 +676,7 @@
 
 /obj/item/clothing/head/helmet/durability/watermelon
 	name = "watermelon helmet"
-	desc = "A helmet cut out from a watermelon. Might take a few hits, but don't expect it whitstand much."
+	desc = "A helmet cut out from a watermelon. Might take a few hits, but don't expect it to withstand much."
 	icon_state = "watermelon"
 	inhand_icon_state = "watermelon"
 	flags_inv = HIDEEARS
@@ -738,7 +740,7 @@
 
 /obj/item/clothing/head/helmet/durability/barrelmelon
 	name = "barrelmelon helmet"
-	desc = "A helmet from hollowed out barrelmelon. As sturdy as if made from actual wood, though its rigid structure makes it break up quicker."
+	desc = "A helmet made from a hollowed out barrelmelon. As sturdy as actual wood, though its rigid structure makes it break quicker."
 	icon_state = "barrelmelon"
 	inhand_icon_state = "barrelmelon"
 	flags_inv = HIDEEARS

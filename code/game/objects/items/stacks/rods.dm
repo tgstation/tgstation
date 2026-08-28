@@ -47,7 +47,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 /datum/embedding/rods
 	embed_chance = 50
 
-/obj/item/stack/rods/suicide_act(mob/living/carbon/user)
+/obj/item/stack/rods/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to stuff \the [src] down [user.p_their()] throat! It looks like [user.p_theyre()] trying to commit suicide!"))//it looks like theyre ur mum
 	return BRUTELOSS
 
@@ -63,7 +63,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	)
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/spear, /datum/crafting_recipe/stunprod, /datum/crafting_recipe/teleprod) // snatcher prod isn't here as a spoopy secret
+	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/spear, /datum/crafting_recipe/stunprod, /datum/crafting_recipe/teleprod, /datum/crafting_recipe/wireprod) // snatcher prod isn't here as a spoopy secret
 
 	AddElement(
 		/datum/element/slapcrafting,\
@@ -71,7 +71,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	)
 
 /obj/item/stack/rods/handle_openspace_click(turf/target, mob/user, list/modifiers)
-	target.attackby(src, user, list2params(modifiers))
+	target.base_item_interaction(user, src, list2params(modifiers))
 
 /obj/item/stack/rods/get_main_recipes()
 	. = ..()
@@ -81,9 +81,9 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	. = ..()
 	var/amount = get_amount()
 	if(amount <= 5)
-		icon_state = "rods-[amount]"
+		icon_state = "[initial(icon_state)]-[amount]"
 	else
-		icon_state = "rods"
+		icon_state = initial(icon_state)
 
 /obj/item/stack/rods/welder_act(mob/living/user, obj/item/tool)
 	if(get_amount() < 2)
@@ -134,7 +134,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	name = "heat resistant rod"
 	desc = "Treated, specialized iron rods. When exposed to the vacuum of space their coating breaks off, but they can hold up against the extreme heat of active lava."
 	singular_name = "heat resistant rod"
-	icon_state = "rods"
+	icon_state = "lavarods"
 	inhand_icon_state = "rods"
 	color = "#5286b9ff"
 	obj_flags = CONDUCTS_ELECTRICITY
@@ -151,6 +151,7 @@ GLOBAL_LIST_INIT(rod_recipes, list ( \
 	name = "shuttle frame rods"
 	desc = "Treated, specialized iron rods suitable for the construction of shuttle frames or the expansion of existing shuttles."
 	singular_name = "shuttle frame rod"
+	icon_state = "shuttlerods"
 	mats_per_unit = list(/datum/material/iron=HALF_SHEET_MATERIAL_AMOUNT,  /datum/material/titanium=SMALL_MATERIAL_AMOUNT)
 	merge_type = /obj/item/stack/rods/shuttle
 

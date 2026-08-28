@@ -304,12 +304,15 @@ const FilterMatrixEntry = (props) => {
         selected={matrix.length}
         options={matrix_sizes.map((size) => `${size} elements`)}
         onSelected={(option) =>
-          matrix.length === parseInt(option.split(' '))
+          matrix.length === parseInt(option.split(' '), 10)
             ? null
             : act('modify_filter_value', {
                 name: filterName,
                 new_data: {
-                  [name]: resize_matrix(matrix, parseInt(option.split(' '))),
+                  [name]: resize_matrix(
+                    matrix,
+                    parseInt(option.split(' '), 10),
+                  ),
                 },
               })
         }
@@ -321,7 +324,7 @@ const FilterMatrixEntry = (props) => {
               {matrix_row.map((matrix_elem, elem_index) => (
                 <Stack.Item key={elem_index}>
                   <NumberInput
-                    value={matrix[row_index * row_width + elem_index]}
+                    value={matrix[row_index * row_width + elem_index] || 0}
                     minValue={-4}
                     maxValue={4}
                     step={0.01}

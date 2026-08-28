@@ -121,7 +121,7 @@
 		var/atom/target = get_edge_target_turf(source, source.dir)
 		choking_on.throw_at(target, distance, 1, source)
 
-/datum/status_effect/choke/get_examine_text()
+/datum/status_effect/choke/get_examine_text(mob/examiner)
 	return span_boldwarning("[owner.p_They()] [owner.p_are()] choking!")
 
 /datum/status_effect/choke/proc/remove_choke(datum/source)
@@ -163,7 +163,7 @@
 /datum/status_effect/choke/proc/attempt_eat(mob/source, atom/eating)
 	SIGNAL_HANDLER
 	source.balloon_alert(source, "can't get it down!")
-	return COMSIG_CARBON_BLOCK_EAT
+	return BLOCK_EAT_ATTEMPT
 
 /datum/status_effect/choke/proc/helped(mob/source, mob/helping)
 	SIGNAL_HANDLER
@@ -238,7 +238,7 @@
 
 	if(iscarbon(victim))
 		var/mob/living/carbon/carbon_victim = victim
-		if(!carbon_victim.appears_alive())
+		if(IS_DEAD_OR_FAKING(carbon_victim))
 			victim.balloon_alert(aggressor, "too late...")
 			return FALSE
 

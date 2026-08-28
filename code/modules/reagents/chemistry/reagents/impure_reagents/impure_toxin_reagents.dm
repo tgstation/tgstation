@@ -26,10 +26,10 @@
 	ph = 7
 	liver_damage = 0
 
-/datum/reagent/impurity/methanol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, times_fired)
+/datum/reagent/impurity/methanol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/obj/item/organ/eyes/eyes = affected_mob.get_organ_slot(ORGAN_SLOT_EYES)
-	if(eyes?.apply_organ_damage(0.5 * REM * seconds_per_tick, required_organ_flag = affected_organ_flags))
+	if(eyes?.apply_organ_damage(0.25 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags))
 		return UPDATE_MOB_HEALTH
 
 //Chloral Hydrate - Impure Version
@@ -40,9 +40,9 @@
 	ph = 7
 	liver_damage = 0
 
-/datum/reagent/impurity/chloralax/on_mob_life(mob/living/carbon/owner, seconds_per_tick)
+/datum/reagent/impurity/chloralax/on_mob_life(mob/living/carbon/owner, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(owner.adjust_tox_loss(1 * REM * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
+	if(owner.adjust_tox_loss(0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 
 //Mindbreaker Toxin - Impure Version
@@ -54,7 +54,7 @@
 	liver_damage = 0
 	metabolization_rate = 0.5 * REAGENTS_METABOLISM
 
-/datum/reagent/impurity/rosenol/on_mob_life(mob/living/carbon/owner, seconds_per_tick)
+/datum/reagent/impurity/rosenol/on_mob_life(mob/living/carbon/owner, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/obj/item/organ/tongue/tongue = owner.get_organ_slot(ORGAN_SLOT_TONGUE)
 	if(!tongue)

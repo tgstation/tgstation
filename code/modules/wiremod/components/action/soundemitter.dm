@@ -51,7 +51,7 @@
 /obj/item/circuit_component/soundemitter/populate_ports()
 	volume = add_input_port("Volume", PORT_TYPE_NUMBER, default = 35)
 	frequency = add_input_port("Frequency", PORT_TYPE_NUMBER, default = 0)
-	backwards = add_input_port("Play Backwards", PORT_TYPE_NUMBER, default = 0)
+	backwards = add_input_port("Play Backwards", PORT_TYPE_BOOLEAN, default = FALSE)
 
 /obj/item/circuit_component/soundemitter/populate_options()
 	var/static/component_options = list(

@@ -26,16 +26,23 @@
 /// Logging for mapping errors
 /proc/log_mapping(text, skip_world_log)
 #ifdef UNIT_TESTS
-	GLOB.unit_test_mapping_logs += text
+	// Only add to fail list if AREACOORD was conveyed, and it's a station or mining z-level.
+	// This is due to mapping errors don't have coords being impossible to diagnose as a unit test,
+	// and various ruins frequently intentionally doing non-standard things.
+	if(GLOB.test_areacoord_regex.Find(text))
+		var/z = text2num(GLOB.test_areacoord_regex.group[1])
+		if(is_station_level(z) || is_mining_level(z))
+			GLOB.unit_test_mapping_logs += text
+			return
 #endif
 #ifdef MAP_TEST
 	message_admins("Mapping: [text]")
-#endif
+#else
 	logger.Log(LOG_CATEGORY_DEBUG_MAPPING, text)
 	if(skip_world_log)
 		return
 	SEND_TEXT(world.log, text)
-
+#endif
 /// Logging for game performance
 /proc/log_perf(list/perf_info)
 	. = "[perf_info.Join(",")]\n"

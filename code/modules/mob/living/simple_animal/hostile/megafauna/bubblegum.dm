@@ -171,7 +171,7 @@ Difficulty: Hard
 	if(targets.len)
 		target_two = pick_n_take(targets)
 		var/turf/target_two_turf = get_turf(target_two)
-		if(target_two.stat != CONSCIOUS || prob(10))
+		if(IS_UNCONSCIOUS_OR_CRIT(target_two) || prob(10))
 			bloodgrab(target_two_turf, handedness)
 		else
 			bloodsmack(target_two_turf, handedness)
@@ -181,7 +181,7 @@ Difficulty: Hard
 		if(pools.len)
 			target_one_turf = get_turf(target_one)
 			if(target_one_turf)
-				if(target_one.stat != CONSCIOUS || prob(10))
+				if(IS_UNCONSCIOUS_OR_CRIT(target_one) || prob(10))
 					bloodgrab(target_one_turf, !handedness)
 				else
 					bloodsmack(target_one_turf, !handedness)
@@ -191,7 +191,7 @@ Difficulty: Hard
 		if(poolstwo.len)
 			target_one_turf = get_turf(target_one)
 			if(target_one_turf)
-				if(target_one.stat != CONSCIOUS || prob(10))
+				if(IS_UNCONSCIOUS_OR_CRIT(target_one) || prob(10))
 					bloodgrab(target_one_turf, handedness)
 				else
 					bloodsmack(target_one_turf, handedness)
@@ -220,7 +220,7 @@ Difficulty: Hard
 	SLEEP_CHECK_DEATH(6, src)
 	for(var/mob/living/L in T)
 		if(!faction_check_atom(L))
-			if(L.stat != CONSCIOUS)
+			if(IS_UNCONSCIOUS_OR_CRIT(L))
 				to_chat(L, span_userdanger("[src] drags you through the blood!"))
 				playsound(T, 'sound/effects/magic/enter_blood.ogg', 100, TRUE, -1)
 				var/turf/targetturf = get_step(src, dir)
@@ -341,7 +341,7 @@ Difficulty: Hard
 		new /obj/effect/decal/cleanable/blood(get_turf(src))
 	. = ..()
 
-/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/Life(seconds_per_tick = SSMOBS_DT)
 	return
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)

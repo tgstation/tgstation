@@ -53,6 +53,12 @@ Key procs
 	if(!id)
 		id = "[type]" //We turn the path into a string.
 
+/datum/movespeed_modifier/vv_edit_var(var_name, var_value)
+	if(GLOB.movespeed_modification_cache[type] == src)
+		return FALSE
+
+	return ..()
+
 GLOBAL_LIST_EMPTY(movespeed_modification_cache)
 
 /// Grabs a STATIC MODIFIER datum from cache. YOU MUST NEVER EDIT THESE DATUMS, OR IT WILL AFFECT ANYTHING ELSE USING IT TOO!

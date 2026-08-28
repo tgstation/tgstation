@@ -19,7 +19,7 @@
 /datum/armor/mask_breath
 	bio = 50
 
-/obj/item/clothing/mask/breath/suicide_act(mob/living/carbon/user)
+/obj/item/clothing/mask/breath/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is wrapping \the [src]'s tube around [user.p_their()] neck! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
@@ -68,11 +68,9 @@
 	AddElement(/datum/element/muffles_speech)
 
 /obj/item/clothing/mask/breath/muzzle/attack_paw(mob/user, list/modifiers)
-	if(iscarbon(user))
-		var/mob/living/carbon/carbon_user = user
-		if(src == carbon_user.wear_mask)
-			to_chat(user, span_warning("You need help taking this off!"))
-			return
+	if(user.get_item_by_slot(ITEM_SLOT_MASK) == src)
+		to_chat(user, span_warning("You need help taking this off!"))
+		return
 	return ..()
 
 /obj/item/clothing/mask/breath/muzzle/examine_tags(mob/user)

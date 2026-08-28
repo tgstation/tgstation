@@ -32,9 +32,9 @@
 ///from /obj/item/bodypart/proc/receive_damage, sent from the limb owner (limb, brute, burn)
 #define COMSIG_CARBON_LIMB_DAMAGED "carbon_limb_damaged"
 	#define COMPONENT_PREVENT_LIMB_DAMAGE (1 << 0)
-/// from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze): (/obj/item/stack/medical/gauze/applied_gauze, /obj/item/stack/medical/gauze/stack_used)
+/// from /obj/item/bodypart/proc/apply_gauze(/obj/item/stack/gauze): (/obj/item/stack/medical/wrap/gauze/applied_gauze, /obj/item/stack/medical/wrap/gauze/stack_used)
 #define COMSIG_BODYPART_GAUZED "bodypart_gauzed"
-/// from /obj/item/stack/medical/gauze/Destroy(): (/obj/item/stack/medical/gauze/removed_gauze)
+/// from /obj/item/stack/medical/wrap/gauze/Destroy(): (/obj/item/stack/medical/wrap/gauze/removed_gauze)
 #define COMSIG_BODYPART_UNGAUZED "bodypart_ungauzed"
 
 /// Called from bodypart changing owner, which could be on attach or detachment. Either argument can be null. (mob/living/carbon/new_owner, mob/living/carbon/old_owner)
@@ -59,6 +59,22 @@
 #define COMSIG_CARBON_POST_REMOVE_LIMB "carbon_post_remove_limb"
 /// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, special, dismembered)
 #define COMSIG_BODYPART_REMOVED "bodypart_removed"
+
+/// From /obj/item/bodypart/proc/update_limb(): (dropping_limb, is_creating)
+#define COMSIG_BODYPART_UPDATED "bodypart_updated"
+/// Also from /obj/item/bodypart/proc/update_limb(), sent to the mob: (dropping_limb, is_creating)
+#define COMSIG_CARBON_BODYPART_UPDATED "carbon_bodypart_updated"
+/// From /datum/component/butchering/create_replacement_limb(): (replacement limb)
+#define COMSIG_BODYPART_BUTCHERED "bodypart_butchered"
+
+/// Sent to a limb when something *attempts* to change its surgery state (old_state, new_state, changed_states)
+#define COMSIG_BODYPART_UPDATING_SURGERY_STATE "bodypart_updating_surgery_state"
+
+/// Called from /obj/item/bodypart/proc/get_limb_icon(dropped) : (list/limb_icons, dropped, mob/living/carbon/update_on)
+#define COMSIG_BODYPART_GET_LIMB_ICON "bodypart_get_limb_icon"
+
+/// Called from /obj/item/bodypart/proc/generate_icon_key() : (list/icon_keys)
+#define COMSIG_BODYPART_GENERATE_ICON_KEY "bodypart_generate_icon_key"
 
 ///from /item/organ/proc/Insert() (/obj/item/organ/)
 #define COMSIG_CARBON_GAIN_ORGAN "carbon_gain_organ"
@@ -97,8 +113,8 @@
 #define COMSIG_CARBON_MOOD_UPDATE "carbon_mood_update"
 ///Called when a carbon attempts to eat (eating)
 #define COMSIG_CARBON_ATTEMPT_EAT "carbon_attempt_eat"
-	// Prevents the breath
-	#define COMSIG_CARBON_BLOCK_EAT (1 << 0)
+	// Prevents eating the food
+	#define BLOCK_EAT_ATTEMPT (1 << 0)
 ///Called when a carbon vomits : (distance, force)
 #define COMSIG_CARBON_VOMITED "carbon_vomited"
 ///Called from apply_overlay(cache_index, overlay)
@@ -107,6 +123,8 @@
 #define COMSIG_CARBON_REMOVE_OVERLAY "carbon_remove_overlay"
 ///Called when a carbon checks their mood
 #define COMSIG_CARBON_MOOD_CHECK "carbon_mod_check"
+///Called when a carbon is adding a fire overlay
+#define COMSIG_CARBON_GET_FIRE_OVERLAY "carbon_get_fire_overlay"
 
 // /mob/living/carbon/human signals
 
@@ -139,12 +157,12 @@
 #define COMSIG_MONKEY_HUMANIZE "monkey_humanize"
 
 ///From mob/living/carbon/human/suicide()
-#define COMSIG_HUMAN_SUICIDE_ACT "human_suicide_act"
+#define COMSIG_LIVING_SUICIDE_ACT "human_suicide_act"
 
 ///from base of /mob/living/carbon/regenerate_limbs(): (excluded_limbs)
 #define COMSIG_CARBON_REGENERATE_LIMBS "living_regen_limbs"
 
-/// Sent from /mob/living/carbon/human/handle_blood(): (seconds_per_tick, times_fired)
+/// Sent from /mob/living/carbon/human/handle_blood(): (seconds_per_tick)
 #define COMSIG_HUMAN_ON_HANDLE_BLOOD "human_on_handle_blood"
 	/// Return to prevent all default blood handling
 	#define HANDLE_BLOOD_HANDLED (1<<0)
@@ -153,7 +171,7 @@
 	/// Return to skip oxyloss and similar effects from blood level
 	#define HANDLE_BLOOD_NO_OXYLOSS (1<<2)
 
-/// from /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced) iodk where it should go
+/// from /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced): (var/obj/item/bodypart/limping_leg)
 #define COMSIG_CARBON_LIMPING "mob_limp_check"
 	#define COMPONENT_CANCEL_LIMP (1<<0)
 
@@ -188,7 +206,22 @@
 /// Return a defib result flag to override default defib brain check
 #define COMSIG_CARBON_DEFIB_BRAIN_CHECK "carbon_defib_brain_check"
 
+/// From /mob/living/carbon/human/proc/defib_check() : ()
+/// Return a defib result flag to override default defib heart check
+#define COMSIG_CARBON_DEFIB_HEART_CHECK "carbon_defib_heart_check"
+
 /// From /mob/living/carbon/human/proc/smart_equip_targeted(): (mob/living/carbon/human/user, obj/item/possible_container)
 #define COMSIG_HUMAN_NON_STORAGE_HOTKEY "human_storage_hotkey"
 	/// Return to prevent the storage fail message
 	#define COMPONENT_STORAGE_HOTKEY_HANDLED (1<<0)
+
+/// Before a mob starts dreaming - you can add dream datums to the dream pool to override the selection: (list/dream_pool)
+#define COMSIG_PRE_DREAMING "pre_dreaming"
+/// A mob has started dreaming: (datum/dream/current_dream)
+#define COMSIG_START_DREAMING "start_dreaming"
+/// A mob has finished dreaming: (datum/dream/finished_dream)
+#define COMSIG_END_DREAMING "end_dreaming"
+/// From /mob/living/carbon/item_coverage_changed: (added_slots, removed_slots)
+#define COMSIG_CARBON_ITEM_COVERAGE_CHANGED "carbon_item_coverage_changed"
+/// From /mob/living/carbon/proc/get_sight_and_cutoffs(): (list/new_sight_flags)
+#define COMSIG_CARBON_UPDATE_SIGHT_CUTOFFS "carbon_update_sight_cutoffs"

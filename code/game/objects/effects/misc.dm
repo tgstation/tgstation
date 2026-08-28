@@ -104,3 +104,12 @@
 /obj/effect/abstract/reach_checker
 	pass_flags = PASSTABLE
 	invisibility = INVISIBILITY_ABSTRACT
+
+/obj/effect/clear_color
+	icon = 'icons/effects/alphacolors.dmi'
+	layer = ABOVE_NORMAL_TURF_LAYER
+	plane = ABOVE_GAME_PLANE
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+
+/obj/effect/clear_color/green
+	icon_state = "green"

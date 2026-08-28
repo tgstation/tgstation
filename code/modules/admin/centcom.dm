@@ -25,7 +25,7 @@
 	else if(response.status_code != 200)
 		dat += "<br>Failed to connect to CentCom. Status code: [response.status_code]"
 	else
-		if(response.body == "[]")
+		if(response.body == "\[]")
 			dat += "<center><b>0 bans detected for [ckey]</b></center>"
 		else
 			bans = json_decode(response.body)
@@ -83,7 +83,7 @@
 	var/list/bans
 	var/total_permabans
 
-	if(response.body == "[]")
+	if(response.body == "\[]")
 		return
 	bans = json_decode(response.body)
 	//Ignore bans from non-whitelisted sources, if a whitelist exists

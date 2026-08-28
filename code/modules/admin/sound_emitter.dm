@@ -47,7 +47,7 @@
 //ATTACK GHOST IGNORING PARENT RETURN VALUE
 /obj/effect/sound_emitter/attack_ghost(mob/user)
 	if(!check_rights_for(user.client, R_SOUND))
-		examine(user)
+		user.examinate(src)
 		return
 	edit_emitter(user)
 

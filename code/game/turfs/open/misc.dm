@@ -21,18 +21,18 @@
 	heat_capacity = 20000
 	tiled_turf = TRUE
 
-/turf/open/misc/attackby(obj/item/attacking_item, mob/user, list/modifiers)
+/turf/open/misc/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(.)
-		return TRUE
+	if(ITEM_INTERACT_ANY_BLOCKER & .)
+		return .
 
-	if(istype(attacking_item, /obj/item/stack/rods))
-		build_with_rods(attacking_item, user)
-		return TRUE
+	if(istype(tool, /obj/item/stack/rods))
+		build_with_rods(tool, user)
+		return ITEM_INTERACT_SUCCESS
 
-	if(ismetaltile(attacking_item))
-		build_with_floor_tiles(attacking_item, user)
-		return TRUE
+	if(ismetaltile(tool))
+		build_with_floor_tiles(tool, user)
+		return ITEM_INTERACT_SUCCESS
 
 /turf/open/misc/attack_paw(mob/user, list/modifiers)
 	return attack_hand(user, modifiers)

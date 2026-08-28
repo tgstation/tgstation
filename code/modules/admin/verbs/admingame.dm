@@ -1,7 +1,8 @@
 ADMIN_VERB(cmd_player_panel, R_ADMIN, "Player Panel", "See all players and their Player Panel.", ADMIN_CATEGORY_GAME)
 	user.holder.player_panel_new()
 
-ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mob/player in world)
+ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", /mob)
+	VERB_ARG_TYPED(player, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	log_admin("[key_name(user)] checked the individual player panel for [key_name(player)][isobserver(user.mob)?"":" while in game"].")
 
 	if(!player)
@@ -113,12 +114,12 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mo
 			else
 				body += "<A href='byond://?_src_=holder;[HrefToken()];simplemake=observer;mob=[REF(player)]'>Make Ghost</A> | "
 
-			if(ishuman(player) && !ismonkey(player))
+			if(ishuman(player) && !HAS_TRAIT(player, TRAIT_LESSER_HUMANOID))
 				body += "<b>Human</b> | "
 			else
 				body += "<A href='byond://?_src_=holder;[HrefToken()];simplemake=human;mob=[REF(player)]'>Make Human</A> | "
 
-			if(ismonkey(player))
+			if(HAS_TRAIT(player, TRAIT_LESSER_HUMANOID))
 				body += "<b>Monkey</b> | "
 			else
 				body += "<A href='byond://?_src_=holder;[HrefToken()];simplemake=monkey;mob=[REF(player)]'>Make Monkey</A> | "
@@ -151,9 +152,79 @@ ADMIN_VERB_ONLY_CONTEXT_MENU(show_player_panel, R_ADMIN, "Show Player Panel", mo
 	user << browse(body, "window=adminplayeropts-[REF(player)];size=550x540")
 	BLACKBOX_LOG_ADMIN_VERB("Player Panel")
 
-/client/proc/cmd_admin_godmode(mob/mob in GLOB.mob_list)
-	set category = "Admin.Game"
-	set name = "Godmode"
+ADMIN_VERB_ONLY_CONTEXT_MENU(show_occupants_player_panel, R_ADMIN, "Show Occupants PP", /obj)
+	VERB_ARG_TYPED(target, VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_WORLD, /obj)
+	var/list/options = list()
+
+	// Vehicles
+	if(istype(target, /obj/vehicle))
+		var/obj/vehicle/target_vehicle = target
+		if(istype(target_vehicle.occupants, /list) && target_vehicle.occupants.len)
+			for(var/mob/mob_occupant in target_vehicle.occupants)
+				options["[mob_occupant.name] ([mob_occupant.tag])[target_vehicle.is_driver(mob_occupant) ? " (Driver)" : ""]"] = "\ref[mob_occupant]"
+		// Searching for mobs in exosuit equipment (e.g. seccage, sleepers)
+		for(var/obj/item/mecha_parts/mecha_equipment/obj_contents in target.contents)
+			for(var/mob/mob_in_equipment in obj_contents.contents)
+				options["[mob_in_equipment.name] ([mob_in_equipment.tag])"] = "\ref[mob_in_equipment]"
+
+	// Closets, crates, bodybags, coffins, etc.
+	else if(istype(target, /obj/structure/closet))
+		for(var/mob/mob_occupant in target.contents)
+			options["[mob_occupant.name] ([mob_occupant.tag])"] = "\ref[mob_occupant]"
+		// Searching for mobs in bodybags placed inside closet
+		for(var/obj/structure/closet/obj_contents in target.contents)
+			for(var/mob/mob_in_bodybag in obj_contents.contents)
+				options["[mob_in_bodybag.name] ([mob_in_bodybag.tag])"] = "\ref[mob_in_bodybag]"
+		// That's basically the same for folded bodybags (e.g. bluespace bodybags with mobs inside)
+		for(var/obj/item/bodybag/obj_contents_folded in target.contents)
+			for(var/mob/mob_in_bodybag_folded in obj_contents_folded.contents)
+				options["[mob_in_bodybag_folded.name] ([mob_in_bodybag_folded.tag])"] = "\ref[mob_in_bodybag_folded]"
+
+	// Folded bodybags (e.g. bluespace bodybags with mobs inside)
+	else if(istype(target, /obj/item/bodybag))
+		for(var/mob/mob_occupant in target.contents)
+			options["[mob_occupant.name] ([mob_occupant.tag])"] = "\ref[mob_occupant]"
+
+	// Body containers (morgue trays, crematoriums)
+	else if(istype(target, /obj/structure/bodycontainer))
+		for(var/mob/mob_occupant in target.contents)
+			options["[mob_occupant.name] ([mob_occupant.tag])"] = "\ref[mob_occupant]"
+		// Searching for mobs in bodybags placed inside body container
+		for(var/obj/structure/closet/obj_contents in target.contents)
+			for(var/mob/mob_in_bodybag in obj_contents.contents)
+				options["[mob_in_bodybag.name] ([mob_in_bodybag.tag])"] = "\ref[mob_in_bodybag]"
+		// That's basically the same for folded bodybags (e.g. bluespace bodybags with mobs inside)
+		for(var/obj/item/bodybag/obj_contents_folded in target.contents)
+			for(var/mob/mob_in_bodybag_folded in obj_contents_folded.contents)
+				options["[mob_in_bodybag_folded.name] ([mob_in_bodybag_folded.tag])"] = "\ref[mob_in_bodybag_folded]"
+
+	// Machinery
+	else if(istype(target, /obj/machinery))
+		for(var/mob/mob_occupant in target.contents)
+			options["[mob_occupant.name] ([mob_occupant.tag])"] = "\ref[mob_occupant]"
+
+	else
+		tgui_alert(user,"Unsupported object type! Supported types: /obj/vehicle; /obj/structure/closet; /obj/structure/bodycontainer; /obj/machinery; /obj/item/bodybag.")
+		return
+
+	if(!options.len)
+		tgui_alert(user, "No occupants found!")
+		return
+
+	var/choice
+	if(options.len == 1)
+		choice = options[1]
+	else
+		choice = tgui_input_list(user, "Select mob", "Player Panel", options)
+
+	if(choice)
+		var/mob/selected_mob = locate(options[choice])
+		if(selected_mob)
+			SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/show_player_panel, selected_mob)
+		return
+
+GAME_VERB_PROC(/client, cmd_admin_godmode, "Godmode", "Admin.Game")
+	VERB_ARG_TYPED(mob, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	if(!check_rights(R_ADMIN))
 		return
 
@@ -215,7 +286,7 @@ ADMIN_VERB(respawn_character, R_ADMIN, "Respawn Character", "Respawn a player th
 
 	if(record_found)//If they have a record we can determine a few things.
 		new_character.real_name = record_found.name
-		new_character.gender = LOWER_TEXT(record_found.gender)
+		new_character.gender = record_found.gender
 		new_character.age = record_found.age
 		var/datum/dna/found_dna = record_found.locked_dna
 		new_character.hardset_dna(found_dna.unique_identity, found_dna.mutation_index, null, record_found.name, record_found.blood_type, new record_found.species_type, found_dna.features)
@@ -376,7 +447,8 @@ ADMIN_VERB(combo_hud, R_ADMIN, "Toggle Combo HUD", "Toggles the Admin Combo HUD.
 
 #undef ADMIN_HUDS
 
-ADMIN_VERB(show_traitor_panel, R_ADMIN, "Show Traitor Panel", "Edit mobs's memory and role", ADMIN_CATEGORY_GAME, mob/target_mob)
+ADMIN_VERB(show_traitor_panel, R_ADMIN, "Show Traitor Panel", "Edit mobs's memory and role", ADMIN_CATEGORY_GAME)
+	VERB_ARG_TYPED(target_mob, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/datum/mind/target_mind = target_mob.mind
 	if(!target_mind)
 		to_chat(user, "This mob has no mind!", confidential = TRUE)
@@ -387,7 +459,8 @@ ADMIN_VERB(show_traitor_panel, R_ADMIN, "Show Traitor Panel", "Edit mobs's memor
 	target_mind.traitor_panel()
 	BLACKBOX_LOG_ADMIN_VERB("Traitor Panel")
 
-ADMIN_VERB(show_skill_panel, R_ADMIN, "Show Skill Panel", "Edit mobs's experience and skill levels", ADMIN_CATEGORY_GAME, mob/target_mob)
+ADMIN_VERB(show_skill_panel, R_ADMIN, "Show Skill Panel", "Edit mobs's experience and skill levels", ADMIN_CATEGORY_GAME)
+	VERB_ARG_TYPED(target_mob, VERB_ARG_TYPE_MOB, VERB_ARG_SOURCE_WORLD, /mob)
 	var/datum/mind/target_mind
 	if(istype(target_mob, /datum/mind))
 		target_mind = target_mob
@@ -414,6 +487,7 @@ ADMIN_VERB(lag_switch_panel, R_ADMIN, "Show Lag Switches", "Display the controls
 	dat += "<br/><b>Measures below can be bypassed with a <abbr title='TRAIT_BYPASS_MEASURES'><u>special trait</u></abbr></b><br/>"
 	dat += "Slowmode say verb (informs world): <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[SLOWMODE_SAY]'><b>[SSlag_switch.measures[SLOWMODE_SAY] ? "On" : "Off"]</b></a><br/>"
 	dat += "Disable runechat: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_RUNECHAT]'><b>[SSlag_switch.measures[DISABLE_RUNECHAT] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to speaker</span><br/>"
+	dat += "Disable dead runechat: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_DEAD_RUNECHAT]'><b>[SSlag_switch.measures[DISABLE_DEAD_RUNECHAT] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to speaker</span><br/>"
 	dat += "Disable examine icons: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_USR_ICON2HTML]'><b>[SSlag_switch.measures[DISABLE_USR_ICON2HTML] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to examiner</span><br/>"
 	dat += "Disable parallax: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_PARALLAX]'><b>[SSlag_switch.measures[DISABLE_PARALLAX] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to character</span><br />"
 	dat += "Disable footsteps: <a href='byond://?_src_=holder;[HrefToken()];change_lag_switch=[DISABLE_FOOTSTEPS]'><b>[SSlag_switch.measures[DISABLE_FOOTSTEPS] ? "On" : "Off"]</b></a> - <span style='font-size:80%'>trait applies to character</span><br />"

@@ -39,14 +39,14 @@ export const StationAlertConsoleContent = (props) => {
         <Section key={category.name} title={`${category.name} Alarms`}>
           <ul>
             {category.alerts.length === 0 && (
-              <li className="color-good">Systems Nominal</li>
+              <li className="color-good">Systems nominal</li>
             )}
             {category.alerts.map((alert) => (
               <Stack key={alert.name} height="30px" align="baseline">
                 <Stack.Item grow>
                   <li className="color-average">
                     {alert.name}{' '}
-                    {!!cameraView && alert.sources > 1
+                    {cameraView && alert.sources > 1
                       ? ` (${alert.sources} sources)`
                       : ''}
                   </li>

@@ -11,7 +11,7 @@
 	melee_cooldown_time = 0
 	shared_cooldown = NONE
 	/// If a mob is not clicked directly, inherit targeting data from this blackboard key and setting it upon this target key
-	var/ai_target_key = BB_BASIC_MOB_CURRENT_TARGET
+	var/ai_target_key = BB_CURRENT_TARGET
 	/// What are we actually spawning?
 	var/spawn_type = /mob/living/basic/hivelord_brood
 	/// Do we automatically fire with no cooldown when damaged?
@@ -79,7 +79,7 @@
 /// Actually create a mob
 /datum/action/cooldown/mob_cooldown/hivelord_spawn/proc/complete_spawn(turf/spawn_turf, target)
 	var/mob/living/brood = new spawn_type(spawn_turf)
-	brood.faction = owner.faction
+	SET_FACTION_AND_ALLIES_FROM(brood, owner)
 	brood.ai_controller?.set_blackboard_key(ai_target_key, target)
 	brood.dir = get_dir(owner, spawn_turf)
 

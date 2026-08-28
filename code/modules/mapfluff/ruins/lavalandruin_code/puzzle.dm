@@ -196,7 +196,7 @@
 
 /obj/structure/puzzle_element
 	name = "mysterious pillar"
-	desc = "puzzling..."
+	desc = "Puzzling..."
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "puzzle_pillar"
 	anchored = FALSE
@@ -315,7 +315,7 @@
 	return
 
 /obj/item/prisoncube
-	name = "Prison Cube"
+	name = "prison cube"
 	desc = "Dusty cube with humanoid imprint on it."
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "prison_cube"
@@ -326,7 +326,7 @@
 
 	var/mob/living/carbon/carbon_victim = interacting_with
 	//Handcuffed or unconscious
-	if(istype(carbon_victim) && (carbon_victim.handcuffed || carbon_victim.stat != CONSCIOUS))
+	if(istype(carbon_victim) && (carbon_victim.handcuffed || IS_UNCONSCIOUS_OR_CRIT(carbon_victim)))
 		user.do_attack_animation(carbon_victim)
 		if(!puzzle_imprison(carbon_victim))
 			to_chat(user, span_warning("[src] does nothing."))

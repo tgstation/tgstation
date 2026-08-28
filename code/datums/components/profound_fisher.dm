@@ -141,6 +141,7 @@
 /obj/item/fishing_rod/mob_fisher
 	line = /obj/item/fishing_line/reinforced
 	bait = /obj/item/food/bait/doughball/synthetic/unconsumable
+	custom_materials = null
 	resistance_flags = INDESTRUCTIBLE
 	reel_overlay = null
 	show_in_wiki = FALSE //abstract fishing rod

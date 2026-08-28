@@ -75,54 +75,56 @@
 		qdel(rip_u)
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
-/obj/machinery/power/supermatter_crystal/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/scalpel/supermatter))
-		var/obj/item/scalpel/supermatter/scalpel = item
+/obj/machinery/power/supermatter_crystal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/scalpel/supermatter))
+		var/obj/item/scalpel/supermatter/scalpel = tool
 		to_chat(user, span_notice("You carefully begin to scrape \the [src] with \the [scalpel]..."))
 		if(!scalpel.use_tool(src, user, 60, volume=100))
-			return
-		if (scalpel.usesLeft)
-			to_chat(user, span_danger("You extract a sliver from \the [src]. \The [src] begins to react violently!"))
-			new /obj/item/nuke_core/supermatter_sliver(src.drop_location())
-			supermatter_sliver_removed = TRUE
-			external_power_trickle += 800
-			log_activation(who = user, how = scalpel)
-			scalpel.usesLeft--
-			if (!scalpel.usesLeft)
-				to_chat(user, span_notice("A tiny piece of \the [scalpel] falls off, rendering it useless!"))
-		else
+			return ITEM_INTERACT_BLOCKING
+		if (!scalpel.usesLeft)
 			to_chat(user, span_warning("You fail to extract a sliver from \the [src]! \The [scalpel] isn't sharp enough anymore."))
-		return
+			return ITEM_INTERACT_BLOCKING
+		to_chat(user, span_danger("You extract a sliver from \the [src]. \The [src] begins to react violently!"))
+		new /obj/item/nuke_core/supermatter_sliver(src.drop_location())
+		supermatter_sliver_removed = TRUE
+		external_power_trickle += 800
+		log_activation(who = user, how = scalpel)
+		scalpel.usesLeft--
+		if (!scalpel.usesLeft)
+			to_chat(user, span_notice("A tiny piece of \the [scalpel] falls off, rendering it useless!"))
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(item, /obj/item/hemostat/supermatter))
-		to_chat(user, span_warning("You poke [src] with [item]'s hyper-noblium tips. Nothing happens."))
-		return
+	if(istype(tool, /obj/item/hemostat/supermatter))
+		to_chat(user, span_warning("You poke [src] with [tool]'s hyper-noblium tips. Nothing happens."))
+		return ITEM_INTERACT_BLOCKING
 
-	if(istype(item, /obj/item/destabilizing_crystal))
-		var/obj/item/destabilizing_crystal/destabilizing_crystal = item
+	if(istype(tool, /obj/item/destabilizing_crystal))
+		var/obj/item/destabilizing_crystal/destabilizing_crystal = tool
 
 		if(!is_main_engine)
 			to_chat(user, span_warning("You can't use \the [destabilizing_crystal] on \a [name]."))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		if(get_integrity_percent() < SUPERMATTER_CASCADE_PERCENT)
 			to_chat(user, span_warning("You can only apply \the [destabilizing_crystal] to \a [name] that is at least [SUPERMATTER_CASCADE_PERCENT]% intact."))
-			return
+			return ITEM_INTERACT_BLOCKING
 
 		to_chat(user, span_warning("You begin to attach \the [destabilizing_crystal] to \the [src]..."))
-		if(do_after(user, 3 SECONDS, src))
-			message_admins("[ADMIN_LOOKUPFLW(user)] attached [destabilizing_crystal] to the supermatter at [ADMIN_VERBOSEJMP(src)].")
-			user.log_message("attached [destabilizing_crystal] to the supermatter", LOG_GAME)
-			user.investigate_log("attached [destabilizing_crystal] to a supermatter crystal.", INVESTIGATE_ENGINE)
-			to_chat(user, span_danger("\The [destabilizing_crystal] snaps onto \the [src]."))
-			set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade)
-			external_damage_immediate += 10
-			external_power_trickle += 500
-			log_activation(who = user, how = destabilizing_crystal)
-			qdel(destabilizing_crystal)
-		return
+		if(!do_after(user, 3 SECONDS, src))
+			return ITEM_INTERACT_BLOCKING
 
-	return ..()
+		message_admins("[ADMIN_LOOKUPFLW(user)] attached [destabilizing_crystal] to the supermatter at [ADMIN_VERBOSEJMP(src)].")
+		user.log_message("attached [destabilizing_crystal] to the supermatter", LOG_GAME)
+		user.investigate_log("attached [destabilizing_crystal] to a supermatter crystal.", INVESTIGATE_ENGINE)
+		to_chat(user, span_danger("\The [destabilizing_crystal] snaps onto \the [src]."))
+		set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade)
+		external_damage_immediate += 10
+		external_power_trickle += 500
+		log_activation(who = user, how = destabilizing_crystal)
+		qdel(destabilizing_crystal)
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 //Do not blow up our internal radio
 /obj/machinery/power/supermatter_crystal/contents_explosion(severity, target)

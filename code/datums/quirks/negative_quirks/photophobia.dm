@@ -8,7 +8,9 @@
 	gain_text = span_danger("The safety of light feels off...")
 	lose_text = span_notice("Enlightening.")
 	medical_record_text = "Patient has acute phobia of light, and insists it is physically harmful."
+	medical_symptom_text = "Exhibits heightened sensitivity to bright lights, leading to discomfort and avoidance behaviors."
 	hardcore_value = 4
+	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_TRAUMALIKE
 	mail_goodies = list(
 		/obj/item/flashlight/flashdark,
 		/obj/item/food/grown/mushroom/glowshroom/shadowshroom,
@@ -51,10 +53,7 @@
 /datum/quirk/photophobia/proc/on_holder_moved(mob/living/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
 
-	if(quirk_holder.stat != CONSCIOUS || quirk_holder.IsSleeping() || quirk_holder.IsUnconscious())
-		return
-
-	if(HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
+	if(IS_UNCONSCIOUS(quirk_holder) || HAS_TRAIT(quirk_holder, TRAIT_FEARLESS))
 		return
 
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -63,11 +62,8 @@
 		return
 
 	var/turf/holder_turf = get_turf(quirk_holder)
-
-	var/lums = holder_turf.get_lumcount()
-
 	var/eye_protection = quirk_holder.get_eye_protection()
-	if(lums < LIGHTING_TILE_IS_DARK || eye_protection >= FLASH_PROTECTION_NONE)
+	if(holder_turf.check_lumcount_below(LIGHTING_TILE_IS_DARK) || eye_protection >= FLASH_PROTECTION_NONE)
 		quirk_holder.clear_mood_event(MOOD_CATEGORY_PHOTOPHOBIA)
 		return
 	quirk_holder.add_mood_event(MOOD_CATEGORY_PHOTOPHOBIA, /datum/mood_event/photophobia)

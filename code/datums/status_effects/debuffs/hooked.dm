@@ -12,7 +12,7 @@
 /datum/status_effect/grouped/hooked/proc/still_exists()
 	return !QDELETED(src)
 
-/datum/status_effect/grouped/hooked/source_added(datum/beam/fishing_line/source)
+/datum/status_effect/grouped/hooked/source_added(datum/beam/held/source)
 	RegisterSignal(source, COMSIG_QDELETING, PROC_REF(on_fishing_line_deleted))
 
 /datum/status_effect/grouped/hooked/proc/on_fishing_line_deleted(datum/source)
@@ -22,7 +22,7 @@
 /atom/movable/screen/alert/status_effect/hooked
 	name = "Snagged By Hook"
 	desc = "You're being caught like a fish by some asshat! Click to safely remove the hook or move away far enough to snap it off."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "hooked"
 	clickable_glow = TRUE
 
@@ -37,7 +37,7 @@
 	if(!effect.try_unhook())
 		return
 	owner.balloon_alert(owner, "hook removed")
-	var/datum/beam/fishing_line/rand_source = pick(effect.sources)
+	var/datum/beam/held/rand_source = pick(effect.sources)
 	qdel(rand_source)
 
 ///Version used by the jawed fishing hook, which also applies slowdown
@@ -59,5 +59,5 @@
 /atom/movable/screen/alert/status_effect/hooked/jaws
 	name = "Snagged By Jaws"
 	desc = "You've been snagged by some sort of beartrap-slash-fishing-hook-gizmo! Click to safely remove the hook or move away far enough to snap it off."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "hooked_jaws"

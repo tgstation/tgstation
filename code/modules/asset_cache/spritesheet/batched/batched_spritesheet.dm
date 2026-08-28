@@ -7,7 +7,7 @@
 #define SPRITESHEET_SYSTEM_VERSION 1
 
 /datum/asset/spritesheet_batched
-	_abstract = /datum/asset/spritesheet_batched
+	abstract_type = /datum/asset/spritesheet_batched
 	var/name
 	/// list("32x32")
 	var/list/sizes = list()

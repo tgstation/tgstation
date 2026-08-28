@@ -19,6 +19,7 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/fish_analyzer_inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/fish_analyzer_inhand_right
 	greyscale_config_worn = /datum/greyscale_config/fish_analyzer_worn
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 	///The color of the case. Used by grayscale configs and update_overlays()
 	var/case_color
 	///the atom (aquarium or fish) we have scanned
@@ -41,7 +42,7 @@
 
 	register_item_context()
 	update_appearance()
-	AddComponent(/datum/component/adjust_fishing_difficulty, -3, ITEM_SLOT_HANDS)
+	AddElement(/datum/element/adjust_fishing_difficulty, -3, ITEM_SLOT_HANDS)
 
 /obj/item/fish_analyzer/Destroy()
 	scanned_object = null

@@ -4,7 +4,7 @@ import os
 import re
 import sys
 
-parent_directory = "code/**/*.dm"
+parent_directory = "*/**/*.dm"
 
 output_file_name = "define_sanity_output.txt"
 how_to_fix_message = "Please #undef the above defines or remake them as global defines in the code/__DEFINES directory."
@@ -36,6 +36,8 @@ excluded_files = [
     "code/_globalvars/*.dm",
     # TGS files come from another repository so lets not worry about them.
     "code/modules/tgs/**/*.dm",
+    # Doesn't come with the repo, but is in CI.
+    "DMCompiler_linux-x64/*.dm",
 ]
 
 define_regex = re.compile(r"(\s+)?#define\s?([A-Z0-9_]+)\(?(.+)\)?")
@@ -71,7 +73,7 @@ for applicable_file in files_to_scan:
         for define in define_regex.finditer(file_contents):
             number_of_defines += 1
             define_name = define.group(2)
-            if not re.search("#undef\s" + define_name, file_contents):
+            if not re.search(r"#undef\s" + define_name, file_contents):
                 located_error_tuples.append((define_name, applicable_file))
 
 if number_of_defines == 0:

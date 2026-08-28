@@ -43,7 +43,7 @@
 	)
 
 /mob/living/carbon/alien/Initialize(mapload)
-	add_verb(src, /mob/living/proc/mob_sleep)
+	ASSIGN_GAME_VERB(src, /mob/living, mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)
 
 	create_bodyparts() //initialize bodyparts
@@ -70,7 +70,7 @@
 /mob/living/carbon/alien/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) // beepsky won't hunt aliums
 	return -10
 
-/mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+/mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment, seconds_per_tick)
 	// Run base mob body temperature proc before taking damage
 	// this balances body temp to the environment and natural stabilization
 	. = ..()
@@ -92,7 +92,7 @@
 				apply_damage(HEAT_DAMAGE_LEVEL_2 * seconds_per_tick, BURN)
 
 /mob/living/carbon/alien/get_bloodtype()
-	return get_blood_type(BLOOD_TYPE_XENO)
+	return get_blood_type(/datum/blood_type/xeno)
 
 /*----------------------------------------
 Proc: AddInfectionImages()
@@ -200,3 +200,6 @@ Des: Removes all infected images from the alien.
 
 /mob/living/carbon/alien/get_footprint_sprite()
 	return FOOTPRINT_SPRITE_CLAWS
+
+/mob/living/carbon/alien/get_fire_overlay(stacks, on_fire)
+	return make_generic_fire_overlay()

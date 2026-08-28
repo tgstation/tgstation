@@ -81,11 +81,11 @@
 	ckey = blood.data["ckey"]
 	realName = blood.data["real_name"]
 	blood_gender = blood.data["gender"]
-	blood_type = blood.data["blood_type"]
+	blood_type = blood.data[BLOOD_DATA_TYPE]
 	features = blood.data["features"]
 	factions = blood.data["factions"]
 	quirks = blood.data["quirks"]
-	sampleDNA = blood.data["blood_DNA"]
+	sampleDNA = blood.data[BLOOD_DATA_DNA]
 	contains_sample = TRUE
 	visible_message(span_notice("The [src] is injected with a fresh blood sample."))
 	investigate_log("[key_name(mind)]'s cloning record was added to [src]", INVESTIGATE_BOTANY)
@@ -197,7 +197,7 @@
 		podman.PossessByPlayer(ckey_holder)
 
 	podman.gender = blood_gender
-	podman.faction |= factions
+	podman.add_faction(factions)
 	features[FEATURE_MUTANT_COLOR] ||= "#59CE00"
 	features[FEATURE_POD_HAIR] ||= pick(SSaccessories.feature_list[FEATURE_POD_HAIR])
 

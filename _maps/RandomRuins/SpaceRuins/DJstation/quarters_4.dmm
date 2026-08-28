@@ -27,7 +27,7 @@
 	name = "Rest Room"
 	},
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
 /turf/template_noop,
 /area/space/nearstation)
 "q" = (
@@ -70,7 +70,7 @@
 	},
 /obj/modular_map_connector,
 /obj/effect/mapping_helpers/airlock/locked,
-/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
 /turf/template_noop,
 /area/space/nearstation)
 "W" = (

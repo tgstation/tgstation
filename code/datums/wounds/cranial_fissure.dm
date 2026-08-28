@@ -15,7 +15,7 @@
 	if (isnull(limb.owner))
 		return ..()
 
-	if (HAS_TRAIT(limb.owner, TRAIT_CURSED) && (limb.get_mangled_state() & BODYPART_MANGLED_INTERIOR))
+	if (HAS_TRAIT(limb.owner, TRAIT_CURSED) && (limb.mangled_state & BODYPART_MANGLED_INTERIOR))
 		return ..()
 
 	if (limb.owner.stat >= HARD_CRIT)
@@ -39,6 +39,10 @@
 
 	severity = WOUND_SEVERITY_CRITICAL
 	sound_effect = 'sound/effects/dismember.ogg'
+	surgery_states = SURGERY_SKIN_OPEN | SURGERY_BONE_SAWED // Literally a cracked open skull, no vessels as it... doesn't bleed?
+
+	/// If TRUE we have been prepped for surgery (to repair)
+	VAR_FINAL/prepped = FALSE
 
 #define CRANIAL_FISSURE_FILTER_DISPLACEMENT "cranial_fissure_displacement"
 
@@ -83,7 +87,7 @@
 	if (user.usable_hands <= 0 || user.combat_mode)
 		return FALSE
 
-	if(!isnull(user.hud_used?.zone_select) && (user.zone_selected != BODY_ZONE_HEAD && user.zone_selected != BODY_ZONE_PRECISE_EYES))
+	if(!isnull(user.hud_used?.screen_objects[HUD_MOB_ZONE_SELECTOR]) && (user.zone_selected != BODY_ZONE_HEAD && user.zone_selected != BODY_ZONE_PRECISE_EYES))
 		return FALSE
 
 	if (victim.body_position != LYING_DOWN)

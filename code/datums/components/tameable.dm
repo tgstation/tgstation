@@ -50,12 +50,15 @@
 	if(!isliving(parent))
 		return FALSE // Figure this out when we actually need it
 	var/mob/living/living_parent = parent
-	return living_parent.faction.Find(REF(potential_friend))
+	return living_parent.has_ally(potential_friend)
 
 ///Ran once taming succeeds
 /datum/component/tameable/proc/on_tame(atom/source, mob/living/tamer, obj/item/food, inform_tamer = FALSE)
 	SIGNAL_HANDLER
 	source.tamed(tamer, food)//Run custom behavior if needed
+	if(isliving(parent))
+		var/mob/living/living_parent = parent
+		living_parent.ai_controller?.set_blackboard_key(BB_TAMED, TRUE)
 	if(isliving(parent) && isliving(tamer))
 		INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, befriend), tamer)
 		if(inform_tamer)

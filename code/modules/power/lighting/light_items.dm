@@ -8,7 +8,6 @@
 	throwforce = 5
 	w_class = WEIGHT_CLASS_TINY
 	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT)
-	grind_results = list(/datum/reagent/silicon = 5, /datum/reagent/nitrogen = 10) //Nitrogen is used as a cheaper alternative to argon in incandescent lighbulbs
 	///How much light it gives off
 	var/brightness = 2
 	///LIGHT_OK, LIGHT_BURNED or LIGHT_BROKEN
@@ -30,18 +29,20 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 	AddComponent(/datum/component/golem_food, golem_food_key = /obj/item/light, extra_validation = CALLBACK(src, PROC_REF(is_intact)))
 
-/obj/item/light/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
+/obj/item/light/grind_results()
+	return list(/datum/reagent/silicon = 5, /datum/reagent/nitrogen = 10)
 
-	if(istype(attacking_item, /obj/item/lightreplacer))
-		var/obj/item/lightreplacer/lightreplacer = attacking_item
-		lightreplacer.attackby(src, user)
+/obj/item/light/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/lightreplacer))
+		return NONE
+	tool.item_interaction(user, src)
+	return ITEM_INTERACT_SUCCESS
 
 /// Returns true if bulb is intact
 /obj/item/light/proc/is_intact()
 	return status == LIGHT_OK
 
-/obj/item/light/suicide_act(mob/living/carbon/user)
+/obj/item/light/suicide_act(mob/living/user)
 	if (status == LIGHT_BROKEN)
 		user.visible_message(span_suicide("[user] begins to stab [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	else
@@ -54,6 +55,7 @@
 	desc = "A replacement light tube."
 	icon_state = "ltube"
 	base_state = "ltube"
+	worn_icon = "ltube"
 	inhand_icon_state = "ltube"
 	icon_angle = -45
 	brightness = 8
@@ -77,6 +79,7 @@
 	icon_state = "lbulb"
 	base_state = "lbulb"
 	icon_angle = -90
+	worn_icon = "lbulb"
 	inhand_icon_state = "contvapour"
 	lefthand_file = 'icons/mob/inhands/equipment/medical_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/medical_righthand.dmi'

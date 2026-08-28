@@ -425,7 +425,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/construction/plumbing/service = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/bar_wardrobe
-	payment_department = ACCOUNT_MED
+	payment_department = ACCOUNT_SRV
 	extra_price = PAYCHECK_COMMAND
 
 /obj/item/vending_refill/wardrobe/bar_wardrobe
@@ -536,6 +536,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/radio/headset/headset_srv = 2,
 		/obj/item/storage/box/evidence = 2,
 		/obj/item/reagent_containers/cup/fish_feed = 1,
+		/obj/item/storage/box/stamps = 1,
 	)
 	premium = list(
 		/obj/item/mod/control/pre_equipped/portable_suit = 1,
@@ -586,6 +587,9 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 	premium = list(
 		/obj/item/clothing/head/chaplain/bishopmitre = 1,
 		/obj/item/clothing/suit/chaplainsuit/bishoprobe = 1,
+		/obj/item/clothing/head/costume/pharaoh = 1,
+		/obj/item/clothing/head/costume/nemes = 1,
+		/obj/item/clothing/suit/costume/nemes = 1,
 	)
 	refill_canister = /obj/item/vending_refill/wardrobe/chap_wardrobe
 	payment_department = ACCOUNT_SRV
@@ -695,7 +699,7 @@ GLOBAL_VAR_INIT(roaches_deployed, FALSE)
 		/obj/item/clothing/under/rank/security/detective/noir = 2,
 		/obj/item/clothing/under/rank/security/detective/noir/skirt = 2,
 		/obj/item/clothing/shoes/laceup = 2,
-		/obj/item/clothing/head/fedora = 2,
+		/obj/item/clothing/head/fedora/det_hat/noir = 1,
 		/obj/item/clothing/suit/toggle/jacket/det_trench/noir = 1,
 		/obj/item/clothing/suit/jacket/det_suit/noir = 1,
 		/obj/item/clothing/neck/tie/disco = 1,

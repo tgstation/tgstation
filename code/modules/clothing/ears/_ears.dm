@@ -22,12 +22,13 @@
 	resistance_flags = FLAMMABLE
 	custom_price = PAYCHECK_COMMAND * 1.5
 	flags_cover = EARS_COVERED
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/ears/earmuffs/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/earhealing)
 	AddComponent(/datum/component/wearertargeting/earprotection)
-	AddComponent(/datum/component/adjust_fishing_difficulty, -2)
+	AddElement(/datum/element/adjust_fishing_difficulty, -2)
 
 /obj/item/clothing/ears/earmuffs/debug
 	name = "debug earmuffs"

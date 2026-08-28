@@ -3,6 +3,7 @@
 	can_adjust = FALSE
 	body_parts_covered = CHEST|GROIN
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 	icon = 'icons/obj/clothing/under/dress.dmi'
 	worn_icon = 'icons/mob/clothing/under/dress.dmi'
 
@@ -48,7 +49,7 @@
 
 /obj/item/clothing/under/dress/wedding_dress/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 4) //You aren't going to fish with this are you?
+	AddElement(/datum/element/adjust_fishing_difficulty, 4) //You aren't going to fish with this are you?
 
 /obj/item/clothing/under/dress/eveninggown
 	name = "evening gown"
@@ -65,7 +66,7 @@
 
 /obj/item/clothing/under/dress/eveninggown/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/adjust_fishing_difficulty, 4) //You aren't going to fish with this are you?
+	AddElement(/datum/element/adjust_fishing_difficulty, 4) //You aren't going to fish with this are you?
 
 /obj/item/clothing/under/dress/skirt
 	name = "cardigan skirt"

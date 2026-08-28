@@ -12,7 +12,7 @@
 	register_context()
 	update_appearance()
 
-/obj/item/toy/cards/cardhand/suicide_act(mob/living/carbon/user)
+/obj/item/toy/cards/cardhand/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is slitting [user.p_their()] wrists with \the [src]! It looks like [user.p_they()] [user.p_have()] a crummy hand!"))
 	playsound(src, 'sound/items/cards/cardshuffle.ogg', 50, TRUE)
 	return BRUTELOSS

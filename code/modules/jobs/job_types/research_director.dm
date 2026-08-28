@@ -1,7 +1,7 @@
 /datum/job/research_director
 	title = JOB_RESEARCH_DIRECTOR
 	description = "Supervise research efforts, ensure Robotics is in working \
-		order, make sure the AI and its Cyborgs aren't rogue, replacing them if \
+		order, make sure the AI and its Cyborgs aren't rogue, replace them if \
 		they are."
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD
 	head_announce = RADIO_CHANNEL_SCIENCE
@@ -28,7 +28,7 @@
 	paycheck_department = ACCOUNT_SCI
 
 	mind_traits = list(HEAD_OF_STAFF_MIND_TRAITS)
-	liver_traits = list(TRAIT_ROYAL_METABOLISM, TRAIT_BALLMER_SCIENTIST)
+	liver_traits = list(TRAIT_ROYAL_METABOLISM, TRAIT_SCIENTIST_LIVER)
 
 	display_order = JOB_DISPLAY_ORDER_RESEARCH_DIRECTOR
 	bounty_types = CIV_JOB_SCI
@@ -46,6 +46,7 @@
 	human_authority = JOB_AUTHORITY_HUMANS_ONLY
 
 	voice_of_god_power = 1.4 //Command staff has authority
+	tgui_icon = FA_ICON_USER_GRADUATE
 
 
 /datum/job/research_director/get_captaincy_announcement(mob/living/captain)
@@ -78,6 +79,8 @@
 
 	chameleon_extras = /obj/item/stamp/head/rd
 	skillchips = list(/obj/item/skillchip/research_director, /obj/item/skillchip/job/roboticist)
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/science/rd
 
 /datum/outfit/job/rd/mod
 	name = "Research Director (MODsuit)"

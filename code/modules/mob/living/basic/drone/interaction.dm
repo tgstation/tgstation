@@ -122,7 +122,7 @@
 
 /// Returns a multiplier for any head armor you wear as a drone.
 /mob/living/basic/drone/proc/get_armor_effectiveness()
-	return 0
+	return 0.8
 
 /**
  * Hack or unhack a drone
@@ -165,7 +165,7 @@
 		visible_message(span_info("[src]'s display glows a content blue!"), \
 						"<font size=3 color='#0000CC'><b>ERROR: LAW OVERRIDE DETECTED</b></font>")
 		to_chat(src, span_info("<b>From now on, these are your laws:</b>"))
-		laws = initial(laws)
+		laws = get_default_laws()
 		to_chat(src, laws)
 		to_chat(src, "<i>Having been restored, your onboard antivirus reports the all-clear and you are able to perform all actions again.</i>")
 		hacked = FALSE

@@ -13,7 +13,7 @@
 /obj/item/paper,
 /obj/item/pen,
 /obj/item/clothing/under/costume/seifuku,
-/obj/item/toy/katana,
+/obj/item/storage/belt/sheath/katana/toy,
 /turf/open/floor/holofloor,
 /area/template_noop)
 "s" = (

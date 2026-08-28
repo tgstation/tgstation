@@ -6,7 +6,7 @@
 
 /obj/structure/closet/secure_closet/medical1/PopulateContents()
 	..()
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/reagent_containers/cup/beaker = 2,
 		/obj/item/reagent_containers/dropper = 2,
 		/obj/item/storage/belt/medical = 1,
@@ -80,7 +80,7 @@
 	new /obj/item/clothing/suit/bio_suit/cmo(src)
 	new /obj/item/clothing/head/bio_hood/cmo(src)
 	new /obj/item/storage/bag/garment/chief_medical(src)
-	new /obj/item/computer_disk/command/cmo(src)
+	new /obj/item/disk/computer/command/cmo(src)
 	new /obj/item/radio/headset/heads/cmo(src)
 	new /obj/item/megaphone/command(src)
 	new /obj/item/assembly/flash/handheld(src)
@@ -89,7 +89,6 @@
 	new /obj/item/clothing/neck/petcollar(src)
 	new /obj/item/pet_carrier(src)
 	new /obj/item/circuitboard/machine/techfab/department/medical(src)
-	new /obj/item/storage/photo_album/cmo(src)
 	new /obj/item/storage/lockbox/medal/med(src)
 
 /obj/structure/closet/secure_closet/chief_medical/populate_contents_immediate()
@@ -98,6 +97,8 @@
 	// Traitor steal objective
 	new /obj/item/reagent_containers/hypospray/cmo(src)
 	new /obj/item/defibrillator/compact/loaded/cmo(src)
+
+	new /obj/item/storage/photo_album/cmo(src)
 
 /obj/structure/closet/secure_closet/animal
 	name = "animal control locker"
@@ -146,7 +147,7 @@
 /obj/structure/closet/secure_closet/paramedic/PopulateContents()
 	..()
 
-	var/static/items_inside = list(
+	var/list/items_inside = list(
 		/obj/item/storage/medkit/emergency = 1,
 		/obj/item/storage/box/bandages = 1,
 		/obj/item/pinpointer/crew = 1,

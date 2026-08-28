@@ -8,6 +8,7 @@
 	desc = "you really should call an admin"
 	icon = 'icons/obj/machines/engine/turbine.dmi'
 	icon_state = "inlet_compressor"
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 
 	///Current part tier
 	var/current_tier = TURBINE_PART_TIER_ONE

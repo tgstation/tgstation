@@ -33,5 +33,5 @@
 	if (!victim.ai_controller)
 		return
 
-	victim.ai_controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker)
+	victim.ai_controller.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker, world.time)
 	post_retaliate_callback?.InvokeAsync(attacker)

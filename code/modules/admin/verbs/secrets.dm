@@ -163,21 +163,6 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			log_admin("[key_name(holder)] reset the station name.")
 			message_admins(span_adminnotice("[key_name_admin(holder)] reset the station name."))
 			priority_announce("[command_name()] has renamed the station to \"[new_name]\".")
-		if("night_shift_set")
-			var/val = tgui_alert(holder, "What do you want to set night shift to? This will override the automatic system until set to automatic again.", "Night Shift", list("On", "Off", "Automatic"))
-			switch(val)
-				if("Automatic")
-					if(CONFIG_GET(flag/enable_night_shifts))
-						SSnightshift.can_fire = TRUE
-						SSnightshift.fire()
-					else
-						SSnightshift.update_nightshift(active = FALSE, announce = TRUE, forced = TRUE)
-				if("On")
-					SSnightshift.can_fire = FALSE
-					SSnightshift.update_nightshift(active = TRUE, announce = TRUE, forced = TRUE)
-				if("Off")
-					SSnightshift.can_fire = FALSE
-					SSnightshift.update_nightshift(active = FALSE, announce = TRUE, forced = TRUE)
 		if("moveferry")
 			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Send CentCom Ferry"))
 			if(!SSshuttle.toggleShuttle("ferry","ferry_home","ferry_away"))
@@ -349,16 +334,6 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 					airlock.req_one_access = list()
 			message_admins("[key_name_admin(holder)] activated Egalitarian Station mode")
 			priority_announce("CentCom airlock control override activated. Please take this time to get acquainted with your coworkers.", null, SSstation.announcer.get_rand_report_sound())
-		if("ancap")
-			if(!is_funmin)
-				return
-			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Anarcho-capitalist Station"))
-			SSeconomy.full_ancap = !SSeconomy.full_ancap
-			message_admins("[key_name_admin(holder)] toggled Anarcho-capitalist mode")
-			if(SSeconomy.full_ancap)
-				priority_announce("The NAP is now in full effect.", null, SSstation.announcer.get_rand_report_sound())
-			else
-				priority_announce("The NAP has been revoked.", null, SSstation.announcer.get_rand_report_sound())
 		if("send_shuttle_back")
 			if (!is_funmin)
 				return
@@ -387,6 +362,18 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(return_escape_shuttle), make_announcement), new_timer SECONDS)
 			else
 				INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(return_escape_shuttle), make_announcement)
+		if("ore_vents")
+			if(!is_funmin)
+				return
+			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("Tap Ore Vents"))
+			var/vent_count = 0
+			for(var/obj/structure/ore_vent/vent as anything in SSore_generation.possible_vents)
+				if(vent.tapped || !COOLDOWN_FINISHED(vent, wave_cooldown) || vent.node) // skip if already tapped or currently being tapped
+					continue
+				vent.initiate_wave_win(forced = TRUE)
+				vent_count++
+			message_admins("[key_name_admin(holder)] tapped [vent_count] ore vents")
+			log_admin("[key_name_admin(holder)] tapped [vent_count] ore vents")
 		if("blackout")
 			if(!is_funmin)
 				return
@@ -637,7 +624,7 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			if(teamsize <= 0)
 				return FALSE
 
-			candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for a [span_notice("Nanotrasen emergency response drone")]?", check_jobban = ROLE_DRONE, alert_pic = /mob/living/basic/drone/classic, role_name_text = "nanotrasen emergency response drone")
+			candidates = SSpolling.poll_ghost_candidates("Do you wish to be considered for a [span_notice("Nanotrasen emergency response drone")]?", check_jobban = ROLE_DRONE, alert_pic = /mob/living/basic/drone/classic, role_name_text = "Nanotrasen emergency response drone")
 
 			if(length(candidates) == 0)
 				return FALSE
@@ -686,6 +673,53 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			sound_to_playing_players('sound/effects/pray_chaplain.ogg')
 			message_admins("[key_name_admin(holder)] healed everyone.")
 			log_admin("[key_name(holder)] healed everyone.")
+
+		if("cascade")
+			if(!is_funmin)
+				return
+			message_admins("[key_name_admin(holder)] started a resonance cascade! You're supposed to be a scientist! Use your common sense!")
+			for(var/obj/machinery/power/supermatter_crystal/S in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/supermatter_crystal))
+				if(!S.is_main_engine)
+					continue
+				S.explosion_point = 0
+				S.set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade)
+				S.external_damage_immediate += 200
+				S.count_down()
+				return
+			return
+
+		if("meteormode")
+			if(!is_funmin)
+				return
+			if(GLOB.meteor_mode)
+				QDEL_NULL(GLOB.meteor_mode)
+				message_admins("[key_name_admin(holder)] disabled meteor mode.")
+				return TRUE
+
+			GLOB.meteor_mode = new()
+			var/start_when = tgui_input_number(usr, "Meteors will start in (this many seconds):", "Meteor Mode: Start", (5 MINUTES) / 10, (24 HOURS) / 10, 0)
+			var/ramp_speed = tgui_input_number(usr, "Meteors will worsen every (this many seconds):", "Meteor Mode: Intensity", (5 MINUTES) / 10, (24 HOURS) / 10, (30 SECONDS) / 10)
+			if(!is_funmin) // deadminnied?
+				QDEL_NULL(GLOB.meteor_mode)
+				return TRUE
+			GLOB.meteor_mode.meteordelay = world.time + (start_when * 10)
+			GLOB.meteor_mode.rampupdelta = ramp_speed / 60
+			GLOB.meteor_mode.start_meteor()
+			message_admins("[key_name_admin(holder)] enabled meteor mode. \
+				Meteors will start [start_when ? "in [DisplayTimeText(start_when * 10)]" : "immediately"], and will worsen every [DisplayTimeText(ramp_speed * 10)].")
+			return TRUE
+
+		if("fix_gravity")
+			if(!is_funmin)
+				return
+			SSblackbox.record_feedback("nested tally", "admin_secrets_fun_used", 1, list("fix_gravity"))
+			message_admins("[key_name_admin(holder)] fixed the gravity generator.")
+
+			for(var/obj/machinery/gravity_generator/main/the_generator as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/gravity_generator/main))
+				if(!is_station_level(the_generator.z))
+					continue
+				the_generator.kickstart()
+				CHECK_TICK
 
 	if(holder)
 		log_admin("[key_name(holder)] used secret: [action].")

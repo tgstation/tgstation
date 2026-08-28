@@ -23,7 +23,7 @@
 
 /obj/item/circuit_component/speech/populate_ports()
 	message = add_input_port("Message", PORT_TYPE_STRING, trigger = null)
-	quietmode = add_input_port("Quiet Mode", PORT_TYPE_NUMBER, default = 0)
+	quietmode = add_input_port("Quiet Mode", PORT_TYPE_BOOLEAN, default = FALSE)
 
 /obj/item/circuit_component/speech/input_received(datum/port/input/port)
 	if(!parent.shell)

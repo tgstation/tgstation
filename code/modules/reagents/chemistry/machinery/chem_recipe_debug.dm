@@ -77,9 +77,8 @@
 
 	if(isnull(all_reaction_list))
 		all_reaction_list = list()
-		for(var/datum/reagent/reagent as anything in GLOB.chemical_reactions_list_reactant_index)
-			for(var/datum/chemical_reaction/reaction as anything in GLOB.chemical_reactions_list_reactant_index[reagent])
-				all_reaction_list[extract_reaction_name(reaction)] = reaction
+		for(var/reaction, datum in GLOB.chemical_reactions_list)
+			all_reaction_list[extract_reaction_name(datum)] = datum
 
 /obj/machinery/chem_recipe_debug/Destroy()
 	reactions_to_test.Cut()
@@ -147,11 +146,12 @@
 	PRIVATE_PROC(TRUE)
 	SHOULD_BE_PURE(TRUE)
 
+	. = null
 	if(temp_mode == USE_REACTION_TEMPERATURE)
-		return null //simply means don't alter the reaction temperature
+		return . //simply means don't alter the reaction temperature
 	else if(temp_mode == USE_USER_TEMPERATURE)
 		return forced_temp
-	else
+	else if(reactions_to_test.len)
 		var/datum/chemical_reaction/test_reaction = reactions_to_test[current_reaction_index || 1]
 		switch(temp_mode)
 			if(USE_MINIMUM_TEMPERATURE)

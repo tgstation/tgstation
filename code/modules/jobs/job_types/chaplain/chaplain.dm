@@ -12,7 +12,8 @@
 	outfit = /datum/outfit/job/chaplain
 	plasmaman_outfit = /datum/outfit/plasmaman/chaplain
 
-	mind_traits = list(TRAIT_SPIRITUAL, TRAIT_DESENSITIZED)
+	mind_traits = list(TRAIT_SPIRITUAL)
+	desensitized_base = DESENSITIZED_THRESHOLD
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_SRV
@@ -36,6 +37,7 @@
 	voice_of_god_power = 2 //Chaplains are very good at speaking with the voice of god
 
 	job_tone = "holy"
+	tgui_icon = FA_ICON_CROSS
 
 
 /datum/job/chaplain/after_spawn(mob/living/spawned, client/player_client)

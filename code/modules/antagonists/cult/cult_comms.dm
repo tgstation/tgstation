@@ -399,7 +399,7 @@
 
 		var/turf/throwee_turf = get_turf(throwee)
 
-		playsound(throwee_turf, 'sound/effects/magic/exit_blood.ogg')
+		playsound(throwee_turf, 'sound/effects/magic/exit_blood.ogg', 50)
 		new /obj/effect/temp_visual/cult/sparks(throwee_turf, clicker.dir)
 		throwee.visible_message(
 			span_warning("A pulse of magic whisks [throwee] away!"),

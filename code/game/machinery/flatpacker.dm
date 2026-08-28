@@ -16,7 +16,7 @@
 	/// Coefficient applied to consumed materials. Lower values result in lower material consumption.
 	var/creation_efficiency = 2
 	///The container to hold materials
-	var/datum/component/material_container/materials
+	var/datum/material_container/materials
 	/// The inserted board
 	var/obj/item/circuitboard/machine/inserted_board
 	/// List of components that need to be packed along with the circuitboard
@@ -33,9 +33,9 @@
 /obj/machinery/flatpacker/Initialize(mapload)
 	register_context()
 
-	materials = AddComponent( \
-		/datum/component/material_container, \
-		SSmaterials.materials_by_category[MAT_CATEGORY_SILO], \
+	materials = new ( \
+		src, \
+		SSmaterials.get_materials_by_flag(MATERIAL_SILO_STORED), \
 		0, \
 		MATCONTAINER_EXAMINE, \
 		container_signals = list(COMSIG_MATCONTAINER_ITEM_CONSUMED = TYPE_PROC_REF(/obj/machinery/flatpacker, AfterMaterialInsert)) \
@@ -44,10 +44,10 @@
 	return ..()
 
 /obj/machinery/flatpacker/Destroy()
-	materials = null
+	QDEL_NULL(materials)
 	QDEL_NULL(inserted_board)
 	QDEL_LIST(flatpacked_components)
-	. = ..()
+	return ..()
 
 /obj/machinery/flatpacker/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = NONE
@@ -79,13 +79,13 @@
 	. += span_notice("The status display reads:")
 	. += span_notice("Capable of packing up to <b>Tier [max_part_tier]</b>.")
 	. += span_notice("Storing up to <b>[materials.max_amount]</b> material units.")
-	. += span_notice("Material consumption at <b>[creation_efficiency * 100]%</b>")
+	. += span_notice("Material consumption at <b>[creation_efficiency * 100]%</b>.")
 
-	. += span_notice("Its maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"]")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "close" : "open"].")
 	if(panel_open)
-		. += span_notice("It can be [EXAMINE_HINT("pried")] apart")
+		. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
 	if(!QDELETED(inserted_board))
-		. += span_notice("The board can be ejected via [EXAMINE_HINT("Ctrl Click")]")
+		. += span_notice("The board can be ejected via [EXAMINE_HINT("Ctrl Click")].")
 		if(length(inserted_board.flatpack_components))
 			var/list/obj/item/to_insert
 			for(var/obj/item/component as anything in inserted_board.flatpack_components)
@@ -95,9 +95,9 @@
 					continue
 				LAZYADDASSOC(to_insert, get_flatpack_component_name(component), "[inserted]/[required]")
 			if(length(to_insert))
-				. += span_warning("The following components must be inserted by hand before packaging")
+				. += span_warning("The following components must be inserted by hand before packaging:")
 				for(var/component_name in to_insert)
-					. += span_warning("[component_name]:[to_insert[component_name]]")
+					. += span_warning("[component_name]: [to_insert[component_name]].")
 
 /obj/machinery/flatpacker/update_overlays()
 	. = ..()
@@ -159,7 +159,7 @@
 	var/efficiency = initial(creation_efficiency)
 	for(var/datum/stock_part/micro_laser/laser in component_parts)
 		efficiency -= laser.tier * 0.2
-	creation_efficiency = max(1.2, efficiency)
+	creation_efficiency = max(1.2, round(efficiency, 0.1))
 
 /obj/machinery/flatpacker/proc/AfterMaterialInsert(container, obj/item/item_inserted, last_inserted_id, mats_consumed, amount_inserted, atom/context)
 	SIGNAL_HANDLER
@@ -199,10 +199,11 @@
 		if(as_part.tier > print_tier)
 			print_tier = as_part.tier
 
+	var/datum/design/item_design = SSresearch.techweb_designs[LAZYACCESS(SSresearch.item_to_design[comp_type], 1)]
 	var/list/mat_list
 	var/obj/item/null_comp
-	if(!isnull(SSresearch.item_to_design[comp_type]))
-		mat_list = SSresearch.item_to_design[comp_type][1].materials
+	if(istype(item_design))
+		mat_list = item_design.materials
 	else
 		var/datum/stock_part/part = GLOB.stock_part_datums_per_object[comp_type]
 		if(part)
@@ -211,8 +212,8 @@
 			null_comp = new comp_type
 			mat_list = null_comp.custom_materials
 
-	for(var/atom/mat as anything in mat_list)
-		CREATE_AND_INCREMENT(costs, mat.type, mat_list[mat] * count)
+	for(var/datum/material/required_material, required_amount in mat_list)
+		CREATE_AND_INCREMENT(costs, required_material.type, required_amount * count)
 
 	if(null_comp)
 		qdel(null_comp)
@@ -230,16 +231,15 @@
 			return ITEM_INTERACT_BLOCKING
 
 		// If insertion was successful and there's already a diskette in the console, eject the old one.
-		if(inserted_board)
-			inserted_board.forceMove(drop_location())
+		inserted_board?.forceMove(drop_location())
 		inserted_board = attacking_item
 
 		//compute the needed mats from its stock parts
-		for(var/type in inserted_board.req_components)
+		for(var/required_component, required_amount in inserted_board.req_components)
 			//these don't count to the final cost as they have to inserted manually
-			if(type in inserted_board.flatpack_components)
+			if(required_component in inserted_board.flatpack_components)
 				continue
-			needed_mats = analyze_cost(type, needed_mats, inserted_board.req_components[type])
+			needed_mats = analyze_cost(required_component, needed_mats, required_amount)
 
 		// 5 sheets of iron and 5 of cable coil
 		CREATE_AND_INCREMENT(needed_mats, /datum/material/iron, (SHEET_MATERIAL_AMOUNT * 5 + (SHEET_MATERIAL_AMOUNT / 20)))
@@ -261,15 +261,15 @@
 
 	return ..()
 
+/obj/machinery/flatpacker/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]_o" : base_icon_state
+
 /obj/machinery/flatpacker/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_screwdriver(user, "[base_icon_state]_o", base_icon_state, tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/flatpacker/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_crowbar(tool))
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/flatpacker/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

@@ -73,7 +73,7 @@
 
 /datum/component/fearful/proc/add_handler(handler_type, source)
 	for (var/datum/terror_handler/existing as anything in terror_handlers)
-		if (existing.type == handler_type)
+		if (existing.type == handler_type && !existing.bespoke)
 			terror_handlers[existing] += source
 			return
 
@@ -83,6 +83,7 @@
 		if (!overriden_handlers[override_type])
 			overriden_handlers[override_type] = list()
 		overriden_handlers[override_type][handler_type] = TRUE
+	return handler
 
 /datum/component/fearful/proc/get_fear_multiplier()
 	var/multiplier = 1
@@ -127,7 +128,7 @@
 /datum/component/fearful/proc/on_examine(mob/living/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
 
-	if (source.stat >= UNCONSCIOUS)
+	if (IS_UNCONSCIOUS(source))
 		return
 
 	if(terror_buildup >= TERROR_BUILDUP_HEART_ATTACK)
@@ -147,13 +148,12 @@
 	if(hugger == parent)
 		return
 
-	if(isnightmare(hugger))
+	if(HAS_TRAIT(hugger, TRAIT_NIGHTMARISH))
 		var/lit_tiles = 0
 		var/unlit_tiles = 0
 
 		for(var/turf/open/turf_to_check in range(1, source))
-			var/light_amount = turf_to_check.get_lumcount()
-			if(light_amount > LIGHTING_TILE_IS_DARK)
+			if(turf_to_check.check_lumcount_above(LIGHTING_TILE_IS_DARK))
 				lit_tiles++
 			else
 				unlit_tiles++
@@ -168,11 +168,12 @@
 				)
 			return COMPONENT_BLOCK_MISC_HELP
 
-	for (var/datum/brain_trauma/mild/phobia/phobia in source.get_traumas())
-		if (!phobia.is_scary_mob(hugger))
-			continue
+	var/hug_buildup = 0
+	for (var/datum/terror_handler/handler as anything in terror_handlers)
+		hug_buildup += handler.on_hug(hugger)
 
-		terror_buildup += HUG_TERROR_AMOUNT
+	if (hug_buildup > 0)
+		terror_buildup += hug_buildup
 		source.visible_message(
 			span_warning("[source] recoils in fear as [hugger] attempts to hug [source.p_them()]!"),
 			span_boldwarning("You recoil in terror as [hugger] attempts to hug you!"),
@@ -180,12 +181,13 @@
 			)
 		return COMPONENT_BLOCK_MISC_HELP
 
+	if(terror_buildup >= TERROR_BUILDUP_TERROR)
+		source.visible_message(
+			span_notice("[source] seems to relax as [hugger] gives [source.p_them()] a comforting hug."),
+			span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."),
+			span_hear("You hear shuffling and a sigh of relief."),
+		)
 	terror_buildup -= HUG_TERROR_AMOUNT
-	source.visible_message(
-		span_notice("[source] seems to relax as [hugger] gives [source.p_them()] a comforting hug."),
-		span_nicegreen("You feel yourself calm down as [hugger] gives you a reassuring hug."),
-		span_hear("You hear shuffling and a sigh of relief."),
-	)
 
 /// Remove all terror buildup when we become fearless
 /datum/component/fearful/proc/fearless_added(datum/source)

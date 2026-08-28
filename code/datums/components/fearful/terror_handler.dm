@@ -11,6 +11,8 @@
 	var/default = FALSE
 	/// Other effects which should be disabled while this one is running
 	var/list/overrides
+	/// Is this handler bespoke, and always requires a new instance upon adding even when one is already present?
+	var/bespoke = FALSE
 
 /datum/terror_handler/New(mob/living/new_owner, datum/component/fearful/new_component)
 	. = ..()
@@ -24,4 +26,8 @@
 
 /// Single tick of terror handler, returns adjustment to terror buildup
 /datum/terror_handler/proc/tick(seconds_per_tick, terror_buildup)
+	return 0
+
+/// Additional effects when we're hugged by a mob, returns fear adjustment per hug. Should only be positive.
+/datum/terror_handler/proc/on_hug(mob/living/hugger)
 	return 0

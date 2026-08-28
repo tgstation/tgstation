@@ -1,4 +1,4 @@
-/mob/living/silicon/ai/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/silicon/ai/Life(seconds_per_tick = SSMOBS_DT)
 	if (stat == DEAD)
 		return
 	//Being dead doesn't mean your temperature never changes
@@ -65,12 +65,8 @@
 /mob/living/silicon/ai/update_stat()
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
-	if(stat != DEAD)
-		if(health <= HEALTH_THRESHOLD_DEAD)
-			death()
-			return
-		else if(stat >= UNCONSCIOUS)
-			set_stat(CONSCIOUS)
+	if(stat != DEAD && health <= HEALTH_THRESHOLD_DEAD)
+		death()
 	diag_hud_set_status()
 
 /mob/living/silicon/ai/update_sight()

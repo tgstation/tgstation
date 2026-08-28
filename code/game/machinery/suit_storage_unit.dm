@@ -407,7 +407,7 @@
 			else
 				if (occupant)
 					var/mob/living/mob_occupant = occupant
-					to_chat(mob_occupant, span_userdanger("[src]'s confines grow warm, then hot, then scorching. You're being burned [!mob_occupant.stat ? "alive" : "away"]!"))
+					to_chat(mob_occupant, span_userdanger("[src]'s confines grow warm, then hot, then scorching. You're being burned [mob_occupant.stat == DEAD ? "away" : "alive"]!"))
 				cook()
 		if ("lock", "unlock")
 			if(locked && !access_check(user))
@@ -424,7 +424,7 @@
 			else
 				var/obj/item/in_hands = user.get_active_held_item()
 				if (in_hands)
-					attackby(in_hands, user)
+					try_insert_item(user, in_hands)
 				update_icon()
 
 	interact(user)
@@ -496,7 +496,7 @@
 				mob_occupant.adjust_fire_loss(rand(20, 36))
 			else
 				mob_occupant.adjust_fire_loss(rand(10, 16))
-			if(iscarbon(mob_occupant) && mob_occupant.stat < UNCONSCIOUS)
+			if(iscarbon(mob_occupant) && !IS_UNCONSCIOUS(mob_occupant))
 				//Awake, organic and screaming
 				mob_occupant.emote("scream")
 		addtimer(CALLBACK(src, PROC_REF(cook)), 5 SECONDS)
@@ -507,9 +507,7 @@
 		if(uv_super)
 			visible_message(span_warning("[src]'s door creaks open with a loud whining noise. A cloud of foul black smoke escapes from its chamber."))
 			playsound(src, 'sound/machines/airlock/airlock_alien_prying.ogg', 50, TRUE)
-			var/datum/effect_system/fluid_spread/smoke/bad/black/smoke = new
-			smoke.set_up(0, holder = src, location = src)
-			smoke.start()
+			do_smoke(0, src, src, smoke_type = /datum/effect_system/fluid_spread/smoke/bad/black)
 			QDEL_NULL(helmet)
 			QDEL_NULL(suit)
 			QDEL_NULL(mask)
@@ -567,14 +565,6 @@
 	for(var/obj/item/stock_parts/power_store/cell as anything in cells_to_charge)
 		charge_cell(charge_per_item, cell, grid_only = TRUE)
 
-/obj/machinery/suit_storage_unit/proc/shock(mob/user, prb)
-	if(!prob(prb))
-		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		s.set_up(5, 1, src)
-		s.start()
-		if(electrocute_mob(user, src, src, 1, TRUE))
-			return 1
-
 /obj/machinery/suit_storage_unit/relaymove(mob/living/user, direction)
 	if(locked)
 		if(message_cooldown <= world.time)
@@ -595,7 +585,7 @@
 		span_notice("You start kicking against the doors... (this will take about [DisplayTimeText(breakout_time)].)"), \
 		span_hear("You hear a thump from [src]."))
 	if(do_after(user,(breakout_time), target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src )
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src )
 			return
 		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
 			span_notice("You successfully break out of [src]!"))
@@ -612,7 +602,7 @@
 		dump_inventory_contents()
 
 /obj/machinery/suit_storage_unit/proc/resist_open(mob/user)
-	if(!state_open && occupant && (user in src) && user.stat == CONSCIOUS) // Check they're still here.
+	if(!state_open && occupant && (user in src) && !IS_UNCONSCIOUS_OR_CRIT(user)) // Check they're still here.
 		visible_message(span_notice("You see [user] burst out of [src]!"), \
 			span_notice("You escape the cramped confines of [src]!"))
 		open_machine()
@@ -698,59 +688,16 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(state_open && is_operational)
-		if(istype(tool, /obj/item/clothing/suit))
-			if(suit)
-				to_chat(user, span_warning("The unit already contains a suit!"))
-				return ITEM_INTERACT_BLOCKING
-			if(!user.transferItemToLoc(tool, src))
-				return ITEM_INTERACT_BLOCKING
-			suit = tool
-		else if(istype(tool, /obj/item/clothing/head))
-			if(helmet)
-				to_chat(user, span_warning("The unit already contains a helmet!"))
-				return ITEM_INTERACT_BLOCKING
-			if(!user.transferItemToLoc(tool, src))
-				return ITEM_INTERACT_BLOCKING
-			helmet = tool
-		else if(istype(tool, /obj/item/clothing/mask))
-			if(mask)
-				to_chat(user, span_warning("The unit already contains a mask!"))
-				return ITEM_INTERACT_BLOCKING
-			if(!user.transferItemToLoc(tool, src))
-				return ITEM_INTERACT_BLOCKING
-			mask = tool
-		else if(istype(tool, /obj/item/storage/backpack) || istype(tool, /obj/item/mod/control))
-			if(mod)
-				to_chat(user, span_warning("The unit already contains a backpack or MOD!"))
-				return ITEM_INTERACT_BLOCKING
-			if(!user.transferItemToLoc(tool, src))
-				return ITEM_INTERACT_BLOCKING
-			mod = tool
-		else
-			if(storage)
-				to_chat(user, span_warning("The auxiliary storage compartment is full!"))
-				return ITEM_INTERACT_BLOCKING
-			if(!user.transferItemToLoc(tool, src))
-				return ITEM_INTERACT_BLOCKING
-			storage = tool
-		visible_message(span_notice("[user] inserts [tool] into [src]"), span_notice("You load [tool] into [src]."))
-		update_appearance()
-		return ITEM_INTERACT_SUCCESS
+		return try_insert_item(user, tool)
 
 	if(panel_open)
 		if(is_wire_tool(tool))
 			wires.interact(user)
 			return ITEM_INTERACT_SUCCESS
 		else if(tool.tool_behaviour == TOOL_CROWBAR)
-			default_deconstruction_crowbar(tool)
-			return ITEM_INTERACT_SUCCESS
+			return default_deconstruction_crowbar(user, tool)
 
-	if(!state_open)
-		if(default_deconstruction_screwdriver(user, "[base_icon_state]", "[base_icon_state]", tool))	//Set to base_icon_state because the panels for this are overlays
-			update_appearance()
-			return ITEM_INTERACT_SUCCESS
-
-	if(default_pry_open(tool))
+	if(default_pry_open(user, tool) & ITEM_INTERACT_SUCCESS)
 		dump_inventory_contents()
 		return ITEM_INTERACT_SUCCESS
 
@@ -758,24 +705,20 @@
 	screwdriving it open while it's running a decontamination sequence without closing the panel prior to finish
 	causes the SSU to break due to state_open being set to TRUE at the end, and the panel becoming inaccessible.
 */
-/obj/machinery/suit_storage_unit/default_deconstruction_screwdriver(mob/user, icon_state_open, icon_state_closed, obj/item/screwdriver)
-	if(screwdriver.tool_behaviour == TOOL_SCREWDRIVER && (uv || locked))
+/obj/machinery/suit_storage_unit/screwdriver_act(mob/living/user, obj/item/tool)
+	if(state_open)
+		return NONE
+	if(uv || locked)
 		to_chat(user, span_warning("You can't open the panel while its [locked ? "locked" : "decontaminating"]"))
-		return TRUE
-	return ..()
+		return ITEM_INTERACT_BLOCKING
 
+	return default_deconstruction_screwdriver(user, tool)
 
-/obj/machinery/suit_storage_unit/default_pry_open(obj/item/crowbar)//needs to check if the storage is locked.
-	. = !(state_open || panel_open || is_operational || locked) && crowbar.tool_behaviour == TOOL_CROWBAR
-	if(.)
-		crowbar.play_tool_sound(src, 50)
-		visible_message(span_notice("[usr] pries open \the [src]."), span_notice("You pry open \the [src]."))
-		open_machine()
+/obj/machinery/suit_storage_unit/can_crowbar_pry_open()
+	return ..() && !locked
 
-/obj/machinery/suit_storage_unit/default_deconstruction_crowbar(obj/item/crowbar, ignore_panel, custom_deconstruct)
-	. = (!locked && panel_open && crowbar.tool_behaviour == TOOL_CROWBAR)
-	if(.)
-		return ..()
+/obj/machinery/suit_storage_unit/can_crowbar_deconstruct()
+	return ..() && !locked
 
 /obj/machinery/suit_storage_unit/rename_checks(mob/living/user)
 	. = TRUE
@@ -792,3 +735,53 @@
 		return
 
 	mod.disable_modlink()
+
+/obj/machinery/suit_storage_unit/proc/try_insert_item(mob/living/user, obj/item/to_insert)
+	if(istype(to_insert, /obj/item/clothing/suit))
+		if(suit)
+			to_chat(user, span_warning("The unit already contains a suit!"))
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(to_insert, src))
+			return ITEM_INTERACT_BLOCKING
+
+		suit = to_insert
+	else if(istype(to_insert, /obj/item/clothing/head))
+		if(helmet)
+			to_chat(user, span_warning("The unit already contains a helmet!"))
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(to_insert, src))
+			return ITEM_INTERACT_BLOCKING
+
+		helmet = to_insert
+	else if(istype(to_insert, /obj/item/clothing/mask))
+		if(mask)
+			to_chat(user, span_warning("The unit already contains a mask!"))
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(to_insert, src))
+			return ITEM_INTERACT_BLOCKING
+
+		mask = to_insert
+	else if(istype(to_insert, /obj/item/storage/backpack) || istype(to_insert, /obj/item/mod/control))
+		if(mod)
+			to_chat(user, span_warning("The unit already contains a backpack or MOD!"))
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(to_insert, src))
+			return ITEM_INTERACT_BLOCKING
+
+		mod = to_insert
+	else
+		if(storage)
+			to_chat(user, span_warning("The auxiliary storage compartment is full!"))
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(to_insert, src))
+			return ITEM_INTERACT_BLOCKING
+
+		storage = to_insert
+	visible_message(span_notice("[user] inserts [to_insert] into [src]"), span_notice("You load [to_insert] into [src]."))
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS

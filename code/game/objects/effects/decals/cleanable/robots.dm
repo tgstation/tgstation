@@ -8,7 +8,7 @@
 	color = null
 
 /obj/effect/decal/cleanable/blood/gibs/robot_debris/get_default_blood_type()
-	return get_blood_type(BLOOD_TYPE_OIL)
+	return get_blood_type(/datum/blood_type/oil)
 
 /obj/effect/decal/cleanable/blood/gibs/robot_debris/create_splatter()
 	if(prob(40))
@@ -20,9 +20,7 @@
 	if (prob(40))
 		new /obj/effect/decal/cleanable/blood/splatter(loc, null, GET_ATOM_BLOOD_DNA(src))
 	else if (prob(10))
-		var/datum/effect_system/spark_spread/s = new /datum/effect_system/spark_spread
-		s.set_up(3, 1, src)
-		s.start()
+		do_sparks(3, TRUE, src)
 
 // Doesn't have overlay support as of now
 /obj/effect/decal/cleanable/blood/gibs/robot_debris/update_blood_color()
@@ -47,7 +45,7 @@
 	color = /datum/blood_type/oil::color // For mapper sanity
 
 /obj/effect/decal/cleanable/blood/oil/get_default_blood_type()
-	return get_blood_type(BLOOD_TYPE_OIL)
+	return get_blood_type(/datum/blood_type/oil)
 
 /obj/effect/decal/cleanable/blood/oil/slippery/Initialize(mapload, list/datum/disease/diseases, list/blood_or_dna)
 	. = ..()
@@ -58,4 +56,4 @@
 	color = /datum/blood_type/oil::color
 
 /obj/effect/decal/cleanable/blood/splatter/oil/get_default_blood_type()
-	return get_blood_type(BLOOD_TYPE_OIL)
+	return get_blood_type(/datum/blood_type/oil)

@@ -6,6 +6,7 @@
 	desc = "We sacrifice our current body in a moment of need, violently expanding to break through obstacles and reforming as a headslug. Costs 20 chemicals."
 	helptext = "We will violently expand, destroying obstacles around us, then be placed in control of a small, fragile creature. We may attack a corpse like this to plant an egg which will slowly mature into a new form for us."
 	button_icon_state = "last_resort"
+	category = "utility"
 	chemical_cost = 20
 	dna_cost = 1
 	req_stat = DEAD
@@ -67,6 +68,7 @@
 			continue
 		blinded.visible_message(span_danger("[blinded] is splattered with blood!"), span_userdanger("You're splattered with blood!"))
 		blinded.add_blood_DNA(user_DNA)
+		blinded.add_mood_event("splattered_with_blood", /datum/mood_event/splattered_with_blood)
 		playsound(blinded, 'sound/effects/splat.ogg', 50, TRUE, extrarange = SILENCED_SOUND_EXTRARANGE)
 
 		if(ishuman(blinded))

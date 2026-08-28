@@ -1,6 +1,8 @@
 import { storage } from 'common/storage';
 import { smoothMerge } from 'common/type-safety';
 import { omit, pick } from 'es-toolkit';
+import { wsUpdate } from 'tgui-panel/websocket/helpers';
+import { setMusicVolume } from '../audio/handlers';
 import { chatRenderer } from '../chat/renderer';
 import { store } from '../events/store';
 import {
@@ -58,6 +60,32 @@ function migrateHighlights(next: HighlightState): HighlightState {
       draft.highlightText ?? defaultHighlightSetting.highlightText;
   }
 
+  // Backfill vars added after highlights were first stored.
+  for (const id in draft.highlightSettingById) {
+    const setting = draft.highlightSettingById[id];
+    if (!setting) {
+      continue;
+    }
+    if (setting.enabled === undefined) {
+      setting.enabled = true;
+    }
+    if (setting.playSound === undefined) {
+      setting.playSound = false;
+    }
+    if (!setting.soundFile) {
+      setting.soundFile = defaultHighlightSetting.soundFile;
+    }
+    if (setting.soundVolume === undefined) {
+      setting.soundVolume = defaultHighlightSetting.soundVolume;
+    }
+    if (setting.jobFilter === undefined) {
+      setting.jobFilter = '';
+    }
+    if (!Array.isArray(setting.characterFilter)) {
+      setting.characterFilter = [];
+    }
+  }
+
   return draft;
 }
 
@@ -72,13 +100,13 @@ const highlightKeys: (keyof typeof defaultHighlights)[] = [
 export function startSettingsMigration(next: MergedSettings): void {
   // No stored settings found, initialize with defaults
   if (!next) {
-    console.log('Initializing panel settings with defaults.');
     const initialized: SettingsState = {
       ...defaultSettings,
       initialized: true,
     };
     storage.set('panel-settings', initialized);
     store.set(settingsAtom, initialized);
+    console.log('Initialized settings with defaults.');
     return;
   }
 
@@ -95,8 +123,14 @@ export function startSettingsMigration(next: MergedSettings): void {
   draftSettings.view = defaultSettings.view; // Preserve view state
 
   generalSettingsHandler(draftSettings);
+  setMusicVolume(draftSettings.adminMusicVolume);
   store.set(settingsAtom, draftSettings);
   console.log('Migrated panel settings:', draftSettings);
+
+  if (draftSettings.websocketEnabled !== defaultSettings.websocketEnabled) {
+    // Ensure websocket state is correct after migration
+    wsUpdate(draftSettings.websocketEnabled);
+  }
 
   const migratedHighlights = migrateHighlights(highlightPart);
 

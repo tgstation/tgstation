@@ -7,7 +7,6 @@
 	inhand_icon_state = "reverse_bear_trap"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	clothing_flags = INEDIBLE_CLOTHING
 	armor_type = /datum/armor/collar_bomb
 	equip_delay_self = 6 SECONDS
 	equip_delay_other = 8 SECONDS
@@ -32,17 +31,21 @@
 	button = null
 	return ..()
 
+/obj/item/clothing/neck/collar_bomb/create_moth_snack()
+	return null
+
 /obj/item/clothing/neck/collar_bomb/examine(mob/user)
 	. = ..()
 	if(user.get_item_by_slot(ITEM_SLOT_NECK) == src)
 		return
 	. += span_tinynotice("It has a [EXAMINE_HINT("wire")] panel that could be interacted with...")
 
-/obj/item/clothing/neck/collar_bomb/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
-	if(is_wire_tool(item))
-		wires.interact(user)
-	else
+/obj/item/clothing/neck/collar_bomb/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!is_wire_tool(tool))
 		return ..()
+
+	wires.interact(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/neck/collar_bomb/equipped(mob/user, slot, initial = FALSE)
 	. = ..()

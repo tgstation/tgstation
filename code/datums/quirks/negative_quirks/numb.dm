@@ -6,7 +6,9 @@
 	gain_text = "You feel your body becoming numb."
 	lose_text = "The numbness subsides."
 	medical_record_text = "The patient exhibits congenital hypoesthesia, making them insensitive to pain stimuli."
+	medical_symptom_text = "Exhibits an inability to perceive pain, which may lead to unintentional self-injury and delayed response to harmful stimuli."
 	hardcore_value = 4
+	quirk_flags = QUIRK_TRAUMALIKE
 
 /datum/quirk/numb/add(client/client_source)
 	quirk_holder.apply_status_effect(/datum/status_effect/grouped/screwy_hud/fake_healthy, type)

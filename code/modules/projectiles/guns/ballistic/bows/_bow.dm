@@ -23,6 +23,7 @@
 	click_on_low_ammo = FALSE
 	must_hold_to_load = TRUE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
+	about_to_shoot_inside_mail_text = "Its bowstring is pulled back!"
 	/// whether the bow is drawn back
 	var/drawn = FALSE
 

@@ -8,6 +8,7 @@
 	purity_min = 0.1
 	rate_up_lim = 35
 	reaction_tags = REACTION_TAG_HEALING | REACTION_TAG_EASY
+	thermic_constant = 50
 
 /datum/chemical_reaction/medicine/leporazine
 	results = list(/datum/reagent/medicine/leporazine = 2)
@@ -159,7 +160,7 @@
 
 /datum/chemical_reaction/medicine/albuterol_creation
 	results = list(/datum/reagent/medicine/albuterol = 15)
-	required_reagents = list(/datum/reagent/lithium = 3, /datum/reagent/aluminium = 3, /datum/reagent/bromine = 3, /datum/reagent/inverse/healing/convermol = 1)
+	required_reagents = list(/datum/reagent/lithium = 3, /datum/reagent/aluminium = 3, /datum/reagent/bromine = 3, /datum/reagent/medicine/c2/convermol = 1)
 	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_ORGAN | REACTION_TAG_OTHER
 	required_temp = 400
 	optimal_temp = 600
@@ -187,8 +188,8 @@
 	overheat_temp = 800
 	mix_message = "The solution breaks apart, turning a deeper blue."
 
-/datum/chemical_reaction/medicine/albuterol_to_inverse_convermol
-	results = list(/datum/reagent/inverse/healing/convermol = 1, /datum/reagent/lithium = 3, /datum/reagent/aluminium = 3, /datum/reagent/bromine = 3)
+/datum/chemical_reaction/medicine/albuterol_to_convermol
+	results = list(/datum/reagent/medicine/c2/convermol = 1, /datum/reagent/lithium = 3, /datum/reagent/aluminium = 3, /datum/reagent/bromine = 3)
 	required_catalysts = list(/datum/reagent/toxin/acid/fluacid = 1)
 	required_reagents = list(/datum/reagent/medicine/albuterol = 5)
 	reaction_tags = REACTION_TAG_MODERATE | REACTION_TAG_ORGAN | REACTION_TAG_OTHER | REACTION_TAG_ACTIVE
@@ -198,7 +199,7 @@
 	thermic_constant = 25
 	mix_message = "The solution rapidly breaks apart, turning a mix of colors."
 
-/datum/chemical_reaction/medicine/albuterol_to_inverse_convermol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, impure = FALSE)
+/datum/chemical_reaction/medicine/albuterol_to_convermol/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, step_volume_added, impure = FALSE)
 	var/bonus = impure ? 2 : 1
 	explode_smoke(holder, equilibrium, 7.5 * bonus, TRUE, TRUE)
 
@@ -222,10 +223,10 @@
 	purity_min = 0.32
 
 /datum/chemical_reaction/medicine/ephedrine/overheated(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
-	default_explode(holder, equilibrium.reacted_vol, 0, 25)
+	reagent_explode(holder, equilibrium.reacted_vol, 0, 25)
 
 /datum/chemical_reaction/medicine/ephedrine/overly_impure(datum/reagents/holder, datum/equilibrium/equilibrium, vol_added)
-	default_explode(holder, equilibrium.reacted_vol, 0, 20)
+	reagent_explode(holder, equilibrium.reacted_vol, 0, 20)
 
 /datum/chemical_reaction/medicine/diphenhydramine
 	results = list(/datum/reagent/medicine/diphenhydramine = 4)

@@ -14,14 +14,12 @@
 #define REMAIN_DENSE_WHILE_DEAD (1<<2)
 /// Mob can be set on fire
 #define FLAMMABLE_MOB (1<<3)
-/// Mob never takes damage from unarmed attacks
-#define IMMUNE_TO_FISTS (1<<4)
 /// Mob is immune to getting wet
-#define IMMUNE_TO_GETTING_WET (1<<5)
+#define IMMUNE_TO_GETTING_WET (1<<4)
 /// Disables the function of attacking random body zones
-#define PRECISE_ATTACK_ZONES (1<<6)
+#define PRECISE_ATTACK_ZONES (1<<5)
 /// People would be sad to see this mob die
-#define SENDS_DEATH_MOODLETS (1<<7)
+#define SENDS_DEATH_MOODLETS (1<<6)
 
 /// Temporary trait applied when an attack forecast animation has completed
 #define TRAIT_BASIC_ATTACK_FORECAST "trait_basic_attack_forecast"
@@ -60,19 +58,19 @@ GLOBAL_LIST_EMPTY(customized_pets)
 /// How much does meal complexity affect our growth?
 #define RAPTOR_MEAL_COMPLEXITY_GROWTH_FACTOR 5
 /// Base value for raptor growth from meat
-#define RAPTOR_GROWTH_BASE_MEAT 10
+#define RAPTOR_GROWTH_BASE_MEAT 15
 /// Base value for raptor growth from ash flora
-#define RAPTOR_GROWTH_BASE_PLANT 5
+#define RAPTOR_GROWTH_BASE_PLANT 8
 /// How much growth progress raptors need to accumulate to fully grow into an adult
 #define RAPTOR_GROWTH_REQUIRED 100
 /// Minimum random growth value a baby raptor can gain per second
-#define RAPTOR_BABY_GROWTH_LOWER 0.5
+#define RAPTOR_BABY_GROWTH_LOWER 0.8
 /// Maximum random growth value a baby raptor can gain per second
-#define RAPTOR_BABY_GROWTH_UPPER 0.8
+#define RAPTOR_BABY_GROWTH_UPPER 1.2
 /// How long it takes for a raptor egg to grow up, in seconds
 #define RAPTOR_EGG_GROWTH_PROGRESS 100
 /// How much happiness percentage affects our growth speed
-#define RAPTOR_GROWTH_HAPPINESS_MULTIPLIER 0.005 // Full happiness increases growth rate by 50%
+#define RAPTOR_GROWTH_HAPPINESS_MULTIPLIER 0.0075 // Full happiness increases growth rate by 75%
 
 /// Damage boost per happiness percent
 #define RAPTOR_HAPPINESS_DAMAGE_BOOST 0.05
@@ -119,3 +117,17 @@ GLOBAL_LIST_EMPTY(customized_pets)
 #define BB_RAPTOR_FLEE_THRESHOLD "raptor_flee_threshold"
 
 #define MAX_RAPTOR_POP 64
+
+
+///Return value for [/mob/living/basic/proc/early_melee_attack]. Using this value will make the attack continue as normal.
+#define BASIC_MOB_CONTINUE_ATTACK_CHAIN 0
+///Return value for [/mob/living/basic/proc/early_melee_attack]. Using this value will make the attack end, but not set a cooldown. This is the default.
+#define BASIC_MOB_END_ATTACK_CHAIN 1
+///Return value for [/mob/living/basic/proc/early_melee_attack]. Using this value will make the attack end, and sets a cooldown. Useful if you add behavior to early_melee_attack
+#define BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN 2
+
+///Delay between trying to update target selection
+#define BASIC_MOB_FIND_TARGET_RATE 1 SECONDS
+
+///Time between idle behavior execution
+#define IDLE_BEHAVIOR_RATE 1.5 SECONDS

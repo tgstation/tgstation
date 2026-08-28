@@ -31,7 +31,7 @@
 	gradient = list("#FBAF4D", "#FCE6B6", "#FD481C")
 	position = generator(GEN_BOX, list(-12,-16,0), list(12,16,0), NORMAL_RAND)
 	drift = generator(GEN_VECTOR, list(-0.1,0), list(0.1,0.025), UNIFORM_RAND)
-	spin = generator(GEN_NUM, list(-15,15), NORMAL_RAND)
+	spin = generator(GEN_NUM, -15, 15, NORMAL_RAND)
 	scale = generator(GEN_VECTOR, list(0.5,0.5), list(2,2), NORMAL_RAND)
 
 /particles/embers/minor

@@ -1,32 +1,20 @@
 /// The datum and interface for the malf unlock menu, which lets them choose actions to unlock.
 /datum/module_picker
 	var/name = "Malfunction Modules Menu"
-	var/selected_cat
-	var/compact_mode = FALSE
 	var/processing_time = 50
 	var/list/possible_modules
 
 /datum/module_picker/New()
 	possible_modules = get_malf_modules()
 
-/proc/cmp_malfmodules_priority(datum/ai_module/A, datum/ai_module/B)
-	return B.cost - A.cost
-
 /proc/get_malf_modules()
-	var/list/filtered_modules = list()
-
+	var/list/modules = list()
 	for(var/path in GLOB.malf_modules)
 		var/datum/ai_module/AM = new path
 		if((AM.power_type == /datum/action/innate/ai) && !AM.upgrade)
 			continue
-		if(!filtered_modules[AM.category])
-			filtered_modules[AM.category] = list()
-		filtered_modules[AM.category][AM] = AM
-
-	for(var/category in filtered_modules)
-		sortTim(filtered_modules[category], GLOBAL_PROC_REF(cmp_malfmodules_priority))
-
-	return filtered_modules
+		modules += AM
+	return modules
 
 /datum/module_picker/ui_state(mob/user)
 	return GLOB.always_state
@@ -40,7 +28,6 @@
 /datum/module_picker/ui_data(mob/user)
 	var/list/data = list()
 	data["processingTime"] = processing_time
-	data["compactMode"] = compact_mode
 	if(isAI(user))
 		var/mob/living/silicon/ai/ai_user = user
 		data["hackedAPCs"] = ai_user.hacked_apcs.len
@@ -48,21 +35,28 @@
 
 /datum/module_picker/ui_static_data(mob/user)
 	var/list/data = list()
-
 	data["categories"] = list()
-	for(var/category in possible_modules)
-		var/list/cat = list(
-			"name" = category,
-			"items" = (category == selected_cat ? list() : null))
-		for(var/module in possible_modules[category])
-			var/datum/ai_module/AM = possible_modules[category][module]
-			cat["items"] += list(list(
-				"name" = AM.name,
-				"cost" = AM.cost,
-				"desc" = AM.description,
-				"minimum_apcs" = AM.minimum_apcs,
-			))
-		data["categories"] += list(cat)
+	data["modules"] = list()
+
+	for(var/datum/ai_module/module as anything in possible_modules)
+		var/icon_state = module.icon_state
+		var/icon = module.icon
+		if (!module.icon_state && !module.upgrade && module.power_type)
+			var/datum/action/innate/ai/active_ability = module.power_type
+			icon = active_ability.button_icon
+			icon_state = active_ability.button_icon_state
+
+		data["modules"] += list(list(
+			"name" = module.name,
+			"icon" = icon,
+			"icon_state" = icon_state,
+			"cost" = module.cost,
+			"desc" = module.description,
+			"category" = module.category,
+			"minimumApcs" = module.minimum_apcs,
+		))
+		if (!(module.category in data["categories"]))
+			data["categories"] += module.category
 
 	return data
 
@@ -75,20 +69,10 @@
 	switch(action)
 		if("buy")
 			var/item_name = params["name"]
-			var/list/buyable_items = list()
-			for(var/category in possible_modules)
-				buyable_items += possible_modules[category]
-			for(var/key in buyable_items)
-				var/datum/ai_module/AM = buyable_items[key]
-				if(AM.name == item_name)
-					purchase_module(usr, AM)
+			for(var/datum/ai_module/module as anything in possible_modules)
+				if(module.name == item_name)
+					purchase_module(usr, module)
 					return TRUE
-		if("select")
-			selected_cat = params["category"]
-			return TRUE
-		if("compact_toggle")
-			compact_mode = !compact_mode
-			return TRUE
 
 /datum/module_picker/proc/purchase_module(mob/living/silicon/ai/AI, datum/ai_module/AM)
 	if(!istype(AM))
@@ -99,11 +83,10 @@
 		return
 	if(AM.minimum_apcs > AI.hacked_apcs.len)
 		return
-	var/datum/action/innate/ai/action = locate(AM.power_type) in AI.actions
 	// Give the power and take away the money.
 	if(AM.upgrade) //upgrade and upgrade() are separate, be careful!
 		AM.upgrade(AI)
-		possible_modules[AM.category] -= AM
+		possible_modules -= AM
 		if(AM.unlock_text)
 			to_chat(AI, AM.unlock_text)
 		if(AM.unlock_sound)
@@ -111,12 +94,13 @@
 		update_static_data(AI)
 	else
 		if(AM.power_type)
+			var/datum/action/innate/ai/action = locate(AM.power_type) in AI.actions
 			if(!action) //Unlocking for the first time
 				var/datum/action/AC = new AM.power_type
 				AC.Grant(AI)
 				AI.current_modules += new AM.type
 				if(AM.one_purchase)
-					possible_modules[AM.category] -= AM
+					possible_modules -= AM
 					update_static_data(AI)
 				if(AM.unlock_text)
 					to_chat(AI, AM.unlock_text)

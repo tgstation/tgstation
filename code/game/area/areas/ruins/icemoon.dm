@@ -27,6 +27,10 @@
 	name = "\improper Listening Post"
 	sound_environment = SOUND_ENVIRONMENT_CITY
 
+/area/ruin/comms_agent/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/block_area_power_fail)
+
 /area/ruin/comms_agent/maint
 	name = "\improper Listening Post Maintenance"
 	sound_environment = SOUND_AREA_TUNNEL_ENCLOSED

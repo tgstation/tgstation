@@ -10,6 +10,7 @@
 	base_icon_state = "pandemic"
 	resistance_flags = ACID_PROOF
 	circuit = /obj/item/circuitboard/computer/pandemic
+	generate_map_preview = FALSE
 
 	/// Whether the pandemic is ready to make another culture/vaccine
 	var/wait = FALSE
@@ -80,33 +81,33 @@
 		update_appearance()
 		SStgui.update_uis(src)
 
-/obj/machinery/computer/pandemic/attackby(obj/item/held_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/computer/pandemic/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	//Advanced science! Precision instruments (eg droppers and syringes) are precise enough to modify the loaded sample!
-	if(istype(held_item, /obj/item/reagent_containers/dropper) || istype(held_item, /obj/item/reagent_containers/syringe))
+	if(istype(tool, /obj/item/reagent_containers/dropper) || istype(tool, /obj/item/reagent_containers/syringe))
 		if(!beaker)
 			balloon_alert(user, "no beaker!")
-			return ..()
-		if(istype(held_item, /obj/item/reagent_containers/syringe) && LAZYACCESS(modifiers, RIGHT_CLICK))
-			held_item.interact_with_atom_secondary(beaker, user)
+			return ITEM_INTERACT_BLOCKING
+		if(istype(tool, /obj/item/reagent_containers/syringe) && LAZYACCESS(modifiers, RIGHT_CLICK))
+			tool.interact_with_atom_secondary(beaker, user)
 		else
-			held_item.interact_with_atom(beaker, user)
+			tool.interact_with_atom(beaker, user)
 		SStgui.update_uis(src)
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	if(!is_reagent_container(held_item) || held_item.item_flags & ABSTRACT || !held_item.is_open_container())
-		return ..()
-	. = TRUE //no afterattack
+	if(!is_reagent_container(tool) || tool.item_flags & ABSTRACT || !tool.is_open_container())
+		return NONE
 	if(machine_stat & (NOPOWER|BROKEN))
-		return ..()
+		return ITEM_INTERACT_BLOCKING
 	if(beaker)
 		balloon_alert(user, "beaker swapped")
 		try_put_in_hand(beaker, usr)
 	else
 		balloon_alert(user, "beaker loaded")
-	user.transferItemToLoc(held_item, src)
-	beaker = held_item
+	user.transferItemToLoc(tool, src)
+	beaker = tool
 	update_appearance()
 	SStgui.update_uis(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/pandemic/on_deconstruction(disassembled)
 	eject_beaker()
@@ -147,8 +148,8 @@
 		return data
 	data["has_blood"] = TRUE
 	data["blood"] = list()
-	data["blood"]["dna"] = blood.data["blood_DNA"] || "none"
-	data["blood"]["type"] = blood.data["blood_type"] || "none"
+	data["blood"]["dna"] = blood.data[BLOOD_DATA_DNA] || "none"
+	data["blood"]["type"] = blood.data[BLOOD_DATA_TYPE] || "none"
 	data["viruses"] = get_viruses_data(blood)
 	data["resistances"] = get_resistance_data(blood)
 	return data
@@ -185,38 +186,6 @@
 			return TRUE
 	return FALSE
 
-
-/**
- * Supporting proc to get the cures of a replicable virus. This may differ from the archived cures for that disease id.
- *
- * @param {number} disease_id - The id of the disease being replicated.
- *
- * @returns {list} - List of two elements - the cures list for the disease and the cure_text associated with it. Will be empty if anything fails.
- *
- */
-/obj/machinery/computer/pandemic/proc/get_beaker_cures(disease_id)
-	var/list/cures = list()
-	if(!beaker)
-		return cures
-
-	var/datum/reagent/blood = get_blood_reagent()
-	if(!blood)
-		return cures
-
-	var/list/viruses = blood.data["viruses"]
-	if(!length(viruses))
-		return cures
-
-	// Only check for cure if there is a beaker AND the beaker contains blood AND the blood contains a virus.
-	for(var/datum/disease/advance/disease in viruses)
-		if(disease.GetDiseaseID() == disease_id)	// Double check the ids match.
-			cures.Add(disease.cures)
-			cures.Add(disease.cure_text)
-			break
-
-	return cures
-
-
 /**
  * Creates a culture bottle (ie: replicates) of the the specified disease.
  *
@@ -228,16 +197,11 @@
 	var/id = get_virus_id_by_index(text2num(index))
 	var/datum/disease/advance/adv_disease = SSdisease.archive_diseases[id]
 
-
 	if(!istype(adv_disease) || !adv_disease.mutable)
 		to_chat(usr, span_warning("ERROR: Cannot replicate virus strain."))
 		return FALSE
 	use_energy(active_power_usage)
 	adv_disease = adv_disease.Copy()
-	var/list/cures = get_beaker_cures(id)
-	if(cures.len)
-		adv_disease.cures = cures[1]
-		adv_disease.cure_text = cures[2]	// Same as generate_cure() in advance.dm
 	var/list/data = list("viruses" = list(adv_disease))
 
 	var/obj/item/reagent_containers/cup/tube/bottle = new(drop_location())
@@ -254,7 +218,7 @@
 /// Tries to locate a reagent with valid blood_type data
 /obj/machinery/computer/pandemic/proc/get_blood_reagent()
 	for (var/datum/reagent/reagent as anything in beaker?.reagents?.reagent_list)
-		if (reagent.data?["blood_type"])
+		if (reagent.data?[BLOOD_DATA_TYPE])
 			return reagent
 
 /**

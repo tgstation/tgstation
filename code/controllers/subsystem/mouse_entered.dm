@@ -2,7 +2,7 @@
 SUBSYSTEM_DEF(mouse_entered)
 	name = "MouseEntered"
 	wait = 1
-	flags = SS_NO_INIT | SS_TICKER
+	ss_flags = SS_NO_INIT | SS_TICKER
 	priority = FIRE_PRIORITY_MOUSE_ENTERED
 	runlevels = RUNLEVELS_DEFAULT | RUNLEVEL_LOBBY
 

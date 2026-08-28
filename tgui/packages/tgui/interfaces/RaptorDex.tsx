@@ -16,6 +16,8 @@ type Data = {
   raptor_health: number;
   raptor_max_health: number;
   raptor_speed: number;
+  can_grow: boolean;
+  raptor_growth: number;
   raptor_color: string;
   raptor_image: string;
   raptor_gender: string;
@@ -54,6 +56,8 @@ export const RaptorDexContent = (props) => {
     raptor_speed,
     raptor_image,
     raptor_gender,
+    can_grow,
+    raptor_growth,
     inherited_attack,
     inherited_attack_max,
     inherited_health,
@@ -107,6 +111,11 @@ export const RaptorDexContent = (props) => {
             <LabeledList.Item label="Gender">
               {capitalizeFirst(raptor_gender)}
             </LabeledList.Item>
+            {!!can_grow && (
+              <LabeledList.Item label="Growth">
+                <ProgressBar value={raptor_growth} maxValue={100} />
+              </LabeledList.Item>
+            )}
           </LabeledList>
         </Section>
         <Section title="Inherit Modifiers">

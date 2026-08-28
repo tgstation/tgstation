@@ -2,7 +2,7 @@
 
 SUBSYSTEM_DEF(bitrunning)
 	name = "Bitrunning"
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 
 	var/list/all_domains = list()
 
@@ -21,8 +21,10 @@ SUBSYSTEM_DEF(bitrunning)
 	for(var/datum/lazy_template/virtual_domain/domain as anything in all_domains)
 		if(domain.domain_flags & DOMAIN_TEST_ONLY)
 			continue
-		var/can_view = domain.difficulty < scanner_tier && domain.cost <= points + 5
-		var/can_view_reward = domain.difficulty < (scanner_tier + 1) && domain.cost <= points + 3
+		var/can_view = domain.can_view_name(scanner_tier, points)
+		var/can_view_reward = domain.can_view_reward(scanner_tier, points)
+
+		var/grade_symbol = GLOB.bitrunning_grades[domain.best_grade]
 
 		UNTYPED_LIST_ADD(levels, list(
 			"announce_ghosts" = domain.announce_to_ghosts,
@@ -34,6 +36,7 @@ SUBSYSTEM_DEF(bitrunning)
 			"has_secondary_objectives" = counterlist_sum(domain.secondary_loot) ? TRUE : FALSE,
 			"name" = can_view ? domain.name : REDACTED,
 			"reward" = can_view_reward ? domain.reward_points : REDACTED,
+			"grade_symbol" = grade_symbol,
 		))
 
 	return levels

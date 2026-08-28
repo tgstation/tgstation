@@ -11,13 +11,12 @@
 /obj/machinery/computer/message_monitor
 	name = "message monitor console"
 	desc = "Used to monitor the crew's PDA messages, as well as request console messages."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/telecomms/server")
 	icon_screen = "comm_logs"
 	circuit = /obj/item/circuitboard/computer/message_monitor
 	light_color = LIGHT_COLOR_GREEN
 	/// Server linked to.
 	var/obj/machinery/telecomms/message_server/linked_server = null
-	/// Sparks effect - For emag
-	var/datum/effect_system/spark_spread/spark_system
 	/// Computer properties.
 	/// 0 = Main menu, 1 = Message Logs, 2 = Hacked screen, 3 = Custom Message
 	var/screen = MSG_MON_SCREEN_MAIN
@@ -34,7 +33,6 @@
 
 /obj/machinery/computer/message_monitor/Initialize(mapload)
 	..()
-	spark_system = new
 	return INITIALIZE_HINT_LATELOAD
 
 /obj/machinery/computer/message_monitor/post_machine_initialize()
@@ -69,22 +67,21 @@
 /obj/machinery/computer/message_monitor/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE
-	if(!isnull(linked_server))
-		obj_flags |= EMAGGED
-		screen = MSG_MON_SCREEN_HACKED
-		spark_system.set_up(5, 0, src)
-		spark_system.start()
-		var/obj/item/paper/monitorkey/monitor_key_paper = new(loc, linked_server)
-		// Will help make emagging the console not so easy to get away with.
-		monitor_key_paper.add_raw_text("<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>")
-		var/time = 100 * length(linked_server.decryptkey)
-		addtimer(CALLBACK(src, PROC_REF(unemag_console)), time)
-		error_message = "%$&(£: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!"
-		linked_server.toggled = FALSE
-		return TRUE
-	else
+	if(isnull(linked_server))
 		to_chat(user, span_notice("A no server error appears on the screen."))
-	return FALSE
+		return FALSE
+
+	obj_flags |= EMAGGED
+	screen = MSG_MON_SCREEN_HACKED
+	do_sparks(5, FALSE, src)
+	var/obj/item/paper/monitorkey/monitor_key_paper = new(loc, linked_server)
+	// Will help make emagging the console not so easy to get away with.
+	monitor_key_paper.add_raw_text("<br><br><font color='red'>£%@%(*$%&(£&?*(%&£/{}</font>")
+	var/time = 100 * length(linked_server.decryptkey)
+	addtimer(CALLBACK(src, PROC_REF(unemag_console)), time)
+	error_message = "%$&(£: Critical %$$@ Error // !RestArting! <lOadiNg backUp iNput ouTput> - ?pLeaSe wAit!"
+	linked_server.toggled = FALSE
+	return TRUE
 
 /// Remove the emag effect from the console
 /obj/machinery/computer/message_monitor/proc/unemag_console()
@@ -123,6 +120,20 @@
 			data["requests"] = request_list
 	return data
 
+/obj/machinery/computer/message_monitor/ui_static_data(mob/user)
+	var/list/data = list()
+	data["is_on_station"] = is_on_station()
+	return data
+
+/// Check if this console is on the station and in a valid area
+/obj/machinery/computer/message_monitor/proc/is_on_station()
+	if(!is_station_level(z))
+		return FALSE
+	var/area/station/area = get_area(src)
+	if(isnull(area) || !(area.area_flags & VALID_TERRITORY))
+		return FALSE
+	return TRUE
+
 /obj/machinery/computer/message_monitor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
@@ -154,7 +165,11 @@
 				message_servers += message_server
 
 			if(length(message_servers) > 1)
-				set_linked_server(tgui_input_list(usr, "Please select a server", "Server Selection", message_servers))
+				var/selected_server = tgui_input_list(usr, "Please select a server", "Server Selection", message_servers)
+				if(QDELETED(src) || !is_operational || !usr.can_interact_with(src))
+					screen = MSG_MON_SCREEN_MAIN
+					return TRUE
+				set_linked_server(selected_server)
 				if(linked_server)
 					notice_message = "NOTICE: Server selected."
 			else if(length(message_servers) == 1)
@@ -186,10 +201,17 @@
 			notice_message = "NOTICE: Logs cleared."
 			return TRUE
 		if("set_key")
+			if(!is_on_station())
+				return TRUE
+
 			var/dkey = tgui_input_text(usr, "Please enter the decryption key", "Telecomms Decryption", max_length = 16)
+			if(QDELETED(src) || !is_operational || !usr.can_interact_with(src))
+				return TRUE
 			if(dkey && dkey != "")
 				if(linked_server.decryptkey == dkey)
 					var/newkey = tgui_input_text(usr, "Please enter the new key (3 - 16 characters max)", "New Key", max_length = 16)
+					if(QDELETED(src) || !is_operational || !usr.can_interact_with(src))
+						return TRUE
 					if(length(newkey) <= 3)
 						notice_message = "NOTICE: Decryption key too short!"
 					else if(newkey && newkey != "")
@@ -242,10 +264,12 @@
 
 			if(isnull(recipient))
 				notice_message = "NOTICE: No recipient selected!"
-				return attack_hand(usr)
+				return TRUE
 			if(isnull(message) || message == "")
 				notice_message = "NOTICE: No message entered!"
-				return attack_hand(usr)
+				return TRUE
+			if(QDELETED(src) || !is_operational || !usr.can_interact_with(src))
+				return TRUE
 
 			var/datum/signal/subspace/messaging/tablet_message/signal = new(src, list(
 				"fakename" = "[sender]",

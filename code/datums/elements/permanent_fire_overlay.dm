@@ -20,5 +20,5 @@
 	var/mutable_appearance/created_overlay = source.get_fire_overlay(stacks = MAX_FIRE_STACKS, on_fire = TRUE)
 	if(isnull(created_overlay))
 		return
-
 	overlays |= created_overlay
+	overlays |= source.make_fire_emissive(created_overlay)

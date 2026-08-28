@@ -13,6 +13,7 @@
 	/// The kind of wallframe that this telescreen drops
 	var/frame_type = /obj/item/wallframe/telescreen
 	projectiles_pass_chance = 100
+	generate_map_preview = FALSE
 
 /obj/machinery/computer/security/telescreen/Initialize(mapload)
 	. = ..()
@@ -26,6 +27,7 @@
 	icon_state = "telescreen"
 	result_path = /obj/machinery/computer/security/telescreen
 	pixel_shift = 32
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5)
 
 /obj/machinery/computer/security/telescreen/on_deconstruction(disassembled)
 	new frame_type(loc)
@@ -57,9 +59,9 @@
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/machinery/computer/security/telescreen/entertainment/click_ctrl(mob/user)
-	. = ..()
 	balloon_alert(user, speakers.should_be_listening ? "muted" : "unmuted")
 	speakers.toggle_mute()
+	return CLICK_ACTION_SUCCESS
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertainment, 32)
 
@@ -87,7 +89,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 /obj/machinery/computer/security/telescreen/entertainment/examine(mob/user)
 	. = ..()
 	. += length(network) ? span_notice("The TV is broadcasting something!") : span_notice("<i>There's nothing on TV.</i>")
-	. += span_notice("The volume is currently [speakers.should_be_listening ? "on" : "off"]")
+	. += span_notice("The volume is currently [speakers.should_be_listening ? "on" : "off"].")
 
 /obj/machinery/computer/security/telescreen/entertainment/ui_state(mob/user)
 	return GLOB.always_state
@@ -99,7 +101,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 		return UI_CLOSE
 	if(!isliving(user))
 		return isAdminGhostAI(user) ? UI_INTERACTIVE : UI_UPDATE
-	if(user.stat >= SOFT_CRIT)
+	if(user.incapacitated)
 		return UI_UPDATE
 
 	var/can_range = FALSE
@@ -139,9 +141,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	else
 		if(!can_see(watcher, src, 7))
 			return FALSE
-	if(watcher.is_blind())
-		return FALSE
-	if(!isobserver(watcher) && watcher.stat >= UNCONSCIOUS)
+	if(watcher.is_blind() || IS_UNCONSCIOUS(watcher))
 		return FALSE
 	return TRUE
 
@@ -569,4 +569,3 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/monaster
 /obj/item/wallframe/telescreen/monastery
 	name = "monastery telescreen frame"
 	result_path = /obj/machinery/computer/security/telescreen/monastery
-

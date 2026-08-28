@@ -55,12 +55,13 @@
  *
  * required user the mob currently interacting with the ui
  * optional ui ui to be updated
+ * always_instant when set to true stops the ui update cooldown from happening
  */
-/datum/proc/update_static_data(mob/user, datum/tgui/ui)
+/datum/proc/update_static_data(mob/user, datum/tgui/ui, always_instant)
 	if(!ui)
 		ui = SStgui.get_open_ui(user, src)
 	if(ui)
-		ui.send_full_update()
+		ui.send_full_update(always_instant = always_instant)
 
 /**
  * public
@@ -182,10 +183,7 @@
  *
  * required uiref ref The UI that was closed.
  */
-/client/verb/uiclose(window_id as text)
-	// Name the verb, and hide it from the user panel.
-	set name = "uiclose"
-	set hidden = TRUE
+GAME_VERB_NATIVE(/client, uiclose, "uiclose", null, window_id as text)
 	var/mob/user = src?.mob
 	if(!user)
 		return

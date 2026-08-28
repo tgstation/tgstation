@@ -71,6 +71,10 @@
 	name = "Waistcoat"
 	item_path = /obj/item/clothing/accessory/waistcoat
 
+/datum/loadout_item/accessory/sweatervest
+	name = "Sweater Vest"
+	item_path = /obj/item/clothing/accessory/sweatervest
+
 /datum/loadout_item/accessory/pocket_protector
 	name = "Pocket Protector"
 	item_path = /obj/item/clothing/accessory/pocketprotector

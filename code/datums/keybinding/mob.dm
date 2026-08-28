@@ -21,7 +21,7 @@
 	return TRUE
 
 /datum/keybinding/mob/swap_hands
-	hotkey_keys = list("Unbound")
+	hotkey_keys = list("X")
 	name = "swap_hands"
 	full_name = "Swap hands"
 	description = ""
@@ -39,14 +39,14 @@
 	var/hand_index = NONE
 
 /datum/keybinding/mob/select_hand/right
-	hotkey_keys = list("Q")
+	hotkey_keys = list(UNBOUND_KEY)
 	name = "select_right_hand"
 	full_name = "Swap to Right Hand"
 	keybind_signal = COMSIG_KB_MOB_SELECTRIGHTHAND_DOWN
 	hand_index = RIGHT_HANDS
 
 /datum/keybinding/mob/select_hand/left
-	hotkey_keys = list("E")
+	hotkey_keys = list(UNBOUND_KEY)
 	name = "select_left_hand"
 	full_name = "Swap to Left Hand"
 	keybind_signal = COMSIG_KB_MOB_SELECTLEFTHAND_DOWN
@@ -81,7 +81,7 @@
 	return TRUE
 
 /datum/keybinding/mob/drop_item
-	hotkey_keys = list("X")
+	hotkey_keys = list("Q")
 	name = "drop_item"
 	full_name = "Drop Item"
 	description = "Drops the item in your active hand to the ground."
@@ -161,12 +161,12 @@
 /datum/keybinding/mob/target/head_cycle
 	hotkey_keys = list("Numpad8")
 	name = "target_head_cycle"
-	full_name = "Target: Cycle Head"
+	full_name = "Target: Cycle head"
 	description = "Pressing this key targets the head, and continued presses will cycle to the eyes and mouth. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETCYCLEHEAD_DOWN
 
 /datum/keybinding/mob/target/head
-	hotkey_keys = list("Unbound")
+	hotkey_keys = list(UNBOUND_KEY)
 	name = "target_head"
 	full_name = "Target: Head"
 	description = "Pressing this key targets the head. This will impact where you hit people, and can be used for surgery."
@@ -189,7 +189,7 @@
 /datum/keybinding/mob/target/r_arm
 	hotkey_keys = list("Numpad4")
 	name = "target_r_arm"
-	full_name = "Target: right arm"
+	full_name = "Target: Right arm"
 	description = "Pressing this key targets the right arm. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETRIGHTARM_DOWN
 
@@ -203,7 +203,7 @@
 /datum/keybinding/mob/target/left_arm
 	hotkey_keys = list("Numpad6")
 	name = "target_left_arm"
-	full_name = "Target: left arm"
+	full_name = "Target: Left arm"
 	description = "Pressing this key targets the body. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETLEFTARM_DOWN
 
@@ -224,7 +224,7 @@
 /datum/keybinding/mob/target/left_leg
 	hotkey_keys = list("Numpad3")
 	name = "target_left_leg"
-	full_name = "Target: left leg"
+	full_name = "Target: Left leg"
 	description = "Pressing this key targets the left leg. This will impact where you hit people, and can be used for surgery."
 	keybind_signal = COMSIG_KB_MOB_TARGETLEFTLEG_DOWN
 
@@ -246,10 +246,3 @@
 	if(.)
 		return
 	user.movement_locked = FALSE
-
-/datum/keybinding/living/view_pet_data
-	hotkey_keys = list("Shift")
-	name = "view_pet_commands"
-	full_name = "View Pet Commands"
-	description = "Hold down to see all the commands you can give your pets!"
-	keybind_signal = COMSIG_KB_LIVING_VIEW_PET_COMMANDS

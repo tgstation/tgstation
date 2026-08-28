@@ -10,7 +10,8 @@
 	throwforce = 0
 	throw_speed = 3
 	throw_range = 6
-	grind_results = list(/datum/reagent/toxin/slimejelly = 20)
+	///Can this extract still be grinded
+	var/can_grind = TRUE
 	///uses before it goes inert
 	var/extract_uses = 1
 	///deletion timer, for delayed reactions
@@ -20,24 +21,28 @@
 	///Reagents required for activation
 	var/recurring = FALSE
 
+/obj/item/slime_extract/grind_results()
+	return can_grind ? list(/datum/reagent/toxin/slimejelly = 20) : list()
+
 /obj/item/slime_extract/examine(mob/user)
 	. = ..()
 	if(extract_uses > 1)
 		. += "It has [extract_uses] uses remaining."
 
-/obj/item/slime_extract/attackby(obj/item/O, mob/user)
-	if(istype(O, /obj/item/slimepotion/enhancer))
-		if(extract_uses >= 5 || recurring)
-			to_chat(user, span_warning("You cannot enhance this extract further!"))
-			return ..()
-		if(O.type == /obj/item/slimepotion/enhancer) //Seriously, why is this defined here...?
-			to_chat(user, span_notice("You apply the enhancer to the slime extract. It may now be reused one more time."))
-			extract_uses++
-		if(O.type == /obj/item/slimepotion/enhancer/max)
-			to_chat(user, span_notice("You dump the maximizer on the slime extract. It can now be used a total of 5 times!"))
-			extract_uses = 5
-		qdel(O)
-	..()
+/obj/item/slime_extract/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/slimepotion/enhancer))
+		return NONE
+	if(extract_uses >= 5 || recurring)
+		to_chat(user, span_warning("You cannot enhance this extract further!"))
+		return ITEM_INTERACT_BLOCKING
+	if(istype(tool, /obj/item/slimepotion/enhancer/max))
+		to_chat(user, span_notice("You dump the maximizer on the slime extract. It can now be used a total of 5 times!"))
+		extract_uses = 5
+	else
+		to_chat(user, span_notice("You apply the enhancer to the slime extract. It may now be reused one more time."))
+		extract_uses++
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/slime_extract/Initialize(mapload)
 	. = ..()
@@ -66,7 +71,7 @@
 	if(!istype(target_slime))
 		return NONE
 
-	if(target_slime.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(target_slime))
 		to_chat(user, span_warning("The slime is dead!"))
 		return ITEM_INTERACT_BLOCKING
 	if(target_slime.life_stage != SLIME_LIFE_STAGE_ADULT)
@@ -184,7 +189,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			user.visible_message(span_warning("[user] starts shaking!"),span_notice("Your [name] starts pulsing gently..."))
 			if(do_after(user, 4 SECONDS, target = user))
 				var/mob/living/spawned_mob = create_random_mob(user.drop_location(), FRIENDLY_SPAWN)
-				spawned_mob.faction |= FACTION_NEUTRAL
+				spawned_mob.add_faction(FACTION_NEUTRAL)
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				user.visible_message(span_warning("[user] spits out [spawned_mob]!"), span_notice("You spit out [spawned_mob]!"))
 				return 300
@@ -194,9 +199,9 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 			if(do_after(user, 5 SECONDS, target = user))
 				var/mob/living/spawned_mob = create_random_mob(user.drop_location(), HOSTILE_SPAWN)
 				if(!user.combat_mode)
-					spawned_mob.faction |= FACTION_NEUTRAL
+					spawned_mob.add_faction(FACTION_NEUTRAL)
 				else
-					spawned_mob.faction |= FACTION_SLIME
+					spawned_mob.add_faction(FACTION_SLIME)
 				playsound(user, 'sound/effects/splat.ogg', 50, TRUE)
 				user.visible_message(span_warning("[user] spits out [spawned_mob]!"), span_warning("You spit out [spawned_mob]!"))
 				return 600
@@ -706,7 +711,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	icon_state = "potsilver"
 
 /obj/item/slimepotion/slime/docility/interact_with_slime(mob/living/basic/slime/interacting_slime, mob/living/user, list/modifiers)
-	if(interacting_slime.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(interacting_slime))
 		to_chat(user, span_warning("The slime is dead!"))
 		return ITEM_INTERACT_BLOCKING
 	if(interacting_slime.ai_controller?.clear_blackboard_key(BB_SLIME_RABID)) //Stops being rabid, but doesn't become truly docile.
@@ -765,7 +770,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	if(dumb_mob.ckey) //only works on animals that aren't player controlled
 		balloon_alert(user, "already sentient!")
 		return ITEM_INTERACT_BLOCKING
-	if(dumb_mob.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(dumb_mob))
 		balloon_alert(user, "it's dead!")
 		return ITEM_INTERACT_BLOCKING
 	if(!dumb_mob.compare_sentience_type(sentience_type)) // Will also return false if not a basic or simple mob, which are the only two we want anyway
@@ -817,6 +822,8 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	var/obj/item/implant/radio/syndicate/imp = new(src)
 	imp.implant(smart_mob, user)
 	smart_mob.AddComponent(/datum/component/simple_access, list(ACCESS_SYNDICATE, ACCESS_MAINT_TUNNELS))
+	var/obj/item/implant/implanter = SSwardrobe.provide_type(/obj/item/implant/tacmap/nuclear/cayenne, src)
+	implanter.implant(src, null, TRUE)
 
 /obj/item/slimepotion/sentience/nuclear/dangerous_horse
 	name = "dangerous pony potion"
@@ -842,7 +849,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	if(switchy_mob.ckey) //much like sentience, these will not work on something that is already player controlled
 		balloon_alert(user, "already sentient!")
 		return ITEM_INTERACT_BLOCKING
-	if(switchy_mob.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(switchy_mob))
 		balloon_alert(user, "it's dead!")
 		return ITEM_INTERACT_BLOCKING
 	if(!switchy_mob.compare_sentience_type(animal_type))
@@ -867,7 +874,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 
 	user.mind.transfer_to(switchy_mob)
 	SEND_SIGNAL(switchy_mob, COMSIG_SIMPLEMOB_TRANSFERPOTION, user)
-	switchy_mob.faction = user.faction.Copy()
+	SET_FACTION_AND_ALLIES_FROM( switchy_mob, user)
 	switchy_mob.copy_languages(user, LANGUAGE_MIND)
 	user.death()
 	to_chat(switchy_mob, span_notice("In a quick flash, you feel your consciousness flow into [switchy_mob]!"))
@@ -888,7 +895,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	if(interacting_slime.life_stage == SLIME_LIFE_STAGE_ADULT) //Can't steroidify adults
 		to_chat(user, span_warning("Only baby slimes can use the steroid!"))
 		return ITEM_INTERACT_BLOCKING
-	if(interacting_slime.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(interacting_slime))
 		to_chat(user, span_warning("The slime is dead!"))
 		return ITEM_INTERACT_BLOCKING
 	if(interacting_slime.cores >= 5)
@@ -911,7 +918,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	icon_state = "potcyan"
 
 /obj/item/slimepotion/slime/stabilizer/interact_with_slime(mob/living/basic/slime/interacting_slime, mob/living/user, list/modifiers)
-	if(interacting_slime.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(interacting_slime))
 		to_chat(user, span_warning("The slime is dead!"))
 		return ITEM_INTERACT_BLOCKING
 	if(interacting_slime.mutation_chance == 0)
@@ -929,7 +936,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	icon_state = "potgreen"
 
 /obj/item/slimepotion/slime/mutator/interact_with_slime(mob/living/basic/slime/interacting_slime, mob/living/user, list/modifiers)
-	if(interacting_slime.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(interacting_slime))
 		to_chat(user, span_warning("The slime is dead!"))
 		return ITEM_INTERACT_BLOCKING
 	if(interacting_slime.mutator_used)
@@ -1038,6 +1045,11 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 		to_chat(user, span_warning("The potion can only be used on gendered things!"))
 		return ITEM_INTERACT_BLOCKING
 
+	if(living_mob.mind)
+		if (!do_after(user, delay = 5 SECONDS, target = living_mob))
+			balloon_alert(user, "interrupted!")
+			return ITEM_INTERACT_BLOCKING
+
 	if(living_mob.gender == MALE)
 		living_mob.gender = FEMALE
 		living_mob.visible_message(span_boldnotice("[living_mob] suddenly looks more feminine!"), span_boldwarning("You suddenly feel more feminine!"))
@@ -1083,7 +1095,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	user.log_message("used [src] on [key_name(renaming_mob)], letting them rename themselves into [new_name].", LOG_GAME)
 
 	// pass null as first arg to not update records or ID/PDA
-	renaming_mob.fully_replace_character_name(null, new_name)
+	renaming_mob.fully_replace_character_name(null, new_name, log_new_name = TRUE)
 
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
@@ -1103,7 +1115,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 		to_chat(user, span_warning("[interacting_with] is too complex for the potion!"))
 		return ITEM_INTERACT_BLOCKING
 	var/mob/living/radio_head = interacting_with
-	if(radio_head.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(radio_head))
 		to_chat(user, span_warning("[radio_head] is dead!"))
 		return ITEM_INTERACT_BLOCKING
 
@@ -1117,7 +1129,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 ///Definitions for slime products that don't have anywhere else to go (Floor tiles, blueprints).
 
 /obj/item/stack/tile/bluespace
-	name = "bluespace floor tile"
+	name = "stabilized bluespace floor tile"
 	singular_name = "floor tile"
 	desc = "Through a series of micro-teleports these tiles let people move at incredible speeds."
 	icon_state = "tile_bluespace"

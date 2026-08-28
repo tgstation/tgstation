@@ -125,3 +125,14 @@
 	for(var/points_type in points_reward)
 		english_list_keys += "[points_reward[points_type]] [points_type]"
 	return "[english_list(english_list_keys)] points"
+
+/datum/experiment/proc/to_ui_data()
+	return list(
+		"name" = name,
+		"description" = description,
+		"tag" = exp_tag,
+		"progress" = check_progress(),
+		"completed" = completed,
+		"performance_hint" = performance_hint,
+		"ref" = REF(src)
+	)

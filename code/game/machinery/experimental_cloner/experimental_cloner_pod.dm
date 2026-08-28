@@ -31,6 +31,11 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 	. = ..()
 	sound_loop = new(src, FALSE)
 
+/obj/machinery/experimental_cloner/Destroy(force)
+	QDEL_NULL(loaded_record)
+	QDEL_NULL(sound_loop)
+	return ..()
+
 /obj/machinery/experimental_cloner/power_change()
 	. = ..()
 	if (machine_stat & NOPOWER && running)
@@ -126,10 +131,10 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 
 	chosen_one.log_message("took control of experimental clone of [result].", LOG_GAME)
 	result.PossessByPlayer(chosen_one.ckey)
-	to_chat(chosen_one, span_boldnotice("You are [loaded_record.name]! You aren't quite sure where you are or how you got here, though."))
+	to_chat(result, span_boldnotice("You are [loaded_record.name]! You aren't quite sure where you are or how you got here, though."))
 	var/policy = get_policy(ROLE_EXPERIMENTAL_CLONER)
 	if (policy)
-		to_chat(chosen_one, span_notice(policy))
+		to_chat(result, span_notice(policy))
 
 	UnregisterSignal(result, list(COMSIG_MOVABLE_MOVED, COMSIG_QDELETING, COMSIG_LIVING_DEATH))
 	result.forceMove(drop_location())
@@ -163,7 +168,7 @@ GLOBAL_VAR_INIT(experimental_cloner_fuckup_chance, 50)
 
 	if (prob(75))
 		var/static/list/permitted_heights = list(HUMAN_HEIGHT_SHORTEST, HUMAN_HEIGHT_SHORT, HUMAN_HEIGHT_MEDIUM, HUMAN_HEIGHT_TALL, HUMAN_HEIGHT_TALLER, HUMAN_HEIGHT_TALLEST)
-		new_clone.dna.remove_mutation(/datum/mutation/dwarfism, list(MUTATION_SOURCE_ACTIVATED, MUTATION_SOURCE_MUTATOR))
+		new_clone.dna.remove_mutation(/datum/mutation/dwarfism, GLOB.standard_mutation_sources)
 		new_clone.set_mob_height(pick(permitted_heights - loaded_record.height)) // To differentiate the clones
 
 	return new_clone

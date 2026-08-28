@@ -20,7 +20,7 @@
 	// ALso we'll automatically covnert string def zones into bodyparts to pass into parent call.
 	else if(!isbodypart(def_zone))
 		var/random_zone = check_zone(def_zone || get_random_valid_zone(def_zone))
-		def_zone = get_bodypart(random_zone) || bodyparts[1]
+		def_zone = get_bodypart(random_zone) || get_bodypart()
 
 	. = ..()
 	// Taking brute or burn to bodyparts gives a damage flash
@@ -84,13 +84,13 @@
 //These procs fetch a cumulative total damage from all bodyparts
 /mob/living/carbon/get_brute_loss()
 	var/amount = 0
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in get_bodyparts())
 		amount += bodypart.brute_dam
 	return round(amount, DAMAGE_PRECISION)
 
 /mob/living/carbon/get_fire_loss()
 	var/amount = 0
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in get_bodyparts())
 		amount += bodypart.burn_dam
 	return round(amount, DAMAGE_PRECISION)
 
@@ -104,7 +104,7 @@
  */
 /mob/living/carbon/proc/get_brute_loss_for_type(required_bodytype = ALL)
 	var/amount = 0
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in get_bodyparts())
 		if(!(bodypart.bodytype & required_bodytype))
 			continue
 		amount += bodypart.brute_dam
@@ -119,7 +119,7 @@
  */
 /mob/living/carbon/proc/get_fire_loss_for_type(required_bodytype = ALL)
 	var/amount = 0
-	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in get_bodyparts())
 		if(!(bodypart.bodytype & required_bodytype))
 			continue
 		amount += bodypart.burn_dam
@@ -239,8 +239,7 @@
 ///Returns a list of damaged bodyparts
 /mob/living/carbon/proc/get_damaged_bodyparts(brute = FALSE, burn = FALSE, required_bodytype = NONE, target_zone = null)
 	var/list/obj/item/bodypart/parts = list()
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP as anything in get_bodyparts())
 		if(required_bodytype && !(BP.bodytype & required_bodytype))
 			continue
 		if(!isnull(target_zone) && BP.body_zone != target_zone)
@@ -252,8 +251,7 @@
 ///Returns a list of damageable bodyparts
 /mob/living/carbon/proc/get_damageable_bodyparts(required_bodytype)
 	var/list/obj/item/bodypart/parts = list()
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP as anything in get_bodyparts())
 		if(required_bodytype && !(BP.bodytype & required_bodytype))
 			continue
 		if(BP.brute_dam + BP.burn_dam < BP.max_damage)
@@ -264,8 +262,7 @@
 ///Returns a list of bodyparts with wounds (in case someone has a wound on an otherwise fully healed limb)
 /mob/living/carbon/proc/get_wounded_bodyparts(required_bodytype)
 	var/list/obj/item/bodypart/parts = list()
-	for(var/X in bodyparts)
-		var/obj/item/bodypart/BP = X
+	for(var/obj/item/bodypart/BP as anything in get_bodyparts())
 		if(required_bodytype && !(BP.bodytype & required_bodytype))
 			continue
 		if(LAZYLEN(BP.wounds))

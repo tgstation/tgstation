@@ -10,6 +10,7 @@
 	fishing_difficulty = -10
 	//The range for waiting is also a bit narrower, so it cannot take as few as 3 seconds or as many as 25 to snatch an organ.
 	wait_time_range = list(6 SECONDS, 12 SECONDS)
+	fish_source_flags = FISH_SOURCE_FLAG_EXPLOSIVE_NONE
 
 /datum/fish_source/surgery/spawn_reward(reward_path, atom/spawn_location, atom/fishing_spot, obj/item/fishing_rod/used_rod)
 	if(reward_path != FISHING_RANDOM_ORGAN)
@@ -25,14 +26,12 @@
 
 	var/mob/living/carbon/carbon = fishing_spot
 	var/list/possible_organs = list()
-	for(var/datum/surgery/organ_manipulation/operation in carbon.surgeries)
-		var/datum/surgery_step/manipulate_organs/manip_step = GLOB.surgery_steps[operation.steps[operation.status]]
-		if(!istype(manip_step))
+	for(var/obj/item/organ/fishable as anything in carbon.organs)
+		if(fishable.organ_flags & (ORGAN_UNREMOVABLE|ORGAN_EXTERNAL|ORGAN_VITAL))
 			continue
-		for(var/obj/item/organ/organ in operation.operated_bodypart)
-			if(organ.organ_flags & ORGAN_UNREMOVABLE || !manip_step.can_use_organ(organ))
-				continue
-			possible_organs |= organ
+		if(!LIMB_HAS_SURGERY_STATE(fishable.bodypart_owner, ALL_SURGERY_FISH_STATES(fishable.zone)))
+			continue
+		possible_organs += fishable
 
 	if(!length(possible_organs))
 		return null
@@ -48,7 +47,7 @@
 		FISH_SOURCE_AUTOWIKI_NAME = "Organs",
 		FISH_SOURCE_AUTOWIKI_DUD = "",
 		FISH_SOURCE_AUTOWIKI_WEIGHT = 100,
-		FISH_SOURCE_AUTOWIKI_NOTES = "A random organ from an ongoing organ manipulation surgery.",
+		FISH_SOURCE_AUTOWIKI_NOTES = "A random organ from an ongoing surgical operation.",
 	))
 
 	return data

@@ -126,7 +126,7 @@
 	UnregisterSignal(source, COMSIG_ATOM_AFTER_SHUTTLE_MOVE)
 	begin_orbit(arglist(list(source) + orbiter_params[source]))
 
-/datum/component/orbiter/proc/end_orbit(atom/movable/orbiter, refreshing=FALSE)
+/datum/component/orbiter/proc/end_orbit(atom/movable/orbiter, refreshing = FALSE)
 	if(!orbiter_list[orbiter])
 		return
 	UnregisterSignal(orbiter, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, COMSIG_ATOM_AFTER_SHUTTLE_MOVE))
@@ -137,7 +137,7 @@
 	orbiter_list -= orbiter
 	if(!refreshing)
 		orbiter_params -= orbiter
-	orbiter.stop_orbit(src)
+	orbiter.stop_orbit(src, refreshing)
 	orbiter.orbiting = null
 
 	if(ismob(orbiter))
@@ -200,9 +200,11 @@
 	orbit_target = A
 	return A.AddComponent(/datum/component/orbiter, src, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 
-/atom/movable/proc/stop_orbit(datum/component/orbiter/orbits)
+/atom/movable/proc/stop_orbit(datum/component/orbiter/orbits, refreshing = FALSE)
+	if(refreshing)
+		return //Only null the target if we're actually stopping the orbit for real, not if we're merely shuttle moving(or orbiting the same thing again). We will never get it back unless the orbit is fully deleted and reinstated.
 	orbit_target = null
-	return // We're just a simple hook
+
 
 /atom/proc/transfer_observers_to(atom/target)
 	if(!orbiters || !istype(target) || !get_turf(target) || target == src)

@@ -73,10 +73,8 @@
 	var/search_objects_timer_id
 	///The delay between being attacked and gaining our old search_objects value back
 	var/search_objects_regain_time = 3 SECONDS
-	///A typecache of objects types that will be checked against to attack, should we have search_objects enabled
-	var/list/wanted_objects = list()
 	///Mobs ignore mob/living targets with a stat lower than that of stat_attack. If set to DEAD, then they'll include corpses in their targets, if to HARD_CRIT they'll keep attacking until they kill, and so on.
-	var/stat_attack = CONSCIOUS
+	var/stat_attack = STABLE
 	///Mobs with this set to TRUE will exclusively attack things defined by stat_attack, stat_attack DEAD means they will only attack corpses
 	var/stat_exclusive = FALSE
 	///Set us to TRUE to allow us to attack our own faction
@@ -86,23 +84,17 @@
 	//Attempting to call GET_TARGETS_FROM(mob) when this var is null will just return mob as a base
 	///all range/attack/etc. calculations should be done from the atom this weakrefs, useful for Vehicles and such.
 	var/datum/weakref/targets_from
-	///if true, equivalent to having a wanted_objects list containing ALL objects.
-	var/attack_all_objects = FALSE
 	///id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
 	var/lose_patience_timer_id
 	///30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever
 	var/lose_patience_timeout = 30 SECONDS
-
-/mob/living/simple_animal/hostile/Initialize(mapload)
-	. = ..()
-	wanted_objects = typecacheof(wanted_objects)
 
 /mob/living/simple_animal/hostile/Destroy()
 	//We can't use losetarget here because fucking cursed blobs override it to do nothing the motherfuckers
 	GiveTarget(null)
 	return ..()
 
-/mob/living/simple_animal/hostile/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/simple_animal/hostile/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(!.) //dead
 		GLOB.move_manager.stop_looping(src)
@@ -157,17 +149,17 @@
 		face_atom(target) //Looks better if they keep looking at you when dodging
 
 /mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user)
-	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client && user)
+	if(!IS_UNCONSCIOUS_OR_CRIT(src) && !target && AIStatus != AI_OFF && !client && user)
 		FindTarget(list(user))
 	return ..()
 
 /mob/living/simple_animal/hostile/electrocute_act(shock_damage, source, siemens_coeff, flags)
-	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client && isatom(source)) // strings are sometimes used in electrocute_act()
+	if(!IS_UNCONSCIOUS_OR_CRIT(src) && !target && AIStatus != AI_OFF && !client && isatom(source)) // strings are sometimes used in electrocute_act()
 		FindTarget(list(source))
 	return ..()
 
 /mob/living/simple_animal/hostile/bullet_act(obj/projectile/proj)
-	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client)
+	if(!IS_UNCONSCIOUS_OR_CRIT(src) && !target && AIStatus != AI_OFF && !client)
 		if(proj.firer && get_dist(src, proj.firer) <= aggro_vision_range)
 			FindTarget(list(proj.firer))
 		Goto(proj.starting, move_to_delay, 3)
@@ -275,7 +267,7 @@
 				if(L in friends)
 					return FALSE
 			else
-				if((faction_check && !attack_same) || L.stat)
+				if((faction_check && !attack_same) || IS_UNCONSCIOUS_OR_CRIT(L))
 					return FALSE
 			return TRUE
 
@@ -293,10 +285,6 @@
 				return FALSE
 			if(P.machine_stat & BROKEN) //Or turrets that are already broken
 				return FALSE
-			return TRUE
-
-	if(isobj(the_target))
-		if(attack_all_objects || is_type_in_typecache(the_target, wanted_objects))
 			return TRUE
 
 	return FALSE
@@ -386,7 +374,7 @@
 
 /mob/living/simple_animal/hostile/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
 	. = ..()
-	if(!ckey && !stat && search_objects < 3 && . > 0)//Not unconscious, and we don't ignore mobs
+	if(!ckey && !IS_UNCONSCIOUS_OR_CRIT(src) && search_objects < 3 && . > 0)//Not unconscious, and we don't ignore mobs
 		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
 			LoseTarget()
 			LoseSearchObjects()
@@ -661,7 +649,7 @@
 		return
 	friends += new_friend
 	RegisterSignal(new_friend, COMSIG_QDELETING, PROC_REF(handle_friend_del))
-	faction = new_friend.faction.Copy()
+	SET_FACTION_AND_ALLIES_FROM(src, new_friend)
 
 /mob/living/simple_animal/hostile/lazarus_revive(mob/living/reviver, malfunctioning)
 	. = ..()

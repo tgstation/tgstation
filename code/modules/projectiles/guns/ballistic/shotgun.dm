@@ -60,6 +60,23 @@
 		overlay_x = 20, \
 		overlay_y = 11)
 
+// Pump-Action Grenade Launcher //
+
+/obj/item/gun/ballistic/shotgun/china_lake
+	name = "pump-action grenade launcher"
+	desc = "A pump-action grenade launcher. Typically found in the hands of space pirate raiders. The weight leaves a lot to be desired, but the high ammo capacity makes \
+		up for the bulk."
+	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	icon_state = "china_lake"
+	inhand_icon_state = "china_lake"
+	worn_icon_state = "riotshotgun"
+	fire_sound = 'sound/items/weapons/gun/general/grenade_launch.ogg'
+	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/lake
+	inhand_x_dimension = 32
+	inhand_y_dimension = 32
+	pb_knockback = 4 // Not advised.
+
 // Automatic Shotguns//
 
 /obj/item/gun/ballistic/shotgun/automatic/shoot_live_shot(mob/living/user)
@@ -338,8 +355,7 @@
 	can_be_sawn_off = TRUE
 	pb_knockback = 3 // it's a super shotgun!
 
-/obj/item/gun/ballistic/shotgun/doublebarrel/Initialize(mapload)
-	. = ..()
+/obj/item/gun/ballistic/shotgun/doublebarrel/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/bar_shotgun)
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/sawoff(mob/user)

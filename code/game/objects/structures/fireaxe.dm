@@ -47,45 +47,66 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/fireaxecabinet, 32)
 		QDEL_NULL(held_item)
 	return ..()
 
-/obj/structure/fireaxecabinet/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(iscyborg(user) || attacking_item.tool_behaviour == unlocking_tool_behavior)
+/obj/structure/fireaxecabinet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(iscyborg(user) || tool.tool_behaviour == unlocking_tool_behavior)
 		toggle_lock(user)
-	else if(attacking_item.tool_behaviour == TOOL_WELDER && !user.combat_mode && !broken)
-		if(atom_integrity < max_integrity)
-			if(!attacking_item.tool_start_check(user, amount = 2))
-				return
-			balloon_alert(user, "repairing...")
-			if(attacking_item.use_tool(src, user, 4 SECONDS, volume= 50, amount = 2))
-				repair_damage(max_integrity - get_integrity())
-				update_appearance()
-				balloon_alert(user, "repaired")
-		else
-			balloon_alert(user, "already repaired!")
-		return
-	else if(istype(attacking_item, /obj/item/stack/sheet/glass) && broken)
-		var/obj/item/stack/sheet/glass/glass_stack = attacking_item
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stack/sheet/glass) && broken)
+		var/obj/item/stack/sheet/glass/glass_stack = tool
 		if(glass_stack.get_amount() < 2)
 			balloon_alert(user, "need more glass!")
-			return
+			return ITEM_INTERACT_BLOCKING
+
 		balloon_alert(user, "repairing")
-		if(do_after(user, 2 SECONDS, target = src) && glass_stack.use(2))
-			broken = FALSE
-			repair_damage(max_integrity - get_integrity())
-			update_appearance()
-	else if(open || broken)
-		if(istype(attacking_item, item_path) && !held_item)
-			if(HAS_TRAIT(attacking_item, TRAIT_WIELDED))
-				balloon_alert(user, "unwield it!")
-				return
-			if(!user.transferItemToLoc(attacking_item, src))
-				return
-			held_item = attacking_item
-			update_appearance()
-			return
-		else if(!broken)
-			toggle_open()
-	else
-		return ..()
+		if(!glass_stack.use_tool(src, user, 2 SECONDS, 2))
+			return ITEM_INTERACT_BLOCKING
+
+		broken = FALSE
+		repair_damage(max_integrity - get_integrity())
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	if(open || broken)
+		if(!istype(tool, item_path) || held_item)
+			if(!broken)
+				toggle_open() // Unsure why this is desired behaviour
+				return ITEM_INTERACT_SUCCESS
+			return ITEM_INTERACT_BLOCKING
+
+		if(HAS_TRAIT(tool, TRAIT_WIELDED))
+			balloon_alert(user, "unwield it!")
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+
+		held_item = tool
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
+
+/obj/structure/fireaxecabinet/welder_act(mob/living/user, obj/item/tool)
+	if(user.combat_mode || broken)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+
+	if(atom_integrity == max_integrity)
+		balloon_alert(user, "already repaired!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(!tool.tool_start_check(user, amount = 2))
+		return ITEM_INTERACT_BLOCKING
+
+	balloon_alert(user, "repairing...")
+	if(!tool.use_tool(src, user, 4 SECONDS, volume= 50, amount = 2))
+		return ITEM_INTERACT_BLOCKING
+
+	repair_damage(max_integrity - get_integrity())
+	update_appearance()
+	balloon_alert(user, "repaired")
+	return ITEM_INTERACT_SUCCESS
+
 
 /obj/structure/fireaxecabinet/Exited(atom/movable/gone, direction)
 	if(gone == held_item)

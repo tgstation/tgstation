@@ -62,9 +62,9 @@
 /// Handles an extremely basic AI
 /obj/structure/legionturret/proc/set_up_shot()
 	for(var/mob/living/possible_target in oview(9, src))
-		if(possible_target.stat == DEAD || possible_target.stat == UNCONSCIOUS)
+		if(IS_UNCONSCIOUS(possible_target))
 			continue
-		if(faction_check(faction, possible_target.faction))
+		if(faction_check_atom(possible_target))
 			continue
 		fire(possible_target)
 		return

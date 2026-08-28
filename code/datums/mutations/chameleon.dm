@@ -1,7 +1,7 @@
 //Chameleon causes the owner to slowly become transparent when not moving.
 /datum/mutation/chameleon
 	name = "Chameleon"
-	desc = "A genome that causes the holder's skin to become transparent over time."
+	desc = "The subject's skin becomes transparent over time while not moving."
 	quality = POSITIVE
 	difficulty = 16
 	text_gain_indication = span_notice("You feel one with your surroundings.")
@@ -17,12 +17,12 @@
 	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	RegisterSignal(owner, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_attack_hand))
 
-/datum/mutation/chameleon/on_life(seconds_per_tick, times_fired)
+/datum/mutation/chameleon/on_life(seconds_per_tick)
 	owner.alpha = max(owner.alpha - (12.5 * (GET_MUTATION_POWER(src)) * seconds_per_tick), 0)
 
 //Upgraded mutation of the base variant, used for changelings. No instability and better power_coeff
 /datum/mutation/chameleon/changeling
-	instability = 0
+	instability = NEGATIVE_STABILITY_NONE
 	power_coeff = 2.5
 	locked = TRUE
 

@@ -24,9 +24,11 @@
 	gender = PLURAL
 	icon_state = "soybeans"
 	foodtypes = VEGETABLES
-	juice_typepath = /datum/reagent/consumable/soymilk
 	tastes = list("soy" = 1)
 	distill_reagent = /datum/reagent/consumable/soysauce
+
+/obj/item/food/grown/soybeans/juice_typepath()
+	return /datum/reagent/consumable/soymilk
 
 // Koibean
 /obj/item/seeds/soya/koi
@@ -67,7 +69,7 @@
 	desc = "These seeds grow into butterbean plants."
 	icon_state = "seed-butterbean"
 	species = "butterbean"
-	plantname = "butterbean Plants"
+	plantname = "Butterbean Plants"
 	product = /obj/item/food/grown/butterbeans
 	potency = 10
 	mutatelist = null

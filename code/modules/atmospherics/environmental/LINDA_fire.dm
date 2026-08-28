@@ -1,7 +1,7 @@
 /// Returns reactions which will contribute to a hotspot's size.
 /proc/init_hotspot_reactions()
 	var/list/fire_reactions = list()
-	for (var/datum/gas_reaction/reaction as anything in subtypesof(/datum/gas_reaction))
+	for (var/datum/gas_reaction/standard/reaction as anything in subtypesof(/datum/gas_reaction/standard))
 		if(initial(reaction.expands_hotspot))
 			fire_reactions += reaction
 
@@ -25,38 +25,34 @@
 		exposed_temperature = TCMB
 		CRASH("[src].hotspot_expose() called with exposed_temperature < [TCMB]")
 	//If the air doesn't exist we just return false
-	var/list/air_gases = air?.gases
-	if(!air_gases)
+	var/cached_moles = air?.moles
+	if(!cached_moles)
 		return
 
-	. = air_gases[/datum/gas/oxygen]
-	var/oxy = . ? .[MOLES] : 0
-	if (oxy < 0.5)
+	if (cached_moles[/datum/gas/oxygen] < 0.5)
 		return
-	. = air_gases[/datum/gas/plasma]
-	var/plas = . ? .[MOLES] : 0
-	. = air_gases[/datum/gas/tritium]
-	var/trit = . ? .[MOLES] : 0
-	. = air_gases[/datum/gas/hydrogen]
-	var/h2 = . ? .[MOLES] : 0
-	. = air_gases[/datum/gas/freon]
-	var/freon = . ? .[MOLES] : 0
+
+	var/plas_trit_h2_threshold = (\
+		   cached_moles[/datum/gas/plasma] > 0.5\
+		|| cached_moles[/datum/gas/tritium] > 0.5\
+		|| cached_moles[/datum/gas/hydrogen] > 0.5)
+	var/freon_threshold = (cached_moles[/datum/gas/freon] > 0.5)
 	if(active_hotspot)
 		if(soh)
-			if(plas > 0.5 || trit > 0.5 || h2 > 0.5)
+			if(plas_trit_h2_threshold)
 				if(active_hotspot.temperature < exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
-			else if(freon > 0.5)
+			else if(freon_threshold)
 				if(active_hotspot.temperature > exposed_temperature)
 					active_hotspot.temperature = exposed_temperature
 				if(active_hotspot.volume < exposed_volume)
 					active_hotspot.volume = exposed_volume
 		return
 
-	if(((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && (plas > 0.5 || trit > 0.5 || h2 > 0.5)) || \
-		((exposed_temperature < FREON_MAXIMUM_BURN_TEMPERATURE) && (freon > 0.5)))
+	if (((exposed_temperature > PLASMA_MINIMUM_BURN_TEMPERATURE) && plas_trit_h2_threshold) || \
+		((exposed_temperature < FREON_MAXIMUM_BURN_TEMPERATURE) && freon_threshold))
 
 		new /obj/effect/hotspot(src, exposed_volume * 25, exposed_temperature)
 		SSair.add_to_active(src)
@@ -115,12 +111,15 @@
 		if(!to_check.active_hotspot)
 			continue
 		var/obj/effect/hotspot/enemy_spot = to_check.active_hotspot
+		// Safeguard to prevent infectious init runtimes for hotspots if we somehow end up with a hotspot without a group
+		if(!enemy_spot.our_hot_group)
+			continue
 		if(!our_hot_group)
 			enemy_spot.our_hot_group.add_to_group(src)
-		else if(our_hot_group != enemy_spot.our_hot_group && enemy_spot.our_hot_group) //if we belongs to a hot group from prior loop and we encounter another hot spot with a group then we merge
+		else if(our_hot_group != enemy_spot.our_hot_group) //if we belongs to a hot group from prior loop and we encounter another hot spot with a group then we merge
 			our_hot_group.merge_hot_groups(enemy_spot.our_hot_group)
 
-	if(!our_hot_group)//if after loop through all the adjacents turfs and we havent belong to a group yet, make our own
+	if(QDELETED(our_hot_group))//if after loop through all the adjacents turfs and we havent belong to a group yet, make our own
 		our_hot_group = new
 		our_hot_group.add_to_group(src)
 
@@ -279,7 +278,7 @@
 	color = list(LERP(0.3, 1, 1-greyscale_fire) * heat_r,0.3 * heat_g * greyscale_fire,0.3 * heat_b * greyscale_fire, 0.59 * heat_r * greyscale_fire,LERP(0.59, 1, 1-greyscale_fire) * heat_g,0.59 * heat_b * greyscale_fire, 0.11 * heat_r * greyscale_fire,0.11 * heat_g * greyscale_fire,LERP(0.11, 1, 1-greyscale_fire) * heat_b, 0,0,0)
 	alpha = heat_a
 
-#define INSUFFICIENT(path) (!location.air.gases[path] || location.air.gases[path][MOLES] < 0.5)
+#define INSUFFICIENT(path) (!location.air.moles[path] || location.air.moles[path] < 0.5)
 
 /**
  * Regular process proc for hotspots governed by the controller.

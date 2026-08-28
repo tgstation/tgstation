@@ -18,20 +18,19 @@
 #define THERMAL_PROTECTION_HAND_LEFT 0.025
 #define THERMAL_PROTECTION_HAND_RIGHT 0.025
 
-/mob/living/carbon/human/Life(seconds_per_tick = SSMOBS_DT, times_fired)
+/mob/living/carbon/human/Life(seconds_per_tick = SSMOBS_DT)
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
 
 	. = ..()
-
 	if(QDELETED(src))
 		return FALSE
 
 	// Body temperature stability and damage
-	dna.species.handle_body_temperature(src, seconds_per_tick, times_fired)
+	dna.species.handle_body_temperature(src, seconds_per_tick)
 	if(HAS_TRAIT(src, TRAIT_STASIS))
 		for(var/datum/wound/iter_wound as anything in all_wounds)
-			iter_wound.on_stasis(seconds_per_tick, times_fired)
+			iter_wound.on_stasis(seconds_per_tick)
 		return stat != DEAD
 
 	if(stat == DEAD)
@@ -39,14 +38,15 @@
 
 	// Handle active mutations
 	for(var/datum/mutation/mutation as anything in dna.mutations)
-		mutation.on_life(seconds_per_tick, times_fired)
+		mutation.on_life(seconds_per_tick)
 
 	// Heart attack stuff
-	handle_heart(seconds_per_tick, times_fired)
+	handle_heart(seconds_per_tick)
 	// Handles liver failure effects, if we lack a liver
-	handle_liver(seconds_per_tick, times_fired)
-	// For special species interactions
-	dna.species.spec_life(src, seconds_per_tick, times_fired)
+	handle_liver(seconds_per_tick)
+	// Crit damage but specifically for people who don't get suffocate while in crit so they can actually die eventually
+	if(HAS_TRAIT(src, TRAIT_NOBREATH) && (health < crit_threshold) && !HAS_TRAIT(src, TRAIT_NOCRITDAMAGE))
+		adjust_brute_loss(0.5 * seconds_per_tick)
 	return stat != DEAD
 
 /mob/living/carbon/human/calculate_affecting_pressure(pressure)
@@ -81,17 +81,16 @@
 	if(human_lungs)
 		return human_lungs.check_breath(breath, src)
 
-	if(health >= crit_threshold)
-		adjust_oxy_loss(HUMAN_MAX_OXYLOSS + 1)
-	else if(!HAS_TRAIT(src, TRAIT_NOCRITDAMAGE))
-		adjust_oxy_loss(HUMAN_CRIT_MAX_OXYLOSS)
+	var/oxy_damage = SUFFOCATION_OXYLOSS + 1
+	if(stat == SOFT_CRIT || stat == HARD_CRIT)
+		oxy_damage *= (HAS_TRAIT(src, TRAIT_NOCRITDAMAGE) ? 0 : SUFFOCATION_OXYLOSS_CRIT_MODIFIER)
+
+	if(oxy_damage > 0)
+		apply_damage(oxy_damage, OXY)
 
 	failed_last_breath = TRUE
-
-	var/datum/species/human_species = dna.species
-
-	switch(human_species.breathid)
-		if(GAS_O2)
+	switch(dna?.species?.get_breath_type())
+		if(GAS_O2, null) // null means use oxyloss alert by default
 			throw_alert(ALERT_NOT_ENOUGH_OXYGEN, /atom/movable/screen/alert/not_enough_oxy)
 		if(GAS_PLASMA)
 			throw_alert(ALERT_NOT_ENOUGH_PLASMA, /atom/movable/screen/alert/not_enough_plas)
@@ -99,15 +98,18 @@
 			throw_alert(ALERT_NOT_ENOUGH_CO2, /atom/movable/screen/alert/not_enough_co2)
 		if(GAS_N2)
 			throw_alert(ALERT_NOT_ENOUGH_NITRO, /atom/movable/screen/alert/not_enough_nitro)
+		else
+			stack_trace("Unsupported breath type for species [dna.species.name] in check_breath()")
+
 	return FALSE
 
 /// Environment handlers for species
-/mob/living/carbon/human/handle_environment(datum/gas_mixture/environment, seconds_per_tick, times_fired)
+/mob/living/carbon/human/handle_environment(datum/gas_mixture/environment, seconds_per_tick)
 	// If we are in a cryo bed do not process life functions
 	if(istype(loc, /obj/machinery/cryo_cell))
 		return
 
-	dna.species.handle_environment(src, environment, seconds_per_tick, times_fired)
+	dna.species.handle_environment(src, environment, seconds_per_tick)
 
 /**
  * Adjust the core temperature of a mob
@@ -275,19 +277,12 @@
 	return min(1, round(thermal_protection, 0.001))
 
 /mob/living/carbon/human/has_smoke_protection()
-	if(isclothing(wear_mask))
-		if(wear_mask.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
-			return TRUE
-	if(isclothing(glasses))
-		if(glasses.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
-			return TRUE
-	if(isclothing(head))
-		var/obj/item/clothing/CH = head
-		if(CH.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
+	for (var/obj/item/clothing/equip in get_equipped_items())
+		if(equip.clothing_flags & BLOCK_GAS_SMOKE_EFFECT)
 			return TRUE
 	return ..()
 
-/mob/living/carbon/human/proc/handle_heart(seconds_per_tick, times_fired)
+/mob/living/carbon/human/proc/handle_heart(seconds_per_tick)
 	var/we_breath = !HAS_TRAIT_FROM(src, TRAIT_NOBREATH, SPECIES_TRAIT)
 
 	if(!undergoing_cardiac_arrest())

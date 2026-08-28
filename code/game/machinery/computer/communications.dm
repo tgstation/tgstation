@@ -10,6 +10,7 @@
 /obj/machinery/computer/communications
 	name = "communications console"
 	desc = "A console used for high-priority announcements and emergencies."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/communications")
 	icon_screen = "comm"
 	icon_keyboard = "tech_key"
 	req_access = list(ACCESS_COMMAND)
@@ -59,6 +60,7 @@
 	var/last_toggled
 
 /obj/machinery/computer/communications/syndicate
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/communications/syndicate")
 	icon_screen = "commsyndie"
 	circuit = /obj/item/circuitboard/computer/communications/syndicate
 	req_access = list(ACCESS_SYNDICATE_LEADER)
@@ -110,11 +112,11 @@
 		return TRUE
 	return authenticated
 
-/obj/machinery/computer/communications/attackby(obj/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(isidcard(I))
-		attack_hand(user)
-	else
-		return ..()
+/obj/machinery/computer/communications/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!isidcard(tool))
+		return NONE
+	attack_hand(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/communications/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(istype(emag_card, /obj/item/card/emag/battlecruiser))
@@ -267,6 +269,19 @@
 				return
 			if (!can_purchase_this_shuttle(shuttle))
 				return
+			if (istype(shuttle, /datum/map_template/shuttle/emergency/departmental))
+				var/datum/map_template/shuttle/emergency/departmental/dept_shuttle = shuttle
+				if(dept_shuttle.department_type)
+					var/max_crew_count = 0
+					for(var/dept_type in SSjob.joinable_departments_by_type)
+						var/crew_count = get_department_employee_count(dept_type)
+						if(crew_count > max_crew_count)
+							max_crew_count = crew_count
+
+					var/crew_in_department = get_department_employee_count(dept_shuttle.department_type)
+					if(crew_in_department <= 0 || crew_in_department < max_crew_count)
+						to_chat(user, span_alert("This shuttle can be buyed only if this department has most employees."))
+						return
 			if (!shuttle.prerequisites_met())
 				to_chat(user, span_alert("You have not met the requirements for purchasing this shuttle."))
 				return
@@ -292,7 +307,7 @@
 			// AIs cannot recall the shuttle
 			if (!authenticated(user) || HAS_SILICON_ACCESS(user) || syndicate)
 				return
-			SSshuttle.cancelEvac(user)
+			SSshuttle.cancel_evac(user)
 		if ("requestNukeCodes")
 			if (!authenticated_as_non_silicon_captain(user))
 				return
@@ -335,7 +350,7 @@
 			if(soft_filter_result)
 				if(tgui_alert(user,"Your message contains \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". \"[soft_filter_result[CHAT_FILTER_INDEX_REASON]]\", Are you sure you want to use it?", "Soft Blocked Word", list("Yes", "No")) != "Yes")
 					return
-				message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[message]\"")
+				message_admins("[ADMIN_LOOKUPFLW(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[html_encode(message)]\"")
 				log_admin_private("[key_name(user)] has passed the soft filter for \"[soft_filter_result[CHAT_FILTER_INDEX_WORD]]\". They may be using a disallowed term for a cross-station message. Increasing delay time to reject.\n\n Message: \"[message]\"")
 				GLOB.communications_controller.soft_filtering = TRUE
 
@@ -343,7 +358,7 @@
 
 			var/destination = params["destination"]
 			if (!(destination in CONFIG_GET(keyed_list/cross_server)) && destination != "all")
-				message_admins("[ADMIN_LOOKUPFLW(user)] has passed an invalid destination into comms console cross-sector message. Message: \"[message]\"")
+				message_admins("[ADMIN_LOOKUPFLW(user)] has passed an invalid destination into comms console cross-sector message. Message: \"[html_encode(message)]\"")
 				return
 
 			user.log_message("is about to send the following message to [destination]: [message]", LOG_GAME)
@@ -353,7 +368,7 @@
 					"<b color='orange'>CROSS-SECTOR MESSAGE (OUTGOING):</b> [ADMIN_LOOKUPFLW(user)] is about to send \
 					the following message to <b>[destination]</b> (will autoapprove in [GLOB.communications_controller.soft_filtering ? DisplayTimeText(EXTENDED_CROSS_SECTOR_CANCEL_TIME) : DisplayTimeText(CROSS_SECTOR_CANCEL_TIME)]): \
 					<b><a href='byond://?src=[REF(src)];reject_cross_comms_message=1'>REJECT</a></b><br> \
-					[message]" \
+					[html_encode(message)]" \
 				)
 			)
 
@@ -575,7 +590,7 @@
 
 				if (SSshuttle.emergency.mode != SHUTTLE_IDLE && SSshuttle.emergency.mode != SHUTTLE_RECALL)
 					data["shuttleCalled"] = TRUE
-					data["shuttleRecallable"] = SSshuttle.canRecall() || syndicate
+					data["shuttleRecallable"] = SSshuttle.can_recall(user) || syndicate
 
 				if (SSshuttle.emergencyCallAmount)
 					data["shuttleCalledPreviously"] = TRUE
@@ -606,6 +621,27 @@
 					if (!can_purchase_this_shuttle(shuttle_template))
 						continue
 
+					var/department_locked = FALSE
+					var/department_name_string = ""
+
+					if (istype(shuttle_template, /datum/map_template/shuttle/emergency/departmental))
+						var/datum/map_template/shuttle/emergency/departmental/dept_shuttle = shuttle_template
+						department_name_string = dept_shuttle.department_name
+
+						if (dept_shuttle.department_type)
+							var/crew_in_department = get_department_employee_count(dept_shuttle.department_type)
+							if(crew_in_department <= 0)
+								department_locked = TRUE
+							else
+								for(var/other_id in SSmapping.shuttle_templates)
+									var/datum/map_template/shuttle/emergency/departmental/other_shuttle = SSmapping.shuttle_templates[other_id]
+									if(!istype(other_shuttle) || other_shuttle == dept_shuttle || !other_shuttle.department_type)
+										continue
+									var/crew_in_other_department = get_department_employee_count(other_shuttle.department_name)
+									if(crew_in_department < crew_in_other_department)
+										department_locked = TRUE
+										break
+
 					shuttles += list(list(
 						"name" = shuttle_template.name,
 						"description" = shuttle_template.description,
@@ -615,6 +651,8 @@
 						"emagOnly" = shuttle_template.emag_only,
 						"prerequisites" = shuttle_template.prerequisites,
 						"ref" = REF(shuttle_template),
+						"department_locked" = department_locked,
+						"department_name" = department_name_string,
 					))
 
 				data["budget"] = bank_account.account_balance
@@ -637,6 +675,8 @@
 		"callShuttleReasonMinLength" = CALL_SHUTTLE_REASON_LENGTH,
 		"maxStatusLineLength" = MAX_STATUS_LINE_LENGTH,
 		"maxMessageLength" = MAX_MESSAGE_LEN,
+		"displayed_currency_full_name" = " [MONEY_NAME]",
+		"displayed_currency_name" = " [MONEY_SYMBOL]",
 	)
 
 /obj/machinery/computer/communications/Topic(href, href_list)
@@ -715,6 +755,19 @@
 			return TRUE
 
 	return FALSE
+
+/// Used in checks of dept-locked shuttles.
+/// Determines number of employees in department.
+/obj/machinery/computer/communications/proc/get_department_employee_count(datum/job_department/target_department_type)
+	if(!target_department_type)
+		return
+	var/datum/job_department/current_department = SSjob.joinable_departments_by_type[target_department_type]
+	if(!istype(current_department))
+		return
+	var/total_crew_count = 0
+	for(var/datum/job/current_job in current_department.department_jobs)
+		total_crew_count += current_job.current_positions
+	return total_crew_count
 
 /obj/machinery/computer/communications/proc/can_send_messages_to_other_sectors(mob/user)
 	if (!authenticated_as_non_silicon_captain(user))

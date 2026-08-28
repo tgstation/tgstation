@@ -98,16 +98,19 @@
 		postmark_image.appearance_flags |= RESET_COLOR|KEEP_APART
 		. += postmark_image
 
-/obj/item/mail/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/mail/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	// Destination tagging
-	if(istype(W, /obj/item/dest_tagger))
-		var/obj/item/dest_tagger/destination_tag = W
+	if(!istype(tool, /obj/item/dest_tagger))
+		return NONE
+	var/obj/item/dest_tagger/destination_tag = tool
 
-		if(sort_tag != destination_tag.currTag)
-			var/tag = uppertext(GLOB.TAGGERLOCATIONS[destination_tag.currTag])
-			to_chat(user, span_notice("*[tag]*"))
-			sort_tag = destination_tag.currTag
-			playsound(loc, 'sound/machines/beep/twobeep_high.ogg', vol = 100, vary = TRUE)
+	if(sort_tag == destination_tag.currTag)
+		return ITEM_INTERACT_BLOCKING
+	var/tag = uppertext(GLOB.TAGGERLOCATIONS[destination_tag.currTag])
+	to_chat(user, span_notice("*[tag]*"))
+	sort_tag = destination_tag.currTag
+	playsound(loc, 'sound/machines/beep/twobeep_high.ogg', vol = 100, vary = TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/mail/multitool_act(mob/living/user, obj/item/tool)
 	if(user.get_inactive_held_item() == src)
@@ -400,10 +403,18 @@
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
 	playsound(loc, 'sound/items/poster/poster_ripped.ogg', vol = 50, vary = TRUE)
 	for(var/obj/item/stuff as anything in contents) // Mail and envelope actually can have more than 1 item.
-		if(user.put_in_hands(stuff) && armed)
-			var/whomst = made_by_cached_name ? "[made_by_cached_name] ([made_by_cached_ckey])" : "no one in particular"
-			log_bomber(user, "opened armed mail made by [whomst], activating", stuff)
-			INVOKE_ASYNC(stuff, TYPE_PROC_REF(/obj/item, attack_self), user)
+		if(!armed)
+			continue
+		var/whomst = made_by_cached_name ? "[made_by_cached_name] ([made_by_cached_ckey])" : "no one in particular"
+		log_bomber(user, "opened armed mail made by [whomst], activating", stuff)
+
+		if(SEND_SIGNAL(stuff, COMSIG_ITEM_IN_UNWRAPPED_TRAITOR_MAIL, user, src) & COMPONENT_TRAITOR_MAIL_HANDLED)
+			continue
+
+		if(!user.put_in_hands(stuff))
+			continue
+
+		INVOKE_ASYNC(stuff, TYPE_PROC_REF(/obj/item, attack_self), user)
 	qdel(src)
 	return TRUE
 
@@ -418,20 +429,18 @@
 		playsound(src, 'sound/machines/defib/defib_ready.ogg', vol = 100, vary = TRUE)
 		armed = FALSE
 		return TRUE
-	else
-		balloon_alert(user, "tinkering with something...")
+	balloon_alert(user, "tinkering with something...")
 
-		if(!do_after(user, 2 SECONDS, target = src))
-			after_unwrap(user)
-			return FALSE
-		if(prob(50))
-			balloon_alert(user, "disarmed something...?")
-			playsound(src, 'sound/machines/defib/defib_ready.ogg', vol = 100, vary = TRUE)
-			armed = FALSE
-			return TRUE
-		else
-			after_unwrap(user)
-			return TRUE
+	if(!do_after(user, 2 SECONDS, target = src))
+		after_unwrap(user)
+		return FALSE
+	if(prob(50))
+		balloon_alert(user, "disarmed something...?")
+		playsound(src, 'sound/machines/defib/defib_ready.ogg', vol = 100, vary = TRUE)
+		armed = FALSE
+		return TRUE
+	after_unwrap(user)
+	return TRUE
 
 ///Generic mail used in the mail strike shuttle loan event
 /obj/item/mail/mail_strike

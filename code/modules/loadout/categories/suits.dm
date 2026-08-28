@@ -40,3 +40,19 @@
 		/datum/job/paramedic = "#28324b",
 		/datum/job/prisoner = "#ff8b00",
 	)
+
+/datum/loadout_item/suit/hoodie_pullover
+	name = "Pullover"
+	item_path = /obj/item/clothing/suit/hooded/wintercoat/pullover
+
+/datum/loadout_item/suit/hoodie_zipup
+	name = "Zipup"
+	item_path = /obj/item/clothing/suit/hooded/wintercoat/zipup
+
+/datum/loadout_item/suit/wintercoat
+	name = "Winter Coat (Departmental)"
+	item_path = /obj/item/clothing/suit/hooded/wintercoat
+
+/datum/loadout_item/suit/wintercoat/insert_path_into_outfit(datum/outfit/outfit, mob/living/carbon/human/equipper, visuals_only = FALSE)
+	. = ..()
+	outfit.suit = astype(outfit, /datum/outfit/job)?.wintercoat || item_path

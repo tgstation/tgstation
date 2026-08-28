@@ -1,0 +1,7 @@
+# Replaces /obj/item/bitrunning_disk with /obj/item/disk/bitrunning
+
+/obj/item/bitrunning_disk : /obj/item/disk/bitrunning{@OLD}
+/obj/item/bitrunning_disk/@SUBTYPES : /obj/item/disk/bitrunning/@SUBTYPES{@OLD}
+
+/obj/item/computer_disk : /obj/item/disk/computer{@OLD}
+/obj/item/computer_disk/@SUBTYPES : /obj/item/disk/computer/@SUBTYPES{@OLD}

@@ -1,5 +1,6 @@
 /datum/map_template/shuttle/arrival
 	port_id = "arrival"
+	prefix = "_maps/shuttles/arrival/"
 	who_can_purchase = null
 
 /datum/map_template/shuttle/arrival/box

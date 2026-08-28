@@ -3,7 +3,7 @@
 	description = "Keep yourself occupied in permabrig."
 	faction = FACTION_STATION
 	total_positions = 0
-	spawn_positions = 2
+	spawn_positions = 4
 	supervisors = "the security team"
 	exp_granted_type = EXP_TYPE_CREW
 	paycheck = PAYCHECK_LOWER
@@ -23,6 +23,7 @@
 	family_heirlooms = list(/obj/item/pen/blue)
 	rpg_title = "Defeated Miniboss"
 	job_flags = STATION_JOB_FLAGS | JOB_CANNOT_OPEN_SLOTS | JOB_ANTAG_PROTECTED & ~JOB_REOPEN_ON_ROUNDSTART_LOSS
+	tgui_icon = FA_ICON_LOCK
 
 /datum/job/prisoner/New()
 	. = ..()
@@ -73,7 +74,7 @@
 	var/datum/prisoner_crime/crime = GLOB.prisoner_crimes[crime_name]
 	if (isnull(crime))
 		return
-	var/list/limbs_to_tat = new_prisoner.bodyparts.Copy()
+	var/list/limbs_to_tat = new_prisoner.get_bodyparts()
 	for(var/i in 1 to crime.tattoos)
 		if(!length(SSpersistence.prison_tattoos_to_use) || visuals_only)
 			return

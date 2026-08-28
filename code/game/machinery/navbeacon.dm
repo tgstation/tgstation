@@ -5,6 +5,7 @@
 
 	icon = 'icons/obj/machines/floor.dmi'
 	icon_state = "navbeacon0"
+	base_icon_state = "navbeacon"
 	name = "navigation beacon"
 	desc = "A radio beacon used for bot navigation."
 	layer = LOW_OBJ_LAYER
@@ -25,7 +26,7 @@
 	/// codes as set on map: "tag1;tag2" or "tag1=value;tag2=value"
 	var/codes_txt = ""
 
-	req_one_access = list(ACCESS_ENGINEERING, ACCESS_ROBOTICS)
+	req_one_access = list(ACCESS_CARGO, ACCESS_ENGINEERING, ACCESS_ROBOTICS)
 
 /datum/armor/machinery_navbeacon
 	melee = 70
@@ -106,33 +107,35 @@
 		GLOB.deliverybeacontags += location
 
 /obj/machinery/navbeacon/crowbar_act(mob/living/user, obj/item/I)
-	if(default_deconstruction_crowbar(I))
-		return TRUE
+	return default_deconstruction_crowbar(user, I)
 
 /obj/machinery/navbeacon/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!panel_open && cover_locked)
 		balloon_alert(user, "hatch locked!")
-		return TRUE
-	return default_deconstruction_screwdriver(user, "navbeacon1","navbeacon0",tool)
+		return ITEM_INTERACT_BLOCKING
+	return default_deconstruction_screwdriver(user, tool)
 
-/obj/machinery/navbeacon/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/navbeacon/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state][panel_open]"
+
+/obj/machinery/navbeacon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/turf/our_turf = loc
 	if(our_turf.underfloor_accessibility < UNDERFLOOR_INTERACTABLE)
-		return // prevent intraction when T-scanner revealed
+		return ITEM_INTERACT_BLOCKING// prevent interaction when T-scanner revealed
 
-	if (attacking_item.GetID())
-		if(!panel_open)
-			if (allowed(user))
-				controls_locked = !controls_locked
-				balloon_alert(user, "controls [controls_locked ? "locked" : "unlocked"]")
-				SStgui.update_uis(src)
-			else
-				balloon_alert(user, "access denied")
-		else
-			balloon_alert(user, "panel open!")
-		return
-
-	return ..()
+	if(!tool.GetID())
+		return NONE
+	if(panel_open)
+		balloon_alert(user, "panel open!")
+		return ITEM_INTERACT_BLOCKING
+	if (!allowed(user))
+		balloon_alert(user, "access denied")
+		return ITEM_INTERACT_BLOCKING
+	controls_locked = !controls_locked
+	balloon_alert(user, "controls [controls_locked ? "locked" : "unlocked"]")
+	SStgui.update_uis(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/navbeacon/attack_ai(mob/user)
 	interact(user)

@@ -2,7 +2,7 @@
 /// Queues image generation for search objects without icons
 SUBSYSTEM_DEF(looting)
 	name = "Loot Icon Generation"
-	flags = SS_NO_INIT
+	ss_flags = SS_NO_INIT
 	priority = FIRE_PRIORITY_PROCESS
 	runlevels = RUNLEVEL_LOBBY|RUNLEVELS_DEFAULT
 	wait = 0.5 SECONDS
@@ -18,7 +18,7 @@ SUBSYSTEM_DEF(looting)
 
 
 /datum/controller/subsystem/looting/fire(resumed)
-	if(!length(backlog))
+	if(!length(backlog) && !length(processing))
 		return
 
 	if(!resumed)

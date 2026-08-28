@@ -78,7 +78,7 @@
 		return
 	var/icon/size_check = icon(mob_parent.icon, mob_parent.icon_state, mob_parent.dir)
 	holder.pixel_y = size_check.Height() - ICON_SIZE_Y
-	if(mob_parent.stat == DEAD || HAS_TRAIT(mob_parent, TRAIT_FAKEDEATH) || isnull(mainframe))
+	if(IS_DEAD_OR_FAKING(mob_parent) || isnull(mainframe))
 		holder.icon_state = "huddead2"
 		holder.pixel_x = -8 // new icon states? nuh uh
 	else
@@ -151,7 +151,7 @@
 		implant.radio.command = TRUE
 		implant.radio.channels = AI.radio.channels
 		for(var/channel in implant.radio.channels)
-			implant.radio.secure_radio_connections[channel] = add_radio(implant.radio, GLOB.default_radio_channels[channel])
+			LAZYSET(implant.radio.secure_radio_connections, channel, add_radio(implant.radio, GLOB.default_radio_channels[channel]))
 
 /obj/item/organ/brain/cybernetic/ai/proc/undeploy(datum/source)
 	SIGNAL_HANDLER

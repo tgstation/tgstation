@@ -7,6 +7,7 @@
 	category = PREFERENCE_CATEGORY_NON_CONTEXTUAL
 	savefile_identifier = PREFERENCE_CHARACTER
 	savefile_key = "silicon_gender"
+	should_update_preview = FALSE
 	var/static/use_character_gender = "Use character gender"
 	///Used to convert the read value of this preference into a gender
 	var/static/list/pronouns_to_genders = list(
@@ -28,7 +29,7 @@
 /datum/preference/choiced/silicon_gender/create_default_value()
 	return SILICON_NEUTER
 
-/datum/preference/choiced/silicon_gender/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/silicon_gender/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return
 
 #undef SILICON_MALE

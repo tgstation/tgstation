@@ -1,19 +1,19 @@
 /datum/disease/brainrot
 	name = "Brainrot"
 	max_stages = 4
-	spread_text = "On contact"
+	spread_text = "Skin contact"
 	spread_flags = DISEASE_SPREAD_BLOOD | DISEASE_SPREAD_CONTACT_SKIN | DISEASE_SPREAD_CONTACT_FLUIDS
-	cure_text = "Mannitol"
+	cure_text = /datum/reagent/medicine/mannitol::name
 	cures = list(/datum/reagent/medicine/mannitol)
 	agent = "Cryptococcus Cosmosis"
 	viable_mobtypes = list(/mob/living/carbon/human)
 	cure_chance = 7.5 //higher chance to cure, since two reagents are required
-	desc = "This disease destroys the brain cells, causing brain fever, brain necrosis and general intoxication."
+	desc = "A disease which targets brain cells, leading to brain fog - though it is otherwise non-lethal."
 	required_organ = ORGAN_SLOT_BRAIN
 	severity = DISEASE_SEVERITY_HARMFUL
 	bypasses_immunity = TRUE
 
-/datum/disease/brainrot/stage_act(seconds_per_tick, times_fired) //Removed toxloss because damaging diseases are pretty horrible. Last round it killed the entire station because the cure didn't work -- Urist -ACTUALLY Removed rather than commented out, I don't see it returning - RR
+/datum/disease/brainrot/stage_act(seconds_per_tick) //Removed toxloss because damaging diseases are pretty horrible. Last round it killed the entire station because the cure didn't work -- Urist -ACTUALLY Removed rather than commented out, I don't see it returning - RR
 	. = ..()
 	if(!.)
 		return

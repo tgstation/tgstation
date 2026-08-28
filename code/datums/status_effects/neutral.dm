@@ -67,7 +67,7 @@
 /atom/movable/screen/alert/status_effect/in_love
 	name = "In Love"
 	desc = "You feel so wonderfully in love!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "in_love"
 
 /datum/status_effect/in_love
@@ -170,7 +170,7 @@
 /atom/movable/screen/alert/status_effect/heldup
 	name = "Held Up"
 	desc = "Making any sudden moves would probably be a bad idea!"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "aimed"
 
 /datum/status_effect/grouped/heldup/on_apply()
@@ -192,7 +192,7 @@
 /atom/movable/screen/alert/status_effect/holdup
 	name = "Holding Up"
 	desc = "You're currently pointing a gun at someone. Click to cancel."
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "aimed"
 	clickable_glow = TRUE
 
@@ -214,6 +214,8 @@
 	var/list/possible_takers
 	/// The actual item being offered
 	var/obj/item/offered_item
+	///If we should bypass active_hand checks.
+	var/bypass_active_hand = FALSE
 	/// The type of alert given to people when offered, in case you need to override some behavior (like for high-fives)
 	var/give_alert_type = /atom/movable/screen/alert/give
 
@@ -268,7 +270,7 @@
 /// One of our possible takers moved, see if they left us hanging
 /datum/status_effect/offering/proc/check_taker_in_range(mob/living/taker)
 	SIGNAL_HANDLER
-	if(taker.IsReachableBy(owner) || ((owner.pulling == taker) || (taker.pulling == owner)) && !IS_DEAD_OR_INCAP(taker))
+	if(taker.IsReachableBy(owner) || ((owner.pulling == taker) || (taker.pulling == owner)) && !taker.incapacitated)
 		return
 
 	to_chat(taker, span_warning("You moved out of range of [owner]!"))
@@ -279,7 +281,7 @@
 	SIGNAL_HANDLER
 
 	for(var/mob/living/checking_taker as anything in possible_takers)
-		if(!istype(checking_taker) || (!checking_taker.IsReachableBy(owner) && !((owner.pulling == checking_taker) || (checking_taker.pulling == owner))) || IS_DEAD_OR_INCAP(checking_taker))
+		if(!istype(checking_taker) || (!checking_taker.IsReachableBy(owner) && !((owner.pulling == checking_taker) || (checking_taker.pulling == owner))) || checking_taker.incapacitated)
 			remove_candidate(checking_taker)
 
 /// We lost the item, give it up
@@ -294,10 +296,10 @@
  * Returns `TRUE` if the taker is valid as a target for the offering.
  */
 /datum/status_effect/offering/proc/is_taker_elligible(mob/living/taker)
-	return taker.IsReachableBy(owner) && !IS_DEAD_OR_INCAP(taker) && additional_taker_check(taker)
+	return taker.IsReachableBy(owner) && !taker.incapacitated && additional_taker_check(taker)
 
 /**
- * Additional checks added to `CanReach()` and `IS_DEAD_OR_INCAP()` in `is_taker_elligible()`.
+ * Additional checks added to `CanReach()` and `incapacitated` in `is_taker_elligible()`.
  * Should be what you override instead of `is_taker_elligible()`. By default, checks if the
  * taker can hold items.
  *
@@ -376,7 +378,7 @@
 /atom/movable/screen/alert/status_effect/surrender
 	name = "Surrender"
 	desc = "Looks like you're in trouble now, bud. Click here to surrender. (Warning: You will be incapacitated.)"
-	use_user_hud_icon = TRUE
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "surrender"
 	clickable_glow = TRUE
 
@@ -615,6 +617,30 @@
 /datum/status_effect/tinlux_light/on_remove()
 	QDEL_NULL(mob_light_obj)
 
+///Makes the mob glow blue and rarely emit nuclear particles
+/datum/status_effect/cherenkov_radiation
+	id = "cherenkov_radiation"
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	remove_on_fullheal = TRUE
+	alert_type = null
+	var/obj/effect/dummy/lighting_obj/moblight/mob_light_obj
+
+/datum/status_effect/cherenkov_radiation/on_creation(mob/living/new_owner, duration)
+	if(duration)
+		src.duration = duration
+	return ..()
+
+/datum/status_effect/cherenkov_radiation/on_apply()
+	mob_light_obj = owner.mob_light(2, 4, "#33ddff")
+	return TRUE
+
+/datum/status_effect/cherenkov_radiation/tick(seconds_between_ticks)
+	if(prob(3))
+		owner.fire_nuclear_particle()
+
+/datum/status_effect/cherenkov_radiation/on_remove()
+	QDEL_NULL(mob_light_obj)
+
 /datum/status_effect/gutted
 	id = "gutted"
 	alert_type = null
@@ -773,22 +799,27 @@
 /datum/status_effect/spotlight_light/on_apply()
 	mob_light_obj = owner.mob_light(2, 1.5, spotlight_color)
 
+	var/turf/owner_turf = get_turf(owner)
+
 	beam_from_above_a = new /obj/effect/overlay/spotlight
 	beam_from_above_a.color = spotlight_color
 	beam_from_above_a.alpha = BEAM_ALPHA
-	owner.vis_contents += beam_from_above_a
 	beam_from_above_a.layer = BELOW_MOB_LAYER
+	SET_PLANE(beam_from_above_a, PLANE_TO_TRUE(beam_from_above_a.plane), owner_turf)
+	owner.vis_contents += beam_from_above_a
 
 	beam_from_above_b = new /obj/effect/overlay/spotlight
 	beam_from_above_b.color = spotlight_color
 	beam_from_above_b.alpha = BEAM_ALPHA
 	beam_from_above_b.layer = ABOVE_MOB_LAYER
 	beam_from_above_b.pixel_y = -2 //Slight vertical offset for an illusion of volume
+	SET_PLANE(beam_from_above_b, PLANE_TO_TRUE(beam_from_above_b.plane), owner_turf)
 	owner.vis_contents += beam_from_above_b
 
 	if(additional_overlay)
 		owner.add_overlay(additional_overlay)
 
+	RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_change))
 	return TRUE
 
 /datum/status_effect/spotlight_light/on_remove()
@@ -800,6 +831,13 @@
 
 	if(additional_overlay)
 		owner.cut_overlay(additional_overlay)
+
+	UnregisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED)
+
+/datum/status_effect/spotlight_light/proc/on_z_change(mob/living/source, turf/old_turf, turf/new_turf, same_z_layer)
+	SIGNAL_HANDLER
+	SET_PLANE(beam_from_above_a, PLANE_TO_TRUE(beam_from_above_a.plane), new_turf)
+	SET_PLANE(beam_from_above_b, PLANE_TO_TRUE(beam_from_above_b.plane), new_turf)
 
 /datum/status_effect/spotlight_light/divine
 	id = "divine_spotlight"
@@ -855,3 +893,60 @@
 		owner.add_mood_event("[id]_[moodlet_type]", moodlet_type)
 	else
 		owner.clear_mood_event("[id]_[moodlet_type]")
+
+/datum/status_effect/admin_esp
+	id = "admin_esp"
+	duration = STATUS_EFFECT_PERMANENT
+	tick_interval = STATUS_EFFECT_NO_TICK
+	status_type = STATUS_EFFECT_UNIQUE
+	alert_type = null
+	/// What the mob's see_invisible should be once this status effect is removed
+	VAR_PRIVATE/real_invis_see
+
+/datum/status_effect/admin_esp/on_apply()
+	real_invis_see = owner.see_invisible
+	owner.set_invis_see(SEE_INVISIBLE_ADMIN)
+	RegisterSignal(owner, COMSIG_MOB_SEE_INVIS_CHANGE, PROC_REF(on_invis_changed))
+	return TRUE
+
+/datum/status_effect/admin_esp/on_remove()
+	UnregisterSignal(owner, COMSIG_MOB_SEE_INVIS_CHANGE)
+	owner.set_invis_see(real_invis_see) // restore our 'real' invis_see
+
+/// Whenever our invis_see updates from some other source, keep real_invis_see up to date
+/datum/status_effect/admin_esp/proc/on_invis_changed(datum/source, see_invis, old_invis)
+	SIGNAL_HANDLER
+
+	real_invis_see = see_invis
+
+// Applies a little arrow above the mobs head to let the players know that it's subject to holding up the waves being spawned.
+/datum/status_effect/heads_up
+	id = "heads_up_arrow"
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	alert_type = null
+	on_remove_on_mob_delete = TRUE
+	var/obj/effect/overlay/wave_headsup/arrow_overlay
+
+/datum/status_effect/heads_up/on_apply()
+	. = ..()
+	var/turf/owner_turf = get_turf(owner)
+	arrow_overlay = new /obj/effect/overlay/wave_headsup
+	arrow_overlay.pixel_x = -(owner.base_pixel_x)
+	SET_PLANE(arrow_overlay, PLANE_TO_TRUE(arrow_overlay.plane), owner_turf)
+	owner.vis_contents += arrow_overlay
+	RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_change))
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+
+/datum/status_effect/heads_up/on_remove()
+	owner.vis_contents -= arrow_overlay
+	QDEL_NULL(arrow_overlay)
+	UnregisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED)
+
+/datum/status_effect/heads_up/proc/on_z_change(mob/living/source, turf/old_turf, turf/new_turf, same_z_layer)
+	SIGNAL_HANDLER
+	SET_PLANE(arrow_overlay, PLANE_TO_TRUE(arrow_overlay.plane), new_turf)
+
+/// We delete the status effect and visual on mob death.
+/datum/status_effect/heads_up/proc/on_death(mob/living/source)
+	SIGNAL_HANDLER
+	qdel(src)

@@ -9,6 +9,12 @@
 	purchase_path = /obj/item/reagent_containers/hypospray/medipen/survival/luxury
 	cost_per_order = 750
 
+// slime accounts get ourple pen :3
+/datum/orderable_item/consumables/luxury_pen/get_purchased_item(mob/living/user, obj/item/card/id/card)
+	if(cmptext(trimtext(find_record(card.registered_account?.account_holder)?.species), /datum/species/jelly::name))
+		return /obj/item/reagent_containers/hypospray/medipen/survival/luxury/purple
+	return ..()
+
 /datum/orderable_item/consumables/medkit
 	purchase_path = /obj/item/storage/medkit/brute
 	cost_per_order = 400
@@ -41,6 +47,10 @@
 /datum/orderable_item/consumables/tracking_implants
 	purchase_path = /obj/item/storage/box/minertracker
 	cost_per_order = 600
+
+/datum/orderable_item/consumables/deathrattle_implants
+	purchase_path = /obj/item/storage/box/minerdeathrattle
+	cost_per_order = 900
 
 /datum/orderable_item/consumables/space_cash
 	purchase_path = /obj/item/stack/spacecash/c1000

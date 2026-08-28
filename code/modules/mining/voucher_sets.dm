@@ -40,23 +40,24 @@
 
 /datum/voucher_set/mining/crusher_kit
 	name = "Crusher Kit"
-	description = "Contains a kinetic crusher and a pocket fire extinguisher. Kinetic crusher is a versatile melee mining tool capable both of mining and fighting local fauna, however it is difficult to use effectively for anyone but most skilled and/or suicidal miners."
+	description = "Contains a kinetic crusher, expanded pocket oxygen tank and a pocket fire extinguisher. Kinetic crusher is a versatile melee mining tool capable both of mining and fighting local fauna, however it is difficult to use effectively for anyone but most skilled and/or suicidal miners."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "crusher"
 	set_items = list(
 		/obj/item/kinetic_crusher,
 		/obj/item/extinguisher/mini,
+		/obj/item/tank/internals/emergency_oxygen/engi,
 	)
 
 /datum/voucher_set/mining/extraction_kit
 	name = "Extraction and Rescue Kit"
-	description = "Contains a fulton extraction pack and a beacon signaller, which allows you to send back home minerals, items and dead bodies without having to use the mining shuttle. And as a bonus, you get 30 marker beacons to help you better mark your path."
+	description = "Contains a fulton extraction pack and a beacon signaller, which allows you to send minerals, items, dead bodies and yourself through the \"Candela\" navigation network. And as a bonus, you get 30 navigation beacons for free."
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_pack"
 	set_items = list(
-		/obj/item/extraction_pack,
-		/obj/item/fulton_core,
-		/obj/item/stack/marker_beacon/thirty,
+		/obj/item/extraction_pack/networked,
+		/obj/item/fulton_core/networked,
+		/obj/item/stack/candela_beacon/thirty,
 	)
 
 /datum/voucher_set/mining/resonator_kit

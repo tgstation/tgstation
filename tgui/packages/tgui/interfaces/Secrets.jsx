@@ -120,13 +120,13 @@ const HelpfulTab = (props) => {
       <Stack.Item>
         <Stack fill>
           <Stack.Item>
-            <NoticeBox
-              mb={-0.5}
+            <Button
+              icon="plane-slash"
+              lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
-              height={lineHeightNormal}
-            >
-              Your admin button here, coder!
-            </NoticeBox>
+              content="Fix station gravity"
+              onClick={() => act('fix_gravity')}
+            />
           </Stack.Item>
           <Stack.Item>
             <Button
@@ -231,13 +231,13 @@ const HelpfulTab = (props) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <Button
-              icon="moon"
-              lineHeight={lineHeightNormal}
+            <NoticeBox
+              mb={-0.5}
               width={buttonWidthNormal}
-              content="Set Nightshift"
-              onClick={() => act('night_shift_set')}
-            />
+              height={lineHeightNormal}
+            >
+              Your admin button here, coder!
+            </NoticeBox>
           </Stack.Item>
         </Stack>
       </Stack.Item>
@@ -417,20 +417,20 @@ const FunTab = (props) => {
           </Stack.Item>
           <Stack.Item>
             <Button
-              icon="dollar-sign"
-              lineHeight={lineHeightNormal}
-              width={buttonWidthNormal}
-              content="Ancap Station"
-              onClick={() => act('ancap')}
-            />
-          </Stack.Item>
-          <Stack.Item>
-            <Button
               icon="house"
               lineHeight={lineHeightNormal}
               width={buttonWidthNormal}
               content="Send Shuttle Back"
               onClick={() => act('send_shuttle_back')}
+            />
+          </Stack.Item>
+          <Stack.Item>
+            <Button
+              icon="oil-well"
+              lineHeight={lineHeightNormal}
+              width={buttonWidthNormal}
+              content="Tap Ore Vents"
+              onClick={() => act('ore_vents')}
             />
           </Stack.Item>
         </Stack>
@@ -575,6 +575,36 @@ const FunForYouTab = (props) => {
         </Stack>
       </Stack.Item>
       <Stack.Item>
+        <Stack fill>
+          <Stack.Item>
+            <NoticeBox danger width={19.6} mb={0}>
+              <Button
+                color="red"
+                icon="explosion"
+                fluid
+                content="CASCAAADE"
+                onClick={() => act('cascade')}
+              />
+            </NoticeBox>
+          </Stack.Item>
+          <Stack.Item>
+            <Stack fill>
+              <Stack.Item>
+                <NoticeBox danger width={19.6} mb={0}>
+                  <Button
+                    color="red"
+                    icon="burst"
+                    fluid
+                    content="Toggle Meteor Mode"
+                    onClick={() => act('meteormode')}
+                  />
+                </NoticeBox>
+              </Stack.Item>
+            </Stack>
+          </Stack.Item>
+        </Stack>
+      </Stack.Item>
+      <Stack.Item>
         <Stack>
           <Stack.Item>
             <NoticeBox danger width={19.6} mb={0}>
@@ -637,7 +667,7 @@ export const Secrets = (props) => {
   const TabComponent = TAB2NAME[tabIndex - 1].component();
 
   return (
-    <Window title="Secrets Panel" width={500} height={488} theme="admin">
+    <Window title="Secrets Panel" width={500} height={520} theme="admin">
       <Window.Content>
         <Flex direction="column" height="100%">
           <Flex.Item mb={1}>

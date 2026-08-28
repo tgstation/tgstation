@@ -122,7 +122,7 @@
 	name = "Monkey Hide"
 	description = "One of the scientists at CentCom is interested in testing products on monkey skin. Your mission is to acquire monkey's hide and ship it."
 	reward = CARGO_CRATE_VALUE * 3
-	wanted_types = list(/obj/item/stack/sheet/animalhide/monkey = TRUE)
+	wanted_types = list(/obj/item/stack/sheet/animalhide/carbon/monkey = TRUE)
 
 /datum/bounty/item/assistant/dead_mice
 	name = "Dead Mice"
@@ -143,7 +143,7 @@
 	description = "Commander Zot has the hots for Commander Zena. Send a shipment of geraniums - her favorite flower - and he'll happily reward you."
 	reward = CARGO_CRATE_VALUE * 8
 	required_count = 3
-	wanted_types = list(/obj/item/food/grown/poppy/geranium = TRUE)
+	wanted_types = list(/obj/item/food/grown/flower/poppy/geranium = TRUE)
 	include_subtypes = FALSE
 
 /datum/bounty/item/assistant/poppy
@@ -151,7 +151,7 @@
 	description = "Commander Zot really wants to sweep Security Officer Olivia off her feet. Send a shipment of Poppies - her favorite flower - and he'll happily reward you."
 	reward = CARGO_CRATE_VALUE * 2
 	required_count = 3
-	wanted_types = list(/obj/item/food/grown/poppy = TRUE)
+	wanted_types = list(/obj/item/food/grown/flower/poppy = TRUE)
 	include_subtypes = FALSE
 
 /datum/bounty/item/assistant/potted_plants

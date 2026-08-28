@@ -34,9 +34,7 @@
 		moblocs.len -= 1
 
 	for(var/mob/living/carbon/human/victim in GLOB.alive_mob_list)
-		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(0, holder = victim, location = victim.loc)
-		smoke.start()
+		do_smoke(0, victim, victim.loc)
 
 //---//
 
@@ -69,9 +67,7 @@
 		mobnames.len -= 1
 
 	for(var/mob/living/carbon/human/victim in GLOB.alive_mob_list)
-		var/datum/effect_system/fluid_spread/smoke/smoke = new
-		smoke.set_up(0, holder = victim, location = victim.loc)
-		smoke.start()
+		do_smoke(0, victim, victim.loc)
 
 //---//
 
@@ -87,7 +83,7 @@
 	var/list/mobs_to_swap = list()
 
 	for(var/mob/living/carbon/human/alive_human in GLOB.alive_mob_list)
-		if(alive_human.stat != CONSCIOUS || isnull(alive_human.mind) || IS_WIZARD(alive_human) || HAS_TRAIT(alive_human, TRAIT_NO_MINDSWAP))
+		if(IS_UNCONSCIOUS_OR_CRIT(alive_human) || isnull(alive_human.mind) || IS_WIZARD(alive_human) || HAS_TRAIT(alive_human, TRAIT_NO_MINDSWAP))
 			continue //the wizard(s) are spared on this one
 		mobs_to_swap += alive_human
 
@@ -107,6 +103,4 @@
 	qdel(swapper)
 
 	for(var/mob/living/carbon/human/alive_human in GLOB.alive_mob_list)
-		var/datum/effect_system/fluid_spread/smoke/smoke = new()
-		smoke.set_up(0, holder = alive_human, location = alive_human.loc)
-		smoke.start()
+		do_smoke(0, alive_human, alive_human.loc)

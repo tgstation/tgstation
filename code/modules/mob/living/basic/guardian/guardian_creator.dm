@@ -25,6 +25,10 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	var/use_message = span_holoparasite("You shuffle the deck...")
 	/// Message sent when it's already used.
 	var/used_message = span_holoparasite("All the cards seem to be blank now.")
+	/// Examine description if the creator is unused
+	var/unused_description = span_holoparasite("You feel beckoned to draw one...")
+	/// Examine description if the creator is used.
+	var/used_description = span_holoparasite("They seem rather uninteresting.")
 	/// Failure message if no ghost picks the holopara.
 	var/failure_message = span_boldholoparasite("..And draw a card! It's... blank? Maybe you should try again later.")
 	/// Failure message if we don't allow lings.
@@ -113,6 +117,13 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 		to_chat(user, failure_message)
 		used = FALSE
 
+/obj/item/guardian_creator/examine(mob/user)
+	. = ..()
+	if(used)
+		. += span_holoparasite(used_description)
+	else
+		. += span_holoparasite(unused_description)
+
 /obj/item/guardian_creator/proc/on_reimbursed(datum/source)
 	SIGNAL_HANDLER
 	was_refunded = TRUE
@@ -135,6 +146,7 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	to_chat(user, guardian_theme.get_fluff_string(summoned_guardian.guardian_type))
 	to_chat(user, replacetext(success_message, "%GUARDIAN", mob_name))
 	summoned_guardian.client?.init_verbs()
+	summoned_guardian.updatehealth() // Set the initial health hud
 	return summoned_guardian
 
 /// Checks to ensure we're still capable of using the radial selector
@@ -184,6 +196,8 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	allow_changeling = FALSE
 	use_message = span_holoparasite("You start to power on the injector...")
 	used_message = span_holoparasite("The injector has already been used.")
+	unused_description = span_holoparasite("Its vial is filled with a violent storm of color.")
+	used_description = span_holoparasite("Nothing seems to be loaded in the injector.")
 	failure_message = span_boldholoparasite("...ERROR. BOOT SEQUENCE ABORTED. AI FAILED TO INTIALIZE. PLEASE CONTACT SUPPORT OR TRY AGAIN LATER.")
 	ling_failure = span_boldholoparasite("The holoparasites recoil in horror. They want nothing to do with a creature like you.")
 	success_message = span_holoparasite("<b>%GUARDIAN</b> is now online!")
@@ -197,6 +211,8 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	theme = GUARDIAN_THEME_CARP
 	use_message = span_holoparasite("You put the fishsticks in your mouth...")
 	used_message = span_holoparasite("Someone's already taken a bite out of these fishsticks! Ew.")
+	unused_description = span_holoparasite("They look hot and ready to eat!")
+	used_description = span_holoparasite("They look soggy and old...")
 	failure_message = span_boldholoparasite("You couldn't catch any carp spirits from the seas of Lake Carp. Maybe there are none, maybe you fucked up.")
 	ling_failure = span_boldholoparasite("Carp'sie seems to not have taken you as the chosen one. Maybe it's because of your horrifying origin.")
 	success_message = span_holoparasite("<b>%GUARDIAN</b> has been caught!")
@@ -211,6 +227,8 @@ GLOBAL_LIST_INIT(guardian_radial_images, setup_guardian_radial())
 	theme = GUARDIAN_THEME_MINER
 	use_message = span_holoparasite("You pierce your skin with the shard...")
 	used_message = span_holoparasite("This shard seems to have lost all its power...")
+	unused_description = span_holoparasite("It glows with an otherwordly power...")
+	used_description = span_holoparasite("It looks dull, with dried blood on the tip.")
 	failure_message = span_boldholoparasite("The shard hasn't reacted at all. Maybe try again later...")
 	ling_failure = span_boldholoparasite("The power of the shard seems to not react with your horrifying, mutated body.")
 	success_message = span_holoparasite("<b>%GUARDIAN</b> has appeared!")

@@ -1,9 +1,7 @@
-import { useState } from 'react';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Button, Input, Section, Stack } from 'tgui-core/components';
 import { isEscape } from 'tgui-core/keys';
 import { clamp } from 'tgui-core/math';
-import type { BooleanLike } from 'tgui-core/react';
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
@@ -13,12 +11,11 @@ import type { SearchItem } from './types';
 
 type Data = {
   contents: SearchItem[];
-  searching: BooleanLike;
 };
 
 export function LootPanel(props) {
-  const { act, data } = useBackend<Data>();
-  const { contents = [], searching } = data;
+  const { data } = useBackend<Data>();
+  const { contents = [] } = data;
 
   // limitations: items with different stack counts, charges etc.
   const contentsByPathName = useMemo(() => {
@@ -70,11 +67,6 @@ export function LootPanel(props) {
             selected={grouping}
             onClick={() => setGrouping(!grouping)}
             tooltip="Toggle Grouping"
-          />
-          <Button
-            icon="sync"
-            onClick={() => act('refresh')}
-            tooltip="Refresh"
           />
         </Stack>
       }

@@ -21,7 +21,7 @@
 	is_editable = TRUE
 
 /obj/structure/sign/chalkboard_menu
-	name = "\improper Chalkboard coffee menu"
+	name = "chalkboard coffee menu"
 	icon_state = "chalkboard_menu"
 	icon = 'icons/obj/machines/barsigns.dmi'
 	desc = "85cr for a iced lactose-free caramel frappe?! Who buys that?!"

@@ -62,7 +62,7 @@
 
 /mob/living/carbon/get_random_valid_zone(base_zone, base_probability = 80, list/blacklisted_parts, even_weights, bypass_warning)
 	var/list/limbs = list()
-	for(var/obj/item/bodypart/part as anything in bodyparts)
+	for(var/obj/item/bodypart/part as anything in get_bodyparts())
 		var/limb_zone = part.body_zone //cache the zone since we're gonna check it a ton.
 		if(limb_zone in blacklisted_parts)
 			continue
@@ -178,6 +178,7 @@
 
 		M.overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(M, TYPE_PROC_REF(/mob, clear_fullscreen), "flash", 1 SECONDS), shake_dur)
+		return
 
 	//How much time to allot for each pixel moved
 	var/time_scalar = (1 / ICON_SIZE_ALL) * TILES_PER_SECOND
@@ -227,7 +228,7 @@
 		var/shake_dur = max(duration, 2 SECONDS)
 		recoiled_mob.overlay_fullscreen("flash", type)
 		addtimer(CALLBACK(recoiled_mob, TYPE_PROC_REF(/mob, clear_fullscreen), "flash", 1 SECONDS), shake_dur)
-
+		return
 
 	animate(client_to_shake, pixel_x = oldx+mpx, pixel_y = oldy+mpy, time = duration, flags = ANIMATION_RELATIVE)
 	animate(pixel_x = oldx, pixel_y = oldy, time = backtime_duration, easing = BACK_EASING)
@@ -402,10 +403,6 @@
 	if(nearby_mobs.len)
 		var/mob/living/T = pick(nearby_mobs)
 		ClickOn(T)
-
-///Can the mob hear
-/mob/proc/can_hear()
-	return !HAS_TRAIT(src, TRAIT_DEAF)
 
 /**
  * Get the list of keywords for policy config
@@ -591,3 +588,12 @@
 			continue
 
 		ai_controller?.set_blackboard_key(blackboard_key, ability)
+
+/// Returns true if the mob is on a rusty tile, really low level just because we call it in a bunch of unrelated places
+/mob/proc/is_touching_rust(check_flying = FALSE)
+	if (check_flying && (movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
+		return FALSE
+	if (HAS_TRAIT(src, TRAIT_MAGICALLY_PHASED) || (movement_type & VENTCRAWLING))
+		return FALSE
+	var/turf/our_turf = get_turf(src)
+	return HAS_TRAIT(our_turf, TRAIT_RUSTY)

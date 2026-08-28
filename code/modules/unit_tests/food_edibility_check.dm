@@ -3,13 +3,10 @@
 
 /datum/unit_test/food_edibility_check/Run()
 	var/list/not_food = list(
-		/obj/item/food/grown,
-		/obj/item/food/grown/mushroom,
 		/obj/item/food/clothing,
-		/obj/item/food/meat/slab/human/mutant,
 	)
 
-	var/list/food_paths = subtypesof(/obj/item/food) - not_food
+	var/list/food_paths = valid_subtypesof(/obj/item/food) - not_food
 
 	for(var/food_path in food_paths)
 		var/obj/item/food/spawned_food = allocate(food_path)

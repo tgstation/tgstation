@@ -34,7 +34,7 @@
 		/datum/component/amputating_limbs,\
 		surgery_time = 0,\
 		surgery_verb = "slicing",\
-		minimum_stat = CONSCIOUS,\
+		minimum_stat = STABLE,\
 	)
 	var/datum/action/innate/seek_prey/seek = new(src)
 	seek.Grant(src)
@@ -46,7 +46,7 @@
 		return ..()
 	var/mob/living/carbon/carbon_target = attack_target
 
-	for(var/obj/item/bodypart/limb as anything in carbon_target.bodyparts)
+	for(var/obj/item/bodypart/limb as anything in carbon_target.get_bodyparts())
 		if(limb.body_part == HEAD || limb.body_part == CHEST)
 			continue
 		return ..() //if any arms or legs exist, attack
@@ -180,12 +180,12 @@
 
 /mob/living/basic/construct/harvester/heretic/grant_abilities()
 	AddElement(/datum/element/wall_walker, or_trait = TRAIT_RUSTY)
-	AddElement(/datum/element/leeching_walk)
+	AddElement(/datum/element/rust_healing)
 	AddComponent(\
 		/datum/component/amputating_limbs,\
 		surgery_time = 1.5 SECONDS,\
 		surgery_verb = "slicing",\
-		minimum_stat = CONSCIOUS,\
+		minimum_stat = STABLE,\
 		pre_hit_callback = CALLBACK(src, PROC_REF(is_cultist_handler)),\
 	)
 	AddComponent(/datum/component/damage_aura,\
@@ -206,7 +206,7 @@
 
 // These aren't friends they're assholes
 // Don't let them be near you!
-/mob/living/basic/construct/harvester/heretic/Life(seconds_per_tick, times_fired)
+/mob/living/basic/construct/harvester/heretic/Life(seconds_per_tick)
 	. = ..()
 	if(!.) //dead or deleted
 		return

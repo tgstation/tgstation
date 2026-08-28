@@ -86,6 +86,8 @@
 				),
 			),
 		))
+		send_player_info()
+		send_hotkey_mode()
 		return TRUE
 
 	if(type == "audio/setAdminMusicVolume")
@@ -103,6 +105,99 @@
 		analyze_telemetry(payload)
 		return TRUE
 
+	if(type == "verbs/request_verbs")
+		client.init_verbs()
+		if(!client?.holder)
+			return TRUE
+
+		window.send_asset(get_asset_datum(/datum/asset/json/spawn_menu))
+		return TRUE
+
+	if(type == "verbs/request_targets")
+		var/verb_path = text2path(payload["verb_type"])
+		if(!verb_path)
+			return TRUE
+		if(!(verb_path in client.verbs) && !(client.mob && (verb_path in client.mob.verbs)))
+			return TRUE
+
+		var/list/arg_list
+		var/datum/verb_metadata/meta = SSverbs.verbs_by_verb_path[verb_path]
+		if(meta)
+			arg_list = meta.arguments
+		else
+			var/datum/admin_verb/av = SSadmin_verbs.admin_verbs_by_verb_path[verb_path]
+			if(av)
+				arg_list = av.arguments
+		if(!length(arg_list))
+			return TRUE
+		var/datum/verb_arg_metadata/entity_arg
+		for(var/datum/verb_arg_metadata/arg in arg_list)
+			if(arg.arg_type & VERB_ARG_TYPE_ENTITY)
+				entity_arg = arg
+				break
+		if(!entity_arg)
+			return TRUE
+		var/list/target_data = list()
+		var/list/source_atoms = entity_arg.get_targets(client)
+		for(var/atom/target in source_atoms)
+			target_data += list(list("name" = "[target]", "ref" = REF(target)))
+		window.send_message("verbs/targets", list("targets" = target_data))
+		return TRUE
+
+	if(type == "verbs/invoke")
+		var/verb_path = text2path(payload["verb_type"])
+		if(!verb_path)
+			return TRUE
+
+		var/datum/admin_verb/admin_meta = SSadmin_verbs.admin_verbs_by_verb_path[verb_path]
+		if(admin_meta)
+			var/list/resolved_args = resolve_invoke_args(payload["args"], admin_meta.arguments)
+			SSadmin_verbs.dynamic_invoke_verb(client, admin_meta.type, resolved_args)
+			return TRUE
+		var/datum/verb_metadata/meta = SSverbs.verbs_by_verb_path[verb_path]
+		if(!meta)
+			return TRUE
+		var/target = resolve_verb_target(verb_path)
+		if(!target)
+			return TRUE
+		if(!(verb_path in client.verbs) && !(client.mob && (verb_path in client.mob.verbs)))
+			return TRUE
+		var/list/resolved_args = resolve_invoke_args(payload["args"], meta.arguments)
+		call(target, meta.body_path)(resolved_args)
+		return TRUE
+
+	if(type == "requestMetadata")
+		send_metadata()
+		return TRUE
+
+/datum/tgui_panel/proc/resolve_invoke_args(list/raw_args, list/arg_metadata)
+	if(!islist(raw_args))
+		raw_args = list()
+	var/alist/resolved = alist()
+	for(var/datum/verb_arg_metadata/meta in arg_metadata)
+		if(!(meta.name in raw_args))
+			continue
+		var/value = raw_args[meta.name]
+		if(meta.arg_type & VERB_ARG_TYPE_NUM)
+			value = text2num(value)
+		else if(meta.arg_type & VERB_ARG_TYPE_ENTITY && istext(value))
+			var/located = locate(value)
+			if(!located)
+				continue
+			var/list/valid_targets = meta.get_targets(client)
+			if(length(valid_targets) && !(located in valid_targets))
+				continue
+			value = located
+		resolved[meta.name] = value
+	return resolved
+
+/datum/tgui_panel/proc/resolve_verb_target(verb_path)
+	if(verb_path in client.verbs)
+		return client
+	if(client.mob && (verb_path in client.mob.verbs))
+		return client.mob
+	return null
+
 /**
  * public
  *
@@ -110,3 +205,48 @@
  */
 /datum/tgui_panel/proc/send_roundrestart()
 	window.send_message("roundrestart")
+
+/**
+ * public
+ *
+ * Sends the client's current job, character and saved character names,
+ * used for conditional chat highlights.
+ */
+/datum/tgui_panel/proc/send_player_info()
+	window.send_message("player/set", list(
+		"job" = client.mob?.mind?.assigned_role?.title,
+		"character" = client.prefs?.read_preference(/datum/preference/name/real_name),
+		"characters" = client.prefs?.create_character_profiles(),
+	))
+
+/**
+ * private
+ *
+ * Sent when a client requests metadata - used for websocket stuff.
+ */
+/datum/tgui_panel/proc/send_metadata()
+	var/static/list/webroot_asset_urls
+
+	var/list/metadata = list(
+		"game_version" = GLOB.game_version,
+		"server_name" = CONFIG_GET(string/servername),
+		"round_id" = GLOB.round_id,
+		"map_name" = SSmapping.current_map?.map_name,
+		"round_duration" = round(STATION_TIME_PASSED() / 10, 1),
+		"gamestate" = SSticker.current_state,
+	)
+	// if we're using webroot - also pass along the webroot url and such, so we can embed chat logs with the proper styles/images if desired
+	if(istype(SSassets.transport, /datum/asset_transport/webroot))
+		if(isnull(webroot_asset_urls))
+			webroot_asset_urls = list()
+			for(var/asset_type in list(/datum/asset/simple/tgui_panel, /datum/asset/simple/namespaced/fontawesome, /datum/asset/simple/namespaced/tgfont, /datum/asset/spritesheet_batched/chat))
+				var/datum/asset/asset = get_asset_datum(asset_type)
+				webroot_asset_urls += asset.get_url_mappings()
+		metadata["webroot"] = list(
+			"base_url" = CONFIG_GET(string/asset_cdn_url),
+			"assets" = webroot_asset_urls,
+		)
+	window.send_message("metadata", metadata)
+
+/datum/tgui_panel/proc/send_hotkey_mode()
+	window.send_message("verbs/hotkey_mode", list("hotkeys" = client.hotkeys))

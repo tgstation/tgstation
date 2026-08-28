@@ -68,12 +68,14 @@
 	current_charges--
 	addtimer(CALLBACK(src, PROC_REF(charge)), charge_rate)
 	owner?.update_mob_action_buttons()
+	SEND_SIGNAL(src, COMSIG_DASH_ACTION_DASHED)
 
 	return TRUE
 
 /// Callback for [/proc/teleport] to increment our charges after  use.
 /datum/action/innate/dash/proc/charge()
 	current_charges = clamp(current_charges + 1, 0, max_charges)
+	SEND_SIGNAL(src, COMSIG_DASH_ACTION_CHARGED)
 
 	var/obj/item/dashing_item = target
 	if(!istype(dashing_item))

@@ -83,6 +83,9 @@ GLOBAL_LIST_INIT(autodrobe_entretainers_items, list(
 	/obj/item/clothing/under/rank/civilian/clown/jester = 3,
 	/obj/item/clothing/head/costume/jester = 3,
 	/obj/item/clothing/shoes/jester_shoes = 3,
+	/obj/item/clothing/under/rank/civilian/clown/jesteralt = 3,
+	/obj/item/clothing/head/costume/jesteralt = 3,
+	/obj/item/clothing/shoes/clown_shoes/jester = 1,
 	/obj/item/clothing/under/costume/villain = 3,
 	/obj/item/clothing/suit/costume/joker = 3,
 	/obj/item/clothing/under/costume/joker = 3,
@@ -90,6 +93,8 @@ GLOBAL_LIST_INIT(autodrobe_entretainers_items, list(
 	/obj/item/clothing/under/costume/singer/yellow = 1,
 	/obj/item/clothing/shoes/singerb = 1,
 	/obj/item/clothing/under/costume/singer/blue = 1,
+	/obj/item/clothing/shoes/singerr = 1,
+	/obj/item/clothing/under/costume/singer/red = 1,
 	/obj/item/clothing/head/costume/cueball = 1,
 ))
 

@@ -26,11 +26,8 @@
 #define REALTIMEOFDAY (world.timeofday + (MIDNIGHT_ROLLOVER * MIDNIGHT_ROLLOVER_CHECK))
 #define MIDNIGHT_ROLLOVER_CHECK ( GLOB.rollovercheck_last_timeofday != world.timeofday ? update_midnight_rollover() : GLOB.midnight_rollovers )
 
-/// Gets the sign of x, returns -1 if negative, 0 if 0, 1 if positive
-#define SIGN(x) ( ((x) > 0) - ((x) < 0) )
-
 /// Returns the integer closest to 0 from a division
-#define SIGNED_FLOOR_DIVISION(x, y) (SIGN(x) * FLOOR(abs(x) / y, 1))
+#define SIGNED_FLOOR_DIVISION(x, y) (sign(x) * floor(abs(x) / y))
 
 #define CEILING(x, y) ( -round(-(x) / (y)) * (y) )
 
@@ -53,8 +50,11 @@
 /// Increments a value and wraps it if it exceeds some value. Can be used to circularly iterate through a list through `idx = WRAP_UP(idx, length_of_list)`.
 #define WRAP_UP(val, max) (((val) % (max)) + 1)
 
-// Real modulus that handles decimals
-#define MODULUS(x, y) ( (x) - FLOOR(x, y))
+/// Helper that increments and wraps the passed in number when it hits the integer limit
+#define WRAP_UID(val) WRAP_UP(val, SHORT_REAL_LIMIT - 1)
+
+// Real modulus that handles decimals, now just a wrapper for BYOND's %% operator
+#define MODULUS(x, y) ((x) %% (y))
 
 // Cotangent
 #define COT(x) (1 / tan(x))
@@ -233,6 +233,9 @@
 
 #define LORENTZ_DISTRIBUTION(x, s) ( s*tan(TODEGREES(PI*(rand()-0.5))) + x )
 #define LORENTZ_CUMULATIVE_DISTRIBUTION(x, y, s) ( (1/PI)*TORADIANS(arctan((x-(y))/s)) + 1/2 )
+/// Fucked up like upside down cauchy dist that I've pinned to 1 so I can use it as a multiplier
+/// https://www.desmos.com/calculator/bt4tfavvi7
+#define ANCHORED_INVERSE_CAUCHY(s) (2 - ( 1 / (s * (1 + ((rand() - 0.5) / s) ** 2 ))) * (s + (0.5 ** 2) / s))
 
 #define RULE_OF_THREE(a, b, x) ((a*x)/b)
 

@@ -50,11 +50,11 @@
 	if(!owner)
 		return
 	if(active_mind_control)
-		owner.set_hud_image_state(GLAND_HUD, "hudgland_active")
+		owner.set_hud_image_state(GLAND_HUD, hud_state = "hudgland_active")
 	else if(mind_control_uses)
-		owner.set_hud_image_state(GLAND_HUD, "hudgland_ready")
+		owner.set_hud_image_state(GLAND_HUD, hud_state = "hudgland_ready")
 	else
-		owner.set_hud_image_state(GLAND_HUD, "hudgland_spent")
+		owner.set_hud_image_state(GLAND_HUD, hud_state = "hudgland_spent")
 
 /obj/item/organ/heart/gland/proc/mind_control(command, mob/living/user)
 	if(!ownerCheck() || !mind_control_uses || active_mind_control)
@@ -99,7 +99,9 @@
 	hud.add_atom_to_hud(gland_owner)
 	update_gland_hud()
 
-/obj/item/organ/heart/gland/on_life(seconds_per_tick, times_fired)
+/obj/item/organ/heart/gland/on_life(seconds_per_tick)
+	. = ..()
+
 	if(!active)
 		return
 	if(!ownerCheck())

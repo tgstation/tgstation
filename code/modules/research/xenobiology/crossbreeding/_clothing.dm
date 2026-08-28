@@ -73,7 +73,7 @@ Slimecrossing Armor
 
 /datum/action/item_action/change_prism_colour/do_effect(trigger_flags)
 	var/obj/item/clothing/glasses/prism_glasses/glasses = target
-	var/new_color = input(owner, "Choose the lens color:", "Color change",glasses.glasses_color) as color|null
+	var/new_color = tgui_color_picker(owner, "Choose the lens color:", "Color change",glasses.glasses_color)
 	if(!new_color)
 		return
 	RemoveElement(/datum/element/wearable_client_colour, /datum/client_colour/glass_colour, ITEM_SLOT_EYES, GLASSES_TRAIT, glasses.glasses_color, glasses.forced_glass_color)
@@ -129,6 +129,8 @@ Slimecrossing Armor
 	flags_inv = NONE
 	item_flags = IMMUTABLE_SLOW
 	slowdown = 4
+	emp_protection = EMP_PROTECTION_MODERATE
+	texture_type = /datum/bodypart_texture/mesh/biosuit_dark
 	var/hit_reflect_chance = 40
 
 /obj/item/clothing/suit/armor/heavy/adamantine/Initialize(mapload)

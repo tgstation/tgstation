@@ -9,6 +9,8 @@
 	var/buckle_requires_restraints = FALSE
 	/// The mobs currently buckled to this atom
 	var/list/mob/living/buckled_mobs = null //list()
+	/// How much time it takes to buckle a mob to us?
+	var/buckle_delay = 2 SECONDS
 	/// The maximum number of mob/livings allowed to be buckled to this atom at once
 	var/max_buckled_mobs = 1
 	/// Whether things buckled to this atom can be pulled while they're buckled
@@ -153,6 +155,7 @@
  * force - TRUE if we should ignore buckled_mob.can_buckle_to
  */
 /atom/movable/proc/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
+
 	if(!isliving(buckled_mob))
 		CRASH("Non-living [buckled_mob] thing called unbuckle_mob() for source.")
 	if(buckled_mob.buckled != src)
@@ -201,7 +204,7 @@
 	if(!has_buckled_mobs())
 		return
 	for(var/m in buckled_mobs)
-		unbuckle_mob(m, force)
+		INVOKE_ASYNC(src, PROC_REF(unbuckle_mob), m, force)
 
 //Handle any extras after buckling
 //Called on buckle_mob()
@@ -321,7 +324,7 @@
 		M.visible_message(span_warning("[user] starts buckling [M] to [src]!"),\
 			span_userdanger("[user] starts buckling you to [src]!"),\
 			span_hear("You hear metal clanking."))
-		if(!do_after(user, 2 SECONDS, M))
+		if(!do_after(user, buckle_delay, M))
 			return FALSE
 
 		// Sanity check before we attempt to buckle. Is everything still in a kosher state for buckling after the 3 seconds have elapsed?

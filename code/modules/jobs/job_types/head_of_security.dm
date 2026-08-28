@@ -23,7 +23,8 @@
 		/datum/job_department/command,
 		)
 
-	mind_traits = list(HEAD_OF_STAFF_MIND_TRAITS, SECURITY_MIND_TRAITS)
+	mind_traits = list(HEAD_OF_STAFF_MIND_TRAITS)
+	desensitized_base = DESENSITIZED_THRESHOLD
 	liver_traits = list(TRAIT_LAW_ENFORCEMENT_METABOLISM, TRAIT_ROYAL_METABOLISM)
 
 	paycheck = PAYCHECK_COMMAND
@@ -39,11 +40,17 @@
 	human_authority = JOB_AUTHORITY_HUMANS_ONLY
 
 	voice_of_god_power = 1.4 //Command staff has authority
-
+	tgui_icon = FA_ICON_USER_SHIELD
 
 /datum/job/head_of_security/get_captaincy_announcement(mob/living/captain)
 	return "Due to staffing shortages, newly promoted Acting Captain [captain.real_name] on deck!"
 
+/datum/job/head_of_security/after_spawn(mob/living/spawned, client/player_client)
+	. = ..()
+	if(!prob(PIG_COP_PROBABILITY))
+		return
+	for (var/obj/item/bodypart/ham as anything in spawned.get_bodyparts())
+		ham.butcher_drops_override = list(/obj/item/food/meat/slab/pig = ham.base_meat_amount)
 
 /datum/outfit/job/hos
 	name = "Head of Security"
@@ -78,6 +85,8 @@
 		/obj/item/stamp/head/hos,
 		)
 	implants = list(/obj/item/implant/mindshield)
+
+	wintercoat = /obj/item/clothing/suit/armor/hos/trenchcoat/winter
 
 /datum/outfit/job/hos/mod
 	name = "Head of Security (MODsuit)"

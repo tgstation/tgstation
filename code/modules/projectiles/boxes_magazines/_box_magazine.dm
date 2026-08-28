@@ -160,7 +160,7 @@
 ///puts a round into the magazine
 /obj/item/ammo_box/proc/give_round(obj/item/ammo_casing/new_round, replace_spent = 0)
 	// Boxes don't have a caliber type, magazines do. Not sure if it's intended or not, but if we fail to find a caliber, then we fall back to ammo_type.
-	if(!new_round || !(caliber ? (caliber == new_round.caliber) : (ammo_type == new_round.type)))
+	if(!is_compatible_round(new_round))
 		return FALSE
 
 	if (stored_ammo.len < max_ammo)
@@ -189,6 +189,11 @@
 		return TRUE
 	return FALSE
 
+/obj/item/ammo_box/proc/is_compatible_round(obj/item/ammo_casing/new_round)
+	if(!new_round || !(caliber ? (caliber == new_round.caliber) : (ammo_type == new_round.type)))
+		return FALSE
+	return TRUE
+
 ///Whether or not the box can be loaded, used in overrides
 /obj/item/ammo_box/proc/can_load(mob/user)
 	return TRUE
@@ -198,7 +203,7 @@
 		if(!ammo_band_icon)
 			balloon_alert(user, "no indicator support!")
 			return
-		var/new_color = input(user, "Set a new ammo band color, cancel to remove indicator", "Ammo Box Indicator Color", ammo_band_color) as color|null
+		var/new_color = tgui_color_picker(user, "Set a new ammo band color, cancel to remove indicator", "Ammo Box Indicator Color", ammo_band_color)
 		ammo_band_color = new_color
 		balloon_alert(user, "indicator updated")
 		update_appearance()

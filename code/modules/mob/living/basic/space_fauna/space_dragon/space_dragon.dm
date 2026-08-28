@@ -136,11 +136,11 @@
 		rename_dragon()
 		return
 	to_chat(src, span_notice("Your name is now [span_name("[chosen_name]")], the feared Space Dragon."))
-	fully_replace_character_name(null, chosen_name)
+	fully_replace_character_name(null, chosen_name, log_new_name = TRUE)
 
 /// Select scale colour with the colour picker
 /mob/living/basic/space_dragon/proc/select_colour()
-	chosen_colour = input(src, "What colour would you like to be?" ,"Colour Selection", COLOR_WHITE) as color|null
+	chosen_colour = tgui_color_picker(src, "What colour would you like to be?" ,"Colour Selection", COLOR_WHITE)
 	if(!chosen_colour) // Redo proc until we get a color
 		to_chat(src, span_warning("Not a valid colour, please try again."))
 		select_colour()

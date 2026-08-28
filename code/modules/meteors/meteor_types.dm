@@ -42,6 +42,13 @@
 	SSaugury.register_doom(src, threat)
 	SpinAnimation()
 	chase_target(target)
+	setup_extra_drops()
+	AddComponent(
+		/datum/component/meteor_combat, \
+		CALLBACK(src, PROC_REF(redirect)), \
+		CALLBACK(src, PROC_REF(make_debris)), \
+		achievement_on = !istype(src, /obj/effect/meteor/sand), \
+	)
 
 /obj/effect/meteor/Destroy()
 	GLOB.meteor_list -= src
@@ -82,6 +89,9 @@
 	if(new_loop)
 		RegisterSignal(new_loop, COMSIG_MOVELOOP_STOP, PROC_REF(on_loop_stopped))
 
+/obj/effect/meteor/proc/setup_extra_drops()
+	return
+
 /obj/effect/meteor/proc/on_loop_stopped(datum/source)
 	SIGNAL_HANDLER
 	if(!move_packet || !length(move_packet.existing_loops))
@@ -121,46 +131,7 @@
 		. += span_notice("On second thought, it doesn't look too tough.")
 	check_examine_award(user)
 
-/obj/effect/meteor/attack_hand(mob/user, list/modifiers)
-	if(!isliving(user))
-		return ..()
-	var/mob/living/livinguser = user
-
-	if(livinguser.combat_mode && livinguser.mind?.get_skill_level(/datum/skill/athletics) >= SKILL_LEVEL_LEGENDARY)
-		check_punch_award(livinguser)
-		playsound(loc, SFX_PUNCH, 50, TRUE)
-		redirect(livinguser)
-		return TRUE
-
-	return ..()
-
-/obj/effect/meteor/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.tool_behaviour == TOOL_MINING)
-		make_debris()
-		qdel(src)
-
-	else if	(istype(attacking_item, /obj/item/melee/baseball_bat))
-		if(user.mind?.get_skill_level(/datum/skill/athletics) >= SKILL_LEVEL_EXPERT)
-			playsound(src, 'sound/items/baseballhit.ogg', 100, TRUE)
-			redirect(user)
-			return TRUE
-		to_chat(user, span_warning("\The [src] is too heavy for you!"))
-
-	else if (istype(attacking_item, /obj/item/melee/powerfist))
-		var/obj/item/melee/powerfist/fist = attacking_item
-		if(!fist.tank)
-			to_chat(user, span_warning("\The [fist] has no gas tank!"))
-			return ..()
-		var/datum/gas_mixture/gas_used = fist.tank.remove_air(fist.gas_per_fist * 3) // 3 is HIGH_PRESSURE setting on powerfist.
-		if(!gas_used || !molar_cmp_equals(gas_used.total_moles(), fist.gas_per_fist * 3))
-			to_chat(user, span_warning("\The [fist] didn't have enough gas to budge \the [src]!"))
-			return ..()
-		playsound(src, 'sound/items/weapons/resonator_blast.ogg', 50, TRUE)
-		redirect(user)
-		return TRUE
-
-	return ..()
-
+///Called by component/meteor_combat to send us moving to the edge of the map away from whoever punched us
 /obj/effect/meteor/proc/redirect(mob/athlete)
 	dest = spaceDebrisStartLoc(get_cardinal_dir(athlete, src), z)
 	chase_target(dest)
@@ -200,10 +171,6 @@
 		user.client.give_award(/datum/award/achievement/misc/meteor_examine, user)
 
 
-/obj/effect/meteor/proc/check_punch_award(mob/user)
-	if(!(flags_1 & ADMIN_SPAWNED_1) && isliving(user))
-		user.client.give_award(/datum/award/achievement/misc/meteor_punch, user)
-
 /**
  * Handles the meteor's interaction with meteor shields.
  *
@@ -228,7 +195,7 @@
 	hits = 2
 	hitpwr = EXPLODE_LIGHT
 	meteorsound = 'sound/items/dodgeball.ogg'
-	threat = 1
+	threat = SEVERITY_SAND
 
 /obj/effect/meteor/sand/make_debris()
 	return //We drop NOTHING
@@ -248,9 +215,6 @@
 /obj/effect/meteor/sand/check_examine_award(mob/user) //Too insignificant and predictable to warrant an award.
 	return
 
-/obj/effect/meteor/sand/check_punch_award(mob/user)
-	return
-
 //Dust
 /obj/effect/meteor/dust
 	name = "space dust"
@@ -260,13 +224,13 @@
 	hitpwr = EXPLODE_LIGHT
 	meteorsound = 'sound/items/weapons/gun/smg/shot.ogg'
 	meteordrop = list(/obj/item/stack/ore/glass)
-	threat = 1
+	threat = SEVERITY_DUST
 
 //Medium-sized
 /obj/effect/meteor/medium
 	name = "meteor"
 	dropamt = 3
-	threat = 5
+	threat = SEVERITY_MEDIUM_METEOR
 
 /obj/effect/meteor/medium/meteor_effect()
 	..()
@@ -279,7 +243,7 @@
 	hits = 6
 	heavy = TRUE
 	dropamt = 4
-	threat = 10
+	threat = SEVERITY_BIG_METEOR
 
 /obj/effect/meteor/big/meteor_effect()
 	..()
@@ -294,7 +258,7 @@
 	heavy = TRUE
 	meteorsound = 'sound/effects/bamf.ogg'
 	meteordrop = list(/obj/item/stack/ore/plasma)
-	threat = 20
+	threat = SEVERITY_FLAMING_METEOR
 	signature = "thermal"
 
 /obj/effect/meteor/flaming/meteor_effect()
@@ -309,7 +273,7 @@
 	heavy = TRUE
 	hits = 9
 	meteordrop = list(/obj/item/stack/ore/uranium)
-	threat = 35
+	threat = SEVERITY_IRRADIATED_METEOR
 	signature = "radiation"
 
 /obj/effect/meteor/irradiated/meteor_effect()
@@ -327,7 +291,7 @@
 	hits = 9
 	heavy = TRUE
 	meteorsound = 'sound/effects/break_stone.ogg'
-	threat = 25
+	threat = SEVERITY_CLUSTER_METEOR
 	signature = "ordnance"
 	///Number of fragmentation meteors to be spawned
 	var/cluster_count = 8
@@ -359,7 +323,7 @@
 	meteorsound = 'sound/mobs/humanoids/ethereal/ethereal_revive_fail.ogg'
 	meteordrop = list(/mob/living/basic/carp)
 	dropamt = 1
-	threat = 5
+	threat = SEVERITY_FROZEN_CARP
 	signature = "fishing and trawling"
 
 /obj/effect/meteor/carp/Initialize(mapload)
@@ -375,12 +339,12 @@
 	dropamt = 3
 	hits = 12
 	meteordrop = list(/obj/item/stack/ore/bluespace_crystal)
-	threat = 15
+	threat = SEVERITY_BLUESPACE_METEOR
 	signature = "bluespace flux"
 
-/obj/effect/meteor/bluespace/Bump()
+/obj/effect/meteor/bluespace/Bump(atom/bumped_atom)
 	..()
-	if(prob(35))
+	if(!QDELETED(src) && prob(35))
 		do_teleport(src, get_turf(src), 6, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
 
 /obj/effect/meteor/banana
@@ -391,7 +355,7 @@
 	hits = 175 //Honks everything, including space tiles. Depending on the angle/how much stuff it hits, there's a fair chance that it will spare the station from the actual explosion
 	meteordrop = list(/obj/item/stack/ore/bananium)
 	meteorsound = 'sound/items/bikehorn.ogg'
-	threat = 15
+	threat = SEVERITY_BANANIUM_METEOR
 	movement_type = PHASING
 	signature = "comedy"
 
@@ -413,7 +377,7 @@
 	desc = "It radiates with captive energy, ready to be let loose upon the world."
 	icon_state = "bluespace"
 	hits = 6
-	threat = 10
+	threat = SEVERITY_EMP_METEOR
 	signature = "electromagnetic interference"
 
 /obj/effect/meteor/emp/Move()
@@ -434,27 +398,18 @@
 	hits = 2
 	heavy = TRUE
 	meteorsound = 'sound/effects/blob/blobattack.ogg'
-	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/food/meat/slab/human/mutant, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/tongue, /obj/item/organ/appendix/)
+	meteordrop = list(/obj/item/food/meat/slab/human, /obj/item/organ/heart, /obj/item/organ/lungs, /obj/item/organ/appendix)
 	var/meteorgibs = /obj/effect/gibspawner/generic
-	threat = 2
+	threat = SEVERITY_MEATY_ORE
 	signature = "culinary material"
 
-/obj/effect/meteor/meaty/Initialize(mapload)
-	for(var/path in meteordrop)
-		if(path == /obj/item/food/meat/slab/human/mutant)
-			meteordrop -= path
-			meteordrop += pick(subtypesof(path))
-
-	for(var/path in meteordrop)
-		if(path == /obj/item/organ/tongue)
-			meteordrop -= path
-			meteordrop += pick(typesof(path))
-	return ..()
+/obj/effect/meteor/meaty/setup_extra_drops()
+	meteordrop += pick(subtypesof(/obj/item/food/meat/slab/human/mutant))
+	meteordrop += pick(typesof(/obj/item/organ/tongue))
 
 /obj/effect/meteor/meaty/make_debris()
 	..()
 	new meteorgibs(get_turf(src))
-
 
 /obj/effect/meteor/meaty/ram_turf(turf/T)
 	if(!isspaceturf(T))
@@ -471,9 +426,8 @@
 	meteorgibs = /obj/effect/gibspawner/xeno
 	signature = "exotic culinary material"
 
-/obj/effect/meteor/meaty/xeno/Initialize(mapload)
+/obj/effect/meteor/meaty/xeno/setup_extra_drops()
 	meteordrop += subtypesof(/obj/item/organ/alien)
-	return ..()
 
 /obj/effect/meteor/meaty/xeno/ram_turf(turf/T)
 	if(!isspaceturf(T))
@@ -489,7 +443,7 @@
 	heavy = TRUE
 	meteorsound = 'sound/effects/bamf.ogg'
 	meteordrop = list(/obj/item/stack/ore/plasma)
-	threat = 50
+	threat = SEVERITY_TUNGSKA_METEOR
 	signature = "armageddon"
 
 /obj/effect/meteor/tunguska/Move()
@@ -515,7 +469,7 @@
 	heavy = TRUE
 	dropamt = 1
 	meteordrop = list(/obj/item/clothing/head/utility/hardhat/pumpkinhead, /obj/item/food/grown/pumpkin)
-	threat = 100
+	threat = SEVERITY_PUMPKING
 
 /obj/effect/meteor/pumpkin/Initialize(mapload)
 	. = ..()

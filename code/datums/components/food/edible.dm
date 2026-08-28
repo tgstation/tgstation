@@ -24,6 +24,8 @@ Behavior that's still missing from this component that original food items had t
 	var/food_flags = NONE
 	///Bitfield of the types of this food
 	var/foodtypes = NONE
+	///The main food complexity (read: quality) when handmade. It dictates the strength of the effect that this edible gives when eaten.
+	var/handmade_complexity = FOOD_COMPLEXITY_0
 	///Amount of seconds it takes to eat this food
 	var/eat_time = 3 SECONDS
 	///Defines how much it lowers someones satiety (Need to eat, essentialy)
@@ -59,6 +61,7 @@ Behavior that's still missing from this component that original food items had t
 	datum/callback/on_consume,
 	datum/callback/check_liked,
 	reagent_purity = 0.5,
+	handmade_complexity = FOOD_COMPLEXITY_0
 )
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
@@ -72,6 +75,7 @@ Behavior that's still missing from this component that original food items had t
 	src.foodtypes = foodtypes
 	src.eat_time = eat_time
 	src.eatverbs = string_list(eatverbs)
+	src.handmade_complexity = handmade_complexity
 
 /datum/component/edible/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
@@ -136,6 +140,7 @@ Behavior that's still missing from this component that original food items had t
 	datum/callback/on_consume,
 	datum/callback/check_liked,
 	reagent_purity = 0.5,
+	handmade_complexity,
 )
 	. = ..()
 
@@ -269,7 +274,7 @@ Behavior that's still missing from this component that original food items had t
 				examine_list += span_green("It is made of finest ingredients prolonging the effect!")
 
 	var/datum/mind/mind = user.mind
-	if(mind && HAS_TRAIT_FROM(owner, TRAIT_FOOD_CHEF_MADE, REF(mind)))
+	if(mind && HAS_TRAIT_FROM(owner, TRAIT_HANDMADE, REF(mind)))
 		examine_list += span_green("[owner] was made by you!")
 
 	if(!(food_flags & FOOD_IN_CONTAINER))
@@ -491,7 +496,7 @@ Behavior that's still missing from this component that original food items had t
 	playsound(eater.loc,'sound/items/eatfood.ogg', rand(10,50), TRUE)
 	if(!owner.reagents.total_volume)
 		return
-	SEND_SIGNAL(eater, COMSIG_LIVING_EAT_FOOD, owner)
+	SEND_SIGNAL(eater, COMSIG_LIVING_EAT_FOOD, owner, foodtypes)
 	var/sig_return = SEND_SIGNAL(parent, COMSIG_FOOD_EATEN, eater, feeder, bitecount, bite_consumption)
 	if(sig_return & DESTROY_FOOD)
 		qdel(owner)
@@ -504,7 +509,9 @@ Behavior that's still missing from this component that original food items had t
 	var/fraction = 0.3
 	fraction = min(bite_consumption / owner.reagents.total_volume, 1)
 	owner.reagents.trans_to(eater, bite_consumption, transferred_by = feeder, methods = INGEST)
-	eater.hud_used?.hunger?.update_hunger_bar()
+	var/atom/movable/screen/hunger/hunger_bar = eater.hud_used?.screen_objects[HUD_MOB_HUNGER]
+	if (istype(hunger_bar))
+		hunger_bar.update_hunger_bar()
 	bitecount++
 
 	checkLiked(fraction, eater)
@@ -568,8 +575,10 @@ Behavior that's still missing from this component that original food items had t
 		qdel(food)
 		return FALSE
 
-	if(SEND_SIGNAL(eater, COMSIG_CARBON_ATTEMPT_EAT, food) & COMSIG_CARBON_BLOCK_EAT)
-		return
+	if(SEND_SIGNAL(eater, COMSIG_CARBON_ATTEMPT_EAT, food) & BLOCK_EAT_ATTEMPT)
+		return FALSE
+	if(SEND_SIGNAL(food, COMSIG_FOOD_ATTEMPT_EAT, eater, feeder) & BLOCK_EAT_ATTEMPT)
+		return FALSE
 	return TRUE
 
 ///Applies food buffs according to the crafting complexity
@@ -634,15 +643,14 @@ Behavior that's still missing from this component that original food items had t
 	var/quality_label = GLOB.food_quality_description[food_quality]
 	to_chat(gourmand, span_notice("That's \an [quality_label] meal."))
 
-/// Get the complexity of the crafted food
+/// Get the complexity of the crafted food. Some ingredients may influence this value.
 /datum/component/edible/proc/get_recipe_complexity()
-	var/list/extra_complexity = list(0)
-	SEND_SIGNAL(parent, COMSIG_FOOD_GET_EXTRA_COMPLEXITY, extra_complexity)
-	var/complexity_to_add = extra_complexity[1]
-	if(!HAS_TRAIT(parent, TRAIT_FOOD_CHEF_MADE) || !istype(parent, /obj/item/food))
-		return complexity_to_add // It is factory made. Soulless.
-	var/obj/item/food/food = parent
-	return food.crafting_complexity + complexity_to_add
+	var/complexity = FOOD_COMPLEXITY_0
+	if(HAS_TRAIT(parent, TRAIT_HANDMADE))
+		complexity += handmade_complexity
+	var/list/complexity_holder = list(complexity)
+	SEND_SIGNAL(parent, COMSIG_FOOD_GET_EXTRA_COMPLEXITY, complexity_holder)
+	return complexity_holder[1]
 
 /// Get food quality adjusted according to eater's preferences
 /datum/component/edible/proc/get_perceived_food_quality(mob/living/eater)
@@ -653,7 +661,7 @@ Behavior that's still missing from this component that original food items had t
 		food_quality += quality
 
 	if(HAS_TRAIT(parent, TRAIT_FOOD_SILVER)) // it's not real food
-		if(!isjellyperson(eater)) //if you aren't a jellyperson, it makes you sick no matter how nice it looks
+		if(!(eater.mob_biotypes & MOB_SLIME)) //if you aren't a jellyperson, it makes you sick no matter how nice it looks
 			return TOXIC_FOOD_QUALITY_THRESHOLD
 		food_quality += LIKED_FOOD_QUALITY_CHANGE
 

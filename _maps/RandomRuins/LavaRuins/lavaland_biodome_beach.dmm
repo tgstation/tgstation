@@ -117,7 +117,7 @@
 	density = 1
 	},
 /obj/effect/decal/fakelattice,
-/turf/open/floor/pod/light{
+/turf/open/floor/mineral/plastitanium/pod/light{
 	density = 1
 	},
 /area/ruin/powered/beach)
@@ -195,7 +195,7 @@
 "eA" = (
 /obj/item/melee/skateboard/hoverboard,
 /obj/machinery/light/directional/west,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/powered/beach)
 "eE" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
@@ -242,7 +242,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/powered/beach)
 "gF" = (
 /obj/effect/turf_decal/sand,
@@ -260,7 +260,7 @@
 /area/ruin/powered/beach)
 "gX" = (
 /obj/machinery/atmospherics/components/unary/passive_vent/layer4,
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors/explored)
 "hj" = (
 /obj/structure/flora/tree/palm,
@@ -332,7 +332,7 @@
 /area/ruin/powered/beach)
 "hX" = (
 /obj/structure/punching_bag,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/beach)
 "iH" = (
 /obj/structure/flora/bush/stalky/style_random,
@@ -443,24 +443,24 @@
 /area/ruin/powered/beach)
 "og" = (
 /obj/structure/weightmachine/weightlifter,
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/beach)
 "oF" = (
 /obj/structure/table/reinforced,
 /obj/machinery/reagentgrinder,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/powered/beach)
 "oL" = (
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/misc/beach/sand,
 /area/ruin/powered/beach)
 "oQ" = (
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/effect/spawner/random/food_or_drink/keg,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
 "oU" = (
 /obj/machinery/seed_extractor,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/powered/beach)
 "pz" = (
 /turf/open/water/beach,
@@ -494,7 +494,7 @@
 /area/ruin/powered/beach)
 "qf" = (
 /obj/structure/reagent_dispensers/watertank,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/powered/beach)
 "qg" = (
 /obj/structure/flora/bush/large/style_random,
@@ -556,7 +556,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/powered/beach)
 "rU" = (
 /obj/item/reagent_containers/condiment/enzyme,
@@ -630,10 +630,10 @@
 /turf/closed/wall/mineral/wood/nonmetal,
 /area/ruin/powered/beach)
 "wL" = (
-/turf/open/misc/asteroid/basalt/lava_land_surface,
+/turf/open/misc/asteroid/basalt/lava_land_surface/biome_replace,
 /area/lavaland/surface/outdoors/explored)
 "wY" = (
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/powered/beach)
 "xa" = (
 /obj/effect/mapping_helpers/broken_floor,
@@ -749,7 +749,7 @@
 /area/ruin/powered/beach)
 "AE" = (
 /obj/item/melee/skateboard/hoverboard,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/powered/beach)
 "AG" = (
 /obj/structure/flora/rock/pile/jungle/style_random,
@@ -769,9 +769,6 @@
 "Bn" = (
 /turf/open/floor/carpet/blue,
 /area/ruin/powered/beach)
-"Bp" = (
-/turf/closed/mineral/random/volcanic,
-/area/lavaland/surface/outdoors/explored)
 "Bv" = (
 /obj/effect/turf_decal/sand,
 /obj/machinery/light/directional/east,
@@ -792,6 +789,10 @@
 	dir = 4
 	},
 /turf/closed/wall/mineral/sandstone,
+/area/ruin/powered/beach)
+"Cl" = (
+/obj/effect/spawner/random/entertainment/slot_machine,
+/turf/open/floor/wood,
 /area/ruin/powered/beach)
 "Cq" = (
 /obj/structure/sign/departments/restroom/directional/east,
@@ -832,6 +833,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4,
 /turf/open/floor/wood,
 /area/ruin/powered/beach)
+"Dh" = (
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/lavaland/surface/outdoors/explored)
 "Ds" = (
 /obj/structure/closet/secure_closet/freezer/kitchen/all_access,
 /turf/open/floor/wood,
@@ -854,7 +858,7 @@
 /obj/structure/table/reinforced,
 /obj/item/secateurs,
 /obj/item/reagent_containers/cup/bottle/nutrient/ez,
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/powered/beach)
 "Fa" = (
 /obj/structure/chair/stool/bar/directional/south,
@@ -948,7 +952,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on{
 	dir = 8
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/powered/beach)
 "Iv" = (
 /turf/open/floor/iron/stairs/right,
@@ -981,6 +985,9 @@
 	dir = 8
 	},
 /area/ruin/powered/beach)
+"Jj" = (
+/turf/closed/mineral/volcanic/lava_land_surface/biome_replace,
+/area/template_noop)
 "Jr" = (
 /turf/open/floor/carpet/purple,
 /area/ruin/powered/beach)
@@ -1003,7 +1010,7 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer4{
 	dir = 8
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/powered/beach)
 "Kn" = (
 /obj/structure/flora/bush/large/style_random,
@@ -1074,10 +1081,6 @@
 	},
 /turf/closed/wall/mineral/sandstone,
 /area/ruin/powered/beach)
-"NJ" = (
-/obj/machinery/computer/slot_machine,
-/turf/open/floor/wood,
-/area/ruin/powered/beach)
 "NK" = (
 /obj/machinery/grill,
 /turf/open/floor/wood,
@@ -1119,7 +1122,7 @@
 	desc = "A sink used for washing one's hands and face. It looks rusty and home-made";
 	name = "old sink"
 	},
-/turf/open/floor/pod/light,
+/turf/open/floor/mineral/plastitanium/pod/light,
 /area/ruin/powered/beach)
 "Qf" = (
 /obj/effect/turf_decal/sand,
@@ -1315,7 +1318,7 @@
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
 "VO" = (
-/turf/open/floor/pod/dark,
+/turf/open/floor/mineral/plastitanium/pod/dark,
 /area/ruin/powered/beach)
 "VY" = (
 /obj/structure/flora/coconuts,
@@ -1409,23 +1412,20 @@
 /obj/structure/curtain,
 /turf/open/floor/plating,
 /area/ruin/powered/beach)
-"ZS" = (
-/turf/closed/mineral/random/volcanic,
-/area/template_noop)
 
 (1,1,1) = {"
 aa
 aa
 aa
 aa
-Bp
-Bp
-Bp
-Bp
+Dh
+Dh
+Dh
+Dh
 wL
 wL
 wL
-Bp
+Dh
 aa
 aa
 aa
@@ -1442,8 +1442,8 @@ BE
 BE
 BE
 yc
-Bp
-Bp
+Dh
+aa
 "}
 (2,1,1) = {"
 aa
@@ -1451,8 +1451,8 @@ aa
 aa
 aa
 aa
-aa
-aa
+Dh
+Dh
 aj
 gs
 gs
@@ -1475,16 +1475,16 @@ Df
 aF
 Fr
 yc
-Bp
+aa
 "}
 (3,1,1) = {"
 aa
 aa
 aa
-aa
-aa
-aa
-aa
+Dh
+Dh
+Dh
+Dh
 aj
 cg
 Cs
@@ -1507,7 +1507,7 @@ kh
 aC
 hS
 cd
-Bp
+aa
 "}
 (4,1,1) = {"
 aa
@@ -1539,12 +1539,12 @@ CK
 IJ
 mE
 CU
-Bp
+aa
 "}
 (5,1,1) = {"
 aa
 aj
-NJ
+Cl
 Fa
 xg
 aC
@@ -1571,12 +1571,12 @@ aP
 Wd
 aj
 MZ
-Bp
+Dh
 "}
 (6,1,1) = {"
 aa
 aj
-NJ
+Cl
 Bg
 Ti
 Fa
@@ -1603,7 +1603,7 @@ cE
 cE
 gF
 MZ
-Bp
+Dh
 "}
 (7,1,1) = {"
 aa
@@ -1635,7 +1635,7 @@ uz
 uz
 lq
 MZ
-Bp
+Dh
 "}
 (8,1,1) = {"
 aa
@@ -1667,7 +1667,7 @@ uz
 uz
 PN
 MZ
-Bp
+Dh
 "}
 (9,1,1) = {"
 aa
@@ -1699,7 +1699,7 @@ uz
 uz
 lq
 MZ
-Bp
+Dh
 "}
 (10,1,1) = {"
 aa
@@ -1766,7 +1766,7 @@ IP
 MZ
 "}
 (12,1,1) = {"
-aa
+Dh
 MZ
 VI
 VI
@@ -1798,7 +1798,7 @@ Ro
 MZ
 "}
 (13,1,1) = {"
-Bp
+Dh
 Fr
 yc
 VI
@@ -1830,7 +1830,7 @@ Ro
 MZ
 "}
 (14,1,1) = {"
-Bp
+Dh
 wL
 MZ
 SC
@@ -1862,7 +1862,7 @@ Ro
 MZ
 "}
 (15,1,1) = {"
-Bp
+Dh
 gX
 cd
 VI
@@ -1894,7 +1894,7 @@ EL
 MZ
 "}
 (16,1,1) = {"
-Bp
+Dh
 wL
 MZ
 dj
@@ -1926,7 +1926,7 @@ Ro
 MZ
 "}
 (17,1,1) = {"
-Bp
+Dh
 wL
 MZ
 VY
@@ -1958,7 +1958,7 @@ Ro
 MZ
 "}
 (18,1,1) = {"
-Bp
+Dh
 Zi
 Mf
 UT
@@ -2114,8 +2114,8 @@ AE
 eA
 qf
 MZ
-Bp
-Bp
+Dh
+aa
 "}
 (23,1,1) = {"
 aa
@@ -2147,7 +2147,7 @@ gC
 rO
 Fr
 yc
-Bp
+Dh
 "}
 (24,1,1) = {"
 aa
@@ -2339,7 +2339,7 @@ BE
 CU
 BE
 Mf
-Bp
+aa
 "}
 (30,1,1) = {"
 aa
@@ -2349,7 +2349,7 @@ BE
 BE
 BE
 Mf
-ZS
+Jj
 Fr
 BE
 BE
@@ -2364,12 +2364,12 @@ Mf
 aj
 aj
 aj
-Bp
-Bp
-Bp
-Bp
-Bp
-Bp
-Bp
-Bp
+Dh
+Dh
+aa
+aa
+aa
+aa
+aa
+aa
 "}

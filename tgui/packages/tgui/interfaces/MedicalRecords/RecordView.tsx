@@ -2,6 +2,8 @@ import { useState } from 'react';
 import {
   Box,
   Button,
+  Dropdown,
+  Input,
   LabeledList,
   NoticeBox,
   RestrictedInput,
@@ -30,7 +32,13 @@ export const MedicalRecordView = (props) => {
   if (!foundRecord) return <NoticeBox>No record selected.</NoticeBox>;
 
   const { act, data } = useBackend<MedicalRecordData>();
-  const { assigned_view, physical_statuses, mental_statuses, station_z } = data;
+  const {
+    assigned_view,
+    physical_statuses,
+    mental_statuses,
+    station_z,
+    blood_types,
+  } = data;
 
   const { min_age, max_age } = data;
 
@@ -43,6 +51,7 @@ export const MedicalRecordView = (props) => {
     major_disabilities,
     minor_disabilities,
     physical_status,
+    cause_of_death,
     mental_status,
     name,
     quirk_notes,
@@ -130,10 +139,16 @@ export const MedicalRecordView = (props) => {
               />
             </LabeledList.Item>
             <LabeledList.Item color="bad" label="Blood Type">
-              <EditableText
-                field="blood_type"
-                target_ref={crew_ref}
-                text={blood_type}
+              <Dropdown
+                selected={blood_type}
+                options={blood_types}
+                width="6rem"
+                onSelected={(value) =>
+                  act('set_blood_type', {
+                    crew_ref: crew_ref,
+                    blood_type: value,
+                  })
+                }
               />
             </LabeledList.Item>
             <LabeledList.Item
@@ -166,6 +181,23 @@ export const MedicalRecordView = (props) => {
                 {physical_status}
               </Box>
             </LabeledList.Item>
+            {physical_status === 'Deceased' && (
+              <LabeledList.Item label="Cause of Death">
+                <Box>
+                  <Input
+                    fluid
+                    placeholder="Input Cause of Death..."
+                    value={cause_of_death}
+                    onChange={(value) =>
+                      act('set_cause_of_death', {
+                        crew_ref: crew_ref,
+                        cause: value,
+                      })
+                    }
+                  />
+                </Box>
+              </LabeledList.Item>
+            )}
             <LabeledList.Item
               buttons={mental_statuses.map((button, index) => {
                 const isSelected = button === mental_status;

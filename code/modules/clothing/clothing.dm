@@ -23,6 +23,8 @@
 	var/toggle_message
 	///chat message when the visor is toggled up.
 	var/alt_toggle_message
+	/// What level of emp protection item has
+	var/emp_protection = EMP_PROTECTION_NONE
 
 	var/clothing_flags = NONE
 	///List of items that can be equipped in the suit storage slot while we're worn.
@@ -61,9 +63,14 @@
 	// such that you never actually cared about checking if something is *edible*.
 	var/obj/item/food/clothing/moth_snack
 
+	// Is it freshly laundered
+	var/is_laundered = FALSE
+
 /obj/item/clothing/Initialize(mapload)
 	if(clothing_flags & VOICEBOX_TOGGLABLE)
 		actions_types += list(/datum/action/item_action/toggle_voice_box)
+	if(LAZYLEN(clothing_traits))
+		clothing_traits = string_list(clothing_traits)
 	. = ..()
 	AddElement(/datum/element/venue_price, FOOD_PRICE_CHEAP)
 	if(can_be_bloody && ((body_parts_covered & FEET) || (flags_inv & HIDESHOES)))
@@ -99,19 +106,20 @@
 		qdel(src)
 
 /obj/item/clothing/attack(mob/living/target, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(user.combat_mode || !ismoth(target) || ispickedupmob(src))
+	if(user.combat_mode || !HAS_TRAIT(user, TRAIT_CLOTH_EATER) || (resistance_flags & INDESTRUCTIBLE))
 		return ..()
-	if((clothing_flags & INEDIBLE_CLOTHING) || (resistance_flags & INDESTRUCTIBLE))
-		return ..()
+	moth_snack ||= create_moth_snack()
 	if(isnull(moth_snack))
-		create_moth_snack()
+		to_chat(user, span_warning("You can't eat [src]!"))
+		return
 	moth_snack.attack(target, user, modifiers)
 
 /// Creates a food object in null space which we can eat and imagine we're eating this pair of shoes
 /obj/item/clothing/proc/create_moth_snack()
-	moth_snack = new
-	moth_snack.name = name
-	moth_snack.clothing = WEAKREF(src)
+	var/obj/item/food/clothing/new_moth_snack = new
+	new_moth_snack.name = name
+	new_moth_snack.clothing = WEAKREF(src)
+	return new_moth_snack
 
 /obj/item/clothing/item_interaction(mob/living/user, obj/item/weapon, list/modifiers)
 	. = NONE
@@ -286,7 +294,11 @@
 	if(!islist(trait_or_traits))
 		trait_or_traits = list(trait_or_traits)
 
+	// Use a temporary list so we don't mutate the cached version
+	clothing_traits = LAZYLISTDUPLICATE(clothing_traits)
 	LAZYOR(clothing_traits, trait_or_traits)
+	if(clothing_traits) // because we might be null
+		clothing_traits = string_list(clothing_traits)
 	var/mob/wearer = loc
 	if(istype(wearer) && (wearer.get_slot_by_item(src) & slot_flags))
 		for(var/new_trait in trait_or_traits)
@@ -303,7 +315,11 @@
 	if(!islist(trait_or_traits))
 		trait_or_traits = list(trait_or_traits)
 
+	// Use a temporary list so we don't mutate the cached version
+	clothing_traits = LAZYLISTDUPLICATE(clothing_traits)
 	LAZYREMOVE(clothing_traits, trait_or_traits)
+	if(clothing_traits) // because we might be null
+		clothing_traits = string_list(clothing_traits)
 	var/mob/wearer = loc
 	if(istype(wearer))
 		for(var/new_trait in trait_or_traits)
@@ -346,11 +362,14 @@
 	if(get_armor().has_any_armor() || (flags_cover & (HEADCOVERSMOUTH|PEPPERPROOF)) || (clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
 		. += span_notice("It has a <a href='byond://?src=[REF(src)];list_armor=1'>tag</a> listing its protection classes.")
 
+	if(is_laundered)
+		. += "[src] looks crisp and pristine."
+
 /obj/item/clothing/examine_tags(mob/user)
 	. = ..()
 	if (clothing_flags & THICKMATERIAL)
 		.["thick"] = "Protects from most injections and sprays."
-	if (clothing_flags & CASTING_CLOTHES)
+	if (HAS_TRAIT(src, TRAIT_CASTING_CLOTHING))
 		.["magical"] = "Allows magical beings to cast spells when wearing [src]."
 	if((clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
 		.["pressure-proof"] = "Protects the wearer from extremely low or high pressure, such as vacuum of space."
@@ -380,6 +399,8 @@
 		.["sterile"] = "Increases the speed at which reagents are administered to others by [round((1/NITRILE_GLOVES_MULTIPLIER-1)*100, 1)]%."
 	if(TRAIT_FAST_CUFFING in clothing_traits)
 		.["secure"] = "Increases the speed at which you apply restraints."
+	if(emp_protection > EMP_PROTECTION_NONE)
+		.["emp resistant"] = "Reduces the effects of incoming electromagnetic pulses on the wearer."
 
 /obj/item/clothing/examine_descriptor(mob/user)
 	return "clothing"
@@ -392,7 +413,7 @@
 
 		var/datum/armor/armor = get_armor()
 		var/added_damage_header = FALSE
-		for(var/damage_key in ARMOR_LIST_DAMAGE())
+		for(var/damage_key in ARMOR_LIST_DAMAGE)
 			var/rating = armor.get_rating(damage_key)
 			if(!rating)
 				continue
@@ -402,7 +423,7 @@
 			readout += "[armor_to_protection_name(damage_key)] [armor_to_protection_class(rating)]"
 
 		var/added_durability_header = FALSE
-		for(var/durability_key in ARMOR_LIST_DURABILITY())
+		for(var/durability_key in ARMOR_LIST_DURABILITY)
 			var/rating = armor.get_rating(durability_key)
 			if(!rating)
 				continue
@@ -421,21 +442,23 @@
 				readout += "<b><u>COVERAGE</u></b>"
 				readout += "It will block [english_list(things_blocked)]."
 
+		var/list/parts_covered = list()
+		if(body_parts_covered & HEAD)
+			parts_covered += "head"
+		if(body_parts_covered & CHEST)
+			parts_covered += "torso"
+		if(body_parts_covered & (ARMS|HANDS))
+			parts_covered += "arms"
+		if(body_parts_covered & (LEGS|FEET))
+			parts_covered += "legs"
+		if(length(parts_covered))
+			readout += "It covers the wearer's [english_list(parts_covered)]."
+
 		if((clothing_flags & STOPSPRESSUREDAMAGE) || (visor_flags & STOPSPRESSUREDAMAGE))
-			var/list/parts_covered = list()
 			var/output_string = "It"
 			if(!(clothing_flags & STOPSPRESSUREDAMAGE))
 				output_string = "When sealed, it"
-			if(body_parts_covered & HEAD)
-				parts_covered += "head"
-			if(body_parts_covered & CHEST)
-				parts_covered += "torso"
-			if(body_parts_covered & (ARMS|HANDS))
-				parts_covered += "arms"
-			if(body_parts_covered & (LEGS|FEET))
-				parts_covered += "legs"
-			if(length(parts_covered))
-				readout += "[output_string] will protect the wearer's [english_list(parts_covered)] from [span_tooltip("The extremely low pressure is the biggest danger posed by the vacuum of space.", "low pressure")]."
+			readout += "[output_string] will protect the wearer's bodyparts that it covers from [span_tooltip("The extremely low pressure is the biggest danger posed by the vacuum of space.", "low pressure")]."
 
 		var/heat_prot
 		switch (max_heat_protection_temperature)
@@ -486,13 +509,8 @@
 	if(stubborn_stains) //Just can't make it feel right
 		return
 
-	var/fresh_mood = AddComponent( \
-		/datum/component/onwear_mood, \
-		saved_event_type = /datum/mood_event/fresh_laundry, \
-		examine_string = "[src] looks crisp and pristine.", \
-	)
-
-	QDEL_IN(fresh_mood, 2 MINUTES)
+	is_laundered = TRUE
+	addtimer(VARSET_CALLBACK(src, is_laundered, FALSE), 2 MINUTES)
 
 //This mostly exists so subtypes can call appriopriate update icon calls on the wearer.
 /obj/item/clothing/proc/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
@@ -562,7 +580,7 @@ BLIND     // can't see anything
 	if(!iscarbon(user))
 		return TRUE
 	var/mob/living/carbon/carbon_user = user
-	if(up)
+	if(visor_flags_inv)
 		carbon_user.refresh_obscured()
 	if(visor_vars_to_toggle & VISOR_TINT)
 		carbon_user.update_tint()
@@ -572,7 +590,6 @@ BLIND     // can't see anything
 
 /obj/item/clothing/proc/visor_toggling() //handles all the actual toggling of flags
 	up = !up
-	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
 	clothing_flags ^= visor_flags
 	flags_inv ^= visor_flags_inv
 	flags_cover ^= visor_flags_cover
@@ -580,6 +597,7 @@ BLIND     // can't see anything
 		flash_protect ^= initial(flash_protect)
 	if(visor_vars_to_toggle & VISOR_TINT)
 		tint ^= initial(tint)
+	SEND_SIGNAL(src, COMSIG_CLOTHING_VISOR_TOGGLE, up)
 	update_appearance() //most of the time the sprite changes
 
 /obj/item/clothing/proc/can_use(mob/user)
@@ -635,7 +653,7 @@ BLIND     // can't see anything
 	return ..()
 
 /// Returns a list of overlays with our blood, if we're bloodied
-/obj/item/clothing/proc/get_blood_overlay(blood_state)
+/obj/item/clothing/proc/get_blood_overlay(blood_state, bodyshape = NONE)
 	if (!GET_ATOM_BLOOD_DECAL_LENGTH(src))
 		return
 

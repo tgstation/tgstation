@@ -26,18 +26,17 @@
 		if(computer.stored_id.registered_account.civilian_bounty)
 			data["id_bounty_info"] = computer.stored_id.registered_account.civilian_bounty.description
 			data["id_bounty_num"] = computer.stored_id.registered_account.bounty_num()
-			data["id_bounty_value"] = (computer.stored_id.registered_account.civilian_bounty.reward) * (CIV_BOUNTY_SPLIT/100)
+			data["id_bounty_value"] = (computer.stored_id.registered_account.civilian_bounty.get_bounty_reward()) * (CIV_BOUNTY_SPLIT / 100)
 		if(computer.stored_id.registered_account.bounties)
 			data["picking"] = TRUE
-			data["id_bounty_names"] = list(computer.stored_id.registered_account.bounties[1].name,
-											computer.stored_id.registered_account.bounties[2].name,
-											computer.stored_id.registered_account.bounties[3].name)
-			data["id_bounty_infos"] = list(computer.stored_id.registered_account.bounties[1].description,
-											computer.stored_id.registered_account.bounties[2].description,
-											computer.stored_id.registered_account.bounties[3].description)
-			data["id_bounty_values"] = list(computer.stored_id.registered_account.bounties[1].reward * (CIV_BOUNTY_SPLIT/100),
-											computer.stored_id.registered_account.bounties[2].reward * (CIV_BOUNTY_SPLIT/100),
-											computer.stored_id.registered_account.bounties[3].reward * (CIV_BOUNTY_SPLIT/100))
+			data["id_bounty_names"] = list()
+			data["id_bounty_infos"] = list()
+			data["id_bounty_values"] = list()
+			for(var/datum/bounty/bounty as anything in computer.stored_id.registered_account.bounties)
+				data["id_bounty_names"] += bounty.name
+				data["id_bounty_infos"] += bounty.description
+				data["id_bounty_values"] += bounty.get_bounty_reward() * (CIV_BOUNTY_SPLIT / 100)
+
 		else
 			data["picking"] = FALSE
 
@@ -61,11 +60,11 @@
 		var/time_left = DisplayTimeText(COOLDOWN_TIMELEFT(id_account, bounty_timer), round_seconds_to = 1)
 		computer.balloon_alert(user, "try again in [time_left]!")
 		return FALSE
-	if(!id_account.account_job)
+	if(!computer.stored_id.trim)
 		computer.say("Requesting ID card has no job assignment registered!")
 		return FALSE
 
-	var/list/datum/bounty/crumbs = generate_bounty_list(id_account.account_job.bounty_types)
+	var/list/datum/bounty/crumbs = computer.stored_id.trim.generate_bounty_list()
 	COOLDOWN_START(id_account, bounty_timer, (5 MINUTES) - cooldown_reduction)
 	id_account.bounties = crumbs
 
@@ -80,31 +79,8 @@
 	if(!id_account?.bounties?[choice])
 		playsound(computer.loc, 'sound/machines/synth/synth_no.ogg', 40 , TRUE)
 		return
-	id_account.civilian_bounty = id_account.bounties[choice]
-	id_account.bounties = null
+	id_account.set_bounty(id_account.bounties[choice], computer.stored_id)
 	SSblackbox.record_feedback("tally", "bounties_assigned", 1, id_account.civilian_bounty.type)
 	return id_account.civilian_bounty
-
-/**
- * Generates a list of bounties for use with the civilian bounty pad, this is virtually identical to the stuff contained within: code/game/machinery/civilian_bounties.dm
- * @param bounty_types the define taken from a job for selection of a random_bounty() proc.
- * @param bounty_rolls the number of bounties to be selected from.
- * @param assistant_failsafe Do we guarentee one assistant bounty per generated list? Used for non-assistant jobs to give an easier alternative to that job's default bounties.
- */
-/datum/computer_file/program/civilianbounties/proc/generate_bounty_list(bounty_types, bounty_rolls = 3, assistant_failsafe = TRUE)
-	var/list/rolling_list = list()
-	if(assistant_failsafe)
-		rolling_list += random_bounty(CIV_JOB_BASIC)
-	while(bounty_rolls > 1)
-		var/datum/bounty/potential_bounty = random_bounty(bounty_types)
-		var/repeats_bool = FALSE
-		for(var/datum/iterator in rolling_list)
-			if(iterator.type == potential_bounty.type)
-				repeats_bool = TRUE
-		if(repeats_bool)
-			continue
-		rolling_list += potential_bounty
-		bounty_rolls -= 1
-	return rolling_list
 
 #undef CIV_BOUNTY_SPLIT

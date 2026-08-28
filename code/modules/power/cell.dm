@@ -19,7 +19,6 @@
 	emp_damage_modifier = 1
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*7, /datum/material/glass=SMALL_MATERIAL_AMOUNT*0.5)
-	grind_results = list(/datum/reagent/lithium = 15, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 
 /obj/item/stock_parts/power_store/cell/Initialize(mapload)
 	. = ..()
@@ -30,6 +29,9 @@
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
+
+/obj/item/stock_parts/power_store/cell/grind_results()
+	return list(/datum/reagent/lithium = 15, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
 
 /* Cell variants*/
 /obj/item/stock_parts/power_store/cell/empty
@@ -114,7 +116,7 @@
 	icon_state = "hcell"
 	emp_damage_modifier = 3
 	maxcharge = STANDARD_CELL_CHARGE * 10
-	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*0.6)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.7, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.6)
 	chargerate = STANDARD_CELL_RATE * 0.75
 
 
@@ -126,7 +128,7 @@
 	icon_state = "scell"
 	emp_damage_modifier = 5
 	maxcharge = STANDARD_CELL_CHARGE * 20
-	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 3)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.7, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.7)
 	chargerate = STANDARD_CELL_RATE
 
 /obj/item/stock_parts/power_store/cell/super/empty
@@ -137,7 +139,7 @@
 	icon_state = "hpcell"
 	emp_damage_modifier = 5
 	maxcharge = STANDARD_CELL_CHARGE * 30
-	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT * 4)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.7, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/silver = SMALL_MATERIAL_AMOUNT * 1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.8)
 	chargerate = STANDARD_CELL_RATE * 1.5
 
 /obj/item/stock_parts/power_store/cell/hyper/empty
@@ -149,7 +151,14 @@
 	icon_state = "bscell"
 	emp_damage_modifier = 5
 	maxcharge = STANDARD_CELL_CHARGE * 40
-	custom_materials = list(/datum/material/glass=SMALL_MATERIAL_AMOUNT*6)
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.8,
+		/datum/material/titanium = SMALL_MATERIAL_AMOUNT * 3,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT * 1.6,
+		/datum/material/diamond = SMALL_MATERIAL_AMOUNT * 1.6,
+		/datum/material/gold = SMALL_MATERIAL_AMOUNT * 1.2,
+		/datum/material/bluespace = SMALL_MATERIAL_AMOUNT,
+	)
 	chargerate = STANDARD_CELL_RATE * 2
 
 /obj/item/stock_parts/power_store/cell/bluespace/empty
@@ -238,14 +247,16 @@
 
 /obj/item/stock_parts/power_store/cell/crystal_cell
 	name = "crystal power cell"
-	desc = "A very high power cell made from crystallized plasma"
+	desc = "A high power cell made from crystallized plasma."
 	icon_state = "crystal_cell"
 	maxcharge = STANDARD_CELL_CHARGE * 50
 	chargerate = 0
 	charge_light_type = null
 	connector_type = "crystal"
 	custom_materials = null
-	grind_results = null
+
+/obj/item/stock_parts/power_store/cell/crystal_cell/grind_results()
+	return null
 
 /obj/item/stock_parts/power_store/cell/ethereal
 	name = "ahelp it"
@@ -256,9 +267,10 @@
 	charge_light_type = null
 	connector_type = null
 	custom_materials = null
-	grind_results = null
 	emp_damage_modifier = 0
-	abstract_type = /obj/item/stock_parts/power_store/cell/ethereal
+
+/obj/item/stock_parts/power_store/cell/ethereal/grind_results()
+	return null
 
 /obj/item/stock_parts/power_store/cell/ethereal/examine(mob/user)
 	. = ..()

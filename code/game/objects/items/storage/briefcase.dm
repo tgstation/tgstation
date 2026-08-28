@@ -62,6 +62,10 @@
 	user.visible_message(span_suicide("[user] looks overwhelmed with paperwork! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
+// Empty subtype
+/obj/item/storage/briefcase/empty/PopulateContents()
+	return
+
 /obj/item/storage/briefcase/sniper
 	desc = "Its label reads \"genuine hardened Captain leather\", but suspiciously has no other tags or branding. Smells like L'Air du Temps."
 	force = 10
@@ -175,3 +179,22 @@
 	remote.pad = WEAKREF(src.pad)
 	to_chat(user, span_notice("You link [pad] to [remote]."))
 	return ITEM_INTERACT_BLOCKING
+
+/obj/item/storage/briefcase/gun
+	storage_type = /datum/storage/briefcase/gun
+
+/obj/item/storage/briefcase/gun/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	for(var/obj/item/gun/weapon in src)
+		return weapon.try_fire_gun(interacting_with, user, list2params(modifiers))
+	return NONE
+
+/obj/item/storage/briefcase/gun/examine_more(mob/user)
+	. = ..()
+	if(user.is_holding(src))
+		. += span_notice("Upon closer inspection, you notice a hole in the side of the briefcase.")
+
+/obj/item/storage/briefcase/gun/preloaded
+
+/obj/item/storage/briefcase/gun/preloaded/PopulateContents()
+	new /obj/item/gun/ballistic/automatic/pistol(src)
+	return ..()

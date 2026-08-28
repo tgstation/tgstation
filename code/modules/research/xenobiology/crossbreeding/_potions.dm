@@ -99,7 +99,7 @@ Slimecrossing Potions
 		return ITEM_INTERACT_BLOCKING
 	to_chat(user, span_notice("You feed [love_target] the love potion!"))
 	to_chat(love_target, span_notice("You develop feelings for [user], and anyone [user.p_they()] like[user.p_s()]."))
-	love_target.faction |= "[REF(user)]"
+	love_target.add_ally(user)
 	love_target.apply_status_effect(/datum/status_effect/in_love, user)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS
@@ -202,7 +202,6 @@ Slimecrossing Potions
 		return ITEM_INTERACT_BLOCKING
 	user.do_attack_animation(interacting_with)
 	revive_target.revive(HEAL_ALL)
-	revive_target.set_stat(CONSCIOUS)
 	revive_target.visible_message(span_notice("[revive_target] is filled with renewed vigor and blinks awake!"))
 	revive_target.maxHealth -= 10 //Revival isn't healthy.
 	revive_target.health -= 10
@@ -217,7 +216,7 @@ Slimecrossing Potions
 	icon_state = "potcyan"
 
 /obj/item/slimepotion/slime/chargedstabilizer/interact_with_slime(mob/living/basic/slime/interacting_slime, mob/living/user, list/modifiers)
-	if(interacting_slime.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(interacting_slime))
 		to_chat(user, span_warning("The slime is dead!"))
 		return ITEM_INTERACT_BLOCKING
 	if(interacting_slime.mutation_chance == 0)

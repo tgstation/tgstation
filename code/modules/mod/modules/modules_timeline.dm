@@ -5,7 +5,7 @@
 
 ///Eradication lock - Prevents people who aren't the owner of the suit from existing on the timeline via eradicating the suit with the intruder inside
 /obj/item/mod/module/eradication_lock
-	name = "MOD eradication lock module"
+	name = "\improper MOD eradication lock module"
 	desc = "A module which remembers the original owner of the suit, even alternate universe \
 			versions. When a non-owner enters, the eradication lock will begin eradicating the suit \
 			from the timeline... with the intruder inside. Not the way you want to go, so it turns \
@@ -39,10 +39,12 @@
 /obj/item/mod/module/eradication_lock/proc/on_mod_activation(datum/source, mob/user)
 	SIGNAL_HANDLER
 
-	if(true_owner_ckey && user.ckey != true_owner_ckey)
+	if(!true_owner_ckey || user.ckey == true_owner_ckey)
+		return NONE
+	if(user == mod.wearer)
 		to_chat(mod.wearer, span_userdanger("\"MODsuit compromised by timeline inhabitant! Eradicating...\""))
 		new /obj/structure/chrono_field(user.loc, user)
-		return MOD_CANCEL_ACTIVATE
+	return MOD_CANCEL_ACTIVATE
 
 ///Signal fired when the modsuit tries removing a module.
 /obj/item/mod/module/eradication_lock/proc/on_mod_removal(datum/source, mob/user)
@@ -55,7 +57,7 @@
 
 ///Rewinder - Activating saves a point in time, after 10 seconds you will jump back to that state.
 /obj/item/mod/module/rewinder
-	name = "MOD rewinder module"
+	name = "\improper MOD rewinder module"
 	desc = "A module that can pull the user back through time given an anchor point to \
 			pull to. Very useful tool to get the job done, but keep in mind the suit locks for \
 			safety reasons while preparing a rewind."
@@ -97,7 +99,7 @@
 
 ///Timestopper - Need I really explain? It's the wizard's time stop, but the user channels it by not moving instead of a duration.
 /obj/item/mod/module/timestopper
-	name = "MOD timestopper module"
+	name = "\improper MOD timestopper module"
 	desc = "A module that can halt time in a small radius around the user... for as long as they \
 			want! Great for monologues or lunch breaks. Keep in mind moving will end the stop, and the \
 			module has a hefty cooldown period to avoid reality errors."
@@ -147,7 +149,7 @@
 
 ///Timeline Jumper - Infinite phasing. needs some special effects
 /obj/item/mod/module/timeline_jumper
-	name = "MOD timeline jumper module"
+	name = "\improper MOD timeline jumper module"
 	desc = "A module used to traverse timelines, phasing the user in and out of the stream of events."
 	icon_state = "timeline_jumper"
 	module_type = MODULE_USABLE
@@ -199,7 +201,7 @@
 
 ///TEM - Lets you eradicate people.
 /obj/item/mod/module/tem
-	name = "MOD timestream eradication module"
+	name = "\improper MOD timestream eradication module"
 	desc = "The correction device of a fourth dimensional group outside time itself used to \
 			change the destination of a timeline. this device is capable of wiping a being from the \
 			timestream. They never are, they never were, they never will be."
@@ -360,7 +362,7 @@
 /obj/structure/chrono_field/update_overlays()
 	. = ..()
 	var/ttk_frame = 1 - (timetokill / initial(timetokill))
-	ttk_frame = clamp(CEILING(ttk_frame * CHRONO_FRAME_COUNT, 1), 1, CHRONO_FRAME_COUNT)
+	ttk_frame = clamp(ceil(ttk_frame * CHRONO_FRAME_COUNT), 1, CHRONO_FRAME_COUNT)
 	if(ttk_frame != RPpos)
 		RPpos = ttk_frame
 		underlays -= mob_underlay
@@ -416,9 +418,8 @@
 
 /obj/structure/chrono_field/return_air() //we always have nominal air and temperature
 	var/datum/gas_mixture/fresh_air = new
-	fresh_air.add_gases(/datum/gas/oxygen, /datum/gas/nitrogen)
-	fresh_air.gases[/datum/gas/oxygen][MOLES] = MOLES_O2STANDARD
-	fresh_air.gases[/datum/gas/nitrogen][MOLES] = MOLES_N2STANDARD
+	fresh_air.set_gas(/datum/gas/oxygen, MOLES_O2STANDARD)
+	fresh_air.set_gas(/datum/gas/nitrogen, MOLES_N2STANDARD)
 	fresh_air.temperature = T20C
 	return fresh_air
 

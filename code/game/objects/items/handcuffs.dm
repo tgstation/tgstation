@@ -14,7 +14,7 @@
 	dye_color = DYE_PRISONER
 	icon = 'icons/obj/weapons/restraints.dmi'
 
-/obj/item/restraints/suicide_act(mob/living/carbon/user)
+/obj/item/restraints/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] is strangling [user.p_them()]self with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
@@ -353,6 +353,7 @@
 	breakouttime = 45 SECONDS
 	color = null
 	cable_color = null
+	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2.5)
 
 /obj/item/restraints/handcuffs/cable/zipties/on_uncuffed(datum/source, mob/living/wearer)
 	. = ..()
@@ -419,6 +420,8 @@
 	slowdown = 7
 	breakouttime = 30 SECONDS
 	slot_flags = ITEM_SLOT_LEGCUFFED
+	/// Icon state for the legcuff overlay
+	var/legcuff_state = "legcuff"
 
 /**
  * # Bear trap
@@ -431,6 +434,7 @@
 	throw_range = 1
 	icon_state = "beartrap"
 	desc = "A trap used to catch bears and other legged creatures."
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT)
 	///If true, the trap is "open" and can trigger.
 	var/armed = FALSE
 	///How much damage the trap deals when triggered.
@@ -456,13 +460,36 @@
 	playsound(loc, 'sound/items/weapons/bladeslice.ogg', 50, TRUE, -1)
 	return BRUTELOSS
 
-/obj/item/restraints/legcuffs/beartrap/attack_self(mob/user)
+/obj/item/restraints/legcuffs/beartrap/attack_self(mob/living/user)
 	. = ..()
-	if(!ishuman(user) || user.stat != CONSCIOUS || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+	if(!ishuman(user) || IS_UNCONSCIOUS_OR_CRIT(user) || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		return
+
+	playsound(loc, 'sound/items/weapons/handcuffs.ogg', 30, TRUE, -3)
+
 	armed = !armed
 	update_appearance()
+
+	if(armed && (HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(25))
+		to_chat(user, span_warning("Your hand slips, setting off the trigger!"))
+		var/hand_zone = user.held_index_to_dir(user.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
+		spring_trap(user, def_zone = hand_zone)
+		return
+
 	to_chat(user, span_notice("[src] is now [armed ? "armed" : "disarmed"]"))
+
+
+/obj/item/restraints/legcuffs/beartrap/attempt_pickup(mob/user)
+	if(!armed)
+		return ..()
+
+	if((HAS_TRAIT(user, TRAIT_DUMB) || HAS_TRAIT(user, TRAIT_CLUMSY)) && prob(25))
+		to_chat(user, span_warning("Your hand slips, setting off the trigger!"))
+		var/hand_zone = user.held_index_to_dir(user.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
+		spring_trap(user, def_zone = hand_zone)
+		return TRUE
+
+	return ..()
 
 /**
  * Closes a bear trap
@@ -488,8 +515,8 @@
  * Does not trigger on tiny mobs.
  * If ignore_movetypes is FALSE, does not trigger on floating / flying / etc. mobs.
  */
-/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(atom/movable/target, ignore_movetypes = FALSE, hit_prone = FALSE)
-	if(!armed || !isturf(loc) || !isliving(target))
+/obj/item/restraints/legcuffs/beartrap/proc/spring_trap(atom/movable/target, ignore_movetypes = FALSE, hit_prone = FALSE, def_zone = BODY_ZONE_CHEST)
+	if(!armed || !isliving(target))
 		return
 
 	var/mob/living/victim = target
@@ -513,15 +540,15 @@
 	else
 		victim.visible_message(span_danger("[victim] triggers \the [src]."), \
 				span_userdanger("You trigger \the [src]!"))
-	var/def_zone = BODY_ZONE_CHEST
-	if(iscarbon(victim) && (victim.body_position == STANDING_UP || hit_prone))
+
+	if(iscarbon(victim) && (victim.body_position == STANDING_UP || hit_prone) && !((def_zone == BODY_ZONE_PRECISE_R_HAND) || (def_zone == BODY_ZONE_PRECISE_L_HAND)))
 		var/mob/living/carbon/carbon_victim = victim
 		def_zone = pick(BODY_ZONE_L_LEG, BODY_ZONE_R_LEG)
 		if(!carbon_victim.legcuffed && carbon_victim.num_legs >= 2) //beartrap can't cuff your leg if there's already a beartrap or legcuffs, or you don't have two legs.
 			INVOKE_ASYNC(carbon_victim, TYPE_PROC_REF(/mob/living/carbon, equip_to_slot), src, ITEM_SLOT_LEGCUFFED)
 			SSblackbox.record_feedback("tally", "handcuffs", 1, type)
 
-	victim.apply_damage(trap_damage, BRUTE, def_zone)
+	victim.apply_damage(trap_damage, BRUTE, def_zone, sharpness=SHARP_POINTY, wound_bonus=trap_damage/2, exposed_wound_bonus=trap_damage)
 
 /**
  * # Energy snare
@@ -538,6 +565,7 @@
 	breakouttime = 3 SECONDS
 	item_flags = DROPDEL
 	flags_1 = NONE
+	custom_materials = null // cannot be recycled anyway
 
 /obj/item/restraints/legcuffs/beartrap/energy/Initialize(mapload)
 	. = ..()
@@ -555,7 +583,9 @@
 		qdel(src)
 
 /obj/item/restraints/legcuffs/beartrap/energy/attack_hand(mob/user, list/modifiers)
-	spring_trap(user)
+	if(isturf(loc))
+		spring_trap(user)
+
 	return ..()
 
 /obj/item/restraints/legcuffs/beartrap/energy/cyborg
@@ -641,7 +671,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	breakouttime = 6 SECONDS
 	custom_price = PAYCHECK_COMMAND * 0.35
-	custom_materials = null
+	custom_materials = list(/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/restraints/legcuffs/bola/energy/Initialize(mapload)
 	. = ..()

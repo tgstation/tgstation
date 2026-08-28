@@ -119,6 +119,8 @@ Then the player gets the profit from selling his own wasted time.
 	var/include_subtypes = TRUE
 	/// Types excluded from export
 	var/list/exclude_types = list()
+	/// A list consisting of the original export times, without any subtypes adjusted via include_subtypes
+	var/list/original_export_types = list()
 	/// Set to false if the cost shouldn't be determinable by an export scanner
 	var/scannable = TRUE
 	/// Export market that this export applies to. Defaults to EXPORT_MARKET_STATION for items sold to the standard supply shuttle, replacements exist for pirates, etc.
@@ -126,6 +128,7 @@ Then the player gets the profit from selling his own wasted time.
 
 /datum/export/New()
 	..()
+	original_export_types = export_types?.Copy()
 	export_types = typecacheof(export_types, only_root_path = !include_subtypes)
 	exclude_types = typecacheof(exclude_types)
 
@@ -159,7 +162,7 @@ Then the player gets the profit from selling his own wasted time.
 
 
 /**
- * Returns the cost of the xported item i.e. amount * base cost * elasticity if TRUE
+ * Returns the cost of the exported item i.e. amount * base cost * elasticity if TRUE
  *
  * Arguments
  * * obj/exported_item - the item we are trying to export
@@ -171,6 +174,8 @@ Then the player gets the profit from selling his own wasted time.
 	var/total = get_base_cost(exported_item) * get_amount(exported_item)
 	if(apply_elastic && initial(k_elasticity) > 0)
 		total *= k_elasticity
+	if(type in SSeconomy.boosted_exports)
+		total *= EXPORT_BOOST_MULT
 	return ROUND_UP(total)
 
 /// Checks if the item is fit for export datum.
@@ -244,7 +249,7 @@ Then the player gets the profit from selling his own wasted time.
 	if(unit_name)
 		msg += unit_name
 		if(total_amount > 1)
-			msg += "s"
+			msg += plural_s(unit_name)
 		if(message)
 			msg += " "
 

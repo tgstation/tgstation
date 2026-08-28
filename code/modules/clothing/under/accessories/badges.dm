@@ -131,11 +131,9 @@
 	. += display
 
 // Examining the clothes will display the examine message of the dogtag
-/obj/item/clothing/accessory/dogtag/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
+/obj/item/clothing/accessory/dogtag/attach(obj/item/clothing/under/attached_to)
 	. = ..()
-	if(!.)
-		return
-	RegisterSignal(attach_to, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
+	RegisterSignal(attached_to, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 
 /obj/item/clothing/accessory/dogtag/detach(obj/item/clothing/under/detach_from)
 	. = ..()
@@ -213,14 +211,17 @@
 	preview_name = "Lesbian Pride"
 	new_icon_state = "pride_lesbian"
 
+/datum/atom_skin/pride_pin/mlm
+	preview_name = "Gay Pride"
+	new_icon_state = "pride_gay"
+
 /obj/item/clothing/accessory/pride
 	name = "pride pin"
 	desc = "A Nanotrasen Diversity & Inclusion Center-sponsored holographic pin to show off your pride, reminding the crew of their unwavering commitment to equity, diversity, and inclusion!"
 	icon_state = "pride"
 	obj_flags = UNIQUE_RENAME
 
-/obj/item/clothing/accessory/pride/Initialize(mapload)
-	. = ..()
+/obj/item/clothing/accessory/pride/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/pride_pin, infinite = TRUE)
 
 /obj/item/clothing/accessory/deaf_pin
@@ -239,12 +240,13 @@
 	name = "subversive pin"
 	desc = "A badge which loudly and proudly proclaims your hostility to the Nanotrasen Security Team, and authority in general."
 	icon_state = "anti_sec"
+	clothing_traits = list(TRAIT_ALWAYS_WANTED)
 
 /obj/item/clothing/accessory/anti_sec_pin/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/pinnable_accessory, silent = TRUE, pinning_time = 5 SECONDS)
 
-/obj/item/clothing/accessory/anti_sec_pin/attach(obj/item/clothing/under/attach_to, mob/living/attacher)
+/obj/item/clothing/accessory/anti_sec_pin/try_attach(obj/item/clothing/under/attach_to, mob/living/attacher)
 	. = ..()
 	if (!. || isnull(attacher))
 		return
@@ -255,14 +257,12 @@
 
 /obj/item/clothing/accessory/anti_sec_pin/accessory_equipped(obj/item/clothing/under/clothes, mob/living/user)
 	. = ..()
-	ADD_TRAIT(user, TRAIT_ALWAYS_WANTED, "[CLOTHING_TRAIT]_[REF(src)]")
 	if (ishuman(user))
 		var/mob/living/carbon/human/human_wearer = user
 		human_wearer.sec_hud_set_security_status()
 
 /obj/item/clothing/accessory/anti_sec_pin/accessory_dropped(obj/item/clothing/under/clothes, mob/living/user)
 	. = ..()
-	REMOVE_TRAIT(user, TRAIT_ALWAYS_WANTED, "[CLOTHING_TRAIT]_[REF(src)]")
 	if (ishuman(user))
 		var/mob/living/carbon/human/human_wearer = user
 		human_wearer.sec_hud_set_security_status()
@@ -301,11 +301,11 @@
 	var/mob/living/interacting_living = interacting_with
 	if(user.combat_mode)
 		playsound(interacting_living, 'sound/items/weapons/throw.ogg', 30)
-		examine(interacting_living)
+		interacting_living.examinate(src)
 		to_chat(interacting_living, span_userdanger("[user] shoves the [src] up your face!"))
 		user.visible_message(span_warning("[user] have shoved a [src] into [interacting_living] face."))
 	else
 		playsound(interacting_living, 'sound/items/weapons/throwsoft.ogg', 20)
-		examine(interacting_living)
+		interacting_living.examinate(src)
 		to_chat(interacting_living, span_boldwarning("[user] shows the [src] to you."))
 		user.visible_message(span_notice("[user] shows a [src] to [interacting_living]."))

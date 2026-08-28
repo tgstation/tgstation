@@ -51,13 +51,13 @@
 	else
 		. += span_notice("It looks like it has already made its delivery.")
 
-/mob/living/basic/pet/gondola/gondolapod/setOpened()
+/mob/living/basic/pet/gondola/gondolapod/set_opened()
 	opened = TRUE
 	layer = initial(layer)
 	update_appearance()
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, setClosed)), 5 SECONDS)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom/, set_closed)), 5 SECONDS)
 
-/mob/living/basic/pet/gondola/gondolapod/setClosed()
+/mob/living/basic/pet/gondola/gondolapod/set_closed()
 	opened = FALSE
 	layer = LOW_MOB_LAYER
 	update_appearance()

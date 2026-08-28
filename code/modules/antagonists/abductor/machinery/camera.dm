@@ -8,8 +8,8 @@
 	var/abduct_created = FALSE
 	lock_override = TRUE
 
-	icon = 'icons/obj/antags/abductor.dmi'
-	icon_state = "camera"
+	icon = MAP_SWITCH('icons/obj/antags/abductor.dmi', 'icons/obj/fluff/map_previews.dmi')
+	icon_state = MAP_SWITCH("camera", "/obj/machinery/computer/camera_advanced/abductor")
 	icon_keyboard = null
 	icon_screen = null
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
@@ -49,7 +49,7 @@
 	var/use_delay
 	name = "Send To"
 	button_icon = 'icons/mob/actions/actions_minor_antag.dmi'
-	button_icon_state = "beam_down"
+	button_icon_state = "beam_down_pad"
 
 /datum/action/innate/teleport_in/Activate()
 	if(!target || !iscarbon(owner))

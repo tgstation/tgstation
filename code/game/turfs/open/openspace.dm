@@ -12,6 +12,7 @@
 	plane = TRANSPARENT_FLOOR_PLANE
 	layer = SPACE_LAYER
 	rust_resistance = RUST_RESISTANCE_ABSOLUTE
+	turf_flags = NO_RUST
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 
@@ -25,8 +26,8 @@
 // I am so sorry
 /turf/open/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
-	if(PERFORM_ALL_TESTS(focus_only/openspace_clear) && !GET_TURF_BELOW(src))
-		stack_trace("[src] was inited as openspace with nothing below it at ([x], [y], [z])")
+	if(PERFORM_ALL_TESTS(maptest_log_mapping) && !GET_TURF_BELOW(src))
+		log_mapping("[src] was inited as openspace with nothing below it at ([x], [y], [z])")
 	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_created))
 	var/area/our_area = loc
 	if(istype(our_area, /area/space))
@@ -113,18 +114,29 @@
 /turf/open/openspace/CanBuildHere()
 	return can_build_on
 
-/turf/open/openspace/attackby(obj/item/attacking_item, mob/user, list/modifiers)
-	..()
+/turf/open/openspace/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(ITEM_INTERACT_ANY_BLOCKER & .)
+		return .
+
 	if(!CanBuildHere())
-		return
-	if(istype(attacking_item, /obj/item/stack/rods))
-		build_with_rods(attacking_item, user)
-	else if(ismetaltile(attacking_item))
-		build_with_floor_tiles(attacking_item, user)
-	else if(istype(attacking_item, /obj/item/stack/thermoplastic))
-		build_with_transport_tiles(attacking_item, user)
-	else if(istype(attacking_item, /obj/item/stack/sheet/mineral/titanium))
-		build_with_titanium(attacking_item, user)
+		return .
+
+	if(istype(tool, /obj/item/stack/rods))
+		build_with_rods(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(ismetaltile(tool))
+		build_with_floor_tiles(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stack/thermoplastic))
+		build_with_transport_tiles(tool, user)
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/stack/sheet/mineral/titanium))
+		build_with_titanium(tool, user)
+		return ITEM_INTERACT_SUCCESS
 
 /turf/open/openspace/build_with_floor_tiles(obj/item/stack/tile/iron/used_tiles)
 	if(!CanCoverUp())
@@ -148,7 +160,7 @@
 	return FALSE
 
 /turf/open/openspace/CanAStarPass(to_dir, datum/can_pass_info/pass_info)
-	var/atom/movable/our_movable = pass_info.requester_ref.resolve()
+	var/atom/movable/our_movable = pass_info.requester_ref?.resolve()
 	if(our_movable && !our_movable.can_z_move(DOWN, src, null, ZMOVE_FALL_FLAGS)) //If we can't fall here (flying/lattice), it's fine to path through
 		return TRUE
 	return FALSE
@@ -190,7 +202,7 @@
 	if(!ismineralturf(T) || !drill_below)
 		return
 	var/turf/closed/mineral/M = T
-	M.mineralAmt = 0
+	M.mineral_amt = 0
 	M.gets_drilled()
 	baseturfs = /turf/open/openspace/icemoon //This is to ensure that IF random turf generation produces a openturf, there won't be other turfs assigned other than openspace.
 

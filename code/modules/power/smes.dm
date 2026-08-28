@@ -5,6 +5,7 @@
 	name = "power storage unit"
 	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
 	icon_state = "smes"
+	base_icon_state = "smes"
 	density = TRUE
 	use_power = NO_POWER_USE
 	circuit = /obj/item/circuitboard/machine/smes
@@ -70,6 +71,14 @@
 	terminal.master = src
 	update_appearance(UPDATE_OVERLAYS)
 
+/obj/machinery/power/smes/get_cell()
+	var/obj/item/stock_parts/power_store/lowest_charged_part
+	for(var/obj/item/stock_parts/power_store/power_cell in component_parts)
+		if(lowest_charged_part && (power_cell.charge >= lowest_charged_part.charge || (power_cell.charge == power_cell.maxcharge)))
+			continue
+		lowest_charged_part = power_cell
+	return lowest_charged_part
+
 /obj/machinery/power/smes/on_construction(mob/user)
 	var/obj/structure/cable/C = locate() in loc
 	if(!QDELETED(C))
@@ -116,7 +125,7 @@
 /obj/machinery/power/smes/examine(user)
 	. = ..()
 
-	. += span_notice("it's maintainence panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "opened"]")
+	. += span_notice("Its maintenance panel can be [EXAMINE_HINT("screwed")] [panel_open ? "closed" : "opened"].")
 	if(panel_open)
 		if(!terminal)
 			. += span_notice("It can be [EXAMINE_HINT("pried")] apart.")
@@ -277,32 +286,32 @@
 		set_machine_stat(machine_stat & ~BROKEN)
 		return ITEM_INTERACT_SUCCESS
 
-//opening using screwdriver
+/obj/machinery/power/smes/update_icon_state()
+	. = ..()
+	icon_state = panel_open ? "[base_icon_state]-o" : base_icon_state
+
 /obj/machinery/power/smes/screwdriver_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_BLOCKING
-	if(default_deconstruction_screwdriver(user, "[initial(icon_state)]-o", initial(icon_state), tool))
-		update_appearance(UPDATE_OVERLAYS)
-		return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_screwdriver(user, tool)
 
 /obj/machinery/power/smes/wirecutter_act(mob/living/user, obj/item/item)
-	. = ITEM_INTERACT_FAILURE
 	if(terminal && panel_open)
 		terminal.dismantle(user, item)
 		return ITEM_INTERACT_SUCCESS
+	return ITEM_INTERACT_BLOCKING
 
-//crowbarring it!
 /obj/machinery/power/smes/crowbar_act(mob/living/user, obj/item/tool)
-	. = ITEM_INTERACT_FAILURE
 	if(terminal)
 		balloon_alert(user, "remove the power terminal!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(default_deconstruction_crowbar(tool))
+	if(default_deconstruction_crowbar(user, tool))
 		var/turf/ground = get_turf(src)
 		message_admins("[src] has been deconstructed by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(ground)].")
 		user.log_message("deconstructed [src]", LOG_GAME)
 		investigate_log("deconstructed by [key_name(user)] at [AREACOORD(src)].", INVESTIGATE_ENGINE)
 		return ITEM_INTERACT_SUCCESS
+
+	return ITEM_INTERACT_BLOCKING
 
 //changing direction using wrench
 /obj/machinery/power/smes/wrench_act(mob/living/user, obj/item/tool)

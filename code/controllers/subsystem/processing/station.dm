@@ -1,6 +1,6 @@
 PROCESSING_SUBSYSTEM_DEF(station)
 	name = "Station"
-	flags = SS_BACKGROUND
+	ss_flags = SS_BACKGROUND
 	runlevels = RUNLEVEL_GAME
 	wait = 5 SECONDS
 

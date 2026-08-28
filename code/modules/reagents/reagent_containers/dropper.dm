@@ -10,7 +10,7 @@
 	volume = 5
 	initial_reagent_flags = TRANSPARENT
 	custom_price = PAYCHECK_CREW
-	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 0.3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.1)
 
 /obj/item/reagent_containers/dropper/interact_with_atom(atom/target, mob/living/user, list/modifiers)
 	if(!target.reagents)
@@ -63,6 +63,7 @@
 		trans = round(reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
 		if(trans)
 			to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
+		playsound(src, 'sound/effects/droplet.ogg', 70, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		update_appearance()
 		target.update_appearance()
 		return ITEM_INTERACT_SUCCESS

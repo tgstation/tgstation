@@ -14,6 +14,7 @@
 	resistance_flags = FIRE_PROOF
 	clothing_flags = parent_type::clothing_flags | STOPSPRESSUREDAMAGE
 	slowdown = SHOES_SLOWDOWN
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75)
 	/// Whether the magpulse system is active
 	var/magpulse = FALSE
 	/// Slowdown applied wwhen magpulse is active. This is added onto existing slowdown
@@ -30,7 +31,7 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 	RegisterSignal(src, COMSIG_SPEED_POTION_APPLIED, PROC_REF(on_speed_potioned))
 	if(fishing_modifier)
-		AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 
 /// Signal handler for [COMSIG_SPEED_POTION_APPLIED]. Speed potion removes the active slowdown
 /obj/item/clothing/shoes/magboots/proc/on_speed_potioned(datum/source)
@@ -40,15 +41,12 @@
 	slowdown_active = 0
 
 	if(magpulse && magpulse_fishing_modifier)
-		qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
+		RemoveElement(/datum/element/adjust_fishing_difficulty)
 		if(fishing_modifier)
-			AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+			AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 	magpulse_fishing_modifier = fishing_modifier
 
-/obj/item/clothing/shoes/magboots/verb/toggle()
-	set name = "Toggle Magboots"
-	set category = "Object"
-	set src in usr
+GAME_VERB_SRC(/obj/item/clothing/shoes/magboots, toggle, usr, "Toggle Magboots", null)
 
 	if(!can_use(usr))
 		return
@@ -60,14 +58,14 @@
 		attach_clothing_traits(active_traits)
 		slowdown += slowdown_active
 		if(magpulse_fishing_modifier)
-			AddComponent(/datum/component/adjust_fishing_difficulty, magpulse_fishing_modifier)
+			AddElement(/datum/element/adjust_fishing_difficulty, magpulse_fishing_modifier)
 		else if(magpulse_fishing_modifier != fishing_modifier)
-			qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
+			RemoveElement(/datum/element/adjust_fishing_difficulty)
 	else
 		if(fishing_modifier)
-			AddComponent(/datum/component/adjust_fishing_difficulty, fishing_modifier)
+			AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 		else if(magpulse_fishing_modifier != fishing_modifier)
-			qdel(GetComponent(/datum/component/adjust_fishing_difficulty))
+			RemoveElement(/datum/element/adjust_fishing_difficulty)
 		detach_clothing_traits(active_traits)
 		slowdown -= slowdown_active
 

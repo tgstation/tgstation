@@ -81,32 +81,7 @@
 	AddElement(/datum/element/contextual_screentip_tools, tool_behaviors)
 	register_context()
 
-/obj/structure/barricade/wooden/item_interaction(mob/living/user, obj/item/stack/sheet/mineral/wood/our_wood, list/modifiers)
-	if(user.combat_mode)
-		return ITEM_INTERACT_SKIP_TO_ATTACK
-
-	if(!istype(our_wood, /obj/item/stack/sheet/mineral/wood))
-		return NONE
-
-	if(our_wood.amount < 5)
-		balloon_alert(user, "not enough wood!")
-		to_chat(user, span_warning("You need at least five wooden planks to make a barricade!"))
-		return ITEM_INTERACT_BLOCKING
-
-
-	to_chat(user, span_notice("You start adding [our_wood] to [src]..."))
-	playsound(src, 'sound/items/hammering_wood.ogg', 50, vary = TRUE)
-	if(!do_after(user, 5 SECONDS, target=src))
-		balloon_alert(user, "interrupted!")
-		return ITEM_INTERACT_BLOCKING
-
-	if(!our_wood.use(drop_amount))
-		return ITEM_INTERACT_BLOCKING
-
-	var/turf/cur_turf = get_turf(src)
-	cur_turf.place_on_top(/turf/closed/wall/mineral/wood/nonmetal)
-	qdel(src)
-	return ITEM_INTERACT_SUCCESS
+	AddElement(/datum/element/uses_girder_wall_recipes)
 
 /obj/structure/barricade/wooden/crowbar_act(mob/living/user, obj/item/tool)
 	balloon_alert(user, "deconstructing barricade...")

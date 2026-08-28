@@ -11,11 +11,11 @@
 		return FALSE
 
 	var/mob/living/carbon/carb_hallucinator = hallucinator
-	if(!length(carb_hallucinator.bodyparts) || !carb_hallucinator.can_bleed())
+	var/list/bodyparts = carb_hallucinator.get_bodyparts()
+	if(!length(bodyparts) || !carb_hallucinator.can_bleed())
 		return FALSE
 
 	var/obj/item/bodypart/picked
-	var/list/bodyparts = carb_hallucinator.bodyparts.Copy()
 	while(isnull(picked) && length(bodyparts))
 		picked = pick_n_take(bodyparts)
 		if(!picked.can_bleed())

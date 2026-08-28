@@ -15,6 +15,9 @@
 	return ..()
 
 /datum/hallucination/death/start()
+	if(IS_UNCONSCIOUS(hallucinator)) // on your way there already
+		return FALSE
+
 	if(floor_them)
 		hallucinator.Paralyze(30 SECONDS)
 	else

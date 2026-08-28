@@ -35,7 +35,7 @@
 			launched = TRUE
 			playsound(src,'sound/machines/beep/triple_beep.ogg',50,FALSE)
 			playsound(src,'sound/machines/warning-buzzer.ogg',50,FALSE)
-			addtimer(CALLBACK(src, PROC_REF(endLaunch)), 33)//wait 3.3 seconds (time it takes for supplypod to land), then update icon
+			addtimer(CALLBACK(src, PROC_REF(end_launch)), 33)//wait 3.3 seconds (time it takes for supplypod to land), then update icon
 		if (SP_UNLINK)
 			linked = FALSE
 			playsound(src,'sound/machines/synth/synth_no.ogg',50,FALSE)
@@ -55,7 +55,7 @@
 		. += "sp_orange"
 		return
 
-/obj/item/supplypod_beacon/proc/endLaunch()
+/obj/item/supplypod_beacon/proc/end_launch()
 	launched = FALSE
 	update_status()
 

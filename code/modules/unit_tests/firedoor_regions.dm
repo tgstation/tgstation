@@ -7,6 +7,7 @@
  * Then, checks if every non-ignored region has a fire alarm in it
  */
 /datum/unit_test/firedoor_regions
+	test_flags = UNIT_TEST_MAP_TEST
 	priority = TEST_LONGER
 
 /datum/unit_test/firedoor_regions/Run()

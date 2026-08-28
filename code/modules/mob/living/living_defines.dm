@@ -1,7 +1,7 @@
 /mob/living
 	see_invisible = SEE_INVISIBLE_LIVING
 	abstract_type = /mob/living
-	hud_possible = list(HEALTH_HUD,STATUS_HUD,ANTAG_HUD)
+	hud_possible = list(HEALTH_HUD,STATUS_HUD,BLOOD_HUD,ANTAG_HUD)
 	pressure_resistance = 10
 	hud_type = /datum/hud/living
 	interaction_flags_click = ALLOW_RESTING
@@ -94,10 +94,8 @@
 	/// Lazylist of all typepaths of personalities the mob has.
 	var/list/personalities
 
-	///a list of surgery datums. generally empty, they're added when the player wants them.
-	var/list/surgeries = list()
-	///Mob specific surgery speed modifier
-	var/mob_surgery_speed_mod = 1
+	/// Lazylist of surgery speed modifiers - id to number - 2 = 2x faster, 0.5x = 0.5x slower
+	var/list/mob_surgery_speed_mods
 
 	/// Used by [living/Bump()][/mob/living/proc/Bump] and [living/PushAM()][/mob/living/proc/PushAM] to prevent potential infinite loop.
 	var/now_pushing = null
@@ -113,8 +111,6 @@
 	var/mob_size = MOB_SIZE_HUMAN
 	/// List of biotypes the mob belongs to. Used by diseases and reagents mainly.
 	var/mob_biotypes = MOB_ORGANIC
-	/// The type of respiration the mob is capable of doing. Used by adjust_oxy_loss.
-	var/mob_respiration_type = RESPIRATION_OXYGEN
 	///more or less efficiency to metabolize helpful/harmful reagents and regulate body temperature..
 	var/metabolism_efficiency = 1
 	///does the mob have distinct limbs?(arms,legs, chest,head)
@@ -171,6 +167,9 @@
 	var/blood_volume = 0
 	/// The default blood volume of the mob. Used primarily for healing bloodloss.
 	var/default_blood_volume = 0
+	/// Lazylist of blood volume modifiers. These multiply blood volume when get_blood_volume(apply_modifiers = TRUE) is used.
+	/// Use set_blood_volume_modifier(multiplier, source) and remove_blood_volume_modifier(source) to modify this.
+	var/list/blood_volume_modifiers = null
 
 	///a list of all status effects the mob has
 	var/list/status_effects
@@ -179,8 +178,6 @@
 	///used for database logging
 	var/last_words
 
-	///whether this can be picked up and held.
-	var/can_be_held = FALSE
 	/// The w_class of the holder when held.
 	var/held_w_class = WEIGHT_CLASS_NORMAL
 	///if it can be held, can it be equipped to any slots? (think pAI's on head)
@@ -193,6 +190,7 @@
 	/// list of all diseases in a mob
 	var/list/diseases
 	var/list/disease_resistances
+	var/list/symptom_resistances
 
 	///Whether the mob is slowed down when dragging another prone mob
 	var/slowed_by_drag = TRUE
@@ -258,3 +256,16 @@
 
 	/// how many tiles can this mob reach with their hands? 1 tile is adjacent.
 	var/reach_length = 1
+
+	/// Lazy assoc list of currently applied fishing difficulty modifiers keyed to their source
+	var/list/fishing_difficulty_mods_by_source
+
+	/// When less than or equal to  this distance (but not adjacent), this mob can hear parts of distant whispers, but not the entire message.
+	/// When greater than this distance, this mob cannot hear anything of a whisper.
+	var/eavesdrop_range = EAVESDROP_RANGE
+
+	/// Reference to the unconscious appearance image that appears in place of the mob to other knocked out mobs
+	VAR_FINAL/image/unconscious_appearance
+
+	/// Reduces the effects of EMPs, does NOT negate them even at very high numbers
+	var/emp_protection = EMP_PROTECTION_NONE

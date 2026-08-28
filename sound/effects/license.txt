@@ -1,4 +1,4 @@
-﻿hit_punch.ogg and hit_kick.ogg are made by Taira Komori
+hit_punch.ogg and hit_kick.ogg are made by Taira Komori
 (https://taira-komori.jpn.org/freesounden.html)
 
 cartoon_pop.ogg by Tobiasz 'unfa' Karoń
@@ -17,3 +17,16 @@ https://freesound.org/people/lolamadeus/sounds/179341/, -- License: Creative Com
 https://freesound.org/people/fthrll/sounds/522200/, -- License: Creative Commons 0
 https://freesound.org/people/Hankof/sounds/655630/, -- License: Creative Commons 0
 }
+
+heavy_drop1.ogg and heavy_drop2.ogg is made using:
+https://freesound.org/people/rottako/sounds/693581/ by Rottako.
+https://freesound.org/people/rottako/sounds/693582/ by Rottako.
+Cleaned up and trimmed by ArcaneMusic.
+licensed as Creative Commons 0.
+
+node_drilling.ogg was made using:
+https://freesound.org/people/jedg/sounds/505826/  -- License: Creative Commons 0
+Trimmed and effects added by ArcaneMusic.
+
+node_victory.ogg was made by ArcaneMusic
+FL-studio, Flex Plugin. -- License: Creative Commons 0

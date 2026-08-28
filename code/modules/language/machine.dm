@@ -3,7 +3,7 @@
 	desc = "An efficient language of encoded tones developed by synthetics and cyborgs."
 	spans = list(SPAN_ROBOT)
 	key = "6"
-	flags = NO_STUTTER
+	flags = LANGUAGE_NO_STUTTER
 	syllables = list(
 		"beep", "beep", "beep", "beep", "beep", "boop", "boop", "boop",
 		"bop", "bop", "dee", "dee", "doo", "doo", "hiss", "hss", "buzz",

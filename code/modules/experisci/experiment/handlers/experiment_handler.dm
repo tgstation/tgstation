@@ -337,16 +337,7 @@
 		for (var/datum/experiment/experiment as anything in linked_web.available_experiments)
 			if(!can_select_experiment(experiment))
 				continue
-			var/list/data = list(
-				name = experiment.name,
-				description = experiment.description,
-				tag = experiment.exp_tag,
-				selected = selected_experiment == experiment,
-				progress = experiment.check_progress(),
-				performance_hint = experiment.performance_hint,
-				ref = REF(experiment)
-			)
-			.["experiments"] += list(data)
+			.["experiments"] += list(list("selected" = selected_experiment == experiment) + experiment.to_ui_data())
 
 /datum/component/experiment_handler/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

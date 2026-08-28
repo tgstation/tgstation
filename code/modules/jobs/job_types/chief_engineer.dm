@@ -48,6 +48,7 @@
 	human_authority = JOB_AUTHORITY_HUMANS_ONLY
 
 	voice_of_god_power = 1.4 //Command staff has authority
+	tgui_icon = FA_ICON_USER_ASTRONAUT
 
 
 /datum/job/chief_engineer/after_spawn(mob/living/spawned, client/player_client)
@@ -68,14 +69,12 @@
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic/silver = 1,
 		/obj/item/construction/rcd/ce = 1,
-		/obj/item/extinguisher/mini = 1,
-		/obj/item/analyzer = 1,
 	)
 	belt = /obj/item/storage/belt/utility/chief/full
 	ears = /obj/item/radio/headset/heads/ce
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/utility/hardhat/welding/white/up
-	shoes = /obj/item/clothing/shoes/sneakers/brown
+	shoes = /obj/item/clothing/shoes/workboots
 	l_pocket = /obj/item/modular_computer/pda/heads/ce
 
 	backpack = /obj/item/storage/backpack/industrial
@@ -87,6 +86,8 @@
 	chameleon_extras = /obj/item/stamp/head/ce
 	skillchips = list(/obj/item/skillchip/job/engineer)
 	pda_slot = ITEM_SLOT_LPOCKET
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/engineering/ce
 
 /datum/outfit/job/ce/mod
 	name = "Chief Engineer (MODsuit)"

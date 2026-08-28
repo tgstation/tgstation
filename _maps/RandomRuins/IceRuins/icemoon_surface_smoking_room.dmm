@@ -72,7 +72,7 @@
 /turf/open/floor/wood,
 /area/ruin/smoking_room/house)
 "m" = (
-/obj/structure/barricade/wooden,
+/obj/structure/barricade/wooden/crude,
 /obj/machinery/door/airlock/wood,
 /obj/structure/curtain/cloth/fancy{
 	open = 0

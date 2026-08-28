@@ -58,7 +58,6 @@
 	name = "of <mobtype> slaying (random species, carbon or simple animal)"
 	placement = AFFIX_SUFFIX
 	alignment = AFFIX_GOOD
-	var/list/target_types_by_comp = list()
 
 /datum/fantasy_affix/bane/apply(datum/component/fantasy/comp, newName)
 	. = ..()
@@ -83,15 +82,8 @@
 	// This works even with the species picks since we're only accessing the name
 
 	var/obj/item/master = comp.parent
-	master.AddElement(/datum/element/bane, target_type = picked_mobtype)
-	target_types_by_comp[comp] = picked_mobtype
+	comp.appliedComponents += master.AddComponent(/datum/component/bane, affected_biotypes = picked_mobtype, damage_multiplier = 2)
 	return "[newName] of [initial(picked_mobtype.name)] slaying"
-
-/datum/fantasy_affix/bane/remove(datum/component/fantasy/comp)
-	var/picked_mobtype = target_types_by_comp[comp]
-	var/obj/item/master = comp.parent
-	master.RemoveElement(/datum/element/bane, picked_mobtype)
-	target_types_by_comp -= comp
 
 /datum/fantasy_affix/summoning
 	name = "of <mobtype> summoning (dangerous, can pick all but megafauna tier stuff)"
@@ -148,20 +140,22 @@
 /datum/fantasy_affix/shrapnel/apply(datum/component/fantasy/comp, newName)
 	. = ..()
 	// higher means more likely
-	var/list/weighted_projectile_types = list(/obj/projectile/meteor = 1,
-											  /obj/projectile/energy/nuclear_particle = 1,
-											  /obj/projectile/beam/pulse = 1,
-											  /obj/projectile/bullet/honker = 15,
-											  /obj/projectile/temp = 15,
-											  /obj/projectile/ion = 15,
-											  /obj/projectile/magic/door = 15,
-											  /obj/projectile/magic/locker = 15,
-											  /obj/projectile/magic/fetch = 15,
-											  /obj/projectile/beam/emitter = 15,
-											  /obj/projectile/magic/flying = 15,
-											  /obj/projectile/bullet/incendiary/c9mm = 15,
-											  /obj/projectile/temp/hot = 15,
-											  /obj/projectile/beam/disabler = 15)
+	var/list/weighted_projectile_types = list(
+		/obj/projectile/beam/disabler = 15,
+		/obj/projectile/beam/emitter = 15,
+		/obj/projectile/bullet/honker = 15,
+		/obj/projectile/beam/pulse = 1,
+		/obj/projectile/bullet/incendiary/c9mm = 15,
+		/obj/projectile/energy/nuclear_particle = 1,
+		/obj/projectile/ion = 15,
+		/obj/projectile/magic/door = 15,
+		/obj/projectile/magic/fetch = 15,
+		/obj/projectile/magic/flying = 15,
+		/obj/projectile/magic/locker = 15,
+		/obj/projectile/meteor = 1,
+		/obj/projectile/temp = 15,
+		/obj/projectile/temp/hot = 15,
+	)
 
 	var/obj/projectile/picked_projectiletype = pick_weight(weighted_projectile_types)
 

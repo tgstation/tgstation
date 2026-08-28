@@ -1,7 +1,7 @@
 /datum/job/coroner
 	title = JOB_CORONER
-	description = "Perform Autopsies whenever needed, \
-		Update medical records accordingly, apply formaldehyde."
+	description = "Perform autopsies whenever needed, \
+		update medical records accordingly, apply formaldehyde."
 	faction = FACTION_STATION
 	total_positions = 1
 	spawn_positions = 1
@@ -12,7 +12,8 @@
 	outfit = /datum/outfit/job/coroner
 	plasmaman_outfit = /datum/outfit/plasmaman/coroner
 
-	mind_traits = list(TRAIT_MORBID, MEDICAL_MIND_TRAITS)
+	mind_traits = list(TRAIT_MORBID)
+	desensitized_base = DESENSITIZED_THRESHOLD
 	liver_traits = list(TRAIT_CORONER_METABOLISM)
 
 	paycheck = PAYCHECK_CREW
@@ -42,6 +43,7 @@
 	job_flags = STATION_JOB_FLAGS
 
 	rpg_title = "Undertaker"
+	tgui_icon = FA_ICON_SKULL
 
 /datum/outfit/job/coroner
 	name = "Coroner"
@@ -72,3 +74,5 @@
 	messenger = /obj/item/storage/backpack/messenger/coroner
 
 	skillchips = list(/obj/item/skillchip/entrails_reader)
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/medical/coroner

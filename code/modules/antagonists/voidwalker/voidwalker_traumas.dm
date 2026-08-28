@@ -7,8 +7,9 @@
 	lose_text = ""
 	resilience = TRAUMA_RESILIENCE_LOBOTOMY
 	random_gain = FALSE
+	known_trauma = FALSE
 	/// Type for the bodypart texture we add
-	var/bodypart_overlay_type = /datum/bodypart_overlay/texture/spacey
+	var/bodypart_texture_type = /datum/bodypart_texture/spacey
 	/// Color in which we paint the space texture
 	var/space_color = COLOR_WHITE
 	///traits we give on gain
@@ -44,7 +45,7 @@
 	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(texture_limb)) //also catch new limbs being attached
 	RegisterSignal(owner, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(untexture_limb)) //and remove it from limbs if they go away
 
-	for(var/obj/item/bodypart as anything in owner.bodyparts)
+	for(var/obj/item/bodypart as anything in owner.get_bodyparts())
 		texture_limb(owner, bodypart)
 
 	if(ishuman(owner))
@@ -74,11 +75,11 @@
 		var/mob/living/carbon/human/human = owner
 		human.physiology.brute_mod /= brute_mod
 
-	for(var/obj/item/bodypart/bodypart as anything in owner.bodyparts)
+	for(var/obj/item/bodypart/bodypart as anything in owner.get_bodyparts())
 		untexture_limb(owner, bodypart)
 	owner.update_body()
 
-/datum/brain_trauma/voided/on_life(seconds_per_tick, times_fired)
+/datum/brain_trauma/voided/on_life(seconds_per_tick)
 	. = ..()
 
 	if(prob(vomit_frequency))
@@ -89,7 +90,7 @@
 	SIGNAL_HANDLER
 
 	// Not updating because on_gain/on_lose() call it down the line, and calls coming from comsigs update the owner's body themselves
-	limb.add_bodypart_overlay(new bodypart_overlay_type(), update = FALSE)
+	limb.add_bodypart_texture(bodypart_texture_type, update = FALSE)
 	limb.add_color_override(space_color, LIMB_COLOR_VOIDWALKER_CURSE)
 	if(istype(limb, /obj/item/bodypart/head))
 		var/obj/item/bodypart/head/head = limb
@@ -98,10 +99,9 @@
 /datum/brain_trauma/voided/proc/untexture_limb(atom/source, obj/item/bodypart/limb)
 	SIGNAL_HANDLER
 
-	var/overlay = locate(bodypart_overlay_type) in limb.bodypart_overlays
-	if(overlay)
-		limb.remove_bodypart_overlay(overlay, update = FALSE)
-		limb.remove_color_override(LIMB_COLOR_VOIDWALKER_CURSE)
+
+	limb.remove_bodypart_texture(bodypart_texture_type, update = FALSE)
+	limb.remove_color_override(LIMB_COLOR_VOIDWALKER_CURSE)
 
 	if(istype(limb, /obj/item/bodypart/head))
 		var/obj/item/bodypart/head/head = limb
