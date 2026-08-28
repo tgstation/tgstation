@@ -715,3 +715,8 @@
 2026-08-26:
   vinylspiders:
   - spellcheck: fixes a typo in diluted regenerative jelly description
+2026-08-28:
+  Hatterhat:
+  - bugfix: Crew manifests should no longer break when adding new entries.
+  PapaMichael:
+  - bugfix: Face decals (like pie) now appear on monkeys' faces instead of above it
