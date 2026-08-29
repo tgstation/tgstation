@@ -351,17 +351,17 @@
 /obj/item/shield/mattress/dropped(mob/user, silent)
 	. = ..()
 	if(hunkered)
-		un_fortify()
+		un_fortify(user)
 
 /obj/item/shield/mattress/ui_action_click(mob/user, actiontype)
 	. = ..()
 
 	if(!hunkered)
-		fortify()
+		fortify(user)
 	else
-		un_fortify()
+		un_fortify(user)
 
-/obj/item/mattress/proc/fortify()
+/obj/item/shield/mattress/proc/fortify(mob/user)
 	hunkered = TRUE
 	force += 5
 	block_chance += 20
@@ -373,7 +373,7 @@
 	animate(filter, alpha = 200, time = 0.5 SECONDS, loop = -1)
 	animate(alpha = 0, time = 0.5 SECONDS)
 
-/obj/item/mattress/proc/un_fortify()
+/obj/item/shield/mattress/proc/un_fortify(mob/user)
 	hunkered = FALSE
 	force -= 5
 	block_chance -= 20
