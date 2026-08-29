@@ -120,7 +120,7 @@ SUBSYSTEM_DEF(lag_switch)
 				to_chat(world, span_boldannounce("Parallax has been re-enabled."))
 
 			for (var/mob/mob as anything in GLOB.mob_list)
-				mob.client?.update_parallax_prefs()
+				mob.hud_used?.update_parallax_pref()
 		if (DISABLE_FOOTSTEPS)
 			if (state)
 				to_chat(world, span_boldannounce("Footstep sounds have been disabled for performance concerns."))

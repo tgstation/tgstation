@@ -65,7 +65,6 @@
 	tracker = new /datum/movement_detector(src, CALLBACK(src, PROC_REF(update_view)))
 	cam_screen = new
 	cam_screen.generate_view("spypopup_map")
-	cam_screen.set_display(src)
 
 /obj/item/clothing/accessory/spy_bug/Destroy()
 	if(linked_glasses)

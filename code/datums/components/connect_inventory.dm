@@ -23,7 +23,7 @@
 
 /datum/component/connect_inventory/UnregisterFromParent()
 	unregister_signals()
-	UnregisterSignal(tracked, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_QDELETING))
+	UnregisterSignal(tracked, list(COMSIG_MOB_EQUIPPED_ITEM, COMSIG_MOB_UNEQUIPPED_ITEM))
 
 /datum/component/connect_inventory/proc/handle_tracked_qdel()
 	SIGNAL_HANDLER

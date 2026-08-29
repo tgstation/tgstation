@@ -12,6 +12,7 @@
 /datum/component/hide_weather_planes/Initialize(atom/movable/screen/plane_master/care_about)
 	if(!istype(parent, /datum/plane_master_group))
 		return COMPONENT_INCOMPATIBLE
+	var/datum/plane_master_group/home = parent
 	plane_masters += care_about
 	RegisterSignal(care_about, COMSIG_QDELETING, PROC_REF(plane_master_deleted))
 
@@ -23,8 +24,11 @@
 
 	RegisterSignals(SSdcs, starting_signals, PROC_REF(weather_started))
 	RegisterSignals(SSdcs, ending_signals, PROC_REF(weather_finished))
-	AddComponent(/datum/component/connect_perspective, parent, list(COMSIG_MOVABLE_Z_CHANGED = PROC_REF(z_changed)))
-	RegisterSignal(parent, COMSIG_PLANE_GROUP_PERSPECTIVE_CHANGED, PROC_REF(perspective_changed))
+
+	if(home.our_hud)
+		attach_hud(home.our_hud)
+	else
+		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(new_hud_attached))
 
 /datum/component/hide_weather_planes/Destroy(force)
 	hide_planes()
@@ -36,21 +40,30 @@
 	if(!i_am_original)
 		return
 	var/datum/plane_master_group/home = parent
-	var/mob/perspective = home.get_perspective()
-	var/mob/viewer = home.our_hud?.mymob
-	var/our_offset = GET_TURF_PLANE_OFFSET(perspective)
+	var/mob/our_lad = home.our_hud?.mymob
+	var/our_offset = GET_TURF_PLANE_OFFSET(our_lad)
 	plane_masters += care_about
 	RegisterSignal(care_about, COMSIG_QDELETING, PROC_REF(plane_master_deleted))
 	if(length(active_weather))
 		//If there's weather to care about we unhide our new plane and adjust its alpha
-		care_about.unhide_plane(viewer)
+		care_about.unhide_plane(our_lad)
 
 		if(care_about.offset >= our_offset)
 			care_about.enable_alpha()
 		else
 			care_about.disable_alpha()
 	else
-		care_about.hide_plane(viewer)
+		care_about.hide_plane(our_lad)
+
+/datum/component/hide_weather_planes/proc/new_hud_attached(datum/source, datum/hud/old_hud, datum/hud/new_hud)
+	SIGNAL_HANDLER
+	attach_hud(new_hud)
+
+/datum/component/hide_weather_planes/proc/attach_hud(datum/hud/new_hud)
+	RegisterSignal(new_hud, COMSIG_HUD_Z_CHANGED, PROC_REF(z_changed))
+	var/mob/eye = new_hud?.mymob?.client?.eye
+	var/turf/eye_location = get_turf(eye)
+	z_changed(new_hud, eye_location?.z)
 
 /datum/component/hide_weather_planes/proc/plane_master_deleted(atom/movable/screen/plane_master/source)
 	SIGNAL_HANDLER
@@ -62,13 +75,12 @@
  */
 /datum/component/hide_weather_planes/proc/display_planes()
 	var/datum/plane_master_group/home = parent
-	var/mob/perspective = home.get_perspective()
-	var/mob/viewer = home.our_hud?.mymob
-	var/our_offset = GET_TURF_PLANE_OFFSET(perspective)
+	var/mob/our_lad = home.our_hud?.mymob
+	var/our_offset = GET_TURF_PLANE_OFFSET(our_lad)
 	for(var/atom/movable/screen/plane_master/weather_conscious as anything in plane_masters)
 		//If the plane is hidden, unhide it
 		if(weather_conscious.force_hidden)
-			weather_conscious.unhide_plane(viewer)
+			weather_conscious.unhide_plane(our_lad)
 
 		//Now we update the alpha of the plane based on our offset. Weather above us (lower offset) are transparent, weather at or below us (higher offset) are opaque.
 		if(weather_conscious.offset >= our_offset)
@@ -83,21 +95,13 @@
 	for(var/atom/movable/screen/plane_master/weather_conscious as anything in plane_masters)
 		weather_conscious.hide_plane(our_lad)
 
-/datum/component/hide_weather_planes/proc/z_changed(datum/source, turf/old_turf, turf/new_turf, same_z_layer)
+/datum/component/hide_weather_planes/proc/z_changed(datum/source, new_z)
 	SIGNAL_HANDLER
-	update_by_z(new_turf)
-
-/datum/component/hide_weather_planes/proc/perspective_changed(datum/source)
-	SIGNAL_HANDLER
-	var/datum/plane_master_group/group = parent
-	update_by_z(get_turf(group.perspective))
-
-/datum/component/hide_weather_planes/proc/update_by_z(turf/new_turf)
 	active_weather = list()
 	if(!SSmapping.initialized)
 		return
 
-	var/list/connected_levels = SSmapping.get_connected_levels(new_turf)
+	var/list/connected_levels = SSmapping.get_connected_levels(new_z)
 	for(var/datum/weather/active as anything in SSweather.processing)
 		if(length(connected_levels & active.impacted_z_levels))
 			active_weather += WEAKREF(active)
@@ -110,7 +114,7 @@
 /datum/component/hide_weather_planes/proc/weather_started(datum/source, datum/weather/starting)
 	SIGNAL_HANDLER
 	var/datum/plane_master_group/home = parent
-	var/mob/eye = home.get_perspective()
+	var/mob/eye = home.our_hud?.mymob?.client?.eye
 	var/turf/viewing_from = get_turf(eye)
 	if(!viewing_from)
 		return

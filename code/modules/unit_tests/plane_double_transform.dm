@@ -8,7 +8,6 @@
 	// Hack to account for not having an actual hud
 	var/datum/plane_master_group/hudless/our_group = allocate(/datum/plane_master_group/hudless)
 	our_group.our_mob = judger
-	our_group.set_perspective(judger)
 	our_group.show_hud()
 	// End hack
 
