@@ -97,7 +97,7 @@ SUBSYSTEM_DEF(greyscale_previews)
 		"clothing/under/_under" = /obj/item/clothing/under,
 		"clothing/_clothing" = /obj/item/clothing,
 		"items/encryptionkey" = /obj/item/encryptionkey,
-		"items/pda" = /obj/item/modular_computer/pda,
+		"items/pda" = /obj/item/modular_computer/pda/crew,
 		"items/_item" = /obj/item,
 		"objects" = /obj,
 )
