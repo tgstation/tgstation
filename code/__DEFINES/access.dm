@@ -560,37 +560,37 @@
  * Used to see pda_region in [/datum/controller/subsystem/id_access/proc/setup_tgui_lists]
  */
 #define PDA_PAINTING_REGIONS list( \
-	/obj/item/modular_computer/pda/crew = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/crew/clown = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/crew/mime = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/crew/medical = list(REGION_MEDBAY), \
-	/obj/item/modular_computer/pda/crew/coroner = list(REGION_MEDBAY), \
-	/obj/item/modular_computer/pda/crew/engineering = list(REGION_ENGINEERING), \
-	/obj/item/modular_computer/pda/crew/security = list(REGION_SECURITY), \
-	/obj/item/modular_computer/pda/crew/detective = list(REGION_SECURITY), \
-	/obj/item/modular_computer/pda/crew/warden = list(REGION_SECURITY), \
-	/obj/item/modular_computer/pda/crew/janitor = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/crew/science = list(REGION_RESEARCH), \
-	/obj/item/modular_computer/pda/crew/heads/quartermaster = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/crew/heads/hop = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/crew/heads/hos = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/crew/heads/cmo = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/crew/heads/ce = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/crew/heads/rd = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/crew/heads/captain = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/crew/cargo = list(REGION_SUPPLY), \
-	/obj/item/modular_computer/pda/crew/bitrunner = list(REGION_SUPPLY), \
-	/obj/item/modular_computer/pda/crew/shaftminer = list(REGION_SUPPLY), \
-	/obj/item/modular_computer/pda/crew/chaplain = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/crew/lawyer = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/crew/botanist = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/crew/roboticist = list(REGION_RESEARCH), \
-	/obj/item/modular_computer/pda/crew/curator = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/crew/cook = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/crew/bar = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/crew/atmos = list(REGION_ENGINEERING), \
-	/obj/item/modular_computer/pda/crew/chemist = list(REGION_MEDBAY), \
-	/obj/item/modular_computer/pda/crew/geneticist = list(REGION_RESEARCH), \
+	/obj/item/modular_computer/pda/crew
+	/obj/item/modular_computer/pda/crew/clown
+	/obj/item/modular_computer/pda/crew/mime
+	/obj/item/modular_computer/pda/crew/medical
+	/obj/item/modular_computer/pda/crew/coroner
+	/obj/item/modular_computer/pda/crew/engineering
+	/obj/item/modular_computer/pda/crew/security
+	/obj/item/modular_computer/pda/crew/detective
+	/obj/item/modular_computer/pda/crew/warden
+	/obj/item/modular_computer/pda/crew/janitor
+	/obj/item/modular_computer/pda/crew/science
+	/obj/item/modular_computer/pda/crew/heads
+	/obj/item/modular_computer/pda/crew/heads/hop
+	/obj/item/modular_computer/pda/crew/heads/hos
+	/obj/item/modular_computer/pda/crew/heads/cmo
+	/obj/item/modular_computer/pda/crew/heads/ce
+	/obj/item/modular_computer/pda/crew/heads/rd
+	/obj/item/modular_computer/pda/crew/heads/captain
+	/obj/item/modular_computer/pda/crew/cargo
+	/obj/item/modular_computer/pda/crew/bitrunner
+	/obj/item/modular_computer/pda/crew/shaftminer
+	/obj/item/modular_computer/pda/crew/chaplain
+	/obj/item/modular_computer/pda/crew/lawyer
+	/obj/item/modular_computer/pda/crew/botanist
+	/obj/item/modular_computer/pda/crew/roboticist
+	/obj/item/modular_computer/pda/crew/curator
+	/obj/item/modular_computer/pda/crew/cook
+	/obj/item/modular_computer/pda/crew/bar
+	/obj/item/modular_computer/pda/crew/atmos
+	/obj/item/modular_computer/pda/crew/chemist
+	/obj/item/modular_computer/pda/crew/geneticist
 )
 
 /// All regions that make up the station area. Helper define to quickly designate a region as part of the station or not. Access via SSid_access.station_regions.
