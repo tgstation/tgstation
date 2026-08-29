@@ -284,6 +284,7 @@
 	feature_key = FEATURE_TAIL_FISH
 	color_source = ORGAN_COLOR_OVERRIDE
 	draw_on_husks = HUSK_OVERLAY_GRAYSCALE
+	mesh_in_suits = TRUE
 
 /datum/bodypart_overlay/mutant/tail/fish/on_mob_insert(obj/item/organ/parent, mob/living/carbon/receiver)
 	//Initialize the related dna feature block if we don't have any so it doesn't error out.

@@ -53,7 +53,12 @@
 			var/mob/living/living_target = the_target
 			if(custom_faction_check ? faction_check(our_controller, living_mob, living_target) : TARGETING_FACTION_CHECK(src, our_controller, living_mob, living_target))
 				return FALSE
-			if(living_target.stat > our_controller.blackboard[minimum_stat_key])
+
+			var/checked_stat = living_target.stat
+			if(our_controller.blackboard[BB_TREAT_UNCONSCIOUS_AS_HARDCRIT] && IS_UNCONSCIOUS(living_target))
+				checked_stat = max(checked_stat, HARD_CRIT)
+
+			if(checked_stat > our_controller.blackboard[minimum_stat_key])
 				return FALSE
 			if(target_wounded_key && our_controller.blackboard[target_wounded_key] && living_target.health == living_target.maxHealth)
 				return FALSE
@@ -90,8 +95,8 @@
 		return target.loc
 	return null
 
-/datum/targeting_strategy/basic/can_keep_target(mob/living/living_mob, atom/target, range)
-	return can_see(living_mob, target, range)
+/datum/targeting_strategy/basic/can_keep_target(mob/living/living_mob, atom/target, range, datum/ai_controller/controller = null)
+	return is_valid_target(living_mob, target, range, controller)
 
 /// Returns true if the mob and target share factions.
 /// Slow path for subtypes with custom_faction_check set; everything else uses TARGETING_FACTION_CHECK directly

@@ -51,6 +51,8 @@
 	//otherwise don't do anything because turfs and areas are initialized before movables.
 	if(!mapload)
 		addtimer(CALLBACK(src, PROC_REF(drop_stuff)), 0)
+	else if(HAS_TRAIT(parent, TRAIT_CHASM_STOPPED)) // The lattice initialized before we could set our signals
+		on_chasm_stopped(parent)
 	parent.AddComponent(/datum/component/fishing_spot, GLOB.preset_fish_sources[/datum/fish_source/chasm])
 
 /datum/component/chasm/UnregisterFromParent()
@@ -70,7 +72,7 @@
 	drop_stuff(movable)
 
 /datum/component/chasm/proc/block_teleport()
-	return TRUE
+	return COMPONENT_INTERCEPT_TELEPORT
 
 /datum/component/chasm/proc/on_chasm_stopped(datum/source)
 	SIGNAL_HANDLER

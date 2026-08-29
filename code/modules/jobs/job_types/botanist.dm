@@ -37,6 +37,7 @@
 
 	job_flags = STATION_JOB_FLAGS
 	rpg_title = "Gardener"
+	tgui_icon = FA_ICON_SEEDLING
 
 /datum/outfit/job/botanist
 	name = "Botanist"
@@ -54,3 +55,5 @@
 	satchel = /obj/item/storage/backpack/satchel/hyd
 	duffelbag = /obj/item/storage/backpack/duffelbag/hydroponics
 	messenger = /obj/item/storage/backpack/messenger/hyd
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/hydro

@@ -199,20 +199,20 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/balloon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, /obj/item/ammo_casing/foam_dart) || !ismonkey(user))
+	if(!istype(tool, /obj/item/ammo_casing/foam_dart) || !HAS_TRAIT(user, TRAIT_SIMIAN))
 		return NONE
 	pop_balloon(monkey_pop = TRUE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/balloon/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	var/mob/thrower = throwingdatum?.get_thrower()
-	if(ismonkey(thrower) && istype(AM, /obj/item/ammo_casing/foam_dart))
+	if(HAS_TRAIT(thrower, TRAIT_SIMIAN) && istype(AM, /obj/item/ammo_casing/foam_dart))
 		pop_balloon(monkey_pop = TRUE)
 	else
 		return ..()
 
 /obj/item/toy/balloon/bullet_act(obj/projectile/proj)
-	if((istype(proj, /obj/projectile/bullet/p50) || istype(proj,/obj/projectile/bullet/foam_dart)) && ismonkey(proj.firer))
+	if((istype(proj, /obj/projectile/bullet/p50) || istype(proj,/obj/projectile/bullet/foam_dart)) && HAS_TRAIT(proj.firer, TRAIT_SIMIAN))
 		pop_balloon(monkey_pop = TRUE)
 		return BULLET_ACT_HIT
 	return ..()
@@ -1051,7 +1051,7 @@
 /obj/item/toy/minimeteor/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	playsound(src, 'sound/effects/meteorimpact.ogg', 40, TRUE)
 	for(var/mob/M in urange(10, src))
-		if(!M.stat && !isAI(M))
+		if(!IS_UNCONSCIOUS_OR_CRIT(M) && !isAI(M))
 			shake_camera(M, 3, 1)
 	if (obj_flags & EMAGGED)
 		explosion(src, devastation_range = -1, heavy_impact_range = -1, light_impact_range = 1)
@@ -1074,7 +1074,7 @@
 		user.visible_message(span_warning("[user] presses the big red button."), span_notice("You press the button, it plays a loud noise!"), span_hear("The button clicks loudly."))
 		playsound(src, 'sound/effects/explosion/explosionfar.ogg', 50, FALSE)
 		for(var/mob/M in urange(10, src)) // Checks range
-			if(!M.stat && !isAI(M)) // Checks to make sure whoever's getting shaken is alive/not the AI
+			if(!IS_UNCONSCIOUS_OR_CRIT(M) && !isAI(M)) // Checks to make sure whoever's getting shaken is alive/not the AI
 				// Short delay to match up with the explosion sound
 				// Shakes player camera 2 squares for 1 second.
 				addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(shake_camera), M, 2, 1), 0.8 SECONDS)

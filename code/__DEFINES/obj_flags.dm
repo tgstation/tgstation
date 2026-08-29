@@ -35,41 +35,49 @@
 
 // Flags for the item_flags var on /obj/item
 
-#define BEING_REMOVED (1<<0)
-#define IN_INVENTORY (1<<1) //is this item equipped into an inventory slot or hand of a mob? used for tooltips
-#define FORCE_STRING_OVERRIDE (1<<2) // used for tooltips
-///Used by security bots to determine if this item is safe for public use.
-#define NEEDS_PERMIT (1<<3)
-#define SLOWS_WHILE_IN_HAND (1<<4)
-#define NO_MAT_REDEMPTION (1<<5) // Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
-#define DROPDEL (1<<6) // When dropped, it calls qdel on itself
-#define NOBLUDGEON (1<<7) // when an item has this it produces no "X has been hit by Y with Z" message in the default attackby()
+/// Is this item equipped into an inventory slot or hand of a mob?
+#define IN_INVENTORY (1<<0)
+/// If set, calls set_force_string when retrieving force for tooltips
+#define FORCE_STRING_OVERRIDE (1<<1)
+/// Used by security bots to determine if this item is safe for public use.
+#define NEEDS_PERMIT (1<<2)
+/// Must be set for an item's slowdown to apply when held rather than just worn
+#define SLOWS_WHILE_IN_HAND (1<<3)
+// Stops you from putting things like an RCD or other items into an ORM or protolathe for materials.
+#define NO_MAT_REDEMPTION (1<<4)
+/// When dropped, it calls qdel on itself
+#define DROPDEL (1<<5)
+/// Item cannot be used for attacks, even if it has a force set.
+#define NOBLUDGEON (1<<6)
 /**
  * for all things that are technically items but don't want to be treated as such, given on a case-by-case basis
  * examples of use are hand items, omni-toolsets, non-limb limbs (hand eater, mounted chainsaw, many null rods), borg modules, bodyparts, organs, etc.
  * This is used for general exclusion, such as preventing insertions into other items
  * Basically, these aren't "real" items. <= wow thanks for the fucking insight sherlock
 */
-#define ABSTRACT (1<<9)
-#define IMMUTABLE_SLOW (1<<10) // When players should not be able to change the slowdown of the item (Speed potions, etc)
-#define IN_STORAGE (1<<11) //is this item in the storage item, such as backpack? used for tooltips
-#define SURGICAL_TOOL (1<<12) //Tool commonly used for surgery: won't attack targets in an active surgical operation on help intent (in case of mistakes)
-#define CRUEL_IMPLEMENT (1<<13) //This object, when used for surgery, causes a lot more pain for the patient, and is more efficient in a morbid users hands
-#define HAND_ITEM (1<<14) // If an item is just your hand (circled hand, slapper) and shouldn't block things like riding
-#define XENOMORPH_HOLDABLE (1<<15) // A Xenomorph can hold this item.
-#define NO_PIXEL_RANDOM_DROP (1<<16) //if dropped, it wont have a randomized pixel_x/pixel_y
+#define ABSTRACT (1<<7)
+/// When players should not be able to change the slowdown of the item (Speed potions, etc)
+#define IMMUTABLE_SLOW (1<<8)
+/// is this item in the storage item, such as backpack?
+#define IN_STORAGE (1<<9)
+/// Tool commonly used for surgery, so it has some unique handling around surgical operations
+#define SURGICAL_TOOL (1<<10)
+/// This object, when used for surgery, causes a lot more pain for the patient, and is more efficient in a morbid users hands
+#define CRUEL_IMPLEMENT (1<<11)
+/// If an item represents a hand (circled hand, slapper) and shouldn't block things like riding
+#define HAND_ITEM (1<<12)
+/// if dropped, it wont have a randomized pixel_x/pixel_y
+#define NO_PIXEL_RANDOM_DROP (1<<13)
 ///Can be equipped on digitigrade legs.
-#define IGNORE_DIGITIGRADE (1<<17)
+#define IGNORE_DIGITIGRADE (1<<14)
 /// Has contextual screentips when HOVERING OVER OTHER objects
-#define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1 << 18)
+#define ITEM_HAS_CONTEXTUAL_SCREENTIPS (1<<15)
 /// No blood overlay is allowed to appear on this item, and it cannot gain blood DNA forensics
-#define NO_BLOOD_ON_ITEM (1 << 19)
+#define NO_BLOOD_ON_ITEM (1<<16)
 /// Whether this item should skip the /datum/component/fantasy applied on spawn on the RPG event. Used on things like stacks
-#define SKIP_FANTASY_ON_SPAWN (1<<20)
+#define SKIP_FANTASY_ON_SPAWN (1<<17)
 /// If an item has had its /datum/element/weapon_description initialized or not.
-#define WEAPON_DESCRIPTION_INITIALIZED (1<<21)
-/// If an item causes bluespace interference when teleported with.
-#define BLUESPACE_INTERFERENCE (1<<22)
+#define WEAPON_DESCRIPTION_INITIALIZED (1<<18)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
@@ -82,39 +90,29 @@
 #define BLOCK_GAS_SMOKE_EFFECT (1<<2)
 /// mask allows internals
 #define MASKINTERNALS (1<<3)
-/// mask filters toxins and other harmful gases
-#define GAS_FILTERING (1<<4)
 /// prevents syringes, parapens and hypos if the external suit or helmet (if targeting head) has this flag.
 /// Example: space suits, biosuit, bombsuits, thick suits that cover your body.
-#define THICKMATERIAL (1<<5)
+#define THICKMATERIAL (1<<4)
 /// The voicebox in this clothing can be toggled.
-#define VOICEBOX_TOGGLABLE (1<<6)
+#define VOICEBOX_TOGGLABLE (1<<5)
 /// The voicebox is currently turned off.
-#define VOICEBOX_DISABLED (1<<7)
+#define VOICEBOX_DISABLED (1<<6)
 /// Prevents knock-off from things like hat-throwing.
-#define SNUG_FIT (1<<8)
-/// Hats with negative effects when worn (i.e the tinfoil hat).
-#define ANTI_TINFOIL_MANEUVER (1<<9)
-/// Clothes that cause a larger notification when placed on a person.
-#define DANGEROUS_OBJECT (1<<10)
+#define SNUG_FIT (1<<7)
 /// Clothes that use large icons, for applying the proper overlays like blood
-#define LARGE_WORN_ICON (1<<11)
+#define LARGE_WORN_ICON (1<<8)
 /// prevents from placing on plasmaman helmet or modsuit hat holder
-#define STACKABLE_HELMET_EXEMPT (1<<12)
+#define STACKABLE_HELMET_EXEMPT (1<<9)
 /// Prevents plasmamen from igniting when wearing this
-#define PLASMAMAN_PREVENT_IGNITION (1<<13)
-/// Usable as casting clothes by wizards (matters for suits, glasses and headwear)
-#define CASTING_CLOTHES (1<<14)
-///Moths can't eat the clothing that has this flag.
-#define INEDIBLE_CLOTHING (1<<15)
+#define PLASMAMAN_PREVENT_IGNITION (1<<10)
 /// Headgear/helmet allows internals
-#define HEADINTERNALS (1<<16)
+#define HEADINTERNALS (1<<11)
 /// Prevents masks from getting adjusted from enabling internals
-#define INTERNALS_ADJUST_EXEMPT (1<<17)
+#define INTERNALS_ADJUST_EXEMPT (1<<12)
 /// Indicates that the piece of clothing contributes towards Sleeping Carp's style factor, which determines evasion probabilities. See /datums/martial/sleeping_carp/carp_style_check().
-#define CARP_STYLE_FACTOR (1<<18)
+#define CARP_STYLE_FACTOR (1<<13)
 /// Prevents clothing from losing bodyparts coverage when shredded
-#define NO_ZONE_DISABLING (1<<19)
+#define NO_ZONE_DISABLING (1<<14)
 
 /// Integrity defines for clothing (not flags but close enough)
 #define CLOTHING_PRISTINE 0 // We have no damage on the clothing

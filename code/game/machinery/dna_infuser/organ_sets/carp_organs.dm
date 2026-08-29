@@ -6,7 +6,7 @@
 ///bonus of the carp: you can swim through space!
 /datum/status_effect/organ_set_bonus/carp
 	id = "organ_set_bonus_carp"
-	organs_needed = 4
+	organs_needed = 5
 	bonus_activate_text = span_notice("Carp DNA is deeply infused with you! You've learned how to propel yourself through space!")
 	bonus_deactivate_text = span_notice("Your DNA is once again mostly yours, and so fades your ability to space-swim...")
 	bonus_traits = list(TRAIT_SPACEWALK)
@@ -36,12 +36,55 @@
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
 
 ///occasionally sheds carp teeth, stronger melee (bite) attacks, but you can't cover your mouth anymore.
-/obj/item/organ/tongue/carp
+/obj/item/organ/fangs/carp
 	name = "mutated carp-jaws"
 	desc = "Carp DNA infused into what was once some normal teeth."
+	icon_state = "fangs_lizard"
+	organ_traits = list(TRAIT_FERAL_BITER)
+	bite_low = 10
+	bite_high = 15
+	bite_effectiveness = 15
+	bite_attack_effect = ATTACK_EFFECT_BITE
+	bite_sharpness = SHARP_POINTY
 
+/obj/item/organ/fangs/carp/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their teeth are big and sharp.", BODY_ZONE_PRECISE_MOUTH)
+	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
+
+/obj/item/organ/fangs/carp/on_mob_insert(mob/living/carbon/fangs_owner, special, movement_flags)
+	. = ..()
+	if(!ishuman(fangs_owner))
+		return
+	var/mob/living/carbon/human/human_receiver = fangs_owner
+	if(!human_receiver.can_mutate())
+		return
+	var/datum/species/rec_species = human_receiver.dna.species
+	rec_species.update_no_equip_flags(fangs_owner, rec_species.no_equip_flags | ITEM_SLOT_MASK)
+
+/obj/item/organ/fangs/carp/on_mob_remove(mob/living/carbon/fangs_owner)
+	. = ..()
+	if(!ishuman(fangs_owner))
+		return
+	var/mob/living/carbon/human/human_receiver = fangs_owner
+	if(!human_receiver.can_mutate())
+		return
+	var/datum/species/rec_species = human_receiver.dna.species
+	rec_species.update_no_equip_flags(fangs_owner, initial(rec_species.no_equip_flags))
+
+/obj/item/organ/fangs/carp/on_life(seconds_per_tick)
+	. = ..()
+	if(IS_UNCONSCIOUS_OR_CRIT(owner) || !prob(0.1))
+		return
+	owner.emote("cough")
+	var/turf/tooth_fairy = get_turf(owner)
+	if(tooth_fairy)
+		new /obj/item/knife/carp(tooth_fairy)
+
+/obj/item/organ/tongue/carp
+	name = "mutated carp-tongue"
+	desc = "Carp DNA infused into what was once a normal tongue."
 	say_mod = "gnashes"
-
 	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/organ/tongue/carp"
 	post_init_icon_state = "tongue"
@@ -50,53 +93,7 @@
 
 /obj/item/organ/tongue/carp/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their teeth are big and sharp.", BODY_ZONE_PRECISE_MOUTH)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/carp)
-
-/obj/item/organ/tongue/carp/on_mob_insert(mob/living/carbon/tongue_owner, special, movement_flags)
-	. = ..()
-	if(!ishuman(tongue_owner))
-		return
-	var/mob/living/carbon/human/human_receiver = tongue_owner
-	if(!human_receiver.can_mutate())
-		return
-	var/datum/species/rec_species = human_receiver.dna.species
-	rec_species.update_no_equip_flags(tongue_owner, rec_species.no_equip_flags | ITEM_SLOT_MASK)
-
-/obj/item/organ/tongue/carp/on_bodypart_insert(obj/item/bodypart/head)
-	. = ..()
-	head.unarmed_damage_low = 10
-	head.unarmed_damage_high = 15
-	head.unarmed_effectiveness = 15
-	head.unarmed_attack_effect = ATTACK_EFFECT_BITE
-	head.unarmed_sharpness = SHARP_POINTY
-
-/obj/item/organ/tongue/carp/on_mob_remove(mob/living/carbon/tongue_owner)
-	. = ..()
-	if(!ishuman(tongue_owner))
-		return
-	var/mob/living/carbon/human/human_receiver = tongue_owner
-	if(!human_receiver.can_mutate())
-		return
-	var/datum/species/rec_species = human_receiver.dna.species
-	rec_species.update_no_equip_flags(tongue_owner, initial(rec_species.no_equip_flags))
-
-/obj/item/organ/tongue/carp/on_bodypart_remove(obj/item/bodypart/head)
-	. = ..()
-	head.unarmed_damage_low = initial(head.unarmed_damage_low)
-	head.unarmed_damage_high = initial(head.unarmed_damage_high)
-	head.unarmed_effectiveness = initial(head.unarmed_effectiveness)
-	head.unarmed_attack_effect = initial(head.unarmed_attack_effect)
-	head.unarmed_sharpness = initial(head.unarmed_sharpness)
-
-/obj/item/organ/tongue/carp/on_life(seconds_per_tick)
-	. = ..()
-	if(owner.stat != CONSCIOUS || !prob(0.1))
-		return
-	owner.emote("cough")
-	var/turf/tooth_fairy = get_turf(owner)
-	if(tooth_fairy)
-		new /obj/item/knife/carp(tooth_fairy)
 
 /obj/item/organ/tongue/carp/get_possible_languages()
 	. = ..()
@@ -142,9 +139,6 @@
 	. = ..()
 	UnregisterSignal(brain_owner, COMSIG_MOVABLE_Z_CHANGED)
 	deltimer(cooldown_timer)
-
-/obj/item/organ/brain/carp/get_attacking_limb(mob/living/carbon/human/target)
-	return owner.get_bodypart(BODY_ZONE_HEAD)
 
 /obj/item/organ/brain/carp/proc/unsatisfied_nomad()
 	owner.add_mood_event("nomad", /datum/mood_event/unsatisfied_nomad)

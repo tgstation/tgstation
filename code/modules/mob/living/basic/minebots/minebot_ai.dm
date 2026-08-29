@@ -164,7 +164,7 @@
 	if(!istype(target, /mob/living/carbon/human))
 		return FALSE
 	var/mob/living/carbon/human/human_target = target
-	return human_target.stat >= UNCONSCIOUS && human_target.mind
+	return IS_UNCONSCIOUS_OR_CRIT(human_target) && human_target.mind
 
 ///pet commands
 /datum/pet_command/free/minebot

@@ -128,8 +128,6 @@
 		affected_human.add_eye_color_right(eye_color_right, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
 	refresh_atom_color_overrides()
 
-	if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_cutoff)
-		lighting_cutoff = LIGHTING_CUTOFF_REAL_LOW
 	if(CONFIG_GET(flag/native_fov) && native_fov)
 		affected_human.add_fov_trait(type, native_fov)
 
@@ -270,8 +268,9 @@
 
 /// Similar to get_status_text, but appends the text after the damage report, for additional status info
 /obj/item/organ/eyes/get_status_appendix(scanpower, add_tooltips)
-	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
-		return
+	if(owner.stat == DEAD || IS_UNCONSCIOUS(owner))
+		return // you're blind when dead or unconscious so it's redundant to show it
+
 	if(owner.is_blind())
 		if(scanpower >= SCANPOWER_ADVANCED)
 			if(owner.is_blind_from(QUIRK_TRAIT))
@@ -300,7 +299,7 @@
 
 /obj/item/organ/eyes/show_on_condensed_scans()
 	// Always show if we have an appendix
-	return ..() || (owner.stat != DEAD && !HAS_TRAIT(owner, TRAIT_KNOCKEDOUT) && (owner.is_blind() || owner.is_nearsighted()))
+	return ..() || (owner.stat != DEAD && !IS_UNCONSCIOUS(owner) && (owner.is_blind() || owner.is_nearsighted()))
 
 /// This proc generates a list of overlays that the eye displays on the given head
 /obj/item/organ/eyes/proc/generate_body_overlay(obj/item/bodypart/head/my_head)
@@ -318,7 +317,7 @@
 	if(my_head.owner && !(my_head.owner.obscured_slots & HIDEEYES))
 		overlays += get_emissive_overlays(eye_left, eye_right, my_head)
 
-	if(my_head.head_flags & HEAD_EYECOLOR)
+	if((my_head.head_flags & HEAD_EYECOLOR) && my_head.is_husked != HUSKED_ZOMBIE)
 		eye_right.color = my_head.owner?.get_right_eye_color() || eye_color_right
 		eye_left.color = my_head.owner?.get_left_eye_color() || eye_color_left
 		var/list/eyelids = get_eyelid_overlays(eye_left, eye_right, my_head)
@@ -473,7 +472,7 @@
 	base_color[3] *= 0.85
 	var/eyelid_color = rgb(base_color[1], base_color[2], base_color[3], (length(base_color) >= 4 ? base_color[4] : null), COLORSPACE_HSL)
 	// If we're knocked out, just color the eyes
-	if (!parent.appears_alive() || HAS_TRAIT(parent, TRAIT_KNOCKEDOUT))
+	if (IS_DEAD_OR_FAKING(parent) || IS_UNCONSCIOUS(parent))
 		eye_right.color = eyelid_color
 		eye_left.color = eyelid_color
 		return
@@ -524,7 +523,9 @@
 		. += wait_time
 		if (anim_times && !sync_blinking)
 			// Make sure that we're somewhat in sync with the other eye
-			animate(time = anim_times[i + 1] - wait_time)
+			var/offset_time = anim_times[i + 1] - wait_time
+			if(offset_time) // For some reason having time == 0 in this case breaks animate
+				animate(time = offset_time)
 		animate(alpha = 255, time = 0)
 		animate(time = BLINK_DURATION)
 		if (i != cycles)

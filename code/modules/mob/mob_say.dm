@@ -1,7 +1,8 @@
 //Speech verbs.
 
 ///what clients use to speak. when you type a message into the chat bar in say mode, this is the first thing that goes off serverside.
-GAME_VERB(/mob, say_verb, VERB_SAY, null, message as text)
+GAME_VERB(/mob, say_verb, VERB_SAY, null)
+	VERB_ARG(message, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
@@ -13,7 +14,8 @@ GAME_VERB(/mob, say_verb, VERB_SAY, null, message as text)
 		QUEUE_OR_CALL_VERB_FOR(VERB_CALLBACK(src, TYPE_PROC_REF(/atom/movable, say), message), SSspeech_controller)
 
 ///Whisper verb
-GAME_VERB(/mob, whisper_verb, VERB_WHISPER, null, message as text)
+GAME_VERB(/mob, whisper_verb, VERB_WHISPER, null)
+	VERB_ARG(message, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
@@ -33,7 +35,8 @@ GAME_VERB(/mob, whisper_verb, VERB_WHISPER, null, message as text)
 	say(message, language = language)
 
 ///The me emote verb
-GAME_VERB(/mob, me_verb, VERB_ME, null, message as text)
+GAME_VERB(/mob, me_verb, VERB_ME, null)
+	VERB_ARG(message, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
@@ -209,21 +212,21 @@ GAME_VERB(/mob, me_verb, VERB_ME, null, message as text)
 		else if(key == "%" && !mods[MODE_SING])
 			mods[MODE_SING] = TRUE
 		else if(key == ";" && !mods[MODE_HEADSET])
-			if(stat == CONSCIOUS) //necessary indentation so it gets stripped of the semicolon anyway.
+			if(!IS_UNCONSCIOUS_OR_CRIT(src)) //necessary indentation so it gets stripped of the semicolon anyway.
 				mods[MODE_HEADSET] = TRUE
 		else if((key in GLOB.department_radio_prefixes) && length(message) > length(key) + 1 && !mods[RADIO_EXTENSION])
 			mods[RADIO_KEY] = LOWER_TEXT(message[1 + length(key)])
 			mods[RADIO_EXTENSION] = GLOB.department_radio_keys[mods[RADIO_KEY]]
 			chop_to = length(key) + 2
 		else if(key == "," && !mods[LANGUAGE_EXTENSION])
-			for(var/ld in GLOB.all_languages)
-				var/datum/language/LD = ld
-				if(initial(LD.key) == message[1 + length(message[1])])
+			for(var/datum/language/LD as anything in GLOB.all_languages)
+				var/lang_key = LD::key
+				if(lang_key && (lang_key == message[1 + length(message[1])]))
 					// No, you cannot speak in xenocommon just because you know the key
 					if(!can_speak_language(LD))
 						return message
 					mods[LANGUAGE_EXTENSION] = LD
-					chop_to = length(key) + length(initial(LD.key)) + 1
+					chop_to = length(key) + length(lang_key) + 1
 			if(!mods[LANGUAGE_EXTENSION])
 				return message
 		else

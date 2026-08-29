@@ -122,14 +122,18 @@
 
 	update_appearance()
 
-/obj/item/assembly/signaler/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(issignaler(W))
-		var/obj/item/assembly/signaler/signaler2 = W
-		if(secured && signaler2.secured)
-			code = signaler2.code
-			set_frequency(signaler2.frequency)
-			to_chat(user, "You transfer the frequency and code of \the [signaler2.name] to \the [name]")
-	..()
+/obj/item/assembly/signaler/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!issignaler(tool))
+		return ..()
+
+	var/obj/item/assembly/signaler/sister_signaler = tool
+	if(!secured || !sister_signaler.secured)
+		return ..()
+
+	code = sister_signaler.code
+	set_frequency(sister_signaler.frequency)
+	to_chat(user, "You transfer the frequency and code of \the [sister_signaler.name] to \the [name]")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/assembly/signaler/attack_self_secondary(mob/user, modifiers)
 	. = ..()
@@ -190,10 +194,11 @@
 
 /obj/item/assembly/signaler/cyborg
 
-/obj/item/assembly/signaler/cyborg/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	return
+/obj/item/assembly/signaler/cyborg/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return ITEM_INTERACT_BLOCKING
+
 /obj/item/assembly/signaler/cyborg/screwdriver_act(mob/living/user, obj/item/I)
-	return
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/assembly/signaler/internal
 	name = "internal remote signaling device"
@@ -201,11 +206,11 @@
 /obj/item/assembly/signaler/internal/ui_state(mob/user)
 	return GLOB.inventory_state
 
-/obj/item/assembly/signaler/internal/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	return
+/obj/item/assembly/signaler/internal/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/assembly/signaler/internal/screwdriver_act(mob/living/user, obj/item/I)
-	return
+	return ITEM_INTERACT_BLOCKING
 
 /obj/item/assembly/signaler/internal/can_interact(mob/user)
 	if(ispAI(user))

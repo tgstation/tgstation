@@ -15,12 +15,19 @@
 	transparent_protection = HIDEGLOVES | HIDESUITSTORAGE | HIDEJUMPSUIT | HIDESHOES | HIDENECK
 	cold_protection = FULL_BODY
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
-	allowed = list(/obj/item/melee/sickly_blade, /obj/item/gun/ballistic/rifle/lionhunter)
+	allowed = list(/obj/item/melee/sickly_blade, /obj/item/gun/ballistic/rifle/lionhunter, /obj/item/flashlight/lantern/heretic)
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	armor_type = /datum/armor/eldritch_armor
 	clothing_traits = list(TRAIT_HERETIC_AURA_HIDDEN)
 	/// Whether the hood is flipped up
 	var/hood_up = FALSE
+	/// Type of texture applied by this
+	var/texture_type = /datum/bodypart_texture/mesh/heretic
+
+/obj/item/clothing/suit/hooded/cultrobes/eldritch/Initialize(mapload)
+	. = ..()
+	if(texture_type)
+		AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, texture_type)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/equipped(mob/user, slot, initial)
 	. = ..()
@@ -57,16 +64,6 @@
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/on_hood_down(obj/item/clothing/head/hooded/hood)
 	hood_up = FALSE
 
-/obj/item/clothing/suit/hooded/cultrobes/eldritch/examine(mob/user)
-	. = ..()
-	if(!IS_HERETIC(user))
-		return
-	if(hood_up)
-		return
-
-	// Our hood gains the heretic_focus element.
-	. += span_notice("Allows you to cast heretic spells while the hood is up.")
-
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch
 	name = "ominous hood"
 	icon = 'icons/obj/clothing/head/helmet.dmi'
@@ -79,10 +76,13 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	clothing_flags = THICKMATERIAL | PLASMAMAN_PREVENT_IGNITION | SNUG_FIT
 	armor_type = /datum/armor/eldritch_armor
+	/// Type of texture applied by this
+	var/texture_type = /datum/bodypart_texture/mesh/heretic
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/heretic_focus)
+	if(texture_type)
+		AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, texture_type)
 
 /datum/armor/eldritch_armor
 	melee = 50
@@ -114,6 +114,7 @@
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF | LAVA_PROOF | FREEZE_PROOF
 	actions_types = list(/datum/action/item_action/toggle/flames)
+	texture_type = /datum/bodypart_texture/mesh/black
 	/// If our robes are actively generating flames
 	var/flame_generation = FALSE
 	/// Cooldown before our robes will create new flames
@@ -195,6 +196,7 @@
 		Yet the soot-choked folds turn blade and flame from the form within. A brief reprieve before its gaze turns inwards."
 	icon_state = "ash_armor"
 	armor_type = /datum/armor/eldritch_armor/ash
+	texture_type = /datum/bodypart_texture/mesh/black
 
 /datum/armor/eldritch_armor/ash
 	melee = 40
@@ -217,6 +219,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/blade
 	armor_type = /datum/armor/eldritch_armor/blade
 	siemens_coefficient = 0
+	texture_type = /datum/bodypart_texture/mesh/bombsuit
 	var/murdering_with_blades = FALSE
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/blade/on_robes_gained(mob/living/user)
@@ -324,6 +327,7 @@
 	icon_state = "blade_armor"
 	armor_type = /datum/armor/eldritch_armor/blade
 	siemens_coefficient = 0
+	texture_type = /datum/bodypart_texture/mesh/bombsuit
 
 /datum/armor/eldritch_armor/blade
 	melee = 50
@@ -349,6 +353,7 @@
 	cold_protection = CHEST | GROIN | LEGS | FEET | ARMS | HANDS
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
 	actions_types = list(/datum/action/item_action/toggle/gravity)
+	texture_type = null
 	/// If our robes are making us weightless
 	var/weightless_enabled = FALSE
 
@@ -399,6 +404,7 @@
 	clothing_flags = THICKMATERIAL | PLASMAMAN_PREVENT_IGNITION | STOPSPRESSUREDAMAGE
 	cold_protection = HEAD
 	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	texture_type = null
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/cosmic/Initialize(mapload)
 	. = ..()
@@ -418,12 +424,13 @@
 // Flesh
 // Emits a healing aura that affects any heretic summons (excluding the heretic himself)
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/flesh
-	name = "Writhing Embrace"
+	name = "\improper Writhing Embrace"
 	desc = "A rotten carcass, or perhaps several, twisted into fleshy polyps, knotted intestines and cracked bone. \
 			How one 'wears' this baffles reasonable understanding. It moves when it believes itself unobserved."
 	icon_state = "flesh_armor"
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/flesh
 	armor_type = /datum/armor/eldritch_armor/flesh
+	texture_type = null
 	/// The aura healing component. Used to delete it when taken off.
 	var/datum/component/healing_aura
 
@@ -456,9 +463,11 @@
 		addtimer(CALLBACK(limb, TYPE_PROC_REF(/obj/item/bodypart, force_wound_upwards), /datum/wound/slash/flesh/critical), 1 SECONDS * iteration)
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/flesh
+	name = "\improper Writhing Embrace"
 	icon_state = "flesh_armor"
 	armor_type = /datum/armor/eldritch_armor/flesh
 	clothing_traits = list(TRAIT_MEDICAL_HUD)
+	texture_type = null
 
 /datum/armor/eldritch_armor/flesh
 	melee = 70
@@ -474,11 +483,12 @@
 // Lock
 // Gives you digital camo, silences your footsteps and makes you un-examineable
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/lock
-	name = "Shifting Guise"
+	name = "\improper Shifting Guise"
 	icon_state = "lock_armor"
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/lock
 	armor_type = /datum/armor/eldritch_armor/lock
 	flags_inv = parent_type::flags_inv | HIDEMUTWINGS
+	texture_type = /datum/bodypart_texture/mesh/firesuit
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/lock/on_robes_gained(mob/living/user)
 	user.AddElement(/datum/element/digitalcamo)
@@ -500,8 +510,10 @@
 			to_throw.safe_throw_at(pick(nearby_turfs), 2, 1, spin = TRUE)
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/lock
+	name = "\improper Shifting Guise"
 	icon_state = "lock_armor"
 	armor_type = /datum/armor/eldritch_armor/lock
+	texture_type = /datum/bodypart_texture/mesh/firesuit
 
 /datum/armor/eldritch_armor/lock
 	melee = 40
@@ -533,6 +545,7 @@
 		TRAIT_PACIFISM,
 		TRAIT_NOHUNGER
 	)
+	texture_type = /datum/bodypart_texture/mesh/firesuit
 	/// Boolean if you are brain dead so the sound doesn't spam during the delay
 	var/braindead = FALSE
 	//---- Messages that get sent when someone wearing the moon robes is attacked
@@ -774,6 +787,7 @@
 	name = "\improper Resplendant Hood"
 	icon_state = "moon_armor"
 	armor_type = /datum/armor/eldritch_armor/moon
+	texture_type = /datum/bodypart_texture/mesh/firesuit
 
 /datum/armor/eldritch_armor/moon
 	melee = 0
@@ -846,8 +860,6 @@
 	var/rusted = FALSE
 	/// Atom used to animate our overlay
 	var/atom/movable/rust_overlay
-	/// The mutable that is actually overlayed on the mob
-	var/mutable_appearance/rust_appearance
 	/// identifier for the overlay
 	var/static/overlay_id = 0
 	/// Overlay for the armor object
@@ -875,8 +887,6 @@
 	rust_overlay.vis_flags |= VIS_INHERIT_DIR | VIS_INHERIT_LAYER | VIS_INHERIT_ID
 	user.vis_contents += rust_overlay // Should be invisible, we just update the sprite as needed
 
-	rust_appearance = new /mutable_appearance()
-	rust_appearance.render_source = "*rust_overlay_[overlay_id]"
 	update_appearance(UPDATE_ICON)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/on_robes_lost(mob/user, obj/item/clothing/suit/hooded/cultrobes/eldritch/robes)
@@ -894,7 +904,6 @@
 	REMOVE_TRAIT(user, TRAIT_PIERCEIMMUNE, REF(src))
 	cut_overlay(object_overlay)
 	QDEL_NULL(rust_overlay)
-	QDEL_NULL(rust_appearance)
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/robes_side_effect(mob/living/user)
 	. = ..()
@@ -996,6 +1005,8 @@
 		rust_overlay?.icon_state = "[worn_icon_state]" + "_overlay"
 	else
 		rust_overlay?.icon_state = null
+	var/mutable_appearance/rust_appearance = mutable_appearance()
+	rust_appearance.render_source = "*rust_overlay_[overlay_id]"
 	. += rust_appearance
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/rust
@@ -1059,6 +1070,7 @@
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/void
 	armor_type = /datum/armor/eldritch_armor/void
+	texture_type = null
 	/// Cooldown before we can go back into stealth
 	COOLDOWN_DECLARE(stealth_cooldown)
 	/// Timer before our stealth runs out
@@ -1099,6 +1111,7 @@
 			Yet upon tracking the shape of the folds more carefully, it is better to describe it as the absence of such a thing."
 	icon_state = "void_armor"
 	armor_type = /datum/armor/eldritch_armor/void
+	texture_type = null
 
 /datum/armor/eldritch_armor/void
 	melee = 40
@@ -1220,7 +1233,6 @@
 /// Makes our cloak "invisible". Not the wearer, the cloak itself.
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_invisible()
 	add_traits(list(TRAIT_NO_STRIP, TRAIT_EXAMINE_SKIP), REF(src))
-	RemoveElement(/datum/element/heretic_focus)
 	flags_cover |= ALLOW_SURGERY_THROUGH
 
 	if(isliving(loc))
@@ -1232,7 +1244,6 @@
 /// Makes our cloak "visible" again.
 /obj/item/clothing/suit/hooded/cultrobes/void/proc/make_visible()
 	remove_traits(list(TRAIT_NO_STRIP, TRAIT_EXAMINE_SKIP), REF(src))
-	AddElement(/datum/element/heretic_focus)
 	flags_cover &= ~ALLOW_SURGERY_THROUGH
 
 	if(isliving(loc))

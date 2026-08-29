@@ -144,9 +144,9 @@
 	name = "random flower spawner"
 	icon_state = "flower"
 	loot = list(
-		/obj/item/food/grown/poppy,
-		/obj/item/food/grown/harebell,
-		/obj/item/food/grown/trumpet,
-		/obj/item/food/grown/sunflower,
-		/obj/item/food/grown/rose,
+		/obj/item/food/grown/flower/poppy,
+		/obj/item/food/grown/flower/harebell,
+		/obj/item/food/grown/flower/trumpet,
+		/obj/item/food/grown/flower/sunflower,
+		/obj/item/food/grown/flower/rose,
 	)

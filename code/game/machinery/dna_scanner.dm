@@ -82,7 +82,7 @@
 		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
 		span_hear("You hear a metallic creaking from [src]."))
 	if(do_after(user,(breakout_time), target = src))
-		if(!user || user.stat != CONSCIOUS || user.loc != src || state_open || !locked || HAS_TRAIT(user, TRAIT_PRIMITIVE) || user.ai_controller)
+		if(!user || IS_UNCONSCIOUS_OR_CRIT(user) || user.loc != src || state_open || !locked || HAS_TRAIT(user, TRAIT_PRIMITIVE) || user.ai_controller)
 			return
 		locked = FALSE
 		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
@@ -123,7 +123,7 @@
 	return TRUE
 
 /obj/machinery/dna_scannernew/relaymove(mob/living/user, direction)
-	if(user.stat || locked)
+	if(IS_UNCONSCIOUS_OR_CRIT(user) || locked)
 		if(message_cooldown <= world.time)
 			message_cooldown = world.time + 50
 			to_chat(user, span_warning("[src]'s door won't budge!"))

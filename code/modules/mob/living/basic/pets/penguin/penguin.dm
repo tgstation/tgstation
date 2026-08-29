@@ -163,7 +163,7 @@
 	)
 
 /mob/living/basic/pet/penguin/baby/proc/ready_to_grow()
-	return (stat == CONSCIOUS)
+	return (!IS_UNCONSCIOUS_OR_CRIT(src))
 
 /mob/living/basic/pet/penguin/baby/permanent
 	can_grow_up = FALSE

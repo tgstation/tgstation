@@ -6,7 +6,7 @@
 	key_third_person = "daps"
 	message = "sadly can't find anybody to give daps to, and daps themself. Shameful."
 	message_param = "gives daps to %t."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/human/eyebrow
 	key = "eyebrow"
@@ -40,7 +40,7 @@
 	key = "handshake"
 	message = "shakes their own hands."
 	message_param = "shakes hands with %t."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 
 /datum/emote/living/carbon/human/hug
@@ -48,7 +48,7 @@
 	key_third_person = "hugs"
 	message = "hugs themself."
 	message_param = "hugs %t."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/human/mumble
 	key = "mumble"
@@ -67,7 +67,8 @@
 	vary = FALSE
 
 /datum/emote/living/carbon/human/screech/get_sound(mob/living/carbon/human/user)
-	return user.dna.species.get_scream_sound(user)
+	var/datum/emote/scream_emote = GLOB.emote_list[/datum/emote/living/scream::key][1]
+	return scream_emote.get_sound(user)
 
 /datum/emote/living/carbon/human/pale
 	key = "pale"
@@ -77,41 +78,41 @@
 	key = "raise"
 	key_third_person = "raises"
 	message = "raises a hand."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/human/salute
 	key = "salute"
 	key_third_person = "salutes"
 	message = "salutes."
 	message_param = "salutes to %t."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 	sound = 'sound/mobs/humanoids/human/salute/salute.ogg'
 
 /datum/emote/living/carbon/human/slit
 	key = "slit"
 	key_third_person = "slits"
 	message = "drags a finger across their neck."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/human/scratch_h
 	key = "scratch_h"
 	message = "scratches their head."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/human/thumb_up
 	key = "thumb_u"
 	message = "gives a thumbs up."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/human/thumb_down
 	key = "thumb_d"
 	message = "gives a thumbs down."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/human/time
 	key = "time"
 	message = "checks the time."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/human/tap
 	key = "tap"
@@ -122,42 +123,42 @@
 	key = "halt"
 	key_third_person = "halts"
 	message = "holds up their palm, signaling to stop."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/human/shush
 	key = "shush"
 	key_third_person = "shushes"
 	message = "holds a finger to their lips."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/human/listen
 	key = "listen"
 	key_third_person = "listens"
 	message = "cups a hand to their ear."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/human/think
 	key = "think"
 	key_third_person = "thinks"
 	message = "taps their head, thinking."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/human/beckon
 	key = "beckon"
 	key_third_person = "beckons"
 	message = "waves a hand for someone to come closer."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/human/airquote
 	key = "airquote"
 	key_third_person = "airquotes"
 	message = "makes air quotes."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/human/crazy
 	key = "crazy"
 	message = "twirls a finger next to their head."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/human/squint
 	key = "squint"
@@ -168,7 +169,7 @@
 	key = "rub"
 	key_third_person = "rubs"
 	message = "rubs their chin."
-	hands_use_check = TRUE
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/carbon/human/shrug
 	key = "shrug"
@@ -178,7 +179,7 @@
 /datum/emote/living/carbon/human/wag
 	key = "wag"
 	key_third_person = "wags"
-	message = "their tail."
+	message = "wags"
 
 /datum/emote/living/carbon/human/wag/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
@@ -194,9 +195,8 @@
 	. = ..()
 	var/obj/item/organ/tail/oranges_accessory = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
 	if(oranges_accessory.wag_flags & WAG_WAGGING)
-		. = "stops wagging " + message
-	else
-		. = "wags " + message
+		. = "stops wagging"
+	. += " [user.p_their()] tail."
 
 /datum/emote/living/carbon/human/wag/can_run_emote(mob/user, status_check, intentional, params)
 	var/obj/item/organ/tail/tail = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
@@ -211,7 +211,7 @@
 
 /datum/emote/living/carbon/human/wing/run_emote(mob/user, params, type_override, intentional)
 	. = ..()
-	var/obj/item/organ/wings/functional/wings = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+	var/obj/item/organ/wings/wings = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 	if(isnull(wings))
 		CRASH("[type] ran on a mob that has no wings!")
 	if(wings.wings_open)
@@ -220,12 +220,13 @@
 		wings.open_wings()
 
 /datum/emote/living/carbon/human/wing/select_message_type(mob/user, intentional)
-	var/obj/item/organ/wings/functional/wings = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+	var/obj/item/organ/wings/wings = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 	var/emote_verb = wings.wings_open ? "closes" : "opens"
 	return "[emote_verb] [message]"
 
 /datum/emote/living/carbon/human/wing/can_run_emote(mob/user, status_check = TRUE, intentional, params)
-	if(!istype(user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS), /obj/item/organ/wings/functional))
+	var/obj/item/organ/wings/wings = user.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
+	if(!istype(wings) || !wings.has_open_sprite)
 		return FALSE
 	return ..()
 
@@ -272,48 +273,12 @@
 		addtimer(CALLBACK(eyes, TYPE_PROC_REF(/obj/item/organ/eyes, blink), 0.1 SECONDS, FALSE), i * 0.2 SECONDS)
 	eyes.animate_eyelids(user)
 
-///Snowflake emotes only for le epic chimp
-/datum/emote/living/carbon/human/monkey
-
-/datum/emote/living/carbon/human/monkey/can_run_emote(mob/user, status_check = TRUE, intentional, params)
-	if(ismonkey(user))
-		return ..()
-	return FALSE
-
-/datum/emote/living/carbon/human/monkey/gnarl
-	key = "gnarl"
-	key_third_person = "gnarls"
-	message = "gnarls and shows its teeth..."
-	message_mime = "gnarls silently, baring its teeth..."
-
-/datum/emote/living/carbon/human/monkey/roll
-	key = "roll"
-	key_third_person = "rolls"
-	message = "rolls."
-	hands_use_check = TRUE
-
-/datum/emote/living/carbon/human/monkey/scratch
-	key = "scratch"
-	key_third_person = "scratches"
-	message = "scratches."
-	hands_use_check = TRUE
-
-/datum/emote/living/carbon/human/monkey/screech/roar
+/datum/emote/living/carbon/human/screech/roar
 	key = "roar"
 	key_third_person = "roars"
 	message = "roars!"
 	message_mime = "acts out a roar."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
-
-/datum/emote/living/carbon/human/monkey/tail
-	key = "tail"
-	message = "waves their tail."
-
-/datum/emote/living/carbon/human/monkey/sign
-	key = "sign"
-	key_third_person = "signs"
-	message_param = "signs the number %t."
-	hands_use_check = TRUE
 
 /// emotes for glowy goobers
 /datum/emote/living/carbon/human/glow
@@ -322,15 +287,15 @@
 	message = "glows brightly!"
 	emote_type = EMOTE_VISIBLE
 
-/datum/emote/living/carbon/human/glow/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
-	if(!isethereal(user))
+/datum/emote/living/carbon/human/glow/can_run_emote(mob/living/carbon/human/user, status_check = TRUE, intentional, params)
+	if(!user.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow))
 		return FALSE
 	return ..()
 
 /datum/emote/living/carbon/human/glow/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
 	. = ..()
-	var/datum/species/ethereal/goober = user.dna.species
-	goober.handle_glow_emote(user, 1.75, 1.2)
+	var/datum/status_effect/grouped/bodypart_effect/ethereal_glow/glow = user.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow)
+	glow.handle_glow_emote(1.75, 1.2)
 
 /datum/emote/living/carbon/human/flare
 	key = "flare"
@@ -339,15 +304,15 @@
 	emote_type = EMOTE_VISIBLE
 	sound = 'sound/mobs/humanoids/ethereal/ethereal_hiss.ogg'
 
-/datum/emote/living/carbon/human/flare/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
-	if(!isethereal(user))
+/datum/emote/living/carbon/human/flare/can_run_emote(mob/living/carbon/human/user, status_check = TRUE, intentional, params)
+	if(!user.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow))
 		return FALSE
 	return ..()
 
 /datum/emote/living/carbon/human/flare/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
 	. = ..()
-	var/datum/species/ethereal/goober = user.dna.species
-	goober.handle_glow_emote(user, 12, 6, flare = TRUE, duration = 2 SECONDS, flare_time = 10 SECONDS)
+	var/datum/status_effect/grouped/bodypart_effect/ethereal_glow/glow = user.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow)
+	glow.handle_glow_emote(12, 6, flare = TRUE, duration = 2 SECONDS, flare_time = 10 SECONDS)
 
 /datum/emote/living/carbon/human/flicker
 	key = "flicker"
@@ -357,11 +322,11 @@
 	sound = 'sound/effects/sparks/sparks4.ogg'
 
 /datum/emote/living/carbon/human/flicker/can_run_emote(mob/living/carbon/human/user, status_check = TRUE , intentional, params)
-	if(!isethereal(user))
+	if(!user.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow))
 		return FALSE
 	return ..()
 
 /datum/emote/living/carbon/human/flicker/run_emote(mob/living/carbon/human/user, params, type_override, intentional)
 	. = ..()
-	var/datum/species/ethereal/goober = user.dna.species
-	goober.start_flicker(user)
+	var/datum/status_effect/grouped/bodypart_effect/ethereal_glow/glow = user.has_status_effect(/datum/status_effect/grouped/bodypart_effect/ethereal_glow)
+	glow.start_flicker()

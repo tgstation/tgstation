@@ -48,6 +48,7 @@
 	human_authority = JOB_AUTHORITY_HUMANS_ONLY
 
 	voice_of_god_power = 1.4 //Command staff has authority
+	tgui_icon = FA_ICON_USER_ASTRONAUT
 
 
 /datum/job/chief_engineer/after_spawn(mob/living/spawned, client/player_client)
@@ -85,6 +86,8 @@
 	chameleon_extras = /obj/item/stamp/head/ce
 	skillchips = list(/obj/item/skillchip/job/engineer)
 	pda_slot = ITEM_SLOT_LPOCKET
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/engineering/ce
 
 /datum/outfit/job/ce/mod
 	name = "Chief Engineer (MODsuit)"

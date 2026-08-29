@@ -199,7 +199,7 @@
 
 	if(flashed.stat == DEAD || issilicon(flashed) || isdrone(flashed))
 		return
-	if(flashed.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(flashed))
 		to_chat(source, span_warning("[flashed.p_They()] must be conscious before you can convert [flashed.p_them()]!"))
 		return
 
@@ -426,7 +426,7 @@
 	for(var/datum/mind/khrushchev as anything in members - head_revolutionaries)
 		if(!can_be_headrev(khrushchev))
 			continue
-		if(ismonkey(khrushchev.current))
+		if(HAS_TRAIT(khrushchev.current, TRAIT_LESSER_HUMANOID))
 			monkey_promotable += khrushchev
 		else
 			promotable += khrushchev

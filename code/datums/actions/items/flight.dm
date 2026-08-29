@@ -35,9 +35,9 @@
 	)
 
 /datum/action/item_action/toggle_flight/Remove(mob/remove_from)
-	. = ..()
 	if(HAS_TRAIT_FROM(remove_from, TRAIT_MOVE_FLOATING, SHOES_TRAIT))
 		switch_flight()
+	return ..()
 
 /datum/action/item_action/toggle_flight/do_effect(trigger_flags)
 	if(!ishuman(owner))
@@ -93,7 +93,7 @@
 /// Largely lifted off of wing's can_fly proc, tailored to the jet boots functionality.
 /datum/action/item_action/toggle_flight/proc/can_fly()
 	var/mob/living/carbon/human/human = owner
-	if(human.stat || human.body_position == LYING_DOWN || isnull(human.client))
+	if(IS_UNCONSCIOUS_OR_CRIT(human) || human.body_position == LYING_DOWN || isnull(human.client))
 		return FALSE
 
 	var/turf/location = get_turf(human)

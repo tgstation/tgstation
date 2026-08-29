@@ -115,12 +115,12 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/get_able_to_run()
 	var/mob/living/living_pawn = pawn
 
-	if(INCAPACITATED_IGNORING(living_pawn, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS|INCAPABLE_GRAB) || living_pawn.stat > CONSCIOUS)
+	if(INCAPACITATED_IGNORING(living_pawn, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS|INCAPABLE_GRAB))
 		return AI_UNABLE_TO_RUN
 	return ..()
 
 /datum/ai_controller/monkey/proc/set_trip_mode(mode = TRUE)
-	var/mob/living/carbon/regressed_monkey = pawn
+	var/mob/living/regressed_monkey = pawn
 	var/brain = regressed_monkey.get_organ_slot(ORGAN_SLOT_BRAIN)
 	if(istype(brain, /obj/item/organ/brain/primate)) // In case we are a monkey AI in a human brain by who was previously controlled by a client but it now not by some marvel
 		var/obj/item/organ/brain/primate/monkeybrain = brain
@@ -142,7 +142,7 @@ have ways of interacting with a specific mob and control it.
 /datum/ai_controller/monkey/proc/on_startpulling(datum/source, atom/movable/puller, state, force)
 	SIGNAL_HANDLER
 	var/mob/living/living_pawn = pawn
-	if(!IS_DEAD_OR_INCAP(living_pawn) && prob(MONKEY_PULL_AGGRO_PROB)) // nuh uh you don't pull me!
+	if(!living_pawn.incapacitated && prob(MONKEY_PULL_AGGRO_PROB)) // nuh uh you don't pull me!
 		retaliate(living_pawn.pulledby)
 		return TRUE
 

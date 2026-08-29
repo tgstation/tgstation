@@ -60,14 +60,29 @@ function migrateHighlights(next: HighlightState): HighlightState {
       draft.highlightText ?? defaultHighlightSetting.highlightText;
   }
 
-  // Ensure that all highlights have the "enabled" var,
-  // setting it to true if it doesn't exist.
+  // Backfill vars added after highlights were first stored.
   for (const id in draft.highlightSettingById) {
-    if (
-      draft.highlightSettingById[id] &&
-      draft.highlightSettingById[id].enabled === undefined
-    ) {
-      draft.highlightSettingById[id].enabled = true;
+    const setting = draft.highlightSettingById[id];
+    if (!setting) {
+      continue;
+    }
+    if (setting.enabled === undefined) {
+      setting.enabled = true;
+    }
+    if (setting.playSound === undefined) {
+      setting.playSound = false;
+    }
+    if (!setting.soundFile) {
+      setting.soundFile = defaultHighlightSetting.soundFile;
+    }
+    if (setting.soundVolume === undefined) {
+      setting.soundVolume = defaultHighlightSetting.soundVolume;
+    }
+    if (setting.jobFilter === undefined) {
+      setting.jobFilter = '';
+    }
+    if (!Array.isArray(setting.characterFilter)) {
+      setting.characterFilter = [];
     }
   }
 

@@ -1,16 +1,17 @@
-// Simple define to avoid copy-pasting the same code 3 times
-#define ABDUCTOR_SUBTYPE_UNLOCKS(X) \
-	##X/New() { \
-		. = ..(); \
-		required_items_to_unlock += subtypesof(/obj/item/abductor); \
-		required_items_to_unlock += subtypesof(/obj/item/circuitboard/machine/abductor); \
-	}
+/datum/techweb_node/alien
+	abstract_type = /datum/techweb_node/alien
+	node_flags = parent_type::node_flags | TECHWEB_NODE_HIDDEN
 
-/datum/techweb_node/alientech //AYYYYYYYYLMAOO tech
-	id = TECHWEB_NODE_ALIENTECH
+/datum/techweb_node/alien/New()
+	. = ..()
+	required_items_to_unlock += subtypesof(/obj/item/abductor)
+	required_items_to_unlock += subtypesof(/obj/item/circuitboard/machine/abductor)
+
+/datum/techweb_node/alien/base //AYYYYYYYYLMAOO tech
 	display_name = "Alien Technology"
 	description = "Things used by the greys."
-	prereq_ids = list(TECHWEB_NODE_BLUESPACE_TRAVEL)
+	node_flags = parent_type::node_flags | TECHWEB_NODE_HIDDEN
+	prerequisite_nodes = list(/datum/techweb_node/bluespace_travel)
 	required_items_to_unlock = list(
 		/obj/item/stack/sheet/mineral/abductor,
 		/obj/item/cautery/alien,
@@ -29,30 +30,26 @@
 		/obj/item/wirecutters/abductor,
 		/obj/item/wrench/abductor,
 	)
-	design_ids = list(
-		"alienalloy",
+	unlocked_designs = list(
+		/datum/design/alloy/alien,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
-	hidden = TRUE
 
-ABDUCTOR_SUBTYPE_UNLOCKS(/datum/techweb_node/alientech)
-
-/datum/techweb_node/alientech/on_station_research()
+/datum/techweb_node/alien/base/on_station_research()
 	. = ..()
 	SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ALIENTECH] = TRUE
 
-/datum/techweb_node/alien_engi
-	id = TECHWEB_NODE_ALIEN_ENGI
+/datum/techweb_node/alien/engi
 	display_name = "Alien Engineering"
 	description = "Alien engineering tools"
-	prereq_ids = list(TECHWEB_NODE_ALIENTECH, TECHWEB_NODE_EXP_TOOLS)
-	design_ids = list(
-		"alien_crowbar",
-		"alien_multitool",
-		"alien_screwdriver",
-		"alien_welder",
-		"alien_wirecutters",
-		"alien_wrench",
+	prerequisite_nodes = list(/datum/techweb_node/alien/base, /datum/techweb_node/exp_tools)
+	unlocked_designs = list(
+		/datum/design/aliencrowbar,
+		/datum/design/alienmultitool,
+		/datum/design/alienscrewdriver,
+		/datum/design/alienwelder,
+		/datum/design/alienwirecutters,
+		/datum/design/alienwrench,
 	)
 	required_items_to_unlock = list(
 		/obj/item/crowbar/abductor,
@@ -65,28 +62,24 @@ ABDUCTOR_SUBTYPE_UNLOCKS(/datum/techweb_node/alientech)
 		/obj/item/wrench/abductor,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
-	hidden = TRUE
 	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
 
-ABDUCTOR_SUBTYPE_UNLOCKS(/datum/techweb_node/alien_engi)
-
-/datum/techweb_node/alien_surgery
-	id = TECHWEB_NODE_ALIEN_SURGERY
+/datum/techweb_node/alien/surgery
 	display_name = "Alien Surgery"
 	description = "Abductors did nothing wrong."
-	prereq_ids = list(TECHWEB_NODE_ALIENTECH, TECHWEB_NODE_SURGERY_TOOLS)
-	design_ids = list(
-		"alien_cautery",
-		"alien_drill",
-		"alien_hemostat",
-		"alien_retractor",
-		"alien_saw",
-		"alien_scalpel",
-		"medibot_upgrade_four",
-		"surgery_brainwashing",
-		"surgery_brainwashing_mechanic",
-		"surgery_heal_combo_upgrade_femto",
-		"surgery_zombie",
+	prerequisite_nodes = list(/datum/techweb_node/alien/base, /datum/techweb_node/surgery_tools)
+	unlocked_designs = list(
+		/datum/design/aliencautery,
+		/datum/design/aliendrill,
+		/datum/design/alienhemostat,
+		/datum/design/alienretractor,
+		/datum/design/aliensaw,
+		/datum/design/alienscalpel,
+		/datum/design/medibot_upgrade/tier_four,
+		/datum/design/surgery/brainwashing,
+		/datum/design/surgery/brainwashing/mechanic,
+		/datum/design/surgery/tend_wounds_combo/upgrade/femto,
+		/datum/design/surgery/necrotic_revival,
 	)
 	required_items_to_unlock = list(
 		/obj/item/cautery/alien,
@@ -107,9 +100,4 @@ ABDUCTOR_SUBTYPE_UNLOCKS(/datum/techweb_node/alien_engi)
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/slime/hard = TECHWEB_TIER_5_POINTS)
-	hidden = TRUE
 	announce_channels = list(RADIO_CHANNEL_MEDICAL)
-
-ABDUCTOR_SUBTYPE_UNLOCKS(/datum/techweb_node/alien_surgery)
-
-#undef ABDUCTOR_SUBTYPE_UNLOCKS

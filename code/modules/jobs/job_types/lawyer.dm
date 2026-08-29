@@ -27,6 +27,7 @@
 	job_flags = STATION_JOB_FLAGS
 
 	job_tone = "objection"
+	tgui_icon = FA_ICON_GAVEL
 
 /datum/outfit/job/lawyer
 	name = "Lawyer"

@@ -214,7 +214,7 @@ If you make a derivative work from this code, you must include this notification
 		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
 		var/turf/T = get_edge_target_turf(attacker, attacker.dir)
 		if (T && isturf(T))
-			if (!defender.stat)
+			if (!IS_UNCONSCIOUS_OR_CRIT(defender))
 				defender.emote("scream")
 			defender.throw_at(T, 10, 4, attacker, TRUE, TRUE, callback = CALLBACK(defender, TYPE_PROC_REF(/mob/living, Paralyze), 20))
 	log_combat(attacker, defender, "has thrown with wrestling")
@@ -314,7 +314,7 @@ If you make a derivative work from this code, you must include this notification
 						span_userdanger("You're [fluff]ed by [attacker]!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, attacker)
 		to_chat(attacker, span_danger("You [fluff] [defender]!"))
 		playsound(attacker.loc, SFX_SWING_HIT, 50, TRUE)
-		if (!defender.stat)
+		if (!IS_UNCONSCIOUS_OR_CRIT(defender))
 			defender.emote("scream")
 			defender.Paralyze(4 SECONDS)
 
@@ -443,7 +443,7 @@ If you make a derivative work from this code, you must include this notification
 		attacker.emote("scream")
 
 		if (falling == 1)
-			if (prob(33) || defender.stat)
+			if (prob(33) || IS_UNCONSCIOUS_OR_CRIT(defender))
 				EX_ACT(defender, EXPLODE_LIGHT)
 			else
 				defender.adjust_brute_loss(rand(20,30))

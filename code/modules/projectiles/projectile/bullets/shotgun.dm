@@ -1,6 +1,6 @@
 /obj/projectile/bullet/shotgun_slug
 	name = "12g shotgun slug"
-	icon_state = "pellet"
+	icon_state = "bullet_tracer"
 	damage = 25
 	armour_penetration = 30
 	sharpness = SHARP_POINTY
@@ -9,7 +9,6 @@
 
 /obj/projectile/bullet/shotgun_slug/milspec
 	name = "12g shotgun milspec slug"
-	icon_state = "pellet"
 	damage = 50
 
 /obj/projectile/bullet/shotgun_slug/executioner
@@ -48,7 +47,6 @@
 
 /obj/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
-	icon_state = "pellet"
 	damage = 20
 
 /obj/projectile/bullet/incendiary/shotgun/no_trail
@@ -58,6 +56,7 @@
 
 /obj/projectile/bullet/incendiary/shotgun/dragonsbreath
 	name = "dragonsbreath pellet"
+	icon_state = "pellet_tracer"
 	damage = 5
 
 /obj/projectile/bullet/shotgun_stunslug
@@ -73,7 +72,7 @@
 
 /obj/projectile/bullet/shotgun_frag12
 	name ="frag12 slug"
-	icon_state = "pellet"
+	icon_state = "bullet_tracer"
 	damage = 15
 	paralyze = 10
 
@@ -83,7 +82,7 @@
 	return BULLET_ACT_HIT
 
 /obj/projectile/bullet/pellet
-	icon_state = "pellet"
+	icon_state = "pellet_tracer"
 	damage_falloff_tile = -0.25
 
 /obj/projectile/bullet/pellet/shotgun_buckshot
@@ -100,6 +99,7 @@
  * The casings they're in have a very small chance to misfire and will gradually damage the firearm, making it weaker.
  */
 /obj/projectile/bullet/pellet/shotgun_buckshot/old
+	icon_state = "pellet"
 	damage_falloff_tile = -1
 	wound_bonus = -100
 	exposed_wound_bonus = -100
@@ -117,6 +117,7 @@
 
 /obj/projectile/bullet/pellet/shotgun_rubbershot
 	name = "rubber shot pellet"
+	icon_state = "pellet"
 	damage = 3
 	stamina = 10
 	sharpness = NONE
@@ -140,6 +141,7 @@
 
 /obj/projectile/bullet/pellet/shotgun_incapacitate
 	name = "incapacitating pellet"
+	icon_state = "pellet"
 	damage = 1
 	stamina = 6
 	embed_type = null
@@ -166,6 +168,7 @@
 	pain_mult = 0.5
 	jostle_pain_mult = 1.5
 	rip_time = 0.5 SECONDS
+	stealthy_embed = FALSE
 
 /obj/projectile/bullet/pellet/flechette/donk
 	name = "\improper Donk Co. 'Donk Spike' flechette"
@@ -191,7 +194,7 @@
 // Mech Scattershot
 
 /obj/projectile/bullet/scattershot
-	icon_state = "pellet"
+	icon_state = "pellet_tracer"
 	damage = 24
 
 //Breaching Ammo

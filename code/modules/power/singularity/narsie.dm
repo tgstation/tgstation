@@ -170,7 +170,7 @@
 /// Stun people around Nar'Sie that aren't cultists
 /obj/narsie/proc/mesmerize()
 	for (var/mob/living/carbon/victim in viewers(NARSIE_CONSUME_RANGE, src))
-		if (victim.stat == CONSCIOUS)
+		if (!IS_UNCONSCIOUS_OR_CRIT(victim))
 			if (!IS_CULTIST(victim))
 				to_chat(victim, span_cult("You feel conscious thought crumble away in an instant as you gaze upon [src]..."))
 				victim.apply_effect(NARSIE_MESMERIZE_EFFECT, EFFECT_STUN)

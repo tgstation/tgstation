@@ -1,4 +1,4 @@
-import { Section } from 'tgui-core/components';
+import { Section, Stack } from 'tgui-core/components';
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
@@ -10,33 +10,37 @@ import type { Gasmix } from './common/GasmixParser';
 import { GasmixParser } from './common/GasmixParser';
 
 export type GasAnalyzerData = {
-  gasmixes: Gasmix[];
+  gasmixes: Gasmix[] | null;
 };
 
-export const GasAnalyzerContent = (props) => {
-  const { act, data } = useBackend<GasAnalyzerData>();
+export const GasAnalyzerContent = () => {
+  const { data } = useBackend<GasAnalyzerData>();
   const { gasmixes } = data;
   const [setActiveGasId, setActiveReactionId] = atmosHandbookHooks();
   return (
-    <>
-      {gasmixes.map((gasmix) => (
-        <Section title={gasmix.name} key={gasmix.reference}>
-          <GasmixParser
-            gasmix={gasmix}
-            gasesOnClick={setActiveGasId}
-            reactionOnClick={setActiveReactionId}
-          />
-        </Section>
-      ))}
-      <AtmosHandbookContent vertical />
-    </>
+    <Stack vertical fill>
+      <Stack.Item>
+        {gasmixes?.map((gasmix) => (
+          <Section title={gasmix.name} key={gasmix.reference}>
+            <GasmixParser
+              gasmix={gasmix}
+              gasesOnClick={setActiveGasId}
+              reactionOnClick={setActiveReactionId}
+            />
+          </Section>
+        ))}
+      </Stack.Item>
+      <Stack.Item grow>
+        <AtmosHandbookContent />
+      </Stack.Item>
+    </Stack>
   );
 };
 
-export const GasAnalyzer = (props) => {
+export const GasAnalyzer = () => {
   return (
-    <Window width={500} height={450}>
-      <Window.Content scrollable>
+    <Window width={500} height={500}>
+      <Window.Content>
         <GasAnalyzerContent />
       </Window.Content>
     </Window>

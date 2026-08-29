@@ -148,7 +148,7 @@
 /obj/item/clothing/neck/tie/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	var/mob/living/carbon/human/wearer = loc
-	if(!ishuman(wearer) || !wearer.w_uniform)
+	if(!ishuman(wearer))
 		return
 	var/obj/item/clothing/under/undershirt = wearer.w_uniform
 	if(!istype(undershirt) || !LAZYLEN(undershirt.attached_accessories))
@@ -328,7 +328,7 @@
 				render_list += "<span class='danger ml-1'>You can't feel anything where [target.p_their()] appendix would be.</span>\n"
 				appendix_okay = FALSE
 			else
-				if(appendix.damage > 10 && carbon_patient.stat == CONSCIOUS)
+				if(appendix.damage > 10 && !IS_UNCONSCIOUS_OR_CRIT(carbon_patient))
 					render_list += "<span class='danger ml-1'>[target] screams when you lift your hand from [target.p_their()] appendix!</span>\n"//scream if their appendix is damaged and they're awake
 					target.emote("scream")
 					appendix_okay = FALSE
@@ -503,8 +503,8 @@
 	fire = 50
 	acid = 40
 
-/obj/item/clothing/neck/petcollar/mob_can_equip(mob/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE, indirect_action = FALSE)
-	if(!ismonkey(M) && !human_wearable)
+/obj/item/clothing/neck/petcollar/mob_can_equip(mob/mob, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE, indirect_action = FALSE)
+	if(!HAS_TRAIT(mob, TRAIT_LESSER_HUMANOID) && !human_wearable)
 		return FALSE
 	return ..()
 

@@ -17,7 +17,7 @@
 /datum/religion_rites/banish_nightmare/perform_rite(mob/living/user, atom/religious_tool)
 	var/has_nightmare = FALSE
 	for(var/mob/living/carbon/human/nightmare in get_turf(religious_tool))
-		if(isnightmare(nightmare))
+		if(HAS_TRAIT(nightmare, TRAIT_NIGHTMARISH))
 			has_nightmare = TRUE
 			break
 
@@ -37,7 +37,7 @@
 	var/favor = 0
 	var/give_heart = FALSE
 	for(var/mob/living/carbon/human/nightmare in get_turf(religious_tool))
-		if(!isnightmare(nightmare))
+		if(!HAS_TRAIT(nightmare, TRAIT_NIGHTMARISH))
 			continue
 
 		if(istype(nightmare.get_organ_slot(ORGAN_SLOT_HEART), /obj/item/organ/heart/nightmare))
@@ -84,7 +84,7 @@
 	healing_probability = 5
 	if(HAS_TRAIT(owner, TRAIT_DREAMING))
 		healing_probability += 7.5
-	if(owner.stat == UNCONSCIOUS)
+	if(IS_UNCONSCIOUS(owner))
 		healing_probability += 7.5
 	return ..()
 

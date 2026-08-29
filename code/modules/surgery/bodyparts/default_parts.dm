@@ -36,7 +36,7 @@
 	/// Offset to apply to equipment worn on the neck
 	var/datum/worn_feature_offset/worn_neck_offset
 	/// Which functional (i.e. flightpotion) wing types (if any) does this bodypart support? If count is >1 a radial menu is used to choose between all icons in list
-	var/list/wing_types = list(/obj/item/organ/wings/functional/angel)
+	var/list/wing_types = list(/obj/item/organ/wings/angel)
 
 /obj/item/bodypart/chest/apply_ownership(mob/living/carbon/new_owner)
 	. = ..()
@@ -44,16 +44,12 @@
 		var/mob/living/carbon/human/humie = new_owner
 		humie.update_mob_height()
 
-/obj/item/bodypart/chest/get_butcher_drops(force = FALSE)
+/obj/item/bodypart/chest/get_butcher_drops()
 	. = ..()
-	if(!isnull(butcher_drops) && !force)
-		return
 	var/datum/species/species = GLOB.species_list[species_id || limb_id]
-	if (!species || !species.skinned_type)
-		return
-	if (!islist(.))
-		. = list()
-	.[species.skinned_type] = 1
+	if (!isnull(species?.skinned_type))
+		. ||= list()
+		.[species.skinned_type] = 1
 
 /obj/item/bodypart/chest/grind_results()
 	return null
@@ -200,7 +196,7 @@
 	if(!.)
 		if(bodypart_disabled)
 			owner.set_usable_hands(owner.usable_hands - 1)
-			if(owner.stat < UNCONSCIOUS)
+			if(!IS_UNCONSCIOUS(owner))
 				to_chat(owner, span_userdanger("You lose control of your [plaintext_zone]!"))
 			if(held_index)
 				owner.dropItemToGround(owner.get_item_for_held_index(held_index))
@@ -427,7 +423,7 @@
 	if(!.)
 		if(bodypart_disabled)
 			owner.set_usable_legs(owner.usable_legs - 1)
-			if(owner.stat < UNCONSCIOUS)
+			if(!IS_UNCONSCIOUS(owner))
 				to_chat(owner, span_userdanger("You lose control of your [plaintext_zone]!"))
 	else if(!bodypart_disabled)
 		owner.set_usable_legs(owner.usable_legs + 1)

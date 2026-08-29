@@ -182,16 +182,10 @@
 	///A lazy list of atoms we've examined in the last RECENT_EXAMINE_MAX_WINDOW (default 2) seconds, so that we will call [/atom/proc/examine_more] instead of [/atom/proc/examine] on them when examining
 	var/list/recent_examines
 
-	var/atom/movable/screen/parallax_home/parallax_rock
-	///this is the last recorded client eye by SSparallax/fire()
-	var/atom/movable/movingmob
-	var/turf/previous_turf
-	///world.time of when we can state animate()ing parallax again
-	var/dont_animate_parallax
-	/// Direction our current area wants to move parallax
-	var/parallax_movedir = 0
-	/// Timers for the area directional animation, one for each layer
-	var/list/parallax_animate_timers
+	/// List of all the parallax instances we are currently displaying
+	var/list/atom/movable/screen/parallax_home/parallax_instances = list()
+	/// The parallax instance tied to our eye
+	var/atom/movable/screen/parallax_home/eye_parallax
 
 	///Are we locking our movement input?
 	var/movement_locked = FALSE
@@ -245,6 +239,8 @@
 
 	/// Loot panel for the client
 	var/datum/lootpanel/loot_panel
+
+	var/datum/admin_verb_panel/admin_verb_panel
 
 	///Which ambient sound this client is currently being provided.
 	var/current_ambient_sound

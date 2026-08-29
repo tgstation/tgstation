@@ -1,16 +1,23 @@
-import { useMemo } from 'react';
+import { useAtomValue } from 'jotai';
+import { useMemo, useRef } from 'react';
 import {
   Box,
   Button,
   ColorBox,
   Divider,
+  Dropdown,
+  Floating,
   Icon,
   Input,
+  Knob,
   Section,
   Stack,
   TextArea,
 } from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+
 import { chatRenderer } from '../chat/renderer';
+import { characterProfilesAtom, currentCharacterAtom } from '../game/atoms';
 import { WARN_AFTER_HIGHLIGHT_AMT } from './constants';
 import { useHighlights } from './use-highlights';
 
@@ -62,6 +69,15 @@ export function TextHighlightSettings(props) {
   );
 }
 
+const HIGHLIGHT_SOUND_OPTIONS = [
+  { label: 'Beep', value: 'sound/misc/highlight_sounds/Beep.ogg' },
+  { label: 'Pillow Hit', value: 'sound/items/pillow/pillow_hit.ogg' },
+  { label: 'Coin Flip', value: 'sound/items/coinflip.ogg' },
+  { label: 'Pen Click', value: 'sound/items/pen_click.ogg' },
+  { label: 'Rattling Keys', value: 'sound/items/rattling_keys.ogg' },
+  { label: 'Honk!', value: 'sound/items/bikehorn.ogg' },
+];
+
 const oneCharacterRegex = /^(\[.*\]|\\.|.)$/;
 
 function extractRegex(highlight: string): string | null {
@@ -92,7 +108,36 @@ function TextHighlightSetting(props) {
     highlightWholeMessage,
     matchWord,
     matchCase,
+    playSound,
+    soundFile,
+    soundVolume,
+    jobFilter,
+    characterFilter,
   } = highlightSettingById[id];
+  const currentCharacter = useAtomValue(currentCharacterAtom);
+  const characterProfiles = useAtomValue(characterProfilesAtom);
+  const jobsPopover = useRef<{ close: () => void }>(null);
+  const jobCount = jobFilter.split(',').filter((str) => str.trim()).length;
+
+  // Known characters plus any selected names no longer in the save slots,
+  // so stale selections stay visible and can be unchecked
+  const selectableCharacters = useMemo(() => {
+    const known = new Set([...characterProfiles, ...characterFilter]);
+    if (currentCharacter) {
+      known.add(currentCharacter);
+    }
+    return [...known];
+  }, [characterProfiles, characterFilter, currentCharacter]);
+
+  function toggleCharacter(name: string): void {
+    const draft = characterFilter.includes(name)
+      ? characterFilter.filter((entry) => entry !== name)
+      : [...characterFilter, name];
+    updateHighlight({
+      id,
+      characterFilter: draft,
+    });
+  }
 
   const highlightRegex = useMemo(
     () => extractRegex(highlightText),
@@ -125,13 +170,6 @@ function TextHighlightSetting(props) {
           >
             Enabled
           </Button.Checkbox>
-          <Button
-            color="transparent"
-            icon="times"
-            onClick={() => removeHighlight(id)}
-          >
-            Delete
-          </Button>
         </Stack.Item>
         <Stack.Item>
           <Button.Checkbox
@@ -177,6 +215,73 @@ function TextHighlightSetting(props) {
             Case
           </Button.Checkbox>
         </Stack.Item>
+
+        <Stack.Item>
+          <Button.Checkbox
+            checked={!!playSound}
+            tooltip="If this option is selected, a sound will play when the highlight is triggered."
+            onClick={() =>
+              updateHighlight({
+                id,
+                playSound: !playSound,
+              })
+            }
+          >
+            Sound
+          </Button.Checkbox>
+        </Stack.Item>
+
+        <Stack.Item>
+          <Box>
+            <Dropdown
+              width="160px"
+              options={HIGHLIGHT_SOUND_OPTIONS.map((option) => option.label)}
+              selected={
+                HIGHLIGHT_SOUND_OPTIONS.find(
+                  (option) => option.value === soundFile,
+                )?.label ?? 'Beep'
+              }
+              disabled={!playSound}
+              onSelected={(label) => {
+                const option = HIGHLIGHT_SOUND_OPTIONS.find(
+                  (item) => item.label === label,
+                );
+                if (!option) {
+                  return;
+                }
+                updateHighlight({
+                  id,
+                  soundFile: option.value,
+                });
+              }}
+            />
+          </Box>
+        </Stack.Item>
+
+        <Stack.Item>
+          <Knob
+            minValue={0}
+            maxValue={1}
+            value={soundVolume}
+            step={0.01}
+            stepPixelSize={1}
+            style={{
+              opacity: playSound ? 1 : 0.45,
+              pointerEvents: playSound ? 'auto' : 'none',
+            }}
+            format={(value) => `${toFixed(value * 100)}%`}
+            onChange={(_event, value) => {
+              if (!playSound) {
+                return;
+              }
+              updateHighlight({
+                id,
+                soundVolume: value,
+              });
+            }}
+          />
+        </Stack.Item>
+
         <Stack.Item>
           <ColorBox mr={1} color={highlightColor} />
           <Input
@@ -191,6 +296,86 @@ function TextHighlightSetting(props) {
               })
             }
           />
+        </Stack.Item>
+      </Stack>
+      <Stack mb={1} color="label" align="baseline">
+        <Stack.Item grow>
+          <Floating
+            placement="bottom-start"
+            contentClasses="Dropdown__menu--wrapper"
+            content={
+              <div className="Dropdown__menu">
+                {selectableCharacters.map((name) => (
+                  <div key={name}>
+                    <Button.Checkbox
+                      checked={characterFilter.includes(name)}
+                      onClick={() => toggleCharacter(name)}
+                    >
+                      {name}
+                    </Button.Checkbox>
+                  </div>
+                ))}
+                {selectableCharacters.length === 0 && (
+                  <Box p={0.5} fontSize="0.9em" color="label">
+                    No known characters yet.
+                    <br />
+                    Join the game once to fill this list.
+                  </Box>
+                )}
+              </div>
+            }
+          >
+            <Box inline>
+              <Button color="transparent" icon="user">
+                {characterFilter.length
+                  ? `Characters: ${characterFilter.length}`
+                  : 'Characters: all'}
+              </Button>
+            </Box>
+          </Floating>
+          <Floating
+            ref={jobsPopover}
+            placement="bottom-start"
+            contentClasses="Dropdown__menu--wrapper"
+            contentStyles={{ width: '20em' }}
+            content={
+              <div className="Dropdown__menu">
+                <Input
+                  fluid
+                  placeholder="Job titles, e.g. (Captain, Assistant)"
+                  value={jobFilter}
+                  onBlur={(value) =>
+                    updateHighlight({
+                      id,
+                      jobFilter: value,
+                    })
+                  }
+                  onEnter={(value) => {
+                    updateHighlight({
+                      id,
+                      jobFilter: value,
+                    });
+                    jobsPopover.current?.close();
+                  }}
+                />
+              </div>
+            }
+          >
+            <Box inline>
+              <Button color="transparent" icon="user-tag">
+                {jobCount ? `Jobs: ${jobCount}` : 'Jobs: all'}
+              </Button>
+            </Box>
+          </Floating>
+        </Stack.Item>
+        <Stack.Item>
+          <Button
+            color="transparent"
+            icon="times"
+            onClick={() => removeHighlight(id)}
+          >
+            Delete
+          </Button>
         </Stack.Item>
       </Stack>
       <TextArea
