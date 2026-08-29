@@ -80,16 +80,23 @@
 	var/turf/curloc = get_turf(fired_from)
 	if (!istype(targloc) || !istype(curloc) || !loaded_projectile)
 		return null
-
 	var/firing_dir
 	if(loaded_projectile.firer)
 		firing_dir = get_dir(fired_from, target)
 	if(!loaded_projectile.suppressed && firing_effect_type && !tk_firing(user, fired_from))
 		new firing_effect_type(user || get_turf(src), firing_dir)
-
 	var/direct_target
-	if(target && curloc.Adjacent(targloc, target=targloc, mover=src)) //if the target is right on our location or adjacent (including diagonally if reachable) we'll skip the travelling code in the proj's fire()
+	if(target && curloc.Adjacent(targloc, target=targloc, mover=src))
 		direct_target = target
+	// BANDASTATION EDIT START: Validate Z-level transition
+	var/atom/projectile_source = tk_firing(user, fired_from) ? fired_from : user
+	if(target && projectile_source)
+		var/turf/source_turf = get_turf(projectile_source)
+		var/turf/target_turf = get_turf(target)
+		if(source_turf && target_turf && source_turf.z != target_turf.z)
+			if(!loaded_projectile.is_valid_z_transition(source_turf, target_turf))
+				return null
+	// BANDASTATION EDIT END
 	loaded_projectile.aim_projectile(target, tk_firing(user, fired_from) ? fired_from : user, params2list(params), spread)
 	var/obj/projectile/loaded_projectile_cache = loaded_projectile
 	loaded_projectile = null
