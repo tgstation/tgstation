@@ -325,7 +325,7 @@
 /obj/item/spear/pillow/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
-	new /obj/effect/temp_visual/pillow_hit(get_turf(target_mob))
+	new /obj/effect/temp_visual/pillow_hit(get_turf(target))
 
 /obj/item/shield/mattress
 	name = "mattress shield"
@@ -346,7 +346,7 @@
 /obj/item/shield/mattress/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 
-	new /obj/effect/temp_visual/pillow_hit(get_turf(target_mob))
+	new /obj/effect/temp_visual/pillow_hit(get_turf(target))
 
 /obj/item/shield/mattress/dropped(mob/user, silent)
 	. = ..()
