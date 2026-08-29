@@ -734,6 +734,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait that makes you bite when attacking with an unarmed strike.
 #define TRAIT_FERAL_BITER "feral biter"
 
+/// Trait that makes you only SOMETIMES bite when attacking with an unarmed strike.
+#define TRAIT_REFINED_BITER "refined biter"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
