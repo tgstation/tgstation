@@ -553,46 +553,6 @@
 /// Used to seed the accesses_by_region list in SSid_access. A list of all CENTCOM_ACCESS regional accesses.
 #define REGION_ACCESS_CENTCOM CENTCOM_ACCESS
 
-/**
- * A list of PDA paths that can be painted as well as the regional heads which should be able to paint them.
- * If a PDA is not in this list, it cannot be painted using the PDA & ID Painter.
- * If a PDA is in this list, it can always be painted with ACCESS_CHANGE_IDS.
- * Used to see pda_region in [/datum/controller/subsystem/id_access/proc/setup_tgui_lists]
- */
-#define PDA_PAINTING_REGIONS list( \
-	/obj/item/modular_computer/pda/crew
-	/obj/item/modular_computer/pda/crew/clown
-	/obj/item/modular_computer/pda/crew/mime
-	/obj/item/modular_computer/pda/crew/medical
-	/obj/item/modular_computer/pda/crew/coroner
-	/obj/item/modular_computer/pda/crew/engineering
-	/obj/item/modular_computer/pda/crew/security
-	/obj/item/modular_computer/pda/crew/detective
-	/obj/item/modular_computer/pda/crew/warden
-	/obj/item/modular_computer/pda/crew/janitor
-	/obj/item/modular_computer/pda/crew/science
-	/obj/item/modular_computer/pda/crew/heads
-	/obj/item/modular_computer/pda/crew/heads/hop
-	/obj/item/modular_computer/pda/crew/heads/hos
-	/obj/item/modular_computer/pda/crew/heads/cmo
-	/obj/item/modular_computer/pda/crew/heads/ce
-	/obj/item/modular_computer/pda/crew/heads/rd
-	/obj/item/modular_computer/pda/crew/heads/captain
-	/obj/item/modular_computer/pda/crew/cargo
-	/obj/item/modular_computer/pda/crew/bitrunner
-	/obj/item/modular_computer/pda/crew/shaftminer
-	/obj/item/modular_computer/pda/crew/chaplain
-	/obj/item/modular_computer/pda/crew/lawyer
-	/obj/item/modular_computer/pda/crew/botanist
-	/obj/item/modular_computer/pda/crew/roboticist
-	/obj/item/modular_computer/pda/crew/curator
-	/obj/item/modular_computer/pda/crew/cook
-	/obj/item/modular_computer/pda/crew/bar
-	/obj/item/modular_computer/pda/crew/atmos
-	/obj/item/modular_computer/pda/crew/chemist
-	/obj/item/modular_computer/pda/crew/geneticist
-)
-
 /// All regions that make up the station area. Helper define to quickly designate a region as part of the station or not. Access via SSid_access.station_regions.
 #define REGION_AREA_STATION list( \
 	REGION_COMMAND, \
