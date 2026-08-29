@@ -271,12 +271,10 @@
 	/// If true directly targeted turfs can be hit
 	var/can_hit_turfs = FALSE
 
-	//BANDASTATION EDIT START: transitions between Z-levels
 	var/cross_z = FALSE
 	var/cross_z_up = FALSE
 	var/cross_z_target = 0
 	var/turf/cross_z_landing_turf
-	//BANDASTATION EDIT END
 
 /obj/projectile/Initialize(mapload)
 	. = ..()
@@ -1005,12 +1003,11 @@
 			step_towards(src, new_turf)
 			SEND_SIGNAL(src, COMSIG_PROJECTILE_MOVE_PROCESS_STEP)
 
-			// BANDASTATION EDIT START: Transitions between Z-levels
 			if(try_cross_z_level())
 				new_turf = loc
 			if(try_cross_z_level_up())
 				new_turf = loc
-			// BANDASTATION EDIT END
+
 			// We hit something and got deleted, stop the loop
 			if (QDELETED(src))
 				return movements_done
@@ -1269,7 +1266,6 @@
 	pixel_y = source.pixel_y - source.base_pixel_y
 	original = target
 
-	// BANDASTATION EDIT START: Z-level transitions
 	if(target_loc && target_loc.z != source_loc.z)
 		cross_z_landing_turf = target_loc
 		// Lower Z -> Upper Z
@@ -1286,7 +1282,6 @@
 			if(istype(cross_check_turf) && is_valid_cross_z_target(cross_check_turf))
 				cross_z = TRUE
 				cross_z_target = target_loc.z
-	// BANDASTATION EDIT END
 
 	// Trim off excess pixel_x/y by converting them into turf offset
 	if (abs(pixel_x) > ICON_SIZE_X / 2)
@@ -1462,7 +1457,6 @@
 
 	embed_data = new_embed
 
-//BANDASTATION EDIT START: Transitions between Z-levels
 /obj/projectile/proc/is_valid_cross_z_target(turf/T)
 	if(!T)
 		return FALSE
@@ -1552,4 +1546,4 @@
 		return FALSE
 	if(!is_near_z_open_space(target_upper))
 		return FALSE
-	return TRUE //BANDASTATION EDIT END
+	return TRUE
