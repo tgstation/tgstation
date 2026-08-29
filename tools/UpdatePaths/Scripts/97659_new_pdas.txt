@@ -32,3 +32,4 @@
 /obj/item/modular_computer/pda/chemist : /obj/item/modular_computer/pda/crew/chemist
 /obj/item/modular_computer/pda/geneticist : /obj/item/modular_computer/pda/crew/geneticist
 /obj/item/modular_computer/pda/psychologist : /obj/item/modular_computer/pda/crew/psychologist
+/obj/item/modular_computer/pda/assistant : /obj/item/modular_computer/pda/crew/assistant
