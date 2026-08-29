@@ -543,6 +543,7 @@
 			"id" = "[index]",
 			"icon" = "integrated_circuit",
 			"categories" = list("/Saved Circuits"),
+			"path" = index,
 		)
 		index++
 
