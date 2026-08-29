@@ -733,9 +733,15 @@
   - rscadd: Add reworked vending shortage negative station trait. All station snack,
       soda, and coffee vending machines start empty.
 2026-08-29:
+  FalloutFalcon:
+  - bugfix: sawnoff recoil is ADDED to existing recoil rather then setting it
+  - code_imp: Adds support for pre-sawnoff guns and cleans up sawnoff behavoir
   LemonInTheDark:
   - rscadd: Space parallax now works through cameras and other "external maps"
   - rscadd: Cameras and friends will no longer be incorrectly culled/shrunk when displaying
       a z level other then your own.
   - refactor: Fucked with how space parallax/the renderer thinks about "where" it
       is being displayed pretty heavily. Please report any weird visuals!
+  Melbert:
+  - rscadd: Adds two item acts - one to portable wind turbines, and one to propeller
+      hats - that does something when you act with the items. No spoilers.

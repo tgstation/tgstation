@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscadd: "Adds two item acts - one to portable wind turbines, and one to propeller hats - that does something when you act with the items. No spoilers."
