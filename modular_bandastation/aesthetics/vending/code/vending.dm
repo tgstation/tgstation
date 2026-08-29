@@ -6,7 +6,7 @@
 		/obj/item/clothing/head/hats/centcom_cap = 3,
 		/obj/item/clothing/head/hats/centhat = 3,
 		/obj/item/clothing/head/beret/cent_intern = 3,
-		/obj/item/clothing/head/helmet/space/beret = 3,
+		/obj/item/clothing/head/beret/centcom = 3,
 		/obj/item/clothing/under/rank/centcom/admiral = 3,
 		/obj/item/clothing/under/rank/centcom/commander = 3,
 		/obj/item/clothing/under/rank/centcom/centcom_skirt = 3,

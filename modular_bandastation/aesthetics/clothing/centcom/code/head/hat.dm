@@ -11,7 +11,7 @@
 	icon = 'modular_bandastation/aesthetics/clothing/centcom/icons/obj/clothing/head/hats.dmi'
 	worn_icon = 'modular_bandastation/aesthetics/clothing/centcom/icons/mob/clothing/head/hats.dmi'
 
-/obj/item/clothing/head/helmet/space/beret
+/obj/item/clothing/head/beret/centcom
 	name = "fleet officer's beret"
 	desc = "Стандартный берет офицера флота Нанотрейзен. Лёгкий и надежный."
 	greyscale_colors = "#323253#FFCE5B"

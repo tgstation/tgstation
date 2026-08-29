@@ -1,6 +1,12 @@
 #include "_prime_only.dm"
 
+#include "code/apex_outfit.dm"
 #include "code/fishing_portal_generator.dm"
+#include "code/khaaroot_survivor/ghost_disease.dm"
+#include "code/khaaroot_survivor/status_effect.dm"
+#include "code/khaaroot_survivor/viral_surge.dm"
+#include "code/khaaroot_survivor/khaaroot_hivemind.dm"
+#include "code/khaaroot_survivor/khaaroot_abilities.dm"
 
 #include "../_defines220/code/defines/bodycam.dm"
 #include "../~components/code/bodycam_camera.dm"

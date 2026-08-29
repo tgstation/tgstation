@@ -102,7 +102,7 @@
 	acid = 60
 	wound = 12
 
-/obj/item/clothing/head/helmet/space/beret/soo
+/obj/item/clothing/head/beret/centcom/soo
 	name = "special ops officer's beret"
 	desc = "Продвинутая версия стандартного офицерского берета. Выдерживает попадание аннигиляторной пушки. Проверять не стоит."
 	greyscale_colors = "#b72b2f#acacac"

@@ -1,8 +1,8 @@
-/obj/item/clothing/head/helmet/space/beret
+/obj/item/clothing/head/beret/centcom
 	name = "\improper CentCom officer's beret"
 	desc = "An armored beret commonly used by special operations officers. Uses advanced force field technology to protect the head from space."
-	icon = 'icons/map_icons/clothing/head/_head.dmi'
-	icon_state = "/obj/item/clothing/head/helmet/space/beret"
+	icon = 'icons/map_icons/clothing/head/beret.dmi'
+	icon_state = "/obj/item/clothing/head/beret/centcom"
 	post_init_icon_state = "beret_badge"
 	greyscale_config = /datum/greyscale_config/beret_badge
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
@@ -11,13 +11,17 @@
 	clothing_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | SNUG_FIT
 	flags_inv = /obj/item/clothing/head/beret::flags_inv
 	flags_cover = /obj/item/clothing/head/beret::flags_cover
+	interaction_flags_click = NEED_DEXTERITY
+	cold_protection = HEAD
+	min_cold_protection_temperature = SPACE_HELM_MIN_TEMP_PROTECT
+	heat_protection = HEAD
 	armor_type = /datum/armor/space_beret
 	strip_delay = 13 SECONDS
 	max_heat_protection_temperature = FIRE_IMMUNITY_MAX_TEMP_PROTECT
+	flash_protect = FLASH_PROTECTION_WELDER
+	equip_delay_other = 5 SECONDS
 	resistance_flags = FIRE_PROOF | ACID_PROOF
-	fishing_modifier = 0
 	hair_mask = /datum/hair_mask/standard_hat_middle
-	visor_dirt = null
 
 /datum/armor/space_beret
 	melee = 80

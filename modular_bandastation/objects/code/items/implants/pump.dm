@@ -71,9 +71,9 @@
 			REAGENT_AMOUNT = 4,
 			REAGENT_THRESHOLD = 16
 		),
-			/datum/reagent/medicine/salglu_solution = list(
+		/datum/reagent/iron = list(
 			REAGENT_AMOUNT = 10,
-			REAGENT_THRESHOLD = 50
+			REAGENT_THRESHOLD = 20
 		)
 	)
 

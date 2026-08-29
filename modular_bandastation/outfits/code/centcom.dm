@@ -23,7 +23,7 @@
 	ears = /obj/item/radio/headset/headset_cent/commander
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/soo
 	gloves = /obj/item/clothing/gloves/combat
-	head = /obj/item/clothing/head/helmet/space/beret/soo
+	head = /obj/item/clothing/head/beret/centcom/soo
 	mask = /obj/item/cigarette/cigar/havana
 	shoes = /obj/item/clothing/shoes/jackboots/centcom
 	r_pocket = /obj/item/lighter
@@ -77,7 +77,7 @@
 	ears = /obj/item/radio/headset/headset_cent/commander
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/centcom_officer
 	gloves = /obj/item/clothing/gloves/combat/centcom
-	head = /obj/item/clothing/head/helmet/space/beret
+	head = /obj/item/clothing/head/beret/centcom
 	mask = /obj/item/cigarette/cigar/cohiba
 	shoes = /obj/item/clothing/shoes/laceup
 	r_pocket = /obj/item/modular_computer/pda/heads/centcom
@@ -99,81 +99,13 @@
 	ears = /obj/item/radio/headset/headset_cent/commander
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses/centcom_officer
 	gloves = /obj/item/clothing/gloves/combat/centcom
-	head = /obj/item/clothing/head/helmet/space/beret
+	head = /obj/item/clothing/head/beret/centcom
 	mask = /obj/item/cigarette/cigar/cohiba
 	shoes = /obj/item/clothing/shoes/jackboots/centcom
 	r_pocket = /obj/item/modular_computer/pda/heads/centcom
 
 /datum/id_trim/centcom/commander/field
 	assignment = "Nanotrasen Navy Field Officer"
-
-/datum/outfit/centcom/commander/field/apex
-	name = "Apex Nanotrasen Navy Field Officer"
-	suit = null
-	mask = null
-	accessory = /obj/item/clothing/accessory/holster/tacticool/ert_gp93r
-	l_pocket = null
-	head = /obj/item/clothing/head/helmet/space/beret/soo
-	neck = /obj/item/clothing/neck/cloak/centcom/gr_cape
-	uniform = /obj/item/clothing/under/rank/centcom/gr_under
-	gloves = /obj/item/clothing/gloves/combat
-	backpack_contents = list(
-		/obj/item/storage/box/survival/centcom,
-		/obj/item/stamp/centcom,
-		/obj/item/door_remote/omni,
-		/obj/item/flashlight/seclite,
-		/obj/item/clothing/mask/gas/sechailer,
-		/obj/item/reagent_containers/hypospray/combat,
-		/obj/item/reagent_containers/spray/cleaner
-	)
-	implants = list(
-		/obj/item/implant/mindshield,
-		/obj/item/implant/freedom,
-		/obj/item/implant/empprotection
-	)
-
-/datum/outfit/centcom/commander/field/apex/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)
-	. = ..()
-
-	if(visuals_only)
-		return
-
-	// skills
-	var/datum/action/cooldown/spell/dodge_mode/dodge = new()
-	dodge.Grant(H)
-
-	// limbs
-	var/obj/item/bodypart/arm/left/strongarm/left_arm = new()
-	var/obj/item/bodypart/arm/right/strongarm/right_arm = new()
-	var/obj/item/bodypart/leg/left/strongleg/left_leg = new()
-	var/obj/item/bodypart/leg/right/strongleg/right_leg = new()
-
-	var/obj/item/bodypart/old_left_arm = H.get_bodypart(BODY_ZONE_L_ARM)
-	left_arm.replace_limb(H, TRUE)
-	qdel(old_left_arm)
-
-	var/obj/item/bodypart/old_right_arm = H.get_bodypart(BODY_ZONE_R_ARM)
-	right_arm.replace_limb(H, TRUE)
-	qdel(old_right_arm)
-
-	var/obj/item/bodypart/old_left_leg = H.get_bodypart(BODY_ZONE_L_LEG)
-	left_leg.replace_limb(H, TRUE)
-	qdel(old_left_leg)
-
-	var/obj/item/bodypart/old_right_leg = H.get_bodypart(BODY_ZONE_R_LEG)
-	right_leg.replace_limb(H, TRUE)
-	qdel(old_right_leg)
-
-	// cyberimps
-	var/list/implants_to_add = list(
-		/obj/item/organ/cyberimp/chest/pump/centcom,
-		/obj/item/organ/cyberimp/eyes/hud/security/shielded,
-		/obj/item/organ/cyberimp/chest/reviver,
-		/obj/item/organ/cyberimp/brain/anti_stun
-	)
-	for(var/imp_type in implants_to_add)
-		var/obj/item/organ/cyberimp/imp = new imp_type()
-		imp.Insert(H, special = TRUE)
 
 // CentCom Diplomat
 /datum/outfit/centcom/diplomat

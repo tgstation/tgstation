@@ -484,7 +484,7 @@
 	if(!istype(mod))
 		return
 	var/obj/item/clothing/helmet = mod.get_part_from_slot(ITEM_SLOT_HEAD)
-	var/obj/item/clothing/head/helmet/space/beret/beret = new(helmet)
+	var/obj/item/clothing/head/beret/centcom/beret = new(helmet)
 	var/datum/component/hat_stabilizer/component = helmet.GetComponent(/datum/component/hat_stabilizer)
 	component.attach_hat(beret)
 	squaddie.update_clothing(helmet.slot_flags)
