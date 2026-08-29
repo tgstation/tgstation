@@ -1,0 +1,4 @@
+author: "PetyaFX"
+delete-after: True
+changes:
+  - rscadd: "Для некоторых TTS голосов были изменены требования к донат-тиру."
