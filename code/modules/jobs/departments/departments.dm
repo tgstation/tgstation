@@ -85,6 +85,7 @@
 	display_order = 1
 	ui_color = "#fcd203"
 	primary_work_area = /area/station/command
+	department_access = REGION_ACCESS_COMMAND
 
 /datum/job_department/security
 	department_name = DEPARTMENT_SECURITY
@@ -187,7 +188,7 @@
 	department_delivery_areas = list(/area/station/hallway/secondary/service, /area/station/service/bar/atrium)
 	associated_cargo_groups = list("Service", "Food & Hydroponics", "Livestock", "Costumes & Toys")
 	head_of_staff_access = ACCESS_HOP
-	department_access = list(ACCESS_SERVICE)
+	department_access = REGION_ACCESS_GENERAL
 
 /datum/job_department/silicon
 	department_name = DEPARTMENT_SILICON
