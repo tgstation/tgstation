@@ -1,6 +1,0 @@
-author: "LemonInTheDark"
-delete-after: True
-changes:
-  - rscadd: "Space parallax now works through cameras and other \"external maps\""
-  - rscadd: "Cameras and friends will no longer be incorrectly culled/shrunk when displaying a z level other then your own."
-  - refactor: "Fucked with how space parallax/the renderer thinks about \"where\" it is being displayed pretty heavily. Please report any weird visuals!"

@@ -732,3 +732,10 @@
   timothymtorres:
   - rscadd: Add reworked vending shortage negative station trait. All station snack,
       soda, and coffee vending machines start empty.
+2026-08-29:
+  LemonInTheDark:
+  - rscadd: Space parallax now works through cameras and other "external maps"
+  - rscadd: Cameras and friends will no longer be incorrectly culled/shrunk when displaying
+      a z level other then your own.
+  - refactor: Fucked with how space parallax/the renderer thinks about "where" it
+      is being displayed pretty heavily. Please report any weird visuals!
