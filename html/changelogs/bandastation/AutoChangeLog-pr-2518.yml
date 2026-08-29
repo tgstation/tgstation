@@ -1,0 +1,10 @@
+author: "Fullonibus"
+delete-after: True
+changes:
+  - rscadd: "Добавлена система Khaaroot Survivor для Apex Field Officer."
+  - rscadd: "Добавлена способность Viral Surge."
+  - rscadd: "Добавлена псевдо-антагонистская система Khaaroot Hivemind."
+  - rscadd: "Добавлена болезнь-призрак Khaaroot Remnant Antigen."
+  - rscadd: "Добавлен TGUI-интерфейс KhaarootHivemind для управления ульем."
+  - bugfix: "Исправлена ошибка с исчезновением беретов цк при переходе на другой z уровень."
+  - balance: "Заменена салин-глюкоза на железо в цк помпе."
