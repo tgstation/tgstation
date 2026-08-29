@@ -1,6 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - rscadd: "Fangs, which now handle the functionality of pseudo-fang tongues. Felinids, lizardpeople, vampires, carp-infused and stout-infused people now have their own fangs."
-  - code_imp: "Vampire fangs now handle all vampire blood-draining effects."
-  - rscadd: "Cybernetic fangs, unlocked via the Cybernetics tech node."

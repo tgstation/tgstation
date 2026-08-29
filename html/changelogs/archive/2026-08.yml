@@ -736,6 +736,7 @@
   FalloutFalcon:
   - bugfix: sawnoff recoil is ADDED to existing recoil rather then setting it
   - code_imp: Adds support for pre-sawnoff guns and cleans up sawnoff behavoir
+  - image: landmarks for job icons refreshed with programmatic generation
   LemonInTheDark:
   - rscadd: Space parallax now works through cameras and other "external maps"
   - rscadd: Cameras and friends will no longer be incorrectly culled/shrunk when displaying
@@ -745,3 +746,9 @@
   Melbert:
   - rscadd: Adds two item acts - one to portable wind turbines, and one to propeller
       hats - that does something when you act with the items. No spoilers.
+  necromanceranne:
+  - rscadd: Fangs, which now handle the functionality of pseudo-fang tongues. Felinids,
+      lizardpeople, vampires, carp-infused and stout-infused people now have their
+      own fangs.
+  - code_imp: Vampire fangs now handle all vampire blood-draining effects.
+  - rscadd: Cybernetic fangs, unlocked via the Cybernetics tech node.
