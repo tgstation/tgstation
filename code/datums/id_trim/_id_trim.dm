@@ -14,6 +14,8 @@
 	var/assignment
 	/// The name of the job for interns. If unset it will default to "[assignment] (Intern)".
 	var/intern_alt_name = null
+	/// The dmi icon file associated with this trim, as it will show on the security HUD.
+	var/sechud_icon = DEFAULT_HUDS_DMI
 	/// The icon_state associated with this trim, as it will show on the security HUD.
 	var/sechud_icon_state = SECHUD_UNKNOWN
 	/// How threatened does a security bot feel when scanning this ID? A negative value may cause them to forgive things which would otherwise cause aggro.
@@ -35,6 +37,13 @@
 
 /datum/id_trim/proc/find_job()
 	return null
+
+/// Returns the SecHUD job icon state for whatever this object's ID card is, if it has one.
+/obj/item/proc/get_sechud_job_icon()
+	var/obj/item/card/id/id_card = GetID()
+
+	return id_card?.get_trim_sechud_icon() || DEFAULT_HUDS_DMI
+
 
 /// Returns the SecHUD job icon state for whatever this object's ID card is, if it has one.
 /obj/item/proc/get_sechud_job_icon_state()

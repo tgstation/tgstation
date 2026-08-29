@@ -57,9 +57,6 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	///Icon-smoothing variable to map a diagonal wall corner with a fixed underlay.
 	var/list/fixed_underlay = null
 
-	///Lumcount added by sources other than lighting datum objects, such as the overlay lighting component.
-	var/dynamic_lumcount = 0
-
 	///Bool, whether this turf will always be illuminated no matter what area it is in
 	///Makes it look blue, be warned
 	var/space_lit = FALSE
@@ -518,10 +515,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(L && (L.flags_1 & INITIALIZED_1))
 		qdel(L)
 
-/turf/proc/Bless()
-	if(locate(/obj/effect/blessing) in src)
-		return
-	new /obj/effect/blessing(src)
+/turf/proc/bless_turf(invisible = FALSE)
+	if(!HAS_TRAIT(src, TRAIT_TURF_BLESSED))
+		AddElement(/datum/element/blessed_turf, invisible)
 
 //////////////////////////////
 //Distance procs
@@ -634,10 +630,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Check if the heretic is strong enough to rust this turf, and if so, rusts the turf with an added visual effect.
 /turf/rust_heretic_act(rust_strength = RUST_RESISTANCE_BASIC)
 	if((rust_strength < rust_resistance))
-		return
+		return FALSE
 
 	if (rust_turf(magic = TRUE))
 		new /obj/effect/glowing_rune(src)
+		return TRUE
+	return FALSE
 
 /// Override this to change behaviour when being rusted
 /turf/proc/rust_turf(magic = FALSE)

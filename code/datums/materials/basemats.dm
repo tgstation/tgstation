@@ -77,7 +77,7 @@
 	if(isobj(source) && !isstack(source) && (source.material_flags & MATERIAL_AFFECT_STATISTICS))
 		source.RemoveElement(/datum/element/can_shatter, shard_type, round(mat_amount / SHEET_MATERIAL_AMOUNT * multiplier), SFX_SHATTER)
 
-/// Has no special properties. Could be good against vampires in the future perhaps.
+/// Gives weapons an edge against vampires and possibly other mobs with the UNHOLY_BANEABLE trait.
 /datum/material/silver
 	name = "silver"
 	desc = "A precious metal known for being hated by oversized bats and dogs."
@@ -91,7 +91,7 @@
 		MATERIAL_ELECTRICAL = 9,
 		MATERIAL_THERMAL = 4,
 		MATERIAL_CHEMICAL = 4,
-		MATERIAL_VAMPIRES_BANE = 8,
+		MATERIAL_UNHOLY_BANE = 8,
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	ore_type = /obj/item/stack/ore/silver
@@ -516,7 +516,7 @@
 /// RPG Magic.
 /datum/material/mythril
 	name = "mythril"
-	desc = "How this even exists is byond me"
+	desc = "How this even exists is byond me."
 	color = "#f2d5d7"
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
 	mat_properties = list(
@@ -557,7 +557,7 @@
 //formed when freon react with o2, emits a lot of plasma when heated
 /datum/material/hot_ice
 	name = "hot ice"
-	desc = "A weird kind of ice, feels warm to the touch"
+	desc = "A crystalline solid formed when Freon reacts with Oxygen. Extremely flammable, and will easily combust when exposed to heat."
 	color = "#88cdf1"
 	alpha = 150
 	starlight_color = COLOR_BLUE_LIGHT
@@ -587,8 +587,8 @@
 
 // It's basically adamantine, but it isn't!
 /datum/material/metalhydrogen
-	name = "Metal Hydrogen"
-	desc = "Solid metallic hydrogen. Some say it should be impossible"
+	name = "metal hydrogen"
+	desc = "Hydrogen in a metallic state, formed under extreme pressure. Some say achieving this state is impossible."
 	color = "#62708A"
 	starlight_color = COLOR_MODERATE_BLUE
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
@@ -868,7 +868,7 @@
 
 /datum/material/zaukerite
 	name = "zaukerite"
-	desc = "A light absorbing crystal"
+	desc = "A light absorbing crystal formed out of Zauker. Vaguely toxic, like the gas itself."
 	color = COLOR_ALMOST_BLACK
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_RIGID
 	mat_properties = list(

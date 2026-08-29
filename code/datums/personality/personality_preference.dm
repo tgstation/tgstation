@@ -5,7 +5,7 @@
 	randomize_by_default = FALSE
 	should_update_preview = FALSE
 
-/datum/preference/personality/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/personality/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	if(isdummy(target) || !ishuman(target) || isnull(target.mob_mood))
 		return
 	if(CONFIG_GET(flag/disable_human_mood) || !CONFIG_GET(flag/roundstart_traits))

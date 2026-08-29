@@ -3,12 +3,18 @@
 	button_icon = 'icons/mob/actions/actions_slime.dmi'
 	background_icon_state = "bg_alien"
 	overlay_icon_state = "bg_alien_border"
+	transparent_when_unavailable = FALSE
 	///Does the ability require a specific slime lifestage?
 	var/life_stage_required
 	///Does the ability requires the slime to hit max growth?
 	var/needs_growth = FALSE
 	///Does the ability cost nutrition?
 	var/nutrition_cost = 0
+
+/datum/action/innate/slime/create_button(mob/viewer)
+	var/atom/movable/screen/movable/action_button/button = ..()
+	button.maptext_x = 2
+	return button
 
 /datum/action/innate/slime/IsAvailable(feedback = FALSE)
 	. = ..()
@@ -37,13 +43,26 @@
 	needs_growth = TRUE
 	nutrition_cost = SLIME_EVOLUTION_COST
 
+/datum/action/innate/slime/evolve/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
+	. = ..()
+	var/mob/living/basic/slime/slime_owner = owner
+	if(!isnull(life_stage_required) && slime_owner.life_stage != life_stage_required)
+		button.maptext = ""
+		return
+	button.maptext = MAPTEXT_TINY_UNICODE("[slime_owner.amount_grown]/[SLIME_EVOLUTION_THRESHOLD]")
+
 ///Turns a baby slime into an adult slime
 /datum/action/innate/slime/evolve/Activate()
-	var/mob/living/basic/slime/slime_owner = owner
+	if(IS_UNCONSCIOUS_OR_CRIT(owner))
+		if(owner.stat == DEAD)
+			owner.balloon_alert(owner, "dead!")
+		else if(IS_UNCONSCIOUS(owner))
+			owner.balloon_alert(owner, "unconscious!")
+		else
+			owner.balloon_alert(owner, "in critical!")
+		return FALSE
 
-	if(slime_owner.stat)
-		slime_owner.balloon_alert(slime_owner, "unconscious!")
-		return
+	var/mob/living/basic/slime/slime_owner = owner
 	if(slime_owner.life_stage == SLIME_LIFE_STAGE_ADULT)
 		slime_owner.balloon_alert(slime_owner, "already adult!")
 		return
@@ -71,6 +90,14 @@
 	life_stage_required = SLIME_LIFE_STAGE_ADULT
 	needs_growth = TRUE
 
+/datum/action/innate/slime/reproduce/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
+	. = ..()
+	var/mob/living/basic/slime/slime_owner = owner
+	if(!isnull(life_stage_required) && slime_owner.life_stage != life_stage_required)
+		button.maptext = ""
+		return
+	button.maptext = MAPTEXT_TINY_UNICODE("[slime_owner.amount_grown]/[SLIME_EVOLUTION_THRESHOLD]")
+
 /datum/action/innate/slime/reproduce/Activate()
 	var/mob/living/basic/slime/slime_owner = owner
 	slime_owner.reproduce()
@@ -78,9 +105,14 @@
 ///Splits the slime into multiple children if possible
 /mob/living/basic/slime/proc/reproduce()
 
-	if(stat != CONSCIOUS)
-		balloon_alert(src, "not conscious!")
-		return
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
+		if(stat == DEAD)
+			balloon_alert(src, "dead!")
+		else if(IS_UNCONSCIOUS(src))
+			balloon_alert(src, "unconscious!")
+		else
+			balloon_alert(src, "in critical!")
+		return FALSE
 
 	if(!isopenturf(loc))
 		balloon_alert(src, "not here!")
@@ -132,6 +164,8 @@
 		if(ckey) // Player slimes are more robust at spliting. Once an oversight of poor copypasta, now a feature!
 			baby.set_nutrition(new_nutrition)
 		baby.powerlevel = new_powerlevel
+		var/atom/movable/screen/slime_power/power_hud = baby.hud_used?.screen_objects[HUD_MOB_SLIME_POWER]
+		power_hud?.update_maptext()
 		if(mutation_chance)
 			baby.mutation_chance = clamp(mutation_chance + rand(-5, 5), 0, 100)
 		else

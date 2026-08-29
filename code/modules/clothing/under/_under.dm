@@ -386,6 +386,7 @@
 	// Remove it from the list before detaching
 	LAZYREMOVE(attached_accessories, removed)
 	removed.detach(src, update)
+	update_appearance()
 
 /// Get a list of all accessory overlays
 /obj/item/clothing/under/proc/get_accessory_overlays()

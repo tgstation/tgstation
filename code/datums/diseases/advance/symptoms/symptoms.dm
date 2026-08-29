@@ -24,12 +24,10 @@
 	var/id = ""
 	///Base chance of sending warning messages, so it can be modified
 	var/base_message_chance = 10
-	///If the early warnings are suppressed or not
-	var/suppress_warning = FALSE
 	///Ticks between each activation
 	var/next_activation = 0
-	var/symptom_delay_min = 1
-	var/symptom_delay_max = 1
+	var/symptom_delay = 1 // Measured in seconds, not ticks or life ticks
+	var/delay_variation = 0.25 // Anywhere from -25% to +25%
 	///Can be used to multiply virus effects
 	var/power = 1
 	///A neutered symptom has no effect, and only affects statistics.
@@ -45,6 +43,8 @@
 	var/cure_color = "green"
 	///A remedied symptom has no effect and contributes to the cure
 	var/remedied = FALSE
+	///Whether or not mobs can gain immunity to this symptom after recovering from a disease with it
+	var/immunity_proof = FALSE
 
 /datum/symptom/New()
 	var/list/S = SSdisease.list_symptoms
@@ -55,9 +55,11 @@
 	CRASH("We couldn't assign an ID!")
 
 ///Called when processing of the advance disease that holds this symptom infects a host and upon each Refresh() of that advance disease.
-/datum/symptom/proc/Start(datum/disease/advance/A)
+/datum/symptom/proc/Start(datum/disease/advance/advanced_disease)
 	if(neutered)
 		return FALSE
+	if(name in advanced_disease.affected_mob.symptom_resistances)
+		symptom_delay *= 1.75
 	return TRUE
 
 ///Called when the advance disease is going to be deleted or when the advance disease stops processing.
@@ -80,7 +82,7 @@
 	if(world.time < next_activation)
 		return FALSE
 	else
-		next_activation = world.time + rand(symptom_delay_min * 10, symptom_delay_max * 10)
+		next_activation = world.time + rand(symptom_delay * (1 - delay_variation) SECONDS, symptom_delay * (1 + delay_variation) SECONDS) * DISEASE_SYMPTOM_FREQUENCY_MODIFIER
 		return TRUE
 
 /datum/symptom/proc/on_stage_change(datum/disease/advance/A)

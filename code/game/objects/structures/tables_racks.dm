@@ -29,7 +29,7 @@
 	smoothing_flags = SMOOTH_BITMASK
 	smoothing_groups = SMOOTH_GROUP_TABLES
 	canSmoothWith = SMOOTH_GROUP_TABLES
-	var/static/list/turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY, TRAIT_IMMERSE_STOPPED)
+	var/static/list/turf_traits = list(TRAIT_TURF_IGNORE_SLOWDOWN, TRAIT_TURF_IGNORE_SLIPPERY, TRAIT_IMMERSE_STOPPED, TRAIT_TURF_PROJECTS_WHISPERS)
 	///a bit fucky, I know. but this is needed to get sorted on init smoothing groups stored
 	var/list/on_init_smoothed_vars
 	var/frame = /obj/structure/table_frame
@@ -89,7 +89,7 @@
 		return
 
 	make_climbable()
-	AddElement(/datum/element/give_turf_traits, string_list(turf_traits))
+	AddElement(/datum/element/give_turf_traits, turf_traits)
 	AddElement(/datum/element/footstep_override, priority = STEP_SOUND_TABLE_PRIORITY)
 	AddElement(/datum/element/table_smash, gentle_push = slam_gently, after_smash_proccall = PROC_REF(after_smash))
 
@@ -631,7 +631,7 @@
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/table/wood/after_smash(mob/living/smashed_onto)
-	if(QDELETED(src) || prob(66))
+	if(QDELETED(src) || QDELETED(smashed_onto) || prob(66))
 		return
 	visible_message(
 		span_warning("[src] smashes into bits!"),
@@ -1468,7 +1468,7 @@
 		return
 	building = TRUE
 	to_chat(user, span_notice("You start constructing a rack..."))
-	if(do_after(user, 5 SECONDS, target = user, progress=TRUE))
+	if(do_after(user, 5 SECONDS, target = user))
 		if(!user.temporarilyRemoveItemFromInventory(src))
 			return
 		var/obj/structure/rack/R = new /obj/structure/rack(get_turf(src))

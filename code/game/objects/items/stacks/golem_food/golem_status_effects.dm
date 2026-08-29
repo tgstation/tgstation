@@ -20,6 +20,12 @@
 	var/alert_desc = "Something went wrong and this tooltip is not displaying correctly."
 	/// If we are not a golem what color does the filter glow?
 	var/filter_color = LIGHT_COLOR_DEFAULT
+	/// If TRUE, then this status effect is exclusive to other golem status effects and cannot be stacked with them.
+	var/exclusive = TRUE
+	/// For mobs with bodyparts, used to calculate the overall duration based on how many BIO_STONE bodyparts the mob has.
+	var/duration_mult_per_bodypart = 0.15 // 0.1 + (0.15 * 6 bodyparts) = 1
+	/// The minimum duration if the mob has no BIO_STONE bodypart
+	var/minimum_duration_mult = 0.1
 
 /atom/movable/screen/alert/status_effect/golem_status
 	name = "Metamorphic %SOMETHING%"
@@ -65,60 +71,83 @@
 	QDEL_NULL(mineral_overlay)
 	return ..()
 
+///If we find 3 or more golem parts, then we can say that the status effect overlays are noticeable enough, so we won't need the outline filter.
+#define MAX_GOLEM_PARTS_FOUND_FOR_FILTER 2
+
 /datum/status_effect/golem/on_apply()
 	. = ..()
-	if (!ishuman(owner))
-		return FALSE
-	if (owner.has_status_effect(/datum/status_effect/golem))
+	if (owner.has_status_effect(type)) //the initial id of the type will be checked. Make sure to override it if not exclusive
 		return FALSE
 	if (applied_fluff)
 		to_chat(owner, span_notice(applied_fluff))
-	if (!overlay_state_prefix || !iscarbon(owner))
-		return TRUE
 
-	if(isgolem(owner))
-		var/mob/living/carbon/golem_owner = owner
-		for (var/obj/item/bodypart/part in golem_owner.get_bodyparts())
+	if (overlay_state_prefix)
+		var/golem_parts_found = 0
+		for (var/obj/item/bodypart/part as anything in owner.get_bodyparts())
 			// these overlays won't look good on anything but golem limbs
 			if (part.limb_id != SPECIES_GOLEM)
 				continue
 			var/datum/bodypart_overlay/simple/golem_overlay/overlay = new()
 			overlay.add_to_bodypart(overlay_state_prefix, part)
 			active_overlays += overlay
-		golem_owner.update_body_parts()
-	else
+			golem_parts_found++
+		if(golem_parts_found)
+			var/mob/living/carbon/golem_owner = owner
+			golem_owner.update_body_parts()
+			if(golem_parts_found > MAX_GOLEM_PARTS_FOUND_FOR_FILTER)
+				return TRUE
+
+	if(filter_color)
 		owner.add_filter("[id]_filter", 2, outline_filter("color" = filter_color, "size" = 1.25))
 		var/the_filter = owner.get_filter("[id]_filter")
 		animate(the_filter, alpha = 0) // start at 0 alpha
 		animate(the_filter, alpha = 150, time = 7.5 SECONDS, loop = -1, easing = SINE_EASING) // fade in and out
 		animate(alpha = 50, time = 7.5 SECONDS, loop = -1, easing = SINE_EASING)
+
 	return TRUE
+
+#undef MAX_GOLEM_PARTS_FOUND_FOR_FILTER
 
 /datum/status_effect/golem/on_creation(mob/living/new_owner, multiplier = 1)
 	///instead of straight out multiplying the duration, we use exponents to flatten the duration so it doesn't become exceedingly long for golems
-	var/exponent = 0.2
-	if(!isgolem(new_owner))
-		duration *= 0.1
-		exponent = 0.5 //non-golem benefit more from higher multipliers since it normally only lasts for 30 seconds for them.
+	var/exponent = 0.5
+	var/duration_mult = minimum_duration_mult
+	if(iscarbon(new_owner))
+		//increase the duration for each stone bodypart, while reducing the benefit of higher multipliers in relation to the inscreased duration
+		duration_mult = 0.1
+		for(var/obj/item/bodypart/part as anything in new_owner.get_bodyparts())
+			if(part.biological_state & BIO_STONE)
+				duration_mult += duration_mult_per_bodypart // should be 1 at 6 stone-y bodyparts
+				exponent = max(0.2, exponent - 0.05) // 0.2 at 6 bodyparts
+	else if(new_owner.mob_biotypes & MOB_MINERAL)
+		exponent = 0.2
+		duration_mult = 1
 	if(multiplier > 1)
-		duration *= multiplier ** exponent
+		duration *= (duration_mult * multiplier) ** exponent
 	else // if the multiplier is lower than 1, don't bother using powers.
-		duration *= multiplier
+		duration *= duration_mult * multiplier
 	var/buff_duration = duration
 	. = ..()
 	if (!.)
 		return .
 	var/atom/movable/screen/alert/status_effect/golem_status/status_alert = linked_alert
 	status_alert?.update_details(buff_time = buff_duration)
+	RegisterSignal(new_owner, SIGNAL_REMOVETRAIT(TRAIT_ROCK_METAMORPHIC), PROC_REF(on_metamorphic_lost))
+
+/datum/status_effect/golem/proc/on_metamorphic_lost()
+	SIGNAL_HANDLER
+	qdel(src)
 
 /datum/status_effect/golem/on_remove()
-	to_chat(owner, span_warning("The effect of the [mineral_name] fades."))
+	if(mineral_name)
+		to_chat(owner, span_warning("The effect of the [mineral_name] fades."))
 	QDEL_LIST(active_overlays)
 	owner.remove_filter("[id]_filter")
 	return ..()
 
-/datum/status_effect/golem/get_examine_text()
-	return span_notice("[owner.p_Their()] body has been augmented with veins of [mineral_name].")
+/datum/status_effect/golem/get_examine_text(mob/examiner)
+	if(mineral_name)
+		return span_notice("[owner.p_Their()] body has been augmented with veins of [mineral_name].")
 
 /// Body part overlays applied by golem status effects
 /datum/bodypart_overlay/simple/golem_overlay
@@ -468,23 +497,22 @@
 
 #define LIGHTBULB_FILTER "filter_lightbulb_glow"
 
-/// Lights up the golem, NOT using the golem subtype because it is not exclusive with other status effects
-/datum/status_effect/golem_lightbulb
+/datum/status_effect/golem/lightbulb
 	id = "golem_lightbulb"
 	status_type = STATUS_EFFECT_REFRESH
 	duration = 2 MINUTES
 	alert_type = null
+	overlay_state_prefix = null
+	filter_color = null
+	exclusive = FALSE
+	duration_mult_per_bodypart = 0.11 // 0.34 + (0.11 * 6 bodyparts) = 1
+	minimum_duration_mult = 0.34
 	var/glow_range = 3
 	var/glow_power = 1
 	var/glow_color = LIGHT_COLOR_DEFAULT
 	var/obj/effect/dummy/lighting_obj/moblight/lightbulb
 
-/datum/status_effect/golem_lightbulb/on_creation(mob/living/new_owner, ...)
-	if(!isgolem(new_owner))
-		duration *= 0.3
-	return ..()
-
-/datum/status_effect/golem_lightbulb/on_apply()
+/datum/status_effect/golem/lightbulb/on_apply()
 	. = ..()
 	if (!.)
 		return
@@ -492,7 +520,7 @@
 	lightbulb = owner.mob_light(glow_range, glow_power, glow_color)
 	owner.add_filter(LIGHTBULB_FILTER, 2, list("type" = "outline", "color" = glow_color, "alpha" = 60, "size" = 1))
 
-/datum/status_effect/golem_lightbulb/on_remove()
+/datum/status_effect/golem/lightbulb/on_remove()
 	QDEL_NULL(lightbulb)
 	owner.remove_filter(LIGHTBULB_FILTER)
 	to_chat(owner, span_warning("Your glow fades."))

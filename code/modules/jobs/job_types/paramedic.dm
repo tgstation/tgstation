@@ -37,6 +37,7 @@
 	)
 	rpg_title = "Corpse Runner"
 	job_flags = STATION_JOB_FLAGS
+	tgui_icon = FA_ICON_TRUCK_MEDICAL
 
 
 /datum/outfit/job/paramedic
@@ -67,6 +68,8 @@
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = /obj/item/gun/syringe
 	pda_slot = ITEM_SLOT_LPOCKET
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/medical/paramedic
 
 /datum/outfit/job/doctor/mod
 	name = "Paramedic (MODsuit)"

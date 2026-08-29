@@ -181,11 +181,13 @@
 	if(!Adjacent(user)) //Make sure user is adjacent still.
 		to_chat(user, span_warning("You need to stand next to the sign to change it!"))
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(span_notice("You begin changing [src]."))
+	user.visible_message(span_notice("[user] begins changing [src]."), \
+						span_notice("You begin changing [src]."))
 	if(!do_after(user, 4 SECONDS, target = src))
 		return ITEM_INTERACT_BLOCKING
 	set_sign_type(GLOB.editable_sign_types[choice])
-	user.visible_message(span_notice("You finish changing the sign."))
+	user.visible_message(span_notice("[user] finishes changing the sign."), \
+						span_notice("You finish changing the sign."))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/sign/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)

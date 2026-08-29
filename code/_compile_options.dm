@@ -149,14 +149,7 @@
 #endif // 1 to use the default behaviour;
 								// 2 for preloading absolutely everything;
 
-#ifdef LOWMEMORYMODE
-#ifndef ABSOLUTE_MINIMUM
-#define FORCE_MAP "runtimestation"
-#else
-#define FORCE_MAP "runtimestation_minimal"
-#endif
 #define FORCE_MAP_DIRECTORY "_maps"
-#endif
 
 //Additional code for the above flags.
 #ifdef TESTING

@@ -13,7 +13,7 @@
 			/* PRIORITY_FIRE = */ list()
 		)
 
-	for(var/datum/gas_reaction/reaction as anything in subtypesof(/datum/gas_reaction))
+	for(var/datum/gas_reaction/standard/reaction as anything in subtypesof(/datum/gas_reaction/standard))
 		if(initial(reaction.exclude))
 			continue
 		reaction = new reaction
@@ -40,6 +40,13 @@
 	return priority_reactions
 
 /datum/gas_reaction
+	abstract_type = /datum/gas_reaction
+	/// Name of the reaction
+	var/name = "reaction"
+	/// A short string describing this reaction.
+	var/desc
+	/// ID of the reaction
+	var/id = "r"
 	/**
 	 * Regarding the requirements list: the minimum or maximum requirements must be non-zero.
 	 * When in doubt, use MINIMUM_MOLE_COUNT.
@@ -47,16 +54,6 @@
 	 * More complex implementations will require modifications to gas_mixture.react()
 	 */
 	var/list/requirements
-	var/major_gas //the highest rarity gas used in the reaction.
-	var/exclude = FALSE //do it this way to allow for addition/removal of reactions midmatch in the future
-	///The priority group this reaction is a part of. You can think of these as processing in batches, put your reaction into the one that's most fitting
-	var/priority_group
-	var/name = "reaction"
-	var/id = "r"
-	/// Whether the presence of our reaction should make fires bigger or not.
-	var/expands_hotspot = FALSE
-	/// A short string describing this reaction.
-	var/desc
 	/** REACTION FACTORS
 	 *
 	 * Describe (to a human) factors influencing this reaction in an assoc list format.
@@ -69,16 +66,26 @@
 	 */
 	var/list/factor
 
-/datum/gas_reaction/New()
+/datum/gas_reaction/standard
+	abstract_type = /datum/gas_reaction/standard
+	var/major_gas //the highest rarity gas used in the reaction.
+	var/exclude = FALSE //do it this way to allow for addition/removal of reactions midmatch in the future
+	///The priority group this reaction is a part of. You can think of these as processing in batches, put your reaction into the one that's most fitting
+	var/priority_group
+	/// Whether the presence of our reaction should make fires bigger or not.
+	var/expands_hotspot = FALSE
+
+/datum/gas_reaction/standard/New()
+	. = ..()
 	init_reqs()
 	init_factors()
 
-/datum/gas_reaction/proc/init_reqs() // Override this
+/datum/gas_reaction/standard/proc/init_reqs() // Override this
 	CRASH("Reaction [type] made without specifying requirements.")
 
-/datum/gas_reaction/proc/init_factors()
+/datum/gas_reaction/standard/proc/init_factors()
 
-/datum/gas_reaction/proc/react(datum/gas_mixture/air, atom/location)
+/datum/gas_reaction/standard/proc/react(datum/gas_mixture/air, atom/location)
 	return NO_REACTION
 
 
@@ -88,19 +95,19 @@
  * Makes turfs slippery.
  * Can frost things if the gas is cold enough.
  */
-/datum/gas_reaction/water_vapor
+/datum/gas_reaction/standard/water_vapor
 	priority_group = PRIORITY_POST_FORMATION
 	name = "Water Vapor Condensation"
 	id = "vapor"
-	desc = "Water vapor condensation that can make things slippery."
+	desc = "Water Vapor condensation that may make things slippery."
 
-/datum/gas_reaction/water_vapor/init_reqs()
+/datum/gas_reaction/standard/water_vapor/init_reqs()
 	requirements = list(
 		/datum/gas/water_vapor = MOLES_GAS_VISIBLE,
 		"MAX_TEMP" = WATER_VAPOR_CONDENSATION_POINT,
 	)
 
-/datum/gas_reaction/water_vapor/react(datum/gas_mixture/air, datum/holder)
+/datum/gas_reaction/standard/water_vapor/react(datum/gas_mixture/air, datum/holder)
 	. = NO_REACTION
 	if(!isturf(holder))
 		return
@@ -130,19 +137,19 @@
  *
  * Clears out pathogens in the air.
  */
-/datum/gas_reaction/miaster
+/datum/gas_reaction/standard/miaster
 	priority_group = PRIORITY_POST_FORMATION
 	name = "Dry Heat Sterilization"
 	id = "sterilization"
 	desc = "Pathogens cannot survive in a hot environment. Miasma decomposes on high temperature."
 
-/datum/gas_reaction/miaster/init_reqs()
+/datum/gas_reaction/standard/miaster/init_reqs()
 	requirements = list(
 		/datum/gas/miasma = MINIMUM_MOLE_COUNT,
 		"MIN_TEMP" = MIASTER_STERILIZATION_TEMP,
 	)
 
-/datum/gas_reaction/miaster/react(datum/gas_mixture/air, datum/holder)
+/datum/gas_reaction/standard/miaster/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_moles = air.moles
 	var/water_vapor_moles = cached_moles[/datum/gas/water_vapor]
 	var/miasma_moles = cached_moles[/datum/gas/miasma]
@@ -171,21 +178,22 @@
  * The reaction rate is dependent on the temperature of the gasmix.
  * May produce either tritium or carbon dioxide and water vapor depending on the fuel/oxydizer ratio of the gasmix.
  */
-/datum/gas_reaction/plasmafire
+/datum/gas_reaction/standard/plasmafire
 	priority_group = PRIORITY_FIRE
 	name = "Plasma Combustion"
 	id = "plasmafire"
 	expands_hotspot = TRUE
-	desc = "Combustion of oxygen and plasma. Able to produce tritium or carbon dioxide and water vapor."
+	desc = "Combustion of Oxygen and Plasma. Produces Carbon Dioxide and Water Vapor, \
+		and potentially even Tritium if the mixture is rich enough in Plasma."
 
-/datum/gas_reaction/plasmafire/init_reqs()
+/datum/gas_reaction/standard/plasmafire/init_reqs()
 	requirements = list(
 		/datum/gas/plasma = MINIMUM_MOLE_COUNT,
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		"MIN_TEMP" = PLASMA_MINIMUM_BURN_TEMPERATURE,
 	)
 
-/datum/gas_reaction/plasmafire/react(datum/gas_mixture/air, datum/holder)
+/datum/gas_reaction/standard/plasmafire/react(datum/gas_mixture/air, datum/holder)
 	. = NO_REACTION
 	// This reaction should proceed faster at higher temperatures.
 	var/temperature = air.temperature
@@ -249,21 +257,21 @@
  * Highly exothermic.
  * Creates hotspots.
  */
-/datum/gas_reaction/h2fire
+/datum/gas_reaction/standard/h2fire
 	priority_group = PRIORITY_FIRE
 	name = "Hydrogen Combustion"
 	id = "h2fire"
 	expands_hotspot = TRUE
-	desc = "Combustion of hydrogen with oxygen. Can be extremely fast and energetic if a few conditions are fulfilled."
+	desc = "Combustion of Hydrogen with Oxygen. May be extremely fast and energetic, if a few conditions are fulfilled."
 
-/datum/gas_reaction/h2fire/init_reqs()
+/datum/gas_reaction/standard/h2fire/init_reqs()
 	requirements = list(
 		/datum/gas/hydrogen = MINIMUM_MOLE_COUNT,
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		"MIN_TEMP" = HYDROGEN_MINIMUM_BURN_TEMPERATURE,
 	)
 
-/datum/gas_reaction/h2fire/react(datum/gas_mixture/air, datum/holder)
+/datum/gas_reaction/standard/h2fire/react(datum/gas_mixture/air, datum/holder)
 	. = NO_REACTION
 	var/list/cached_moles = air.moles //this speeds things up because accessing datum vars is slow
 	var/hydrogen_moles = cached_moles[/datum/gas/hydrogen]
@@ -305,21 +313,21 @@
  * Creates hotspots.
  * Creates radiation.
  */
-/datum/gas_reaction/tritfire
+/datum/gas_reaction/standard/tritfire
 	priority_group = PRIORITY_FIRE
 	name = "Tritium Combustion"
 	id = "tritfire"
 	expands_hotspot = TRUE
-	desc = "Combustion of tritium with oxygen. Can be extremely fast and energetic if a few conditions are fulfilled."
+	desc = "Combustion of Tritium with Oxygen. May be extremely fast and energetic, if a few conditions are fulfilled."
 
-/datum/gas_reaction/tritfire/init_reqs()
+/datum/gas_reaction/standard/tritfire/init_reqs()
 	requirements = list(
 		/datum/gas/tritium = MINIMUM_MOLE_COUNT,
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		"MIN_TEMP" = TRITIUM_MINIMUM_BURN_TEMPERATURE,
 	)
 
-/datum/gas_reaction/tritfire/react(datum/gas_mixture/air, datum/holder)
+/datum/gas_reaction/standard/tritfire/react(datum/gas_mixture/air, datum/holder)
 	. = NO_REACTION
 	var/list/cached_moles = air.moles //this speeds things up because accessing datum vars is slow
 	var/tritium_moles = cached_moles[/datum/gas/tritium]
@@ -369,14 +377,14 @@
  * Combustion of oxygen and freon.
  * Endothermic.
  */
-/datum/gas_reaction/freonfire
+/datum/gas_reaction/standard/freonfire
 	priority_group = PRIORITY_FIRE
 	name = "Freon Combustion"
 	id = "freonfire"
 	expands_hotspot = TRUE
-	desc = "Reaction between oxygen and freon that consumes a huge amount of energy and can cool things significantly. Also able to produce hot ice."
+	desc = "Reaction between Oxygen and Freon that consumes a huge amount of energy, cooling the atmosphere significantly. May produce \"hot ice\"."
 
-/datum/gas_reaction/freonfire/init_reqs()
+/datum/gas_reaction/standard/freonfire/init_reqs()
 	requirements = list(
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		/datum/gas/freon = MINIMUM_MOLE_COUNT,
@@ -384,7 +392,7 @@
 		"MAX_TEMP" = FREON_MAXIMUM_BURN_TEMPERATURE,
 	)
 
-/datum/gas_reaction/freonfire/react(datum/gas_mixture/air, datum/holder)
+/datum/gas_reaction/standard/freonfire/react(datum/gas_mixture/air, datum/holder)
 	. = NO_REACTION
 	var/temperature = air.temperature
 	var/temperature_scale
@@ -443,13 +451,13 @@
  * Endothermic.
  * Requires BZ as a catalyst.
  */
-/datum/gas_reaction/nitrousformation //formation of n2o, exothermic, requires bz as catalyst
+/datum/gas_reaction/standard/nitrousformation //formation of n2o, exothermic, requires bz as catalyst
 	priority_group = PRIORITY_FORMATION
 	name = "Nitrous Oxide Formation"
 	id = "nitrousformation"
-	desc = "Production of nitrous oxide with BZ as a catalyst."
+	desc = "Production of Nitrous Oxide with BZ as a catalyst."
 
-/datum/gas_reaction/nitrousformation/init_reqs()
+/datum/gas_reaction/standard/nitrousformation/init_reqs()
 	requirements = list(
 		/datum/gas/oxygen = 10,
 		/datum/gas/nitrogen = 20,
@@ -458,7 +466,7 @@
 		"MAX_TEMP" = N2O_FORMATION_MAX_TEMPERATURE,
 	)
 
-/datum/gas_reaction/nitrousformation/react(datum/gas_mixture/air)
+/datum/gas_reaction/standard/nitrousformation/react(datum/gas_mixture/air)
 	var/list/cached_moles = air.moles
 	var/oxygen_moles = cached_moles[/datum/gas/oxygen]
 	var/nitrogen_moles = cached_moles[/datum/gas/nitrogen]
@@ -485,20 +493,20 @@
  * Decomposition of N2O.
  * Exothermic.
  */
-/datum/gas_reaction/nitrous_decomp
+/datum/gas_reaction/standard/nitrous_decomp
 	priority_group = PRIORITY_POST_FORMATION
 	name = "Nitrous Oxide Decomposition"
 	id = "nitrous_decomp"
-	desc = "Decomposition of nitrous oxide under high temperature."
+	desc = "Decomposition of Nitrous Oxide under high temperature."
 
-/datum/gas_reaction/nitrous_decomp/init_reqs()
+/datum/gas_reaction/standard/nitrous_decomp/init_reqs()
 	requirements = list(
 		/datum/gas/nitrous_oxide = MINIMUM_MOLE_COUNT * 2,
 		"MIN_TEMP" = N2O_DECOMPOSITION_MIN_TEMPERATURE,
 		"MAX_TEMP" = N2O_DECOMPOSITION_MAX_TEMPERATURE,
 	)
 
-/datum/gas_reaction/nitrous_decomp/react(datum/gas_mixture/air, datum/holder)
+/datum/gas_reaction/standard/nitrous_decomp/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_moles = air.moles //this speeds things up because accessing datum vars is slow
 	var/nitrous_oxide_moles = cached_moles[/datum/gas/nitrous_oxide]
 	var/temperature = air.temperature
@@ -527,20 +535,20 @@
  * Formation of BZ by combining plasma and nitrous oxide at low pressures.
  * Exothermic.
  */
-/datum/gas_reaction/bzformation
+/datum/gas_reaction/standard/bzformation
 	priority_group = PRIORITY_FORMATION
 	name = "BZ Gas Formation"
 	id = "bzformation"
-	desc = "Production of BZ using plasma and nitrous oxide."
+	desc = "Production of BZ using Plasma and Nitrous Oxide."
 
-/datum/gas_reaction/bzformation/init_reqs()
+/datum/gas_reaction/standard/bzformation/init_reqs()
 	requirements = list(
 		/datum/gas/nitrous_oxide = 10,
 		/datum/gas/plasma = 10,
 		"MAX_TEMP" = BZ_FORMATION_MAX_TEMPERATURE,
 	)
 
-/datum/gas_reaction/bzformation/react(datum/gas_mixture/air)
+/datum/gas_reaction/standard/bzformation/react(datum/gas_mixture/air)
 	var/list/cached_moles = air.moles
 	var/nitrous_oxide_moles = cached_moles[/datum/gas/nitrous_oxide]
 	var/plasma_moles = cached_moles[/datum/gas/plasma]
@@ -587,13 +595,13 @@
  * Consumes a tiny amount of tritium to convert CO2 and oxygen to pluoxium.
  * Exothermic.
  */
-/datum/gas_reaction/pluox_formation
+/datum/gas_reaction/standard/pluox_formation
 	priority_group = PRIORITY_FORMATION
 	name = "Pluoxium Formation"
 	id = "pluox_formation"
-	desc = "Alternate production for pluoxium which uses tritium."
+	desc = "Alternate Production method for Pluoxium which uses Tritium."
 
-/datum/gas_reaction/pluox_formation/init_reqs()
+/datum/gas_reaction/standard/pluox_formation/init_reqs()
 	requirements = list(
 		/datum/gas/carbon_dioxide = MINIMUM_MOLE_COUNT,
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
@@ -602,7 +610,7 @@
 		"MAX_TEMP" = PLUOXIUM_FORMATION_MAX_TEMP,
 	)
 
-/datum/gas_reaction/pluox_formation/react(datum/gas_mixture/air, datum/holder)
+/datum/gas_reaction/standard/pluox_formation/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_moles = air.moles
 	var/carbon_dioxide_moles = cached_moles[/datum/gas/carbon_dioxide]
 	var/oxygen_moles = cached_moles[/datum/gas/oxygen]
@@ -635,13 +643,13 @@
  * Endothermic.
  * Requires BZ.
  */
-/datum/gas_reaction/nitrium_formation
+/datum/gas_reaction/standard/nitrium_formation
 	priority_group = PRIORITY_FORMATION
 	name = "Nitrium Formation"
 	id = "nitrium_formation"
-	desc = "Production of nitrium from BZ, tritium, and nitrogen."
+	desc = "Production of Nitrium from BZ, Tritium, and Nitrogen."
 
-/datum/gas_reaction/nitrium_formation/init_reqs()
+/datum/gas_reaction/standard/nitrium_formation/init_reqs()
 	requirements = list(
 		/datum/gas/tritium = 20,
 		/datum/gas/nitrogen = 10,
@@ -649,7 +657,7 @@
 		"MIN_TEMP" = NITRIUM_FORMATION_MIN_TEMP,
 	)
 
-/datum/gas_reaction/nitrium_formation/react(datum/gas_mixture/air)
+/datum/gas_reaction/standard/nitrium_formation/react(datum/gas_mixture/air)
 	var/list/cached_moles = air.moles
 	var/tritium_moles = cached_moles[/datum/gas/tritium]
 	var/nitrogen_moles = cached_moles[/datum/gas/nitrogen]
@@ -682,20 +690,20 @@
  * Exothermic.
  * Requires oxygen as catalyst.
  */
-/datum/gas_reaction/nitrium_decomposition
+/datum/gas_reaction/standard/nitrium_decomposition
 	priority_group = PRIORITY_PRE_FORMATION
 	name = "Nitrium Decomposition"
 	id = "nitrium_decomp"
-	desc = "Decomposition of nitrium when exposed to oxygen under normal temperatures."
+	desc = "Decomposition of Nitrium when exposed to Oxygen under normal temperatures."
 
-/datum/gas_reaction/nitrium_decomposition/init_reqs()
+/datum/gas_reaction/standard/nitrium_decomposition/init_reqs()
 	requirements = list(
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		/datum/gas/nitrium = MINIMUM_MOLE_COUNT,
 		"MAX_TEMP" = NITRIUM_DECOMPOSITION_MAX_TEMP,
 	)
 
-/datum/gas_reaction/nitrium_decomposition/react(datum/gas_mixture/air)
+/datum/gas_reaction/standard/nitrium_decomposition/react(datum/gas_mixture/air)
 	var/list/cached_moles = air.moles
 	var/nitrium_moles = cached_moles[/datum/gas/nitrium]
 	var/temperature = air.temperature
@@ -726,13 +734,13 @@
  * The formation of freon.
  * Endothermic.
  */
-/datum/gas_reaction/freonformation
+/datum/gas_reaction/standard/freonformation
 	priority_group = PRIORITY_FORMATION
 	name = "Freon Formation"
 	id = "freonformation"
-	desc = "Production of freon using plasma, carbon dioxide, and BZ under high temperature."
+	desc = "Production of Freon using Plasma, Carbon Dioxide, and BZ under high temperature."
 
-/datum/gas_reaction/freonformation/init_reqs() //minimum requirements for freon formation
+/datum/gas_reaction/standard/freonformation/init_reqs() //minimum requirements for freon formation
 	requirements = list(
 		/datum/gas/plasma = MINIMUM_MOLE_COUNT * 6,
 		/datum/gas/carbon_dioxide = MINIMUM_MOLE_COUNT * 3,
@@ -740,7 +748,7 @@
 		"MIN_TEMP" = FREON_FORMATION_MIN_TEMPERATURE,
 	)
 
-/datum/gas_reaction/freonformation/react(datum/gas_mixture/air)
+/datum/gas_reaction/standard/freonformation/react(datum/gas_mixture/air)
 	var/list/cached_moles = air.moles
 	var/plasma_moles = cached_moles[/datum/gas/plasma]
 	var/carbon_dioxide_moles = cached_moles[/datum/gas/carbon_dioxide]
@@ -779,13 +787,13 @@
  * Due to its high mass, hyper-noblium uses large amounts of nitrogen and tritium.
  * BZ can be used as a catalyst to make it less exothermic.
  */
-/datum/gas_reaction/nobliumformation
+/datum/gas_reaction/standard/nobliumformation
 	priority_group = PRIORITY_FORMATION
 	name = "Hyper-Noblium Condensation"
 	id = "nobformation"
-	desc = "Production of hyper-noblium from nitrogen and tritium under very low temperatures. Extremely energetic."
+	desc = "Production of Hyper-Noblium from Nitrogen and Tritium under very low temperatures. Extremely energetic."
 
-/datum/gas_reaction/nobliumformation/init_reqs()
+/datum/gas_reaction/standard/nobliumformation/init_reqs()
 	requirements = list(
 		/datum/gas/nitrogen = 10,
 		/datum/gas/tritium = 5,
@@ -793,7 +801,7 @@
 		"MAX_TEMP" = NOBLIUM_FORMATION_MAX_TEMP,
 	)
 
-/datum/gas_reaction/nobliumformation/react(datum/gas_mixture/air)
+/datum/gas_reaction/standard/nobliumformation/react(datum/gas_mixture/air)
 	. = NO_REACTION
 	var/list/cached_moles = air.moles
 	var/nitrogen_moles = cached_moles[/datum/gas/nitrogen]
@@ -832,20 +840,20 @@
  * Produces carbon dioxide.
  * Endothermic.
  */
-/datum/gas_reaction/halon_o2removal
+/datum/gas_reaction/standard/halon_o2removal
 	priority_group = PRIORITY_PRE_FORMATION
 	name = "Halon Oxygen Absorption"
 	id = "halon_o2removal"
-	desc = "Halon interaction with oxygen that can be used to snuff fires out."
+	desc = "Halon interaction with Oxygen that can be used to snuff fires out."
 
-/datum/gas_reaction/halon_o2removal/init_reqs()
+/datum/gas_reaction/standard/halon_o2removal/init_reqs()
 	requirements = list(
 		/datum/gas/halon = MINIMUM_MOLE_COUNT,
 		/datum/gas/oxygen = MINIMUM_MOLE_COUNT,
 		"MIN_TEMP" = HALON_COMBUSTION_MIN_TEMPERATURE,
 	)
 
-/datum/gas_reaction/halon_o2removal/react(datum/gas_mixture/air, datum/holder)
+/datum/gas_reaction/standard/halon_o2removal/react(datum/gas_mixture/air, datum/holder)
 	. = NO_REACTION
 	var/list/cached_moles = air.moles
 	var/halon_moles = cached_moles[/datum/gas/halon]
@@ -885,13 +893,13 @@
  *
  * Exothermic
  */
-/datum/gas_reaction/healium_formation
+/datum/gas_reaction/standard/healium_formation
 	priority_group = PRIORITY_FORMATION
 	name = "Healium Formation"
 	id = "healium_formation"
-	desc = "Production of healium using BZ and freon."
+	desc = "Production of Healium using BZ and Freon."
 
-/datum/gas_reaction/healium_formation/init_reqs()
+/datum/gas_reaction/standard/healium_formation/init_reqs()
 	requirements = list(
 		/datum/gas/bz = MINIMUM_MOLE_COUNT,
 		/datum/gas/freon = MINIMUM_MOLE_COUNT,
@@ -899,7 +907,7 @@
 		"MAX_TEMP" = HEALIUM_FORMATION_MAX_TEMP,
 	)
 
-/datum/gas_reaction/healium_formation/react(datum/gas_mixture/air, datum/holder)
+/datum/gas_reaction/standard/healium_formation/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_moles = air.moles
 	var/bz_moles = cached_moles[/datum/gas/bz]
 	var/freon_moles = cached_moles[/datum/gas/freon]
@@ -926,13 +934,13 @@
  * Exothermic.
  * Requires Hypernoblium.
  */
-/datum/gas_reaction/zauker_formation
+/datum/gas_reaction/standard/zauker_formation
 	priority_group = PRIORITY_FORMATION
 	name = "Zauker Formation"
 	id = "zauker_formation"
-	desc = "Production of zauker using hyper-noblium and nitrium under very high temperatures."
+	desc = "Production of Zauker using Hyper-Noblium and Nitrium under very high temperatures."
 
-/datum/gas_reaction/zauker_formation/init_reqs()
+/datum/gas_reaction/standard/zauker_formation/init_reqs()
 	requirements = list(
 		/datum/gas/hypernoblium = MINIMUM_MOLE_COUNT,
 		/datum/gas/nitrium = MINIMUM_MOLE_COUNT,
@@ -940,7 +948,7 @@
 		"MAX_TEMP" = ZAUKER_FORMATION_MAX_TEMPERATURE,
 	)
 
-/datum/gas_reaction/zauker_formation/react(datum/gas_mixture/air, datum/holder)
+/datum/gas_reaction/standard/zauker_formation/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_moles = air.moles
 	var/hypernoblium_moles = cached_moles[/datum/gas/hypernoblium]
 	var/nitrium_moles = cached_moles[/datum/gas/nitrium]
@@ -969,19 +977,19 @@
  * Occurs in the presence of nitrogen to prevent zauker floods.
  * Exothermic.
  */
-/datum/gas_reaction/zauker_decomp
+/datum/gas_reaction/standard/zauker_decomp
 	priority_group = PRIORITY_POST_FORMATION
 	name = "Zauker Decomposition"
 	id = "zauker_decomp"
-	desc = "Decomposition of zauker when exposed to nitrogen."
+	desc = "Decomposition of Zauker when exposed to Nitrogen."
 
-/datum/gas_reaction/zauker_decomp/init_reqs()
+/datum/gas_reaction/standard/zauker_decomp/init_reqs()
 	requirements = list(
 		/datum/gas/nitrogen = MINIMUM_MOLE_COUNT,
 		/datum/gas/zauker = MINIMUM_MOLE_COUNT,
 	)
 
-/datum/gas_reaction/zauker_decomp/react(datum/gas_mixture/air, datum/holder)
+/datum/gas_reaction/standard/zauker_decomp/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_moles = air.moles //this speeds things up because accessing datum vars is slow
 	var/nitrogen_moles = cached_moles[/datum/gas/nitrogen]
 	var/zauker_moles = cached_moles[/datum/gas/zauker]
@@ -1009,13 +1017,13 @@
  *
  * Exothermic.
  */
-/datum/gas_reaction/proto_nitrate_formation
+/datum/gas_reaction/standard/proto_nitrate_formation
 	priority_group = PRIORITY_FORMATION
-	name = "Proto Nitrate Formation"
+	name = "Proto-Nitrate Formation"
 	id = "proto_nitrate_formation"
-	desc = "Production of proto-nitrate from pluoxium and hydrogen under high temperatures."
+	desc = "Production of Proto-Nitrate from Pluoxium and Hydrogen under high temperatures."
 
-/datum/gas_reaction/proto_nitrate_formation/init_reqs()
+/datum/gas_reaction/standard/proto_nitrate_formation/init_reqs()
 	requirements = list(
 		/datum/gas/pluoxium = MINIMUM_MOLE_COUNT,
 		/datum/gas/hydrogen = MINIMUM_MOLE_COUNT,
@@ -1023,7 +1031,7 @@
 		"MAX_TEMP" = PN_FORMATION_MAX_TEMPERATURE,
 	)
 
-/datum/gas_reaction/proto_nitrate_formation/react(datum/gas_mixture/air, datum/holder)
+/datum/gas_reaction/standard/proto_nitrate_formation/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_moles = air.moles
 	var/pluoxium_moles = cached_moles[/datum/gas/pluoxium]
 	var/hydrogen_moles = cached_moles[/datum/gas/hydrogen]
@@ -1051,19 +1059,19 @@
  * Converts hydrogen into proto-nitrate.
  * Endothermic.
  */
-/datum/gas_reaction/proto_nitrate_hydrogen_response
+/datum/gas_reaction/standard/proto_nitrate_hydrogen_response
 	priority_group = PRIORITY_PRE_FORMATION
-	name = "Proto Nitrate Hydrogen Response"
+	name = "Proto-Nitrate Hydrogen Response"
 	id = "proto_nitrate_hydrogen_response"
-	desc = "Conversion of hydrogen into proto nitrate."
+	desc = "Conversion of Hydrogen into Proto-Nitrate."
 
-/datum/gas_reaction/proto_nitrate_hydrogen_response/init_reqs()
+/datum/gas_reaction/standard/proto_nitrate_hydrogen_response/init_reqs()
 	requirements = list(
 		/datum/gas/proto_nitrate = MINIMUM_MOLE_COUNT,
 		/datum/gas/hydrogen = PN_HYDROGEN_CONVERSION_THRESHOLD,
 	)
 
-/datum/gas_reaction/proto_nitrate_hydrogen_response/react(datum/gas_mixture/air, datum/holder)
+/datum/gas_reaction/standard/proto_nitrate_hydrogen_response/react(datum/gas_mixture/air, datum/holder)
 	var/list/cached_moles = air.moles
 	var/proto_nitrate_moles = cached_moles[/datum/gas/proto_nitrate]
 	var/hydrogen_moles = cached_moles[/datum/gas/hydrogen]
@@ -1089,13 +1097,13 @@
  * Releases radiation.
  * Exothermic.
  */
-/datum/gas_reaction/proto_nitrate_tritium_response
+/datum/gas_reaction/standard/proto_nitrate_tritium_response
 	priority_group = PRIORITY_PRE_FORMATION
-	name = "Proto Nitrate Tritium Response"
+	name = "Proto-Nitrate Tritium Response"
 	id = "proto_nitrate_tritium_response"
-	desc = "Conversion of tritium into hydrogen that consumes a small amount of proto-nitrate."
+	desc = "Conversion of Tritium into Hydrogen that consumes a small amount of Proto-Nitrate."
 
-/datum/gas_reaction/proto_nitrate_tritium_response/init_reqs()
+/datum/gas_reaction/standard/proto_nitrate_tritium_response/init_reqs()
 	requirements = list(
 		/datum/gas/proto_nitrate = MINIMUM_MOLE_COUNT,
 		/datum/gas/tritium = MINIMUM_MOLE_COUNT,
@@ -1103,7 +1111,7 @@
 		"MAX_TEMP" = PN_TRITIUM_CONVERSION_MAX_TEMP,
 	)
 
-/datum/gas_reaction/proto_nitrate_tritium_response/react(datum/gas_mixture/air, datum/holder)
+/datum/gas_reaction/standard/proto_nitrate_tritium_response/react(datum/gas_mixture/air, datum/holder)
 	. = NO_REACTION
 	var/list/cached_moles = air.moles
 	var/proto_nitrate_moles = cached_moles[/datum/gas/proto_nitrate]
@@ -1142,13 +1150,13 @@
  *
  * Breaks BZ down into nitrogen, helium, and plasma in the presence of proto-nitrate.
  */
-/datum/gas_reaction/proto_nitrate_bz_response
+/datum/gas_reaction/standard/proto_nitrate_bz_response
 	priority_group = PRIORITY_PRE_FORMATION
-	name = "Proto Nitrate BZ Response"
+	name = "Proto-Nitrate BZ Response"
 	id = "proto_nitrate_bz_response"
-	desc = "Breakdown of BZ into nitrogen, helium, and plasma by proto-nitrate under low temperatures."
+	desc = "Breakdown of BZ into Nitrogen, Helium, and Plasma by Proto-Nitrate under low temperatures."
 
-/datum/gas_reaction/proto_nitrate_bz_response/init_reqs()
+/datum/gas_reaction/standard/proto_nitrate_bz_response/init_reqs()
 	requirements = list(
 		/datum/gas/proto_nitrate = MINIMUM_MOLE_COUNT,
 		/datum/gas/bz = MINIMUM_MOLE_COUNT,
@@ -1156,7 +1164,7 @@
 		"MAX_TEMP" = PN_BZASE_MAX_TEMP,
 	)
 
-/datum/gas_reaction/proto_nitrate_bz_response/react(datum/gas_mixture/air, datum/holder)
+/datum/gas_reaction/standard/proto_nitrate_bz_response/react(datum/gas_mixture/air, datum/holder)
 	. = NO_REACTION
 	var/list/cached_moles = air.moles
 	var/proto_nitrate_moles = cached_moles[/datum/gas/proto_nitrate]
@@ -1194,24 +1202,24 @@
 		air.temperature = max((temperature * old_heat_capacity + energy_released) / new_heat_capacity, TCMB)
 	. |= REACTING
 
-/datum/gas_reaction/antinoblium_replication
+/datum/gas_reaction/standard/antinoblium_replication
 	priority_group = PRIORITY_FORMATION
-	name = "Antinoblium Replication"
+	name = "Anti-Noblium Replication"
 	id = "antinoblium_replication"
-	desc = "Antinoblium breaks down all gases into more of itself."
+	desc = "Anti-Noblium breaks down all gases into more of itself."
 
-/datum/gas_reaction/antinoblium_replication/init_reqs()
+/datum/gas_reaction/standard/antinoblium_replication/init_reqs()
 	requirements = list(
 		/datum/gas/antinoblium = MOLES_GAS_VISIBLE,
 		"MIN_TEMP" = REACTION_OPPRESSION_MIN_TEMP,
 	)
 
 /**
- * Antinoblium Recplication
+ * Anti-Noblium Replication
  *
  * Converts all gases into antinoblium.
  */
-/datum/gas_reaction/antinoblium_replication/react(datum/gas_mixture/air, datum/holder)
+/datum/gas_reaction/standard/antinoblium_replication/react(datum/gas_mixture/air, datum/holder)
 	. = REACTING | VOLATILE_REACTION
 	var/list/cached_moles = air.moles
 	var/heat_capacity = air.heat_capacity()
@@ -1222,13 +1230,13 @@
 	if(total_not_antinoblium_moles < MINIMUM_MOLE_COUNT) // Clear up the remaining gases if this condition is met.
 		. = NO_REACTION
 		reaction_rate = total_not_antinoblium_moles
-	for(var/gas_id in cached_moles)
+	for(var/gas_id, value in cached_moles)
 		if(gas_id == /datum/gas/antinoblium)
 			continue
 		if(. == NO_REACTION) // Let the gases get properly cleared while avoiding potential division by 0.
 			cached_moles[gas_id] = 0
 			continue
-		cached_moles[gas_id] -= reaction_rate * cached_moles[gas_id] / total_not_antinoblium_moles
+		cached_moles[gas_id] -= reaction_rate * value / total_not_antinoblium_moles
 	cached_moles[/datum/gas/antinoblium] += reaction_rate
 
 	SET_REACTION_RESULTS(reaction_rate)

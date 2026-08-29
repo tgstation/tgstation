@@ -251,7 +251,7 @@
 	return NONE
 
 /mob/living/basic/turtle/proc/process_food(potential_food)
-	if(QDELETED(src) || stat != CONSCIOUS)
+	if(QDELETED(src) || IS_UNCONSCIOUS_OR_CRIT(src))
 		return
 
 	if(ispath(potential_food))

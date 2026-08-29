@@ -194,7 +194,6 @@
 
 /datum/deathmatch_modifier/xray/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	ADD_TRAIT(player, TRAIT_XRAY_VISION, DEATHMATCH_TRAIT)
-	player.update_sight()
 
 /datum/deathmatch_modifier/thermal
 	name = "Thermal Vision"
@@ -203,7 +202,6 @@
 
 /datum/deathmatch_modifier/thermal/apply(mob/living/carbon/player, datum/deathmatch_lobby/lobby)
 	ADD_TRAIT(player, TRAIT_THERMAL_VISION, DEATHMATCH_TRAIT)
-	player.update_sight()
 
 /datum/deathmatch_modifier/regen
 	name = "Health Regen"
@@ -528,9 +526,8 @@
 	///Pick global modifiers at random.
 	for(var/iteration in 1 to rand(3, 5))
 		var/datum/deathmatch_modifier/modifier = GLOB.deathmatch_game.modifiers[pick_n_take(modifiers_pool)]
-		modifier.on_select(lobby)
+		lobby.select_modifier(modifier)
 		modifier.on_start_game(lobby)
-		lobby.modifiers += modifier.type
 		modifiers_pool -= modifier.blacklisted_modifiers
 		if(!length(modifiers_pool))
 			return

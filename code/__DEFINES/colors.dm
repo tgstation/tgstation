@@ -118,6 +118,7 @@
 #define COLOR_BLUE_VERY_LIGHT "#ccecff"
 #define COLOR_NAVY "#000080"
 #define COLOR_BLUE_GRAY "#75A2BB"
+#define COLOR_AI_HOLOGRAM_BLUE "#7DB4E1"
 
 #define COLOR_PINK "#FFC0CB"
 #define COLOR_LIGHT_PINK "#FF3CC8"
@@ -295,6 +296,8 @@
 #define LIGHT_COLOR_HOLY_MAGIC "#FFF743"
 /// deep crimson
 #define LIGHT_COLOR_BLOOD_MAGIC "#D00000"
+/// Light-ish blue, used on mining sprites
+#define LIGHT_COLOR_MINING "#4AA0ED"
 
 /* These ones aren't a direct colour like the ones above, because nothing would fit */
 /// Warm orange color, leaning strongly towards yellow. rgb(250, 160, 25)

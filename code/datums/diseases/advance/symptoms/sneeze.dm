@@ -16,8 +16,8 @@
 	transmittable = 4
 	level = 1
 	severity = 1
-	symptom_delay_min = 5
-	symptom_delay_max = 35
+	symptom_delay = 20
+	delay_variation = 0.4
 	required_organ = ORGAN_SLOT_LUNGS
 	threshold_descs = list(
 		"Transmission 9" = "Increases sneezing range, spreading the virus over 6 meter cone instead of over a 4 meter cone.",
@@ -30,6 +30,7 @@
 	var/cartoon_sneezing = FALSE //ah, ah, AH, AH-CHOO!!
 	///if FALSE, there is a percentage chance that the mob will emote sneezing while sneeze_cooldown is on cooldown. If TRUE, won't emote again until after the off cooldown sneeze occurs.
 	var/off_cooldown_sneezed = FALSE
+	var/suppress_warning = FALSE
 
 /datum/symptom/sneeze/Start(datum/disease/advance/active_disease)
 	. = ..()

@@ -1,7 +1,7 @@
 ///Checks the health status of our rider, if any. returns false if we dont have a rider to begin with
 /datum/bt_node/decorator/check_rider_stat
 	///stat we're interested in
-	var/target_stat = UNCONSCIOUS
+	var/target_stat = HARD_CRIT
 
 /datum/bt_node/decorator/check_rider_stat/check_condition(datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn

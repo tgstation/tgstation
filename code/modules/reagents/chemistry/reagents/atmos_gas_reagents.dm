@@ -119,7 +119,7 @@
 
 /datum/reagent/pluoxium/on_mob_life(mob/living/carbon/breather, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(!HAS_TRAIT(breather, TRAIT_KNOCKEDOUT))
+	if(!IS_UNCONSCIOUS(breather))
 		return
 
 	for(var/obj/item/organ/organ_being_healed as anything in breather.organs)

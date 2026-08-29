@@ -12,13 +12,16 @@
 		TRAIT_BLOOD_CLANS,
 		TRAIT_USES_SKINTONES,
 		TRAIT_NO_MIRROR_REFLECTION,
+		TRAIT_UNHOLY_BANEABLE, //still baned by silver even if they get a different heart
 	)
 	inherent_biotypes = MOB_UNDEAD|MOB_HUMANOID
 	changesource_flags = MIRROR_BADMIN | MIRROR_PRIDE | WABBAJACK | ERT_SPAWN
-	exotic_bloodtype = BLOOD_TYPE_VAMPIRE
+	exotic_bloodtype = /datum/blood_type/universal/vampire
 	blood_deficiency_drain_rate = BLOOD_DEFICIENCY_MODIFIER // vampires already passively lose blood, so this just makes them lose it slightly more quickly when they have blood deficiency.
+	mutant_organs = list(
+		/obj/item/organ/fangs/vampire,
+	)
 	mutantheart = /obj/item/organ/heart/vampire
-	mutanttongue = /obj/item/organ/tongue/vampire
 	///some starter text sent to the vampire initially, because vampires have shit to do to stay alive
 	var/info_text = "You are a <span class='danger'>Vampire</span>. You will slowly but constantly lose blood if outside of a coffin. If inside a coffin, you will slowly heal. You may gain more blood by grabbing a live victim and using your drain ability."
 
@@ -122,7 +125,7 @@
 		SPECIES_PERK_ICON = "tint",
 		SPECIES_PERK_NAME = "The Thirst",
 		SPECIES_PERK_DESC = "In place of eating, Vampires suffer from The Thirst. \
-			Thirst of what? Blood! Their tongue allows them to grab people and drink \
+			Thirst of what? Blood! Their fangs allows them to grab people and drink \
 			their blood, and they will die if they run out. As a note, it doesn't \
 			matter whose blood you drink, it will all be converted into your blood \
 			type when consumed.",
@@ -146,28 +149,29 @@
 
 	return to_add
 
-/obj/item/organ/tongue/vampire
-	name = "vampire teeth"
+/obj/item/organ/fangs/vampire
+	name = "vampire fangs"
 	desc = "The only thing with which it's acceptable to say \"I will suck you dry!\""
-	icon_state = "tongue_vampire"
+	icon_state = "fangs_vampire"
 	actions_types = list(/datum/action/item_action/organ_action/vampire)
 	organ_traits = list(
 		TRAIT_DRINKS_BLOOD,
 		// future todo : tie nobreath and nohunger to a vampire organ set bonus
 		TRAIT_NOBREATH,
 		TRAIT_NOHUNGER,
+		TRAIT_REFINED_BITER,
 	)
 	COOLDOWN_DECLARE(drain_cooldown)
 
-/obj/item/organ/tongue/vampire/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
+/obj/item/organ/fangs/vampire/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
 	RegisterSignal(receiver, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(stab_bloodbag))
 
-/obj/item/organ/tongue/vampire/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
+/obj/item/organ/fangs/vampire/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_ATOM_ITEM_INTERACTION)
 
-/obj/item/organ/tongue/vampire/proc/stab_bloodbag(mob/living/source, mob/living/user,  obj/item/used_item, list/modifiers)
+/obj/item/organ/fangs/vampire/proc/stab_bloodbag(mob/living/source, mob/living/user,  obj/item/used_item, list/modifiers)
 	SIGNAL_HANDLER
 
 	if(user != source)
@@ -187,7 +191,7 @@
 	INVOKE_ASYNC(src, PROC_REF(async_stab_bloodbag), user, used_item)
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/organ/tongue/vampire/proc/async_stab_bloodbag(mob/living/carbon/user, obj/item/reagent_containers/blood/bloodbag, time = 0.5 SECONDS)
+/obj/item/organ/fangs/vampire/proc/async_stab_bloodbag(mob/living/carbon/user, obj/item/reagent_containers/blood/bloodbag, time = 0.5 SECONDS)
 	if(!do_after(user, time, bloodbag))
 		return
 
@@ -209,8 +213,8 @@
 		return FALSE
 
 	var/mob/living/carbon/user = owner
-	var/obj/item/organ/tongue/vampire/licker_drinker = target
-	if(!COOLDOWN_FINISHED(licker_drinker, drain_cooldown))
+	var/obj/item/organ/fangs/vampire/fang_drinker = target
+	if(!COOLDOWN_FINISHED(fang_drinker, drain_cooldown))
 		to_chat(user, span_warning("You just drained blood, wait a few seconds!"))
 		return FALSE
 
@@ -231,7 +235,7 @@
 		else
 			to_chat(user, span_warning("[victim] doesn't have anything inside of them you could stomach!"))
 		return FALSE
-	COOLDOWN_START(licker_drinker, drain_cooldown, 3 SECONDS)
+	COOLDOWN_START(fang_drinker, drain_cooldown, 3 SECONDS)
 	if(victim.can_block_magic(MAGIC_RESISTANCE_HOLY, charge_cost = 0))
 		victim.show_message(span_warning("[user] tries to bite you, but stops before touching you!"))
 		to_chat(user, span_warning("[victim] is blessed! You stop just in time to avoid catching fire."))
@@ -240,7 +244,7 @@
 		victim.show_message(span_warning("[user] tries to bite you, but recoils in disgust!"))
 		to_chat(user, span_warning("[victim] reeks of garlic! you can't bring yourself to drain such tainted blood."))
 		return FALSE
-	if(!do_after(user, 3 SECONDS, target = victim, hidden = TRUE))
+	if(!do_after(user, 3 SECONDS, target = victim, cog_icon = null))
 		return FALSE
 
 	victim.show_message(span_danger("[user] is draining your blood!"))
@@ -263,6 +267,7 @@
 	name = "vampire heart"
 	icon_state = "heart_vampire"
 	desc = "Some guy stabbed his brother 6,000 years ago so now you have this."
+	organ_traits = list(TRAIT_UNHOLY_BANEABLE)
 
 #undef VAMPIRES_PER_HOUSE
 #undef VAMP_DRAIN_AMOUNT

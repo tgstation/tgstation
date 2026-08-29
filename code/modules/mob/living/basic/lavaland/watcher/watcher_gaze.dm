@@ -37,7 +37,7 @@
 	stage_timer = addtimer(CALLBACK(src, PROC_REF(show_indicator_overlay), "eye_pulse"), animation_time, TIMER_STOPPABLE)
 	StartCooldown(360 SECONDS, 360 SECONDS)
 	owner.visible_message(span_warning("[owner]'s eye glows ominously!"))
-	if (do_after(owner, delay = wait_delay, target = owner, hidden = TRUE))
+	if (do_after(owner, delay = wait_delay, target = owner, cog_icon = null))
 		trigger_effect()
 		proxmon_cleanup()
 	else
@@ -92,7 +92,7 @@
 	living_owner.Stun(1.5 SECONDS, ignore_canstun = TRUE)
 
 /datum/action/cooldown/mob_cooldown/watcher_gaze/proc/valid_target(mob/living/viewer)
-	if (!istype(viewer) || viewer.stat || viewer == owner)
+	if (!istype(viewer) || IS_UNCONSCIOUS_OR_CRIT(viewer) || viewer == owner)
 		return FALSE
 	if (!(viewer.dir & get_dir(viewer, owner)))
 		return FALSE

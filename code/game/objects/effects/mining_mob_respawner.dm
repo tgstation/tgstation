@@ -7,12 +7,16 @@
 	var/outdoor_only = TRUE
 	/// Are we waiting for a mob to spawn so we can link to it?
 	var/registered_spawn_signal = FALSE
-	// Spawn somewhere in an area around the spawner rather than dead on it
+	/// Spawn somewhere in an area around the spawner rather than dead on it
 	var/respawn_range = 3
+	/// Range in which active Candela nodes prevent our mob spawns
+	var/network_block_range = 5
 	/// Min time from storm to spawn a mob
 	var/min_delay = 1 SECONDS
 	/// Max time from storm to spawn a mob
 	var/max_delay = 10 SECONDS
+	/// Chance to respawn a mob
+	var/respawn_chance = 30
 	/// Our currently spawned mob
 	var/datum/weakref/our_mob
 	/// Weighted list of things we can spawn
@@ -106,7 +110,22 @@
 /obj/effect/mining_mob_respawner/proc/on_storm_event()
 	SIGNAL_HANDLER
 	var/mob/living/resolved = our_mob?.resolve()
-	if (!resolved || resolved.stat == DEAD)
+	if (resolved && resolved.stat != DEAD)
+		return
+
+	var/list/blockers = list()
+	// Respawns get blocked by active Candela network nodes nearby
+	for (var/datum/mining_beacon_network/network as anything in GLOB.mining_beacon_networks)
+		if (!network.powered)
+			continue
+		for (var/datum/component/candela_node/node as anything in network.linked_nodes)
+			blockers[get_turf(node.parent)] = TRUE
+
+	for(var/turf/turf_in_view in view(network_block_range, get_turf(src)))
+		if (blockers[turf_in_view])
+			return
+
+	if (prob(respawn_chance))
 		addtimer(CALLBACK(src, PROC_REF(make_mob)), rand(min_delay, max_delay), TIMER_DELETE_ME)
 
 /// Play an awesome animation

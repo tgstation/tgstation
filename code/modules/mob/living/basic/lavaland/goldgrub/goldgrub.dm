@@ -93,7 +93,7 @@
 /mob/living/basic/mining/goldgrub/proc/block_bullets(datum/source, obj/projectile/hitting_projectile)
 	SIGNAL_HANDLER
 
-	if(stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		return NONE
 
 	/// Reflects PKA/PKC shots and plasma cutter beams, unless they have high armor penetration
@@ -147,16 +147,6 @@
 		max_eggs_held = 1,\
 	)
 
-/mob/living/basic/mining/goldgrub/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	if(!istype(arrived, /obj/item/stack/ore))
-		return
-	if(!can_lay_eggs)
-		return
-	if(!istype(arrived, /obj/item/stack/ore/bluespace_crystal) || prob(60))
-		return
-	new /obj/item/food/egg/green/grub_egg(get_turf(src))
-
 /mob/living/basic/mining/goldgrub/update_overlays()
 	. = ..()
 	if(has_emissive)
@@ -198,7 +188,7 @@
 	)
 
 /mob/living/basic/mining/goldgrub/baby/proc/ready_to_grow()
-	return (stat == CONSCIOUS && !is_jaunting(src))
+	return (!IS_UNCONSCIOUS_OR_CRIT(src) && !is_jaunting(src))
 
 /obj/item/food/egg/green/grub_egg
 	name = "grub egg"

@@ -81,6 +81,7 @@
 		// Generate map view
 		mmi_view = new()
 		mmi_view.generate_view(mmi_view_key)
+		mmi_view.set_display(brain_ref)
 		// Generate movement detector (to update the view on MMI movement)
 		update_view_tracker = new(brain_ref, CALLBACK(src, PROC_REF(update_mmi_view)))
 
@@ -114,7 +115,7 @@
 		return FALSE
 
 	var/obj/item/mmi/mmi = brain_ref.loc
-	if(mmi.brainmob.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(mmi.brainmob))
 		to_chat(usr, span_warning("Our decoy brain is too damaged to speak."))
 	else
 		// Say will perform input sanitization and such for us

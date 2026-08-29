@@ -58,12 +58,9 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 				original_baseturf_count = length(original_baseturfs)
 		else
 			var/atom/creation = new type_path(spawn_at)
-			if(QDELETED(creation))
-				// Same as below
-				creation = null
-				continue
-			//Go all in
-			qdel(creation, force = TRUE)
+			if(!QDELETED(creation))
+				//Go all in
+				qdel(creation, force = TRUE)
 			//This will hold a ref to the last thing we process unless we set it to null
 			//Yes byond is fucking sinful
 			creation = null
@@ -72,7 +69,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		var/list/to_del = spawn_at.contents - cached_contents
 		if(length(to_del))
 			for(var/atom/to_kill in to_del)
-				qdel(to_kill)
+				qdel(to_kill, force = TRUE)
 
 	GLOB.running_create_and_destroy = FALSE
 
@@ -109,6 +106,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 			var/qdeld_at = oldest_packet[GC_QUEUE_ITEM_GCD_DESTROYED]
 
 			oldest_packet_creation = min(qdeld_at, oldest_packet_creation)
+			oldest_packet = null
 
 		//If we've found a packet that got del'd later then we finished, then all our shit has been processed
 		//That said, if there are any pending hard deletes you may NOT sleep, we gotta handle that shit

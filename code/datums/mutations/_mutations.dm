@@ -1,7 +1,9 @@
 
 /// Negatives that are virtually harmless and mostly just funny (language)
 // Set to 0 because munchkinning via miscommunication = bad
-#define NEGATIVE_STABILITY_MINI 0
+#define NEGATIVE_STABILITY_NONE 0
+/// Ostensibly negatives but not an active hinderance, at least not to you
+#define NEGATIVE_STABILITY_MINI -10
 /// Negatives that are slightly annoying (unused)
 #define NEGATIVE_STABILITY_MINOR -20
 /// Negatives that present an uncommon or weak, consistent hindrance to gameplay (cough, paranoia)
@@ -117,7 +119,7 @@
 	return copy
 
 /datum/mutation/proc/on_acquiring(mob/living/carbon/human/acquirer)
-	if(!acquirer || !istype(acquirer) || acquirer.stat == DEAD || (src in acquirer.dna.mutations))
+	if(!istype(acquirer) || acquirer.stat == DEAD || (src in acquirer.dna.mutations))
 		return FALSE
 	if(LAZYLEN(species_allowed) && !LAZYFIND(species_allowed, acquirer.dna.species.id))
 		return FALSE
@@ -128,8 +130,10 @@
 	for(var/datum/mutation/mewtayshun as anything in acquirer.dna.mutations) //check for conflicting powers
 		if(!(mewtayshun.type in conflicts) && !(type in mewtayshun.conflicts))
 			continue
-		to_chat(acquirer, span_warning("You feel your genes resisting something."))
 		return FALSE
+	if(!can_acquire(acquirer))
+		return FALSE
+
 	owner = acquirer
 	dna = acquirer.dna
 	LAZYADD(dna.mutations, src)
@@ -144,6 +148,10 @@
 	grant_power() //we do checks here so nothing about hulk getting magic
 	if(mutation_traits)
 		owner.add_traits(mutation_traits, GENETIC_MUTATION)
+	return TRUE
+
+/// Checks if the mob can acquire the mutation, returning FALSE prevents it
+/datum/mutation/proc/can_acquire(mob/living/carbon/human/acquirer)
 	return TRUE
 
 /datum/mutation/proc/get_visual_indicator()
@@ -168,7 +176,7 @@
 /datum/mutation/proc/on_species_change(datum/source, datum/species/new_species)
 	SIGNAL_HANDLER
 
-	if(!LAZYFIND(species_allowed, new_species.id))
+	if(!LAZYFIND(species_allowed, new_species.id) || !can_acquire(owner))
 		dna.remove_mutation(src, src.sources) // shouldn't have this mutation at all
 
 /datum/mutation/proc/on_update_overlay(datum/source, list/overlay_list)
@@ -192,13 +200,13 @@
 	modified_power.cooldown_time = initial(modified_power.cooldown_time) * GET_MUTATION_ENERGY(src)
 	return modified_power
 
-/datum/mutation/proc/remove_chromosome()
-	stabilizer_coeff = initial(stabilizer_coeff)
-	synchronizer_coeff = initial(synchronizer_coeff)
-	power_coeff = initial(power_coeff)
-	energy_coeff = initial(energy_coeff)
-	can_chromosome = initial(can_chromosome)
-	chromosome_name = null
+/// Called before we apply a chromosome
+/datum/mutation/proc/pre_apply_chromosome()
+	return
+
+/// Called after we apply a chromosome
+/datum/mutation/proc/post_apply_chromosome()
+	setup()
 
 /datum/mutation/proc/grant_power()
 	if(!ispath(power_path) || !owner)

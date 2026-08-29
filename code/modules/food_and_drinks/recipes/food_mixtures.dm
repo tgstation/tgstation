@@ -126,7 +126,7 @@
 	if(!lastkey)
 		return
 	var/mob/living/user = get_mob_by_ckey(lastkey)
-	if(!istype(user) || user.stat || !is_in_sight(user, holder.my_atom))
+	if(!istype(user) || IS_UNCONSCIOUS_OR_CRIT(user) || !is_in_sight(user, holder.my_atom))
 		return
 	user.add_mood_event("why_on_earth_are_you_making_chocolate_pudding", /datum/mood_event/lost_control_of_life)
 
@@ -334,10 +334,20 @@
 
 /datum/chemical_reaction/food/grounding_neutralise
 	results = list(/datum/reagent/consumable/salt = 2)
-	required_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 2, /datum/reagent/consumable/grounding_solution = 1)
+	required_reagents = list(
+		/datum/reagent/consumable/liquidelectricity = 2,
+		/datum/reagent/consumable/grounding_solution = 1,
+	)
 	mix_message = "The mixture lets off a sharp snap as the electricity discharges."
 	mix_sound = 'sound/items/weapons/taser.ogg'
 	reaction_flags = REACTION_INSTANT | REACTION_TAG_ACTIVE
+
+/datum/chemical_reaction/food/grounding_neutralise/pre_reaction_other_checks(datum/reagents/holder)
+	for(var/datum/reagent/consumable/liquidelectricity/liquid_elec in holder.reagent_list)
+		if(LAZYACCESS(liquid_elec.data, BLOOD_DATA_ENRICHED_ETHEREAL))
+			return ..()
+
+	return FALSE
 
 /datum/chemical_reaction/food/martian_batter
 	results = list(/datum/reagent/consumable/martian_batter = 10)

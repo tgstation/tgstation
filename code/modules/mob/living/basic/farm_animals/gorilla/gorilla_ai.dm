@@ -3,7 +3,8 @@
 	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/gorilla/gorilla.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
-		BB_TARGET_MINIMUM_STAT = UNCONSCIOUS,
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_TREAT_UNCONSCIOUS_AS_HARDCRIT = TRUE,
 		BB_EMOTE_KEY = "ooga",
 		BB_EMOTE_CHANCE = 40,
 	)
@@ -17,3 +18,6 @@
 		BB_EMOTE_KEY = "ooga",
 		BB_EMOTE_CHANCE = 60,
 	)
+
+/datum/bt_node/subtree/bar_gorilla_combat
+	behavior_tree_json = "code/modules/mob/living/basic/farm_animals/gorilla/bar_gorilla_combat.bt.json"

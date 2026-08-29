@@ -40,9 +40,10 @@
 		. += span_notice("It looks like you could probably scan and tag it with a <b>[scanner_descriptor]</b>.")
 
 /obj/structure/spawner/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!scanner_taggable || !is_type_in_list(tool, scanner_types))
+	if(scanner_taggable && is_type_in_list(tool, scanner_types))
 		gps_tag(user)
 		return ITEM_INTERACT_SUCCESS
+
 	return NONE
 
 /// Tag the spawner, prefixing its GPS entry with an identifier - or giving it one, if nonexistent.
@@ -202,19 +203,15 @@
 
 /obj/structure/spawner/nether/examine(mob/user)
 	. = ..()
-	if(isskeleton(user) || iszombie(user))
-		. += "A direct link to another dimension full of creatures very happy to see you. [span_nicegreen("You can see your house from here!")]"
-	else
-		. += "A direct link to another dimension full of creatures not very happy to see you. [span_warning("Entering the link would be a very bad idea.")]"
+	. += "A direct link to another dimension full of creatures not very happy to see you. [span_warning("Entering the link would be a very bad idea.")]"
 
 /obj/structure/spawner/nether/attack_hand(mob/user, list/modifiers)
 	. = ..()
-	if(isskeleton(user) || iszombie(user))
-		to_chat(user, span_notice("You don't feel like going home yet..."))
-	else
-		user.visible_message(span_warning("[user] is violently pulled into the link!"), \
-							span_userdanger("Touching the portal, you are quickly pulled through into a world of unimaginable horror!"))
-		contents.Add(user)
+	user.visible_message(
+		span_warning("[user] is violently pulled into the link!"),
+		span_userdanger("Touching the portal, you are quickly pulled through into a world of unimaginable horror!")
+	)
+	contents.Add(user)
 
 /obj/structure/spawner/nether/process(seconds_per_tick)
 	for(var/mob/living/living_mob in contents)

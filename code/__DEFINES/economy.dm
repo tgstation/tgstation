@@ -104,3 +104,9 @@
 //Mood event from minor slot events like winning/losing a few bits.
 #define SLOTS_MOOD_CATEGORY "slots"
 
+/// Minimum amount of exports that can get boosted per economy fire
+#define EXPORT_BOOST_MIN_AMOUNT 2
+/// Maximum amount of exports that can get boosted per economy fire
+#define EXPORT_BOOST_MAX_AMOUNT 4
+/// Amount by which random exports are boosted each SSeconomy tick
+#define EXPORT_BOOST_MULT 3

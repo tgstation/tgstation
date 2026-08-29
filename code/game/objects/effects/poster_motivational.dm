@@ -90,7 +90,7 @@
 		on_seen(examiner)
 
 /datum/proximity_monitor/advanced/quirk_posters/proc/on_seen(mob/living/viewer)
-	if (!viewer.mind || !viewer.mob_mood || (viewer.stat != CONSCIOUS) || viewer.is_blind())
+	if (!viewer.mind || !viewer.mob_mood || (IS_UNCONSCIOUS_OR_CRIT(viewer)) || viewer.is_blind())
 		return
 	if(!viewer.can_read(host, READING_CHECK_LIGHT, TRUE))
 		return
