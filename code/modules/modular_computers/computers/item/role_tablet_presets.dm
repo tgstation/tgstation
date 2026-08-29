@@ -4,7 +4,7 @@
 
 /obj/item/modular_computer/pda/crew
 	///The region that could paint this PDA.
-	var/painting_region = REGION_GENERAL
+	var/painting_region = null
 
 /obj/item/modular_computer/pda/crew/heads
 	icon_state = "/obj/item/modular_computer/pda/crew/heads"
@@ -474,9 +474,10 @@
 /**
  * No Department/Station Trait
  */
-/obj/item/modular_computer/pda/assistant
+/obj/item/modular_computer/pda/crew/assistant
 	name = "assistant PDA"
 	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
+	painting_region = REGION_GENERAL
 	starting_programs = list(
 		/datum/computer_file/program/bounty_board,
 	)
