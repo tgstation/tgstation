@@ -216,7 +216,7 @@ SUBSYSTEM_DEF(id_access)
 		var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
 		centcom_job_templates[trim_path] = trim.assignment
 
-	for(var/obj/item/modular_computer/pda/crew/pda_path as anything in typesof(/obj/item/modular_computer/pda/crew))
+	for(var/obj/item/modular_computer/pda/crew/pda_path as anything in subtypesof(/obj/item/modular_computer/pda/crew))
 		if(isnull(pda_path::painting_region))
 			continue
 
