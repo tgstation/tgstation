@@ -743,6 +743,7 @@
       a z level other then your own.
   - refactor: Fucked with how space parallax/the renderer thinks about "where" it
       is being displayed pretty heavily. Please report any weird visuals!
+  - bugfix: Parallax draws as expected again
   Melbert:
   - rscadd: Adds two item acts - one to portable wind turbines, and one to propeller
       hats - that does something when you act with the items. No spoilers.
