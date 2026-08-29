@@ -1,0 +1,4 @@
+author: "mcbalaam"
+delete-after: True
+changes:
+  - rscadd: "ИИ теперь может запросить смену законов с Центрального Командования в первые 10 минут смены при помощи \"Request Law Change\" вёрба в категории \"AI Commands\"."
