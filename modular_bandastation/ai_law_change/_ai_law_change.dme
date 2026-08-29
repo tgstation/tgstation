@@ -1,0 +1,3 @@
+#include "_ai_law_change.dm"
+
+#include "code/ai_law_change.dm"

@@ -1,6 +1,7 @@
 #include "_defines220.dm"
 
 #include "code/defines/~is_helpers.dm"
+#include "code/defines/ai.dm"
 #include "code/defines/atom_hud.dm"
 #include "code/signals_atom.dm"
 #include "code/signals_item.dm"

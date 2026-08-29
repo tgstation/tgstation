@@ -10,6 +10,7 @@
 #include "admin/_admin.dme"
 #include "aesthetics/_aesthetics.dme"
 #include "aesthetics_sounds/_aesthetics_sounds.dme"
+#include "ai_law_change/_ai_law_change.dme"
 #include "ai_laws/_ai_laws.dme"
 #include "ai_vox/_ai_vox.dme"
 #include "announcers/_announcers.dme"
