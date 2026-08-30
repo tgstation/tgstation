@@ -477,8 +477,8 @@
 /datum/spacevine_mutation/slippery/on_grow(obj/structure/spacevine/vine)
 	vine.AddComponent(/datum/component/slippery, 5 SECONDS, NO_SLIP_WHEN_WALKING|SLIDE)
 
-/datum/spacevine_mutation/slippery/on_hit(obj/structure/spacevine/vine, mob/hitter, obj/item/attacking_item, expected_damage)
-	if(prob(15))
-		attacking_item.AddComponent(/datum/component/slippery_item, fall_catch_chance=25, duration=5 SECONDS)
+/datum/spacevine_mutation/slippery/on_hit(obj/structure/spacevine/vine, obj/item/item,  mob/living/hitter, list/attack_modifiers)
+	if(prob(20) && !(HAS_TRAIT(hitter, TRAIT_PLANT_SAFE)))
+		item?.AddComponent(/datum/component/slippery_item, fall_catch_chance=25, duration=5 SECONDS)
 
-	return expected_damage
+	return ..()
