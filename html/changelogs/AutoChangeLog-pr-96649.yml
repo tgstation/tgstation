@@ -1,0 +1,4 @@
+author: "Ghommie"
+delete-after: True
+changes:
+  - refactor: "Refactored the code for damage and types of damage a little (also armor but not as much). Make sure to report any oddity with it."
