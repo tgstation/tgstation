@@ -105,10 +105,12 @@
 	for(var/datum/spacevine_mutation/mutation in mutations)
 		mutation.on_cross(src, movable)
 
+/obj/structure/spacevine/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	for(var/datum/spacevine_mutation/mutation in mutations)
+		mutation.on_hit(src, attacking_item, user, modifiers, attack_modifiers)
+
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/spacevine/attack_hand(mob/user, list/modifiers)
-	for(var/datum/spacevine_mutation/mutation in mutations)
-		mutation.on_hit(src, user)
 	user_unbuckle_mob(user, user)
 	return ..()
 
