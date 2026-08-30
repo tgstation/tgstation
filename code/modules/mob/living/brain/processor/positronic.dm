@@ -226,7 +226,8 @@
 	if(isspaceturf(loc) || !direction)
 		return
 
-	COOLDOWN_FINISHED(src, move_cooldown)
+	if(!COOLDOWN_FINISHED(src, move_cooldown))
+		return
 	COOLDOWN_START(src, move_cooldown, move_delay)
 
 	// MOVE US
@@ -254,8 +255,8 @@
 		return .
 
 	visible_message(\
-		span_danger("[user] punts [src] hard, sending [p_them()] flying!"),\
-		span_userdanger("[user] punts you like a football!"),\ // it's technically impossible to see this message but you never know
+		span_danger("[user] punts [src] hard, sending [p_them()] flying!"), \
+		span_userdanger("[user] punts you like a football!"), \
 		span_danger("You hear something get hit!"))
 	user.do_attack_animation(src)
 	playsound(src, SFX_PUNCH, 40, TRUE)
