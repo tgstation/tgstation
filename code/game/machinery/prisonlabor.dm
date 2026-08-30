@@ -77,8 +77,7 @@
 /obj/machinery/plate_press/proc/post_press(mob/living/user)
 	if(!user)
 		return
-	var/obj/item/card/id/id_card = user.get_idcard(TRUE)
-	if(!istype(id_card, /obj/item/card/id/advanced/prisoner))
+	if(!istype(user.get_idcard(TRUE), /obj/item/card/id/advanced/prisoner))
 		return // No bonus effects if we're not a prisoner or there's no ID.
 	var/obj/item/card/id/advanced/prisoner/prison_id = id_card
 	prison_id.points += PRISON_LABOR_PLATE
