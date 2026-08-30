@@ -132,8 +132,8 @@
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/stoat)
 	AddElement(/datum/element/update_icon_blocker)
 
-/obj/item/organ/fangs/stout
-	desc = "Stout DNA infused into what was once some normal teeth."
+/obj/item/organ/fangs/stoat
+	desc = "Stoat DNA infused into what was once some normal teeth."
 	bite_low = 7
 	bite_high = 7
 	bite_effectiveness = 20
