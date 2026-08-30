@@ -501,8 +501,8 @@
 	. = ..()
 	var/damage = min(round(0.4 * reac_volume, 0.1), 10)
 	if(exposed_mob.mob_biotypes & MOB_PLANT)
-		// spray bottle emits 5u so it's dealing ~15 dmg per spray
-		if(exposed_mob.adjust_tox_loss(damage * 20, required_biotype = affected_biotype))
+		damage = damage * 10 * weed_damage_multiplier
+		if(exposed_mob.adjust_tox_loss(damage, required_biotype = affected_biotype))
 			return
 
 	if(!(methods & VAPOR) || !ishuman(exposed_mob))
