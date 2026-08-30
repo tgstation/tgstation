@@ -316,7 +316,7 @@
 	brute_loss *= bomb_multi
 	burn_loss *= bomb_multi
 	take_overall_damage(brute_loss,burn_loss)
-	soundbang_act(soundbang_intensity, stun_pwr = 0, ear_damage, deafen_duration, ignore_deafness = TRUE, send_sound = FALSE)
+	soundbang_act(soundbang_intensity, 0, ear_damage, deafen_duration, ignore_deafness = TRUE, send_sound = FALSE)
 
 	//wounding time
 	if(severity >= EXPLODE_HEAVY || !bomb_armor)
