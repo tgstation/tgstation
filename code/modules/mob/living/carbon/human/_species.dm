@@ -47,7 +47,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/digitigrade_customization = DIGITIGRADE_NEVER
 	///If your race uses a non standard bloodtype (A+, O-, AB-, etc). For example, lizards have L type blood.
 	///Reagent that your species bleeds, and what chemical can be used to recover lost blood depend on this
-	var/exotic_bloodtype
+	var/datum/blood_type/exotic_bloodtype
 	///The rate at which blood is passively drained by having the blood deficiency quirk. Some races such as slimepeople can regen their blood at different rates so this is to account for that
 	var/blood_deficiency_drain_rate = BLOOD_REGEN_FACTOR + BLOOD_DEFICIENCY_MODIFIER // slightly above the regen rate so it slowly drains instead of regenerates.
 	///What the species drops when gibbed by a gibber machine.
@@ -755,9 +755,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/obj/item/organ/brain/brain = user.get_organ_slot(ORGAN_SLOT_BRAIN)
 	var/obj/item/bodypart/attacking_bodypart = attacker_style?.get_attacking_limb(user, target) || brain?.get_attacking_limb(target) || user.get_active_hand()
 
-	// Whether or not we get some protein for a successful attack. Nom.
-	var/biting = FALSE
-
 	var/atk_verb_index = rand(1, length(attacking_bodypart.unarmed_attack_verbs))
 	var/atk_verb = attacking_bodypart.unarmed_attack_verbs[atk_verb_index]
 	var/atk_verb_continuous = "[atk_verb]s"
@@ -767,9 +764,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/atk_effect = attacking_bodypart.unarmed_attack_effect
 
 	if(atk_effect == ATTACK_EFFECT_BITE)
-		if(!user.is_mouth_covered(ITEM_SLOT_MASK))
-			biting = TRUE
-		else if(user.get_active_hand()) //In the event we can't bite, emergency swap to see if we can attack with a hand.
+		if(user.is_mouth_covered(ITEM_SLOT_MASK) && (user.get_active_hand())) //In the event we can't bite, emergency swap to see if we can attack with a hand.
 			attacking_bodypart = user.get_active_hand()
 			atk_verb_index = rand(1, length(attacking_bodypart.unarmed_attack_verbs))
 			atk_verb = attacking_bodypart.unarmed_attack_verbs[atk_verb_index]
@@ -907,13 +902,8 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			target.force_say()
 		log_combat(user, target, "punched")
 
-	if(user != target && biting && (target.mob_biotypes & MOB_ORGANIC)) //Good for you. You probably just ate someone alive.
-		var/datum/reagents/tasty_meal = new()
-		tasty_meal.add_reagent(/datum/reagent/consumable/nutriment/protein, round(damage/3, 1))
-		tasty_meal.trans_to(user, tasty_meal.total_volume, transferred_by = user, methods = INGEST)
-
-	SEND_SIGNAL(target, COMSIG_HUMAN_GOT_PUNCHED, user, damage, attack_type, affecting, final_armor_block, kicking, limb_sharpness)
-	SEND_SIGNAL(user, COMSIG_HUMAN_PUNCHED, target, damage, attack_type, affecting, final_armor_block, kicking, limb_sharpness)
+	SEND_SIGNAL(target, COMSIG_HUMAN_GOT_PUNCHED, user, damage, attack_type, atk_effect, affecting, final_armor_block, limb_sharpness)
+	SEND_SIGNAL(user, COMSIG_HUMAN_PUNCHED, target, damage, attack_type, atk_effect, affecting, final_armor_block, limb_sharpness)
 
 	// If our target is staggered and has sustained enough damage, we can apply a randomly determined status effect to inflict when we punch them.
 	// The effects are based on the punching effectiveness of our attacker. Some effects are not reachable by the average human, and require augmentation to reach or being a species with a heavy punch effectiveness.

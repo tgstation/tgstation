@@ -1,5 +1,5 @@
 /obj/item/mod/core
-	name = "MOD core"
+	name = "\improper MOD core"
 	desc = "A non-functional MOD core. Inform the admins if you see this."
 	icon = 'icons/obj/clothing/modsuit/mod_construction.dmi'
 	icon_state = "mod-core"
@@ -66,7 +66,7 @@
 		([round((100 * charge_amount) / max_charge_amount, 1)]%)"
 
 /obj/item/mod/core/infinite
-	name = "MOD infinite core"
+	name = "\improper MOD infinite core"
 	icon_state = "mod-core-infinite"
 	desc = "A fusion core using the rare Fixium to sustain enough energy for the lifetime of the MOD's user. \
 		This might be because of the slowly killing poison inside, but those are just rumors."
@@ -99,7 +99,7 @@
 	return "Infinite"
 
 /obj/item/mod/core/standard
-	name = "MOD standard core"
+	name = "\improper MOD standard core"
 	icon_state = "mod-core-standard"
 	desc = "Growing in the most lush, fertile areas of the planet Sprout, there is a crystal known as the Heartbloom. \
 		These rare, organic piezoelectric crystals are of incredible cultural significance to the artist castes of the \
@@ -295,7 +295,7 @@
 		mod.update_charge_alert()
 
 /obj/item/mod/core/ethereal
-	name = "MOD ethereal core"
+	name = "\improper MOD ethereal core"
 	icon_state = "mod-core-ethereal"
 	desc = "A reverse engineered core of a Modular Outerwear Device. Using natural liquid electricity from Ethereals, \
 		preventing the need to use external sources to convert electric charge. As the suits are naturally charged by \
@@ -360,7 +360,7 @@
 #define PLASMA_CORE_SHEET_CHARGE (2 * STANDARD_CELL_CHARGE)
 
 /obj/item/mod/core/plasma
-	name = "MOD plasma core"
+	name = "\improper MOD plasma core"
 	icon_state = "mod-core-plasma"
 	desc = "Nanotrasen's attempt at capitalizing on their plasma research. These plasma cores are refueled \
 		through plasma fuel, allowing for easy continued use by their mining squads."
@@ -445,7 +445,7 @@
 #undef PLASMA_CORE_SHEET_CHARGE
 
 /obj/item/mod/core/plasma/lavaland
-	name = "MOD plasma flower core"
+	name = "\improper MOD plasma flower core"
 	icon_state = "mod-core-plasma-flower"
 	desc = "A strange flower from the desolate wastes of lavaland. It pulses with a strange purple glow.  \
 		The wires coming out of it could be hooked into a MODsuit."
@@ -499,7 +499,7 @@
 	QDEL_IN(flower_boots, 1 SECONDS)
 
 /obj/item/mod/core/soul
-	name = "MOD soul shard core"
+	name = "\improper MOD soul shard core"
 	desc = "A soul shard haphazardly jammed into a hand-crafted MOD core frame."
 	icon = 'icons/map_icons/items/_item.dmi'
 	icon_state = "/obj/item/mod/core/soul"
@@ -662,3 +662,100 @@
 /obj/item/mod/core/soul/wizard
 	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	theme = THEME_WIZARD
+
+/obj/item/mod/core/candela
+	name = "\improper MOD luminetworked core"
+	desc = "A light, low-capacity networked MOD core capable of recharging from the \"Candela\" navigation network, offering a consistent supply of power for forward-operating miners."
+	icon_state = "mod-core-candela"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.05, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.05, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT)
+	/// How much charge we can store.
+	var/max_charge = 3 * STANDARD_CELL_CHARGE
+	/// How much charge we are currently storing.
+	var/charge = 3 * STANDARD_CELL_CHARGE
+	/// Amount of charge recovered per second when linked to a Candela network
+	var/charge_recovery_rate = STANDARD_CELL_CHARGE / 10 // 30 seconds to go from empty to full
+	/// Our network handler
+	var/datum/candela_item_handler/handler = null
+
+/obj/item/mod/core/candela/Initialize(mapload)
+	. = ..()
+	handler = new(src)
+
+/obj/item/mod/core/candela/Destroy()
+	QDEL_NULL(handler)
+	return ..()
+
+/obj/item/mod/core/candela/install(obj/item/mod/control/mod_unit)
+	. = ..()
+	RegisterSignal(mod_unit, COMSIG_MOD_WEARER_SET, PROC_REF(on_mod_wearer_set))
+	RegisterSignal(mod_unit, COMSIG_MOD_WEARER_UNSET, PROC_REF(on_mod_wearer_unset))
+
+/obj/item/mod/core/candela/uninstall()
+	UnregisterSignal(mod, list(COMSIG_MOD_WEARER_SET, COMSIG_MOD_WEARER_UNSET))
+	return ..()
+
+/obj/item/mod/core/candela/process(seconds_per_tick)
+	if (charge >= max_charge)
+		return
+
+	if (!handler.network)
+		handler.locate_closest_network()
+
+	if (handler.network?.powered & CANDELA_NETWORK_POWERED)
+		add_charge(charge_recovery_rate * seconds_per_tick)
+
+/obj/item/mod/core/candela/proc/on_mod_wearer_set(datum/source, mob/living/wearer)
+	SIGNAL_HANDLER
+
+	handler.set_owner(wearer)
+	START_PROCESSING(SSprocessing, src)
+
+/obj/item/mod/core/candela/proc/on_mod_wearer_unset(datum/source)
+	SIGNAL_HANDLER
+
+	handler.set_owner(null)
+	STOP_PROCESSING(SSprocessing, src)
+
+/obj/item/mod/core/candela/charge_source()
+	return src
+
+/obj/item/mod/core/candela/charge_amount()
+	return charge
+
+/obj/item/mod/core/candela/max_charge_amount()
+	return max_charge
+
+/obj/item/mod/core/candela/add_charge(amount)
+	charge = min(max_charge, charge + amount)
+	mod.update_charge_alert()
+	return TRUE
+
+/obj/item/mod/core/candela/subtract_charge(amount)
+	amount = min(amount, charge)
+	charge -= amount
+	mod.update_charge_alert()
+	return amount
+
+/obj/item/mod/core/candela/check_charge(amount)
+	return charge_amount() >= amount
+
+/obj/item/mod/core/candela/get_charge_icon_state()
+	switch(round(charge_amount() / max_charge_amount(), 0.01))
+		if(0.75 to INFINITY)
+			return SPACESUIT_CELL_HIGH
+		if(0.5 to 0.75)
+			return SPACESUIT_CELL_MID
+		if(0.25 to 0.5)
+			return SPACESUIT_CELL_LOW
+		if(0.02 to 0.25)
+			return SPACESUIT_CELL_VERY_LOW
+
+	return SPACESUIT_CELL_EMPTY
+
+/obj/item/mod/core/candela/get_chargebar_color()
+	switch(round(charge_amount() / max_charge_amount(), 0.01))
+		if(-INFINITY to 0.33)
+			return "bad"
+		if(0.33 to INFINITY)
+			return "cyan"
+

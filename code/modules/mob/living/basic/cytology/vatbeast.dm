@@ -60,7 +60,7 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_VATBEAST, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/basic/vatbeast/get_bloodtype()
-	return get_blood_type(BLOOD_TYPE_LIZARD) // Green and alien
+	return get_blood_type(/datum/blood_type/lizard) // Green and alien
 
 /// Attack people and slap them
 /datum/ai_controller/basic_controller/vatbeast

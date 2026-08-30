@@ -541,7 +541,7 @@
 
 	return ..()
 
-/datum/status_effect/stabilized/purple/get_examine_text()
+/datum/status_effect/stabilized/purple/get_examine_text(mob/examiner)
 	if(healed_last_tick)
 		return span_warning("[owner.p_They()] [owner.p_are()] regenerating slowly, purplish goo filling in small injuries!")
 
@@ -587,7 +587,7 @@
 	var/cooldown = 10
 	var/max_cooldown = 10
 
-/datum/status_effect/stabilized/yellow/get_examine_text()
+/datum/status_effect/stabilized/yellow/get_examine_text(mob/examiner)
 	return span_warning("Nearby electronics seem just a little more charged wherever [owner.p_they()] go[owner.p_es()].")
 
 /datum/status_effect/stabilized/yellow/tick(seconds_between_ticks)
@@ -634,7 +634,7 @@
 	REMOVE_TRAIT(owner, TRAIT_RESISTHEATHANDS, TRAIT_STATUS_EFFECT(id))
 	QDEL_NULL(fire)
 
-/datum/status_effect/stabilized/darkpurple/get_examine_text()
+/datum/status_effect/stabilized/darkpurple/get_examine_text(mob/examiner)
 	return span_notice("[owner.p_Their()] fingertips burn brightly!")
 
 /datum/status_effect/stabilized/darkblue
@@ -823,7 +823,7 @@
 	return ..()
 
 // Only occasionally give examiners a warning.
-/datum/status_effect/stabilized/green/get_examine_text()
+/datum/status_effect/stabilized/green/get_examine_text(mob/examiner)
 	if(prob(50))
 		return span_warning("[owner.p_They()] look[owner.p_s()] a bit green and gooey...")
 
@@ -931,7 +931,7 @@
 		qdel(linked_extract)
 	return ..()
 
-/datum/status_effect/stabilized/oil/get_examine_text()
+/datum/status_effect/stabilized/oil/get_examine_text(mob/examiner)
 	return span_warning("[owner.p_They()] smell[owner.p_s()] of sulfur and oil!")
 
 /// How much damage is dealt per healing done for the stabilized back.
@@ -970,7 +970,7 @@
 	to_chat(owner, span_boldnotice("You feel your hands melt around [draining]'s neck as you start to drain [draining.p_them()] of [draining.p_their()] life!"))
 	to_chat(draining, span_userdanger("[owner]'s hands melt around your neck as you can feel your life starting to drain away!"))
 
-/datum/status_effect/stabilized/black/get_examine_text()
+/datum/status_effect/stabilized/black/get_examine_text(mob/examiner)
 	var/mob/living/draining = draining_ref?.resolve()
 	if(!draining)
 		return null
@@ -1028,7 +1028,7 @@
 	id = "stabilizedadamantine"
 	colour = SLIME_TYPE_ADAMANTINE
 
-/datum/status_effect/stabilized/adamantine/get_examine_text()
+/datum/status_effect/stabilized/adamantine/get_examine_text(mob/examiner)
 	return span_warning("[owner.p_They()] [owner.p_have()] strange metallic coating on [owner.p_their()] skin.")
 
 /datum/status_effect/stabilized/gold

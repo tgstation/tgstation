@@ -265,7 +265,7 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 		for(var/datum/supply_order/our_order as anything in buying_account_orders)
 			for (var/item in our_order.pack.contains)
-				misc_contents[buyer] += item
+				LAZYADD(misc_contents[buyer], item)
 			misc_costs[buyer] += our_order.pack.cost
 			misc_order_num[buyer] = "[misc_order_num[buyer]]#[our_order.id] "
 

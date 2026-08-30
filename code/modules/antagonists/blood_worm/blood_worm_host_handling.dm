@@ -21,9 +21,11 @@
 	RegisterSignal(host, COMSIG_LIVING_LIFE, PROC_REF(on_host_life))
 	RegisterSignal(host, COMSIG_LIVING_ADJUST_OXY_DAMAGE, PROC_REF(on_host_adjust_oxy_damage))
 	RegisterSignal(host, COMSIG_LIVING_PRE_UPDATE_BLOOD_STATUS, PROC_REF(on_host_pre_update_blood_status))
-	RegisterSignal(host, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(on_host_get_status_tab_items))
 	client?.set_stat_panel()
 	RegisterSignal(host, COMSIG_MOB_EXAMINING, PROC_REF(on_host_examining))
+
+	var/atom/movable/screen/alert/bloodworm_info/info_alert = host.throw_alert(ALERT_BLOODWORM_INFO, /atom/movable/screen/alert/bloodworm_info)
+	info_alert.worm_owner = src
 
 	START_PROCESSING(SSfastprocess, src)
 
@@ -135,6 +137,7 @@
 	sync_health(already_ejecting = TRUE)
 
 	host.hud_used?.remove_screen_object(HUD_MOB_BLOOD_LEVEL)
+	host.clear_alert(ALERT_BLOODWORM_INFO)
 
 	host.set_blood_volume(0)
 

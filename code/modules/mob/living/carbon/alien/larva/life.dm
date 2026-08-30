@@ -3,10 +3,10 @@
 /mob/living/carbon/alien/larva/Life(seconds_per_tick = SSMOBS_DT)
 	if(HAS_TRAIT(src, TRAIT_NO_TRANSFORM))
 		return
-	if(!..() || HAS_TRAIT(src, TRAIT_STASIS) || (amount_grown >= max_grown))
+	if(!..() || HAS_TRAIT(src, TRAIT_STASIS) || (amount_grown >= XENOMORPH_MAX_GROWTH))
 		return // We're dead, in stasis, or already grown.
 	// GROW!
-	amount_grown = min(amount_grown + (0.5 * seconds_per_tick), max_grown)
+	amount_grown = min(amount_grown + (0.5 * seconds_per_tick), XENOMORPH_MAX_GROWTH)
 	update_icons()
 
 /mob/living/carbon/alien/larva/on_knockedout_trait_loss(datum/source)

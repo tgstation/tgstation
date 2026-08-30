@@ -35,9 +35,9 @@
 	)
 
 /datum/action/item_action/toggle_flight/Remove(mob/remove_from)
-	. = ..()
 	if(HAS_TRAIT_FROM(remove_from, TRAIT_MOVE_FLOATING, SHOES_TRAIT))
 		switch_flight()
+	return ..()
 
 /datum/action/item_action/toggle_flight/do_effect(trigger_flags)
 	if(!ishuman(owner))

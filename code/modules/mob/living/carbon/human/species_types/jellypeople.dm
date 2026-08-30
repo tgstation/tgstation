@@ -21,7 +21,7 @@
 	mutanteyes = /obj/item/organ/eyes/jelly
 	mutantheart = null
 	meat = /obj/item/food/meat/slab/human/mutant/slime
-	exotic_bloodtype = BLOOD_TYPE_TOX
+	exotic_bloodtype = /datum/blood_type/slime
 	blood_deficiency_drain_rate = JELLY_REGEN_RATE + BLOOD_DEFICIENCY_MODIFIER
 	coldmod = 6   // = 3x cold damage
 	heatmod = 0.5 // = 1/4x heat damage
@@ -148,6 +148,19 @@
 		SPECIES_PERK_NAME = "Jelly Blood",
 		SPECIES_PERK_DESC = "[plural_form] don't have blood, but instead have toxic [initial(blood_type.reagent_type.name)]! \
 			Jelly is extremely important, as losing it will cause you to lose limbs. Having low jelly will make medical treatment very difficult.",
+	))
+
+	return to_add
+
+/datum/species/jelly/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(list(
+		SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+		SPECIES_PERK_ICON = FA_ICON_PERSON_RUNNING,
+		SPECIES_PERK_NAME = "Jelly Body",
+		SPECIES_PERK_DESC = "[plural_form] have bodies of malleable Jelly. \
+			You can squeeze through small cracks like grilles, provided you're not wearing clothes.",
 	))
 
 	return to_add

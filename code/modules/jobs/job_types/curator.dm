@@ -34,6 +34,7 @@
 
 	voice_of_god_silence_power = 3
 	rpg_title = "Veteran Adventurer"
+	tgui_icon = FA_ICON_BOOK
 
 /datum/outfit/job/curator
 	name = "Curator"
