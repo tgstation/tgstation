@@ -69,10 +69,14 @@ GAME_VERB_SRC_DESC(/obj/item/brain_processor, Toggle_Listening, usr.loc, "Toggle
 	to_chat(brainmob, span_notice("Radio is [radio.get_listening() ? "now" : "no longer"] receiving broadcast."))
 
 /// Transfers the user into the brain processor, preserving its information (such as name and DNA if applicable)
+/// Does not transfer mind or ckey, this must be handled by the user of this proc.
 /obj/item/brain_processor/proc/transfer_identity(mob/living/transferred_user)
 	if(!brainmob)
 		set_brainmob(new /mob/living/brain(src))
+
 	set_name(transferred_user.real_name)
+	brainmob.timeofdeath = transferred_user.timeofdeath
+
 	if(astype(transferred_user, /mob/living/carbon)?.has_dna())
 		var/mob/living/carbon/carbon_user = transferred_user
 		brainmob.stored_dna ||= new /datum/dna/stored(brainmob)
