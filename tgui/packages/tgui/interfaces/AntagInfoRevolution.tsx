@@ -195,8 +195,8 @@ export const AntagInfoRevolution = () => {
                 <Stack.Item>
                   <Stack vertical>
                     <Stack.Item italic>
-                      Set a conversion objective: This text is shown only to
-                      newly converted revolutionaries as a guideline.
+                      Set a conversion guideline: This text is shown only to
+                      newly converted revolutionaries.
                     </Stack.Item>
                     <Stack.Item>
                       <Input
