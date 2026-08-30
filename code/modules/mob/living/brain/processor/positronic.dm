@@ -190,9 +190,9 @@
 /obj/item/brain_processor/positronic/transfer_identity(mob/living/transferred_user)
 	. = ..()
 	// this is a little awkward...
-	transferred_user.set_assigned_role(SSjob.get_job_type(posibrain_job_path))
-	transferred_user.remove_all_antag_datums()
-	transferred_user.wipe_memory()
+	transferred_user.mind.set_assigned_role(SSjob.get_job_type(posibrain_job_path))
+	transferred_user.mind.remove_all_antag_datums()
+	transferred_user.mind.wipe_memory()
 	update_appearance(UPDATE_ICON)
 
 /obj/item/brain_processor/positronic/display
