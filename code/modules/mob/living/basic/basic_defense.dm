@@ -119,7 +119,7 @@
 	if(!. || QDELETED(src))
 		return FALSE
 	var/bomb_armor = getarmor(null, BOMB)
-	var/bomb_multi = clamp(1 - bomb_armor/200, 0, 1) // Scales linearly down to 2/3 damage at 100 armor
+	var/bomb_multi = clamp(1 - bomb_armor/200, 0, 1) // Scales linearly down to 50% damage at 100 armor
 	var/bloss
 	switch(severity)
 		if (EXPLODE_DEVASTATE)
