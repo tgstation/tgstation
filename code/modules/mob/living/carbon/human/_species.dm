@@ -758,17 +758,18 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/atk_effect = attacking_bodypart.unarmed_attack_effect
 
 	if(atk_effect == ATTACK_EFFECT_BITE)
-		if(user.is_mouth_covered(ITEM_SLOT_MASK) && (user.get_active_hand())) //In the event we can't bite, emergency swap to see if we can attack with a hand.
-			attacking_bodypart = user.get_active_hand()
-			atk_verb_index = rand(1, length(attacking_bodypart.unarmed_attack_verbs))
-			atk_verb = attacking_bodypart.unarmed_attack_verbs[atk_verb_index]
-			atk_verb_continuous = "[atk_verb]s"
-			if (length(attacking_bodypart.unarmed_attack_verbs_continuous) >= atk_verb_index) // Just in case
-				atk_verb_continuous = attacking_bodypart.unarmed_attack_verbs_continuous[atk_verb_index]
-			atk_effect = attacking_bodypart.unarmed_attack_effect
-		else  //Nothing? Okay. Fail.
-			user.balloon_alert(user, "can't attack!")
-			return FALSE
+		if(user.is_mouth_covered(ITEM_SLOT_MASK))
+			if((user.get_active_hand())) //In the event we can't bite, emergency swap to see if we can attack with a hand.
+				attacking_bodypart = user.get_active_hand()
+				atk_verb_index = rand(1, length(attacking_bodypart.unarmed_attack_verbs))
+				atk_verb = attacking_bodypart.unarmed_attack_verbs[atk_verb_index]
+				atk_verb_continuous = "[atk_verb]s"
+				if (length(attacking_bodypart.unarmed_attack_verbs_continuous) >= atk_verb_index) // Just in case
+					atk_verb_continuous = attacking_bodypart.unarmed_attack_verbs_continuous[atk_verb_index]
+				atk_effect = attacking_bodypart.unarmed_attack_effect
+			else  //Nothing? Okay. Fail.
+				user.balloon_alert(user, "can't attack!")
+				return FALSE
 
 	user.do_attack_animation(target, atk_effect)
 
