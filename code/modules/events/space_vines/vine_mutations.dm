@@ -420,10 +420,10 @@
 		vine.set_density(TRUE)
 	vine.modify_max_integrity(100)
 
-/datum/spacevine_mutation/hardened/on_hit(obj/structure/spacevine/vine, mob/living/hitter, obj/item/item, expected_damage)
+/datum/spacevine_mutation/hardened/on_hit(obj/structure/spacevine/vine, obj/item/item,  mob/living/hitter, list/attack_modifiers)
 	if(item?.get_sharpness())
-		return expected_damage * 0.5
-	return expected_damage
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 0.5)
+	return ..()
 
 /datum/spacevine_mutation/hardened/equip_venus_trap(mob/living/basic/venus_human_trap/venus_trap)
 	venus_trap.health = initial(venus_trap.health) * 1.5
