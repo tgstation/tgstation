@@ -23,7 +23,7 @@
 	if(!(target.flags_1 & PREVENT_CONTENTS_EXPLOSION_1)) { \
 		target.contents_explosion(##args);\
 	};\
-	if(!(SEND_SIGNAL(target, COMSIG_ATOM_PRE_EX_ACT, ##args) & COMPONENT_CANCEL_EX_ACT)) { \
+	if(!(SEND_SIGNAL(target, COMSIG_ATOM_PRE_EX_ACT, ##args) & COMPONENT_CANCEL_EX_ACT) && !(HAS_TRAIT(target, TRAIT_BOMBIMMUNE))) { \
 		SEND_SIGNAL(target, COMSIG_ATOM_EX_ACT, ##args);\
 		target.ex_act(##args);\
 	}
