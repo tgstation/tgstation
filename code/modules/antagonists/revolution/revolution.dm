@@ -331,7 +331,7 @@
 	var/conversion_formatted = span_hypnophrase(set_conversion_objective)
 	var/hint_formatted = span_warning("This is a guideline instilled upon you from your (new) leader - \
 		while you are expected to follow it where possible, it is not a strict order. \
-		Further orders from your leaders may supersede this.")
+		Further orders from your (new) leader(s) may supersede this.")
 
 	to_chat(rev_mind.current, fieldset_block(span_warning("A directive echoes through your mind..."), "[conversion_formatted]<br>[hint_formatted]", "boxed_message red_box"))
 	rev_mind.current.log_message("has been given a conversion guideline from [key_name(owner.current)]: [set_conversion_objective]", color = COLOR_CULT_RED)
