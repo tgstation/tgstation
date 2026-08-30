@@ -46,7 +46,7 @@
 	return
 
 /datum/spacevine_mutation/proc/on_hit(obj/structure/spacevine/vine, obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	. = expected_damage
+	return
 
 /datum/spacevine_mutation/proc/on_cross(obj/structure/spacevine/vine, mob/crosser)
 	return
@@ -160,10 +160,10 @@
 	severity = SEVERITY_ABOVE_AVERAGE
 	venus_flavor_text = "Heat Resistance - Immune to extreme heat and fire"
 
-/datum/spacevine_mutation/fire_proof/on_hit(obj/structure/spacevine/vine, mob/hitter, obj/item/attacking_item, expected_damage)
-	if(attacking_item && attacking_item.damtype == BURN)
-		return 0
-	return expected_damage
+/datum/spacevine_mutation/fire_proof/on_hit(obj/structure/spacevine/vine, obj/item/item,  mob/living/hitter, list/modifiers, list/attack_modifiers)
+	if(item?.damtype == BURN)
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 0)
+	return ..()
 
 /datum/spacevine_mutation/fire_proof/on_grow(obj/structure/spacevine/vine)
 	vine.resistance_flags |= FIRE_PROOF
@@ -382,22 +382,20 @@
 		if(victim.apply_damage(15, BRUTE, blocked = victim.run_armor_check(attack_flag = MELEE, silent = TRUE), spread_damage = TRUE))
 			to_chat(victim, span_danger("You cut yourself on the thorny vines."))
 
-/datum/spacevine_mutation/thorns/on_hit(obj/structure/spacevine/vine, mob/living/hitter, obj/item/item, expected_damage)
+/datum/spacevine_mutation/thorns/on_hit(obj/structure/spacevine/vine, obj/item/item,  mob/living/hitter, list/modifiers, list/attack_modifiers)
 	if(isvineimmune(hitter) || HAS_TRAIT(hitter, TRAIT_PIERCEIMMUNE) || HAS_TRAIT(hitter, TRAIT_PLANT_SAFE))
-		return expected_damage
+		return
 
 	if(iscarbon(hitter))
 		var/mob/living/carbon/carbon_victim = hitter
 		for(var/obj/item/clothing/worn_item in carbon_victim.get_equipped_items())
 			if((worn_item.body_parts_covered & HANDS) && (worn_item.clothing_flags & THICKMATERIAL))
-				return expected_damage
+				return
 
 	if(prob(THORN_MUTATION_CUT_PROB))
 		var/mob/living/victim = hitter
 		if(victim.apply_damage(15, BRUTE, blocked = victim.run_armor_check(attack_flag = MELEE, silent = TRUE), spread_damage = TRUE))
 			to_chat(victim, span_danger("You cut yourself on the thorny vines."))
-
-	return expected_damage
 
 /datum/spacevine_mutation/thorns/equip_venus_trap(mob/living/basic/venus_human_trap/venus_trap)
 	venus_trap.melee_damage_lower = initial(venus_trap.melee_damage_lower) * 0.5
@@ -420,10 +418,9 @@
 		vine.set_density(TRUE)
 	vine.modify_max_integrity(100)
 
-/datum/spacevine_mutation/hardened/on_hit(obj/structure/spacevine/vine, obj/item/item,  mob/living/hitter, list/attack_modifiers)
+/datum/spacevine_mutation/hardened/on_hit(obj/structure/spacevine/vine, obj/item/item,  mob/living/hitter, list/modifiers, list/attack_modifiers)
 	if(item?.get_sharpness())
-		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 0.5)
-	return ..()
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 0.125)
 
 /datum/spacevine_mutation/hardened/equip_venus_trap(mob/living/basic/venus_human_trap/venus_trap)
 	venus_trap.health = initial(venus_trap.health) * 1.5
@@ -477,9 +474,12 @@
 /datum/spacevine_mutation/slippery/on_grow(obj/structure/spacevine/vine)
 	vine.AddComponent(/datum/component/slippery, 5 SECONDS, NO_SLIP_WHEN_WALKING|SLIDE)
 
-/datum/spacevine_mutation/slippery/on_hit(obj/structure/spacevine/vine, obj/item/item,  mob/living/hitter, list/attack_modifiers)
-	if(prob(20) && !(HAS_TRAIT(hitter, TRAIT_PLANT_SAFE)))
-		item?.AddComponent(/datum/component/slippery_item, fall_catch_chance=25, duration=5 SECONDS)
+/datum/spacevine_mutation/slippery/on_hit(obj/structure/spacevine/vine, obj/item/item,  mob/living/hitter, list/modifiers, list/attack_modifiers)
+	if(isvineimmune(hitter) || HAS_TRAIT(hitter, TRAIT_PLANT_SAFE))
+		return
+
+	if(prob(20))
+		item?.AddComponent(/datum/component/slippery_item, fall_chance=25, fall_catch_chance=25, duration=5 SECONDS)
 
 /datum/spacevine_mutation/conductive
 	name = "Conductive"
