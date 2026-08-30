@@ -29,6 +29,7 @@
 /obj/projectile/plasma/adv
 	damage = 7
 	range = 7
+	speed = 2
 	mine_range = 3
 	wound_bonus = 3
 
