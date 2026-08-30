@@ -211,9 +211,9 @@
 	base_icon_state = "spheribrain"
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 4.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3.2, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 2.5)
 	/// Delay between movements
-	var/move_delay = 0.5 SECONDS
+	VAR_PROTECTED/move_delay = 0.5 SECONDS
 	/// when can we move again?
-	var/can_move
+	COOLDOWN_DECLARE(move_cooldown)
 
 /obj/item/brain_processor/positronic/sphere/Initialize(mapload, autoping)
 	. = ..()
@@ -222,25 +222,24 @@
 	transform = matrix.Scale(0.8, 0.8)
 
 /obj/item/brain_processor/positronic/sphere/relaymove(mob/living/user, direction)
+	. = ..()
 	if(isspaceturf(loc) || !direction)
 		return
 
-	if(can_move >= world.time)
-		return
-	can_move = world.time + move_delay
-
-	// ESCAPE PRISON
-	if(istype(loc, /obj/item/storage) && prob(25))
-		var/obj/item/item = pick(loc.contents)
-		item.forceMove(loc.drop_location()) //throw stuff out of the inventory till we free ourselves!
-		playsound(src, SFX_RUSTLE, 30, TRUE)
-		return
+	COOLDOWN_FINISHED(src, move_cooldown)
+	COOLDOWN_START(src, move_cooldown, move_delay)
 
 	// MOVE US
 	if(isturf(loc))
-		can_move = world.time + move_delay
 		try_step_multiz(direction)
 		SpinAnimation(move_delay, 1, direction == NORTH || direction == EAST)
+	// ESCAPE PRISON
+	else if(istype(loc, /obj/item/storage))
+		balloon_alert(src, "shuffle shuffle...")
+		if(prob(25))
+			var/obj/item/item = pick(loc.contents) // toss something out (which could be us!)
+			item.forceMove(loc.drop_location())
+			playsound(src, SFX_RUSTLE, 30, TRUE)
 
 /obj/item/brain_processor/positronic/sphere/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
@@ -249,14 +248,20 @@
 		do_sweep(src, brainmob, loc, get_dir(old_loc, loc)) //movement dir doesnt work on objects
 		anchored = FALSE
 
-/// Punt the shit across the room
 /obj/item/brain_processor/positronic/sphere/attack_hand_secondary(mob/user, list/modifiers)
 	. = ..()
 	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
 		return .
-	throw_at(get_edge_target_turf(src, get_dir(user, src)), 7, 1, user)
+
+	visible_message(\
+		span_danger("[user] punts [src] hard, sending [p_them()] flying!"),\
+		span_userdanger("[user] punts you like a football!"),\ // it's technically impossible to see this message but you never know
+		span_danger("You hear something get hit!"))
 	user.do_attack_animation(src)
-	can_move = world.time + move_delay //pweeze stawp
+	playsound(src, SFX_PUNCH, 40, TRUE)
+
+	throw_at(get_edge_target_turf(src, get_dir(user, src)), 7, 1, user, TRUE)
+	COOLDOWN_START(src, move_cooldown, move_delay) //pweeze stawp
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
 #undef POSIBRAIN_NAG_COOLDOWN
