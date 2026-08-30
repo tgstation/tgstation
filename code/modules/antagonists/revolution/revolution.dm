@@ -328,7 +328,7 @@
 		addtimer(CALLBACK(src, PROC_REF(report_conversion_objective), rev_mind, set_conversion_objective), 3 SECONDS, TIMER_DELETE_ME)
 		return
 
-	var/conversion_formatted = span_hypnophrase(set_conversion_objective)
+	var/conversion_formatted = span_big(span_hypnophrase(set_conversion_objective))
 	var/hint_formatted = span_warning("This is a guideline instilled upon you from your (new) leader - \
 		while you are expected to follow it where possible, it is not a strict order. \
 		Further orders from your (new) leader(s) may supersede this.")
