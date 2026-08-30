@@ -81,6 +81,11 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/brain_processor/positronic/attack_self(mob/user)
+	. = ..()
+	if(.)
+		return
+	. = TRUE
+	
 	if(is_occupied())
 		balloon_alert(user, "already active!")
 		return
@@ -93,6 +98,7 @@
 
 	to_chat(user, span_notice("You press the manual activation button and start [src]'s boot process."))
 	start_requesting_ghost()
+	return
 
 /obj/item/brain_processor/positronic/attack_ghost(mob/user)
 	if(is_occupied())
