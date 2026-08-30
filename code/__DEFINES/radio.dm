@@ -173,3 +173,13 @@
 /// Past this amount of compression, the resulting gibberish will actually
 /// replace characters, making it even harder to understand.
 #define COMPRESSION_REPLACE_CHARACTER_THRESHOLD 30
+
+// Voice description defines (mainly used to indicate gender at the moment).
+/// Description for a plural voice.
+#define VOICE_DESCRIPTION_PLURAL "Their voice sounds gender neutral"
+/// Description for a gender neutral voice.
+#define VOICE_DESCRIPTION_NEUTER "Its voice sounds gender neutral."
+/// Description for a feminine voice.
+#define VOICE_DESCRIPTION_FEMININE "Her voice sounds feminine."
+/// Description for a masculine voice.
+#define VOICE_DESCRIPTION_MASCULINE "His voice sounds masculine."
