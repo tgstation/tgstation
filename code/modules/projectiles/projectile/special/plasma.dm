@@ -1,7 +1,7 @@
 /obj/projectile/plasma
 	name = "plasma blast"
 	icon_state = "plasmacutter"
-	damage_type = BURN
+	damage_type = BRUTE
 	armor_flag = ENERGY
 	damage = 5
 	range = 3
@@ -28,8 +28,10 @@
 
 /obj/projectile/plasma/adv
 	damage = 7
-	range = 4
-	mine_range = 6
+	range = 10
+	mine_range = 0
+	dismemberment = 25
+	wound_bonus = 8
 
 /obj/projectile/plasma/adv/mech
 	damage = 10
