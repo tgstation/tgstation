@@ -45,7 +45,7 @@
 /datum/antagonist/rev/on_gain()
 	. = ..()
 	equip_rev()
-	owner.current.log_message("has been converted to the revolution!", LOG_ATTACK, color="red")
+	owner.current.log_message("has been converted to the revolution!", LOG_ATTACK, color = COLOR_CULT_RED)
 
 /datum/antagonist/rev/create_team(datum/team/revolution/new_team)
 	if(!new_team)
@@ -114,6 +114,7 @@
 				return
 
 			conversion_objective = new_objective
+			owner.current.log_message("set their conversion guideline to: [conversion_objective]", color = COLOR_CULT_RED)
 
 /datum/antagonist/rev/head/admin_add(datum/mind/new_owner, mob/admin)
 	give_flash = TRUE
@@ -328,9 +329,12 @@
 		return
 
 	var/conversion_formatted = span_hypnophrase(set_conversion_objective)
-	var/hint_formatted = span_warning("This is a guideline instilled upon you from your leader, not a strict order. Further verbal orders from your leaders may supersede this.")
+	var/hint_formatted = span_warning("This is a guideline instilled upon you from your (new) leader - \
+		while you are expected to follow it where possible, it is not a strict order. \
+		Further orders from your leaders may supersede this.")
 
 	to_chat(rev_mind.current, fieldset_block(span_warning("A directive echoes through your mind..."), "[conversion_formatted]<br>[hint_formatted]", "boxed_message red_box"))
+	rev_mind.current.log_message("has been given a conversion guideline from [key_name(owner.current)]: [set_conversion_objective]", color = COLOR_CULT_RED)
 
 /datum/antagonist/rev/head/proc/demote()
 	var/datum/mind/old_owner = owner
@@ -370,7 +374,7 @@
 
 /// Handles rev removal via IC methods such as borging, mindshielding, blunt force trauma to the head or revs losing.
 /datum/antagonist/rev/proc/remove_revolutionary(deconverter)
-	owner.current.log_message("has been deconverted from the revolution by [ismob(deconverter) ? key_name(deconverter) : deconverter]!", LOG_ATTACK, color=COLOR_CULT_RED)
+	owner.current.log_message("has been deconverted from the revolution by [ismob(deconverter) ? key_name(deconverter) : deconverter]!", LOG_ATTACK, color = COLOR_CULT_RED)
 	if(deconverter == DECONVERTER_BORGED)
 		message_admins("[ADMIN_LOOKUPFLW(owner.current)] has been borged while being a [name]")
 	if(iscarbon(owner.current) && deconverter)
