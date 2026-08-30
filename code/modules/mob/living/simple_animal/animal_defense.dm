@@ -104,7 +104,7 @@
 	if(!. || QDELETED(src))
 		return FALSE
 	var/bomb_armor = getarmor(null, BOMB)
-	var/bomb_multi = clamp(1 - bomb_armor/300, 0, 1) // Scales linearly down to 2/3 damage at 100 armor
+	var/bomb_multi = clamp(1 - bomb_armor/200, 0, 1) // Scales linearly down to 2/3 damage at 100 armor
 	var/bloss
 	switch(severity)
 		if (EXPLODE_DEVASTATE)
@@ -112,7 +112,7 @@
 				investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 				gib(DROP_ALL_REMAINS)
 			else
-				bloss = 500
+				adjust_brute_loss(500)
 		if (EXPLODE_HEAVY)
 			bloss = 60
 		if (EXPLODE_LIGHT)
