@@ -481,4 +481,30 @@
 	if(prob(20) && !(HAS_TRAIT(hitter, TRAIT_PLANT_SAFE)))
 		item?.AddComponent(/datum/component/slippery_item, fall_catch_chance=25, duration=5 SECONDS)
 
-	return ..()
+/datum/spacevine_mutation/conductive
+	name = "Conductive"
+	description = "Causes the vines to be electrified when on top of cables"
+	hue = "#ad5c00"
+	quality = NEGATIVE
+	severity = SEVERITY_MINOR
+
+/datum/spacevine_mutation/conductive/proc/attempt_shock(obj/structure/spacevine/vine, mob/living/victim, obj/item/attacking_item)
+	if(isvineimmune(victim) || HAS_TRAIT(victim, TRAIT_PLANT_SAFE))
+		return
+	if(attacking_item && !(attacking_item.obj_flags & CONDUCTS_ELECTRICITY))
+		return
+
+	var/turf/vine_loc = get_turf(vine)
+	if(vine_loc.overfloor_placed)
+		return
+	var/obj/structure/cable/cable = vine_loc.get_cable_node()
+	if(isnull(cable))
+		return
+
+	vine.shock(victim, 100, cable)
+
+/datum/spacevine_mutation/conductive/on_hit(obj/structure/spacevine/vine, obj/item/item,  mob/living/hitter, list/modifiers, list/attack_modifiers)
+	attempt_shock(vine, hitter, item)
+
+/datum/spacevine_mutation/conductive/on_buckle(obj/structure/spacevine/vine, mob/living/buckled)
+	attempt_shock(vine, buckled)
