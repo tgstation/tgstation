@@ -1489,7 +1489,7 @@
 	cross_z = FALSE
 	cross_z_target = 0
 	if(isliving(original) && get_turf(original) == lower_turf)
-		to_chat(original, span_userdanger("По вам ведут огонь сверху!"))
+		to_chat(original, span_userdanger("You are under fire from above!"))
 		impact(original)
 	else
 		impact(lower_turf)
