@@ -93,7 +93,6 @@
 	icon_state = "pitchfork"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
-	icon_angle = -45
 	force = 12
 	throwforce = 16
 	throw_speed = 4
@@ -108,10 +107,6 @@
 	sharpness = SHARP_POINTY
 	wound_bonus = 8
 	exposed_wound_bonus = 15
-
-/obj/item/cultivator/rake/pitchfork/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(!)
 
 /obj/item/cultivator/cyborg
 	name = "cyborg cultivator"
