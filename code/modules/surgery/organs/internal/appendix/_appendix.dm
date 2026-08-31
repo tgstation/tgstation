@@ -16,6 +16,7 @@
 	now_failing = span_warning("An explosion of pain erupts in your lower right abdomen!")
 	now_fixed = span_info("The pain in your abdomen has subsided.")
 	visual = FALSE
+	woundable = TRUE
 
 	var/inflamation_stage = 0
 
@@ -36,7 +37,7 @@
 		return
 
 	if(organ_flags & ORGAN_FAILING)
-		// forced to ensure people don't use it to gain tox as slime person
+		// forced to ensure people don't use it to heal tox as slime person
 		owner.adjust_tox_loss(2 * seconds_per_tick, forced = TRUE)
 	else if(inflamation_stage)
 		inflamation(seconds_per_tick)
@@ -118,7 +119,22 @@
 	REMOVE_TRAIT(owner, TRAIT_DISEASELIKE_SEVERITY_MEDIUM, type)
 	owner.med_hud_set_status()
 
+/obj/item/organ/appendix/wounded()
+	. = ..()
+	inflamation_stage = min(inflamation_stage, 1)
+
+/obj/item/organ/appendix/on_wounded_life(seconds_per_tick)
+	if(organ_flags & ORGAN_FAILING) // Don't deal tox damage from a partial failure if the organ has already failed totally
+		return
+	. = ..()
+	// forced to ensure people don't use it to heal tox as slime person
+	owner.adjust_tox_loss(clamp(wounded_time / 180, 0, 0.5), forced = TRUE)
+	if(SPT_PROB(1, seconds_per_tick))
+		to_chat(owner, span_warning("You feel a spreading pain around your [HAS_TRAIT(owner, TRAIT_SELF_AWARE) ? "appendix" : "lower abdomen"]."))
+
 /obj/item/organ/appendix/get_status_text(scanpower, add_tooltips, colored)
+	if(organ_flags & ORGAN_WOUNDED)
+		return conditional_tooltip(span_warning("Ruptured"), "Remove or repair surgically.", add_tooltips)
 	if(!(organ_flags & ORGAN_FAILING) && inflamation_stage)
 		return conditional_tooltip("<font color='#ff9933'>Inflamed</font>", "Remove surgically.", add_tooltips)
 	return ..()

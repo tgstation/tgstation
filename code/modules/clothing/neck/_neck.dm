@@ -285,24 +285,31 @@
 				|| (HAS_TRAIT(carbon_patient, TRAIT_NOBREATH))\
 				|| carbon_patient.failed_last_breath \
 				|| carbon_patient.losebreath)//If pt is dead or otherwise not breathing
-				render_list += "<span class='danger ml-1'>[target.p_Theyre()] not breathing!</span>\n"
+				render_list += span_danger_ml("[target.p_Theyre()] not breathing!\n")
 				lung_noises = FALSE
 
+			else if(lungs.organ_flags & ORGAN_WOUNDED)
+				render_list += span_danger_ml("You hear shallow breathing and fluid in [target.p_their()] lungs!\n")
 			else if(lungs.damage > 10)//if breathing, check for lung damage
-				render_list += "<span class='danger ml-1'>You hear fluid in [target.p_their()] lungs!</span>\n"
+				render_list += span_danger_ml("You hear fluid in [target.p_their()] lungs!\n")
 			else if(oxy_loss > 10)//if they have suffocation damage
-				render_list += "<span class='danger ml-1'>[target.p_Theyre()] breathing heavily!</span>\n"
+				render_list += span_danger_ml("[target.p_Theyre()] breathing heavily!\n")
 			else
-				render_list += "<span class='notice ml-1'>[target.p_Theyre()] breathing normally.</span>\n"//they're okay :D
+				render_list += span_notice("[target.p_Theyre()] breathing normally.\n")//they're okay :D
 			if(lung_noises)
-				render_list += "<span class='notice ml-1'>[lungs.hear_breath_noise(user)]</span>\n"
+				render_list += span_notice_ml("[lungs.hear_breath_noise(user)]\n")
 			//assess heart
 			if(body_part == BODY_ZONE_CHEST)//if we're listening to the chest
 				if(isnull(heart) || !heart.is_beating() || carbon_patient.stat == DEAD)
 					render_list += "<span class='danger ml-1'>You don't hear a heartbeat!</span>\n"//they're dead or their heart isn't beating
 					heart_noises = FALSE
 				else if(having_heart_attack)
-					render_list += "<span class='danger ml-1'>You hear a rapid, irregular heartbeat.</span>\n"
+					if(heart.organ_flags & ORGAN_WOUNDED)
+						render_list += "<span class='danger ml-1'>You hear a muffled yet rapid and irregular heartbeat.</span>\n"
+					else
+						render_list += "<span class='danger ml-1'>You hear a rapid, irregular heartbeat.</span>\n"
+				else if (heart.organ_flags & ORGAN_WOUNDED)
+					render_list += "<span class='danger ml-1'>You hear a muffled heartbeat.</span>\n"
 				else if(heart.damage > 10 || carbon_patient.get_blood_volume(apply_modifiers = TRUE) <= BLOOD_VOLUME_OKAY)
 					render_list += "<span class='danger ml-1'>You hear a weak heartbeat.</span>\n"//their heart is damaged, or they have critical blood
 				else
