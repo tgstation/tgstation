@@ -1,4 +1,0 @@
-author: "PapaMichael"
-delete-after: True
-changes:
-  - bugfix: "Firefighting foam no longer immediately burns away in heat without getting a chance to do its firefighting foam effects"

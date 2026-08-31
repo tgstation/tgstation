@@ -1,4 +1,0 @@
-author: "QuiteLiterallyAnything"
-delete-after: True
-changes:
-  - rscadd: "Added subtle tooltips to speaker names in chat in order to make distinguishing gender over the radio easier."
