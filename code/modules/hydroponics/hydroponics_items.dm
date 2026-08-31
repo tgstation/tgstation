@@ -87,6 +87,32 @@
 		H.visible_message(span_warning("[H] steps on [src] causing the handle to hit [H.p_them()] right in the face!"), \
 						  span_userdanger("You step on [src] causing the handle to hit you right in the face!"))
 
+/obj/item/cultivator/rake/pitchfork
+	name = "pitchfork"
+	desc = "About as traditional of a rake as you can get. Far better known, however, as the sign of \"political disagreements\"."
+	icon_state = "pitchfork"
+	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
+	icon_angle = -45
+	force = 12
+	throwforce = 16
+	throw_speed = 4
+	w_class = WEIGHT_CLASS_BULKY
+	attack_verb_continuous = list("pokes", "pierces", "impales", "stabs")
+	attack_verb_simple = list("poke", "pierce", "impale", "stab")
+	hitsound = 'sound/items/weapons/bladeslice.ogg'
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 2, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
+	resistance_flags = FLAMMABLE | FIRE_PROOF
+	embed_type = /datum/embedding/spear
+	armour_penetration = 5
+	sharpness = SHARP_POINTY
+	wound_bonus = 8
+	exposed_wound_bonus = 15
+
+/obj/item/cultivator/rake/pitchfork/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	if(!)
+
 /obj/item/cultivator/cyborg
 	name = "cyborg cultivator"
 	icon = 'icons/obj/items_cyborg.dmi'
