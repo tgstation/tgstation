@@ -288,7 +288,7 @@
 				brute_loss = 300
 				burn_loss = 300
 				soundbang_intensity = SOUNDBANG_OVERWHELMING
-				ear_damage = 80
+				ear_damage = 60
 				deafen_duration = 360 SECONDS
 				var/atom/throw_target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
 				throw_at(throw_target, 200, 4)
@@ -338,11 +338,13 @@
 				dismember_prob = 50
 				wound_severities -= WOUND_SEVERITY_MODERATE
 		for(var/obj/item/bodypart/BP as anything in get_bodyparts())
+			bomb_armor = getarmor(BP.body_zone, BOMB)
+			bomb_multi = clamp(1 - bomb_armor/166.6, 0, 1)
 			if(prob(probability * bomb_multi)) // chance to do anything at all
 				if(prob(dismember_prob) && BP.body_zone != BODY_ZONE_HEAD && BP.body_zone != BODY_ZONE_CHEST) // chance to dismember instead of wound
 					if(!prob((bomb_armor - 50) * 2)) // bomb armor has a second chance to stop dismemberment
 						BP.dismember()
-				else if(!prob(get_armor(BP.body_zone, WOUND))) // time to roll for wounds
+				else if(!prob(getarmor(BP.body_zone, WOUND))) // time to roll for wounds
 					var/wound_type = pick(prob(50); WOUND_SLASH, WOUND_BLUNT, WOUND_BURN)
 					var/wound_power = pick(wound_severities)
 					cause_wound_of_type_and_severity(wound_type, BP, WOUND_SEVERITY_MODERATE, wound_power, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY)
