@@ -1,0 +1,5 @@
+author: "Fghj240"
+delete-after: True
+changes:
+  - qol: "reinforced windows hint that they can be secured on examine"
+  - bugfix: "plastitanium windows are in the correct state once constructed"
