@@ -1136,7 +1136,6 @@
 /datum/design/producepad
 	name = "Producepad"
 	desc = "This lightweight contraption acts as a beacon for produceporters, teleporting freshly grown food to this location."
-	id = "producepad"
 	build_type = PROTOLATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.3)
 	build_path = /obj/item/producepad
