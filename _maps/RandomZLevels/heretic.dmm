@@ -8176,7 +8176,7 @@
 "Qz" = (
 /obj/structure/table,
 /obj/machinery/light/floor,
-/obj/item/gun/energy/shrink_ray/one_shot,
+/obj/item/gun/energy/recharge/shrink_ray/one_shot,
 /turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
 "QA" = (

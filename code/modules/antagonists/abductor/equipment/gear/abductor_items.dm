@@ -252,7 +252,7 @@
 	inhand_icon_state = "alienpistol"
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
-/obj/item/gun/energy/shrink_ray
+/obj/item/gun/energy/recharge/shrink_ray
 	name = "shrink ray blaster"
 	desc = "This is a piece of frightening alien tech that enhances the magnetic pull of atoms in a localized space to temporarily make an object shrink. \
 			That or it's just space magic. Either way, it shrinks stuff."
@@ -261,37 +261,24 @@
 	inhand_icon_state = "shrink_ray"
 	icon_state = "shrink_ray"
 	automatic_charge_overlays = FALSE
-	self_charge_amount = 2000
-	selfcharge = 1//shot costs 200 energy, has a max capacity of 1000 for 5 shots. self charge returns 25 energy every couple ticks, so about 1 shot charged every 12~ seconds
-	trigger_guard = TRIGGER_GUARD_ALLOW_ALL// variable-size trigger, get it? (abductors need this to be set so the gun is usable for them)
+	recharge_time = 2 SECONDS
+	recharge_sound = 'sound/items/eshield_recharge.ogg'
+	holds_charge = TRUE
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
-/obj/item/gun/energy/shrink_ray/suicide_act(mob/living/user)
+/obj/item/gun/energy/recharge/shrink_ray/suicide_act(mob/living/user)
 	. = ..()
 	user.visible_message(span_suicide("[user] points [src] at [user.p_their()] head, it looks like [user.p_theyre()] going to commit suicide!"))
 	// we want an animation, so lets manually handle suicide.
 	addtimer(CALLBACK(src, PROC_REF(shrink_death), user), 0)
 	return MANUAL_SUICIDE
 
-/obj/item/gun/energy/shrink_ray/proc/shrink_death(mob/living/user)
-	var/shrink = user.transform.Scale(0.1,0.1)
-	animate(user, 30 SECONDS, transform=shrink)
+/obj/item/gun/energy/recharge/shrink_ray/proc/shrink_death(mob/living/user)
+	var/shrink = user.transform.Scale(0.1, 0.1)
+	animate(user, 30 SECONDS, transform = shrink)
 	// Have to wait until the animate is done
 	sleep(30 SECONDS)
 	user.gib(DROP_ALL_REMAINS)
-
-/obj/item/gun/energy/shrink_ray
-	COOLDOWN_DECLARE(shrink_cooldown)
-
-/obj/item/gun/energy/shrink_ray/can_shoot()
-	if(!COOLDOWN_FINISHED(src, shrink_cooldown))
-		return FALSE
-	return ..()
-
-/obj/item/gun/energy/shrink_ray/shoot_live_shot(mob/living/user, pointblank = FALSE, atom/pbtarget = null, message = TRUE)
-	. = ..()
-	if(.)
-		COOLDOWN_START(src, shrink_cooldown, 2 SECONDS)
-		playsound(src, "sound/items/eshield_recharge.ogg", 30, TRUE)
 
 /obj/item/paper/guides/antag/abductor
 	name = "Dissection Guide"
