@@ -548,6 +548,8 @@ class ChatRenderer {
 
           const reactRoot = createRoot(childNode);
 
+          // `flushSync()` because of a chat scroll issue where whether or not
+          // the line wraps was being decided before the name loaded
           flushSync(() => {
             reactRoot.render(
               <Element {...outputProps}>
