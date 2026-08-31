@@ -1,3 +1,4 @@
+import { storage } from 'common/storage';
 import {
   filterTypepaths,
   isEntityArg,
@@ -215,6 +216,14 @@ export function CommandBar() {
   const isCurrentArgList = currentArg ? isListArg(currentArg) : false;
 
   useEffect(() => {
+    const loadStoredValues = async () => {
+      const storedMode = await storage.get('tgui-commandbar-mode');
+      if (storedMode !== undefined) setMode(storedMode);
+    };
+    loadStoredValues();
+  }, []);
+
+  useEffect(() => {
     Byond.sendMessage('verbs/request_verbs');
   }, []);
 
@@ -292,6 +301,7 @@ export function CommandBar() {
     } else {
       enterChatMode(nextMode);
     }
+    storage.set('tgui-commandbar-mode', nextMode);
     inputRef.current?.focus();
   };
 

@@ -1,0 +1,4 @@
+author: "ZeWaka"
+delete-after: True
+changes:
+  - bugfix: "Fixed more TGUI window resize/white flashing"

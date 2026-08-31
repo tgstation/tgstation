@@ -1,0 +1,9 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - code_imp: "Cleaned up atmos color adapter pipe code a tiny bit, report any oddities"
+  - bugfix: "Atmos multi-z pipes rendering weirdly when connecting with omni-pipes"
+  - bugfix: "Atmos airlock pumps disregarding color of connected pipes"
+  - bugfix: "Atmos layer adapter color is more consistent"
+  - qol: "Thermo machines input pipe takes on pipe color (visually, mechanically no changes)"
+  - qol: "Pipes leading into floor objects take on pipe color (visually, mechanically no changes)"
