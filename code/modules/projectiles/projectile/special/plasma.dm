@@ -30,8 +30,9 @@
 	damage = 7
 	range = 7
 	speed = 2
-	mine_range = 7
-	wound_bonus = 3
+	mine_range = 3
+	exposed_wound_bonus = 8
+	dismemberment = 25
 
 /obj/projectile/plasma/adv/mech
 	damage = 10
