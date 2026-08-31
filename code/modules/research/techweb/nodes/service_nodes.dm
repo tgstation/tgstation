@@ -40,6 +40,7 @@
 		"radio_entertainment",
 		"rdd",
 		"photocopier",
+		"producepad",
 	)
 
 /datum/techweb_node/sanitation

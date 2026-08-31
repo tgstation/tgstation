@@ -79,12 +79,11 @@
 		return
 	if(!istype(user.get_idcard(TRUE), /obj/item/card/id/advanced/prisoner))
 		return // No bonus effects if we're not a prisoner or there's no ID.
-	var/obj/item/card/id/advanced/prisoner/prison_id = id_card
+	var/obj/item/card/id/advanced/prisoner/prison_id = user.get_idcard(TRUE)
 	prison_id.points += PRISON_LABOR_PLATE
 	to_chat(user, span_notice("[PRISON_LABOR_PLATE] points added!"))
 
-/// Global list of all locations where produce can be dropped off.
-GLOBAL_LIST_EMPTY(produce_dropoff)
+
 
 //Grown crop recepticle.
 /obj/machinery/produceporter
@@ -106,11 +105,6 @@ GLOBAL_LIST_EMPTY(produce_dropoff)
 	register_context()
 	update_appearance()
 
-/obj/machinery/produceporter/post_machine_initialize()
-	. = ..()
-	if(!length(GLOB.produce_dropoff))
-		CRASH("A produceporter was spawned, however, there were no dropoff landmarks to send produce to!")
-
 /obj/machinery/produceporter/update_icon_state()
 	if(!is_operational)
 		icon_state = "produceporter_off"
@@ -129,7 +123,10 @@ GLOBAL_LIST_EMPTY(produce_dropoff)
 		. += span_notice("\The [src]'s bin is full, and can be sent back to the station for labor points.")
 	else
 		. += span_notice("\The [src] has room for more produce to be inserted.")
-	. += span_notice("The lever can be pulled with [span_boldnotice("Right Click")] to send produce back to the station.")
+	if(!length(GLOB.produce_locations))
+		. += span_notice("A dirty screen shows a warning, saying there are no [span_boldnotice("produce pads")] to teleport crops to.")
+	else
+		. += span_notice("The lever can be pulled with [span_boldnotice("Right Click")] to send produce back to the station.")
 
 /obj/machinery/produceporter/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/food/grown))
@@ -151,13 +148,17 @@ GLOBAL_LIST_EMPTY(produce_dropoff)
 	if(!current_produce)
 		balloon_alert(user, "bin's empty!")
 		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(!length(GLOB.produce_locations))
+		balloon_alert(user, "no dropoffs!")
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 	flick("produceporter_active", src)
 	use_energy(active_power_usage)
 	playsound(src, 'sound/items/weapons/emitter2.ogg', 50)
 	var/points = 0
 	var/produce_count = 0
 	for(var/obj/item/food/grown/produce in contents)
-		do_teleport(produce, pick(GLOB.produce_dropoff), 0, asoundout = 'sound/machines/woosh.ogg')
+		var/atom/dropoff = pick(GLOB.produce_locations)
+		do_teleport(produce, dropoff.drop_location(), 0, asoundout = 'sound/machines/woosh.ogg')
 		points += (produce.seed?.potency > 50 ? (PRISON_LABOR_CROPS * 2) : PRISON_LABOR_CROPS)
 		produce_count ++
 	balloon_alert_to_viewers("kachunk!")
@@ -201,7 +202,7 @@ GLOBAL_LIST_EMPTY(produce_dropoff)
 		return // No bonus effects if we're not a prisoner or there's no ID.
 	var/obj/item/card/id/advanced/prisoner/prison_id = id_card
 	prison_id.points += labor_points
-	to_chat(user, span_notice("[labor_points] points added!"))
+	to_chat(user, span_notice("[labor_points] labor points added!"))
 
 	aas_config_announce(/datum/aas_config_entry/gulag_produce, list(
 		"LOCATION" = get_area_name(src),
@@ -216,3 +217,20 @@ GLOBAL_LIST_EMPTY(produce_dropoff)
 		"LOCATION" = "will be replaced with the location of the produce delivery.",
 		"COUNT" = "Will be replaced with the quantity of produce recieved"
 	)
+
+GLOBAL_LIST_EMPTY(produce_locations)
+
+/obj/item/producepad
+	name = "produce pad"
+	desc = "This lightweight contraption acts as a beacon for produceporters, teleporting freshly grown food to this location."
+	icon = 'icons/obj/machines/prison.dmi'
+	icon_state = "producepad"
+	w_class = WEIGHT_CLASS_SMALL
+
+/obj/item/producepad/Initialize(mapload)
+	. = ..()
+	GLOB.produce_locations += src
+
+/obj/item/producepad/Destroy(force)
+	GLOB.produce_locations -= src
+	return ..()

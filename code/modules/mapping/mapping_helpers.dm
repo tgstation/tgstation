@@ -1561,13 +1561,3 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 
 /obj/effect/mapping_helpers/blessing/invisible
 	invisible = TRUE
-
-/obj/effect/mapping_helpers/produce_delivery
-	name = "produce delivery zone"
-	desc =  "The labor camp's produceporter will delivery crops to this location."
-	icon_state = "produce_drop"
-
-/obj/effect/mapping_helpers/produce_delivery/Initialize(mapload)
-	. = ..()
-	GLOB.produce_dropoff += loc
-	return INITIALIZE_HINT_QDEL
