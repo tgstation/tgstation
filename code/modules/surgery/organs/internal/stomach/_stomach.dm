@@ -167,8 +167,7 @@
 			if(SPT_PROB(round(-human.satiety/77), seconds_per_tick))
 				human.set_jitter_if_lower(10 SECONDS)
 			hunger_rate = 3 * HUNGER_FACTOR
-		hunger_rate *= hunger_modifier
-		hunger_rate *= human.physiology.hunger_mod
+		hunger_rate *= hunger_modifier * GET_PHYSIOLOGY(human, PHYS_COEFF_HUNGER_MOD)
 		human.adjust_nutrition(-hunger_rate * seconds_per_tick)
 
 	var/nutrition = human.nutrition

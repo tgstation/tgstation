@@ -753,3 +753,24 @@
       own fangs.
   - code_imp: Vampire fangs now handle all vampire blood-draining effects.
   - rscadd: Cybernetic fangs, unlocked via the Cybernetics tech node.
+2026-08-31:
+  FlufflesTheDog:
+  - bugfix: Stoat fangs properly exist
+  Ghommie:
+  - refactor: Refactored the code for damage and types of damage a little (also armor
+      but not as much). Make sure to report any oddity with it.
+  Melbert:
+  - qol: Atmos mix tank output starts disabled.
+  PapaMichael:
+  - bugfix: Firefighting foam no longer immediately burns away in heat without getting
+      a chance to do its firefighting foam effects
+  QuiteLiterallyAnything:
+  - rscadd: Added subtle tooltips to speaker names in chat in order to make distinguishing
+      gender over the radio easier.
+  lelandkemble:
+  - bugfix: The greed of miners no longer clogs the runtime logs
+  necromanceranne:
+  - bugfix: Biting now actually works again.
+  san7890:
+  - bugfix: The pizza reward from the Bitrunning Pizzeria is now "edible", but it
+      is a fool's errand to try and eat it.
