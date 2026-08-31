@@ -3,6 +3,7 @@
 	desc = "This is a piece of frightening alien tech that enhances the magnetic pull of atoms in a localized space to temporarily make an object shrink. \
 		That or it's just space magic. Either way, it shrinks stuff, This one is jerry-rigged to work with a non alien cell. It still recharges though."
 	ammo_type = list(/obj/item/ammo_casing/energy/shrink/worse)
+	holds_charge = TRUE
 
 /obj/item/ammo_casing/energy/shrink/worse
 	projectile_type = /obj/projectile/magic/shrink/alien
