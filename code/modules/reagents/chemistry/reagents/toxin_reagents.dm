@@ -467,7 +467,7 @@
 	ph = 2.7
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
-	var/spacevine_kill_prob = 75
+	var/spacevine_kill_prob = 50
 	var/weed_damage_multiplier = 1
 
 // Plant-B-Gone is just as bad
@@ -519,8 +519,8 @@
 	ph = 3
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
-	spacevine_kill_prob = 100
-	weed_damage_multiplier = 3
+	spacevine_kill_prob = 75
+	weed_damage_multiplier = 2
 
 //Weed Spray
 /datum/reagent/toxin/plantbgone/weedkiller/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
