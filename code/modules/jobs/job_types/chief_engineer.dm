@@ -48,6 +48,7 @@
 	human_authority = JOB_AUTHORITY_HUMANS_ONLY
 
 	voice_of_god_power = 1.4 //Command staff has authority
+	tgui_icon = FA_ICON_USER_ASTRONAUT
 
 
 /datum/job/chief_engineer/after_spawn(mob/living/spawned, client/player_client)

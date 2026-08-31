@@ -1,6 +1,6 @@
 /obj/item/hypernoblium_crystal
-	name = "Hypernoblium Crystal"
-	desc = "Crystallized oxygen and hypernoblium stored in a bottle to pressure-proof your clothes or stop reactions occurring in portable atmospheric devices."
+	name = "\improper Hyper-Noblium crystal"
+	desc = "Crystallized Oxygen and Hyper-Noblium stored in a bottle. Pressure-proofs clothing or stop reactions occurring in portable atmospheric devices."
 	icon = 'icons/obj/pipes_n_cables/atmos.dmi'
 	icon_state = "hypernoblium_crystal"
 	var/uses = 1
@@ -40,8 +40,8 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/nitrium_crystal
-	desc = "A weird brown crystal, it smokes when broken"
-	name = "nitrium crystal"
+	name = "\improper Nitrium crystal"
+	desc = "A strange brown crystal that emits a foul smoke when chipped."
 	icon = 'icons/obj/pipes_n_cables/atmos.dmi'
 	icon_state = "nitrium_crystal"
 	var/cloud_size = 1

@@ -6,7 +6,7 @@
 	worn_icon = 'icons/mob/clothing/modsuit/mod_clothing.dmi'
 
 /obj/item/mod/control
-	name = "MOD control unit"
+	name = "\improper MOD control unit"
 	desc = "The control unit of a Modular Outerwear Device, a powered suit that protects against various environments."
 	icon_state = "standard-control"
 	inhand_icon_state = "mod_control"
@@ -607,7 +607,7 @@
 	var/obj/item/mod/module/picked_module = locate(module_reference) in modules
 	if(!istype(picked_module))
 		return
-	picked_module.on_select()
+	picked_module.on_select(user)
 
 /obj/item/mod/control/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
 	if(get_charge() < 1)

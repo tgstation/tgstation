@@ -1106,8 +1106,7 @@
 /obj/structure/transport/linear/tram,
 /obj/structure/thermoplastic/light,
 /obj/machinery/computer/tram_controls/heretic_tram_computer{
-	icon_state = "tram_alt_controls";
-	dir = 8
+	dir = 4
 	},
 /turf/open/floor/engine,
 /area/awaymission/caves/heretic_laboratory)

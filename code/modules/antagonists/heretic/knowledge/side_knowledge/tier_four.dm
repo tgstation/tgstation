@@ -19,6 +19,12 @@
 	/// Tracks tim ein EVA
 	var/seconds_in_eva = 0
 
+/datum/heretic_knowledge/spell/space_phase/has_charges(mob/living/user)
+	return HAS_TRAIT(user, TRAIT_MAGICALLY_PHASED) || ..()
+
+/datum/heretic_knowledge/spell/space_phase/should_deduct_charge(mob/living/user)
+	return !HAS_TRAIT(user, TRAIT_MAGICALLY_PHASED)
+
 /datum/heretic_knowledge/spell/space_phase/on_gain(mob/user, datum/antagonist/heretic/our_heretic)
 	. = ..()
 	RegisterSignal(user, COMSIG_MOB_CRUSHED_BLUESPACE_CRYSTAL, PROC_REF(on_crystal_crushed))

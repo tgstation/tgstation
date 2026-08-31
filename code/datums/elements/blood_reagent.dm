@@ -26,7 +26,7 @@
 	if (!target.data)
 		target.data = list()
 
-	target.data["blood_type"] = blood_type
+	target.data[BLOOD_DATA_TYPE] = blood_type
 	if (blood_type.desc)
 		target.description = blood_type.desc
 	target.color = blood_type.get_color()
@@ -81,7 +81,7 @@
 	SIGNAL_HANDLER
 
 	if ((methods & (TOUCH | VAPOR)) && reac_volume >= 3 && (blood_type.blood_flags & (BLOOD_ADD_DNA | BLOOD_COVER_MOBS)))
-		exposed_mob.add_blood_DNA(list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type))
+		exposed_mob.add_blood_DNA(list("[source.data?[BLOOD_DATA_DNA] || blood_type.dna_string]" = blood_type))
 
 	// Somehow got a no-data reagent, probably artificially created blood
 	if (!source.data)
@@ -125,7 +125,7 @@
 	if (reac_volume < 3 || !(blood_type.blood_flags & (BLOOD_ADD_DNA | BLOOD_COVER_TURFS)))
 		return
 
-	var/dna_list = list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type)
+	var/dna_list = list("[source.data?[BLOOD_DATA_DNA] || blood_type.dna_string]" = blood_type)
 	var/obj/effect/decal/cleanable/blood/splatter = locate() in exposed_turf
 	if (!splatter)
 		if (!(blood_type.blood_flags & BLOOD_COVER_TURFS))
@@ -156,7 +156,7 @@
 		return
 
 	if (blood_type.blood_flags & (BLOOD_ADD_DNA | BLOOD_COVER_ITEMS))
-		exposed_obj.add_blood_DNA(list("[source.data?["blood_DNA"] || blood_type.dna_string]" = blood_type))
+		exposed_obj.add_blood_DNA(list("[source.data?[BLOOD_DATA_DNA] || blood_type.dna_string]" = blood_type))
 
 	if (!(blood_type.blood_flags & BLOOD_TRANSFER_VIRAL_DATA) || !source.data?["viruses"])
 		return
@@ -188,7 +188,7 @@
 		return
 
 	// Mixed blood cannot be used for cloning
-	if (source.data["blood_DNA"] != mix_data["blood_DNA"])
+	if (source.data[BLOOD_DATA_DNA] != mix_data[BLOOD_DATA_DNA])
 		source.data["cloneable"] = FALSE
 
 	var/list/source_viruses = source.data["viruses"]

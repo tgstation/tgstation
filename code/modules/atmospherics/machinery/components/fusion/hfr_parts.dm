@@ -70,21 +70,21 @@
 	return
 
 /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input
-	name = "HFR fuel input port"
+	name = "\improper HFR fuel input port"
 	desc = "Input port for the Hypertorus Fusion Reactor, designed to take in fuels with the optimal fuel mix being a 50/50 split."
 	icon_state = "fuel_input"
 	base_icon_state = "fuel_input"
 	circuit = /obj/item/circuitboard/machine/HFR_fuel_input
 
 /obj/machinery/atmospherics/components/unary/hypertorus/waste_output
-	name = "HFR waste output port"
+	name = "\improper HFR waste output port"
 	desc = "Waste port for the Hypertorus Fusion Reactor, designed to output the hot waste gases coming from the core of the machine."
 	icon_state = "waste_output"
 	base_icon_state = "waste_output"
 	circuit = /obj/item/circuitboard/machine/HFR_waste_output
 
 /obj/machinery/atmospherics/components/unary/hypertorus/moderator_input
-	name = "HFR moderator input port"
+	name = "\improper HFR moderator input port"
 	desc = "Moderator port for the Hypertorus Fusion Reactor, designed to move gases inside the machine to cool and control the flow of the reaction."
 	icon_state = "moderator_input"
 	base_icon_state = "moderator_input"
@@ -135,7 +135,7 @@
 		. += emissive_appearance(icon, "[base_icon_state]_active", src, alpha = src.alpha)
 
 /obj/machinery/hypertorus/interface
-	name = "HFR interface"
+	name = "\improper HFR interface"
 	desc = "Interface for the HFR to control the flow of the reaction."
 	icon_state = "interface"
 	base_icon_state = "interface"
@@ -379,7 +379,7 @@
 				. = TRUE
 
 /obj/machinery/hypertorus/corner
-	name = "HFR corner"
+	name = "\improper HFR corner"
 	desc = "Structural piece of the machine."
 	icon_state = "corner"
 	base_icon_state = "corner"
@@ -411,7 +411,7 @@
 	use more advanced guides to understando how the various gases will act as moderators."
 
 /obj/item/hfr_box
-	name = "HFR box"
+	name = "\improper HFR box"
 	desc = "If you see this, call the police."
 	icon = 'icons/obj/machines/atmospherics/hypertorus.dmi'
 	icon_state = "error"
@@ -421,39 +421,39 @@
 	var/part_path
 
 /obj/item/hfr_box/corner
-	name = "HFR box corner"
+	name = "\improper HFR box corner"
 	desc = "Place this as the corner of your 3x3 multiblock fusion reactor"
 	icon_state = "box_corner"
 	box_type = "corner"
 	part_path = /obj/machinery/hypertorus/corner
 
 /obj/item/hfr_box/body
-	name = "HFR box body"
+	name = "\improper HFR box body"
 	desc = "Place this on the sides of the core box of your 3x3 multiblock fusion reactor"
 	box_type = "body"
 	icon_state = "box_body"
 
 /obj/item/hfr_box/body/fuel_input
-	name = "HFR box fuel input"
+	name = "\improper HFR box fuel input"
 	icon_state = "box_fuel"
 	part_path = /obj/machinery/atmospherics/components/unary/hypertorus/fuel_input
 
 /obj/item/hfr_box/body/moderator_input
-	name = "HFR box moderator input"
+	name = "\improper HFR box moderator input"
 	icon_state = "box_moderator"
 	part_path = /obj/machinery/atmospherics/components/unary/hypertorus/moderator_input
 
 /obj/item/hfr_box/body/waste_output
-	name = "HFR box waste output"
+	name = "\improper HFR box waste output"
 	icon_state = "box_waste"
 	part_path = /obj/machinery/atmospherics/components/unary/hypertorus/waste_output
 
 /obj/item/hfr_box/body/interface
-	name = "HFR box interface"
+	name = "\improper HFR box interface"
 	part_path = /obj/machinery/hypertorus/interface
 
 /obj/item/hfr_box/core
-	name = "HFR box core"
+	name = "\improper HFR box core"
 	desc = "Activate this with a multitool to deploy the full machine after setting up the other boxes"
 	icon_state = "box_core"
 	box_type = "core"
