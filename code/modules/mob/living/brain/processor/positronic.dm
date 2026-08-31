@@ -24,6 +24,8 @@
 
 /obj/item/brain_processor/positronic/Initialize(mapload, autoping = TRUE)
 	. = ..()
+	// THIS brainmob is the only brainmob that we should ever use for all of our existance
+	// If the brainmob becomes null or gets replaced, this is invalid behaviour
 	set_brainmob(new /mob/living/brain(src))
 	brainmob.grant_language(/datum/language/machine, source = LANGUAGE_ATOM)
 
@@ -85,7 +87,7 @@
 	if(.)
 		return
 	. = TRUE
-	
+
 	if(is_occupied())
 		balloon_alert(user, "already active!")
 		return
@@ -98,7 +100,6 @@
 
 	to_chat(user, span_notice("You press the manual activation button and start [src]'s boot process."))
 	start_requesting_ghost()
-	return
 
 /obj/item/brain_processor/positronic/attack_ghost(mob/user)
 	if(is_occupied())
@@ -242,7 +243,6 @@
 		SpinAnimation(move_delay, 1, direction == NORTH || direction == EAST)
 	// ESCAPE PRISON
 	else if(istype(loc, /obj/item/storage))
-		balloon_alert(src, "shuffle shuffle...")
 		if(prob(25))
 			var/obj/item/item = pick(loc.contents) // toss something out (which could be us!)
 			item.forceMove(loc.drop_location())
