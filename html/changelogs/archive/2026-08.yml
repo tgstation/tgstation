@@ -771,3 +771,6 @@
   - bugfix: The greed of miners no longer clogs the runtime logs
   necromanceranne:
   - bugfix: Biting now actually works again.
+  san7890:
+  - bugfix: The pizza reward from the Bitrunning Pizzeria is now "edible", but it
+      is a fool's errand to try and eat it.
