@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Head revolutionaries can set a \"conversion guideline\" - a short message sent to all people they convert - in their antag ui, to help them bring some order to the revolution. It is, however, ultimately a *guideline*. You're note forced to follow it but are expected to abide by it ."
