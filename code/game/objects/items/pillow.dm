@@ -279,16 +279,15 @@
 
 /obj/item/spear/pillow/on_unwield(obj/item/source, mob/living/carbon/user)
 	. = ..()
-	UnregisterSignal(user, COMSIG_MOB_CLIENT_MOVED)
-	UnregisterSignal(user, COMSIG_LIVING_MOB_BUMP)
-	reset_charge(user)
+	reset_user(user)
 
 /obj/item/spear/pillow/dropped(mob/user, silent)
 	. = ..()
-	UnregisterSignal(user, COMSIG_MOB_CLIENT_MOVED)
-	UnregisterSignal(user, COMSIG_LIVING_MOB_BUMP)
-	reset_charge(user)
+	reset_user(user)
 
+/obj/item/spear/pillow/proc/reset_user(mob/user)
+	UnregisterSignal(user, list(COMSIG_MOB_CLIENT_MOVED, COMSIG_LIVING_MOB_BUMP))
+	reset_charge(user)
 
 /obj/item/spear/pillow/proc/reset_charge(mob/living/user)
 	user.remove_movespeed_modifier(/datum/movespeed_modifier/lance_charge)
