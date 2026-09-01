@@ -137,8 +137,8 @@
 	health_doll_icon = "venus_human_trap"
 	mob_biotypes = MOB_ORGANIC | MOB_PLANT
 	layer = SPACEVINE_MOB_LAYER
-	health = 100
-	maxHealth = 100
+	health = 50
+	maxHealth = 50
 	obj_damage = 60
 	melee_damage_lower = 10
 	melee_damage_upper = 20
