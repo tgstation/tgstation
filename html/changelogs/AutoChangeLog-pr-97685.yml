@@ -1,0 +1,4 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - bugfix: "Chat should scroll properly on some messages that wrap now."
