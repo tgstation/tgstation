@@ -481,6 +481,18 @@
 	if(prob(20))
 		item?.AddComponent(/datum/component/slippery_item, fall_chance=25, fall_catch_chance=25, duration=5 SECONDS)
 
+/datum/spacevine_mutation/slippery/equip_venus_trap(mob/living/basic/venus_human_trap/venus_trap)
+	RegisterSignal(venus_trap, COMSIG_ATOM_ATTACKBY, PROC_REF(on_venus_hit), override=TRUE)
+
+/datum/spacevine_mutation/slippery/proc/on_venus_hit(mob/living/basic/venus_human_trap/venus_trap, obj/item/attacking_item, mob/living/attacker, params)
+	SIGNAL_HANDLER
+
+	if(isvineimmune(attacker) || HAS_TRAIT(attacker, TRAIT_PLANT_SAFE))
+		return
+
+	if(prob(20))
+		attacking_item?.AddComponent(/datum/component/slippery_item, fall_chance=25, fall_catch_chance=25, duration=5 SECONDS)
+
 /datum/spacevine_mutation/conductive
 	name = "Conductive"
 	description = "Causes the vines to be electrified when on top of cables"
