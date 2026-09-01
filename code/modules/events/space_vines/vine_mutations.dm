@@ -440,10 +440,10 @@
 	vine.layer = ABOVE_OPEN_TURF_LAYER
 	vine.light_state = PASS_LIGHT
 	vine.can_tangle = FALSE
-	return ..()
 
 /datum/spacevine_mutation/timid/equip_venus_trap(mob/living/basic/venus_human_trap/venus_trap)
 	var/datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle/tangle_action
+	tangle_action = locate(/datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle) in venus_trap.actions
 	tangle_action.Remove(venus_trap)
 
 /datum/spacevine_mutation/flowering
