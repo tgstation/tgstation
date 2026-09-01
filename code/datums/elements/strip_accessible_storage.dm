@@ -51,6 +51,9 @@
 		blind_message = span_hear("You hear rustling."),
 		ignored_mobs = user,
 	)
+	if(owner.is_blind())
+		to_chat(owner, span_userdanger("Someone is trying to open your [source]!"))
+
 	if(!do_after(user, source.strip_delay + 1 SECONDS, owner, extra_checks = CALLBACK(src, PROC_REF(can_access_storage), source, owner, user) ))
 		return
 	source.atom_storage.open_storage(user)
