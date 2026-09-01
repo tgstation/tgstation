@@ -22,6 +22,7 @@
 	cells_maximum = 2
 
 	visual = FALSE
+	woundable = TRUE
 
 	/// Affects how much damage the liver takes from alcohol
 	var/alcohol_tolerance = ALCOHOL_RATE
@@ -221,6 +222,18 @@
 	if(damage < high_threshold)
 		return span_warning("Your [self_aware ? "liver" : "lower abdomen"] feels sore.")
 	return span_boldwarning("Your [self_aware ? "liver" : "lower abdomen"] feels like it's on fire!")
+
+/obj/item/organ/liver/get_status_text(scanpower, add_tooltips, colored)
+	if(organ_flags & ORGAN_WOUNDED)
+		return conditional_tooltip(span_warning("Hepatic Avulsion"), "Fix surgically.", add_tooltips)
+	return ..()
+
+/obj/item/organ/liver/wounded(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+
+/obj/item/organ/liver/on_wounded_life(seconds_per_tick)
+	. = ..()
+
 
 // alien livers can ignore up to 15u of toxins, but they take x3 liver damage
 /obj/item/organ/liver/alien

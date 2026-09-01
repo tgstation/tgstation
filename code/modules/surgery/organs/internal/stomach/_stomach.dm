@@ -29,6 +29,7 @@
 	cells_maximum = 2
 
 	visual = FALSE
+	woundable = TRUE
 
 	///The rate that disgust decays
 	var/disgust_metabolism = 1
@@ -434,7 +435,7 @@
 
 /obj/item/organ/stomach/get_status_text(scanpower, add_tooltips, colored)
 	if(organ_flags & ORGAN_WOUNDED)
-		return conditional_tooltip(span_warning("Ruptured"), "Fix surgically.", add_tooltips)
+		return conditional_tooltip(span_warning("Gastric Perforation"), "Fix surgically.", add_tooltips)
 	if(cut_open_damage)
 		return conditional_tooltip("<font color='#ff9933'>Incised</font>", "Remove and cauterize.", add_tooltips)
 	return ..()
@@ -443,13 +444,16 @@
 	. = ..()
 	// Starts lower but scales higher than appendixes
 	var/wounded_scaling = clamp(wounded_time / 240, 0, 1)
+	if(HAS_TRAIT(owner, TRAIT_VIRUS_RESISTANCE))
+		wounded_scaling /= 3
+	apply_organ_damage(wounded_scaling)
 	owner.adjust_tox_loss(wounded_scaling, forced = TRUE)
 	owner.adjust_blood_volume(-0.05, BLOOD_VOLUME_OKAY)
 	if(SPT_PROB(wounded_scaling * 5, seconds_per_tick))
 		owner.adjust_disgust(15)
 	if(SPT_PROB((1 + wounded_scaling * 1.5), seconds_per_tick))
 		var/self_aware = HAS_TRAIT(owner, TRAIT_SELF_AWARE)
-		var/alert_message = "You feel a spreading pain around your [self_aware ? "appendix" : "lower abdomen"]."
+		var/alert_message = "You feel a spreading pain around your [self_aware ? "stomach" : "lower abdomen"]."
 		to_chat(owner, span_warning(alert_message))
 
 /obj/item/organ/stomach/tool_act(mob/living/user, obj/item/tool, list/modifiers)

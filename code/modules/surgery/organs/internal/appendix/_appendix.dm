@@ -128,7 +128,10 @@
 		return
 	. = ..()
 	// forced to ensure people don't use it to heal tox as slime person
-	owner.adjust_tox_loss(clamp(wounded_time / 180, 0, 0.5), forced = TRUE)
+	var/wounded_scaling = clamp(wounded_time / 180, 0, 0.5)
+	if(HAS_TRAIT(owner, TRAIT_VIRUS_RESISTANCE))
+		wounded_scaling /= 3
+	owner.adjust_tox_loss(wounded_scaling, forced = TRUE)
 	if(SPT_PROB(1, seconds_per_tick))
 		to_chat(owner, span_warning("You feel a spreading pain around your [HAS_TRAIT(owner, TRAIT_SELF_AWARE) ? "appendix" : "lower abdomen"]."))
 

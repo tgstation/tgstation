@@ -557,7 +557,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 // This isn't a real attack because we don't actually want to destroy the organ, but
 /obj/item/organ/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!woundable || attacking_item.force = 0 || (attacking_item.item_flags & NOBLUDGEON))
+	if(!woundable || attacking_item.force == 0 || (attacking_item.item_flags & NOBLUDGEON))
 		return ..()
 	if(isliving(user))
 		var/mob/living/living_user = user
