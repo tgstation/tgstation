@@ -184,6 +184,10 @@
 	)
 	grant_actions_by_list(innate_actions)
 
+/mob/living/basic/venus_human_trap/Destroy(force)
+	QDEL_NULL(glow)
+	return ..()
+
 /mob/living/basic/venus_human_trap/RangedAttack(atom/victim)
 	if(!combat_mode)
 		return
