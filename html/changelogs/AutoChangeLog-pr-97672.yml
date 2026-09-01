@@ -1,0 +1,4 @@
+author: "projectkepler-ru"
+delete-after: True
+changes:
+  - balance: ".38 Truestrike now does 20 damage and has better AP."
