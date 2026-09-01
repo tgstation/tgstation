@@ -133,16 +133,10 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 /datum/gas_mixture/proc/thermal_energy()
 	return THERMAL_ENERGY(src) //see code/__DEFINES/atmospherics.dm; use the define in performance critical areas
 
-///Update archived versions of variables. Returns: 1 in all cases
+/// Update archived versions of variables
 /datum/gas_mixture/proc/archive()
-	var/list/cached_moles = moles
-	var/list/cached_moles_archive = moles_archive
-
+	moles_archive = moles.Copy()
 	temperature_archived = temperature
-	for(var/gas_id, value in cached_moles)
-		cached_moles_archive[gas_id] = value
-
-	return TRUE
 
 ///Merges all air from giver into self. Deletes giver. Returns: 1 if we are mutable, 0 otherwise
 /datum/gas_mixture/proc/merge(datum/gas_mixture/giver)
@@ -529,7 +523,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	//It might be worth looking into updating these after each reaction, but that makes us care more about order of operations, so be careful
 	var/temp = temperature
 	reaction_loop:
-		for(var/datum/gas_reaction/reaction as anything in reactions)
+		for(var/datum/gas_reaction/standard/reaction as anything in reactions)
 
 			var/list/reqs = reaction.requirements
 			if((reqs["MIN_TEMP"] && temp < reqs["MIN_TEMP"]) || (reqs["MAX_TEMP"] && temp > reqs["MAX_TEMP"]))
@@ -749,7 +743,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
  */
 /datum/gas_mixture/proc/electrolyze(working_power = 0, electrolyzer_args = list())
 	for(var/reaction in GLOB.electrolyzer_reactions)
-		var/datum/electrolyzer_reaction/current_reaction = GLOB.electrolyzer_reactions[reaction]
+		var/datum/gas_reaction/electrolyzer/current_reaction = GLOB.electrolyzer_reactions[reaction]
 
 		if(!current_reaction.reaction_check(air_mixture = src, electrolyzer_args = electrolyzer_args))
 			continue

@@ -408,3 +408,4 @@
 	new /obj/item/gun/energy/recharge/kinetic_accelerator(src)
 	new /obj/item/knife/combat/survival(src)
 	new /obj/item/flashlight/seclite(src)
+	new /obj/item/stack/candela_beacon/thirty(src)

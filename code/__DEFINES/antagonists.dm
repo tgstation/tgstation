@@ -155,7 +155,7 @@
 /// - Must be a human (type, not species)
 /// - Skeletons cannot be husked (they are snowflaked instead of having a trait)
 /// - Monkeys are monkeys, not quite human (balance reasons)
-#define IS_VALID_GHOUL_MOB(mob) (ishuman(mob) && !isskeleton(mob) && !ismonkey(mob))
+#define IS_VALID_GHOUL_MOB(mob) (ishuman(mob) && !isskeleton(mob) && !HAS_TRAIT(mob, TRAIT_LESSER_HUMANOID))
 
 /// Forces the blob to place the core where they currently are, ignoring any checks.
 #define BLOB_FORCE_PLACEMENT -1
@@ -330,6 +330,9 @@ GLOBAL_LIST_INIT(ai_employers, list(
 
 /// Checks if the given mob is a spy!
 #define IS_SPY(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/spy))
+
+/// Checks if the given mob is a bloodworm
+#define IS_BLOODWORM(mob) (mob?.mind?.has_antag_datum(/datum/antagonist/blood_worm))
 
 /// List of human antagonist types which don't spawn directly on the space station
 GLOBAL_LIST_INIT(human_invader_antagonists, list(

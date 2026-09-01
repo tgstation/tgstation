@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower"
 	density = FALSE
-	layer = ABOVE_WINDOW_LAYER
+	layer = ABOVE_MOB_LAYER
 	use_power = NO_POWER_USE
 	subsystem_type = /datum/controller/subsystem/processing/plumbing
 	///Does the user want the shower on or off?

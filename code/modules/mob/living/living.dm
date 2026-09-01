@@ -55,6 +55,7 @@
 		QDEL_LIST(imaginary_group)
 	QDEL_LAZYLIST(diseases)
 	QDEL_LAZYLIST(quirks)
+	QDEL_NULL(inner_armor)
 
 	if(!isnull(unconscious_appearance))
 		// Not super necessary strictly speaking but just in case
@@ -1641,8 +1642,8 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 				/mob/living/basic/mining/mook/worker,
 				/mob/living/basic/mining/mook/worker/bard,
 				/mob/living/basic/mining/mook/worker/tribal_chief,
-				/mob/living/basic/mining/legion/monkey,
-				/mob/living/basic/mining/legion/monkey/snow,
+				/mob/living/basic/mining/legion/lesser,
+				/mob/living/basic/mining/legion/lesser/snow,
 				/mob/living/basic/mining/lobstrosity,
 				/mob/living/basic/mining/lobstrosity/lava,
 				/mob/living/basic/mining/ice_demon,
@@ -2150,6 +2151,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_DELUSION_HALLUCINATION, "Give Delusion Hallucination")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_GUARDIAN_SPIRIT, "Give Guardian Spirit")
 	VV_DROPDOWN_OPTION(VV_HK_ADMIN_RENAME, "Force Change Name")
+	VV_DROPDOWN_OPTION(VV_HK_NAVIGATE_TO_MARKED_OBJECT, "Navigate To Marked Object")
 
 /mob/living/vv_do_topic(list/href_list)
 	. = ..()
@@ -2197,6 +2199,18 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			"updated_prefs" = replace_preferences,
 		))
 		message_admins("[key_name_admin(usr)] has forcibly changed the real name of [key_name(src)] from '[old_name]' to '[real_name]'[(replace_preferences ? " and their preferences" : "")]")
+
+	if(href_list[VV_HK_NAVIGATE_TO_MARKED_OBJECT])
+		if(!check_rights(R_ADMIN))
+			return
+
+		if(!usr.client.holder.marked_datum)
+			to_chat(usr, span_warning("You don't have any object marked."))
+		else if(!isatom(usr.client.holder.marked_datum))
+			to_chat(usr, span_warning("The object you have marked cannot be used as a target. Target must be an atom."))
+		else
+			create_navigation_line(usr.client.holder.marked_datum)
+
 
 /mob/living/proc/move_to_error_room()
 	var/obj/effect/landmark/error/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list

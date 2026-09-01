@@ -27,7 +27,7 @@
 	// If we were artificially created without blood data, we still want to have the blood_reagent element for exposure effects
 	if(isnull(LAZYACCESS(data, BLOOD_DATA_TYPE)))
 		RegisterSignal(src, COMSIG_REAGENT_GROWN_IN_PLANT, PROC_REF(grown_in_plant))
-		AddElement(/datum/element/blood_reagent, null, get_blood_type(BLOOD_TYPE_UNIVERSAL))
+		AddElement(/datum/element/blood_reagent, null, get_blood_type(/datum/blood_type/universal))
 		return
 
 	var/datum/blood_type/blood_type = data[BLOOD_DATA_TYPE]
@@ -52,7 +52,7 @@
 /datum/reagent/blood/proc/grown_in_plant(datum/source, obj/item/seeds/our_seeds, obj/item/our_plant)
 	SIGNAL_HANDLER
 
-	LAZYSET(data, BLOOD_DATA_TYPE, get_blood_type(BLOOD_TYPE_O_MINUS))
+	LAZYSET(data, BLOOD_DATA_TYPE, get_blood_type(/datum/blood_type/human/o_minus))
 
 /datum/reagent/consumable/liquidgibs
 	name = "Liquid Gibs"
@@ -2639,6 +2639,13 @@
 	name = "Stable Uranium Gel"
 	color = "#04506C" // rgb: 4,80,108
 	taste_description = "the inside of a reactor"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/wittelvirusfood
+	name = "Exotic Agar"
+	color = "#C3CF7C" // rgb: 195, 207, 124
+	taste_description = "sourness"
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 

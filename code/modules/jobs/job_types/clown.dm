@@ -36,13 +36,14 @@
 	job_flags = STATION_JOB_FLAGS
 
 	job_tone = "honk"
+	tgui_icon = FA_ICON_FACE_GRIN_TEARS
 
 /datum/job/clown/after_spawn(mob/living/spawned, client/player_client)
 	if (ishuman(spawned))
 		spawned.apply_pref_name(/datum/preference/name/clown, player_client)
 		if(check_holidays(APRIL_FOOLS)) // Clown blood is real
 			var/mob/living/carbon/human/human_clown = spawned
-			human_clown.set_blood_type(BLOOD_TYPE_CLOWN)
+			human_clown.set_blood_type(/datum/blood_type/clown)
 
 	return ..()
 

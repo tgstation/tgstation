@@ -65,6 +65,7 @@
 	flags_cover = NONE
 	dirt_state = null
 	alternate_worn_layer = HAIR_LAYER
+	texture_type = /datum/bodypart_texture/mesh/black
 
 /datum/armor/bio_hood_plague
 	bio = 100

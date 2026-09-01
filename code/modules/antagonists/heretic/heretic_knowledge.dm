@@ -310,7 +310,7 @@
 
 	if(the_spell != created_action_ref || isnull(the_spell.owner))
 		return NONE
-	if(charges > 0)
+	if(has_charges(the_spell.owner))
 		return NONE
 	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(the_spell.owner)
 	if(our_heretic?.ascended)
@@ -325,7 +325,7 @@
 
 	if(the_spell != created_action_ref)
 		return NONE
-	if(charges > 0)
+	if(has_charges(source))
 		return NONE
 	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(source)
 	if(our_heretic?.ascended)
@@ -334,16 +334,26 @@
 	to_chat(source, span_mansus("You don't have enough charges to cast this spell! [transmute_text]"))
 	return SPELL_CANCEL_CAST
 
+/// Checks if we have enough charges to cast the spell
+/datum/heretic_knowledge/spell/proc/has_charges(mob/living/user)
+	return charges > 0
+
 /datum/heretic_knowledge/spell/proc/deduct_charge(mob/living/source, datum/action/cooldown/the_spell)
 	SIGNAL_HANDLER
 
 	if(the_spell != created_action_ref)
+		return
+	if(!should_deduct_charge(source))
 		return
 	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(source)
 	if(our_heretic?.ascended)
 		return
 
 	remove_charges(1)
+
+/// Checks if casting the spell should deduct a charge
+/datum/heretic_knowledge/spell/proc/should_deduct_charge(mob/living/user)
+	return TRUE
 
 /// Add a number of charges, optionally bypassing the cap
 /datum/heretic_knowledge/spell/proc/add_charges(num, uncapped = FALSE)
@@ -787,7 +797,7 @@
  * Checks if the passed human is a valid sacrifice for our ritual.
  */
 /datum/heretic_knowledge/ultimate/proc/is_valid_sacrifice(mob/living/carbon/human/sacrifice)
-	return (sacrifice.stat == DEAD) && !ismonkey(sacrifice)
+	return (sacrifice.stat == DEAD) && !HAS_TRAIT(sacrifice, TRAIT_LESSER_HUMANOID)
 
 /datum/heretic_knowledge/ultimate/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
 
@@ -799,10 +809,8 @@
 	// Show the cool red gradiant in our UI
 	heretic_datum.update_static_data(user)
 
-	if(ishuman(user))
-		var/mob/living/carbon/human/human_user = user
-		human_user.physiology.brute_mod *= 0.5
-		human_user.physiology.burn_mod *= 0.5
+	MODIFY_PHYSIOLOGY(user, BRUTE, 0.5)
+	MODIFY_PHYSIOLOGY(user, BURN, 0.5)
 
 	SSblackbox.record_feedback("tally", "heretic_ascended", 1, heretic_datum.heretic_path.route)
 	log_heretic_knowledge("[key_name(user)] completed their final ritual at [round_timestamp()].")

@@ -183,7 +183,9 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/messagepart = speaker.generate_messagepart(raw_message, spans, message_mods)
 	messagepart = " <span class='message'>[messagepart]</span></span>"
 
-	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][namepart][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
+	var/speaker_voice_description = message_mods[MODE_SPEAKER_GENDER_OVERRIDE] || speaker.get_voice_description()
+
+	return "[spanpart1][spanpart2][freqpart][languageicon][compose_track_href(speaker, namepart)][span_tooltip_subtle(speaker_voice_description, namepart)][compose_job(speaker, message_language, raw_message, radio_freq)][endspanpart][messagepart]"
 
 /atom/movable/proc/compose_track_href(atom/movable/speaker, message_langs, raw_message, radio_freq)
 	return ""
@@ -253,6 +255,17 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/processed_say_mod = apply_message_emphasis(say_mod)
 
 	return "[processed_say_mod], \"[processed_input]\""
+
+/atom/movable/proc/get_voice_description()
+	switch(gender)
+		if(MALE)
+			return VOICE_DESCRIPTION_MASCULINE
+		if(FEMALE)
+			return VOICE_DESCRIPTION_FEMININE
+		if(PLURAL)
+			return VOICE_DESCRIPTION_PLURAL
+		else
+			return VOICE_DESCRIPTION_NEUTER
 
 /// Transforms the message emphasis mods from [/atom/proc/apply_message_emphasis] into the appropriate HTML tags. Includes escaping.
 #define ENCODE_HTML_EMPHASIS(input, char, html, varname) \
@@ -376,6 +389,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 	source = M
 	if(istype(M))
 		name = radio?.anonymize ? "Unknown" : M.get_voice(add_id_name = TRUE)
+		gender = M.gender
 		verb_say = M.get_default_say_verb()
 		verb_ask = M.verb_ask
 		verb_exclaim = M.verb_exclaim
@@ -387,6 +401,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 		// can know their job even if they don't carry an ID.
 		var/datum/record/crew/found_record = find_record(name)
 		if(found_record)
+			gender = LOWER_TEXT(found_record.gender)
 			job = found_record.rank
 		else
 			job = "Unknown"
