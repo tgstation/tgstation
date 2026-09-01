@@ -82,7 +82,7 @@
 		vine.set_light(LIGHT_MUTATION_BRIGHTNESS, 0.3)
 
 /datum/spacevine_mutation/light/equip_venus_trap(mob/living/basic/venus_human_trap/venus_trap)
-	venus_trap.light_range = LIGHT_MUTATION_BRIGHTNESS
+	venus_trap.glow = venus_trap.mob_light(LIGHT_MUTATION_BRIGHTNESS, 0.3)
 
 /datum/spacevine_mutation/toxicity
 	name = "Toxic"
