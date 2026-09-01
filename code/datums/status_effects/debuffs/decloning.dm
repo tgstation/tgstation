@@ -65,7 +65,7 @@
 		owner.dust()
 		return
 
-/datum/status_effect/decloning/get_examine_text()
+/datum/status_effect/decloning/get_examine_text(mob/examiner)
 	switch(strikes_left)
 		if(68 to 100)
 			return span_warning("[owner.p_Their()] body looks a bit deformed.")

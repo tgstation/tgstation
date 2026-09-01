@@ -84,6 +84,7 @@
 		/obj/item/organ/monster_core/regenerative_core = 3,
 		/obj/item/organ/monster_core/rush_gland = 3,
 		/obj/item/organ/tongue/carp = 3,
+		/obj/item/organ/fangs/carp = 3,
 		/obj/item/organ/alien/acid = 2,
 		/obj/item/organ/alien/resinspinner = 2,
 		/obj/item/organ/eyes/night_vision/goliath = 2,

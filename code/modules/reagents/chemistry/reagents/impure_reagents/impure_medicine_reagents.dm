@@ -975,7 +975,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 
 /datum/reagent/inverse/bath_salts/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
-	if(is_simian(affected_mob))
+	if(HAS_TRAIT(affected_mob, TRAIT_SIMIAN))
 		affected_mob.gain_trauma(/datum/brain_trauma/special/primal_instincts, TRAUMA_RESILIENCE_ABSOLUTE)
 		affected_mob.add_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_ANALGESIA, TRAIT_STIMULATED), type)
 		if(jungle_arts)
@@ -989,7 +989,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	QDEL_NULL(jungle_arts)
 	affected_mob.remove_traits(list(TRAIT_STUNIMMUNE, TRAIT_SLEEPIMMUNE, TRAIT_ANALGESIA, TRAIT_STIMULATED), type)
 	affected_mob.Sleeping(30 SECONDS)
-	if(is_simian(affected_mob))
+	if(HAS_TRAIT(affected_mob, TRAIT_SIMIAN))
 		affected_mob.cure_trauma_type(/datum/brain_trauma/special/primal_instincts, resilience = TRAUMA_RESILIENCE_ABSOLUTE)
 
 
@@ -999,7 +999,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 		holder.remove_reagent(type, volume)
 		return
 
-	if(is_simian(affected_mob))
+	if(HAS_TRAIT(affected_mob, TRAIT_SIMIAN))
 		var/need_mob_update
 		need_mob_update = affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 5 * metabolization_ratio * seconds_per_tick, required_organ_flag = affected_organ_flags)
 

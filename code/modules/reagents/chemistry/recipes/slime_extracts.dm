@@ -76,7 +76,7 @@
 
 /datum/chemical_reaction/slime/slimeethereal
 	results = list(/datum/reagent/mutationtoxin/ethereal = 1)
-	required_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 1)
+	required_reagents = list(/datum/reagent/consumable/liquidelectricity = 1)
 	required_container = /obj/item/slime_extract/green
 
 //Metal

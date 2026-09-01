@@ -121,7 +121,7 @@
 		var/atom/target = get_edge_target_turf(source, source.dir)
 		choking_on.throw_at(target, distance, 1, source)
 
-/datum/status_effect/choke/get_examine_text()
+/datum/status_effect/choke/get_examine_text(mob/examiner)
 	return span_boldwarning("[owner.p_They()] [owner.p_are()] choking!")
 
 /datum/status_effect/choke/proc/remove_choke(datum/source)

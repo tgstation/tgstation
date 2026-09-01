@@ -399,6 +399,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/organ/stomach/fish,
 		/obj/item/organ/tail/fish,
 		/obj/item/organ/tongue/carp,
+		/obj/item/organ/fangs/carp,
 		/obj/item/storage/fancy/cigarettes/cigpack_carp,
 		/obj/item/storage/toolbox/fishing,
 		/obj/item/stack/sheet/animalhide/carp,

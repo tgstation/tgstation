@@ -237,5 +237,6 @@
 	var/size_y = bbox[4] - bbox[2] + 1
 
 	cam_screen.show_camera(visible_turfs, size_x, size_y)
+	cam_screen.set_display(active_camera)
 
 #undef DEFAULT_MAP_SIZE

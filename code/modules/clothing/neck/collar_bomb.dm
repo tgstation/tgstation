@@ -7,7 +7,6 @@
 	inhand_icon_state = "reverse_bear_trap"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
-	clothing_flags = INEDIBLE_CLOTHING
 	armor_type = /datum/armor/collar_bomb
 	equip_delay_self = 6 SECONDS
 	equip_delay_other = 8 SECONDS
@@ -31,6 +30,9 @@
 	button?.collar = null
 	button = null
 	return ..()
+
+/obj/item/clothing/neck/collar_bomb/create_moth_snack()
+	return null
 
 /obj/item/clothing/neck/collar_bomb/examine(mob/user)
 	. = ..()

@@ -114,3 +114,116 @@
 
 /turf/open/floor/glass/reinforced/plasma/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/glass/bronze
+	name = "bronze glass floor"
+	desc = "Do jump on it, there's no rat'var cultists around to give you smack for it."
+	icon = 'icons/turf/floors/glass_bronze.dmi'
+	icon_state = "glass_bronze-0"
+	base_icon_state = "glass_bronze"
+	floor_tile = /obj/item/stack/tile/bronze/window
+	starlight_color = COLOR_THEME_CLOCKWORK
+	alpha_to_leave = 206
+
+/turf/open/floor/glass/cult
+	name = "cult glass floor"
+	desc = "If you jump on it, there's no guarantee you won't fall into some kinf of nightmare dimension."
+	icon = 'icons/turf/floors/glass_runic.dmi'
+	icon_state = "glass_runic-0"
+	base_icon_state = "glass_runic"
+	floor_tile = /obj/item/stack/tile/cult/window
+	starlight_color = COLOR_CULT_RED
+	alpha_to_leave = 206
+
+/turf/open/floor/glass/titatanium
+	name = "titatanium glass floor"
+	desc = "Do jump on it, it can take it."
+	icon = 'icons/turf/floors/glass_titanium.dmi'
+	icon_state = "glass_titanium-0"
+	base_icon_state = "glass_titanium"
+	floor_tile = /obj/item/stack/tile/glass/titanium
+	starlight_color = COLOR_ASSISTANT_GRAY
+	alpha_to_leave = 206
+
+/turf/open/floor/glass/plastitatanium
+	name = "plastitatanium glass floor"
+	desc = "Do jump on it, it can take it."
+	icon = 'icons/turf/floors/glass_plastitanium.dmi'
+	icon_state = "glass_plastitanium-0"
+	base_icon_state = "glass_plastitanium"
+	floor_tile = /obj/item/stack/tile/glass/plastitanium
+	starlight_color = COLOR_ASSISTANT_GRAY
+	alpha_to_leave = 206
+
+/turf/open/floor/glass/stained_red
+	name = "red stained glass floor"
+	desc = "Glass floor, stained red. Not with blood, hopefuly."
+	icon = 'icons/turf/floors/glass_stained_red.dmi'
+	icon_state = "glass_stained_red-0"
+	base_icon_state = "glass_stained_red"
+	floor_tile = /obj/item/stack/tile/stained_glass/red
+	starlight_color = COLOR_CRAYON_RED
+
+/turf/open/floor/glass/stained_orange
+	name = "orange stained glass floor"
+	desc = "Glass floor, stained orange. Somebody spilled their orange juice?"
+	icon = 'icons/turf/floors/glass_stained_orange.dmi'
+	icon_state = "glass_stained_orange-0"
+	base_icon_state = "glass_stained_orange"
+	floor_tile = /obj/item/stack/tile/stained_glass/orange
+	starlight_color = COLOR_CRAYON_ORANGE
+
+/turf/open/floor/glass/stained_yellow
+	name = "yellow stained glass floor"
+	desc = "Glass floor, stained yellow. Probably by some mellow fellow."
+	icon = 'icons/turf/floors/glass_stained_yellow.dmi'
+	icon_state = "glass_stained_yellow-0"
+	base_icon_state = "glass_stained_yellow"
+	floor_tile = /obj/item/stack/tile/stained_glass/yellow
+	starlight_color = COLOR_CRAYON_YELLOW
+
+/turf/open/floor/glass/stained_green
+	name = "green stained glass floor"
+	desc = "Glass floor, stained green. That's what you get when putting liquid uranium at the edge of your table."
+	icon = 'icons/turf/floors/glass_stained_green.dmi'
+	icon_state = "glass_stained_green-0"
+	base_icon_state = "glass_stained_green"
+	floor_tile = /obj/item/stack/tile/stained_glass/green
+	starlight_color = COLOR_CRAYON_GREEN
+
+/turf/open/floor/glass/stained_blue
+	name = "blue stained glass floor"
+	desc = "Glass floor, stained blue. With tears of someone feeling blue, obviously."
+	icon = 'icons/turf/floors/glass_stained_blue.dmi'
+	icon_state = "glass_stained_blue-0"
+	base_icon_state = "glass_stained_blue"
+	floor_tile = /obj/item/stack/tile/stained_glass/blue
+	starlight_color = COLOR_CRAYON_BLUE
+
+/turf/open/floor/glass/stained_purple
+	name = "purple stained glass floor"
+	desc = "Glass floor, stained purple. It tastes purple, too."
+	icon = 'icons/turf/floors/glass_stained_purple.dmi'
+	icon_state = "glass_stained_purple-0"
+	base_icon_state = "glass_stained_purple"
+	floor_tile = /obj/item/stack/tile/stained_glass/purple
+	starlight_color = COLOR_CRAYON_PURPLE
+
+/turf/open/floor/glass/stained_white
+	name = "white stained glass floor"
+	desc = "Glass floor, stained white. Or perhaps it was bleached?"
+	icon = 'icons/turf/floors/glass_stained_white.dmi'
+	icon_state = "glass_stained_white-0"
+	base_icon_state = "glass_stained_white"
+	floor_tile = /obj/item/stack/tile/stained_glass/white
+	starlight_color = COLOR_VERY_LIGHT_GRAY /// White crayon doesn't have a colour.
+
+/turf/open/floor/glass/stained_black
+	name = "black stained glass floor"
+	desc = "Glass floor, stained black. A space squid inked it."
+	icon = 'icons/turf/floors/glass_stained_black.dmi'
+	icon_state = "glass_stained_black-0"
+	base_icon_state = "glass_stained_black"
+	floor_tile = /obj/item/stack/tile/stained_glass/black
+	starlight_color = COLOR_CRAYON_BLACK
+

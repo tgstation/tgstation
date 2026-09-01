@@ -99,11 +99,11 @@ GLOBAL_LIST_INIT(specular_color, SPECULAR_COLOR)
 
 // Types of emissives
 /// Emissive that will not have bloom applied to it, encoded into the green channel
-#define EMISSIVE_NO_BLOOM 0
+#define EMISSIVE_NO_BLOOM 1
 /// Emissive that will get bloom applied to it, encoded into the red channel
-#define EMISSIVE_BLOOM 1
+#define EMISSIVE_BLOOM 2
 /// Mimics a highly reflective surface, will not have any glow by itself but will amplify any lighting applied to it, encoded into the blue channel
-#define EMISSIVE_SPECULAR 2
+#define EMISSIVE_SPECULAR 3
 
 /// Light cutoff of specular emissives, controls how sharp a light must be before it starts reflecting
 #define SPECULAR_EMISSIVE_CUTOFF 0.3
