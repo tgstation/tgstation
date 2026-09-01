@@ -19,7 +19,7 @@
 /datum/spacevine_mutation/proc/on_buckle(obj/structure/spacevine/vine, mob/living/buckled)
 	SHOULD_CALL_PARENT(TRUE)
 	buckled.layer = SPACEVINE_MOB_LAYER
-	RegisterSignal(buckled, COMSIG_MOB_UNBUCKLED, PROC_REF(on_unbuckle))
+	RegisterSignal(buckled, COMSIG_MOB_UNBUCKLED, PROC_REF(on_unbuckle), override=TRUE)
 
 /datum/spacevine_mutation/proc/on_unbuckle(datum/source)
 	SHOULD_CALL_PARENT(TRUE)
@@ -145,7 +145,7 @@
 	explosion(vine, light_impact_range = EXPLOSION_MUTATION_IMPACT_RADIUS, adminlog = FALSE)
 
 /datum/spacevine_mutation/explosive/equip_venus_trap(mob/living/basic/venus_human_trap/venus_trap)
-	RegisterSignal(venus_trap, COMSIG_LIVING_DEATH, PROC_REF(on_venus_trap_death))
+	RegisterSignal(venus_trap, COMSIG_LIVING_DEATH, PROC_REF(on_venus_trap_death), override=TRUE)
 
 /datum/spacevine_mutation/explosive/proc/on_venus_trap_death(mob/living/spawned_mob, mob/mob_possessor, apply_prefs)
 	SIGNAL_HANDLER
@@ -519,6 +519,7 @@
 	attempt_shock(vine, hitter, item)
 
 /datum/spacevine_mutation/conductive/on_buckle(obj/structure/spacevine/vine, mob/living/buckled)
+	. = ..()
 	attempt_shock(vine, buckled)
 
 /datum/spacevine_mutation/radioactive
