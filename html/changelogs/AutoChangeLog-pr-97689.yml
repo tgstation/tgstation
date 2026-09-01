@@ -1,4 +1,0 @@
-author: "Absolucy"
-delete-after: True
-changes:
-  - bugfix: "Fixed the existence of borgs sometimes causing the orbit menu to crash."
