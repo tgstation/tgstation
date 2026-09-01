@@ -52,7 +52,7 @@
 		ignored_mobs = user,
 	)
 	to_chat(user, span_notice("You try to open [owner]'s [source]..."))
-	if(owner.is_blind())
+	if(astype(owner, /mob)?.is_blind())
 		to_chat(owner, span_userdanger("Someone is trying to open your [source]!"))
 
 	if(!do_after(user, source.strip_delay + 1 SECONDS, owner, extra_checks = CALLBACK(src, PROC_REF(can_access_storage), source, owner, user) ))
