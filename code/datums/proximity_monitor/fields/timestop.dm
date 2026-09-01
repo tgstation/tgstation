@@ -68,7 +68,7 @@
 	edge_is_a_field = TRUE
 	var/list/immune = list()
 	var/list/frozen_things = list()
-	var/list/frozen_mobs = list() //cached separately for processing
+	var/list/frozen_mobs = list()
 	var/list/frozen_structures = list() //Also machinery, and only frozen aestethically
 	var/list/frozen_turfs = list() //Only aesthetically
 	var/antimagic_flags = NONE
@@ -83,14 +83,12 @@
 	src.antimagic_flags = antimagic_flags
 	src.channelled = channelled
 	recalculate_field(full_recalc = TRUE)
-	START_PROCESSING(SSfastprocess, src)
 
 /datum/proximity_monitor/advanced/timestop/Destroy()
 	unfreeze_all()
 	if(channelled)
 		for(var/atom in immune)
 			UnregisterSignal(atom, COMSIG_MOVABLE_MOVED)
-	STOP_PROCESSING(SSfastprocess, src)
 	return ..()
 
 /datum/proximity_monitor/advanced/timestop/field_turf_crossed(atom/movable/movable, turf/old_location, turf/new_location)
@@ -193,11 +191,6 @@
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_structure(obj/O)
 	escape_the_negative_zone(O)
 
-/datum/proximity_monitor/advanced/timestop/process()
-	for(var/i in frozen_mobs)
-		var/mob/living/m = i
-		m.Stun(20, ignore_canstun = TRUE)
-
 /datum/proximity_monitor/advanced/timestop/setup_field_turf(turf/target)
 	. = ..()
 	for(var/i in target.contents)
@@ -212,8 +205,7 @@
 
 /datum/proximity_monitor/advanced/timestop/proc/freeze_mob(mob/living/victim)
 	frozen_mobs += victim
-	victim.Stun(20, ignore_canstun = TRUE)
-	victim.add_traits(list(TRAIT_MUTE, TRAIT_EMOTEMUTE), TIMESTOP_TRAIT)
+	victim.add_traits(list(TRAIT_MUTE, TRAIT_EMOTEMUTE, TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS), TIMESTOP_TRAIT)
 	GLOB.move_manager.stop_looping(victim) //stops them mid pathing even if they're stunimmune //This is really dumb
 	if(isanimal(victim))
 		var/mob/living/simple_animal/animal_victim = victim
@@ -226,8 +218,7 @@
 		basic_victim.ai_controller?.force_ai_off()
 
 /datum/proximity_monitor/advanced/timestop/proc/unfreeze_mob(mob/living/victim)
-	victim.AdjustStun(-20, ignore_canstun = TRUE)
-	victim.remove_traits(list(TRAIT_MUTE, TRAIT_EMOTEMUTE), TIMESTOP_TRAIT)
+	victim.remove_traits(list(TRAIT_MUTE, TRAIT_EMOTEMUTE, TRAIT_INCAPACITATED, TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS), TIMESTOP_TRAIT)
 	frozen_mobs -= victim
 	if(isanimal(victim))
 		var/mob/living/simple_animal/animal_victim = victim
