@@ -962,7 +962,7 @@
 		return
 
 	if(get_iff_signature(target) == IFF_FRIENDLY)
-		examine_overrides[EXAMINE_OVERRIDE_PRIORITY_IFF] = span_notice("Centcom personnel. Do not attack.")
+		examine_overrides[EXAMINE_OVERRIDE_PRIORITY_IFF] = span_notice("CentCom personnel. Do not attack.")
 	else
 		examine_overrides[EXAMINE_OVERRIDE_PRIORITY_IFF] = span_boldwarning("KILL KILL KILL KILL KILL KILL!!!")
 
