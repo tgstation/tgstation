@@ -1693,7 +1693,6 @@
 
 	if(goo.lazy_init_reagents())
 		goo.reagents.maximum_volume = min(goo.reagents.maximum_volume + rounded_volume, 300)
-		// goo.reagents.add_reagent(type, rounded_volume)
 	if(goo.reagents.has_reagent(type, WASTE_REACTION_THRESHOLD))
 		goo.pre_dissolve()
 		return // Otherwise there's too little waste to do anything.
