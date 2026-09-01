@@ -11,3 +11,6 @@
   PapaMichael:
   - bugfix: Cats no longer try to run away from themselves after losing a catfight,
       instead running from the cat they actually lost to
+  - bugfix: Revenants are no longer immune to all damage
+  projectkepler-ru:
+  - balance: .38 Truestrike now does 20 damage and has better AP.
