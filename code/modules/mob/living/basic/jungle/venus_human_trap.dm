@@ -179,6 +179,9 @@
 /mob/living/basic/venus_human_trap/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/lifesteal, 5)
+	var/static/list/innate_actions = list(
+		/datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle = BB_TARGETED_ACTION,
+	)
 	grant_actions_by_list(innate_actions)
 
 /mob/living/basic/venus_human_trap/RangedAttack(atom/victim)
