@@ -168,14 +168,13 @@
 	///how much damage we take out of weeds
 	var/no_weed_damage = 12.5
 	///how much do we heal in weeds
-	var/weed_heal = 10
+	var/weed_heal = 5
 	///if the balloon alert was shown atleast once, reset after healing in weeds
 	var/alert_shown = FALSE
 	///the distance it can move away from kudzu before taking damage
-	var/kudzu_off_distance_range = 2
-	var/static/list/innate_actions = list(
-		/datum/action/cooldown/mob_cooldown/projectile_attack/vine_tangle = BB_TARGETED_ACTION,
-	)
+	var/kudzu_off_distance_range = 0
+	/// Internal dummy used to glow (very cool)
+	var/obj/effect/dummy/lighting_obj/moblight/glow
 
 /mob/living/basic/venus_human_trap/Initialize(mapload)
 	. = ..()
