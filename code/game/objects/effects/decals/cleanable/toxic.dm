@@ -29,6 +29,7 @@
 
 /obj/effect/decal/cleanable/greenglow/waste/Destroy()
 	QDEL_NULL(bubbling_audio)
+	remove_shared_particles(/particles/acid/toxic)
 	return ..()
 
 /**
@@ -46,6 +47,7 @@
 	dissolve_timer = addtimer(CALLBACK(src, PROC_REF(dissolve_floor)), dissolve_clock, TIMER_STOPPABLE | TIMER_DELETE_ME)
 	active = TRUE
 	update_appearance()
+	add_shared_particles(/particles/acid/toxic)
 
 /obj/effect/decal/cleanable/greenglow/waste/proc/dissolve_floor()
 	if(QDELETED(src))
@@ -60,6 +62,7 @@
 	bubbling_audio?.stop()
 	active = TRUE
 	update_appearance()
+	remove_shared_particles(/particles/acid/toxic)
 
 /obj/effect/decal/cleanable/greenglow/waste/update_icon_state()
 	. = ..()
