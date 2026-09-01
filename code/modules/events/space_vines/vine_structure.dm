@@ -81,7 +81,6 @@
 
 /obj/structure/spacevine/attacked_by(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
 	LAZYSET(attack_modifiers, SILENCE_DEFAULT_MESSAGES, TRUE)
-	LAZYSET(attack_modifiers, FORCE_MULTIPLIER, 1)
 	if(item.damtype == BURN)
 		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 4)
 	if(item.get_sharpness())
@@ -108,6 +107,8 @@
 /obj/structure/spacevine/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	for(var/datum/spacevine_mutation/mutation in mutations)
 		mutation.on_hit(src, attacking_item, user, modifiers, attack_modifiers)
+
+	return ..()
 
 //ATTACK HAND IGNORING PARENT RETURN VALUE
 /obj/structure/spacevine/attack_hand(mob/user, list/modifiers)
