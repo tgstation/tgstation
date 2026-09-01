@@ -133,7 +133,7 @@
 		if (EXPLODE_LIGHT)
 			bloss = 30
 	if(bloss)
-		bloss *= bomb_multi
+		bloss = round(bloss * bomb_multi, 0.1)
 		apply_damage(bloss, damagetype = BRUTE)
 	return TRUE
 

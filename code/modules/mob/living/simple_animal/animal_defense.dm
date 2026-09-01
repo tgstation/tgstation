@@ -118,7 +118,7 @@
 		if (EXPLODE_LIGHT)
 			bloss = 30
 	if(bloss)
-		bloss *= bomb_multi
+		bloss = round(bloss * bomb_multi, 0.1)
 		adjust_brute_loss(bloss)
 	return TRUE
 

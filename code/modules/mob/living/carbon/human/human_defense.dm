@@ -312,8 +312,8 @@
 			damage_clothes(max(50 - bomb_armor, 0), BRUTE, BOMB)
 			Knockdown(16 SECONDS - (bomb_armor * 1.6)) //100 bomb armor will prevent knockdown altogether
 
-	brute_loss *= bomb_multi
-	burn_loss *= bomb_multi
+	brute_loss = round(brute_loss * bomb_multi, 0.1)
+	burn_loss = round(burn_loss * bomb_multi, 0.1)
 	take_overall_damage(brute_loss,burn_loss)
 	soundbang_act(soundbang_intensity, 0, ear_damage, deafen_duration, ignore_deafness = TRUE, send_sound = FALSE)
 
