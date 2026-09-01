@@ -1,3 +1,4 @@
+/// Apply to an atom to allow it people to access its storage through the strip menu directly
 /datum/element/strip_accessible_storage
 
 /datum/element/strip_accessible_storage/Attach(obj/item/target)
