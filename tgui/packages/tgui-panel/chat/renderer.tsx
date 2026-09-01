@@ -4,6 +4,7 @@
  * @license MIT
  */
 
+import { flushSync } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { createLogger } from 'tgui/logging';
 import { Tooltip } from 'tgui-core/components';
@@ -129,8 +130,8 @@ function isRadioChannelName(node: Text): boolean {
   const match = RADIO_CHANNEL_LABEL.exec(text);
   return Boolean(
     node.parentElement?.classList.contains('name') &&
-      match &&
-      match[0].length === text.length,
+    match &&
+    match[0].length === text.length,
   );
 }
 
@@ -547,11 +548,15 @@ class ChatRenderer {
 
           const reactRoot = createRoot(childNode);
 
-          reactRoot.render(
-            <Element {...outputProps}>
-              <span dangerouslySetInnerHTML={oldHtml} />
-            </Element>,
-          );
+          // `flushSync()` because of a chat scroll issue where whether or not
+          // the line wraps was being decided before the name loaded
+          flushSync(() => {
+            reactRoot.render(
+              <Element {...outputProps}>
+                <span dangerouslySetInnerHTML={oldHtml} />
+              </Element>,
+            );
+          });
         }
 
         // Highlight text
