@@ -40,7 +40,7 @@
 		/obj/item/flashlight/seclite = 1,
 		/obj/item/knife/combat/survival = 1,
 		/obj/item/mining_voucher = 1,
-		/obj/item/stack/marker_beacon/ten = 1,
+		/obj/item/stack/candela_beacon/thirty = 1,
 		/obj/item/t_scanner/adv_mining_scanner/lesser = 1,
 	)
 	belt = /obj/item/modular_computer/pda/shaftminer
@@ -70,7 +70,7 @@
 		/obj/item/gun/energy/recharge/kinetic_accelerator = 1,
 		/obj/item/knife/combat/survival = 1,
 		/obj/item/mining_voucher = 1,
-		/obj/item/stack/marker_beacon/ten = 1,
+		/obj/item/stack/candela_beacon/thirty = 1,
 		/obj/item/t_scanner/adv_mining_scanner/lesser = 1,
 	)
 	glasses = /obj/item/clothing/glasses/meson

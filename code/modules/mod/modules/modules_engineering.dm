@@ -206,7 +206,7 @@
 
 /obj/projectile/tether/fire(setAngle)
 	if(firer)
-		line = firer.Beam(src, "line", 'icons/obj/clothing/modsuit/mod_modules.dmi', emissive = FALSE)
+		line = firer.Beam(src, "line", 'icons/obj/clothing/modsuit/mod_modules.dmi', emissive = NONE)
 	return ..()
 
 /obj/projectile/tether/on_hit(atom/target, blocked = 0, pierce_hit)
