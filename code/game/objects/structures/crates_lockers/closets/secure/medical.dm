@@ -83,6 +83,7 @@
 	new /obj/item/disk/computer/command/cmo(src)
 	new /obj/item/radio/headset/heads/cmo(src)
 	new /obj/item/megaphone/command(src)
+	new /obj/item/healthanalyzer/advanced(src)
 	new /obj/item/assembly/flash/handheld(src)
 	new /obj/item/autosurgeon/medical_hud(src)
 	new /obj/item/door_remote/chief_medical_officer(src)

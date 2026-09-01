@@ -270,9 +270,12 @@
 	cell = new(src)
 	update_power()
 
-/obj/item/defibrillator/compact/loaded/cmo // subtype for the spy steal objective
-	name = "chief medical officer's compact defibrillator"
+/obj/item/defibrillator/compact/loaded/cmo // special version for the CMO, is a theft objective.
+	name = "experimental compact defibrillator"
+	desc = "A belt-equipped defibrillator that can be rapidly deployed. This one is customized with various experimental \
+		components to significantly increase recharge rate. Nifty."
 	icon_state = "defibcmo"
+	cooldown_duration = 2.5 SECONDS
 	resistance_flags = INDESTRUCTIBLE // So no cheesy getting rid of like other steal/head items
 
 /obj/item/defibrillator/compact/combat
