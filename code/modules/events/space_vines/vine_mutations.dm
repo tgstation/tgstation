@@ -508,3 +508,34 @@
 
 /datum/spacevine_mutation/conductive/on_buckle(obj/structure/spacevine/vine, mob/living/buckled)
 	attempt_shock(vine, buckled)
+
+/datum/spacevine_mutation/radioactive
+	name = "Radioactive"
+	description = "Causes the vines to be radioactive"
+	hue = "#09b82f"
+	quality = NEGATIVE
+	severity = SEVERITY_MAJOR
+
+/datum/spacevine_mutation/radioactive/on_birth(obj/structure/spacevine/vine)
+	vine.AddElement(/datum/element/radioactive, chance = DEFAULT_RADIATION_CHANCE / 3)
+
+/datum/spacevine_mutation/radioactive/equip_venus_trap(mob/living/basic/venus_human_trap/venus_trap)
+	RegisterSignal(venus_trap, COMSIG_ATOM_ATTACKBY, PROC_REF(on_venus_hit), override=TRUE)
+
+/datum/spacevine_mutation/radioactive/proc/on_venus_hit(mob/living/basic/venus_human_trap/venus_trap, obj/item/attacking_item, mob/living/attacker, params)
+	SIGNAL_HANDLER
+
+	if(isvineimmune(attacker) || HAS_TRAIT(attacker, TRAIT_PLANT_SAFE))
+		return
+	if(!SSradiation.can_irradiate_basic(attacker))
+		return
+	if(ishuman(attacker) && SSradiation.wearing_rad_protected_clothing(attacker))
+		return
+
+	radiation_pulse(
+		venus_trap,
+		max_range = 1,
+		threshold = RAD_VERY_LIGHT_INSULATION,
+		chance = (DEFAULT_RADIATION_CHANCE / 3),
+		minimum_exposure_time = 3 SECONDS,
+	)
