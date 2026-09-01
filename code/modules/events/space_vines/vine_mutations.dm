@@ -227,7 +227,7 @@
 		qdel(prey)
 
 /datum/spacevine_mutation/vine_eating/equip_venus_trap(mob/living/basic/venus_human_trap/venus_trap)
-	venus_trap.weed_heal = initial(venus_trap.weed_heal) * 0.5
+	venus_trap.weed_heal = initial(venus_trap.weed_heal) * 2
 
 /datum/spacevine_mutation/aggressive_spread  //very OP, but im out of other ideas currently
 	name = "Aggressive spreading"
@@ -295,7 +295,7 @@
 	log_combat(vine, living_mob, "aggressively smashed")
 
 /datum/spacevine_mutation/aggressive_spread/equip_venus_trap(mob/living/basic/venus_human_trap/venus_trap)
-	venus_trap.kudzu_off_distance_range = initial(venus_trap.kudzu_off_distance_range) * 3
+	venus_trap.kudzu_off_distance_range = 2
 
 /datum/spacevine_mutation/transparency
 	name = "transparent"
@@ -416,15 +416,15 @@
 /datum/spacevine_mutation/hardened/on_grow(obj/structure/spacevine/vine)
 	if(vine.growth_stage)
 		vine.set_density(TRUE)
-	vine.modify_max_integrity(100)
+	vine.modify_max_integrity(initial(vine.max_integrity) * 2)
 
 /datum/spacevine_mutation/hardened/on_hit(obj/structure/spacevine/vine, obj/item/item,  mob/living/hitter, list/modifiers, list/attack_modifiers)
 	if(item?.get_sharpness())
-		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 0.125)
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 0.5)
 
 /datum/spacevine_mutation/hardened/equip_venus_trap(mob/living/basic/venus_human_trap/venus_trap)
-	venus_trap.health = initial(venus_trap.health) * 1.5
-	venus_trap.maxHealth = initial(venus_trap.maxHealth) * 1.5
+	venus_trap.health = initial(venus_trap.health) * 2
+	venus_trap.maxHealth = initial(venus_trap.maxHealth) * 2
 
 /datum/spacevine_mutation/timid
 	name = "Timid"
