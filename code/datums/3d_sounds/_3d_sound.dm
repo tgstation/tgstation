@@ -127,11 +127,8 @@
 			RegisterSignal(new_listener, COMSIG_MOB_LOGIN, PROC_REF(listener_login))
 			return
 		if(preference_signal)
-			if(new_listener == parent)
-				RegisterSignal(new_listener, preference_signal, PROC_REF(listener_moved))
-			else
-				RegisterSignals(new_listener, list(COMSIG_MOVABLE_MOVED, preference_signal), PROC_REF(listener_moved))
-		else if(new_listener != parent)
+			RegisterSignal(new_listener, preference_signal, PROC_REF(listener_moved))
+		if(new_listener != parent)
 			RegisterSignal(new_listener, COMSIG_MOVABLE_MOVED, PROC_REF(listener_moved))
 
 		RegisterSignals(new_listener, list(SIGNAL_ADDTRAIT(TRAIT_DEAF), SIGNAL_REMOVETRAIT(TRAIT_DEAF)), PROC_REF(listener_deaf))
