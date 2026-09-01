@@ -69,6 +69,8 @@
 	var/list/organ_effects
 	/// String displayed when the organ has decayed.
 	var/failing_desc = "has decayed for too long, and has turned a sickly color. It probably won't work without repairs."
+	/// String displayed when the organ has a wound but has not decayed.
+	var/wounded_desc = "has a large tear."
 	/// Assoc list of alternate zones where this can organ be slotted to organ slot for that zone
 	var/list/valid_zones = null
 	/// The cell line we can spawn on us
@@ -214,6 +216,10 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 	if(organ_flags & ORGAN_FAILING)
 		. += span_warning("[src] [failing_desc]")
+		return
+
+	if(organ_flags & ORGAN_WOUNDED)
+		. += span_warning("[src] [wounded_desc] It needs to be <b>stitched up</b> before it'll work properly.")
 		return
 
 	if(damage > high_threshold)

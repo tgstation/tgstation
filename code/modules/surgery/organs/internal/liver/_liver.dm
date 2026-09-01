@@ -23,6 +23,7 @@
 
 	visual = FALSE
 	woundable = TRUE
+	wounded_desc = "has been torn nearly in half."
 
 	/// Affects how much damage the liver takes from alcohol
 	var/alcohol_tolerance = ALCOHOL_RATE
@@ -225,15 +226,21 @@
 
 /obj/item/organ/liver/get_status_text(scanpower, add_tooltips, colored)
 	if(organ_flags & ORGAN_WOUNDED)
-		return conditional_tooltip(span_warning("Hepatic Avulsion"), "Fix surgically.", add_tooltips)
+		return conditional_tooltip(span_warning("Hepatic Avulsion"), "Use coagulants or fix surgically.", add_tooltips)
 	return ..()
 
 /obj/item/organ/liver/wounded(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	. = ..()
+	playsound(owner, 'sound/effects/wounds/pierce1.ogg')
+	apply_organ_damage(40)
 
 /obj/item/organ/liver/on_wounded_life(seconds_per_tick)
 	. = ..()
-
+	var/wounded_scaling = clamp(wounded_time / 160, 0, 1)
+	if(wounded_scaling >= 0.5)
+		owner.adjust_tox_loss(wounded_scaling * 0.35)
+	if(SPT_PROB(1 + wounded_scaling * 1.5, seconds_per_tick))
+		to_chat(owner, span_warning(pick("You feel faint.", "You feel tired.")))
 
 // alien livers can ignore up to 15u of toxins, but they take x3 liver damage
 /obj/item/organ/liver/alien

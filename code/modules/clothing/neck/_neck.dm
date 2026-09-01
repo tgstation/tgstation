@@ -301,21 +301,19 @@
 			//assess heart
 			if(body_part == BODY_ZONE_CHEST)//if we're listening to the chest
 				if(isnull(heart) || !heart.is_beating() || carbon_patient.stat == DEAD)
-					render_list += "<span class='danger ml-1'>You don't hear a heartbeat!</span>\n"//they're dead or their heart isn't beating
+					render_list += span_danger_ml("You don't hear a heartbeat\n")//they're dead or their heart isn't beating
 					heart_noises = FALSE
 				else if(having_heart_attack)
 					if(heart.organ_flags & ORGAN_WOUNDED)
-						render_list += "<span class='danger ml-1'>You hear a muffled yet rapid and irregular heartbeat.</span>\n"
+						render_list += span_danger_ml("You hear a weak yet rapid and irregular heartbeat.\n")
 					else
-						render_list += "<span class='danger ml-1'>You hear a rapid, irregular heartbeat.</span>\n"
-				else if (heart.organ_flags & ORGAN_WOUNDED)
-					render_list += "<span class='danger ml-1'>You hear a muffled heartbeat.</span>\n"
-				else if(heart.damage > 10 || carbon_patient.get_blood_volume(apply_modifiers = TRUE) <= BLOOD_VOLUME_OKAY)
-					render_list += "<span class='danger ml-1'>You hear a weak heartbeat.</span>\n"//their heart is damaged, or they have critical blood
+						render_list += span_danger_ml("You hear a rapid, irregular heartbeat.\n")
+				else if(heart.damage > 10 || carbon_patient.get_blood_volume(apply_modifiers = TRUE) <= BLOOD_VOLUME_OKAY || heart.organ_flags & ORGAN_WOUNDED)
+					render_list += span_danger_ml("You hear a weak heartbeat.\n")//their heart is damaged, or they have critical blood
 				else
-					render_list += "<span class='notice ml-1'>You hear a healthy heartbeat.</span>\n"//they're okay :D
+					render_list += span_danger_ml("You hear a healthy heartbeat.\n")//they're okay :D
 				if(heart_noises)
-					render_list += "<span class='notice ml-1'>[heart.hear_beat_noise(user)]</span>\n"
+					render_list += span_notice_ml("[heart.hear_beat_noise(user)]\n")
 
 		if(BODY_ZONE_PRECISE_GROIN)//If we're targeting the groin
 			render_list += span_info("You carefully press down on [carbon_patient]'s abdomen:\n")

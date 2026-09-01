@@ -128,7 +128,7 @@
 		return
 	. = ..()
 	// forced to ensure people don't use it to heal tox as slime person
-	var/wounded_scaling = clamp(wounded_time / 180, 0, 0.5)
+	var/wounded_scaling = clamp(wounded_time / 120, 0, 0.5)
 	if(HAS_TRAIT(owner, TRAIT_VIRUS_RESISTANCE))
 		wounded_scaling /= 3
 	owner.adjust_tox_loss(wounded_scaling, forced = TRUE)

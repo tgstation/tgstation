@@ -30,6 +30,7 @@
 
 	visual = FALSE
 	woundable = TRUE
+	wounded_desc = "has ruptured, leaking digestive juices onto its surface."
 
 	///The rate that disgust decays
 	var/disgust_metabolism = 1
@@ -440,15 +441,18 @@
 		return conditional_tooltip("<font color='#ff9933'>Incised</font>", "Remove and cauterize.", add_tooltips)
 	return ..()
 
+/obj/item/organ/stomach/wounded(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	playsound(owner, 'sound/effects/wounds/pierce1.ogg')
+
 /obj/item/organ/stomach/on_wounded_life(seconds_per_tick)
 	. = ..()
 	// Starts lower but scales higher than appendixes
-	var/wounded_scaling = clamp(wounded_time / 240, 0, 1)
+	var/wounded_scaling = clamp(wounded_time / 180, 0, 1)
 	if(HAS_TRAIT(owner, TRAIT_VIRUS_RESISTANCE))
 		wounded_scaling /= 3
 	apply_organ_damage(wounded_scaling)
 	owner.adjust_tox_loss(wounded_scaling, forced = TRUE)
-	owner.adjust_blood_volume(-0.05, BLOOD_VOLUME_OKAY)
 	if(SPT_PROB(wounded_scaling * 5, seconds_per_tick))
 		owner.adjust_disgust(15)
 	if(SPT_PROB((1 + wounded_scaling * 1.5), seconds_per_tick))
