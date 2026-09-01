@@ -1656,7 +1656,7 @@
 	. = ..()
 	var/merged_total = amount + volume
 	if(merged_total >= CRITICAL_CAPACITY)
-		spew_waste(round(volume / WASTE_REACTION_THRESHOLD * 2)) //Sure as HELL can't store it.
+		spew_waste(round(volume / (WASTE_REACTION_THRESHOLD * 2)), merged_total) //Sure as HELL can't store it.
 		var/atom/container = holder.my_atom
 		var/damage_mult = 1
 		if(ismachinery(container))
@@ -1693,7 +1693,7 @@
 
 	if(goo.lazy_init_reagents())
 		goo.reagents.maximum_volume = min(goo.reagents.maximum_volume + rounded_volume, 300)
-		goo.reagents.add_reagent(type, rounded_volume)
+		// goo.reagents.add_reagent(type, rounded_volume)
 	if(goo.reagents.has_reagent(type, WASTE_REACTION_THRESHOLD))
 		goo.pre_dissolve()
 		return // Otherwise there's too little waste to do anything.
@@ -1711,10 +1711,11 @@
 /**
  * Pick a random turf in the spew range and split our total amount of waste there.
  */
-/datum/reagent/toxin/acid/industrial_waste/proc/spew_waste(spew_range = 1)
+/datum/reagent/toxin/acid/industrial_waste/proc/spew_waste(spew_range = 1, total_toxins)
 	if(!spew_range)
 		return
-
+	if(!holder.my_atom)
+		return
 	var/atom/atom_holder = holder.my_atom
 	var/turf/dropturf = get_turf(atom_holder)
 	if(!dropturf)
