@@ -12,6 +12,8 @@
 	var/aug_overlay = null
 	/// Does the implant have an emissive overlay too?
 	var/emissive_overlay = FALSE
+	/// Mob layer the overlay will be placed onto
+	var/overlay_layer = BODY_ADJ_LAYER
 	/// Bodypart overlay we're going to apply to whoever we're implanted into
 	var/datum/bodypart_overlay/simple/augment/bodypart_aug = null
 
@@ -23,6 +25,7 @@
 		bodypart_aug.icon = aug_icon
 		bodypart_aug.icon_state = get_overlay_state()
 		bodypart_aug.emissive = emissive_overlay
+		bodypart_aug.set_layer("", overlay_layer)
 
 /obj/item/organ/cyberimp/Destroy()
 	. = ..()
@@ -42,17 +45,18 @@
 		limb.remove_bodypart_overlay(bodypart_aug)
 
 /datum/bodypart_overlay/simple/augment
-	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
+	layers = list("" = BODY_ADJ_LAYER)
 	draw_on_husks = HUSK_OVERLAY_NORMAL
 	offset_location = ENTIRE_BODY
-	overlay_flags = LIMB_OVERLAY_SEPARATE
+	overlay_flags = NONE
 	/// Whether the overlay has an emissive appeareance too
 	var/emissive = FALSE
 
 /datum/bodypart_overlay/simple/augment/get_overlay(obj/item/bodypart/limb, layer_index, layer_real)
 	. = ..()
 	if(emissive)
-		.[emissive_appearance(icon, "[icon_state]_e", limb.owner || limb, layer = layer_real)] = LIMB_OVERLAY_META
+		var/iconstate_to_use = icon_state + (layer_index ? "_[layer_index]" : "") + "_e"
+		.[emissive_appearance(icon, iconstate_to_use, limb, layer = layer_real)] = LIMB_OVERLAY_META
 
 /obj/item/organ/cyberimp/feel_for_damage(self_aware)
 	// No feeling in implants (yet?)

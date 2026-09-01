@@ -73,8 +73,9 @@
 		var/atom/new_item = new typepath(src)
 		new_item.set_custom_materials(null)
 		items_list += WEAKREF(new_item)
-	// melbert todo
-	bodypart_aug?.set_layer("hand", BODYPARTS_HIGH_LAYER)
+
+	// Overlay is done in two layers, "[state]" and "[state]_hand"
+	bodypart_aug?.add_layer("hand", BODYPARTS_HIGH_LAYER)
 
 /obj/item/organ/cyberimp/arm/toolkit/Destroy()
 	hand = null

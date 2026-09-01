@@ -189,6 +189,7 @@
 	base_icon_state = "imp_jetpack"
 	aug_overlay = "imp_jetpack"
 	emissive_overlay = TRUE
+	overlay_layer = BODYPARTS_HIGH_LAYER
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT)
@@ -207,7 +208,6 @@
 		CALLBACK(src, PROC_REF(allow_thrust), 0.01), \
 		/datum/effect_system/trail_follow/ion, \
 	)
-	bodypart_aug?.set_layer(EXTERNAL_ADJACENT, BODYPARTS_HIGH_LAYER)
 
 /obj/item/organ/cyberimp/chest/thrusters/Remove(mob/living/carbon/thruster_owner, special, movement_flags)
 	if(on)

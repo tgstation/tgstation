@@ -1297,7 +1297,7 @@
 	var/image_dir = dropped ? SOUTH : null
 	// Handles invisibility (not alpha or actual invisibility but invisibility)
 	if(is_invisible)
-		.[image(icon_invisible, "invisible_[body_zone]", -BODYPARTS_LAYER, dir = image_dir)] = LIMB_OVERLAY_BASE
+		.[image(icon_invisible, "invisible_[body_zone]", -BODYPARTS_LAYER, dir = image_dir)] = NONE
 		SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped)
 		return .
 
@@ -1311,11 +1311,11 @@
 
 	icon_exists_or_scream(limb.icon, limb.icon_state) //Prints a stack trace on the first failure of a given iconstate.
 
-	.[limb] = LIMB_OVERLAY_BASE
+	.[limb] = LIMB_OVERLAY_TEXTURED
 
 	if(aux_zone) //Hand shit
 		aux = image(limb.icon, "[limb_id]_[aux_zone]", -aux_layer, dir = image_dir)
-		.[aux] = LIMB_OVERLAY_BASE
+		.[aux] = LIMB_OVERLAY_TEXTURED
 
 	if(dropped && dmg_overlay_type)
 		if(brutestate)
@@ -1325,9 +1325,10 @@
 			var/image/brute_blood_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER, dir = SOUTH)
 			brute_blood_overlay.color = get_color_from_blood_list(blood_dna_info)
 			brute_blood_overlay.overlays += brute_damage_overlay
-			.[brute_blood_overlay] = LIMB_OVERLAY_DAMAGE
+			.[brute_blood_overlay] = NONE
 		if(burnstate)
-			.[image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, dir = SOUTH)] = LIMB_OVERLAY_DAMAGE
+			var/image/burn_damage_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, dir = SOUTH)
+			.[burn_damage_overlay] = NONE
 
 	var/atom/location = loc || owner || src
 	if(blocks_emissive != EMISSIVE_BLOCK_NONE)
@@ -1356,10 +1357,10 @@
 
 	if(is_husked)
 		for(var/image/husk_image as anything in huskify_image(limb))
-			.[husk_image] = LIMB_OVERLAY_BASE|LIMB_OVERLAY_DAMAGE
+			.[husk_image] = LIMB_OVERLAY_TEXTURED
 		if(aux)
 			for(var/image/husk_image as anything in huskify_image(aux))
-				.[husk_image] = LIMB_OVERLAY_BASE|LIMB_OVERLAY_DAMAGE
+				.[husk_image] = LIMB_OVERLAY_TEXTURED
 		draw_color = is_husked == HUSKED_ZOMBIE ? zombie_color : husk_color
 	else
 		update_draw_color()
@@ -1373,10 +1374,13 @@
 	if(!dropped)
 		// Legs are a bit goofy in regards to layering, and we will need two images instead of one to fix that
 		for(var/generated_overlay, generated_overlay_flags in .)
+			var/list/maked_generated_overlays = handle_masking(generated_overlay)
+			if(!length(maked_generated_overlays))
+				continue
 			// Remove the old, unmasked image
 			. -= generated_overlay
-			// Add two masked images based on the old one
-			for(var/masked_image in handle_masking(generated_overlay))
+			// Add in the new, masked images (with the same flags)
+			for(var/masked_image in maked_generated_overlays)
 				.[masked_image] = generated_overlay_flags
 
 		// Apply height to the overlays we generated so far
@@ -1406,10 +1410,10 @@
 		if(!texture.can_texture_bodypart(src))
 			continue
 		for(var/generated_overlay, generated_overlay_flags in .)
-			if(!(generated_overlay_flags & LIMB_OVERLAY_BASE))
+			if(!(generated_overlay_flags & LIMB_OVERLAY_TEXTURED))
 				continue
 
-			texture.modify_bodypart_appearance(generated_overlay)
+			texture.modify_bodypart_appearance(generated_overlay, generated_overlay_flags)
 
 	SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped)
 	return .

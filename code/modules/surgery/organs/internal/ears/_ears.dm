@@ -235,7 +235,7 @@
 /datum/bodypart_overlay/mutant/cat_ears/cybernetic
 	color_source = null
 	dyable = FALSE
-	overlay_flags = LIMB_OVERLAY_SEPARATE
+	overlay_flags = NONE
 	/// Color of the inner ear
 	var/inner_color = "#F0004A"
 

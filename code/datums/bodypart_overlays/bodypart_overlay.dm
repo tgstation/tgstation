@@ -23,9 +23,7 @@
 	/// Determines body area of the overlay for height offsets
 	var/offset_location = NO_MODIFY
 	/// Flags that determine how the overlay is handled by the bodypart.
-	/// For example, [LIMB_OVERLAY_BASE] indicates that it's a a part of the bodypart itself,
-	/// while [LIMB_OVERLAY_SEPARATE] indicates that it's entirely separate from the bodypart, like cream pie
-	var/overlay_flags = LIMB_OVERLAY_BASE
+	var/overlay_flags = LIMB_OVERLAY_TEXTURED
 
 /datum/bodypart_overlay/New()
 	. = ..()
@@ -33,9 +31,14 @@
 
 /// Used for adding a layer at runtime
 /datum/bodypart_overlay/proc/set_layer(layer_postfix, layer_number)
-	var/list/existing_layers = layers.Copy()
+	var/list/existing_layers = LAZYCOPY(layers)
 	existing_layers[layer_postfix] = layer_number
 	layers = string_assoc_list(existing_layers)
+
+/// Used for adding a layer at runtime without replacing existing layers
+/datum/bodypart_overlay/proc/add_layer(layer_postfix, layer_number)
+	if(isnull(LAZYACCESS(layers, layer_postfix)))
+		set_layer(layer_postfix, layer_number)
 
 /// Used for adding layers at runtime
 /datum/bodypart_overlay/proc/set_layers(list/layer_list)

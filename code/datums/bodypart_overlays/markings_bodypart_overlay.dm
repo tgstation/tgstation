@@ -1,6 +1,6 @@
 /// For body markings applied on the species, which need some extra code
 /datum/bodypart_overlay/simple/body_marking
-	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
+	layers = list("" = BODY_ADJ_LAYER)
 	offset_location = ENTIRE_BODY
 	/// Listen to the gendercode, if the limb is bimorphic
 	var/use_gender = FALSE
