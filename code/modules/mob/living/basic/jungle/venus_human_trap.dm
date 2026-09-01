@@ -23,19 +23,14 @@
 	/// The amount of time it takes to create a venus human trap.
 	var/growth_time = 120 SECONDS
 	var/growth_icon = 0
-
 	/// Used by countdown to check time, this is when the timer will complete and the venus trap will spawn.
 	var/finish_time
 	/// The countdown ghosts see to when the plant will hatch
 	var/obj/effect/countdown/flower_bud/countdown
-
-	//var/trait_flags = 0
-
 	/// List of mutations for a specific flower vine
 	var/list/mutations = list()
 	/// List of anchored vines that are attatched to the flower for the bloom/beam effect
 	var/list/vines = list()
-
 	/// The spawner that actually handles spawning the ghost role in
 	var/obj/effect/mob_spawn/ghost_role/venus_human_trap/spawner
 
