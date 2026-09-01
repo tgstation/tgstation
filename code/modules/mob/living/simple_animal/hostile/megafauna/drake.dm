@@ -170,12 +170,35 @@
 		return FALSE
 	return ..()
 
-/mob/living/simple_animal/hostile/megafauna/dragon/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	anger_modifier = clamp(((maxHealth - health)/60),0,20)
-	lava_swoop.enraged = DRAKE_ENRAGED
+// Prevents damage from adjust_x_loss while in a host, because that damage would be nullified by the next [proc/sync_health] call. Adjust host blood volume instead.
+/mob/living/simple_animal/hostile/megafauna/dragon/can_adjust_brute_loss(amount, forced, required_bodytype)
 	if(!forced && (swooping & SWOOP_INVULNERABLE))
 		return FALSE
 	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/can_adjust_fire_loss(amount, forced, required_bodytype)
+	if(!forced && (swooping & SWOOP_INVULNERABLE))
+		return FALSE
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/can_adjust_tox_loss(amount, forced, required_bodytype)
+	if(!forced && (swooping & SWOOP_INVULNERABLE))
+		return FALSE
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/can_adjust_oxy_loss(amount, forced, required_bodytype)
+	if(!forced && (swooping & SWOOP_INVULNERABLE))
+		return FALSE
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/on_damage_loss_changed(amount, updating_health, forced)
+	if(amount > 0)
+		lava_swoop.enraged = DRAKE_ENRAGED
+	return ..()
+
+/mob/living/simple_animal/hostile/megafauna/dragon/updatehealth()
+	. = ..()
+	anger_modifier = clamp(((maxHealth - health)/60),0,20)
 
 /mob/living/simple_animal/hostile/megafauna/dragon/visible_message(message, self_message, blind_message, vision_distance = DEFAULT_MESSAGE_RANGE, list/ignored_mobs, visible_message_flags = NONE)
 	if(swooping & SWOOP_INVULNERABLE) //to suppress attack messages without overriding every single proc that could send a message saying we got hit
@@ -213,27 +236,34 @@
 	animate(src, alpha = 255, time = duration)
 
 /obj/effect/temp_visual/lava_warning/proc/fall(reset_time)
-	var/turf/T = get_turf(src)
-	playsound(T,'sound/effects/magic/fleshtostone.ogg', 80, TRUE)
+	var/turf/our_turf = get_turf(src)
+	playsound(our_turf,'sound/effects/magic/fleshtostone.ogg', 80, TRUE)
 	sleep(duration)
-	playsound(T,'sound/effects/magic/fireball.ogg', 200, TRUE)
+	playsound(our_turf,'sound/effects/magic/fireball.ogg', 200, TRUE)
+	var/can_transform_turf = !isclosedturf(our_turf) && !islava(our_turf)
 
-	for(var/mob/living/L in T.contents - owner)
-		if(istype(L, /mob/living/simple_animal/hostile/megafauna/dragon))
+	for(var/mob/living/victim in our_turf)
+		if(istype(victim, /mob/living/simple_animal/hostile/megafauna/dragon) || victim == owner)
 			continue
-		L.adjust_fire_loss(10)
-		to_chat(L, span_userdanger("You fall directly into the pool of lava!"))
+		victim.adjust_fire_loss(10)
+		if(can_transform_turf)
+			to_chat(victim, span_userdanger("You fall directly into the pool of lava!"))
+		else
+			to_chat(victim, span_userdanger("You are set ablaze by a fireball from above!"))
 
 	// deals damage to mechs
-	for(var/obj/vehicle/sealed/mecha/M in T.contents)
-		M.take_damage(45, BRUTE, MELEE, 1)
+	for(var/obj/vehicle/sealed/mecha/mech in our_turf)
+		mech.take_damage(45, BRUTE, MELEE, 1)
 
-	// changes turf to lava temporarily
-	if(!isclosedturf(T) && !islava(T))
-		var/lava_turf = /turf/open/lava/smooth
-		var/reset_turf = T.type
-		T.TerraformTurf(lava_turf, flags = CHANGETURF_INHERIT_AIR)
-		addtimer(CALLBACK(T, TYPE_PROC_REF(/turf, ChangeTurf), reset_turf, null, CHANGETURF_INHERIT_AIR), reset_time, TIMER_OVERRIDE|TIMER_UNIQUE)
+	// changes turf to lava temporarily if possible, create a fire visual otherwise
+	if(!can_transform_turf)
+		new /obj/effect/temp_visual/fire/light(our_turf)
+		return
+
+	var/lava_turf = /turf/open/lava/smooth
+	var/reset_turf = our_turf.type
+	our_turf.TerraformTurf(lava_turf, flags = CHANGETURF_INHERIT_AIR)
+	addtimer(CALLBACK(our_turf, TYPE_PROC_REF(/turf, ChangeTurf), reset_turf, null, CHANGETURF_INHERIT_AIR), reset_time, TIMER_OVERRIDE|TIMER_UNIQUE)
 
 /obj/effect/temp_visual/drakewall
 	desc = "An ash drakes true flame."
@@ -311,7 +341,7 @@
 	melee_damage_upper = 30
 	melee_damage_lower = 30
 	mouse_opacity = MOUSE_OPACITY_ICON
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	physiology = list(STAMINA = 0)
 	loot = list()
 	crusher_loot = null
 	achievement_type = null
@@ -325,7 +355,7 @@
 	mass_fire.Remove(src)
 	lava_swoop.cooldown_time = 20 SECONDS
 
-/mob/living/simple_animal/hostile/megafauna/dragon/lesser/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/simple_animal/hostile/megafauna/dragon/lesser/on_damage_loss_changed(amount, updating_health, forced)
 	. = ..()
 	lava_swoop?.enraged = FALSE // In case taking damage caused us to start deleting ourselves
 

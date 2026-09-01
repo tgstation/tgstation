@@ -215,6 +215,11 @@
 		return FALSE
 	if(!user.mob)
 		return FALSE
+	var/obj/item/object = user.mob.get_active_held_item()
+	if(isnull(object))
+		return FALSE
+	if(HAS_TRAIT(object, TRAIT_BORG_GIVE))
+		return TRUE
 	if(!HAS_TRAIT(user.mob, TRAIT_CAN_HOLD_ITEMS))
 		return FALSE
 	return TRUE
@@ -224,6 +229,33 @@
 	if(.)
 		return
 	var/mob/living/living_user = user.mob
-	if(!HAS_TRAIT(living_user, TRAIT_CAN_HOLD_ITEMS))
+	var/obj/item/held_item = living_user.get_active_held_item()
+	if(isnull(held_item))
+		return
+	if(!HAS_TRAIT(living_user, TRAIT_CAN_HOLD_ITEMS) && !HAS_TRAIT(held_item, TRAIT_BORG_GIVE))
 		return
 	living_user.give()
+
+/datum/keybinding/living/view_pet_data
+	hotkey_keys = list("Shift")
+	name = "view_pet_commands"
+	full_name = "View Pet Commands"
+	description = "Hold down to see all the commands you can give your pets!"
+	keybind_signal = COMSIG_KB_LIVING_VIEW_PET_COMMANDS
+
+/datum/keybinding/living/cancel_interactions
+	name = "stop_interactions"
+	full_name = "Cancel Interactions"
+	description = "Cancels any ongoing interactions (such as using a tool, performing surgery, or climbing). \
+		Note that some interactions cannot be interrupted, and you can't cancel other player's interaction with this hotkey."
+	keybind_signal = COMSIG_KB_LIVING_STOP_INTERACTIONS_DOWN
+
+/datum/keybinding/living/cancel_interactions/down(client/user, turf/target, mousepos_x, mousepos_y)
+	. = ..()
+	if(.)
+		return
+	var/mob/living/mob_user = user.mob
+	if(!LAZYLEN(mob_user.do_afters) || HAS_TRAIT(mob_user, TRAIT_INCAPACITATED))
+		return
+	// this is currently the best way to stop all ongoing doafters
+	mob_user.incapacitate(0.1 SECONDS, ignore_canstun = TRUE)

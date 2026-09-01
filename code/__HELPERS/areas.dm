@@ -2,15 +2,6 @@
 #define EXTRA_ROOM_CHECK_SKIP 1
 #define EXTRA_ROOM_CHECK_FAIL 2
 
-GLOBAL_LIST_INIT(typecache_powerfailure_safe_areas, typecacheof(list(
-	/area/station/engineering/main,
-	/area/station/engineering/supermatter,
-	/area/station/engineering/atmospherics_engine,
-	/area/station/ai/satellite/chamber,
-	/area/ruin/comms_agent //fixes icemoon comms station being affected
-
-)))
-
 // Gets an atmos isolated contained space
 // Returns an associative list of turf|dirs pairs
 // The dirs are connected turfs in the same space

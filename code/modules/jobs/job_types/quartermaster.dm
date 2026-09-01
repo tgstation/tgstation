@@ -36,6 +36,7 @@
 	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS
 	voice_of_god_power = 1.4 //Command staff has authority
 	human_authority = JOB_AUTHORITY_NON_HUMANS_ALLOWED
+	tgui_icon = FA_ICON_SACK_DOLLAR
 
 /datum/outfit/job/quartermaster
 	name = "Quartermaster"
@@ -54,3 +55,5 @@
 	l_hand = /obj/item/clipboard
 
 	chameleon_extras = /obj/item/stamp/head/qm
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/cargo/qm

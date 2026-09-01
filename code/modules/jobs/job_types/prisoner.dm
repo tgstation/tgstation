@@ -3,7 +3,7 @@
 	description = "Keep yourself occupied in permabrig."
 	faction = FACTION_STATION
 	total_positions = 0
-	spawn_positions = 2
+	spawn_positions = 4
 	supervisors = "the security team"
 	exp_granted_type = EXP_TYPE_CREW
 	paycheck = PAYCHECK_LOWER
@@ -23,6 +23,7 @@
 	family_heirlooms = list(/obj/item/pen/blue)
 	rpg_title = "Defeated Miniboss"
 	job_flags = STATION_JOB_FLAGS | JOB_CANNOT_OPEN_SLOTS | JOB_ANTAG_PROTECTED & ~JOB_REOPEN_ON_ROUNDSTART_LOSS
+	tgui_icon = FA_ICON_LOCK
 
 /datum/job/prisoner/New()
 	. = ..()

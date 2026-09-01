@@ -208,11 +208,26 @@
 				. -= target
 				break
 
+/**
+ * Returns a list of mobs who are in hearing range of every radio in the list of radios given
+ */
 /proc/get_hearers_in_radio_ranges(list/obj/item/radio/radios)
 	. = list()
 	// Returns a list of mobs who can hear any of the radios given in @radios
 	for(var/obj/item/radio/radio as anything in radios)
 		. |= get_hearers_in_LOS(radio.canhear_range, radio)
+
+/**
+ * Returns a list of mobs who can hear any of the radios given in the given radio list, indexed by the radio.
+ * More expensive than get_hearers_in_radio_ranges()
+ */
+/proc/get_hearers_in_radio_ranges_track_radios(list/obj/item/radio/radios)
+	. = list()
+	// Returns a list of mobs who can hear any of the radios given in @radios, indexed by the radio. More expensive than get_hearers_in_radio_ranges()
+	for(var/obj/item/radio/radio as anything in radios)
+		var/list/possible_hearers = get_hearers_in_LOS(radio.canhear_range, radio)
+		if(length(possible_hearers))
+			.[radio] = possible_hearers
 
 /// A filter to be applied to get_hearers_in_x, that removes any non-mob hearers, converting them to their relevant mob if one exists (such as dullahan heads).
 /// Modifies input list.
@@ -501,8 +516,9 @@
  * @params inner_range - The inner range of the circle to NOT pull from.
  * @params center - The center of the circle to pull from, can be an atom (we'll apply get_turf() to it within circle_x_turfs procs.)
  * @params view_based - If TRUE, we'll use circle_view_turfs instead of circle_range_turfs procs.
+ * @params reject_dense - If TRUE, ignore picked turfs in this selection that have density.
  */
-/proc/turf_peel(outer_range, inner_range, center, view_based = FALSE)
+/proc/turf_peel(outer_range, inner_range, center, view_based = FALSE, reject_dense = TRUE)
 	if(inner_range > outer_range) // If the inner range is larger than the outer range, you're using this wrong.
 		CRASH("Turf peel inner range is larger than outer range!")
 	var/list/peel = list()
@@ -517,10 +533,12 @@
 	for(var/turf/possible_spawn as anything in outer)
 		if(possible_spawn in inner)
 			continue
+		if(possible_spawn.density && reject_dense)
+			continue
 		peel += possible_spawn
 
 	if(!length(peel))
-		return center //Offer the center only as a default case when we don't have a valid circle.
+		peel += center //Offer the center only as a default case when we don't have a valid circle.
 	return peel
 
 ///check if 2 diagonal turfs are blocked by dense objects

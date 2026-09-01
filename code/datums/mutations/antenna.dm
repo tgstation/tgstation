@@ -1,11 +1,13 @@
 /datum/mutation/antenna
 	name = "Antenna"
-	desc = "The affected person sprouts an antenna. This is known to allow them to access common radio channels passively."
+	desc = "The subject sprouts an antenna, which is known to allow them to access common radio channels without any external devices."
 	quality = POSITIVE
 	text_gain_indication = span_notice("You feel an antenna sprout from your forehead.")
 	text_lose_indication = span_notice("Your antenna shrinks back down.")
 	instability = POSITIVE_INSTABILITY_MINOR
 	difficulty = 8
+	mutation_icon_state = "antenna"
+	layer_used = FRONT_MUTATIONS_LAYER
 	var/datum/weakref/radio_weakref
 
 /obj/item/implant/radio/antenna
@@ -33,17 +35,9 @@
 	if(linked_radio)
 		QDEL_NULL(linked_radio)
 
-/datum/mutation/antenna/New(datum/mutation/copymut)
-	..()
-	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))//-MUTATIONS_LAYER+1
-
-/datum/mutation/antenna/get_visual_indicator()
-	return visual_indicators[type][1]
-
 /datum/mutation/mindreader
 	name = "Mind Reader"
-	desc = "The affected person can look into the recent memories of others."
+	desc = "The subject can look into the recent memories of others."
 	quality = POSITIVE
 	text_gain_indication = span_notice("You hear distant voices at the corners of your mind.")
 	text_lose_indication = span_notice("The distant voices fade.")
@@ -51,6 +45,8 @@
 	instability = POSITIVE_INSTABILITY_MINOR
 	difficulty = 8
 	locked = TRUE
+	mutation_icon_state = "antenna"
+	layer_used = FRONT_MUTATIONS_LAYER
 
 /datum/action/cooldown/spell/pointed/mindread
 	name = "Mindread"
@@ -148,7 +144,7 @@
 	INVOKE_ASYNC(src, PROC_REF(read_mind), examiner, examining)
 
 /datum/action/cooldown/spell/pointed/mindread/proc/read_mind(mob/living/examiner, mob/living/examined)
-	if(examined.stat >= UNCONSCIOUS || isnull(examined.mind) || (examined.mob_biotypes & MOB_ROBOTIC))
+	if(IS_UNCONSCIOUS(examined) || isnull(examined.mind) || (examined.mob_biotypes & MOB_ROBOTIC))
 		return
 
 	var/antimagic = examined.can_block_magic(antimagic_flags, charge_cost = 0)
@@ -174,11 +170,3 @@
 	log_info += "Current thought: \"[read_text]\""
 
 	log_combat(examiner, examined, "mind read (triggered on examine)", null, "info: [english_list(log_info, and_text = ", ")]")
-
-/datum/mutation/mindreader/New(datum/mutation/copymut)
-	..()
-	if(!(type in visual_indicators))
-		visual_indicators[type] = list(mutable_appearance('icons/mob/effects/genetics.dmi', "antenna", -FRONT_MUTATIONS_LAYER+1))
-
-/datum/mutation/mindreader/get_visual_indicator()
-	return visual_indicators[type][1]

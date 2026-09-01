@@ -2,7 +2,7 @@
 
 ///Internal GPS - Extends a GPS you can use.
 /obj/item/mod/module/gps
-	name = "MOD internal GPS module"
+	name = "\improper MOD internal GPS module"
 	desc = "This module uses common Nanotrasen technology to calculate the user's position anywhere in space, \
 		down to the exact coordinates. This information is fed to a central database viewable from the device itself, \
 		though using it to help people is up to you."
@@ -13,6 +13,7 @@
 	incompatible_modules = list(/obj/item/mod/module/gps)
 	cooldown_time = 0.5 SECONDS
 	allow_flags = MODULE_ALLOW_INACTIVE
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/mod/module/gps/Initialize(mapload)
 	. = ..()
@@ -23,7 +24,7 @@
 
 ///Hydraulic Clamp - Lets you pick up and drop crates.
 /obj/item/mod/module/clamp
-	name = "MOD hydraulic clamp module"
+	name = "\improper MOD hydraulic clamp module"
 	desc = "A series of actuators installed into both arms of the suit, boasting a lifting capacity of almost a ton. \
 		However, this design has been locked by Nanotrasen to be primarily utilized for lifting various crates. \
 		A lot of people would say that loading cargo is a dull job, but you could not disagree more."
@@ -36,6 +37,7 @@
 	overlay_state_inactive = "module_clamp"
 	overlay_state_active = "module_clamp_on"
 	required_slots = list(ITEM_SLOT_GLOVES, ITEM_SLOT_BACK)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT)
 	/// Time it takes to load a crate.
 	var/load_time = 3 SECONDS
 	/// The max amount of crates you can carry.
@@ -65,7 +67,7 @@
 		if(!check_crate_pickup(picked_crate))
 			return
 		playsound(src, 'sound/vehicles/mecha/hydraulic.ogg', 25, TRUE)
-		if(!do_after(mod.wearer, load_time, target = target))
+		if(!do_after(mod.wearer, load_time, target))
 			balloon_alert(mod.wearer, "interrupted!")
 			return
 		if(!check_crate_pickup(picked_crate))
@@ -74,22 +76,27 @@
 		picked_crate.forceMove(src)
 		balloon_alert(mod.wearer, "picked up crate")
 		drain_power(use_energy_cost)
-	else if(length(stored_crates))
+		return
+
+	if(length(stored_crates))
 		var/turf/target_turf = get_turf(target)
 		if(target_turf.is_blocked_turf())
 			return
 		playsound(src, 'sound/vehicles/mecha/hydraulic.ogg', 25, TRUE)
-		if(!do_after(mod.wearer, load_time, target = target))
+		if(!do_after(mod.wearer, load_time, target))
 			balloon_alert(mod.wearer, "interrupted!")
 			return
 		if(target_turf.is_blocked_turf())
 			return
 		var/atom/movable/dropped_crate = pop(stored_crates)
+		if(!dropped_crate)
+			return
 		dropped_crate.forceMove(target_turf)
 		balloon_alert(mod.wearer, "dropped [dropped_crate]")
 		drain_power(use_energy_cost)
-	else
-		balloon_alert(mod.wearer, "invalid target!")
+		return
+
+	balloon_alert(mod.wearer, "invalid target!")
 
 /obj/item/mod/module/clamp/on_part_deactivation(deleting = FALSE)
 	if(deleting)
@@ -110,7 +117,7 @@
 	return TRUE
 
 /obj/item/mod/module/clamp/loader
-	name = "MOD loader hydraulic clamp module"
+	name = "\improper MOD loader hydraulic clamp module"
 	icon_state = "clamp_loader"
 	complexity = 0
 	removable = FALSE
@@ -123,7 +130,7 @@
 
 ///Drill - Lets you dig through rock and basalt.
 /obj/item/mod/module/drill
-	name = "MOD drill module"
+	name = "\improper MOD drill module"
 	desc = "An arm-mounted drill, typically extending over the user's hand. While useful for drilling through rock, \
 		your drill is surely the one that both pierces and creates the heavens. Integrates with mining MODs' sphere \
 		transformation module, changing it from a mere traversal tool to high-powered excavation unit."
@@ -136,6 +143,7 @@
 	overlay_state_active = "module_drill"
 	required_slots = list(ITEM_SLOT_GLOVES)
 	toolspeed = 0.25
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 	/// Are we currently in passive sphere mode?
 	var/ballin = FALSE
 	/// Last tick when we bumpmined. Prevents diagonal bumpnining being thrice as fast as normal
@@ -175,11 +183,11 @@
 	if(!. || !mod.wearer.Adjacent(target))
 		return
 
-	if(!ismineralturf(target) || !isasteroidturf(target))
+	if(!ismineralturf(target) && !isasteroidturf(target))
 		return
 
 	if(drain_power(use_energy_cost))
-		target.attackby(src, mod.wearer)
+		target.base_item_interaction(mod.wearer, src)
 
 /obj/item/mod/module/drill/proc/bump_mine(mob/living/carbon/human/bumper, atom/bumped_into, proximity)
 	SIGNAL_HANDLER
@@ -194,7 +202,7 @@
 	if (!istype(giberal_turf) || giberal_turf.stage != GIBTONITE_UNSTRUCK)
 		last_bumpmine_tick = world.time
 		var/turf/closed/mineral/rock = bumped_into
-		INVOKE_ASYNC(rock, TYPE_PROC_REF(/atom, attackby), src, bumper, null, null, exp_multiplier)
+		INVOKE_ASYNC(src, PROC_REF(mine_rock), rock, bumper)
 		return
 
 	if (!COOLDOWN_FINISHED(src, gibtonite_warning_cd))
@@ -204,12 +212,21 @@
 	playsound(bumper, 'sound/machines/scanner/scanbuzz.ogg', 25, TRUE, SILENCED_SOUND_EXTRARANGE)
 	to_chat(bumper, span_warning("[icon2html(src, bumper)] Unstable gibtonite ore deposit detected!"))
 
+/obj/item/mod/module/drill/proc/mine_rock(turf/closed/mineral/rock, mob/living/carbon/human/bumper)
+	// Even faster if it has ore!
+	var/has_ore = !isnull(rock.mineral_type)
+	if (has_ore)
+		toolspeed /= 2
+	rock.manual_mine(bumper, src, exp_multiplier)
+	if (has_ore)
+		toolspeed *= 2
+
 /obj/item/mod/module/drill/proc/on_module_activated(datum/source, obj/item/mod/module/module)
 	SIGNAL_HANDLER
 	if (!istype(module, /obj/item/mod/module/sphere_transform))
 		return
-	// In sphere mode we get instamine and halved power drain
-	toolspeed = 0
+	// In sphere mode we get faster mining and halved power drain
+	toolspeed = 0.075
 	use_energy_cost *= 0.5
 	exp_multiplier *= 0.2
 	if (!active)
@@ -222,14 +239,14 @@
 		return
 	toolspeed = initial(toolspeed)
 	use_energy_cost *= 2
-	exp_multiplier /= 2
+	exp_multiplier /= 0.2
 	ballin = FALSE
 	if (!active)
 		on_deactivation()
 
 /// Ore Bag - Lets you pick up ores and drop them from the suit.
 /obj/item/mod/module/orebag
-	name = "MOD ore bag module"
+	name = "\improper MOD ore bag module"
 	desc = "An integrated ore storage system installed into the suit, \
 		this utilizes precise electromagnets and storage compartments to automatically collect and deposit ore. \
 		It's recommended by Nakamura Engineering to actually deposit that ore at local refineries."
@@ -241,6 +258,7 @@
 	cooldown_time = 0.5 SECONDS
 	allow_flags = MODULE_ALLOW_INACTIVE
 	required_slots = list(ITEM_SLOT_BACK)
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 7.5)
 	/// Are we currently dropping off ores? Used to prevent the bag from instantly picking up ores after dropping them
 	var/dropping_ores = FALSE
 
@@ -301,7 +319,7 @@
 		playsound(mod.wearer, SFX_RUSTLE, 50, TRUE)
 
 /obj/item/mod/module/hydraulic
-	name = "MOD loader hydraulic arms module"
+	name = "\improper MOD loader hydraulic arms module"
 	desc = "A pair of powerful hydraulic arms installed in a MODsuit."
 	icon_state = "launch_loader"
 	module_type = MODULE_ACTIVE
@@ -354,13 +372,14 @@
 	user.transform = user.transform.Turn(angle)
 
 /obj/item/mod/module/disposal_connector
-	name = "MOD disposal selector module"
+	name = "\improper MOD disposal selector module"
 	desc = "A module that connects to the disposal pipeline, causing the user to go into their config selected disposal. \
 		Only seems to work when the suit is on."
 	icon_state = "disposal"
 	complexity = 2
 	idle_power_cost = DEFAULT_CHARGE_DRAIN * 0.3
 	incompatible_modules = list(/obj/item/mod/module/disposal_connector)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT)
 	var/disposal_tag = NONE
 
 /obj/item/mod/module/disposal_connector/Initialize(mapload)
@@ -391,7 +410,7 @@
 	disposal_holder.destinationTag = disposal_tag
 
 /obj/item/mod/module/magnet
-	name = "MOD loader hydraulic magnet module"
+	name = "\improper MOD loader hydraulic magnet module"
 	desc = "A powerful hydraulic electromagnet able to launch crates and lockers towards the user, and keep 'em attached."
 	icon_state = "magnet_loader"
 	module_type = MODULE_ACTIVE
@@ -445,7 +464,7 @@
 	UnregisterSignal(locker, COMSIG_ATOM_NO_LONGER_PULLED)
 
 /obj/item/mod/module/ash_accretion
-	name = "MOD ash accretion module"
+	name = "\improper MOD ash accretion module"
 	desc = "A module that collects ash from the terrain, covering the suit in a protective layer, this layer is \
 		lost when moving across standard terrain."
 	icon_state = "ash_accretion"
@@ -566,9 +585,9 @@
 		balloon_alert(mod.wearer, "ran out of ash!")
 
 /obj/item/mod/module/sphere_transform
-	name = "MOD sphere transform module"
-	desc = "A module able to move the suit's parts around, turning it and the user into a sphere. \
-		The sphere can move quickly, even through lava, and launch mining bombs to decimate terrain."
+	name = "\improper MOD sphere transform module"
+	desc = "A module able to move the suit's parts around, turning it and the user into a sphere. If the modsuit is insulated with bileworm skin, the user will be protected from lava while active. \
+		The sphere can move quickly, even through lava, and launch mining micromissiles to decimate terrain and fauna alike."
 	icon_state = "sphere"
 	module_type = MODULE_ACTIVE
 	removable = FALSE
@@ -649,6 +668,8 @@
 	mod.wearer.add_movespeed_mod_immunities(REF(src), /datum/movespeed_modifier/damage_slowdown)
 	mod.wearer.add_movespeed_modifier(/datum/movespeed_modifier/sphere)
 	RegisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE, PROC_REF(on_statchange))
+	RegisterSignal(mod.wearer, COMSIG_CARBON_GET_FIRE_OVERLAY, PROC_REF(replace_fire_overlay))
+	mod.wearer.update_appearance(UPDATE_ICON)
 	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().add_other_armor(armor_mod))
 
@@ -663,9 +684,22 @@
 	mod.wearer.RemoveElement(/datum/element/footstep, FOOTSTEP_OBJ_ROBOT, 1, -6, sound_vary = TRUE)
 	mod.wearer.AddElement(/datum/element/footstep, FOOTSTEP_MOB_HUMAN, 1, -6)
 	mod.wearer.remove_movespeed_modifier(/datum/movespeed_modifier/sphere)
-	UnregisterSignal(mod.wearer, COMSIG_MOB_STATCHANGE)
+	UnregisterSignal(mod.wearer, list(COMSIG_MOB_STATCHANGE, COMSIG_CARBON_GET_FIRE_OVERLAY))
+	mod.wearer.update_appearance(UPDATE_ICON)
 	for(var/obj/item/part as anything in mod.get_parts(all = TRUE))
 		part.set_armor(part.get_armor().subtract_other_armor(armor_mod))
+
+/obj/item/mod/module/sphere_transform/proc/replace_fire_overlay(datum/source, stacks, on_fire, fire_icon, list/overrides)
+	SIGNAL_HANDLER
+
+	var/mutable_appearance/fire_overlay = mutable_appearance(
+		'icons/mob/effects/onfire.dmi',
+		fire_icon,
+		-HIGHEST_LAYER,
+		appearance_flags = RESET_COLOR|KEEP_APART,
+	)
+	fire_overlay.add_filter("mod_ball", 1, alpha_mask_filter(icon = icon('icons/mob/clothing/modsuit/mod_modules.dmi', "ball_mask"), flags = MASK_INVERSE))
+	overrides += fire_overlay
 
 /obj/item/mod/module/sphere_transform/used(mob/activator)
 	if(!lavaland_equipment_pressure_check(get_turf(src)))
@@ -678,12 +712,19 @@
 	. = ..()
 	if(!.)
 		return
-	var/obj/projectile/bullet/mining_bomb/bomb = new(mod.wearer.loc)
-	bomb.aim_projectile(target, mod.wearer)
-	bomb.firer = mod.wearer
-	playsound(src, 'sound/items/weapons/gun/general/grenade_launch.ogg', 75, TRUE)
-	INVOKE_ASYNC(bomb, TYPE_PROC_REF(/obj/projectile, fire))
 	drain_power(use_energy_cost)
+	INVOKE_ASYNC(src, PROC_REF(fire_missile), target)
+	for (var/i in 1 to 2)
+		addtimer(CALLBACK(src, PROC_REF(fire_missile), target), 0.2 SECONDS * i)
+
+/obj/item/mod/module/sphere_transform/proc/fire_missile(atom/target)
+	var/obj/projectile/bullet/mining_missile/missile = new(mod.wearer.loc)
+	missile.aim_projectile(target, mod.wearer)
+	missile.firer = mod.wearer
+	if (isliving(target))
+		missile.set_homing_target(target)
+	playsound(src, 'sound/items/weapons/gun/general/rocket_launch.ogg', 30, TRUE)
+	missile.fire()
 
 /obj/item/mod/module/sphere_transform/on_active_process(seconds_per_tick)
 	if(!mod.wearer.has_gravity())
@@ -691,79 +732,135 @@
 
 /obj/item/mod/module/sphere_transform/proc/on_statchange(datum/source)
 	SIGNAL_HANDLER
-	if(mod.wearer.stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(mod.wearer))
 		deactivate()
 
-/obj/projectile/bullet/mining_bomb
-	name = "mining bomb"
-	desc = "A bomb. Why are you examining this?"
-	icon_state = "mine_bomb"
+/obj/projectile/bullet/mining_missile
+	name = "mining micromissile"
+	desc = "A missile. Why are you examining this?"
+	icon_state = "mine_missile"
 	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
-	damage = 0
+	damage = 3 // 3 * 4 = 12, *3 = 36 damage between 3 missiles
 	range = 6
+	homing_turn_speed = 12
 	suppressed = SUPPRESSED_VERY
 	armor_flag = BOMB
 	light_system = OVERLAY_LIGHT
 	light_range = 1
 	light_power = 1
-	light_color = COLOR_LIGHT_ORANGE
+	light_color = LIGHT_COLOR_BABY_BLUE
 	embed_type = null
 	can_hit_turfs = TRUE
-
-/obj/projectile/bullet/mining_bomb/Initialize(mapload)
-	. = ..()
-	AddElement(/datum/element/projectile_drop, /obj/structure/mining_bomb)
-	RegisterSignal(src, COMSIG_PROJECTILE_ON_SPAWN_DROP, PROC_REF(handle_drop))
-
-/obj/projectile/bullet/mining_bomb/proc/handle_drop(datum/source, obj/structure/mining_bomb/mining_bomb)
-	SIGNAL_HANDLER
-	addtimer(CALLBACK(mining_bomb, TYPE_PROC_REF(/obj/structure/mining_bomb, prime), firer), mining_bomb.prime_time)
-
-/obj/structure/mining_bomb
-	name = "mining bomb"
-	desc = "A bomb. Why are you examining this?"
-	icon_state = "mine_bomb"
-	icon = 'icons/obj/clothing/modsuit/mod_modules.dmi'
-	anchored = TRUE
-	resistance_flags = FIRE_PROOF|LAVA_PROOF
-	light_system = OVERLAY_LIGHT
-	light_range = 1
-	light_power = 1
-	light_color = COLOR_LIGHT_ORANGE
-	/// Time to prime the explosion
-	var/prime_time = 0.1 SECONDS
-	/// Time to explode from the priming
-	var/explosion_time = 0.9 SECONDS // Roughly this much until the blast part of the explosion animation
-	/// Damage done on explosion.
-	var/damage = 7
-	/// Damage multiplier on hostile fauna.
+	/// Damage multiplier against lavaland fauna
 	var/fauna_boost = 4
 
-/obj/structure/mining_bomb/proc/prime(atom/movable/firer)
-	var/mutable_appearance/explosion_image = mutable_appearance('icons/effects/96x96.dmi', "judicial_explosion", FLOAT_LAYER, src, ABOVE_GAME_PLANE)
-	explosion_image.pixel_w = -32
-	explosion_image.pixel_z = -32
-	var/turf/our_loc = get_turf(src)
-	our_loc.flick_overlay_view(explosion_image, 1.35 SECONDS)
-	addtimer(CALLBACK(src, PROC_REF(boom), firer), explosion_time)
+/obj/projectile/bullet/mining_missile/on_hit(atom/target, blocked, pierce_hit)
+	playsound(get_turf(target), 'sound/items/weapons/sonic_jackhammer.ogg', 75, TRUE)
+	if (ismineralturf(target))
+		. = ..()
+		spawn_particles(target)
+		var/turf/closed/mineral/rock = target
+		rock.gets_drilled(firer)
+		return BULLET_ACT_HIT
 
-/obj/structure/mining_bomb/proc/boom(atom/movable/firer)
-	visible_message(span_danger("[src] explodes!"))
-	playsound(src, 'sound/effects/magic/magic_missile.ogg', 200, vary = TRUE)
-	for(var/turf/closed/mineral/rock in circle_range_turfs(src, 1))
-		rock.gets_drilled()
-	for(var/mob/living/victim in range(1, src))
-		if(HAS_TRAIT(victim, TRAIT_MINING_AOE_IMMUNE))
-			continue
-		victim.apply_damage(damage * (ismining(victim) ? fauna_boost : 1), BRUTE, spread_damage = TRUE)
-		to_chat(victim, span_userdanger("You are hit by a mining bomb explosion!"))
-		if(!firer)
-			continue
-		if(ishostile(victim))
-			var/mob/living/simple_animal/hostile/hostile_mob = victim
-			hostile_mob.GiveTarget(firer)
-		else if(isbasicmob(victim))
-			victim.ai_controller.set_blackboard_key(BB_BASIC_MOB_CURRENT_TARGET, firer)
-	for(var/obj/object in range(1, src))
-		object.take_damage(damage, BRUTE, BOMB)
-	qdel(src)
+	if (!isliving(target))
+		. = ..()
+		spawn_particles(target)
+		return
+
+	if (isliving(target))
+		var/mob/living/victim = target
+		if (ismining(victim))
+			damage *= fauna_boost
+	. = ..()
+	spawn_particles(target)
+
+/obj/projectile/bullet/mining_missile/proc/spawn_particles(atom/target)
+	var/obj/effect/abstract/particle_holder/impact_particles = new(get_turf(target), /particles/micromissile_impact)
+	impact_particles.particles.position = generator(GEN_BOX, list(impact_x - 2, impact_y - 2), list(impact_x + 2, impact_y + 2), NORMAL_RAND)
+	impact_particles.particles.velocity = generator(GEN_BOX, list(movement_vector.pixel_x * 0.5 * speed * ICON_SIZE_X - 2, movement_vector.pixel_y * 0.5 * speed * ICON_SIZE_Y - 2, ), list(movement_vector.pixel_x * 0.5 * speed * ICON_SIZE_X + 2, movement_vector.pixel_y * 0.5 * speed * ICON_SIZE_Y + 2), NORMAL_RAND)
+	QDEL_IN(impact_particles, /particles/micromissile_impact::lifespan)
+
+/particles/micromissile_impact
+	icon = 'icons/effects/particles/generic.dmi'
+	icon_state = "cross"
+	width = 100
+	height = 100
+	count = 10
+	spawning = 10
+	color = LIGHT_COLOR_BABY_BLUE
+	lifespan = 1 SECONDS
+	fade = 1 SECONDS
+	spin = generator(GEN_NUM, -20, 20)
+
+/obj/item/mod/module/candela_spool
+	name = "\improper MOD \"Candela\" beacon spool module"
+	desc = "A set of tethers and connectors, capable of automatically deploying \"Candela\" beacons from within a MODsuit."
+	icon_state = "candela_spool"
+	module_type = MODULE_ACTIVE
+	use_energy_cost = DEFAULT_CHARGE_DRAIN
+	incompatible_modules = list(/obj/item/mod/module/candela_spool)
+	cooldown_time = 1 SECONDS
+	required_slots = list(ITEM_SLOT_BACK, ITEM_SLOT_GLOVES)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.75)
+	/// Our network handler datum
+	/// We handle the network separately from the beacons we deploy, and supercede all of its' behaviors
+	var/datum/candela_item_handler/handler = null
+
+/obj/item/mod/module/candela_spool/Initialize(mapload)
+	. = ..()
+	handler = new(src, on_network_cut_callback = CALLBACK(src, PROC_REF(on_network_cut)))
+
+/obj/item/mod/module/candela_spool/Destroy()
+	QDEL_NULL(handler)
+	return ..()
+
+/obj/item/mod/module/candela_spool/on_install()
+	. = ..()
+	RegisterSignal(mod, COMSIG_ATOM_STORED_ITEM, PROC_REF(on_stored_item))
+
+/obj/item/mod/module/candela_spool/on_uninstall(deleting = FALSE)
+	. = ..()
+	UnregisterSignal(mod, COMSIG_ATOM_STORED_ITEM)
+
+/obj/item/mod/module/candela_spool/on_activation(mob/activator)
+	handler.set_owner(activator)
+
+/obj/item/mod/module/candela_spool/on_deactivation(mob/activator, display_message, deleting)
+	handler.set_owner(null)
+
+/obj/item/mod/module/candela_spool/on_select_use(atom/target)
+	. = ..()
+	if(!.)
+		return
+	attempt_deploy(mod.wearer, get_turf(mod.wearer))
+
+/obj/item/mod/module/candela_spool/proc/on_stored_item(datum/source, obj/item/stored, mob/user, force)
+	SIGNAL_HANDLER
+
+	if (!istype(stored, /obj/item/stack/candela_beacon))
+		return
+
+	// When storing linked beacons in our MODsuit, inherit their link for convinience
+	var/obj/item/stack/candela_beacon/beacons = stored
+	if (beacons.handler.network)
+		handler.set_network(beacons.handler.network, beacons.handler.closest_node)
+
+/// Callback to react to breaking LOS/reaching maximum distance with a beacon
+/obj/item/mod/module/candela_spool/proc/on_network_cut(atom/old_loc, old_dir, interrupt)
+	if (mod.wearer && handler.closest_node && !interrupt)
+		return attempt_deploy(mod.wearer, old_loc, silent = TRUE)
+	return FALSE
+
+/// Attempt to deploy a candela beacon at a given location
+/obj/item/mod/module/candela_spool/proc/attempt_deploy(mob/activator, atom/location, silent = FALSE)
+	var/obj/item/stack/candela_beacon/beacons = locate() in mod.atom_storage.real_location
+	if (isnull(beacons))
+		balloon_alert(activator, "no beacons!")
+		return FALSE
+
+	if (!beacons.place_beacon(activator, loc_override = location, handler_override = handler, silent = silent))
+		return FALSE
+
+	drain_power(use_energy_cost)
+	return TRUE

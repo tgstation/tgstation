@@ -22,6 +22,7 @@
 		/obj/structure/closet/mini_fridge = 35,
 		/obj/effect/spawner/random/trash/mess = 30,
 		/obj/item/kirbyplants/fern = 20,
+		/obj/effect/spawner/random/gizmo = 20,
 		/obj/structure/closet/crate/decorations = 15,
 		/obj/effect/decal/remains/human/smokey/maintenance = 7,
 		/obj/structure/destructible/cult/pants_altar = 1,

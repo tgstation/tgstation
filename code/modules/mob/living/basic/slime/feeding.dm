@@ -7,9 +7,13 @@
 	if(!isliving(meal)) //sanity check
 		return FALSE
 
-	if(stat != CONSCIOUS)
-		if(!silent)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
+		if(stat == DEAD)
+			balloon_alert(src, "dead!")
+		else if(IS_UNCONSCIOUS(src))
 			balloon_alert(src, "unconscious!")
+		else
+			balloon_alert(src, "in critical!")
 		return FALSE
 
 	if(hunger_disabled)
@@ -47,18 +51,10 @@
 			balloon_alert(src, "can't eat slime!")
 		return FALSE
 
-	if(isanimal(meal))
-		var/mob/living/simple_animal/simple_meal = meal
-		if(simple_meal.damage_coeff[TOX] <= 0 && simple_meal.damage_coeff[BRUTE] <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
-			if(!silent)
-				balloon_alert(src, "not food!")
-			return FALSE
-	else if(isbasicmob(meal))
-		var/mob/living/basic/basic_meal = meal
-		if(basic_meal.damage_coeff[TOX] <= 0 && basic_meal.damage_coeff[BRUTE] <= 0)
-			if (!silent)
-				balloon_alert(src, "not food!")
-			return FALSE
+	if(GET_PHYSIOLOGY(meal, BRUTE) <= 0 && GET_PHYSIOLOGY(meal, TOX) <= 0) //The creature wouldn't take any damage, it must be too weird even for us.
+		if(!silent)
+			balloon_alert(src, "not food!")
+		return FALSE
 
 	return TRUE
 
@@ -91,6 +87,6 @@
 		balloon_alert(src, "feeding stopped")
 	remove_offsets(FEEDING_OFFSET)
 	layer = initial(layer)
-	buckled.unbuckle_mob(src,force=TRUE)
+	INVOKE_ASYNC(buckled, TYPE_PROC_REF(/atom/movable, unbuckle_mob), src, force=TRUE)
 
 #undef FEEDING_OFFSET

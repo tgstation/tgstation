@@ -386,7 +386,7 @@
 
 	if(user != mob_parent)
 		return
-	if(user.stat >= UNCONSCIOUS)
+	if(IS_UNCONSCIOUS(user))
 		return
 	print_mood(user)
 
@@ -494,6 +494,9 @@
 					msg += "[span_boldnicegreen(event.description)]<br>"
 	else
 		msg += "&bull; [span_grey("I don't have much of a reaction to anything right now.")]<br>"
+
+	if(LAZYLEN(mob_parent.personalities))
+		msg += span_notice("You know yourself to be [mob_parent.get_parsonality_string()].<br>")
 
 	if(LAZYLEN(mob_parent.quirks))
 		msg += span_notice("You have these quirks: [mob_parent.get_quirk_string(FALSE, CAT_QUIRK_ALL)].")

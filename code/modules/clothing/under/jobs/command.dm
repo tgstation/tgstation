@@ -21,6 +21,7 @@
 	dying_key = DYE_REGISTRY_JUMPSKIRT
 	female_sprite_flags = FEMALE_UNIFORM_TOP_ONLY
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/rank/captain/parade
 	name = "captain's parade uniform"
@@ -28,3 +29,8 @@
 	icon_state = "captain_parade"
 	inhand_icon_state = null
 	can_adjust = FALSE
+
+/obj/item/clothing/under/rank/captain/royal
+	name = "captain's royal uniform"
+	desc = "A captain's royal uniform. Fit for commanding your Officers in the midst of a nuclear incursion."
+	icon_state = "caproyal"

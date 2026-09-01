@@ -14,15 +14,16 @@
 		wizard_datum.perks += src
 	RegisterSignal(user, COMSIG_MOB_HUD_CREATED, PROC_REF(on_hud_created))
 	if (user.hud_used)
-		on_hud_created()
+		on_hud_created(user)
 	to_chat(user, span_notice("You got a new perk: [src.name]."))
 	log_purchase(user.key)
 	return TRUE
 
-/datum/spellbook_entry/perks/proc/on_hud_created(mob/living/carbon/human/user, datum/antagonist/wizard/wizard_datum)
+/datum/spellbook_entry/perks/proc/on_hud_created(mob/living/carbon/human/source)
 	SIGNAL_HANDLER
 
-	var/datum/hud/user_hud = user.hud_used
+	var/datum/hud/user_hud = source.hud_used
+	var/datum/antagonist/wizard/wizard_datum = source.mind.has_antag_datum(/datum/antagonist/wizard)
 	if(!user_hud.screen_objects[HUD_WIZARD_COMPACT_PERKS])
 		user_hud.add_screen_object(/atom/movable/screen/perk/more, HUD_WIZARD_COMPACT_PERKS, HUD_GROUP_INFO, ui_loc = ui_perk_position(0), update_screen = TRUE)
 
@@ -104,9 +105,10 @@
 
 /datum/spellbook_entry/perks/heart_eater
 	name = "Heart Eater"
-	desc = "Gives you ability to obtain a person's life force by eating their heart. \
+	desc = "Gives you the ability to obtain a sentient being's life force by eating their heart. \
+		Additionally, you can tear a vulnerable being's heart out with your bare hands. \
 		By eating someone's heart you can increase your damage resistance or gain random mutation. \
-		Heart also give strong healing buff."
+		Hearts also provide strong healing."
 	hud_icon = "hearteater"
 
 /datum/spellbook_entry/perks/heart_eater/buy_spell(mob/living/carbon/human/user, obj/item/spellbook/book, log_buy)

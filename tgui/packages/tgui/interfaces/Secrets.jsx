@@ -231,13 +231,13 @@ const HelpfulTab = (props) => {
             />
           </Stack.Item>
           <Stack.Item>
-            <Button
-              icon="moon"
-              lineHeight={lineHeightNormal}
+            <NoticeBox
+              mb={-0.5}
               width={buttonWidthNormal}
-              content="Set Nightshift"
-              onClick={() => act('night_shift_set')}
-            />
+              height={lineHeightNormal}
+            >
+              Your admin button here, coder!
+            </NoticeBox>
           </Stack.Item>
         </Stack>
       </Stack.Item>
@@ -580,12 +580,27 @@ const FunForYouTab = (props) => {
             <NoticeBox danger width={19.6} mb={0}>
               <Button
                 color="red"
-                icon="cat"
+                icon="explosion"
                 fluid
                 content="CASCAAADE"
                 onClick={() => act('cascade')}
               />
             </NoticeBox>
+          </Stack.Item>
+          <Stack.Item>
+            <Stack fill>
+              <Stack.Item>
+                <NoticeBox danger width={19.6} mb={0}>
+                  <Button
+                    color="red"
+                    icon="burst"
+                    fluid
+                    content="Toggle Meteor Mode"
+                    onClick={() => act('meteormode')}
+                  />
+                </NoticeBox>
+              </Stack.Item>
+            </Stack>
           </Stack.Item>
         </Stack>
       </Stack.Item>

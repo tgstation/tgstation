@@ -63,7 +63,6 @@
 			var/datum/gas_mixture/air = turf?.return_air()
 			data["gasmixes"] = list(gas_mixture_parser(air, "Location Reading"))
 		if(ATMOZPHERE_SCAN_CLICK)
-			LAZYINITLIST(last_gasmix_data)
 			data["gasmixes"] = last_gasmix_data
 	return data
 

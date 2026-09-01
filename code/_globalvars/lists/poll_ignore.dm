@@ -37,6 +37,7 @@
 #define POLL_IGNORE_SPLITPERSONALITY "split_personality"
 #define POLL_IGNORE_STALKER "stalker"
 #define POLL_IGNORE_SYNDICATE "syndicate"
+#define POLL_IGNORE_SYNDICATE_MONKEY "syndicate_monkey"
 #define POLL_IGNORE_VENUSHUMANTRAP "venus_human_trap"
 #define POLL_IGNORE_RECOVERED_CREW "recovered_crew"
 #define POLL_IGNORE_EXPERIMENTAL_CLONER "experimental_cloner"
@@ -79,6 +80,7 @@ GLOBAL_LIST_INIT(poll_ignore_desc, list(
 	POLL_IGNORE_SPLITPERSONALITY = "Split Personality",
 	POLL_IGNORE_STALKER = "Stalker",
 	POLL_IGNORE_SYNDICATE = "Syndicate",
+	POLL_IGNORE_SYNDICATE_MONKEY = "Syndicate Monkey",
 	POLL_IGNORE_VENUSHUMANTRAP = "Venus Human Traps",
 	POLL_IGNORE_RECOVERED_CREW = "Recovered Crew",
 	POLL_IGNORE_FREE_SPORE = "Free spore",

@@ -35,7 +35,7 @@
 	icon_state = "medkit"
 	desc = "A first aid kit with the ability to heal common types of injuries."
 
-/obj/item/storage/medkit/regular/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/regular/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins giving [user.p_them()]self aids with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
@@ -150,7 +150,7 @@
 /obj/item/storage/medkit/fire/get_medbot_skin()
 	return "burn"
 
-/obj/item/storage/medkit/fire/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/fire/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins rubbing \the [src] against [user.p_them()]self! It looks like [user.p_theyre()] trying to start a fire!"))
 	return FIRELOSS
 
@@ -174,7 +174,7 @@
 /obj/item/storage/medkit/toxin/get_medbot_skin()
 	return "tox"
 
-/obj/item/storage/medkit/toxin/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/toxin/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins licking the lead paint off \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return TOXLOSS
 
@@ -201,7 +201,7 @@
 /obj/item/storage/medkit/o2/get_medbot_skin()
 	return "oxy"
 
-/obj/item/storage/medkit/o2/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/o2/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins hitting [user.p_their()] neck with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return OXYLOSS
 
@@ -225,7 +225,7 @@
 /obj/item/storage/medkit/brute/get_medbot_skin()
 	return "brute"
 
-/obj/item/storage/medkit/brute/suicide_act(mob/living/carbon/user)
+/obj/item/storage/medkit/brute/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins beating [user.p_them()]self over the head with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	return BRUTELOSS
 
@@ -466,7 +466,7 @@
 		return ITEM_INTERACT_SUCCESS
 	return ..()
 
-/obj/item/storage/organbox/suicide_act(mob/living/carbon/user)
+/obj/item/storage/organbox/suicide_act(mob/living/user)
 	if(HAS_TRAIT(user, TRAIT_RESISTCOLD)) //if they're immune to cold, just do the box suicide
 		var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 		if(myhead)

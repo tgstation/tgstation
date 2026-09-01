@@ -26,7 +26,7 @@
 	velocity = list(0, 0.2, 0)
 	position = generator(GEN_BOX, list(-8,-16,0), list(8,16,0), NORMAL_RAND)
 	drift = generator(GEN_BOX, list(-8,-16,0), list(8,16,0), NORMAL_RAND)
-	spin = generator(GEN_NUM, list(-5,5), NORMAL_RAND)
+	spin = generator(GEN_NUM, -5, 5, NORMAL_RAND)
 	friction = 0.5
 	gravity = list(0, 0)
 	grow = 0.05

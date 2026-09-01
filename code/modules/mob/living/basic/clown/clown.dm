@@ -57,7 +57,7 @@
 	if (!istype(attacker))
 		return
 	for (var/mob/living/basic/clown/harbringer in oview(src, 7))
-		harbringer.ai_controller.insert_blackboard_key_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker)
+		harbringer.ai_controller.set_blackboard_key_assoc_lazylist(BB_BASIC_MOB_RETALIATE_LIST, attacker, world.time)
 
 /mob/living/basic/clown/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	if(!istype(target, /obj/item/food/grown/banana/bunch))
@@ -68,7 +68,7 @@
 
 /mob/living/basic/clown/get_bloodtype()
 	if (check_holidays(APRIL_FOOLS))
-		return get_blood_type(BLOOD_TYPE_CLOWN)
+		return get_blood_type(/datum/blood_type/clown)
 	return ..()
 
 /mob/living/basic/clown/lube
@@ -83,7 +83,7 @@
 	response_disarm_continuous = "gently scoops and pours aside"
 	response_disarm_simple = "gently scoop and pour aside"
 	mob_biotypes = MOB_ORGANIC|MOB_HUMANOID|MOB_SLIME
-	damage_coeff = list(BRUTE = 0.25, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
+	physiology = list(BRUTE = 0.25)
 	emotes = list(
 		BB_EMOTE_SAY = list("HONK!!", "Honk!", "Welcome to Clown Planet!"),
 		BB_EMOTE_HEAR = list("bubbles.", "oozes."),
@@ -388,7 +388,6 @@
 	melee_damage_lower = 10
 	melee_damage_upper = 15
 	obj_damage = 50
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
 	attack_verb_continuous = "slams"
 	attack_verb_simple = "slam"
 	///Tracks how many total foods we have eaten, used for calculating when we should gain max health.

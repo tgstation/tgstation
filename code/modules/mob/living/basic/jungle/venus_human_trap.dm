@@ -231,7 +231,7 @@
 			owner.balloon_alert(owner, "path blocked!")
 			return
 
-	var/datum/beam/new_vine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration * (ismob(target_atom) ? 1 : 2), beam_type = /obj/effect/ebeam/vine, emissive = FALSE)
+	var/datum/beam/new_vine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration * (ismob(target_atom) ? 1 : 2), beam_type = /obj/effect/ebeam/vine, emissive = NONE)
 	var/component = target_atom.AddComponent(/datum/component/leash, owner, vine_grab_distance)
 	RegisterSignal(new_vine, COMSIG_QDELETING, PROC_REF(remove_vine), new_vine)
 	vines[new_vine] = component
@@ -256,18 +256,11 @@
 	vines -= vine
 
 /datum/ai_controller/basic_controller/human_trap
+	behavior_tree_json = "code/modules/mob/living/basic/jungle/human_trap.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/targeted_mob_ability/continue_planning,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
 
 #undef FINAL_BUD_GROWTH_ICON

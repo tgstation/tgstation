@@ -11,7 +11,7 @@
 	basic_mob_flags = FLAMMABLE_MOB
 	status_flags = CANPUSH // No CANSTUN, blood worms are immune to stuns by design.
 
-	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 0, STAMINA = 0, OXY = 0)
+	physiology = list(BURN = 1.5, TOX = 0, STAMINA = 0, OXY = 0)
 
 	pressure_resistance = 200
 
@@ -24,11 +24,11 @@
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
 
-	minimum_survivable_temperature = 0
+	minimum_survivable_temperature = T0C - 100
 	maximum_survivable_temperature = T0C + 100
-	unsuitable_cold_damage = 0
+	unsuitable_atmos_damage = 0
 
-	habitable_atmos = null
+	habitable_atmos = null // Breathless
 
 	// A vivid red.
 	lighting_cutoff_red = 40
@@ -168,11 +168,14 @@
 		return FALSE
 	if (host)
 		ADD_TRAIT(host, TRAIT_MIND_TEMPORARILY_GONE, BLOOD_WORM_HOST_TRAIT)
+	var/atom/movable/screen/alert/bloodworm_info/info_alert = throw_alert(ALERT_BLOODWORM_INFO, /atom/movable/screen/alert/bloodworm_info)
+	info_alert.worm_owner = src
 
 /mob/living/basic/blood_worm/Logout()
 	. = ..()
 	if (host)
 		REMOVE_TRAIT(host, TRAIT_MIND_TEMPORARILY_GONE, BLOOD_WORM_HOST_TRAIT)
+	clear_alert(ALERT_BLOODWORM_INFO)
 
 /mob/living/basic/blood_worm/process(seconds_per_tick, times_fired)
 	if (!host)
@@ -200,13 +203,23 @@
 	name = "[initial(name)] ([id_number])"
 	real_name = name
 
-/mob/living/basic/blood_worm/adjust_health(amount, updating_health, forced)
-	return host ? 0 : ..() // Prevents damage from adjust_x_loss while in a host, because that damage would be nullified by the next [proc/sync_health] call. Adjust host blood volume instead.
+// Prevents damage from adjust_x_loss while in a host, because that damage would be nullified by the next [proc/sync_health] call. Adjust host blood volume instead.
+/mob/living/basic/blood_worm/can_adjust_brute_loss(amount, forced, required_bodytype)
+	return host ? FALSE : ..()
+
+/mob/living/basic/blood_worm/can_adjust_fire_loss(amount, forced, required_bodytype)
+	return host ? FALSE : ..()
+
+/mob/living/basic/blood_worm/can_adjust_tox_loss(amount, forced, required_bodytype)
+	return host ? FALSE : ..()
+
+/mob/living/basic/blood_worm/can_adjust_oxy_loss(amount, forced, required_bodytype)
+	return host ? FALSE : ..()
 
 /mob/living/basic/blood_worm/set_stat(new_stat)
 	. = ..()
 
-	if (host && stat != CONSCIOUS)
+	if (host && IS_UNCONSCIOUS_OR_CRIT(src))
 		leave_host()
 
 /mob/living/basic/blood_worm/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
@@ -269,6 +282,14 @@
 	. = ..()
 	icon_state = "invade-[effect_name]"
 
+/mob/living/basic/blood_worm/lazarus_revive(mob/living/reviver, malfunctioning)
+	if(!IS_BLOODWORM(src)) //checks to see if this isn't just a poly'd bloodworm
+		return ..()
+
+	revive(HEAL_ALL)
+	to_chat(reviver, span_userdanger("[src] resists the control of the injector!"))
+	balloon_alert(reviver, "can't control!")
+
 /mob/living/basic/blood_worm/hatchling
 	name = "hatchling blood worm"
 	desc = "A freshly hatched blood worm. It looks hungry and weak, requiring blood to grow further."
@@ -285,6 +306,9 @@
 	maxHealth = 80 // In practice, escaping into a vent from someone who could 3 hit you with a basic bitch welder was really hard. This used to be 50, and was buffed to 80, but speed was slowed a bit.
 	health = 80
 
+	// Hatchlings need to be space resistant
+	// Otherwise, if distro loses pressure or is made cold for increased density, all blood worm hatchlings will die
+	unsuitable_cold_damage = 0.5
 	unsuitable_heat_damage = 1
 
 	obj_damage = 15 // 10 -> 15, in testing 10 proved to be way too slow at breaking morgue trays and such. Make sure that this doesn't go above airlock damage deflection.
@@ -310,6 +334,7 @@
 	ADD_TRAIT(src, TRAIT_VENTCRAWLER_ALWAYS, INNATE_TRAIT)
 
 	AddComponent(/datum/component/slide_under_doors, slide_in_delay = 3 SECONDS)
+	AddElement(/datum/element/pressure_sensitive, min_pressure = 20, max_pressure = 0, low_pressure_damage = 0.5, high_pressure_damage = 0)
 
 /mob/living/basic/blood_worm/juvenile
 	name = "juvenile blood worm"
@@ -326,6 +351,7 @@
 	maxHealth = 120 // Note that the juveniles are bigger and slower than hatchlings, making them far easier to hit by comparison.
 	health = 120
 
+	unsuitable_cold_damage = 1
 	unsuitable_heat_damage = 1.5
 
 	obj_damage = 35 // Able to break most obstacles, such as airlocks. This is mandatory since they can't ventcrawl anymore.
@@ -353,6 +379,7 @@
 	. = ..()
 
 	AddComponent(/datum/component/slide_under_doors, slide_in_delay = 5 SECONDS)
+	AddElement(/datum/element/pressure_sensitive, min_pressure = 20, max_pressure = 0, low_pressure_damage = 1, high_pressure_damage = 0)
 
 /mob/living/basic/blood_worm/adult
 	name = "adult blood worm"
@@ -373,6 +400,7 @@
 	maxHealth = 180 // Used to be 150, turns out their lack of armor and weakness to burn made them too squishy. People kited them using lasguns, leaving them with no way to fight back at all.
 	health = 180
 
+	unsuitable_cold_damage = 1
 	unsuitable_heat_damage = 2
 
 	obj_damage = 50 // You are not getting away.
@@ -398,3 +426,17 @@
 	transfuse_action = /datum/action/cooldown/mob_cooldown/blood_worm/inject/adult
 
 	regen_rate = 0.5 // 360 seconds to recover from 0 to 180, or exactly 6 minutes.
+
+/mob/living/basic/blood_worm/adult/Initialize(mapload)
+	. = ..()
+
+	AddElement(/datum/element/pressure_sensitive, min_pressure = 20, max_pressure = 0, low_pressure_damage = 2, high_pressure_damage = 0)
+
+/mob/living/basic/blood_worm/hatchling/polymorph
+	cocoon_action = /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/hatchling/polymorph
+
+/mob/living/basic/blood_worm/juvenile/polymorph
+	cocoon_action = /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/juvenile/polymorph
+
+/mob/living/basic/blood_worm/adult/polymorph
+	cocoon_action = null

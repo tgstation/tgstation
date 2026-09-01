@@ -44,7 +44,7 @@
 /datum/status_effect/proc/on_creation(mob/living/new_owner, ...)
 	if(new_owner)
 		owner = new_owner
-	if(QDELETED(owner) || !on_apply())
+	if(QDELETED(owner) || !on_apply(arglist(args.Copy(2))))
 		qdel(src)
 		return
 	if(owner)
@@ -66,26 +66,14 @@
 		update_shown_duration()
 
 	if(duration != STATUS_EFFECT_PERMANENT || tick_interval != STATUS_EFFECT_NO_TICK) //don't process if we don't care
-		switch(processing_speed)
-			if(STATUS_EFFECT_FAST_PROCESS)
-				START_PROCESSING(SSfastprocess, src)
-			if(STATUS_EFFECT_NORMAL_PROCESS)
-				START_PROCESSING(SSprocessing, src)
-			if(STATUS_EFFECT_PRIORITY)
-				START_PROCESSING(SSpriority_effects, src)
+		start_processing()
 
 	update_particles()
 	SEND_SIGNAL(owner, COMSIG_LIVING_STATUS_APPLIED, src)
 	return TRUE
 
 /datum/status_effect/Destroy()
-	switch(processing_speed)
-		if(STATUS_EFFECT_FAST_PROCESS)
-			STOP_PROCESSING(SSfastprocess, src)
-		if(STATUS_EFFECT_NORMAL_PROCESS)
-			STOP_PROCESSING(SSprocessing, src)
-		if(STATUS_EFFECT_PRIORITY)
-			STOP_PROCESSING(SSpriority_effects, src)
+	stop_processing()
 	if(owner)
 		linked_alert = null
 		owner.clear_alert(id)
@@ -144,7 +132,7 @@
 
 /// Gets and formats examine text associated with our status effect.
 /// Return 'null' to have no examine text appear (default behavior).
-/datum/status_effect/proc/get_examine_text()
+/datum/status_effect/proc/get_examine_text(mob/examiner)
 	return null
 
 /**
@@ -238,6 +226,46 @@
 
 	if(var_name == NAMEOF(src, show_duration))
 		update_shown_duration()
+
+/// Stops ticking. Entirely stops processing if the effect is permanent.
+/datum/status_effect/proc/stop_ticking()
+	// If we have a set duration, we can't stop processing as duration is also handled in process
+	if(duration != STATUS_EFFECT_PERMANENT)
+		time_until_next_tick = STATUS_EFFECT_NO_TICK
+		return
+
+	// But if we have are permanent, there is no reason to keep processing if we don't tick
+	stop_processing()
+
+/// Stops processing, removing it from relevant subsystems
+/datum/status_effect/proc/stop_processing()
+	switch(processing_speed)
+		if(STATUS_EFFECT_FAST_PROCESS)
+			STOP_PROCESSING(SSfastprocess, src)
+		if(STATUS_EFFECT_NORMAL_PROCESS)
+			STOP_PROCESSING(SSprocessing, src)
+		if(STATUS_EFFECT_PRIORITY)
+			STOP_PROCESSING(SSpriority_effects, src)
+
+/// (Re)starts ticking, also (re)starting processing if the effect is permanent
+/datum/status_effect/proc/start_ticking()
+	// If we have a set duration, we assume we're processing already, so just reset the timer
+	if(duration != STATUS_EFFECT_PERMANENT)
+		time_until_next_tick = tick_interval
+		return
+
+	// But if we are permanent, we probably need to start processing
+	start_processing()
+
+/// (Re)starts processing, adding it to relevant subsystems
+/datum/status_effect/proc/start_processing()
+	switch(processing_speed)
+		if(STATUS_EFFECT_FAST_PROCESS)
+			START_PROCESSING(SSfastprocess, src)
+		if(STATUS_EFFECT_NORMAL_PROCESS)
+			START_PROCESSING(SSprocessing, src)
+		if(STATUS_EFFECT_PRIORITY)
+			START_PROCESSING(SSpriority_effects, src)
 
 /// Alert base type for status effect alerts
 /atom/movable/screen/alert/status_effect

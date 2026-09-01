@@ -55,26 +55,18 @@
 	underlay_appearance.icon_state = /turf/open/misc/asteroid/basalt::icon_state
 	return TRUE
 
-/turf/open/chasm/attackby(obj/item/C, mob/user, params, area/area_restriction)
+/turf/open/chasm/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(ismetaltile(C))
-		build_with_floor_tiles(C, user)
-		return
+	if(ITEM_INTERACT_ANY_BLOCKER & .)
+		return .
 
-	if(!istype(C, /obj/item/stack/rods))
-		return
+	if(istype(tool, /obj/item/stack/rods))
+		build_with_rods(tool, user)
+		return ITEM_INTERACT_SUCCESS
 
-	var/obj/item/stack/rods/R = C
-	var/obj/structure/lattice/L = locate(/obj/structure/lattice, src)
-	if(L)
-		return
-	if(!R.use(1))
-		to_chat(user, span_warning("You need one rod to build a lattice."))
-		return
-	to_chat(user, span_notice("You construct a lattice."))
-	playsound(src, 'sound/items/weapons/genhit.ogg', 50, TRUE)
-	// Create a lattice, without reverting to our baseturf
-	new /obj/structure/lattice(src)
+	if(ismetaltile(tool))
+		build_with_floor_tiles(tool, user)
+		return ITEM_INTERACT_SUCCESS
 
 
 /// Handles adding the chasm component to the turf (So stuff falls into it!)
@@ -140,9 +132,28 @@
 /turf/open/chasm/true/no_smooth/rcd_act(mob/user, obj/item/construction/rcd/the_rcd, list/rcd_data)
 	return FALSE
 
-/turf/open/chasm/true/no_smooth/attackby(obj/item/item, mob/user, params, area/area_restriction)
-	if(istype(item, /obj/item/stack/rods))
-		return
-	else if(ismetaltile(item))
-		return
+/turf/open/chasm/true/no_smooth/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stack/rods))
+		return ITEM_INTERACT_BLOCKING
+
+	if(ismetaltile(tool))
+		return ITEM_INTERACT_BLOCKING
+
 	return ..()
+
+// Chasm produced by the Pride ruin. Leads to a random space Z-level at the same x/y coordinate.
+/turf/open/chasm/pride
+	desc = "It's beautiful down there, dotted with pinpricks of light."
+	baseturfs = /turf/open/chasm/pride
+	light_color = COLOR_STARLIGHT
+	light_range = 1.9
+	light_power = 0.65
+
+/turf/open/chasm/pride/apply_components(mapload)
+	var/list/levels = SSmapping.levels_by_trait(ZTRAIT_SPACE_RUINS)
+	var/turf/space_turf
+	if(length(levels))
+		space_turf = locate(src.x, src.y, pick(levels))
+
+	AddComponent(/datum/component/chasm, space_turf, mapload)
+

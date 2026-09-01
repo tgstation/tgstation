@@ -1,21 +1,9 @@
-/datum/ai_planning_subtree/basic_melee_attack_subtree/opportunistic/on_top/SelectBehaviors(datum/ai_controller/controller, delta_time)
-	var/mob/target = controller.blackboard[BB_BASIC_MOB_CURRENT_TARGET]
-	if(!target || QDELETED(target))
-		return
-	if(target.loc != controller.pawn.loc)
-		return
-	return ..()
-
 /datum/ai_controller/basic_controller/living_floor
 	max_target_distance = 2
+	behavior_tree_json = "code/modules/mob/living/basic/ruin_defender/living_floor.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
-	)
-
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree/opportunistic/on_top
 	)
 
 /mob/living/basic/living_floor
@@ -44,7 +32,7 @@
 	attack_vis_effect = ATTACK_EFFECT_BITE
 	attack_verb_continuous = "bites"
 	attack_verb_simple = "bite"
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	physiology = list(STAMINA = 0)
 	ai_controller = /datum/ai_controller/basic_controller/living_floor
 	melee_attack_cooldown = 0.5 SECONDS // get real
 
@@ -63,7 +51,7 @@
 		return
 	if(victim.loc == loc) //guaranteed bite
 		var/datum/targeting_strategy/basic/targeting = GET_TARGETING_STRATEGY(ai_controller.blackboard[BB_TARGETING_STRATEGY])
-		if(targeting.can_attack(src, victim))
+		if(targeting.is_valid_target(src, victim))
 			melee_attack(victim)
 	icon_state = icon_aggro
 	desc = desc_aggro
@@ -81,15 +69,15 @@
 /mob/living/basic/living_floor/med_hud_set_status()
 	return
 
-/mob/living/basic/living_floor/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(weapon.tool_behaviour != TOOL_CROWBAR)
-		return ..()
+/mob/living/basic/living_floor/crowbar_act(mob/living/user, obj/item/tool)
 	balloon_alert(user, "prying...")
 	playsound(src, 'sound/items/tools/crowbar.ogg', 45, TRUE)
 	if(!do_after(user, 5 SECONDS, src))
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	new /obj/effect/gibspawner/generic(loc)
 	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/basic/living_floor/white
 	icon_state = "white"

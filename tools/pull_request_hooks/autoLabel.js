@@ -1,4 +1,4 @@
-import * as autoLabelConfig from "./autoLabelConfig.js";
+import * as autoLabelConfig from './autoLabelConfig.js';
 
 /**
  * Precompute a lowercase keyword → changelog label map
@@ -6,7 +6,7 @@ import * as autoLabelConfig from "./autoLabelConfig.js";
 const keywordToClLabel = (() => {
   const map = {};
   for (const [label, { keywords }] of Object.entries(
-    autoLabelConfig.changelog_labels
+    autoLabelConfig.changelog_labels,
   )) {
     for (const keyword of keywords) {
       map[keyword.toLowerCase()] = label;
@@ -21,7 +21,7 @@ const keywordToClLabel = (() => {
 const titleKeywordSets = (() => {
   const map = {};
   for (const [label, { keywords }] of Object.entries(
-    autoLabelConfig.title_labels
+    autoLabelConfig.title_labels,
   )) {
     map[label] = new Set(keywords.map((k) => k.toLowerCase()));
   }
@@ -33,10 +33,15 @@ const titleKeywordSets = (() => {
  */
 const fileLabelFilepathSets = (() => {
   const map = {};
-  for (const [label, { filepaths = [], file_extensions = [], add_only }] of Object.entries(
-    autoLabelConfig.file_labels
-  )) {
-    map[label] = { filepaths: new Set(filepaths), file_extensions: new Set(file_extensions), add_only };
+  for (const [
+    label,
+    { filepaths = [], file_extensions = [], add_only },
+  ] of Object.entries(autoLabelConfig.file_labels)) {
+    map[label] = {
+      filepaths: new Set(filepaths),
+      file_extensions: new Set(file_extensions),
+      add_only,
+    };
   }
   return map;
 })();
@@ -48,29 +53,30 @@ function check_body_for_labels(body) {
   const labels_to_add = [];
 
   // detect "fixes #1234" or "resolves #1234" in body
-  const fix_regex = /\b(?:fix(?:es|ed)?|resolve[sd]?)\s*(?:#\d+|https:\/\/github\.com\/\S+\/issues\/\d+)/gim;
+  const fix_regex =
+    /\b(?:fix(?:es|ed)?|resolve[sd]?)\s*(?:#\d+|https:\/\/github\.com\/\S+\/issues\/\d+)/gim;
   if (fix_regex.test(body)) {
-    labels_to_add.push("Fix");
+    labels_to_add.push('Fix');
   }
 
-  const lines = body.split("\n");
+  const lines = body.split('\n');
   let inChangelog = false;
 
   for (const line of lines) {
-    if (line.startsWith(":cl:")) {
+    if (line.startsWith(':cl:')) {
       inChangelog = true;
       continue;
     }
-    if (line.startsWith("/:cl:")) break;
+    if (line.startsWith('/:cl:')) break;
     if (!inChangelog) continue;
 
     // see if the first segment of the line is one of the keywords
-    const keyword = line.split(":")[0]?.toLowerCase();
+    const keyword = line.split(':')[0]?.toLowerCase();
     const found_label = keywordToClLabel[keyword];
     if (!found_label) continue;
 
     // don't add a billion tags if they forgot to clear all the default ones
-    const line_text = line.split(":")[1]?.trim();
+    const line_text = line.split(':')[1]?.trim();
     const { default_text, alt_default_text } =
       autoLabelConfig.changelog_labels[found_label];
 
@@ -109,27 +115,25 @@ async function check_diff_files_for_labels(github, context) {
 
   try {
     // Use github.paginate to fetch all files (up to ~3000 max)
-    const allFiles = await github.paginate(
-      github.rest.pulls.listFiles,
-      {
-        owner: context.repo.owner,
-        repo: context.repo.repo,
-        pull_number: context.payload.pull_request.number,
-        per_page: 100, // max per request
-      }
-    );
+    const allFiles = await github.paginate(github.rest.pulls.listFiles, {
+      owner: context.repo.owner,
+      repo: context.repo.repo,
+      pull_number: context.payload.pull_request.number,
+      per_page: 100, // max per request
+    });
 
     if (!allFiles?.length) {
-      console.error("No files returned in pagination.");
+      console.error('No files returned in pagination.');
       return { labels_to_add, labels_to_remove };
     }
 
     // Set of changed filenames for quick lookup
     const changedFiles = new Set(allFiles.map((f) => f.filename));
 
-    for (const [label, { filepaths = new Set(), file_extensions = new Set(), add_only }] of Object.entries(
-      fileLabelFilepathSets
-    )) {
+    for (const [
+      label,
+      { filepaths = new Set(), file_extensions = new Set(), add_only },
+    ] of Object.entries(fileLabelFilepathSets)) {
       let found = false;
 
       // Filepath-based matching
@@ -163,7 +167,7 @@ async function check_diff_files_for_labels(github, context) {
       }
     }
   } catch (error) {
-    console.error("Error fetching paginated files:", error);
+    console.error('Error fetching paginated files:', error);
   }
 
   return { labels_to_add, labels_to_remove };
@@ -174,29 +178,31 @@ async function check_diff_files_for_labels(github, context) {
  */
 export async function get_updated_label_set({ github, context }) {
   const { pull_request } = context.payload;
-  const {
-    body = "",
-    diff_url,
-    labels = [],
-    mergeable,
-    title = "",
-  } = pull_request;
+  const { body = '', diff_url, mergeable, title = '' } = pull_request;
 
-  const updated_labels = new Set(labels.map((l) => l.name));
+  const updated_labels = new Set();
 
   // Always check file diffs
   if (diff_url) {
     const { labels_to_add, labels_to_remove } =
       await check_diff_files_for_labels(github, context);
-    labels_to_add.forEach((label) => updated_labels.add(label));
-    labels_to_remove.forEach((label) => updated_labels.delete(label));
+    labels_to_add.forEach((label) => {
+      updated_labels.add(label);
+    });
+    labels_to_remove.forEach((label) => {
+      updated_labels.delete(label);
+    });
   }
 
   // Always check body/title (otherwise we can lose the changelog labels)
   if (title)
-    check_title_for_labels(title).forEach((label) => updated_labels.add(label));
+    check_title_for_labels(title).forEach((label) => {
+      updated_labels.add(label);
+    });
   if (body)
-    check_body_for_labels(body).forEach((label) => updated_labels.add(label));
+    check_body_for_labels(body).forEach((label) => {
+      updated_labels.add(label);
+    });
 
   // Keep track of labels that were manually added/removed by maintainers in the events.
   // And make sure they -stay- added/removed.
@@ -208,26 +214,29 @@ export async function get_updated_label_set({ github, context }) {
         repo: context.repo.repo,
         issue_number: context.payload.pull_request.number,
         per_page: 100,
-      }
+      },
     );
 
     for (const eventData of events) {
       // Skip all bot actions
-      if (eventData.actor?.login === "github-actions[bot]") {
+      if (eventData.actor?.login === 'github-actions[bot]') {
         continue;
       }
-      if (eventData.event === "labeled") {
+      if (eventData.event === 'labeled') {
         updated_labels.add(eventData.label.name);
-      } else if (eventData.event === "unlabeled") {
+      } else if (eventData.event === 'unlabeled') {
         updated_labels.delete(eventData.label.name);
       }
     }
   } catch (error) {
-    console.error("Error fetching paginated events:", error);
+    console.error('Error fetching paginated events:', error);
+    for (const label of pull_request.labels) {
+      updated_labels.add(label.name);
+    }
   }
 
   // Always remove Test Merge Candidate
-  updated_labels.delete("Test Merge Candidate");
+  updated_labels.delete('Test Merge Candidate');
 
   // Handle merge conflict label
   let merge_conflict = mergeable === false;
@@ -243,7 +252,7 @@ export async function get_updated_label_set({ github, context }) {
       // failed to find? still processing? try again in a few seconds
 
       if (response.data.mergeable === null) {
-        console.log("Awaiting GitHub response for merge status...");
+        console.log('Awaiting GitHub response for merge status...');
         await new Promise((r) => setTimeout(r, 10000));
         response = await github.rest.pulls.get({
           owner: context.repo.owner,
@@ -251,7 +260,7 @@ export async function get_updated_label_set({ github, context }) {
           pull_number: pull_request.number,
         });
         if (response.data.mergeable === null) {
-          throw new Error("Merge status not available");
+          throw new Error('Merge status not available');
         }
       }
 
@@ -262,9 +271,9 @@ export async function get_updated_label_set({ github, context }) {
   }
 
   if (merge_conflict) {
-    updated_labels.add("Merge Conflict");
+    updated_labels.add('Merge Conflict');
   } else {
-    updated_labels.delete("Merge Conflict");
+    updated_labels.delete('Merge Conflict');
   }
 
   // return the labels to the action, which will apply it

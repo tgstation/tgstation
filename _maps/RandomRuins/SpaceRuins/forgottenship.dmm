@@ -205,21 +205,6 @@
 "bb" = (
 /turf/closed/wall/r_wall/plastitanium/syndicate,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"bd" = (
-/obj/structure/closet/crate/secure/gear{
-	req_access = list("syndicate")
-	},
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/iron/fifty,
-/obj/item/stack/sheet/plasteel/twenty,
-/obj/item/stack/sheet/mineral/plastitanium{
-	amount = 50
-	},
-/obj/item/stack/sheet/glass/fifty,
-/obj/item/stack/rods/fifty,
-/turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "be" = (
 /obj/structure/cable,
 /obj/machinery/door/airlock/external/ruin{
@@ -368,14 +353,6 @@
 /obj/item/assembly/prox_sensor,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"bA" = (
-/obj/structure/closet/crate/secure/gear{
-	req_access = list("syndicate")
-	},
-/obj/item/clothing/head/helmet/space/syndicate/black/engie,
-/obj/item/clothing/suit/space/syndicate/black/engie,
-/turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "bC" = (
 /obj/structure/closet/crate/medical,
 /obj/item/stack/medical/bruise_pack{
@@ -640,18 +617,6 @@
 	},
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"cz" = (
-/obj/structure/closet/crate/secure/gear{
-	req_access = list("syndicate")
-	},
-/obj/item/stack/sheet/mineral/titanium{
-	amount = 40
-	},
-/obj/item/stack/sheet/mineral/uranium{
-	amount = 15
-	},
-/turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "cA" = (
 /obj/structure/table/reinforced,
 /obj/machinery/atmospherics/components/unary/vent_pump,
@@ -850,16 +815,6 @@
 /obj/machinery/light/directional/south,
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"dd" = (
-/obj/structure/closet/crate/secure/gear{
-	req_access = list("syndicate")
-	},
-/obj/item/language_manual/codespeak_manual/unlimited,
-/turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
-"de" = (
-/turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "df" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
@@ -903,28 +858,9 @@
 	},
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
-"di" = (
-/obj/structure/closet/crate/secure/gear{
-	req_access = list("syndicate")
-	},
-/obj/item/disk/surgery/forgottenship,
-/turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dj" = (
 /turf/closed/mineral/random/high_chance,
 /area/space/nearstation)
-"dl" = (
-/obj/machinery/door/password/voice/sfc{
-	password = null
-	},
-/obj/structure/fans/tiny,
-/obj/machinery/door/airlock/grunge{
-	desc = "Vault airlock preventing air from going out.";
-	name = "Syndicate Vault Airlock"
-	},
-/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
-/turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dm" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -941,19 +877,6 @@
 /obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"do" = (
-/obj/structure/closet/crate/secure/gear{
-	req_access = list("syndicate")
-	},
-/obj/item/stack/sheet/mineral/gold{
-	amount = 30
-	},
-/obj/item/stack/sheet/mineral/silver{
-	amount = 30
-	},
-/obj/machinery/light/directional/south,
-/turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "dp" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -981,6 +904,9 @@
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
+"io" = (
+/turf/open/floor/mineral/plastitanium/pod/dark,
+/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "jN" = (
 /obj/structure/closet/crate/secure/gear{
 	req_access = list("syndicate")
@@ -992,6 +918,26 @@
 /obj/structure/closet/crate/solarpanel_small,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_cargopod)
+"ke" = (
+/obj/structure/closet/crate/secure/gear{
+	req_access = list("syndicate")
+	},
+/obj/item/clothing/head/helmet/space/syndicate/black/engie,
+/obj/item/clothing/suit/space/syndicate/black/engie,
+/turf/open/floor/mineral/plastitanium/pod/dark,
+/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
+"kB" = (
+/obj/structure/closet/crate/secure/gear{
+	req_access = list("syndicate")
+	},
+/obj/item/stack/sheet/mineral/titanium{
+	amount = 40
+	},
+/obj/item/stack/sheet/mineral/uranium{
+	amount = 15
+	},
+/turf/open/floor/mineral/plastitanium/pod/dark,
+/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "kY" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
@@ -1004,6 +950,18 @@
 /obj/effect/spawner/random/contraband/armory,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
+"la" = (
+/obj/machinery/door/password/voice/sfc{
+	password = null
+	},
+/obj/structure/fans/tiny,
+/obj/machinery/door/airlock/grunge{
+	desc = "Vault airlock preventing air from going out.";
+	name = "Syndicate Vault Airlock"
+	},
+/obj/effect/mapping_helpers/airlock/access/all/syndicate/general,
+/turf/open/floor/mineral/plastitanium/pod/dark,
+/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "lQ" = (
 /obj/machinery/ore_silo,
 /obj/machinery/light/directional/west,
@@ -1036,6 +994,28 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
+"pG" = (
+/obj/structure/closet/crate/secure/gear{
+	req_access = list("syndicate")
+	},
+/obj/item/disk/surgery/forgottenship,
+/turf/open/floor/mineral/plastitanium/pod/dark,
+/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
+"ql" = (
+/obj/structure/closet/crate/secure/gear{
+	req_access = list("syndicate")
+	},
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/iron/fifty,
+/obj/item/stack/sheet/plasteel/twenty,
+/obj/item/stack/sheet/mineral/plastitanium{
+	amount = 50
+	},
+/obj/item/stack/sheet/glass/fifty,
+/obj/item/stack/rods/fifty,
+/turf/open/floor/mineral/plastitanium/pod/dark,
+/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "qK" = (
 /obj/machinery/turretid{
 	control_area = "/area/ruin/space/has_grav/syndicate_forgotten_ship";
@@ -1053,6 +1033,19 @@
 /obj/effect/mapping_helpers/airalarm/syndicate_access,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
+"sz" = (
+/obj/structure/closet/crate/secure/gear{
+	req_access = list("syndicate")
+	},
+/obj/item/stack/sheet/mineral/gold{
+	amount = 30
+	},
+/obj/item/stack/sheet/mineral/silver{
+	amount = 30
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/mineral/plastitanium/pod/dark,
+/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "sL" = (
 /obj/effect/mob_spawn/ghost_role/human/syndicatespace/captain,
 /obj/machinery/light/directional/west,
@@ -1078,11 +1071,14 @@
 /obj/structure/cable,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"vR" = (
-/obj/item/ai_module/core/full/cybersun,
-/obj/structure/table/reinforced,
-/turf/open/floor/mineral/plastitanium/red,
-/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"xV" = (
+/obj/structure/closet/crate/secure/gear{
+	req_access = list("syndicate")
+	},
+/obj/item/melee/energy/sword/saber/red,
+/obj/machinery/light/directional/north,
+/turf/open/floor/mineral/plastitanium/pod/dark,
+/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "yf" = (
 /mob/living/basic/trooper/nanotrasen/ranged/assault,
 /turf/open/floor/mineral/plastitanium/red,
@@ -1134,14 +1130,6 @@
 /obj/effect/spawner/random/maintenance,
 /turf/open/floor/mineral/plastitanium,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
-"Il" = (
-/obj/structure/closet/crate/secure/gear{
-	req_access = list("syndicate")
-	},
-/obj/item/melee/energy/sword/saber/red,
-/obj/machinery/light/directional/north,
-/turf/open/floor/pod/dark,
-/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "IP" = (
 /obj/structure/cable,
 /obj/machinery/light/directional/west,
@@ -1154,6 +1142,13 @@
 /obj/machinery/light/directional/east,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
+"Jl" = (
+/obj/structure/closet/crate/secure/gear{
+	req_access = list("syndicate")
+	},
+/obj/item/language_manual/codespeak_manual/unlimited,
+/turf/open/floor/mineral/plastitanium/pod/dark,
+/area/ruin/space/has_grav/powered/syndicate_forgotten_vault)
 "Lj" = (
 /obj/structure/closet/syndicate{
 	anchored = 1;
@@ -1171,6 +1166,11 @@
 /obj/item/storage/box/firingpins/syndicate,
 /obj/item/storage/box/firingpins/syndicate,
 /obj/machinery/light/small/directional/north,
+/turf/open/floor/mineral/plastitanium/red,
+/area/ruin/space/has_grav/syndicate_forgotten_ship)
+"OS" = (
+/obj/item/ai_module/law/core/full/cybersun,
+/obj/structure/table/reinforced,
 /turf/open/floor/mineral/plastitanium/red,
 /area/ruin/space/has_grav/syndicate_forgotten_ship)
 "OW" = (
@@ -1980,8 +1980,8 @@ ba
 ba
 aZ
 aZ
-bA
-bA
+ke
+ke
 aZ
 aZ
 ba
@@ -2002,7 +2002,7 @@ aa
 aa
 aa
 bZ
-vR
+OS
 aw
 bZ
 aB
@@ -2026,10 +2026,10 @@ ba
 ba
 ba
 aZ
-bd
-de
-de
-cz
+ql
+io
+io
+kB
 aZ
 ba
 aY
@@ -2073,10 +2073,10 @@ ba
 bq
 ba
 aZ
-Il
-de
-de
-do
+xV
+io
+io
+sz
 aZ
 ba
 bq
@@ -2120,10 +2120,10 @@ aY
 ba
 ba
 aZ
-dd
-de
-de
-di
+Jl
+io
+io
+pG
 aZ
 ba
 ba
@@ -2168,7 +2168,7 @@ ba
 ba
 aZ
 aZ
-dl
+la
 aZ
 aZ
 aZ

@@ -123,7 +123,7 @@
 
 /obj/projectile/bullet/ballista_spear/dragonator/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/bane, mob_biotypes = MOB_MINING, damage_multiplier = 2)
+	AddComponent(/datum/component/bane, affected_biotypes = MOB_MINING, damage_multiplier = 3)
 
 /obj/projectile/bullet/ballista_spear/dragonator/attach_spear(obj/item/spear)
 	AddComponent(/datum/component/projectile_instance_drop, spear)

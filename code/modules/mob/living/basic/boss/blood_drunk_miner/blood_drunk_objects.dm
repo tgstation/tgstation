@@ -1,15 +1,10 @@
 /// A slightly nerfed saw as the normal one is much too murdery.
 /obj/item/melee/cleaving_saw/miner
-	force = 6
-	open_force = 10
-
-/obj/item/melee/cleaving_saw/miner/attack(mob/living/target, mob/living/carbon/human/user)
-	target.add_stun_absorption(source = "miner", duration = 1 SECONDS, priority = INFINITY)
-	return ..()
+	force = 8
+	open_force = 12
 
 /obj/projectile/kinetic/miner
-	damage = 20
-	speed = 1.1
+	damage = 18
 	icon_state = "ka_tracer"
 	range = 4
 

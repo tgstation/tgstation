@@ -351,8 +351,9 @@
 		return
 	while(length(chargeable_items) && recharges)
 		recharges--
-		var/obj/item/to_charge_base = pick_n_take(chargeable_items)
+		var/obj/item/to_charge_base = pick(chargeable_items)
 		var/obj/item/stock_parts/power_store/to_charge = chargeable_items[to_charge_base]
+		chargeable_items.Remove(to_charge_base)
 		to_charge.charge = to_charge.maxcharge
 		to_charge_base.update_appearance(UPDATE_ICON|UPDATE_OVERLAYS)
 		to_chat(user, span_notice("[to_charge_base] feels energized!"))
@@ -401,17 +402,15 @@
 	playsound(user, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	throw_smoke(user)
 
-	// carbons always get a hat at least
-	var/mob/living/carbon/carbonius = user
-	//hat
-	var/obj/item/clothing/head/costume/disguise_hat = roll_costume(ITEM_SLOT_HEAD, HIDEMASK)
-	carbonius.dropItemToGround(carbonius.head)
-	carbonius.equip_to_slot_or_del(disguise_hat, ITEM_SLOT_HEAD)
-	if(!ishuman(carbonius))
+	if(!ishuman(user))
 		to_chat(user, span_notice("You have a peculiar feeling for a moment, but then it passes."))
 		return
 
-	var/mob/living/carbon/human/humerus = carbonius
+	var/mob/living/carbon/human/humerus = user
+	//hat
+	var/obj/item/clothing/head/costume/disguise_hat = roll_costume(ITEM_SLOT_HEAD, HIDEMASK)
+	humerus.dropItemToGround(humerus.head)
+	humerus.equip_to_slot_or_del(disguise_hat, ITEM_SLOT_HEAD)
 	// uniform
 	var/obj/item/clothing/under/costume/disguise_uniform = roll_costume(ITEM_SLOT_ICLOTHING)
 	humerus.dropItemToGround(humerus.w_uniform)

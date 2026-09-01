@@ -50,9 +50,9 @@ map nebulastation
 	votable
 endmap
 
-map wawastation
+map kilostation
 	votable
-	minplayers 40
+	maxplayers 40
 endmap
 
 # Debug-only maps.
@@ -64,4 +64,7 @@ map multiz_debug
 endmap
 
 map runtimestation
+endmap
+
+map runtimestation_minimal
 endmap

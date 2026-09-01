@@ -18,11 +18,23 @@
 	. = ..()
 	//if permanent, replace any existing omen
 	if(incidents == INFINITY)
-		var/existing_component = target.GetComponent(/datum/component/omen)
-		qdel(existing_component)
-	target.AddComponent(/datum/component/omen/smite, incidents_left = incidents)
+		qdel(target.GetComponent(/datum/component/omen))
+	target.AddComponent( \
+		/datum/component/omen, \
+		incidents_left = incidents, \
+		on_death = CALLBACK(src, PROC_REF(on_death)), \
+		bless_fixable = incidents != INFINITY, \
+	)
 	if(silent)
 		return
 	to_chat(target, span_warning("You get a bad feeling..."))
 	if(incidents == INFINITY)
 		to_chat(target, span_warning("A <b>very</b> bad feeling... As if malevolent forces are watching you..."))
+
+/datum/smite/bad_luck/proc/on_death(datum/component/omen/omen)
+	if(omen.incidents_left == INFINITY)
+		return
+
+	var/mob/living/our_guy = omen.parent
+	omen.death_explode(our_guy)
+	our_guy.gib(DROP_ALL_REMAINS)

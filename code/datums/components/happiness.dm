@@ -70,7 +70,7 @@
 		return
 
 	var/mob/living/living_parent = parent
-	if (living_parent.stat != CONSCIOUS)
+	if (IS_UNCONSCIOUS_OR_CRIT(living_parent))
 		return NONE
 
 	COOLDOWN_START(src, groom_cooldown, GROOM_COOLDOWN)
@@ -83,7 +83,7 @@
 		return
 
 	var/mob/living/living_parent = parent
-	if (living_parent.stat != CONSCIOUS)
+	if (IS_UNCONSCIOUS_OR_CRIT(living_parent))
 		return
 
 	pet_animal()

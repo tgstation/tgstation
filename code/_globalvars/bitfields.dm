@@ -27,6 +27,20 @@ GLOBAL_LIST_INIT(bitfields, generate_bitfields())
 	var/name = pick(flags)
 	return flags[name]
 
+/// Returns null if no such field exists, a list of all matching flags by name otherwise
+/proc/get_matching_bitflags(var_name, value)
+	if(isnum(var_name))
+		return null
+	var/list/valid_bitflags = get_valid_bitflags(var_name)
+	if(!length(valid_bitflags))
+		return null
+
+	var/list/flags = list()
+	for (var/bit_name in valid_bitflags)
+		if (value & valid_bitflags[bit_name])
+			flags += bit_name
+	return flags
+
 DEFINE_BITFIELD(admin_flags, list(
 	"ADMIN" = R_ADMIN,
 	"AUTOLOGIN" = R_AUTOADMIN,
@@ -106,14 +120,9 @@ DEFINE_BITFIELD(car_traits, list(
 ))
 
 DEFINE_BITFIELD(clothing_flags, list(
-	"ANTI_TINFOIL_MANEUVER" = ANTI_TINFOIL_MANEUVER,
 	"BLOCK_GAS_SMOKE_EFFECT" = BLOCK_GAS_SMOKE_EFFECT,
 	"CARP_STYLE_FACTOR" = CARP_STYLE_FACTOR,
-	"CASTING_CLOTHES" = CASTING_CLOTHES,
-	"DANGEROUS_OBJECT" = DANGEROUS_OBJECT,
-	"GAS_FILTERING" = GAS_FILTERING,
 	"HEADINTERNALS" = HEADINTERNALS,
-	"INEDIBLE_CLOTHING" = INEDIBLE_CLOTHING,
 	"INTERNALS_ADJUST_EXEMPT" = INTERNALS_ADJUST_EXEMPT,
 	"LARGE_WORN_ICON" = LARGE_WORN_ICON,
 	"LAVAPROTECT" = LAVAPROTECT,
@@ -215,7 +224,6 @@ DEFINE_BITFIELD(interaction_flags_item, list(
 
 DEFINE_BITFIELD(item_flags, list(
 	"ABSTRACT" = ABSTRACT,
-	"BEING_REMOVED" = BEING_REMOVED,
 	"CRUEL_IMPLEMENT" = CRUEL_IMPLEMENT,
 	"DROPDEL" = DROPDEL,
 	"FORCE_STRING_OVERRIDE" = FORCE_STRING_OVERRIDE,
@@ -234,7 +242,6 @@ DEFINE_BITFIELD(item_flags, list(
 	"SLOWS_WHILE_IN_HAND" = SLOWS_WHILE_IN_HAND,
 	"SURGICAL_TOOL" = SURGICAL_TOOL,
 	"WEAPON_DESCRIPTION_INITIALIZED" = WEAPON_DESCRIPTION_INITIALIZED,
-	"XENOMORPH_HOLDABLE" = XENOMORPH_HOLDABLE,
 ))
 
 #define HIDEFLAGS_BITFIELD list( \
@@ -352,12 +359,6 @@ DEFINE_BITFIELD(mob_biotypes, list(
 
 DEFINE_BITFIELD(mob_flags, list(
 	"MOB_HAS_SCREENTIPS_NAME_OVERRIDE" = MOB_HAS_SCREENTIPS_NAME_OVERRIDE,
-))
-
-DEFINE_BITFIELD(mob_respiration_type, list(
-	"RESPIRATION_OXYGEN" = RESPIRATION_OXYGEN,
-	"RESPIRATION_N2" = RESPIRATION_N2,
-	"RESPIRATION_PLASMA" = RESPIRATION_PLASMA,
 ))
 
 DEFINE_BITFIELD(mobility_flags, list(
@@ -552,15 +553,16 @@ DEFINE_BITFIELD(bodypart_flags, list(
 ))
 
 DEFINE_BITFIELD(biological_state, list(
-	"BIO_INORGANIC" = BIO_INORGANIC,
-	"BIO_BONE" = BIO_BONE,
-	"BIO_FLESH" = BIO_FLESH,
-	"BIO_METAL" = BIO_METAL,
-	"BIO_WOOD" = BIO_WOOD,
-	"BIO_WIRED" = BIO_WIRED,
 	"BIO_BLOODED" = BIO_BLOODED,
-	"BIO_JOINTED" = BIO_JOINTED,
+	"BIO_BONE" = BIO_BONE,
 	"BIO_CHITIN" = BIO_CHITIN,
+	"BIO_FLESH" = BIO_FLESH,
+	"BIO_INORGANIC" = BIO_INORGANIC,
+	"BIO_JELLY" = BIO_JELLY,
+	"BIO_JOINTED" = BIO_JOINTED,
+	"BIO_METAL" = BIO_METAL,
+	"BIO_WIRED" = BIO_WIRED,
+	"BIO_WOOD" = BIO_WOOD,
 ))
 
 DEFINE_BITFIELD(change_exempt_flags, list(
@@ -615,12 +617,6 @@ DEFINE_BITFIELD(organ_flags, list(
 	"ORGAN_GHOST" = ORGAN_GHOST,
 	"ORGAN_MUTANT" = ORGAN_MUTANT,
 	"ORGAN_UNUSABLE" = ORGAN_UNUSABLE,
-))
-
-DEFINE_BITFIELD(respiration_type, list(
-	"RESPIRATION_OXYGEN" = RESPIRATION_OXYGEN,
-	"RESPIRATION_N2" = RESPIRATION_N2,
-	"RESPIRATION_PLASMA" = RESPIRATION_PLASMA,
 ))
 
 DEFINE_BITFIELD(liked_foodtypes, list(

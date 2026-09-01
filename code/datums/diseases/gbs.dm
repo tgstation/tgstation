@@ -34,3 +34,9 @@
 				affected_mob.investigate_log("has been gibbed by GBS.", INVESTIGATE_DEATHS)
 				affected_mob.gib(DROP_ALL_REMAINS)
 				return FALSE
+
+/datum/disease/gbs/no_transmission
+	name = "Non-Transmissible GBS"
+	spread_text = "Skin contact"
+	spread_flags = DISEASE_SPREAD_NON_CONTAGIOUS
+	spreading_modifier = 0

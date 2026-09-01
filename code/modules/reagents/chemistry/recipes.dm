@@ -45,7 +45,7 @@
 	/// How sharp the pH exponential curve is (to the power of value)
 	var/ph_exponent_factor = 2
 	/// How much the temperature changes per unit of chem used. without REACTION_HEAT_ARBITARY flag the rate of change depends on the holder heat capacity else results are more accurate
-	var/thermic_constant = 50
+	var/thermic_constant = 0
 	/// pH change per 1u reaction
 	var/H_ion_release = 0.01
 	/// Optimal/max rate possible if all conditions are perfect
@@ -61,7 +61,7 @@
 ///REACTION PROCS
 
 /**
- * Checks if this reaction can occur. Only is ran if required_other is set to TRUE.
+ * Checks if this reaction can occur.
  */
 /datum/chemical_reaction/proc/pre_reaction_other_checks(datum/reagents/holder)
 	return TRUE

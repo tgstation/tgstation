@@ -112,8 +112,11 @@
 /// Refreshes the visuals of the eyes
 /// If call_update is TRUE, we also will call update_body
 /obj/item/organ/eyes/proc/refresh(mob/living/carbon/eye_owner = owner, call_update = TRUE)
-	owner.update_sight()
-	owner.update_tint()
+	if(isnull(eye_owner))
+		return
+
+	eye_owner.update_sight()
+	eye_owner.update_tint()
 
 	if(!ishuman(eye_owner))
 		return
@@ -125,13 +128,11 @@
 		affected_human.add_eye_color_right(eye_color_right, EYE_COLOR_ORGAN_PRIORITY, update_body = FALSE)
 	refresh_atom_color_overrides()
 
-	if(HAS_TRAIT(affected_human, TRAIT_NIGHT_VISION) && !lighting_cutoff)
-		lighting_cutoff = LIGHTING_CUTOFF_REAL_LOW
 	if(CONFIG_GET(flag/native_fov) && native_fov)
 		affected_human.add_fov_trait(type, native_fov)
 
 	if(call_update)
-		affected_human.update_body()
+		affected_human.update_eyes()
 
 /obj/item/organ/eyes/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
@@ -144,7 +145,7 @@
 		if(native_fov)
 			organ_owner.remove_fov_trait(type)
 		if(!special)
-			human_owner.update_body()
+			human_owner.update_eyes(refresh = FALSE)
 
 	// become blind (if not special)
 	if(!special)
@@ -173,6 +174,20 @@
 		SIGNAL_REMOVETRAIT(TRAIT_REFLECTIVE_EYES),
 	))
 
+/obj/item/organ/eyes/on_bodypart_insert(obj/item/bodypart/limb)
+	. = ..()
+	if(ishuman(limb.owner))
+		limb.owner.update_eyes(refresh = FALSE)
+	else
+		limb.update_icon_dropped()
+
+/obj/item/organ/eyes/on_bodypart_remove(obj/item/bodypart/limb, movement_flags)
+	. = ..()
+	if(ishuman(limb.owner))
+		limb.owner.update_eyes(refresh = FALSE)
+	else
+		limb.update_icon_dropped()
+
 ///Called whenever the luminescent and/or reflective eyes traits are added or removed
 /obj/item/organ/eyes/proc/on_shiny_eyes_trait_update(mob/living/carbon/human/source)
 	SIGNAL_HANDLER
@@ -182,7 +197,7 @@
 	. = ..()
 	if (ishuman(owner))
 		refresh_atom_color_overrides()
-		owner.update_body()
+		owner.update_eyes()
 
 /// Adds eye color overrides to our owner from our atom color
 /obj/item/organ/eyes/proc/refresh_atom_color_overrides()
@@ -252,11 +267,12 @@
 #define OFFSET_Y 2
 
 /// Similar to get_status_text, but appends the text after the damage report, for additional status info
-/obj/item/organ/eyes/get_status_appendix(advanced, add_tooltips)
-	if(owner.stat == DEAD || HAS_TRAIT(owner, TRAIT_KNOCKEDOUT))
-		return
+/obj/item/organ/eyes/get_status_appendix(scanpower, add_tooltips)
+	if(owner.stat == DEAD || IS_UNCONSCIOUS(owner))
+		return // you're blind when dead or unconscious so it's redundant to show it
+
 	if(owner.is_blind())
-		if(advanced)
+		if(scanpower >= SCANPOWER_ADVANCED)
 			if(owner.is_blind_from(QUIRK_TRAIT))
 				return conditional_tooltip("Subject is permanently blind.", "Irreparable under normal circumstances.", add_tooltips)
 			if(owner.is_blind_from(EYE_SCARRING_TRAIT))
@@ -269,7 +285,7 @@
 				return conditional_tooltip("Subject is blind from eye damage.", "Repair surgically, use medication such as [/datum/reagent/medicine/oculine::name], or protect eyes with a blindfold.", add_tooltips)
 		return "Subject is blind."
 	if(owner.is_nearsighted())
-		if(advanced)
+		if(scanpower >= SCANPOWER_ADVANCED)
 			if(owner.is_nearsighted_from(QUIRK_TRAIT))
 				return conditional_tooltip("Subject is permanently nearsighted.", "Irreparable under normal circumstances. Prescription glasses will assuage the effects.", add_tooltips)
 			if(owner.is_nearsighted_from(TRAIT_RIGHT_EYE_SCAR) || owner.is_nearsighted_from(TRAIT_LEFT_EYE_SCAR))
@@ -283,49 +299,44 @@
 
 /obj/item/organ/eyes/show_on_condensed_scans()
 	// Always show if we have an appendix
-	return ..() || (owner.stat != DEAD && !HAS_TRAIT(owner, TRAIT_KNOCKEDOUT) && (owner.is_blind() || owner.is_nearsighted()))
+	return ..() || (owner.stat != DEAD && !IS_UNCONSCIOUS(owner) && (owner.is_blind() || owner.is_nearsighted()))
 
-/// This proc generates a list of overlays that the eye should be displayed using for the given parent
-/obj/item/organ/eyes/proc/generate_body_overlay(mob/living/carbon/human/parent, obj/item/bodypart/limb)
-	if(isnull(eye_icon_state))
+/// This proc generates a list of overlays that the eye displays on the given head
+/obj/item/organ/eyes/proc/generate_body_overlay(obj/item/bodypart/head/my_head)
+	if(!eye_icon_state || isnull(my_head))
 		return list()
 
-	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -EYES_LAYER, parent || limb)
-	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -EYES_LAYER, parent || limb)
+	var/eye_dir = my_head.owner ? null : SOUTH
+	var/mutable_appearance/eye_left = mutable_appearance(eye_icon, "[eye_icon_state]_l", -EYES_LAYER)
+	var/mutable_appearance/eye_right = mutable_appearance(eye_icon, "[eye_icon_state]_r", -EYES_LAYER)
+	eye_left.dir = eye_dir
+	eye_right.dir = eye_dir
+
 	var/list/overlays = list(eye_left, eye_right)
 
-	if(!(parent?.obscured_slots & HIDEEYES))
-		overlays += get_emissive_overlays(eye_left, eye_right, parent || limb)
+	if(my_head.owner && !(my_head.owner.obscured_slots & HIDEEYES))
+		overlays += get_emissive_overlays(eye_left, eye_right, my_head)
 
-	if(!limb)
-		return overlays
-
-	// Futureproofing for HARS/weird species
-	var/obj/item/bodypart/head/head = astype(limb, /obj/item/bodypart/head)
-	if(head?.head_flags & HEAD_EYECOLOR)
-		if (parent)
-			eye_right.color = parent.get_right_eye_color()
-			eye_left.color = parent.get_left_eye_color()
-			var/list/eyelids = setup_eyelids(eye_left, eye_right, parent)
-			if (LAZYLEN(eyelids))
-				overlays += eyelids
-		else
-			eye_right.color = eye_color_right
-			eye_left.color = eye_color_left
+	if((my_head.head_flags & HEAD_EYECOLOR) && my_head.is_husked != HUSKED_ZOMBIE)
+		eye_right.color = my_head.owner?.get_right_eye_color() || eye_color_right
+		eye_left.color = my_head.owner?.get_left_eye_color() || eye_color_left
+		var/list/eyelids = get_eyelid_overlays(eye_left, eye_right, my_head)
+		if (LAZYLEN(eyelids))
+			overlays += eyelids
 
 	if (scarring & RIGHT_EYE_SCAR)
-		var/mutable_appearance/right_scar = mutable_appearance('icons/mob/human/human_eyes.dmi', "eye_scar_right", -EYES_LAYER, parent || limb)
-		right_scar.color = limb.draw_color
+		var/mutable_appearance/right_scar = mutable_appearance('icons/mob/human/human_eyes.dmi', "eye_scar_right", -EYES_LAYER)
+		right_scar.color = my_head.draw_color
 		overlays += right_scar
 
 	if (scarring & LEFT_EYE_SCAR)
-		var/mutable_appearance/left_scar = mutable_appearance('icons/mob/human/human_eyes.dmi', "eye_scar_left", -EYES_LAYER, parent || limb)
-		left_scar.color = limb.draw_color
+		var/mutable_appearance/left_scar = mutable_appearance('icons/mob/human/human_eyes.dmi', "eye_scar_left", -EYES_LAYER)
+		left_scar.color = my_head.draw_color
 		overlays += left_scar
 
-	if(head?.worn_face_offset)
+	if(my_head.worn_face_offset)
 		for (var/mutable_appearance/overlay as anything in overlays)
-			head.worn_face_offset.apply_offset(overlay)
+			my_head.worn_face_offset.apply_offset(overlay)
 
 	return overlays
 
@@ -392,7 +403,7 @@
 		owner.assign_nearsightedness(TRAIT_LEFT_EYE_SCAR, 1, FALSE)
 	if((scarring & RIGHT_EYE_SCAR) && (scarring & LEFT_EYE_SCAR))
 		owner.become_blind(EYE_SCARRING_TRAIT)
-	owner.update_body()
+	owner.update_eyes()
 
 /obj/item/organ/eyes/proc/fix_scar(side)
 	if (!(scarring & side))
@@ -404,7 +415,7 @@
 		return
 	owner.cure_nearsighted(side == RIGHT_EYE_SCAR ? TRAIT_RIGHT_EYE_SCAR : TRAIT_LEFT_EYE_SCAR)
 	owner.cure_blind(EYE_SCARRING_TRAIT)
-	owner.update_body()
+	owner.update_eyes()
 
 #undef OFFSET_X
 #undef OFFSET_Y
@@ -414,6 +425,8 @@
 	. = ..()
 	eye_color_left = initial(eye_color_left)
 	eye_color_right = initial(eye_color_right)
+	fix_scar(LEFT_EYE_SCAR)
+	fix_scar(RIGHT_EYE_SCAR)
 
 /obj/item/organ/eyes/on_low_damage_received()
 	if(damage >= high_threshold)
@@ -448,10 +461,10 @@
 #define BLINK_LOOPS 5
 
 /// Modifies eye overlays to also act as eyelids, both for blinking and for when you're knocked out cold
-/obj/item/organ/eyes/proc/setup_eyelids(mutable_appearance/eye_left, mutable_appearance/eye_right, mob/living/carbon/human/parent)
-	var/obj/item/bodypart/head/my_head = parent.get_bodypart(BODY_ZONE_HEAD)
+/obj/item/organ/eyes/proc/get_eyelid_overlays(mutable_appearance/eye_left, mutable_appearance/eye_right, obj/item/bodypart/head/my_head)
+	var/mob/living/carbon/human/parent = my_head.owner
 	// Robotic eyes or colorless heads don't get the privelege of having eyelids
-	if (IS_ROBOTIC_ORGAN(src) || !my_head.draw_color || HAS_TRAIT(parent, TRAIT_NO_EYELIDS))
+	if (isnull(parent) || IS_ROBOTIC_ORGAN(src) || !my_head.draw_color || HAS_TRAIT(parent, TRAIT_NO_EYELIDS))
 		return
 
 	var/list/base_color = rgb2num(my_head.draw_color, COLORSPACE_HSL)
@@ -459,7 +472,7 @@
 	base_color[3] *= 0.85
 	var/eyelid_color = rgb(base_color[1], base_color[2], base_color[3], (length(base_color) >= 4 ? base_color[4] : null), COLORSPACE_HSL)
 	// If we're knocked out, just color the eyes
-	if (!parent.appears_alive() || HAS_TRAIT(parent, TRAIT_KNOCKEDOUT))
+	if (IS_DEAD_OR_FAKING(parent) || IS_UNCONSCIOUS(parent))
 		eye_right.color = eyelid_color
 		eye_left.color = eyelid_color
 		return
@@ -510,7 +523,9 @@
 		. += wait_time
 		if (anim_times && !sync_blinking)
 			// Make sure that we're somewhat in sync with the other eye
-			animate(time = anim_times[i + 1] - wait_time)
+			var/offset_time = anim_times[i + 1] - wait_time
+			if(offset_time) // For some reason having time == 0 in this case breaks animate
+				animate(time = offset_time)
 		animate(alpha = 255, time = 0)
 		animate(time = BLINK_DURATION)
 		if (i != cycles)
@@ -518,6 +533,8 @@
 			animate(time = wait_time)
 
 /obj/item/organ/eyes/proc/blink(duration = BLINK_DURATION, restart_animation = TRUE)
+	if(!blink_animation)
+		return
 	var/left_delayed = prob(50)
 	// Storing blink delay so mistimed blinks of lizards don't get cut short
 	var/sync_blinking = synchronized_blinking && (owner.get_organ_loss(ORGAN_SLOT_BRAIN) < BRAIN_DAMAGE_ASYNC_BLINKING)

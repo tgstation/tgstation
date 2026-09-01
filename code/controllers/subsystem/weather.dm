@@ -8,13 +8,24 @@ SUBSYSTEM_DEF(weather)
 	wait = 10
 	runlevels = RUNLEVEL_GAME
 	var/list/processing = list()
+	/// Z levels on which weather can occur -> weather that can occur -> probability of said weather occuring
 	var/list/eligible_zlevels = list()
-	var/list/next_hit_by_zlevel = list() //Used by barometers to know when the next storm is coming
+	/// Used by barometers to know when the next storm is coming
+	var/list/next_hit_by_zlevel = list()
+	/// Alist of particle holder to display in the form z_level -> alist(plane -> holder)
+	var/alist/z_particles = alist()
 
 /datum/controller/subsystem/weather/fire(resumed = FALSE)
 	// process active weather
 	for(var/datum/weather/weather_event as anything in processing)
-		if(!length(weather_event.subsystem_tasks) || weather_event.stage != MAIN_STAGE)
+		if(!length(weather_event.subsystem_tasks))
+			continue
+
+		if(istype(weather_event, /datum/weather/particle))
+			var/datum/weather/particle/particle_event = weather_event
+			particle_event.process_particles()
+
+		if(weather_event.stage != MAIN_STAGE)
 			continue
 
 		if(weather_event.subsystem_tasks[weather_event.task_index] == SSWEATHER_MOBS)
@@ -69,21 +80,49 @@ SUBSYSTEM_DEF(weather)
 		next_hit_by_zlevel["[z]"] = addtimer(CALLBACK(src, PROC_REF(make_eligible), z, possible_weather), randTime + initial(weather_event.weather_duration_upper), TIMER_UNIQUE|TIMER_STOPPABLE)
 
 /datum/controller/subsystem/weather/Initialize()
-	for(var/V in subtypesof(/datum/weather))
-		var/datum/weather/W = V
-		var/probability = initial(W.probability)
-		var/target_trait = initial(W.target_trait)
+	generate_holders(1, world.maxz)
+	for(var/datum/weather/weather as anything in valid_subtypesof(/datum/weather))
+		var/probability = initial(weather.probability)
+		var/target_trait = initial(weather.target_trait)
 
 		// any weather with a probability set may occur at random
 		if (probability)
 			for(var/z in SSmapping.levels_by_trait(target_trait))
 				LAZYINITLIST(eligible_zlevels["[z]"])
-				eligible_zlevels["[z]"][W] = probability
+				eligible_zlevels["[z]"][weather] = probability
 	return SS_INIT_SUCCESS
+
+/datum/controller/subsystem/weather/proc/generate_holders(z_min, z_max)
+	for(var/i in z_min to z_max)
+		z_particles[i] = alist()
+
+/datum/controller/subsystem/weather/proc/add_weather_objects(list/obj/effect/abstract/weather_holder/new_objects, z_level)
+	var/alist/holders_by_plane = z_particles[z_level]
+	if(isnull(holders_by_plane))
+		stack_trace("No particle holder slot found for z level [z_level]")
+		return
+
+	for(var/obj/effect/abstract/weather_holder/new_object as anything in new_objects)
+		var/obj/effect/abstract/weather_holder/z_level/holder = holders_by_plane[new_object.plane]
+		if(isnull(holder))
+			holder = new()
+			holder.plane = new_object.plane
+			holders_by_plane[new_object.plane] = new_object
+
+		holder.vis_contents += new_object
+
+/datum/controller/subsystem/weather/proc/remove_weather_objects(list/old_objects, z_level)
+	var/alist/holders_by_plane = z_particles[z_level]
+	if(isnull(holders_by_plane))
+		CRASH("No particle holder slot found for z level [z_level]")
+
+	for(var/plane in holders_by_plane)
+		var/obj/effect/abstract/weather_holder/z_level/holder = holders_by_plane[plane]
+		holder.vis_contents -= old_objects
 
 /datum/controller/subsystem/weather/proc/update_z_level(datum/space_level/level)
 	var/z = level.z_value
-	for(var/datum/weather/weather as anything in subtypesof(/datum/weather))
+	for(var/datum/weather/weather as anything in valid_subtypesof(/datum/weather))
 		var/probability = initial(weather.probability)
 		var/target_trait = initial(weather.target_trait)
 		if(probability && level.traits[target_trait])
@@ -92,10 +131,9 @@ SUBSYSTEM_DEF(weather)
 
 /datum/controller/subsystem/weather/proc/run_weather(datum/weather/weather_datum_type, z_levels, list/weather_data)
 	if (istext(weather_datum_type))
-		for (var/V in subtypesof(/datum/weather))
-			var/datum/weather/W = V
-			if (initial(W.name) == weather_datum_type)
-				weather_datum_type = V
+		for (var/datum/weather/weather as anything in valid_subtypesof(/datum/weather))
+			if (initial(weather.name) == weather_datum_type)
+				weather_datum_type = weather
 				break
 	if (!ispath(weather_datum_type, /datum/weather))
 		CRASH("run_weather called with invalid weather_datum_type: [weather_datum_type || "null"]")
@@ -107,10 +145,9 @@ SUBSYSTEM_DEF(weather)
 	else if (!islist(z_levels))
 		CRASH("run_weather called with invalid z_levels: [z_levels || "null"]")
 
-
-	var/datum/weather/W = new weather_datum_type(z_levels, weather_data)
-	W.telegraph(weather_data)
-	return W
+	var/datum/weather/weather = new weather_datum_type(z_levels, weather_data)
+	weather.telegraph(weather_data)
+	return weather
 
 /datum/controller/subsystem/weather/proc/make_eligible(z, possible_weather)
 	eligible_zlevels[z] = possible_weather

@@ -141,8 +141,8 @@
 		wander = TRUE
 
 ///This makes sure that the legion door opens on taking damage, so you can't cheese this boss.
-/mob/living/simple_animal/hostile/megafauna/legion/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	if(GLOB.necropolis_gate && true_spawn)
+/mob/living/simple_animal/hostile/megafauna/legion/on_damage_loss_changed(amount, updating_health, forced)
+	if(GLOB.necropolis_gate && true_spawn && amount > 0)
 		GLOB.necropolis_gate.toggle_the_gate(null, TRUE) //very clever.
 	return ..()
 
@@ -153,10 +153,9 @@
 	if(!. || !ishuman(target))
 		return
 	var/mob/living/living_target = target
-	switch(living_target.stat)
-		if(UNCONSCIOUS, HARD_CRIT)
-			var/mob/living/basic/mining/legion_brood/legion = new(loc)
-			legion.infest(living_target)
+	if(IS_UNCONSCIOUS_AND_ALIVE(living_target))
+		var/mob/living/basic/mining/legion_brood/legion = new(loc)
+		legion.infest(living_target)
 
 ///Special snowflake death() here. Can only die if size is 1 or lower and HP is 0 or below.
 /mob/living/simple_animal/hostile/megafauna/legion/death()

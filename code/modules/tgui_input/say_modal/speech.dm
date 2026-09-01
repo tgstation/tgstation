@@ -12,7 +12,7 @@
 	var/list/phrases = alter_phrases || hurt_phrases
 
 	/// No OOC leaks
-	if(!entry || payload["channel"] == OOC_CHANNEL || payload["channel"] == ME_CHANNEL)
+	if(!entry || payload["channel"] == OOC_CHANNEL || payload["channel"] == ME_CHANNEL || payload["channel"] == PRAY_CHANNEL)
 		return pick(phrases)
 	/// Random trimming for larger sentences
 	if(length(entry) > 50)
@@ -50,6 +50,9 @@
 		if(ADMIN_CHANNEL)
 			INVOKE_ASYNC(SSadmin_verbs, TYPE_PROC_REF(/datum/controller/subsystem/admin_verbs, dynamic_invoke_verb), client, /datum/admin_verb/cmd_admin_say, entry)
 			return TRUE
+		if(PRAY_CHANNEL)
+			client.mob.pray(entry)
+			return TRUE
 	return FALSE
 
 /**
@@ -84,18 +87,19 @@
 /**
  * Makes the player force say what's in their current input box.
  * Arguments:
- * 	alter_phrases - Optional list of alternate suffixes to blurt out
- * 	immediate - If [TRUE], the say must be invoked inline due to side effects that may cause the mob to be unable to speak
+ * * alter_phrases - Optional list of alternate suffixes to blurt out
+ * * immediate - If [TRUE], the say must be invoked inline due to side effects that may cause the mob to be unable to speak
+ * * major - If [TRUE], a "major action" triggered the force say, which may have additional side effects
  */
-/mob/living/carbon/human/proc/force_say(list/alter_phrases = null, immediate = FALSE)
-	if(stat != CONSCIOUS || !client?.tgui_say?.window_open)
+/mob/living/carbon/human/proc/force_say(list/alter_phrases = null, immediate = FALSE, major = TRUE)
+	if(IS_UNCONSCIOUS_OR_CRIT(src) || !client?.tgui_say?.window_open)
 		return FALSE
 	client.tgui_say.force_say(alter_phrases, immediate)
 	if(client.typing_indicators)
 		log_speech_indicators("[key_name(client)] FORCED to stop typing, indicators enabled.")
 	else
 		log_speech_indicators("[key_name(client)] FORCED to stop typing, indicators DISABLED.")
-	SEND_SIGNAL(src, COMSIG_HUMAN_FORCESAY)
+	SEND_SIGNAL(src, COMSIG_HUMAN_FORCESAY, major)
 
 /**
  * Gets whatever text is currently in this mob's say box and returns it.
@@ -120,7 +124,7 @@
  *  boolean - success or failure
  */
 /datum/tgui_say/proc/handle_entry(type, payload)
-	if(!payload?["channel"] || !payload["entry"])
+	if(!payload?["channel"] || isnull(payload["entry"]))
 		CRASH("[usr] entered in a null payload to the chat window.")
 	if(length(payload["entry"]) > max_length)
 		CRASH("[usr] has entered more characters than allowed into a TGUI-Say")
@@ -129,7 +133,7 @@
 		return TRUE
 	if(type == "force")
 		var/target_channel = payload["channel"]
-		if(target_channel == ME_CHANNEL || target_channel == OOC_CHANNEL)
+		if(target_channel == ME_CHANNEL || target_channel == OOC_CHANNEL || target_channel == PRAY_CHANNEL)
 			target_channel = SAY_CHANNEL // No ooc leaks
 		delegate_speech(alter_entry(payload), target_channel)
 		return TRUE

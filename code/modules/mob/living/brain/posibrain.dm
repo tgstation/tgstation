@@ -9,6 +9,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	w_class = WEIGHT_CLASS_NORMAL
 	req_access = list(ACCESS_ROBOTICS)
 	braintype = "Android"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.85, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.67, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT)
 
 	///Message sent to the user when polling ghosts
 	var/begin_activation_message = span_notice("You carefully locate the manual activation switch and start the positronic brain's boot process.")
@@ -133,7 +134,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 			brainmob.stored_dna = new /datum/dna/stored(brainmob)
 		transferred_user.dna.copy_dna(brainmob.stored_dna)
 	brainmob.timeofdeath = transferred_user.timeofdeath
-	brainmob.set_stat(CONSCIOUS)
+	brainmob.set_stat(STABLE)
 	if(brainmob.mind)
 		brainmob.mind.set_assigned_role(SSjob.get_job_type(posibrain_job_path))
 	if(transferred_user.mind)
@@ -159,7 +160,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	if(policy)
 		to_chat(brainmob, policy)
 	brainmob.mind.set_assigned_role(SSjob.get_job_type(posibrain_job_path))
-	brainmob.set_stat(CONSCIOUS)
+	brainmob.set_stat(STABLE)
 	brainmob.grant_language(/datum/language/machine, source = LANGUAGE_ATOM)
 
 	visible_message(new_mob_message)
@@ -172,7 +173,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	. = ..()
 	if(brainmob?.key)
 		switch(brainmob.stat)
-			if(CONSCIOUS)
+			if(STABLE)
 				if(!brainmob.client)
 					. += "It appears to be in stand-by mode." //afk
 			if(DEAD)
@@ -209,7 +210,10 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	icon_state = "[base_icon_state]"
 	return
 
-/obj/item/mmi/posibrain/attackby(obj/item/O, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/mmi/posibrain/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	return ITEM_INTERACT_BLOCKING
+
+/obj/item/mmi/posibrain/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	return
 
 /obj/item/mmi/posibrain/add_mmi_overlay()
@@ -230,6 +234,7 @@ GLOBAL_VAR(posibrain_notify_cooldown)
 	icon_state = "spheribrain"
 	base_icon_state = "spheribrain"
 	immobilize = FALSE
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 4.2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3.2, /datum/material/gold = SMALL_MATERIAL_AMOUNT * 2.5)
 	/// Delay between movements
 	var/move_delay = 0.5 SECONDS
 	/// when can we move again?

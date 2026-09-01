@@ -62,6 +62,7 @@
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = RAT_COLORS
 	beat_noise = "a fast-paced high-pitched pit-pat"
+	organ_traits = list(TRAIT_DWARF)
 
 /obj/item/organ/heart/rat/Initialize(mapload)
 	. = ..()
@@ -71,21 +72,11 @@
 
 /obj/item/organ/heart/rat/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()
-	if(!ishuman(receiver))
-		return
-	var/mob/living/carbon/human/human_receiver = receiver
-	if(human_receiver.can_mutate())
-		human_receiver.dna.add_mutation(/datum/mutation/dwarfism, MUTATION_SOURCE_RAT_HEART)
-	//but 1.5 damage
-	human_receiver.physiology?.damage_resistance -= 50
+	receiver.damage_resistance -= 50 //but 1.5 damage
 
 /obj/item/organ/heart/rat/on_mob_remove(mob/living/carbon/heartless, special, movement_flags)
 	. = ..()
-	if(!ishuman(heartless))
-		return
-	var/mob/living/carbon/human/human_heartless = heartless
-	human_heartless.dna.remove_mutation(/datum/mutation/dwarfism, MUTATION_SOURCE_RAT_HEART)
-	human_heartless.physiology?.damage_resistance += 50
+	heartless.damage_resistance += 50 //revert damage resistance
 
 /// you occasionally squeak, and have some rat related verbal tics
 /obj/item/organ/tongue/rat

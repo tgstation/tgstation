@@ -1,6 +1,7 @@
 /obj/machinery/computer/station_alert
 	name = "station alert console"
 	desc = "Used to access the station's automated alert system."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/atmos_alert")
 	icon_screen = "alert:0"
 	icon_keyboard = "atmos_key"
 	circuit = /obj/item/circuitboard/computer/station_alert

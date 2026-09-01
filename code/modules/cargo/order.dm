@@ -109,7 +109,7 @@
 	var/requisition_text = "<h2>[station_name()] Supply Requisition</h2>"
 	requisition_text += "<hr/>"
 	requisition_text += "Order #[id]<br/>"
-	requisition_text+= "Time of Order: [station_time_timestamp()]<br/>"
+	requisition_text += "Time of Order: [UNDERLINED_HTML_TEXT("[server_timestamp(ic_time = TRUE)]", "Shift Time: [round_timestamp()]")]<br/>"
 	requisition_text += "Item: [pack.name]<br/>"
 	requisition_text += "Access Restrictions: [SSid_access.get_access_desc(pack.access)]<br/>"
 	requisition_text += "Requested by: [orderer]<br/>"
@@ -118,7 +118,7 @@
 	requisition_text += "Rank: [orderer_rank]<br/>"
 	requisition_text += "Comment: [reason]<br/>"
 
-	requisition_paper.add_raw_text(requisition_text)
+	requisition_paper.add_raw_text(requisition_text, advanced_html = TRUE)
 	requisition_paper.update_appearance()
 	return requisition_paper
 
@@ -220,6 +220,11 @@
 /// Custom material order to append cargo crate value to the final order cost
 /datum/supply_order/disposable/materials/get_final_cost()
 	return (..() + CARGO_CRATE_VALUE)
+
+/// Custom material order to append cargo crate value to the final manifest cost
+/datum/supply_order/disposable/materials/generateManifest(obj/container, owner, packname, cost)
+	cost += CARGO_CRATE_VALUE
+	return ..()
 
 #undef MANIFEST_ERROR_CHANCE
 #undef MANIFEST_ERROR_NAME

@@ -418,7 +418,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	. = ..()
 	AddElement(/datum/element/cuffable_item)
 
-/obj/item/chair/suicide_act(mob/living/carbon/user)
+/obj/item/chair/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins hitting [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	playsound(src,hitsound,50,TRUE)
 	return BRUTELOSS
@@ -623,8 +623,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 	fishing_modifier = -21 //it only lives for 25 seconds, so we make them worth it.
 	custom_materials = null
 
-/obj/structure/chair/mime/wrench_act_secondary(mob/living/user, obj/item/weapon)
-	return NONE
+/obj/structure/chair/mime/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/tool_blocker, TOOL_WRENCH, TOOL_ACT_SECONDARY)
 
 /obj/structure/chair/mime/post_buckle_mob(mob/living/M)
 	M.add_offsets(type, z_add = 5)
@@ -656,7 +657,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/chair/stool/bar, 0)
 /obj/structure/chair/plastic/proc/snap_check(mob/living/carbon/Mob)
 	if (Mob.nutrition >= NUTRITION_LEVEL_FAT)
 		to_chat(Mob, span_warning("The chair begins to pop and crack, you're too heavy!"))
-		if(do_after(Mob, 6 SECONDS, progress = FALSE))
+		if(do_after(Mob, 6 SECONDS, show_progress = FALSE))
 			Mob.visible_message(span_notice("The plastic chair snaps under [Mob]'s weight!"))
 			new /obj/effect/decal/cleanable/plastic(loc)
 			qdel(src)

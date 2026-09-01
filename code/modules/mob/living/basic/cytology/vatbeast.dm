@@ -12,7 +12,7 @@
 	speak_emote = list("roars")
 	health = 250
 	maxHealth = 250
-	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 1, STAMINA = 1, OXY = 1)
+	physiology = list(BRUTE = 0.7, BURN = 0.7)
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	melee_attack_cooldown = CLICK_CD_MELEE
@@ -47,7 +47,7 @@
 	var/datum/action/cooldown/tentacle_slap/slapper = new (src)
 	slapper.Grant(src)
 
-	ai_controller.set_blackboard_key(BB_TARGETED_ACTION, slapper)
+	ai_controller.set_blackboard_key(BB_GENERIC_ACTION, slapper)
 	ai_controller.set_blackboard_key(BB_BASIC_FOODS, typecacheof(enjoyed_food))
 
 /mob/living/basic/vatbeast/tamed(mob/living/tamer, obj/item/food)
@@ -60,38 +60,16 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_VATBEAST, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/basic/vatbeast/get_bloodtype()
-	return get_blood_type(BLOOD_TYPE_LIZARD) // Green and alien
+	return get_blood_type(/datum/blood_type/lizard) // Green and alien
 
 /// Attack people and slap them
 /datum/ai_controller/basic_controller/vatbeast
+	behavior_tree_json = "code/modules/mob/living/basic/cytology/vatbeast.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/find_food,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/targeted_mob_ability/vatbeast_slap,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree
-	)
-
-/// Only do this if we are adjacent to target and have been mad at the same guy for at least 10 seconds
-/// That slap REALLY hurts
-/datum/ai_planning_subtree/targeted_mob_ability/vatbeast_slap
-	operational_datums = list(/datum/component/ai_target_timer)
-
-/datum/ai_planning_subtree/targeted_mob_ability/vatbeast_slap/SelectBehaviors(datum/ai_controller/controller, seconds_per_tick)
-	var/mob/living/target = controller.blackboard[target_key]
-	if (!isliving(target) || !controller.pawn.Adjacent(target))
-		return
-	var/time_on_target = controller.blackboard[BB_BASIC_MOB_HAS_TARGET_TIME] || 0
-	if (time_on_target < 10 SECONDS)
-		return
-	return ..()
 
 /// Ability that allows the owner to slap other mobs a short distance away.
 /// For vatbeats, this ability is shared with the rider.

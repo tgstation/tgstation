@@ -157,3 +157,9 @@
 	template_id = "holodeck_refuelingstation"
 	mappath = "_maps/templates/holodeck_refuelingstation.dmm"
 	restricted = TRUE
+
+/datum/map_template/holodeck/prison
+	name = "Holodeck - Prison Block"
+	template_id = "holodeck_prison"
+	mappath = "_maps/templates/holodeck_prison.dmm"
+	restricted = TRUE

@@ -43,7 +43,7 @@
 	)
 
 /mob/living/carbon/alien/Initialize(mapload)
-	add_verb(src, /mob/living/proc/mob_sleep)
+	ASSIGN_GAME_VERB(src, /mob/living, mob_sleep)
 	add_verb(src, /mob/living/proc/toggle_resting)
 
 	create_bodyparts() //initialize bodyparts
@@ -92,7 +92,7 @@
 				apply_damage(HEAT_DAMAGE_LEVEL_2 * seconds_per_tick, BURN)
 
 /mob/living/carbon/alien/get_bloodtype()
-	return get_blood_type(BLOOD_TYPE_XENO)
+	return get_blood_type(/datum/blood_type/xeno)
 
 /*----------------------------------------
 Proc: AddInfectionImages()

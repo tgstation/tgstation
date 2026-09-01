@@ -264,10 +264,10 @@
 
 	var/obj/item/disk/top = stacked_disks[length(stacked_disks)]
 	user.put_in_hands(top)
-	balloon_alert(user, "removed top disk")
 
 	if(length(stacked_disks) > 1)
 		update_appearance(UPDATE_OVERLAYS)
+		balloon_alert(user, "removed top disk")
 		return TRUE
 
 	var/obj/item/disk/last_disk = stacked_disks[1]
@@ -281,6 +281,7 @@
 		last_disk.pixel_x = pixel_x
 		last_disk.pixel_y = pixel_y
 
+	last_disk.balloon_alert(user, "removed top disk")
 	qdel(src)
 	return TRUE
 
@@ -357,6 +358,21 @@
 /obj/item/delivery/small/floppy/Initialize(mapload)
 	. = ..()
 	new /obj/item/disk/data(src)
+
+/obj/item/disk/manipulator
+	name = "manipulator task disk"
+	desc = "A floppy disk containing manipulator tasks."
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
+	var/list/tasks_data = list()
+
+/obj/item/disk/manipulator/proc/set_tasks(list/new_tasks_data)
+	if(read_only)
+		return FALSE
+	tasks_data = islist(new_tasks_data) ? new_tasks_data : list()
+	return TRUE
+
+/obj/item/disk/manipulator/proc/get_tasks()
+	return tasks_data?.Copy() || list()
 
 #undef STARTING_STICKER
 #undef MAX_DISK_STACK_SIZE

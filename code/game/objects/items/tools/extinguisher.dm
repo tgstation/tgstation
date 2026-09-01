@@ -16,7 +16,7 @@
 	throw_range = 7
 	force = 13
 	demolition_mod = 1.25
-	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.9)
+	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	attack_verb_continuous = list("slams", "whacks", "bashes", "thunks", "batters", "bludgeons", "thrashes")
 	attack_verb_simple = list("slam", "whack", "bash", "thunk", "batter", "bludgeon", "thrash")
 	dog_fashion = /datum/dog_fashion/back
@@ -168,6 +168,7 @@
 	dog_fashion = null
 	cooling_power = 1.5
 	power = 3
+	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 
 /obj/item/extinguisher/crafted/attack_self(mob/user)
 	safety = !safety
@@ -207,11 +208,12 @@
 	)
 	sprite_name = "foam_extinguisher"
 	precision = TRUE
+	custom_materials = list(/datum/material/titanium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/extinguisher/advanced/empty
 	starting_water = FALSE
 
-/obj/item/extinguisher/suicide_act(mob/living/carbon/user)
+/obj/item/extinguisher/suicide_act(mob/living/user)
 	if (!safety && (reagents.total_volume >= 1))
 		user.visible_message(span_suicide("[user] puts the nozzle to [user.p_their()] mouth. It looks like [user.p_theyre()] trying to extinguish the spark of life!"))
 		interact_with_atom(user, user)

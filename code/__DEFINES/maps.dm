@@ -135,7 +135,7 @@ Always compile, always use that verb, and always make sure that it works for wha
 ///Z level traits for Deep Space
 #define ZTRAITS_SPACE list(ZTRAIT_LINKAGE = CROSSLINKED, ZTRAIT_SPACE_RUINS = TRUE)
 ///Z level traits for
-#define ZTRAITS_WILDS list(\
+#define ZTRAITS_ICY_WILDS list(\
 	ZTRAIT_LINKAGE = GRIDLINKED, \
 	ZTRAIT_ICE_RUINS = TRUE, \
 	ZTRAIT_SNOWSTORM = FALSE, \
@@ -246,10 +246,8 @@ Always compile, always use that verb, and always make sure that it works for wha
 #define AWAYSTART_BEACH "AWAYSTART_BEACH"
 #define AWAYSTART_MUSEUM "AWAYSTART_MUSEUM"
 #define AWAYSTART_RESEARCH "AWAYSTART_RESEARCH"
-#define AWAYSTART_CAVES "AWAYSTART_CAVES"
 #define AWAYSTART_MOONOUTPOST "AWAYSTART_MOONOUTPOST"
 #define AWAYSTART_SNOWCABIN "AWAYSTART_SNOWCABIN"
-#define AWAYSTART_SNOWDIN "AWAYSTART_SNOWDIN"
 #define AWAYSTART_UNDERGROUND "AWAYSTART_UNDERGROUND"
 #define AWAYSTART_HERETIC "AWAYSTART_HERETIC"
 

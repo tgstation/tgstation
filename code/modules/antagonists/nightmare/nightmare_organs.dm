@@ -9,6 +9,7 @@
 	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "brain-x-d"
 	shade_color = "black, somehow"
+	variant_traits_added = list(TRAIT_NIGHTMARISH)
 
 	///Our associated shadow jaunt spell, for all nightmares
 	var/datum/action/cooldown/spell/jaunt/shadow_walk/our_jaunt
@@ -40,9 +41,7 @@
 	var/turf/owner_turf = owner.loc
 	if(!isturf(owner_turf))
 		return
-	var/light_amount = owner_turf.get_lumcount()
-
-	if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //dodge in the dark
+	if (owner_turf.check_lumcount_below(SHADOW_SPECIES_LIGHT_THRESHOLD)) //dodge in the dark
 		owner.apply_status_effect(/datum/status_effect/shadow/nightmare)
 
 /datum/status_effect/shadow/nightmare
@@ -93,6 +92,10 @@
 	/// The armblade granted to the host of this heart.
 	var/obj/item/light_eater/blade
 
+/obj/item/organ/heart/nightmare/Destroy()
+	QDEL_NULL(blade)
+	return ..()
+
 /obj/item/organ/heart/nightmare/attack(mob/M, mob/living/carbon/user, obj/target)
 	if(M != user)
 		return ..()
@@ -111,9 +114,11 @@
 
 /obj/item/organ/heart/nightmare/on_mob_insert(mob/living/carbon/heart_owner, special, movement_flags)
 	. = ..()
-	if(special != HEART_SPECIAL_SHADOWIFY)
-		blade = new/obj/item/light_eater
-		heart_owner.put_in_hands(blade)
+	if(special == HEART_SPECIAL_SHADOWIFY)
+		return
+	blade = new /obj/item/light_eater
+	heart_owner.put_in_hands(blade)
+	RegisterSignal(blade, COMSIG_QDELETING, PROC_REF(on_blade_deleted))
 
 /obj/item/organ/heart/nightmare/on_mob_remove(mob/living/carbon/heart_owner, special, movement_flags)
 	. = ..()
@@ -125,15 +130,21 @@
 /obj/item/organ/heart/nightmare/Stop()
 	return FALSE
 
+// Happens if the blade was deleted before we were during mob destruction
+/obj/item/organ/heart/nightmare/proc/on_blade_deleted(datum/source)
+	SIGNAL_HANDLER
+	blade = null
+
 /obj/item/organ/heart/nightmare/on_death(seconds_per_tick)
 	if(!owner)
 		return
-	var/turf/T = get_turf(owner)
-	if(istype(T))
-		var/light_amount = T.get_lumcount()
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
+
+	var/turf/owner_turf = get_turf(owner)
+	if(istype(owner_turf))
+		if(owner_turf.check_lumcount_below(SHADOW_SPECIES_LIGHT_THRESHOLD))
 			respawn_progress += seconds_per_tick SECONDS
 			playsound(owner, 'sound/effects/singlebeat.ogg', 40, TRUE)
+
 	if(respawn_progress < HEART_RESPAWN_THRESHHOLD)
 		return
 
@@ -150,7 +161,7 @@
 	respawn_progress = 0
 
 /obj/item/organ/heart/nightmare/get_availability(datum/species/owner_species, mob/living/owner_mob)
-	if(isnightmare(owner_mob))
+	if(HAS_TRAIT(owner_mob, TRAIT_NIGHTMARISH))
 		return TRUE
 	return ..()
 

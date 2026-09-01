@@ -1,5 +1,6 @@
 import type { BooleanLike } from 'tgui-core/react';
 import type { ExperimentData } from '../ExperimentConfigure';
+import type { MaterialMap } from '../Fabrication/Types';
 
 type StoredDesigns = Record<string, 1>;
 
@@ -13,13 +14,14 @@ type TechDisk = {
 
 // Base node type
 export type NodeCache = {
-  description: string;
-  design_ids: string[];
-  discount_experiments: Record<string, number>;
   name: string;
-  prereq_ids: string[];
+  description: string;
+  prerequisite_nodes?: string[];
+  unlocked_designs?: string[];
+  unlocked_nodes?: string[];
   required_experiments?: string[];
-  unlock_ids: string[];
+  discount_experiments?: Record<string, number>;
+  discount_boosts?: Record<string, number>;
 };
 
 // The unmapped nodes from Byond
@@ -32,16 +34,20 @@ export type TechwebNode = {
   can_unlock: BooleanLike;
   enqueued_by_user: BooleanLike;
   have_experiments_done: BooleanLike;
-  id: string;
+  discount_boosted: BooleanLike;
+  path: string;
   is_free: BooleanLike;
   tier: number;
 };
 
 // Unmapped static data
 type StaticData = {
-  design_cache: Record<string, [string, string]>;
+  design_cache: Record<string, [string, MaterialMap, number, number, string]>;
   id_cache: string[];
   node_cache: Record<string, DefaultNode>;
+  build_types: Record<string, string>;
+  department_flags: Record<string, string>;
+  SHEET_MATERIAL_AMOUNT: number;
 };
 
 export type TechWebData = {

@@ -34,6 +34,7 @@
 		force_wielded = 10, \
 	)
 	AddElement(/datum/element/disarm_attack)
+	RegisterSignal(src, COMSIG_ITEM_CAN_DISARM_ATTACK, PROC_REF(can_disarm_attack))
 
 	var/static/list/slapcraft_recipe_list = list(\
 		/datum/crafting_recipe/pillow_suit, /datum/crafting_recipe/pillow_hood,\
@@ -48,6 +49,14 @@
 	. = ..()
 	QDEL_NULL(pillow_trophy)
 
+/obj/item/pillow/proc/can_smother(mob/living/victim, mob/living/user)
+	return (victim.body_position == LYING_DOWN || (user.grab_state >= GRAB_AGGRESSIVE && user.pulling == victim))
+
+/obj/item/pillow/proc/can_disarm_attack(datum/source, mob/living/victim, mob/living/user, message)
+	SIGNAL_HANDLER
+	if(can_smother(victim, user))
+		return COMPONENT_BLOCK_ITEM_DISARM_ATTACK
+
 /obj/item/pillow/attack(mob/living/carbon/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!iscarbon(target_mob))
@@ -60,7 +69,7 @@
 	last_fighter = user
 	playsound(user, hit_sound, 80) //the basic 50 vol is barely audible
 
-/obj/item/pillow/attack_secondary(mob/living/carbon/victim, mob/living/user, params)
+/obj/item/pillow/attack_secondary(mob/living/carbon/victim, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
 	if(!istype(victim))
 		return
@@ -68,34 +77,37 @@
 		return
 	if(HAS_TRAIT(user, TRAIT_PACIFISM))
 		to_chat(user, span_notice("You can't bring yourself to harm [victim]"))
-		return
-	if((victim.body_position == LYING_DOWN) || ((user.grab_state >= GRAB_AGGRESSIVE) && (user.pulling == victim)))
-		user.visible_message("[user] starts to smother [victim]", span_notice("You begin smothering [victim]"), vision_distance = COMBAT_MESSAGE_RANGE)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(can_smother(victim, user))
+		user.visible_message("[user] starts to smother [victim]!", span_notice("You begin smothering [victim]!"), vision_distance = COMBAT_MESSAGE_RANGE)
 		INVOKE_ASYNC(src, PROC_REF(smothering), user, victim)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
 
-/obj/item/pillow/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(!bricked && istype(attacking_item, /obj/item/stack/sheet/mineral/sandstone))
-		var/obj/item/stack/sheet/mineral/sandstone/brick = attacking_item
+/obj/item/pillow/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!bricked && istype(tool, /obj/item/stack/sheet/mineral/sandstone))
+		var/obj/item/stack/sheet/mineral/sandstone/brick = tool
 		balloon_alert(user, "inserting brick...")
 		if(!do_after(user, 2 SECONDS, src))
-			return
+			return ITEM_INTERACT_BLOCKING
 		if(!brick.use(1))
 			balloon_alert(user, "not enough bricks!")
-			return
+			return ITEM_INTERACT_BLOCKING
 		balloon_alert(user, "bricked!")
 		become_bricked()
-		return
-	if(istype(attacking_item, /obj/item/clothing/neck/pillow_tag))
-		if(!pillow_trophy)
-			user.transferItemToLoc(attacking_item, src)
-			pillow_trophy = attacking_item
-			balloon_alert(user, "honor reclaimed!")
-			update_appearance()
-			return
-		else
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/clothing/neck/pillow_tag))
+		if(pillow_trophy)
 			balloon_alert(user, "tag is intact.")
-			return
-	return ..()
+			return ITEM_INTERACT_BLOCKING
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		pillow_trophy = tool
+		balloon_alert(user, "honor reclaimed!")
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/pillow/examine(mob/user)
 	. = ..()
@@ -145,7 +157,7 @@
 /// Smothers the victim while the do_after succeeds and the victim is laying down or being strangled
 /obj/item/pillow/proc/smothering(mob/living/carbon/user, mob/living/carbon/victim)
 	while(victim)
-		if((victim.body_position != LYING_DOWN) && ((user.grab_state < GRAB_AGGRESSIVE) || (user.pulling != victim)))
+		if(!can_smother(victim, user))
 			break
 		if(!do_after(user, 1 SECONDS, victim))
 			break
@@ -172,6 +184,7 @@
 	worn_icon = 'icons/mob/clothing/suits/pillow.dmi'
 	icon_state = "pillow_suit"
 	armor_type = /datum/armor/suit_pillow_suit
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 	var/obj/item/pillow/unstoppably_plushed
 
 /datum/armor/suit_pillow_suit
@@ -197,6 +210,7 @@
 	body_parts_covered = HEAD
 	flags_inv = HIDEHAIR|HIDEEARS
 	armor_type = /datum/armor/head_pillow_hood
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 
 /datum/armor/head_pillow_hood
 	melee = 5

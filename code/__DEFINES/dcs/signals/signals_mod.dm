@@ -60,3 +60,7 @@
 #define COMSIG_MOD_TRY_INSTALL_MODULE "mod_try_install_module"
 	/// Cancel module installation, with no message. Include feedback on your cancel.
 	#define MOD_ABORT_INSTALL (1<<0)
+/// Called on an atom whenever a MOD module is used targeting it
+#define COMSIG_ATOM_MOD_MODULE_USED "atom_mod_module_used"
+	/// Cancels whatever the module is supposed to do
+	#define COMPONENT_INTERRUPT_MODULE_USE (1<<0)

@@ -1,6 +1,7 @@
 /obj/machinery/computer/launchpad
 	name = "launchpad control console"
 	desc = "Used to teleport objects to and from a launchpad."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/launchpad")
 	icon_screen = "teleport"
 	icon_keyboard = "teleport_key"
 	circuit = /obj/item/circuitboard/computer/launchpad_console

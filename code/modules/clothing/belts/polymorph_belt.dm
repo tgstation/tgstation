@@ -8,6 +8,7 @@
 	worn_icon_state = "polybelt_inactive"
 	base_icon_state = "polybelt"
 	item_flags = NOBLUDGEON
+	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2, /datum/material/uranium = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT)
 	/// Typepath of a mob we have scanned, we only store one at a time
 	var/stored_mob_type
 	/// Have we activated the belt?

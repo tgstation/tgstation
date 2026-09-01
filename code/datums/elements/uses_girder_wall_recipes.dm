@@ -82,6 +82,8 @@
 	structure.add_fingerprint(user)
 	stack.add_fingerprint(user)
 
+	// Save refernce to the materials for the case when we place last tile in the stack
+	var/list/saved_mats_per_unit = stack.mats_per_unit
 	if (!stack.use_tool(structure, user, recipe.make_delay, recipe.stack_amount, extra_checks = CALLBACK(src, PROC_REF(check_recipe), structure, user, recipe)))
 		return
 
@@ -94,6 +96,13 @@
 	else
 		CRASH("Attempted a girder wall recipe with an invalid wall type ([recipe.wall_type])")
 
+	if(istype(wall, /turf/closed/wall))
+		var/turf/closed/wall/griderholder = wall
+		griderholder.girder_type = structure.type
+	if(istype(wall, /obj/structure/falsewall))
+		var/obj/structure/falsewall/griderholder = wall
+		griderholder.girder_type = structure.type
+
 	user.visible_message(
 		message = span_notice("\The [user] finish[user.p_es()] building \a [wall] on \the [structure]."),
 		self_message = span_notice("You finish building \a [wall] on \the [structure]."),
@@ -103,7 +112,7 @@
 	qdel(structure)
 
 	if (is_material_recipe)
-		wall.set_custom_materials(stack.mats_per_unit, recipe.stack_amount)
+		wall.set_custom_materials(saved_mats_per_unit, recipe.stack_amount)
 
 /// Checks if the user can do the wall recipe.
 /datum/element/uses_girder_wall_recipes/proc/check_recipe(obj/structure/structure, mob/living/user, datum/girder_wall_recipe/recipe)

@@ -149,14 +149,7 @@
 #endif // 1 to use the default behaviour;
 								// 2 for preloading absolutely everything;
 
-#ifdef LOWMEMORYMODE
-#ifndef ABSOLUTE_MINIMUM
-#define FORCE_MAP "runtimestation"
-#else
-#define FORCE_MAP "runtimestation_minimal"
-#endif
 #define FORCE_MAP_DIRECTORY "_maps"
-#endif
 
 //Additional code for the above flags.
 #ifdef TESTING
@@ -181,6 +174,11 @@
 #define DO_NOT_DEFER_ASSETS
 //Test at full capacity, the extra cost doesn't matter
 #define TIMER_DEBUG
+
+// Checks if unit tests are being run locally or well, not
+#if !defined(CIBUILDING) && !defined(SPACEMAN_DMM) && !defined(OPENDREAM)
+#define RUNNING_LOCAL_TESTS
+#endif
 #endif
 
 #ifdef TGS

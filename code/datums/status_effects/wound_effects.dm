@@ -15,15 +15,11 @@
 	. = ..()
 	owner.visible_message(span_danger("[owner]'s body tenses up noticeably, gritting against [owner.p_their()] pain!"), span_notice("<b>Your senses sharpen as your body tenses up from the wounds you've sustained!</b>"), \
 		vision_distance=COMBAT_MESSAGE_RANGE)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology.bleed_mod *= WOUND_DETERMINATION_BLEED_MOD
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLEED, WOUND_DETERMINATION_BLEED_MOD)
 
 /datum/status_effect/determined/on_remove()
 	owner.visible_message(span_danger("[owner]'s body slackens noticeably!"), span_warning("<b>Your adrenaline rush dies off, and the pain from your wounds come aching back in...</b>"), vision_distance=COMBAT_MESSAGE_RANGE)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology.bleed_mod /= WOUND_DETERMINATION_BLEED_MOD
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLEED, 1/WOUND_DETERMINATION_BLEED_MOD)
 	return ..()
 
 /datum/status_effect/limp
@@ -79,17 +75,25 @@
 	// less limping while we have determination still
 	var/determined_mod = owner.has_status_effect(/datum/status_effect/determined) ? 0.5 : 1
 
-	if(SEND_SIGNAL(owner, COMSIG_CARBON_LIMPING) & COMPONENT_CANCEL_LIMP)
-		return
-
+	var/obj/item/bodypart/leg_about_to_limp
+	var/limp_chance
+	var/limp_slowdown
 	if(next_leg == left)
-		if(prob(limp_chance_left * determined_mod))
-			owner.client.move_delay += slowdown_left * determined_mod
+		leg_about_to_limp = left
+		limp_chance = limp_chance_left
+		limp_slowdown = slowdown_left
 		next_leg = right
 	else
-		if(prob(limp_chance_right * determined_mod))
-			owner.client.move_delay += slowdown_right * determined_mod
+		leg_about_to_limp = right
+		limp_chance = limp_chance_right
+		limp_slowdown = slowdown_right
 		next_leg = left
+
+	if(SEND_SIGNAL(owner, COMSIG_CARBON_LIMPING, leg_about_to_limp) & COMPONENT_CANCEL_LIMP)
+		return
+
+	if(prob(limp_chance * determined_mod))
+		owner.client.move_delay += limp_slowdown * determined_mod
 
 /// We need to make sure that we properly clear these refs if one of the owner's limbs gets deleted
 /datum/status_effect/limp/proc/on_limb_removed(datum/source, obj/item/bodypart/limb_lost, special, dismembered)
@@ -136,6 +140,31 @@
 	if(!slowdown_left && !slowdown_right)
 		carbon_mob.remove_status_effect(src)
 		return
+
+//Quirk variant of limping. Will always be applied as long as you have a leg to stand on.
+/datum/status_effect/limp/quirk
+	id = "limp_quirk"
+	alert_type = null
+
+/datum/status_effect/limp/quirk/update_limp(datum/source)
+	var/mob/living/carbon/carbon_mob = owner
+	left = carbon_mob.get_bodypart(BODY_ZONE_L_LEG)
+	right = carbon_mob.get_bodypart(BODY_ZONE_R_LEG)
+
+	slowdown_left = 0
+	slowdown_right = 0
+	limp_chance_left = 0
+	limp_chance_right = 0
+
+
+	if(left)
+		slowdown_left = 7 //Same as compound fracture
+		limp_chance_left = 70
+
+	else if(right)
+		slowdown_right = 7
+		limp_chance_right = 70
+
 
 /////////////////////////
 //////// WOUNDS /////////

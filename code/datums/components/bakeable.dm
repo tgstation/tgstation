@@ -98,7 +98,7 @@
 			baked_result.reagents.add_reagent_list(added_reagents)
 
 	if(who_baked_us)
-		ADD_TRAIT(baked_result, TRAIT_FOOD_CHEF_MADE, who_baked_us)
+		ADD_TRAIT(baked_result, TRAIT_HANDMADE, who_baked_us)
 
 	if(original_object.custom_materials)
 		baked_result.set_custom_materials(original_object.custom_materials, 1)

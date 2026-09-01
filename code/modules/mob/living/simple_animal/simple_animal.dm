@@ -88,7 +88,7 @@
 	///Damage type of a simple mob's melee attack, should it do damage.
 	var/melee_damage_type = BRUTE
 	/// 1 for full damage , 0 for none , -1 for 1:1 heal from that source.
-	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	physiology = list(STAMINA = 0)
 	///Attacking verb in present continuous tense.
 	var/attack_verb_continuous = "attacks"
 	///Attacking verb in present simple tense.
@@ -182,7 +182,7 @@
 		emote_hear = string_list(emote_hear)
 	if(LAZYLEN(emote_see))
 		emote_see = string_list(emote_see)
-	damage_coeff = string_assoc_list(damage_coeff)
+
 	if(footstep_type)
 		AddElement(/datum/element/footstep, footstep_type)
 	if(isnull(unsuitable_cold_damage))
@@ -234,7 +234,7 @@
 		if(health <= 0)
 			death()
 		else
-			set_stat(CONSCIOUS)
+			set_stat(STABLE)
 	med_hud_set_status()
 
 /**
@@ -244,7 +244,7 @@
  * Reduces the stamina loss by stamina_recovery
  */
 /mob/living/simple_animal/update_stamina()
-	if(damage_coeff[STAMINA] <= 0) //we shouldn't reset our speed to its initial value if we don't need to, as that can mess with things like mulebot motor wires
+	if(GET_PHYSIOLOGY(src, STAMINA) <= 0) //we shouldn't reset our speed to its initial value if we don't need to, as that can mess with things like mulebot motor wires
 		return
 	set_varspeed(initial(speed) + (staminaloss * 0.06))
 
@@ -392,7 +392,7 @@
 			return FALSE
 	if (isliving(the_target))
 		var/mob/living/L = the_target
-		if(L.stat != CONSCIOUS)
+		if(IS_UNCONSCIOUS_OR_CRIT(L))
 			return FALSE
 	if (ismecha(the_target))
 		var/obj/vehicle/sealed/mecha/M = the_target
@@ -408,14 +408,14 @@
 	REMOVE_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
 
 /mob/living/simple_animal/proc/make_babies() // <3 <3 <3
-	if(gender != FEMALE || stat || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
+	if(gender != FEMALE || IS_UNCONSCIOUS_OR_CRIT(src) || next_scan_time > world.time || !childtype || !animal_species || !SSticker.IsRoundInProgress())
 		return
 	next_scan_time = world.time + 400
 	var/alone = TRUE
 	var/mob/living/simple_animal/partner
 	var/children = 0
 	for(var/mob/M in view(7, src))
-		if(M.stat != CONSCIOUS) //Check if it's conscious FIRST.
+		if(IS_UNCONSCIOUS_OR_CRIT(M)) //Check if it's conscious FIRST.
 			continue
 		var/is_child = is_type_in_list(M, childtype)
 		if(is_child) //Check for children SECOND.
@@ -475,17 +475,6 @@
 	. = ..()
 	update_held_items()
 
-/mob/living/simple_animal/update_held_items()
-	. = ..()
-	if(!client || !hud_used || hud_used.hud_version == HUD_STYLE_NOHUD)
-		return
-	var/turf/our_turf = get_turf(src)
-	for(var/obj/item/I in held_items)
-		var/index = get_held_index_of_item(I)
-		SET_PLANE(I, ABOVE_HUD_PLANE, our_turf)
-		I.screen_loc = ui_hand_position(index)
-		client.screen |= I
-
 //ANIMAL RIDING
 
 /mob/living/simple_animal/user_buckle_mob(mob/living/M, mob/user, check_loc = TRUE)
@@ -543,7 +532,7 @@
 	stop_automated_movement = FALSE
 	if(!isturf(src.loc)) // Are we on a proper turf?
 		return
-	if(stat || resting || buckled) // Are we conscious, upright, and not buckled?
+	if(IS_UNCONSCIOUS_OR_CRIT(src) || resting || buckled) // Are we conscious, upright, and not buckled?
 		return
 	if(!COOLDOWN_FINISHED(src, emote_cooldown)) // Has the cooldown on this ended?
 		return
@@ -559,7 +548,7 @@
 			step(prey, pick(GLOB.cardinals))
 			COOLDOWN_START(src, emote_cooldown, 1 MINUTES)
 			return
-		if(!(prey.stat))
+		if(!IS_UNCONSCIOUS_OR_CRIT(prey))
 			manual_emote("chomps [prey]!")
 			prey.death()
 			prey = null

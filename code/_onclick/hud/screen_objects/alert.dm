@@ -86,6 +86,8 @@
 	alerts -= category
 	if(client && hud_used)
 		hud_used.reorganize_alerts()
+		for(var/mob/viewer as anything in observers)
+			viewer.client?.screen -= alert
 		client.screen -= alert
 	qdel(alert)
 
@@ -408,6 +410,8 @@
 	var/screentip_override_text
 	/// Whether the offered item can be examined by shift-clicking the alert
 	var/examinable = TRUE
+	/// Whether this item should bypass active hand checks.
+	var/bypass_active_hand = FALSE
 
 /atom/movable/screen/alert/give/Initialize(mapload, datum/hud/hud_owner)
 	. = ..()
@@ -486,8 +490,12 @@
 	var/mob/living/taker = owner
 	var/mob/living/offerer = offer.owner
 	var/obj/item/receiving = offer.offered_item
-	taker.take(offerer, receiving)
+	taker.take(offerer, receiving, bypass_active_hand)
 	SEND_SIGNAL(offerer, COMSIG_LIVING_ITEM_GIVEN, taker, receiving)
+
+/// Mostly for borgs to offer items.
+/atom/movable/screen/alert/give/borg
+	bypass_active_hand = TRUE
 
 /atom/movable/screen/alert/give/highfive
 	additional_desc_text = "Click this alert to slap it."
@@ -549,7 +557,7 @@
 	SIGNAL_HANDLER
 
 	if(QDELETED(offer.offered_item))
-		examine_list += span_warning("[source]'s arm appears tensed up, as if [source.p_they()] plan on pulling it back suddenly...")
+		examine_list += span_warning("[source]'s arm appears tensed up, as if [source.p_they()] plan[source.p_s()] on pulling it back suddenly...")
 
 /atom/movable/screen/alert/give/hand
 	screentip_override_text = "Take Hand"
@@ -600,7 +608,7 @@
 		return
 	if(length(last_whisper))
 		living_owner.say("#[last_whisper]")
-	living_owner.succumb(whispered = length(last_whisper) > 0)
+	INVOKE_GAME_VERB(living_owner, usr, /mob/living, succumb, whisper = length(last_whisper) > 0)
 
 //ALIENS
 
@@ -1154,13 +1162,12 @@
 	if(!.)
 		return
 
-	var/mob/living/carbon/carbon_owner = owner
-
-	if(!carbon_owner.can_resist() || !carbon_owner.shoes)
+	var/obj/item/clothing/shoes/shoes = owner.get_item_by_slot(ITEM_SLOT_FEET)
+	if(!owner.can_resist() || !istype(shoes, /obj/item/clothing/shoes))
 		return
 
-	carbon_owner.changeNext_move(CLICK_CD_RESIST)
-	carbon_owner.shoes.handle_tying(carbon_owner)
+	owner.changeNext_move(CLICK_CD_RESIST)
+	shoes.handle_tying(owner)
 
 /atom/movable/screen/alert/shoes/untied
 	name = "Untied Shoes"
@@ -1203,10 +1210,11 @@
 	if(!screenmob.client)
 		return FALSE
 	var/list/alerts = mymob.alerts
-	if(!hud_shown)
+	if(hud_version != HUD_STYLE_STANDARD)
 		for(var/i in 1 to alerts.len)
 			screenmob.client.screen -= alerts[alerts[i]]
 		return TRUE
+
 	var/user_pref_hud = ui_style2icon(mymob.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 	for(var/i in 1 to length(alerts))
 		var/atom/movable/screen/alert/alert = alerts[alerts[i]]

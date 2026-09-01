@@ -35,7 +35,6 @@
 	resistance_flags = NONE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
 
-
 /obj/item/clothing/suit/redtag/equipped(mob/equipper, slot)
 	. = ..()
 	if (slot != ITEM_SLOT_OCLOTHING)

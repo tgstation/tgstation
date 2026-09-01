@@ -60,10 +60,17 @@
 /// Called from bodypart being removed /obj/item/bodypart/proc/drop_limb(mob/living/carbon/old_owner, special, dismembered)
 #define COMSIG_BODYPART_REMOVED "bodypart_removed"
 
+/// From /obj/item/bodypart/proc/update_limb(): (dropping_limb, is_creating)
+#define COMSIG_BODYPART_UPDATED "bodypart_updated"
+/// Also from /obj/item/bodypart/proc/update_limb(), sent to the mob: (dropping_limb, is_creating)
+#define COMSIG_CARBON_BODYPART_UPDATED "carbon_bodypart_updated"
+/// From /datum/component/butchering/create_replacement_limb(): (replacement limb)
+#define COMSIG_BODYPART_BUTCHERED "bodypart_butchered"
+
 /// Sent to a limb when something *attempts* to change its surgery state (old_state, new_state, changed_states)
 #define COMSIG_BODYPART_UPDATING_SURGERY_STATE "bodypart_updating_surgery_state"
 
-/// Called from /obj/item/bodypart/proc/get_limb_icon(dropped, mob/living/carbon/update_on) : (list/limb_icons, dropped, mob/living/carbon/update_on)
+/// Called from /obj/item/bodypart/proc/get_limb_icon(dropped) : (list/limb_icons, dropped, mob/living/carbon/update_on)
 #define COMSIG_BODYPART_GET_LIMB_ICON "bodypart_get_limb_icon"
 
 /// Called from /obj/item/bodypart/proc/generate_icon_key() : (list/icon_keys)
@@ -116,6 +123,8 @@
 #define COMSIG_CARBON_REMOVE_OVERLAY "carbon_remove_overlay"
 ///Called when a carbon checks their mood
 #define COMSIG_CARBON_MOOD_CHECK "carbon_mod_check"
+///Called when a carbon is adding a fire overlay
+#define COMSIG_CARBON_GET_FIRE_OVERLAY "carbon_get_fire_overlay"
 
 // /mob/living/carbon/human signals
 
@@ -141,6 +150,9 @@
 ///from /mob/living/carbon/human/get_id_name; only returns if the mob has TRAIT_UNKNOWN and it's being overridden: (identity)
 #define COMSIG_HUMAN_GET_FORCED_NAME "human_get_forced_name"
 
+///from /mob/living/carbon/human/spec_stun(): (list/amount)
+#define COMSIG_HUMAN_SPEC_STUN "human_spec_stun"
+
 // Mob transformation signals
 ///Called when a human turns into a monkey, from /mob/living/carbon/proc/finish_monkeyize()
 #define COMSIG_HUMAN_MONKEYIZE "human_monkeyize"
@@ -148,7 +160,7 @@
 #define COMSIG_MONKEY_HUMANIZE "monkey_humanize"
 
 ///From mob/living/carbon/human/suicide()
-#define COMSIG_HUMAN_SUICIDE_ACT "human_suicide_act"
+#define COMSIG_LIVING_SUICIDE_ACT "human_suicide_act"
 
 ///from base of /mob/living/carbon/regenerate_limbs(): (excluded_limbs)
 #define COMSIG_CARBON_REGENERATE_LIMBS "living_regen_limbs"
@@ -162,7 +174,7 @@
 	/// Return to skip oxyloss and similar effects from blood level
 	#define HANDLE_BLOOD_NO_OXYLOSS (1<<2)
 
-/// from /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced) iodk where it should go
+/// from /datum/status_effect/limp/proc/check_step(mob/whocares, OldLoc, Dir, forced): (var/obj/item/bodypart/limping_leg)
 #define COMSIG_CARBON_LIMPING "mob_limp_check"
 	#define COMPONENT_CANCEL_LIMP (1<<0)
 
@@ -175,9 +187,9 @@
 ///Called from on_losing(mob/living/carbon/human/owner)
 #define COMSIG_MUTATION_LOST "mutation_lost"
 
-/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacker, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking)
+/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacker, damage, attack_type, atk_effect, obj/item/bodypart/affecting, final_armor_block, limb_sharpness)
 #define COMSIG_HUMAN_GOT_PUNCHED "human_got_punched"
-/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacked, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking)
+/// Called from /datum/species/proc/harm(): (mob/living/carbon/human/attacked, damage, attack_type, atk_effect, obj/item/bodypart/affecting, final_armor_block, limb_sharpness)
 #define COMSIG_HUMAN_PUNCHED "human_punched"
 
 /// Called at the very end of human character setup
@@ -205,3 +217,14 @@
 #define COMSIG_HUMAN_NON_STORAGE_HOTKEY "human_storage_hotkey"
 	/// Return to prevent the storage fail message
 	#define COMPONENT_STORAGE_HOTKEY_HANDLED (1<<0)
+
+/// Before a mob starts dreaming - you can add dream datums to the dream pool to override the selection: (list/dream_pool)
+#define COMSIG_PRE_DREAMING "pre_dreaming"
+/// A mob has started dreaming: (datum/dream/current_dream)
+#define COMSIG_START_DREAMING "start_dreaming"
+/// A mob has finished dreaming: (datum/dream/finished_dream)
+#define COMSIG_END_DREAMING "end_dreaming"
+/// From /mob/living/carbon/item_coverage_changed: (added_slots, removed_slots)
+#define COMSIG_CARBON_ITEM_COVERAGE_CHANGED "carbon_item_coverage_changed"
+/// From /mob/living/carbon/proc/get_sight_and_cutoffs(): (list/new_sight_flags)
+#define COMSIG_CARBON_UPDATE_SIGHT_CUTOFFS "carbon_update_sight_cutoffs"

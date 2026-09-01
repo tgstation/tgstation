@@ -22,16 +22,27 @@
 	strip_delay = 5 SECONDS
 	equip_delay_other = 5 SECONDS
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	visor_flags = STOPSPRESSUREDAMAGE | THICKMATERIAL | HEADINTERNALS
+	visor_flags_inv = HIDEMASK | HIDEEYES | HIDEFACE | HIDESNOUT
+	visor_flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH | PEPPERPROOF
+	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	resistance_flags = NONE
 	dog_fashion = null
 	sound_vary = TRUE
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
+	visor_toggle_up_sound = SFX_VISOR_UP
+	visor_toggle_down_sound = SFX_VISOR_DOWN
+	actions_types = list(/datum/action/item_action/adjust_visor)
+	toggle_message = "You pull your helmet's visor down."
+	alt_toggle_message = "You pull your helmet's visor up."
 	///How much this helmet affects fishing difficulty
 	var/fishing_modifier = 3
 	///Icon state applied when we get spraypainted/peppersprayed. If null, does not add the dirt component
 	var/visor_dirt = "helm_dirt"
+	/// Whether the helmet has a visor you can flip up
+	var/has_visor = FALSE
 
 /obj/item/clothing/head/helmet/space/Initialize(mapload)
 	. = ..()
@@ -40,9 +51,27 @@
 	if(fishing_modifier)
 		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 	add_stabilizer()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/space)
 
 /obj/item/clothing/head/helmet/space/proc/add_stabilizer(loose_hat = TRUE)
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = loose_hat)
+
+/obj/item/clothing/head/helmet/space/attack_self(mob/living/user)
+	. = ..()
+	if(. || !has_visor)
+		return
+
+	return adjust_visor(user)
+
+/obj/item/clothing/head/helmet/space/click_alt(mob/user)
+	if(!has_visor)
+		return NONE
+
+	return adjust_visor(user) ? CLICK_ACTION_SUCCESS : CLICK_ACTION_BLOCKING
+
+/obj/item/clothing/head/helmet/space/update_icon_state()
+	. = ..()
+	icon_state = "[initial(icon_state)][up ? "-novisor" : ""]"
 
 /datum/armor/helmet_space
 	bio = 100
@@ -103,6 +132,7 @@
 
 	if(fishing_modifier)
 		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/space)
 
 /obj/item/clothing/suit/space/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
 	. = ..()
@@ -152,7 +182,7 @@
 
 	// If we got here, it means thermals are on, the cell is in and the cell has
 	// just had enough charge subtracted from it to power the thermal regulator
-	user.adjust_bodytemperature(get_temp_change_amount((temperature_setting - user.bodytemperature), 0.08 * seconds_per_tick))
+	user.adjust_bodytemperature(get_temp_change_amount((temperature_setting - user.bodytemperature), BODYTEMP_SUIT_CHANGE_RATE * seconds_per_tick))
 	update_hud_icon(user)
 
 // Clean up the cell on destroy
@@ -214,17 +244,20 @@
 	return ITEM_INTERACT_SUCCESS
 
 // object handling for accessing features of the suit
-/obj/item/clothing/suit/space/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
-	if(!cell_cover_open || !istype(I, /obj/item/stock_parts/power_store/cell))
+/obj/item/clothing/suit/space/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!cell_cover_open || !istype(tool, /obj/item/stock_parts/power_store/cell))
 		return ..()
+
 	if(cell)
 		to_chat(user, span_warning("[src] already has a cell installed."))
-		return
-	if(user.transferItemToLoc(I, src))
-		cell = I
-		to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
-		update_hud_icon(user)
-		return
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	cell = tool
+	to_chat(user, span_notice("You successfully install \the [cell] into [src]."))
+	update_hud_icon(user)
+	return ITEM_INTERACT_SUCCESS
 
 /// Open the cell cover when ALT+Click on the suit
 /obj/item/clothing/suit/space/click_alt(mob/living/user)
@@ -343,7 +376,7 @@
 	if(cell)
 		cell.emp_act(severity)
 
-/obj/item/clothing/head/helmet/space/suicide_act(mob/living/carbon/user)
+/obj/item/clothing/head/helmet/space/suicide_act(mob/living/user)
 	var/datum/gas_mixture/environment = user.loc.return_air()
 	if(HAS_TRAIT(user, TRAIT_RESISTCOLD) || !environment || environment.return_temperature() >= user.get_body_temp_cold_damage_limit())
 		user.visible_message(span_suicide("[user] is beating [user.p_them()]self with \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))

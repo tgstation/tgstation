@@ -8,8 +8,8 @@
 	transmittable = 0
 	level = 0 //not obtainable
 	base_message_chance = 20 //here used for the overlays
-	symptom_delay_min = 1
-	symptom_delay_max = 1
+	symptom_delay = 1
+	delay_variation = 0
 	var/passive_message = "" //random message to infected but not actively healing people
 	var/healable_bodytypes = BODYTYPE_ORGANIC // What types of body parts we can heal
 
@@ -58,7 +58,7 @@
 	resistance = -2
 	stage_speed = 0
 	transmittable = 1
-	level = 6
+	level = 8
 	passive_message = span_notice("You miss the feeling of starlight on your skin.")
 	var/nearspace_penalty = 0.3
 	threshold_descs = list(
@@ -366,7 +366,7 @@
 	if(living_host.IsSleeping())
 		return power * 0.25 //Voluntary unconsciousness yields lower healing.
 	switch(living_host.stat)
-		if(UNCONSCIOUS, HARD_CRIT)
+		if(HARD_CRIT)
 			return power * 0.9
 		if(SOFT_CRIT)
 			return power * 0.5
@@ -408,7 +408,7 @@
 	resistance = -1
 	stage_speed = 0
 	transmittable = 1
-	level = 6
+	level = 4
 	passive_message = span_notice("Your skin feels oddly dry...")
 	required_organ = ORGAN_SLOT_LIVER
 	threshold_descs = list(
@@ -513,8 +513,6 @@
 /datum/symptom/heal/plasma/CanHeal(datum/disease/advance/our_disease)
 	var/mob/living/carbon/carbon_host = our_disease.affected_mob
 	var/datum/gas_mixture/environment
-	var/list/gases
-
 	. = 0
 
 	// Check internals
@@ -525,16 +523,14 @@
 	if(internals_tank)
 		var/datum/gas_mixture/tank_contents = internals_tank.return_air()
 		if(tank_contents && round(tank_contents.return_pressure())) // make sure the tank is not empty or 0 pressure
-			if(tank_contents.gases[/datum/gas/plasma])
+			if(tank_contents.moles[/datum/gas/plasma])
 				// higher tank distribution pressure leads to more healing, but once you get to about 15kpa you reach the max
 				. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, internals_tank.distribute_pressure * HEALING_PER_BREATH_PRESSURE)
 	else // Check environment
 		if(carbon_host.loc)
 			environment = carbon_host.loc.return_air()
-		if(environment)
-			gases = environment.gases
-			if(gases[/datum/gas/plasma])
-				. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, gases[/datum/gas/plasma][MOLES] * HEALING_PER_MOL)
+		if(environment && environment.moles[/datum/gas/plasma])
+			. += power * min(MAX_HEAL_COEFFICIENT_INTERNALS, environment.moles[/datum/gas/plasma] * HEALING_PER_MOL)
 
 	// Check for reagents in bloodstream
 	if(carbon_host.reagents.has_reagent(/datum/reagent/toxin/plasma, needs_metabolizing = TRUE))
@@ -578,9 +574,7 @@
 	resistance = -2
 	stage_speed = 2
 	transmittable = -3
-	level = 6
-	symptom_delay_min = 1
-	symptom_delay_max = 1
+	level = 7
 	passive_message = span_notice("Your skin glows faintly for a moment.")
 	threshold_descs = list(
 		"Resistance 7" = "Increases healing speed.",
@@ -610,3 +604,64 @@
 
 /datum/symptom/heal/radiation/can_generate_randomly()
 	return ..() && !HAS_TRAIT(SSstation, STATION_TRAIT_RADIOACTIVE_NEBULA) // Because people can never really suffer enough
+
+/datum/symptom/heal/aggressive_healing
+	name = "Aggressive Healing"
+	desc = "The virus heals damaged tissues in a way that appears threatening to the immune system."
+	severity = 1
+	stealth = -4
+	resistance = 1
+	stage_speed = 0
+	transmittable = -1
+	level = 5
+	base_message_chance = 0
+	power = 2
+
+	threshold_descs = list(
+		"Severity > 1" = "For each point of severity, the healing provided by the virus increases.",
+	)
+	///Increases the healing effect (if active) of the virus by this amount for each severity level above 1
+	var/severity_heal_bonus = 0.25
+
+/datum/symptom/heal/aggressive_healing/CanHeal(datum/disease/advance/our_disease)
+	return power + our_disease.totalSeverity() * severity_heal_bonus
+
+/datum/symptom/heal/aggressive_healing/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
+	carbon_host.heal_overall_damage(actual_power, actual_power, required_bodytype = healable_bodytypes)
+	return TRUE
+
+/datum/symptom/heal/genetic
+	name = "Mutated Regeneration"
+	desc = "The virus slowly repairs tissue damage in hosts with stable genetics."
+	stealth = 1
+	resistance = -3
+	stage_speed = -4
+	transmittable = -4
+	level = 9
+	threshold_descs = list(
+		"Resistance 9" = "Doubles healing speed from stable genetics.",
+		"Stage Speed 6" = "Slightly increases healing speed for all hosts without negative genetic stability.",
+	)
+	power = 0
+	var/stability_divisor = 25
+
+/datum/symptom/heal/genetic/Start(datum/disease/advance/our_disease)
+	. = ..()
+	if(!.)
+		return
+	if(our_disease.totalResistance() >= 9)
+		power = 0.2
+	if(our_disease.totalStageSpeed() >= 6)
+		stability_divisor = 12.5
+
+/datum/symptom/heal/genetic/CanHeal(datum/disease/advance/our_disease)
+	if(!our_disease.affected_mob.has_dna())
+		return power
+	var/dna_stability = our_disease.affected_mob.dna.stability
+	if(dna_stability >= initial(our_disease.affected_mob.dna.stability))
+		return power + (dna_stability - initial(our_disease.affected_mob.dna.stability)) / stability_divisor
+
+/datum/symptom/heal/genetic/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
+	if(carbon_host.heal_overall_damage(actual_power, actual_power, required_bodytype = healable_bodytypes) && prob(5))
+		to_chat(carbon_host, span_notice("You feel your injuries slowly fading away."))
+	return TRUE

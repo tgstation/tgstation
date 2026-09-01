@@ -29,7 +29,7 @@
 	lighting_cutoff_blue = 50
 
 	ai_controller = /datum/ai_controller/basic_controller/simple/simple_hostile_obstacles
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	physiology = list(STAMINA = 0)
 	var/static/list/migo_sounds
 	/// Odds migo will dodge
 	var/dodge_prob = 10
@@ -56,7 +56,7 @@
 
 /mob/living/basic/migo/send_speech(message_raw, message_range, obj/source, bubble_type, list/spans, datum/language/message_language, list/message_mods, forced, tts_message, list/tts_filter)
 	. = ..()
-	if(stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		return
 	make_migo_sound()
 
@@ -64,7 +64,7 @@
 	. = ..()
 	if(!.) //dead or deleted
 		return
-	if(stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		return
 	if(SPT_PROB(5, seconds_per_tick))
 		make_migo_sound()

@@ -502,8 +502,8 @@
 /obj/item/knife/kitchen,
 /obj/item/storage/box/mousetraps,
 /obj/structure/broken_flooring/pile,
-/obj/item/food/grown/parsnip,
-/obj/item/food/grown/parsnip,
+/obj/item/food/grown/carrotlike/parsnip,
+/obj/item/food/grown/carrotlike/parsnip,
 /obj/item/food/cheese/wedge,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)

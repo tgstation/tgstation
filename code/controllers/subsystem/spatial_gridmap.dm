@@ -9,25 +9,29 @@
  * these datums shouldnt have significant behavior, they should just hold data. the lists are filled and emptied by the subsystem.
  */
 /datum/spatial_grid_cell
-	///our x index in the list of cells. this is our index inside of our row list
+	/// Our x index in the list of cells. this is our index inside of our row list
 	var/cell_x
-	///our y index in the list of cells. this is the index of our row list inside of our z level grid
+	/// Our y index in the list of cells. this is the index of our row list inside of our z level grid
 	var/cell_y
-	///which z level we belong to, corresponding to the index of our gridmap in SSspatial_grid.grids_by_z_level
+	/// Which z level we belong to, corresponding to the index of our gridmap in SSspatial_grid.grids_by_z_level
 	var/cell_z
-	//every data point in a grid cell is separated by usecase
+	// Every data point in a grid cell is separated by usecase
 
-	//when empty, the contents lists of these grid cell datums are just references to a dummy list from SSspatial_grid
-	//this is meant to allow a great compromise between memory usage and speed.
-	//now orthogonal_range_search() doesnt need to check if the list is null and each empty list is taking 12 bytes instead of 24
-	//the only downside is that it needs to be switched over to a new list when it goes from 0 contents to > 0 contents and switched back on the opposite case
+	// When empty, the contents lists of these grid cell datums are just references to a dummy list from SSspatial_grid
+	// This is meant to allow a great compromise between memory usage and speed.
+	// Now orthogonal_range_search() doesnt need to check if the list is null and each empty list is taking 12 bytes instead of 24
+	// The only downside is that it needs to be switched over to a new list when it goes from 0 contents to > 0 contents and switched back on the opposite case
 
-	///every hearing sensitive movable inside this cell
+	/// Every hearing sensitive movable inside this cell
 	var/list/hearing_contents
-	///every client possessed mob inside this cell
+	/// Every client possessed mob inside this cell
 	var/list/client_contents
-	///every atmos machine inside this cell
+	/// Every atmos machine inside this cell
 	var/list/atmos_contents
+
+	/// Every dynamic light source *affecting* this cell
+	/// Light sources have their own radius rather than static polling range, so we need to store them in multiple cells
+	var/list/dynamic_light_sources
 
 /datum/spatial_grid_cell/New(cell_x, cell_y, cell_z)
 	. = ..()
@@ -40,9 +44,11 @@
 	if(length(dummy_list))
 		dummy_list.Cut()
 		stack_trace("SSspatial_grid.dummy_list had something inserted into it at some point! this is a problem as it is supposed to stay empty")
+
 	hearing_contents = dummy_list
 	client_contents = dummy_list
 	atmos_contents = dummy_list
+	dynamic_light_sources = dummy_list
 
 /datum/spatial_grid_cell/Destroy(force)
 	if(!force)//the response to someone trying to qdel this is a right proper fuck you
@@ -142,22 +148,20 @@ SUBSYSTEM_DEF(spatial_grid)
 
 ///removes an initialized and probably deleted movable from our pre init queue before we're initialized
 /datum/controller/subsystem/spatial_grid/proc/remove_from_pre_init_queue(atom/movable/movable_to_remove, exclusive_type)
-	if(exclusive_type)
-		waiting_to_add_by_type[exclusive_type] -= movable_to_remove
-
-		var/waiting_movable_is_in_other_queues = FALSE//we need to check if this movable is inside the other queues
+	if(isnull(exclusive_type))
+		UnregisterSignal(movable_to_remove, COMSIG_QDELETING)
 		for(var/type in waiting_to_add_by_type)
-			if(movable_to_remove in waiting_to_add_by_type[type])
-				waiting_movable_is_in_other_queues = TRUE
-
-		if(!waiting_movable_is_in_other_queues)
-			UnregisterSignal(movable_to_remove, COMSIG_QDELETING)
-
+			waiting_to_add_by_type[type] -= movable_to_remove
 		return
 
+	waiting_to_add_by_type[exclusive_type] -= movable_to_remove
+
+	// We need to check if this movable is inside the other queues
+	for(var/type, queue in waiting_to_add_by_type)
+		if(movable_to_remove in queue)
+			return
+
 	UnregisterSignal(movable_to_remove, COMSIG_QDELETING)
-	for(var/type in waiting_to_add_by_type)
-		waiting_to_add_by_type[type] -= movable_to_remove
 
 ///if a movable is inside our pre init queue before we're initialized and it gets deleted we need to remove that reference with this proc
 /datum/controller/subsystem/spatial_grid/proc/queued_item_deleted(atom/movable/movable_being_deleted)

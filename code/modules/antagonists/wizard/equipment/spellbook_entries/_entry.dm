@@ -228,6 +228,16 @@
 	var/was_put_in_hands = user.put_in_hands(to_equip)
 	to_chat(user, span_notice("\A [to_equip.name] has been summoned [was_put_in_hands ? "in your hands" : "at your feet"]."))
 
+/datum/spellbook_entry/item/can_refund(mob/living/carbon/human/user, obj/item/spellbook/book, obj/item/refunding_item)
+	if(HAS_TRAIT(user, TRAIT_SPELLS_LOTTERY))
+		to_chat(user, span_notice("No refund."))
+		return FALSE
+	if(!book.refunds_allowed) // We're not doing a check for refundable here because they're not refundable in-book.
+		return FALSE
+	if(refunding_item.type != item_path)
+		return FALSE
+	return TRUE
+
 /// Ritual, these cause station wide effects and are (pretty much) a blank slate to implement stuff in
 /datum/spellbook_entry/summon
 	category = "Rituals"

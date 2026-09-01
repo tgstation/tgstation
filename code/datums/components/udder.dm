@@ -31,7 +31,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/milked = parent
-	if(milked.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(milked))
 		return //come on now
 
 	var/udder_filled_percentage = PERCENT(udder.reagents.total_volume / udder.reagents.maximum_volume)
@@ -49,7 +49,7 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/milked = parent
-	if(milked.stat == CONSCIOUS && istype(milking_tool, /obj/item/reagent_containers/cup))
+	if(!IS_UNCONSCIOUS_OR_CRIT(milked) && istype(milking_tool, /obj/item/reagent_containers/cup))
 		udder.milk(milking_tool, user)
 		if(on_milk_callback)
 			on_milk_callback.Invoke(udder.reagents.total_volume, udder.reagents.maximum_volume)

@@ -363,7 +363,7 @@
 /turf/open/floor/iron/dark,
 /area/centcom/basketball)
 "Gi" = (
-/obj/structure/reagent_dispensers/beerkeg,
+/obj/structure/reagent_dispensers/keg/beer,
 /turf/open/floor/iron/kitchen_coldroom/freezerfloor,
 /area/centcom/basketball)
 "Hu" = (

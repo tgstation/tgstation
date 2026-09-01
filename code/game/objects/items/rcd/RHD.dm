@@ -30,6 +30,8 @@
 	var/has_ammobar = FALSE
 	/// amount of divisions in the ammo indicator overlay/number of ammo indicator states
 	var/ammo_sections = 10
+	/// icon_state prefix used for charge overlays — defaults to icon_state if not set
+	var/charge_icon_state
 	/// bitflags for upgrades
 	var/construction_upgrades = NONE
 	/// bitflags for banned upgrades
@@ -179,7 +181,7 @@
 	if(has_ammobar)
 		var/ratio = ceil((matter / max_matter) * ammo_sections)
 		if(ratio > 0)
-			. += "[icon_state]_charge[ratio]"
+			. += "[charge_icon_state || icon_state]_charge[ratio]"
 
 /**
  * Uses resource to do some action. Returns amount of resource used or TRUE/FALSE if only an dry run is required
@@ -193,7 +195,7 @@
 	if(!silo_mats || !silo_link)
 		if(matter < amount)
 			if(has_ammobar)
-				flick("[icon_state]_empty", src)
+				flick("[charge_icon_state || icon_state]_empty", src)
 			if(user)
 				balloon_alert(user, "not enough matter!")
 			return FALSE
@@ -297,6 +299,7 @@
 	desc = "It seems to be empty."
 	icon = 'icons/obj/devices/floppy_disks.dmi'
 	icon_state = "datadisk3"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/titanium = SHEET_MATERIAL_AMOUNT, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75)
 	var/upgrade
 
 /obj/item/rcd_upgrade/frames
@@ -322,18 +325,21 @@
 	desc = "It contains the upgrades necessary to allow more frequent use of the RCD."
 	icon_state = "datadisk7"
 	upgrade = RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/rcd_upgrade/silo_link
 	name = "RCD advanced upgrade: silo link"
 	desc = "It contains direct silo connection RCD upgrade."
 	icon_state = "datadisk8"
 	upgrade = RCD_UPGRADE_SILO_LINK
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 1.25)
 
 /obj/item/rcd_upgrade/furnishing
 	name = "RCD advanced upgrade: furnishings"
 	desc = "It contains the design for chairs, stools, tables, and glass tables."
 	icon_state = "datadisk5"
 	upgrade = RCD_UPGRADE_FURNISHING
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/titanium = SHEET_MATERIAL_AMOUNT, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.75)
 
 /datum/action/item_action/rcd_scan
 	name = "Destruction Scan"

@@ -1,6 +1,6 @@
 // Throwing stuff
 /mob/living/proc/toggle_throw_mode()
-	if(stat)
+	if(IS_UNCONSCIOUS_OR_CRIT(src))
 		return
 	if(!HAS_TRAIT(src, TRAIT_CAN_THROW_ITEMS))
 		return
@@ -127,18 +127,18 @@
  * Arguments:
  * * offered - The player being offered the item (optional, if null the offer is to everyone around)
  */
-/mob/living/proc/give(mob/living/offered)
+/mob/living/proc/give(mob/living/offered, obj/item/item_bypass)
 	if(has_status_effect(/datum/status_effect/offering))
 		to_chat(src, span_warning("You're already offering something!"))
 		return
 
-	if(IS_DEAD_OR_INCAP(src))
+	if(src.incapacitated)
 		to_chat(src, span_warning("You're unable to offer anything in your current state!"))
 		return
 
-	var/obj/item/offered_item = get_active_held_item()
+	var/obj/item/offered_item = item_bypass ? item_bypass : get_active_held_item()
 	// if it's an abstract item, should consider it to be non-existent (unless it's a HAND_ITEM, which means it's an obj/item that is just a representation of our hand)
-	if(!offered_item || ((offered_item.item_flags & ABSTRACT) && !(offered_item.item_flags & HAND_ITEM)))
+	if(!offered_item || ((offered_item.item_flags & ABSTRACT && !HAS_TRAIT(offered_item, TRAIT_BORG_GIVE)) && !HAS_TRAIT(offered_item, TRAIT_OFFERED_WHEN_PULLED) && !(offered_item.item_flags & HAND_ITEM)))
 		to_chat(src, span_warning("You're not holding anything to offer!"))
 		return
 
@@ -154,7 +154,7 @@
 				to_chat(src, span_notice("You take [offered_item] from yourself."))
 				return
 
-		if(IS_DEAD_OR_INCAP(offered))
+		if(offered.incapacitated)
 			to_chat(src, span_warning("[offered.p_Theyre()] unable to take anything in [offered.p_their()] current state!"))
 			return
 
@@ -187,15 +187,15 @@
  * * offerer - The living mob giving the original item
  * * offered_item - The item being given by the offerer
  */
-/mob/living/proc/take(mob/living/offerer, obj/item/offered_item)
+/mob/living/proc/take(mob/living/offerer, obj/item/offered_item, bypass)
 	clear_alert("[offerer]")
-	if(IS_DEAD_OR_INCAP(src))
+	if(src.incapacitated)
 		to_chat(src, span_warning("You're unable to take anything in your current state!"))
 		return
 	if(get_dist(src, offerer) > 1)
 		to_chat(src, span_warning("[offerer] is out of range!"))
 		return
-	if(!offered_item || offerer.get_active_held_item() != offered_item)
+	if(!offered_item || offerer.get_active_held_item() != offered_item && !bypass)
 		to_chat(src, span_warning("[offerer] is no longer holding the item they were offering!"))
 		return
 	if(!get_empty_held_indexes())

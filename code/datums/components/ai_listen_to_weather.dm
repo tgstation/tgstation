@@ -7,7 +7,7 @@
 	///what blackboard key are we setting
 	var/weather_key
 
-/datum/component/ai_listen_to_weather/Initialize(weather_type = /datum/weather/ash_storm, weather_key = BB_STORM_APPROACHING)
+/datum/component/ai_listen_to_weather/Initialize(weather_type = /datum/weather/particle/ash_storm, weather_key = BB_STORM_APPROACHING)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.weather_type = weather_type
@@ -26,7 +26,7 @@
 	var/mob/living/basic/source = parent
 	if(!source.ai_controller)
 		return
-	source.ai_controller.CancelActions()
+	source.ai_controller.cancel_current_plan()
 	source.ai_controller.set_blackboard_key(weather_key, TRUE)
 
 /datum/component/ai_listen_to_weather/proc/storm_end()

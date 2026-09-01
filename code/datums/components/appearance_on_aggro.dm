@@ -4,7 +4,7 @@
  */
 /datum/component/appearance_on_aggro
 	/// Blackboardey to search for a target
-	var/target_key = BB_BASIC_MOB_CURRENT_TARGET
+	var/target_key = BB_CURRENT_TARGET
 	/// Icon state to use when we have a target
 	var/aggro_state
 	/// path of the overlay to apply

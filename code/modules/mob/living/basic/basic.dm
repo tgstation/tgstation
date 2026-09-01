@@ -6,7 +6,7 @@
 	health = 20
 	maxHealth = 20
 	max_stamina = BASIC_MOB_STAMINA_MATCH_HEALTH
-	gender = PLURAL
+	gender = PLURAL // Plural means we randomize by default.
 	living_flags = MOVES_ON_ITS_OWN
 	status_flags = CANPUSH | CANSTUN
 	fire_stack_decay_rate = -5 // Reasonably fast as NPCs will not usually actively extinguish themselves
@@ -47,9 +47,6 @@
 	/// Variable maintained for compatibility with attack_animal procs until simple animals can be refactored away. Use element instead of setting manually.
 	var/environment_smash = ENVIRONMENT_SMASH_STRUCTURES
 
-	/// 1 for full damage, 0 for none, -1 for 1:1 heal from that source.
-	var/list/damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
-
 	///Verbs used for speaking e.g. "Says" or "Chitters". This can be elementized
 	var/list/speak_emote
 
@@ -85,6 +82,9 @@
 	///We only try to show a gibbing animation if this exists.
 	var/icon_gib = null
 
+	/// If we randomize our gender when its default is set to plural
+	var/randomize_gender = TRUE
+
 	///If the mob can be spawned with a gold slime core. HOSTILE_SPAWN are spawned with plasma, FRIENDLY_SPAWN are spawned with blood.
 	var/gold_core_spawnable = NO_SPAWN
 	///Sentience type, for slime potions. SHOULD BE AN ELEMENT BUT I DONT CARE ABOUT IT FOR NOW
@@ -107,7 +107,7 @@
 /mob/living/basic/Initialize(mapload)
 	. = ..()
 
-	if(gender == PLURAL)
+	if((gender == PLURAL) && randomize_gender)
 		gender = pick(MALE,FEMALE)
 
 	if(!real_name)
@@ -122,7 +122,6 @@
 
 	if(LAZYLEN(speak_emote))
 		speak_emote = string_list(speak_emote)
-	damage_coeff = string_assoc_list(damage_coeff)
 
 	///We need to wait for SSair to be initialized before we can check atmos/temp requirements.
 	if(PERFORM_ALL_TESTS(focus_only/atmos_and_temp_requirements) && mapload && !SSair.initialized)
@@ -155,7 +154,7 @@
 /mob/living/basic/proc/make_stamina_slowable()
 	if (max_stamina == BASIC_MOB_STAMINA_MATCH_HEALTH)
 		max_stamina = maxHealth
-	if (damage_coeff[STAMINA] <= 0 || max_stamina <= 0 || max_stamina_slowdown <= 0)
+	if (GET_PHYSIOLOGY(src, STAMINA) <= 0 || max_stamina <= 0 || max_stamina_slowdown <= 0)
 		return
 	AddElement(/datum/element/basic_stamina_slowdown, minium_stamina_threshold = max_stamina / 3, maximum_stamina = max_stamina, maximum_slowdown = max_stamina_slowdown)
 
@@ -167,7 +166,7 @@
 /mob/living/basic/Life(seconds_per_tick = SSMOBS_DT)
 	. = ..()
 	if(staminaloss > 0)
-		adjust_stamina_loss(-stamina_recovery * seconds_per_tick, forced = TRUE)
+		adjust_stamina_loss(-stamina_recovery * seconds_per_tick)
 
 /mob/living/basic/get_default_say_verb()
 	return length(speak_emote) ? pick(speak_emote) : ..()
@@ -232,21 +231,22 @@
 	. += span_deadsay("Upon closer examination, [p_they()] appear[p_s()] to be [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "asleep" : "dead"].")
 
 /mob/living/basic/proc/melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
-	if(!early_melee_attack(target, modifiers, ignore_cooldown))
+	var/early_melee_result = early_melee_attack(target, modifiers, ignore_cooldown)
+	if(early_melee_result) //Truthy value means we want to end the chain
+		if(!ignore_cooldown && early_melee_result == BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN)
+			changeNext_move(melee_attack_cooldown)
 		return FALSE
 	var/result = target.attack_basic_mob(src, modifiers)
 	SEND_SIGNAL(src, COMSIG_HOSTILE_POST_ATTACKINGTARGET, target, result)
-	if(!ignore_cooldown)
-		changeNext_move(melee_attack_cooldown) // Set it again because objects like to fuck with it in attack_basic_mob
+	if(result && !ignore_cooldown) //Only set cooldown if the attack achieved something, which is the case when the value is true-ey. This could definitely be done better but is probably easier once living/simple is gone and we no longer use attack_animal.
+		changeNext_move(melee_attack_cooldown)
 	return result
 
 /mob/living/basic/proc/early_melee_attack(atom/target, list/modifiers, ignore_cooldown = FALSE)
 	face_atom(target)
-	if(!ignore_cooldown)
-		changeNext_move(melee_attack_cooldown) // Set cooldown early in case it is cancelled
 	if(SEND_SIGNAL(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, target, Adjacent(target), modifiers) & COMPONENT_HOSTILE_NO_ATTACK)
-		return FALSE //but more importantly return before attack_animal called
-	return TRUE
+		return BASIC_MOB_END_ATTACK_CHAIN //but more importantly return before attack_animal called
+	return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 
 /mob/living/basic/resolve_unarmed_attack(atom/attack_target, list/modifiers)
 	melee_attack(attack_target, modifiers)
@@ -306,17 +306,6 @@
 	. = ..()
 	if (.)
 		update_held_items()
-
-/mob/living/basic/update_held_items()
-	. = ..()
-	if(isnull(client) || isnull(hud_used) || hud_used.hud_version == HUD_STYLE_NOHUD)
-		return
-	var/turf/our_turf = get_turf(src)
-	for(var/obj/item/held in held_items)
-		var/index = get_held_index_of_item(held)
-		SET_PLANE(held, ABOVE_HUD_PLANE, our_turf)
-		held.screen_loc = ui_hand_position(index)
-		client.screen |= held
 
 /mob/living/basic/get_body_temp_heat_damage_limit()
 	return maximum_survivable_temperature

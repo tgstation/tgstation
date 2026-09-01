@@ -78,54 +78,26 @@
 	user.AddElement(/datum/element/rust_healing)
 	user.add_faction(FACTION_HERETIC)
 
-// All it does is stand there, only attacks if attacked (Manuel player)
+// All it does is stand there, only attacks if attacked (Manuel player) (TODO: make them ahelp to really simulate manuel players)
 /datum/ai_controller/basic_controller/fake_crewman
+	behavior_tree_json = "code/modules/bitrunning/virtual_domain/domains/crewman.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
 		BB_REINFORCEMENTS_SAY = "Help me!",
+		BB_CALLS_REINFORCEMENTS = TRUE,
 	)
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk/less_walking
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/call_reinforcements,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
 
 /datum/ai_controller/basic_controller/fake_crewman/ranged
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/call_reinforcements,
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/maintain_distance,
-		/datum/ai_planning_subtree/ranged_skirmish,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
+	behavior_tree_json = "code/modules/bitrunning/virtual_domain/domains/crewman_ranged.bt.json"
 
 // Immediately tries to attack the player (Terry player)
 /datum/ai_controller/basic_controller/fake_crewman/instant_hostile
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/call_reinforcements,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
+	behavior_tree_json = "code/modules/bitrunning/virtual_domain/domains/crewman_hostile.bt.json"
 
 /datum/ai_controller/basic_controller/fake_crewman/instant_hostile/ranged
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/call_reinforcements,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/maintain_distance,
-		/datum/ai_planning_subtree/ranged_skirmish,
-		/datum/ai_planning_subtree/attack_obstacle_in_path/trooper,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
+	behavior_tree_json = "code/modules/bitrunning/virtual_domain/domains/crewman_hostile_ranged.bt.json"
 
 // The actual crewmate
 /mob/living/basic/fake_crewman
@@ -176,7 +148,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/fake_crewman/instant_hostile
 	death_spawner = /obj/effect/mob_spawn/corpse/human/secoff
 	weapon = /obj/item/knife/combat/survival
-	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 1, STAMINA = 1, OXY = 1)
+	physiology = list(BURN = 0.6, BRUTE = 0.6)
 
 /mob/living/basic/fake_crewman/engi
 	name = "engineer"
@@ -184,11 +156,11 @@
 	weapon = /obj/item/weldingtool
 	attack_sound = 'sound/items/tools/welder.ogg'
 	melee_damage_type = BURN
-	damage_coeff = list(BRUTE = 1, BURN = 0.9, TOX = 1, STAMINA = 1, OXY = 1)
+	physiology = list(BURN = 0.9)
 
 /mob/living/basic/fake_crewman/engi/mod
 	death_spawner = /obj/effect/mob_spawn/corpse/human/engineer/mod
-	damage_coeff = list(BRUTE = 0.8, BURN = 0.8, TOX = 1, STAMINA = 1, OXY = 1)
+	physiology = list(BURN = 0.8, BRUTE = 0.8)
 
 /mob/living/basic/fake_crewman/assistant
 	name = "assistant"
@@ -227,7 +199,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/fake_crewman/instant_hostile/ranged
 	death_spawner = /obj/effect/mob_spawn/corpse/human/hos
 	weapon = /obj/item/gun/energy/e_gun/hos
-	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 1, STAMINA = 1, OXY = 1)
+	physiology = list(BURN = 0.6, BRUTE = 0.6)
 
 /mob/living/basic/fake_crewman/boss/hos/Initialize(mapload)
 	. = ..()

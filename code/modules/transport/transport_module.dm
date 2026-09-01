@@ -745,11 +745,12 @@
 
 	return open_lift_radial(user)
 
-/obj/structure/transport/linear/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/transport/linear/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!radial_travel)
-		return ..()
+		return NONE
 
-	return open_lift_radial(user)
+	open_lift_radial(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/transport/linear/attack_robot(mob/living/user)
 	if(!radial_travel)

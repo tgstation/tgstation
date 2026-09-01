@@ -32,7 +32,7 @@ GLOBAL_LIST_INIT(shower_mode_descriptions, list(
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "shower"
 	density = FALSE
-	layer = ABOVE_WINDOW_LAYER
+	layer = ABOVE_MOB_LAYER
 	use_power = NO_POWER_USE
 	subsystem_type = /datum/controller/subsystem/processing/plumbing
 	///Does the user want the shower on or off?
@@ -138,18 +138,19 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	begin_processing()
 	return TRUE
 
-/obj/machinery/shower/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(tool, /obj/item/stock_parts/water_recycler))
-		if(has_water_reclaimer)
-			to_chat(user, span_warning("There is already has a water recycler installed."))
-			return
+/obj/machinery/shower/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stock_parts/water_recycler))
+		return NONE
 
-		playsound(src, 'sound/machines/click.ogg', 20, TRUE)
-		qdel(tool)
-		has_water_reclaimer = TRUE
-		begin_processing()
+	if(has_water_reclaimer)
+		to_chat(user, span_warning("There is already has a water recycler installed."))
+		return ITEM_INTERACT_BLOCKING
 
-	return ..()
+	playsound(src, 'sound/machines/click.ogg', 20, TRUE)
+	qdel(tool)
+	has_water_reclaimer = TRUE
+	begin_processing()
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/shower/multitool_act(mob/living/user, obj/item/tool)
 	. = ..()
@@ -390,14 +391,15 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/shower, (-16))
 	. = ..()
 	AddElement(/datum/element/simple_rotation)
 
-/obj/structure/showerframe/attackby(obj/item/tool, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(tool, /obj/item/stock_parts/water_recycler))
-		qdel(tool)
-		var/obj/machinery/shower/shower = new(loc, REVERSE_DIR(dir), TRUE)
-		qdel(src)
-		playsound(shower, 'sound/machines/click.ogg', 20, TRUE)
-		return
-	return ..()
+/obj/structure/showerframe/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/stock_parts/water_recycler))
+		return NONE
+
+	qdel(tool)
+	var/obj/machinery/shower/shower = new(loc, REVERSE_DIR(dir), TRUE)
+	qdel(src)
+	playsound(shower, 'sound/machines/click.ogg', 20, TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/showerframe/wrench_act(mob/living/user, obj/item/tool)
 	. = ..()

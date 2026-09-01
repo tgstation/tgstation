@@ -31,6 +31,7 @@
 	available_items[item.category] -= item.identifier
 	if(!length(available_items[item.category]))
 		available_items -= item.category
+		categories -= item.category
 
 /**
  * Handles buying the item for a market.

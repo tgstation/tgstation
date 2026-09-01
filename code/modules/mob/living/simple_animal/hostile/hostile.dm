@@ -74,7 +74,7 @@
 	///The delay between being attacked and gaining our old search_objects value back
 	var/search_objects_regain_time = 3 SECONDS
 	///Mobs ignore mob/living targets with a stat lower than that of stat_attack. If set to DEAD, then they'll include corpses in their targets, if to HARD_CRIT they'll keep attacking until they kill, and so on.
-	var/stat_attack = CONSCIOUS
+	var/stat_attack = STABLE
 	///Mobs with this set to TRUE will exclusively attack things defined by stat_attack, stat_attack DEAD means they will only attack corpses
 	var/stat_exclusive = FALSE
 	///Set us to TRUE to allow us to attack our own faction
@@ -149,17 +149,17 @@
 		face_atom(target) //Looks better if they keep looking at you when dodging
 
 /mob/living/simple_animal/hostile/attacked_by(obj/item/I, mob/living/user)
-	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client && user)
+	if(!IS_UNCONSCIOUS_OR_CRIT(src) && !target && AIStatus != AI_OFF && !client && user)
 		FindTarget(list(user))
 	return ..()
 
 /mob/living/simple_animal/hostile/electrocute_act(shock_damage, source, siemens_coeff, flags)
-	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client && isatom(source)) // strings are sometimes used in electrocute_act()
+	if(!IS_UNCONSCIOUS_OR_CRIT(src) && !target && AIStatus != AI_OFF && !client && isatom(source)) // strings are sometimes used in electrocute_act()
 		FindTarget(list(source))
 	return ..()
 
 /mob/living/simple_animal/hostile/bullet_act(obj/projectile/proj)
-	if(stat == CONSCIOUS && !target && AIStatus != AI_OFF && !client)
+	if(!IS_UNCONSCIOUS_OR_CRIT(src) && !target && AIStatus != AI_OFF && !client)
 		if(proj.firer && get_dist(src, proj.firer) <= aggro_vision_range)
 			FindTarget(list(proj.firer))
 		Goto(proj.starting, move_to_delay, 3)
@@ -267,7 +267,7 @@
 				if(L in friends)
 					return FALSE
 			else
-				if((faction_check && !attack_same) || L.stat)
+				if((faction_check && !attack_same) || IS_UNCONSCIOUS_OR_CRIT(L))
 					return FALSE
 			return TRUE
 
@@ -372,18 +372,18 @@
 	GLOB.move_manager.move_to(src, target, minimum_distance, delay, flags = MOVEMENT_LOOP_IGNORE_GLIDE)
 	return TRUE
 
-/mob/living/simple_animal/hostile/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/simple_animal/hostile/toggle_ai_on_damage(health_change)
 	. = ..()
-	if(!ckey && !stat && search_objects < 3 && . > 0)//Not unconscious, and we don't ignore mobs
-		if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
-			LoseTarget()
-			LoseSearchObjects()
-		if(AIStatus != AI_ON && AIStatus != AI_OFF)
-			toggle_ai(AI_ON)
-			FindTarget()
-		else if(target != null && prob(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
-			FindTarget()
-
+	if(search_objects >= 3)
+		return
+	if(search_objects)//Turn off item searching and ignore whatever item we were looking at, we're more concerned with fight or flight
+		LoseTarget()
+		LoseSearchObjects()
+	if(AIStatus != AI_ON && AIStatus != AI_OFF)
+		toggle_ai(AI_ON)
+		FindTarget()
+	else if(target != null && prob(40))//No more pulling a mob forever and having a second player attack it, it can switch targets now if it finds a more suitable one
+		FindTarget()
 
 /mob/living/simple_animal/hostile/proc/AttackingTarget(atom/attacked_target)
 	in_melee = TRUE

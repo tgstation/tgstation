@@ -164,7 +164,7 @@
 	//THE UNREADY (Applies over ANYTHING else!)
 	if(honorbound_human == target_creature)
 		return TRUE //oh come on now
-	if(target_creature.IsSleeping() || target_creature.IsUnconscious() || HAS_TRAIT(target_creature, TRAIT_RESTRAINED))
+	if(IS_UNCONSCIOUS(target_creature) || HAS_TRAIT(target_creature, TRAIT_RESTRAINED))
 		to_chat(honorbound_human, span_warning("There is no honor in attacking the <b>unready</b>."))
 		return FALSE
 	//THE JUST (Applies over guilt except for med, so you best be careful!)
@@ -221,7 +221,7 @@
 
 /datum/action/cooldown/spell/pointed/declare_evil
 	name = "Declare Evil"
-	desc = "If someone is so obviously an evil of this world you can spend a huge amount of favor to declare them guilty."
+	desc = "If someone is so obviously an evil of this world then you can spend a huge amount of favor to declare them guilty."
 	button_icon_state = "declaration"
 	ranged_mousepointer = 'icons/effects/mouse_pointers/honorbound.dmi'
 

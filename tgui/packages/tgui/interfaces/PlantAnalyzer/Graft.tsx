@@ -8,7 +8,7 @@ import {
 import { capitalizeFirst } from 'tgui-core/string';
 
 import { useBackend } from '../../backend';
-import { TraitTooltip } from '../SeedExtractor';
+import { TraitTooltip } from '../SeedTable';
 import { Fallback } from './Fallback';
 import type { PlantAnalyzerData } from './types';
 

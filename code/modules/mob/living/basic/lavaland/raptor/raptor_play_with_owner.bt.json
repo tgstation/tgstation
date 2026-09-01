@@ -1,0 +1,28 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/raptor/aggressive",
+	"type": "decorator",
+	"decorator": "/datum/bt_node/decorator/bb_key_set",
+	"vars": {
+		"observer_abort": "BT_ABORT_BOTH",
+		"key": "BB_OWNER_TARGET"
+	},
+	"child": {
+		"type": "sequence",
+		"children": [
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/move_to_target",
+				"vars": {
+					"target_key": "BB_OWNER_TARGET"
+				}
+			},
+			{
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/hunt_target/play_with_owner",
+				"vars": {
+					"cooldown_key": "BB_OWNER_TARGET"
+				}
+			}
+		]
+	}
+}

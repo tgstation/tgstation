@@ -189,3 +189,24 @@
 	. = ..()
 
 	dispensable_reagents = beer_reagents
+
+/obj/machinery/plumbing/synthesizer/mining
+	name = "mining synthesizer"
+	desc = "Can generate all the tasty plumbing chems that make mining more profitable or destructive."
+
+	var/static/list/mining_chems = list(
+		/datum/reagent/toxin/acid,
+		/datum/reagent/toxin/acid/fluacid,
+		/datum/reagent/toxin/acid/nitracid,
+		/datum/reagent/teslium,
+		/datum/reagent/fuel,
+		/datum/reagent/thermite,
+		/datum/reagent/gunpowder,
+		/datum/reagent/liquid_dark_matter,
+		/datum/reagent/toxin/acid/industrial_waste,
+	)
+
+/obj/machinery/plumbing/synthesizer/mining/Initialize(mapload, layer)
+	. = ..()
+
+	dispensable_reagents = mining_chems

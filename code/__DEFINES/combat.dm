@@ -72,7 +72,7 @@
 #define CANKNOCKDOWN (1<<1)
 /// If set, this mob can be knocked unconscious via status effect.
 /// NOTE, does not mean immune to sleep. Unconscious and sleep are two different things.
-/// NOTE, does not relate to the unconscious stat either. Only the status effect.
+/// NOTE, does not relate to the unconscious trait either. Only the status effect.
 #define CANUNCONSCIOUS (1<<2)
 /// If set, this mob can be grabbed or pushed when bumped into
 #define CANPUSH (1<<3)
@@ -227,8 +227,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 //Sawn off nerfs
 ///accuracy penalty of sawn off guns
 #define SAWN_OFF_ACC_PENALTY 25
-///added recoil of sawn off guns
-#define SAWN_OFF_RECOIL 1
 
 //ammo box sprite defines
 ///ammo box will always use provided icon state

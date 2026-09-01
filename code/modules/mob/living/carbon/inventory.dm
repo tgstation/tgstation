@@ -25,14 +25,6 @@
 
 /mob/living/carbon/get_item_by_slot(slot_id)
 	switch(slot_id)
-		if(ITEM_SLOT_BACK)
-			return back
-		if(ITEM_SLOT_MASK)
-			return wear_mask
-		if(ITEM_SLOT_NECK)
-			return wear_neck
-		if(ITEM_SLOT_HEAD)
-			return head
 		if(ITEM_SLOT_HANDCUFFED)
 			return handcuffed
 		if(ITEM_SLOT_LEGCUFFED)
@@ -41,18 +33,6 @@
 	return ..()
 
 /mob/living/carbon/get_slot_by_item(obj/item/looking_for)
-	if(looking_for == back)
-		return ITEM_SLOT_BACK
-
-	if(looking_for == wear_mask)
-		return ITEM_SLOT_MASK
-
-	if(looking_for == wear_neck)
-		return ITEM_SLOT_NECK
-
-	if(looking_for == head)
-		return ITEM_SLOT_HEAD
-
 	if(looking_for == handcuffed)
 		return ITEM_SLOT_HANDCUFFED
 
@@ -112,8 +92,7 @@
 	if(equipping.pulledby)
 		equipping.pulledby.stop_pulling()
 
-	equipping.screen_loc = null
-	client?.screen -= equipping
+	hud_used?.update_inventory_slot(slot)
 
 	for(var/mob/dead/observe as anything in observers)
 		observe.client?.screen -= equipping
@@ -124,26 +103,6 @@
 	var/not_handled = FALSE
 
 	switch(slot)
-		if(ITEM_SLOT_BACK)
-			if(back)
-				return
-			back = equipping
-			update_worn_back()
-		if(ITEM_SLOT_MASK)
-			if(wear_mask)
-				return
-			wear_mask = equipping
-			update_worn_mask()
-		if(ITEM_SLOT_HEAD)
-			if(head)
-				return
-			head = equipping
-			update_worn_head()
-		if(ITEM_SLOT_NECK)
-			if(wear_neck)
-				return
-			wear_neck = equipping
-			update_worn_neck(equipping)
 		if(ITEM_SLOT_HANDCUFFED)
 			set_handcuffed(equipping)
 		if(ITEM_SLOT_LEGCUFFED)
@@ -172,7 +131,9 @@
 	if(!(slot & item.slot_flags)) // Things below only update if slotted in (ie: not held)
 		return
 	if(item.hair_mask)
-		update_body()
+		LAZYADD(hair_masks, item.hair_mask)
+		update_hair()
+		update_body() // this is solely for lizard frills
 	add_item_coverage(item)
 
 /mob/living/carbon/has_unequipped(obj/item/item)
@@ -182,7 +143,9 @@
 
 	hud_used?.update_locked_slots()
 	if(item.hair_mask)
-		update_body()
+		LAZYREMOVE(hair_masks, item.hair_mask)
+		update_hair()
+		update_body() // this is solely for lizard frills
 	remove_item_coverage(item)
 
 /mob/living/carbon/doUnEquip(obj/item/item_dropping, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
@@ -190,23 +153,7 @@
 	if(!. || !item_dropping) //We don't want to set anything to null if the parent returned 0.
 		return
 
-	if(item_dropping == head)
-		head = null
-		if(!QDELETED(src))
-			update_worn_head()
-	else if(item_dropping == back)
-		back = null
-		if(!QDELETED(src))
-			update_worn_back()
-	else if(item_dropping == wear_mask)
-		wear_mask = null
-		if(!QDELETED(src))
-			update_worn_mask()
-	else if(item_dropping == wear_neck)
-		wear_neck = null
-		if(!QDELETED(src))
-			update_worn_neck(item_dropping)
-	else if(item_dropping == handcuffed)
+	if(item_dropping == handcuffed)
 		set_handcuffed(null)
 		if(buckled?.buckle_requires_restraints)
 			buckled.unbuckle_mob(src)
@@ -256,19 +203,18 @@
  * * removed_slots - slots that were removed from obscured_slots
  */
 /mob/living/carbon/proc/item_coverage_changed(added_slots, removed_slots)
+	SEND_SIGNAL(src, COMSIG_CARBON_ITEM_COVERAGE_CHANGED, added_slots, removed_slots)
 	update_clothing(hidden_slots_to_inventory_slots(added_slots|removed_slots))
-	if((added_slots|removed_slots) & (HIDEJUMPSUIT|HIDEEARS|HIDEEYES|HIDEHAIR|HIDEFACIALHAIR|HIDESNOUT|HIDEMUTWINGS|HIDEANTENNAE))
+	if((added_slots|removed_slots) & HIDESNOUT)
+		synchronize_bodyshapes()
+	if((added_slots|removed_slots) & (HIDEHAIR|HIDEFACIALHAIR))
+		update_hair()
+	if((added_slots|removed_slots) & HIDEEYES)
+		update_eyes()
+	// HIDEJUMPSUIT is for digitigrade legs, HIDEEARS is for lizard frills, HIDEHAIR is for felinid ears and lizard horns, the others should be obvious
+	// future todo; we should collect a list of all bodypart overlays and what conceals/reveals them dynamically, rather than hardcoding this
+	if((added_slots|removed_slots) & (HIDEJUMPSUIT|HIDEEARS|HIDEHAIR|HIDESNOUT|HIDEMUTWINGS|HIDEANTENNAE))
 		update_body()
-
-/// Returns the helmet if an air tank compatible helmet is equipped.
-/mob/living/carbon/proc/can_breathe_helmet()
-	if (astype(head, /obj/item/clothing)?.clothing_flags & HEADINTERNALS)
-		return head
-
-/// Returns the mask if an air tank compatible mask is equipped.
-/mob/living/carbon/proc/can_breathe_mask()
-	if (astype(wear_mask, /obj/item/clothing)?.clothing_flags & MASKINTERNALS)
-		return wear_mask
 
 /// Returns the tube if a breathing tube is equipped.
 /mob/living/carbon/proc/can_breathe_tube()
@@ -276,7 +222,7 @@
 
 /// Returns the object that allows us to breathe internals - tube implant, mask or helmet
 /mob/living/carbon/proc/can_breathe_internals()
-	return can_breathe_tube() || can_breathe_mask() || can_breathe_helmet()
+	return can_breathe_tube()
 
 /// Returns truthy if air tank is open and mob lacks apparatus, or if the tank moved away from the mob.
 /mob/living/carbon/proc/invalid_internals()
@@ -443,6 +389,8 @@
 	var/covered_flags = NONE
 	for(var/obj/item/worn_item in get_equipped_items(INCLUDE_ABSTRACT))
 		if(worn_item.slot_flags & exluded_equipment_slots)
+			continue
+		if(worn_item.flags_cover & ALLOW_SURGERY_THROUGH)
 			continue
 		covered_flags |= worn_item.body_parts_covered
 

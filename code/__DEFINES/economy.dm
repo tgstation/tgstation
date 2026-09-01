@@ -60,7 +60,7 @@
 #define CIV_JOB_SEC 4
 #define CIV_JOB_DRINK 5
 #define CIV_JOB_CHEM 6
-#define CIV_JOB_VIRO 7
+#define CIV_JOB_MED_VIRO 7
 #define CIV_JOB_SCI 8
 #define CIV_JOB_ENG 9
 #define CIV_JOB_MINE 10
@@ -104,3 +104,9 @@
 //Mood event from minor slot events like winning/losing a few bits.
 #define SLOTS_MOOD_CATEGORY "slots"
 
+/// Minimum amount of exports that can get boosted per economy fire
+#define EXPORT_BOOST_MIN_AMOUNT 2
+/// Maximum amount of exports that can get boosted per economy fire
+#define EXPORT_BOOST_MAX_AMOUNT 4
+/// Amount by which random exports are boosted each SSeconomy tick
+#define EXPORT_BOOST_MULT 3

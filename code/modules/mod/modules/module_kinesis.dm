@@ -1,6 +1,6 @@
 ///Kinesis - Gives you the ability to move and launch objects.
 /obj/item/mod/module/anomaly_locked/kinesis
-	name = "MOD kinesis module"
+	name = "\improper MOD kinesis module"
 	desc = "A modular plug-in to the forearm, this module was presumed lost for many years, \
 		despite the suits it used to be mounted on still seeing some circulation. \
 		This piece of technology allows the user to generate precise anti-gravity fields, \
@@ -16,6 +16,7 @@
 	overlay_state_active = "module_kinesis_on"
 	accepted_anomalies = list(/obj/item/assembly/signaler/anomaly/grav)
 	required_slots = list(ITEM_SLOT_GLOVES)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.25, /datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
 	/// Range of the knesis grab.
 	var/grab_range = 8
 	/// Time between us hitting objects with kinesis.
@@ -254,7 +255,7 @@
 	core_removable = FALSE
 
 /obj/item/mod/module/anomaly_locked/kinesis/prototype
-	name = "MOD prototype kinesis module"
+	name = "\improper MOD prototype kinesis module"
 	prebuilt = TRUE
 	complexity = 0
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 5
@@ -262,25 +263,25 @@
 	core_removable = FALSE
 
 /obj/item/mod/module/anomaly_locked/kinesis/plus
-	name = "MOD kinesis+ module"
+	name = "\improper MOD kinesis+ module"
 	desc = "A modular plug-in to the forearm, this module was recently redeveloped in secret. \
 		The bane of all ne'er-do-wells, the kinesis+ module is a powerful tool that allows the user \
 		to manipulate the world around them. Like its older counterpart, it's capable of manipulating \
 		structures, machinery, vehicles, and, thanks to the fruitful efforts of its creators - living beings."
 	complexity = 0
 	prebuilt = TRUE
-	stat_required = CONSCIOUS
+	stat_required = STABLE
 
 /// Admin suit version of kinesis. Can grab anything at any range, may enable phasing through walls.
 /obj/item/mod/module/anomaly_locked/kinesis/admin
-	name = "MOD kinesis++ module"
+	name = "\improper MOD kinesis++ module"
 	desc = "A modular plug-in to the forearm, this module was recently reredeveloped in super secret. \
 		This one can force some of the grasped objects to phase through walls. Oh no."
 	complexity = 0
 	grab_range = INFINITY
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 0
 	prebuilt = TRUE
-	stat_required = CONSCIOUS
+	stat_required = STABLE
 	/// Does our object phase through stuff?
 	var/phasing = FALSE
 

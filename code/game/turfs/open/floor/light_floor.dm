@@ -129,21 +129,31 @@
 	currentcolor = choice
 	update_appearance()
 
-/turf/open/floor/light/attackby(obj/item/C, mob/user, list/modifiers)
-	if(..())
-		return
-	if(istype(C, /obj/item/light/bulb)) //only for light tiles
-		var/obj/item/light/bulb/B = C
-		if(B.status)/// check if broken
-			to_chat(user, span_danger("The light bulb is broken!"))
-			return
-		if(state && user.temporarilyRemoveItemFromInventory(C))
-			qdel(C)
-			state = LIGHTFLOOR_FINE //fixing it by bashing it with a light bulb, fun eh?
-			update_appearance()
-			to_chat(user, span_notice("You replace the light bulb."))
-		else
-			to_chat(user, span_notice("The light bulb seems fine, no need to replace it."))
+/turf/open/floor/light/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(ITEM_INTERACT_ANY_BLOCKER & .)
+		return .
+
+	if(!istype(tool, /obj/item/light/bulb)) //only for light tiles
+		return .
+
+	if(astype(tool, /obj/item/light/bulb).status)/// check if broken
+		to_chat(user, span_danger("The light bulb is broken!"))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!state)
+		to_chat(user, span_notice("The light bulb seems fine, no need to replace it."))
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.temporarilyRemoveItemFromInventory(tool))
+		return ITEM_INTERACT_BLOCKING
+
+	qdel(tool)
+	state = LIGHTFLOOR_FINE //fixing it by bashing it with a light bulb, fun eh?
+	update_appearance()
+	to_chat(user, span_notice("You replace the light bulb."))
+	return ITEM_INTERACT_SUCCESS
+
 
 /turf/open/floor/light/emp_act(severity)
 	. = ..()

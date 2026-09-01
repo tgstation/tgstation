@@ -87,7 +87,7 @@
 	UnregisterSignal(owner, incapacitation_effect_signals)
 	UnregisterSignal(owner, COMSIG_LIVING_GENERIC_STUN_CHECK)
 
-/datum/status_effect/stun_absorption/get_examine_text()
+/datum/status_effect/stun_absorption/get_examine_text(mob/examiner)
 	if(can_absorb_stun())
 		return replacetext(examine_message, "%EFFECT_OWNER_THEYRE", owner.p_Theyre())
 	return null // no message if we can't absorb stuns, duh.
@@ -133,7 +133,7 @@
 
 /// Simply checks if the owner of the effect is in a valid state to absorb stuns.
 /datum/status_effect/stun_absorption/proc/can_absorb_stun()
-	if(owner.stat != CONSCIOUS)
+	if(IS_UNCONSCIOUS_OR_CRIT(owner))
 		return FALSE
 	if(seconds_of_stuns_absorbed > max_seconds_of_stuns_blocked)
 		return FALSE

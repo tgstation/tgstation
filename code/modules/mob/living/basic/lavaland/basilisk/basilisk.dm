@@ -6,7 +6,6 @@
 	icon_living = "basilisk"
 	icon_dead = "basilisk_dead"
 	speak_emote = list("chimes")
-	damage_coeff = list(BRUTE = 1, BURN = 0.1, TOX = 1, STAMINA = 0, OXY = 1)
 	mob_biotypes = parent_type::mob_biotypes | MOB_MINERAL
 	speed = 20
 	maxHealth = 200
@@ -67,7 +66,7 @@
 
 /// We got hit by something hot, go into heat mode
 /mob/living/basic/mining/basilisk/proc/heat_up()
-	if (stat != CONSCIOUS || has_status_effect(/datum/status_effect/basilisk_overheat))
+	if (IS_UNCONSCIOUS_OR_CRIT(src) || has_status_effect(/datum/status_effect/basilisk_overheat))
 		return
 	apply_status_effect(/datum/status_effect/basilisk_overheat)
 
@@ -76,17 +75,10 @@
 	ranged_attacks.projectile_type = projectile_type
 
 /datum/ai_controller/basic_controller/basilisk
+	behavior_tree_json = "code/modules/mob/living/basic/lavaland/basilisk/basilisk.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_AGGRO_RANGE = 5,
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/escape_captivity,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/ranged_skirmish,
-		/datum/ai_planning_subtree/attack_obstacle_in_path,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)

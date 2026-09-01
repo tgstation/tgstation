@@ -106,17 +106,17 @@
 	PROTECTED_PROC(TRUE)
 	techweb_updating = FALSE
 
-	var/previous_design_count = cached_designs.len
+	var/previous_design_count = length(cached_designs)
 
 	cached_designs.Cut()
 
-	for(var/design_id in stored_research.researched_designs)
-		var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+	for(var/design_path in stored_research.researched_designs)
+		var/datum/design/design = SSresearch.techweb_designs[design_path]
 
 		if((isnull(allowed_department_flags) || (design.departmental_flags & allowed_department_flags)) && (design.build_type & allowed_buildtypes))
 			cached_designs |= design
 
-	var/design_delta = cached_designs.len - previous_design_count
+	var/design_delta = length(cached_designs) - previous_design_count
 
 	if(design_delta > 0)
 		say("Received [design_delta] new design[design_delta == 1 ? "" : "s"].")
@@ -210,14 +210,13 @@
  *
  * * path - the design path to check for
  */
-/obj/machinery/rnd/production/proc/build_efficiency(path)
+/obj/machinery/rnd/production/proc/build_efficiency(datum/design/design)
 	PRIVATE_PROC(TRUE)
 	SHOULD_BE_PURE(TRUE)
 
-	if(ispath(path, /obj/item/stack/sheet) || ispath(path, /obj/item/stack/ore/bluespace_crystal))
+	if(ispath(design.build_path, /obj/item/stack) || design.fixed_cost_efficiency)
 		return 1
-	else
-		return efficiency_coeff
+	return efficiency_coeff
 
 /obj/machinery/rnd/production/ui_assets(mob/user)
 	return list(
@@ -239,23 +238,22 @@
 	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
 	var/size32x32 = "[spritesheet.name]32x32"
 
-	var/coefficient
 	for(var/datum/design/design in cached_designs)
-		var/cost = list()
+		var/list/cost = list()
 
-		coefficient = build_efficiency(design.build_path)
-		for(var/datum/material/mat as anything in design.materials)
-			var/amount = design.materials[mat]
-			cost[mat.name] = OPTIMAL_COST(amount * coefficient)
+		var/coefficient = build_efficiency(design)
+		for(var/_material, amount in design.materials)
+			var/datum/material/material = _material
+			cost[material.name] = OPTIMAL_COST(amount * coefficient)
 
-		var/icon_size = spritesheet.icon_size_id(design.id)
-		designs[design.id] = list(
+		var/icon_size = spritesheet.icon_size_id(design.asset_id)
+		designs[design.type] = list(
 			"name" = design.name,
 			"desc" = design.get_description(),
 			"cost" = cost,
-			"id" = design.id,
+			"path" = design.type,
 			"categories" = design.category,
-			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]"
+			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.asset_id]"
 		)
 
 	data["designs"] = designs
@@ -285,12 +283,8 @@
 			if(!istype(material))
 				return
 
-			var/amount = params["amount"]
-			if(isnull(amount))
-				return
-
-			amount = text2num(amount)
-			if(isnull(amount))
+			var/amount = text2num(params["amount"])
+			if(!amount)
 				return
 
 			//we use initial(active_power_usage) because higher tier parts will have higher active usage but we have no benifit from it
@@ -307,12 +301,17 @@
 				return
 
 			//validate design
-			var/design_id = params["ref"]
-			if(!design_id)
+			var/design_path = text2path(params["design_path"])
+			if(!design_path)
 				return
-			var/datum/design/design = stored_research.researched_designs[design_id] ? SSresearch.techweb_design_by_id(design_id) : null
+
+			if(!stored_research.researched_designs[design_path])
+				return
+
+			var/datum/design/design = SSresearch.techweb_designs[design_path]
 			if(!istype(design))
 				return FALSE
+
 			if(!(isnull(allowed_department_flags) || (design.departmental_flags & allowed_department_flags)))
 				say("This fabricator does not have the necessary keys to decrypt this design.")
 				return FALSE
@@ -321,16 +320,13 @@
 				return FALSE
 
 			//validate print quantity
-			var/print_quantity = params["amount"]
-			if(isnull(print_quantity))
-				return
-			print_quantity = text2num(print_quantity)
+			var/print_quantity = text2num(params["amount"])
 			if(isnull(print_quantity))
 				return
 			print_quantity = clamp(print_quantity, 1, 50)
 
 			//efficiency for this design, stacks use exact materials
-			var/coefficient = build_efficiency(design.build_path)
+			var/coefficient = build_efficiency(design)
 
 			//check for materials
 			if(!materials.can_use_resource(user_data = ID_DATA(usr)))
@@ -340,10 +336,7 @@
 				return FALSE
 
 			//compute power & time to print 1 item
-			var/charge_per_item = 0
-			for(var/material, amount in design.materials)
-				charge_per_item += amount
-			charge_per_item = ROUND_UP((charge_per_item / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * coefficient * active_power_usage)
+			var/charge_per_item = ROUND_UP((values_sum(design.materials) / (MAX_STACK_SIZE * SHEET_MATERIAL_AMOUNT)) * coefficient * active_power_usage)
 			var/build_time_per_item = (design.construction_time * design.lathe_time_factor * efficiency_coeff) ** 0.8
 
 			//start production
@@ -375,13 +368,14 @@
  * * user_data - ID_DATA(user), see the proc on SSid_access, served for logging
 */
 /obj/machinery/rnd/production/proc/do_make_item(
-		datum/design/design,
-		items_remaining,
-		build_time_per_item,
-		material_cost_coefficient,
-		charge_per_item,
-		turf/target,
-		alist/user_data)
+	datum/design/design,
+	items_remaining,
+	build_time_per_item,
+	material_cost_coefficient,
+	charge_per_item,
+	turf/target,
+	alist/user_data,
+)
 	PROTECTED_PROC(TRUE)
 
 	if(!items_remaining) // how
@@ -412,29 +406,29 @@
 		return
 
 	var/is_stack = ispath(design.build_path, /obj/item/stack)
-	var/list/design_materials = design.materials
-	if(!materials.mat_container.has_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1))
+
+	if(!materials.mat_container.has_materials(design.materials, material_cost_coefficient, is_stack ? items_remaining : 1))
 		say("Unable to continue production, missing materials.")
 		finalize_build()
 		return
-	materials.use_materials(design_materials, material_cost_coefficient, is_stack ? items_remaining : 1, "processed", "[design.name]", user_data = user_data)
+	materials.use_materials(design.materials, material_cost_coefficient, is_stack ? items_remaining : 1, "processed", "[design.name]", user_data = user_data)
 
 	var/atom/movable/created
+	var/number_to_make = 1
 	if(is_stack)
 		var/obj/item/stack/stack_item = initial(design.build_path)
 		var/max_stack_amount = initial(stack_item.max_amount)
-		var/number_to_make = (initial(stack_item.amount) * items_remaining)
+		number_to_make = (initial(stack_item.amount) * items_remaining)
 		while(number_to_make > max_stack_amount)
-			created = design.create_result(target, design_materials, amount = max_stack_amount)
+			created = design.create_result(target, design.materials, amount = max_stack_amount)
 			if(isitem(created))
 				created.pixel_x = created.base_pixel_x + rand(-6, 6)
 				created.pixel_y = created.base_pixel_y + rand(-6, 6)
 			number_to_make -= max_stack_amount
 
-		created = design.create_result(target, design_materials, amount = number_to_make)
-	else
-		created = design.create_result(target, design_materials)
-		split_materials_uniformly(design_materials, material_cost_coefficient, created)
+	created = design.create_result(target, design.materials, amount = number_to_make)
+	if(design.inherit_materials != DESIGN_DONT_INHERIT_MATS)
+		design.transfer_materials(design.materials, material_cost_coefficient, created)
 
 	if(isitem(created))
 		created.pixel_x = created.base_pixel_x + rand(-6, 6)
@@ -444,7 +438,7 @@
 	if(is_stack)
 		items_remaining = 0
 	else
-		items_remaining -= 1
+		items_remaining--
 
 	if(!items_remaining)
 		finalize_build()

@@ -1,0 +1,5 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/cat_butcherer",
+	"type": "subtree",
+	"subtype": "/datum/bt_node/subtree/simple_hostile_combat_with_retaliate"
+}

@@ -15,6 +15,9 @@
 #define PRIDE_MIRROR_OPTIONS list(CHANGE_HAIR, CHANGE_BEARD, CHANGE_RACE, CHANGE_SEX, CHANGE_EYES)
 #define MAGIC_MIRROR_OPTIONS list(CHANGE_HAIR, CHANGE_BEARD, CHANGE_RACE, CHANGE_SEX, CHANGE_EYES, CHANGE_NAME)
 
+// Chance for the mirror to be haunted at creation
+#define ROUNDSTART_CURSED_CHANCE 0.2
+
 /obj/structure/mirror
 	name = "mirror"
 	desc = "Mirror mirror on the wall, who's the most robust of them all?"
@@ -29,20 +32,26 @@
 	///Can this mirror be removed from walls with tools?
 	var/deconstructable = TRUE
 	var/list/mirror_options = INERT_MIRROR_OPTIONS
-
+	// Can a revenant be imprisoned in this mirror?
+	var/cursable = TRUE
 	///Flags this race must have to be selectable with this type of mirror.
 	var/race_flags = MIRROR_MAGIC
 	///List of all Races that can be chosen, decided by its Initialize.
-	var/list/selectable_races = list()
-
-/obj/structure/mirror/Destroy()
-	mirror_options = null
-	selectable_races = null
-	return ..()
+	var/list/selectable_races
 
 /obj/structure/mirror/proc/update_choices()
 	for(var/i in mirror_options)
 		mirror_options[i] = icon('icons/hud/radial.dmi', i)
+
+	if(CHANGE_RACE in mirror_options)
+		selectable_races = list()
+		for(var/datum/species/species_type as anything in get_species_pool())
+			if(!race_flags || (species_type::changesource_flags & race_flags))
+				selectable_races[species_type::name] = species_type
+		selectable_races = sort_list(selectable_races)
+
+	else
+		selectable_races = null
 
 /obj/structure/mirror/Initialize(mapload)
 	. = ..()
@@ -55,6 +64,11 @@
 		update_signals = list(COMSIG_ATOM_BREAK), \
 		check_reflect_signals = list(SIGNAL_ADDTRAIT(TRAIT_NO_MIRROR_REFLECTION), SIGNAL_REMOVETRAIT(TRAIT_NO_MIRROR_REFLECTION)), \
 	)
+	if(cursable)
+		if(mapload && prob(ROUNDSTART_CURSED_CHANCE))
+			AddComponent(/datum/component/revenant_prison, create_on_release = TRUE)
+		else
+			ADD_TRAIT(src, TRAIT_COZY_REVENANT_HOME, INNATE_TRAIT)
 	if(mapload)
 		find_and_mount_on_atom()
 	update_choices()
@@ -68,14 +82,20 @@
 		return FALSE
 	return TRUE
 
+/// Returns a list species typepaths to use for the mirror. This pool is then filtered by flags.
+/obj/structure/mirror/proc/get_species_pool()
+	return subtypesof(/datum/species)
+
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror, 28)
 
 /obj/structure/mirror/broken
 	icon_state = "mirror_broke"
+	cursable = FALSE
+	broken = TRUE
+	desc = "Oh no, seven years of bad luck!"
 
 /obj/structure/mirror/broken/Initialize(mapload)
 	. = ..()
-	atom_break(null, mapload)
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
@@ -99,9 +119,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		deconstruct()
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
-
-/obj/structure/mirror/atom_deconstruct()
-	new /obj/item/wallframe/mirror(loc, 1)
 
 /obj/structure/mirror/proc/display_radial_menu(mob/living/carbon/human/user)
 	if(!can_use_mirror(user))
@@ -133,7 +150,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 /// Checks if the mob can continue to use the mirror
 /obj/structure/mirror/proc/can_use_mirror(mob/living/carbon/human/user)
-	return !QDELETED(src) && !QDELETED(user) && user.can_perform_action(src, FORBID_TELEKINESIS_REACH)
+	return !QDELETED(src) && !QDELETED(user) && !broken && user.can_perform_action(src, FORBID_TELEKINESIS_REACH)
 
 /obj/structure/mirror/proc/change_beard(mob/living/carbon/human/beard_dresser)
 	if(beard_dresser.physique == FEMALE)
@@ -217,7 +234,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 				to_chat(race_changer, span_notice("Invalid color. Your color is not bright enough."))
 
 	race_changer.update_body(is_creating = TRUE)
-	race_changer.update_mutations_overlay() // no hulk lizard
 
 /// Hook for mirrors to do stuff on species change
 /obj/structure/mirror/proc/on_species_change(mob/living/carbon/human/race_changer, datum/species/newrace)
@@ -253,7 +269,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 	sexy.dna.update_ui_block(/datum/dna_block/identity/gender)
 	sexy.update_body(is_creating = TRUE) // or else physique won't change properly
-	sexy.update_mutations_overlay() //(hulk male/female)
 	sexy.update_clothing(ITEM_SLOT_ICLOTHING) // update gender shaped clothing
 
 /obj/structure/mirror/proc/change_eyes(mob/living/carbon/human/user)
@@ -262,7 +277,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		return
 	user.set_eye_color(sanitize_hexcolor(new_eye_color))
 	user.dna.update_ui_block(/datum/dna_block/identity/eye_colors)
-	user.update_body()
+	user.update_eyes()
 	to_chat(user, span_notice("You gaze at your new eyes with your new eyes. Perfect!"))
 
 /obj/structure/mirror/examine(mob/user)
@@ -286,8 +301,10 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	return .
 
 /obj/structure/mirror/attacked_by(obj/item/I, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(broken)
+		return ..()
 	. = ..()
-	if(broken || . <= 0) // breaking a mirror truly gets you bad luck!
+	if(!broken || . <= 0) // breaking a mirror truly gets you bad luck!
 		return
 	to_chat(user, span_warning("A chill runs down your spine as [src] shatters..."))
 	user.AddComponent(/datum/component/omen, incidents_left = 7)
@@ -302,13 +319,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 		to_chat(unlucky_dude, span_warning("A chill runs down your spine as [src] shatters..."))
 		unlucky_dude.AddComponent(/datum/component/omen, incidents_left = 7)
 
-/obj/structure/mirror/atom_break(damage_flag, mapload)
+/obj/structure/mirror/atom_break(damage_flag)
 	. = ..()
 	if(broken)
 		return
 	icon_state = "mirror_broke"
-	if(!mapload)
-		playsound(src, SFX_SHATTER, 70, TRUE)
+	playsound(src, SFX_SHATTER, 70, TRUE)
 	if(desc == initial(desc))
 		desc = "Oh no, seven years of bad luck!"
 	broken = TRUE
@@ -316,6 +332,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 /obj/structure/mirror/atom_deconstruct(disassembled = TRUE)
 	if(!disassembled)
 		new /obj/item/shard(loc)
+	else if(broken)
+		new /obj/item/wallframe/mirror/broken(loc)
 	else
 		new /obj/item/wallframe/mirror(loc)
 
@@ -348,12 +366,25 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 
 /obj/item/wallframe/mirror
 	name = "mirror"
-	desc = "An unmounted mirror. Attach it to a wall to use."
+	desc = "An unmounted mirror. Attach it to a wall for use."
 	icon = 'icons/obj/watercloset.dmi'
 	icon_state = "mirror"
 	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 5, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 2)
 	result_path = /obj/structure/mirror
 	pixel_shift = 28
+
+/obj/item/wallframe/mirror/heretic
+	name = /obj/structure/mirror/magic/lesser/heretic::name
+	desc = /obj/structure/mirror/magic/lesser/heretic::desc
+	icon = 'icons/obj/watercloset.dmi'
+	icon_state = "magic_mirror"
+	result_path = /obj/structure/mirror/magic/lesser/heretic
+
+/obj/item/wallframe/mirror/broken
+	name = "broken mirror"
+	desc = "An unmounted and broken mirror. Attach it to a wall for decor."
+	icon_state = "mirror_broke"
+	result_path = /obj/structure/mirror/broken
 
 /obj/structure/mirror/magic
 	name = "magic mirror"
@@ -361,16 +392,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	icon_state = "magic_mirror"
 	mirror_options = MAGIC_MIRROR_OPTIONS
 	deconstructable = FALSE
-
-/obj/structure/mirror/magic/Initialize(mapload)
-	. = ..()
-
-	if(length(selectable_races))
-		return
-	for(var/datum/species/species_type as anything in subtypesof(/datum/species))
-		if(initial(species_type.changesource_flags) & race_flags)
-			selectable_races[initial(species_type.name)] = species_type
-	selectable_races = sort_list(selectable_races)
+	cursable = FALSE
 
 /obj/structure/mirror/magic/change_beard(mob/living/carbon/human/beard_dresser) // magical mirrors do nothing but give you the damn beard
 	var/new_style = tgui_input_list(beard_dresser, "Select a facial hairstyle", "Grooming", SSaccessories.facial_hairstyles_list)
@@ -410,11 +432,76 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	race_changer.add_traits(list(TRAIT_LITERATE, TRAIT_ADVANCEDTOOLUSER), SPECIES_TRAIT)
 
 /obj/structure/mirror/magic/lesser
+	race_flags = NONE
 
-/obj/structure/mirror/magic/lesser/Initialize(mapload)
-	// Roundstart species don't have a flag, so it has to be set on Initialize.
-	selectable_races = get_selectable_species().Copy()
-	return ..()
+/obj/structure/mirror/magic/lesser/get_species_pool()
+	var/list/race_list = list()
+	for(var/species_id in get_selectable_species())
+		race_list += GLOB.species_list[species_id]
+	return race_list
+
+/obj/structure/mirror/magic/lesser/heretic
+	name = "miraculous mirror"
+	desc = "Gazing at your reflection, you feel like you could be better."
+	mirror_options = PRIDE_MIRROR_OPTIONS
+
+/obj/structure/mirror/magic/lesser/heretic/on_species_change(mob/living/carbon/human/race_changer, datum/species/newrace)
+	. = ..()
+	if(race_changer.dna?.species?.type == newrace.type)
+		return
+	atom_break(null)
+
+/obj/structure/mirror/magic/lesser/heretic/atom_deconstruct(disassembled)
+	new /obj/item/shard(loc) // never gives the frame back
+
+/obj/structure/mirror/magic/lesser/heretic/welder_act(mob/living/user, obj/item/I)
+	to_chat(user, span_alert("Trying to find where to start fixing [src] proves nigh impossible."))
+	return ITEM_INTERACT_BLOCKING
+
+/obj/structure/mirror/magic/lesser/heretic/pre_change(mob/living/carbon/human/user, picked)
+	if(IS_HERETIC(user))
+		return TRUE
+
+	to_chat(user, span_hypnophrase("You find yourself gazing at [src], unable to look away..."))
+	user.Immobilize(5 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(change_something), user, picked), 5 SECONDS)
+	return FALSE
+
+/obj/structure/mirror/magic/lesser/heretic/proc/change_something(mob/living/carbon/human/user, picked)
+	if(QDELETED(src) || QDELETED(user))
+		return
+
+	if(!user.Adjacent(src))
+		to_chat(user, span_warning("Pulled away from [src], you snap out of your trance."))
+		return
+	if(broken)
+		to_chat(user, span_warning("With the shattering of [src], you snap out of your trance."))
+		return
+
+	// randomizes your stuff, doesn't affect DNA though so you could easily get genetics to fix you
+	switch(picked)
+		if(CHANGE_HAIR, CHANGE_BEARD)
+			to_chat(user, span_hypnophrase("The hair - yes, the hair is wrong - [pick("it can be improved", "it needs to be changed", "it must be different")]..."))
+			user.set_hairstyle(random_hairstyle(user.gender))
+			user.set_facial_hairstyle(random_facial_hairstyle(user.gender))
+		if(CHANGE_RACE)
+			to_chat(user, span_hypnophrase("The body - no, the body is all wrong - [pick("I must become anew", "I need to be different", "I want to be something else")]..."))
+			var/list/options = assoc_to_values(selectable_races) - user.dna.species.type
+			var/datum/species/newrace = GLOB.species_prototypes[pick(options)]
+			on_species_change(user, newrace)
+			user.set_species(newrace.type, icon_update = FALSE)
+		if(CHANGE_SEX)
+			to_chat(user, span_hypnophrase("My form - yes, the form is all wrong - I  need to change it...")) // the wording used here needs to be very deliberate...
+			var/list/options = list(MALE, FEMALE, PLURAL, NEUTER) - user.gender
+			user.gender = pick(options)
+			user.physique = user.gender
+		if(CHANGE_EYES)
+			to_chat(user, span_hypnophrase("My eyes - I cannot see clearly - [pick("They're simply not right", "they must be replaced", "they are both wrong")]..."))
+			user.set_eye_color(random_eye_color())
+		if(CHANGE_NAME) // not enabled by default but for badmin support
+			to_chat(user, span_hypnophrase("My name - it doesn't fit me - [pick("Something else would be better", "it must be changed", "Something more appropriate would be good")]..."))
+			user.real_name = user.generate_random_mob_name()
+			user.update_visible_name()
 
 /obj/structure/mirror/magic/badmin
 	race_flags = MIRROR_BADMIN
@@ -442,15 +529,11 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 	)
 
 	var/turf/user_turf = get_turf(user)
-	var/list/levels = SSmapping.levels_by_trait(ZTRAIT_SPACE_RUINS)
-	var/turf/dest
-	if(length(levels))
-		dest = locate(user_turf.x, user_turf.y, pick(levels))
-
-	user_turf.ChangeTurf(/turf/open/chasm, flags = CHANGETURF_INHERIT_AIR)
-	var/turf/open/chasm/new_chasm = user_turf
-	new_chasm.set_target(dest)
-	new_chasm.drop(user)
+	var/turf/open/chasm/pride/new_chasm = user_turf.ChangeTurf(/turf/open/chasm/pride, flags = CHANGETURF_INHERIT_AIR)
+	// `ChangeTurf()` can itself lead to `drop()` if there's lattice present, so
+	// we only force the user down if they're still on the same turf.
+	if(get_turf(user) == user_turf)
+		new_chasm.drop(user)
 
 #undef CHANGE_HAIR
 #undef CHANGE_BEARD
@@ -463,3 +546,5 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/mirror/broken, 28)
 #undef INERT_MIRROR_OPTIONS
 #undef PRIDE_MIRROR_OPTIONS
 #undef MAGIC_MIRROR_OPTIONS
+
+#undef ROUNDSTART_CURSED_CHANCE

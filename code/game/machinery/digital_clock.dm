@@ -110,7 +110,7 @@
 	if(obj_flags & EMAGGED)
 		station_minutes = rand(0, 99)
 	else
-		station_minutes = text2num(station_time_timestamp(format = "mm"))
+		station_minutes = text2num(round_timestamp(format = "mm"))
 
 	// tenth / the '3' in '31' / 31 -> 3.1 -> 3
 	var/station_minute_tenth = station_minutes >= 10 ? round(station_minutes * 0.1) : 0
@@ -122,7 +122,7 @@
 	if(obj_flags & EMAGGED)
 		station_hours = rand(0, 99)
 	else
-		station_hours = text2num(station_time_timestamp(format = "hh"))
+		station_hours = text2num(round_timestamp(format = "hh"))
 
 	// one / the '1' in '12' / 12 -> 1.2 -> 1
 	var/station_hours_tenth = station_minutes >= 10 ? round(station_hours * 0.1) : 0

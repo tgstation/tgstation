@@ -20,8 +20,7 @@
 	flipped = FALSE
 	..()
 
-/obj/item/clothing/head/soft/verb/flipcap()
-	set name = "Flip cap"
+GAME_VERB(/obj/item/clothing/head/soft, flipcap, "Flip cap", null)
 
 	flip(usr)
 
@@ -168,6 +167,7 @@
 	AddElement(/datum/element/adjust_fishing_difficulty, -5)
 
 #define PROPHAT_MOOD "prophat"
+#define PROPHAT_SUICIDE_TIME (10 SECONDS)
 
 /obj/item/clothing/head/soft/propeller_hat
 	name = "propeller hat"
@@ -196,11 +196,43 @@
 	. = ..()
 	if(slot & ITEM_SLOT_HEAD)
 		user.add_mood_event(PROPHAT_MOOD, /datum/mood_event/prophat)
+		RegisterSignal(user, COMSIG_LIVING_SUICIDE_ACT, PROC_REF(on_suicide_act))
 
 /obj/item/clothing/head/soft/propeller_hat/dropped(mob/living/user)
 	. = ..()
+	UnregisterSignal(user, COMSIG_LIVING_SUICIDE_ACT)
 	user.clear_mood_event(PROPHAT_MOOD)
 	active = FALSE
 	update_icon()
 
+/obj/item/clothing/head/soft/propeller_hat/proc/on_suicide_act(mob/living/source)
+	SIGNAL_HANDLER
+	if(source.get_active_held_item())
+		return NONE
+
+	return suicide_act(source)
+
+/obj/item/clothing/head/soft/propeller_hat/suicide_act(mob/living/user)
+	if(!isturf(user.loc))
+		user.visible_message(span_suicide("[user] starts spinning [src] as fast as possible! \
+			It looks like [user.p_theyre()] trying to fly off into the sunset... yet the sky is out of reach for [user.p_them()]..."))
+		return SHAME
+
+	ADD_TRAIT(src, TRAIT_NODROP, TRAIT_GENERIC)
+	user.add_traits(list(TRAIT_GODMODE, TRAIT_FORCED_STANDING, TRAIT_UNDENSE, TRAIT_IMMOBILIZED, TRAIT_INCAPACITATED, TRAIT_HANDS_BLOCKED), TRAIT_GENERIC)
+	user.move_resist = INFINITY
+	user.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	user.set_suicide(TRUE)
+	user.visible_message(span_suicide("[user] starts spinning [src] as fast as possible! \
+		It looks like [user.p_theyre()] trying to fly off into the sunset!"))
+	playsound(src, 'sound/effects/whirthunk.ogg', 75)
+	animate(user, PROPHAT_SUICIDE_TIME, pixel_z = 256, alpha = 0)
+	QDEL_IN(user, PROPHAT_SUICIDE_TIME)
+	// drop objects that will get flagged by tsa before we board
+	for(var/obj/item/should_keep in user.get_all_contents())
+		if(should_keep.resistance_flags & INDESTRUCTIBLE)
+			should_keep.forceMove(user.drop_location())
+	return MANUAL_SUICIDE
+
+#undef PROPHAT_SUICIDE_TIME
 #undef PROPHAT_MOOD

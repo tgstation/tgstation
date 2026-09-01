@@ -2,7 +2,7 @@
 	name = "Draconic"
 	desc = "The common language of lizard-people, composed of sibilant hisses and rattles."
 	key = "o"
-	flags = TONGUELESS_SPEECH
+	flags = LANGUAGE_TONGUELESS_SPEECH
 	space_chance = 12
 	sentence_chance = 0
 	between_word_sentence_chance = 10

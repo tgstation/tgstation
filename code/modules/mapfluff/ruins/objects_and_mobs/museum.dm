@@ -2,7 +2,7 @@
 	name = "exhibit info terminal"
 	desc = "A relatively low-tech info board. Not as low-tech as an actual sign though. Appears to be quite old."
 	upperinfo = "Nanotrasen Museum Exhibit Info"
-	icon_state = "plaque"
+	icon_state = MAP_SWITCH("plaque", "/obj/machinery/computer/terminal/museum")
 	icon_screen = "plaque_screen"
 	icon_keyboard = null
 
@@ -161,11 +161,10 @@
 /obj/machinery/vending/hotdog/museum
 	all_products_free = TRUE
 
-/obj/machinery/vending/hotdog/museum/screwdriver_act(mob/living/user, obj/item/attack_item)
-	return NONE
-
-/obj/machinery/vending/hotdog/museum/crowbar_act(mob/living/user, obj/item/attack_item)
-	return NONE
+/obj/machinery/vending/hotdog/museum/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/tool_blocker, TOOL_SCREWDRIVER, TOOL_ACT_PRIMARY)
+	AddElement(/datum/element/tool_blocker, TOOL_CROWBAR, TOOL_ACT_PRIMARY)
 
 #define CAFE_KEYCARD_TOILETS "museum_cafe_key_toilets"
 

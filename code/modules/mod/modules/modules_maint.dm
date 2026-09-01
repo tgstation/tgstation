@@ -2,7 +2,7 @@
 
 ///Springlock Mechanism - allows your modsuit to activate faster, but reagents are very dangerous.
 /obj/item/mod/module/springlock
-	name = "MOD springlock module"
+	name = "\improper MOD springlock module"
 	desc = "A module that spans the entire size of the MOD unit, sitting under the outer shell. \
 		This mechanical exoskeleton pushes out of the way when the user enters and it helps in booting \
 		up, but was taken out of modern suits because of the springlock's tendency to \"snap\" back \
@@ -67,7 +67,7 @@
 
 	var/turf/wearer_turf = get_turf(src)
 	var/datum/gas_mixture/air = wearer_turf.return_air()
-	if(!(air.gases[/datum/gas/water_vapor] && (air.gases[/datum/gas/water_vapor][MOLES]) >= 5))
+	if(air.moles[/datum/gas/water_vapor] < 5)
 		return //return if there aren't more than 5 Moles of Water Vapor in the air
 	snap_signal()
 
@@ -105,7 +105,7 @@
 
 ///Rave Visor - Gives you a rainbow visor and plays jukebox music to you.
 /obj/item/mod/module/visor/rave
-	name = "MOD rave visor module"
+	name = "\improper MOD rave visor module"
 	desc = "A Super Cool Awesome Visor (SCAV), intended for modular suits."
 	icon_state = "rave_visor"
 	complexity = 1
@@ -188,7 +188,7 @@
 
 ///Tanner - Tans you with spraytan.
 /obj/item/mod/module/tanner
-	name = "MOD tanning module"
+	name = "\improper MOD tanning module"
 	desc = "A tanning module for modular suits. Skin cancer functionality has not been ever proven, \
 		although who knows with the rumors..."
 	icon_state = "tanning"
@@ -210,7 +210,7 @@
 
 ///Balloon Blower - Blows a balloon.
 /obj/item/mod/module/balloon
-	name = "MOD balloon blower module"
+	name = "\improper MOD balloon blower module"
 	desc = "A strange module invented years ago by some ingenious mimes. It blows balloons."
 	icon_state = "bloon"
 	module_type = MODULE_USABLE
@@ -234,7 +234,7 @@
 
 ///Paper Dispenser - Dispenses (sometimes burning) paper sheets.
 /obj/item/mod/module/paper_dispenser
-	name = "MOD paper dispenser module"
+	name = "\improper MOD paper dispenser module"
 	desc = "A simple module designed by the bureaucrats of Torch Bay. \
 		It dispenses 'warm, clean, and crisp sheets of paper' onto a nearby table. Usually."
 	icon_state = "paper_maker"
@@ -276,7 +276,7 @@
 
 ///Stamper - Extends a stamp that can switch between accept/deny modes.
 /obj/item/mod/module/stamp
-	name = "MOD stamper module"
+	name = "\improper MOD stamper module"
 	desc = "A module installed into the wrist of the suit, this functions as a high-power stamp, \
 		able to switch between accept, deny, and void modes."
 	icon_state = "stamp"
@@ -289,7 +289,7 @@
 	required_slots = list(ITEM_SLOT_GLOVES|ITEM_SLOT_NECK)
 
 /obj/item/stamp/mod
-	name = "MOD electronic stamp"
+	name = "\improper MOD electronic stamp"
 	desc = "A high-power stamp, able to switch between accept, deny, and void modes when used."
 	icon_state = "stamp-ok"
 
@@ -315,7 +315,7 @@
 
 ///Atrocinator - Flips your gravity.
 /obj/item/mod/module/atrocinator
-	name = "MOD atrocinator module"
+	name = "\improper MOD atrocinator module"
 	desc = "A mysterious orb that has mysterious effects when inserted in a MODsuit."
 	icon_state = "atrocinator"
 	module_type = MODULE_TOGGLE
@@ -341,7 +341,7 @@
 	RegisterSignal(mod.wearer, COMSIG_MOB_SAY, PROC_REF(on_talk))
 	RegisterSignal(mod.wearer, COMSIG_MOVABLE_PREBUCKLE, PROC_REF(on_someone_buckled))
 	ADD_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
-	passtable_on(mod.wearer, REF(src))
+	ADD_TRAIT(mod.wearer, TRAIT_PASSTABLE, REF(src))
 	check_upstairs() //todo at some point flip your screen around
 
 /obj/item/mod/module/atrocinator/deactivate(mob/activator, display_message = TRUE, deleting = FALSE)
@@ -359,7 +359,7 @@
 	UnregisterSignal(mod.wearer, COMSIG_MOVABLE_PREBUCKLE)
 	step_count = 0
 	REMOVE_TRAIT(mod.wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
-	passtable_off(mod.wearer, REF(src))
+	REMOVE_TRAIT(mod.wearer, TRAIT_PASSTABLE, REF(src))
 	var/turf/open/openspace/current_turf = get_turf(mod.wearer)
 	if(istype(current_turf))
 		current_turf.zFall(mod.wearer, falling_from_move = TRUE)
@@ -423,7 +423,7 @@
 
 
 /obj/item/mod/module/recycler/donk/safe
-	name = "MOD foam dart recycler module"
+	name = "\improper MOD foam dart recycler module"
 	desc = "A mod module that collects and repackages fired foam darts into half-sized ammo boxes. \
 		Activate on a nearby turf or storage to unload stored ammo boxes."
 	icon_state = "donk_safe_recycler"

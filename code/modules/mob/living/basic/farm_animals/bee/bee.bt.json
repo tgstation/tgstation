@@ -1,0 +1,86 @@
+{
+	"dm_type": "/datum/ai_controller/basic_controller/bee",
+	"type": "parallel",
+	"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+	"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+	"repeat_secondary": true,
+	"repeat_secondary_delay": "1 SECONDS",
+	"finish_on_primary": true,
+	"children": [
+		{
+			"type": "selector",
+			"children": [
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree",
+					"override_id": "SUBPLAN_ID_PET_COMMAND"
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/find_hive"
+				},
+				{
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/transition_hive_status"
+				},
+				{
+					"type": "parallel",
+					"failure_policy": "BT_PARALLEL_FAILURE_CHILD_ONE",
+					"success_policy": "BT_PARALLEL_SUCCESS_CHILD_ONE",
+					"repeat_secondary": true,
+					"repeat_secondary_delay": "1 SECONDS",
+					"finish_on_primary": true,
+					"children": [
+						{
+							"type": "selector",
+							"children": [
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/pollinate_target"
+								},
+								{
+									"type": "subtree",
+									"subtype": "/datum/bt_node/subtree/simple_hostile_combat"
+								}
+							]
+						},
+						{
+							"type": "leaf",
+							"behavior": "/datum/bt_node/ai_behavior/enter_exit_hive"
+						},
+						{
+							"type": "decorator",
+							"decorator": "/datum/bt_node/decorator/random_chance",
+							"vars": {
+								"chance": 0.85
+							},
+							"child": {
+								"type": "leaf",
+								"behavior": "/datum/bt_node/ai_behavior/acquire_target/update_interaction_target",
+								"vars": {
+									"target_key": "BB_TARGET_HYDRO",
+									"target_source": "/datum/target_source/oview_single_type/hydroponics",
+									"targeting_strategy": "/datum/targeting_strategy/pollinatable_hydro",
+									"vision_range": 10,
+									"time_between_perform": "10 SECONDS"
+								}
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"type": "decorator",
+			"decorator": "/datum/bt_node/decorator/bb_key_set",
+			"vars": {
+				"invert": true,
+				"key": "BB_TARGET_HOME"
+			},
+			"child": {
+				"type": "leaf",
+				"behavior": "/datum/bt_node/ai_behavior/find_hive"
+			}
+		}
+	]
+}

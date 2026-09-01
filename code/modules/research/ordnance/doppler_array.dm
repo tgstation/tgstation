@@ -169,7 +169,7 @@
 
 	var/datum/data/tachyon_record/new_record = new /datum/data/tachyon_record()
 	new_record.name = "Log Recording #[record_number]"
-	new_record.timestamp = station_time_timestamp()
+	new_record.timestamp = "[server_timestamp(ic_time = TRUE)] (PT: [round_timestamp()])"
 	new_record.coordinates = "[epicenter.x], [epicenter.y]"
 	new_record.displacement = took
 	new_record.factual_radius["epicenter_radius"] = devastation_range
@@ -276,7 +276,7 @@
 		// Make sure the list is indexed first.
 		if(reaction_data.len)
 			for (var/path in reaction_data[TANK_RESULTS_REACTION])
-				var/datum/gas_reaction/reaction_path = path
+				var/datum/gas_reaction/standard/reaction_path = path
 				record_data["reaction_results"] += initial(reaction_path.name)
 			if(TANK_MERGE_OVERPRESSURE in reaction_data[TANK_RESULTS_MISC])
 				record_data["reaction_results"] += "Tank overpressurized before reaction"

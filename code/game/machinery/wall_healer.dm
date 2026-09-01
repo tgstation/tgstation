@@ -1,3 +1,5 @@
+#define WALL_HEALER_OFFSET 32
+
 /// A wall mounted machine that heals chip damage for a price
 /obj/machinery/wall_healer
 	name = "\improper DeForest first aid station"
@@ -10,6 +12,7 @@
 	payment_department = ACCOUNT_MED
 	max_integrity = 150
 	armor_type = /datum/armor/obj_machinery/wall_healer
+	circuit = /obj/item/circuitboard/machine/wall_healer
 
 	/// Cost per bandage dispensed. Note, always disregarded on red alert.
 	var/per_bandage_cost = (/obj/item/stack/medical/wrap/gauze::custom_price) / (/obj/item/stack/medical/wrap/gauze::amount)
@@ -51,26 +54,29 @@
 	VAR_PRIVATE/antispam_counter = 0
 
 /datum/armor/obj_machinery/wall_healer
-	melee = 50
-	bullet = 30
+	melee = 20
+	bullet = 20
 	laser = 30
-	energy = 40
+	energy = 30
 	bomb = 10
 	fire = 80
 	acid = 80
+	bio = 100
 
 /obj/machinery/wall_healer/Initialize(mapload)
 	. = ..()
 	if(!mapload)
+		num_bandages = 0
 		brute_healing = 0
 		burn_healing = 0
 		tox_healing = 0
 		blood_healing = 0
 		update_appearance()
+	if(istype(circuit) && (circuit.obj_flags & EMAGGED))
+		obj_flags |= EMAGGED
 	init_payment()
 	register_context()
-	if(mapload)
-		find_and_mount_on_atom()
+	find_and_mount_on_atom()
 
 /obj/machinery/wall_healer/Destroy()
 	clear_using_mob()
@@ -85,6 +91,30 @@
 	if(istype(held_item, /obj/item/stack/medical/wrap/gauze))
 		context[SCREENTIP_CONTEXT_LMB] = "Restock"
 		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER)
+		context[SCREENTIP_CONTEXT_LMB] = "[panel_open ? "Close" : "Open"] panel"
+		return CONTEXTUAL_SCREENTIP_SET
+	if(held_item?.tool_behaviour == TOOL_CROWBAR && can_crowbar_deconstruct())
+		context[SCREENTIP_CONTEXT_LMB] = "Deconstruct"
+		return CONTEXTUAL_SCREENTIP_SET
+	return NONE
+
+// Someone please add generic support for constructing wall mounted objects thanks
+/obj/machinery/wall_healer/on_construction(mob/user)
+	if(user.dir & NORTH)
+		pixel_y += WALL_HEALER_OFFSET
+	else if(user.dir & SOUTH)
+		pixel_y -= WALL_HEALER_OFFSET
+
+	if(user.dir & EAST)
+		pixel_x += WALL_HEALER_OFFSET
+	else if(user.dir & WEST)
+		pixel_x -= WALL_HEALER_OFFSET
+
+	if(!find_and_mount_on_atom())
+		stack_trace("Got to on_construction for [type], but failed to mount on a wall! This should be asserted from construction requirements.")
+		loc.balloon_alert(user, "no wall to install on!")
+		deconstruct(TRUE)
 
 /obj/machinery/wall_healer/proc/refill_healing_pool(percent = 100)
 	var/amount_refilled = 0
@@ -126,6 +156,9 @@
 /obj/machinery/wall_healer/update_overlays()
 	. = ..()
 
+	if(panel_open)
+		. += "open"
+
 	var/brute_state = 7 - round(7 * (brute_healing / initial(brute_healing)), 1)
 	var/mutable_appearance/brute = mutable_appearance(icon, "bar[brute_state]", alpha = src.alpha, appearance_flags = RESET_COLOR)
 	brute.color = /datum/reagent/medicine/c2/libital::color
@@ -162,7 +195,20 @@
 	visible_message(span_warning("Sparks fly out of [src]!"))
 	balloon_alert(user, "safeties disabled")
 	obj_flags |= EMAGGED
+	circuit?.obj_flags |= EMAGGED
 	return TRUE
+
+/obj/machinery/wall_healer/screwdriver_act(mob/living/user, obj/item/tool)
+	return screwdriver_act_secondary(user, tool)
+
+/obj/machinery/wall_healer/screwdriver_act_secondary(mob/living/user, obj/item/tool)
+	return default_deconstruction_screwdriver(user, tool)
+
+/obj/machinery/wall_healer/crowbar_act(mob/living/user, obj/item/tool)
+	return crowbar_act_secondary(user, tool)
+
+/obj/machinery/wall_healer/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	return default_deconstruction_crowbar(user, tool)
 
 /// We want user to be right up to the wall mount to use it
 /// However people may often map the machine over a table
@@ -354,7 +400,8 @@
 	var/atom/drop_loc = drop_location()
 	for(var/obj/item/stack/medical/wrap/gauze/bandage as anything in stocked_bandages)
 		bandage.forceMove(drop_loc)
-	new /obj/item/stack/medical/wrap/gauze(drop_loc, num_bandages)
+	if(num_bandages > 0)
+		new /obj/item/stack/medical/wrap/gauze(drop_loc, num_bandages)
 
 /obj/machinery/wall_healer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/stack/medical/wrap/gauze))
@@ -556,12 +603,17 @@
 
 	update(COOLDOWN_FINISHED(healer, injection_cooldown) ? 0 : COOLDOWN_TIMELEFT(healer, injection_cooldown))
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/wall_healer, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/wall_healer, WALL_HEALER_OFFSET)
 
 /obj/machinery/wall_healer/free
 	name = "\improper DeForest emergency first aid station"
+	circuit = /obj/item/circuitboard/machine/wall_healer/free
+	recharge_cd_length = 60 SECONDS
+	injection_cd_length = 2 SECONDS
 
 /obj/machinery/wall_healer/free/init_payment()
 	return
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/wall_healer/free, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/wall_healer/free, WALL_HEALER_OFFSET)
+
+#undef WALL_HEALER_OFFSET

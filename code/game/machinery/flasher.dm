@@ -62,35 +62,45 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	return ..()
 
 //Don't want to render prison breaks impossible
-/obj/machinery/flasher/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/flasher/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-	if (attacking_item.tool_behaviour == TOOL_WIRECUTTER)
-		if (bulb)
-			user.visible_message(span_notice("[user] begins to disconnect [src]'s flashbulb."), span_notice("You begin to disconnect [src]'s flashbulb..."))
-			if(attacking_item.use_tool(src, user, 30, volume=50) && bulb)
-				user.visible_message(span_notice("[user] disconnects [src]'s flashbulb!"), span_notice("You disconnect [src]'s flashbulb."))
-				bulb.forceMove(loc)
-				power_change()
 
-	else if (istype(attacking_item, /obj/item/assembly/flash/handheld))
-		if (!bulb)
-			if(!user.transferItemToLoc(attacking_item, src))
-				return
-			user.visible_message(span_notice("[user] installs [attacking_item] into [src]."), span_notice("You install [attacking_item] into [src]."))
-			power_change()
-		else
-			to_chat(user, span_warning("A flashbulb is already installed in [src]!"))
+	if (!istype(tool, /obj/item/assembly/flash/handheld))
+		return NONE
+	if (bulb)
+		to_chat(user, span_warning("A flashbulb is already installed in [src]!"))
+		return ITEM_INTERACT_BLOCKING
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice("[user] installs [tool] into [src]."), \
+						span_notice("You install [tool] into [src]."))
+	power_change()
+	return ITEM_INTERACT_SUCCESS
 
-	else if (attacking_item.tool_behaviour == TOOL_WRENCH)
-		if(!bulb)
-			to_chat(user, span_notice("You start unsecuring the flasher frame..."))
-			if(attacking_item.use_tool(src, user, 40, volume=50))
-				to_chat(user, span_notice("You unsecure the flasher frame."))
-				deconstruct(TRUE)
-		else
-			to_chat(user, span_warning("Remove a flashbulb from [src] first!"))
-	else
-		return ..()
+
+/obj/machinery/flasher/wirecutter_act(mob/living/user, obj/item/tool)
+	add_fingerprint(user)
+	if(!bulb)
+		return NONE
+	user.visible_message(span_notice("[user] begins to disconnect [src]'s flashbulb."), span_notice("You begin to disconnect [src]'s flashbulb..."))
+	if(!tool.use_tool(src, user, 30, volume=50) || !bulb)
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_notice("[user] disconnects [src]'s flashbulb!"), span_notice("You disconnect [src]'s flashbulb."))
+	bulb.forceMove(loc)
+	power_change()
+	return ITEM_INTERACT_SUCCESS
+
+/obj/machinery/flasher/wrench_act(mob/living/user, obj/item/tool)
+	add_fingerprint(user)
+	if(bulb)
+		to_chat(user, span_warning("Remove a flashbulb from [src] first!"))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You start unsecuring the flasher frame..."))
+	if(!tool.use_tool(src, user, 40, volume=50))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("You unsecure the flasher frame."))
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
 //Let the AI trigger them directly.
 /obj/machinery/flasher/attack_ai()
@@ -189,25 +199,22 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/flasher, 26)
 	if(vname == NAMEOF(src, flash_range))
 		proximity_monitor?.set_range(flash_range)
 
-/obj/machinery/flasher/portable/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if (attacking_item.tool_behaviour == TOOL_WRENCH)
-		attacking_item.play_tool_sound(src, 100)
+/obj/machinery/flasher/portable/wrench_act(mob/living/user, obj/item/tool)
+	tool.play_tool_sound(src, 100)
+	if (!anchored && !isinspace())
+		to_chat(user, span_notice("[src] is now secured."))
+		add_overlay("[base_icon_state]-s")
+		set_anchored(TRUE)
+		power_change()
+		proximity_monitor.set_range(flash_range)
+		return ITEM_INTERACT_SUCCESS
 
-		if (!anchored && !isinspace())
-			to_chat(user, span_notice("[src] is now secured."))
-			add_overlay("[base_icon_state]-s")
-			set_anchored(TRUE)
-			power_change()
-			proximity_monitor.set_range(flash_range)
-		else
-			to_chat(user, span_notice("[src] can now be moved."))
-			cut_overlays()
-			set_anchored(FALSE)
-			power_change()
-			proximity_monitor.set_range(0)
-
-	else
-		return ..()
+	to_chat(user, span_notice("[src] can now be moved."))
+	cut_overlays()
+	set_anchored(FALSE)
+	power_change()
+	proximity_monitor.set_range(0)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/wallframe/flasher
 	name = "mounted flash frame"

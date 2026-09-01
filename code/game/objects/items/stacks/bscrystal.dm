@@ -13,6 +13,10 @@
 	refined_type = /obj/item/stack/sheet/bluespace_crystal
 	scan_state = "rock_bscrystal"
 	merge_type = /obj/item/stack/ore/bluespace_crystal
+	vein_type = ORE_VEIN_SCATTER
+	vein_distance = 5
+	min_vein_size = 1
+	max_vein_size = 2
 	/// The teleport range when crushed/thrown at someone.
 	var/blink_range = 8
 
@@ -34,6 +38,7 @@
 	return 1
 
 /obj/item/stack/ore/bluespace_crystal/attack_self(mob/user)
+	SEND_SIGNAL(user, COMSIG_MOB_CRUSHED_BLUESPACE_CRYSTAL, src)
 	user.visible_message(span_warning("[user] crushes [src]!"), span_danger("You crush [src]!"))
 	new /obj/effect/particle_effect/sparks(loc)
 	playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -76,7 +81,7 @@
 	icon_state = "polycrystal"
 	inhand_icon_state = null
 	material_flags = MATERIAL_NO_DESCRIPTORS
-	gulag_valid = TRUE
+	gulag_value = 100
 	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT)
 	attack_verb_continuous = list("bluespace polybashes", "bluespace polybatters", "bluespace polybludgeons", "bluespace polythrashes", "bluespace polysmashes")
 	attack_verb_simple = list("bluespace polybash", "bluespace polybatter", "bluespace polybludgeon", "bluespace polythrash", "bluespace polysmash")
@@ -103,3 +108,11 @@
 
 /obj/item/stack/sheet/bluespace_crystal/fifty
 	amount = 50
+
+GLOBAL_LIST_INIT(bluespace_crystal_recipes, list ( \
+	new/datum/stack_recipe("bluespace crystal tile", /obj/item/stack/tile/mineral/bluespace, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
+))
+
+/obj/item/stack/sheet/bluespace_crystal/get_main_recipes()
+	. = ..()
+	. += GLOB.bluespace_crystal_recipes

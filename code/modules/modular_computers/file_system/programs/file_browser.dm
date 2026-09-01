@@ -119,8 +119,8 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 			var/datum/computer_file/file = computer.find_file_by_name(params["name"])
 			if(!file)
 				return
-			var/newname = reject_bad_name(params["new_name"], allow_numbers = TRUE, cap_after_symbols = FALSE, cap_at_start = FALSE)
-			if(!newname || newname != params["new_name"])
+			var/newname = trim(params["new_name"], MAX_MESSAGE_LEN)
+			if(!length(newname) || !filter_filename_pda(newname))
 				playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 25, FALSE)
 				return
 			file.filename = newname
@@ -131,8 +131,8 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 			var/datum/computer_file/file = computer.find_file_by_name(params["name"], computer.inserted_disk)
 			if(!file)
 				return
-			var/newname = reject_bad_name(params["new_name"], allow_numbers = TRUE, cap_after_symbols = FALSE, cap_at_start = FALSE)
-			if(!newname || newname != params["new_name"])
+			var/newname = trim(params["new_name"], MAX_MESSAGE_LEN)
+			if(!length(newname) || !filter_filename_pda(newname))
 				playsound(computer, 'sound/machines/terminal/terminal_error.ogg', 25, FALSE)
 				return
 			file.filename = newname

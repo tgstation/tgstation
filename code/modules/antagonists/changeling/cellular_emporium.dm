@@ -42,6 +42,7 @@
 			var/list/ability_data = list(
 				"name" = initial(ability_path.name),
 				"desc" = initial(ability_path.desc),
+				"icon" = initial(ability_path.button_icon_state),
 				"helptext" = initial(ability_path.helptext),
 				"path" = ability_path,
 				"genetic_point_required" = dna_cost,

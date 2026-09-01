@@ -32,6 +32,7 @@
 	family_heirlooms = list(/obj/item/toy/plush/pkplush)
 	rpg_title = "Necromancer"
 	job_flags = STATION_JOB_FLAGS
+	tgui_icon = FA_ICON_BATTERY_HALF
 
 
 /datum/job/roboticist/New()
@@ -55,6 +56,8 @@
 
 	pda_slot = ITEM_SLOT_LPOCKET
 	skillchips = list(/obj/item/skillchip/job/roboticist)
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/science/robotics
 
 /datum/outfit/job/roboticist/mod
 	name = "Roboticist (MODsuit)"

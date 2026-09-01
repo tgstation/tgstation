@@ -99,13 +99,19 @@
 	update_appearance()
 
 	if(is_path_in_list(merge_type, GLOB.golem_stack_food_directory))
-		AddComponent(/datum/component/golem_food, golem_food_key = merge_type)
+		var/processing_bonus = 1
+		if(ispath(merge_type, /obj/item/stack/sheet))
+			processing_bonus = GOLEMFOOD_PREPARED_MEAL
+		AddComponent(/datum/component/golem_food, golem_food_key = merge_type, food_multiplier = processing_bonus)
 
 /obj/item/stack/LateInitialize()
 	merge_with_loc()
 
 /obj/item/stack/Destroy()
 	mats_per_unit = null
+	if(source)
+		LAZYREMOVE(source.linked_modules, src)
+		source = null
 	return ..()
 
 /obj/item/stack/update_name(updates)
@@ -153,6 +159,11 @@
 			return FALSE
 		other_stack = find_other_stack(already_found, TRUE)
 	return TRUE
+
+/obj/item/stack/apply_material_effects(list/materials)
+	. = ..()
+	if(amount)
+		mats_per_unit = SSmaterials.get_material_set_cache(materials, 1/amount)
 
 /obj/item/stack/blend_requirements(atom/movable/grinder, mob/living/user)
 	if(!is_cyborg)
@@ -475,8 +486,13 @@
 
 		if(isstack(created))
 			var/obj/item/stack/crafted_stack = created
-			crafted_stack.mats_per_unit = SSmaterials.get_material_set_cache(result_mats)
-			update_custom_materials()
+			if(crafted_stack.amount) // If our stack's been emptied, it means another stack's already eaten it, and that stack'll deal with materials
+				if(recipe.res_amount > 0 && recipe.req_amount != recipe.res_amount)
+					var/scale = recipe.req_amount / recipe.res_amount
+					for(var/mat in result_mats)
+						result_mats[mat] *= scale
+				crafted_stack.mats_per_unit = SSmaterials.get_material_set_cache(result_mats)
+				crafted_stack.update_custom_materials()
 		else
 			created.set_custom_materials(result_mats, recipe.req_amount * multiplier)
 
@@ -572,7 +588,9 @@
 		return FALSE
 	if(is_cyborg)
 		if(source.use_charge(used * cost))
-			update_appearance(UPDATE_NAME)
+			//this will include us
+			for(var/obj/item/stack/modules as anything in source.linked_modules)
+				modules.update_appearance(UPDATE_NAME)
 			return TRUE
 		return FALSE
 	if (amount < used)
@@ -787,13 +805,14 @@
 	user.put_in_hands(new_stack, merge_stacks = FALSE)
 	return new_stack
 
-/obj/item/stack/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(can_merge(W, inhand = TRUE))
-		var/obj/item/stack/S = W
-		if(merge(S))
-			to_chat(user, span_notice("Your [S.name] stack now contains [S.get_amount()] [S.singular_name]\s."))
-	else
-		. = ..()
+/obj/item/stack/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!can_merge(tool, inhand = TRUE))
+		return NONE
+	var/obj/item/stack/overtaking_stack = tool
+	if(!merge(overtaking_stack))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("Your [overtaking_stack.name] stack now contains [overtaking_stack.get_amount()] [overtaking_stack.singular_name]\s."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/stack/proc/copy_evidences(obj/item/stack/from)
 	add_blood_DNA(GET_ATOM_BLOOD_DNA(from))

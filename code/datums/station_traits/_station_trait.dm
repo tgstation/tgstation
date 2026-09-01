@@ -71,14 +71,6 @@ GLOBAL_LIST_EMPTY(lobby_station_traits)
 
 	qdel(src)
 
-/// Called by decals if they can be colored, to see if we got some cool colors for them. Only takes the first station trait
-/proc/request_station_colors(atom/thing_to_color, pattern)
-	for(var/datum/station_trait/trait in SSstation.station_traits)
-		var/decal_color = trait.get_decal_color(thing_to_color, pattern || PATTERN_DEFAULT)
-		if(decal_color)
-			return decal_color
-	return null
-
 /// Return a color for the decals, if any
 /datum/station_trait/proc/get_decal_color(thing_to_color, pattern)
 	return

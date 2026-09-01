@@ -302,8 +302,8 @@
 	)
 	custom_materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4.75,
-		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 2.50,
 		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 1.75,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 1.25,
 		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.25,
 	)
 	radio_alert = TRUE

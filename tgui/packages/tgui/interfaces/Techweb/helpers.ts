@@ -1,6 +1,7 @@
 import { map } from 'es-toolkit/compat';
 
 import { useBackend } from '../../backend';
+import type { Design } from '../Fabrication/Types';
 import type { NodeCache, TechWebData } from './types';
 
 type Cost = {
@@ -9,13 +10,13 @@ type Cost = {
 };
 
 type RemappedNode = NodeCache & {
-  id: string;
   costs: Cost[];
 };
 
-type RemappedDesignCache = {
-  name: string;
+type RemappedDesignCache = Design & {
   class: string;
+  department_flags: number;
+  build_type: number;
 };
 
 // Data reshaping / ingestion (thanks stylemistake for the help, very cool!)
@@ -46,27 +47,39 @@ function selectRemappedStaticData(data: TechWebData) {
       ...node,
       id: remapId(id),
       costs,
-      prereq_ids: map(node.prereq_ids || [], remapId),
-      design_ids: map(node.design_ids || [], remapId),
-      unlock_ids: map(node.unlock_ids || [], remapId),
+      prerequisite_nodes: map(node.prerequisite_nodes || [], remapId),
+      unlocked_designs: map(node.unlocked_designs || [], remapId),
+      unlocked_nodes: map(node.unlocked_nodes || [], remapId),
       required_experiments: node.required_experiments || [],
       discount_experiments: node.discount_experiments || [],
+      discount_boosts: node.discount_boosts || [],
     };
   }
 
   // Do the same as the above for the design cache
   const design_cache = {} as RemappedDesignCache;
   for (const id of Object.keys(data.static_data.design_cache)) {
-    const [name, classes] = data.static_data.design_cache[id];
+    const [name, cost, build_types, department_flags, classes] =
+      data.static_data.design_cache[id];
     design_cache[remapId(id)] = {
       name: name,
+      cost: cost,
+      build_types: build_types,
+      department_flags: department_flags,
       class: classes.startsWith('design') ? classes : `design32x32 ${classes}`,
     };
   }
 
+  const SHEET_MATERIAL_AMOUNT = data.static_data.SHEET_MATERIAL_AMOUNT;
+  const build_types = data.static_data.build_types;
+  const department_flags = data.static_data.department_flags;
+
   return {
     node_cache,
     design_cache,
+    build_types,
+    department_flags,
+    SHEET_MATERIAL_AMOUNT,
   };
 }
 

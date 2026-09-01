@@ -85,16 +85,20 @@
 /obj/item/chainsaw/get_demolition_modifier(obj/target)
 	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE) ? demolition_mod : 0.8
 
-/obj/item/chainsaw/suicide_act(mob/living/carbon/user)
+/obj/item/chainsaw/suicide_act(mob/living/user)
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		user.visible_message(span_suicide("[user] smashes [src] into [user.p_their()] neck, destroying [user.p_their()] esophagus! It looks like [user.p_theyre()] trying to commit suicide!"))
 		playsound(src, 'sound/items/weapons/genhit1.ogg', 100, TRUE)
 		return BRUTELOSS
 
+	if (!iscarbon(user))
+		user.visible_message(span_suicide("[user] begins to shred [user.p_themselves()] with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
+		return BRUTELOSS
+
 	user.visible_message(span_suicide("[user] begins to tear [user.p_their()] head off with [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	var/obj/item/bodypart/head/myhead = user.get_bodypart(BODY_ZONE_HEAD)
 	if(!myhead)
-		visible_message(span_suicide("[user] realises that [user.p_they()] cannot cut off [user.p_their()] head because [user.p_they()] don't have one!"))
+		visible_message(span_suicide("[user] realises that [user.p_they()] cannot cut off [user.p_their()] head because [user.p_they()] [user.p_do()]n't have one!"))
 		return SHAME
 
 	playsound(src, 'sound/items/weapons/chainsawhit.ogg', 100, TRUE)
@@ -107,6 +111,9 @@
 	return BRUTELOSS
 
 /obj/item/chainsaw/attack(mob/living/target_mob, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return ..()
+
 	if (target_mob.stat != DEAD)
 		return ..()
 
@@ -114,17 +121,19 @@
 		return ..()
 
 	var/obj/item/bodypart/head = target_mob.get_bodypart(BODY_ZONE_HEAD)
-	if (!head?.can_dismember())
+	if (!head)
 		return ..()
 
-	playsound(user, 'sound/items/weapons/slice.ogg', vol = 80, vary = TRUE)
-
+	playsound(src, 'sound/items/weapons/chainsawhit.ogg', vol = 100, vary = TRUE)
 	target_mob.balloon_alert(user, "cutting off head...")
+
 	if (!do_after(user, behead_time, target_mob, extra_checks = CALLBACK(src, PROC_REF(has_same_head), target_mob, head)))
 		return TRUE
 
 	if (head.dismember(silent = FALSE))
-		user.put_in_hands(head)
+		playsound(src, 'sound/items/weapons/chainsawhit.ogg', vol = 100, vary = TRUE)
+	else
+		to_chat(user, span_warning("[target_mob]'s head is attached too firmly to cut off!"))
 
 	return TRUE
 
@@ -151,6 +160,76 @@
 		playsound(src, SFX_BULLET_MISS, 75, TRUE)
 		return TRUE
 	return FALSE
+
+/obj/item/chainsaw/dual
+	name = "double-ended chainsaw spear"
+	desc = "A dangerous, crazy contraption that could fall apart from a slight breeze. WHAT WERE THEY THINKING?!"
+	icon_state = "chainsawdual"
+	base_icon_state = "chainsawdual"
+	lefthand_file = 'icons/mob/inhands/weapons/chainsaw_lefthand.dmi'
+	righthand_file = 'icons/mob/inhands/weapons/chainsaw_righthand.dmi'
+	throw_range = 0
+	force_on = 40
+	armour_penetration = 20
+	block_chance = 50
+	block_sound = 'sound/items/weapons/parry.ogg'
+	item_flags = SLOWS_WHILE_IN_HAND
+	slowdown = 2
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 12.3,
+		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 10,
+		/datum/material/glass = SHEET_MATERIAL_AMOUNT * 6.3,
+		/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 2
+	)
+
+/obj/item/chainsaw/dual/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	if(HAS_TRAIT(user, TRAIT_HULK))
+		to_chat(user, span_warning("You grip the weapon too hard and accidentally drop it!"))
+		user.dropItemToGround(src, force=TRUE)
+		return TRUE
+
+/obj/item/chainsaw/dual/attack(mob/target, mob/living/carbon/human/user)
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return ..()
+
+	if(prob(50))
+		impale(user)
+		return TRUE
+
+	return ..()
+
+/obj/item/chainsaw/dual/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
+	if(prob(50))
+		INVOKE_ASYNC(src, PROC_REF(jedi_spin), user)
+
+/obj/item/chainsaw/dual/proc/jedi_spin(mob/living/user)
+	dance_rotate(user, CALLBACK(user, TYPE_PROC_REF(/mob, dance_flip)))
+
+/obj/item/chainsaw/dual/proc/impale(mob/living/user)
+	to_chat(user, span_warning("You horrifically tear yourself with [src]!"))
+	user.take_bodypart_damage(45,check_armor = TRUE, wound_bonus = 20, sharpness = SHARP_EDGED)
+	user.do_attack_animation(user)
+	user.Stun(1 SECONDS)
+	user.Knockdown(5 SECONDS)
+
+/obj/item/chainsaw/dual/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
+	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
+		final_block_chance = 0
+	if(attack_type != PROJECTILE_ATTACK && prob(30))
+		atom_destruction(MELEE)
+		return FALSE
+
+	return ..()
+
+/obj/item/chainsaw/dual/atom_destruction(damage_flag)
+	playsound(src, 'sound/effects/grillehit.ogg', 50)
+	new /obj/item/chainsaw(drop_location())
+	new /obj/item/chainsaw(drop_location())
+	new /obj/item/restraints/handcuffs/cable(drop_location())
+	if(isliving(loc))
+		loc.balloon_alert(loc, "weapon broken!")
+	return ..()
 
 /datum/action/item_action/startchainsaw
 	name = "Pull The Starting Cord"

@@ -71,13 +71,15 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		/obj/item/food/meat/slab/xeno = -15,
 		/obj/item/food/meat/steak = 50,
 		/obj/item/food/grown/ash_flora = 10,
-		/obj/item/fish = 15,
+		/obj/item/fish = 25,
 		/obj/item/organ = 25,
 	)
 	/// Inheritance datum we store our genetic data in
 	var/datum/raptor_inheritance/inherited_stats = null
 	/// Current happiness value of the raptor
 	var/happiness_percentage = 0
+	/// The ability for this raptor to be picked up and held. Defaults to FALSE as it's meant to be in lockstep with the element being added/removed.
+	var/could_be_held = FALSE
 
 /mob/living/basic/raptor/Initialize(mapload, datum/raptor_color/color_type, datum/raptor_inheritance/passed_stats)
 	. = ..()
@@ -92,7 +94,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	else
 		change_growth_stage(growth_stage, RAPTOR_ADULT)
 
-	add_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_MINING_AOE_IMMUNE), INNATE_TRAIT)
+	add_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_MINING_AOE_IMMUNE, TRAIT_NO_SLIP_ICE, TRAIT_NO_SLIP_SLIDE), INNATE_TRAIT)
 	AddElement(\
 		/datum/element/crusher_loot,\
 		trophy_type = /obj/item/crusher_trophy/raptor_feather,\
@@ -139,6 +141,9 @@ GLOBAL_LIST_EMPTY(raptor_population)
 		return
 	return ..()
 
+/mob/living/basic/raptor/get_hud_x_offset()
+	return -4
+
 /mob/living/basic/raptor/examine(mob/user)
 	. = ..()
 	if (stat == DEAD)
@@ -169,16 +174,16 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 /mob/living/basic/raptor/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(.)
+		return
 	if(!istype(target, /obj/structure/ore_container/food_trough/raptor_trough))
-		return TRUE
+		return BASIC_MOB_CONTINUE_ATTACK_CHAIN
 	var/obj/ore_food = locate(/obj/item/stack/ore) in target
 	if(isnull(ore_food))
 		balloon_alert(src, "no food!")
 	else
 		UnarmedAttack(ore_food, TRUE, modifiers)
-	return FALSE
+	return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /mob/living/basic/raptor/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
 	if (!combat_mode && istype(target, /mob/living/basic/raptor))
@@ -280,6 +285,16 @@ GLOBAL_LIST_EMPTY(raptor_population)
 
 	return pick_weight(prob_list)
 
+/// Updates the presence of the can_be_held element based on what we want from the raptor
+/mob/living/basic/raptor/proc/update_holdability(bool)
+	if(bool && !could_be_held)
+		AddElement(/datum/element/can_be_held)
+		could_be_held = TRUE
+
+	if(!bool && could_be_held)
+		RemoveElement(/datum/element/can_be_held)
+		could_be_held = FALSE
+
 /mob/living/basic/raptor/proc/on_picked_up(mob/living/basic/raptor/source, mob/living/user, obj/item/mob_holder/holder)
 	SIGNAL_HANDLER
 	// Our inventory code sucks so we have to do this
@@ -361,16 +376,16 @@ GLOBAL_LIST_EMPTY(raptor_population)
 			base_pixel_w = initial(base_pixel_w)
 			mob_size = initial(mob_size)
 
-	can_be_held = initial(density)
 	density = initial(density)
 	move_resist = initial(move_resist)
 	can_breed = initial(can_breed)
+	update_holdability(initial(could_be_held))
 
 	if (new_stage == RAPTOR_ADULT)
 		// Adults need to be tamed with skill rather than snacks
 		qdel(GetComponent(/datum/component/tameable))
 	else // Make us teeny-tiny
-		can_be_held = TRUE
+		update_holdability(TRUE)
 		density = FALSE
 		can_breed = FALSE
 		move_resist = MOVE_RESIST_DEFAULT
@@ -386,7 +401,7 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	var/obj/item/mob_holder/holder = null
 	if (istype(loc, /obj/item/mob_holder))
 		holder = loc
-		if (!can_be_held)
+		if (!could_be_held)
 			holder.release()
 			holder = null
 

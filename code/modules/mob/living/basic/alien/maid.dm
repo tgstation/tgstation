@@ -19,15 +19,15 @@
 ///Handles the maid attacking other players, cancelling the attack to clean up instead.
 /mob/living/basic/alien/maid/early_melee_attack(atom/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!.)
-		return FALSE
+	if(.)
+		return
 
 	target.wash(CLEAN_SCRUB)
 	if(istype(target, /obj/effect/decal/cleanable))
 		visible_message(span_notice("[src] cleans up \the [target]."))
 	else
 		visible_message(span_notice("[src] polishes \the [target]."))
-	return FALSE
+	return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
 
 /**
  * Barmaid special type

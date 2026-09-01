@@ -72,7 +72,8 @@
 		initial_reagents = list(/datum/reagent/consumable/nutriment/protein = protein_count, /datum/reagent/consumable/nutriment/fat = fat_count), \
 		foodtypes = RAW | MEAT, \
 		eat_time = 3 SECONDS, \
-		tastes = list("meat" = 1))
+		tastes = list("meat" = 1),\
+		handmade_complexity = /obj/item/food/meat/steak::crafting_complexity)
 
 	source.AddComponent(
 		/datum/component/bloody_spreader,\
@@ -166,7 +167,7 @@
 
 	var/list/blood_data = source.data
 	name = "[blood_data["real_name"] || "mystery"] [initial(name)]"
-	var/datum/blood_type/blood_type = blood_data["blood_type"]
+	var/datum/blood_type/blood_type = blood_data[BLOOD_DATA_TYPE]
 	if(blood_type && blood_type.get_color() != BLOOD_COLOR_RED)
 		var/list/transition_filter = color_transition_filter(blood_type.get_color())
 		color = transition_filter["color"]

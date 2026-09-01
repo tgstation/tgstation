@@ -8,7 +8,7 @@
 	sentience_type = SENTIENCE_BOSS
 	mob_biotypes = MOB_ORGANIC|MOB_SPECIAL
 	faction = list(FACTION_MINING, FACTION_BOSS)
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, CLONE = 0, STAMINA = 0, OXY = 0)
+	physiology = list(TOX = 0, OXY = 0, STAMINA = 0)
 	obj_damage = 400
 	unsuitable_cold_damage = 0
 	unsuitable_heat_damage = 0
@@ -77,10 +77,12 @@
 
 /mob/living/basic/boss/early_melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
 	. = ..()
-	if(!. || !istype(target))
+	if(. || !istype(target))
 		return
 	if(should_devour(target))
 		devour(target)
+		return BASIC_MOB_END_ATTACK_CHAIN_COOLDOWN
+	return
 
 /// Determines if this mob is worth devouring
 /mob/living/basic/boss/proc/should_devour(mob/living/victim)

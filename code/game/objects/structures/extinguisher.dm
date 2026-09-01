@@ -65,33 +65,36 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/extinguisher_cabinet, 29)
 		stored_extinguisher = null
 		update_appearance(UPDATE_ICON)
 
-/obj/structure/extinguisher_cabinet/attackby(obj/item/used_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(used_item.tool_behaviour == TOOL_WRENCH && !stored_extinguisher)
-		user.balloon_alert(user, "deconstructing cabinet...")
-		used_item.play_tool_sound(src)
-		if(used_item.use_tool(src, user, 60))
-			playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
-			user.balloon_alert(user, "cabinet deconstructed")
-			deconstruct(TRUE)
-		return
+/obj/structure/extinguisher_cabinet/wrench_act(mob/living/user, obj/item/tool)
+	if(stored_extinguisher)
+		balloon_alert(user, "must be empty!")
+		return ITEM_INTERACT_BLOCKING
+	balloon_alert(user, "deconstructing cabinet...")
+	tool.play_tool_sound(src)
+	if(!tool.use_tool(src, user, 6 SECONDS))
+		return ITEM_INTERACT_BLOCKING
+	playsound(loc, 'sound/items/deconstruct.ogg', 50, TRUE)
+	user.balloon_alert(user, "cabinet deconstructed")
+	deconstruct(TRUE)
+	return ITEM_INTERACT_SUCCESS
 
+/obj/structure/extinguisher_cabinet/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(iscyborg(user) || isalien(user))
-		return
-	if(istype(used_item, /obj/item/extinguisher))
-		if(!stored_extinguisher && opened)
-			if(!user.transferItemToLoc(used_item, src))
-				return
-			stored_extinguisher = used_item
-			user.balloon_alert(user, "extinguisher stored")
-			update_appearance(UPDATE_ICON)
-			return TRUE
-		else
+		return NONE
+	if(user.combat_mode)
+		return ITEM_INTERACT_SKIP_TO_ATTACK
+	if(istype(tool, /obj/item/extinguisher))
+		if(stored_extinguisher || !opened)
 			toggle_cabinet(user)
-	else if(!user.combat_mode)
-		toggle_cabinet(user)
-	else
-		return ..()
-
+			return ITEM_INTERACT_SUCCESS
+		if(!user.transferItemToLoc(tool, src))
+			return ITEM_INTERACT_BLOCKING
+		stored_extinguisher = tool
+		balloon_alert(user, "extinguisher stored")
+		update_appearance(UPDATE_ICON)
+		return ITEM_INTERACT_SUCCESS
+	toggle_cabinet(user)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/extinguisher_cabinet/attack_hand(mob/user, list/modifiers)
 	. = ..()

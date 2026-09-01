@@ -73,7 +73,7 @@
 	if(HAS_TRAIT(owner, TRAIT_SPLATTERCASTER))
 		shoe_to_cast = /obj/item/clothing/shoes/laceup
 
-	var/obj/item/clothing/shoes/shoes_to_tie = cast_on.shoes
+	var/obj/item/clothing/shoes/shoes_to_tie = cast_on.get_item_by_slot(ITEM_SLOT_FEET)
 
 	if(isnull(shoes_to_tie))
 		if(!summons_shoes)

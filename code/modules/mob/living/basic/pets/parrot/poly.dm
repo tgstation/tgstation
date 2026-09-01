@@ -7,7 +7,7 @@
 /// Poly has only just survived a round, and is doing a consecutive one.
 #define POLY_CONSECUTIVE_ROUND "consecutive_round"
 /// haunt filter we apply to who we possess
-#define POLY_POSSESS_FILTER
+#define POLY_POSSESS_FILTER "poly_possess_filter"
 /// haunt filter color we apply to who we possess
 #define POLY_POSSESS_GLOW "#522059"
 

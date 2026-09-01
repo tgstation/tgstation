@@ -362,6 +362,7 @@
 
 /obj/item/modular_computer/pda/silicon/Destroy()
 	silicon_owner = null
+	robotact = null
 	return ..()
 
 ///Silicons don't have the tools (or hands) to make circuits setups with their own PDAs.

@@ -4,6 +4,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 /obj/machinery/computer/order_console
 	name = "Orders Console"
 	desc = "An interface for ordering specific ingredients from Cargo, with an express option at the cost of more money."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/order_console")
 	icon_screen = "request"
 	icon_keyboard = "generic_key"
 	light_color = LIGHT_COLOR_ORANGE
@@ -188,8 +189,9 @@ GLOBAL_LIST_EMPTY(order_console_products)
 					stack_trace("[src] somehow delivered [item] which is not purchasable at this order console.")
 					grocery_list.Remove(item)
 					continue
+				var/purchase_path = item.get_purchased_item(living_user, used_id_card)
 				for(var/amt in 1 to grocery_list[item])//every order amount
-					ordered_paths += item.purchase_path
+					ordered_paths += purchase_path
 			podspawn(list(
 				"target" = get_turf(living_user),
 				"style" = /datum/pod_style/advanced,

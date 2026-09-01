@@ -28,7 +28,7 @@ export function PlaneEditor() {
       position="absolute"
       top="0px"
       right="0px"
-      backgroundColor="#121212"
+      backgroundColor="#121212DA"
       title={`Plane Master: ${currentPlane.name}`}
       buttons={
         <Button

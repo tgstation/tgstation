@@ -63,7 +63,7 @@
 	return
 
 /mob/living/basic/mining/legion_brood/melee_attack(mob/living/target, list/modifiers, ignore_cooldown)
-	if (ishuman(target) && target.stat > SOFT_CRIT)
+	if (ishuman(target) && IS_UNCONSCIOUS(target))
 		infest(target)
 		return
 
@@ -90,8 +90,8 @@
 
 /// Returns the kind of legion we make out of the target
 /mob/living/basic/mining/legion_brood/proc/get_legion_type(mob/living/carbon/human/target)
-	if (ismonkey(target))
-		return /mob/living/basic/mining/legion/monkey
+	if (HAS_TRAIT(target, TRAIT_LESSER_HUMANOID))
+		return /mob/living/basic/mining/legion/lesser
 	if (HAS_TRAIT(target, TRAIT_DWARF))
 		return /mob/living/basic/mining/legion/dwarf
 	return /mob/living/basic/mining/legion
@@ -103,8 +103,17 @@
 	else
 		add_ally(creator)
 	created_by = WEAKREF(creator)
-	ai_controller?.set_blackboard_key(BB_LEGION_BROOD_CREATOR, creator)
 	RegisterSignal(creator, COMSIG_QDELETING, PROC_REF(creator_destroyed))
+	if (!ai_controller)
+		return
+
+	ai_controller.set_blackboard_key(BB_LEGION_BROOD_CREATOR, creator)
+	if (!creator.ai_controller)
+		return
+
+	// Inherit our creator's target and reinforcement requests
+	ai_controller.set_blackboard_key(BB_CURRENT_TARGET, creator.ai_controller.blackboard[BB_CURRENT_TARGET])
+	ai_controller.set_blackboard_key(BB_MINING_MOB_REINFORCEMENTS_REQUESTS, creator.ai_controller.blackboard[BB_MINING_MOB_REINFORCEMENTS_REQUESTS])
 
 /// Reference handling
 /mob/living/basic/mining/legion_brood/proc/creator_destroyed()
@@ -127,6 +136,6 @@
 	has_emissive = FALSE
 
 /mob/living/basic/mining/legion_brood/snow/get_legion_type(mob/living/target)
-	if (ismonkey(target))
-		return /mob/living/basic/mining/legion/monkey/snow
+	if (HAS_TRAIT(target, TRAIT_LESSER_HUMANOID))
+		return /mob/living/basic/mining/legion/lesser/snow
 	return /mob/living/basic/mining/legion/snow

@@ -20,6 +20,7 @@
 	mat_rust_resistance = RUST_RESISTANCE_BASIC
 	mineral_rarity = MATERIAL_RARITY_COMMON
 	points_per_unit = 1 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 1 / SHEET_MATERIAL_AMOUNT
 	minimum_value_override = 0
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_COMMON
@@ -57,6 +58,7 @@
 	tradable_base_quantity = MATERIAL_QUANTITY_COMMON
 	mineral_rarity = MATERIAL_RARITY_COMMON
 	points_per_unit = 1 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 1 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"
 
 /datum/material/glass/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
@@ -75,7 +77,7 @@
 	if(isobj(source) && !isstack(source) && (source.material_flags & MATERIAL_AFFECT_STATISTICS))
 		source.RemoveElement(/datum/element/can_shatter, shard_type, round(mat_amount / SHEET_MATERIAL_AMOUNT * multiplier), SFX_SHATTER)
 
-/// Has no special properties. Could be good against vampires in the future perhaps.
+/// Gives weapons an edge against vampires and possibly other mobs with the UNHOLY_BANEABLE trait.
 /datum/material/silver
 	name = "silver"
 	desc = "A precious metal known for being hated by oversized bats and dogs."
@@ -89,7 +91,7 @@
 		MATERIAL_ELECTRICAL = 9,
 		MATERIAL_THERMAL = 4,
 		MATERIAL_CHEMICAL = 4,
-		MATERIAL_VAMPIRES_BANE = 5,
+		MATERIAL_UNHOLY_BANE = 8,
 	)
 	sheet_type = /obj/item/stack/sheet/mineral/silver
 	ore_type = /obj/item/stack/ore/silver
@@ -99,6 +101,7 @@
 	tradable_base_quantity = MATERIAL_QUANTITY_UNCOMMON
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	points_per_unit = 16 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 3.5 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"
 
 /datum/material/silver/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
@@ -130,6 +133,7 @@
 	tradable_base_quantity = MATERIAL_QUANTITY_RARE
 	mineral_rarity = MATERIAL_RARITY_PRECIOUS
 	points_per_unit = 18 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 4 / SHEET_MATERIAL_AMOUNT
 	texture_layer_icon_state = "shine"
 
 /datum/material/gold/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
@@ -163,6 +167,7 @@
 	tradable_base_quantity = MATERIAL_QUANTITY_EXOTIC
 	mineral_rarity = MATERIAL_RARITY_RARE
 	points_per_unit = 50 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 10 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/diamond/on_accidental_mat_consumption(mob/living/carbon/victim, obj/item/source_item)
 	. = ..()
@@ -195,6 +200,7 @@
 	tradable_base_quantity = MATERIAL_QUANTITY_RARE
 	mineral_rarity = MATERIAL_RARITY_SEMIPRECIOUS
 	points_per_unit = 30 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 3.5 / SHEET_MATERIAL_AMOUNT
 
 /// Adds firestacks on hit (Still needs support to turn into gas on destruction)
 /datum/material/plasma
@@ -219,6 +225,7 @@
 	value_per_unit = 200 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_PRECIOUS
 	points_per_unit = 15 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 2 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/plasma/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
@@ -257,6 +264,7 @@
 	value_per_unit = 300 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_RARE
 	points_per_unit = 50 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 10 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_EXOTIC
 	texture_layer_icon_state = "shine"
@@ -305,6 +313,7 @@
 	value_per_unit = 1000 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
 	points_per_unit = 60 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 15 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/bananium/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
@@ -360,6 +369,7 @@
 	sheet_type = /obj/item/stack/sheet/mineral/titanium
 	ore_type = /obj/item/stack/ore/titanium
 	value_per_unit = 125 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 3 / SHEET_MATERIAL_AMOUNT
 	tradable = TRUE
 	tradable_base_quantity = MATERIAL_QUANTITY_UNCOMMON
 	mat_rust_resistance = RUST_RESISTANCE_TITANIUM
@@ -390,6 +400,7 @@
 	value_per_unit = 600 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 20 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/runite/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
@@ -429,6 +440,7 @@
 	value_per_unit = 25 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED // Nobody's found oil on lavaland yet.
 	points_per_unit = 4 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 4 / SHEET_MATERIAL_AMOUNT
 
 /// Force decrease and mushy sound effect. (Not yet implemented)
 /datum/material/biomass
@@ -483,6 +495,7 @@
 	value_per_unit = 500 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED // Doesn't naturally spawn on lavaland.
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 20 / SHEET_MATERIAL_AMOUNT // If it ever needs it, we'll give it
 
 /datum/material/adamantine/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
@@ -503,7 +516,7 @@
 /// RPG Magic.
 /datum/material/mythril
 	name = "mythril"
-	desc = "How this even exists is byond me"
+	desc = "How this even exists is byond me."
 	color = "#f2d5d7"
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
 	mat_properties = list(
@@ -521,6 +534,7 @@
 	value_per_unit = 1500 / SHEET_MATERIAL_AMOUNT
 	mineral_rarity = MATERIAL_RARITY_UNDISCOVERED // Doesn't naturally spawn on lavaland.
 	points_per_unit = 100 / SHEET_MATERIAL_AMOUNT
+	points_per_boulder_unit = 20 / SHEET_MATERIAL_AMOUNT
 
 /datum/material/mythril/on_applied(atom/source, mat_amount, multiplier, from_slot)
 	. = ..()
@@ -543,7 +557,7 @@
 //formed when freon react with o2, emits a lot of plasma when heated
 /datum/material/hot_ice
 	name = "hot ice"
-	desc = "A weird kind of ice, feels warm to the touch"
+	desc = "A crystalline solid formed when Freon reacts with Oxygen. Extremely flammable, and will easily combust when exposed to heat."
 	color = "#88cdf1"
 	alpha = 150
 	starlight_color = COLOR_BLUE_LIGHT
@@ -573,8 +587,8 @@
 
 // It's basically adamantine, but it isn't!
 /datum/material/metalhydrogen
-	name = "Metal Hydrogen"
-	desc = "Solid metallic hydrogen. Some say it should be impossible"
+	name = "metal hydrogen"
+	desc = "Hydrogen in a metallic state, formed under extreme pressure. Some say achieving this state is impossible."
 	color = "#62708A"
 	starlight_color = COLOR_MODERATE_BLUE
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
@@ -854,7 +868,7 @@
 
 /datum/material/zaukerite
 	name = "zaukerite"
-	desc = "A light absorbing crystal"
+	desc = "A light absorbing crystal formed out of Zauker. Vaguely toxic, like the gas itself."
 	color = COLOR_ALMOST_BLACK
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_RIGID
 	mat_properties = list(
@@ -926,3 +940,19 @@
 	// Oops, all chainsawfish!
 	challenge.register_reward_signals(GLOB.preset_fish_sources[/datum/fish_source/portal/syndicate])
 
+/datum/material/rock
+	name = "rock"
+	desc = "Marble maybe?"
+	color = "#919191"
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_RIGID
+	mat_properties = list(
+		MATERIAL_DENSITY = 2,
+		MATERIAL_HARDNESS = 4,
+		MATERIAL_FLEXIBILITY = 0,
+		MATERIAL_REFLECTIVITY = 0,
+		MATERIAL_ELECTRICAL = 0,
+		MATERIAL_THERMAL = 1,
+		MATERIAL_CHEMICAL = 0,
+		MATERIAL_BEAUTY = 0.8,
+	)
+	texture_layer_icon_state = "sand"

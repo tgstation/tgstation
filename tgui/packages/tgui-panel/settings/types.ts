@@ -18,6 +18,8 @@ export const settingsSchema = z.object({
   theme: z.string(),
   version: z.number(),
   view: viewSchema,
+  websocketEnabled: z.boolean(),
+  websocketServer: z.string(),
 });
 
 export type HighlightSetting = {
@@ -28,6 +30,13 @@ export type HighlightSetting = {
   matchCase: boolean;
   matchWord: boolean;
   enabled: boolean;
+  playSound: boolean;
+  soundFile: string;
+  soundVolume: number;
+  /** Comma-separated job titles this highlight is limited to. Empty = all jobs. */
+  jobFilter: string;
+  /** Character names this highlight is limited to. Empty = all characters. */
+  characterFilter: string[];
 };
 
 export type HighlightState = {

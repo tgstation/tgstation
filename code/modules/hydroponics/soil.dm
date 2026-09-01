@@ -30,15 +30,17 @@
 /obj/machinery/hydroponics/soil/update_status_light_overlays()
 	return // Has no lights
 
-/obj/machinery/hydroponics/soil/attackby_secondary(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(weapon.tool_behaviour != TOOL_SHOVEL) //Spades can still uproot plants on left click
-		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-	balloon_alert(user, "digging up soil...")
-	if(weapon.use_tool(src, user, 3 SECONDS, volume=50))
-		balloon_alert(user, "bagged")
-		new sack_type(loc, src) //The bag handles sucking up the soil, stopping processing and setting relevants stats.
+/obj/machinery/hydroponics/soil/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.tool_behaviour != TOOL_SHOVEL) //Spades can still uproot plants on left click
+		return ..()
 
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	balloon_alert(user, "digging up soil...")
+	if(!tool.use_tool(src, user, 3 SECONDS, volume = 50))
+		return ITEM_INTERACT_BLOCKING
+
+	balloon_alert(user, "bagged")
+	new sack_type(loc, src) //The bag handles sucking up the soil, stopping processing and setting relevants stats.
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/hydroponics/soil/click_ctrl(mob/user)
 	return CLICK_ACTION_BLOCKING //Soil has no electricity.
@@ -150,6 +152,12 @@
 		animate(time = 100 MILLISECONDS, pixel_z = 0, easing = QUAD_EASING | EASE_IN)
 		animate(time = 250 MILLISECONDS, pixel_x = rand(-6, 6), pixel_y = rand(-4, 4), flags = ANIMATION_PARALLEL)
 
+/obj/item/soil_sack/Exited(atom/movable/gone)
+	. = ..()
+	if(gone == stored_soil)
+		stored_soil = null
+		qdel(src)
+
 /obj/item/soil_sack/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!isopenturf(interacting_with) || isgroundlessturf(interacting_with))
 		return ..()
@@ -161,19 +169,26 @@
 	if(!do_after(user, 1 SECONDS, interacting_with))
 		return ITEM_INTERACT_BLOCKING
 
+	transfer_soil(interacting_with)
+	return ITEM_INTERACT_SUCCESS
+
+//Proc responsible for placing the soil inside track onto the turf or inside a hydroponic tray
+/obj/item/soil_sack/proc/transfer_soil(atom/target, inside_tray = FALSE)
 	if(ispath(stored_soil))
 		stored_soil = new stored_soil(src)
+		if(inside_tray)
+			STOP_PROCESSING(SSmachines, stored_soil)
 		stored_soil.reagents.add_reagent(/datum/reagent/plantnutriment/eznutriment, stored_soil.maxnutri / 2)
 		stored_soil.waterlevel = stored_soil.maxwater
-	else
+	else if(!inside_tray)
 		START_PROCESSING(SSmachines, stored_soil)
 
-
-	stored_soil.forceMove(interacting_with)
-	playsound(stored_soil, placement_sound, 65, vary = TRUE)
-	stored_soil.on_place()
-	qdel(src)
-	return ITEM_INTERACT_SUCCESS
+	playsound(target, placement_sound, 65, vary = TRUE)
+	if(!inside_tray)
+		stored_soil.on_place()
+	var/obj/machinery/hydroponics/soil_ref = stored_soil
+	stored_soil.forceMove(target) //stored_soil is set to null at this point, and the soil sack is deleted when that happens
+	return soil_ref
 
 /obj/item/soil_sack/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == OVERWHELMING_ATTACK)

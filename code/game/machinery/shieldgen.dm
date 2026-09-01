@@ -239,33 +239,36 @@
 		set_anchored(FALSE)
 
 
-/obj/machinery/shieldgen/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/stack/cable_coil) && (machine_stat & BROKEN) && panel_open)
-		var/obj/item/stack/cable_coil/coil = W
+/obj/machinery/shieldgen/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/stack/cable_coil) && (machine_stat & BROKEN) && panel_open)
+		var/obj/item/stack/cable_coil/coil = tool
 		if (coil.get_amount() < 1)
 			to_chat(user, span_warning("You need one length of cable to repair [src]!"))
-			return
+			return ITEM_INTERACT_BLOCKING
 		to_chat(user, span_notice("You begin to replace the wires..."))
-		if(do_after(user, 3 SECONDS, target = src))
-			if(coil.get_amount() < 1)
-				return
-			coil.use(1)
-			atom_integrity = max_integrity
-			set_machine_stat(machine_stat & ~BROKEN)
-			to_chat(user, span_notice("You repair \the [src]."))
-			update_appearance()
+		if(!do_after(user, 3 SECONDS, target = src))
+			return ITEM_INTERACT_BLOCKING
+		if(coil.get_amount() < 1)
+			return ITEM_INTERACT_BLOCKING
+		coil.use(1)
+		atom_integrity = max_integrity
+		set_machine_stat(machine_stat & ~BROKEN)
+		to_chat(user, span_notice("You repair \the [src]."))
+		update_appearance()
+		return ITEM_INTERACT_SUCCESS
 
-	else if(W.GetID())
-		if(allowed(user) && !(obj_flags & EMAGGED))
-			locked = !locked
-			to_chat(user, span_notice("You [locked ? "lock" : "unlock"] the controls."))
-		else if(obj_flags & EMAGGED)
+	if(tool.GetID())
+		if(obj_flags & EMAGGED)
 			to_chat(user, span_danger("Error, access controller damaged!"))
-		else
+			return ITEM_INTERACT_BLOCKING
+		if(!allowed(user))
 			to_chat(user, span_danger("Access denied."))
+			return ITEM_INTERACT_BLOCKING
+		locked = !locked
+		to_chat(user, span_notice("You [locked ? "lock" : "unlock"] the controls."))
+		return ITEM_INTERACT_SUCCESS
 
-	else
-		return ..()
+	return NONE
 
 /obj/machinery/shieldgen/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
@@ -464,22 +467,24 @@
 
 	return default_deconstruction_crowbar(user, tool)
 
-/obj/machinery/power/shieldwallgen/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(W.GetID())
-		if(allowed(user) && !(obj_flags & EMAGGED))
-			locked = !locked
-			balloon_alert(user, "[locked ? "locked!" : "unlocked"]")
-		else if(obj_flags & EMAGGED)
+/obj/machinery/power/shieldwallgen/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.GetID())
+		if(obj_flags & EMAGGED)
 			balloon_alert(user, "malfunctioning!")
-		else
+			return ITEM_INTERACT_BLOCKING
+		if(!allowed(user))
 			balloon_alert(user, "no access!")
-		return
+			return ITEM_INTERACT_BLOCKING
+		locked = !locked
+		balloon_alert(user, "[locked ? "locked!" : "unlocked"]")
+		return ITEM_INTERACT_SUCCESS
 
 	add_fingerprint(user)
-	if(is_wire_tool(W) && panel_open)
+	if(is_wire_tool(tool) && panel_open)
 		wires.interact(user)
-		return
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 
 /obj/machinery/power/shieldwallgen/interact(mob/user)

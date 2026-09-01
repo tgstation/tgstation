@@ -16,22 +16,28 @@
 	var/luck_mod = 1
 	/// Base damage from negative events. Cursed take 25% of this damage.
 	var/damage_mod = 1
+	/// If TRUE being blessed by the chaplain can remove the omen
+	var/bless_fixable = TRUE
+	/// Callback invoked on death
+	var/datum/callback/on_death
+	/// List of light fixtures nearby - we track their state to see if they break or toggle
+	VAR_FINAL/list/tracked_lights = list()
 
-/datum/component/omen/Initialize(obj/vessel, incidents_left, luck_mod, damage_mod)
+/datum/component/omen/Initialize(obj/vessel, incidents_left = INFINITY, luck_mod = 1, damage_mod = 1, bless_fixable = TRUE, datum/callback/on_death)
 	if(!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	if(istype(vessel))
 		src.vessel = vessel
 		RegisterSignal(vessel, COMSIG_QDELETING, PROC_REF(vessel_qdeleting))
-	if(!isnull(incidents_left))
-		src.incidents_left = incidents_left
-	if(!isnull(luck_mod))
-		src.luck_mod = luck_mod
-	if(!isnull(damage_mod))
-		src.damage_mod = damage_mod
 
-	ADD_TRAIT(parent, TRAIT_CURSED, SMITE_TRAIT)
+	src.incidents_left = incidents_left
+	src.luck_mod = luck_mod
+	src.damage_mod = damage_mod
+	src.bless_fixable = bless_fixable
+	src.on_death = on_death
+
+	ADD_TRAIT(parent, TRAIT_CURSED, REF(src))
 
 /**
  * This is a omen eat omen world! The stronger omen survives.
@@ -52,7 +58,8 @@
 
 /datum/component/omen/Destroy(force)
 	var/mob/living/person = parent
-	REMOVE_TRAIT(person, TRAIT_CURSED, SMITE_TRAIT)
+	REMOVE_TRAIT(person, TRAIT_CURSED, REF(src))
+	REMOVE_TRAIT(person, TRAIT_NO_MIRROR_REFLECTION, REF(src))
 	to_chat(person, span_nicegreen("You feel a horrible omen lifted off your shoulders!"))
 
 	if(vessel)
@@ -61,6 +68,9 @@
 		vessel.burn()
 		vessel = null
 
+	for(var/obj/machinery/light/to_untrack as anything in tracked_lights)
+		untrack_light(to_untrack)
+
 	return ..()
 
 /datum/component/omen/RegisterWithParent()
@@ -68,161 +78,251 @@
 	RegisterSignal(parent, COMSIG_ON_CARBON_SLIP, PROC_REF(check_slip))
 	RegisterSignal(parent, COMSIG_LIVING_BLESSED, PROC_REF(check_bless))
 	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(check_death))
+	RegisterSignal(parent, COMSIG_MOVABLE_BLOCKING_AIRLOCK, PROC_REF(check_airlock_crush))
+	RegisterSignal(parent, COMSIG_MOB_VENDING_PURCHASE, PROC_REF(check_vending))
+	RegisterSignal(parent, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
 /datum/component/omen/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ON_CARBON_SLIP, COMSIG_MOVABLE_MOVED, COMSIG_LIVING_BLESSED, COMSIG_LIVING_DEATH))
+	UnregisterSignal(parent, list(
+		COMSIG_ON_CARBON_SLIP,
+		COMSIG_MOVABLE_MOVED,
+		COMSIG_LIVING_BLESSED,
+		COMSIG_LIVING_DEATH,
+		COMSIG_MOVABLE_BLOCKING_AIRLOCK,
+		COMSIG_MOB_VENDING_PURCHASE,
+		COMSIG_LIVING_LIFE,
+	))
 
 /datum/component/omen/proc/consume_omen()
+	if(incidents_left == INFINITY)
+		return
+
 	incidents_left--
 	if(incidents_left < 1)
 		qdel(src)
 
-/**
- * check_accident() is called each step we take
- *
- * While we're walking around, roll to see if there's any environmental hazards on one of the adjacent tiles we can trigger.
- * We do the prob() at the beginning to A. add some tension for /when/ it will strike, and B. (more importantly) ameliorate the fact that we're checking up to 5 turfs's contents each time
- */
-/datum/component/omen/proc/check_accident(atom/movable/our_guy)
-	SIGNAL_HANDLER
-
-	if(!isliving(our_guy))
-		return
-
-	var/mob/living/living_guy = our_guy
-
-	if(prob(0.001) && (living_guy.stat != DEAD)) // You hit the lottery! Kinda.
-		living_guy.visible_message(span_danger("[living_guy] suddenly bursts into flames!"), span_danger("You suddenly burst into flames!"))
-		INVOKE_ASYNC(living_guy, TYPE_PROC_REF(/mob, emote), "scream")
-		living_guy.adjust_fire_stacks(20)
-		living_guy.ignite_mob(silent = TRUE)
-		consume_omen()
-		return
-
-	var/effective_luck = luck_mod
-
-	// If there's nobody to witness the misfortune, make it less likely.
-	// This way, we allow for people to be able to get into hilarious situations without making the game nigh unplayable most of the time.
-
-	var/has_watchers = FALSE
-	for(var/mob/viewer in viewers(our_guy, null))
-		if(viewer.client && !viewer.client.is_afk())
-			has_watchers = TRUE
+/// Roll an accident happening, factoring in a few things, based on some base change.
+/datum/component/omen/proc/roll_for_accident(base_chance = 4)
+	var/chance = base_chance * luck_mod
+	for(var/mob/viewer in viewers(parent))
+		if(!viewer.client?.is_afk())
+			chance *= 2
 			break
 
-	if(!has_watchers)
-		effective_luck *= 0.5
+	return prob(chance)
 
-	if(!prob(8 * effective_luck))
+/// When we obstruct an airlock, there's a chance it will crush us instead of stopping like it should
+/datum/component/omen/proc/check_airlock_crush(mob/living/source, obj/machinery/door/airlock/darth_airlock, forced, force_crush)
+	SIGNAL_HANDLER
+
+	if(force_crush || !roll_for_accident(25))
+		return NONE
+
+	consume_omen()
+	to_chat(parent, span_warning("As you stand in [darth_airlock], it doesn't stop closing like it should..."))
+	return AIRLOCK_BLOCK_FORCE_CRUSH
+
+/// When we vend an item from a vending machine, there's a chance the machine will tip
+/datum/component/omen/proc/check_vending(mob/living/source, obj/machinery/vending/darth_vendor, obj/item/vended_item)
+	SIGNAL_HANDLER
+
+	if(!source.Adjacent(darth_vendor) || !roll_for_accident(10))
+		return NONE
+
+	consume_omen()
+	to_chat(source, span_warning("As you grab [vended_item] from the slot, [darth_vendor] wobbles ominously..."))
+	INVOKE_ASYNC(darth_vendor, TYPE_PROC_REF(/obj/machinery/vending, tilt), source)
+	return VENDING_NO_PICKUP
+
+/// On life tick, run a few generic checks for accidents, and track nearby lights
+/datum/component/omen/proc/on_life(mob/living/source)
+	SIGNAL_HANDLER
+
+	if(source.stat == DEAD || HAS_TRAIT(source, TRAIT_STASIS))
 		return
 
-	var/turf/open/our_guy_pos = living_guy.loc
-	if(!isopenturf(our_guy_pos))
-		return
-	for(var/obj/machinery/door/airlock/darth_airlock in our_guy_pos)
-		if(darth_airlock.locked || !darth_airlock.hasPower())
-			continue
-
-		to_chat(living_guy, span_warning("A malevolent force launches your body to the floor..."))
-		living_guy.Paralyze(1 SECONDS, ignore_canstun = TRUE)
-		INVOKE_ASYNC(src, PROC_REF(slam_airlock), darth_airlock)
+	if(roll_for_accident(0.001))
+		spontaneous_combustion(source)
 		return
 
-	for(var/turf/the_turf as anything in get_adjacent_open_turfs(living_guy))
-		if(istype(the_turf, /turf/open/floor/glass/reinforced/tram)) // don't fall off the tram bridge, we want to hit you instead
-			return
-		if(living_guy.can_z_move(DOWN, the_turf, z_move_flags = ZMOVE_FALL_FLAGS))
-			to_chat(living_guy, span_warning("A malevolent force guides you towards the edge..."))
-			living_guy.throw_at(the_turf, 1, 10, force = MOVE_FORCE_EXTREMELY_STRONG)
-			consume_omen()
-			return
+	if(HAS_TRAIT(source, TRAIT_SHOCKIMMUNE))
+		for(var/obj/machinery/light/to_untrack as anything in tracked_lights)
+			untrack_light(to_untrack)
+		return
 
-		for(var/obj/machinery/vending/darth_vendor in the_turf)
-			if(!darth_vendor.tiltable || darth_vendor.tilted)
-				continue
-			to_chat(living_guy, span_warning("A malevolent force tugs at the [darth_vendor]..."))
-			INVOKE_ASYNC(darth_vendor, TYPE_PROC_REF(/obj/machinery/vending, tilt), living_guy)
-			consume_omen()
-			return
+	var/list/light_list = list()
+	for(var/obj/machinery/light/evil_light in view(2, source))
+		if(evil_light.status == LIGHT_OK)
+			light_list += evil_light
+	for(var/obj/machinery/light/to_track as anything in light_list - tracked_lights)
+		track_light(to_track)
+	for(var/obj/machinery/light/to_untrack as anything in tracked_lights - light_list)
+		untrack_light(to_untrack)
 
-		for(var/obj/machinery/light/evil_light in the_turf)
-			if((evil_light.status == LIGHT_BURNED || evil_light.status == LIGHT_BROKEN) || (HAS_TRAIT(living_guy, TRAIT_SHOCKIMMUNE))) // we can't do anything :( // Why in the world is there no get_siemens_coeff proc???
-				to_chat(living_guy, span_warning("[evil_light] sparks weakly for a second."))
-				do_sparks(2, FALSE, evil_light) // hey maybe it'll ignite them
-				return
+/// Start tracking a light, because it's near us and could be a threat
+/datum/component/omen/proc/track_light(obj/machinery/light/evil_light)
+	tracked_lights += evil_light
+	RegisterSignal(evil_light, COMSIG_LIGHT_FIXTURE_BROKEN, PROC_REF(check_break_zap))
+	RegisterSignal(evil_light, COMSIG_LIGHT_FIXTURE_TOGGLED, PROC_REF(check_toggle_zap))
+	RegisterSignal(evil_light, COMSIG_QDELETING, PROC_REF(untrack_light))
 
-			to_chat(living_guy, span_warning("[evil_light] glows ominously...")) // ominously
-			evil_light.visible_message(span_boldwarning("[evil_light] suddenly flares brightly and sparks!"))
-			evil_light.break_light_tube(skip_sound_and_sparks = FALSE)
-			do_sparks(number = 4, cardinal_only = FALSE, source = evil_light)
-			evil_light.Beam(living_guy, icon_state = "lightning[rand(1,12)]", time = 0.5 SECONDS)
-			living_guy.electrocute_act(35 * (damage_mod * 0.5), evil_light, flags = SHOCK_NOGLOVES)
-			INVOKE_ASYNC(living_guy, TYPE_PROC_REF(/mob, emote), "scream")
-			consume_omen()
+/// Stop tracking a light, either because it broke or we moved away from it
+/datum/component/omen/proc/untrack_light(obj/machinery/light/evil_light)
+	SIGNAL_HANDLER
 
-		for(var/obj/structure/mirror/evil_mirror in the_turf)
-			to_chat(living_guy, span_warning("You pass by the mirror and glance at it..."))
-			if(evil_mirror.broken)
-				to_chat(living_guy, span_notice("You feel lucky, somehow."))
-				return
-			switch(rand(1, 5))
-				if(1)
-					to_chat(living_guy, span_warning("The mirror explodes into a million pieces! Wait, does that mean you're even more unlucky?"))
-					evil_mirror.take_damage(evil_mirror.max_integrity, BRUTE, MELEE, FALSE)
-					if(prob(50 * effective_luck)) // sometimes
-						luck_mod += 0.25
-						damage_mod += 0.25
-				if(2 to 3)
-					to_chat(living_guy, span_big(span_hypnophrase("Oh god, you can't see your reflection!!")))
-					if(HAS_TRAIT(living_guy, TRAIT_NO_MIRROR_REFLECTION)) // not so living i suppose
-						to_chat(living_guy, span_green("Well, obviously."))
-						return
-					INVOKE_ASYNC(living_guy, TYPE_PROC_REF(/mob, emote), "scream")
+	tracked_lights -= evil_light
+	UnregisterSignal(evil_light, list(COMSIG_LIGHT_FIXTURE_BROKEN, COMSIG_LIGHT_FIXTURE_TOGGLED, COMSIG_QDELETING))
 
-				if(4 to 5)
-					if(HAS_TRAIT(living_guy, TRAIT_NO_MIRROR_REFLECTION))
-						to_chat(living_guy, span_warning("You don't see anything of notice. Huh."))
-						return
-					to_chat(living_guy, span_userdanger("You see your reflection, but it is grinning malevolently and staring directly at you!"))
-					INVOKE_ASYNC(living_guy, TYPE_PROC_REF(/mob, emote), "scream")
+/// When a light we track breaks, there's a chance of zapping us
+/datum/component/omen/proc/check_break_zap(obj/machinery/light/evil_light, was_ok)
+	SIGNAL_HANDLER
 
-			living_guy.set_jitter_if_lower(25 SECONDS)
-			if(prob(7 * effective_luck))
-				to_chat(living_guy, span_warning("You are completely shocked by this turn of events!"))
-				to_chat(living_guy, span_userdanger("You clutch at your heart!"))
-				var/mob/living/carbon/carbon_guy = living_guy
-				if(istype(carbon_guy))
-					carbon_guy.set_heartattack(status = TRUE)
-
-			consume_omen()
-
-/datum/component/omen/proc/slam_airlock(obj/machinery/door/airlock/darth_airlock)
-	. = darth_airlock.close(force_crush = TRUE)
-	if(.)
+	if(was_ok && !HAS_TRAIT(parent, TRAIT_SHOCKIMMUNE) && roll_for_accident(25))
+		evil_light.visible_message(span_boldwarning("A bolt of electricity jumps from [evil_light] to [parent] as it breaks!"))
+		light_zap(evil_light)
 		consume_omen()
+	// always untrack because it's broken now
+	untrack_light(evil_light)
+
+/// When a light we track is toggled on or off, there's a chance of zapping us
+/datum/component/omen/proc/check_toggle_zap(obj/machinery/light/evil_light, new_status)
+	SIGNAL_HANDLER
+
+	if(HAS_TRAIT(parent, TRAIT_SHOCKIMMUNE) || !roll_for_accident(10))
+		return
+
+	evil_light.visible_message(span_boldwarning("A bolt of electricity jumps from [evil_light] to [parent] as it turns [new_status ? "on" : "off"]!"))
+	light_zap(evil_light)
+	consume_omen()
+	// we're about to break it, so untrack to avoid a double zap
+	untrack_light(evil_light)
+	// and then actually break the thing
+	evil_light.break_light_tube()
+
+/// Zap the target with electricity from a light fixture
+/datum/component/omen/proc/light_zap(obj/machinery/light/evil_light)
+	PRIVATE_PROC(TRUE)
+
+	var/mob/living/target = parent
+	evil_light.Beam(target, icon_state = "lightning[rand(1, 12)]", time = 0.5 SECONDS)
+	target.electrocute_act(35 * damage_mod, evil_light, flags = SHOCK_NOGLOVES)
+	INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, emote), "scream")
+	consume_omen()
+
+/// Randomly burst into flames
+/datum/component/omen/proc/spontaneous_combustion()
+	var/mob/living/target = parent
+	target.adjust_fire_stacks(20)
+	if(!target.ignite_mob(silent = TRUE))
+		return FALSE
+
+	target.visible_message(
+		span_danger("[target] suddenly bursts into flames!"),
+		span_userdanger("You suddenly burst into flames!"),
+	)
+	INVOKE_ASYNC(target, TYPE_PROC_REF(/mob, emote), "scream")
+	consume_omen()
+	return TRUE
+
+/// Every time we move we need to check a few things for potential incidents
+/datum/component/omen/proc/check_accident(mob/living/source)
+	SIGNAL_HANDLER
+
+	if(mirror_interaction())
+		return
+
+	if(fall_down())
+		return
+
+/// Attempts to throw us down a nearby open space
+/datum/component/omen/proc/fall_down()
+	var/mob/living/our_guy = parent
+	var/turf/open/mob_turf = get_turf(our_guy)
+	if(isgroundlessturf(mob_turf) || istype(mob_turf, /turf/open/floor/glass/reinforced/tram)) // snowflake check is to increase likelihood of being hit with the tram
+		return FALSE
+
+	for(var/turf/adjacent_turf as anything in get_adjacent_open_turfs(mob_turf))
+		if(!our_guy.can_z_move(DOWN, adjacent_turf, z_move_flags = ZMOVE_FALL_FLAGS))
+			continue
+		if(!roll_for_accident(4))
+			return FALSE
+
+		var/obj/structure/railing/rail = locate() in mob_turf
+		to_chat(our_guy, span_warning("As you step on [mob_turf], you lose footing and fall[rail ? " over the railing and" : ""] off the edge!"))
+		our_guy.throw_at(adjacent_turf, 1, 10, force = MOVE_FORCE_EXTREMELY_STRONG)
+		consume_omen()
+		return TRUE
+
+	return FALSE
+
+/// Gaze into a mirror and see if something bad happens
+/datum/component/omen/proc/mirror_interaction()
+	var/mob/living/our_guy = parent
+	var/obj/structure/mirror/evil_mirror = locate() in get_turf(our_guy)
+	if(isnull(evil_mirror) || !roll_for_accident(10))
+		REMOVE_TRAIT(our_guy, TRAIT_NO_MIRROR_REFLECTION, REF(src))
+		return FALSE
+
+	to_chat(our_guy, span_warning("You pass by the mirror and glance at it..."))
+	if(evil_mirror.broken)
+		to_chat(our_guy, span_notice("...You feel lucky, somehow."))
+		return TRUE
+
+	switch(rand(1, 5))
+		if(1)
+			to_chat(our_guy, span_warning("...The mirror explodes into a million pieces! Wait, does that mean you're even more unlucky?"))
+			evil_mirror.take_damage(evil_mirror.max_integrity, BRUTE, MELEE, FALSE)
+			if(roll_for_accident(20))
+				luck_mod += 0.25
+				damage_mod += 0.25
+
+		if(2 to 3)
+			if(HAS_TRAIT(our_guy, TRAIT_NO_MIRROR_REFLECTION)) // not so living i suppose
+				to_chat(our_guy, span_green("...Oh god, you can't see your reflection - wait, that's normal."))
+				return TRUE
+			to_chat(our_guy, span_big(span_hypnophrase("...Oh god, you can't see your reflection!!")))
+			INVOKE_ASYNC(our_guy, TYPE_PROC_REF(/mob, emote), "scream")
+			ADD_TRAIT(our_guy, TRAIT_NO_MIRROR_REFLECTION, REF(src))
+
+		if(4 to 5)
+			if(HAS_TRAIT(our_guy, TRAIT_NO_MIRROR_REFLECTION))
+				to_chat(our_guy, span_warning("...but you don't see anything of notice."))
+				return TRUE
+			to_chat(our_guy, span_userdanger("You see your reflection, but it is grinning malevolently and staring directly at you!"))
+			INVOKE_ASYNC(our_guy, TYPE_PROC_REF(/mob, emote), "scream")
+
+	our_guy.set_jitter_if_lower(25 SECONDS)
+	if(roll_for_accident(2))
+		to_chat(our_guy, span_warning("You are completely shocked by this turn of events!"))
+		to_chat(our_guy, span_userdanger("You clutch at your heart!"))
+		if(iscarbon(our_guy))
+			var/mob/living/carbon/carbon_guy = our_guy
+			carbon_guy.set_heartattack(status = TRUE)
+
+	consume_omen()
+	return TRUE
 
 /// If we get knocked down, see if we have a really bad slip and bash our head hard
 /datum/component/omen/proc/check_slip(mob/living/our_guy, amount)
 	SIGNAL_HANDLER
 
-	if(prob(30)) // AAAA
-		INVOKE_ASYNC(our_guy, TYPE_PROC_REF(/mob, emote), "scream")
-		to_chat(our_guy, span_warning("What a horrible night... To have a curse!"))
+	if(!our_guy.get_bodypart(BODY_ZONE_HEAD) || !roll_for_accident(15)) // Bonk!
+		return
 
-	if(prob(30 * luck_mod) && our_guy.get_bodypart(BODY_ZONE_HEAD)) /// Bonk!
-		playsound(our_guy, 'sound/effects/tableheadsmash.ogg', 90, TRUE)
-		our_guy.visible_message(span_danger("[our_guy] hits [our_guy.p_their()] head really badly falling down!"), span_userdanger("You hit your head really badly falling down!"))
-		our_guy.apply_damage(75 * damage_mod, BRUTE, BODY_ZONE_HEAD, attacking_item = "slipping")
-		our_guy.apply_damage(100 * damage_mod, BRAIN)
-		consume_omen()
-
-	return
+	playsound(our_guy, 'sound/effects/tableheadsmash.ogg', 90, TRUE)
+	our_guy.visible_message(
+		span_danger("[our_guy] hits [our_guy.p_their()] head really badly falling down!"),
+		span_userdanger("You hit your head really badly falling down!"),
+	)
+	our_guy.apply_damage(75 * damage_mod, BRUTE, BODY_ZONE_HEAD, attacking_item = "slipping")
+	our_guy.apply_damage(100 * damage_mod, BRAIN)
+	consume_omen()
 
 /// Hijack the mood system to see if we get the blessing mood event to cancel the omen
 /datum/component/omen/proc/check_bless(mob/living/our_guy, mob/living/priest, obj/item/book/bible/bible, bless_result)
 	SIGNAL_HANDLER
 
-	if(incidents_left == INFINITY || bless_result != BLESSING_SUCCESS)
+	if(incidents_left == INFINITY || bless_result != BLESSING_SUCCESS || !bless_fixable)
 		return
 
 	playsound(our_guy, 'sound/effects/pray_chaplain.ogg', 40, TRUE)
@@ -233,6 +333,7 @@
 /datum/component/omen/proc/check_death(mob/living/our_guy)
 	SIGNAL_HANDLER
 
+	on_death?.Invoke(src)
 	if(incidents_left == INFINITY)
 		return
 
@@ -251,53 +352,6 @@
 
 	UnregisterSignal(vessel, COMSIG_QDELETING)
 	vessel = null
-
-/**
- * The smite omen. Permanent.
- */
-/datum/component/omen/smite
-
-/datum/component/omen/smite/check_death(mob/living/our_guy)
-	if(incidents_left == INFINITY)
-		return ..()
-
-	death_explode(our_guy)
-	our_guy.gib(DROP_ALL_REMAINS)
-
-/**
- * The quirk omen. Permanent.
- * Has only a 50% chance of bad things happening, and takes only 25% of normal damage.
- */
-/datum/component/omen/quirk
-	incidents_left = INFINITY
-	luck_mod = 0.3 // 30% chance of bad things happening
-	damage_mod = 0.25 // 25% of normal damage
-
-/datum/component/omen/quirk/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(check_accident))
-	RegisterSignal(parent, COMSIG_ON_CARBON_SLIP, PROC_REF(check_slip))
-	RegisterSignal(parent, COMSIG_LIVING_DEATH, PROC_REF(check_death))
-
-/datum/component/omen/quirk/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ON_CARBON_SLIP, COMSIG_MOVABLE_MOVED, COMSIG_LIVING_DEATH))
-
-/datum/component/omen/quirk/check_death(mob/living/our_guy)
-	if(!iscarbon(our_guy))
-		our_guy.gib(DROP_ALL_REMAINS)
-		return
-
-	// Don't explode if buckled to a stasis bed
-	if(our_guy.buckled)
-		var/obj/machinery/stasis/stasis_bed = our_guy.buckled
-		if(istype(stasis_bed))
-			return
-
-	death_explode(our_guy)
-	var/mob/living/carbon/player = our_guy
-	player.spread_bodyparts()
-	player.spawn_gibs()
-
-	return
 
 /**
  * The bible omen.

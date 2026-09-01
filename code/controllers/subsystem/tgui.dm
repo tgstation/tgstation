@@ -37,7 +37,7 @@ SUBSYSTEM_DEF(tgui)
 	ntos_error = "<style type='text/css'>\n[ntos_error]\n</style>"
 	basehtml = replacetextEx(basehtml, "<!-- tgui:ntos-error -->", ntos_error)
 
-	basehtml = replacetextEx(basehtml, "<!-- tgui:nt-copyright -->", "Nanotrasen (c) 2525-[text2num(UTC_YEAR) + STATION_YEAR_OFFSET]") // This can't use the GLOB as it runs before those are populated
+	basehtml = replacetextEx(basehtml, "<!-- tgui:nt-copyright -->", "Nanotrasen (c) 2525-[CURRENT_STATION_YEAR]")
 
 /datum/controller/subsystem/tgui/OnConfigLoad()
 	var/storage_iframe = CONFIG_GET(string/storage_cdn_iframe)
@@ -96,10 +96,11 @@ SUBSYSTEM_DEF(tgui)
 		return null
 	var/list/windows = user.client.tgui_windows
 	var/window_id
+	var/window_limit = user.client.prefs?.read_preference(/datum/preference/toggle/tgui_unlimited_windows) ? TGUI_WINDOW_UNLIMITED_LIMIT : TGUI_WINDOW_HARD_LIMIT
 	var/datum/tgui_window/window
 	var/window_found = FALSE
 	// Find a usable window
-	for(var/i in 1 to TGUI_WINDOW_HARD_LIMIT)
+	for(var/i in 1 to window_limit)
 		window_id = TGUI_WINDOW_ID(i)
 		window = windows[window_id]
 		// As we are looping, create missing window datums
@@ -131,7 +132,8 @@ SUBSYSTEM_DEF(tgui)
 	log_tgui(user, context = "SStgui/force_close_all_windows")
 	if(user.client)
 		user.client.tgui_windows = list()
-		for(var/i in 1 to TGUI_WINDOW_HARD_LIMIT)
+		var/window_limit = user.client.prefs.read_preference(/datum/preference/toggle/tgui_unlimited_windows) ? TGUI_WINDOW_UNLIMITED_LIMIT : TGUI_WINDOW_HARD_LIMIT
+		for(var/i in 1 to window_limit)
 			var/window_id = TGUI_WINDOW_ID(i)
 			user << browse(null, "window=[window_id]")
 

@@ -64,6 +64,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/guarddog
 
 /datum/ai_controller/basic_controller/guarddog
+	behavior_tree_json = "code/modules/mob/living/basic/pets/dog/guarddog.bt.json"
 	blackboard = list(
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic/not_friends,
@@ -72,12 +73,6 @@
 	)
 
 	ai_movement = /datum/ai_movement/basic_avoidance
-	idle_behavior = /datum/idle_behavior/idle_random_walk
-	planning_subtrees = list(
-		/datum/ai_planning_subtree/target_retaliate,
-		/datum/ai_planning_subtree/simple_find_target,
-		/datum/ai_planning_subtree/basic_melee_attack_subtree,
-	)
 
 /mob/living/basic/pet/dog/breaddog //Most of the code originates from Cak
 	name = "Kobun"
@@ -90,7 +85,7 @@
 	health = 50
 	maxHealth = 50
 	gender = NEUTER
-	damage_coeff = list(BRUTE = 3, BURN = 3, TOX = 1, STAMINA = 1, OXY = 1)
+	physiology = list(BRUTE = 3, BURN = 3)
 	butcher_results = list(/obj/item/organ/brain = 1, /obj/item/organ/heart = 1, /obj/item/food/breadslice/plain = 3,  \
 	/obj/item/food/meat/slab = 2)
 	response_harm_continuous = "takes a bite out of"
@@ -121,7 +116,7 @@
 	. = ..()
 	if(!.) //dead or deleted
 		return
-	if(stat) // consciousness check
+	if(IS_UNCONSCIOUS_OR_CRIT(src)) // consciousness check
 		return
 
 	if(health < maxHealth)

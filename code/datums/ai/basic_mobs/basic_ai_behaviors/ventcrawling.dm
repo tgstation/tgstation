@@ -1,143 +1,190 @@
-/// We hop into the vents through a vent outlet, and then crawl around a bit. Jolly good times.
-/// This also assumes that we are on the turf that the vent outlet is on. If it isn't, shit.
+///uhm...sus?
+/datum/bt_node/subtree/consider_venting
+	behavior_tree_json = "code/datums/ai/basic_mobs/basic_ai_behaviors/consider_venting.bt.json"
 
-/// Warning: this was really snowflake code lifted from an obscure feature that likely has not been touched for over five years years.
-/// Something that isn't implemented is the ability to actually crawl through vents ourselves because I think that's just a waste of time for the same effect (instead of psuedo-teleportation, do REAL forceMoving)
-/// If you are seriously considering using this component, it would be a great idea to extend this proc to be more versatile/less overpowered - the mobs that currently implement this benefit the most
-/// since they are weak as shit with only five health. Up to you though, don't take what's written here as gospel.
-/datum/ai_behavior/crawl_through_vents
-	action_cooldown = 10 SECONDS
 
-/datum/ai_behavior/crawl_through_vents/get_cooldown(datum/ai_controller/cooldown_for)
-	return cooldown_for.blackboard[BB_VENTCRAWL_COOLDOWN] || initial(action_cooldown)
+/// Enters a vent stored in entry_vent_key. Sets BB_EXIT_VENT_TARGET and BB_VENT_ENTRY_TIME on success.
+/datum/bt_node/ai_behavior/enter_vent
+	var/entry_vent_key = BB_ENTRY_VENT_TARGET
+	/// TRUE while the async crawl-in is running. perform() holds at DELAY until it resolves.
+	var/is_starting_crawl = FALSE
+	/// Set by the async action when the crawl finished but we did not end up in the vent.
+	var/failed_ventcrawl = FALSE
 
-/datum/ai_behavior/crawl_through_vents/setup(datum/ai_controller/controller, target_key)
-	. = ..()
-	var/obj/machinery/atmospherics/components/unary/vent_pump/target = controller.blackboard[target_key] || controller.blackboard[BB_ENTRY_VENT_TARGET]
-	return istype(target) && isliving(controller.pawn) // only mobs can vent crawl in the current framework
-
-/datum/ai_behavior/crawl_through_vents/perform(seconds_per_tick, datum/ai_controller/controller, target_key)
-	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent = controller.blackboard[target_key] || controller.blackboard[BB_ENTRY_VENT_TARGET]
+/datum/bt_node/ai_behavior/enter_vent/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/cached_pawn = controller.pawn
-	if(HAS_TRAIT(cached_pawn, TRAIT_MOVE_VENTCRAWLING) || !controller.blackboard[BB_CURRENTLY_TARGETING_VENT] || !is_vent_valid(entry_vent))
-		return AI_BEHAVIOR_DELAY
 
-	if(!cached_pawn.can_enter_vent(entry_vent, provide_feedback = FALSE)) // we're an AI we scoff at feedback
-		// "never enter a hole you can't get out of"
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	// We kicked off the crawl on a previous tick; report its result once it resolves. Flags reset in finish_action.
+	if(failed_ventcrawl)
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+	if(is_starting_crawl)
+		if(!HAS_TRAIT(cached_pawn, TRAIT_MOVE_VENTCRAWLING))
+			return AI_BEHAVIOR_DELAY // still climbing in
+		controller.set_blackboard_key(BB_VENT_ENTRY_TIME, world.time)
+		if(prob(50))
+			cached_pawn.visible_message(
+				span_warning("[cached_pawn] scrambles into the ventilation ducts!"),
+				span_hear("You hear something scampering through the ventilation ducts."),
+			)
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
-	var/vent_we_exit_out_of = calculate_exit_vent(controller, target_key)
-	if(isnull(vent_we_exit_out_of)) // don't get into the vents if we can't get out of them, that's SILLY.
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	if(HAS_TRAIT(cached_pawn, TRAIT_MOVE_VENTCRAWLING))
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	controller.set_blackboard_key(BB_CURRENTLY_TARGETING_VENT, FALSE) // must be done here because we have a do_after sleep in handle_ventcrawl unfortunately and double dipping could lead to erroneous suicide pill calls.
-	cached_pawn.handle_ventcrawl(entry_vent)
-	if(!HAS_TRAIT(cached_pawn, TRAIT_MOVE_VENTCRAWLING)) //something failed and we ARE NOT IN THE VENT even though the earlier check said we were good to go! odd.
-		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent = controller.blackboard[entry_vent_key]
+	if(!is_vent_valid(entry_vent) || !isliving(cached_pawn))
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	controller.set_blackboard_key(BB_EXIT_VENT_TARGET, vent_we_exit_out_of)
+	if(!cached_pawn.can_enter_vent(entry_vent, provide_feedback = FALSE))
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	if(prob(50))
-		cached_pawn.visible_message(
-			span_warning("[src] scrambles into the ventilation ducts!"),
-			span_hear("You hear something scampering through the ventilation ducts."),
-		)
+	var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = calculate_exit_vent(controller)
+	if(isnull(exit_vent))
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 
-	var/lower_vent_time_limit = controller.blackboard[BB_LOWER_VENT_TIME_LIMIT] // the least amount of time we spend in the vents
-	var/upper_vent_time_limit = controller.blackboard[BB_UPPER_VENT_TIME_LIMIT] // the most amount of time we spend in the vents
-
-	addtimer(CALLBACK(src, PROC_REF(exit_the_vents), controller), rand(lower_vent_time_limit, upper_vent_time_limit))
-	controller.set_blackboard_key(BB_GIVE_UP_ON_VENT_PATHING_TIMER_ID, addtimer(CALLBACK(src, PROC_REF(delayed_suicide_pill), controller, target_key), controller.blackboard[BB_TIME_TO_GIVE_UP_ON_VENT_PATHING], TIMER_STOPPABLE))
+	controller.set_blackboard_key(BB_EXIT_VENT_TARGET, exit_vent)
+	is_starting_crawl = TRUE
+	INVOKE_ASYNC(src, PROC_REF(perform_ventcrawl_action), controller, entry_vent)
 	return AI_BEHAVIOR_DELAY
 
-/// Figure out an exit vent that we should head towards. If we don't have one, default to the entry vent. If they're all kaput, we die.
-/datum/ai_behavior/crawl_through_vents/proc/calculate_exit_vent(datum/ai_controller/controller, target_key)
-	var/obj/machinery/atmospherics/components/unary/vent_pump/returnable_vent
-	var/obj/machinery/atmospherics/components/unary/vent_pump/vent_we_entered_through = controller.blackboard[target_key] || controller.blackboard[BB_ENTRY_VENT_TARGET]
+/// Runs the sleeping ventcrawl off the tick. Flags failure if we didn't end up in the vent, so perform() never has to sleep.
+/datum/bt_node/ai_behavior/enter_vent/proc/perform_ventcrawl_action(datum/ai_controller/controller, obj/machinery/atmospherics/components/unary/vent_pump/entry_vent)
+	var/mob/living/cached_pawn = controller.pawn
+	cached_pawn.handle_ventcrawl(entry_vent)
+	if(!HAS_TRAIT(cached_pawn, TRAIT_MOVE_VENTCRAWLING)) //something failed and we ARE NOT IN THE VENT even though the earlier check said we were good to go! odd.
+		failed_ventcrawl = TRUE
 
-	var/datum/pipeline/entry_vent_parent = vent_we_entered_through.parents[1]
-	var/list/potential_exits = list()
+/datum/bt_node/ai_behavior/enter_vent/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	is_starting_crawl = FALSE
+	failed_ventcrawl = FALSE
+	if(!succeeded)
+		controller.clear_blackboard_key(entry_vent_key)
 
-	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in entry_vent_parent.other_atmos_machines)
-		if(is_vent_valid(vent))
-			potential_exits.Add(vent)
+/// Returns TRUE if the vent exists and isn't welded shut.
+/datum/bt_node/ai_behavior/enter_vent/proc/is_vent_valid(obj/machinery/atmospherics/components/unary/vent_pump/vent)
+	return !QDELETED(vent) && !vent.welded
 
-	if(length(potential_exits))
-		returnable_vent = pick(potential_exits)
-		return returnable_vent
-
-	// if we're here, we're in "what the flarp" mode... okay maybe we can default to the vent we entered in.
-	returnable_vent = vent_we_entered_through
-	if(is_vent_valid(vent_we_entered_through))
-		// AH WHAT THE FUCK. okay, maybe we're not inside the vents yet? let's return null and we can pick up on that based on the wider context of the proc that invokes it.
+/// Picks a random valid vent on the same pipeline as the entry vent. Falls back to the entry vent itself; returns null if nothing is usable.
+/datum/bt_node/ai_behavior/enter_vent/proc/calculate_exit_vent(datum/ai_controller/controller)
+	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent = controller.blackboard[entry_vent_key]
+	if(QDELETED(entry_vent))
 		return null
 
-	return returnable_vent // we return null in case something yonked between then and now so it's all good man
+	var/datum/pipeline/parent_pipe = entry_vent.parents[1]
+	var/list/candidates = list()
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in parent_pipe.other_atmos_machines)
+		if(is_vent_valid(vent))
+			candidates += vent
 
-/// We've had enough horsing around in the vents, it's time to get out.
-/datum/ai_behavior/crawl_through_vents/proc/exit_the_vents(datum/ai_controller/controller, target_key)
-	var/obj/machinery/atmospherics/components/unary/vent_pump/emergency_vent // vent we will scramble to search for in case plan A is a bust (exit vent)
-	var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = controller.blackboard[BB_EXIT_VENT_TARGET]
-	var/mob/living/living_pawn = controller.pawn
+	if(length(candidates))
+		return pick(candidates)
 
-	if(!HAS_TRAIT(living_pawn, TRAIT_MOVE_VENTCRAWLING) && isturf(get_turf(living_pawn))) // we're out of the vents, so no need to do an exit
-		// assume that we got yeeted out somehow and return this so we can halt the suicide pill timer.
-		finish_action(controller, TRUE, target_key)
-		return
+	if(is_vent_valid(entry_vent))
+		return null // in the pipeline already; let the caller handle it
 
-	living_pawn.forceMove(exit_vent)
-	if(!living_pawn.can_enter_vent(exit_vent, provide_feedback = FALSE))
-		// oh shit, something happened while we were waiting on that timer. let's figure out a different way to get out of here.
-		emergency_vent = calculate_exit_vent(controller)
-		if(isnull(emergency_vent))
-			// it's joever. we cooked too hard.
-			suicide_pill(controller)
-			return
+	return entry_vent
 
-		controller.set_blackboard_key(BB_EXIT_VENT_TARGET, emergency_vent) // assign and go again
-		addtimer(CALLBACK(src, PROC_REF(exit_the_vents), controller), (rand(controller.blackboard[BB_LOWER_VENT_TIME_LIMIT], controller.blackboard[BB_UPPER_VENT_TIME_LIMIT]) / 2)) // we're in danger mode, so scurry out at half the time it would normally take.
-		return
 
-	living_pawn.handle_ventcrawl(exit_vent)
-	if(HAS_TRAIT(living_pawn, TRAIT_MOVE_VENTCRAWLING)) // how'd we fail? what the fuck
-		stack_trace("We failed to exit the vents, even though we should have been fine? This is very weird.")
-		suicide_pill(controller)
-		return
+/// Waits inside a vent for a randomised duration, then exits. Handles the give-up timeout.
+/datum/bt_node/ai_behavior/exit_vent
+	time_between_perform = 1 SECONDS
+	var/target_exit_time = 0
+	/// TRUE while the async crawl-out is running. perform() holds at DELAY until it resolves.
+	var/is_exiting_crawl = FALSE
+	/// Set by the async action when the crawl finished but we are somehow still in the vent.
+	var/failed_ventcrawl = FALSE
 
-	finish_action(controller, TRUE, target_key)
-	return
-
-/// Incredibly stripped down version of the overarching `can_enter_vent` proc on `/mob, just meant for rapid rechecking of a vent. Will be TRUE if not blocked, FALSE otherwise.
-/datum/ai_behavior/crawl_through_vents/proc/is_vent_valid(obj/machinery/atmospherics/components/unary/vent_pump/checkable)
-	return !QDELETED(checkable) && !checkable.welded
-
-/// Wraps a delayed defeat, so we gotta handle the return value properly ya feel?
-/datum/ai_behavior/crawl_through_vents/proc/delayed_suicide_pill(datum/ai_controller/controller, target_key)
-	if(suicide_pill(controller) & AI_BEHAVIOR_FAILED)
-		finish_action(controller, FALSE, target_key)
-
-/// Aw fuck, we may have been bested somehow. Regardless of what we do, we can't exit through a vent! Let's end our misery and prevent useless endless calculations.
-/datum/ai_behavior/crawl_through_vents/proc/suicide_pill(datum/ai_controller/controller)
-	var/mob/living/living_pawn = controller.pawn
-
-	if(istype(living_pawn))
-		if(isnull(living_pawn.client)) // only call death if we don't have a client because maybe their natural intelligence can pick up where our AI calculations have failed
-			living_pawn.death(TRUE) // call gibbed as true because we are never coming back it is so fucking joever
-
-		return AI_BEHAVIOR_FAILED
-
-	if(QDELETED(living_pawn)) // we got deleted by some other means, just presume the action is a wash and get outta here
-		return NONE
-
-	qdel(living_pawn) // failover, we really should've been caught in the istype() but lets just bow out of existing at this point
-	return NONE
-
-/datum/ai_behavior/crawl_through_vents/finish_action(datum/ai_controller/controller, succeeded, target_key)
+/datum/bt_node/ai_behavior/exit_vent/setup(datum/ai_controller/controller)
 	. = ..()
+	var/lower = controller.blackboard[BB_LOWER_VENT_TIME_LIMIT]
+	var/upper = controller.blackboard[BB_UPPER_VENT_TIME_LIMIT]
+	var/entry_time = controller.blackboard[BB_VENT_ENTRY_TIME] || world.time
+	target_exit_time = entry_time + rand(lower, upper)
+	return TRUE
 
-	deltimer(controller.blackboard[BB_GIVE_UP_ON_VENT_PATHING_TIMER_ID])
-	controller.clear_blackboard_key(target_key)
-	controller.clear_blackboard_key(BB_ENTRY_VENT_TARGET)
+/datum/bt_node/ai_behavior/exit_vent/perform(seconds_per_tick, datum/ai_controller/controller)
+	var/mob/living/cached_pawn = controller.pawn
+
+	// We kicked off the crawl-out on a previous tick; report its result once it resolves. Flags reset in finish_action.
+	if(failed_ventcrawl)
+		return suicide_pill(cached_pawn)
+	if(is_exiting_crawl)
+		if(HAS_TRAIT(cached_pawn, TRAIT_MOVE_VENTCRAWLING))
+			return AI_BEHAVIOR_DELAY // still climbing out
+		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
+
+	if(world.time < target_exit_time)
+		var/give_up = controller.blackboard[BB_TIME_TO_GIVE_UP_ON_VENT_PATHING]
+		var/entry_time = controller.blackboard[BB_VENT_ENTRY_TIME]
+		if(give_up && entry_time && world.time > entry_time + give_up)
+			return suicide_pill(cached_pawn)
+		return AI_BEHAVIOR_DELAY
+
+	var/obj/machinery/atmospherics/components/unary/vent_pump/exit_vent = controller.blackboard[BB_EXIT_VENT_TARGET]
+	if(!is_vent_valid(exit_vent))
+		exit_vent = calculate_exit_vent(controller)
+		if(isnull(exit_vent))
+			return suicide_pill(cached_pawn)
+		controller.set_blackboard_key(BB_EXIT_VENT_TARGET, exit_vent)
+
+	cached_pawn.forceMove(exit_vent)
+	if(!cached_pawn.can_enter_vent(exit_vent, provide_feedback = FALSE))
+		// vent became unusable while we waited; try an emergency exit next tick
+		var/emergency = calculate_exit_vent(controller)
+		if(isnull(emergency))
+			return suicide_pill(cached_pawn)
+		controller.set_blackboard_key(BB_EXIT_VENT_TARGET, emergency)
+		target_exit_time = world.time // retry immediately next tick
+		return AI_BEHAVIOR_DELAY
+
+	is_exiting_crawl = TRUE
+	INVOKE_ASYNC(src, PROC_REF(perform_ventcrawl_action), controller, exit_vent)
+	return AI_BEHAVIOR_DELAY
+
+/// Runs the sleeping ventcrawl off the tick. Flags failure if we're somehow still in the vent, so perform() never has to sleep.
+/datum/bt_node/ai_behavior/exit_vent/proc/perform_ventcrawl_action(datum/ai_controller/controller, obj/machinery/atmospherics/components/unary/vent_pump/exit_vent)
+	var/mob/living/cached_pawn = controller.pawn
+	cached_pawn.handle_ventcrawl(exit_vent)
+	if(HAS_TRAIT(cached_pawn, TRAIT_MOVE_VENTCRAWLING))
+		stack_trace("[cached_pawn] [type]: exited vent but still has TRAIT_MOVE_VENTCRAWLING")
+		failed_ventcrawl = TRUE
+
+/datum/bt_node/ai_behavior/exit_vent/finish_action(datum/ai_controller/controller, succeeded)
+	. = ..()
+	is_exiting_crawl = FALSE
+	failed_ventcrawl = FALSE
+	controller.clear_blackboard_key(BB_VENT_ENTRY_TIME)
 	controller.clear_blackboard_key(BB_EXIT_VENT_TARGET)
-	controller.set_blackboard_key(BB_CURRENTLY_TARGETING_VENT, FALSE) // just in case
+	controller.clear_blackboard_key(BB_ENTRY_VENT_TARGET)
+
+/// Kills the pawn if it has no client, then returns INSTANT FAILED.
+/datum/bt_node/ai_behavior/exit_vent/proc/suicide_pill(mob/living/pawn)
+	if(istype(pawn) && isnull(pawn.client))
+		pawn.death(TRUE)
+	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+
+/// Returns TRUE if the vent exists and isn't welded shut.
+/datum/bt_node/ai_behavior/exit_vent/proc/is_vent_valid(obj/machinery/atmospherics/components/unary/vent_pump/vent)
+	return !QDELETED(vent) && !vent.welded
+
+/// Picks a random valid vent on the same pipeline as BB_ENTRY_VENT_TARGET. Returns null if nothing is usable.
+/datum/bt_node/ai_behavior/exit_vent/proc/calculate_exit_vent(datum/ai_controller/controller)
+	var/obj/machinery/atmospherics/components/unary/vent_pump/entry_vent = controller.blackboard[BB_ENTRY_VENT_TARGET]
+	if(QDELETED(entry_vent))
+		return null
+
+	var/datum/pipeline/parent_pipe = entry_vent.parents[1]
+	var/list/candidates = list()
+	for(var/obj/machinery/atmospherics/components/unary/vent_pump/vent in parent_pipe.other_atmos_machines)
+		if(is_vent_valid(vent))
+			candidates += vent
+
+	if(length(candidates))
+		return pick(candidates)
+
+	if(is_vent_valid(entry_vent))
+		return null
+
+	return entry_vent
 

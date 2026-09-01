@@ -19,6 +19,7 @@
 		/obj/item/reagent_containers/hypospray/medipen/methamphetamine = /datum/reagent/drug/methamphetamine,
 		/obj/item/reagent_containers/hypospray/medipen/survival = /datum/reagent/medicine/c2/libital,
 		/obj/item/reagent_containers/hypospray/medipen/survival/luxury = /datum/reagent/medicine/c2/penthrite,
+		/obj/item/reagent_containers/hypospray/medipen/survival/luxury/purple = /datum/reagent/medicine/c2/penthrite,
 		/obj/item/reagent_containers/hypospray/medipen/invisibility = /datum/reagent/drug/saturnx,
 	)
 
@@ -119,12 +120,10 @@
 	return TRUE
 
 /obj/machinery/medipen_refiller/wrench_act(mob/living/user, obj/item/tool)
-	default_unfasten_wrench(user, tool)
-	return ITEM_INTERACT_SUCCESS
+	return default_unfasten_wrench(user, tool)
 
 /obj/machinery/medipen_refiller/crowbar_act(mob/living/user, obj/item/tool)
-	default_deconstruction_crowbar(tool)
-	return ITEM_INTERACT_SUCCESS
+	return default_deconstruction_crowbar(user, tool)
 
 /obj/machinery/medipen_refiller/screwdriver_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_screwdriver(user, tool)

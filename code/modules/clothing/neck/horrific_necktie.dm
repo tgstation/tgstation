@@ -20,7 +20,7 @@
 	hears_us = null
 	QDEL_LIST(possessed_souls)
 	SSpoints_of_interest.remove_point_of_interest(src)
-	LAZYREMOVE(GLOB.joinable_mobs[format_text("[initial(name)]")], src)
+	LAZYREMOVEASSOC(GLOB.joinable_mobs, initial(name), src)
 	return ..()
 
 /obj/item/clothing/neck/tie/disco/examine(mob/user)
@@ -34,12 +34,12 @@
 		return
 	if(user.client && (isnull(hears_us) || user == hears_us))
 		SSpoints_of_interest.make_point_of_interest(src)
-		LAZYADD(GLOB.joinable_mobs[format_text("[initial(name)]")], src)
+		LAZYADDASSOCLIST(GLOB.joinable_mobs, initial(name), src)
 
 /obj/item/clothing/neck/tie/disco/dropped(mob/living/user)
 	if(!QDELETED(src))
 		SSpoints_of_interest.remove_point_of_interest(src)
-		LAZYREMOVE(GLOB.joinable_mobs[format_text("[initial(name)]")], src)
+		LAZYREMOVEASSOC(GLOB.joinable_mobs, initial(name), src)
 	return ..()
 
 /obj/item/clothing/neck/tie/disco/attack_self(mob/living/user, modifiers)
