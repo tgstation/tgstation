@@ -84,7 +84,7 @@
 	rowjoin_right.alpha = (rows > 1) * 255
 
 	upper.screen_loc = "[screen_start_x + columns]:[screen_pixel_x + 8],[screen_start_y]:[screen_pixel_y]"
-	upper.invisibility = parent_storage.parent.loc?.atom_storage ? INVISIBILITY_MAXIMUM : 0
+	upper.invisibility = parent_storage.parent.loc?.atom_storage ? 0 : INVISIBILITY_MAXIMUM
 
 	closer.screen_loc = "[screen_start_x + columns]:[screen_pixel_x - 5],[screen_start_y]:[screen_pixel_y]"
 

@@ -110,7 +110,7 @@ const ALTERNATE_ACTIONS: Record<string, AlternateAction> = {
 
   access_storage: {
     icon: 'box-open',
-    text: 'Access storage',
+    text: 'Open',
   },
 };
 
