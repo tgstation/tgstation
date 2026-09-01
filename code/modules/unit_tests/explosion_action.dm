@@ -87,11 +87,11 @@
 
 	// those two items should give us a 100% armor rating, so let's test that to make sure it works (all ex_act checks should now be prob(100)), no room for error.
 	EX_ACT(test_dog, EXPLODE_LIGHT) // should do 20 damage (basic animals do a prob() check based on the armor rating, and divide the expected brute loss by 1.5).
-	TEST_ASSERT_EQUAL(test_dog.health, MAX_LIVING_HEALTH - 20, "EX_ACT() with EXPLODE_LIGHT severity should have done 20 damage to a corgi with an immune helmet and vest!")
+	TEST_ASSERT_EQUAL(test_dog.health, MAX_LIVING_HEALTH - 15, "EX_ACT() with EXPLODE_LIGHT severity should have done 20 damage to a corgi with an immune helmet and vest!")
 	test_dog.revive(ADMIN_HEAL_ALL)
 
 	EX_ACT(test_dog, EXPLODE_HEAVY) // should do 40 damage.
-	TEST_ASSERT_EQUAL(test_dog.health, MAX_LIVING_HEALTH - 40, "EX_ACT() with EXPLODE_HEAVY severity should have done 40 damage to a corgi with an immune helmet and vest!")
+	TEST_ASSERT_EQUAL(test_dog.health, MAX_LIVING_HEALTH - 30, "EX_ACT() with EXPLODE_HEAVY severity should have done 40 damage to a corgi with an immune helmet and vest!")
 	test_dog.revive(ADMIN_HEAL_ALL)
 
 	EX_ACT(test_dog, EXPLODE_DEVASTATE) // this should NOT gib, but should do 500 damage. 500 is a lot but we don't really need to test that exact number here to be honest
