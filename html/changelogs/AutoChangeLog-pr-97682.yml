@@ -1,4 +1,0 @@
-author: "PapaMichael"
-delete-after: True
-changes:
-  - bugfix: "Cats no longer try to run away from themselves after losing a catfight, instead running from the cat they actually lost to"
