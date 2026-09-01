@@ -13,7 +13,7 @@
 	var/venus_flavor_text = ""
 
 /datum/spacevine_mutation/proc/add_mutation_to_vinepiece(obj/structure/spacevine/vine)
-	vine.mutations += src
+	vine.mutations |= src
 	vine.add_atom_colour(hue, FIXED_COLOUR_PRIORITY)
 
 /datum/spacevine_mutation/proc/on_buckle(obj/structure/spacevine/vine, mob/living/buckled)
