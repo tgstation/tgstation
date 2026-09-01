@@ -51,6 +51,7 @@
 		blind_message = span_hear("You hear rustling."),
 		ignored_mobs = user,
 	)
+	to_chat(user, span_notice("You try to open [owner]'s [source]..."))
 	if(owner.is_blind())
 		to_chat(owner, span_userdanger("Someone is trying to open your [source]!"))
 
