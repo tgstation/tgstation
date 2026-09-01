@@ -215,7 +215,7 @@
 		"Message" = "A shipment of produce (%COUNT items) has been sent to %LOCATION from the Gulag.")
 	vars_and_tooltips_map = list(
 		"LOCATION" = "will be replaced with the location of the produce delivery.",
-		"COUNT" = "Will be replaced with the quantity of produce recieved"
+		"COUNT" = "Will be replaced with the quantity of produce received"
 	)
 
 GLOBAL_LIST_EMPTY(produce_locations)
