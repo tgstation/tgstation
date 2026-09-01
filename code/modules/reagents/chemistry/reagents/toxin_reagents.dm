@@ -486,7 +486,7 @@
 			if(mutation.type == /datum/spacevine_mutation/toxicity)
 				return
 
-		var/flower_damage = rand(30, 50) * weed_damage_multiplier
+		var/flower_damage = rand(15, 25) * weed_damage_multiplier
 		flower.take_damage(flower_damage, BRUTE, 0)
 	if(istype(exposed_obj, /obj/structure/glowshroom)) //even a small amount is enough to kill it
 		qdel(exposed_obj)
