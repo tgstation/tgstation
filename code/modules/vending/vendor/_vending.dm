@@ -49,8 +49,6 @@
 	armor_type = /datum/armor/machinery_vending
 	circuit = /obj/item/circuitboard/machine/vendor
 	payment_department = ACCOUNT_SRV
-	light_power = 0.7
-	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
 
 	///Next world time to send a purchase message
@@ -378,13 +376,6 @@
 		. += span_notice("It should have a handfull of [MONEY_NAME] stored based on the missing items.")
 	else if (credits_contained > PAYCHECK_CREW)
 		. += span_notice("It should have at least a full paycheck worth of [MONEY_NAME] inside!")
-
-/obj/machinery/vending/update_appearance(updates = ALL)
-	. = ..()
-	if(machine_stat & BROKEN)
-		set_light(0)
-		return
-	set_light(powered() ? MINIMUM_USEFUL_LIGHT_RANGE : 0)
 
 /obj/machinery/vending/update_icon_state()
 	if(machine_stat & BROKEN)

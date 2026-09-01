@@ -89,14 +89,6 @@
 		return
 	update_appearance()
 
-
-/obj/machinery/digital_clock/update_appearance(updates=ALL)
-	. = ..()
-	if(machine_stat & (NOPOWER|BROKEN))
-		set_light(0)
-		return
-	set_light(l_range = 1.5, l_power = 0.7, l_color = LIGHT_COLOR_BLUE) // blue light
-
 /obj/machinery/digital_clock/update_overlays()
 	. = ..()
 
@@ -134,6 +126,10 @@
 	var/mutable_appearance/minute_one_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_minute_one]")
 	minute_one_overlay.pixel_w = 0
 	return_overlays += minute_one_overlay
+	return_overlays += emissive_appearance(icon, "[base_icon_state]-light-mask", src, alpha = src.alpha)
+
+		. += mutable_appearance(icon, "[base_icon_state]-powered")
+
 
 	var/mutable_appearance/minute_tenth_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_minute_tenth]")
 	minute_tenth_overlay.pixel_w = -4

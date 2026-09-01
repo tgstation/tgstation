@@ -89,7 +89,7 @@
 	if(machine_stat & NOPOWER)
 		set_light(0)
 	else
-		set_light(brightness_on)
+		set_light(brightness_on, l_dir = dir)
 
 /obj/machinery/computer/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
