@@ -219,7 +219,7 @@
 	hue = "#F4A442"
 	quality = MINOR_NEGATIVE
 	severity = SEVERITY_MINOR
-	venus_flavor_text = "Vine Eating - Reduced regeneration while on vines"
+	venus_flavor_text = "Vine Eating - Increased regeneration while on vines"
 
 /// Destroys any vine on spread-target's tile. The checks for if this should be done are in the spread() proc.
 /datum/spacevine_mutation/vine_eating/on_spread(obj/structure/spacevine/vine, turf/target)
