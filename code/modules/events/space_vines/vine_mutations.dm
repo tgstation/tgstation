@@ -469,7 +469,7 @@
 	description = "Causes the vines to be slippery"
 	hue = "#a5980c"
 	quality = NEGATIVE
-	severity = SEVERITY_MINOR
+	severity = SEVERITY_AVERAGE
 
 /datum/spacevine_mutation/slippery/on_grow(obj/structure/spacevine/vine)
 	vine.AddComponent(/datum/component/slippery, 5 SECONDS, NO_SLIP_WHEN_WALKING|SLIDE)
