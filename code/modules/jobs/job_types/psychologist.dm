@@ -31,6 +31,7 @@
 	)
 	rpg_title = "Snake Oil Salesman"
 	job_flags = STATION_JOB_FLAGS
+	tgui_icon = FA_ICON_BRAIN
 
 
 /datum/outfit/job/psychologist

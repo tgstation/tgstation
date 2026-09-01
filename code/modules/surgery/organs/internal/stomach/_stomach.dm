@@ -167,8 +167,7 @@
 			if(SPT_PROB(round(-human.satiety/77), seconds_per_tick))
 				human.set_jitter_if_lower(10 SECONDS)
 			hunger_rate = 3 * HUNGER_FACTOR
-		hunger_rate *= hunger_modifier
-		hunger_rate *= human.physiology.hunger_mod
+		hunger_rate *= hunger_modifier * GET_PHYSIOLOGY(human, PHYS_COEFF_HUNGER_MOD)
 		human.adjust_nutrition(-hunger_rate * seconds_per_tick)
 
 	var/nutrition = human.nutrition
@@ -415,9 +414,9 @@
 	return span_boldwarning("Your stomach cramps in pain!")
 
 /// If damage is high enough, we may end up vomiting out whatever we had stored
-/obj/item/organ/stomach/proc/on_punched(datum/source, mob/living/carbon/human/attacker, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking, limb_sharpness)
+/obj/item/organ/stomach/proc/on_punched(datum/source, mob/living/carbon/human/attacker, damage, attack_type, atk_effect, obj/item/bodypart/affecting, final_armor_block, limb_sharpness)
 	SIGNAL_HANDLER
-	if (!LAZYLEN(stomach_contents) || damage < 9 || final_armor_block || kicking)
+	if (!LAZYLEN(stomach_contents) || damage < 9 || final_armor_block || atk_effect == ATTACK_EFFECT_KICK)
 		return
 	if (owner.vomit(MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE))
 		// Since we vomited with a force flag, we should've vomited out at least one item

@@ -523,7 +523,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	//It might be worth looking into updating these after each reaction, but that makes us care more about order of operations, so be careful
 	var/temp = temperature
 	reaction_loop:
-		for(var/datum/gas_reaction/reaction as anything in reactions)
+		for(var/datum/gas_reaction/standard/reaction as anything in reactions)
 
 			var/list/reqs = reaction.requirements
 			if((reqs["MIN_TEMP"] && temp < reqs["MIN_TEMP"]) || (reqs["MAX_TEMP"] && temp > reqs["MAX_TEMP"]))
@@ -743,7 +743,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
  */
 /datum/gas_mixture/proc/electrolyze(working_power = 0, electrolyzer_args = list())
 	for(var/reaction in GLOB.electrolyzer_reactions)
-		var/datum/electrolyzer_reaction/current_reaction = GLOB.electrolyzer_reactions[reaction]
+		var/datum/gas_reaction/electrolyzer/current_reaction = GLOB.electrolyzer_reactions[reaction]
 
 		if(!current_reaction.reaction_check(air_mixture = src, electrolyzer_args = electrolyzer_args))
 			continue

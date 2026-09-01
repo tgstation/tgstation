@@ -42,8 +42,8 @@
 	family_heirlooms = list(/obj/item/reagent_containers/cup/glass/bottle/whiskey)
 	rpg_title = "Thiefcatcher" //I guess they caught them all rip thief...
 	job_flags = STATION_JOB_FLAGS | JOB_ANTAG_PROTECTED
-
 	job_tone = "objection"
+	tgui_icon = FA_ICON_USER_SECRET
 
 
 /datum/outfit/job/detective

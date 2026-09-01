@@ -36,6 +36,7 @@ Assistant
 	job_flags = STATION_JOB_FLAGS
 	rpg_title = "Lout"
 	config_tag = "ASSISTANT"
+	tgui_icon = FA_ICON_TOOLBOX
 
 /datum/job/assistant/get_outfit(consistent)
 	if(consistent)
