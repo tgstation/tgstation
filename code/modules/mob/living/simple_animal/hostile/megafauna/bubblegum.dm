@@ -345,16 +345,16 @@ Difficulty: Hard
 	return
 
 // Prevents damage, period. These are hallucinations/afterimages/whatever and should delete on their own.
-/mob/living/basic/revenant/can_adjust_brute_loss(amount, forced, required_bodytype)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/can_adjust_brute_loss(amount, forced, required_bodytype)
 	return FALSE
 
-/mob/living/basic/revenant/can_adjust_fire_loss(amount, forced, required_bodytype)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/can_adjust_fire_loss(amount, forced, required_bodytype)
 	return FALSE
 
-/mob/living/basic/revenant/can_adjust_tox_loss(amount, forced, required_bodytype)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/can_adjust_tox_loss(amount, forced, required_bodytype)
 	return FALSE
 
-/mob/living/basic/revenant/can_adjust_oxy_loss(amount, forced, required_bodytype)
+/mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/can_adjust_oxy_loss(amount, forced, required_bodytype)
 	return FALSE
 
 /mob/living/simple_animal/hostile/megafauna/bubblegum/hallucination/OpenFire()
