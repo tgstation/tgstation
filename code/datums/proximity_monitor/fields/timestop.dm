@@ -31,14 +31,8 @@
 	if(silent)
 		hidden = TRUE
 		alpha = 0
-	for(var/A in immune_atoms)
-		immune[A] = TRUE
-	for(var/mob/living/to_check in GLOB.player_list)
-		if(HAS_TRAIT(to_check, TRAIT_TIME_STOP_IMMUNE))
-			immune[to_check] = TRUE
-	for(var/mob/living/basic/guardian/stand in GLOB.parasites)
-		if(stand.summoner && HAS_TRAIT(stand.summoner, TRAIT_TIME_STOP_IMMUNE)) //It would only make sense that a person's stand would also be immune.
-			immune[stand] = TRUE
+	for(var/innately_immune in immune_atoms)
+		immune[innately_immune] = TRUE
 	if(start)
 		INVOKE_ASYNC(src, PROC_REF(timestop))
 
@@ -97,15 +91,15 @@
 /datum/proximity_monitor/advanced/timestop/proc/freeze_atom(atom/movable/A)
 	if(global_frozen_atoms[A] || !istype(A))
 		return FALSE
-	if(immune[A]) //a little special logic but yes immune things don't freeze
+
+	if(HAS_TRAIT(A, TRAIT_TIME_STOP_IMMUNE) || astype(A, /mob)?.can_block_magic(antimagic_flags))
+		immune[A] = TRUE
+
+	if(immune[A])
 		if(channelled)
 			RegisterSignal(A, COMSIG_MOVABLE_MOVED, PROC_REF(atom_broke_channel), override = TRUE)
 		return FALSE
-	if(ismob(A))
-		var/mob/M = A
-		if(M.can_block_magic(antimagic_flags))
-			immune[A] = TRUE
-			return
+
 	var/frozen = TRUE
 	if(isliving(A))
 		freeze_mob(A)
