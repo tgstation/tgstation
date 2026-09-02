@@ -29,13 +29,13 @@
 
 	TEST_ASSERT_EQUAL(the_world.loc, dio.loc, "Holoparasite failed to manifest")
 
+	var/datum/action/cooldown/spell/timestop/other_timestop = new(jotaro)
+	other_timestop.Grant(jotaro)
+
 	var/datum/action/cooldown/spell/timestop/timestop = new(dio)
 	timestop.spell_requirements = NONE
 	timestop.Grant(dio)
 	timestop.Trigger()
-
-	var/datum/action/cooldown/spell/timestop/other_timestop = new(jotaro)
-	other_timestop.Grant(jotaro)
 
 	var/obj/effect/timestop/time_effect = locate() in center
 	TEST_ASSERT_NOTNULL(time_effect, "Failed to create timestop effect")
