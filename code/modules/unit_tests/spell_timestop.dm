@@ -23,9 +23,9 @@
 	jotaro.forceMove(in_range)
 	johnathan.forceMove(out_of_range)
 
-	the_world.manifest()
-	star_platinum.manifest()
-	heirophant_green.manifest()
+	the_world.manifest(TRUE)
+	star_platinum.manifest(TRUE)
+	heirophant_green.manifest(TRUE)
 
 	TEST_ASSERT_EQUAL(the_world.loc, dio.loc, "Holoparasite failed to manifest")
 
