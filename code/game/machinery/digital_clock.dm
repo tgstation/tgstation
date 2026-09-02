@@ -124,27 +124,37 @@
 	var/return_overlays = list()
 
 	var/mutable_appearance/minute_one_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_minute_one]")
+	var/mutable_appearance/minute_one_emissive = emissive_appearance('icons/obj/digital_clock.dmi', "+[station_minute_one]", src, alpha = src.alpha)
 	minute_one_overlay.pixel_w = 0
+	minute_one_emissive.pixel_w = 0
 	return_overlays += minute_one_overlay
-	return_overlays += emissive_appearance(icon, "[base_icon_state]-light-mask", src, alpha = src.alpha)
-
-		. += mutable_appearance(icon, "[base_icon_state]-powered")
-
+	return_overlays += minute_one_emissive
 
 	var/mutable_appearance/minute_tenth_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_minute_tenth]")
+	var/mutable_appearance/minute_tenth_emissive = emissive_appearance('icons/obj/digital_clock.dmi', "+[station_minute_tenth]", src, alpha = src.alpha)
 	minute_tenth_overlay.pixel_w = -4
+	minute_tenth_emissive.pixel_w = -4
 	return_overlays += minute_tenth_overlay
+	return_overlays += minute_tenth_emissive
 
 	var/mutable_appearance/separator = mutable_appearance('icons/obj/digital_clock.dmi', "+separator")
+	var/mutable_appearance/separator_emissive = emissive_appearance('icons/obj/digital_clock.dmi', "+separator", src, alpha = src.alpha)
 	return_overlays += separator
+	return_overlays += separator_emissive
 
 	var/mutable_appearance/hour_one_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_hours_one]")
+	var/mutable_appearance/hour_one_emissive = emissive_appearance('icons/obj/digital_clock.dmi', "+[station_hours_one]", src, alpha = src.alpha)
 	hour_one_overlay.pixel_w = -10
+	hour_one_emissive.pixel_w = -10
 	return_overlays += hour_one_overlay
+	return_overlays += hour_one_emissive
 
 	var/mutable_appearance/hour_tenth_overlay = mutable_appearance('icons/obj/digital_clock.dmi', "+[station_hours_tenth]")
+	var/mutable_appearance/hour_tenth_emissive = emissive_appearance('icons/obj/digital_clock.dmi', "+[station_hours_tenth]", src, alpha = src.alpha)
 	hour_tenth_overlay.pixel_w = -14
+	hour_tenth_emissive.pixel_w = -14
 	return_overlays += hour_tenth_overlay
+	return_overlays += hour_tenth_emissive
 
 	return return_overlays
 
