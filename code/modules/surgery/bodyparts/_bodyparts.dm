@@ -1416,7 +1416,7 @@
 			texture.modify_bodypart_appearance(generated_overlay, generated_overlay_flags)
 
 	SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped)
-	return .
+	return assoc_to_keys(.)
 
 /**
  * Takes in an image and greyscales it to later be recolored to look like a husk
