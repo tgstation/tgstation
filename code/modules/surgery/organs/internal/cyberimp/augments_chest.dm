@@ -238,7 +238,6 @@
 	if(!silent)
 		to_chat(owner, span_notice("You turn your thrusters set on."))
 	update_appearance()
-	owner.update_body_parts()
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/deactivate(silent = FALSE)
 	if(!on)
@@ -249,11 +248,10 @@
 		to_chat(owner, span_notice("You turn your thrusters set off."))
 	on = FALSE
 	update_appearance()
-	owner.update_body_parts()
 
 /obj/item/organ/cyberimp/chest/thrusters/update_icon_state()
 	icon_state = "[base_icon_state][on ? "-on" : null]"
-	bodypart_aug?.icon_state = get_overlay_state()
+	update_overlay_state()
 	return ..()
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/allow_thrust(num, use_fuel = TRUE)
@@ -291,7 +289,7 @@
 	deactivate(silent = TRUE)
 	return FALSE
 
-/obj/item/organ/cyberimp/chest/thrusters/get_overlay_state(image_layer, obj/item/bodypart/limb)
+/obj/item/organ/cyberimp/chest/thrusters/get_overlay_state()
 	return "[aug_overlay][on ? "_on" : ""]"
 
 /obj/item/organ/cyberimp/chest/spine

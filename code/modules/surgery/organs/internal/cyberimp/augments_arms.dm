@@ -12,7 +12,11 @@
 	///A ref for the arm we're taking up. Mostly for the unregister signal upon removal
 	var/obj/hand
 
-/obj/item/organ/cyberimp/arm/get_overlay_state(image_layer, obj/item/bodypart/limb)
+/obj/item/organ/cyberimp/arm/swap_zone(target_zone)
+	. = ..()
+	update_overlay_state()
+
+/obj/item/organ/cyberimp/arm/get_overlay_state()
 	return "[aug_overlay][zone == BODY_ZONE_L_ARM ? "_left" : "_right"]"
 
 /obj/item/organ/cyberimp/arm/on_mob_insert(mob/living/carbon/arm_owner)

@@ -31,18 +31,34 @@
 	. = ..()
 	QDEL_NULL(bodypart_aug) // Do this after Remove() has done its thing, otherwise on_bodypart_remove() will not properly remove the overlay
 
+/// Returns what icon_state the bodypart overlay should be in.
+/// Defaults to whatever is set in the variable, but can be overridden by subtypes which need multiple states
 /obj/item/organ/cyberimp/proc/get_overlay_state()
 	return aug_overlay
 
+/// Refreshes the overlay's icon_state, then calls update_bodyparts if necessary
+/obj/item/organ/cyberimp/proc/update_overlay_state()
+	if(isnull(bodypart_aug))
+		return
+
+	var/old_aug_state = bodypart_aug.icon_state
+	bodypart_aug.icon_state = get_overlay_state()
+	if(old_aug_state != bodypart_aug.icon_state)
+		owner?.update_body_parts()
+
 /obj/item/organ/cyberimp/on_bodypart_insert(obj/item/bodypart/limb)
 	. = ..()
-	if (bodypart_aug)
-		limb.add_bodypart_overlay(bodypart_aug)
+	if(isnull(bodypart_aug))
+		return
+
+	limb.add_bodypart_overlay(bodypart_aug)
 
 /obj/item/organ/cyberimp/on_bodypart_remove(obj/item/bodypart/limb)
 	. = ..()
-	if (bodypart_aug)
-		limb.remove_bodypart_overlay(bodypart_aug)
+	if(isnull(bodypart_aug))
+		return
+
+	limb.remove_bodypart_overlay(bodypart_aug)
 
 /datum/bodypart_overlay/simple/augment
 	layers = list("" = BODY_ADJ_LAYER)
