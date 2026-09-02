@@ -123,7 +123,7 @@
 
 		if("ejectcard")
 			if(!driver)
-				to_chat("No ID card driver installed in the [os]!")
+				to_chat(user, "No ID card driver installed in the [os]!")
 				return FALSE
 
 			driver.eject_stored_id()
@@ -131,7 +131,7 @@
 
 		if("changedroneaccess")
 			if(!driver)
-				to_chat("No ID card driver installed in the [os]!")
+				to_chat(user, "No ID card driver installed in the [os]!")
 				return FALSE
 
 			if(!id_card)
