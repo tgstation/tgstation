@@ -64894,7 +64894,6 @@
 /area/station/science/ordnance)
 "sdp" = (
 /obj/effect/spawner/structure/window,
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/engineering/atmos)
 "sdr" = (
