@@ -814,7 +814,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	bot_reset(bypass_ai_reset = isAI(summoner))
 	var/turf/destination = turf_destination ? turf_destination : get_turf(summoner)
 	ai_controller?.set_blackboard_key(BB_BOT_SUMMON_TARGET, destination)
-	var/list/access_to_grant = grant_all_access ? REGION_ACCESS_ALL_STATION : user_access + initial_access
+	var/list/access_to_grant = grant_all_access ? SSid_access.accesses_by_region[REGION_ALL_STATION] : user_access + initial_access
 	access_card.set_access(access_to_grant)
 	speak("Responding.", radio_channel)
 	update_bot_mode(new_mode = BOT_SUMMON)
