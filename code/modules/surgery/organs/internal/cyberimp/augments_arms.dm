@@ -74,8 +74,9 @@
 		new_item.set_custom_materials(null)
 		items_list += WEAKREF(new_item)
 
-	// Overlay is done in two layers, "[state]" and "[state]_hand"
-	bodypart_aug?.add_layer("hand", BODYPARTS_HIGH_LAYER)
+	if(hand_state)
+		// Overlay is done in two layers, "[state]" and "[state]_hand"
+		bodypart_aug?.add_layer("hand", BODYPARTS_HIGH_LAYER)
 
 /obj/item/organ/cyberimp/arm/toolkit/Destroy()
 	hand = null
