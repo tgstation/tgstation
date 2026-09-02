@@ -1,6 +1,7 @@
 //backpack item
 #define HALFWAYCRITDEATH ((HEALTH_THRESHOLD_CRIT + HEALTH_THRESHOLD_DEAD) * 0.5)
 #define DEFIB_CAN_HURT(source) (source.combat || (source.req_defib && !source.defib.safety))
+#define DEFIB_RESET_TIMER 3 MINUTES
 
 /obj/item/defibrillator
 	name = "defibrillator"
@@ -21,8 +22,10 @@
 	var/obj/item/shockpaddles/paddle_type = /obj/item/shockpaddles
 	/// If the paddles are equipped (1) or on the defib (0)
 	var/on = FALSE
-	/// If you can zap people with the defibs on harm mode
+	/// If TRUE, will allow you to zap people while in combat mode.
 	var/safety = TRUE
+	/// If TRUE, will not attempt to retoggle safeties if emp'd again.
+	var/recently_emped = FALSE
 	/// If there's a cell in the defib with enough power for a revive, blocks paddles from reviving otherwise
 	var/powered = FALSE
 	/// If the cell can be removed via screwdriver
@@ -164,11 +167,8 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/defibrillator/emag_act(mob/user, obj/item/card/emag/emag_card)
-
-	safety = !safety
-
-	var/enabled_or_disabled = (safety ? "enabled" : "disabled")
-	balloon_alert(user, "safety protocols [enabled_or_disabled]")
+	obj_flags |= EMAGGED
+	toggle_safety()
 
 	return TRUE
 
@@ -178,8 +178,33 @@
 		deductcharge(STANDARD_CELL_CHARGE / severity)
 	if (. & EMP_PROTECT_SELF)
 		return
-
 	update_power()
+	if((obj_flags & EMAGGED) || recently_emped)
+		return
+	toggle_safety()
+	recently_emped = TRUE
+
+/obj/item/defibrillator/proc/toggle_safety(mob/living/user, force_safety = FALSE)
+	if(force_safety && !(obj_flags & EMAGGED))
+		safety = TRUE
+	else
+		safety = FALSE
+
+	var/enabled_or_disabled = (safety ? "enabled" : "disabled")
+	if(user)
+		balloon_alert(user, "safety protocols [enabled_or_disabled]")
+
+	if(obj_flags & EMAGGED)
+		return
+
+	addtimer(CALLBACK(src, PROC_REF(force_safety_on)), DEFIB_RESET_TIMER)
+
+/obj/item/defibrillator/proc/force_safety_on()
+	recently_emped = FALSE
+	if(obj_flags & EMAGGED)
+		return
+
+	toggle_safety(null, TRUE)
 
 /obj/item/defibrillator/proc/toggle_paddles(mob/living/user)
 	on = !on
@@ -718,3 +743,4 @@
 
 #undef HALFWAYCRITDEATH
 #undef DEFIB_CAN_HURT
+#undef DEFIB_RESET_TIMER
