@@ -92,9 +92,9 @@
 	for(var/i in 0 to filter_width step 32)
 		for(var/j in 0 to filter_height step 32)
 			// adds a displacement map so the outline lines up with the bottom of the sprite
-			appearance.add_filter("displacement_[i]_[j]", 2, displacement_map_filter(cached_displacement_icon, x = i, y = j, size = 1))
+			appearance.add_filter("displacement_[i]/[j]", 2, displacement_map_filter(cached_displacement_icon, x = i, y = j, size = 1))
 			// adds a bit of lighting to make the texture look less flat
-			appearance.add_filter("lighting_[i]_[j]", 4, layering_filter(cached_lighting_icon, x = i, y = j, blend_mode = BLEND_MULTIPLY))
+			appearance.add_filter("lighting_[i]/[j]", 4, layering_filter(cached_lighting_icon, x = i, y = j, blend_mode = BLEND_MULTIPLY))
 
 /datum/bodypart_texture/mesh/black
 	texture_icon_state = "mesh_mask"
