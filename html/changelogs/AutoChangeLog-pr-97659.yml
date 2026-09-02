@@ -1,0 +1,5 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - bugfix: "Psychologist PDA is now paintable."
+  - qol: "\"PDA\" in the PDA painter is now called \"Assistant PDA\", which it is."
