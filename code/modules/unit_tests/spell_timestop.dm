@@ -6,9 +6,9 @@
 	var/mob/living/carbon/human/kakyoin = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/jotaro = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/johnathan = allocate(/mob/living/carbon/human/consistent)
-	var/mob/living/basic/guardian/the_world = allocate(/mob/living/basic/guardian/stand)
-	var/mob/living/basic/guardian/star_platinum = allocate(/mob/living/basic/guardian/stand)
-	var/mob/living/basic/guardian/heirophant_green = allocate(/mob/living/basic/guardian/stand)
+	var/mob/living/basic/guardian/the_world = allocate(/mob/living/basic/guardian)
+	var/mob/living/basic/guardian/star_platinum = allocate(/mob/living/basic/guardian)
+	var/mob/living/basic/guardian/heirophant_green = allocate(/mob/living/basic/guardian)
 
 	the_world.set_summoner(dio)
 	star_platinum.set_summoner(jotaro)
