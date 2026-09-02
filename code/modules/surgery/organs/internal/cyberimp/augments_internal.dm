@@ -55,8 +55,8 @@
 /datum/bodypart_overlay/simple/augment/get_overlay(obj/item/bodypart/limb, layer_index, layer_real)
 	. = ..()
 	if(emissive)
-		var/iconstate_to_use = icon_state + (layer_index ? "_[layer_index]" : "") + "_e"
-		.[emissive_appearance(icon, iconstate_to_use, limb, layer = layer_real)] = LIMB_OVERLAY_META
+		var/mutable_appearance/emissive_overlay = emissive_appearance(icon, icon_state + (layer_index ? "_[layer_index]" : "") + "_e", limb, layer = layer_real)
+		.[emissive_overlay] = LIMB_OVERLAY_META
 
 /obj/item/organ/cyberimp/feel_for_damage(self_aware)
 	// No feeling in implants (yet?)

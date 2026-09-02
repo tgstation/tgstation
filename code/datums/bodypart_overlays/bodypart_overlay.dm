@@ -91,7 +91,8 @@
 	var/list/created_overlays = list()
 	created_overlays[main_image] = overlay_flags
 	if(blocks_emissive != EMISSIVE_BLOCK_NONE && !isnull(limb))
-		created_overlays[emissive_blocker(main_image.icon, main_image.icon_state, limb, layer = main_image.layer, alpha = main_image.alpha)] = LIMB_OVERLAY_META
+		var/mutable_appearance/blocker_overlay = emissive_blocker(main_image.icon, main_image.icon_state, limb, layer = main_image.layer, alpha = main_image.alpha)
+		created_overlays[blocker_overlay] = LIMB_OVERLAY_META
 
 	return created_overlays
 
