@@ -1,8 +1,7 @@
 SUBSYSTEM_DEF(solar_power_bars)
 	name = "Solar Power"
 	dependencies = list(
-		/datum/controller/subsystem/mapping,
-		/datum/controller/subsystem/atoms,
+		/datum/controller/subsystem/power_bars,
 	)
 	wait = 5 SECONDS
 

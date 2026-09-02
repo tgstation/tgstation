@@ -4,6 +4,7 @@ SUBSYSTEM_DEF(research)
 	wait = 1 SECONDS
 	dependencies = list(
 		/datum/controller/subsystem/processing/station,
+		/datum/controller/subsystem/power_bars,
 	)
 
 	/// An associative list of techweb node typepaths to instances.

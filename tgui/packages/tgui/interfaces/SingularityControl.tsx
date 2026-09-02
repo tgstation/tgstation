@@ -520,7 +520,6 @@ const OverclockWindow = (props: OverclockWindowProps) => {
           }
           tooltip={OVERCLOCK_TOOLTIPS[overclock_access]}
           onClick={handleBeginOverclock}
-          tooltipPosition="right"
         >
           BEGIN OVERCLOCK
         </Button>
@@ -694,7 +693,7 @@ const ObserveScreen = () => {
                   title={
                     <Tooltip
                       content="Massively increase power output at the cost of massively damaging the singularity, when needed urgently."
-                      position="right-end"
+                      position="top-start"
                     >
                       <span
                         style={{

@@ -30,7 +30,7 @@
 	/// Flag for mapping related area properties (such as cavegen)
 	var/area_flags_mapping = UNIQUE_AREA
 
-	var/protected_from_power_bars = TRUE
+	var/protected_from_power_bars = FALSE
 
 	///Do we have an active fire alarm?
 	var/fire = FALSE

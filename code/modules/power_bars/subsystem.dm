@@ -1,6 +1,10 @@
 SUBSYSTEM_DEF(power_bars)
 	name = "Power Bars"
 	ss_flags = SS_NO_FIRE
+	dependencies = list(
+		/datum/controller/subsystem/atoms,
+		/datum/controller/subsystem/mapping,
+	)
 
 	var/list/list/department_allocations = list(
 		POWER_BAR_DEPARTMENT_COMMON = list(0),
