@@ -2,10 +2,10 @@ import { map } from 'es-toolkit/compat';
 import { Button, Section, Table } from 'tgui-core/components';
 
 import { NtosWindow } from '../layouts';
-import { useNtos } from './NtosCore/ntos';
+import { useNtos } from './NtosCore';
 
 export const NtosCrewManifest = (props) => {
-  const { act, data } = useNtos(props);
+  const { act, data } = useNtos();
   const { manifest = {} } = data;
   return (
     <NtosWindow width={400} height={480}>

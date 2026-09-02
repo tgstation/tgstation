@@ -1,7 +1,7 @@
 import { Button, ColorBox, Section, Stack, Table } from 'tgui-core/components';
 
 import { NtosWindow } from '../layouts';
-import { useNtos } from './NtosCore/ntos';
+import { useNtos } from './NtosCore';
 
 export enum alert_relevancies {
   ALERT_RELEVANCY_SAFE,
@@ -10,7 +10,7 @@ export enum alert_relevancies {
 }
 
 export const NtosMain = (props) => {
-  const { system, api } = useNtos(props);
+  const { system, api } = useNtos();
   const {
     alert_style,
     alert_color,
@@ -187,14 +187,14 @@ export const NtosMain = (props) => {
             </Table>
           </Section>
         )}
-        <ProgramsTable {...props} />
+        <ProgramsTable />
       </NtosWindow.Content>
     </NtosWindow>
   );
 };
 
 const ProgramsTable = (props) => {
-  const { system, api } = useNtos(props);
+  const { system, api } = useNtos();
   const { programs = [] } = system;
   const { kill_program, run_program } = api;
 

@@ -16,10 +16,10 @@ import { Box, Button, ImageButton } from 'tgui-core/components';
 import { Window } from '../../layouts';
 import type { Coordinates } from '../common/Connections';
 import { NtosHeader, NtosHeaderIcon } from './NtosHeader';
-import { useNtos } from './ntos';
+import { NtosContext, useNtos } from '.';
 
 export const NtosCoreDesktop = (props) => {
-  const { act, system, api } = useNtos(props);
+  const { act, system, api } = useNtos();
   const {
     device_theme,
     battery_icon,
@@ -313,7 +313,9 @@ const NtosDesktopWindow = (props: NtosDesktopWindowProps) => {
         onMouseDown={handleMouseDown}
       />
 
-      <Component tgui_id={interface_id} />
+      <NtosContext.Provider value={interface_id}>
+        <Component />
+      </NtosContext.Provider>
       <ResizeHandle onMouseDown={handleResizeMouseDown} direction="right" />
       <ResizeHandle onMouseDown={handleResizeMouseDown} direction="bottom" />
       <ResizeHandle

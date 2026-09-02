@@ -8,10 +8,10 @@ import { getRoutedComponent } from 'tgui/routes';
 import { Box, Button } from 'tgui-core/components';
 import { Window } from '../../layouts';
 import { NtosHeader, NtosHeaderIcon } from './NtosHeader';
-import { useNtos } from './ntos';
+import { NtosContext, useNtos } from '.';
 
 export const NtosCoreMobile = (props) => {
-  const { system, api } = useNtos(props);
+  const { system, api } = useNtos();
   const {
     device_theme,
     battery_icon,
@@ -110,7 +110,9 @@ export const NtosCoreMobile = (props) => {
             </>
           }
         />
-        <Component tgui_id={component_id} />
+        <NtosContext.Provider value={component_id}>
+          <Component />
+        </NtosContext.Provider>
       </div>
     </Window>
   );

@@ -1,5 +1,6 @@
 import { useBackend } from 'tgui/backend';
 import type { BooleanLike } from 'tgui-core/react';
+import { createContext, useContext } from 'react';
 
 type NtosData = {
   system: NtosSystemData;
@@ -73,10 +74,6 @@ type Login = {
   id_name: string | null;
 };
 
-type UseNtosProps = {
-  tgui_id?: string;
-};
-
 type NtosState<TData> = {
   act: any;
   system: NtosSystemData & NtosSystemStaticData;
@@ -84,10 +81,10 @@ type NtosState<TData> = {
   api: NtosApi;
 };
 
-export function useNtos<TData extends Record<string, any>>(
-  props: UseNtosProps,
-): NtosState<TData> {
-  const { tgui_id } = props;
+export const NtosContext = createContext<string | null>(null);
+
+export function useNtos<TData extends Record<string, any>>(): NtosState<TData> {
+  const tgui_id = useContext(NtosContext);
   const { data, act } = useBackend<NtosData>();
 
   const systemAct = (action: string, payload: Record<string, unknown> = {}) => {

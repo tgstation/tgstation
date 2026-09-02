@@ -15,20 +15,20 @@ import {
 import { formatEnergy } from 'tgui-core/format';
 import { formatPower } from 'tgui-core/format';
 import { NtosWindow } from '../layouts';
-import { useNtos } from './NtosCore/ntos';
+import { useNtos } from './NtosCore';
 
 export const NtosRobotact = (props) => {
   return (
     <NtosWindow width={800} height={600}>
       <NtosWindow.Content>
-        <NtosRobotactContent {...props} />
+        <NtosRobotactContent />
       </NtosWindow.Content>
     </NtosWindow>
   );
 };
 
 export const NtosRobotactContent = (props) => {
-  const { act, data } = useNtos(props);
+  const { act, data } = useNtos();
   const [tab_main, setTab_main] = useState(1);
   const [tab_sub, setTab_sub] = useState(1);
   const {
