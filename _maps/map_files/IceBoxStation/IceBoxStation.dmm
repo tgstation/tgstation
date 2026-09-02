@@ -73277,6 +73277,8 @@
 /obj/effect/turf_decal/siding/yellow{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment,
+/obj/structure/cable,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "uxx" = (
