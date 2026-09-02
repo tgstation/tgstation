@@ -85,6 +85,7 @@
 	icon_state = "armory"
 	ambience_index = AMBIENCE_DANGER
 	motion_monitored = TRUE
+	protected_from_power_bars = TRUE
 
 /area/station/security/armory/upper
 	name = "Upper Armory"

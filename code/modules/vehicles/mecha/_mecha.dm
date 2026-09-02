@@ -252,6 +252,8 @@
 	AddElement(/datum/element/falling_hazard, damage = 80, wound_bonus = 10, hardhat_safety = FALSE, crushes = TRUE)
 	AddElement(/datum/element/hostile_machine)
 
+	AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_bar_update)), POWER_BAR_DEPARTMENT_SCIENCE)
+
 /obj/vehicle/sealed/mecha/Destroy()
 	// If the former occupants get polymorphed, mutated, chestburstered,
 	// or otherwise replaced by another mob, that mob is no longer in .occupants
@@ -288,8 +290,9 @@
 /// Add parts on mech spawning. Skipped in manual construction.
 /obj/vehicle/sealed/mecha/proc/populate_parts()
 	cell = new /obj/item/stock_parts/power_store/cell/high(src)
-	scanmod = new /obj/item/stock_parts/scanning_module(src)
-	capacitor = new /obj/item/stock_parts/capacitor(src)
+	if (!SSpower_bars.enabled) // melbert todo?
+		scanmod = new /obj/item/stock_parts/scanning_module(src)
+		capacitor = new /obj/item/stock_parts/capacitor(src)
 	servo = new /obj/item/stock_parts/servo(src)
 	update_part_values()
 
@@ -454,12 +457,45 @@
 
 /// Updates the values given by scanning module and capacitor tier, called when a part is removed or inserted.
 /obj/vehicle/sealed/mecha/proc/update_part_values()
-	update_energy_drain()
+	var/capacitor_rating = capacitor?.rating
+	// var/scanmod_rating = scanmod?.rating // melbert todo: what does this even do?
 
-	if(capacitor)
-		overclock_temp_danger = initial(overclock_temp_danger) * capacitor.rating
-	else
-		overclock_temp_danger = initial(overclock_temp_danger)
+	if (SSpower_bars.enabled)
+		switch (SSpower_bars.power_bars_of_department(POWER_BAR_DEPARTMENT_SCIENCE))
+			if (0, 1)
+				// scanmod_rating = 1
+				capacitor_rating = 1
+			if (2)
+				// scanmod_rating = 2
+				capacitor_rating = 2
+			if (3)
+				// scanmod_rating = 4
+				capacitor_rating = 4
+
+	step_energy_drain = initial(step_energy_drain)
+	melee_energy_drain = initial(melee_energy_drain)
+	light_power_drain = initial(light_power_drain)
+	overclock_temp_danger = initial(overclock_temp_danger)
+
+	if(overclock_mode)
+		step_energy_drain *= overclock_coeff
+
+	step_energy_drain *= (servo ? (1 / servo.rating) : 2)
+
+	if(capacitor_rating)
+		// melbert todo
+		// var/datum/armor/stock_armor = get_armor_by_type(armor_type)
+		// var/initial_energy = stock_armor.get_rating(ENERGY)
+
+		// for (var/damage_type in ARMOR_LIST_DAMAGE())
+		// 	set_armor_rating(damage_type, initial_energy + (capacitor_rating * 5))
+
+		melee_energy_drain *= capacitor_rating
+		light_power_drain *= capacitor_rating
+		overclock_temp_danger *= capacitor_rating
+
+/obj/vehicle/sealed/mecha/proc/on_power_bar_update()
+	update_part_values()
 
 /obj/vehicle/sealed/mecha/examine(mob/user)
 	. = ..()
@@ -906,25 +942,8 @@
 	else
 		movedelay *= overclock_coeff
 		visible_message(span_notice("[src] cools down and the humming stops."))
-	update_energy_drain()
+	update_part_values()
 	return TRUE
-
-/// Update the energy drain according to parts and status
-/obj/vehicle/sealed/mecha/proc/update_energy_drain()
-	if(servo)
-		step_energy_drain = initial(step_energy_drain) / servo.rating
-	else
-		step_energy_drain = 2 * initial(step_energy_drain)
-
-	if(overclock_mode)
-		step_energy_drain *= overclock_coeff
-
-	if(capacitor)
-		melee_energy_drain = initial(melee_energy_drain) / capacitor.rating
-		light_power_drain = initial(light_power_drain) / capacitor.rating
-	else
-		melee_energy_drain = initial(melee_energy_drain)
-		light_power_drain = initial(light_power_drain)
 
 /// Toggle lights on/off
 /obj/vehicle/sealed/mecha/proc/toggle_lights(forced_state = null, mob/user)

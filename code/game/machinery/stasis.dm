@@ -23,14 +23,34 @@
 	var/mattress_state = "stasis_on"
 	var/obj/effect/overlay/vis/mattress_on
 
+
+	var/surgery_access = FALSE
+	/// Techweb linked
+	VAR_PRIVATE/datum/techweb/linked_techweb
+	/// List if surgery typepaths available
+	VAR_PRIVATE/list/advanced_surgeries = list()
+
 /obj/machinery/stasis/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/elevation, pixel_shift = 6)
 	update_buckle_vars(dir)
 
+/obj/machinery/stasis/post_machine_initialize()
+	. = ..()
+	if(!CONFIG_GET(flag/no_default_techweb_link) && isnull(linked_techweb))
+		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)
+
+	if(isnull(linked_techweb))
+		return
+
+	RegisterSignal(linked_techweb, COMSIG_TECHWEB_ADD_DESIGN, PROC_REF(on_techweb_research))
+	RegisterSignal(linked_techweb, COMSIG_TECHWEB_REMOVE_DESIGN, PROC_REF(on_techweb_unresearch))
+
+	for(var/datum/design/surgery/design in linked_techweb.get_researched_design_datums())
+		advanced_surgeries |= design.surgery
+
 /obj/machinery/stasis/RefreshParts()
 	. = ..()
-
 	var/energy_rating = 0
 	for(var/datum/stock_part/part in component_parts)
 		energy_rating += part.energy_rating()
@@ -42,9 +62,18 @@
 	active_power_usage = initial(active_power_usage) / (energy_rating/2)
 	update_current_power_usage()
 
+	if (!SSpower_bars.enabled)
+		return
+
+	var/obj/item/stock_parts/servo/servo = locate() in component_parts
+	surgery_access = servo?.rating == 4
+
 /obj/machinery/stasis/examine(mob/user)
 	. = ..()
 	. += span_notice("Alt-click to [stasis_enabled ? "turn off" : "turn on"] the machine.")
+
+	if (surgery_access)
+		. += span_notice("Extra power being delivered to it has granted it the ability to perform any researched surgery.")
 
 /obj/machinery/stasis/proc/play_power_sound()
 	var/_running = stasis_running()
@@ -152,6 +181,7 @@
 		chill_out(L)
 	update_appearance()
 	L.AddComponentFrom(type, /datum/component/free_operation)
+	RegisterSignal(L, COMSIG_ATOM_BEING_OPERATED_ON, PROC_REF(get_surgeries))
 
 /obj/machinery/stasis/post_unbuckle_mob(mob/living/L)
 	thaw_them(L)
@@ -159,6 +189,15 @@
 		set_occupant(null)
 	update_appearance()
 	L.RemoveComponentSource(type, /datum/component/free_operation)
+	UnregisterSignal(L, COMSIG_ATOM_BEING_OPERATED_ON)
+
+/obj/machinery/stasis/proc/get_surgeries(datum/source, mob/living/surgeon, list/operations)
+	SIGNAL_HANDLER
+
+	if(!surgery_access)
+		return
+
+	operations |= advanced_surgeries
 
 /obj/machinery/stasis/process()
 	if(!isliving(occupant))
@@ -177,5 +216,21 @@
 
 /obj/machinery/stasis/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(user, tool)
+
+/obj/machinery/stasis/proc/on_techweb_research(datum/source, datum/design/surgery/design)
+	SIGNAL_HANDLER
+
+	if(!istype(design))
+		return
+
+	advanced_surgeries |= design.surgery
+
+/obj/machinery/stasis/proc/on_techweb_unresearch(datum/source, datum/design/surgery/design)
+	SIGNAL_HANDLER
+
+	if(!istype(design))
+		return
+
+	advanced_surgeries -= design.surgery
 
 #undef STASIS_TOGGLE_COOLDOWN

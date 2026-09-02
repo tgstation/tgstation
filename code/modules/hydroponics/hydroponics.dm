@@ -69,6 +69,10 @@
 	///Soil things
 	var/obj/machinery/hydroponics/soil/current_soil
 
+	VAR_PRIVATE
+		forcably_set_autogrow_state = null
+		power_bars_needed_for_autogrow = 2
+
 /obj/machinery/hydroponics/Initialize(mapload)
 	//ALRIGHT YOU DEGENERATES. YOU HAD REAGENT HOLDERS FOR AT LEAST 4 YEARS AND NONE OF YOU MADE HYDROPONICS TRAYS HOLD NUTRIENT CHEMS INSTEAD OF USING "Points".
 	//SO HERE LIES THE "nutrilevel" VAR. IT'S DEAD AND I PUT IT OUT OF ITS MISERY. USE "reagents" INSTEAD. ~ArcaneMusic, accept no substitutes.
@@ -92,6 +96,8 @@
 
 	AddElement(/datum/element/contextual_screentip_item_typechecks, hovering_item_typechecks)
 	register_context()
+
+	AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_bar_update)))
 
 /obj/machinery/hydroponics/add_context(
 	atom/source,
@@ -163,6 +169,16 @@
 		return CONTEXTUAL_SCREENTIP_SET
 
 	return NONE
+
+/obj/machinery/hydroponics/proc/on_power_bar_update(new_power_bars, old_power_bars)
+	var/changed = (new_power_bars >= power_bars_needed_for_autogrow) != (old_power_bars >= power_bars_needed_for_autogrow)
+	if (!changed)
+		return POWER_BAR_DONT_REACT
+
+	if (forcably_set_autogrow_state != FALSE)
+		set_self_sustaining(new_power_bars >= power_bars_needed_for_autogrow)
+
+	return POWER_BAR_DONT_REACT // The APC will report it
 
 /obj/machinery/hydroponics/constructable
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
@@ -539,13 +555,21 @@
  *
  * new_value - true / false value that self_sustaining is being set to
  */
-/obj/machinery/hydroponics/proc/set_self_sustaining(new_value)
+/obj/machinery/hydroponics/proc/set_self_sustaining(new_value, mob/user)
 	if(self_sustaining == new_value)
 		return
 
+	if (SSpower_bars.enabled)
+		if (new_value && SSpower_bars.power_bars_of_area(get_area(src)) < power_bars_needed_for_autogrow)
+			if (!isnull(user))
+				balloon_alert(user, "need [power_bars_needed_for_autogrow] power bars,\nask engineering!")
+			return
+
 	self_sustaining = new_value
 
-	update_use_power(self_sustaining ? ACTIVE_POWER_USE : NO_POWER_USE)
+	if (!SSpower_bars.enabled)
+		update_use_power(self_sustaining ? ACTIVE_POWER_USE : NO_POWER_USE)
+
 	update_appearance()
 
 	SEND_SIGNAL(src, COMSIG_HYDROTRAY_SET_SELFSUSTAINING, new_value)
@@ -1191,7 +1215,10 @@
 		return CLICK_ACTION_BLOCKING
 
 	set_self_sustaining(!self_sustaining)
-	to_chat(user, span_notice("You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[self_sustaining ? ", maintaining the tray's health while using high amounts of power" : ""]."))
+	forcably_set_autogrow_state = self_sustaining
+
+	var/consequence = self_sustaining ? (SSpower_bars.enabled ? " as long as it has enough power" : ", maintaining the tray's health while using high amounts of power") : ""
+	to_chat(user, span_notice("You [self_sustaining ? "activate" : "deactivated"] [src]'s autogrow function[consequence]."))
 	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/hydroponics/attack_hand_secondary(mob/user, list/modifiers)

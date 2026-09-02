@@ -92,20 +92,45 @@
 	if(state != FRAME_STATE_BOARD_INSTALLED)
 		. += span_warning("It's missing a circuit board!")
 		return
-	if(!length(req_components))
+
+	var/list/filtered_req_components = components_left_to_build()
+
+	if(!length(filtered_req_components))
 		. += span_info("It requires no components.")
-		return
+		return .
+
+	if(!req_component_names)
+		stack_trace("[src]'s req_components list has items but its req_component_names list is null!")
+		return .
 
 	var/list/nice_list = list()
-	for(var/component in req_components)
-		if(!req_components[component])
+	for(var/component in filtered_req_components)
+		if(!ispath(component))
+			stack_trace("An item in [src]'s req_components list is not a path!")
 			continue
-		nice_list += list("[req_components[component]] [req_component_names[component]]\s")
+		if(!filtered_req_components[component])
+			continue
+
+		nice_list += list("[filtered_req_components[component]] [req_component_names[component]]\s")
 	. += span_info("It requires [english_list(nice_list, "no more components")].")
 
 	. += span_notice("All the components can be [EXAMINE_HINT("pried")] out.")
 	if(!length(nice_list))
 		. += span_info("The frame should be [EXAMINE_HINT("screwed")] to complete it.")
+
+/obj/structure/frame/machine/proc/components_left_to_build()
+	if (!SSpower_bars.enabled)
+		return req_components
+
+	var/list/filtered_req_components = list()
+
+	for (var/req_component, req_component_amount in req_components)
+		if(!allowed_stockpart(req_component))
+			continue
+
+		filtered_req_components[req_component] = req_component_amount
+
+	return filtered_req_components
 
 /obj/structure/frame/machine/dump_contents()
 	var/atom/drop_loc = drop_location()
@@ -121,6 +146,9 @@
 
 	// Rest of the stuff can just be spat out (this includes the circuitboard0)
 	for(var/component in components)
+		if(!allowed_stockpart(component))
+			continue
+
 		if(ismovable(component))
 			var/atom/movable/atom_component = component
 			atom_component.forceMove(drop_loc)

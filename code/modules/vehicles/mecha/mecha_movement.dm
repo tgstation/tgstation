@@ -138,19 +138,20 @@
 			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
 		return FALSE
 
-	var/list/missing_parts = list()
-	if(isnull(cell))
-		missing_parts += "power cell"
-	if(isnull(capacitor))
-		missing_parts += "capacitor"
-	if(isnull(servo))
-		missing_parts += "servo"
+	if(!SSpower_bars.enabled) // melbert todo : check
+		var/list/missing_parts = list()
+		if(isnull(cell))
+			missing_parts += "power cell"
+		if(isnull(capacitor))
+			missing_parts += "capacitor"
+		if(isnull(servo))
+			missing_parts += "servo"
 
-	if(length(missing_parts))
-		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
-			to_chat(occupants, "[icon2html(src, occupants)][span_warning("Missing [english_list(missing_parts)].")]")
-			TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
-		return FALSE
+		if(length(missing_parts))
+			if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))
+				to_chat(occupants, "[icon2html(src, occupants)][span_warning("Missing [english_list(missing_parts)].")]")
+				TIMER_COOLDOWN_START(src, COOLDOWN_MECHA_MESSAGE, 2 SECONDS)
+			return FALSE
 
 	if((step_energy_drain != 0) && !use_energy(step_energy_drain))
 		if(TIMER_COOLDOWN_FINISHED(src, COOLDOWN_MECHA_MESSAGE))

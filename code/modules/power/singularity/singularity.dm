@@ -412,7 +412,10 @@
 /obj/singularity/proc/can_move(turf/considered_turf)
 	if(!considered_turf)
 		return FALSE
-	if (HAS_TRAIT(considered_turf, TRAIT_CONTAINMENT_FIELD))
+	// We cannot be contained!!!
+	if (SSpower_bars.enabled)
+		return TRUE
+	if(HAS_TRAIT(considered_turf, TRAIT_CONTAINMENT_FIELD))
 		return FALSE
 	return TRUE
 

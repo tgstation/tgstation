@@ -828,6 +828,7 @@
 
 /obj/machinery/proc/RefreshParts()
 	SHOULD_CALL_PARENT(TRUE)
+
 	//reset to baseline
 	idle_power_usage = initial(idle_power_usage)
 	active_power_usage = initial(active_power_usage)
@@ -845,6 +846,12 @@
 	active_power_usage = initial(active_power_usage) * (1 + parts_energy_rating)
 	update_current_power_usage()
 	SEND_SIGNAL(src, COMSIG_MACHINERY_REFRESH_PARTS)
+
+/obj/machinery/proc/update_for_power_bars()
+	ASSERT(SSpower_bars.enabled)
+
+	refill_parts()
+	RefreshParts()
 
 /**
  * Checks if the machine is in a state where it can be pried open with a crowbar,
@@ -939,20 +946,26 @@
 		return //we don't have any parts.
 
 	for(var/part in component_parts)
+		if(!allowed_stockpart(part))
+			continue
 		if(istype(part, /datum/stock_part))
 			var/datum/stock_part/datum_part = part
 			new datum_part.physical_object_type(loc)
-		else
-			var/obj/item/obj_part = part
-			component_parts -= part
-			obj_part.forceMove(loc)
-			if(istype(obj_part, /obj/item/circuitboard/machine))
-				var/obj/item/circuitboard/machine/board = obj_part
-				for(var/component in board.req_components) //loop through all stack components and spawn them
-					if(!ispath(component, /obj/item/stack))
-						continue
-					var/obj/item/stack/stack_path = component
-					new stack_path(loc, board.req_components[component])
+			continue
+
+		var/obj/item/obj_part = part
+		component_parts -= part
+		obj_part.forceMove(loc)
+		if(!istype(obj_part, /obj/item/circuitboard/machine))
+			continue
+
+		var/obj/item/circuitboard/machine/board = obj_part
+		for(var/component in board.req_components) //loop through all stack components and spawn them
+			if(!ispath(component, /obj/item/stack))
+				continue
+			var/obj/item/stack/stack_path = component
+			new stack_path(loc, board.req_components[component])
+
 	LAZYCLEARLIST(component_parts)
 
 	//drop everything inside us. we do this last to give machines a chance
@@ -1019,8 +1032,9 @@
 		circuit = null
 	if((gone in component_parts) && !QDELETED(src))
 		component_parts -= gone
-		// It would be unusual for a component_part to be qdel'd ordinarily.
-		deconstruct(FALSE)
+		if (!SSpower_bars.enabled)
+			// It would be unusual for a component_part to be qdel'd ordinarily.
+			deconstruct(FALSE)
 
 /**
  * This should be called before mass qdeling components to make space for replacements.
@@ -1077,6 +1091,8 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/proc/exchange_parts(mob/user, obj/item/storage/part_replacer/replacer_tool)
+	ASSERT(!SSpower_bars.enabled)
+
 	if(!istype(replacer_tool) || !component_parts)
 		return FALSE
 
@@ -1181,6 +1197,9 @@
 	return TRUE
 
 /obj/machinery/proc/display_parts(mob/user)
+	if (SSpower_bars.enabled)
+		return ""
+
 	var/list/part_count = list()
 
 	for(var/component_part in component_parts)

@@ -14,9 +14,9 @@
 /obj/machinery/vending/proc/build_inventory(list/productlist, list/recordlist, list/categories, start_empty = FALSE, premium = FALSE)
 	PRIVATE_PROC(TRUE)
 
-	var/inflation_value = HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING) ? SSeconomy.inflation_value() : 1
-	default_price = round(initial(default_price) * inflation_value)
-	extra_price = round(initial(extra_price) * inflation_value)
+	var/price_coefficient = price_coefficient()
+	default_price = round(initial(default_price) * price_coefficient)
+	extra_price = round(initial(extra_price) * price_coefficient)
 
 	QDEL_LIST(recordlist)
 
@@ -37,11 +37,11 @@
 		new_record.max_amount = amount
 
 		///Prices of vending machines are all increased uniformly.
-		var/custom_price = round(initial(temp.custom_price) * inflation_value)
+		var/custom_price = round(initial(temp.custom_price) * price_coefficient)
 		if(!premium)
 			new_record.price = custom_price || default_price
 		else
-			var/premium_custom_price = round(initial(temp.custom_premium_price) * inflation_value)
+			var/premium_custom_price = round(initial(temp.custom_premium_price) * price_coefficient)
 			if(!premium_custom_price && custom_price) //For some ungodly reason, some premium only items only have a custom_price
 				new_record.price = extra_price + custom_price
 			else
@@ -82,6 +82,21 @@
 	//fill the records if we have an canister
 	if(canister)
 		restock(canister)
+
+/obj/machinery/vending/update_for_power_bars()
+	reset_prices(product_records, coin_records)
+
+/obj/machinery/vending/proc/price_coefficient()
+	var/coefficient = HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING) ? SSeconomy.inflation_value() : 1
+
+	if (SSpower_bars.enabled)
+		switch (SSpower_bars.power_bars_of_area(get_area(src)))
+			if (2)
+				coefficient *= 0.8
+			if (3)
+				coefficient *= 0.45
+
+	return coefficient
 
 /**
  * Refill a vending machine from a refill canister

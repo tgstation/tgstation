@@ -86,7 +86,7 @@ SUBSYSTEM_DEF(research)
 			var/income_time_difference = world.time - techweb.last_income
 			techweb.last_bitcoins = bitcoins // Doesn't take tick drift into account
 			for(var/point_type in bitcoins)
-				bitcoins[point_type] *= (income_time_difference / 10) * techweb.income_modifier
+				bitcoins[point_type] *= (income_time_difference / 10) * techweb.get_income_modifier(point_type)
 			techweb.adjust_multiple_points(bitcoins)
 
 		techweb.last_income = world.time

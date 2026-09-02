@@ -44,6 +44,7 @@
 	icon_state = "eva"
 	ambience_index = AMBIENCE_DANGER
 	motion_monitored = TRUE
+	protected_from_power_bars = TRUE
 
 /area/station/command/eva/upper
 	name = "Upper EVA Storage"
@@ -52,6 +53,7 @@
 	name = "\improper Vault"
 	icon_state = "nuke_storage" // someone should change this, not me though
 	motion_monitored = TRUE
+	protected_from_power_bars = TRUE
 
 /*
 * Command Head Areas

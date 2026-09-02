@@ -242,6 +242,9 @@
 	AddElement(/datum/element/contextual_screentip_bare_hands, rmb_text = "Toggle interface lock")
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
 
+	// We just want the alert message this gives
+	AddComponent(/datum/component/power_bar_reactor)
+
 /obj/machinery/power/apc/Destroy()
 	if(malfai)
 		malfai.hacked_apcs -= src
@@ -431,7 +434,9 @@
 					"off" = list("env" = 1),
 				)
 			)
-		)
+		),
+
+		"powerBars" = (SSpower_bars.enabled && !area.protected_from_power_bars) ? SSpower_bars.power_bars_of_area(area) : null,
 	)
 	return data
 

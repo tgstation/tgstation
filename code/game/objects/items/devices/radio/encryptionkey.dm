@@ -76,6 +76,11 @@
 	greyscale_config = /datum/greyscale_config/encryptionkey_security
 	greyscale_colors = "#820a16#280b1a"
 
+/obj/item/encryptionkey/headset_sec/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/security_headset)
+
 /obj/item/encryptionkey/headset_eng
 	name = "engineering radio encryption key"
 	icon = 'icons/map_icons/items/encryptionkey.dmi'
@@ -186,6 +191,11 @@
 	channels = list(RADIO_CHANNEL_SECURITY = 1, RADIO_CHANNEL_COMMAND = 1)
 	greyscale_config = /datum/greyscale_config/encryptionkey_security
 	greyscale_colors = "#280b1a#820a16"
+
+/obj/item/encryptionkey/heads/hos/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/security_headset)
 
 /obj/item/encryptionkey/heads/ce
 	name = "\proper the chief engineer's encryption key"
@@ -302,6 +312,9 @@
 	special_channels = RADIO_SPECIAL_SYNDIE
 	greyscale_config = /datum/greyscale_config/encryptionkey_syndicate
 	greyscale_colors = "#171717#990000"
+
+/obj/item/encryptionkey/all_access
+	channels = list(RADIO_CHANNEL_COMMAND = 1, RADIO_CHANNEL_SECURITY = 1, RADIO_CHANNEL_ENGINEERING = 1, RADIO_CHANNEL_SCIENCE = 1, RADIO_CHANNEL_MEDICAL = 1, RADIO_CHANNEL_SUPPLY = 1, RADIO_CHANNEL_SERVICE = 1, RADIO_CHANNEL_AI_PRIVATE = 1)
 
 /obj/item/encryptionkey/secbot
 	channels = list(RADIO_CHANNEL_AI_PRIVATE = 1, RADIO_CHANNEL_SECURITY = 1)

@@ -157,6 +157,7 @@
 		traits_prevent_checks = prevent_checks,\
 	)
 	RegisterSignal(src, COMSIG_HOSTILE_PRE_ATTACKINGTARGET, PROC_REF(pre_attack))
+	AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_bar_updated)), POWER_BAR_DEPARTMENT_MEDICAL)
 
 	if(!HAS_TRAIT(SSstation, STATION_TRAIT_MEDBOT_MANIA) || !mapload || !is_station_level(z))
 		return INITIALIZE_HINT_LATELOAD
@@ -170,6 +171,9 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /mob/living/basic/bot/medbot/LateInitialize()
+	if(SSpower_bars.enabled)
+		return
+
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)
 
@@ -399,6 +403,15 @@
 
 	heal_multiplier -= design.additive_multiplier
 	INVOKE_ASYNC(src, PROC_REF(speak), "Error! Surgical efficacy decreased to [round(heal_multiplier * 100)]%!")
+
+/mob/living/basic/bot/medbot/proc/on_power_bar_updated(power_bars)
+	switch (power_bars)
+		if (0, 1)
+			heal_multiplier = 1
+		if (2)
+			heal_multiplier = 2
+		if (3)
+			heal_multiplier = 3
 
 /datum/id_trim/medibot
 	assignment = JOB_MEDIBOT

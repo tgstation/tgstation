@@ -85,7 +85,10 @@
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
-		return clamp(powernet.avail-powernet.load, 0, powernet.avail)
+		if (SSpower_bars.enabled)
+			return SSpower_bars.surplus_power(src)
+		else
+			return clamp(powernet.avail-powernet.load, 0, powernet.avail)
 	else
 		return 0
 
@@ -117,6 +120,9 @@
 // returns true if the area has power on given channel (or doesn't require power).
 // defaults to power_channel
 /obj/machinery/proc/powered(chan = power_channel, ignore_use_power = FALSE)
+	if (SEND_SIGNAL(src, COMSIG_MACHINERY_POWERED) & FLAG_MACHINERY_POWERED_FORCE_OFF)
+		return FALSE
+
 	if(!use_power && !ignore_use_power)
 		return TRUE
 
@@ -435,6 +441,8 @@
 	for(var/obj/machinery/power/Node in net2.nodes) //merge power machines
 		if(!Node.connect_to_network())
 			Node.disconnect_from_network() //if somehow we can't connect the machine to the new powernet, disconnect it from the old nonetheless
+
+	SEND_SIGNAL(net1, COMSIG_POWERNET_MERGED)
 
 	return net1
 

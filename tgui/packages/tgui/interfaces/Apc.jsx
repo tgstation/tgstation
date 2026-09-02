@@ -102,6 +102,13 @@ const ApcContent = (props) => {
       />
       <Section title="Power Status">
         <LabeledList>
+          {data.powerBars !== null && (
+            <LabeledList.Item label="Power Distribution">
+              {data.powerBars
+                ? `Tier ${'I'.repeat(data.powerBars)}`
+                : 'Disconnected'}
+            </LabeledList.Item>
+          )}
           <LabeledList.Item
             label="Main Breaker"
             color={externalPowerStatus.color}

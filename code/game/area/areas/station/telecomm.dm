@@ -16,6 +16,7 @@
 		)
 	airlock_wires = /datum/wires/airlock/engineering
 	tacmap_color = TACMAP_AREA_ENGINEERING
+	protected_from_power_bars = TRUE
 
 /area/station/tcommsat/maints
 	name = "\improper Telecomms Maintenance Room"

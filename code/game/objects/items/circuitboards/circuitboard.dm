@@ -186,6 +186,9 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 				var/datum/stock_part/datum_part = component_path
 				stock_part = initial(datum_part.physical_object_type)
 
+			if(!allowed_stockpart(stock_part))
+				continue
+
 			if(!specific_parts)
 				component_name = initial(stock_part.base_name)
 			if(!component_name)

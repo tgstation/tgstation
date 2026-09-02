@@ -3,3 +3,5 @@
 #define APERTURE_TO_METERS(value)(2 * value - 1)
 ///Max size of an photograph in square dimensions
 #define CAMERA_PICTURE_SIZE_HARD_LIMIT 4
+
+#define DEFAULT_MAP_SIZE 15

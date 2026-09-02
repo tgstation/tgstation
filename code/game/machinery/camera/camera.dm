@@ -75,6 +75,9 @@
 	///The short range the camera can see, if tampered with to be short-sighted.
 	var/short_range = 2
 
+	var/offset_x = 0
+	var/offset_y = 0
+
 	///Boolean on whether the camera's alarm is triggered.
 	var/alarm_on = FALSE
 	///How many times this camera has been EMP'ed consecutively, will reset back to 0 when fixed.
@@ -466,6 +469,9 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		user.add_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 	else
 		user.clear_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		// melbert todo
+		// user.sight = 0
+		// user.set_see_in_dark(2)
 	return TRUE
 
 ///Called when the camera starts being watched on a camera console.
@@ -491,3 +497,38 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 #undef XRAY_POWER_MOD
 #undef MOTION_POWER_MOD
 #undef EMP_POWER_MOD
+
+/obj/machinery/camera/proc/update_camera_screens(atom/movable/screen/map_view/cam_screen, atom/movable/screen/background/cam_background, force_xray = FALSE)
+	var/list/visible_turfs = list()
+
+	// Get the camera's turf to correctly gather what's visible from it's turf, in case it's located in a moving object (borgs / mechs)
+	var/turf/new_cam_turf = get_turf(src)
+	if (offset_x != 0 || offset_y != 0)
+		new_cam_turf = locate(new_cam_turf.x + offset_x, new_cam_turf.y + offset_y, new_cam_turf.z)
+
+	// melbert todo
+	// If we're not forcing an update for some reason and the cameras are in the same location,
+	// we don't need to update anything.
+	// Most security cameras will end here as they're not moving.
+	// if(last_camera_turf == new_cam_turf)
+	// 	return
+
+	// Cameras that get here are moving, and are likely attached to some moving atom such as cyborgs.
+	// last_camera_turf = new_cam_turf
+
+	//Here we gather what's visible from the camera's POV based on its view_range and xray modifier if present
+	var/list/visible_things = (force_xray || isXRay( ignore_malf_upgrades = TRUE)) \
+		? range(view_range, new_cam_turf) \
+		: view(view_range, new_cam_turf)
+
+	for(var/turf/visible_turf in visible_things)
+		visible_turfs += visible_turf
+
+	//Get coordinates for a rectangle area that contains the turfs we see so we can then clear away the static in the resulting rectangle area
+	var/list/bbox = get_bbox_of_atoms(visible_turfs)
+	var/size_x = bbox[3] - bbox[1] + 1
+	var/size_y = bbox[4] - bbox[2] + 1
+
+	cam_screen.vis_contents = visible_turfs
+	cam_background.icon_state = "clear"
+	cam_background.fill_rect(1, 1, size_x, size_y)

@@ -14,10 +14,16 @@
 	prerequisite_nodes = list(/datum/techweb_node/medbay_equip)
 	unlocked_designs = list(
 		/datum/design/surgery/tend_wounds_upgrade,
-		/datum/design/medibot_upgrade,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_MEDICAL)
+
+/datum/techweb_node/surgery/New()
+	if(!SSpower_bars.enabled)
+		unlocked_designs += list(
+			/datum/design/medibot_upgrade,
+		)
+	return ..()
 
 /datum/techweb_node/surgery_adv
 	display_name = "Advanced Surgery"
@@ -25,7 +31,6 @@
 	prerequisite_nodes = list(/datum/techweb_node/surgery)
 	unlocked_designs = list(
 		/datum/design/board/harvester,
-		/datum/design/medibot_upgrade/tier_two,
 		/datum/design/surgery/tend_wounds_combo,
 		/datum/design/surgery/tend_wounds_upgrade/femto,
 		/datum/design/surgery/lobotomy,
@@ -36,12 +41,18 @@
 	discount_experiments = list(/datum/experiment/autopsy/human = TECHWEB_TIER_2_POINTS)
 	announce_channels = list(RADIO_CHANNEL_MEDICAL)
 
+/datum/techweb_node/surgery_adv/New()
+	if(!SSpower_bars.enabled)
+		unlocked_designs += list(
+			/datum/design/medibot_upgrade/tier_two,
+		)
+	return ..()
+
 /datum/techweb_node/surgery_exp
 	display_name = "Experimental Surgery"
 	description = "When evolution isn't fast enough."
 	prerequisite_nodes = list(/datum/techweb_node/surgery_adv)
 	unlocked_designs = list(
-		/datum/design/medibot_upgrade/tier_three,
 		/datum/design/surgery/cortex_folding,
 		/datum/design/surgery/cortex_folding/mechanic,
 		/datum/design/surgery/cortex_imprint,
@@ -66,6 +77,13 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	discount_experiments = list(/datum/experiment/autopsy/nonhuman = TECHWEB_TIER_3_POINTS)
 	announce_channels = list(RADIO_CHANNEL_MEDICAL)
+
+/datum/techweb_node/surgery_exp/New()
+	if(!SSpower_bars.enabled)
+		unlocked_designs += list(
+			/datum/design/medibot_upgrade/tier_three,
+		)
+	return ..()
 
 /datum/techweb_node/surgery_tools
 	display_name = "Advanced Surgery Tools"
