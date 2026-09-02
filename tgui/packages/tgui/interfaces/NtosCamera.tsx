@@ -11,6 +11,7 @@ import {
 import type { BooleanLike } from 'tgui-core/react';
 import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 type NtosCameraCommonData = {
   width: number;
@@ -33,9 +34,7 @@ type NtosCameraPictureData = {
   storedPaper: number;
 };
 
-type NtosCameraData =
-  | NtosCameraCommonData
-  | (NtosCameraCommonData & NtosCameraPictureData);
+type NtosCameraData = NtosCameraCommonData & NtosCameraPictureData;
 
 export const NtosCamera = (props) => {
   return (
@@ -48,7 +47,7 @@ export const NtosCamera = (props) => {
 };
 
 export const NtosCameraContent = (props) => {
-  const { act, data } = useBackend<NtosCameraData>();
+  const { act, data } = useNtos<NtosCameraData>();
   const {
     width,
     height,

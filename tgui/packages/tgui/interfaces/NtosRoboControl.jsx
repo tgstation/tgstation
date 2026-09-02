@@ -8,15 +8,16 @@ import {
   Tabs,
 } from 'tgui-core/components';
 
-import { useBackend, useSharedState } from '../backend';
+import { useSharedState } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 const getMuleByRef = (mules, ref) => {
   return mules?.find((mule) => mule.mule_ref === ref);
 };
 
 export const NtosRoboControl = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useNtos();
   const [tab_main, setTab_main] = useSharedState('tab_main', 1);
   const { bots, drones, id_owner, droneaccess, dronepingtypes } = data;
 
@@ -100,7 +101,7 @@ export const NtosRoboControl = (props) => {
 
 export const RobotInfo = (props) => {
   const { robot } = props;
-  const { act, data } = useBackend();
+  const { act, data } = useNtos();
   const mules = data.mules || [];
   // Get a mule object
   const mule = !!robot.mule_check && getMuleByRef(mules, robot.bot_ref);
@@ -299,7 +300,7 @@ export const RobotInfo = (props) => {
 
 export const DroneInfo = (props) => {
   const { drone } = props;
-  const { act, data } = useBackend();
+  const { act, data } = useNtos();
   const color = 'rgba(74, 59, 140, 1)';
 
   return (

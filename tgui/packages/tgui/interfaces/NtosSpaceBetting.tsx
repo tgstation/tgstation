@@ -13,7 +13,7 @@ import {
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
-import { useBackend } from '../backend';
+import { useNtos } from './NtosCore';
 import { NtosWindow } from '../layouts';
 
 type Data = {
@@ -41,7 +41,7 @@ type CurrentBets = {
 };
 
 export const NtosSpaceBetting = () => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const { bank_name, bank_money, can_create_bet } = data;
   return (
     <NtosWindow width={500} height={620}>
@@ -70,7 +70,7 @@ export const NtosSpaceBetting = () => {
 };
 
 export const PollsSection = () => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const { active_bets = [] } = data;
   const [Winner, set_winner] = useState('');
   return (
@@ -185,7 +185,7 @@ export const PollsSection = () => {
 };
 
 export const BettingCreation = () => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const { max_title_length, max_description_length } = data;
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');

@@ -7,11 +7,11 @@ import {
   Section,
 } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 export const NtosCivCargoHoldTerminal = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useNtos();
   const { status_report, id_inserted, id_bounty_info, picking } = data;
   const in_text = 'Welcome valued employee.';
   const out_text = 'To begin, insert your ID into the console.';
@@ -50,7 +50,7 @@ export const NtosCivCargoHoldTerminal = (props) => {
 };
 
 const BountyTextBox = (props) => {
-  const { data } = useBackend();
+  const { data } = useNtos();
   const { id_bounty_info, id_bounty_value, id_bounty_num } = data;
   const na_text = 'N/A, please add a new bounty.';
   return (
@@ -71,7 +71,7 @@ const BountyTextBox = (props) => {
 };
 
 const BountyPickBox = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useNtos();
   const { id_bounty_names, id_bounty_infos, id_bounty_values } = data;
   return (
     <Section title="Please Select a Bounty:" textAlign="center">

@@ -9,11 +9,11 @@ import {
 } from 'tgui-core/components';
 
 import { resolveAsset } from '../assets';
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 export const NtosPortraitPrinter = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useNtos();
   const [listIndex, setListIndex] = useState(0);
   const { paintings, search_string, search_mode, is_console } = data;
   const got_paintings = !!paintings.length;

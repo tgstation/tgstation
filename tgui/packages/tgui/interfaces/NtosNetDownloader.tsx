@@ -17,8 +17,8 @@ import { scale, toFixed } from 'tgui-core/math';
 import type { BooleanLike } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 type Data = {
   disk_size: number;
@@ -47,7 +47,7 @@ type ProgramData = {
 };
 
 export const NtosNetDownloader = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const {
     disk_size,
     disk_used,
@@ -176,7 +176,7 @@ export const NtosNetDownloader = (props) => {
 
 const Program = (props) => {
   const { program } = props;
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const {
     disk_size,
     disk_used,
