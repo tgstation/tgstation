@@ -20,5 +20,12 @@
   projectkepler-ru:
   - balance: .38 Truestrike now does 20 damage and has better AP.
 2026-09-02:
+  Fghj240:
+  - bugfix: moves deathsquad thermal vision to their IFF visors
+  - spellcheck: tactical EFF visors are now called IFF visors.
+  - qol: deathsquaddies can no longer check security records with their eyes
+  JohnFulpWillard:
+  - bugfix: Psychologist PDA is now paintable.
+  - qol: '"PDA" in the PDA painter is now called "Assistant PDA", which it is.'
   PapaMichael:
   - bugfix: Chat should scroll properly on some messages that wrap now.
