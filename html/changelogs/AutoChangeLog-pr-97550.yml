@@ -1,0 +1,6 @@
+author: "adonis"
+
+delete-after: True
+
+changes:
+  - bugfix: "Fixed the power miner (and other ranged guardians) 'Toggle Light' action, which previously granted unremovable night vision instead of toggling an actual light."
