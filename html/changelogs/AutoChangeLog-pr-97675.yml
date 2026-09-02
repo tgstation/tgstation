@@ -1,0 +1,6 @@
+author: "Fghj240"
+delete-after: True
+changes:
+  - bugfix: "moves deathsquad thermal vision to their IFF visors"
+  - spellcheck: "tactical EFF visors are now called IFF visors."
+  - qol: "deathsquaddies can no longer check security records with their eyes"
