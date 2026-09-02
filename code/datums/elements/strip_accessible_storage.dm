@@ -15,7 +15,7 @@
 	UnregisterSignal(source, COMSIG_ITEM_GET_STRIPPABLE_ALT_ACTIONS)
 	UnregisterSignal(source, COMSIG_ITEM_STRIPPABLE_ALT_ACTION)
 	REMOVE_TRAIT(source, TRAIT_SKIP_BASIC_REACH_CHECK, ELEMENT_TRAIT(type))
-	source.atom_storage.close_all_non_wearers()
+	source.atom_storage?.close_all_non_wearers()
 
 /datum/element/strip_accessible_storage/proc/get_strippable_alternate_actions(obj/item/source, atom/owner, mob/user, list/alt_actions)
 	SIGNAL_HANDLER
