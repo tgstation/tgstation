@@ -1,8 +1,0 @@
-author: "TheBoondock"
-delete-after: True
-changes:
-  - rscadd: "Added pillow lance and mattress shield"
-  - rscadd: "Pillow lance deals stamina damage and allows user to charge once wielded, to charge simply contiously run in a direction and it consumes stamina the more you run"
-  - rscadd: "Mattress shield deals stamina damage and allows user yto fortify, gaining more  block chance and more stamina damage, the shield breaks easily as it is still a mattress"
-  - rscadd: "You can now buy lance and mattress from toy vendor"
-  - rscadd: "Maintenance now have a chance to spawn lance and mattress shield"
