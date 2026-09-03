@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Mobs subjected to time stop are now slightly more stopped (chems will no longer metabolize, bleeding will pause, etc)."
+  - balance: "Syndicate bombs no longer tick towards detonation when time stopped"
+  - refactor: "Refactored timestop a teeny bit, primarily its interaction with holoparasites, report any issues next time you jojo larp"
