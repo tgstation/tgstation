@@ -39,3 +39,15 @@
       still a mattress
   - rscadd: You can now buy lance and mattress from toy vendor
   - rscadd: Maintenance now have a chance to spawn lance and mattress shield
+2026-09-03:
+  Melbert:
+  - bugfix: Fix DNA consoles being able to print anomalous mutations
+  - bugfix: Fix weird issue where mutation list in the DNA console would go to 1 wide
+  - rscdel: Revenant can no longer affect emergency shuttle console with Malfunction
+  - balance: Mobs subjected to time stop are now slightly more stopped (chems will
+      no longer metabolize, bleeding will pause, etc).
+  - balance: Syndicate bombs no longer tick towards detonation when time stopped
+  - refactor: Refactored timestop a teeny bit, primarily its interaction with holoparasites,
+      report any issues next time you jojo larp
+  PapaMichael:
+  - bugfix: Setting SHIFT+number keybinds now works
