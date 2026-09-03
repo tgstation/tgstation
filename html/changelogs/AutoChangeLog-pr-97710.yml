@@ -1,0 +1,4 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - bugfix: "Icemoon tiles no longer count towards the blob's victory"
