@@ -690,12 +690,12 @@
 	RegisterSignal(mod_unit, COMSIG_MOD_WEARER_SET, PROC_REF(on_mod_wearer_set))
 	RegisterSignal(mod_unit, COMSIG_MOD_WEARER_UNSET, PROC_REF(on_mod_wearer_unset))
 	if(mod.wearer)
-		on_wearer_set(mod, mod.wearer)
+		on_mod_wearer_set(mod, mod.wearer)
 
 /obj/item/mod/core/candela/uninstall()
 	UnregisterSignal(mod, list(COMSIG_MOD_WEARER_SET, COMSIG_MOD_WEARER_UNSET))
 	if(mod.wearer)
-		on_wearer_unset(mod, mod.wearer)
+		on_mod_wearer_unset(mod)
 	return ..()
 
 /obj/item/mod/core/candela/process(seconds_per_tick)
