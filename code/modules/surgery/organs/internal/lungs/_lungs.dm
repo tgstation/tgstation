@@ -21,6 +21,8 @@
 	cells_maximum = 2
 
 	visual = FALSE
+	woundable = TRUE
+	wounded_desc = "has a hole in one of it lobes that air can escape through."
 
 	var/failed = FALSE
 	var/operated = FALSE //whether we can still have our damages fixed through surgery
@@ -861,37 +863,64 @@
 	return span_boldwarning("It feels extremely tight[HAS_TRAIT(owner, TRAIT_NOBREATH) ?  "" : ", and every breath is a struggle"].")
 
 /obj/item/organ/lungs/get_status_appendix(scanpower, add_tooltips)
+	var/lung_dilation_data = ""
+	var/wound_data = ""
 	var/initial_pressure_mult = initial(received_pressure_mult)
-	if (received_pressure_mult == initial_pressure_mult)
-		return
+	if (received_pressure_mult != initial_pressure_mult)
+		var/tooltip
+		var/dilation_text
+		var/beginning_text = "Lung Dilation: "
+		if (received_pressure_mult > initial_pressure_mult) // higher than usual
+			beginning_text = span_blue("<b>[beginning_text]</b>")
+			dilation_text = span_blue("[(received_pressure_mult * 100) - 100]%")
+			tooltip = "Subject's lungs are dilated and breathing more air than usual. \
+				Increases the effectiveness of healium and other gases."
 
-	var/tooltip
-	var/dilation_text
-	var/beginning_text = "Lung Dilation: "
-	if (received_pressure_mult > initial_pressure_mult) // higher than usual
-		beginning_text = span_blue("<b>[beginning_text]</b>")
-		dilation_text = span_blue("[(received_pressure_mult * 100) - 100]%")
-		tooltip = "Subject's lungs are dilated and breathing more air than usual. \
-			Increases the effectiveness of healium and other gases."
-
-	else
-		beginning_text = span_alert("<b>[beginning_text]</b>")
-		if (received_pressure_mult <= 0) // lethal
-			dilation_text = span_alert("<b>[received_pressure_mult * 100]%</b>")
-			tooltip = "Subject's lungs are completely shut. Subject is unable to breathe and requires emergency surgery. \
-				If asthmatic, perform asthmatic bypass surgery and adminster albuterol inhalant. \
-				Otherwise, replace lungs."
 		else
-			dilation_text = span_alert("[received_pressure_mult * 100]%")
-			tooltip = "Subject's lungs are partially shut. \
-				If unable to breathe, administer a high-pressure internals tank or replace lungs. \
-				If asthmatic, inhaled albuterol or bypass surgery will likely help."
+			beginning_text = span_alert("<b>[beginning_text]</b>")
+			if (received_pressure_mult <= 0) // lethal
+				dilation_text = span_alert("<b>[received_pressure_mult * 100]%</b>")
+				tooltip = "Subject's lungs are completely shut. Subject is unable to breathe and requires emergency surgery. \
+					If asthmatic, perform asthmatic bypass surgery and adminster albuterol inhalant. \
+					Otherwise, replace lungs."
+			else
+				dilation_text = span_alert("[received_pressure_mult * 100]%")
+				tooltip = "Subject's lungs are partially shut. \
+					If unable to breathe, administer a high-pressure internals tank or replace lungs. \
+					If asthmatic, inhaled albuterol or bypass surgery will likely help."
 
-	return beginning_text + conditional_tooltip(dilation_text, tooltip, add_tooltips)
+		lung_dilation_data = beginning_text + conditional_tooltip(dilation_text, tooltip, add_tooltips)
+
+	if(organ_flags & ORGAN_WOUNDED)
+		wound_data = conditional_tooltip(span_warning("Hemopneumothroax"), "Apply a chest drain and coagulants or fix surgically.", add_tooltips)
+
+	return lung_dilation_data + wound_data
 
 /// by default, returns the lungs' breath_noise var as a notice. called when stethoscope is used on chest, uses the return as a message for stethoscope user.
 /obj/item/organ/lungs/proc/hear_breath_noise(mob/living/hearer)
 	return span_notice("[owner.p_Their()] lungs emit [breath_noise].")
+
+/obj/item/organ/stomach/wounded(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	playsound(owner, 'sound/effects/wounds/pierce1.ogg')
+
+/obj/item/organ/lungs/on_wounded_life(seconds_per_tick)
+	. = ..()
+	var/wounded_scaling = clamp(wounded_time / 120, 1) // These build up fast but the effects aren't very strong.
+	apply_organ_damage(wounded_scaling, maxHealth * 0.7)
+	if(owner.get_oxy_loss() < wounded_scaling * 25)
+		owner.adjust_oxy_loss(wounded_scaling)
+	if(prob(wounded_scaling * 35) || !HAS_TRAIT(owner, TRAIT_NOBREATH))
+		owner.losebreath++
+		if(prob(25) && !IS_UNCONSCIOUS(owner))
+			var/alert_message = ""
+			if(HAS_TRAIT(owner, TRAIT_SELF_AWARE))
+				alert_message = "Your lungs aren't expanding properly!"
+			else if (HAS_TRAIT(owner, TRAIT_ANALGESIA))
+				alert_message = "Breathing feels difficult!"
+			else
+				alert_message = "It hurts to breathe!"
+			to_chat(owner, alert_message)
 
 #define SMOKER_ORGAN_HEALTH (STANDARD_ORGAN_THRESHOLD * 0.75)
 #define SMOKER_LUNG_HEALING (STANDARD_ORGAN_HEALING * 0.75)

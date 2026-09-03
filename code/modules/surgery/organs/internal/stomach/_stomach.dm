@@ -434,9 +434,9 @@
 	// If we're forced to vomit, try to spew out at least one item
 	empty_contents(chance = 60, damaging = TRUE, min_amount = (force ? 1 : 0))
 
-/obj/item/organ/stomach/get_status_text(scanpower, add_tooltips, colored)
+/obj/item/organ/stomach/get_status_appendix(scanpower, add_tooltips, colored)
 	if(organ_flags & ORGAN_WOUNDED)
-		return conditional_tooltip(span_warning("Gastric Perforation"), "Fix surgically.", add_tooltips)
+		return conditional_tooltip(span_warning("Perforated"), "Fix surgically.", add_tooltips)
 	if(cut_open_damage)
 		return conditional_tooltip("<font color='#ff9933'>Incised</font>", "Remove and cauterize.", add_tooltips)
 	return ..()
@@ -451,13 +451,17 @@
 	var/wounded_scaling = clamp(wounded_time / 180, 0, 1)
 	if(HAS_TRAIT(owner, TRAIT_VIRUS_RESISTANCE))
 		wounded_scaling /= 3
-	apply_organ_damage(wounded_scaling)
+	apply_organ_damage(wounded_scaling, maxHealth * 0.8)
 	owner.adjust_tox_loss(wounded_scaling, forced = TRUE)
-	if(SPT_PROB(wounded_scaling * 5, seconds_per_tick))
+	if(SPT_PROB(wounded_scaling * 4, seconds_per_tick))
 		owner.adjust_disgust(15)
 	if(SPT_PROB((1 + wounded_scaling * 1.5), seconds_per_tick))
 		var/self_aware = HAS_TRAIT(owner, TRAIT_SELF_AWARE)
-		var/alert_message = "You feel a spreading pain around your [self_aware ? "stomach" : "lower abdomen"]."
+		var/alert_message = ""
+		if(HAS_TRAIT(owner, TRAIT_ANALGESIA))
+			alert_message = "You feel sick."
+		else
+			alert_message = "You feel a spreading pain around your [self_aware ? "stomach" : "lower abdomen"]."
 		to_chat(owner, span_warning(alert_message))
 
 /obj/item/organ/stomach/tool_act(mob/living/user, obj/item/tool, list/modifiers)

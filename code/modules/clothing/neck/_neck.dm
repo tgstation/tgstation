@@ -323,22 +323,24 @@
 			var/appendix_okay = TRUE
 			var/liver_okay = TRUE
 			if(!liver)//sanity check, ensure the patient actually has a liver
-				render_list += "<span class='danger ml-1'>You can't feel anything where [target.p_their()] liver would be.</span>\n"
+				render_list += span_danger_ml("You can't feel anything where [target.p_their()] liver would be.\n")
 				liver_okay = FALSE
 			else
+				if(liver.organ_flags & ORGAN_WOUNDED)
+					render_list += span_danger_ml("You feel fluid surrounding [target.p_their()] liver.\n")
 				if(liver.damage > 10)
-					render_list += "<span class='danger ml-1'>[target.p_Their()] liver feels firm.</span>\n"//their liver is damaged
+					render_list += span_danger_ml("[target.p_Their()] liver feels firm.\n")//their liver is damaged
 					liver_okay = FALSE
 			if(!appendix)//sanity check, ensure the patient actually has an appendix
-				render_list += "<span class='danger ml-1'>You can't feel anything where [target.p_their()] appendix would be.</span>\n"
+				render_list += span_danger_ml("You can't feel anything where [target.p_their()] appendix would be.\n")
 				appendix_okay = FALSE
 			else
-				if(appendix.damage > 10 && !IS_UNCONSCIOUS_OR_CRIT(carbon_patient))
-					render_list += "<span class='danger ml-1'>[target] screams when you lift your hand from [target.p_their()] appendix!</span>\n"//scream if their appendix is damaged and they're awake
+				if((appendix.damage > 10 || appendix.inflamation_stage || appendix.organ_flags & ORGAN_WOUNDED) && !IS_UNCONSCIOUS_OR_CRIT(carbon_patient) && !HAS_TRAIT(carbon_patient, TRAIT_ANALGESIA))
+					render_list += span_danger_ml("[target] screams when you lift your hand from [target.p_their()] appendix!\n")//scream if their appendix is damaged and they're awake
 					target.emote("scream")
 					appendix_okay = FALSE
 			if(liver_okay && appendix_okay)//if they have all their organs and have no detectable damage
-				render_list += "<span class='notice ml-1'>You don't find anything abnormal.</span>\n"//they're okay :D
+				render_list += span_danger_ml("You don't find anything abnormal.\n")//they're okay :D
 
 		if(BODY_ZONE_PRECISE_EYES)
 			balloon_alert(user, "can't do that!")
@@ -360,7 +362,7 @@
 
 			//assess pulse (heart & blood level)
 			if(isnull(heart) || !heart.is_beating() || cached_blood_volume <= BLOOD_VOLUME_OKAY || carbon_patient.stat == DEAD)
-				render_list += "<span class='danger ml-1'>You can't find a pulse!</span>\n"//they're dead, their heart isn't beating, or they have critical blood
+				render_list += span_danger_ml("You can't find a pulse!</span>\n")//they're dead, their heart isn't beating, or they have critical blood
 			else
 				if(having_heart_attack)
 					heart_strength = span_danger("irregular")
@@ -374,7 +376,7 @@
 				else
 					pulse_pressure = span_notice("strong")//they're okay :D
 
-				render_list += "<span class='notice ml-1'>[target.p_Their()] pulse is [pulse_pressure] and [heart_strength].</span>\n"
+				render_list += span_notice_ml("[target.p_Their()] pulse is [pulse_pressure] and [heart_strength].\n")
 
 	//display our packaged information in an examine block for easy reading
 	to_chat(user, boxed_message(jointext(render_list, "")), type = MESSAGE_TYPE_INFO)

@@ -121,21 +121,28 @@
 
 /obj/item/organ/appendix/wounded()
 	. = ..()
+	// We don't need to deal organ damage since inflamation stages do that for us.
 	inflamation_stage = min(inflamation_stage, 1)
 
 /obj/item/organ/appendix/on_wounded_life(seconds_per_tick)
 	if(organ_flags & ORGAN_FAILING) // Don't deal tox damage from a partial failure if the organ has already failed totally
 		return
 	. = ..()
-	// forced to ensure people don't use it to heal tox as slime person
+	// Forced to ensure people don't use it to heal tox as slime person
 	var/wounded_scaling = clamp(wounded_time / 120, 0, 0.5)
 	if(HAS_TRAIT(owner, TRAIT_VIRUS_RESISTANCE))
 		wounded_scaling /= 3
 	owner.adjust_tox_loss(wounded_scaling, forced = TRUE)
 	if(SPT_PROB(1, seconds_per_tick))
-		to_chat(owner, span_warning("You feel a spreading pain around your [HAS_TRAIT(owner, TRAIT_SELF_AWARE) ? "appendix" : "lower abdomen"]."))
+		var/self_aware = HAS_TRAIT(owner, TRAIT_SELF_AWARE)
+		var/alert_message = ""
+		if(HAS_TRAIT(owner, TRAIT_ANALGESIA))
+			alert_message = "You feel sick."
+		else
+			alert_message = "You feel a spreading pain around your [self_aware ? "appendix" : "lower abdomen"]."
+		to_chat(owner, span_warning(alert_message))
 
-/obj/item/organ/appendix/get_status_text(scanpower, add_tooltips, colored)
+/obj/item/organ/appendix/get_status_appendix(scanpower, add_tooltips, colored)
 	if(organ_flags & ORGAN_WOUNDED)
 		return conditional_tooltip(span_warning("Ruptured"), "Remove or repair surgically.", add_tooltips)
 	if(!(organ_flags & ORGAN_FAILING) && inflamation_stage)
