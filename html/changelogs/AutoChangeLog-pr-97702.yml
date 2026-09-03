@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscdel: "Revenant can no longer affect emergency shuttle console with Malfunction"
