@@ -3,7 +3,7 @@ import { Box, Button, Section } from 'tgui-core/components';
 import { useBackend } from '../../backend';
 import {
   StatusDisplayControls,
-  StatusDisplayControlsData,
+  type StatusDisplayControlsData,
 } from '../common/StatusDisplayControls';
 import { ShuttleState } from './types';
 

@@ -1,6 +1,5 @@
 import { Button, Flex, Input, Section } from 'tgui-core/components';
-
-import { useBackend, useSharedState } from '../../backend';
+import { useSharedState } from '../../backend';
 
 export type StatusDisplayControlsData = {
   upperText: string;

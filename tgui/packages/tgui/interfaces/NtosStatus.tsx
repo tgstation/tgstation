@@ -1,7 +1,7 @@
 import { NtosWindow } from '../layouts';
 import {
   StatusDisplayControls,
-  StatusDisplayControlsData,
+  type StatusDisplayControlsData,
 } from './common/StatusDisplayControls';
 import { useNtos } from './NtosCore';
 

@@ -1,6 +1,6 @@
 import { NtosWindow } from '../layouts';
 import { CargoContent } from './Cargo';
-import { CargoData } from './Cargo/types';
+import { type CargoData } from './Cargo/types';
 import { useNtos } from './NtosCore';
 
 export const NtosCargo = (props) => {
