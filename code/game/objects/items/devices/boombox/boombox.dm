@@ -7,6 +7,7 @@
 	drop_sound = 'sound/items/handling/ammobox_drop.ogg'
 	pickup_sound = 'sound/items/handling/ammobox_pickup.ogg'
 	custom_premium_price = PAYCHECK_COMMAND * 7
+	interaction_flags_item = parent_type::interaction_flags_item & ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 	/// Is the boombox actively playing anything?
 	var/active = FALSE
 	/// Is the boombox being worn on the holder's shoulder?
@@ -22,15 +23,16 @@
 
 /obj/item/boombox/Initialize(mapload)
 	. = ..()
-	interaction_flags_item &= ~INTERACT_ITEM_ATTACK_HAND_PICKUP
 	AddElement(/datum/element/drag_pickup)
 	update_available_icons()
 	register_context()
 	RegisterSignal(src, COMSIG_MOUSEDROP_ONTO, PROC_REF(on_drag_pickup))
-
-/obj/item/boombox/Destroy(force)
+/obj/item/boombox/deconstruct(disassembled)
+	. = ..()
 	if(tapedeck)
 		tapedeck.forceMove(drop_location())
+
+/obj/item/boombox/Destroy(force)
 	QDEL_NULL(boombox_audio)
 	return ..()
 
@@ -38,13 +40,12 @@
 	. = ..()
 	. += span_notice("The boombox can be worn in hand or on your shoulder. Alt-Right-click to toggle.")
 	if(tapedeck)
-		. += "It has [span_bold("tapedeck")] inside."
+		. += "It has [span_bold("[tapedeck]")] inside."
 	else
-		. += "It has no record inside."
+		. += "It has no tapedeck inside."
 
 /obj/item/boombox/click_alt_secondary(mob/user)
 	swag_mode = !swag_mode
-	inhand_icon_state = swag_mode ? "boombox_swag" : "boombox"
 	balloon_alert(user, "wearing [swag_mode ? "on shoulder" : "in hand"].")
 	if(loc == user)
 		playsound(user, pickup_sound, 30)
@@ -87,6 +88,10 @@
 	context[SCREENTIP_CONTEXT_LMB] = "Pick up (Drag)"
 	context[SCREENTIP_CONTEXT_ALT_RMB] = "Change worn style"
 	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/boombox/update_icon_state()
+	inhand_icon_state = swag_mode ? "boombox_swag" : "boombox"
+	return ..()
 
 /obj/item/boombox/proc/on_drag_pickup(atom/movable/source, atom/over, mob/user)
 	SIGNAL_HANDLER
