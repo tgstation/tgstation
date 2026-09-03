@@ -98,9 +98,9 @@ GLOBAL_LIST_EMPTY(contained_singularities)
 /obj/contained_singularity/singularity_act()
 	return
 
-/obj/contained_singularity/bullet_act(obj/projectile/projectile)
-	if (istype(projectile, /obj/projectile/beam/singularity_turret))
-		var/obj/projectile/beam/singularity_turret/turret_beam = projectile
+/obj/contained_singularity/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
+	if (istype(hitting_projectile, /obj/projectile/beam/singularity_turret))
+		var/obj/projectile/beam/singularity_turret/turret_beam = hitting_projectile
 
 		delayed_power_bar_one.poke()
 		delayed_power_bar_two.poke()
@@ -111,8 +111,7 @@ GLOBAL_LIST_EMPTY(contained_singularities)
 		else
 			addtimer(CALLBACK(src, PROC_REF(fire_particle_reaction)), 0.3 SECONDS)
 
-		return
-
+	// Continue to default handling which will be deleted by the singularity component
 	return ..()
 
 /obj/contained_singularity/process(seconds_per_tick)
