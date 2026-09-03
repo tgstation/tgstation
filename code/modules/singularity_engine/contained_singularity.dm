@@ -115,6 +115,23 @@ GLOBAL_LIST_EMPTY(contained_singularities)
 	return ..()
 
 /obj/contained_singularity/process(seconds_per_tick)
+	switch(rand(1, 5))
+		if(1)
+			empulse(src, 6, 8)
+		if(2)
+			for(var/mob/living/nearby_living in view(8, src))
+				if(HAS_MIND_TRAIT(nearby_living, TRAIT_MADNESS_IMMUNE) || (nearby_living.mob_biotypes & NO_HALLUCINATION_BIOTYPES))
+					continue
+				if(nearby_living.is_blind() || nearby_living.IsStun())
+					continue
+				nearby_living.apply_effect(6 SECONDS, EFFECT_STUN)
+				nearby_living.visible_message(
+					span_danger("[nearby_living] stares blankly at \the [src]!"),
+					span_userdanger("You look directly into \the [src] and feel weak.")
+				)
+		if(3, 4, 5)
+			visible_hallucination_pulse(src, 8)
+
 	var/health_percent = health / max_health
 	if (health_percent >= 1)
 		return

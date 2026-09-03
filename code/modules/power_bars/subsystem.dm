@@ -238,7 +238,7 @@ SUBSYSTEM_DEF(power_bars)
 		if (current == next)
 			continue
 
-		areas_to_update += areas_per_department[department]
+		areas_to_update[areas_per_department[department]] = TRUE
 		departments_to_update[department] = current
 
 	last_distributed_allocations = deep_copy_list(department_allocations)
@@ -246,7 +246,7 @@ SUBSYSTEM_DEF(power_bars)
 
 	for (var/obj/machinery/machine as anything in SSmachines.get_all_machines())
 		var/area/area = get_area(machine)
-		if (!(area?.type in areas_to_update))
+		if (!is_type_in_typecache(area, areas_to_update))
 			continue
 
 		machine.update_for_power_bars()
