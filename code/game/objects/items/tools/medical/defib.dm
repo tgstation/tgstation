@@ -168,7 +168,7 @@
 
 /obj/item/defibrillator/emag_act(mob/user, obj/item/card/emag/emag_card)
 	obj_flags |= EMAGGED
-	toggle_safety()
+	toggle_safety(user)
 
 	return TRUE
 
