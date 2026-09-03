@@ -1,0 +1,5 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fix DNA consoles being able to print anomalous mutations"
+  - bugfix: "Fix weird issue where mutation list in the DNA console would go to 1 wide"
