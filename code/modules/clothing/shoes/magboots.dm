@@ -25,8 +25,6 @@
 	var/magpulse_fishing_modifier = 8
 	/// How much do these boots affect fishing when not active
 	var/fishing_modifier = 4
-	/// Reference to the component that manages the footstep sounds
-	VAR_PRIVATE/datum/component/shoe_footstep/footstep_component
 	/// Footstep SFX when the magboots are off
 	var/list/inactive_step_sounds = list('sound/items/modsuit/rigstep_medium.ogg')
 	/// Footstep SFX when the magboots are on
@@ -34,7 +32,7 @@
 
 /obj/item/clothing/shoes/magboots/Initialize(mapload)
 	. = ..()
-	footstep_component = AddComponent(/datum/component/shoe_footstep, inactive_step_sounds, volume = 50)
+	AddComponent(/datum/component/shoe_footstep, inactive_step_sounds, volume = 50)
 
 /obj/item/clothing/shoes/magboots/Destroy()
 	footstep_component = null
@@ -75,7 +73,7 @@ GAME_VERB_SRC(/obj/item/clothing/shoes/magboots, toggle, usr, "Toggle Magboots",
 			AddElement(/datum/element/adjust_fishing_difficulty, magpulse_fishing_modifier)
 		else if(magpulse_fishing_modifier != fishing_modifier)
 			RemoveElement(/datum/element/adjust_fishing_difficulty)
-		footstep_component = AddComponent(/datum/component/shoe_footstep, active_step_sounds, volume = 50)
+		AddComponent(/datum/component/shoe_footstep, active_step_sounds, volume = 50)
 	else
 		if(fishing_modifier)
 			AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
@@ -83,7 +81,7 @@ GAME_VERB_SRC(/obj/item/clothing/shoes/magboots, toggle, usr, "Toggle Magboots",
 			RemoveElement(/datum/element/adjust_fishing_difficulty)
 		detach_clothing_traits(active_traits)
 		slowdown -= slowdown_active
-		footstep_component = AddComponent(/datum/component/shoe_footstep, inactive_step_sounds, volume = 50)
+		AddComponent(/datum/component/shoe_footstep, inactive_step_sounds, volume = 50)
 
 	update_appearance()
 	balloon_alert(user, "mag-pulse [magpulse ? "enabled" : "disabled"]")

@@ -1,7 +1,6 @@
 /// Basically the squeak component but stripped down for only shoes
+/// In other words it replaces the mob's default footstep sounds with the ones provided on all surfaces
 /datum/component/shoe_footstep
-	dupe_mode = COMPONENT_DUPE_ALLOWED
-
 	/// Tracks how many steps have been taken since the last sound was played
 	VAR_PRIVATE/steps = 0
 
@@ -24,7 +23,6 @@
 
 /datum/component/shoe_footstep/Initialize(
 	list/sounds,
-	can_tape = FALSE,
 	volume = 50,
 	chance_per_play = 100,
 	steps_per_play = 1,
@@ -77,7 +75,7 @@
 		return
 	if(owner.move_intent == MOVE_INTENT_SNEAK || (owner.movement_type & (VENTCRAWLING|FLYING|FLOATING)))
 		return
-	if(owner.buckled || owner.throwing || HAS_TRAIT(owner, TRAIT_IMMOBILIZED))
+	if(owner.buckled || owner.throwing || HAS_TRAIT(owner, TRAIT_IMMOBILIZED) || HAS_TRAIT_NOT_FROM(owner, TRAIT_SILENT_FOOTSTEPS, REF(src)))
 		return
 	if(steps < steps_per_play)
 		steps++
@@ -94,34 +92,6 @@
 			falloff_distance = falloff_distance,
 		)
 	steps = 0
-
-/datum/component/shoe_footstep/proc/taped(obj/item/clothing/shoes/source, mob/living/user, obj/item/tape, ...)
-	SIGNAL_HANDLER
-
-	if(tape_check(tape))
-		playsound(source, 'sound/items/duct_tape_snap.ogg', 50, TRUE)
-		user.visible_message(
-			span_notice("[user] tapes the bottom of [source]'s soles."),
-			span_notice("You tape the bottom of [source]'s soles, muffling [source.p_their()] footsteps."),
-		)
-		source.desc += " [source.p_Their()] soles have been taped."
-		qdel(src)
-		return ITEM_INTERACT_SUCCESS
-
-	return NONE
-
-/datum/component/shoe_footstep/proc/tape_check(obj/item/tape)
-	if(!can_tape)
-		return FALSE
-
-	if(istype(tape, /obj/item/clothing/mask/muzzle/tape))
-		qdel(tape)
-		return TRUE
-
-	if(istype(tape, /obj/item/stack/sticky_tape))
-		return tape.use(1)
-
-	return FALSE
 
 /datum/component/shoe_footstep/proc/equipped(obj/item/source, mob/user, slot)
 	SIGNAL_HANDLER
