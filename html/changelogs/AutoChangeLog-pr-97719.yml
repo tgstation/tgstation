@@ -1,0 +1,4 @@
+author: "SmArtKar"
+delete-after: True
+changes:
+  - bugfix: "Fixed luminetworked MODsuit cores sometimes not charging from the network"
