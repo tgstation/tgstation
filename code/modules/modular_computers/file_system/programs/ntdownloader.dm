@@ -33,7 +33,7 @@
 		PROGRAM_CATEGORY_SERVICE,
 	)
 
-/datum/computer_file/program/ntnetdownload/kill_program(mob/user)
+/datum/computer_file/program/ntnetdownload/on_kill(mob/user)
 	abort_file_download()
 	ui_header = null
 	. = ..()
@@ -51,7 +51,7 @@
 	if((PRG.program_flags & PROGRAM_ON_SYNDINET_STORE) && !(computer.obj_flags & EMAGGED))
 		return FALSE
 
-	if(!computer || !computer.can_store_file(PRG))
+	if(!computer || !os.filesystem.can_store_file(PRG))
 		return FALSE
 
 	ui_header = "downloader_running.gif"
@@ -86,7 +86,7 @@
 	if(!downloaded_file)
 		return
 	generate_network_log("Completed download of file [hacked_download ? "**ENCRYPTED**" : "[downloaded_file.filename].[downloaded_file.filetype]"].")
-	if(!computer || !computer.store_file(downloaded_file, download_user?.resolve()))
+	if(!computer || !os.filesystem.store_file(downloaded_file, download_user?.resolve()))
 		// The download failed
 		downloaderror = "I/O ERROR - Unable to save file. Check whether you have enough free space on your hard drive and whether your hard drive is properly connected. If the issue persists contact your system administrator for assistance."
 	downloaded_file = null
@@ -154,13 +154,14 @@
 	var/list/repo = SSmodular_computers.available_antag_software | SSmodular_computers.available_station_software
 
 	for(var/datum/computer_file/program/programs as anything in repo)
-		data["programs"] += list(list(
+		// TODO: Revert this to programs
+		data["downloadable_programs"] += list(list(
 			"icon" = programs.program_icon,
 			"filename" = programs.filename,
 			"filedesc" = programs.filedesc,
 			"fileinfo" = programs.extended_desc,
 			"category" = programs.downloader_category,
-			"installed" = !!computer.find_file_by_name(programs.filename),
+			"installed" = !!os.filesystem.find_file_by_name(programs.filename),
 			"compatible" = check_compatibility(programs),
 			"size" = programs.size,
 			"access" = programs.can_run(user, downloading = TRUE, access = access),

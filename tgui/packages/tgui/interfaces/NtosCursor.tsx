@@ -7,8 +7,8 @@ import {
   Stack,
 } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 type Data = {
   dmi: {
@@ -18,7 +18,7 @@ type Data = {
 };
 
 export const NtosCursor = () => {
-  const { data } = useBackend<Data>();
+  const { data } = useNtos<Data>();
 
   const { dmi } = data;
 

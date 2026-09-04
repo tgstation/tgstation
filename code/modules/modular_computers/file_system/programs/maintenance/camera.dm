@@ -50,7 +50,7 @@
 /datum/computer_file/program/maintenance/camera/on_made_active_program(user)
 	RegisterSignal(computer, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY, PROC_REF(on_computer_ranged_interact))
 
-/datum/computer_file/program/maintenance/camera/kill_program(mob/user)
+/datum/computer_file/program/maintenance/camera/on_kill(mob/user)
 	. = ..()
 	UnregisterSignal(computer, COMSIG_RANGED_ITEM_INTERACTING_WITH_ATOM_SECONDARY)
 	QDEL_NULL(internal_picture)
@@ -157,7 +157,7 @@
 				display_name = internal_picture.picture_name || "photo[picture_number]",
 				source_photo_or_painting = internal_picture
 			)
-			if(computer.store_file(photo_file, ui.user))
+			if(os.filesystem.store_file(photo_file, ui.user))
 				return FALSE
 			commit_metadata()
 			return TRUE

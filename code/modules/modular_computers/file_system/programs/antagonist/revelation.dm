@@ -10,31 +10,24 @@
 	program_icon = "magnet"
 	var/armed = 0
 
+/datum/computer_file/program/revelation/on_install(datum/computer_file/source, obj/item/modular_computer/computer_installing, mob/user)
+	. = ..()
+	os.install_driver(/datum/driver/kernel32)
+
+
 /datum/computer_file/program/revelation/on_start(mob/living/user)
 	. = ..(user)
 	if(armed)
 		activate()
 
 /datum/computer_file/program/revelation/proc/activate()
-	if(computer)
-		if(istype(computer, /obj/item/modular_computer/pda/silicon)) //If this is a borg's integrated tablet
-			var/obj/item/modular_computer/pda/silicon/modularInterface = computer
-			to_chat(modularInterface.silicon_owner,span_userdanger("SYSTEM PURGE DETECTED/"))
-			addtimer(CALLBACK(modularInterface.silicon_owner, TYPE_PROC_REF(/mob/living/silicon/robot/, death)), 2 SECONDS, TIMER_UNIQUE)
-			return
+	var/datum/driver/kernel32/driver = os.get_driver(/datum/driver/kernel32)
 
-		computer.visible_message(span_notice("\The [computer]'s screen brightly flashes and loud electrical buzzing is heard."))
-		computer.enabled = FALSE
-		computer.update_appearance()
+	// Somehow you managed to safe your computer!
+	if(!driver)
+		return
 
-		QDEL_LIST(computer.stored_files)
-
-		computer.take_damage(25, BRUTE, 0, 0)
-
-		if(computer.internal_cell && prob(25))
-			QDEL_NULL(computer.internal_cell)
-			computer.visible_message(span_notice("\The [computer]'s battery explodes in rain of sparks."))
-			do_sparks(3, FALSE, src)
+	driver.activate()
 
 /datum/computer_file/program/revelation/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -64,3 +57,32 @@
 	data["armed"] = armed
 
 	return data
+
+
+// The most important driver of the system. It's not replaced with malware, right?
+/datum/driver/kernel32
+
+/datum/driver/kernel32/proc/activate()
+	if(!hardware)
+		return
+
+	var/datum/driver/silicon_power/silicon_driver = hardware.os.get_driver(/datum/driver/silicon_power)
+	// Attacking silicon unit's driver
+	if(silicon_driver)
+		to_chat(silicon_driver.silicon_owner,span_userdanger("SYSTEM PURGE DETECTED/"))
+		addtimer(CALLBACK(silicon_driver.silicon_owner, TYPE_PROC_REF(/mob/living/silicon/robot/, death)), 2 SECONDS, TIMER_UNIQUE)
+		return
+
+	hardware.visible_message(span_notice("\The [hardware]'s screen brightly flashes and loud electrical buzzing is heard."))
+	hardware.enabled = FALSE
+	hardware.update_appearance()
+
+	QDEL_LIST(hardware.stored_files)
+
+	hardware.take_damage(25, BRUTE, 0, 0)
+
+	if(hardware.internal_cell && prob(25))
+		QDEL_NULL(hardware.internal_cell)
+		hardware.visible_message(span_notice("\The [hardware]'s battery explodes in rain of sparks."))
+		do_sparks(3, FALSE, src)
+
