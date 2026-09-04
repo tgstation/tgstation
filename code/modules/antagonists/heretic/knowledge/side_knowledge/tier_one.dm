@@ -306,3 +306,93 @@
 	if(feedback)
 		to_chat(the_spell.owner, span_mansus("You need a Living Heart to cast [the_spell]!"))
 	return SPELL_CANCEL_CAST
+
+/datum/heretic_knowledge/lodestone
+	name = "Rhythmic Lodestone"
+	desc = "Imbue an object with a Lodestone.<br>\
+		The Lodestone pulses in rhythm with your Living Heart, allowing you to track it from any distance - so long as it is not destroyed."
+	transmute_text = "Transmute a GPS and up to three of any object."
+	gain_text = "I was lost. No one had claimed navigating the Mansus was a simple task. \
+		I needed to recenter myself. Focus. Listen to my heartbeat."
+	notice = "Up to three items can be imbued at once. Weapons, equipment, and valuables are prioritized."
+	required_atoms = list(
+		/obj/item/gps = 1,
+	)
+	cost = 1
+	drafting_tier = 1
+	is_shop_only = TRUE
+	research_tree_icon_path = /obj/item/gps::icon
+	research_tree_icon_state = /obj/item/gps::icon_state
+
+/datum/heretic_knowledge/lodestone/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+	for(var/obj/whatever in atoms)
+		if(istype(whatever, /obj/item/gps) || whatever.anchored)
+			continue
+		selected_atoms += whatever
+
+	if(!length(selected_atoms))
+		loc.balloon_alert(user, "no items to imbue!")
+		return FALSE
+	return TRUE
+
+/datum/heretic_knowledge/lodestone/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	var/lodestones_created = 0
+
+	var/list/valuable_pool = list()
+	var/list/equipment_pool = list()
+	var/list/weapon_pool = list()
+	var/list/item_pool = list()
+	var/list/leftover_pool = list()
+	for(var/obj/new_trackable in selected_atoms)
+		if(istype(new_trackable, /obj/item/gps))
+			continue
+
+		if(new_trackable.resistance_flags & INDESTRUCTIBLE)
+			valuable_pool += new_trackable
+		if(isclothing(new_trackable) || astype(new_trackable, /obj/item)?.slot_flags)
+			equipment_pool += new_trackable
+		if(new_trackable.force >= 15 || isgun(new_trackable))
+			weapon_pool += new_trackable
+		if(isitem(new_trackable))
+			item_pool += new_trackable
+		leftover_pool += new_trackable
+
+	// Valuable items first, then clothing items (so you can track people wearing them), then weapons (stuff you probably want), then random items
+	for(var/obj/item/new_trackable as anything in valuable_pool | equipment_pool | weapon_pool | item_pool | leftover_pool)
+		var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
+		LAZYADD(heretic_datum.tracked_items, new_trackable)
+		to_chat(user, span_mansus("You feel the new lodestone in [new_trackable] start to beat in rhythm with your heart."))
+		lodestones_created += 1
+		if(lodestones_created >= 3)
+			break
+
+	return lodestones_created >= 1
+
+/datum/heretic_knowledge/lodestone/cleanup_atoms(list/selected_atoms)
+	qdel(locate(/obj/item/gps) in selected_atoms)
+	selected_atoms.Cut() // ASSUMING DIRECT CONTROL
+	return ..()
+
+/datum/heretic_knowledge/blessed_poppy
+	name = "Blessed Poppy"
+	desc = "Sprout a Blessed Poppy.<br>\
+		Blessed Poppies can be applied to wounded limbs to heal them over time. \
+		While worn on the head, they will also stabilize those in critical condition. \
+		Either usage will eventually sap the poppy of its power, and it will wither away."
+	transmute_text = "Transmute a poppy and a sling of at least four gauze."
+	gain_text = "\"In Flander's fields, the poppies grow \
+		/ Between the crosses, row on row. \
+		/ That mark our place; and in the sky, \
+		/ The larks, still bravely singing, fly \
+		/ Scarce heard amid the guns below.\"\
+	"
+	required_atoms = list(
+		/obj/item/food/grown/flower/poppy = 1,
+		/obj/item/stack/medical/wrap/gauze = 4,
+	)
+	result_atoms = list(/obj/item/food/grown/flower/poppy/blessed)
+	cost = 1
+	drafting_tier = 1
+	is_shop_only = TRUE
+	research_tree_icon_path = /obj/item/food/grown/flower/poppy::icon
+	research_tree_icon_state = /obj/item/food/grown/flower/poppy::icon

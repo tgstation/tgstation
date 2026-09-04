@@ -3629,6 +3629,7 @@
 #include "code\modules\antagonists\heretic\rust_effect.dm"
 #include "code\modules\antagonists\heretic\soultrapped_heretic.dm"
 #include "code\modules\antagonists\heretic\transmutation_rune.dm"
+#include "code\modules\antagonists\heretic\items\blessed_poppy.dm"
 #include "code\modules\antagonists\heretic\items\corrupted_organs.dm"
 #include "code\modules\antagonists\heretic\items\crimson_cleaver.dm"
 #include "code\modules\antagonists\heretic\items\eldritch_flask.dm"

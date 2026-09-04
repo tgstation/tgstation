@@ -87,7 +87,7 @@
 
 /datum/heretic_knowledge/crimson_cleave
 	name = "The Crimson Cleaver"
-	desc = "Allows you to forge a Crimson Cleaver, a terrifying weapon that thirsts for blood. \
+	desc = "Allows you to forge a Crimson Cleaver, a terrifying weapon that thirsts for blood.<br>\
 		Its strikes heal you for the damage it inflicts, and it can cleave through multiple enemies at once. \
 		It is also a moderately effective thrown weapon, returning to the wielder after being thrown."
 	gain_text = "At first I didn't understand these instruments of war, but the Priest \
@@ -102,7 +102,7 @@
 	cost = 2
 	drafting_tier = 4
 
-/datum/heretic_knowledge/spell/crimson_cleave/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
+/datum/heretic_knowledge/crimson_cleave/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	for(var/obj/item/knife/butcher/cleaver in atoms)
 		selected_atoms += cleaver
 		if(GET_ATOM_BLOOD_DNA_LENGTH(cleaver))
@@ -131,7 +131,7 @@
 
 	return FALSE
 
-/datum/heretic_knowledge/spell/crimson_cleave/cleanup_atoms(list/selected_atoms)
+/datum/heretic_knowledge/crimson_cleave/cleanup_atoms(list/selected_atoms)
 	for(var/obj/item/reagent_containers/container in selected_atoms)
 		for(var/datum/reagent/reagent_content as anything in container.reagents.reagent_list)
 			if(LAZYACCESS(reagent_content.data, BLOOD_DATA_DNA))

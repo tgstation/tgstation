@@ -1,6 +1,6 @@
 /obj/item/knife/butcher/heretic
 	name = "\improper Crimson Cleaver"
-	desc = "A cleaver with an intricately designed red handle and curved tip. A tool of war, no doubt."
+	desc = "A cleaver with an intricately designed red handle and slightly curved back. A tool of war, rather than cooking, no doubt."
 	icon = 'icons/obj/weapons/khopesh.dmi'
 	force = 20
 	throwforce = 20
@@ -19,7 +19,7 @@
 /obj/item/knife/butcher/heretic/Initialize(mapload)
 	. = ..()
 	add_lifesteal_filter()
-	boomerang_examine ||= span_mansus("[src]'s blade is curved with such elegance, that it may return to your hand when thrown...")
+	boomerang_examine ||= span_mansus("[src]'s blade is curved so subtly, that it may return to your hand when thrown...")
 	AddComponent(/datum/component/boomerang, boomerange_range, FALSE, boomerang_examine)
 
 /obj/item/knife/butcher/heretic/equipped(mob/living/user, slot, initial)
