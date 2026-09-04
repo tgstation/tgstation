@@ -499,6 +499,10 @@
 	var/tagname = null
 	var/human_wearable = FALSE
 
+/obj/item/clothing/neck/petcollar/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/cuffable_item)
+
 /datum/armor/large_scarf_syndie
 	fire = 50
 	acid = 40
