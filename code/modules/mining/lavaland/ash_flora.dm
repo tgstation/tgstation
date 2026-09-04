@@ -238,6 +238,128 @@
 /obj/structure/flora/ash/chilly/get_potential_products()
 	return list(/obj/item/food/grown/icepepper = 1)
 
+/obj/structure/flora/ash/fonarstolbe
+	name = "fonarstolbe fruit"
+	desc = "A chemotrophic, insignificantly bioluminescent plant dubbed fonarstolbe by spinward scientists. They can survive for weeks in environments and presures lethal to most other plants, as long as they are well rooted.."
+	icon_state = "lamppostfruit"
+	base_icon_state = "lamppostfruit"
+	light_range = 1.5
+	light_power = 2.1
+	harvested_name = "fonarstolbe"
+	harvested_desc = "Stem of a fonarstolbe. It should grow back up, sooner or later. And once it does, you can pluck its sweet and sour fruit."
+	harvest_amount_high = 3
+	harvest_message_low = "You pluck a single fonarstolbe fruit."
+	harvest_message_med = "You pluck a number of fonarstolbe fruits."
+	harvest_message_high = "You pluck quite a lot of fonarstolbe fruits."
+	harvest_time = 40
+	number_of_variants = 4
+
+/obj/structure/flora/ash/fonarstolbe/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/fonarstolbe = 1)
+
+/obj/structure/flora/ash/vahrezjia
+	name = "vahrezjia flowers"
+	desc = "Bright blue stalks emerging from purple flowery pods. Apparently they can drive animals aggresive. They definetly sped up huskies and bears shipped in here by Spinward colonizers going feral. Quite unlikely they were the direct reason, though."
+	icon_state = "flowerpod1"
+	base_icon_state = "flowerpod"
+	harvested_name = "vahrezjia pods"
+	harvested_desc = "A bunch of vahrezjia pods. Why do these guys from Spinward have to name everything such a mouthful?"
+	harvest_amount_high = 3
+	harvest_message_low = "You pluck a single vahrezjia stalk."
+	harvest_message_med = "You pluck a number of vahrezjia stalks."
+	harvest_message_high = "You pluck quite a lot of vahrezjia stalks."
+	harvest_time = 25
+	number_of_variants = 4
+
+/obj/structure/flora/ash/vahrezjia/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/vahrezjia = 1)
+
+/obj/structure/flora/ash/podsneyzka
+	name = "podsneyzka flower"
+	desc = "A bunch of flowering podsneyzkas. These flowers are known to taste quite like meat, and have quite similiar chemical composition to it. Better not to think about it, perhaps."
+	icon_state = "flower1"
+	base_icon_state = "flower"
+	harvested_name = "podsneyzka stems"
+	harvested_desc = "A bunch of podsneyzka stems. Most of the plants is actually underground, and their roots are extremely long, ever searching for decomposing corpses to sap off of."
+	harvest_amount_high = 5
+	harvest_message_low = "You menage to pluck a single bunch of podzneyzkas."
+	harvest_message_med = "You carefully pluck a whole bunch of podzneyzkas."
+	harvest_message_high = "You very carefully pluck quite a lot of podzneyzkas."
+	harvest_time = 30
+	number_of_variants = 4
+
+/obj/structure/flora/ash/podsneyzka/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/podsneyzka = 1)
+
+/obj/structure/flora/ash/inozhakust
+	name = "inozhakust"
+	desc = "A plant looking like roots growing into the sky, covered in mushy, wet, oily vines. They squelch and break apart when touched. You'll have to gather them as a paste."
+	icon_state = "shrub1"
+	base_icon_state = "shrub"
+	harvested_name = "inozhakust"
+	harvested_desc = "A plant looking like roots growing into the sky - inozhakust. Filters chemical compounds in both earth and dirt, and spits out disgusting vines which you should be able to harvest soon."
+	harvest_amount_high = 5
+	harvest_message_low = "You menage to scoop just a bit of inozhakust's vines into paste."
+	harvest_message_med = "You menage to scoop some inozhakust's vines into paste."
+	harvest_message_high = "You menage to scoop quite a lot of inozhakust's vines into paste."
+	harvest_time = 30
+	number_of_variants = 4
+
+/obj/structure/flora/ash/inozhakust/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/inozhakust = 1)
+
+/obj/structure/flora/ash/plasmaflower
+	name = "plasma flower"
+	desc = "A bunch of vines surrounding a clustered bunch of plasma flowers. Researches still are trying to wrap their heads around these ones."
+	icon_state = "plasma_flower1"
+	base_icon_state = "plasma_flower"
+	light_range = LIGHT_FIRE_BLOSSOM
+	light_power = LIGHT_FIRE_BLOSSOM
+	light_color = COLOR_BIOLUMINESCENCE_PURPLE
+	harvested_name = "fire blossom vines"
+	harvested_desc = "A few plasma flower vines, missing their flowers."
+	harvest_amount_high = 3
+	harvest_message_low = "You pluck a single, suitable flower."
+	harvest_message_med = "You pluck a number of flowers, leaving a few unsuitable ones."
+	harvest_message_high = "You pluck quite a lot of suitable flowers."
+	regrowth_time_low = 4 MINUTES
+	regrowth_time_high = 7 MINUTES
+	number_of_variants = 2
+
+/obj/structure/flora/ash/plasmaflower/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/plasmaflower = 1)
+
+/obj/structure/flora/ash/plasmaflower/after_harvest()
+	set_light_power(LIGHT_RANGE_FIRE_BLOSSOM_HARVESTED)
+	set_light_range(LIGHT_POWER_FIRE_BLOSSOM_HARVESTED)
+	update_light()
+	return ..()
+
+/obj/structure/flora/ash/plasmaflower/regrow()
+	set_light_power(initial(light_power))
+	set_light_range(initial(light_range))
+	update_light()
+	return ..()
+
+/obj/structure/flora/ash/drakebeet
+	name = "drake beet"
+	desc = "An mutated beet. It seems to have adapted to local ecosystems by vaguely mimicking the appearance of a drake. Unsure how that helps, but its probably still tasty."
+	icon_state = "drakebeet1"
+	base_icon_state = "drakebeet"
+	harvested_name = "young drake beet"
+	harvested_desc = "An mutated beet. These ones are yet to grow up... Wonder where all the young of the actual snowdrakes are."
+	harvest_amount_high = 4
+	harvest_message_low = "You pull a single suitable beet from the ground."
+	harvest_message_med = "You pull a number of suitable beets from the ground."
+	harvest_message_high = "You pull quite a lot of suitable beets from the ground."
+	regrowth_time_low = 3 MINUTES
+	regrowth_time_high = 6 MINUTES
+	harvest_time = 25
+	number_of_variants = 2
+
+/obj/structure/flora/ash/drakebeet/get_potential_products()
+	return list(/obj/item/food/grown/drakebeet = 1)
+
 //SNACKS
 
 /obj/item/food/grown/ash_flora
@@ -328,6 +450,54 @@
 	icon_state = "glowgrowth"
 	seed = /obj/item/seeds/lavaland/glowgrowth // Cannot be grown in hydroponics as it feeds off mineral air
 	wine_power = 50
+
+//SNACKS - icebox
+
+/obj/item/food/grown/ash_flora/fonarstolbe
+	name = "fonarstolbe fruit"
+	desc = "A fonarstolbe fruit. It's glowing blue, faintly."
+	icon_state = "fonarstolbe"
+	seed = /obj/item/seeds/lavaland/fonarstolbe
+	wine_power = 50
+	foodtypes = FRUIT
+
+/obj/item/food/grown/ash_flora/vahrezjia
+	name = "vahrezjia stalks"
+	desc = "Bunched together vahrezjia stalks. Suprisingly coarse in texture."
+	icon_state = "vahrezjia"
+	seed = /obj/item/seeds/lavaland/vahrezjia
+	wine_power = 50
+	foodtypes = FRUIT
+
+/obj/item/food/grown/ash_flora/podsneyzka
+	name = "podsneyzka bunch"
+	desc = "A bunch of spotted podsneyzka flowers, folded onto themselves. They smell bit like rotten meat."
+	icon_state = "podsneyzka"
+	seed = /obj/item/seeds/lavaland/podsneyzka
+	wine_power = 50
+	foodtypes = MEAT|VEGETABLES
+
+/obj/item/food/grown/ash_flora/inozhakust
+	name = "inozhakust mash"
+	desc = "The mashed up vines of an inozhakust scooped into whatever you had on hand."
+	icon_state = "inozhakust"
+	seed = /obj/item/seeds/lavaland/inozhakust
+	distill_reagent = /datum/reagent/consumable/ethanol/mouthwash
+	foodtypes = VEGETABLES|GROSS
+
+/obj/item/food/grown/ash_flora/plasmaflower
+	name = "plasma flower"
+	desc = "A bit of vine conected a crystalized plasma flower."
+	icon_state = "plasmaflower"
+	slot_flags = ITEM_SLOT_HEAD
+	seed = /obj/item/seeds/lavaland/plasmaflower
+	foodtypes = TOXIC
+	wine_power = 40
+
+/obj/item/food/grown/ash_flora/plasmaflower/Initialize(mapload)
+	. = ..()
+	// Fire flowers make fireproof raptors
+	AddElement(/datum/element/raptor_food, color_chances = string_list(list(/datum/raptor_color/blue = 5)))
 
 // SEEDS
 
@@ -466,6 +636,86 @@
 	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/trait/fire_resistance, /datum/plant_gene/trait/glow/blue) // Fungal metab doesn't do anything (cause it can't be planted) but it shows up in analyzers
 	reagents_add = list(/datum/reagent/luminescent_fluid/cyan = 0.06, /datum/reagent/consumable/nutriment = 0.01, /datum/reagent/silicon = 0.03)
 	seed_flags = parent_type::seed_flags | NO_PLANTING
+
+/// SEEDS - icebox
+
+/obj/item/seeds/lavaland/fonarstolbe
+	name = "fonarstolbe seed pack"
+	desc = "These seeds grow into fonarstolbe."
+	icon_state = "seed-fonarstolbe"
+	species = "fonarstolbe"
+	plantname = "Fonarstolbe"
+	lifespan = 40
+	production = 5
+	yield = 3
+	growthstages = 4
+	product = /obj/item/food/grown/ash_flora/fonarstolbe
+	genes = list(/datum/plant_gene/trait/tox_resistance, /datum/plant_gene/trait/glow/blue)
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.04, /datum/reagent/luminescent_fluid/cyan = 0.03, /datum/reagent/iron = 0.02, /datum/reagent/consumable/guidoferrun = 0.2)
+	graft_gene = /datum/plant_gene/trait/glow/blue
+
+/obj/item/seeds/lavaland/vahrezjia
+	name = "vahrezjia seed pack"
+	desc = "These seeds grow into vahrezjia."
+	icon_state = "seed-vahrezjia"
+	species = "vahrezjia"
+	plantname = "Vahrezjia"
+	growthstages = 3
+	product = /obj/item/food/grown/ash_flora/vahrezjia
+	genes = list(/datum/plant_gene/trait/tox_resistance, /datum/plant_gene/trait/repeated_harvest)
+	growing_icon = 'icons/obj/service/hydroponics/growing_fruits.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/nutriment = 0.02, /datum/reagent/toxin/berserker = 0.06, /datum/reagent/consumable/nutriment/fat/oil = 0.03)
+
+/obj/item/seeds/lavaland/podsneyzka
+	name = "podsneyzka seed pack"
+	desc = "These seeds grow into podsneyzkas."
+	icon_state = "seed-podsneyzka"
+	species = "podsneyzka"
+	plantname = "Podsneyzka"
+	lifespan = 30
+	endurance = 15
+	production = 4
+	yield = 5
+	growthstages = 3
+	product = /obj/item/food/grown/ash_flora/podsneyzka
+	genes = list(/datum/plant_gene/trait/tox_resistance, /datum/plant_gene/trait/chem_cooling)
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.03, /datum/reagent/consumable/nutriment = 0.03, /datum/reagent/cryostylane = 0.02, /datum/reagent/consumable/liquidgibs = 0.02)
+	graft_gene = /datum/plant_gene/trait/chem_cooling
+
+/obj/item/seeds/lavaland/inozhakust
+	name = "inozhakust seed pack"
+	desc = "These seeds grow into a inozhakust."
+	icon_state = "seed-inozhakust"
+	species = "inozhakust"
+	plantname = "Inozhakust"
+	lifespan = 40
+	endurance = 30
+	yield = 3
+	growthstages = 5
+	product = /obj/item/food/grown/ash_flora/inozhakust
+	genes = list(/datum/plant_gene/trait/plant_type/toxin_adaptation, /datum/plant_gene/trait/repeated_harvest)
+	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.01, /datum/reagent/consumable/nutriment = 0.09,  /datum/reagent/consumable/mintextract = 0.03, /datum/reagent/impurity = 0.02)
+	graft_gene = /datum/plant_gene/trait/plant_type/toxin_adaptation
+
+/obj/item/seeds/lavaland/plasmaflower
+	name = "plasma flower seed pack"
+	desc = "These seeds grow into plasma flowers."
+	icon_state = "seed-plasmaflower"
+	species = "plasmaflower"
+	plantname = "Plasma flower"
+	lifespan = 40
+	endurance = 15
+	production = 5
+	yield = 3
+	potency = 20
+	growthstages = 4
+	product = /obj/item/food/grown/ash_flora/plasmaflower
+	genes = list(/datum/plant_gene/trait/plant_type/toxin_adaptation, /datum/plant_gene/trait/glow/purple)
+	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
+	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/plasma_oxide = 0.01, /datum/reagent/stable_plasma = 0.02)
 
 //CRAFTING
 

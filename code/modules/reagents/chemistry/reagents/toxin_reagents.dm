@@ -1762,3 +1762,45 @@
 	if(current_cycle >= transformation_cycle)
 		affected_mob.mind?.add_antag_datum(/datum/antagonist/spider)
 		affected_mob.change_mob_type(/mob/living/basic/spider/giant, delete_old_mob = TRUE)
+
+/datum/reagent/toxin/berserker
+	name = "Berserker Toxin"
+	description = "A psychoactive substance irritating the neural sectors responsible for fight or flight response, damaging them in the process."
+	silent_toxin = TRUE
+	color = "#ad378d"
+	penetrates_skin = VAPOR
+	toxpwr = 0.2
+	taste_description = "bitter rage"
+	chemical_flags = REAGENT_NO_RANDOM_RECIPE
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	metabolized_traits = list(TRAIT_ANALGESIA, TRAIT_STIMULATED)
+	addiction_types = list(/datum/addiction/stimulants = 30)
+
+/datum/reagent/toxin/berserker/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	var/need_mob_update
+	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.75 * metabolization_ratio * seconds_per_tick)
+	affected_mob.AdjustAllImmobility(-5 * metabolization_ratio * seconds_per_tick)
+	if(affected_mob.adjust_stamina_loss(-10 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))
+		. = UPDATE_MOB_HEALTH
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
+	if(SPT_PROB(5, seconds_per_tick))
+		affected_mob.emote(pick("twitch", "drool"))
+
+/datum/reagent/toxin/berserker/on_mob_metabolize(mob/living/affected_mob)
+	. = ..()
+	affected_mob.apply_status_effect(/datum/status_effect/spasms)
+	RegisterSignal(affected_mob, COMSIG_LIVING_ENTER_STAMCRIT, PROC_REF(on_stamcrit))
+
+/datum/reagent/toxin/berserker/on_mob_end_metabolize(mob/living/affected_mob)
+	. = ..()
+	affected_mob.remove_status_effect(/datum/status_effect/spasms)
+	UnregisterSignal(affected_mob, COMSIG_LIVING_ENTER_STAMCRIT)
+
+/datum/reagent/toxin/berserker/proc/on_stamcrit(mob/living/affected_mob)
+	SIGNAL_HANDLER
+	affected_mob.set_stamina_loss(90, updating_stamina = TRUE)
+	to_chat(affected_mob, span_message("This can't end like this... Blood rushes away from your head..."))
+	volume -= (min(volume, 3))
+	return STAMCRIT_CANCELLED
