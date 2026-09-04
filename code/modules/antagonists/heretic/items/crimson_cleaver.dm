@@ -110,7 +110,7 @@
 
 	var/is_cleaving = LAZYACCESS(attack_modifiers, "cleave")
 	if(is_cleaving || COOLDOWN_FINISHED(src, lifesteal_cd))
-		lifesteal(target, user, coefficient = (is_cleaving ? 0.5 : 1), amount = LAZYACCESS(attack_modifiers, "damage_done"))
+		lifesteal(target, user, coefficient = (is_cleaving ? 0.5 : 1), amount = LAZYACCESS(attack_modifiers, DAMAGE_DONE))
 
 	if(is_cleaving)
 		return

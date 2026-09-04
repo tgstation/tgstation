@@ -399,7 +399,7 @@
 	var/limit = 1
 	/// A list of weakrefs to all items we've created.
 	var/list/datum/weakref/created_items
-
+	/// If TRUE items we create can be tracked with the living heart
 	var/trackable_items = FALSE
 
 /datum/heretic_knowledge/limited_amount/Destroy(force)
