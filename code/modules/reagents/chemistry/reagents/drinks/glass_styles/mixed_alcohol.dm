@@ -1233,6 +1233,62 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "vieux_carre"
 
+/datum/glass_style/drinking_glass/watchmans_nightcap
+	required_drink_type = /datum/reagent/consumable/ethanol/watchmans_nightcap
+	name = "Watchman's Nightcap"
+	desc = "Fire illuminates, thus we understand our world. Fire purifies, thus we understand our dreams."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "watchmans_nightcap"
+
+/datum/glass_style/drinking_glass/footsoldiers_razor
+	required_drink_type = /datum/reagent/consumable/ethanol/footsoldiers_razor
+	name = "Footsoldier's Razor"
+	desc = "Sunrise Parabellum."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "footsoldiers_razor"
+
+/datum/glass_style/drinking_glass/farstar_amrita
+	required_drink_type = /datum/reagent/consumable/ethanol/farstar_amrita
+	name = "Farstar Amrita"
+	desc = "Any Spaceman knows that if you stare too long into the abyss, something might stare back. What fewer know, is that the abyss will always accept a drink."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "farstar_amrita"
+
+/datum/glass_style/drinking_glass/rubywise_ruin
+	required_drink_type = /datum/reagent/consumable/ethanol/rubywise_ruin
+	name = "Rubywise Ruin"
+	desc = "A stimulant of appetites; Those oldest, deepest, reddest, most regretable appetites."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "rubywise_ruin"
+
+/datum/glass_style/drinking_glass/openthroat_draught
+	required_drink_type = /datum/reagent/consumable/ethanol/openthroat_draught
+	name = "Open-Throat Draught"
+	desc = "Speech is a wound, and wounds always open both ways. Drink and understand."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "openthroat_draught"
+
+/datum/glass_style/drinking_glass/lunacy
+	required_drink_type = /datum/reagent/consumable/ethanol/lunacy
+	name = "Lunacy"
+	desc = "Kill the truth, or speak the name..."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "lunacy"
+
+/datum/glass_style/drinking_glass/entropic_brew
+	required_drink_type = /datum/reagent/consumable/ethanol/entropic_brew
+	name = "Entropic Brew"
+	desc = "It's like if someone distilled existential despair into a glass. Theoretically, you could get drunk off it, but you would certainly regret it."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "entropic_brew"
+
+/datum/glass_style/drinking_glass/emptiest_glass
+	required_drink_type = /datum/reagent/consumable/ethanol/emptiest_glass
+	name = "Emptiest Glass"
+	desc = "All of your senses agree: there is nothing here. And yet, some part of your soul begs you to take a sip..."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "emptiest_glass"
+
 // Shot glasses
 
 /datum/glass_style/shot_glass/toxins_special

@@ -30,3 +30,5 @@ Trimmed and effects added by ArcaneMusic.
 
 node_victory.ogg was made by ArcaneMusic
 FL-studio, Flex Plugin. -- License: Creative Commons 0
+
+eldritch_crowd.ogg made from a distorted and reversed clip from "Pub in Cambridge by domasmo -- https://freesound.org/s/376456/ -- License: Creative Commons 0"

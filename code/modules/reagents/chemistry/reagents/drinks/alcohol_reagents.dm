@@ -3496,5 +3496,318 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+//Heretical drinks
+//Ash
+/datum/reagent/consumable/ethanol/watchmans_nightcap
+	name = "Watchman's Nightcap"
+	description = "A particular man used to always go to bed with a candle lit on his nightstand. You would too, if you knew what he knew."
+	boozepwr = 40
+	color = "#1DA7DD"
+	quality = DRINK_FANTASTIC
+	taste_description = "all that's in a flame alongside fire"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_HAD_SLEEPY_DRINK) //Improves sleep quality. Should add this to other drinks like hot milk or something.
+
+/datum/reagent/consumable/ethanol/watchmans_nightcap/on_mob_add(mob/living/drinker)
+	. = ..()
+	if(prob(50))
+		drinker.emote(pick("scream","moan"))
+	to_chat(drinker, span_userdanger("A searing flame scours your mind, leaving it raw and sensitive to new experiences!"))
+	SEND_SOUND(drinker, sound('sound/effects/wounds/sizzle2.ogg', volume=70))
+	drinker.flash_act(INFINITY, override_blindness_check = TRUE, visual = TRUE) //Cover your eyes, if you like. It will serve no purpose.
+
+/datum/reagent/consumable/ethanol/watchmans_nightcap/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	//triples experience gain
+	drinker.mind?.experience_multiplier_reasons[type] = 2 * metabolization_ratio * seconds_per_tick
+
+/datum/reagent/consumable/ethanol/watchmans_nightcap/on_mob_end_metabolize(mob/living/drinker)
+	. = ..()
+	drinker?.mind?.experience_multiplier_reasons -= type
+
+//Blade
+/datum/reagent/consumable/ethanol/footsoldiers_razor
+	name = "Footsoldier's Razor"
+	description = "The drink of choice for an army that was slaughtered to the man, to be drunk on the morn of battle. 'Now, a drop. Soon, a torrent.'"
+	boozepwr = 60
+	color = "#563517"
+	quality = DRINK_FANTASTIC
+	taste_description = "bitterness seasoned by blood"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_FEARLESS, TRAIT_ANALGESIA, TRAIT_STIMULATED, TRAIT_HARDLY_WOUNDED)
+
+/datum/reagent/consumable/ethanol/footsoldiers_razor/expose_mob(mob/living/drinker, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+	//Causes drinkers to injure themselves when first sipping with a 1 minute cooldown.
+	if(!(methods & INGEST) || !iscarbon(drinker) || HAS_TRAIT(drinker, TRAIT_HAD_FOOTSOLDIERS_RAZOR))
+		return
+
+	ADD_TRAIT(drinker, TRAIT_HAD_FOOTSOLDIERS_RAZOR, type)
+	to_chat(drinker, span_warning("You cut your lip on something sharp!"))
+	SEND_SOUND(drinker, sound('sound/items/weapons/slice.ogg', volume=50))
+	drinker.bleed(5)
+	drinker.apply_damage(10, BRUTE, BODY_ZONE_HEAD)
+	addtimer(TRAIT_CALLBACK_REMOVE(drinker, TRAIT_HAD_FOOTSOLDIERS_RAZOR, type), 60 SECONDS)
+
+/datum/reagent/consumable/ethanol/footsoldiers_razor/on_mob_metabolize(mob/living/drinker)
+	. = ..()
+	drinker.crit_threshold -= 20
+
+/datum/reagent/consumable/ethanol/footsoldiers_razor/on_mob_end_metabolize(mob/living/drinker)
+	. = ..()
+	drinker.crit_threshold += 20
+
+//Cosmos
+/datum/reagent/consumable/ethanol/farstar_amrita
+	name = "Farstar Amrita"
+	description = "A wine for a decidedly different kind of communion."
+	boozepwr = 50
+	color = "#76276b"
+	quality = DRINK_FANTASTIC
+	taste_description = "something else tasting with you"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	//Creates an illusory(?) star gazer that wants a sippy, and which only the drinker can see. Similar to the stalking phantom brain trauma
+	var/gazer_type = /obj/effect/client_image_holder/thirsty_gazer
+	var/obj/effect/client_image_holder/thirsty_gazer/gazer
+
+/obj/effect/client_image_holder/thirsty_gazer
+	name = "???"
+	desc = "It looks... thirsty?"
+	image_icon = 'icons/mob/nonhuman-player/96x96eldritch_mobs.dmi'
+	image_state = "star_gazer"
+	pixel_x = -32
+	base_pixel_x = -32
+	alpha = 0
+
+/datum/reagent/consumable/ethanol/farstar_amrita/proc/create_gazer(mob/living/carbon/drinker)
+	if(HAS_TRAIT(drinker, TRAIT_FARSTAR_SHARED)) //If you've already fed one, you can't see new ones
+		return
+	var/turf/gazer_source = get_step(drinker, REVERSE_DIR(drinker.dir)) //directly behind the drinker.
+	gazer = new gazer_type(gazer_source, drinker)
+
+/obj/effect/client_image_holder/thirsty_gazer/Initialize(mapload)
+	. = ..()
+	animate(src, alpha = 80, time = 3 SECONDS, easing = CIRCULAR_EASING|EASE_IN, flags = ANIMATION_PARALLEL)
+
+/obj/effect/client_image_holder/thirsty_gazer/generate_image()
+	. = ..()
+	var/atom/image = .
+	var/static/list/wave_filter = list(type = "wave", x = 2, size = 4)
+	image.add_filter("wave_filter_gazer", 3, wave_filter)
+	return image
+
+/obj/effect/client_image_holder/thirsty_gazer/item_interaction(mob/living/drinker, obj/item/tool, list/modifiers)
+	. = ..()
+	if(!istype(tool, /obj/item/reagent_containers/cup/glass/drinkingglass) || tool.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/farstar_amrita) < 5) //a good host serves their guests with proper glassware. need at least 5u for a proper sippy.
+		to_chat(drinker, span_notice("You feel like something's missing..."))
+		return
+
+	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(drinker) //gives heretics a knowledge point upon doing this correctly
+	if(heretic_datum)
+		heretic_datum.adjust_knowledge_points(1)
+		to_chat(drinker, "[span_hear("You hear a whisper...")] [span_mansus("A TOKEN OF APPRECIATION.")]")
+
+	playsound(src,'sound/items/drink.ogg', rand(10,50), TRUE)
+	to_chat(drinker, span_notice("You blink. There's nothing there, and there never was. And yet, you feel like you've established some kind of connection, and your glass feels a bit lighter."))
+	drinker.add_mood_event("farstar_shared", /datum/mood_event/farstar_shared)
+	ADD_TRAIT(drinker, TRAIT_FARSTAR_SHARED, type)
+	tool.reagents.remove_reagent(/datum/reagent/consumable/ethanol/farstar_amrita, 5)
+	QDEL_NULL(src)
+
+/datum/reagent/consumable/ethanol/farstar_amrita/on_mob_add(mob/living/carbon/drinker)
+	. = ..()
+	create_gazer(drinker)
+
+/datum/reagent/consumable/ethanol/farstar_amrita/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, times_fired)
+	. = ..()
+	if(get_dist(drinker, gazer) >= 7 || gazer.z != drinker.z) //deletes if you get too far away
+		QDEL_NULL(gazer)
+		if(SPT_PROB(20, seconds_per_tick)) //unpredictably spawns a new one
+			create_gazer(drinker)
+
+/datum/reagent/consumable/ethanol/farstar_amrita/on_mob_delete(mob/living/carbon/drinker)
+	. = ..()
+	QDEL_NULL(gazer)
+
+
+//Flesh
+/datum/reagent/consumable/ethanol/rubywise_ruin
+	name = "Rubywise Ruin"
+	description = "A ruddy liquor wrung from flowers - even when the flowers aren't red."
+	boozepwr = 70
+	color = "#DC143C"
+	quality = DRINK_FANTASTIC
+	taste_description = "wine that writhes"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_VORACIOUS, TRAIT_FLESH_PECKISH) //makes the user eat faster and like meat and gore
+
+/datum/reagent/consumable/ethanol/rubywise_ruin/on_mob_add(mob/living/drinker)
+	. = ..()
+	if(HAS_TRAIT(drinker, TRAIT_NOHUNGER)) //I kinda feel like this should do something special to bloodworms since they have NOHUNGER and are sorta thematically adjacent, but ehh.
+		return
+	RegisterSignal(drinker, COMSIG_LIVING_EAT_FOOD, PROC_REF(on_eat))
+
+	if(drinker.mob_mood?.has_mood_of_category("rubywise_satisfied")) //satisfaction can last between exposures
+		return
+	ADD_TRAIT(drinker, TRAIT_GLUTTON, type)
+	to_chat(drinker, span_warning("An urge, almost like a whisper, bestows you with a desire for flesh! It's so hard to say no..."))
+
+/datum/reagent/consumable/ethanol/rubywise_ruin/proc/on_eat(mob/living/drinker, atom/food, foodtypes)
+	SIGNAL_HANDLER
+	if(drinker.mob_mood?.has_mood_of_category("rubywise_satisfied") || HAS_TRAIT(drinker, TRAIT_NOHUNGER))
+		return
+	if(foodtypes & (MEAT | GORE))
+		drinker.add_mood_event("rubywise_satisfied", /datum/mood_event/rubywise_satisfied) //grants mood buff, also used to prevent hunger debuff effects. Lasts for 3 min.
+		drinker.clear_mood_event("rubywise_unsatisfied")
+		REMOVE_TRAIT(drinker, TRAIT_GLUTTON, type)
+		to_chat(drinker, span_warning("An delightful sense of satisfaction fills you as your uncanny hunger abates... But a little more wouldn't hurt, surely?"))
+
+/datum/reagent/consumable/ethanol/rubywise_ruin/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	drinker.overeatduration = 0
+	if(SPT_PROB(4, seconds_per_tick)) //still drool even when satisfied.
+		drinker.emote("drool")
+
+	if(drinker.mob_mood?.has_mood_of_category("rubywise_satisfied") || HAS_TRAIT(drinker, TRAIT_NOHUNGER))
+		return
+	drinker.add_mood_event("rubywise_unsatisfied", /datum/mood_event/rubywise_unsatisfied) //short duration mood debuff to remind people to eat meat
+	drinker.adjust_nutrition(-5 * metabolization_ratio * seconds_per_tick)
+
+/datum/reagent/consumable/ethanol/rubywise_ruin/on_mob_delete(mob/living/drinker)
+	REMOVE_TRAIT(drinker, TRAIT_GLUTTON, type)
+	drinker.clear_mood_event("rubywise_unsatisfied")
+
+//Lock
+/datum/reagent/consumable/ethanol/openthroat_draught
+	name = "Open-Throat Draught"
+	description = "Supposedly, there is a tavern that exsists between the walls of our reality, where stray souls from all strange worlds gather. If such a bar truely exsists, it's patrons might drink this to facilitate friendly discussion."
+	boozepwr = 35
+	color = "#e4f38f"
+	quality = DRINK_FANTASTIC
+	taste_description = "your tongue splitting, then splitting again"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/openthroat_draught/on_mob_metabolize(mob/living/drinker)
+	. = ..()
+	drinker.grant_all_languages(source = LANGUAGE_DRINK)
+	drinker.apply_status_effect(/datum/status_effect/shadowspeak, 60) //same effect as the tongue corrupted organ
+
+/datum/reagent/consumable/ethanol/openthroat_draught/on_mob_end_metabolize(mob/living/drinker)
+	. = ..()
+	drinker.remove_all_languages(source = LANGUAGE_DRINK)
+	drinker.remove_status_effect(/datum/status_effect/shadowspeak)
+
+//Moon
+/datum/reagent/consumable/ethanol/lunacy
+	name = "Lunacy"
+	description = "Many cocktail bars often seek to serve their clientele a vacation in a glass. Why not a vacation from sanity?"
+	boozepwr = 70
+	color = "#c4eef6"
+	quality = DRINK_FANTASTIC
+	taste_description = "something <span class='hypnophrase'>funny</span>"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/lunacy/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio) //makes the drinker hallucinate everyone else as a heretic.
+	.= ..()
+	if(HAS_TRAIT(drinker, TRAIT_HALLUCINATION_IMMUNE))
+		return
+
+	drinker.cause_hallucination(/datum/hallucination/delusion/preset/heretic, "delusion/preset/moon hallucination caused by Lunacy cocktail", duration = 4 SECONDS)
+	drinker.adjust_hallucinations_up_to(4 SECONDS * metabolization_ratio * seconds_per_tick, 10 SECONDS)
+
+//Rust
+/datum/reagent/consumable/ethanol/entropic_brew
+	name = "Entropic Brew"
+	description = "Beyond foul. This fluid is an affront to the very concept of ordered beauty. Not to be served in any vessel that can be corroded or oxidized... Or, frankly, served whatsoever."
+	boozepwr = 40
+	color = "#B7410E"
+	quality = DRINK_FANTASTIC
+	overdose_threshold = 44 //if you can chug a full glass without vomiting, you become immune. Around 5u is metabolized as the stomach does it's thing, so this is set to 44u instead of 50.
+	taste_description = "the end of everything"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/entropic_brew/expose_turf(turf/exposed_turf, reac_volume)
+	. = ..()
+	exposed_turf.rust_heretic_act(RUST_RESISTANCE_BASIC)
+
+/datum/reagent/consumable/ethanol/entropic_brew/on_mob_metabolize(mob/living/carbon/drinker)
+	. = ..()
+	RegisterSignal(drinker, COMSIG_CARBON_VOMITED, PROC_REF(on_vomit))
+
+/datum/reagent/consumable/ethanol/entropic_brew/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	if(HAS_TRAIT(drinker, TRAIT_APATHETIC)) //if already apathetic, doesn't cause vomiting and rapidly drains disgust
+		drinker.adjust_disgust(-20 * metabolization_ratio * seconds_per_tick)
+		return
+
+	drinker.adjust_disgust(10 * metabolization_ratio * seconds_per_tick)
+
+/datum/reagent/consumable/ethanol/entropic_brew/proc/on_vomit(mob/living/carbon/drinker, distance, force)
+	SIGNAL_HANDLER
+	//if you vomit with this in your system, you rust the tile beneath you. Note, this still applies even when you're apathetic if you vomit due to non-disgust related reasons.
+	var/atom/tile = get_turf(drinker)
+	if(isnull(tile))
+		return
+	tile.rust_heretic_act()
+
+/datum/reagent/consumable/ethanol/entropic_brew/overdose_start(mob/living/drinker, metabolization_ratio)
+	to_chat(drinker, span_boldwarning("You feel something inside you break as the feeling of illness recedes. In the face of the inevitability of decay, your troubles seem quaint."))
+	drinker.add_traits(list(TRAIT_STRONG_STOMACH, TRAIT_APATHETIC), type)
+
+/datum/reagent/consumable/ethanol/entropic_brew/on_mob_end_metabolize(mob/living/carbon/drinker, metabolization_ratio)
+	. = ..()
+	drinker.remove_traits(list(TRAIT_STRONG_STOMACH, TRAIT_APATHETIC), type)
+	UnregisterSignal(drinker, COMSIG_CARBON_VOMITED)
+
+//Void
+/datum/reagent/consumable/ethanol/emptiest_glass
+	name = "Emptiest Glass"
+	description = "Every mundane instrument at your disposal concurs: there is nothing here. Why did you expect anything different?"
+	boozepwr = 1
+	color = "#000000"
+	quality = DRINK_FANTASTIC
+	taste_description = "an absence"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/list/col_filter_muted = list(0.7,0.15,0.15,0, 0.15,0.7,0.15,0, 0.15,0.15,0.7,0, 0,0,0,1, 0,0,0,0)
+
+/datum/reagent/consumable/ethanol/emptiest_glass/on_mob_metabolize(mob/living/carbon/drinker)
+	. = ..()
+	if(!drinker.hud_used)
+		return
+	var/atom/movable/plane_master_controller/game_plane_master_controller = drinker.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+
+	game_plane_master_controller.add_filter("emptiest_glass_filter", 10, color_matrix_filter(COLOR_MATRIX_IDENTITY))
+
+	for(var/filter in game_plane_master_controller.get_filters("emptiest_glass_filter"))
+		animate(filter, color = col_filter_muted, 5 SECONDS, CIRCULAR_EASING) //I have no clue if this is the right way to do this, but it works.
+
+/datum/reagent/consumable/ethanol/emptiest_glass/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	var/turf/drinker_turf = get_turf(drinker)
+	drinker_turf.TakeTemperature(-10)
+
+	if(SPT_PROB(2.5, seconds_per_tick))
+		to_chat(drinker, span_warning("[pick("You feel cold.", "You feel empty.")]"))
+		drinker.emote(pick("pale","shiver"))
+		if(prob(20)) //very low chance to apply void chill
+			drinker.playsound_local(drinker, 'sound/music/antag/heretic/VoidsEmbrace_short.ogg', 50) //technically this can overlap, but the chances of that happening are extremely low (and it doesn't even sound that bad)
+			drinker.apply_status_effect(/datum/status_effect/void_chill, 1)
+			to_chat(drinker, span_warning("You hear a distant song..."))
+
+/datum/reagent/consumable/ethanol/emptiest_glass/on_mob_end_metabolize(mob/living/carbon/drinker)
+	. = ..()
+	if(!drinker.hud_used)
+		return
+	var/atom/movable/plane_master_controller/game_plane_master_controller = drinker.hud_used.plane_master_controllers[PLANE_MASTERS_GAME]
+	game_plane_master_controller.remove_filter("emptiest_glass_filter")
+
 #undef ALCOHOL_EXPONENT
 #undef ALCOHOL_THRESHOLD_MODIFIER
