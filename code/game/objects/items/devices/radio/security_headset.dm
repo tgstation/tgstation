@@ -84,7 +84,6 @@
 		if (channel in key.channels)
 			return NONE
 
-
 	// Channels unlocked are listen only. If none of your keys unlock the channel, you can't talk on it.
 	if(!(channel in channels_to_give))
 		return NONE
