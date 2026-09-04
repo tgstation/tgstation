@@ -35,6 +35,8 @@
 	var/list/default_immune_atoms = list()
 	if(owner_is_immune_to_self_timestop)
 		default_immune_atoms += cast_on
+
+	SEND_SIGNAL(cast_on, COMSIG_ATOM_STOPPING_TIME, src, default_immune_atoms)
 	new /obj/effect/timestop/magic(get_turf(cast_on), timestop_range, timestop_duration, default_immune_atoms)
 
 /datum/action/cooldown/spell/timestop/vv_edit_var(var_name, var_value)

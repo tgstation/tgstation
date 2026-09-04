@@ -1426,6 +1426,7 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	affected_biotype = MOB_ORGANIC | MOB_MINERAL | MOB_PLANT // no healing ghosts
+	var/healing = 0.75
 
 /datum/reagent/medicine/regen_jelly/expose_mob(mob/living/exposed_mob, reac_volume)
 	. = ..()
@@ -1438,7 +1439,7 @@
 
 /datum/reagent/medicine/regen_jelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	var/heal = -0.75 * metabolization_ratio * seconds_per_tick
+	var/heal = -healing * metabolization_ratio * seconds_per_tick
 	var/need_mob_update
 	need_mob_update = affected_mob.adjust_brute_loss(heal, updating_health = FALSE, required_bodytype = affected_bodytype)
 	need_mob_update += affected_mob.adjust_fire_loss(heal, updating_health = FALSE, required_bodytype = affected_bodytype)
@@ -1446,6 +1447,13 @@
 	need_mob_update += affected_mob.adjust_tox_loss(heal, updating_health = FALSE, forced = TRUE, required_biotype = affected_biotype) //heals TOXINLOVERs
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
+
+// purple
+/datum/reagent/medicine/regen_jelly/diluted
+	name = "Diluted Regenerative Jelly"
+	description = "Regenerative slime jelly that has been diluted, resulting in it regenerating tissues slower, but lasting longer with the same volume."
+	metabolization_rate = 0.125 * REAGENTS_METABOLISM
+	healing = 0.45 // less than omnizine, actually
 
 /datum/reagent/medicine/syndicate_nanites //Used exclusively by Syndicate medical cyborgs
 	name = "Restorative Nanites"
@@ -1872,17 +1880,13 @@
 
 /datum/reagent/medicine/coagulant/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
-	if(ishuman(affected_mob))
-		var/mob/living/carbon/human/blood_boy = affected_mob
-		blood_boy.physiology?.bleed_mod *= passive_bleed_modifier
+	MODIFY_PHYSIOLOGY(affected_mob, PHYS_COEFF_BLEED, passive_bleed_modifier)
 
 /datum/reagent/medicine/coagulant/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
 	if(was_working)
 		to_chat(affected_mob, span_warning("The medicine thickening your blood loses its effect!"))
-	if(ishuman(affected_mob))
-		var/mob/living/carbon/human/blood_boy = affected_mob
-		blood_boy.physiology?.bleed_mod /= passive_bleed_modifier
+	MODIFY_PHYSIOLOGY(affected_mob, PHYS_COEFF_BLEED, 1 / passive_bleed_modifier)
 
 /datum/reagent/medicine/coagulant/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()

@@ -55,6 +55,7 @@
 		QDEL_LIST(imaginary_group)
 	QDEL_LAZYLIST(diseases)
 	QDEL_LAZYLIST(quirks)
+	QDEL_NULL(inner_armor)
 
 	if(!isnull(unconscious_appearance))
 		// Not super necessary strictly speaking but just in case
@@ -1641,8 +1642,8 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 				/mob/living/basic/mining/mook/worker,
 				/mob/living/basic/mining/mook/worker/bard,
 				/mob/living/basic/mining/mook/worker/tribal_chief,
-				/mob/living/basic/mining/legion/monkey,
-				/mob/living/basic/mining/legion/monkey/snow,
+				/mob/living/basic/mining/legion/lesser,
+				/mob/living/basic/mining/legion/lesser/snow,
 				/mob/living/basic/mining/lobstrosity,
 				/mob/living/basic/mining/lobstrosity/lava,
 				/mob/living/basic/mining/ice_demon,

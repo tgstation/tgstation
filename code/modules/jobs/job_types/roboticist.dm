@@ -32,6 +32,7 @@
 	family_heirlooms = list(/obj/item/toy/plush/pkplush)
 	rpg_title = "Necromancer"
 	job_flags = STATION_JOB_FLAGS
+	tgui_icon = FA_ICON_BATTERY_HALF
 
 
 /datum/job/roboticist/New()
@@ -47,7 +48,7 @@
 	suit = /obj/item/clothing/suit/toggle/labcoat/roboticist
 	belt = /obj/item/storage/belt/utility/full
 	ears = /obj/item/radio/headset/headset_sci
-	l_pocket = /obj/item/modular_computer/pda/roboticist
+	l_pocket = /obj/item/modular_computer/pda/crew/roboticist
 
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/science

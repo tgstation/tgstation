@@ -1,0 +1,56 @@
+2026-09-01:
+  Absolucy:
+  - bugfix: Fixed the existence of borgs sometimes causing the orbit menu to crash.
+  Fghj240:
+  - qol: reinforced windows hint that they can be secured on examine
+  - bugfix: plastitanium windows are in the correct state once constructed
+  Melbert:
+  - rscadd: Head revolutionaries can set a "conversion guideline" - a short message
+      sent to all people they convert - in their antag ui, to help them bring some
+      order to the revolution. It is, however, ultimately a *guideline*. You're note
+      forced to follow it but are expected to abide by it .
+  - bugfix: Fruit punch healing updates correctly
+  PapaMichael:
+  - bugfix: Cats no longer try to run away from themselves after losing a catfight,
+      instead running from the cat they actually lost to
+  - bugfix: Revenants are no longer immune to all damage
+  - qol: The AI Malfunction UI now shows the number of currently hacked APCs
+  necromanceranne:
+  - balance: Spears no longer break from overuse without repair.
+  projectkepler-ru:
+  - balance: .38 Truestrike now does 20 damage and has better AP.
+2026-09-02:
+  Fghj240:
+  - bugfix: moves deathsquad thermal vision to their IFF visors
+  - spellcheck: tactical EFF visors are now called IFF visors.
+  - qol: deathsquaddies can no longer check security records with their eyes
+  JohnFulpWillard:
+  - bugfix: Psychologist PDA is now paintable.
+  - qol: '"PDA" in the PDA painter is now called "Assistant PDA", which it is.'
+  PapaMichael:
+  - bugfix: Chat should scroll properly on some messages that wrap now.
+  TheBoondock:
+  - rscadd: Added pillow lance and mattress shield
+  - rscadd: Pillow lance deals stamina damage and allows user to charge once wielded,
+      to charge simply contiously run in a direction and it consumes stamina the more
+      you run
+  - rscadd: Mattress shield deals stamina damage and allows user yto fortify, gaining
+      more  block chance and more stamina damage, the shield breaks easily as it is
+      still a mattress
+  - rscadd: You can now buy lance and mattress from toy vendor
+  - rscadd: Maintenance now have a chance to spawn lance and mattress shield
+2026-09-03:
+  Melbert:
+  - bugfix: Fix DNA consoles being able to print anomalous mutations
+  - bugfix: Fix weird issue where mutation list in the DNA console would go to 1 wide
+  - rscdel: Revenant can no longer affect emergency shuttle console with Malfunction
+  - balance: Mobs subjected to time stop are now slightly more stopped (chems will
+      no longer metabolize, bleeding will pause, etc).
+  - balance: Syndicate bombs no longer tick towards detonation when time stopped
+  - refactor: Refactored timestop a teeny bit, primarily its interaction with holoparasites,
+      report any issues next time you jojo larp
+  PapaMichael:
+  - bugfix: Setting SHIFT+number keybinds now works
+2026-09-04:
+  PapaMichael:
+  - bugfix: Icemoon tiles no longer count towards the blob's victory

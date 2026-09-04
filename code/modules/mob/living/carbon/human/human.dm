@@ -7,8 +7,6 @@
 	setup_mood()
 	// This needs to be called very very early in human init (before organs / species are created at the minimum)
 	setup_organless_effects()
-	// Physiology needs to be created before species, as some species modify physiology
-	setup_physiology()
 
 
 	create_dna(species)
@@ -39,9 +37,6 @@
 	ADD_TRAIT(src, TRAIT_CAN_MOUNT_HUMANS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_CAN_MOUNT_CYBORGS, INNATE_TRAIT)
 
-/mob/living/carbon/human/proc/setup_physiology()
-	physiology = new()
-
 /mob/living/carbon/human/get_unconscious_appearance()
 	return get_generic_humanoid_static_appearance()
 
@@ -71,7 +66,6 @@
 	randomize_human_normie(src, randomize_mutations = TRUE, update_body = FALSE)
 
 /mob/living/carbon/human/Destroy()
-	QDEL_NULL(physiology)
 	GLOB.human_list -= src
 
 	if (mob_mood)

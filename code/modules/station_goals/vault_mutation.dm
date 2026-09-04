@@ -38,12 +38,12 @@
 
 /datum/mutation/tough/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
-	acquirer.physiology.brute_mod *= 0.7
+	MODIFY_PHYSIOLOGY(acquirer, BRUTE, 0.7)
 	ADD_TRAIT(acquirer, TRAIT_PIERCEIMMUNE, GENETIC_MUTATION)
 
 /datum/mutation/tough/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-	owner.physiology.brute_mod /= 0.7
+	MODIFY_PHYSIOLOGY(owner, BRUTE, 1 / 0.7)
 	REMOVE_TRAIT(owner, TRAIT_PIERCEIMMUNE, GENETIC_MUTATION)
 
 /datum/mutation/dextrous
@@ -70,12 +70,12 @@
 
 /datum/mutation/fire_immunity/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
-	acquirer.physiology.burn_mod *= 0.5
+	MODIFY_PHYSIOLOGY(acquirer, BURN, 0.5)
 	acquirer.add_traits(list(TRAIT_RESISTHEAT, TRAIT_NOFIRE), GENETIC_MUTATION)
 
 /datum/mutation/fire_immunity/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-	owner.physiology.burn_mod /= 0.5
+	MODIFY_PHYSIOLOGY(owner, BURN, 2)
 	owner.remove_traits(list(TRAIT_RESISTHEAT, TRAIT_NOFIRE), GENETIC_MUTATION)
 
 /datum/mutation/quick_recovery
@@ -87,11 +87,11 @@
 
 /datum/mutation/quick_recovery/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
-	acquirer.physiology.stun_mod *= 0.5
+	MODIFY_PHYSIOLOGY(acquirer, PHYS_COEFF_STUN, 0.5)
 
 /datum/mutation/quick_recovery/on_losing(mob/living/carbon/human/owner)
 	. = ..()
-	owner.physiology.stun_mod /= 0.5
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_STUN, 2)
 
 /datum/mutation/plasmocile
 	name = "Plasmocile"
