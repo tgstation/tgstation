@@ -363,25 +363,19 @@ GLOBAL_LIST_EMPTY(unconscious_appearances)
 	. = ..()
 	if(!.)
 		return
-	owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS, TRAIT_TUMOR_SUPPRESSED), TRAIT_STATUS_EFFECT(id))
+	owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS), TRAIT_STATUS_EFFECT(id))
 	owner.add_filter("stasis_status_ripple", 2, list("type" = "ripple", "flags" = WAVE_BOUNDED, "radius" = 0, "size" = 2))
 	var/filter = owner.get_filter("stasis_status_ripple")
 	animate(filter, radius = 0, time = 0.2 SECONDS, size = 2, easing = JUMP_EASING, loop = -1, flags = ANIMATION_PARALLEL)
 	animate(radius = 32, time = 1.5 SECONDS, size = 0)
-	if(iscarbon(owner))
-		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.update_bodypart_bleed_overlays()
 
 /datum/status_effect/grouped/stasis/tick(seconds_between_ticks)
 	update_time_of_death()
 
 /datum/status_effect/grouped/stasis/on_remove()
-	owner.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS, TRAIT_TUMOR_SUPPRESSED), TRAIT_STATUS_EFFECT(id))
+	owner.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED, TRAIT_STASIS), TRAIT_STATUS_EFFECT(id))
 	owner.remove_filter("stasis_status_ripple")
 	update_time_of_death()
-	if(iscarbon(owner))
-		var/mob/living/carbon/carbon_owner = owner
-		carbon_owner.update_bodypart_bleed_overlays()
 	return ..()
 
 /atom/movable/screen/alert/status_effect/stasis
@@ -538,11 +532,11 @@ GLOBAL_LIST_EMPTY(unconscious_appearances)
 	new /obj/effect/temp_visual/bleed(get_turf(owner))
 
 /datum/status_effect/stacking/saw_bleed/threshold_cross_effect()
-	owner.adjust_brute_loss(bleed_damage)
 	new /obj/effect/temp_visual/bleed/explode(get_turf(owner))
+	playsound(owner, SFX_DESECRATION, 100, TRUE, -1)
 	for(var/splatter_dir in GLOB.alldirs)
 		owner.create_splatter(splatter_dir)
-	playsound(owner, SFX_DESECRATION, 100, TRUE, -1)
+	owner.adjust_brute_loss(bleed_damage)
 
 /datum/status_effect/stacking/saw_bleed/bloodletting
 	id = "bloodletting"
@@ -583,7 +577,7 @@ GLOBAL_LIST_EMPTY(unconscious_appearances)
 	if(prob(10))
 		owner.emote(pick("gasp", "gag", "choke"))
 
-/datum/status_effect/neck_slice/get_examine_text()
+/datum/status_effect/neck_slice/get_examine_text(mob/examiner)
 	return span_warning("[owner.p_Their()] neck is cut and is bleeding profusely!")
 
 /// Applies a curse with various possible effects
@@ -724,7 +718,7 @@ GLOBAL_LIST_EMPTY(unconscious_appearances)
 	owner.remove_client_colour(REF(src))
 	to_chat(owner, span_warning("You snap out of your trance!"))
 
-/datum/status_effect/trance/get_examine_text()
+/datum/status_effect/trance/get_examine_text(mob/examiner)
 	return span_warning("[owner.p_They()] seem[owner.p_s()] slow and unfocused.")
 
 /datum/status_effect/trance/proc/hypnotize(datum/source, list/hearing_args)
@@ -1014,7 +1008,7 @@ GLOBAL_LIST_EMPTY(unconscious_appearances)
 	if(owner.remove_status_effect(/datum/status_effect/ants))
 		return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
-/datum/status_effect/ants/get_examine_text()
+/datum/status_effect/ants/get_examine_text(mob/examiner)
 	return span_warning("[owner.p_They()] [owner.p_are()] covered in ants!")
 
 /datum/status_effect/ants/tick(seconds_between_ticks)

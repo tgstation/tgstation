@@ -495,6 +495,7 @@
 	new /obj/item/reagent_containers/cup/bottle/carnivorous_blood(src)
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/food/meat/slab/human(src)
+	new /obj/item/paper/guides/carnivorous_blood(src)
 
 /obj/item/storage/box/syndie_kit/nuke
 	name = "nuke core extraction kit"
@@ -602,7 +603,7 @@
 	new /obj/item/radio/headset/headset_cent/empty(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/storage/backpack/satchel(src)
-	new /obj/item/modular_computer/pda/heads(src)
+	new /obj/item/modular_computer/pda/crew/heads(src)
 	new /obj/item/clipboard(src)
 
 /obj/item/storage/box/syndie_kit/chameleon/broken/PopulateContents()

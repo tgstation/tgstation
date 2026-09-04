@@ -12,7 +12,7 @@
 	speak_emote = list("roars")
 	health = 250
 	maxHealth = 250
-	damage_coeff = list(BRUTE = 0.7, BURN = 0.7, TOX = 1, STAMINA = 1, OXY = 1)
+	physiology = list(BRUTE = 0.7, BURN = 0.7)
 	melee_damage_lower = 25
 	melee_damage_upper = 25
 	melee_attack_cooldown = CLICK_CD_MELEE
@@ -60,7 +60,7 @@
 	AddElement(/datum/element/swabable, CELL_LINE_TABLE_VATBEAST, CELL_VIRUS_TABLE_GENERIC_MOB, 1, 5)
 
 /mob/living/basic/vatbeast/get_bloodtype()
-	return get_blood_type(BLOOD_TYPE_LIZARD) // Green and alien
+	return get_blood_type(/datum/blood_type/lizard) // Green and alien
 
 /// Attack people and slap them
 /datum/ai_controller/basic_controller/vatbeast

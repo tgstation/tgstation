@@ -4924,6 +4924,10 @@
 	},
 /turf/open/misc/hay/lavaland,
 /area/lavaland/surface/outdoors)
+"AH" = (
+/obj/structure/candela_beacon,
+/turf/open/misc/asteroid/basalt/lava_land_surface,
+/area/lavaland/surface/outdoors)
 "AI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -46595,7 +46599,7 @@ pU
 pU
 pU
 pU
-pU
+AH
 pU
 aj
 aj

@@ -272,7 +272,7 @@
 		add_bodypart_overlay(texture_bodypart_overlay, update = FALSE)
 
 	if(IS_ORGANIC_LIMB(src))
-		blood_dna_info = list("Unknown DNA" = get_blood_type(BLOOD_TYPE_O_PLUS))
+		blood_dna_info = list("Unknown DNA" = get_blood_type(/datum/blood_type/human/o_plus))
 
 	set_bio_state_status()
 
@@ -737,6 +737,9 @@
 			wounding_type = WOUND_PIERCE
 
 	if(owner) // i tried to modularize the below, but the modifications to wounding_dmg and wounding_type cant be extracted to a proc
+		if(!forced)
+			brute *= GET_PHYSIOLOGY(owner, BRUTE)
+			burn *= GET_PHYSIOLOGY(owner, BURN)
 		var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
 
 		var/has_exterior = (bio_status & ANATOMY_EXTERIOR)
@@ -1285,6 +1288,17 @@
 	var/image_dir = null
 	if (dropped)
 		image_dir = SOUTH
+
+	// Stumps are FAKE limbs that hold the spot for REAL limbs. thusly no sprite of their own, so early return!
+	if(IS_STUMP(src))
+		SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped)
+		return .
+
+	// Arms past the first pair get body_zone suffixed (l_arm_2 and so on). No state exists for them
+	// This guard is bad :)
+	if(held_index >= 3)
+		SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped)
+		return .
 
 	// Handles invisibility (not alpha or actual invisibility but invisibility)
 	if(is_invisible)

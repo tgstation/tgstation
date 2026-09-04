@@ -136,7 +136,7 @@
 #define BB_REPAIRBOT_INTERACTION_TYPE "interaction_type"
 ///Key that hold robot target
 #define BB_ROBOT_TARGET "robot target"
-///Key thast holds thingt to deconstruct
+///Key that holds thingt to deconstruct
 #define BB_DECONSTRUCT_TARGET "deconstruct_target"
 
 #define REPAIRBOT_INTERACTION_INTERACT 1

@@ -264,10 +264,10 @@
 
 	var/obj/item/disk/top = stacked_disks[length(stacked_disks)]
 	user.put_in_hands(top)
-	balloon_alert(user, "removed top disk")
 
 	if(length(stacked_disks) > 1)
 		update_appearance(UPDATE_OVERLAYS)
+		balloon_alert(user, "removed top disk")
 		return TRUE
 
 	var/obj/item/disk/last_disk = stacked_disks[1]
@@ -281,6 +281,7 @@
 		last_disk.pixel_x = pixel_x
 		last_disk.pixel_y = pixel_y
 
+	last_disk.balloon_alert(user, "removed top disk")
 	qdel(src)
 	return TRUE
 
