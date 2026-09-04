@@ -11,11 +11,10 @@ import {
 } from 'tgui-core/components';
 import { type BooleanLike, classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
-
-import { useBackend } from '../backend';
 import { Window } from '../layouts';
+import { useBackend } from '../backend';
 
-type Data = {
+export type CameraConsoleData = {
   activeCamera: Camera & { status: BooleanLike };
   cameras: Camera[];
   can_spy: BooleanLike;
@@ -82,35 +81,52 @@ const selectCameras = (cameras: Camera[], searchText = ''): Camera[] => {
 };
 
 export const CameraConsole = (props) => {
+  const { act, data } = useBackend<CameraConsoleData>();
+
   return (
     <Window width={850} height={708}>
       <Window.Content>
-        <CameraContent />
+        <CameraContent act={act} data={data} />
       </Window.Content>
     </Window>
   );
 };
 
-export const CameraContent = (props) => {
+type CameraContentProps = {
+  act: any;
+  data: CameraConsoleData;
+};
+
+export const CameraContent = (props: CameraContentProps) => {
+  const { act, data } = props;
   const [searchText, setSearchText] = useState('');
 
   return (
     <Stack fill>
       <Stack.Item grow>
-        <CameraSelector searchText={searchText} setSearchText={setSearchText} />
+        <CameraSelector
+          act={act}
+          {...data}
+          searchText={searchText}
+          setSearchText={setSearchText}
+        />
       </Stack.Item>
       <Stack.Item grow={3}>
-        <CameraControls searchText={searchText} />
+        <CameraControls act={act} {...data} searchText={searchText} />
       </Stack.Item>
     </Stack>
   );
 };
 
-const CameraSelector = (props) => {
-  const { act, data } = useBackend<Data>();
-  const { searchText, setSearchText } = props;
-  const { activeCamera } = data;
-  const cameras = selectCameras(data.cameras, searchText);
+type CameraSelectorProps = {
+  act: any;
+  searchText: string;
+  setSearchText: any;
+} & CameraConsoleData;
+
+const CameraSelector = (props: CameraSelectorProps) => {
+  const { act, searchText, setSearchText, activeCamera } = props;
+  const cameras = selectCameras(props.cameras, searchText);
 
   return (
     <Stack fill vertical>
@@ -156,12 +172,15 @@ const CameraSelector = (props) => {
   );
 };
 
-const CameraControls = (props: { searchText: string }) => {
-  const { act, data } = useBackend<Data>();
-  const { activeCamera, can_spy, mapRef } = data;
-  const { searchText } = props;
+type CameraControlsProps = {
+  act: any;
+  searchText: string;
+} & CameraConsoleData;
 
-  const cameras = selectCameras(data.cameras, searchText);
+const CameraControls = (props: CameraControlsProps) => {
+  const { act, activeCamera, can_spy, mapRef, searchText } = props;
+
+  const cameras = selectCameras(props.cameras, searchText);
 
   const [prevCamera, nextCamera] = prevNextCamera(cameras, activeCamera);
 
