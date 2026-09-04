@@ -836,8 +836,8 @@
 "akf" = (
 /obj/structure/table/reinforced,
 /obj/item/bodypart/chest/robot,
-/obj/item/mmi,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -15706,7 +15706,7 @@
 	dir = 6
 	},
 /obj/structure/table,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/engineering/circuit_workshop)
@@ -17206,7 +17206,7 @@
 	network = list("ss13","rd")
 	},
 /obj/structure/table,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/science/circuits)
@@ -41380,7 +41380,7 @@
 /area/station/maintenance/port/aft)
 "kfj" = (
 /obj/structure/table/reinforced,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/item/assembly/prox_sensor,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -42829,7 +42829,7 @@
 /obj/structure/table/reinforced,
 /obj/item/crowbar,
 /obj/item/wrench,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/machinery/status_display/ai/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -88668,9 +88668,9 @@
 /area/station/maintenance/department/science/xenobiology)
 "vPV" = (
 /obj/structure/table/reinforced,
-/obj/item/mmi,
-/obj/item/mmi,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
 /obj/structure/sign/departments/medbay/alt/directional/south,
 /obj/machinery/status_display/ai/directional/west,
 /turf/open/floor/iron,

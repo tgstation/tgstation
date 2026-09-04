@@ -3508,7 +3508,7 @@
 	pixel_x = 5;
 	pixel_y = 7
 	},
-/obj/item/mmi/syndie{
+/obj/item/brain_processor/organic/syndie{
 	pixel_x = 7;
 	pixel_y = 6
 	},

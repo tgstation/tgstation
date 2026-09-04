@@ -58265,7 +58265,7 @@
 /area/station/engineering/storage)
 "qtu" = (
 /obj/structure/table,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 5
 	},
@@ -72511,7 +72511,7 @@
 "uus" = (
 /obj/machinery/status_display/evac/directional/north,
 /obj/structure/table,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
 "uuw" = (

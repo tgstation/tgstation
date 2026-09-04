@@ -144,12 +144,7 @@
 			new_borg.apply_pref_name(/datum/preference/name/cyborg, new_borg.client)
 
 	if(new_borg.mmi)
-		new_borg.mmi.name = "[initial(new_borg.mmi.name)]: [real_name]"
-		if(new_borg.mmi.brain)
-			new_borg.mmi.brain.name = "[real_name]'s brain"
-		if(new_borg.mmi.brainmob)
-			new_borg.mmi.brainmob.real_name = real_name //the name of the brain inside the cyborg is the robotized human's name.
-			new_borg.mmi.brainmob.name = real_name
+		new_borg.mmi.set_name(real_name)
 
 	new_borg.job = JOB_CYBORG
 	new_borg.notify_ai(AI_NOTIFICATION_NEW_BORG)

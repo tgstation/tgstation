@@ -11036,7 +11036,7 @@
 /area/station/engineering/storage/tech)
 "dHE" = (
 /obj/structure/table/reinforced/plastitaniumglass,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /turf/open/floor/iron/dark,
 /area/station/service/chapel/storage)
 "dHG" = (
@@ -11911,8 +11911,8 @@
 /obj/item/compact_remote,
 /obj/item/controller,
 /obj/item/integrated_circuit/loaded/speech_relay,
-/obj/item/mmi,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
 /obj/item/integrated_circuit/loaded/hello_world,
 /turf/open/floor/iron/showroomfloor,
 /area/station/engineering/circuit_workshop)
@@ -64465,9 +64465,9 @@
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/suit/apron/surgical,
 /obj/item/clothing/mask/surgical,
-/obj/item/mmi,
-/obj/item/mmi,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
 /obj/structure/window/reinforced/spawner/directional/east,
 /turf/open/floor/iron/dark,
 /area/station/science/robotics/lab)
@@ -71199,7 +71199,7 @@
 /area/station/command/bridge)
 "wtB" = (
 /obj/structure/table,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/item/bodypart/chest/robot{
 	pixel_y = 4
 	},

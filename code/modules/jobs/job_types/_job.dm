@@ -625,12 +625,7 @@
 				return // Disconnected while checking the appearance ban.
 			organic_name = player_client.prefs.read_preference(/datum/preference/name/real_name)
 
-		mmi.name = "[initial(mmi.name)]: [organic_name]"
-		if(mmi.brain)
-			mmi.brain.name = "[organic_name]'s brain"
-		if(mmi.brainmob)
-			mmi.brainmob.real_name = organic_name //the name of the brain inside the cyborg is the robotized human's name.
-			mmi.brainmob.name = organic_name
+		mmi.set_name(organic_name)
 	// If this checks fails, then the name will have been handled during initialization.
 	if(!GLOB.current_anonymous_theme && player_client.prefs.read_preference(/datum/preference/name/cyborg) != DEFAULT_CYBORG_NAME)
 		apply_pref_name(/datum/preference/name/cyborg, player_client)

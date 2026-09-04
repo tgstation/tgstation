@@ -856,10 +856,10 @@
 			to_chat(usr, "This mob has no brain to insert into an MMI.")
 			return
 
-		var/obj/item/mmi/new_mmi = new(get_turf(src))
+		var/obj/item/brain_processor/organic/new_mmi = new(get_turf(src))
 
 		target_brain.Remove(src)
-		new_mmi.force_brain_into(target_brain)
+		new_mmi.insert_brain(target_brain)
 
 		to_chat(usr, "Turned [src] into an MMI.")
 		log_admin("[key_name(usr)] turned [key_name_and_tag(src)] into an MMI.")

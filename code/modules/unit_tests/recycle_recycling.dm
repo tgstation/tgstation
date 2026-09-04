@@ -69,7 +69,7 @@
 
 /datum/unit_test/recycler_mmi_with_brain_safety/Run()
 	var/obj/machinery/recycler/recycler = allocate(/obj/machinery/recycler,  get_step(run_loc_floor_bottom_left, EAST))
-	var/obj/item/mmi/test_mmi = allocate(/obj/item/mmi, run_loc_floor_bottom_left)
+	var/obj/item/brain_processor/organic/test_mmi = allocate(/obj/item/brain_processor/organic, run_loc_floor_bottom_left)
 	var/mob/living/brain/test_brain = allocate(/mob/living/brain, run_loc_floor_bottom_left)
 	// Insert brain into MMI.
 	test_mmi.brain = test_brain

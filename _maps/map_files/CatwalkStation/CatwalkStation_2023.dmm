@@ -20274,9 +20274,9 @@
 /area/station/service/kitchen)
 "fqD" = (
 /obj/structure/table,
-/obj/item/mmi,
-/obj/item/mmi,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
 /obj/effect/turf_decal/tile/dark_blue/anticorner,
 /obj/item/borg/upgrade/rename{
 	pixel_y = 14
@@ -35079,7 +35079,7 @@
 /area/station/service/kitchen/abandoned)
 "jpG" = (
 /obj/structure/table/reinforced,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai/satellite/chamber)
 "jqd" = (
@@ -74997,7 +74997,7 @@
 /area/station/hallway/secondary/command)
 "tXT" = (
 /obj/structure/table,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/dark,
