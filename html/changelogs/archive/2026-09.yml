@@ -51,3 +51,6 @@
       report any issues next time you jojo larp
   PapaMichael:
   - bugfix: Setting SHIFT+number keybinds now works
+2026-09-04:
+  PapaMichael:
+  - bugfix: Icemoon tiles no longer count towards the blob's victory
