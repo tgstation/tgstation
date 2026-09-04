@@ -895,7 +895,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	if(smack_attack && attack_type == BRUTE && (affecting.bodytype & BODYTYPE_ROBOTIC))
 		smack_sound = 'sound/effects/bang.ogg'
 
-	playsound(target, smack_sound, 25, TRUE, -1)
+	playsound(target, smack_sound, atk_effect == ATTACK_EFFECT_SMASH ? 33 : 25, TRUE, -1)
 
 	if(kicking || grappled) //kicks and punches when grappling bypass armor slightly.
 		if(damage >= 12 || (damage >= 9 && prob(66)))
