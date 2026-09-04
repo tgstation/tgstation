@@ -313,6 +313,21 @@
 /turf/open/floor/iron/recharge_floor/airless
 	initial_gas_mix = AIRLESS_ATMOS
 
+/turf/open/floor/iron/recharge_floor/dark
+	icon_state = "recharge_dark"
+	base_icon_state = "recharge_dark"
+	floor_tile = /obj/item/stack/tile/iron/recharge_floor/dark
+
+/turf/open/floor/iron/recharge_floor/white
+	icon_state = "recharge_white"
+	base_icon_state = "recharge_white"
+	floor_tile = /obj/item/stack/tile/iron/recharge_floor/white
+
+/turf/open/floor/iron/recharge_floor/smooth
+	icon_state = "recharge_smooth"
+	base_icon_state = "recharge_smooth"
+	floor_tile = /obj/item/stack/tile/iron/recharge_floor/smooth
+
 /turf/open/floor/iron/recharge_floor/asteroid
 	icon_state = "recharge_floor_asteroid"
 	base_icon_state = "recharge_floor_asteroid"

@@ -62,6 +62,9 @@
 		/obj/item/stack/tile/iron/white/textured_corner,
 		/obj/item/stack/tile/iron/white/textured_large,
 		/obj/item/stack/tile/iron/recharge_floor,
+		/obj/item/stack/tile/iron/recharge_floor/white,
+		/obj/item/stack/tile/iron/recharge_floor/dark,
+		/obj/item/stack/tile/iron/recharge_floor/smooth,
 		/obj/item/stack/tile/iron/smooth,
 		/obj/item/stack/tile/iron/smooth_edge,
 		/obj/item/stack/tile/iron/smooth_half,
@@ -483,6 +486,27 @@
 	icon_state = "tile_recharge"
 	turf_type = /turf/open/floor/iron/recharge_floor
 	merge_type = /obj/item/stack/tile/iron/recharge_floor
+
+/obj/item/stack/tile/iron/recharge_floor/dark
+	name = "dark recharge floor tile"
+	singular_name = "dark recharge floor tile"
+	icon_state = "tile_dark_recharge"
+	turf_type = /turf/open/floor/iron/recharge_floor/dark
+	merge_type = /obj/item/stack/tile/iron/recharge_floor/dark
+
+/obj/item/stack/tile/iron/recharge_floor/white
+	name = "white recharge floor tile"
+	singular_name = "white recharge floor tile"
+	icon_state = "tile_white_recharge"
+	turf_type = /turf/open/floor/iron/recharge_floor/white
+	merge_type = /obj/item/stack/tile/iron/recharge_floor/white
+
+/obj/item/stack/tile/iron/recharge_floor/smooth
+	name = "smooth recharge floor tile"
+	singular_name = "smooth recharge floor tile"
+	icon_state = "tile_smooth_recharge"
+	turf_type = /turf/open/floor/iron/recharge_floor/smooth
+	merge_type = /obj/item/stack/tile/iron/recharge_floor/smooth
 
 /obj/item/stack/tile/iron/smooth
 	name = "smooth tile"
