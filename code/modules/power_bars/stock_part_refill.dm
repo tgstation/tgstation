@@ -19,7 +19,7 @@
 					component_parts += GLOB.stock_part_datums[component_path]
 				else if (ispath(component_path, /obj/item/stock_parts))
 					var/obj/item/stock_parts/stock_part = component_path
-					if (ispath(stock_part, /obj/item/stock_parts/power_storage))
+					if (ispath(stock_part, /obj/item/stock_parts/power_store))
 						continue
 
 					component_parts += new stock_part(src, machine_circuit.req_components[component_path])

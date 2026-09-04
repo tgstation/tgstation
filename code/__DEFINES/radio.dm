@@ -183,3 +183,6 @@
 #define VOICE_DESCRIPTION_FEMININE "Her voice sounds feminine."
 /// Description for a masculine voice.
 #define VOICE_DESCRIPTION_MASCULINE "His voice sounds masculine."
+
+/// Whether a channel is being listened to or not
+#define FREQ_LISTENING (1<<0)

@@ -23,7 +23,7 @@
 /obj/item/stock_parts/proc/should_hack()
 	return SSpower_bars.enabled
 
-/obj/item/stock_parts/power_storage/should_hack()
+/obj/item/stock_parts/power_store/should_hack()
 	return FALSE
 
 /obj/item/stock_parts/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
@@ -80,7 +80,7 @@
 		return TRUE
 
 	// Cells are fine
-	if(ispath(actual_stock_part, /obj/item/stock_parts/power_storage))
+	if(ispath(actual_stock_part, /obj/item/stock_parts/power_store))
 		return TRUE
 
 	// Others are not

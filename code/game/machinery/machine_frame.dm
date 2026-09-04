@@ -468,7 +468,7 @@
 	if(locate(circuit.build_path) in loc)
 		balloon_alert(user, "identical machine present!")
 		return FALSE
-	for(var/component in req_components)
+	for(var/component in components_left_to_build())
 		if(req_components[component] > 0)
 			user.balloon_alert(user, "missing components!")
 			return FALSE

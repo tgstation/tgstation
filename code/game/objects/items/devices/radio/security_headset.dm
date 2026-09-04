@@ -1,41 +1,31 @@
-#define TRAIT_SECURITY_HEADSET "security_headset"
-
 /datum/component/security_headset
 	VAR_PRIVATE
+		has_all_access = FALSE
+
 		power_bars_for_all_access = 2
 
 		datum/weakref/last_known_radio_ref
 
 		list/channels_to_give = list(
-			RADIO_CHANNEL_COMMAND,
-			RADIO_CHANNEL_ENGINEERING,
-			RADIO_CHANNEL_MEDICAL,
-			RADIO_CHANNEL_SCIENCE,
-			RADIO_CHANNEL_SERVICE,
-			RADIO_CHANNEL_SUPPLY,
+			RADIO_CHANNEL_COMMAND = FREQ_LISTENING,
+			RADIO_CHANNEL_ENGINEERING = FREQ_LISTENING,
+			RADIO_CHANNEL_MEDICAL = FREQ_LISTENING,
+			RADIO_CHANNEL_SCIENCE = FREQ_LISTENING,
+			RADIO_CHANNEL_SERVICE = FREQ_LISTENING,
+			RADIO_CHANNEL_SUPPLY = FREQ_LISTENING,
 		)
 
-		list/filtered_channels = list()
-
 /datum/component/security_headset/Initialize(...)
-	. = ..()
-
 	if (!istype(parent, /obj/item/encryptionkey))
 		return COMPONENT_INCOMPATIBLE
-
-	var/obj/item/encryptionkey/key_parent = parent
-	filtered_channels = assoc_to_keys(key_parent.channels)
-	channels_to_give -= filtered_channels
 
 	addtimer(CALLBACK(src, PROC_REF(deferred_init)), 0)
 
 /datum/component/security_headset/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
-	ADD_TRAIT(parent, TRAIT_SECURITY_HEADSET, REF(src))
 
 /datum/component/security_headset/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
-	REMOVE_TRAIT(parent, TRAIT_SECURITY_HEADSET, REF(src))
 
 /datum/component/security_headset/proc/on_move()
 	SIGNAL_HANDLER
@@ -52,56 +42,49 @@
 	if (IS_WEAKREF_OF(last_known_radio_ref, atom_parent.loc))
 		return
 
-	var/last_known_radio = last_known_radio_ref?.resolve()
+	var/obj/item/radio/last_known_radio = last_known_radio_ref?.resolve()
 	if (!isnull(last_known_radio))
-		UnregisterSignal(last_known_radio, COMSIG_RADIO_NEW_MESSAGE)
+		UnregisterSignal(last_known_radio, list(COMSIG_RADIO_NEW_MESSAGE, COMSIG_RADIO_CHANNELS_RECALCULATED))
+		last_known_radio.recalculateChannels()
 		last_known_radio_ref = null
 
 	if (istype(atom_parent.loc, /obj/item/radio))
 		last_known_radio_ref = WEAKREF(atom_parent.loc)
 		RegisterSignal(atom_parent.loc, COMSIG_RADIO_NEW_MESSAGE, PROC_REF(on_radio_message))
+		RegisterSignal(atom_parent.loc, COMSIG_RADIO_CHANNELS_RECALCULATED, PROC_REF(radio_channels_recalculated))
+		var/obj/item/radio/new_last_known_radio = atom_parent.loc
+		new_last_known_radio.recalculateChannels()
 
 /datum/component/security_headset/proc/on_power_update(new_power_bars)
-	var/atom/atom_parent = parent
-	var/has_all_access = new_power_bars >= power_bars_for_all_access
+	has_all_access = new_power_bars >= power_bars_for_all_access
 
+	var/atom/atom_parent = parent
+	var/obj/item/radio/radio = last_known_radio_ref?.resolve()
 	var/mob/living/carbon/holder = get(parent, /mob/living/carbon)
+	radio?.recalculateChannels()
 	if (!isnull(holder))
 		atom_parent.balloon_alert(holder, has_all_access ? "security power upgraded" : "security power downgraded")
 		addtimer(CALLBACK(parent, TYPE_PROC_REF(/atom, balloon_alert), holder, has_all_access ? "you can now listen to all departments" : "you can no longer listen to all departments"), 1 SECONDS)
 
-	if (has_all_access)
-		give_all_access()
-	else
-		drop_all_access()
+	return POWER_BAR_DONT_REACT
 
-	if (istype(atom_parent.loc, /obj/item/radio))
-		var/obj/item/radio/radio = atom_parent.loc
-		radio.recalculateChannels()
+/datum/component/security_headset/proc/radio_channels_recalculated(obj/item/radio/source, list/channel_list, list/special_channel_list)
+	SIGNAL_HANDLER
 
-	return isnull(holder) ? NONE : POWER_BAR_DONT_REACT
+	if (!has_all_access)
+		return
 
-/datum/component/security_headset/proc/give_all_access()
-	var/obj/item/encryptionkey/encryption_key = parent
-
-	for (var/channel in channels_to_give)
-		encryption_key.channels[channel] = TRUE
-
-/datum/component/security_headset/proc/drop_all_access()
-	var/obj/item/encryptionkey/encryption_key = parent
-
-	for (var/channel in channels_to_give)
-		encryption_key.channels -= channel
+	channel_list |= channels_to_give
 
 /datum/component/security_headset/proc/on_radio_message(obj/item/radio/source, atom/movable/talking, message, channel)
-	if (channel in filtered_channels)
-		return NONE
+	SIGNAL_HANDLER
 
-	for (var/obj/item/encryptionkey/encryption_key in source)
-		if (HAS_TRAIT(encryption_key, TRAIT_SECURITY_HEADSET))
-			continue
-
-		if (channel in encryption_key.channels)
+	// Check if the channel is natively unlocked, if so do nothing
+	for (var/obj/item/encryptionkey/key as anything in source.get_keys())
+		if (channel in key.channels)
 			return NONE
 
+	// Channels unlocked are listen only. If none of your keys unlock the channel, you can't talk on it.
+	if(isliving(talking))
+		source.balloon_alert(talking, "channel is listen only!")
 	return COMPONENT_CANNOT_USE_RADIO
