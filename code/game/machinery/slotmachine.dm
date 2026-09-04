@@ -29,7 +29,7 @@
 	density = TRUE
 	circuit = /obj/item/circuitboard/computer/slot_machine
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON // don't need to be literate to play slots
-	light_color = LIGHT_COLOR_BROWN
+	brightness_on = 0
 	var/money = 3000 // How much money it has CONSUMED
 	var/plays = 0
 	var/working = FALSE
