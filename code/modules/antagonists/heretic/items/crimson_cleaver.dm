@@ -42,6 +42,7 @@
 /obj/item/knife/butcher/heretic/proc/remove_lifesteal_filter()
 	var/the_filter = get_filter("lifesteal_filter")
 	animate(the_filter, alpha = 0, time = 1 SECONDS, easing = SINE_EASING)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum, remove_filter), "lifesteal_filter"), 2 SECONDS)
 
 /obj/item/knife/butcher/heretic/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()
@@ -85,7 +86,7 @@
 
 	for(var/datum/wound/active_wound in astyp(user, /mob/living/carbon)?.all_wounds)
 		if(active_wound.blood_flow)
-			active_wound.adjust_blood_flow(-0.5 * coefficient * amount)
+			active_wound.adjust_blood_flow(-0.1 * coefficient * amount)
 
 	start_lifesteal_cd(10 SECONDS)
 
