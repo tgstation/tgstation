@@ -79,6 +79,17 @@
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_SPEED_POTION, INNATE_TRAIT)
 
+/obj/item/clothing/shoes/mod/proc/update_footstep_sounds()
+	switch(slowdown)
+		if(0.3 to INFINITY)
+			AddComponent(/datum/component/shoe_footstep, list('sound/items/modsuit/rigstep_chonk.ogg'), volume = 50)
+		if(0.2 to 0.3)
+			AddComponent(/datum/component/shoe_footstep, list('sound/items/modsuit/rigstep_heavy.ogg'), volume = 50)
+		if(0.1 to 0.2)
+			AddComponent(/datum/component/shoe_footstep, list('sound/items/modsuit/rigstep_medium.ogg'), volume = 50)
+		if(-INFINITY to 0.1)
+			AddComponent(/datum/component/shoe_footstep, list('sound/items/modsuit/rigstep.ogg'), volume = 50)
+
 /obj/item/clothing/glasses/mod
 	name = "\improper MOD glasses"
 	desc = "A pair of glasses for a MODsuit."
