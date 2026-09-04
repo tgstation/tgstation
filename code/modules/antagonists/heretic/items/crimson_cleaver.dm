@@ -10,10 +10,11 @@
 	armour_penetration = 50
 	throw_speed = 4
 	throw_range = 7
-
+	/// Cooldown between lifesteal triggers
 	COOLDOWN_DECLARE(lifesteal_cd)
-
+	/// Range that which it will boomerang back to the wielder
 	var/boomerange_range = 5
+	/// Examine text for the boomerang component
 	var/boomerang_examine = ""
 
 /obj/item/knife/butcher/heretic/Initialize(mapload)
