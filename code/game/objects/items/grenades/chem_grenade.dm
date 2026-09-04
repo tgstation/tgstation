@@ -487,7 +487,7 @@
 	var/obj/item/reagent_containers/cup/beaker/beaker_one = new(src)
 	var/obj/item/reagent_containers/cup/beaker/beaker_two = new(src)
 
-	beaker_one.reagents.add_reagent(/datum/reagent/toxin/plantbgone, 25)
+	beaker_one.reagents.add_reagent(/datum/reagent/toxin/plantbgone/weedkiller, 25)
 	beaker_one.reagents.add_reagent(/datum/reagent/potassium, 25)
 	beaker_two.reagents.add_reagent(/datum/reagent/phosphorus, 25)
 	beaker_two.reagents.add_reagent(/datum/reagent/consumable/sugar, 25)

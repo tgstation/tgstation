@@ -324,12 +324,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Cancel the action if the user does another action (mainly via clicking)
 #define DO_AFTER_CHECK_NEXT_MOVE (1<<5)
 
-// Spacevine-related flags
-/// Is the spacevine / flower bud heat resistant
-#define SPACEVINE_HEAT_RESISTANT (1 << 0)
-/// Is the spacevine / flower bud cold resistant
-#define SPACEVINE_COLD_RESISTANT (1 << 1)
-
 // Flags for flora structures
 #define FLORA_HERBAL (1 << 0)
 #define FLORA_WOODEN (1 << 1)
