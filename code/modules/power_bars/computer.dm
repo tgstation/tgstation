@@ -4,7 +4,7 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 	name = "power level distribution console"
 	desc = "Used to control the power level throughout the station. The more power a department has, the better their equipment will be. APCs must be connected on the same powernet as this computer in order to receive the benefits."
 	icon_screen = "ratvar2"
-	icon_state = "ratvarcomputer3"
+	icon_state = MAP_SWITCH("ratvarcomputer3", "/obj/machinery/computer/power_distribution")
 	icon_keyboard = "ratvar_key4"
 	light_color = COLOR_YELLOW // LIGHT_COLOR_YELLOW // melbert todo
 	use_power = ACTIVE_POWER_USE

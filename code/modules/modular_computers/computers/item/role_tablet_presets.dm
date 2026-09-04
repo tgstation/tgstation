@@ -82,6 +82,11 @@
 		/datum/computer_file/program/supermatter_monitor,
 	)
 
+/obj/item/modular_computer/pda/heads/ce/Initialize(mapload)
+	if (SSpower_bars.enabled)
+		starting_programs -= /datum/computer_file/program/supermatter_monitor
+	return ..()
+
 /obj/item/modular_computer/pda/heads/cmo
 	name = "chief medical officer PDA"
 	icon_state = "/obj/item/modular_computer/pda/heads/cmo"
@@ -168,6 +173,11 @@
 		/datum/computer_file/program/supermatter_monitor,
 	)
 
+/obj/item/modular_computer/pda/engineering/Initialize(mapload)
+	if (SSpower_bars.enabled)
+		starting_programs -= /datum/computer_file/program/supermatter_monitor
+	return ..()
+
 /obj/item/modular_computer/pda/atmos
 	name = "atmospherics PDA"
 	icon_state = "/obj/item/modular_computer/pda/atmos"
@@ -178,6 +188,11 @@
 		/datum/computer_file/program/atmosscan,
 		/datum/computer_file/program/supermatter_monitor,
 	)
+
+/obj/item/modular_computer/pda/atmos/Initialize(mapload)
+	if (SSpower_bars.enabled)
+		starting_programs -= /datum/computer_file/program/supermatter_monitor
+	return ..()
 
 /**
  * Science

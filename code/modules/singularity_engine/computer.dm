@@ -11,6 +11,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 /obj/machinery/computer/singularity
 	name = "singularity control console"
 	desc = "Transforming the singularity from a terror-inducing class action lawsuit into a useful class action lawsuit, this console safely controls the equipment containing the singularity, as well as harnessing its energy output."
+	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/singularity")
 	icon_screen = "commsyndie" // idk
 	light_color = COLOR_SOFT_RED
 
@@ -83,7 +84,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 // not now, definitely later
 /obj/machinery/computer/singularity/screwdriver_act(mob/living/user, obj/item/I)
 	balloon_alert(user, "you can't find the panel!")
-	return TRUE
+	return ITEM_INTERACT_BLOCKING
 
 /obj/machinery/computer/singularity/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()
@@ -174,36 +175,35 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 
 /obj/machinery/computer/singularity/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if (obj_flags & EMAGGED)
-		return
+		return FALSE
 
 	obj_flags |= EMAGGED
 	balloon_alert(user, "overrode access")
 	req_access.Cut()
+	return TRUE
 
 /obj/machinery/computer/singularity/wirecutter_act(mob/living/user, obj/item/tool)
 	if (DOING_INTERACTION_WITH_TARGET(user, src))
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
 	if (talk_into_radio)
 		balloon_alert(user, "cutting communication wire...")
-		if (!do_after(user, 3 SECONDS))
-			return TRUE
+		if (!tool.use_tool(src, user, 3 SECONDS, volume = 50))
+			return ITEM_INTERACT_BLOCKING
 
 		talk_into_radio = FALSE
 		balloon_alert(user, "cut communication wire")
 		user.log_message("cut communication wire to singularity console at [AREACOORD(src)]", LOG_GAME)
 	else
 		balloon_alert(user, "mending communication wire...")
-		if (!do_after(user, 3 SECONDS))
-			return TRUE
+		if (!tool.use_tool(src, user, 3 SECONDS, volume = 50))
+			return ITEM_INTERACT_BLOCKING
 
 		talk_into_radio = TRUE
 		balloon_alert(user, "mended communication wire")
 		user.log_message("mended communication wire to singularity console at [AREACOORD(src)]", LOG_GAME)
 
-	user.playsound_local(get_turf(src), tool.usesound, 50, vary = TRUE)
-
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/singularity/proc/try_singularity_ui_data()
 	var/obj/contained_singularity/singularity = singularity_ref?.resolve()

@@ -1,7 +1,7 @@
 /obj/machinery/singularity_generator
 	name = "singularity generator"
 	desc = "A deceptively small machine that, when fired with void emitters, produces enough compressed energy to create a singularity in space. It's worth more in scrap parts than the combined net worth of the entire station."
-	icon = 'icons/obj/engine/singularity.dmi' // melbert todo : move file
+	icon = 'icons/obj/machines/engine/singularity.dmi'
 	icon_state = "generator"
 
 	anchored = TRUE
@@ -25,10 +25,8 @@
 	if (!istype(projectile, /obj/projectile/beam/singularity_turret))
 		return ..()
 
-	if (starting)
-		return
-
-	INVOKE_ASYNC(src, PROC_REF(start))
+	if (!starting)
+		INVOKE_ASYNC(src, PROC_REF(start))
 
 	return BULLET_ACT_HIT
 
@@ -39,7 +37,7 @@
 	stoplag(9 SECONDS)
 
 	for (var/mob/living/carbon/viewer in viewers(10, src))
-		viewer.flash_act(intensity = FLASH_PROTECTION_WELDER + 1, visual = TRUE)
+		viewer.flash_act(intensity = FLASH_PROTECTION_WELDER_SENSITIVE, visual = TRUE)
 
 	var/obj/contained_singularity/singularity = new(get_turf(src))
 	SEND_SIGNAL(src, COMSIG_SINGULARITY_GENERATOR_CREATED_SINGULARITY, singularity)

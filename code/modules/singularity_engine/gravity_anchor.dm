@@ -367,37 +367,37 @@ GLOBAL_LIST_EMPTY(mapload_gravity_anchor_chargers)
 
 	return ..()
 
-/obj/machinery/gravity_anchor_charger/attackby(obj/item/weapon, mob/user, params)
-	if (istype(weapon, /obj/item/raw_anomaly_core))
+/obj/machinery/gravity_anchor_charger/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (istype(tool, /obj/item/raw_anomaly_core))
 		balloon_alert(user, "needs to be refined, ask science!")
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
-	if (!istype(weapon, /obj/item/assembly/signaler/anomaly))
-		return ..()
+	if (!istype(tool, /obj/item/assembly/signaler/anomaly))
+		return NONE
 
 	if (DOING_INTERACTION_WITH_TARGET(user, src))
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "slotting in anomaly core...")
 
 	if (!do_after(user, 3 SECONDS, src))
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
-	if (QDELETED(weapon))
-		return TRUE
+	if (QDELETED(tool))
+		return ITEM_INTERACT_BLOCKING
 
 	if (charging)
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
 	begin_charging()
 
 	balloon_alert_to_viewers("it charges up,\nuse it while you can")
 	begin_processing()
 
-	stop_timer_id = addtimer(CALLBACK(src, .proc/stop_charging), 3 MINUTES, TIMER_DELETE_ME | TIMER_STOPPABLE)
+	stop_timer_id = addtimer(CALLBACK(src, PROC_REF(stop_charging)), 3 MINUTES, TIMER_DELETE_ME | TIMER_STOPPABLE)
 
-	qdel(weapon)
-	return TRUE
+	qdel(tool)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/gravity_anchor_charger/examine(mob/user)
 	. = ..()

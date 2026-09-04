@@ -21,6 +21,11 @@
 		/datum/computer_file/program/supermatter_monitor,
 	)
 
+/obj/machinery/modular_computer/preset/engineering/Initialize(mapload)
+	if (SSpower_bars.enabled)
+		starting_programs -= /datum/computer_file/program/supermatter_monitor
+	return ..()
+
 // ===== RESEARCH CONSOLE =====
 /obj/machinery/modular_computer/preset/research
 	name = "research director's console"
