@@ -3979,6 +3979,7 @@
 #include "code\modules\atmospherics\machinery\pipes\heat_exchange\manifold.dm"
 #include "code\modules\atmospherics\machinery\pipes\heat_exchange\manifold4w.dm"
 #include "code\modules\atmospherics\machinery\pipes\heat_exchange\simple.dm"
+#include "code\modules\atmospherics\machinery\portable\bluespace_scrubber.dm"
 #include "code\modules\atmospherics\machinery\portable\canister.dm"
 #include "code\modules\atmospherics\machinery\portable\pipe_scrubber.dm"
 #include "code\modules\atmospherics\machinery\portable\portable_atmospherics.dm"
