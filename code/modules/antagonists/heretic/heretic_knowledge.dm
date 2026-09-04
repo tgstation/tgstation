@@ -399,6 +399,8 @@
 	var/limit = 1
 	/// A list of weakrefs to all items we've created.
 	var/list/datum/weakref/created_items
+	/// If TRUE items we create can be tracked with the living heart
+	var/trackable_items = FALSE
 
 /datum/heretic_knowledge/limited_amount/Destroy(force)
 	LAZYCLEARLIST(created_items)
@@ -422,9 +424,13 @@
 	return TRUE
 
 /datum/heretic_knowledge/limited_amount/on_finished_recipe(mob/living/user, list/selected_atoms, turf/loc)
+	var/datum/antagonist/heretic/our_heretic = GET_HERETIC(user)
 	for(var/result in result_atoms)
 		var/atom/created_thing = new result(loc)
 		LAZYADD(created_items, WEAKREF(created_thing))
+		if(trackable_items && our_heretic)
+			LAZYADD(our_heretic.tracked_items, WEAKREF(created_thing))
+
 	return TRUE
 
 /**
@@ -440,6 +446,7 @@
 	limit = 2
 	cost = 1
 	priority = MAX_KNOWLEDGE_PRIORITY - 5
+	trackable_items = TRUE
 	/// The status effect typepath we apply on people on mansus grasp.
 	var/datum/status_effect/eldritch/mark_type
 	/// The status effect of our passive
