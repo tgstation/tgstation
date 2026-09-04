@@ -51,6 +51,9 @@
 	icon_state = "plasma_tiled"
 	floor_tile = /obj/item/stack/tile/mineral/plasma/tiled
 
+/turf/open/floor/mineral/plasma/tiled/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
 //GOLD
 
 /turf/open/floor/mineral/gold
@@ -66,10 +69,16 @@
 	icon_state = "gold_tiled"
 	floor_tile = /obj/item/stack/tile/mineral/gold/tiled
 
+/turf/open/floor/mineral/gold/tiled/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
 /turf/open/floor/mineral/gold/sun
 	name = "gold sun floor"
 	icon_state = "gold_sun"
 	floor_tile = /obj/item/stack/tile/mineral/gold/sun
+
+/turf/open/floor/mineral/gold/sun/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
 //SILVER
 
@@ -85,10 +94,16 @@
 	icon_state = "silver_tiled"
 	floor_tile = /obj/item/stack/tile/mineral/silver/tiled
 
+/turf/open/floor/mineral/silver/tiled/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
 /turf/open/floor/mineral/silver/moon
 	name = "silver moon floor"
 	icon_state = "silver_moon"
 	floor_tile = /obj/item/stack/tile/mineral/silver/moon
+
+/turf/open/floor/mineral/silver/moon/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
 //TITANIUM (shuttle)
 
@@ -242,6 +257,9 @@
 	icon_state = "bananium_tiled"
 	floor_tile = /obj/item/stack/tile/mineral/bananium/tiled
 
+/turf/open/floor/mineral/bananium/tiled/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
 /turf/open/floor/mineral/bananium/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
 	if(.)
@@ -292,6 +310,9 @@
 	icon_state = "diamond_tiled"
 	floor_tile = /obj/item/stack/tile/mineral/diamond/tiled
 
+/turf/open/floor/mineral/diamond/tiled/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
 //URANIUM
 
 /turf/open/floor/mineral/uranium
@@ -309,6 +330,9 @@
 	name = "tiled uranium floor"
 	icon_state = "uranium_tiled"
 	floor_tile = /obj/item/stack/tile/mineral/uranium/tiled
+
+/turf/open/floor/mineral/uranium/tiled/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
 /turf/open/floor/mineral/uranium/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
 	. = ..()
@@ -357,6 +381,9 @@
 	custom_materials = list(/datum/material/bluespace = SMALL_MATERIAL_AMOUNT*5)
 	rust_resistance = RUST_RESISTANCE_REINFORCED
 
+/turf/open/floor/mineral/bluespace/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
 /turf/open/floor/mineral/bluespace/tiled
 	name = "tiled bluespace floor"
 	icon_state = "bluespacecrystal_tiled"
@@ -369,6 +396,9 @@
 	floor_tile = /obj/item/stack/tile/mineral/telecrystal
 	custom_materials = list(/datum/material/telecrystal = SMALL_MATERIAL_AMOUNT*5)
 	rust_resistance = RUST_RESISTANCE_REINFORCED
+
+/turf/open/floor/mineral/telecrystal/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
 /turf/open/floor/mineral/telecrystal/tiled
 	name = "tiled telecrystal floor"
@@ -383,6 +413,9 @@
 	custom_materials = list(/datum/material/adamantine = SMALL_MATERIAL_AMOUNT*5)
 	rust_resistance = RUST_RESISTANCE_TITANIUM
 
+/turf/open/floor/mineral/adamantine/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
 /turf/open/floor/mineral/adamantine/tiled
 	name = "tiled adamantine floor"
 	icon_state = "adamantine_tiled"
@@ -395,6 +428,9 @@
 	floor_tile = /obj/item/stack/tile/mineral/metal_hydrogen
 	custom_materials = list(/datum/material/metalhydrogen = SMALL_MATERIAL_AMOUNT*5)
 	rust_resistance = RUST_RESISTANCE_TITANIUM
+
+/turf/open/floor/mineral/metal_hydrogen/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
 /turf/open/floor/mineral/metal_hydrogen/tiled
 	name = "tiled metalhydrogen floor"
@@ -409,6 +445,9 @@
 	custom_materials = list(/datum/material/runite = SMALL_MATERIAL_AMOUNT*5)
 	rust_resistance = RUST_RESISTANCE_REINFORCED
 
+/turf/open/floor/mineral/runite/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
+
 /turf/open/floor/mineral/runite/tiled
 	name = "tiled runite floor"
 	icon_state = "runite_tiled"
@@ -421,6 +460,9 @@
 	floor_tile = /obj/item/stack/tile/mineral/mythril
 	custom_materials = list(/datum/material/mythril = SMALL_MATERIAL_AMOUNT*5)
 	rust_resistance = RUST_RESISTANCE_REINFORCED
+
+/turf/open/floor/mineral/mythril/broken_states()
+	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
 /turf/open/floor/mineral/mythril/tiled
 	name = "tiled mythril floor"
