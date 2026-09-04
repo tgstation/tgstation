@@ -1,2 +1,0 @@
-output_name = "metal_hydrogen_wall"
-template = "bitmask/diagonal_32x32.toml"
