@@ -891,7 +891,7 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	var/final_armor_block = armor_block
 
 	var/smack_sound = attacking_bodypart.unarmed_attack_sound
-	var/smack_attack = (atk_effect == ATTACK_EFFECT_KICK || atk_effect == ATTACK_EFFECT_PUNCH || atk_effectatk_effect == ATTACK_EFFECT_SMASH)
+	var/smack_attack = (atk_effect == ATTACK_EFFECT_KICK || atk_effect == ATTACK_EFFECT_PUNCH || atk_effect == ATTACK_EFFECT_SMASH)
 	if(smack_attack && attack_type == BRUTE && (affecting.bodytype & BODYTYPE_ROBOTIC))
 		smack_sound = 'sound/effects/bang.ogg'
 
