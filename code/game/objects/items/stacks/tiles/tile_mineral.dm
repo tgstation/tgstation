@@ -147,7 +147,6 @@
 	turf_type = /turf/open/floor/mineral/bananium
 	mineralType = "bananium"
 	mats_per_unit = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT*0.25)
-	material_flags = NONE //The slippery comp makes it unpractical for good clown decor. The material tiles should still slip.
 	merge_type = /obj/item/stack/tile/mineral/bananium
 	tile_reskin_types = list(
 		/obj/item/stack/tile/mineral/bananium,
