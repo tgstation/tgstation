@@ -173,6 +173,7 @@
 	resistance_flags = FLAMMABLE
 	tile_reskin_types = list(
 		/obj/item/stack/tile/bamboo,
+		/obj/item/stack/tile/bamboo/planks,
 		/obj/item/stack/tile/bamboo/tatami,
 		/obj/item/stack/tile/bamboo/tatami/purple,
 		/obj/item/stack/tile/bamboo/tatami/black,
@@ -183,6 +184,7 @@
 	name = "bamboo planks tile"
 	singular_name = "planks planks floor tile"
 	icon_state = "tile_bamboo_planks"
+	inhand_icon_state = "tile-grass"
 	desc = "Layer after layer of cut bamboo placed like planks."
 	turf_type = /turf/open/floor/bamboo/planks
 	merge_type = /obj/item/stack/tile/bamboo/planks
@@ -360,7 +362,7 @@
 	tile_reskin_types = null
 
 /obj/item/stack/tile/carpet/bear
-	name = "bear carpet"
+	name = "bear fur carpet"
 	desc = "Bear fur stretched out into a carpet for you to walk on."
 	icon_state = "tile_carpet_bear"
 	inhand_icon_state = "tile-carpet-bear"
@@ -369,7 +371,7 @@
 	tile_reskin_types = null
 
 /obj/item/stack/tile/carpet/polar_bear
-	name = "polar bear carpet"
+	name = "polar fur carpet"
 	desc = "Polar bear fur stretched out into a carpet for you to walk on."
 	icon_state = "tile_carpet_bear_polar"
 	inhand_icon_state = "tile-carpet-bear-polar"
@@ -378,7 +380,7 @@
 	tile_reskin_types = null
 
 /obj/item/stack/tile/carpet/moth
-	name = "moth carpet"
+	name = "moth fur carpet"
 	desc = "Moth fur stretched out into a carpet for you to walk on."
 	icon_state = "tile_carpet_moth"
 	inhand_icon_state = "tile-carpet-moth"
@@ -387,7 +389,7 @@
 	tile_reskin_types = null
 
 /obj/item/stack/tile/carpet/goliath
-	name = "goliath carpet"
+	name = "goliath hide carpet"
 	desc = "Goliath hide plates woven together with watcher sinew to make something aproximating a carpet."
 	icon_state = "tile_carpet_goliath"
 	inhand_icon_state = "tile-carpet-goliath"
@@ -396,7 +398,7 @@
 	tile_reskin_types = null
 
 /obj/item/stack/tile/carpet/carp
-	name = "carp carpet"
+	name = "carp scales carpet"
 	desc = "Carpet made with carp scales. A carp carpet. Carp carp carp."
 	icon_state = "tile_carpet_carp"
 	inhand_icon_state = "tile-carpet-carp"
@@ -405,7 +407,7 @@
 	tile_reskin_types = null
 
 /obj/item/stack/tile/carpet/lizard
-	name = "lizard carpet"
+	name = "lizard scales carpet"
 	desc = "Carpet made with lizard scales. Lizards were most likely harmed making this."
 	icon_state = "tile_carpet_lizard"
 	inhand_icon_state = "tile-carpet-lizard"
@@ -414,7 +416,7 @@
 	tile_reskin_types = null
 
 /obj/item/stack/tile/carpet/human
-	name = "human carpet"
+	name = "human skin carpet"
 	desc = "Carpet made from flayed human skin. Fresh and moist."
 	icon_state = "tile_carpet_skin"
 	inhand_icon_state = "tile-carpet-skin"
@@ -1191,6 +1193,10 @@
 	mats_per_unit = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT / 2)
 	turf_type = /turf/open/floor/plastic
 	merge_type = /obj/item/stack/tile/plastic
+	tile_reskin_types = list(
+		/obj/item/stack/tile/plastic,
+		/obj/item/stack/tile/plastic/puzzle,
+	)
 
 /obj/item/stack/tile/plastic/puzzle
 	icon_state = "tile_plastic_puzzle"
@@ -1201,12 +1207,16 @@
 /obj/item/stack/tile/hauntium
 	name = "hauntium tile"
 	singular_name = "hauntium floor tile"
-	desc = "Now this is one spooky tile."
+	desc = "Dead men walking? More like walking over dead men."
 	icon_state = "tile_hauntium"
 	inhand_icon_state = "tile-hauntium"
-	mats_per_unit = list(/datum/material/hauntium=SMALL_MATERIAL_AMOUNT*5)
+	mats_per_unit = list(/datum/material/hauntium = HALF_SHEET_MATERIAL_AMOUNT / 2)
 	turf_type = /turf/open/floor/hauntium
 	merge_type = /obj/item/stack/tile/hauntium
+	tile_reskin_types = list(
+		/obj/item/stack/tile/hauntium,
+		/obj/item/stack/tile/hauntium/tiled,
+	)
 
 /obj/item/stack/tile/hauntium/tiled
 	icon_state = "tile_hauntium_tiled"
