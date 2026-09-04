@@ -32,6 +32,15 @@
 	var/mob/dead/observer/G = usr
 	G.reenter_corpse()
 
+/atom/movable/screen/ghost/respawn
+	name = "Respawn"
+	icon_state = "respawn"
+	screen_loc = ui_ghost_respawn
+
+/atom/movable/screen/ghost/respawn/Click()
+	var/mob/dead/observer/G = usr
+	G.abandon_mob()
+
 /atom/movable/screen/ghost/dnr
 	name = "Do Not Resuscitate"
 	icon_state = "dnr"
@@ -63,7 +72,7 @@
 	GLOB.ghost_menu.ui_interact(usr)
 
 /atom/movable/screen/ghost/minigames_menu
-	name ="Minigames"
+	name = "Minigames"
 	icon_state = "minigames"
 	screen_loc = ui_ghost_minigames
 
