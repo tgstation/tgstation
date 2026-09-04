@@ -79,6 +79,14 @@
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/incinerator_input
 	name = "incinerator chamber input injector"
 
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/incinerator_input/layer2
+	piping_layer = 2
+	icon_state = "inje_map-2"
+
+/obj/machinery/atmospherics/components/unary/outlet_injector/monitored/incinerator_input/layer4
+	piping_layer = 4
+	icon_state = "inje_map-4"
+
 /obj/machinery/atmospherics/components/unary/outlet_injector/monitored/ordnance_burn_chamber_input
 	on = FALSE
 	name = "ordnance burn chamber input injector"

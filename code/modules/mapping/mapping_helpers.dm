@@ -160,42 +160,23 @@
 	if(!airlock)
 		qdel(src)
 		return
-	if(airlock.cyclelinkeddir)
-		airlock.cyclelinkairlock()
-	if(airlock.closeOtherId)
-		airlock.update_other_id()
-	if(airlock.abandoned)
-		var/outcome = rand(1,100)
-		switch(outcome)
-			if(1 to 9)
-				var/turf/here = get_turf(src)
-				for(var/turf/closed/T in range(2, src))
-					here.place_on_top(T.type)
-					qdel(airlock)
-					qdel(src)
-					return
-				here.place_on_top(/turf/closed/wall)
-				qdel(airlock)
-				qdel(src)
-				return
-			if(9 to 11)
-				airlock.feedback = FALSE
-				// These do not use airlock.bolt() because we want to pretend it was always locked. That means no sound effects.
-				airlock.locked = TRUE
-			if(12 to 15)
-				airlock.locked = TRUE
-			if(16 to 23)
-				airlock.welded = TRUE
-			if(24 to 30)
-				airlock.set_panel_open(TRUE)
-	if(airlock.cutAiWire)
-		airlock.wires.cut(WIRE_AI)
-	if(airlock.autoname)
-		airlock.name = get_area_name(src, TRUE)
-	airlock.update_appearance()
+	late_payload(airlock)
+	if(!QDELETED(airlock))
+		if(airlock.cyclelinkeddir)
+			airlock.cyclelinkairlock()
+		if(airlock.closeOtherId)
+			airlock.update_other_id()
+		if(airlock.cutAiWire)
+			airlock.wires.cut(WIRE_AI)
+		if(airlock.autoname)
+			airlock.name = get_area_name(src, TRUE)
+		airlock.update_appearance()
 	qdel(src)
 
 /obj/effect/mapping_helpers/airlock/proc/payload(obj/machinery/door/airlock/payload)
+	return
+
+/obj/effect/mapping_helpers/airlock/proc/late_payload(obj/machinery/door/airlock/payload)
 	return
 
 /obj/effect/mapping_helpers/airlock/cyclelink_helper
@@ -248,15 +229,88 @@
 	. = ..()
 	airlock.delayed_unres_open = TRUE
 
+#define ABANDON_WALL "wall"
+#define ABANDON_FALSEWALL "falsewall"
+#define ABANDON_LOCKED_NOLIGHT "locked_no_lights"
+#define ABANDON_LOCKED "locked"
+#define ABANDON_WELDED "welded"
+#define ABANDON_PANEL_OPEN "panel_open"
+#define ABANDON_NONE "none"
+
 /obj/effect/mapping_helpers/airlock/abandoned
 	name = "airlock abandoned helper"
 	icon_state = "airlock_abandoned"
+	var/list/weights = list(
+		ABANDON_WALL = 8,
+		ABANDON_FALSEWALL = 1,
+		ABANDON_LOCKED_NOLIGHT = 2,
+		ABANDON_LOCKED = 4,
+		ABANDON_WELDED = 8,
+		ABANDON_PANEL_OPEN = 8,
+	)
 
-/obj/effect/mapping_helpers/airlock/abandoned/payload(obj/machinery/door/airlock/airlock)
-	if(airlock.abandoned)
-		log_mapping("[src] at [AREACOORD(src)] tried to make [airlock] abandoned but it's already abandoned!")
-	else
-		airlock.abandoned = TRUE
+/obj/effect/mapping_helpers/airlock/abandoned/Initialize(mapload)
+	. = ..()
+	modify_weights()
+	var/max_weight = values_sum(weights)
+	weights[ABANDON_NONE] = 100 - max_weight
+
+/obj/effect/mapping_helpers/airlock/abandoned/proc/modify_weights()
+	return
+
+/obj/effect/mapping_helpers/airlock/abandoned/late_payload(obj/machinery/door/airlock/airlock)
+	switch(pick_weight(weights))
+		if(ABANDON_WALL)
+			var/turf/here = get_turf(src)
+			here.place_on_top(get_wall_type(airlock))
+			qdel(airlock)
+
+		if(ABANDON_FALSEWALL)
+			var/walltype = get_wall_type(airlock)
+			var/falsewalltype = /obj/structure/falsewall
+			for(var/obj/structure/falsewall/false_wall as anything in typesof(/obj/structure/falsewall))
+				if(false_wall::walltype == walltype)
+					falsewalltype = false_wall
+					break
+
+			var/turf/here = get_turf(src)
+			new falsewalltype(here)
+			qdel(airlock)
+
+		if(ABANDON_LOCKED_NOLIGHT)
+			airlock.feedback = FALSE
+			// These do not use airlock.bolt() because we want to pretend it was always locked. That means no sound effects.
+			airlock.locked = TRUE
+
+		if(ABANDON_LOCKED)
+			airlock.locked = TRUE
+
+		if(ABANDON_WELDED)
+			airlock.welded = TRUE
+
+		if(ABANDON_PANEL_OPEN)
+			airlock.set_panel_open(TRUE)
+
+/obj/effect/mapping_helpers/airlock/abandoned/proc/get_wall_type(obj/machinery/door/airlock/airlock)
+	for(var/turf/closed/wall in range(2, airlock)) // uses range to prioritize closest
+		return wall.type
+
+	return /turf/closed/wall
+
+/obj/effect/mapping_helpers/airlock/abandoned/nowall
+	name = "airlock abandoned helper (no wall)"
+
+/obj/effect/mapping_helpers/airlock/abandoned/nowall/modify_weights()
+	weights[ABANDON_WALL] = 0
+	weights[ABANDON_FALSEWALL] = 0
+
+#undef ABANDON_WALL
+#undef ABANDON_FALSEWALL
+#undef ABANDON_LOCKED_NOLIGHT
+#undef ABANDON_LOCKED
+#undef ABANDON_WELDED
+#undef ABANDON_PANEL_OPEN
+#undef ABANDON_NONE
 
 /obj/effect/mapping_helpers/airlock/welded
 	name = "airlock welded helper"
