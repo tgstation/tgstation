@@ -159,10 +159,9 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		if(!space_lit)
 			if(old_lighting_object)
 				lighting_object = old_lighting_object
-				vis_contents += lighting_object
 			// Should have a lighting object if we never had one
 			else
-				new /atom/movable/lighting_object(null, src)
+				new /atom/movable/lighting_object(src)
 		else if (old_lighting_object)
 			qdel(old_lighting_object, force = TRUE)
 
