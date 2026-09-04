@@ -29,6 +29,8 @@
 	cells_maximum = 2
 
 	visual = FALSE
+	woundable = TRUE
+	wounded_desc = "has ruptured, leaking digestive juices onto its surface."
 
 	///The rate that disgust decays
 	var/disgust_metabolism = 1
@@ -278,7 +280,7 @@
 	var/obj/item/bodypart/chest/chest = owner.get_bodypart(zone)
 	var/datum/wound/slash/flesh/slash = chest.get_wound_type(/datum/wound/slash/flesh)
 	// A chance to spill out all the contents
-	if (cut_open_damage && slash?.severity >= WOUND_SEVERITY_CRITICAL)
+	if ((cut_open_damage || (organ_flags & ORGAN_WOUNDED)) && slash?.severity >= WOUND_SEVERITY_CRITICAL)
 		if (SPT_PROB(chest.get_damage(), seconds_per_tick * 3))
 			var/emptied = empty_contents()
 			if (emptied > 0)
@@ -302,15 +304,19 @@
 
 		var/obj/item/as_item = thing
 		// If your stomach is cut open, it will hurt like hell
-		if (cut_open_damage)
+		if (cut_open_damage || (organ_flags & ORGAN_WOUNDED))
 			if (chest && !chest.cavity_item && as_item.w_class <= WEIGHT_CLASS_NORMAL)
 				// Oopsie!
 				chest.cavity_item = as_item
 				LAZYREMOVE(stomach_contents, as_item)
 				continue
 
-			owner.apply_damage(as_item.w_class * (as_item.sharpness ? 2 : 1), BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND,
-				sharpness = as_item.sharpness, attacking_item = as_item, wound_clothing = FALSE)
+			var/item_sharpness = as_item.sharpness
+			owner.apply_damage(as_item.w_class * (item_sharpness ? 2 : 1), BRUTE, BODY_ZONE_CHEST, wound_bonus = CANT_WOUND,
+				sharpness = item_sharpness, attacking_item = as_item, wound_clothing = FALSE)
+			if(item_sharpness || prob(50))
+				wounded(as_item)
+				to_chat(owner, span_boldwarning(HAS_TRAIT(owner, TRAIT_SELF_AWARE) ? "You feel your stomach tearing further open." : "You feel a burning pain in your lower abdomen!"))
 
 		if (!as_item.sharpness)
 			continue
@@ -427,6 +433,36 @@
 	SIGNAL_HANDLER
 	// If we're forced to vomit, try to spew out at least one item
 	empty_contents(chance = 60, damaging = TRUE, min_amount = (force ? 1 : 0))
+
+/obj/item/organ/stomach/get_status_appendix(scanpower, add_tooltips, colored)
+	if(organ_flags & ORGAN_WOUNDED)
+		return conditional_tooltip(span_warning("Perforated"), "Fix surgically.", add_tooltips)
+	if(cut_open_damage)
+		return conditional_tooltip("<font color='#ff9933'>Incised</font>", "Remove and cauterize.", add_tooltips)
+	return ..()
+
+/obj/item/organ/stomach/wounded(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	playsound(owner, 'sound/effects/wounds/pierce1.ogg')
+
+/obj/item/organ/stomach/on_wounded_life(seconds_per_tick)
+	. = ..()
+	// Starts lower but scales higher than appendixes
+	var/wounded_scaling = clamp(wounded_time / 180, 0, 1)
+	if(HAS_TRAIT(owner, TRAIT_VIRUS_RESISTANCE))
+		wounded_scaling /= 3
+	apply_organ_damage(wounded_scaling, maxHealth * 0.8)
+	owner.adjust_tox_loss(wounded_scaling, forced = TRUE)
+	if(SPT_PROB(wounded_scaling * 4, seconds_per_tick))
+		owner.adjust_disgust(15)
+	if(SPT_PROB((1 + wounded_scaling * 1.5), seconds_per_tick))
+		var/self_aware = HAS_TRAIT(owner, TRAIT_SELF_AWARE)
+		var/alert_message = ""
+		if(HAS_TRAIT(owner, TRAIT_ANALGESIA))
+			alert_message = "You feel sick."
+		else
+			alert_message = "You feel a spreading pain around your [self_aware ? "stomach" : "lower abdomen"]."
+		to_chat(owner, span_warning(alert_message))
 
 /obj/item/organ/stomach/tool_act(mob/living/user, obj/item/tool, list/modifiers)
 	if (tool.tool_behaviour == TOOL_SCALPEL)

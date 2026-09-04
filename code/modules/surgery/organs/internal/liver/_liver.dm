@@ -22,6 +22,8 @@
 	cells_maximum = 2
 
 	visual = FALSE
+	woundable = TRUE
+	wounded_desc = "has been torn nearly in half."
 
 	/// Affects how much damage the liver takes from alcohol
 	var/alcohol_tolerance = ALCOHOL_RATE
@@ -221,6 +223,25 @@
 	if(damage < high_threshold)
 		return span_warning("Your [self_aware ? "liver" : "lower abdomen"] feels sore.")
 	return span_boldwarning("Your [self_aware ? "liver" : "lower abdomen"] feels like it's on fire!")
+
+/obj/item/organ/liver/get_status_appendix(scanpower, add_tooltips, colored)
+	if(organ_flags & ORGAN_WOUNDED)
+		return conditional_tooltip(span_warning("Lacerated"), "Use coagulants or fix surgically.", add_tooltips)
+	return ..()
+
+/obj/item/organ/liver/wounded(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	. = ..()
+	playsound(owner, 'sound/effects/wounds/pierce1.ogg')
+	apply_organ_damage(40)
+
+/obj/item/organ/liver/on_wounded_life(seconds_per_tick)
+	. = ..()
+	var/wounded_scaling = clamp(wounded_time / 160, 0, 1)
+	apply_organ_damage(wounded_scaling, maxHealth * 0.8)
+	owner.adjust_blood_volume(-0.5 * wounded_scaling, BLOOD_VOLUME_OKAY)
+	owner.adjust_tox_loss(wounded_scaling * 0.5)
+	if(SPT_PROB(1 + wounded_scaling * 1.5, seconds_per_tick))
+		to_chat(owner, span_warning(pick("You feel faint.", "You feel tired.")))
 
 // alien livers can ignore up to 15u of toxins, but they take x3 liver damage
 /obj/item/organ/liver/alien

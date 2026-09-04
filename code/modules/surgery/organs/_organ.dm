@@ -56,6 +56,8 @@
 
 	/// Time this organ has failed for
 	var/failure_time = 0
+	/// Time this organ has been wounded for
+	var/wounded_time = 0
 	/// Do we affect the appearance of our mob. Used to save time in preference code
 	var/visual = TRUE
 	/**
@@ -67,6 +69,8 @@
 	var/list/organ_effects
 	/// String displayed when the organ has decayed.
 	var/failing_desc = "has decayed for too long, and has turned a sickly color. It probably won't work without repairs."
+	/// String displayed when the organ has a wound but has not decayed.
+	var/wounded_desc = "has a large tear."
 	/// Assoc list of alternate zones where this can organ be slotted to organ slot for that zone
 	var/list/valid_zones = null
 	/// The cell line we can spawn on us
@@ -75,6 +79,8 @@
 	var/cells_minimum = 0
 	/// The maximum cells we can spawn
 	var/cells_maximum = 0
+	/// Can this organ be wounded?
+	var/woundable
 
 // Players can look at prefs before atoms SS init, and without this
 // they would not be able to see external organs, such as moth wings.
@@ -177,6 +183,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		handle_failing_organs(seconds_per_tick)
 		return
 
+	if(organ_flags & ORGAN_WOUNDED)
+		on_wounded_life(seconds_per_tick)
+
 	if(failure_time > 0)
 		failure_time--
 
@@ -207,6 +216,10 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 	if(organ_flags & ORGAN_FAILING)
 		. += span_warning("[src] [failing_desc]")
+		return
+
+	if(organ_flags & ORGAN_WOUNDED)
+		. += span_warning("[src] [wounded_desc] It needs to be <b>stitched up</b> before it'll work properly.")
 		return
 
 	if(damage > high_threshold)
@@ -348,6 +361,9 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		for(var/obj/item/organ/organ as anything in organs)
 			if(organ.organ_flags & ORGAN_EMP)
 				organ.organ_flags &= ~ORGAN_EMP
+			if(organ.organ_flags & ORGAN_WOUNDED)
+				organ.organ_flags &= ~ORGAN_WOUNDED
+				organ.wounded_time = 0
 			if(remove_hazardous && (organ.organ_flags & ORGAN_HAZARDOUS))
 				qdel(organ)
 				continue
@@ -544,3 +560,32 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			all_organ_slots |= initial(an_organ.slot)
 
 	return all_organ_slots
+
+// This isn't a real attack because we don't actually want to destroy the organ, but
+/obj/item/organ/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	if(!woundable || attacking_item.force == 0 || (attacking_item.item_flags & NOBLUDGEON))
+		return ..()
+	if(isliving(user))
+		var/mob/living/living_user = user
+		if(!living_user.combat_mode)
+			return..()
+	if(!(organ_flags & ORGAN_ROBOTIC)) // Remove this if robotic organ wounds ever become a thing
+		return ..()
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	visible_message(span_danger("[user] hits [src] with [attacking_item]!"))
+	to_chat(user, span_danger("You hit [src] with [attacking_item]!"))
+	var/sound_to_play = 'sound/effects/meatslap.ogg'
+	if(organ_flags & ORGAN_ROBOTIC || organ_flags & ORGAN_MINERAL)
+		sound_to_play = 'sound/effects/wounds/crack1.ogg'
+	playsound(loc, sound_to_play, 50)
+	set_organ_damage(maxHealth)
+	wounded(attacking_item, user, modifiers, attack_modifiers)
+
+/obj/item/organ/proc/wounded(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
+	organ_flags |= ORGAN_WOUNDED
+
+/obj/item/organ/proc/on_wounded_life(seconds_per_tick)
+	wounded_time += seconds_per_tick
+	return
+
