@@ -252,7 +252,7 @@
 	inhand_icon_state = "alienpistol"
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
-/obj/item/gun/energy/shrink_ray
+/obj/item/gun/energy/recharge/shrink_ray
 	name = "shrink ray blaster"
 	desc = "This is a piece of frightening alien tech that enhances the magnetic pull of atoms in a localized space to temporarily make an object shrink. \
 			That or it's just space magic. Either way, it shrinks stuff."
@@ -261,20 +261,21 @@
 	inhand_icon_state = "shrink_ray"
 	icon_state = "shrink_ray"
 	automatic_charge_overlays = FALSE
-	fire_delay = 3 SECONDS
-	selfcharge = 1//shot costs 200 energy, has a max capacity of 1000 for 5 shots. self charge returns 25 energy every couple ticks, so about 1 shot charged every 12~ seconds
-	trigger_guard = TRIGGER_GUARD_ALLOW_ALL// variable-size trigger, get it? (abductors need this to be set so the gun is usable for them)
+	recharge_time = 2 SECONDS
+	recharge_sound = 'sound/items/eshield_recharge.ogg'
+	holds_charge = TRUE
+	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 
-/obj/item/gun/energy/shrink_ray/suicide_act(mob/living/user)
+/obj/item/gun/energy/recharge/shrink_ray/suicide_act(mob/living/user)
 	. = ..()
 	user.visible_message(span_suicide("[user] points [src] at [user.p_their()] head, it looks like [user.p_theyre()] going to commit suicide!"))
 	// we want an animation, so lets manually handle suicide.
 	addtimer(CALLBACK(src, PROC_REF(shrink_death), user), 0)
 	return MANUAL_SUICIDE
 
-/obj/item/gun/energy/shrink_ray/proc/shrink_death(mob/living/user)
-	var/shrink = user.transform.Scale(0.1,0.1)
-	animate(user, 30 SECONDS, transform=shrink)
+/obj/item/gun/energy/recharge/shrink_ray/proc/shrink_death(mob/living/user)
+	var/shrink = user.transform.Scale(0.1, 0.1)
+	animate(user, 30 SECONDS, transform = shrink)
 	// Have to wait until the animate is done
 	sleep(30 SECONDS)
 	user.gib(DROP_ALL_REMAINS)

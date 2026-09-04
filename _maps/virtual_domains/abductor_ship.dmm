@@ -275,7 +275,7 @@
 	pixel_x = 6;
 	pixel_y = -5
 	},
-/obj/item/gun/energy/shrink_ray{
+/obj/item/gun/energy/recharge/shrink_ray{
 	pixel_x = -5;
 	pixel_y = 7
 	},
