@@ -84,7 +84,7 @@
 	to_chat(target, span_warning("You feel your life force drain away..."))
 	new /obj/effect/temp_visual/cleave(get_turf(target))
 
-	for(var/datum/wound/active_wound in astyp(user, /mob/living/carbon)?.all_wounds)
+	for(var/datum/wound/active_wound as anything in astype(user, /mob/living/carbon)?.all_wounds)
 		if(active_wound.blood_flow)
 			active_wound.adjust_blood_flow(-0.1 * coefficient * amount)
 
