@@ -180,6 +180,28 @@
 				footstep_sounds = GLOB.heavyfootstep[prepared_steps[footstep_type]]
 			if(FOOTSTEP_MOB_SHOE)
 				footstep_sounds = GLOB.footstep[prepared_steps[footstep_type]]
+			if(FOOTSTEP_MOB_SYNTHETIC)
+				var/barefoot_type = prepared_steps[FOOTSTEP_MOB_BAREFOOT]
+				// these categories will use the synthetic step over the normal barefoot steps
+				var/static/list/synthetic_footstep_types = list(
+					FOOTSTEP_CARPET_BAREFOOT = 1,
+					FOOTSTEP_HARD_BAREFOOT = 1,
+					FOOTSTEP_WOOD_BAREFOOT = 1,
+				)
+				// the actual synthetic footstep sound
+				var/static/list/synthetic_footsteps = alist(
+					FOOTSTEP_SOUNDS = list(
+						'sound/items/modsuit/rigstep.ogg' = 1,
+						'sound/items/modsuit/rigstep.ogg' = 1,
+					),
+					FOOTSTEP_VOLUME = 50,
+					FOOTSTEP_RANGE =  2,
+				)
+
+				if(synthetic_footstep_types[barefoot_type])
+					footstep_sounds = synthetic_footsteps
+				else
+					footstep_sounds = GLOB.barefootstep[barefoot_type]
 			if(null)
 				return
 			else
