@@ -96,6 +96,17 @@
 	added_foodtypes = ALCOHOL
 	dish_category = DISH_MEAT
 
+/datum/crafting_recipe/food/bearsteakfrost
+	name = "Filet polar migrawr"
+	reqs = list(
+		/datum/reagent/consumable/ethanol/frosty_dorf = 3,
+		/datum/reagent/consumable/ethanol/blue_blazer = 3,
+		/obj/item/food/meat/steak/bear = 1,
+	)
+	result = /obj/item/food/bearsteakfrost
+	added_foodtypes = ALCOHOL
+	dish_category = DISH_MEAT
+
 /datum/crafting_recipe/food/stewedsoymeat
 	name = "Stewed soymeat"
 	reqs = list(
@@ -191,6 +202,20 @@
 		/obj/item/stack/rods = 2
 	)
 	result = /obj/item/food/bbqribs
+	added_foodtypes = SUGAR
+	dish_category = DISH_MEAT
+
+/datum/crafting_recipe/food/drakeribs
+	name = "Drake Ribs"
+	reqs = list(
+		/datum/reagent/consumable/guidoferrun = 1,
+		/datum/reagent/consumable/frostoil = 4,
+		/datum/reagent/consumable/bbqsauce = 5,
+		/obj/item/food/meat/steak/bear = 2,
+		/obj/item/stack/sheet/animalhide/ashdrake = 1,
+		/obj/item/stack/rods = 2
+	)
+	result = /obj/item/food/drakeribs
 	added_foodtypes = SUGAR
 	dish_category = DISH_MEAT
 
@@ -408,3 +433,16 @@
 	result = /obj/item/food/kebab/pineapple_skewer
 	dish_category = DISH_MEAT
 	meal_category = MEAL_APPETIZER
+
+/datum/crafting_recipe/food/wendigofeast
+	name = "Wendigo feast"
+	reqs = list(
+		/obj/item/food/drakeribs = 1,
+		/obj/item/food/bearsteakfrost = 1,
+		/obj/item/wendigo_skull = 1,
+		/obj/item/stack/sheet/sinew/wolf = 2,
+		/obj/item/food/grown/ash_flora/vahrezjia = 1,
+		/obj/item/food/grown/ash_flora/podsneyzka = 1,
+	)
+	result = /obj/item/food/wendigofeast
+	dish_category = DISH_MEAT

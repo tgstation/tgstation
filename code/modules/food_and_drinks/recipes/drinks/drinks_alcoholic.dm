@@ -783,3 +783,27 @@
 /datum/chemical_reaction/drink/vieux_carre
 	results=list(/datum/reagent/consumable/ethanol/vieux_carre = 15)
 	required_reagents = list(/datum/reagent/consumable/ethanol/manhattan = 6, /datum/reagent/consumable/ethanol/cognac = 4, /datum/reagent/consumable/ethanol/vermouth = 2, /datum/reagent/consumable/ethanol/herbal_liqueur = 2, /datum/reagent/consumable/ethanol/bitters = 1)
+
+/datum/chemical_reaction/drink/mouthwash_strong
+	results=list(/datum/reagent/consumable/ethanol/mouthwash_strong = 6)
+	required_reagents = list(/datum/reagent/consumable/ethanol/mouthwash = 3, /datum/reagent/consumable/ethanol/absinthe = 2, /datum/reagent/consumable/mintextract = 2, /datum/reagent/consumable/frostoil = 2, /datum/reagent/consumable/menthol = 1)
+
+/datum/chemical_reaction/drink/frosty_dorf
+	results=list(/datum/reagent/consumable/ethanol/frosty_dorf = 8)
+	required_reagents = list(/datum/reagent/consumable/ethanol/manly_dorf  = 2,  /datum/reagent/consumable/ethanol/herbal_liqueur = 2, /datum/reagent/consumable/ethanol/mouthwash = 2, /datum/reagent/consumable/ice = 2)
+
+/datum/chemical_reaction/drink/stone_cold_stout
+	results=list(/datum/reagent/consumable/ethanol/stone_cold_stout = 6)
+	required_reagents = list(/datum/reagent/consumable/ethanol/beer/maltliquor = 1, /datum/reagent/consumable/frostoil = 1, /datum/reagent/consumable/ethanol/fernet = 1, /datum/reagent/consumable/ethanol/bitters = 1, /datum/reagent/cryostylane = 1)
+
+/datum/chemical_reaction/drink/ramp_rager
+	results=list(/datum/reagent/consumable/ethanol/ramp_rager = 8)
+	required_reagents = list(/datum/reagent/consumable/ethanol/manly_dorf  = 3, /datum/reagent/toxin/berserker = 2, /datum/reagent/consumable/grey_bull = 2, /datum/reagent/blood = 1)
+
+/datum/chemical_reaction/drink/sea_lantern
+	results=list(/datum/reagent/consumable/ethanol/frosty_dorf = 8)
+	required_reagents = list(/datum/reagent/consumable/guidoferrun = 4,  /datum/reagent/consumable/strawberryshake = 4, /datum/reagent/consumable/ethanol/wine_voltaic = 2, /datum/reagent/consumable/ethanol/admiralty = 2)
+
+/datum/chemical_reaction/drink/icegrave
+	results=list(/datum/reagent/consumable/ethanol/icegrave = 6)
+	required_reagents = list(/datum/reagent/toxin/formaldehyde = 2,  /datum/reagent/cryostylane = 1, /datum/reagent/consumable/ethanol/mouthwash = 1, /datum/reagent/consumable/ethanol/whiskey = 1, /datum/reagent/consumable/ice = 1)

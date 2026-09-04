@@ -17,11 +17,14 @@
 	)
 
 	weighted_flora_spawn_list = list(
-		/obj/structure/flora/ash/chilly = 2,
-		/obj/structure/flora/grass/both/style_random = 6,
-		/obj/structure/flora/rock/icy/style_random = 2,
-		/obj/structure/flora/rock/pile/icy/style_random = 2,
-		/obj/structure/flora/tree/pine/style_random = 2,
+		/obj/structure/flora/ash/chilly = 3,
+		/obj/structure/flora/grass/both/style_random = 8,
+		/obj/structure/flora/rock/icy/style_random = 3,
+		/obj/structure/flora/rock/pile/icy/style_random = 3,
+		/obj/structure/flora/tree/pine/style_random = 3,
+		/obj/structure/flora/ash/fonarstolbe = 1,
+		/obj/structure/flora/ash/vahrezjia = 1,
+		/obj/structure/flora/ash/drakebeet = 1,
 	)
 
 	///Note that this spawn list is also in the lavaland generator
@@ -99,4 +102,10 @@
 		/obj/structure/flora/rock/icy/style_random = 6,
 		/obj/structure/flora/rock/pile/icy/style_random = 6,
 		/obj/structure/flora/ash/chilly = 1,
+		/obj/structure/flora/ash/fonarstolbe = 1,
+		/obj/structure/flora/ash/vahrezjia = 1,
+		/obj/structure/flora/ash/podsneyzka = 1,
+		/obj/structure/flora/ash/inozhakust = 1,
+		/obj/structure/flora/ash/plasmaflower = 1,
+		/obj/structure/flora/ash/drakebeet = 1,
 	)

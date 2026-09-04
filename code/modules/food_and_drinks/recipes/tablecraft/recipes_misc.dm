@@ -589,3 +589,12 @@
 	)
 	result = /obj/item/food/raw_pita_bread
 	dish_category = DISH_BREAD
+
+/datum/crafting_recipe/food/nutreintbar
+	name = "Nutreint Bar"
+	reqs = list(
+		/obj/item/food/grown/ash_flora/inozhakust = 2,
+		/datum/reagent/consumable/sugar = 3,
+	)
+	result = /obj/item/food/nutreintbar
+	dish_category = DISH_UNCATEGORIZED

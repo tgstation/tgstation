@@ -3496,5 +3496,136 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 
+/datum/reagent/consumable/ethanol/mouthwash
+	name = "Mouthwash"
+	description = "A minty, slightly foamy liquid. It seems to be more sugar than alcohol in content, and smells kind of like ice drake's breath."
+	boozepwr = 14
+	color = "#10b486"
+	taste_description = "sweet and minty"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/mouthwash/on_mob_life(mob/living/drinker, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	drinker.apply_status_effect(/datum/status_effect/throat_soothed)
+
+/datum/reagent/consumable/ethanol/mouthwash_strong
+	name = "Strong Mouthwash"
+	description = "A minty, slightly foamy liquid. As strong as it might be, it won't actually clean your teeth. And no matter how sweet it is, it will leave bitterness in your mouth."
+	boozepwr = 30
+	color = "#10b4ac"
+	taste_description = "dentist appointment"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/mouthwash_strong/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	drinker.apply_status_effect(/datum/status_effect/throat_soothed)
+	if(HAS_TRAIT(drinker, TRAIT_FAT))
+		drinker.investigate_log("has been gibbed by consuming [src] while fat.", INVESTIGATE_DEATHS)
+		drinker.inflate_gib()
+	if(SPT_PROB(5, seconds_per_tick) && !HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
+		drinker.adjust_hallucinations(8 SECONDS * metabolization_ratio)
+	if(SPT_PROB(0.01, seconds_per_tick) && !HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
+		drinker.investigate_log("has been gibbed by consuming [src] due to being that 0.01% of germs.", INVESTIGATE_DEATHS)
+		drinker.inflate_gib()
+
+/datum/reagent/consumable/ethanol/frosty_dorf
+	name = "Frosty Dorf"
+	description = "Herbal variant of the dwarven classic. Makes you feel like digging a mountain keep."
+	boozepwr = 75
+	color = "#A1C89A"
+	taste_description = "hair on your beard"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/stone_cold_stout
+	name = "Stone Cold Stout"
+	description = "Stone-cold drink, challenging even for seasoned drinkers. If you can survive it, you can take on anything."
+	boozepwr = 100
+	color = "#9DDCFA"
+	taste_description = "bitter rock bottom"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/stone_cold_stout/on_mob_metabolize(mob/living/carbon/human/drinker)
+	. = ..()
+	drinker.physiology.brute_mod *= 0.5
+	drinker.physiology.burn_mod *= 0.5
+
+/datum/reagent/consumable/ethanol/stone_cold_stout/on_mob_end_metabolize(mob/living/carbon/human/drinker)
+	. = ..()
+	drinker.physiology.brute_mod *= 2
+	drinker.physiology.burn_mod *= 2
+
+/datum/reagent/consumable/ethanol/ramp_rager
+	name = "Ramp Rager"
+	description = "Furiously bubbling drink, capable of making people go berserk. An invitation for a bar fight."
+	boozepwr = 65
+	color = "#1D789B"
+	taste_description = "bottled rage"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	metabolized_traits = list(TRAIT_ANALGESIA, TRAIT_STIMULATED, TRAIT_FEARLESS)
+
+/datum/reagent/consumable/ethanol/ramp_rager/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	var/need_mob_update
+	if(SPT_PROB(15, seconds_per_tick) && !HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
+		drinker.adjust_hallucinations(8 SECONDS * metabolization_ratio)
+	need_mob_update += drinker.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.75 * metabolization_ratio * seconds_per_tick)
+	drinker.AdjustAllImmobility(-10 * metabolization_ratio * seconds_per_tick)
+	if(drinker.adjust_stamina_loss(-15 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))
+		. = UPDATE_MOB_HEALTH
+	if(need_mob_update)
+		. = UPDATE_MOB_HEALTH
+	if(SPT_PROB(5, seconds_per_tick))
+		drinker.emote(pick("twitch", "drool"))
+
+/datum/reagent/consumable/ethanol/ramp_rager/on_mob_metabolize(mob/living/drinker)
+	. = ..()
+	drinker.apply_status_effect(/datum/status_effect/spasms)
+	RegisterSignal(drinker, COMSIG_LIVING_ENTER_STAMCRIT, PROC_REF(on_stamcrit))
+
+/datum/reagent/consumable/ethanol/ramp_rager/on_mob_end_metabolize(mob/living/drinker)
+	. = ..()
+	drinker.remove_status_effect(/datum/status_effect/spasms)
+	UnregisterSignal(drinker, COMSIG_LIVING_ENTER_STAMCRIT)
+
+/datum/reagent/consumable/ethanol/ramp_rager/proc/on_stamcrit(mob/living/drinker)
+	SIGNAL_HANDLER
+	drinker.set_stamina_loss(90, updating_stamina = TRUE)
+	to_chat(drinker, span_message("This can't end like this... Blood rushes away from your head..."))
+	volume -= (min(volume, 3))
+	return STAMCRIT_CANCELLED
+
+/datum/reagent/consumable/ethanol/sea_lantern
+	name = "Sea Lantern"
+	description = "Layered drink using fonarstolbe's unique properties. May it guide you away from harm, in these trying times."
+	boozepwr = 35
+	color = "#9FE7EC"
+	taste_description = "sweet and minty"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/icegrave
+	name = "Ice Grave"
+	description = "A very, very cold drink, almost thorny to the touch. Like ice magic in liquid form."
+	boozepwr = 40
+	color = "#443EAC"
+	taste_description = "cold"
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+
+/datum/reagent/consumable/ethanol/icegrave/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(liver && !HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM)) //Coroners know your icegraves. Also, its made using formaldehyde, so.
+		affected_mob.apply_status_effect(/datum/status_effect/ice_block_talisman, 5 SECONDS)
+		var/thermal_protection = 1 - affected_mob.get_insulation_protection(affected_mob.bodytemperature - 200)
+		var/applied_temp = (thermal_protection * -200) - 200
+		affected_mob.adjust_bodytemperature(applied_temp)
+		return
+
 #undef ALCOHOL_EXPONENT
 #undef ALCOHOL_THRESHOLD_MODIFIER
