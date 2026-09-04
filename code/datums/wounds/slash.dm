@@ -403,3 +403,19 @@
 	can_be_randomly_generated = FALSE
 
 	wound_path_to_generate = /datum/wound/slash/flesh/moderate/many_cuts
+
+// Subtype for cleave (heretic spell)
+/datum/wound/slash/flesh/critical/cleave
+	name = "Burning Avulsion"
+	examine_desc = "is ruptured, spraying blood wildly"
+	clot_rate = 0.01
+
+/datum/wound/slash/flesh/critical/cleave/update_descriptions()
+	if(!limb.can_bleed())
+		occur_text = "is ruptured"
+
+/datum/wound_pregen_data/flesh_slash/avulsion/clear
+	abstract = FALSE
+	can_be_randomly_generated = FALSE
+
+	wound_path_to_generate = /datum/wound/slash/flesh/critical/cleave
