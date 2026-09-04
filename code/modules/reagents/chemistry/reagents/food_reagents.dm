@@ -1409,7 +1409,6 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	default_container = /obj/item/reagent_containers/condiment/pack/beef_flavour
-<<<<<<< HEAD
 
 /datum/reagent/consumable/guidoferrun
 	name = "Guidoferrunitian Glycetamine"
@@ -1428,5 +1427,3 @@
 	. = ..()
 	affected_mob.physiology.brute_mod *= 1.25
 	affected_mob.physiology.burn_mod *= 1.25
-=======
->>>>>>> upstream/master
