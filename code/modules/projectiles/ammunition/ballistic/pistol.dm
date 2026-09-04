@@ -22,7 +22,7 @@
 	desc = "A 10mm incendiary bullet casing."
 	projectile_type = /obj/projectile/bullet/incendiary/c10mm
 
-// 9mm (Makarov, Stechkin APS)
+// 9mm (Makarov, Stechkin APS, PP-95)
 
 /obj/item/ammo_casing/c9mm
 	name = "9mm bullet casing"
