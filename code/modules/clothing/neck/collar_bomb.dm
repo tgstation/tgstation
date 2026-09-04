@@ -25,6 +25,7 @@
 	src.button = button
 	button?.collar = src
 	set_wires(new /datum/wires/collar_bomb(src))
+	AddElement(/datum/element/cuffable_item)
 
 /obj/item/clothing/neck/collar_bomb/Destroy()
 	button?.collar = null
