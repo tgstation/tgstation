@@ -96,6 +96,13 @@
 		var/datum/status_effect/crimson_cleaver_curse/curse = user.has_status_effect(/datum/status_effect/crimson_cleaver_curse)
 		curse?.curse_timer -= ceil(4 * coefficient)
 		user.mob_mood?.direct_sanity_drain(-0.5 * coefficient * amount)
+		switch(user.mob_mood?.sanity)
+			if(SANITY_CRAZY + 1 to SANITY_UNSTABLE)
+				user.apply_damage(-0.2 * coefficient * amount, BRAIN_DAMAGE)
+			if(SANITY_INSANE + 1 to SANITY_CRAZY)
+				user.apply_damage(-0.4 * coefficient * amount, BRAIN_DAMAGE)
+			if(SANITY_INSANE)
+				user.apply_damage(-0.8 * coefficient * amount, BRAIN_DAMAGE)
 
 /obj/item/knife/butcher/heretic/proc/start_lifesteal_cd(duration = 10 SECONDS)
 	if(!COOLDOWN_FINISHED(src, lifesteal_cd))
