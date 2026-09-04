@@ -420,6 +420,8 @@
 	// This could be half the size but we need to provide space for parallax movement on mob movement, and movement on scroll from shuttles, so like this instead
 	var/countx = (CEILING((viewscales[1] / 2) * parallax_scaler, 1) + 1)
 	var/county = (CEILING((viewscales[2] / 2) * parallax_scaler, 1) + 1)
+	countx = min(countx, 4)
+	county = min(county, 4)
 	for(var/x in -countx to countx)
 		for(var/y in -county to county)
 			if(x == 0 && y == 0)
