@@ -94,7 +94,7 @@
 /obj/item/organ/tail/proc/start_wag(mob/living/carbon/organ_owner, stop_after = INFINITY)
 	if(wag_flags & WAG_WAGGING || !(wag_flags & WAG_ABLE)) // we are already wagging
 		return FALSE
-	if(IS_UNCONSCIOUS_OR_CRIT(organ_owner) || organ_owner != owner) // no wagging when owner is dead or tail has been disembodied
+	if(IS_UNCONSCIOUS_OR_CRIT(organ_owner) || organ_owner != owner) // no wagging when owner is ko'd or tail has been disembodied(?)
 		return FALSE
 
 	if(stop_after != INFINITY)
