@@ -48,6 +48,7 @@
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(equipped))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(dropped))
 
+	var/atom/parent_atom = parent
 	var/mob/living/wearer = parent_atom.loc
 	if(istype(wearer) && (wearer.get_slot_by_item(parent_atom) & parent_atom.slot_flags))
 		ADD_TRAIT(wearer, TRAIT_SILENT_FOOTSTEPS, REF(src))
@@ -69,7 +70,7 @@
 	var/mob/living/carbon/human/owner = source.loc
 	if(CHECK_MOVE_LOOP_FLAGS(owner, MOVEMENT_LOOP_OUTSIDE_CONTROL) || owner.moving_diagonally == SECOND_DIAG_STEP)
 		return
-	if(owner.move_intent == MOVE_INTENT_SNEAK || (owner.movement_type & (VENTCRAWLING|FLYING|FLOATING)))
+	if(owner.move_intent == MOVE_INTENT_WALK || (owner.movement_type & (VENTCRAWLING|FLYING|FLOATING)))
 		return
 	if(owner.buckled || owner.throwing || HAS_TRAIT(owner, TRAIT_IMMOBILIZED) || HAS_TRAIT_NOT_FROM(owner, TRAIT_SILENT_FOOTSTEPS, REF(src)))
 		return

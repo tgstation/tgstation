@@ -34,10 +34,6 @@
 	. = ..()
 	AddComponent(/datum/component/shoe_footstep, inactive_step_sounds, volume = 50)
 
-/obj/item/clothing/shoes/magboots/Destroy()
-	footstep_component = null
-	return ..()
-
 /obj/item/clothing/shoes/magboots/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_updates_onmob)
