@@ -85,32 +85,64 @@
 	research_tree_icon_state = "rustgrenade"
 	drafting_tier = 4
 
-/datum/heretic_knowledge/spell/crimson_cleave
-	name = "Crimson Cleave"
-	desc = "Grants you Crimson Cleave, a targeted spell which siphons health in a small AoE.\
-		<br>Also cleanses all wounds upon casting."
+/datum/heretic_knowledge/crimson_cleave
+	name = "The Crimson Cleaver"
+	desc = "Allows you to forge a Crimson Cleaver, a terrifying weapon that thirsts for blood. \
+		Its strikes heal you for the damage it inflicts, and it can cleave through multiple enemies at once. \
+		It is also a moderately effective thrown weapon, returning to the wielder after being thrown."
 	gain_text = "At first I didn't understand these instruments of war, but the Priest \
 		told me to use them regardless. Soon, he said, I would know them well."
+	transmute_text = "Transmute a butcher's cleaver and some blood - \
+		either a pool or droplets, bloodied rags or bandages, a beaker or vial, or even the cleaver itself stained in blood."
 	required_atoms = list(
-		list(/obj/effect/decal/cleanable/blood, /obj/item/rag, /obj/item/stack/medical/wrap/gauze) = 1,
+		/obj/item/knife/butcher = 1,
 	)
-	action_to_add = /datum/action/cooldown/spell/pointed/crimson_cleave
+	result_atoms = list(/obj/item/knife/butcher/heretic)
+	banned_atom_types = list(/obj/item/knife/butcher/heretic)
 	cost = 2
 	drafting_tier = 4
-	max_charges = 3
-	path_recharge_amount = 0.0
-	focus_recharge_amount = 0.33
-	holywater_drain_amount = 0.33
 
 /datum/heretic_knowledge/spell/crimson_cleave/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
-	. = ..()
+	for(var/obj/item/knife/butcher/cleaver in atoms)
+		selected_atoms += cleaver
+		if(GET_ATOM_BLOOD_DNA_LENGTH(cleaver))
+			return TRUE // two for one deal
+		break
+
+	for(var/obj/effect/decal/cleanable/blood/blood in atoms)
+		selected_atoms += blood // blood is blood
+		return TRUE
+
 	for(var/obj/item/rag/rag in atoms)
-		if(!GET_ATOM_BLOOD_DNA_LENGTH(rag))
-			atoms -= rag
+		if(GET_ATOM_BLOOD_DNA_LENGTH(rag))
+			selected_atoms += rag
+			return TRUE
 
 	for(var/obj/item/stack/medical/wrap/gauze/medwrap in atoms)
-		if(!GET_ATOM_BLOOD_DNA_LENGTH(medwrap))
-			atoms -= medwrap
+		if(GET_ATOM_BLOOD_DNA_LENGTH(medwrap))
+			selected_atoms += medwrap
+			return TRUE
+
+	for(var/obj/item/reagent_containers/container in atoms)
+		for(var/datum/reagent/reagent_content as anything in container.reagents.reagent_list)
+			if(LAZYACCESS(reagent_content.data, BLOOD_DATA_DNA))
+				selected_atoms += container
+				return TRUE
+
+	return FALSE
+
+/datum/heretic_knowledge/spell/crimson_cleave/cleanup_atoms(list/selected_atoms)
+	for(var/obj/item/reagent_containers/container in selected_atoms)
+		for(var/datum/reagent/reagent_content as anything in container.reagents.reagent_list)
+			if(LAZYACCESS(reagent_content.data, BLOOD_DATA_DNA))
+				container.reagents.del_reagent(reagent_content.type)
+		selected_atoms -= container
+
+	for(var/obj/item/stack/medical/wrap/gauze/medwrap in selected_atoms)
+		medwrap.use(1)
+		selected_atoms -= medwrap
+
+	return ..()
 
 /datum/heretic_knowledge/rifle
 	name = "Lionhunter's Rifle"
