@@ -70,7 +70,7 @@
 	var/mob/living/carbon/human/owner = source.loc
 	if(CHECK_MOVE_LOOP_FLAGS(owner, MOVEMENT_LOOP_OUTSIDE_CONTROL) || owner.moving_diagonally == SECOND_DIAG_STEP)
 		return
-	if(owner.move_intent == MOVE_INTENT_WALK || (owner.movement_type & (VENTCRAWLING|FLYING|FLOATING)))
+	if(owner.move_intent == MOVE_INTENT_WALK || (owner.movement_type & (VENTCRAWLING|FLYING)))
 		return
 	if(owner.buckled || owner.throwing || HAS_TRAIT(owner, TRAIT_IMMOBILIZED) || HAS_TRAIT_NOT_FROM(owner, TRAIT_SILENT_FOOTSTEPS, REF(src)))
 		return
