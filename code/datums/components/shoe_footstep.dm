@@ -68,16 +68,16 @@
 	SIGNAL_HANDLER
 
 	var/mob/living/carbon/human/owner = source.loc
-	if(CHECK_MOVE_LOOP_FLAGS(owner, MOVEMENT_LOOP_OUTSIDE_CONTROL) || owner.moving_diagonally == SECOND_DIAG_STEP)
+	if(SHOULD_ATOM_DISABLE_FOOTSTEPS(owner) || SHOULD_MOB_DISABLE_FOOTSTEPS(owner))
 		return
-	if(owner.move_intent == MOVE_INTENT_WALK || (owner.movement_type & (VENTCRAWLING|FLYING)))
-		return
-	if(owner.buckled || owner.throwing || HAS_TRAIT(owner, TRAIT_IMMOBILIZED) || HAS_TRAIT_NOT_FROM(owner, TRAIT_SILENT_FOOTSTEPS, REF(src)))
-		return
+	if(HAS_TRAIT_NOT_FROM(owner, TRAIT_SILENT_FOOTSTEPS, REF(src)) )
+		return // a second source of silent footsteps silences us! the plot thickens
+
 	if(steps < steps_per_play)
 		steps++
 		return
 
+	steps = 0
 	if(prob(chance_per_play))
 		playsound(
 			source = source,
@@ -88,7 +88,6 @@
 			falloff_exponent = falloff_exponent,
 			falloff_distance = falloff_distance,
 		)
-	steps = 0
 
 /datum/component/shoe_footstep/proc/equipped(obj/item/source, mob/user, slot)
 	SIGNAL_HANDLER
