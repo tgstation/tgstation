@@ -140,6 +140,8 @@
 /obj/item/trash/can/food
 	icon = 'icons/obj/food/canned.dmi'
 	icon_state = "peachcan_empty"
+	hitsound = 'sound/items/can/can_hit.ogg'
+	item_flags = SKIP_FANTASY_ON_SPAWN
 
 /obj/item/trash/can/food/peaches
 	name = "canned peaches"
@@ -157,6 +159,7 @@
 	. = ..()
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
+	ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, INNATE_TRAIT)
 
 /obj/item/trash/peanuts
 	name = "\improper Gallery peanuts packet"
