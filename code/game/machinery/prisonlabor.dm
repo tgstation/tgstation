@@ -95,6 +95,7 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.01
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
 	/// Maximum amount of produce the machine can hold before it has to be either emptied or sent.
 	var/max_produce = 10
 	/// Current count of held produce
