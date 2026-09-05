@@ -326,6 +326,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	feature_key = FEATURE_POD_HAIR
 	dyable = TRUE
 	offset_location = UPPER_BODY
+	overlay_flags = NONE
 
 	///This layer will be colored differently than the rest of the organ. So we can get differently colored flowers or something
 	var/color_swapped_layer = EXTERNAL_FRONT
