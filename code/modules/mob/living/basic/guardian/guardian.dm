@@ -252,6 +252,11 @@
 	RegisterSignal(to_who, COMSIG_LIVING_ON_WABBAJACKED, PROC_REF(on_summoner_wabbajacked))
 	RegisterSignal(to_who, COMSIG_LIVING_SHAPESHIFTED, PROC_REF(on_summoner_shapeshifted))
 	RegisterSignal(to_who, COMSIG_LIVING_UNSHAPESHIFTED, PROC_REF(on_summoner_unshapeshifted))
+	RegisterSignal(to_who, COMSIG_ATOM_STOPPING_TIME, PROC_REF(on_summoner_timestop))
+	RegisterSignal(to_who, SIGNAL_ADDTRAIT(TRAIT_TIME_STOP_IMMUNE), PROC_REF(on_summoner_timestop_immune_gained))
+	RegisterSignal(to_who, SIGNAL_REMOVETRAIT(TRAIT_TIME_STOP_IMMUNE), PROC_REF(on_summoner_timestop_immune_removed))
+	if (HAS_TRAIT(to_who, TRAIT_TIME_STOP_IMMUNE))
+		ADD_TRAIT(src, TRAIT_TIME_STOP_IMMUNE, REF(summoner))
 	recall(forced = TRUE)
 	leash_to(src, summoner)
 	if (to_who.stat == DEAD)
@@ -268,7 +273,16 @@
 	if (!isnull(summoner_turf))
 		forceMove(summoner_turf)
 	unleash()
-	UnregisterSignal(summoner, list(COMSIG_QDELETING, COMSIG_LIVING_ON_WABBAJACKED, COMSIG_LIVING_SHAPESHIFTED, COMSIG_LIVING_UNSHAPESHIFTED))
+	UnregisterSignal(summoner, list(
+		COMSIG_QDELETING,
+		COMSIG_LIVING_ON_WABBAJACKED,
+		COMSIG_LIVING_SHAPESHIFTED,
+		COMSIG_LIVING_UNSHAPESHIFTED,
+		COMSIG_ATOM_STOPPING_TIME,
+		SIGNAL_ADDTRAIT(TRAIT_TIME_STOP_IMMUNE),
+		SIGNAL_REMOVETRAIT(TRAIT_TIME_STOP_IMMUNE),
+	))
+	REMOVE_TRAIT(src, TRAIT_TIME_STOP_IMMUNE, REF(summoner))
 	if (different_person)
 		summoner.remove_ally(src)
 		remove_faction(summoner.get_faction())
@@ -340,6 +354,22 @@
 	SIGNAL_HANDLER
 	set_summoner(old_summoner)
 	to_chat(src, span_holoparasite("Your summoner has shapeshifted back into their normal form!"))
+
+/// Signal proc for [COMSIG_ATOM_STOPPING_TIME] - when our summoner timestops, we should share their immunity.
+/mob/living/basic/guardian/proc/on_summoner_timestop(mob/living/source, datum/action/cooldown/spell/timestop/timestop, list/immune_atoms)
+	SIGNAL_HANDLER
+	if (timestop.owner_is_immune_to_self_timestop)
+		immune_atoms |= src
+
+/// Signal proc for [SIGNAL_ADDTRAIT(TRAIT_TIME_STOP_IMMUNE)] - when our summoner gains time stop immunity, we should too
+/mob/living/basic/guardian/proc/on_summoner_timestop_immune_gained(mob/living/source, ...)
+	SIGNAL_HANDLER
+	ADD_TRAIT(src, TRAIT_TIME_STOP_IMMUNE, REF(summoner))
+
+/// Signal proc for [SIGNAL_REMOVETRAIT(TRAIT_TIME_STOP_IMMUNE)] - when our summoner loses time stop immunity, we should too
+/mob/living/basic/guardian/proc/on_summoner_timestop_immune_removed(mob/living/source, ...)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(src, TRAIT_TIME_STOP_IMMUNE, REF(summoner))
 
 /mob/living/basic/guardian/wabbajack(what_to_randomize, change_flags = WABBAJACK)
 	visible_message(span_warning("[src] resists the polymorph!")) // Ha, no

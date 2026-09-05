@@ -51,7 +51,7 @@
 	var/obj/effect/abstract/eyelid_effect/eyelid_left
 	var/obj/effect/abstract/eyelid_effect/eyelid_right
 
-	/// Glasses cannot be worn over these eyes. Currently unused
+	/// Glasses cannot be worn over these eyes.
 	var/no_glasses = FALSE
 	/// Native FOV that will be applied if a config is enabled
 	var/native_fov = FOV_90_DEGREES

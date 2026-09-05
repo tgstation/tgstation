@@ -1,0 +1,35 @@
+# PDAs were repathed to be a subtype of /crew so non-station PDAs would not be included in the PDA Painter.
+
+/obj/item/modular_computer/pda : /obj/item/modular_computer/pda/crew
+/obj/item/modular_computer/pda/clown : /obj/item/modular_computer/pda/crew/clown
+/obj/item/modular_computer/pda/mime : /obj/item/modular_computer/pda/crew/mime
+/obj/item/modular_computer/pda/medical : /obj/item/modular_computer/pda/crew/medical
+/obj/item/modular_computer/pda/coroner : /obj/item/modular_computer/pda/crew/coroner
+/obj/item/modular_computer/pda/engineering : /obj/item/modular_computer/pda/crew/engineering
+/obj/item/modular_computer/pda/security : /obj/item/modular_computer/pda/crew/security
+/obj/item/modular_computer/pda/detective : /obj/item/modular_computer/pda/crew/detective
+/obj/item/modular_computer/pda/warden : /obj/item/modular_computer/pda/crew/warden
+/obj/item/modular_computer/pda/janitor : /obj/item/modular_computer/pda/crew/janitor
+/obj/item/modular_computer/pda/science : /obj/item/modular_computer/pda/crew/science
+/obj/item/modular_computer/pda/heads/quartermaster : /obj/item/modular_computer/pda/crew/heads/quartermaster
+/obj/item/modular_computer/pda/heads/hop : /obj/item/modular_computer/pda/crew/heads/hop
+/obj/item/modular_computer/pda/heads/hos : /obj/item/modular_computer/pda/crew/heads/hos
+/obj/item/modular_computer/pda/heads/cmo : /obj/item/modular_computer/pda/crew/heads/cmo
+/obj/item/modular_computer/pda/heads/ce : /obj/item/modular_computer/pda/crew/heads/ce
+/obj/item/modular_computer/pda/heads/rd : /obj/item/modular_computer/pda/crew/heads/rd
+/obj/item/modular_computer/pda/heads/captain : /obj/item/modular_computer/pda/crew/heads/captain
+/obj/item/modular_computer/pda/cargo : /obj/item/modular_computer/pda/crew/cargo
+/obj/item/modular_computer/pda/bitrunner : /obj/item/modular_computer/pda/crew/bitrunner
+/obj/item/modular_computer/pda/shaftminer : /obj/item/modular_computer/pda/crew/shaftminer
+/obj/item/modular_computer/pda/chaplain : /obj/item/modular_computer/pda/crew/chaplain
+/obj/item/modular_computer/pda/lawyer : /obj/item/modular_computer/pda/crew/lawyer
+/obj/item/modular_computer/pda/botanist : /obj/item/modular_computer/pda/crew/botanist
+/obj/item/modular_computer/pda/roboticist : /obj/item/modular_computer/pda/crew/roboticist
+/obj/item/modular_computer/pda/curator : /obj/item/modular_computer/pda/crew/curator
+/obj/item/modular_computer/pda/cook : /obj/item/modular_computer/pda/crew/cook
+/obj/item/modular_computer/pda/bar : /obj/item/modular_computer/pda/crew/bar
+/obj/item/modular_computer/pda/atmos : /obj/item/modular_computer/pda/crew/atmos
+/obj/item/modular_computer/pda/chemist : /obj/item/modular_computer/pda/crew/chemist
+/obj/item/modular_computer/pda/geneticist : /obj/item/modular_computer/pda/crew/geneticist
+/obj/item/modular_computer/pda/psychologist : /obj/item/modular_computer/pda/crew/psychologist
+/obj/item/modular_computer/pda/assistant : /obj/item/modular_computer/pda/crew/assistant

@@ -75,7 +75,7 @@
 		/obj/item/choice_beacon/ingredient = 1,
 		/obj/item/sharpener = 1,
 	)
-	belt = /obj/item/modular_computer/pda/cook
+	belt = /obj/item/modular_computer/pda/crew/cook
 	ears = /obj/item/radio/headset/headset_srv
 	head = /obj/item/clothing/head/utility/chefhat
 	mask = /obj/item/clothing/mask/fakemoustache/italian

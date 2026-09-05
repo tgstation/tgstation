@@ -131,3 +131,7 @@
 	#define COMPONENT_ITEM_CHARGED (1 << 0)
 	/// Return if the item had a negative side effect occur while recharging
 	#define COMPONENT_ITEM_BURNT_OUT (1 << 1)
+
+// Time Stop
+/// Sent from /datum/action/cooldown/spell/timestop/cast(), to the atom casting the spell: (datum/action/cooldown/spell/timestop/spell, list/immune_atoms)
+#define COMSIG_ATOM_STOPPING_TIME "atom_stopping_time"
