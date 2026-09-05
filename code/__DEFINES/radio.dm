@@ -176,9 +176,9 @@
 
 // Voice description defines (mainly used to indicate gender at the moment).
 /// Description for a plural voice.
-#define VOICE_DESCRIPTION_PLURAL "Its voice sounds gender neutral."
+#define VOICE_DESCRIPTION_PLURAL "Their voice sounds gender neutral."
 /// Description for a gender neutral voice.
-#define VOICE_DESCRIPTION_NEUTER "Their voice sounds gender neutral."
+#define VOICE_DESCRIPTION_NEUTER "Its voice sounds gender neutral."
 /// Description for a feminine voice.
 #define VOICE_DESCRIPTION_FEMININE "Her voice sounds feminine."
 /// Description for a masculine voice.

@@ -61,9 +61,9 @@
 		return record_gender
 	// they/them if "unknown"
 	if(record_gender == "unknown")
-		return NEUTER
+		return PLURAL
 	// it/its if "other"
-	return PLURAL
+	return NEUTER
 
 /**
  * Crew record datum
