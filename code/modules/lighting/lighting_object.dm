@@ -116,6 +116,9 @@
 		)
 
 	luminosity = set_luminosity
+	var/list/hanger_overlays = list()
+	SEND_SIGNAL(affected_turf, COMSIG_LIGHTING_OBJECT_UPDATE, hanger_overlays)
+	overlays = hanger_overlays
 
 // Variety of overrides so the overlays don't get affected by weird things.
 

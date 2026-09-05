@@ -14,6 +14,8 @@
 	clawfootstep = FOOTSTEP_HARD_CLAW
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	floor_tile = /obj/item/stack/tile/glass
+	turf_flags = parent_type::turf_flags | REACTS_TO_ATOM_INIT
+	transparency_flags = TURF_TRANSPARENT
 	/// List of /atom/movable/render_step that are being used to make this glass floor glow
 	/// These are OWNED by this floor, they delete when we delete them, not before not after
 	var/list/glow_stuff
@@ -31,7 +33,7 @@
 	return INITIALIZE_HINT_LATELOAD
 
 /turf/open/floor/glass/LateInitialize()
-	ADD_TURF_TRANSPARENCY(src, INNATE_TRAIT)
+	. = ..()
 	setup_glow()
 
 /turf/open/floor/glass/Destroy()
@@ -226,4 +228,3 @@
 	base_icon_state = "glass_stained_black"
 	floor_tile = /obj/item/stack/tile/stained_glass/black
 	starlight_color = COLOR_CRAYON_BLACK
-

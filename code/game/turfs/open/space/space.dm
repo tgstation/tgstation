@@ -72,6 +72,9 @@ GLOBAL_LIST_EMPTY(starlight)
 
 	force_no_gravity = TRUE
 	skip_minimap_rendering = TRUE
+	// tough decision here: casting shadows on space looks awesome... buuuut makes no sense.
+	// i opted for disabling it since it also helps with performance.
+	transparency_flags = NONE
 
 /turf/open/space/basic
 	icon_state = MAP_SWITCH("space", "space_basic_map")
@@ -225,6 +228,7 @@ GLOBAL_LIST_EMPTY(starlight)
 	icon = 'icons/turf/floors.dmi'
 	icon_state = MAP_SWITCH("pure_white", "invisible")
 	plane = TRANSPARENT_FLOOR_PLANE
+	transparency_flags = TURF_TRANSPARENT
 
 /turf/open/space/openspace/Initialize(mapload) // handle plane and layer here so that they don't cover other obs/turfs in Dream Maker
 	. = ..()
@@ -235,9 +239,6 @@ GLOBAL_LIST_EMPTY(starlight)
 	if(SSmapping.max_plane_offset)
 		plane = TRANSPARENT_FLOOR_PLANE - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
 	return INITIALIZE_HINT_LATELOAD
-
-/turf/open/space/openspace/LateInitialize()
-	ADD_TURF_TRANSPARENCY(src, INNATE_TRAIT)
 
 /turf/open/space/openspace/Destroy()
 	// Signals persist through destroy, GO HOME

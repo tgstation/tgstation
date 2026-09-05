@@ -42,6 +42,10 @@
 #define GHOST_PLANE 5
 #define POINT_PLANE 6
 
+/// Shadows are cast above everything, but still below lighting
+#define SHADOW_PLANE 8
+#define SHADOW_MASK_PLANE 9
+
 //---------- LIGHTING -------------
 /// Normal 1 per turf dynamic lighting objects
 #define LIGHTING_PLANE 10
@@ -95,6 +99,10 @@
 #define ABOVE_LIGHTING_PLANE 25
 
 #define WEATHER_GLOW_PLANE 26
+
+// Combines everything that should mask out shadows
+#define RENDER_PLANE_SHADOW_MASK 27
+#define SHADOW_MASK_RENDER_TARGET "*RENDER_PLANE_SHADOW_MASK"
 
 ///---------------- MISC -----------------------
 
