@@ -17299,6 +17299,7 @@
 /area/station/service/library)
 "fZw" = (
 /obj/structure/table,
+/obj/item/reagent_containers/spray/dinitrogen_plasmide,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
