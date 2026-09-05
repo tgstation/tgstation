@@ -224,7 +224,7 @@
 	src.owner = owner
 	owner.parallax_instances += src
 	src.submap = submap
-	if(!isnull(submap))
+	if(submap)
 		src.submap_text = "[submap]:"
 	if(!isnull(submap_text))
 		screen_loc = "[submap_text][screen_loc]"

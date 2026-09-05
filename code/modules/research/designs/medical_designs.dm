@@ -1099,6 +1099,23 @@
 	name = "Cybernetic Moth Eyes"
 	build_path = /obj/item/organ/eyes/robotic/moth
 
+/datum/design/cybernetic_fangs
+	name = "Advanced Cybernetic Fangs"
+	desc = "A set of plastitanium fangs. For when you want to bite through a ship hull."
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 3 SECONDS
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.5)
+	build_path = /obj/item/organ/fangs/cybernetic
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_1
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/cybernetic_fangs/cat
+	name = "Advanced Cybernetic Cat Fangs"
+	desc = "A set of plastitanium fangs. For when you want to nom through a ship hull."
+	build_path = /obj/item/organ/fangs/cat/cybernetic
+
 /datum/design/cyberimp_welding
 	name = "Welding Shield Eyes"
 	desc = "These reactive micro-shields will protect you from welders and flashes without obscuring your vision."

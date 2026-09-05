@@ -55,6 +55,7 @@
 		QDEL_LIST(imaginary_group)
 	QDEL_LAZYLIST(diseases)
 	QDEL_LAZYLIST(quirks)
+	QDEL_NULL(inner_armor)
 
 	if(!isnull(unconscious_appearance))
 		// Not super necessary strictly speaking but just in case

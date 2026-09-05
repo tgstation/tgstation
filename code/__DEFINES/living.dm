@@ -30,3 +30,50 @@
 #define PIXEL_X_OFFSET "x"
 #define PIXEL_Y_OFFSET "y"
 #define PIXEL_Z_OFFSET "z"
+
+//Physiology macros and keys
+
+///Default value for physiology coefficients. It should be an identity for multiplication, so basically 1
+#define DEFAULT_PHYSIOLOGY_VAL 1
+
+///get the physiology coefficient for a specific key
+#define GET_PHYSIOLOGY(living, key) (LAZYACCESS(living.physiology, key) || DEFAULT_PHYSIOLOGY_VAL)
+
+#define _INIT_PHYSIOLOGY_VAL(living, key) \
+	LAZYINITLIST(living.physiology); \
+	if(isnull(living.physiology[key])) { \
+		living.physiology[key] = DEFAULT_PHYSIOLOGY_VAL; \
+	}
+
+#define _CLEAR_PHYSIOLOGY_VAL(living, key) \
+	if(round(living.physiology[key], 0.001) == DEFAULT_PHYSIOLOGY_VAL) { \
+		LAZYREMOVE(living.physiology, key); \
+	}
+
+#define MODIFY_PHYSIOLOGY(living, key, mult) \
+	_INIT_PHYSIOLOGY_VAL(living, key); \
+	living.physiology[key] *= mult;\
+	_CLEAR_PHYSIOLOGY_VAL(living, key);
+
+//Physiology coefficient multipliers (FOR BRUTE/BURN/TOX/OXY/STAMINA damage, we just use the same text macros since they're already there)
+
+/// Multiplier to damage taken from high / low pressure exposure, stacking with the brute modifier
+#define PHYS_COEFF_PRESSURE "pressure"
+/// Multiplier to damage taken from high temperature exposure, stacking with the burn modifier
+#define PHYS_COEFF_HEAT "heat"
+/// Multiplier to damage taken from low temperature exposure, stacking with the burn modifier
+#define PHYS_COEFF_COLD "cold"
+/// Multiplier to the damage electrical shocks can cause
+#define PHYS_COEFF_ELEC_CONDUCTIVITY "elec_conductivity"
+/// Multiplier applied to all incapacitating stuns (knockdown, stun, paralyze, immobilize)
+#define PHYS_COEFF_STUN "stun"
+/// Multiplied aplpied to just knockdowns, stacks with above multiplicatively
+#define PHYS_COEFF_KNOCKDOWN "knockdown"
+/// Modifier to amount of blood lost when bleeding (both on life ticks and from flat bleed calls)
+#define PHYS_COEFF_BLEED "bleed"
+/// Modifier to amount blood regenerated per life tick
+#define PHYS_COEFF_BLOOD_REGEN "blood_regen"
+/// Modifier of the hunger rate taken per tick
+#define PHYS_COEFF_HUNGER_MOD "hunger"
+/// Multiplier for flat damage in general (tox, burn, oxy, brute)
+#define PHYS_COEFF_DAMAGE "damage"
