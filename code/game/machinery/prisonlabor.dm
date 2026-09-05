@@ -95,7 +95,6 @@
 	use_power = IDLE_POWER_USE
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.01
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
 	/// Maximum amount of produce the machine can hold before it has to be either emptied or sent.
 	var/max_produce = 10
 	/// Current count of held produce
@@ -227,6 +226,7 @@ GLOBAL_LIST_EMPTY(produce_locations)
 	icon = 'icons/obj/machines/prison.dmi'
 	icon_state = "producepad"
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
 
 /obj/item/producepad/Initialize(mapload)
 	. = ..()
