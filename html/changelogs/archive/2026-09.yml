@@ -54,3 +54,9 @@
 2026-09-04:
   PapaMichael:
   - bugfix: Icemoon tiles no longer count towards the blob's victory
+2026-09-05:
+  SmArtKar:
+  - bugfix: Fixed luminetworked MODsuit cores sometimes not charging from the network
+  - qol: Made Candela LoS checks a bit more forgiving
+  TheBoondock:
+  - code_imp: optimize compare() by adding total moles check

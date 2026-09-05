@@ -1,4 +1,0 @@
-author: "TheBoondock"
-delete-after: True
-changes:
-  - code_imp: "optimize compare() by adding total moles check"
