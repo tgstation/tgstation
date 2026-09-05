@@ -88,9 +88,10 @@
 						  span_userdanger("You step on [src] causing the handle to hit you right in the face!"))
 
 /obj/item/cultivator/rake/pitchfork
-	name = "pitchfork"
+	name = "gardening pitchfork"
 	desc = "About as traditional of a rake as you can get. Far better known, however, as the sign of \"political disagreements\"."
 	icon_state = "pitchfork"
+	inhand_icon_state = "pitchfork"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	force = 12
