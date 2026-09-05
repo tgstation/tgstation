@@ -13,12 +13,11 @@
 
 /datum/status_effect/determined/on_apply()
 	. = ..()
-	owner.visible_message(span_danger("[owner]'s body tenses up noticeably, gritting against [owner.p_their()] pain!"), span_notice("<b>Your senses sharpen as your body tenses up from the wounds you've sustained!</b>"), \
-		vision_distance=COMBAT_MESSAGE_RANGE)
+	to_chat(owner, span_grey("<b>Your senses sharpen as your body tenses up from the wounds you've sustained!</b>"))
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLEED, WOUND_DETERMINATION_BLEED_MOD)
 
 /datum/status_effect/determined/on_remove()
-	owner.visible_message(span_danger("[owner]'s body slackens noticeably!"), span_warning("<b>Your adrenaline rush dies off, and the pain from your wounds come aching back in...</b>"), vision_distance=COMBAT_MESSAGE_RANGE)
+	to_chat(owner, span_grey("Your adrenaline rush dies off, and the pain from your wounds come aching back in..."))
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLEED, 1/WOUND_DETERMINATION_BLEED_MOD)
 	return ..()
 

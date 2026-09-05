@@ -56,7 +56,7 @@
 		return TRUE
 	return ..()
 
-/mob/living/carbon/send_item_attack_message(obj/item/weapon, mob/living/user, hit_area, def_zone)
+/mob/living/carbon/send_item_attack_message(obj/item/weapon, mob/living/user, hit_area, def_zone, list/new_wounds)
 	// In the future replace these with parent call if the item attack message proc is ever unshittified
 	if(SEND_SIGNAL(weapon, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT, src, user) & SIGNAL_MESSAGE_MODIFIED)
 		return TRUE
@@ -83,6 +83,10 @@
 
 	var/extra_wound_details = ""
 
+	for(var/datum/wound/new_wound as anything in new_wounds)
+		if(new_wound.attack_trigger_message)
+			extra_wound_details += ", [new_wound.attack_trigger_message]"
+
 	if(weapon.damtype == BRUTE && hit_bodypart.can_dismember())
 		var/has_exterior = (hit_bodypart.bio_status & ANATOMY_EXTERIOR)
 		var/has_interior = (hit_bodypart.bio_status & ANATOMY_INTERIOR)
@@ -91,13 +95,13 @@
 		var/interior_ready_to_dismember = (!has_interior || (hit_bodypart.mangled_state & BODYPART_MANGLED_INTERIOR))
 
 		if ((exterior_ready_to_dismember && interior_ready_to_dismember) || hit_bodypart.dismemberable_by_total_damage())
-			extra_wound_details = ", threatening to sever it entirely"
+			extra_wound_details += (extra_wound_details ? " and" : ",") + " threatening to sever it entirely"
 		else if((has_interior && (has_exterior && exterior_ready_to_dismember) && weapon.get_sharpness()))
 			var/bone_text = hit_bodypart.get_internal_description()
-			extra_wound_details = ", [weapon.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] through to the [bone_text]"
+			extra_wound_details += (extra_wound_details ? " and" : ",") + " [weapon.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] through to the [bone_text]"
 		else if(has_exterior && ((has_interior && interior_ready_to_dismember) && weapon.get_sharpness()))
 			var/tissue_text = hit_bodypart.get_external_description()
-			extra_wound_details = ", [weapon.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] at the remaining [tissue_text]"
+			extra_wound_details += (extra_wound_details ? " and" : ",") + " [weapon.get_sharpness() == SHARP_EDGED ? "slicing" : "piercing"] at the remaining [tissue_text]"
 
 	var/attack_message_spectator = "[src] [message_verb_continuous][message_hit_area] with [weapon][extra_wound_details]!"
 	var/attack_message_victim = "You're [message_verb_continuous][message_hit_area] with [weapon][extra_wound_details]!"

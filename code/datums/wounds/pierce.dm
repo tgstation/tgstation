@@ -200,6 +200,7 @@
 	treat_text_short = "Apply bandaging or suturing."
 	examine_desc = "has a small, torn hole, gently bleeding"
 	occur_text = "spurts out a thin stream of blood"
+	attack_trigger_message = "drawing a thin stream of blood"
 	sound_effect = 'sound/effects/wounds/pierce1.ogg'
 	severity = WOUND_SEVERITY_MODERATE
 	initial_flow = 1.25
@@ -218,6 +219,7 @@
 	if(!limb.can_bleed())
 		examine_desc = "has a small, torn hole"
 		occur_text = "splits a small hole open"
+		attack_trigger_message = "opening a small hole"
 
 /datum/wound_pregen_data/flesh_pierce/breakage
 	abstract = FALSE
@@ -260,6 +262,7 @@
 	if(!limb.can_bleed())
 		examine_desc = "has a small, circular hole"
 		occur_text = "splits a small hole open"
+		attack_trigger_message = "opening a small hole"
 
 /datum/wound_pregen_data/flesh_pierce/breakage/projectile
 	wound_path_to_generate = /datum/wound/pierce/bleed/moderate/projectile
@@ -278,6 +281,7 @@
 	treat_text_short = "Apply bandaging, suturing, clotting agents, or cauterization."
 	examine_desc = "is pierced clear through, with bits of tissue obscuring the open hole"
 	occur_text = "looses a violent spray of blood, revealing a pierced wound"
+	attack_trigger_message = "sending a violent spray of blood flying"
 	sound_effect = 'sound/effects/wounds/pierce2.ogg'
 	severity = WOUND_SEVERITY_SEVERE
 	initial_flow = 2
@@ -295,6 +299,7 @@
 /datum/wound/pierce/bleed/severe/update_descriptions()
 	if(!limb.can_bleed())
 		occur_text = "tears a hole open"
+		attack_trigger_message = "tearing a hole open"
 
 /datum/wound_pregen_data/flesh_pierce/open_puncture
 	abstract = FALSE
@@ -325,6 +330,7 @@
 	name = "Eyeball Puncture"
 	desc = "Patient's eye has sustained extreme damage, causing severe bleeding from the ocular cavity."
 	occur_text = "looses a violent spray of blood, revealing a crushed eyeball"
+	attack_trigger_message = "sending a violent spray of blood flying from the eye"
 	var/right_side = FALSE
 
 /datum/wound/pierce/bleed/severe/eye/apply_wound(obj/item/bodypart/limb, silent, datum/wound/old_wound, smited, attack_direction, wound_source, replacing, right_side)
@@ -391,6 +397,7 @@
 	treat_text_short = "Apply bandaging, suturing, clotting agents, or cauterization."
 	examine_desc = "is ripped clear through, barely held together by exposed bone"
 	occur_text = "blasts apart, sending chunks of viscera flying in all directions"
+	attack_trigger_message = "blasting it apart, sending chunks of viscera flying in all directions"
 	sound_effect = 'sound/effects/wounds/pierce3.ogg'
 	severity = WOUND_SEVERITY_CRITICAL
 	initial_flow = 2.5

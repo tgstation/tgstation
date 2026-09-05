@@ -293,6 +293,7 @@
 	treat_text_short = "Apply healing aid such as regenerative mesh."
 	examine_desc = "is badly burned and breaking out in blisters"
 	occur_text = "breaks out with violent red burns"
+	attack_trigger_message = "causing violent red burns"
 	severity = WOUND_SEVERITY_MODERATE
 	damage_multiplier_penalty = 1.1
 	series_threshold_penalty = 30 // burns cause significant decrease in limb integrity compared to other wounds
@@ -321,6 +322,7 @@
 		Clean gauze or ointment will slow infection rate."
 	examine_desc = "appears seriously charred, with aggressive red splotches"
 	occur_text = "chars rapidly, exposing ruined tissue and spreading angry red burns"
+	attack_trigger_message = "charring it rapidly, exposing ruined tissue"
 	severity = WOUND_SEVERITY_SEVERE
 	damage_multiplier_penalty = 1.2
 	series_threshold_penalty = 40
@@ -351,6 +353,7 @@
 		Clean gauze or ointment will slow infection rate."
 	examine_desc = "is a ruined mess of blanched bone, melted fat, and charred tissue"
 	occur_text = "vaporizes as flesh, bone, and fat melt together in a horrifying mess"
+	attack_trigger_message = "vaporizing it as sflesh, bone, and fat melt together"
 	severity = WOUND_SEVERITY_CRITICAL
 	damage_multiplier_penalty = 1.3
 	sound_effect = 'sound/effects/wounds/sizzle2.ogg'

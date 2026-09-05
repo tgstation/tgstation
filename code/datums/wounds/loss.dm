@@ -36,6 +36,7 @@
 
 	if(dismembered_part.body_zone == BODY_ZONE_CHEST)
 		occur_text = "is split open, causing [victim.p_their()] internal organs to spill out!"
+		attack_trigger_message = "splitting it open, causing [victim.p_their()] internal organs to spill out"
 		self_msg = "is split open, causing your internal organs to spill out!"
 	else
 		occur_text = dismembered_part.get_dismember_message(wounding_type, outright)

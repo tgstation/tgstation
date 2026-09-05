@@ -326,14 +326,11 @@
 		targeting = get_random_valid_zone(targeting, zone_hit_chance)
 	var/targeting_human_readable = parse_zone_with_bodypart(targeting)
 
-	if(!LAZYACCESS(attack_modifiers, SILENCE_DEFAULT_MESSAGES))
-		send_item_attack_message(attacking_item, user, targeting_human_readable, targeting)
-
 	var/armor_block = min(run_armor_check(
 			def_zone = targeting,
 			attack_flag = MELEE,
-			absorb_text = span_notice("Your armor has protected your [targeting_human_readable]!"),
-			soften_text = span_warning("Your armor has softened a hit to your [targeting_human_readable]!"),
+			absorb_text = "Your armor has protected your [targeting_human_readable]!",
+			soften_text = "Your armor has softened a hit to your [targeting_human_readable]!",
 			armour_penetration = attacking_item.armour_penetration,
 			weak_against_armour = attacking_item.weak_against_armour,
 		), ARMOR_MAX_BLOCK)
@@ -349,16 +346,24 @@
 	if(user != src)
 		// This doesn't factor in armor, or most damage modifiers (physiology). Your mileage may vary
 		if(check_block(attacking_item, final_force, "\the [attacking_item]", MELEE_ATTACK, attacking_item.armour_penetration, attacking_item.damtype))
+			// melbert todo : check block audit
+			if(!LAZYACCESS(attack_modifiers, SILENCE_DEFAULT_MESSAGES))
+				send_item_attack_message(attacking_item, user, targeting_human_readable, targeting)
 			return ATTACK_FAILED
 
 	SEND_SIGNAL(attacking_item, COMSIG_ITEM_ATTACK_ZONE, src, user, targeting)
 
 	if(final_force <= 0)
+		if(!LAZYACCESS(attack_modifiers, SILENCE_DEFAULT_MESSAGES))
+			send_item_attack_message(attacking_item, user, targeting_human_readable, targeting)
 		return 0
 
 	if(ishuman(src) || client) // istype(src) is kinda bad, but it's to avoid spamming the blackbox
 		SSblackbox.record_feedback("nested tally", "item_used_for_combat", 1, list("[attacking_item.force]", "[attacking_item.type]"))
 		SSblackbox.record_feedback("tally", "zone_targeted", 1, user.zone_selected)
+
+	living_flags |= BLOCK_WOUND_MESSAGES
+	var/list/pre_attack_wounds = astype(src, /mob/living/carbon)?.all_wounds?.Copy() || list()
 
 	var/damage_done = apply_damage(
 		damage = final_force,
@@ -372,7 +377,13 @@
 		attacking_item = attacking_item,
 	)
 
+	living_flags &= ~BLOCK_WOUND_MESSAGES
 	attack_effects(damage_done, targeting, armor_block, attacking_item, user)
+
+	var/list/new_wounds = (astype(src, /mob/living/carbon)?.all_wounds?.Copy() || list()) - pre_attack_wounds
+
+	if(!LAZYACCESS(attack_modifiers, SILENCE_DEFAULT_MESSAGES))
+		send_item_attack_message(attacking_item, user, targeting_human_readable, targeting, new_wounds)
 
 	return damage_done
 
@@ -484,7 +495,7 @@
 		else
 			return clamp(w_class * 6, 10, 100) // Multiply the item's weight class by 6, then clamp the value between 10 and 100
 
-/mob/living/proc/send_item_attack_message(obj/item/weapon, mob/living/user, hit_area, def_zone)
+/mob/living/proc/send_item_attack_message(obj/item/weapon, mob/living/user, hit_area, def_zone, list/new_wounds)
 	if(SEND_SIGNAL(weapon, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT, src, user) & SIGNAL_MESSAGE_MODIFIED)
 		return TRUE
 	if(SEND_SIGNAL(src, COMSIG_SEND_ITEM_ATTACK_MESSAGE_CARBON, weapon, user) & SIGNAL_MESSAGE_MODIFIED)

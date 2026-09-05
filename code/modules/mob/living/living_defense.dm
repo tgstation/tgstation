@@ -13,19 +13,19 @@
 	if(armour_penetration)
 		our_armor = max(PENETRATE_ARMOUR(our_armor, armour_penetration), 0)
 		if(penetrated_text)
-			to_chat(src, span_userdanger("[penetrated_text]"))
+			to_chat(src, span_grey("[penetrated_text]"))
 		else
-			to_chat(src, span_userdanger("Your armor was penetrated!"))
+			to_chat(src, span_grey("Your armor was penetrated!"))
 	else if(our_armor >= 100)
 		if(absorb_text)
-			to_chat(src, span_notice("[absorb_text]"))
+			to_chat(src, span_grey("[absorb_text]"))
 		else
-			to_chat(src, span_notice("Your armor absorbs the blow!"))
+			to_chat(src, span_grey("Your armor absorbs the blow!"))
 	else
 		if(soften_text)
-			to_chat(src, span_warning("[soften_text]"))
+			to_chat(src, span_grey("[soften_text]"))
 		else
-			to_chat(src, span_warning("Your armor softens the blow!"))
+			to_chat(src, span_grey("Your armor softens the blow!"))
 	return our_armor
 
 /mob/living/proc/getarmor(def_zone, type)

@@ -17,6 +17,8 @@
 #define BLOOD_UPDATE_QUEUED (1<<4)
 /// This mob can have blood, cached value of [proc/can_have_blood]
 #define LIVING_CAN_HAVE_BLOOD (1<<5)
+/// Don't trigger messages when getting wounds
+#define BLOCK_WOUND_MESSAGES (1<<6)
 
 /// Getter for a mob/living's lying angle, otherwise protected
 #define GET_LYING_ANGLE(mob) (UNLINT(mob.lying_angle))

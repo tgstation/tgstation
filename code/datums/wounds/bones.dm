@@ -235,6 +235,7 @@
 	treat_text_short = "Apply Bonesetter, or manually relocate the limb."
 	examine_desc = "is awkwardly janked out of place"
 	occur_text = "janks violently and becomes unseated"
+	attack_trigger_message = "janking it violently out of place"
 	severity = WOUND_SEVERITY_MODERATE
 	interaction_efficiency_penalty = 1.3
 	limp_slowdown = 3
@@ -376,6 +377,7 @@
 	treat_text_short = "Repair surgically, or apply bone gel. A splint or gauze sling can also be used."
 	examine_desc = "appears grotesquely swollen, jagged bumps hinting at chips in the bone"
 	occur_text = "sprays chips of bone and develops a nasty looking bruise"
+	attack_trigger_message = "sending chips of bone flying and leaving a nasty bruise"
 
 	severity = WOUND_SEVERITY_SEVERE
 	interaction_efficiency_penalty = 2
@@ -415,7 +417,7 @@
 	treat_text_short = "Repair surgically, or apply bone gel and surgical tape. A splint or gauze sling should also be used."
 	examine_desc = "is thoroughly pulped and cracked, exposing shards of bone to open air"
 	occur_text = "cracks apart, exposing broken bones to open air"
-
+	attack_trigger_message = "cracking it apart, exposing broken bones to open air"
 	severity = WOUND_SEVERITY_CRITICAL
 	interaction_efficiency_penalty = 2.5
 	limp_slowdown = 7
@@ -451,6 +453,7 @@
 /datum/wound/blunt/bone/critical/apply_wound(obj/item/bodypart/L, silent = FALSE, datum/wound/old_wound = null, smited = FALSE, attack_direction = null, wound_source = "Unknown", replacing = FALSE)
 	if(L.body_zone == BODY_ZONE_HEAD)
 		occur_text = "splits open, exposing a bare, cracked skull through the flesh and blood"
+		attack_trigger_message = "splitting it open, exposing a bare, cracked skull through the flesh and blood"
 		examine_desc = "has an unsettling indent, with bits of skull poking out"
 	. = ..()
 

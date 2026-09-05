@@ -33,7 +33,7 @@
 	treat_text_short = "Surgical reconstruction required."
 	examine_desc = "is split open"
 	occur_text = "is split into two separated chunks"
-
+	attack_trigger_message = "splitting it into two separated chunks"
 	simple_desc = "Patient's skull is split open."
 	threshold_penalty = 40
 

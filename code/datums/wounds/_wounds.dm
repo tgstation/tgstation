@@ -48,6 +48,8 @@
 	var/a_or_from = "a"
 	/// The visible message when this happens
 	var/occur_text = ""
+	/// Message appended to the attack that caused this wound
+	var/attack_trigger_message = ""
 	/// This sound will be played upon the wound being applied
 	var/sound_effect
 	/// The volume of [sound_effect]
@@ -221,7 +223,7 @@
 	if(severity == WOUND_SEVERITY_TRIVIAL)
 		return
 
-	if(!silent && !demoted)
+	if(!silent && !demoted && !(victim.living_flags & BLOCK_WOUND_MESSAGES))
 		var/msg = span_danger("[victim]'s [limb.plaintext_zone] [occur_text]!")
 		var/vis_dist = COMBAT_MESSAGE_RANGE
 
