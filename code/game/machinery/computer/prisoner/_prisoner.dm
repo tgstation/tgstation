@@ -26,7 +26,14 @@
 	id_eject(user)
 	return CLICK_ACTION_SUCCESS
 
-/obj/machinery/computer/prisoner/proc/id_insert(mob/user, obj/item/card/id/advanced/prisoner/new_id)
+/**
+ * Called when the prison teleporter computer attempts to insert a new ID card, that will be assigned to the prisoner if successful.
+ * user: The mob user of the computer.
+ * new_id: The ID that we're trying to insert.
+ */
+/obj/machinery/computer/prisoner/proc/id_insert(mob/living/user, obj/item/card/id/advanced/prisoner/new_id)
+	if(!new_id)
+		new_id = user.get_active_held_item()
 	if(!istype(new_id))
 		return
 	if(!isnull(contained_id))

@@ -1088,6 +1088,7 @@
 /obj/structure/table,
 /obj/item/storage/box/prisoner,
 /obj/item/paper/guides/jobs/security/labor_camp,
+/obj/item/producepad,
 /turf/open/floor/iron,
 /area/station/security/brig)
 "hm" = (
