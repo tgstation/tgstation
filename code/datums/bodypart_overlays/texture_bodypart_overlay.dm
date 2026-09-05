@@ -81,6 +81,9 @@
 	cached_lighting_icon = icon(lighting_icon, lighting_icon_state)
 
 /datum/bodypart_texture/mesh/modify_bodypart_appearance(image/appearance, overlay_flags)
+	if(overlay_flags & LIMB_OVERLAY_CORE)
+		return // the bodypart itself doesn't need mesh
+
 	. = ..()
 	// adds an outline so the texture doesn't end abruptly
 	appearance.add_filter("outline", 3, outline_filter(1, outline_color, OUTLINE_SHARP))

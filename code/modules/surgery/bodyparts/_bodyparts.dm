@@ -1311,11 +1311,11 @@
 
 	icon_exists_or_scream(limb.icon, limb.icon_state) //Prints a stack trace on the first failure of a given iconstate.
 
-	.[limb] = LIMB_OVERLAY_TEXTURED
+	.[limb] = LIMB_OVERLAY_TEXTURED|LIMB_OVERLAY_CORE
 
 	if(aux_zone) //Hand shit
 		aux = image(limb.icon, "[limb_id]_[aux_zone]", -aux_layer, dir = image_dir)
-		.[aux] = LIMB_OVERLAY_TEXTURED
+		.[aux] = LIMB_OVERLAY_TEXTURED|LIMB_OVERLAY_CORE
 
 	if(dropped && dmg_overlay_type)
 		if(brutestate)
@@ -1357,10 +1357,10 @@
 
 	if(is_husked)
 		for(var/image/husk_image as anything in huskify_image(limb))
-			.[husk_image] = LIMB_OVERLAY_TEXTURED
+			.[husk_image] = LIMB_OVERLAY_TEXTURED|LIMB_OVERLAY_CORE
 		if(aux)
 			for(var/image/husk_image as anything in huskify_image(aux))
-				.[husk_image] = LIMB_OVERLAY_TEXTURED
+				.[husk_image] = LIMB_OVERLAY_TEXTURED|LIMB_OVERLAY_CORE
 		draw_color = is_husked == HUSKED_ZOMBIE ? zombie_color : husk_color
 	else
 		update_draw_color()

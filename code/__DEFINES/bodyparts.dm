@@ -245,3 +245,5 @@ DEFINE_BITFIELD(surgery_state, list(
 #define LIMB_OVERLAY_WIDE_ICON (1<<2)
 /// Overlay is toll, at least 48 pixels tall
 #define LIMB_OVERLAY_TALL_ICON (1<<3)
+/// Core part of the bodypart, like the actual bodypart icon
+#define LIMB_OVERLAY_CORE (1<<4)
