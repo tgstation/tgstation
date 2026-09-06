@@ -55,6 +55,11 @@ GLOBAL_LIST_INIT(cerulean_respiration_variation, list(
 		return FALSE
 	return current_species_has_savekey(preferences)
 
+/datum/preference/toggle/cerulean_frills/deserialize(value, datum/preferences/preferences)
+	if(!current_species_has_savekey(preferences))
+		return ..(create_default_value(), preferences)
+	return ..(value, preferences)
+
 /datum/preference/toggle/cerulean_frills/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	if(!value)
 		return

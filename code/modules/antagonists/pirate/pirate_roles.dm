@@ -238,7 +238,6 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/siren
 	name = /obj/machinery/experimental_cloner::name
 	desc = /obj/machinery/experimental_cloner::desc
-	density = TRUE
 	deletes_on_zero_uses_left = FALSE
 	mob_species = /datum/species/human/cerulean
 	allow_custom_character = NONE
@@ -249,10 +248,10 @@
 	flavour_text = "Its time to put on an impromptu show! Lets raid the station in style, steal their resources with grace, and call it a great night!"
 	prompt_name = "a deadbeat musician"
 	outfit = /datum/outfit/pirate/siren
-	rank = "Guitarist"
+	rank = "Gitarisuto"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/siren/vocalist
-	rank = "Vocalist"
+	rank = "Bookaru"
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/siren/check_uses()
 	. = ..()

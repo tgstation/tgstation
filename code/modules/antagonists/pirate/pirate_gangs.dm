@@ -230,9 +230,9 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 
 //wicked assh*le ceruleans that pretend to be a different pirate team
 /datum/pirate_gang/siren
-	name = "Siren Sisters"
+	name = "Siren Shimai"
 	ship_template_id = "siren"
-	ship_name_pool = "rogue_names"
+	ship_name_pool = "siren_names"
 	announcement_color = "purple"
 
 	arrival_announcement = "\u266A Ready to play in the greatest performance of your life? \u266B \n\

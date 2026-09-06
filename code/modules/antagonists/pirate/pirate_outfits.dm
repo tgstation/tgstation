@@ -203,7 +203,7 @@
 	skillchips = list(/obj/item/skillchip/big_pointer) //they don't have an id, so this is needed
 
 /datum/outfit/pirate/siren
-	name = "Siren Sister Guitarist"
+	name = "Siren Shimai"
 
 	uniform = null
 	head = null

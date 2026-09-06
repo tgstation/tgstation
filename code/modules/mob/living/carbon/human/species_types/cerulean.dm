@@ -40,7 +40,8 @@
 	preview_human.set_hairstyle(/datum/sprite_accessory/hair/countryponytail::name, update = TRUE)
 	preview_human.dna.features[TRAIT_USES_SKINTONES] = "asian1"
 	preview_human.dna.features[FEATURE_TAIL_FISH_COLOR] = COLOR_CARP_TEAL
-	preview_human.dna.features[FEATURE_FRILLS] = mutant_organs[/obj/item/organ/frills]
+	preview_human.dna.features[FEATURE_FRILLS] = /datum/sprite_accessory/frills/aquatic::name
+	preview_human.dna.species.mutant_organs[/obj/item/organ/frills] = /datum/sprite_accessory/frills/aquatic::name
 	regenerate_organs(preview_human)
 	preview_human.update_body(is_creating = TRUE)
 
@@ -206,8 +207,8 @@
 // an additional overlay to be added to the image stack. used by abyssal cerulean's skeleton
 /datum/bodypart_overlay/mutant/tail/fish/cerulean/abyssal/get_overlay(obj/item/bodypart/limb, layer_index, layer_real)
 	var/list/created_overlays = ..()
-	created_overlays += mutable_appearance(icon = sprite_datum.icon, icon_state = "abyssal_skeleton", offset_spokesman = limb, alpha = 105, layer = layer_real)
-	created_overlays += emissive_appearance(icon = sprite_datum.icon, icon_state = "abyssal_skeleton", offset_spokesman = limb,	alpha = 35,	layer = layer_real)
+	created_overlays += mutable_appearance(sprite_datum.icon, "abyssal_skeleton", limb, 105, layer_real)
+	created_overlays += emissive_appearance(sprite_datum.icon, "abyssal_skeleton", limb, 35, layer_real)
 	return created_overlays
 
 /datum/bodypart_overlay/mutant/tail/fish/cerulean/abyssal/added_to_limb(obj/item/bodypart/limb)

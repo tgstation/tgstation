@@ -145,5 +145,5 @@
 
 /obj/item/broadcast_camera/siren_pirates
 	name = "Livestreaming Camera"
-	broadcast_name = "Siren Sisters"
+	broadcast_name = "Siren Shimai!"
 	camera_networks = list(CAMERA_NETWORK_PIRATE)
