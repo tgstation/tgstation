@@ -80,15 +80,12 @@
 		return UI_CLOSE
 
 	if(!(astype(user, /mob/living)?.mobility_flags & (MOBILITY_USE|MOBILITY_PICKUP)))
-		// These flags are removed when unconscious or whatever, we don't need to complicate this further
 		return UI_UPDATE
 
 	if(astype(user, /mob/living/carbon/human)?.dna?.check_mutation(/datum/mutation/telekinesis))
-		// Range check here is just a formality with the "can I see" check above. But you never knowwww
-		return tkMaxRangeCheck(user, source_turf) ? UI_INTERACTIVE : UI_UPDATE
+		return tkMaxRangeCheck(user, source_turf) ? UI_INTERACTIVE : UI_UPDATE // Range check here is just a formality with the viewers check above.
 
 	if(!source_turf.IsReachableBy(user, user.get_active_held_item()?.reach))
-		// Blind check here is what prevents blind mobs from being able to telepathically know a turf's contents from across the room
-		return user.is_blind() ? UI_CLOSE : UI_UPDATE
+		return (get_dist(user, source_turf) >= 3 && user.is_blind()) ? UI_CLOSE : UI_UPDATE
 
 	return UI_INTERACTIVE
