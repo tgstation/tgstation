@@ -13,13 +13,12 @@
 		reset_contents()
 
 	// Add source turf first
-	var/datum/search_object/source = new(owner, source_turf)
-	add_to_index(source)
+	if(!source_turf.IsObscured())
+		var/datum/search_object/source = new(owner, source_turf)
+		add_to_index(source)
 
-	for(var/atom/thing as anything in source_turf.contents)
-		// validate
-		if(!istype(thing))
-			stack_trace("Non-atom in the contents of [source_turf]!")
+	for(var/atom/thing as anything in source_turf)
+		if(thing.IsObscured())
 			continue
 
 		add_new_searchable(thing, FALSE)
