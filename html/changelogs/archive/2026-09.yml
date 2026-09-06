@@ -60,3 +60,15 @@
   - qol: Made Candela LoS checks a bit more forgiving
   TheBoondock:
   - code_imp: optimize compare() by adding total moles check
+2026-09-06:
+  Maia-J:
+  - bugfix: Pod dropped mobs no longer have broken AI that's stuck trying to resist
+      forever.
+  Melbert:
+  - sound: Modsuits now have footstep sounds
+  - sound: Magboots now have footstep sounds
+  - sound: Robotic limbs now have footstep sounds (only applies when barefoot)
+  - sound: When punching, kicking, or smashing someone's robotic limbs, an alternate
+      hitsound is played
+  - qol: Tails auto-stop wagging when its owner falls unconscious or into crit, rather
+      than when their owner dies.
