@@ -71,9 +71,9 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	if(!dna_block)
 		return
 
-	var/list/feature_list = SSaccessories.feature_list[bodypart_overlay.feature_key]
+	var/list/feature_list = bodypart_overlay.get_global_feature_list()
 	var/datum/dna_block/feature/feature_block = GLOB.dna_feature_blocks[dna_block]
-	bodypart_overlay.set_appearance_from_name(feature_list[deconstruct_block(feature_block.get_block(features), length(feature_list))])
+	bodypart_overlay.set_appearance_from_name(feature_list[deconstruct_block(feature_block.get_block(features), feature_list.len)])
 
 ///If you need to change an external_organ for simple one-offs, use this. Pass the accessory type : /datum/accessory/something
 /obj/item/organ/proc/simple_change_sprite(accessory_type)
