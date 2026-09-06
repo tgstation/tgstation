@@ -72,3 +72,5 @@
       hitsound is played
   - qol: Tails auto-stop wagging when its owner falls unconscious or into crit, rather
       than when their owner dies.
+  Twaticus:
+  - image: reverts/resprites multiple walls/floors from 'floors and walls pr'

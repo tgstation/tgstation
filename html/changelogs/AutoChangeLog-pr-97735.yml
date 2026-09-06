@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fixes some particle effects being invisible when on floor objects (or the floor itself)"
