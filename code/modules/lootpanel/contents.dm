@@ -13,14 +13,9 @@
 		reset_contents()
 
 	// Add source turf first
-	if(!source_turf.IsObscured())
-		var/datum/search_object/source = new(owner, source_turf)
-		add_to_index(source)
+	add_new_searchable(source_turf, FALSE)
 
 	for(var/atom/thing as anything in source_turf)
-		if(thing.IsObscured())
-			continue
-
 		add_new_searchable(thing, FALSE)
 
 	queue_update()
