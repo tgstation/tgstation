@@ -235,25 +235,29 @@ GLOBAL_LIST_INIT(heavy_pirate_gangs, init_pirate_gangs(is_heavy = TRUE))
 	ship_name_pool = "siren_names"
 	announcement_color = "purple"
 
-	arrival_announcement = "\u266A Ready to play in the greatest performance of your life? \u266B \n\
-		\u2669 Ankōru suru hima wa nai! \u266B"
-
 /datum/pirate_gang/siren/generate_message(payoff)
-	var/list/pirate_gangs = (GLOB.light_pirate_gangs + GLOB.heavy_pirate_gangs)
+	false_flag()
+	. = ..()
+	reveal_yourself()
+
+/datum/pirate_gang/siren/proc/false_flag()
+	var/static/list/pirate_gangs = (GLOB.light_pirate_gangs + GLOB.heavy_pirate_gangs)
 	var/datum/pirate_gang/gang_to_imitate = pick(pirate_gangs - src)
 	threat_title = gang_to_imitate.threat_title
 	threat_content = gang_to_imitate.threat_content
 	ship_name = pick(strings(PIRATE_NAMES_FILE, gang_to_imitate.ship_name_pool))
 	possible_answers = gang_to_imitate.possible_answers
-	. = ..()
-	//now that weve sent a message, update our real vars
-	response_received = "\u266A Fufu~ You fell for it. We're not [ship_name] at all! \u2669 \n\
-		\u2669 Our next show is funded. Sayōnara! \u266B"
-	response_rejected = "\u2669 You must think you're so clever. \u266B \n\
-		\u266A [station_name()] seems like the perfect venue for us anyway!~ \u266B"
-	response_too_late = "\u266B Surprise!~ \u266A \n\
-		\u266B ...Awh- don't worry, the autographs are free! \u266A"
-	response_not_enough = "\u266A Got you good!~ B-but this is hardly enough, baka! \u2669 \n\
-		\u2669 We'll discuss payment after the show. \u266B"
-	//reset ship_name to true name
+
+/datum/pirate_gang/siren/proc/reveal_yourself()
 	ship_name = pick(strings(PIRATE_NAMES_FILE, ship_name_pool))
+	var/static/list/note_symbols = list("\u266A", "\u2669", "\u266B")
+	response_received = "[pick(note_symbols)] Fufu~ You fell for it. We're not [ship_name] at all! [pick(note_symbols)] \n\
+		[pick(note_symbols)] Our next show is funded. Sayōnara! [pick(note_symbols)]"
+	response_rejected = "[pick(note_symbols)] You must think you're so clever. [pick(note_symbols)] \n\
+		[pick(note_symbols)] [station_name()] seems like the perfect venue for us anyway!~ [pick(note_symbols)]"
+	response_too_late = "[pick(note_symbols)] Surprise!~ [pick(note_symbols)] \n\
+		[pick(note_symbols)] ...Awh- don't worry, the autographs are free! [pick(note_symbols)]"
+	response_not_enough = "[pick(note_symbols)]Got you good!~ B-but this is hardly enough, baka! [pick(note_symbols)] \n\
+		[pick(note_symbols)] We'll discuss payment after the show. [pick(note_symbols)]"
+	arrival_announcement = "[pick(note_symbols)] Ready to play in the greatest performance of your life? [pick(note_symbols)]\n\
+		[pick(note_symbols)] Ankōru suru hima wa nai! [pick(note_symbols)]"

@@ -711,11 +711,7 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /obj/item/gun/energy/laser/scatter/shotty/compact{
-	pixel_x = -2
-	},
-/obj/item/melee/energy/sword/pirate{
-	pixel_x = 16;
-	pixel_y = 9
+	pixel_x = 2
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
@@ -733,8 +729,8 @@
 /obj/machinery/door/airlock/external/glass/ruin,
 /obj/docking_port/mobile/pirate{
 	dir = 8;
-	movement_force = list("KNOCKDOWN"=0,"THROW"=3);
-	port_direction = 4
+	port_direction = 4;
+	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 	},
 /obj/effect/mapping_helpers/airlock/cyclelink_helper{
 	dir = 8
@@ -1327,6 +1323,10 @@
 	pixel_y = 2
 	},
 /obj/effect/mapping_helpers/turn_off_lights_with_lightswitch,
+/obj/item/melee/energy/sword/pirate{
+	pixel_x = 26;
+	pixel_y = 9
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "Wd" = (

@@ -19,10 +19,6 @@
 		/obj/item/ammo_casing/harpoon,
 		/obj/item/toy/seashell,
 	)
-	/*	fun vars to check out:
-	death_sound =
-	grab_sound =
-	*/
 
 /datum/species/human/cerulean/get_physical_attributes()
 	return "An unremarkable species."
@@ -42,8 +38,7 @@
 	preview_human.dna.features[FEATURE_TAIL_FISH_COLOR] = COLOR_CARP_TEAL
 	preview_human.dna.features[FEATURE_FRILLS] = /datum/sprite_accessory/frills/aquatic::name
 	preview_human.dna.species.mutant_organs[/obj/item/organ/frills] = /datum/sprite_accessory/frills/aquatic::name
-	regenerate_organs(preview_human)
-	preview_human.update_body(is_creating = TRUE)
+	regenerate_organs(preview_human, excluded_zones = GLOB.leg_zones)
 
 /datum/species/human/cerulean/get_features()
 	var/list/features = ..()
@@ -96,8 +91,8 @@
 	)
 
 /*
- *
- *
+ * the main driver of the species and the source of the strongest species perks
+ * allowing free movement in any atmosphere if zero g
  */
 /obj/item/organ/tail/fish/cerulean
 	name = "oversized fish tail"
@@ -194,11 +189,11 @@
 
 
 /*
- *
+ * same as parent, but with a pretty skeleton texture
  */
 /obj/item/organ/tail/fish/cerulean/abyssal
-//	name = ""
-//	desc = ""
+	name = "skeletal oversized fish tail"
+	desc = "A hugely sized and scaled fish tail, it is partially translucent and shows the skeleton inside."
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish/cerulean/abyssal
 
 /datum/bodypart_overlay/mutant/tail/fish/cerulean/abyssal
@@ -207,8 +202,8 @@
 // an additional overlay to be added to the image stack. used by abyssal cerulean's skeleton
 /datum/bodypart_overlay/mutant/tail/fish/cerulean/abyssal/get_overlay(obj/item/bodypart/limb, layer_index, layer_real)
 	var/list/created_overlays = ..()
-	created_overlays += mutable_appearance(sprite_datum.icon, "abyssal_skeleton", limb, 105, layer_real)
-	created_overlays += emissive_appearance(sprite_datum.icon, "abyssal_skeleton", limb, 35, layer_real)
+	created_overlays += mutable_appearance(sprite_datum.icon, "abyssal_skeleton", offset_spokesman = limb, alpha = 105, layer = layer_real)
+	created_overlays += emissive_appearance(sprite_datum.icon, "abyssal_skeleton", offset_spokesman = limb, alpha = 35, layer = layer_real)
 	return created_overlays
 
 /datum/bodypart_overlay/mutant/tail/fish/cerulean/abyssal/added_to_limb(obj/item/bodypart/limb)

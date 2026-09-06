@@ -15,7 +15,8 @@ GLOBAL_LIST_INIT(cerulean_respiration_variation, list(
 	return current_species_has_savekey(preferences)
 
 /datum/preference/choiced/cerulean_lungs/apply_to_human(mob/living/carbon/human/target, value)
-	target.dna.species.mutantlungs = GLOB.cerulean_respiration_variation[value]
+	if(iscerulean(target))
+		target.dna.species.mutantlungs = GLOB.cerulean_respiration_variation[value]
 	target.dna.species.regenerate_organs(target, GLOB.species_prototypes[target.dna.species.type], FALSE, (GLOB.all_body_zones - BODY_ZONE_CHEST))
 
 /datum/preference/choiced/cerulean_lungs/init_possible_values()
@@ -23,11 +24,6 @@ GLOBAL_LIST_INIT(cerulean_respiration_variation, list(
 
 /datum/preference/choiced/cerulean_lungs/create_default_value()
 	return "Oxygen"
-
-/datum/preference/choiced/cerulean_lungs/deserialize(value, datum/preferences/preferences)
-	if(!current_species_has_savekey(preferences))
-		return ..(create_default_value(), preferences)
-	return ..(value, preferences)
 
 /// The color given to people with a fish tail, the selection is exclusive to Ceruleans
 /datum/preference/color/fish_tail_color
@@ -48,21 +44,14 @@ GLOBAL_LIST_INIT(cerulean_respiration_variation, list(
 	savefile_identifier = PREFERENCE_CHARACTER
 	category = PREFERENCE_CATEGORY_SECONDARY_FEATURES
 	priority = PREFERENCE_PRIORITY_SPECIES
-	default_value = FALSE
+	randomize_by_default = FALSE
+	default_value = TRUE
 
-/datum/preference/toggle/cerulean_frills/is_accessible(datum/preferences/preferences)
-	if (!..())
-		return FALSE
+/datum/preference/toggle/cerulean_frills/has_relevant_feature(datum/preferences/preferences)
 	return current_species_has_savekey(preferences)
 
-/datum/preference/toggle/cerulean_frills/deserialize(value, datum/preferences/preferences)
-	if(!current_species_has_savekey(preferences))
-		return ..(create_default_value(), preferences)
-	return ..(value, preferences)
-
 /datum/preference/toggle/cerulean_frills/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
-	if(!value)
-		return
-	target.dna.features[FEATURE_FRILLS] = /datum/sprite_accessory/frills/aquatic::name
-	target.dna.species.mutant_organs[/obj/item/organ/frills] = /datum/sprite_accessory/frills/aquatic::name
+	if(iscerulean(target) && value)
+		target.dna.features[FEATURE_FRILLS] = /datum/sprite_accessory/frills/aquatic::name
+		target.dna.species.mutant_organs[/obj/item/organ/frills] = /datum/sprite_accessory/frills/aquatic::name
 	target.dna.species.regenerate_organs(target, GLOB.species_prototypes[target.dna.species.type], FALSE, (GLOB.all_body_zones - BODY_ZONE_HEAD))

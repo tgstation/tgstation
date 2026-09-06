@@ -1136,17 +1136,21 @@
 /mob/living/carbon/human/species/ethereal
 	race = /datum/species/ethereal
 
+#define COLOR_AMP_DARKER 0.33
+
 /mob/living/carbon/human/species/cerulean
 	race = /datum/species/human/cerulean
 
-#define COLOR_AMP_DARKER 0.33
+/mob/living/carbon/human/species/cerulean/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
+	. = ..()
+	dna.features[FEATURE_FRILLS] = /datum/sprite_accessory/frills/aquatic::name
+	dna.species.mutant_organs[/obj/item/organ/frills] = /datum/sprite_accessory/frills/aquatic::name
+	dna.species.regenerate_organs(src, excluded_zones = (GLOB.all_body_zones - BODY_ZONE_HEAD))
 
 /mob/living/carbon/human/species/cerulean/true/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
 	. = ..()
-	dna.features[FEATURE_FRILLS] = /datum/sprite_accessory/frills/aquatic::name
 	dna.species.mutantlungs = /obj/item/organ/lungs/fish
-	dna.species.mutant_organs[/obj/item/organ/frills] = /datum/sprite_accessory/frills/aquatic::name
-	dna.species.regenerate_organs(src)
+	dna.species.regenerate_organs(src, excluded_zones = (GLOB.all_body_zones - BODY_ZONE_CHEST))
 
 /mob/living/carbon/human/species/cerulean/true/abyssal/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
 	. = ..()
@@ -1162,7 +1166,7 @@
 		/obj/item/organ/horns = /datum/sprite_accessory/horns/angler::name,
 		/obj/item/organ/frills = /datum/sprite_accessory/frills/aquatic::name,
 	)
-	dna.species.regenerate_organs(src)
+	dna.species.regenerate_organs(src, excluded_zones = GLOB.limb_zones)
 
 #undef COLOR_AMP_DARKER
 
