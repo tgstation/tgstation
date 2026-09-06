@@ -171,6 +171,10 @@
 		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
 	)
 
+/datum/bodypart_overlay/mutant/tail/fish/cerulean/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
+	SHOULD_CALL_PARENT(FALSE)
+	return TRUE
+
 // simpler than parent. we don't care about locked/natural_spawn. all the accessories in our pool are locked
 /datum/bodypart_overlay/mutant/tail/fish/cerulean/get_random_appearance()
 	return fetch_sprite_datum_from_name(pick(get_global_feature_list()))

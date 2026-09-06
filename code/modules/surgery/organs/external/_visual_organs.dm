@@ -72,6 +72,7 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 		return
 
 	var/list/feature_list = bodypart_overlay.get_global_feature_list()
+
 	var/datum/dna_block/feature/feature_block = GLOB.dna_feature_blocks[dna_block]
 	bodypart_overlay.set_appearance_from_name(feature_list[deconstruct_block(feature_block.get_block(features), feature_list.len)])
 

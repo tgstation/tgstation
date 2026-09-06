@@ -253,6 +253,9 @@
 /obj/effect/mob_spawn/ghost_role/human/pirate/siren/vocalist
 	rank = "Bookaru"
 
+/obj/effect/mob_spawn/ghost_role/human/pirate/siren/generate_pirate_name()
+	return "[rank] [pick(GLOB.first_names_female)]"
+
 /obj/effect/mob_spawn/ghost_role/human/pirate/siren/check_uses()
 	. = ..()
 	if(!uses)
@@ -261,6 +264,12 @@
 #define COLOR_AMP_BRIGHT 1.5
 #define COLOR_AMP_BRIGHTER 3.5
 #define COLOR_AMP_DARKER 0.33
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/siren/equip(mob/living/spawned_mob)
+	. = ..()
+	if(rank == /obj/effect/mob_spawn/ghost_role/human/pirate/siren::rank)
+		spawned_mob.add_mood_event("hungover", /datum/mood_event/normal_hangover)
+		spawned_mob.adjust_drunk_effect(15)
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/siren/special(mob/living/carbon/spawned_mob, mob/mob_possessor, apply_prefs)
 	. = ..()
@@ -272,13 +281,6 @@
 	load_identity(spawned_mob)
 
 /obj/effect/mob_spawn/ghost_role/human/pirate/siren/proc/load_features(mob/living/carbon/human/siren)
-	var/list/special_organs = list(
-		/obj/item/organ/heart/carp,
-		/obj/item/organ/lungs/fish/amphibious,
-		/obj/item/organ/tail/fish/cerulean/abyssal,
-		/obj/item/organ/horns,
-		/obj/item/organ/frills,
-	)
 	siren.dna.species.mutantheart = /obj/item/organ/heart/carp
 	siren.dna.species.mutantlungs = /obj/item/organ/lungs/fish/amphibious
 	siren.dna.species.mutant_organs = list(
@@ -293,7 +295,13 @@
 	))
 	siren.dna.features[FEATURE_HORNS] = siren.dna.species.mutant_organs[/obj/item/organ/horns]
 	siren.dna.features[FEATURE_FRILLS] = siren.dna.species.mutant_organs[/obj/item/organ/frills]
-	for(var/obj/item/organ/special_organ as anything in special_organs)
+	for(var/obj/item/organ/special_organ as anything in list(
+		/obj/item/organ/heart/carp,
+		/obj/item/organ/lungs/fish/amphibious,
+		/obj/item/organ/tail/fish/cerulean/abyssal,
+		/obj/item/organ/horns,
+		/obj/item/organ/frills,
+	))
 		special_organ = new special_organ.type
 		special_organ.Insert(siren, TRUE, DELETE_IF_REPLACED)
 

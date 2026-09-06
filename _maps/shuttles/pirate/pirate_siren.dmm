@@ -455,6 +455,11 @@
 	dir = 8
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/trash/can{
+	pixel_x = 11;
+	pixel_y = -8;
+	icon_state = "space_beer"
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "tK" = (
@@ -614,7 +619,8 @@
 	},
 /obj/item/trash/can{
 	pixel_x = -37;
-	pixel_y = 16
+	pixel_y = 16;
+	icon_state = "sodawater"
 	},
 /obj/item/grenade/antigravity{
 	pixel_x = -8;
@@ -836,9 +842,32 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/pirate/siren)
 "EA" = (
+/obj/item/trash/can{
+	pixel_x = 10;
+	pixel_y = 14;
+	icon_state = "space_beer"
+	},
 /obj/effect/mob_spawn/ghost_role/human/pirate/siren{
 	pixel_y = 14;
 	pixel_x = -1
+	},
+/obj/item/trash/can{
+	pixel_x = -11;
+	pixel_y = 3;
+	icon_state = "melon_soda"
+	},
+/obj/item/reagent_containers/cup/soda_cans/beer/rice{
+	pixel_x = -7;
+	pixel_y = -5
+	},
+/obj/item/reagent_containers/cup/soda_cans/beer/rice{
+	pixel_x = 9;
+	pixel_y = -1
+	},
+/obj/item/trash/can{
+	pixel_x = 3;
+	pixel_y = -7;
+	icon_state = "space_beer"
 	},
 /turf/open/floor/circuit/green,
 /area/shuttle/pirate/siren)
@@ -1253,6 +1282,26 @@
 	specialfunctions = 4;
 	normaldoorcontrol = 1
 	},
+/obj/item/food/cakeslice/spekkoek{
+	pixel_x = -12;
+	pixel_y = -2
+	},
+/obj/item/food/cakeslice/spekkoek{
+	pixel_x = -10;
+	pixel_y = -2
+	},
+/obj/item/food/cakeslice/spekkoek{
+	pixel_x = -8;
+	pixel_y = -2
+	},
+/obj/item/food/cakeslice/spekkoek{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/reagent_containers/cup/soda_cans/melon_soda{
+	pixel_x = 7;
+	pixel_y = 14
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "Tt" = (
@@ -1380,7 +1429,8 @@
 	radio_channel = "Syndicate";
 	req_one_access = list();
 	bot_mode_flags = 0;
-	bot_access_flags = 0
+	bot_access_flags = 0;
+	faction = list("pirate")
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
