@@ -37,8 +37,8 @@
 
 	if(!(slot & equipped_item.slot_flags))
 		return
-	if((equipped_item.supports_variations_flags & CERULEAN_VARIATIONS) && (equipper.bodyshape & BODYSHAPE_CERULEAN))
-		return //dont add the overlay when we have sprites already
+	if(!check_ignored_bodyshapes(equipper))
+		return
 
 	var/obj/item/bodypart/affected_bodypart = equipper.get_bodypart(body_zone)
 	affected_bodypart?.add_bodypart_texture(bodypart_overlay_type)
@@ -64,4 +64,11 @@
 /datum/element/equipment_bodypart_texture/proc/limb_added(mob/living/carbon/limb_owner, obj/item/bodypart/added_limb)
 	SIGNAL_HANDLER
 
+	if(!check_ignored_bodyshapes(limb_owner))
+		return
 	added_limb.add_bodypart_texture(bodypart_overlay_type)
+
+/datum/element/equipment_bodypart_texture/proc/check_ignored_bodyshapes(mob/living/carbon/human/equipper)
+	if((equipper.wear_suit.supports_variations_flags & CERULEAN_VARIATIONS) && (equipper.bodyshape & BODYSHAPE_CERULEAN))
+		return FALSE
+	return TRUE

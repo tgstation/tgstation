@@ -157,16 +157,15 @@
 /obj/item/organ/tail/fish/cerulean/proc/get_your_sealegs(mob/living/carbon/owner, special)
 	var/obj/item/bodypart/right_leg = owner.get_bodypart(BODY_ZONE_R_LEG)
 	var/obj/item/bodypart/left_leg = owner.get_bodypart(BODY_ZONE_L_LEG)
-	if(special)
-		right_leg?.drop_limb(special, FALSE, FALSE)
-		left_leg?.drop_limb(special, FALSE, FALSE)
+	if(special || HAS_TRAIT(owner, TRAIT_GODMODE) || HAS_TRAIT(owner, TRAIT_NODISMEMBER))
+		right_leg?.drop_limb(TRUE, FALSE, FALSE)
+		left_leg?.drop_limb(TRUE, FALSE, FALSE)
+		var/obj/item/clothing/shoesprobably = owner.get_item_by_slot(ITEM_SLOT_FEET)
+		if(!isnull(shoesprobably))
+			owner.dropItemToGround(shoesprobably, force = TRUE)
 		return
-	if(!(HAS_TRAIT(owner, TRAIT_GODMODE) || HAS_TRAIT(owner, TRAIT_NODISMEMBER)))
-		right_leg?.dismember()
-		left_leg?.dismember()
-		return
-	qdel(right_leg)
-	qdel(left_leg)
+	right_leg?.dismember()
+	left_leg?.dismember()
 
 /// the bodypart overlay for cerulean fish tails!
 /datum/bodypart_overlay/mutant/tail/fish/cerulean
@@ -268,10 +267,11 @@
 	for(var/zone in ephemeral_limbs)
 		if(isnull(ephemeral_limbs[zone]))
 			var/obj/item/bodypart/leg/new_leg
+			var/is_digi_species = limb_owner.dna.species.digitigrade_customization
 			switch(zone)
 				if(BODY_ZONE_L_LEG)
 					if(limb_owner.dna.species.bodypart_overrides[BODY_ZONE_L_LEG])
-						if(limb_owner.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS)
+						if(is_digi_species && limb_owner.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS)
 							new_leg = /obj/item/bodypart/leg/left/digitigrade
 						else
 							new_leg = limb_owner.dna?.species?.bodypart_overrides[BODY_ZONE_L_LEG]
@@ -280,7 +280,7 @@
 
 				if(BODY_ZONE_R_LEG)
 					if(limb_owner.dna.species.bodypart_overrides[BODY_ZONE_R_LEG])
-						if(limb_owner.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS)
+						if(is_digi_species && limb_owner.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS)
 							new_leg = /obj/item/bodypart/leg/right/digitigrade
 						else
 							new_leg = limb_owner.dna?.species?.bodypart_overrides[BODY_ZONE_R_LEG]
@@ -301,16 +301,23 @@
 
 	limb_owner.set_resting(FALSE, silent = TRUE, instant = TRUE)
 
-/obj/item/organ/tail/fish/cerulean/ephemeral/proc/toggle_legs(mob/living/carbon/source)
+/obj/item/organ/tail/fish/cerulean/ephemeral/proc/toggle_legs(mob/living/carbon/human/source)
 	SIGNAL_HANDLER
+	//load tail if wet
 	if(!loc && HAS_TRAIT(source, TRAIT_IS_WET))
 		source.dna.species.bodypart_overrides = GLOB.species_prototypes[source.dna.species.type].bodypart_overrides
 		for(var/zone in ephemeral_limbs)
 			var/obj/item/bodypart/ephemeral_limb = source.get_bodypart(zone)
+			if(isnull(ephemeral_limb))
+				continue
 			ephemeral_limb.drop_limb(TRUE, FALSE, FALSE)
 			ephemeral_limb.moveToNullspace()
 			ephemeral_limbs[zone] = ephemeral_limb
 		Insert(source, TRUE)
+		var/obj/item/bodypart/chest/tail_holder = source.get_bodypart(BODY_ZONE_CHEST)
+		if(!isnull(tail_holder) && source.wear_suit?.supports_variations_flags & CERULEAN_VARIATIONS)
+			tail_holder.remove_bodypart_texture(/datum/bodypart_texture/mesh)
+	//load legs if dry
 	else if(istype(loc, /obj/item/bodypart/chest))
 		source.dna.species.bodypart_overrides[BODY_ZONE_L_LEG] = ephemeral_limbs[BODY_ZONE_L_LEG].type
 		source.dna.species.bodypart_overrides[BODY_ZONE_R_LEG] = ephemeral_limbs[BODY_ZONE_R_LEG].type
@@ -321,3 +328,5 @@
 				ephemeral_limb.update_draw_color()
 				ephemeral_limb.update_limb(FALSE, TRUE)
 				ephemeral_limbs -= ephemeral_limb
+	//regen clothing icons
+	source.regenerate_icons()

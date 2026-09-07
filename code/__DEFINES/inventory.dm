@@ -177,7 +177,7 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define CLOTHING_CERULEAN_MASK_LEGS (1<<4)
 ///The clothing flag which cuts pixels between the legs
 #define CLOTHING_CERULEAN_MASK_INBETWEEN (1<<5)
-/// All variation flags which render on cerulean bodyshape
+/// All variation flags which can render on cerulean bodyshapes
 #define CERULEAN_VARIATIONS (CLOTHING_CERULEAN_VARIATION|CLOTHING_CERULEAN_MASK_LEGS|CLOTHING_CERULEAN_MASK_INBETWEEN)
 
 //flags for covering body parts
