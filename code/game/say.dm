@@ -401,7 +401,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 		// can know their job even if they don't carry an ID.
 		var/datum/record/crew/found_record = find_record(name)
 		if(found_record)
-			gender = LOWER_TEXT(found_record.gender)
+			gender = found_record.get_byond_gender()
 			job = found_record.rank
 		else
 			job = "Unknown"

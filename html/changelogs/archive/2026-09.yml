@@ -74,3 +74,8 @@
       than when their owner dies.
   Twaticus:
   - image: reverts/resprites multiple walls/floors from 'floors and walls pr'
+2026-09-07:
+  Melbert:
+  - bugfix: Fixes some particle effects being invisible when on floor objects (or
+      the floor itself)
+  - bugfix: Players with it/its pronouns don't break radio messages
