@@ -224,7 +224,7 @@
 				uniform = /obj/item/clothing/under/color/jumpskirt/black
 			else
 				uniform = /obj/item/clothing/under/color/black
-	if(rand(0,3) == 1)
+	if(rand(0,5) == 1)
 		head = /obj/item/clothing/head/soft/black
 
 /datum/outfit/pirate/siren/post_equip(mob/living/carbon/human/equipped)

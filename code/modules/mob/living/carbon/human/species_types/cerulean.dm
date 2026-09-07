@@ -161,8 +161,12 @@
 		right_leg?.drop_limb(special, FALSE, FALSE)
 		left_leg?.drop_limb(special, FALSE, FALSE)
 		return
-	right_leg?.dismember()
-	left_leg?.dismember()
+	if(!(HAS_TRAIT(owner, TRAIT_GODMODE) || HAS_TRAIT(owner, TRAIT_NODISMEMBER)))
+		right_leg?.dismember()
+		left_leg?.dismember()
+		return
+	qdel(right_leg)
+	qdel(left_leg)
 
 /// the bodypart overlay for cerulean fish tails!
 /datum/bodypart_overlay/mutant/tail/fish/cerulean
@@ -190,7 +194,6 @@
 		if(!istype(accessory_datum, /datum/sprite_accessory/tails/fish/cerulean))
 			feature_list -= accessory
 	return feature_list
-
 
 /*
  * same as parent, but with a pretty skeleton texture
@@ -223,3 +226,98 @@
 
 /datum/bodypart_texture/abyssal_cerulean/can_texture_bodypart(obj/item/bodypart/bodypart_owner)
 	return TRUE
+
+/*
+ *
+ */
+/obj/item/organ/tail/fish/cerulean/ephemeral
+	var/datum/weakref/owner_ref
+	var/alist/ephemeral_limbs = alist(
+		BODY_ZONE_L_LEG = null,
+		BODY_ZONE_R_LEG = null,
+	)
+
+/obj/item/organ/tail/fish/cerulean/ephemeral/on_mob_insert(mob/living/carbon/owner, special)
+	. = ..()
+	if(special || !owner)
+		return
+	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_IS_WET), SIGNAL_REMOVETRAIT(TRAIT_IS_WET)), PROC_REF(toggle_legs))
+
+/obj/item/organ/tail/fish/cerulean/ephemeral/on_mob_remove(mob/living/carbon/owner, special)
+	. = ..()
+	if(special || !owner)
+		return
+	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_IS_WET),	SIGNAL_REMOVETRAIT(TRAIT_IS_WET)))
+
+/obj/item/organ/tail/fish/cerulean/ephemeral/bodypart_insert(obj/item/bodypart/bodypart, mob/living/carbon/limb_owner, movement_flags)
+	if(!isnull(owner_ref) && limb_owner == owner_ref.resolve())
+		return ..()
+	else
+		..()
+		set_up(bodypart, limb_owner)
+		owner_ref = WEAKREF(limb_owner)
+
+/obj/item/organ/tail/fish/cerulean/ephemeral/proc/set_up(obj/item/bodypart/bodypart, mob/living/carbon/limb_owner)
+
+	var/list/missing_limbs = limb_owner.get_missing_limbs()
+	for(var/obj/item/bodypart/missing_limb in missing_limbs)
+		if(!(missing_limb.body_zone in GLOB.leg_zones))
+			continue
+		ephemeral_limbs[missing_limb.body_zone] = new missing_limb
+
+	for(var/zone in ephemeral_limbs)
+		if(isnull(ephemeral_limbs[zone]))
+			var/obj/item/bodypart/leg/new_leg
+			switch(zone)
+				if(BODY_ZONE_L_LEG)
+					if(limb_owner.dna.species.bodypart_overrides[BODY_ZONE_L_LEG])
+						if(limb_owner.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS)
+							new_leg = /obj/item/bodypart/leg/left/digitigrade
+						else
+							new_leg = limb_owner.dna?.species?.bodypart_overrides[BODY_ZONE_L_LEG]
+					else
+						new_leg = /obj/item/bodypart/leg/left
+
+				if(BODY_ZONE_R_LEG)
+					if(limb_owner.dna.species.bodypart_overrides[BODY_ZONE_R_LEG])
+						if(limb_owner.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS)
+							new_leg = /obj/item/bodypart/leg/right/digitigrade
+						else
+							new_leg = limb_owner.dna?.species?.bodypart_overrides[BODY_ZONE_R_LEG]
+					else
+						new_leg = /obj/item/bodypart/leg/right
+
+			limb_owner.dna.species.bodypart_overrides[zone] = new_leg.type
+			ephemeral_limbs[zone] = new new_leg
+
+	Remove(limb_owner, TRUE)
+
+	for(var/zone in ephemeral_limbs)
+		var/obj/item/bodypart/leg/ephemeral_limb = ephemeral_limbs[zone]
+		if(ephemeral_limb.try_attach_limb(limb_owner, TRUE))
+			ephemeral_limb.update_draw_color()
+			ephemeral_limb.update_limb(FALSE, TRUE)
+			ephemeral_limbs -= ephemeral_limb
+
+	limb_owner.set_resting(FALSE, silent = TRUE, instant = TRUE)
+
+/obj/item/organ/tail/fish/cerulean/ephemeral/proc/toggle_legs(mob/living/carbon/source)
+	SIGNAL_HANDLER
+	if(!loc && HAS_TRAIT(source, TRAIT_IS_WET))
+		source.dna.species.bodypart_overrides = GLOB.species_prototypes[source.dna.species.type].bodypart_overrides
+		for(var/zone in ephemeral_limbs)
+			var/obj/item/bodypart/ephemeral_limb = source.get_bodypart(zone)
+			ephemeral_limb.drop_limb(TRUE, FALSE, FALSE)
+			ephemeral_limb.moveToNullspace()
+			ephemeral_limbs[zone] = ephemeral_limb
+		Insert(source, TRUE)
+	else if(istype(loc, /obj/item/bodypart/chest))
+		source.dna.species.bodypart_overrides[BODY_ZONE_L_LEG] = ephemeral_limbs[BODY_ZONE_L_LEG].type
+		source.dna.species.bodypart_overrides[BODY_ZONE_R_LEG] = ephemeral_limbs[BODY_ZONE_R_LEG].type
+		Remove(owner, TRUE)
+		for(var/zone in ephemeral_limbs)
+			var/obj/item/bodypart/ephemeral_limb = ephemeral_limbs[zone]
+			if(ephemeral_limb.try_attach_limb(source, TRUE))
+				ephemeral_limb.update_draw_color()
+				ephemeral_limb.update_limb(FALSE, TRUE)
+				ephemeral_limbs -= ephemeral_limb
