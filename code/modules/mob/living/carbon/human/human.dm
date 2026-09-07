@@ -581,7 +581,8 @@
 /mob/living/carbon/human/cuff_resist(obj/item/cuffs, breakouttime = null, cuff_break = 0)
 	if(HAS_TRAIT(src, TRAIT_HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
-		if(..(cuffs, cuff_break = FAST_CUFFBREAK))
+		. = ..(cuffs, cuff_break = FAST_CUFFBREAK)
+		if(.)
 			dropItemToGround(cuffs)
 	else
 		. = ..()
