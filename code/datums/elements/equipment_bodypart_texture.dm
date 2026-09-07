@@ -7,18 +7,6 @@
 	var/body_zone
 	/// Texture we apply to the bodypart
 	var/bodypart_overlay_type
-	/// An associated list of bodyshapes holding clothing items which skip texture rendering
-	var/alist/bodyshape_blacklist = alist(
-		BODYSHAPE_CERULEAN = list(
-			/obj/item/clothing/suit/mod, //we have our own pretty cerulean tail sprites
-		),
-	)
-
-/datum/element/equipment_bodypart_texture/proc/run_blacklist(obj/item/equipped_item, mob/living/carbon/equipper)
-	for(var/bodyshape in bodyshape_blacklist)
-		if((equipper.bodyshape & bodyshape) && (is_type_in_list(equipped_item, bodyshape_blacklist[bodyshape])))
-			return FALSE
-	return TRUE
 
 /datum/element/equipment_bodypart_texture/Attach(datum/target, body_zone, bodypart_overlay_type)
 	. = ..()
@@ -49,8 +37,8 @@
 
 	if(!(slot & equipped_item.slot_flags))
 		return
-	if(!run_blacklist(equipped_item, equipper))
-		return
+	if((equipped_item.supports_variations_flags & CERULEAN_VARIATIONS) && (equipper.bodyshape & BODYSHAPE_CERULEAN))
+		return //dont add the overlay when we have sprites already
 
 	var/obj/item/bodypart/affected_bodypart = equipper.get_bodypart(body_zone)
 	affected_bodypart?.add_bodypart_texture(bodypart_overlay_type)
