@@ -537,7 +537,7 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	. = ..()
 	remove_buffs(affected_mob)
 	var/obj/item/organ/heart/heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
-	if(affected_mob.health < (5 * HEALTH_THRESHOLD_DEAD) || (heart?.organ_flags & ORGAN_FAILING)) // Honestly commendable if you get -500
+	if(affected_mob.health < (5 * affected_mob.dead_threshold) || (heart?.organ_flags & ORGAN_FAILING)) // Honestly commendable if you get -500
 		explosion(affected_mob, light_impact_range = 1, explosion_cause = src)
 		affected_mob.visible_message(span_boldwarning("[affected_mob]'s heart explodes!"))
 		qdel(heart)
