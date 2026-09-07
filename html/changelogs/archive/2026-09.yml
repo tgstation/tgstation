@@ -75,7 +75,29 @@
   Twaticus:
   - image: reverts/resprites multiple walls/floors from 'floors and walls pr'
 2026-09-07:
+  ArcaneMusic:
+  - rscadd: 'Added a new machine to the prison labor camp on lavaland: The produceporter.
+      Send grown crops to service staff in exchange for labor points!'
+  - rscadd: The license plate press will now grant 10 labor points every time a new
+      plate is pressed.
+  - qol: The labor camp console can now take a prisoner ID straight from your hand.
+  - sound: Added sfx to the license plate press.
+  FalloutFalcon:
+  - bugfix: 'Chem dispenser custom recipes (and maybe a few other spots) now properly
+      clamp text when using `Input: Enable TGUI`'
+  Maia-J:
+  - bugfix: Mobs that are aggro grabbed and are meant to escape captivity actually
+      do so.
   Melbert:
   - bugfix: Fixes some particle effects being invisible when on floor objects (or
       the floor itself)
   - bugfix: Players with it/its pronouns don't break radio messages
+  Odairu:
+  - bugfix: AI are no longer stuck in hard crit forever post-revive
+  PapaMichael:
+  - bugfix: pAIs once again have language and navigate buttons on their UI
+  - bugfix: Fixes inverted logic when cutting a cuffed item.
+  - bugfix: Announcements when radiation storms end now properly show
+  Techbot121:
+  - rscadd: hitsounds to cans
+  - sound: added can_hit.ogg

@@ -1,4 +1,0 @@
-author: "Odairu"
-delete-after: True
-changes:
-  - bugfix: "AI are no longer stuck in hard crit forever post-revive"

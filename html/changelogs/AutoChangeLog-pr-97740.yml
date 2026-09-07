@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Loot panel objects can be interacted with while lying down."
+  - qol: "Loot panel objects can be interacted with at range if you have telekinesis or a weapon with reach."
+  - qol: "Blind mobs can see names in the loot panel again, but the panel auto-closes when further than two tiles away."
