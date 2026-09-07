@@ -20,6 +20,8 @@
 	var/list/boombox_acts = list()
 	/// Icon file for radial objects
 	var/radial_icon_file = 'icons/hud/radial_taperecorder.dmi'
+	/// Particle holder for music note effect.
+	var/obj/effect/abstract/particle_holder/music_particles
 
 /obj/item/boombox/Initialize(mapload)
 	. = ..()
@@ -57,7 +59,7 @@
 /obj/item/boombox/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/music_tape))
 		if(tapedeck)
-			balloon_alert(user, "eject first")
+			balloon_alert(user, "eject first!")
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/music_tape/tunes = tool
 		user.transferItemToLoc(tunes, src)
@@ -95,21 +97,16 @@
 	inhand_icon_state = swag_mode ? "boombox_swag" : "boombox"
 	return ..()
 
+/**
+ * Called when the boombox is picked up via clickdrag for handling particle pass-back.
+ */
 /obj/item/boombox/proc/on_drag_pickup(atom/movable/source, atom/over, mob/user)
 	SIGNAL_HANDLER
-	if(user.particles || !src.particles)
-		return
-	user.particles = particles // We're transferring the music particles from the boombox to the user.
 	update_appearance()
 
-/obj/item/boombox/dropped(mob/user, silent)
-	. = ..()
-	if(!user.particles)
-		return
-	if(istype(user.particles, /particles/musical_notes))
-		src.particles =	user.particles
-		user.particles = null
-
+/**
+ * Handles the radial menu of the boombox and it's active effects when selected.
+ */
 /obj/item/boombox/proc/display_radial_menu(mob/living/user)
 	if(!user)
 		return FALSE
@@ -123,9 +120,7 @@
 				return
 			boombox_audio = tapedeck.song_inside
 			boombox_audio = new boombox_audio(src)
-			particles = new /particles/musical_notes
-			if(!user.particles && loc == user)
-				user.particles = particles
+			music_particles = new (src, /particles/musical_notes)
 			boombox_audio.start()
 			icon_state = "boombox_on"
 			update_appearance()
@@ -172,9 +167,7 @@
 	boombox_audio.stop()
 	boombox_audio = qdel(boombox_audio)
 
-	if(particles)
-		particles = qdel(particles)
-	if(loc == user && istype(user?.particles, /particles/musical_notes))
-		qdel(user.particles)
+	if(music_particles)
+		QDEL_NULL(music_particles)
 	icon_state = "boombox"
 	update_appearance()
