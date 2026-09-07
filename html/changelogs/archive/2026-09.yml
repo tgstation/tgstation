@@ -1,0 +1,103 @@
+2026-09-01:
+  Absolucy:
+  - bugfix: Fixed the existence of borgs sometimes causing the orbit menu to crash.
+  Fghj240:
+  - qol: reinforced windows hint that they can be secured on examine
+  - bugfix: plastitanium windows are in the correct state once constructed
+  Melbert:
+  - rscadd: Head revolutionaries can set a "conversion guideline" - a short message
+      sent to all people they convert - in their antag ui, to help them bring some
+      order to the revolution. It is, however, ultimately a *guideline*. You're note
+      forced to follow it but are expected to abide by it .
+  - bugfix: Fruit punch healing updates correctly
+  PapaMichael:
+  - bugfix: Cats no longer try to run away from themselves after losing a catfight,
+      instead running from the cat they actually lost to
+  - bugfix: Revenants are no longer immune to all damage
+  - qol: The AI Malfunction UI now shows the number of currently hacked APCs
+  necromanceranne:
+  - balance: Spears no longer break from overuse without repair.
+  projectkepler-ru:
+  - balance: .38 Truestrike now does 20 damage and has better AP.
+2026-09-02:
+  Fghj240:
+  - bugfix: moves deathsquad thermal vision to their IFF visors
+  - spellcheck: tactical EFF visors are now called IFF visors.
+  - qol: deathsquaddies can no longer check security records with their eyes
+  JohnFulpWillard:
+  - bugfix: Psychologist PDA is now paintable.
+  - qol: '"PDA" in the PDA painter is now called "Assistant PDA", which it is.'
+  PapaMichael:
+  - bugfix: Chat should scroll properly on some messages that wrap now.
+  TheBoondock:
+  - rscadd: Added pillow lance and mattress shield
+  - rscadd: Pillow lance deals stamina damage and allows user to charge once wielded,
+      to charge simply contiously run in a direction and it consumes stamina the more
+      you run
+  - rscadd: Mattress shield deals stamina damage and allows user yto fortify, gaining
+      more  block chance and more stamina damage, the shield breaks easily as it is
+      still a mattress
+  - rscadd: You can now buy lance and mattress from toy vendor
+  - rscadd: Maintenance now have a chance to spawn lance and mattress shield
+2026-09-03:
+  Melbert:
+  - bugfix: Fix DNA consoles being able to print anomalous mutations
+  - bugfix: Fix weird issue where mutation list in the DNA console would go to 1 wide
+  - rscdel: Revenant can no longer affect emergency shuttle console with Malfunction
+  - balance: Mobs subjected to time stop are now slightly more stopped (chems will
+      no longer metabolize, bleeding will pause, etc).
+  - balance: Syndicate bombs no longer tick towards detonation when time stopped
+  - refactor: Refactored timestop a teeny bit, primarily its interaction with holoparasites,
+      report any issues next time you jojo larp
+  PapaMichael:
+  - bugfix: Setting SHIFT+number keybinds now works
+2026-09-04:
+  PapaMichael:
+  - bugfix: Icemoon tiles no longer count towards the blob's victory
+2026-09-05:
+  SmArtKar:
+  - bugfix: Fixed luminetworked MODsuit cores sometimes not charging from the network
+  - qol: Made Candela LoS checks a bit more forgiving
+  TheBoondock:
+  - code_imp: optimize compare() by adding total moles check
+2026-09-06:
+  Maia-J:
+  - bugfix: Pod dropped mobs no longer have broken AI that's stuck trying to resist
+      forever.
+  Melbert:
+  - sound: Modsuits now have footstep sounds
+  - sound: Magboots now have footstep sounds
+  - sound: Robotic limbs now have footstep sounds (only applies when barefoot)
+  - sound: When punching, kicking, or smashing someone's robotic limbs, an alternate
+      hitsound is played
+  - qol: Tails auto-stop wagging when its owner falls unconscious or into crit, rather
+      than when their owner dies.
+  Twaticus:
+  - image: reverts/resprites multiple walls/floors from 'floors and walls pr'
+2026-09-07:
+  ArcaneMusic:
+  - rscadd: 'Added a new machine to the prison labor camp on lavaland: The produceporter.
+      Send grown crops to service staff in exchange for labor points!'
+  - rscadd: The license plate press will now grant 10 labor points every time a new
+      plate is pressed.
+  - qol: The labor camp console can now take a prisoner ID straight from your hand.
+  - sound: Added sfx to the license plate press.
+  FalloutFalcon:
+  - bugfix: 'Chem dispenser custom recipes (and maybe a few other spots) now properly
+      clamp text when using `Input: Enable TGUI`'
+  Maia-J:
+  - bugfix: Mobs that are aggro grabbed and are meant to escape captivity actually
+      do so.
+  Melbert:
+  - bugfix: Fixes some particle effects being invisible when on floor objects (or
+      the floor itself)
+  - bugfix: Players with it/its pronouns don't break radio messages
+  Odairu:
+  - bugfix: AI are no longer stuck in hard crit forever post-revive
+  PapaMichael:
+  - bugfix: pAIs once again have language and navigate buttons on their UI
+  - bugfix: Fixes inverted logic when cutting a cuffed item.
+  - bugfix: Announcements when radiation storms end now properly show
+  Techbot121:
+  - rscadd: hitsounds to cans
+  - sound: added can_hit.ogg

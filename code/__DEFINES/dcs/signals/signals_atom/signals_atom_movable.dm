@@ -84,8 +84,10 @@
 #define COMSIG_MOVABLE_PIPE_EJECTING "movable_pipe_ejecting"
 ///called when the movable successfully has its anchored var changed, from base atom/movable/set_anchored(): (value)
 #define COMSIG_MOVABLE_SET_ANCHORED "movable_set_anchored"
-///from base of atom/movable/setGrabState(): (newstate)
+///from base of atom/movable/setGrabState(). Called on the person grabbing: (newstate)
 #define COMSIG_MOVABLE_SET_GRAB_STATE "living_set_grab_state"
+///from base of atom/movable/setGrabState(). Called on the thing that got grabbed: (newstate)
+#define COMSIG_MOVABLE_CHANGED_GRABBED_STATE "movable_changed_grabbed_state"
 /// from base of mob/living/resist_grab(), to the grabber: (mob/living/grabbed, list/grab_stats)
 #define COMSIG_MOVABLE_GRABBED_RESISTING "movable_grabbed_resisting"
 	#define GRAB_STAT_EFFECTIVE_STATE 1
