@@ -523,9 +523,9 @@ Basically, we fill the time between now and 2s from now with hands based off the
 	var/need_mob_update
 	need_mob_update += affected_mob.adjust_brute_loss(20 * creation_impurity * metabolization_ratio * seconds_per_tick, required_bodytype = affected_bodytype)
 	need_mob_update += affected_mob.adjust_organ_loss(ORGAN_SLOT_HEART, 4 * ((1 + creation_impurity) * metabolization_ratio * seconds_per_tick), required_organ_flag = affected_organ_flags)
-	if(affected_mob.health < HEALTH_THRESHOLD_CRIT)
+	if(affected_mob.health < affected_mob.crit_threshold)
 		affected_mob.add_movespeed_modifier(/datum/movespeed_modifier/reagent/nooartrium)
-	if(affected_mob.health < HEALTH_THRESHOLD_FULLCRIT)
+	if(affected_mob.health < affected_mob.hardcrit_threshold)
 		affected_mob.add_actionspeed_modifier(/datum/actionspeed_modifier/nooartrium)
 	var/obj/item/organ/heart/heart = affected_mob.get_organ_slot(ORGAN_SLOT_HEART)
 	if(isnull(heart) || (heart.organ_flags & ORGAN_FAILING))

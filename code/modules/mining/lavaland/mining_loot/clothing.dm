@@ -57,7 +57,7 @@
 			if(guardian.loc == src)
 				continue
 			consume_guardian(guardian)
-	else if (source.health > HEALTH_THRESHOLD_CRIT)
+	else if (source.health > source.crit_threshold)
 		for (var/mob/guardian in guardians)
 			if(guardian.loc != src)
 				continue
