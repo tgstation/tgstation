@@ -582,8 +582,6 @@
 	if(HAS_TRAIT(src, TRAIT_HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
 		. = ..(cuffs, cuff_break = FAST_CUFFBREAK)
-		if(.)
-			dropItemToGround(cuffs)
 	else
 		. = ..()
 
