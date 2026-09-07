@@ -101,7 +101,7 @@ There are several things that need to be remembered:
 		if(digi && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
 			icon_file = DIGITIGRADE_UNIFORM_FILE
 		if((bodyshape & BODYSHAPE_CERULEAN) && (uniform.supports_variations_flags & CLOTHING_CERULEAN_VARIATION))
-			icon_file = CERULEAN_UNDER_FILE
+			icon_file = CERULEAN_UNIFORM_FILE
 		//Female sprites have lower priority than digitigrade sprites
 		var/chest_is_dimorphic
 		if(dna.species.sexes)
@@ -366,12 +366,26 @@ There are several things that need to be remembered:
 		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON))
 			return
 
-		var/icon_file = DEFAULT_SUIT_FILE
+		var/icon_file
+		var/handled_by_bodyshape = TRUE
+		var/state_override
 
 		if((bodyshape & BODYSHAPE_CERULEAN) && (worn_item.supports_variations_flags & CLOTHING_CERULEAN_VARIATION))
 			icon_file = CERULEAN_SUIT_FILE
+			if(physique == FEMALE)
+				state_override = "[RESOLVE_ICON_STATE(worn_item)]_f"
 
-		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
+		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
+			icon_file = DEFAULT_SUIT_FILE
+			handled_by_bodyshape = FALSE
+
+		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(
+			default_layer = SUIT_LAYER,
+			default_icon_file = icon_file,
+			override_state = handled_by_bodyshape ? state_override : null,
+			override_file = handled_by_bodyshape ? icon_file : null,
+			bodyshape = bodyshape,
+		)
 		apply_height(suit_overlay, ENTIRE_BODY)
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_suit_offset?.apply_offset(suit_overlay)
