@@ -157,7 +157,10 @@
 /obj/item/organ/tail/fish/cerulean/proc/get_your_sealegs(mob/living/carbon/owner, special)
 	var/obj/item/bodypart/right_leg = owner.get_bodypart(BODY_ZONE_R_LEG)
 	var/obj/item/bodypart/left_leg = owner.get_bodypart(BODY_ZONE_L_LEG)
-	if(special || HAS_TRAIT(owner, TRAIT_GODMODE) || HAS_TRAIT(owner, TRAIT_NODISMEMBER))
+	if(special \
+		|| HAS_TRAIT(owner, TRAIT_GODMODE) \
+		|| HAS_TRAIT(owner, TRAIT_NODISMEMBER) \
+		|| type == /obj/item/organ/tail/fish/cerulean/ephemeral)
 		right_leg?.drop_limb(TRUE, FALSE, FALSE)
 		left_leg?.drop_limb(TRUE, FALSE, FALSE)
 		var/obj/item/clothing/shoesprobably = owner.get_item_by_slot(ITEM_SLOT_FEET)
@@ -227,7 +230,8 @@
 	return TRUE
 
 /*
- *
+ * a subtype of the cerulean tail that only exists on the owner when they have wet stacks
+ * could be cool as a component but i dont think we need more magical anime shit
  */
 /obj/item/organ/tail/fish/cerulean/ephemeral
 	var/datum/weakref/owner_ref
@@ -248,6 +252,14 @@
 		return
 	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_IS_WET),	SIGNAL_REMOVETRAIT(TRAIT_IS_WET)))
 
+/obj/item/organ/tail/fish/cerulean/ephemeral/on_surgical_removal(mob/living/user, obj/item/bodypart/limb, obj/item/tool)
+	. = ..()
+	owner_ref = null
+	ephemeral_limbs = alist(
+		BODY_ZONE_L_LEG = null,
+		BODY_ZONE_R_LEG = null,
+	)
+
 /obj/item/organ/tail/fish/cerulean/ephemeral/bodypart_insert(obj/item/bodypart/bodypart, mob/living/carbon/limb_owner, movement_flags)
 	if(!isnull(owner_ref) && limb_owner == owner_ref.resolve())
 		return ..()
@@ -257,13 +269,13 @@
 		owner_ref = WEAKREF(limb_owner)
 
 /obj/item/organ/tail/fish/cerulean/ephemeral/proc/set_up(obj/item/bodypart/bodypart, mob/living/carbon/limb_owner)
-
+	// identify if owner is already missing limbs and set them up
 	var/list/missing_limbs = limb_owner.get_missing_limbs()
 	for(var/obj/item/bodypart/missing_limb in missing_limbs)
 		if(!(missing_limb.body_zone in GLOB.leg_zones))
 			continue
 		ephemeral_limbs[missing_limb.body_zone] = new missing_limb
-
+	// if for some reason get_missing_limbs() didn't fill our var, manually fill them
 	for(var/zone in ephemeral_limbs)
 		if(isnull(ephemeral_limbs[zone]))
 			var/obj/item/bodypart/leg/new_leg
@@ -272,7 +284,7 @@
 				if(BODY_ZONE_L_LEG)
 					if(limb_owner.dna.species.bodypart_overrides[BODY_ZONE_L_LEG])
 						if(is_digi_species && limb_owner.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS)
-							new_leg = /obj/item/bodypart/leg/left/digitigrade
+							new_leg = /obj/item/bodypart/leg/left/digitigrade //:steam_happy:
 						else
 							new_leg = limb_owner.dna?.species?.bodypart_overrides[BODY_ZONE_L_LEG]
 					else
@@ -289,21 +301,21 @@
 
 			limb_owner.dna.species.bodypart_overrides[zone] = new_leg.type
 			ephemeral_limbs[zone] = new new_leg
-
+	// time to detach the tail
 	Remove(limb_owner, TRUE)
-
+	// add the legs we just made
 	for(var/zone in ephemeral_limbs)
 		var/obj/item/bodypart/leg/ephemeral_limb = ephemeral_limbs[zone]
 		if(ephemeral_limb.try_attach_limb(limb_owner, TRUE))
 			ephemeral_limb.update_draw_color()
 			ephemeral_limb.update_limb(FALSE, TRUE)
 			ephemeral_limbs -= ephemeral_limb
-
+	// act like nothing happened
 	limb_owner.set_resting(FALSE, silent = TRUE, instant = TRUE)
 
 /obj/item/organ/tail/fish/cerulean/ephemeral/proc/toggle_legs(mob/living/carbon/human/source)
 	SIGNAL_HANDLER
-	//load tail if wet
+	// load tail if wet
 	if(!loc && HAS_TRAIT(source, TRAIT_IS_WET))
 		source.dna.species.bodypart_overrides = GLOB.species_prototypes[source.dna.species.type].bodypart_overrides
 		for(var/zone in ephemeral_limbs)
@@ -314,6 +326,7 @@
 			ephemeral_limb.moveToNullspace()
 			ephemeral_limbs[zone] = ephemeral_limb
 		Insert(source, TRUE)
+		// remove mesh texture if there and we dont need it
 		var/obj/item/bodypart/chest/tail_holder = source.get_bodypart(BODY_ZONE_CHEST)
 		if(!isnull(tail_holder) && source.wear_suit?.supports_variations_flags & CERULEAN_VARIATIONS)
 			tail_holder.remove_bodypart_texture(/datum/bodypart_texture/mesh)
