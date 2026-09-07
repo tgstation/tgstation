@@ -27,6 +27,7 @@
 	update_available_icons()
 	register_context()
 	RegisterSignal(src, COMSIG_MOUSEDROP_ONTO, PROC_REF(on_drag_pickup))
+	
 /obj/item/boombox/deconstruct(disassembled)
 	. = ..()
 	if(tapedeck)

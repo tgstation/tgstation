@@ -22,15 +22,13 @@
 	. = ..()
 	. += span_notice("You could probably play this in a Nanotrasen Brand [span_smallnoticeital("tm")] \
 		Nanomusic [span_smallnoticeital("tm")] boombox, at least until they trademark the concept of a boombox, too.")
+	if(song_name && song_inside)
+		. += span_notice("The track is labled [span_boldnotice(song_name)].")
 
 /obj/item/music_tape/Initialize(mapload)
 	. = ..()
 	if(!song_inside)
 		CRASH("We spawned a tape deck without any looping audio inside.")
-
-/obj/item/music_tape/examine(mob/user)
-	. = ..()
-	. += span_notice("The track is labled [span_boldnotice(song_name)].")
 
 /obj/item/music_tape/rock
 	icon_state = "tape_red"
