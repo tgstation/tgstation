@@ -52,7 +52,6 @@
 
 /obj/item/music_tape/jazz/proc/add_deep_lore()
 	AddElement(/datum/element/examine_lore, \
-		lore_hint = span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src]."), \
 		lore = "Jazz is, by all definitions, completely legal in the spinward sector. After all, sounds\
 			tend not to be the sort of thing that a major corporation can effectively police.\
 			Freeform Jazz, on the other hand, had taken on a scandalous identity in the late 2590s, following\

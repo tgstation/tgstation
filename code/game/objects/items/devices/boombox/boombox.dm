@@ -27,7 +27,7 @@
 	update_available_icons()
 	register_context()
 	RegisterSignal(src, COMSIG_MOUSEDROP_ONTO, PROC_REF(on_drag_pickup))
-	
+
 /obj/item/boombox/deconstruct(disassembled)
 	. = ..()
 	if(tapedeck)
@@ -47,11 +47,12 @@
 
 /obj/item/boombox/click_alt_secondary(mob/user)
 	swag_mode = !swag_mode
-	balloon_alert(user, "wearing [swag_mode ? "on shoulder" : "in hand"].")
+	balloon_alert(user, "wearing [swag_mode ? "on shoulder" : "in hand"]")
 	if(loc == user)
 		playsound(user, pickup_sound, 30)
 	update_appearance()
 	user.update_held_items()
+	return CLICK_ACTION_SUCCESS
 
 /obj/item/boombox/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/music_tape))
@@ -118,7 +119,7 @@
 	switch(choice)
 		if("Play")
 			if(!tapedeck)
-				balloon_alert(user, "no tape")
+				balloon_alert(user, "no tape!")
 				return
 			boombox_audio = tapedeck.song_inside
 			boombox_audio = new boombox_audio(src)
@@ -132,7 +133,7 @@
 
 		if("Stop")
 			if(!boombox_audio)
-				balloon_alert(user, "nothing playing")
+				balloon_alert(user, "nothing playing!")
 				return
 			stop_music(user)
 			active = FALSE
@@ -151,7 +152,7 @@
 	boombox_acts = list()
 	if(!active)
 		boombox_acts += list("Play" = image(radial_icon_file, "play"))
-	if(active)
+	else
 		boombox_acts += list("Stop" = image(radial_icon_file, "stop"))
 	if(tapedeck)
 		boombox_acts += list("Eject" = image(radial_icon_file, "eject"))
