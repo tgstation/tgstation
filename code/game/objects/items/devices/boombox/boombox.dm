@@ -8,6 +8,7 @@
 	pickup_sound = 'sound/items/handling/ammobox_pickup.ogg'
 	custom_premium_price = PAYCHECK_COMMAND * 7
 	interaction_flags_item = parent_type::interaction_flags_item & ~INTERACT_ITEM_ATTACK_HAND_PICKUP
+	custom_materials = (/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	/// Is the boombox actively playing anything?
 	var/active = FALSE
 	/// Is the boombox being worn on the holder's shoulder?
@@ -28,10 +29,8 @@
 	AddElement(/datum/element/drag_pickup)
 	update_available_icons()
 	register_context()
-	RegisterSignal(src, COMSIG_MOUSEDROP_ONTO, PROC_REF(on_drag_pickup))
 
 /obj/item/boombox/deconstruct(disassembled)
-	. = ..()
 	if(tapedeck)
 		tapedeck.forceMove(drop_location())
 
@@ -97,12 +96,9 @@
 	inhand_icon_state = swag_mode ? "boombox_swag" : "boombox"
 	return ..()
 
-/**
- * Called when the boombox is picked up via clickdrag for handling particle pass-back.
- */
-/obj/item/boombox/proc/on_drag_pickup(atom/movable/source, atom/over, mob/user)
-	SIGNAL_HANDLER
-	update_appearance()
+/obj/item/boombox/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)
+	. = ..()
+	update_appearance() //Update appearance when dragged for shoulder icon state.
 
 /**
  * Handles the radial menu of the boombox and it's active effects when selected.
@@ -119,8 +115,7 @@
 				balloon_alert(user, "no tape!")
 				return
 			boombox_audio = tapedeck.song_inside
-			boombox_audio = new boombox_audio(src)
-			music_particles = new (src, /particles/musical_notes)
+			music_particles = new (src, /particles/musical_notes, PARTICLE_ATTACH_MOB)
 			boombox_audio.start()
 			icon_state = "boombox_on"
 			update_appearance()
@@ -165,7 +160,7 @@
 	if(!boombox_audio)
 		return
 	boombox_audio.stop()
-	boombox_audio = qdel(boombox_audio)
+	boombox_audio = null
 
 	if(music_particles)
 		QDEL_NULL(music_particles)

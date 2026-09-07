@@ -29,6 +29,7 @@
 	. = ..()
 	if(!song_inside)
 		CRASH("We spawned a tape deck without any looping audio inside.")
+	song_inside = new song_inside(src)
 
 /obj/item/music_tape/rock
 	icon_state = "tape_red"
@@ -66,6 +67,11 @@
 	song_inside = /datum/looping_sound/boombox/pop
 	song_name = "Bubblegum"
 
+/obj/item/music_tape/robocop
+	song_inside = /datum/looping_sound/boombox/robocop
+	song_name = "Nanotrasen Company Approved Ambiance"
+	custom_premium_price = PAYCHECK_COMMAND * 2.5
+
 // This exists mostly for testing
 /obj/item/storage/box/music_tapes
 	name = "box of music tapes"
@@ -78,5 +84,6 @@
 		/obj/item/music_tape/rock = 1,
 		/obj/item/music_tape/hiphop = 1,
 		/obj/item/music_tape/pop = 1,
+		/obj/item/music_tape/robocop = 1,
 	)
 	generate_items_inside(items_inside, src)
