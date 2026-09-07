@@ -67,6 +67,8 @@
 		return
 	if(stat != DEAD && health <= HEALTH_THRESHOLD_DEAD)
 		death()
+	else if(stat < DEAD)
+		set_stat(STABLE)
 	diag_hud_set_status()
 
 /mob/living/silicon/ai/update_sight()

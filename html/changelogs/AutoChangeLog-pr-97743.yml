@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - rscdel: "Operating computers no longer has the Experiments tab if there's no research servers in existence."

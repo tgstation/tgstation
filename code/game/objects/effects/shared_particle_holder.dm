@@ -27,22 +27,38 @@ GLOBAL_LIST_EMPTY(shared_particles)
 	QDEL_NULL(particles)
 	return ..()
 
-/* Adds (or creates and adds) a shared particle holder
+/**
+ * Adds (or creates and adds) a shared particle holder
+ *
  * Shared particle holders are held in nullspace and added to vis_contents of all atoms using it
  * in order to save clientside performance by making clients only render 3-5 particle holders
  * for 400 objects using them. This should be prioritized over normal particles when possible if it is known
  * that there will be a lot of objects using certain particles.
- * custom_key can be used to create a new pool of already existing particle type in case you're planning to edit holder's color or properties
- * pool_size controls how many particle holders per type are created. Any objects over this cap will pick an existing holder from the pool.
+ *
+ * Args
+ * * particle_type - the type of particle to add
+ * * custom_key - can be used to create a new pool of already existing particle type in case you're planning to edit holder's color or properties
+ * * particle_flags - flags to pass to the particle holder. Not included in the key automatically, so you need to provide a custom key in that case
+ * * pool_size - controls how many particle holders per type are created. Any objects over this cap will pick an existing holder from the pool.
  *
  * Now, this code seems fucked up, that's because this is meant to support both objects (and mobs) and turfs, *however* areas are special
  * and don't have vis_contents, so to avoid copypaste code we do this weirdness
  */
 /atom/proc/add_shared_particles(particle_type, custom_key = null, particle_flags = NONE, pool_size = 3)
+	if(particle_flags && isnull(custom_key))
+		// nb: particle flags are not included in the key automatically to make remove_shared_particles easier to use...
+		// however, if you set particle flags without a custom key, there's a good chance you accidentally just made every source of that particle use those flags
+		CRASH("add_shared_particles was called with flags, but without a key - you must \
+			provide a custom key if you want to use flags! (atom: [type] particle: [particle_type])")
+
 	var/atom/movable/play_pretend = src
-	var/particle_key = custom_key || "[particle_type]"
+	var/is_floor_plane = PLANE_TO_TRUE(plane) == FLOOR_PLANE
+	var/particle_key = "[custom_key || particle_type][is_floor_plane ? "-floor" : ""]"
 	if (!GLOB.shared_particles[particle_key])
-		GLOB.shared_particles[particle_key] = list(list(new /obj/effect/abstract/shared_particle_holder(null, particle_type, particle_flags)), 1)
+		var/obj/effect/abstract/shared_particle_holder/new_holder = new(null, particle_type, particle_flags)
+		if(is_floor_plane) // Keeps us off the floor plane, we'll just sit on game plane
+			new_holder.vis_flags &= ~VIS_INHERIT_PLANE
+		GLOB.shared_particles[particle_key] = list(list(new_holder), 1)
 		play_pretend.vis_contents += GLOB.shared_particles[particle_key][SHARED_PARTICLE_HOLDER_INDEX][1]
 		return GLOB.shared_particles[particle_key][SHARED_PARTICLE_HOLDER_INDEX][1]
 
@@ -53,6 +69,8 @@ GLOBAL_LIST_EMPTY(shared_particles)
 
 	if (length(type_holders) < pool_size)
 		var/obj/effect/abstract/shared_particle_holder/new_holder = new(null, particle_type, particle_flags)
+		if(is_floor_plane) // See above, we don't want to be on floor
+			new_holder.vis_flags &= ~VIS_INHERIT_PLANE
 		type_holders += new_holder
 		play_pretend.vis_contents += new_holder
 		GLOB.shared_particles[particle_key][SHARED_PARTICLE_USER_NUM_INDEX] += 1
@@ -75,6 +93,9 @@ GLOBAL_LIST_EMPTY(shared_particles)
 
 	if (ispath(particle_key))
 		particle_key = "[particle_key]"
+
+	if (PLANE_TO_TRUE(plane) == FLOOR_PLANE)
+		particle_key += "-floor" // nb: unfortunately if the plane changes between the particles being removed, this will break.
 
 	if (!GLOB.shared_particles[particle_key])
 		return

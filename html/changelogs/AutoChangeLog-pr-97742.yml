@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - qol: "Changed thumbs up/down & scratch head emote when manually typing to thumbsup, thumbsdown & scratchhead"
