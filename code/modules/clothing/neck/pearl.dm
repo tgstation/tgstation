@@ -13,7 +13,7 @@
 	color = "#ffffff"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	/// what tail to spawn? fleur make an effect so this can become /obj/item/organ/tail/fish/cerulean/abyssal
+	/// what tail to spawn?
 	var/tail_type = /obj/item/organ/tail/fish/cerulean
 	/// storage var for the real tail, if we had any. so we can swap without untailing ourselves
 	var/obj/item/organ/real_tail
@@ -194,6 +194,12 @@
 	var/atom/movable/screen/healthdoll/doll = equipper.hud_used?.screen_objects[HUD_MOB_HEALTHDOLL]
 	doll?.update_body_zones()
 	doll?.update_appearance()
+
+/obj/item/clothing/neck/necklace/pearl/abyssal
+	tail_type = /obj/item/organ/tail/fish/cerulean/abyssal
+
+/obj/item/clothing/neck/necklace/pearl/skeleton
+	tail_type = /obj/item/organ/tail/fish/cerulean/skeletal
 
 #undef LEFT
 #undef RIGHT

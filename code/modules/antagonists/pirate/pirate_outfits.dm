@@ -207,12 +207,14 @@
 
 	uniform = null
 	head = null
+	neck = /obj/item/clothing/neck/necklace/pearl/abyssal
 	back = /obj/item/instrument/eguitar
 	glasses = null
 	suit = /obj/item/clothing/suit/jacket/leather/armored
 	gloves = /obj/item/clothing/gloves/fingerless
 	shoes = null
 	ears = /obj/item/radio/headset/syndicate/alt
+	l_pocket = /obj/item/clothing/accessory/vaporizer
 
 	skillchips = list(/obj/item/skillchip/musical)
 
