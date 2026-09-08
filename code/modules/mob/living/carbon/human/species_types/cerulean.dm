@@ -155,20 +155,9 @@
 
 /// if legs are present remove them silently if special = true, not so silently else
 /obj/item/organ/tail/fish/cerulean/proc/get_your_sealegs(mob/living/carbon/owner, special)
-	var/obj/item/bodypart/right_leg = owner.get_bodypart(BODY_ZONE_R_LEG)
-	var/obj/item/bodypart/left_leg = owner.get_bodypart(BODY_ZONE_L_LEG)
-	if(special \
-		|| HAS_TRAIT(owner, TRAIT_GODMODE) \
-		|| HAS_TRAIT(owner, TRAIT_NODISMEMBER) \
-		|| type == /obj/item/organ/tail/fish/cerulean/ephemeral)
-		right_leg?.drop_limb(TRUE, FALSE, FALSE)
-		left_leg?.drop_limb(TRUE, FALSE, FALSE)
-		var/obj/item/clothing/shoesprobably = owner.get_item_by_slot(ITEM_SLOT_FEET)
-		if(!isnull(shoesprobably))
-			owner.dropItemToGround(shoesprobably, force = TRUE)
-		return
-	right_leg?.dismember()
-	left_leg?.dismember()
+	var/list/legs = list(owner.get_bodypart(BODY_ZONE_R_LEG), owner.get_bodypart(BODY_ZONE_L_LEG))
+	for(var/obj/item/bodypart/leg/leg as anything in legs)
+		special ? leg?.drop_limb(TRUE, FALSE, FALSE) : leg?.dismember()
 
 /// the bodypart overlay for cerulean fish tails!
 /datum/bodypart_overlay/mutant/tail/fish/cerulean
@@ -230,116 +219,125 @@
 	return TRUE
 
 /*
- * a subtype of the cerulean tail that only exists on the owner when they have wet stacks
- * could be cool as a component but i dont think we need more magical anime shit
+ *
  */
-/obj/item/organ/tail/fish/cerulean/ephemeral
-	var/datum/weakref/owner_ref
+/obj/item/clothing/neck/necklace/pearl_necklace
+	/// storage for the reeeeeal tail
+	var/obj/item/organ/real_tail
+	/// storage for the tail
+	var/obj/item/organ/ephemeral_tail
+	/// storage for the limbs
 	var/alist/ephemeral_limbs = alist(
 		BODY_ZONE_L_LEG = null,
 		BODY_ZONE_R_LEG = null,
 	)
 
-/obj/item/organ/tail/fish/cerulean/ephemeral/on_mob_insert(mob/living/carbon/owner, special)
+/obj/item/clothing/neck/necklace/pearl_necklace/Initialize(mapload)
 	. = ..()
-	if(special || !owner)
-		return
-	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_IS_WET), SIGNAL_REMOVETRAIT(TRAIT_IS_WET)), PROC_REF(toggle_legs))
+	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
+	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 
-/obj/item/organ/tail/fish/cerulean/ephemeral/on_mob_remove(mob/living/carbon/owner, special)
+/obj/item/clothing/neck/necklace/pearl_necklace/Destroy()
 	. = ..()
-	if(special || !owner)
-		return
-	UnregisterSignal(owner, list(SIGNAL_ADDTRAIT(TRAIT_IS_WET),	SIGNAL_REMOVETRAIT(TRAIT_IS_WET)))
+	UnregisterSignal(src, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	clear_vars()
 
-/obj/item/organ/tail/fish/cerulean/ephemeral/on_surgical_removal(mob/living/user, obj/item/bodypart/limb, obj/item/tool)
-	. = ..()
-	owner_ref = null
+/obj/item/clothing/neck/necklace/pearl_necklace/proc/clear_vars()
+	real_tail = null
+	ephemeral_tail = null
 	ephemeral_limbs = alist(
 		BODY_ZONE_L_LEG = null,
 		BODY_ZONE_R_LEG = null,
 	)
 
-/obj/item/organ/tail/fish/cerulean/ephemeral/bodypart_insert(obj/item/bodypart/bodypart, mob/living/carbon/limb_owner, movement_flags)
-	if(!isnull(owner_ref) && limb_owner == owner_ref.resolve())
-		return ..()
+/obj/item/clothing/neck/necklace/pearl_necklace/proc/on_equip(obj/item/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+	if(slot != ITEM_SLOT_NECK)
+		return
+	RegisterSignal(equipper, SIGNAL_ADDTRAIT(TRAIT_IS_WET), PROC_REF(on_wet))
+	RegisterSignal(equipper, SIGNAL_REMOVETRAIT(TRAIT_IS_WET), PROC_REF(on_dry))
+	set_up(equipper)
+	if(equipper.has_status_effect(/datum/status_effect/fire_handler/wet_stacks))
+		on_wet(equipper)
 	else
-		..()
-		set_up(bodypart, limb_owner)
-		owner_ref = WEAKREF(limb_owner)
+		on_dry(equipper)
 
-/obj/item/organ/tail/fish/cerulean/ephemeral/proc/set_up(obj/item/bodypart/bodypart, mob/living/carbon/limb_owner)
-	// identify if owner is already missing limbs and set them up
-	var/list/missing_limbs = limb_owner.get_missing_limbs()
-	for(var/obj/item/bodypart/missing_limb in missing_limbs)
-		if(!(missing_limb.body_zone in GLOB.leg_zones))
+/obj/item/clothing/neck/necklace/pearl_necklace/proc/on_drop(obj/item/source, mob/dropper)
+	SIGNAL_HANDLER
+	UnregisterSignal(dropper, list(SIGNAL_ADDTRAIT(TRAIT_IS_WET), SIGNAL_REMOVETRAIT(TRAIT_IS_WET)))
+	if(istype(real_tail, /obj/item/organ/tail/fish/cerulean))
+		on_wet(dropper)
+	else
+		on_dry(dropper)
+	clear_vars()
+
+/obj/item/clothing/neck/necklace/pearl_necklace/proc/set_up(mob/living/carbon/human/equipper)
+	if(isnull(ephemeral_tail))
+		real_tail = equipper.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
+		ephemeral_tail = new /obj/item/organ/tail/fish/cerulean
+		if(istype(real_tail, /obj/item/organ/tail/fish/cerulean)) //we are cerulean or have one of their tails. gift a new set of legs. bcuz it wouldnt make sense to have this item useless on ceruleans
+			for(var/zone in ephemeral_limbs)
+				var/obj/item/bodypart/leg/new_leg
+				var/is_digi_species = equipper.dna.species.digitigrade_customization
+				switch(zone)
+					if(BODY_ZONE_L_LEG)
+						if(equipper.dna.species.bodypart_overrides[BODY_ZONE_L_LEG])
+							if(is_digi_species && equipper.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS)
+								new_leg = /obj/item/bodypart/leg/left/digitigrade //:steam_happy:
+							else
+								new_leg = equipper.dna?.species?.bodypart_overrides[BODY_ZONE_L_LEG]
+						else
+							new_leg = /obj/item/bodypart/leg/left
+					if(BODY_ZONE_R_LEG)
+						if(equipper.dna.species.bodypart_overrides[BODY_ZONE_R_LEG])
+							if(is_digi_species && equipper.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS)
+								new_leg = /obj/item/bodypart/leg/right/digitigrade
+							else
+								new_leg = equipper.dna?.species?.bodypart_overrides[BODY_ZONE_R_LEG]
+						else
+							new_leg = /obj/item/bodypart/leg/right
+
+				ephemeral_limbs[zone] = new new_leg
+				equipper.dna.species.bodypart_overrides[zone] = new_leg.type
+		else
+			for(var/zone in ephemeral_limbs) //log our existing legs. or leg. or whatever we have
+				ephemeral_limbs[zone] = equipper.get_bodypart(zone)
+
+/obj/item/clothing/neck/necklace/pearl_necklace/proc/on_wet(mob/living/carbon/human/wetter)
+	SIGNAL_HANDLER
+
+	for(var/zone in ephemeral_limbs)
+		var/obj/item/bodypart/leg/ephemeral_limb = wetter.get_bodypart(zone)
+		ephemeral_limb?.drop_limb(TRUE, FALSE, FALSE)
+		ephemeral_limb?.moveToNullspace()
+	if(wetter.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL) == real_tail)
+		real_tail?.Remove(wetter, TRUE)
+	if(isnull(ephemeral_tail.owner))
+		ephemeral_tail.Insert(wetter, TRUE)
+	// this needs manually setting okay
+	var/datum/status_effect/organ_set_bonus/fish/fish_bonus = wetter.has_status_effect(/datum/status_effect/organ_set_bonus/fish)
+	fish_bonus?.set_organs(fish_bonus?.organs++, ephemeral_tail)
+	// remove mesh texture if there and we dont need it
+	var/obj/item/bodypart/chest/tail_holder = wetter.get_bodypart(BODY_ZONE_CHEST)
+	if(wetter.wear_suit?.supports_variations_flags & CERULEAN_VARIATIONS)
+		tail_holder?.remove_bodypart_texture(/datum/bodypart_texture/mesh)
+	// fix snoes if we wore em
+	if(!isnull(wetter.get_item_by_slot(ITEM_SLOT_FEET)))
+		wetter.dropItemToGround(wetter.get_item_by_slot(ITEM_SLOT_FEET), force = TRUE)
+	wetter.regenerate_icons()
+
+/obj/item/clothing/neck/necklace/pearl_necklace/proc/on_dry(mob/living/carbon/human/dryer)
+	SIGNAL_HANDLER
+	if(dryer.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL) == ephemeral_tail)
+		ephemeral_tail?.Remove(dryer, TRUE)
+	if(!(TRAIT_BLOCK_ATTACHING_LEGS in real_tail?.organ_traits) && isnull(real_tail?.owner) && !isnull(real_tail))
+		real_tail?.Insert(dryer, TRUE)
+	for(var/zone in ephemeral_limbs)
+		var/obj/item/bodypart/ephemeral_limb = ephemeral_limbs[zone]
+		if(dryer.get_bodypart(zone))
 			continue
-		ephemeral_limbs[missing_limb.body_zone] = new missing_limb
-	// if for some reason get_missing_limbs() didn't fill our var, manually fill them
-	for(var/zone in ephemeral_limbs)
-		if(isnull(ephemeral_limbs[zone]))
-			var/obj/item/bodypart/leg/new_leg
-			var/is_digi_species = limb_owner.dna.species.digitigrade_customization
-			switch(zone)
-				if(BODY_ZONE_L_LEG)
-					if(limb_owner.dna.species.bodypart_overrides[BODY_ZONE_L_LEG])
-						if(is_digi_species && limb_owner.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS)
-							new_leg = /obj/item/bodypart/leg/left/digitigrade //:steam_happy:
-						else
-							new_leg = limb_owner.dna?.species?.bodypart_overrides[BODY_ZONE_L_LEG]
-					else
-						new_leg = /obj/item/bodypart/leg/left
-
-				if(BODY_ZONE_R_LEG)
-					if(limb_owner.dna.species.bodypart_overrides[BODY_ZONE_R_LEG])
-						if(is_digi_species && limb_owner.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS)
-							new_leg = /obj/item/bodypart/leg/right/digitigrade
-						else
-							new_leg = limb_owner.dna?.species?.bodypart_overrides[BODY_ZONE_R_LEG]
-					else
-						new_leg = /obj/item/bodypart/leg/right
-
-			limb_owner.dna.species.bodypart_overrides[zone] = new_leg.type
-			ephemeral_limbs[zone] = new new_leg
-	// time to detach the tail
-	Remove(limb_owner, TRUE)
-	// add the legs we just made
-	for(var/zone in ephemeral_limbs)
-		var/obj/item/bodypart/leg/ephemeral_limb = ephemeral_limbs[zone]
-		if(ephemeral_limb.try_attach_limb(limb_owner, TRUE))
+		if(ephemeral_limb?.try_attach_limb(dryer, TRUE))
 			ephemeral_limb.update_draw_color()
 			ephemeral_limb.update_limb(FALSE, TRUE)
-			ephemeral_limbs -= ephemeral_limb
-	// act like nothing happened
-	limb_owner.set_resting(FALSE, silent = TRUE, instant = TRUE)
-
-/obj/item/organ/tail/fish/cerulean/ephemeral/proc/toggle_legs(mob/living/carbon/human/source)
-	SIGNAL_HANDLER
-	// load tail if wet
-	if(!loc && HAS_TRAIT(source, TRAIT_IS_WET))
-		source.dna.species.bodypart_overrides = GLOB.species_prototypes[source.dna.species.type].bodypart_overrides
-		for(var/zone in ephemeral_limbs)
-			var/obj/item/bodypart/ephemeral_limb = source.get_bodypart(zone)
-			if(isnull(ephemeral_limb))
-				continue
-			ephemeral_limb.drop_limb(TRUE, FALSE, FALSE)
-			ephemeral_limb.moveToNullspace()
-			ephemeral_limbs[zone] = ephemeral_limb
-		Insert(source, TRUE)
-		// remove mesh texture if there and we dont need it
-		var/obj/item/bodypart/chest/tail_holder = source.get_bodypart(BODY_ZONE_CHEST)
-		if(!isnull(tail_holder) && source.wear_suit?.supports_variations_flags & CERULEAN_VARIATIONS)
-			tail_holder.remove_bodypart_texture(/datum/bodypart_texture/mesh)
-	//load legs if dry
-	else if(istype(loc, /obj/item/bodypart/chest))
-		source.dna.species.bodypart_overrides[BODY_ZONE_L_LEG] = ephemeral_limbs[BODY_ZONE_L_LEG].type
-		source.dna.species.bodypart_overrides[BODY_ZONE_R_LEG] = ephemeral_limbs[BODY_ZONE_R_LEG].type
-		Remove(owner, TRUE)
-		for(var/zone in ephemeral_limbs)
-			var/obj/item/bodypart/ephemeral_limb = ephemeral_limbs[zone]
-			if(ephemeral_limb.try_attach_limb(source, TRUE))
-				ephemeral_limb.update_draw_color()
-				ephemeral_limb.update_limb(FALSE, TRUE)
-				ephemeral_limbs -= ephemeral_limb
-	//regen clothing icons
-	source.regenerate_icons()
+	dryer.dna.species.bodypart_overrides = GLOB.species_prototypes[dryer.dna.species.type].bodypart_overrides //reset this
+	dryer.regenerate_icons()
