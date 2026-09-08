@@ -1,11 +1,11 @@
-/// The multiplier put against our movement effects if our victim has the determined reagent
-/// The multiplier put against our movement effects if our victim has the determined reagent
+/// The multiplier put against our movement effects if our victim has determination
 #define ROBOTIC_WOUND_DETERMINATION_MOVEMENT_EFFECT_MOD 0.7
-/// The multiplier of stagger intensity on hit if our victim has the determined reagent
+/// The multiplier of stagger intensity on hit if our victim has determination
 #define ROBOTIC_WOUND_DETERMINATION_STAGGER_MOVEMENT_MULT 0.7
-
 /// The multiplier put against our movement effects if our limb is grasped
 #define ROBOTIC_BLUNT_GRASPED_MOVEMENT_MULT 0.7
+/// If our victim is lying down and is attacked in the chest, effective oscillation damage is multiplied against this.
+#define OSCILLATION_ATTACKED_LYING_DOWN_EFFECT_MULT 0.5
 
 /datum/wound/blunt/robotic
 	name = "Robotic Blunt (Screws and bolts) Wound"
@@ -23,8 +23,6 @@
 
 	/// The ratio stagger score will be multiplied against for determining the final chance of moving away from the attacker.
 	var/stagger_movement_chance_ratio = 1
-	/// The ratio stagger score will be multiplied against for determining the amount of pixelshifting we will do when we are hit.
-	var/stagger_shake_shift_ratio = 0.05
 
 	/// The ratio of stagger score to shake duration during a stagger() call
 	var/stagger_score_to_shake_duration_ratio = 0.1
@@ -118,49 +116,32 @@
 
 	var/obj/item/held_item = victim.get_item_for_held_index(limb.held_index || 0)
 	if(held_item && (disabling || prob(30 * severity)))
+
 		if(istype(held_item, /obj/item/offhand))
 			held_item = victim.get_inactive_held_item()
+
 		if(held_item && victim.dropItemToGround(held_item))
 			victim.visible_message(span_danger("[victim] drops [held_item] in shock!"), span_warning("<b>The force on your [limb.plaintext_zone] causes you to drop [held_item]!</b>"), vision_distance=COMBAT_MESSAGE_RANGE)
 
+	update_inefficiencies()
+	return..()
+
 /datum/wound/blunt/robotic/remove_wound(ignore_limb, replaced, destroying)
 	. = ..()
-
 	QDEL_NULL(active_trauma)
 
 /datum/wound/blunt/robotic/handle_process(seconds_per_tick, times_fired)
 	. = ..()
 
-	if (!victim || HAS_TRAIT(victim, TRAIT_STASIS))
+	if(!victim || HAS_TRAIT(victim, TRAIT_STASIS))
 		return
 
-	if (limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group && world.time > next_trauma_cycle)
+	if(limb.body_zone == BODY_ZONE_HEAD && brain_trauma_group && world.time > next_trauma_cycle)
 		if (active_trauma)
 			QDEL_NULL(active_trauma)
 		else
 			active_trauma = victim.gain_trauma_type(brain_trauma_group, TRAUMA_RESILIENCE_WOUND)
 		next_trauma_cycle = world.time + (rand(100-WOUND_BONE_HEAD_TIME_VARIANCE, 100+WOUND_BONE_HEAD_TIME_VARIANCE) * 0.01 * trauma_cycle_cooldown)
-
-/// If true, allows our superstructure to be modified if we are T3. RCDs can always fix our superstructure.
-/datum/wound/blunt/robotic/proc/limb_malleable()
-	if (!isnull(get_overheat_wound()))
-		return TRUE
-	var/burn_damage_to_max = (limb.burn_dam / limb.max_damage) // only exists for the weird case where it cant get a overheat wound
-	if (burn_damage_to_max >= limb_burn_percent_to_max_threshold_for_malleable)
-		return TRUE
-	return FALSE
-
-/// If we have one, returns a robotic overheat wound of severe severity or higher. Null otherwise.
-/datum/wound/blunt/robotic/proc/get_overheat_wound()
-	RETURN_TYPE(/datum/wound/burn/robotic/overheat)
-	for (var/datum/wound/found_wound as anything in limb.wounds)
-		var/datum/wound_pregen_data/pregen_data = found_wound.get_pregen_data()
-		if (pregen_data.wound_series == WOUND_SERIES_METAL_BURN_OVERHEAT && found_wound.severity >= WOUND_SEVERITY_MODERATE) // meh solution but whateva
-			return found_wound
-	return null
-
-/// If our victim is lying down and is attacked in the chest, effective oscillation damage is multiplied against this.
-#define OSCILLATION_ATTACKED_LYING_DOWN_EFFECT_MULT 0.5
 
 /// Signal handler proc to when our victim has damage applied via apply_damage(), which is a external attack.
 /datum/wound/blunt/robotic/proc/victim_attacked(datum/source, damage, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item)
@@ -188,7 +169,7 @@
 			if (victim.has_status_effect(/datum/status_effect/determined))
 				oscillation_damage *= ROBOTIC_WOUND_DETERMINATION_STAGGER_MOVEMENT_MULT
 			if ((stagger_damage >= chest_attacked_stagger_minimum_score) && prob(oscillation_damage * chest_attacked_stagger_chance_ratio))
-				stagger(stagger_damage * oscillation_mult, attack_direction, attacking_item, shift = stagger_damage * stagger_shake_shift_ratio)
+				stagger(stagger_damage * oscillation_mult, attack_direction, attacking_item, shift = stagger_damage / 20)
 
 #undef OSCILLATION_ATTACKED_LYING_DOWN_EFFECT_MULT
 

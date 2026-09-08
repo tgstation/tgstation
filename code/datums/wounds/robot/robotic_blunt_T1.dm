@@ -1,14 +1,13 @@
 /datum/wound/blunt/robotic/moderate
 	name = "Loosened Screws"
 	desc = "Various semi-external fastening instruments have loosened, causing components to jostle, inhibiting limb control."
-	treat_text = "Recommend topical re-fastening of instruments with a screwdriver, though percussive maintenance via low-force bludgeoning may suffice - \
+	treat_text = "Recommend re-fastening of instruments with a screwdriver, though percussive maintenance via low-force bludgeoning may suffice - \
 	albeit at risk of worsening the injury."
 	examine_desc = "appears to be loosely secured"
 	occur_text = "jostles awkwardly and seems to slightly unfasten"
 	severity = WOUND_SEVERITY_MODERATE
 	simple_treat_text = "<b>Splinting</b> the wound will reduce the impact until it's <b>screws are secured."
-	homemade_treat_text = "In a pinch, <b>percussive maintenance</b> can reset the screws - the chance of which is increased if done by <b>someone else</b> or \
-	with a <b>diagnostic HUD</b>!"
+	homemade_treat_text = "In a pinch, <b>percussive maintenance</b> targeting the loose body part can reset the screws. However, effective percussive maintenance is difficult to perform on oneself."
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/moderate
 	treat_text_short = "Apply screwdriver or percussive maintenance"
 	treatable_tools = list(TOOL_SCREWDRIVER)
@@ -20,7 +19,7 @@
 	/// % chance for hitting our limb to fix something.
 	var/percussive_repair_chance = 12
 	/// Damage must be over this to proc percussive maintenance.
-	var/percussive_damage_min = 0
+	var/percussive_damage_min = 3
 
 /datum/wound_pregen_data/blunt_metal/loose_screws
 	abstract = FALSE
@@ -53,9 +52,6 @@
 
 	if (user == victim)
 		delay_mult *= 2
-
-	if (HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
-		delay_mult *= 0.5
 
 	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
 		delay_mult *= 0.5

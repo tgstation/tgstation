@@ -54,7 +54,7 @@
 
 /datum/wound/blunt/robotic/critical/treat(obj/item/item, mob/treater)
 	var/delay = 4 SECONDS / (HAS_TRAIT(src, TRAIT_WOUND_SCANNED) ? 2 : 1)
-	if(!limb.get_wound(series = WOUND_SERIES_METAL_BURN_OVERHEAT, severity = WOUND_SEVERITY_MODERATE) && victim?.bodytemperature < BODYTEMP_HEAT_WARNING_3)
+	if(!limb.get_wound_type(WOUND_SERIES_METAL_BURN_OVERHEAT) || victim?.bodytemperature < BODYTEMP_HEAT_WARNING_3)
 		to_chat(treater, span_warning("The metal isn't hot enough to bend back into place!"))
 		return
 	if(item.use_tool(target = victim, user = treater, delay = delay, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
