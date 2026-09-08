@@ -59,6 +59,7 @@
 		MECHA_POWER = 1,
 		MECHA_ARMOR = 2,
 	)
+	forced_power_bar = 2
 
 /obj/vehicle/sealed/mecha/honker/dark/Initialize(mapload, built_manually)
 	. = ..()
@@ -84,9 +85,10 @@
 
 /obj/vehicle/sealed/mecha/honker/dark/loaded/populate_parts()
 	cell = new /obj/item/stock_parts/power_store/cell/hyper(src)
-	scanmod = new /obj/item/stock_parts/scanning_module/phasic(src)
-	capacitor = new /obj/item/stock_parts/capacitor/super(src)
-	servo = new /obj/item/stock_parts/servo/pico(src)
+	if (!SSpower_bars.enabled)
+		scanmod = new /obj/item/stock_parts/scanning_module/phasic(src)
+		capacitor = new /obj/item/stock_parts/capacitor/super(src)
+		servo = new /obj/item/stock_parts/servo/pico(src)
 	update_part_values()
 
 /obj/structure/mecha_wreckage/honker/dark

@@ -431,8 +431,7 @@
 		return
 
 	user.put_in_hands(part_to_remove)
-	locate_parts()
-	diag_hud_set_mechcell()
+	update_part_values()
 	tool.play_tool_sound(src)
 
 /obj/vehicle/sealed/mecha/welder_act(mob/living/user, obj/item/W)

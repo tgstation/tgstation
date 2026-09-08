@@ -49,12 +49,6 @@
 	var/equipment_disabled = FALSE
 	/// Keeps track of the mech's cell
 	var/obj/item/stock_parts/power_store/cell
-	/// Keeps track of the mech's scanning module
-	var/obj/item/stock_parts/scanning_module/scanmod
-	/// Keeps track of the mech's capacitor
-	var/obj/item/stock_parts/capacitor/capacitor
-	/// Keeps track of the mech's servo motor
-	var/obj/item/stock_parts/servo/servo
 	/// Contains flags for the mecha
 	var/mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | BEACON_TRACKABLE | AI_COMPATIBLE | BEACON_CONTROLLABLE
 
@@ -198,6 +192,19 @@
 	/// Whether we've been knocked down, unable to move
 	var/toppled = FALSE
 
+	/// If power bars are enabled, and this is a number, we force the mech to use that number for power level
+	var/forced_power_bar = null
+
+	var/power_dept = POWER_BAR_DEPARTMENT_SCIENCE
+
+	VAR_PRIVATE/capacitor_rating
+	VAR_PRIVATE/servo_rating
+	VAR_PRIVATE/scanmod_rating
+
+	VAR_PRIVATE/capacitor_name
+	VAR_PRIVATE/servo_name
+	VAR_PRIVATE/scanmod_name
+
 /datum/armor/sealed_mecha
 	melee = 20
 	bullet = 10
@@ -273,9 +280,6 @@
 	QDEL_NULL(ore_box)
 
 	QDEL_NULL(cell)
-	QDEL_NULL(scanmod)
-	QDEL_NULL(capacitor)
-	QDEL_NULL(servo)
 	QDEL_NULL(cabin_air)
 	QDEL_NULL(spark_system)
 	QDEL_NULL(ui_view)
@@ -293,17 +297,16 @@
 	if (!SSpower_bars.enabled) // melbert todo?
 		scanmod = new /obj/item/stock_parts/scanning_module(src)
 		capacitor = new /obj/item/stock_parts/capacitor(src)
-	servo = new /obj/item/stock_parts/servo(src)
+		servo = new /obj/item/stock_parts/servo(src)
 	update_part_values()
 
-/obj/vehicle/sealed/mecha/proc/locate_parts()
-	cell = locate(/obj/item/stock_parts/power_store) in contents
-	diag_hud_set_mechcell()
-	scanmod = locate(/obj/item/stock_parts/scanning_module) in contents
-	capacitor = locate(/obj/item/stock_parts/capacitor) in contents
-	servo = locate(/obj/item/stock_parts/servo) in contents
-	update_part_values()
+/obj/vehicle/sealed/mecha/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
+		cell = null
 
+	if(!QDELETING(src) && istype(gone, /obj/item/stock_parts))
+		update_part_values()
 
 /obj/vehicle/sealed/mecha/update_icon_state()
 	icon_state = get_mecha_occupancy_state()
@@ -455,44 +458,65 @@
 		to_chat(mob_occupant, span_notice("Equipment control unit has been rebooted successfully."))
 	set_mouse_pointer()
 
-/// Updates the values given by scanning module and capacitor tier, called when a part is removed or inserted.
 /obj/vehicle/sealed/mecha/proc/update_part_values()
-	var/capacitor_rating = capacitor?.rating
-	// var/scanmod_rating = scanmod?.rating // melbert todo: what does this even do?
+	var/old_cell = cell
+	cell = locate(/obj/item/stock_parts/power_store) in contents
+	if(cell != old_cell)
+		diag_hud_set_mechcell()
+
+	capacitor_rating = 1
+	servo_rating = 2
+	scanmod_rating = 0
 
 	if (SSpower_bars.enabled)
-		switch (SSpower_bars.power_bars_of_department(POWER_BAR_DEPARTMENT_SCIENCE))
-			if (0, 1)
-				// scanmod_rating = 1
+		var/power_tier = isnum(forced_power_bar) ? forced_power_bar : (isnull(power_dept) ? 1 : SSpower_bars.power_bars_of_department(power_dept))
+		switch (power_tier)
+			if(0)
 				capacitor_rating = 1
+				servo_rating = 2
+				scanmod_rating = 0
+			if (1)
+				capacitor_rating = 1
+				servo_rating = 1
+				scanmod_rating = 1
 			if (2)
-				// scanmod_rating = 2
 				capacitor_rating = 2
+				servo_rating = 0.5
+				scanmod_rating = 2
 			if (3)
-				// scanmod_rating = 4
 				capacitor_rating = 4
+				servo_rating = 0.25
+				scanmod_rating = 4
 
-	step_energy_drain = initial(step_energy_drain)
-	melee_energy_drain = initial(melee_energy_drain)
-	light_power_drain = initial(light_power_drain)
-	overclock_temp_danger = initial(overclock_temp_danger)
+		capacitor_name = "Tier \roman[power_tier]"
+		servo_name = "Tier \roman[power_tier]"
+		scanmod_name = "Tier \roman[power_tier]"
 
-	if(overclock_mode)
-		step_energy_drain *= overclock_coeff
+	else
+		var/obj/item/stock_parts/capacitor/capacitor = locate() in contents
+		var/obj/item/stock_parts/servo/servo = locate() in contents
+		var/obj/item/stock_parts/scanning_module/scanmod = locate() in contents
 
-	step_energy_drain *= (servo ? (1 / servo.rating) : 2)
+		capacitor_rating = isnull(capacitor) ? 1 : capacitor.rating
+		servo_rating = isnull(servo) ? 2 : servo.rating
+		scanmod_rating = isnull(scanmod) ? 0 : scanmod.rating
 
-	if(capacitor_rating)
+		capacitor_name = isnull(capacitor) ? "None" : capacitor.name
+		servo_name = isnull(servo) ? "None" : servo.name
+		scanmod_name = isnull(scanmod) ? "None" : scanmod.name
+
+	step_energy_drain = initial(step_energy_drain) * servo_rating * (overclock_mode ? overclock_coeff : 1)
+	melee_energy_drain = initial(melee_energy_drain) * capacitor_rating
+	light_power_drain = initial(light_power_drain) * capacitor_rating
+	overclock_temp_danger = initial(overclock_temp_danger) * capacitor_rating
+
+	// if(capacitor_rating)
 		// melbert todo
 		// var/datum/armor/stock_armor = get_armor_by_type(armor_type)
 		// var/initial_energy = stock_armor.get_rating(ENERGY)
 
 		// for (var/damage_type in ARMOR_LIST_DAMAGE())
 		// 	set_armor_rating(damage_type, initial_energy + (capacitor_rating * 5))
-
-		melee_energy_drain *= capacitor_rating
-		light_power_drain *= capacitor_rating
-		overclock_temp_danger *= capacitor_rating
 
 /obj/vehicle/sealed/mecha/proc/on_power_bar_update()
 	update_part_values()

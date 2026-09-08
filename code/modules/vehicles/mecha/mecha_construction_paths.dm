@@ -30,7 +30,7 @@
 	var/obj/item/mecha_parts/chassis/parent_chassis = parent
 	for(var/atom/movable/content in parent_chassis.contents)
 		content.forceMove(mech)
-	mech.locate_parts()
+	mech.update_part_values()
 	SSblackbox.record_feedback("tally", "mechas_created", 1, mech.name)
 	ADD_TRAIT(mech, TRAIT_MECHA_CREATED_NORMALLY, REF(mech))
 	QDEL_NULL(parent)

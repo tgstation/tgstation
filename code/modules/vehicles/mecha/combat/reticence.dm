@@ -23,6 +23,7 @@
 	)
 	step_energy_drain = 4
 	color = "#87878715"
+	forced_power_bar = 2
 
 /datum/armor/mecha_reticence
 	melee = 40
@@ -43,7 +44,8 @@
 
 /obj/vehicle/sealed/mecha/reticence/loaded/populate_parts()
 	cell = new /obj/item/stock_parts/power_store/cell/bluespace(src)
-	scanmod = new /obj/item/stock_parts/scanning_module/phasic(src)
-	capacitor = new /obj/item/stock_parts/capacitor/super(src)
-	servo = new /obj/item/stock_parts/servo/pico(src)
+	if (!SSpower_bars.enabled)
+		scanmod = new /obj/item/stock_parts/scanning_module/phasic(src)
+		capacitor = new /obj/item/stock_parts/capacitor/super(src)
+		servo = new /obj/item/stock_parts/servo/pico(src)
 	update_part_values()
