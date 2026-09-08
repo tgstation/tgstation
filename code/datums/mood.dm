@@ -610,6 +610,8 @@
 			sanity_level = SANITY_LEVEL_GREAT
 
 	set_crit_threshold()
+	set_movespeed_effect()
+	set_actionspeed_effect()
 
 	// Crazy or insane = add some uncommon hallucinations
 	if(sanity_level >= SANITY_LEVEL_CRAZY)

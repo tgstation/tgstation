@@ -46,7 +46,7 @@
 
 /datum/config_entry/flag/disable_human_mood_crit_threshold
 /datum/config_entry/flag/disable_human_mood_movespeed
-/datum/config_entry/flag/disable_human_mood_actiondelay
+/datum/config_entry/flag/disable_human_mood_actionspeed
 
 /datum/config_entry/flag/disable_secborg // disallow secborg model to be chosen.
 
