@@ -295,9 +295,9 @@
 /obj/vehicle/sealed/mecha/proc/populate_parts()
 	cell = new /obj/item/stock_parts/power_store/cell/high(src)
 	if (!SSpower_bars.enabled) // melbert todo?
-		scanmod = new /obj/item/stock_parts/scanning_module(src)
-		capacitor = new /obj/item/stock_parts/capacitor(src)
-		servo = new /obj/item/stock_parts/servo(src)
+		new /obj/item/stock_parts/scanning_module(src)
+		new /obj/item/stock_parts/capacitor(src)
+		new /obj/item/stock_parts/servo(src)
 	update_part_values()
 
 /obj/vehicle/sealed/mecha/Exited(atom/movable/gone, direction)
@@ -305,7 +305,7 @@
 	if(gone == cell)
 		cell = null
 
-	if(!QDELETING(src) && istype(gone, /obj/item/stock_parts))
+	if(!QDELING(src) && istype(gone, /obj/item/stock_parts))
 		update_part_values()
 
 /obj/vehicle/sealed/mecha/update_icon_state()
@@ -459,64 +459,58 @@
 	set_mouse_pointer()
 
 /obj/vehicle/sealed/mecha/proc/update_part_values()
+	SHOULD_CALL_PARENT(TRUE)
+
 	var/old_cell = cell
 	cell = locate(/obj/item/stock_parts/power_store) in contents
 	if(cell != old_cell)
 		diag_hud_set_mechcell()
 
-	capacitor_rating = 1
-	servo_rating = 2
 	scanmod_rating = 0
+	capacitor_rating = 1
+	servo_rating = 0.5
 
 	if (SSpower_bars.enabled)
 		var/power_tier = isnum(forced_power_bar) ? forced_power_bar : (isnull(power_dept) ? 1 : SSpower_bars.power_bars_of_department(power_dept))
 		switch (power_tier)
 			if(0)
-				capacitor_rating = 1
-				servo_rating = 2
 				scanmod_rating = 0
+				capacitor_rating = 1
+				servo_rating = 0.5
 			if (1)
+				scanmod_rating = 1
 				capacitor_rating = 1
 				servo_rating = 1
-				scanmod_rating = 1
 			if (2)
-				capacitor_rating = 2
-				servo_rating = 0.5
 				scanmod_rating = 2
+				capacitor_rating = 2
+				servo_rating = 2
 			if (3)
-				capacitor_rating = 4
-				servo_rating = 0.25
 				scanmod_rating = 4
+				capacitor_rating = 4
+				servo_rating = 4
 
 		capacitor_name = "Tier \roman[power_tier]"
 		servo_name = "Tier \roman[power_tier]"
 		scanmod_name = "Tier \roman[power_tier]"
 
 	else
+		var/obj/item/stock_parts/scanning_module/scanmod = locate() in contents
 		var/obj/item/stock_parts/capacitor/capacitor = locate() in contents
 		var/obj/item/stock_parts/servo/servo = locate() in contents
-		var/obj/item/stock_parts/scanning_module/scanmod = locate() in contents
 
-		capacitor_rating = isnull(capacitor) ? 1 : capacitor.rating
-		servo_rating = isnull(servo) ? 2 : servo.rating
 		scanmod_rating = isnull(scanmod) ? 0 : scanmod.rating
+		capacitor_rating = isnull(capacitor) ? 1 : capacitor.rating
+		servo_rating = isnull(servo) ? 0.5 : servo.rating
 
+		scanmod_name = isnull(scanmod) ? "None" : scanmod.name
 		capacitor_name = isnull(capacitor) ? "None" : capacitor.name
 		servo_name = isnull(servo) ? "None" : servo.name
-		scanmod_name = isnull(scanmod) ? "None" : scanmod.name
 
-	step_energy_drain = initial(step_energy_drain) * servo_rating * (overclock_mode ? overclock_coeff : 1)
-	melee_energy_drain = initial(melee_energy_drain) * capacitor_rating
-	light_power_drain = initial(light_power_drain) * capacitor_rating
-	overclock_temp_danger = initial(overclock_temp_danger) * capacitor_rating
-
-	// if(capacitor_rating)
-		// melbert todo
-		// var/datum/armor/stock_armor = get_armor_by_type(armor_type)
-		// var/initial_energy = stock_armor.get_rating(ENERGY)
-
-		// for (var/damage_type in ARMOR_LIST_DAMAGE())
-		// 	set_armor_rating(damage_type, initial_energy + (capacitor_rating * 5))
+	step_energy_drain = (initial(step_energy_drain) / servo_rating) * (overclock_mode ? overclock_coeff : 1)
+	melee_energy_drain = initial(melee_energy_drain) / capacitor_rating
+	light_power_drain = initial(light_power_drain) / capacitor_rating
+	overclock_temp_danger = initial(overclock_temp_danger) / capacitor_rating
 
 /obj/vehicle/sealed/mecha/proc/on_power_bar_update()
 	update_part_values()
@@ -530,15 +524,17 @@
 				continue
 			. += span_notice("[icon2html(ME, user)] \A [ME].")
 	if(mecha_flags & PANEL_OPEN)
-		if(servo)
-			. += span_notice("Servo reduces movement power usage by [100 - round(100 / servo.rating)]%")
+		if(locate(/obj/item/stock_parts/servo) in contents)
+			. += span_notice("Servo reduces movement power usage by [round(100 / servo_rating)]%")
 		else
-			. += span_warning("It's missing a servo.")
-		if(capacitor)
-			. += span_notice("Capacitor increases armor against energy attacks by [capacitor.rating * 5].")
+			. += span_warning("It's missing a servo, increasing movement power usage by [round(100 / servo_rating)]%")
+		if(locate(/obj/item/stock_parts/capacitor) in contents)
+			. += span_notice("Capacitor increases armor against energy attacks by [capacitor_rating * 5].")
 		else
 			. += span_warning("It's missing a capacitor.")
-		if(!scanmod)
+		if(locate(/obj/item/stock_parts/scanning_module) in contents)
+			pass()
+		else
 			. += span_warning("It's missing a scanning module.")
 	if(!(mecha_flags & IS_ENCLOSED))
 		if(mecha_flags & SILICON_PILOT)

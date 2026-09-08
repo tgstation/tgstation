@@ -74,9 +74,9 @@
 	var/isoperator = (user in occupants) //maintenance mode outside of mech
 	data["isoperator"] = isoperator
 	data["cell"] = cell?.name
-	data["scanning"] = scanmod?.name
-	data["capacitor"] = capacitor?.name
-	data["servo"] = servo?.name
+	data["scanning"] = scanmod_name
+	data["capacitor"] = capacitor_name
+	data["servo"] = servo_name
 	ui_view.appearance = appearance
 	data["name"] = name
 	data["integrity"] = atom_integrity
@@ -97,9 +97,9 @@
 	data["one_access"] = one_access
 	data["accesses"] = accesses
 
-	data["servo_rating"] = servo?.rating
-	data["scanmod_rating"] = scanmod?.rating
-	data["capacitor_rating"] = capacitor?.rating
+	data["servo_rating"] = servo_rating
+	data["scanmod_rating"] = scanmod_rating
+	data["capacitor_rating"] = capacitor_rating
 
 	data["weapons_safety"] = weapons_safety
 	data["enclosed"] = mecha_flags & IS_ENCLOSED
@@ -234,4 +234,3 @@
 			diagnostic.mech_data += src
 			ADD_TRAIT(src, TRAIT_MECHA_DIAGNOSTIC_CREATED, REF(src))
 	return TRUE
-
