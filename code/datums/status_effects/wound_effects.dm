@@ -45,7 +45,7 @@
 		wound_source = "offensive injuries from attempting to fight"
 
 	if(ishuman(attack_target))
-		wound_source += " a human"
+		wound_source += " a humanoid"
 	else if(issilicon(attack_target))
 		wound_source += " something mechanical"
 	else
