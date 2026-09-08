@@ -76,15 +76,12 @@
 	for(var/zone in ephemeral_limbs)
 		ephemeral_limbs[zone] = (equipper.get_bodypart(zone) && !istype(real_tail, /obj/item/organ/tail/fish/cerulean)) ? equipper.get_bodypart(zone) : gift_leg(equipper, zone)
 		equipper.dna.species.bodypart_overrides[zone] = ephemeral_limbs[zone].type
-	// also update our healthdoll so we can see if our legs get hurt
-	var/atom/movable/screen/healthdoll/doll = equipper.hud_used?.screen_objects[HUD_MOB_HEALTHDOLL]
-	doll?.update_body_zones()
-	doll?.update_appearance()
+	update_healthdoll(equipper)
 
 /// restore our original appearance and organs/limbs. delete the fake spooky bits
 /obj/item/clothing/neck/necklace/pearl/proc/restore_owner(mob/living/carbon/human/dropper)
 	if(ephemeral_tail)
-		if(!ephemeral_tail.owner)
+		if(ephemeral_tail.owner)
 			ephemeral_tail.Remove(dropper, TRUE)
 			qdel(ephemeral_tail)
 
@@ -99,10 +96,9 @@
 		if(!real_tail.owner)
 			real_tail.Insert(dropper, TRUE)
 
-	dropper.dna.species.bodypart_overrides = GLOB.species_prototypes[dropper.dna.species.type].bodypart_overrides
-	var/atom/movable/screen/healthdoll/doll = equipper.hud_used?.screen_objects[HUD_MOB_HEALTHDOLL]
-	doll?.update_body_zones()
-	doll?.update_appearance()
+	clear_mood_events(dropper)
+	dropper.dna.species.bodypart_overrides = GLOB.species_prototypes[dropper.dna.species.type].bodypart_overrides.Copy()
+	update_healthdoll(dropper)
 
 /// if cerulean or character has one of their tails, gift a new set of legs. bcuz it wouldnt make sense to have this item useless on ceruleans
 /obj/item/clothing/neck/necklace/pearl/proc/gift_leg(mob/living/carbon/human/equipper, zone)
@@ -134,6 +130,7 @@
 		if(!ephemeral_tail.owner)
 			ephemeral_tail.Insert(wetter, TRUE)
 
+	clear_mood_events(wetter)
 	var/obj/item/bodypart/chest/tail_holder = wetter.get_bodypart(BODY_ZONE_CHEST)
 	if(!ephemeral_tail.owner || tail_holder != ephemeral_tail.owner.get_bodypart(BODY_ZONE_CHEST))
 		return
@@ -149,11 +146,10 @@
 	if(real_tail)
 		if(!real_tail.owner && !(TRAIT_BLOCK_ATTACHING_LEGS in real_tail.organ_traits))
 			real_tail.Insert(dryer, TRUE)
-		else if(dryer.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL) == real_tail)
+		else if(istype(real_tail, obj/item/organ/tail/fish/cerulean) && dryer.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL) == real_tail)
 			real_tail.Remove(dryer, TRUE)
-			var/datum/status_effect/organ_set_bonus/fish/bonus = dryer.has_status_effect(/datum/status_effect/organ_set_bonus/fish)
-			bonus?.set_organs(bonus?.organs + 1, real_tail)
 	attach_limbs(dryer)
+	clear_mood_events(dryer)
 
 /// the limb attachening
 /obj/item/clothing/neck/necklace/pearl/proc/attach_limbs(mob/living/carbon/human/dryer, obj/item/bodypart/leg/ephemeral_limb)
@@ -179,6 +175,23 @@
 		ephemeral_limb.moveToNullspace()
 
 	wetter.regenerate_icons()
+
+/obj/item/clothing/neck/necklace/pearl/proc/clear_mood_events(mob/living/equipper)
+	var/static/list/tail_moods = list(
+		/datum/mood_event/tail_lost,
+		/datum/mood_event/tail_balance_lost,
+		/datum/mood_event/tail_regained_wrong,
+		/datum/mood_event/tail_regained_species,
+		/datum/mood_event/tail_regained_right,
+	)
+
+	for(var/mood_event as anything in tail_moods)
+		equipper.clear_mood_event(mood_event)
+
+/obj/item/clothing/neck/necklace/pearl/proc/update_healthdoll(mob/equipper)
+	var/atom/movable/screen/healthdoll/doll = equipper.hud_used?.screen_objects[HUD_MOB_HEALTHDOLL]
+	doll?.update_body_zones()
+	doll?.update_appearance()
 
 #undef LEFT
 #undef RIGHT
