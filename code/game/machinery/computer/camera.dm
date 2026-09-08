@@ -131,8 +131,6 @@
 		active_camera?.on_stop_watching(src)
 		active_camera = null
 		cam_screen?.set_display(null)
-		// melbert todo
-		// last_camera_turf = null
 		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
 
 /atom/movable/screen/map_view/camera
