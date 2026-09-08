@@ -152,7 +152,7 @@
 /datum/design/board/plankman
 	name = "PLANKMAN Board"
 	desc = "The circuit board for a PLANKMAN-type portable generator."
-	build_path = /obj/item/circuitboard/machine/pacman/wood
+	build_path = /obj/item/circuitboard/machine/plankman
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)
