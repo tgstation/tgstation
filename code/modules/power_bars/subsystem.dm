@@ -126,7 +126,13 @@ SUBSYSTEM_DEF(power_bars)
 	return counts
 
 /datum/controller/subsystem/power_bars/proc/department_from_area(area/area)
-	return astype(area, /area/station)?.power_bar_department
+	if(!istype(area, /area/station))
+		return null
+	if(area.area_flags & NO_POWER_BAR_EFFECTS)
+		return null
+
+	var/area/station/station_area = area
+	return station_area.power_bar_department
 
 /datum/controller/subsystem/power_bars/proc/areas_for_department()
 	PRIVATE_PROC(TRUE)
