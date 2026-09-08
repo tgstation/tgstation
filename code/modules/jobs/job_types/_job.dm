@@ -137,7 +137,7 @@
 	var/desensitized_base = 1.0
 
 	///If set, adds this as the job icon map (from fontawesome5)
-	var/tgui_icon
+	var/tgui_icon = FA_ICON_QUESTION
 
 /datum/job/New()
 	. = ..()
