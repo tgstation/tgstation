@@ -310,9 +310,15 @@
 	var/message = high_production_profile ? "high-power uranium mode" : "medium-power plasma mode"
 	to_chat(user, span_notice("You set the board for [message]"))
 
-/obj/item/circuitboard/machine/pacman/wood
+/obj/item/circuitboard/machine/plankman
 	name = "PLANKMAN-type Generator"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/power/port_gen/pacman/wood
+	req_components = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/sheet/iron = 5
+	)
+	needs_anchored = FALSE
 
 /obj/item/circuitboard/machine/turbine_compressor
 	name = "Turbine - Inlet Compressor"
