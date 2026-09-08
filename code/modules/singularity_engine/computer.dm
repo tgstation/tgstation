@@ -144,7 +144,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	for (var/obj/connected_machine as anything in connected_machines)
 		if (istype(connected_machine, /obj/machinery/field/generator/singularity))
 			var/obj/machinery/field/generator/singularity/field_generator = connected_machine
-			if (field_generator.active == 2) // FG_ONLINE :(((((
+			if (field_generator.active == FG_ONLINE)
 				data["enabled_field_generators"] += 1
 			else
 				data["disabled_field_generators"] += 1
@@ -224,7 +224,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 
 	var/enabled_field_generators = 0
 	for (var/obj/machinery/field/generator/singularity/field_generator in connected_machines)
-		if (field_generator.active == 2) // FG_ONLINE :(((((
+		if (field_generator.active == FG_ONLINE)
 			enabled_field_generators += 1
 
 	var/enough_field_generators = enabled_field_generators >= 4

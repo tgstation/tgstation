@@ -83,6 +83,13 @@
 
 		field.reset_cooldown()
 
+	var/obj/structure/cable/gen_one_cable = locate() in field_gen_1.loc
+	var/obj/structure/cable/gen_two_cable = locate() in field_gen_2.loc
+
+	var/fake_power = power_to_energy(SSpower_bars.get_surplus_power())
+	gen_one_cable?.add_avail(fake_power / 2)
+	gen_two_cable?.add_avail(fake_power / 2)
+
 /obj/machinery/field/containment/singularity/proc/reset_cooldown()
 	var/delay = SSsingularity_turrets.wait * 0.75
 	COOLDOWN_START(src, reset_cooldown, delay)

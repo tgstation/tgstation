@@ -692,6 +692,9 @@
 "aoG" = (
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/power/terminal{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "aoH" = (
@@ -6802,6 +6805,7 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/status_display/ai/directional/south,
 /obj/effect/turf_decal/delivery/red,
+/obj/machinery/power/smes/engineering,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "cAK" = (
@@ -15191,6 +15195,7 @@
 /obj/machinery/light/directional/south,
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery,
+/obj/machinery/power/smes/engineering,
 /turf/open/floor/iron,
 /area/station/engineering/gravity_generator)
 "fnV" = (
@@ -15428,6 +15433,14 @@
 	},
 /turf/open/floor/iron/white/smooth_half,
 /area/station/medical/cryo)
+"fss" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 10
+	},
+/obj/structure/cable,
+/obj/machinery/power/terminal,
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "fst" = (
 /obj/structure/sign/directions/evac,
 /turf/closed/wall,
@@ -45129,6 +45142,7 @@
 /obj/machinery/status_display/evac/directional/south,
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery/red,
+/obj/machinery/power/smes/engineering,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "pvY" = (
@@ -54272,6 +54286,8 @@
 /area/station/maintenance/port/greater)
 "sHT" = (
 /obj/effect/turf_decal/stripes/line,
+/obj/structure/cable,
+/obj/machinery/power/terminal,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "sIe" = (
@@ -59823,6 +59839,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 6
 	},
+/obj/machinery/power/terminal,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "uGp" = (
@@ -63975,11 +63992,9 @@
 /area/station/ai/satellite/chamber)
 "wbm" = (
 /obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/item/paper{
-	default_raw_text = "Your SMES have been taken in for repairs. APCs will charge themselves if your engine is distributing power."
-	},
 /obj/structure/cable,
 /obj/effect/turf_decal/delivery/red,
+/obj/machinery/power/smes/engineering,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "wbz" = (
@@ -109720,7 +109735,7 @@ ssI
 uXd
 mfM
 vkW
-poc
+fss
 pvC
 uXd
 fDL

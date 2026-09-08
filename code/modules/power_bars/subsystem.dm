@@ -332,6 +332,13 @@ SUBSYSTEM_DEF(power_bars)
 
 	return 1000000 WATTS
 
+/datum/controller/subsystem/power_bars/proc/get_surplus_power()
+	var/extra_bars = available_power_bars() - department_allocations.len
+	if (extra_bars <= 0)
+		return 0 WATTS
+
+	return round(300 * (extra_bars ** 1.2), 100) * 1 KILO WATTS
+
 /datum/controller/subsystem/power_bars/proc/available_power_bars()
 	var/sum = 0
 	for (var/datum/power_bar_allocation/power_bar_allocation as anything in available_power_bars)

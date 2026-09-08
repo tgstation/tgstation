@@ -47,3 +47,11 @@ GLOBAL_LIST_INIT(cable_name_to_layer, list(
 	CABLE_LAYER_3_NAME = CABLE_LAYER_3
 ))
 
+// Field generator stuff
+#define FG_OFFLINE 0
+#define FG_CHARGING 1
+#define FG_ONLINE 2
+
+#define FG_UNSECURED 0
+#define FG_SECURED 1
+#define FG_WELDED 2

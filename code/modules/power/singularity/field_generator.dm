@@ -14,15 +14,6 @@ no power level overlay is currently in the overlays list.
 
 #define field_generator_max_power 250
 
-#define FG_OFFLINE 0
-#define FG_CHARGING 1
-#define FG_ONLINE 2
-
-//field generator construction defines
-#define FG_UNSECURED 0
-#define FG_SECURED 1
-#define FG_WELDED 2
-
 /obj/machinery/field/generator
 	name = "field generator"
 	desc = "A large thermal battery that projects a high amount of energy when powered."
@@ -302,8 +293,7 @@ no power level overlay is currently in the overlays list.
 	//Need more power
 	draw -= power
 	power = 0
-	for(var/connected_generator in connected_gens)
-		var/obj/machinery/field/generator/considered_generator = connected_generator
+	for(var/obj/machinery/field/generator/considered_generator as anything in connected_gens)
 		if(considered_generator == last)//We just asked you
 			continue
 		if(other_generator)//Another gen is askin for power and we dont have it
@@ -483,11 +473,3 @@ no power level overlay is currently in the overlays list.
 
 /obj/machinery/field/generator/starts_on/magic/process()
 	return PROCESS_KILL // this is the only place calc_power is called, and doing it here avoids one unnecessary proc call
-
-#undef FG_UNSECURED
-#undef FG_SECURED
-#undef FG_WELDED
-
-#undef FG_OFFLINE
-#undef FG_CHARGING
-#undef FG_ONLINE

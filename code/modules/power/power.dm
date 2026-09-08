@@ -85,10 +85,7 @@
 
 /obj/machinery/power/proc/surplus()
 	if(powernet)
-		if (SSpower_bars.enabled)
-			return SSpower_bars.surplus_power(src)
-		else
-			return clamp(powernet.avail-powernet.load, 0, powernet.avail)
+		return clamp(powernet.avail-powernet.load, 0, powernet.avail)
 	else
 		return 0
 
