@@ -10,7 +10,7 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 	use_power = ACTIVE_POWER_USE
 	circuit = /obj/item/circuitboard/computer/power_distribution
 
-	req_access = list(ACCESS_ENGINEERING)
+	req_access = list(ACCESS_ENGINE_EQUIP)
 
 	VAR_PRIVATE
 		talk_into_radio = TRUE

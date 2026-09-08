@@ -290,54 +290,55 @@ SUBSYSTEM_DEF(power_bars)
 	return sum
 
 // APCs charge themselves
-/datum/controller/subsystem/power_bars/proc/surplus_power(obj/machinery/power/source)
-	ASSERT(SSpower_bars.enabled)
+// /datum/controller/subsystem/power_bars/proc/surplus_power(obj/machinery/power/source)
+// 	ASSERT(SSpower_bars.enabled)
 
-	var/obj/machinery/power/apc/apc_source = source
-	if (!istype(apc_source))
-		apc_source = null
+// 	var/obj/machinery/power/apc/apc_source = source
+// 	if (!istype(apc_source))
+// 		apc_source = null
 
-	var/area/source_area = get_area(source)
-	if (source_area.protected_from_power_bars)
-		return clamp(source.powernet.avail - source.powernet.load, 0, source.powernet.avail)
+// 	var/area/source_area = get_area(source)
+// 	if (source_area.protected_from_power_bars)
+// 		return clamp(source.powernet.avail - source.powernet.load, 0, source.powernet.avail)
 
-	if (available_power_bars() <= department_allocations.len)
-		return 0 WATTS
+// 	if (available_power_bars() <= department_allocations.len)
+// 		return 0 WATTS
 
-	if (power_bars_of_area(source_area) == 0)
-		return 0 WATTS
+// 	if (power_bars_of_area(source_area) == 0)
+// 		return 0 WATTS
 
-	// Outside of a prototype, this would ideally be like, a big battery or something.
-	// I would've done that now, but if it's a Big Battery and we still have a separate computer (which we might not need),
-	// then it would also intuit that the computer would need to be connected to Big Battery, which I don't want to bother with right now.
-	var/list/valid_powernet = FALSE
+// 	// Outside of a prototype, this would ideally be like, a big battery or something.
+// 	// I would've done that now, but if it's a Big Battery and we still have a separate computer (which we might not need),
+// 	// then it would also intuit that the computer would need to be connected to Big Battery, which I don't want to bother with right now.
+// 	var/list/valid_powernet = FALSE
 
-	for (var/obj/machinery/power_distribution_console as anything in GLOB.power_distribution_consoles)
-		var/area/console_area = get_area(power_distribution_console)
-		var/apc_powernet = console_area?.apc?.terminal?.powernet
+// 	for (var/obj/machinery/power_distribution_console as anything in GLOB.power_distribution_consoles)
+// 		var/area/console_area = get_area(power_distribution_console)
+// 		var/apc_powernet = console_area?.apc?.terminal?.powernet
 
-		if (isnull(apc_powernet))
-			continue
+// 		if (isnull(apc_powernet))
+// 			continue
 
-		if (apc_powernet == source.powernet)
-			valid_powernet = TRUE
-			continue
+// 		if (apc_powernet == source.powernet)
+// 			valid_powernet = TRUE
+// 			continue
 
-		if (istype(apc_source) && apc_powernet == apc_source.terminal?.powernet)
-			valid_powernet = TRUE
-			continue
+// 		if (istype(apc_source) && apc_powernet == apc_source.terminal?.powernet)
+// 			valid_powernet = TRUE
+// 			continue
 
-	if (!valid_powernet)
-		return 0 WATTS
+// 	if (!valid_powernet)
+// 		return 0 WATTS
 
-	return 1000000 WATTS
+// 	return 1000000 WATTS
 
+/// Returns the amount of joules the singularity particles produce per hit, which is then given to the station powernet
 /datum/controller/subsystem/power_bars/proc/get_surplus_power()
 	var/extra_bars = available_power_bars() - department_allocations.len
-	if (extra_bars <= 0)
-		return 0 WATTS
+	if (extra_bars < 0)
+		return 0 JOULES
 
-	return round(300 * (extra_bars ** 1.2), 100) * 1 KILO WATTS
+	return (extra_bars + 1) * 1 MEGA JOULES
 
 /datum/controller/subsystem/power_bars/proc/available_power_bars()
 	var/sum = 0

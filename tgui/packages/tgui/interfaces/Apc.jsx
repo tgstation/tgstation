@@ -104,9 +104,7 @@ const ApcContent = (props) => {
         <LabeledList>
           {data.powerBars !== null && (
             <LabeledList.Item label="Power Distribution">
-              {data.powerBars
-                ? `Tier ${'I'.repeat(data.powerBars)}`
-                : 'Disconnected'}
+              {data.powerBars}
             </LabeledList.Item>
           )}
           <LabeledList.Item

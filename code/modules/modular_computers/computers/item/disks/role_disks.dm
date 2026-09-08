@@ -64,11 +64,6 @@
 		/datum/computer_file/program/alarm_monitor,
 	)
 
-/obj/item/disk/computer/command/ce/Initialize(mapload)
-	if (SSpower_bars.enabled)
-		starting_programs -= /datum/computer_file/program/supermatter_monitor
-	return ..()
-
 /**
  * Security
  */
@@ -129,8 +124,3 @@
 		/datum/computer_file/program/supermatter_monitor,
 
 	)
-
-/obj/item/disk/computer/engineering/Initialize(mapload)
-	if (SSpower_bars.enabled)
-		starting_programs -= /datum/computer_file/program/supermatter_monitor
-	return ..()

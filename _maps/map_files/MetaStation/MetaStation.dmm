@@ -34298,6 +34298,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/plating,
 /area/station/maintenance/fore)
+"lLN" = (
+/turf/open/floor/catwalk_floor/iron,
+/area/station/engineering/main)
 "lLR" = (
 /obj/machinery/atmospherics/pipe/smart/simple/purple/visible{
 	dir = 8
@@ -37233,6 +37236,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "mLi" = (
@@ -48919,11 +48925,8 @@
 /turf/open/floor/carpet,
 /area/station/command/bridge)
 "qNY" = (
-/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
-	dir = 4
-	},
 /obj/structure/cable,
-/turf/open/floor/iron,
+/turf/open/floor/catwalk_floor/iron,
 /area/station/engineering/main)
 "qOm" = (
 /obj/machinery/door/firedoor,
@@ -57314,6 +57317,13 @@
 /obj/machinery/duct,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"tIZ" = (
+/obj/structure/cable,
+/obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2{
+	dir = 4
+	},
+/turf/open/floor/iron,
+/area/station/engineering/main)
 "tJx" = (
 /obj/machinery/atmospherics/components/tank/air/layer4{
 	dir = 8
@@ -58395,6 +58405,13 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer5,
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
+"uea" = (
+/obj/structure/disposalpipe/segment,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/duct,
+/turf/open/floor/catwalk_floor/iron,
+/area/station/engineering/main)
 "uec" = (
 /obj/machinery/door/window/left/directional/north{
 	name = "Inner Pipe Access";
@@ -62922,7 +62939,7 @@
 /obj/effect/turf_decal/bot{
 	dir = 1
 	},
-/obj/effect/mapping_helpers/airlock/access/all/engineering/general,
+/obj/effect/mapping_helpers/airlock/access/all/engineering/engine_equipment,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "vHz" = (
@@ -111522,18 +111539,18 @@ cgL
 tCS
 xAj
 niR
-qNY
+mfh
 mKV
 lRG
-mfh
-mfh
-ncx
+qNY
+qNY
+lLN
 dRp
 txa
-mfh
-mfh
 qNY
-mfh
+qNY
+qNY
+tIZ
 ptK
 pTw
 nrz
@@ -111782,14 +111799,14 @@ vQV
 lnT
 rPe
 rPe
-rPe
-rPe
-rPe
+uea
+uea
+uea
 rPe
 jzx
-rPe
-rPe
-rPe
+uea
+uea
+uea
 dhi
 rPe
 vjB

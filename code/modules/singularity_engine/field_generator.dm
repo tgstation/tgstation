@@ -3,7 +3,7 @@
 	desc = "A field generator specialized in containing the extremely dangerous emissions of the singularity. Due to the sheer force of these particles, contact will weaken the field temporarily."
 
 	anchored = TRUE
-	state = 2 // FG_WELDED...:-(
+	state = FG_WELDED
 
 	// Prototype only
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF
@@ -16,6 +16,11 @@
 	generator_distance = 12
 
 	containment_field_type = /obj/machinery/field/containment/singularity
+
+	/// How much energy did we trap from singularity particles
+	var/trapped_energy = 0
+	/// How much to transfer to the powernet per tick
+	var/transfer_per_tick = 0
 
 /obj/machinery/field/generator/singularity/Initialize(mapload)
 	. = ..()
@@ -37,6 +42,25 @@
 /obj/machinery/field/generator/singularity/singularity_pull(S, current_size)
 	. = ..()
 	resistance_flags = NONE
+
+/obj/machinery/field/generator/singularity/proc/trap_energy(amount)
+	if(amount <= 0)
+		return
+
+	trapped_energy += amount
+	transfer_per_tick = min(trapped_energy, max(transfer_per_tick, amount / 2))
+
+/obj/machinery/field/generator/singularity/process(seconds_per_tick)
+	. = ..()
+	if(trapped_energy <= 0)
+		return
+
+	if(active == FG_ONLINE)
+		var/obj/structure/cable/gen_cable = locate() in loc
+		gen_cable?.add_avail(min(transfer_per_tick, trapped_energy))
+	// power is used even without a cable - say it discharges or something
+	trapped_energy = max(0, trapped_energy - transfer_per_tick)
+	transfer_per_tick = min(transfer_per_tick, trapped_energy)
 
 /obj/machinery/field/containment/singularity
 	name = "singularity containment field"
@@ -63,7 +87,7 @@
 			return BULLET_ACT_FORCE_PIERCE
 
 		capture_particle(projectile)
-		return
+		return BULLET_ACT_BLOCK
 
 	return ..()
 
@@ -83,12 +107,10 @@
 
 		field.reset_cooldown()
 
-	var/obj/structure/cable/gen_one_cable = locate() in field_gen_1.loc
-	var/obj/structure/cable/gen_two_cable = locate() in field_gen_2.loc
-
-	var/fake_power = power_to_energy(SSpower_bars.get_surplus_power())
-	gen_one_cable?.add_avail(fake_power / 2)
-	gen_two_cable?.add_avail(fake_power / 2)
+	var/captured_energy = SSpower_bars.get_surplus_power()
+	if(captured_energy > 0)
+		astype(field_gen_1, /obj/machinery/field/generator/singularity)?.trap_energy(captured_energy / 2)
+		astype(field_gen_2, /obj/machinery/field/generator/singularity)?.trap_energy(captured_energy / 2)
 
 /obj/machinery/field/containment/singularity/proc/reset_cooldown()
 	var/delay = SSsingularity_turrets.wait * 0.75

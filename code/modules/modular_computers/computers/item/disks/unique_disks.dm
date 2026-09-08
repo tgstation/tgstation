@@ -37,7 +37,6 @@
 	if(SSpower_bars.enabled)
 		potential_programs -= /datum/computer_file/program/supermatter_monitor
 
-
 	var/total_programs_size = 0
 	for(var/i in 1 to rand(2, 4))
 		var/datum/computer_file/program/to_add = pick_n_take(potential_programs)
