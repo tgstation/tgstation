@@ -4,6 +4,7 @@
  * @license MIT
  */
 
+import { flushSync } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { createLogger } from 'tgui/logging';
 import { Tooltip } from 'tgui-core/components';
@@ -119,6 +120,40 @@ function playHighlightSound(soundFile: string, volume: number) {
 
   lastHighlightSoundAt = now;
   Byond.command(`.sound '${soundFile}' volume=${Math.round(volume * 100)}`);
+}
+
+const RADIO_CHANNEL_LABEL = /^\[[^\]]+\]\s*/;
+
+// Check if a text node is a radio channel name, e.g. "[Radio] ".
+function isRadioChannelName(node: Text): boolean {
+  const text = node.textContent || '';
+  const match = RADIO_CHANNEL_LABEL.exec(text);
+  return Boolean(
+    node.parentElement?.classList.contains('name') &&
+    match &&
+    match[0].length === text.length,
+  );
+}
+
+// Split the radio channel label from the name node so that it can be highlighted separately. (used to avoid highlighting radio channel names)
+function splitRadioChannelLabel(root: HTMLElement): void {
+  const nameNodes = root.querySelectorAll('.name');
+  for (let i = 0; i < nameNodes.length; i++) {
+    const firstChild = nameNodes[i].firstChild;
+    if (firstChild?.nodeType !== Node.TEXT_NODE) {
+      continue;
+    }
+    const text = firstChild.textContent || '';
+    const match = RADIO_CHANNEL_LABEL.exec(text);
+    if (match && match[0].length < text.length) {
+      (firstChild as Text).splitText(match[0].length);
+    }
+  }
+}
+
+// Check if a message is a self-action message, such as "You put on your helmet.", we don't want to highlight it as, it's you doing the action.
+function isSelfActionMessage(text: string): boolean {
+  return /^\s*You\b/.test(text);
 }
 
 class ChatRenderer {
@@ -513,15 +548,20 @@ class ChatRenderer {
 
           const reactRoot = createRoot(childNode);
 
-          reactRoot.render(
-            <Element {...outputProps}>
-              <span dangerouslySetInnerHTML={oldHtml} />
-            </Element>,
-          );
+          // `flushSync()` because of a chat scroll issue where whether or not
+          // the line wraps was being decided before the name loaded
+          flushSync(() => {
+            reactRoot.render(
+              <Element {...outputProps}>
+                <span dangerouslySetInnerHTML={oldHtml} />
+              </Element>,
+            );
+          });
         }
 
         // Highlight text
         if (!message.avoidHighlighting && this.highlightParsers) {
+          splitRadioChannelLabel(node);
           let messageHighlighted = false;
           this.highlightParsers
             .filter((parser) => parser.enabled && this.matchesFilters(parser))
@@ -531,6 +571,7 @@ class ChatRenderer {
                 parser.highlightRegex,
                 parser.highlightWords,
                 (text) => createHighlightNode(text, parser.highlightColor),
+                (textNode) => !isRadioChannelName(textNode), // Exclude radio channel names from highlighting
               );
               if (highlighted && parser.highlightWholeMessage) {
                 node.className += ' ChatMessage--highlighted';
@@ -542,7 +583,10 @@ class ChatRenderer {
               // Highlight sounds - Plays a sound once per message if enabled, will not play if the text was prased. (aka when relogging or reapplying chat).
               if (highlighted && parser.playSound && !messageHighlighted) {
                 messageHighlighted = true;
-                if (!suppressHighlightSound) {
+                if (
+                  !suppressHighlightSound &&
+                  !isSelfActionMessage(node.textContent || '')
+                ) {
                   playHighlightSound(
                     parser.soundFile,
                     parser.soundVolume ?? 0.5,

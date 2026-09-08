@@ -24,7 +24,7 @@
 			if (isnull(current_design.build_path) && isnull(current_design.make_reagent))
 				TEST_FAIL("Design [design_path] requires materials but does not have either build_path or make_reagent set")
 		// Design requires no materials but creates stuff
-		else if (!isnull(current_design.build_path) || !isnull(current_design.build_path))
+		else if (!isnull(current_design.build_path) || !isnull(current_design.make_reagent))
 			TEST_FAIL("Design [design_path] requires NO materials but has build_path or make_reagent set")
 
 		// Only limbgrowers can use reagents

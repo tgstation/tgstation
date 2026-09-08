@@ -55,7 +55,7 @@
 
 	if(!HAS_TRAIT_FROM(human_owner, TRAIT_MOVE_FLOATING, SHOES_TRAIT))
 		//functional
-		human_owner.physiology.stun_mod *= 2
+		MODIFY_PHYSIOLOGY(human_owner, PHYS_COEFF_STUN, 2)
 		human_owner.add_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SHOES_TRAIT)
 		human_owner.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/shoes)
 		human_owner.AddElement(/datum/element/forced_gravity, 0)
@@ -74,7 +74,7 @@
 		return
 
 	//functional
-	human_owner.physiology.stun_mod *= 0.5
+	MODIFY_PHYSIOLOGY(human_owner, PHYS_COEFF_STUN, 0.5)
 	human_owner.remove_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SHOES_TRAIT)
 	human_owner.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/shoes)
 	human_owner.RemoveElement(/datum/element/forced_gravity, 0)

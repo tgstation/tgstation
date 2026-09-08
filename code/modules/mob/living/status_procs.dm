@@ -40,6 +40,7 @@
 	return 0
 
 /mob/living/proc/Stun(amount, ignore_canstun = FALSE) //Can't go below remaining duration
+	amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_STUN)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_STUN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(check_stun_immunity(CANSTUN, ignore_canstun))
@@ -90,6 +91,7 @@
 	return 0
 
 /mob/living/proc/Knockdown(amount, daze_amount = 0, ignore_canstun = FALSE) //Can't go below remaining duration
+	amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_KNOCKDOWN) * GET_PHYSIOLOGY(src, PHYS_COEFF_STUN)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_KNOCKDOWN, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(check_stun_immunity(CANKNOCKDOWN, ignore_canstun))
@@ -144,6 +146,7 @@
 	return 0
 
 /mob/living/proc/Immobilize(amount, ignore_canstun = FALSE) //Can't go below remaining duration
+	amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_STUN)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_IMMOBILIZE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(check_stun_immunity(CANSTUN, ignore_canstun))
@@ -194,6 +197,7 @@
 	return 0
 
 /mob/living/proc/Paralyze(amount, ignore_canstun = FALSE) //Can't go below remaining duration
+	amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_STUN)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_PARALYZE, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(check_stun_immunity(CANSTUN|CANKNOCKDOWN, ignore_canstun)) // this requires both can stun and can knockdown
@@ -337,6 +341,7 @@
 	return 0
 
 /mob/living/proc/Unconscious(amount, ignore_canstun = FALSE) //Can't go below remaining duration
+	amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_STUN)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_STATUS_UNCONSCIOUS, amount, ignore_canstun) & COMPONENT_NO_STUN)
 		return
 	if(check_stun_immunity(CANUNCONSCIOUS, ignore_canstun))

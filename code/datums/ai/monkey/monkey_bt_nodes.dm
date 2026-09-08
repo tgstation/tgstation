@@ -344,7 +344,7 @@
 	for(var/mob/living/carbon/human/human_mob in oview(5, living_pawn))
 		if(istype(human_mob.mind?.assigned_role, /datum/job/bartender))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED // my boss is on duty!
-		if(IS_UNCONSCIOUS_OR_CRIT(human_mob) || ismonkey(human_mob))
+		if(IS_UNCONSCIOUS_OR_CRIT(human_mob) || HAS_TRAIT(human_mob, TRAIT_LESSER_HUMANOID))
 			continue
 		if(!human_mob.get_empty_held_indexes())
 			continue

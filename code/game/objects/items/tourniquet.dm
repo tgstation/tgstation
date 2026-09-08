@@ -68,9 +68,9 @@
 		return // you win this time
 
 	limb.owner.losebreath += 1 * seconds_per_tick // incapable of breathing
-	limb.owner.apply_damage(1 * seconds_per_tick, OXY, BODY_ZONE_HEAD, forced = TRUE) // no blood getting to brain
+	limb.owner.apply_damage(1 * seconds_per_tick, OXY, BODY_ZONE_HEAD) // no blood getting to brain
 	if(SPT_PROB(6, seconds_per_tick))
-		limb.owner.apply_damage(10, STAMINA, BODY_ZONE_HEAD, forced = TRUE)
+		limb.owner.apply_damage(10, STAMINA, BODY_ZONE_HEAD)
 	if(SPT_PROB(5, seconds_per_tick))
 		limb.owner.adjust_eye_blur(4 SECONDS)
 	if(SPT_PROB(4, seconds_per_tick))

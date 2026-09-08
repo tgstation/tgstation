@@ -1,6 +1,5 @@
 import { DmIcon, Icon } from 'tgui-core/components';
 
-import { JOB2ICON } from '../common/JobToIcon';
 import type { Antagonist, Observable } from './types';
 
 type Props = {
@@ -27,7 +26,7 @@ export function JobIcon(props: Props) {
   const {
     icon = '',
     icon_state = '',
-    job = '',
+    mind_job_icon = '',
     mind_icon = '',
     mind_icon_state = '',
   } = item;
@@ -35,12 +34,10 @@ export function JobIcon(props: Props) {
   const usedIconState = realNameDisplay
     ? mind_icon_state || icon_state
     : icon_state;
-  let usedJob = realNameDisplay ? mind_icon || job : job;
 
   let iconSettings: IconSettings;
   if ('antag' in item && !realNameDisplay) {
     iconSettings = antagIcon;
-    usedJob = item.antag;
   } else {
     iconSettings = normalIcon;
   }
@@ -48,7 +45,7 @@ export function JobIcon(props: Props) {
   return (
     <div className="JobIcon">
       {icon_state === 'borg' ? (
-        <Icon color="lightblue" name={JOB2ICON[usedJob]} ml={0.3} mt={0.4} />
+        <Icon color="lightblue" name={mind_job_icon} ml={0.3} mt={0.4} />
       ) : (
         <DmIcon
           icon={usedIcon}

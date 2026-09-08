@@ -274,7 +274,7 @@
 	if(atom_storage.locked == STORAGE_NOT_LOCKED)
 		return TRUE
 
-	if(is_simian(user))
+	if(HAS_TRAIT(user, TRAIT_SIMIAN))
 		atom_storage.locked = STORAGE_NOT_LOCKED
 		to_chat(user, span_notice("You place your paw on the paw scanner, and hear a soft click as [src] unlocks!"))
 		playsound(src, 'sound/items/click.ogg', 25, TRUE)

@@ -2260,6 +2260,14 @@
 		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY
 	)
 
+/datum/design/module/mod_candela_spool
+	name = "Candela Spool Module"
+	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT * 1.5)
+	build_path = /obj/item/mod/module/candela_spool
+	category = list(
+		RND_CATEGORY_MODSUIT_MODULES + RND_SUBCATEGORY_MODSUIT_MODULES_SUPPLY
+	)
+
 /datum/design/module/mod_organizer
 	name = "Organizer Module"
 	materials = list(

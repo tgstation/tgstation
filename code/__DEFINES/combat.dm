@@ -227,8 +227,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 //Sawn off nerfs
 ///accuracy penalty of sawn off guns
 #define SAWN_OFF_ACC_PENALTY 25
-///added recoil of sawn off guns
-#define SAWN_OFF_RECOIL 1
 
 //ammo box sprite defines
 ///ammo box will always use provided icon state

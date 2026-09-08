@@ -89,7 +89,7 @@
 	sanitized_misc = TRUE
 	sanitized_reactions = TRUE
 	require_all = FALSE
-	required_reactions = list(/datum/gas_reaction/h2fire, /datum/gas_reaction/tritfire)
+	required_reactions = list(/datum/gas_reaction/standard/h2fire, /datum/gas_reaction/standard/tritfire)
 
 /datum/experiment/ordnance/explosive/nobliumbomb
 	name = "Noblium Explosives"
@@ -99,7 +99,7 @@
 	experiment_proper = TRUE
 	sanitized_misc = TRUE
 	sanitized_reactions = TRUE
-	required_reactions = list(/datum/gas_reaction/nobliumformation)
+	required_reactions = list(/datum/gas_reaction/standard/nobliumformation)
 
 /datum/experiment/ordnance/explosive/pressurebomb
 	name = "Reactionless Explosives"

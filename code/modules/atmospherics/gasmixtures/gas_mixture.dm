@@ -470,6 +470,10 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 /datum/gas_mixture/proc/compare(datum/gas_mixture/sample, cmp_archive)
 	var/list/cached_moles = (cmp_archive) ? moles_archive : moles
 	var/list/sample_cached_moles = (cmp_archive) ? sample.moles_archive : sample.moles  //accessing datum vars is slower than proc vars
+	var/total_delta = abs(values_sum(moles) - values_sum(sample.moles))
+
+	if(total_delta > MINIMUM_MOLES_DELTA_TO_MOVE) //difference in total moles no need for further iterration
+		return "total_moles"
 
 	for(var/gas_id in cached_moles | sample_cached_moles) // compare gases from either mixture
 		var/gas_moles = cached_moles[gas_id] // it can be null, but everything coerce to 0 after, so we save JMP and Tst
@@ -523,7 +527,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 	//It might be worth looking into updating these after each reaction, but that makes us care more about order of operations, so be careful
 	var/temp = temperature
 	reaction_loop:
-		for(var/datum/gas_reaction/reaction as anything in reactions)
+		for(var/datum/gas_reaction/standard/reaction as anything in reactions)
 
 			var/list/reqs = reaction.requirements
 			if((reqs["MIN_TEMP"] && temp < reqs["MIN_TEMP"]) || (reqs["MAX_TEMP"] && temp > reqs["MAX_TEMP"]))
@@ -743,7 +747,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
  */
 /datum/gas_mixture/proc/electrolyze(working_power = 0, electrolyzer_args = list())
 	for(var/reaction in GLOB.electrolyzer_reactions)
-		var/datum/electrolyzer_reaction/current_reaction = GLOB.electrolyzer_reactions[reaction]
+		var/datum/gas_reaction/electrolyzer/current_reaction = GLOB.electrolyzer_reactions[reaction]
 
 		if(!current_reaction.reaction_check(air_mixture = src, electrolyzer_args = electrolyzer_args))
 			continue

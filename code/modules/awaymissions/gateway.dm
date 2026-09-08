@@ -425,10 +425,12 @@ GLOBAL_LIST_EMPTY(gateway_destinations)
 
 /atom/movable/screen/map_view/gateway_port/proc/setup_visuals(datum/gateway_destination/D)
 	our_destination = D
+	set_display(our_destination?.get_target_turf())
 	update_portal_filters()
 
 /atom/movable/screen/map_view/gateway_port/proc/reset_visuals()
 	our_destination = null
+	set_display(our_destination?.get_target_turf())
 	update_portal_filters()
 
 /atom/movable/screen/map_view/gateway_port/proc/update_portal_filters()

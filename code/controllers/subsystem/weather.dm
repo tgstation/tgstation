@@ -12,10 +12,8 @@ SUBSYSTEM_DEF(weather)
 	var/list/eligible_zlevels = list()
 	/// Used by barometers to know when the next storm is coming
 	var/list/next_hit_by_zlevel = list()
-	/// Alist of all particle holders per Z-stack offset for particle weather, each particle holder associated with z-levels it should be displayed on, to be shown to clients
-	var/alist/particle_holders = alist()
-	/// List of all RENDER_PLANE_PARTICLE_WEATHER and RENDER_PLANE_EMISSIVE_PARTICLE_WEATHER planes
-	var/list/particle_planemasters = list()
+	/// Alist of particle holder to display in the form z_level -> alist(plane -> holder)
+	var/alist/z_particles = alist()
 
 /datum/controller/subsystem/weather/fire(resumed = FALSE)
 	// process active weather
@@ -82,6 +80,7 @@ SUBSYSTEM_DEF(weather)
 		next_hit_by_zlevel["[z]"] = addtimer(CALLBACK(src, PROC_REF(make_eligible), z, possible_weather), randTime + initial(weather_event.weather_duration_upper), TIMER_UNIQUE|TIMER_STOPPABLE)
 
 /datum/controller/subsystem/weather/Initialize()
+	generate_holders(1, world.maxz)
 	for(var/datum/weather/weather as anything in valid_subtypesof(/datum/weather))
 		var/probability = initial(weather.probability)
 		var/target_trait = initial(weather.target_trait)
@@ -93,37 +92,33 @@ SUBSYSTEM_DEF(weather)
 				eligible_zlevels["[z]"][weather] = probability
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/weather/proc/add_weather_objects(list/new_holders, z_level)
-	for (var/offset in 1 to length(new_holders))
-		var/list/holder_list = new_holders[offset]
-		if (isnull(particle_holders[offset]))
-			particle_holders[offset] = list()
-		particle_holders[offset] += holder_list
+/datum/controller/subsystem/weather/proc/generate_holders(z_min, z_max)
+	for(var/i in z_min to z_max)
+		z_particles[i] = alist()
 
-		// We add it to vis_contents of planemasters rather than client screen as planemasters already
-		// manage their own visibility based on owner's z level
-		for (var/atom/movable/screen/plane_master/plane_master as anything in particle_planemasters)
-			var/mob/owner = plane_master.home.our_hud?.mymob
-			if (!owner) // Vibecheck
-				continue
-			// Could be caching these per-mob but its basically just a list lookup wrapper
-			var/list/stack_levels = SSmapping.get_connected_levels(get_turf(owner.client?.eye || owner))
-			for (var/obj/effect/abstract/weather_holder/holder as anything in holder_list)
-				if (holder.plane != plane_master.plane)
-					continue
+/datum/controller/subsystem/weather/proc/add_weather_objects(list/obj/effect/abstract/weather_holder/new_objects, z_level)
+	var/alist/holders_by_plane = z_particles[z_level]
+	if(isnull(holders_by_plane))
+		stack_trace("No particle holder slot found for z level [z_level]")
+		return
 
-				if (!length(holder_list[holder] & stack_levels))
-					continue
+	for(var/obj/effect/abstract/weather_holder/new_object as anything in new_objects)
+		var/obj/effect/abstract/weather_holder/z_level/holder = holders_by_plane[new_object.plane]
+		if(isnull(holder))
+			holder = new()
+			holder.plane = new_object.plane
+			holders_by_plane[new_object.plane] = new_object
 
-				plane_master.vis_contents |= holder
+		holder.vis_contents += new_object
 
-/datum/controller/subsystem/weather/proc/remove_weather_objects(list/old_holders)
-	for (var/offset in 1 to length(old_holders))
-		var/list/holder_list = old_holders[offset]
-		particle_holders[offset] -= holder_list
+/datum/controller/subsystem/weather/proc/remove_weather_objects(list/old_objects, z_level)
+	var/alist/holders_by_plane = z_particles[z_level]
+	if(isnull(holders_by_plane))
+		CRASH("No particle holder slot found for z level [z_level]")
 
-		for (var/atom/movable/screen/plane_master/plane_master as anything in particle_planemasters)
-			plane_master.vis_contents -= holder_list
+	for(var/plane in holders_by_plane)
+		var/obj/effect/abstract/weather_holder/z_level/holder = holders_by_plane[plane]
+		holder.vis_contents -= old_objects
 
 /datum/controller/subsystem/weather/proc/update_z_level(datum/space_level/level)
 	var/z = level.z_value

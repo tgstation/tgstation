@@ -154,3 +154,11 @@
 /mob/living/carbon/on_hearing_loss(datum/source)
 	. = ..()
 	breathing_loop.stop()
+
+/mob/living/carbon/on_stasis_trait_gain(datum/source)
+	. = ..()
+	update_bodypart_bleed_overlays()
+
+/mob/living/carbon/on_stasis_trait_loss(datum/source)
+	. = ..()
+	update_bodypart_bleed_overlays()

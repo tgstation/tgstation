@@ -1,15 +1,12 @@
 ADMIN_VERB(trophy_manager, R_ADMIN, "Trophy Manager", "View all trophies.", ADMIN_CATEGORY_MAIN)
-	var/static/datum/trophy_manager/ui = new
-	ui.ui_interact(user.mob)
+	var/datum/trophy_manager/tgui = new()
+	tgui.ui_interact(user.mob)
 
 /// Trophy Admin Management Panel
 /datum/trophy_manager
 
 /datum/trophy_manager/ui_state(mob/user)
 	return ADMIN_STATE(R_ADMIN)
-
-/datum/trophy_manager/ui_close(mob/user)
-	qdel(src)
 
 /datum/trophy_manager/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

@@ -771,7 +771,7 @@
  *
  * If no record is found, returns null
  */
-/proc/find_record(value, locked_only = FALSE)
+/proc/find_record(value, locked_only = FALSE) as /datum/record
 	if(locked_only)
 		for(var/datum/record/locked/target in GLOB.manifest.locked)
 			if(target.name != value)

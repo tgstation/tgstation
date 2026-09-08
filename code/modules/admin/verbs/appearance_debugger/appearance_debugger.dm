@@ -11,8 +11,16 @@
 	var/atom/movable/screen/map_view/proxy_view_hover
 	/// Mapview used to display the selected appearance
 	var/atom/movable/screen/map_view/proxy_view_selected
+	/// ID of currently hovered over appearance
+	var/hover_id = null
+	/// ID of currently selected appearance
+	var/selected_id = null
 	/// Assoc list of ref -> list of atoms to be displayed in said ref atom's vis_contents
 	var/list/atom/movable/fake_vis
+	/// Are we currently forcing selected overlay to render to a specific plane?
+	var/forced_plane = null
+	/// Color of the backdrop, if any
+	var/backdrop_color = null
 	/// Should we display a popup that the appearance in-game has updated?
 	var/update_warning = FALSE
 
@@ -134,6 +142,8 @@
 /datum/appearance_debugger/ui_data(mob/user)
 	return list(
 		"updateWarning" = update_warning,
+		"forcedPlane" = forced_plane,
+		"backdropColor" = backdrop_color,
 	)
 
 /datum/appearance_debugger/ui_static_data(mob/user)
@@ -150,39 +160,47 @@
 
 /datum/appearance_debugger/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
-	if(.)
+	if (.)
 		return
-	switch(action)
-		if("swapMapViewHover")
-			var/appearance_id = text2num(params["id"])
-			proxy_view_hover.appearance = appearance_copies[appearance_id]
+	switch (action)
+		if ("swapMapViewHover")
+			hover_id = text2num(params["id"])
+			set_appearance_proxy(proxy_view_hover, hover_id)
 
-			for (var/atom/movable/something as anything in proxy_view_hover.vis_contents)
-				proxy_view_hover.vis_contents -= something
-			for (var/ref_id in appearance_cache)
-				if (appearance_copies[appearance_id] != appearance_cache[ref_id])
-					continue
-				if (fake_vis[ref_id])
-					proxy_view_hover.vis_contents |= fake_vis[ref_id]
+		if ("swapMapViewSelected")
+			selected_id = text2num(params["id"])
+			set_appearance_proxy(proxy_view_selected, selected_id)
 
-			// Needs screenloc to be set since we're setting the appearance and carrying over target's screenloc
-			proxy_view_hover.set_position(1, 1)
+		if ("setForcedPlane")
+			forced_plane = text2num(params["plane"])
+			SET_PLANE_IMPLICIT(proxy_view_hover, forced_plane)
+			SET_PLANE_IMPLICIT(proxy_view_selected, forced_plane)
 
-		if("swapMapViewSelected")
-			var/appearance_id = text2num(params["id"])
-			proxy_view_selected.appearance = appearance_copies[appearance_id]
+		if ("resetForcedPlane")
+			forced_plane = null
+			if (!isnull(hover_id))
+				var/mutable_appearance/hover_appearance = appearance_copies[hover_id]
+				SET_PLANE_IMPLICIT(proxy_view_hover, hover_appearance.plane)
 
-			for (var/atom/movable/something as anything in proxy_view_selected.vis_contents)
-				proxy_view_selected.vis_contents -= something
-			for (var/ref_id in appearance_cache)
-				if (appearance_copies[appearance_id] != appearance_cache[ref_id])
-					continue
-				if (fake_vis[ref_id])
-					proxy_view_selected.vis_contents |= fake_vis[ref_id]
+			if (!isnull(selected_id))
+				var/mutable_appearance/selected_appearance = appearance_copies[selected_id]
+				SET_PLANE_IMPLICIT(proxy_view_selected, selected_appearance.plane)
 
-			proxy_view_selected.set_position(1, 1)
+		if ("pickBackdropColor")
+			backdrop_color = tgui_color_picker(usr, "Choose preview backdrop color:", "Backdrop Color", backdrop_color || COLOR_WHITE)
+			if (!isnull(hover_id))
+				set_appearance_proxy(proxy_view_hover, hover_id)
+			if (!isnull(selected_id))
+				set_appearance_proxy(proxy_view_selected, selected_id)
 
-		if("refreshAppearance")
+		if ("setBackdropColor")
+			backdrop_color = params["reset"] ? null : params["backdropColor"]
+			if (!isnull(hover_id))
+				set_appearance_proxy(proxy_view_hover, hover_id)
+			if (!isnull(selected_id))
+				set_appearance_proxy(proxy_view_selected, selected_id)
+
+		if ("refreshAppearance")
 			update_warning = FALSE
 			appearance_copies = list()
 			appearance_cache = list()
@@ -192,11 +210,42 @@
 			fake_vis = list()
 			update_static_data_for_all_viewers()
 
-		if("vvAppearance")
+		if ("vvAppearance")
 			if (!check_rights(R_VAREDIT))
 				return
 			var/appearance_id = text2num(params["id"])
 			usr.client.debug_variables(appearance_copies[appearance_id])
+
+/// Cause a passed proxy mapview to render a set appearance ID
+/datum/appearance_debugger/proc/set_appearance_proxy(atom/movable/screen/map_view/proxy, appearance_id)
+	var/mutable_appearance/appearance_mirror = new(appearance_copies[appearance_id])
+	proxy.appearance = appearance_mirror
+	proxy.vis_contents.Cut()
+
+	for (var/ref_id in appearance_cache)
+		if (appearance_copies[appearance_id] != appearance_cache[ref_id])
+			continue
+		if (fake_vis[ref_id])
+			proxy.vis_contents |= fake_vis[ref_id]
+
+	if (!isnull(forced_plane))
+		SET_PLANE_IMPLICIT(proxy, forced_plane)
+
+	if (!isnull(backdrop_color))
+		// Rendering *really* low, to ensure we're below everything
+		var/mutable_appearance/backdrop = mutable_appearance('icons/effects/alphacolors.dmi', "white", LOWER_FLOOR_LAYER, proxy, FLOOR_PLANE, 255, KEEP_APART | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM)
+		backdrop.transform = matrix() * 32 // I doubt anyone will make sprites larger than 32x32 tiles, largest we have as of 2026 is 11x11
+		backdrop.transform.Translate(-15.5, -15.5)
+		backdrop.color = backdrop_color
+		proxy.underlays += backdrop
+		// Also render an emissive backdrop to light up the floor
+		var/mutable_appearance/backdrop_light = emissive_appearance('icons/effects/alphacolors.dmi', "white", proxy, LOWER_FLOOR_LAYER, 255, RESET_ALPHA | RESET_TRANSFORM, effect_type = EMISSIVE_NO_BLOOM)
+		backdrop_light.transform = matrix() * 32
+		backdrop_light.transform.Translate(-15.5, -15.5)
+		proxy.underlays += backdrop_light
+
+	// Needs screenloc to be set since we're setting the appearance and carrying over target's screenloc
+	proxy.set_position(1, 1)
 
 /datum/appearance_debugger/ui_assets(mob/user)
 	return list(get_asset_datum(/datum/asset/simple/plane_background))

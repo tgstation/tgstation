@@ -607,7 +607,7 @@
 	var/obj/item/mod/module/picked_module = locate(module_reference) in modules
 	if(!istype(picked_module))
 		return
-	picked_module.on_select()
+	picked_module.on_select(user)
 
 /obj/item/mod/control/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
 	if(get_charge() < 1)
@@ -747,6 +747,9 @@
 		part.slowdown = total_slowdown / length(mod_parts)
 		if (!part_datum.sealed)
 			part.slowdown = max(part.slowdown, 0)
+		if(istype(part, /obj/item/clothing/shoes/mod))
+			var/obj/item/clothing/shoes/mod/shoe_part = part
+			shoe_part.update_footstep_sounds()
 	wearer?.update_equipment_speed_mods()
 
 /obj/item/mod/control/proc/power_off()

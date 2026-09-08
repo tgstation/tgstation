@@ -3,6 +3,10 @@
 
 /datum/orderable_item/mining/marker_beacon
 	purchase_path = /obj/item/stack/marker_beacon/ten
+	cost_per_order = 60
+
+/datum/orderable_item/mining/candela_beacon
+	purchase_path = /obj/item/stack/candela_beacon/ten
 	cost_per_order = 80
 
 /datum/orderable_item/mining/skeleton_key
@@ -14,8 +18,8 @@
 	cost_per_order = 320
 
 /datum/orderable_item/mining/fulton_core
-	purchase_path = /obj/item/fulton_core
-	cost_per_order = 320
+	purchase_path = /obj/item/fulton_core/networked
+	cost_per_order = 280
 
 /datum/orderable_item/mining/mining_modsuit
 	purchase_path = /obj/item/mod/control/pre_equipped/mining
@@ -51,8 +55,8 @@
 	cost_per_order = 675
 
 /datum/orderable_item/mining/fulton
-	purchase_path = /obj/item/extraction_pack
-	cost_per_order = 800
+	purchase_path = /obj/item/extraction_pack/networked
+	cost_per_order = 400
 
 /datum/orderable_item/mining/lazarus
 	purchase_path = /obj/item/lazarus_injector

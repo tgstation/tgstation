@@ -516,7 +516,7 @@
 /// RPG Magic.
 /datum/material/mythril
 	name = "mythril"
-	desc = "How this even exists is byond me"
+	desc = "How this even exists is byond me."
 	color = "#f2d5d7"
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
 	mat_properties = list(
@@ -557,7 +557,7 @@
 //formed when freon react with o2, emits a lot of plasma when heated
 /datum/material/hot_ice
 	name = "hot ice"
-	desc = "A weird kind of ice, feels warm to the touch"
+	desc = "A crystalline solid formed when Freon reacts with Oxygen. Extremely flammable, and will easily combust when exposed to heat."
 	color = "#88cdf1"
 	alpha = 150
 	starlight_color = COLOR_BLUE_LIGHT
@@ -587,8 +587,8 @@
 
 // It's basically adamantine, but it isn't!
 /datum/material/metalhydrogen
-	name = "Metal Hydrogen"
-	desc = "Solid metallic hydrogen. Some say it should be impossible"
+	name = "metal hydrogen"
+	desc = "Hydrogen in a metallic state, formed under extreme pressure. Some say achieving this state is impossible."
 	color = "#62708A"
 	starlight_color = COLOR_MODERATE_BLUE
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_METAL | MATERIAL_CLASS_RIGID
@@ -868,7 +868,7 @@
 
 /datum/material/zaukerite
 	name = "zaukerite"
-	desc = "A light absorbing crystal"
+	desc = "A light absorbing crystal formed out of Zauker. Vaguely toxic, like the gas itself."
 	color = COLOR_ALMOST_BLACK
 	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_CRYSTAL | MATERIAL_CLASS_RIGID
 	mat_properties = list(

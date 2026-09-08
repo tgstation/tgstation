@@ -9,7 +9,6 @@ GLOBAL_LIST_INIT(duplicate_forbidden_vars, list(
 	"atmos_adjacent_turfs",
 	"bodyparts",
 	"ckey",
-	"client_mobs_in_contents",
 	"_listen_lookup",
 	"computer_id",
 	"contents",

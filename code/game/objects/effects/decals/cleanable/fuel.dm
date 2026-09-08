@@ -12,13 +12,15 @@
 	var/burning = FALSE
 	/// Type of hotspot fuel pool spawns upon being ignited
 	var/hotspot_type = /obj/effect/hotspot
-
-/obj/effect/decal/cleanable/fuel_pool/Initialize(mapload, burn_stacks)
-	. = ..()
 	var/static/list/loc_connections = list(
 		COMSIG_TURF_MOVABLE_THROW_LANDED = PROC_REF(ignition_trigger),
 		COMSIG_ATOM_ENTERED = PROC_REF(on_entered)
 	)
+
+/obj/effect/decal/cleanable/fuel_pool/Initialize(mapload, burn_stacks)
+	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	AddElement(/datum/element/connect_loc, loc_connections)
 	for(var/obj/effect/decal/cleanable/fuel_pool/pool in get_turf(src)) //Can't use locate because we also belong to that turf
 		if(pool == src)
@@ -30,6 +32,10 @@
 		burn_amount = max(min(burn_stacks, 10), 1)
 
 	return INITIALIZE_HINT_LATELOAD
+
+/obj/effect/decal/cleanable/fuel_pool/Destroy(force)
+	RemoveElement(/datum/element/connect_loc, loc_connections)
+	return ..()
 
 // Just in case of fires, do this after mapload.
 /obj/effect/decal/cleanable/fuel_pool/LateInitialize()

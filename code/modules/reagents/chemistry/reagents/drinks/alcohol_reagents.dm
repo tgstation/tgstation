@@ -1357,7 +1357,7 @@
 /datum/reagent/consumable/ethanol/bananahonk/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/obj/item/organ/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
-	if((liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM)) || is_simian(drinker))
+	if((liver && HAS_TRAIT(liver, TRAIT_COMEDY_METABOLISM)) || HAS_TRAIT(drinker, TRAIT_SIMIAN))
 		var/heal = 1 * metabolization_ratio * seconds_per_tick
 		if(drinker.heal_bodypart_damage(brute = heal, burn = heal, updating_health = FALSE))
 			return UPDATE_MOB_HEALTH

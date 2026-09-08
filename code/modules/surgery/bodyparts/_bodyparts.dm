@@ -737,6 +737,9 @@
 			wounding_type = WOUND_PIERCE
 
 	if(owner) // i tried to modularize the below, but the modifications to wounding_dmg and wounding_type cant be extracted to a proc
+		if(!forced)
+			brute *= GET_PHYSIOLOGY(owner, BRUTE)
+			burn *= GET_PHYSIOLOGY(owner, BURN)
 		var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
 
 		var/has_exterior = (bio_status & ANATOMY_EXTERIOR)

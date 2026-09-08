@@ -1,0 +1,4 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - rscadd: "Added tooltips for language icons in chat"

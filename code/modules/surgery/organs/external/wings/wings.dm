@@ -206,7 +206,7 @@
 ///UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
 /obj/item/organ/wings/proc/toggle_flight(mob/living/carbon/human/human)
 	if(!HAS_TRAIT_FROM(human, TRAIT_MOVE_FLOATING, SPECIES_FLIGHT_TRAIT))
-		human.physiology.stun_mod *= 2
+		MODIFY_PHYSIOLOGY(human, PHYS_COEFF_STUN, 2)
 		human.add_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SPECIES_FLIGHT_TRAIT)
 		human.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/wings)
 		human.AddElement(/datum/element/forced_gravity, 0)
@@ -215,9 +215,10 @@
 		to_chat(human, span_notice("You beat your wings and begin to hover gently above the ground..."))
 		human.set_resting(FALSE, TRUE)
 		human.refresh_gravity()
+		RegisterSignal(human, COMSIG_HUMAN_SPEC_STUN, PROC_REF(on_spec_stun))
 		return
 
-	human.physiology.stun_mod *= 0.5
+	MODIFY_PHYSIOLOGY(human, PHYS_COEFF_STUN, 0.5)
 	human.remove_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SPECIES_FLIGHT_TRAIT)
 	human.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/wings)
 	human.RemoveElement(/datum/element/forced_gravity, 0)
@@ -225,6 +226,14 @@
 	to_chat(human, span_notice("You settle gently back onto the ground..."))
 	close_wings()
 	human.refresh_gravity()
+	UnregisterSignal(human, COMSIG_HUMAN_SPEC_STUN)
+
+/obj/item/organ/wings/proc/on_spec_stun(datum/source, list/amount)
+	SIGNAL_HANDLER
+	if(owner.buckled)
+		return
+	toggle_flight(owner)
+	INVOKE_ASYNC(src, PROC_REF(fly_slip), owner)
 
 ///Spread wings. Activate Jetpack component
 /obj/item/organ/wings/proc/open_wings()

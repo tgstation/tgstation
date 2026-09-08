@@ -76,6 +76,7 @@ GLOBAL_DATUM_INIT(latejoin_menu, /datum/latejoin_menu, new)
 				"prioritized" = (job_datum in SSjob.prioritized_jobs),
 				"used_slots" = job_datum.current_positions,
 				"open_slots" = job_datum.total_positions < 0 ? "∞" : job_datum.total_positions,
+				"jobIcon" = job_datum.tgui_icon,
 			)
 
 			if(job_availability != JOB_AVAILABLE)

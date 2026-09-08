@@ -1,76 +1,66 @@
 /// Decides if parallax should be rendered or not, and sets things up accordingly
-/datum/hud/proc/check_parallax()
-	var/client/displaying_client = mymob.client
-	if(isnull(displaying_client.parallax_rock))
-		displaying_client.parallax_rock = new(null, null, displaying_client)
-
+/atom/movable/screen/parallax_home/proc/check_parallax()
 	/// Applies our preferences to our existing display
 	apply_parallax_pref()
-	var/atom/movable/screen/parallax_home/rock = displaying_client?.parallax_rock
 
 	// Because other parts of the code can just REMOVE US FROM THE SCREEN for no reason as a joke
-	if (rock.displaying_layers)
-		ADD_TRAIT(src, TRAIT_PARALLAX_DISPLAYED, TRAIT_GENERIC)
-		displaying_client.screen |= rock
+	if (displaying_layers)
+		ADD_TRAIT(owner, TRAIT_PARALLAX_DISPLAYED(submap), TRAIT_GENERIC)
+		owner.screen |= src
 	else
-		REMOVE_TRAIT(src, TRAIT_PARALLAX_DISPLAYED, TRAIT_GENERIC)
-		displaying_client.screen -= rock
+		REMOVE_TRAIT(owner, TRAIT_PARALLAX_DISPLAYED(submap), TRAIT_GENERIC)
+		owner.screen -= src
 
-/datum/hud/proc/apply_parallax_pref()
-	var/turf/screen_location = get_turf(mymob)
-	var/client/displaying_client = mymob.client
-	var/atom/movable/screen/parallax_home/rock = displaying_client.parallax_rock
+/atom/movable/screen/parallax_home/proc/apply_parallax_pref()
+	var/turf/screen_location = get_turf(perspective)
 
 	if(SSmapping.level_trait(screen_location?.z, ZTRAIT_NOPARALLAX))
-		rock.set_layer_settings(layers_to_draw = 0, draw_old_space = FALSE, animate_parallax = FALSE)
+		set_layer_settings(layers_to_draw = 0, draw_old_space = FALSE, animate_parallax = FALSE)
 		return
 
-	if (SSlag_switch.measures[DISABLE_PARALLAX] && !HAS_TRAIT(mymob, TRAIT_BYPASS_MEASURES))
-		rock.set_layer_settings(layers_to_draw = 0, draw_old_space = FALSE, animate_parallax = FALSE)
+	if (SSlag_switch.measures[DISABLE_PARALLAX] && (!owner?.mob || !HAS_TRAIT(owner.mob, TRAIT_BYPASS_MEASURES)))
+		set_layer_settings(layers_to_draw = 0, draw_old_space = FALSE, animate_parallax = FALSE)
 		return
 
 	// Default to HIGH
-	var/parallax_selection = displaying_client?.prefs.read_preference(/datum/preference/choiced/parallax) || PARALLAX_HIGH
+	var/parallax_selection = owner?.prefs.read_preference(/datum/preference/choiced/parallax) || PARALLAX_HIGH
 
 	switch(parallax_selection)
 		if (PARALLAX_INSANE)
-			rock.set_layer_settings(layers_to_draw = 5, draw_old_space = FALSE, animate_parallax = TRUE)
+			set_layer_settings(layers_to_draw = 5, draw_old_space = FALSE, animate_parallax = TRUE)
 			return
 
 		if(PARALLAX_HIGH)
-			rock.set_layer_settings(layers_to_draw = 4, draw_old_space = FALSE, animate_parallax = TRUE)
+			set_layer_settings(layers_to_draw = 4, draw_old_space = FALSE, animate_parallax = TRUE)
 			return
 
 		if (PARALLAX_MED)
-			rock.set_layer_settings(layers_to_draw = 3, draw_old_space = FALSE, animate_parallax = TRUE)
+			set_layer_settings(layers_to_draw = 3, draw_old_space = FALSE, animate_parallax = TRUE)
 			return
 
 		if (PARALLAX_LOW)
-			rock.set_layer_settings(layers_to_draw = 1, draw_old_space = FALSE, animate_parallax = FALSE)
+			set_layer_settings(layers_to_draw = 1, draw_old_space = FALSE, animate_parallax = FALSE)
 			return
 
 		if (PARALLAX_BOOMER)
-			rock.set_layer_settings(layers_to_draw = 0, draw_old_space = TRUE, animate_parallax = TRUE)
+			set_layer_settings(layers_to_draw = 0, draw_old_space = TRUE, animate_parallax = TRUE)
 			return
 
 		if (PARALLAX_DISABLE)
-			rock.set_layer_settings(layers_to_draw = 0, draw_old_space = FALSE, animate_parallax = FALSE)
+			set_layer_settings(layers_to_draw = 0, draw_old_space = FALSE, animate_parallax = FALSE)
 			return
 
-/datum/hud/proc/update_parallax_pref()
-	if(!mymob.client)
-		return
-	check_parallax()
-	update_parallax()
+/client/proc/update_parallax_prefs()
+	for(var/atom/movable/screen/parallax_home/instance as anything in parallax_instances)
+		instance.check_parallax()
+		instance.update_parallax()
 
 // This sets which way the current shuttle is moving (returns true if the shuttle has stopped moving so the caller can append their animation)
-/datum/hud/proc/set_parallax_movedir(new_parallax_movedir = NONE, skip_windups)
-	. = FALSE
-	var/client/displaying_client = mymob.client
-	if(new_parallax_movedir == displaying_client.parallax_movedir)
-		return
+/atom/movable/screen/parallax_home/proc/set_parallax_movedir(new_parallax_movedir = NONE, skip_windups)
+	if(new_parallax_movedir == parallax_movedir)
+		return FALSE
 
-	var/animation_dir = new_parallax_movedir || displaying_client.parallax_movedir
+	var/animation_dir = new_parallax_movedir || parallax_movedir
 	var/matrix/new_transform
 	switch(animation_dir)
 		if(NORTH)
@@ -83,17 +73,17 @@
 			new_transform = matrix(1, 0,-480, 0, 1, 0)
 
 	var/longest_timer = 0
-	for(var/key in displaying_client.parallax_animate_timers)
-		deltimer(displaying_client.parallax_animate_timers[key])
-	displaying_client.parallax_animate_timers = list()
-	for(var/atom/movable/screen/parallax_layer/layer as anything in displaying_client.parallax_rock.parallax_layers)
+	for(var/key in parallax_animate_timers)
+		deltimer(parallax_animate_timers[key])
+	parallax_animate_timers = list()
+	for(var/atom/movable/screen/parallax_layer/layer as anything in parallax_layers)
 		var/scaled_time = PARALLAX_LOOP_TIME / layer.speed
 		if(new_parallax_movedir == NONE) // If we're stopping, we need to stop on the same dime, yeah?
 			scaled_time = PARALLAX_LOOP_TIME
 		longest_timer = max(longest_timer, scaled_time)
 
 		if(skip_windups)
-			update_parallax_motionblur(displaying_client, layer, new_parallax_movedir, new_transform)
+			update_parallax_motionblur(layer, new_parallax_movedir, new_transform)
 			continue
 
 		layer.transform = new_transform
@@ -103,16 +93,14 @@
 		//queue up another animate so lag doesn't create a shutter
 		animate(transform = new_transform, time = 0)
 		animate(transform = matrix(), time = scaled_time / 2)
-		displaying_client.parallax_animate_timers[layer] = addtimer(CALLBACK(src, PROC_REF(update_parallax_motionblur), displaying_client, layer, new_parallax_movedir, new_transform), scaled_time, TIMER_CLIENT_TIME|TIMER_STOPPABLE)
+		parallax_animate_timers[layer] = addtimer(CALLBACK(src, PROC_REF(update_parallax_motionblur), layer, new_parallax_movedir, new_transform), scaled_time, TIMER_CLIENT_TIME|TIMER_STOPPABLE)
 
-	displaying_client.dont_animate_parallax = world.time + min(longest_timer, PARALLAX_LOOP_TIME)
-	displaying_client.parallax_movedir = new_parallax_movedir
+	dont_animate_parallax = world.time + min(longest_timer, PARALLAX_LOOP_TIME)
+	parallax_movedir = new_parallax_movedir
+	return TRUE
 
-/datum/hud/proc/update_parallax_motionblur(client/displaying_client, atom/movable/screen/parallax_layer/layer, new_parallax_movedir, matrix/new_transform)
-	if(!displaying_client)
-		return
-	displaying_client.parallax_animate_timers -= layer
-
+/atom/movable/screen/parallax_home/proc/update_parallax_motionblur(atom/movable/screen/parallax_layer/layer, new_parallax_movedir, matrix/new_transform)
+	parallax_animate_timers -= layer
 	// If we are moving in a direction, we used the QUAD_EASING function with EASE_IN
 	// This means our position function is x^2. This is always LESS then the linear we're using here
 	// But if we just used the same time delay, our rate of change would mismatch. f'(1) = 2x for quad easing, rather then the 1 we get for linear
@@ -123,34 +111,36 @@
 	animate(layer, transform = new_transform, time = 0, loop = -1, flags = ANIMATION_END_NOW)
 	animate(transform = matrix(), time = scaled_time)
 
-/datum/hud/proc/update_parallax()
-	var/client/displaying_client = mymob.client
-	var/turf/posobj = get_turf(displaying_client.eye)
-	if(!posobj)
+/atom/movable/screen/parallax_home/proc/update_parallax()
+	var/turf/viewing_from = get_turf(perspective)
+	if(!viewing_from)
 		return
 
-	var/area/areaobj = posobj.loc
-	// Update the movement direction of the parallax if necessary (for shuttles)
-	set_parallax_movedir(areaobj.parallax_movedir, FALSE, mymob)
+	var/area/areaobj = viewing_from.loc
+	set_perspective_area(areaobj)
 
-	if(!displaying_client.previous_turf || (displaying_client.previous_turf.z != posobj.z))
-		displaying_client.previous_turf = posobj
+	// Update the movement direction of the parallax if necessary (for shuttles and such)
+	var/quickstart_parallax = FALSE
+	if(!current_turf || (current_turf.z != viewing_from.z))
+		current_turf = viewing_from
+		quickstart_parallax = TRUE
+
+	set_parallax_movedir(areaobj.parallax_movedir, quickstart_parallax)
 
 	//Doing it this way prevents parallax layers from "jumping" when you change Z-Levels.
-	var/offset_x = posobj.x - displaying_client.previous_turf.x
-	var/offset_y = posobj.y - displaying_client.previous_turf.y
+	var/offset_x = viewing_from.x - current_turf.x
+	var/offset_y = viewing_from.y - current_turf.y
 
-	var/glide_rate = round(ICON_SIZE_ALL / mymob.glide_size * world.tick_lag, world.tick_lag)
-	displaying_client.previous_turf = posobj
+	var/glide_rate = round(ICON_SIZE_ALL / perspective.glide_size * world.tick_lag, world.tick_lag)
+	current_turf = viewing_from
 
 	var/largest_change = max(abs(offset_x), abs(offset_y))
 	var/max_allowed_dist = (glide_rate / world.tick_lag) + 1
-	var/atom/movable/screen/parallax_home/rock = displaying_client.parallax_rock
 
 	// If we aren't already moving/don't allow parallax, have made some movement, and that movement was smaller then our "glide" size, animate
-	var/run_parralax = (rock.animate_parallax && glide_rate && !areaobj.parallax_movedir && displaying_client.dont_animate_parallax <= world.time && largest_change <= max_allowed_dist)
+	var/run_parralax = (animate_parallax && glide_rate && !areaobj.parallax_movedir && dont_animate_parallax <= world.time && largest_change <= max_allowed_dist)
 
-	for(var/atom/movable/screen/parallax_layer/parallax_layer as anything in rock.parallax_layers)
+	for(var/atom/movable/screen/parallax_layer/parallax_layer as anything in parallax_layers)
 		var/our_speed = parallax_layer.speed
 		var/change_x
 		var/change_y
@@ -158,8 +148,8 @@
 		var/old_y = parallax_layer.offset_y
 		if(parallax_layer.absolute)
 			// We use change here so the typically large absolute objects (just lavaland for now) don't jitter so much
-			change_x = (posobj.x - SSparallax.planet_x_offset) * our_speed + old_x
-			change_y = (posobj.y - SSparallax.planet_y_offset) * our_speed + old_y
+			change_x = (viewing_from.x - SSparallax.planet_x_offset) * our_speed + old_x
+			change_y = (viewing_from.y - SSparallax.planet_y_offset) * our_speed + old_y
 		else
 			change_x = offset_x * our_speed
 			change_y = offset_y * our_speed
@@ -190,16 +180,6 @@
 			parallax_layer.pixel_w = round(parallax_layer.offset_x, 1)
 			parallax_layer.pixel_z = round(parallax_layer.offset_y, 1)
 
-/atom/movable/proc/update_parallax_contents()
-	for(var/mob/client_mob as anything in client_mobs_in_contents)
-		if(client_mob?.client?.parallax_rock?.displaying_layers && client_mob.hud_used)
-			client_mob.hud_used.update_parallax()
-
-/mob/proc/update_parallax_teleport() //used for arrivals shuttle
-	if(client?.eye && hud_used && client?.parallax_rock?.displaying_layers)
-		var/area/areaobj = get_area(client.eye)
-		hud_used.set_parallax_movedir(areaobj.parallax_movedir, TRUE)
-
 // Root object for parallax, all parallax layers are drawn onto this and it manages them
 /atom/movable/screen/parallax_home
 	icon = null
@@ -207,6 +187,10 @@
 	plane = PLANE_SPACE_PARALLAX
 	screen_loc = "CENTER-7,CENTER-7"
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	/// The submap we are displaying on
+	var/submap = null
+	/// The submap string to draw with, if any
+	var/submap_text = null
 	/// Layers we are currently displaying
 	var/list/atom/movable/screen/parallax_layer/parallax_layers = list()
 	/// Pallet of layers we CAN display if we choose to, depending on our client's prefs
@@ -220,17 +204,94 @@
 	var/displaying_layers = FALSE
 	/// Are we animating parallax?
 	var/animate_parallax = FALSE
+	/// The movable we are being drawn from the perspective of
+	var/atom/movable/perspective
+	/// The turf we are currently displaying "from"
+	var/turf/current_turf
 	/// The client that owns us
 	var/client/owner
+	/// Timers for the area directional animation, one for each layer
+	var/list/parallax_animate_timers
+	/// world.time of when we can state animate()ing parallax again
+	var/dont_animate_parallax
+	/// Direction our current area wants to move parallax
+	var/parallax_movedir = NONE
+	/// The area our perspective is currently in
+	var/area/perspective_area
 
-/atom/movable/screen/parallax_home/Initialize(mapload, datum/hud/hud_owner, client/owner)
+/atom/movable/screen/parallax_home/Initialize(mapload, datum/hud/hud_owner, client/owner, submap = null)
 	. = ..()
 	src.owner = owner
+	owner.parallax_instances += src
+	src.submap = submap
+	if(submap)
+		src.submap_text = "[submap]:"
+	if(!isnull(submap_text))
+		screen_loc = "[submap_text][screen_loc]"
 
 /atom/movable/screen/parallax_home/Destroy()
+	REMOVE_TRAIT(owner, TRAIT_PARALLAX_DISPLAYED(submap), TRAIT_GENERIC)
 	clear_layers()
+	set_perspective(null)
+	current_turf = null
+	owner.screen -= src
+	owner.parallax_instances -= src
+	if(owner.eye_parallax == src)
+		owner.eye_parallax = null
 	owner = null
 	return ..()
+
+/atom/movable/screen/parallax_home/proc/set_perspective(atom/movable/new_perspective)
+	if(perspective == new_perspective)
+		return
+	var/old_perspective = perspective
+	if(old_perspective)
+		UnregisterSignal(old_perspective, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_Z_CHANGED))
+	perspective = new_perspective
+
+	if(!perspective)
+		SEND_SIGNAL(src, COMSIG_PARALLAX_PERSPECTIVE_CHANGED, old_perspective, new_perspective)
+		return
+	var/static/list/container_connections = list(
+		COMSIG_MOVABLE_MOVED = PROC_REF(perspective_loc_moved),
+	)
+	AddComponent(/datum/component/connect_containers, perspective, container_connections)
+	RegisterSignal(perspective, COMSIG_MOVABLE_MOVED, PROC_REF(perspective_moved))
+	RegisterSignal(perspective, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(perspective_z_changed))
+	SEND_SIGNAL(src, COMSIG_PARALLAX_PERSPECTIVE_CHANGED, old_perspective, new_perspective)
+	check_parallax()
+	update_parallax()
+
+/atom/movable/screen/parallax_home/proc/perspective_loc_moved(atom/movable/source)
+	if(source.moving_diagonally == FIRST_DIAG_STEP)
+		return
+	update_parallax()
+
+/atom/movable/screen/parallax_home/proc/perspective_moved(datum/source)
+	SIGNAL_HANDLER
+	// We don't do this all the time because diag movements should trigger one call to this, not two
+	// Waste of cpu time, and it fucks the animate
+	if(perspective.moving_diagonally == FIRST_DIAG_STEP)
+		return
+	update_parallax()
+
+/atom/movable/screen/parallax_home/proc/perspective_z_changed(datum/source)
+	SIGNAL_HANDLER
+	check_parallax()
+	update_parallax()
+
+/atom/movable/screen/parallax_home/proc/set_perspective_area(area/new_area)
+	if(perspective_area == new_area)
+		return
+	if(perspective_area)
+		UnregisterSignal(perspective_area, COMSIG_AREA_PARALLAX_DIR_CHANGED)
+
+	perspective_area = new_area
+	RegisterSignal(perspective_area, COMSIG_AREA_PARALLAX_DIR_CHANGED, PROC_REF(area_parallax_dir_changed))
+
+/atom/movable/screen/parallax_home/proc/area_parallax_dir_changed(datum/source)
+	SIGNAL_HANDLER
+	update_parallax()
 
 /atom/movable/screen/parallax_home/proc/display_layers()
 	if(displaying_layers || length(parallax_layers_cached) == 0)
@@ -257,19 +318,19 @@
 /atom/movable/screen/parallax_home/proc/generate_space_layer(index)
 	switch(index)
 		if(1)
-			return new /atom/movable/screen/parallax_layer/layer_1(null, null, owner)
+			return new /atom/movable/screen/parallax_layer/layer_1(null, null, src)
 		if(2)
-			return new /atom/movable/screen/parallax_layer/layer_2(null, null, owner)
+			return new /atom/movable/screen/parallax_layer/layer_2(null, null, src)
 		if(3)
-			return new /atom/movable/screen/parallax_layer/planet(null, null, owner)
+			return new /atom/movable/screen/parallax_layer/planet(null, null, src)
 		if(4)
 			if(SSparallax.random_layer)
-				return new SSparallax.random_layer.type(null, null, owner, FALSE, SSparallax.random_layer)
+				return new SSparallax.random_layer.type(null, null, src, FALSE, SSparallax.random_layer)
 			else
-				return new /atom/movable/screen/parallax_layer/layer_3(null, null, owner)
+				return new /atom/movable/screen/parallax_layer/layer_3(null, null, src)
 		if(5)
 			if(SSparallax.random_layer)
-				return new /atom/movable/screen/parallax_layer/layer_3(null, null, owner)
+				return new /atom/movable/screen/parallax_layer/layer_3(null, null, src)
 
 /atom/movable/screen/parallax_home/proc/regenerate_layers()
 	clear_layers()
@@ -283,7 +344,7 @@
 			parallax_layers_cached += parallax
 
 	if(draw_old_space)
-		parallax_layers_cached += new /atom/movable/screen/parallax_layer/old(null, null, owner)
+		parallax_layers_cached += new /atom/movable/screen/parallax_layer/old(null, null, src)
 
 	display_layers()
 
@@ -304,8 +365,10 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	/// View size we're being rendered with
 	var/working_view = ""
+	/// The parallax home that owns us
+	var/atom/movable/screen/parallax_home/home
 
-/atom/movable/screen/parallax_layer/Initialize(mapload, datum/hud/hud_owner, client/owner, template = FALSE)
+/atom/movable/screen/parallax_layer/Initialize(mapload, datum/hud/hud_owner, atom/movable/screen/parallax_home/home, template = FALSE)
 	. = ..()
 	// Parallax layers are independent of hud, they care about client
 	// Not doing this will just create a bunch of hard deletes
@@ -314,13 +377,25 @@
 	if(template)
 		return
 
-	if(!owner) // If this typepath all starts to harddel your culprit is likely this
+	src.home = home
+	var/client/owner = home.owner
+	if(QDELETED(owner)) // If this typepath all starts to harddel your culprit is likely this
 		return INITIALIZE_HINT_QDEL
+
+	if(!isnull(home.submap_text))
+		screen_loc = "[home.submap_text][screen_loc]"
 
 	// I do not want to know bestie
 	var/view = owner.view || world.view
 	update_o(view)
 	RegisterSignal(owner, COMSIG_VIEW_SET, PROC_REF(on_view_change))
+
+/atom/movable/screen/parallax_layer/Destroy()
+	if(home)
+		home.parallax_layers_cached -= src
+		home.parallax_layers -= src
+		home = null
+	return ..()
 
 /atom/movable/screen/parallax_layer/proc/on_view_change(datum/source, new_size)
 	SIGNAL_HANDLER
@@ -407,29 +482,27 @@
 	speed = 3
 	layer = 30
 
-/atom/movable/screen/parallax_layer/planet/Initialize(mapload, datum/hud/hud_owner, client/owner)
+/atom/movable/screen/parallax_layer/planet/Initialize(mapload, datum/hud/hud_owner, atom/movable/screen/parallax_home/home)
 	. = ..()
-	if(!owner)
-		return
-	var/static/list/connections = list(
-		COMSIG_MOVABLE_Z_CHANGED = PROC_REF(on_z_change),
-		COMSIG_MOB_LOGOUT = PROC_REF(on_mob_logout),
-	)
-	AddComponent(/datum/component/connect_mob_behalf, owner, connections)
-	on_z_change(owner.mob)
+	RegisterSignal(home, COMSIG_PARALLAX_PERSPECTIVE_CHANGED, PROC_REF(perspective_changed))
+	perspective_changed(home, null, home.perspective)
 
-/atom/movable/screen/parallax_layer/planet/proc/on_mob_logout(mob/source)
+/atom/movable/screen/parallax_layer/planet/proc/perspective_changed(datum/source, atom/old_perspective, atom/new_perspective)
 	SIGNAL_HANDLER
-	var/client/boss = source.canon_client
-	on_z_change(boss.mob)
-
-/atom/movable/screen/parallax_layer/planet/proc/on_z_change(mob/source)
-	SIGNAL_HANDLER
-	var/client/boss = source.client
-	var/turf/posobj = get_turf(boss?.eye)
-	if(!posobj)
+	if(old_perspective == new_perspective)
 		return
-	SetInvisibility(is_station_level(posobj.z) ? INVISIBILITY_NONE : INVISIBILITY_ABSTRACT, id=type)
+	if(old_perspective)
+		UnregisterSignal(old_perspective, COMSIG_MOVABLE_Z_CHANGED)
+	if(new_perspective)
+		RegisterSignal(new_perspective, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_change))
+	on_z_change(new_perspective)
+
+/atom/movable/screen/parallax_layer/planet/proc/on_z_change(atom/source)
+	SIGNAL_HANDLER
+	var/turf/viewing_from = get_turf(home?.perspective)
+	if(isnull(viewing_from))
+		return
+	SetInvisibility(is_station_level(viewing_from.z) ? INVISIBILITY_NONE : INVISIBILITY_ABSTRACT, id=type)
 
 /atom/movable/screen/parallax_layer/planet/update_o()
 	return //Shit won't move

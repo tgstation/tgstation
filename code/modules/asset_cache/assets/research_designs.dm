@@ -64,4 +64,4 @@
 
 /datum/asset/spritesheet_batched/research_designs/proc/get_design_id(design_path)
 	var/static/base_path_len = length("/datum/design/")
-	return replacetext(splicetext("[design_path]", 1, base_path_len), "/", "_")
+	return replacetext(splicetext("[design_path]", 1, base_path_len + 1), "/", "_")

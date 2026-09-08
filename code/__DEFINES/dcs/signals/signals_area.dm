@@ -27,6 +27,9 @@
 /// Called when the air alarm mode is updated
 #define COMSIG_AIRALARM_UPDATE_MODE "airalarm_update_mode"
 
+/// Sent from base of area/set_parallax_movedir: (new_movedir)
+#define COMSIG_AREA_PARALLAX_DIR_CHANGED "area_parallax_dir_changed"
+
 // Area fire signals
 /// Sent when an area's fire var changes: (fire_value)
 #define COMSIG_AREA_FIRE_CHANGED "area_fire_set"

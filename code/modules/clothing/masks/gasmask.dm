@@ -11,7 +11,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	name = "gas mask"
 	desc = "A face-covering mask that can be connected to an air supply. Good for concealing your identity and with a filter slot to help remove those toxins." //More accurate
 	icon_state = "gas_alt"
-	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS | GAS_FILTERING
+	clothing_flags = BLOCK_GAS_SMOKE_EFFECT | MASKINTERNALS
 	flags_inv = HIDEEARS|HIDEEYES|HIDEFACE|HIDEFACIALHAIR|HIDESNOUT
 	w_class = WEIGHT_CLASS_NORMAL
 	inhand_icon_state = "gas_alt"

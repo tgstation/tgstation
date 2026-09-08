@@ -319,4 +319,4 @@
 
 /obj/item/storage/box/contractor/fulton_extraction/PopulateContents()
 	new /obj/item/extraction_pack/syndicate(src)
-	new /obj/item/fulton_core(src)
+	new /obj/item/fulton_core/syndicate(src)

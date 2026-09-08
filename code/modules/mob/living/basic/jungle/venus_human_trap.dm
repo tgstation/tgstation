@@ -231,7 +231,7 @@
 			owner.balloon_alert(owner, "path blocked!")
 			return
 
-	var/datum/beam/new_vine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration * (ismob(target_atom) ? 1 : 2), beam_type = /obj/effect/ebeam/vine, emissive = FALSE)
+	var/datum/beam/new_vine = owner.Beam(target_atom, icon_state = "vine", time = vine_duration * (ismob(target_atom) ? 1 : 2), beam_type = /obj/effect/ebeam/vine, emissive = NONE)
 	var/component = target_atom.AddComponent(/datum/component/leash, owner, vine_grab_distance)
 	RegisterSignal(new_vine, COMSIG_QDELETING, PROC_REF(remove_vine), new_vine)
 	vines[new_vine] = component

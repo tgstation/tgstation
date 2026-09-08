@@ -69,6 +69,10 @@
 	var/obj/effect/abstract/top_bit = null
 	/// Are we currently hiding our top half because someone is above us?
 	var/trimmed = FALSE
+	/// Power flags we provide for our network
+	var/network_power_flags = CANDELA_NETWORK_POWERED
+	/// Is this vent being boosted by a Candela network?
+	var/boosted = FALSE
 
 	/// What base icon_state do we use for this vent's boulders?
 	var/boulder_icon_state = "boulder"
@@ -92,8 +96,7 @@
 	))
 	if(tapped)
 		SSore_generation.processed_vents += src
-		update_appearance(UPDATE_ICON_STATE)
-		add_tapped_visual()
+		become_tapped()
 
 	RegisterSignal(src, COMSIG_SPAWNER_SPAWNED_DEFAULT, PROC_REF(anti_cheese))
 	RegisterSignal(src, COMSIG_SPAWNER_SPAWNED, PROC_REF(log_mob_spawned))
@@ -342,7 +345,7 @@
  * Handles winning the event, gives everyone a payout and start boulder production
  */
 /obj/structure/ore_vent/proc/initiate_wave_win(forced = FALSE)
-	tapped = TRUE //The Node Drone has survived the wave defense, and the ore vent is tapped.
+	become_tapped() //The Node Drone has survived the wave defense, and the ore vent is tapped.
 	SSore_generation.processed_vents += src
 	if(!forced)
 		log_game("Ore vent [key_name_and_tag(src)] was tapped")
@@ -379,6 +382,7 @@
 	vent_visual.icon_state = "well"
 	vent_visual.layer = ABOVE_MOB_LAYER
 	vent_visual.vis_flags = VIS_INHERIT_PLANE | VIS_INHERIT_ID
+	vent_visual.overlays += emissive_appearance('icons/obj/mining_zones/terrain.dmi', "well_e", src, alpha = 192)
 	vis_contents += vent_visual
 
 /obj/structure/ore_vent/update_icon_state()
@@ -562,7 +566,7 @@
 	var/list/mats_list = new_rock.custom_materials?.Copy() || list()
 	for(var/iteration in 1 to MINERALS_PER_BOULDER)
 		var/datum/material/material = pick_weight(mineral_breakdown)
-		mats_list[material] += ore_quantity_function(iteration)
+		mats_list[material] += ore_quantity_function(iteration, HALF_SHEET_MATERIAL_AMOUNT * (boosted ? BOULDER_MAT_MULT_BOOSTED : 1))
 	new_rock.set_custom_materials(mats_list)
 
 	//set size & durability
@@ -645,6 +649,27 @@
 			wave_timer = WAVE_DURATION_SMALL
 			name = initial(name)
 
+/obj/structure/ore_vent/proc/become_tapped()
+	tapped = TRUE
+	RegisterSignal(src, COMSIG_CANDELA_NODE_NETWORK_CHANGED, PROC_REF(on_network_changed))
+	AddComponent(/datum/component/candela_node, new /datum/mining_beacon_network(), connection_pixel_x = base_pixel_w, connection_pixel_y = base_pixel_z + 36, power_flags = network_power_flags, fulton_point = TRUE)
+	update_appearance(UPDATE_ICON_STATE)
+	add_tapped_visual()
+
+/obj/structure/ore_vent/proc/on_network_changed(datum/source, datum/mining_beacon_network/old_network, datum/mining_beacon_network/new_network)
+	SIGNAL_HANDLER
+
+	if (old_network)
+		UnregisterSignal(old_network, COMSIG_CANDELA_NETWORK_POWER_CHANGED)
+	on_power_changed(old_state = old_network?.powered, new_state = new_network?.powered)
+	if (new_network)
+		RegisterSignal(new_network, COMSIG_CANDELA_NETWORK_POWER_CHANGED, PROC_REF(on_power_changed))
+
+/obj/structure/ore_vent/proc/on_power_changed(datum/source, old_state, new_state)
+	SIGNAL_HANDLER
+
+	boosted = !!(new_state & CANDELA_NETWORK_BOOSTED)
+
 //comes with the station, and is already tapped.
 /obj/structure/ore_vent/starter_resources
 	name = "active ore vent"
@@ -657,6 +682,7 @@
 		/datum/material/iron = 1,
 		/datum/material/glass = 1,
 	)
+	network_power_flags = CANDELA_NETWORK_POWERED | CANDELA_NETWORK_BOOSTED
 
 /obj/structure/ore_vent/starter_resources/Initialize(mapload)
 	. = ..()
