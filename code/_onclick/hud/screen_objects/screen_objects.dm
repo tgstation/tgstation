@@ -1151,8 +1151,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	if(!istype(hungry))
 		return
 
-	if(!ishuman(hungry) || CONFIG_GET(flag/disable_human_mood))
-		screen_loc = ui_mood // Slot in where mood normally is if mood is disabled
+	if(!ishuman(hungry))
+		screen_loc = ui_mood // Slot in where mood normally is if mood is not here (we arent a human)
 
 	// Burger next to the bar
 	food_image = image(icon = food_icon, icon_state = food_icon_state, pixel_x = -5)

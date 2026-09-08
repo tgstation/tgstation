@@ -41,8 +41,6 @@
 	return get_generic_humanoid_static_appearance()
 
 /mob/living/carbon/human/proc/setup_mood()
-	if (CONFIG_GET(flag/disable_human_mood))
-		return
 	mob_mood = new /datum/mood(src)
 
 /mob/living/carbon/human/dummy/get_unconscious_appearance()

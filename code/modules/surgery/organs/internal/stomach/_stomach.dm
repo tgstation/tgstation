@@ -195,7 +195,7 @@
 		human.metabolism_efficiency = 1
 
 	//Hunger slowdown for if mood isn't enabled
-	if(CONFIG_GET(flag/disable_human_mood))
+	if(CONFIG_GET(flag/disable_human_mood_movespeed))
 		handle_hunger_slowdown(human)
 
 ///for when mood is disabled and hunger should handle slowdowns

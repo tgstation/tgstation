@@ -597,35 +597,19 @@
 	SEND_SIGNAL(mob_parent, COMSIG_CARBON_SANITY_UPDATE, amount)
 	switch(sanity)
 		if(SANITY_INSANE to SANITY_CRAZY)
-			set_insanity_effect(MAJOR_INSANITY_PEN)
-			mob_parent.add_movespeed_modifier(/datum/movespeed_modifier/sanity/insane)
-			mob_parent.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
 			sanity_level = SANITY_LEVEL_INSANE
 		if(SANITY_CRAZY to SANITY_UNSTABLE)
-			set_insanity_effect(MINOR_INSANITY_PEN)
-			mob_parent.add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy)
-			mob_parent.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
 			sanity_level = SANITY_LEVEL_CRAZY
 		if(SANITY_UNSTABLE to SANITY_DISTURBED)
-			set_insanity_effect(0)
-			mob_parent.add_movespeed_modifier(/datum/movespeed_modifier/sanity/disturbed)
-			mob_parent.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
 			sanity_level = SANITY_LEVEL_UNSTABLE
 		if(SANITY_DISTURBED to SANITY_NEUTRAL)
-			set_insanity_effect(0)
-			mob_parent.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
-			mob_parent.remove_actionspeed_modifier(ACTIONSPEED_ID_SANITY)
 			sanity_level = SANITY_LEVEL_DISTURBED
 		if(SANITY_NEUTRAL+1 to SANITY_GREAT+1) //shitty hack but +1 to prevent it from responding to super small differences
-			set_insanity_effect(0)
-			mob_parent.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
-			mob_parent.add_actionspeed_modifier(/datum/actionspeed_modifier/high_sanity)
 			sanity_level = SANITY_LEVEL_NEUTRAL
 		if(SANITY_GREAT+1 to INFINITY)
-			set_insanity_effect(0)
-			mob_parent.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
-			mob_parent.add_actionspeed_modifier(/datum/actionspeed_modifier/high_sanity)
 			sanity_level = SANITY_LEVEL_GREAT
+
+	set_crit_threshold()
 
 	// Crazy or insane = add some uncommon hallucinations
 	if(sanity_level >= SANITY_LEVEL_CRAZY)
@@ -643,12 +627,44 @@
 /datum/mood/proc/adjust_sanity(amount, minimum = SANITY_INSANE, maximum = SANITY_GREAT, override = FALSE)
 	set_sanity(sanity + amount, minimum, maximum, override)
 
-/// Sets the insanity effect on the mob
-/datum/mood/proc/set_insanity_effect(newval)
+/// Sets the crit threshold of the mob
+/datum/mood/proc/set_crit_threshold()
+	if(CONFIG_GET(flag/disable_human_mood_crit_threshold))
+		return
+	var/newval = 0
+	switch(sanity_level)
+		if(SANITY_LEVEL_INSANE)
+			newval = MAJOR_INSANITY_PEN
+		if(SANITY_LEVEL_CRAZY)
+			newval = MINOR_INSANITY_PEN
 	if (newval == insanity_effect)
 		return
 	mob_parent.crit_threshold = (mob_parent.crit_threshold - insanity_effect) + newval
 	insanity_effect = newval
+
+/datum/mood/proc/set_movespeed_effect()
+	if(CONFIG_GET(flag/disable_human_mood_movespeed))
+		return
+	switch(sanity_level)
+		if(SANITY_LEVEL_INSANE)
+			mob_parent.add_movespeed_modifier(/datum/movespeed_modifier/sanity/insane)
+		if(SANITY_LEVEL_CRAZY)
+			mob_parent.add_movespeed_modifier(/datum/movespeed_modifier/sanity/crazy)
+		if(SANITY_LEVEL_UNSTABLE)
+			mob_parent.add_movespeed_modifier(/datum/movespeed_modifier/sanity/disturbed)
+		else
+			mob_parent.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
+
+/datum/mood/proc/set_actionspeed_effect()
+	if(CONFIG_GET(flag/disable_human_mood_actionspeed))
+		return
+	switch(sanity_level)
+		if(SANITY_LEVEL_INSANE, SANITY_LEVEL_CRAZY, SANITY_LEVEL_UNSTABLE)
+			mob_parent.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
+		if(SANITY_LEVEL_NEUTRAL, SANITY_LEVEL_GREAT)
+			mob_parent.add_actionspeed_modifier(/datum/actionspeed_modifier/high_sanity)
+		else
+			mob_parent.remove_actionspeed_modifier(ACTIONSPEED_ID_SANITY)
 
 /// Removes all temporary moods
 /datum/mood/proc/remove_temp_moods()
