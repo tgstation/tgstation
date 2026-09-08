@@ -289,7 +289,7 @@
 	circuit = /obj/item/circuitboard/machine/plankman
 	icon_state = "portgen3_0"
 	base_icon_state = "portgen3"
-	max_sheets = 100
+	max_sheets = 75
 	time_per_sheet = 360
 	power_gen = 5 KILO JOULES
 	sheet_path = /obj/item/stack/sheet/mineral/wood
