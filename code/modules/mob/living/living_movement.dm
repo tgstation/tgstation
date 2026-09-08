@@ -52,6 +52,9 @@
 	else if(old_grav_state > STANDARD_GRAVITY)
 		remove_filter("gravity")
 
+/mob/living/mob_negates_gravity()
+	return HAS_TRAIT_FROM(src, TRAIT_IGNORING_GRAVITY, IGNORING_GRAVITY_NEGATION)
+
 /mob/living/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(.)
