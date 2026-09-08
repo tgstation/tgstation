@@ -474,9 +474,7 @@
 		var/power_tier = isnum(forced_power_bar) ? forced_power_bar : (isnull(power_dept) ? 1 : SSpower_bars.power_bars_of_department(power_dept))
 		switch (power_tier)
 			if(0)
-				scanmod_rating = 0
-				capacitor_rating = 1
-				servo_rating = 0.5
+				pass()
 			if (1)
 				scanmod_rating = 1
 				capacitor_rating = 1
@@ -520,22 +518,52 @@
 	if(LAZYLEN(flat_equipment))
 		. += span_notice("It's equipped with:")
 		for(var/obj/item/mecha_parts/mecha_equipment/ME as anything in flat_equipment)
-			if(istype(ME, /obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay))
+			if(ME.examine_hidden)
 				continue
 			. += span_notice("[icon2html(ME, user)] \A [ME].")
+
 	if(mecha_flags & PANEL_OPEN)
-		if(locate(/obj/item/stock_parts/servo) in contents)
-			. += span_notice("Servo reduces movement power usage by [round(100 / servo_rating)]%")
+		var/servo_percent = round((1 / servo_rating - 1) * 100)
+		var/has_servo = SSpower_bars.enabled || !!(locate(/obj/item/stock_parts/servo) in contents)
+		if(has_servo)
+			if(servo_percent < 0)
+				. += span_notice("[SSpower_bars.enabled ? "Current [power_dept || "internal"] power setting" : "Its servo"] \
+					reduces movement power consumption by [abs(servo_percent)]%.")
+			else if(servo_percent > 0)
+				. += span_notice("[SSpower_bars.enabled ? "Current [power_dept] power setting" : "Its servo"] \
+					increases movement power consumption by [servo_percent]%.")
+			else
+				. += span_notice("[SSpower_bars.enabled ? "Current [power_dept] power setting" : "Its servo"] \
+					has no effect on movement power consumption.")
+
 		else
-			. += span_warning("It's missing a servo, increasing movement power usage by [round(100 / servo_rating)]%")
-		if(locate(/obj/item/stock_parts/capacitor) in contents)
-			. += span_notice("Capacitor increases armor against energy attacks by [capacitor_rating * 5].")
+			. += span_warning("It's missing a servo, increasing movement power consumption by [servo_percent]%.")
+
+		var/capacitor_percent = round((1 / capacitor_rating - 1) * 100)
+		var/capacitor_threshold = round((capacitor_rating - 1) * 100)
+		var/has_capacitor = SSpower_bars.enabled || !!(locate(/obj/item/stock_parts/capacitor) in contents)
+		if(has_capacitor)
+			if(capacitor_percent > 0)
+				. += span_notice("[SSpower_bars.enabled ? "Current [power_dept || "internal"] power setting" : "Its capacitor"] \
+					reduces component power usage by [abs(capacitor_percent)]%, \
+					increases overclocking threshold by [abs(capacitor_threshold)]%, \
+					and increases EMP resistance by [abs(capacitor_threshold)]%.")
+			else
+				. += span_notice("[SSpower_bars.enabled ? "Current [power_dept] power setting" : "Its capacitor"] \
+					has no effect on general power usage, overclocking threshold, or EMP resistance.")
+
 		else
 			. += span_warning("It's missing a capacitor.")
-		if(locate(/obj/item/stock_parts/scanning_module) in contents)
-			pass()
+
+		var/has_scanmod = SSpower_bars.enabled || !!(locate(/obj/item/stock_parts/scanning_module) in contents)
+		if(has_scanmod)
+			if(scanmod_rating < 1)
+				. += span_warning("[SSpower_bars.enabled ? "Current [power_dept] power setting" : "Its scanning module"] offers no damage monitoring.")
+			else
+				. += span_notice("[SSpower_bars.enabled ? "Current [power_dept] power setting" : "Its scanning module"] allows active damage monitoring.")
 		else
-			. += span_warning("It's missing a scanning module.")
+			. += span_warning("It's missing a scanning module, preventing active damage monitoring.")
+
 	if(!(mecha_flags & IS_ENCLOSED))
 		if(mecha_flags & SILICON_PILOT)
 			. += span_notice("[src] appears to be piloting itself...")

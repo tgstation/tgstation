@@ -276,8 +276,8 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	cell = new /obj/item/stock_parts/power_store/cell/high(src)
 	if (!SSpower_bars.enabled)
 		// No scanmod for Big Bess
-		capacitor = new /obj/item/stock_parts/capacitor(src)
-		servo = new /obj/item/stock_parts/servo(src)
+		new /obj/item/stock_parts/capacitor(src)
+		new /obj/item/stock_parts/servo(src)
 	update_part_values()
 
 /obj/item/mecha_parts/mecha_equipment/ejector

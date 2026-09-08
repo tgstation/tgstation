@@ -176,7 +176,7 @@
 	if (. & EMP_PROTECT_SELF)
 		return
 
-	var/mecha_explodies_vulnerability = (severity * capacitor.rating) //The more severe the EMP, the worse the outcome. The higher the tier of the capacitor, the less severe the outcome.
+	var/mecha_explodies_vulnerability = (severity * capacitor_rating) //The more severe the EMP, the worse the outcome. The higher the tier of the capacitor, the less severe the outcome.
 
 	if(get_charge())
 		use_energy(round((cell.maxcharge / 2) / mecha_explodies_vulnerability, 1))
@@ -302,14 +302,13 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/stock_parts/scanning_module))
-		if(scanmod)
+		if(locate(/obj/item/stock_parts/scanning_module) in contents)
 			balloon_alert(user, "already installed!")
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(tool, src, silent = FALSE))
 			return ITEM_INTERACT_BLOCKING
 
-		scanmod = tool
 		balloon_alert(user, "installed scanning module")
 		playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
 		log_message("[tool] installed", LOG_MECHA)
@@ -317,14 +316,13 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/stock_parts/capacitor))
-		if(capacitor)
+		if(locate(/obj/item/stock_parts/capacitor) in contents)
 			balloon_alert(user, "already installed!")
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(tool, src, silent = FALSE))
 			return ITEM_INTERACT_BLOCKING
 
-		capacitor = tool
 		balloon_alert(user, "installed capacitor")
 		playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
 		log_message("[tool] installed", LOG_MECHA)
@@ -332,14 +330,13 @@
 		return ITEM_INTERACT_SUCCESS
 
 	if(istype(tool, /obj/item/stock_parts/servo))
-		if(servo)
+		if(locate(/obj/item/stock_parts/servo) in contents)
 			balloon_alert(user, "already installed!")
 			return ITEM_INTERACT_BLOCKING
 
 		if(!user.transferItemToLoc(tool, src, silent = FALSE))
 			return ITEM_INTERACT_BLOCKING
 
-		servo = tool
 		balloon_alert(user, "installed servo")
 		playsound(src, 'sound/items/tools/screwdriver2.ogg', 50, FALSE)
 		log_message("[tool] installed", LOG_MECHA)
@@ -413,14 +410,8 @@
 		return
 
 	var/list/stock_parts = list()
-	if(cell)
-		stock_parts += cell
-	if(scanmod)
-		stock_parts += scanmod
-	if(capacitor)
-		stock_parts += capacitor
-	if(servo)
-		stock_parts += servo
+	for(var/obj/item/stock_parts/part in src)
+		stock_parts += part
 
 	if(!length(stock_parts))
 		balloon_alert(user, "no parts!")

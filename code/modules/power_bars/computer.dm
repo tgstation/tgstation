@@ -6,7 +6,7 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 	icon_screen = "ratvar2"
 	icon_state = MAP_SWITCH("ratvarcomputer3", "/obj/machinery/computer/power_distribution")
 	icon_keyboard = "ratvar_key4"
-	light_color = COLOR_YELLOW // LIGHT_COLOR_YELLOW // melbert todo
+	light_color = COLOR_YELLOW
 	use_power = ACTIVE_POWER_USE
 	circuit = /obj/item/circuitboard/computer/power_distribution
 
