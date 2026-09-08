@@ -48,10 +48,16 @@ GLOBAL_LIST_INIT(cable_name_to_layer, list(
 ))
 
 // Field generator stuff
+/// Completely offline
 #define FG_OFFLINE 0
+/// Actively charging / preparing to place down fields
 #define FG_CHARGING 1
+/// Has a field active
 #define FG_ONLINE 2
 
+/// Completely unsecured/movable
 #define FG_UNSECURED 0
+/// Anchored, but not welded
 #define FG_SECURED 1
+/// Welded, completely immovable
 #define FG_WELDED 2

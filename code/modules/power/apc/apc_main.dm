@@ -436,7 +436,11 @@
 			)
 		),
 
-		"powerBars" = SSpower_bars.enabled ? (area.protected_from_power_bars ? "Disconnected" : "Tier \roman[SSpower_bars.power_bars_of_area(area)]") : null,
+		"powerBars" = SSpower_bars.enabled \
+			? ((area.area_flags & NO_POWER_BAR_EFFECTS) \
+				? "Disconnected" \
+				: "Tier \roman[SSpower_bars.power_bars_of_area(area)]") \
+			: null,
 	)
 	return data
 

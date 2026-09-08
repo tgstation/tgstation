@@ -469,9 +469,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		user.add_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
 	else
 		user.clear_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		// melbert todo
-		// user.sight = 0
-		// user.set_see_in_dark(2)
 	return TRUE
 
 ///Called when the camera starts being watched on a camera console.

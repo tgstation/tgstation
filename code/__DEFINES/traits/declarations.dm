@@ -1742,6 +1742,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Objects with this trait may become a new prison for a revenant, in the event of its ectoplasm dispersing
 #define TRAIT_COZY_REVENANT_HOME "cozy_revenant_home"
 
-#define TRAIT_CAN_BE_MAGNETIZED "can_be_magnetized"
+/// Applied to groundless turfs like space to allow gravity negating effects like magboots to function on them
+#define TRAIT_ALLOWS_GRAVITY_NEGATION "allows_gravity_negation"
 
 // END TRAIT DEFINES

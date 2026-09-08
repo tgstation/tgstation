@@ -23,8 +23,8 @@
 	var/mattress_state = "stasis_on"
 	var/obj/effect/overlay/vis/mattress_on
 
-
-	var/surgery_access = FALSE
+	/// Whether we have active surgery access from power bars
+	VAR_PRIVATE/surgery_access = FALSE
 	/// Techweb linked
 	VAR_PRIVATE/datum/techweb/linked_techweb
 	/// List if surgery typepaths available

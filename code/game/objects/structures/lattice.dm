@@ -64,7 +64,7 @@
 		return INITIALIZE_HINT_QDEL
 
 	if (isturf(loc))
-		ADD_TRAIT(loc, TRAIT_CAN_BE_MAGNETIZED, type)
+		ADD_TRAIT(loc, TRAIT_ALLOWS_GRAVITY_NEGATION, type)
 
 /obj/structure/lattice/blob_act(obj/structure/blob/B)
 	return
@@ -120,10 +120,10 @@
 	. = ..()
 
 	if (isturf(old_loc))
-		REMOVE_TRAIT(old_loc, TRAIT_CAN_BE_MAGNETIZED, type)
+		REMOVE_TRAIT(old_loc, TRAIT_ALLOWS_GRAVITY_NEGATION, type)
 
 	if (isturf(loc))
-		ADD_TRAIT(loc, TRAIT_CAN_BE_MAGNETIZED, type)
+		ADD_TRAIT(loc, TRAIT_ALLOWS_GRAVITY_NEGATION, type)
 
 /obj/structure/lattice/catwalk
 	name = "catwalk"

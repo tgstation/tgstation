@@ -365,12 +365,7 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
  * Does this mob ignore gravity
  */
 /mob/proc/mob_negates_gravity()
-	if(HAS_TRAIT_FROM(src, TRAIT_IGNORING_GRAVITY, IGNORING_GRAVITY_NEGATION) )
-		return TRUE
-
-	var/turf/turf = get_turf(src)
-	// This is fine to not put behind power bars guard
-	return (!isgroundlessturf(turf) || HAS_TRAIT(turf, TRAIT_CAN_BE_MAGNETIZED))
+	return FALSE
 
 /**
  * Called when this mob slips over, override as needed
