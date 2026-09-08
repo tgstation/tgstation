@@ -75,10 +75,6 @@
 			available_hardcore_quirks -= picked_quirk
 			continue
 
-		if((initial(picked_quirk.quirk_flags) & QUIRK_MOODLET_BASED)) //check for moodlet quirks
-			available_hardcore_quirks -= picked_quirk
-			continue
-
 		all_quirks += initial(picked_quirk.name)
 		quirk_budget -= available_hardcore_quirks[picked_quirk]
 		. += available_hardcore_quirks[picked_quirk]

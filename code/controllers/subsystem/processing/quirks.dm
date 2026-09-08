@@ -191,9 +191,6 @@ PROCESSING_SUBSYSTEM_DEF(quirks)
 		if (isnull(quirk))
 			continue
 
-		if ((initial(quirk.quirk_flags) & QUIRK_MOODLET_BASED))
-			continue
-
 		var/blacklisted = FALSE
 
 		for (var/list/blacklist as anything in GLOB.quirk_blacklist)
