@@ -46,8 +46,10 @@
 
 	if(ishuman(attack_target))
 		wound_source += " a human"
+	else if(issilicon(attack_target))
+		wound_source += " something mechanical"
 	else
-		wound_source += " a [attack_target::name]"
+		wound_source += " an animal"
 	arm_bruises.apply_wound(arm, TRUE, wound_source = wound_source)
 
 /datum/status_effect/limp
