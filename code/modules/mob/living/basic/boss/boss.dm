@@ -86,7 +86,7 @@
 
 /// Determines if this mob is worth devouring
 /mob/living/basic/boss/proc/should_devour(mob/living/victim)
-	return victim.stat == DEAD || (victim.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(victim, TRAIT_NODEATH))
+	return victim.stat == DEAD || (victim.health <= victim.dead_threshold && HAS_TRAIT(victim, TRAIT_NODEATH))
 
 /// Devours a target and restores health to the megafauna
 /mob/living/basic/boss/proc/devour(mob/living/victim)

@@ -1086,8 +1086,7 @@ GAME_VERB_SRC(/obj/structure/closet, verb_toggleopen, view(1), "Toggle Open", nu
 	if(opened)
 		return
 	if(ismovable(loc))
-		user.changeNext_move(CLICK_CD_BREAKOUT)
-		user.last_special = world.time + CLICK_CD_BREAKOUT
+		user.change_next_special_move(CLICK_CD_BREAKOUT)
 		var/atom/movable/movable_parent = loc
 		movable_parent.relay_container_resist_act(user, src)
 		return
@@ -1098,8 +1097,7 @@ GAME_VERB_SRC(/obj/structure/closet, verb_toggleopen, view(1), "Toggle Open", nu
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		return
 	//okay, so the closet is either welded or locked... resist!!!
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.change_next_special_move(CLICK_CD_BREAKOUT)
 	user.visible_message(span_warning("[src] begins to shake violently!"), \
 		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
 		span_hear("You hear banging from [src]."))

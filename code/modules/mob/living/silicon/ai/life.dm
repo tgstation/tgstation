@@ -65,7 +65,7 @@
 /mob/living/silicon/ai/update_stat()
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
-	if(stat != DEAD && health <= HEALTH_THRESHOLD_DEAD)
+	if(stat != DEAD && health <= dead_threshold)
 		death()
 	else if(stat < DEAD)
 		set_stat(STABLE)
