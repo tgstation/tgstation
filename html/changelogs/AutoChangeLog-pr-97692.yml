@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - bugfix: "Industrial waste now uses shared particles for processing."
+  - bugfix: "Industrial waste can no longer be duped."

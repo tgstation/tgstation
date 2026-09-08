@@ -39,3 +39,81 @@
       still a mattress
   - rscadd: You can now buy lance and mattress from toy vendor
   - rscadd: Maintenance now have a chance to spawn lance and mattress shield
+2026-09-03:
+  Melbert:
+  - bugfix: Fix DNA consoles being able to print anomalous mutations
+  - bugfix: Fix weird issue where mutation list in the DNA console would go to 1 wide
+  - rscdel: Revenant can no longer affect emergency shuttle console with Malfunction
+  - balance: Mobs subjected to time stop are now slightly more stopped (chems will
+      no longer metabolize, bleeding will pause, etc).
+  - balance: Syndicate bombs no longer tick towards detonation when time stopped
+  - refactor: Refactored timestop a teeny bit, primarily its interaction with holoparasites,
+      report any issues next time you jojo larp
+  PapaMichael:
+  - bugfix: Setting SHIFT+number keybinds now works
+2026-09-04:
+  PapaMichael:
+  - bugfix: Icemoon tiles no longer count towards the blob's victory
+2026-09-05:
+  SmArtKar:
+  - bugfix: Fixed luminetworked MODsuit cores sometimes not charging from the network
+  - qol: Made Candela LoS checks a bit more forgiving
+  TheBoondock:
+  - code_imp: optimize compare() by adding total moles check
+2026-09-06:
+  Maia-J:
+  - bugfix: Pod dropped mobs no longer have broken AI that's stuck trying to resist
+      forever.
+  Melbert:
+  - sound: Modsuits now have footstep sounds
+  - sound: Magboots now have footstep sounds
+  - sound: Robotic limbs now have footstep sounds (only applies when barefoot)
+  - sound: When punching, kicking, or smashing someone's robotic limbs, an alternate
+      hitsound is played
+  - qol: Tails auto-stop wagging when its owner falls unconscious or into crit, rather
+      than when their owner dies.
+  Twaticus:
+  - image: reverts/resprites multiple walls/floors from 'floors and walls pr'
+2026-09-07:
+  ArcaneMusic:
+  - rscadd: 'Added a new machine to the prison labor camp on lavaland: The produceporter.
+      Send grown crops to service staff in exchange for labor points!'
+  - rscadd: The license plate press will now grant 10 labor points every time a new
+      plate is pressed.
+  - qol: The labor camp console can now take a prisoner ID straight from your hand.
+  - sound: Added sfx to the license plate press.
+  FalloutFalcon:
+  - bugfix: 'Chem dispenser custom recipes (and maybe a few other spots) now properly
+      clamp text when using `Input: Enable TGUI`'
+  Maia-J:
+  - bugfix: Mobs that are aggro grabbed and are meant to escape captivity actually
+      do so.
+  Melbert:
+  - bugfix: Fixes some particle effects being invisible when on floor objects (or
+      the floor itself)
+  - bugfix: Players with it/its pronouns don't break radio messages
+  Odairu:
+  - bugfix: AI are no longer stuck in hard crit forever post-revive
+  PapaMichael:
+  - bugfix: pAIs once again have language and navigate buttons on their UI
+  - bugfix: Fixes inverted logic when cutting a cuffed item.
+  - bugfix: Announcements when radiation storms end now properly show
+  Techbot121:
+  - rscadd: hitsounds to cans
+  - sound: added can_hit.ogg
+2026-09-08:
+  ArcaneMusic:
+  - rscadd: cargo can now buy a "gardening" crate on broad spectrum bands filled with
+      pitchforks and torches.
+  JohnFulpWillard:
+  - qol: Changed thumbs up/down & scratch head emote when manually typing to thumbsup,
+      thumbsdown & scratchhead
+  - rscdel: Operating computers no longer has the Experiments tab if there's no research
+      servers in existence.
+  Melbert:
+  - qol: Loot panel objects can be interacted with while lying down.
+  - qol: Loot panel objects can be interacted with at range if you have telekinesis
+      or a weapon with reach.
+  - qol: Blind mobs can see names in the loot panel again, but the panel auto-closes
+      when further than two tiles away.
+  - bugfix: Cables are properly obscured by windows or airlocks

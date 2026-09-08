@@ -1,0 +1,4 @@
+author: "FalloutFalcon"
+delete-after: True
+changes:
+  - code_imp: "Improves some code which means straightjackets are better caught in cuff resist code"
