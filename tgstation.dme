@@ -4417,6 +4417,7 @@
 #include "code\modules\clothing\neck\_neck.dm"
 #include "code\modules\clothing\neck\collar_bomb.dm"
 #include "code\modules\clothing\neck\horrific_necktie.dm"
+#include "code\modules\clothing\neck\pearl.dm"
 #include "code\modules\clothing\outfits\ert.dm"
 #include "code\modules\clothing\outfits\event.dm"
 #include "code\modules\clothing\outfits\plasmaman.dm"

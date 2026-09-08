@@ -238,6 +238,17 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
+/datum/design/cerulean_vaporizer
+	name = /obj/item/clothing/accessory/vaporizer::name
+	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
+	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*4.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/diamond = SMALL_MATERIAL_AMOUNT*1.8)
+	build_path = /obj/item/clothing/accessory/vaporizer
+	category = list(
+		RND_CATEGORY_HACKED,
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS,
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
+
 /datum/design/boxcutter
 	name = "Boxcutter"
 	build_type = AUTOLATHE | PROTOLATHE
