@@ -53,7 +53,7 @@
 		/obj/item/reagent_containers/cup/glass/bottle/bottleofnothing = 1,
 		/obj/item/stamp/mime = 1,
 		)
-	belt = /obj/item/modular_computer/pda/mime
+	belt = /obj/item/modular_computer/pda/crew/mime
 	ears = /obj/item/radio/headset/headset_srv
 	gloves = /obj/item/clothing/gloves/color/white
 	head = /obj/item/clothing/head/beret/frenchberet

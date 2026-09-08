@@ -156,9 +156,8 @@
 	// We use can_see rather than view() because view() is not a raycast and can end up putting beams through walls, as it sees around corners in a weird fasion
 	var/list/our_links = network.linked_nodes[src]
 	for (var/datum/component/candela_node/other_node as anything in our_links)
-		if (!can_see(parent, other_node.parent, MINING_BEACON_MAX_REACH) || !can_see(other_node.parent, parent, MINING_BEACON_MAX_REACH))
-			continue
-		located_nodes |= other_node
+		if (can_see(parent, other_node.parent, MINING_BEACON_MAX_REACH) || can_see(other_node.parent, parent, MINING_BEACON_MAX_REACH))
+			located_nodes |= other_node
 
 	if (length(located_nodes))
 		// No nodes were cut, don't do anything
@@ -178,7 +177,7 @@
 		if (node_dist >= min_dist)
 			continue
 
-		if (!can_see(parent, thing, MINING_BEACON_MAX_REACH) || !can_see(thing, parent, MINING_BEACON_MAX_REACH))
+		if (!can_see(parent, thing, MINING_BEACON_MAX_REACH) && !can_see(thing, parent, MINING_BEACON_MAX_REACH))
 			continue
 
 		min_dist = node_dist
@@ -246,8 +245,11 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 	var/list/need_updates = list(new_node)
 	for (var/atom/movable/thing in view(MINING_BEACON_MAX_REACH, new_node.parent))
 		var/datum/component/candela_node/actual_node = atoms_to_nodes[thing]
+		if (!actual_node || actual_node == new_node)
+			continue
+
 		// Need a can_see check to avoid beams going through walls
-		if (!actual_node || actual_node == new_node || !can_see(thing, new_node.parent, MINING_BEACON_MAX_REACH) || !can_see(new_node.parent, thing, MINING_BEACON_MAX_REACH))
+		if (!can_see(thing, new_node.parent, MINING_BEACON_MAX_REACH) && !can_see(new_node.parent, thing, MINING_BEACON_MAX_REACH))
 			continue
 
 		if (linked_nodes[actual_node])
@@ -427,7 +429,7 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 	var/datum/component/candela_node/current_closest = null
 	var/datum/candela_item_handler/master = all_handlers[1]
 	var/datum/component/candela_node/closest_node = master.closest_node
-	if (closest_node && can_see(source, closest_node.parent, MINING_BEACON_MAX_REACH) && can_see(closest_node.parent, source, MINING_BEACON_MAX_REACH))
+	if (closest_node && (can_see(source, closest_node.parent, MINING_BEACON_MAX_REACH) || can_see(closest_node.parent, source, MINING_BEACON_MAX_REACH)))
 		current_closest = closest_node
 
 	for (var/datum/component/candela_node/network_node as anything in linked_nodes)
@@ -438,7 +440,7 @@ GLOBAL_LIST_EMPTY(mining_beacon_networks)
 			continue
 
 		// Need a can_see rather than viewers() to avoid beams going through walls
-		if (can_see(source, network_node.parent, MINING_BEACON_MAX_REACH) && can_see(network_node.parent, source, MINING_BEACON_MAX_REACH))
+		if (can_see(source, network_node.parent, MINING_BEACON_MAX_REACH) || can_see(network_node.parent, source, MINING_BEACON_MAX_REACH))
 			current_closest = network_node
 
 	if (current_closest)

@@ -65,7 +65,7 @@
 		/obj/item/evidencebag = 1,
 		/obj/item/melee/baton/security/loaded/hos = 1,
 		)
-	belt = /obj/item/modular_computer/pda/heads/hos
+	belt = /obj/item/modular_computer/pda/crew/heads/hos
 	ears = /obj/item/radio/headset/heads/hos/alt
 	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
 	gloves = /obj/item/clothing/gloves/color/black/security

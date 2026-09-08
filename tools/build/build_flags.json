@@ -188,6 +188,13 @@
 			"category": "Map",
 			"description": "Uses a mini centcom. Required for runtimestation minimal and cant be used without it.",
 			"requiresValues": { "force_map": "runtimestation_minimal" }
+		},
+		{
+			"id": "FORCE_GENERATE_INIT_ASSETS",
+			"define": "FORCE_GENERATE_INIT_ASSETS",
+			"label": "Generate Init Assets",
+			"category": "Misc",
+			"description": "Enables init assets generation - identical to the config entry 'generate_assets_in_init'."
 		}
 	],
 	"presets": [
