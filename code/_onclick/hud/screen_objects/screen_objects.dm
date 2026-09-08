@@ -1151,7 +1151,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	if(!istype(hungry))
 		return
 
-	if(!ishuman(hungry))
+	if(isnull(hungry.mob_mood))
 		screen_loc = ui_mood // Slot in where mood normally is if mood is not here (we arent a human)
 
 	// Burger next to the bar
