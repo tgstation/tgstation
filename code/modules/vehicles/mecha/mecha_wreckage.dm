@@ -20,6 +20,7 @@
 	var/wires_removed = FALSE
 	/// AIs to be salvaged
 	var/mob/living/silicon/ai/ai_pilot
+	/// Intact mech parts list that can be welded off. Only one per type can be removed, to a max of 2, with a 60% chance to skip.
 	var/list/parts
 
 /obj/structure/mecha_wreckage/Initialize(mapload, mob/living/silicon/ai/AI_pilot)
