@@ -80,6 +80,8 @@
 				. += span_notice(tourniquet_msg)
 
 		for(var/datum/wound/iter_wound as anything in body_part.wounds)
+			if(isnull(iter_wound.examine_desc))
+				continue
 			. += span_danger(iter_wound.get_examine_description(user))
 
 		var/surgery_examine = body_part.get_surgery_examine()

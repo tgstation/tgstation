@@ -30,14 +30,25 @@
 	if(!proximity || !isliving(attack_target))
 		return NONE
 
+	var/obj/item/bodypart/arm = source.get_active_hand()
+	var/datum/wound/bruised/arm_bruises = arm.get_wound_type(/datum/wound/bruised)
+	if(!isnull(arm_bruises))
+		arm_bruises.bruise_ticks = initial(arm_bruises.bruise_ticks)
+		return
+	arm_bruises = new /datum/wound/bruised()
+
+	var/wound_source
+
 	if(LAZYACCESS(modifiers, RIGHT_CLICK))
-		var/obj/item/bodypart/arm = source.get_active_hand()
-		var/datum/wound/bruised/arm_bruises = arm.get_wound_type(/datum/wound/bruised)
-		if(isnull(arm_bruises))
-			arm_bruises = new()
-			arm_bruises.apply_wound(arm, TRUE, wound_source = "determination shoving")
-		else
-			arm_bruises.bruise_ticks = initial(arm_bruises.bruise_ticks)
+		wound_source = "defensive injuries from attempting to ward off"
+	else
+		wound_source = "offensive injuries from attempting to fight"
+
+	if(ishuman(attack_target))
+		wound_source += " a human"
+	else
+		wound_source += " a [attack_target::name]"
+	arm_bruises.apply_wound(arm, TRUE, wound_source = wound_source)
 
 /datum/status_effect/limp
 	id = "limp"
