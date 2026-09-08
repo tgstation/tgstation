@@ -5,6 +5,8 @@
 	sound_environment = SOUND_AREA_STANDARD_STATION
 	tacmap_color = TACMAP_AREA_SCIENCE
 
+	power_bar_department = POWER_BAR_DEPARTMENT_SCIENCE
+
 /area/station/science/lobby
 	name = "\improper Science Lobby"
 	icon_state = "science_lobby"

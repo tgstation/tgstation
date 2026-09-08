@@ -228,6 +228,8 @@
 
 	clear_components()
 	unset_static_power()
+	var/area/our_area = get_area(src)
+	our_area?.machines -= src
 
 	return ..()
 
@@ -242,6 +244,7 @@
 /obj/machinery/proc/setup_area_power_relationship()
 	var/area/our_area = get_area(src)
 	if(our_area)
+		our_area.machines |= src
 		RegisterSignal(our_area, COMSIG_AREA_POWER_CHANGE, PROC_REF(power_change))
 
 	if(HAS_TRAIT_FROM(src, TRAIT_AREA_SENSITIVE, INNATE_TRAIT)) // If we for some reason have not lost our area sensitivity, there's no reason to set it back up
@@ -260,6 +263,7 @@
 /obj/machinery/proc/remove_area_power_relationship()
 	var/area/our_area = get_area(src)
 	if(our_area)
+		our_area.machines -= src
 		UnregisterSignal(our_area, COMSIG_AREA_POWER_CHANGE)
 
 	if(always_area_sensitive)
@@ -271,6 +275,7 @@
 
 /obj/machinery/proc/on_enter_area(datum/source, area/area_to_register)
 	SIGNAL_HANDLER
+	area_to_register.machines |= src
 	// If we're always area sensitive, and this is called while we have no power usage, do nothing and return
 	if(always_area_sensitive && use_power == NO_POWER_USE)
 		return
@@ -280,6 +285,7 @@
 
 /obj/machinery/proc/on_exit_area(datum/source, area/area_to_unregister)
 	SIGNAL_HANDLER
+	area_to_unregister.machines -= src
 	// If we're always area sensitive, and this is called while we have no power usage, do nothing and return
 	if(always_area_sensitive && use_power == NO_POWER_USE)
 		return

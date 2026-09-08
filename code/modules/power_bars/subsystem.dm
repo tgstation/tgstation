@@ -126,20 +126,7 @@ SUBSYSTEM_DEF(power_bars)
 	return counts
 
 /datum/controller/subsystem/power_bars/proc/department_from_area(area/area)
-	if (istype(area, /area/station/medical))
-		return POWER_BAR_DEPARTMENT_MEDICAL
-	else if (istype(area, /area/station/cargo))
-		return POWER_BAR_DEPARTMENT_CARGO
-	else if (istype(area, /area/station/engineering))
-		return POWER_BAR_DEPARTMENT_ENGINEERING
-	else if (istype(area, /area/station/science))
-		return POWER_BAR_DEPARTMENT_SCIENCE
-	else if (istype(area, /area/station/security))
-		return POWER_BAR_DEPARTMENT_SECURITY
-	else if (istype(area, /area/station))
-		return POWER_BAR_DEPARTMENT_COMMON
-	else
-		return null
+	return astype(area, /area/station)?.power_bar_department
 
 /datum/controller/subsystem/power_bars/proc/areas_for_department()
 	PRIVATE_PROC(TRUE)
@@ -238,18 +225,24 @@ SUBSYSTEM_DEF(power_bars)
 		if (current == next)
 			continue
 
-		areas_to_update[areas_per_department[department]] = TRUE
+		areas_to_update |= areas_per_department[department]
 		departments_to_update[department] = current
 
 	last_distributed_allocations = deep_copy_list(department_allocations)
 	next_distribution_timer_id = null
 
-	for (var/obj/machinery/machine as anything in SSmachines.get_all_machines())
-		var/area/area = get_area(machine)
-		if (!is_type_in_typecache(area, areas_to_update))
-			continue
+	// for (var/obj/machinery/machine as anything in SSmachines.get_all_machines())
+	// 	var/area/area = get_area(machine)
+	// 	if (!is_type_in_typecache(area, areas_to_update))
+	// 		continue
 
-		machine.update_for_power_bars()
+	// 	machine.update_for_power_bars()
+
+	for (var/area/area_type as anything in areas_to_update)
+		for(var/obj/machinery/machine as anything in GLOB.areas_by_type[area_type]?.machines)
+			if(!length(machine.component_parts))
+				continue
+			machine.update_for_power_bars()
 
 	// Do it here instead of signal so we don't do it more than once
 	for (var/obj/machinery/computer/power_distribution/power_distribution_console as anything in GLOB.power_distribution_consoles)

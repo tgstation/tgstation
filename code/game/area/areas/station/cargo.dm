@@ -5,6 +5,8 @@
 	sound_environment = SOUND_AREA_STANDARD_STATION
 	tacmap_color = COLOR_CARGO_BROWN
 
+	power_bar_department = POWER_BAR_DEPARTMENT_CARGO
+
 /area/station/cargo/sorting
 	name = "\improper Delivery Office"
 	icon_state = "cargo_delivery"

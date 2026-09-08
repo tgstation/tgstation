@@ -8,7 +8,7 @@
 /datum/power_bar_detail/cargo_discounts
 	department = POWER_BAR_DEPARTMENT_CARGO
 	tier = 2
-	message = "Packs made cheaper."
+	message = "Cargo orders are cheaper."
 
 /datum/power_bar_detail/cargo_shuttles
 	department = POWER_BAR_DEPARTMENT_CARGO
@@ -51,13 +51,13 @@
 /datum/power_bar_detail/faster_points
 	department = POWER_BAR_DEPARTMENT_SCIENCE
 	tier = 2
-	message = "Points generate faster."
+	message = "Research points generate faster."
 
 // Security
 /datum/power_bar_detail/security_headset
 	department = POWER_BAR_DEPARTMENT_SECURITY
 	tier = 2
-	message = "Security headsets have access to all departments."
+	message = "Security headsets can listen to all department channels."
 
 /datum/power_bar_detail/beepsky
 	department = POWER_BAR_DEPARTMENT_SECURITY
@@ -68,4 +68,4 @@
 /datum/power_bar_detail/botany
 	department = POWER_BAR_DEPARTMENT_COMMON
 	tier = 2
-	message = "Botany trays will auto grow plants."
+	message = "Enables auto-grow for Hydroponics trays."
