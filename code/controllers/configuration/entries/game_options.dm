@@ -44,8 +44,13 @@
 
 /datum/config_entry/flag/allow_ai_multicam // allow ai multicamera mode
 
+/// Determines if mood affects the point at which you fall into crit
 /datum/config_entry/flag/disable_human_mood_crit_threshold
+
+/// Determines if mood affects move speed
 /datum/config_entry/flag/disable_human_mood_movespeed
+
+/// Determines if mood affects doafter speed
 /datum/config_entry/flag/disable_human_mood_actionspeed
 
 /datum/config_entry/flag/disable_secborg // disallow secborg model to be chosen.
