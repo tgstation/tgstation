@@ -7,13 +7,13 @@
  */
 /obj/item/clothing/neck/necklace/pearl
 	name = "Pearl necklace"
-	desc = "Get your mind out of the gutter."
+	desc = "Get your mind out of the gutter." //fleur you have to change this
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "beads"
 	color = "#ffffff"
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	/// what tail to spawn? reminder to make an effect so this can become /obj/item/organ/tail/fish/cerulean/abyssal
+	/// what tail to spawn? fleur make an effect so this can become /obj/item/organ/tail/fish/cerulean/abyssal
 	var/tail_type = /obj/item/organ/tail/fish/cerulean
 	/// storage var for the real tail, if we had any. so we can swap without untailing ourselves
 	var/obj/item/organ/real_tail
@@ -146,7 +146,7 @@
 	if(real_tail)
 		if(!real_tail.owner && !(TRAIT_BLOCK_ATTACHING_LEGS in real_tail.organ_traits))
 			real_tail.Insert(dryer, TRUE)
-		else if(istype(real_tail, obj/item/organ/tail/fish/cerulean) && dryer.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL) == real_tail)
+		else if(istype(real_tail, /obj/item/organ/tail/fish/cerulean) && dryer.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL) == real_tail)
 			real_tail.Remove(dryer, TRUE)
 	attach_limbs(dryer)
 	clear_mood_events(dryer)
@@ -176,6 +176,7 @@
 
 	wetter.regenerate_icons()
 
+/// why are there so many
 /obj/item/clothing/neck/necklace/pearl/proc/clear_mood_events(mob/living/equipper)
 	var/static/list/tail_moods = list(
 		/datum/mood_event/tail_lost,
@@ -188,6 +189,7 @@
 	for(var/mood_event as anything in tail_moods)
 		equipper.clear_mood_event(mood_event)
 
+/// so you can see your legs damage
 /obj/item/clothing/neck/necklace/pearl/proc/update_healthdoll(mob/equipper)
 	var/atom/movable/screen/healthdoll/doll = equipper.hud_used?.screen_objects[HUD_MOB_HEALTHDOLL]
 	doll?.update_body_zones()

@@ -114,7 +114,7 @@
 	start_active = TRUE
 
 /obj/machinery/camera/preset/siren_pirates/connect_to_shuttle(mapload, obj/docking_port/mobile/port, obj/docking_port/stationary/dock)
-	return //leave `network` alone
+	return
 
 ///The internal camera object for exosuits, applied by the camera upgrade
 /obj/machinery/camera/exosuit
