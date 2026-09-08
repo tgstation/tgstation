@@ -252,7 +252,7 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 		return
 
 	last_checked_available_power_bars = current_count
-	icon_screen = "power_bar_alert" // melbert todo : move icon
+	icon_screen = "power_bar_alert"
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/item/circuitboard/computer/power_distribution
