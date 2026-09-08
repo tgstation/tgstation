@@ -314,7 +314,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 
-	for(var/obj/inside in contents) //for accesories particularly, but might as well use contents instead of attached_accessories
+	for(var/obj/inside in attached_accessories)
 		inside.emp_act(severity)
 
 	if(has_sensor == NO_SENSORS || has_sensor == BROKEN_SENSORS)

@@ -33,11 +33,16 @@
 	dimension_x = 36
 
 /datum/sprite_accessory/tails/fish/cerulean //cerulean species fish tail
-	name = "Plain"
+	name = "Cerulean"
 	icon = 'icons/mob/human/species/cerulean/cerulean_tails.dmi'
-	icon_state = "plain"
+	icon_state = "cerulean"
 	gender_specific = TRUE
 	locked = TRUE
+
+/datum/sprite_accessory/tails/fish/cerulean/skeleton
+	name = "Cerulean Skeleton"
+	icon_state = "skeleton"
+	color_src = NONE
 
 /datum/sprite_accessory/tails/lizard
 	icon = 'icons/mob/human/species/lizard/lizard_tails.dmi'

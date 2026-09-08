@@ -100,7 +100,7 @@
 	dropper.dna.species.bodypart_overrides = GLOB.species_prototypes[dropper.dna.species.type].bodypart_overrides.Copy()
 	update_healthdoll(dropper)
 
-/// if cerulean or character has one of their tails, gift a new set of legs. bcuz it wouldnt make sense to have this item useless on ceruleans
+/// if cerulean, or the character has one of their tails, gift a new set of legs. bcuz it wouldnt make sense to have this item useless on ceruleans
 /obj/item/clothing/neck/necklace/pearl/proc/gift_leg(mob/living/carbon/human/equipper, zone)
 	var/left_or_right = findtext(zone, "l_") ? LEFT : RIGHT
 	var/type_path

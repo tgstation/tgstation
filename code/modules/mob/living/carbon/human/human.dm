@@ -1186,6 +1186,18 @@
 /mob/living/carbon/human/species/skeleton
 	race = /datum/species/skeleton
 
+/mob/living/carbon/human/species/skeleton/cerulean/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
+	. = ..()
+	for(var/zone in GLOB.leg_zones)
+		dna.species.bodypart_overrides -= zone
+	dna.features[FEATURE_TAIL_FISH_COLOR] = LIGHT_COLOR_TUNGSTEN
+	dna.features[FEATURE_FRILLS] = /datum/sprite_accessory/frills/aquatic::name
+	dna.species.mutant_organs[/obj/item/organ/tail/fish/cerulean/skeletal] = /datum/sprite_accessory/tails/fish/cerulean/skeleton::name
+	dna.species.mutant_organs[/obj/item/organ/frills] = /datum/sprite_accessory/frills/aquatic::name
+	dna.species.regenerate_organs(src, excluded_zones = GLOB.arm_zones)
+	if(has_gravity() && !buckled)
+		set_resting(TRUE, silent = TRUE, instant = TRUE)
+
 /mob/living/carbon/human/species/snail
 	race = /datum/species/snail
 

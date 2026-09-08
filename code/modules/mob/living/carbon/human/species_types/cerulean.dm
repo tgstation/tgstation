@@ -11,7 +11,7 @@
 		BODY_ZONE_HEAD = /obj/item/bodypart/head,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
-
+	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	species_cookie = /obj/item/food/chips/shrimp
 	inert_mutation = /datum/mutation/echolocation
 	payday_modifier = 0.9
@@ -157,13 +157,17 @@
 /obj/item/organ/tail/fish/cerulean/proc/get_your_sealegs(mob/living/carbon/owner, special)
 	var/list/legs = list(owner.get_bodypart(BODY_ZONE_R_LEG), owner.get_bodypart(BODY_ZONE_L_LEG))
 	for(var/obj/item/bodypart/leg/leg as anything in legs)
-		special ? leg?.drop_limb(TRUE, FALSE, FALSE) : leg?.dismember()
+		(special || QDELING(owner)) ? leg?.drop_limb(TRUE, FALSE, FALSE) : leg?.dismember()
 
 /// the bodypart overlay for cerulean fish tails!
 /datum/bodypart_overlay/mutant/tail/fish/cerulean
 	layers = list(
 		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
 		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
+	/// which datums are blocked in get_global_feature_list
+	var/list/locked_sprite_datums = list(
+		/datum/sprite_accessory/tails/fish/cerulean/skeleton, //dont rock this please
 	)
 
 /datum/bodypart_overlay/mutant/tail/fish/cerulean/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
@@ -184,13 +188,15 @@
 		var/datum/sprite_accessory/accessory_datum = feature_list[accessory]
 		if(!istype(accessory_datum, /datum/sprite_accessory/tails/fish/cerulean))
 			feature_list -= accessory
+		if(accessory_datum.type in locked_sprite_datums)
+			feature_list -= accessory
 	return feature_list
 
 /*
  * same as parent, but with a pretty skeleton texture
  */
 /obj/item/organ/tail/fish/cerulean/abyssal
-	name = "skeletal oversized fish tail"
+	name = "translucent oversized fish tail"
 	desc = "A hugely sized and scaled fish tail, it is partially translucent and shows the skeleton inside."
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish/cerulean/abyssal
 
@@ -217,3 +223,37 @@
 
 /datum/bodypart_texture/abyssal_cerulean/can_texture_bodypart(obj/item/bodypart/bodypart_owner)
 	return TRUE
+
+/*
+ * same as parent, but for cerulean skeletons
+ */
+/obj/item/organ/tail/fish/cerulean/skeletal
+	name = "skeletal oversized fish tail"
+	desc = "A hugely sized and scaled fish tail, it is partially translucent and shows the skeleton inside."
+	post_init_icon_state = null
+	greyscale_config = null
+	greyscale_colors = null
+
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish/cerulean/skeletal
+
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1) //i guess
+	restyle_flags = EXTERNAL_RESTYLE_ENAMEL
+	foodtype_flags = GORE
+	food_tastes = list("bone" = 1)
+	fillet_amount = 0
+
+/obj/item/organ/tail/fish/cerulean/skeletal/LateInitialize()
+	. = ..()
+	RemoveElement(/datum/element/processable)
+
+/obj/item/organ/tail/fish/cerulean/skeletal/Initialize(mapload)
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/organ/tail/fish/cerulean/skeletal/splatter_check(mob/living/carbon/owner)
+	return FALSE //no blood in this one
+
+/datum/bodypart_overlay/mutant/tail/fish/cerulean/skeletal
+	locked_sprite_datums = list(
+		/datum/sprite_accessory/tails/fish/cerulean,
+	)

@@ -27,11 +27,13 @@ GLOBAL_LIST_INIT_TYPED(chasm_detritus_types, /datum/chasm_detritus, init_chasm_d
 			/obj/item/stack/sheet/bone = 6,
 			/obj/item/stack/ore/slag = 4,
 			/obj/effect/mob_spawn/corpse/human/skeleton = 2,
+			/obj/effect/mob_spawn/corpse/human/skeleton/cerulean = 1,
 			/mob/living/basic/mining/lobstrosity/lava = 1,
 			/mob/living/basic/mining/lobstrosity/juvenile/lava = 1,
 		),
 		BODIES_ONLY = list(
 			/obj/effect/mob_spawn/corpse/human/skeleton = 6,
+			/obj/effect/mob_spawn/corpse/human/skeleton/cerulean = 1,
 			/mob/living/basic/mining/lobstrosity/lava = 1,
 			/mob/living/basic/mining/lobstrosity/juvenile/lava = 1,
 		),
