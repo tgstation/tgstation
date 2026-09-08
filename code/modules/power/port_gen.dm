@@ -283,5 +283,15 @@
 	power_gen = 30 KILO JOULES
 	sheet_path = /obj/item/stack/sheet/mineral/uranium
 
+/obj/machinery/power/port_gen/pacman/wood
+	name = "\improper P.L.A.N.K.M.A.N.-type portable generator"
+	desc = "Burns wood to generate some power. Do not touch when powered."
+	icon_state = "portgen3_0"
+	base_icon_state = "portgen3"
+	max_sheets = 100
+	time_per_sheet = 360
+	power_gen = 5 KILO JOULES
+	sheet_path = /obj/item/stack/sheet/mineral/wood
+
 /obj/machinery/power/port_gen/pacman/pre_loaded
 	sheets = 15
