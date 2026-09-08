@@ -11,7 +11,6 @@
 	var/list/network = list(CAMERANET_NETWORK_SS13)
 	var/obj/machinery/camera/active_camera
 	var/list/concurrent_users = list()
-
 	// Stuff needed to render the map
 	var/atom/movable/screen/map_view/camera/cam_screen
 
@@ -116,13 +115,8 @@
 		cam_screen.show_camera_static()
 		return
 
-	active_camera.update_camera_screens(
-		cam_screen,
-		// melbert todo
-		// cam_background,
-		// Security only, but all camera consoles get access
-		force_xray = SSpower_bars.power_bars_of_department(POWER_BAR_DEPARTMENT_SECURITY) == 3,
-	)
+	// Security only, but all camera consoles get access
+	active_camera.update_camera_screens(cam_screen, force_xray = SSpower_bars.power_bars_of_department(POWER_BAR_DEPARTMENT_SECURITY) == 3)
 
 /obj/machinery/computer/security/ui_close(mob/user)
 	. = ..()

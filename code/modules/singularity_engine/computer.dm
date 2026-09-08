@@ -28,8 +28,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 		obj/item/radio/internal_radio
 		datum/weakref/singularity_ref
 
-		atom/movable/screen/map_view/camera_screen
-		atom/movable/screen/background/camera_background
+		atom/movable/screen/map_view/camera/camera_screen
 		obj/machinery/camera/active_camera
 
 		last_reported_health
@@ -65,7 +64,6 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 
 	active_camera = null
 
-	QDEL_NULL(camera_background)
 	QDEL_NULL(camera_screen)
 	QDEL_NULL(internal_radio)
 
@@ -94,7 +92,6 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 
 	if(!ui)
 		camera_screen.display_to(user)
-		user.client?.register_map_obj(camera_background)
 
 		ui = new(user, src, "SingularityControl")
 		ui.open()
@@ -443,10 +440,6 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	camera_screen = new
 	camera_screen.generate_view(camera_map_name)
 
-	camera_background = new
-	camera_background.assigned_map = camera_map_name
-	camera_background.del_on_map_removal = FALSE
-
 	update_camera_view()
 
 /obj/machinery/computer/singularity/proc/clear_camera()
@@ -458,10 +451,9 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 /obj/machinery/computer/singularity/proc/update_camera_view()
 	if (isnull(active_camera) || !active_camera.can_use())
 		camera_screen.vis_contents.Cut()
-		camera_background.icon_state = "scanline2"
-		camera_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
+		camera_screen.show_camera_static()
 	else if (camera_screen.vis_contents.len == 0)
-		active_camera.update_camera_screens(camera_screen, camera_background)
+		active_camera.update_camera_screens(camera_screen)
 
 #undef CRITICAL_HEALTH_THRESHOLD
 #undef STAGE_SINGULARITY_CONSOLE_DESTROYED

@@ -294,7 +294,7 @@
 /// Add parts on mech spawning. Skipped in manual construction.
 /obj/vehicle/sealed/mecha/proc/populate_parts()
 	cell = new /obj/item/stock_parts/power_store/cell/high(src)
-	if (!SSpower_bars.enabled) // melbert todo?
+	if (!SSpower_bars.enabled)
 		new /obj/item/stock_parts/scanning_module(src)
 		new /obj/item/stock_parts/capacitor(src)
 		new /obj/item/stock_parts/servo(src)
