@@ -212,7 +212,7 @@
 
 		data["occupant"]["health"] = mob_occupant.health
 		data["occupant"]["maxHealth"] = mob_occupant.maxHealth
-		data["occupant"]["minHealth"] = HEALTH_THRESHOLD_DEAD
+		data["occupant"]["minHealth"] = mob_occupant.dead_threshold
 		data["occupant"]["bruteLoss"] = mob_occupant.get_brute_loss()
 		data["occupant"]["oxyLoss"] = mob_occupant.get_oxy_loss()
 		data["occupant"]["toxLoss"] = mob_occupant.get_tox_loss()
