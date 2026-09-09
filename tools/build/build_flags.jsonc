@@ -36,7 +36,7 @@
 			"options": [
 				// value is the map's identifier from maps.txt, label is what
 				// appears in the build flags force map dropdown.
-				{ "value": "", "label": "default (next_map.json or default map)" },
+				{ "value": "", "label": "default (cached next map or default map)" },
 				{ "value": "deltastation", "label": "Delta Station" },
 				{ "value": "icebox", "label": "Ice Box Station" },
 				{ "value": "metastation", "label": "MetaStation" },
