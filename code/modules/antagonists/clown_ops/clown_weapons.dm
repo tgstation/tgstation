@@ -39,6 +39,7 @@
 		clumsy_check = FALSE, \
 	)
 	make_less_slippery()
+	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
 
 /obj/item/melee/energy/sword/bananium/on_transform(obj/item/source, mob/user, active)
 	. = ..()
@@ -65,7 +66,7 @@
 		/datum/component/slippery, \
 		knockdown = 8 SECONDS, \
 		lube_flags = GALOSHES_DONT_HELP|SLIP_WHEN_CRAWLING, \
-		force_drop_items = TRUE, \
+		force_drop = TRUE, \
 		can_slip_callback = CALLBACK(src, PROC_REF(is_active)), \
 		slip_on_damage = TRUE, \
 	)
@@ -75,7 +76,7 @@
 		/datum/component/slippery, \
 		knockdown = 4 SECONDS, \
 		lube_flags = GALOSHES_DONT_HELP, \
-		force_drop_items = FALSE, \
+		force_drop = FALSE, \
 		can_slip_callback = CALLBACK(src, PROC_REF(is_active)), \
 		slip_on_damage = FALSE, \
 	)

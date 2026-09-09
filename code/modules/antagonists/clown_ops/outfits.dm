@@ -9,8 +9,8 @@
 	l_pocket = /obj/item/modular_computer/pda/nukeops
 	r_pocket = /obj/item/bikehorn
 	id = /obj/item/card/id/advanced/chameleon/elite
+	belt = /obj/item/gun/ballistic/automatic/pistol/toy/riot/clandestine
 	backpack_contents = list(
-		/obj/item/gun/ballistic/automatic/pistol/toy/riot/clandestine = 1, //The clown op equivalent to the Ansem
 		/obj/item/reagent_containers/spray/waterflower/lube/super = 1,
 		/obj/item/mod/skin_applier/honkerative = 1,
 	)
@@ -23,11 +23,15 @@
 
 /datum/outfit/syndicate/clownop/post_equip(mob/living/carbon/human/nukie, visuals_only)
 	. = ..()
-	var/obj/item/gun/ballistic/automatic/pistol/toy/riot/clandestine/gun = locate() in back
+	var/list/nukie_contents = nukie.get_all_contents()
+	var/obj/item/gun/ballistic/automatic/pistol/toy/riot/clandestine/gun = locate() in nukie_contents
 	if(!isnull(gun))
 		qdel(gun.pin)
 		var/obj/item/firing_pin/clown/ultra/new_pin = new()
 		new_pin.gun_insert(null, gun, TRUE)
+
+	var/obj/item/clothing/mask/gas/syndicate/old_mask = locate() in nukie_contents
+	qdel(old_mask)
 
 	nukie.dna.add_mutation(/datum/mutation/clumsy, MUTATION_SOURCE_MUTATOR)
 

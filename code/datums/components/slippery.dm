@@ -81,6 +81,7 @@
 	src.lube_flags = lube_flags
 	src.can_slip_callback = can_slip_callback
 	src.on_slip_callback = on_slip_callback
+	src.slip_on_damage = slip_on_damage
 	if(slot_whitelist)
 		src.slot_whitelist = slot_whitelist
 
@@ -148,7 +149,7 @@
 		knockdown = component.knockdown_time
 		lube_flags = component.lube_flags
 		on_slip_callback = component.on_slip_callback
-		can_slip_callback = component.on_slip_callback
+		can_slip_callback = component.can_slip_callback
 		paralyze = component.paralyze_time
 		daze = component.daze_time
 		force_drop = component.force_drop_items
@@ -161,6 +162,7 @@
 	src.lube_flags = lube_flags
 	src.on_slip_callback = on_slip_callback
 	src.can_slip_callback = can_slip_callback
+	src.slip_on_damage = slip_on_damage
 	if(slot_whitelist)
 		src.slot_whitelist = slot_whitelist
 /**
