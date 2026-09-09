@@ -152,6 +152,12 @@
 	return "[number_of_things] [initial(item_path.name)]\s"
 
 /**
+ * Used in addition to parse_required_items in parsing requirements into a readable form.
+ */
+/datum/heretic_knowledge/proc/get_extra_requirements()
+	return
+
+/**
  * Called whenever the knowledge's associated ritual is completed successfully.
  *
  * Creates atoms from types in result_atoms.

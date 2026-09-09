@@ -101,6 +101,15 @@
 	banned_atom_types = list(/obj/item/knife/butcher/heretic)
 	cost = 2
 	drafting_tier = 4
+	research_tree_icon_path = /obj/item/knife/butcher/heretic::icon
+	research_tree_icon_state = /obj/item/knife/butcher/heretic::icon_state
+
+/datum/heretic_knowledge/crimson_cleave/prepare_atom_for_ritual_test(atom/what)
+	. = ..()
+	what.add_blood_DNA(list("Test DNA" = get_blood_type(/datum/blood_type/human/o_minus)))
+
+/datum/heretic_knowledge/crimson_cleave/get_extra_requirements()
+	return "some blood - either a pool or droplets, bloodied rags or bandages, a beaker or vial, or even the cleaver itself stained in blood"
 
 /datum/heretic_knowledge/crimson_cleave/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	for(var/obj/item/knife/butcher/cleaver in atoms)
@@ -129,6 +138,8 @@
 				selected_atoms += container
 				return TRUE
 
+	loc.balloon_alert(user, "ritual failed, no blood!")
+	to_chat(user, span_mansus("You are missing blood in order to complete the ritual \"[name]\"."))
 	return FALSE
 
 /datum/heretic_knowledge/crimson_cleave/cleanup_atoms(list/selected_atoms)
