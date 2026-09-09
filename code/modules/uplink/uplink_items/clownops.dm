@@ -38,7 +38,7 @@
 	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 /datum/uplink_item/weapon_kits/clownopsuperpin
-	name = "Super Ultra Hilarious Firing Pin"
+	name = "Super Ultra Hilarious Firing Pins"
 	desc = "Like the ultra hilarious firing pin, except the gun you insert this pin into explodes when someone who isn't clumsy or a clown tries to fire it."
 	cost = 4 //much cheaper for clown ops than for clowns
 	item = /obj/item/storage/box/syndie_kit/clownpins/super
