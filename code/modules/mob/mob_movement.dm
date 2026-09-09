@@ -379,6 +379,7 @@ GAME_VERB_HIDDEN(/client, drop_item, "drop item")
  */
 /mob/proc/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, daze, force_drop = FALSE)
 	SEND_SIGNAL(src, COMSIG_MOB_SLIPPED, knockdown_amount, slipped_on, lube_flags, paralyze, daze, force_drop)
+	return TRUE
 
 /mob/living/slip(knockdown_amount, obj/slipped_on, lube_flags, paralyze, daze, force_drop = FALSE)
 	add_mob_memory(/datum/memory/was_slipped, antagonist = slipped_on)

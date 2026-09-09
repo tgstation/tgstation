@@ -10,6 +10,9 @@
 	volume = 30
 	list_reagents = list(/datum/reagent/lube = 30)
 
+/obj/item/reagent_containers/spray/waterflower/lube/super
+	list_reagents = list(/datum/reagent/lube/superlube = 30)
+
 //BANANIUM SWORD
 
 /obj/item/melee/energy/sword/bananium
@@ -35,32 +38,50 @@
 		attack_verb_simple_on = list("slip"), \
 		clumsy_check = FALSE, \
 	)
-	RegisterSignal(src, COMSIG_TRANSFORMING_ON_TRANSFORM, PROC_REF(on_transform))
+	make_less_slippery()
 
 /obj/item/melee/energy/sword/bananium/on_transform(obj/item/source, mob/user, active)
 	. = ..()
-	adjust_slipperiness()
-
-/*
- * Adds or removes a slippery component, depending on whether the sword is active or not.
- */
-/obj/item/melee/energy/sword/bananium/proc/adjust_slipperiness()
 	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-		AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
+		ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, INNATE_TRAIT)
+		hitsound = 'sound/misc/slip.ogg'
 	else
-		qdel(GetComponent(/datum/component/slippery))
+		REMOVE_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, INNATE_TRAIT)
+		hitsound = initial(hitsound)
 
-/obj/item/melee/energy/sword/bananium/attack(mob/living/M, mob/living/user)
+/obj/item/melee/energy/sword/bananium/equipped(mob/user, slot, initial)
 	. = ..()
-	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-		var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-		slipper.Slip(src, M)
+	if((slot & ITEM_SLOT_HANDS) && HAS_TRAIT(user, TRAIT_CLUMSY))
+		make_very_slippery()
+	else
+		make_less_slippery()
 
-/obj/item/melee/energy/sword/bananium/throw_impact(atom/hit_atom, throwingdatum)
+/obj/item/melee/energy/sword/bananium/dropped(mob/user, silent)
 	. = ..()
-	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-		var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-		slipper.Slip(src, hit_atom)
+	make_less_slippery()
+
+/obj/item/melee/energy/sword/bananium/proc/make_very_slippery()
+	AddComponent( \
+		/datum/component/slippery, \
+		knockdown = 8 SECONDS, \
+		lube_flags = GALOSHES_DONT_HELP|SLIP_WHEN_CRAWLING, \
+		force_drop_items = TRUE, \
+		can_slip_callback = CALLBACK(src, PROC_REF(is_active)), \
+		slip_on_damage = TRUE,
+	)
+
+/obj/item/melee/energy/sword/bananium/proc/make_less_slippery()
+	AddComponent( \
+		/datum/component/slippery, \
+		knockdown = 4 SECONDS, \
+		lube_flags = GALOSHES_DONT_HELP, \
+		force_drop_items = FALSE, \
+		can_slip_callback = CALLBACK(src, PROC_REF(is_active)), \
+		slip_on_damage = FALSE,
+	)
+
+/obj/item/melee/energy/sword/bananium/proc/is_active()
+	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE)
 
 /obj/item/melee/energy/sword/bananium/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/melee/energy/sword/bananium))
@@ -78,8 +99,7 @@
 	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
 		attack_self(user)
 	user.visible_message(span_suicide("[user] is [pick("slitting [user.p_their()] stomach open with", "falling on")] [src]! It looks like [user.p_theyre()] trying to commit seppuku, but the blade slips off of [user.p_them()] harmlessly!"))
-	var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-	slipper.Slip(src, user)
+	user.attackby(src, user)
 	return SHAME
 
 //BANANIUM SHIELD
@@ -99,30 +119,37 @@
 	active_throw_speed = 1
 	can_clumsy_use = TRUE
 
+	hitsound = 'sound/misc/slip.ogg'
+
 /obj/item/shield/energy/bananium/on_transform(obj/item/source, mob/user, active)
 	. = ..()
-	adjust_comedy()
-
-/*
- * Adds or removes a slippery and boomerang component, depending on whether the shield is active or not.
- */
-/obj/item/shield/energy/bananium/proc/adjust_comedy()
 	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-		AddComponent(/datum/component/slippery, 60, GALOSHES_DONT_HELP)
-		AddComponent(/datum/component/boomerang, throw_range+2, TRUE)
+		AddComponent(/datum/component/slippery, 6 SECONDS, GALOSHES_DONT_HELP, slip_on_damage = TRUE, can_slip_callback = CALLBACK(src, PROC_REF(is_active)))
+		if(HAS_TRAIT(user, TRAIT_CLUMSY))
+			AddComponent(/datum/component/boomerang, throw_range + 2, TRUE)
+		else
+			AddComponent(/datum/component/boomerang, throw_range + 1)
+		ADD_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, INNATE_TRAIT)
+		hitsound = 'sound/misc/slip.ogg'
+
 	else
 		qdel(GetComponent(/datum/component/slippery))
 		qdel(GetComponent(/datum/component/boomerang))
+		REMOVE_TRAIT(src, TRAIT_CUSTOM_TAP_SOUND, INNATE_TRAIT)
+		hitsound = initial(hitsound)
 
-/obj/item/shield/energy/bananium/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	if(HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
-		var/caught = hit_atom.hitby(src, FALSE, FALSE, throwingdatum=throwingdatum)
-		if(iscarbon(hit_atom) && !caught)//if they are a carbon and they didn't catch it
-			var/datum/component/slippery/slipper = GetComponent(/datum/component/slippery)
-			slipper.Slip(src, hit_atom)
+/obj/item/shield/energy/bananium/proc/is_active()
+	return HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE)
+
+/obj/item/shield/energy/bananium/equipped(mob/user, slot, initial)
+	. = ..()
+	if(!HAS_TRAIT(src, TRAIT_TRANSFORM_ACTIVE))
+		return
+
+	if(HAS_TRAIT(user, TRAIT_CLUMSY))
+		AddComponent(/datum/component/boomerang, throw_range + 2, TRUE)
 	else
-		return ..()
-
+		AddComponent(/datum/component/boomerang, throw_range + 1)
 
 //BOMBANANA
 

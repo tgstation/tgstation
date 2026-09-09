@@ -714,6 +714,14 @@
 	cost = 10
 	purchasable_from = UPLINK_NUKE_OPS
 
+/datum/uplink_item/bundles_tc/induction_kit/clown
+	name = "Syndicate Circus Induction Kit"
+	desc = "Found a particularly entertaining and skilled performer on the station? \
+		This kit allows you to induct them into the Syndicate circus! Contains equipment them with all the necessary gear for their new role. \
+		*NOT* for usage with Reinforcements, and does not brainwash the target!"
+	item = /obj/item/storage/box/syndie_kit/induction_kit/clown
+	purchasable_from = UPLINK_CLOWN_OPS
+
 /datum/uplink_item/bundles_tc/cowboy
 	name = "Syndicate Outlaw Kit"
 	desc = "There've been high tales of an outlaw 'round these parts. A fella so ruthless and efficient no ranger could ever capture 'em. \
@@ -806,7 +814,7 @@
 	desc = "An upgraded, elite version of the Syndicate MODsuit. It features fireproofing, and also \
 		provides the user with superior armor and mobility compared to the standard Syndicate MODsuit."
 	item = /obj/item/mod/control/pre_equipped/elite
-	purchasable_from = (UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY)
+	purchasable_from = (UPLINK_SERIOUS_OPS | UPLINK_SPY)
 
 /datum/uplink_item/suits/energy_shield
 	name = "MODsuit Energy Shield Module"
@@ -873,7 +881,6 @@
 	item = /obj/item/assault_pod
 	cost = 30
 	surplus = 0
-	purchasable_from = UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS
 	restricted = TRUE
 	purchasable_from = UPLINK_FIREBASE_OPS
 
@@ -883,7 +890,7 @@
 		In its crowbar configuration, it can be used to force open airlocks. Very useful for entering the station or its departments."
 	item = /obj/item/crowbar/power/syndicate
 	cost = 4
-	purchasable_from = UPLINK_SERIOUS_OPS | UPLINK_SPY
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY
 
 /datum/uplink_item/device_tools/medkit
 	name = "Syndicate Combat Medic Kit"
@@ -892,7 +899,7 @@
 		for faster healing on the field. Also comes with basic medical tools and sterlizer."
 	item = /obj/item/storage/medkit/tactical
 	cost = 4
-	purchasable_from = UPLINK_SERIOUS_OPS
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/device_tools/medkit/premium
 	name = "Syndicate Combat Medical Suite"
@@ -910,7 +917,7 @@
 	desc = "A potion recovered at great risk by undercover Syndicate operatives and then subsequently modified with Syndicate technology. \
 		Using it will make any animal sentient, and bound to serve you, as well as implanting an internal radio for communication and an internal ID card for opening doors."
 	cost = 4
-	purchasable_from = UPLINK_SERIOUS_OPS | UPLINK_SPY
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY
 	restricted = TRUE
 
 // Implants
@@ -927,6 +934,7 @@
 		in any creature, biological or mechanical."
 	item = /obj/item/storage/box/syndie_kit/imp_deathrattle
 	cost = 4
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/implants/nuclear/microbomb
 	name = "Microbomb Implant"
@@ -935,7 +943,7 @@
 		This will permanently destroy your body, however."
 	item = /obj/item/storage/box/syndie_kit/imp_microbomb
 	cost = 2
-	purchasable_from = UPLINK_SERIOUS_OPS | UPLINK_SPY
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS | UPLINK_SPY
 
 /datum/uplink_item/implants/nuclear/macrobomb
 	name = "Macrobomb Implant"
@@ -944,6 +952,7 @@
 	item = /obj/item/storage/box/syndie_kit/imp_macrobomb
 	cost = 20
 	restricted = TRUE
+	purchasable_from = UPLINK_ALL_SYNDIE_OPS
 
 /datum/uplink_item/implants/nuclear/deniability
 	name = "Tactical Deniability Implant"
@@ -1012,7 +1021,7 @@
 		micro-organism symbiosis to slime-core weaponization, this special Authorization Key can let you push past the boundaries \
 		of bio-terrorism at breakneck speeds. As a bonus, these labs even come equipped with natural life support! *Plants not included."
 	item = /obj/item/keycard/syndicate_bio
-	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_FIREBASE_OPS
 
 /datum/uplink_item/base_keys/chem_key
 	name = "Syndicate Chemical Plant Access Card"
@@ -1021,7 +1030,7 @@
 		can be instantly delivered to your location. Create groundbreaking chemical agents, cook up, sell the best of drugs, \
 		and listen to the best classic music today!"
 	item = /obj/item/keycard/syndicate_chem
-	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_FIREBASE_OPS
 
 /datum/uplink_item/base_keys/fridge_key
 	name = "Lopez's Access Card"
@@ -1030,14 +1039,14 @@
 		pocket during this morning's briefing. He's been looking for it since. Take it, get into the fridge, and cook up whatever \
 		you need before he gets back. And remember: DON'T TELL ANYONE! -M.T"
 	item = /obj/item/keycard/syndicate_fridge
-	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_FIREBASE_OPS
 
 /datum/uplink_item/base_keys/custodial_key
 	name = "Syndicate Custodial Access Card"
 	desc = "Your workplace dirty? No problem! with this card you gain access to the custodial. Containing a janitorial cart \
 	with some janitorial supplies and an canister of water vapour."
 	item = /obj/item/keycard/syndicate_custodial
-	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_NUKE_OPS
+	purchasable_from = UPLINK_FIREBASE_OPS
 
 // Hats
 // It is fundamental for the game's health for there to be a hat crate for nuclear operatives.

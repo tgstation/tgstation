@@ -429,6 +429,8 @@
 #define SLIPPERY_WHEN_LYING_DOWN (1<<6)
 ///Like sliding, but it's short, it doesn't knockdown, it doesn't stun, it just staggers a bit.
 #define WEAK_SLIDE (1<<7)
+/// You can even slip if you're experiencing nograv or flying
+#define SLIP_IN_NOGRAV (1<<8)
 
 #define MAX_CHICKENS 50
 
