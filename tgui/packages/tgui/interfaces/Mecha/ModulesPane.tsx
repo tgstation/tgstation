@@ -64,7 +64,7 @@ export const ModulesPane = (props) => {
     <Section
       title= {
         showModuleList ? "Equipment" :
-        <Icon name="screwdriver-wrench"></Icon>}
+        <Icon name="screwdriver-wrench" />}
       fill
       style={{ overflowY: 'auto' }}
       buttons={
@@ -125,7 +125,7 @@ export const ModulesPane = (props) => {
                       {`${moduleSlotLabel(module.slot)} Slot`}
                     </Stack.Item>
                     :
-                    <></>
+                    null
                   }
                 </Stack>
               </Button>
@@ -161,7 +161,7 @@ export const ModulesPane = (props) => {
                       {module.name}
                     </Stack.Item>
                     :
-                    <></>
+                    null
                   }
                 </Stack>
               </Button>

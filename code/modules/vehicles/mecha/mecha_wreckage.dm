@@ -112,7 +112,7 @@
 		return
 	cut_overlays() //Remove the recovery beacon overlay
 	ai_pilot.forceMove(card) //Move the dead AI to the card.
-	card.ai_pilot = ai_pilot
+	card.AI = ai_pilot
 	if(ai_pilot.client) //AI player is still in the dead AI and is connected
 		to_chat(ai_pilot, span_notice("The remains of your file system have been recovered on a mobile storage device."))
 	else //Give the AI a heads-up that it is probably going to get fixed.
