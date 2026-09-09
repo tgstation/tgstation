@@ -83,11 +83,13 @@
 	if(ephemeral_tail)
 		if(ephemeral_tail.owner)
 			ephemeral_tail.Remove(dropper, TRUE)
+			//extra code to prevent deletion if tail and owner broke up and tail found a new relationship
 			qdel(ephemeral_tail)
 
 	if(istype(real_tail, /obj/item/organ/tail/fish/cerulean))
 		detach_limbs(dropper)
 		for(var/zone in ephemeral_limbs)
+			//ditto but legs
 			qdel(ephemeral_limbs[zone])
 	else
 		attach_limbs(dropper)

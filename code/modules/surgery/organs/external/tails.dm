@@ -84,7 +84,7 @@
 
 	organ_owner.clear_mood_event("tail_regained")
 
-	if(type in organ_owner.dna?.species.mutant_organs)
+	if(type in organ_owner.dna?.species.mutant_organs && !special)
 		organ_owner.add_mood_event("tail_lost", /datum/mood_event/tail_lost)
 		organ_owner.add_mood_event("tail_balance_lost", /datum/mood_event/tail_balance_lost)
 

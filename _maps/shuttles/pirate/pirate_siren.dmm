@@ -271,9 +271,6 @@
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/pirate/siren)
 "oJ" = (
-/obj/machinery/atmospherics/components/binary/pump/on/layer4{
-	dir = 4
-	},
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
 	},
@@ -281,6 +278,9 @@
 /obj/effect/decal/cleanable/plastic,
 /obj/structure/sign/warning/vacuum/external/directional/east{
 	pixel_y = -13
+	},
+/obj/machinery/atmospherics/components/binary/pump/off/general/visible/layer4{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)

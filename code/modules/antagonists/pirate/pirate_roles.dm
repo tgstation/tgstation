@@ -275,7 +275,14 @@
 	. = ..()
 	var/datum/language_holder/language_holder = spawned_mob.get_language_holder()
 	language_holder.selected_language = /datum/language/common //sing for them
-	spawned_mob.add_personalities(list(/datum/personality/apathetic, /datum/personality/pessimistic, /datum/personality/brave)) //i'm not willing to die for this, but i'm willing to kill you
+	spawned_mob.add_personalities(list(
+		//some sugar
+		/datum/personality/creative,
+		/datum/personality/brave,
+		/datum/personality/extrovert,
+		//some salt
+		/datum/personality/apathetic,
+		/datum/personality/pessimistic))
 	spawned_mob.add_traits(list(TRAIT_TRUE_NIGHT_VISION, TRAIT_LUMINESCENT_EYES), SPECIES_TRAIT)
 	load_features(spawned_mob)
 	load_identity(spawned_mob)

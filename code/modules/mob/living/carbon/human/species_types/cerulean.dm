@@ -167,7 +167,7 @@
 	)
 	/// which datums are blocked in get_global_feature_list
 	var/list/locked_sprite_datums = list(
-		/datum/sprite_accessory/tails/fish/cerulean/skeleton, //dont rock this please
+		/datum/sprite_accessory/tails/fish/cerulean/skeleton,
 	)
 
 /datum/bodypart_overlay/mutant/tail/fish/cerulean/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
@@ -243,7 +243,6 @@
 	fillet_amount = 0
 
 /obj/item/organ/tail/fish/cerulean/skeletal/LateInitialize()
-	. = ..()
 	RemoveElement(/datum/element/processable)
 
 /obj/item/organ/tail/fish/cerulean/skeletal/Initialize(mapload)
