@@ -79,34 +79,34 @@
 
 	return .
 
-/obj/item/gravity_anchor/pre_attack(atom/attacked_atom, mob/living/user, params)
-	if (!istype(attacked_atom, /obj/machinery/gravity_anchor_charger))
-		return ..()
+/obj/item/gravity_anchor/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if (!istype(interacting_with, /obj/machinery/gravity_anchor_charger))
+		return NONE
 
 	var/obj/machinery/gravity_anchor_charger/charger = attacked_atom
 
 	if (src.charger == charger)
 		balloon_alert(user, "already linked to this!")
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "linking to charger...")
 
 	if (!do_after(user, 2.2 SECONDS, target = charger))
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
 	link_to_charger(charger)
 
 	balloon_alert(user, "linked to charger[charged() ? "" : ",\nbut the charger needs an anomaly core"]")
 	playsound(src, 'sound/machines/ping.ogg', 50, vary = TRUE)
 
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
-/obj/item/gravity_anchor/attackby(obj/item/attacking_item, mob/user, params)
-	if (istype(attacking_item, /obj/item/raw_anomaly_core) || istype(attacking_item, /obj/item/assembly/signaler/anomaly))
+/obj/item/gravity_anchor/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if (istype(tool, /obj/item/raw_anomaly_core) || istype(tool, /obj/item/assembly/signaler/anomaly))
 		balloon_alert(user, "give this to the charger!")
-		return TRUE
+		return ITEM_INTERACT_BLOCKING
 
-	return ..()
+	return NONE
 
 /obj/item/gravity_anchor/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (!isnull(targeting_singularity))
