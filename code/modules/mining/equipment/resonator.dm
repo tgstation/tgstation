@@ -35,7 +35,7 @@
 		to_chat(user, span_info("You set the resonator's fields to detonate only after you hit one with it."))
 		mode = RESONATOR_MODE_MANUAL
 	else
-		to_chat(user, span_info("You set the resonator's fields to automatically detonate after 2 seconds."))
+		to_chat(user, span_info("You set the resonator's fields to automatically detonate after 1 second."))
 		mode = RESONATOR_MODE_AUTO
 
 /obj/item/resonator/proc/create_resonance(target, mob/user)
@@ -79,7 +79,7 @@
 
 /obj/effect/temp_visual/resonance/Initialize(mapload, set_creator, set_resonator, mode, set_failure = 50)
 	if(mode == RESONATOR_MODE_AUTO)
-		duration = 2 SECONDS
+		duration = 1 SECONDS
 	if(mode == RESONATOR_MODE_MATRIX)
 		icon_state = "shield2"
 		name = "resonance matrix"
@@ -168,9 +168,9 @@
 	desc = "An upgraded version of the resonator that can produce more fields at once, as well as having no damage penalty for bursting a resonance field early. It also allows you to set 'Resonance matrixes', that detonate after someone(or something) walks over it."
 	icon_state = "resonator_u"
 	inhand_icon_state = "resonator_u"
-	fieldlimit = 6
+	fieldlimit = 8
 	quick_burst_mod = 1
-	adding_failure = 30
+	adding_failure = 20
 
 /obj/item/resonator/upgraded/attack_self(mob/user)
 	if(mode == RESONATOR_MODE_AUTO)
