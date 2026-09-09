@@ -16,7 +16,7 @@
 
 	for(var/mob/living/basic/heretic_summon/helper in created_atoms)
 		helper.ai_controller = new /datum/ai_controller/basic_controller/simple/simple_hostile(helper)
-		helper.ai_controller.blackboard[BB_BASIC_MOB_IDLE_WALK_CHANCE] = 0.1
+		helper.ai_controller.set_blackboard_key(BB_BASIC_MOB_IDLE_WALK_CHANCE, 0.1)
 
 	var/obj/effect/heretic_rune/big/rune = locate() in created_atoms
 	rune.set_greyscale(pick(assoc_to_values(GLOB.heretic_path_to_color)))
