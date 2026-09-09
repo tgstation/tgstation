@@ -94,9 +94,8 @@
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 		RegisterSignal(parent, COMSIG_ITEM_APPLY_FANTASY_BONUSES, PROC_REF(apply_fantasy_bonuses))
 		RegisterSignal(parent, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, PROC_REF(remove_fantasy_bonuses))
-		if(slip_on_damage)
-			RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(slip_on_afterattack))
-			RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, PROC_REF(slip_on_throw_impact))
+		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(slip_on_afterattack))
+		RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, PROC_REF(slip_on_throw_impact))
 
 /datum/component/slippery/Destroy(force)
 	can_slip_callback = null

@@ -57,10 +57,6 @@
 	else
 		make_less_slippery()
 
-/obj/item/melee/energy/sword/bananium/dropped(mob/user, silent)
-	. = ..()
-	make_less_slippery()
-
 /obj/item/melee/energy/sword/bananium/proc/make_very_slippery()
 	AddComponent( \
 		/datum/component/slippery, \
