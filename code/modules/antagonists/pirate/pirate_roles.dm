@@ -332,6 +332,9 @@
 	siren.set_eye_color(pick(eyecolors), pick(eyecolors))
 	siren.update_eyes()
 	siren.gender = (rand(0, 10) > 3) ? FEMALE : PLURAL //despite physique always she/her or they/them. why? because they're sisters of course. 🏳️‍⚧️
+	siren.undershirt = /datum/sprite_accessory/clothing/undershirt/sports_bra::name
+	siren.underwear = /datum/sprite_accessory/clothing/underwear/female_lace::name
+	siren.socks = /datum/sprite_accessory/clothing/socks/fishnet_knee::name
 	siren.set_resting(FALSE, TRUE, TRUE)
 
 #undef COLOR_AMP_BRIGHT

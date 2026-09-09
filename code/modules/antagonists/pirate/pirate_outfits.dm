@@ -205,7 +205,7 @@
 /datum/outfit/pirate/siren
 	name = "Siren Shimai"
 
-	uniform = null
+	uniform = /obj/item/clothing/under/color/jumpskirt/random
 	head = null
 	neck = /obj/item/clothing/neck/necklace/pearl/abyssal
 	back = /obj/item/instrument/eguitar
@@ -214,24 +214,23 @@
 	gloves = /obj/item/clothing/gloves/fingerless
 	shoes = null
 	ears = /obj/item/radio/headset/syndicate/alt
-	l_pocket = /obj/item/clothing/accessory/vaporizer
+	id = null
 
 	skillchips = list(/obj/item/skillchip/musical)
 
 /datum/outfit/pirate/siren/pre_equip(mob/living/carbon/human/pre_equipped, visuals_only)
 	. = ..()
-	if(!(locate(/obj/item/organ/tail/fish/cerulean/abyssal) in pre_equipped.organs))//if youre not showing off your skeleton you should have some modesty
-		switch(pre_equipped.client?.prefs?.read_preference(/datum/preference/choiced/jumpsuit))
-			if(PREF_SKIRT)
-				uniform = /obj/item/clothing/under/color/jumpskirt/black
-			else
-				uniform = /obj/item/clothing/under/color/black
 	if(rand(0,5) == 1)
 		head = /obj/item/clothing/head/soft/black
+	belt = pick(subtypesof(/obj/item/flashlight/glowstick))
 
 /datum/outfit/pirate/siren/post_equip(mob/living/carbon/human/equipped)
 	. = ..()
 	var/obj/item/clothing/head/soft/cap = equipped.get_item_by_slot(ITEM_SLOT_HEAD)
 	if(cap && rand(0,1) == 1)
 		cap.flip(equipped)
+	var/obj/item/clothing/under/uniform = equipped.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+	if(uniform)
+		uniform.rolldown(equipped)
 	equipped.update_lips("lipstick_lower", COLOR_BLACK)
+	equipped.adjust_wet_stacks(-3)

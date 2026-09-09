@@ -252,6 +252,10 @@
 	name = "edgy shuttle seat"
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/shoes/sneakers/black{
+	pixel_x = 12;
+	pixel_y = 6
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "nN" = (
@@ -392,6 +396,12 @@
 	},
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/effect/spawner/random/decoration/glowstick/on,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "carp";
+	pixel_x = 5;
+	pixel_y = -12;
+	paint_colour = "#09bae1"
+	},
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/pirate/siren)
 "sw" = (
@@ -404,6 +414,12 @@
 	dir = 9
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "heart";
+	pixel_x = 13;
+	pixel_y = -14;
+	paint_colour = "#fd6767"
+	},
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/pirate/siren)
 "sJ" = (
@@ -437,6 +453,10 @@
 	pixel_y = 13;
 	pixel_x = -1
 	},
+/obj/item/clothing/shoes/sneakers/black{
+	pixel_x = 9;
+	pixel_y = -14
+	},
 /turf/open/floor/circuit/green,
 /area/shuttle/pirate/siren)
 "tx" = (
@@ -459,6 +479,10 @@
 	pixel_x = 11;
 	pixel_y = -8;
 	icon_state = "space_beer"
+	},
+/obj/item/clothing/accessory/vaporizer/with_cell{
+	pixel_y = 14;
+	pixel_x = 2
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
@@ -504,6 +528,12 @@
 	},
 /obj/machinery/light/floor,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "skull";
+	pixel_x = 7;
+	pixel_y = -22;
+	paint_colour = "#8D8B8B"
+	},
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/pirate/siren)
 "vt" = (
@@ -574,6 +604,12 @@
 	dir = 4
 	},
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "carp";
+	pixel_x = -7;
+	pixel_y = 4;
+	paint_colour = "#ca805a"
+	},
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/pirate/siren)
 "xp" = (
@@ -582,6 +618,12 @@
 /obj/structure/cable,
 /obj/effect/spawner/random/decoration/glowstick/on,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "carp";
+	pixel_x = 11;
+	pixel_y = 8;
+	paint_colour = "#20e28e"
+	},
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/pirate/siren)
 "xu" = (
@@ -839,6 +881,12 @@
 	pixel_x = 16;
 	pixel_y = 22
 	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "carp";
+	pixel_x = -20;
+	pixel_y = 8;
+	paint_colour = "#70ff25"
+	},
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/pirate/siren)
 "EA" = (
@@ -988,6 +1036,12 @@
 /obj/machinery/computer/security/telescreen/entertainment/directional/north{
 	pixel_y = 34
 	},
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "heart";
+	pixel_x = 13;
+	pixel_y = -14;
+	paint_colour = "#fd6767"
+	},
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/pirate/siren)
 "JE" = (
@@ -1042,6 +1096,12 @@
 	},
 /obj/effect/turf_decal/tile/bar/diagonal_centre,
 /obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/crayon{
+	icon_state = "carp";
+	pixel_x = 11;
+	pixel_y = -3;
+	paint_colour = "#df0afb"
+	},
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/pirate/siren)
 "MQ" = (
@@ -1093,6 +1153,10 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/red/corner,
 /obj/effect/decal/cleanable/dirt,
+/obj/item/clothing/accessory/vaporizer/with_cell{
+	pixel_y = 15;
+	pixel_x = -4
+	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "Pq" = (
