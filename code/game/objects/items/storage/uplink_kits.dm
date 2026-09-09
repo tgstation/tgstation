@@ -395,7 +395,7 @@
 	name = "fake macrobomb implant box"
 
 /obj/item/storage/box/syndie_kit/imp_macrobomb_fake/PopulateContents()
-	new /obj/item/implanter/explosive_macro/clown(src)
+	new /obj/item/implanter/explosive_macro/fake(src)
 
 /obj/item/storage/box/syndie_kit/imp_deniability
 	name = "tactical deniability implant box"
