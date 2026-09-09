@@ -180,5 +180,5 @@
 		to_chat(user, span_info("You set the resonator's fields to work as matrix traps."))
 		mode = RESONATOR_MODE_MATRIX
 	else
-		to_chat(user, span_info("You set the resonator's fields to automatically detonate after 1 seconds."))
+		to_chat(user, span_info("You set the resonator's fields to automatically detonate after 1 second."))
 		mode = RESONATOR_MODE_AUTO
