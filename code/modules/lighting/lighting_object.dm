@@ -9,6 +9,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
 	move_resist = INFINITY
+	flags_1 = NO_SHADOW_1
 	///whether we are already in the SSlighting.objects_queue list
 	var/needs_update = FALSE
 
