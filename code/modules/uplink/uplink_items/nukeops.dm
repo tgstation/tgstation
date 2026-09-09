@@ -954,6 +954,14 @@
 	restricted = TRUE
 	purchasable_from = UPLINK_ALL_SYNDIE_OPS
 
+/datum/uplink_item/implants/nuclear/macrobomb/fake
+	name = "Fake Macrobomb Implant"
+	desc = "A bomb implant with the same delay as a true macrobomb, but is ultimately no greater than a standard microbomb. \
+		However, its detonation also comes with a surprise that the standard microbomb doesn't..."
+	item = /obj/item/storage/box/syndie_kit/imp_macrobomb_fake
+	cost = /datum/uplink_item/implants/nuclear/microbomb::cost
+	purchasable_from = UPLINK_CLOWN_OPS
+
 /datum/uplink_item/implants/nuclear/deniability
 	name = "Tactical Deniability Implant"
 	desc = "An implant injected into the brain, and later activated either manually or automatically upon entering critical condition. \
