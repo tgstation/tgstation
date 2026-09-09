@@ -324,7 +324,7 @@
 	cut_overlays()
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	icon_state = model.cyborg_base_icon
-	if(!IS_UNCONSCIOUS(src) && !IsStun() && !IsParalyzed() && !low_power_mode) //Not dead, not stunned.
+	if(!IS_UNCONSCIOUS(src) && !IsStun() && !IsParalyzed() && !low_power_mode && !is_empty_shell()) //Not dead, not stunned, not an unpiloted AI shell.
 		if(!eye_lights)
 			eye_lights = new()
 		if(lamp_enabled || lamp_doom)
@@ -530,7 +530,7 @@
 		balloon_alert(src, "disrupted!")
 		return FALSE
 
-	if(!(update_color && lamp_enabled) && (turn_off || lamp_enabled || update_color || !lamp_functional || IS_UNCONSCIOUS_OR_CRIT(src) || low_power_mode))
+	if(!(update_color && lamp_enabled) && (turn_off || lamp_enabled || update_color || !lamp_functional || IS_UNCONSCIOUS_OR_CRIT(src) || low_power_mode || is_empty_shell()))
 		set_light_on(lamp_functional && stat != DEAD && lamp_doom) //If the lamp isn't broken and borg isn't dead, doomsday borgs cannot disable their light fully.
 		set_light_color(COLOR_RED) //This should only matter for doomsday borgs, as any other time the lamp will be off and the color not seen
 		set_light_range(1) //Again, like above, this only takes effect when the light is forced on by doomsday mode.
@@ -877,6 +877,13 @@
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name //update the camera name too
 	diag_hud_set_aishell()
+	if(lamp_enabled)
+		toggle_headlamp(TRUE)
+	update_icons()
+
+/// Is this an AI shell with no AI currently piloting it?
+/mob/living/silicon/robot/proc/is_empty_shell()
+	return shell && !deployed
 
 /**
  * revert_shell: Reverts AI shell back into a normal cyborg unit
@@ -895,6 +902,7 @@
 	if(!QDELETED(builtInCamera))
 		builtInCamera.c_tag = real_name
 	diag_hud_set_aishell()
+	update_icons()
 
 /**
  * deploy_init: Deploys AI unit into AI shell
@@ -925,6 +933,7 @@
 			LAZYSET(radio.secure_radio_connections, chan, add_radio(radio, GLOB.default_radio_channels[chan]))
 
 	diag_hud_set_aishell()
+	update_icons()
 	undeployment_action.Grant(src)
 
 /datum/action/innate/undeployment
@@ -952,6 +961,9 @@
 	deployed = FALSE
 	mainframe.deployed_shell = null
 	undeployment_action.Remove(src)
+	if(lamp_enabled)
+		toggle_headlamp(TRUE)
+	update_icons()
 	REMOVE_TRAIT(src, TRAIT_LOUD_BINARY, REF(mainframe))
 	if(radio) //Return radio to normal
 		radio.recalculateChannels()
