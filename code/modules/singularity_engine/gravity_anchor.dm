@@ -83,7 +83,7 @@
 	if (!istype(interacting_with, /obj/machinery/gravity_anchor_charger))
 		return NONE
 
-	var/obj/machinery/gravity_anchor_charger/charger = attacked_atom
+	var/obj/machinery/gravity_anchor_charger/charger = interacting_with
 
 	if (src.charger == charger)
 		balloon_alert(user, "already linked to this!")
