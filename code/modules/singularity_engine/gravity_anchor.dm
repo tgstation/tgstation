@@ -14,7 +14,7 @@
 
 	VAR_PRIVATE
 		heal_per_second = 3.4
-		max_range = 5
+		max_range = 7
 		out_of_range_forgiveness = 3 SECONDS
 
 		out_of_range_time = null
@@ -108,53 +108,52 @@
 
 	return ..()
 
-/obj/item/gravity_anchor/afterattack(atom/target, mob/user, proximity_flag, click_parameters)
-	. = ..()
-
+/obj/item/gravity_anchor/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if (!isnull(targeting_singularity))
-		return
+		return NONE
 
 	if (DOING_INTERACTION(user, REF(src)))
-		return
+		return NONE
 
-	var/obj/contained_singularity/singularity = target
+	var/obj/contained_singularity/singularity = interacting_with
 
 	if (!istype(singularity))
-		return
+		return NONE
 
 	if (singularity.health / singularity.max_health >= 1)
 		balloon_alert(user, "it's already fully contained!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if (singularity.health <= 0)
 		balloon_alert(current_user, "it's too late, run!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if (!isnull(singularity.gravity_anchor))
 		balloon_alert(user, "someone else is already anchoring the singularity, step back!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if (isnull(charger))
 		balloon_alert(user, "link to a charger!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if (!charger.charging)
 		balloon_alert(user, "charger isn't ready,\nit needs an anomaly core!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if (!wielded)
 		balloon_alert(user, "hold in two hands!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if (!can_see(src, singularity, max_range))
 		balloon_alert(user, "too far away!\nget closer, but be safe!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	if (!should_keep_going(user, singularity))
 		balloon_alert(user, "get closer!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	target_singularity(user, singularity)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/gravity_anchor/pickup(mob/user)
 	. = ..()
