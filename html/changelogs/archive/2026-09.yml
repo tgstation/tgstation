@@ -125,3 +125,5 @@
   - qol: Blind mobs can see names in the loot panel again, but the panel auto-closes
       when further than two tiles away.
   - bugfix: Cables are properly obscured by windows or airlocks
+  PapaMichael:
+  - rscadd: Added tooltips for language icons in chat
