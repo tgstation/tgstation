@@ -794,6 +794,8 @@
 
 	// You need this for the gun
 	new /obj/item/dnainjector/clumsymut(src)
+	// And a bonus
+	new /obj/item/reagent_containers/spray/waterflower/lube/super(src)
 
 /obj/item/implanter/induction_implant
 	name = "implanter (nuclear operative)"
