@@ -12,8 +12,6 @@
 		{
 			"fileMatch": ["**/build_flags.jsonc"],
 			"schema": {
-				// biome can be configured to allow them, vscode needs
-				// this to not show a warning for each trailing comma.
 				"allowTrailingCommas": true
 			}
 		}
