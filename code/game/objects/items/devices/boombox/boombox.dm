@@ -8,7 +8,7 @@
 	pickup_sound = 'sound/items/handling/ammobox_pickup.ogg'
 	custom_premium_price = PAYCHECK_COMMAND * 7
 	interaction_flags_item = parent_type::interaction_flags_item & ~INTERACT_ITEM_ATTACK_HAND_PICKUP
-	custom_materials = (/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/plastic = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	/// Is the boombox actively playing anything?
 	var/active = FALSE
 	/// Is the boombox being worn on the holder's shoulder?
