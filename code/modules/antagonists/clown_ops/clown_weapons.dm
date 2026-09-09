@@ -67,7 +67,7 @@
 		lube_flags = GALOSHES_DONT_HELP|SLIP_WHEN_CRAWLING, \
 		force_drop_items = TRUE, \
 		can_slip_callback = CALLBACK(src, PROC_REF(is_active)), \
-		slip_on_damage = TRUE,
+		slip_on_damage = TRUE, \
 	)
 
 /obj/item/melee/energy/sword/bananium/proc/make_less_slippery()
@@ -77,7 +77,7 @@
 		lube_flags = GALOSHES_DONT_HELP, \
 		force_drop_items = FALSE, \
 		can_slip_callback = CALLBACK(src, PROC_REF(is_active)), \
-		slip_on_damage = FALSE,
+		slip_on_damage = FALSE, \
 	)
 
 /obj/item/melee/energy/sword/bananium/proc/is_active()
