@@ -94,7 +94,7 @@
 /obj/item/organ/tail/proc/start_wag(mob/living/carbon/organ_owner, stop_after = INFINITY)
 	if(wag_flags & WAG_WAGGING || !(wag_flags & WAG_ABLE)) // we are already wagging
 		return FALSE
-	if(organ_owner.stat == DEAD || organ_owner != owner) // no wagging when owner is dead or tail has been disembodied
+	if(IS_UNCONSCIOUS_OR_CRIT(organ_owner) || organ_owner != owner) // no wagging when owner is ko'd or tail has been disembodied(?)
 		return FALSE
 
 	if(stop_after != INFINITY)
@@ -106,12 +106,13 @@
 	if(tail_spines_overlay) //if there are spines, they should wag with the tail
 		tail_spines_overlay.wagging = TRUE
 	organ_owner.update_body_parts()
-	RegisterSignal(organ_owner, COMSIG_LIVING_DEATH, PROC_REF(owner_died))
+	RegisterSignals(organ_owner, list(COMSIG_MOB_STATCHANGE, SIGNAL_ADDTRAIT(TRAIT_KNOCKEDOUT)), PROC_REF(owner_kod))
 	return TRUE
 
-/obj/item/organ/tail/proc/owner_died(mob/living/carbon/organ_owner) // Resisting the urge to replace owner with daddy
+/obj/item/organ/tail/proc/owner_kod(mob/living/carbon/organ_owner) // Resisting the urge to replace owner with daddy
 	SIGNAL_HANDLER
-	stop_wag(organ_owner)
+	if(IS_UNCONSCIOUS_OR_CRIT(organ_owner))
+		stop_wag(organ_owner)
 
 ///We need some special behaviour for accessories, wrapped here so we can easily add more interactions later
 ///Returns false if the wag stopping worked, true otherwise
@@ -132,7 +133,7 @@
 		return succeeded
 
 	organ_owner.update_body_parts()
-	UnregisterSignal(organ_owner, COMSIG_LIVING_DEATH)
+	UnregisterSignal(organ_owner, list(COMSIG_MOB_STATCHANGE, SIGNAL_ADDTRAIT(TRAIT_KNOCKEDOUT)))
 	return succeeded
 
 /obj/item/organ/tail/proc/get_butt_sprite()

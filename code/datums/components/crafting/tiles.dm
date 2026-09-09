@@ -28,39 +28,6 @@
 	)
 	category = CAT_TILES
 
-/datum/crafting_recipe/ashforge
-	name = "Ash Forge Tile"
-	result = /obj/item/stack/tile/circuit/ash
-	reqs = list(
-		/obj/item/stack/sheet/mineral/plastitanium = 1,
-		/datum/reagent/ash = 80,
-		/datum/reagent/phosphorus = 80,
-	)
-	result_amount = 6
-	category = CAT_TILES
-
-/datum/crafting_recipe/silvergold
-	name = "Silver And Gold Tile"
-	result = /obj/item/stack/tile/silvergold
-	reqs = list(
-		/obj/item/stack/sheet/mineral/silver = 1,
-		/obj/item/stack/sheet/mineral/gold = 1,
-	)
-	result_amount = 8
-	category = CAT_TILES
-
-/datum/crafting_recipe/neo_tile
-	name = "Neo Tile"
-	result = /obj/item/stack/tile/neo/red
-	reqs = list(
-		/obj/item/stack/tile/iron = 4,
-		/datum/reagent/phosphorus = 20,
-		/datum/reagent/uranium/radium = 20,
-		/datum/reagent/fuel/oil = 10,
-	)
-	result_amount = 4
-	category = CAT_TILES
-
 /datum/crafting_recipe/goliath
 	name = "Goliath Carpet"
 	result = /obj/item/stack/tile/carpet/goliath
