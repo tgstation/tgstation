@@ -6,11 +6,11 @@
  * swapping to the latter only when the wearer is wet, and granting control by (un)equipping
  */
 /obj/item/clothing/neck/necklace/pearl
-	name = "pearl necklace"
+	name = "black pearl necklace"
 	desc = "Get your mind out of the gutter." //fleur you have to change this
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "beads"
-	color = "#ffffff"
+	color = "#121011"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/bone = HALF_SHEET_MATERIAL_AMOUNT / 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT / 2)
 	resistance_flags = FIRE_PROOF | ACID_PROOF
@@ -28,7 +28,6 @@
 
 /obj/item/clothing/neck/necklace/pearl/Initialize(mapload)
 	. = ..()
-	color = pick(GLOB.carp_colors)
 	RegisterSignal(src, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
 	RegisterSignal(src, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 

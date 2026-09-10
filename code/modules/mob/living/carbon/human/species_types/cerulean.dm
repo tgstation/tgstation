@@ -23,21 +23,21 @@
 
 /datum/species/human/cerulean/get_physical_attributes()
 	return "Ceruleans struggle with the pull of gravity yet are otherwise similar to humans. \
-		They are slightly more durable, and adore Martian culinary culture, but not much else..."
+		They are slightly more durable, and adore Martian culinary culture, though not much else..."
 
 /datum/species/human/cerulean/get_species_description()
 	return "Ceruleans are descendants of humans and vastly altered \"Animalids\" \
 		who originated from a populace of fanatic body modders devoted to perfecting biomechanics. \
-		Not much of these origins remain par for their insatiable drive to endlessly chase scientific advancement."
+		Not much of these origins remain, par for their insatiable drive to endlessly chase scientific advancement."
 
 /datum/species/human/cerulean/get_species_lore()
 	return list(
 		"Pioneers of gravity manipulation technology, and an \"Animalid\" variant hailing from the planets Moryana and Marina. \
-			Two tidal locked hycean worlds, X being the larger body and richer society.",
+			Two tidal locked hycean worlds, Moryana being the larger body and richer society.",
 
-		"The Marinans suffer from the natural and cultural hardships caused by the perpetually lightless 'abyssal' region.",
+		"The Marinians suffer from the natural and cultural hardships caused by the perpetually lightless 'abyssal' region.",
 
-		"The Moryanians built grav-gen megastructures onto their sea beds to cast its planet's ocean currents upward past atmosphere, \
+		"The Moryanans built grav-gen megastructures onto their sea beds to cast its planet's ocean currents upward past atmosphere, \
 			connecting a flowing aquatic bridge between the two worlds.",
 	)
 
@@ -139,6 +139,9 @@
 		indirect_action = TRUE,
 	)
 
+/// The inverse multiplyer indicating how much blood compared to default_blood_volume() needs to exist for a clean detachment surgery
+#define CLEAN_CUT_MULT 0.4
+
 /*
  * the main driver of the species and the source of the strongest species perks
  * allowing free movement in any atmosphere if zero g
@@ -200,7 +203,7 @@
 /obj/item/organ/tail/fish/cerulean/proc/splatter_check(mob/living/carbon/owner)
 	if(isnull(owner))
 		return FALSE
-	return (owner.blood_volume && !HAS_TRAIT(owner, TRAIT_NOBLOOD) && owner.blood_volume >= (owner.default_blood_volume / 2))
+	return (owner.blood_volume && !HAS_TRAIT(owner, TRAIT_NOBLOOD) && owner.blood_volume >= (owner.default_blood_volume * CLEAN_CUT_MULT))
 
 /// if legs are present remove them silently if special = true, not so silently else
 /obj/item/organ/tail/fish/cerulean/proc/get_your_sealegs(mob/living/carbon/owner, special)
@@ -278,7 +281,7 @@
  */
 /obj/item/organ/tail/fish/cerulean/skeletal
 	name = "skeletal oversized fish tail"
-	desc = "A hugely sized and scaled fish tail, it is partially translucent and shows the skeleton inside."
+	desc = "A hugely sized fish tail skeleton."
 	post_init_icon_state = null
 	greyscale_config = null
 	greyscale_colors = null
@@ -305,3 +308,5 @@
 	locked_sprite_datums = list(
 		/datum/sprite_accessory/tails/fish/cerulean,
 	)
+
+#undef CLEAN_CUT_MULT
