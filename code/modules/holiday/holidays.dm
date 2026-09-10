@@ -649,6 +649,16 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 		/obj/item/toy/figure/ian,
 	)
 
+/datum/holiday/rememberanceday
+	name = REMEMBRANCE_DAY
+	begin_day = 11
+	end_day = 12
+	begin_month = SEPTEMBER
+	holiday_mail = list(
+		/obj/effect/spawner/random/exotic/rememberanceday,
+		/obj/item/toy/plush/narplush,
+	)
+
 /datum/holiday/ianbirthday/greet()
 	return "Happy birthday, Ian!"
 
