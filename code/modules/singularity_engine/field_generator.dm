@@ -27,6 +27,10 @@
 
 	AddComponent(/datum/component/connects_to_singularity_console)
 
+/obj/machinery/field/generator/singularity/update_overlays()
+	. = ..()
+	. += "no-power"
+
 /obj/machinery/field/generator/singularity/calc_power(set_power_draw)
 	return TRUE
 

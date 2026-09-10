@@ -30,7 +30,6 @@ SUBSYSTEM_DEF(power_bars)
 
 /datum/controller/subsystem/power_bars/Initialize()
 	enabled = GLOB.singularity_computers.len > 0
-	last_distributed_allocations = deep_copy_list(department_allocations)
 	areas_per_department = areas_for_department()
 
 	available_power_bars = list(
@@ -38,6 +37,7 @@ SUBSYSTEM_DEF(power_bars)
 	)
 
 	delete_redundant_designs()
+	distribute_power_bars() // this will be laggy unfortunately
 
 	return SS_INIT_SUCCESS
 
@@ -194,10 +194,12 @@ SUBSYSTEM_DEF(power_bars)
 
 /datum/controller/subsystem/power_bars/proc/stock_part_tier(power_bars)
 	switch (power_bars)
-		if (0, 1)
+		if (0)
 			return 1
-		if (2)
+		if (1)
 			return 2
+		if (2)
+			return 3
 		if (3)
 			return 4
 
@@ -244,13 +246,6 @@ SUBSYSTEM_DEF(power_bars)
 
 	last_distributed_allocations = deep_copy_list(department_allocations)
 	next_distribution_timer_id = null
-
-	// for (var/obj/machinery/machine as anything in SSmachines.get_all_machines())
-	// 	var/area/area = get_area(machine)
-	// 	if (!is_type_in_typecache(area, areas_to_update))
-	// 		continue
-
-	// 	machine.update_for_power_bars()
 
 	for (var/area/area_type as anything in areas_to_update)
 		for(var/obj/machinery/machine as anything in GLOB.areas_by_type[area_type]?.machines)
