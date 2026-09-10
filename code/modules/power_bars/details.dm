@@ -27,6 +27,11 @@
 	message = "RCDs link to silo."
 
 // Medical
+/datum/power_bar_detail/medibot_potency
+	department = POWER_BAR_DEPARTMENT_MEDICAL
+	exclusive_tier = 2
+	message = "Medibots heal faster."
+
 /datum/power_bar_detail/pinpointer_proximity
 	department = POWER_BAR_DEPARTMENT_MEDICAL
 	exclusive_tier = 2
@@ -69,3 +74,8 @@
 	department = POWER_BAR_DEPARTMENT_COMMON
 	tier = 2
 	message = "Enables auto-grow for Hydroponics trays."
+
+/datum/power_bar_detail/print_efficiency
+	department = POWER_BAR_DEPARTMENT_COMMON
+	tier = 2
+	message = "Reduced mineral cost for printing research designs station-wide."

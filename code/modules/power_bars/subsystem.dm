@@ -28,6 +28,9 @@ SUBSYSTEM_DEF(power_bars)
 
 	var/max_power_bars = 3
 
+	/// Tracks active auto grow trays per department, more are allowed with more bars... Refeactor this later
+	var/list/botany_autogrow_per_department = list()
+
 /datum/controller/subsystem/power_bars/Initialize()
 	enabled = GLOB.singularity_computers.len > 0
 	areas_per_department = areas_for_department()

@@ -480,7 +480,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	SIGNAL_HANDLER
 
 	UnregisterSignal(SSpower_bars, COMSIG_SUBSYSTEM_POST_INITIALIZE)
-	if (!SSpower_bars.enabled)
+	if (!SSpower_bars.enabled && !ismachinery(loc))
 		qdel(src)
 
 /datum/design/board/singulo_control

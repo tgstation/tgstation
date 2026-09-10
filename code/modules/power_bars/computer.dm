@@ -272,7 +272,7 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 	SIGNAL_HANDLER
 
 	UnregisterSignal(SSpower_bars, COMSIG_SUBSYSTEM_POST_INITIALIZE)
-	if (!SSpower_bars.enabled)
+	if (!SSpower_bars.enabled && !ismachinery(loc))
 		qdel(src)
 
 /datum/design/board/power_control
