@@ -62,6 +62,8 @@ SUBSYSTEM_DEF(power_bars)
 		</div>
 	"}
 
+#undef POWER_BAR_PR_LINK
+
 /datum/controller/subsystem/power_bars/proc/debug_power_bar_distributions()
 	var/list/entries = list()
 	for (var/department in department_allocations)

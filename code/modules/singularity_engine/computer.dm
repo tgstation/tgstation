@@ -368,6 +368,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 
 #undef OVERCLOCK_ACCESS_NOT_ALLOWED
 #undef OVERCLOCK_ACCESS_NOT_ALLOWED_SILICON
+#undef OVERCLOCK_ACCESS_NOT_ALLOWED_TOO_DAMAGED
 #undef OVERCLOCK_ACCESS_ALLOWED
 
 /obj/machinery/computer/singularity/proc/on_singularity_take_damage(obj/contained_singularity/singularity)
