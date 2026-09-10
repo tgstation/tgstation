@@ -29,7 +29,7 @@
 // Medical
 /datum/power_bar_detail/medibot_potency
 	department = POWER_BAR_DEPARTMENT_MEDICAL
-	exclusive_tier = 2
+	tier = 2
 	message = "Medibots heal faster."
 
 /datum/power_bar_detail/pinpointer_proximity
@@ -73,7 +73,7 @@
 /datum/power_bar_detail/botany
 	department = POWER_BAR_DEPARTMENT_COMMON
 	tier = 2
-	message = "Enables auto-grow for Hydroponics trays."
+	message = "Allows unlimited auto-grow for Hydroponics trays."
 
 /datum/power_bar_detail/print_efficiency
 	department = POWER_BAR_DEPARTMENT_COMMON
