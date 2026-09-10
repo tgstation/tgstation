@@ -30,7 +30,7 @@
 	update_available_icons()
 	register_context()
 
-/obj/item/boombox/deconstruct(disassembled)
+/obj/item/boombox/handle_deconstruct(disassembled)
 	if(tapedeck)
 		tapedeck.forceMove(drop_location())
 
