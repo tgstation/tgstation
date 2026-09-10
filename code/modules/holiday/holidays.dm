@@ -651,7 +651,7 @@ GLOBAL_LIST_INIT(holiday_mail, list())
 
 /datum/holiday/rememberanceday
 	name = REMEMBRANCE_DAY
-	begin_day = 11
+	begin_day = 9
 	end_day = 12
 	begin_month = SEPTEMBER
 	holiday_mail = list(
