@@ -145,9 +145,3 @@
 		/obj/item/circuitboard/computer/singulo_control,
 		/obj/item/circuitboard/computer/power_distribution,
 	)
-
-/obj/effect/spawner/random/techstorage/rnd_secure_all/Initialize(mapload)
-	if(!SSpower_bars.enabled) // melbert todo : needs to hook post init, probably
-		loot -= /obj/item/circuitboard/computer/singulo_control
-		loot -= /obj/item/circuitboard/computer/power_distribution
-	return ..()

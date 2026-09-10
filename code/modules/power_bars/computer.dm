@@ -260,6 +260,20 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/power_distribution
 
+/obj/item/circuitboard/computer/power_distribution/Initialize(mapload)
+	. = ..()
+	if(SSpower_bars.initialized)
+		if(!SSpower_bars.enabled)
+			. = INITIALIZE_HINT_QDEL
+	else
+		RegisterSignal(SSpower_bars, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(qdel_if_disabled))
+
+/obj/item/circuitboard/computer/power_distribution/proc/qdel_if_disabled()
+	SIGNAL_HANDLER
+
+	if (!SSpower_bars.enabled)
+		qdel(src)
+
 /datum/design/board/power_control
 	name = "Power Level Distribution Console Board"
 	desc = "Allows for the construction of circuit boards used to build a new power level distribution console."
