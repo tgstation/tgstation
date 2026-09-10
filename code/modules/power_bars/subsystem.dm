@@ -4,6 +4,7 @@ SUBSYSTEM_DEF(power_bars)
 	dependencies = list(
 		/datum/controller/subsystem/atoms,
 		/datum/controller/subsystem/mapping,
+		/datum/controller/subsystem/research,
 	)
 
 	var/list/list/department_allocations = list(
@@ -36,15 +37,14 @@ SUBSYSTEM_DEF(power_bars)
 		new /datum/power_bar_allocation("Base charge", department_allocations.len),
 	)
 
-	if (enabled)
-		delete_redundant_designs()
+	delete_redundant_designs()
 
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/power_bars/stat_entry(msg)
 	return "[enabled ? "ON": "OFF"] ([debug_power_bar_distributions()])"
 
-#define POWER_BAR_PR_LINK "https://github.com/tgstation/tgstation/pull/12345"
+#define POWER_BAR_PR_LINK "https://github.com/tgstation/tgstation/pull/97769"
 
 /datum/controller/subsystem/power_bars/proc/motd()
 	if (!enabled)
@@ -70,22 +70,30 @@ SUBSYSTEM_DEF(power_bars)
 	return "+[available_power_bars()] [entries.Join(" / ")]"
 
 /datum/controller/subsystem/power_bars/proc/delete_redundant_designs()
-	var/list/stock_part_designs = list()
+	if(!enabled)
+		var/list/powerbar_related_designs = list(
+			/datum/design/board/gravity_anchor_charger,
+			/datum/design/board/power_control,
+			/datum/design/board/singulo_control,
+			/datum/design/gravity_anchor,
+		)
+
+		for (var/design_path in powerbar_related_designs)
+			SSresearch.hide_design(design_path)
+		return
+
+	var/list/powerbar_replaced_designs = list()
+
+	powerbar_replaced_designs |= typesof(/datum/design/medibot_upgrade)
+	powerbar_replaced_designs |= typesof(/datum/design/rcd_upgrade)
 
 	for (var/design_typepath in SSresearch.techweb_designs)
 		var/datum/design/design = SSresearch.techweb_designs[design_typepath]
 		if (!allowed_stockpart(design.build_path) || ispath(design.build_path, /obj/item/storage/part_replacer))
-			stock_part_designs += design_typepath
-			design.departmental_flags = NONE
+			powerbar_replaced_designs += design_typepath
 
-	for (var/node_path in SSresearch.techweb_nodes)
-		var/datum/techweb_node/node = SSresearch.techweb_nodes[node_path]
-		for (var/design_path in node.unlocked_designs)
-			if (!(design_path in stock_part_designs))
-				continue
-
-			// node.prune_design_id(design_path) // melbert todo
-			node.unlocked_designs -= design_path
+	for (var/design_path in powerbar_replaced_designs)
+		SSresearch.hide_design(design_path)
 
 /datum/controller/subsystem/power_bars/proc/power_bars_of_area(area/area)
 	var/department = department_from_area(area)

@@ -75,10 +75,11 @@
 		/datum/design/alienretractor,
 		/datum/design/aliensaw,
 		/datum/design/alienscalpel,
+		/datum/design/medibot_upgrade/tier_four,
 		/datum/design/surgery/brainwashing,
 		/datum/design/surgery/brainwashing/mechanic,
-		/datum/design/surgery/tend_wounds_combo/upgrade/femto,
 		/datum/design/surgery/necrotic_revival,
+		/datum/design/surgery/tend_wounds_combo/upgrade/femto,
 	)
 	required_items_to_unlock = list(
 		/obj/item/cautery/alien,
@@ -100,10 +101,3 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/slime/hard = TECHWEB_TIER_5_POINTS)
 	announce_channels = list(RADIO_CHANNEL_MEDICAL)
-
-/datum/techweb_node/alien/surgery/New()
-	if(!SSpower_bars.enabled)
-		unlocked_designs += list(
-			/datum/design/medibot_upgrade/tier_four,
-		)
-	return ..()

@@ -479,6 +479,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 /obj/item/circuitboard/computer/singulo_control/proc/qdel_if_disabled()
 	SIGNAL_HANDLER
 
+	UnregisterSignal(SSpower_bars, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 	if (!SSpower_bars.enabled)
 		qdel(src)
 

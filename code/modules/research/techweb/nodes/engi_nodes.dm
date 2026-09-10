@@ -178,13 +178,6 @@
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_ENGINEERING)
 
-/datum/techweb_node/energy_manipulation/New()
-	if(!SSpower_bars.enabled)
-		unlocked_designs -= /datum/design/board/singulo_control
-		unlocked_designs -= /datum/design/board/power_control
-
-	return ..()
-
 /datum/techweb_node/shuttle_engineering
 	display_name = "Shuttle Engineering"
 	description = "Materials and equipment for constructing shuttles"

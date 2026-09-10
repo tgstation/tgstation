@@ -271,6 +271,7 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 /obj/item/circuitboard/computer/power_distribution/proc/qdel_if_disabled()
 	SIGNAL_HANDLER
 
+	UnregisterSignal(SSpower_bars, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 	if (!SSpower_bars.enabled)
 		qdel(src)
 

@@ -48,8 +48,6 @@
 	return .
 
 /obj/item/gravity_anchor/LateInitialize()
-	. = ..()
-
 	for (var/obj/machinery/gravity_anchor_charger/gravity_anchor_charger as anything in GLOB.mapload_gravity_anchor_chargers)
 		if (gravity_anchor_charger.z != z)
 			continue

@@ -4,7 +4,6 @@ SUBSYSTEM_DEF(research)
 	wait = 1 SECONDS
 	dependencies = list(
 		/datum/controller/subsystem/processing/station,
-		/datum/controller/subsystem/power_bars,
 	)
 
 	/// An associative list of techweb node typepaths to instances.
@@ -146,6 +145,18 @@ SUBSYSTEM_DEF(research)
 		for(var/prerequisite_path in node.prerequisite_nodes)
 			var/datum/techweb_node/prerequisite_node = techweb_nodes[prerequisite_path]
 			LAZYADD(prerequisite_node.unlocked_nodes, node_path)
+
+/datum/controller/subsystem/research/proc/hide_design(design_typepath)
+	var/datum/design/unhidden_design = techweb_designs[design_typepath]
+	if(isnull(unhidden_design))
+		return
+
+	for(var/node_path in unhidden_design.unlocked_by)
+		var/datum/techweb_node/relevant_node = techweb_nodes[node_path]
+		relevant_node.unlocked_designs -= design_typepath
+
+	unhidden_design.unlocked_by = null
+	unhidden_design.departmental_flags = NONE
 
 /datum/controller/subsystem/research/proc/initialize_ordnance_experiments()
 	for (var/datum/experiment/ordnance/experiment_path as anything in subtypesof(/datum/experiment/ordnance))
