@@ -35,7 +35,6 @@
 
 	bruise_ticks--
 	if(!bruise_ticks)
-		to_chat(victim, span_green("The cut on your [limb.plaintext_zone] has [!limb.can_bleed() ? "healed up" : "stopped bleeding"]!"))
 		qdel(src)
 
 /datum/wound/bruised/on_xadone(power)
