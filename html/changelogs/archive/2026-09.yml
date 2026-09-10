@@ -127,3 +127,6 @@
   - bugfix: Cables are properly obscured by windows or airlocks
   PapaMichael:
   - rscadd: Added tooltips for language icons in chat
+2026-09-10:
+  vinylspiders:
+  - rscdel: deletes a bunch of unused, unreferenced assets from the game
