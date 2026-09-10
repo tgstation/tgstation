@@ -7,7 +7,8 @@
  */
 /obj/item/clothing/neck/necklace/pearl
 	name = "black pearl necklace"
-	desc = "Get your mind out of the gutter." //fleur you have to change this
+	desc = "A necklace of black pearls gathered from somewhere within the \"Abyssal\" region of planet Marina, \
+		a strange infusion seems to actively swirl within the tiny dark beads."
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "beads"
 	color = "#121011"

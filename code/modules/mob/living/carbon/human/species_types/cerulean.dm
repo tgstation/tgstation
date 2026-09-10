@@ -32,13 +32,22 @@
 
 /datum/species/human/cerulean/get_species_lore()
 	return list(
-		"Pioneers of gravity manipulation technology, and an \"Animalid\" variant hailing from the planets Moryana and Marina. \
-			Two tidal locked hycean worlds, Moryana being the larger body and richer society.",
+		"Ceruleans are a scarcely common \"Animalid\" variant, sought mostly for their labor in vacuum environments. \
+		They are descendant of a radically spliced human society, who inhabit two tidal locked hycean worlds: planets Marina and Moryana. \
+		Most of the early Cerulean society still reside there today, granted they posess water-breathing lungs \
+		or financial means to occupy limited terrestrial living-space.",
 
-		"The Marinians suffer from the natural and cultural hardships caused by the perpetually lightless 'abyssal' region.",
+		"Most of the scientific development of early Cerulean kind, directly post migration from humans, are left in obscurity or destroyed. \
+		In part due to the self-centered nature of the problems they were designed to solve, like the \"hydro-vaporizer\", a device which respirates \
+		gills in dry atmosphere. Or, their arrogant and inexorable attitude in favor for their inventions and the pursuit for improvement.",
 
-		"The Moryanans built grav-gen megastructures onto their sea beds to cast its planet's ocean currents upward past atmosphere, \
-			connecting a flowing aquatic bridge between the two worlds.",
+		"There is one category of technology the Ceruleans have managed to stand out with: they are pioneers of gravity manipulation technology. \
+		Not many decades ago, Ceruleans of planet Moryana, known as the Moryan, built grav-gen megastructures onto their sea beds to cast its \
+		planet's ocean currents upward past atmosphere,	building a flowing aquatic bridge onto Marina and a connection between the two worlds.",
+
+		"Outwardly, this was done to show-boat their planetary technology as well as their unity portraying to be two kindred planets, but to the Marinians \
+		it was an obvious attempt of the mightier celestial body to seize control over a new, peculiar society. Taking shape deep in the perpetually \
+		lightless region behind Marina, known around space as the \"Abyssal\" zone.",
 	)
 
 /datum/species/human/cerulean/create_pref_unique_perks()
