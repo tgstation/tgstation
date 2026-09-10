@@ -314,3 +314,14 @@
 	cost = CARGO_CRATE_VALUE * 2
 	contains = list(/obj/item/storage/box/mousetraps = 3)
 	crate_name = "mousetraps crate"
+
+/datum/supply_pack/service/boombox
+	name = "MC Starter Kit & Boombox"
+	desc = "A top of the line, Nanomusic boombox. \
+		Can play specialized music tapedecks for you, and possibly even your coworkers, to enjoy. Comes with a free demo tape."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(
+		/obj/item/boombox = 1,
+		/obj/item/music_tape = 1,
+	)
+	crate_name = "boombox crate"
