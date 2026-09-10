@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - rscdel: "deletes a bunch of unused, unreferenced assets from the game"
