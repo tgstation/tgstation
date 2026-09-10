@@ -259,3 +259,13 @@ GLOBAL_LIST_EMPTY_TYPED(power_distribution_consoles, /obj/machinery/computer/pow
 	name = "Power Level Distribution Console"
 	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
 	build_path = /obj/machinery/computer/power_distribution
+
+/datum/design/board/power_control
+	name = "Power Level Distribution Console Board"
+	desc = "Allows for the construction of circuit boards used to build a new power level distribution console."
+	build_type = IMPRINTER
+	build_path = /obj/item/circuitboard/computer/power_distribution
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING

@@ -133,10 +133,21 @@
 		/obj/item/circuitboard/computer/crew,
 	)
 
+
+
 /obj/effect/spawner/random/techstorage/rnd_secure_all
 	name = "secure RnD circuit board spawner"
 	loot = list(
 		/obj/item/circuitboard/computer/mecha_control,
 		/obj/item/circuitboard/computer/apc_control,
 		/obj/item/circuitboard/computer/robotics,
+		// "why are these in RND"? I just wanted them in the pile of the "miscellaneous" boards for now
+		/obj/item/circuitboard/computer/singulo_control,
+		/obj/item/circuitboard/computer/power_distribution,
 	)
+
+/obj/effect/spawner/random/techstorage/rnd_secure_all/Initialize(mapload)
+	if(!SSpower_bars.enabled) // melbert todo : needs to hook post init, probably
+		loot -= /obj/item/circuitboard/computer/singulo_control
+		loot -= /obj/item/circuitboard/computer/power_distribution
+	return ..()

@@ -14,6 +14,7 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 	icon_state = MAP_SWITCH("computer", "/obj/machinery/computer/singularity")
 	icon_screen = "commsyndie" // idk
 	light_color = COLOR_SOFT_RED
+	circuit = /obj/item/circuitboard/computer/singulo_control
 
 	req_access = list(ACCESS_ENGINEERING)
 
@@ -461,3 +462,18 @@ GLOBAL_LIST_EMPTY_TYPED(singularity_computers, /obj/machinery/computer/singulari
 #undef STAGE_SINGULARITY_CONSOLE_NOT_STARTED
 #undef STAGE_SINGULARITY_CONSOLE_PREPARING
 #undef STAGE_SINGULARITY_CONSOLE_SELF_DESTRUCTING
+
+/obj/item/circuitboard/computer/singulo_control
+	name = "Singularity Control Console"
+	build_path = /obj/machinery/computer/singularity
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+
+/datum/design/board/singulo_control
+	name = "Singularity Control Console Board"
+	desc = "Allows for the construction of circuit boards used to build a new singularity control console."
+	build_type = IMPRINTER
+	build_path = /obj/item/circuitboard/computer/singulo_control
+	category = list(
+		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
