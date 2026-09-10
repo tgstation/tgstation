@@ -1228,7 +1228,6 @@
 		update_use_power(NO_POWER_USE)
 		return CLICK_ACTION_BLOCKING
 
-	var/was_self_sustaining = self_sustaining
 	if(!set_self_sustaining(!self_sustaining, user))
 		return CLICK_ACTION_BLOCKING
 

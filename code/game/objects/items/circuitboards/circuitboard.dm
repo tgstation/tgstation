@@ -144,6 +144,10 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 
 	. = ..()
 
+	if(SSpower_bars.enabled)
+		machine.update_for_power_bars()
+		return
+
 	if(replacement_parts)
 		for(var/part in replacement_parts)
 			if(ispath(part, /obj/item))
