@@ -12,6 +12,7 @@
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
+	species_language_holder = /datum/language_holder/cerulean
 	species_cookie = /obj/item/food/chips/shrimp
 	inert_mutation = /datum/mutation/echolocation
 	payday_modifier = 0.9
@@ -21,24 +22,72 @@
 	)
 
 /datum/species/human/cerulean/get_physical_attributes()
-	return "An unremarkable species."
+	return "Ceruleans struggle with the pull of gravity yet are otherwise similar to humans. \
+		They are slightly more durable, and adore Martian culinary culture, but not much else..."
 
 /datum/species/human/cerulean/get_species_description()
-	return "Nothing yet."
+	return "Ceruleans are descendants of humans and vastly altered \"Animalids\" \
+		who originated from a populace of fanatic body modders devoted to perfecting biomechanics. \
+		Not much of these origins remain par for their insatiable drive to endlessly chase scientific advancement."
 
 /datum/species/human/cerulean/get_species_lore()
 	return list(
-		"Nothing yet.",
+		"Pioneers of gravity manipulation technology, and an \"Animalid\" variant hailing from the planets Moryana and Marina. \
+			Two tidal locked hycean worlds, X being the larger body and richer society.",
+
+		"The Marinans suffer from the natural and cultural hardships caused by the perpetually lightless 'abyssal' region.",
+
+		"The Moryanians built grav-gen megastructures onto their sea beds to cast its planet's ocean currents upward past atmosphere, \
+			connecting a flowing aquatic bridge between the two worlds.",
 	)
 
+/datum/species/human/cerulean/create_pref_unique_perks()
+	var/list/to_add = list()
+
+	to_add += list(
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "fish-fins",
+			SPECIES_PERK_NAME = "Flip-Flap",
+			SPECIES_PERK_DESC = "Ceruleans are hard to keep ahold of, becoming slippery and tough to grab if soaked in water.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
+			SPECIES_PERK_ICON = "shield",
+			SPECIES_PERK_NAME = "Scaled Up",
+			SPECIES_PERK_DESC = "Ceruleans have slightly higher damage and pressure resistance.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
+			SPECIES_PERK_ICON = "dragon",
+			SPECIES_PERK_NAME = "Little Space Dragon",
+			SPECIES_PERK_DESC = "Ceruleans and their dexterity are tied to gravity, turning lethally agile if its taken out the question.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "wheelchair-move",
+			SPECIES_PERK_NAME = "No Leg to Stand On",
+			SPECIES_PERK_DESC = "Ceruleans do not have legs, requiring a brutal surgery to opt for a pair.",
+		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "shrimp",
+			SPECIES_PERK_NAME = "Fried Shrimp",
+			SPECIES_PERK_DESC = "Ceruleans gain more damage from burn damage and heat sources.",
+		),
+	)
+
+	return to_add
+
 /datum/species/human/cerulean/prepare_human_for_preview(mob/living/carbon/human/preview_human)
+	preview_human.skin_tone = "asian1"
 	preview_human.set_haircolor("#a54ea1", update = FALSE)
 	preview_human.set_hairstyle(/datum/sprite_accessory/hair/countryponytail::name, update = TRUE)
-	preview_human.dna.features[TRAIT_USES_SKINTONES] = "asian1"
 	preview_human.dna.features[FEATURE_TAIL_FISH_COLOR] = COLOR_CARP_TEAL
 	preview_human.dna.features[FEATURE_FRILLS] = /datum/sprite_accessory/frills/aquatic::name
 	preview_human.dna.species.mutant_organs[/obj/item/organ/frills] = /datum/sprite_accessory/frills/aquatic::name
 	regenerate_organs(preview_human, excluded_zones = GLOB.leg_zones)
+	preview_human.update_body(is_creating = TRUE)
 
 /datum/species/human/cerulean/get_features()
 	var/list/features = ..()

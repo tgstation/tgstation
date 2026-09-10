@@ -12,7 +12,7 @@
 /obj/item/clothing/suit/utility
 	icon = 'icons/obj/clothing/suits/utility.dmi'
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
-	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
+	supports_variations_flags = CLOTHING_CERULEAN_VARIATION
 
 /obj/item/clothing/suit/utility/fire
 	name = "emergency firesuit"

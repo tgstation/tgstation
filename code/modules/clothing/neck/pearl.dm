@@ -2,17 +2,18 @@
 #define RIGHT "right"
 
 /*
- * a rare and magical necklace which allows someone to have both legs and a mermaid tail
- * swapping to the latter only when the wearer is wet, and granting contorl by (un)equipping
+ * an artifact which allows someone to have both legs and a cerulean tail
+ * swapping to the latter only when the wearer is wet, and granting control by (un)equipping
  */
 /obj/item/clothing/neck/necklace/pearl
-	name = "Pearl necklace"
+	name = "pearl necklace"
 	desc = "Get your mind out of the gutter." //fleur you have to change this
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "beads"
 	color = "#ffffff"
 	w_class = WEIGHT_CLASS_SMALL
-	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	custom_materials = list(/datum/material/bone = HALF_SHEET_MATERIAL_AMOUNT / 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT / 2)
+	resistance_flags = FIRE_PROOF | ACID_PROOF
 	/// what tail to spawn?
 	var/tail_type = /obj/item/organ/tail/fish/cerulean
 	/// storage var for the real tail, if we had any. so we can swap without untailing ourselves
