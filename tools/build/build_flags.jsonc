@@ -8,23 +8,22 @@
 			"define": "AUTOSTART_GAME",
 			"label": "Auto Start",
 			"category": "Testing",
-			"description": "Start the game as soon as initializations finish."
+			"description": "Start the game as soon as initializations finish.",
 		},
 		{
 			"id": "TESTING",
 			"define": "TESTING",
 			"label": "Testing",
 			"category": "Testing",
-			"description": "Enables testing() debug messages. Also turns on DATUMVAR_DEBUGGING_MODE, atmos/lighting update visualisers and max-share tracking."
+			"description": "Enables testing() debug messages. Also turns on DATUMVAR_DEBUGGING_MODE, atmos/lighting update visualisers and max-share tracking.",
 		},
-
 		{
 			"id": "REAGENTS_TESTING",
 			"define": "REAGENTS_TESTING",
 			"label": "Reagents testing",
-			"category": "Testineg",
+			"category": "Testing",
 			"description": "Debug messages for every reaction step (very spammy). Requires TESTING.",
-			"requires": ["TESTING"]
+			"requires": ["TESTING"],
 		},
 		{
 			"id": "FORCE_MAP",
@@ -35,7 +34,9 @@
 			"valueFormat": "quoted",
 			"description": "Overrides the map loaded at round start.",
 			"options": [
-				{ "value": "", "label": "default" },
+				// value is the map's identifier from maps.txt, label is what
+				// appears in the build flags force map dropdown.
+				{ "value": "", "label": "default (cached next map or default map)" },
 				{ "value": "deltastation", "label": "Delta Station" },
 				{ "value": "icebox", "label": "Ice Box Station" },
 				{ "value": "metastation", "label": "MetaStation" },
@@ -49,44 +50,44 @@
 				{
 					"value": "runtimestation_minimal",
 					"label": "Minimal Runtime Station. Only works with minimal CentCom.",
-					"requires": ["MINIMAL_CENTCOM", "SKIP_LAVALAND", "SKIP_SPACE_LEVELS"]
-				}
-			]
+					"requires": ["MINIMAL_CENTCOM", "SKIP_LAVALAND", "SKIP_SPACE_LEVELS"],
+				},
+			],
 		},
 		{
 			"id": "MAP_TEST",
 			"define": "MAP_TEST",
 			"label": "Map test mode",
 			"category": "Map",
-			"description": "Disables common annoyances (rat spawns, random light breakage) so mappers can test without shenanigans."
+			"description": "Disables common annoyances (rat spawns, random light breakage) so mappers can test without shenanigans.",
 		},
 		{
 			"id": "SKIP_LAVALAND",
 			"define": "SKIP_LAVALAND",
 			"label": "No Lavaland",
 			"category": "Map",
-			"description": "Prevents Lavaland from loading in."
+			"description": "Prevents Lavaland from loading in.",
 		},
 		{
 			"id": "SKIP_SPACE_LEVELS",
 			"define": "SKIP_SPACE_LEVELS",
 			"label": "No space ruins",
 			"category": "Map",
-			"description": "Makes no space levels load in."
+			"description": "Makes no space levels load in.",
 		},
 		{
 			"id": "TIMER_DEBUG",
 			"define": "TIMER_DEBUG",
 			"label": "Timer debug",
 			"category": "Debugging",
-			"description": "Compiles full timer debug info. Warning: increases timer creation cost ~5x."
+			"description": "Compiles full timer debug info. Warning: increases timer creation cost ~5x.",
 		},
 		{
 			"id": "REFERENCE_DOING_IT_LIVE",
 			"define": "REFERENCE_DOING_IT_LIVE",
 			"label": "Reference tracking (live)",
 			"category": "Debugging",
-			"description": "Sets up the ref tracker for a live environment, logging hard-deletes to harddels.log. Uses fast reftracking but less accurate."
+			"description": "Sets up the ref tracker for a live environment, logging hard-deletes to harddels.log. Uses fast reftracking but less accurate.",
 		},
 		{
 			"id": "REFERENCE_TRACKING_STANDARD",
@@ -94,70 +95,70 @@
 			"label": "Reference tracking (standard)",
 			"category": "Debugging",
 			"description": "Local hard-deletion hunting. Spends all its time searching (slower but thorough), logging to harddels.log.",
-			"conflictsWith": ["REFERENCE_DOING_IT_LIVE"]
+			"conflictsWith": ["REFERENCE_DOING_IT_LIVE"],
 		},
 		{
 			"id": "DATUMVAR_DEBUGGING_MODE",
 			"define": "DATUMVAR_DEBUGGING_MODE",
 			"label": "Datum var debugging",
 			"category": "Debugging",
-			"description": "Caches datum vars so you can retrieve them later to see which vars changed. Implied by TESTING."
+			"description": "Caches datum vars so you can retrieve them later to see which vars changed. Implied by TESTING.",
 		},
 		{
 			"id": "UNIT_TESTS",
 			"define": "UNIT_TESTS",
 			"label": "Unit tests",
 			"category": "Testing",
-			"description": "Runs all unit tests, then shuts down."
+			"description": "Runs all unit tests, then shuts down.",
 		},
 		{
 			"id": "USE_BYOND_TRACY",
 			"define": "USE_BYOND_TRACY",
 			"label": "byond-tracy profiler",
 			"category": "Performance",
-			"description": "Attempts to load prof.dll/libprof.so on boot for Tracy profiling. You must build byond-tracy yourself look at the guide for info."
+			"description": "Attempts to load prof.dll/libprof.so on boot for Tracy profiling. You must build byond-tracy yourself look at the guide for info.",
 		},
 		{
 			"id": "MC_TAB_TRACY_INFO",
 			"define": "MC_TAB_TRACY_INFO",
 			"label": "byond-tracy MC tab info",
 			"category": "Performance",
-			"description": "Displays byond-tracy's status in the MC tab."
+			"description": "Displays byond-tracy's status in the MC tab.",
 		},
 		{
 			"id": "PERFORMANCE_TESTS",
 			"define": "PERFORMANCE_TESTS",
 			"label": "Performance tests",
 			"category": "Performance",
-			"description": "Boots, runs world.run_performance_tests(), then shuts down the server."
+			"description": "Boots, runs world.run_performance_tests(), then shuts down the server.",
 		},
 		{
 			"id": "DO_NOT_DEFER_ASSETS",
 			"define": "DO_NOT_DEFER_ASSETS",
 			"label": "Do not defer assets",
 			"category": "Performance",
-			"description": "Generates all assets up front during initialize instead of deferring them when needed."
+			"description": "Generates all assets up front during initialize instead of deferring them when needed.",
 		},
 		{
 			"id": "PROFILE_MAPLOAD_INIT_ATOM",
 			"define": "PROFILE_MAPLOAD_INIT_ATOM",
 			"label": "Profile mapload init atom",
 			"category": "Performance",
-			"description": "Profiles atom initialization during map load."
+			"description": "Profiles atom initialization during map load.",
 		},
 		{
 			"id": "DISABLE_DREAMLUAU",
 			"define": "DISABLE_DREAMLUAU",
 			"label": "Disable Dreamluau",
 			"category": "Misc",
-			"description": "Fully disables Dreamluau."
+			"description": "Fully disables Dreamluau.",
 		},
 		{
 			"id": "VERB_STRESS_TEST",
 			"define": "VERB_STRESS_TEST",
 			"label": "Verb stress test",
 			"category": "Performance",
-			"description": "Forces verb processing into just the 2% of a tick we normally reserve for it, for simulating highpop."
+			"description": "Forces verb processing into just the 2% of a tick we normally reserve for it, for simulating highpop.",
 		},
 		{
 			"id": "FORCE_VERB_OVERTIME",
@@ -165,21 +166,21 @@
 			"label": "Force verb overtime",
 			"category": "Performance",
 			"description": "Forces all verbs to run into overtime all of the time, negating the reserve 2%.",
-			"requires": ["VERB_STRESS_TEST"]
+			"requires": ["VERB_STRESS_TEST"],
 		},
 		{
 			"id": "ALL_TEMPLATES",
 			"define": "ALL_TEMPLATES",
 			"label": "All templates",
 			"category": "Map",
-			"description": "Includes all map templates in the build (needed for some map/ruin testing)."
+			"description": "Includes all map templates in the build (needed for some map/ruin testing).",
 		},
 		{
 			"id": "ALL_MAPS",
 			"define": "ALL_MAPS",
 			"label": "All maps",
 			"category": "Map",
-			"description": "Includes every station map in the compiled build instead of just the ones referenced dynamically."
+			"description": "Includes every station map in the compiled build instead of just the ones referenced dynamically.",
 		},
 		{
 			"id": "MINIMAL_CENTCOM",
@@ -187,22 +188,22 @@
 			"label": "Minimal CentCom",
 			"category": "Map",
 			"description": "Uses a mini centcom. Required for runtimestation minimal and cant be used without it.",
-			"requiresValues": { "force_map": "runtimestation_minimal" }
+			"requiresValues": { "force_map": "runtimestation_minimal" },
 		},
 		{
 			"id": "FORCE_GENERATE_INIT_ASSETS",
 			"define": "FORCE_GENERATE_INIT_ASSETS",
 			"label": "Generate Init Assets",
 			"category": "Misc",
-			"description": "Enables init assets generation - identical to the config entry 'generate_assets_in_init'."
-		}
+			"description": "Enables init assets generation - identical to the config entry 'generate_assets_in_init'.",
+		},
 	],
 	"presets": [
 		{
 			"id": "LOW_MEMORY",
 			"label": "Low memory mode",
 			"flags": ["SKIP_LAVALAND", "SKIP_SPACE_LEVELS"],
-			"values": { "force_map": "runtimestation" }
+			"values": { "force_map": "runtimestation" },
 		},
 		{
 			"id": "ABSOLUTE_MINIMUM",
@@ -211,9 +212,9 @@
 				"SKIP_LAVALAND",
 				"SKIP_SPACE_LEVELS",
 				"AUTOSTART_GAME",
-				"MINIMAL_CENTCOM"
+				"MINIMAL_CENTCOM",
 			],
-			"values": { "force_map": "runtimestation_minimal" }
+			"values": { "force_map": "runtimestation_minimal" },
 		},
 		{
 			"id": "TESTING",
@@ -222,8 +223,8 @@
 				"TESTING",
 				"REAGENTS_TESTING",
 				"TIMER_DEBUG",
-				"REFERENCE_DOING_IT_LIVE"
-			]
+				"REFERENCE_DOING_IT_LIVE",
+			],
 		},
 		{
 			"id": "TESTING_LOW_MEMORY",
@@ -234,14 +235,14 @@
 				"TESTING",
 				"REAGENTS_TESTING",
 				"TIMER_DEBUG",
-				"REFERENCE_DOING_IT_LIVE"
+				"REFERENCE_DOING_IT_LIVE",
 			],
-			"values": { "force_map": "runtimestation" }
+			"values": { "force_map": "runtimestation" },
 		},
 		{
 			"id": "MAP_TESTING",
 			"label": "Map testing",
-			"flags": ["TESTING", "MAP_TEST"]
-		}
-	]
+			"flags": ["TESTING", "MAP_TEST"],
+		},
+	],
 }
