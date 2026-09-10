@@ -212,7 +212,28 @@
 		if(OVERLAY_LIGHT_BEAM)
 			AddComponent(/datum/component/overlay_lighting, is_directional = TRUE, is_beam = TRUE)
 
+	if(NAV_RELEVANT(src))
+		var/turf/spawn_turf = get_turf(src)
+		if(spawn_turf)
+			spawn_turf.nav_dirty()
+
+/atom/movable/set_density(new_value)
+	. = ..()
+	if(isnull(.)) //no change
+		return
+
+	if(!(flags_1 & (NAV_IRRELEVANT_1 | NAV_ALWAYS_CONDITIONAL_1)))
+		if(isturf(loc))
+			var/turf/our_turf = loc
+			our_turf.nav_dirty()
+
 /atom/movable/Destroy(force)
+	//Update the navmap if the destroyed thing was nav relevant : )
+	if(NAV_RELEVANT(src))
+		var/turf/our_turf = get_turf(src)
+		if(our_turf)
+			our_turf.nav_dirty()
+
 	QDEL_NULL(language_holder)
 	QDEL_NULL(em_block)
 	QDEL_NULL(drift_handler)
@@ -926,6 +947,13 @@
 
 		else if(new_turf && !old_turf)
 			SSspatial_grid.enter_cell(src, new_turf)
+
+	// Shit moving; mark em dirty if relevant
+	if(NAV_RELEVANT(src))
+		if(old_turf)
+			old_turf.nav_dirty()
+		if(new_turf && new_turf != old_turf)
+			new_turf.nav_dirty()
 
 	return TRUE
 

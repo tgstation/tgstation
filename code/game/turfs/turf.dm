@@ -16,6 +16,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	/// Turf bitflags, see code/__DEFINES/flags.dm
 	var/turf_flags = NONE
 
+	/// Packed navmap passability bits. null = unbaked / dirty. See code/__DEFINES/navmap.dm for layout.
+	var/nav_pass = null
+	/// Lazy assoc: "[dir]" -> flat list of conditional blocker entries (numbers = pass_flags masks,
+	/// atom refs = evaluated live via CanAStarPass). Only present on turfs with conditional edges.
+	var/list/nav_blockers
+
 	/// If there's a tile over a basic floor that can be ripped out
 	var/overfloor_placed = FALSE
 	/// How accessible underfloor pieces such as wires, pipes, etc are on this turf. Can be HIDDEN, VISIBLE, or INTERACTABLE.
@@ -740,6 +746,9 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	if(density)
 		explosive_resistance += get_explosive_block()
 
+	// Navmap: a density toggle changes our own edges.
+	nav_dirty()
+
 /// Wrapper around inherent_explosive_resistance
 /// We assume this proc is cold, so we can move the "what is our block" into it
 /turf/proc/get_explosive_block()
@@ -871,3 +880,147 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		return ..()
 	var/obj/machinery/fishing_portal_generator/portal = tool.buffer
 	return portal.link_fishing_spot(GLOB.preset_fish_sources[fish_source], src, user)
+
+/// Invalidates this turf and its neighbours, then queues them for baking.
+/turf/proc/nav_dirty()
+	// Before the subsystem inits nothing is baked
+	if(!SSnavmap.initialized)
+		return
+	// Only auto-update important z-levels
+	if(!SSnavmap.auto_dirty_zlevels[z])
+		return
+	nav_pass = null
+	nav_blockers = null
+	SSnavmap.queue_turf_bake(src)
+	// Clear the navmap DLL's baked flag before the asynchronous re-bake.
+	navmap_pathfinder_update(x, y, z, 0)
+	for(var/dir in GLOB.cardinals)
+		var/turf/neighbor = get_step(src, dir)
+		if(neighbor)
+			neighbor.nav_pass = null
+			neighbor.nav_blockers = null
+			SSnavmap.queue_turf_bake(neighbor)
+			navmap_pathfinder_update(neighbor.x, neighbor.y, neighbor.z, 0)
+	for(var/dir in list(UP, DOWN))
+		var/turf/neighbor = get_step_multiz(src, dir)
+		if(neighbor)
+			neighbor.nav_pass = null
+			SSnavmap.queue_turf_bake(neighbor)
+			navmap_pathfinder_update(neighbor.x, neighbor.y, neighbor.z, 0)
+			// Proc-based turfs may have passability that depends on the adjacent z-level.
+			// Avoid a virtual call for the overwhelmingly common density-based turfs.
+			if(neighbor.pathing_pass_method == TURF_PATHING_PASS_PROC)
+				neighbor.nav_dirty_vertical_dependents()
+
+/// Invalidates nav edges whose passability depends on this turf's vertical neighbours.
+/// Most turfs have no such dependencies; specialized proc-based turfs can override this.
+/turf/proc/nav_dirty_vertical_dependents()
+	return
+
+/// Bakes this turf's outgoing edges and publishes them to the DLL navmap cache.
+/turf/proc/nav_bake(skip_navmap_push = FALSE)
+	var/packed = NAV_BAKED | (SSnavmap.space_type_cache[type] ? NONE : NAV_SIMULATED)
+	var/list/blockers = null
+
+	for(var/dir in GLOB.cardinals)
+		var/turf/dest = get_step(src, dir)
+		if(isnull(dest))
+			continue // edge of the world, no edge
+		var/list/edge_blockers = list()
+		packed |= nav_evaluate_edge(dir, dest, edge_blockers)
+		if(length(edge_blockers))
+			LAZYINITLIST(blockers)
+			blockers["[dir]"] = edge_blockers
+
+	// Raw vertical edges are intentionally available only to flying movers. Their
+	// destination remains at the same x/y on the adjacent mapped layer.
+	for(var/dir in list(UP, DOWN))
+		var/turf/dest = get_step_multiz(src, dir)
+		if(!dest || !zPassOut(dir) || !dest.zPassIn(dir))
+			continue
+		packed |= NAV_FLIGHT(dir)
+
+	nav_pass = packed
+	nav_blockers = blockers
+	// Mass prebakes publish the completed z-level in one FFI call when the DLL is present.
+	if(!skip_navmap_push)
+		navmap_pathfinder_update(x, y, z, packed)
+
+/// Builds packed passability bits and live blockers for one outgoing edge.
+/turf/proc/nav_evaluate_edge(dir, turf/dest, list/edge_blockers)
+	if(dest.density)
+		return NONE // hard blocked, nobody passes
+	// Baseline class passability of the destination turf, before contents.
+	var/ground_ok = TRUE
+	var/flight_ok = TRUE
+	var/has_cond = FALSE
+	switch(dest.pathing_pass_method)
+		if(TURF_PATHING_PASS_NO)
+			return NONE
+		if(TURF_PATHING_PASS_PROC)
+			var/pathing_bits = dest.nav_bake_pathing_pass(dir, edge_blockers)
+			ground_ok = !!(pathing_bits & NAV_GROUND(dir))
+			flight_ok = !!(pathing_bits & NAV_FLIGHT(dir))
+			has_cond = !!(pathing_bits & NAV_COND(dir))
+
+	// border objects :(
+	for(var/obj/border in src)
+		if(!SSnavmap.border_blocker_cache[border.type])
+			continue
+		if(!border.density && border.can_astar_pass == CANASTARPASS_DENSITY)
+			continue
+		if(nav_classify_atom(border, edge_blockers))
+			has_cond = TRUE
+		else
+			if(ground_ok && !border.CanAStarPass(dir, SSnavmap.ground_rep))
+				ground_ok = FALSE
+			if(flight_ok && !border.CanAStarPass(dir, SSnavmap.flying_rep))
+				flight_ok = FALSE
+
+	// destination contents (reverse dir)
+	var/reverse = REVERSE_DIR(dir)
+	for(var/atom/movable/iter_object in dest)
+		if(ismob(iter_object))
+			continue // mobs are never baked; resolved live at execution time
+		if(!iter_object.density && iter_object.can_astar_pass == CANASTARPASS_DENSITY)
+			continue
+		if(nav_classify_atom(iter_object, edge_blockers))
+			has_cond = TRUE
+		else
+			if(ground_ok && !iter_object.CanAStarPass(reverse, SSnavmap.ground_rep))
+				ground_ok = FALSE
+			if(flight_ok && !iter_object.CanAStarPass(reverse, SSnavmap.flying_rep))
+				flight_ok = FALSE
+
+	var/bits = NONE
+	if(ground_ok)
+		bits |= NAV_GROUND(dir)
+	if(flight_ok)
+		bits |= NAV_FLIGHT(dir)
+	if(has_cond)
+		bits |= NAV_COND(dir)
+	return bits
+
+/// Returns the packed edge bits for a turf whose pathing pass method is proc-based.
+/// The default keeps the turf conditional, matching the normal CanAStarPass behavior.
+/turf/proc/nav_bake_pathing_pass(dir, list/edge_blockers)
+	edge_blockers += src
+	return NAV_GROUND(dir) | NAV_FLIGHT(dir) | NAV_COND(dir)
+
+/// Stores a static pass-flag mask or a live mover-dependent blocker.
+/turf/proc/nav_classify_atom(atom/movable/blocker, list/edge_blockers)
+	// Store known pass-flag gates as masks.
+	var/mask = SSnavmap.mask_whitelist_cache[blocker.type]
+	if(mask)
+		edge_blockers += mask
+		return TRUE
+
+	// Store mover-dependent blockers for live evaluation. (The DLL calls back into these via byond API.)
+	if(istype(blocker, /obj/machinery/door) \
+		|| blocker.can_astar_pass == CANASTARPASS_ALWAYS_PROC \
+		|| (blocker.pass_flags_self & ~NAV_NON_PASS_FLAGS) \
+		|| SSnavmap.force_conditional_cache[blocker.type])
+		edge_blockers += blocker
+		return TRUE
+
+	return FALSE

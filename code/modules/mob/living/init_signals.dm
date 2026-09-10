@@ -90,6 +90,11 @@
 
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_PASSTABLE), SIGNAL_REMOVETRAIT(TRAIT_PASSTABLE)), PROC_REF(on_passtable_trait_toggled))
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_PASSWINDOW), SIGNAL_REMOVETRAIT(TRAIT_PASSWINDOW)), PROC_REF(on_passwindow_trait_toggled))
+	// Species bodyparts may grant these traits before our handlers are registered. awesome!!
+	if(HAS_TRAIT(src, TRAIT_PASSTABLE))
+		pass_flags |= PASSTABLE
+	if(HAS_TRAIT(src, TRAIT_PASSWINDOW))
+		pass_flags |= PASSWINDOW
 
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)

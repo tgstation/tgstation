@@ -18,7 +18,7 @@
 	max_integrity = 350
 	armor_type = /datum/armor/machinery_door
 	can_atmos_pass = ATMOS_PASS_DENSITY
-	flags_1 = PREVENT_CLICK_UNDER_1
+	flags_1 = PREVENT_CLICK_UNDER_1 | NAV_ALWAYS_CONDITIONAL_1
 	receive_ricochet_chance_mod = 0.8
 	damage_deflection = 10
 
@@ -206,6 +206,9 @@
 
 	filler.density = density
 	filler.set_opacity(opacity)
+	var/turf/filler_turf = get_turf(filler)
+	if(filler_turf)
+		filler_turf.nav_dirty()
 
 /**
  * Checks which way the airlock is facing and adjusts the direction accordingly.

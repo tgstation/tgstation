@@ -1,4 +1,4 @@
-/// Queues and manages JPS pathfinding steps
+/// Queues and manages navmap pathfinding steps
 SUBSYSTEM_DEF(pathfinder)
 	name = "Pathfinder"
 	priority = FIRE_PRIORITY_PATHFINDING
@@ -7,6 +7,9 @@ SUBSYSTEM_DEF(pathfinder)
 	var/list/datum/pathfind/active_pathing = list()
 	/// List of pathfind datums being ACTIVELY processed. exists to make subsystem stats readable
 	var/list/datum/pathfind/currentrun = list()
+	/// Async rust-g navmap jobs.
+	var/list/datum/pathfind/navmap/navmap_pathing = list()
+	var/list/datum/pathfind/navmap/current_navmap_run = list()
 	/// List of uncheccked source_to_map entries
 	var/list/currentmaps = list()
 	/// Assoc list of target turf -> list(/datum/path_map) centered on the turf
@@ -18,7 +21,7 @@ SUBSYSTEM_DEF(pathfinder)
 	return SS_INIT_SUCCESS
 
 /datum/controller/subsystem/pathfinder/stat_entry(msg)
-	msg = "P:[length(active_pathing)]"
+	msg = "P:[length(active_pathing)] A:[length(navmap_pathing)]"
 	return ..()
 
 // This is another one of those subsystems (hey lighting) in which one "Run" means fully processing a queue
@@ -26,13 +29,15 @@ SUBSYSTEM_DEF(pathfinder)
 /datum/controller/subsystem/pathfinder/fire(resumed)
 	if(!resumed)
 		src.currentrun = active_pathing.Copy()
+		src.current_navmap_run = navmap_pathing.Copy()
 		src.currentmaps = deep_copy_list(source_to_maps)
 
 	// Dies of sonic speed from caching datum var reads
 	var/list/currentrun = src.currentrun
 	while(length(currentrun))
 		var/datum/pathfind/path = currentrun[length(currentrun)]
-		if(!path.search_step()) // Something's wrong
+		var/step_ok = path.search_step()
+		if(!step_ok) // Something's wrong
 			path.early_exit()
 			currentrun.len--
 			continue
@@ -41,6 +46,20 @@ SUBSYSTEM_DEF(pathfinder)
 		path.finished()
 		// Next please
 		currentrun.len--
+
+	var/list/datum/pathfind/navmap/current_navmap_run = src.current_navmap_run
+	while(length(current_navmap_run))
+		var/datum/pathfind/navmap/path = current_navmap_run[length(current_navmap_run)]
+		var/step_ok = path.search_step()
+		if(!step_ok)
+			path.early_exit()
+			current_navmap_run.len--
+			continue
+		if(path.complete)
+			path.finished()
+		current_navmap_run.len--
+		if(MC_TICK_CHECK)
+			return
 
 	// Go over our existing pathmaps, clear out the ones we aren't using
 	var/list/currentmaps = src.currentmaps
@@ -59,14 +78,45 @@ SUBSYSTEM_DEF(pathfinder)
 
 		currentmaps.len--
 
-/// Initiates a pathfind. Returns true if we're good, FALSE if something's failed
-/datum/controller/subsystem/pathfinder/proc/pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish)
-	var/datum/pathfind/jps/path = new()
-	path.setup(requester, access, max_distance, simulated_only, exclude, on_finish, end, mintargetdist, skip_first, diagonal_handling)
-	if(path.start())
-		active_pathing += path
-		return TRUE
-	return FALSE
+/// Initiates a pathfind. Returns true if we're good, FALSE if something's failed.
+/// Uses the DLL if available, otherwise uses the DM navmap A* implementation.
+/datum/controller/subsystem/pathfinder/proc/pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish, allow_multiz = FALSE, max_path_cost = 0)
+	var/turf/start = get_turf(requester)
+	var/turf/goal = get_turf(end)
+	if(!start || !goal)
+		return FALSE
+	var/datum/can_pass_info/pass_info = new(requester, access)
+	if(allow_multiz)
+		var/datum/pathfind/navmap/multiz_path = navmap_pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, on_finish, TRUE, max_path_cost)
+		return !!multiz_path
+	if(navmap_pathfinder_available())
+		var/list/path
+		try
+			path = navmap_pathfinder(start, goal, pass_info, NAV_IS_FLYING(pass_info), max_distance, mintargetdist || 0, simulated_only, exclude, diagonal_handling, skip_first, allow_multiz, max_path_cost)
+			for(var/datum/callback/finished as anything in on_finish)
+				finished.Invoke(path)
+			return TRUE
+		catch
+			for(var/datum/callback/finished as anything in on_finish)
+				finished.Invoke(list())
+			return TRUE
+
+	var/datum/pathfind/navmap/astar_path = navmap_pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, on_finish, allow_multiz, max_path_cost)
+	return !!astar_path
+
+/// Starts a async navmap pathfinding job and returns the queued job.
+/datum/controller/subsystem/pathfinder/proc/navmap_pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish, allow_multiz = FALSE, max_path_cost = 0)
+	if(allow_multiz && !SSnavmap.groups_reachable(get_turf(requester), get_turf(end)))
+		for(var/datum/callback/finished as anything in on_finish)
+			finished.Invoke(list(), list())
+		return
+	var/datum/pathfind/navmap/path = new()
+	path.setup(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, on_finish, allow_multiz, max_path_cost)
+	if(!path.start())
+		qdel(path)
+		return
+	navmap_pathing += path
+	return path
 
 /// Initiates a swarmed pathfind. Returns TRUE if we're good, FALSE if something's failed
 /// If a valid pathmap exists for the TARGET turf we'll use that, otherwise we have to build a new one

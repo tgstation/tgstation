@@ -14,11 +14,15 @@
  * * skip_first: Whether or not to delete the first item in the path. This would be done because the first item is the starting tile, which can break movement for some creatures.
  * * diagonal_handling: defines how we handle diagonal moves. see __DEFINES/path.dm
  */
-/proc/get_path_to(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access=list(), simulated_only = TRUE, turf/exclude, skip_first=TRUE, diagonal_handling=DIAGONAL_REMOVE_CLUNKY)
+/proc/get_path_to(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access=list(), simulated_only = TRUE, turf/exclude, skip_first=TRUE, diagonal_handling=DIAGONAL_REMOVE_CLUNKY, allow_multiz = FALSE, max_path_cost = 0, list/action_sidecar)
 	var/list/hand_around = list()
+	var/list/datum/callback/await
+	if(action_sidecar)
+		await = list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished_actions), hand_around, action_sidecar))
+	else
+		await = list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around))
 	// We're guaranteed that list will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
-	var/datum/callback/await = list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around))
-	if(!SSpathfinder.pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, await))
+	if(!SSpathfinder.pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, await, allow_multiz, max_path_cost))
 		return list()
 
 	UNTIL(length(hand_around))
@@ -79,7 +83,11 @@
 	// We use += here to behave nicely with lists
 	return_list += LIST_VALUE_WRAP_LISTS(hand_back)
 
-/// The datum used to handle the JPS pathfinding, completely self-contained
+/proc/pathfinding_finished_actions(list/return_list, list/action_return, hand_back, list/actions)
+	return_list += LIST_VALUE_WRAP_LISTS(hand_back)
+	action_return += actions || list()
+
+/// The datum used to handle the navmap pathfinding, completely self-contained
 /datum/pathfind
 	/// The turf we started at
 	var/turf/start
@@ -96,7 +104,6 @@
 	var/list/datum/callback/on_finish
 	/// Datum that holds the canpass info of this pathing attempt. This is what CanAstarPass sees
 	var/datum/can_pass_info/pass_info
-
 /datum/pathfind/Destroy(force)
 	. = ..()
 	SSpathfinder.active_pathing -= src
