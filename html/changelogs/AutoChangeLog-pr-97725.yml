@@ -1,0 +1,4 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - rscadd: "Some collars are now able to be cuffed to your arm."
