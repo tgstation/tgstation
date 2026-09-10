@@ -22,7 +22,7 @@
 	occur_text = "gets bruised up"
 	threshold_penalty = 1
 	processes = TRUE
-	default_scar_file = null//FLESH_SCAR_FILE
+	default_scar_file = null
 	severity = WOUND_SEVERITY_TRIVIAL
 	simple_treat_text = null
 	homemade_treat_text = null
