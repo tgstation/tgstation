@@ -132,7 +132,7 @@
 	. += pipe
 
 	if(on && is_operational)
-		. += emissive_appearance(icon, "thermo-emissive", src, alpha = src.alpha)
+		. += emissive_appearance('icons/obj/machines/atmospherics/thermomachine.dmi', "thermo-emissive", src, alpha = src.alpha)
 
 /obj/machinery/atmospherics/components/unary/thermomachine/examine(mob/user)
 	. = ..()
