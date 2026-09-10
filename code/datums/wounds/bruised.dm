@@ -27,6 +27,7 @@
 	simple_treat_text = null
 	homemade_treat_text = null
 
+	///How many ticks the bruise has left until it disappears. Only ticks away while the victim is alive.
 	var/bruise_ticks = 25
 
 /datum/wound/bruised/handle_process(seconds_per_tick)
