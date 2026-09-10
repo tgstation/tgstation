@@ -294,6 +294,14 @@ if $grep -i 'securaty|securiy|secuirty' "${code_files[@]}"; then
     echo -e "${RED}ERROR: Misspelling(s) of 'security' detected in code, please fix.${NC}";
     st=1
 fi;
+
+part "ai slop comment detector"
+if $grep -i '—' "${code_files[@]}"; then
+	echo
+	echo -e "${RED}ERROR: EM dash usage detected. You are required to disclose usage of AI tooling during development along with what percentage of the code is written by you versus written by the AI for licensing reasons. Failure to disclose AI usage and to what extent it was used may result in your PR being closed.${NC}"
+	st=1
+fi;
+
 part "map json naming"
 if ls _maps/*.json | $grep "[A-Z]"; then
 	echo
