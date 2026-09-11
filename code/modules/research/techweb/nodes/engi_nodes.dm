@@ -161,6 +161,7 @@
 		/datum/design/board/cell_charger,
 		/datum/design/board/emitter,
 		/datum/design/board/grounding_rod,
+		/datum/design/board/plankman,
 		/datum/design/board/power_connector,
 		/datum/design/board/power_control,
 		/datum/design/board/powermonitor,
