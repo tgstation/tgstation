@@ -43,11 +43,11 @@
 
 		"There is one category of technology the Ceruleans have managed to stand out with: they are pioneers of gravity manipulation technology. \
 		Not many decades ago, Ceruleans of planet Marina, known as the Marinians, built grav-gen megastructures onto their sea beds to cast its \
-		planet's ocean currents upward past atmosphere,	building a flowing aquatic bridge onto Moryana and a connection between the two worlds.",
+		planet's ocean currents upward past atmosphere,	building an aquatic bridge flowing towards Moryana into a connection between the two worlds.",
 
 		"Outwardly, this was done to show-boat their planetary technology as well as their unity portraying to be two kindred planets, but to the Moryan \
 		it was an obvious attempt of the mightier celestial body to seize control over a new, peculiar society. Taking shape deep in the perpetually \
-		lightless region behind Moryana, known around space as the \"Abyssal\" zone.",
+		lightless region behind Moryana, known around space as Moryana's \"Abyss\" region.",
 	)
 
 /datum/species/human/cerulean/create_pref_unique_perks()
@@ -149,7 +149,7 @@
 	)
 
 /// The inverse multiplyer indicating how much blood compared to default_blood_volume() needs to exist for a clean detachment surgery
-#define CLEAN_CUT_MULT 0.4
+#define CLEAN_CUT_MULT 0.5
 
 /*
  * the main driver of the species and the source of the strongest species perks
