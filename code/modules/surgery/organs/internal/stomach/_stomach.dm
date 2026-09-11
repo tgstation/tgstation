@@ -436,7 +436,7 @@
 
 /obj/item/organ/stomach/get_status_appendix(scanpower, add_tooltips, colored)
 	if(organ_flags & ORGAN_WOUNDED)
-		return conditional_tooltip(span_warning("Perforated"), "Fix surgically.", add_tooltips)
+		return conditional_tooltip(span_warning("Perforated"), "Fix surgically, [/datum/reagent/medicine/spaceacillin::name] may temporarily reduce effects.", add_tooltips)
 	if(cut_open_damage)
 		return conditional_tooltip("<font color='#ff9933'>Incised</font>", "Remove and cauterize.", add_tooltips)
 	return ..()
@@ -448,7 +448,7 @@
 /obj/item/organ/stomach/on_wounded_life(seconds_per_tick)
 	. = ..()
 	// Starts lower but scales higher than appendixes
-	var/wounded_scaling = clamp(wounded_time / 180, 0, 1)
+	var/wounded_scaling = min(wounded_time / 180, 1)
 	if(HAS_TRAIT(owner, TRAIT_VIRUS_RESISTANCE))
 		wounded_scaling /= 3
 	apply_organ_damage(wounded_scaling, maxHealth * 0.8)

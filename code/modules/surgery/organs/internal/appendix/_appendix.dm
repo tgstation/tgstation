@@ -125,14 +125,16 @@
 	inflamation_stage = min(inflamation_stage, 1)
 
 /obj/item/organ/appendix/on_wounded_life(seconds_per_tick)
+	. = ..()
 	if(organ_flags & ORGAN_FAILING) // Don't deal tox damage from a partial failure if the organ has already failed totally
 		return
-	. = ..()
 	// Forced to ensure people don't use it to heal tox as slime person
-	var/wounded_scaling = clamp(wounded_time / 120, 0, 0.5)
+	var/wounded_scaling = min(wounded_time / 120, 0.5)
 	if(HAS_TRAIT(owner, TRAIT_VIRUS_RESISTANCE))
 		wounded_scaling /= 3
 	owner.adjust_tox_loss(wounded_scaling, forced = TRUE)
+	if(SPT_PROB(wounded_scaling * 3, seconds_per_tick))
+		owner.adjust_disgust(15)
 	if(SPT_PROB(1, seconds_per_tick))
 		var/self_aware = HAS_TRAIT(owner, TRAIT_SELF_AWARE)
 		var/alert_message = ""
@@ -144,7 +146,7 @@
 
 /obj/item/organ/appendix/get_status_appendix(scanpower, add_tooltips, colored)
 	if(organ_flags & ORGAN_WOUNDED)
-		return conditional_tooltip(span_warning("Ruptured"), "Remove or repair surgically.", add_tooltips)
+		return conditional_tooltip(span_warning("Ruptured"), "Remove surgically, [/datum/reagent/medicine/spaceacillin::name] may temporarily reduce effects.", add_tooltips)
 	if(!(organ_flags & ORGAN_FAILING) && inflamation_stage)
 		return conditional_tooltip("<font color='#ff9933'>Inflamed</font>", "Remove surgically.", add_tooltips)
 	return ..()

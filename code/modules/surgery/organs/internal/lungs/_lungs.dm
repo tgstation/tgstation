@@ -865,6 +865,7 @@
 /obj/item/organ/lungs/get_status_appendix(scanpower, add_tooltips)
 	var/lung_dilation_data = ""
 	var/wound_data = ""
+	var/connector = ""
 	var/initial_pressure_mult = initial(received_pressure_mult)
 	if (received_pressure_mult != initial_pressure_mult)
 		var/tooltip
@@ -890,11 +891,13 @@
 					If asthmatic, inhaled albuterol or bypass surgery will likely help."
 
 		lung_dilation_data = beginning_text + conditional_tooltip(dilation_text, tooltip, add_tooltips)
+		if (organ_flags & ORGAN_WOUNDED)
+			connector = " + " // Awkward but it works
 
 	if(organ_flags & ORGAN_WOUNDED)
 		wound_data = conditional_tooltip(span_warning("Hemopneumothroax"), "Apply a chest drain and coagulants or fix surgically.", add_tooltips)
 
-	return lung_dilation_data + wound_data
+	return lung_dilation_data + connector + wound_data
 
 /// by default, returns the lungs' breath_noise var as a notice. called when stethoscope is used on chest, uses the return as a message for stethoscope user.
 /obj/item/organ/lungs/proc/hear_breath_noise(mob/living/hearer)
@@ -906,7 +909,9 @@
 
 /obj/item/organ/lungs/on_wounded_life(seconds_per_tick)
 	. = ..()
-	var/wounded_scaling = clamp(wounded_time / 120, 1) // These build up fast but the effects aren't very strong.
+	if(organ_flags & ORGAN_FAILING) // You can't exactly suffocate twice
+		return
+	var/wounded_scaling = min(wounded_time / 120, 1) // These build up fast but the effects aren't very strong
 	apply_organ_damage(wounded_scaling, maxHealth * 0.7)
 	if(owner.get_oxy_loss() < wounded_scaling * 25)
 		owner.adjust_oxy_loss(wounded_scaling)

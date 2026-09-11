@@ -114,6 +114,11 @@
 		return conditional_tooltip("<font color='#cc3333'>Cardiac Arrest</font>", "Repair tissue damage and apply defibrillation immediately.", add_tooltips)
 	return ..()
 
+/obj/item/organ/heart/get_status_appendix(scanpower, add_tooltips)
+	if(organ_flags & ORGAN_WOUNDED)
+		return conditional_tooltip(span_warning("Cardiac Tamponade"), "Apply a chest drain and coagulants or fix surgically.", add_tooltips)
+	. = ..()
+
 /obj/item/organ/heart/show_on_condensed_scans()
 	// Always show if the guy needs a heart (so its status can be monitored)
 	return ..() || owner.needs_heart()
@@ -167,6 +172,11 @@
 /// by default, returns the hearts beat_noise var as a notice span. May do other things when overridden, such as eldritch insanity or electrocution. Whatever you want, really.
 /obj/item/organ/heart/proc/hear_beat_noise(mob/living/hearer)
 	return span_notice("[owner.p_Their()] heart produces [beat_noise].")
+
+/obj/item/organ/heart/proc/on_wounded_life()
+	. = ..()
+	var/wounded_scaling = min(wounded_time / 320, 1) // The slowest and most lethal
+	apply_organ_damage(wounded_scaling) // No maximum damage, unlike other organ wounds
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"

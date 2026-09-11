@@ -179,12 +179,12 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 /obj/item/organ/proc/on_life(seconds_per_tick) //repair organ damage if the organ is not failing
 	SHOULD_CALL_PARENT(TRUE)
 
+	if(organ_flags & ORGAN_WOUNDED)
+		on_wounded_life(seconds_per_tick)
+
 	if(organ_flags & ORGAN_FAILING)
 		handle_failing_organs(seconds_per_tick)
 		return
-
-	if(organ_flags & ORGAN_WOUNDED)
-		on_wounded_life(seconds_per_tick)
 
 	if(failure_time > 0)
 		failure_time--

@@ -226,7 +226,7 @@
 
 /obj/item/organ/liver/get_status_appendix(scanpower, add_tooltips, colored)
 	if(organ_flags & ORGAN_WOUNDED)
-		return conditional_tooltip(span_warning("Lacerated"), "Use coagulants or fix surgically.", add_tooltips)
+		return conditional_tooltip(span_warning("Lacerated"), "Apply coagulants or fix surgically.", add_tooltips)
 	return ..()
 
 /obj/item/organ/liver/wounded(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
@@ -236,9 +236,9 @@
 
 /obj/item/organ/liver/on_wounded_life(seconds_per_tick)
 	. = ..()
-	var/wounded_scaling = clamp(wounded_time / 160, 0, 1)
+	var/wounded_scaling = min(wounded_time / 160, 1)
 	apply_organ_damage(wounded_scaling, maxHealth * 0.8)
-	owner.adjust_blood_volume(-0.5 * wounded_scaling, BLOOD_VOLUME_OKAY)
+	owner.adjust_blood_volume(-1 * wounded_scaling, BLOOD_VOLUME_OKAY)
 	owner.adjust_tox_loss(wounded_scaling * 0.5)
 	if(SPT_PROB(1 + wounded_scaling * 1.5, seconds_per_tick))
 		to_chat(owner, span_warning(pick("You feel faint.", "You feel tired.")))
