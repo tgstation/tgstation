@@ -7,8 +7,9 @@
 	desc = "An ingenious little device manufactured for supporting an alternative method for respiration. \
 			Relying on a removable cell, the coil mechanism synthesizes a hydrogen oxygen mixture, \
 			which can then be used to moisturize the wearer's gills. \n\
-			The rate at which liquid is applied seems to be intended for skin which exceeds at retaining moisture. \n\n\
-			<i>A label on its back warns about the potential dangers of electro-magnetic pulses.</i>"
+			The rate at which liquid is applied seems to be intended for skin which excells at retaining moisture. \n\
+			There is a picture of planet Marina stamped onto it. \n\n\
+			A label on its back warns about the potential dangers of electro-magnetic pulses."
 	icon_state = "vaporizer"
 	worn_icon_state = "vaporizer"
 	base_icon_state = "vaporizer"
