@@ -14,5 +14,5 @@
 	var/mob/living/pawn = controller.pawn
 	if(isturf(pawn.loc) || ismob(pawn.loc) || istype(pawn.loc, /obj/item/mob_holder) || HAS_TRAIT(controller.pawn, TRAIT_MOVE_VENTCRAWLING))
 		return FALSE
-	controller.blackboard[target_key] = pawn.loc
+	controller.set_blackboard_key(target_key, pawn.loc)
 	return TRUE

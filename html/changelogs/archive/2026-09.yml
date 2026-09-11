@@ -130,3 +130,17 @@
 2026-09-10:
   vinylspiders:
   - rscdel: deletes a bunch of unused, unreferenced assets from the game
+2026-09-11:
+  ArcaneMusic:
+  - rscadd: Cargo may now buy a brand new, Nanomusic Boombox! Comes free with 1 demo
+      tape. Two additional disks sold separately (as goodies).
+  - rscadd: A familiar-sounding tape has been added to the game's vendor's premium
+      goods.
+  - rscadd: A rare tape has been added to the black market.
+  - rscadd: A rare tape has been added as a bitrunning secondary reward.
+  MelokG000:
+  - rscadd: PLANKMAN-type portable generator! You can now burn wood for power!
+  necromanceranne:
+  - rscadd: Some collars are now able to be cuffed to your arm.
+  vinylspiders:
+  - bugfix: fixes bot move path overlays not showing up
