@@ -354,6 +354,8 @@
 
 /// allows Ceruleans to wear shoes as a hat. this is never going to get in, but i think it should because its funny
 /obj/item/clothing/shoes/proc/oh_what_a_neat_hat(obj/item, mob/living/carbon/user)
+	SIGNAL_HANDLER
+
 	if (isnull(user))
 		return
 	if (user.bodyshape & BODYSHAPE_CERULEAN)
