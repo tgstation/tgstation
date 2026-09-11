@@ -31,6 +31,13 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
+"bV" = (
+/obj/structure/platform,
+/obj/item/boombox{
+	pixel_y = 7
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate/siren)
 "cQ" = (
 /obj/structure/platform,
 /obj/structure/railing/corner/end/flip,
@@ -218,6 +225,14 @@
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/space/basic,
+/area/shuttle/pirate/siren)
+"lb" = (
+/obj/structure/platform,
+/obj/item/music_tape/rock{
+	pixel_y = 12;
+	pixel_x = -5
+	},
+/turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "lo" = (
 /obj/structure/lattice,
@@ -969,6 +984,14 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
+"HG" = (
+/obj/structure/platform,
+/obj/item/music_tape/hiphop{
+	pixel_y = -7;
+	pixel_x = 4
+	},
+/turf/open/floor/plating,
+/area/shuttle/pirate/siren)
 "HJ" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -1710,7 +1733,7 @@ ZA
 XV
 ho
 Tx
-Tx
+HG
 Tx
 cQ
 Bn
@@ -1735,7 +1758,7 @@ zP
 oj
 AE
 IG
-Tx
+bV
 IG
 Pz
 oj
@@ -1760,7 +1783,7 @@ Tt
 ea
 Ol
 Tx
-Tx
+lb
 Tx
 fq
 rJ
