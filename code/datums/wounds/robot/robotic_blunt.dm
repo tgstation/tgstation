@@ -73,9 +73,6 @@
 	/// The time, in world time, that we will be allowed to do another movement shake. Useful because it lets us prioritize attacked shakes over movement shakes.
 	var/time_til_next_movement_shake_allowed = 0
 
-	/// The percent our limb must get to max possible damage by burn damage alone to count as malleable if it has no T2 burn wound.
-	var/limb_burn_percent_to_max_threshold_for_malleable = 0.8 // must be 75% to max damage by burn damage alone
-
 	/// The last time our victim has moved. Used for determining if we should increase or decrease the chance of having stagger aftershock.
 	var/last_time_victim_moved = 0
 

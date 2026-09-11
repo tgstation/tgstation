@@ -1,10 +1,12 @@
+#define CHASSIS_TEMPERATURE_DEFAULT 15
+
 /datum/wound_pregen_data/burnt_metal
 	abstract = TRUE
 	required_limb_biostate = BIO_METAL
 	required_wounding_type = WOUND_BURN
 	wound_series = WOUND_SERIES_METAL_BURN_OVERHEAT
 
-/datum/wound/burn/robotic/overheat
+/datum/wound/burn/robotic
 	treat_text = "Introduction of a cold environment or lowering of body temperature."
 	treat_text_short = "Cool the patient down or put them under a shower."
 	simple_desc = "Metals are overheated, increasing damage taken and raising body temperature!"
@@ -25,12 +27,10 @@
 	var/thermal_shock_mult = 0
 	// If we are sprayed with a extinguisher/shower with obscuring clothing on (think clothing that prevents surgery), the effect is multiplied against this.
 	var/sprayed_with_reagent_clothed_mult = 0.4
-	// The wound we demote to when we go below cooling threshold. If null, removes us.
-	var/datum/wound/burn/robotic/demotes_to
 	// The temperature we need to be under in order to begin passively cooling.
 	var/temperature_limit = BODYTEMP_NORMAL + 200
-	// Divisor for how much reagents cool the chassis. 100 means 100 units of water at 0K will reduce chassis_temperature by 1.
-	var/reagent_volume_coeff = 30
+	// Divisor for how much reagents cool the chassis. 10 means 10 units of water at 0K will reduce chassis_temperature by 1.
+	var/reagent_volume_coeff = 4
 	// The color of the light we will generate.
 	var/light_color
 	// The power of the light we will generate.
@@ -40,7 +40,7 @@
 	// The glow we have attached to our victim, to simulate our limb glowing.
 	var/obj/effect/dummy/lighting_obj/moblight/mob_glow
 
-/datum/wound/burn/robotic/overheat/set_victim(mob/living/new_victim)
+/datum/wound/burn/robotic/set_victim(mob/living/new_victim)
 	if (victim)
 		QDEL_NULL(mob_glow)
 		UnregisterSignal(victim, COMSIG_ATOM_EXPOSE_REAGENTS)
@@ -53,29 +53,37 @@
 /datum/wound/burn/robotic/get_limb_examine_description()
 	return span_warning("The metal on this limb is glowing with heat.")
 
-/datum/wound/burn/robotic/overheat/proc/under_limit(query)
+/datum/wound/burn/robotic/proc/under_limit(query)
 	if(query >= temperature_limit)
 		return
 	var/amount_under_limit = temperature_limit - query
 	return amount_under_limit / temperature_limit
 
-/datum/wound/burn/robotic/overheat/handle_process(seconds_per_tick)
+/datum/wound/burn/robotic/handle_process(seconds_per_tick)
 	var/passive_cooling = under_limit(victim.bodytemperature)
 	if(passive_cooling)
 		chassis_temperature -= 0.2 * passive_cooling
 	if(victim.stat != DEAD) // So we don't husk anyone with a burn
 		victim.adjust_bodytemperature((chassis_temperature + overheat_bonus) * 0.4) // This is how burns actually hurt you, our (very simple and much weaker) version of infection
-	if (chassis_temperature <= 0)
-		if (demotes_to)
+	try_downgrade()
+	return
+
+/datum/wound/burn/robotic/proc/try_downgrade()
+	if(chassis_temperature <= 0)
+		var/new_severity = severity - (1 + floor(chassis_temperature / -CHASSIS_TEMPERATURE_DEFAULT)) // For every 15 chassis_temperature below 0, we skip down an extra stage.
+		if(new_severity >= WOUND_SEVERITY_MODERATE)
 			victim.visible_message(span_green("[victim]'s [limb.plaintext_zone] turns a more pleasant thermal color as it cools down a little..."), span_green("Your [limb.plaintext_zone] seems to cool down a little!"))
-			replace_wound(new demotes_to)
-			return
+			// Could this be done with get_corresponding_typepath? Yes, but it would be a waste of processing power and not hold up if variants of robotic burns are added.
+			var/new_wound_typepath = /datum/wound/burn/robotic/severe
+			if(new_severity == WOUND_SEVERITY_MODERATE)
+				new_wound_typepath = /datum/wound/burn/robotic/moderate
+			replace_wound(new new_wound_typepath)
 		else
 			victim.visible_message(span_green("[victim]'s [limb.plaintext_zone] returns to its usual colors!"), span_green("Your [limb.plaintext_zone] returns to its usual colors!"))
 			remove_wound()
 			return
 
-/datum/wound/burn/robotic/overheat/proc/victim_exposed_to_reagents(datum/signal_source, list/reagents, datum/reagents/source, methods, volume_modifier, show_message)
+/datum/wound/burn/robotic/proc/victim_exposed_to_reagents(datum/signal_source, list/reagents, datum/reagents/source, methods, volume_modifier, show_message)
 	SIGNAL_HANDLER
 	if(methods != TOUCH)
 		return
@@ -98,35 +106,37 @@
 		temp_delta *= 2
 
 /*  Here we try to calculate the amount of heat any volume of reagents can conduct away from the burn.
-	However, every reagent in the game besides plasma and the one bespoke cooling reagent (as of coding this) has the exact same specific heat.
-	Even "reagents" that aren't liquid like salt.
+	However, every reagent in the game besides plasma and the one bespoke cooling reagent (as of coding this) have the exact same specific heat.
+	Even reagents that aren't liquid like salt.
 	So it's not a very in-depth mechanic. */
 
 	var/effective_volume = 0
 	for(var/datum/reagent/each_reagent as anything in reagents)
 		effective_volume += reagents[each_reagent] * each_reagent.specific_heat / SPECIFIC_HEAT_DEFAULT
 	temp_delta *= effective_volume / reagent_volume_coeff
-	temp_delta = max(chassis_temperature, 0) // So we don't overheal and take extra thermal shock
+	temp_delta = min(temp_delta, chassis_temperature + overheat_bonus) // So we don't overheal and take extra thermal shock
 	chassis_temperature -= temp_delta
 
 	// Okay, now it's thermal shock time
-	var/thermal_shock = temp_delta * thermal_shock_mult * (effective_volume / source.total_volume) // Highly conductive reagents (plasma, coolant) cause less shock
+	var/thermal_shock = temp_delta * thermal_shock_mult * (source.total_volume / effective_volume) // Highly conductive reagents (plasma, coolant) cause less shock
 	thermal_shock *= limb.get_splint_factor()
 	if(limb.grasped_by)
-		thermal_shock *= 0.8 // Grab that burning hot metal! Fireproof gloves would be a bit of an unreasonable ask from medical so whatever.
+		thermal_shock *= 0.8 // Grab that burning hot metal! Fireproof gloves would be a bit of an unreasonable ask so whatever.
 	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
 	victim.visible_message(span_warning("[victim]'s [limb.plaintext_zone] strains from the thermal shock[(!victim.is_location_accessible(limb.body_zone) ? ", [victim.p_their()] clothing absorbing some of the liquid" : "")][(!isnull(current_gauze) ? ", but the [current_gauze.name] helps to keep it together" : "")]!"))
 	playsound(victim, 'sound/items/tools/welder.ogg', 25)
 	if(thermal_shock >= 30)
 		INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
 	limb.receive_damage(brute = thermal_shock, wound_bonus = CANT_WOUND)
+	// This happens after thermal shock because it might remove the wound.
+	try_downgrade()
 
 // this wound is unaffected by cryoxadone and pyroxadone
-/datum/wound/burn/robotic/overheat/on_xadone(power)
+/datum/wound/burn/robotic/on_xadone(power)
 	chassis_temperature -= 0.2
 	return
 
-/datum/wound/burn/robotic/overheat/moderate
+/datum/wound/burn/robotic/moderate
 	name = "Transient Overheating"
 	desc = "External metals have exceeded lower-bound thermal limits and have lost some structural integrity, increasing damage taken as well as the chance to \
 		sustain additional wounds."
@@ -142,18 +152,18 @@
 	status_effect_type = /datum/status_effect/wound/burn/robotic/moderate
 	sound_volume = 18
 
-	chassis_temperature = 15
-	thermal_shock_mult = 1
+	chassis_temperature = CHASSIS_TEMPERATURE_DEFAULT
+	thermal_shock_mult = 0.5
 	light_color = COLOR_RED
 	light_power = 0.1
 	light_range = 0.5
 
 /datum/wound_pregen_data/burnt_metal/transient_overheat
 	abstract = FALSE
-	wound_path_to_generate = /datum/wound/burn/robotic/overheat/moderate
+	wound_path_to_generate = /datum/wound/burn/robotic/moderate
 	threshold_minimum = 30
 
-/datum/wound/burn/robotic/overheat/severe
+/datum/wound/burn/robotic/severe
 	name = "Thermal Overload"
 	desc = "Exterior plating has surpassed critical thermal levels, causing significant failure in structural integrity and overheating of internal systems."
 	occur_text = "sizzles, the externals turning a dull shade of orange"
@@ -169,20 +179,19 @@
 	status_effect_type = /datum/status_effect/wound/burn/robotic/severe
 	sound_volume = 20
 
-	chassis_temperature = 15
-	thermal_shock_mult = 1.25
-	overheat_bonus = 15
-	demotes_to = /datum/wound/burn/robotic/overheat/moderate
+	chassis_temperature = CHASSIS_TEMPERATURE_DEFAULT
+	thermal_shock_mult = 0.5
+	overheat_bonus = CHASSIS_TEMPERATURE_DEFAULT
 	light_color = COLOR_BRIGHT_ORANGE
 	light_power = 0.8
 	light_range = 0.5
 
 /datum/wound_pregen_data/burnt_metal/severe
 	abstract = FALSE
-	wound_path_to_generate = /datum/wound/burn/robotic/overheat/severe
+	wound_path_to_generate = /datum/wound/burn/robotic/severe
 	threshold_minimum = 80
 
-/datum/wound/burn/robotic/overheat/critical
+/datum/wound/burn/robotic/critical
 	name = "Runaway Exothermy"
 	desc = "Carapace is beyond melting point, causing catastrophic structural integrity failure as well as massively heating up the subject."
 	occur_text = "turns a bright shade of radiant white as it sizzles and melts"
@@ -199,15 +208,16 @@
 	sound_volume = 22
 	wound_flags = (ACCEPTS_GAUZE|CAN_BE_GRASPED)
 
-	chassis_temperature = 15
-	thermal_shock_mult = 1.5
-	overheat_bonus = 30
-	demotes_to = /datum/wound/burn/robotic/overheat/severe
+	chassis_temperature = CHASSIS_TEMPERATURE_DEFAULT
+	thermal_shock_mult = 0.5
+	overheat_bonus = CHASSIS_TEMPERATURE_DEFAULT * 2
 	light_color = COLOR_VERY_SOFT_YELLOW
 	light_power = 1.3
 	light_range = 1.5
 
 /datum/wound_pregen_data/burnt_metal/critical
 	abstract = FALSE
-	wound_path_to_generate = /datum/wound/burn/robotic/overheat/critical
+	wound_path_to_generate = /datum/wound/burn/robotic/critical
 	threshold_minimum = 140
+
+#undef CHASSIS_TEMPERATURE_DEFAULT
