@@ -1,7 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - rscadd: "Cargo may now buy a brand new, Nanomusic Boombox! Comes free with 1 demo tape. Two additional disks sold separately (as goodies)."
-  - rscadd: "A familiar-sounding tape has been added to the game's vendor's premium goods."
-  - rscadd: "A rare tape has been added to the black market."
-  - rscadd: "A rare tape has been added as a bitrunning secondary reward."
