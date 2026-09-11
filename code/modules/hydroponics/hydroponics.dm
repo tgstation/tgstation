@@ -10,6 +10,7 @@
 	circuit = /obj/item/circuitboard/machine/hydroponics
 	interaction_flags_click = FORBID_TELEKINESIS_REACH
 	use_power = NO_POWER_USE
+	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 5
 	///The amount of water in the tray (max 100)
 	var/waterlevel = 0
 	///The maximum amount of water in the tray
