@@ -173,7 +173,7 @@
 /obj/item/organ/heart/proc/hear_beat_noise(mob/living/hearer)
 	return span_notice("[owner.p_Their()] heart produces [beat_noise].")
 
-/obj/item/organ/heart/proc/on_wounded_life()
+/obj/item/organ/heart/on_wounded_life()
 	. = ..()
 	var/wounded_scaling = min(wounded_time / 320, 1) // The slowest and most lethal
 	apply_organ_damage(wounded_scaling) // No maximum damage, unlike other organ wounds
