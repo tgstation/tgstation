@@ -87,6 +87,7 @@
 	SIGNAL_HANDLER
 	if(methods != TOUCH)
 		return
+	var/blocked_by_clothing = FALSE
 	var/temp_delta = under_limit(source.chem_temp)
 	if(isnull(temp_delta))
 		return
@@ -98,6 +99,7 @@
 				if (iter_clothing.clothing_flags & THICKMATERIAL)
 					return
 		temp_delta *= sprayed_with_reagent_clothed_mult
+		blocked_by_clothing = TRUE
 
 	if (istype(source.my_atom, /obj/effect/particle_effect/water))
 		temp_delta *= 3
@@ -123,7 +125,7 @@
 	if(limb.grasped_by)
 		thermal_shock *= 0.8 // Grab that burning hot metal! Fireproof gloves would be a bit of an unreasonable ask so whatever.
 	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
-	victim.visible_message(span_warning("[victim]'s [limb.plaintext_zone] strains from the thermal shock[(!victim.is_location_accessible(limb.body_zone) ? ", [victim.p_their()] clothing absorbing some of the liquid" : "")][(!isnull(current_gauze) ? ", but the [current_gauze.name] helps to keep it together" : "")]!"))
+	victim.visible_message(span_warning("[victim]'s [limb.plaintext_zone] strains from the thermal shock[(blocked_by_clothing ? ", [victim.p_their()] clothing absorbing some of the liquid" : "")][(!isnull(current_gauze) ? ", but the [current_gauze.name] helps to keep it together" : "")]!"))
 	playsound(victim, 'sound/items/tools/welder.ogg', 25)
 	if(thermal_shock >= 30)
 		INVOKE_ASYNC(victim, TYPE_PROC_REF(/mob, emote), "scream")
