@@ -168,7 +168,7 @@
 	. = dna?.species?.bodypart_overrides.Copy() || ..()
 	// includes any additional adminbussed hands
 	for(var/obj/item/bodypart/hand in hand_bodyparts)
-		if(hand.body_zone != null)
+		if(!isnull(hand.body_zone))
 			. |= hand.body_zone
 
 ///Returns a list of all missing limbs this mob should have on them, but don't.

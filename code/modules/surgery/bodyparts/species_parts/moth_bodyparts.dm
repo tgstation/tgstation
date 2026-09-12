@@ -27,6 +27,7 @@
 	left_inner = new(src)
 	right_inner = new(src)
 	RegisterSignal(left_inner, COMSIG_BODYPART_POST_REMOVED, PROC_REF(slurp_up_limbs))
+	RegisterSignal(right_inner, COMSIG_BODYPART_POST_REMOVED, PROC_REF(slurp_up_limbs))
 
 /obj/item/bodypart/chest/moth/Destroy()
 	QDEL_NULL(left_inner)
@@ -44,12 +45,12 @@
 		return
 
 	new_owner.change_number_of_hands(4)
-	left_inner.try_attach_limb(new_owner, TRUE)
-	right_inner.try_attach_limb(new_owner, TRUE)
+	left_inner.try_attach_limb(new_owner, special = TRUE)
+	right_inner.try_attach_limb(new_owner, special = TRUE)
 
 /obj/item/bodypart/chest/moth/on_removal(mob/living/carbon/old_owner)
-	left_inner.drop_limb(TRUE, FALSE, FALSE)
-	right_inner.drop_limb(TRUE, FALSE, FALSE)
+	left_inner.drop_limb(special = TRUE, dismembered = FALSE, move_to_floor = FALSE)
+	right_inner.drop_limb(special = TRUE, dismembered = FALSE, move_to_floor = FALSE)
 	old_owner.change_number_of_hands(2)
 	. = ..()
 

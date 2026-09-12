@@ -127,9 +127,8 @@
 
 	return finish_unequip_mob(item, source, user)
 
-/datum/strippable_item/hand/should_show(atom/source, mob/user)
-	var/mob/mob_source = astype(source, /mob)
-	return length(mob_source.held_items) >= hand_index
+/datum/strippable_item/hand/should_show(mob/source, mob/user)
+	return length(astype(source)?.held_items) >= hand_index
 
 /datum/strippable_item/hand/left
 	key = STRIPPABLE_ITEM_LHAND
