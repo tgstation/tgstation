@@ -283,6 +283,11 @@
 	powered_state = "defibimprov-powered"
 	emagged_state = "defibimprov-emagged"
 	w_class = WEIGHT_CLASS_BULKY
+	custom_materials = list(
+		/datum/material/iron = SMALL_MATERIAL_AMOUNT,
+		/datum/material/glass = SMALL_MATERIAL_AMOUNT,
+		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 5,
+	)
 
 /obj/item/defibrillator/compact/loaded/cmo // subtype for the spy steal objective
 	name = "chief medical officer's compact defibrillator"
