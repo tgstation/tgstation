@@ -14,6 +14,11 @@
 #error This version of BYOND (516.1660) has a bug which prevents this codebase from loading properly. If possible, update your BYOND version. Otherwise, visit www.byond.com/download/build to download an older release.
 #endif
 
+// Reminder to check to see if we can fix the weird maximum list macro size thing in `vox_sounds.dm`
+#if defined(CIBUILDING) && (DM_VERSION > 516 || (DM_VERSION == 516 && DM_BUILD > 1687))
+#warn vox_sounds.dm initializes a list in 2 steps to get around a weird BYOND macro bug. Check to see if this has been fixed in this BYOND version.
+#endif
+
 // Keep savefile compatibilty at minimum supported level
 /savefile/byond_version = MIN_COMPILER_VERSION
 
