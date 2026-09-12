@@ -85,7 +85,7 @@
 	// Let's check to make sure the armor system works as expected. Corgi dogs are the only one that have this implemented on the basic level, so let's use that.
 	var/mob/living/basic/pet/dog/corgi/test_dog = set_up_test_dog()
 
-	// those two items should give us a 100% armor rating, so let's test that to make sure it works (all ex_act checks should now be prob(100)), no room for error.
+	// those two items should give us a 100% armor rating, so let's test that to make sure it works (all ex_act checks should deal half damage), no room for error.
 	EX_ACT(test_dog, EXPLODE_LIGHT) // should do 15 damage (basic animals do a prob() check based on the armor rating, and divide the expected brute loss by 1.5).
 	TEST_ASSERT_EQUAL(test_dog.health, MAX_LIVING_HEALTH - 15, "EX_ACT() with EXPLODE_LIGHT severity should have done 15 damage to a corgi with an immune helmet and vest!")
 	test_dog.revive(ADMIN_HEAL_ALL)
