@@ -101,6 +101,7 @@
 /obj/item/bodypart/arm/left/moth/inner
 	body_zone = null
 	held_index = 3
+	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_ABSTRACT
 
 /obj/item/bodypart/arm/left/moth/inner/Initialize(mapload)
 	held_hand_offset =  new (
@@ -122,6 +123,7 @@
 /obj/item/bodypart/arm/right/moth/inner
 	body_zone = null
 	held_index = 4
+	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_ABSTRACT
 
 /obj/item/bodypart/arm/right/moth/inner/Initialize(mapload)
 	held_hand_offset = new (
