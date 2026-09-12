@@ -158,9 +158,9 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)
 
 /datum/bodypart_overlay/mutant/frills/override_color(obj/item/bodypart/bodypart_owner)
-	if(isnull(bodypart_owner.owner) || HAS_TRAIT(bodypart_owner.owner, TRAIT_MUTANT_COLORS))
-		return bodypart_owner.draw_color
-	return bodypart_owner.owner.dna.features[FEATURE_TAIL_FISH_COLOR]
+	if(iscerulean(bodypart_owner.owner)) //if we are fish frills
+		return bodypart_owner.owner.dna.features[FEATURE_TAIL_FISH_COLOR]
+	return bodypart_owner.draw_color
 
 /datum/bodypart_overlay/mutant/frills/icon_render_key(obj/item/bodypart/limb)
 	. = ..()
