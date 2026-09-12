@@ -163,4 +163,4 @@
 // Sorted alphabetically
 #define span_tooltip(tip, main_text) ("<span data-component=\"Tooltip\" data-content=\"" + tip + "\" class=\"tooltip\">" + main_text + "</span>")
 /// Creates a tooltip without italicization or a dotted underline under the "say" class.
-#define span_tooltip_subtle(tip, main_text) ("<span data-component=\"Tooltip\" data-content=\"" + tip + "\" class=\"say\">" + main_text + "</span>")
+#define span_tooltip_subtle(tip, main_text) ("<span data-component=\"Tooltip\" data-content=\"" + tip + "\" class=\"tooltip_subtle\">" + main_text + "</span>")
