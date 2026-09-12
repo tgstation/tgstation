@@ -21,7 +21,7 @@
 		/obj/item/stack/rods, // kebab
 		/obj/item/paper/paperslip/fortune, // fortune cookie
 		/obj/item/dice/fudge, // /obj/item/food/fudgedice
-		/obj/item/food/wendigofeast, // you get back the wendigo skull as it mostly acts as bowl.
+		/obj/item/wendigo_skull, // you get back the wendigo skull as it mostly acts as bowl.
 	)
 
 	for(var/path in subtypesof(/obj/item/food))
