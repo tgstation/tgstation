@@ -445,4 +445,5 @@
 		/obj/item/food/grown/ash_flora/podsneyzka = 1,
 	)
 	result = /obj/item/food/wendigofeast
+	removed_foodtypes = ALCOHOL
 	dish_category = DISH_MEAT

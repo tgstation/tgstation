@@ -241,7 +241,7 @@
 /obj/structure/flora/ash/fonarstolbe
 	name = "fonarstolbe fruit"
 	desc = "A chemotrophic, insignificantly bioluminescent plant dubbed fonarstolbe by spinward scientists. They can survive for weeks in environments and presures lethal to most other plants, as long as they are well rooted.."
-	icon_state = "lamppostfruit"
+	icon_state = "lamppostfruit1"
 	base_icon_state = "lamppostfruit"
 	light_range = 1.5
 	light_power = 2.1

@@ -597,4 +597,5 @@
 		/datum/reagent/consumable/sugar = 3,
 	)
 	result = /obj/item/food/nutreintbar
+	removed_foodtypes =  GROSS
 	dish_category = DISH_UNCATEGORIZED

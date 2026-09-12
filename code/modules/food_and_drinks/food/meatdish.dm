@@ -1312,7 +1312,7 @@
 		/datum/reagent/toxin/berserker = 5,
 	)
 	tastes = list("chicken" = 3, "vegetables" = 1, "gravy" = 1)
-	foodtypes = MEAT | VEGETABLES | GRAIN
+	foodtypes = MEAT | VEGETABLES | FRUIT | SUGAR
 	w_class = WEIGHT_CLASS_NORMAL
 	venue_value = FOOD_PRICE_EXOTIC
 	crafting_complexity = FOOD_COMPLEXITY_5
