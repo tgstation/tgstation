@@ -343,7 +343,8 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			if(deaf_message)
 				deaf_type = MSG_VISUAL
 				message = deaf_message
-				return show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
+				show_message(message, MSG_VISUAL, deaf_message, deaf_type, avoid_highlight)
+				return FALSE // Return false so TTS doesn't attempt to read this message.
 			return FALSE
 		// Out of message range but within eavesdrop range - alter displayed message
 		if(outside_dist > 0)
