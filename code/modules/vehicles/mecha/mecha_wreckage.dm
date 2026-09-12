@@ -10,11 +10,17 @@
 	density = TRUE
 	anchored = FALSE
 	opacity = FALSE
+	/// What types of items/materials can be salvaged using a welder. Each non-stack subtype can only be salvaged once per wreckage.
 	var/list/welder_salvage = list(/obj/item/stack/sheet/plasteel, /obj/item/stack/sheet/iron, /obj/item/stack/rods)
+	/// Total number of times that this wreckage can be salvaged.
 	var/salvage_num = 5
+	/// What types of items/materials can be salvaged using a crowbar. Typically consists of installed mech equipment. Does not interact with salvage_num.
 	var/list/crowbar_salvage = list()
+	/// Tracks if the cables have been salvaged from the mecha wreckage. Only performed once.
 	var/wires_removed = FALSE
-	var/mob/living/silicon/ai/AI //AIs to be salvaged
+	/// AIs to be salvaged
+	var/mob/living/silicon/ai/ai_pilot
+	/// Intact mech parts list that can be welded off. Only one per type can be removed, to a max of 2, with a 60% chance to skip.
 	var/list/parts
 
 /obj/structure/mecha_wreckage/Initialize(mapload, mob/living/silicon/ai/AI_pilot)
@@ -30,17 +36,17 @@
 		parts = null
 	if(!AI_pilot) //Type-checking for this is already done in mecha/Destroy()
 		return
-	AI = AI_pilot
-	AI.apply_damage(150, BURN) //Give the AI a bit of damage from the "shock" of being suddenly shut down
-	INVOKE_ASYNC(AI, TYPE_PROC_REF(/mob/living/silicon, death)) //The damage is not enough to kill the AI, but to be 'corrupted files' in need of repair.
-	AI.forceMove(src) //Put the dead AI inside the wreckage for recovery
+	ai_pilot = AI_pilot
+	ai_pilot.apply_damage(150, BURN) //Give the AI a bit of damage from the "shock" of being suddenly shut down
+	INVOKE_ASYNC(ai_pilot, TYPE_PROC_REF(/mob/living/silicon, death)) //The damage is not enough to kill the AI, but to be 'corrupted files' in need of repair.
+	ai_pilot.forceMove(src) //Put the dead AI inside the wreckage for recovery
 	add_overlay(mutable_appearance('icons/obj/weapons/guns/projectiles.dmi', "green_laser")) //Overlay for the recovery beacon
-	AI.controlled_equipment = null
-	AI.remote_control = null
+	ai_pilot.controlled_equipment = null
+	ai_pilot.remote_control = null
 
 /obj/structure/mecha_wreckage/Destroy()
-	if(AI)
-		QDEL_NULL(AI)
+	if(ai_pilot)
+		QDEL_NULL(ai_pilot)
 	QDEL_LIST(crowbar_salvage)
 	src.visible_message(span_danger("[src]'s superstructure folds in on itself, collapsing into a heap of unsalvageable scrap!"))
 	playsound(src, 'sound/effects/meteorimpact.ogg', 100, TRUE)
@@ -51,7 +57,7 @@
 
 /obj/structure/mecha_wreckage/examine(mob/user)
 	. = ..()
-	if(!AI)
+	if(!ai_pilot)
 		return
 	. += span_notice("The AI recovery beacon is active.")
 
@@ -101,18 +107,18 @@
 	//Proc called on the wreck by the AI card.
 	if(interaction != AI_TRANS_TO_CARD) //AIs can only be transferred in one direction, from the wreck to the card.
 		return
-	if(!AI) //No AI in the wreck
+	if(!ai_pilot) //No AI in the wreck
 		to_chat(user, span_warning("No AI backups found."))
 		return
 	cut_overlays() //Remove the recovery beacon overlay
-	AI.forceMove(card) //Move the dead AI to the card.
-	card.AI = AI
-	if(AI.client) //AI player is still in the dead AI and is connected
-		to_chat(AI, span_notice("The remains of your file system have been recovered on a mobile storage device."))
+	ai_pilot.forceMove(card) //Move the dead AI to the card.
+	card.AI = ai_pilot
+	if(ai_pilot.client) //AI player is still in the dead AI and is connected
+		to_chat(ai_pilot, span_notice("The remains of your file system have been recovered on a mobile storage device."))
 	else //Give the AI a heads-up that it is probably going to get fixed.
-		AI.notify_revival("You have been recovered from the wreckage!", source = card)
-	to_chat(user, "[span_boldnotice("Backup files recovered")]: [AI.name] ([rand(1000,9999)].exe) salvaged from [name] and stored within local memory.")
-	AI = null
+		ai_pilot.notify_revival("You have been recovered from the wreckage!", source = card)
+	to_chat(user, "[span_boldnotice("Backup files recovered")]: [ai_pilot.name] ([rand(1000,9999)].exe) salvaged from [name] and stored within local memory.")
+	ai_pilot = null
 
 /obj/structure/mecha_wreckage/gygax
 	name = "\improper Gygax wreckage"
