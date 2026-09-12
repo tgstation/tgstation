@@ -1,0 +1,137 @@
+/obj/item/brain_processor
+	abstract_type = /obj/item/brain_processor // It is functionally complete though (sans sprites)
+
+	name = "\improper Cerebral Processing Unit"
+	desc = "Pure processing potential packed into a puny but powerful pundit."
+	icon = 'icons/obj/devices/assemblies.dmi'
+	w_class = WEIGHT_CLASS_NORMAL
+	custom_materials = null
+
+	// FIXME: This disables the buckled nag on relaymove, but ideally we shouldn't have to do this
+	buckle_message_cooldown = INFINITY
+
+	/// The current occupant.
+	VAR_FINAL/mob/living/brain/brainmob = null
+	/// The processor's built-in radio.
+	VAR_FINAL/obj/item/radio/brain_processor/radio = null
+	/// If supplied with a law datum, the laws will be transferred to whatever it's placed in.
+	/// - If placed in a cyborg, it will start de-synced from the AI.
+	/// The cyborg's laws will be unmodifiable unless synced to the AI or a law rack.
+	/// - If placed in an AI, it will override the AI's laws.
+	/// Likewise, the AI's laws will be unmodifiable unless synced to a law rack.
+	VAR_FINAL/datum/ai_laws/laws = null
+
+	var/braintype = "Cyborg"
+
+/obj/item/radio/brain_processor
+	custom_materials = null
+
+/obj/item/brain_processor/Initialize(mapload)
+	. = ..()
+	radio = new(src)
+	radio.set_broadcasting(FALSE) //researching radio mmis turned the robofabs into radios because this didnt start as FALSE.
+
+/obj/item/brain_processor/Destroy(force)
+	QDEL_NULL(brainmob)
+	QDEL_NULL(laws)
+	QDEL_NULL(radio)
+	return ..()
+
+/obj/item/brain_processor/proc/set_brainmob(mob/living/brain/new_brainmob)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(brainmob == new_brainmob)
+		return
+
+	var/mob/living/brain/old_brainmob = brainmob
+	if(old_brainmob)
+		old_brainmob.container = null
+		old_brainmob.emp_damage = 0 // okay?
+		REMOVE_TRAIT(old_brainmob, TRAIT_SILICON_EMOTES_ALLOWED, MMI_ASSISTED)
+
+	brainmob = new_brainmob
+
+	if(new_brainmob)
+		new_brainmob.container = src
+		ADD_TRAIT(new_brainmob, TRAIT_SILICON_EMOTES_ALLOWED, MMI_ASSISTED)
+
+	SEND_SIGNAL(src, COMSIG_MMI_SET_BRAINMOB, old_brainmob)
+
+GAME_VERB_SRC_DESC(/obj/item/brain_processor, Toggle_Listening, usr.loc, "Toggle Listening", "Toggle listening channel on or off.", "MMI")
+	if(IS_UNCONSCIOUS_OR_CRIT(brainmob))
+		to_chat(brainmob, span_warning("Can't do that while incapacitated or dead!"))
+		return
+	if(!radio.is_on())
+		to_chat(brainmob, span_warning("Your radio is disabled!"))
+		return
+
+	radio.set_listening(!radio.get_listening())
+	to_chat(brainmob, span_notice("Radio is [radio.get_listening() ? "now" : "no longer"] receiving broadcast."))
+
+/// Transfers the user into the brain processor, preserving its information (such as name and DNA if applicable)
+/// Does not transfer mind or ckey, this must be handled by the user of this proc.
+/obj/item/brain_processor/proc/transfer_identity(mob/living/transferred_user)
+	if(!brainmob)
+		set_brainmob(new /mob/living/brain(src))
+
+	set_name(transferred_user.real_name)
+	brainmob.timeofdeath = transferred_user.timeofdeath
+
+	if(astype(transferred_user, /mob/living/carbon)?.has_dna())
+		var/mob/living/carbon/carbon_user = transferred_user
+		brainmob.stored_dna ||= new /datum/dna/stored(brainmob)
+		carbon_user.dna.copy_dna(brainmob.stored_dna)
+
+/obj/item/brain_processor/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(!brainmob || iscyborg(loc))
+		return
+
+	switch(severity)
+		if(1)
+			brainmob.emp_damage = min(brainmob.emp_damage + rand(20,30), 30)
+		if(2)
+			brainmob.emp_damage = min(brainmob.emp_damage + rand(10,20), 30)
+		if(3)
+			brainmob.emp_damage = min(brainmob.emp_damage + rand(0,10), 30)
+	brainmob.emote("alarm")
+
+/obj/item/brain_processor/proc/brain_check(mob/user)
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(!brainmob)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that there is no mind present!"))
+		return FALSE
+	if(!brainmob.key || !brainmob.mind)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that their mind is completely unresponsive!"))
+		return FALSE
+	if(!brainmob.client)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that their mind is currently inactive."))
+		return FALSE
+	if(suicided())
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that their mind has no will to live!"))
+		return FALSE
+	if(brainmob.stat >= DEAD)
+		if(user)
+			to_chat(user, span_warning("\The [src] indicates that the brain is dead!"))
+		return FALSE
+	return TRUE
+
+/obj/item/brain_processor/proc/replacement_ai_name()
+	return brainmob.name
+
+/obj/item/brain_processor/proc/suicided()
+	return HAS_TRAIT(brainmob, TRAIT_SUICIDED)
+
+/obj/item/brain_processor/proc/set_name(new_name)
+	brainmob.name = new_name
+	brainmob.real_name = new_name
+
+/obj/item/brain_processor/proc/set_suicide(suicided)
+	brainmob.set_suicide(suicided)

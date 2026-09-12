@@ -205,7 +205,7 @@
 		has_brain = TRUE
 	else if(iscyborg(target))
 		var/mob/living/silicon/robot/cyborg_target = target
-		if(cyborg_target.mmi?.brain)
+		if(astype(cyborg_target.mmi, /obj/item/brain_processor/organic)?.brain)
 			has_brain = TRUE
 
 	if(!has_brain) // kept exclusively for soul purposes

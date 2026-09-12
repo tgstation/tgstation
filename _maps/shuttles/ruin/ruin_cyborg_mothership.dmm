@@ -685,7 +685,7 @@
 /turf/open/floor/plating/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "Ng" = (
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /turf/open/floor/circuit/green/airless,
 /area/shuttle/ruin/cyborg_mothership)
 "Nv" = (
