@@ -313,7 +313,7 @@
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
 
 /datum/crafting_recipe/compact_defib
-	name = "Improvized Compact Defibrillator"
+	name = "Improvised Compact Defibrillator"
 	result = /obj/item/defibrillator/compact/improvised
 	reqs = list(
 		/obj/item/defibrillator = 1,
