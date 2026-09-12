@@ -711,7 +711,7 @@
 	production = 5
 	yield = 3
 	potency = 20
-	growthstages = 4
+	growthstages = 3
 	product = /obj/item/food/grown/ash_flora/plasmaflower
 	genes = list(/datum/plant_gene/trait/plant_type/toxin_adaptation, /datum/plant_gene/trait/glow/purple)
 	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
