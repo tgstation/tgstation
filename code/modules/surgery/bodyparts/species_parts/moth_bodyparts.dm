@@ -107,11 +107,11 @@
 /obj/item/bodypart/arm/left/moth/inner
 	body_zone = null
 	held_index = 3
-	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_ABSTRACT
+	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_ABSTRACT | BODYPART_VIRGIN
 	plaintext_zone = "left chest arm"
 
 /obj/item/bodypart/arm/left/moth/inner/Initialize(mapload)
-	held_hand_offset =  new (
+	held_hand_offset =  new(
 		attached_part = src,
 		feature_key = OFFSET_HELD,
 		offset_x = list("north" = 2, "south" = -2, "east" = 0),
@@ -130,7 +130,7 @@
 /obj/item/bodypart/arm/right/moth/inner
 	body_zone = null
 	held_index = 4
-	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_ABSTRACT
+	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_ABSTRACT | BODYPART_VIRGIN
 	plaintext_zone = "right chest arm"
 
 /obj/item/bodypart/arm/right/moth/inner/Initialize(mapload)
