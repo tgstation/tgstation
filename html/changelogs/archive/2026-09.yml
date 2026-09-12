@@ -144,3 +144,6 @@
   - rscadd: Some collars are now able to be cuffed to your arm.
   vinylspiders:
   - bugfix: fixes bot move path overlays not showing up
+2026-09-12:
+  OnlineGirlfriend:
+  - rscadd: pinup posters
