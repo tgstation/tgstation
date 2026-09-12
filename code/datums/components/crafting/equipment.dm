@@ -321,6 +321,7 @@
 		/obj/item/stack/cable_coil = 10,
 		/obj/item/stack/sheet/plasteel = 5,
 	)
+	blacklist = list(/obj/item/defibrillator/compact)
 	time = 3 SECONDS
 	category = CAT_EQUIPMENT
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)

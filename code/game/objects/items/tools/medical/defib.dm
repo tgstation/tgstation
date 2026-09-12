@@ -274,12 +274,13 @@
 	update_power()
 
 /obj/item/defibrillator/compact/improvised
-	name = "improvised compact defibrillator"
+	name = "improvized compact defibrillator"
 	desc = "A stripped down defibrillator that can be worn as a belt."
-	revive_time_mult = 1.75
+	revive_time_mult = 1.5
 	icon_state = "defibimprov"
 	worn_icon_state = "defibimprov"
-	powered_state = null
+	powered_state = "defibimprov-powered"
+	emagged_state = "defibimprov-emagged"
 	w_class = WEIGHT_CLASS_BULKY
 
 /obj/item/defibrillator/compact/loaded/cmo // subtype for the spy steal objective
