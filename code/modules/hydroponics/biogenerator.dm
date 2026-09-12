@@ -159,13 +159,6 @@
 	if(welded_down)
 		. += span_info("It's moored firmly to the floor. You can unsecure its moorings with a <b>welder</b>.")
 
-/obj/machinery/biogenerator/update_appearance()
-	. = ..()
-
-	var/power = machine_stat & (NOPOWER|BROKEN) ? 0 : 1 + min(biomass / max_visual_biomass, 1) + (processing & 1)
-	set_light(MINIMUM_USEFUL_LIGHT_RANGE, power, LIGHT_COLOR_CYAN)
-
-
 /obj/machinery/biogenerator/update_overlays()
 	. = ..()
 

@@ -111,6 +111,7 @@
 	payment_department = ACCOUNT_MED
 	refill_canister = /obj/item/vending_refill/drugs
 	allow_custom = TRUE
+	light_mask = "drug-light-mask"
 
 /obj/item/vending_refill/drugs
 	machine_name = "NanoDrug Plus"

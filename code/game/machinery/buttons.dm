@@ -5,9 +5,6 @@
 	base_icon_state = "button"
 	icon_state = "button"
 	power_channel = AREA_USAGE_ENVIRON
-	light_power = 0.5 // Minimums, we want the button to glow if it has a mask, not light an area
-	light_range = 1.5
-	light_color = LIGHT_COLOR_VIVID_GREEN
 	armor_type = /datum/armor/machinery_button
 	idle_power_usage = BASE_MACHINE_IDLE_CONSUMPTION * 0.02
 	resistance_flags = LAVA_PROOF | FIRE_PROOF
@@ -95,14 +92,6 @@
 	else if(machine_stat & (NOPOWER|BROKEN))
 		icon_state += "-nopower"
 	return ..()
-
-/obj/machinery/button/update_appearance()
-	. = ..()
-
-	if(panel_open || (machine_stat & (NOPOWER|BROKEN)))
-		set_light(0)
-	else
-		set_light(initial(light_range), light_power, light_color)
 
 /obj/machinery/button/update_overlays()
 	. = ..()

@@ -10,8 +10,6 @@
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/smartfridge
-	light_power = 1
-	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	integrity_failure = 0.5
 	can_atmos_pass = ATMOS_PASS_NO
 	pass_flags_self = PASSCLOSEDTURF
@@ -219,8 +217,6 @@
 
 /obj/machinery/smartfridge/update_appearance(updates=ALL)
 	. = ..()
-
-	set_light((!(machine_stat & BROKEN) && powered()) ? MINIMUM_USEFUL_LIGHT_RANGE : 0)
 
 /obj/machinery/smartfridge/update_icon_state()
 	icon_state = "[base_icon_state]"
@@ -454,7 +450,6 @@
 	base_icon_state = "dehydrator"
 	contents_overlay_icon = "contents"
 	circuit = /obj/item/circuitboard/machine/dehydrator
-	light_power = 0.5
 	base_build_path = /obj/machinery/smartfridge/drying //should really be seeing this without admin fuckery.
 	has_emissive = FALSE
 	can_atmos_pass = ATMOS_PASS_YES
