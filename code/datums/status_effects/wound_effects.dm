@@ -251,3 +251,17 @@
 	id = "thirddeg"
 /datum/status_effect/wound/burn/flesh/critical
 	id = "fourthdeg"
+
+/datum/status_effect/wound/blunt/robotic/moderate
+	id = "loose"
+/datum/status_effect/wound/blunt/robotic/severe
+	id = "unfastening"
+/datum/status_effect/wound/blunt/robotic/critical
+	id = "collapse"
+
+/datum/status_effect/wound/burn/robotic/moderate
+	id = "overheating_moderate"
+/datum/status_effect/wound/burn/robotic/severe
+	id = "overheating_severe"
+/datum/status_effect/wound/burn/robotic/critical
+	id = "overheating_critical"
