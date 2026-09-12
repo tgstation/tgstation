@@ -255,15 +255,16 @@
 		apply_damage(damage, BRUTE, affecting, armor_block)
 
 /mob/living/carbon/human/ex_act(severity, target, origin)
-	if(HAS_TRAIT(src, TRAIT_BOMBIMMUNE))
-		return FALSE
-
 	. = ..()
 	if (!. || !severity || QDELETED(src))
 		return FALSE
 	var/brute_loss = 0
 	var/burn_loss = 0
 	var/bomb_armor = getarmor(null, BOMB)
+	var/bomb_multi = clamp(1 - bomb_armor/166.6, 0, 1) // Scales linearly down to 40% damage at 100 armor
+	var/soundbang_intensity = SOUNDBANG_MASSIVE
+	var/ear_damage = 0
+	var/deafen_duration = 0
 
 //200 max knockdown for EXPLODE_HEAVY
 //160 max knockdown for EXPLODE_LIGHT
@@ -283,59 +284,72 @@
 				gib(DROP_ALL_REMAINS)
 				return TRUE
 			else
-				brute_loss = 500
+				brute_loss = 300
+				burn_loss = 300
+				soundbang_intensity = SOUNDBANG_OVERWHELMING
+				ear_damage = 60
+				deafen_duration = 360 SECONDS
 				var/atom/throw_target = get_edge_target_turf(src, get_dir(src, get_step_away(src, src)))
 				throw_at(throw_target, 200, 4)
 				damage_clothes(400 - bomb_armor, BRUTE, BOMB)
+				Paralyze(3 SECONDS)
 
 		if (EXPLODE_HEAVY)
 			brute_loss = 60
 			burn_loss = 60
-			if(bomb_armor)
-				brute_loss = 30*(2 - round(bomb_armor*0.01, 0.05))
-				burn_loss = brute_loss //damage gets reduced from 120 to up to 60 combined brute+burn
+			soundbang_intensity = SOUNDBANG_MASSIVE
+			ear_damage = 30
+			deafen_duration = 240 SECONDS
 			damage_clothes(200 - bomb_armor, BRUTE, BOMB)
-			if (!HAS_TRAIT_FROM(src, TRAIT_DEAF, EAR_DAMAGE))
-				sound_damage(30, 240 SECONDS)
-			Unconscious(20) //short amount of time for follow up attacks against elusive enemies like wizards
-			Knockdown(200 - (bomb_armor * 1.6)) //between ~4 and ~20 seconds of knockdown depending on bomb armor
+			Paralyze(2 SECONDS)
+			Knockdown(20 SECONDS - (bomb_armor * 1.6)) //between ~4 and ~20 seconds of knockdown depending on bomb armor
 
 		if(EXPLODE_LIGHT)
 			brute_loss = 30
-			if(bomb_armor)
-				brute_loss = 15*(2 - round(bomb_armor*0.01, 0.05))
+			soundbang_intensity = SOUNDBANG_STRONG
+			ear_damage = 15
+			deafen_duration = 120 SECONDS
 			damage_clothes(max(50 - bomb_armor, 0), BRUTE, BOMB)
-			if (!HAS_TRAIT_FROM(src, TRAIT_DEAF, EAR_DAMAGE))
-				sound_damage(15, 120 SECONDS)
-			Knockdown(160 - (bomb_armor * 1.6)) //100 bomb armor will prevent knockdown altogether
+			Knockdown(16 SECONDS - (bomb_armor * 1.6)) //100 bomb armor will prevent knockdown altogether
 
+	brute_loss = round(brute_loss * bomb_multi, 0.1)
+	burn_loss = round(burn_loss * bomb_multi, 0.1)
 	take_overall_damage(brute_loss,burn_loss)
+	soundbang_act(soundbang_intensity, 0, ear_damage, deafen_duration, ignore_deafness = TRUE, send_sound = FALSE)
 
-	//attempt to dismember bodyparts
+	//wounding time
 	if(severity >= EXPLODE_HEAVY || !bomb_armor)
-		var/max_limb_loss = 0
+		var/max_wounds = 0
 		var/probability = 0
+		var/dismember_prob = 33 // chance of a wound becoming dismemberment
+		var/list/wound_severities = list(WOUND_SEVERITY_MODERATE, WOUND_SEVERITY_SEVERE, WOUND_SEVERITY_CRITICAL)
 		switch(severity)
-			if(EXPLODE_NONE)
-				max_limb_loss = 1
-				probability = 20
 			if(EXPLODE_LIGHT)
-				max_limb_loss = 2
-				probability = 30
+				max_wounds = 2
+				probability = 35
+				wound_severities -= WOUND_SEVERITY_CRITICAL
 			if(EXPLODE_HEAVY)
-				max_limb_loss = 3
-				probability = 40
+				max_wounds = 3
+				probability = 45
 			if(EXPLODE_DEVASTATE)
-				max_limb_loss = 4
-				probability = 50
+				max_wounds = 5
+				probability = 75
+				dismember_prob = 50
+				wound_severities -= WOUND_SEVERITY_MODERATE
 		for(var/obj/item/bodypart/BP as anything in get_bodyparts())
-			if(prob(probability) && !prob(getarmor(BP, BOMB)) && BP.body_zone != BODY_ZONE_HEAD && BP.body_zone != BODY_ZONE_CHEST)
-				BP.receive_damage(INFINITY, wound_bonus = CANT_WOUND) //Capped by proc
-				BP.dismember()
-				max_limb_loss--
-				if(!max_limb_loss)
+			bomb_armor = getarmor(BP.body_zone, BOMB)
+			bomb_multi = clamp(1 - bomb_armor/166.6, 0, 1)
+			if(prob(probability * bomb_multi)) // chance to do anything at all
+				if(prob(dismember_prob) && BP.body_zone != BODY_ZONE_HEAD && BP.body_zone != BODY_ZONE_CHEST) // chance to dismember instead of wound
+					if(!prob((bomb_armor - 50) * 2)) // bomb armor has a second chance to stop dismemberment
+						BP.dismember()
+				else if(!prob(getarmor(BP.body_zone, WOUND))) // time to roll for wounds
+					var/wound_type = pick(prob(50); WOUND_SLASH, WOUND_BLUNT, WOUND_BURN)
+					var/wound_power = pick(wound_severities)
+					cause_wound_of_type_and_severity(wound_type, BP, WOUND_SEVERITY_MODERATE, wound_power, severity_pick_mode = WOUND_PICK_HIGHEST_SEVERITY)
+				max_wounds--
+				if(!max_wounds)
 					break
-
 	return TRUE
 
 
