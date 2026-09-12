@@ -255,9 +255,6 @@
 		apply_damage(damage, BRUTE, affecting, armor_block)
 
 /mob/living/carbon/human/ex_act(severity, target, origin)
-	if(HAS_TRAIT(src, TRAIT_BOMBIMMUNE))
-		return FALSE
-
 	. = ..()
 	if (!. || !severity || QDELETED(src))
 		return FALSE
