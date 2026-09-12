@@ -86,7 +86,7 @@ SUBSYSTEM_DEF(research)
 			var/income_time_difference = world.time - techweb.last_income
 			techweb.last_bitcoins = bitcoins // Doesn't take tick drift into account
 			for(var/point_type in bitcoins)
-				bitcoins[point_type] *= (income_time_difference / 10) * techweb.income_modifier
+				bitcoins[point_type] *= (income_time_difference / 10) * techweb.get_income_modifier(point_type)
 			techweb.adjust_multiple_points(bitcoins)
 
 		techweb.last_income = world.time
@@ -145,6 +145,18 @@ SUBSYSTEM_DEF(research)
 		for(var/prerequisite_path in node.prerequisite_nodes)
 			var/datum/techweb_node/prerequisite_node = techweb_nodes[prerequisite_path]
 			LAZYADD(prerequisite_node.unlocked_nodes, node_path)
+
+/datum/controller/subsystem/research/proc/hide_design(design_typepath)
+	var/datum/design/unhidden_design = techweb_designs[design_typepath]
+	if(isnull(unhidden_design))
+		return
+
+	for(var/node_path in unhidden_design.unlocked_by)
+		var/datum/techweb_node/relevant_node = techweb_nodes[node_path]
+		relevant_node.unlocked_designs -= design_typepath
+
+	unhidden_design.unlocked_by = null
+	unhidden_design.departmental_flags = NONE
 
 /datum/controller/subsystem/research/proc/initialize_ordnance_experiments()
 	for (var/datum/experiment/ordnance/experiment_path as anything in subtypesof(/datum/experiment/ordnance))

@@ -158,21 +158,23 @@
 	prerequisite_nodes = list(/datum/techweb_node/construction)
 	unlocked_designs = list(
 		/datum/design/board/apc_control,
-		/datum/design/board/powermonitor,
-		/datum/design/board/plankman,
-		/datum/design/board/smes,
-		/datum/design/board/smesbank,
-		/datum/design/board/power_connector,
+		/datum/design/board/cell_charger,
 		/datum/design/board/emitter,
 		/datum/design/board/grounding_rod,
-		/datum/design/board/tesla_coil,
-		/datum/design/board/cell_charger,
+		/datum/design/board/plankman,
+		/datum/design/board/power_connector,
+		/datum/design/board/power_control,
+		/datum/design/board/powermonitor,
 		/datum/design/board/recharger,
+		/datum/design/board/singulo_control,
+		/datum/design/board/smes,
+		/datum/design/board/smesbank,
+		/datum/design/board/tesla_coil,
+		/datum/design/geiger,
 		/datum/design/inducer,
 		/datum/design/inducerengi,
-		/datum/design/welding_goggles,
 		/datum/design/tray_goggles,
-		/datum/design/geiger,
+		/datum/design/welding_goggles,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_ENGINEERING)

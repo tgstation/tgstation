@@ -102,6 +102,11 @@ const ApcContent = (props) => {
       />
       <Section title="Power Status">
         <LabeledList>
+          {data.powerBars !== null && (
+            <LabeledList.Item label="Power Distribution">
+              {data.powerBars}
+            </LabeledList.Item>
+          )}
           <LabeledList.Item
             label="Main Breaker"
             color={externalPowerStatus.color}

@@ -104,6 +104,8 @@
 		/datum/design/welding_mask,
 		/datum/design/magboots,
 		/datum/design/diode_disk_stamina,
+		/datum/design/gravity_anchor,
+		/datum/design/board/gravity_anchor_charger,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	discount_experiments = list(/datum/experiment/ordnance/gaseous/bz = TECHWEB_TIER_4_POINTS)
@@ -114,11 +116,11 @@
 	description = "New designs and enhancements for RCD and RPD."
 	prerequisite_nodes = list(/datum/techweb_node/exp_tools, /datum/techweb_node/parts_bluespace)
 	unlocked_designs = list(
-		/datum/design/rcd_upgrade/silo_link,
 		/datum/design/rcd_upgrade/anti_interrupt,
 		/datum/design/rcd_upgrade/cooling,
 		/datum/design/rcd_upgrade/frames,
 		/datum/design/rcd_upgrade/furnishing,
+		/datum/design/rcd_upgrade/silo_link,
 		/datum/design/rcd_upgrade/simple_circuits,
 		/datum/design/rpd_upgrade/unwrench,
 	)

@@ -135,6 +135,9 @@
 	/// List of all air scrubbers in the area
 	var/list/obj/machinery/atmospherics/components/unary/vent_scrubber/air_scrubbers = list()
 
+	/// List of all machinery in the area
+	var/list/obj/machinery/machines = list()
+
 	/// Are shuttles allowed to dock in this area
 	var/allow_shuttle_docking = FALSE
 

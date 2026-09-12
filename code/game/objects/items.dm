@@ -848,10 +848,8 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 
 /obj/item/singularity_pull(atom/singularity, current_size)
 	..()
-	if(current_size >= STAGE_FOUR)
-		throw_at(singularity, 14, 3, spin=0)
-	else
-		return
+	if(current_size >= STAGE_FOUR && !QDELETED(src))
+		throw_at(singularity, 14, 3, spin = FALSE)
 
 /obj/item/on_exit_storage(datum/storage/master_storage)
 	. = ..()

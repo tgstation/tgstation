@@ -209,11 +209,15 @@
 /obj/item/storage/belt/medical/paramedic/PopulateContents()
 	SSwardrobe.provide_type(/obj/item/sensor_device, src)
 	SSwardrobe.provide_type(/obj/item/stack/medical/wrap/gauze/twelve, src)
-	SSwardrobe.provide_type(/obj/item/tourniquet, src)
+	if (SSpower_bars.enabled)
+		SSwardrobe.provide_type(/obj/item/pinpointer/crew, src)
+	else
+		SSwardrobe.provide_type(/obj/item/tourniquet, src)
 	SSwardrobe.provide_type(/obj/item/bonesetter, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/syringe, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/ammoniated_mercury, src)
 	SSwardrobe.provide_type(/obj/item/reagent_containers/cup/bottle/formaldehyde, src)
+
 	update_appearance()
 
 /obj/item/storage/belt/medical/paramedic/get_types_to_preload()
@@ -223,6 +227,7 @@
 	to_preload += /obj/item/tourniquet
 	to_preload += /obj/item/bonesetter
 	to_preload += /obj/item/reagent_containers/syringe
+	to_preload += /obj/item/pinpointer/crew
 	to_preload += /obj/item/reagent_containers/cup/bottle/ammoniated_mercury
 	to_preload += /obj/item/reagent_containers/cup/bottle/formaldehyde
 	return to_preload

@@ -26,10 +26,10 @@
 	unlocked_designs = list(
 		/datum/design/board/harvester,
 		/datum/design/medibot_upgrade/tier_two,
-		/datum/design/surgery/tend_wounds_combo,
-		/datum/design/surgery/tend_wounds_upgrade/femto,
 		/datum/design/surgery/lobotomy,
 		/datum/design/surgery/lobotomy/mechanic,
+		/datum/design/surgery/tend_wounds_combo,
+		/datum/design/surgery/tend_wounds_upgrade/femto,
 		/datum/design/surgery/wing_reconstruction,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
@@ -46,7 +46,6 @@
 		/datum/design/surgery/cortex_folding/mechanic,
 		/datum/design/surgery/cortex_imprint,
 		/datum/design/surgery/cortex_imprint/mechanic,
-		/datum/design/surgery/tend_wounds_combo/upgrade,
 		/datum/design/surgery/ligament_hook,
 		/datum/design/surgery/ligament_hook/mechanic,
 		/datum/design/surgery/ligament_reinforcement,
@@ -59,6 +58,7 @@
 		/datum/design/surgery/nerve_splicing/mechanic,
 		/datum/design/surgery/pacify,
 		/datum/design/surgery/pacify/mechanic,
+		/datum/design/surgery/tend_wounds_combo/upgrade,
 		/datum/design/surgery/vein_threading,
 		/datum/design/surgery/vein_threading/mechanic,
 		/datum/design/surgery/viral_bonding,

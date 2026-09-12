@@ -122,7 +122,9 @@ SUBSYSTEM_DEF(persistence)
 			if(VM.map_name == name)
 				run++
 		if(run >= 2) //If run twice in the last KEEP_ROUNDS_MAP + 1 (including current) rounds, disable map for voting and rotation.
-			blocked_maps += VM.map_name
+			// PROTOTYPE: Meta is the only map with power bars, so always run it
+			if (VM.map_name != "MetaStation")
+				blocked_maps += VM.map_name
 
 ///Updates the list of the most recent maps.
 /datum/controller/subsystem/persistence/proc/collect_maps()

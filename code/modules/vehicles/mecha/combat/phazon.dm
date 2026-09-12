@@ -65,12 +65,9 @@
 		return
 	return ..()
 
-/obj/vehicle/sealed/mecha/phazon/update_energy_drain()
+/obj/vehicle/sealed/mecha/phazon/update_part_values()
 	. = ..()
-	if(capacitor)
-		phasing_energy_drain = initial(phasing_energy_drain) / capacitor.rating
-	else
-		phasing_energy_drain = initial(phasing_energy_drain)
+	phasing_energy_drain = initial(phasing_energy_drain) / capacitor_rating
 
 /obj/vehicle/sealed/mecha/phazon/can_interact_with(atom/target, mob/user, list/modifiers)
 	. = ..()

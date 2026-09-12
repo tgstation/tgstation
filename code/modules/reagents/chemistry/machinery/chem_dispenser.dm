@@ -471,7 +471,10 @@
 		else
 			dispensable_reagents -= upgrade_reagents
 		parts_rating += servo.tier
+		// parts_rating += manipulator.tier
 	power_cost = max(new_power_cost, 0.1 KILO WATTS)
+
+	ASSERT(locate(/datum/stock_part/matter_bin) in component_parts)
 
 /**
  * Insert, remove, replace the existig beaker. Returns TRUE on success.

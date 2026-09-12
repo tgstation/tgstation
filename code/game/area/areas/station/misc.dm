@@ -13,6 +13,8 @@
 	icon = 'icons/area/areas_station.dmi'
 	icon_state = "station"
 
+	var/power_bar_department = POWER_BAR_DEPARTMENT_COMMON
+
 /*
 * Tramstation unique areas
 */

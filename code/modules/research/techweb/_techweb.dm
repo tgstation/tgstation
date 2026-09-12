@@ -495,3 +495,18 @@
 	for(var/design_path in researched_designs)
 		designs += SSresearch.techweb_designs[design_path]
 	return designs
+
+/// Multiplies the passive income gained for a given point type by a certain amount. Used for things like power bars and other global modifiers.
+/datum/techweb/proc/get_income_modifier(point_type)
+	return income_modifier
+
+/datum/techweb/science/get_income_modifier(point_type)
+	. = ..()
+	if (SSpower_bars.enabled)
+		switch (SSpower_bars.power_bars_of_department(POWER_BAR_DEPARTMENT_SCIENCE))
+			if (2)
+				. *= 1.2
+			if (3)
+				. *= 1.6
+
+	return .

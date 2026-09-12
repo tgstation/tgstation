@@ -1,0 +1,3 @@
+#define COMSIG_POWER_BARS_UPDATED "power_bars_updated"
+
+#define COMSIG_POWER_BAR_AVAILABILITY_UPDATED "power_bar_availability_updated"

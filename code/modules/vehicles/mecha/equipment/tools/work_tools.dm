@@ -334,6 +334,12 @@
 	mech_flags = EXOSUIT_MODULE_RIPLEY
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 5)
 	var/result = /obj/vehicle/sealed/mecha/ripley/mk2
+	var/list/carried_over_parts = list(
+		/obj/item/stock_parts/capacitor,
+		/obj/item/stock_parts/power_store,
+		/obj/item/stock_parts/scanning_module,
+		/obj/item/stock_parts/servo,
+	)
 
 /obj/item/mecha_parts/mecha_equipment/ripleyupgrade/can_attach(obj/vehicle/sealed/mecha/ripley/mecha, attach_right = FALSE, mob/user)
 	if(mecha.type != /obj/vehicle/sealed/mecha/ripley)
@@ -358,26 +364,15 @@
 	var/obj/vehicle/sealed/mecha/newmech = new result(get_turf(markone),1)
 	if(!newmech)
 		return
-	QDEL_NULL(newmech.cell)
-	if (markone.cell)
-		newmech.cell = markone.cell
-		markone.cell.forceMove(newmech)
-		markone.cell = null
-	QDEL_NULL(newmech.scanmod)
-	if (markone.scanmod)
-		newmech.scanmod = markone.scanmod
-		markone.scanmod.forceMove(newmech)
-		markone.scanmod = null
-	QDEL_NULL(newmech.capacitor)
-	if (markone.capacitor)
-		newmech.capacitor = markone.capacitor
-		markone.capacitor.forceMove(newmech)
-		markone.capacitor = null
-	QDEL_NULL(newmech.servo)
-	if (markone.servo)
-		newmech.servo = markone.servo
-		markone.servo.forceMove(newmech)
-		markone.servo = null
+
+	for(var/part_type in carried_over_parts)
+		var/obj/item/stock_parts/existing_part = locate(part_type) in markone
+		var/obj/item/stock_parts/new_part = locate(part_type) in newmech
+		if(!isnull(new_part))
+			qdel(new_part)
+		if(!isnull(existing_part))
+			existing_part.forceMove(newmech)
+
 	newmech.update_part_values()
 	for(var/obj/item/mecha_parts/mecha_equipment/equipment in markone.flat_equipment) //Move the equipment over...
 		if(istype(equipment, /obj/item/mecha_parts/mecha_equipment/ejector))

@@ -144,6 +144,10 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 
 	. = ..()
 
+	if(SSpower_bars.enabled)
+		machine.update_for_power_bars()
+		return
+
 	if(replacement_parts)
 		for(var/part in replacement_parts)
 			if(ispath(part, /obj/item))
@@ -185,6 +189,9 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			else
 				var/datum/stock_part/datum_part = component_path
 				stock_part = initial(datum_part.physical_object_type)
+
+			if(!allowed_stockpart(stock_part))
+				continue
 
 			if(!specific_parts)
 				component_name = initial(stock_part.base_name)
