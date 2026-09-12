@@ -291,29 +291,44 @@
 	abstract_type = /datum/atom_skin/mech_suit
 
 /datum/atom_skin/mech_suit/red
-	preview_name = "Red"
+	preview_name = "Red" //Asuka from evangelion
 	new_icon_state = "red_mech_suit"
 
 /datum/atom_skin/mech_suit/white
-	preview_name = "White"
+	preview_name = "White" //Rei from evangelion
 	new_icon_state = "white_mech_suit"
 
 /datum/atom_skin/mech_suit/blue
-	preview_name = "Blue"
+	preview_name = "Blue" //Shinji from Evangelion
 	new_icon_state = "blue_mech_suit"
 
 /datum/atom_skin/mech_suit/black
-	preview_name = "Black"
+	preview_name = "Black" //Based on the robotics jumpsuot
 	new_icon_state = "black_mech_suit"
+
+/datum/atom_skin/mech_suit/royal
+	preview_name = "royal division" //Kallen Stadtfeld from Code Geass
+	new_icon_state = "royal_mech_suit"
+
+/datum/atom_skin/mech_suit/royal_alt
+	preview_name = "royal division - alternate" //Kallen again, with her alternate design
+	new_icon_state = "royal_mech_suit_alt"
+
+/datum/atom_skin/mech_suit/explorer
+	preview_name = "explorer corps" //Sleeker version of the robotics jumpsuit
+	new_icon_state = "explorer_mech_suit"
+
+/datum/atom_skin/mech_suit/explorer
+	preview_name = "explorer corps - alternate" //Elster from SIGNALIS
+	new_icon_state = "explorer_mech_suit_alt"
 
 /obj/item/clothing/under/costume/mech_suit
 	name = "mech pilot's suit"
-	desc = "A mech pilot's suit. Might make your butt look big."
-	icon_state = "red_mech_suit"
+	desc = "A mech pilot's suit. Might make your butt look big. Alt-click to reskin."
+	icon_state = "explorer_mech_suit"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
-	female_sprite_flags = NO_FEMALE_UNIFORM
 	alternate_worn_layer = GLOVES_LAYER //covers hands but gloves can go over it. This is how these things work in my head.
 	can_adjust = FALSE
 
