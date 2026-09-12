@@ -274,7 +274,7 @@
 	update_power()
 
 /obj/item/defibrillator/compact/improvised
-	name = "improvized compact defibrillator"
+	name = "improvised compact defibrillator"
 	desc = "A stripped down defibrillator that can be worn as a belt."
 	revive_time_mult = 1.5
 	icon_state = "defibimprov"
