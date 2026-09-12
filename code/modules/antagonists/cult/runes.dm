@@ -588,8 +588,9 @@ structure_check() searches for nearby cultist structures required for the invoca
 	color = RUNE_COLOR_DARKRED
 	icon_state = "rune_large"
 	pixel_x = -32 //So the big ol' 96x96 sprite shows up right
-	pixel_y = 16
-	pixel_z = -48
+	pixel_y = -32
+	bound_width = 96
+	bound_height = 96
 	scribe_delay = 50 SECONDS //how long the rune takes to create
 	scribe_damage = 40.1 //how much damage you take doing it
 	log_when_erased = TRUE
@@ -604,6 +605,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/narsie/Initialize(mapload, set_keyword)
 	. = ..()
 	SSpoints_of_interest.make_point_of_interest(src)
+	AddComponent(/datum/component/multi_tile_rotation)
 
 /obj/effect/rune/narsie/conceal() //can't hide this, and you wouldn't want to
 	return

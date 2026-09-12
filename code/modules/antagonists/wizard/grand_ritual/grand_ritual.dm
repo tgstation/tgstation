@@ -294,9 +294,10 @@
 /obj/effect/temp_visual/wizard_rune
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = null
-	pixel_x = -33
-	pixel_y = 16
-	pixel_z = -48
+	pixel_x = -28
+	pixel_y = -33
+	bound_width = 96
+	bound_height = 96
 	anchored = TRUE
 	plane = FLOOR_PLANE
 	layer = RUNE_LAYER
@@ -307,6 +308,7 @@
 	var/image/silicon_image = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "wizard_rune", silicon_image)
+	AddComponent(/datum/component/multi_tile_rotation)
 
 /// Animates drawing a cool rune
 /obj/effect/temp_visual/wizard_rune/drawing

@@ -15,9 +15,10 @@
 	desc = "A flowing circle of shapes and runes is etched into the floor, the lines twist and move before your eyes."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "wizard_rune"
-	pixel_x = -33
-	pixel_y = 16
-	pixel_z = -48
+	pixel_x = -28
+	pixel_y = -33
+	bound_width = 96
+	bound_height = 96
 	anchored = TRUE
 	interaction_flags_atom = INTERACT_ATOM_ATTACK_HAND | INTERACT_ATOM_ATTACK_PAW
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -80,6 +81,7 @@
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "wizard_rune", silicon_image)
 	announce_rune()
 	ADD_TRAIT(src, TRAIT_MOPABLE, INNATE_TRAIT)
+	AddComponent(/datum/component/multi_tile_rotation)
 
 /// I cast Summon Security
 /obj/effect/grand_rune/proc/announce_rune()
@@ -398,11 +400,17 @@
 	icon_state = "wizard_rune_burned"
 	pixel_x = -28
 	pixel_y = -34
+	bound_width = 96
+	bound_height = 96
 	anchored = TRUE
 	mergeable_decal = FALSE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	clean_type = CLEAN_TYPE_HARD_DECAL
 	layer = RUNE_LAYER
+
+/obj/effect/decal/cleanable/grand_remains/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	AddComponent(/datum/component/multi_tile_rotation)
 
 /obj/effect/decal/cleanable/grand_remains/cheese
 	name = "cheese soot marks"

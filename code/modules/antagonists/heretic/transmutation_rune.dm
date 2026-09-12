@@ -262,23 +262,26 @@
 /obj/effect/heretic_rune/big
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "transmutation_rune"
-	pixel_x = -30
-	pixel_y = 18
-	pixel_z = -48
+	pixel_x = -33
+	pixel_y = -32
+	bound_width = 96
+	bound_height = 96
 	greyscale_config = /datum/greyscale_config/heretic_rune
 
 /obj/effect/heretic_rune/big/Initialize(mapload, path_colour)
 	. = ..()
 	if (path_colour)
 		set_greyscale(colors = list(path_colour))
+	AddComponent(/datum/component/multi_tile_rotation)
 
 /obj/effect/temp_visual/drawing_heretic_rune
 	duration = 30 SECONDS
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "transmutation_rune"
-	pixel_x = -30
-	pixel_y = 18
-	pixel_z = -48
+	pixel_x = -33
+	pixel_y = -32
+	bound_width = 96
+	bound_height = 96
 	plane = FLOOR_PLANE
 	layer = RUNE_LAYER
 	greyscale_config = /datum/greyscale_config/heretic_rune
@@ -292,6 +295,7 @@
 	var/image/silicon_image = image(icon = 'icons/effects/eldritch.dmi', icon_state = null, loc = src)
 	silicon_image.override = TRUE
 	add_alt_appearance(/datum/atom_hud/alternate_appearance/basic/silicons, "heretic_rune", silicon_image)
+	AddComponent(/datum/component/multi_tile_rotation)
 
 /obj/effect/temp_visual/drawing_heretic_rune/fast
 	duration = 12 SECONDS
