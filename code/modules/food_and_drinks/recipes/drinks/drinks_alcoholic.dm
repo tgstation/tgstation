@@ -801,7 +801,7 @@
 	required_reagents = list(/datum/reagent/consumable/ethanol/manly_dorf  = 3, /datum/reagent/toxin/berserker = 2, /datum/reagent/consumable/grey_bull = 2, /datum/reagent/blood = 1)
 
 /datum/chemical_reaction/drink/sea_lantern
-	results=list(/datum/reagent/consumable/ethanol/frosty_dorf = 8)
+	results=list(/datum/reagent/consumable/ethanol/sea_lantern = 8)
 	required_reagents = list(/datum/reagent/consumable/guidoferrun = 4,  /datum/reagent/consumable/strawberryshake = 4, /datum/reagent/consumable/ethanol/wine_voltaic = 2, /datum/reagent/consumable/ethanol/admiralty = 2)
 
 /datum/chemical_reaction/drink/icegrave

@@ -3550,14 +3550,13 @@
 
 /datum/reagent/consumable/ethanol/stone_cold_stout/on_mob_metabolize(mob/living/carbon/human/drinker)
 	. = ..()
-	drinker.physiology.brute_mod *= 0.5
-	drinker.physiology.burn_mod *= 0.5
+	MODIFY_PHYSIOLOGY(drinker, BRUTE, 0.5)
+	MODIFY_PHYSIOLOGY(drinker, BURN, 0.5)
 
 /datum/reagent/consumable/ethanol/stone_cold_stout/on_mob_end_metabolize(mob/living/carbon/human/drinker)
 	. = ..()
-	drinker.physiology.brute_mod *= 2
-	drinker.physiology.burn_mod *= 2
-
+	MODIFY_PHYSIOLOGY(drinker, BRUTE, 2)
+	MODIFY_PHYSIOLOGY(drinker, BURN, 2)
 /datum/reagent/consumable/ethanol/ramp_rager
 	name = "Ramp Rager"
 	description = "Furiously bubbling drink, capable of making people go berserk. An invitation for a bar fight."

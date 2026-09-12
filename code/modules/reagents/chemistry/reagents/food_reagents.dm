@@ -1420,10 +1420,10 @@
 
 /datum/reagent/consumable/guidoferrun/on_mob_metabolize(mob/living/carbon/human/affected_mob)
 	. = ..()
-	affected_mob.physiology.brute_mod *= 0.8
-	affected_mob.physiology.burn_mod *= 0.8
+	MODIFY_PHYSIOLOGY(drinker, BRUTE, 0.8)
+	MODIFY_PHYSIOLOGY(drinker, BURN, 0.8)
 
 /datum/reagent/consumable/guidoferrun/on_mob_end_metabolize(mob/living/carbon/human/affected_mob)
 	. = ..()
-	affected_mob.physiology.brute_mod *= 1.25
-	affected_mob.physiology.burn_mod *= 1.25
+	MODIFY_PHYSIOLOGY(drinker, BRUTE, 1.25)
+	MODIFY_PHYSIOLOGY(drinker, BURN, 1.25)
