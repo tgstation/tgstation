@@ -546,6 +546,7 @@ GLOBAL_LIST_INIT(heretic_path_to_color, list(
 #define EYE_COLOR_WEED_PRIORITY 20
 #define EYE_COLOR_HUD_PRIORITY 30
 #define EYE_COLOR_LUMINESCENT_PRIORITY 40
+#define EYE_COLOR_CULTLIKE_PRIORITY 49
 #define EYE_COLOR_CULT_PRIORITY 50
 
 // Client color priorities
