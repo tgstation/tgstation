@@ -19,8 +19,8 @@
 	wing_types = list(/obj/item/organ/wings/megamoth, /obj/item/organ/wings/mothra)
 	bodypart_traits = list(TRAIT_TACKLING_WINGED_ATTACKER)
 
-	var/obj/item/bodypart/arm/left/moth/inner/left_inner
-	var/obj/item/bodypart/arm/right/moth/inner/right_inner
+	VAR_PRIVATE/obj/item/bodypart/arm/left/moth/inner/left_inner
+	VAR_PRIVATE/obj/item/bodypart/arm/right/moth/inner/right_inner
 
 /obj/item/bodypart/chest/moth/Initialize(mapload)
 	. = ..()
@@ -38,6 +38,11 @@
 	SIGNAL_HANDLER
 
 	astype(source, /obj/item/bodypart/arm)?.forceMove(src)
+
+/obj/item/bodypart/chest/moth/set_disabled(new_disabled, update_limbs)
+	. = ..()
+	left_inner.set_disabled(new_disabled, update_limbs)
+	right_inner.set_disabled(new_disabled, update_limbs)
 
 /obj/item/bodypart/chest/moth/try_attach_limb(mob/living/carbon/new_owner, special, lazy)
 	. = ..()

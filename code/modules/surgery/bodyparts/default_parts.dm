@@ -188,9 +188,9 @@
 		new_owner.apply_status_effect(/datum/status_effect/arm_speed_penalty, held_index, interaction_modifier, click_cd_modifier)
 	new_owner.hud_used?.update_inventory_slot(ITEM_SLOT_HANDS, held_index)
 
-/obj/item/bodypart/arm/set_disabled(new_disabled)
+/obj/item/bodypart/arm/set_disabled(new_disabled, update_limbs = TRUE)
 	. = ..()
-	if(isnull(.) || !owner)
+	if(isnull(.) || !owner || !update_limbs)
 		return
 
 	if(!.)
