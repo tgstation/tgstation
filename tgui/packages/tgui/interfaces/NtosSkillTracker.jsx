@@ -7,11 +7,11 @@ import {
   Table,
 } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 export const NtosSkillTracker = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useNtos();
   const { skills = {} } = data;
   return (
     <NtosWindow width={500} height={600}>

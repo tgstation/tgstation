@@ -10,7 +10,6 @@
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 4.3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 4.5)
 
 	hardware_flag = PROGRAM_LAPTOP
-	max_idle_programs = 3
 	w_class = WEIGHT_CLASS_NORMAL
 	interaction_flags_mouse_drop = NEED_HANDS
 

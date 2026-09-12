@@ -30,7 +30,7 @@
 	if(.)
 		soundloop = new()
 
-/datum/computer_file/program/maintenance/spectre_meter/kill_program()
+/datum/computer_file/program/maintenance/spectre_meter/on_kill()
 	QDEL_NULL(soundloop)
 	auto_mode = FALSE
 	last_spook_value = 0

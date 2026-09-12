@@ -31,6 +31,9 @@
 @include meta.load-css('./interfaces/LibraryComputer.scss');
 @include meta.load-css('./interfaces/ListInput.scss');
 @include meta.load-css('./interfaces/Mecha.scss');
+@include meta.load-css('./interfaces/Ntos.scss');
+@include meta.load-css('./interfaces/NtosDesktop.scss');
+@include meta.load-css('./interfaces/NtosHeader.scss');
 @include meta.load-css('./interfaces/NtosMessenger.scss');
 @include meta.load-css('./interfaces/NtosNanopaint.scss');
 @include meta.load-css('./interfaces/NtosNotepad.scss');
@@ -55,8 +58,6 @@
 
 // Layouts
 @include meta.load-css('./layouts/Layout.scss');
-@include meta.load-css('./layouts/NtosHeader.scss');
-@include meta.load-css('./layouts/NtosWindow.scss');
 @include meta.load-css('./layouts/TitleBar.scss');
 @include meta.load-css('./layouts/Window.scss');
 

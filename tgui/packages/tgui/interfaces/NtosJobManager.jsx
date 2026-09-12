@@ -7,8 +7,8 @@ import {
   Table,
 } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 export const NtosJobManager = (props) => {
   return (
@@ -21,7 +21,7 @@ export const NtosJobManager = (props) => {
 };
 
 export const NtosJobManagerContent = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useNtos();
   const { authed, cooldown, slots = [], prioritized = [] } = data;
   if (!authed) {
     return (

@@ -1,8 +1,8 @@
 import { Box, Button, LabeledList, Section } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 type Data = {
   current_user: string;
@@ -25,7 +25,7 @@ export const NtosShipping = (props) => {
 
 /** Returns information about the current user, available paper, etc */
 const ShippingHub = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const { current_user, card_owner, paperamt, barcode_split } = data;
 
   return (
@@ -57,7 +57,7 @@ const ShippingHub = (props) => {
 
 /** Returns shipping options */
 const ShippingOptions = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const { has_id_slot, current_user } = data;
 
   return (

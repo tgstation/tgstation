@@ -333,14 +333,18 @@
 /mob/living/silicon/proc/logevent(string = "")
 	if(!string)
 		return
+
 	if(stat == DEAD) //Dead silicons log no longer
 		return
+
 	if(!modularInterface)
 		stack_trace("Silicon [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 		create_modularInterface()
-	var/mob/living/silicon/robot/robo = modularInterface.silicon_owner
-	if(istype(robo))
-		modularInterface.borglog += "[round_timestamp()] - [string]"
+
+	var/datum/driver/silicon_power/driver = modularInterface.os.get_driver(/datum/driver/silicon_power)
+	if(driver && driver.silicon_owner)
+		driver.borg_log += "[round_timestamp()] - [string]"
+
 	var/datum/computer_file/program/robotact/program = modularInterface.get_robotact()
 	if(program)
 		var/datum/tgui/active_ui = SStgui.get_open_ui(src, program.computer)

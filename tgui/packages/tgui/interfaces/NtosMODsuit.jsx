@@ -1,11 +1,11 @@
 import { NoticeBox } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 import { MODsuitContent } from './MODsuit';
+import { useNtos } from './NtosCore';
 
 export const NtosMODsuit = (props) => {
-  const { data } = useBackend();
+  const { data } = useNtos();
   const { ui_theme } = data;
   return (
     <NtosWindow theme={ui_theme}>
@@ -17,7 +17,7 @@ export const NtosMODsuit = (props) => {
 };
 
 const NtosMODsuitContent = (props) => {
-  const { data } = useBackend();
+  const { data } = useNtos();
   const { has_suit } = data;
   if (!has_suit) {
     return (

@@ -6,8 +6,8 @@ import {
   Section,
 } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 export const NtosNetDos = (props) => {
   return (
@@ -20,7 +20,7 @@ export const NtosNetDos = (props) => {
 };
 
 export const NtosNetDosContent = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useNtos();
 
   const { relays = [], focus, target, speed, overload, capacity, error } = data;
 

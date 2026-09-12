@@ -1,11 +1,14 @@
 import { Box, Button, Section } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
-import { StatusDisplayControls } from '../common/StatusDisplayControls';
+import {
+  StatusDisplayControls,
+  type StatusDisplayControlsData,
+} from '../common/StatusDisplayControls';
 import { ShuttleState } from './types';
 
 export function PageChangingStatus(props) {
-  const { act } = useBackend();
+  const { act, data } = useBackend<StatusDisplayControlsData>();
 
   return (
     <Box>
@@ -18,7 +21,7 @@ export function PageChangingStatus(props) {
         </Button>
       </Section>
 
-      <StatusDisplayControls />
+      <StatusDisplayControls act={act} data={data} />
     </Box>
   );
 }

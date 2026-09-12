@@ -12,8 +12,8 @@ import {
   Tooltip,
 } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 type Data = {
   name: string;
@@ -39,7 +39,7 @@ export const NtosPay = (props) => {
 };
 
 export const NtosPayContent = (props) => {
-  const { data } = useBackend<Data>();
+  const { data } = useNtos<Data>();
   const { name } = data;
 
   if (!name) {
@@ -68,7 +68,7 @@ export const NtosPayContent = (props) => {
 
 /** Displays the user's name and balance. */
 const Introduction = (props) => {
-  const { data } = useBackend<Data>();
+  const { data } = useNtos<Data>();
   const { name, owner_token, money } = data;
   return (
     <Section textAlign="center">
@@ -85,7 +85,7 @@ const Introduction = (props) => {
 
 /** Displays the transfer section. */
 const TransferSection = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const { money, wanted_token } = data;
 
   const [token, setToken] = useState('');
@@ -163,7 +163,7 @@ const TransferSection = (props) => {
 
 /** Displays the transaction history. */
 const TransactionHistory = (props) => {
-  const { data } = useBackend<Data>();
+  const { data } = useNtos<Data>();
   const { transaction_list = [] } = data;
 
   return (
