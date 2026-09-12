@@ -423,9 +423,6 @@
 	stored.attack_hand(src) // take out thing from item in storage slot
 	return
 
-/mob/living/carbon/human/change_number_of_hands(amt)
-	..() //Don't redraw hands until we have organs for them
-
 /// Returns the helmet if an air tank compatible helmet is equipped.
 /mob/living/carbon/human/proc/can_breathe_helmet()
 	if (astype(head, /obj/item/clothing)?.clothing_flags & HEADINTERNALS)
