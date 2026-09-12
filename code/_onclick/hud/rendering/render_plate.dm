@@ -398,6 +398,17 @@
 		// Can't do it before cause it fucks with the filter
 		add_relay_to(GET_NEW_PLANE(RENDER_PLANE_GAME, offset), relay_color = list(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1, 0,0,0,1))
 
+/atom/movable/screen/plane_master/rendering_plate/shadow_mask
+	name = "Shadow masking plate"
+	documentation = "Combines shadow masks with overlay lighting into one mask that is then applied to shadows. \
+		Lets us get around having to add a shadow masks onto all overlay lights."
+	plane = RENDER_PLANE_SHADOW_MASK
+	appearance_flags = PLANE_MASTER|NO_CLIENT_COLOR
+	render_target = SHADOW_MASK_RENDER_TARGET
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	critical = PLANE_CRITICAL_DISPLAY
+	render_relay_planes = list()
+
 ///renders in character game objects
 /atom/movable/screen/plane_master/rendering_plate/game_plate
 	name = "Game rendering plate"

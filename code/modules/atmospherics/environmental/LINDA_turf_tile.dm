@@ -64,14 +64,20 @@
 				var/datum/gas_mixture/immutable/planetary/mix = new
 				mix.parse_string_immutable(initial_gas_mix)
 				SSair.planetary[initial_gas_mix] = mix
-	return ..()
+	. = ..()
+	if(transparency_flags & TURF_TRANSPARENT)
+		. = INITIALIZE_HINT_LATELOAD
+	if(turf_flags & REACTS_TO_ATOM_INIT)
+		RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_inited))
 
 /turf/open/Destroy()
-	if(active_hotspot)
+	if(!isnull(active_hotspot))
 		QDEL_NULL(active_hotspot)
 	// Adds the adjacent turfs to the current atmos processing
 	for(var/near_turf in atmos_adjacent_turfs)
 		SSair.add_to_active(near_turf)
+	if(turf_flags & REACTS_TO_ATOM_INIT)
+		UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
 	return ..()
 
 /////////////////GAS MIXTURE PROCS///////////////////

@@ -701,6 +701,11 @@
 /// Sent from /datum/component/reflection when the reflection is updated to the component parent: (obj/effect/abstract/reflection)
 #define COMSIG_REFLECTED_IMAGE_UPDATED "reflected_image_updated"
 
+/// Sent from /datum/component/shadow to a movable when its shadow is updated: (obj/effect/abstract/shadow)
+#define COMSIG_SHADOW_UPDATED "shadow_updated"
+	/// Return to stop the shadow from taking the movable's appearance, i.e. you gave it a custom appearance
+	#define CUSTOM_SHADOW_APPEARANCE (1<<0)
+
 /// From /datum/element/weapon_description: (list/readout)
 #define COMSIG_ITEM_WEAPON_LABEL_READOUT "item_weapon_label_readout"
 

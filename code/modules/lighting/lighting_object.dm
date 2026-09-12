@@ -9,6 +9,7 @@
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	invisibility = INVISIBILITY_LIGHTING
 	move_resist = INFINITY
+	flags_1 = NO_SHADOW_1
 	///whether we are already in the SSlighting.objects_queue list
 	var/needs_update = FALSE
 
@@ -116,6 +117,9 @@
 		)
 
 	luminosity = set_luminosity
+	var/list/hanger_overlays = list()
+	SEND_SIGNAL(affected_turf, COMSIG_LIGHTING_OBJECT_UPDATE, hanger_overlays)
+	overlays = hanger_overlays
 
 // Variety of overrides so the overlays don't get affected by weird things.
 

@@ -74,6 +74,7 @@
 	ADD_KEEP_TOGETHER(loc, SOURCE_LADDER(ladder))
 	ADD_TURF_TRANSPARENCY(loc, SOURCE_LADDER(ladder))
 	RegisterSignal(loc, COMSIG_TURF_CHANGE, PROC_REF(turf_changing))
+	RegisterSignal(loc, COMSIG_TURF_CASTING_SHADOW, PROC_REF(turf_casting_shadow))
 	RegisterSignal(loc, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_ladder_rim))
 	loc.add_filter(SOURCE_LADDER(ladder), 1, alpha_mask_filter(
 		x = ladder.pixel_x + ladder.pixel_w,
@@ -88,7 +89,7 @@
 		return ..()
 
 	if(isopenturf(loc))
-		UnregisterSignal(loc, list(COMSIG_TURF_CHANGE, COMSIG_ATOM_UPDATE_OVERLAYS))
+		UnregisterSignal(loc, list(COMSIG_TURF_CHANGE, COMSIG_TURF_CASTING_SHADOW, COMSIG_ATOM_UPDATE_OVERLAYS))
 		REMOVE_KEEP_TOGETHER(loc, SOURCE_LADDER(ladder))
 		REMOVE_TURF_TRANSPARENCY(loc, SOURCE_LADDER(ladder))
 		loc.remove_filter(SOURCE_LADDER(ladder))
@@ -111,6 +112,11 @@
 
 	post_change_callbacks += CALLBACK(ladder, TYPE_PROC_REF(/obj/structure/ladder, make_base_transparent))
 	qdel(src)
+
+/obj/effect/abstract/ladder_hole/proc/turf_casting_shadow(datum/source, list/icon/shadow_masks)
+	SIGNAL_HANDLER
+
+	shadow_masks += icon(ladder.icon, "[ladder.base_icon_state]_hole")
 
 /obj/effect/abstract/ladder_hole/proc/add_ladder_rim(turf/source, list/overlays)
 	SIGNAL_HANDLER

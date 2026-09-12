@@ -60,3 +60,6 @@
 
 ///from /turf/proc/afterShuttleMove() : (/turf/old_turf)
 #define COMSIG_TURF_AFTER_SHUTTLE_MOVE "turf_after_shuttle_move"
+
+/// Sent when a turf casts a shadow of an atom to a lower z-level
+#define COMSIG_TURF_CASTING_SHADOW "turf_casting_shadow"
