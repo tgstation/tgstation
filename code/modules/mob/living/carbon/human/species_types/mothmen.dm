@@ -81,7 +81,7 @@
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "hand-spock",
 			SPECIES_PERK_NAME = "Handy",
-			SPECIES_PERK_DESC = "Mothpeople have two extra arms on their chests!",
+			SPECIES_PERK_DESC = "Moths have extra hands on the front of their chests.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
