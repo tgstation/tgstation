@@ -523,10 +523,11 @@
 	return TRUE
 
 /turf/open/handle_slip(mob/living/slipper, knockdown_amount, obj/slippable, lube, paralyze_amount, daze_amount, force_drop)
-	if(slipper.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
-		return FALSE
-	if(!has_gravity(src))
-		return FALSE
+	if(!(lube & SLIP_IN_NOGRAV))
+		if(slipper.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
+			return FALSE
+		if(!has_gravity(src))
+			return FALSE
 
 	var/slide_distance = 4
 	if(lube & SLIDE_ICE)
