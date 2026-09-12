@@ -12,6 +12,15 @@
 		/obj/item/disk/computer/syndicate/camera_app,
 	)
 
+/obj/effect/spawner/random/exotic/brutus
+	name = "brutus spawner"
+	spawn_loot_count = 1
+	loot = list( // random loot spawner specifically used in the infested_frigate ruin for random loot.
+		/obj/item/storage/toolbox/guncase/plastikov = 1,
+		/obj/item/storage/toolbox/guncase/syringe_gun = 1,
+		/obj/effect/spawner/random/trash/deluxe_garbage = 4,
+	)
+
 /obj/effect/spawner/random/exotic/languagebook
 	name = "language book spawner"
 	icon_state = "book"
