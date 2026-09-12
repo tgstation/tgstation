@@ -17,14 +17,14 @@
 
 	src.pixel_shift = pixel_shift
 
-	RegisterSignal(target, COMSIG_ATOM_ENTERING, PROC_REF(on_source_entering))
+	RegisterSignals(target, list(COMSIG_ATOM_ENTERING, COMSIG_MOVABLE_TURF_INITIALIZING), PROC_REF(on_source_entering))
 	RegisterSignal(target, COMSIG_ATOM_EXITING, PROC_REF(on_source_exiting))
 
 	var/atom/atom_target = target
 	register_turf(atom_target, atom_target.loc)
 
 /datum/element/elevation/Detach(atom/movable/source)
-	UnregisterSignal(source, list(COMSIG_ATOM_ENTERING, COMSIG_ATOM_EXITING))
+	UnregisterSignal(source, list(COMSIG_ATOM_ENTERING, COMSIG_MOVABLE_TURF_INITIALIZING, COMSIG_ATOM_EXITING))
 	unregister_turf(source, source.loc)
 	REMOVE_TRAIT(source, TRAIT_ELEVATING_OBJECT, ref(src))
 	return ..()

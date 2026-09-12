@@ -30,7 +30,7 @@
 	src.alpha_to_self = alpha_to_self
 
 /datum/component/space_camo/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_ENTERING, PROC_REF(on_atom_entering))
+	RegisterSignals(parent, list(COMSIG_ATOM_ENTERING, COMSIG_MOVABLE_TURF_INITIALIZING), PROC_REF(on_atom_entering))
 	if(!isliving(parent))
 		return
 
@@ -54,6 +54,7 @@
 /datum/component/space_camo/UnregisterFromParent()
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ENTERING,
+		COMSIG_MOVABLE_TURF_INITIALIZING,
 		COMSIG_ATOM_WAS_ATTACKED,
 		COMSIG_MOB_ITEM_ATTACK,
 		COMSIG_LIVING_UNARMED_ATTACK,

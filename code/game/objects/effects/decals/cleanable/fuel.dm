@@ -33,10 +33,6 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
-/obj/effect/decal/cleanable/fuel_pool/Destroy(force)
-	RemoveElement(/datum/element/connect_loc, loc_connections)
-	return ..()
-
 // Just in case of fires, do this after mapload.
 /obj/effect/decal/cleanable/fuel_pool/LateInitialize()
 // We don't want to burn down the create_and_destroy test area
