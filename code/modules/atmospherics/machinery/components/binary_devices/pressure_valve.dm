@@ -43,12 +43,20 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/update_icon_nopipes()
+	var/new_icon_state
 	if(on && is_operational && is_gas_flowing)
-		icon_state = "pvalve_flow-[set_overlay_offset(piping_layer)]"
+		new_icon_state = "pvalve_flow-[set_overlay_offset(piping_layer)]"
 	else if(on && is_operational && !is_gas_flowing)
-		icon_state = "pvalve_on-[set_overlay_offset(piping_layer)]"
+		new_icon_state = "pvalve_on-[set_overlay_offset(piping_layer)]"
 	else
-		icon_state = "pvalve_off-[set_overlay_offset(piping_layer)]"
+		new_icon_state = "pvalve_off-[set_overlay_offset(piping_layer)]"
+
+	var/old_icon_state = icon_state
+	icon_state = new_icon_state
+	if(new_icon_state != old_icon_state)
+	//cut_overlays()
+	//add_overlay(emissive_appearance(icon, "[icon_state]-emissive", src, alpha = src.alpha))
+		update_overlays()
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/process_atmos()
 

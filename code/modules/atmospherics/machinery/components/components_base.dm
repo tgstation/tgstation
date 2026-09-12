@@ -57,6 +57,8 @@
 /obj/machinery/atmospherics/components/update_overlays()
 	. = ..()
 	if(is_operational && ((on && light_mask_on) || (!on && light_mask_off)))
+		cut_overlays()
+		cut_overlay(managed_overlays)
 		. += emissive_appearance(icon, "[icon_state]-emissive", src, alpha = src.alpha)
 
 /obj/machinery/atmospherics/components/on_hide(datum/source, underfloor_accessibility)

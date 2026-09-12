@@ -43,7 +43,13 @@
 	return CLICK_ACTION_SUCCESS
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/update_icon_nopipes()
-	icon_state = "tpump_[on && is_operational ? "on" : "off"]-[set_overlay_offset(piping_layer)]"
+	var/new_icon_state = "tpump_[on && is_operational ? "on" : "off"]-[set_overlay_offset(piping_layer)]"
+	var/old_icon_state = icon_state
+	icon_state = new_icon_state
+	if(new_icon_state != old_icon_state)
+	//cut_overlays()
+	//add_overlay(emissive_appearance(icon, "[icon_state]-emissive", src, alpha = src.alpha))
+		update_overlays()
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/process_atmos()
 	if(!on || !is_operational)
