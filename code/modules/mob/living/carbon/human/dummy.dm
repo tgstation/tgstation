@@ -111,6 +111,7 @@ INITIALIZE_IMMEDIATE(/mob/living/carbon/human/dummy)
 
 /proc/create_consistent_human_dna(mob/living/carbon/human/target)
 	target.dna.features[FEATURE_MUTANT_COLOR] = COLOR_VIBRANT_LIME
+	target.dna.features[FEATURE_TAIL_FISH_COLOR] = COLOR_CARP_TEAL
 	for(var/feature_key in SSaccessories.feature_list)
 		target.dna.features[feature_key] = get_consistent_feature_entry(SSaccessories.feature_list[feature_key])
 	target.dna.initialize_dna(newblood_type = get_blood_type(/datum/blood_type/human/o_minus), create_mutation_blocks = FALSE, randomize_features = FALSE)

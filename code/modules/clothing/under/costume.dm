@@ -64,6 +64,7 @@
 	name = "pirate outfit"
 	desc = "Yarr."
 	icon_state = "pirate"
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 	inhand_icon_state = null
 	can_adjust = FALSE
 

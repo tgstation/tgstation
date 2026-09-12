@@ -274,8 +274,6 @@
 	if(use_mob_sprite_as_obj_sprite)
 		update_appearance(UPDATE_OVERLAYS)
 
-	color = bodypart_overlay.draw_color // so a pink felinid doesn't drop a gray tail
-
 	if(greyscale_config)
 		get_greyscale_color_from_draw_color()
 	else

@@ -169,9 +169,16 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON (1<<1)
 /// Auto-generates the leg portion of the sprite with GAGS
 #define CLOTHING_DIGITIGRADE_MASK (1<<2)
-
 /// All variation flags which render "correctly" on a digitigrade leg setup
 #define DIGITIGRADE_VARIATIONS (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON|CLOTHING_DIGITIGRADE_MASK)
+/// The clothing flag to declare an item has dedicated sprites
+#define CLOTHING_CERULEAN_VARIATION (1<<3)
+/// The clothing flag which cuts away the legs. has a niche case for modsuits where it generates, see handle_cerulean_modsuit()
+#define CLOTHING_CERULEAN_MASK_LEGS (1<<4)
+///The clothing flag which cuts pixels between the legs
+#define CLOTHING_CERULEAN_MASK_INBETWEEN (1<<5)
+/// All variation flags which can render on cerulean bodyshapes
+#define CERULEAN_VARIATIONS (CLOTHING_CERULEAN_VARIATION|CLOTHING_CERULEAN_MASK_LEGS|CLOTHING_CERULEAN_MASK_INBETWEEN)
 
 //flags for covering body parts
 #define GLASSESCOVERSEYES (1<<0)
@@ -247,6 +254,7 @@ GLOBAL_LIST_INIT(detective_vest_allowed, list(
 	/obj/item/storage/belt/holster/nukie,
 	/obj/item/storage/belt/holster/energy,
 	/obj/item/gun/ballistic/shotgun/automatic/combat/compact,
+	/obj/item/gun/energy/laser/scatter/shotty/compact,
 ))
 
 GLOBAL_LIST_INIT(security_vest_allowed, list(
@@ -263,6 +271,7 @@ GLOBAL_LIST_INIT(security_vest_allowed, list(
 	/obj/item/storage/belt/holster/nukie,
 	/obj/item/storage/belt/holster/energy,
 	/obj/item/gun/ballistic/shotgun/automatic/combat/compact,
+	/obj/item/gun/energy/laser/scatter/shotty/compact,
 	/obj/item/pen/red/security,
 ))
 
@@ -276,6 +285,7 @@ GLOBAL_LIST_INIT(security_wintercoat_allowed, list(
 	/obj/item/storage/belt/holster/nukie,
 	/obj/item/storage/belt/holster/energy,
 	/obj/item/gun/ballistic/shotgun/automatic/combat/compact,
+	/obj/item/gun/energy/laser/scatter/shotty/compact,
 ))
 
 //Allowed list for all chaplain suits (except the honkmother robe)

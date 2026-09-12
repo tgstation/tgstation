@@ -226,16 +226,6 @@
 		animate(owner, pixel_w = w_offset, pixel_z = z_offset, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE|ANIMATION_PARALLEL)
 		animate(owner, pixel_w = -w_offset, pixel_z = -z_offset, time = 0.1 SECONDS, flags = ANIMATION_RELATIVE)
 
-
-//Deafness makes you deaf.
-/datum/mutation/deaf
-	name = "Deafness"
-	desc = "The subject is completely deaf and cannot hear anything."
-	instability = NEGATIVE_STABILITY_MAJOR
-	quality = NEGATIVE
-	text_gain_indication = span_danger("You can't seem to hear anything.")
-	mutation_traits = list(TRAIT_DEAF)
-
 //Monified turns you into a monkey.
 /datum/mutation/race
 	name = "Monkified"

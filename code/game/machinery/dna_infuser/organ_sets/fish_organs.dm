@@ -4,7 +4,7 @@
 #define FISH_COLORS FISH_ORGAN_COLOR + FISH_SCLERA_COLOR + FISH_PUPIL_COLOR
 /// How many fishy organs can you have at once, requirement to get the tail color
 /// Currently liver, stomach, lungs and tail plus tongue
-#define FISH_INFUSION_ALL_ORGANS 4
+#define FISH_INFUSION_ALL_ORGANS 5
 
 /datum/status_effect/organ_set_bonus/fish
 	id = "organ_set_bonus_fish"
@@ -80,16 +80,12 @@
 	if (!iscarbon(owner))
 		return
 	var/mob/living/carbon/carbon_owner = owner
-	var/obj/item/organ/tail/fish/tail = carbon_owner.get_organ_by_type(/obj/item/organ/tail/fish)
-	var/tail_color = tail?.bodypart_overlay?.draw_color
-	// We need to snowflake the tongue because it doesn't count towards the set bonus
-	if (carbon_owner.get_organ_by_type(/obj/item/organ/tongue/inky))
-		new_value += 1
-
-	if (new_value >= FISH_INFUSION_ALL_ORGANS && tail_color)
+	if (new_value >= FISH_INFUSION_ALL_ORGANS)
 		if (!color_active)
 			for(var/obj/item/bodypart/limb as anything in carbon_owner.get_bodyparts())
-				limb.add_color_override(tail_color, LIMB_COLOR_FISH_INFUSION)
+				if(limb.bodytype & BODYTYPE_ROBOTIC)
+					continue
+				limb.add_color_override(carbon_owner.dna.features[FEATURE_TAIL_FISH_COLOR], LIMB_COLOR_FISH_INFUSION)
 			color_active = TRUE
 		return
 
@@ -102,13 +98,10 @@
 
 /datum/status_effect/organ_set_bonus/fish/texture_limb(atom/source, obj/item/bodypart/limb)
 	. = ..()
-	if (!color_active || !iscarbon(owner))
+	if (!color_active || !iscarbon(owner) || limb.bodytype & BODYTYPE_ROBOTIC)
 		return
 	var/mob/living/carbon/carbon_owner = owner
-	var/obj/item/organ/tail/fish/tail = carbon_owner.get_organ_by_type(/obj/item/organ/tail/fish)
-	var/tail_color = tail?.bodypart_overlay?.draw_color
-	if (tail_color)
-		limb.add_color_override(tail_color, LIMB_COLOR_FISH_INFUSION)
+	limb.add_color_override(carbon_owner.dna.features[FEATURE_TAIL_FISH_COLOR], LIMB_COLOR_FISH_INFUSION)
 
 /datum/status_effect/organ_set_bonus/fish/untexture_limb(atom/source, obj/item/bodypart/limb)
 	. = ..()
@@ -168,10 +161,6 @@
 
 /datum/status_effect/organ_set_bonus/fish/proc/check_tail(mob/living/carbon/source, obj/item/organ/organ, special)
 	SIGNAL_HANDLER
-	// We need to snowflake the tongue because it doesn't count towards the set bonus
-	if (istype(organ, /obj/item/organ/tongue/inky))
-		set_organs(organs)
-		return
 	if(!HAS_TRAIT(owner, TRAIT_IS_WET) || !istype(organ, /obj/item/organ/tail/fish))
 		return
 	var/obj/item/organ/tail = owner.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL)
@@ -277,20 +266,18 @@
 	mesh_in_suits = TRUE
 
 /datum/bodypart_overlay/mutant/tail/fish/on_mob_insert(obj/item/organ/parent, mob/living/carbon/receiver)
-	//Initialize the related dna feature block if we don't have any so it doesn't error out.
-	//This isn't tied to any species, but I kinda want it to be mutable instead of having a fixed sprite accessory.
-	if(imprint_on_next_insertion && !receiver.dna.features[feature_key])
-		receiver.dna.features[feature_key] = pick(SSaccessories.feature_list[feature_key])
+	if(imprint_on_next_insertion || !(receiver.dna.features[feature_key] in get_global_feature_list()))
+		receiver.dna.features[feature_key] = get_random_appearance().name
 		receiver.dna.update_uf_block(/datum/dna_block/feature/accessory/tail_fish)
-
 	return ..()
 
-/datum/bodypart_overlay/mutant/tail/fish/override_color(obj/item/bodypart/bodypart_owner)
-	//If the owner uses mutant colors, inherit the color of the bodypart
-	if(!bodypart_owner.owner || HAS_TRAIT(bodypart_owner.owner, TRAIT_MUTANT_COLORS))
-		return bodypart_owner.draw_color
-	else //otherwise get one from a set of faded out blue and some greys colors.
-		return pick("#B4B8DD", "#85C7D0", "#67BBEE", "#2F4450", "#55CCBB", "#999FD0", "#345066", "#585B69", "#7381A0", "#B6DDE5", "#4E4E50")
+/datum/bodypart_overlay/mutant/tail/fish/override_color(obj/item/bodypart/limb)
+	if(isnull(limb.owner) || HAS_TRAIT(limb.owner, TRAIT_MUTANT_COLORS))
+		return limb.draw_color
+	return limb.owner.dna.features[FEATURE_TAIL_FISH_COLOR]
+
+/datum/bodypart_overlay/mutant/tail/fish/randomize_appearance()
+	return //we already do this above, we are bound to dna!
 
 ///Lungs that replace the need of oxygen with water vapor or being wet
 /obj/item/organ/lungs/fish
@@ -441,9 +428,25 @@
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fish)
 
+/obj/item/organ/tongue/fish
+	name = "mutated fish-tongue"
+	desc = "Interestingly, a fish-tongue isn't much unlike the humanoid variety."
+	say_mod = "blubs"
+	organ_traits = list(TRAIT_CARPOTOXIN_IMMUNE)
+	liked_foodtypes = MEAT | EGG | SEAFOOD
+	foodtype_flags = RAW | SEAFOOD | GORE
+	languages_native = list(/datum/language/carptongue)
 
-///Organ from fish with the ink production trait. Doesn't count toward the organ set bonus but is buffed once it's active.
-/obj/item/organ/tongue/inky
+/obj/item/organ/tongue/fish/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/fish)
+
+/obj/item/organ/tongue/fish/get_possible_languages()
+	. = ..()
+	. += /datum/language/carptongue
+
+///Organ from fish with the ink production trait.
+/obj/item/organ/tongue/fish/inky
 	name = "ink-secreting tongue"
 	desc = "A black tongue linked to two swollen black sacs underneath the palate."
 	icon = 'icons/obj/medical/organs/infuser_organs.dmi'
@@ -489,13 +492,9 @@
 		"the sea" = 0.2,
 	)
 
-/obj/item/organ/tongue/inky/Initialize(mapload)
+/obj/item/organ/tongue/fish/inky/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/noticable_organ, "Slick black ink seldom rivulets from %PRONOUN_their mouth.", BODY_ZONE_PRECISE_MOUTH)
-
-/obj/item/organ/tongue/inky/get_possible_languages()
-	. = ..()
-	. += /datum/language/carptongue
 
 ///Organ from fish with the toxic trait. Allows the user to use tetrodotoxin as a healing chem instead of a toxin.
 /obj/item/organ/liver/fish

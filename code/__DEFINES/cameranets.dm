@@ -45,3 +45,4 @@
 #define CAMERANET_NETWORK_FSCI "fsci"
 #define CAMERA_NETWORK_BUNKER "bunker1"
 #define CAMERA_NETWORK_HERETIC_GATEWAY "heretic_gate"
+#define CAMERA_NETWORK_PIRATE "pirate"

@@ -298,6 +298,11 @@
 	overlays |= created_overlay
 	overlays |= source.make_fire_emissive(created_overlay)
 
+#define WET_STACKS_MINIMUM_VFX 3
+#define WET_STACKS_DAMP 3
+#define WET_STACKS_DRIPPING 7.5
+#define WET_STACKS_SOAKED 15
+
 /datum/status_effect/fire_handler/wet_stacks
 	id = "wet_stacks"
 
@@ -315,14 +320,12 @@
 	if(HAS_TRAIT(owner, TRAIT_SLIPPERY_WHEN_WET))
 		become_slippery()
 	ADD_TRAIT(owner, TRAIT_IS_WET,  TRAIT_STATUS_EFFECT(id))
-	owner.add_shared_particles(/particles/droplets)
 
 /datum/status_effect/fire_handler/wet_stacks/on_remove()
 	. = ..()
 	REMOVE_TRAIT(owner, TRAIT_IS_WET, TRAIT_STATUS_EFFECT(id))
 	if(HAS_TRAIT(owner, TRAIT_SLIPPERY_WHEN_WET))
 		no_longer_slippery()
-	owner.remove_shared_particles(/particles/droplets)
 
 /datum/status_effect/fire_handler/wet_stacks/proc/update_wet_stack_modifier()
 	SIGNAL_HANDLER
@@ -339,7 +342,12 @@
 	REMOVE_TRAIT(owner, TRAIT_NO_SLIP_WATER, TRAIT_STATUS_EFFECT(id))
 
 /datum/status_effect/fire_handler/wet_stacks/get_examine_text(mob/examiner)
-	return "[owner.p_They()] look[owner.p_s()] a little soaked."
+	if(stacks <= WET_STACKS_DAMP)
+		return "[owner.p_Their()] skin seem[owner.p_s()] lightly damp."
+	else if(stacks >= WET_STACKS_SOAKED)
+		return "[owner.p_They()] is completely soaked."
+	else
+		return "[owner.p_They()] appear[owner.p_s()] to be dripping wet."
 
 /datum/status_effect/fire_handler/wet_stacks/tick(seconds_between_ticks)
 	var/decay = HAS_TRAIT(owner, TRAIT_WET_FOR_LONGER) ? -0.035 : -0.5
@@ -355,5 +363,15 @@
 		owner.apply_status_effect(/datum/status_effect/freon, stacks SECONDS)
 		qdel(src)
 
+	if(stacks > WET_STACKS_MINIMUM_VFX)
+		owner?.add_shared_particles(/particles/droplets)
+	if(stacks <= WET_STACKS_MINIMUM_VFX)
+		owner?.remove_shared_particles(/particles/droplets)
+
 /datum/status_effect/fire_handler/wet_stacks/check_basic_mob_immunity(mob/living/basic/basic_owner)
 	return !(basic_owner.basic_mob_flags & IMMUNE_TO_GETTING_WET)
+
+#undef WET_STACKS_MINIMUM_VFX
+#undef WET_STACKS_DAMP
+#undef WET_STACKS_DRIPPING
+#undef WET_STACKS_SOAKED

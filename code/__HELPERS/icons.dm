@@ -628,6 +628,21 @@ world
 	mask_icon.MapColors(0,0,0,0, 0,0,0,0, 0,0,0,0, 255,255,255,-255, 1,1,1,1)
 	return mask_icon
 
+/**
+ * A simple helper proc to apply a mask to an icon
+ * Arguments:
+ * * base_icon - the icon which the proc will apply the mask on
+ * * mask_to_use - the mask to use from code\__DEFINES\icon_masks.dm
+ * * replacement - an icon to overlay after the masking
+ */
+/proc/apply_icon_mask(icon/base_icon, mask_to_use, icon/replacement)
+	if(isnull(mask_to_use))
+		return
+	var/icon/mask = icon(MASKING_HELPERS_PATH, mask_to_use)
+	base_icon.Blend(mask, ICON_SUBTRACT)
+	if(!isnull(replacement))
+		base_icon.Blend(replacement, ICON_OVERLAY)
+	return base_icon
 
 /mob/proc/AddCamoOverlay(atom/A)//A is the atom which we are using as the overlay.
 	var/icon/opacity_icon = new(A.icon, A.icon_state)//Don't really care for overlays/underlays.

@@ -67,6 +67,7 @@
 	blood_overlay_type = "coat"
 	flags_inv = HIDEBELT
 	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR // I know kung-fu
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/toggle/jacket/trenchcoat/Initialize(mapload)
 	. = ..()
@@ -94,6 +95,7 @@
 	greyscale_config_worn = /datum/greyscale_config/jacket_oversized/worn
 	greyscale_colors = "#414344"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/jacket/fancy
 	name = "fancy fur coat"
@@ -136,6 +138,18 @@
 	name = "biker jacket"
 	desc = "You think I'm not even worth a single dollar, but I feel like a millionare."
 	icon_state = "leatherjacket_biker"
+
+/obj/item/clothing/suit/jacket/leather/armored
+	desc = "Its leather is so thick, you can hardly tell there's padding beneath it. its also <b>really loud!</b>"
+	icon = /obj/item/clothing/suit/toggle/jacket/sweater::icon
+	icon_state = /obj/item/clothing/suit/toggle/jacket/sweater::icon_state
+	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'
+	worn_icon_state = "leatherjacket_p"
+	armor_type = /datum/armor/wintercoat_security
+
+/obj/item/clothing/suit/jacket/leather/armored/Initialize(mapload)
+	. = ..()
+	allowed += GLOB.security_vest_allowed
 
 /obj/item/clothing/suit/jacket/puffer
 	name = "puffer jacket"

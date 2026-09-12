@@ -234,3 +234,116 @@
 	. = ..()
 	spawned_mob.dna.add_mutation(/datum/mutation/hulk/superhuman, MUTATION_SOURCE_GHOST_ROLE)
 	spawned_mob.dna.add_mutation(/datum/mutation/gigantism, MUTATION_SOURCE_GHOST_ROLE)
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/siren
+	name = /obj/machinery/experimental_cloner::name
+	desc = /obj/machinery/experimental_cloner::desc
+	deletes_on_zero_uses_left = FALSE
+	mob_species = /datum/species/human/cerulean
+	allow_custom_character = NONE
+	icon = 'icons/obj/machines/cloning.dmi'
+	icon_state = "pod_1"
+	fluff_spawn = /obj/effect/decal/cleanable/greenglow
+	you_are_text = "You are a wanna-be idol getting by on gigs and criminality."
+	flavour_text = "Its time to put on an impromptu show! Lets raid the station in style, steal their resources with grace, and call it a great night!"
+	prompt_name = "a deadbeat musician"
+	outfit = /datum/outfit/pirate/siren
+	rank = "Gitarisuto"
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/siren/vocalist
+	rank = "Bookaru"
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/siren/generate_pirate_name()
+	return "[rank] [pick(GLOB.first_names_female)]"
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/siren/check_uses()
+	. = ..()
+	if(!uses)
+		icon_state = "pod_0"
+
+#define COLOR_AMP_BRIGHT 1.5
+#define COLOR_AMP_BRIGHTER 3.5
+#define COLOR_AMP_DARKER 0.33
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/siren/equip(mob/living/spawned_mob)
+	. = ..()
+	if(rank == /obj/effect/mob_spawn/ghost_role/human/pirate/siren::rank)
+		spawned_mob.add_mood_event("hungover", /datum/mood_event/normal_hangover)
+		spawned_mob.adjust_drunk_effect(15)
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/siren/special(mob/living/carbon/spawned_mob, mob/mob_possessor, apply_prefs)
+	. = ..()
+	var/datum/language_holder/language_holder = spawned_mob.get_language_holder()
+	language_holder.selected_language = /datum/language/common //sing for them
+	spawned_mob.add_personalities(list(
+		//some sugar
+		/datum/personality/creative,
+		/datum/personality/brave,
+		/datum/personality/extrovert,
+		//some salt
+		/datum/personality/apathetic,
+		/datum/personality/pessimistic))
+	spawned_mob.add_traits(list(TRAIT_TRUE_NIGHT_VISION, TRAIT_LUMINESCENT_EYES), SPECIES_TRAIT)
+	load_features(spawned_mob)
+	load_identity(spawned_mob)
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/siren/proc/load_features(mob/living/carbon/human/siren)
+	siren.dna.species.mutantheart = /obj/item/organ/heart/carp
+	siren.dna.species.mutantlungs = /obj/item/organ/lungs/fish/amphibious
+	siren.dna.species.mutant_organs = list(
+		/obj/item/organ/tail/fish/cerulean/abyssal = /datum/sprite_accessory/tails/fish/cerulean::name,
+		/obj/item/organ/horns = /datum/sprite_accessory/horns/angler::name,
+		/obj/item/organ/frills = /datum/sprite_accessory/frills/aquatic::name,
+	)
+	siren.dna.features[FEATURE_TAIL_FISH_COLOR] = sanitize_hexcolor(rgb(
+		min(255, hex2num(copytext(copytext(siren.dna.features[FEATURE_TAIL_FISH_COLOR], 2), 1, 3)) * COLOR_AMP_DARKER),
+		min(255, hex2num(copytext(copytext(siren.dna.features[FEATURE_TAIL_FISH_COLOR], 2), 3, 5)) * COLOR_AMP_DARKER),
+		min(255, hex2num(copytext(copytext(siren.dna.features[FEATURE_TAIL_FISH_COLOR], 2), 5, 7)) * COLOR_AMP_DARKER),
+	))
+	siren.dna.features[FEATURE_HORNS] = siren.dna.species.mutant_organs[/obj/item/organ/horns]
+	siren.dna.features[FEATURE_FRILLS] = siren.dna.species.mutant_organs[/obj/item/organ/frills]
+	for(var/obj/item/organ/special_organ as anything in list(
+		/obj/item/organ/heart/carp,
+		/obj/item/organ/lungs/fish/amphibious,
+		/obj/item/organ/tail/fish/cerulean/abyssal,
+		/obj/item/organ/horns,
+		/obj/item/organ/frills,
+	))
+		special_organ = new special_organ.type
+		special_organ.Insert(siren, TRUE, DELETE_IF_REPLACED)
+
+/obj/effect/mob_spawn/ghost_role/human/pirate/siren/proc/load_identity(mob/living/carbon/human/siren)
+	siren.set_facial_hairstyle(/datum/sprite_accessory/facial_hair/shaved::name)
+	siren.set_hairstyle(pick(list(
+		/datum/sprite_accessory/hair/sadako::name,
+		/datum/sprite_accessory/hair/moneypiece::name,
+		/datum/sprite_accessory/hair/frizzysidecut::name,
+		/datum/sprite_accessory/hair/coily::name,
+		/datum/sprite_accessory/hair/wolfcut::name,
+		/datum/sprite_accessory/hair/shortwavy::name,
+		/datum/sprite_accessory/hair/sidecutbang::name,
+		//more when i think of it
+	)))
+	siren.set_haircolor(sanitize_hexcolor(rgb(
+		min(255, hex2num(copytext(copytext(siren.dna.features[FEATURE_TAIL_FISH_COLOR], 2), 1, 3)) * COLOR_AMP_BRIGHTER),
+		min(255, hex2num(copytext(copytext(siren.dna.features[FEATURE_TAIL_FISH_COLOR], 2), 3, 5)) * COLOR_AMP_BRIGHTER),
+		min(255, hex2num(copytext(copytext(siren.dna.features[FEATURE_TAIL_FISH_COLOR], 2), 5, 7)) * COLOR_AMP_BRIGHTER),
+	)))
+	siren.set_hair_gradient_style(/datum/sprite_accessory/gradient/reflected_inverse::name)
+	siren.set_hair_gradient_color(sanitize_hexcolor(rgb(
+		min(255, hex2num(copytext(copytext(siren.dna.features[FEATURE_TAIL_FISH_COLOR], 2), 1, 3)) * COLOR_AMP_BRIGHT),
+		min(255, hex2num(copytext(copytext(siren.dna.features[FEATURE_TAIL_FISH_COLOR], 2), 3, 5)) * COLOR_AMP_BRIGHT),
+		min(255, hex2num(copytext(copytext(siren.dna.features[FEATURE_TAIL_FISH_COLOR], 2), 5, 7)) * COLOR_AMP_BRIGHT),
+	)))
+	var/list/eyecolors = list("#ff0000", "#04ff58", "#ffe600", "#d400ff")
+	siren.set_eye_color(pick(eyecolors), pick(eyecolors))
+	siren.update_eyes()
+	siren.gender = (rand(0, 10) > 3) ? FEMALE : PLURAL //despite physique always she/her or they/them. why? because they're sisters of course. 🏳️‍⚧️
+	siren.undershirt = /datum/sprite_accessory/clothing/undershirt/sports_bra::name
+	siren.underwear = /datum/sprite_accessory/clothing/underwear/female_lace::name
+	siren.socks = /datum/sprite_accessory/clothing/socks/fishnet_knee::name
+	siren.set_resting(FALSE, TRUE, TRUE)
+
+#undef COLOR_AMP_BRIGHT
+#undef COLOR_AMP_BRIGHTER
+#undef COLOR_AMP_DARKER

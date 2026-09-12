@@ -121,6 +121,17 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 /datum/bodypart_overlay/mutant/horns/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)
 
+/datum/bodypart_overlay/mutant/horns/get_overlay(obj/item/bodypart/limb, layer_index, layer_real)
+	var/list/created_overlays = ..()
+	if(istype(sprite_datum, /datum/sprite_accessory/horns/angler))
+		created_overlays += emissive_appearance(
+			icon = sprite_datum.icon,
+			icon_state = build_icon_state(layer_index, limb),
+			offset_spokesman = limb,
+			layer = layer_real,
+		)
+	return created_overlays
+
 ///The frills of a lizard (like weird fin ears)
 /obj/item/organ/frills
 	name = "frills"
@@ -141,9 +152,15 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
 	feature_key = FEATURE_FRILLS
 	offset_location = UPPER_BODY
+	color_source = ORGAN_COLOR_OVERRIDE
 
 /datum/bodypart_overlay/mutant/frills/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)
+
+/datum/bodypart_overlay/mutant/frills/override_color(obj/item/bodypart/bodypart_owner)
+	if(iscerulean(bodypart_owner.owner)) //if we are fish frills
+		return bodypart_owner.owner.dna.features[FEATURE_TAIL_FISH_COLOR]
+	return bodypart_owner.draw_color
 
 /datum/bodypart_overlay/mutant/frills/icon_render_key(obj/item/bodypart/limb)
 	. = ..()

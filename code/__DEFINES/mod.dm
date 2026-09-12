@@ -64,8 +64,3 @@
 #define GLASSES_SEAL_MESSAGE "settle onto your eyes"
 #define NECKWEAR_UNSEAL_MESSAGE "looses around your neck"
 #define NECKWEAR_SEAL_MESSAGE "tightens around your neck"
-
-/// Global list of all /datum/mod_theme
-GLOBAL_LIST_INIT(mod_themes, setup_mod_themes())
-/// Global list of all ids associated to a /datum/mod_link instance
-GLOBAL_LIST_EMPTY(mod_link_ids)

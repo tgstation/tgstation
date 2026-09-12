@@ -45,7 +45,7 @@
 			created = wear_female_version(icon_state_to_use, icon_file_path, icon, female_sprite_flags_to_use)
 		if(use_digi)
 			var/icon/replacement = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade_underwear, greyscale_colors), digi_icon_state)
-			created = replace_icon_legs(created, replacement)
+			created = apply_icon_mask(created, LEGS_MASK, replacement)
 
 		cached_icons[key] = fcopy_rsc(created)
 		result = mutable_appearance(created)

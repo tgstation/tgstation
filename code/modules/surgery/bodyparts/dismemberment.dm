@@ -364,6 +364,8 @@
 
 	if(length(excluded_zones))
 		zone_list -= excluded_zones
+	if(HAS_TRAIT(src, TRAIT_BLOCK_ATTACHING_LEGS))
+		zone_list -= GLOB.leg_zones
 	for(var/limb_zone in zone_list)
 		regenerate_limb(limb_zone, dismembered_by_copy)
 

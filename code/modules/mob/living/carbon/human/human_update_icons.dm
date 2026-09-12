@@ -100,6 +100,8 @@ There are several things that need to be remembered:
 		//BEGIN SPECIES HANDLING
 		if(digi && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
 			icon_file = DIGITIGRADE_UNIFORM_FILE
+		if((bodyshape & BODYSHAPE_CERULEAN) && (uniform.supports_variations_flags & CLOTHING_CERULEAN_VARIATION))
+			icon_file = CERULEAN_UNIFORM_FILE
 		//Female sprites have lower priority than digitigrade sprites
 		var/chest_is_dimorphic
 		if(dna.species.sexes)
@@ -324,7 +326,8 @@ There are several things that need to be remembered:
 		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDEHEADGEAR))
 			return
 
-		var/icon_file = 'icons/mob/clothing/head/default.dmi'
+		var/confused_cerulean = istype(worn_item, /obj/item/clothing/shoes) ? TRUE : FALSE
+		var/icon_file = !confused_cerulean ? 'icons/mob/clothing/head/default.dmi' : DEFAULT_SHOES_FILE
 
 		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
 		apply_height(head_overlay, UPPER_BODY)
@@ -363,9 +366,26 @@ There are several things that need to be remembered:
 		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON))
 			return
 
-		var/icon_file = DEFAULT_SUIT_FILE
+		var/icon_file
+		var/handled_by_bodyshape = TRUE
+		var/state_override
 
-		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
+		if((bodyshape & BODYSHAPE_CERULEAN) && (worn_item.supports_variations_flags & CLOTHING_CERULEAN_VARIATION))
+			icon_file = CERULEAN_SUIT_FILE
+			if(physique == FEMALE)
+				state_override = "[RESOLVE_ICON_STATE(worn_item)]_f"
+
+		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
+			icon_file = DEFAULT_SUIT_FILE
+			handled_by_bodyshape = FALSE
+
+		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(
+			default_layer = SUIT_LAYER,
+			default_icon_file = icon_file,
+			override_state = handled_by_bodyshape ? state_override : null,
+			override_file = handled_by_bodyshape ? icon_file : null,
+			bodyshape = bodyshape,
+		)
 		apply_height(suit_overlay, ENTIRE_BODY)
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_suit_offset?.apply_offset(suit_overlay)
@@ -443,7 +463,7 @@ There are several things that need to be remembered:
 	var/icon/female_clothing_icon = female_clothing_icons[index]
 	if(!female_clothing_icon) //Create standing/laying icons if they don't exist
 		var/female_icon_state = "female[type == FEMALE_UNIFORM_FULL ? "_full" : ((!type || type & FEMALE_UNIFORM_TOP_ONLY) || bodyshape & BODYSHAPE_DIGITIGRADE ? "_top" : "")][type & FEMALE_UNIFORM_NO_BREASTS ? "_no_breasts" : ""]"
-		var/icon/female_cropping_mask = icon('icons/mob/clothing/under/masking_helpers.dmi', female_icon_state)
+		var/icon/female_cropping_mask = icon(MASKING_HELPERS_PATH, female_icon_state)
 		female_clothing_icon = icon(icon, icon_state)
 		female_clothing_icon.Blend(female_cropping_mask, ICON_MULTIPLY)
 		female_clothing_icon = fcopy_rsc(female_clothing_icon)
@@ -469,18 +489,6 @@ There are several things that need to be remembered:
 			digitigrade_clothing_cache[index] = fcopy_rsc(resulting_icon)
 
 		return icon(resulting_icon)
-
-/// Modifies a sprite to replace the legs with a new version
-/proc/replace_icon_legs(icon/base_icon, icon/new_legs)
-	var/static/icon/leg_mask
-	if(!leg_mask)
-		leg_mask = icon('icons/mob/clothing/under/masking_helpers.dmi', "digi_leg_mask")
-
-	// cuts the legs off
-	base_icon.Blend(leg_mask, ICON_SUBTRACT)
-	// staples the new legs on
-	base_icon.Blend(new_legs, ICON_OVERLAY)
-	return base_icon
 
 /**
  * Generates a digitigrade version of this item's worn icon
@@ -611,6 +619,15 @@ generate/load female uniform sprites matching all previously decided variables
 			greyscale_colors = greyscale_colors,
 			bodyshape = bodyshape,
 		)
+
+	if(!isinhands && (bodyshape & BODYSHAPE_CERULEAN) && (supports_variations_flags & (CLOTHING_CERULEAN_MASK_LEGS|CLOTHING_CERULEAN_MASK_INBETWEEN)))
+		building_icon = wear_cerulean_version(
+			base_icon = building_icon || icon(file2use, t_state),
+			item = src,
+			key = "[t_state]-[file2use]-[female_uniform]",
+			greyscale_colors = greyscale_colors,
+		)
+
 	if(building_icon)
 		draw_target = mutable_appearance(building_icon, layer = -layer2use)
 	else

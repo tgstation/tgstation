@@ -235,6 +235,7 @@
 	icon = 'icons/map_icons/clothing/suit/_suit.dmi'
 	icon_state = "/obj/item/clothing/suit/armor/vest/ctf/light"
 	post_init_icon_state = "light"
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 	greyscale_config = /datum/greyscale_config/ctf_light
 	greyscale_config_worn = /datum/greyscale_config/ctf_light/worn
 	slowdown = -0.25

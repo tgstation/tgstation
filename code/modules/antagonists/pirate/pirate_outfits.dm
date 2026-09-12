@@ -201,3 +201,36 @@
 
 
 	skillchips = list(/obj/item/skillchip/big_pointer) //they don't have an id, so this is needed
+
+/datum/outfit/pirate/siren
+	name = "Siren Shimai"
+
+	uniform = /obj/item/clothing/under/color/jumpskirt/random
+	head = null
+	neck = /obj/item/clothing/neck/necklace/pearl/abyssal
+	back = /obj/item/instrument/eguitar
+	glasses = null
+	suit = /obj/item/clothing/suit/jacket/leather/armored
+	gloves = /obj/item/clothing/gloves/fingerless
+	shoes = null
+	ears = /obj/item/radio/headset/syndicate/alt
+	id = null
+
+	skillchips = list(/obj/item/skillchip/musical)
+
+/datum/outfit/pirate/siren/pre_equip(mob/living/carbon/human/pre_equipped, visuals_only)
+	. = ..()
+	if(rand(0,5) == 1)
+		head = /obj/item/clothing/head/soft/black
+	belt = pick(subtypesof(/obj/item/flashlight/glowstick))
+
+/datum/outfit/pirate/siren/post_equip(mob/living/carbon/human/equipped)
+	. = ..()
+	var/obj/item/clothing/head/soft/cap = equipped.get_item_by_slot(ITEM_SLOT_HEAD)
+	if(cap && rand(0,1) == 1)
+		cap.flip(equipped)
+	var/obj/item/clothing/under/uniform = equipped.get_item_by_slot(ITEM_SLOT_ICLOTHING)
+	if(uniform)
+		uniform.rolldown(equipped)
+	equipped.update_lips("lipstick_lower", COLOR_BLACK)
+	equipped.adjust_wet_stacks(-3)

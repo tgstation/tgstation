@@ -34,12 +34,19 @@
 	var/exclude_from_random = FALSE
 	/// Text added to the atom's examine when stickered.
 	var/examine_text
+	/// Will attempt to stick to a wall or window on mapload
+	var/start_stuck = FALSE
 
 /obj/item/sticker/Initialize(mapload)
 	. = ..()
 
 	if(length(icon_states))
 		icon_state = pick(icon_states)
+	if(mapload && start_stuck)
+		for(var/thing in loc.contents)
+			if(istype(thing, /turf/closed/wall)	|| istype(thing, /obj/structure/window))
+				attempt_attach(thing, null, (pixel_x + 12), (pixel_y + 12))
+				return
 
 /obj/item/sticker/Bump(atom/bumped_atom)
 	if(prob(50) && attempt_attach(bumped_atom))
