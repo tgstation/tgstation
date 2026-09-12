@@ -33,6 +33,8 @@
 	var/combat = FALSE
 	/// How long does it take to recharge
 	var/cooldown_duration = 5 SECONDS
+	/// How long does it take to revive
+	var/revive_time_mult = 1.0
 	/// The icon state for the paddle overlay, not applied if null
 	var/paddle_state = "defibunit-paddles"
 	/// The icon state for the powered on overlay, not applied if null
@@ -57,6 +59,7 @@
 	update_power()
 	RegisterSignal(paddles, COMSIG_DEFIBRILLATOR_SUCCESS, PROC_REF(on_defib_success))
 	AddElement(/datum/element/drag_pickup)
+	paddles.revive_time_mult = revive_time_mult
 
 /obj/item/defibrillator/loaded/Initialize(mapload) //starts with hicap
 	. = ..()
@@ -270,6 +273,15 @@
 	cell = new(src)
 	update_power()
 
+/obj/item/defibrillator/compact/improvised
+	name = "improvized compact defibrillator"
+	desc = "A stripped down defibrillator that can be worn as a belt."
+	revive_time_mult = 1.75
+	icon_state = "defibimprov"
+	worn_icon_state = "defibimprov"
+	powered_state = null
+	w_class = WEIGHT_CLASS_BULKY
+
 /obj/item/defibrillator/compact/loaded/cmo // subtype for the spy steal objective
 	name = "chief medical officer's compact defibrillator"
 	icon_state = "defibcmo"
@@ -331,6 +343,7 @@
 	var/req_defib = TRUE // Whether or not the paddles require a defibrilator object
 	var/recharge_time = 6 SECONDS // Only applies to defibs that do not require a defibrilator. See: do_success()
 	var/combat = FALSE //If it penetrates armor and gives additional functionality
+	var/revive_time_mult = 1.0
 
 /obj/item/shockpaddles/Initialize(mapload)
 	. = ..()
@@ -561,11 +574,11 @@
 	user.visible_message(span_warning("[user] begins to place [src] on [H]'s chest."), span_warning("You begin to place [src] on [H]'s chest..."))
 	busy = TRUE
 	update_appearance()
-	if(do_after(user, 3 SECONDS, H, extra_checks = CALLBACK(src, PROC_REF(is_wielded)))) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
+	if(do_after(user, 3 SECONDS * revive_time_mult, H, extra_checks = CALLBACK(src, PROC_REF(is_wielded)))) //beginning to place the paddles on patient's chest to allow some time for people to move away to stop the process
 		user.visible_message(span_notice("[user] places [src] on [H]'s chest."), span_warning("You place [src] on [H]'s chest."))
 		playsound(src, 'sound/machines/defib/defib_charge.ogg', 75, FALSE)
 		var/obj/item/organ/heart = H.get_organ_by_type(/obj/item/organ/heart)
-		if(do_after(user, 2 SECONDS, H, extra_checks = CALLBACK(src, PROC_REF(is_wielded)))) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
+		if(do_after(user, 2 SECONDS * revive_time_mult, H, extra_checks = CALLBACK(src, PROC_REF(is_wielded)))) //placed on chest and short delay to shock for dramatic effect, revive time is 5sec total
 			if((!combat && !req_defib) || (req_defib && !defib.combat))
 				for(var/obj/item/clothing/C in H.get_equipped_items())
 					if((C.body_parts_covered & CHEST) && (C.clothing_flags & THICKMATERIAL)) //check to see if something is obscuring their chest.

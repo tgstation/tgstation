@@ -311,3 +311,16 @@
 	time = 10 SECONDS
 	category = CAT_EQUIPMENT
 	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
+
+/datum/crafting_recipe/compact_defib
+	name = "Improvized Compact Defibrillator"
+	result = /obj/item/defibrillator/compact/improvised
+	reqs = list(
+		/obj/item/defibrillator = 1,
+		/obj/item/storage/belt/utility = 1,
+		/obj/item/stack/cable_coil = 10,
+		/obj/item/stack/sheet/plasteel = 5,
+	)
+	time = 3 SECONDS
+	category = CAT_EQUIPMENT
+	tool_behaviors = list(TOOL_WELDER, TOOL_SCREWDRIVER, TOOL_WIRECUTTER)
