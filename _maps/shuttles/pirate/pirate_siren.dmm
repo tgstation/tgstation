@@ -74,7 +74,7 @@
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "dW" = (
-/turf/open/space/basic,
+/turf/template_noop,
 /area/template_noop)
 "ea" = (
 /obj/structure/steps/directional/south,
@@ -333,9 +333,8 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
-/obj/machinery/atmospherics/components/tank/air{
-	dir = 4;
-	piping_layer = 4
+/obj/machinery/atmospherics/components/tank/air/layer4{
+	dir = 4
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
@@ -728,9 +727,6 @@
 /obj/effect/turf_decal/stripes/red/line{
 	dir = 1
 	},
-/obj/machinery/computer/security/telescreen/entertainment/directional/south{
-	pixel_y = -35
-	},
 /obj/machinery/recharger{
 	pixel_x = -6;
 	pixel_y = 6
@@ -751,6 +747,7 @@
 	pixel_x = 9;
 	pixel_y = 1
 	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "AE" = (
@@ -758,9 +755,7 @@
 /obj/machinery/camera/preset/siren_pirates{
 	dir = 1
 	},
-/obj/machinery/computer/security/telescreen/entertainment/directional/north{
-	pixel_y = 29
-	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "Bc" = (
@@ -1056,15 +1051,13 @@
 	dir = 1
 	},
 /obj/effect/spawner/random/decoration/glowstick/on,
-/obj/machinery/computer/security/telescreen/entertainment/directional/north{
-	pixel_y = 34
-	},
 /obj/effect/decal/cleanable/crayon{
 	icon_state = "heart";
 	pixel_x = 13;
 	pixel_y = -14;
 	paint_colour = "#fd6767"
 	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/north,
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/pirate/siren)
 "JE" = (
@@ -1188,12 +1181,10 @@
 /area/shuttle/pirate/siren)
 "Pz" = (
 /obj/structure/platform,
-/obj/machinery/computer/security/telescreen/entertainment/directional/south{
-	pixel_y = -30
-	},
 /obj/machinery/camera/preset/siren_pirates{
 	dir = 5
 	},
+/obj/machinery/computer/security/telescreen/entertainment/directional/south,
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "PI" = (
