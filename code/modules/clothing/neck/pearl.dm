@@ -189,7 +189,7 @@
 		/datum/mood_event/tail_regained_right,
 	)
 
-	for(var/mood_event as anything in tail_moods)
+	for(var/mood_event in tail_moods)
 		equipper.clear_mood_event(mood_event)
 
 /// so you can see your legs damage
