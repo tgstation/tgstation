@@ -4,11 +4,11 @@
 	child_typepath = /datum/bt_node/ai_behavior/resist
 
 /datum/bt_node/decorator/pawn_grabbed_by_enemy/register_observe_signals(atom/pawn)
-	RegisterSignals(pawn, list(COMSIG_LIVING_GET_PULLED, COMSIG_ATOM_NO_LONGER_PULLED, COMSIG_MOVABLE_SET_GRAB_STATE), PROC_REF(on_signal_changed))
+	RegisterSignals(pawn, list(COMSIG_LIVING_GET_PULLED, COMSIG_ATOM_NO_LONGER_PULLED, COMSIG_MOVABLE_CHANGED_GRABBED_STATE), PROC_REF(on_signal_changed))
 	return TRUE
 
 /datum/bt_node/decorator/pawn_grabbed_by_enemy/unregister_observe_signals(atom/pawn)
-	UnregisterSignal(pawn, list(COMSIG_LIVING_GET_PULLED, COMSIG_ATOM_NO_LONGER_PULLED, COMSIG_MOVABLE_SET_GRAB_STATE))
+	UnregisterSignal(pawn, list(COMSIG_LIVING_GET_PULLED, COMSIG_ATOM_NO_LONGER_PULLED, COMSIG_MOVABLE_CHANGED_GRABBED_STATE))
 
 /datum/bt_node/decorator/pawn_grabbed_by_enemy/check_condition(datum/ai_controller/controller)
 	var/mob/living/pawn = controller.pawn
