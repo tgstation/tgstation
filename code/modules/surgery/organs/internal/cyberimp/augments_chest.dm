@@ -189,6 +189,7 @@
 	base_icon_state = "imp_jetpack"
 	aug_overlay = "imp_jetpack"
 	emissive_overlay = TRUE
+	overlay_layer = BODYPARTS_HIGH_LAYER
 	actions_types = list(/datum/action/item_action/organ_action/toggle)
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2, /datum/material/glass = SHEET_MATERIAL_AMOUNT, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT)
@@ -237,7 +238,6 @@
 	if(!silent)
 		to_chat(owner, span_notice("You turn your thrusters set on."))
 	update_appearance()
-	owner.update_body_parts()
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/deactivate(silent = FALSE)
 	if(!on)
@@ -248,10 +248,10 @@
 		to_chat(owner, span_notice("You turn your thrusters set off."))
 	on = FALSE
 	update_appearance()
-	owner.update_body_parts()
 
 /obj/item/organ/cyberimp/chest/thrusters/update_icon_state()
 	icon_state = "[base_icon_state][on ? "-on" : null]"
+	update_overlay_state()
 	return ..()
 
 /obj/item/organ/cyberimp/chest/thrusters/proc/allow_thrust(num, use_fuel = TRUE)
@@ -289,13 +289,8 @@
 	deactivate(silent = TRUE)
 	return FALSE
 
-/obj/item/organ/cyberimp/chest/thrusters/get_overlay_state(image_layer, obj/item/bodypart/limb)
+/obj/item/organ/cyberimp/chest/thrusters/get_overlay_state()
 	return "[aug_overlay][on ? "_on" : ""]"
-
-/obj/item/organ/cyberimp/chest/thrusters/get_overlay(image_layer, obj/item/bodypart/limb)
-	. = ..()
-	for (var/image/overlay as anything in .)
-		overlay.layer = -BODYPARTS_HIGH_LAYER // makes absolutely zero sense why it would layer ontop of jumpsuits but it looks cool
 
 /obj/item/organ/cyberimp/chest/spine
 	name = "\improper Herculean gravitronic spinal implant"
