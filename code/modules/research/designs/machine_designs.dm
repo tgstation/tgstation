@@ -1096,6 +1096,24 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/board/bluespace_scrubber
+	name = "Portable Bluespace Scrubber Board"
+	desc = "The circuit board for a portable bluespace scrubber."
+	build_path = /obj/item/circuitboard/machine/bluespace_scrubber
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ATMOS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/gas_receiver
+	name = "Gas Receiver Board"
+	desc = "The circuit board for a gas receiver."
+	build_path = /obj/item/circuitboard/machine/gas_receiver
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ATMOS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/board/pump
 	name = "Portable Air Pump Board"
 	desc = "The circuit board for a portable air pump."
