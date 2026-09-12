@@ -172,6 +172,7 @@
 
 	var/enabled_or_disabled = (safety ? "enabled" : "disabled")
 	balloon_alert(user, "safety protocols [enabled_or_disabled]")
+	update_appearance()
 
 	return TRUE
 
