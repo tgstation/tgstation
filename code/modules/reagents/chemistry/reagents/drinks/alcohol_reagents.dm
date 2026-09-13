@@ -3502,7 +3502,7 @@
 	name = "Watchman's Nightcap"
 	description = "A particular man used to always go to bed with a candle lit on his nightstand. You would too, if you knew what he knew."
 	boozepwr = 40
-	color = "#1DA7DD"
+	color = "#dd1d1d"
 	quality = DRINK_FANTASTIC
 	taste_description = "all that's in a flame alongside fire"
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
@@ -3638,7 +3638,7 @@
 	name = "Rubywise Ruin"
 	description = "A ruddy liquor wrung from flowers - even when the flowers aren't red."
 	boozepwr = 70
-	color = "#DC143C"
+	color = "#7b1d30"
 	quality = DRINK_FANTASTIC
 	taste_description = "wine that writhes"
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
@@ -3686,7 +3686,7 @@
 	name = "Open-Throat Draught"
 	description = "Supposedly, there is a tavern that exsists between the walls of our reality, where stray souls from all strange worlds gather. If such a bar truely exsists, it's patrons might drink this to facilitate friendly discussion."
 	boozepwr = 35
-	color = "#e4f38f"
+	color = "#34bf34"
 	quality = DRINK_FANTASTIC
 	taste_description = "your tongue splitting, then splitting again"
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
@@ -3726,7 +3726,7 @@
 	name = "Entropic Brew"
 	description = "Beyond foul. This fluid is an affront to the very concept of ordered beauty. Not to be served in any vessel that can be corroded or oxidized... Or, frankly, served whatsoever."
 	boozepwr = 40
-	color = "#B7410E"
+	color = "#294021"
 	quality = DRINK_FANTASTIC
 	overdose_threshold = 44 //if you can chug a full glass without vomiting, you become immune. Around 5u is metabolized as the stomach does it's thing, so this is set to 44u instead of 50.
 	taste_description = "the end of everything"
