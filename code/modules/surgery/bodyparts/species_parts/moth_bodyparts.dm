@@ -18,6 +18,7 @@
 	should_draw_greyscale = FALSE
 	wing_types = list(/obj/item/organ/wings/megamoth, /obj/item/organ/wings/mothra)
 	bodypart_traits = list(TRAIT_TACKLING_WINGED_ATTACKER)
+	can_be_disabled = TRUE // to allow disabling the chest arms
 
 	VAR_PRIVATE/obj/item/bodypart/arm/left/moth/inner/left_inner
 	VAR_PRIVATE/obj/item/bodypart/arm/right/moth/inner/right_inner
@@ -109,9 +110,10 @@
 	body_zone = null
 	held_index = 3
 	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_ABSTRACT | BODYPART_VIRGIN
-	plaintext_zone = "left chest arm"
+	plaintext_zone = "left chest-arm"
 
 /obj/item/bodypart/arm/left/moth/inner/Initialize(mapload)
+	name = "left chest-arm"
 	held_hand_offset =  new(
 		attached_part = src,
 		feature_key = OFFSET_HELD,
@@ -132,9 +134,10 @@
 	body_zone = null
 	held_index = 4
 	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_ABSTRACT | BODYPART_VIRGIN
-	plaintext_zone = "right chest arm"
+	plaintext_zone = "right chest-arm"
 
 /obj/item/bodypart/arm/right/moth/inner/Initialize(mapload)
+	name = "left chest-arm"
 	held_hand_offset = new (
 		attached_part = src,
 		feature_key = OFFSET_HELD,
