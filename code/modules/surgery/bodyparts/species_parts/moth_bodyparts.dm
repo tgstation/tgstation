@@ -26,6 +26,7 @@
 	. = ..()
 	left_inner = new(src)
 	right_inner = new(src)
+	add_bodypart_overlay(new /datum/bodypart_overlay/simple/moth_arms())
 	RegisterSignal(left_inner, COMSIG_BODYPART_POST_REMOVED, PROC_REF(slurp_up_limbs))
 	RegisterSignal(right_inner, COMSIG_BODYPART_POST_REMOVED, PROC_REF(slurp_up_limbs))
 
@@ -114,7 +115,7 @@
 	held_hand_offset =  new(
 		attached_part = src,
 		feature_key = OFFSET_HELD,
-		offset_x = list("north" = 2, "south" = -2, "east" = 0),
+		offset_x = list("north" = 2, "south" = -2, "east" = 2, "west" = -8),
 		offset_y = list("south" = -12), // shhh
 	)
 	return ..()
@@ -137,7 +138,7 @@
 	held_hand_offset = new (
 		attached_part = src,
 		feature_key = OFFSET_HELD,
-		offset_x = list("north" = -2, "south" = 2, "east" = 0),
+		offset_x = list("north" = -2, "south" = 2, "east" = 8, "west" = -2),
 		offset_y = list("south" = -12),
 	)
 	return ..()
@@ -149,3 +150,12 @@
 
 /obj/item/bodypart/arm/right/moth/inner/generate_icon_key()
 	return list()
+
+// TODO: should be mutant overlay at some point?
+/datum/bodypart_overlay/simple/moth_arms
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+	)
+	offset_location = UPPER_BODY
+	icon = 'icons/mob/human/species/moth/moth_arms.dmi'
+	icon_state = "m_moth_arms_generic_FRONT"
