@@ -3619,9 +3619,9 @@
 
 	var/icegrave_temp = -200
 	affected_mob.apply_status_effect(/datum/status_effect/ice_block_talisman, 5 SECONDS)
-		var/thermal_protection = 1 - affected_mob.get_insulation_protection(affected_mob.bodytemperature + icegrave_temp)
-		var/applied_temp = (thermal_protection * icegrave_temp) + icegrave_temp
-		affected_mob.adjust_bodytemperature(applied_temp)
+	var/thermal_protection = 1 - affected_mob.get_insulation_protection(affected_mob.bodytemperature + icegrave_temp)
+	var/applied_temp = (thermal_protection * icegrave_temp) + icegrave_temp
+	affected_mob.adjust_bodytemperature(applied_temp)
 
 #undef ALCOHOL_EXPONENT
 #undef ALCOHOL_THRESHOLD_MODIFIER
