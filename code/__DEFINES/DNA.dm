@@ -64,6 +64,7 @@
 #define FEATURE_MOTH_WINGS "moth_wings"
 #define FEATURE_MOTH_ANTENNAE "moth_antennae"
 #define FEATURE_MOTH_MARKINGS "moth_markings"
+#define FEATURE_MOTH_ARMS "moth_arms"
 #define FEATURE_MUSH_CAP "caps"
 #define FEATURE_POD_HAIR "pod_hair"
 

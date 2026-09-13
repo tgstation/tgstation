@@ -904,12 +904,13 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 /mob/proc/swap_hand(held_index, silent = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE) // Override perform_hand_swap instead
 
-	var/obj/item/held_item = get_active_held_item()
-	if(SEND_SIGNAL(src, COMSIG_MOB_SWAPPING_HANDS, held_item) & COMPONENT_BLOCK_SWAP)
-		if (!silent)
-			to_chat(src, span_warning("Your other hand is too busy holding [held_item]."))
+	if(!held_index)
+		held_index = (active_hand_index % held_items.len) + 1
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_SWAPPING_HANDS, held_index, silent) & COMPONENT_BLOCK_SWAP)
 		return FALSE
 
+	var/obj/item/held_item = get_active_held_item()
 	var/result = perform_hand_swap(held_index)
 	if (result)
 		SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, get_active_held_item(), held_item)
@@ -921,9 +922,6 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 	PROTECTED_PROC(TRUE)
 	if (!HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS))
 		return FALSE
-
-	if(!held_index)
-		held_index = (active_hand_index % held_items.len) + 1
 
 	if(!isnum(held_index))
 		CRASH("You passed [held_index] into swap_hand instead of a number. WTF man")

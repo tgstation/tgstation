@@ -19,6 +19,47 @@
 	wing_types = list(/obj/item/organ/wings/megamoth, /obj/item/organ/wings/mothra)
 	bodypart_traits = list(TRAIT_TACKLING_WINGED_ATTACKER)
 
+	VAR_PRIVATE/obj/item/bodypart/arm/left/moth/inner/left_inner
+	VAR_PRIVATE/obj/item/bodypart/arm/right/moth/inner/right_inner
+
+/obj/item/bodypart/chest/moth/Initialize(mapload)
+	. = ..()
+	left_inner = new(src)
+	right_inner = new(src)
+	add_bodypart_overlay(new /datum/bodypart_overlay/simple/moth_arms())
+	RegisterSignal(left_inner, COMSIG_BODYPART_POST_REMOVED, PROC_REF(slurp_up_limbs))
+	RegisterSignal(right_inner, COMSIG_BODYPART_POST_REMOVED, PROC_REF(slurp_up_limbs))
+
+/obj/item/bodypart/chest/moth/Destroy()
+	QDEL_NULL(left_inner)
+	QDEL_NULL(right_inner)
+	return ..()
+
+/obj/item/bodypart/chest/moth/proc/slurp_up_limbs(datum/source, mob/living/carbon/owner, special, dismembered)
+	SIGNAL_HANDLER
+
+	astype(source, /obj/item/bodypart/arm)?.forceMove(src)
+
+/obj/item/bodypart/chest/moth/set_disabled(new_disabled, update_limbs)
+	. = ..()
+	left_inner.set_disabled(new_disabled, update_limbs)
+	right_inner.set_disabled(new_disabled, update_limbs)
+
+/obj/item/bodypart/chest/moth/try_attach_limb(mob/living/carbon/new_owner, special, lazy)
+	. = ..()
+	if(!.)
+		return
+
+	new_owner.change_number_of_hands(4)
+	left_inner.try_attach_limb(new_owner, special = TRUE)
+	right_inner.try_attach_limb(new_owner, special = TRUE)
+
+/obj/item/bodypart/chest/moth/on_removal(mob/living/carbon/old_owner)
+	left_inner.drop_limb(special = TRUE, dismembered = FALSE, move_to_floor = FALSE)
+	right_inner.drop_limb(special = TRUE, dismembered = FALSE, move_to_floor = FALSE)
+	old_owner.change_number_of_hands(2)
+	. = ..()
+
 /obj/item/bodypart/chest/moth/get_butt_sprite()
 	return icon('icons/mob/butts.dmi', BUTT_SPRITE_FUZZY)
 
@@ -63,3 +104,58 @@
 	icon_static = 'icons/mob/human/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	should_draw_greyscale = FALSE
+
+/obj/item/bodypart/arm/left/moth/inner
+	body_zone = null
+	held_index = 3
+	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_ABSTRACT | BODYPART_VIRGIN
+	plaintext_zone = "left chest arm"
+
+/obj/item/bodypart/arm/left/moth/inner/Initialize(mapload)
+	held_hand_offset =  new(
+		attached_part = src,
+		feature_key = OFFSET_HELD,
+		offset_x = list("north" = 2, "south" = -2, "east" = 2, "west" = -8),
+		offset_y = list("south" = -12), // shhh
+	)
+	return ..()
+
+/obj/item/bodypart/arm/left/moth/inner/drop_limb(special, dismembered, move_to_floor)
+	if(special)
+		return ..()
+	return FALSE
+
+/obj/item/bodypart/arm/left/moth/inner/generate_icon_key()
+	return list()
+
+/obj/item/bodypart/arm/right/moth/inner
+	body_zone = null
+	held_index = 4
+	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_ABSTRACT | BODYPART_VIRGIN
+	plaintext_zone = "right chest arm"
+
+/obj/item/bodypart/arm/right/moth/inner/Initialize(mapload)
+	held_hand_offset = new (
+		attached_part = src,
+		feature_key = OFFSET_HELD,
+		offset_x = list("north" = -2, "south" = 2, "east" = 8, "west" = -2),
+		offset_y = list("south" = -12),
+	)
+	return ..()
+
+/obj/item/bodypart/arm/right/moth/inner/drop_limb(special, dismembered, move_to_floor)
+	if(special)
+		return ..()
+	return FALSE
+
+/obj/item/bodypart/arm/right/moth/inner/generate_icon_key()
+	return list()
+
+// TODO: should be mutant overlay at some point?
+/datum/bodypart_overlay/simple/moth_arms
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+	)
+	offset_location = UPPER_BODY
+	icon = 'icons/mob/human/species/moth/moth_arms.dmi'
+	icon_state = "m_moth_arms_generic_FRONT"
