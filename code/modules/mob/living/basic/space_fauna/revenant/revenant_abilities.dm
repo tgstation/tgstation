@@ -306,6 +306,13 @@
 	cast_amount = 60
 	unlock_amount = 125
 
+	/// Typecache of stuff we generally don't want emaggable
+	var/static/list/no_emag_typecache = typecacheof(list(
+		/obj/machinery/power/apc,
+		/obj/machinery/power/smes,
+		/obj/machinery/computer/emergency_shuttle,
+	))
+
 // A note to future coders: do not replace this with an EMP because it will wreck malf AIs and everyone will hate you.
 /datum/action/cooldown/spell/aoe/revenant/malfunction/cast_on_thing_in_aoe(turf/victim, mob/living/basic/revenant/caster)
 	for(var/mob/living/basic/bot/bot in victim)
@@ -323,13 +330,13 @@
 		new /obj/effect/temp_visual/revenant(human.loc)
 		human.emp_act(EMP_HEAVY)
 	for(var/obj/thing in victim)
-		//Doesn't work on SMES and APCs, to prevent kekkery.
-		if(istype(thing, /obj/machinery/power/apc) || istype(thing, /obj/machinery/power/smes))
+		if(is_type_in_typecache(thing, no_emag_typecache))
 			continue
-		if(prob(20))
-			if(prob(50))
-				new /obj/effect/temp_visual/revenant(thing.loc)
-			thing.emag_act(caster)
+		if(!prob(20))
+			continue
+		if(prob(50))
+			new /obj/effect/temp_visual/revenant(thing.loc)
+		thing.emag_act(caster)
 	// Only works on cyborgs, not AI!
 	for(var/mob/living/silicon/robot/cyborg in victim)
 		playsound(cyborg, 'sound/machines/warning-buzzer.ogg', 50, TRUE)

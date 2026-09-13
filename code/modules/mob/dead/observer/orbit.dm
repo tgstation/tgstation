@@ -228,7 +228,7 @@ GLOBAL_DATUM_INIT(orbit_menu, /datum/orbit_menu, new)
 		return serialized
 
 	serialized["mind_job"] = job.title
-	serialized["mind_job_icon"] = job.tgui_icon
+	serialized["mind_job_icon"] = job.tgui_icon || FA_ICON_QUESTION
 	var/datum/outfit/outfit = job.get_outfit()
 	if (isnull(outfit))
 		return serialized

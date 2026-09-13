@@ -149,6 +149,15 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
+/datum/design/board/plankman
+	name = "PLANKMAN Board"
+	desc = "The circuit board for a PLANKMAN-type portable generator."
+	build_path = /obj/item/circuitboard/machine/plankman
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
 /datum/design/bioelec_gen
 	name = "Aquarium Bioelectricity Kit"
 	desc = "The required components to convert an aquarium into a bioelectricity generator."

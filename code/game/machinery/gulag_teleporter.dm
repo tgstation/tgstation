@@ -96,8 +96,7 @@ The console is located at computer/gulag_teleporter.dm
 			return
 		resist_time *= 0.5
 
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.change_next_special_move(CLICK_CD_BREAKOUT)
 	user.visible_message(
 		span_notice("You see [user] kicking against the door of [src]!"),
 		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(resist_time)].)"),

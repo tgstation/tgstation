@@ -230,7 +230,7 @@ GLOBAL_LIST_EMPTY(security_officer_distribution)
 	backpack_contents = list(
 		/obj/item/evidencebag = 1,
 		)
-	belt = /obj/item/modular_computer/pda/security
+	belt = /obj/item/modular_computer/pda/crew/security
 	ears = /obj/item/radio/headset/headset_sec/alt
 	gloves = /obj/item/clothing/gloves/color/black/security
 	head = /obj/item/clothing/head/helmet/sec

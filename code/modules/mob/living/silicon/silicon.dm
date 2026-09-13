@@ -374,4 +374,4 @@
 		. += borg_laws
 
 /mob/living/silicon/get_access()
-	return REGION_ACCESS_ALL_STATION
+	return SSid_access.accesses_by_region[REGION_ALL_STATION]
