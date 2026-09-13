@@ -3521,14 +3521,8 @@
 /datum/reagent/consumable/ethanol/mouthwash_strong/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	drinker.apply_status_effect(/datum/status_effect/throat_soothed)
-	if(HAS_TRAIT(drinker, TRAIT_FAT))
-		drinker.investigate_log("has been gibbed by consuming [src] while fat.", INVESTIGATE_DEATHS)
-		drinker.inflate_gib()
 	if(SPT_PROB(5, seconds_per_tick) && !HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.adjust_hallucinations(8 SECONDS * metabolization_ratio)
-	if(SPT_PROB(0.01, seconds_per_tick) && !HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
-		drinker.investigate_log("has been gibbed by consuming [src] due to being that 0.01% of germs.", INVESTIGATE_DEATHS)
-		drinker.inflate_gib()
 
 /datum/reagent/consumable/ethanol/frosty_dorf
 	name = "Frosty Dorf"
