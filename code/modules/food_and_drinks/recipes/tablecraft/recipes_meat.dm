@@ -96,7 +96,7 @@
 	added_foodtypes = ALCOHOL
 	dish_category = DISH_MEAT
 
-/datum/crafting_recipe/food/bearsteakfrost
+/datum/crafting_recipe/food/polar_bear_steak
 	name = "Filet polar migrawr"
 	reqs = list(
 		/datum/reagent/consumable/ethanol/frosty_dorf = 3,
