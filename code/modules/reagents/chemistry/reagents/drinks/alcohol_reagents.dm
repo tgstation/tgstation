@@ -3550,13 +3550,14 @@
 
 /datum/reagent/consumable/ethanol/stone_cold_stout/on_mob_metabolize(mob/living/carbon/human/drinker)
 	. = ..()
-	MODIFY_PHYSIOLOGY(drinker, BRUTE, 0.5)
-	MODIFY_PHYSIOLOGY(drinker, BURN, 0.5)
+	MODIFY_PHYSIOLOGY(drinker, BRUTE, 0.8)
+	MODIFY_PHYSIOLOGY(drinker, BURN, 0.8)
 
 /datum/reagent/consumable/ethanol/stone_cold_stout/on_mob_end_metabolize(mob/living/carbon/human/drinker)
 	. = ..()
-	MODIFY_PHYSIOLOGY(drinker, BRUTE, 2)
-	MODIFY_PHYSIOLOGY(drinker, BURN, 2)
+	MODIFY_PHYSIOLOGY(drinker, BRUTE, 1.25)
+	MODIFY_PHYSIOLOGY(drinker, BURN, 1.25)
+
 /datum/reagent/consumable/ethanol/ramp_rager
 	name = "Ramp Rager"
 	description = "Furiously bubbling drink, capable of making people go berserk. An invitation for a bar fight."
@@ -3573,7 +3574,7 @@
 	if(SPT_PROB(15, seconds_per_tick) && !HAS_TRAIT(drinker, TRAIT_ALCOHOL_TOLERANCE))
 		drinker.adjust_hallucinations(8 SECONDS * metabolization_ratio)
 	need_mob_update += drinker.adjust_organ_loss(ORGAN_SLOT_BRAIN, 0.75 * metabolization_ratio * seconds_per_tick)
-	drinker.AdjustAllImmobility(-10 * metabolization_ratio * seconds_per_tick)
+	drinker.AdjustAllImmobility(-1 SECONDS * metabolization_ratio * seconds_per_tick)
 	if(drinker.adjust_stamina_loss(-15 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))
 		. = UPDATE_MOB_HEALTH
 	if(need_mob_update)
@@ -3593,7 +3594,7 @@
 
 /datum/reagent/consumable/ethanol/ramp_rager/proc/on_stamcrit(mob/living/drinker)
 	SIGNAL_HANDLER
-	drinker.set_stamina_loss(90, updating_stamina = TRUE)
+	drinker.set_stamina_loss(50, updating_stamina = TRUE)
 	to_chat(drinker, span_message("This can't end like this... Blood rushes away from your head..."))
 	volume -= (min(volume, 3))
 	return STAMCRIT_CANCELLED
@@ -3615,14 +3616,16 @@
 	taste_description = "cold"
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	var/icegrave_temp = -200
 
 /datum/reagent/consumable/ethanol/icegrave/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(HAS_TRAIT(affected_mob.get_organ_slot(ORGAN_SLOT_LIVER), TRAIT_CORONER_METABOLISM)) //Coroners know your icegraves. Also, its made using formaldehyde, so.
 		return
+
 	affected_mob.apply_status_effect(/datum/status_effect/ice_block_talisman, 5 SECONDS)
-		var/thermal_protection = 1 - affected_mob.get_insulation_protection(affected_mob.bodytemperature - 200)
-		var/applied_temp = (thermal_protection * -200) - 200
+		var/thermal_protection = 1 - affected_mob.get_insulation_protection(affected_mob.bodytemperature + icegrave_temp)
+		var/applied_temp = (thermal_protection * icegrave_temp) + icegrave_temp
 		affected_mob.adjust_bodytemperature(applied_temp)
 		return
 

@@ -308,7 +308,7 @@
 /obj/structure/flora/ash/inozhakust/get_potential_products()
 	return list(/obj/item/food/grown/ash_flora/inozhakust = 1)
 
-/obj/structure/flora/ash/plasmaflower
+/obj/structure/flora/ash/plasma_flower
 	name = "plasma flower"
 	desc = "A bunch of vines surrounding a clustered bunch of plasma flowers. Researches still are trying to wrap their heads around these ones."
 	icon_state = "plasma_flower1"
@@ -326,28 +326,28 @@
 	regrowth_time_high = 7 MINUTES
 	number_of_variants = 2
 
-/obj/structure/flora/ash/plasmaflower/get_potential_products()
-	return list(/obj/item/food/grown/ash_flora/plasmaflower = 1)
+/obj/structure/flora/ash/plasma_flower/get_potential_products()
+	return list(/obj/item/food/grown/ash_flora/plasma_flower = 1)
 
-/obj/structure/flora/ash/plasmaflower/after_harvest()
+/obj/structure/flora/ash/plasma_flower/after_harvest()
 	set_light_power(LIGHT_RANGE_FIRE_BLOSSOM_HARVESTED)
 	set_light_range(LIGHT_POWER_FIRE_BLOSSOM_HARVESTED)
 	update_light()
 	return ..()
 
-/obj/structure/flora/ash/plasmaflower/regrow()
+/obj/structure/flora/ash/plasma_flower/regrow()
 	set_light_power(initial(light_power))
 	set_light_range(initial(light_range))
 	update_light()
 	return ..()
 
-/obj/structure/flora/ash/drakebeet
+/obj/structure/flora/ash/drake_beet
 	name = "drake beet"
 	desc = "An mutated beet. It seems to have adapted to local ecosystems by vaguely mimicking the appearance of a drake. Unsure how that helps, but its probably still tasty."
 	icon_state = "drakebeet1"
 	base_icon_state = "drakebeet"
 	harvested_name = "young drake beet"
-	harvested_desc = "An mutated beet. These ones are yet to grow up... Wonder where all the young of the actual snowdrakes are."
+	harvested_desc = "An mutated beet. These ones are yet to grow up. Brought here by spinwarders in order to make borstch then went wild and mutated like everything else."
 	harvest_amount_high = 4
 	harvest_message_low = "You pull a single suitable beet from the ground."
 	harvest_message_med = "You pull a number of suitable beets from the ground."
@@ -357,8 +357,8 @@
 	harvest_time = 25
 	number_of_variants = 2
 
-/obj/structure/flora/ash/drakebeet/get_potential_products()
-	return list(/obj/item/food/grown/drakebeet = 1)
+/obj/structure/flora/ash/drake_beet/get_potential_products()
+	return list(/obj/item/food/grown/drake_beet = 1)
 
 //SNACKS
 
@@ -485,16 +485,16 @@
 	distill_reagent = /datum/reagent/consumable/ethanol/mouthwash
 	foodtypes = VEGETABLES|GROSS
 
-/obj/item/food/grown/ash_flora/plasmaflower
+/obj/item/food/grown/ash_flora/plasma_flower
 	name = "plasma flower"
 	desc = "A bit of vine conected a crystalized plasma flower."
 	icon_state = "plasmaflower"
 	slot_flags = ITEM_SLOT_HEAD
-	seed = /obj/item/seeds/lavaland/plasmaflower
+	seed = /obj/item/seeds/lavaland/plasma_flower
 	foodtypes = TOXIC
 	wine_power = 40
 
-/obj/item/food/grown/ash_flora/plasmaflower/Initialize(mapload)
+/obj/item/food/grown/ash_flora/plasma_flower/Initialize(mapload)
 	. = ..()
 	// Fire flowers make fireproof raptors
 	AddElement(/datum/element/raptor_food, color_chances = string_list(list(/datum/raptor_color/blue = 5)))
@@ -700,7 +700,7 @@
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.01, /datum/reagent/consumable/nutriment = 0.09,  /datum/reagent/consumable/mintextract = 0.03, /datum/reagent/impurity = 0.02)
 	graft_gene = /datum/plant_gene/trait/plant_type/toxin_adaptation
 
-/obj/item/seeds/lavaland/plasmaflower
+/obj/item/seeds/lavaland/plasma_flower
 	name = "plasma flower seed pack"
 	desc = "These seeds grow into plasma flowers."
 	icon_state = "seed-plasmaflower"
@@ -712,7 +712,7 @@
 	yield = 3
 	potency = 20
 	growthstages = 3
-	product = /obj/item/food/grown/ash_flora/plasmaflower
+	product = /obj/item/food/grown/ash_flora/plasma_flower
 	genes = list(/datum/plant_gene/trait/plant_type/toxin_adaptation, /datum/plant_gene/trait/glow/purple)
 	growing_icon = 'icons/obj/service/hydroponics/growing_flowers.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.02, /datum/reagent/plasma_oxide = 0.01, /datum/reagent/stable_plasma = 0.02)

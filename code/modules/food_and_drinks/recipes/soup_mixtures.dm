@@ -1096,7 +1096,7 @@
 /datum/chemical_reaction/food/soup/drake_beet
 	required_reagents = list(/datum/reagent/water = 50)
 	required_ingredients = list(
-		/obj/item/food/grown/drakebeet = 2,
+		/obj/item/food/grown/drake_beet = 2,
 		/obj/item/stack/sheet/animalhide/ashdrake = 1,
 	)
 	results = list(
@@ -1160,7 +1160,7 @@
 // Iceberg soup
 /datum/reagent/consumable/nutriment/soup/iceberg
 	name = "Iceberg Soup"
-	description = "A slight upgrade upon the wish soup, this one has some nutreint content."
+	description = "A slight upgrade upon the wish soup, this one has some nutrient content."
 	data = list("cold" = 4, "tundra wilds" = 1)
 	color = "#26AEB9"
 
@@ -1340,7 +1340,7 @@
 	)
 	required_ingredients = list(
 		/obj/item/stack/sheet/sinew/wolf = 1,
-		/obj/item/food/grown/drakebeet = 1,
+		/obj/item/food/grown/drake_beet = 1,
 		/obj/item/food/grown/bell_pepper = 1,
 		/obj/item/food/grown/onion = 1,
 	)

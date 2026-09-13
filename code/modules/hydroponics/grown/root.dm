@@ -168,7 +168,7 @@
 	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_dead = "whitebeet-dead"
 	genes = list(/datum/plant_gene/trait/soil_lover, /datum/plant_gene/trait/maxchem)
-	mutatelist = list(/obj/item/seeds/drakebeet)
+	mutatelist = list(/obj/item/seeds/drake_beet)
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.05, /datum/reagent/consumable/nutriment = 0.05)
 	graft_gene = /datum/plant_gene/trait/maxchem
 
@@ -182,13 +182,13 @@
 	wine_power = 60
 
 /// Drake Beet
-/obj/item/seeds/drakebeet
+/obj/item/seeds/drake_beet
 	name = "drake beet seed pack"
 	desc = "These seeds grow into drake beet producing plants."
 	icon_state = "seed-drakebeet"
 	species = "drakebeet"
 	plantname = "Drake-Beet Plants"
-	product = /obj/item/food/grown/drakebeet
+	product = /obj/item/food/grown/drake_beet
 	lifespan = 60
 	endurance = 60
 	yield = 5
@@ -199,8 +199,8 @@
 	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.02, /datum/reagent/consumable/sugar = 0.5, /datum/reagent/consumable/nutriment = 0.03, /datum/reagent/consumable/capsaicin = 0.2)
 	graft_gene = /datum/plant_gene/trait/maxchem
 
-/obj/item/food/grown/drakebeet
-	seed = /obj/item/seeds/drakebeet
+/obj/item/food/grown/drake_beet
+	seed = /obj/item/seeds/drake_beet
 	name = "drake beet"
 	desc = "Despite the intimidating exterior, drakebeets are actually rich in sugars, extracted from the soil. And just slightly spicy."
 	icon_state = "drakebeet"

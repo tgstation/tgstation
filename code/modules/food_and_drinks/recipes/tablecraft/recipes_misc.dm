@@ -590,12 +590,12 @@
 	result = /obj/item/food/raw_pita_bread
 	dish_category = DISH_BREAD
 
-/datum/crafting_recipe/food/nutreintbar
-	name = "Nutreint Bar"
+/datum/crafting_recipe/food/nutrient_bar
+	name = "Nutrient Bar"
 	reqs = list(
 		/obj/item/food/grown/ash_flora/inozhakust = 2,
 		/datum/reagent/consumable/sugar = 3,
 	)
-	result = /obj/item/food/nutreintbar
+	result = /obj/item/food/nutrient_bar
 	removed_foodtypes =  GROSS
 	dish_category = DISH_UNCATEGORIZED

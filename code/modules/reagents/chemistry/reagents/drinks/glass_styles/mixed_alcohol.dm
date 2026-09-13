@@ -1257,7 +1257,7 @@
 /datum/glass_style/drinking_glass/mouthwash_strong
 	required_drink_type = /datum/reagent/consumable/ethanol/mouthwash_strong
 	name = "Strong Mouthwash"
-	desc = "A bottle of strong moutwash, with increased alcohol content. The label proudly proclaims 'Kills 99.9% of all germs'. Another, smaller label reads 'Take responsibility for your hygiene'."
+	desc = "A bottle of strong mouthwash, with increased alcohol content. The label proudly proclaims 'Kills 99.9% of all germs'. Another, smaller label reads 'Take responsibility for your hygiene'."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "mouthwash_strong"
 

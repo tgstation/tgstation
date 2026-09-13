@@ -449,7 +449,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_2
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
-/obj/item/food/bearsteakfrost
+/obj/item/food/polar_bear_steak
 	name = "fillet polar migrawr"
 	desc = "Because eating bear on fire wasn't slavic enough."
 	icon = 'icons/obj/food/meat.dmi'
@@ -870,7 +870,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_2
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 2)
 
-/obj/item/food/drakeribs
+/obj/item/food/drake_ribs
 	name = "drake ribs"
 	desc = "Ribs from bear meat and scrapes of drake hide, slathered in BBQ sauce and Cold sauce. If it'd be any more meaty it'd inflict mental anguish upon vegans."
 	icon = 'icons/obj/food/meat.dmi'
@@ -1296,7 +1296,7 @@
 	crafting_complexity = FOOD_COMPLEXITY_4
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 2)
 
-/obj/item/food/wendigofeast
+/obj/item/food/wendigo_feast
 	trash_type = /obj/item/wendigo_skull
 	name = "wendigo feast"
 	desc = "A full load of meat, cold sauce and BBQ sauce. All topped by a Skull of a Wendigo stuffed with plants native to Freyja."

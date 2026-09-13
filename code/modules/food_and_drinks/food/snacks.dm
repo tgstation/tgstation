@@ -224,10 +224,10 @@
 	food_flags = FOOD_FINGER_FOOD
 	w_class = WEIGHT_CLASS_SMALL
 
-/obj/item/food/nutreintbar
-	name = "\improper Nutreint Bar"
-	icon_state = "nutreintbar"
-	desc = "A nutreint rich bar from inozhakust mash, with just enough sugar to not taste utterly horrid."
+/obj/item/food/nutrient_bar
+	name = "\improper Nutrient Bar"
+	icon_state = "nutrientbar"
+	desc = "A nutrieeint rich bar from inozhakust mash, with just enough sugar to not taste utterly horrid."
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 12,
 		/datum/reagent/consumable/sugar = 3,

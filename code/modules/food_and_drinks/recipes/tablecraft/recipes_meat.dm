@@ -103,7 +103,7 @@
 		/datum/reagent/consumable/ethanol/blue_blazer = 3,
 		/obj/item/food/meat/steak/bear = 1,
 	)
-	result = /obj/item/food/bearsteakfrost
+	result = /obj/item/food/polar_bear_steak
 	added_foodtypes = ALCOHOL
 	dish_category = DISH_MEAT
 
@@ -205,7 +205,7 @@
 	added_foodtypes = SUGAR
 	dish_category = DISH_MEAT
 
-/datum/crafting_recipe/food/drakeribs
+/datum/crafting_recipe/food/drake_ribs
 	name = "Drake Ribs"
 	reqs = list(
 		/datum/reagent/consumable/guidoferrun = 1,
@@ -215,7 +215,7 @@
 		/obj/item/stack/sheet/animalhide/ashdrake = 1,
 		/obj/item/stack/rods = 2
 	)
-	result = /obj/item/food/drakeribs
+	result = /obj/item/food/drake_ribs
 	added_foodtypes = SUGAR
 	dish_category = DISH_MEAT
 
@@ -434,16 +434,16 @@
 	dish_category = DISH_MEAT
 	meal_category = MEAL_APPETIZER
 
-/datum/crafting_recipe/food/wendigofeast
+/datum/crafting_recipe/food/wendigo_feast
 	name = "Wendigo feast"
 	reqs = list(
-		/obj/item/food/drakeribs = 1,
-		/obj/item/food/bearsteakfrost = 1,
+		/obj/item/food/drake_ribs = 1,
+		/obj/item/food/polar_bear_steak = 1,
 		/obj/item/wendigo_skull = 1,
 		/obj/item/stack/sheet/sinew/wolf = 2,
 		/obj/item/food/grown/ash_flora/vahrezjia = 1,
 		/obj/item/food/grown/ash_flora/podsneyzka = 1,
 	)
-	result = /obj/item/food/wendigofeast
+	result = /obj/item/food/wendigo_feast
 	removed_foodtypes = ALCOHOL
 	dish_category = DISH_MEAT

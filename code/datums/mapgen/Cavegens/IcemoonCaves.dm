@@ -24,7 +24,7 @@
 		/obj/structure/flora/tree/pine/style_random = 3,
 		/obj/structure/flora/ash/fonarstolbe = 1,
 		/obj/structure/flora/ash/vahrezjia = 1,
-		/obj/structure/flora/ash/drakebeet = 1,
+		/obj/structure/flora/ash/drake_beet = 1,
 	)
 
 	///Note that this spawn list is also in the lavaland generator
@@ -107,5 +107,5 @@
 		/obj/structure/flora/ash/podsneyzka = 1,
 		/obj/structure/flora/ash/inozhakust = 1,
 		/obj/structure/flora/ash/plasmaflower = 1,
-		/obj/structure/flora/ash/drakebeet = 1,
+		/obj/structure/flora/ash/drake_beet = 1,
 	)
