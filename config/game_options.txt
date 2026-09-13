@@ -487,11 +487,6 @@ MICE_ROUNDSTART 10
 ## This used to be named traits, hence the config name, but it handles quirks, not the other kind of trait!
 ROUNDSTART_TRAITS
 
-## Uncomment to disable common effects of mood that may be undesirable
-#DISABLE_HUMAN_MOOD_CRIT_THRESHOLD
-#DISABLE_HUMAN_MOOD_MOVESPEED
-#DISABLE_HUMAN_MOOD_ACTIONSPEED
-
 ## Enable night shifts
 #ENABLE_NIGHT_SHIFTS
 

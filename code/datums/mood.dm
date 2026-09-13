@@ -631,8 +631,6 @@
 
 /// Sets the crit threshold of the mob
 /datum/mood/proc/set_crit_threshold()
-	if(CONFIG_GET(flag/disable_human_mood_crit_threshold))
-		return
 	var/newval = 0
 	switch(sanity_level)
 		if(SANITY_LEVEL_INSANE)
@@ -645,8 +643,6 @@
 	insanity_effect = newval
 
 /datum/mood/proc/set_movespeed_effect()
-	if(CONFIG_GET(flag/disable_human_mood_movespeed))
-		return
 	switch(sanity_level)
 		if(SANITY_LEVEL_INSANE)
 			mob_parent.add_movespeed_modifier(/datum/movespeed_modifier/sanity/insane)
@@ -658,8 +654,6 @@
 			mob_parent.remove_movespeed_modifier(MOVESPEED_ID_SANITY)
 
 /datum/mood/proc/set_actionspeed_effect()
-	if(CONFIG_GET(flag/disable_human_mood_actionspeed))
-		return
 	switch(sanity_level)
 		if(SANITY_LEVEL_INSANE, SANITY_LEVEL_CRAZY, SANITY_LEVEL_UNSTABLE)
 			mob_parent.add_actionspeed_modifier(/datum/actionspeed_modifier/low_sanity)
