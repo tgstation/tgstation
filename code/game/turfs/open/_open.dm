@@ -36,6 +36,25 @@
 	VAR_PRIVATE/footprint_entrance_dirs = NONE
 	/// All dirs from which footprints have exited this turf
 	VAR_PRIVATE/footprint_exit_dirs = NONE
+	/// Flags for transparency. Avoid relying on this during runtime, use istransparentturf() instead
+	var/transparency_flags = TURF_CAN_CAST_SHADOW_ON
+
+/turf/open/LateInitialize()
+	if(!(transparency_flags & TURF_TRANSPARENT))
+		// Feel free to remove this if you add more late init behavior to open turfs
+		CRASH("Open turf late initing without transparent flag set")
+
+	ADD_TURF_TRANSPARENCY(src, INNATE_TRAIT)
+	if(length(contents))
+		for(var/atom/movable/thing as anything in src)
+			cast_shadow(thing)
+
+/turf/open/proc/on_atom_inited(datum/source, atom/movable/inited, mapload)
+	SIGNAL_HANDLER
+	SHOULD_CALL_PARENT(TRUE)
+
+	if(transparency_flags & TURF_TRANSPARENT)
+		cast_shadow(inited)
 
 /// Returns a list of every turf state considered "broken".
 /// Will be randomly chosen if a turf breaks at runtime.
@@ -231,6 +250,9 @@
 	if(old_loc && leave_footprints && !broken && !burnt && ishuman(arrived))
 		add_footprint(arrived, get_dir(old_loc, src))
 
+	if(istransparentturf(src))
+		cast_shadow(arrived)
+
 	if(!destination_z || !destination_x || !destination_y || arrived.pulledby || arrived.currently_z_moving)
 		return
 
@@ -267,6 +289,14 @@
 	. = ..()
 	if(gone && direction && leave_footprints && !broken && !burnt && isturf(gone.loc) && ishuman(gone))
 		add_footprint(gone, direction)
+
+/// Casts a shadow of the given atom onto a lower turf
+/turf/open/proc/cast_shadow(atom/movable/casting, list/icon/shadow_masks = list())
+	if(!SSmapping.max_plane_offset || casting.invisibility >= INVISIBILITY_MAXIMUM || isProbablyWallMounted(casting) || (casting.flags_1 & NO_SHADOW_1))
+		return
+
+	SEND_SIGNAL(src, COMSIG_TURF_CASTING_SHADOW, shadow_masks)
+	casting.AddComponent(/datum/component/shadow_handler, src, shadow_masks)
 
 /**
  * Replace an open turf with another open turf while avoiding the pitfall of replacing plating with a floor tile, leaving a hole underneath.

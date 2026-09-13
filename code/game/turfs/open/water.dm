@@ -9,7 +9,7 @@
 	slowdown = 1
 	bullet_sizzle = TRUE
 	bullet_bounce_sound = null //needs a splashing sound one day.
-	turf_flags = NO_RUST
+	turf_flags = NO_RUST | REACTS_TO_ATOM_INIT
 	footstep = FOOTSTEP_WATER
 	barefootstep = FOOTSTEP_WATER
 	clawfootstep = FOOTSTEP_WATER
@@ -44,7 +44,6 @@
 
 /turf/open/water/Initialize(mapload)
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_inited))
 	AddElement(/datum/element/watery_tile)
 	if(!isnull(fishing_datum))
 		add_lazy_fishing(fishing_datum)
@@ -53,10 +52,9 @@
 		AddElement(/datum/element/reagent_scoopable_atom, reagent_to_extract)
 
 ///We lazily add the immerse element when something is spawned or crosses this turf and not before.
-/turf/open/water/proc/on_atom_inited(datum/source, atom/movable/movable)
-	SIGNAL_HANDLER
-	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
-	make_immersed(movable)
+/turf/open/water/on_atom_inited(datum/source, atom/movable/inited, mapload)
+	. = ..()
+	make_immersed(inited)
 
 /**
  * turf/Initialize() calls Entered on its contents too, however
@@ -76,11 +74,6 @@
 	if(is_swimming_tile)
 		AddElement(/datum/element/swimming_tile, stamina_entry_cost, ticking_stamina_cost, ticking_oxy_damage, exhaust_swimmer_prob)
 	return TRUE
-
-/turf/open/water/Destroy()
-	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
-	return ..()
-
 
 /turf/open/water/jungle
 
@@ -258,8 +251,9 @@
 		return
 	enter_hot_spring(arrived)
 
-/turf/open/water/hot_spring/on_atom_inited(datum/source, atom/movable/movable)
-	enter_hot_spring(movable)
+/turf/open/water/hot_spring/on_atom_inited(datum/source, atom/movable/inited, mapload)
+	. = ..()
+	enter_hot_spring(inited)
 
 ///Registers the signals from the immerse element and calls dip_in if the movable has the required trait.
 /turf/open/water/hot_spring/proc/enter_hot_spring(atom/movable/movable)

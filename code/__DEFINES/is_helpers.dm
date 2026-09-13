@@ -99,7 +99,7 @@ GLOBAL_LIST_INIT(turfs_snow, typecacheof(list(
 
 #define isasteroidturf(A) (istype(A, /turf/open/misc/asteroid))
 
-#define istransparentturf(A) (HAS_TRAIT(A, TURF_Z_TRANSPARENT_TRAIT))
+#define istransparentturf(A) (A && HAS_TRAIT(A, TURF_Z_TRANSPARENT_TRAIT))
 
 #define iscliffturf(A) (istype(A, /turf/open/cliff))
 

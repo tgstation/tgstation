@@ -23,7 +23,8 @@
 	clawfootstep = FOOTSTEP_LAVA
 	heavyfootstep = FOOTSTEP_LAVA
 	rust_resistance = RUST_RESISTANCE_ABSOLUTE
-	turf_flags = NO_RUST
+	turf_flags = NO_RUST | REACTS_TO_ATOM_INIT
+	transparency_flags = NONE
 	/// How much fire damage we deal to living mobs stepping on us
 	var/lava_damage = 20
 	/// How many firestacks we add to living mobs stepping on us
@@ -56,20 +57,20 @@
 	refresh_light()
 	if(!smoothing_flags)
 		update_appearance()
-	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_inited))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_LAVA_STOPPED), PROC_REF(drop_contents_into_lava))
 
 /turf/open/lava/Destroy()
 	checked_atoms = null
-	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
 	for(var/mob/living/leaving_mob in contents)
 		leaving_mob.RemoveElement(/datum/element/perma_fire_overlay)
 		REMOVE_TRAIT(leaving_mob, TRAIT_NO_EXTINGUISH, TURF_TRAIT)
 	return ..()
 
-///We lazily add the immerse element when something is spawned or crosses this turf and not before.
-/turf/open/lava/proc/on_atom_inited(datum/source, atom/movable/movable)
-	SIGNAL_HANDLER
+/turf/open/lava/on_atom_inited(datum/source, atom/movable/inited, mapload)
+	. = ..()
+	atom_dunked(inited)
+
+/turf/open/lava/proc/atom_dunked(atom/movable/movable)
 	if(burn_stuff(movable))
 		START_PROCESSING(SSobj, src)
 	if(immerse_added || is_type_in_typecache(movable, GLOB.immerse_ignored_movable))
@@ -357,7 +358,7 @@
 	balloon_alert_to_hearers("[pick("splash","pshhhh","hiss","blorble")]!")
 	playsound(src, 'sound/items/match_strike.ogg', 15, TRUE)
 	for(var/atom/movable/each_content as anything in contents)
-		on_atom_inited(src, each_content)
+		atom_dunked(each_content)
 	return TRUE
 
 /turf/open/lava/can_cross_safely(atom/movable/crossing)

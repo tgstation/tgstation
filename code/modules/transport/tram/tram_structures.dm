@@ -30,7 +30,7 @@
 	density = TRUE
 	opacity = FALSE
 	anchored = TRUE
-	flags_1 = PREVENT_CLICK_UNDER_1
+	flags_1 = PREVENT_CLICK_UNDER_1|NO_SHADOW_1
 	pass_flags_self = PASSWINDOW
 	armor_type = /datum/armor/tram_structure
 	smoothing_flags = SMOOTH_BITMASK

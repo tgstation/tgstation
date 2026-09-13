@@ -12,7 +12,8 @@
 	plane = TRANSPARENT_FLOOR_PLANE
 	layer = SPACE_LAYER
 	rust_resistance = RUST_RESISTANCE_ABSOLUTE
-	turf_flags = NO_RUST
+	turf_flags = NO_RUST | REACTS_TO_ATOM_INIT
+	transparency_flags = TURF_TRANSPARENT
 	var/can_cover_up = TRUE
 	var/can_build_on = TRUE
 
@@ -28,18 +29,9 @@
 	. = ..()
 	if(PERFORM_ALL_TESTS(maptest_log_mapping) && !GET_TURF_BELOW(src))
 		log_mapping("[src] was inited as openspace with nothing below it at ([x], [y], [z])")
-	RegisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_created))
-	var/area/our_area = loc
-	if(istype(our_area, /area/space))
+	if(istype(loc, /area/space))
 		force_no_gravity = TRUE
 	return INITIALIZE_HINT_LATELOAD
-
-/turf/open/openspace/LateInitialize()
-	ADD_TURF_TRANSPARENCY(src, INNATE_TRAIT)
-
-/turf/open/openspace/ChangeTurf(path, list/new_baseturfs, flags)
-	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
-	return ..()
 
 /**
  * Prepares a moving movable to be precipitated if Move() is successful.
@@ -57,14 +49,10 @@
 	. = ..()
 	if(movable.set_currently_z_moving(CURRENTLY_Z_FALLING))
 		zFall(movable, falling_from_move = TRUE)
-/**
- * Drops movables spawned on this turf after they are successfully initialized.
- * so that spawned movables that should fall to gravity, will fall.
- */
-/turf/open/openspace/proc/on_atom_created(datum/source, atom/created_atom)
-	SIGNAL_HANDLER
-	if(ismovable(created_atom))
-		zfall_if_on_turf(created_atom)
+
+/turf/open/openspace/on_atom_inited(datum/source, atom/movable/inited, mapload)
+	. = ..()
+	zfall_if_on_turf(inited)
 
 /turf/open/openspace/proc/zfall_if_on_turf(atom/movable/movable)
 	if(QDELETED(movable) || movable.loc != src)
