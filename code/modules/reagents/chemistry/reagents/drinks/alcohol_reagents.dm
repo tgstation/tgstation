@@ -3594,9 +3594,9 @@
 
 /datum/reagent/consumable/ethanol/ramp_rager/proc/on_stamcrit(mob/living/drinker)
 	SIGNAL_HANDLER
-	drinker.set_stamina_loss(50, updating_stamina = TRUE)
+	drinker.set_stamina_loss(90, updating_stamina = TRUE)
 	to_chat(drinker, span_message("This can't end like this... Blood rushes away from your head..."))
-	volume -= (min(volume, 3))
+	volume -= (min(volume, 6))
 	return STAMCRIT_CANCELLED
 
 /datum/reagent/consumable/ethanol/sea_lantern
