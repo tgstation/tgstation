@@ -46,6 +46,12 @@
 	database_id = MEDAL_SNAIL
 	icon_state = "snail"
 
+/datum/award/achievement/jobs/bag_of_holding
+	name = "The Ultimate Storage Solution"
+	desc = "I bet you could fit the whole space station in there."
+	database_id = MEDAL_BAG_OF_HOLDING
+	icon_state = "bag_of_holding"
+
 //all of service! hip hip!
 
 /datum/award/achievement/jobs/service_bad

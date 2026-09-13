@@ -63,6 +63,16 @@
 #define MEDAL_SHARKDRAGON "Sharkdragon"
 #define MEDAL_THEORETICAL_LIMITS "All Within Theoretical Limits"
 #define MEDAL_DESENSITIZED "In Flanders Fields"
+#define MEDAL_SPICY_HANDSHAKE "Spicy Handshake"
+#define MEDAL_DOWN_LOW_TOO_SLOW "Down Low Too Slow"
+#define MEDAL_PAGLIACCI "But Doctor, I AM Pagliacci"
+#define MEDAL_SOUVENIER "And All I Got Was This Lousy Achievement"
+#define MEDAL_SAMARITAN "Good Samaritan"
+#define MEDAL_RED_PILL "Red Pill"
+#define MEDAL_KONG "Rise of Kong"
+#define MEDAL_NO_PARKING "You Can't Park here"
+#define MEDAL_CLEVER_GIRL "Clever Girl"
+#define MEDAL_BAG_OF_HOLDING "The Ultimate Storage Solution"
 
 //Skill medal hub IDs
 #define MEDAL_LEGENDARY_MINER "Legendary Miner"
