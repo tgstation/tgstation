@@ -3616,13 +3616,14 @@
 	taste_description = "cold"
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
-	var/icegrave_temp = -200
+
 
 /datum/reagent/consumable/ethanol/icegrave/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(HAS_TRAIT(affected_mob.get_organ_slot(ORGAN_SLOT_LIVER), TRAIT_CORONER_METABOLISM)) //Coroners know your icegraves. Also, its made using formaldehyde, so.
 		return
 
+	var/icegrave_temp = -200
 	affected_mob.apply_status_effect(/datum/status_effect/ice_block_talisman, 5 SECONDS)
 		var/thermal_protection = 1 - affected_mob.get_insulation_protection(affected_mob.bodytemperature + icegrave_temp)
 		var/applied_temp = (thermal_protection * icegrave_temp) + icegrave_temp

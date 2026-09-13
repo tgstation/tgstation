@@ -263,7 +263,7 @@
 	icon_state = "flowerpod1"
 	base_icon_state = "flowerpod"
 	harvested_name = "vahrezjia pods"
-	harvested_desc = "A bunch of vahrezjia pods. Why do these guys from Spinward have to name everything such a mouthful?"
+	harvested_desc = "A bunch of vahrezjia pods. Despite repeated attempts to burn or uproot them away, they somehow still spread around and perservere."
 	harvest_amount_high = 3
 	harvest_message_low = "You pluck a single vahrezjia stalk."
 	harvest_message_med = "You pluck a number of vahrezjia stalks."
