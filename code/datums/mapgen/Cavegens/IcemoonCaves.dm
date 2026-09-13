@@ -106,6 +106,6 @@
 		/obj/structure/flora/ash/vahrezjia = 1,
 		/obj/structure/flora/ash/podsneyzka = 1,
 		/obj/structure/flora/ash/inozhakust = 1,
-		/obj/structure/flora/ash/plasmaflower = 1,
+		/obj/structure/flora/ash/plasma_flower = 1,
 		/obj/structure/flora/ash/drake_beet = 1,
 	)

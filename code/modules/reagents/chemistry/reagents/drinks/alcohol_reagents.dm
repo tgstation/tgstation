@@ -3627,7 +3627,6 @@
 		var/thermal_protection = 1 - affected_mob.get_insulation_protection(affected_mob.bodytemperature + icegrave_temp)
 		var/applied_temp = (thermal_protection * icegrave_temp) + icegrave_temp
 		affected_mob.adjust_bodytemperature(applied_temp)
-		return
 
 #undef ALCOHOL_EXPONENT
 #undef ALCOHOL_THRESHOLD_MODIFIER
