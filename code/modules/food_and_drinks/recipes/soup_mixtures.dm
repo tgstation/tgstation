@@ -2306,3 +2306,28 @@
 	resulting_food_path = /obj/item/food/volt_fish
 	ingredient_reagent_multiplier = 0
 	mix_message = "The air fills with a hellish mix of fish and artificial flavouring."
+
+//Rubywise Ruin
+//actual reagent defined in alcohol_reagents
+/datum/chemical_reaction/food/soup/rubywise_ruin
+	required_reagents = list(
+		/datum/reagent/consumable/ethanol/sangria = 30,
+		/datum/reagent/blood = 10,
+		/datum/reagent/consumable/ethanol/aperitivo = 10
+	)
+	required_ingredients = list(
+		/obj/item/food/drug/opium = 1,
+		/obj/item/food/grown/flower = 1
+	)
+	results=list(
+		/datum/reagent/consumable/ethanol/rubywise_ruin = 50
+	)
+	mix_message = "The flower becomes dissolute in the bloody mixture as a carnal pefume wafts from the pot."
+	mix_sound = 'sound/effects/changeling_absorb/changeling_absorb5.ogg'
+
+/datum/glass_style/has_foodtype/soup/rubywise_ruin
+	required_drink_type = /datum/reagent/consumable/ethanol/rubywise_ruin
+	name = "Rubywise Ruin"
+	desc = "A stimulant of appetites; Those oldest, deepest, reddest, most regretable appetites."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi' //Drinking a cocktail out a bowl...?
+	icon_state = "rubywise_ruin"
