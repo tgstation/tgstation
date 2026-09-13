@@ -3618,9 +3618,9 @@
 
 /datum/reagent/consumable/ethanol/icegrave/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	var/obj/item/organ/liver/liver = affected_mob.get_organ_slot(ORGAN_SLOT_LIVER)
-	if(liver && !HAS_TRAIT(liver, TRAIT_CORONER_METABOLISM)) //Coroners know your icegraves. Also, its made using formaldehyde, so.
-		affected_mob.apply_status_effect(/datum/status_effect/ice_block_talisman, 5 SECONDS)
+	if(HAS_TRAIT(affected_mob.get_organ_slot(ORGAN_SLOT_LIVER), TRAIT_CORONER_METABOLISM)) //Coroners know your icegraves. Also, its made using formaldehyde, so.
+		return
+	affected_mob.apply_status_effect(/datum/status_effect/ice_block_talisman, 5 SECONDS)
 		var/thermal_protection = 1 - affected_mob.get_insulation_protection(affected_mob.bodytemperature - 200)
 		var/applied_temp = (thermal_protection * -200) - 200
 		affected_mob.adjust_bodytemperature(applied_temp)
