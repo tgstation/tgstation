@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - spellcheck: "Fix blood trail examine: \"That's a trail of blood\" instead of \"that's some trail of blood\""

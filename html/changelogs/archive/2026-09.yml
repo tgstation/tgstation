@@ -165,3 +165,19 @@
 2026-09-13:
   KingkumaArt:
   - image: added 4 new mech pilot suits, purchasable from cargo!
+2026-09-14:
+  Melbert:
+  - rscdel: Toy guns no longer have cosmetic recoil effects
+  - balance: Bananium swords are now slippier, particularly in the hands of clowns
+  - balance: Bananium shields are now slippier, particularly in the hands of clowns
+  - balance: Added and removed several items from the clown operative outfit and uplink
+  - spellcheck: 'Fix blood trail examine: "That''s a trail of blood" instead of "that''s
+      some trail of blood"'
+  timothymtorres:
+  - bugfix: Fix cargo stray supply pod runtime
+  vinylspiders:
+  - bugfix: brings back the tg window icon that mysteriously went missing for a couple
+      days
+  - refactor: changed the way ChangeTurf() handles signal registration, please report
+      any weird issues with stuff that usually happens on entering certain turfs (elevation,
+      bananium squeaks, lava burning things, etc)
