@@ -31,6 +31,7 @@
 /obj/item/storage/backpack/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/attack_equip)
+	AddElement(/datum/element/strip_accessible_storage)
 
 /*
  * Backpack Types

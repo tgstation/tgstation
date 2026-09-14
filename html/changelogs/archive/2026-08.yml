@@ -759,14 +759,26 @@
   Ghommie:
   - refactor: Refactored the code for damage and types of damage a little (also armor
       but not as much). Make sure to report any oddity with it.
+  JohnFulpWillard:
+  - qol: Command bar's last used mode is now persistent between rounds.
   Melbert:
   - qol: Atmos mix tank output starts disabled.
+  - code_imp: Cleaned up atmos color adapter pipe code a tiny bit, report any oddities
+  - bugfix: Atmos multi-z pipes rendering weirdly when connecting with omni-pipes
+  - bugfix: Atmos airlock pumps disregarding color of connected pipes
+  - bugfix: Atmos layer adapter color is more consistent
+  - qol: Thermo machines input pipe takes on pipe color (visually, mechanically no
+      changes)
+  - qol: Pipes leading into floor objects take on pipe color (visually, mechanically
+      no changes)
   PapaMichael:
   - bugfix: Firefighting foam no longer immediately burns away in heat without getting
       a chance to do its firefighting foam effects
   QuiteLiterallyAnything:
   - rscadd: Added subtle tooltips to speaker names in chat in order to make distinguishing
       gender over the radio easier.
+  ZeWaka:
+  - bugfix: Fixed more TGUI window resize/white flashing
   lelandkemble:
   - bugfix: The greed of miners no longer clogs the runtime logs
   necromanceranne:

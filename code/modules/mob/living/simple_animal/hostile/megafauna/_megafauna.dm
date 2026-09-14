@@ -128,7 +128,7 @@
 	if(!isliving(target))
 		return
 	var/mob/living/living_target = target
-	if(living_target.stat == DEAD || (living_target.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(living_target, TRAIT_NODEATH)))
+	if(living_target.stat == DEAD || (living_target.health <= dead_threshold && HAS_TRAIT(living_target, TRAIT_NODEATH)))
 		devour(living_target)
 		return
 	if(isnull(client) && ranged && ranged_cooldown <= world.time)

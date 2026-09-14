@@ -111,6 +111,7 @@
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
+	footstep_type = FOOTSTEP_MOB_SYNTHETIC
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8
@@ -167,6 +168,7 @@
 	change_exempt_flags = BP_BLOCK_CHANGE_SPECIES
 	dmg_overlay_type = "robotic"
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
+	footstep_type = FOOTSTEP_MOB_SYNTHETIC
 
 	brute_modifier = 0.8
 	burn_modifier = 0.8

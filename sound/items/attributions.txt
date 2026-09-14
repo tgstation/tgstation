@@ -62,3 +62,11 @@ glove_equip.ogg - LETHRCreak_Leather Belt Short Creak 01_PF_365 DAYS OF SOUND by
 lead_pipe_hit.ogg - jixaw-metal-pipe-falling-sound.mp3 by thenotcheeseman -- https://freesound.org/s/679206/ -- License: Creative Commons 0
 lead_pipe_drop.ogg - jixaw-metal-pipe-falling-sound.mp3 by thenotcheeseman -- https://freesound.org/s/679206/ -- License: Creative Commons 0
 lead_pipe_pickup.ogg - Metal pipe hitting the ground.flac by CGEffex -- https://freesound.org/s/93962/ -- License: Attribution 4.0
+
+- rigstep.ogg
+ported from Aurora (...in turn ported from Hestia), assumed to be licensed under CC-BY-SA 3.0 (no specific attribution found, original repo lost?)
+
+- rigstep_chonk.ogg
+- rigstep_heavy.ogg
+- rigstep_medium.ogg
+ported from Aurora, by majormoth(Discord), licensed under CC-BY-SA-3.0

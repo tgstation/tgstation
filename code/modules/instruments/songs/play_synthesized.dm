@@ -44,7 +44,7 @@
  */
 /datum/song/proc/playkey_synth(key, atom/player)
 	key = clamp(key + note_shift, key_min, key_max)
-	if((world.time - MUSICIAN_HEARCHECK_MINDELAY) > last_hearcheck)
+	if((world.time - SSinstruments.musician_hearcheck_mindelay) > last_hearcheck)
 		do_hearcheck()
 	var/datum/instrument_key/K = using_instrument.samples[num2text(key)] //See how fucking easy it is to make a number text? You don't need a complicated 9 line proc!
 	//Should probably add channel limiters here at some point but I don't care right now.

@@ -71,7 +71,7 @@
 		/obj/item/melee/baton/telescopic/gold = 1,
 		/obj/item/station_charter = 1,
 		)
-	belt = /obj/item/modular_computer/pda/heads/captain
+	belt = /obj/item/modular_computer/pda/crew/heads/captain
 	ears = /obj/item/radio/headset/heads/captain/alt
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/captain

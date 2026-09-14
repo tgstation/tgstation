@@ -573,14 +573,17 @@
 
 #undef CPR_PANIC_SPEED
 
-/mob/living/carbon/human/cuff_resist(obj/item/I)
+/mob/living/carbon/human/get_all_attached_restraints()
+	. = ..()
+	if(wear_suit?.breakouttime)
+		. += wear_suit
+
+/mob/living/carbon/human/cuff_resist(obj/item/cuffs, breakouttime = null, cuff_break = 0)
 	if(HAS_TRAIT(src, TRAIT_HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
-		if(..(I, cuff_break = FAST_CUFFBREAK))
-			dropItemToGround(I)
+		. = ..(cuffs, cuff_break = FAST_CUFFBREAK)
 	else
-		if(..())
-			dropItemToGround(I)
+		. = ..()
 
 /**
  * Wash the hands, cleaning either the gloves if equipped and not obscured, otherwise the hands themselves if they're not obscured.
@@ -654,14 +657,6 @@
 /mob/living/carbon/human/proc/end_electrocution_animation(mutable_appearance/MA)
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BLACK)
 	cut_overlay(MA)
-
-/mob/living/carbon/human/resist_restraints()
-	if(wear_suit?.breakouttime)
-		changeNext_move(CLICK_CD_BREAKOUT)
-		last_special = world.time + CLICK_CD_BREAKOUT
-		cuff_resist(wear_suit)
-	else
-		..()
 
 /mob/living/carbon/human/clear_cuffs(obj/item/I, cuff_break)
 	. = ..()

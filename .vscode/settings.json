@@ -8,6 +8,14 @@
 	"editor.insertSpaces": false,
 	"git.branchProtection": ["master"],
 	"gitlens.advanced.blame.customArguments": ["-w"],
+	"json.schemas": [
+		{
+			"fileMatch": ["**/build_flags.jsonc"],
+			"schema": {
+				"allowTrailingCommas": true
+			}
+		}
+	],
 	"tgstationTestExplorer.project.resultsType": "json",
 	"[javascript][typescript][javascriptreact][typescriptreact][css][json][jsonc]": {
 		"editor.defaultFormatter": "biomejs.biome",
@@ -27,6 +35,6 @@
 	},
 	"Lua.diagnostics.enable": false,
 	"ss13BuildFlags.baseTask": "Build All",
-	"ss13BuildFlags.configPath": "tools/build/build_flags.json",
+	"ss13BuildFlags.configPath": "tools/build/build_flags.jsonc",
 	"ss13BuildFlags.injectionMode": "cli-args"
 }

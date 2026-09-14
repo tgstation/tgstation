@@ -174,7 +174,7 @@ GLOBAL_LIST_INIT(message_modes_stat_limits, list(
 			message_range = 1
 			// this is where deathgasping is processed
 			if(stat == HARD_CRIT)
-				var/health_diff = round(-HEALTH_THRESHOLD_DEAD + health)
+				var/health_diff = round(-dead_threshold + health)
 				// If we cut our message short, abruptly end it with a-..
 				var/message_len = length_char(message)
 				message = copytext_char(message, 1, health_diff) + "[message_len > health_diff ? "-.." : "..."]"

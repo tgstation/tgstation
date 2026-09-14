@@ -216,21 +216,18 @@ SUBSYSTEM_DEF(id_access)
 		var/datum/id_trim/trim = trim_singletons_by_path[trim_path]
 		centcom_job_templates[trim_path] = trim.assignment
 
-	var/list/all_pda_paths = typesof(/obj/item/modular_computer/pda)
-	var/list/pda_regions = PDA_PAINTING_REGIONS
-	for(var/pda_path in all_pda_paths)
-		if(!(pda_path in pda_regions))
+	for(var/obj/item/modular_computer/pda/crew/pda_path as anything in subtypesof(/obj/item/modular_computer/pda/crew))
+		if(isnull(pda_path::painting_region))
 			continue
 
-		var/list/region_whitelist = pda_regions[pda_path]
 		for(var/access_txt in sub_department_managers_tgui)
 			var/list/manager_info = sub_department_managers_tgui[access_txt]
 			var/list/manager_regions = manager_info["regions"]
-			for(var/whitelisted_region in region_whitelist)
-				if(!(whitelisted_region in manager_regions))
+			for(var/whitelisted_region in manager_regions)
+				if(pda_path::painting_region != whitelisted_region)
 					continue
 				var/list/manager_pdas = manager_info["pdas"]
-				var/obj/item/modular_computer/pda/fake_pda = pda_path
+				var/obj/item/modular_computer/pda/crew/fake_pda = pda_path
 				manager_pdas[pda_path] = initial(fake_pda.name)
 				station_pda_templates[pda_path] = initial(fake_pda.name)
 
