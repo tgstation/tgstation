@@ -155,6 +155,12 @@
 	database_id = MEDAL_MOON_ASCENSION
 	icon_state = "moonascend"
 
+/datum/award/achievement/misc/gazer_sippy
+	name = "A Welcoming Gift"
+	desc = "You were a good host to a guest from very, very far away."
+	database_id = MEDAL_GAZER_SIPPY
+	icon_state = "gazersippy"
+
 /datum/award/achievement/misc/grand_ritual_finale
 	name = "Archmage"
 	desc = "Made a big impression on the station with your phenomenal cosmic power."

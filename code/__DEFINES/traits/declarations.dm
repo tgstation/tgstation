@@ -1237,8 +1237,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to a dreaming carbon when they are currently doing dreaming stuff
 #define TRAIT_DREAMING "currently_dreaming"
 
+/// Trait for if you've recently had drink that helps you sleep
+#define TRAIT_HAD_SLEEPY_DRINK "had_sleepy_drink"
+
 /// Trait for if you've recently had a Last Word cocktail
 #define TRAIT_HAD_LAST_WORD "had_last_word"
+
+/// Trait for if you've recently had a Footsoldier's Razor cocktail
+#define TRAIT_HAD_FOOTSOLDIERS_RAZOR "had_footsoldiers_razor"
+
+/// Trait for if you've completed the farstar amarita's communion
+#define TRAIT_FARSTAR_SHARED "farstar_shared"
 
 /// Whether bots will salute this mob.
 #define TRAIT_COMMISSIONED "commissioned"
@@ -1432,6 +1441,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait used by the /obj/item/wallframe/painting/eldritch/desire status effect to change their preferences of what they eat
 #define TRAIT_FLESH_DESIRE "flesh_desire"
+
+///Softer version of the above trait which just adds the same preferences as flesh desire without also making everything else toxic
+#define TRAIT_FLESH_PECKISH "flesh_peckish"
 
 ///Trait granted by janitor skillchip, allows communication with cleanbots
 #define TRAIT_CLEANBOT_WHISPERER "cleanbot_whisperer"
