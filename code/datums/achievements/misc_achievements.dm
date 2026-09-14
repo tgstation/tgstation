@@ -270,17 +270,11 @@
 	database_id = MEDAL_DOWN_LOW_TOO_SLOW
 	icon_state = "down_low_too_slow"
 
-/datum/award/achievement/misc/pagliacci
-	name = "But Doctor, I AM Pagliacci"
-	desc = "Bear witness to a plight that cannot be resolved by visiting a clown."
-	database_id = MEDAL_PAGLIACCI
-	icon_state = "pagliacci"
-
-/datum/award/achievement/misc/souvenier
+/datum/award/achievement/misc/souvenir
 	name = "And All I Got Was This Lousy Achievement"
-	desc = "Take home a souvenier."
-	database_id = MEDAL_SOUVENIER
-	icon_state = "souvenier"
+	desc = "Take home a souvenir."
+	database_id = MEDAL_SOUVENIR
+	icon_state = "souvenir"
 
 /datum/award/achievement/misc/samaritan
 	name = "Good Samaritan"

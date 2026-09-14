@@ -189,7 +189,7 @@
 		qdel(temp_body)
 
 	do_teleport(antag, get_turf(chosen_forge), forced = TRUE, asoundin = 'sound/effects/magic/ethereal_enter.ogg', asoundout = 'sound/effects/magic/ethereal_exit.ogg', channel = TELEPORT_CHANNEL_QUANTUM)
-
+	antag.client?.give_award(/datum/award/achievement/misc/red_pill, antag)
 
 /// Removes any invalid candidates from the list
 /obj/machinery/quantum_server/proc/validate_mutation_candidates()
