@@ -75,6 +75,8 @@ GLOBAL_LIST_INIT(strippable_gorilla_items, create_strippable_list(list(
 	AddComponent(/datum/component/basic_inhands, y_offset = -1)
 	AddElement(/datum/element/strippable, GLOB.strippable_gorilla_items)
 
+	RegisterSignal(src, COMSIG_MOB_EMOTED("ooga"), PROC_REF(check_kong_state))
+
 	ai_controller?.set_blackboard_key(BB_BASIC_FOODS, typecacheof(gorilla_food))
 
 /mob/living/basic/gorilla/examine(mob/user)
@@ -136,6 +138,15 @@ GLOBAL_LIST_INIT(strippable_gorilla_items, create_strippable_list(list(
 		return
 	oogas = rand(2,6)
 	emote("ooga")
+
+/// Check how well we are roleplaying as King Kong
+/mob/living/basic/gorilla/proc/check_kong_state()
+	SIGNAL_HANDLER
+	if (!HAS_TRAIT(src, TRAIT_MOB_ELEVATED))
+		return
+	if (!isliving(pulling) || pulling.gender != FEMALE || grab_state < GRAB_AGGRESSIVE)
+		return
+	client?.give_award(/datum/award/achievement/misc/kong, src)
 
 /// Gorillas are slower when carrying something
 /datum/movespeed_modifier/gorilla_standing
