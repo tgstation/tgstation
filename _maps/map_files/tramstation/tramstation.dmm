@@ -31580,6 +31580,7 @@
 "kcF" = (
 /obj/structure/table/reinforced,
 /obj/effect/turf_decal/stripes/corner,
+/obj/item/reagent_containers/spray/dinitrogen_plasmide,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/gloves/latex,
 /obj/item/clothing/mask/surgical,
