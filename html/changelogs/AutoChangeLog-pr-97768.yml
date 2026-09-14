@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscdel: "Toy guns no longer have cosmetic recoil effects"
+  - balance: "Bananium swords are now slippier, particularly in the hands of clowns"
+  - balance: "Bananium shields are now slippier, particularly in the hands of clowns"
+  - balance: "Added and removed several items from the clown operative outfit and uplink"
