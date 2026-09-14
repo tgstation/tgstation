@@ -16,7 +16,7 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/cerulean
 	species_cookie = /obj/item/food/chips/shrimp
-	inert_mutation = /datum/mutation/echolocation
+	inert_mutation = /datum/mutation/firebreath
 	payday_modifier = 0.9
 	family_heirlooms = list(
 		/obj/item/ammo_casing/harpoon,

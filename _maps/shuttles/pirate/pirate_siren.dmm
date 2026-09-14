@@ -494,9 +494,9 @@
 	pixel_y = -8;
 	icon_state = "space_beer"
 	},
-/obj/item/clothing/accessory/vaporizer/with_cell{
-	pixel_y = 14;
-	pixel_x = 2
+/obj/item/vaporizer/with_cell{
+	pixel_y = 16;
+	pixel_x = 3
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
@@ -1169,9 +1169,9 @@
 /obj/effect/turf_decal/stripes/corner,
 /obj/effect/turf_decal/stripes/red/corner,
 /obj/effect/decal/cleanable/dirt,
-/obj/item/clothing/accessory/vaporizer/with_cell{
+/obj/item/vaporizer/with_cell{
 	pixel_y = 15;
-	pixel_x = -4
+	pixel_x = -3
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)

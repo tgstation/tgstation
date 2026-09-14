@@ -1142,12 +1142,7 @@
 	dna.species.mutant_organs[/obj/item/organ/frills] = /datum/sprite_accessory/frills/aquatic::name
 	dna.species.regenerate_organs(src, excluded_zones = (GLOB.all_body_zones - BODY_ZONE_HEAD))
 
-/mob/living/carbon/human/species/cerulean/true/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
-	. = ..()
-	dna.species.mutantlungs = /obj/item/organ/lungs/fish
-	dna.species.regenerate_organs(src, excluded_zones = (GLOB.all_body_zones - BODY_ZONE_CHEST))
-
-/mob/living/carbon/human/species/cerulean/true/abyssal/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
+/mob/living/carbon/human/species/cerulean/abyssal/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
 	. = ..()
 	dna.features[FEATURE_TAIL_FISH_COLOR] = sanitize_hexcolor(rgb(
 		min(255, hex2num(copytext(copytext(dna.features[FEATURE_TAIL_FISH_COLOR], 2), 1, 3)) * COLOR_AMP_DARKER),
@@ -1190,11 +1185,11 @@
 	. = ..()
 	for(var/zone in GLOB.leg_zones)
 		dna.species.bodypart_overrides -= zone
-	dna.features[FEATURE_TAIL_FISH_COLOR] = LIGHT_COLOR_TUNGSTEN
+	dna.features[FEATURE_TAIL_FISH_COLOR] = "#fee5ca"
 	dna.features[FEATURE_FRILLS] = /datum/sprite_accessory/frills/aquatic::name
 	dna.species.mutant_organs[/obj/item/organ/tail/fish/cerulean/skeletal] = /datum/sprite_accessory/tails/fish/cerulean/skeleton::name
 	dna.species.mutant_organs[/obj/item/organ/frills] = /datum/sprite_accessory/frills/aquatic::name
-	dna.species.regenerate_organs(src, excluded_zones = GLOB.arm_zones)
+	dna.species.regenerate_organs(src)
 	if(has_gravity() && !buckled)
 		set_resting(TRUE, silent = TRUE, instant = TRUE)
 
