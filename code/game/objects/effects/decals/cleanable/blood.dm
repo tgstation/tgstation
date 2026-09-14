@@ -298,6 +298,7 @@
 	beauty = -50
 	base_name = "trail of"
 	bloodiness = BLOOD_AMOUNT_PER_DECAL * 0.1
+	gender = NEUTER
 
 	/// All the components of the trail
 	var/list/obj/effect/decal/cleanable/blood/trail/trail_components
