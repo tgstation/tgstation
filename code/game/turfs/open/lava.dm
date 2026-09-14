@@ -77,17 +77,20 @@
 	AddElement(/datum/element/immerse, "immerse", 215)
 	immerse_added = TRUE
 
-/**
- * turf/Initialize() calls Entered on its contents too, however
- * we need to wait for movables that still need to be initialized
- * before we add the immerse element.
- */
 /turf/open/lava/Entered(atom/movable/arrived)
 	. = ..()
-	if(!immerse_added && !is_type_in_typecache(arrived, GLOB.immerse_ignored_movable))
+	apply_lava_effects(arrived)
+
+/turf/open/lava/initialize_occupant(atom/movable/occupant)
+	. = ..()
+	apply_lava_effects(occupant)
+
+/// Entering lava and having the floor turn into lava apply the same effects.
+/turf/open/lava/proc/apply_lava_effects(atom/movable/occupant)
+	if(!immerse_added && !is_type_in_typecache(occupant, GLOB.immerse_ignored_movable))
 		AddElement(/datum/element/immerse, "immerse", 215)
 		immerse_added = TRUE
-	if(burn_stuff(arrived))
+	if(burn_stuff(occupant))
 		START_PROCESSING(SSobj, src)
 
 /turf/open/lava/update_overlays()

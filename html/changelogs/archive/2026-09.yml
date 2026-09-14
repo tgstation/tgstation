@@ -144,3 +144,46 @@
   - rscadd: Some collars are now able to be cuffed to your arm.
   vinylspiders:
   - bugfix: fixes bot move path overlays not showing up
+2026-09-12:
+  OnlineGirlfriend:
+  - rscadd: pinup posters
+  timothymtorres:
+  - rscadd: Add 3 new kudzu mutations - slippery, radioactive, and conductive
+  - rscadd: Venus Flytraps will inherit mutations from kudzu that can be beneficial
+      or negative that can affect stats, abilities, etc.
+  - balance: Halved Venus Flytrap health and regen. Venus Flytraps can no longer move
+      off weeds without taking damage unless they have the aggressive spread mutation.
+  - rscadd: Weedkiller/Plant-B-Gone instakills alien weeds
+  - rscadd: Weedkiller grenades now use weedkiller chemical and not Plant-B-Gone
+  - balance: Halved the damage from Plant-B-Gone vs kudzu and plants
+  - bugfix: Fixed hardening kudzu mutation not providing a 50% resistance to sharpened
+      weapons.
+  - bugfix: Fixed thorn kudzu mutation not retaliating against players who attack
+      it.
+  - qol: Add examine blocks to flavour text for Venus Trap Ghost Spawners that includes
+      their inherited mutations
+2026-09-13:
+  KingkumaArt:
+  - image: added 4 new mech pilot suits, purchasable from cargo!
+2026-09-14:
+  Fghj240:
+  - balance: simplemob bomb armor grants linearly scaling damage reduction vs bombs
+      instead of a random chance to reduce damage
+  - bugfix: bomb immunity works on simplemobs
+  - bugfix: bomb armor now protects simplemobs from being gibbed by explosions
+  - code_imp: simplemob bomb code is less repetitive
+  Melbert:
+  - rscdel: Toy guns no longer have cosmetic recoil effects
+  - balance: Bananium swords are now slippier, particularly in the hands of clowns
+  - balance: Bananium shields are now slippier, particularly in the hands of clowns
+  - balance: Added and removed several items from the clown operative outfit and uplink
+  - spellcheck: 'Fix blood trail examine: "That''s a trail of blood" instead of "that''s
+      some trail of blood"'
+  timothymtorres:
+  - bugfix: Fix cargo stray supply pod runtime
+  vinylspiders:
+  - bugfix: brings back the tg window icon that mysteriously went missing for a couple
+      days
+  - refactor: changed the way ChangeTurf() handles signal registration, please report
+      any weird issues with stuff that usually happens on entering certain turfs (elevation,
+      bananium squeaks, lava burning things, etc)
