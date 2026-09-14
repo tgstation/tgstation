@@ -137,14 +137,15 @@
 
 	if(new_holder != parent)
 		RegisterSignal(new_holder, COMSIG_LIGHT_EATER_QUEUE, PROC_REF(on_light_eater))
-	if(light.overlay_lighting_flags & LIGHTING_ON)
-		RegisterSignal(new_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
+	RegisterSignal(new_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
 	add_dynamic_lumi(new_holder)
 
 /// Called when current_holder changes loc.
 /datum/component/overlay_lighting/proc/on_holder_moved(atom/movable/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
-	update_luminosity_cells()
+
+	if(light.overlay_lighting_flags & LIGHTING_ON)
+		update_luminosity_cells()
 
 ///Changes the range which the light reaches. 0 means no light, 6 is the maximum value.
 /datum/component/overlay_lighting/proc/set_range(atom/source, old_range)
@@ -201,7 +202,6 @@
 	if(!light.turn_on() || !light.current_holder)
 		return
 	add_dynamic_lumi(light.current_holder)
-	RegisterSignal(light.current_holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_holder_moved))
 	update_luminosity_cells()
 
 /// Toggles the light off.
@@ -215,7 +215,6 @@
 		return
 
 	remove_dynamic_lumi(light.current_holder)
-	UnregisterSignal(light.current_holder, COMSIG_MOVABLE_MOVED)
 	update_luminosity_cells()
 
 /// Handles putting the source for overlay lights into the light eater queue since we aren't tracked by [/atom/var/light_sources]
