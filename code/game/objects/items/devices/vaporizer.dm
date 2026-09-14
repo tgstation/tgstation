@@ -2,7 +2,7 @@
  *	Device to let water breathers breathe. TRAIT_WET_FOR_LONGER is required for it to actually function
  *	Because this is a Cerulean device, after all, intended to be used on fish scales
 */
-/obj/item/clothing/accessory/vaporizer
+/obj/item/vaporizer
 	name = "hydro-vaporizer"
 	desc = "An ingenious little device manufactured for supporting an alternative method for respiration. \
 			Relying on a removable cell, the coil mechanism synthesizes a hydrogen oxygen mixture, \
@@ -10,11 +10,13 @@
 			The rate at which liquid is applied seems to be intended for skin which excells at retaining moisture. \n\
 			There is a picture of planet Marina stamped onto it. \n\n\
 			A label on its back warns about the potential dangers of electro-magnetic pulses."
+	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "vaporizer"
 	worn_icon_state = "vaporizer"
-	base_icon_state = "vaporizer"
+	slot_flags = ITEM_SLOT_BELT
 	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
 	drop_sound = SFX_GENERIC_DEVICE_DROP
+	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*4.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/diamond = SMALL_MATERIAL_AMOUNT*1.8)
 	/// visual which shows how much charge is left in the cell
@@ -24,13 +26,13 @@
 	/// how much will be drawn from the cell every time it applies wet stacks
 	var/power_cost = 45 JOULES
 
-/obj/item/clothing/accessory/vaporizer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+/obj/item/vaporizer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	if(held_item?.tool_behaviour == TOOL_SCREWDRIVER && !isnull(cell))
 		context[SCREENTIP_CONTEXT_LMB] = "Remove [cell.name]"
 	return CONTEXTUAL_SCREENTIP_SET
 
-/obj/item/clothing/accessory/vaporizer/examine(mob/user)
+/obj/item/vaporizer/examine(mob/user)
 	. = ..()
 	if(isnull(cell))
 		return
@@ -39,41 +41,41 @@
 		return
 	. += span_notice("The LED display reads its [cell.percent()]% charged.")
 
-/obj/item/clothing/accessory/vaporizer/Initialize(mapload)
+/obj/item/vaporizer/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/wet_stacks_clothing, CALLBACK(src, PROC_REF(use_cell)), must_be_worn = FALSE)
+	AddComponent(/datum/component/wet_stacks_granting, CALLBACK(src, PROC_REF(use_cell)), must_be_worn = FALSE)
 
-/obj/item/clothing/accessory/vaporizer/with_cell/Initialize(mapload)
+/obj/item/vaporizer/with_cell/Initialize(mapload)
 	. = ..()
 	cell = new (src)
 
-/obj/item/clothing/accessory/vaporizer/Destroy()
+/obj/item/vaporizer/Destroy()
 	. = ..()
 	QDEL_NULL(cell)
-	qdel(GetComponent(/datum/component/wet_stacks_clothing))
+	qdel(GetComponent(/datum/component/wet_stacks_granting))
 
-/obj/item/clothing/accessory/vaporizer/equipped(mob/living/user, slot)
+/obj/item/vaporizer/equipped(mob/living/user, slot)
 	. = ..()
 	create_charge_bar(user)
 
-/obj/item/clothing/accessory/vaporizer/dropped(mob/living/user)
+/obj/item/vaporizer/dropped(mob/living/user)
 	. = ..()
 	destroy_charge_bar()
 
 /// create a visual for how much power is left in the cell of the item
-/obj/item/clothing/accessory/vaporizer/proc/create_charge_bar(mob/living/user)
+/obj/item/vaporizer/proc/create_charge_bar(mob/living/user)
 	if(!cell || charge_bar)
 		return
 	var/charge_bar_target = loc == user ? src : loc
 	charge_bar = new(user, 100/*%*/, charge_bar_target, cell.percent())
 
-/obj/item/clothing/accessory/vaporizer/proc/destroy_charge_bar()
+/obj/item/vaporizer/proc/destroy_charge_bar()
 	if(!charge_bar)
 		return
 	QDEL_NULL(charge_bar)
 
 // remove the cell with a screwdriver
-/obj/item/clothing/accessory/vaporizer/screwdriver_act(mob/living/user, obj/item/tool)
+/obj/item/vaporizer/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!cell)
 		return FALSE
 	tool.play_tool_sound(src)
@@ -84,7 +86,7 @@
 	return TRUE
 
 // proc to feed the machine a new cell
-/obj/item/clothing/accessory/vaporizer/item_interaction(mob/living/user, obj/item/stock_parts/power_store/cell/new_cell, list/modifiers)
+/obj/item/vaporizer/item_interaction(mob/living/user, obj/item/stock_parts/power_store/cell/new_cell, list/modifiers)
 	if(!istype(new_cell))
 		return NONE
 	if(!isnull(cell))
@@ -98,14 +100,14 @@
 	return ITEM_INTERACT_SUCCESS
 
 /// proc we forward to the callback the wet stack component uses every time it ticks
-/obj/item/clothing/accessory/vaporizer/proc/use_cell()
+/obj/item/vaporizer/proc/use_cell()
 	if(!cell || !cell?.use(power_cost, TRUE))
 		return FALSE
 	charge_bar?.update(cell.percent())
 	return TRUE
 
 /// overload and spew hot steam on EMP
-/obj/item/clothing/accessory/vaporizer/emp_act(severity)
+/obj/item/vaporizer/emp_act(severity)
 	. = ..()
 	if(!(. & EMP_PROTECT_CONTENTS))
 		cell?.emp_act(severity)
@@ -124,7 +126,7 @@
 	particles = new /particles/smoke/steam
 	addtimer(CALLBACK(src, PROC_REF(remove_particles)), 5 SECONDS, TIMER_DELETE_ME)
 
-/obj/item/clothing/accessory/vaporizer/proc/remove_particles()
+/obj/item/vaporizer/proc/remove_particles()
 	if(isnull(particles))
 		return
 	particles.spawning = 0

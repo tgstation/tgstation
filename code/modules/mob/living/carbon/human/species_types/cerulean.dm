@@ -3,6 +3,7 @@
 	id = SPECIES_CERULEAN
 	mutant_organs = list(/obj/item/organ/tail/fish/cerulean = /datum/sprite_accessory/tails/fish/cerulean::name)
 	mutanttongue = /obj/item/organ/tongue/fish
+	mutantlungs = /obj/item/organ/lungs/fish
 	mutantstomach = /obj/item/organ/stomach/fish
 	mutantliver = /obj/item/organ/liver/fish
 	bodypart_overrides = list(
@@ -11,6 +12,7 @@
 		BODY_ZONE_HEAD = /obj/item/bodypart/head,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
+	character_preview_load_all_organs = TRUE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/cerulean
 	species_cookie = /obj/item/food/chips/shrimp
@@ -89,10 +91,8 @@
 	return to_add
 
 /datum/species/human/cerulean/prepare_human_for_preview(mob/living/carbon/human/preview_human)
-	preview_human.skin_tone = "asian1"
-	preview_human.set_haircolor("#a54ea1", update = FALSE)
-	preview_human.set_hairstyle(/datum/sprite_accessory/hair/countryponytail::name, update = TRUE)
-	preview_human.dna.features[FEATURE_TAIL_FISH_COLOR] = COLOR_CARP_TEAL
+	preview_human.set_haircolor("#C2DFED", update = FALSE)
+	preview_human.set_hairstyle(/datum/sprite_accessory/hair/highponytail::name, update = TRUE)
 	preview_human.dna.features[FEATURE_FRILLS] = /datum/sprite_accessory/frills/aquatic::name
 	preview_human.dna.species.mutant_organs[/obj/item/organ/frills] = /datum/sprite_accessory/frills/aquatic::name
 	regenerate_organs(preview_human, excluded_zones = GLOB.leg_zones)
@@ -100,7 +100,6 @@
 
 /datum/species/human/cerulean/get_features()
 	var/list/features = ..()
-	LAZYOR(features, /datum/preference/choiced/cerulean_lungs::savefile_key)
 	LAZYOR(features, /datum/preference/toggle/cerulean_frills::savefile_key)
 	LAZYOR(features, /datum/preference/color/fish_tail_color::savefile_key)
 	return features
@@ -112,9 +111,6 @@
 
 /datum/species/human/cerulean/on_species_gain(mob/living/carbon/human/cerulean, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
-	if (isdummy(cerulean))
-		cerulean.visual_only_organs = FALSE //sorry but we need them all for the organ set bonus
-		return
 	if (cerulean.has_gravity())
 		cerulean.set_resting(TRUE, silent = TRUE, instant = TRUE)
 	//apply a free wet stack to prevent the choking screen alert to appear for a second on mob creation
@@ -137,16 +133,19 @@
 		return
 	// try to attach to uniform
 	var/obj/item/clothing/under/uniform = cerulean.w_uniform
-	var/attached = uniform?.attach_accessory(SSwardrobe.provide_type(/obj/item/clothing/accessory/vaporizer/with_cell, cerulean))
+	var/attached = uniform?.attach_accessory(SSwardrobe.provide_type(/obj/item/vaporizer/with_cell, cerulean))
 	if (attached)
 		return
 	// try anything else
 	cerulean.equip_in_one_of_slots(
-		equipping = SSwardrobe.provide_type(/obj/item/clothing/accessory/vaporizer/with_cell, cerulean),
+		equipping = SSwardrobe.provide_type(/obj/item/vaporizer/with_cell, cerulean),
 		slots = list(LOCATION_LPOCKET, LOCATION_RPOCKET, LOCATION_HANDS, LOCATION_BACKPACK),
 		qdel_on_fail = FALSE,
 		indirect_action = TRUE,
 	)
+
+/datum/species/human/cerulean/get_breath_type()
+	return GAS_WATER_VAPOR //overwrite this proc because safe_water_min is on a lungs subtype. remind me to revive #91453
 
 /// The inverse multiplyer indicating how much blood compared to default_blood_volume() needs to exist for a clean detachment surgery
 #define CLEAN_CUT_MULT 0.5

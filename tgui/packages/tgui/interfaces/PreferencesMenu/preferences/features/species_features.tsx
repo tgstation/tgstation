@@ -126,11 +126,6 @@ export const heterochromatic: Feature<string> = {
   component: FeatureColorInput,
 };
 
-export const feature_cerulean_respiration: Feature<string> = {
-  name: 'Respiration type',
-  component: FeatureDropdownInput,
-};
-
 export const feature_fish_tail_color: Feature<string> = {
   name: 'Fish tail color',
   component: FeatureColorInput,

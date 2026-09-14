@@ -171,7 +171,7 @@
 
 /datum/status_effect/organ_set_bonus/fish/proc/add_speed_buff(datum/source)
 	SIGNAL_HANDLER
-	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(check_body_position))
+	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(check_body_position), TRUE)
 	check_body_position()
 
 /datum/status_effect/organ_set_bonus/fish/proc/remove_speed_buff(datum/source)

@@ -239,10 +239,10 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/cerulean_vaporizer
-	name = /obj/item/clothing/accessory/vaporizer::name
+	name = /obj/item/vaporizer::name
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
-	materials = /obj/item/clothing/accessory/vaporizer::custom_materials
-	build_path = /obj/item/clothing/accessory/vaporizer
+	materials = /obj/item/vaporizer::custom_materials
+	build_path = /obj/item/vaporizer
 	category = list(
 		RND_CATEGORY_HACKED,
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_GAS_TANKS,

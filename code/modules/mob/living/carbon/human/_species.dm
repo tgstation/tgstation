@@ -154,6 +154,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Should we preload this species's organs?
 	var/preload = TRUE
 
+	/// Should the character preview dummy load all organs? Required for i.e organ_set_bonus visual effects
+	var/character_preview_load_all_organs = FALSE
+
 	/// Do we try to prevent reset_perspective() from working? Useful for Dullahans to stop perspective changes when they're looking through their head.
 	var/prevent_perspective_change = FALSE
 
@@ -383,6 +386,9 @@ GLOBAL_LIST_EMPTY(features_by_species)
 		//Otherwise, check if the previous species had an exotic bloodtype and we do not have one and assign a random blood type
 		else if(old_species.exotic_bloodtype && isnull(exotic_bloodtype))
 			human_who_gained_species.set_blood_type(random_human_blood_type())
+
+	if(character_preview_load_all_organs)
+		human_who_gained_species.visual_only_organs = FALSE
 
 	regenerate_organs(human_who_gained_species, old_species, replace_current = FALSE, visual_only = human_who_gained_species.visual_only_organs, replace_missing = replace_missing)
 	// Update locked slots AFTER all organ and body stuff is handled
