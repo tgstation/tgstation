@@ -5,7 +5,7 @@
 
 /datum/design/intellicard
 	name = "Intellicard AI Transportation System"
-	desc = "Allows for the construction of an intellicard. Used to transport AI units between systems."
+	desc = "Can be used to store AI units and transfer them between systems or networks."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/aicard
@@ -16,7 +16,7 @@
 
 /datum/design/paicard
 	name = "Personal Artificial Intelligence Card"
-	desc = "Allows for the construction of a pAI Card. Can be activated to gain a companion AI."
+	desc = "Can be activated to gain a companion AI."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/pai_card
