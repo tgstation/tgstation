@@ -125,7 +125,7 @@ GLOBAL_LIST_EMPTY(starlight)
 	return attack_hand(user, modifiers)
 
 /turf/open/space/handle_slip()
-	return
+	return FALSE
 
 /turf/open/space/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
