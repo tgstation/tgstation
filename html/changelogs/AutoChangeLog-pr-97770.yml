@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - refactor: "changed the way ChangeTurf() handles signal registration, please report any weird issues with stuff that usually happens on entering certain turfs (elevation, bananium squeaks, lava burning things, etc)"
