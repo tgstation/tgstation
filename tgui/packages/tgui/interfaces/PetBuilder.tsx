@@ -15,6 +15,7 @@ import {
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { IconDisplay } from './LootPanel/IconDisplay';
+
 type Data = {
   pet_name: string | null;
   pet_specie: string;
@@ -399,7 +400,7 @@ const CarrierSelector = ({
   setSelectedCarrier,
 }: any) => (
   <Flex grow>
-    <Flex.Item width="30%">
+    <Flex.Item width="100%">
       <Stack vertical>
         <Stack.Item>
           <Image
