@@ -17,10 +17,10 @@
 		/obj/structure/sign/poster/contraband/lizard,
 		/obj/structure/sign/poster/contraband/lusty_xenomorph,
 		/obj/structure/sign/poster/contraband/double_rainbow,
+		/obj/structure/sign/poster/contraband/double_gunshow,
 		/obj/structure/sign/poster/contraband/rabbit_hole,
 		/obj/structure/sign/poster/contraband/bridge_bunny,
 		/obj/structure/sign/poster/contraband/rabbit_swole,
-		/obj/structure/sign/poster/contraband/gym_bunny,
 	)
 
 /obj/item/poster/random_contraband/pinup/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
@@ -864,12 +864,12 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/rabbit_hole, 3
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/rabbit_swole, 32)
 
-/obj/structure/sign/poster/contraband/gym_bunny
-	name = "Welcome to Gunderland"
-	desc = "And the queen shouted, 'Off with his sleeves!'"
-	icon_state = "rabbit_gunshow"
+/obj/structure/sign/poster/contraband/double_gunshow
+	name = "Double Gunshow"
+	desc = "All the whey all across this guy..."
+	icon_state = "double_gunshow"
 
-MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/gym_bunny, 32)
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/double_gunshow, 32)
 
 /obj/structure/sign/poster/contraband/bridge_bunny
 	name = "Bridge Bunny"
