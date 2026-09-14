@@ -1,0 +1,7 @@
+author: "Fghj240"
+delete-after: True
+changes:
+  - balance: "simplemob bomb armor grants linearly scaling damage reduction vs bombs instead of a random chance to reduce damage"
+  - bugfix: "bomb immunity works on simplemobs"
+  - bugfix: "bomb armor now protects simplemobs from being gibbed by explosions"
+  - code_imp: "simplemob bomb code is less repetitive"
