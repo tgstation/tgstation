@@ -187,6 +187,7 @@
 
 			available_recipe += list(list(
 				"pipe_name" = info.name,
+				"pipe_desc" = info.desc,
 				"pipe_index" = i,
 				"previews" = info.get_preview(p_dir, info == recipe)
 			))
