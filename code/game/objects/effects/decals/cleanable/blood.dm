@@ -75,8 +75,6 @@
 
 /obj/effect/decal/cleanable/blood/Destroy(force)
 	STOP_PROCESSING(SSblood_drying, src)
-	// connect_loc only unregisters via COMSIG_MOVABLE_MOVED, which never fires when the turf we're on gets replaced by ChangeTurf()
-	RemoveElement(/datum/element/connect_loc, loc_connections)
 	return ..()
 
 /// Returns the default blood type for this decal for maploaded decals
