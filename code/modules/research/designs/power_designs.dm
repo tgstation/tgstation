@@ -142,7 +142,7 @@
 
 /datum/design/board/pacman
 	name = "PACMAN Board"
-	desc = "The circuit board for a PACMAN-type portable generator."
+	desc = "Used to build a PACMAN-type portable generator. Consumes plasma to generate a moderate amount of power."
 	build_path = /obj/item/circuitboard/machine/pacman
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
