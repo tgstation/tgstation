@@ -1110,7 +1110,6 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 
 ///Redirect proc that makes it easier to call the unlock achievement proc. Achievement type is the typepath to the award, user is the mob getting the award, and value is an optional variable used for leaderboard value increments
 /client/proc/give_award(achievement_type, mob/user, value = 1, ...)
-	to_chat(world, span_warning("[user] got achievement [achievement_type]")) // TODO: remove this before the PR gets posted or they'll laugh at you
 	return persistent_client.achievements.unlock(arglist(args))
 
 ///Redirect proc that makes it easier to get the status of an achievement. Achievement type is the typepath to the award.
