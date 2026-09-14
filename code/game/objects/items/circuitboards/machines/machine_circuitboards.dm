@@ -516,7 +516,7 @@
 	build_path = /obj/machinery/rnd/production/circuit_imprinter/department
 
 /obj/item/circuitboard/machine/holopad
-	name = "AI Holopad"
+	name = "Holopad"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/holopad
 	req_components = list(/datum/stock_part/capacitor = 1)

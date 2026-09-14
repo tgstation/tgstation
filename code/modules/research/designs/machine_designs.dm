@@ -652,8 +652,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_SECURITY | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_MEDICAL
 
 /datum/design/board/holopad
-	name = "AI Holopad Board"
-	desc = "Used to build a holopad. Allows for remote calls to other holopads."
+	name = "Holopad Board"
+	desc = "Used to build a holopad. Allows for remote calls to other holopads. Screwdriver the circuit to toggle security mode."
 	build_path = /obj/item/circuitboard/machine/holopad
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
