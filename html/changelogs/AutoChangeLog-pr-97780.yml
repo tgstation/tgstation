@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "brings back the tg window icon that mysteriously went missing for a couple days"
