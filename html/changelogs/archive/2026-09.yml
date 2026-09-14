@@ -166,6 +166,12 @@
   KingkumaArt:
   - image: added 4 new mech pilot suits, purchasable from cargo!
 2026-09-14:
+  Fghj240:
+  - balance: simplemob bomb armor grants linearly scaling damage reduction vs bombs
+      instead of a random chance to reduce damage
+  - bugfix: bomb immunity works on simplemobs
+  - bugfix: bomb armor now protects simplemobs from being gibbed by explosions
+  - code_imp: simplemob bomb code is less repetitive
   Melbert:
   - rscdel: Toy guns no longer have cosmetic recoil effects
   - balance: Bananium swords are now slippier, particularly in the hands of clowns
