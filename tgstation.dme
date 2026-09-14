@@ -2034,7 +2034,6 @@
 #include "code\datums\mutations\cold.dm"
 #include "code\datums\mutations\farsight.dm"
 #include "code\datums\mutations\fire_breath.dm"
-#include "code\datums\mutations\hearing.dm"
 #include "code\datums\mutations\hot.dm"
 #include "code\datums\mutations\hulk.dm"
 #include "code\datums\mutations\olfaction.dm"
