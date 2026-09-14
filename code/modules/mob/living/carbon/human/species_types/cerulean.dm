@@ -111,6 +111,9 @@
 
 /datum/species/human/cerulean/on_species_gain(mob/living/carbon/human/cerulean, datum/species/old_species, pref_load, regenerate_icons)
 	. = ..()
+	var/obj/item/bodypart/chest/cerulean_chest = cerulean.get_bodypart()
+	if(cerulean_chest)
+		cerulean_chest.wing_types = list(/obj/item/organ/wings/dragon)
 	if (cerulean.has_gravity())
 		cerulean.set_resting(TRUE, silent = TRUE, instant = TRUE)
 	//apply a free wet stack to prevent the choking screen alert to appear for a second on mob creation
