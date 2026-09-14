@@ -19,6 +19,8 @@
 		/obj/structure/sign/poster/contraband/double_rainbow,
 		/obj/structure/sign/poster/contraband/rabbit_hole,
 		/obj/structure/sign/poster/contraband/bridge_bunny,
+		/obj/structure/sign/poster/contraband/rabbit_swole,
+		/obj/structure/sign/poster/contraband/gym_bunny,
 	)
 
 /obj/item/poster/random_contraband/pinup/Initialize(mapload, obj/structure/sign/poster/new_poster_structure)
@@ -854,6 +856,20 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/double_rainbow
 	icon_state = "rabbit_hole"
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/rabbit_hole, 32)
+
+/obj/structure/sign/poster/contraband/rabbit_swole
+	name = "Damn that Rabbit Swole"
+	desc = "Someone's been hitting that 'Eat me' cake..."
+	icon_state = "rabbit_swole"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/rabbit_swole, 32)
+
+/obj/structure/sign/poster/contraband/gym_bunny
+	name = "Welcome to Gunderland"
+	desc = "And the queen shouted, 'Off with his sleeves!'"
+	icon_state = "rabbit_gunshow"
+
+MAPPING_DIRECTIONAL_HELPERS(/obj/structure/sign/poster/contraband/gym_bunny, 32)
 
 /obj/structure/sign/poster/contraband/bridge_bunny
 	name = "Bridge Bunny"
