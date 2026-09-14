@@ -1,0 +1,4 @@
+author: "JohnFulpWillard"
+delete-after: True
+changes:
+  - rscadd: "Added bruise wounds to your hands if you attack people in a near-death state. They show up on autopsies."
