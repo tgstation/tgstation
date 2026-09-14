@@ -1,5 +1,5 @@
 /obj/machinery/computer/rdservercontrol
-	name = "R&D Server Controller"
+	name = "\improper R&D Server Controller"
 	desc = "Manages access to research databases and consoles."
 	icon_screen = "rdcomp"
 	icon_keyboard = "rd_key"

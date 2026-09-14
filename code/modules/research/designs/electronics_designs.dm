@@ -5,7 +5,7 @@
 
 /datum/design/intellicard
 	name = "Intellicard AI Transportation System"
-	desc = "Allows for the construction of an intellicard."
+	desc = "Allows for the construction of an intellicard. Used to transport AI units between systems."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/aicard
@@ -16,7 +16,7 @@
 
 /datum/design/paicard
 	name = "Personal Artificial Intelligence Card"
-	desc = "Allows for the construction of a pAI Card."
+	desc = "Allows for the construction of a pAI Card. Can be activated to gain a companion AI."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/pai_card
@@ -27,7 +27,7 @@
 
 /datum/design/ai_cam_upgrade
 	name = "AI Surveillance Software Update"
-	desc = "A software package that will allow an artificial intelligence to 'hear' from its cameras via lip reading."
+	desc = "A software package that will allow an AI to 'hear' from its cameras via lip reading."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5,
@@ -45,7 +45,7 @@
 
 /datum/design/ai_power_transfer
 	name = "AI Power Transfer Update"
-	desc = "An upgrade package that lets an AI charge an APC from a distance"
+	desc = "An software package that allows an AI charge an APC, regardless of connection status."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2.5,
