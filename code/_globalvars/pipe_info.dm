@@ -130,21 +130,21 @@
 	all_layers = TRUE
 
 /datum/pipe_info/pipe/passive_gate
-	name = "Passive Valve"
+	name = "Passive Gate"
 	desc = "Blocks the flow of gas through the pipeline while the output pipeline has higher pressure \
 		than either the configured pressure or the input pipeline's pressure.<br>Does not allow backwards flow, and does not require power."
 	id = /obj/machinery/atmospherics/components/binary/passive_gate
 	all_layers = TRUE
 
 /datum/pipe_info/pipe/pressure_valve
-	name = "Pressure Valve"
+	name = "Pressure Gate"
 	desc = "Blocks the flow of gas through the pipeline while the input pipeline's pressure \
 		is below the configured pressure.<br>Does not allow backwards flow, and does not require power."
 	id = /obj/machinery/atmospherics/components/binary/pressure_valve
 	all_layers = TRUE
 
 /datum/pipe_info/pipe/temperature_gate
-	name = "Temperature Valve"
+	name = "Temperature Gate"
 	desc = "Blocks the flow of gas through the pipeline while the input pipeline's temperature is below the configured temperature.<br>\
 		Does not allow backwards flow, and can be multitooled to instead check for exceeding the configured temperature."
 	id = /obj/machinery/atmospherics/components/binary/temperature_gate
