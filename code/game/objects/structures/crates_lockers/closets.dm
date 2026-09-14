@@ -191,7 +191,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			take_contents()
 
 	if(sealed)
-		var/datum/gas_mixture/external_air = loc.return_air()
+		var/datum/gas_mixture/external_air = loc?.return_air()
 		if(external_air && is_maploaded)
 			internal_air = external_air.copy()
 		else

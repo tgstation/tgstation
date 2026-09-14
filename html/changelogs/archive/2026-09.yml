@@ -102,9 +102,17 @@
   - rscadd: hitsounds to cans
   - sound: added can_hit.ogg
 2026-09-08:
+  Absolucy:
+  - bugfix: Slimes now properly pass down factions and allies to their babies.
+  - bugfix: Fixed progress bars still flashing red when they were completed.
   ArcaneMusic:
   - rscadd: cargo can now buy a "gardening" crate on broad spectrum bands filled with
       pitchforks and torches.
+  - bugfix: Industrial waste now uses shared particles for processing.
+  - bugfix: Industrial waste can no longer be duped.
+  FalloutFalcon:
+  - code_imp: Improves some code which means straightjackets are better caught in
+      cuff resist code
   JohnFulpWillard:
   - qol: Changed thumbs up/down & scratch head emote when manually typing to thumbsup,
       thumbsdown & scratchhead
@@ -117,3 +125,59 @@
   - qol: Blind mobs can see names in the loot panel again, but the panel auto-closes
       when further than two tiles away.
   - bugfix: Cables are properly obscured by windows or airlocks
+  PapaMichael:
+  - rscadd: Added tooltips for language icons in chat
+2026-09-10:
+  vinylspiders:
+  - rscdel: deletes a bunch of unused, unreferenced assets from the game
+2026-09-11:
+  ArcaneMusic:
+  - rscadd: Cargo may now buy a brand new, Nanomusic Boombox! Comes free with 1 demo
+      tape. Two additional disks sold separately (as goodies).
+  - rscadd: A familiar-sounding tape has been added to the game's vendor's premium
+      goods.
+  - rscadd: A rare tape has been added to the black market.
+  - rscadd: A rare tape has been added as a bitrunning secondary reward.
+  MelokG000:
+  - rscadd: PLANKMAN-type portable generator! You can now burn wood for power!
+  necromanceranne:
+  - rscadd: Some collars are now able to be cuffed to your arm.
+  vinylspiders:
+  - bugfix: fixes bot move path overlays not showing up
+2026-09-12:
+  OnlineGirlfriend:
+  - rscadd: pinup posters
+  timothymtorres:
+  - rscadd: Add 3 new kudzu mutations - slippery, radioactive, and conductive
+  - rscadd: Venus Flytraps will inherit mutations from kudzu that can be beneficial
+      or negative that can affect stats, abilities, etc.
+  - balance: Halved Venus Flytrap health and regen. Venus Flytraps can no longer move
+      off weeds without taking damage unless they have the aggressive spread mutation.
+  - rscadd: Weedkiller/Plant-B-Gone instakills alien weeds
+  - rscadd: Weedkiller grenades now use weedkiller chemical and not Plant-B-Gone
+  - balance: Halved the damage from Plant-B-Gone vs kudzu and plants
+  - bugfix: Fixed hardening kudzu mutation not providing a 50% resistance to sharpened
+      weapons.
+  - bugfix: Fixed thorn kudzu mutation not retaliating against players who attack
+      it.
+  - qol: Add examine blocks to flavour text for Venus Trap Ghost Spawners that includes
+      their inherited mutations
+2026-09-13:
+  KingkumaArt:
+  - image: added 4 new mech pilot suits, purchasable from cargo!
+2026-09-14:
+  Melbert:
+  - rscdel: Toy guns no longer have cosmetic recoil effects
+  - balance: Bananium swords are now slippier, particularly in the hands of clowns
+  - balance: Bananium shields are now slippier, particularly in the hands of clowns
+  - balance: Added and removed several items from the clown operative outfit and uplink
+  - spellcheck: 'Fix blood trail examine: "That''s a trail of blood" instead of "that''s
+      some trail of blood"'
+  timothymtorres:
+  - bugfix: Fix cargo stray supply pod runtime
+  vinylspiders:
+  - bugfix: brings back the tg window icon that mysteriously went missing for a couple
+      days
+  - refactor: changed the way ChangeTurf() handles signal registration, please report
+      any weird issues with stuff that usually happens on entering certain turfs (elevation,
+      bananium squeaks, lava burning things, etc)
