@@ -304,7 +304,7 @@
 				unconscious_duration = 3 SECONDS
 		if(EXPLODE_HEAVY)
 			max_wounds = 3
-			wound_prob = 45
+			wound_prob = 40
 			brute_loss = 60
 			burn_loss = 60
 			soundbang_intensity = SOUNDBANG_MASSIVE
