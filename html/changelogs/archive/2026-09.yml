@@ -201,6 +201,8 @@
       state. They show up on autopsies.
   Melbert:
   - bugfix: Fixes Kilo's gas turbine burning Atmos down on use
+  Voyaker-coder:
+  - rscadd: Adds a functional firing delay to the Abductor "Shrink Ray" pistol
   YesterdaysPromise:
   - rscadd: Added Fonarstolbes, Podsneyzkas, Vahrezjias, Inozhakusts, Plasma Flowers,
       and Drake Beets as Icebox plantlife and botany plants.
