@@ -4,7 +4,7 @@ import { toFixed } from 'tgui-core/math';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-type Data = {
+export type SignalerData = {
   code: number;
   frequency: number;
   cooldown: number;
@@ -13,18 +13,18 @@ type Data = {
 };
 
 export const Signaler = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useBackend<SignalerData>();
   return (
     <Window width={280} height={128}>
       <Window.Content>
-        <SignalerContent />
+        <SignalerContent act={act} data={data} />
       </Window.Content>
     </Window>
   );
 };
 
 export const SignalerContent = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = props;
   const { code, frequency, cooldown, minFrequency, maxFrequency } = data;
 
   const color = 'rgba(13, 13, 213, 0.7)';

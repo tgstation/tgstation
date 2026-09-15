@@ -17,8 +17,8 @@ import { scale, toFixed } from 'tgui-core/math';
 import type { BooleanLike } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 type Data = {
   disk_size: number;
@@ -30,7 +30,7 @@ type Data = {
   error: string;
   emagged: BooleanLike;
   categories: string[];
-  programs: ProgramData[];
+  downloadable_programs: ProgramData[];
 };
 
 type ProgramData = {
@@ -47,7 +47,7 @@ type ProgramData = {
 };
 
 export const NtosNetDownloader = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const {
     disk_size,
     disk_used,
@@ -58,7 +58,7 @@ export const NtosNetDownloader = (props) => {
     error,
     emagged,
     categories = [],
-    programs = [],
+    downloadable_programs = [],
   } = data;
   const all_categories = categories;
   const downloadpercentage = toFixed(
@@ -73,9 +73,12 @@ export const NtosNetDownloader = (props) => {
   let items =
     searchItem.length > 0
       ? // If we have a query, search everything for it.
-        filter(programs, search)
+        filter(downloadable_programs, search)
       : // Otherwise, show respective programs for the category.
-        filter(programs, (program) => program.category === selectedCategory);
+        filter(
+          downloadable_programs,
+          (program) => program.category === selectedCategory,
+        );
   // This sorts all programs in the lists by name and compatibility
   items = sortBy(items, [
     (program: ProgramData) => !program.compatible,
@@ -173,7 +176,7 @@ export const NtosNetDownloader = (props) => {
 
 const Program = (props) => {
   const { program } = props;
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const {
     disk_size,
     disk_used,

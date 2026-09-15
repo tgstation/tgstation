@@ -126,11 +126,12 @@
  * and also borg emag code.
  */
 /mob/living/silicon/robot/proc/set_modularInterface_theme()
+	var/datum/operating_system/default/ntos/ntos = modularInterface.os
 	if(istype(model, /obj/item/robot_model/syndicate) || emagged)
-		modularInterface.device_theme = PDA_THEME_SYNDICATE
+		ntos.device_theme = PDA_THEME_SYNDICATE
 		modularInterface.icon_state = "tablet-silicon-syndicate"
 	else
-		modularInterface.device_theme = PDA_THEME_NTOS
+		ntos.device_theme = PDA_THEME_NTOS
 		modularInterface.icon_state = "tablet-silicon"
 		modularInterface.icon_state_powered = "tablet-silicon"
 		modularInterface.icon_state_unpowered = "tablet-silicon"

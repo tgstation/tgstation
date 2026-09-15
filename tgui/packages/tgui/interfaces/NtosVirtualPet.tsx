@@ -15,8 +15,8 @@ import {
 import type { BooleanLike } from 'tgui-core/react';
 import { capitalize } from 'tgui-core/string';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 type Data = {
   currently_summoned: BooleanLike;
@@ -126,7 +126,7 @@ export const NtosVirtualPet = (props) => {
 };
 
 const Stats = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const {
     currently_summoned,
     pet_state,
@@ -240,7 +240,7 @@ const Stats = (props) => {
 };
 
 const PetTricks = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const { possible_emotes } = data;
   const [sequences, setSequences] = useState(['none', 'none', 'none', 'none']);
   const [TrickName, setTrickName] = useState('Trick');
@@ -294,7 +294,7 @@ const PetTricks = (props) => {
 };
 
 const Customization = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const {
     preview_icon,
     hat_selections = [],
@@ -428,7 +428,7 @@ const Customization = (props) => {
 };
 
 const AllPetUpdates = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const { pet_updates } = data;
 
   return (
@@ -493,7 +493,7 @@ const AllPetUpdates = (props) => {
 };
 
 const PetIcon = (props) => {
-  const { data } = useBackend<Data>();
+  const { data } = useNtos<Data>();
   const { pet_state_icons = [] } = data;
   const { our_pet_state } = props;
 

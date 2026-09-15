@@ -9,8 +9,8 @@ import {
 import { type BooleanLike, classes } from 'tgui-core/react';
 
 import { resolveAsset } from '../assets';
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 type Data = {
   selected: string;
@@ -69,7 +69,7 @@ export const NtosRadarContent = (props) => {
 
 /** Returns object information */
 const ObjectDisplay = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const { object = [], scanning, selected } = data;
 
   return (
@@ -111,7 +111,7 @@ const ObjectDisplay = (props) => {
 
 /** Returns target information */
 const TargetDisplay = (props) => {
-  const { data } = useBackend<Data>();
+  const { data } = useNtos<Data>();
   const { selected, target } = data;
 
   if (!selected || !target) {

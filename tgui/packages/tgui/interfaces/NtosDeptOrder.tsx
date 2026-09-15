@@ -13,8 +13,8 @@ import {
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 // 3.5x crate value, 10 minutes
 const COST_MODERATE_BOUND = 700;
@@ -65,7 +65,7 @@ const CooldownEstimate = (props) => {
 };
 
 export const DepartmentOrderContent = (props) => {
-  const { data } = useBackend<Info>();
+  const { data } = useNtos<Info>();
   const { no_link, time_left } = data;
   if (!data) {
     return null;
@@ -111,7 +111,7 @@ export const NtosDeptOrder = () => {
 };
 
 const CooldownDimmer = () => {
-  const { act, data } = useBackend<Info>();
+  const { act, data } = useNtos<Info>();
   const { can_override, time_left } = data;
   return (
     <Dimmer>
@@ -145,7 +145,7 @@ const CooldownDimmer = () => {
 };
 
 const NoLinkDimmer = () => {
-  const { act, data } = useBackend<Info>();
+  const { act, data } = useNtos<Info>();
   const { id_inside } = data;
   return (
     <Dimmer>
@@ -169,7 +169,7 @@ const NoLinkDimmer = () => {
 };
 
 const DepartmentCatalog = () => {
-  const { act, data } = useBackend<Info>();
+  const { act, data } = useNtos<Info>();
   const { supplies } = data;
   const [tabCategory, setTabCategory] = useState(supplies[0]);
 

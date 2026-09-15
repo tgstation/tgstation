@@ -1,8 +1,8 @@
 import { Box, Input, NoticeBox, Section } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 type Data = {
   valid_id: BooleanLike;
@@ -16,7 +16,7 @@ type CouponData = {
 };
 
 export const NtosCouponMaster = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const { valid_id, redeemed_coupons = [], printed_coupons = [] } = data;
   return (
     <NtosWindow width={400} height={400}>
