@@ -50,6 +50,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 	. = ..()
 	GLOB.tendrils += src
 	AddElement(/datum/element/death_drops, /obj/structure/closet/crate/necropolis/tendril)
+	AddElement(/datum/element/block_mining_mob_respawns, 10)
 	AddComponent(/datum/component/ai_target_timer)
 	AddComponent(/datum/component/gps, "Eerie Signal")
 	AddComponent(/datum/component/basic_mob_attack_telegraph, display_telegraph_overlay = FALSE, telegraph_duration = 0.4 SECONDS)
