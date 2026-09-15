@@ -2,6 +2,7 @@
 	name = "\improper Codex Gigas"
 	desc = "A book documenting the nature of devils."
 	icon_state ="demonomicon"
+	inhand_icon_state = "demonomicon"
 	lefthand_file = 'icons/mob/inhands/items/books_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/books_righthand.dmi'
 	throw_speed = 1
