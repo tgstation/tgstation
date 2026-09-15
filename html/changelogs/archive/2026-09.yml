@@ -219,3 +219,5 @@
   vinylspiders:
   - bugfix: fixes an issue that can cause the holodeck to stop functioning for the
       entire round
+  - bugfix: the carrier choice dropdown in the bring your pets to work day menu is
+      now visible
