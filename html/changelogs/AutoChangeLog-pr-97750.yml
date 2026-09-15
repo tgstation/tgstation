@@ -1,6 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - qol: "All Mechs now have a toggle to trim down the modules pane of the Mech UI."
-  - qol: "Mechs will now show their overlock percentage without having it enabled."
-  - spellcheck: "Mechs when examined now format their integrity text the same as when other things are falling apart."

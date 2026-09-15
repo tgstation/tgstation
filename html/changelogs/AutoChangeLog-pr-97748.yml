@@ -1,4 +1,0 @@
-author: "sqnztb"
-delete-after: True
-changes:
-  - bugfix: "radio and entertainment chatter are no longer filtered out by local chat."
