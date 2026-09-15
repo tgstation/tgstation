@@ -582,6 +582,14 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	set_organ_damage(maxHealth)
 	wounded(attacking_item, user, modifiers, attack_modifiers)
 
+/obj/item/organ/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(organ_flags & ORGAN_WOUNDED && istype(tool, obj/item/stack/medical/suture))
+		if(tool.use_tool(src, user, 2 SECONDS, 1))
+			balloon_alert(user, "organ stitched")
+			organ_flags &= ~ORGAN_WOUNDED
+			wounded_time = 0
+	. = ..()
+
 /obj/item/organ/proc/wounded(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
 	organ_flags |= ORGAN_WOUNDED
 
