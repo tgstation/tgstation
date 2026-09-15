@@ -25,7 +25,12 @@
 
 /obj/item/organ/appendix/update_name()
 	. = ..()
-	name = "[inflamation_stage ? "inflamed " : null][initial(name)]"
+	var/prefix = ""
+	if(organ_flags & ORGAN_WOUNDED)
+		prefix = "ruptured"
+	else if(inflamation_stage)
+		prefix = "inflamed"
+	name = "[prefix][initial(name)]"
 
 /obj/item/organ/appendix/update_icon_state()
 	icon_state = "[base_icon_state][inflamation_stage ? "inflamed" : ""]"
