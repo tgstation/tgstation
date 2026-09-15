@@ -78,7 +78,7 @@ In all, this is a lot like the monkey code. /N
 		if (EXPLODE_HEAVY)
 			take_overall_damage(60, 60)
 			if(prob(50))
-				Unconscious(20)
+				Unconscious(2 SECONDS)
 			sound_damage(30, 240 SECONDS)
 
 		if(EXPLODE_LIGHT)
