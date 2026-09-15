@@ -166,6 +166,12 @@
   KingkumaArt:
   - image: added 4 new mech pilot suits, purchasable from cargo!
 2026-09-14:
+  Fghj240:
+  - balance: simplemob bomb armor grants linearly scaling damage reduction vs bombs
+      instead of a random chance to reduce damage
+  - bugfix: bomb immunity works on simplemobs
+  - bugfix: bomb armor now protects simplemobs from being gibbed by explosions
+  - code_imp: simplemob bomb code is less repetitive
   Melbert:
   - rscdel: Toy guns no longer have cosmetic recoil effects
   - balance: Bananium swords are now slippier, particularly in the hands of clowns
@@ -181,3 +187,37 @@
   - refactor: changed the way ChangeTurf() handles signal registration, please report
       any weird issues with stuff that usually happens on entering certain turfs (elevation,
       bananium squeaks, lava burning things, etc)
+2026-09-15:
+  ArcaneMusic:
+  - qol: All Mechs now have a toggle to trim down the modules pane of the Mech UI.
+  - qol: Mechs will now show their overlock percentage without having it enabled.
+  - spellcheck: Mechs when examined now format their integrity text the same as when
+      other things are falling apart.
+  Jacquerel:
+  - image: Added icons for the achievements "I Was a Teenage Anarchist", "A Bowl-d
+      New World", and "How Do I Switch Hands???"
+  JohnFulpWillard:
+  - rscadd: Added bruise wounds to your hands if you attack people in a near-death
+      state. They show up on autopsies.
+  Melbert:
+  - bugfix: Fixes Kilo's gas turbine burning Atmos down on use
+  Voyaker-coder:
+  - rscadd: Adds a functional firing delay to the Abductor "Shrink Ray" pistol
+  YesterdaysPromise:
+  - rscadd: Added Fonarstolbes, Podsneyzkas, Vahrezjias, Inozhakusts, Plasma Flowers,
+      and Drake Beets as Icebox plantlife and botany plants.
+  - rscadd: 'Added following chemicals: Guidoferrunitian Glycetamine (Found in Fonarstolbes)  and
+      Berserk Toxin (Found in Vahrezjias)'
+  - rscadd: Added Nutrient Bars, Iceberg Soup, Drake Borscht, Wolf Goulash, Snowdrake
+      BBQ, Wendigo Killer Feast, and Ice Breaker to cooking recipes.
+  - rscadd: Added Mouthwash (from fermented Inozhakusts), Strong Mouthwash, Stone
+      Cold Stout, Icy Dorf, Ramp Rager, Ice Grave and Frozen-Sea Lantern drinks.
+  sqnztb:
+  - bugfix: radio and entertainment chatter are no longer filtered out by local chat.
+  timothymtorres:
+  - bugfix: Fix supermatter spiders not having web immunity trait
+  vinylspiders:
+  - bugfix: fixes an issue that can cause the holodeck to stop functioning for the
+      entire round
+  - bugfix: the carrier choice dropdown in the bring your pets to work day menu is
+      now visible
