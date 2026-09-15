@@ -6,19 +6,6 @@
 		return
 
 	. = ..()
-	// And now, separately for cleanness, the lighting changing
-	if(!update_state)
-		switch(charging)
-			if(APC_NOT_CHARGING)
-				set_light_color(COLOR_SOFT_RED)
-			if(APC_CHARGING)
-				set_light_color(LIGHT_COLOR_BLUE)
-			if(APC_FULLY_CHARGED)
-				set_light_color(LIGHT_COLOR_GREEN)
-		set_light(light_on_range)
-		return
-
-	set_light(0)
 
 /obj/machinery/power/apc/update_icon_state()
 	if(!update_state)

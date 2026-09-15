@@ -535,7 +535,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	else
 		color = "#00FFCC" // teal
 
-	set_light(1.5, 1, color)
+	set_light(MINIMUM_USEFUL_LIGHT_RANGE, 3.5, color, 90, dir)
 
 /obj/machinery/airalarm/update_icon_state()
 	if(panel_open)

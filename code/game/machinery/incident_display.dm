@@ -30,9 +30,6 @@ DEFINE_BITFIELD(sign_features, list(
 #define DISPLAY_BASE_ALPHA 64
 #define DISPLAY_PIXEL_ALPHA 96
 
-#define LIGHT_COLOR_NORMAL "#4b4290"
-#define LIGHT_COLOR_SHAME "#e24e76"
-
 /obj/machinery/incident_display
 	name = NAME_DELAM
 	desc = DESC_DELAM
@@ -253,22 +250,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 	. = ..()
 	update_appearance()
 
-/obj/machinery/incident_display/update_appearance(updates = ALL)
-	. = ..()
-	if(machine_stat & NOPOWER)
-		icon_state = "display_normal"
-		set_light(l_on = FALSE)
-		return
-	else if(machine_stat & BROKEN)
-		icon_state = "display_broken"
-		set_light(l_range = 1.7, l_power = 1.5, l_color = LIGHT_COLOR_NORMAL, l_on = TRUE)
-	else if((sign_features & DISPLAY_DELAM) && last_delam <= 0) // you done fucked up
-		icon_state = "display_shame"
-		set_light(l_range = 1.7, l_power = 1.5, l_color = LIGHT_COLOR_SHAME, l_on = TRUE)
-	else
-		icon_state = "display_normal"
-		set_light(l_range = 1.7, l_power = 1.5, l_color = LIGHT_COLOR_NORMAL, l_on = TRUE)
-
 /obj/machinery/incident_display/update_overlays()
 	. = ..()
 	if(machine_stat & (NOPOWER|BROKEN))
@@ -424,5 +405,3 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/incident_display/tram, 32)
 #undef DISPLAY_BASE_ALPHA
 #undef DISPLAY_PIXEL_ALPHA
 
-#undef LIGHT_COLOR_NORMAL
-#undef LIGHT_COLOR_SHAME

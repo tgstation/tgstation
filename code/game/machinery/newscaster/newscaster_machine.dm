@@ -90,13 +90,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	newscaster_username = null
 	return ..()
 
-/obj/machinery/newscaster/update_appearance(updates=ALL)
-	. = ..()
-	if(machine_stat & (NOPOWER|BROKEN))
-		set_light(0)
-		return
-	set_light(1.5, 0.7, "#34D352") // green light
-
 /obj/machinery/newscaster/update_overlays()
 	. = ..()
 

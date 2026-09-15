@@ -23,7 +23,7 @@
 /// Does this light ignore inherent offsets? (Pixels, transforms, etc)
 #define LIGHT_IGNORE_OFFSET (1<<2)
 
-#define MINIMUM_USEFUL_LIGHT_RANGE 1.4
+#define MINIMUM_USEFUL_LIGHT_RANGE 1.2
 
 /// light UNDER the floor. primarily used for starlight, shouldn't fuck with this
 #define LIGHTING_HEIGHT_SPACE -0.5

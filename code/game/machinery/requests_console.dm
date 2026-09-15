@@ -60,13 +60,6 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	fire = 90
 	acid = 90
 
-/obj/machinery/requests_console/update_appearance(updates=ALL)
-	. = ..()
-	if(machine_stat & NOPOWER)
-		set_light(0)
-		return
-	set_light(1.5, 0.7, "#34D352")//green light
-
 /obj/machinery/requests_console/examine(mob/user)
 	. = ..()
 	if(!open)
