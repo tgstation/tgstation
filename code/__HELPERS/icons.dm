@@ -638,7 +638,7 @@ world
 /proc/apply_icon_mask(icon/base_icon, mask_to_use, icon/replacement)
 	if(isnull(mask_to_use))
 		return
-	var/icon/mask = icon(MASKING_HELPERS_PATH, mask_to_use)
+	var/icon/mask = icon('icons/mob/clothing/under/masking_helpers.dmi', mask_to_use)
 	base_icon.Blend(mask, ICON_SUBTRACT)
 	if(!isnull(replacement))
 		base_icon.Blend(replacement, ICON_OVERLAY)
