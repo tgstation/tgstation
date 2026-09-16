@@ -38,7 +38,7 @@
 		if(PTURRET_SENSORS_ON)
 			. += span_notice("The turret's access hatch is <b>unscrewed</b>. The proximity sensor could <i>be removed</i>.")
 		if(PTURRET_CLOSED)
-			. += span_notice("The turret requires <b>metal</b> for its external armor, the access hatch could be <i>unscrewed</i>.")
+			. += span_notice("The turret requires <b>plasteel</b> for its external armor, the access hatch could be <i>unscrewed</i>.")
 		if(PTURRET_START_EXTERNAL_ARMOUR)
 			. += span_notice("The turret's armor needs to be <b>welded</b> in place, the armor looks like it could be <i>pried</i> off.")
 
@@ -82,13 +82,13 @@
 			return ITEM_INTERACT_SUCCESS
 
 		if(PTURRET_CLOSED)
-			if(!istype(tool, /obj/item/stack/sheet/iron))
+			if(!istype(tool, /obj/item/stack/sheet/plasteel))
 				return NONE
-			var/obj/item/stack/sheet/iron/sheet = tool
-			if(!sheet.use(2))
-				to_chat(user, span_warning("You need two sheets of iron to continue construction!"))
+			var/obj/item/stack/sheet/plasteel/sheet = tool
+			if(!sheet.use(5))
+				to_chat(user, span_warning("You need five sheets of plasteel to continue construction!"))
 				return ITEM_INTERACT_BLOCKING
-			to_chat(user, span_notice("You add some metal armor to the exterior frame."))
+			to_chat(user, span_notice("You add some plasteel armor to the exterior frame."))
 			build_step = PTURRET_START_EXTERNAL_ARMOUR
 			return ITEM_INTERACT_SUCCESS
 
@@ -136,7 +136,7 @@
 		if(PTURRET_START_EXTERNAL_ARMOUR)
 			tool.play_tool_sound(src, 75)
 			to_chat(user, span_notice("You pry off the turret's exterior armor."))
-			new /obj/item/stack/sheet/iron(loc, 2)
+			new /obj/item/stack/sheet/plasteel(loc, 5)
 			build_step = PTURRET_CLOSED
 			return ITEM_INTERACT_SUCCESS
 
