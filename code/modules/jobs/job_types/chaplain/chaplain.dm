@@ -37,6 +37,7 @@
 	voice_of_god_power = 2 //Chaplains are very good at speaking with the voice of god
 
 	job_tone = "holy"
+	tgui_icon = FA_ICON_CROSS
 
 
 /datum/job/chaplain/after_spawn(mob/living/spawned, client/player_client)
@@ -123,7 +124,7 @@
 		/obj/item/camera/spooky = 1,
 		/obj/item/stamp/chap = 1,
 		)
-	belt = /obj/item/modular_computer/pda/chaplain
+	belt = /obj/item/modular_computer/pda/crew/chaplain
 	ears = /obj/item/radio/headset/headset_srv
 
 	backpack = /obj/item/storage/backpack/cultpack

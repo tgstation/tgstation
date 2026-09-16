@@ -41,6 +41,9 @@
 	client.clear_screen() //remove hud items just in case
 	client.images = list()
 	client.set_right_click_menu_mode(shift_to_open_context_menu)
+	// Draws to the default map
+	client.eye_parallax = client.create_parallax("")
+	client.eye_parallax.set_perspective(src)
 
 	if(!hud_used)
 		create_mob_hud() // creating a hud will add it to the client's screen, which can process a disconnect

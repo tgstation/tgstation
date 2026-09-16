@@ -9,6 +9,7 @@
 	mutanteyes = /obj/item/organ/eyes/felinid
 	mutant_organs = list(
 		/obj/item/organ/tail/cat = "Cat",
+		/obj/item/organ/fangs/cat,
 	)
 	inherent_traits = list(
 		TRAIT_HATED_BY_DOGS,

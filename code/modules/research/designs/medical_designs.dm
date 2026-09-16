@@ -185,6 +185,17 @@
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
+/datum/design/defibrillator
+	name = "Defibrillator"
+	desc = "A portable defibrillator, used for resuscitating recently deceased crew."
+	build_type = PROTOLATHE | AWAY_LATHE
+	build_path = /obj/item/defibrillator
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*4, /datum/material/glass = SHEET_MATERIAL_AMOUNT*2, /datum/material/silver =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT * 1.5)
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
 /datum/design/defibrillator_mount
 	name = "Defibrillator Wall Mount"
 	desc = "A mounted frame for holding defibrillators, providing easy security."
@@ -204,6 +215,17 @@
 	build_path = /obj/item/wallframe/defib_mount/charging
 	category = list(
 		RND_CATEGORY_CONSTRUCTION + RND_SUBCATEGORY_CONSTRUCTION_MOUNTS
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/defibrillator_compact
+	name = "Compact Defibrillator"
+	desc = "A compact defibrillator that can be worn on a belt."
+	build_type = PROTOLATHE | AWAY_LATHE
+	build_path = /obj/item/defibrillator/compact
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6, /datum/material/glass = SHEET_MATERIAL_AMOUNT*4, /datum/material/silver = SHEET_MATERIAL_AMOUNT*3, /datum/material/gold =SHEET_MATERIAL_AMOUNT * 1.5)
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
 
@@ -1098,6 +1120,23 @@
 /datum/design/cybernetic_eyes/improved/moth
 	name = "Cybernetic Moth Eyes"
 	build_path = /obj/item/organ/eyes/robotic/moth
+
+/datum/design/cybernetic_fangs
+	name = "Cybernetic Fangs"
+	desc = "A set of plastitanium fangs. For when you want to bite through a ship hull."
+	build_type = PROTOLATHE | AWAY_LATHE | MECHFAB
+	construction_time = 3 SECONDS
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.5)
+	build_path = /obj/item/organ/fangs/cybernetic
+	category = list(
+		RND_CATEGORY_CYBERNETICS + RND_SUBCATEGORY_CYBERNETICS_ORGANS_COMBAT
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_MEDICAL
+
+/datum/design/cybernetic_fangs/cat
+	name = "Cybernetic Cat Fangs"
+	desc = "A set of plastitanium fangs. For when you want to nom through a ship hull."
+	build_path = /obj/item/organ/fangs/cat/cybernetic
 
 /datum/design/cyberimp_welding
 	name = "Welding Shield Eyes"

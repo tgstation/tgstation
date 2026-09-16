@@ -38,6 +38,7 @@ export type Observable = {
   mind_icon_state: string;
   job: string;
   mind_job: string;
+  mind_job_icon: string;
   name: string;
   orbiters: number;
   ckey: string;

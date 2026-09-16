@@ -61,7 +61,6 @@
 
 	if(use_visibility)
 		update_visibility()
-	update_parallax_contents()
 
 /// Sends a visibility query to the cameranet.
 /// Can be used as a signal handler.

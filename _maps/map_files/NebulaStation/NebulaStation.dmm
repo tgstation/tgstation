@@ -120996,6 +120996,7 @@
 "rQo" = (
 /obj/structure/table/reinforced/rglass,
 /obj/item/aquarium_kit,
+/obj/item/producepad,
 /turf/open/floor/iron/dark/herringbone,
 /area/station/hallway/secondary/service)
 "rQr" = (
@@ -162638,6 +162639,7 @@
 	pixel_x = 4;
 	pixel_y = 0
 	},
+/obj/item/producepad,
 /turf/open/floor/stone,
 /area/station/service/hydroponics)
 "ycp" = (

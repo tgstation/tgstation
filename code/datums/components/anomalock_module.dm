@@ -20,10 +20,10 @@
 	src.pre_insert_callback = pre_insert_callback
 	core_insert_callback = insert_callback
 	core_remove_callback = remove_callback
-	if(!(prebuilt && length(anomaly_types)))
+	if(!prebuilt || !length(anomaly_types))
 		return
 	var/obj/item/assembly/signaler/anomaly/core_type = pick(anomaly_types)
-	core = new core_type(parent)
+	insert_core(parent, null, new core_type(parent), null)
 
 /datum/component/anomaly_locked_module/Destroy(force)
 	QDEL_NULL(core)
@@ -69,12 +69,13 @@
 			return callback_return
 	return insert_core(source, user, tool, modifiers)
 
-/datum/component/anomaly_locked_module/proc/insert_core(obj/item/mod/module/source, mob/living/user, obj/item/tool, list/modifiers)
-	if(!user.transferItemToLoc(tool, source))
+/datum/component/anomaly_locked_module/proc/insert_core(obj/item/mod/module/source, mob/living/user, obj/item/new_core, list/modifiers)
+	if(user && !user.transferItemToLoc(new_core, source))
 		return ITEM_INTERACT_FAILURE
-	core = tool
-	source.balloon_alert(user, "core inserted")
-	playsound(source, 'sound/machines/click.ogg', 30, TRUE)
+	core = new_core
+	if(user)
+		source.balloon_alert(user, "core inserted")
+		playsound(source, 'sound/machines/click.ogg', 30, TRUE)
 	source.update_appearance(UPDATE_ICON_STATE)
 	if(core_insert_callback)
 		if(istype(core_insert_callback, /datum/callback))

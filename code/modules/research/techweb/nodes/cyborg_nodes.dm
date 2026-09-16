@@ -40,6 +40,8 @@
 		/datum/design/advanced_r_leg,
 		/datum/design/borg_upgrade_rename,
 		/datum/design/borg_upgrade_restart,
+		/datum/design/cybernetic_fangs,
+		/datum/design/cybernetic_fangs/cat,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_1_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SCIENCE)

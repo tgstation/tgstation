@@ -39,7 +39,7 @@
 	cur_dist = max_dist
 	if (start_distance != null)
 		cur_dist = start_distance
-	var/datum/beam/beam = tether_target.Beam(parent, "line", 'icons/obj/clothing/modsuit/mod_modules.dmi', emissive = FALSE, beam_type = /obj/effect/ebeam/tether)
+	var/datum/beam/beam = tether_target.Beam(parent, "line", 'icons/obj/clothing/modsuit/mod_modules.dmi', emissive = NONE, beam_type = /obj/effect/ebeam/tether)
 	tether_beam = beam
 	if (ispath(tether_name, /atom))
 		var/atom/tmp = tether_name

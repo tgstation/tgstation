@@ -421,15 +421,12 @@
 /// Gives/Removes damage resistance when we become/lose fatness
 /datum/status_effect/heretic_passive/flesh/proc/on_fat(datum/source)
 	SIGNAL_HANDLER
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/heretic = owner
-	if(HAS_TRAIT(heretic, TRAIT_FAT))
-		heretic.physiology.damage_resistance += 25
-		ADD_TRAIT(heretic, TRAIT_BATON_RESISTANCE, REF(src))
+	if(HAS_TRAIT(owner, TRAIT_FAT))
+		owner.damage_resistance += 25
+		ADD_TRAIT(owner, TRAIT_BATON_RESISTANCE, REF(src))
 	else
-		heretic.physiology.damage_resistance -= 25
-		REMOVE_TRAIT(heretic, TRAIT_BATON_RESISTANCE, REF(src))
+		owner.damage_resistance -= 25
+		REMOVE_TRAIT(owner, TRAIT_BATON_RESISTANCE, REF(src))
 
 /datum/status_effect/heretic_passive/flesh/proc/on_summon(datum/source, mob/living/summoned)
 	SIGNAL_HANDLER
@@ -439,13 +436,8 @@
 	. = ..()
 	owner.remove_traits(list(TRAIT_VIRUSIMMUNE, TRAIT_SPACE_ANT_IMMUNITY, TRAIT_FAT_IGNORE_SLOWDOWN, TRAIT_VORACIOUS, TRAIT_GLUTTON, TRAIT_BATON_RESISTANCE), REF(src))
 	UnregisterSignal(owner, list(COMSIG_LIVING_EAT_FOOD, SIGNAL_ADDTRAIT(TRAIT_FAT), SIGNAL_REMOVETRAIT(TRAIT_FAT), COMSIG_HERETIC_SUMMONED_MOB))
-	if(!ishuman(owner))
-		return
-	var/mob/living/carbon/human/heretic = owner
-	if(!HAS_TRAIT(heretic, TRAIT_FAT))
-		return
-	heretic.physiology.damage_resistance -= 25
-	heretic.on_fat()
+	if(HAS_TRAIT(owner, TRAIT_FAT))
+		owner.damage_resistance -= 25
 
 //---- Lock Passive
 // On gain you can understand and speak every language

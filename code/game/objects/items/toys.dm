@@ -199,20 +199,20 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/balloon/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(!istype(tool, /obj/item/ammo_casing/foam_dart) || !ismonkey(user))
+	if(!istype(tool, /obj/item/ammo_casing/foam_dart) || !HAS_TRAIT(user, TRAIT_SIMIAN))
 		return NONE
 	pop_balloon(monkey_pop = TRUE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/toy/balloon/hitby(atom/movable/AM, skipcatch, hitpush, blocked, datum/thrownthing/throwingdatum)
 	var/mob/thrower = throwingdatum?.get_thrower()
-	if(ismonkey(thrower) && istype(AM, /obj/item/ammo_casing/foam_dart))
+	if(HAS_TRAIT(thrower, TRAIT_SIMIAN) && istype(AM, /obj/item/ammo_casing/foam_dart))
 		pop_balloon(monkey_pop = TRUE)
 	else
 		return ..()
 
 /obj/item/toy/balloon/bullet_act(obj/projectile/proj)
-	if((istype(proj, /obj/projectile/bullet/p50) || istype(proj,/obj/projectile/bullet/foam_dart)) && ismonkey(proj.firer))
+	if((istype(proj, /obj/projectile/bullet/p50) || istype(proj,/obj/projectile/bullet/foam_dart)) && HAS_TRAIT(proj.firer, TRAIT_SIMIAN))
 		pop_balloon(monkey_pop = TRUE)
 		return BULLET_ACT_HIT
 	return ..()
