@@ -56,11 +56,18 @@
 
 /obj/machinery/atmospherics/components/update_overlays()
 	. = ..()
+
+	if(istype(src, /obj/machinery/atmospherics/components/trinary))
+		var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational
+		// during Initialize() trinary devices will be technically "on" but their icon_state
+		// updates to off via update_icon_nopipes() before atmos nodes process which breaks their emissives
+		if(!on_state)
+			return
+
 	cut_overlays()
 	if(is_operational && ((on && light_mask_on) || (!on && light_mask_off)))
-		// this is cursed but both these emissive_appearance() are needed
-		// one gives emissives to mapload machinery that are already on
-		// the other gives emissives when updates happen (on/off/pressure change/etc.)
+		// this is cursed but both these emissive_appearance() are needed one gives emissives to
+		// mapload machinery that are already on the other gives emissives when updates happen (on/off/pressure change/etc.)
 		. += emissive_appearance(icon, "[icon_state]-emissive", src, alpha = src.alpha)
 		add_overlay(emissive_appearance(icon, "[icon_state]-emissive", src, alpha = src.alpha))
 
