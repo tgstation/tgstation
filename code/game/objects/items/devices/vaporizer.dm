@@ -50,10 +50,8 @@
 	cell = new (src)
 
 /obj/item/vaporizer/Destroy()
-	. = ..()
 	QDEL_NULL(cell)
-	qdel(GetComponent(/datum/component/wet_stacks_granting))
-
+	return ..()
 /obj/item/vaporizer/equipped(mob/living/user, slot)
 	. = ..()
 	create_charge_bar(user)
