@@ -223,6 +223,13 @@
 	icon = 'icons/obj/drinks/drinks.dmi'
 	icon_state = "maraschino"
 
+/datum/glass_style/drinking_glass/mouthwash
+	required_drink_type = /datum/reagent/consumable/ethanol/mouthwash
+	name = "Mouthwash"
+	desc = "A bottle of mouthwash. The label proudly proclaims 'Kills 99.9% of all germs'. It seems to be more sugar than alcohol in content, though. Smells kind of like ice drake's breath."
+	icon = 'icons/obj/drinks/drinks.dmi'
+	icon_state = "mouthwash"
+
 // Shot glasses
 
 /datum/glass_style/shot_glass/kahlua
