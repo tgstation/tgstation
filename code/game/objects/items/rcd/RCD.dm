@@ -81,6 +81,66 @@
 
 	GLOB.rcd_list += src
 	AddElement(/datum/element/openspace_item_click_handler)
+	update_appearance()
+	init_power_bars()
+
+/obj/item/construction/rcd/proc/init_power_bars()
+	AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_bar_update)), POWER_BAR_DEPARTMENT_ENGINEERING)
+
+/obj/item/construction/rcd/borg/init_power_bars()
+	return
+
+/obj/item/construction/rcd/combat/init_power_bars()
+	return
+
+/obj/item/construction/rcd/arcd/init_power_bars()
+	return
+
+/obj/item/construction/rcd/exosuit/init_power_bars()
+	return
+
+/obj/item/construction/rcd/repairbot/init_power_bars()
+	return
+
+/obj/item/construction/rcd/uninstall_upgrades()
+	. = ..()
+
+	if (design_category == "Machines" && !(construction_upgrades & RCD_UPGRADE_FRAMES))
+		reset()
+		return
+
+	if (design_category == "Furniture" && !(construction_upgrades & RCD_UPGRADE_FURNISHING))
+		reset()
+		return
+
+/obj/item/construction/rcd/proc/reset()
+	design_category = initial(design_category)
+	design_title = initial(design_title)
+	root_category = initial(root_category)
+	mode = initial(mode)
+	construction_mode = initial(construction_mode)
+
+	update_appearance()
+
+/obj/item/construction/rcd/proc/on_power_bar_update(power_bars)
+	SIGNAL_HANDLER
+
+	if (power_bars <= 1)
+		uninstall_upgrades()
+		return
+
+	var/new_upgrade = NONE
+
+	if (power_bars >= 2)
+		new_upgrade |= RCD_UPGRADE_FRAMES | RCD_UPGRADE_FURNISHING | RCD_UPGRADE_SILO_LINK
+
+	if (power_bars >= 3)
+		new_upgrade |= RCD_UPGRADE_SILO_LINK
+
+		install_silo_mats()
+		silo_link = TRUE
+
+	construction_upgrades = new_upgrade & ~banned_upgrades
 
 /obj/item/construction/rcd/examine(mob/user)
 	. = ..()
@@ -266,7 +326,7 @@
 	rcd_results[RCD_DESIGN_MODE] = mode
 	rcd_results[RCD_DESIGN_PATH] = rcd_design_path
 
-	var/delay = rcd_results["delay"] * delay_mod
+	var/delay = rcd_results["delay"] * delay_mod()
 	if (
 		!(construction_upgrades & RCD_UPGRADE_NO_FREQUENT_USE_COOLDOWN) \
 			&& !rcd_results[RCD_RESULT_BYPASS_FREQUENT_USE_COOLDOWN] \
@@ -285,6 +345,18 @@
 
 	current_active_effects -= 1
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/construction/rcd/proc/delay_mod()
+	var/delay = delay_mod
+
+	if (SSpower_bars.enabled)
+		switch (SSpower_bars.power_bars_of_department(POWER_BAR_DEPARTMENT_ENGINEERING))
+			if (2)
+				delay *= 0.8
+			if (3)
+				delay *= 0.4
+
+	return delay
 
 /**
  * Internal proc which creates the rcd effects & creates the structure

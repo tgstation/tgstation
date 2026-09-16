@@ -1,5 +1,3 @@
-#define FREQ_LISTENING (1<<0)
-
 /obj/item/radio
 	icon = 'icons/obj/devices/voice.dmi'
 	name = "station bounced radio"
@@ -155,15 +153,18 @@
 	if(listening && on)
 		add_radio(src, new_frequency)
 
+/// Clears the channels list and special channels flag, re-populates it according to key slots, and then updates the radio accordingly
 /obj/item/radio/proc/recalculateChannels()
 	resetChannels()
 
-	if(keyslot)
-		for(var/channel_name in keyslot.channels)
-			if(!(channel_name in channels))
-				channels[channel_name] = keyslot.channels[channel_name]
+	for(var/obj/item/encryptionkey/key as anything in get_keys())
+		channels |= key.channels
+		special_channels |= key.special_channels
 
-		special_channels |= keyslot.special_channels
+	var/list/signal_special_channels = list()
+	SEND_SIGNAL(src, COMSIG_RADIO_CHANNELS_RECALCULATED, channels, signal_special_channels)
+	for(var/channel_flag in signal_special_channels)
+		special_channels |= channel_flag
 
 	for(var/channel_name in channels)
 		LAZYSET(secure_radio_connections, channel_name, add_radio(src, GLOB.default_radio_channels[channel_name]))
@@ -171,9 +172,15 @@
 	if(!listening)
 		remove_radio_all(src)
 
+/// Returns a list of installed keys
+/obj/item/radio/proc/get_keys()
+	. = list()
+	if(istype(keyslot))
+		. += keyslot
+
 /obj/item/radio/proc/resetChannels()
-	for(var/ch_name in channels)
-		SSradio.remove_object(src, GLOB.default_radio_channels[ch_name])
+	for(var/channel_name in channels)
+		SSradio.remove_object(src, GLOB.default_radio_channels[channel_name])
 
 	channels = list()
 	LAZYNULL(secure_radio_connections)
@@ -281,7 +288,7 @@
 		set_listening(FALSE, actual_setting = FALSE)
 
 /obj/item/radio/talk_into(atom/movable/talking_movable, message, channel, list/spans, datum/language/language, list/message_mods)
-	if(SEND_SIGNAL(talking_movable, COMSIG_MOVABLE_USING_RADIO, src) & COMPONENT_CANNOT_USE_RADIO)
+	if(SEND_SIGNAL(talking_movable, COMSIG_MOVABLE_USING_RADIO, src, message, channel) & COMPONENT_CANNOT_USE_RADIO)
 		return NONE
 	if(SEND_SIGNAL(src, COMSIG_RADIO_NEW_MESSAGE, talking_movable, message, channel) & COMPONENT_CANNOT_USE_RADIO)
 		return NONE
@@ -618,11 +625,9 @@
 /// Returns a list of the removed keys
 /obj/item/radio/proc/remove_keys(mob/living/user)
 	. = list()
-	if(!keyslot)
-		return
-
-	. += keyslot
-	user.put_in_hands(keyslot) // null via Exited
+	for(var/obj/item/encryptionkey/key as anything in get_keys())
+		user.put_in_hands(key)
+		. += key
 
 /// Attempts to install the given encryption key into the radio
 /obj/item/radio/proc/install_key(mob/living/user, obj/item/encryptionkey/key)
@@ -774,5 +779,3 @@
 /obj/item/radio/toy/Initialize(mapload)
 	. = ..()
 	make_silly()
-
-#undef FREQ_LISTENING

@@ -173,8 +173,7 @@
 	owner.remove_traits(list(TRAIT_SILICON_ACCESS, TRAIT_LOUD_BINARY), REF(src)) // we don't want randoms using our body as free AA, so we only have it when we active.
 
 	var/obj/item/implant/radio/implant = radio_weakref.resolve()
-	if(implant)
-		implant.radio.resetChannels()
+	implant?.radio.resetChannels()
 
 	mainframe = null
 	update_med_hud_status(owner)

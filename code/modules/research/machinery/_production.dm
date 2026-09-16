@@ -49,6 +49,7 @@
 		PAYMENT_CLINICAL, \
 		TRUE, \
 	)
+	AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_bar_updated)), POWER_BAR_DEPARTMENT_COMMON)
 
 	update_icon(UPDATE_OVERLAYS)
 
@@ -182,6 +183,15 @@
 
 	process_item(item_inserted, mats_consumed, amount_inserted)
 
+/obj/machinery/rnd/production/proc/on_power_bar_updated(power_bars)
+	switch (SSpower_bars.power_bars_of_department(POWER_BAR_DEPARTMENT_COMMON))
+		if(0, 1)
+			efficiency_coeff = 1
+		if(2)
+			efficiency_coeff = 0.75
+		if(3)
+			efficiency_coeff = 0.5
+
 /obj/machinery/rnd/production/RefreshParts()
 	. = ..()
 
@@ -190,7 +200,8 @@
 		total_storage += bin.tier * 37.5 * SHEET_MATERIAL_AMOUNT
 	materials.set_local_size(total_storage)
 
-	efficiency_coeff = compute_efficiency()
+	if(!SSpower_bars.enabled)
+		efficiency_coeff = compute_efficiency()
 
 	update_static_data_for_all_viewers()
 

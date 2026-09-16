@@ -56,8 +56,19 @@
 		/obj/item/reagent_containers/hypospray/medipen,
 		/obj/item/cigarette,
 	)
+	///Apps to be removed by default if power bars are enabled
+	var/static/list/powerbar_apps = list(
+		/datum/computer_file/program/supermatter_monitor,
+		/datum/computer_file/program/radar/lifeline,
+	)
 
 /obj/item/modular_computer/pda/Initialize(mapload)
+	if(SSpower_bars.initialized)
+		if(SSpower_bars.enabled)
+			starting_programs -= powerbar_apps
+	else
+		RegisterSignal(SSpower_bars, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(powerbars_init))
+
 	. = ..()
 	if(inserted_item)
 		inserted_item = new inserted_item(src)
@@ -66,6 +77,17 @@
 	if(istype(inserted_item))
 		QDEL_NULL(inserted_item)
 	return ..()
+
+/obj/item/modular_computer/pda/proc/powerbars_init()
+	SIGNAL_HANDLER
+
+	if(!SSpower_bars.enabled)
+		return
+
+	UnregisterSignal(SSpower_bars, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	for(var/datum/computer_file/program/deleted_app in stored_files)
+		if(is_type_in_list(deleted_app, powerbar_apps))
+			remove_file(deleted_app)
 
 /obj/item/modular_computer/pda/install_default_programs()
 	var/list/apps_to_download = list()
