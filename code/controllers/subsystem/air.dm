@@ -714,9 +714,10 @@ SUBSYSTEM_DEF(air)
 // pipenet can be built.
 /datum/controller/subsystem/air/proc/setup_pipenets()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
-		var/list/targets = AM.get_rebuild_targets()
-		for(var/datum/pipeline/build_off as anything in targets)
-			build_off.build_pipeline_blocking(AM)
+		var/datum/pipeline/build_target = AM.get_rebuild_target()
+		while(build_target)
+			build_target.build_pipeline_blocking(AM)
+			build_target = AM.get_rebuild_target()
 		CHECK_TICK
 
 GLOBAL_LIST_EMPTY(colored_turfs)
@@ -743,9 +744,10 @@ GLOBAL_LIST_EMPTY(colored_images)
 
 	for(var/A in 1 to atmos_machines.len)
 		AM = atmos_machines[A]
-		var/list/targets = AM.get_rebuild_targets()
-		for(var/datum/pipeline/build_off as anything in targets)
-			build_off.build_pipeline_blocking(AM)
+		var/datum/pipeline/build_target = AM.get_rebuild_target()
+		while(build_target)
+			build_target.build_pipeline_blocking(AM)
+			build_target = AM.get_rebuild_target()
 		CHECK_TICK
 
 

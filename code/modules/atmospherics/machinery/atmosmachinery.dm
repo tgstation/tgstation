@@ -192,15 +192,17 @@
 /// This should only be called by SSair as part of the rebuild queue.
 /// Handles rebuilding pipelines after init or they've been changed.
 /obj/machinery/atmospherics/proc/rebuild_pipes()
-	var/list/targets = get_rebuild_targets()
 	rebuilding = FALSE
-	for(var/datum/pipeline/build_off as anything in targets)
-		build_off.build_pipeline(src) //This'll add to the expansion queue
+	var/datum/pipeline/build_target = get_rebuild_target()
+	if(!build_target)
+		return
+	build_target.build_pipeline(src) //This'll add to the expansion queue
+	SSair.add_to_rebuild_queue(src) // expansion can connect several ports. revisit this machine after the expansion queue has been processed
 
 /**
- * Returns a list of new pipelines that need to be built up
+ * Assigns and returns the next pipeline that needs to be built up. Make sure to expand it before requesting another
  */
-/obj/machinery/atmospherics/proc/get_rebuild_targets()
+/obj/machinery/atmospherics/proc/get_rebuild_target()
 	return
 
 /**

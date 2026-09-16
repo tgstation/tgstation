@@ -138,14 +138,12 @@
 	if(update_parents_after_rebuild)
 		update_parents()
 
-/obj/machinery/atmospherics/components/get_rebuild_targets()
-	var/list/to_return = list()
-	for(var/i in 1 to device_type)
-		if(parents[i])
+/obj/machinery/atmospherics/components/get_rebuild_target()
+	for(var/port in 1 to device_type)
+		if(parents[port])
 			continue
-		parents[i] = new /datum/pipeline()
-		to_return += parents[i]
-	return to_return
+		parents[port] = new /datum/pipeline()
+		return parents[port]
 
 /**
  * Called by nullify_node(), used to remove the pipeline the component is attached to
