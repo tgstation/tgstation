@@ -45,6 +45,8 @@
 #define ORGAN_UNUSABLE (1<<16)
 /// Used for organs that aren't really real organs, but holders for stuff and whatnot
 #define ORGAN_FAKE (1<<17)
+/// Used for organs that have been wounded
+#define ORGAN_WOUNDED (1<<18)
 
 /// Organ flags that correspond to bodytypes
 #define ORGAN_TYPE_FLAGS (ORGAN_ORGANIC | ORGAN_ROBOTIC | ORGAN_MINERAL | ORGAN_GHOST)
