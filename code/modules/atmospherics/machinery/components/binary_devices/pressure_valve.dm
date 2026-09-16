@@ -54,7 +54,7 @@
 	var/old_icon_state = icon_state
 	icon_state = new_icon_state
 	if(new_icon_state != old_icon_state)
-		update_overlays()
+		update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/atmospherics/components/binary/pressure_valve/process_atmos()
 
