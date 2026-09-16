@@ -30,6 +30,8 @@
 	var/mob/user = music_player
 	if(user.incapacitated)
 		return FALSE
+	if(user.get_item_by_slot(slot_flags) == src) //can't play while wearing the instrument
+		return FALSE
 	if(!Adjacent(user))
 		return FALSE
 	return TRUE
