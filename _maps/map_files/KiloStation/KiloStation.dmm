@@ -1960,7 +1960,7 @@
 /area/space/nearstation)
 "aDV" = (
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/obj/effect/turf_decal/stripes/corner{
+/obj/effect/turf_decal/stripes/line{
 	dir = 1
 	},
 /turf/open/floor/plating/airless,
@@ -3532,6 +3532,12 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/security/checkpoint/customs)
+"beB" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/turf/closed/wall/r_wall/rust,
+/area/station/maintenance/disposal/incinerator)
 "beK" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
@@ -8065,14 +8071,6 @@
 /obj/effect/turf_decal/tile/neutral,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/armory)
-"cHN" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/obj/structure/grille/broken,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "cHO" = (
 /obj/structure/sign/poster/official/random/directional/south,
 /obj/effect/spawner/structure/window,
@@ -13057,6 +13055,9 @@
 /area/station/service/chapel)
 "emU" = (
 /obj/machinery/door/poddoor/incinerator_atmos_aux,
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "emV" = (
@@ -16579,6 +16580,9 @@
 /obj/machinery/atmospherics/pipe/heat_exchanging/simple{
 	dir = 5
 	},
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "fwJ" = (
@@ -18289,13 +18293,6 @@
 /obj/effect/turf_decal/tile/red/anticorner/contrasted,
 /turf/open/floor/iron/showroomfloor,
 /area/station/security/brig)
-"fUi" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple,
-/obj/effect/turf_decal/stripes/corner{
-	dir = 8
-	},
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "fUp" = (
 /obj/machinery/chem_heater/withbuffer,
 /obj/effect/decal/cleanable/dirt,
@@ -26797,6 +26794,7 @@
 /area/station/command/heads_quarters/hop)
 "iyd" = (
 /obj/machinery/door/poddoor/incinerator_atmos_main,
+/obj/effect/turf_decal/stripes/line,
 /turf/open/floor/engine,
 /area/station/maintenance/disposal/incinerator)
 "iyi" = (
@@ -35225,10 +35223,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/security/lockers)
-"lbG" = (
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "lbJ" = (
 /obj/effect/turf_decal/stripes/corner{
 	dir = 1
@@ -36133,12 +36127,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/wood,
 /area/station/command/heads_quarters/captain)
-"lrm" = (
-/obj/machinery/atmospherics/pipe/heat_exchanging/simple{
-	dir = 6
-	},
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "lrp" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 1
@@ -42486,6 +42474,9 @@
 	dir = 4
 	},
 /obj/structure/sign/warning/hot_temp/directional/west,
+/obj/effect/turf_decal/stripes/line{
+	dir = 9
+	},
 /turf/open/floor/plating/airless,
 /area/space/nearstation)
 "nrv" = (
@@ -58373,9 +58364,9 @@
 /turf/open/floor/iron/chapel,
 /area/station/service/chapel)
 "ssM" = (
-/obj/effect/turf_decal/stripes/line,
 /obj/structure/sign/warning/hot_temp/directional/north,
-/turf/open/floor/plating/airless,
+/obj/structure/lattice,
+/turf/open/space/basic,
 /area/space/nearstation)
 "ssQ" = (
 /obj/structure/sign/warning/electric_shock/directional/north,
@@ -68743,10 +68734,6 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"vHl" = (
-/obj/effect/turf_decal/stripes/corner,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "vHr" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/tile/yellow/half/contrasted,
@@ -68874,12 +68861,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron/dark,
 /area/station/science/server)
-"vIY" = (
-/obj/effect/turf_decal/stripes/line,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/plating/airless,
-/area/space/nearstation)
 "vJc" = (
 /turf/closed/wall/r_wall,
 /area/station/science/xenobiology)
@@ -108918,7 +108899,7 @@ bda
 grj
 yma
 bda
-vHl
+aeZ
 kau
 wRU
 dGS
@@ -109175,7 +109156,7 @@ goi
 lfE
 ain
 iyd
-vIY
+acm
 aeU
 ach
 jGQ
@@ -109683,13 +109664,13 @@ iZq
 iSa
 tFh
 yma
-bda
+beB
 emU
 bda
-lbG
-lbG
-alO
-aoe
+acK
+acm
+acK
+acm
 aeU
 aeU
 aeU
@@ -109940,13 +109921,13 @@ gOZ
 oMP
 ebI
 foa
-aeZ
-aeZ
+acK
+acK
 nrp
-lrm
+clX
 fwm
-lrm
-fUi
+clX
+clz
 clz
 clz
 clz
@@ -110711,8 +110692,8 @@ cvI
 twN
 thJ
 byi
-clX
-cHN
+aEk
+aEr
 aDV
 aEa
 rbw
