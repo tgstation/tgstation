@@ -231,6 +231,13 @@
       "This is a circuitboard."
   - spellcheck: Examining a PanD.E.M.I.C 2200, Sheet-meister 2000, or the R&D Server
       Controller now reads as "That's a [thing]" rather than "That's [thing]".
+  necromanceranne:
+  - balance: The CMO now has an advanced medical scanner in their medkit.
+  - balance: You can now once again print defibrillators and their compact variant
+      (with the researched tech) from cargo.
+  - balance: Defibs now can have their safeties switched off by EMP blasts. However,
+      they reset after a while.
+  - balance: The CMO's unique compact defibrillator has double the recharge rate.
   vinylspiders:
   - bugfix: fixes a bug that would cause a goldgrub to sometimes spawn a bugged boulder
       when hitting a boss vent
