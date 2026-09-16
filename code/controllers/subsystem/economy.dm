@@ -265,22 +265,23 @@ SUBSYSTEM_DEF(economy)
  * * premiumlist - the list of premium product datums in the vendor to refresh their prices.
  */
 /obj/machinery/vending/proc/reset_prices(list/recordlist, list/premiumlist)
-	var/inflation_value = HAS_TRAIT(SSeconomy, TRAIT_MARKET_CRASHING) ? SSeconomy.inflation_value() : 1
-	default_price = round(initial(default_price) * inflation_value)
-	extra_price = round(initial(extra_price) * inflation_value)
+	var/price_coefficient = price_coefficient()
+	default_price = round(initial(default_price) * price_coefficient)
+	extra_price = round(initial(extra_price) * price_coefficient)
 
 	for(var/datum/data/vending_product/record as anything in recordlist)
 		var/obj/item/potential_product = record.product_path
-		var/custom_price = round(initial(potential_product.custom_price) * inflation_value)
+		var/custom_price = round(initial(potential_product.custom_price) * price_coefficient)
 		record.price = custom_price | default_price
 	for(var/datum/data/vending_product/premium_record as anything in premiumlist)
 		var/obj/item/potential_product = premium_record.product_path
-		var/premium_custom_price = round(initial(potential_product.custom_premium_price) * inflation_value)
+		var/premium_custom_price = round(initial(potential_product.custom_premium_price) * price_coefficient)
 		var/custom_price = initial(potential_product.custom_price)
 		if(!premium_custom_price && custom_price) //For some ungodly reason, some premium only items only have a custom_price
-			premium_record.price = extra_price + round(custom_price * inflation_value)
+			premium_record.price = extra_price + round(custom_price * price_coefficient)
 		else
 			premium_record.price = premium_custom_price || extra_price
+	update_static_data_for_all_viewers()
 
 /datum/controller/subsystem/economy/proc/inflict_moneybags(datum/bank_account/moneybags)
 	if(!moneybags)

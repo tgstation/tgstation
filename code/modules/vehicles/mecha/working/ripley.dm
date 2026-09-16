@@ -252,6 +252,7 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 	base_icon_state = "hauler"
 	silicon_icon_state = "hauler-empty"
 	max_integrity = 100 //Has half the health of a normal RIPLEY mech, so it's harder to use as a weapon.
+	power_dept = POWER_BAR_DEPARTMENT_CARGO
 
 /obj/vehicle/sealed/mecha/ripley/cargo/Initialize(mapload)
 	. = ..()
@@ -273,9 +274,10 @@ GLOBAL_DATUM(cargo_ripley, /obj/vehicle/sealed/mecha/ripley/cargo)
 
 /obj/vehicle/sealed/mecha/ripley/cargo/populate_parts()
 	cell = new /obj/item/stock_parts/power_store/cell/high(src)
-	//No scanmod for Big Bess
-	capacitor = new /obj/item/stock_parts/capacitor(src)
-	servo = new /obj/item/stock_parts/servo(src)
+	if (!SSpower_bars.enabled)
+		// No scanmod for Big Bess
+		new /obj/item/stock_parts/capacitor(src)
+		new /obj/item/stock_parts/servo(src)
 	update_part_values()
 
 /obj/item/mecha_parts/mecha_equipment/ejector

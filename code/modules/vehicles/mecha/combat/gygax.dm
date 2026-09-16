@@ -63,6 +63,7 @@
 		MECHA_ARMOR = list(/obj/item/mecha_parts/mecha_equipment/armor/antiemp_armor_booster/clandestine),
 	)
 	destruction_sleep_duration = 20
+	forced_power_bar = 3
 
 /datum/armor/gygax_dark
 	melee = 70
@@ -83,7 +84,8 @@
 
 /obj/vehicle/sealed/mecha/gygax/dark/loaded/populate_parts()
 	cell = new /obj/item/stock_parts/power_store/cell/bluespace(src)
-	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
-	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
-	servo = new /obj/item/stock_parts/servo/femto(src)
+	if (!SSpower_bars.enabled)
+		new /obj/item/stock_parts/scanning_module/triphasic(src)
+		new /obj/item/stock_parts/capacitor/quadratic(src)
+		new /obj/item/stock_parts/servo/femto(src)
 	update_part_values()

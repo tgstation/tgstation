@@ -367,6 +367,8 @@
 #define COMSIG_RADIO_NEW_MESSAGE "radio_new_message"
 ///called from base of /obj/item/radio/proc/on_receive_messgae(): (list/data)
 #define COMSIG_RADIO_RECEIVE_MESSAGE "radio_receive_message"
+///called from base of /obj/item/radio/proc/recalculateChannels(): (list/channels, list/special_channels)
+#define COMSIG_RADIO_CHANNELS_RECALCULATED "radio_channels_recalculated"
 
 // /obj/item/pen signals
 

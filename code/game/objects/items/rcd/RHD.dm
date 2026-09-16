@@ -52,7 +52,8 @@
 	spark_system = new(5, FALSE, src)
 	spark_system.attach(src)
 	if(construction_upgrades & RCD_UPGRADE_SILO_LINK)
-		silo_mats = new (src, mapload, FALSE)
+		// silo_mats = new (src, mapload, FALSE)
+		install_silo_mats(mapload)
 	update_appearance()
 
 /obj/item/construction/Destroy()
@@ -127,11 +128,26 @@
 		return FALSE
 	construction_upgrades |= design_disk.upgrade
 	if((design_disk.upgrade & RCD_UPGRADE_SILO_LINK) && !silo_mats)
-		silo_mats = new (src, FALSE, FALSE)
+		// silo_mats = new (src, FALSE, FALSE)
+		install_silo_mats()
 	playsound(loc, 'sound/machines/click.ogg', 50, TRUE)
 	qdel(design_disk)
 	update_static_data_for_all_viewers()
 	return TRUE
+
+/obj/item/construction/proc/install_silo_mats(mapload = FALSE)
+	if (!isnull(silo_mats))
+		return
+
+	// silo_mats = AddComponent(/datum/component/remote_materials, "RCD", mapload = FALSE, allow_standalone = FALSE, force_connect = SSpower_bars.enabled)
+	silo_mats = new(src, mapload, FALSE)
+
+/obj/item/construction/proc/uninstall_upgrades()
+	ASSERT(SSpower_bars.enabled)
+
+	construction_upgrades = NONE
+	silo_link = FALSE
+	QDEL_NULL(silo_mats)
 
 /// Inserts matter into the RCD allowing it to build
 /obj/item/construction/proc/insert_matter(obj/item, mob/user)

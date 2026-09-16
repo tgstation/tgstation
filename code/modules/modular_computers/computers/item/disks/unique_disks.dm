@@ -34,6 +34,8 @@
 		/datum/computer_file/program/status,
 	)
 	potential_programs += subtypesof(/datum/computer_file/program/maintenance) - /datum/computer_file/program/maintenance/theme
+	if(SSpower_bars.enabled)
+		potential_programs -= /datum/computer_file/program/supermatter_monitor
 
 	var/total_programs_size = 0
 	for(var/i in 1 to rand(2, 4))

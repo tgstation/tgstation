@@ -44,6 +44,11 @@
 /obj/item/laser_pointer/Initialize(mapload)
 	. = ..()
 	diode = new(src)
+
+	// Prototype hack
+	if (QDELETED(diode))
+		diode = null
+
 	if(!pointer_icon_state)
 		pointer_icon_state = pick("red_laser", "green_laser", "blue_laser", "purple_laser")
 
@@ -59,9 +64,15 @@
 	if(gone == diode)
 		diode = null
 
+/obj/item/laser_pointer/Exited(atom/movable/gone, direction)
+	. = ..()
+
+	if (gone == diode)
+		diode = null
+
 /obj/item/laser_pointer/upgraded/Initialize(mapload)
 	. = ..()
-	diode = new /obj/item/stock_parts/micro_laser/ultra
+	diode = new /obj/item/stock_parts/micro_laser/ultra(src)
 
 /obj/item/laser_pointer/infinite_range
 	name = "infinite laser pointer"
