@@ -187,6 +187,7 @@
 	desc = "Part man, part pillow. All CARNAGE!"
 	body_parts_covered = CHEST|GROIN|ARMS|LEGS|FEET
 	cold_protection = CHEST|GROIN|ARMS|LEGS //a pillow suit must be hella warm
+	supports_variations_flags = CLOTHING_CERULEAN_VARIATION
 	allowed = list(/obj/item/pillow) //moar pillow carnage
 	icon = 'icons/obj/bed.dmi'
 	worn_icon = 'icons/mob/clothing/suits/pillow.dmi'

@@ -72,6 +72,7 @@
 	icon_state = "studentuni"
 	inhand_icon_state = null
 	body_parts_covered = ARMS|CHEST
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/chaplainsuit/armor/witchhunter
 	name = "witchunter garb"

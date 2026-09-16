@@ -9,3 +9,4 @@
 	desc = "A long, black trenchcoat. Makes you feel like you're the one, but you're not."
 	icon_state = "leather_trenchcoat"
 	flags_inv = HIDEBELT
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN

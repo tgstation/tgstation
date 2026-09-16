@@ -32,6 +32,7 @@
 	icon_state = "pirate"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 	allowed = list(
 		/obj/item/melee/energy/sword/pirate,
 		/obj/item/clothing/glasses/eyepatch,
@@ -158,6 +159,7 @@
 	icon_state = "owl_wings"
 	icon = 'icons/obj/clothing/suits/costume.dmi'
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 	inhand_icon_state = null
 	toggle_noun = "wings"
 	body_parts_covered = ARMS|CHEST
@@ -171,6 +173,7 @@
 	desc = "A plush white cloak made of synthetic feathers. Soft to the touch, stylish, and a 2 meter wing span that will drive your captives mad."
 	icon_state = "griffin_wings"
 	inhand_icon_state = null
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/costume/cardborg
 	name = "cardborg suit"
@@ -514,6 +517,7 @@
 	desc = "Perfect for those who want to stalk around a corner of a bar."
 	icon_state = "gothcoat"
 	inhand_icon_state = null
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 	flags_inv = HIDEBELT
 
 /obj/item/clothing/suit/costume/xenos

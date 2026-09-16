@@ -12,6 +12,7 @@
 /obj/item/clothing/suit/utility
 	icon = 'icons/obj/clothing/suits/utility.dmi'
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
+	supports_variations_flags = CLOTHING_CERULEAN_VARIATION
 
 /obj/item/clothing/suit/utility/fire
 	name = "emergency firesuit"
@@ -57,7 +58,7 @@
 /obj/item/clothing/suit/utility/fire/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
+		. += emissive_appearance((bodyshape & BODYSHAPE_CERULEAN) ? CERULEAN_SUIT_FILE : icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
 /obj/item/clothing/suit/utility/fire/firefighter
 	icon_state = "firesuit"

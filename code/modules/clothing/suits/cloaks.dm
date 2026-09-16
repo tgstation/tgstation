@@ -10,6 +10,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDESUITSTORAGE
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/neck/cloak/Initialize(mapload)
 	. = ..()

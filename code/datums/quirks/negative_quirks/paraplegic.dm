@@ -14,25 +14,10 @@
 	customization_options = list(/datum/preference/choiced/paraplegic)
 
 /datum/quirk/paraplegic/add_unique(client/client_source)
-	if(quirk_holder.buckled) // Handle late joins being buckled to arrival shuttle chairs.
-		quirk_holder.buckled.unbuckle_mob(quirk_holder)
-
-	var/turf/holder_turf = get_turf(quirk_holder)
-	var/obj/structure/chair/spawn_chair = locate() in holder_turf
-
-	var/obj/vehicle/ridden/wheelchair/wheels
-	if(client_source?.get_award_status(/datum/award/score/hardcore_random) >= 5000) //More than 5k score? you unlock the gamer wheelchair.
-		wheels = new /obj/vehicle/ridden/wheelchair/gold(holder_turf)
-	else
-		wheels = new(holder_turf)
-	if(spawn_chair) // Makes spawning on the arrivals shuttle more consistent looking
-		wheels.setDir(spawn_chair.dir)
-
-	wheels.buckle_mob(quirk_holder)
-
+	quirk_holder.put_in_wheelchair()
 	// During the spawning process, they may have dropped what they were holding, due to the paralysis
 	// So put the things back in their hands.
-	for(var/obj/item/dropped_item in holder_turf)
+	for(var/obj/item/dropped_item in get_turf(quirk_holder))
 		if(dropped_item.fingerprintslast == quirk_holder.ckey)
 			quirk_holder.put_in_hands(dropped_item)
 
@@ -53,3 +38,41 @@
 /datum/quirk/paraplegic/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	human_holder.cure_trauma_type(/datum/brain_trauma/severe/paralysis/paraplegic, TRAUMA_RESILIENCE_ABSOLUTE)
+
+/datum/quirk/paraplegic/is_species_appropriate(datum/species/mob_species)
+	if(istype(mob_species, /datum/species/human/cerulean)) //prevent weird interactions
+		return FALSE
+	return ..()
+
+/// Put a mob in a wheelchair, simple as
+/mob/living/proc/put_in_wheelchair()
+	// more than 5k score? you unlock the gamer wheelchair.
+	var/gold = FALSE
+	if(client?.get_award_status(/datum/award/score/hardcore_random) >= 5000)
+		gold = TRUE
+
+	// early return for if we spawn inside a closet. its more likely than you think
+	if(istype(loc, /obj/structure/closet))
+		if(gold)
+			new /obj/item/wheelchair/gold(loc)
+		else
+			new /obj/item/wheelchair(loc)
+		return
+
+	var/turf/turf = get_turf(src)
+	var/obj/structure/chair/chair_in_turf = locate() in turf
+	var/obj/vehicle/ridden/wheelchair/wheelchair
+	if(gold)
+		wheelchair = new /obj/vehicle/ridden/wheelchair/gold(turf)
+	else
+		wheelchair = new (turf)
+
+	// align with a chair already in the turf (if there is one)
+	if(chair_in_turf  && chair_in_turf != wheelchair)
+		wheelchair.setDir(chair_in_turf.dir)
+		// unbuckle from the chair that already exists
+		if(length(chair_in_turf.buckled_mobs) && locate(src) in chair_in_turf.buckled_mobs)
+			chair_in_turf.unbuckle_mob(src)
+
+	// buckle to the wheelchair!
+	wheelchair.buckle_mob(src)
