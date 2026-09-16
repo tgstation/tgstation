@@ -301,6 +301,7 @@
 	time_per_sheet = 360
 	power_gen = 5 KILO JOULES
 	sheet_path = /obj/item/stack/sheet/mineral/wood
+	light_mask = "portgen3-emissive"
 
 /obj/machinery/power/port_gen/pacman/pre_loaded
 	sheets = 15
