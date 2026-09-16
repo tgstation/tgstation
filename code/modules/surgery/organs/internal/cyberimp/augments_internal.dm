@@ -12,68 +12,67 @@
 	var/aug_overlay = null
 	/// Does the implant have an emissive overlay too?
 	var/emissive_overlay = FALSE
+	/// Mob layer the overlay will be placed onto
+	var/overlay_layer = BODY_ADJ_LAYER
 	/// Bodypart overlay we're going to apply to whoever we're implanted into
-	var/datum/bodypart_overlay/augment/bodypart_aug = null
+	var/datum/bodypart_overlay/simple/augment/bodypart_aug = null
 
 /obj/item/organ/cyberimp/Initialize(mapload)
 	. = ..()
 	if (aug_overlay)
 		visual = TRUE
-		bodypart_aug = new(src)
+		bodypart_aug = new()
+		bodypart_aug.icon = aug_icon
+		bodypart_aug.icon_state = get_overlay_state()
+		bodypart_aug.emissive = emissive_overlay
+		bodypart_aug.set_layer("", overlay_layer)
 
 /obj/item/organ/cyberimp/Destroy()
 	. = ..()
 	QDEL_NULL(bodypart_aug) // Do this after Remove() has done its thing, otherwise on_bodypart_remove() will not properly remove the overlay
 
+/// Returns what icon_state the bodypart overlay should be in.
+/// Defaults to whatever is set in the variable, but can be overridden by subtypes which need multiple states
 /obj/item/organ/cyberimp/proc/get_overlay_state()
 	return aug_overlay
 
-/obj/item/organ/cyberimp/proc/get_overlay(image_layer, obj/item/bodypart/limb)
-	. = list()
-	. += image(icon = aug_icon, icon_state = get_overlay_state(), layer = image_layer)
-	if (emissive_overlay)
-		. += emissive_appearance(aug_icon, "[get_overlay_state()]_e", limb.owner || limb, image_layer)
+/// Refreshes the overlay's icon_state, then calls update_bodyparts if necessary
+/obj/item/organ/cyberimp/proc/update_overlay_state()
+	if(isnull(bodypart_aug))
+		return
+
+	var/old_aug_state = bodypart_aug.icon_state
+	bodypart_aug.icon_state = get_overlay_state()
+	if(old_aug_state != bodypart_aug.icon_state)
+		owner?.update_body_parts()
 
 /obj/item/organ/cyberimp/on_bodypart_insert(obj/item/bodypart/limb)
 	. = ..()
-	if (bodypart_aug)
-		limb.add_bodypart_overlay(bodypart_aug)
+	if(isnull(bodypart_aug))
+		return
+
+	limb.add_bodypart_overlay(bodypart_aug)
 
 /obj/item/organ/cyberimp/on_bodypart_remove(obj/item/bodypart/limb)
 	. = ..()
-	if (bodypart_aug)
-		limb.remove_bodypart_overlay(bodypart_aug)
+	if(isnull(bodypart_aug))
+		return
 
-/datum/bodypart_overlay/augment
-	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
+	limb.remove_bodypart_overlay(bodypart_aug)
+
+/datum/bodypart_overlay/simple/augment
+	layers = list("" = BODY_ADJ_LAYER)
 	draw_on_husks = HUSK_OVERLAY_NORMAL
 	offset_location = ENTIRE_BODY
-	/// Implant that owns this overlay
-	var/obj/item/organ/cyberimp/implant
+	overlay_flags = NONE
+	/// Whether the overlay has an emissive appeareance too
+	var/emissive = FALSE
 
-/datum/bodypart_overlay/augment/New(obj/item/organ/cyberimp/implant)
+/datum/bodypart_overlay/simple/augment/get_overlay(obj/item/bodypart/limb, layer_index, layer_real)
 	. = ..()
-	src.implant = implant
-
-/datum/bodypart_overlay/augment/Destroy(force)
-	implant = null
-	return ..()
-
-/datum/bodypart_overlay/augment/icon_render_key(obj/item/bodypart/limb)
-	. = ..()
-	. += implant.get_overlay_state()
-
-/datum/bodypart_overlay/augment/get_overlay(obj/item/bodypart/limb, layer_index, layer_real)
-	var/list/imageset = implant.get_overlay(layer_real, limb)
-	if(blocks_emissive == EMISSIVE_BLOCK_NONE || !limb)
-		return imageset
-
-	var/list/all_images = list()
-	for(var/image/overlay as anything in imageset)
-		all_images += overlay
-		all_images += emissive_blocker(overlay.icon, overlay.icon_state, limb, layer = overlay.layer, alpha = overlay.alpha)
-
-	return all_images
+	if(emissive)
+		var/mutable_appearance/emissive_overlay = emissive_appearance(icon, icon_state + (layer_index ? "_[layer_index]" : "") + "_e", limb, layer = layer_real)
+		.[emissive_overlay] = LIMB_OVERLAY_META
 
 /obj/item/organ/cyberimp/feel_for_damage(self_aware)
 	// No feeling in implants (yet?)
