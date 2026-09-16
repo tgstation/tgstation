@@ -1530,6 +1530,40 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 	icon_state = "impact1"
 	dent_type = WALL_DENT_HIT
 
+/obj/effect/mapping_helpers/sticker_placer
+	name = "sticker placer"
+	icon = /obj/item/sticker::icon
+	icon_state = /obj/item/sticker/smile::icon_state
+	/// Sticker type to spawn
+	var/sticker_type = /obj/item/sticker/smile
+	///Will stick onto atoms of this type
+	var/target_type
+	///Will stick onto atoms with this name
+	var/target_name
+
+/obj/effect/mapping_helpers/sticker_placer/Initialize(mapload)
+	. = ..()
+	var/turf/target_turf = get_turf(src)
+	for(var/atom/atom_on_turf as anything in target_turf.get_all_contents())
+		if(atom_on_turf == src)
+			continue
+		if(target_name && atom_on_turf.name != target_name)
+			continue
+		if(target_type && !istype(atom_on_turf, target_type))
+			continue
+		var/obj/item/sticker/sticker = new sticker_type(target_turf)
+		atom_on_turf.AddComponent( \
+			/datum/component/sticker, \
+			sticker, \
+			NORTH, \
+			pixel_x + pixel_w + (ICON_SIZE_X / 2), \
+			pixel_y + pixel_z + (ICON_SIZE_Y / 2), \
+			null, \
+			null, \
+			sticker.examine_text, \
+		)
+	return INITIALIZE_HINT_QDEL
+
 /***
  * Used to prevent things from teleporting on (but not off) the turf through most means that do not call do_teleport() with the forced arg set to TRUE.
  * The trait is removed if the turf is changed, so you should only keep it on small sections with indestructible turfs, ideally corners surrounded by
