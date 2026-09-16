@@ -757,6 +757,8 @@
 		/datum/reagent/plantnutriment/robustharvestnutriment,
 		/datum/reagent/plantnutriment/endurogrow,
 		/datum/reagent/plantnutriment/liquidearthquake,
+		/datum/reagent/plantnutriment/chemocultivate,
+		/datum/reagent/plantnutriment/stabilifeed,
 		/datum/reagent/water,
 		/datum/reagent/toxin/plantbgone,
 		/datum/reagent/toxin/plantbgone/weedkiller,

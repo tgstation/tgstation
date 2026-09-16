@@ -98,6 +98,18 @@
 	make_reagent = /datum/reagent/plantnutriment/liquidearthquake
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_CHEMICALS)
 
+/datum/design/biogen/chemo_cult
+	name = "Chemo Cultivate"
+	materials = list(/datum/material/biomass = 0.4)
+	make_reagent = /datum/reagent/plantnutriment/chemocultivate
+	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_CHEMICALS)
+
+/datum/design/biogen/stab_feed
+	name = "Stabili Feed"
+	materials = list(/datum/material/biomass = 0.4)
+	make_reagent = /datum/reagent/plantnutriment/stabilifeed
+	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_BIO_CHEMICALS)
+
 /datum/design/biogen/weed_killer
 	name = "Weed Killer"
 	materials = list(/datum/material/biomass = 0.2)
