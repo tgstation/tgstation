@@ -1,0 +1,4 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - qol: "AI shells now appear \"off\" when not being actively piloted."

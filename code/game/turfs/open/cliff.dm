@@ -52,6 +52,10 @@
 
 	try_fall(arrived)
 
+/turf/open/cliff/initialize_occupant(atom/movable/occupant)
+	. = ..()
+	try_fall(occupant)
+
 /turf/open/cliff/zImpact(atom/movable/falling, levels, turf/prev_turf, flags)
 	. = ..(flags = flags | FALL_INTERCEPTED)
 

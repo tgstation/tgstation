@@ -728,11 +728,15 @@
 	for(var/i in 1 to severity)
 		severity_text_formatted += "!"
 
-	return "[name] detected!<br>\
+	var/scanner_text = "[name] detected!<br>\
 		Risk: [severity_text_formatted]<br>\
-		Description: [simple_desc || desc]<br>\
-		<i>Treatment Guide: [simple_treat_text]</i><br>\
-		<i>Homemade Remedies: [homemade_treat_text]</i>"
+		Description: [simple_desc || desc]<br>"
+	if(simple_treat_text)
+		scanner_text += "<i>Treatment Guide: [simple_treat_text]</i><br>"
+	if(homemade_treat_text)
+		scanner_text += "<i>Homemade Remedies: [homemade_treat_text]</i>"
+
+	return scanner_text
 
 /**
  * Returns what text describes this wound

@@ -21,10 +21,6 @@
 	AddElement(/datum/element/connect_loc, decal_move_connections)
 	AddElement(/datum/element/force_move_pulled)
 
-/obj/effect/decal/Destroy(force)
-	RemoveElement(/datum/element/connect_loc, decal_move_connections)
-	return ..()
-
 /obj/effect/decal/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		qdel(src)
@@ -72,12 +68,13 @@
 	flags_1 |= INITIALIZED_1
 
 	// If the tile uses holiday colors, apply them here
+#ifndef MAP_TEST
 	if(use_holiday_colors)
-
 		var/custom_color = request_decoration_colors(src, pattern)
 		if(custom_color)
 			color = custom_color
 			alpha = DECAL_ALPHA
+#endif
 
 	var/turf/T = loc
 	if(!istype(T)) //you know this will happen somehow

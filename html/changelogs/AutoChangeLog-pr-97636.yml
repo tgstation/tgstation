@@ -1,0 +1,6 @@
+author: "MrMelbert"
+delete-after: True
+changes:
+  - map: "[Icebox] Remapped Atmospherics. The hallway of pain is gone."
+  - map: "[Icebox] Remapped maintenance around Atmos and Science a bit."
+  - image: "Adds long corner trimline decals"

@@ -162,3 +162,86 @@
       it.
   - qol: Add examine blocks to flavour text for Venus Trap Ghost Spawners that includes
       their inherited mutations
+2026-09-13:
+  KingkumaArt:
+  - image: added 4 new mech pilot suits, purchasable from cargo!
+2026-09-14:
+  Fghj240:
+  - balance: simplemob bomb armor grants linearly scaling damage reduction vs bombs
+      instead of a random chance to reduce damage
+  - bugfix: bomb immunity works on simplemobs
+  - bugfix: bomb armor now protects simplemobs from being gibbed by explosions
+  - code_imp: simplemob bomb code is less repetitive
+  Melbert:
+  - rscdel: Toy guns no longer have cosmetic recoil effects
+  - balance: Bananium swords are now slippier, particularly in the hands of clowns
+  - balance: Bananium shields are now slippier, particularly in the hands of clowns
+  - balance: Added and removed several items from the clown operative outfit and uplink
+  - spellcheck: 'Fix blood trail examine: "That''s a trail of blood" instead of "that''s
+      some trail of blood"'
+  timothymtorres:
+  - bugfix: Fix cargo stray supply pod runtime
+  vinylspiders:
+  - bugfix: brings back the tg window icon that mysteriously went missing for a couple
+      days
+  - refactor: changed the way ChangeTurf() handles signal registration, please report
+      any weird issues with stuff that usually happens on entering certain turfs (elevation,
+      bananium squeaks, lava burning things, etc)
+2026-09-15:
+  ArcaneMusic:
+  - qol: All Mechs now have a toggle to trim down the modules pane of the Mech UI.
+  - qol: Mechs will now show their overlock percentage without having it enabled.
+  - spellcheck: Mechs when examined now format their integrity text the same as when
+      other things are falling apart.
+  Jacquerel:
+  - image: Added icons for the achievements "I Was a Teenage Anarchist", "A Bowl-d
+      New World", and "How Do I Switch Hands???"
+  JohnFulpWillard:
+  - rscadd: Added bruise wounds to your hands if you attack people in a near-death
+      state. They show up on autopsies.
+  Melbert:
+  - bugfix: Fixes Kilo's gas turbine burning Atmos down on use
+  Voyaker-coder:
+  - rscadd: Adds a functional firing delay to the Abductor "Shrink Ray" pistol
+  YesterdaysPromise:
+  - rscadd: Added Fonarstolbes, Podsneyzkas, Vahrezjias, Inozhakusts, Plasma Flowers,
+      and Drake Beets as Icebox plantlife and botany plants.
+  - rscadd: 'Added following chemicals: Guidoferrunitian Glycetamine (Found in Fonarstolbes)  and
+      Berserk Toxin (Found in Vahrezjias)'
+  - rscadd: Added Nutrient Bars, Iceberg Soup, Drake Borscht, Wolf Goulash, Snowdrake
+      BBQ, Wendigo Killer Feast, and Ice Breaker to cooking recipes.
+  - rscadd: Added Mouthwash (from fermented Inozhakusts), Strong Mouthwash, Stone
+      Cold Stout, Icy Dorf, Ramp Rager, Ice Grave and Frozen-Sea Lantern drinks.
+  sqnztb:
+  - bugfix: radio and entertainment chatter are no longer filtered out by local chat.
+  timothymtorres:
+  - bugfix: Fix supermatter spiders not having web immunity trait
+  vinylspiders:
+  - bugfix: fixes an issue that can cause the holodeck to stop functioning for the
+      entire round
+  - bugfix: the carrier choice dropdown in the bring your pets to work day menu is
+      now visible
+2026-09-16:
+  Fghj240:
+  - spellcheck: cybernetic fangs aren't called advanced in the printer anymore.
+  - bugfix: cybernetic fangs moved to combat cybernetic organs
+  Melbert:
+  - qol: Many, many, many RND designs (primarily computers and machines) now have
+      more informative descriptions that explain what they do, rather than only stating
+      "This is a circuitboard."
+  - spellcheck: Examining a PanD.E.M.I.C 2200, Sheet-meister 2000, or the R&D Server
+      Controller now reads as "That's a [thing]" rather than "That's [thing]".
+  necromanceranne:
+  - balance: The CMO now has an advanced medical scanner in their medkit.
+  - balance: You can now once again print defibrillators and their compact variant
+      (with the researched tech) from cargo.
+  - balance: Defibs now can have their safeties switched off by EMP blasts. However,
+      they reset after a while.
+  - balance: The CMO's unique compact defibrillator has double the recharge rate.
+  vinylspiders:
+  - bugfix: fixes a bug that would cause a goldgrub to sometimes spawn a bugged boulder
+      when hitting a boss vent
+  - bugfix: boss vents can actually give diamonds and bluespace now like they're supposed
+      to
+  - bugfix: fixes an issue where the tooltips on the escape menu buttons would be
+      render behind the buttons themselves
