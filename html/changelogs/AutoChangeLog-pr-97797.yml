@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes an issue where the tooltips on the escape menu buttons would be render behind the buttons themselves"
