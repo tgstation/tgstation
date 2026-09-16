@@ -47,8 +47,6 @@
 	var/old_icon_state = icon_state
 	icon_state = new_icon_state
 	if(new_icon_state != old_icon_state)
-	//cut_overlays()
-	//add_overlay(emissive_appearance(icon, "[icon_state]-emissive", src, alpha = src.alpha))
 		update_overlays()
 
 /obj/machinery/atmospherics/components/binary/temperature_pump/process_atmos()
