@@ -194,18 +194,6 @@
 			to_chat(human, span_notice("You no longer feel vigorous."))
 		human.metabolism_efficiency = 1
 
-	//Hunger slowdown for if mood isn't enabled
-	if(CONFIG_GET(flag/disable_human_mood))
-		handle_hunger_slowdown(human)
-
-///for when mood is disabled and hunger should handle slowdowns
-/obj/item/organ/stomach/proc/handle_hunger_slowdown(mob/living/carbon/human/human)
-	var/hungry = (500 - human.nutrition) / 5 //So overeat would be 100 and default level would be 80
-	if(hungry >= 70)
-		human.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/hunger, multiplicative_slowdown = (hungry / 50))
-	else
-		human.remove_movespeed_modifier(/datum/movespeed_modifier/hunger)
-
 /obj/item/organ/stomach/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantstomach
 
