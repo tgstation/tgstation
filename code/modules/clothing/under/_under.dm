@@ -314,9 +314,6 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 
-	for(var/obj/inside in attached_accessories)
-		inside.emp_act(severity)
-
 	if(has_sensor == NO_SENSORS || has_sensor == BROKEN_SENSORS)
 		return
 
