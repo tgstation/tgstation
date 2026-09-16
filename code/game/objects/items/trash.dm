@@ -136,6 +136,8 @@
 
 /obj/item/trash/can/Initialize(mapload)
 	. = ..()
+	if(mapload)
+		return
 	pixel_x = rand(-4,4)
 	pixel_y = rand(-4,4)
 
