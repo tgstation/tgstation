@@ -98,7 +98,7 @@
 
 /datum/status_effect/organ_set_bonus/fish/texture_limb(atom/source, obj/item/bodypart/limb)
 	. = ..()
-	if (!color_active || !iscarbon(owner) || limb.bodytype & BODYTYPE_ROBOTIC)
+	if (!color_active || !iscarbon(owner) || (limb.bodytype & BODYTYPE_ROBOTIC))
 		return
 	var/mob/living/carbon/carbon_owner = owner
 	limb.add_color_override(carbon_owner.dna.features[FEATURE_TAIL_FISH_COLOR], LIMB_COLOR_FISH_INFUSION)
