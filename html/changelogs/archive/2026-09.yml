@@ -221,3 +221,20 @@
       entire round
   - bugfix: the carrier choice dropdown in the bring your pets to work day menu is
       now visible
+2026-09-16:
+  Fghj240:
+  - spellcheck: cybernetic fangs aren't called advanced in the printer anymore.
+  - bugfix: cybernetic fangs moved to combat cybernetic organs
+  Melbert:
+  - qol: Many, many, many RND designs (primarily computers and machines) now have
+      more informative descriptions that explain what they do, rather than only stating
+      "This is a circuitboard."
+  - spellcheck: Examining a PanD.E.M.I.C 2200, Sheet-meister 2000, or the R&D Server
+      Controller now reads as "That's a [thing]" rather than "That's [thing]".
+  vinylspiders:
+  - bugfix: fixes a bug that would cause a goldgrub to sometimes spawn a bugged boulder
+      when hitting a boss vent
+  - bugfix: boss vents can actually give diamonds and bluespace now like they're supposed
+      to
+  - bugfix: fixes an issue where the tooltips on the escape menu buttons would be
+      render behind the buttons themselves
