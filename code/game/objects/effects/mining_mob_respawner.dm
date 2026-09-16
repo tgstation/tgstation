@@ -9,8 +9,6 @@
 	var/registered_spawn_signal = FALSE
 	/// Spawn somewhere in an area around the spawner rather than dead on it
 	var/respawn_range = 3
-	/// Range in which active Candela nodes prevent our mob spawns
-	var/network_block_range = 5
 	/// Min time from storm to spawn a mob
 	var/min_delay = 1 SECONDS
 	/// Max time from storm to spawn a mob
@@ -113,16 +111,14 @@
 	if (resolved && resolved.stat != DEAD)
 		return
 
-	var/list/blockers = list()
-	// Respawns get blocked by active Candela network nodes nearby
-	for (var/datum/mining_beacon_network/network as anything in GLOB.mining_beacon_networks)
-		if (!network.powered)
-			continue
-		for (var/datum/component/candela_node/node as anything in network.linked_nodes)
-			blockers[get_turf(node.parent)] = TRUE
+	// Check all turfs that have a blocker on it
+	for(var/blocker, blocker_range in GLOB.mining_mob_respawn_blockers)
+		if(get_dist(src, blocker) <= blocker_range)
+			return
 
-	for(var/turf/turf_in_view in view(network_block_range, get_turf(src)))
-		if (blockers[turf_in_view])
+	// Check for any (living, active, nearby) players
+	for(var/mob/living/miner in viewers(loc, 3))
+		if(miner.stat != DEAD && !isnull(miner.mind))
 			return
 
 	if (prob(respawn_chance))

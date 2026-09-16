@@ -44,6 +44,7 @@
 	AddComponent(/datum/component/seethrough_mob)
 	AddElement(/datum/element/simple_flying)
 	AddElement(/datum/element/death_drops, string_list(regular_loot))
+	AddElement(/datum/element/block_mining_mob_respawns, 10)
 	handle_crusher_loot()
 	handle_achievements()
 
@@ -129,4 +130,3 @@
 		guaranteed_drop = 0.6,\
 		drop_immediately = basic_mob_flags & DEL_ON_DEATH,\
 	)
-
