@@ -70,6 +70,10 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		if(length(to_del))
 			for(var/atom/to_kill in to_del)
 				qdel(to_kill, force = TRUE)
+				//This will hold a ref to the last thing we qdel unless we set it to null
+				//Yes, byond is VERY fucking sinful!
+				to_del[to_kill] = null
+		to_del = null
 
 	GLOB.running_create_and_destroy = FALSE
 
