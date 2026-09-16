@@ -1,0 +1,7 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "The CMO now has an advanced medical scanner in their medkit."
+  - balance: "You can now once again print defibrillators and their compact variant (with the researched tech) from cargo."
+  - balance: "Defibs now can have their safeties switched off by EMP blasts. However, they reset after a while."
+  - balance: "The CMO's unique compact defibrillator has double the recharge rate."
