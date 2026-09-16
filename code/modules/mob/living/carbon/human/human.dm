@@ -49,7 +49,7 @@
 	return null
 
 /mob/living/carbon/human/dummy/setup_mood()
-	return
+	mob_mood = new /datum/mood/dummy(src)
 
 /// This proc is for holding effects applied when a mob is missing certain organs
 /// It is called very, very early in human init because all humans innately spawn with no organs and gain them during init

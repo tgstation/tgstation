@@ -677,6 +677,12 @@
 			return TRUE
 	return FALSE
 
+
+/datum/mood/dummy
+
+/datum/mood/dummy/set_sanity(amount, minimum, maximum, override)
+	return
+
 #undef MINOR_INSANITY_PEN
 #undef MAJOR_INSANITY_PEN
 #undef MOOD_CATEGORY_NUTRITION
