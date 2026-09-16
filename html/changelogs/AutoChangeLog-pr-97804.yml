@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes a bug that would cause a goldgrub to sometimes spawn a bugged boulder when hitting a boss vent"
+  - bugfix: "boss vents can actually give diamonds and bluespace now like they're supposed to"
