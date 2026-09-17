@@ -254,9 +254,16 @@
       is flammable though, so make sure you change while under a shower or something.
   - rscadd: Breathing Miasma can get you sick with the same diseases you get from
       eating dirty food off the floor.
+  - bugfix: Bitrunning antagonists can once again escape from an emagged server
   MrMelbert:
   - map: '[Icebox] Remapped Atmospherics. The hallway of pain is gone.'
   - map: '[Icebox] Remapped maintenance around Atmos and Science a bit.'
   - image: Adds long corner trimline decals
   PapaMichael:
   - qol: AI shells now appear "off" when not being actively piloted.
+  Redwizz99:
+  - rscadd: bluspace scrubber and gas receiver machinery
+  - rscadd: bluespace scrubber and gas receiver circuits
+  - rscadd: adds bluespace scubber and gas receiver to tech node
+  - rscadd: sprites for bluespace scrubber and gas receiver
+  - rscadd: you can disconnect scrubbers linked to receiver, just use wirecutter
