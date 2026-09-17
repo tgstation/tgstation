@@ -328,6 +328,10 @@
 	if(current_disguise)
 		return_look()
 		return
+	select_disguise(activator)
+
+/obj/item/mod/module/chameleon/proc/select_disguise(mob/activator)
+	set waitfor = FALSE
 	var/picked_name = tgui_input_list(activator, "Select look to change into", "Chameleon Settings", possible_disguises)
 	if(!possible_disguises[picked_name] || mod.active || mod.activating)
 		return
