@@ -8,6 +8,7 @@
 	icon_state = "debug_artefact"
 	assembly_flags = ASSEMBLY_FUNCTIONAL_OUTPUT
 	activation_cooldown = null
+	use_base_icon_for_holder = TRUE
 	/// The name this artefact will have when it's activated.
 	var/real_name = "artefact"
 	/// Has this artefact been activated?
@@ -27,7 +28,6 @@
 	. = ..()
 	random_themed_appearance()
 	RegisterSignal(src, COMSIG_ITEM_OPENED_FROM_GIFT, PROC_REF(auto_reveal))
-	ADD_TRAIT(src, TRAIT_ASSEMBLY_USE_SELF_AS_HOLDER_OVERLAY, INNATE_TRAIT)
 
 /obj/item/assembly/relic/proc/auto_reveal(...)
 	SIGNAL_HANDLER

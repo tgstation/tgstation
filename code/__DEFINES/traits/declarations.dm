@@ -1745,7 +1745,4 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Mobs with this trait will appear as human to medical scanners even if they are not human
 #define TRAIT_HUMAN_DISGUISE "human_disguise"
 
-/// Assemblies with this trait use their own icon manually offset when rendering in a holder
-#define TRAIT_ASSEMBLY_USE_SELF_AS_HOLDER_OVERLAY "assembly_use_self_as_holder_overlay"
-
 // END TRAIT DEFINES

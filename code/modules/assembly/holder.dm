@@ -103,7 +103,7 @@
 		if(IS_LEFT_INDEX(i))
 			var/obj/item/assembly/assembly = assemblies[i]
 			var/mutable_appearance/left
-			if(HAS_TRAIT(assembly, TRAIT_ASSEMBLY_USE_SELF_AS_HOLDER_OVERLAY))
+			if(assembly.use_base_icon_for_holder)
 				left = mutable_appearance(assembly.icon, assembly.icon_state)
 				left.transform = matrix(1, 0, -0.1, 0, 1, 0.1)
 			else
@@ -114,7 +114,7 @@
 		if(IS_RIGHT_INDEX(i))
 			var/obj/item/assembly/assembly = assemblies[i]
 			var/mutable_appearance/right
-			if(HAS_TRAIT(assembly, TRAIT_ASSEMBLY_USE_SELF_AS_HOLDER_OVERLAY))
+			if(assembly.use_base_icon_for_holder)
 				right = mutable_appearance(assembly.icon, assembly.icon_state)
 				right.transform = matrix(-1, 0, 0.1, 0, 1, 0.1)
 			else
