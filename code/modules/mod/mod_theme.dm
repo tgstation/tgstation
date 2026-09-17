@@ -1,12 +1,13 @@
 /// Global proc that sets up all MOD themes as singletons in a list and returns it.
 /proc/setup_mod_themes()
 	. = list()
-	for(var/path in subtypesof(/datum/mod_theme))
+	for(var/path in valid_subtypesof(/datum/mod_theme))
 		var/datum/mod_theme/new_theme = new path()
 		.[path] = new_theme
 
 /// MODsuit theme, instanced once and then used by MODsuits to grab various statistics.
 /datum/mod_theme
+	abstract_type = /datum/mod_theme
 	/// Theme name for the MOD.
 	var/name = "debug"
 	/// Description added to the MOD.
