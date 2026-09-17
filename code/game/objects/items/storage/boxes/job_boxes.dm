@@ -31,7 +31,6 @@
 /obj/item/storage/box/survival/PopulateContents()
 	if(crafted)
 		return
-
 	if(!isnull(mask_type))
 		new mask_type(src)
 
@@ -67,9 +66,10 @@
 		locate(medipen_type) in src,
 	)
 	QDEL_LIST(items_to_clear)
-	for(var/survival_types in owner.dna.species.survival_box_overrides)
-		var/obj/item_to_add = owner.dna.species.survival_box_overrides[survival_types]
-		if(isnull(item_to_add))
+	var/list/survival_box_overrides = owner.dna.species.survival_box_overrides.Copy()
+	for(var/survival_types in survival_box_overrides)
+		var/item_to_add = survival_box_overrides[survival_types]
+		if(item_to_add == NONE)
 			continue
 		new item_to_add(src)
 
