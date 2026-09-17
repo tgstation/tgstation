@@ -245,3 +245,18 @@
       to
   - bugfix: fixes an issue where the tooltips on the escape menu buttons would be
       render behind the buttons themselves
+2026-09-17:
+  FalloutFalcon:
+  - config: Removes "Disable mood" config
+  - code_imp: Dummies have a blank mood datum
+  Jacquerel:
+  - rscadd: Plasmamen wearing a human skin suit won't catch fire. The suit itself
+      is flammable though, so make sure you change while under a shower or something.
+  - rscadd: Breathing Miasma can get you sick with the same diseases you get from
+      eating dirty food off the floor.
+  MrMelbert:
+  - map: '[Icebox] Remapped Atmospherics. The hallway of pain is gone.'
+  - map: '[Icebox] Remapped maintenance around Atmos and Science a bit.'
+  - image: Adds long corner trimline decals
+  PapaMichael:
+  - qol: AI shells now appear "off" when not being actively piloted.
