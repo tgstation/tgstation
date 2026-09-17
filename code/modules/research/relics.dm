@@ -404,8 +404,7 @@
 	for(var/turf/shiftee in range(1, src))
 		shifter.apply_theme(shiftee, show_effect = TRUE)
 	// prevent *total* spam conversion
-	min_cooldown += 2 SECONDS
-	max_cooldown += 2 SECONDS
+	activation_cooldown += 2 SECONDS
 
 /// Replaces your clothing with a random costume, and your ID with a cardboard one.
 /// TODO: make them part of the same kit (lobster hat, lobster suit)
