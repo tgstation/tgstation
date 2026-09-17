@@ -51,8 +51,7 @@
 		return data
 	var/list/queued_nodes = list()
 	for(var/node, weakref in stored_research.research_queue_nodes)
-		var/datum/weakref/queuer_weakref = weakref
-		queued_nodes[node] = queuer_weakref?.resolve()
+		queued_nodes[node] = astype(weakref, /datum/weakref)?.resolve()
 	data += list(
 		"nodes" = list(),
 		"queue_nodes" = queued_nodes,
