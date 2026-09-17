@@ -86,7 +86,6 @@
 	icon_state = "eguitar"
 	inhand_icon_state = "eguitar"
 	worn_icon = 'icons/mob/clothing/back.dmi'
-	worn_icon_state = "eguitar"
 	slot_flags = ITEM_SLOT_BACK
 	force = 12
 	attack_verb_continuous = list("plays metal on", "shreds", "crashes", "smashes")
