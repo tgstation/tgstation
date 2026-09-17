@@ -55,7 +55,7 @@
 	new /obj/item/radio/off(src)
 
 /obj/item/storage/box/survival/proc/apply_overrides()
-	if(!ishuman(loc))
+	if(!ishuman(loc) || QDELING(src))
 		return
 	var/mob/living/carbon/human/owner = loc
 	if(!length(owner.dna.species.survival_box_overrides))
@@ -69,8 +69,6 @@
 	var/list/survival_box_overrides = owner.dna.species.survival_box_overrides.Copy()
 	for(var/survival_types in survival_box_overrides)
 		var/item_to_add = survival_box_overrides[survival_types]
-		if(item_to_add == NONE)
-			continue
 		new item_to_add(src)
 
 // Prisoners don't get an escape hook
