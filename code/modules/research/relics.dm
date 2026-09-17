@@ -574,11 +574,7 @@
 	addtimer(CALLBACK(src, PROC_REF(actually_yeet_blood)), yeet_time)
 
 /obj/item/assembly/relic/proc/actually_yeet_blood()
-	var/mob/living/user
-	for(var/container in get_nested_locs(src))
-		if(isliving(container))
-			user = container
-			break
+	var/mob/living/user = get_loose_container(src, container_flags = LOOSE_CONTAINER_INCLUDE_INVENTORY)
 	var/splatcount = 0
 	if(istype(user) && CAN_HAVE_BLOOD(user) && !user.can_block_magic(MAGIC_RESISTANCE_HOLY, 1))
 		for(var/splatdir in GLOB.alldirs)
@@ -615,11 +611,7 @@
 	addtimer(CALLBACK(src, PROC_REF(actually_suck_blood)), suck_time)
 
 /obj/item/assembly/relic/proc/actually_suck_blood()
-	var/mob/living/user
-	for(var/container in get_nested_locs(src))
-		if(isliving(container))
-			user = container
-			break
+	var/mob/living/user = get_loose_container(src, container_flags = LOOSE_CONTAINER_INCLUDE_INVENTORY)
 	var/any_affected = FALSE
 	if(istype(user) && CAN_HAVE_BLOOD(user) && !user.can_block_magic(MAGIC_RESISTANCE_HOLY, 1))
 		for(var/mob/living/nearby in view(2, user))
