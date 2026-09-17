@@ -27,6 +27,7 @@
 	. = ..()
 	random_themed_appearance()
 	RegisterSignal(src, COMSIG_ITEM_OPENED_FROM_GIFT, PROC_REF(auto_reveal))
+	ADD_TRAIT(src, TRAIT_ASSEMBLY_USE_SELF_AS_HOLDER_OVERLAY, INNATE_TRAIT)
 
 /obj/item/assembly/relic/proc/auto_reveal(...)
 	SIGNAL_HANDLER
