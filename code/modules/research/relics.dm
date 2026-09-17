@@ -261,7 +261,7 @@
 
 /obj/item/assembly/relic/proc/do_the_teleport(mob/user)
 	var/turf/userturf = get_turf(src)
-	var/atom/movable/to_teleport = get_teleportable_container(src, container_flags = ALL)
+	var/atom/movable/to_teleport = get_loose_container(src, container_flags = ALL)
 	to_teleport.visible_message(span_notice("[to_teleport] twists and bends, relocating itself!"))
 	throw_smoke(get_turf(to_teleport))
 	do_teleport(to_teleport, userturf, 8, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE)
@@ -477,7 +477,7 @@
 
 /// Makes the relic holder have a shield that blocks 3 common attacks
 /obj/item/assembly/relic/proc/t1_shield_holder(mob/user)
-	var/obj/item/outermost_item = get_teleportable_container(src, container_flags = NONE)
+	var/obj/item/outermost_item = get_loose_container(src, container_flags = NONE)
 	var/datum/component/shield = outermost_item.AddComponent( \
 		/datum/component/shielded, \
 		max_charges = 3, \
@@ -508,7 +508,7 @@
 
 /// Makes the relic holder have a shield that blocks 1 powerful attack
 /obj/item/assembly/relic/proc/t2_shield_holder(mob/user)
-	var/obj/item/outermost_item = get_teleportable_container(src, container_flags = NONE)
+	var/obj/item/outermost_item = get_loose_container(src, container_flags = NONE)
 	var/datum/component/shield = outermost_item.AddComponent( \
 		/datum/component/shielded, \
 		max_charges = 1, \
