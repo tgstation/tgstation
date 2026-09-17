@@ -345,7 +345,7 @@
 	if(stacks <= WET_STACKS_DAMP)
 		return "[owner.p_Their()] skin seem[owner.p_s()] lightly damp."
 	else if(stacks >= WET_STACKS_SOAKED)
-		return "[owner.p_They()] looks completely soaked."
+		return "[owner.p_They()] look[owner.p_s()] completely soaked."
 	else
 		return "[owner.p_They()] appear[owner.p_s()] to be dripping wet."
 
