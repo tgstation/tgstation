@@ -118,13 +118,7 @@
 
 /// Helper to show a message to people around the relic
 /obj/item/assembly/relic/proc/relic_message(message)
-	var/atom/message_source
-	for(var/container in get_nested_locs(src))
-		if(isliving(container))
-			message_source = container
-			break
-	if(!message_source)
-		message_source = src
+	var/atom/message_source = get(src, mob/living) || src
 	message_source.visible_message(message)
 
 // Artefact Powers \\
@@ -340,12 +334,8 @@
 
 /// Charges an item or two in your inventory. Also yourself.
 /obj/item/assembly/relic/proc/charger(mob/living/user)
-	playsound(user, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	var/mob/living/mob_to_charge
-	for(var/container in get_nested_locs(src))
-		if(isliving(container))
-			mob_to_charge = container
-			break
+	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	var/mob/living/mob_to_charge = get(src, /mob/living)
 	if(!mob_to_charge)
 		return
 	to_chat(mob_to_charge, span_danger("You're recharged!"))
@@ -383,11 +373,7 @@
 
 /// Hugs/shakes everyone in range!
 /obj/item/assembly/relic/proc/hugger(mob/user)
-	var/mob/living/hugger
-	for(var/container in get_nested_locs(src))
-		if(isliving(container))
-			hugger = container
-			break
+	var/mob/living/hugger = get(src, /mob/living)
 	var/list/mob/living/carbon/huggeds = oviewers(3, hugger)
 	for(var/mob/living/carbon/victim in huggeds)
 		victim.help_shake_act(hugger, force_friendly = TRUE)
@@ -409,11 +395,7 @@
 /// Replaces your clothing with a random costume, and your ID with a cardboard one.
 /// TODO: make them part of the same kit (lobster hat, lobster suit)
 /obj/item/assembly/relic/proc/disguiser(mob/user)
-	var/mob/living/to_disguise
-	for(var/container in get_nested_locs(src))
-		if(isliving(container))
-			to_disguise = container
-			break
+	var/mob/living/to_disguise = get(src, /mob/living)
 	if(!iscarbon(to_disguise))
 		to_chat(to_disguise, span_notice("You have a strange feeling for a moment, but then it passes."))
 		return
