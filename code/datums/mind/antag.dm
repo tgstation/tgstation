@@ -182,7 +182,7 @@
 		add_antag_datum(/datum/antagonist/cult)
 
 	else if(IS_REVOLUTIONARY(creator))
-		var/datum/antagonist/rev/converter = creator.mind.has_antag_datum(/datum/antagonist/rev,TRUE)
+		var/datum/antagonist/rev/converter = creator.mind.has_antag_datum(/datum/antagonist/rev, TRUE)
 		converter.add_revolutionary(src, stun = FALSE, mute = FALSE)
 
 	else if(IS_NUKE_OP(creator))

@@ -1451,7 +1451,7 @@
 // purple
 /datum/reagent/medicine/regen_jelly/diluted
 	name = "Diluted Regenerative Jelly"
-	description = "Regenerative slime jelly thas has been diluted, resulting in it regenerating tissues slower, but lasting longer with the same volume."
+	description = "Regenerative slime jelly that has been diluted, resulting in it regenerating tissues slower, but lasting longer with the same volume."
 	metabolization_rate = 0.125 * REAGENTS_METABOLISM
 	healing = 0.45 // less than omnizine, actually
 
@@ -1880,17 +1880,13 @@
 
 /datum/reagent/medicine/coagulant/on_mob_metabolize(mob/living/affected_mob)
 	. = ..()
-	if(ishuman(affected_mob))
-		var/mob/living/carbon/human/blood_boy = affected_mob
-		blood_boy.physiology?.bleed_mod *= passive_bleed_modifier
+	MODIFY_PHYSIOLOGY(affected_mob, PHYS_COEFF_BLEED, passive_bleed_modifier)
 
 /datum/reagent/medicine/coagulant/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
 	if(was_working)
 		to_chat(affected_mob, span_warning("The medicine thickening your blood loses its effect!"))
-	if(ishuman(affected_mob))
-		var/mob/living/carbon/human/blood_boy = affected_mob
-		blood_boy.physiology?.bleed_mod /= passive_bleed_modifier
+	MODIFY_PHYSIOLOGY(affected_mob, PHYS_COEFF_BLEED, 1 / passive_bleed_modifier)
 
 /datum/reagent/medicine/coagulant/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()

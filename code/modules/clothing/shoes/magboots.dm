@@ -25,6 +25,14 @@
 	var/magpulse_fishing_modifier = 8
 	/// How much do these boots affect fishing when not active
 	var/fishing_modifier = 4
+	/// Footstep SFX when the magboots are off
+	var/list/inactive_step_sounds = list('sound/items/modsuit/rigstep_medium.ogg')
+	/// Footstep SFX when the magboots are on
+	var/list/active_step_sounds = list('sound/items/modsuit/rigstep_chonk.ogg')
+
+/obj/item/clothing/shoes/magboots/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/shoe_footstep, inactive_step_sounds, volume = 50)
 
 /obj/item/clothing/shoes/magboots/Initialize(mapload)
 	. = ..()
@@ -61,6 +69,7 @@ GAME_VERB_SRC(/obj/item/clothing/shoes/magboots, toggle, usr, "Toggle Magboots",
 			AddElement(/datum/element/adjust_fishing_difficulty, magpulse_fishing_modifier)
 		else if(magpulse_fishing_modifier != fishing_modifier)
 			RemoveElement(/datum/element/adjust_fishing_difficulty)
+		AddComponent(/datum/component/shoe_footstep, active_step_sounds, volume = 50)
 	else
 		if(fishing_modifier)
 			AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
@@ -68,6 +77,7 @@ GAME_VERB_SRC(/obj/item/clothing/shoes/magboots, toggle, usr, "Toggle Magboots",
 			RemoveElement(/datum/element/adjust_fishing_difficulty)
 		detach_clothing_traits(active_traits)
 		slowdown -= slowdown_active
+		AddComponent(/datum/component/shoe_footstep, inactive_step_sounds, volume = 50)
 
 	update_appearance()
 	balloon_alert(user, "mag-pulse [magpulse ? "enabled" : "disabled"]")
@@ -91,6 +101,8 @@ GAME_VERB_SRC(/obj/item/clothing/shoes/magboots, toggle, usr, "Toggle Magboots",
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
 	magpulse_fishing_modifier = 3
 	fishing_modifier = 0
+	inactive_step_sounds = list('sound/items/modsuit/rigstep.ogg')
+	active_step_sounds = list('sound/items/modsuit/rigstep_medium.ogg')
 
 /obj/item/clothing/shoes/magboots/syndie
 	name = "blood-red magboots"
@@ -99,3 +111,4 @@ GAME_VERB_SRC(/obj/item/clothing/shoes/magboots, toggle, usr, "Toggle Magboots",
 	base_icon_state = "syndiemag"
 	magpulse_fishing_modifier = 6
 	fishing_modifier = 3
+	active_step_sounds = list('sound/items/modsuit/rigstep_heavy.ogg')

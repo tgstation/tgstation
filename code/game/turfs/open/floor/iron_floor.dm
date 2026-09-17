@@ -306,7 +306,6 @@
 	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/iron/recharge_floor
-	desc = "This tile possesses a purely aesthetic indent and cable port. Often used to denote where a piece of machinery is supposed to stand or be parked."
 	icon_state = "recharge_floor"
 	base_icon_state = "recharge_floor"
 	floor_tile = /obj/item/stack/tile/iron/recharge_floor

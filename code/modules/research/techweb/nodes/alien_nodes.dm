@@ -18,7 +18,7 @@
 		/obj/item/circular_saw/alien,
 		/obj/item/crowbar/abductor,
 		/obj/item/gun/energy/alien,
-		/obj/item/gun/energy/shrink_ray,
+		/obj/item/gun/energy/recharge/shrink_ray,
 		/obj/item/hemostat/alien,
 		/obj/item/melee/baton/abductor,
 		/obj/item/multitool/abductor,
@@ -53,7 +53,7 @@
 	)
 	required_items_to_unlock = list(
 		/obj/item/crowbar/abductor,
-		/obj/item/gun/energy/shrink_ray,
+		/obj/item/gun/energy/recharge/shrink_ray,
 		/obj/item/melee/baton/abductor,
 		/obj/item/multitool/abductor,
 		/obj/item/screwdriver/abductor,
@@ -86,7 +86,7 @@
 		/obj/item/circular_saw/alien,
 		/obj/item/crowbar/abductor,
 		/obj/item/gun/energy/alien,
-		/obj/item/gun/energy/shrink_ray,
+		/obj/item/gun/energy/recharge/shrink_ray,
 		/obj/item/hemostat/alien,
 		/obj/item/melee/baton/abductor,
 		/obj/item/multitool/abductor,

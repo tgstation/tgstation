@@ -259,14 +259,12 @@
 		if(3)
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
-				if(!ismonkey(human) && !isjellyperson(human))
+				if(!HAS_TRAIT(human, TRAIT_LESSER_HUMANOID) && !isjellyperson(human))
 					human.set_species(/datum/species/jelly/slime)
 
 /datum/disease/transformation/slime/do_disease_transformation(mob/living/affected_mob)
-	if(affected_mob.client && ishuman(affected_mob)) // if they are a human who's not a monkey and are sentient, then let them have the old fun
-		var/mob/living/carbon/human/human = affected_mob
-		if(!ismonkey(human))
-			new_form = /mob/living/basic/slime/random
+	if(affected_mob.client &&!HAS_TRAIT(affected_mob, TRAIT_LESSER_HUMANOID)) // if they are a human who's not a monkey and are sentient, then let them have the old fun
+		new_form = /mob/living/basic/slime/random
 	return ..()
 
 /datum/disease/transformation/corgi

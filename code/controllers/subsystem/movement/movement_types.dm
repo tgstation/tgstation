@@ -421,6 +421,8 @@
 
 /datum/move_loop/has_target/jps/Destroy()
 	avoid = null
+	// Pending pathfinds share this list so we need to clear it to release their callbacks to us
+	on_finish_callbacks.Cut()
 	on_finish_callbacks = null
 	return ..()
 
@@ -757,6 +759,9 @@
 
 /datum/move_loop/has_target/move_towards/proc/handle_move(source, atom/OldLoc, Dir, Forced = FALSE)
 	SIGNAL_HANDLER
+	if(QDELETED(src))
+		return
+
 	if(moving.loc != moving_towards && home) //If we didn't go where we should have, update slope to account for the deviation
 		update_slope()
 
@@ -777,6 +782,8 @@
 **/
 /datum/move_loop/has_target/move_towards/proc/update_slope()
 	SIGNAL_HANDLER
+	if(QDELETED(src))
+		return
 
 	//You'll notice this is rise over run, except we flip the formula upside down depending on the larger number
 	//This is so we never move more then one tile at once

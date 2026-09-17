@@ -16,7 +16,7 @@
 /mob/living/brain/update_stat()
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
-	if(health > HEALTH_THRESHOLD_DEAD)
+	if(health > dead_threshold)
 		return
 	if(stat != DEAD)
 		death()

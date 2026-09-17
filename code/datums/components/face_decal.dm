@@ -40,6 +40,7 @@
 			return
 		bodypart_overlay = new()
 		bodypart_overlay.set_layers(layers)
+		bodypart_overlay.offset_location = UPPER_BODY
 		if(carbon_parent.bodyshape & BODYSHAPE_SNOUTED) //stupid, but external organ bodytypes are not stored on the limb
 			bodypart_overlay.icon_state = "[icon_state]_lizard"
 		else if(my_head.bodyshape & BODYSHAPE_MONKEY)

@@ -18,7 +18,6 @@
 	attack_verb_simple = "punch"
 	attack_sound = 'sound/items/weapons/punch1.ogg'
 	melee_attack_cooldown = 1.2 SECONDS
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
 	speak_emote = list("announces")
 
 	unsuitable_atmos_damage = 0
@@ -30,8 +29,6 @@
 	gold_core_spawnable = HOSTILE_SPAWN
 	greyscale_config = /datum/greyscale_config/garden_gnome
 	ai_controller = /datum/ai_controller/basic_controller/garden_gnome
-	/// The damage resistence when sinked into the ground
-	var/resistance_when_sinked = list(BRUTE = 0.5, BURN = 0.5, TOX = 1, STAMINA = 0, OXY = 1)
 	/// Realistically weighted list of usual gnome hat colours
 	var/static/list/gnome_hat_colours = list(
 		COLOR_GNOME_RED_ONE = 9,
@@ -108,9 +105,15 @@
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_SHOE)
 	AddComponent(/datum/component/ai_retaliate_advanced, retaliate_callback)
 	AddComponent(/datum/component/swarming)
-	AddComponent(/datum/component/ground_sinking, target_icon_state = icon_state, outline_colour = chosen_hat_colour, damage_res_sinked = resistance_when_sinked)
+	AddComponent(/datum/component/ground_sinking, target_icon_state = icon_state, outline_colour = chosen_hat_colour, sink_callback = CALLBACK(src, PROC_REF(toggle_sink_damage_res)))
 	AddComponent(/datum/component/caltrop, min_damage = 5, max_damage = 10, paralyze_duration = 1 SECONDS, flags = CALTROP_BYPASS_SHOES)
 	add_traits(list(TRAIT_SPACEWALK, TRAIT_VENTCRAWLER_ALWAYS), INNATE_TRAIT)
+
+///Apply extra damage resistances when sunk in the ground.
+/mob/living/basic/garden_gnome/proc/toggle_sink_damage_res(has_sunk)
+	MODIFY_PHYSIOLOGY(src, BRUTE, has_sunk ? 0.5 : 2)
+	MODIFY_PHYSIOLOGY(src, BURN, has_sunk ? 0.5 : 2)
+	MODIFY_PHYSIOLOGY(src, STAMINA, has_sunk ? 0.1 : 10)
 
 /mob/living/basic/garden_gnome/proc/apply_colour()
 	if(!greyscale_config)

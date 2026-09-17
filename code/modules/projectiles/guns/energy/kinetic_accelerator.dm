@@ -432,7 +432,7 @@
 		if(istype(modkit_upgrade, src))
 			new_recharge_time += modkit_upgrade.modifier
 
-	return new_recharge_time
+	return max(new_recharge_time, 0)
 
 /obj/item/borg/upgrade/modkit/cooldown/install(obj/item/gun/energy/recharge/kinetic_accelerator/KA, mob/user)
 	. = ..()

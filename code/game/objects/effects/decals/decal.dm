@@ -21,10 +21,6 @@
 	AddElement(/datum/element/connect_loc, decal_move_connections)
 	AddElement(/datum/element/force_move_pulled)
 
-/obj/effect/decal/Destroy(force)
-	RemoveElement(/datum/element/connect_loc, decal_move_connections)
-	return ..()
-
 /obj/effect/decal/blob_act(obj/structure/blob/B)
 	if(B && B.loc == loc)
 		qdel(src)

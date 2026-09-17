@@ -106,6 +106,7 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 			var/qdeld_at = oldest_packet[GC_QUEUE_ITEM_GCD_DESTROYED]
 
 			oldest_packet_creation = min(qdeld_at, oldest_packet_creation)
+			oldest_packet = null
 
 		//If we've found a packet that got del'd later then we finished, then all our shit has been processed
 		//That said, if there are any pending hard deletes you may NOT sleep, we gotta handle that shit

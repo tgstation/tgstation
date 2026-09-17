@@ -612,7 +612,7 @@
 		// Breath has more than 0 moles of gas.
 		// Route gases through mask filter if breather is wearing one.
 		var/obj/item/clothing/mask/worn_mask = breather.get_item_by_slot(ITEM_SLOT_MASK)
-		if(istype(worn_mask) && (worn_mask.clothing_flags & GAS_FILTERING) && worn_mask.has_filter)
+		if(istype(worn_mask) && worn_mask.has_filter)
 			breath = worn_mask.consume_filter(breath)
 	// Breath has 0 moles of gas, and we can breathe space
 	else if(HAS_TRAIT(breather, TRAIT_NO_BREATHLESS_DAMAGE))

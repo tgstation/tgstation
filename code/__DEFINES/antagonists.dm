@@ -155,7 +155,7 @@
 /// - Must be a human (type, not species)
 /// - Skeletons cannot be husked (they are snowflaked instead of having a trait)
 /// - Monkeys are monkeys, not quite human (balance reasons)
-#define IS_VALID_GHOUL_MOB(mob) (ishuman(mob) && !isskeleton(mob) && !ismonkey(mob))
+#define IS_VALID_GHOUL_MOB(mob) (ishuman(mob) && !isskeleton(mob) && !HAS_TRAIT(mob, TRAIT_LESSER_HUMANOID))
 
 /// Forces the blob to place the core where they currently are, ignoring any checks.
 #define BLOB_FORCE_PLACEMENT -1

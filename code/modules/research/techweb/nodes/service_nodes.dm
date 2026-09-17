@@ -39,6 +39,7 @@
 		/datum/design/entertainment_radio,
 		/datum/design/rdd,
 		/datum/design/board/photopcopier,
+		/datum/design/producepad,
 	)
 
 /datum/techweb_node/sanitation
