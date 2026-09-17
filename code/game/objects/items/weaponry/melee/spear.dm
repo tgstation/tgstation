@@ -5,6 +5,7 @@
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "spearglass0"
+	inhand_icon_state = "spearglass0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	icon_angle = -45
@@ -291,6 +292,7 @@
 /obj/item/spear/explosive
 	name = "explosive lance"
 	icon_state = "spearbomb0"
+	inhand_icon_state = "spearbomb0"
 	base_icon_state = "spearbomb"
 	icon_prefix = "spearbomb"
 	var/obj/item/grenade/explosive = null
@@ -380,6 +382,7 @@
 //MILITARY
 /obj/item/spear/military
 	icon_state = "military_spear0"
+	inhand_icon_state = "military_spear0"
 	base_icon_state = "military_spear0"
 	icon_prefix = "military_spear"
 	name = "military javelin"
@@ -412,6 +415,7 @@
 	desc = "An oversized multi-bladed spear designed to kill large hostile xenoforms such as space dragons or the creatures of Indecipheres. Capable of being launched from a ballista."
 	icon = 'icons/obj/weapons/48x.dmi'
 	icon_state = "speardragon0"
+	inhand_icon_state = "speardragon0"
 	icon_prefix = "speardragon"
 	base_icon_state = "speardragon"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
@@ -447,6 +451,7 @@
 	desc = "A half-finished giantslayer spear, needs to be thrown in lava to forge the metals to a killing edge."
 	icon = 'icons/obj/weapons/48x.dmi'
 	icon_state = "speardragonraw0"
+	inhand_icon_state = "speardragonraw0"
 	icon_prefix = "speardragonraw"
 	base_icon_state = "speardragonraw"
 	material_flags = MATERIAL_EFFECTS
@@ -477,6 +482,7 @@
 	name = "bone spear"
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
 	icon_state = "bone_spear0"
+	inhand_icon_state = "bone_spear0"
 	base_icon_state = "bone_spear0"
 	icon_prefix = "bone_spear"
 	throwforce = 22
@@ -500,6 +506,7 @@
  */
 /obj/item/spear/bamboospear //Blatant imitation of spear, but all natural.
 	icon_state = "bamboo_spear0"
+	inhand_icon_state = "bamboo_spear0"
 	base_icon_state = "bamboo_spear0"
 	icon_prefix = "bamboo_spear"
 	name = "bamboo spear"
@@ -528,6 +535,7 @@
 	name = "\improper Sky Bulge"
 	desc = "A legendary stick with a very pointy tip. Takes you to the skies!"
 	icon_state = "dragoonpole0"
+	inhand_icon_state = "dragoonpole0"
 	icon_prefix = "dragoonpole"
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "gores", "lances")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "gore", "lance")
