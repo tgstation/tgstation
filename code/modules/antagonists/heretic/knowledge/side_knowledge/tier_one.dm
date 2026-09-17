@@ -380,7 +380,7 @@
 		While worn on the head, they will also stabilize those in critical condition. \
 		Either usage will eventually sap the poppy of its power, and it will wither away."
 	transmute_text = "Transmute a poppy and a sling of at least four gauze."
-	gain_text = "\"In Flander's fields, the poppies grow \
+	gain_text = "\"In Flanders fields, the poppies grow \
 		/ Between the crosses, row on row. \
 		/ That mark our place; and in the sky, \
 		/ The larks, still bravely singing, fly \
