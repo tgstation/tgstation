@@ -1542,7 +1542,6 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 	var/target_name
 
 /obj/effect/mapping_helpers/sticker_placer/Initialize(mapload)
-	. = ..()
 	var/turf/target_turf = get_turf(src)
 	for(var/atom/atom_on_turf as anything in target_turf.get_all_contents())
 		if(atom_on_turf == src)
@@ -1562,8 +1561,8 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 			null, \
 			sticker.examine_text, \
 		)
-	return INITIALIZE_HINT_QDEL
-
+		return INITIALIZE_HINT_QDEL
+	return ..()
 /***
  * Used to prevent things from teleporting on (but not off) the turf through most means that do not call do_teleport() with the forced arg set to TRUE.
  * The trait is removed if the turf is changed, so you should only keep it on small sections with indestructible turfs, ideally corners surrounded by
