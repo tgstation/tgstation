@@ -387,7 +387,7 @@
 /obj/item/assembly/relic/proc/dimensional_shift(mob/user)
 	var/new_theme_path = pick(subtypesof(/datum/dimension_theme))
 	var/datum/dimension_theme/shifter = SSmaterials.dimensional_themes[new_theme_path]
-	for(var/turf/shiftee in range(1, src))
+	for(var/turf/shiftee in range(1, get_turf(src)))
 		shifter.apply_theme(shiftee, show_effect = TRUE)
 	// prevent *total* spam conversion
 	activation_cooldown += 2 SECONDS
