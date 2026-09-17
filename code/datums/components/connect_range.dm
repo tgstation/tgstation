@@ -83,10 +83,7 @@
 			turfs = list()
 			return
 
-	//Only register/unregister turf signals if it's moved to a new turf.
-	if(current_turf == get_turf(old_loc))
-		unregister_signals(old_loc, null)
-		return
+	// Reconcile subscriptions even on the same turf: the container may have changed.
 	var/list/old_turfs = turfs
 	turfs = RANGE_TURFS(range, current_turf)
 	unregister_signals(old_loc, old_turfs - turfs)
