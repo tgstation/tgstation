@@ -402,6 +402,10 @@
 	default = 64
 	min_val = 0
 
+/datum/config_entry/number/relicmobcap
+	default = 64
+	min_val = 0
+
 /datum/config_entry/number/maxfine
 	default = 1000
 	min_val = 0

@@ -126,9 +126,12 @@
 /// Throws a corgi somewhere
 /obj/item/assembly/relic/proc/corgi_cannon(mob/user)
 	playsound(src, SFX_SPARKS, rand(25,50), TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	var/mob/living/basic/pet/dog/corgi/sad_corgi = new(get_turf(src))
-	sad_corgi.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, PROC_REF(throw_smoke), sad_corgi))
-	warn_admins(user, "Corgi Cannon", FALSE)
+	var/mob/living/basic/pet/dog/corgi/sad_corgi = relic_mob_spawn(/mob/living/basic/pet/dog/corgi)
+	if(sad_corgi)
+		sad_corgi.throw_at(pick(oview(10,user)), 10, rand(3,8), callback = CALLBACK(src, PROC_REF(throw_smoke), sad_corgi))
+		warn_admins(user, "Corgi Cannon", FALSE)
+	else
+		to_chat(user, span_notice("[src] vibrates a bit, but nothing happens."))
 
 /// Spawns cleaning foam
 /obj/item/assembly/relic/proc/cleaning_foam(mob/user)
@@ -158,9 +161,6 @@
 
 /// Summon a bunch of random animals, some of which are dangerous
 /obj/item/assembly/relic/proc/summon_animals(mob/user)
-	var/message = span_danger("[src] begins to shake, and in the distance the sound of rampaging animals arises!")
-	visible_message(message)
-	to_chat(user, message)
 	var/static/list/valid_animals = list(
 		/mob/living/basic/bear,
 		/mob/living/basic/bee,
@@ -175,20 +175,23 @@
 		/mob/living/basic/pet/dog/pug,
 		/mob/living/basic/pet/fox,
 	)
+	var/actually_spawned = 0
 	for(var/counter in 1 to rand(1, 25))
 		var/animal_spawn = pick(valid_animals)
-		var/mob/living/animal = new animal_spawn(get_turf(src))
-		ADD_TRAIT(animal, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
-	warn_admins(user, "Mass Mob Spawn")
-	if(prob(60))
-		relic_message(span_warning("[src] falls apart!"))
-		deconstruct(FALSE)
+		var/mob/living/animal = relic_mob_spawn(animal_spawn)
+		if(animal)
+			actually_spawned++
+	var/message = actually_spawned ? span_danger("[src] begins to shake, and in the distance the sound of rampaging animals arises!") : span_warning("[src] begins to shake, but nothing happens...")
+	visible_message(message)
+	to_chat(user, message)
+	if(actually_spawned)
+		warn_admins(user, "Mass Mob Spawn")
+		if(prob(60))
+			relic_message(span_warning("[src] falls apart!"))
+			deconstruct(FALSE)
 
 /// Version of summon_animals that spawns mostly lavaland monsters
 /obj/item/assembly/relic/proc/summon_animals_monsters(mob/user)
-	var/message = span_danger("[src] begins to shake, and in the distance the sound of roaring arises!")
-	visible_message(message)
-	to_chat(user, message)
 	var/static/list/valid_monsters = list(
 		/mob/living/basic/construct/artificer/hostile,
 		/mob/living/basic/construct/juggernaut/hostile,
@@ -209,14 +212,20 @@
 		/mob/living/basic/raptor/white,
 		/mob/living/basic/raptor/yellow,
 	)
+	var/actually_spawned = 0
 	for(var/counter in 1 to rand(3, 9))
 		var/animal_spawn = pick(valid_monsters)
-		var/mob/living/animal = new animal_spawn(get_turf(src))
-		ADD_TRAIT(animal, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
-	warn_admins(user, "Mass Mob Spawn (Monster)")
-	if(prob(80))
-		relic_message(span_warning("[src] falls apart!"))
-		deconstruct(FALSE)
+		var/mob/living/animal = relic_mob_spawn(animal_spawn)
+		if(animal)
+			actually_spawned++
+	var/message = actually_spawned ? span_danger("[src] begins to shake, and in the distance the sound of roaring arises!") : span_warning("[src] begins to shake, but nothing happens...")
+	visible_message(message)
+	to_chat(user, message)
+	if(actually_spawned)
+		warn_admins(user, "Mass Mob Spawn (Monster)")
+		if(prob(80))
+			relic_message(span_warning("[src] falls apart!"))
+			deconstruct(FALSE)
 
 /// Spawns a bunch of mimics of the relic which also can spawn relics, but despawn shortly
 /obj/item/assembly/relic/proc/rapid_self_dupe(mob/user)
@@ -645,6 +654,14 @@
 		message_admins("[relic_type] relic activated by [ADMIN_LOOKUPFLW(user)] in [ADMIN_VERBOSEJMP(location)]")
 	log_game(log_msg)
 	investigate_log(log_msg, "experimentor")
+
+/obj/item/assembly/relic/proc/relic_mob_spawn(mob_type)
+	if(length(SSmobs.relicmobs) >= CONFIG_GET(number/relicmobcap))
+		return null
+	var/mob/living/spawned = new mob_type(get_turf(src))
+	ADD_TRAIT(spawned, TRAIT_SPAWNED_MOB, INNATE_TRAIT)
+	SSmobs.register_relic_mob(spawned)
+	return spawned
 
 // Subtypes that spawn revealed, primarily for debug/testing/badmin purposes
 /obj/item/assembly/relic/revealed
