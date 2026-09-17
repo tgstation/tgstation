@@ -36649,7 +36649,7 @@
 /obj/structure/rack,
 /obj/item/poster/random_official,
 /obj/effect/spawner/random/maintenance,
-/obj/item/relic,
+/obj/item/assembly/relic,
 /turf/open/floor/plating,
 /area/station/maintenance/department/medical/morgue)
 "kxp" = (
@@ -48027,7 +48027,7 @@
 /area/station/commons/storage/primary)
 "nFG" = (
 /obj/structure/table,
-/obj/item/relic,
+/obj/item/assembly/relic,
 /obj/effect/spawner/random/maintenance,
 /obj/item/screwdriver,
 /obj/effect/decal/cleanable/cobweb/cobweb2,
