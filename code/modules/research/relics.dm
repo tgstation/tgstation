@@ -240,6 +240,8 @@
 	addtimer(CALLBACK(src, PROC_REF(blow_up), user), rand(3.5 SECONDS, 10 SECONDS))
 
 /obj/item/assembly/relic/proc/blow_up(mob/user)
+	if(user && (get(src, /mob/living) != user))
+		return
 	visible_message(span_notice("\The [src]'s top opens, releasing a powerful blast!"))
 	explosion(src, heavy_impact_range = rand(1,5), light_impact_range = rand(1,5), flame_range = 2, flash_range = rand(1,5), adminlog = TRUE)
 	warn_admins(user, "Explosion")
