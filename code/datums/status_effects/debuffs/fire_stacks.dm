@@ -298,10 +298,10 @@
 	overlays |= created_overlay
 	overlays |= source.make_fire_emissive(created_overlay)
 
-#define WET_STACKS_MINIMUM_VFX 3
 #define WET_STACKS_DAMP 3
 #define WET_STACKS_DRIPPING 7.5
 #define WET_STACKS_SOAKED 15
+#define WET_STACKS_MINIMUM_VFX WET_STACKS_DAMP
 
 /datum/status_effect/fire_handler/wet_stacks
 	id = "wet_stacks"
@@ -343,7 +343,7 @@
 
 /datum/status_effect/fire_handler/wet_stacks/get_examine_text(mob/examiner)
 	if(stacks <= WET_STACKS_DAMP)
-		return "[owner.p_Their()] skin seem[owner.p_s()] lightly damp."
+		return "[owner.p_They()] seem[owner.p_s()] damp."
 	else if(stacks >= WET_STACKS_SOAKED)
 		return "[owner.p_They()] look[owner.p_s()] completely soaked."
 	else
