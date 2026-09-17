@@ -353,7 +353,7 @@
 
 		//body temperature
 		var/datum/species/targetspecies = humantarget.dna.species
-		var/disguised = !ishumanbasic(humantarget) && istype(humantarget.head, /obj/item/clothing/head/hooded/human_head) && istype(humantarget.wear_suit, /obj/item/clothing/suit/hooded/bloated_human)
+		var/disguised = !ishumanbasic(humantarget) && HAS_TRAIT(humantarget, TRAIT_HUMAN_DISGUISE)
 		var/species_name = "[disguised ? "\"[/datum/species/human::name]\"" : targetspecies.name][mutant ? "-derived mutant" : ""]"
 
 		render_list += "<span class='info ml-1'>Species: [species_name]</span><br>"

@@ -41,15 +41,13 @@
 	return get_generic_humanoid_static_appearance()
 
 /mob/living/carbon/human/proc/setup_mood()
-	if (CONFIG_GET(flag/disable_human_mood))
-		return
 	mob_mood = new /datum/mood(src)
 
 /mob/living/carbon/human/dummy/get_unconscious_appearance()
 	return null
 
 /mob/living/carbon/human/dummy/setup_mood()
-	return
+	mob_mood = new /datum/mood/dummy(src)
 
 /// This proc is for holding effects applied when a mob is missing certain organs
 /// It is called very, very early in human init because all humans innately spawn with no organs and gain them during init
