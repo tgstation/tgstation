@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes fish food missing their lefthand icon, and boxcutter should show its inhand icon now, as well as a whole bunch of other random items that were not linked up with their existing inhand icon states"
