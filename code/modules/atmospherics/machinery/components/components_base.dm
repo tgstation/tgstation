@@ -185,9 +185,16 @@
 	return returned_air
 
 /obj/machinery/atmospherics/components/pipeline_expansion(datum/pipeline/reference)
-	if(reference)
-		return list(nodes[parents.Find(reference)])
-	return ..()
+	if(!reference)
+		return ..()
+	var/port = parents.Find(reference)
+	if(port)
+		return list(nodes[port])
+	// no port means another pipeline took our port while this one waited to expand somehow
+	reference.other_atmos_machines -= src
+	reference.require_custom_reconcilation -= src
+	reference.other_airs -= airs
+	return list()
 
 /obj/machinery/atmospherics/components/set_pipenet(datum/pipeline/reference, obj/machinery/atmospherics/target_component)
 	parents[nodes.Find(target_component)] = reference

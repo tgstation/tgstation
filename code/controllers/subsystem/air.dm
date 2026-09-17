@@ -422,11 +422,14 @@ SUBSYSTEM_DEF(air)
 			var/datum/pipeline/linepipe = pack[SSAIR_REBUILD_PIPELINE]
 			var/list/border = pack[SSAIR_REBUILD_QUEUE]
 			expand_pipeline(linepipe, border)
-			if(state != SS_RUNNING) //expand_pipeline can fail a tick check, we shouldn't let things get too fucky here
+			if(length(border)) //expand_pipeline failed a tick check before finishing, resume it next fire
 				return
 
 			linepipe.building = FALSE
 			queue.len--
+			// machinery was claimed by another pipeline before we could expand somehow, check if it has no pipes or machines left we can just delete it
+			if(!length(linepipe.members) && !length(linepipe.other_atmos_machines))
+				qdel(linepipe)
 			if (MC_TICK_CHECK)
 				return
 
