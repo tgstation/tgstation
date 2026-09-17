@@ -345,16 +345,16 @@
 	if(stacks <= WET_STACKS_DAMP)
 		return "[owner.p_Their()] skin seem[owner.p_s()] lightly damp."
 	else if(stacks >= WET_STACKS_SOAKED)
-		return "[owner.p_They()] is completely soaked."
+		return "[owner.p_They()] looks completely soaked."
 	else
 		return "[owner.p_They()] appear[owner.p_s()] to be dripping wet."
 
 /datum/status_effect/fire_handler/wet_stacks/cache_stacks()
 	. = ..()
 	if(stacks > WET_STACKS_MINIMUM_VFX)
-		owner?.add_shared_particles(/particles/droplets)
+		owner.add_shared_particles(/particles/droplets)
 	if(stacks <= WET_STACKS_MINIMUM_VFX)
-		owner?.remove_shared_particles(/particles/droplets)
+		owner.remove_shared_particles(/particles/droplets)
 
 /datum/status_effect/fire_handler/wet_stacks/tick(seconds_between_ticks)
 	var/decay = HAS_TRAIT(owner, TRAIT_WET_FOR_LONGER) ? -0.035 : -0.5
