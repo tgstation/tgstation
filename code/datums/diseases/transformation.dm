@@ -145,7 +145,7 @@
 				affected_mob.adjust_confusion(10 SECONDS)
 		if(4)
 			if(SPT_PROB(1.5, seconds_per_tick))
-				affected_mob.say(pick("Eeee!", "Eeek, ook ook!", "Eee-eeek!", "Ungh, ungh."), forced = "jungle fever")
+				INVOKE_ASYNC(affected_mob, TYPE_PROC_REF(/atom/movable, say), pick("Eeee!", "Eeek, ook ook!", "Eee-eeek!", "Ungh, ungh."), forced = "jungle fever")
 
 /datum/disease/transformation/robot
 	name = "Robotic Transformation"
@@ -177,13 +177,13 @@
 	switch(stage)
 		if(3)
 			if (SPT_PROB(4, seconds_per_tick))
-				affected_mob.say(pick("beep, beep!", "Beep, boop", "Boop...bop"), forced = "robotic transformation")
+				INVOKE_ASYNC(affected_mob, TYPE_PROC_REF(/atom/movable, say), pick("beep, beep!", "Beep, boop", "Boop...bop"), forced = "robotic transformation")
 			if (SPT_PROB(2, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
 				affected_mob.Unconscious(40)
 		if(4)
 			if (SPT_PROB(10, seconds_per_tick))
-				affected_mob.say(pick("beep, beep!", "Boop bop boop beep.", "I wwwaaannntt tttoo dddiiieeee...", "kkkiiiill mmme"), forced = "robotic transformation")
+				INVOKE_ASYNC(affected_mob, TYPE_PROC_REF(/atom/movable, say), pick("beep, beep!", "Boop bop boop beep.", "I wwwaaannntt tttoo dddiiieeee...", "kkkiiiill mmme"), forced = "robotic transformation")
 
 
 /datum/disease/transformation/xeno
@@ -225,7 +225,7 @@
 				affected_mob.Unconscious(40)
 		if(4)
 			if(SPT_PROB(10, seconds_per_tick))
-				affected_mob.say(pick("Going to... devour you...", "Hsssshhhhh!", "You look delicious."), forced = "xenomorph transformation")
+				INVOKE_ASYNC(affected_mob, TYPE_PROC_REF(/atom/movable, say), pick("Going to... devour you...", "Hsssshhhhh!", "You look delicious."), forced = "xenomorph transformation")
 
 
 /datum/disease/transformation/slime
@@ -290,10 +290,10 @@
 	switch(stage)
 		if(3)
 			if (SPT_PROB(4, seconds_per_tick))
-				affected_mob.say(pick("Woof!", "YAP"), forced = "corgi transformation")
+				INVOKE_ASYNC(affected_mob, TYPE_PROC_REF(/atom/movable, say), pick("Woof!", "YAP"), forced = "corgi transformation")
 		if(4)
 			if (SPT_PROB(10, seconds_per_tick))
-				affected_mob.say(pick("AUUUUUU", "Bark!"), forced = "corgi transformation")
+				INVOKE_ASYNC(affected_mob, TYPE_PROC_REF(/atom/movable, say), pick("AUUUUUU", "Bark!"), forced = "corgi transformation")
 
 
 /datum/disease/transformation/morph
