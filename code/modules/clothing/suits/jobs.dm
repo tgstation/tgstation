@@ -35,7 +35,7 @@
 
 /obj/item/clothing/suit/apron/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "apron_worn")
-	return replace_icon_legs(base_icon, legs)
+	return apply_icon_mask(base_icon, LEGS_MASK, legs)
 
 /datum/armor/suit_apron
 	bio = 50
@@ -55,6 +55,7 @@
 	post_init_icon_state = "overalls"
 	inhand_icon_state = ""
 	body_parts_covered = CHEST|GROIN|LEGS
+	supports_variations_flags = CLOTHING_CERULEAN_VARIATION
 	gender = PLURAL
 	species_exception = list(/datum/species/golem)
 	greyscale_config = /datum/greyscale_config/overalls
@@ -149,6 +150,7 @@
 	desc = "A hard-boiled private investigator's dark trenchcoat."
 	icon_state = "noir_trenchcoat"
 	inhand_icon_state = null
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/jacket/det_suit
 	name = "brown blazer jacket"
@@ -200,10 +202,10 @@
 	resistance_flags = NONE
 	species_exception = list(/datum/species/golem)
 
-/obj/item/clothing/suit/hazardvest/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
+/obj/item/clothing/suit/hazardvest/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
+		. += emissive_appearance(bodyshape & BODYSHAPE_CERULEAN ? CERULEAN_SUIT_FILE : icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
 /obj/item/clothing/suit/hazardvest/press // Variant used by the Curator
 	name = "press hazard vest"
@@ -426,6 +428,7 @@
 	icon_state = "atmos_overalls"
 	inhand_icon_state = ""
 	body_parts_covered = CHEST|GROIN|LEGS
+	supports_variations_flags = CLOTHING_CERULEAN_VARIATION
 	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/atmos_overalls
 	species_exception = list(/datum/species/golem)
@@ -448,7 +451,7 @@
 
 /obj/item/clothing/suit/atmos_overalls/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "apron_worn")
-	return replace_icon_legs(base_icon, legs)
+	return apply_icon_mask(base_icon, LEGS_MASK, legs)
 
 /datum/armor/atmos_overalls
 	fire = 100

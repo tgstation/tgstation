@@ -145,6 +145,12 @@
 	damage_falloff_tile = -0.45
 	wound_falloff_tile = -2.5
 
+/obj/projectile/beam/scatter/weak
+	icon_state = "purple_laser"
+	impact_effect_type = /obj/effect/temp_visual/impact_effect/purple_laser
+	light_color = COLOR_STRONG_VIOLET
+	damage = 6
+
 /obj/projectile/beam/scatter/pathetic
 	name = "extremely weak laser pellet"
 	damage = 1

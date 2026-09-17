@@ -1529,7 +1529,7 @@
 /turf/open/misc/asteroid/airless,
 /area/deathmatch)
 "TP" = (
-/obj/effect/mob_spawn/corpse/human/skeleton,
+/obj/effect/mob_spawn/corpse/human/skeleton/cerulean,
 /turf/open/misc/asteroid/airless,
 /area/deathmatch)
 "Uy" = (

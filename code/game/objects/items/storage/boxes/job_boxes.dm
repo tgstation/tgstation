@@ -55,13 +55,24 @@
 	new /obj/item/radio/off(src)
 
 /obj/item/storage/box/survival/proc/wardrobe_removal()
-	if(!isplasmaman(loc)) //We need to specially fill the box with plasmaman gear, since it's intended for one
-		return
+	var/mob/living/carbon/wearer = loc
+	if(!wearer)
+		CRASH("wardrobe_removal was called by SSwardrobe without a /mob/living/carbon to check for. Received [loc] ([loc.type]).")
 	var/obj/item/mask = locate(mask_type) in src
 	var/obj/item/internals = locate(internal_type) in src
-	new /obj/item/tank/internals/plasmaman/belt(src)
-	qdel(mask) // Get rid of the items that shouldn't be
-	qdel(internals)
+//	var/obj/item/medipen = locate(medipen_type) in src
+	switch(wearer.dna.species.id)
+		if(SPECIES_PLASMAMAN)
+			qdel(internals)
+			qdel(mask)
+			new /obj/item/tank/internals/plasmaman/belt(src)
+		if(SPECIES_CERULEAN)
+			var/obj/item/organ/lungs/lungs = wearer.get_organ_slot(ORGAN_SLOT_LUNGS)
+			if (!(/datum/gas/water_vapor in lungs?.breathe_always))
+				return
+			qdel(mask)
+			qdel(internals)
+			new /obj/item/reagent_containers/cup/glass/waterbottle(src)
 
 // Prisoners don't get an escape hook
 /obj/item/storage/box/survival/prisoner

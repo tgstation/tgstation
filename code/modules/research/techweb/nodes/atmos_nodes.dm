@@ -30,6 +30,7 @@
 		/datum/design/board/pump,
 		/datum/design/emergency_oxygen,
 		/datum/design/emergency_oxygen_engi,
+		/datum/design/cerulean_vaporizer,
 		/datum/design/board/turbine_computer,
 		/datum/design/turbine_part_compressor,
 		/datum/design/turbine_part_rotor,

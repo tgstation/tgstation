@@ -49,6 +49,10 @@
 /datum/armor/clothing_shoes
 	bio = 50
 
+/obj/item/clothing/shoes/Initialize(mapload)
+	. = ..()
+	RegisterSignals(src, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED), PROC_REF(oh_what_a_neat_hat))
+
 /obj/item/clothing/shoes/suicide_act(mob/living/user)
 	if(prob(50))
 		user.visible_message(span_suicide("[user] begins fastening \the [src] up waaay too tightly! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -235,6 +239,8 @@
 	var/mob/living/carbon/human/our_guy = loc
 	if(!istype(our_guy)) // are they REALLY /our guy/?
 		return
+	if(slot_flags == ITEM_SLOT_HEAD) //where else would it go? on your feet? thats a trip hazard.
+		return
 
 	if(tied == SHOES_KNOTTED)
 		our_guy.Paralyze(5)
@@ -341,3 +347,22 @@
 			return "fastening"
 
 	return "doing something mysterious to"
+
+/obj/item/clothing/shoes/attach_clothing_traits(traits)
+	if(slot_flags == ITEM_SLOT_FEET)
+		return ..()
+
+/// allows Ceruleans to wear shoes as a hat. this is never going to get in, but i think it should because its funny
+/obj/item/clothing/shoes/proc/oh_what_a_neat_hat(obj/item, mob/living/carbon/user)
+	SIGNAL_HANDLER
+
+	if (isnull(user))
+		return
+	if (user.bodyshape & BODYSHAPE_CERULEAN)
+		slot_flags = ITEM_SLOT_HEAD
+		worn_y_offset = 28
+		return
+	if (slot_flags != initial(slot_flags))
+		slot_flags = initial(slot_flags)
+	if (worn_y_offset != initial(worn_y_offset))
+		worn_y_offset = initial(worn_y_offset)
