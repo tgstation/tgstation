@@ -1,0 +1,8 @@
+author: "Redwizz99"
+delete-after: True
+changes:
+  - rscadd: "bluspace scrubber and gas receiver machinery"
+  - rscadd: "bluespace scrubber and gas receiver circuits"
+  - rscadd: "adds bluespace scubber and gas receiver to tech node"
+  - rscadd: "sprites for bluespace scrubber and gas receiver"
+  - rscadd: "you can disconnect scrubbers linked to receiver, just use wirecutter"
