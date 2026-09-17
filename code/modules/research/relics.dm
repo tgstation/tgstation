@@ -118,7 +118,7 @@
 
 /// Helper to show a message to people around the relic
 /obj/item/assembly/relic/proc/relic_message(message)
-	var/atom/message_source = get(src, mob/living) || src
+	var/atom/message_source = get(src, /mob/living) || src
 	message_source.visible_message(message)
 
 // Artefact Powers \\
