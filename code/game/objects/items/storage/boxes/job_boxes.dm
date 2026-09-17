@@ -31,6 +31,7 @@
 /obj/item/storage/box/survival/PopulateContents()
 	if(crafted)
 		return
+
 	if(!isnull(mask_type))
 		new mask_type(src)
 
@@ -54,14 +55,23 @@
 	..() // we want the survival stuff too.
 	new /obj/item/radio/off(src)
 
-/obj/item/storage/box/survival/proc/wardrobe_removal()
-	if(!isplasmaman(loc)) //We need to specially fill the box with plasmaman gear, since it's intended for one
+/obj/item/storage/box/survival/proc/apply_overrides()
+	if(!ishuman(loc))
 		return
-	var/obj/item/mask = locate(mask_type) in src
-	var/obj/item/internals = locate(internal_type) in src
-	new /obj/item/tank/internals/plasmaman/belt(src)
-	qdel(mask) // Get rid of the items that shouldn't be
-	qdel(internals)
+	var/mob/living/carbon/human/owner = loc
+	if(!length(owner.dna.species.survival_box_overrides))
+		return
+	var/list/items_to_clear = list(
+		locate(mask_type) in src,
+		locate(internal_type) in src,
+		locate(medipen_type) in src,
+	)
+	QDEL_LIST(items_to_clear)
+	for(var/survival_types in owner.dna.species.survival_box_overrides)
+		var/obj/item_to_add = owner.dna.species.survival_box_overrides[survival_types]
+		if(isnull(item_to_add))
+			continue
+		new item_to_add(src)
 
 // Prisoners don't get an escape hook
 /obj/item/storage/box/survival/prisoner
