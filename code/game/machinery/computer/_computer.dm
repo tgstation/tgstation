@@ -86,10 +86,10 @@
 
 /obj/machinery/computer/power_change()
 	. = ..()
-	if(machine_stat & NOPOWER)
+	if(machine_stat & (NOPOWER|BROKEN))
 		set_light(0)
 	else
-		set_light(brightness_on, l_dir = dir, l_angle=90)
+		set_light(l_range=MINIMUM_USEFUL_LIGHT_RANGE, l_power=brightness_on, l_dir=dir, l_angle=90)
 
 /obj/machinery/computer/screwdriver_act(mob/living/user, obj/item/I)
 	if(..())
