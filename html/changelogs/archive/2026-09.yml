@@ -267,3 +267,21 @@
   - rscadd: adds bluespace scubber and gas receiver to tech node
   - rscadd: sprites for bluespace scrubber and gas receiver
   - rscadd: you can disconnect scrubbers linked to receiver, just use wirecutter
+2026-09-18:
+  Melbert:
+  - rscdel: 'Heretic: "Crimson Cleave" spell removed.'
+  - rscadd: 'Heretic: Adds "The Crimson Cleaver", a tier four knowledge. A weapon
+      that can cleave and lifesteal. Non-heretics are capable of wielding it, at the
+      expense of their sanity and mind...'
+  - rscadd: 'Heretic: Adds "Rhythmic Lodestone", a tier one knowledge, which lets
+      the heretic track any imbued object with their living heart.'
+  - rscadd: 'Heretic: Adds "Blessed Poppy", a tier one knowledge, which heals wounds
+      and stabilizes mobs. Can be used by non-heretics.'
+  tontyGH:
+  - refactor: Man-Machine Interfaces and positronic brains have been rewritten internally.
+      Please report any unexpected behaviour.
+  vinylspiders:
+  - bugfix: fixes fish food missing their lefthand icon, and boxcutter should show
+      its inhand icon now, as well as a whole bunch of other random items that were
+      not linked up with their existing inhand icon states
+  - rscadd: Adds two new pinup bunny contraband posters
