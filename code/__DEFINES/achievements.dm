@@ -45,6 +45,7 @@
 #define MEDAL_COSMOS_ASCENSION "Cosmos"
 #define MEDAL_LOCK_ASCENSION "Knock"
 #define MEDAL_MOON_ASCENSION "Moon"
+#define MEDAL_GAZER_SIPPY "Welcoming Gift"
 #define MEDAL_TOOLBOX_SOUL "Toolsoul"
 #define MEDAL_HOT_DAMN "Hot Damn!"
 #define MEDAL_CAYENNE_DISK "Very Important Piscis"
