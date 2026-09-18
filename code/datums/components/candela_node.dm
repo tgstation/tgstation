@@ -28,7 +28,7 @@
 		deployer.set_network(network, src)
 
 /datum/component/candela_node/Destroy(force)
-	set_network(null, update = FALSE)
+	set_network(null)
 	return ..()
 
 /datum/component/candela_node/RegisterWithParent()
@@ -77,6 +77,9 @@
 	if (network == new_network)
 		return
 
+	if(network)
+		UnregisterSignal(network, COMSIG_CANDELA_NETWORK_POWER_CHANGED)
+
 	. = network
 	if (network && !separating && !merging)
 		network.remove_node(src)
@@ -86,9 +89,11 @@
 
 	if (network)
 		network.add_node(src, merging = merging)
+		RegisterSignal(network, COMSIG_CANDELA_NETWORK_POWER_CHANGED, PROC_REF(on_network_power_changed))
 
 	if (update)
 		update_connections()
+		update_blockers()
 
 /// Refresh visual connections of our node
 /// - keep_links: Forces a redraw of all beams rather than a full recalculation of all links
@@ -141,6 +146,16 @@
 			emissive_alpha = (network.powered & CANDELA_NETWORK_BOOSTED) ? 255 : 192,
 			alpha = (network.powered & CANDELA_NETWORK_POWERED) ? 192 : 128
 		)
+
+/datum/component/candela_node/proc/on_network_power_changed(datum/mining_beacon_network/source, ...)
+	SIGNAL_HANDLER
+	update_blockers()
+
+/datum/component/candela_node/proc/update_blockers()
+	if(network?.powered & CANDELA_NETWORK_POWERED)
+		parent.AddElement(/datum/element/block_mining_mob_respawns, 5)
+	else
+		parent.RemoveElement(/datum/element/block_mining_mob_respawns, 5)
 
 // Costly, but should not be called often (if at all) as all nodes should be anchored
 /datum/component/candela_node/proc/on_moved(atom/movable/source, atom/old_loc, dir, forced, list/old_locs)
