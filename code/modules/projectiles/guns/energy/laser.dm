@@ -220,7 +220,7 @@
 		Shame, really, or it would be perfect..."
 	icon_state = "cshotgunc"
 	worn_icon = 'icons/mob/clothing/belt.dmi'
-	worn_icon_state = "compact_shotty"
+	worn_icon_state = "clshotgun"
 	w_class = WEIGHT_CLASS_NORMAL
 	pin = /obj/item/firing_pin
 	recoil = 1
