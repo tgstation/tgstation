@@ -3,8 +3,8 @@ import { Button, Input, Section } from 'tgui-core/components';
 import { classes } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 type Data = {
   emoji_list: Emoji[];
@@ -15,7 +15,7 @@ type Emoji = {
 };
 
 export const NtosEmojipedia = (props) => {
-  const { data } = useBackend<Data>();
+  const { data } = useNtos<Data>();
   const { emoji_list = [] } = data;
   const [filter, setFilter] = useState('');
 
