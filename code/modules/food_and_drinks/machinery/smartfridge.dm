@@ -219,8 +219,10 @@
 
 /obj/machinery/smartfridge/update_appearance(updates=ALL)
 	. = ..()
-
-	set_light((!(machine_stat & BROKEN) && powered()) ? MINIMUM_USEFUL_LIGHT_RANGE : 0)
+	if((machine_stat & BROKEN) || !powered())
+		set_light(0)
+	else
+		set_light(l_range=light_range, l_power=light_power, l_color=LIGHT_COLOR_ELECTRIC_CYAN)
 
 /obj/machinery/smartfridge/update_icon_state()
 	icon_state = "[base_icon_state]"
@@ -454,7 +456,8 @@
 	base_icon_state = "dehydrator"
 	contents_overlay_icon = "contents"
 	circuit = /obj/item/circuitboard/machine/dehydrator
-	light_power = 0.5
+	light_power = 0
+	light_range = 0
 	base_build_path = /obj/machinery/smartfridge/drying //should really be seeing this without admin fuckery.
 	has_emissive = FALSE
 	can_atmos_pass = ATMOS_PASS_YES

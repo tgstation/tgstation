@@ -15,7 +15,7 @@
 				set_light_color(LIGHT_COLOR_BLUE)
 			if(APC_FULLY_CHARGED)
 				set_light_color(LIGHT_COLOR_GREEN)
-		set_light(light_on_range)
+		set_light(l_range=light_on_range, l_power=0.7, l_dir=REVERSE_DIR(dir), l_angle=90)
 		return
 
 	set_light(0)
