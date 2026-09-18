@@ -60,12 +60,6 @@
 	integer = FALSE
 	min_val = 0
 
-/// Determines how fast traitors scale in general.
-/datum/config_entry/number/traitor_scaling_multiplier
-	default = 1
-	integer = FALSE
-	min_val = 0.01
-
 /datum/config_entry/number/changeling_scaling_coeff //how much does the amount of players get divided by to determine changelings
 	default = 6
 	integer = FALSE

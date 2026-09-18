@@ -7,7 +7,6 @@ import {
   Section,
   Stack,
   Tabs,
-  Tooltip,
 } from 'tgui-core/components';
 import { fetchRetry } from 'tgui-core/http';
 import type { BooleanLike } from 'tgui-core/react';
@@ -15,11 +14,6 @@ import type { BooleanLike } from 'tgui-core/react';
 import { resolveAsset } from '../../assets';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import {
-  calculateDangerLevel,
-  calculateProgression,
-  dangerLevelsTooltip,
-} from './calculateDangerLevel';
 import { GenericUplink, type Item } from './GenericUplink';
 import { PrimaryObjectiveMenu } from './PrimaryObjectiveMenu';
 
@@ -37,7 +31,6 @@ type UplinkItem = {
   stock_key: string;
   restricted_roles: string;
   restricted_species: string;
-  progression_minimum: number;
   population_minimum: number;
   cost_override_string: string;
   lock_other_purchases: BooleanLike;
@@ -46,10 +39,8 @@ type UplinkItem = {
 
 type UplinkData = {
   telecrystals: number;
-  progression_points: number;
   joined_population?: number;
   lockable: BooleanLike;
-  current_progression_scaling: number;
   uplink_flag: number;
   assigned_role: string;
   assigned_species: string;
@@ -61,8 +52,6 @@ type UplinkData = {
   current_stock: {
     [key: string]: number;
   };
-
-  has_progression: BooleanLike;
   primary_objectives: {
     [key: number]: string;
   };
@@ -120,15 +109,6 @@ export class Uplink extends Component<any, UplinkState> {
     const uplinkSpecies = data.assigned_species;
 
     const uplinkData = await fetchServerData;
-    uplinkData.items = uplinkData.items.sort((a, b) => {
-      if (a.progression_minimum < b.progression_minimum) {
-        return -1;
-      }
-      if (a.progression_minimum > b.progression_minimum) {
-        return 1;
-      }
-      return 0;
-    });
 
     const availableCategories: string[] = [];
     uplinkData.items = uplinkData.items.filter((value) => {
@@ -172,12 +152,9 @@ export class Uplink extends Component<any, UplinkState> {
     const { data, act } = useBackend<UplinkData>();
     const {
       telecrystals,
-      progression_points,
       joined_population,
       primary_objectives,
       can_renegotiate,
-      has_progression,
-      current_progression_scaling,
       extra_purchasable,
       extra_purchasable_stock,
       current_stock,
@@ -197,8 +174,6 @@ export class Uplink extends Component<any, UplinkState> {
     }
     for (let i = 0; i < itemsToAdd.length; i++) {
       const item = itemsToAdd[i];
-      const hasEnoughProgression =
-        progression_points >= item.progression_minimum;
       const hasEnoughPop =
         !joined_population || joined_population >= item.population_minimum;
 
@@ -229,21 +204,7 @@ export class Uplink extends Component<any, UplinkState> {
               null}
           </>
         ),
-        cost: (
-          <Box>
-            {item.cost_override_string || `${item.cost} TC`}
-            {has_progression ? (
-              <>
-                ,&nbsp;
-                <Box as="span">
-                  {calculateDangerLevel(item.progression_minimum, true)}
-                </Box>
-              </>
-            ) : (
-              ''
-            )}
-          </Box>
-        ),
+        cost: <Box>{item.cost_override_string || `${item.cost} TC`}</Box>,
         population_tooltip:
           'This item is not cleared for operations performed against stations crewed by fewer than ' +
           item.population_minimum +
@@ -252,7 +213,6 @@ export class Uplink extends Component<any, UplinkState> {
         disabled:
           !canBuy ||
           !hasEnoughPop ||
-          (has_progression && !hasEnoughProgression) ||
           (item.lock_other_purchases && purchased_items > 0),
         extraData: {
           ref: item.ref,
@@ -269,33 +229,6 @@ export class Uplink extends Component<any, UplinkState> {
             <Stack.Item>
               <Section fitted>
                 <Stack fill>
-                  {!!has_progression && (
-                    <Stack.Item p="4px">
-                      <Tooltip
-                        content={
-                          <Box>
-                            <Box>
-                              <Box>Your current level of threat.</Box> Threat
-                              determines what items you can purchase.&nbsp;
-                              <Box mt={0.5}>
-                                {/* A minute in deciseconds */}
-                                Threat passively increases by{' '}
-                                <Box color="green" as="span">
-                                  {calculateProgression(
-                                    current_progression_scaling,
-                                  )}
-                                </Box>
-                                &nbsp;every minute
-                              </Box>
-                              {dangerLevelsTooltip}
-                            </Box>
-                          </Box>
-                        }
-                      >
-                        {calculateDangerLevel(progression_points, false)}
-                      </Tooltip>
-                    </Stack.Item>
-                  )}
                   {!!primary_objectives && (
                     <Stack.Item grow={1}>
                       <Tabs fluid>

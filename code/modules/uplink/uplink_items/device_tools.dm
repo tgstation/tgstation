@@ -142,13 +142,6 @@
 	restricted = TRUE
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
 
-/datum/uplink_item/device_tools/frame/spawn_item(spawn_path, mob/user, datum/uplink_handler/uplink_handler, atom/movable/source)
-	. = ..()
-	var/obj/item/disk/computer/virus/frame/target = .
-	if(!target)
-		return
-	target.current_progression = uplink_handler.progression_points
-
 /datum/uplink_item/device_tools/failsafe
 	name = "Failsafe Uplink Code"
 	desc = "When entered the uplink will self-destruct immediately."
@@ -260,7 +253,6 @@
 			active gravitational singularities or tesla balls towards it. This will not work when the engine is still \
 			in containment. Because of its size, it cannot be carried. Ordering this \
 			sends you a small beacon that will teleport the larger beacon to your location upon activation."
-	progression_minimum = 20 MINUTES
 	item = /obj/item/sbeacondrop
 	cost = 4
 	surplus = 0 // not while there isnt one on any station
@@ -271,7 +263,6 @@
 	desc = "When screwed to wiring attached to a power grid and activated, this large device lights up and places excessive \
 			load on the grid, causing a station-wide blackout. The sink is large and cannot be stored in most \
 			traditional bags and boxes. Caution: Will explode if the powernet contains sufficient amounts of energy."
-	progression_minimum = 20 MINUTES
 	item = /obj/item/powersink
 	cost = 11
 	limited_stock = 1
