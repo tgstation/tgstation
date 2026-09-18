@@ -315,7 +315,7 @@
 			unconscious_duration = 2 SECONDS
 		if(EXPLODE_LIGHT)
 			max_wounds = 2
-			wound_prob = 35
+			wound_prob = 30
 			wound_severities -= WOUND_SEVERITY_CRITICAL
 			brute_loss = 30
 			soundbang_intensity = SOUNDBANG_STRONG
@@ -324,20 +324,20 @@
 			clothes_damage = 50
 			knockdown_duration = 16 SECONDS
 
-	Unconscious(unconscious_duration) // Do this first, before wounds, so we DONT get wound text.
+	Unconscious(unconscious_duration) // do this first, before wounds, so we DONT get wound text
 	var/list/all_bodyparts = get_bodyparts()
 	for(var/obj/item/bodypart/BP as anything in all_bodyparts)
 		var/bp_bomb_armor = getarmor(BP.body_zone, BOMB)
-		var/bomb_multi = clamp(bp_bomb_armor/166.6, 0, 1) // Scales linearly up to 0.6 at 100 armor
+		var/bomb_multi = clamp(bp_bomb_armor/166.6, 0, 1) // scales linearly up to 0.6 at 100 armor
 		apply_damage(round(brute_loss / all_bodyparts.len, DAMAGE_PRECISION), BRUTE, (bomb_multi * 100), wound_bonus = CANT_WOUND)
 		apply_damage(round(burn_loss  / all_bodyparts.len, DAMAGE_PRECISION), BURN, (bomb_multi * 100), wound_bonus = CANT_WOUND)
-		/* Damage split among body parts leaves wounding extremely unlikely outside of devastating explosions against miners
-		so instead we do our own wounds */
-		if(prob(wound_prob * (1 - bomb_multi)) && (severity >= EXPLODE_HEAVY || !bomb_armor)) // chance to do anything at all
-			if(prob(dismember_prob) && BP.body_zone != BODY_ZONE_HEAD && BP.body_zone != BODY_ZONE_CHEST) // chance to dismember instead of wound
+		// damage split among body parts leaves wounding extremely unlikely so instead we do our own wounds
+		if(prob(wound_prob * (1 - bomb_multi))) // chance to do anything at all
+			if(prob(dismember_prob) && BP.body_zone != BODY_ZONE_HEAD && BP.body_zone != BODY_ZONE_CHEST && (severity >= EXPLODE_HEAVY || !bp_bomb_armor)) // chance to dismember instead of wound
 				if(!prob((bomb_armor - 50) * 2)) // bomb armor has a second chance to stop dismemberment if it's over 50
-					BP.dismember()
-					BP.receive_damage(INFINITY, wound_bonus = CANT_WOUND) // capped by proc
+					// only apply damage if the dismember works otherwise nodismember makes you extremely fragile to explosions
+					if(BP.dismember())
+						BP.receive_damage(INFINITY, wound_bonus = CANT_WOUND) // capped by proc
 			else if(!prob(getarmor(BP.body_zone, WOUND))) // time to roll for wounds
 				var/wound_type = pick_weight(list(WOUND_SLASH = 1, WOUND_BLUNT = 2, WOUND_BURN = 2))
 				var/wound_power = pick(wound_severities)
