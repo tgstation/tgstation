@@ -58,14 +58,13 @@
 	UnregisterSignal(src, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON)
 	make_immersed(movable)
 
-/**
- * turf/Initialize() calls Entered on its contents too, however
- * we need to wait for movables that still need to be initialized
- * before we add the immerse element.
- */
 /turf/open/water/Entered(atom/movable/arrived)
 	. = ..()
 	make_immersed(arrived)
+
+/turf/open/water/initialize_occupant(atom/movable/occupant)
+	. = ..()
+	make_immersed(occupant)
 
 ///Makes this turf immersable, return true if we actually did anything so child procs don't have to repeat our checks
 /turf/open/water/proc/make_immersed(atom/movable/triggering_atom)
@@ -257,6 +256,13 @@
 	if(!(arrived.flags_1 & INITIALIZED_1)) // If arrived hasn't finished its own Initialize() yet (e.g. during its own creation during mapload), on_atom_inited() will already call enter_hot_spring() for it once
 		return
 	enter_hot_spring(arrived)
+
+/turf/open/water/hot_spring/initialize_occupant(atom/movable/occupant)
+	. = ..()
+	// Uninitialized occupants use on_atom_inited() once their own initialization finishes.
+	if(!(occupant.flags_1 & INITIALIZED_1))
+		return
+	enter_hot_spring(occupant)
 
 /turf/open/water/hot_spring/on_atom_inited(datum/source, atom/movable/movable)
 	enter_hot_spring(movable)
