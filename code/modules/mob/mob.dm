@@ -613,10 +613,10 @@ GAME_VERB_CONTEXT(/mob, examinate, "Examine", "", null, /atom)
 	if(.)
 		return
 	if(href_list["run_examinate"])
-		var/atom/examined_atom = locate(href_list["run_examinate"])
-		//run_examinate only early returns this check for turfs for some reason.
-		if(examined_atom in view(client ? client.view : world.view, src))
-			run_examinate(examined_atom, force_examinate_more = TRUE)
+		var/atom/examined_atom = locate(href_list["run_examinate"]) in view(client ? client.view : world.view, src)
+		if(isnull(examined_atom))
+			return
+		run_examinate(examined_atom, force_examinate_more = TRUE)
 
 /mob/proc/blind_examine_check(atom/examined_thing)
 	return TRUE //The non-living will always succeed at this check.
