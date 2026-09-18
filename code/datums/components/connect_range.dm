@@ -34,8 +34,8 @@
 	return ..()
 
 /datum/component/connect_range/InheritComponent(datum/component/component, original, atom/tracked, list/connections, range, works_in_containers)
-	// Not equivalent. Checks if they are not the same list via shallow comparison.
-	if(!compare_list(src.connections, connections))
+	// Both the signal names and their handlers must match.
+	if(!deep_compare_list(src.connections, connections))
 		stack_trace("connect_range component attached to [parent] tried to inherit another connect_range component with different connections")
 		return
 	if(src.tracked != tracked)
