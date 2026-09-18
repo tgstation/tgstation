@@ -13,8 +13,13 @@
 	. = ..()
 	cached_texture_icon = icon(texture_icon, texture_icon_state)
 
-/datum/bodypart_texture/proc/modify_bodypart_appearance(image/appearance)
-	appearance.add_filter("bodypart_texture_[texture_icon_state]", 1, layering_filter(icon = cached_texture_icon, blend_mode = BLEND_INSET_OVERLAY))
+/datum/bodypart_texture/proc/modify_bodypart_appearance(image/appearance, overlay_flags)
+	var/filter_width = (overlay_flags & LIMB_OVERLAY_WIDE_ICON) ? 96 : 32
+	var/filter_height = (overlay_flags & LIMB_OVERLAY_TALL_ICON) ? 96 : 32
+
+	for(var/i in 0 to filter_width step 32)
+		for(var/j in 0 to filter_height step 32)
+			appearance.add_filter("bodypart_texture_[texture_icon_state]_[i]/[j]", 1, layering_filter(cached_texture_icon, x = i, y = j, blend_mode = BLEND_INSET_OVERLAY))
 
 /datum/bodypart_texture/proc/icon_render_key()
 	return type
@@ -40,7 +45,7 @@
 	texture_icon = 'icons/mob/human/textures.dmi'
 	overlay_priority = BODYPART_OVERLAY_CSS_SUICIDE
 
-/datum/bodypart_texture/checkered/modify_bodypart_appearance(image/appearance)
+/datum/bodypart_texture/checkered/modify_bodypart_appearance(image/appearance, overlay_flags)
 	. = ..()
 	appearance.color = COLOR_WHITE
 
@@ -75,24 +80,24 @@
 	cached_displacement_icon = icon(displacement_icon, displacement_icon_state)
 	cached_lighting_icon = icon(lighting_icon, lighting_icon_state)
 
-/datum/bodypart_texture/mesh/modify_bodypart_appearance(image/appearance)
-	if(!should_modify(appearance))
-		return
+/datum/bodypart_texture/mesh/modify_bodypart_appearance(image/appearance, overlay_flags)
+	if(overlay_flags & LIMB_OVERLAY_CORE)
+		return // the bodypart itself doesn't need mesh
 
 	. = ..()
-	// adds a displacement map so the outline lines up with the bottom of the sprite
-	appearance.add_filter("displacement", 2, displacement_map_filter(cached_displacement_icon, size = 1))
 	// adds an outline so the texture doesn't end abruptly
 	appearance.add_filter("outline", 3, outline_filter(1, outline_color, OUTLINE_SHARP))
-	// adds a bit of lighting to make the texture look less flat
-	appearance.add_filter("lighting", 4, layering_filter(cached_lighting_icon, blend_mode = BLEND_MULTIPLY))
 	// forces white (blends better with the texture)
 	appearance.color = COLOR_WHITE
 
-/datum/bodypart_texture/mesh/proc/should_modify(image/appearance)
-	// only apply to other mutant bodyparts. we filter by layer which is *absolutely* not ideal, but hey, work with what you got
-	var/appearance_layer = abs(appearance.layer)
-	return appearance_layer == BODY_ADJ_LAYER || appearance_layer == BODY_FRONT_LAYER || appearance_layer == BODY_BEHIND_LAYER
+	var/filter_width = (overlay_flags & LIMB_OVERLAY_WIDE_ICON) ? 96 : 32
+	var/filter_height = (overlay_flags & LIMB_OVERLAY_TALL_ICON) ? 96 : 32
+	for(var/i in 0 to filter_width step 32)
+		for(var/j in 0 to filter_height step 32)
+			// adds a displacement map so the outline lines up with the bottom of the sprite
+			appearance.add_filter("displacement_[i]/[j]", 2, displacement_map_filter(cached_displacement_icon, x = i, y = j, size = 1))
+			// adds a bit of lighting to make the texture look less flat
+			appearance.add_filter("lighting_[i]/[j]", 4, layering_filter(cached_lighting_icon, x = i, y = j, blend_mode = BLEND_MULTIPLY))
 
 /datum/bodypart_texture/mesh/black
 	texture_icon_state = "mesh_mask"
