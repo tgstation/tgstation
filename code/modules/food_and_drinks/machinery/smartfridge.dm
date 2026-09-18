@@ -10,7 +10,7 @@
 	layer = BELOW_OBJ_LAYER
 	density = TRUE
 	circuit = /obj/item/circuitboard/machine/smartfridge
-	light_power = 3.5
+	light_power = 1
 	light_range = MINIMUM_USEFUL_LIGHT_RANGE
 	integrity_failure = 0.5
 	can_atmos_pass = ATMOS_PASS_NO
@@ -222,7 +222,7 @@
 	if((machine_stat & BROKEN) || !powered())
 		set_light(0)
 	else
-		set_light(l_range=light_range, l_power=light_power)
+		set_light(l_range=light_range, l_power=light_power, l_color=LIGHT_COLOR_ELECTRIC_CYAN)
 
 /obj/machinery/smartfridge/update_icon_state()
 	icon_state = "[base_icon_state]"
