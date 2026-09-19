@@ -116,4 +116,10 @@
 /datum/storage/rped/bluespace
 	max_specific_storage = WEIGHT_CLASS_GIGANTIC
 
+///Smaller cyborg variant
+
+/datum/storage/rped/compact
+	max_slots = 50
+	max_total_storage = 100
+
 #undef MAX_STACK_PICKUP

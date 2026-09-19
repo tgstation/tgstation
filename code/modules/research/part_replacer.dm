@@ -195,6 +195,6 @@
 	storage_type = /datum/storage/rped/bluespace
 
 /obj/item/storage/part_replacer/cyborg/small
-	desc = "Special mechanical module made to store, sort, and apply standard machine parts. This one has as much space as your regular RPED"
+	desc = "Special mechanical module made to store, sort, and apply standard machine parts. This one has even less space than your regular RPED"
 	icon_state = "RPED"
-	storage_type = /datum/storage/rped
+	storage_type = /datum/storage/rped/compact
