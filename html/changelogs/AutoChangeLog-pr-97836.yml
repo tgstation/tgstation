@@ -1,0 +1,5 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - rscadd: "Relics are now assemblies - they can be attached to wires and connected to other assemblies"
+  - bugfix: "The dimensional shifting relic effect's cooldown now increases as it was intended to"
