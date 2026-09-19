@@ -68,7 +68,6 @@
 	// Overlay for borg hat
 	var/mutable_appearance/hat_overlay
 
-	var/sight_mode = 0
 	hud_possible = list(ANTAG_HUD, DIAG_STAT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_TRACK_HUD)
 
 	// Modules (tool slots)

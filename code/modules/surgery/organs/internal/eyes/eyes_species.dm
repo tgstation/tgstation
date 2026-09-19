@@ -19,7 +19,7 @@
 /obj/item/organ/eyes/alien
 	name = "alien eyes"
 	desc = "It turned out they had them after all!"
-	sight_flags = SEE_MOBS
+	organ_traits = list(TRAIT_THERMAL_VISION)
 	color_cutoffs = list(25, 5, 42)
 
 /obj/item/organ/eyes/golem

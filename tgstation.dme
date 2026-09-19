@@ -2986,7 +2986,6 @@
 #include "code\game\objects\items\robot\robot_upgrades.dm"
 #include "code\game\objects\items\robot\items\food.dm"
 #include "code\game\objects\items\robot\items\generic.dm"
-#include "code\game\objects\items\robot\items\hud.dm"
 #include "code\game\objects\items\robot\items\hypo.dm"
 #include "code\game\objects\items\robot\items\janitor.dm"
 #include "code\game\objects\items\robot\items\storage.dm"
