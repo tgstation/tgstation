@@ -54,7 +54,7 @@
 ///Bluespace RPED. Allows exchanging parts from a distance & through cameras
 /obj/item/storage/part_replacer/bluespace
 	name = "bluespace rapid part exchange device"
-	desc = "A version of the RPED that allows for replacement of parts and scanning from a distance, along with higher capacity for parts."
+	desc = "A version of the RPED that allows for replacement of parts and scanning from a distance, along with the ability to store larger components."
 	icon_state = "BS_RPED"
 	inhand_icon_state = "BS_RPED"
 	w_class = WEIGHT_CLASS_NORMAL
@@ -187,7 +187,7 @@
 ///Cyborg variant
 /obj/item/storage/part_replacer/cyborg
 	name = "rapid part exchange device"
-	desc = "Special mechanical module made to store, sort, and apply standard machine parts. This one has an extra large compartment for more parts."
+	desc = "Special mechanical module made to store, sort, and apply standard machine parts. This one has an extra large compartment for oversized components."
 	icon_state = "borgrped"
 	inhand_icon_state = "RPED"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
@@ -195,6 +195,6 @@
 	storage_type = /datum/storage/rped/bluespace
 
 /obj/item/storage/part_replacer/cyborg/small
-	desc = "Special mechanical module made to store, sort, and apply standard machine parts. This one has as much space, as your regular RPED"
+	desc = "Special mechanical module made to store, sort, and apply standard machine parts. This one has as much space as your regular RPED"
 	icon_state = "RPED"
 	storage_type = /datum/storage/rped
