@@ -55,28 +55,13 @@
 	. = ..()
 	if (!(slot & ITEM_SLOT_EYES))
 		return
-	RegisterSignal(user, COMSIG_CARBON_UPDATE_SIGHT_CUTOFFS, PROC_REF(update_wearer_sight))
-	if (vision_flags || invis_override || invis_view || !isnull(lighting_cutoff))
+	if (invis_override || invis_view || !isnull(lighting_cutoff))
 		user.update_sight()
 
 /obj/item/clothing/glasses/dropped(mob/living/user)
 	. = ..()
-	UnregisterSignal(user, COMSIG_CARBON_UPDATE_SIGHT_CUTOFFS)
-	if (vision_flags || invis_override || invis_view || !isnull(lighting_cutoff))
+	if (invis_override || invis_view || !isnull(lighting_cutoff))
 		user.update_sight()
-
-/obj/item/clothing/glasses/proc/update_wearer_sight(mob/living/carbon/source, list/new_sight_flags)
-	SIGNAL_HANDLER
-
-	new_sight_flags[1] |= vision_flags
-	if(invis_override)
-		source.set_invis_see(invis_override)
-	else
-		source.set_invis_see(min(invis_view, source.see_invisible))
-	if(!isnull(lighting_cutoff))
-		source.lighting_cutoff = max(source.lighting_cutoff, lighting_cutoff)
-	if(length(color_cutoffs))
-		source.lighting_color_cutoffs = blend_cutoff_colors(source.lighting_color_cutoffs, color_cutoffs)
 
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
