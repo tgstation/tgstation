@@ -138,14 +138,12 @@
 	if(update_parents_after_rebuild)
 		update_parents()
 
-/obj/machinery/atmospherics/components/get_rebuild_targets()
-	var/list/to_return = list()
-	for(var/i in 1 to device_type)
-		if(parents[i])
+/obj/machinery/atmospherics/components/get_rebuild_target()
+	for(var/port in 1 to device_type)
+		if(parents[port])
 			continue
-		parents[i] = new /datum/pipeline()
-		to_return += parents[i]
-	return to_return
+		parents[port] = new /datum/pipeline()
+		return parents[port]
 
 /**
  * Called by nullify_node(), used to remove the pipeline the component is attached to
@@ -187,9 +185,16 @@
 	return returned_air
 
 /obj/machinery/atmospherics/components/pipeline_expansion(datum/pipeline/reference)
-	if(reference)
-		return list(nodes[parents.Find(reference)])
-	return ..()
+	if(!reference)
+		return ..()
+	var/port = parents.Find(reference)
+	if(port)
+		return list(nodes[port])
+	// no port means another pipeline took our port while this one waited to expand somehow
+	reference.other_atmos_machines -= src
+	reference.require_custom_reconcilation -= src
+	reference.other_airs -= airs
+	return list()
 
 /obj/machinery/atmospherics/components/set_pipenet(datum/pipeline/reference, obj/machinery/atmospherics/target_component)
 	parents[nodes.Find(target_component)] = reference
