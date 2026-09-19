@@ -53,7 +53,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 
-	take_damage(100/severity , BRUTE, ENERGY, FALSE)
+	take_damage(150/severity, BRUTE, ENERGY, FALSE)
 
 /obj/structure/holosign/proc/attack_holosign(mob/living/user, list/modifiers)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
