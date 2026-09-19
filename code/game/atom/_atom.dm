@@ -600,9 +600,6 @@
 /atom/proc/wash(clean_types)
 	SHOULD_CALL_PARENT(TRUE)
 	. = SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, clean_types)
-	if(.)
-		return
-
 	// Basically "if has washable coloration"
 	if(length(atom_colours) >= WASHABLE_COLOUR_PRIORITY && atom_colours[WASHABLE_COLOUR_PRIORITY])
 		remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
