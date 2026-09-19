@@ -56,11 +56,13 @@
 	if (!(slot & ITEM_SLOT_EYES))
 		return
 	if (invis_override || invis_view || !isnull(lighting_cutoff))
+		//This call becomes redundant if thermal/meson/material (etc.) vision flags are present in clothing_traits, but, as of the time of this comment, it isn't really a problem.
 		user.update_sight()
 
 /obj/item/clothing/glasses/dropped(mob/living/user)
 	. = ..()
 	if (invis_override || invis_view || !isnull(lighting_cutoff))
+		//This call becomes redundant if thermal/meson/material (etc.) vision flags are present in clothing_traits, but, as of the time of this comment, it isn't really a problem.
 		user.update_sight()
 
 //called when thermal glasses are emped.
