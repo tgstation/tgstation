@@ -378,7 +378,7 @@
 		var/cables_or_cuffs = istype(handcuffed, /obj/item/restraints/handcuffs/cable) ? "restrained with cable" : "handcuffed"
 		. += span_warning("[t_He] [t_is] [icon2html(handcuffed, user)] [cables_or_cuffs]!")
 	//eyes
-	if(!(obscured_slots & HIDEEYES))
+	if(is_eyes_visible(requires_eyes = TRUE))
 		if(HAS_TRAIT(src, TRAIT_UNNATURAL_RED_GLOWY_EYES))
 			. += span_warning("<B>[t_His] eyes are glowing with an unnatural red aura!</B>")
 		else if(HAS_TRAIT(src, TRAIT_BLOODSHOT_EYES))
