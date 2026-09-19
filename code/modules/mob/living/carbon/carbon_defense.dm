@@ -29,28 +29,25 @@
 	if(eyes && eyes.pepperspray_protect)
 		return eyes
 
-/mob/living/carbon/is_eyes_visible(max_tint, max_flash_protection, requires_eyes = FALSE, check_flags = NONE)
+/mob/living/carbon/is_eyes_visible(max_tint, max_flash_protection, requires_eyes = FALSE, covered_check_flags = NONE)
 	if(obscured_slots & HIDEEYES)
 		return FALSE
 
 	if(requires_eyes && !get_organ_by_type(/obj/item/organ/eyes))
 		return FALSE
 
-	if(!isnull(max_tint))
+	if(!isnull(max_tint) || !isnull(max_flash_protection))
 		var/tint = 0
-		for (var/obj/item/clothing/clothing in get_equipped_items())
-			tint += clothing.tint
-		if(tint >= max_tint)
-			return FALSE
-
-	if(!isnull(max_flash_protection))
 		var/flash_protect = 0
-		for (var/obj/item/clothing/clothing in get_equipped_items())
+		for(var/obj/item/clothing/clothing in get_equipped_items())
+			tint += clothing.tint
 			flash_protect += clothing.flash_protect
-		if(flash_protect >= max_flash_protection)
+		if(!isnull(max_tint) && tint >= max_tint)
+			return FALSE
+		if(!isnull(max_tint) && flash_protect >= max_flash_protection)
 			return FALSE
 
-	if(check_flags && is_eyes_covered(check_flags))
+	if(covered_check_flags && is_eyes_covered(covered_check_flags))
 		return FALSE
 
 	return TRUE
