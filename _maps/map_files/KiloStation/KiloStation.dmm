@@ -43261,7 +43261,7 @@
 /obj/item/clothing/gloves/color/fyellow,
 /obj/item/flashlight,
 /obj/item/flashlight/flare,
-/obj/item/relic,
+/obj/item/assembly/relic,
 /obj/structure/sign/poster/contraband/random/directional/west,
 /obj/machinery/light/small/directional/south,
 /turf/open/floor/plating,
