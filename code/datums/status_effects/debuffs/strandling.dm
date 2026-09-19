@@ -18,7 +18,7 @@
 /datum/status_effect/strandling/on_remove()
 	UnregisterSignal(owner, list(COMSIG_CARBON_PRE_BREATHE, COMSIG_ATOM_TOOL_ACT(TOOL_WIRECUTTER), COMSIG_CARBON_PRE_MISC_HELP))
 
-/datum/status_effect/strandling/get_examine_text()
+/datum/status_effect/strandling/get_examine_text(mob/examiner)
 	return span_warning("[owner.p_They()] seem[owner.p_s()] to be being choked by some durathread strands. You may be able to <b>cut</b> them off.")
 
 /// Signal proc for [COMSIG_CARBON_PRE_BREATHE], causes losebreath whenever we're trying to breathe

@@ -43,7 +43,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/opened = FALSE
 	var/welded = FALSE
 	var/locked = FALSE
-	var/large = TRUE
 	var/wall_mounted = 0 //never solid (You can always pass over it)
 	var/breakout_time = 1200
 	var/message_cooldown
@@ -192,7 +191,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			take_contents()
 
 	if(sealed)
-		var/datum/gas_mixture/external_air = loc.return_air()
+		var/datum/gas_mixture/external_air = loc?.return_air()
 		if(external_air && is_maploaded)
 			internal_air = external_air.copy()
 		else
@@ -768,10 +767,10 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 			if("Personal") //only the player who swiped their id has access.
 				id_card = WEAKREF(card)
 				name = "[card.registered_name]'s locker"
-				desc += " It has been ID locked to [card.registered_name]."
+				desc = initial(desc) + " It has been ID locked to [card.registered_name]."
 			if("Job") //anyone who has the same access permissions as this id has access. Does NOT apply to the whole department.
 				name = "[card.assignment]'s locker"
-				desc += " It has been access locked to [card.assignment]s."
+				desc = initial(desc) + " It has been access locked to [card.assignment]s."
 				set_access(card.GetAccess())
 			if("None") //free for all
 				name = initial(name)
@@ -926,7 +925,12 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(user in contents)
 		return ITEM_INTERACT_BLOCKING
 
+
 	if(opened && istype(tool, cutting_tool)) // not all of them take welders
+		if(resistance_flags & INDESTRUCTIBLE)
+			to_chat(user, span_warning("You can't cut [src] apart!"))
+			return ITEM_INTERACT_BLOCKING
+
 		if(!tool.tool_start_check(user, amount=1))
 			return ITEM_INTERACT_BLOCKING
 
@@ -1082,8 +1086,7 @@ GAME_VERB_SRC(/obj/structure/closet, verb_toggleopen, view(1), "Toggle Open", nu
 	if(opened)
 		return
 	if(ismovable(loc))
-		user.changeNext_move(CLICK_CD_BREAKOUT)
-		user.last_special = world.time + CLICK_CD_BREAKOUT
+		user.change_next_special_move(CLICK_CD_BREAKOUT)
 		var/atom/movable/movable_parent = loc
 		movable_parent.relay_container_resist_act(user, src)
 		return
@@ -1094,8 +1097,7 @@ GAME_VERB_SRC(/obj/structure/closet, verb_toggleopen, view(1), "Toggle Open", nu
 	if(DOING_INTERACTION_WITH_TARGET(user, src))
 		return
 	//okay, so the closet is either welded or locked... resist!!!
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.change_next_special_move(CLICK_CD_BREAKOUT)
 	user.visible_message(span_warning("[src] begins to shake violently!"), \
 		span_notice("You lean on the back of [src] and start pushing the door open... (this will take about [DisplayTimeText(breakout_time)].)"), \
 		span_hear("You hear banging from [src]."))

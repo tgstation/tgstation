@@ -1,0 +1,1 @@
+/obj/structure/closet/crate/secure/owned : @DELETE

@@ -20,7 +20,7 @@
 	. = ..()
 	set_drunk_value(drunk_value)
 
-/datum/status_effect/inebriated/get_examine_text()
+/datum/status_effect/inebriated/get_examine_text(mob/examiner)
 	// Dead people don't look drunk
 	if(IS_DEAD_OR_FAKING(owner))
 		return null

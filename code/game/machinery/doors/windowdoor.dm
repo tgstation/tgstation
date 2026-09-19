@@ -353,11 +353,15 @@
 	add_atom_colour(NARSIE_WINDOW_COLOUR, FIXED_COLOUR_PRIORITY)
 
 /obj/machinery/door/window/rust_heretic_act()
+	if(HAS_TRAIT(src, TRAIT_RUSTY))
+		return FALSE
+
 	add_atom_colour(COLOR_RUSTED_GLASS, FIXED_COLOUR_PRIORITY)
 	AddElement(/datum/element/rust)
 	set_armor(/datum/armor/none)
 	take_damage(get_integrity() * 0.5)
 	modify_max_integrity(initial(max_integrity) * 0.2)
+	return TRUE
 
 /obj/machinery/door/window/should_atmos_process(datum/gas_mixture/air, exposed_temperature)
 	return (exposed_temperature > T0C + (reinf ? 1600 : 800))

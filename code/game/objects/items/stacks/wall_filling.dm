@@ -132,3 +132,29 @@ GLOBAL_LIST_EMPTY(wall_reskin_lists)
 	icon_state = "redpod-wall-fill"
 	desc = "A filling for a red dark shuttle wall. Quite the menacing vibe."
 	merge_type = /obj/item/stack/wall_filling/plastitanium/redpod
+
+
+///Window-fill. Same, but for windows.
+/obj/item/stack/wall_filling/plastitaniumglass
+	name = "plastitaniumglass window filling"
+	singular_name = "plastitanium window filler"
+	desc = "A filling for a standard plastitanium glass window."
+	icon_state = "plastitanium-window-fill"
+	inhand_icon_state = "sheet-plastitaniumglass"
+	mats_per_unit = list(/datum/material/alloy/plastitaniumglass=SHEET_MATERIAL_AMOUNT*2)
+	merge_type = /obj/item/stack/wall_filling/plastitaniumglass
+	made_from = /obj/item/stack/sheet/plastitaniumglass
+	wall_reskin_types = list(
+		/obj/item/stack/wall_filling/plastitaniumglass/basic,
+		/obj/item/stack/wall_filling/plastitaniumglass/pod,
+	)
+
+/obj/item/stack/wall_filling/plastitaniumglass/basic
+	merge_type = /obj/item/stack/wall_filling/plastitaniumglass/basic
+
+/obj/item/stack/wall_filling/plastitaniumglass/pod
+	name = "pod window filling"
+	singular_name = "pod window filler"
+	icon_state = "pod-window-fill"
+	desc = "A filling for a elegant yet formidable window. Mostly seen in hostile enviroments."
+	merge_type = /obj/item/stack/wall_filling/plastitaniumglass/pod

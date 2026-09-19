@@ -4,6 +4,15 @@ import { CONNECTION_LOST_AFTER } from './constants';
 
 export const roundRestartedAtAtom = atom<number | null>(null);
 
+/** Current job title of the player, as reported by the server */
+export const currentJobAtom = atom<string | null>(null);
+
+/** Name of the character the player is currently playing */
+export const currentCharacterAtom = atom<string | null>(null);
+
+/** Names of the player's saved characters */
+export const characterProfilesAtom = atom<string[]>([]);
+
 /**
  * Ticking clock atom. Only runs while something is subscribed to it.
  * (And only after we’ve had at least one ping, see connectionLostAtAtom.)

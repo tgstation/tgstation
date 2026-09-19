@@ -71,6 +71,7 @@ jobs:
           name: test_artifacts_${{ inputs.map }}_${{ inputs.major || env.BYOND_MAJOR }}_${{ inputs.minor || env.BYOND_MINOR }}
           path: data/screenshots_new/
           retention-days: 1
+          if-no-files-found: ignore
       - name: On test fail, write a step summary
         if: always() && steps.run_tests.outcome == 'failure'
         run: |

@@ -58,7 +58,7 @@
 /obj/item/weldingtool/Initialize(mapload)
 	. = ..()
 	if(IS_OVERLAY_LIGHT_SYSTEM(light_system))
-		middleman = new(src, "flashlight")
+		middleman = new(src, "weldingtool")
 		RegisterSignal(middleman, COMSIG_LIGHT_MIDDLEMAN_UPDATED, PROC_REF(light_updated))
 		middleman.being_overriding_light()
 	AddElement(/datum/element/update_icon_updates_onmob)

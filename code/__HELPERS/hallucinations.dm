@@ -66,6 +66,7 @@ GLOBAL_LIST_EMPTY(all_ongoing_hallucinations)
 		qdel(new_hallucination)
 		return
 
+	SEND_SIGNAL(src, COMSIG_LIVING_HALLUCINATING, new_hallucination)
 	investigate_log("was afflicted with a hallucination of type [hallucination_type] by: [hallucination_source]. \
 		([new_hallucination.feedback_details])", INVESTIGATE_HALLUCINATIONS)
 	return new_hallucination

@@ -34,13 +34,10 @@ SUBSYSTEM_DEF(pathfinder)
 		var/datum/pathfind/path = currentrun[length(currentrun)]
 		if(!path.search_step()) // Something's wrong
 			path.early_exit()
-			currentrun.len--
 			continue
 		if(MC_TICK_CHECK)
 			return
 		path.finished()
-		// Next please
-		currentrun.len--
 
 	// Go over our existing pathmaps, clear out the ones we aren't using
 	var/list/currentmaps = src.currentmaps

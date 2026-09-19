@@ -1019,6 +1019,10 @@
 	return trim?.assignment || assignment
 
 /// Returns the trim sechud icon state.
+/obj/item/card/id/proc/get_trim_sechud_icon()
+	return trim?.sechud_icon || DEFAULT_HUDS_DMI
+
+/// Returns the trim sechud icon state.
 /obj/item/card/id/proc/get_trim_sechud_icon_state()
 	return trim?.sechud_icon_state || SECHUD_UNKNOWN
 

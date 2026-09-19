@@ -23,7 +23,7 @@
 		amounts[i] = rand(1,5)
 
 /obj/machinery/abductor/gland_dispenser/ui_status(mob/user, datum/ui_state/state)
-	if(!isabductor(user) && !isobserver(user))
+	if(!HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_KNOWLEDGE) && !isobserver(user))
 		return UI_CLOSE
 	return ..()
 
@@ -61,15 +61,17 @@
 			Dispense(gland_id)
 			return TRUE
 
-/obj/machinery/abductor/gland_dispenser/attackby(obj/item/W, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(W, /obj/item/organ/heart/gland))
-		if(!user.transferItemToLoc(W, src))
-			return
-		for(var/i in 1 to gland_colors.len)
-			if(gland_types[i] == W.type)
-				amounts[i]++
-	else
-		return ..()
+/obj/machinery/abductor/gland_dispenser/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/organ/heart/gland))
+		return NONE
+
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+
+	for(var/slot in 1 to gland_colors.len)
+		if(gland_types[slot] == tool.type)
+			amounts[slot]++
+			return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/abductor/gland_dispenser/proc/Dispense(count)
 	if(amounts[count]>0)

@@ -32,24 +32,28 @@
 				positive_result = TRUE,\
 				use_large_steam_sprite = TRUE)
 
-/obj/item/food/pancakes/raw/attackby(obj/item/garnish, mob/living/user, list/modifiers, list/attack_modifiers)
+/obj/item/food/pancakes/raw/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(name != initial(name))// we already have additives
+		return ..()
+
 	var/newresult
-	if(istype(garnish, /obj/item/food/grown/berries))
+	if(istype(tool, /obj/item/food/grown/berries))
 		newresult = /obj/item/food/pancakes/blueberry
 		name = "raw blueberry pancake"
 		icon_state = "rawbbpancakes_1"
 		stack_name = "rawbbpancakes"
-	else if(istype(garnish, /obj/item/food/chocolatebar))
+	else if(istype(tool, /obj/item/food/chocolatebar))
 		newresult = /obj/item/food/pancakes/chocolatechip
 		name = "raw chocolate chip pancake"
 		icon_state = "rawccpancakes_1"
 		stack_name = "rawccpancakes"
-	else
+	if(!newresult)
 		return ..()
-	if(newresult)
-		qdel(garnish)
-		to_chat(user, span_notice("You add [garnish] to [src]."))
-		AddComponent(/datum/component/grillable, cook_result = newresult)
+
+	qdel(tool)
+	to_chat(user, span_notice("You add [tool] to [src]."))
+	AddComponent(/datum/component/grillable, cook_result = newresult)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/food/pancakes/raw/examine(mob/user)
 	. = ..()
@@ -119,31 +123,35 @@
 			ingredients_listed += "[ING.name], "
 		. += "It contains [contents.len?"[ingredients_listed]":"no ingredient, "]on top of a [initial(name)]."
 
-/obj/item/food/pancakes/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(istype(item, /obj/item/food/pancakes))
-		var/obj/item/food/pancakes/pancake = item
+/obj/item/food/pancakes/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/food/pancakes))
+		var/obj/item/food/pancakes/pancake = tool
 		if((contents.len >= PANCAKE_MAX_STACK) || ((pancake.contents.len + contents.len) > PANCAKE_MAX_STACK))
 			to_chat(user, span_warning("You can't add that many pancakes to [src]!"))
-		else
-			if(!user.transferItemToLoc(pancake, src))
-				return
-			to_chat(user, span_notice("You add the [pancake] to the [src]."))
-			pancake.name = initial(pancake.name)
-			contents += pancake
-			update_snack_overlays(pancake)
-			if (pancake.contents.len)
-				for(var/pancake_content in pancake.contents)
-					pancake = pancake_content
-					pancake.name = initial(pancake.name)
-					contents += pancake
-					update_snack_overlays(pancake)
-			pancake = item
-			pancake.contents.Cut()
-		return
-	else if(contents.len)
-		var/obj/O = contents[contents.len]
-		return O.attackby(item, user, modifiers)
-	..()
+			return ITEM_INTERACT_BLOCKING
+
+		if(!user.transferItemToLoc(pancake, src))
+			return ITEM_INTERACT_BLOCKING
+
+		to_chat(user, span_notice("You add the [pancake] to the [src]."))
+		pancake.name = initial(pancake.name)
+		contents += pancake
+		update_snack_overlays(pancake)
+		if (pancake.contents.len)
+			for(var/pancake_content in pancake.contents)
+				pancake = pancake_content
+				pancake.name = initial(pancake.name)
+				contents += pancake
+				update_snack_overlays(pancake)
+		pancake = tool
+		pancake.contents.Cut()
+		return ITEM_INTERACT_SUCCESS
+
+	if(contents.len)
+		var/obj/pancake = contents[contents.len]
+		return pancake.item_interaction(user, tool, modifiers)
+
+	return NONE
 
 /obj/item/food/pancakes/proc/update_snack_overlays(obj/item/food/pancakes/pancake)
 	var/mutable_appearance/pancake_visual = mutable_appearance(icon, "[pancake.stack_name]_[rand(1, 3)]")

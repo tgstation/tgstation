@@ -102,6 +102,7 @@
 		active_camera?.on_stop_watching(src)
 		var/obj/machinery/camera/selected_camera = locate(params["camera"]) in SScameras.cameras
 		active_camera = selected_camera
+		cam_screen.set_display(active_camera)
 
 		if(isnull(active_camera))
 			return TRUE
@@ -156,6 +157,7 @@
 	if(length(concurrent_users) == 0 && is_living)
 		active_camera?.on_stop_watching(src)
 		active_camera = null
+		cam_screen?.set_display(null)
 		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
 

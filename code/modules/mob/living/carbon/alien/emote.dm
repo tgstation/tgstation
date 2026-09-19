@@ -14,7 +14,6 @@
 	message_larva = "softly roars."
 	emote_type = EMOTE_AUDIBLE | EMOTE_VISIBLE
 	vary = TRUE
-
-/datum/emote/living/alien/roar/get_sound(mob/living/user)
-	if(isalienadult(user))
-		return 'sound/mobs/non-humanoids/hiss/hiss5.ogg'
+	sounds_by_mobtype = list(
+		/mob/living/carbon/alien/adult = 'sound/mobs/non-humanoids/hiss/hiss5.ogg',
+	)

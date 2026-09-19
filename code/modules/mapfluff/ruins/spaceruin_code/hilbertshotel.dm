@@ -580,7 +580,7 @@ GLOBAL_VAR_INIT(hhMysteryRoomNumber, rand(1, 999999))
 	if(!istype(interacting_with, /obj/item/hilbertshotel))
 		return ..()
 	if(!interacting_with.IsReachableBy(user))
-		to_chat(user, span_warning("It's to far away to scan!"))
+		to_chat(user, span_warning("It's too far away to scan!"))
 		return ITEM_INTERACT_BLOCKING
 	var/obj/item/hilbertshotel/sphere = interacting_with
 	if(length(sphere.activeRooms))

@@ -37,6 +37,7 @@
 	)
 	rpg_title = "Cleric"
 	job_flags = STATION_JOB_FLAGS
+	tgui_icon = FA_ICON_STAFF_SNAKE
 
 
 /datum/outfit/job/doctor
@@ -47,7 +48,7 @@
 	uniform = /obj/item/clothing/under/rank/medical/doctor
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	suit_store = /obj/item/flashlight/pen
-	belt = /obj/item/modular_computer/pda/medical
+	belt = /obj/item/modular_computer/pda/crew/medical
 	ears = /obj/item/radio/headset/headset_med
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	l_hand = /obj/item/storage/medkit/surgery
@@ -60,3 +61,5 @@
 	box = /obj/item/storage/box/survival/medical
 	chameleon_extras = /obj/item/gun/syringe
 	skillchips = list(/obj/item/skillchip/entrails_reader)
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/medical

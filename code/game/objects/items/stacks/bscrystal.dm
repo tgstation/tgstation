@@ -38,6 +38,7 @@
 	return 1
 
 /obj/item/stack/ore/bluespace_crystal/attack_self(mob/user)
+	SEND_SIGNAL(user, COMSIG_MOB_CRUSHED_BLUESPACE_CRYSTAL, src)
 	user.visible_message(span_warning("[user] crushes [src]!"), span_danger("You crush [src]!"))
 	new /obj/effect/particle_effect/sparks(loc)
 	playsound(loc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -107,3 +108,11 @@
 
 /obj/item/stack/sheet/bluespace_crystal/fifty
 	amount = 50
+
+GLOBAL_LIST_INIT(bluespace_crystal_recipes, list ( \
+	new/datum/stack_recipe("bluespace crystal tile", /obj/item/stack/tile/mineral/bluespace, 1, 4, 20, crafting_flags = NONE, category = CAT_TILES), \
+))
+
+/obj/item/stack/sheet/bluespace_crystal/get_main_recipes()
+	. = ..()
+	. += GLOB.bluespace_crystal_recipes

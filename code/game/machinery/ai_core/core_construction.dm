@@ -16,14 +16,22 @@
 	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/structure/ai_core/wrench_act(mob/living/user, obj/item/tool)
+/obj/structure/ai_core/can_be_unfasten_wrench(mob/user, silent)
 	if(state >= CORE_STATE_FINISHED)
-		set_anchored(TRUE) //teehee
-		balloon_alert(user, "can't unanchor!")
-		return ITEM_INTERACT_BLOCKING
+		if(!silent)
+			balloon_alert(user, "can't be unanchored while operational!")
+		return FAILED_UNFASTEN
 
-	default_unfasten_wrench(user, tool)
-	return ITEM_INTERACT_SUCCESS
+	return ..()
+
+/obj/structure/ai_core/wrench_act(mob/living/user, obj/item/tool)
+	switch(default_unfasten_wrench(user, tool))
+		if(FAILED_UNFASTEN)
+			return ITEM_INTERACT_BLOCKING
+		if(SUCCESSFUL_UNFASTEN)
+			return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/structure/ai_core/screwdriver_act(mob/living/user, obj/item/tool)
 	switch(state)
@@ -153,10 +161,8 @@
 	if(istype(tool, /obj/item/stack/cable_coil))
 		return add_cabling(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
-	if(istype(tool, /obj/item/mmi))
+	if(istype(tool, /obj/item/brain_processor))
 		return install_mmi(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
-	if(istype(tool, /obj/item/ai_module))
-		return update_laws(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 	if(istype(tool, /obj/item/stack/sheet/rglass))
 		return install_glass(user, tool) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
@@ -188,7 +194,7 @@
 	UPDATE_STATE(CORE_STATE_CABLED)
 	return TRUE
 
-/obj/structure/ai_core/proc/install_mmi(mob/living/user, obj/item/mmi/mmi)
+/obj/structure/ai_core/proc/install_mmi(mob/living/user, obj/item/brain_processor/mmi)
 	if(state != CORE_STATE_CABLED)
 		return FALSE
 
@@ -215,20 +221,6 @@
 
 	core_mmi = mmi
 	UPDATE_STATE(CORE_STATE_CABLED)
-	return TRUE
-
-/obj/structure/ai_core/proc/update_laws(mob/living/user, obj/item/ai_module/module)
-	if(!core_mmi)
-		balloon_alert(user, "no brain installed!")
-		return FALSE
-	if(!core_mmi.brainmob || !core_mmi.brainmob?.mind || suicide_check())
-		balloon_alert(user, "[AI_CORE_BRAIN(core_mmi)] is inactive!")
-		return FALSE
-	if(core_mmi.laws.id != DEFAULT_AI_LAWID)
-		balloon_alert(user, "[AI_CORE_BRAIN(core_mmi)] already has set laws!")
-		return FALSE
-
-	module.install(laws, user)
 	return TRUE
 
 /obj/structure/ai_core/proc/install_glass(mob/living/user, obj/item/stack/sheet/rglass/glass)

@@ -150,8 +150,8 @@
 			if(!istype(present_reagent, /datum/reagent/blood))
 				continue
 
-			var/blood_DNA = present_reagent.data["blood_DNA"]
-			var/blood_type = present_reagent.data["blood_type"]
+			var/blood_DNA = present_reagent.data[BLOOD_DATA_DNA]
+			var/blood_type = present_reagent.data[BLOOD_DATA_TYPE]
 			if(!blood_DNA || !blood_type)
 				continue
 

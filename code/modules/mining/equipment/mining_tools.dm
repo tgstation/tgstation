@@ -114,6 +114,7 @@
 	desc = "A large tool for digging and moving dirt."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "shovel"
+	worn_icon_state = "shovel"
 	inhand_icon_state = "shovel"
 	icon_angle = 135
 	lefthand_file = 'icons/mob/inhands/equipment/mining_lefthand.dmi'
@@ -151,6 +152,7 @@
 	name = "spade"
 	desc = "A small tool for digging and moving dirt."
 	icon_state = "spade"
+	worn_icon_state = "spade"
 	inhand_icon_state = "spade"
 	icon_angle = -135
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'

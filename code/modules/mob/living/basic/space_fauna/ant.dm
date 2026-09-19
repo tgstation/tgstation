@@ -7,6 +7,7 @@
 	icon_dead = "ant_dead"
 	speak_emote = list("buzzes", "chitters")
 	gender = PLURAL // We are Ven-ant
+	randomize_gender = FALSE
 	pass_flags = PASSTABLE
 	mob_size = MOB_SIZE_SMALL
 	mob_biotypes = MOB_ORGANIC|MOB_BUG

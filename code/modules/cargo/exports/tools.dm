@@ -141,16 +141,22 @@
 	cost = CARGO_CRATE_VALUE * 0.375
 	unit_name = "soap"
 	export_types = list(/obj/item/soap)
+	exclude_types = list(
+		/obj/item/soap/homemade,
+		/obj/item/soap/omega,
+	)
 
 /datum/export/soap/homemade
 	cost = CARGO_CRATE_VALUE * 0.15
 	unit_name = "artisanal soap"
 	export_types = list(/obj/item/soap/homemade)
+	exclude_types = list()
 
 /datum/export/soap/omega
 	cost = CARGO_CRATE_VALUE * 14
 	unit_name = "omega soap"
 	export_types = list(/obj/item/soap/omega)
+	exclude_types = list()
 
 /datum/export/candle
 	cost = CARGO_CRATE_VALUE * 0.06125

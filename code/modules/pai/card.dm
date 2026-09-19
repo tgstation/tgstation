@@ -32,15 +32,15 @@
 	SSpai.pai_card_list += src
 	ADD_TRAIT(src, TRAIT_CASTABLE_LOC, INNATE_TRAIT)
 
-/obj/item/pai_card/attackby(obj/item/used, mob/user, list/modifiers, list/attack_modifiers)
-	if(pai && istype(used, /obj/item/encryptionkey))
-		if(!pai.encrypt_mod)
-			to_chat(user, span_alert("Encryption Key ports not configured."))
-			return
-		pai.radio.attackby(used, user, modifiers)
-		to_chat(user, span_notice("You insert [used] into the [src]."))
-		return
-	return ..()
+/obj/item/pai_card/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!pai || !istype(tool, /obj/item/encryptionkey))
+		return NONE
+
+	if(!pai.encrypt_mod)
+		to_chat(user, span_alert("Encryption Key ports not configured."))
+		return ITEM_INTERACT_BLOCKING
+
+	return pai.radio.install_key(user, tool)
 
 /obj/item/pai_card/attack_self(mob/user)
 	if(!in_range(src, user))
@@ -121,7 +121,7 @@
 		can_holo = pai.can_holo,
 		dna = pai.master_dna,
 		emagged = pai.emagged,
-		laws = pai.laws.supplied,
+		laws = pai.laws.inherent,
 		master = pai.master_name,
 		name = pai.name,
 		transmit = pai.can_transmit,

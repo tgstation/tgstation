@@ -6,6 +6,8 @@ SUBSYSTEM_DEF(admin_verbs)
 	init_stage = INITSTAGE_EARLY
 	/// A list of all admin verbs indexed by their type.
 	var/list/datum/admin_verb/admin_verbs_by_type = list()
+	/// A list of all admin verbs indexed by their verb_path.
+	var/list/datum/admin_verb/admin_verbs_by_verb_path = list()
 	/// A list of all admin verbs indexed by their visibility flag.
 	var/list/list/datum/admin_verb/admin_verbs_by_visibility_flag = list()
 	/// A map of all assosciated admins and their visibility flags.
@@ -40,7 +42,11 @@ SUBSYSTEM_DEF(admin_verbs)
 			qdel(verb_singleton, force = TRUE)
 			continue
 
+		var/list/pending = GLOB.____pending_verb_args[verb_type]
+		if(pending)
+			verb_singleton.arguments = pending
 		admin_verbs_by_type[verb_type] = verb_singleton
+		admin_verbs_by_verb_path[verb_singleton.get_verb_path()] = verb_singleton
 		if(verb_singleton.visibility_flag)
 			if(!(verb_singleton.visibility_flag in admin_verbs_by_visibility_flag))
 				admin_verbs_by_visibility_flag[verb_singleton.visibility_flag] = list()
@@ -79,13 +85,15 @@ SUBSYSTEM_DEF(admin_verbs)
 	if(state)
 		admin_visibility_flags[admin.ckey] |= list(flag)
 		assosciate_admin(admin)
-		return
+	else
+		admin_visibility_flags[admin.ckey] -= list(flag)
+		for(var/datum/admin_verb/verb_singleton as anything in admin_verbs_by_visibility_flag[flag])
+			verb_singleton.unassign_from_client(admin)
+		admin.init_verbs()
 
-	admin_visibility_flags[admin.ckey] -= list(flag)
-	// they lost the flag, iterate over verbs with that flag and yoink em
-	for(var/datum/admin_verb/verb_singleton as anything in admin_verbs_by_visibility_flag[flag])
-		verb_singleton.unassign_from_client(admin)
-	admin.init_verbs()
+	if(admin.admin_verb_panel)
+		var/datum/tgui/ui = SStgui.get_open_ui(admin.mob, admin.admin_verb_panel)
+		ui?.send_full_update()
 
 /datum/controller/subsystem/admin_verbs/proc/dynamic_invoke_verb(client/admin, datum/admin_verb/verb_type, ...)
 	if(IsAdminAdvancedProcCall())
@@ -101,9 +109,7 @@ SUBSYSTEM_DEF(admin_verbs)
 	if(isnull(admin.holder))
 		CRASH("Attempted to dynamically invoke admin verb '[verb_type]' with a non-admin.")
 
-	var/list/verb_args = args.Copy()
-	verb_args.Cut(2, 3)
-	var/datum/admin_verb/verb_singleton = admin_verbs_by_type[verb_type] // this cannot be typed because we need to use `:`
+	var/datum/admin_verb/verb_singleton = admin_verbs_by_type[verb_type]
 	if(isnull(verb_singleton))
 		CRASH("Attempted to dynamically invoke admin verb '[verb_type]' that doesn't exist.")
 
@@ -111,10 +117,20 @@ SUBSYSTEM_DEF(admin_verbs)
 		to_chat(admin, span_adminnotice("You lack the permissions to do this."))
 		return
 
+	var/list/extra_args = args.Copy(3)
+	var/list/positional_args
+	if(length(extra_args) == 1 && islist(extra_args[1]))
+		positional_args = extra_args[1]
+	else if(length(extra_args))
+		positional_args = extra_args
+
+	var/list/structured_args = ____collect_verb_args(admin, verb_singleton.name, verb_singleton.arguments, positional_args)
+	if(isnull(structured_args))
+		return
+
 	var/old_usr = usr
 	usr = admin.mob
-	// THE MACRO ENSURES THIS EXISTS. IF IT EVER DOESNT EXIST SOMEONE DIDNT USE THE DAMN MACRO!
-	verb_singleton.__avd_do_verb(arglist(verb_args))
+	verb_singleton.__avd_do_verb(admin, structured_args)
 	usr = old_usr
 	SSblackbox.record_feedback("tally", "dynamic_admin_verb_invocation", 1, "[verb_type]")
 

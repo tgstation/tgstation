@@ -16,6 +16,7 @@
 	flags_cover = HEADCOVERSEYES|EARS_COVERED
 	flags_inv = HIDEHAIR
 	dog_fashion = /datum/dog_fashion/head/helmet
+	resistance_flags = NONE
 
 /datum/armor/head_helmet
 	melee = 35
@@ -45,30 +46,30 @@
 	. = ..()
 	AddComponent(/datum/component/seclite_attachable, light_icon_state = "flight")
 
-/obj/item/clothing/head/helmet/sec/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(issignaler(attacking_item))
-		var/obj/item/assembly/signaler/attached_signaler = attacking_item
-		// There's a flashlight in us. Remove it first, or it'll be lost forever!
-		var/obj/item/flashlight/seclite/blocking_us = locate() in src
-		if(blocking_us)
-			to_chat(user, span_warning("[blocking_us] is in the way, remove it first!"))
-			return TRUE
+/obj/item/clothing/head/helmet/sec/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!issignaler(tool))
+		return ..()
 
-		if(!attached_signaler.secured)
-			to_chat(user, span_warning("Secure [attached_signaler] first!"))
-			return TRUE
+	var/obj/item/assembly/signaler/attached_signaler = tool
+	// There's a flashlight in us. Remove it first, or it'll be lost forever!
+	var/obj/item/flashlight/seclite/blocking_us = locate() in src
+	if(blocking_us)
+		to_chat(user, span_warning("[blocking_us] is in the way, remove it first!"))
+		return ITEM_INTERACT_BLOCKING
 
-		to_chat(user, span_notice("You add [attached_signaler] to [src]."))
+	if(!attached_signaler.secured)
+		to_chat(user, span_warning("Secure [attached_signaler] first!"))
+		return ITEM_INTERACT_BLOCKING
 
-		qdel(attached_signaler)
-		var/obj/item/bot_assembly/secbot/secbot_frame = new(drop_location())
-		var/held_index = user.is_holding(src)
-		qdel(src)
-		if (held_index)
-			user.put_in_hand(secbot_frame, held_index)
-		return TRUE
+	to_chat(user, span_notice("You add [attached_signaler] to [src]."))
 
-	return ..()
+	qdel(attached_signaler)
+	var/obj/item/bot_assembly/secbot/secbot_frame = new(drop_location())
+	var/held_index = user.is_holding(src)
+	qdel(src)
+	if (held_index)
+		user.put_in_hand(secbot_frame, held_index)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/head/helmet/sec/attack_self(mob/user)
 	. = ..()

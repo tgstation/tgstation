@@ -11,6 +11,8 @@
 #define TGUI_WINDOW_SOFT_LIMIT 5
 /// Maximum number of open windows
 #define TGUI_WINDOW_HARD_LIMIT 9
+/// Maximum number of open windows when user has prefs set to unlimited, basically infinite. You dont need 200 windows; you'll run out of memory by then
+#define TGUI_WINDOW_UNLIMITED_LIMIT 200
 
 /// Maximum ping timeout allowed to detect zombie windows
 #define TGUI_PING_TIMEOUT (4 SECONDS)
@@ -46,6 +48,14 @@
 #define TGUI_CREATE_MESSAGE(type, payload) ( \
 	"%7b%22type%22%3a%22[type]%22%2c%22payload%22%3a[url_encode(json_encode(payload))]%7d" \
 )
+
+/// Pre-encoded TGUI message for verbs/focus with null payload, used in the Tab macro.
+/// This is TGUI_CREATE_MESSAGE("verbs/focus", null), unit tested in tgui_panel_focus_message.
+#define TGUI_PANEL_FOCUS_MESSAGE "%7b%22type%22%3a%22verbs/focus%22%2c%22payload%22%3anull%7d"
+
+/// Pre-encoded TGUI message for verbs/clear with null payload, used in the Backspace macro.
+/// This is TGUI_CREATE_MESSAGE("verbs/clear", null), unit tested in tgui_panel_clear_message.
+#define TGUI_PANEL_CLEAR_MESSAGE "%7b%22type%22%3a%22verbs/clear%22%2c%22payload%22%3anull%7d"
 
 /**
  * Gets a ui_state that checks to see if the user has specific admin permissions.

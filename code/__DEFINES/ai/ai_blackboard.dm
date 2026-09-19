@@ -51,6 +51,10 @@
 #define BB_WANTS_TO_COMMIT_THEFT "BB_WANTS_TO_COMMIT_THEFT"
 ///last stolen item
 #define BB_LAST_STOLEN_ITEM "BB_LAST_STOLEN_ITEM"
+/// Associative list of target typepaths to selection weights for theft.
+#define BB_STEAL_TARGET_PRIORITIES "BB_steal_target_priorities"
+/// Selection weight for theft targets which do not match a configured priority type.
+#define BB_STEAL_FALLBACK_PRIORITY "BB_steal_fallback_priority"
 
 ///the owner we will try to play with
 #define BB_OWNER_TARGET "BB_owner_target"
@@ -139,7 +143,6 @@
 #define BB_TARGET_HELD_ITEM "BB_target_held_item"
 /// How likely is this mob to move when idle per tick?
 #define BB_BASIC_MOB_IDLE_WALK_CHANCE "BB_basic_idle_walk_chance"
-#define BB_BASIC_MOB_TARGET_REFRESH_COOLDOWN "BB_basic_mob_target_refresh_cooldown"
 
 /// whether we can have fuck
 #define BB_FUCKS "can we fuck?"

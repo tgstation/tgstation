@@ -134,14 +134,14 @@
 	viewers = list()
 	UnregisterSignal(remove_from, COMSIG_MOB_KEYDOWN)
 
-	if(isnull(owner))
+	if(isnull(remove_from))
 		return
-	SEND_SIGNAL(src, COMSIG_ACTION_REMOVED, owner)
-	SEND_SIGNAL(owner, COMSIG_MOB_REMOVED_ACTION, src)
-	UnregisterSignal(owner, COMSIG_QDELETING)
+	SEND_SIGNAL(src, COMSIG_ACTION_REMOVED, remove_from)
+	SEND_SIGNAL(remove_from, COMSIG_MOB_REMOVED_ACTION, src)
+	UnregisterSignal(remove_from, COMSIG_QDELETING)
 
 	// Clean up our check_flag signals
-	UnregisterSignal(owner, list(
+	UnregisterSignal(remove_from, list(
 		COMSIG_LIVING_SET_BODY_POSITION,
 		COMSIG_MOB_STATCHANGE,
 		COMSIG_MOVABLE_MOVED,
@@ -155,7 +155,7 @@
 		SIGNAL_REMOVETRAIT(TRAIT_MAGICALLY_PHASED),
 	))
 
-	if(target == owner)
+	if(target == remove_from)
 		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(clear_ref))
 	if (owner == remove_from)
 		owner = null
@@ -341,6 +341,7 @@
 		current_button.color = rgb(255,255,255,255)
 	else
 		current_button.color = transparent_when_unavailable ? rgb(128,0,0,128) : rgb(128,0,0)
+	SEND_SIGNAL(src, COMSIG_ACTION_STATUS_UPDATE, current_button, force)
 
 /// Gives our action to the passed viewer.
 /// Puts our action in their actions list and shows them the button.

@@ -2,7 +2,7 @@
 #define HOLDING_MODULE_CHECK_CONFIRMED 2
 
 /obj/item/mod/module/storage/holding
-	name = "MOD storage module of holding"
+	name = "\improper MOD storage module of holding"
 	desc = "A prototype storage module utilizing the power of anomalous bluespace phenomena \
 		to store copious amounts of matter. Unfortunately, it suffers from the same drawbacks as its standalone counterpart, \
 		including <b>tearing catastrophic rifts in reality</b> when nested inside bluespace pockets produced through similar means."
@@ -59,12 +59,12 @@
 	storage_type = /datum/storage/bag_of_holding
 	create_storage(storage_type = /datum/storage/bag_of_holding)
 	atom_storage.set_locked(STORAGE_FULLY_LOCKED)
-	item_flags |= BLUESPACE_INTERFERENCE
+	ADD_TRAIT(src, TRAIT_BLUESPACE_INTERFERENCE, TRAIT_GENERIC)
 
 /obj/item/mod/module/storage/holding/proc/on_core_removed()
 	QDEL_NULL(atom_storage)
 	storage_type = null
-	item_flags &= ~BLUESPACE_INTERFERENCE
+	REMOVE_TRAIT(src, TRAIT_BLUESPACE_INTERFERENCE, TRAIT_GENERIC)
 
 /obj/item/mod/module/storage/holding/proc/try_install(_source, obj/item/mod/control/suit, mob/user)
 	SIGNAL_HANDLER
@@ -95,7 +95,6 @@
 
 /obj/item/mod/module/storage/holding/prebuilt
 	prebuilt = TRUE
-	item_flags = BLUESPACE_INTERFERENCE
 
 /obj/item/mod/module/storage/holding/prebuilt/locked
 	core_removable = FALSE

@@ -28,12 +28,11 @@
 	else
 		. += span_danger("It's empty.")
 
-/obj/machinery/nuclearbomb/beer/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(weapon.is_refillable())
-		weapon.interact_with_atom(keg, user) // redirect refillable containers to the keg, allowing them to be filled
-		return TRUE // pretend we handled the attack, too.
-
-	return ..()
+/obj/machinery/nuclearbomb/beer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!tool.is_refillable())
+		return ..()
+	tool.interact_with_atom(keg, user) // redirect refillable containers to the keg, allowing them to be filled
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/nuclearbomb/beer/actually_explode()
 	if(core)

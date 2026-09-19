@@ -14,25 +14,39 @@
 
       const MAX_MESSAGES = 1000;
 
-      const dbPromise = new Promise((resolve, reject) => {
-        const indexedDB = window.indexedDB;
-        const req = indexedDB.open(INDEXED_DB_NAME, INDEXED_DB_VERSION);
-        req.onupgradeneeded = (event) => {
+      const dbPromise = (async () => {
+        if (document.requestStorageAccess) {
           try {
-            if (event.oldVersion < 1) {
-              req.result.createObjectStore(INDEXED_DB_STORE_NAME);
+            const hasAccess = await document.hasStorageAccess();
+            if (!hasAccess) {
+              await document.requestStorageAccess({ all: true });
             }
-          } catch (err) {
-            reject(new Error('Failed to upgrade IDB: ' + req.error));
-          }
-        };
+          } catch {}
+        }
 
-        req.onsuccess = () => resolve(req.result);
+        if (navigator.storage && navigator.storage.persist) {
+          navigator.storage.persist().catch(() => {});
+        }
 
-        req.onerror = () => {
-          reject(new Error('Failed to open IDB: ' + req.error));
-        };
-      });
+        return new Promise((resolve, reject) => {
+          const req = indexedDB.open(INDEXED_DB_NAME, INDEXED_DB_VERSION);
+          req.onupgradeneeded = (event) => {
+            try {
+              if (event.oldVersion < 1) {
+                req.result.createObjectStore(INDEXED_DB_STORE_NAME);
+              }
+            } catch (err) {
+              reject(new Error('Failed to upgrade IDB: ' + req.error));
+            }
+          };
+
+          req.onsuccess = () => resolve(req.result);
+
+          req.onerror = () => {
+            reject(new Error('Failed to open IDB: ' + req.error));
+          };
+        });
+      })();
 
       window.addEventListener('message', (messageEvent) => {
         switch (messageEvent.data.type) {
@@ -94,9 +108,9 @@
         store.clear();
       };
 
-      window.onload = () => {
+      dbPromise.then(() => {
         window.parent.postMessage("ready", "*");
-      }
+      });
     </script>
   </head>
 </html>

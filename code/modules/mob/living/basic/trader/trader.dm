@@ -58,8 +58,8 @@
 	setup_shop.Grant(src)
 	ai_controller.set_blackboard_key(BB_SETUP_SHOP, setup_shop)
 
-/mob/living/basic/trader/init_unconscious_appearance()
-	add_generic_humanoid_static_appearance()
+/mob/living/basic/trader/get_unconscious_appearance()
+	return get_generic_humanoid_static_appearance()
 
 /mob/living/basic/trader/mrbones
 	name = "Mr. Bones"

@@ -444,7 +444,7 @@
 	if(died == parent)
 		change_points(-500, use_multiplier = FALSE)
 		return
-	else if(mob_parent.faction_check_atom(died) || !died.has_faction(FACTION_MINING) || (died.z != mob_parent.z) || !(died in view(mob_parent.client?.view, get_turf(mob_parent))))
+	else if(mob_parent.faction_check_atom(died) || !ismining(died) || (died.z != mob_parent.z) || !(died in view(mob_parent.client?.view, get_turf(mob_parent))))
 		return
 
 	if(ismegafauna(died))

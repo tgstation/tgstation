@@ -408,6 +408,7 @@
 			disease_data["spread_by"] = disease_type::spread_text || get_disease_spread_text(disease_type::spread_flags)
 			disease_data["cured_by"] = disease_type::cure_text
 			disease_data["id"] = disease_type
+			disease_data["level"] = "N/A"
 			disease_info += list(disease_data)
 
 		for(var/datum/symptom/symptom_type as anything in valid_subtypesof(/datum/symptom))
@@ -420,6 +421,7 @@
 			symptom_data["spread_by"] = "N/A"
 			symptom_data["cured_by"] = symptom_type::symptom_cure::name
 			symptom_data["id"] = symptom_type
+			symptom_data["level"] = "[symptom_type::level]"
 			disease_info += list(symptom_data)
 
 		var/list/advanced_virus_info = list(

@@ -74,7 +74,7 @@
 		return
 
 	var/typeofmeat = null
-	for(var/meat_path in limb.butcher_drops)
+	for(var/meat_path in limb.get_butcher_drops())
 		if(ispath(meat_path, /obj/item/food/meat))
 			typeofmeat = meat_path
 			break

@@ -20,7 +20,7 @@
 	var/mob/living/carbon/human/human_target = the_target
 	if(human_target.handcuffed || IS_UNCONSCIOUS_OR_CRIT(human_target))
 		return FALSE
-	if(locate(human_target) in my_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST])
+	if(human_target in my_controller.blackboard[BB_BASIC_MOB_RETALIATE_LIST])
 		return TRUE
 	var/mob/living/basic/bot/secbot/my_bot = living_mob
 	if(human_target.IsParalyzed() && !(my_bot.security_mode_flags & SECBOT_HANDCUFF_TARGET))
@@ -41,7 +41,7 @@
 /datum/ai_controller/basic_controller/bot/secbot/proc/on_target_set()
 	SIGNAL_HANDLER
 	var/datum/action/cooldown/bot_announcement/announcement = blackboard[BB_ANNOUNCE_ABILITY]
-	var/threat_level = 5 || blackboard[BB_CURRENT_CRIMINAL_ASSESSMENT]
+	var/threat_level = blackboard[BB_CURRENT_CRIMINAL_ASSESSMENT] || 5
 	INVOKE_ASYNC(announcement, TYPE_PROC_REF(/datum/action/cooldown/bot_announcement, announce), "Level [threat_level] infraction alert!")
 	playsound(pawn, pick(
 		'sound/mobs/non-humanoids/beepsky/criminal.ogg',

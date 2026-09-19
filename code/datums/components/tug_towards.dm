@@ -119,14 +119,15 @@
 			total_tug_x += sign(target.x - atom_parent.x) * strength
 			total_tug_y += sign(target.y - atom_parent.y) * strength
 
-		// Intentionally not trig--something at a corner with a strength of 1 should have
-		// you at the corner, rather than root(2).
-		total_tug_x /= tuggers
-		total_tug_y /= tuggers
+		if(tuggers > 0)
+			// Intentionally not trig--something at a corner with a strength of 1 should have
+			// you at the corner, rather than root(2).
+			total_tug_x /= tuggers
+			total_tug_y /= tuggers
 
-		var/half_size = world.icon_size * 0.5
-		total_tug_x *= half_size
-		total_tug_y *= half_size
+			var/half_size = world.icon_size * 0.5
+			total_tug_x *= half_size
+			total_tug_y *= half_size
 
 	if (total_tug_x == current_tug_offset_x && total_tug_y == current_tug_offset_y)
 		return

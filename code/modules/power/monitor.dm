@@ -25,6 +25,10 @@
 	history["supply"] = list()
 	history["demand"] = list()
 
+/obj/machinery/computer/monitor/Destroy(force)
+	SSmachines.processing_late -= src
+	return ..()
+
 /obj/machinery/computer/monitor/process_late()
 	if(!get_powernet())
 		update_use_power(IDLE_POWER_USE)

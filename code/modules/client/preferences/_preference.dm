@@ -228,7 +228,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /// Apply this preference onto the given human.
 /// Must be overriden by subtypes.
 /// Called when the savefile_identifier == PREFERENCE_CHARACTER.
-/datum/preference/proc/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/proc/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	SHOULD_NOT_SLEEP(TRUE)
 	SHOULD_CALL_PARENT(FALSE)
 	CRASH("`apply_to_human()` was not implemented for [type]!")
@@ -370,6 +370,14 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	var/is_character_preference = savefile_identifier == PREFERENCE_CHARACTER
 	return is_on_character_page == is_character_preference
 
+/// Helper for checking if one/any of the passed job types are the highest priority job for the passed preferences object
+/// Useful for filtering out certain preferences unless certain jobs are/are not active
+/datum/preference/proc/highest_priority_job_is(datum/preferences/preferences, job_type_or_types)
+	if(islist(job_type_or_types))
+		return is_type_in_list(preferences.get_highest_priority_job(), job_type_or_types)
+
+	return istype(preferences.get_highest_priority_job(), job_type_or_types)
+
 /// A preference that is a choice of one option among a fixed set.
 /// Used for preferences such as clothing.
 /datum/preference/choiced
@@ -483,7 +491,7 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 /datum/preference/choiced/species_feature/create_default_value()
 	return get_consistent_feature_entry(get_accessory_list())
 
-/datum/preference/choiced/species_feature/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/species_feature/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	target.dna.features[feature_key] = value
 
 /// Returns what acessory list to draw from

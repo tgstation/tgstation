@@ -18,7 +18,7 @@
 	bubble_icon = "alien"
 	combat_mode = TRUE
 	faction = list(ROLE_ALIEN)
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	physiology = list(STAMINA = 0)
 
 	// Going for a dark purple here
 	lighting_cutoff_red = 30
@@ -88,7 +88,7 @@
 	return TRUE
 
 /mob/living/basic/alien/get_bloodtype()
-	return get_blood_type(BLOOD_TYPE_XENO)
+	return get_blood_type(/datum/blood_type/xeno)
 
 /mob/living/basic/alien/get_gibs_type(drop_bitflags = NONE)
 	if(drop_bitflags & DROP_BODYPARTS)

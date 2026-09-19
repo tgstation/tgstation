@@ -161,7 +161,7 @@
 /obj/machinery/bouldertech/refinery/smelter/on_set_panel_open(old_value)
 	update_light_value()
 
-/obj/machinery/bouldertech/refinery/smelter/maim_golem(mob/living/carbon/human/rockman)
+/obj/machinery/bouldertech/refinery/smelter/gib_mob(mob/living/rockman)
 	rockman.visible_message(span_warning("[rockman] is processed by [src]!"), span_userdanger("You get melted into rock by [src]!"))
-	rockman.investigate_log("was melted by [src] for being a golem", INVESTIGATE_DEATHS)
+	rockman.investigate_log("was melted by [src] for having the MOB_MINERAL mob biotype", INVESTIGATE_DEATHS)
 	rockman.dust()

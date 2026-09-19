@@ -90,27 +90,28 @@
 	scoreboard.add_overlay(tens_overlay)
 	scoreboard.add_overlay(emissive_tens_overlay)
 
-/obj/structure/hoop/attackby(obj/item/ball, mob/living/baller, list/modifiers, list/attack_modifiers)
-	if(!baller.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
-		return // TK users aren't allowed to dunk
+/obj/structure/hoop/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!user.can_perform_action(src, NEED_HANDS|FORBID_TELEKINESIS_REACH))
+		return NONE// TK users aren't allowed to dunk
 
-	if(!baller.transfer_item_to_turf(ball, drop_location()))
-		return
+	if(!user.transfer_item_to_turf(tool, drop_location()))
+		return ITEM_INTERACT_BLOCKING
 
-	var/dunk_dir = get_dir(baller, src)
+	var/dunk_dir = get_dir(user, src)
 
 	var/dunk_pixel_z = (dunk_dir & SOUTH) ? -16 : 16
 	var/dunk_pixel_w = ((dunk_dir & EAST) && 16) || ((dunk_dir & WEST) && -16) || 0
 
-	animate(baller, pixel_w = dunk_pixel_w, pixel_z = dunk_pixel_z, time = 0.5 SECONDS, easing = BOUNCE_EASING|EASE_IN|EASE_OUT, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
+	animate(user, pixel_w = dunk_pixel_w, pixel_z = dunk_pixel_z, time = 0.5 SECONDS, easing = BOUNCE_EASING|EASE_IN|EASE_OUT, flags = ANIMATION_PARALLEL|ANIMATION_RELATIVE)
 	animate(pixel_w = -dunk_pixel_w, pixel_z = -dunk_pixel_z, time = 0.5 SECONDS, flags = ANIMATION_RELATIVE)
 
-	visible_message(span_warning("[baller] dunks [ball] into \the [src]!"))
-	baller.add_mood_event("basketball", /datum/mood_event/basketball_dunk)
-	score(ball, baller, 2)
+	visible_message(span_warning("[user] dunks [tool] into \the [src]!"))
+	user.add_mood_event("basketball", /datum/mood_event/basketball_dunk)
+	score(tool, user, 2)
 
-	if(istype(ball, /obj/item/toy/basketball))
-		baller.adjust_stamina_loss(STAMINA_COST_DUNKING)
+	if(istype(tool, /obj/item/toy/basketball))
+		user.adjust_stamina_loss(STAMINA_COST_DUNKING)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/hoop/attack_hand(mob/living/baller, list/modifiers)
 	. = ..()

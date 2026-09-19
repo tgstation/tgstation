@@ -90,7 +90,7 @@
 		last_scan_text = floor_text
 		return
 
-	if(ispodperson(M) && !scanpower <= SCANPOWER_ADVANCED)
+	if(HAS_TRAIT(M, TRAIT_REQUIRED_ADV_HEALTH_SCANNER) && scanpower < SCANPOWER_ADVANCED)
 		to_chat(user, span_info("[M]'s biological structure is too complex for the health analyzer."))
 		return
 
@@ -182,6 +182,9 @@
 				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("desiccation", "Irreparable. Under normal circumstances, revival can only proceed via brain transplant.", tochat)].</span><br>"
 			else if(HAS_TRAIT_FROM(target, TRAIT_HUSK, SKELETON_TRAIT))
 				render_list += "<span class='alert ml-1'>Subject has been husked due to severe flesh loss.</span><br>"
+			else if(HAS_TRAIT_FROM(target, TRAIT_HUSK, /datum/status_effect/zombie::id))
+				render_list += "<span class='alert ml-1'>Subject has been husked by [conditional_tooltip("zombification", \
+					"Surgically remove the source of the infection, typically located in the head. If no source is found, it is otherwise irreparable.", tochat)].</span><br>"
 			else if(!HAS_TRAIT_FROM(target, TRAIT_HUSK, BURN)) // prioritize showing unknown causes over burns
 				render_list += "<span class='alert ml-1'>Subject has been husked by mysterious causes.</span><br>"
 			else
@@ -202,7 +205,7 @@
 		has_brain = TRUE
 	else if(iscyborg(target))
 		var/mob/living/silicon/robot/cyborg_target = target
-		if(cyborg_target.mmi?.brain)
+		if(astype(cyborg_target.mmi, /obj/item/brain_processor/organic)?.brain)
 			has_brain = TRUE
 
 	if(!has_brain) // kept exclusively for soul purposes
@@ -350,7 +353,7 @@
 
 		//body temperature
 		var/datum/species/targetspecies = humantarget.dna.species
-		var/disguised = !ishumanbasic(humantarget) && istype(humantarget.head, /obj/item/clothing/head/hooded/human_head) && istype(humantarget.wear_suit, /obj/item/clothing/suit/hooded/bloated_human)
+		var/disguised = !ishumanbasic(humantarget) && HAS_TRAIT(humantarget, TRAIT_HUMAN_DISGUISE)
 		var/species_name = "[disguised ? "\"[/datum/species/human::name]\"" : targetspecies.name][mutant ? "-derived mutant" : ""]"
 
 		render_list += "<span class='info ml-1'>Species: [species_name]</span><br>"

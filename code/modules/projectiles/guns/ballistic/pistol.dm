@@ -216,7 +216,10 @@
 	accepted_magazine_type = /obj/item/ammo_box/magazine/r45
 	actions_types = list(/datum/action/item_action/toggle_firemode)
 	obj_flags = UNIQUE_RENAME // if you did the sidequest, you get the customization
-	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 30, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 25, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 11.5, /datum/material/telecrystal = SHEET_MATERIAL_AMOUNT * 4)
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT * 20, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 15, /datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/telecrystal = SHEET_MATERIAL_AMOUNT * 4)
+
+/obj/item/gun/ballistic/automatic/pistol/deagle/regal/no_mag
+	spawnwithmagazine = FALSE
 
 /obj/item/gun/ballistic/automatic/pistol/deagle/regal/add_deep_lore()
 	AddElement(/datum/element/examine_lore, \
@@ -387,10 +390,7 @@
 
 /obj/item/disk/design_disk/liberator
 	name = "illegal 3D printer design disk"
-
-/obj/item/disk/design_disk/liberator/Initialize(mapload)
-	. = ..()
-	blueprints += new /datum/design/liberator_gun
+	blueprints = list(/datum/design/liberator_gun)
 
 #undef DOORHICKEY_GUN_MIN_DAMAGE
 #undef DOORHICKEY_GUN_MAX_DAMAGE

@@ -24,44 +24,42 @@
 /datum/element/spooky/proc/spectral_attack(datum/source, mob/living/carbon/target, mob/user)
 	SIGNAL_HANDLER
 
-	if(ishuman(user) && !isskeleton(user)) //this weapon wasn't meant for mortals.
-		var/mob/living/carbon/human/human_user = user
-		if(rattle_bones(human_user, stam_dam_mult = stam_damage_mult * 2))
-			to_chat(human_user, span_userdanger("Your ears weren't meant for this spectral sound."))
-			INVOKE_ASYNC(src, PROC_REF(spectral_change), human_user, user, source)
+	if(!HAS_TRAIT(user, TRAIT_SPOOKY_INSTRUMENT_PLAYER)) //this weapon wasn't meant for mortals.
+		if(rattle_bones(user, stam_dam_mult = stam_damage_mult * 2))
+			to_chat(user, span_userdanger("Your ears weren't meant for this spectral sound."))
+			if(ishuman(user))
+				INVOKE_ASYNC(src, PROC_REF(spectral_change), user, user, source)
 		return
 
 	to_chat(target, span_userdanger("<b>DOOT</b"))
 
-	if(isskeleton(target)) // skeletons are totally immune, no redundant skeletonization or bad mood event.
-		return
+	if(rattle_bones(target))
+		INVOKE_ASYNC(src, PROC_REF(spectral_change), target, user, source)
+
+///Cause jitteriness and stamina to the target relative to the amount of their bodyparts made of flesh and bone.
+/datum/element/spooky/proc/rattle_bones(mob/living/target, stam_dam_mult = stam_damage_mult)
+	if(HAS_TRAIT(target, TRAIT_SPOOKY_INSTRUMENT_PLAYER))
+		return 0 //those who can play spooky instruments are unaffected by the spook-pocalypse. No redundant skeletonization or bad mood event.
 
 	target.add_mood_event("spooked", /datum/mood_event/spooked)
 
 	if(!ishuman(target))//the sound will spook basic mobs.
 		target.set_jitter_if_lower(30 SECONDS)
 		target.set_stutter(40 SECONDS)
-		return
+		return 0
 
-	var/mob/living/carbon/human/human = target
-	if(rattle_bones(human))
-		INVOKE_ASYNC(src, PROC_REF(spectral_change), human, user, source)
-
-///Cause jitteriness and stamina to the target relative to the amount of their bodyparts made of flesh and bone.
-/datum/element/spooky/proc/rattle_bones(mob/living/carbon/human/human, stam_dam_mult = stam_damage_mult)
-	if(isskeleton(human))
-		return FALSE //undeads are unaffected by the spook-pocalypse.
 	var/bone_amount = 0
-	for(var/obj/item/bodypart/part as anything in human.get_bodyparts())
+	for(var/obj/item/bodypart/part as anything in target.get_bodyparts())
 		if((part.biological_state & BIO_FLESH_BONE) == BIO_FLESH_BONE)
 			bone_amount++
 	if(bone_amount)
-		human.set_jitter_if_lower(12 SECONDS * bone_amount)
-		human.set_stutter(6.5 SECONDS * bone_amount)
-		human.adjust_stamina_loss(3 * bone_amount * stam_dam_mult)
-	if(iszombie(human))
-		human.adjust_stamina_loss(25)
-		human.Paralyze(15) //zombies can't resist the doot
+		target.set_jitter_if_lower(12 SECONDS * bone_amount)
+		target.set_stutter(6.5 SECONDS * bone_amount)
+		target.adjust_stamina_loss(3 * bone_amount * stam_dam_mult)
+	if(target.mob_biotypes & MOB_UNDEAD)
+		target.adjust_stamina_loss(25)
+		target.Paralyze(15) //the rest of the undead can't resist the doot
+
 	return bone_amount
 
 /datum/element/spooky/proc/spectral_change(mob/living/carbon/human/human, mob/living/user, obj/item/source)
@@ -100,4 +98,4 @@
 	var/skeleton_name = spooked.client ? sanitize_name(tgui_input_text(spooked, "Enter your new skeleton name", "Spookifier", spooked.real_name, MAX_NAME_LEN)) : null
 	if(!skeleton_name)
 		skeleton_name = "\improper spooky skeleton"
-	spooked.fully_replace_character_name(null, skeleton_name)
+	spooked.fully_replace_character_name(null, skeleton_name, log_new_name = TRUE)

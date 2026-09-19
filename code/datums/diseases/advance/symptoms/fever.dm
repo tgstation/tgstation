@@ -19,8 +19,7 @@
 	level = 2
 	severity = 2
 	base_message_chance = 20
-	symptom_delay_min = 10
-	symptom_delay_max = 30
+	symptom_delay = 20
 	symptom_cure = /datum/reagent/medicine/leporazine
 	threshold_descs = list(
 		"Resistance 5" = "Increases fever intensity, fever can overheat and harm the host.",

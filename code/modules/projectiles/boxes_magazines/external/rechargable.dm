@@ -9,7 +9,7 @@
 
 /obj/item/ammo_box/magazine/recharge/update_desc()
 	. = ..()
-	desc = "[initial(desc)] It has [stored_ammo.len] shot\s left."
+	desc = "[initial(desc)] It has [length(stored_ammo)] shot\s left."
 
 /obj/item/ammo_box/magazine/recharge/update_icon_state()
 	. = ..()

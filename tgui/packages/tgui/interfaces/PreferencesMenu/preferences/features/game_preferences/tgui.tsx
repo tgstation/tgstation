@@ -28,6 +28,14 @@ export const tgui_lock: FeatureToggle = {
   component: CheckboxInput,
 };
 
+export const tgui_unlimited_windows: FeatureToggle = {
+  name: 'Uncap TGUI window limit',
+  category: 'UI',
+  description:
+    'Disables the window limit for TGUI windows. Having more than 5 windows open can tank performance on lower end computers.',
+  component: CheckboxInput,
+};
+
 export const ui_scale: FeatureToggle = {
   name: 'Toggle UI scaling',
   category: 'UI',

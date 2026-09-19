@@ -271,51 +271,29 @@
  * Specific chem handling is also handled here, like bloodtype, food taste within nutriment, and the auto-distilling/autojuicing traits.
  * This is where chemical reactions can occur, and the heating / cooling traits effect the reagent container.
  */
-/obj/item/seeds/proc/prepare_result(obj/item/T)
-	if(!T.reagents)
-		CRASH("[T] has no reagents.")
-	var/reagent_max = 0
-	for(var/rid in reagents_add)
-		reagent_max += reagents_add[rid]
-	if(IS_EDIBLE(T) || istype(T, /obj/item/grown))
-		var/obj/item/food/grown/grown_edible = T
-		var/reagent_purity = get_reagent_purity()
-		for(var/rid in reagents_add)
-			var/reagent_overflow_mod = reagents_add[rid]
-			if(reagent_max > 1)
-				reagent_overflow_mod = (reagents_add[rid]/ reagent_max)
-			var/edible_vol = grown_edible.reagents ? grown_edible.reagents.maximum_volume : 0
-			var/amount = max(1, round((edible_vol)*(potency/100) * reagent_overflow_mod, 1)) //the plant will always have at least 1u of each of the reagents in its reagent production traits
-			var/list/data
-			if(rid == /datum/reagent/blood) // Hack to make blood in plants always O-
-				data = list("blood_type" = get_blood_type(BLOOD_TYPE_O_MINUS))
-			if(istype(grown_edible) && (rid == /datum/reagent/consumable/nutriment || rid == /datum/reagent/consumable/nutriment/vitamin))
-				data = grown_edible.tastes // apple tastes of apple.
-			T.reagents.add_reagent(rid, amount, data, added_purity = reagent_purity)
+/obj/item/seeds/proc/prepare_result(obj/item/result)
+	if(isnull(result.reagents))
+		CRASH("[result] has no reagents.")
 
-		//Handles the juicing trait, swaps nutriment and vitamins for that species various juices if they exist. Mutually exclusive with distilling.
-		if(get_gene(/datum/plant_gene/trait/juicing) && grown_edible.juice_typepath())
-			grown_edible.juice(juicer = FALSE) //we pass FALSE & not null because Byond default args will subtitute it with the default value
-		else if(get_gene(/datum/plant_gene/trait/brewing))
-			grown_edible.ferment()
+	if(!istype(result, /obj/item/grown) && !IS_EDIBLE(result))
+		return
 
-		/// The number of nutriments we have inside of our plant, for use in our heating / cooling genes
-		var/num_nutriment = T.reagents.get_reagent_amount(/datum/reagent/consumable/nutriment)
+	var/sum_reagent_percentage = 0
+	for(var/reagent_type, reagent_volume_percentage in reagents_add)
+		sum_reagent_percentage += reagent_volume_percentage
 
-		// Heats up the plant's contents by 25 kelvin per 1 unit of nutriment. Mutually exclusive with cooling.
-		if(get_gene(/datum/plant_gene/trait/chem_heating))
-			T.visible_message(span_notice("[T] releases freezing air, consuming its nutriments to heat its contents."))
-			T.reagents.remove_reagent(/datum/reagent/consumable/nutriment, num_nutriment)
-			T.reagents.chem_temp = min(1000, (T.reagents.chem_temp + num_nutriment * 25))
-			T.reagents.handle_reactions()
-			playsound(T.loc, 'sound/effects/wounds/sizzle2.ogg', 5)
-		// Cools down the plant's contents by 5 kelvin per 1 unit of nutriment. Mutually exclusive with heating.
-		else if(get_gene(/datum/plant_gene/trait/chem_cooling))
-			T.visible_message(span_notice("[T] releases a blast of hot air, consuming its nutriments to cool its contents."))
-			T.reagents.remove_reagent(/datum/reagent/consumable/nutriment, num_nutriment)
-			T.reagents.chem_temp = max(3, (T.reagents.chem_temp + num_nutriment * -5))
-			T.reagents.handle_reactions()
-			playsound(T.loc, 'sound/effects/space_wind.ogg', 50)
+	var/reagent_purity = get_reagent_purity()
+	for(var/reagent_type, reagent_volume_percentage in reagents_add)
+		// Going over 100% volume percentage penalizes you
+		// However the plant will always have at least 1u of each of the reagents in its reagent production traits
+		result.reagents.add_reagent(
+			reagent_type = reagent_type,
+			amount = max(1, round((result.reagents?.maximum_volume || 0) * (potency / 100) * reagent_volume_percentage * min(1, 1 / sum_reagent_percentage))),
+			added_purity = reagent_purity,
+			creation_callback = CALLBACK(src, PROC_REF(send_reagent_signal), result),
+		)
+
+	SEND_SIGNAL(result, COMSIG_PLANT_ON_HARVEST, src)
 
 /// Returns reagent purity based on seed stats
 /obj/item/seeds/proc/get_reagent_purity()
@@ -324,6 +302,11 @@
 	var/purity_from_instability = rand(-instability, instability) / 400  //up to +-25% at random for instability
 	var/result_purity = clamp(0.5 + purity_from_lifespan + purity_from_endurance + purity_from_instability, 0, 1) //50% base + stats
 	return result_purity
+
+/// Sends a signal to reagents in produced produce
+/obj/item/seeds/proc/send_reagent_signal(obj/item/plant, datum/reagent/the_reagent)
+	PRIVATE_PROC(TRUE)
+	SEND_SIGNAL(the_reagent, COMSIG_REAGENT_GROWN_IN_PLANT, src, plant)
 
 /// Setters procs ///
 

@@ -35,3 +35,19 @@
 /datum/manipulator_priority/interact/with_vehicles
 	name = "USE ON VEHICLES"
 	atom_typepath = /obj/vehicle
+
+/datum/manipulator_priority/interact/with_turf
+	name = "USE ON FLOOR"
+	atom_typepath = /turf
+
+/datum/manipulator_priority/pickup/items
+	name = "PICK UP ITEMS"
+	atom_typepath = /obj/item
+
+/datum/manipulator_priority/pickup/closets
+	name = "PICK UP CLOSETS"
+	atom_typepath = /obj/structure/closet
+
+/datum/manipulator_priority/pickup/humans
+	name = "PICK UP HUMANS"
+	atom_typepath = /mob/living/carbon/human

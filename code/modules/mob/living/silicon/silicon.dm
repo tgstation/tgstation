@@ -28,13 +28,8 @@
 	var/list/alarm_types_show = list(ALARM_ATMOS = 0, ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
 	var/list/alarm_types_clear = list(ALARM_ATMOS = 0, ALARM_POWER = 0, ALARM_CAMERA = 0, ALARM_MOTION = 0)
 
-	//These lists will contain each law that should be announced / set to yes in the state laws menu.
-	///List keeping track of which laws to announce
-	var/list/lawcheck = list()
-	///List keeping track of hacked laws to announce
-	var/list/hackedcheck = list()
-	///List keeping track of ion laws to announce
-	var/list/ioncheck = list()
+	/// State laws UI datum which is also used to state laws even without the UI
+	VAR_PROTECTED/datum/state_laws_ui/law_ui
 
 	///Are our siliconHUDs on? TRUE for yes, FALSE for no.
 	var/sensors_on = TRUE
@@ -49,7 +44,8 @@
 	var/control_disabled = FALSE // Set to 1 to stop AI from interacting via Click()
 
 	var/obj/item/modular_computer/pda/silicon/modularInterface
-
+	/// If TRUE, the AI can't be linked to a law rack
+	var/no_law_rack_link = FALSE
 
 /mob/living/silicon/Initialize(mapload)
 	. = ..()
@@ -67,31 +63,33 @@
 	var/static/list/traits_to_apply = list(
 		TRAIT_ADVANCEDTOOLUSER,
 		TRAIT_ASHSTORM_IMMUNE,
+		TRAIT_BRAWLING_KNOCKDOWN_BLOCKED,
+		TRAIT_FENCE_CLIMBER,
 		TRAIT_LITERATE,
 		TRAIT_MADNESS_IMMUNE,
 		TRAIT_MARTIAL_ARTS_IMMUNE,
+		TRAIT_NEVER_CONSIDERED_ALIVE,
 		TRAIT_NOFIRE_SPREAD,
-		TRAIT_BRAWLING_KNOCKDOWN_BLOCKED,
-		TRAIT_FENCE_CLIMBER,
-		TRAIT_SILICON_ACCESS,
-		TRAIT_REAGENT_SCANNER,
-		TRAIT_UNOBSERVANT,
 		TRAIT_NO_SLIP_ALL,
+		TRAIT_REAGENT_SCANNER,
+		TRAIT_SILICON_ACCESS,
+		TRAIT_UNOBSERVANT,
 	)
 
 	add_traits(traits_to_apply, ROUNDSTART_TRAIT)
 	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_ANOSMIA, INNATE_TRAIT)
 	RegisterSignal(src, COMSIG_LIVING_ELECTROCUTE_ACT, PROC_REF(on_silicon_shocked))
+	law_ui = new(src)
 
 /mob/living/silicon/Destroy()
 	QDEL_NULL(radio)
 	QDEL_NULL(aicamera)
 	QDEL_NULL(builtInCamera)
-	laws?.owner = null //Laws will refuse to die otherwise.
 	QDEL_NULL(laws)
 	QDEL_NULL(modularInterface)
 	GLOB.silicon_mobs -= src
+	QDEL_NULL(law_ui)
 	return ..()
 
 ///Sets cyborg gender from preferences. Expects a client.
@@ -203,47 +201,7 @@
 		return TRUE
 	return FALSE
 
-/**
- * Assembles all the zeroth, inherent and supplied laws into a single list.
- */
-/mob/living/silicon/proc/assemble_laws()
-	var/list/laws_to_return = list()
-	laws_to_return += laws.zeroth
-	for (var/law in laws.inherent)
-		laws_to_return += law
-	for (var/law in laws.supplied)
-		if (law != "") // supplied laws start off with 15 blank strings, so don't add any of those
-			laws_to_return += law
-	return laws_to_return
-
 /mob/living/silicon/Topic(href, href_list)
-	if (href_list["lawc"]) // Toggling whether or not a law gets stated by the State Laws verb
-		var/law_index = text2num(href_list["lawc"])
-		var/law = assemble_laws()[law_index + 1]
-		if (law in lawcheck)
-			lawcheck -= law
-		else
-			lawcheck += law
-		checklaws()
-
-	if (href_list["lawi"])
-		var/law_index = text2num(href_list["lawi"])
-		var/law = laws.ion[law_index]
-		if (law in ioncheck)
-			ioncheck -= law
-		else
-			ioncheck += law
-		checklaws()
-
-	if (href_list["lawh"])
-		var/law_index = text2num(href_list["lawh"])
-		var/law = laws.hacked[law_index]
-		if (law in hackedcheck)
-			hackedcheck -= law
-		else
-			hackedcheck += law
-		checklaws()
-
 	if (href_list["laws"])
 		statelaws()
 
@@ -270,117 +228,11 @@
 
 	return
 
-/mob/living/silicon/proc/statelaws(force = 0)
-	laws_sanity_check()
-	// Create a cache of our laws and lawcheck flags before we do anything else.
-	// These are used to prevent weirdness when laws are changed when the AI is mid-stating.
-	var/lawcache_zeroth = laws.zeroth
-	var/list/lawcache_hacked = laws.hacked.Copy()
-	var/list/lawcache_ion = laws.ion.Copy()
-	var/list/lawcache_inherent = laws.inherent.Copy()
-	var/list/lawcache_supplied = laws.supplied.Copy()
+/mob/living/silicon/proc/statelaws(force = FALSE)
+	law_ui.state_laws(force)
 
-	var/list/lawcache_lawcheck = lawcheck.Copy()
-	var/list/lawcache_ioncheck = ioncheck.Copy()
-	var/list/lawcache_hackedcheck = hackedcheck.Copy()
-	var/forced_log_message = "stating laws[force ? ", forced" : ""]"
-	//"radiomod" is inserted before a hardcoded message to change if and how it is handled by an internal radio.
-	say("[radiomod] Current Active Laws:", forced = forced_log_message)
-	sleep(1 SECONDS)
-
-	if (lawcache_zeroth)
-		if (force || (lawcache_zeroth in lawcache_lawcheck))
-			say("[radiomod] 0. [lawcache_zeroth]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE))
-			sleep(1 SECONDS)
-
-	for (var/index in 1 to length(lawcache_hacked))
-		var/law = lawcache_hacked[index]
-		var/num = ion_num()
-		if (length(law) <= 0)
-			continue
-		if (force || (law in lawcache_hackedcheck))
-			say("[radiomod] [num]. [law]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE))
-			sleep(1 SECONDS)
-
-	for (var/index in 1 to length(lawcache_ion))
-		var/law = lawcache_ion[index]
-		var/num = ion_num()
-		if (length(law) <= 0)
-			return
-		if (force || (law in lawcache_ioncheck))
-			say("[radiomod] [num]. [law]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE))
-			sleep(1 SECONDS)
-
-	var/number = 1
-	for (var/index in 1 to length(lawcache_inherent))
-		var/law = lawcache_inherent[index]
-		if (length(law) <= 0)
-			continue
-		if (force || (law in lawcache_lawcheck))
-			say("[radiomod] [number]. [law]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE))
-			number++
-			sleep(1 SECONDS)
-
-	for (var/index in 1 to length(lawcache_supplied))
-		var/law = lawcache_supplied[index]
-
-		if (length(law) <= 0)
-			continue
-		if (force || (law in lawcache_lawcheck))
-			say("[radiomod] [number]. [law]", forced = forced_log_message, message_mods = list(MODE_SEQUENTIAL = TRUE))
-			number++
-			sleep(1 SECONDS)
-
-///Gives you a link-driven interface for deciding what laws the statelaws() proc will share with the crew.
 /mob/living/silicon/proc/checklaws()
-	laws_sanity_check()
-	var/list = "<b>Which laws do you want to include when stating them for the crew?</b><br><br>"
-
-	var/law_display = "Yes"
-	if (laws.zeroth)
-		if (!(laws.zeroth in lawcheck))
-			law_display = "No"
-		list += {"<a href='byond://?src=[REF(src)];lawc=0'>[law_display] 0:</a> <font color='#ff0000'><b>[laws.zeroth]</b></font><br>"}
-
-	for (var/index in 1 to length(laws.hacked))
-		law_display = "Yes"
-		var/law = laws.hacked[index]
-		if (length(law) > 0)
-			if (!(law in hackedcheck))
-				law_display = "No"
-			list += {"<a href='byond://?src=[REF(src)];lawh=[index]'>[law_display] [ion_num()]:</a> <font color='#660000'>[law]</font><br>"}
-
-	for (var/index in 1 to length(laws.ion))
-		law_display = "Yes"
-		var/law = laws.ion[index]
-		if (length(law) > 0)
-			if(!(law in ioncheck))
-				law_display = "No"
-			list += {"<a href='byond://?src=[REF(src)];lawi=[index]'>[law_display] [ion_num()]:</a> <font color='#547DFE'>[law]</font><br>"}
-
-	var/number = 1
-	for (var/index in 1 to length(laws.inherent))
-		law_display = "Yes"
-		var/law = laws.inherent[index]
-		if (length(law) > 0)
-			if (!(law in lawcheck))
-				law_display = "No"
-			list += {"<a href='byond://?src=[REF(src)];lawc=[index]'>[law_display] [number]:</a> [law]<br>"}
-			number++
-
-	for (var/index in 1 to length(laws.supplied))
-		law_display = "Yes"
-		var/law = laws.supplied[index]
-		if (length(law) > 0)
-			if (!(law in lawcheck))
-				law_display = "No"
-			list += {"<a href='byond://?src=[REF(src)];lawc=[number]'>[law_display] [number]:</a> <font color='#990099'>[law]</font><br>"}
-			number++
-	list += {"<br><br><a href='byond://?src=[REF(src)];laws=1'>State Laws</a>"}
-
-	var/datum/browser/browser = new(usr, "laws")
-	browser.set_content(list)
-	browser.open()
+	law_ui.ui_interact(src)
 
 /mob/living/silicon/proc/ai_roster()
 	if(!client)
@@ -449,6 +301,7 @@
 
 /mob/living/silicon/rust_heretic_act()
 	adjust_brute_loss(500)
+	return TRUE
 
 /mob/living/silicon/on_floored_start()
 	return // Silicons are always standing by default.
@@ -495,8 +348,10 @@
 			active_ui.send_full_update()
 
 /// Same as the normal character name replacement, but updates the contents of the modular interface.
-/mob/living/silicon/fully_replace_character_name(oldname, newname)
+/mob/living/silicon/fully_replace_character_name(oldname, newname, log_new_name = FALSE)
 	. = ..()
+	if(!.)
+		return
 	if(!modularInterface)
 		stack_trace("Silicon [src] ( [type] ) was somehow missing their integrated tablet. Please make a bug report.")
 		create_modularInterface()
@@ -519,4 +374,4 @@
 		. += borg_laws
 
 /mob/living/silicon/get_access()
-	return REGION_ACCESS_ALL_STATION
+	return SSid_access.accesses_by_region[REGION_ALL_STATION]

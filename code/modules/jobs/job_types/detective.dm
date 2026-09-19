@@ -42,8 +42,8 @@
 	family_heirlooms = list(/obj/item/reagent_containers/cup/glass/bottle/whiskey)
 	rpg_title = "Thiefcatcher" //I guess they caught them all rip thief...
 	job_flags = STATION_JOB_FLAGS | JOB_ANTAG_PROTECTED
-
 	job_tone = "objection"
+	tgui_icon = FA_ICON_USER_SECRET
 
 
 /datum/outfit/job/detective
@@ -60,7 +60,7 @@
 		/obj/item/melee/baton = 1,
 		/obj/item/storage/box/evidence = 1,
 		)
-	belt = /obj/item/modular_computer/pda/detective
+	belt = /obj/item/modular_computer/pda/crew/detective
 	ears = /obj/item/radio/headset/headset_sec/alt
 	gloves = /obj/item/clothing/gloves/color/black
 	head = /obj/item/clothing/head/fedora/det_hat
@@ -77,6 +77,8 @@
 	implants = list(/obj/item/implant/mindshield)
 
 	skillchips = list(/obj/item/skillchip/job/detectives_taste)
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/security
 
 /datum/outfit/job/detective/pre_equip(mob/living/carbon/human/human, visuals_only = FALSE)
 	. = ..()

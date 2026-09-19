@@ -25,6 +25,7 @@
 /datum/export/crate/wooden/ore
 	unit_name = "ore box"
 	export_types = list(/obj/structure/ore_box)
+	exclude_types = list()
 
 /datum/export/crate/wood
 	cost = CARGO_CRATE_VALUE * 0.48
@@ -36,11 +37,13 @@
 	cost = CARGO_CRATE_VALUE/2 //50 wooden crates cost 800 credits, and you can make 10 coffins in seconds with those planks. Each coffin selling for 100 means you can make a net gain of 200 credits for wasting your time making coffins.
 	unit_name = "coffin"
 	export_types = list(/obj/structure/closet/crate/coffin)
+	exclude_types = list()
 
 /datum/export/crate/cardboard
 	cost = CARGO_CRATE_VALUE/5
 	unit_name = "cardboard box"
 	export_types = list(/obj/structure/closet/crate/cardboard, /obj/structure/closet/cardboard)
+	exclude_types = list()
 
 /datum/export/reagent_dispenser
 	abstract_type = /datum/export/reagent_dispenser
@@ -128,28 +131,13 @@
 		return 0
 	var/cached_moles = canister_mix.moles
 
-	var/static/list/gases_to_check = list(
-		/datum/gas/bz,
-		/datum/gas/nitrium,
-		/datum/gas/hypernoblium,
-		/datum/gas/miasma,
-		/datum/gas/tritium,
-		/datum/gas/pluoxium,
-		/datum/gas/freon,
-		/datum/gas/hydrogen,
-		/datum/gas/healium,
-		/datum/gas/proto_nitrate,
-		/datum/gas/zauker,
-		/datum/gas/helium,
-		/datum/gas/antinoblium,
-		/datum/gas/halon,
-	)
-
 	var/worth = cost
-	for(var/gas_id in gases_to_check)
-		canister_mix.assert_gas(gas_id)
-		if(cached_moles[gas_id] > 0)
-			worth += get_gas_value(gas_id, cached_moles[gas_id])
+	for(var/datum/gas/gas as anything in GLOB.meta_gas_info[META_GAS_ID])
+		if(!(initial(gas.cargo_flags) & GAS_EXPORTABLE))
+			continue
+		canister_mix.assert_gas(gas)
+		if(cached_moles[gas] > 0)
+			worth += get_gas_value(gas, cached_moles[gas])
 			if(worth > MAX_GAS_CREDITS)
 				worth = MAX_GAS_CREDITS
 				break

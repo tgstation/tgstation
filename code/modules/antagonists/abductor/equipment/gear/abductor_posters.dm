@@ -12,15 +12,15 @@
 	poster_item_icon_state = "rolled_abductor"
 
 /obj/structure/sign/poster/abductor/tear_poster(mob/user)
-	if(!isabductor(user))
+	if(!HAS_MIND_TRAIT(user, TRAIT_ABDUCTOR_KNOWLEDGE))
 		balloon_alert(user, "it won't budge!")
 		return
 	return ..()
 
-/obj/structure/sign/poster/abductor/attackby(obj/item/tool, mob/user, list/modifiers, list/attack_modifiers)
+/obj/structure/sign/poster/abductor/wirecutter_act(mob/living/user, obj/item/tool)
 	if(tool.toolspeed >= 0.2)
 		balloon_alert(user, "tool too weak!")
-		return FALSE
+		return ITEM_INTERACT_BLOCKING
 	return ..()
 
 /obj/structure/sign/poster/abductor/random

@@ -115,11 +115,11 @@
 			new /obj/item/implanter/storage(src) // 8 tc
 
 		if(KIT_HACKER) //L-L--LOOK AT YOU, HACKER
-			new /obj/item/ai_module/syndicate(src) // 4 tc
+			new /obj/item/ai_module/law/syndicate(src) // 4 tc
 			new /obj/item/card/emag(src) // 4 tc
 			new /obj/item/card/emag/doorjack(src) // 3 tc
 			new /obj/item/encryptionkey/binary(src) // 5 tc
-			new /obj/item/ai_module/toy_ai(src) // ~6 tc
+			new /obj/item/ai_module/law/toy_ai(src) // ~6 tc
 			new /obj/item/multitool/ai_detect(src) // 1 tc
 			new /obj/item/storage/toolbox/syndicate(src) // 1 tc
 			new /obj/item/disk/computer/syndicate/camera_app(src) // 1 tc
@@ -391,6 +391,12 @@
 /obj/item/storage/box/syndie_kit/imp_macrobomb/PopulateContents()
 	new /obj/item/implanter/explosive_macro(src)
 
+/obj/item/storage/box/syndie_kit/imp_macrobomb_fake
+	name = "fake macrobomb implant box"
+
+/obj/item/storage/box/syndie_kit/imp_macrobomb_fake/PopulateContents()
+	new /obj/item/implanter/explosive_macro/fake(src)
+
 /obj/item/storage/box/syndie_kit/imp_deniability
 	name = "tactical deniability implant box"
 
@@ -412,10 +418,15 @@
 
 /obj/item/storage/box/syndie_kit/clownpins
 	name = "ultra hilarious firing pin box"
+	var/pin_type = /obj/item/firing_pin/clown/ultra
 
 /obj/item/storage/box/syndie_kit/clownpins/PopulateContents()
-	for(var/i in 1 to 7)
-		new /obj/item/firing_pin/clown/ultra(src)
+	for(var/i in 1 to 4)
+		new pin_type(src)
+
+/obj/item/storage/box/syndie_kit/clownpins/super
+	name = "super ultra hilarious firing pin box"
+	pin_type = /obj/item/firing_pin/clown/ultra/selfdestruct
 
 /obj/item/storage/box/syndie_kit/imp_storage
 	name = "storage implant box"
@@ -495,6 +506,7 @@
 	new /obj/item/reagent_containers/cup/bottle/carnivorous_blood(src)
 	new /obj/item/reagent_containers/syringe(src)
 	new /obj/item/food/meat/slab/human(src)
+	new /obj/item/paper/guides/carnivorous_blood(src)
 
 /obj/item/storage/box/syndie_kit/nuke
 	name = "nuke core extraction kit"
@@ -602,7 +614,7 @@
 	new /obj/item/radio/headset/headset_cent/empty(src)
 	new /obj/item/clothing/glasses/sunglasses(src)
 	new /obj/item/storage/backpack/satchel(src)
-	new /obj/item/modular_computer/pda/heads(src)
+	new /obj/item/modular_computer/pda/crew/heads(src)
 	new /obj/item/clipboard(src)
 
 /obj/item/storage/box/syndie_kit/chameleon/broken/PopulateContents()
@@ -741,13 +753,11 @@
 /obj/item/storage/box/syndie_kit/induction_kit
 	name = "syndicate induction kit"
 	desc = "Contains all you need for introducing your newest comrade to the Syndicate and all its worker's benefits."
+	var/implant_type = /obj/item/implanter/induction_implant
 
 /obj/item/storage/box/syndie_kit/induction_kit/PopulateContents()
 	// Basic weaponry, so they have something to use.
-	new /obj/item/gun/ballistic/automatic/pistol/clandestine(src) // 6 TC, but free for nukies
-	new /obj/item/ammo_box/magazine/m10mm/hp(src) // 3 TC, a reward for the teamwork involved
-	new /obj/item/ammo_box/magazine/m10mm/ap(src) // 3 TC, a reward for the teamwork involved
-	new /obj/item/pen/edagger(src) // 2 TC
+	give_weaponry()
 	// The necessary equipment to help secure that disky.
 	new /obj/item/radio/headset/syndicate/alt(src) // 5 TC / Free for nukies
 	new /obj/item/modular_computer/pda/nukeops(src) // ?? TC / Free for nukies
@@ -763,22 +773,50 @@
 	new /obj/item/clothing/gloves/fingerless(src)
 	new /obj/item/book/manual/nuclear(src) // Very important
 	// The most important part of the kit, the implant that gives them the syndicate faction.
-	new /obj/item/implanter/induction_implant(src)
+	new implant_type(src)
 	// Tactical map implant so they can see the minimap with the rest of the team.
 	new /obj/item/implanter/tacmap/nuclear(src)
 	// All in all, 6+3+3+2+5+2+4 = ~25 TC of 'miscellaneous' items.
 	// This is a lot of value for 10 TC, but you have to keep in mind that you NEED someone to get this stuff station-side.
 	// Pretty much all of it is a bad deal for reinforcements or yourself as they already have similar or good-enough alternatives.
 
+/obj/item/storage/box/syndie_kit/induction_kit/proc/give_weaponry()
+	new /obj/item/gun/ballistic/automatic/pistol/clandestine(src) // 6 TC, but free for nukies
+	new /obj/item/ammo_box/magazine/m10mm/hp(src) // 3 TC, a reward for the teamwork involved
+	new /obj/item/ammo_box/magazine/m10mm/ap(src) // 3 TC, a reward for the teamwork involved
+	new /obj/item/pen/edagger(src) // 2 TC
+
+/obj/item/storage/box/syndie_kit/induction_kit/clown
+	name = "syndicate circus induction kit"
+	desc = "A special induction kit for joining the syndicate circus."
+	implant_type = /obj/item/implanter/induction_implant/clown
+
+/obj/item/storage/box/syndie_kit/induction_kit/clown/give_weaponry()
+	// Toy gun instead of real gun
+	var/obj/item/gun/ballistic/automatic/pistol/toy/riot/clandestine/gun = new(src)
+	qdel(gun.pin)
+	var/obj/item/firing_pin/clown/ultra/new_pin = new()
+	new_pin.gun_insert(null, gun, TRUE)
+
+	// You need this for the gun
+	new /obj/item/dnainjector/clumsymut(src)
+	// And a bonus
+	new /obj/item/reagent_containers/spray/waterflower/lube/super(src)
+
 /obj/item/implanter/induction_implant
 	name = "implanter (nuclear operative)"
 	desc = "A sterile automatic implant injector. You can see a tiny, somehow legible sticker on the side: 'NOT A BRAINWASH DEVICE'"
 	imp_type = /obj/item/implant/nuclear_operative
 
+/obj/item/implanter/induction_implant/clown
+	name = "implanter (syndicate circus)"
+	imp_type = /obj/item/implant/nuclear_operative/clown
+
 /obj/item/implant/nuclear_operative
 	name = "nuclear operative implant"
 	desc = "Registers you as a member of a Syndicate nuclear operative team."
 	implant_color = "r"
+	var/antag_datum_type = /datum/antagonist/nukeop
 
 /obj/item/implant/nuclear_operative/implant(mob/living/target, mob/user, silent = FALSE, force = FALSE)
 	. = ..()
@@ -798,12 +836,12 @@
 			human_target.reagents.add_reagent(/datum/reagent/toxin, 2)
 			return FALSE
 
-	if(!human_target.is_antag()) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
+	if(is_valid_inductee(target)) // GTFO. Technically not foolproof but making a heartbreaker or a paradox clone a nuke op sounds hilarious
 		to_chat(human_target, span_notice("Huh? Nothing happened? But you're starting to feel a little ill..."))
 		human_target.reagents.add_reagent(/datum/reagent/toxin, 15)
 		return FALSE
 
-	var/datum/antagonist/nukeop/nuke_datum = new()
+	var/datum/antagonist/nukeop/nuke_datum = new antag_datum_type()
 	nuke_datum.send_to_spawnpoint = FALSE
 	nuke_datum.give_bonus_tc = FALSE
 	nuke_datum.nukeop_outfit = null
@@ -823,6 +861,17 @@
 	to_chat(target, span_notice("You feel a little less nuclear."))
 	to_chat(target, span_userdanger("You're no longer identified as a nuclear operative! You are free to follow any valid goals you wish, even continuing to secure the disk. Just make sure neither any turrets nor operatives kill you on sight."))
 	return TRUE
+
+/obj/item/implant/nuclear_operative/proc/is_valid_inductee(mob/living/target)
+	return target.is_antag()
+
+/obj/item/implant/nuclear_operative/clown
+	name = "syndicate circus implant"
+	desc = "Registers the wearer as a member of the syndicate circus."
+	antag_datum_type = /datum/antagonist/nukeop/clownop
+
+/obj/item/implant/nuclear_operative/clown/is_valid_inductee(mob/living/target)
+	return HAS_MIND_TRAIT(target, TRAIT_CLUMSY) || HAS_MIND_TRAIT(target, TRAIT_NAIVE) || ..()
 
 /obj/item/storage/box/syndie_kit/poster_box
 	name = "syndicate poster pack"

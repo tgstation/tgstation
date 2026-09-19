@@ -4,6 +4,7 @@
  * @license MIT
  */
 
+import { flushSync } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import { createLogger } from 'tgui/logging';
 import { Tooltip } from 'tgui-core/components';
@@ -105,6 +106,56 @@ function updateMessageBadge(message) {
   }
 }
 
+/**
+ * Highlight chat sounds - Cooldown check + play sound for client.
+ */
+const HIGHLIGHT_SOUND_COOLDOWN_SECONDS = 3;
+let lastHighlightSoundAt = 0;
+
+function playHighlightSound(soundFile: string, volume: number) {
+  const now = Date.now();
+  if (now - lastHighlightSoundAt < HIGHLIGHT_SOUND_COOLDOWN_SECONDS * 1000) {
+    return;
+  }
+
+  lastHighlightSoundAt = now;
+  Byond.command(`.sound '${soundFile}' volume=${Math.round(volume * 100)}`);
+}
+
+const RADIO_CHANNEL_LABEL = /^\[[^\]]+\]\s*/;
+
+// Check if a text node is a radio channel name, e.g. "[Radio] ".
+function isRadioChannelName(node: Text): boolean {
+  const text = node.textContent || '';
+  const match = RADIO_CHANNEL_LABEL.exec(text);
+  return Boolean(
+    node.parentElement?.classList.contains('name') &&
+    match &&
+    match[0].length === text.length,
+  );
+}
+
+// Split the radio channel label from the name node so that it can be highlighted separately. (used to avoid highlighting radio channel names)
+function splitRadioChannelLabel(root: HTMLElement): void {
+  const nameNodes = root.querySelectorAll('.name');
+  for (let i = 0; i < nameNodes.length; i++) {
+    const firstChild = nameNodes[i].firstChild;
+    if (firstChild?.nodeType !== Node.TEXT_NODE) {
+      continue;
+    }
+    const text = firstChild.textContent || '';
+    const match = RADIO_CHANNEL_LABEL.exec(text);
+    if (match && match[0].length < text.length) {
+      (firstChild as Text).splitText(match[0].length);
+    }
+  }
+}
+
+// Check if a message is a self-action message, such as "You put on your helmet.", we don't want to highlight it as, it's you doing the action.
+function isSelfActionMessage(text: string): boolean {
+  return /^\s*You\b/.test(text);
+}
+
 class ChatRenderer {
   loaded: boolean;
   rootNode: HTMLElement | null;
@@ -117,6 +168,8 @@ class ChatRenderer {
   scrollTracking: boolean;
   lastScrollHeight: number;
   highlightParsers: Array<any> | null;
+  currentJob: string | null;
+  currentCharacter: string | null;
   handleScroll: (type: any) => void;
 
   constructor() {
@@ -130,6 +183,8 @@ class ChatRenderer {
     // Scroll handler
 
     this.scrollNode = null;
+    this.currentJob = null;
+    this.currentCharacter = null;
     this.scrollTracking = true;
     this.lastScrollHeight = 0;
     this.handleScroll = (evt) => {
@@ -182,7 +237,9 @@ class ChatRenderer {
 
   tryFlushQueue() {
     if (this.isReady() && this.queue.length > 0) {
-      this.processBatch(this.queue);
+      this.processBatch(this.queue, {
+        suppressHighlightSound: true,
+      });
       this.queue = [];
     }
   }
@@ -191,6 +248,35 @@ class ChatRenderer {
     for (const key of Object.keys(style)) {
       this.rootNode!.style.setProperty(key, style[key]);
     }
+  }
+
+  setJob(title) {
+    this.currentJob =
+      typeof title === 'string' && title ? title.trim().toLowerCase() : null;
+  }
+
+  setCharacter(name) {
+    this.currentCharacter =
+      typeof name === 'string' && name ? name.trim().toLowerCase() : null;
+  }
+
+  matchesFilters(parser) {
+    if (
+      parser.jobs?.length &&
+      !(this.currentJob && parser.jobs.includes(this.currentJob))
+    ) {
+      return false;
+    }
+    if (
+      parser.characters?.length &&
+      !(
+        this.currentCharacter &&
+        parser.characters.includes(this.currentCharacter)
+      )
+    ) {
+      return false;
+    }
+    return true;
   }
 
   setHighlight(highlightSettings, highlightSettingById) {
@@ -206,6 +292,17 @@ class ChatRenderer {
       const matchWord = setting.matchWord;
       const matchCase = setting.matchCase;
       const enabled = setting.enabled;
+      const playSound = Boolean(setting.playSound);
+      const soundFile =
+        setting.soundFile || 'sound/misc/highlight_sounds/Beep.ogg';
+      const soundVolume = Number(setting.soundVolume ?? 0.5);
+      const jobs = String(setting.jobFilter || '')
+        .split(',')
+        .map((str) => str.trim().toLowerCase())
+        .filter(Boolean);
+      const characters = (
+        Array.isArray(setting.characterFilter) ? setting.characterFilter : []
+      ).map((str) => String(str).trim().toLowerCase());
       const allowedRegex = /^[a-zа-яё0-9_\-$/^[\s\]\\]+$/gi;
       const regexEscapeCharacters = /[!#$%^&*)(+=.<>{}[\]:;'"|~`_\-\\/]/g;
       const lines = String(text)
@@ -281,6 +378,11 @@ class ChatRenderer {
         highlightRegex,
         highlightColor,
         highlightWholeMessage,
+        playSound,
+        soundFile,
+        soundVolume,
+        jobs,
+        characters,
       });
     });
   }
@@ -341,9 +443,17 @@ class ChatRenderer {
 
   processBatch(
     batch,
-    options: { prepend?: boolean; notifyListeners?: boolean } = {},
+    options: {
+      prepend?: boolean;
+      notifyListeners?: boolean;
+      suppressHighlightSound?: boolean;
+    } = {},
   ) {
-    const { prepend, notifyListeners = true } = options;
+    const {
+      prepend,
+      notifyListeners = true,
+      suppressHighlightSound = false,
+    } = options;
     const now = Date.now();
     // Queue up messages until chat is ready
     if (!this.isReady()) {
@@ -438,23 +548,30 @@ class ChatRenderer {
 
           const reactRoot = createRoot(childNode);
 
-          reactRoot.render(
-            <Element {...outputProps}>
-              <span dangerouslySetInnerHTML={oldHtml} />
-            </Element>,
-          );
+          // `flushSync()` because of a chat scroll issue where whether or not
+          // the line wraps was being decided before the name loaded
+          flushSync(() => {
+            reactRoot.render(
+              <Element {...outputProps}>
+                <span dangerouslySetInnerHTML={oldHtml} />
+              </Element>,
+            );
+          });
         }
 
         // Highlight text
         if (!message.avoidHighlighting && this.highlightParsers) {
+          splitRadioChannelLabel(node);
+          let messageHighlighted = false;
           this.highlightParsers
-            .filter((parser) => parser.enabled)
+            .filter((parser) => parser.enabled && this.matchesFilters(parser))
             .forEach((parser) => {
               const highlighted = highlightNode(
                 node,
                 parser.highlightRegex,
                 parser.highlightWords,
                 (text) => createHighlightNode(text, parser.highlightColor),
+                (textNode) => !isRadioChannelName(textNode), // Exclude radio channel names from highlighting
               );
               if (highlighted && parser.highlightWholeMessage) {
                 node.className += ' ChatMessage--highlighted';
@@ -462,6 +579,19 @@ class ChatRenderer {
                   '--highlight-color',
                   parser.highlightColor,
                 );
+              }
+              // Highlight sounds - Plays a sound once per message if enabled, will not play if the text was prased. (aka when relogging or reapplying chat).
+              if (highlighted && parser.playSound && !messageHighlighted) {
+                messageHighlighted = true;
+                if (
+                  !suppressHighlightSound &&
+                  !isSelfActionMessage(node.textContent || '')
+                ) {
+                  playHighlightSound(
+                    parser.soundFile,
+                    parser.soundVolume ?? 0.5,
+                  );
+                }
               }
             });
         }
@@ -581,6 +711,7 @@ class ChatRenderer {
     // Repopulate the chat log
     this.processBatch(messages, {
       notifyListeners: false,
+      suppressHighlightSound: true,
     });
   }
 

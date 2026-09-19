@@ -91,9 +91,15 @@
 	/// The role that ghosts will get. Only used for poll text.
 	var/spawner_role = "Antagonist"
 
+	/**
+	 * Scorekeeping
+	 */
+
+	/// The highest score grade achieved so far
+	var/best_grade = "None"
 
 /datum/lazy_template/virtual_domain/proc/can_view_name(scanner_tier, server_points)
-	return difficulty < scanner_tier && cost <= server_points + 5
+	return cost <= server_points + 5
 
 /datum/lazy_template/virtual_domain/proc/can_view_reward(scanner_tier, server_points)
 	return difficulty < (scanner_tier + 1) && cost <= server_points + 3
@@ -134,3 +140,7 @@
 /// Overridable proc to be called after the map is loaded.
 /datum/lazy_template/virtual_domain/proc/setup_domain(list/created_atoms)
 	return
+
+/datum/lazy_template/virtual_domain/proc/submit_grade(new_grade)
+	if(GLOB.bitrunning_grades.Find(new_grade) > GLOB.bitrunning_grades.Find(best_grade))
+		best_grade = new_grade

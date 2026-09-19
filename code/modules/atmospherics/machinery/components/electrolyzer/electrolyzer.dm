@@ -7,8 +7,8 @@
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN
 	icon = 'icons/obj/pipes_n_cables/atmos.dmi'
 	icon_state = "electrolyzer-off"
-	name = "space electrolyzer"
-	desc = "Thanks to the fast and dynamic response of our electrolyzers, on-site hydrogen production is guaranteed. Warranty void if used by clowns"
+	name = "electrolyzer"
+	desc = "A portable electrolyzer, allowing for on-site production of Hydrogen. Warranty void if used by clowns."
 	max_integrity = 250
 	armor_type = /datum/armor/machinery_electrolyzer
 	circuit = /obj/item/circuitboard/machine/electrolyzer
@@ -71,9 +71,9 @@
 		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
 	else
 		. += "There is no power cell installed."
-	if(in_range(user, src) || isobserver(user))
+	if(in_range(user, src) && !isobserver(user))
 		. += span_notice("<b>Alt-click</b> to toggle [on ? "off" : "on"].")
-		. += span_notice("<b>Anchor</b> to drain power from APC instead of cell")
+		. += span_notice("<b>Anchor</b> it to drain power from the area's APC instead its internal power cell.")
 	. += span_notice("It will drain power from the [anchored ? "area's APC" : "internal power cell"].")
 
 
@@ -160,24 +160,27 @@
 /obj/machinery/electrolyzer/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(user, tool)
 
-/obj/machinery/electrolyzer/attackby(obj/item/I, mob/user, list/modifiers, list/attack_modifiers)
+/obj/machinery/electrolyzer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	add_fingerprint(user)
-	if(istype(I, /obj/item/stock_parts/power_store/cell))
-		if(!panel_open)
-			balloon_alert(user, "open panel!")
-			return
-		if(cell)
-			balloon_alert(user, "cell inside!")
-			return
-		if(!user.transferItemToLoc(I, src))
-			return
-		cell = I
-		I.add_fingerprint(usr)
-		balloon_alert(user, "inserted cell")
-		SStgui.update_uis(src)
+	if(!istype(tool, /obj/item/stock_parts/power_store/cell))
+		return NONE
 
-		return
-	return ..()
+	if(!panel_open)
+		balloon_alert(user, "open panel!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(cell)
+		balloon_alert(user, "cell inside!")
+		return ITEM_INTERACT_BLOCKING
+
+	if(!user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
+
+	cell = tool
+	tool.add_fingerprint(usr)
+	balloon_alert(user, "inserted cell")
+	SStgui.update_uis(src)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/electrolyzer/click_alt(mob/user)
 	if(panel_open)

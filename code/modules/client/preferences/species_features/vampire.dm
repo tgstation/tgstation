@@ -24,7 +24,7 @@
 ///list that stores a vampire house name for each department
 GLOBAL_LIST_EMPTY(vampire_houses)
 
-/datum/preference/choiced/vampire_status/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/vampire_status/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	if(!HAS_TRAIT(target, TRAIT_BLOOD_CLANS))
 		return
 

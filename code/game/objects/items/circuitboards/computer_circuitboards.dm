@@ -10,28 +10,6 @@
 
 //Command
 
-/obj/item/circuitboard/computer/aiupload
-	name = "AI Upload"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	build_path = /obj/machinery/computer/upload/ai
-	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
-	req_one_access = list(ACCESS_AI_UPLOAD)
-
-/obj/item/circuitboard/computer/aiupload/no_lock
-	build_path = /obj/machinery/computer/upload/ai/no_lock
-	req_one_access = null
-
-/obj/item/circuitboard/computer/borgupload
-	name = "Cyborg Upload"
-	greyscale_colors = CIRCUIT_COLOR_COMMAND
-	req_one_access = list(ACCESS_AI_UPLOAD)
-	build_path = /obj/machinery/computer/upload/borg
-	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
-
-/obj/item/circuitboard/computer/borgupload/no_lock
-	req_one_access = null
-	build_path = /obj/machinery/computer/upload/borg/no_lock
-
 /obj/item/circuitboard/computer/bsa_control
 	name = "Bluespace Artillery Controls"
 	build_path = /obj/machinery/computer/bsa_control
@@ -413,20 +391,29 @@
 /obj/item/circuitboard/computer/tram_controls
 	name = "Tram Controls"
 	build_path = /obj/machinery/computer/tram_controls
-	var/split_mode = FALSE
-
-/obj/item/circuitboard/computer/tram_controls/split
-	split_mode = TRUE
+	var/install_type = NORMAL_WINDOW
+	var/specific_transport_id = TRAMSTATION_LINE_1
 
 /obj/item/circuitboard/computer/tram_controls/examine(mob/user)
 	. = ..()
-	. += span_info("The board is configured for [split_mode ? "split window" : "normal window"].")
-	. += span_notice("The board mode can be changed with a [EXAMINE_HINT("multitool")].")
+	. += span_info("The board is configured for tram ID [specific_transport_id] and a [install_type] installation.")
+	. += span_notice("The tram ID can be changed with a [EXAMINE_HINT("multitool")]. The installation mode can be changed with a [EXAMINE_HINT("screwdriver")].")
+
+/obj/item/circuitboard/computer/tram_controls/screwdriver_act(mob/living/user)
+	var/selected_install_type = tgui_input_list(user, "Window mounted or standalone?", "Off the rails", list(NORMAL_WINDOW, SPLIT_WINDOW, STANDALONE))
+	if(isnull(selected_install_type))
+		return NONE
+	install_type = selected_install_type
+	to_chat(user, span_notice("[src] is now aligned in installation mode [install_type]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/circuitboard/computer/tram_controls/multitool_act(mob/living/user)
-	split_mode = !split_mode
-	to_chat(user, span_notice("[src] positioning set to [split_mode ? "split window" : "normal window"]."))
-	return TRUE
+	var/selected_transport_id = tgui_input_list(user, "Which tram?", "Off the rails", SStransport.debug_tram_list)
+	if(isnull(selected_transport_id))
+		return NONE
+	specific_transport_id = selected_transport_id
+	to_chat(user, span_notice("[src] is now programmed to control [specific_transport_id]."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/circuitboard/computer/terminal
 	name = "Terminal"

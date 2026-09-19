@@ -13,11 +13,10 @@
 	resistance = 2
 	stage_speed = -2
 	transmittable = -2
-	level = 3
+	level = 7
 	severity = 3
 	base_message_chance = 100
-	symptom_delay_min = 15
-	symptom_delay_max = 45
+	symptom_delay = 30
 	required_organ = ORGAN_SLOT_STOMACH
 	symptom_cure = /datum/reagent/medicine/diphenhydramine // It's good with terrible stats, it should be harder to cure
 	cure_color = "orange"

@@ -81,7 +81,7 @@
 /datum/preference/choiced/lizard_legs/init_possible_values()
 	return list(NORMAL_LEGS, DIGITIGRADE_LEGS)
 
-/datum/preference/choiced/lizard_legs/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/lizard_legs/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	target.dna.features[FEATURE_LEGS] = value
 	// Hack to update the dummy in the preference menu
 	// (Because digi legs are ONLY handled on species change)

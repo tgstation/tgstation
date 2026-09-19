@@ -179,3 +179,11 @@
 #define ATMOS_PRESSURE_ERROR_TOLERANCE 0.01
 /// Helper function for retrieving gas meta info for use in performace critical places
 #define GAS_META /datum/gas_mixture::gas_meta
+
+// Flags for gas-cargo handling
+/// Gas can be sold in canisters
+#define GAS_EXPORTABLE (1 << 0)
+/// Gas can be purchased in canisters
+#define GAS_PURCHASABLE (1 << 1)
+/// Gas is dangerous and may need additional access
+#define GAS_DANGEROUS (1 << 2)

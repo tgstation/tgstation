@@ -225,6 +225,30 @@
 /turf/open/floor/plastic/broken_states()
 	return list("plastic-damaged1","plastic-damaged2")
 
+/turf/open/floor/plastic/puzzle
+	name = "plastic puzzle floor"
+	icon_state = "plastic_puzzle"
+	floor_tile = /obj/item/stack/tile/plastic/puzzle
+
+/turf/open/floor/hauntium
+	name = "hauntium floor"
+	icon_state = "hauntium"
+	desc = "Now this is one spooky tile."
+	custom_materials = list(/datum/material/hauntium=SMALL_MATERIAL_AMOUNT*5)
+	floor_tile = /obj/item/stack/tile/hauntium
+
+/turf/open/floor/hauntium/tiled
+	name = "tiled hauntium floor"
+	icon_state = "hauntium_tiled"
+	floor_tile = /obj/item/stack/tile/hauntium/tiled
+
+/turf/open/floor/sandstone
+	name = "sandstone brick floor"
+	desc = "Sandstone tile. Makes you feel quite like a pharoah."
+	icon_state = "sandstone_floor"
+	custom_materials = list(/datum/material/sandstone=SMALL_MATERIAL_AMOUNT*5)
+	floor_tile = /obj/item/stack/tile/mineral/sandstone
+
 /turf/open/floor/eighties
 	name = "retro floor"
 	desc = "This one takes you back."
@@ -283,17 +307,11 @@
 		out of. It only makes sense in the context of space because you're trying to keep a freezing vacuum out. Is anyone following me on this? \
 		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
 	icon_state = "stone_floor"
+	custom_materials = list(/datum/material/rock=SMALL_MATERIAL_AMOUNT*5)
+	floor_tile = /obj/item/stack/tile/mineral/stone
 
 /turf/open/floor/stone/icemoon
 	initial_gas_mix = ICEMOON_DEFAULT_ATMOS
-	name = "stone brick floor"
-	desc = "Odd, really, how it looks exactly like the iron walls yet is stone instead of iron. Now, if that's really more of a complaint about\
-		the ironness of walls or the stoneness of the floors, that's really up to you. But have you really ever seen iron that dull? I mean, it\
-		makes sense for the station to have dull metal walls but we're talking how a rudimentary iron wall would be. Medieval ages didn't even\
-		use iron walls, iron walls are actually not even something that exists because iron is an expensive and not-so-great thing to build walls\
-		out of. It only makes sense in the context of space because you're trying to keep a freezing vacuum out. Is anyone following me on this? \
-		The idea of a \"rudimentary\" iron wall makes no sense at all! Is anything i'm even saying here true? Someone's gotta fact check this!"
-	icon_state = "stone_floor"
 
 /turf/open/floor/vault
 	name = "strange floor"

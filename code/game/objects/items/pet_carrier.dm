@@ -111,8 +111,7 @@
 	var/mob/living/target = interacting_with
 	if(target.mob_size > max_occupant_weight)
 		if(ishuman(target))
-			var/mob/living/carbon/human/H = target
-			if(isfelinid(H))
+			if(HAS_TRAIT(target, TRAIT_CATLIKE_INSTINCT))
 				to_chat(user, span_warning("You'd need a lot of catnip and treats, plus maybe a laser pointer, for that to work."))
 			else
 				to_chat(user, span_warning("Humans, generally, do not fit into pet carriers."))
@@ -141,8 +140,7 @@
 		container_resist_act(user)
 
 /obj/item/pet_carrier/container_resist_act(mob/living/user)
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.change_next_special_move(CLICK_CD_BREAKOUT)
 	if(user.mob_size <= MOB_SIZE_SMALL)
 		to_chat(user, span_notice("You poke a limb through [src]'s bars and start fumbling for the lock switch... (This will take some time.)"))
 		to_chat(loc, span_warning("You see [user] reach through the bars and fumble for the lock switch!"))

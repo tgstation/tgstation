@@ -1743,7 +1743,8 @@
 /area/awaymission/caves/academy)
 "lK" = (
 /obj/effect/immovablerod{
-	dir = 4
+	dir = 4;
+	should_augury = 0
 	},
 /obj/effect/mapping_helpers/no_tele_turf,
 /turf/open/floor/plating,

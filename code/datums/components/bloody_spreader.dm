@@ -7,7 +7,7 @@
 	// Blood splashed around everywhere will carry these diseases. Oh no...
 	var/list/diseases
 
-/datum/component/bloody_spreader/Initialize(blood_left = INFINITY, list/blood_dna = list(get_blood_type(BLOOD_TYPE_MEAT).dna_string = get_blood_type(BLOOD_TYPE_MEAT)), list/diseases = null)
+/datum/component/bloody_spreader/Initialize(blood_left = INFINITY, list/blood_dna = list(get_blood_type(/datum/blood_type/meat).dna_string = get_blood_type(/datum/blood_type/meat)), list/diseases = null)
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 

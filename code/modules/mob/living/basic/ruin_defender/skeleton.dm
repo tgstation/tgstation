@@ -50,12 +50,12 @@
 		AddElement(/datum/element/death_drops, loot)
 	AddElement(/datum/element/basic_eating, heal_amt = 50, drinking = TRUE, food_types = good_drinks)
 	AddElement(/datum/element/basic_eating, heal_amt = 0, damage_amount = 25, damage_type = BURN, drinking = TRUE, food_types = bad_drinks)
-	ADD_TRAIT(src, TRAIT_SNOWSTORM_IMMUNE, INNATE_TRAIT)
+	add_traits(list(TRAIT_SPOOKY_INSTRUMENT_PLAYER, TRAIT_SNOWSTORM_IMMUNE), INNATE_TRAIT)
 	var/list/foods_list = good_drinks + bad_drinks
 	ai_controller?.set_blackboard_key(BB_BASIC_FOODS, typecacheof(foods_list))
 
-/mob/living/basic/skeleton/init_unconscious_appearance()
-	add_generic_humanoid_static_appearance()
+/mob/living/basic/skeleton/get_unconscious_appearance()
+	return get_generic_humanoid_static_appearance()
 
 /mob/living/basic/skeleton/settler
 	name = "undead settler"
@@ -89,7 +89,7 @@
 	maxHealth = 150
 	health = 150
 	speed = 2
-	damage_coeff = list(BRUTE = 0.5, BURN = 0.5, TOX = 0, STAMINA = 0, OXY = 0) //trying to simulate actually having armor
+	physiology = list(BRUTE = 0.5, BURN = 0.5, TOX = 0, OXY = 0, STAMINA = 0) //trying to simulate actually having armor
 	obj_damage = 50
 	melee_damage_lower = 25
 	melee_damage_upper = 30

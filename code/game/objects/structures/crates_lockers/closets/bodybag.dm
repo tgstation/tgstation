@@ -229,7 +229,7 @@
 		for(var/mob/living/inside in src)
 			return tool.interact_with_atom(inside, user, modifiers)
 
-	return NONE
+	return ..()
 
 /obj/structure/closet/body_bag/before_open(mob/living/user, force)
 	if(pinned)
@@ -354,8 +354,7 @@
 	if(opened || ismovable(loc) || !cinched)
 		return ..()
 
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.change_next_special_move(CLICK_CD_BREAKOUT)
 	user.visible_message(span_warning("Someone in [src] begins to wriggle!"), \
 		span_notice("You start wriggling, attempting to loosen [src]'s buckles... (this will take about [DisplayTimeText(breakout_time)].)"), \
 		span_hear("You hear straining cloth from [src]."))
@@ -573,8 +572,9 @@
 	if(SPT_PROB(2 * (seconds_freezing / 60), seconds_per_tick))
 		freezing.Unconscious(1 SECONDS)
 
-	// Bout two minutes of time
-	take_damage(max_integrity * 0.004 * seconds_per_tick, sound_effect = FALSE)
+	if(loc?.return_air()?.return_temperature() > T0C)
+		// Bout two minutes of time
+		take_damage(max_integrity * 0.004 * seconds_per_tick, sound_effect = FALSE)
 
 /obj/structure/closet/body_bag/environmental/stasis/after_open(mob/living/user, force = FALSE)
 	. = ..()
@@ -621,8 +621,7 @@
 		open(user)
 		return
 
-	user.changeNext_move(6 SECONDS)
-	user.last_special = world.time + 6 SECONDS
+	user.change_next_special_move(6 SECONDS)
 	user.visible_message(
 		span_warning("Something in [src] begins to wriggle!"),
 		span_notice("You start wriggling, attempting to climb out of [src]... (This will take about [DisplayTimeText(breakout_time)].)"),

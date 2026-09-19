@@ -173,7 +173,7 @@ const Structures = (props) => {
         </LabeledList.Item>
         <LabeledList.Item label="Reflective Blobs">
           Upgrading strong blobs creates reflective blobs, capable of reflecting
-          most projectiles at the cost of the strong blob&apos;s extra health.
+          most projectiles at the cost of reduced resistance to explosions.
         </LabeledList.Item>
         <LabeledList.Item label="Resource Blobs">
           Blobs which produce more resources for you, build as many of these as

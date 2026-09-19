@@ -215,15 +215,16 @@ Once you are done with your tree, be sure to save the file. You can now compile 
 
 ## Targeting
 
-A huge amount of AI work boils down to finding a thing nearby and remembering it. Finding an enemy, finding food, finding a beacon to walk to. Instead of writing a brand new "find" leaf every time, we have one generic leaf that you configure with two helpers. You almost never need to write a new leaf for this.
+A huge amount of AI work boils down to finding a thing nearby and remembering it. Finding an enemy, finding food, finding a beacon to walk to. Instead of writing a brand new "find" leaf every time, we have one generic leaf that you configure with reusable helpers. You almost never need to write a new leaf for this.
 
-The three pieces:
+The four pieces:
 
-1. **The leaf** is `update_interaction_target` or `update_targets`. Its job is to look around, find something, and write it to a blackboard key.
+1. **The leaf** is `update_interaction_target`, `update_combat_targets`, or another `acquire_target` subtype. Its job is to look around, find something, and write it to a blackboard key.
 2. **A target source** answers the question "what candidates exist?". It gathers a list of nearby things, such as everything in view, only things of a certain type, or items in your hands.
 3. **A targeting strategy** answers the question "is this specific candidate valid?". It looks at one candidate at a time and says yes or no.
+4. **An optional target priority strategy** answers the question "which valid candidate should be selected?". Omit it when all valid candidates are equivalent.
 
-So the flow is: the **source** hands the leaf a list of candidates, the leaf runs each one past the **strategy**, and the first one that passes gets written to your target key.
+So the flow is: the **source** hands the leaf a list of candidates, the leaf runs each one past the **targeting strategy**, and the optional **priority strategy** chooses among the survivors.
 
 You configure all of this on the leaf node.
 
@@ -232,6 +233,7 @@ LEAF: update_interaction_target
 	target_key:          BB_TARGET_FOOD          (where to store what we found)
 	target_source:       .../held_items_then_oview/basic_foods   (what to look at)
 	targeting_strategy:  .../anything            (how to decide it's valid)
+	target_priority_strategy: null                (optional selection policy)
 	vision_range:        7                        (how far to look, optional)
 ```
 
@@ -239,8 +241,9 @@ A few pitfalls:
 
 - **Finding nothing is just a FAILURE.** If the source returns an empty list, the leaf simply fails.
 - **Use `/datum/targeting_strategy/anything` if you don't filter for specifics.** With this strategy the only thing we check is `get_dist`, which is enough when the source already gives you the specific candidates you want.
+- **Selection does not imply a private refresh timer.** `TARGET_RESELECT_WITH_SELECTION` reruns a configured priority strategy whenever the tree normally ticks the acquisition leaf; without a priority strategy it retains a valid target. `TARGET_REVALIDATE` retains any valid target even when a priority strategy exists, while `TARGET_ALWAYS_SEARCH` always searches.
 - **Reuse before you build.** There are many existing sources and strategies. Use these before adding new ones.
 
 Once the target key is set, the rest of your tree reacts to it the way you've already seen. A `decorator` gates the combat branch behind "is the target key set?". An observer on this decorator can cancel lower priority behavior when the target is set, or cancel its own behavior when the target is lost.
 
-> Note: combat target _searching_ during a fight is usually done by the `update_targets` leaf, which keeps `BB_CURRENT_TARGET` refreshed while you fight. `update_interaction_target` is the general-purpose "go find a thing" leaf for everything else.
+> Note: combat target _searching_ during a fight is usually done by the `update_combat_targets` leaf, which keeps `BB_CURRENT_TARGET` refreshed while you fight. `update_interaction_target` is the general-purpose "go find a thing" leaf for everything else.

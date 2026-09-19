@@ -55,7 +55,7 @@
 		if(!seen)
 			P.mobs_seen -= seen_ref
 			continue
-		if(!isobserver(seen) && !isspirit(seen))
+		if(!HAS_TRAIT(seen, TRAIT_GHOSTLY_MOB))
 			continue
 		set_custom_materials(list(/datum/material/hauntium =SHEET_MATERIAL_AMOUNT))
 		break

@@ -43,9 +43,7 @@
 
 			if(player_mob.stat == DEAD)
 				return FALSE
-			if(issilicon(player_mob) || isbrain(player_mob))
-				return FALSE
-			if(istype(player_mob) && (player_mob.dna?.species?.id == SPECIES_ZOMBIE_INFECTIOUS))
+			if(HAS_TRAIT(player_mob, TRAIT_NEVER_CONSIDERED_ALIVE))
 				return FALSE
 			return TRUE
 

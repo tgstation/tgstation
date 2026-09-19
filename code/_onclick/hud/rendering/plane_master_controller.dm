@@ -54,10 +54,14 @@ INITIALIZE_IMMEDIATE(/atom/movable/plane_master_controller)
 		. += pm_iterator.get_filter(name)
 
 ///Transitions all filters owned by this plane master controller
-/atom/movable/plane_master_controller/transition_filter(name, time, list/new_params, easing, loop)
+/atom/movable/plane_master_controller/transition_filter(name, list/new_params, time, easing, loop)
 	. = ..()
 	for(var/atom/movable/screen/plane_master/pm_iterator as anything in get_planes())
 		pm_iterator.transition_filter(name, new_params, time, easing, loop)
+
+/atom/movable/plane_master_controller/transition_filter_chain(name, num_loops, ...)
+	for(var/atom/movable/screen/plane_master/pm_iterator as anything in get_filters(name))
+		pm_iterator.transition_filter_chain(arglist(args))
 
 ///Full override so we can just use filterrific
 /atom/movable/plane_master_controller/add_atom_colour(coloration, colour_priority)

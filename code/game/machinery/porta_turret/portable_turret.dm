@@ -556,7 +556,9 @@ DEFINE_BITFIELD(turret_flags, list(
 	raising = 1
 	if(cover)
 		flick("popup", cover)
-	sleep(POPUP_ANIM_TIME)
+	addtimer(CALLBACK(src, PROC_REF(finish_popup)), POPUP_ANIM_TIME, TIMER_STOPPABLE | TIMER_DELETE_ME)
+
+/obj/machinery/porta_turret/proc/finish_popup()
 	raising = 0
 	if(cover)
 		cover.icon_state = "openTurretCover"
@@ -572,7 +574,9 @@ DEFINE_BITFIELD(turret_flags, list(
 	raising = 1
 	if(cover)
 		flick("popdown", cover)
-	sleep(POPDOWN_ANIM_TIME)
+	addtimer(CALLBACK(src, PROC_REF(finish_popdown)), POPDOWN_ANIM_TIME, TIMER_STOPPABLE | TIMER_DELETE_ME)
+
+/obj/machinery/porta_turret/proc/finish_popdown()
 	raising = 0
 	if(cover)
 		cover.icon_state = "turretCover"

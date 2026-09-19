@@ -596,6 +596,15 @@
 /obj/item/ammo_casing/c45/spent,
 /turf/open/indestructible/white,
 /area/ruin/space/has_grav/powered/biooutpost)
+"ls" = (
+/obj/structure/window/reinforced/spawner/directional/east,
+/obj/structure/window/reinforced/spawner/directional/south,
+/obj/structure/flora/bush/fullgrass/style_random,
+/obj/item/food/grown/carrotlike/carrot{
+	preserved_food = 1
+	},
+/turf/open/floor/grass,
+/area/ruin/space/has_grav/powered/biooutpost)
 "lJ" = (
 /obj/machinery/door/airlock/science/glass,
 /obj/effect/mapping_helpers/airlock/welded,
@@ -1864,15 +1873,6 @@
 /obj/item/grown/bananapeel,
 /turf/open/floor/iron/dark/textured_large,
 /area/ruin/space/has_grav/powered/biooutpost/vault)
-"JF" = (
-/obj/structure/window/reinforced/spawner/directional/east,
-/obj/structure/window/reinforced/spawner/directional/south,
-/obj/structure/flora/bush/fullgrass/style_random,
-/obj/item/food/grown/carrotlike/carrot{
-	preserved_food = 1
-	},
-/turf/open/floor/grass,
-/area/ruin/space/has_grav/powered/biooutpost)
 "Ka" = (
 /mob/living/basic/living_floor/white,
 /obj/effect/decal/cleanable/dirt,
@@ -1907,6 +1907,14 @@
 	},
 /obj/effect/decal/cleanable/blood/splatter,
 /turf/open/indestructible/white,
+/area/ruin/space/has_grav/powered/biooutpost)
+"KB" = (
+/obj/structure/table/wood/fancy/orange,
+/obj/item/ai_module/law/core/full/ten_commandments,
+/obj/effect/turf_decal/siding/wood{
+	dir = 4
+	},
+/turf/open/floor/carpet,
 /area/ruin/space/has_grav/powered/biooutpost)
 "KC" = (
 /obj/machinery/puzzle/button/directional/north{
@@ -2512,14 +2520,6 @@
 /obj/effect/turf_decal/tile/neutral/opposingcorners,
 /turf/open/indestructible/dark,
 /area/ruin/space/has_grav/powered/biooutpost)
-"Xm" = (
-/obj/structure/table/wood/fancy/orange,
-/obj/item/ai_module/core/full/ten_commandments,
-/obj/effect/turf_decal/siding/wood{
-	dir = 4
-	},
-/turf/open/floor/carpet,
-/area/ruin/space/has_grav/powered/biooutpost)
 "Xo" = (
 /obj/structure/showcase/horrific_experiment,
 /turf/open/indestructible/plating,
@@ -3080,7 +3080,7 @@ Ec
 Ec
 Jh
 Kc
-JF
+ls
 DJ
 kl
 qs
@@ -3188,7 +3188,7 @@ Jh
 Jh
 Jh
 eT
-Xm
+KB
 Tw
 tg
 Jh

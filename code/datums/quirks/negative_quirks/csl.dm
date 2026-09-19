@@ -41,14 +41,6 @@
 	else
 		quirk_holder.grant_language(/datum/language/common, UNDERSTOOD_LANGUAGE, LANGUAGE_ATOM)
 
-/datum/quirk/csl/is_species_appropriate(datum/species/mob_species)
-	var/datum/language_holder/species_holder = GLOB.prototype_language_holders[mob_species.species_language_holder]
-	if(isnull(species_holder))
-		return FALSE
-	if(length(species_holder.spoken_languages) < 2)
-		return FALSE
-	return ..()
-
 /// Gets our native language from our list of spoken languages
 /datum/quirk/csl/proc/get_native_language()
 	var/list/language_pool = quirk_holder.get_language_holder()?.spoken_languages?.Copy()

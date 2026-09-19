@@ -69,12 +69,6 @@
 	default_unfasten_wrench(user, tool)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/recycler/can_be_unfasten_wrench(mob/user, silent)
-	if(!(isfloorturf(loc) || isindestructiblefloor(loc)) && !anchored)
-		to_chat(user, span_warning("[src] needs to be on the floor to be secured!"))
-		return FAILED_UNFASTEN
-	return SUCCESSFUL_UNFASTEN
-
 /obj/machinery/recycler/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(user, tool)
 
@@ -240,8 +234,8 @@
 	if(isbrain(target) || istype(target, /obj/item/dullahan_relay))
 		return TRUE
 
-	if(istype(target, /obj/item/mmi))
-		var/obj/item/mmi/mmi_thing = target
+	if(istype(target, /obj/item/brain_processor/organic))
+		var/obj/item/brain_processor/organic/mmi_thing = target
 		return !!(mmi_thing.brain)
 
 	return FALSE

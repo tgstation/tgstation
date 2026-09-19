@@ -91,6 +91,9 @@
 #define FACTION_RAPTOR "raptor"
 ///holy faction, for anything part of the church
 #define FACTION_HOLY "holy"
+/// Creatures that are spawned on the escape shuttle
+#define FACTION_SHUTTLE "shuttle"
+
 // Antagonist factions
 
 /// Cultists and their constructs

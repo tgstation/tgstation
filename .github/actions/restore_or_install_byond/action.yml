@@ -29,7 +29,15 @@ runs:
         echo "BYOND_MAJOR=$BYOND_MAJOR" >> $GITHUB_ENV
         echo "BYOND_MINOR=$BYOND_MINOR" >> $GITHUB_ENV
 
+    - name: Find fastest APT mirror
+      if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664
+      uses: vegardit/fast-apt-mirror.sh@v1
+      with:
+        sample-size: 8192
+        sample-time: 5
     - name: Install 32-bit libcurl
+      # Only required in 516.1664+
+      if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664
       shell: bash
       run: |
         sudo dpkg --add-architecture i386

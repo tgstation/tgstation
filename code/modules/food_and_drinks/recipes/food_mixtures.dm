@@ -334,10 +334,20 @@
 
 /datum/chemical_reaction/food/grounding_neutralise
 	results = list(/datum/reagent/consumable/salt = 2)
-	required_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 2, /datum/reagent/consumable/grounding_solution = 1)
+	required_reagents = list(
+		/datum/reagent/consumable/liquidelectricity = 2,
+		/datum/reagent/consumable/grounding_solution = 1,
+	)
 	mix_message = "The mixture lets off a sharp snap as the electricity discharges."
 	mix_sound = 'sound/items/weapons/taser.ogg'
 	reaction_flags = REACTION_INSTANT | REACTION_TAG_ACTIVE
+
+/datum/chemical_reaction/food/grounding_neutralise/pre_reaction_other_checks(datum/reagents/holder)
+	for(var/datum/reagent/consumable/liquidelectricity/liquid_elec in holder.reagent_list)
+		if(LAZYACCESS(liquid_elec.data, BLOOD_DATA_ENRICHED_ETHEREAL))
+			return ..()
+
+	return FALSE
 
 /datum/chemical_reaction/food/martian_batter
 	results = list(/datum/reagent/consumable/martian_batter = 10)

@@ -16,6 +16,9 @@
 #define SKIN_TGUISAY "tgui_say"
 #define SKIN_TGUISAY_BROWSER "[SKIN_TGUISAY].browser"
 
+#define SKIN_ESCAPE_MENU "[SKIN_MAPWINDOW].escape_menu"
+#define ESCAPE_MENU_TOGGLE_MESSAGE "%7B%22type%22%3A%22toggle%22%2C%22payload%22%3Anull%7D"
+
 #define SKIN_DEFAULT "default"
 #define SKIN_DEFAULT_SHIFT "[SKIN_DEFAULT].Shift"
 #define SKIN_DEFAULT_SHIFTUP "[SKIN_DEFAULT].ShiftUp"

@@ -83,7 +83,7 @@
  *
  * NOTE: If you return COMSIG_MOB_STOP_REAGENT_TICK, that reagent will not be removed like normal! You must handle it manually.
  **/
-/obj/item/organ/liver/proc/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick)
+/obj/item/organ/liver/proc/handle_chemical(mob/living/carbon/organ_owner, datum/reagent/chem, seconds_per_tick, metabolization_rate)
 	SIGNAL_HANDLER
 
 /obj/item/organ/liver/examine(mob/user)
@@ -254,7 +254,7 @@
 	if(. & EMP_PROTECT_SELF)
 		return
 	if(!COOLDOWN_FINISHED(src, severe_cooldown)) //So we cant just spam emp to kill people.
-		owner.adjust_tox_loss(10)
+		owner.adjust_tox_loss(10 / severity)
 		COOLDOWN_START(src, severe_cooldown, 10 SECONDS)
 	if(prob(emp_vulnerability/severity)) //Chance of permanent effects
 		organ_flags |= ORGAN_EMP //Starts organ faliure - gonna need replacing soon.
@@ -392,6 +392,12 @@
 			continue
 
 		owner.reagents.convert_reagent(reagent.type, convert_into, ethanol_conversion)
+
+/obj/item/organ/liver/lizard
+	name = "saurian liver"
+	desc = "A liver that has mutated at some point in the past to allow the quasi-carnivore, proto-lizardfolk to metabolize plant nutrients from Tizira's xenoflora. \
+		Researchers believe this to be what ultimately allowed the lizardpeople to thrive as a species."
+	organ_traits = list(TRAIT_LIZARD_METABOLISM)
 
 #undef LIVER_DEFAULT_TOX_TOLERANCE
 #undef LIVER_DEFAULT_TOX_RESISTANCE

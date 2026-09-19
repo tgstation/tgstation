@@ -151,3 +151,17 @@
 		return
 	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/display_tags)
 	return TRUE
+
+/datum/keybinding/admin/admin_verb_panel
+	hotkey_keys = list("`")
+	name = "admin_verb_panel"
+	full_name = "Admin Verb Panel"
+	description = "Opens the admin verb panel"
+	keybind_signal = COMSIG_KB_ADMIN_VERBPANEL_DOWN
+
+/datum/keybinding/admin/admin_verb_panel/down(client/user, turf/target, mousepos_x, mousepos_y)
+	. = ..()
+	if(.)
+		return
+	SSadmin_verbs.dynamic_invoke_verb(user, /datum/admin_verb/admin_verb_panel)
+	return TRUE

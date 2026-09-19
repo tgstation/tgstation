@@ -102,8 +102,10 @@
 		return AI_BEHAVIOR_DELAY
 
 	// 50/50 chance we lose.
-	var/datum/ai_controller/loser_controller = prob(50) ? controller : target.ai_controller
-	loser_controller.set_blackboard_key(BB_BASIC_MOB_FLEE_TARGET, target)
+	if(prob(50))
+		controller.set_blackboard_key(BB_BASIC_MOB_FLEE_TARGET, target)
+	else
+		target.ai_controller?.set_blackboard_key(BB_BASIC_MOB_FLEE_TARGET, living_pawn)
 	target.ai_controller?.clear_blackboard_key(target_key)
 	return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 

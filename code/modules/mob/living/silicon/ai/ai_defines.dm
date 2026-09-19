@@ -157,6 +157,8 @@
 	VAR_FINAL/atom/lastloc
 	/// The AI's hologram appearance, can be set by a client and is assigned on AI creation
 	VAR_FINAL/mutable_appearance/hologram_appearance
+	/// The AI's hologram color, defaults to blue when nothing is selected
+	VAR_FINAL/ai_holocolor
 	/// The AI's currently used holopad
 	VAR_FINAL/obj/machinery/holopad/current
 

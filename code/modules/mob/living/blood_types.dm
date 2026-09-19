@@ -22,10 +22,9 @@
 
 /datum/blood_type/New()
 	. = ..()
-	id = name
 	compatible_types |= type_key()
-	if (!desc)
-		desc = reagent_type::description
+	id ||= name
+	desc ||= reagent_type::description
 
 /datum/blood_type/Destroy(force)
 	if(!force)
@@ -51,6 +50,14 @@
 	if (reagent_type != /datum/reagent/blood)
 		return null
 	return name
+
+/// Default stuff included in this blood type's blood data
+/// Return a list of key/value pairs for blood data, or null if no additional default data
+/datum/blood_type/proc/get_default_blood_data()
+	return list(
+		BLOOD_DATA_TYPE = src,
+		BLOOD_DATA_DNA = dna_string,
+	)
 
 /// Returns blood color or color matrix
 /// Useful when you want to have a blood color with values out of normal hex bounds for that acidic look
@@ -166,22 +173,30 @@
 	abstract_type = /datum/blood_type/human
 
 /datum/blood_type/human/a_minus
-	name = BLOOD_TYPE_A_MINUS
-	compatible_types = list(/datum/blood_type/human/a_minus, /datum/blood_type/human/o_minus)
+	name = "A-"
+	compatible_types = list(
+		/datum/blood_type/human/a_minus,
+		/datum/blood_type/human/o_minus,
+	)
 
 /datum/blood_type/human/a_plus
-	name = BLOOD_TYPE_A_PLUS
-	compatible_types = list(/datum/blood_type/human/a_minus, /datum/blood_type/human/a_plus, /datum/blood_type/human/o_minus, /datum/blood_type/human/o_plus)
+	name = "A+"
+	compatible_types = list(
+		/datum/blood_type/human/a_minus,
+		/datum/blood_type/human/a_plus,
+		/datum/blood_type/human/o_minus,
+		/datum/blood_type/human/o_plus,
+	)
 
 /datum/blood_type/human/b_minus
-	name = BLOOD_TYPE_B_MINUS
+	name = "B-"
 	compatible_types = list(
 		/datum/blood_type/human/b_minus,
 		/datum/blood_type/human/o_minus,
 	)
 
 /datum/blood_type/human/b_plus
-	name = BLOOD_TYPE_B_PLUS
+	name = "B+"
 	compatible_types = list(
 		/datum/blood_type/human/b_minus,
 		/datum/blood_type/human/b_plus,
@@ -190,7 +205,7 @@
 	)
 
 /datum/blood_type/human/ab_minus
-	name = BLOOD_TYPE_AB_MINUS
+	name = "AB-"
 	compatible_types = list(
 		/datum/blood_type/human/a_minus,
 		/datum/blood_type/human/b_minus,
@@ -199,7 +214,7 @@
 	)
 
 /datum/blood_type/human/ab_plus
-	name = BLOOD_TYPE_AB_PLUS
+	name = "AB+"
 	compatible_types = list(
 		/datum/blood_type/human/a_minus,
 		/datum/blood_type/human/a_plus,
@@ -212,51 +227,56 @@
 	)
 
 /datum/blood_type/human/o_minus
-	name = BLOOD_TYPE_O_MINUS
+	name = "O-"
 	compatible_types = list(
 		/datum/blood_type/human/o_minus,
 	)
 
 /datum/blood_type/human/o_plus
-	name = BLOOD_TYPE_O_PLUS
+	name = "O+"
 	compatible_types = list(
 		/datum/blood_type/human/o_minus,
 		/datum/blood_type/human/o_plus,
 	)
 
-/datum/blood_type/human/universal
-	name = BLOOD_TYPE_UNIVERSAL
+/// Universal accepts all blood types, but not all blood types accept universal
+/datum/blood_type/universal
+	name = "U"
+	desc = /datum/blood_type/human::desc
 
-/datum/blood_type/human/universal/New()
+/datum/blood_type/universal/New()
 	. = ..()
 	compatible_types = subtypesof(/datum/blood_type)
 
-/datum/blood_type/human/universal/vampire
-	name = BLOOD_TYPE_VAMPIRE
+/datum/blood_type/universal/vampire
+	name = "V"
 	dna_string = "Hemovore DNA"
 
 /datum/blood_type/animal
-	name = BLOOD_TYPE_ANIMAL
-	desc = "Blood cells suspended in plasma, the most abundant of which being the hemoglobin-containing red blood cells."
+	name = "Y-"
+	desc = /datum/blood_type/human::desc
 	dna_string = "Animal DNA"
 
 /datum/blood_type/lizard
-	name = BLOOD_TYPE_LIZARD
+	name = "L"
 	desc = "Green sulfhemoglobin subtype-based blood, which while less effective at transporting oxygen, \
 		is capable of withstanding much higher temperatures without breaking down or clotting."
 	dna_string = "Lizard DNA"
 	color = BLOOD_COLOR_LIZARD
 
 /datum/blood_type/ethereal
-	name = BLOOD_TYPE_ETHEREAL
+	name = "LE"
 	dna_string = "Ethereal DNA"
 	color = /datum/reagent/consumable/liquidelectricity::color
 	reagent_type = /datum/reagent/consumable/liquidelectricity
 
+/datum/blood_type/ethereal/get_default_blood_data()
+	. = ..()
+	// Unenriched by default to prevent Ethereals from going crazy with syringe guns
+	.[BLOOD_DATA_ENRICHED_ETHEREAL] = FALSE
+
 /datum/blood_type/ethereal/get_emissive_alpha(atom/source, is_worn = FALSE)
-	if (is_worn)
-		return 102
-	return 125
+	return is_worn ? 102 : 125
 
 /datum/blood_type/ethereal/set_up_blood(obj/effect/decal/cleanable/blood/blood, new_splat = FALSE)
 	. = ..()
@@ -266,7 +286,7 @@
 	blood.can_dry = FALSE
 
 /datum/blood_type/oil
-	name = BLOOD_TYPE_OIL
+	name = "Oil"
 	dna_string = "Oil"
 	color = BLOOD_COLOR_OIL
 	reagent_type = /datum/reagent/fuel/oil
@@ -295,11 +315,11 @@
 		blood.desc = /obj/effect/decal/cleanable/blood/oil::desc
 
 /datum/blood_type/meat // why does this exist
-	name = BLOOD_TYPE_MEAT
+	name = "MT-"
 	dna_string = "Meaty DNA"
 
 /datum/blood_type/xeno
-	name = BLOOD_TYPE_XENO
+	name = "X*"
 	desc = "An incredibly potent mineral acid, somehow capable of carrying oxygen."
 	dna_string = "Alien DNA"
 	color = BLOOD_COLOR_XENO
@@ -321,7 +341,7 @@
 
 /// April fool's blood for clowns
 /datum/blood_type/clown
-	name = BLOOD_TYPE_CLOWN
+	name = "C"
 	dna_string = "Clown DNA"
 	reagent_type = /datum/reagent/colorful_reagent
 	is_species_universal = TRUE
@@ -340,7 +360,7 @@
 
 /// Slimeperson blood, aka 'toxin' blood type
 /datum/blood_type/slime
-	name = BLOOD_TYPE_TOX
+	name = "TOX"
 	dna_string = "Slime DNA"
 	color = /datum/reagent/toxin/slimejelly::color
 	reagent_type = /datum/reagent/toxin/slimejelly
@@ -355,7 +375,7 @@
 
 /// Podpeople blood
 /datum/blood_type/water
-	name = BLOOD_TYPE_H2O
+	name = "H2O"
 	dna_string = "Plant DNA"
 	color = /datum/reagent/water::color
 	reagent_type = /datum/reagent/water
@@ -368,7 +388,7 @@
 
 /// Snail blood
 /datum/blood_type/snail
-	name = BLOOD_TYPE_SNAIL
+	name = "S"
 	dna_string = "Snail DNA"
 	reagent_type = /datum/reagent/lube
 	restoration_chem = /datum/reagent/silicon
@@ -386,13 +406,13 @@
 	abstract_type = /datum/blood_type/random_chemical
 
 /datum/blood_type/random_chemical/New(datum/reagent/reagent)
+	abstract_type = null
+	id = reagent
 	name = initial(reagent.name)
 	desc = initial(reagent.description)
-	. = ..()
-	id = type_key()
 	color = initial(reagent.color)
 	reagent_type = reagent
-	abstract_type = null
+	return ..()
 
 /datum/blood_type/random_chemical/type_key()
 	return reagent_type

@@ -185,7 +185,7 @@
 			flick(icon_deny, src)
 			return
 
-		if(!proceed_payment(card_used, living_user, item_record, price_to_use, params["discountless"]))
+		if(!proceed_payment(card_used, living_user, item_record, price_to_use, params["premium"]))
 			return
 
 	if(last_shopper != REF(user) || purchase_message_cooldown < world.time)
@@ -265,9 +265,9 @@
  * mob_paying - the mob that is trying to purchase the item.
  * product_to_vend - the product record of the item we're trying to vend.
  * price_to_use - price of the item we're trying to vend.
- * discountless - whether or not to apply discounts
+ * premium - whether or not to apply premium pricing
  */
-/obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, mob/living/mob_paying, datum/data/vending_product/product_to_vend, price_to_use, discountless)
+/obj/machinery/vending/proc/proceed_payment(obj/item/card/id/paying_id_card, mob/living/mob_paying, datum/data/vending_product/product_to_vend, price_to_use, premium)
 	PROTECTED_PROC(TRUE)
 
 	//returned items are free
@@ -278,7 +278,7 @@
 	var/datum/bank_account/account = paying_id_card.registered_account
 
 	//deduct money from person
-	if(!discountless && account.account_job?.paycheck_department == payment_department)
+	if(discount_check(paying_id_card, premium))
 		price_to_use = max(round(price_to_use * DEPARTMENT_DISCOUNT), 1) //No longer free, but signifigantly cheaper.
 	if(attempt_charge(src, mob_paying, price_to_use) & COMPONENT_OBJ_CANCEL_CHARGE)
 		speak("You do not possess the funds to purchase [product_to_vend.name].")
@@ -290,3 +290,11 @@
 	log_econ("[price_to_use] [MONEY_NAME] were inserted into [src] by [account.account_holder] to buy [product_to_vend].")
 	credits_contained += round(price_to_use * VENDING_CREDITS_COLLECTION_AMOUNT)
 	return TRUE
+
+/obj/machinery/vending/proc/discount_check(obj/item/card/id/paying_id_card, premium)
+	PROTECTED_PROC(TRUE)
+	if(premium)
+		return FALSE
+	var/datum/bank_account/account = paying_id_card.registered_account
+	//captain gets a discount in every department
+	return istype(paying_id_card.trim, big_boss_trim) || account.account_job?.paycheck_department == payment_department

@@ -98,10 +98,10 @@
 /datum/antagonist/separatist/apply_innate_effects(mob/living/mob_override)
 	. = ..()
 	var/mob/living/silicon/ai/united_nations_ai = mob_override || owner.current
-	if(isAI(united_nations_ai))
-		united_nations_ai.laws = new /datum/ai_laws/united_nations()
-		united_nations_ai.laws.associate(united_nations_ai)
-		united_nations_ai.show_laws()
+	if(!isAI(united_nations_ai))
+		return
+	united_nations_ai.no_law_rack_link = TRUE
+	united_nations_ai.replace_law_set(/datum/ai_laws/united_nations)
 
 /datum/antagonist/separatist/on_removal()
 	remove_objectives()

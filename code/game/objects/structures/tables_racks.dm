@@ -631,7 +631,7 @@
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/table/wood/after_smash(mob/living/smashed_onto)
-	if(QDELETED(src) || prob(66))
+	if(QDELETED(src) || QDELETED(smashed_onto) || prob(66))
 		return
 	visible_message(
 		span_warning("[src] smashes into bits!"),

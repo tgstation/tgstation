@@ -15,6 +15,8 @@
 		TRAIT_NO_BLOOD_OVERLAY,
 		TRAIT_NO_DNA_COPY,
 		TRAIT_NO_UNDERWEAR,
+		TRAIT_LESSER_HUMANOID,
+		TRAIT_SIMIAN,
 	)
 	no_equip_flags = ITEM_SLOT_OCLOTHING | ITEM_SLOT_GLOVES | ITEM_SLOT_FEET | ITEM_SLOT_SUITSTORE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_PRIDE | MIRROR_MAGIC | ERT_SPAWN | SLIME_EXTRACT
@@ -53,13 +55,6 @@
 	if(check_holidays(MONKEYDAY) && id == SPECIES_MONKEY)
 		return TRUE
 	return ..()
-
-/datum/species/monkey/get_scream_sound(mob/living/carbon/human/monkey)
-	return get_sfx(SFX_SCREECH)
-
-/datum/species/monkey/get_hiss_sound(mob/living/carbon/human/monkey)
-	return 'sound/mobs/humanoids/human/hiss/human_hiss.ogg'
-	// we're both great apes, or something..
 
 /datum/species/monkey/get_physical_attributes()
 	return "Monkeys are slippery, can crawl into vents, and are more dextrous than humans.. but only when stealing things. \
@@ -118,7 +113,7 @@
 /obj/item/organ/brain/primate //Ook Ook
 	name = "Primate Brain"
 	desc = "This wad of meat is small, but has enlarged occipital lobes for spotting bananas."
-	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_PRIMITIVE, TRAIT_GUN_NATURAL, TRAIT_WEAK_SOUL) // No literacy or advanced tool usage.
+	organ_traits = list(TRAIT_CAN_STRIP, TRAIT_PRIMITIVE, TRAIT_GUN_NATURAL) // No literacy or advanced tool usage.
 	actions_types = list(/datum/action/item_action/organ_action/toggle_trip)
 	/// Will this monkey stumble if they are crossed by a simple mob or a carbon in combat mode? Toggable by monkeys with clients, and is messed automatically set to true by monkey AI.
 	var/tripping = TRUE

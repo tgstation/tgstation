@@ -14,14 +14,14 @@ type TechDisk = {
 
 // Base node type
 export type NodeCache = {
-  description: string;
-  design_ids: string[];
-  discount_experiments: Record<string, number>;
-  discount_boosts: Record<string, number>;
   name: string;
-  prereq_ids: string[];
+  description: string;
+  prerequisite_nodes?: string[];
+  unlocked_designs?: string[];
+  unlocked_nodes?: string[];
   required_experiments?: string[];
-  unlock_ids: string[];
+  discount_experiments?: Record<string, number>;
+  discount_boosts?: Record<string, number>;
 };
 
 // The unmapped nodes from Byond
@@ -35,7 +35,7 @@ export type TechwebNode = {
   enqueued_by_user: BooleanLike;
   have_experiments_done: BooleanLike;
   discount_boosted: BooleanLike;
-  id: string;
+  path: string;
   is_free: BooleanLike;
   tier: number;
 };

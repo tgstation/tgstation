@@ -427,7 +427,7 @@ Difficulty: Hard
 	sitting_at_center = TRUE
 	visible_message(span_hierophant_warning("\"Vixyvrmrk xs fewi...\""))
 	blink(beacon)
-	adjustHealth(min((health - maxHealth) * 0.5, -250)) //heal for 50% of our missing health, minimum 10% of maximum health
+	adjust_brute_loss(min((health - maxHealth) * 0.5, -250)) //heal for 50% of our missing health, minimum 10% of maximum health
 	wander = FALSE
 	if(health > maxHealth * 0.9)
 		visible_message(span_hierophant("\"Vitemvw gsqtpixi. Stivexmrk ex qebmqyq ijjmgmirgc.\""))
@@ -464,11 +464,11 @@ Difficulty: Hard
 		if(beacon && loc == beacon.loc && sitting_at_center)
 			arena_trap(src)
 
-/mob/living/simple_animal/hostile/megafauna/hierophant/adjustHealth(amount, updating_health = TRUE, forced = FALSE)
-	. = ..()
-	if(src && . && !blinking)
+/mob/living/simple_animal/hostile/megafauna/hierophant/on_damage_loss_changed(amount, updating_health, forced)
+	if(amount > 0 && !blinking)
 		wander = TRUE
 		sitting_at_center = FALSE
+	return ..()
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/AttackingTarget(atom/attacked_target)
 	if(!blinking)
@@ -483,7 +483,7 @@ Difficulty: Hard
 					burst_range = 3
 					INVOKE_ASYNC(src, PROC_REF(burst), get_turf(src), 0.25) //melee attacks on living mobs cause it to release a fast burst if on cooldown
 				OpenFire()
-				if(L.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(L, TRAIT_NODEATH)) //Nope, it still kills yall
+				if(L.health <= L.dead_threshold && HAS_TRAIT(L, TRAIT_NODEATH)) //Nope, it still kills yall
 					devour(L)
 			else
 				devour(L)
@@ -765,20 +765,24 @@ Difficulty: Hard
 	layer = LOW_OBJ_LAYER
 	anchored = TRUE
 
-/obj/effect/hierophant/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(attacking_item, /obj/item/hierophant_club))
-		var/obj/item/hierophant_club/club = attacking_item
-		if(club.beacon == src)
-			to_chat(user, span_notice("You start removing your hierophant beacon..."))
-			if(do_after(user, 5 SECONDS, target = src))
-				playsound(src,'sound/effects/magic/blind.ogg', 100, TRUE, -4)
-				new /obj/effect/temp_visual/hierophant/telegraph/teleport(get_turf(src), user)
-				to_chat(user, span_hierophant_warning("You collect [src], reattaching it to the club!"))
-				club.beacon = null
-				club.update_appearance(UPDATE_ICON_STATE)
-				user.update_mob_action_buttons()
-				qdel(src)
-		else
-			to_chat(user, span_hierophant_warning("You touch the beacon with the club, but nothing happens."))
-	else
+/obj/effect/hierophant/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/hierophant_club))
 		return ..()
+
+	var/obj/item/hierophant_club/club = tool
+	if(club.beacon != src)
+		to_chat(user, span_hierophant_warning("You touch the beacon with the club, but nothing happens."))
+		return ITEM_INTERACT_BLOCKING
+
+	to_chat(user, span_notice("You start removing your hierophant beacon..."))
+	if(!do_after(user, 5 SECONDS, target = src))
+		return ITEM_INTERACT_BLOCKING
+
+	playsound(src,'sound/effects/magic/blind.ogg', 100, TRUE, -4)
+	new /obj/effect/temp_visual/hierophant/telegraph/teleport(get_turf(src), user)
+	to_chat(user, span_hierophant_warning("You collect [src], reattaching it to the club!"))
+	club.beacon = null
+	club.update_appearance(UPDATE_ICON_STATE)
+	user.update_mob_action_buttons()
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS

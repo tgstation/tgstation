@@ -22,7 +22,7 @@
 		return cached_data
 	return list("invalid")
 
-/datum/preference/choiced/voice/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/voice/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	if(SStts.tts_enabled && !(value in SStts.available_speakers))
 		value = SStts.random_tts_voice(target.gender) // As a failsafe
 	target.voice = value
@@ -43,7 +43,7 @@
 /datum/preference/numeric/tts_voice_pitch/create_default_value()
 	return 0
 
-/datum/preference/numeric/tts_voice_pitch/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/numeric/tts_voice_pitch/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	if(SStts.tts_enabled && SStts.pitch_enabled)
 		target.pitch = value
 
@@ -61,7 +61,7 @@
 /datum/preference/choiced/tts_blip_base/init_possible_values()
 	return list(TTS_BLIPS_MASCULINE, TTS_BLIPS_FEMININE)
 
-/datum/preference/choiced/tts_blip_base/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/tts_blip_base/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	if(SStts.tts_enabled)
 		if(value == TTS_BLIPS_MASCULINE)
 			target.blip_base = "male"
@@ -89,6 +89,6 @@
 /datum/preference/numeric/tts_blip_number/create_default_value()
 	return rand(1, 4)
 
-/datum/preference/numeric/tts_blip_number/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/numeric/tts_blip_number/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	if(SStts.tts_enabled)
 		target.blip_number = value

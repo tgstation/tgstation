@@ -81,11 +81,6 @@
 
 	return ..()
 
-/obj/item/folder/biscuit/insertables_act(mob/living/user, obj/item/tool)
-	if(!crack_check(user))
-		return ITEM_INTERACT_BLOCKING
-	return ..()
-
 /obj/item/folder/biscuit/interact_with_insertables(atom/interacting_with, mob/living/user)
 	if(!crack_check(user))
 		return ITEM_INTERACT_BLOCKING

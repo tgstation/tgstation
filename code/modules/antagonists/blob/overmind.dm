@@ -306,7 +306,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	if(blobstrain)
 		. += "Its strain is <font color=\"[blobstrain.color]\">[blobstrain.name]</font>."
 
-/mob/eye/blob/update_health_hud()
+/mob/eye/blob/update_health_hud(healthpercent)
 	if(!blob_core)
 		return FALSE
 	var/current_health = round((blob_core.get_integrity() / blob_core.max_integrity) * 100)

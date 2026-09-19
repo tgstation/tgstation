@@ -526,7 +526,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 				return
 			ADD_TRAIT(user, TRAIT_ADAMANTINE_EXTRACT_ARMOR, ADAMANTINE_EXTRACT_TRAIT)
 			to_chat(user, span_notice("You feel your skin harden and become more resistant."))
-			user.physiology.damage_resistance += 25
+			user.damage_resistance += 25
 			addtimer(CALLBACK(src, PROC_REF(reset_armor), user), 120 SECONDS)
 			return 450
 
@@ -540,7 +540,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 
 /obj/item/slime_extract/adamantine/proc/reset_armor(mob/living/carbon/human/user)
 	REMOVE_TRAIT(user, TRAIT_ADAMANTINE_EXTRACT_ARMOR, ADAMANTINE_EXTRACT_TRAIT)
-	user.physiology.damage_resistance -= 25
+	user.damage_resistance -= 25
 
 /obj/item/slime_extract/bluespace
 	name = "bluespace slime extract"
@@ -1095,7 +1095,7 @@ GLOBAL_LIST_INIT(slime_extract_auto_activate_reactions, init_slime_auto_activate
 	user.log_message("used [src] on [key_name(renaming_mob)], letting them rename themselves into [new_name].", LOG_GAME)
 
 	// pass null as first arg to not update records or ID/PDA
-	renaming_mob.fully_replace_character_name(null, new_name)
+	renaming_mob.fully_replace_character_name(null, new_name, log_new_name = TRUE)
 
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS

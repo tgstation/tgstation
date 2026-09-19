@@ -96,6 +96,13 @@
 	else
 		CRASH("Attempted a girder wall recipe with an invalid wall type ([recipe.wall_type])")
 
+	if(istype(wall, /turf/closed/wall))
+		var/turf/closed/wall/griderholder = wall
+		griderholder.girder_type = structure.type
+	if(istype(wall, /obj/structure/falsewall))
+		var/obj/structure/falsewall/griderholder = wall
+		griderholder.girder_type = structure.type
+
 	user.visible_message(
 		message = span_notice("\The [user] finish[user.p_es()] building \a [wall] on \the [structure]."),
 		self_message = span_notice("You finish building \a [wall] on \the [structure]."),

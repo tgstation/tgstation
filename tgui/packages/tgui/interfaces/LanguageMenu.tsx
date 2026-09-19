@@ -16,7 +16,7 @@ import { Window } from '../layouts';
 type Language = {
   name: string;
   desc: string;
-  key: string; // the key used to speak the language
+  key: string | null; // the key used to speak the language
   is_default: BooleanLike; // the user's selected default language
   can_speak: BooleanLike; // mentally, we know how to speak it
   could_speak: BooleanLike; // physically, we are capable of speaking it
@@ -146,7 +146,7 @@ const LanguageRow = (props: LanguageProps) => {
       <Table.Cell>
         <LangUnderstandIcon language={language} />
       </Table.Cell>
-      <Table.Cell>,{language.key}</Table.Cell>
+      <Table.Cell>{language.key ? `,${language.key}` : 'N/A'}</Table.Cell>
       {!!is_living && (
         <Table.Cell>
           <Button.Checkbox

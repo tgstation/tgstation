@@ -11,6 +11,8 @@
 #define LABEL_ROBUST_HARVEST "robust"
 #define LABEL_LEFT_4_ZED "l4z"
 #define LABEL_SPACE_CLEANER "space_cleaner"
+#define LABEL_CONCRETE "concrete"
+#define LABEL_HEXACRETE "hexacrete"
 
 #define CAP_BLACK "black"
 #define CAP_WHITE "white"
@@ -168,6 +170,19 @@
 	desc = "A jug of most wholesome milk."
 	list_reagents = list(/datum/reagent/consumable/milk = 200)
 
+/obj/item/reagent_containers/cup/jerrycan/concrete_mix
+	name = "concrete mix can"
+	label_type = LABEL_CONCRETE
+	cap_type = CAP_BLACK
+	desc = "A large can of ready-to-use concrete mix. Just add water."
+	list_reagents = list(/datum/reagent/concrete_mix = 200)
+
+/obj/item/reagent_containers/cup/jerrycan/hexacrete
+	name = "hexacrete can"
+	label_type = LABEL_HEXACRETE
+	cap_type = CAP_RED
+	desc = "A large canister of hexacrete."
+	list_reagents = list(/datum/reagent/concrete/hexacrete = 200)
 
 #undef LABEL_TEXT
 #undef LABEL_TEXT_OLD
@@ -182,6 +197,8 @@
 #undef LABEL_ROBUST_HARVEST
 #undef LABEL_LEFT_4_ZED
 #undef LABEL_SPACE_CLEANER
+#undef LABEL_CONCRETE
+#undef LABEL_HEXACRETE
 #undef CAP_BLACK
 #undef CAP_WHITE
 #undef CAP_RED

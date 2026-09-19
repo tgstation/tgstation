@@ -3,7 +3,7 @@ ADMIN_VERB(policy_panel, R_ADMIN, "Policy Panel", "View all policy the server ha
 		tgui_alert(usr, "Policy hasn't loaded yet (or the server has none set).", "Policy Panel", list("OK"))
 		return
 
-	var/datum/policy_panel/tgui = new
+	var/datum/policy_panel/tgui = new()
 	tgui.ui_interact(user.mob)
 	BLACKBOX_LOG_ADMIN_VERB("Policy Panel")
 

@@ -642,6 +642,16 @@
 /obj/structure/lattice,
 /turf/template_noop,
 /area/space/nearstation)
+"gS" = (
+/obj/structure/rack,
+/obj/item/circuitboard/machine/autolathe{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/circuitboard/machine/protolathe/offstation,
+/obj/item/circuitboard/machine/ai_law_rack,
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/ks13/ai/corridor)
 "gU" = (
 /obj/item/kirbyplants/random/dead,
 /obj/effect/decal/cleanable/dirt,
@@ -838,6 +848,19 @@
 /obj/structure/cable,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/hallway/aft)
+"kf" = (
+/obj/structure/rack,
+/obj/item/circuitboard/machine/circuit_imprinter/offstation{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/ai_module/law/core/full/drone,
+/obj/item/circuitboard/machine/ai_law_rack/core{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/turf/open/floor/circuit/red/off,
+/area/ruin/space/ks13/ai/corridor)
 "kk" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -4042,15 +4065,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/plating/airless,
 /area/ruin/space/ks13/engineering/supermatter)
-"DK" = (
-/obj/structure/rack,
-/obj/item/circuitboard/machine/circuit_imprinter/offstation{
-	pixel_x = 6;
-	pixel_y = 6
-	},
-/obj/item/ai_module/core/full/drone,
-/turf/open/floor/circuit/red/off,
-/area/ruin/space/ks13/ai/corridor)
 "DL" = (
 /obj/structure/table,
 /obj/item/stock_parts/power_store/cell/high{
@@ -5587,17 +5601,6 @@
 /obj/effect/mapping_helpers/broken_floor,
 /turf/open/floor/iron/airless,
 /area/ruin/space/ks13/service/kitchen)
-"LL" = (
-/obj/structure/rack,
-/obj/item/circuitboard/machine/autolathe{
-	pixel_x = -6;
-	pixel_y = 6
-	},
-/obj/item/circuitboard/machine/protolathe/offstation,
-/obj/item/circuitboard/computer/borgupload/no_lock,
-/obj/item/circuitboard/computer/aiupload/no_lock,
-/turf/open/floor/circuit/red/off,
-/area/ruin/space/ks13/ai/corridor)
 "LM" = (
 /obj/machinery/light/small/directional/north,
 /obj/structure/cable,
@@ -13335,7 +13338,7 @@ Rm
 lq
 lq
 Yc
-LL
+gS
 Yc
 aa
 aa
@@ -13561,7 +13564,7 @@ Jy
 lq
 YC
 Yc
-DK
+kf
 Yc
 aa
 aa

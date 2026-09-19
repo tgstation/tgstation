@@ -22,7 +22,7 @@
 		to_chat(user, span_warning("You don't want to hurt [src]!"))
 		return TRUE
 	var/obj/item/bodypart/arm/active_arm = user.get_active_hand()
-	var/damage = (basic_mob_flags & IMMUNE_TO_FISTS) ? 0 : rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
+	var/damage = rand(active_arm.unarmed_damage_low, active_arm.unarmed_damage_high)
 	if(check_block(user, damage, "[user]'s punch", UNARMED_ATTACK, 0, BRUTE))
 		return
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
@@ -99,7 +99,7 @@
 	if(. && stat != DEAD) //successful larva bite
 		var/damage_done = apply_damage(rand(attacking_larva.melee_damage_lower, attacking_larva.melee_damage_upper), BRUTE)
 		if(damage_done > 0)
-			attacking_larva.amount_grown = min(attacking_larva.amount_grown + damage_done, attacking_larva.max_grown)
+			attacking_larva.amount_grown = min(attacking_larva.amount_grown + damage_done, XENOMORPH_MAX_GROWTH)
 
 /mob/living/basic/attack_drone(mob/living/basic/drone/attacking_drone)
 	if(attacking_drone.combat_mode) //No kicking dogs even as a rogue drone. Use a weapon.
@@ -118,28 +118,23 @@
 	. = ..()
 	if(!. || QDELETED(src))
 		return FALSE
-
 	var/bomb_armor = getarmor(null, BOMB)
+	var/bomb_multi = clamp(1 - bomb_armor/200, 0, 1) // Scales linearly down to 50% damage at 100 armor
+	var/bloss
 	switch(severity)
 		if (EXPLODE_DEVASTATE)
-			if(prob(bomb_armor))
-				apply_damage(500, damagetype = BRUTE)
-			else
+			if(bomb_armor < EXPLODE_GIB_THRESHOLD)
 				investigate_log("has been gibbed by an explosion.", INVESTIGATE_DEATHS)
 				gib(DROP_ALL_REMAINS)
-
+			else
+				apply_damage(500, damagetype = BRUTE)
 		if (EXPLODE_HEAVY)
-			var/bloss = 60
-			if(prob(bomb_armor))
-				bloss = bloss / 1.5
-			apply_damage(bloss, damagetype = BRUTE)
-
+			bloss = 60
 		if (EXPLODE_LIGHT)
-			var/bloss = 30
-			if(prob(bomb_armor))
-				bloss = bloss / 1.5
-			apply_damage(bloss, damagetype = BRUTE)
-
+			bloss = 30
+	if(bloss)
+		bloss *= bomb_multi
+		apply_damage(bloss, damagetype = BRUTE)
 	return TRUE
 
 /mob/living/basic/blob_act(obj/structure/blob/attacking_blob)

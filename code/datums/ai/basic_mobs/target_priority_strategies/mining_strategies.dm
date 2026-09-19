@@ -76,6 +76,13 @@
 
 	return pick(lucky_fella)
 
+/datum/target_priority_strategy/mining/can_replace_target(datum/ai_controller/controller, atom/current_target, atom/candidate)
+	var/current_priority = get_target_priority(controller, current_target)
+	var/candidate_priority = get_target_priority(controller, candidate)
+	if(candidate_priority != current_priority)
+		return candidate_priority > current_priority
+	return get_dist(controller.pawn, candidate) < get_dist(controller.pawn, current_target)
+
 /datum/target_priority_strategy/mining/low_node_priority
 	// Higher than normal humans but will instantly pivot towards anyone who attacks or attacked mobs in our vicinity
 	node_priority = AGGRO_PRIORITY_NODE_LOW_PRIO

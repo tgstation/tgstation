@@ -124,8 +124,8 @@
 		return TRUE
 	if(istype(mover, /obj/item/boulder))
 		return can_process_boulder(mover)
-	if(isgolem(mover))
-		return can_process_golem(mover)
+	if(isliving(mover))
+		return can_process_living_mob(mover)
 	return ..()
 
 /**
@@ -183,7 +183,7 @@
  *
  * * [rockman][mob/living/carbon/human] - the golem we are trying to main
  */
-/obj/machinery/bouldertech/proc/can_process_golem(mob/living/carbon/human/rockman)
+/obj/machinery/bouldertech/proc/can_process_living_mob(mob/living/rockman)
 	PRIVATE_PROC(TRUE)
 	SHOULD_BE_PURE(TRUE)
 
@@ -195,11 +195,26 @@
 	if(!COOLDOWN_FINISHED(src, accept_cooldown))
 		return FALSE
 
-	//not processable
-	if(!istype(rockman) || QDELETED(rockman) || rockman.body_position != LYING_DOWN)
+	//not a mineral mob
+	if(!istype(rockman) || QDELETED(rockman))
 		return FALSE
 
-	return TRUE
+	var/list/bodyparts = rockman.get_bodyparts()
+	if(length(bodyparts)) //Has bodypart, check if any has the BIO_STONE state (we don't check MOB_MINERAL for carbon mobs cuz we don't want to gib plasmamen, just grind golem parts)
+		for(var/obj/item/bodypart/part as anything in bodyparts)
+			if(!(part.biological_state & BIO_STONE))
+				return FALSE
+	else if(!(rockman.mob_biotypes & MOB_MINERAL))
+		return FALSE
+
+	//Only return true if they are lying down or are incapacitated.
+	if(rockman.mobility_flags & MOBILITY_LIEDOWN)
+		if(rockman.body_position == LYING_DOWN)
+			return TRUE
+	else if(rockman.incapacitated)
+		return TRUE
+
+	return FALSE
 
 /**
  * Accepts a golem to be processed, mainly for memes
@@ -207,28 +222,52 @@
  *
  * * [rockman][mob/living/carbon/human] - the golem we are trying to main
  */
-/obj/machinery/bouldertech/proc/accept_golem(mob/living/carbon/human/rockman)
+/obj/machinery/bouldertech/proc/accept_mob(mob/living/rockman)
 	PRIVATE_PROC(TRUE)
 
-	if(!can_process_golem(rockman))
+	if(!can_process_living_mob(rockman))
 		return
 
 	if(!use_energy(active_power_usage * 1.5, force = FALSE))
 		say("Not enough energy!")
 		return
 
-	maim_golem(rockman)
+	maim_mob(rockman)
 	playsound(src, usage_sound, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 	COOLDOWN_START(src, accept_cooldown, 3 SECONDS)
 
 /// What effects actually happens to a golem when it is "processed"
-/obj/machinery/bouldertech/proc/maim_golem(mob/living/carbon/human/rockman)
+/obj/machinery/bouldertech/proc/maim_mob(mob/living/rockman)
 	PROTECTED_PROC(TRUE)
 
 	Shake(duration = 1 SECONDS)
+	var/list/bodyparts = rockman.get_bodyparts()
+	var/gibbing = TRUE
+	if(length(bodyparts)) //Has bodypart, check if any has the BIO_STONE state and don't just gib them if you can.
+		var/list/deleted_part_names
+		gibbing = FALSE
+		for(var/obj/item/bodypart/part as anything in bodyparts)
+			if(!(part.biological_state & BIO_STONE))
+				continue
+			if(part.body_zone == BODY_ZONE_CHEST) //Ok, so, without a chest, we're pretty much going to be gibbed anyway.
+				gibbing = TRUE
+				break
+			else
+				deleted_part_names += part.name
+				qdel(part) //This calls force_removal() with dismembered set to TRUE
+		if(!gibbing && length(deleted_part_names))
+			var/parts_text = english_list(deleted_part_names)
+			rockman.investigate_log("had [rockman.p_their()] [parts_text] which all had BIO_STONE biological state) destroyed by a [src]", INVESTIGATE_CARGO)
+			rockman.visible_message(span_warning("[rockman] is processed by [src]!"), span_userdanger("Your [parts_text] are shred into bits by [src]!"))
+
+	if(gibbing)
+		gib_mob(rockman)
+
+///Called at the end of main_mob() if they were a bodyparts-less mob or their chest was made of stone...
+/obj/machinery/bouldertech/proc/gib_mob(mob/living/rockman)
 	rockman.visible_message(span_warning("[rockman] is processed by [src]!"), span_userdanger("You get processed into bits by [src]!"))
-	rockman.investigate_log("was gibbed by [src] for being a golem", INVESTIGATE_DEATHS)
+	rockman.investigate_log("was gibbed by [src] for having the MOB_MINERAL mob biotype", INVESTIGATE_DEATHS)
 	rockman.gib(DROP_ALL_REMAINS)
 
 /obj/machinery/bouldertech/proc/on_entered(datum/source, atom/movable/atom_movable)
@@ -238,8 +277,8 @@
 		INVOKE_ASYNC(src, PROC_REF(accept_boulder), atom_movable)
 		return
 
-	if(isgolem(atom_movable))
-		INVOKE_ASYNC(src, PROC_REF(accept_golem), atom_movable)
+	if(isliving(atom_movable))
+		INVOKE_ASYNC(src, PROC_REF(accept_mob), atom_movable)
 		return
 
 /**

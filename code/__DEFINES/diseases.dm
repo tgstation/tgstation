@@ -92,12 +92,6 @@ DEFINE_BITFIELD(spread_flags, list(
 /// Negative Malnutrition Recovery Penalty
 //// Flat penalty to recovery chance if malnourished or starving
 #define DISEASE_MALNUTRITION_RECOVERY_PENALTY 3
-/// Satiety Recovery Multiplier - added chance to recover based on positive satiety
-//// Multiplier of satiety/max_satiety if satiety is positive or zero. Increase to make satiety more valuable, decrease for less.
-#define DISEASE_SATIETY_RECOVERY_MULTIPLIER 3
-/// Disease Satiety Threshold - how much junk food we have to eat to start curing positive viruses.
-//// About -150 is good. May need to change if satiety/junkiness var is changed up much.
-#define DISEASE_SATIETY_THRESHOLD -150
 /// Good Sleeping Recovery Bonus - additive benefits for various types of good sleep (blanket, bed, darkness, pillows.)
 //// Raise to make each factor add this much chance to recover.
 #define DISEASE_GOOD_SLEEPING_RECOVERY_BONUS 0.6
@@ -110,7 +104,9 @@ DEFINE_BITFIELD(spread_flags, list(
 /// Symptom Offset Duration - number of cycles over which sleeping/having spaceacillin or a slowdown effect can prevent symptoms appearing
 //// Set to maximum # of cycles you want to be able to offset symptoms. Scales down linearly over time.
 #define DISEASE_SYMPTOM_OFFSET_DURATION 200
-
 /// Symptom Frequency Modifier
 //// Raise to make symptoms fire less frequently, lower to make them fire more frequently. Keep at 0 or above.
 #define DISEASE_SYMPTOM_FREQUENCY_MODIFIER 1
+/// Symptom Immunity Recovery Bonus
+/// Raise to make recovering from similar diseases more harshly affect future similar ones (like smallpox and cowpox)
+#define DISEASE_SYMPTOM_IMMUNITY_RECOVERY_BONUS 1.5

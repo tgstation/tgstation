@@ -533,18 +533,21 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 		icon_state = base_icon_state
 	return ..()
 
-/obj/item/fish/attackby(obj/item/item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(!istype(item, /obj/item/reagent_containers/cup/fish_feed))
-		return ..()
-	if(!item.reagents.total_volume)
-		balloon_alert(user, "[item.name] is empty!")
-		return TRUE
+/obj/item/fish/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/reagent_containers/cup/fish_feed))
+		return NONE
+
+	if(!tool.reagents.total_volume)
+		balloon_alert(user, "[tool.name] is empty!")
+		return ITEM_INTERACT_BLOCKING
+
 	if(status == FISH_DEAD)
 		balloon_alert(user, "[name] [HAS_MIND_TRAIT(user, TRAIT_NAIVE) ? "isn't hungry" : "is dead!"]")
-		return TRUE
-	feed(item.reagents)
+		return ITEM_INTERACT_BLOCKING
+
+	feed(tool.reagents)
 	balloon_alert(user, "fed [name]")
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/fish/examine(mob/user)
 	. = ..()

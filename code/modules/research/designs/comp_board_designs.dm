@@ -1,15 +1,13 @@
 ///////////////////Computer Boards///////////////////////////////////
 
 /datum/design/board
-	name = "NULL ENTRY Board"
-	desc = "I promise this doesn't give you syndicate goodies!"
+	abstract_type = /datum/design/board
 	build_type = IMPRINTER | AWAY_IMPRINTER
 	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
 
 /datum/design/board/arcade_battle
 	name = "Battle Arcade Machine Board"
-	desc = "Allows for the construction of circuit boards used to build a new arcade machine."
-	id = "arcade_battle"
+	desc = "Used to build a battle arcade machine."
 	build_path = /obj/item/circuitboard/computer/arcade/battle
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENTERTAINMENT
@@ -18,8 +16,7 @@
 
 /datum/design/board/orion_trail
 	name = "Orion Trail Arcade Machine Board"
-	desc = "Allows for the construction of circuit boards used to build a new Orion Trail machine."
-	id = "arcade_orion"
+	desc = "Used to build an Orion Trail machine."
 	build_path = /obj/item/circuitboard/computer/arcade/orion_trail
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENTERTAINMENT
@@ -28,8 +25,7 @@
 
 /datum/design/board/seccamera
 	name = "Security Camera Board"
-	desc = "Allows for the construction of circuit boards used to build security camera computers."
-	id = "seccamera"
+	desc = "Used to build a security camera console, to view the station's security camera network."
 	build_path = /obj/item/circuitboard/computer/security
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_SECURITY
@@ -38,8 +34,7 @@
 
 /datum/design/board/rdcamera
 	name = "Research Monitor Board"
-	desc = "Allows for the construction of circuit boards used to build research camera computers."
-	id = "rdcamera"
+	desc = "Used to build a research camera console, to view the research department's camera networks."
 	build_path = /obj/item/circuitboard/computer/research
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
@@ -48,40 +43,16 @@
 
 /datum/design/board/xenobiocamera
 	name = "Xenobiology Console Board"
-	desc = "Allows for the construction of circuit boards used to build xenobiology camera computers."
-	id = "xenobioconsole"
+	desc = "Used to build a xenobiology camera console, to manage xenobiology's slime research."
 	build_path = /obj/item/circuitboard/computer/xenobiology
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
 
-/datum/design/board/aiupload
-	name = "AI Upload Board"
-	desc = "Allows for the construction of circuit boards used to build an AI Upload Console."
-	id = "aiupload"
-	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/circuitboard/computer/aiupload
-	category = list(
-		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
-/datum/design/board/borgupload
-	name = "Cyborg Upload Board"
-	desc = "Allows for the construction of circuit boards used to build a Cyborg Upload Console."
-	id = "borgupload"
-	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)
-	build_path = /obj/item/circuitboard/computer/borgupload
-	category = list(
-		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
-	)
-	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE
-
 /datum/design/board/med_data
 	name = "Medical Records Board"
-	desc = "Allows for the construction of circuit boards used to build a medical records console."
-	id = "med_data"
+	desc = "Used to build a medical records console, to view the crew's medical data."
 	build_path = /obj/item/circuitboard/computer/med_data
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_MEDICAL
@@ -90,8 +61,7 @@
 
 /datum/design/board/operating
 	name = "Operating Computer Board"
-	desc = "Allows for the construction of circuit boards used to build an operating computer console."
-	id = "operating"
+	desc = "Used to build an operating computer console, to perform advanced surgical procedures."
 	build_path = /obj/item/circuitboard/computer/operating
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_MEDICAL
@@ -100,8 +70,7 @@
 
 /datum/design/board/pandemic
 	name = "PanD.E.M.I.C. 2200 Board"
-	desc = "Allows for the construction of circuit boards used to build a PanD.E.M.I.C. 2200 console."
-	id = "pandemic"
+	desc = "Used to build a PanD.E.M.I.C. 2200 console, to view and engineer viruses."
 	build_path = /obj/item/circuitboard/computer/pandemic
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_MEDICAL
@@ -110,8 +79,7 @@
 
 /datum/design/board/comconsole
 	name = "Communications Board"
-	desc = "Allows for the construction of circuit boards used to build a communications console."
-	id = "comconsole"
+	desc = "Used to build a communications console, primarily for managing communication between Central Command and the station. Typically installed in the Bridge."
 	build_path = /obj/item/circuitboard/computer/communications
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_COMMAND
@@ -120,8 +88,7 @@
 
 /datum/design/board/bankmachine
 	name = "Bank Machine Board"
-	desc = "Allows for the construction of circuit boards used to build a Bank Machine."
-	id = "bankmachine"
+	desc = "Used to build a bank machine, allowing withdrawal and deposit of funds into the station's bank account. Typically installed in the Vault."
 	build_path = /obj/item/circuitboard/computer/bankmachine
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_COMMAND
@@ -130,8 +97,7 @@
 
 /datum/design/board/crewconsole
 	name = "Crew Monitoring Computer Board"
-	desc = "Allows for the construction of circuit boards used to build a Crew monitoring computer."
-	id = "crewconsole"
+	desc = "Used to build a crew monitoring computer, to monitor the crew's vital signs."
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/crew
 	category = list(
@@ -141,8 +107,7 @@
 
 /datum/design/board/secdata
 	name = "Security Records Console Board"
-	desc = "Allows for the construction of circuit boards used to build a security records console."
-	id = "secdata"
+	desc = "Used to build a security records console, to manage and view the station's security records."
 	build_path = /obj/item/circuitboard/computer/secure_data
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_SECURITY
@@ -151,8 +116,7 @@
 
 /datum/design/board/atmosalerts
 	name = "Atmosphere Alert Board"
-	desc = "Allows for the construction of circuit boards used to build an atmosphere alert console."
-	id = "atmosalerts"
+	desc = "Used to build an atmosphere alert console, reporting hazardous atmospheric conditions across the station."
 	build_path = /obj/item/circuitboard/computer/atmos_alert
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING
@@ -161,8 +125,7 @@
 
 /datum/design/board/atmos_control
 	name = "Atmospheric Monitor Board"
-	desc = "Allows for the construction of circuit boards used to build an Atmospheric Monitor."
-	id = "atmos_control"
+	desc = "Used to build an atmospheric monitor, giving more detailed information about the station's atmospheric conditions."
 	build_path = /obj/item/circuitboard/computer/atmos_control
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING
@@ -171,8 +134,7 @@
 
 /datum/design/board/robocontrol
 	name = "Robotics Control Console Board"
-	desc = "Allows for the construction of circuit boards used to build a Robotics Control console."
-	id = "robocontrol"
+	desc = "Used to build a robotics control console, offering control over the station's bot assistants, and to a lesser extent, cyborg units."
 	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/gold =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/circuitboard/computer/robotics
 	category = list(
@@ -182,8 +144,7 @@
 
 /datum/design/board/slot_machine
 	name = "Slot Machine Board"
-	desc = "Allows for the construction of circuit boards used to build a new slot machine."
-	id = "slotmachine"
+	desc = "Used to build a new slot machine."
 	build_path = /obj/item/circuitboard/computer/slot_machine
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENTERTAINMENT
@@ -193,8 +154,8 @@
 
 /datum/design/board/powermonitor
 	name = "Power Monitor Board"
-	desc = "Allows for the construction of circuit boards used to build a new power monitor."
-	id = "powermonitor"
+	desc = "Used to build a power monitoring console. Provides real-time information pertaining to all APC and SMES units connected to the console. \
+		Requires a physical cable connection, unlike most consoles."
 	build_path = /obj/item/circuitboard/computer/powermonitor
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING
@@ -203,8 +164,8 @@
 
 /datum/design/board/solarcontrol
 	name = "Solar Control Board"
-	desc = "Allows for the construction of circuit boards used to build a solar control console."
-	id = "solarcontrol"
+	desc = "Used to build a solar control console. Tracks the status of all solar cells connected to the console. \
+		Requires a physical cable connection, unlike most consoles."
 	build_path = /obj/item/circuitboard/computer/solar_control
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING
@@ -213,8 +174,7 @@
 
 /datum/design/board/prisonmanage
 	name = "Prisoner Management Console Board"
-	desc = "Allows for the construction of circuit boards used to build a prisoner management console."
-	id = "prisonmanage"
+	desc = "Used to build a prisoner management console, allowing monitoring of all implanted convicts."
 	build_path = /obj/item/circuitboard/computer/prisoner
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_SECURITY
@@ -223,8 +183,7 @@
 
 /datum/design/board/mechacontrol
 	name = "Exosuit Control Console Board"
-	desc = "Allows for the construction of circuit boards used to build an exosuit control console."
-	id = "mechacontrol"
+	desc = "Used to build an exosuit control console, allowing monitoring over mechs with installed tracking beacons."
 	build_path = /obj/item/circuitboard/computer/mecha_control
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
@@ -233,8 +192,7 @@
 
 /datum/design/board/mechapower
 	name = "Mech Bay Power Control Console Board"
-	desc = "Allows for the construction of circuit boards used to build a mech bay power control console."
-	id = "mechapower"
+	desc = "Used to build a mech bay power control console. Built in tandem with a mech recharger to, well, recharge mechs."
 	build_path = /obj/item/circuitboard/computer/mech_bay_power_console
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
@@ -243,8 +201,8 @@
 
 /datum/design/board/rdconsole
 	name = "R&D Console Board"
-	desc = "Allows for the construction of circuit boards used to build a new R&D console."
-	id = "rdconsole"
+	desc = "Used to build a new R&D console, to research new technology for the station. \
+		Locked by default, requiring research access to unlock."
 	build_path = /obj/item/circuitboard/computer/rdconsole
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_RESEARCH
@@ -253,8 +211,7 @@
 
 /datum/design/board/cargo
 	name = "Supply Console Board"
-	desc = "Allows for the construction of circuit boards used to build a Supply Console."
-	id = "cargo"
+	desc = "Used to build a Supply Console. Able to approve supply requests, directly purchase items, and send the supply shuttle back and forth between the station and Central Command."
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/cargo
 	category = list(
@@ -264,8 +221,7 @@
 
 /datum/design/board/cargorequest
 	name = "Supply Request Console Board"
-	desc = "Allows for the construction of circuit boards used to build a Supply Request Console."
-	id = "cargorequest"
+	desc = "Used to build a Supply Request Console. A \"request only\" version of the supply console board, incapable of direct purchase or shuttle use."
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/cargo/request
 	category = list(
@@ -275,8 +231,7 @@
 
 /datum/design/board/mining
 	name = "Outpost Status Display Board"
-	desc = "Allows for the construction of circuit boards used to build an outpost status display console."
-	id = "mining"
+	desc = "Used to build an outpost status display console, to view the mining outpost's camera network."
 	build_path = /obj/item/circuitboard/computer/mining
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_CARGO
@@ -285,8 +240,7 @@
 
 /datum/design/board/comm_monitor
 	name = "Telecommunications Monitoring Console Board"
-	desc = "Allows for the construction of circuit boards used to build a telecommunications monitor."
-	id = "comm_monitor"
+	desc = "Used to build a telecommunications monitor, reporting the status of a telecommunication network."
 	build_path = /obj/item/circuitboard/computer/comm_monitor
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING
@@ -295,8 +249,7 @@
 
 /datum/design/board/comm_server
 	name = "Telecommunications Server Monitoring Console Board"
-	desc = "Allows for the construction of circuit boards used to build a telecommunication server browser and monitor."
-	id = "comm_server"
+	desc = "Used to build a telecommunication server monitor, which logs and stores all communications messages sent through a telecommunication network."
 	build_path = /obj/item/circuitboard/computer/comm_server
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING
@@ -305,8 +258,7 @@
 
 /datum/design/board/message_monitor
 	name = "Messaging Monitor Console Board"
-	desc = "Allows for the construction of circuit boards used to build a messaging monitor console."
-	id = "message_monitor"
+	desc = "Used to build a messaging monitor console, which logs and stores all messages sent via PDA or request console."
 	build_path = /obj/item/circuitboard/computer/message_monitor
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING
@@ -315,8 +267,7 @@
 
 /datum/design/board/aifixer
 	name = "AI Integrity Restorer Board"
-	desc = "Allows for the construction of circuit boards used to build an AI Integrity Restorer."
-	id = "aifixer"
+	desc = "Used to build an AI Integrity Restorer, to repair broken AI units."
 	build_path = /obj/item/circuitboard/computer/aifixer
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ROBOTICS
@@ -325,8 +276,7 @@
 
 /datum/design/board/libraryconsole
 	name = "Library Console Board"
-	desc = "Allows for the construction of circuit boards used to build a new library console."
-	id = "libraryconsole"
+	desc = "Used to build a new library console, providing access to the station's library database."
 	build_path = /obj/item/circuitboard/computer/libraryconsole
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENTERTAINMENT
@@ -335,8 +285,8 @@
 
 /datum/design/board/apc_control
 	name = "APC Control Board"
-	desc = "Allows for the construction of circuit boards used to build a new APC control console."
-	id = "apc_control"
+	desc = "Used to build a new power flow control console, allowing remote access and control over all the station's APC units. \
+		Requires Chief Engineer access to operate."
 	build_path = /obj/item/circuitboard/computer/apc_control
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING
@@ -345,8 +295,7 @@
 
 /datum/design/board/advanced_camera
 	name = "Advanced Camera Console Board"
-	desc = "Allows for the construction of circuit boards used to build advanced camera consoles."
-	id = "advanced_camera"
+	desc = "Used to build advanced camera consoles, providing enhanced surveillance capabilities."
 	build_path = /obj/item/circuitboard/computer/advanced_camera
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_SECURITY
@@ -355,8 +304,7 @@
 
 /datum/design/board/bountypad_control
 	name = "Civilian Bounty Pad Control Board"
-	desc = "Allows for the construction of circuit boards used to build a new civilian bounty pad console."
-	id = "bounty_pad_control"
+	desc = "Used to build a civilian bounty pad console, allowing the crew to manage and track their cargo bounties. Requires a civilian bounty pad."
 	build_path = /obj/item/circuitboard/computer/bountypad
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_CARGO
@@ -365,8 +313,7 @@
 
 /datum/design/board/exoscanner_console
 	name = "Scanner Array Control Console Board"
-	desc = "Allows for the construction of circuit boards used to build a new scanner array control console."
-	id = "exoscanner_console"
+	desc = "Used to build a scanner array control console. Used by exodrone operators to manage their scanning arrays and discover new locations to explore."
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/exoscanner_console
 	category = list(
@@ -376,8 +323,7 @@
 
 /datum/design/board/exodrone_console
 	name = "Exploration Drone Control Console Board"
-	desc = "Allows for the construction of circuit boards used to build a new exploration drone control console."
-	id = "exodrone_console"
+	desc = "Used to build a new exploration drone control console. Used by exodrone operators to control their exploration drones."
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/exodrone_console
 	category = list(
@@ -387,8 +333,7 @@
 
 /datum/design/board/accounting_console
 	name = "Account Lookup Console Board"
-	desc = "Allows for the construction of circuit boards used to assess the wealth of crewmates on station."
-	id = "account_console"
+	desc = "Used to build an account lookup console, allowing for the quick auditing of the crew's financial records, as well as paycheck management."
 	build_type = IMPRINTER
 	build_path = /obj/item/circuitboard/computer/accounting
 	category = list(
@@ -397,6 +342,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SECURITY //Honestly should have a bridge techfab for this sometime.
 
 /datum/design/board/shuttle
+	abstract_type = /datum/design/board/shuttle
 	build_type = IMPRINTER
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_ENGINEERING
@@ -404,21 +350,18 @@
 	departmental_flags = DEPARTMENT_BITFLAG_SCIENCE | DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_CARGO
 
 /datum/design/board/shuttle/flight_control
-	name = "Computer Design (Shuttle Flight Controls)"
-	desc = "Allows for the construction of circuit boards used to build a console that enables shuttle flight"
-	id = "shuttle_control"
+	name = "Shuttle Flight Control Board"
+	desc = "Used to build a console that enables shuttle flight."
 	build_path = /obj/item/circuitboard/computer/shuttle/flight_control
 
 /datum/design/board/shuttle/shuttle_docker
-	name = "Computer Design (Shuttle Navigation Computer)"
-	desc = "Allows for the construction of circuit boards used to build a console that enables the targetting of custom flight locations"
-	id = "shuttle_docker"
+	name = "Shuttle Navigation Computer Board"
+	desc = "Used to build a console that enables the targeting of custom flight locations."
 	build_path = /obj/item/circuitboard/computer/shuttle/docker
 
 /datum/design/board/quantum_console
 	name = "Quantum Console Board"
-	desc = "Allows for the construction of circuit boards used to build a Quantum Console."
-	id = "quantum_console"
+	desc = "Used to build a quantum console, used by Bitrunners to manage their quantum server."
 	build_path = /obj/item/circuitboard/computer/quantum_console
 	category = list(
 		RND_CATEGORY_COMPUTER + RND_SUBCATEGORY_COMPUTER_CARGO

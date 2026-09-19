@@ -82,7 +82,7 @@
 	if(HAS_TRAIT(owner, TRAIT_DREAMING))
 		damage_mods += damage_mod
 
-/datum/status_effect/dream_protection/get_examine_text()
+/datum/status_effect/dream_protection/get_examine_text(mob/examiner)
 	if(IS_UNCONSCIOUS_AND_ALIVE(owner) || HAS_TRAIT(owner, TRAIT_DREAMING))
 		return "A soft cyan glow envelops [owner.p_them()], reflecting light."
 

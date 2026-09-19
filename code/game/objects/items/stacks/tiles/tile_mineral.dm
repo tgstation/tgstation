@@ -33,6 +33,15 @@
 	mineralType = "plasma"
 	mats_per_unit = list(/datum/material/plasma=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/plasma
+	tile_reskin_types = list(
+		/obj/item/stack/tile/mineral/plasma,
+		/obj/item/stack/tile/mineral/plasma/tiled,
+	)
+
+/obj/item/stack/tile/mineral/plasma/tiled
+	icon_state = "tile_plasma_tiled"
+	turf_type = /turf/open/floor/mineral/plasma/tiled
+	merge_type = /obj/item/stack/tile/mineral/plasma/tiled
 
 /obj/item/stack/tile/mineral/uranium
 	name = "uranium tile"
@@ -44,6 +53,15 @@
 	mineralType = "uranium"
 	mats_per_unit = list(/datum/material/uranium=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/uranium
+	tile_reskin_types = list(
+		/obj/item/stack/tile/mineral/uranium,
+		/obj/item/stack/tile/mineral/uranium/tiled,
+	)
+
+/obj/item/stack/tile/mineral/uranium/tiled
+	icon_state = "tile_uranium_tiled"
+	turf_type = /turf/open/floor/mineral/uranium/tiled
+	merge_type = /obj/item/stack/tile/mineral/uranium/tiled
 
 /obj/item/stack/tile/mineral/gold
 	name = "gold tile"
@@ -55,6 +73,22 @@
 	mineralType = "gold"
 	mats_per_unit = list(/datum/material/gold=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/gold
+	tile_reskin_types = list(
+		/obj/item/stack/tile/mineral/gold,
+		/obj/item/stack/tile/mineral/gold/tiled,
+		/obj/item/stack/tile/mineral/gold/sun,
+	)
+
+/obj/item/stack/tile/mineral/gold/tiled
+	icon_state = "tile_gold_tiled"
+	turf_type = /turf/open/floor/mineral/gold/tiled
+	merge_type = /obj/item/stack/tile/mineral/gold/tiled
+
+/obj/item/stack/tile/mineral/gold/sun
+	icon_state = "tile_gold_sun"
+	desc = "A tile made out of gold, portraying the sun."
+	turf_type = /turf/open/floor/mineral/gold/sun
+	merge_type = /obj/item/stack/tile/mineral/gold/sun
 
 /obj/item/stack/tile/mineral/silver
 	name = "silver tile"
@@ -66,6 +100,23 @@
 	mineralType = "silver"
 	mats_per_unit = list(/datum/material/silver=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/silver
+	tile_reskin_types = list(
+		/obj/item/stack/tile/mineral/silver,
+		/obj/item/stack/tile/mineral/silver/tiled,
+		/obj/item/stack/tile/mineral/silver/moon,
+	)
+
+/obj/item/stack/tile/mineral/silver/tiled
+	icon_state = "tile_silver_tiled"
+	turf_type = /turf/open/floor/mineral/silver/tiled
+	merge_type = /obj/item/stack/tile/mineral/silver/tiled
+
+/obj/item/stack/tile/mineral/silver/moon
+	icon_state = "tile_silver_moon"
+	desc = "A tile made out of silver, portraying the moon."
+	turf_type = /turf/open/floor/mineral/silver/moon
+	merge_type = /obj/item/stack/tile/mineral/silver/moon
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
 
 /obj/item/stack/tile/mineral/diamond
 	name = "diamond tile"
@@ -77,6 +128,15 @@
 	mineralType = "diamond"
 	mats_per_unit = list(/datum/material/diamond=SHEET_MATERIAL_AMOUNT*0.25)
 	merge_type = /obj/item/stack/tile/mineral/diamond
+	tile_reskin_types = list(
+		/obj/item/stack/tile/mineral/diamond,
+		/obj/item/stack/tile/mineral/diamond/tiled,
+	)
+
+/obj/item/stack/tile/mineral/diamond/tiled
+	icon_state = "tile_diamond_tiled"
+	turf_type = /turf/open/floor/mineral/diamond/tiled
+	merge_type = /obj/item/stack/tile/mineral/diamond/tiled
 
 /obj/item/stack/tile/mineral/bananium
 	name = "bananium tile"
@@ -89,6 +149,148 @@
 	mats_per_unit = list(/datum/material/bananium=SHEET_MATERIAL_AMOUNT*0.25)
 	material_flags = NONE //The slippery comp makes it unpractical for good clown decor. The material tiles should still slip.
 	merge_type = /obj/item/stack/tile/mineral/bananium
+	tile_reskin_types = list(
+		/obj/item/stack/tile/mineral/bananium,
+		/obj/item/stack/tile/mineral/bananium/tiled,
+	)
+
+/obj/item/stack/tile/mineral/bananium/tiled
+	icon_state = "tile_bananium_tiled"
+	turf_type = /turf/open/floor/mineral/bananium/tiled
+	merge_type = /obj/item/stack/tile/mineral/bananium/tiled
+
+/obj/item/stack/tile/mineral/bluespace
+	name = "bluespace tile"
+	singular_name = "bluespace floor tile"
+	desc = "A tile made out of bluespace crystals. Latest innovation in random teleportation."
+	icon_state = "tile_bluespacecrystal"
+	inhand_icon_state = "tile-bluespacecrystal"
+	turf_type = /turf/open/floor/mineral/bluespace
+	mineralType = "bluespace"
+	mats_per_unit = list(/datum/material/bluespace=SHEET_MATERIAL_AMOUNT*0.25)
+	merge_type = /obj/item/stack/tile/mineral/bluespace
+	tile_reskin_types = list(
+		/obj/item/stack/tile/mineral/bluespace,
+		/obj/item/stack/tile/mineral/bluespace/tiled,
+	)
+
+/obj/item/stack/tile/mineral/bluespace/tiled
+	icon_state = "tile_bluespacecrystal_tiled"
+	turf_type = /turf/open/floor/mineral/bluespace/tiled
+	merge_type = /obj/item/stack/tile/mineral/bluespace/tiled
+
+/obj/item/stack/tile/mineral/telecrystal
+	name = "telecrystal tile"
+	singular_name = "telecrystal floor tile"
+	desc = "A tile made out of telecrystals. Pretty sure its illegal."
+	icon_state = "tile_telecrystal"
+	inhand_icon_state = "tile-telecrystal"
+	turf_type = /turf/open/floor/mineral/telecrystal
+	mineralType = "telecrystal"
+	mats_per_unit = list(/datum/material/telecrystal=SHEET_MATERIAL_AMOUNT*0.25)
+	merge_type = /obj/item/stack/tile/mineral/telecrystal
+	tile_reskin_types = list(
+		/obj/item/stack/tile/mineral/telecrystal,
+		/obj/item/stack/tile/mineral/telecrystal/tiled,
+	)
+
+/obj/item/stack/tile/mineral/telecrystal/tiled
+	icon_state = "tile_telecrystal_tiled"
+	turf_type = /turf/open/floor/mineral/telecrystal/tiled
+	merge_type = /obj/item/stack/tile/mineral/telecrystal/tiled
+
+/obj/item/stack/tile/mineral/adamantine
+	name = "adamantine tile"
+	singular_name = "adamantine floor tile"
+	desc = "A tile made out of adamantine. Industrial style, favourite of golems."
+	icon_state = "tile_adamantine"
+	inhand_icon_state = "tile-adamantine"
+	turf_type = /turf/open/floor/mineral/adamantine
+	mineralType = "adamantine"
+	mats_per_unit = list(/datum/material/adamantine=SHEET_MATERIAL_AMOUNT*0.25)
+	merge_type = /obj/item/stack/tile/mineral/adamantine
+	tile_reskin_types = list(
+		/obj/item/stack/tile/mineral/adamantine,
+		/obj/item/stack/tile/mineral/adamantine/tiled,
+	)
+
+/obj/item/stack/tile/mineral/adamantine/tiled
+	icon_state = "tile_adamantine_tiled"
+	turf_type = /turf/open/floor/mineral/adamantine/tiled
+	merge_type = /obj/item/stack/tile/mineral/adamantine/tiled
+
+/obj/item/stack/tile/mineral/metal_hydrogen
+	name = "metal hydrogen tile"
+	singular_name = "metal hydrogen floor tile"
+	desc = "A tile made out of metal hydrogen. Like walking on a cloud!"
+	icon_state = "tile_metal_hydrogen"
+	inhand_icon_state = "tile-metalhydrogen"
+	turf_type = /turf/open/floor/mineral/metal_hydrogen
+	mineralType = "metal hydrogen"
+	mats_per_unit = list(/datum/material/metalhydrogen=SHEET_MATERIAL_AMOUNT*0.25)
+	merge_type = /obj/item/stack/tile/mineral/metal_hydrogen
+	tile_reskin_types = list(
+		/obj/item/stack/tile/mineral/metal_hydrogen,
+		/obj/item/stack/tile/mineral/metal_hydrogen/tiled,
+	)
+
+/obj/item/stack/tile/mineral/metal_hydrogen/tiled
+	icon_state = "tile_metal_hydrogen_tiled"
+	turf_type = /turf/open/floor/mineral/metal_hydrogen/tiled
+	merge_type = /obj/item/stack/tile/mineral/metal_hydrogen/tiled
+
+/obj/item/stack/tile/mineral/runite
+	name = "runite tile"
+	singular_name = "runite floor tile"
+	desc = "A quite magical tile made from runite. You feel its polarity is determined by the direction of the winds of magic."
+	icon_state = "tile_runite"
+	inhand_icon_state = "tile-runite"
+	turf_type = /turf/open/floor/mineral/runite
+	mineralType = "runite"
+	mats_per_unit = list(/datum/material/runite=SHEET_MATERIAL_AMOUNT*0.25)
+	merge_type = /obj/item/stack/tile/mineral/runite
+	tile_rotate_dirs = list(SOUTH, NORTH, EAST, WEST)
+
+/obj/item/stack/tile/mineral/runite/tiled
+	icon_state = "tile_runite_tiled"
+	turf_type = /turf/open/floor/mineral/runite/tiled
+	merge_type = /obj/item/stack/tile/mineral/runite/tiled
+
+/obj/item/stack/tile/mineral/mythril
+	name = "mythril tile"
+	singular_name = "mythril floor tile"
+	desc = "Definetly the best use of such an legendary, unfathomable material."
+	icon_state = "tile_mythril"
+	inhand_icon_state = "tile-mythril"
+	turf_type = /turf/open/floor/mineral/mythril
+	mineralType = "mythril"
+	mats_per_unit = list(/datum/material/mythril=SHEET_MATERIAL_AMOUNT*0.25)
+	merge_type = /obj/item/stack/tile/mineral/mythril
+
+/obj/item/stack/tile/mineral/mythril/tiled
+	icon_state = "tile_mythril_tiled"
+	turf_type = /turf/open/floor/mineral/mythril/tiled
+	merge_type = /obj/item/stack/tile/mineral/mythril/tiled
+
+/obj/item/stack/tile/mineral/sandstone
+	name = "sandstone brick tile"
+	desc = "A tile made out of sandstone."
+	icon_state = "sandstone_floor"
+	inhand_icon_state = "tile-sandstone"
+	mineralType = "sandstone"
+	mats_per_unit = list(/datum/material/sandstone = HALF_SHEET_MATERIAL_AMOUNT / 2)
+	turf_type = /turf/open/floor/sandstone
+	merge_type = /obj/item/stack/tile/mineral/sandstone
+
+/obj/item/stack/tile/mineral/stone
+	name = "stone brick tile"
+	desc = "A tile made out of stone."
+	icon_state = "stone_floor"
+	inhand_icon_state = "tile-stone"
+	mineralType = "stone"
+	mats_per_unit = list(/datum/material/rock = HALF_SHEET_MATERIAL_AMOUNT / 2)
+	turf_type = /turf/open/floor/stone
+	merge_type = /obj/item/stack/tile/mineral/stone
 
 /obj/item/stack/tile/mineral/abductor
 	name = "alien floor tile"

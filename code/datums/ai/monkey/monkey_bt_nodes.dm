@@ -150,7 +150,7 @@
 	return ..()
 
 /// Prefers any gun once gun neurons are activated, else the strongest candidate that beats our current best held item.
-/datum/bt_node/ai_behavior/acquire_target/update_interaction_target/monkey_find_weapon/pick_final_target(datum/ai_controller/controller, list/filtered_targets)
+/datum/bt_node/ai_behavior/acquire_target/update_interaction_target/monkey_find_weapon/pick_final_target(datum/ai_controller/controller, list/filtered_targets, datum/target_priority_strategy/priority_strategy, atom/current_target)
 	var/mob/living/living_pawn = controller.pawn
 
 	if(controller.blackboard[BB_MONKEY_GUN_NEURONS_ACTIVATED])
@@ -256,10 +256,18 @@
 	var/succeeded = FALSE
 	if(attack_results && !controller.blackboard[BB_MONKEY_AGGRESSIVE])
 		succeeded = TRUE
+		var/hatred_value = controller.blackboard[BB_MONKEY_ENEMIES][target]
+		// A forced target may not have a grudge yet; give it one that can be satisfied.
+		if(isnull(hatred_value))
+			hatred_value = 1
+			controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, hatred_value)
 		if(prob(MONKEY_HATRED_REDUCTION_PROB))
-			var/hatred_value = controller.blackboard[BB_MONKEY_ENEMIES][target] - 1
+			hatred_value--
 			if(hatred_value <= 0)
 				controller.remove_thing_from_blackboard_key(BB_MONKEY_ENEMIES, target)
+				// The combat tree loops until its target is cleared, even after a successful attack.
+				if(controller.blackboard[target_key] == target)
+					controller.clear_blackboard_key(target_key)
 			else
 				controller.set_blackboard_key_assoc(BB_MONKEY_ENEMIES, target, hatred_value)
 	finish_async(succeeded ? AI_BEHAVIOR_SUCCEEDED : AI_BEHAVIOR_FAILED)
@@ -344,7 +352,7 @@
 	for(var/mob/living/carbon/human/human_mob in oview(5, living_pawn))
 		if(istype(human_mob.mind?.assigned_role, /datum/job/bartender))
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED // my boss is on duty!
-		if(IS_UNCONSCIOUS_OR_CRIT(human_mob) || ismonkey(human_mob))
+		if(IS_UNCONSCIOUS_OR_CRIT(human_mob) || HAS_TRAIT(human_mob, TRAIT_LESSER_HUMANOID))
 			continue
 		if(!human_mob.get_empty_held_indexes())
 			continue

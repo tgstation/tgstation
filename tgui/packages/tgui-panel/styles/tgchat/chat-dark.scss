@@ -312,6 +312,7 @@ em {
 .emote,
 .infoplain,
 .oocplain,
+.tooltip_subtle,
 .warningplain {
 }
 
@@ -952,6 +953,11 @@ em {
 .upside_down {
   transform: rotate(180deg);
   display: inline-block;
+}
+
+.mansus {
+  color: #0d9b00;
+  text-shadow: 0 0 6px #0d9b00;
 }
 
 .cyan {

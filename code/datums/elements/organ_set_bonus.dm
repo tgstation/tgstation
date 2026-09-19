@@ -57,10 +57,10 @@
 	var/required_biotype = MOB_ORGANIC
 	/// A list of traits added to the mob upon bonus activation, can be of any length.
 	var/list/bonus_traits = list()
-	/// Bonus biotype to add on bonus activation.
+	/// Bonus biotype(s) to add on bonus activation.
 	var/bonus_biotype
-	/// If the biotype was added - used to check if we should remove the biotype or not, on organ set loss.
-	var/biotype_added = FALSE
+	/// what biotype(s) was added - used to check if we should remove the biotype or not, on organ set loss.
+	var/biotype_added = NONE
 	/// Limb texture to apply upon activation
 	var/limb_texture
 	/// Color priority for limb limb_texture
@@ -89,10 +89,11 @@
 		owner.add_traits(bonus_traits, TRAIT_STATUS_EFFECT(id))
 
 	// Add biotype
-	if(owner.mob_biotypes & bonus_biotype)
-		biotype_added = FALSE
-	owner.mob_biotypes |= bonus_biotype
-	biotype_added = TRUE
+	if(bonus_biotype)
+		biotype_added = bonus_biotype & ~owner.mob_biotypes
+		owner.mob_biotypes |= biotype_added
+		RegisterSignal(owner, COMSIG_SPECIES_LOSS, PROC_REF(on_species_loss))
+		RegisterSignal(owner, COMSIG_SPECIES_GAIN, PROC_REF(on_species_gain))
 
 	if(bonus_activate_text)
 		to_chat(owner, bonus_activate_text)
@@ -123,7 +124,8 @@
 		owner.remove_traits(bonus_traits, TRAIT_STATUS_EFFECT(id))
 	// Remove biotype (if added)
 	if(biotype_added)
-		owner.mob_biotypes &= ~bonus_biotype
+		owner.mob_biotypes &= ~biotype_added
+		biotype_added = NONE
 
 	if(bonus_deactivate_text)
 		to_chat(owner, bonus_deactivate_text)
@@ -132,7 +134,7 @@
 	if(!limb_texture)
 		return
 
-	UnregisterSignal(owner, list(COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB))
+	UnregisterSignal(owner, list(COMSIG_CARBON_ATTACH_LIMB, COMSIG_CARBON_REMOVE_LIMB, COMSIG_SPECIES_LOSS, COMSIG_SPECIES_GAIN))
 
 	if(QDELETED(owner))
 		return
@@ -143,6 +145,18 @@
 			limb.remove_color_override(color_overlay_priority)
 
 	owner.update_body()
+
+///We need to recalculate the mob biotypes, so first, remove the added biotypes from the mob before the new species changes the standard biotypes.
+/datum/status_effect/organ_set_bonus/proc/on_species_loss(mob/living/carbon/human, datum/species/new_species, datum/species/old_species)
+	SIGNAL_HANDLER
+	human.mob_biotypes &= ~biotype_added
+	biotype_added = NONE
+
+///After the new species has added its biotypes to the mob, check if they already have or don't have the bonus biotype now.
+/datum/status_effect/organ_set_bonus/proc/on_species_gain(mob/living/carbon/human, datum/species/new_species, datum/species/old_species)
+	SIGNAL_HANDLER
+	biotype_added = bonus_biotype & ~owner.mob_biotypes
+	owner.mob_biotypes |= biotype_added
 
 /datum/status_effect/organ_set_bonus/proc/texture_limb(atom/source, obj/item/bodypart/limb)
 	SIGNAL_HANDLER

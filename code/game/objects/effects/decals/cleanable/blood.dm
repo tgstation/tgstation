@@ -75,8 +75,6 @@
 
 /obj/effect/decal/cleanable/blood/Destroy(force)
 	STOP_PROCESSING(SSblood_drying, src)
-	// connect_loc only unregisters via COMSIG_MOVABLE_MOVED, which never fires when the turf we're on gets replaced by ChangeTurf()
-	RemoveElement(/datum/element/connect_loc, loc_connections)
 	return ..()
 
 /// Returns the default blood type for this decal for maploaded decals
@@ -141,7 +139,7 @@
 	for(var/reagent_type in reagents_to_add)
 		reagents.add_reagent(reagent_type = reagent_type,
 							amount = round(bloodiness * BLOOD_TO_UNITS_MULTIPLIER / num_reagents, CHEMICAL_VOLUME_ROUNDING),
-							data = ispath(reagent_type, /datum/reagent/blood) ? list("blood_DNA" = pick(blood_DNA)) : null)
+							data = ispath(reagent_type, /datum/reagent/blood) ? list(BLOOD_DATA_DNA = pick(blood_DNA)) : null)
 	return reagents
 
 /obj/effect/decal/cleanable/blood/replace_decal(obj/effect/decal/cleanable/blood/merger)
@@ -298,12 +296,15 @@
 	beauty = -50
 	base_name = "trail of"
 	bloodiness = BLOOD_AMOUNT_PER_DECAL * 0.1
+	gender = NEUTER
 
 	/// All the components of the trail
 	var/list/obj/effect/decal/cleanable/blood/trail/trail_components
 
 /obj/effect/decal/cleanable/blood/trail_holder/Initialize(mapload, list/datum/disease/diseases, list/blood_or_dna = get_default_blood_type())
 	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	icon_state = "nothing"
 	update_appearance() // Cut possible overlays
 	if(mapload)
@@ -537,6 +538,8 @@
 
 /obj/effect/decal/cleanable/blood/gibs/Initialize(mapload, list/datum/disease/diseases, list/blood_or_dna = get_default_blood_type())
 	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	leave_blood = has_blood_flag(GET_ATOM_BLOOD_DNA(src), BLOOD_COVER_TURFS)
 	if(squishy)
 		AddElement(/datum/element/squish_sound)
@@ -691,6 +694,8 @@
 
 /obj/effect/decal/cleanable/blood/footprints/Initialize(mapload, list/datum/disease/diseases, list/blood_or_dna = get_default_blood_type())
 	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	icon_state = "" // All of the footprint visuals come from overlays
 	if(mapload)
 		entered_dirs |= dir // Keep the same appearance as in the map editor
@@ -817,6 +822,8 @@
 
 /obj/effect/decal/cleanable/blood/hitsplatter/Initialize(mapload, list/datum/disease/diseases, list/blood_or_dna = get_default_blood_type(), splatter_strength)
 	. = ..()
+	if(. == INITIALIZE_HINT_QDEL)
+		return
 	leave_blood = has_blood_flag(GET_ATOM_BLOOD_DNA(src), BLOOD_COVER_TURFS)
 	prev_loc = loc //Just so we are sure prev_loc exists
 	if(splatter_strength)

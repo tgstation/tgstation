@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	basic_mob_flags = DEL_ON_DEATH
 	density = FALSE
 
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
+	physiology = list(TOX = 0, OXY = 0, STAMINA = 0)
 	habitable_atmos = null
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST)
 
@@ -441,30 +441,33 @@ GLOBAL_LIST_INIT(command_strings, list(
 	heal_overall_damage(10)
 	user.visible_message(span_notice("[user] repairs [src]!"),span_notice("You repair [src]."))
 
-/mob/living/basic/bot/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(attacking_item.GetID())
+/mob/living/basic/bot/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(tool.GetID())
 		unlock_with_id(user)
-		return
+		return ITEM_INTERACT_SUCCESS
 
-	if(istype(attacking_item, /obj/item/pai_card))
-		insertpai(user, attacking_item)
-		return
+	if(istype(tool, /obj/item/pai_card))
+		insertpai(user, tool)
+		return ITEM_INTERACT_SUCCESS
 
-	if(attacking_item.tool_behaviour != TOOL_HEMOSTAT || !paicard)
+	if(tool.tool_behaviour != TOOL_HEMOSTAT || !paicard)
 		return ..()
 
 	if(bot_access_flags & BOT_COVER_MAINTS_OPEN)
 		balloon_alert(user, "open the access panel!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	balloon_alert(user, "removing pAI...")
 	if(!do_after(user, 3 SECONDS, target = src) || !paicard)
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	user.visible_message(span_notice("[user] uses [attacking_item] to pull [paicard] out of [initial(src.name)]!"), \
-		span_notice("You pull [paicard] out of [initial(src.name)] with [attacking_item]."))
+	user.visible_message(
+		span_notice("[user] uses [tool] to pull [paicard] out of [initial(src.name)]!"),
+		span_notice("You pull [paicard] out of [initial(src.name)] with [tool]."),
+	)
 
 	ejectpai(user)
+	return ITEM_INTERACT_SUCCESS
 
 /mob/living/basic/bot/attack_effects(damage_done, hit_zone, armor_block, obj/item/attacking_item, mob/living/attacker)
 	if(damage_done > 0 && attacking_item.damtype != STAMINA && stat != DEAD)
@@ -788,6 +791,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 
 /mob/living/basic/bot/rust_heretic_act()
 	adjust_brute_loss(400)
+	return TRUE
 
 /mob/living/basic/bot/proc/retrieve_access(mob/bot, list/player_access)
 	SIGNAL_HANDLER
@@ -810,7 +814,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	bot_reset(bypass_ai_reset = isAI(summoner))
 	var/turf/destination = turf_destination ? turf_destination : get_turf(summoner)
 	ai_controller?.set_blackboard_key(BB_BOT_SUMMON_TARGET, destination)
-	var/list/access_to_grant = grant_all_access ? REGION_ACCESS_ALL_STATION : user_access + initial_access
+	var/list/access_to_grant = grant_all_access ? SSid_access.accesses_by_region[REGION_ALL_STATION] : user_access + initial_access
 	access_card.set_access(access_to_grant)
 	speak("Responding.", radio_channel)
 	update_bot_mode(new_mode = BOT_SUMMON)

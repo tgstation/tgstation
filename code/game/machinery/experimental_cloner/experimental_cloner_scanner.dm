@@ -31,6 +31,10 @@
 	. = ..()
 	soundloop = new (src)
 
+/obj/machinery/experimental_cloner_scanner/Destroy(force)
+	QDEL_NULL(soundloop)
+	return ..()
+
 /// Scan the occupant, eventually producing a [/datum/experimental_cloning_record]. Returns FALSE if unsuccessful.
 /obj/machinery/experimental_cloner_scanner/proc/start_scan()
 	if (machine_stat & BROKEN || machine_stat & NOPOWER || isnull(occupant))
@@ -101,8 +105,7 @@
 		open_machine()
 		return
 
-	user.changeNext_move(CLICK_CD_BREAKOUT)
-	user.last_special = world.time + CLICK_CD_BREAKOUT
+	user.change_next_special_move(CLICK_CD_BREAKOUT)
 	user.visible_message(span_notice("You see [user] kicking against the door of [src]!"), \
 		span_notice("You lean on the back of [src] and start pushing the door open..."), \
 		span_hear("You hear a metallic creaking from [src]."))

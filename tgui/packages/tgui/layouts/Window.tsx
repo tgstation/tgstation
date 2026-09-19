@@ -14,6 +14,7 @@ import {
 } from 'react';
 import { type Box, KeyListener } from 'tgui-core/components';
 import { UI_DISABLED, UI_INTERACTIVE } from 'tgui-core/constants';
+import { globalEvents } from 'tgui-core/events';
 import { KEY_ALT } from 'tgui-core/keycodes';
 import { type BooleanLike, classes } from 'tgui-core/react';
 import { decodeHtmlEntities } from 'tgui-core/string';
@@ -71,8 +72,10 @@ export function Window(props: Props) {
   const { scale } = config?.window || false;
 
   useEffect(() => {
+    let cancelled = false;
+
     if (!suspended && isReadyToRender) {
-      const updateGeometry = () => {
+      const updateGeometry = async () => {
         const options = {
           ...config.window,
           size: DEFAULT_SIZE,
@@ -84,10 +87,16 @@ export function Window(props: Props) {
         if (config.window?.key) {
           setWindowKey(config.window.key);
         }
-        recallWindowGeometry(options);
+        await recallWindowGeometry(options);
+        if (cancelled) {
+          return;
+        }
         Byond.winset(Byond.windowId, {
           'is-visible': true,
         });
+        Byond.sendMessage('visible');
+        globalEvents.emit('window-geometry-finished');
+
         logger.log('set to visible');
       };
 
@@ -98,9 +107,10 @@ export function Window(props: Props) {
       updateGeometry();
     }
     return () => {
+      cancelled = true;
       logger.log('unmounting');
     };
-  }, [isReadyToRender, width, height, scale]);
+  }, [isReadyToRender, suspended, width, height, scale]);
 
   // Determine when to show dimmer
   const showDimmer =

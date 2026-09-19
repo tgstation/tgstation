@@ -50,6 +50,8 @@
 		var/mob/living/carbon/human/human_user = user
 		human_user.AdjustParalyzed(5 SECONDS)
 		return TRUE
+	if(SEND_SIGNAL(user, COMSIG_HERETIC_BLADE_PREATTACK, target, src) & COMPONENT_CANCEL_ATTACK_CHAIN)
+		return TRUE
 
 	return .
 
@@ -139,7 +141,7 @@
 
 	AddComponent(
 		/datum/component/bloody_spreader,\
-		blood_dna = list("Alien DNA" = get_blood_type(BLOOD_TYPE_XENO)),\
+		blood_dna = list("Alien DNA" = get_blood_type(/datum/blood_type/xeno)),\
 	)
 
 // Path of Void's blade

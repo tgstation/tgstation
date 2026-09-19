@@ -1,5 +1,7 @@
 //Plants / Plant Traits
 
+///called when a plant is harvested (obj/item/seeds)
+#define COMSIG_PLANT_ON_HARVEST "plant_on_harvest"
 ///called when a plant with slippery skin is slipped on (mob/victim)
 #define COMSIG_PLANT_ON_SLIP "plant_on_slip"
 ///called when a plant with liquid contents is squashed on (atom/target)

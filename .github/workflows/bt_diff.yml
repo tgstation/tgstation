@@ -4,6 +4,8 @@ name: Behavior tree diff
 on:
   pull_request:
     types: [opened, synchronize, reopened]
+    paths:
+      - "**/*.bt.json"
 
 permissions:
   contents: read

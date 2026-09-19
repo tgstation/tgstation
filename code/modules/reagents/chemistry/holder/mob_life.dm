@@ -102,7 +102,10 @@
 	if(!owner || !reagent || (dead && !(reagent.chemical_flags & REAGENT_DEAD_PROCESS)))
 		return FALSE
 
-	var/tick_return = owner.reagent_tick(reagent, seconds_per_tick)
+	var/metabolized_volume = reagent.compute_metabolization(owner, seconds_per_tick)
+	var/metabolization_ratio = REM * metabolized_volume
+
+	var/tick_return = owner.reagent_tick(reagent, seconds_per_tick, metabolization_ratio)
 	if(tick_return & COMSIG_MOB_STOP_REAGENT_TICK)
 		return FALSE
 
@@ -110,8 +113,6 @@
 		return FALSE
 
 	var/need_mob_update = FALSE
-	var/metabolized_volume = reagent.compute_metabolization(owner, seconds_per_tick)
-	var/metabolization_ratio = REM * metabolized_volume
 	if(reagents_metabolized)
 		reagents_metabolized[reagent.type] = metabolization_ratio
 	if(can_overdose && !HAS_TRAIT(owner, TRAIT_OVERDOSEIMMUNE))

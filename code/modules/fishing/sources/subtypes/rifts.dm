@@ -158,7 +158,7 @@
 		var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 		if(heretic_datum)
 			heretic_datum.adjust_knowledge_points(1)
-			to_chat(user, "[span_hear("You hear a whisper...")] [span_hypnophrase("THE HIGHER I RISE, THE MORE I FISH.")]")
+			to_chat(user, "[span_hear("You hear a whisper...")] [span_mansus("THE HIGHER I RISE, THE MORE I FISH.")]")
 			// They can also gain an extra influence point if they infused their rod.
 			if(HAS_TRAIT(challenge.used_rod, TRAIT_ROD_MANSUS_INFUSED))
 				heretic_datum.adjust_knowledge_points(1)

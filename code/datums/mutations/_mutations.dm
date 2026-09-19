@@ -25,7 +25,7 @@
 	/// Description of the mutation
 	var/desc = "A mutation."
 	/// Is this mutation currently locked?
-	var/locked
+	var/locked = FALSE
 	/// Quality of the mutation
 	var/quality
 	/// Message given to the user upon gaining this mutation

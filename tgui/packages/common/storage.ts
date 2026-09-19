@@ -21,6 +21,11 @@ type StorageBackend = {
   clear(): Promise<void>;
 };
 
+export type StorageDiagnostic = {
+  level: 'info' | 'warn' | 'error';
+  message: string;
+};
+
 const testGeneric = (testFn: () => boolean) => (): boolean => {
   try {
     return Boolean(testFn());
@@ -78,6 +83,7 @@ class IFrameIndexedDbBackend implements StorageBackend {
   async ready(): Promise<boolean | null> {
     const iframe = document.createElement('iframe');
     iframe.style.display = 'none';
+    iframe.allow = 'storage-access';
     iframe.src = Byond.storageCdn;
 
     const completePromise: Promise<boolean> = new Promise((resolve) => {
@@ -171,6 +177,11 @@ class IFrameIndexedDbBackend implements StorageBackend {
 class StorageProxy implements StorageBackend {
   private backendPromise: Promise<StorageBackend>;
   public impl: StorageImplementation = IMPL_IFRAME_INDEXED_DB;
+  public diagnostics: StorageDiagnostic[] = [];
+
+  private log(level: StorageDiagnostic['level'], message: string) {
+    this.diagnostics.push({ level, message });
+  }
 
   constructor() {
     this.backendPromise = (async () => {
@@ -181,6 +192,8 @@ class StorageProxy implements StorageBackend {
         const iframe = new IFrameIndexedDbBackend();
 
         if ((await iframe.ready()) === true) {
+          this.log('info', `Using iframe storage (${Byond.storageCdn})`);
+
           if (await iframe.get('byondstorage-migrated')) return iframe;
 
           const iframeHasPersistedStorage = (
@@ -190,6 +203,7 @@ class StorageProxy implements StorageBackend {
           ).some((settings) => settings !== undefined);
 
           if (!iframeHasPersistedStorage) {
+            this.log('info', 'No existing iframe data, migrating from byondstorage');
             const hubStorageWasEnabled = testHubStorage();
             if (!hubStorageWasEnabled) {
               Byond.winset(null, 'browser-options', '+byondstorage');
@@ -218,10 +232,10 @@ class StorageProxy implements StorageBackend {
                   const settings = await hub.get(setting);
                   if (settings !== undefined) {
                     await iframe.set(setting, settings);
+                    this.log('info', `Migrated '${setting}' from byondstorage`);
                   }
                 } catch {
-                  // Ignore unreadable legacy storage entries. A bad old cache
-                  // key should not keep the client on byondstorage.
+                  this.log('warn', `Failed to migrate '${setting}' from byondstorage`);
                 }
               }),
             );
@@ -236,14 +250,19 @@ class StorageProxy implements StorageBackend {
           return iframe;
         }
 
+        this.log('warn', `Iframe storage failed to load from ${Byond.storageCdn}`);
         iframe.destroy();
+      } else {
+        this.log('info', 'No storage CDN configured');
       }
 
       if (testHubStorage()) {
+        this.log('warn', 'Falling back to hubStorage (byondstorage)');
         return new HubStorageBackend();
       }
 
       // IFrame hasn't worked out for us, we'll need to enable byondstorage
+      this.log('warn', 'Enabling byondstorage as last resort');
       Byond.winset(null, 'browser-options', '+byondstorage');
 
       return new Promise((resolve) => {

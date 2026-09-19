@@ -547,16 +547,19 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 			set_screen_state(MIN_LIBRARY)
 			return TRUE
 
-/obj/machinery/computer/libraryconsole/bookmanagement/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(weapon, /obj/item/barcodescanner))
-		return ..()
-	var/obj/item/barcodescanner/scanner = weapon
+/obj/machinery/computer/libraryconsole/bookmanagement/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/barcodescanner))
+		return NONE
+
+	var/obj/item/barcodescanner/scanner = tool
 	if(scanner.computer_ref?.resolve() == src)
 		balloon_alert(user, "already connected!")
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	scanner.computer_ref = WEAKREF(src)
 	balloon_alert(user, "scanner connected")
 	audible_message(span_hear("[src] lets out a low, short blip."))
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/computer/libraryconsole/bookmanagement/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(!density || obj_flags & EMAGGED)
@@ -714,15 +717,16 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	cache = null
 	return ..()
 
-/obj/machinery/libraryscanner/attackby(obj/hitby, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(hitby, /obj/item/book))
-		user.transferItemToLoc(hitby, src)
-		if(held_book)
-			user.put_in_hands(held_book)
-		held_book = hitby
-		playsound(src, 'sound/machines/eject.ogg', 70)
-		return TRUE
-	return ..()
+/obj/machinery/libraryscanner/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/book))
+		return NONE
+
+	user.transferItemToLoc(tool, src)
+	if(held_book)
+		user.put_in_hands(held_book)
+	held_book = tool
+	playsound(src, 'sound/machines/eject.ogg', 70)
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/libraryscanner/Exited(atom/movable/gone, direction)
 	. = ..()
@@ -796,18 +800,18 @@ GLOBAL_VAR_INIT(library_table_modified, 0)
 	. = ..()
 	icon_state = panel_open ? "[base_icon_state]2" : base_icon_state
 
-/obj/machinery/bookbinder/attackby(obj/hitby, mob/user, list/modifiers, list/attack_modifiers)
-	if(istype(hitby, /obj/item/paper))
-		prebind_book(user, hitby)
-		return TRUE
+/obj/machinery/bookbinder/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(istype(tool, /obj/item/paper))
+		prebind_book(user, tool)
+		return ITEM_INTERACT_SUCCESS
 
-	if(isidcard(hitby))
-		var/obj/item/card/id/idcard = hitby
+	if(isidcard(tool))
+		var/obj/item/card/id/idcard = tool
 		scanned_name = idcard.registered_name
 		balloon_alert(user, "scanned")
-		return TRUE
+		return ITEM_INTERACT_SUCCESS
 
-	return ..()
+	return NONE
 
 /obj/machinery/bookbinder/proc/prebind_book(mob/user, obj/item/paper/draw_from)
 	if(machine_stat)

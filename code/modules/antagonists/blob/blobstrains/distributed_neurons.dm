@@ -33,5 +33,4 @@
 		if(exposed_mob.stat == DEAD && overmind.can_buy(5))
 			var/mob/living/basic/blob_minion/spore/minion/spore = overmind.create_spore(get_turf(exposed_mob))
 			spore.zombify(exposed_mob)
-			overmind.add_points(-5)
 			to_chat(overmind, span_notice("Spent 5 resources for the zombification of [exposed_mob]."))

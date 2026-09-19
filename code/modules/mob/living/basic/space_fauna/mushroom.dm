@@ -149,11 +149,15 @@
 		melee_damage_upper += (level_gain * rand(1,5))
 	maxHealth += (level_gain * rand(1,5))
 
-/mob/living/basic/mushroom/attackby(obj/item/mush, mob/living/carbon/human/user, list/modifiers, list/attack_modifiers)
-	if(istype(mush, /obj/item/food/grown/mushroom))
-		recover(mush)
-		return
-	if(mush.force || user.combat_mode)
+/mob/living/basic/mushroom/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/food/grown/mushroom))
+		return ..()
+
+	recover(tool)
+	return ITEM_INTERACT_SUCCESS
+
+/mob/living/basic/mushroom/attackby(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(attacking_item.force || user.combat_mode)
 		bruised = TRUE
 	return ..()
 

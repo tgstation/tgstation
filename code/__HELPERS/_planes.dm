@@ -103,3 +103,23 @@ GLOBAL_LIST_INIT(topdown_planes, list(
 			stack_trace("[thing_to_check] ([thing_to_check.type]) was expected to have a TOPDOWN_LAYER layer due to its plane, but it DID NOT! layer: ([thing_to_check.layer]) plane: ([thing_to_check.plane])")
 	else if(thing_to_check.layer - TOPDOWN_LAYER >= 0 && thing_to_check.layer < BACKGROUND_LAYER)
 		stack_trace("[thing_to_check] ([thing_to_check.type] is NOT ALLOWED to have a TOPDOWN_LAYER layer due to its plane, but it did! layer: ([thing_to_check.layer]) plane: ([thing_to_check.plane])")
+
+/**
+ * A more complicated form of layer_a > layer_b, taking into account topdown layers
+ *
+ * - If both layers are topdown, checks if layer_a is greater than layer_b
+ * - If neither layer is topdown, checks if layer_a is greater than layer_b
+ * - If layer_a is topdown and layer_b is not, returns FALSE
+ * - If layer_b is topdown and layer_a is not, returns TRUE
+ */
+#define COMPARE_LAYERS(layer_a, layer_b) \
+	((layer_a) >= TOPDOWN_LAYER \
+		? ((layer_b) >= TOPDOWN_LAYER \
+			? ((layer_a) > (layer_b)) \
+			: FALSE \
+		) \
+		: ((layer_b) >= TOPDOWN_LAYER \
+			? TRUE \
+			: ((layer_a) > (layer_b)) \
+		) \
+	)

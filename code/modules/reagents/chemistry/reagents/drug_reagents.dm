@@ -140,14 +140,14 @@
 	if(current_cycle != 36 || creation_purity > 0.6)
 		return
 
-	if(istype(affected_mob.dna.species, /datum/species/human/krokodil_addict))
+	if(HAS_TRAIT(affected_mob, TRAIT_HUSK))
 		return
 
 	to_chat(affected_mob, span_userdanger("Your skin falls off easily!"))
 	var/mob/living/carbon/human/affected_human = affected_mob
 	affected_human.set_facial_hairstyle("Shaved", update = FALSE)
 	affected_human.set_hairstyle("Bald", update = FALSE)
-	affected_mob.set_species(/datum/species/human/krokodil_addict)
+	affected_mob.become_husk(/datum/status_effect/zombie::id)
 
 	if(affected_mob.adjust_brute_loss(25, updating_health = FALSE, required_bodytype = affected_bodytype)) // holy shit your skin just FELL THE FUCK OFF
 		return UPDATE_MOB_HEALTH
@@ -527,10 +527,23 @@
 			if(SPT_PROB(16, seconds_per_tick))
 				psychonaut.emote(pick("twitch","giggle"))
 
+/datum/reagent/drug/mushroomhallucinogen/on_mob_add(mob/living/affected_mob, amount)
+	. = ..()
+	RegisterSignal(affected_mob, COMSIG_MOB_LOGIN, PROC_REF(trip))
+
+/datum/reagent/drug/mushroomhallucinogen/on_mob_delete(mob/living/affected_mob)
+	. = ..()
+	UnregisterSignal(affected_mob, COMSIG_MOB_LOGIN)
+
 /datum/reagent/drug/mushroomhallucinogen/on_mob_metabolize(mob/living/psychonaut)
 	. = ..()
-
 	psychonaut.add_mood_event("tripping", /datum/mood_event/high)
+	if(!psychonaut.client)
+		return // No need to mess with a mob's plane masters if they physically can't see it.
+	trip(psychonaut)
+
+/// Proc that handles the changes
+/datum/reagent/drug/mushroomhallucinogen/proc/trip(mob/living/psychonaut)
 	if(!psychonaut.hud_used)
 		return
 

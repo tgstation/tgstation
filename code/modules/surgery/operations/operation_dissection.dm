@@ -73,11 +73,11 @@
 	if(ishuman(target))
 		var/mob/living/carbon/human/human_target = target
 		if(human_target.dna?.species)
-			if(ismonkey(human_target))
+			if(HAS_TRAIT(human_target, TRAIT_LESSER_HUMANOID))
 				reward /= 5
 			else if(isabductor(human_target))
 				reward *= 4
-			else if(isgolem(human_target) || iszombie(human_target))
+			else if(isgolem(human_target) || human_target.has_status_effect(/datum/status_effect/zombie))
 				reward *= 3
 			else if(isjellyperson(human_target) || ispodperson(human_target))
 				reward *= 2
@@ -95,6 +95,7 @@
 	desc = "Valuable scientific data. Use it in an ancient research server to turn it in."
 	icon = 'icons/obj/service/bureaucracy.dmi'
 	icon_state = "paper"
+	inhand_icon_state = "paper"
 	w_class = WEIGHT_CLASS_SMALL
 	///research points it holds
 	var/value = 100

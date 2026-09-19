@@ -20,6 +20,31 @@
 		return ..()
 	return ..(get_turf(revenant), 2)
 
+/datum/action/mirror_talk
+	name = "Mirror Talk"
+	desc = "Communicate with the living world through your prison."
+	background_icon_state = "bg_revenant"
+	overlay_icon_state = "bg_revenant_border"
+	button_icon = 'icons/mob/actions/actions_revenant.dmi'
+	button_icon_state = "mirror_talk"
+
+/datum/action/mirror_talk/IsAvailable(feedback = FALSE)
+	return ..() && istype(owner.loc, /obj/structure/mirror)
+
+
+/datum/action/mirror_talk/Trigger(mob/clicker, trigger_flags)
+	if(!..())
+		return FALSE
+	var/obj/structure/mirror/mirror = astype(clicker.loc)
+	if(!mirror)
+		return FALSE
+	var/message = tgui_input_text(clicker, "What do you wish to say?", "Mirror Talk", max_length = MAX_MESSAGE_LEN)
+	if(!message || QDELETED(src) || QDELETED(clicker) || !IsAvailable())
+		return FALSE
+	clicker.log_message("\"[message]\"", LOG_SAY)
+	mirror.say(message, spans = list(SPAN_REVENWARNING), sanitize = FALSE)
+	return TRUE
+
 /datum/action/cooldown/spell/aoe/revenant
 	background_icon_state = "bg_revenant"
 	overlay_icon_state = "bg_revenant_border"
@@ -117,9 +142,10 @@
 	var/turf_was_defiled = FALSE
 
 	// dispel
-	for(var/obj/effect/blessing/blessing in target_turf)
+	if (HAS_TRAIT(target_turf, TRAIT_TURF_BLESSED))
 		turf_was_defiled = TRUE
-		qdel(blessing)
+		target_turf.RemoveElement(/datum/element/blessed_turf)
+
 	for(var/obj/effect/decal/cleanable/food/salt/salt in target_turf)
 		turf_was_defiled = TRUE
 		qdel(salt)
@@ -280,6 +306,13 @@
 	cast_amount = 60
 	unlock_amount = 125
 
+	/// Typecache of stuff we generally don't want emaggable
+	var/static/list/no_emag_typecache = typecacheof(list(
+		/obj/machinery/power/apc,
+		/obj/machinery/power/smes,
+		/obj/machinery/computer/emergency_shuttle,
+	))
+
 // A note to future coders: do not replace this with an EMP because it will wreck malf AIs and everyone will hate you.
 /datum/action/cooldown/spell/aoe/revenant/malfunction/cast_on_thing_in_aoe(turf/victim, mob/living/basic/revenant/caster)
 	for(var/mob/living/basic/bot/bot in victim)
@@ -297,13 +330,13 @@
 		new /obj/effect/temp_visual/revenant(human.loc)
 		human.emp_act(EMP_HEAVY)
 	for(var/obj/thing in victim)
-		//Doesn't work on SMES and APCs, to prevent kekkery.
-		if(istype(thing, /obj/machinery/power/apc) || istype(thing, /obj/machinery/power/smes))
+		if(is_type_in_typecache(thing, no_emag_typecache))
 			continue
-		if(prob(20))
-			if(prob(50))
-				new /obj/effect/temp_visual/revenant(thing.loc)
-			thing.emag_act(caster)
+		if(!prob(20))
+			continue
+		if(prob(50))
+			new /obj/effect/temp_visual/revenant(thing.loc)
+		thing.emag_act(caster)
 	// Only works on cyborgs, not AI!
 	for(var/mob/living/silicon/robot/cyborg in victim)
 		playsound(cyborg, 'sound/machines/warning-buzzer.ogg', 50, TRUE)

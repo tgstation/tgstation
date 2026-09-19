@@ -58,6 +58,17 @@ function ShuttleCard(props: ShuttleCardProps) {
     emagged,
   } = data;
 
+  const isButtonDisabled = budget < shuttle.creditCost;
+
+  let buttonTooltip: string | undefined;
+  if (budget < shuttle.creditCost) {
+    buttonTooltip = `You need ${shuttle.creditCost - budget} more ${displayed_currency_full_name}.`;
+  } else if (shuttle.department_locked) {
+    buttonTooltip = `Requires ${shuttle.department_name} Department to have the highest employees count.`;
+  } else if (shuttle.emagOnly) {
+    buttonTooltip = EMAG_SHUTTLE_NOTICE;
+  }
+
   return (
     <Section
       title={
@@ -72,25 +83,27 @@ function ShuttleCard(props: ShuttleCardProps) {
       }
       buttons={
         <Button
-          color={shuttle.emagOnly ? 'red' : 'default'}
-          disabled={budget < shuttle.creditCost}
+          color={
+            shuttle.department_locked
+              ? 'danger'
+              : shuttle.emagOnly
+                ? 'red'
+                : 'default'
+          }
+          disabled={isButtonDisabled}
           onClick={() =>
             act('purchaseShuttle', {
               shuttle: shuttle.ref,
             })
           }
-          tooltip={
-            budget < shuttle.creditCost
-              ? `You need ${shuttle.creditCost - budget} more ${displayed_currency_full_name}.`
-              : shuttle.emagOnly
-                ? EMAG_SHUTTLE_NOTICE
-                : undefined
-          }
+          tooltip={buttonTooltip}
           tooltipPosition="left"
         >
-          {shuttle.emagOnly && !emagged
-            ? 'Buy'
-            : `${shuttle.creditCost} ${displayed_currency_name}`}
+          {shuttle.department_locked
+            ? 'Locked'
+            : shuttle.emagOnly && !emagged
+              ? 'Buy'
+              : `${shuttle.creditCost} ${displayed_currency_name}`}
         </Button>
       }
     >
@@ -101,6 +114,15 @@ function ShuttleCard(props: ShuttleCardProps) {
       <Box color="violet" fontSize="10px" bold>
         {shuttle.prerequisites && <b>Prerequisites: {shuttle.prerequisites}</b>}
       </Box>
+      {!!shuttle.department_locked && (
+        <Box
+          color="red"
+          style={{ marginTop: '4px', fontSize: '10px', fontWeight: 'bold' }}
+        >
+          This shuttle can only be purchased if {shuttle.department_name}{' '}
+          Department has biggest number of employees!
+        </Box>
+      )}
     </Section>
   );
 }

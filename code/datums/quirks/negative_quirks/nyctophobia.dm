@@ -1,6 +1,7 @@
 /datum/quirk/nyctophobia
 	name = "Nyctophobia"
-	desc = "As far as you can remember, you've always been afraid of the dark. While in the dark without a light source, you instinctively act careful, and constantly feel a sense of dread."
+	desc = "As far as you can remember, you've always been afraid of the dark. \
+		While in the dark without a light source, you constantly feel a sense of dread."
 	icon = FA_ICON_LIGHTBULB
 	value = -3
 	medical_record_text = "Patient demonstrates a fear of the dark. (Seriously?)"

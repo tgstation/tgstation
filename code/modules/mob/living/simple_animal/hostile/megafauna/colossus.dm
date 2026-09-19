@@ -155,7 +155,7 @@
 /mob/living/simple_animal/hostile/megafauna/colossus/proc/enrage(mob/living/victim)
 	if(!ishuman(victim))
 		return FALSE
-	if(isgolem(victim) && victim.has_status_effect(/datum/status_effect/golem/gold))
+	if(victim.has_status_effect(/datum/status_effect/golem/gold))
 		return TRUE
 
 	return istype(GET_ACTIVE_MARTIAL_ART(victim), /datum/martial_art/the_sleeping_carp)

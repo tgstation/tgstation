@@ -63,9 +63,6 @@
 	 * do NOT add channels to this for little reason as it can add considerable memory usage.
 	 */
 	var/list/important_recursive_contents
-	///contains every client mob corresponding to every client eye in this container. lazily updated by SSparallax and is sparse:
-	///only the last container of a client eye has this list assuming no movement since SSparallax's last fire
-	var/list/client_mobs_in_contents
 
 	/// String representing the spatial grid groups we want to be held in.
 	/// acts as a key to the list of spatial grid contents types we exist in via SSspatial_grid.spatial_grid_categories.
@@ -250,8 +247,6 @@
 	if(spatial_grid_key)
 		SSspatial_grid.force_remove_from_grid(src)
 
-	LAZYNULL(client_mobs_in_contents)
-
 #ifndef DISABLE_DREAMLUAU
 	// These lists cease existing when src does, so we need to clear any lua refs to them that exist.
 	DREAMLUAU_CLEAR_REF_USERDATA(vis_contents)
@@ -417,8 +412,9 @@
 	return TRUE
 
 /// Returns a list of movables that should also be affected when src moves through zlevels, and src.
-/atom/movable/proc/get_z_move_affected(z_move_flags)
-	. = list(src)
+/atom/movable/proc/get_z_move_affected(z_move_flags, list/returning_list = list())
+	. = returning_list
+	. |= src
 	if(buckled_mobs)
 		. |= buckled_mobs
 	if(!(z_move_flags & ZMOVE_INCLUDE_PULLED))
@@ -426,15 +422,11 @@
 	for(var/mob/living/buckled as anything in buckled_mobs)
 		if(buckled.pulling)
 			. |= buckled.pulling
-	if(pulling)
-		. |= pulling
-		if (pulling.buckled_mobs)
-			. |= pulling.buckled_mobs
-
-		//makes conga lines work with ladders and flying up and down; checks if the guy you are pulling is pulling someone,
-		//then uses recursion to run the same function again
-		if (pulling.pulling)
-			. |= pulling.pulling.get_z_move_affected(z_move_flags)
+	//makes conga lines work with ladders and flying up and down; checks if the guy you are pulling is pulling someone,
+	//then uses recursion to run the same function again
+	//we pass in the list from this proc to ensure we dont reach an infinite loop due to mobs grabbed in a loop or two mobs grabing eachother.
+	if(pulling && !(pulling in .))
+		. |= pulling.get_z_move_affected(z_move_flags, .)
 
 /**
  * Checks if the destination turf is elegible for z movement from the start turf to a given direction and returns it if so.
@@ -572,7 +564,6 @@
 	if(!pulling)
 		return
 	var/atom/movable/old_pulling = set_pulling(null)
-	setGrabState(GRAB_PASSIVE)
 	SEND_SIGNAL(old_pulling, COMSIG_ATOM_NO_LONGER_PULLED, src)
 	SEND_SIGNAL(src, COMSIG_ATOM_NO_LONGER_PULLING, old_pulling)
 
@@ -589,6 +580,10 @@
 /atom/movable/proc/set_pulling(new_pulling)
 	if(new_pulling == pulling)
 		return FALSE //null signals there was a change, be sure to return FALSE if none happened here.
+
+	if(isnull(new_pulling))
+		setGrabState(GRAB_PASSIVE)
+
 	. = pulling
 	pulling = new_pulling
 
@@ -830,8 +825,6 @@
 					setDir(first_step_dir)
 				else if(!inertia_moving)
 					newtonian_move(dir2angle(direct))
-				if(client_mobs_in_contents)
-					update_parallax_contents()
 			moving_diagonally = 0
 			return
 
@@ -905,11 +898,6 @@
 
 	if (!moving_diagonally && !inertia_moving && momentum_change && movement_dir)
 		newtonian_move(dir2angle(movement_dir))
-	// If we ain't moving diagonally right now, update our parallax
-	// We don't do this all the time because diag movements should trigger one call to this, not two
-	// Waste of cpu time, and it fucks the animate
-	if (!moving_diagonally && client_mobs_in_contents)
-		update_parallax_contents()
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_MOVED, old_loc, movement_dir, forced, old_locs, momentum_change)
 
@@ -998,8 +986,8 @@
 	if(!QDELETED(throwing))
 		throwing.finalize(hit = TRUE, target = bumped_atom)
 		. = TRUE
-		if(QDELETED(bumped_atom))
-			return
+	if(QDELETED(bumped_atom))
+		return TRUE
 	bumped_atom.Bumped(src)
 
 /atom/movable/Exited(atom/movable/gone, direction)
@@ -1751,9 +1739,10 @@
 /atom/movable/proc/setGrabState(newstate)
 	if(newstate == grab_state)
 		return
-	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_GRAB_STATE, newstate)
 	. = grab_state
 	grab_state = newstate
+	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_GRAB_STATE, grab_state)
+	SEND_SIGNAL(pulling, COMSIG_MOVABLE_CHANGED_GRABBED_STATE, grab_state)
 	switch(grab_state) // Current state.
 		if(GRAB_PASSIVE)
 			pulling.remove_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), CHOKEHOLD_TRAIT)

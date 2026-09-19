@@ -58,14 +58,14 @@
 
 /obj/projectile/bullet/c38/match/true
 	name = ".38 True Strike bullet"
-	damage = 15
-	ricochet_auto_aim_range = 3
+	damage = 20
+	ricochet_auto_aim_range = 4
 	ricochet_auto_aim_angle = 100
 	ricochet_incidence_leeway = 0
 	ricochet_shoots_firer = FALSE
 	shrapnel_type = null
 	embed_type = null
-	armour_penetration = 30
+	armour_penetration = 35
 
 // premium .38 ammo from cargo, weak against armor, lower base damage, but excellent at embedding and causing slice wounds at close range
 /obj/projectile/bullet/c38/dumdum
@@ -136,6 +136,7 @@
 
 /obj/projectile/bullet/c357
 	name = ".357 bullet"
+	icon_state = "bullet"
 	damage = 60
 	wound_bonus = -30
 
@@ -177,7 +178,7 @@
 
 /obj/projectile/bullet/pea/on_hit(mob/living/carbon/target, blocked = 0, pierce_hit)
 	if(istype(target) && blocked != 100)
-		if(iszombie(target)) // https://www.youtube.com/watch?v=ssZoq1eUK-s
+		if(target.has_status_effect(/datum/status_effect/zombie)) // https://www.youtube.com/watch?v=ssZoq1eUK-s
 			target.adjust_brute_loss(15)
 		if(target.can_inject(target_zone = def_zone)) // Pass the hit zone to see if it can inject by whether it hit the head or the body.
 			..()

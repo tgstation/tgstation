@@ -64,6 +64,8 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 	), \
 
 	new /datum/stack_recipe("runed stone platform", /obj/structure/platform/cult, 2, time = 3 SECONDS, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ONE_PER_TURF | CRAFT_ON_SOLID_GROUND, trait_booster = TRAIT_QUICK_BUILD, trait_modifier = 0.75, category = CAT_STRUCTURE), \
+	new/datum/stack_recipe("directional runed window", /obj/structure/window/cult/unanchored, time = 0, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND | CRAFT_CHECK_DIRECTION, category = CAT_WINDOWS), \
+	new/datum/stack_recipe("fulltile runed window", /obj/structure/window/cult/fulltile/unanchored, 2, time = 0, crafting_flags = CRAFT_CHECK_DENSITY | CRAFT_ON_SOLID_GROUND | CRAFT_IS_FULLTILE, category = CAT_WINDOWS), \
 ))
 
 /obj/item/stack/sheet/runed_metal
@@ -71,6 +73,7 @@ GLOBAL_LIST_INIT(runed_metal_recipes, list( \
 	desc = "Sheets of cold metal with shifting inscriptions writ upon them."
 	singular_name = "runed metal sheet"
 	icon_state = "sheet-runed"
+	worn_icon_state = "sheet-runed"
 	inhand_icon_state = "sheet-runed"
 	icon = 'icons/obj/stack_objects.dmi'
 	mats_per_unit = list(/datum/material/runedmetal = SHEET_MATERIAL_AMOUNT)

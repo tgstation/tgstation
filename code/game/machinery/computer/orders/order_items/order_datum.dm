@@ -21,3 +21,6 @@
 		name = initial(purchase_path.name)
 	if(!desc)
 		desc = initial(purchase_path.desc)
+
+/datum/orderable_item/proc/get_purchased_item(mob/living/user, obj/item/card/id/card)
+	return purchase_path

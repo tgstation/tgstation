@@ -127,7 +127,7 @@
 	contains = list(/obj/item/gun/energy/laser/soul)
 
 /datum/supply_pack/goody/smg_single
-	name = "Disabler SMG Single_Pack"
+	name = "Disabler SMG Single Pack"
 	desc = "Contains one disabler SMG, capable of rapidly firing weak disabler beams."
 	cost = PAYCHECK_COMMAND * 6
 	access_view = ACCESS_WEAPONS
@@ -250,6 +250,12 @@
 	desc = "A cool spray to dye your hair with awesome colors!"
 	cost = PAYCHECK_CREW * 2
 	contains = list(/obj/item/dyespray)
+
+/datum/supply_pack/goody/pilotsuit
+	name = "Mech Pilot Suit"
+	desc = "For when you need to look the part during your pre-battle checks. Can be reskinned with alt-click."
+	cost = PAYCHECK_CREW * 2
+	contains = list(/obj/item/clothing/under/costume/mech_suit)
 
 /datum/supply_pack/goody/beach_ball
 	name = "Beach Ball Single-Pack"
@@ -455,3 +461,15 @@
 	desc = "A single broadcast camera which broadcasts to the station's entertainment monitors, for all your theatrical needs."
 	cost = PAYCHECK_COMMAND * 8
 	contains = list(/obj/item/broadcast_camera/cargo)
+
+/datum/supply_pack/goody/rock_tape
+	name = "Boombox tape (Rock)"
+	desc = "A classic rock track by George Patel, 'Bainrock'. Requires a boombox to play."
+	cost = PAYCHECK_CREW * 4
+	contains = list(/obj/item/music_tape/rock)
+
+/datum/supply_pack/goody/hiphop_tape
+	name = "Boombox tape (HipHop)"
+	desc = "A trendy hiphop track by F'norkiz Gamma, 'Groovepad'. Requires a boombox to play."
+	cost = PAYCHECK_CREW * 4
+	contains = list(/obj/item/music_tape/hiphop)

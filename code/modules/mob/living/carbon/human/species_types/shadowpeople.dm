@@ -18,6 +18,7 @@
 
 	mutantbrain = /obj/item/organ/brain/shadow
 	mutanteyes = /obj/item/organ/eyes/shadow
+	mutanttongue = /obj/item/organ/tongue/shadow
 	mutantheart = null
 	mutantlungs = null
 
@@ -112,9 +113,6 @@
 	desc = "Something that was once a brain, before being remolded by a shadowling. It has adapted to the dark, irreversibly."
 	icon = 'icons/obj/medical/organs/shadow_organs.dmi'
 	shade_color = "grey-ish"
-
-/datum/species/shadow/get_scream_sound(mob/living/carbon/human/moth)
-	return 'sound/mobs/humanoids/shadow/shadow_wail.ogg'
 
 /datum/species/shadow/proc/on_flashed(source, mob/living/carbon/flashed, flash, deviation)
 	SIGNAL_HANDLER

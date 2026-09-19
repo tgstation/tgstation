@@ -254,7 +254,7 @@
 	. = ..()
 	if(!.)
 		return
-	if(ismonkey(owner))
+	if(HAS_TRAIT(owner, TRAIT_LESSER_HUMANOID))
 		return
 	original_species = owner.dna.species.type
 	original_name = owner.real_name
@@ -369,12 +369,12 @@
 	. = ..()
 	if(!.)
 		return
-	owner.physiology.burn_mod *= 0.5
+	MODIFY_PHYSIOLOGY(owner, BURN, 0.5)
 
 /datum/mutation/fire/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	owner.physiology.burn_mod *= 2
+	MODIFY_PHYSIOLOGY(owner, BURN, 2)
 
 /datum/mutation/badblink
 	name = "Spatial Instability"
@@ -610,8 +610,8 @@
 	if(!.)
 		return
 	if(!physiology_modified)
-		owner.physiology.bleed_mod *= bleed_rate
-		owner.physiology.blood_regen_mod *= blood_regen_rate
+		MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLEED, bleed_rate)
+		MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLOOD_REGEN, blood_regen_rate)
 		physiology_modified = TRUE
 
 /datum/mutation/bloodier/on_losing(mob/living/carbon/human/owner)
@@ -619,22 +619,22 @@
 	if(.)
 		return
 	if(physiology_modified)
-		owner.physiology.bleed_mod /= bleed_rate
-		owner.physiology.blood_regen_mod /= blood_regen_rate
+		MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLEED, 1/bleed_rate)
+		MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLOOD_REGEN, 1/blood_regen_rate)
 		physiology_modified = FALSE // just in case
 
 /datum/mutation/bloodier/setup()
 	if(owner && physiology_modified)
-		owner.physiology.bleed_mod /= bleed_rate
-		owner.physiology.blood_regen_mod /= blood_regen_rate
+		MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLEED, 1/bleed_rate)
+		MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLOOD_REGEN, 1/blood_regen_rate)
 		physiology_modified = FALSE
 
 	bleed_rate = clamp(initial(bleed_rate) * GET_MUTATION_SYNCHRONIZER(src) * GET_MUTATION_POWER(src), 1, 2)
 	blood_regen_rate = clamp(initial(blood_regen_rate) * GET_MUTATION_POWER(src), 4, 12)
 
 	if(owner && !physiology_modified) // redundant but just in case
-		owner.physiology.bleed_mod *= bleed_rate
-		owner.physiology.blood_regen_mod *= blood_regen_rate
+		MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLEED, bleed_rate)
+		MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLOOD_REGEN, blood_regen_rate)
 		physiology_modified = TRUE
 	return TRUE
 
@@ -661,13 +661,6 @@
 	mutation_traits = list(TRAIT_ROCK_EATER, TRAIT_ROCK_METAMORPHIC)
 	conflicts = list(/datum/mutation/rock_eater)
 	locked = TRUE
-
-/datum/mutation/rock_absorber/on_losing(mob/living/carbon/human/owner)
-	. = ..()
-	if(. || QDELING(owner) || HAS_TRAIT(owner, TRAIT_ROCK_METAMORPHIC))
-		return
-	owner.remove_status_effect(/datum/status_effect/golem)
-	owner.remove_status_effect(/datum/status_effect/golem_lightbulb)
 
 // Soft crit is disabed
 /datum/mutation/inexorable
@@ -709,12 +702,12 @@
 		return
 	// Gives you 30 seconds of being in fake soft crit... give or take
 	if(HAS_TRAIT(owner, TRAIT_TOXIMMUNE) || HAS_TRAIT(owner, TRAIT_TOXINLOVER))
-		owner.adjust_brute_loss(1 * seconds_per_tick * GET_MUTATION_SYNCHRONIZER(src), forced = TRUE)
+		owner.adjust_brute_loss(1 * seconds_per_tick * GET_MUTATION_SYNCHRONIZER(src))
 	else
-		owner.adjust_tox_loss(0.5 * seconds_per_tick * GET_MUTATION_SYNCHRONIZER(src), forced = TRUE)
-		owner.adjust_brute_loss(0.5 * seconds_per_tick * GET_MUTATION_SYNCHRONIZER(src), forced = TRUE)
+		owner.adjust_tox_loss(0.5 * seconds_per_tick * GET_MUTATION_SYNCHRONIZER(src))
+		owner.adjust_brute_loss(0.5 * seconds_per_tick * GET_MUTATION_SYNCHRONIZER(src))
 	// Offsets suffocation but not entirely
-	owner.adjust_oxy_loss(-0.5 * seconds_per_tick, forced = TRUE)
+	owner.adjust_oxy_loss(-0.5 * seconds_per_tick)
 
 /datum/mutation/limb_regeneration
 	name = "Regeneration"
@@ -769,12 +762,12 @@
 			var/replacement_type = owner.dna.species.get_mutant_organ_type_for_slot(pick(missing_important_organs))
 			var/obj/item/organ/replacement = new replacement_type()
 			replacement.Insert(owner, special = TRUE)
-			to_chat(owner, span_green("The tingingling feeling builds to a climax, until ultimately you feel a new [replacement] where your old one was!"))
+			to_chat(owner, span_green("The tingling feeling builds to a climax, until ultimately you feel [replacement.gender == PLURAL ? "some" : "a"] new [replacement.name] where your old one[replacement.gender == PLURAL ? "s were" : " was"]!"))
 		else
 			var/replacing_zone = pick(missing_limbs)
 			owner.regenerate_limb(replacing_zone)
 			var/obj/item/bodypart/replacement = owner.get_bodypart(replacing_zone)
-			to_chat(owner, span_green("The tingling feeling builds to a climax, until ultimately you feel a new [replacement.plaintext_zone] where your old one was!"))
+			to_chat(owner, span_green("The tingling feeling builds to a climax, until ultimately you feel [replacement.gender == PLURAL ? "some" : "a"] new [replacement.plaintext_zone] where your old one[replacement.gender == PLURAL ? "s were" : " was"]!"))
 			owner.visible_message(span_warning("[owner]'s [replacement.plaintext_zone] reforms, making a loud, grotesque sound!"), ignored_mobs = list(owner))
 		owner.adjust_nutrition(-NUTRITION_LEVEL_FULL * 0.5 * GET_MUTATION_SYNCHRONIZER(src))
 		playsound(owner, 'sound/effects/magic/demon_consume.ogg', 33, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
@@ -785,9 +778,9 @@
 		var/replacement_type = pick(missing_special_organs)
 		var/obj/item/organ/replacement = new replacement_type()
 		replacement.Insert(owner, special = TRUE)
-		to_chat(owner, span_green("The tingling feeling builds to a climax, until ultimately you feel a new [replacement] where your old one was!"))
+		to_chat(owner, span_green("The tingling feeling builds to a climax, until ultimately you feel [replacement.gender == PLURAL ? "some" : "a"] new [replacement.name] where your old one[replacement.gender == PLURAL ? "s were" : " was"]!"))
 		if(replacement.organ_flags & ORGAN_EXTERNAL)
-			owner.visible_message(span_warning("[owner]'s [replacement] reforms, making a loud, grotesque sound!"), ignored_mobs = list(owner))
+			owner.visible_message(span_warning("[owner]'s [replacement.name] reforms, making a loud, grotesque sound!"), ignored_mobs = list(owner))
 		owner.adjust_nutrition(-NUTRITION_LEVEL_FULL * 0.3 * GET_MUTATION_SYNCHRONIZER(src))
 		playsound(owner, 'sound/effects/magic/demon_consume.ogg', 33, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		return

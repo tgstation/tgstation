@@ -36,6 +36,13 @@
 	///Burn damage caused by being way too hot, too cold or burnt.
 	var/fireloss = 0
 
+	///Lazy list of multipliers for related to mobs, like burn/brute/oxy/tox/stamina damage, hunger, bleeding, electrical conductivity
+	var/list/physiology
+	///Contains an inner armor datum separated from worn armor (I could use the default 'armor' var but it might cause some confusion)
+	VAR_PROTECTED/datum/armor/inner_armor
+	///Used on apply_damage(). Less than 0 means you take extra damage. While over 100 is where no damage is taken at all.
+	var/damage_resistance = 0
+
 	/// The movement intent of the mob (run/wal)
 	var/move_intent = MOVE_INTENT_RUN
 
@@ -46,6 +53,8 @@
 	var/crit_threshold = HEALTH_THRESHOLD_CRIT
 	///When the mob enters hard critical state and is fully incapacitated.
 	var/hardcrit_threshold = HEALTH_THRESHOLD_FULLCRIT
+	///Amount of damage needed to be fully dead
+	var/dead_threshold = HEALTH_THRESHOLD_DEAD
 
 	//Damage dealing vars! These are meaningless outside of specific instances where it's checked and defined.
 	/// Lower bound of damage done by unarmed melee attacks. Mob code is a mess, only works where this is checked for.
@@ -190,6 +199,7 @@
 	/// list of all diseases in a mob
 	var/list/diseases
 	var/list/disease_resistances
+	var/list/symptom_resistances
 
 	///Whether the mob is slowed down when dragging another prone mob
 	var/slowed_by_drag = TRUE
@@ -262,3 +272,9 @@
 	/// When less than or equal to  this distance (but not adjacent), this mob can hear parts of distant whispers, but not the entire message.
 	/// When greater than this distance, this mob cannot hear anything of a whisper.
 	var/eavesdrop_range = EAVESDROP_RANGE
+
+	/// Reference to the unconscious appearance image that appears in place of the mob to other knocked out mobs
+	VAR_FINAL/image/unconscious_appearance
+
+	/// Reduces the effects of EMPs, does NOT negate them even at very high numbers
+	var/emp_protection = EMP_PROTECTION_NONE

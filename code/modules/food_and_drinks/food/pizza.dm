@@ -222,12 +222,28 @@
 	foodtypes = GRAIN | VEGETABLES | DAIRY | MEAT
 	crafting_complexity = FOOD_COMPLEXITY_3
 
-/obj/item/food/pizzaslice/meat/pizzeria //Reward for pizzeria bitrunning domain
+/obj/item/food/pizzaslice/meat/pizzeria //Reward for pizzeria bitrunning domain; not really meant to be eaten but functionality as food still exists for remote tasters and absurdly determined persons.
 	name = "pizzeria meatpizza slice"
-	desc = "An ostensibly nutritious slice of meatpizza from a long-closed pizzeria."
-	food_reagents = null
+	desc = "An barely nutritious slice of meatpizza from a long-closed pizzeria. It's hard as cardboard and barely seems edible, probably not worth breaking your jaw trying to eat it."
 	tastes = list("crust" = 1, "ketchup" = 1, "'cheese'" = 1, "mystery meat" = 1, "glue" = 1)
-	foodtypes = null
+	bite_consumption = 0.1
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 1,
+	)
+	foodtypes = parent_type::foodtypes | GROSS
+	eat_time = 5 MINUTES
+
+/obj/item/food/pizzaslice/meat/pizzeria/Initialize(mapload)
+	. = ..()
+	RegisterSignal(src, COMSIG_FOOD_CONSUMED, PROC_REF(on_consumed))
+
+/// Little bit of flavor for the absurdly persistent pizza eater.
+/obj/item/food/pizzaslice/meat/pizzeria/proc/on_consumed(datum/source, mob/living/eater, mob/feeder)
+	SIGNAL_HANDLER
+
+	to_chat(eater, span_notice("You finally finish eating that piece of trash, and your stomach pains reflect that. Surely there was a better use for this slice of pizza..."))
+
+	return NONE
 
 /obj/item/food/pizza/mushroom
 	name = "mushroom pizza"
@@ -503,18 +519,25 @@
 		to_chat(user, "<font color='red' size='7'>If you want something crazy like pineapple, I'll kill you.</font>") //this is in bigger text because it's hard to spam something that gibs you, and so that you're perfectly aware of the reason why you died
 		user.investigate_log("has been gibbed by putting pineapple on an arnold pizza.", INVESTIGATE_DEATHS)
 		user.gib(DROP_ALL_REMAINS) //if you want something crazy like pineapple, i'll kill you
-	else if(istype(item, /obj/item/food/grown/mushroom) && iscarbon(user))
+		return TRUE
+
+	if(istype(item, /obj/item/food/grown/mushroom) && iscarbon(user))
 		to_chat(user, span_userdanger("So, if you want mushroom, shut up.")) //not as large as the pineapple text, because you could in theory spam it
 		var/mob/living/carbon/shutup = user
 		shutup.gain_trauma(/datum/brain_trauma/severe/mute)
+		return TRUE
+
+	return FALSE
 
 /obj/item/food/pizza/arnold/attack(mob/living/target, mob/living/user)
 	. = ..()
 	try_break_off(target, user)
 
-/obj/item/food/pizza/arnold/attackby(obj/item/item, mob/user)
-	i_kill_you(item, user)
-	. = ..()
+/obj/item/food/pizza/arnold/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!i_kill_you(tool, user))
+		return ..()
+
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/food/pizzaslice/arnold
 	name = "\improper Arnold pizza slice"
@@ -528,9 +551,11 @@
 	. =..()
 	try_break_off(target, user)
 
-/obj/item/food/pizzaslice/arnold/attackby(obj/item/item, mob/user)
-	i_kill_you(item, user)
-	. = ..()
+/obj/item/food/pizzaslice/arnold/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!i_kill_you(tool, user))
+		return ..()
+
+	return ITEM_INTERACT_SUCCESS
 
 // Ant Pizza, now with more ants.
 /obj/item/food/pizzaslice/ants
@@ -551,7 +576,7 @@
 	icon_state ="energypizza"
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 18,
-		/datum/reagent/consumable/liquidelectricity/enriched = 18,
+		/datum/reagent/consumable/liquidelectricity = 18,
 	)
 	tastes = list("pure electricity" = 4, "pizza" = 2)
 	slice_type = /obj/item/food/pizzaslice/energy

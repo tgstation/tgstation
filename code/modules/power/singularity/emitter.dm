@@ -615,7 +615,7 @@
 			user.pixel_x = 8
 			user.pixel_y = -12
 
-	emitter.last_projectile_params = calculate_projectile_angle_and_pixel_offsets(user, null, list2params(modifiers))
+	emitter.last_projectile_params = calculate_projectile_angle_and_pixel_offsets(user, null, modifiers)
 
 	if(emitter.charge >= 10 && world.time > delay)
 		emitter.charge -= 10

@@ -728,7 +728,7 @@ SUBSYSTEM_DEF(dynamic)
 			data += "\]\n"
 		else
 			data += "blacklisted_roles = \[\]\n"
-		if(!istype(ruleset, /datum/dynamic_ruleset/latejoin) && !istype(ruleset, /datum/dynamic_ruleset/midround/from_living))
+		if(!istype(ruleset, /datum/dynamic_ruleset/latejoin))
 			if(islist(ruleset.min_antag_cap))
 				for(var/ruleset_min_antag_cap in ruleset.min_antag_cap)
 					data += "min_antag_cap.[ruleset_min_antag_cap] = [ruleset.min_antag_cap[ruleset_min_antag_cap]]\n"

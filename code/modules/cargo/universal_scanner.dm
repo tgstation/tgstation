@@ -70,32 +70,38 @@
 		return ITEM_INTERACT_SUCCESS
 	return NONE
 
-/obj/item/universal_scanner/attackby(obj/item/attacking_item, mob/user, list/modifiers, list/attack_modifiers)
-	. = ..()
-	if(scanning_mode == SCAN_SALES_TAG && isidcard(attacking_item))
-		var/obj/item/card/id/potential_acc = attacking_item
-		if(potential_acc.registered_account)
-			if(payments_acc == potential_acc.registered_account)
-				to_chat(user, span_notice("ID card already registered."))
-				return
-			else
-				payments_acc = potential_acc.registered_account
-				playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
-				to_chat(user, span_notice("[src] registers the ID card. Tag a wrapped item to create a barcode."))
-		else if(!potential_acc.registered_account)
+/obj/item/universal_scanner/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(scanning_mode == SCAN_SALES_TAG && isidcard(tool))
+		var/obj/item/card/id/potential_acc = tool
+		if(!potential_acc.registered_account)
 			to_chat(user, span_warning("This ID card has no account registered!"))
-			return
-	if(istype(attacking_item, /obj/item/paper))
-		if (!(paper_count >= max_paper_count))
-			paper_count += PAPER_PER_SHEET
-			qdel(attacking_item)
-			if (paper_count >= max_paper_count)
-				paper_count = max_paper_count
-				to_chat(user, span_notice("[src]'s paper supply is now full."))
-				return
-			to_chat(user, span_notice("You refill [src]'s paper supply, you have [paper_count] left."))
-		else
+			return ITEM_INTERACT_BLOCKING
+
+		if(payments_acc == potential_acc.registered_account)
+			to_chat(user, span_notice("ID card already registered."))
+			return ITEM_INTERACT_BLOCKING
+
+		payments_acc = potential_acc.registered_account
+		playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
+		to_chat(user, span_notice("[src] registers the ID card. Tag a wrapped item to create a barcode."))
+		return ITEM_INTERACT_SUCCESS
+
+	if(istype(tool, /obj/item/paper))
+		if (paper_count >= max_paper_count)
 			to_chat(user, span_notice("[src]'s paper supply is full."))
+			return ITEM_INTERACT_BLOCKING
+
+		paper_count += PAPER_PER_SHEET
+		qdel(tool)
+		if (paper_count >= max_paper_count)
+			paper_count = max_paper_count
+			to_chat(user, span_notice("[src]'s paper supply is now full."))
+			return ITEM_INTERACT_SUCCESS
+
+		to_chat(user, span_notice("You refill [src]'s paper supply, you have [paper_count] left."))
+		return ITEM_INTERACT_SUCCESS
+
+	return NONE
 
 /obj/item/universal_scanner/attack_self_secondary(mob/user, modifiers)
 	. = ..()

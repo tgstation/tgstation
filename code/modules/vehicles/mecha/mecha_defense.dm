@@ -115,7 +115,10 @@
 
 /obj/vehicle/sealed/mecha/projectile_hit(obj/projectile/hitting_projectile, def_zone, piercing_hit, blocked)
 	// Determine our potential to shoot through the mech and into the cockpit, hitting the pilot
-	var/kill_the_meat = clamp(hitting_projectile.armour_penetration - get_armor_rating(hitting_projectile.armor_flag), 0, 100)
+	var/kill_the_meat = hitting_projectile.armour_penetration
+	if(hitting_projectile.armor_flag)
+		kill_the_meat -= get_armor_rating(hitting_projectile.armor_flag)
+	kill_the_meat = clamp(kill_the_meat, 0, 100)
 	// Allows bullets to hit the pilot of open-canopy mechs, or if the bullet penetrates to the pilot, or the bullet can pass through structures
 	if (!LAZYLEN(occupants) || (mecha_flags & SILICON_PILOT))
 		return ..()
@@ -236,7 +239,7 @@
 		weapon.melee_attack_chain(user, hitmob, modifiers, list("[FORCE_MULTIPLIER]" = (peeling_the_onion/100), "[SILENCE_DEFAULT_MESSAGES]" = TRUE)) //Perform an extra attack on the occupant if all the above conditions pass
 
 /obj/vehicle/sealed/mecha/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
-	if(istype(tool, /obj/item/mmi))
+	if(istype(tool, /obj/item/brain_processor))
 		if(!mmi_move_inside(tool,user))
 			balloon_alert(user, "initialization of MMI failed!")
 			return ITEM_INTERACT_BLOCKING

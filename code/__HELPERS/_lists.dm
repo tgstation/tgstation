@@ -49,7 +49,7 @@
  */
 
 ///Initialize the lazylist
-#define LAZYINITLIST(L) if (!L) { L = list(); }
+#define LAZYINITLIST(L) L ||= list();
 ///If the provided list is empty, set it to null
 #define UNSETEMPTY(L) if (L && !length(L)) L = null
 ///If the provided key -> list is empty, remove it from the list
@@ -59,25 +59,25 @@
 ///Remove an item from the list, set the list to null if empty
 #define LAZYREMOVE(L, I) if(L) { L -= I; if(!length(L)) { L = null; } }
 ///Add an item to the list, if the list is null it will initialize it
-#define LAZYADD(L, I) if(!L) { L = list(); } L += I;
+#define LAZYADD(L, I) L ||= list(); L += I;
 ///Add an item to the list if not already present, if the list is null it will initialize it
-#define LAZYOR(L, I) if(!L) { L = list(); } L |= I;
+#define LAZYOR(L, I) L ||= list(); L |= I;
 ///Returns the key of the submitted item in the list
 #define LAZYFIND(L, V) (L?.Find(V))
 ///returns L[I] if L exists and I is a valid index of L, runtimes if L is not a list
 #define LAZYACCESS(L, I) (L ? (isnum(I) ? (I > 0 && I <= length(L) ? L[I] : null) : L[I]) : null)
 ///Sets the item K to the value V, if the list is null it will initialize it
-#define LAZYSET(L, K, V) if(!L) { L = list(); } L[K] = V;
+#define LAZYSET(L, K, V) L ||= list(); L[K] = V;
 ///Sets the length of a lazylist
-#define LAZYSETLEN(L, V) if (!L) { L = list(); } L.len = V;
+#define LAZYSETLEN(L, V) L ||= list(); L.len = V;
 ///Returns the length of the list
 #define LAZYLEN(L) length(L)
 ///Sets a list to null
 #define LAZYNULL(L) L = null
 ///Adds to the item K the value V, if the list is null it will initialize it
-#define LAZYADDASSOC(L, K, V) if(!L) { L = list(); } L[K] += V;
+#define LAZYADDASSOC(L, K, V) L ||= list(); L[K] += V;
 ///This is used to add onto lazy assoc list when the value you're adding is a /list/. This one has extra safety over lazyaddassoc because the value could be null (and thus cant be used to += objects)
-#define LAZYADDASSOCLIST(L, K, V) if(!L) { L = list(); } L[K] += list(V);
+#define LAZYADDASSOCLIST(L, K, V) L ||= list(); L[K] += list(V);
 ///Removes the value V from the item K, if the item K is empty will remove it from the list, if the list is empty will set the list to null
 #define LAZYREMOVEASSOC(L, K, V) if(L?[K]) { L[K] -= V; if(!length(L[K])) L -= K; if(!length(L)) L = null; }
 ///Accesses an associative list, returns null if nothing is found
@@ -105,6 +105,10 @@
 	} else { \
 		lazylist.Insert(index, value); \
 	}
+/// Returns the smallest element in the lazy list, or default if the list is null
+#define LAZYMAX(lazylist, default) (isnull(lazylist) ? default : max(lazylist))
+/// Returns the largest element in the lazy list, or default if the list is null
+#define LAZYMIN(lazylist, default) (isnull(lazylist) ? default : min(lazylist))
 
 ///Ensures the length of a list is at least I, prefilling it with V if needed. if V is a proc call, it is repeated for each new index so that list() can just make a new list for each item.
 #define LISTASSERTLEN(L, I, V...) \
@@ -275,15 +279,24 @@
  * Arguments:
  * - [type_to_check][/datum]: An instance to check.
  * - [list_to_check][/list]: A list of typepaths to check the type_to_check against.
- * - zebra: Whether to use the value of the matching type in the list instead of just returning true when a match is found.
+ * - zebra: Whether to use the value of the matching type (closest to our type) in the list instead of just returning true when a match is found.
+ * - return_first_match: If zebra is true, this will return the first match found, instead of the value of closest type
  */
-/proc/is_type_in_list(datum/type_to_check, list/list_to_check, zebra = FALSE)
+/proc/is_type_in_list(datum/type_to_check, list/list_to_check, zebra = FALSE, return_first_match = FALSE)
 	if(!LAZYLEN(list_to_check) || !type_to_check)
 		return FALSE
+	. = FALSE
+	var/highest_matched_type
 	for(var/type in list_to_check)
-		if(istype(type_to_check, type))
-			return !zebra || list_to_check[type] // Subtypes must come first in zebra lists.
-	return FALSE
+		if(!istype(type_to_check, type))
+			continue
+		if(!zebra)
+			return TRUE
+		if(return_first_match || type == type_to_check.type)
+			return list_to_check[type]
+		if(!highest_matched_type || ispath(type, highest_matched_type))
+			. = list_to_check[type]
+			highest_matched_type = type
 
 /**
  * Checks for specific paths in a list.
@@ -758,7 +771,7 @@
  *
  * If no record is found, returns null
  */
-/proc/find_record(value, locked_only = FALSE)
+/proc/find_record(value, locked_only = FALSE) as /datum/record
 	if(locked_only)
 		for(var/datum/record/locked/target in GLOB.manifest.locked)
 			if(target.name != value)

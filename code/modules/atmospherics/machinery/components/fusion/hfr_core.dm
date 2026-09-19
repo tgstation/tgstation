@@ -2,7 +2,7 @@
  * This section contain the hfr core with all the variables and the Initialize() and Destroy() procs
  */
 /obj/machinery/atmospherics/components/unary/hypertorus/core
-	name = "HFR core"
+	name = "\improper HFR core"
 	desc = "This is the Hypertorus Fusion Reactor core, an advanced piece of technology to finely tune the reaction inside of the machine. It has I/O for cooling gases."
 	icon = 'icons/obj/machines/atmospherics/hypertorus.dmi'
 	icon_state = "core"

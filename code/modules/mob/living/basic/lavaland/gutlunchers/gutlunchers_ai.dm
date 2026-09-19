@@ -68,14 +68,15 @@
 	if(succeeded)
 		controller.clear_blackboard_key(BB_CHECK_HUNGRY)
 
-///Find nearby ashwalkers. we love lizards.
+///Find nearby ashwalkers (which we share the FACTION_ASHWALKERS faction with), we love lizards.
 /datum/bt_node/ai_behavior/befriend_ashwalkers
 	time_between_perform = 5 SECONDS
 
 /datum/bt_node/ai_behavior/befriend_ashwalkers/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
 	for(var/mob/living/potential_friend in oview(9, living_pawn))
-		if(!isashwalker(potential_friend) || living_pawn.has_ally(REF(potential_friend)))
+		/// The client check is necessary so we don't befriend any npc mining mob that isn't hostile to ashwalkers (until attacked)
+		if(!living_pawn.client || !living_pawn.faction_check_atom(potential_friend) || living_pawn.has_ally(REF(potential_friend)))
 			continue
 		living_pawn.befriend(potential_friend)
 		to_chat(potential_friend, span_nicegreen("[living_pawn] looks at you with endearing eyes!"))

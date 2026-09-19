@@ -5,12 +5,13 @@
 
 /// Datum based languages. Easily editable and modular.
 /datum/language
+	abstract_type = /datum/language
 	/// Fluff name of language if any.
 	var/name = "an unknown language"
 	/// Short description for 'Check Languages'.
 	var/desc = "A language."
 	/// Character used to speak in language
-	/// If key is null, then the language isn't real or learnable.
+	/// If `null`, the language cannot be spoken with a key, requires being set as a default language or forced speech.
 	var/key
 	/// Various language flags.
 	var/flags = NONE

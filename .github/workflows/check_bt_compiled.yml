@@ -3,8 +3,8 @@ name: Check BT Compiled JSON
 on:
   pull_request:
     paths:
-      - "code/**/*.bt.json"
-      - "code/_generated/behavior_trees/**"
+      - "**/*.bt.json"
+      - "build/behavior_trees/**"
       - "code/__DEFINES/**"
       - "tools/build_bt.py"
 

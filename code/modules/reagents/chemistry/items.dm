@@ -130,7 +130,7 @@
 	for(var/datum/reagent/reagent as anything in cont.reagents.reagent_list) // bloodtyping if blood present in container
 		var/blood_info = null
 		if(reagent.data)
-			var/blood = reagent.data["blood_type"]
+			var/blood = reagent.data[BLOOD_DATA_TYPE]
 			if(istype(blood, /datum/blood_type))
 				var/datum/blood_type/blood_type = blood
 				var/type = blood_type.get_type()

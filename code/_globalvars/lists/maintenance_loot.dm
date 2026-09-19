@@ -98,6 +98,11 @@ GLOBAL_LIST_INIT(common_loot, list( //common: basic items
 		/obj/item/clothing/suit/hazardvest = 1,
 		/obj/item/clothing/suit/toggle/labcoat = 1,
 		/obj/item/clothing/under/color/grey = 1,
+		/obj/item/clothing/suit/pillow_suit = 1,
+		/obj/item/clothing/head/pillow_hood = 1,
+		/obj/item/shield/mattress = 1,
+		/obj/item/spear/pillow = 1,
+		/obj/item/pillow/random = 1,
 		/obj/item/radio/headset = 1,
 		/obj/item/storage/backpack = 1,
 		/obj/item/storage/belt/fannypack = 1,
@@ -239,6 +244,7 @@ GLOBAL_LIST_INIT(uncommon_loot, list(//uncommon: useful items
 			/obj/item/reagent_containers/cup/jerrycan/space_cleaner = 2, //If you can't find the janitor, the medbay might also appreciate some readymade cleaner.
 			/obj/item/reagent_containers/cup/jerrycan/sus = 1, //what assitant wouldn't like a vibrant jug o' phlog?
 			/obj/item/reagent_containers/cup/jerrycan/diethylamine = 1, //Im sure the botanist would appreciate it, but it is also really cool for maintenance science projects.
+			/obj/item/reagent_containers/cup/jerrycan/concrete_mix = 2,
 			) = 2,
 		) = 8,
 

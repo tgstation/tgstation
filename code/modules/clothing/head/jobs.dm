@@ -170,6 +170,7 @@
 	name = "nun veil"
 	desc = "No nunsene clothing."
 	icon_state = "nun_hood_alt"
+	inhand_icon_state = "nun_hood_alt"
 	flags_inv = HIDEHAIR | HIDEEARS
 	clothing_flags = SNUG_FIT // can't be knocked off by throwing a paper hat.
 
@@ -186,6 +187,7 @@
 	desc = "There's only one man who can sniff out the dirty stench of crime, and he's likely wearing this hat."
 	armor_type = /datum/armor/fedora_det_hat
 	icon_state = "detective"
+	inhand_icon_state = "detective"
 	interaction_flags_click = NEED_DEXTERITY|NEED_HANDS|ALLOW_RESTING
 	dog_fashion = /datum/dog_fashion/head/detective
 	/// Path for the flask that spawns inside their hat roundstart
@@ -249,6 +251,7 @@
 	desc = "There's only one man who can recklessly discharge a firearm into a crowded street while trying to stop a criminal, \
 		and he's likely wearing this hat."
 	icon_state = /obj/item/clothing/head/fedora::icon_state
+	inhand_icon_state = "fedora"
 
 ///Detectives Fedora, but like Inspector Gadget. Not a subtype to not inherit candy corn stuff
 /obj/item/clothing/head/fedora/inspector_hat
@@ -256,6 +259,7 @@
 	desc = "There's only one man can try to stop an evil villain."
 	armor_type = /datum/armor/fedora_det_hat
 	icon_state = "detective"
+	inhand_icon_state = "detective"
 	dog_fashion = /datum/dog_fashion/head/detective
 	interaction_flags_click = FORBID_TELEKINESIS_REACH|ALLOW_RESTING
 	///prefix our phrases must begin with
@@ -327,28 +331,31 @@
 
 	return .
 
-/obj/item/clothing/head/fedora/inspector_hat/attackby(obj/item/item, mob/user, list/modifiers, list/attack_modifiers)
+/obj/item/clothing/head/fedora/inspector_hat/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
+	if(ITEM_INTERACT_ANY_BLOCKER & .)
+		return .
 
 	if(LAZYLEN(contents) >= max_items)
 		balloon_alert(user, "full!")
-		return
-	if(item.w_class > max_weight)
+		return ITEM_INTERACT_BLOCKING
+
+	if(tool.w_class > max_weight)
 		balloon_alert(user, "too big!")
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	var/desired_phrase = tgui_input_text(user, "What is the activation phrase?", "Activation phrase", "gadget", max_length = 26)
 	if(!desired_phrase || !user.can_perform_action(src, FORBID_TELEKINESIS_REACH))
-		return
+		return ITEM_INTERACT_BLOCKING
 
-	if(item.loc != user || !user.transferItemToLoc(item, src))
-		return
+	if(tool.loc != user || !user.transferItemToLoc(tool, src))
+		return ITEM_INTERACT_BLOCKING
 
-	to_chat(user, span_notice("You install [item] into the [thtotext(contents.len)] slot of [src]."))
+	to_chat(user, span_notice("You install [tool] into the [thtotext(contents.len)] slot of [src]."))
 	playsound(src, 'sound/machines/click.ogg', 30, TRUE)
-	set_phrase(desired_phrase,item)
+	set_phrase(desired_phrase, tool)
 
-	return TRUE
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/clothing/head/fedora/inspector_hat/attack_self(mob/user)
 	. = ..()

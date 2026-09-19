@@ -28,10 +28,13 @@
 	var/dnd_style_level_up = TRUE
 	/// Whether the rod can loop across other z-levels. The rod will still loop when the z-level is self-looping even if this is FALSE.
 	var/loopy_rod = FALSE
+	/// Whether or not this rod should be shown to ghosts for auto-orbiting.
+	var/should_augury = TRUE
 
 /obj/effect/immovablerod/Initialize(mapload, atom/target_atom, atom/specific_target, force_looping = FALSE)
 	. = ..()
-	SSaugury.register_doom(src, 2000)
+	if(should_augury)
+		SSaugury.register_doom(src, SEVERITY_ROD)
 
 	var/turf/real_destination = get_turf(target_atom)
 	destination_turf = real_destination
@@ -42,7 +45,7 @@
 
 	SSpoints_of_interest.make_point_of_interest(src)
 
-	RegisterSignal(src, COMSIG_ATOM_ENTERING, PROC_REF(on_entering_atom))
+	RegisterSignals(src, list(COMSIG_ATOM_ENTERING, COMSIG_MOVABLE_TURF_INITIALIZING), PROC_REF(on_entering_atom))
 
 	if(special_target)
 		GLOB.move_manager.home_onto(src, special_target)
@@ -50,7 +53,7 @@
 		GLOB.move_manager.move_towards(src, real_destination)
 
 /obj/effect/immovablerod/Destroy(force)
-	UnregisterSignal(src, COMSIG_ATOM_ENTERING)
+	UnregisterSignal(src, list(COMSIG_ATOM_ENTERING, COMSIG_MOVABLE_TURF_INITIALIZING))
 	SSaugury.unregister_doom(src)
 	destination_turf = null
 	special_target = null

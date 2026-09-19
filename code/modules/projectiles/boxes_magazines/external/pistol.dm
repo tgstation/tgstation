@@ -124,7 +124,7 @@
 	icon_state = "r45-8"
 	base_icon_state = "r45"
 	ammo_type = /obj/item/ammo_casing/c45/reaper
-	caliber = CALIBER_10MM
+	caliber = CALIBER_45
 	max_ammo = 8
 	multiple_sprites = AMMO_BOX_PER_BULLET
 	multiple_sprite_use_base = TRUE

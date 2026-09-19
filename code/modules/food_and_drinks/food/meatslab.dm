@@ -7,7 +7,7 @@
 	var/subjectjob = null
 	var/blood_decal_type = /obj/effect/decal/cleanable/blood
 
-/obj/item/food/meat/Initialize(mapload, blood_dna_list = list("meaty DNA" = get_blood_type(BLOOD_TYPE_MEAT)))
+/obj/item/food/meat/Initialize(mapload, blood_dna_list = list("meaty DNA" = get_blood_type(/datum/blood_type/meat)))
 	. = ..()
 
 	if(!blood_decal_type || !length(custom_materials))
@@ -170,7 +170,7 @@
 /obj/item/food/meat/slab/human/mutant/ethereal
 	icon_state = "etherealmeat"
 	desc = "So shiny you feel like ingesting it might make you shine too"
-	food_reagents = list(/datum/reagent/consumable/liquidelectricity/enriched = 10)
+	food_reagents = list(/datum/reagent/consumable/liquidelectricity = 10)
 	tastes = list("pure electricity" = 2, "meat" = 1)
 	foodtypes = RAW | MEAT | TOXIC | GORE
 	venue_value = FOOD_MEAT_MUTANT

@@ -450,17 +450,11 @@
 
 /datum/reagent/teslium/on_mob_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
-	if(!ishuman(affected_mob))
-		return
-	var/mob/living/carbon/human/affected_human = affected_mob
-	affected_human.physiology.siemens_coeff *= 2
+	MODIFY_PHYSIOLOGY(affected_mob, PHYS_COEFF_ELEC_CONDUCTIVITY, 2)
 
 /datum/reagent/teslium/on_mob_end_metabolize(mob/living/carbon/affected_mob)
 	. = ..()
-	if(!ishuman(affected_mob))
-		return
-	var/mob/living/carbon/human/affected_human = affected_mob
-	affected_human.physiology.siemens_coeff *= 0.5
+	MODIFY_PHYSIOLOGY(affected_mob, PHYS_COEFF_ELEC_CONDUCTIVITY, 0.5)
 
 /datum/reagent/teslium/on_spark_act(power_charge, spark_flags)
 	tesla_zap(source = holder.my_atom, zap_range = round(volume / 5, 1), power = volume * 20 + power_charge, cutoff = 1 KILO JOULES, zap_flags = ZAP_MOB_DAMAGE | ZAP_OBJ_DAMAGE | ZAP_MOB_STUN | ZAP_LOW_POWER_GEN)
@@ -476,7 +470,7 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/teslium/energized_jelly/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
-	if(!isjellyperson(affected_mob)) //everyone but jellypeople get shocked as normal.
+	if(!(affected_mob.mob_biotypes & MOB_SLIME)) //everyone but jellypeople get shocked as normal.
 		return ..()
 	affected_mob.AdjustAllImmobility(-20  * metabolization_ratio * seconds_per_tick)
 	if(affected_mob.adjust_stamina_loss(-5 * metabolization_ratio * seconds_per_tick, updating_stamina = FALSE))

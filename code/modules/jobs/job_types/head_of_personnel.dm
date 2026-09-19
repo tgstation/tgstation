@@ -44,6 +44,7 @@
 	human_authority = JOB_AUTHORITY_HUMANS_ONLY
 
 	voice_of_god_power = 1.4 //Command staff has authority
+	tgui_icon = FA_ICON_DOG
 
 
 /datum/job/head_of_personnel/get_captaincy_announcement(mob/living/captain)
@@ -99,7 +100,7 @@
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic/silver = 1,
 		)
-	belt = /obj/item/modular_computer/pda/heads/hop
+	belt = /obj/item/modular_computer/pda/crew/heads/hop
 	ears = /obj/item/radio/headset/heads/hop
 	head = /obj/item/clothing/head/hats/hopcap
 	shoes = /obj/item/clothing/shoes/laceup
@@ -109,6 +110,8 @@
 		/obj/item/gun/energy/e_gun,
 		/obj/item/stamp/head/hop,
 		)
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/hop
 
 /datum/outfit/job/hop/pre_equip(mob/living/carbon/human/H)
 	..()

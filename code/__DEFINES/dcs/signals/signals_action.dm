@@ -58,6 +58,9 @@
 /// From /datum/action/cooldown/spell/touch/lay_on_hands/proc/determine_if_this_hurts_instead(), sent to the /mob/living/carbon/hurtguy: (/mob/living/carbon/mendicant)
 #define COMSIG_ON_LAY_ON_HANDS "mob_ability_lay_on_hands"
 
+/// From /datum/action/update_button_status (atom/movable/screen/movable/action_button/current_button, force)
+#define COMSIG_ACTION_STATUS_UPDATE "action_status_update"
+
 /// From /datum/action/innate/dash/proc/teleport when teleport is successful
 #define COMSIG_DASH_ACTION_DASHED "dash_action_dashed"
 /// From /datum/action/innate/dash/proc/charge when charges are replenished

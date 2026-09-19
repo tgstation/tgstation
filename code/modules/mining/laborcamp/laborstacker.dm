@@ -224,16 +224,19 @@
 		return
 	user.examinate(src)
 
-/obj/machinery/mineral/labor_points_checker/attackby(obj/item/weapon, mob/user, list/modifiers, list/attack_modifiers)
-	if(!istype(weapon, /obj/item/card/id/advanced/prisoner))
-		return ..()
-	var/obj/item/card/id/advanced/prisoner/prisoner_id = weapon
+/obj/machinery/mineral/labor_points_checker/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!istype(tool, /obj/item/card/id/advanced/prisoner))
+		return NONE
+
+	var/obj/item/card/id/advanced/prisoner/prisoner_id = tool
 	if(!prisoner_id.goal) //no goal to reach
 		say("No goal required for this ID.")
-		return
+		return ITEM_INTERACT_BLOCKING
+
 	say("ID: [prisoner_id.registered_name].")
 	say("Points Collected: [prisoner_id.points] / [prisoner_id.goal].")
 	say("Collect points by bringing smelted minerals to the Labor Shuttle stacking machine. Reach your quota to earn your release.")
+	return ITEM_INTERACT_SUCCESS
 
 /datum/aas_config_entry/security_labor_stacker
 	name = "Security Alert: Labor Camp Release"

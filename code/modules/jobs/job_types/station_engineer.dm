@@ -25,7 +25,14 @@
 		/datum/job_department/engineering,
 		)
 
-	family_heirlooms = list(/obj/item/clothing/head/utility/hardhat, /obj/item/screwdriver, /obj/item/wrench, /obj/item/weldingtool, /obj/item/crowbar, /obj/item/wirecutters)
+	family_heirlooms = list(
+		/obj/item/clothing/head/utility/hardhat,
+		/obj/item/screwdriver,
+		/obj/item/wrench,
+		/obj/item/weldingtool,
+		/obj/item/crowbar,
+		/obj/item/wirecutters,
+	)
 
 	mail_goodies = list(
 		/obj/item/storage/box/lights/mixed = 20,
@@ -37,6 +44,7 @@
 	)
 	rpg_title = "Crystallomancer"
 	job_flags = STATION_JOB_FLAGS
+	tgui_icon = FA_ICON_GEARS
 
 
 /datum/outfit/job/engineer
@@ -49,7 +57,7 @@
 	ears = /obj/item/radio/headset/headset_eng
 	head = /obj/item/clothing/head/utility/hardhat/welding/up
 	shoes = /obj/item/clothing/shoes/workboots
-	l_pocket = /obj/item/modular_computer/pda/engineering
+	l_pocket = /obj/item/modular_computer/pda/crew/engineering
 	r_pocket = /obj/item/t_scanner
 
 	backpack = /obj/item/storage/backpack/industrial
@@ -64,6 +72,8 @@
 	box = /obj/item/storage/box/survival/engineer
 	pda_slot = ITEM_SLOT_LPOCKET
 	skillchips = list(/obj/item/skillchip/job/engineer)
+
+	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/engineering
 
 /datum/outfit/job/engineer/gloved
 	name = "Station Engineer (Gloves)"

@@ -47,13 +47,21 @@
 	reaction = /datum/chemical_reaction/food/soup/wingfangchu
 
 /datum/crafting_recipe/food/reaction/soup/hotchili
+	name = "Chili Con Carne (Meat Chili)"
 	reaction = /datum/chemical_reaction/food/soup/hotchili
+	cuisine_category = CUISINE_MEXICAN
+
+/datum/crafting_recipe/food/reaction/soup/hotchili/ghost
+	name = "Ghost Chili Con Carne (Meat Chili)"
+	reaction = /datum/chemical_reaction/food/soup/hotchili/ghost
 
 /datum/crafting_recipe/food/reaction/soup/coldchili
 	reaction = /datum/chemical_reaction/food/soup/coldchili
+	cuisine_category = CUISINE_MEXICAN
 
 /datum/crafting_recipe/food/reaction/soup/clownchili
 	reaction = /datum/chemical_reaction/food/soup/clownchili
+	cuisine_category = CUISINE_MEXICAN
 
 /datum/crafting_recipe/food/reaction/soup/tomatosoup
 	reaction = /datum/chemical_reaction/food/soup/tomatosoup
@@ -135,6 +143,15 @@
 
 /datum/crafting_recipe/food/reaction/soup/corn_chowder
 	reaction = /datum/chemical_reaction/food/soup/corn_chowder
+
+/datum/crafting_recipe/food/reaction/soup/chili_sin_carne
+	name = "Chili Sin Carne (Vegetarian Chili)"
+	reaction = /datum/chemical_reaction/food/soup/chili_sin_carne
+	cuisine_category = CUISINE_MEXICAN
+
+/datum/crafting_recipe/food/reaction/soup/chili_sin_carne/ghost
+	name = "Ghost Chili Sin Carne (Vegetarian Chili)"
+	reaction = /datum/chemical_reaction/food/soup/chili_sin_carne/ghost
 
 // Other
 

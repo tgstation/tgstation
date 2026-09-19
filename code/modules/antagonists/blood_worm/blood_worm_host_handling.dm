@@ -21,9 +21,11 @@
 	RegisterSignal(host, COMSIG_LIVING_LIFE, PROC_REF(on_host_life))
 	RegisterSignal(host, COMSIG_LIVING_ADJUST_OXY_DAMAGE, PROC_REF(on_host_adjust_oxy_damage))
 	RegisterSignal(host, COMSIG_LIVING_PRE_UPDATE_BLOOD_STATUS, PROC_REF(on_host_pre_update_blood_status))
-	RegisterSignal(host, COMSIG_MOB_GET_STATUS_TAB_ITEMS, PROC_REF(on_host_get_status_tab_items))
 	client?.set_stat_panel()
 	RegisterSignal(host, COMSIG_MOB_EXAMINING, PROC_REF(on_host_examining))
+
+	var/atom/movable/screen/alert/bloodworm_info/info_alert = host.throw_alert(ALERT_BLOODWORM_INFO, /atom/movable/screen/alert/bloodworm_info)
+	info_alert.worm_owner = src
 
 	START_PROCESSING(SSfastprocess, src)
 
@@ -44,7 +46,7 @@
 	if (client)
 		ADD_TRAIT(host, TRAIT_MIND_TEMPORARILY_GONE, BLOOD_WORM_HOST_TRAIT)
 
-	host.physiology.bleed_mod *= BLOOD_WORM_BLEED_MOD
+	MODIFY_PHYSIOLOGY(host, PHYS_COEFF_BLEED, BLOOD_WORM_BLEED_MOD)
 
 	host.AddElement(/datum/element/hand_organ_insertion)
 
@@ -125,7 +127,7 @@
 
 	REMOVE_TRAITS_IN(src, BLOOD_WORM_HOST_TRAIT)
 	REMOVE_TRAITS_IN(host, BLOOD_WORM_HOST_TRAIT)
-	host.physiology.bleed_mod /= BLOOD_WORM_BLEED_MOD
+	MODIFY_PHYSIOLOGY(host, PHYS_COEFF_BLEED, 1/BLOOD_WORM_BLEED_MOD)
 	host.RemoveElement(/datum/element/hand_organ_insertion)
 
 	remove_actions(src, host_actions)
@@ -135,6 +137,7 @@
 	sync_health(already_ejecting = TRUE)
 
 	host.hud_used?.remove_screen_object(HUD_MOB_BLOOD_LEVEL)
+	host.clear_alert(ALERT_BLOODWORM_INFO)
 
 	host.set_blood_volume(0)
 
@@ -226,8 +229,7 @@
 	if (host.coretemperature <= maximum_survivable_temperature)
 		return
 
-	var/burn_coeff = damage_coeff[BURN]
-	adjust_worm_health(-unsuitable_heat_damage * (burn_coeff ? burn_coeff : 1) * seconds_per_tick)
+	adjust_worm_health(-unsuitable_heat_damage * GET_PHYSIOLOGY(src, BURN) * seconds_per_tick)
 
 	if (COOLDOWN_FINISHED(src, host_heat_alert_cooldown))
 		to_chat_self(span_userdanger("Your blood is burning up!"))

@@ -111,10 +111,9 @@
 		. += lid
 
 /obj/structure/closet/crate/attack_hand(mob/user, list/modifiers)
-	. = ..()
-	if(.)
-		return
-	tear_manifest(user)
+	if(tear_manifest(user))
+		return TRUE
+	return ..()
 
 /obj/structure/closet/crate/after_open(mob/living/user, force)
 	. = ..()
@@ -147,12 +146,12 @@
 
 	UnregisterSignal(src, COMSIG_CLOSET_CONTENTS_INITIALIZED)
 
-///Removes the supply manifest from the closet
+///Removes the supply manifest from the closet, returning TRUE if one was torn off
 /obj/structure/closet/crate/proc/tear_manifest(mob/user)
 	var/obj/item/paper/fluff/jobs/cargo/manifest/our_manifest = manifest?.resolve()
 	if(QDELETED(our_manifest))
 		manifest = null
-		return
+		return FALSE
 	if(user)
 		to_chat(user, span_notice("You tear the manifest off of [src]."))
 	playsound(src, 'sound/items/poster/poster_ripped.ogg', 75, TRUE)
@@ -162,6 +161,7 @@
 		user.put_in_hands(our_manifest)
 	manifest = null
 	update_appearance()
+	return TRUE
 
 /obj/structure/closet/crate/preopen
 	opened = TRUE
@@ -420,7 +420,7 @@
 	base_icon_state = "robo"
 
 /obj/structure/closet/crate/mod
-	name = "MOD crate"
+	name = "\improper MOD crate"
 	icon_state = "robo"
 	base_icon_state = "robo"
 

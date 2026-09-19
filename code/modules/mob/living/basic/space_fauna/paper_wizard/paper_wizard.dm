@@ -21,7 +21,7 @@
 	obj_damage = 50
 	attack_sound = 'sound/effects/hallucinations/growl1.ogg'
 	ai_controller = /datum/ai_controller/basic_controller/paper_wizard
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	physiology = list(STAMINA = 0)
 	unsuitable_atmos_damage = 0
 	///spell to summon minions
 	var/datum/action/cooldown/spell/conjure/wizard_summon_minions/summon
@@ -35,8 +35,8 @@
 	grant_loot()
 	AddElement(/datum/element/effect_trail, /obj/effect/temp_visual/paper_scatter)
 
-/mob/living/basic/paper_wizard/init_unconscious_appearance()
-	add_generic_humanoid_static_appearance()
+/mob/living/basic/paper_wizard/get_unconscious_appearance()
+	return get_generic_humanoid_static_appearance()
 
 /mob/living/basic/paper_wizard/proc/grant_abilities()
 	var/static/list/innate_actions = list(

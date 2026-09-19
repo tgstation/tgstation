@@ -30,17 +30,17 @@
 /datum/action/cooldown/spell/ghostliness/cast(mob/living/carbon/human/cast_on)
 	. = ..()
 
-	if(isspirit(cast_on))
+	if(HAS_TRAIT(cast_on, TRAIT_GHOSTLY_MOB))
 		to_chat(cast_on, span_green("You begin to focus on loosening the bonds holding you to the material plane."))
 	else
 		to_chat(cast_on, span_green("You begin to focus on your very being, drawing it out of its corporeal vessel..."))
 	if(!do_after(cast_on, 5 SECONDS))
-		if(isspirit(cast_on))
+		if(HAS_TRAIT(cast_on, TRAIT_GHOSTLY_MOB))
 			to_chat(cast_on, span_warning("Your focus is broken, and you feel your material bindings snap tight once more."))
 		else
 			to_chat(cast_on, span_warning("Your focus is broken, and your soul snaps back into place."))
 		return
-	if(isspirit(cast_on))
+	if(HAS_TRAIT(cast_on, TRAIT_GHOSTLY_MOB))
 		to_chat(cast_on, span_green("You successfully loosen your bonds to the material plane, and can now slip partially out of it."))
 	else
 		to_chat(cast_on, span_danger("As the last trailing filament of your essence ceases intersection with your body, \

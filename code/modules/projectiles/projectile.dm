@@ -1339,7 +1339,7 @@
 
 	var/ox = round(screenview[1] * 0.5) - user.client.pixel_x //"origin" x
 	var/oy = round(screenview[2] * 0.5) - user.client.pixel_y //"origin" y
-	angle = ATAN2(tx - oy, ty - ox)
+	angle = ATAN2(ty - oy, tx - ox)
 	return list(angle, p_x, p_y)
 
 /obj/projectile/experience_pressure_difference()

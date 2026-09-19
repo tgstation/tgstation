@@ -509,6 +509,7 @@
 	assigned_role = new_role
 	if(!isnull(current))
 		SEND_SIGNAL(current, COMSIG_MOB_MIND_SET_ROLE, new_role)
+		current.client?.tgui_panel?.send_player_info()
 
 ///Sets your holy role, giving/taking away traits related to if you're gaining/losing it.
 /datum/mind/proc/set_holy_role(new_holy_role)

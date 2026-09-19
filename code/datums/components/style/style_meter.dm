@@ -145,7 +145,7 @@
 		return
 	// If we have an active style meter, we're on someone's face. Use them to check if the dead megafauna could be credited to them...
 	var/mob/mob_parent = style_meter.parent
-	if(mob_parent.faction_check_atom(died) || !died.has_faction(FACTION_MINING) || (died.z != mob_parent.z) || !(died in view(mob_parent.client?.view, get_turf(mob_parent))))
+	if(mob_parent.faction_check_atom(died) || !ismining(died) || (died.z != mob_parent.z) || !(died in view(mob_parent.client?.view, get_turf(mob_parent))))
 		return
 
 	if(ismegafauna(died))

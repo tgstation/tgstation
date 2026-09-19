@@ -100,20 +100,22 @@
 #define SHUTTLE_DEFAULT_UNDERLYING_AREA /area/space
 
 /// Shuttle unlocks
-// Needs Alien Technology researched.
+/// Needs Alien Technology researched.
 #define SHUTTLE_UNLOCK_ALIENTECH "abductor"
-// Needs bubblegum to die.
+/// Needs bubblegum to die.
 #define SHUTTLE_UNLOCK_BUBBLEGUM "bubblegum"
-// Needs one to set the holodeck to Medieval Sim.
+/// Needs one to set the holodeck to Medieval Sim.
 #define SHUTTLE_UNLOCK_MEDISIM "holodeck"
-// Needs a rune to be cleared by a null rod.
+/// Needs a rune to be cleared by a null rod.
 #define SHUTTLE_UNLOCK_NARNAR "narnar"
-// Needs someone to be polymorphed - Pride Mirror, Magic Mirror, Race Swap, Polymorph Staff/Wand. Badmin Mirror doesn't count, neither does xenobio.
+/// Needs someone to be polymorphed - Pride Mirror, Magic Mirror, Race Swap, Polymorph Staff/Wand. Badmin Mirror doesn't count, neither does xenobio.
 #define SHUTTLE_UNLOCK_WABBAJACK "wabbajack"
-// Needs cargo budget to be almost empty to be purchasable.
+/// Needs cargo budget to be almost empty to be purchasable.
 #define SHUTTLE_UNLOCK_SCRAPHEAP "scrapheap"
-// Needs biohazard to be triggered - Blob, Zombies, or a Severe Disease
+/// Needs biohazard to be triggered - Blob, Zombies, or a Severe Disease
 #define SHUTTLE_UNLOCK_TOMBSTONE "tombstone"
+/// Needs all samples for station's DNA vault goal to be completed.
+#define SHUTTLE_UNLOCK_ARK "ark"
 
 //Shuttle Events
 

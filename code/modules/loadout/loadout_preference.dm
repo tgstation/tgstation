@@ -11,7 +11,7 @@
 	// - list(/obj/item/plush/lizard = list("name" = "Tests-The-Loadout", "color" = "#FF0000"))
 
 // Loadouts are applied with job equip code.
-/datum/preference/loadout/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/loadout/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return
 
 // Sanitize on load to ensure no invalid paths from older saves get in

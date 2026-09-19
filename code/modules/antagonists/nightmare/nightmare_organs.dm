@@ -9,6 +9,7 @@
 	icon = 'icons/obj/medical/organs/organs.dmi'
 	icon_state = "brain-x-d"
 	shade_color = "black, somehow"
+	variant_traits_added = list(TRAIT_NIGHTMARISH)
 
 	///Our associated shadow jaunt spell, for all nightmares
 	var/datum/action/cooldown/spell/jaunt/shadow_walk/our_jaunt
@@ -40,9 +41,7 @@
 	var/turf/owner_turf = owner.loc
 	if(!isturf(owner_turf))
 		return
-	var/light_amount = owner_turf.get_lumcount()
-
-	if (light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD) //dodge in the dark
+	if (owner_turf.check_lumcount_below(SHADOW_SPECIES_LIGHT_THRESHOLD)) //dodge in the dark
 		owner.apply_status_effect(/datum/status_effect/shadow/nightmare)
 
 /datum/status_effect/shadow/nightmare
@@ -139,12 +138,13 @@
 /obj/item/organ/heart/nightmare/on_death(seconds_per_tick)
 	if(!owner)
 		return
-	var/turf/T = get_turf(owner)
-	if(istype(T))
-		var/light_amount = T.get_lumcount()
-		if(light_amount < SHADOW_SPECIES_LIGHT_THRESHOLD)
+
+	var/turf/owner_turf = get_turf(owner)
+	if(istype(owner_turf))
+		if(owner_turf.check_lumcount_below(SHADOW_SPECIES_LIGHT_THRESHOLD))
 			respawn_progress += seconds_per_tick SECONDS
 			playsound(owner, 'sound/effects/singlebeat.ogg', 40, TRUE)
+
 	if(respawn_progress < HEART_RESPAWN_THRESHHOLD)
 		return
 
@@ -161,7 +161,7 @@
 	respawn_progress = 0
 
 /obj/item/organ/heart/nightmare/get_availability(datum/species/owner_species, mob/living/owner_mob)
-	if(isnightmare(owner_mob))
+	if(HAS_TRAIT(owner_mob, TRAIT_NIGHTMARISH))
 		return TRUE
 	return ..()
 

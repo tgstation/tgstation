@@ -58,11 +58,11 @@
 		to_chat(src, span_revennotice("[target_Their] soul burns with intelligence."))
 		essence_drained += rand(20, 30)
 
-	if(target.stat != DEAD && !HAS_TRAIT(target, TRAIT_WEAK_SOUL))
+	if(target.stat != DEAD && !HAS_TRAIT(target, TRAIT_LESSER_HUMANOID))
 		to_chat(src, span_revennotice("[target_Their] soul blazes with life!"))
 		essence_drained += rand(40, 50)
 
-	if(!target_has_client && HAS_TRAIT(target, TRAIT_WEAK_SOUL))
+	if(!target_has_client && HAS_TRAIT(target, TRAIT_LESSER_HUMANOID))
 		to_chat(src, span_revennotice("[target_Their] soul is weak and underdeveloped. They won't be worth very much."))
 		essence_drained = 5
 
@@ -123,7 +123,7 @@
 
 	change_essence_amount(essence_drained, FALSE, target)
 
-	if(essence_drained <= 90 && target.stat != DEAD && !HAS_TRAIT(target, TRAIT_WEAK_SOUL))
+	if(essence_drained <= 90 && target.stat != DEAD && !HAS_TRAIT(target, TRAIT_LESSER_HUMANOID))
 		max_essence += 5
 		to_chat(src, span_revenboldnotice("The absorption of [target]'s living soul has increased your maximum essence level. Your new maximum essence is [max_essence]."))
 

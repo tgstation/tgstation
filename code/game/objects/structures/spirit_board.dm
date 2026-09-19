@@ -84,7 +84,7 @@
 		return FALSE //No feedback here, hiding the cooldown a little makes it harder to tell who's really picking letters.
 
 	var/turf/play_turf = get_turf(src)
-	if(play_turf?.get_lumcount() > 0.2)
+	if(play_turf?.check_lumcount_above(0.2))
 		to_chat(ghost, span_warning("It's too bright here to use [src]!"))
 		return FALSE
 
