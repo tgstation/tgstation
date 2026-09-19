@@ -470,7 +470,7 @@
 				set_interaction_efficiency_penalty(initial(interaction_efficiency_penalty))
 
 		if(initial(disabling))
-			set_disabling(splint_factor >= 1)
+			set_disabling(!limb.is_splinted())
 
 		limb.update_wounds(replaced_or_replacing)
 
