@@ -114,16 +114,16 @@
 	var/linear_dropoff = cached_linear_dropoff * wait_ds
 	var/exponential_dropoff = cached_exponential_dropoff ** wait_ds
 	for(var/channel in channels_playing)
-		if(full_sustain_held_note && (channel == last_channel_played))
-			continue
+		var/held_note = full_sustain_held_note && (channel == last_channel_played)
 		var/current_volume = channels_playing[channel]
-		switch(sustain_mode)
-			if(SUSTAIN_LINEAR)
-				current_volume -= linear_dropoff
-			if(SUSTAIN_EXPONENTIAL)
-				current_volume /= exponential_dropoff
+		if(!held_note)
+			switch(sustain_mode)
+				if(SUSTAIN_LINEAR)
+					current_volume -= linear_dropoff
+				if(SUSTAIN_EXPONENTIAL)
+					current_volume /= exponential_dropoff
 		channels_playing[channel] = current_volume
-		var/dead = current_volume <= sustain_dropoff_volume
+		var/dead = !held_note && current_volume <= sustain_dropoff_volume
 		var/channelnumber = text2num(channel)
 		if(dead)
 			channels_playing -= channel
@@ -134,4 +134,5 @@
 		else
 			for(var/i in hearing_mobs)
 				var/mob/M = i
-				M.set_sound_channel_volume(channelnumber, (current_volume * 0.01) * volume * using_instrument.volume_multiplier)
+				var/pref_volume = M?.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_instruments)
+				M.set_sound_channel_volume(channelnumber, (current_volume * 0.01) * volume * using_instrument.volume_multiplier * (pref_volume / 100))
