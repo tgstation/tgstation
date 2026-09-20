@@ -1,0 +1,5 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - code_imp: "Add emissive effects to supermatter shards, gas meters, thermomachines, pipe devices (filters, mixers, pumps, valves, etc.), circulator heat exchange, SMESs, and PACMAN generators. Default SM now emits light even when not active."
+  - image: "Add light masks to supermatter shards, gas meters, thermomachines, pipe devices (filters, mixers, pumps, valves, etc.), circulator heat exchange, SMESs, and PACMAN generators."
