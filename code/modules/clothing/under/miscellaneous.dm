@@ -107,6 +107,7 @@
 	inhand_icon_state = null
 	can_adjust = FALSE
 	armor_type = /datum/armor/clothing_under/durathread
+	custom_materials = list(/datum/material/cloth/durathread = 4 * SHEET_MATERIAL_AMOUNT)
 
 /datum/armor/clothing_under/durathread
 	melee = 10

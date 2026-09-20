@@ -956,3 +956,60 @@
 		MATERIAL_BEAUTY = 0.8,
 	)
 	texture_layer_icon_state = "sand"
+
+/datum/material/cloth
+	name = "cloth"
+	desc = "Cotton, Linen, Denim, Burlap, Canvas, Hemp... and more!"
+	color = "#f5f5f5"
+	mat_flags = MATERIAL_CLASS_FABRIC | MATERIAL_CLASS_ORGANIC
+	mat_properties = list(
+		MATERIAL_DENSITY = 0,
+		MATERIAL_HARDNESS = 0,
+		MATERIAL_FLEXIBILITY = 8,
+		MATERIAL_REFLECTIVITY = 1,
+		MATERIAL_ELECTRICAL = 4,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 1,
+		MATERIAL_FLAMMABILITY = 8,
+		MATERIAL_BEAUTY = 0.2,
+	)
+	texture_layer_icon_state = "sand" // close enough
+	sheet_type = /obj/item/stack/sheet/cloth
+	material_reagent = /datum/reagent/cellulose
+	turf_sound_override = FOOTSTEP_CARPET
+
+/datum/material/cloth/durathread
+	name = "durathread"
+	desc = "A very strong and flexible synthetic thread."
+	color = "#5c6d80"
+	mat_properties = list(
+		MATERIAL_DENSITY = 2,
+		MATERIAL_HARDNESS = 4,
+		MATERIAL_FLEXIBILITY = 8,
+		MATERIAL_REFLECTIVITY = 1,
+		MATERIAL_ELECTRICAL = 4,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 2,
+		MATERIAL_FLAMMABILITY = 6,
+		MATERIAL_BEAUTY = 0.2,
+	)
+	sheet_type = /obj/item/stack/sheet/durathread
+
+/datum/material/leather
+	name = "leather"
+	desc = "Tough and flexible animal hide. Well, hopefully it's from an animal."
+	color = "#8b4513"
+	mat_flags = MATERIAL_BASIC_RECIPES | MATERIAL_CLASS_FABRIC | MATERIAL_CLASS_ORGANIC
+	mat_properties = list(
+		MATERIAL_DENSITY = 2,
+		MATERIAL_HARDNESS = 4,
+		MATERIAL_FLEXIBILITY = 8,
+		MATERIAL_REFLECTIVITY = 2, // when well maintained
+		MATERIAL_ELECTRICAL = 4,
+		MATERIAL_THERMAL = 4,
+		MATERIAL_CHEMICAL = 4,
+		MATERIAL_FLAMMABILITY = 4,
+		MATERIAL_BEAUTY = 0.2,
+	)
+	texture_layer_icon_state = "sand" // close enough
+	sheet_type = /obj/item/stack/sheet/leather

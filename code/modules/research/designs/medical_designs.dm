@@ -143,7 +143,12 @@
 	name = "Bluespace Body Bag"
 	desc = "A bluespace body bag, powered by experimental bluespace technology. It can hold loads of bodies and the largest of creatures."
 	build_type = PROTOLATHE | AWAY_LATHE
-	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/plasma =SHEET_MATERIAL_AMOUNT, /datum/material/diamond =SMALL_MATERIAL_AMOUNT*5, /datum/material/bluespace =SMALL_MATERIAL_AMOUNT*5)
+	materials = list(
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 0.25,
+		/datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 0.25,
+	)
 	build_path = /obj/item/bodybag/bluespace
 	category = list(
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_TOOLS_MEDICAL
@@ -156,8 +161,8 @@
 		The bag itself cannot maintain stasis for long, and will eventually fall apart."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/plastic = 10 * SHEET_MATERIAL_AMOUNT, // Very plastic expensive (but only because cloth cannot be put in the lathe)
-		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 1,
 	)
 	build_path = /obj/item/bodybag/stasis
 	category = list(RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_MEDICAL)

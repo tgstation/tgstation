@@ -546,6 +546,7 @@
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/helmet_durathread
 	strip_delay = 6 SECONDS
+	custom_materials = list(/datum/material/cloth/durathread = 5 * SHEET_MATERIAL_AMOUNT, /datum/material/leather = 5 * SHEET_MATERIAL_AMOUNT)
 
 /datum/armor/helmet_durathread
 	melee = 20

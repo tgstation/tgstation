@@ -813,6 +813,7 @@
 	greyscale_config_worn = /datum/greyscale_config/beret_badge/worn
 	greyscale_colors = "#C5D4F3#ECF1F8"
 	armor_type = /datum/armor/beret_durathread
+	custom_materials = list(/datum/material/cloth/durathread = 2 * SHEET_MATERIAL_AMOUNT)
 
 /datum/armor/beret_durathread
 	melee = 15

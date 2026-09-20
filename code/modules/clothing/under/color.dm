@@ -14,6 +14,7 @@
 	greyscale_config_inhand_left = /datum/greyscale_config/jumpsuit/inhand_left
 	greyscale_config_inhand_right = /datum/greyscale_config/jumpsuit/inhand_right
 	flags_1 = IS_PLAYER_COLORABLE_1
+	custom_materials = list(/datum/material/cloth = 3 * SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/under/color/jumpskirt
 	icon_state = "/obj/item/clothing/under/color/jumpskirt"

@@ -588,6 +588,7 @@
 	resistance_flags = FLAMMABLE
 	armor_type = /datum/armor/vest_durathread
 	dog_fashion = null
+	custom_materials = list(/datum/material/cloth/durathread = 5 * SHEET_MATERIAL_AMOUNT, /datum/material/leather = 5 * SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/suit/armor/vest/durathread/Initialize(mapload)
 	. = ..()

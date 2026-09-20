@@ -2,6 +2,7 @@
 	abstract_type = /obj/item/clothing/gloves/color
 	dying_key = DYE_REGISTRY_GLOVES
 	greyscale_colors = null
+	custom_materials = list(/datum/material/cloth = 2 * SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/gloves/color/yellow
 	desc = "These gloves provide protection against electric shock."

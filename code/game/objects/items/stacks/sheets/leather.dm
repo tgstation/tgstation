@@ -248,6 +248,8 @@ GLOBAL_LIST_INIT(carp_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/leather
 	pickup_sound = 'sound/items/handling/materials/skin_pick_up.ogg'
 	drop_sound = 'sound/items/handling/materials/skin_drop.ogg'
+	mats_per_unit = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT)
+	material_type = /datum/material/leather
 
 GLOBAL_LIST_INIT(leather_recipes, list ( \
 	new/datum/stack_recipe("wallet", /obj/item/storage/wallet, 1, crafting_flags = NONE, category = CAT_CONTAINERS), \

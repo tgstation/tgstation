@@ -15,6 +15,7 @@
 	species_exception = list(/datum/species/golem)
 	dying_key = DYE_REGISTRY_BANDANA
 	flags_1 = IS_PLAYER_COLORABLE_1
+	custom_materials = list(/datum/material/cloth = 2 * SHEET_MATERIAL_AMOUNT)
 
 	greyscale_config = /datum/greyscale_config/bandana
 	greyscale_config_worn = /datum/greyscale_config/bandana/worn
@@ -146,6 +147,7 @@
 	icon_state = "/obj/item/clothing/mask/bandana/durathread"
 	greyscale_colors = "#5c6d80"
 	flags_1 = NONE
+	custom_materials = list(/datum/material/cloth/durathread = 1 * SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/mask/bandana/striped
 	name = "striped bandana"
