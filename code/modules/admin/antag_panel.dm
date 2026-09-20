@@ -205,12 +205,8 @@ GLOBAL_VAR(antag_prototypes)
 		if(U)
 			if (check_rights(R_FUN, 0))
 				uplink_info += ", <a href='byond://?src=[REF(src)];common=crystals'>[U.uplink_handler.telecrystals]</a> TC"
-				if(U.uplink_handler.has_progression)
-					uplink_info += ", <a href='byond://?src=[REF(src)];common=progression'>[U.uplink_handler.progression_points]</a> PR"
 			else
 				uplink_info += ", [U.uplink_handler.telecrystals] TC"
-				if(U.uplink_handler.has_progression)
-					uplink_info += ", [U.uplink_handler.progression_points] PR"
 		else
 			uplink_info += "<a href='byond://?src=[REF(src)];common=uplink'>give</a>"
 		uplink_info += "." //hiel grammar
