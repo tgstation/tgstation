@@ -99,6 +99,28 @@
 	},
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
+"fm" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "pirateshutters"
+	},
+/obj/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/mapping_helpers/sticker_placer{
+	icon_state = "heart";
+	sticker_type = /obj/item/sticker/heart;
+	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/effect/mapping_helpers/sticker_placer{
+	icon_state = "star";
+	sticker_type = /obj/item/sticker/star;
+	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
+	pixel_x = -4;
+	pixel_y = -5
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/shuttle/pirate/siren)
 "fq" = (
 /obj/structure/platform,
 /obj/structure/railing/corner/end,
@@ -496,6 +518,28 @@
 	},
 /turf/open/floor/iron/dark/diagonal,
 /area/shuttle/pirate/siren)
+"vd" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "pirateshutters"
+	},
+/obj/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/mapping_helpers/sticker_placer{
+	icon_state = "star";
+	sticker_type = /obj/item/sticker/star;
+	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/effect/mapping_helpers/sticker_placer{
+	icon_state = "heart";
+	sticker_type = /obj/item/sticker/heart;
+	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
+	pixel_x = -4;
+	pixel_y = -5
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_a,
+/area/shuttle/pirate/siren)
 "vp" = (
 /obj/effect/turf_decal/tile/red/diagonal_centre,
 /obj/structure/railing/corner{
@@ -602,6 +646,28 @@
 /obj/machinery/shuttle_scrambler,
 /obj/effect/decal/cleanable/dirt/dust,
 /turf/open/floor/iron/dark/diagonal,
+/area/shuttle/pirate/siren)
+"xP" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "pirateshutters"
+	},
+/obj/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/mapping_helpers/sticker_placer{
+	icon_state = "heart";
+	sticker_type = /obj/item/sticker/heart;
+	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/effect/mapping_helpers/sticker_placer{
+	icon_state = "star";
+	sticker_type = /obj/item/sticker/star;
+	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
+	pixel_x = -4;
+	pixel_y = -5
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_b,
 /area/shuttle/pirate/siren)
 "yg" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -1318,6 +1384,28 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/closed/wall/mineral/plastitanium,
 /area/shuttle/pirate/siren)
+"UN" = (
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 4;
+	id = "pirateshutters"
+	},
+/obj/structure/window/reinforced/plasma/plastitanium,
+/obj/effect/mapping_helpers/sticker_placer{
+	icon_state = "star";
+	sticker_type = /obj/item/sticker/star;
+	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/effect/mapping_helpers/sticker_placer{
+	icon_state = "heart";
+	sticker_type = /obj/item/sticker/heart;
+	target_type = /obj/structure/window/reinforced/plasma/plastitanium;
+	pixel_x = -4;
+	pixel_y = -5
+	},
+/turf/open/floor/light/colour_cycle/dancefloor_b,
+/area/shuttle/pirate/siren)
 "Vj" = (
 /obj/structure/window/reinforced/plasma/spawner/directional/west,
 /obj/structure/lattice,
@@ -1597,11 +1685,11 @@ yg
 Hj
 Wd
 oj
-ws
+fm
 XD
 ws
 XD
-ws
+vd
 Wd
 zF
 HJ
@@ -1697,11 +1785,11 @@ QA
 dj
 Wd
 oj
-pb
+UN
 zu
 pb
 zu
-pb
+xP
 Wd
 XU
 eI
