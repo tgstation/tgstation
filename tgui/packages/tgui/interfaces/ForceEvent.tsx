@@ -185,7 +185,7 @@ function EventSection(props) {
                         fluid
                         checked={!event.disabled}
                         onClick={() => act('toggleevent', { type: event.type })}
-                        tooltip="If checked, this event cannot randomly trigger."
+                        tooltip="If unchecked, this event cannot randomly trigger."
                       />
                     </Stack.Item>
                     <Stack.Item grow>
