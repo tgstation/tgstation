@@ -127,11 +127,9 @@
 		if(dead)
 			channels_playing -= channel
 			channels_idle += channel
-			for(var/i in hearing_mobs)
-				var/mob/M = i
-				M.stop_sound_channel(channelnumber)
+			for(var/mob/hearing_mob as anything in hearing_mobs)
+				hearing_mob.stop_sound_channel(channelnumber)
 		else
-			for(var/i in hearing_mobs)
-				var/mob/M = i
-				var/pref_volume = M?.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_instruments)
-				M.set_sound_channel_volume(channelnumber, (current_volume * 0.01) * volume * using_instrument.volume_multiplier * (pref_volume / 100))
+			for(var/mob/hearing_mob as anything in hearing_mobs)
+				var/pref_volume = hearing_mob?.client?.prefs.read_preference(/datum/preference/numeric/volume/sound_instruments)
+				hearing_mob.set_sound_channel_volume(channelnumber, (current_volume * 0.01) * volume * using_instrument.volume_multiplier * (pref_volume / 100))
