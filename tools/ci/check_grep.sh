@@ -373,6 +373,12 @@ if [ "$pcre2_support" -eq 1 ]; then
 		echo -e "${RED}ERROR: File(s) with no trailing newline detected, please add one.${NC}"
 		st=1
 	fi
+	part "CRLF line endings"
+	if $grep -lP '\r' "${code_files[@]}"; then
+		echo
+		echo -e "${RED}ERROR: File(s) with CRLF line endings detected, convert line endings to LF with 'git add --renormalize <file>' and re-commit.${NC}"
+		st=1
+	fi
 	part "datum stockpart sanity"
 	if $grep -P 'for\b.*/obj/item/stock_parts/(?!power_store)(?![\w_]+ in )' "${code_files[@]}"; then
 		echo
