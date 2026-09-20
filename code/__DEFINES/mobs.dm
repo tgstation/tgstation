@@ -269,7 +269,7 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
-#define TEMPERATURE_LUNG_DAMAGE 1.5 //Amount of damage applied when lungs are breathing air (LEVEL_3) that is too hot or cold
+#define TEMPERATURE_LUNG_DAMAGE 3 //Amount of damage applied when lungs are breathing air (LEVEL_3) that is too hot or cold
 
 /// These are for the default lungs
 #define COLD_LEVEL_1_THRESHOLD 260
