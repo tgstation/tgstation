@@ -1,5 +1,0 @@
-author: "PapaMichael"
-delete-after: True
-changes:
-  - rscdel: "Removed traitor reputation"
-  - balance: "Powerful traitor items are no longer timegated"

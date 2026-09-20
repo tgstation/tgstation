@@ -1,0 +1,4 @@
+author: "Richard Blonski"
+delete-after: True
+changes:
+  - bugfix: "Fixed TTS playing on messages that are out of range to be understood."
