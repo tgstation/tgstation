@@ -124,19 +124,6 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 /datum/bodypart_overlay/mutant/horns/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & HIDEHAIR)
 
-/datum/bodypart_overlay/mutant/horns/get_overlay(obj/item/bodypart/limb, layer_index, layer_real)
-	var/list/created_overlays = ..()
-	var/datum/sprite_accessory/horns/horn_datum = sprite_datum
-	if(horn_datum)
-		if(layer_index in horn_datum.emissive_layers)
-			created_overlays += emissive_appearance(
-				icon = sprite_datum.icon,
-				icon_state = build_icon_state(layer_index, limb),
-				offset_spokesman = limb,
-				layer = layer_real,
-			)
-	return created_overlays
-
 ///The frills of a lizard (like weird fin ears)
 /obj/item/organ/frills
 	name = "frills"

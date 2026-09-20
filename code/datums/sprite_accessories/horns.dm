@@ -1,8 +1,6 @@
 /datum/sprite_accessory/horns
 	icon = 'icons/mob/human/species/lizard/lizard_misc.dmi'
 	em_block = TRUE
-	/// a list of layers which render an extra emissive overlay
-	var/list/emissive_layers = list()
 
 /datum/sprite_accessory/horns/simple
 	name = "Simple"
