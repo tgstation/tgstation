@@ -149,7 +149,8 @@
 		else
 			stuff.forceMove(drop_location())
 	playsound(loc, 'sound/items/poster/poster_ripped.ogg', vol = 50, vary = TRUE)
-	SSeconomy.mail_opened += 1
+	if(recipient_ref) // We only want to care about mail with an owner.
+		SSeconomy.mail_opened += 1
 	qdel(src)
 	return TRUE
 
