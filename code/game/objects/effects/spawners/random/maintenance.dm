@@ -29,6 +29,11 @@
 			loot = GLOB.maintenance_loot
 		if(DUMPSTER_LOOT)
 			loot = GLOB.dumpster_loot
+#ifdef UNIT_TESTS
+	// Make invalid decal placements deterministic for the unit tests, I am so SICK OF ASHES fucking with CI.
+	if(can_spawn(/obj/effect/decal/cleanable/ash))
+		loot = list(/obj/effect/decal/cleanable/ash)
+#endif
 	return ..()
 
 /obj/effect/spawner/random/maintenance/skew_loot_weights(list/loot_list, exponent)
