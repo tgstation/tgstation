@@ -658,6 +658,7 @@
 	pickup_sound = SFX_CLOTH_PICKUP
 	drop_sound = SFX_CLOTH_DROP
 	equip_sound = null
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/head/utility/surgerycap/Initialize(mapload)
 	. = ..()

@@ -12,8 +12,6 @@
 	var/unsealed_layer
 	/// The layer the item will render on when sealed.
 	var/sealed_layer
-	/// Can our part overslot over others?
-	var/can_overslot = FALSE
 	/// What are we overslotting over?
 	var/obj/item/overslotting = null
 

@@ -11,6 +11,7 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 	body_parts_covered = CHEST|GROIN|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/ethereal_rainhood
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/suit/hooded/ethereal_raincoat/Initialize(mapload)
 	. = ..()
