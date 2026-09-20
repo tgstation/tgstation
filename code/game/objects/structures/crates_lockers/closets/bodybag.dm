@@ -36,7 +36,7 @@
 /obj/structure/closet/body_bag/Initialize(mapload)
 	. = ..()
 #ifdef UNIT_TESTS
-	if(PERFORM_ALL_TESTS(focus_only/bodybag_materials))
+	if(PERFORM_ALL_TESTS(focus_only/bodybag_materials) && foldedbag_path)
 		foldedbag_instance = new foldedbag_path()
 		for(var/material_type in (SANITIZE_LIST(foldedbag_instance.custom_materials) ^ SANITIZE_LIST(custom_materials)))
 			stack_trace("Bodybag material mismatch between item and closet: [material_type] is not present in both the item and the closet.")
