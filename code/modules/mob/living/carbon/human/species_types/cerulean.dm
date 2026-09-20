@@ -12,6 +12,10 @@
 		BODY_ZONE_HEAD = /obj/item/bodypart/head,
 		BODY_ZONE_CHEST = /obj/item/bodypart/chest,
 	)
+	survival_box_overrides = list(
+		SURVIVAL_MEDIPEN_TYPE = /obj/item/reagent_containers/hypospray/medipen,
+		SURVIVAL_EXTRA_TYPE = /obj/item/reagent_containers/cup/glass/waterbottle,
+	)
 	character_preview_load_all_organs = TRUE
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | RACE_SWAP | SLIME_EXTRACT
 	species_language_holder = /datum/language_holder/cerulean
@@ -130,18 +134,9 @@
 /datum/species/human/cerulean/post_equip_species_outfit(mob/living/carbon/human/cerulean, visuals_only)
 	if (visuals_only)
 		return
-	var/obj/item/organ/lungs/lungs = cerulean.get_organ_slot(ORGAN_SLOT_LUNGS)
-	if (/datum/gas/oxygen in lungs?.breathe_always)
-		return
-	// try to attach to uniform
-	var/obj/item/clothing/under/uniform = cerulean.w_uniform
-	var/attached = uniform?.attach_accessory(SSwardrobe.provide_type(/obj/item/vaporizer/with_cell, cerulean))
-	if (attached)
-		return
-	// try anything else
 	cerulean.equip_in_one_of_slots(
 		equipping = SSwardrobe.provide_type(/obj/item/vaporizer/with_cell, cerulean),
-		slots = list(LOCATION_LPOCKET, LOCATION_RPOCKET, LOCATION_HANDS, LOCATION_BACKPACK),
+		slots = list(LOCATION_RPOCKET, LOCATION_LPOCKET, LOCATION_HANDS, LOCATION_BACKPACK),
 		qdel_on_fail = FALSE,
 		indirect_action = TRUE,
 	)
