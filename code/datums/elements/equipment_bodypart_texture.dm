@@ -37,7 +37,7 @@
 
 	if(!(slot & equipped_item.slot_flags))
 		return
-	if(!check_ignored_bodyshapes(equipper))
+	if(!check_ignored_bodyshapes(equipper, equipped_item))
 		return
 
 	var/obj/item/bodypart/affected_bodypart = equipper.get_bodypart(body_zone)
@@ -64,11 +64,9 @@
 /datum/element/equipment_bodypart_texture/proc/limb_added(mob/living/carbon/limb_owner, obj/item/bodypart/added_limb)
 	SIGNAL_HANDLER
 
-	if(!check_ignored_bodyshapes(limb_owner))
-		return
 	added_limb.add_bodypart_texture(bodypart_overlay_type)
 
-/datum/element/equipment_bodypart_texture/proc/check_ignored_bodyshapes(mob/living/carbon/human/equipper)
-	if((equipper.wear_suit?.supports_variations_flags & CERULEAN_VARIATIONS) && (equipper.bodyshape & BODYSHAPE_CERULEAN))
+/datum/element/equipment_bodypart_texture/proc/check_ignored_bodyshapes(mob/living/carbon/human/equipper, obj/item/item_to_check)
+	if((equipper.bodyshape & BODYSHAPE_CERULEAN) && (item_to_check.supports_variations_flags & CERULEAN_VARIATIONS))
 		return FALSE
 	return TRUE

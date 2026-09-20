@@ -228,8 +228,7 @@
 	)
 
 /datum/bodypart_overlay/mutant/tail/fish/cerulean/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
-	SHOULD_CALL_PARENT(FALSE)
-	return TRUE
+	return (bodypart_owner && owner) ? TRUE : ..()
 
 // simpler than parent. we don't care about locked/natural_spawn. all the accessories in our pool are locked
 /datum/bodypart_overlay/mutant/tail/fish/cerulean/get_random_appearance()
