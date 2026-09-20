@@ -214,7 +214,7 @@ DEFINE_BITFIELD(food_flags, list(
 ///Making one of these should be worth the time investment, solid chunk of profit.
 #define FOOD_PRICE_EXOTIC 550
 ///Large windfall for making something from this list.
-#define FOOD_PRICE_LEGENDARY 1800
+#define FOOD_PRICE_LEGENDARY 1650
 
 ///***Drink price classes***
 ///Drinks that are only limited by a single click of the dispenser.
