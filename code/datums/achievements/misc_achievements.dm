@@ -267,7 +267,7 @@
 	icon_state = "spicy_handshake"
 
 /datum/award/achievement/misc/down_low_too_slow
-	name = "Down Low Too Slow"
+	name = "Low Blow"
 	desc = "Outwit your fellow man in a display that any schoolchild could be proud of."
 	database_id = MEDAL_DOWN_LOW_TOO_SLOW
 	icon_state = "down_low_too_slow"
