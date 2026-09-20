@@ -390,7 +390,7 @@
 	greyscale_config = /datum/greyscale_config/scarf
 	greyscale_config_worn = /datum/greyscale_config/scarf/worn
 	flags_1 = IS_PLAYER_COLORABLE_1
-	custom_materials = list(/datum/material/cloth = 1 * SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/neck/scarf/black
 	name = "black scarf"

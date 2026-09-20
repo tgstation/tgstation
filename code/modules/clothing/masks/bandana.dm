@@ -147,7 +147,7 @@
 	icon_state = "/obj/item/clothing/mask/bandana/durathread"
 	greyscale_colors = "#5c6d80"
 	flags_1 = NONE
-	custom_materials = list(/datum/material/cloth/durathread = 1 * SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/cloth/durathread = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/mask/bandana/striped
 	name = "striped bandana"
