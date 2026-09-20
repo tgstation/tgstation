@@ -87,6 +87,7 @@
 
 	clear_mood_events(user)
 	user.dna.species.bodypart_overrides = GLOB.species_prototypes[user.dna.species.type].bodypart_overrides.Copy()
+	user.regenerate_icons()
 	update_healthdoll(user)
 
 /// if cerulean, or the character has one of their tails, gift a new set of legs. bcuz it wouldnt make sense to have this item useless on ceruleans
@@ -118,6 +119,9 @@
 	if(ephemeral_tail)
 		if(!ephemeral_tail.owner)
 			ephemeral_tail.Insert(user, TRUE)
+			playsound(user, 'sound/effects/magic/staff_change.ogg', 35, TRUE)
+			apply_wibbly_filters(user)
+			addtimer(CALLBACK(src, PROC_REF(remove_wibbly), user), 2 DECISECONDS, TIMER_DELETE_ME)
 
 	clear_mood_events(user)
 	var/obj/item/bodypart/chest/tail_holder = user.get_bodypart(BODY_ZONE_CHEST)
@@ -132,6 +136,9 @@
 
 	if(ephemeral_tail && user.get_organ_slot(ORGAN_SLOT_EXTERNAL_TAIL) == ephemeral_tail)
 		ephemeral_tail.Remove(user, TRUE)
+		playsound(user, 'sound/effects/magic/staff_change.ogg', 35, TRUE)
+		apply_wibbly_filters(user)
+		addtimer(CALLBACK(src, PROC_REF(remove_wibbly), user), 2 DECISECONDS, TIMER_DELETE_ME)
 	if(real_tail)
 		if(!real_tail.owner && !(TRAIT_BLOCK_ATTACHING_LEGS in real_tail.organ_traits))
 			real_tail.Insert(user, TRUE)
@@ -183,6 +190,12 @@
 	var/atom/movable/screen/healthdoll/doll = user.hud_used?.screen_objects[HUD_MOB_HEALTHDOLL]
 	doll?.update_body_zones()
 	doll?.update_appearance()
+
+/// removes the wibbly filter
+/obj/item/clothing/neck/necklace/pearl/proc/remove_wibbly(mob/user)
+	if(isnull(user))
+		return
+	remove_wibbly_filters(user)
 
 /obj/item/clothing/neck/necklace/pearl/abyssal
 	tail_type = /obj/item/organ/tail/fish/cerulean/abyssal
