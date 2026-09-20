@@ -7,7 +7,6 @@
 	medical_record_text = "Patient appears to suffer from a weakness in the leg."
 	value = -6
 	hardcore_value = 3
-	quirk_flags = QUIRK_HUMAN_ONLY
 
 	mail_goodies = list(
 		/obj/item/cane,

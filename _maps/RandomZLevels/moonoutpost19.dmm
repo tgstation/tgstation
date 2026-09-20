@@ -6830,9 +6830,9 @@
 /area/awaymission/moonoutpost19/arrivals)
 "WP" = (
 /obj/structure/table,
-/obj/item/mmi,
-/obj/item/mmi,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
 /obj/structure/alien/weeds,
 /obj/effect/turf_decal/stripes/line{
 	dir = 1

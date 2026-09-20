@@ -1,0 +1,5 @@
+author: "TealSeer"
+delete-after: True
+changes:
+  - bugfix: "fixed R&D console not showing the name of who queued a research node"
+  - bugfix: "fixed being unable to dequeue research nodes you queued"

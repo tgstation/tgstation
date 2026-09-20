@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixes runtime/race condition with quick and slow shuttle station traits not being applied, fixes a roundstart runtime caused by alert levels trying to be changed before the shuttle is created."

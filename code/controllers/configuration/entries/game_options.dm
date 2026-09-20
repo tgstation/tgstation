@@ -44,8 +44,6 @@
 
 /datum/config_entry/flag/allow_ai_multicam // allow ai multicamera mode
 
-/datum/config_entry/flag/disable_human_mood
-
 /datum/config_entry/flag/disable_secborg // disallow secborg model to be chosen.
 
 /datum/config_entry/flag/disable_peaceborg
@@ -401,6 +399,10 @@
 	min_val = 0
 
 /datum/config_entry/number/ratcap
+	default = 64
+	min_val = 0
+
+/datum/config_entry/number/relicmobcap
 	default = 64
 	min_val = 0
 

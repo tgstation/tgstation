@@ -1,0 +1,8 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - spellcheck: "\"gas pump\" renamed to \"pressure pump\""
+  - spellcheck: "\"volumetric gas pump\" renamed to \"volume pump\""
+  - spellcheck: "\"pressure valve\" renamed to \"pressure gate\""
+  - spellcheck: "In the pipe dispenser UI only: \"unary vent\" renamed to \"pump vent\"."
+  - qol: "In the pipe dispenser UI, most components now have a tooltip explaining what they do and how they work."

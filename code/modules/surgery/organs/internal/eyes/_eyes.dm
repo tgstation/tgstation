@@ -136,6 +136,9 @@
 
 /obj/item/organ/eyes/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
+	// Don't forget about the eyelids
+	organ_owner.vis_contents -= eyelid_left
+	organ_owner.vis_contents -= eyelid_right
 
 	if(ishuman(organ_owner))
 		var/mob/living/carbon/human/human_owner = organ_owner

@@ -245,3 +245,51 @@
       to
   - bugfix: fixes an issue where the tooltips on the escape menu buttons would be
       render behind the buttons themselves
+2026-09-17:
+  FalloutFalcon:
+  - config: Removes "Disable mood" config
+  - code_imp: Dummies have a blank mood datum
+  Jacquerel:
+  - rscadd: Plasmamen wearing a human skin suit won't catch fire. The suit itself
+      is flammable though, so make sure you change while under a shower or something.
+  - rscadd: Breathing Miasma can get you sick with the same diseases you get from
+      eating dirty food off the floor.
+  - bugfix: Bitrunning antagonists can once again escape from an emagged server
+  MrMelbert:
+  - map: '[Icebox] Remapped Atmospherics. The hallway of pain is gone.'
+  - map: '[Icebox] Remapped maintenance around Atmos and Science a bit.'
+  - image: Adds long corner trimline decals
+  PapaMichael:
+  - qol: AI shells now appear "off" when not being actively piloted.
+  Redwizz99:
+  - rscadd: bluspace scrubber and gas receiver machinery
+  - rscadd: bluespace scrubber and gas receiver circuits
+  - rscadd: adds bluespace scubber and gas receiver to tech node
+  - rscadd: sprites for bluespace scrubber and gas receiver
+  - rscadd: you can disconnect scrubbers linked to receiver, just use wirecutter
+2026-09-18:
+  Melbert:
+  - rscdel: 'Heretic: "Crimson Cleave" spell removed.'
+  - rscadd: 'Heretic: Adds "The Crimson Cleaver", a tier four knowledge. A weapon
+      that can cleave and lifesteal. Non-heretics are capable of wielding it, at the
+      expense of their sanity and mind...'
+  - rscadd: 'Heretic: Adds "Rhythmic Lodestone", a tier one knowledge, which lets
+      the heretic track any imbued object with their living heart.'
+  - rscadd: 'Heretic: Adds "Blessed Poppy", a tier one knowledge, which heals wounds
+      and stabilizes mobs. Can be used by non-heretics.'
+  tontyGH:
+  - refactor: Man-Machine Interfaces and positronic brains have been rewritten internally.
+      Please report any unexpected behaviour.
+  vinylspiders:
+  - bugfix: fixes fish food missing their lefthand icon, and boxcutter should show
+      its inhand icon now, as well as a whole bunch of other random items that were
+      not linked up with their existing inhand icon states
+  - rscadd: Adds two new pinup bunny contraband posters
+2026-09-20:
+  Y0SH1M4S73R:
+  - rscadd: Relics are now assemblies - they can be attached to wires and connected
+      to other assemblies
+  - bugfix: The dimensional shifting relic effect's cooldown now increases as it was
+      intended to
+  oranges:
+  - balance: Secure crates are now easier to open thanks to budget cuts

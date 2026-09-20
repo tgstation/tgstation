@@ -1764,6 +1764,10 @@
 		factor *= current_gauze.splint_factor
 	return factor
 
+/// Returns TRUE if the limb is splinted with gauze or tape with an effective splint factor
+/obj/item/bodypart/proc/is_splinted()
+	return get_splint_factor() < 1
+
 /**
  * Attempts to use up some of gauze applied
  * If we use up all of the gauze, it is deleted
