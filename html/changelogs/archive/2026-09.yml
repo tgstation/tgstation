@@ -221,3 +221,110 @@
       entire round
   - bugfix: the carrier choice dropdown in the bring your pets to work day menu is
       now visible
+2026-09-16:
+  Fghj240:
+  - spellcheck: cybernetic fangs aren't called advanced in the printer anymore.
+  - bugfix: cybernetic fangs moved to combat cybernetic organs
+  Melbert:
+  - qol: Many, many, many RND designs (primarily computers and machines) now have
+      more informative descriptions that explain what they do, rather than only stating
+      "This is a circuitboard."
+  - spellcheck: Examining a PanD.E.M.I.C 2200, Sheet-meister 2000, or the R&D Server
+      Controller now reads as "That's a [thing]" rather than "That's [thing]".
+  necromanceranne:
+  - balance: The CMO now has an advanced medical scanner in their medkit.
+  - balance: You can now once again print defibrillators and their compact variant
+      (with the researched tech) from cargo.
+  - balance: Defibs now can have their safeties switched off by EMP blasts. However,
+      they reset after a while.
+  - balance: The CMO's unique compact defibrillator has double the recharge rate.
+  vinylspiders:
+  - bugfix: fixes a bug that would cause a goldgrub to sometimes spawn a bugged boulder
+      when hitting a boss vent
+  - bugfix: boss vents can actually give diamonds and bluespace now like they're supposed
+      to
+  - bugfix: fixes an issue where the tooltips on the escape menu buttons would be
+      render behind the buttons themselves
+2026-09-17:
+  FalloutFalcon:
+  - config: Removes "Disable mood" config
+  - code_imp: Dummies have a blank mood datum
+  Jacquerel:
+  - rscadd: Plasmamen wearing a human skin suit won't catch fire. The suit itself
+      is flammable though, so make sure you change while under a shower or something.
+  - rscadd: Breathing Miasma can get you sick with the same diseases you get from
+      eating dirty food off the floor.
+  - bugfix: Bitrunning antagonists can once again escape from an emagged server
+  MrMelbert:
+  - map: '[Icebox] Remapped Atmospherics. The hallway of pain is gone.'
+  - map: '[Icebox] Remapped maintenance around Atmos and Science a bit.'
+  - image: Adds long corner trimline decals
+  PapaMichael:
+  - qol: AI shells now appear "off" when not being actively piloted.
+  Redwizz99:
+  - rscadd: bluspace scrubber and gas receiver machinery
+  - rscadd: bluespace scrubber and gas receiver circuits
+  - rscadd: adds bluespace scubber and gas receiver to tech node
+  - rscadd: sprites for bluespace scrubber and gas receiver
+  - rscadd: you can disconnect scrubbers linked to receiver, just use wirecutter
+2026-09-18:
+  Melbert:
+  - rscdel: 'Heretic: "Crimson Cleave" spell removed.'
+  - rscadd: 'Heretic: Adds "The Crimson Cleaver", a tier four knowledge. A weapon
+      that can cleave and lifesteal. Non-heretics are capable of wielding it, at the
+      expense of their sanity and mind...'
+  - rscadd: 'Heretic: Adds "Rhythmic Lodestone", a tier one knowledge, which lets
+      the heretic track any imbued object with their living heart.'
+  - rscadd: 'Heretic: Adds "Blessed Poppy", a tier one knowledge, which heals wounds
+      and stabilizes mobs. Can be used by non-heretics.'
+  tontyGH:
+  - refactor: Man-Machine Interfaces and positronic brains have been rewritten internally.
+      Please report any unexpected behaviour.
+  vinylspiders:
+  - bugfix: fixes fish food missing their lefthand icon, and boxcutter should show
+      its inhand icon now, as well as a whole bunch of other random items that were
+      not linked up with their existing inhand icon states
+  - rscadd: Adds two new pinup bunny contraband posters
+2026-09-20:
+  Gboster-0:
+  - bugfix: pet carrier doors no longer clip through gags + pet carriers visual lock
+      indicator is no longer broken (it was for 2-5 years)
+  Melbert:
+  - spellcheck: '"gas pump" renamed to "pressure pump"'
+  - spellcheck: '"volumetric gas pump" renamed to "volume pump"'
+  - spellcheck: '"pressure valve" renamed to "pressure gate"'
+  - spellcheck: 'In the pipe dispenser UI only: "unary vent" renamed to "pump vent".'
+  - qol: In the pipe dispenser UI, most components now have a tooltip explaining what
+      they do and how they work.
+  PapaMichael:
+  - bugfix: Flashbangs now require both eye and ear protection to mitigate their effects,
+      not just ear protection
+  SmArtKar:
+  - bugfix: Fixed wounds not disabling limbs when they should, and disabling them
+      when splinted
+  TealSeer:
+  - bugfix: fixed R&D console not showing the name of who queued a research node
+  - bugfix: fixed being unable to dequeue research nodes you queued
+  Y0SH1M4S73R:
+  - rscadd: Relics are now assemblies - they can be attached to wires and connected
+      to other assemblies
+  - bugfix: The dimensional shifting relic effect's cooldown now increases as it was
+      intended to
+  desertmote:
+  - rscadd: You can visually tell how soaked someone is, and the drip VFX doesn't
+      display when you're only marginally wet
+  oranges:
+  - balance: Secure crates are now easier to open thanks to budget cuts
+  the-orange-cow:
+  - bugfix: all directional glow effects work after being taken out of a bag
+  timothymtorres:
+  - code_imp: Add emissive effects to supermatter shards, gas meters, thermomachines,
+      pipe devices (filters, mixers, pumps, valves, etc.), circulator heat exchange,
+      SMESs, and PACMAN generators. Default SM now emits light even when not active.
+  - image: Add light masks to supermatter shards, gas meters, thermomachines, pipe
+      devices (filters, mixers, pumps, valves, etc.), circulator heat exchange, SMESs,
+      and PACMAN generators.
+  vinylspiders:
+  - bugfix: fixes runtime/race condition with quick and slow shuttle station traits
+      not being applied, fixes a roundstart runtime caused by alert levels trying
+      to be changed before the shuttle is created.
