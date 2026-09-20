@@ -44,6 +44,7 @@
 		return
 	//Unregister the signals with the old settings.
 	unregister_signals(isturf(tracked) ? tracked : tracked.loc, turfs)
+	turfs = list()
 	src.range = range
 	src.works_in_containers = works_in_containers
 	//Re-register the signals with the new settings.
@@ -52,6 +53,7 @@
 /datum/component/connect_range/proc/set_tracked(atom/new_tracked)
 	if(tracked) //Unregister the signals from the old tracked and its surroundings
 		unregister_signals(isturf(tracked) ? tracked : tracked.loc, turfs)
+		turfs = list()
 		UnregisterSignal(tracked, list(
 			COMSIG_MOVABLE_MOVED,
 			COMSIG_QDELETING,
