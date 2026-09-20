@@ -18,6 +18,10 @@
 	var/list/datum/gas_mixture/airs
 	///Handles whether the custom reconcilation handling should be used
 	var/custom_reconcilation = FALSE
+	///The light mask for emissive effects while on
+	var/light_mask_on = FALSE
+	///The light mask for emissive effects while off (but still powered)
+	var/light_mask_off = FALSE
 
 /obj/machinery/atmospherics/components/get_save_vars()
 	. = ..()
@@ -49,6 +53,23 @@
  */
 /obj/machinery/atmospherics/components/proc/update_icon_nopipes()
 	return
+
+/obj/machinery/atmospherics/components/update_overlays()
+	. = ..()
+
+	if(istype(src, /obj/machinery/atmospherics/components/trinary))
+		var/on_state = on && nodes[1] && nodes[2] && nodes[3] && is_operational
+		// during Initialize() trinary devices will be technically "on" but their icon_state
+		// updates to off via update_icon_nopipes() before atmos nodes process which breaks their emissives
+		if(!on_state)
+			return
+
+	cut_overlays()
+	if(is_operational && ((on && light_mask_on) || (!on && light_mask_off)))
+		// this is cursed but both these emissive_appearance() are needed one gives emissives to
+		// mapload machinery that are already on the other gives emissives when updates happen (on/off/pressure change/etc.)
+		. += emissive_appearance(icon, "[icon_state]-emissive", src, alpha = src.alpha)
+		add_overlay(emissive_appearance(icon, "[icon_state]-emissive", src, alpha = src.alpha))
 
 /obj/machinery/atmospherics/components/on_hide(datum/source, underfloor_accessibility)
 	hide_pipe(underfloor_accessibility)
