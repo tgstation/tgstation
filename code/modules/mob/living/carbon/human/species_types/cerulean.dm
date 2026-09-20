@@ -35,9 +35,8 @@
 /datum/species/human/cerulean/get_species_lore()
 	return list(
 		"Ceruleans are a scarcely common \"Animalid\" variant, sought mostly for their labor in vacuum environments. \
-		They are descendant of a radically spliced human society, who inhabit two tidal locked hycean worlds: planets Marina and Moryana. \
-		Most of the early Cerulean society still reside there today, granted they posess water-breathing lungs \
-		or financial means to occupy limited terrestrial living-space.",
+		They are descendant of radically spliced humans, of which a society inhabits two tidal locked hycean worlds: planets Marina and Moryana. \
+		Largely, the Cerulean society still reside there today.",
 
 		"Most of the scientific development of early Cerulean kind, directly post migration from humans, are left in obscurity or destroyed. \
 		In part due to the self-centered nature of the problems they were designed to solve, like the \"hydro-vaporizer\", a device which respirates \
