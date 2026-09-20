@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - rscadd: "Holosigns are now vulnerable to EMPs"
