@@ -285,3 +285,11 @@
       its inhand icon now, as well as a whole bunch of other random items that were
       not linked up with their existing inhand icon states
   - rscadd: Adds two new pinup bunny contraband posters
+2026-09-20:
+  Y0SH1M4S73R:
+  - rscadd: Relics are now assemblies - they can be attached to wires and connected
+      to other assemblies
+  - bugfix: The dimensional shifting relic effect's cooldown now increases as it was
+      intended to
+  oranges:
+  - balance: Secure crates are now easier to open thanks to budget cuts
