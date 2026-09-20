@@ -210,7 +210,7 @@ DEFINE_BITFIELD(food_flags, list(
 ///In line with prices of cheap snacks and foods you find in vending machine, practically disposable.
 #define FOOD_PRICE_CHEAP 70
 ///A reasonable chunk of profit, made even greater if you source your own ingredients, but manageable if you order them all.
-#define FOOD_PRICE_NORMAL 250
+#define FOOD_PRICE_NORMAL 220
 ///Making one of these should be worth the time investment, solid chunk of profit.
 #define FOOD_PRICE_EXOTIC 550
 ///Large windfall for making something from this list.
