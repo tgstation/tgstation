@@ -144,10 +144,10 @@
 	desc = "A bluespace body bag, powered by experimental bluespace technology. It can hold loads of bodies and the largest of creatures."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
-		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 3.5,
 		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.5,
-		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 0.25,
-		/datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 0.25,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 0.5,
 	)
 	build_path = /obj/item/bodybag/bluespace
 	category = list(
