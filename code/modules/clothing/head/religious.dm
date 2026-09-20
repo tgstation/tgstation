@@ -20,6 +20,7 @@
 	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/head/chaplain/taqiyah
+	abstract_type = /obj/item/clothing/head/chaplain/taqiyah
 	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/head/chaplain/taqiyah/white
