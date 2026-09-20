@@ -755,16 +755,17 @@
 	if(!HAS_TRAIT(breather, TRAIT_RESISTCOLD)) // COLD DAMAGE
 		var/cold_modifier = breather.dna.species.coldmod
 		var/breath_effect_prob = 0
-		if(breath_temperature < cold_level_3_threshold)
+		if(breath_temperature <= cold_level_3_threshold)
 			breather.apply_damage(cold_level_3_damage * cold_modifier, cold_damage_type, spread_damage = TRUE)
 			breath_effect_prob = 100
-		if(breath_temperature > cold_level_3_threshold && breath_temperature < cold_level_2_threshold)
+		else if(breath_temperature <= cold_level_2_threshold)
 			breather.apply_damage(cold_level_2_damage * cold_modifier, cold_damage_type, spread_damage = TRUE)
 			breath_effect_prob = 50
-		if(breath_temperature > cold_level_2_threshold && breath_temperature < cold_level_1_threshold)
+		else if(breath_temperature <= cold_level_1_threshold)
 			breather.apply_damage(cold_level_1_damage * cold_modifier, cold_damage_type, spread_damage = TRUE)
 			breath_effect_prob = 25
-		if(breath_temperature < cold_level_1_threshold)
+
+		if(breath_temperature <= cold_level_1_threshold)
 			if(prob(sqrt(breath_effect_prob) * 4))
 				to_chat(breather, span_warning("You feel [cold_message] in your [name]!"))
 				if(prob(50))
@@ -781,21 +782,19 @@
 	if(!HAS_TRAIT(breather, TRAIT_RESISTHEAT)) // HEAT DAMAGE
 		var/heat_modifier = breather.dna.species.heatmod
 		var/heat_message_prob = 0
-		if(breath_temperature > heat_level_1_threshold && breath_temperature < heat_level_2_threshold)
-			breather.apply_damage(heat_level_1_damage * heat_modifier, heat_damage_type, spread_damage = TRUE)
+		if(breath_temperature >= heat_level_3_threshold)
+			breather.apply_damage(heat_level_3_damage * heat_modifier, heat_damage_type, spread_damage = TRUE)
 			heat_message_prob = 100
-		if(breath_temperature > heat_level_2_threshold && breath_temperature < heat_level_3_threshold)
+		else if(breath_temperature >= heat_level_2_threshold)
 			breather.apply_damage(heat_level_2_damage * heat_modifier, heat_damage_type, spread_damage = TRUE)
 			heat_message_prob = 50
-		if(breath_temperature > heat_level_3_threshold)
-			breather.apply_damage(heat_level_3_damage * heat_modifier, heat_damage_type, spread_damage = TRUE)
+		else if(breath_temperature >= heat_level_1_threshold)
+			breather.apply_damage(heat_level_1_damage * heat_modifier, heat_damage_type, spread_damage = TRUE)
 			heat_message_prob = 25
-		if(breath_temperature > heat_level_1_threshold)
+
+		if(breath_temperature >= heat_level_1_threshold)
 			if(prob(sqrt(heat_message_prob) * 4))
 				to_chat(breather, span_warning("You feel [hot_message] in your [name]!"))
-
-	// The air you breathe out should match your body temperature
-	breath.temperature = breather.bodytemperature
 
 /// Creates a particle effect off the mouth of the passed mob.
 /obj/item/organ/lungs/proc/emit_breath_particle(mob/living/carbon/human/breather, particle_type)
