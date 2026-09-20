@@ -1,4 +1,0 @@
-author: "the-orange-cow"
-delete-after: True
-changes:
-  - bugfix: "all directional glow effects work after being taken out of a bag"

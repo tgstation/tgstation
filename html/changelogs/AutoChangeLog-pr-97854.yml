@@ -1,4 +1,0 @@
-author: "SmArtKar"
-delete-after: True
-changes:
-  - bugfix: "Fixed wounds not disabling limbs when they should, and disabling them when splinted"

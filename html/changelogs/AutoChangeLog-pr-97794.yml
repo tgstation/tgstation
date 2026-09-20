@@ -1,4 +1,0 @@
-author: "PapaMichael"
-delete-after: True
-changes:
-  - bugfix: "Flashbangs now require both eye and ear protection to mitigate their effects, not just ear protection"

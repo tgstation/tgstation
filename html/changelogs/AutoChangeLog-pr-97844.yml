@@ -1,4 +1,0 @@
-author: "Gboster-0"
-delete-after: True
-changes:
-  - bugfix: "pet carrier doors no longer clip through gags + pet carriers visual lock indicator is no longer broken (it was for 2-5 years)"
