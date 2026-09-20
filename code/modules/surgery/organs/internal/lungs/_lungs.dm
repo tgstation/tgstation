@@ -747,6 +747,10 @@
 
 /obj/item/organ/lungs/proc/handle_breath_temperature(datum/gas_mixture/breath, mob/living/carbon/human/breather) // called by human/life, handles temperatures
 	var/breath_temperature = breath.temperature
+	breath.temperature = breather.bodytemperature // The air you breathe out should match your body temperature
+
+	if((breath_temperature > cold_level_1_threshold) || (breath_temperature < heat_level_1_threshold))
+		return // safe air that isn't too hot or cold
 
 	if(!HAS_TRAIT(breather, TRAIT_RESISTCOLD)) // COLD DAMAGE
 		var/cold_modifier = breather.dna.species.coldmod
