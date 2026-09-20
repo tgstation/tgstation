@@ -125,7 +125,7 @@
 		return FALSE
 	return after_unwrap(user)
 
-/// Proc for attempting to open a letter. Returns FALSE if it fails. Letters can only be opened if you have the recipient's mind.
+/// Proc for attempting to open a letter. Returns FALSE if it fails.
 /obj/item/mail/proc/unwrap(mob/user)
 	if(recipient_ref)
 		var/datum/mind/recipient = recipient_ref.resolve()
