@@ -46,7 +46,7 @@
 	var/list/obj/machinery/atmospherics/nodes
 
 	///The path of the pipe/device that will spawn after unwrenching it (such as pipe fittings)
-	var/construction_type
+	var/obj/item/pipe/construction_type
 	///icon_state as a pipe item
 	var/pipe_state
 	///Check if the device should be on or off (mostly used in processing for machines)
