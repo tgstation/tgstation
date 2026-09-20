@@ -125,7 +125,7 @@
 		return FALSE
 	return after_unwrap(user)
 
-/// proc for unwrapping a mail. Goes just for an unwrapping procces, returns FALSE if it fails.
+/// Proc for attempting to open a letter. Returns FALSE if it fails. Letters can only be opened if you have the recipient's mind.
 /obj/item/mail/proc/unwrap(mob/user)
 	if(recipient_ref)
 		var/datum/mind/recipient = recipient_ref.resolve()
@@ -140,7 +140,7 @@
 		return FALSE
 	return TRUE
 
-// proc that goes after unwrapping a mail.
+/// Handles additional effects after a letter has successfully been opened, like moving contents to the user, and playing sound effects.
 /obj/item/mail/proc/after_unwrap(mob/user)
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
 	for(var/obj/stuff as anything in contents) // Mail and envelope actually can have more than 1 item.
@@ -149,6 +149,7 @@
 		else
 			stuff.forceMove(drop_location())
 	playsound(loc, 'sound/items/poster/poster_ripped.ogg', vol = 50, vary = TRUE)
+	SSeconomy.mail_opened += 1
 	qdel(src)
 	return TRUE
 
