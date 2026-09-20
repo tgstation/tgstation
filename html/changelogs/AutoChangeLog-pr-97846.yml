@@ -1,0 +1,4 @@
+author: "desertmote"
+delete-after: True
+changes:
+  - rscadd: "You can visually tell how soaked someone is, and the drip VFX doesn't display when you're only marginally wet"

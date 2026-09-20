@@ -26,7 +26,7 @@
 		/obj/item/storage/box/flashes = 20,
 		/obj/item/stack/sheet/iron/twenty = 15,
 		/obj/item/modular_computer/laptop = 5,
-		/obj/item/mmi/posibrain/sphere = 5,
+		/obj/item/brain_processor/positronic/sphere = 5,
 	)
 
 	family_heirlooms = list(/obj/item/toy/plush/pkplush)

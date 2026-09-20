@@ -251,6 +251,12 @@
 	cost = PAYCHECK_CREW * 2
 	contains = list(/obj/item/dyespray)
 
+/datum/supply_pack/goody/pilotsuit
+	name = "Mech Pilot Suit"
+	desc = "For when you need to look the part during your pre-battle checks. Can be reskinned with alt-click."
+	cost = PAYCHECK_CREW * 2
+	contains = list(/obj/item/clothing/under/costume/mech_suit)
+
 /datum/supply_pack/goody/beach_ball
 	name = "Beach Ball Single-Pack"
 	// uses desc from item

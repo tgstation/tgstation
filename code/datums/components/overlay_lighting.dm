@@ -193,6 +193,8 @@
 		return
 	if(directional)
 		cast_directional_light()
+	else
+		show_to_holder()
 	register_new_cells()
 
 /// Adds the luminosity and source for the affected movable atoms to keep track of their visibility.
