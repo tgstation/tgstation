@@ -47,8 +47,8 @@
 	icon_state = "snail"
 
 /datum/award/achievement/jobs/bag_of_holding
-	name = "The Ultimate Storage Solution"
-	desc = "I bet you could fit the whole space station in there."
+	name = "Prepare for Unforeseen Consequences"
+	desc = "Cause significant amounts of property damage with your experimental technology."
 	database_id = MEDAL_BAG_OF_HOLDING
 	icon_state = "bag_of_holding"
 
