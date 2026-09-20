@@ -65,7 +65,7 @@
 #define MEDAL_DESENSITIZED "In Flanders Fields"
 #define MEDAL_SPICY_HANDSHAKE "Spicy Handshake"
 #define MEDAL_DOWN_LOW_TOO_SLOW "Down Low Too Slow"
-#define MEDAL_SOUVENIR "And All I Got Was This Lousy Achievement"
+#define MEDAL_SOUVENIR "Syndicate T-Shirt Achievement"
 #define MEDAL_SAMARITAN "Good Samaritan"
 #define MEDAL_RED_PILL "Red Pill"
 #define MEDAL_KONG "Rise of Kong"
