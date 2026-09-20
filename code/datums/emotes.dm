@@ -180,6 +180,11 @@
 				viewer.show_message(span_emote("<b>[user]</b> [msg]"), MSG_AUDIBLE)
 			else if(is_visual)
 				viewer.show_message(span_emote("<b>[user]</b> [msg]"), MSG_VISUAL)
+
+		// AI-eye emotes
+		if(is_visual)
+			relay_visual_emote_to_ai_runechat(user, msg)
+
 		return // Early exit so no dchat message
 
 	// The emote has some important information, and should always be shown to the user
@@ -217,6 +222,9 @@
 		)
 	else
 		CRASH("Emote [type] has no valid emote type set!")
+
+	if(is_visual)
+		relay_visual_emote_to_ai_runechat(user, msg)
 
 	if(!isnull(user.client))
 		var/dchatmsg = "<b>[user]</b> [msg]"
@@ -447,6 +455,10 @@
 	if (log_emote)
 		log_message(text, LOG_EMOTE)
 	visible_message(text, visible_message_flags = EMOTE_MESSAGE)
+
+	if(ismob(src))
+		relay_visual_emote_to_ai_runechat(src, text)
+
 	return TRUE
 
 /mob/manual_emote(text, log_emote = null)
@@ -467,3 +479,48 @@
 		if(get_chat_toggles(ghost.client) & CHAT_GHOSTSIGHT && !(ghost in viewers(origin_turf, null)))
 			ghost.show_message("[FOLLOW_LINK(ghost, src)] [ghost_text]")
 	return TRUE
+
+/// AI can also see emotes!
+/proc/ai_eye_turf_in_view(mob/eye/camera/ai/eye, turf/T)
+	if(!eye || !T)
+		return FALSE
+
+	var/turf/eye_turf = get_turf(eye)
+	if(!eye_turf || eye_turf.z != T.z)
+		return FALSE
+
+	if(!SScameras || !SScameras.is_visible_by_cameras(eye_turf) || !SScameras.is_visible_by_cameras(T))
+		return FALSE
+
+	return (T in eye.get_visible_turfs())
+
+/proc/relay_visual_emote_to_ai_runechat(mob/user, msg)
+	var/turf/T = get_turf(user)
+	if(!T)
+		return
+
+	for(var/mob/living/silicon/ai/AI as anything in GLOB.ai_list)
+		if(!AI?.client)
+			continue
+
+		if(AI in viewers(user))
+			continue
+
+		var/relayed = FALSE
+
+		var/atom/active_eye = AI.client.eye
+		if(istype(active_eye, /mob/eye/camera/ai))
+			var/mob/eye/camera/ai/eye = active_eye
+			if(eye.ai == AI && ai_eye_turf_in_view(eye, T))
+				if(user.runechat_prefs_check(AI, EMOTE_MESSAGE))
+					AI.create_chat_message(speaker = user, raw_message = msg, runechat_flags = EMOTE_MESSAGE)
+				relayed = TRUE
+
+		if(!relayed && AI.multicam_on) //Multicam
+			for(var/mob/eye/camera/ai/eye as anything in AI.all_eyes)
+				if(eye.ai != AI)
+					continue
+				if(ai_eye_turf_in_view(eye, T))
+					if(user.runechat_prefs_check(AI, EMOTE_MESSAGE))
+						AI.create_chat_message(speaker = user, raw_message = msg, runechat_flags = EMOTE_MESSAGE)
+					break
