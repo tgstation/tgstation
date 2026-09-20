@@ -1397,13 +1397,13 @@
 		if(!overlay.can_draw_on_bodypart(src, owner))
 			continue
 
-		for (var/mutable_appearance/actual_overlay as anything in overlay.get_all_overlays(src))
+		for (var/actual_overlay, actual_overlay_flags in overlay.get_all_overlays(src))
 			if(dropped || isnull(owner))
 				.[image(actual_overlay, dir = SOUTH)] = overlay.overlay_flags
 				continue
 
 			owner.apply_height(actual_overlay, overlay.offset_location)
-			.[actual_overlay] = overlay.overlay_flags
+			.[actual_overlay] = actual_overlay_flags
 
 	// Then texture everything at once, including bodypart overlays
 	for(var/datum/bodypart_texture/texture as anything in bodypart_textures)
@@ -1414,6 +1414,14 @@
 				continue
 
 			texture.modify_bodypart_appearance(generated_overlay, generated_overlay_flags)
+
+#ifndef UNIT_TESTS
+	if(PERFORM_ALL_TESTS(focus_only/bodypart_overlay_flags))
+		for(var/generated_overlay, generated_overlay_flags in .)
+			var/image/generated_overlay_real = generated_overlay
+			if(PLANE_TO_TRUE(generated_overlay_real.plane) == EMISSIVE_PLANE && !(generated_overlay_flags & LIMB_OVERLAY_META))
+				stack_trace("Emissive overlay without meta tag (icon state: [generated_overlay_real.icon_state])")
+#endif
 
 	SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped)
 	return assoc_to_keys(.)
