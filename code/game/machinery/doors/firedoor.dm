@@ -682,7 +682,7 @@
 		INVOKE_ASYNC(src, PROC_REF(open))
 		return
 
-/obj/machinery/door/firedoor/open()
+/obj/machinery/door/firedoor/open(forced = DEFAULT_DOOR_CHECKS, mob/living/opener)
 	if(welded)
 		return
 	var/old_activity = active
