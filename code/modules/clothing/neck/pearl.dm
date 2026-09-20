@@ -8,7 +8,7 @@
 		a strange infusion seems to actively swirl within the tiny dark beads."
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "beads"
-	color = "#121011"
+	color = "#272526"
 	w_class = WEIGHT_CLASS_SMALL
 	custom_materials = list(/datum/material/bone = HALF_SHEET_MATERIAL_AMOUNT / 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT / 2)
 	resistance_flags = FIRE_PROOF | ACID_PROOF

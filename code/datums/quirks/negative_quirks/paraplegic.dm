@@ -53,19 +53,13 @@
 
 	// early return for if we spawn inside a closet. its more likely than you think
 	if(istype(loc, /obj/structure/closet))
-		if(gold)
-			new /obj/item/wheelchair/gold(loc)
-		else
-			new /obj/item/wheelchair(loc)
+		gold ? new /obj/item/wheelchair/gold(loc) : new /obj/item/wheelchair(loc)
 		return
 
 	var/turf/turf = get_turf(src)
 	var/obj/structure/chair/chair_in_turf = locate() in turf
 	var/obj/vehicle/ridden/wheelchair/wheelchair
-	if(gold)
-		wheelchair = new /obj/vehicle/ridden/wheelchair/gold(turf)
-	else
-		wheelchair = new (turf)
+	wheelchair = gold ? new /obj/vehicle/ridden/wheelchair/gold(turf) : new (turf)
 
 	// align with a chair already in the turf (if there is one)
 	if(chair_in_turf  && chair_in_turf != wheelchair)
