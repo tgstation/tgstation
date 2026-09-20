@@ -486,13 +486,7 @@
 	icon_state = "stomach-bone"
 	metabolism_efficiency = 0.025 //very bad
 	organ_traits = list(TRAIT_NOHUNGER)
-
-/obj/item/organ/stomach/moth
-	name = "moth stomach"
-	desc = "An insectoid stomach adapted to the digestion of textile fibers from the get go. It's estimated that a young mothperson will eat 30 times their body weight in cloth \
-		before their stomach can fully produce the enzymes required to digest other matter as well."
-	icon_state = "spinner-x"
-	organ_traits = list(TRAIT_CLOTH_EATER)
+	organ_flags = ORGAN_MINERAL
 
 /obj/item/organ/stomach/bone/plasmaman
 	name = "digestive crystal"
@@ -500,6 +494,14 @@
 	icon_state = "stomach-p"
 	metabolism_efficiency = 0.06
 	organ_traits = null
+	organ_flags = parent_type::organ_flags | ORGAN_ORGANIC
+
+/obj/item/organ/stomach/moth
+	name = "moth stomach"
+	desc = "An insectoid stomach adapted to the digestion of textile fibers from the get go. It's estimated that a young mothperson will eat 30 times their body weight in cloth \
+		before their stomach can fully produce the enzymes required to digest other matter as well."
+	icon_state = "spinner-x"
+	organ_traits = list(TRAIT_CLOTH_EATER)
 
 /obj/item/organ/stomach/cybernetic
 	name = "basic cybernetic stomach"

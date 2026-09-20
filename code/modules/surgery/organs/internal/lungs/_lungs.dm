@@ -905,6 +905,7 @@
 	safe_oxygen_min = 0 //We don't breathe this
 	safe_plasma_min = 4 //We breathe THIS!
 	safe_plasma_max = 0
+	organ_flags = ORGAN_MINERAL | ORGAN_ORGANIC
 
 /obj/item/organ/lungs/plasmaman/plasmaman_smoker
 	name = "smoker plasma filter"
