@@ -499,6 +499,7 @@
 
 /// Causes random euphoria and giggling. Large amounts knock you down
 /obj/item/organ/lungs/proc/too_much_n2o(mob/living/carbon/breather, datum/gas_mixture/breath, n2o_pp, old_n2o_pp)
+	breathe_gas_volume(breath, /datum/gas/nitrous_oxide)
 	if(n2o_pp < n2o_para_min)
 		// Small amount of N2O, small side-effects.
 		if(n2o_pp <= n2o_detect_min)
@@ -557,6 +558,7 @@
 
 /// Radioactive, green gas. Toxin damage, and a radiation chance
 /obj/item/organ/lungs/proc/too_much_tritium(mob/living/carbon/breather, datum/gas_mixture/breath, trit_pp, old_trit_pp)
+	breathe_gas_volume(breath, /datum/gas/tritium)
 	var/gas_breathed = breathe_gas_volume(breath, /datum/gas/tritium)
 	var/moles_visible = GLOB.meta_gas_info[META_GAS_MOLES_VISIBLE][/datum/gas/tritium] * BREATH_PERCENTAGE
 	// Tritium side-effects.
