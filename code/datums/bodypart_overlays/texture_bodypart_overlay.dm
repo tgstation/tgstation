@@ -14,11 +14,11 @@
 	cached_texture_icon = icon(texture_icon, texture_icon_state)
 
 /datum/bodypart_texture/proc/modify_bodypart_appearance(image/appearance, overlay_flags)
-	var/filter_width = (overlay_flags & LIMB_OVERLAY_WIDE_ICON) ? 96 : 32
-	var/filter_height = (overlay_flags & LIMB_OVERLAY_TALL_ICON) ? 96 : 32
+	var/filter_width =  ICON_SIZE_X * ((overlay_flags & LIMB_OVERLAY_WIDE_ICON) ? 3 : 1)
+	var/filter_height = ICON_SIZE_Y * ((overlay_flags & LIMB_OVERLAY_TALL_ICON) ? 3 : 1)
 
-	for(var/i in 0 to filter_width step 32)
-		for(var/j in 0 to filter_height step 32)
+	for(var/i in 0 to filter_width step ICON_SIZE_X)
+		for(var/j in 0 to filter_height step ICON_SIZE_Y)
 			appearance.add_filter("bodypart_texture_[texture_icon_state]_[i]/[j]", 1, layering_filter(cached_texture_icon, x = i, y = j, blend_mode = BLEND_INSET_OVERLAY))
 
 /datum/bodypart_texture/proc/icon_render_key()
@@ -90,10 +90,10 @@
 	// forces white (blends better with the texture)
 	appearance.color = COLOR_WHITE
 
-	var/filter_width = (overlay_flags & LIMB_OVERLAY_WIDE_ICON) ? 96 : 32
-	var/filter_height = (overlay_flags & LIMB_OVERLAY_TALL_ICON) ? 96 : 32
-	for(var/i in 0 to filter_width step 32)
-		for(var/j in 0 to filter_height step 32)
+	var/filter_width =  ICON_SIZE_X * ((overlay_flags & LIMB_OVERLAY_WIDE_ICON) ? 3 : 1)
+	var/filter_height = ICON_SIZE_Y * ((overlay_flags & LIMB_OVERLAY_TALL_ICON) ? 3 : 1)
+	for(var/i in 0 to filter_width step ICON_SIZE_X)
+		for(var/j in 0 to filter_height step ICON_SIZE_Y)
 			// adds a displacement map so the outline lines up with the bottom of the sprite
 			appearance.add_filter("displacement_[i]/[j]", 2, displacement_map_filter(cached_displacement_icon, x = i, y = j, size = 1))
 			// adds a bit of lighting to make the texture look less flat
