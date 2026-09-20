@@ -430,7 +430,7 @@ GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", null)
 	else if (siemens_coefficient <= 0.5)
 		.["partially insulated"] = "It is made from a poor insulator that will dampen (but not fully block) electric shocks passing through it."
 	if(item_flags & CAN_BE_OVERSLOT)
-		.["form-fitting"] = "Does not block MODsuits from deploying."
+		.["form-fitting"] = "It does not block MODsuits from deploying when worn."
 
 /obj/item/examine_descriptor(mob/user)
 	return "item"
