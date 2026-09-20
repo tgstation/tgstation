@@ -9,7 +9,7 @@
 
 /*
  *	The greyscale config which contains only the fem flipper modsuit parts, and a pre-made design for
- *	modsuits which were not given an entry in GLOB.mer_mod_theme.
+ *	modsuits which were not given an entry in var/list/cerulean_tail_palette.
  *	this config expects 1 color source
  */
 /datum/greyscale_config/modular_mod_parts_cerulean/basic

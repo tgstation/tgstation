@@ -42,14 +42,12 @@
 	mer_clothing_icons[index] = fcopy_rsc(mer_clothing_icon)
 	return icon(mer_clothing_icon)
 
-/// in reference to GLOB.mer_mod_theme and its entries. if (un)defined, the following proc generates accordingly
-#define NO_THEME_ENTRY "undefined"
 #define FEM_FLIPPER "f" //lady physique Ceruleans have extra fins, to keep her eggs close. we'll cover these up if the modsuit is sealed
 #define SEALED "sealed"
 
 /**
  *	This proc handles icon building for Ceruleans wearing modsuits.
- *	If a drawn sprite exists, we prioritize it. If it doesn't, we'll look for an entry in GLOB.mer_mod_theme
+ *	If a drawn sprite exists, we prioritize it. If it doesn't, we'll look for an entry in var/list/cerulean_tail_palette
  *	If that doesn't, we'll generate a basic modsuit icon for the Cerulean.
  */
 /proc/handle_cerulean_modsuit(icon/base_icon, obj/item/clothing/chestpiece, key, greyscale_colors)
@@ -57,8 +55,8 @@
 	var/sealed = findtext(key, SEALED) ? TRUE : FALSE
 	/// whether our wearer has boy or girl physique, read from the last symbol of our key
 	var/physique = copytext_char(key, length(key))
-	/// the entry in GLOB.mer_mod_theme
-	var/datum/mod_theme/theme = return_mer_mod_theme_from_key(key)
+	/// the entry in var/list/cerulean_tail_palette
+	var/datum/mod_theme/theme = GLOB.mod_themes[find_mod_theme(key)]
 
 	/// our full icon state string, lets find a pre-drawn modsuit!
 	var/icon_state_string = "[physique == FEM_FLIPPER ? "[FEM_FLIPPER]-" : ""][chestpiece.icon_state]"
@@ -69,9 +67,9 @@
 	// lets cut away the legs first, we really don't need them
 	apply_icon_mask(base_icon, LEGS_MASK)
 	// lets run through generating according to what our variables are set to
-	if(!isnull(GLOB.mer_mod_theme[theme]) && theme != NO_THEME_ENTRY)
-		// add a colored icon for each modular part, according to the theme fetched from GLOB.mer_mod_theme
-		var/list/modular_part_list = GLOB.mer_mod_theme[theme]
+	if(!isnull(theme?.cerulean_tail_palette))
+		// add a colored icon for each modular part, according to the theme fetched
+		var/list/modular_part_list = theme.cerulean_tail_palette.Copy()
 		for(var/index in 1 to length(modular_part_list))
 			base_icon.Blend(
 				icon(
@@ -92,18 +90,18 @@
 					/datum/greyscale_config/modular_mod_parts_cerulean/basic,
 					greyscale_colors,
 				),
-				"[NO_THEME_ENTRY][sealed ? "-[SEALED]" : ""]",
+				"undefined[sealed ? "-[SEALED]" : ""]",
 			),
 			ICON_OVERLAY,
 		)
 	// apply a flipper icon if we are sealed and have a female physique.
-	// ideally we color after the theme fetched from GLOB.mod_theme_to_flipper_color
-	if(physique == FEM_FLIPPER && sealed && GLOB.mod_theme_to_flipper_color[theme] != NO_FLIPPERS)
+	// ideally we color after the theme fetched from var/cerulean_flipper_palette
+	if(physique == FEM_FLIPPER && sealed && theme.cerulean_flipper_palette != NO_FLIPPERS)
 		base_icon.Blend(
 			icon(
 				SSgreyscale.GetColoredIconByType(
 					/datum/greyscale_config/modular_mod_parts_cerulean/basic,
-					GLOB.mod_theme_to_flipper_color[theme] ? GLOB.mod_theme_to_flipper_color[theme] : greyscale_colors,
+					theme.cerulean_flipper_palette ? theme.cerulean_flipper_palette : greyscale_colors,
 				),
 				"[FLIPPERS]",
 			),
@@ -113,16 +111,11 @@
 	// 🪸🐟
 	return base_icon
 
+/// Simple proc to search through mod_themes global to return a theme path
+/proc/find_mod_theme(haystack)
+	for(var/datum/mod_theme/theme_entry as anything in GLOB.mod_themes)
+		if(findtext(haystack, theme_entry.name))
+			return theme_entry
 
 #undef FEM_FLIPPER
 #undef SEALED
-
-/// Simple proc to search through some lists to return what the above proc is looking for
-/proc/return_mer_mod_theme_from_key(key)
-	var/static/list/all_theme_entries = (GLOB.mer_mod_theme + GLOB.mod_theme_to_flipper_color)
-	for(var/datum/mod_theme/theme_entry as anything in all_theme_entries)
-		if(findtext(key, theme_entry.name))
-			return theme_entry
-	return NO_THEME_ENTRY
-
-#undef NO_THEME_ENTRY
