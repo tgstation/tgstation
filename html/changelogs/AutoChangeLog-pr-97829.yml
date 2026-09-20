@@ -1,0 +1,4 @@
+author: "desertmote"
+delete-after: True
+changes:
+  - image: "The electric guitar can now be worn on your back-slot, and has a worn icon state to match"
