@@ -3,7 +3,6 @@
 	icon = 'icons/obj/clothing/neck.dmi'
 	abstract_type = /obj/item/clothing/neck
 	body_parts_covered = NECK
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	slot_flags = ITEM_SLOT_NECK
 	interaction_flags_click = NEED_DEXTERITY
 	strip_delay = 4 SECONDS

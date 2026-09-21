@@ -36,9 +36,9 @@
 			if(item.supports_variations_flags & CLOTHING_CERULEAN_MASK_INBETWEEN)
 				mer_clothing_icon = apply_icon_mask(base_icon, BACK_COAT_MASK)
 		else
-			if(istype(item, /obj/item/clothing/under))
+			if(istype(item, /obj/item/clothing/under) && icon_exists(CERULEAN_UNIFORM_FILE, item.icon_state))
 				mer_clothing_icon = icon(CERULEAN_UNIFORM_FILE, item.icon_state)
-			if(istype(item, /obj/item/clothing/suit))
+			if(istype(item, /obj/item/clothing/suit) && icon_exists(CERULEAN_SUIT_FILE, item.icon_state))
 				mer_clothing_icon = icon(CERULEAN_SUIT_FILE, item.icon_state)
 				var/obj/item/clothing/suit/suit_item = item
 				// flippy flippers
@@ -55,7 +55,7 @@
 					)
 
 	if(!mer_clothing_icon)
-		stack_trace("[item.type] was set to generate a Cerulean fish-tail clothing icon, but there was no result.")
+		//dont stack trace because ending up here is fine, just return base icon
 		return base_icon
 
 	mer_clothing_icons[index] = fcopy_rsc(mer_clothing_icon)
