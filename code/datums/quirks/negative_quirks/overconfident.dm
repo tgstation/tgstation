@@ -7,6 +7,6 @@
 	mob_trait = TRAIT_ALWAYS_ALLOW_DECAPITATION
 	gain_text = span_danger("You feel like nothing can possibly beat you!")
 	lose_text = span_notice("You feel like you have a firmer grasp of your own abilities.")
-	medical_record_text = "Patient has an unrealistic understanding of their own capabilities."
+	medical_record_text = "Patient presents optimistically, but possesses a tendency to lose their head when placed under pressure."
 	hardcore_value = 6
 	mail_goodies = list(/obj/item/clothing/neck/large_scarf/red)
