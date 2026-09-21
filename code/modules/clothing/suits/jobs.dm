@@ -150,6 +150,7 @@
 	icon_state = "noir_trenchcoat"
 	inhand_icon_state = null
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
+	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 
 /obj/item/clothing/suit/jacket/det_suit
 	name = "brown blazer jacket"

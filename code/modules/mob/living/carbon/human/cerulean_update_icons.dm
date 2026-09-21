@@ -53,11 +53,11 @@
 						),
 						ICON_OVERLAY,
 					)
-
+	//not gen'ing is ok
 	if(!mer_clothing_icon)
-		//dont stack trace because ending up here is fine, just return base icon
+		mer_clothing_icons[index] = fcopy_rsc(base_icon)
 		return base_icon
-
+	//return gen'd icon
 	mer_clothing_icons[index] = fcopy_rsc(mer_clothing_icon)
 	return icon(mer_clothing_icon)
 
