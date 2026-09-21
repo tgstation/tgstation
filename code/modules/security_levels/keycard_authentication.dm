@@ -34,20 +34,6 @@ GLOBAL_DATUM_INIT(keycard_events, /datum/events, new)
 	activated = null
 	return ..()
 
-/obj/machinery/keycard_auth/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-
-	if(prob(75 / severity))
-		if(prob(50))
-			if(GLOB.emergency_access)
-				revoke_maint_all_access()
-			else
-				make_maint_all_access()
-		if(prob(50))
-			toggle_bluespace_artillery()
-
 /obj/machinery/keycard_auth/ui_state(mob/user)
 	return GLOB.physical_state
 
