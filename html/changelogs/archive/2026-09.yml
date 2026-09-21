@@ -341,3 +341,5 @@
 2026-09-21:
   Richard Blonski:
   - bugfix: Fixed TTS playing on messages that are out of range to be understood.
+  timothymtorres:
+  - code_imp: Remove unused lung defines
