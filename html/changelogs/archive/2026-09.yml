@@ -338,3 +338,10 @@
   - bugfix: fixes runtime/race condition with quick and slow shuttle station traits
       not being applied, fixes a roundstart runtime caused by alert levels trying
       to be changed before the shuttle is created.
+2026-09-21:
+  Melbert:
+  - bugfix: You can sell, not buy, Nitrium
+  Richard Blonski:
+  - bugfix: Fixed TTS playing on messages that are out of range to be understood.
+  timothymtorres:
+  - code_imp: Remove unused lung defines
