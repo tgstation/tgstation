@@ -8,6 +8,7 @@
 	alt_covers_chest = TRUE
 	icon = 'icons/obj/clothing/under/syndicate.dmi'
 	worn_icon = 'icons/mob/clothing/under/syndicate.dmi'
+	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 
 /datum/armor/clothing_under/syndicate
 	melee = 10
@@ -34,7 +35,6 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
-	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/syndicate/bloodred/Initialize(mapload)
 	. = ..()
@@ -68,6 +68,7 @@
 	has_sensor = HAS_SENSORS
 	armor_type = /datum/armor/clothing_under/syndicate_tacticool
 	stubborn_stains = TRUE
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE|BODYSHAPE_CERULEAN
 
 /datum/armor/clothing_under/syndicate_tacticool
 	fire = 50
@@ -108,7 +109,6 @@
 	inhand_icon_state = "bl_suit"
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
-	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/syndicate/camo
 	name = "camouflage fatigues"
@@ -117,7 +117,6 @@
 	inhand_icon_state = "g_suit"
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
-	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/syndicate/cybersun
 	name = "\improper Cybersun businesswear"
@@ -127,7 +126,6 @@
 	inhand_icon_state = "bl_suit"
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
-	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/syndicate/floortilecamo
 	name = "floortile camouflage fatigues"
@@ -137,7 +135,6 @@
 	inhand_icon_state = "gy_suit"
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
-	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/syndicate/floortilecamo/Initialize(mapload)
 	. = ..()
@@ -149,7 +146,6 @@
 	icon_state = "trackpants"
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
-	bodyshapes_with_variations = NONE
 	armor_type = /datum/armor/clothing_under/syndicate_soviet
 	resistance_flags = NONE
 
@@ -162,7 +158,6 @@
 	icon_state = "syndicate_combat"
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
-	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/under/syndicate/rus_army
 	name = "advanced military tracksuit"
@@ -170,7 +165,6 @@
 	icon_state = "rus_under"
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
-	bodyshapes_with_variations = NONE
 	armor_type = /datum/armor/clothing_under/syndicate_rus_army
 	resistance_flags = NONE
 
@@ -185,7 +179,6 @@
 	icon_state = "scrubswine"
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
-	bodyshapes_with_variations = NONE
 	armor_type = /datum/armor/clothing_under/syndicate_scrubs
 
 /obj/item/clothing/under/syndicate/scrubs/Initialize(mapload)
