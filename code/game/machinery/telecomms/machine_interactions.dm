@@ -25,6 +25,12 @@
 /obj/machinery/telecomms/crowbar_act(mob/living/user, obj/item/tool)
 	return default_deconstruction_crowbar(user, tool)
 
+/obj/machinery/telecomms/emp_act(severity)
+	. = ..()
+	for(var/obj/machinery/telecomms/linked_machine in links)
+		if(prob(50/severity))
+			remove_link(linked_machine)
+
 /obj/machinery/telecomms/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
