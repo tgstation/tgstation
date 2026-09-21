@@ -75,11 +75,14 @@
 		return
 
 	if(prob(75 / severity))
-		set_on(FALSE)
-		update_use_power(IDLE_POWER_USE)
+		set_on(!on)
+		update_use_power(on ? ACTIVE_POWER_USE : IDLE_POWER_USE)
+		investigate_log("was turned [on ? "on" : "off"] due to EMP", INVESTIGATE_ATMOS)
 
-	target_temperature = rand(min_temperature, max_temperature)
-	investigate_log("had its settings changed by EMP", INVESTIGATE_ATMOS)
+	if(prob(75 / severity))
+		target_temperature = rand(min_temperature, max_temperature)
+		investigate_log("was set to [target_temperature] K due to EMP]", INVESTIGATE_ATMOS)
+
 	update_appearance()
 
 /obj/machinery/atmospherics/components/unary/thermomachine/on_construction(mob/user, obj_color, set_layer)
