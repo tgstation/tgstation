@@ -163,11 +163,6 @@ export function PersonalCrafting(props: any) {
         }
       }
       return recipe.category === activeCategory;
-    } else if (mode === MODE.cooking) {
-      if (activeFoodType?.length && activeFoodType.includes('Can Make')) {
-        return Boolean(craftability[recipe.ref]);
-      }
-      return false;
     }
     return true;
   }

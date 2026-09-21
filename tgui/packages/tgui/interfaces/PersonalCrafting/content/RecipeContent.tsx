@@ -123,27 +123,35 @@ export function RecipeContentCompact(props: Props) {
 type FullProps = Props & {
   nodesc?: boolean;
   setParentForceFloating?: (state: boolean) => void;
+  showIcon?: boolean;
 };
 
 export function RecipeContent(props: FullProps) {
-  const { item, nodesc = false, setParentForceFloating } = props;
+  const {
+    item,
+    nodesc = false,
+    setParentForceFloating,
+    showIcon = true,
+  } = props;
   const { data } = useBackend<CraftingData>();
   const { mode, diet } = data;
 
   return (
     <Section>
       <Stack>
-        <Stack.Item>
-          <Box textAlign="center" minWidth="64px" minHeight="64px" mr={1}>
-            <Box
-              style={{
-                transform: 'scale(1.5)',
-              }}
-              m="16px"
-              className={findIcon(item.id, data)}
-            />
-          </Box>
-        </Stack.Item>
+        {showIcon && (
+          <Stack.Item>
+            <Box textAlign="center" minWidth="64px" minHeight="64px" mr={1}>
+              <Box
+                style={{
+                  transform: 'scale(1.5)',
+                }}
+                m="16px"
+                className={findIcon(item.id, data)}
+              />
+            </Box>
+          </Stack.Item>
+        )}
         <Stack.Item grow>
           <Stack>
             <Stack.Item grow={5}>
