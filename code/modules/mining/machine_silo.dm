@@ -117,10 +117,11 @@
 
 	for(var/datum/remote_materials/remote as anything in ore_connected_machines)
 		if(prob(35))
-			if(severity == 1)
-				remote.disconnect()
-			if(severity == 2)
-				remote.toggle_holding()
+			switch(severity)
+				if(EMP_HEAVY)
+					remote.disconnect()
+				if(EMP_LIGHT)
+					remote.toggle_holding()
 
 /obj/machinery/ore_silo/proc/setup_radio()
 	radio = new(src)
