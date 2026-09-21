@@ -130,10 +130,10 @@
 		return
 
 	if(prob(75 / severity))
-		locked = rand(0, 1)
-		enabled = rand(0, 1)
-		lethal = rand(0, 1)
-		shoot_cyborgs = rand(0, 1)
+		locked = pick(TRUE, FALSE)
+		enabled = pick(TRUE, FALSE)
+		lethal = pick(TRUE, FALSE)
+		shoot_cyborgs = pick(TRUE, FALSE)
 		updateTurrets()
 		investigate_log("had its settings changed due to EMP")
 
