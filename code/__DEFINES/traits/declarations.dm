@@ -882,6 +882,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WADDLING "trait_waddling"
 /// Mobs with trait will still waddle even when lying on the floor and make a different footstep sound when doing so.
 #define TRAIT_FLOPPING "trait_flopping"
+/// To be used combined with TRAIT_FLOPPING, to make a mob flop exclusively when laying on the floor.
+#define TRAIT_FLOOR_FLOPPING "trait_floor_flopping"
 /// Required by the on_hit_effect element, which is in turn added by other elements.
 #define TRAIT_ON_HIT_EFFECT "trait_on_hit_effect"
 
