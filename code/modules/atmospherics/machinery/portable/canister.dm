@@ -524,7 +524,7 @@
 	else if(!internal_cell?.use(energy_consumed * 0.025))
 		shielding_powered = FALSE
 		SSair.start_processing_machine(src)
-		investigate_log("shielding turned off due to power loss")
+		investigate_log("shielding turned off due to power loss", INVESTIGATE_ATMOS)
 		update_appearance()
 
 ///return the icon_state component for the canister's indicator light based on its current pressure reading
