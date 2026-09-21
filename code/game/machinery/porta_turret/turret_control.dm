@@ -124,6 +124,19 @@
 	locked = FALSE
 	return TRUE
 
+/obj/machinery/turretid/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	if(prob(75 / severity))
+		locked = rand(0, 1)
+		enabled = rand(0, 1)
+		lethal = rand(0, 1)
+		shoot_cyborgs = rand(0, 1)
+		updateTurrets()
+		investigate_log("had its settings changed due to EMP")
+
 /obj/machinery/turretid/proc/is_ai_locked(mob/user)
 	if(!issilicon(user))
 		return FALSE
