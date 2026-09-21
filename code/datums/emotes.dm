@@ -456,9 +456,6 @@
 		log_message(text, LOG_EMOTE)
 	visible_message(text, visible_message_flags = EMOTE_MESSAGE)
 
-	if(ismob(src))
-		relay_visual_emote_to_ai_runechat(src, text)
-
 	return TRUE
 
 /mob/manual_emote(text, log_emote = null)
@@ -469,6 +466,9 @@
 	. = ..(text, log_emote)
 	if (!.)
 		return FALSE
+
+	relay_visual_emote_to_ai_runechat(src, text)
+
 	if (!client)
 		return TRUE
 	var/ghost_text = "<b>[src]</b> [text]"
