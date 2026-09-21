@@ -326,8 +326,9 @@ There are several things that need to be remembered:
 		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON) || (obscured_slots & HIDEHEADGEAR))
 			return
 
-		var/confused_cerulean = istype(worn_item, /obj/item/clothing/shoes) ? TRUE : FALSE
-		var/icon_file = !confused_cerulean ? 'icons/mob/clothing/head/default.dmi' : DEFAULT_SHOES_FILE
+		var/icon_file = 'icons/mob/clothing/head/default.dmi'
+	//	var/confused_cerulean = istype(worn_item, /obj/item/clothing/shoes) ? TRUE : FALSE
+	//	var/icon_file = !confused_cerulean ? 'icons/mob/clothing/head/default.dmi' : DEFAULT_SHOES_FILE
 
 		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
 		apply_height(head_overlay, UPPER_BODY)
