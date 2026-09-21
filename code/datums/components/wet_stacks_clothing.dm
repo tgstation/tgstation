@@ -47,12 +47,13 @@
 	if(!COOLDOWN_FINISHED(src, tick_cooldown))
 		return
 	COOLDOWN_START(src, tick_cooldown, rand(10 SECONDS, 30 SECONDS))
-	// don't set stacks if a higher amount has already been applied to wearer
-	var/datum/status_effect/fire_handler/wet_stacks/wet_stacks = wearer.has_status_effect(/datum/status_effect/fire_handler/wet_stacks)
-	if(wet_stacks?.stacks > stacks_to_add)
+	var/datum/status_effect/fire_handler/wet_stacks/wet_status = wearer.has_status_effect(/datum/status_effect/fire_handler/wet_stacks)
+	var/datum/status_effect/fire_handler/fire_stacks/fire_status = wearer.has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
+	// cancel if on fire and dousing is false
+	if(!dousing && fire_status)
 		return
 	// try to drain a cell if provided
 	if(!use_cell?.Invoke())
 		return
 	playsound(wearer, 'sound/effects/droplet.ogg', rand(15, 35), TRUE, falloff_exponent = 5)
-	wearer.set_wet_stacks(stacks = stacks_to_add, remove_fire_stacks = dousing)
+	wearer.set_wet_stacks(stacks_to_add, dousing)
