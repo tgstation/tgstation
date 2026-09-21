@@ -44,7 +44,9 @@
 	. += span_red("<b>Left click</b> will stealthily scan a target up to [scan_range] meters away and upload their getup as a custom outfit for you to use.")
 	. += span_red("<b>Right click</b> will do the same, but instantly equip the outfit you obtain.")
 
-/obj/item/chameleon_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+/obj/item/chameleon_scanner/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(!isliving(interacting_with) && !isturf(interacting_with))
+		return NONE
 	return scan_target(interacting_with, user) ? ITEM_INTERACT_SUCCESS : ITEM_INTERACT_BLOCKING
 
 /obj/item/chameleon_scanner/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -64,8 +66,10 @@
 		return ITEM_INTERACT_SUCCESS
 	return ITEM_INTERACT_BLOCKING
 
-/obj/item/chameleon_scanner/ranged_interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	return interact_with_atom_secondary(interacting_with, user, modifiers)
+/obj/item/chameleon_scanner/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
+	if(SHOULD_SKIP_INTERACTION(interacting_with, src, user))
+		return NONE
+	return ranged_interact_with_atom_secondary(interacting_with, user, modifiers)
 
 /**
  * Attempts to scan a human's outfit
