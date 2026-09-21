@@ -144,6 +144,13 @@
 	pipe.appearance_flags |= RESET_COLOR | KEEP_APART
 	. += pipe
 
+	if(on && is_operational)
+		// this is cursed but both these emissive_appearance() are needed
+		// one gives emissives to mapload machinery that are already on
+		// the other gives emissives when updates happen (on/off/pressure change/etc.)
+		. += emissive_appearance('icons/obj/machines/atmospherics/thermomachine.dmi', "thermo-emissive", src, alpha = src.alpha)
+		add_overlay(emissive_appearance('icons/obj/machines/atmospherics/thermomachine.dmi', "thermo-emissive", src, alpha = src.alpha))
+
 /obj/machinery/atmospherics/components/unary/thermomachine/examine(mob/user)
 	. = ..()
 	. += span_notice("With the panel open:")

@@ -117,6 +117,7 @@
 	desc = "A large plastic bag containing commercial garden soil. It is packed with sand, peat and manure. While you might not care much for such mixture, the plants have strange tastes."
 	icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	icon_state = "soil_sack"
+	inhand_icon_state = "soil_sack"
 	lefthand_file = 'icons/mob/inhands/equipment/hydroponics_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/hydroponics_righthand.dmi'
 	base_icon_state =  "soil_sack"
@@ -218,6 +219,7 @@
 	name = "NT vermaculite sack"
 	desc = "A sack of expanded mineral granules that can be used as soilless growing medium.\n\nYou like to think of it a bag of rocky popcorn that lets the roots breathe."
 	icon_state = "soil_sack_verm"
+	inhand_icon_state = "soil_sack_verm"
 	base_icon_state = "soil_sack_verm"
 	custom_premium_price = PAYCHECK_CREW * 2
 	stored_soil = /obj/machinery/hydroponics/soil/vermaculite
@@ -227,6 +229,7 @@
 	name = "hydrogel bead sack"
 	desc = "A sack of space age superabsorbent gel beads! You wonder how shipping them prehydrated would ever make business sense..."
 	icon_state = "soil_sack_gel"
+	inhand_icon_state = "soil_sack_gel"
 	base_icon_state = "soil_sack_gel"
 	custom_premium_price = PAYCHECK_CREW * 2
 	placement_sound = 'sound/effects/meatslap.ogg'
@@ -236,6 +239,7 @@
 	name = "#1™ korta coir sack"
 	desc = "A sack of Tiziran korta root coir. The fiberous roots are composted until they separate into individual fibres.\n\nProvides an excellent food source for saprotrophic mushrooms and helps hold onto water in the hot Tizirian climate."
 	icon_state = "soil_sack_coir"
+	inhand_icon_state = "soil_sack_coir"
 	base_icon_state = "soil_sack_coir"
 	custom_premium_price = PAYCHECK_CREW * 3
 	stored_soil = /obj/machinery/hydroponics/soil/coir
@@ -244,6 +248,7 @@
 	name = "worm castings sack"
 	desc = "A sack of vermicompost, also known as worm castings.\n\nThis invertebrate manure not only contains plant nutrients and undigested organic matter, it also harbours a rich flora of beneficial microorganisms."
 	icon_state = "soil_sack_worm"
+	inhand_icon_state = "soil_sack_worm"
 	base_icon_state = "soil_sack_worm"
 	custom_premium_price = PAYCHECK_CREW * 4
 	stored_soil = /obj/machinery/hydroponics/soil/worm
