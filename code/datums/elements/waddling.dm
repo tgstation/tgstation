@@ -20,7 +20,7 @@
 		var/mob/living/living_moved = moved
 		if (living_moved.buckled || living_moved.incapacitated || (living_moved.body_position == LYING_DOWN && !HAS_TRAIT(living_moved, TRAIT_FLOPPING)))
 			return
-		if (living_moved.body_position == STANDING_UP && HAS_TRAIT(living_moved, TRAIT_FLOOR_FLOPPING))
+		if (living_moved.body_position != LYING_DOWN && HAS_TRAIT(living_moved, TRAIT_FLOOR_FLOPPING))
 			return
 	waddling_animation(moved)
 
