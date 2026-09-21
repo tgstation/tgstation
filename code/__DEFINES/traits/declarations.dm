@@ -739,6 +739,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait that makes you only SOMETIMES bite when attacking with an unarmed strike.
 #define TRAIT_REFINED_BITER "refined biter"
 
+/// Trait that ignores whether or not a human's head can be decapitated, and permits it instead.
+#define TRAIT_ALWAYS_ALLOW_DECAPITATION "always_allow_decapitation"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic

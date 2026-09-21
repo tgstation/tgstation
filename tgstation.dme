@@ -2109,6 +2109,7 @@
 #include "code\datums\quirks\negative_quirks\non_violent.dm"
 #include "code\datums\quirks\negative_quirks\numb.dm"
 #include "code\datums\quirks\negative_quirks\nyctophobia.dm"
+#include "code\datums\quirks\negative_quirks\overconfident.dm"
 #include "code\datums\quirks\negative_quirks\paraplegic.dm"
 #include "code\datums\quirks\negative_quirks\photophobia.dm"
 #include "code\datums\quirks\negative_quirks\poor_aim.dm"
