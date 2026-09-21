@@ -69,6 +69,19 @@
 		return FALSE
 	. = ..()
 
+/obj/machinery/atmospherics/components/unary/thermomachine/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	if(prob(75 / severity))
+		set_on(FALSE)
+		update_use_power(IDLE_POWER_USE)
+
+	target_temperature = rand(min_temperature, max_temperature)
+	investigate_log("had its settings changed by EMP", INVESTIGATE_ATMOS)
+	update_appearance()
+
 /obj/machinery/atmospherics/components/unary/thermomachine/on_construction(mob/user, obj_color, set_layer)
 	var/obj/item/circuitboard/machine/thermomachine/board = circuit
 	if(board)
