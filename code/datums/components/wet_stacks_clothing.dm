@@ -55,4 +55,4 @@
 	if(!use_cell?.Invoke())
 		return
 	playsound(wearer, 'sound/effects/droplet.ogg', rand(15, 35), TRUE, falloff_exponent = 5)
-	wearer.set_wet_stacks(stacks_to_add, dousing)
+	wearer.set_wet_stacks(stacks_to_add, remove_fire_stacks = dousing)

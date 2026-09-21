@@ -100,8 +100,6 @@ There are several things that need to be remembered:
 		//BEGIN SPECIES HANDLING
 		if(digi && (uniform.supports_variations_flags & CLOTHING_DIGITIGRADE_VARIATION))
 			icon_file = DIGITIGRADE_UNIFORM_FILE
-		if((bodyshape & BODYSHAPE_CERULEAN) && (uniform.supports_variations_flags & CLOTHING_CERULEAN_VARIATION))
-			icon_file = CERULEAN_UNIFORM_FILE
 		//Female sprites have lower priority than digitigrade sprites
 		var/chest_is_dimorphic
 		if(dna.species.sexes)
@@ -327,8 +325,6 @@ There are several things that need to be remembered:
 			return
 
 		var/icon_file = 'icons/mob/clothing/head/default.dmi'
-	//	var/confused_cerulean = istype(worn_item, /obj/item/clothing/shoes) ? TRUE : FALSE
-	//	var/icon_file = !confused_cerulean ? 'icons/mob/clothing/head/default.dmi' : DEFAULT_SHOES_FILE
 
 		var/mutable_appearance/head_overlay = head.build_worn_icon(default_layer = HEAD_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
 		apply_height(head_overlay, UPPER_BODY)
@@ -367,26 +363,9 @@ There are several things that need to be remembered:
 		if(HAS_TRAIT(worn_item, TRAIT_NO_WORN_ICON))
 			return
 
-		var/icon_file
-		var/handled_by_bodyshape = TRUE
-		var/state_override
+		var/icon_file = DEFAULT_SUIT_FILE
 
-		if((bodyshape & BODYSHAPE_CERULEAN) && (worn_item.supports_variations_flags & CLOTHING_CERULEAN_VARIATION))
-			icon_file = CERULEAN_SUIT_FILE
-			if(physique == FEMALE)
-				state_override = "[RESOLVE_ICON_STATE(worn_item)]_f"
-
-		if(!icon_exists(icon_file, RESOLVE_ICON_STATE(worn_item)))
-			icon_file = DEFAULT_SUIT_FILE
-			handled_by_bodyshape = FALSE
-
-		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(
-			default_layer = SUIT_LAYER,
-			default_icon_file = icon_file,
-			override_state = handled_by_bodyshape ? state_override : null,
-			override_file = handled_by_bodyshape ? icon_file : null,
-			bodyshape = bodyshape,
-		)
+		var/mutable_appearance/suit_overlay = wear_suit.build_worn_icon(default_layer = SUIT_LAYER, default_icon_file = icon_file, bodyshape = bodyshape)
 		apply_height(suit_overlay, ENTIRE_BODY)
 		var/obj/item/bodypart/chest/my_chest = get_bodypart(BODY_ZONE_CHEST)
 		my_chest?.worn_suit_offset?.apply_offset(suit_overlay)
@@ -473,8 +452,14 @@ There are several things that need to be remembered:
 	return icon(female_clothing_icon)
 
 /// Modifies a sprite to conform to custom body shapes
-/obj/item/proc/get_bodyshape_icon(icon/base_icon, key, greyscale_colors, bodyshape)
+/obj/item/proc/get_bodyshape_icon(icon/base_icon, obj/item/item, key, greyscale_colors, bodyshape)
 	ASSERT(istext(key), "get_bodyshape_icon: no key passed")
+	// cerulean lowerbody
+	if(bodyshape & BODYSHAPE_CERULEAN)
+		if((bodyshapes_with_variations & BODYSHAPE_CERULEAN) || (supports_variations_flags & (CERULEAN_MASKING)))
+			return wear_cerulean_version(base_icon, item, key, greyscale_colors, bodyshape)
+
+	// digi legs
 	if((bodyshape & BODYSHAPE_DIGITIGRADE) && (supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
 		if(isnull(greyscale_colors) || length(SSgreyscale.ParseColorString(greyscale_colors)) > 1)
 			greyscale_colors = get_general_color(base_icon)
@@ -616,17 +601,10 @@ generate/load female uniform sprites matching all previously decided variables
 	if(!isinhands && (bodyshapes_with_variations & bodyshape))
 		building_icon = get_bodyshape_icon(
 			base_icon = building_icon || icon(file2use, t_state),
-			key = "[t_state]-[file2use]-[female_uniform]",
-			greyscale_colors = greyscale_colors,
-			bodyshape = bodyshape,
-		)
-
-	if(!isinhands && (bodyshape & BODYSHAPE_CERULEAN) && (supports_variations_flags & (CLOTHING_CERULEAN_MASK_LEGS|CLOTHING_CERULEAN_MASK_INBETWEEN)))
-		building_icon = wear_cerulean_version(
-			base_icon = building_icon || icon(file2use, t_state),
 			item = src,
 			key = "[t_state]-[file2use]-[female_uniform]",
 			greyscale_colors = greyscale_colors,
+			bodyshape = bodyshape,
 		)
 
 	if(building_icon)

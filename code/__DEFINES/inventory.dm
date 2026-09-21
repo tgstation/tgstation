@@ -171,14 +171,12 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define CLOTHING_DIGITIGRADE_MASK (1<<2)
 /// All variation flags which render "correctly" on a digitigrade leg setup
 #define DIGITIGRADE_VARIATIONS (CLOTHING_DIGITIGRADE_VARIATION|CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON|CLOTHING_DIGITIGRADE_MASK)
-/// The clothing flag to declare an item has dedicated sprites
-#define CLOTHING_CERULEAN_VARIATION (1<<3)
 /// The clothing flag which cuts away the legs. has a niche case for modsuits where it generates, see handle_cerulean_modsuit()
-#define CLOTHING_CERULEAN_MASK_LEGS (1<<4)
+#define CLOTHING_CERULEAN_MASK_LEGS (1<<3)
 ///The clothing flag which cuts pixels between the legs
-#define CLOTHING_CERULEAN_MASK_INBETWEEN (1<<5)
+#define CLOTHING_CERULEAN_MASK_INBETWEEN (1<<4)
 /// All variation flags which can render on cerulean bodyshapes
-#define CERULEAN_VARIATIONS (CLOTHING_CERULEAN_VARIATION|CLOTHING_CERULEAN_MASK_LEGS|CLOTHING_CERULEAN_MASK_INBETWEEN)
+#define CERULEAN_MASKING (CLOTHING_CERULEAN_MASK_LEGS|CLOTHING_CERULEAN_MASK_INBETWEEN)
 
 //flags for covering body parts
 #define GLASSESCOVERSEYES (1<<0)

@@ -31,7 +31,7 @@
 	species_exception = list(/datum/species/golem)
 	armor_type = /datum/armor/suit_apron
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
-	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE|BODYSHAPE_CERULEAN
 
 /obj/item/clothing/suit/apron/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "apron_worn")
@@ -55,7 +55,6 @@
 	post_init_icon_state = "overalls"
 	inhand_icon_state = ""
 	body_parts_covered = CHEST|GROIN|LEGS
-	supports_variations_flags = CLOTHING_CERULEAN_VARIATION
 	gender = PLURAL
 	species_exception = list(/datum/species/golem)
 	greyscale_config = /datum/greyscale_config/overalls
@@ -428,7 +427,6 @@
 	icon_state = "atmos_overalls"
 	inhand_icon_state = ""
 	body_parts_covered = CHEST|GROIN|LEGS
-	supports_variations_flags = CLOTHING_CERULEAN_VARIATION
 	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/atmos_overalls
 	species_exception = list(/datum/species/golem)
@@ -447,7 +445,7 @@
 		/obj/item/storage/bag/rebar_quiver,
 	)
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
-	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE
+	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE|BODYSHAPE_CERULEAN
 
 /obj/item/clothing/suit/atmos_overalls/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "apron_worn")

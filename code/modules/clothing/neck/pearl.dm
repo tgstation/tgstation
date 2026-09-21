@@ -127,7 +127,7 @@
 	var/obj/item/bodypart/chest/tail_holder = user.get_bodypart(BODY_ZONE_CHEST)
 	if(!ephemeral_tail.owner || tail_holder != ephemeral_tail.owner.get_bodypart(BODY_ZONE_CHEST))
 		return
-	if(user.wear_suit?.supports_variations_flags & CERULEAN_VARIATIONS)
+	if((user.wear_suit?.bodyshapes_with_variations & BODYSHAPE_CERULEAN) || (user.wear_suit?.supports_variations_flags & CERULEAN_MASKING))
 		tail_holder?.remove_bodypart_texture(/datum/bodypart_texture/mesh)
 
 /// swap our stuff when we become dry

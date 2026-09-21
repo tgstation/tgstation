@@ -1,39 +1,58 @@
 // File of procs for human_update_icons.dm specifically to render cerulean clothing appropriately. so it doesn't get any more lines than it already has...
 
+/// define for lady physique Ceruleans, who have extra fins, to keep her eggs close. we'll cover these up if the modsuit is sealed
+#define FEM_FLIPPER "f"
+
 /**
  *	Modifies the sprite of clothing to have no legs! For pants, which mer folk canonically can't wear.
  *	What we generate will be saved in a cache, how nice! Our index look slightly different than the sister proc wear_digi_version(...)
  *	we also assign physique into the end of the key, and read this in handle_cerulean_modsuit(...)
  */
-/proc/wear_cerulean_version(icon/base_icon, obj/item/item, key, greyscale_colors)
+/proc/wear_cerulean_version(icon/base_icon, obj/item/item, key, greyscale_colors, bodyshape)
 	ASSERT(istype(item), "wear_cerulean_version: no item passed")
 	ASSERT(istext(key), "wear_cerulean_version: no key passed")
 	if(isnull(greyscale_colors) || length(SSgreyscale.ParseColorString(greyscale_colors)) > 1)
 		greyscale_colors = item.get_general_color(base_icon)
 
 	var/static/list/mer_clothing_icons = list()
-	var/index = "[key]-[item.type]-[greyscale_colors]"
+	var/mob/living/carbon/human/wearer = item.loc
+	var/physique = wearer?.physique == FEMALE ? "f" : "m"
+	var/index = "[key]-[physique]-[item.type]-[greyscale_colors]"
 	var/icon/mer_clothing_icon = mer_clothing_icons[index]
 
 	if(mer_clothing_icon)
 		return icon(mer_clothing_icon)
 
+	// if we are generating for modsuits, we need to run through a bespoke proc!
 	if(istype(item, /obj/item/clothing/suit/mod))
-		var/mob/living/carbon/human/wearer = item.loc
-		var/physique = wearer?.physique == FEMALE ? "f" : "m"
-		index = "[key]-[item.type]-[greyscale_colors]-[physique]"
-		mer_clothing_icon = mer_clothing_icons[index]
-		if(mer_clothing_icon)
-			return icon(mer_clothing_icon)
-		// if we are generating for modsuits, we need to run through a bespoke proc!
 		mer_clothing_icon = handle_cerulean_modsuit(base_icon, item, "[key]-[physique]", greyscale_colors)
-	else
-		// we are just cutting the pant
-		if(item.supports_variations_flags & CLOTHING_CERULEAN_MASK_LEGS)
-			mer_clothing_icon = apply_icon_mask(base_icon, LEGS_MASK)
-		// remove any pixels that typically appear between the legs
-		if(item.supports_variations_flags & CLOTHING_CERULEAN_MASK_INBETWEEN)
-			mer_clothing_icon = apply_icon_mask(base_icon, BACK_COAT_MASK)
+	// all the other bodyshape handling, masking else a unique icon
+	else if(item.bodyshapes_with_variations & BODYSHAPE_CERULEAN)
+		if(item.supports_variations_flags & CERULEAN_MASKING)
+			// we are just cutting the pant
+			if(item.supports_variations_flags & CLOTHING_CERULEAN_MASK_LEGS)
+				mer_clothing_icon = apply_icon_mask(base_icon, LEGS_MASK)
+			// remove any pixels that typically appear between the legs
+			if(item.supports_variations_flags & CLOTHING_CERULEAN_MASK_INBETWEEN)
+				mer_clothing_icon = apply_icon_mask(base_icon, BACK_COAT_MASK)
+		else
+			if(istype(item, /obj/item/clothing/under))
+				mer_clothing_icon = icon(CERULEAN_UNIFORM_FILE, item.icon_state)
+			if(istype(item, /obj/item/clothing/suit))
+				mer_clothing_icon = icon(CERULEAN_SUIT_FILE, item.icon_state)
+				var/obj/item/clothing/suit/suit_item = item
+				// flippy flippers
+				if(physique == FEM_FLIPPER && suit_item.cerulean_flipper_palette != NO_FLIPPERS)
+					mer_clothing_icon.Blend(
+						icon(
+							SSgreyscale.GetColoredIconByType(
+								/datum/greyscale_config/modular_mod_parts_cerulean/basic,
+								suit_item.cerulean_flipper_palette || greyscale_colors,
+							),
+							"[FLIPPERS]",
+						),
+						ICON_OVERLAY,
+					)
 
 	if(!mer_clothing_icon)
 		stack_trace("[item.type] was set to generate a Cerulean fish-tail clothing icon, but there was no result.")
@@ -42,7 +61,7 @@
 	mer_clothing_icons[index] = fcopy_rsc(mer_clothing_icon)
 	return icon(mer_clothing_icon)
 
-#define FEM_FLIPPER "f" //lady physique Ceruleans have extra fins, to keep her eggs close. we'll cover these up if the modsuit is sealed
+/// define for the string added to modsuit icon_states when sealed
 #define SEALED "sealed"
 
 /**
@@ -101,12 +120,12 @@
 			icon(
 				SSgreyscale.GetColoredIconByType(
 					/datum/greyscale_config/modular_mod_parts_cerulean/basic,
-					theme.cerulean_flipper_palette ? theme.cerulean_flipper_palette : greyscale_colors,
+					theme.cerulean_flipper_palette || greyscale_colors,
 				),
 				"[FLIPPERS]",
 			),
 			ICON_OVERLAY,
-			)
+		)
 
 	// 🪸🐟
 	return base_icon

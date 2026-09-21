@@ -67,6 +67,7 @@
 	added_limb.add_bodypart_texture(bodypart_overlay_type)
 
 /datum/element/equipment_bodypart_texture/proc/check_ignored_bodyshapes(mob/living/carbon/human/equipper, obj/item/item_to_check)
-	if((equipper.bodyshape & BODYSHAPE_CERULEAN) && (item_to_check.supports_variations_flags & CERULEAN_VARIATIONS))
-		return FALSE
+	if(equipper.bodyshape & BODYSHAPE_CERULEAN)
+		if((item_to_check.supports_variations_flags & CERULEAN_MASKING) || (item_to_check.bodyshapes_with_variations & BODYSHAPE_CERULEAN))
+			return FALSE
 	return TRUE
