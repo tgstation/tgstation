@@ -47,9 +47,8 @@
 	if(!COOLDOWN_FINISHED(src, tick_cooldown))
 		return
 	COOLDOWN_START(src, tick_cooldown, rand(10 SECONDS, 30 SECONDS))
-	var/datum/status_effect/fire_handler/wet_stacks/wet_status = wearer.has_status_effect(/datum/status_effect/fire_handler/wet_stacks)
-	var/datum/status_effect/fire_handler/fire_stacks/fire_status = wearer.has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 	// cancel if on fire and dousing is false
+	var/datum/status_effect/fire_handler/fire_stacks/fire_status = wearer.has_status_effect(/datum/status_effect/fire_handler/fire_stacks)
 	if(!dousing && fire_status)
 		return
 	// try to drain a cell if provided
