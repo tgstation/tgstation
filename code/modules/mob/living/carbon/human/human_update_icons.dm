@@ -454,12 +454,9 @@ There are several things that need to be remembered:
 /// Modifies a sprite to conform to custom body shapes
 /obj/item/proc/get_bodyshape_icon(icon/base_icon, obj/item/item, key, greyscale_colors, bodyshape)
 	ASSERT(istext(key), "get_bodyshape_icon: no key passed")
-	// cerulean lowerbody
 	if(bodyshape & BODYSHAPE_CERULEAN)
 		if((bodyshapes_with_variations & BODYSHAPE_CERULEAN) || (supports_variations_flags & (CERULEAN_MASKING)))
 			return wear_cerulean_version(base_icon, item, key, greyscale_colors, bodyshape)
-
-	// digi legs
 	if((bodyshape & BODYSHAPE_DIGITIGRADE) && (supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
 		if(isnull(greyscale_colors) || length(SSgreyscale.ParseColorString(greyscale_colors)) > 1)
 			greyscale_colors = get_general_color(base_icon)
@@ -606,7 +603,6 @@ generate/load female uniform sprites matching all previously decided variables
 			greyscale_colors = greyscale_colors,
 			bodyshape = bodyshape,
 		)
-
 	if(building_icon)
 		draw_target = mutable_appearance(building_icon, layer = -layer2use)
 	else
