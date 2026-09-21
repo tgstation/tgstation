@@ -223,6 +223,15 @@
 		balloon_alert(user, "access overridden")
 	return TRUE
 
+/obj/machinery/button/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	if(prob(75 / severity) && device)
+		device.pulsed()
+		SEND_GLOBAL_SIGNAL(COMSIG_GLOB_BUTTON_PRESSED, src)
+
 /obj/machinery/button/attack_ai(mob/user)
 	if(!silicon_access_disabled && !panel_open)
 		return attempt_press(user)
