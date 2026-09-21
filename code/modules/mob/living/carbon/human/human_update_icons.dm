@@ -452,11 +452,11 @@ There are several things that need to be remembered:
 	return icon(female_clothing_icon)
 
 /// Modifies a sprite to conform to custom body shapes
-/obj/item/proc/get_bodyshape_icon(icon/base_icon, obj/item/item, key, greyscale_colors, bodyshape)
+/obj/item/proc/get_bodyshape_icon(icon/base_icon, key, greyscale_colors, bodyshape)
 	ASSERT(istext(key), "get_bodyshape_icon: no key passed")
 	if(bodyshape & BODYSHAPE_CERULEAN)
 		if((bodyshapes_with_variations & BODYSHAPE_CERULEAN) || (supports_variations_flags & (CERULEAN_MASKING)))
-			return wear_cerulean_version(base_icon, item, key, greyscale_colors, bodyshape)
+			return wear_cerulean_version(base_icon, src, key, greyscale_colors, bodyshape)
 	if((bodyshape & BODYSHAPE_DIGITIGRADE) && (supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
 		if(isnull(greyscale_colors) || length(SSgreyscale.ParseColorString(greyscale_colors)) > 1)
 			greyscale_colors = get_general_color(base_icon)
@@ -598,7 +598,6 @@ generate/load female uniform sprites matching all previously decided variables
 	if(!isinhands && (bodyshapes_with_variations & bodyshape))
 		building_icon = get_bodyshape_icon(
 			base_icon = building_icon || icon(file2use, t_state),
-			item = src,
 			key = "[t_state]-[file2use]-[female_uniform]",
 			greyscale_colors = greyscale_colors,
 			bodyshape = bodyshape,
