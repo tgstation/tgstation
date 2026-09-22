@@ -503,7 +503,7 @@
 		if(!AI?.client)
 			continue
 
-		if(AI in viewers(user))
+		if(AI in viewers(user))// Avoid duplicates if the AI is nearby
 			continue
 
 		var/relayed = FALSE
@@ -512,6 +512,8 @@
 		if(istype(active_eye, /mob/eye/camera/ai))
 			var/mob/eye/camera/ai/ai_eye = active_eye
 			if(ai_eye.ai == AI && ai_eye_turf_in_view(ai_eye, user_turf))
+				to_chat(AI, span_emote("You see how <b>[user]</b> [msg]"))
+
 				if(user.runechat_prefs_check(AI, EMOTE_MESSAGE))
 					AI.create_chat_message(speaker = user, raw_message = msg, runechat_flags = EMOTE_MESSAGE)
 				relayed = TRUE
@@ -521,6 +523,8 @@
 				if(ai_eye.ai != AI)
 					continue
 				if(ai_eye_turf_in_view(ai_eye, user_turf))
+					to_chat(AI, span_emote("You see how <b>[user]</b> [msg] on one of the cameras"))
+
 					if(user.runechat_prefs_check(AI, EMOTE_MESSAGE))
 						AI.create_chat_message(speaker = user, raw_message = msg, runechat_flags = EMOTE_MESSAGE)
 					break
