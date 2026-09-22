@@ -40,7 +40,7 @@ runs:
         path: ~/apt-cache
         key: ${{ runner.os }}-libcurl-i386
     - name: Install 32-bit libcurl from cache
-      if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && !steps.restore_libcurl_cache.outputs.cache-hit
+      if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && steps.restore_libcurl_cache.outputs.cache-hit
       shell: bash
       run: |
         sudo dpkg --add-architecture i386
