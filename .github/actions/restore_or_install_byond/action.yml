@@ -44,7 +44,7 @@ runs:
       shell: bash
       run: |
         sudo dpkg --add-architecture i386
-        sudo apt-get install -y --no-install-recommends ~/apt-cache/*.deb
+        sudo dpkg -i ~/apt-cache/*.deb
     - name: Find fastest APT mirror
       if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && !steps.restore_libcurl_cache.outputs.cache-hit
       uses: vegardit/fast-apt-mirror.sh@v1
@@ -58,7 +58,7 @@ runs:
         sudo dpkg --add-architecture i386
         sudo apt-get update -qq
         sudo rm -f /var/cache/apt/archives/*.deb
-        sudo apt-get install -y --no-install-recommends libcurl4t64:i386
+        sudo apt-get install -y -o Keep-Downloaded-Packages=true --no-install-recommends libcurl4t64:i386
         mkdir -p ~/apt-cache
         cp /var/cache/apt/archives/*.deb ~/apt-cache/
     - name: Save libcurl cache
