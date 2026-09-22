@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "All skeleton organs are now considered \"mineral\" organ, stopping most chems from working on them"
+  - balance: "All plasmamen organs are now \"organic + mineral\", allowing most chems to work on them again"
+  - bugfix: "Ensures bodyparts correctly track their parent's dna"
