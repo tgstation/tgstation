@@ -51,6 +51,26 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	port_direction = EAST
 	movement_force = list("KNOCKDOWN" = 0, "THROW" = 0)
 
+/obj/docking_port/mobile/supply/Initialize(mapload)
+	. = ..()
+	// Apply speed traits to each shuttle, including ones loaded after roundstart.
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_QUICK_SHUTTLE))
+		callTime *= 0.5
+		RegisterSignal(SSstation, SIGNAL_REMOVETRAIT(STATION_TRAIT_QUICK_SHUTTLE), PROC_REF(on_speed_trait_removed))
+	if(HAS_TRAIT(SSstation, STATION_TRAIT_SLOW_SHUTTLE))
+		callTime *= 1.5
+		RegisterSignal(SSstation, SIGNAL_REMOVETRAIT(STATION_TRAIT_SLOW_SHUTTLE), PROC_REF(on_speed_trait_removed))
+
+// Undo only the applied modifier when an admin reverts the trait in the lobby.
+/obj/docking_port/mobile/supply/proc/on_speed_trait_removed(datum/source, removed_trait)
+	SIGNAL_HANDLER
+	switch(removed_trait)
+		if(STATION_TRAIT_QUICK_SHUTTLE)
+			callTime /= 0.5
+		if(STATION_TRAIT_SLOW_SHUTTLE)
+			callTime /= 1.5
+	UnregisterSignal(source, SIGNAL_REMOVETRAIT(removed_trait))
+
 /obj/docking_port/mobile/supply/register()
 	. = ..()
 	SSshuttle.supply = src
@@ -315,11 +335,11 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 	if(report.exported_atoms.len)
 		investigate_log("contents sold for [cargo_budget.account_balance - presale_points] [MONEY_NAME]. Contents: [report.exported_atoms.Join(",")]. Message: [msg]", INVESTIGATE_CARGO)
 
-/*
-	Generates a box of mail depending on our exports and imports.
-	Applied in the cargo shuttle sending/arriving, by building the crate if the round is ready to introduce mail based on the economy subsystem.
-	Then, fills the mail crate with mail, by picking applicable crew who can receive mail at the time to sending.
-*/
+/**
+ * Generates a box of mail depending on our exports and imports.
+ * Applied in the cargo shuttle sending/arriving, by building the crate if the round is ready to introduce mail based on the economy subsystem.
+ * Then, fills the mail crate with mail, by picking applicable crew who can receive mail at the time to sending.
+ */
 /obj/docking_port/mobile/supply/proc/create_mail()
 	//Early return if there's no mail waiting to prevent taking up a slot. We also don't send mails on sundays or holidays.
 	if(!SSeconomy.mail_waiting || SSeconomy.mail_blocked || SSsecurity_level.current_security_level.disables_mail)

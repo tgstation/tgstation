@@ -120,7 +120,6 @@
 	var/obj/item/note
 	/// The seal on the airlock
 	var/obj/item/seal
-	var/abandoned = FALSE
 	/// Controls if the door closes quickly or not. FALSE = the door autocloses in 1.5 seconds, TRUE = 8 seconds - see autoclose_in()
 	var/normalspeed = TRUE
 	var/cutAiWire = FALSE
@@ -1285,7 +1284,7 @@
 			to_chat(user, span_warning("You need to be wielding [tool] to do that!"))
 			return
 
-		INVOKE_ASYNC(src, density ? PROC_REF(open) : PROC_REF(close), BYPASS_DOOR_CHECKS)
+		INVOKE_ASYNC(src, density ? PROC_REF(open) : PROC_REF(close), BYPASS_DOOR_CHECKS, user)
 		return
 
 	if(!forced)
@@ -1320,12 +1319,12 @@
 	if(check_electrified && shock(user, 100))
 		return
 
-	open(BYPASS_DOOR_CHECKS)
+	open(BYPASS_DOOR_CHECKS, user)
 	take_damage(AIRLOCK_PRY_DAMAGE, BRUTE, 0, 0) // Enough to sometimes spark
-	if(density && !open(BYPASS_DOOR_CHECKS))
+	if(density && !open(BYPASS_DOOR_CHECKS, user))
 		to_chat(user, span_warning("Despite your attempts, [src] refuses to open."))
 
-/obj/machinery/door/airlock/open(forced = DEFAULT_DOOR_CHECKS)
+/obj/machinery/door/airlock/open(forced = DEFAULT_DOOR_CHECKS, mob/living/opener)
 	if(cycle_pump && !operating && !welded && !seal && locked && density)
 		cycle_pump.airlock_act(src)
 		return FALSE // The rest will be handled by the pump
@@ -1362,6 +1361,8 @@
 				addtimer(CALLBACK(cyclelinkedairlock, PROC_REF(close)), BYPASS_DOOR_CHECKS)
 
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
+	if (opener)
+		SEND_SIGNAL(opener, COMSIG_MOB_OPENED_AIRLOCK, forced)
 	set_airlock_state(AIRLOCK_OPENING, animated = TRUE, force_type = forced)
 	var/transparent_delay = animation_segment_delay(AIRLOCK_OPENING_TRANSPARENT)
 	sleep(transparent_delay)
@@ -1879,7 +1880,7 @@
 	else if(!density)
 		close()
 	else
-		open()
+		open(opener = user)
 
 /**
  * Generates the airlock's wire layout based on the current area the airlock resides in.
@@ -2618,8 +2619,10 @@
 
 // set_density on both open and close procs has a check and return builtin.
 
-/obj/machinery/door/airlock/instant/open(forced = DEFAULT_DOOR_CHECKS)
+/obj/machinery/door/airlock/instant/open(forced = DEFAULT_DOOR_CHECKS, mob/living/opener)
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, forced)
+	if (opener)
+		SEND_SIGNAL(opener, COMSIG_MOB_OPENED_AIRLOCK, forced)
 	operating = TRUE
 	set_density(FALSE)
 	set_airlock_state(AIRLOCK_OPEN, animated = FALSE)

@@ -51,7 +51,6 @@
 
 	var/max = CONFIG_GET(number/max_personalities)
 	data["max_personalities"] = max >= length(SSpersonalities.personalities_by_type) ? -1 : max
-	data["mood_enabled"] = !CONFIG_GET(flag/disable_human_mood)
 
 	return data
 

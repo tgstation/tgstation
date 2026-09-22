@@ -41,6 +41,7 @@ Happy hunting!
 	desc = "A set of incredibly advanced sunglasses, providing you with an array of different sensor scans and visual readouts for pretty much anything you look at. \
 		It's kind of overwhelming, actually. Wearing this for a few hours will probably give you a migrane."
 	icon_state = "sunhudmed"
+	inhand_icon_state = "sunhudmed"
 	flags_cover = GLASSESCOVERSEYES
 	flash_protect = FLASH_PROTECTION_WELDER
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_SECURITY_HUD, TRAIT_MEDICAL_HUD, TRAIT_DIAGNOSTIC_HUD)

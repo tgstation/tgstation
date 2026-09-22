@@ -549,6 +549,7 @@
 		offerer.add_mood_event("high_five", /datum/mood_event/down_low)
 		rube.add_mood_event("high_five", /datum/mood_event/too_slow)
 		offerer.remove_status_effect(/datum/status_effect/offering/no_item_received/high_five)
+		offerer.client?.give_award(/datum/award/achievement/misc/down_low_too_slow, offerer)
 
 	qdel(src)
 
