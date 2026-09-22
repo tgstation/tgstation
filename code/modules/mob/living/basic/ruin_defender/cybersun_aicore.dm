@@ -21,7 +21,7 @@
 	unsuitable_atmos_damage = 0
 	combat_mode = TRUE
 	move_resist = INFINITY
-	damage_coeff = list(BRUTE = 1.5, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
+	physiology = list(BRUTE = 1.5, TOX = 0, OXY = 0, STAMINA = 0)
 	light_system = OVERLAY_LIGHT
 	light_range = 2
 	light_power = 0.6

@@ -159,6 +159,7 @@
 	unlocked_designs = list(
 		/datum/design/board/apc_control,
 		/datum/design/board/powermonitor,
+		/datum/design/board/plankman,
 		/datum/design/board/smes,
 		/datum/design/board/smesbank,
 		/datum/design/board/power_connector,

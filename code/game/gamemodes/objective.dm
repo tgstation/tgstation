@@ -717,28 +717,28 @@ GLOBAL_LIST_EMPTY(possible_items)
 
 /datum/objective/capture/check_completion()//Basically runs through all the mobs in the area to determine how much they are worth.
 	var/captured_amount = 0
-	var/area/centcom/central_command_areas/holding/A = GLOB.areas_by_type[/area/centcom/central_command_areas/holding]
-	for(var/mob/living/carbon/human/M in A)//Humans.
-		if(ismonkey(M))
+	var/area/centcom/central_command_areas/holding/area = GLOB.areas_by_type[/area/centcom/central_command_areas/holding]
+	for(var/mob/living/carbon/human/mob in area)//Humans.
+		if(HAS_TRAIT(mob, TRAIT_LESSER_HUMANOID))
 			captured_amount+=0.1
 			continue
-		if(M.stat == DEAD)//Dead folks are worth less.
+		if(mob.stat == DEAD)//Dead folks are worth less.
 			captured_amount+=0.5
 			continue
 		captured_amount+=1
-	for(var/mob/living/carbon/alien/larva/M in A)//Larva are important for research.
-		if(M.stat == DEAD)
+	for(var/mob/living/carbon/alien/larva/mob in area)//Larva are important for research.
+		if(mob.stat == DEAD)
 			captured_amount+=0.5
 			continue
 		captured_amount+=1
-	for(var/mob/living/carbon/alien/adult/M in A)//Aliens are worth twice as much as humans.
-		if(isalienqueen(M))//Queens are worth three times as much as humans.
-			if(M.stat == DEAD)
+	for(var/mob/living/carbon/alien/adult/mob in area)//Aliens are worth twice as much as humans.
+		if(isalienqueen(mob))//Queens are worth three times as much as humans.
+			if(mob.stat == DEAD)
 				captured_amount+=1.5
 			else
 				captured_amount+=3
 			continue
-		if(M.stat == DEAD)
+		if(mob.stat == DEAD)
 			captured_amount+=1
 			continue
 		captured_amount+=2

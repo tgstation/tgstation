@@ -85,6 +85,7 @@
 	display_order = 1
 	ui_color = "#fcd203"
 	primary_work_area = /area/station/command
+	department_access = REGION_ACCESS_COMMAND
 
 /datum/job_department/security
 	department_name = DEPARTMENT_SECURITY

@@ -31,7 +31,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	faction = list(FACTION_MIMIC)
 	basic_mob_flags = DEL_ON_DEATH
 	combat_mode = TRUE
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 0, OXY = 1)
+	physiology = list(STAMINA = 0)
 	/// can we stun people on hit
 	var/knockdown_people = FALSE
 
@@ -123,7 +123,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		locked = TRUE //if this was a crate with loot then we dont want people to just leftclick it to open it then bait it somewhere and steal its loot
 	return TRUE
 
-/mob/living/basic/mimic/crate/adjust_health(amount, updating_health = TRUE, forced = FALSE)
+/mob/living/basic/mimic/crate/on_damage_loss_changed(amount, updating_health = TRUE, forced = FALSE)
 	if(amount > 0)
 		trigger()
 	return ..()

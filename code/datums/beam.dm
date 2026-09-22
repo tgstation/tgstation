@@ -22,6 +22,8 @@
 	var/icon
 	///icon state of the main segments of the beam
 	var/icon_state = ""
+	///Our beam's alpha
+	var/alpha = 255
 	///The beam will qdel if it's longer than this many tiles.
 	var/max_distance = 0
 	///the objects placed in the elements list
@@ -30,8 +32,10 @@
 	var/obj/effect/ebeam/visuals
 	///The color of the beam we're drawing.
 	var/beam_color
-	///If we use an emissive appearance
-	var/emissive = TRUE
+	///If we use an emissive appearance, and if so, what type?
+	var/emissive = EMISSIVE_NO_BLOOM
+	///Alpha (strength) of our emissive
+	var/emissive_alpha = 255
 	/// If FALSE, redraws snap per update instead of using animate() interpolation.
 	var/animate = TRUE
 	/// If set will be used instead of origin's pixel_x in offset calculations
@@ -83,21 +87,25 @@
 	beam_type = /obj/effect/ebeam,
 	beam_color = null,
 	emissive = TRUE,
+	emissive_alpha = 255,
 	animate = TRUE,
 	override_origin_pixel_x = null,
 	override_origin_pixel_y = null,
 	override_target_pixel_x = null,
 	override_target_pixel_y = null,
-	beam_layer = ABOVE_ALL_MOB_LAYER
+	beam_layer = ABOVE_ALL_MOB_LAYER,
+	alpha = 255,
 )
 	src.origin = origin
 	src.target = target
 	src.icon = icon
 	src.icon_state = icon_state
+	src.alpha = alpha
 	src.max_distance = max_distance
 	src.beam_type = beam_type
 	src.beam_color = beam_color
 	src.emissive = emissive
+	src.emissive_alpha = emissive_alpha
 	src.animate = animate
 	src.override_origin_pixel_x = override_origin_pixel_x
 	src.override_origin_pixel_y = override_origin_pixel_y
@@ -314,6 +322,8 @@
 			final_y += Pixel_y > 0 ? round(Pixel_y/32) : ceil(Pixel_y/32)
 			Pixel_y %= 32
 		segment.forceMove(locate(final_x, final_y, segment.z))
+		segment.alpha = alpha
+		segment.layer = beam_layer
 		var/new_pixel_x = origin_px + Pixel_x
 		var/new_pixel_y = origin_py + Pixel_y
 		if(animate_time)
@@ -326,7 +336,7 @@
 			// Segments past the old beam's end fade in instead of popping.
 			if(N >= old_length)
 				segment.alpha = 0
-				animate(segment, alpha = 255, time = animate_time, flags = ANIMATION_PARALLEL)
+				animate(segment, alpha = alpha, time = animate_time, flags = ANIMATION_PARALLEL)
 			if(animate_rotation)
 				animate(segment, pixel_x = new_pixel_x, pixel_y = new_pixel_y, transform = rot_matrix, time = animate_time, flags = ANIMATION_PARALLEL)
 			else
@@ -335,7 +345,7 @@
 			segment.pixel_x = new_pixel_x
 			segment.pixel_y = new_pixel_y
 		if(emissive)
-			segment.add_overlay(emissive_appearance(terminal_icon ? terminal_icon : icon, terminal_icon ? "" : icon_state, segment, alpha = segment.alpha))
+			segment.add_overlay(emissive_appearance(terminal_icon ? terminal_icon : icon, terminal_icon ? "" : icon_state, segment, alpha = segment.alpha * emissive_alpha / 255, effect_type = emissive))
 
 	elements = new_elements
 	// Fade out extra segments before deleting them so shrinking the beam does not pop the tail.
@@ -418,6 +428,7 @@
 	override_target_pixel_x = null,
 	override_target_pixel_y = null,
 	beam_layer = ABOVE_ALL_MOB_LAYER,
+	alpha = 255,
 	icon_state_variants = 1
 	)
 	. = ..()
@@ -601,13 +612,15 @@
 	icon_state_variants = 0,
 	glide_seed = null,
 	glide_time = 0,
+	alpha = 255,
+	emissive_alpha = 255,
 )
 	var/datum/beam/newbeam
 
 	if(icon_state_variants <= 0)
-		newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, animate, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer)
+		newbeam = new(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, emissive_alpha, animate, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer, alpha)
 	else
-		newbeam = new /datum/beam/varied(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, animate, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer, icon_state_variants)
+		newbeam = new /datum/beam/varied(src,BeamTarget,icon,icon_state,time,maxdistance,beam_type, beam_color, emissive, emissive_alpha, animate, override_origin_pixel_x, override_origin_pixel_y, override_target_pixel_x, override_target_pixel_y, layer, alpha, icon_state_variants)
 	// Seed the glide before Start()'s first Draw() runs (INVOKE_ASYNC runs it synchronously here since
 	// Draw() never sleeps), so a rebuilt beam animates from its predecessor instead of snapping.
 	newbeam.inherit_glide(glide_seed, glide_time)

@@ -56,7 +56,7 @@
 /mob/living/basic/headslug/proc/check_and_implant(mob/living/basic/attacker, atom/target)
 	SIGNAL_HANDLER
 
-	if (egg_lain || !iscarbon(target) || ismonkey(target))
+	if (egg_lain || !iscarbon(target) || HAS_TRAIT(target, TRAIT_LESSER_HUMANOID))
 		return
 
 	var/mob/living/carbon/victim = target

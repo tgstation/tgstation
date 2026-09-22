@@ -1,6 +1,6 @@
 /obj/machinery/sheetifier
-	name = "Sheet-meister 2000"
-	desc = "A very sheety machine"
+	name = "\improper Sheet-meister 2000"
+	desc = "A very sheety machine."
 	icon = 'icons/obj/machines/sheetifier.dmi'
 	icon_state = "base_machine"
 	density = TRUE

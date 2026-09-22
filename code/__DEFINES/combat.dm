@@ -227,8 +227,6 @@ GLOBAL_LIST_INIT(shove_disarming_types, typecacheof(list(
 //Sawn off nerfs
 ///accuracy penalty of sawn off guns
 #define SAWN_OFF_ACC_PENALTY 25
-///added recoil of sawn off guns
-#define SAWN_OFF_RECOIL 1
 
 //ammo box sprite defines
 ///ammo box will always use provided icon state
@@ -412,6 +410,8 @@ GLOBAL_LIST_INIT(all_precise_body_zones, list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_
 #define SILENCE_DEFAULT_MESSAGES "silence_default_messages"
 /// If set in modifiers, default hitsound is silenced
 #define SILENCE_HITSOUND "silence_hitsound"
+/// Set towards the end of an attack with how much actual damage was dealt
+#define DAMAGE_DONE "damage_done"
 
 /// Used in attack chain to set the force of the attack without changing the base force of the item.
 #define SET_ATTACK_FORCE(atk_mods, value) \

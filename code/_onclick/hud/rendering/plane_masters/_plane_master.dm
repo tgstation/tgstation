@@ -94,9 +94,9 @@
 	if(!istype(home, /datum/plane_master_group))
 		return FALSE
 	src.home = home
+	assigned_map = home.map
 	if(home.map)
 		screen_loc = "[home.map]:[screen_loc]"
-		assigned_map = home.map
 	return TRUE
 
 /// Updates our "offset", basically what layer of multiz we're meant to render

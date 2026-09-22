@@ -340,7 +340,7 @@
 		. = message_larva
 	else if(isAI(user) && message_AI)
 		. = message_AI
-	else if(ismonkey(user) && message_monkey)
+	else if(HAS_TRAIT(user, TRAIT_LESSER_HUMANOID) && message_monkey)
 		. = message_monkey
 	else if((iscyborg(user) || (living_user.mob_biotypes & MOB_ROBOTIC)) && message_robot)
 		. = message_robot

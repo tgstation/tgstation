@@ -1,3 +1,4 @@
+import { storage } from 'common/storage';
 import {
   filterTypepaths,
   isEntityArg,
@@ -183,7 +184,6 @@ export function CommandBar() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedVerb, setSelectedVerb] = useState<Verb | null>(null);
   const [filledArgs, setFilledArgs] = useState<string[]>([]);
-  const [lastTypepathRequest, setLastTypepathRequest] = useState('');
   const [mode, setMode] = useState<Mode>('Say');
   const inputRef = useRef<HTMLInputElement>(null);
   const historyRef = useRef<string[]>([]);
@@ -214,6 +214,14 @@ export function CommandBar() {
   const hasSuggestions = allSuggestions.length > 0;
   const isCurrentArgTypepath = currentArg ? isTypepathArg(currentArg) : false;
   const isCurrentArgList = currentArg ? isListArg(currentArg) : false;
+
+  useEffect(() => {
+    const loadStoredValues = async () => {
+      const storedMode = await storage.get('tgui-commandbar-mode');
+      if (storedMode !== undefined) setMode(storedMode);
+    };
+    loadStoredValues();
+  }, []);
 
   useEffect(() => {
     Byond.sendMessage('verbs/request_verbs');
@@ -293,6 +301,7 @@ export function CommandBar() {
     } else {
       enterChatMode(nextMode);
     }
+    storage.set('tgui-commandbar-mode', nextMode);
     inputRef.current?.focus();
   };
 
@@ -555,7 +564,6 @@ export function CommandBar() {
         }
       }
     }
-
   };
 
   const placeholder = selectedVerb

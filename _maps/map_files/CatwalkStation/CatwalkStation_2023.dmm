@@ -20274,9 +20274,9 @@
 /area/station/service/kitchen)
 "fqD" = (
 /obj/structure/table,
-/obj/item/mmi,
-/obj/item/mmi,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
 /obj/effect/turf_decal/tile/dark_blue/anticorner,
 /obj/item/borg/upgrade/rename{
 	pixel_y = 14
@@ -35079,7 +35079,7 @@
 /area/station/service/kitchen/abandoned)
 "jpG" = (
 /obj/structure/table/reinforced,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai/satellite/chamber)
 "jqd" = (
@@ -64748,6 +64748,7 @@
 	pixel_x = 5;
 	pixel_y = 2
 	},
+/obj/item/producepad,
 /turf/open/floor/iron/dark,
 /area/station/service/hydroponics)
 "rkM" = (
@@ -65362,6 +65363,7 @@
 	id = "hydropony_shutters";
 	name = "Hydroponics Shutters"
 	},
+/obj/item/producepad,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/service/kitchen)
 "rtf" = (
@@ -74997,7 +74999,7 @@
 /area/station/hallway/secondary/command)
 "tXT" = (
 /obj/structure/table,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/dark,
@@ -83864,7 +83866,7 @@
 /area/station/medical/pharmacy)
 "wlx" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/random/maintenance/no_decals,
 /obj/item/storage/toolbox/fishing,
 /obj/item/storage/box/lights/mixed{
 	pixel_x = -8;

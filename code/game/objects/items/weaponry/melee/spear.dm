@@ -5,6 +5,7 @@
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "spearglass0"
+	inhand_icon_state = "spearglass0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	icon_angle = -45
@@ -34,10 +35,6 @@
 	var/force_unwielded = 10
 	/// How much damage to do wielded
 	var/force_wielded = 18
-	/// Whether or not hitting with this spear causes damage to the spear itself
-	var/improvised_construction = TRUE
-	/// What is left over when a spear breaks
-	var/spear_leftovers = /obj/item/stack/rods
 	/// What pike do we construct if someone kills themselves with us?
 	var/pike_type = /obj/structure/headpike
 
@@ -111,7 +108,6 @@
 /obj/item/spear/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	var/obj/item/stack/rods/rod = locate() in components
 	if (rod)
-		spear_leftovers = rod.type
 		set_material_slot(/datum/material_slot/handle/spear, rod.get_master_material())
 
 	var/obj/item/shard/tip = locate() in components
@@ -175,24 +171,6 @@
 	if (!tip_material)
 		return ..()
 	return custom_materials[tip_material] ? tip_material : ..()
-
-/obj/item/spear/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
-	if(improvised_construction && !QDELETED(src))
-		take_damage(force / 2, sound_effect = FALSE)
-
-/obj/item/spear/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
-	. = ..()
-	if (.) //spear was caught
-		return
-	if(improvised_construction && !QDELETED(src))
-		take_damage(throwforce / 2, sound_effect = FALSE)
-
-/obj/item/spear/atom_destruction(damage_flag)
-	playsound(src, 'sound/effects/grillehit.ogg', 50)
-	new spear_leftovers(get_turf(src))
-	if(isliving(loc))
-		loc.balloon_alert(loc, "spear broken!")
-	return ..()
 
 /obj/item/spear/get_material_prefixes(list/materials)
 	var/datum/material/material = get_material_from_slot(/datum/material_slot/weapon_head/speartip)
@@ -314,6 +292,7 @@
 /obj/item/spear/explosive
 	name = "explosive lance"
 	icon_state = "spearbomb0"
+	inhand_icon_state = "spearbomb0"
 	base_icon_state = "spearbomb"
 	icon_prefix = "spearbomb"
 	var/obj/item/grenade/explosive = null
@@ -388,7 +367,6 @@
 	attack_verb_simple = list("gore")
 	force_unwielded = 15
 	force_wielded = 25
-	improvised_construction = FALSE
 
 /obj/item/spear/grey_tide/afterattack(atom/movable/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	user.add_ally("greytide([REF(user)])")
@@ -404,6 +382,7 @@
 //MILITARY
 /obj/item/spear/military
 	icon_state = "military_spear0"
+	inhand_icon_state = "military_spear0"
 	base_icon_state = "military_spear0"
 	icon_prefix = "military_spear"
 	name = "military javelin"
@@ -417,7 +396,6 @@
 	throw_range = 9
 	throw_speed = 5
 	sharpness = NONE // we break bones instead of cutting flesh
-	improvised_construction = FALSE
 	pike_type = /obj/structure/headpike/military
 
 /obj/item/spear/military/add_headpike_component()
@@ -437,6 +415,7 @@
 	desc = "An oversized multi-bladed spear designed to kill large hostile xenoforms such as space dragons or the creatures of Indecipheres. Capable of being launched from a ballista."
 	icon = 'icons/obj/weapons/48x.dmi'
 	icon_state = "speardragon0"
+	inhand_icon_state = "speardragon0"
 	icon_prefix = "speardragon"
 	base_icon_state = "speardragon"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
@@ -453,7 +432,6 @@
 	force_unwielded = 13
 	force_wielded = 21
 	armour_penetration = 15
-	improvised_construction = FALSE
 	custom_materials =  list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 42,
 		/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 15,
@@ -473,6 +451,7 @@
 	desc = "A half-finished giantslayer spear, needs to be thrown in lava to forge the metals to a killing edge."
 	icon = 'icons/obj/weapons/48x.dmi'
 	icon_state = "speardragonraw0"
+	inhand_icon_state = "speardragonraw0"
 	icon_prefix = "speardragonraw"
 	base_icon_state = "speardragonraw"
 	material_flags = MATERIAL_EFFECTS
@@ -503,6 +482,7 @@
 	name = "bone spear"
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
 	icon_state = "bone_spear0"
+	inhand_icon_state = "bone_spear0"
 	base_icon_state = "bone_spear0"
 	icon_prefix = "bone_spear"
 	throwforce = 22
@@ -511,7 +491,6 @@
 	material_slots = list(/datum/material_slot/weapon_head/speartip = /datum/material/bone, /datum/material_slot/handle/spear = /datum/material/bone)
 	force_unwielded = 12
 	force_wielded = 20
-	spear_leftovers = /obj/item/stack/sheet/bone
 	pike_type = /obj/structure/headpike/bone
 
 /obj/item/spear/bonespear/add_headpike_component()
@@ -527,6 +506,7 @@
  */
 /obj/item/spear/bamboospear //Blatant imitation of spear, but all natural.
 	icon_state = "bamboo_spear0"
+	inhand_icon_state = "bamboo_spear0"
 	base_icon_state = "bamboo_spear0"
 	icon_prefix = "bamboo_spear"
 	name = "bamboo spear"
@@ -535,7 +515,6 @@
 	throwforce = 23	//Better to throw
 	custom_materials = list(/datum/material/bamboo = SHEET_MATERIAL_AMOUNT * 25)
 	material_slots = list(/datum/material_slot/weapon_head/speartip = /datum/material/bamboo, /datum/material_slot/handle/spear = /datum/material/bamboo)
-	spear_leftovers = /obj/item/stack/sheet/mineral/bamboo
 	pike_type = /obj/structure/headpike/bamboo
 
 /obj/item/spear/bamboospear/add_headpike_component()
@@ -556,6 +535,7 @@
 	name = "\improper Sky Bulge"
 	desc = "A legendary stick with a very pointy tip. Takes you to the skies!"
 	icon_state = "dragoonpole0"
+	inhand_icon_state = "dragoonpole0"
 	icon_prefix = "dragoonpole"
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "gores", "lances")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "gore", "lance")
@@ -569,7 +549,6 @@
 	material_slots = list(/datum/material_slot/weapon_head/speartip = /datum/material/diamond, /datum/material_slot/handle/spear = /datum/material/alloy/plastitaniumglass)
 	action_slots = ITEM_SLOT_HANDS
 	actions_types = list(/datum/action/item_action/skybulge)
-	improvised_construction = FALSE
 
 ///The action button the spear gives, usable once a minute.
 /datum/action/item_action/skybulge

@@ -509,7 +509,7 @@
 #define IFF_FACTION_EVERYONE "Non-Allies"
 
 /obj/item/organ/eyes/robotic/tacvisor
-	name = "tactical EFF visor"
+	name = "tactical IFF visor"
 	desc = "A failed attempt at integrating IFF systems directly into soldiers' prefrontal cortex, this complex sensor array has proved to be impractical as the additional load impared the user's ability to recognize people's appearances or voices. The screen is there just for intimidation."
 	icon_state = "eyes_tacvisor"
 	eye_icon_state = "eyes_tacvisor"
@@ -949,10 +949,22 @@
 	), COLORSPACE_HSL)
 
 /obj/item/organ/eyes/robotic/tacvisor/deathsquad
+	name = "Deathsquad IFF Visor"
 	friendly_faction = IFF_FACTION_CENTCOM
 	hostile_faction = IFF_FACTION_EVERYONE
 	actions_types = null
 	user_controls = FALSE
+	organ_traits = list(TRAIT_THERMAL_VISION)
+
+/obj/item/organ/eyes/robotic/tacvisor/deathsquad/on_examine(mob/source, atom/target, list/examine_strings, list/examine_overrides)
+
+	if (target == owner || !iscarbon(target) && !(isliving(target) && (obj_flags & EMAGGED)))
+		return
+
+	if(get_iff_signature(target) == IFF_FRIENDLY)
+		examine_overrides[EXAMINE_OVERRIDE_PRIORITY_IFF] = span_notice("CentCom personnel. Do not attack.")
+	else
+		examine_overrides[EXAMINE_OVERRIDE_PRIORITY_IFF] = span_boldwarning("KILL KILL KILL KILL KILL KILL!!!")
 
 /obj/item/organ/eyes/robotic/tacvisor/deathsquad/ui_status(mob/user, datum/ui_state/state)
 	return UI_CLOSE

@@ -147,7 +147,6 @@ SUBSYSTEM_DEF(tts)
 		else
 			hearer_atom = hearer
 		if(!hearer_atom || QDELING(hearer_atom))
-			stack_trace("TTS tried to play a sound to a deleted mob.")
 			continue
 		if(!ismob(hearer_atom))
 			continue

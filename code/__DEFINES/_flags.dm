@@ -324,12 +324,6 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// Cancel the action if the user does another action (mainly via clicking)
 #define DO_AFTER_CHECK_NEXT_MOVE (1<<5)
 
-// Spacevine-related flags
-/// Is the spacevine / flower bud heat resistant
-#define SPACEVINE_HEAT_RESISTANT (1 << 0)
-/// Is the spacevine / flower bud cold resistant
-#define SPACEVINE_COLD_RESISTANT (1 << 1)
-
 // Flags for flora structures
 #define FLORA_HERBAL (1 << 0)
 #define FLORA_WOODEN (1 << 1)
@@ -376,3 +370,19 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define EMPATH_SEE_COLD (1<<7)
 /// Can the empath see if living mob has the fundamentally evil trait
 #define EMPATH_SEE_EVIL (1<<8)
+
+// Container flags for get_loose_container
+/// Count mob inventory as a valid container
+#define LOOSE_CONTAINER_INCLUDE_INVENTORY (1<<0)
+/// Count modsuits with at least one sealed part as valid containers, even if mob inventory is not a valid container
+#define LOOSE_CONTAINER_INCLUDE_SEALED_MODSUIT (1<<1)
+/// Count atom storage as a valid container
+#define LOOSE_CONTAINER_INCLUDE_STORAGE (1<<2)
+/// Count closets as a valid container
+#define LOOSE_CONTAINER_INCLUDE_CLOSET (1<<3)
+/// Count vehicles as a valid container
+#define LOOSE_CONTAINER_INCLUDE_VEHICLE (1<<4)
+/// Count mech equipment (particularly cargo holds and sleepers) as a valid container
+#define LOOSE_CONTAINER_INCLUDE_MECH_EQUIPMENT (1<<5)
+/// Count stomachs as a valid container (ew)
+#define LOOSE_CONTAINER_INCLUDE_STOMACH (1<<6)

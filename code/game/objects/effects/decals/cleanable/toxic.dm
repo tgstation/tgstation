@@ -16,6 +16,8 @@
 	var/datum/looping_sound/bubbling_audio // It's really just bubbling liquid audio, which is what I need here.
 	/// TimerID for the floor melting effect, so we can stop it if it gets cleaned up.
 	var/dissolve_timer
+	/// Is the acid bubbling?
+	var/active = FALSE
 
 /obj/effect/decal/cleanable/greenglow/waste/Initialize(mapload, list/datum/disease/diseases)
 	. = ..()
@@ -27,7 +29,7 @@
 
 /obj/effect/decal/cleanable/greenglow/waste/Destroy()
 	QDEL_NULL(bubbling_audio)
-	QDEL_NULL(particles)
+	remove_shared_particles(/particles/acid/toxic)
 	return ..()
 
 /**
@@ -43,7 +45,9 @@
 	bubbling_audio.start()
 
 	dissolve_timer = addtimer(CALLBACK(src, PROC_REF(dissolve_floor)), dissolve_clock, TIMER_STOPPABLE | TIMER_DELETE_ME)
-	particles =  new /particles/acid/toxic()
+	active = TRUE
+	update_appearance()
+	add_shared_particles(/particles/acid/toxic)
 
 /obj/effect/decal/cleanable/greenglow/waste/proc/dissolve_floor()
 	if(QDELETED(src))
@@ -56,6 +60,15 @@
 	visible_message(span_warning("The waste eats away at the floor, leaving \the [get_turf(src)] behind."))
 	animate(src, time = 0.5 SECONDS, color = "#bebebe8e")
 	bubbling_audio?.stop()
-	QDEL_NULL(particles)
+	active = TRUE
+	update_appearance()
+	remove_shared_particles(/particles/acid/toxic)
+
+/obj/effect/decal/cleanable/greenglow/waste/update_icon_state()
+	. = ..()
+	if(active)
+		icon_state = "waste_spill_active"
+	else
+		icon_state = "waste_spill"
 
 #undef DISSOLVE_DURATION

@@ -39,7 +39,7 @@
 		return
 
 	// Non-water rain gets colored into their reagent's color
-	for (var/list/holder_list as anything in weather_objects)
+	for (var/_z_level, holder_list in weather_objects)
 		for (var/obj/effect/abstract/weather_holder/holder as anything in holder_list)
 			holder.particles.color = weather_color
 

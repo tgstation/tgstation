@@ -7,6 +7,7 @@
 	desc_controls = "Right-click to change the broadcast name. Alt-click to toggle microphone."
 	icon = 'icons/obj/service/broadcast.dmi'
 	icon_state = "broadcast_cam0"
+	inhand_icon_state = "broadcast_cam0"
 	base_icon_state = "broadcast_cam"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'

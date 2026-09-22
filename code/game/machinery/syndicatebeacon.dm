@@ -200,6 +200,7 @@
 	name = "suspicious beacon"
 	icon = 'icons/obj/devices/tracker.dmi'
 	icon_state = "beacon"
+	inhand_icon_state = "beacon"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	desc = "A label on it reads: <i>Warning: Activating this device will send a special beacon to your location</i>."
