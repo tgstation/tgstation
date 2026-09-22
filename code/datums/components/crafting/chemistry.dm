@@ -20,6 +20,9 @@
 	)
 	time = 4 SECONDS
 	category = CAT_CHEMISTRY
+	removed_mats = list(
+		/datum/material/cloth = SHEET_MATERIAL_AMOUNT,
+	)
 
 /datum/crafting_recipe/chemical_payload
 	name = "Chemical Payload (C4)"

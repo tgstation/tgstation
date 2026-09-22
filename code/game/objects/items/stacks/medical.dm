@@ -570,6 +570,7 @@
 	sanitization = 1
 	flesh_regeneration = 3
 	merge_type = /obj/item/stack/medical/wrap/gauze/improvised
+	mats_per_unit = list(/datum/material/cloth = 0.5 * SHEET_MATERIAL_AMOUNT)
 
 	/*
 	The idea is for the following medical devices to work like a hybrid of the old brute packs and tend wounds,

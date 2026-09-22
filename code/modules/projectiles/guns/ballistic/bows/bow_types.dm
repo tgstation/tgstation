@@ -10,7 +10,11 @@
 	desc = "A simple homemade shortbow. Great for LARPing. Or poking out someones eye."
 	obj_flags = UNIQUE_RENAME
 	projectile_damage_multiplier = 0.5
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(
+		/datum/material/wood = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 2,
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
+	)
 
 ///chaplain's divine archer bow
 /obj/item/gun/ballistic/bow/divine
