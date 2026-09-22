@@ -75,8 +75,6 @@
 
 /obj/effect/decal/cleanable/blood/Destroy(force)
 	STOP_PROCESSING(SSblood_drying, src)
-	// connect_loc only unregisters via COMSIG_MOVABLE_MOVED, which never fires when the turf we're on gets replaced by ChangeTurf()
-	RemoveElement(/datum/element/connect_loc, loc_connections)
 	return ..()
 
 /// Returns the default blood type for this decal for maploaded decals
@@ -298,6 +296,7 @@
 	beauty = -50
 	base_name = "trail of"
 	bloodiness = BLOOD_AMOUNT_PER_DECAL * 0.1
+	gender = NEUTER
 
 	/// All the components of the trail
 	var/list/obj/effect/decal/cleanable/blood/trail/trail_components
@@ -931,8 +930,8 @@
 	if(!the_window.fulltile)
 		return FALSE
 
-	var/obj/effect/decal/cleanable/final_splatter = new /obj/effect/decal/cleanable/blood/splatter/over_window(prev_loc, null, GET_ATOM_BLOOD_DNA(src))
-	final_splatter.forceMove(the_window)
+	// Spawn in the window so we don't merge with a floor splatter and delete ourselves before attaching.
+	var/obj/effect/decal/cleanable/final_splatter = new /obj/effect/decal/cleanable/blood/splatter/over_window(the_window, null, GET_ATOM_BLOOD_DNA(src))
 	the_window.vis_contents += final_splatter
 	expire()
 	return TRUE

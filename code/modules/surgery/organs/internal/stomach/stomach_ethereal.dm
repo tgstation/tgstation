@@ -36,9 +36,6 @@
 	stomach_owner.clear_alert(ALERT_ETHEREAL_CHARGE)
 	stomach_owner.clear_alert(ALERT_ETHEREAL_OVERCHARGE)
 
-/obj/item/organ/stomach/ethereal/handle_hunger_slowdown(mob/living/carbon/human/human)
-	human.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/hunger, multiplicative_slowdown = (1.5 * (1 - cell.charge() / 100)))
-
 /obj/item/organ/stomach/ethereal/proc/charge(datum/source, datum/callback/charge_cell, seconds_per_tick)
 	SIGNAL_HANDLER
 

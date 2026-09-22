@@ -169,6 +169,13 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
+/mob/living/basic/bot/medbot/Destroy()
+	if(!ispath(health_analyzer))
+		QDEL_NULL(health_analyzer)
+	if(!ispath(medkit_type))
+		QDEL_NULL(medkit_type)
+	return ..()
+
 /mob/living/basic/bot/medbot/LateInitialize()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)

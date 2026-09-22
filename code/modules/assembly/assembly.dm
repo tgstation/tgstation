@@ -28,6 +28,8 @@
 	COOLDOWN_DECLARE(next_activate)
 	/// Length of the cooldown between activations
 	var/activation_cooldown = 3 SECONDS
+	/// If true, the assembly's base icon will be used and shifted for assembly holders instead of using a different icon state
+	var/use_base_icon_for_holder = FALSE
 
 /obj/item/assembly/Destroy()
 	holder = null

@@ -308,7 +308,8 @@
 			output_message += "\n<span class='infoplain'><b>[flavour_text]</b></span>"
 		if(important_text != "")
 			output_message += "\n[span_userdanger("[important_text]")]"
-		to_chat(spawned_mob, output_message)
+
+		to_chat(spawned_mob, boxed_message(output_message), type = MESSAGE_TYPE_INFO)
 
 /// Checks if the spawner has zero uses left, if so, delete yourself... NOW!
 /obj/effect/mob_spawn/ghost_role/proc/check_uses()

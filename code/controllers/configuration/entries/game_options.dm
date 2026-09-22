@@ -44,8 +44,6 @@
 
 /datum/config_entry/flag/allow_ai_multicam // allow ai multicamera mode
 
-/datum/config_entry/flag/disable_human_mood
-
 /datum/config_entry/flag/disable_secborg // disallow secborg model to be chosen.
 
 /datum/config_entry/flag/disable_peaceborg
@@ -61,12 +59,6 @@
 	default = 25
 	integer = FALSE
 	min_val = 0
-
-/// Determines how fast traitors scale in general.
-/datum/config_entry/number/traitor_scaling_multiplier
-	default = 1
-	integer = FALSE
-	min_val = 0.01
 
 /datum/config_entry/number/changeling_scaling_coeff //how much does the amount of players get divided by to determine changelings
 	default = 6
@@ -401,6 +393,10 @@
 	min_val = 0
 
 /datum/config_entry/number/ratcap
+	default = 64
+	min_val = 0
+
+/datum/config_entry/number/relicmobcap
 	default = 64
 	min_val = 0
 

@@ -11,6 +11,7 @@ SUBSYSTEM_DEF(mobs)
 	var/static/list/dead_players_by_zlevel[][] = list(list()) // Needs to support zlevel 1 here, MaxZChanged only happens when z2 is created and new_players can login before that.
 	var/static/list/cubemonkeys = list()
 	var/static/list/cheeserats = list()
+	var/static/list/relicmobs = list()
 
 /datum/controller/subsystem/mobs/stat_entry(msg)
 	msg = "P:[length(GLOB.mob_living_list)]"
@@ -42,3 +43,11 @@ SUBSYSTEM_DEF(mobs)
 			GLOB.mob_living_list.Remove(processing_mob)
 		if (MC_TICK_CHECK)
 			return
+
+/datum/controller/subsystem/mobs/proc/register_relic_mob(mob/living/spawned)
+	relicmobs |= spawned
+	RegisterSignal(spawned, COMSIG_QDELETING, PROC_REF(relic_mob_deleted))
+
+/datum/controller/subsystem/mobs/proc/relic_mob_deleted(mob/living/source)
+	SIGNAL_HANDLER
+	relicmobs -= source

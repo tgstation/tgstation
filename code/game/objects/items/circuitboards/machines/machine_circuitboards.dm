@@ -526,7 +526,7 @@
 	build_path = /obj/machinery/rnd/production/circuit_imprinter/department
 
 /obj/item/circuitboard/machine/holopad
-	name = "AI Holopad"
+	name = "Holopad"
 	greyscale_colors = CIRCUIT_COLOR_GENERIC
 	build_path = /obj/machinery/holopad
 	req_components = list(/datum/stock_part/capacitor = 1)
@@ -1779,6 +1779,26 @@
 	needs_anchored = FALSE
 	req_components = list(
 		/obj/item/pipe/directional/scrubber = 1,
+	)
+
+/obj/item/circuitboard/machine/bluespace_scrubber
+	name = "Portable Bluespace Scrubber"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/portable_atmospherics/scrubber/bluespace
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/pipe/directional/scrubber = 1,
+		/obj/item/stack/ore/bluespace_crystal = 1,
+	)
+
+/obj/item/circuitboard/machine/gas_receiver
+	name = "Gas Receiver"
+	greyscale_colors = CIRCUIT_COLOR_ENGINEERING
+	build_path = /obj/machinery/portable_atmospherics/gas_receiver
+	needs_anchored = FALSE
+	req_components = list(
+		/obj/item/stack/sheet/plasteel = 2,
+		/obj/item/stack/ore/bluespace_crystal = 2,
 	)
 
 /obj/item/circuitboard/machine/pump
