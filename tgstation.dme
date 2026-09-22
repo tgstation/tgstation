@@ -1719,6 +1719,7 @@
 #include "code\datums\elements\chemical_transfer.dm"
 #include "code\datums\elements\chewable.dm"
 #include "code\datums\elements\cleaning.dm"
+#include "code\datums\elements\clever_girl.dm"
 #include "code\datums\elements\cliff_walker.dm"
 #include "code\datums\elements\climb_walkable.dm"
 #include "code\datums\elements\climbable.dm"
