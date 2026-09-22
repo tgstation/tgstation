@@ -1,0 +1,4 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - code_imp: "The round end screen now logs the amount of mail opened by players throughout the shift."
