@@ -37,10 +37,15 @@ runs:
       if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664
       uses: actions/cache/restore@v6.1.0
       with:
-        path: |
-          /usr/lib/i386-linux-gnu
-          /lib/i386-linux-gnu
+        path: ~/libcurl-cache
         key: ${{ runner.os }}-libcurl-i386
+    - name: Apply libcurl cache
+      if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && steps.restore_libcurl_cache.outputs.cache-hit == 'true'
+      shell: bash
+      run: |
+        [ -d ~/libcurl-cache/usr/lib ] && sudo cp -a ~/libcurl-cache/usr/lib/* /usr/lib/ || true
+        [ -d ~/libcurl-cache/lib ] && sudo cp -a ~/libcurl-cache/lib/* /lib/ || true
+        sudo ldconfig
 
     - name: Find fastest APT mirror
       if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && !steps.restore_libcurl_cache.outputs.cache-hit
@@ -55,13 +60,18 @@ runs:
         sudo dpkg --add-architecture i386
         sudo apt-get update -qq
         sudo apt-get install -y --no-install-recommends libcurl4t64:i386
+    - name: Prepare libcurl cache
+      if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && !steps.restore_libcurl_cache.outputs.cache-hit
+      shell: bash
+      run: |
+        mkdir -p ~/libcurl-cache/usr/lib ~/libcurl-cache/lib
+        [ -d /usr/lib/i386-linux-gnu ] && cp -a /usr/lib/i386-linux-gnu ~/libcurl-cache/usr/lib/ || true
+        [ -d /lib/i386-linux-gnu ] && cp -a /lib/i386-linux-gnu ~/libcurl-cache/lib/ || true
     - name: Save libcurl cache
       if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && !steps.restore_libcurl_cache.outputs.cache-hit
       uses: actions/cache/save@v6.1.0
       with:
-        path: |
-          /usr/lib/i386-linux-gnu
-          /lib/i386-linux-gnu
+        path: ~/libcurl-cache
         key: ${{ steps.restore_libcurl_cache.outputs.cache-primary-key }}
 
     # The use of `actions/cache/restore` and `actions/cache/save` here is deliberate, as we want to
