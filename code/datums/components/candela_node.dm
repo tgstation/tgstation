@@ -89,7 +89,7 @@
 	SEND_SIGNAL(parent, COMSIG_CANDELA_NODE_NETWORK_CHANGED, ., network)
 
 	if (network)
-		RegisterSignal(network, COMSIG_CANDELA_NETWORK_POWER_CHANGED, PROC_REF(on_network_power_changed), TRUE)
+		RegisterSignal(network, COMSIG_CANDELA_NETWORK_POWER_CHANGED, PROC_REF(on_network_power_changed))
 		network.add_node(src, merging = merging)
 
 	if (update)
