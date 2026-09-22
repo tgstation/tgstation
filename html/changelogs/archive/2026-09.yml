@@ -359,6 +359,8 @@
   - balance: All plasmamen organs are now "organic + mineral", allowing most chems
       to work on them again
   - bugfix: Ensures bodyparts correctly track their parent's dna
+  PapaMichael:
+  - bugfix: The Detomatix disk now actually sends spoofed messages
   SmArtKar:
   - bugfix: Fixed potential medibot harddels
   TheRyeGuyWhoWillNowDie:
