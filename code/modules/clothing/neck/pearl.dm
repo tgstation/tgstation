@@ -196,8 +196,8 @@
 		return
 	remove_wibbly_filters(user)
 
-/obj/item/clothing/neck/necklace/pearl/abyssal
-	tail_type = /obj/item/organ/tail/fish/cerulean/abyssal
+/obj/item/clothing/neck/necklace/pearl/abyss
+	tail_type = /obj/item/organ/tail/fish/cerulean/abyss
 
 /obj/item/clothing/neck/necklace/pearl/skeleton
 	tail_type = /obj/item/organ/tail/fish/cerulean/skeletal

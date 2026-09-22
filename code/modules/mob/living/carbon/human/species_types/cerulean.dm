@@ -220,6 +220,8 @@
 	for(var/obj/item/bodypart/leg/leg as anything in legs)
 		(special || QDELING(owner)) ? leg?.drop_limb(TRUE, FALSE, FALSE) : leg?.dismember()
 
+#undef CLEAN_CUT_MULT
+
 /// the bodypart overlay for cerulean fish tails!
 /datum/bodypart_overlay/mutant/tail/fish/cerulean
 	layers = list(
@@ -229,6 +231,7 @@
 	/// which datums are blocked in get_global_feature_list
 	var/list/locked_sprite_datums = list(
 		/datum/sprite_accessory/tails/fish/cerulean/skeleton,
+		/datum/sprite_accessory/tails/fish/cerulean/cybernetic,
 	)
 
 /datum/bodypart_overlay/mutant/tail/fish/cerulean/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
@@ -255,37 +258,73 @@
 /*
  * same as parent, but with a pretty skeleton texture
  */
-/obj/item/organ/tail/fish/cerulean/abyssal
+/obj/item/organ/tail/fish/cerulean/abyss
 	name = "translucent oversized fish tail"
 	desc = "A hugely sized and scaled fish tail, it is partially translucent and shows the skeleton inside."
-	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish/cerulean/abyssal
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish/cerulean/abyss
 
-/datum/bodypart_overlay/mutant/tail/fish/cerulean/abyssal
-	var/abyssal_tweak = /datum/bodypart_texture/abyssal_cerulean
-
-// an additional overlay to be added to the image stack. used by abyssal cerulean's skeleton
-/datum/bodypart_overlay/mutant/tail/fish/cerulean/abyssal/get_overlay(obj/item/bodypart/limb, layer_index, layer_real)
+/// apply an emissive for the skeleton
+/datum/bodypart_overlay/mutant/tail/fish/cerulean/abyss/get_overlay(obj/item/bodypart/limb, layer_index, layer_real)
 	var/list/created_overlays = ..()
-	created_overlays += mutable_appearance(sprite_datum.icon, "abyssal_skeleton", offset_spokesman = limb, alpha = 105, layer = layer_real)
-	created_overlays += emissive_appearance(sprite_datum.icon, "abyssal_skeleton", offset_spokesman = limb, alpha = 35, layer = layer_real)
+	created_overlays += mutable_appearance(sprite_datum.icon, "abyss_skeleton", offset_spokesman = limb, alpha = 105, layer = layer_real)
+	created_overlays += emissive_appearance(sprite_datum.icon, "abyss_skeleton", offset_spokesman = limb, alpha = 35, layer = layer_real)
 	return created_overlays
 
-/datum/bodypart_overlay/mutant/tail/fish/cerulean/abyssal/added_to_limb(obj/item/bodypart/limb)
-	limb.add_bodypart_texture(abyssal_tweak, FALSE)
+/// now the texture
+/datum/bodypart_overlay/mutant/tail/fish/cerulean/abyss/added_to_limb(obj/item/bodypart/limb)
+	limb.add_bodypart_texture(/datum/bodypart_texture/cerulean_abyss, FALSE)
 
-/datum/bodypart_overlay/mutant/tail/fish/cerulean/abyssal/removed_from_limb(obj/item/bodypart/limb)
-	limb.remove_bodypart_texture(abyssal_tweak, FALSE)
+/datum/bodypart_overlay/mutant/tail/fish/cerulean/abyss/removed_from_limb(obj/item/bodypart/limb)
+	limb.remove_bodypart_texture(/datum/bodypart_texture/cerulean_abyss, FALSE)
 
-/datum/bodypart_texture/abyssal_cerulean/modify_bodypart_appearance(image/appearance)
+///
+/datum/bodypart_texture/cerulean_abyss/modify_bodypart_appearance(image/appearance)
 	var/icon/new_appearance = new(appearance.icon)
-	new_appearance.Blend(icon(/datum/sprite_accessory/tails/fish/cerulean::icon, "abyssal_mask"), ICON_SUBTRACT)
+	new_appearance.Blend(icon(/datum/sprite_accessory/tails/fish/cerulean::icon, "abyss_mask"), ICON_SUBTRACT)
 	appearance.icon = new_appearance
 
-/datum/bodypart_texture/abyssal_cerulean/can_texture_bodypart(obj/item/bodypart/bodypart_owner)
+/datum/bodypart_texture/cerulean_abyss/can_texture_bodypart(obj/item/bodypart/bodypart_owner)
 	return TRUE
 
 /*
- * same as parent, but for cerulean skeletons
+ *
+ */
+/obj/item/organ/tail/fish/cerulean/cybernetic
+	name = "robotic oversized fish tail"
+	desc = "A hugely sized robotic fish tail."
+	post_init_icon_state = null
+	greyscale_config = null
+	greyscale_colors = null
+
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish/cerulean/cybernetic
+
+	organ_flags = ORGAN_ROBOTIC
+	failing_desc = "seems to be broken."
+
+	food_reagents = list(/datum/reagent/fuel = 5)
+	restyle_flags  = NONE
+	fillet_amount = 0
+
+/obj/item/organ/tail/fish/cerulean/skeletal/LateInitialize()
+	RemoveElement(/datum/element/processable)
+
+/obj/item/organ/tail/fish/cerulean/skeletal/Initialize(mapload)
+	. = ..()
+	return INITIALIZE_HINT_LATELOAD
+
+/datum/bodypart_overlay/mutant/tail/fish/cerulean/cybernetic
+	layers = list(
+		"mountedgun" = BODY_FRONT_LAYER,
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
+	)
+	locked_sprite_datums = list(
+		/datum/sprite_accessory/tails/fish/cerulean,
+		/datum/sprite_accessory/tails/fish/cerulean/skeleton,
+	)
+
+/*
+ * same as parent, but for skeletons
  */
 /obj/item/organ/tail/fish/cerulean/skeletal
 	name = "skeletal oversized fish tail"
@@ -315,6 +354,5 @@
 /datum/bodypart_overlay/mutant/tail/fish/cerulean/skeletal
 	locked_sprite_datums = list(
 		/datum/sprite_accessory/tails/fish/cerulean,
+		/datum/sprite_accessory/tails/fish/cerulean/cybernetic,
 	)
-
-#undef CLEAN_CUT_MULT

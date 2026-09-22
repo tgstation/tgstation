@@ -207,7 +207,7 @@
 
 	uniform = /obj/item/clothing/under/color/jumpskirt/random
 	head = null
-	neck = /obj/item/clothing/neck/necklace/pearl/abyssal
+	neck = /obj/item/clothing/neck/necklace/pearl/abyss
 	back = /obj/item/instrument/eguitar
 	glasses = null
 	suit = /obj/item/clothing/suit/jacket/leather/armored

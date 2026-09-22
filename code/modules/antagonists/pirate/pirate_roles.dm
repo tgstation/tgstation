@@ -291,7 +291,7 @@
 	siren.dna.species.mutantheart = /obj/item/organ/heart/carp
 	siren.dna.species.mutantlungs = /obj/item/organ/lungs/fish/amphibious
 	siren.dna.species.mutant_organs = list(
-		/obj/item/organ/tail/fish/cerulean/abyssal = /datum/sprite_accessory/tails/fish/cerulean::name,
+		/obj/item/organ/tail/fish/cerulean/abyss = /datum/sprite_accessory/tails/fish/cerulean::name,
 		/obj/item/organ/horns = /datum/sprite_accessory/horns/angler::name,
 		/obj/item/organ/frills = /datum/sprite_accessory/frills/aquatic::name,
 	)
@@ -305,7 +305,7 @@
 	for(var/obj/item/organ/special_organ as anything in list(
 		/obj/item/organ/heart/carp,
 		/obj/item/organ/lungs/fish/amphibious,
-		/obj/item/organ/tail/fish/cerulean/abyssal,
+		/obj/item/organ/tail/fish/cerulean/abyss,
 		/obj/item/organ/horns,
 		/obj/item/organ/frills,
 	))
