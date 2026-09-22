@@ -160,6 +160,8 @@
 	icon_state = "traitor_rune_outline"
 	pixel_x = -32
 	pixel_y = -32
+	bound_width = 96
+	bound_height = 96
 	gender = NEUTER
 	mergeable_decal = FALSE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
