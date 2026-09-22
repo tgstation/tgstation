@@ -76,7 +76,7 @@
 
 	switch(loc_rotation) // Shuttle rotations of 0 or 360 do not occur
 		if(LOC_BOTTOMLEFT)
-			switch(rotation) // Nonexistant `rotation` of 0 requires no correction
+			switch(rotation) // Nonexistent `rotation` of 0 requires no correction
 				if(90)
 					move_parent_down(object_parent)
 				if(180)

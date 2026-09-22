@@ -178,6 +178,10 @@
 	/// Timer until the rune can be cleaned up off the floor
 	var/protected_timer
 
+/obj/effect/decal/cleanable/traitor_rune/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	AddComponent(/datum/component/multi_tile_rotation)
+
 /obj/effect/decal/cleanable/traitor_rune/Destroy()
 	deltimer(protected_timer)
 	QDEL_NULL(demoraliser)
