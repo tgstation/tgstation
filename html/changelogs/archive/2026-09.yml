@@ -346,6 +346,25 @@
   timothymtorres:
   - code_imp: Remove unused lung defines
 2026-09-22:
+  ArcaneMusic:
+  - code_imp: The round end screen now logs the amount of mail opened by players throughout
+      the shift.
+  Jacquerel:
+  - rscadd: You can earn meaningless awards from completing several new tasks
+  Melbert:
+  - admin: Admins can toggle off events in the event panel
+  - balance: All skeleton organs are now considered "mineral" organ, stopping most
+      chems from working on them
+  - balance: All plasmamen organs are now "organic + mineral", allowing most chems
+      to work on them again
+  - bugfix: Ensures bodyparts correctly track their parent's dna
+  SmArtKar:
+  - bugfix: Fixed potential medibot harddels
   TheRyeGuyWhoWillNowDie:
   - bugfix: Kilo toxins has a holofan now :D
   - map: kilo toxins is slightly bigger and the kilo cargo warehouse is slightly smaller
+  desertmote:
+  - rscadd: Lizard angler horn now has an emissive effect
+  - image: Changed lizard frills to have their west and east icon layer above hats
+  vinylspiders:
+  - bugfix: instrument volume slider now works as intended

@@ -1,5 +1,0 @@
-author: "desertmote"
-delete-after: True
-changes:
-  - rscadd: "Lizard angler horn now has an emissive effect"
-  - image: "Changed lizard frills to have their west and east icon layer above hats"

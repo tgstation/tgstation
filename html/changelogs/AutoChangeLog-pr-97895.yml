@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - admin: "Admins can toggle off events in the event panel"
