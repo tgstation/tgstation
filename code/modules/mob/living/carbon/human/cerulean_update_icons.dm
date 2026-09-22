@@ -55,8 +55,7 @@
 					)
 	//not gen'ing is ok
 	if(!mer_clothing_icon)
-		mer_clothing_icons[index] = fcopy_rsc(base_icon)
-		return base_icon
+		mer_clothing_icon = base_icon
 	//return gen'd icon
 	mer_clothing_icons[index] = fcopy_rsc(mer_clothing_icon)
 	return icon(mer_clothing_icon)

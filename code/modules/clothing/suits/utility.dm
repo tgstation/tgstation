@@ -66,6 +66,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	cerulean_flipper_palette = "#725c3e"
 
 /obj/item/clothing/suit/utility/fire/heavy
 	name = "heavy firesuit"

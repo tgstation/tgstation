@@ -304,13 +304,24 @@
 	food_reagents = list(/datum/reagent/fuel = 5)
 	restyle_flags  = NONE
 	fillet_amount = 0
+	custom_materials = list(
+		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.5,
+		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
+		/datum/material/gold = SMALL_MATERIAL_AMOUNT,
+		/datum/material/diamond = SMALL_MATERIAL_AMOUNT * 0.66,
+	)
 
-/obj/item/organ/tail/fish/cerulean/skeletal/LateInitialize()
+/obj/item/organ/tail/fish/cerulean/cybernetic/LateInitialize()
 	RemoveElement(/datum/element/processable)
 
-/obj/item/organ/tail/fish/cerulean/skeletal/Initialize(mapload)
+/obj/item/organ/tail/fish/cerulean/cybernetic/Initialize(mapload)
 	. = ..()
 	return INITIALIZE_HINT_LATELOAD
+
+/obj/item/organ/tail/fish/cerulean/cybernetic/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
 
 /datum/bodypart_overlay/mutant/tail/fish/cerulean/cybernetic
 	layers = list(

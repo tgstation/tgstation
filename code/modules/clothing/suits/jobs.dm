@@ -447,6 +447,7 @@
 	)
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE|BODYSHAPE_CERULEAN
+	cerulean_flipper_palette = NO_FLIPPERS
 
 /obj/item/clothing/suit/atmos_overalls/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "apron_worn")
@@ -459,4 +460,4 @@
 /obj/item/clothing/suit/atmos_overalls/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
+		. += emissive_appearance((bodyshape & BODYSHAPE_CERULEAN) ? CERULEAN_SUIT_FILE : icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
