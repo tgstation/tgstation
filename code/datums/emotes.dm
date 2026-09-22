@@ -481,22 +481,22 @@
 	return TRUE
 
 /// AI can also see emotes!
-/proc/ai_eye_turf_in_view(mob/eye/camera/ai/eye, turf/T)
-	if(!eye || !T)
+/proc/ai_eye_turf_in_view(mob/eye/camera/ai/eye, turf/target_turf)
+	if(!eye || !target_turf)
 		return FALSE
 
 	var/turf/eye_turf = get_turf(eye)
-	if(!eye_turf || eye_turf.z != T.z)
+	if(!eye_turf || eye_turf.z != target_turf.z)
 		return FALSE
 
-	if(!SScameras || !SScameras.is_visible_by_cameras(eye_turf) || !SScameras.is_visible_by_cameras(T))
+	if(!SScameras || !SScameras.is_visible_by_cameras(eye_turf) || !SScameras.is_visible_by_cameras(target_turf))
 		return FALSE
 
-	return (T in eye.get_visible_turfs())
+	return (target_turf in eye.get_visible_turfs())
 
 /proc/relay_visual_emote_to_ai_runechat(mob/user, msg)
-	var/turf/T = get_turf(user)
-	if(!T)
+	var/turf/user_turf = get_turf(user)
+	if(!user_turf)
 		return
 
 	for(var/mob/living/silicon/ai/AI as anything in GLOB.ai_list)
@@ -510,17 +510,17 @@
 
 		var/atom/active_eye = AI.client.eye
 		if(istype(active_eye, /mob/eye/camera/ai))
-			var/mob/eye/camera/ai/eye = active_eye
-			if(eye.ai == AI && ai_eye_turf_in_view(eye, T))
+			var/mob/eye/camera/ai/ai_eye = active_eye
+			if(ai_eye.ai == AI && ai_eye_turf_in_view(ai_eye, user_turf))
 				if(user.runechat_prefs_check(AI, EMOTE_MESSAGE))
 					AI.create_chat_message(speaker = user, raw_message = msg, runechat_flags = EMOTE_MESSAGE)
 				relayed = TRUE
 
 		if(!relayed && AI.multicam_on) //Multicam
-			for(var/mob/eye/camera/ai/eye as anything in AI.all_eyes)
-				if(eye.ai != AI)
+			for(var/mob/eye/camera/ai/ai_eye as anything in AI.all_eyes)
+				if(ai_eye.ai != AI)
 					continue
-				if(ai_eye_turf_in_view(eye, T))
+				if(ai_eye_turf_in_view(ai_eye, user_turf))
 					if(user.runechat_prefs_check(AI, EMOTE_MESSAGE))
 						AI.create_chat_message(speaker = user, raw_message = msg, runechat_flags = EMOTE_MESSAGE)
 					break
