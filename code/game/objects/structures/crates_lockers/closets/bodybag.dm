@@ -488,6 +488,7 @@
 	breakout_time = 5 SECONDS
 	can_scan_through = TRUE
 	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
+	foldedbag_path = /obj/item/bodybag/stasis
 	custom_materials = list(
 		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4,
 		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.5,
