@@ -349,6 +349,7 @@
   ArcaneMusic:
   - code_imp: The round end screen now logs the amount of mail opened by players throughout
       the shift.
+  - bugfix: fixes logging for cargo crates and cargo crate requests by job.
   Jacquerel:
   - rscadd: You can earn meaningless awards from completing several new tasks
   Melbert:

@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - bugfix: "fixes logging for cargo crates and cargo crate requests by job."
