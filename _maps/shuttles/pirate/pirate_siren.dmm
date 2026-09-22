@@ -1498,6 +1498,8 @@
 	bot_access_flags = 0;
 	faction = list("pirate")
 	},
+/obj/item/stock_parts/power_store/cell,
+/obj/item/stock_parts/power_store/cell,
 /turf/open/floor/plating,
 /area/shuttle/pirate/siren)
 "XV" = (

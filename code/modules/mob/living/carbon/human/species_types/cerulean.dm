@@ -134,6 +134,9 @@
 /datum/species/human/cerulean/post_equip_species_outfit(mob/living/carbon/human/cerulean, visuals_only)
 	if (visuals_only)
 		return
+	var/obj/item/organ/lungs/cerulean_lungs = cerulean.get_organ_slot(ORGAN_SLOT_LUNGS)
+	if (cerulean_lungs.breathe_always[/datum/gas/oxygen])//early return for ie amphibious lungs. siren shimai have this
+		return
 	cerulean.equip_in_one_of_slots(
 		equipping = SSwardrobe.provide_type(/obj/item/vaporizer/with_cell, cerulean),
 		slots = list(LOCATION_RPOCKET, LOCATION_LPOCKET, LOCATION_HANDS, LOCATION_BACKPACK),
