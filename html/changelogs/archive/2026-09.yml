@@ -345,3 +345,7 @@
   - bugfix: Fixed TTS playing on messages that are out of range to be understood.
   timothymtorres:
   - code_imp: Remove unused lung defines
+2026-09-22:
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: Kilo toxins has a holofan now :D
+  - map: kilo toxins is slightly bigger and the kilo cargo warehouse is slightly smaller
