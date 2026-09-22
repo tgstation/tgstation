@@ -29,6 +29,8 @@ All ShuttleMove procs go here
 			var/mob/living/living_thing = thing
 			if(living_thing.incorporeal_move) // Don't crush incorporeal things
 				continue
+			if (isvehicle(living_thing.buckled))
+				living_thing.client?.give_award(/datum/award/achievement/misc/no_parking, living_thing)
 			living_thing.buckled?.unbuckle_mob(living_thing, force = TRUE)
 			living_thing.pulledby?.stop_pulling()
 			living_thing.stop_pulling()

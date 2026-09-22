@@ -8,6 +8,7 @@
 	can_unwrench = TRUE
 	construction_type = /obj/item/pipe/trinary/flippable/filter
 	pipe_state = "filter"
+	light_mask_on = TRUE
 
 	///Rate of transfer of the gases to the outputs
 	var/transfer_rate = MAX_TRANSFER_RATE

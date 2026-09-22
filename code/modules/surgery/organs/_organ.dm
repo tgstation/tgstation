@@ -18,7 +18,7 @@
 	 */
 	var/slot
 	/// Random flags that describe this organ
-	var/organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE | ORGAN_VIRGIN
+	var/organ_flags = ORGAN_ORGANIC | ORGAN_EDIBLE
 	/// Maximum damage the organ can take, ever.
 	var/maxHealth = STANDARD_ORGAN_THRESHOLD
 	/**
@@ -84,6 +84,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 /obj/item/organ/Initialize(mapload)
 	. = ..()
+	organ_flags |= ORGAN_VIRGIN
 	blood_dna_info = list("Unknown DNA" = get_blood_type(/datum/blood_type/human/o_plus))
 	if(organ_flags & ORGAN_EDIBLE)
 		AddComponentFrom(

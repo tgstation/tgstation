@@ -37,7 +37,8 @@
 	var/output_level_max = 200 KILO WATTS
 	/// amount of power actually outputted. may be less than output_level if the powernet returns excess power
 	var/output_used = 0
-
+	/// the emissive light mask icon
+	var/light_mask = "smes-emissive"
 	///Should we show display lights
 	var/show_display_lights = TRUE
 	/// Terminal for charging this smes
@@ -148,6 +149,8 @@
 		var/clevel = chargedisplay()
 		if(clevel > 0)
 			. += "smes-og[clevel]"
+
+		. += emissive_appearance(icon, light_mask, src, alpha = src.alpha)
 
 /obj/machinery/power/smes/get_save_vars()
 	. = ..()
