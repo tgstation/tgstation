@@ -229,7 +229,7 @@
 		return
 
 	if(prob(75 / severity) && device)
-		attempt_press(require_id_check=FALSE)
+		attempt_press(null, require_id_check=FALSE)
 
 /obj/machinery/button/attack_ai(mob/user)
 	if(!silicon_access_disabled && !panel_open)
