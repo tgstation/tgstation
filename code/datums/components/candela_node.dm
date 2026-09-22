@@ -12,6 +12,8 @@
 	var/power_flags = NONE
 	/// Can this node be teleported to using fultons?
 	var/fulton_point = FALSE
+	/// Track if mob blocker is active. Unfortunately necessary due to complicated order of operations with merging networks.
+	VAR_FINAL/blockers_active = FALSE
 
 /datum/component/candela_node/Initialize(datum/mining_beacon_network/new_network = null, datum/candela_item_handler/deployer = null, connection_pixel_x = null, connection_pixel_y = null, power_flags = NONE, fulton_point = FALSE)
 	. = ..()
@@ -77,19 +79,18 @@
 	if (network == new_network)
 		return
 
-	if(network)
-		UnregisterSignal(network, COMSIG_CANDELA_NETWORK_POWER_CHANGED)
-
 	. = network
 	if (network && !separating && !merging)
+		UnregisterSignal(network, COMSIG_CANDELA_NETWORK_POWER_CHANGED)
 		network.remove_node(src)
+
 	network = new_network
 	// Before add_node, as network can change from merging
 	SEND_SIGNAL(parent, COMSIG_CANDELA_NODE_NETWORK_CHANGED, ., network)
 
 	if (network)
+		RegisterSignal(network, COMSIG_CANDELA_NETWORK_POWER_CHANGED, PROC_REF(on_network_power_changed), TRUE)
 		network.add_node(src, merging = merging)
-		RegisterSignal(network, COMSIG_CANDELA_NETWORK_POWER_CHANGED, PROC_REF(on_network_power_changed))
 
 	if (update)
 		update_connections()
@@ -153,9 +154,14 @@
 
 /datum/component/candela_node/proc/update_blockers()
 	if(network?.powered & CANDELA_NETWORK_POWERED)
-		parent.AddElement(/datum/element/block_mining_mob_respawns, 5)
+		if(!blockers_active)
+			parent.AddElement(/datum/element/block_mining_mob_respawns, 5)
+			blockers_active = TRUE
+
 	else
-		parent.RemoveElement(/datum/element/block_mining_mob_respawns, 5)
+		if(blockers_active)
+			parent.RemoveElement(/datum/element/block_mining_mob_respawns, 5)
+			blockers_active = FALSE
 
 // Costly, but should not be called often (if at all) as all nodes should be anchored
 /datum/component/candela_node/proc/on_moved(atom/movable/source, atom/old_loc, dir, forced, list/old_locs)
