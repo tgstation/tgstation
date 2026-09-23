@@ -138,7 +138,7 @@ jobs:
               - '**.dmm'
 
       - name: Run Map Checks
-        if: !cancelled() && (steps.map-filter.outputs.tool_edits == 'true' || steps.map-filter.outputs.map_edits == 'true')
+        if: ${{ !cancelled() && (steps.map-filter.outputs.tool_edits == 'true' || steps.map-filter.outputs.map_edits == 'true') }}
         run: |
           if [ "${{ steps.map-filter.outputs.tool_edits }}" = "true" ]; then
             MAPS=$(find . -type f -name "*.dmm")
