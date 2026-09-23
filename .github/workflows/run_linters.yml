@@ -123,21 +123,20 @@ jobs:
           if: !cancelled()
           run: tools/build/build.sh --ci lint tgui-test
 
-        - name: Check for Map & Maplint File Edits
-          id: map-filter
-          if: !cancelled()
-          uses: dorny/paths-filter@v4
-          with:
-            list-files: shell
-            filters: |
-              tool_edits:
-                - 'tools/maplint/**'
-                - 'tools/mapmerge2/**'
-              map_edits:
-                - '**.dmm'
+      # Unfortunately this has to be outside of the parallel group because of the screening step.
+      - name: Check for Map & Maplint File Edits
+        id: map-filter
+        if: !cancelled()
+        uses: dorny/paths-filter@v4
+        with:
+          list-files: shell
+          filters: |
+            tool_edits:
+              - 'tools/maplint/**'
+              - 'tools/mapmerge2/**'
+            map_edits:
+              - '**.dmm'
 
-      # Unfortunately this has to be outside of the parallel group because of the map-filter screening step.
-      # We can't do `background: true & wait: [map-filter]` either because it's incompatible with the `if` conditional
       - name: Run Map Checks
         if: !cancelled() && (steps.map-filter.outputs.tool_edits == 'true' || steps.map-filter.outputs.map_edits == 'true')
         run: |
