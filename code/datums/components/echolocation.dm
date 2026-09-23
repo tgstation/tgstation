@@ -215,9 +215,14 @@
 			final_image = image(found_appearance)
 			final_image.dir = filtered_atom.dir
 
-		if(isturf(filtered_atom))
-			// We don't want to mess with you, you can stay on floor or wall plane or whatever
-			SET_PLANE(final_image, filtered_atom.plane, filtered_atom)
+		if(isopenturf(filtered_atom))
+			// Assume it's on the floor plane
+			final_image.layer = LOW_FLOOR_LAYER
+			SET_PLANE(final_image, FLOOR_PLANE, filtered_atom)
+		else if(isclosedturf(filtered_atom))
+			// Assume it's on the wall plane
+			final_image.layer = CLOSED_TURF_LAYER
+			SET_PLANE(final_image, WALL_PLANE, filtered_atom)
 		else if(is_type_in_typecache(filtered_atom, background_paths) || PLANE_TO_TRUE(final_image.plane) == FLOOR_PLANE)
 			// I am being evil here and using wall plane due to being in-between of game plane and floor plane
 			// Why? Because we need background/floor objects to have their own layering, otherwise the effect is blended in wrong
