@@ -92,6 +92,7 @@
 /obj/item/knife/kitchen
 	name = "kitchen knife"
 	desc = "A general purpose Chef's Knife made by SpaceCook Incorporated. Guaranteed to stay sharp for years to come."
+	embed_type = /datum/embedding/combat_knife/weak
 
 /obj/item/knife/plastic
 	name = "plastic knife"
@@ -101,6 +102,7 @@
 	force = 0
 	w_class = WEIGHT_CLASS_TINY
 	throwforce = 0
+	embed_type = null
 	throw_range = 5
 	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT)
 	attack_verb_continuous = list("prods", "whiffs", "scratches", "pokes")
@@ -122,6 +124,7 @@
 	desc = "A breakthrough in synthetic engineering, this tool is a knife programmed to dull when not used for cooking purposes, and can exchange the blade for a rolling pin"
 	force = 0
 	throwforce = 0
+	embed_type = null
 	sharpness = SHARP_EDGED
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
 	attack_verb_continuous = list("prods", "whiffs", "scratches", "pokes")

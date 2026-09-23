@@ -50,6 +50,32 @@
 	alt_simple = string_list(alt_simple)
 	make_stabby()
 
+/obj/item/knife/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
+	if(!isliving(target))
+		return ..()
+
+	var/mob/living/living_target = target
+
+	if(user.pulling == living_target)
+		MODIFY_ATTACK_FORCE_MULTIPLIER(attack_modifiers, 1.5)
+
+	return ..()
+
+/obj/item/knife/afterattack(atom/target, mob/user, list/modifiers, list/attack_modifiers)
+	if(!ishuman(target))
+		return
+
+	var/mob/living/carbon/human/human_target = target
+
+	if(!LAZYACCESS(modifiers, RIGHT_CLICK))
+		return
+
+	if(!embed_type)
+		return
+
+	if(user.grab_state == GRAB_AGGRESSIVE && user.pulling == human_target)
+		force_embed(human_target, human_target.get_random_valid_zone(user.zone_selected))
+
 ///Adds the butchering component, used to override stats for special cases
 /obj/item/knife/proc/set_butchering()
 	AddComponent(/datum/component/butchering, \
@@ -164,7 +190,7 @@
 
 /datum/embedding/combat_knife
 	pain_mult = 4
-	embed_chance = 65
+	embed_chance = 85
 	fall_chance = 10
 	ignore_throwspeed_threshold = TRUE
 
@@ -226,7 +252,7 @@
 	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 2)
 
 /datum/embedding/combat_knife/weak
-	embed_chance = 35
+	pain_mult = 1.5
 
 /obj/item/knife/combat/cyborg
 	name = "cyborg knife"
@@ -235,6 +261,7 @@
 	icon_state = "knife_cyborg"
 	worn_icon_state = "knife_cyborg" //error sprite - this shouldn't have been dropped
 	slot_flags = NONE //you can't put this in your mouth
+	embed_type = null
 
 /obj/item/knife/shiv
 	name = "glass shiv"
@@ -250,6 +277,7 @@
 	throwforce = 12
 	attack_verb_continuous = list("shanks", "shivs")
 	attack_verb_simple = list("shank", "shiv")
+	embed_type = /datum/embedding/combat_knife/weak
 	armor_type = /datum/armor/none
 	custom_materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 
