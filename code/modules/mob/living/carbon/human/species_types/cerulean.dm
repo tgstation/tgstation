@@ -300,10 +300,12 @@
 
 	organ_flags = ORGAN_ROBOTIC
 	failing_desc = "seems to be broken."
+	restyle_flags  = NONE
 
 	food_reagents = list(/datum/reagent/fuel = 5)
-	restyle_flags  = NONE
-	fillet_amount = 0
+	fillet_type = /obj/item/stack/ore/titanium
+	fillet_amount = 2
+
 	custom_materials = list(
 		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.5,
 		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
@@ -311,12 +313,6 @@
 		/datum/material/diamond = SMALL_MATERIAL_AMOUNT * 0.66,
 	)
 
-/obj/item/organ/tail/fish/cerulean/cybernetic/LateInitialize()
-	RemoveElement(/datum/element/processable)
-
-/obj/item/organ/tail/fish/cerulean/cybernetic/Initialize(mapload)
-	. = ..()
-	return INITIALIZE_HINT_LATELOAD
 
 /obj/item/organ/tail/fish/cerulean/cybernetic/emp_act(severity)
 	. = ..()
@@ -350,14 +346,8 @@
 	restyle_flags = EXTERNAL_RESTYLE_ENAMEL
 	foodtype_flags = GORE
 	food_tastes = list("bone" = 1)
-	fillet_amount = 0
-
-/obj/item/organ/tail/fish/cerulean/skeletal/LateInitialize()
-	RemoveElement(/datum/element/processable)
-
-/obj/item/organ/tail/fish/cerulean/skeletal/Initialize(mapload)
-	. = ..()
-	return INITIALIZE_HINT_LATELOAD
+	fillet_type = /obj/item/stack/sheet/bone
+	fillet_amount = 4
 
 /obj/item/organ/tail/fish/cerulean/skeletal/splatter_check(mob/living/carbon/owner)
 	return FALSE //no blood in this one
