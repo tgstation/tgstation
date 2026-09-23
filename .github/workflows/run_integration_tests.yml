@@ -35,7 +35,6 @@ jobs:
       - uses: actions/checkout@v7
 
       - name: Configure BYOND version
-        if: inputs.major
         uses: ./.github/actions/configure_byond_version
         with:
           major: ${{ inputs.major }}
