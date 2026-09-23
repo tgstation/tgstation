@@ -55,17 +55,6 @@
 	time = 0.5 SECONDS
 	category = CAT_WEAPON_AMMO
 
-/datum/crafting_recipe/dragonsbreath
-	name = "Dragonsbreath Shell"
-	result = /obj/item/ammo_casing/shotgun/dragonsbreath
-	reqs = list(
-		/obj/item/ammo_casing/shotgun/techshell = 1,
-		/datum/reagent/phosphorus = 5,
-	)
-	tool_behaviors = list(TOOL_SCREWDRIVER)
-	time = 0.5 SECONDS
-	category = CAT_WEAPON_AMMO
-
 /datum/crafting_recipe/frag12
 	name = "FRAG-12 Slug Shell"
 	result = /obj/item/ammo_casing/shotgun/frag12
