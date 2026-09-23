@@ -73,7 +73,7 @@
 	if(!embed_type)
 		return
 
-	if(user.grab_state == GRAB_AGGRESSIVE && user.pulling == human_target)
+	if(user.grab_state >= GRAB_AGGRESSIVE && user.pulling == human_target)
 		force_embed(human_target, human_target.get_random_valid_zone(user.zone_selected))
 
 ///Adds the butchering component, used to override stats for special cases
