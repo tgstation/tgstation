@@ -3,6 +3,7 @@
 /// define for lady physique Ceruleans, who have extra fins, to keep her eggs close. we'll cover these up if the modsuit is sealed
 #define FEM_FLIPPER "f"
 
+
 /**
  *	Modifies the sprite of clothing to have no legs! For pants, which mer folk canonically can't wear.
  *	What we generate will be saved in a cache, how nice! Our index look slightly different than the sister proc wear_digi_version(...)
@@ -26,8 +27,10 @@
 	// if we are generating for modsuits, we need to run through a bespoke proc!
 	if(istype(item, /obj/item/clothing/suit/mod))
 		mer_clothing_icon = handle_cerulean_modsuit(base_icon, item, "[key]-[physique]", greyscale_colors)
-	// all the other bodyshape handling, masking else a unique icon
+
+	// go to work
 	else if(item.bodyshapes_with_variations & BODYSHAPE_CERULEAN)
+		// if we have to mask
 		if(item.supports_variations_flags & CERULEAN_MASKING)
 			// we are just cutting the pant
 			if(item.supports_variations_flags & CLOTHING_CERULEAN_MASK_LEGS)
@@ -35,12 +38,37 @@
 			// remove any pixels that typically appear between the legs
 			if(item.supports_variations_flags & CLOTHING_CERULEAN_MASK_INBETWEEN)
 				mer_clothing_icon = apply_icon_mask(base_icon, BACK_COAT_MASK)
+
+		// no masks, we have custom sprites
 		else
-			if(istype(item, /obj/item/clothing/under) && icon_exists(CERULEAN_UNIFORM_FILE, item.icon_state))
-				mer_clothing_icon = icon(CERULEAN_UNIFORM_FILE, item.icon_state)
-			if(istype(item, /obj/item/clothing/suit) && icon_exists(CERULEAN_SUIT_FILE, item.icon_state))
-				mer_clothing_icon = icon(CERULEAN_SUIT_FILE, item.icon_state)
-				var/obj/item/clothing/suit/suit_item = item
+			// uniforms
+			var/obj/item/clothing/under/uniform_item = item
+			if(istype(uniform_item) && icon_exists(CERULEAN_UNIFORM_FILE, uniform_item?.icon_state))
+				if(uniform_item.greyscale_config_worn) //if we r gags we gotta color
+					mer_clothing_icon = icon(
+						SSgreyscale.GetColoredIconByType(
+							/datum/greyscale_config/uniform_worn_cerulean,
+							greyscale_colors,
+						),
+						uniform_item.icon_state,
+					)
+				else
+					mer_clothing_icon = icon(CERULEAN_UNIFORM_FILE, uniform_item.icon_state)
+
+			// suits
+			var/obj/item/clothing/suit/suit_item = item
+			if(istype(suit_item) && icon_exists(CERULEAN_SUIT_FILE, suit_item?.icon_state))
+				if(suit_item.greyscale_config_worn)
+					mer_clothing_icon = icon(
+						SSgreyscale.GetColoredIconByType(
+							/datum/greyscale_config/suit_worn_cerulean,
+							greyscale_colors,
+						),
+						suit_item.icon_state,
+					)
+				else
+					mer_clothing_icon = icon(CERULEAN_SUIT_FILE, suit_item.icon_state)
+
 				// flippy flippers
 				if(physique == FEM_FLIPPER && suit_item.cerulean_flipper_palette != NO_FLIPPERS)
 					mer_clothing_icon.Blend(
@@ -53,6 +81,7 @@
 						),
 						ICON_OVERLAY,
 					)
+
 	//not gen'ing is ok
 	if(!mer_clothing_icon)
 		mer_clothing_icon = base_icon
@@ -62,6 +91,7 @@
 
 /// define for the string added to modsuit icon_states when sealed
 #define SEALED "sealed"
+
 
 /**
  *	This proc handles icon building for Ceruleans wearing modsuits.

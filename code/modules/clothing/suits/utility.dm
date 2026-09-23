@@ -12,6 +12,7 @@
 /obj/item/clothing/suit/utility
 	icon = 'icons/obj/clothing/suits/utility.dmi'
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
+	cerulean_flipper_palette = NONE
 
 /obj/item/clothing/suit/utility/fire
 	name = "emergency firesuit"
@@ -85,6 +86,7 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
+	cerulean_flipper_palette = "#525765"
 
 /*
  * Bomb protection
@@ -228,6 +230,7 @@
 	equip_delay_other = 6 SECONDS
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
+	cerulean_flipper_palette = "#ffdb57"
 
 /obj/item/clothing/suit/utility/radiation/Initialize(mapload)
 	. = ..()
