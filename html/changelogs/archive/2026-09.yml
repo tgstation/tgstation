@@ -371,3 +371,10 @@
   - image: Changed lizard frills to have their west and east icon layer above hats
   vinylspiders:
   - bugfix: instrument volume slider now works as intended
+2026-09-23:
+  Co0kie-GG:
+  - rscadd: AI can now see emotes touch cameras
+  SmArtKar:
+  - bugfix: Fixed shoes and a bunch of other items not being washable
+  necromanceranne:
+  - bugfix: Cybernetic fangs use the correct, metallic icon state.
