@@ -20,7 +20,7 @@ jobs:
         - name: Setup Bun
           uses: ./.github/actions/setup_bun
 
-        - name: Restore BYOND from Cache
+        - name: Install BYOND
           uses: ./.github/actions/restore_or_install_byond
 
       - name: Compile All Maps
@@ -46,7 +46,7 @@ jobs:
         - name: Setup Bun
           uses: ./.github/actions/setup_bun
 
-        - name: Restore BYOND from Cache
+        - name: Install BYOND
           uses: ./.github/actions/restore_or_install_byond
 
       - name: Compile All Maps

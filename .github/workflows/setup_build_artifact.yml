@@ -16,15 +16,18 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      - name: Configure BYOND Version
+        uses: ./.github/actions/configure_byond_version
+        with:
+          major: ${{ inputs.major }}
+          minor: ${{ inputs.minor }}
+
       - parallel:
         - name: Setup Bun
           uses: ./.github/actions/setup_bun
 
-        - name: Restore BYOND from Cache
+        - name: Install BYOND
           uses: ./.github/actions/restore_or_install_byond
-          with:
-            major: ${{ inputs.major }}
-            minor: ${{ inputs.minor }}
 
       - name: Compile
         run: |
