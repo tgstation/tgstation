@@ -265,3 +265,51 @@
 		Perhaps one day you'll find peace. But not today."
 	database_id = MEDAL_DESENSITIZED
 	icon_state = "desensitized"
+
+/datum/award/achievement/misc/spicy_handshake
+	name = "Spicy Handshake"
+	desc = "Betray someone's trust in a way they'll never forget."
+	database_id = MEDAL_SPICY_HANDSHAKE
+	icon_state = "spicy_handshake"
+
+/datum/award/achievement/misc/down_low_too_slow
+	name = "Low Blow"
+	desc = "Outwit your fellow man in a display that any schoolchild could be proud of."
+	database_id = MEDAL_DOWN_LOW_TOO_SLOW
+	icon_state = "down_low_too_slow"
+
+/datum/award/achievement/misc/souvenir
+	name = "And All I Got Was This Lousy Achievement"
+	desc = "Take home a souvenir."
+	database_id = MEDAL_SOUVENIR
+	icon_state = "souvenir"
+
+/datum/award/achievement/misc/samaritan
+	name = "Good Samaritan"
+	desc = "Save a life with a timely intervention."
+	database_id = MEDAL_SAMARITAN
+	icon_state = "samaritan"
+
+/datum/award/achievement/misc/red_pill
+	name = "Red Pill"
+	desc = "Let's see how deep this rabbit hole goes."
+	database_id = MEDAL_RED_PILL
+	icon_state = "red_pill"
+
+/datum/award/achievement/misc/kong
+	name = "Rise of Kong"
+	desc = "I'm king of the jungle baby!!"
+	database_id = MEDAL_KONG
+	icon_state = "kong"
+
+/datum/award/achievement/misc/no_parking
+	name = "You Can't Park Here"
+	desc = "Attempted to park in someone else's reserved space."
+	database_id = MEDAL_NO_PARKING
+	icon_state = "no_parking"
+
+/datum/award/achievement/misc/clever_girl
+	name = "Clever Girl"
+	desc = "Life finds a way."
+	database_id = MEDAL_CLEVER_GIRL
+	icon_state = "clever_girl"

@@ -552,7 +552,7 @@
 		being_held_open = TRUE
 		crowbar_owner.balloon_alert_to_viewers("holding firelock open", "holding firelock open")
 		COOLDOWN_START(src, activation_cooldown, REACTIVATION_DELAY)
-		open()
+		open(opener = user)
 		if(QDELETED(crowbar_owner))
 			being_held_open = FALSE
 			return
@@ -569,7 +569,7 @@
 		return
 
 	if(density)
-		open()
+		open(opener = user)
 		if(active)
 			addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
 	else
@@ -598,7 +598,7 @@
 	if(welded || operating || machine_stat & NOPOWER)
 		return TRUE
 	if(density)
-		open()
+		open(opener = user)
 		if(active)
 			addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
 	else
@@ -613,7 +613,7 @@
 	if(welded)
 		balloon_alert(user, "refuses to budge!")
 		return
-	open()
+	open(opener = user)
 	if(active)
 		addtimer(CALLBACK(src, PROC_REF(correct_state)), 2 SECONDS, TIMER_UNIQUE)
 
@@ -682,7 +682,7 @@
 		INVOKE_ASYNC(src, PROC_REF(open))
 		return
 
-/obj/machinery/door/firedoor/open()
+/obj/machinery/door/firedoor/open(forced = DEFAULT_DOOR_CHECKS, mob/living/opener)
 	if(welded)
 		return
 	var/old_activity = active

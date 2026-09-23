@@ -106,10 +106,15 @@
 // /obj access signals
 #define COMSIG_AIRLOCK_SHELL_ALLOWED "airlock_shell_try_allowed"
 
+//from /obj/machinery/door/open(): (forced)
+#define COMSIG_MOB_OPENED_DOOR "mob_opened_door"
+
 // /obj/machinery/door/airlock signals
 
 //from /obj/machinery/door/airlock/open(): (forced)
 #define COMSIG_AIRLOCK_OPEN "airlock_open"
+//from /obj/machinery/door/airlock/open(): (forced)
+#define COMSIG_MOB_OPENED_AIRLOCK "mob_opened_airlock"
 //from /obj/machinery/door/airlock/close(): (forced)
 #define COMSIG_AIRLOCK_CLOSE "airlock_close"
 ///from /obj/machinery/door/airlock/set_bolt():
@@ -548,7 +553,7 @@
 ///from /datum/computer_file/program/nt_pay/_pay(), sent to every physical card of a bank account: (computer, money_received)
 #define COMSIG_ID_CARD_NTPAY_MONEY_RECEIVED "id_card_ntpay_money_received"
 
-///from base of /obj/item/mmi/set_brainmob(): (mob/living/brain/new_brainmob)
+///from base of /obj/item/brain_processor/set_brainmob(): (mob/living/brain/new_brainmob)
 #define COMSIG_MMI_SET_BRAINMOB "mmi_set_brainmob"
 
 /// from base of /obj/item/slimepotion/speed/interact_with_atom(): (obj/target, /obj/src, mob/user)

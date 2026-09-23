@@ -254,6 +254,7 @@
 	force_unwielded = 12
 	force_wielded = 18
 	icon_state = "pillow_lance0"
+	inhand_icon_state = "pillow_lance0"
 	icon_prefix = "pillow_lance"
 	hitsound = 'sound/items/pillow/pillow_hit.ogg'
 	///The current direction of the jousting.
@@ -330,6 +331,7 @@
 	name = "mattress shield"
 	desc = "A typical twin mattress repurposed into a makeshift shield"
 	icon_state = "mattress_shield"
+	inhand_icon_state = "mattress_shield"
 	damtype = STAMINA
 	force = 10
 	actions_types = list(/datum/action/item_action/fortify)

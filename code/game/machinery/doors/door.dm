@@ -342,7 +342,7 @@
 	// note: if the ID wire is cut no ID cards are checked at all! (This is intentional!)
 	if(access_bypass || (requiresID() && user_can_activate_door(user)))
 		if(density)
-			open()
+			open(opener = user)
 		else
 			close()
 		return TRUE
@@ -581,11 +581,15 @@
 
 /// Public proc that simply handles opening the door. Returns TRUE if the door was opened, FALSE otherwise.
 /// Use argument "forced" in conjunction with try_to_force_door_open if you want/need additional checks depending on how sorely you need the door opened.
-/obj/machinery/door/proc/open(forced = DEFAULT_DOOR_CHECKS)
+/obj/machinery/door/proc/open(forced = DEFAULT_DOOR_CHECKS, mob/living/opener)
 	if(!density)
 		return TRUE
 	if(operating)
 		return FALSE
+
+	if (opener)
+		SEND_SIGNAL(opener, COMSIG_MOB_OPENED_DOOR, forced)
+
 	operating = TRUE
 	use_energy(active_power_usage)
 	run_animation(DOOR_OPENING_ANIMATION)
