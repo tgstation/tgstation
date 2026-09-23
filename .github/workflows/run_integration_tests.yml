@@ -28,23 +28,24 @@ jobs:
     #
     # Otherwise, it will output `Run Tests (map; max)`.
     # For example, `Run Tests (runtimestation; 515)`.
-    name: Run Tests (${{ inputs.major && format('{0}.{1}; ', inputs.major, inputs.minor) || '' }}${{ inputs.map }}; ${{ inputs.max_required_byond_client }})
+    name: ${{ inputs.map }} ${{ inputs.major && format('({0}.{1})', inputs.major, inputs.minor) || '' }} (${{ inputs.max_required_byond_client }})
     runs-on: ubuntu-24.04
     timeout-minutes: 55
     steps:
       - uses: actions/checkout@v7
 
-      - name: Configure BYOND Version
+      - name: Configure BYOND version
+        if: inputs.major
         uses: ./.github/actions/configure_byond_version
         with:
           major: ${{ inputs.major }}
           minor: ${{ inputs.minor }}
 
       - parallel:
-        - name: Install BYOND
+        - name: Restore or install BYOND
           uses: ./.github/actions/restore_or_install_byond
 
-        - name: Download Build Outputs
+        - name: Download build artifact
           uses: actions/download-artifact@v8
           with:
             name: build-artifact-${{ inputs.major || env.BYOND_MAJOR }}-${{ inputs.minor || env.BYOND_MINOR }}
@@ -69,7 +70,7 @@ jobs:
           run: |
             bash tools/ci/install_dreamluau.sh
 
-      - name: Run Tests
+      - name: Run unit tests
         id: run_tests
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
@@ -108,7 +109,7 @@ jobs:
             echo "" >> $GITHUB_STEP_SUMMARY
           done
 
-      - name: Check client Compatibility
+      - name: Check client compatibility
         if: always() && steps.compile_tests.outcome == 'success'
         uses: tgstation/byond-client-compatibility-check@v3
         with:

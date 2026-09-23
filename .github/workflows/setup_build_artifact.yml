@@ -10,7 +10,7 @@ on:
 
 jobs:
   setup_build_artifact:
-    name: Setup build artifact (${{ format('{0}.{1}', inputs.major, inputs.minor) }})
+    name: Compile ${{ format('{0}.{1}', inputs.major, inputs.minor) }}
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
@@ -26,7 +26,7 @@ jobs:
         - name: Setup Bun
           uses: ./.github/actions/setup_bun
 
-        - name: Install BYOND
+        - name: Restore or install BYOND
           uses: ./.github/actions/restore_or_install_byond
 
       - name: Compile

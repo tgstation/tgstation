@@ -20,10 +20,10 @@ jobs:
         - name: Setup Bun
           uses: ./.github/actions/setup_bun
 
-        - name: Install BYOND
+        - name: Restore or install BYOND
           uses: ./.github/actions/restore_or_install_byond
 
-      - name: Compile All Maps
+      - name: Compile all maps
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build.sh --ci dm -DCIBUILDING -DCITESTING -DALL_MAPS
@@ -46,10 +46,10 @@ jobs:
         - name: Setup Bun
           uses: ./.github/actions/setup_bun
 
-        - name: Install BYOND
+        - name: Restore or install BYOND
           uses: ./.github/actions/restore_or_install_byond
 
-      - name: Compile All Maps
+      - name: Compile all templates
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build.sh --ci dm -DCIBUILDING -DCITESTING -DALL_TEMPLATES

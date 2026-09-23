@@ -33,7 +33,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: Find Maps
+      - name: Find maps
         id: map_finder
         background: true
         run: |
@@ -72,7 +72,7 @@ jobs:
         background: true
         uses: ./.github/actions/configure_byond_version
 
-      - name: Find Alternate Tests
+      - name: Find alternate tests
         id: alternate_test_finder
         background: true
         run: |

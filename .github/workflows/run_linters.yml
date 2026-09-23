@@ -59,7 +59,7 @@ jobs:
             fileName: "DMCompiler_linux-x64.tar.gz"
             extract: true
 
-        - name: Install Tools
+        - name: Install tools
           run: |
             pip3 install setuptools
             bash tools/ci/install_spaceman_dmm.sh dreamchecker
@@ -72,24 +72,24 @@ jobs:
         background: true
         run: bash tools/ci/check_genesis.sh
 
-      - name: Run Grep Checks
+      - name: Run grep checks
         if: ${{ !cancelled() }}
         background: true
         run: bash tools/ci/check_grep.sh
 
-      - name: Ticked File Enforcement
+      - name: Ticked file enforcement
         if: ${{ !cancelled() }}
         background: true
         run: |
           tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/tgstation_dme.json
           tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/unit_tests.json
 
-      - name: Check Define Sanity
+      - name: Check define sanity
         if: ${{ !cancelled() }}
         background: true
         run: tools/bootstrap/python -m define_sanity.check
 
-      - name: Check Trait Validity
+      - name: Check trait validity
         if: ${{ !cancelled() }}
         background: true
         run: tools/bootstrap/python -m trait_validity.check
@@ -105,37 +105,37 @@ jobs:
         background: true
         run: ./DMCompiler_linux-x64/DMCompiler tgstation.dme --suppress-unimplemented --define=CIBUILDING | bash tools/ci/annotate_od.sh
 
-      - name: Check Cutter
+      - name: Check Icon Cutter
         if: ${{ !cancelled() }}
         background: true
         run: tools/bootstrap/python -m tools.icon_cutter.check
 
-      - name: Run DMI Tests
+      - name: Run DMI tests
         if: ${{ !cancelled() }}
         background: true
         run: tools/bootstrap/python -m dmi.test
 
-      - name: Check File Directories
+      - name: Check file directories
         if: ${{ !cancelled() }}
         background: true
         run: bash tools/ci/check_filedirs.sh tgstation.dme
 
-      - name: Check Changelogs
+      - name: Check changelogs
         if: ${{ !cancelled() }}
         background: true
         run: bash tools/ci/check_changelogs.sh
 
-      - name: Check Miscellaneous Files
+      - name: Check miscellaneous files
         if: ${{ !cancelled() }}
         background: true
         run: bash tools/ci/check_misc.sh
 
-      - name: Run TGUI Checks
+      - name: Run TGUI checks
         if: ${{ !cancelled() }}
         background: true
         run: tools/build/build.sh --ci lint tgui-test
 
-      - name: Check for Map & Maplint File Edits
+      - name: Check for map and/or maplint file edits
         id: map-filter
         if: ${{ !cancelled() }}
         background: true
@@ -149,10 +149,10 @@ jobs:
             map_edits:
               - '**.dmm'
 
-      - name: Wait for Map Screener
-        wait: [map-filter]
+      - name: Wait for map screener
+        wait: map-filter
 
-      - name: Run Map Checks
+      - name: Run map checks
         if: ${{ !cancelled() && (steps.map-filter.outputs.tool_edits == 'true' || steps.map-filter.outputs.map_edits == 'true') }}
         run: |
           if [ "${{ steps.map-filter.outputs.tool_edits }}" = "true" ]; then

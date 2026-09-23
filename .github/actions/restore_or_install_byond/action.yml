@@ -5,7 +5,7 @@ description: Attempts to restore a specified BYOND version from cache; if it can
 runs:
   using: composite
   steps:
-    - name: Configure BYOND Version
+    - name: Configure BYOND version
       if: ${{ !env.BYOND_MAJOR }}
       uses: ./.github/actions/configure_byond_version
 
@@ -19,7 +19,7 @@ runs:
       with:
         path: ~/apt-cache
         key: ${{ runner.os }}-libcurl-i386
-    - name: Install 32-bit libcurl from cache
+    - name: Install libcurl from cache
       if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && steps.restore_libcurl_cache.outputs.cache-hit
       shell: bash
       run: |
@@ -31,7 +31,7 @@ runs:
       with:
         sample-size: 8192
         sample-time: 5
-    - name: Install 32-bit libcurl
+    - name: Install libcurl
       if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && !steps.restore_libcurl_cache.outputs.cache-hit
       shell: bash
       run: |
