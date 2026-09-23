@@ -33,57 +33,64 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - parallel:
-        - name: Find Maps
-          id: map_finder
-          run: |
-            > maps_output.txt
-            > map_configs.txt
+      - name: Find Maps
+        id: map_finder
+        background: true
+        run: |
+          > maps_output.txt
+          > map_configs.txt
 
-            for file in _maps/*.json; do
-              if ! jq -e '.exclude_from_ci == true' "$file" >/dev/null 2>&1; then
-                map_name=$(basename "$file" .json)
+          for file in _maps/*.json; do
+            if ! jq -e '.exclude_from_ci == true' "$file" >/dev/null 2>&1; then
+              map_name=$(basename "$file" .json)
 
-                echo "\"$map_name\"" >> maps_output.txt
-                echo "map $map_name" >> map_configs.txt
-                echo "endmap" >> map_configs.txt
-              else
-                echo "Excluded: $file"
-              fi
-            done
+              echo "\"$map_name\"" >> maps_output.txt
+              echo "map $map_name" >> map_configs.txt
+              echo "endmap" >> map_configs.txt
+            else
+              echo "Excluded: $file"
+            fi
+          done
 
-            map_list=$(paste -sd, maps_output.txt)
-            echo "Maps: $map_list"
-            echo "maps={\"paths\":[$map_list]}" >> "$GITHUB_OUTPUT"
+          map_list=$(paste -sd, maps_output.txt)
+          echo "Maps: $map_list"
+          echo "maps={\"paths\":[$map_list]}" >> "$GITHUB_OUTPUT"
 
-            echo "map_config<<EOF" >> "$GITHUB_OUTPUT"
-            cat map_configs.txt >> "$GITHUB_OUTPUT"
-            echo "EOF" >> "$GITHUB_OUTPUT"
+          echo "map_config<<EOF" >> "$GITHUB_OUTPUT"
+          cat map_configs.txt >> "$GITHUB_OUTPUT"
+          echo "EOF" >> "$GITHUB_OUTPUT"
 
-        - name: Find Alternate Tests
-          id: alternate_test_finder
-          run: |
-            ALTERNATE_TESTS_JSON=$(jq -nRc '[inputs | capture("^(?<major>[0-9]+)\\.(?<minor>[0-9]+): (?<map>[^;]+);?(?<max_client_version>[0-9]+)?$")]' .github/alternate_byond_versions.txt)
-            echo "alternate_tests=$ALTERNATE_TESTS_JSON" >> $GITHUB_OUTPUT
+      - name: Find Alternate Tests
+        id: alternate_test_finder
+        background: true
+        run: |
+          ALTERNATE_TESTS_JSON=$(jq -nRc '[inputs | capture("^(?<major>[0-9]+)\\.(?<minor>[0-9]+): (?<map>[^;]+);?(?<max_client_version>[0-9]+)?$")]' .github/alternate_byond_versions.txt)
+          echo "alternate_tests=$ALTERNATE_TESTS_JSON" >> $GITHUB_OUTPUT
 
-        - name: Collect byond client version configuration
-          id: max_required_byond_client
-          #the regex here does not filter out non-numbers because error messages about no input are less helpful then error messages about bad input (which includes the bad input)
-          run: |
-            echo "max_required_byond_client=$(grep -Ev '^[[:blank:]]{0,}#{1,}|^[[:blank:]]{0,}$' .github/max_required_byond_client.txt | tail -n1)" >> $GITHUB_OUTPUT
+      - name: Collect byond client version configuration
+        id: max_required_byond_client
+        background: true
+        #the regex here does not filter out non-numbers because error messages about no input are less helpful then error messages about bad input (which includes the bad input)
+        run: |
+          echo "max_required_byond_client=$(grep -Ev '^[[:blank:]]{0,}#{1,}|^[[:blank:]]{0,}$' .github/max_required_byond_client.txt | tail -n1)" >> $GITHUB_OUTPUT
 
-        - name: Set up BYOND cache
-          uses: ./.github/actions/restore_or_install_byond
+      - name: Set up BYOND cache
+        id: setup-byond-cache
+        background: true
+        uses: ./.github/actions/restore_or_install_byond
 
-        - name: Set up required build versions
-          id: setup_required_build_versions
-          run: |
-            DEFAULT_VERSION='[{"major": "${{ env.BYOND_MAJOR }}","minor": "${{ env.BYOND_MINOR }}"}]'
-            ALTERNATE_VERSIONS='${{ steps.alternate_test_finder.outputs.alternate_tests }}'
+      - name: Wait for build information
+        wait: [setup-byond-cache, alternate_test_finder]
 
-            REQUIRED_BUILD_VERSIONS=$(jq -nc \
-              --argjson alternate "$ALTERNATE_VERSIONS" \
-              --argjson default "$DEFAULT_VERSION" '
-              ($alternate + $default) | map({major, minor}) | unique
-            ')
-            echo "required_build_versions=$REQUIRED_BUILD_VERSIONS" >> $GITHUB_OUTPUT
+      - name: Set up required build versions
+        id: setup_required_build_versions
+        run: |
+          DEFAULT_VERSION='[{"major": "${{ env.BYOND_MAJOR }}","minor": "${{ env.BYOND_MINOR }}"}]'
+          ALTERNATE_VERSIONS='${{ steps.alternate_test_finder.outputs.alternate_tests }}'
+
+          REQUIRED_BUILD_VERSIONS=$(jq -nc \
+            --argjson alternate "$ALTERNATE_VERSIONS" \
+            --argjson default "$DEFAULT_VERSION" '
+            ($alternate + $default) | map({major, minor}) | unique
+          ')
+          echo "required_build_versions=$REQUIRED_BUILD_VERSIONS" >> $GITHUB_OUTPUT

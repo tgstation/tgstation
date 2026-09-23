@@ -123,10 +123,10 @@ jobs:
           if: ${{ !cancelled() }}
           run: tools/build/build.sh --ci lint tgui-test
 
-      # Unfortunately this has to be outside of the parallel group because of the screening step.
       - name: Check for Map & Maplint File Edits
         id: map-filter
         if: ${{ !cancelled() }}
+        background: true
         uses: dorny/paths-filter@v4
         with:
           list-files: shell
@@ -136,6 +136,9 @@ jobs:
               - 'tools/mapmerge2/**'
             map_edits:
               - '**.dmm'
+
+      - name: Wait for Map Screener
+        wait: [map-filter]
 
       - name: Run Map Checks
         if: ${{ !cancelled() && (steps.map-filter.outputs.tool_edits == 'true' || steps.map-filter.outputs.map_edits == 'true') }}
