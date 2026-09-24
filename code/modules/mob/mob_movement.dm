@@ -523,14 +523,7 @@ GAME_VERB_HIDDEN_INSTANT(/client, toggle_walk_run, "toggle-walk-run")
  * - new_state: The move state we're being set to.
  */
 /mob/living/proc/set_move_intent(new_state)
-	if(isnull(new_state))
-		if(user_mob.move_intent != MOVE_INTENT_WALK)
-			new_state = MOVE_INTENT_WALK
-		else
-			new_state = MOVE_INTENT_RUN
-
 	move_intent = new_state
-
 	hud_used?.screen_objects[HUD_MOB_MOVE_INTENT]?.update_appearance()
 	update_move_intent_slowdown()
 	SEND_SIGNAL(src, COMSIG_MOVE_INTENT_TOGGLED)
