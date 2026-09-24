@@ -103,9 +103,9 @@ export function PlantAnalyzerTrayStats(props) {
               tooltip="The plant starts withering without nutrients, unless it is a weed. Nutrients may affect plant and tray stats."
             >
               {tray_data.reagents.length > 0 ? (
-                <Box>
+                <Box className="PlantAnalyzer__nutrients">
                   <ProgressBar
-                    width="234px" // why won't you scale??
+                    width="100%"
                     position="absolute"
                     value={0}
                     color="transparent"
@@ -119,8 +119,9 @@ export function PlantAnalyzerTrayStats(props) {
                   {tray_data.reagents.map((reagent, i) => (
                     <ProgressBar
                       key={`${i}-${reagent.name}`}
+                      className="PlantAnalyzer__nutrients__reagent"
                       mb={-0.5}
-                      width={`${(reagent.volume / tray_data.nutri_max) * 234}px`}
+                      width={`${(reagent.volume / tray_data.nutri_max) * 100}%`}
                       value={1}
                       color={reagent.color}
                       empty
