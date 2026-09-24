@@ -154,6 +154,8 @@
 	///What was our power state the last time we updated its appearance?
 	///TRUE for on, FALSE for off, -1 for never checked
 	var/appearance_power_state = -1
+	/// If set to a number we always sit at this power bar tier
+	var/forced_power_bar_tier = null
 
 /datum/armor/obj_machinery
 	melee = 25

@@ -144,10 +144,6 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 
 	. = ..()
 
-	if(SSpower_bars.enabled)
-		machine.update_for_power_bars()
-		return
-
 	if(replacement_parts)
 		for(var/part in replacement_parts)
 			if(ispath(part, /obj/item))
@@ -157,10 +153,15 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 				thing.forceMove(machine)
 			machine.component_parts += part
 		replacement_parts = null
-	else
+
+	else if(!SSpower_bars.enabled)
+		// despite the name this instances a bunch of stuff
 		flatten_component_list(machine)
 
-	machine.RefreshParts()
+	if(SSpower_bars.enabled)
+		machine.update_for_power_bars()
+	else
+		machine.RefreshParts()
 
 /obj/item/circuitboard/machine/examine(mob/user)
 	. = ..()

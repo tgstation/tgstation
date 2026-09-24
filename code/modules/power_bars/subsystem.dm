@@ -40,7 +40,8 @@ SUBSYSTEM_DEF(power_bars)
 	)
 
 	delete_redundant_designs()
-	distribute_power_bars() // this will be laggy unfortunately
+	if(enabled)
+		distribute_power_bars() // this will be laggy unfortunately
 
 	return SS_INIT_SUCCESS
 

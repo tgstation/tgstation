@@ -7,7 +7,7 @@
 	if (isnull(area))
 		return
 
-	var/stock_part_tier = SSpower_bars.stock_part_tier(SSpower_bars.power_bars_of_area(area))
+	var/stock_part_tier = SSpower_bars.stock_part_tier(isnum(forced_power_bar_tier) ? forced_power_bar_tier : SSpower_bars.power_bars_of_area(area))
 
 	if (!(locate(/datum/stock_part) in component_parts))
 		// We are rebuilding from a machine frame, maybe.

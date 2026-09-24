@@ -218,24 +218,24 @@
 				"forward_message" = "secured capacitor",
 				"backward_message" = "removed capacitor",
 			),
+			list(
+				"key" = /obj/item/stock_parts/servo,
+				"action" = ITEM_MOVE_INSIDE,
+				"back_key" = TOOL_SCREWDRIVER,
+				"desc" = "Scanning module is secured, the <b>servo</b> can be added.",
+				"forward_message" = "added servo",
+				"backward_message" = "unsecured capacitor",
+			),
+			list(
+				"key" = TOOL_SCREWDRIVER,
+				"back_key" = TOOL_CROWBAR,
+				"desc" = "Servo is installed, and can be <b>screwed</b> into place.",
+				"forward_message" = "secured servo",
+				"backward_message" = "removed servo",
+			),
 		)
 
 	stock_part_steps += list(
-		list(
-			"key" = /obj/item/stock_parts/servo,
-			"action" = ITEM_MOVE_INSIDE,
-			"back_key" = TOOL_SCREWDRIVER,
-			"desc" = "Scanning module is secured, the <b>servo</b> can be added.",
-			"forward_message" = "added servo",
-			"backward_message" = "unsecured capacitor",
-		),
-		list(
-			"key" = TOOL_SCREWDRIVER,
-			"back_key" = TOOL_CROWBAR,
-			"desc" = "Servo is installed, and can be <b>screwed</b> into place.",
-			"forward_message" = "secured servo",
-			"backward_message" = "removed servo",
-		),
 		list(
 			"key" = /obj/item/stock_parts/power_store/cell,
 			"action" = ITEM_MOVE_INSIDE,
