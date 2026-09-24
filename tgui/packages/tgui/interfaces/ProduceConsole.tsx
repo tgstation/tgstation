@@ -170,6 +170,7 @@ function ShoppingTab(props) {
                 <Table.Cell collapsing>
                   <Button
                     icon="minus"
+                    disabled={findAmount(item_amts, item.name) <= 0}
                     onClick={() =>
                       act('remove_one', {
                         target: item.ref,
@@ -178,6 +179,7 @@ function ShoppingTab(props) {
                   />
                   <Button
                     icon="plus"
+                    disabled={findAmount(item_amts, item.name) >= item.max}
                     onClick={() =>
                       act('add_one', {
                         target: item.ref,
@@ -188,7 +190,7 @@ function ShoppingTab(props) {
                     value={findAmount(item_amts, item.name)}
                     width="41px"
                     minValue={0}
-                    maxValue={20}
+                    maxValue={item.max}
                     step={1}
                     onChange={(value) =>
                       act('cart_set', {
@@ -326,7 +328,11 @@ function CheckoutTab(props) {
                     value={item.amt}
                     width="41px"
                     minValue={0}
-                    maxValue={item.max - (item.other_amt ?? 0)}
+                    maxValue={
+                      item.is_free
+                        ? (free_uses ?? 10)
+                        : item.max - (item.other_amt ?? 0)
+                    }
                     step={1}
                     onChange={(value) =>
                       act('cart_set', {
