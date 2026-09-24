@@ -71,6 +71,8 @@ jobs:
         id: restore_or_install_byond
         background: true
         uses: ./.github/actions/restore_or_install_byond
+        with:
+          skip_cache_download: true
 
       - name: Find alternate tests
         id: alternate_test_finder

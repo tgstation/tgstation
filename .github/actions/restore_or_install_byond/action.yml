@@ -2,6 +2,13 @@
 name: Restore or Install BYOND
 description: Attempts to restore a specified BYOND version from cache; if it can't, it installs it.
 
+inputs:
+  skip_cache_download:
+    description: 'If true, we only check if the cache is hit and dont download it'
+    required: false
+    type: bool
+    default: false
+
 runs:
   using: composite
   steps:
@@ -19,18 +26,22 @@ runs:
       with:
         path: ~/apt-cache
         key: ${{ runner.os }}-libcurl-i386
+        lookup-only: skip_cache_download
+
     - name: Install libcurl from cache
-      if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && steps.restore_libcurl_cache.outputs.cache-hit
+      if: inputs.skip_cache_download && env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && steps.restore_libcurl_cache.outputs.cache-hit
       shell: bash
       run: |
         sudo dpkg --add-architecture i386
         sudo dpkg -i ~/apt-cache/*.deb
+
     - name: Find fastest APT mirror
       if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && !steps.restore_libcurl_cache.outputs.cache-hit
       uses: vegardit/fast-apt-mirror.sh@v1
       with:
         sample-size: 8192
         sample-time: 5
+
     - name: Install libcurl
       if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && !steps.restore_libcurl_cache.outputs.cache-hit
       shell: bash
@@ -41,6 +52,7 @@ runs:
         sudo apt-get install -y -o Keep-Downloaded-Packages=true --no-install-recommends libcurl4t64:i386
         mkdir -p ~/apt-cache
         cp /var/cache/apt/archives/*.deb ~/apt-cache/
+
     - name: Save libcurl cache
       if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && !steps.restore_libcurl_cache.outputs.cache-hit
       uses: actions/cache/save@v6.1.0
@@ -58,10 +70,13 @@ runs:
       with:
         path: ~/BYOND
         key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
+        lookup-only: skip_cache_download
+
     - name: Install BYOND
       if: ${{ !steps.restore_byond_cache.outputs.cache-hit }}
       shell: bash
       run: bash tools/ci/install_byond.sh
+
     - name: Save BYOND cache
       if: ${{ !steps.restore_byond_cache.outputs.cache-hit }}
       uses: actions/cache/save@v6.1.0
