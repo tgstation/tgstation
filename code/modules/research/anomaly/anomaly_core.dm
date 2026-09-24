@@ -90,7 +90,7 @@
 	core_color = COLOR_DARK_CYAN
 
 /obj/item/assembly/signaler/anomaly/bluespace/signal()
-	var/atom/movable/to_teleport = get_teleportable_container(src, container_flags = TELEPORT_CONTAINER_INCLUDE_SEALED_MODSUIT)
+	var/atom/movable/to_teleport = get_loose_container(src, container_flags = LOOSE_CONTAINER_INCLUDE_SEALED_MODSUIT)
 	if(!to_teleport)
 		return
 	var/turf/teleportable_turf = get_turf(to_teleport)

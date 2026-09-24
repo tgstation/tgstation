@@ -45,7 +45,6 @@
 	enabled = FALSE,
 	uplink_flag = UPLINK_TRAITORS,
 	starting_tc = TELECRYSTALS_DEFAULT,
-	has_progression = FALSE,
 	datum/uplink_handler/uplink_handler_override,
 )
 
@@ -81,7 +80,6 @@
 		uplink_handler = new()
 		uplink_handler.uplink_flag = uplink_flag
 		uplink_handler.telecrystals = starting_tc
-		uplink_handler.has_progression = has_progression
 		uplink_handler.purchase_log = purchase_log
 	else
 		uplink_handler = uplink_handler_override
@@ -167,9 +165,7 @@
 		return
 	var/list/data = list()
 	data["telecrystals"] = uplink_handler.telecrystals
-	data["progression_points"] = uplink_handler.progression_points
 	data["joined_population"] = length(GLOB.joined_player_list)
-	data["current_progression_scaling"] = SStraitor.current_progression_scaling
 
 	if(uplink_handler.primary_objectives)
 		var/list/primary_objectives = list()
@@ -204,7 +200,6 @@
 			"limited_stock" = item.limited_stock,
 			"restricted_roles" = item.restricted_roles,
 			"restricted_species" = item.restricted_species,
-			"progression_minimum" = item.progression_minimum,
 			"population_minimum" = item.population_minimum,
 			"ref" = REF(item),
 		))
@@ -223,7 +218,6 @@
 /datum/component/uplink/ui_static_data(mob/user)
 	var/list/data = list()
 	data["uplink_flag"] = uplink_handler.uplink_flag
-	data["has_progression"] = uplink_handler.has_progression
 	data["lockable"] = lockable
 	data["assigned_role"] = uplink_handler.assigned_role
 	data["assigned_species"] = uplink_handler.assigned_species

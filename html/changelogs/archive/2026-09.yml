@@ -144,3 +144,237 @@
   - rscadd: Some collars are now able to be cuffed to your arm.
   vinylspiders:
   - bugfix: fixes bot move path overlays not showing up
+2026-09-12:
+  OnlineGirlfriend:
+  - rscadd: pinup posters
+  timothymtorres:
+  - rscadd: Add 3 new kudzu mutations - slippery, radioactive, and conductive
+  - rscadd: Venus Flytraps will inherit mutations from kudzu that can be beneficial
+      or negative that can affect stats, abilities, etc.
+  - balance: Halved Venus Flytrap health and regen. Venus Flytraps can no longer move
+      off weeds without taking damage unless they have the aggressive spread mutation.
+  - rscadd: Weedkiller/Plant-B-Gone instakills alien weeds
+  - rscadd: Weedkiller grenades now use weedkiller chemical and not Plant-B-Gone
+  - balance: Halved the damage from Plant-B-Gone vs kudzu and plants
+  - bugfix: Fixed hardening kudzu mutation not providing a 50% resistance to sharpened
+      weapons.
+  - bugfix: Fixed thorn kudzu mutation not retaliating against players who attack
+      it.
+  - qol: Add examine blocks to flavour text for Venus Trap Ghost Spawners that includes
+      their inherited mutations
+2026-09-13:
+  KingkumaArt:
+  - image: added 4 new mech pilot suits, purchasable from cargo!
+2026-09-14:
+  Fghj240:
+  - balance: simplemob bomb armor grants linearly scaling damage reduction vs bombs
+      instead of a random chance to reduce damage
+  - bugfix: bomb immunity works on simplemobs
+  - bugfix: bomb armor now protects simplemobs from being gibbed by explosions
+  - code_imp: simplemob bomb code is less repetitive
+  Melbert:
+  - rscdel: Toy guns no longer have cosmetic recoil effects
+  - balance: Bananium swords are now slippier, particularly in the hands of clowns
+  - balance: Bananium shields are now slippier, particularly in the hands of clowns
+  - balance: Added and removed several items from the clown operative outfit and uplink
+  - spellcheck: 'Fix blood trail examine: "That''s a trail of blood" instead of "that''s
+      some trail of blood"'
+  timothymtorres:
+  - bugfix: Fix cargo stray supply pod runtime
+  vinylspiders:
+  - bugfix: brings back the tg window icon that mysteriously went missing for a couple
+      days
+  - refactor: changed the way ChangeTurf() handles signal registration, please report
+      any weird issues with stuff that usually happens on entering certain turfs (elevation,
+      bananium squeaks, lava burning things, etc)
+2026-09-15:
+  ArcaneMusic:
+  - qol: All Mechs now have a toggle to trim down the modules pane of the Mech UI.
+  - qol: Mechs will now show their overlock percentage without having it enabled.
+  - spellcheck: Mechs when examined now format their integrity text the same as when
+      other things are falling apart.
+  Jacquerel:
+  - image: Added icons for the achievements "I Was a Teenage Anarchist", "A Bowl-d
+      New World", and "How Do I Switch Hands???"
+  JohnFulpWillard:
+  - rscadd: Added bruise wounds to your hands if you attack people in a near-death
+      state. They show up on autopsies.
+  Melbert:
+  - bugfix: Fixes Kilo's gas turbine burning Atmos down on use
+  Voyaker-coder:
+  - rscadd: Adds a functional firing delay to the Abductor "Shrink Ray" pistol
+  YesterdaysPromise:
+  - rscadd: Added Fonarstolbes, Podsneyzkas, Vahrezjias, Inozhakusts, Plasma Flowers,
+      and Drake Beets as Icebox plantlife and botany plants.
+  - rscadd: 'Added following chemicals: Guidoferrunitian Glycetamine (Found in Fonarstolbes)  and
+      Berserk Toxin (Found in Vahrezjias)'
+  - rscadd: Added Nutrient Bars, Iceberg Soup, Drake Borscht, Wolf Goulash, Snowdrake
+      BBQ, Wendigo Killer Feast, and Ice Breaker to cooking recipes.
+  - rscadd: Added Mouthwash (from fermented Inozhakusts), Strong Mouthwash, Stone
+      Cold Stout, Icy Dorf, Ramp Rager, Ice Grave and Frozen-Sea Lantern drinks.
+  sqnztb:
+  - bugfix: radio and entertainment chatter are no longer filtered out by local chat.
+  timothymtorres:
+  - bugfix: Fix supermatter spiders not having web immunity trait
+  vinylspiders:
+  - bugfix: fixes an issue that can cause the holodeck to stop functioning for the
+      entire round
+  - bugfix: the carrier choice dropdown in the bring your pets to work day menu is
+      now visible
+2026-09-16:
+  Fghj240:
+  - spellcheck: cybernetic fangs aren't called advanced in the printer anymore.
+  - bugfix: cybernetic fangs moved to combat cybernetic organs
+  Melbert:
+  - qol: Many, many, many RND designs (primarily computers and machines) now have
+      more informative descriptions that explain what they do, rather than only stating
+      "This is a circuitboard."
+  - spellcheck: Examining a PanD.E.M.I.C 2200, Sheet-meister 2000, or the R&D Server
+      Controller now reads as "That's a [thing]" rather than "That's [thing]".
+  necromanceranne:
+  - balance: The CMO now has an advanced medical scanner in their medkit.
+  - balance: You can now once again print defibrillators and their compact variant
+      (with the researched tech) from cargo.
+  - balance: Defibs now can have their safeties switched off by EMP blasts. However,
+      they reset after a while.
+  - balance: The CMO's unique compact defibrillator has double the recharge rate.
+  vinylspiders:
+  - bugfix: fixes a bug that would cause a goldgrub to sometimes spawn a bugged boulder
+      when hitting a boss vent
+  - bugfix: boss vents can actually give diamonds and bluespace now like they're supposed
+      to
+  - bugfix: fixes an issue where the tooltips on the escape menu buttons would be
+      render behind the buttons themselves
+2026-09-17:
+  FalloutFalcon:
+  - config: Removes "Disable mood" config
+  - code_imp: Dummies have a blank mood datum
+  Jacquerel:
+  - rscadd: Plasmamen wearing a human skin suit won't catch fire. The suit itself
+      is flammable though, so make sure you change while under a shower or something.
+  - rscadd: Breathing Miasma can get you sick with the same diseases you get from
+      eating dirty food off the floor.
+  - bugfix: Bitrunning antagonists can once again escape from an emagged server
+  MrMelbert:
+  - map: '[Icebox] Remapped Atmospherics. The hallway of pain is gone.'
+  - map: '[Icebox] Remapped maintenance around Atmos and Science a bit.'
+  - image: Adds long corner trimline decals
+  PapaMichael:
+  - qol: AI shells now appear "off" when not being actively piloted.
+  Redwizz99:
+  - rscadd: bluspace scrubber and gas receiver machinery
+  - rscadd: bluespace scrubber and gas receiver circuits
+  - rscadd: adds bluespace scubber and gas receiver to tech node
+  - rscadd: sprites for bluespace scrubber and gas receiver
+  - rscadd: you can disconnect scrubbers linked to receiver, just use wirecutter
+2026-09-18:
+  Melbert:
+  - rscdel: 'Heretic: "Crimson Cleave" spell removed.'
+  - rscadd: 'Heretic: Adds "The Crimson Cleaver", a tier four knowledge. A weapon
+      that can cleave and lifesteal. Non-heretics are capable of wielding it, at the
+      expense of their sanity and mind...'
+  - rscadd: 'Heretic: Adds "Rhythmic Lodestone", a tier one knowledge, which lets
+      the heretic track any imbued object with their living heart.'
+  - rscadd: 'Heretic: Adds "Blessed Poppy", a tier one knowledge, which heals wounds
+      and stabilizes mobs. Can be used by non-heretics.'
+  tontyGH:
+  - refactor: Man-Machine Interfaces and positronic brains have been rewritten internally.
+      Please report any unexpected behaviour.
+  vinylspiders:
+  - bugfix: fixes fish food missing their lefthand icon, and boxcutter should show
+      its inhand icon now, as well as a whole bunch of other random items that were
+      not linked up with their existing inhand icon states
+  - rscadd: Adds two new pinup bunny contraband posters
+2026-09-20:
+  Dmeto:
+  - bugfix: Gateway object collision aligns with itself.
+  Gboster-0:
+  - bugfix: pet carrier doors no longer clip through gags + pet carriers visual lock
+      indicator is no longer broken (it was for 2-5 years)
+  Melbert:
+  - spellcheck: '"gas pump" renamed to "pressure pump"'
+  - spellcheck: '"volumetric gas pump" renamed to "volume pump"'
+  - spellcheck: '"pressure valve" renamed to "pressure gate"'
+  - spellcheck: 'In the pipe dispenser UI only: "unary vent" renamed to "pump vent".'
+  - qol: In the pipe dispenser UI, most components now have a tooltip explaining what
+      they do and how they work.
+  PapaMichael:
+  - bugfix: Flashbangs now require both eye and ear protection to mitigate their effects,
+      not just ear protection
+  - rscdel: Removed traitor reputation
+  - balance: Powerful traitor items are no longer timegated
+  SmArtKar:
+  - bugfix: Fixed wounds not disabling limbs when they should, and disabling them
+      when splinted
+  TealSeer:
+  - bugfix: fixed R&D console not showing the name of who queued a research node
+  - bugfix: fixed being unable to dequeue research nodes you queued
+  Y0SH1M4S73R:
+  - rscadd: Relics are now assemblies - they can be attached to wires and connected
+      to other assemblies
+  - bugfix: The dimensional shifting relic effect's cooldown now increases as it was
+      intended to
+  desertmote:
+  - rscadd: You can visually tell how soaked someone is, and the drip VFX doesn't
+      display when you're only marginally wet
+  - image: The electric guitar can now be worn on your back-slot, and has a worn icon
+      state to match
+  necromanceranne:
+  - qol: Rapid part exchange devices now hold significantly more parts, equivalent
+      to their bluespace upgraded version.
+  oranges:
+  - balance: Secure crates are now easier to open thanks to budget cuts
+  the-orange-cow:
+  - bugfix: all directional glow effects work after being taken out of a bag
+  timothymtorres:
+  - code_imp: Add emissive effects to supermatter shards, gas meters, thermomachines,
+      pipe devices (filters, mixers, pumps, valves, etc.), circulator heat exchange,
+      SMESs, and PACMAN generators. Default SM now emits light even when not active.
+  - image: Add light masks to supermatter shards, gas meters, thermomachines, pipe
+      devices (filters, mixers, pumps, valves, etc.), circulator heat exchange, SMESs,
+      and PACMAN generators.
+  - rscadd: Holosigns are now vulnerable to EMPs
+  vinylspiders:
+  - bugfix: fixes runtime/race condition with quick and slow shuttle station traits
+      not being applied, fixes a roundstart runtime caused by alert levels trying
+      to be changed before the shuttle is created.
+2026-09-21:
+  Melbert:
+  - bugfix: You can sell, not buy, Nitrium
+  Richard Blonski:
+  - bugfix: Fixed TTS playing on messages that are out of range to be understood.
+  timothymtorres:
+  - code_imp: Remove unused lung defines
+2026-09-22:
+  ArcaneMusic:
+  - code_imp: The round end screen now logs the amount of mail opened by players throughout
+      the shift.
+  - bugfix: fixes logging for cargo crates and cargo crate requests by job.
+  Jacquerel:
+  - rscadd: You can earn meaningless awards from completing several new tasks
+  Melbert:
+  - admin: Admins can toggle off events in the event panel
+  - balance: All skeleton organs are now considered "mineral" organ, stopping most
+      chems from working on them
+  - balance: All plasmamen organs are now "organic + mineral", allowing most chems
+      to work on them again
+  - bugfix: Ensures bodyparts correctly track their parent's dna
+  PapaMichael:
+  - bugfix: The Detomatix disk now actually sends spoofed messages
+  SmArtKar:
+  - bugfix: Fixed potential medibot harddels
+  TheRyeGuyWhoWillNowDie:
+  - bugfix: Kilo toxins has a holofan now :D
+  - map: kilo toxins is slightly bigger and the kilo cargo warehouse is slightly smaller
+  desertmote:
+  - rscadd: Lizard angler horn now has an emissive effect
+  - image: Changed lizard frills to have their west and east icon layer above hats
+  vinylspiders:
+  - bugfix: instrument volume slider now works as intended
+2026-09-23:
+  Co0kie-GG:
+  - rscadd: AI can now see emotes touch cameras
+  SmArtKar:
+  - bugfix: Fixed shoes and a bunch of other items not being washable
+  necromanceranne:
+  - bugfix: Cybernetic fangs use the correct, metallic icon state.

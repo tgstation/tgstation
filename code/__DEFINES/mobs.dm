@@ -128,10 +128,6 @@
 	"skeletal", \
 )
 
-//Lung respiration type flags
-#define RESPIRATION_OXYGEN (1 << 0)
-#define RESPIRATION_N2 (1 << 1)
-#define RESPIRATION_PLASMA (1 << 2)
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human/bodyparts_greyscale.dmi'
 
 //Bodytype defines for surgery, and other misc things.
@@ -429,6 +425,8 @@
 #define SLIPPERY_WHEN_LYING_DOWN (1<<6)
 ///Like sliding, but it's short, it doesn't knockdown, it doesn't stun, it just staggers a bit.
 #define WEAK_SLIDE (1<<7)
+/// You can even slip if you're experiencing nograv or flying
+#define SLIP_IN_NOGRAV (1<<8)
 
 #define MAX_CHICKENS 50
 

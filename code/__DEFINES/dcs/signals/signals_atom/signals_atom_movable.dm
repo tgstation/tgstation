@@ -9,6 +9,8 @@
 	#define COMPONENT_MOVABLE_BLOCK_PRE_MOVE (1<<0)
 ///from base of atom/movable/Moved(): (atom/old_loc, dir, forced, list/old_locs)
 #define COMSIG_MOVABLE_MOVED "movable_moved"
+/// Sent to an existing occupant during base turf Initialize(), before subtype effects: (turf/initializing_turf)
+#define COMSIG_MOVABLE_TURF_INITIALIZING "movable_turf_initializing"
 ///from base of atom/movable/Cross(): (/atom/movable)
 #define COMSIG_MOVABLE_CROSS "movable_cross"
 	#define COMPONENT_BLOCK_CROSS (1<<0)

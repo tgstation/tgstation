@@ -246,6 +246,7 @@
 	AddComponent(/datum/component/power_bar_reactor)
 
 /obj/machinery/power/apc/Destroy()
+	SSmachines.processing_apcs -= src
 	if(malfai)
 		malfai.hacked_apcs -= src
 		malfai = null

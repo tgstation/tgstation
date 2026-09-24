@@ -39,10 +39,12 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_PDA_GLITCHED "station_trait_pda_glitched"
 #define STATION_TRAIT_PREMIUM_INTERNALS "station_trait_premium_internals"
 #define STATION_TRAIT_PUN_PUN_GYM_DAY "station_trait_pun_pun_gym_day"
+#define STATION_TRAIT_QUICK_SHUTTLE "station_trait_quick_shuttle"
 #define STATION_TRAIT_RADIOACTIVE_NEBULA "station_trait_radioactive_nebula"
 #define STATION_TRAIT_RANDOM_ARRIVALS "station_trait_random_arrivals"
 #define STATION_TRAIT_REVOLUTIONARY_TRASHING "station_trait_revolutionary_trashing"
 #define STATION_TRAIT_SHUTTLE_SALE "station_trait_shuttle_sale"
+#define STATION_TRAIT_SLOW_SHUTTLE "station_trait_slow_shuttle"
 #define STATION_TRAIT_SMALLER_PODS "station_trait_smaller_pods"
 #define STATION_TRAIT_SPIDER_INFESTATION "station_trait_spider_infestation"
 #define STATION_TRAIT_UNIQUE_AI "station_trait_unique_ai"
@@ -1744,5 +1746,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Applied to groundless turfs like space to allow gravity negating effects like magboots to function on them
 #define TRAIT_ALLOWS_GRAVITY_NEGATION "allows_gravity_negation"
+
+/// Mobs with this trait will appear as human to medical scanners even if they are not human
+#define TRAIT_HUMAN_DISGUISE "human_disguise"
 
 // END TRAIT DEFINES
