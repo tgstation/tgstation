@@ -506,18 +506,18 @@ GAME_VERB_HIDDEN(/client, body_l_leg, "body-l-leg")
 GAME_VERB_HIDDEN_INSTANT(/client, toggle_walk_run, "toggle-walk-run")
 	if(isliving(mob))
 		var/mob/living/user_mob = mob
-		user_mob.toggle_move_intent()
+		if(user_mob.move_intent != MOVE_INTENT_WALK)
+			user_mob.set_move_intent(MOVE_INTENT_WALK)
+		else
+			user_mob.set_move_intent(MOVE_INTENT_RUN)
 
 /**
  * Toggle the move intent of the mob
  *
  * triggers an update the move intent hud as well
  */
-/mob/living/proc/toggle_move_intent()
-	if(move_intent == MOVE_INTENT_RUN)
-		move_intent = MOVE_INTENT_WALK
-	else
-		move_intent = MOVE_INTENT_RUN
+/mob/living/proc/set_move_intent(new_state)
+	move_intent = new_state
 
 	hud_used?.screen_objects[HUD_MOB_MOVE_INTENT]?.update_appearance()
 	update_move_intent_slowdown()
