@@ -50,17 +50,6 @@ jobs:
             name: build-artifact-${{ inputs.major || env.BYOND_MAJOR }}-${{ inputs.minor || env.BYOND_MINOR }}
             path: ./
 
-        - name: Setup database
-          env:
-            MYSQL_CONFIG_FILE: tools/ci/mysql_config.cnf
-          run: |
-            sudo systemctl start mysql
-            mysql --defaults-extra-file=${{ env.MYSQL_CONFIG_FILE }} -e 'CREATE DATABASE tg_ci;'
-            mysql --defaults-extra-file=${{ env.MYSQL_CONFIG_FILE }} tg_ci < SQL/tgstation_schema.sql
-            mysql --defaults-extra-file=${{ env.MYSQL_CONFIG_FILE }} -e 'CREATE DATABASE tg_ci_prefixed;'
-            mysql --defaults-extra-file=${{ env.MYSQL_CONFIG_FILE }} tg_ci_prefixed < SQL/tgstation_schema_prefixed.sql
-            echo "Sucessful MySQL Database Setup"
-
         - name: Install rust-g
           run: |
             bash tools/ci/install_rust_g.sh
@@ -68,6 +57,17 @@ jobs:
         - name: Install dreamluau
           run: |
             bash tools/ci/install_dreamluau.sh
+
+      - name: Setup database
+        env:
+          MYSQL_CONFIG_FILE: tools/ci/mysql_config.cnf
+        run: |
+          sudo systemctl start mysql
+          mysql --defaults-extra-file=${{ env.MYSQL_CONFIG_FILE }} -e 'CREATE DATABASE tg_ci;'
+          mysql --defaults-extra-file=${{ env.MYSQL_CONFIG_FILE }} tg_ci < SQL/tgstation_schema.sql
+          mysql --defaults-extra-file=${{ env.MYSQL_CONFIG_FILE }} -e 'CREATE DATABASE tg_ci_prefixed;'
+          mysql --defaults-extra-file=${{ env.MYSQL_CONFIG_FILE }} tg_ci_prefixed < SQL/tgstation_schema_prefixed.sql
+          echo "Sucessful MySQL Database Setup"
 
       - name: Run unit tests
         id: run_tests
