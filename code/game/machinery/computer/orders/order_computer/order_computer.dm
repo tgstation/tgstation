@@ -125,6 +125,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 			"cost" = round(item.cost_per_order * cargo_cost_multiplier),
 			"icon" = item.purchase_path::icon,
 			"icon_state" = item.purchase_path::icon_state,
+			"max" = item.max_per_order,
 		))
 	return data
 
@@ -138,7 +139,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 	switch(action)
 		if("add_one")
 			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
-			if(grocery_list[wanted_item] >= (wanted_item.cost_per_order <= 10 ? 50 : 10))
+			if(grocery_list[wanted_item] >= wanted_item.max_per_order)
 				return
 			else
 				grocery_list[wanted_item] += 1
@@ -156,7 +157,7 @@ GLOBAL_LIST_EMPTY(order_console_products)
 		if("cart_set")
 			//this is null if the action doesn't need it (purchase, quickpurchase)
 			var/datum/orderable_item/wanted_item = locate(params["target"]) in GLOB.order_console_products
-			grocery_list[wanted_item] = clamp(params["amt"], 0, (wanted_item.cost_per_order <= 10 ? 50 : 10))
+			grocery_list[wanted_item] = clamp(params["amt"], 0, wanted_item.max_per_order)
 			if(!grocery_list[wanted_item])
 				grocery_list -= wanted_item
 		if("purchase")

@@ -28,6 +28,7 @@ type OrderDatum = {
   icon: string;
   name: string;
   ref: string;
+  max: number;
 };
 
 type Item = {
@@ -325,9 +326,7 @@ function CheckoutTab(props) {
                     value={item.amt}
                     width="41px"
                     minValue={0}
-                    maxValue={
-                      (item.cost <= 10 ? 50 : 10) - (item.other_amt ?? 0)
-                    }
+                    maxValue={item.max - (item.other_amt ?? 0)}
                     step={1}
                     onChange={(value) =>
                       act('cart_set', {
