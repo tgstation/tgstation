@@ -48,7 +48,4 @@
 /datum/smite/ghost_control/proc/ghost_speed(mob/living/target, new_speed)
 	if(target.move_intent == new_speed)
 		return
-	if(target.move_intent != MOVE_INTENT_WALK)
-		target.set_move_intent(MOVE_INTENT_WALK)
-	else
-		target.set_move_intent(MOVE_INTENT_RUN)
+	target.toggle_move_intent()

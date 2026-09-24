@@ -547,10 +547,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 /atom/movable/screen/mov_intent/proc/toggle(mob/living/user)
 	if(!istype(user))
 		return
-	if(user.move_intent != MOVE_INTENT_WALK)
-		user.set_move_intent(MOVE_INTENT_WALK)
-	else
-		user.set_move_intent(MOVE_INTENT_RUN)
+	user.toggle_move_intent()
 
 /atom/movable/screen/pull
 	name = "stop pulling"
