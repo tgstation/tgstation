@@ -67,10 +67,10 @@ jobs:
         run: |
           echo "max_required_byond_client=$(grep -Ev '^[[:blank:]]{0,}#{1,}|^[[:blank:]]{0,}$' .github/max_required_byond_client.txt | tail -n1)" >> $GITHUB_OUTPUT
 
-      - name: Configure BYOND version
-        id: configure_byond_version
+      - name: Set up BYOND and libcurl cache
+        id: restore_or_install_byond
         background: true
-        uses: ./.github/actions/configure_byond_version
+        uses: ./.github/actions/restore_or_install_byond
 
       - name: Find alternate tests
         id: alternate_test_finder
@@ -80,7 +80,7 @@ jobs:
           echo "alternate_tests=$ALTERNATE_TESTS_JSON" >> $GITHUB_OUTPUT
 
       - name: Wait for build information
-        wait: [configure_byond_version, alternate_test_finder]
+        wait: [restore_or_install_byond, alternate_test_finder]
 
       - name: Set up required build versions
         id: setup_required_build_versions

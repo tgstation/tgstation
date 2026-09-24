@@ -58,6 +58,7 @@ jobs:
           run: |
             bash tools/ci/install_dreamluau.sh
 
+      # Excluded from the above parallel group because it makes the database setup flaky. Probably something to do with IO ports being clogged
       - name: Setup database
         env:
           MYSQL_CONFIG_FILE: tools/ci/mysql_config.cnf
