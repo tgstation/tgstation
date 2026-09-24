@@ -37,7 +37,8 @@
 
 /obj/item/cooking_voucher
 	name = "cooking voucher"
-	desc = "A token to redeem cooking supplies."
+	desc = "A token to redeem cooking ingredients. \
+		Insert into your local produce order console to redeem ten free ingredients of your choice."
 	icon = 'icons/obj/mining.dmi'
 	icon_state = "mining_voucher"
 	w_class = WEIGHT_CLASS_TINY
