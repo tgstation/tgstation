@@ -59,6 +59,9 @@
 	icon_state = "pellet_tracer"
 	damage = 5
 	wound_bonus = 5
+	speed = 1.1
+	damage_falloff_tile = -0.5
+	wound_falloff_tile = -1
 	ricochets_max = 2
 	ricochet_chance = 120
 	ricochet_decay_chance = 1
