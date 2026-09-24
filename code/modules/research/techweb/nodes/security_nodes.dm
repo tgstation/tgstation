@@ -97,7 +97,7 @@
 	description = "Energy-based weaponry designed for both lethal and non-lethal applications."
 	prerequisite_nodes = list(/datum/techweb_node/riot_supression)
 	unlocked_designs = list(
-		/datum/design/stunrevolver,
+		/datum/design/teslacannon,
 		/datum/design/ioncarbine,
 		/datum/design/temp_gun,
 		/datum/design/lasershell,
