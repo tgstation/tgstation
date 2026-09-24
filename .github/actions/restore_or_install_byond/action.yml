@@ -6,7 +6,6 @@ inputs:
   skip_cache_download:
     description: 'If true, we only check if the cache is hit and dont download it'
     required: false
-    type: bool
     default: false
 
 runs:
@@ -29,7 +28,7 @@ runs:
         lookup-only: skip_cache_download
 
     - name: Install libcurl from cache
-      if: inputs.skip_cache_download && env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && steps.restore_libcurl_cache.outputs.cache-hit
+      if: ${{ !inputs.skip_cache_download && env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && steps.restore_libcurl_cache.outputs.cache-hit }}
       shell: bash
       run: |
         sudo dpkg --add-architecture i386
