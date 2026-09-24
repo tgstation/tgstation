@@ -3,10 +3,9 @@ name: Restore or Install BYOND
 description: Attempts to restore a specified BYOND version from cache; if it can't, it installs it.
 
 inputs:
-  skip_cache_download:
-    description: 'If true, we only check if the cache is hit and dont download it'
+  download_cache:
     required: false
-    default: false
+    default: true
 
 runs:
   using: composite
@@ -25,10 +24,10 @@ runs:
       with:
         path: ~/apt-cache
         key: ${{ runner.os }}-libcurl-i386
-        lookup-only: ${{ inputs.skip_cache_download }}
+        lookup-only: ${{ !inputs.download_cache }}
 
     - name: Install libcurl from cache
-      if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && steps.restore_libcurl_cache.outputs.cache-hit
+      if: inputs.download_cache && env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && steps.restore_libcurl_cache.outputs.cache-hit
       shell: bash
       run: |
         sudo dpkg --add-architecture i386
@@ -69,7 +68,7 @@ runs:
       with:
         path: ~/BYOND
         key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
-        lookup-only: ${{ inputs.skip_cache_download }}
+        lookup-only: ${{ !inputs.download_cache }}
 
     - name: Install BYOND
       if: ${{ !steps.restore_byond_cache.outputs.cache-hit }}

@@ -72,7 +72,7 @@ jobs:
         background: true
         uses: ./.github/actions/restore_or_install_byond
         with:
-          skip_cache_download: true
+          download_cache: false
 
       - name: Find alternate tests
         id: alternate_test_finder
