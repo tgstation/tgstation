@@ -25,7 +25,7 @@ runs:
       with:
         path: ~/apt-cache
         key: ${{ runner.os }}-libcurl-i386
-        lookup-only: skip_cache_download
+        lookup-only: ${{ inputs.skip_cache_download }}
 
     - name: Install libcurl from cache
       if: ${{ !inputs.skip_cache_download && env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && steps.restore_libcurl_cache.outputs.cache-hit }}
@@ -69,7 +69,7 @@ runs:
       with:
         path: ~/BYOND
         key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
-        lookup-only: skip_cache_download
+        lookup-only: ${{ inputs.skip_cache_download }}
 
     - name: Install BYOND
       if: ${{ !steps.restore_byond_cache.outputs.cache-hit }}
