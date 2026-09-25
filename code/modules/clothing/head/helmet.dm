@@ -563,7 +563,7 @@
 	acid = 50
 	wound = 10
 
-	/obj/item/clothing/head/helmet/giant_killerunfired
+/obj/item/clothing/head/helmet/giant_killerunfired
 	name = "unfired Giant-Killer helmet"
 	desc = "A knight helmet to be forged in lava."
 	icon_state = "knight_green"
@@ -590,8 +590,8 @@
 	acid = 0
 	wound = 0
 
-	/obj/item/clothing/head/helmet/giant_killerunfired/fire_act(exposed_temperature, exposed_volume)
-	var/obj/clothing/head/helmet/giant_killerunfired/= new(loc)
+/obj/item/clothing/head/helmet/giant_killerunfired/fire_act(exposed_temperature, exposed_volume)
+	var/obj/clothing/head/helmet/giant_killerunfired = new(loc)
 	dragonator.set_material_slots(material_slots)
 	dragonator.set_custom_materials(custom_materials.Copy())
 	playsound(giant_killer.loc, 'sound/effects/magic/staff_change.ogg',5)
