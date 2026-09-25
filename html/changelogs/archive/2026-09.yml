@@ -378,3 +378,8 @@
   - bugfix: Fixed shoes and a bunch of other items not being washable
   necromanceranne:
   - bugfix: Cybernetic fangs use the correct, metallic icon state.
+2026-09-25:
+  Melbert:
+  - bugfix: Fix echolocation danger turf markers
+  vinylspiders:
+  - bugfix: fixes a source of overflayer bluescreens
