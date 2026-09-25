@@ -1,0 +1,4 @@
+author: "Stonetear"
+delete-after: True
+changes:
+  - qol: "Fishing capsules now only need a 3x3 space to deploy.  The actual fishing size is still 3x3."
