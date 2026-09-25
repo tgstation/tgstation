@@ -19,6 +19,8 @@
 
 	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(clear_staggered))
 	owner.add_movespeed_modifier(/datum/movespeed_modifier/staggered)
+	if(owner.next_move)
+		owner.changeNext_move(clamp(next_move + CLICK_CD_RAPID, 0, CLICK_CD_RESIST))
 	return TRUE
 
 /datum/status_effect/staggered/on_remove()
