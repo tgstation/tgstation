@@ -10,8 +10,16 @@
 				"key": "BB_RAPTOR_COWARDLY"
 			},
 			"child": {
-				"type": "subtree",
-				"subtype": "/datum/bt_node/subtree/run_away_from_target"
+				"type": "decorator",
+				"decorator": "/datum/bt_node/decorator/pawn_health_below",
+				"vars": {
+					"observer_abort": "BT_ABORT_BOTH",
+					"health_blackboard_key": "BB_RAPTOR_FLEE_THRESHOLD_COWARDLY"
+				},
+				"child": {
+					"type": "subtree",
+					"subtype": "/datum/bt_node/subtree/run_away_from_target"
+				}
 			}
 		},
 		{
