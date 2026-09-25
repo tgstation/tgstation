@@ -1067,6 +1067,7 @@ ADMIN_VERB(export_save_to_dev_preference, R_DEBUG, "Export Save as Dev Preferenc
 	tgui_alert(user, "Exported preferences to [DEV_PREFS_PATH]. \
 		Next time you localhost as a guest it will use this savefile as-is.", "Export Complete", list("OK thanks"))
 
+// Important note: The generated CSV file will NOT include power usage from machinery which uses non-automatic power, such as through use_energy().
 ADMIN_VERB(generate_audit_file, R_DEBUG, "Generate Power Audit File", "Generate a large CSV-style text file, that details every piece of machinery with it's different electrical power settings.", ADMIN_CATEGORY_DEBUG)
 	var/list/final_list = list("/obj/machinery/example,Use Power,Idle Power,Active Power Usage,Power Channel")
 	for(var/obj/machinery/machine_test as anything in subtypesof(/obj/machinery))
