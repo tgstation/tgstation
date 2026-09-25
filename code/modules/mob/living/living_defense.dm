@@ -887,7 +887,7 @@
 
 ///Check if the universal conditions for disarming/shoving are met.
 /mob/living/proc/can_disarm(mob/living/target)
-	if(body_position != STANDING_UP || src == target || loc == target.loc)
+	if(src == target || loc == target.loc)
 		return FALSE
 	return TRUE
 
