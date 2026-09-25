@@ -2400,7 +2400,7 @@
 	mix_message = "The air fills with a hellish mix of fish and artificial flavouring."
 
 /datum/reagent/consumable/nutriment/soup/rich_stock
-	name = "rich cargo stock"
+	name = "Rich Cargo Stock"
 	data = list("profit" = 1, "hard work" = 1, "spread sheets" = 1, "big profits" = 1, "payday" = 1)
 	color = "#d814be"
 

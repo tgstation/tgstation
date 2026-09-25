@@ -156,7 +156,7 @@
 /datum/crafting_recipe/food/reaction/soup/rich_stock
 	name = "Rich Cargo Stock"
 	desc = "A stock made from a liquid stock block and some other choice ingredients for good market luck."
-	reaction = /datum/chemical_reaction/food/soup/rich_stock\
+	reaction = /datum/chemical_reaction/food/soup/rich_stock
 	steps = list("Wait for your stock block to become liquid, taking a dark, purple hue.")
 
 // Other
