@@ -1,0 +1,6 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - bugfix: "Fixed a bileworm devouring runtime"
+  - bugfix: "Fixed heirophants not doing their final attack on death"
+  - bugfix: "Fixed potential runtime when using plasmacutters as a tool"
