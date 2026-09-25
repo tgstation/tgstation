@@ -120,16 +120,3 @@
 	desc = "MacReady would be proud."
 	database_id = BOSS_MEDAL_THETHING_CRUSHER
 	icon_state = "thething"
-
-//should be removed soon
-/datum/award/achievement/boss/king_goat_kill
-	name = "King Goat Killer"
-	desc = "The king is dead, long live the king!"
-	database_id = BOSS_MEDAL_KINGGOAT
-	icon_state = "goatboss"
-
-/datum/award/achievement/boss/king_goat_crusher
-	name = "King Goat Crusher"
-	desc = "The king is dead, long live the king!"
-	database_id = BOSS_MEDAL_KINGGOAT_CRUSHER
-	icon_state = "goatboss"
