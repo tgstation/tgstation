@@ -153,6 +153,11 @@
 	name = "Ghost Chili Sin Carne (Vegetarian Chili)"
 	reaction = /datum/chemical_reaction/food/soup/chili_sin_carne/ghost
 
+/datum/crafting_recipe/food/reaction/soup/rich_stock
+	name = "Rich Cargo Stock"
+	desc = "A stock made from a liquid stock block and some other choice ingredients for good market luck."
+	reaction = /datum/chemical_reaction/food/soup/rich_stock
+
 // Other
 
 /datum/crafting_recipe/food/wishsoup

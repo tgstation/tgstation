@@ -66,6 +66,8 @@
 	//number of ingredients who's requested amounts has been satisfied
 	var/completed_ingredients = 0
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
+		if(!snowflake_ingredient_check(ingredient)) //Check for recipe-unique reaction blockers.
+			return FALSE
 		var/datum/ingredient_type = ingredient.type
 		do
 		{
@@ -296,6 +298,14 @@
 /// Return a list of strings, each string will be a new line in the results list
 /datum/chemical_reaction/food/soup/proc/describe_result()
 	return
+
+/**
+ * A snowflake check for if an ingredient is prepared properly.
+ * Override as needed for specific ingredients that need specific handling.
+ */
+/datum/chemical_reaction/food/soup/proc/snowflake_ingredient_check(atom/ingredient)
+	return TRUE
+
 
 #ifdef TESTING
 
@@ -2388,3 +2398,52 @@
 	resulting_food_path = /obj/item/food/volt_fish
 	ingredient_reagent_multiplier = 0
 	mix_message = "The air fills with a hellish mix of fish and artificial flavouring."
+
+/datum/reagent/consumable/nutriment/soup/rich_stock
+	name = "rich cargo stock"
+	desc = "It tastes like a million credits. Or, ironically, like losing a million credits."
+	data = list("profit" = 1, "hard work" = 1, "spread sheets" = 1, "big profits" = 1, "payday" = 1)
+	color = "#d814be"
+
+/datum/glass_style/has_foodtype/soup/rich_stock
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/rich_stock
+	name = "rich cargo stock"
+	icon_state = "rich_stock"
+	drink_type = MEAT | DAIRY
+
+/datum/chemical_reaction/food/soup/rich_stock
+	required_reagents = list(
+		/datum/reagent/consumable/milk = 10,
+		/datum/reagent/water/salt = 5,
+		/datum/reagent/consumable/blackpepper = 5,
+	)
+	required_ingredients = list(
+		/obj/item/stock_block = 1,
+		/obj/item/food/meat/steak = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/rich_stock = 30,
+		/datum/reagent/consumable/nutriment/protein = 6,
+	)
+	var/stock_boost = 4
+
+/datum/chemical_reaction/food/soup/rich_stock/snowflake_ingredient_check(ingredient)
+	if(!istype(ingredient, /obj/item/stock_block))
+		return TRUE
+	var/obj/item/stock_block/block = ingredient
+	if(!block.fluid)
+		return FALSE
+	switch(block.export_value)
+		if(0 to 100)
+			stock_boost = 4
+		if(101 to 1000)
+			stock_boost = 8
+		if(1001 to 5000)
+			stock_boost = 15
+		if(5001 to INFINITY)
+			stock_boost = 25
+	return TRUE
+
+/datum/chemical_reaction/food/soup/rich_stock/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
+	. = ..()
+	holder.add_reagent(/datum/reagent/consumable/nutriment/vitamin, stock_boost)
