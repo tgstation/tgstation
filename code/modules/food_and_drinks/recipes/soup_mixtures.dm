@@ -2401,18 +2401,19 @@
 
 /datum/reagent/consumable/nutriment/soup/rich_stock
 	name = "rich cargo stock"
-	desc = "It tastes like a million credits. Or, ironically, like losing a million credits."
 	data = list("profit" = 1, "hard work" = 1, "spread sheets" = 1, "big profits" = 1, "payday" = 1)
 	color = "#d814be"
 
 /datum/glass_style/has_foodtype/soup/rich_stock
 	required_drink_type = /datum/reagent/consumable/nutriment/soup/rich_stock
 	name = "rich cargo stock"
+	desc = "It tastes like a million credits. Or, ironically, like losing a million credits."
 	icon_state = "rich_stock"
 	drink_type = MEAT | DAIRY
 
 /datum/chemical_reaction/food/soup/rich_stock
 	required_reagents = list(
+		/datum/reagent/water = 50,
 		/datum/reagent/consumable/milk = 10,
 		/datum/reagent/water/salt = 5,
 		/datum/reagent/consumable/blackpepper = 5,
