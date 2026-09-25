@@ -50,6 +50,13 @@
 	alt_simple = string_list(alt_simple)
 	make_stabby()
 
+/obj/item/knife/examine(mob/user)
+	. = ..()
+
+	. += span_info("This should do more harm if you hold the target in place.")
+	if(embed_type)
+		. += span_info("You are fairly sure that you can impale someone using [EXAMINE_HINT("right-click")]. But you will need to hold them aggressively first.")
+
 /obj/item/knife/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!isliving(target))
 		return ..()
