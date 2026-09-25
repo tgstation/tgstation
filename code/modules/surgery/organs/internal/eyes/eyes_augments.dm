@@ -45,7 +45,6 @@
 	iris_overlay = null
 	eye_color_left = "#3cb8a5"
 	eye_color_right = "#3cb8a5"
-	sight_flags = SEE_MOBS | SEE_OBJS | SEE_TURFS
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	organ_traits = list(TRAIT_XRAY_VISION)
 	penlight_message = "are replaced by small radiation emitters and detectors"
@@ -60,7 +59,7 @@
 	eye_color_right = "#ce2525"
 	// We're gonna downshift green and blue a bit so darkness looks yellow
 	color_cutoffs = list(25, 8, 5)
-	sight_flags = SEE_MOBS
+	organ_traits = list(TRAIT_THERMAL_VISION)
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	pupils_name = "slit aperatures"
 	penlight_message = "are cybernetic, with vertically slit metalic lenses."
