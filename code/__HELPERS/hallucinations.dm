@@ -133,7 +133,8 @@ GLOBAL_LIST_INIT_TYPED(random_hallucination_weighted_list, /list, generate_hallu
 	for(var/datum/hallucination/hallucination_type as anything in typesof(/datum/hallucination))
 		if(hallucination_type == initial(hallucination_type.abstract_hallucination_parent))
 			continue
-		var/weight = initial(hallucination_type.random_hallucination_weight)
+		// weights need to be integers for pick_weight(), multiple by ten preserving their relative probabilities.
+		var/weight = initial(hallucination_type.random_hallucination_weight) * 10
 		if(weight <= 0)
 			continue
 
