@@ -16,19 +16,20 @@ jobs:
     steps:
       - name: Checkout required files
         uses: actions/checkout@v7
-        sparse-checkout: |
-          .github
-          _maps/map_jsons
-          code
-          icons
-          sound
-          dependencies.sh
-          _maps/map_files/generic/CentCom.dmm
-          _maps/map_files/generic/CentCom_minimal.dmm
-          tools/bootstrap
-          tools/build
-          tools/ci/copy_build_output.sh
-          tools/ci/install_byond.sh
+        with:
+          sparse-checkout: |
+            .github
+            _maps/map_jsons
+            code
+            icons
+            sound
+            dependencies.sh
+            _maps/map_files/generic/CentCom.dmm
+            _maps/map_files/generic/CentCom_minimal.dmm
+            tools/bootstrap
+            tools/build
+            tools/ci/copy_build_output.sh
+            tools/ci/install_byond.sh
 
       - name: Configure BYOND Version
         uses: ./.github/actions/configure_byond_version
