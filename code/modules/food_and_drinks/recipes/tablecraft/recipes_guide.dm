@@ -967,6 +967,8 @@
 
 /datum/crafting_recipe/food/honeycomb
 	result = /obj/item/food/honeycomb
+	reqs = list(/obj/item/queen_bee = 1)
+	structures = list(/obj/structure/beebox)
 	non_craftable = TRUE
 	steps = list(
 		"Set up an apiary with a queen bee and honey frames",
