@@ -30,7 +30,7 @@
 	processing_flags = START_PROCESSING_MANUALLY
 
 	///Range of the light emitted when on
-	var/light_on_range = 1.5
+	var/light_on_range = MINIMUM_USEFUL_LIGHT_RANGE
 	///Reference to our area
 	var/area/area
 	///Mapper helper to tie an apc to another area
