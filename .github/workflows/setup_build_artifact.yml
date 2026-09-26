@@ -20,14 +20,17 @@ jobs:
           sparse-checkout: |
             .github
             _maps/map_jsons
+            tools/bootstrap
+            tools/build
+            tools/icon_cutter
             code
             icons
             sound
+            tgui
             dependencies.sh
             _maps/map_files/generic/CentCom.dmm
             _maps/map_files/generic/CentCom_minimal.dmm
-            tools/bootstrap
-            tools/build
+            tools/build_bt.py
             tools/ci/copy_build_output.sh
             tools/ci/install_byond.sh
 
