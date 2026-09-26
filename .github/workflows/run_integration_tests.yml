@@ -32,7 +32,19 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 55
     steps:
-      - uses: actions/checkout@v7
+      - name: Checkout required files
+        uses: actions/checkout@v7
+        with:
+          sparse-checkout: |
+            .github
+            dependencies.sh
+            SQL/tgstation_schema.sql
+            SQL/tgstation_schema_prefixed.sql
+            tools/ci/install_byond.sh
+            tools/ci/install_dreamluau.sh
+            tools/ci/install_rust_g.sh
+            tools/ci/mysql_config.cnf
+            tools/ci/run_server.sh
 
       - name: Configure BYOND version
         uses: ./.github/actions/configure_byond_version
@@ -114,4 +126,4 @@ jobs:
         uses: tgstation/byond-client-compatibility-check@v3
         with:
           dmb-location: tgstation.dmb
-          max-required-client-version: ${{inputs.max_required_byond_client}}
+          max-required-client-version: ${{ inputs.max_required_byond_client }}
