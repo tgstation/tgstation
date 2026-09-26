@@ -24,6 +24,7 @@ runs:
 
     - name: Checkout dependencies file
       if: ${{ !inputs.major }}
+      shell: bash
       run: |
         git sparse-checkout set --no-cone dependencies.sh
         git checkout
