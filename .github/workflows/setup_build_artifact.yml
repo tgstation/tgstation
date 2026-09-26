@@ -19,18 +19,23 @@ jobs:
         with:
           sparse-checkout: |
             .github
-            tools/bootstrap
-            tools/build
-            tools/icon_cutter
             code
             cutter_templates
+            html/admin
+            html/browser
+            html/font-awesome
+            html/jquery
             icons
             interface
             sound
             tgui
+            tools/bootstrap
+            tools/build
+            tools/icon_cutter
             dependencies.sh
             _maps/map_files/generic/CentCom.dmm
             _maps/map_files/generic/CentCom_minimal.dmm
+            html/typing_indicator.html
             tools/build_bt.py
             tools/ci/copy_build_output.sh
             tools/ci/install_byond.sh
