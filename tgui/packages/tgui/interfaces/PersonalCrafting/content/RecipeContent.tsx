@@ -170,7 +170,7 @@ export function RecipeContent(props: FullProps) {
                 </Box>
               )}
               <Box style={{ textTransform: 'capitalize' }}>
-                {item.reqs && (
+                {item.reqs && Object.keys(item.reqs).length > 0 && (
                   <Box>
                     <GroupTitle
                       title={

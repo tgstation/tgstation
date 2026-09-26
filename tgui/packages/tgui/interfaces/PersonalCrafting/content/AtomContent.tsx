@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
-import { Box, Floating } from 'tgui-core/components';
+import { Box, Button, Floating, Stack } from 'tgui-core/components';
 import { findIcon } from '../helpers';
 import type { AtomData, CraftingData } from '../types';
 import { RecipeContent } from './RecipeContent';
@@ -20,8 +20,8 @@ export function AtomContent(props: Props) {
   const atom = atom_data[atom_id_int - 1];
 
   // check if the atom itself has a recipe associated
-  const hasRecipe = recipes.filter((recipe) => recipe.id === atom_id_int)[0];
-  if (!hasRecipe) {
+  const hasRecipe = recipes.filter((recipe) => recipe.id === atom_id_int);
+  if (hasRecipe.length <= 0) {
     return (
       <AtomContentInner
         atom={atom}
@@ -33,6 +33,7 @@ export function AtomContent(props: Props) {
   }
 
   const [forceFloating, setForceFloating] = useState(false);
+  const [shownRecipe, setShownRecipe] = useState(hasRecipe[0]);
 
   // add a tooltip to recursively show the recipe for this atom
   return (
@@ -70,8 +71,43 @@ export function AtomContent(props: Props) {
             backdropFilter: 'blur(12px)',
           }}
         >
+          {hasRecipe.length > 1 && (
+            <Stack align="center" fill>
+              <Stack.Item grow>
+                <Button
+                  fluid
+                  icon="arrow-left"
+                  align="center"
+                  onClick={() =>
+                    setShownRecipe(
+                      hasRecipe[
+                        (hasRecipe.indexOf(shownRecipe) -
+                          1 +
+                          hasRecipe.length) %
+                          hasRecipe.length
+                      ],
+                    )
+                  }
+                />
+              </Stack.Item>
+              <Stack.Item grow>
+                <Button
+                  fluid
+                  icon="arrow-right"
+                  align="center"
+                  onClick={() =>
+                    setShownRecipe(
+                      hasRecipe[
+                        (hasRecipe.indexOf(shownRecipe) + 1) % hasRecipe.length
+                      ],
+                    )
+                  }
+                />
+              </Stack.Item>
+            </Stack>
+          )}
           <RecipeContent
-            item={hasRecipe}
+            item={shownRecipe}
             nodesc={true}
             setParentForceFloating={setForceFloating}
             showIcon={false}

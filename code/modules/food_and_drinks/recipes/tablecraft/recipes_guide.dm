@@ -311,6 +311,22 @@
 	reaction = /datum/chemical_reaction/food/grounding_neutralise
 	dish_category = DISH_CONDIMENT
 
+/datum/crafting_recipe/food/reaction/saltwater
+	reaction = /datum/chemical_reaction/saltwater
+
+/datum/crafting_recipe/food/reaction/teslium
+	reaction = /datum/chemical_reaction/teslium
+
+/datum/crafting_recipe/food/reaction/vinegar_grape
+	reaction = /datum/chemical_reaction/food/grape_vinegar
+
+/datum/crafting_recipe/food/reaction/vinegar_wine
+	reaction = /datum/chemical_reaction/food/wine_vinegar
+
+/datum/crafting_recipe/food/reaction/salt
+	reaction = /datum/chemical_reaction/sodiumchloride
+	dish_category = DISH_CONDIMENT
+
 // Tools: Rolling pin
 
 /datum/crafting_recipe/food/rollingpin
@@ -345,6 +361,16 @@
 	result = /obj/item/stack/sheet/pizza
 	cuisine_category = CUISINE_ITALIAN
 	dish_category = DISH_PIZZA
+
+/datum/crafting_recipe/food/rollingpin/meat_patty
+	reqs = list(/obj/item/food/raw_meatball = 1)
+	result = /obj/item/food/raw_patty
+	dish_category = DISH_MEAT
+
+/datum/crafting_recipe/food/rollingpin/chicken_patty
+	reqs = list(/obj/item/food/raw_meatball/chicken = 1)
+	result = /obj/item/food/raw_patty/chicken
+	dish_category = DISH_MEAT
 
 // Tools: Knife
 
@@ -537,6 +563,24 @@
 	dish_category = DISH_MEAT
 	meal_category = MEAL_COMPONENT
 
+/datum/crafting_recipe/food/knife/reispan_slice
+	reqs = list(/obj/item/food/bread/reispan = 1)
+	result = /obj/item/food/breadslice/reispan
+	dish_category = DISH_RICE
+	meal_category = MEAL_SNACK
+
+/datum/crafting_recipe/food/knife/jellyfish_fillet
+	reqs = list(/obj/item/fish/gunner_jellyfish = 1)
+	result = /obj/item/food/fishmeat/gunner_jellyfish
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_MEAT
+
+/datum/crafting_recipe/food/knife/moonfish_fillet
+	reqs = list(/obj/item/fish/moonfish = 1)
+	result = /obj/item/food/fishmeat/moonfish
+	cuisine_category = CUISINE_LIZARD
+	dish_category = DISH_MEAT
+
 // Machinery: Grill
 
 /datum/crafting_recipe/food/grill
@@ -688,6 +732,16 @@
 	dish_category = DISH_TACO
 	meal_category = MEAL_COMPONENT
 
+/datum/crafting_recipe/food/grill/pita_bread
+	reqs = list(/obj/item/food/raw_pita_bread = 1)
+	result = /obj/item/food/pita_bread
+	dish_category = DISH_BREAD
+
+/datum/crafting_recipe/food/grill/octapus_tentacle
+	reqs = list(/obj/item/food/fishmeat/octopus = 1)
+	result = /obj/item/food/grilled_octopus
+	dish_category = DISH_MEAT
+
 // Machinery: Grinder
 /datum/crafting_recipe/food/grinder
 	machinery = list(/obj/machinery/reagentgrinder)
@@ -729,12 +783,19 @@
 	result = /datum/reagent/toxin/mushroom_powder
 
 /datum/crafting_recipe/food/grinder/flour
+	name = "Fresh Wheat Flour"
 	reqs = list(/obj/item/food/grown/wheat = 1)
 	result = /datum/reagent/consumable/flour
 
 /datum/crafting_recipe/food/grinder/flour/oat
+	name = "Fresh Oat Flour"
 	reqs = list(/obj/item/food/grown/oat = 1)
 	result = /datum/reagent/consumable/flour
+
+/datum/crafting_recipe/food/grinder/rice
+	name = "Fresh Rice"
+	reqs = list(/obj/item/food/grown/rice = 1)
+	result = /datum/reagent/consumable/rice
 
 /datum/crafting_recipe/food/grinder/butter
 	reqs = list(/datum/reagent/consumable/milk = MILK_TO_BUTTER_COEFF)
@@ -786,6 +847,125 @@
 	reqs = list(/obj/item/food/grown/peanut = 1)
 	result = /datum/reagent/consumable/peanut_butter
 	dish_category = DISH_CONDIMENT
+
+/datum/crafting_recipe/food/grinder/slime_jelly
+	reqs = list(/obj/item/slime_extract = 1)
+	result = /datum/reagent/toxin/slimejelly
+
+/datum/crafting_recipe/food/grinder/nutriment
+	reqs = list(/obj/item/food = 1)
+	result = /datum/reagent/consumable/nutriment
+
+/datum/crafting_recipe/food/grinder/laugh_syrup
+	reqs = list(/obj/item/food/grown/laugh = 1)
+	result = /datum/reagent/consumable/laughsyrup
+	steps = list("Put into grinder and juice")
+
+/datum/crafting_recipe/food/grinder/coco_powder
+	reqs = list(/obj/item/food/grown/cocoapod = 1)
+	result = /datum/reagent/consumable/coco
+
+/datum/crafting_recipe/food/grinder/vanilla_powder
+	reqs = list(/obj/item/food/grown/vanillapod = 1)
+	result = /datum/reagent/consumable/vanilla
+
+/datum/crafting_recipe/food/grinder/apple_juice
+	name = "Fresh Apple Juice"
+	reqs = list(/obj/item/food/grown/apple = 1)
+	result = /datum/reagent/consumable/applejuice
+	steps = list("Put into grinder and juice")
+
+/datum/crafting_recipe/food/grinder/lemon_juice
+	name = "Fresh Lemon Juice"
+	reqs = list(/obj/item/food/grown/citrus/lemon = 1)
+	result = /datum/reagent/consumable/lemonjuice
+	steps = list("Put into grinder and juice")
+
+/datum/crafting_recipe/food/grinder/lime_juice
+	name = "Fresh Lime Juice"
+	reqs = list(/obj/item/food/grown/citrus/lime = 1)
+	result = /datum/reagent/consumable/limejuice
+	steps = list("Put into grinder and juice")
+
+/datum/crafting_recipe/food/grinder/orange_juice
+	name = "Fresh Orange Juice"
+	reqs = list(/obj/item/food/grown/citrus/orange = 1)
+	result = /datum/reagent/consumable/orangejuice
+	steps = list("Put into grinder and juice")
+
+/datum/crafting_recipe/food/grinder/pineapple_juice
+	name = "Fresh Pineapple Juice"
+	reqs = list(/obj/item/food/grown/pineapple = 1)
+	result = /datum/reagent/consumable/pineapplejuice
+	steps = list("Put into grinder and juice")
+
+/datum/crafting_recipe/food/grinder/berry_juice
+	name = "Fresh Berry Juice"
+	reqs = list(/obj/item/food/grown/berries = 1)
+	result = /datum/reagent/consumable/berryjuice
+	steps = list("Put into grinder and juice")
+
+/datum/crafting_recipe/food/grinder/blumpkin_juice
+	name = "Fresh Blumpkin Juice"
+	reqs = list(/obj/item/food/grown/pumpkin/blumpkin = 1)
+	result = /datum/reagent/consumable/blumpkinjuice
+	steps = list("Put into grinder and juice")
+
+/datum/crafting_recipe/food/grinder/bungo_juice
+	name = "Fresh Bungo Juice"
+	reqs = list(/obj/item/food/grown/bungofruit = 1)
+	result = /datum/reagent/consumable/bungojuice
+	steps = list("Put into grinder and juice")
+
+/datum/crafting_recipe/food/grinder/honey
+	name = "Fresh Honey"
+	reqs = list(/obj/item/food/honeycomb = 1)
+	result = /datum/reagent/consumable/honey
+	dish_category = DISH_CONDIMENT
+
+/datum/crafting_recipe/food/grinder/oligomers
+	reqs = list(/obj/item/seeds/poppy/lily/trumpet= 1)
+	result = /datum/reagent/medicine/polypyr
+	steps = list("Put into grinder and juice")
+
+/datum/crafting_recipe/food/grinder/tea_leaves
+	reqs = list(/obj/item/food/grown/tea = 1)
+	result = /datum/reagent/toxin/teapowder
+
+/datum/crafting_recipe/food/grinder/black_pepper
+	reqs = list(/obj/item/food/grown/peppercorn = 1)
+	result = /datum/reagent/consumable/blackpepper
+
+/datum/crafting_recipe/food/grinder/soymilk
+	reqs = list(/obj/item/food/grown/soybeans = 1)
+	result = /datum/reagent/consumable/soymilk
+	steps = list("Put into grinder and juice")
+
+/datum/crafting_recipe/food/grinder/milk
+	name = "Fresh Plant Milk"
+
+	reqs = list(/obj/item/seeds/soya/butter = 1)
+	result = /datum/reagent/consumable/milk
+
+/datum/crafting_recipe/food/grinder/cream
+	name = "Fresh Plant Cream"
+	reqs = list(/obj/item/seeds/soya/butter = 1)
+	result = /datum/reagent/consumable/cream
+
+/datum/crafting_recipe/food/grinder/vege_oil
+	name = "Fresh Vegetable Oil"
+	reqs = list(/obj/item/food/grown/soybeans = 1)
+	result = /datum/reagent/consumable/nutriment/fat/oil
+
+/datum/crafting_recipe/food/honeycomb
+	result = /obj/item/food/honeycomb
+	non_craftable = TRUE
+	steps = list(
+		"Set up an apiary with a queen bee and honey frames",
+		"Plant crops nearby of any type",
+		"Wait for pollination - takes some time",
+		"Remove honey frame from apiary",
+	)
 
 // Machinery: Processor
 /datum/crafting_recipe/food/processor
@@ -1023,6 +1203,17 @@
 	cuisine_category = CUISINE_MARTIAN
 	meal_category = MEAL_APPETIZER
 
+/datum/crafting_recipe/food/oven/baked_potato
+	reqs = list(/obj/item/food/grown/potato = 1)
+	result = /obj/item/food/baked_potato
+	dish_category = DISH_UNCATEGORIZED
+	meal_category = MEAL_APPETIZER
+
+/datum/crafting_recipe/food/oven/pita_bread
+	reqs = list(/obj/item/food/raw_pita_bread = 1)
+	result = /obj/item/food/pita_bread
+	dish_category = DISH_BREAD
+
 // Machinery: Drying rack
 /datum/crafting_recipe/food/drying
 	machinery = list(/obj/machinery/smartfridge/drying)
@@ -1067,3 +1258,270 @@
 	result = /obj/item/food/kamaboko
 	cuisine_category = CUISINE_MARTIAN
 	meal_category = MEAL_SNACK
+
+/datum/crafting_recipe/food/order
+	steps = list("Place an order in the produce order console")
+	machinery = list(/obj/machinery/computer/order_console/cook)
+	meal_category = MEAL_COMPONENT
+	non_craftable = TRUE
+
+/datum/crafting_recipe/food/order/New()
+	. = ..()
+	name = "Store Bought [name]"
+
+/datum/crafting_recipe/food/order/red_bay
+	result = /datum/reagent/consumable/red_bay
+
+/datum/crafting_recipe/food/order/dashi
+	result = /datum/reagent/consumable/dashi_concentrate
+
+/datum/crafting_recipe/food/order/curry
+	result = /datum/reagent/consumable/curry_powder
+
+/datum/crafting_recipe/food/order/bbq
+	result = /datum/reagent/consumable/bbqsauce
+
+/datum/crafting_recipe/food/order/soy
+	result = /datum/reagent/consumable/soysauce
+
+/datum/crafting_recipe/food/order/vegetable_oil
+	result = /datum/reagent/consumable/nutriment/fat/oil
+
+/datum/crafting_recipe/food/order/vinegar
+
+	result = /datum/reagent/consumable/vinegar
+
+/datum/crafting_recipe/food/order/chap_can
+	result = /obj/item/food/canned/chap
+
+/datum/crafting_recipe/food/order/flour
+	result = /datum/reagent/consumable/flour
+
+/datum/crafting_recipe/food/order/rice
+	result = /datum/reagent/consumable/rice
+
+/datum/crafting_recipe/food/order/cornmeal
+	result = /datum/reagent/consumable/cornmeal
+
+/datum/crafting_recipe/food/order/enzyme
+	result = /datum/reagent/consumable/enzyme
+
+/datum/crafting_recipe/food/order/salt
+	result = /datum/reagent/consumable/salt
+	dish_category = DISH_CONDIMENT
+
+/datum/crafting_recipe/food/order/pepper
+	result = /datum/reagent/consumable/blackpepper
+	dish_category = DISH_CONDIMENT
+
+/datum/crafting_recipe/food/order/oliveoil
+	result = /datum/reagent/consumable/nutriment/fat/oil/olive
+
+/datum/crafting_recipe/food/order/peanutbutter
+	result = /datum/reagent/consumable/peanut_butter
+	dish_category = DISH_CONDIMENT
+
+/datum/crafting_recipe/food/order/cherryjelly
+	result = /datum/reagent/consumable/cherryjelly
+	dish_category = DISH_CONDIMENT
+
+/datum/crafting_recipe/food/order/worcestershire_sauce
+
+	result = /datum/reagent/consumable/worcestershire
+	dish_category = DISH_CONDIMENT
+
+/datum/crafting_recipe/food/order/coconut_milk
+	result = /datum/reagent/consumable/coconut_milk
+
+/datum/crafting_recipe/food/order/grounding_solution
+	result = /datum/reagent/consumable/grounding_solution
+
+/datum/crafting_recipe/food/order/canned_tomatoes
+	result = /obj/item/food/canned/tomatoes
+
+/datum/crafting_recipe/food/order/honey
+	result = /datum/reagent/consumable/honey
+	dish_category = DISH_CONDIMENT
+
+/datum/crafting_recipe/food/order/yoghurt
+	result = /datum/reagent/consumable/yoghurt
+	dish_category = DISH_CONDIMENT
+
+/datum/crafting_recipe/food/order/milk
+	result = /datum/reagent/consumable/milk
+
+/datum/crafting_recipe/food/order/soymilk
+	result = /datum/reagent/consumable/soymilk
+
+/datum/crafting_recipe/food/order/canned_bee_larva
+	result = /obj/item/food/canned/larvae
+
+/datum/crafting_recipe/food/order/canned_gunner_jellyfish
+	result = /obj/item/food/canned/jellyfish
+
+/datum/crafting_recipe/food/order/canned_desert_snails
+	result = /obj/item/food/canned/desert_snails
+
+/datum/crafting_recipe/food/order/canned_squid_ink
+	result = /obj/item/food/canned/squid_ink
+
+/datum/crafting_recipe/food/order/octapus_tentacle
+	result = /obj/item/food/fishmeat/octopus
+	dish_category = DISH_MEAT
+
+/datum/crafting_recipe/food/order/armorfish
+	result = /obj/item/food/fishmeat/armorfish
+	dish_category = DISH_MEAT
+
+/datum/crafting_recipe/food/order/moonfish
+	result = /obj/item/food/fishmeat/moonfish
+	dish_category = DISH_MEAT
+
+/datum/crafting_recipe/food/order/moonfish_eggs
+	result = /obj/item/food/moonfish_eggs
+	dish_category = DISH_MEAT
+
+/datum/crafting_recipe/food/order/voltvine
+	result = /obj/item/food/pickled_voltvine
+
+/datum/crafting_recipe/food/order/pickles
+	result = /obj/item/food/pickle
+
+/datum/crafting_recipe/food/order/cream
+	result = /datum/reagent/consumable/cream
+
+/datum/crafting_recipe/food/order/egg
+	result = /obj/item/food/egg
+
+/datum/crafting_recipe/food/egg_chicken
+	name = "Fresh Eggs"
+	reqs = list(/mob/living/basic/chicken = 1)
+	result = /obj/item/food/egg
+	steps = list("Feed a chicken wheat or oats")
+	non_craftable = TRUE
+	meal_category = MEAL_COMPONENT
+
+/datum/crafting_recipe/food/milk_cow
+	name = "Fresh Cow Milk"
+	reqs = list(/mob/living/basic/cow = 1)
+	result = /datum/reagent/consumable/milk
+	steps = list("Use a beaker or bucket on a cow")
+	non_craftable = TRUE
+	meal_category = MEAL_COMPONENT
+
+/datum/crafting_recipe/food/milk_goat
+	name = "Fresh Goat Milk"
+	reqs = list(/mob/living/basic/goat = 1)
+	result = /datum/reagent/consumable/milk
+	steps = list("Use a beaker or bucket on a goat")
+	non_craftable = TRUE
+	meal_category = MEAL_COMPONENT
+
+/datum/crafting_recipe/food/egg_yolk
+	reqs = list(/obj/item/food/egg = 1)
+	result = /datum/reagent/consumable/eggyolk
+	steps = list("Break the egg into a beaker or bowl")
+	meal_category = MEAL_COMPONENT
+
+/datum/crafting_recipe/food/egg_white
+	reqs = list(/obj/item/food/egg = 1)
+	result = /datum/reagent/consumable/eggwhite
+	steps = list("Break the egg into a beaker or bowl")
+	meal_category = MEAL_COMPONENT
+
+/datum/crafting_recipe/food/vending
+	steps = list("Purchase from a vending machine")
+	machinery = list(/obj/machinery/vending/snack)
+	non_craftable = TRUE
+	meal_category = MEAL_SNACK
+
+/datum/crafting_recipe/food/vending/raisins
+	result = /obj/item/food/no_raisin
+
+/datum/crafting_recipe/food/vending/cds
+	result = /obj/item/food/cnds
+
+/datum/crafting_recipe/food/vending/chips
+	result = /obj/item/food/chips
+
+/datum/crafting_recipe/food/vending/gallery_peanut
+	result = /obj/item/food/peanuts
+
+/datum/crafting_recipe/food/vending/corn_chip
+	result = /obj/item/food/cornchips
+
+/datum/crafting_recipe/food/vending/sm_wind
+	machinery = list(/obj/machinery/vending/cola)
+	result = /datum/reagent/consumable/spacemountainwind
+
+/datum/crafting_recipe/food/vending/volt_energy
+	machinery = list(/obj/machinery/vending/cola)
+	result = /datum/reagent/consumable/volt_energy
+
+/datum/crafting_recipe/food/biogenerator
+	steps = list("Insert organic material into the biogenerator", "Process into desired product")
+	machinery = list(/obj/machinery/biogenerator)
+	non_craftable = TRUE
+	meal_category = MEAL_COMPONENT
+
+/datum/crafting_recipe/food/biogenerator/New()
+	. = ..()
+	name = "Synthetic [name]"
+
+/datum/crafting_recipe/food/biogenerator/seaweed_sheet
+	result = /obj/item/food/seaweedsheet
+
+/datum/crafting_recipe/food/biogenerator/monkey_cube
+	result = /obj/item/food/monkeycube
+
+/datum/crafting_recipe/food/biogenerator/sugar
+	result = /datum/reagent/consumable/sugar
+
+/datum/crafting_recipe/food/biogenerator/milk
+	result = /datum/reagent/consumable/milk
+
+/datum/crafting_recipe/food/biogenerator/soymilk
+	result = /datum/reagent/consumable/soymilk
+
+/datum/crafting_recipe/food/biogenerator/flour
+	result = /datum/reagent/consumable/flour
+
+/datum/crafting_recipe/food/biogenerator/enzyme
+	result = /datum/reagent/consumable/enzyme
+
+/datum/crafting_recipe/food/biogenerator/black_pepper
+	result = /datum/reagent/consumable/blackpepper
+
+/datum/crafting_recipe/food/biogenerator/cream
+	result = /datum/reagent/consumable/cream
+
+/datum/crafting_recipe/food/biogenerator/ethanol
+	result = /datum/reagent/consumable/ethanol
+
+// Distilling
+/datum/crafting_recipe/food/distill
+	steps = list("Distill in a barrel")
+	structures = list(/obj/structure/fermenting_barrel)
+	non_craftable = TRUE
+
+/datum/crafting_recipe/food/distill/enzyme
+	name = "Fresh Universal Enzyme"
+	reqs = list(/obj/item/food/grown/tomato = 1)
+	result = /datum/reagent/consumable/enzyme
+
+/datum/crafting_recipe/food/distill/soysauce
+	name = "Fresh Soy Sauce"
+	reqs = list(/obj/item/food/grown/soybeans = 1)
+	result = /datum/reagent/consumable/soysauce
+
+/datum/crafting_recipe/food/distill/yoghurt
+	name = "Fresh Yoghurt"
+	reqs = list(/obj/item/food/grown/butterbeans = 1)
+	result = /datum/reagent/consumable/yoghurt
+
+/datum/crafting_recipe/food/icecream
+	name = "Waffle Cone"
+	machinery = list(/obj/machinery/icecream_vat)
+	result = /obj/item/food/icecream
+	non_craftable = TRUE
+	steps = list("Retrieve cone from holder")

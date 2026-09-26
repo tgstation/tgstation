@@ -4,8 +4,8 @@
 
 /datum/asset/spritesheet_batched/crafting/create_spritesheets()
 	var/id = 1
-	for(var/atom in GLOB.crafting_recipes_atoms)
-		add_atom_icon(atom, id++)
+	for(var/datum in GLOB.crafting_recipes_datums)
+		add_atom_icon(datum, id++)
 	add_tool_icons()
 
 /datum/asset/spritesheet_batched/crafting/cooking
@@ -13,8 +13,8 @@
 
 /datum/asset/spritesheet_batched/crafting/cooking/create_spritesheets()
 	var/id = 1
-	for(var/atom in GLOB.cooking_recipes_atoms)
-		add_atom_icon(atom, id++)
+	for(var/datum in GLOB.cooking_recipes_datums)
+		add_atom_icon(datum, id++)
 
 /**
  * Adds the ingredient icon to the spritesheet with given ID
