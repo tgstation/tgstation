@@ -303,16 +303,8 @@
 	restyle_flags  = NONE
 
 	food_reagents = list(/datum/reagent/fuel = 5)
-	fillet_type = /obj/item/stack/ore/titanium
+	fillet_type = /obj/item/stack/sheet/mineral/titanium
 	fillet_amount = 2
-
-	custom_materials = list(
-		/datum/material/titanium = SHEET_MATERIAL_AMOUNT * 2.5,
-		/datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT,
-		/datum/material/gold = SMALL_MATERIAL_AMOUNT,
-		/datum/material/diamond = SMALL_MATERIAL_AMOUNT * 0.66,
-	)
-
 
 /obj/item/organ/tail/fish/cerulean/cybernetic/emp_act(severity)
 	. = ..()

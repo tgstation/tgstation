@@ -11,6 +11,7 @@
 	inhand_icon_state = "void_suit"
 	desc = "An old, NASA CentCom branch designed, dark red space suit."
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)
+	cerulean_flipper_palette = "#a1181f"
 
 /obj/item/clothing/head/helmet/space/nasavoid/old
 	name = "\improper engineering void helmet"
