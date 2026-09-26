@@ -15,14 +15,8 @@ jobs:
           sparse-checkout: |
             .github
             _maps
-            tools/bootstrap
-            tools/ci
-            tools/icon_cutter
-            tools/ticked_file_enforcement
-            tools/maplint
-            tools/mapmerge2
+            tools
             dependencies.sh
-            tools/requirements.txt
 
       # Grab pre-requisites
       - parallel:
