@@ -9,6 +9,7 @@ runs:
     - name: Checkout dependencies file
       uses: actions/checkout@v7
       with:
+        clean: false
         sparse-checkout: |
           dependencies.sh
         sparse-checkout-cone-mode: false
