@@ -877,6 +877,12 @@
 	result = /datum/reagent/consumable/applejuice
 	steps = list("Put into grinder and juice")
 
+/datum/crafting_recipe/food/grinder/tomato_juice
+	name = "Fresh Tomato Juice"
+	reqs = list(/obj/item/food/grown/tomato = 1)
+	result = /datum/reagent/consumable/tomatojuice
+	steps = list("Put into grinder and juice")
+
 /datum/crafting_recipe/food/grinder/lemon_juice
 	name = "Fresh Lemon Juice"
 	reqs = list(/obj/item/food/grown/citrus/lemon = 1)
