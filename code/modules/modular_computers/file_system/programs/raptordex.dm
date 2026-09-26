@@ -70,7 +70,7 @@
 	. = ..()
 	UnregisterSignal(computer, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET)
 
-/datum/computer_file/program/raptordex/kill_program(mob/user)
+/datum/computer_file/program/raptordex/on_kill(mob/user)
 	. = ..()
 	UnregisterSignal(computer, COMSIG_ITEM_REQUESTING_CONTEXT_FOR_TARGET)
 

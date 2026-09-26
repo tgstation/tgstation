@@ -1,10 +1,10 @@
 import { Box, Button, Icon, ProgressBar, Section } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 export const NtosSpectreMeter = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useNtos();
   const { auto_mode, spook_value, on_cooldown } = data;
   return (
     <NtosWindow width={400} height={180}>

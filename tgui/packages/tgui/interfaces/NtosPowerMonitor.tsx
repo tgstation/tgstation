@@ -1,11 +1,14 @@
 import { NtosWindow } from '../layouts';
-import { PowerMonitorContent } from './PowerMonitor';
+import { useNtos } from './NtosCore';
+import { PowerMonitorContent, type PowerMonitorData } from './PowerMonitor';
 
 export const NtosPowerMonitor = (props) => {
+  const { data } = useNtos<PowerMonitorData>();
+
   return (
     <NtosWindow width={550} height={700}>
       <NtosWindow.Content>
-        <PowerMonitorContent />
+        <PowerMonitorContent data={data} />
       </NtosWindow.Content>
     </NtosWindow>
   );

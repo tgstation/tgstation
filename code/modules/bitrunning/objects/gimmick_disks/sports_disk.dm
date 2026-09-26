@@ -80,8 +80,8 @@
 		/obj/item/storage/cans/sixgamerdrink,
 	)
 
-/obj/item/modular_computer/laptop/gamer
-	desc = "A high-end laptop often used for metagaming."
+/datum/operating_system/default/ntos/gamer
+	description = "Nanotrasen Operating System specially for gamers"
 	device_theme = PDA_THEME_TERMINAL
 	starting_programs = list(
 		/datum/computer_file/program/themeify,
@@ -90,10 +90,13 @@
 		/datum/computer_file/program/arcade/eazy,
 		/datum/computer_file/program/mafia,
 	)
-	start_open = FALSE
 
-/obj/item/modular_computer/laptop/gamer/install_default_programs()
-	// Only install starting programs, we don't want the software downloading program from default programs
+/datum/operating_system/default/ntos/gamer/install()
 	for(var/programs in starting_programs)
 		var/datum/computer_file/program/program_type = new programs
-		store_file(program_type)
+		filesystem.store_file(program_type)
+
+/obj/item/modular_computer/laptop/gamer
+	desc = "A high-end laptop often used for metagaming."
+	start_open = FALSE
+	os_type = /datum/operating_system/default/ntos/gamer
