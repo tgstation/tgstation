@@ -1,4 +1,3 @@
-TEST_FOCUS(/datum/unit_test/screenshot_dynamic_human_icons)
 /// A screenshot test for specific dynamic human icons
 /datum/unit_test/screenshot_dynamic_human_icons
 

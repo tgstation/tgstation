@@ -1,8 +1,6 @@
 /// A screenshot test for making sure invisible limbs function, keeping them clothed so we know they're there.
 /datum/unit_test/screenshot_saturnx
 
-TEST_FOCUS(/datum/unit_test/screenshot_saturnx)
-
 /datum/unit_test/screenshot_saturnx/Run()
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/dummy/consistent) //we don't use a dummy as they have no organs
 	human.equipOutfit(/datum/outfit/job/assistant/consistent, visuals_only = TRUE)

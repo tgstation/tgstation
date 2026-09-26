@@ -1,8 +1,6 @@
 /// A screenshot test for every humanoid species with a handful of jobs.
 /datum/unit_test/screenshot_humanoids
 
-TEST_FOCUS(/datum/unit_test/screenshot_humanoids)
-
 /datum/unit_test/screenshot_humanoids/Run()
 	var/list/testable_species = subtypesof(/datum/species)
 
