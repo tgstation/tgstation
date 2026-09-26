@@ -376,12 +376,13 @@
 /**
  * on_swap_hands Triggers on swapping hands, blocks swap if the other hand is busy
  */
-/datum/component/two_handed/proc/on_swapping_hands(mob/user, obj/item/held_item)
+/datum/component/two_handed/proc/on_swapping_hands(mob/user, held_index, silent)
 	SIGNAL_HANDLER
 
-	if(!held_item)
-		return
-	if(held_item == parent)
+	var/obj/item/offhand_index = user.get_held_index_of_item(offhand_item)
+	if(held_index == offhand_index)
+		if(!silent)
+			to_chat(user, span_warning("Your other hand is too busy holding [parent]."))
 		return COMPONENT_BLOCK_SWAP
 
 /**

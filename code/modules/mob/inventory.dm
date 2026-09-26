@@ -664,10 +664,9 @@ GAME_VERB_HIDDEN(/mob, quick_equip, "quick-equip")
 
 //Inventory.dm is -kind of- an ok place for this I guess
 
-//This is NOT for dismemberment, as the user still technically has 2 "hands"
-//This is for multi-handed mobs, such as a human with a third limb installed
-//This is a very rare proc to call (besides admin fuckery) so
-//any cost it has isn't a worry
+/// Changes the amount of hands that a mob thinks it can have.
+/// Note that this does not change the amount of hands that it actually has,
+/// Just the amount that it thinks it can hold.
 /mob/proc/change_number_of_hands(amt)
 	if(amt < held_items.len)
 		for(var/i in held_items.len to amt step -1)
