@@ -1,6 +1,8 @@
 #define UPDATE_EYES_LEFT 1
 #define UPDATE_EYES_RIGHT 2
 
+TEST_FOCUS(/datum/unit_test/screenshot_high_luminosity_eyes)
+
 /// Tests to make sure no punks have broken high luminosity eyes
 /datum/unit_test/screenshot_high_luminosity_eyes
 	var/mob/living/carbon/human/test_subject

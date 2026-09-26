@@ -1,3 +1,4 @@
+TEST_FOCUS(/datum/unit_test/screenshot_airlocks)
 /// Ensures common airlock overlays work
 /datum/unit_test/screenshot_airlocks
 

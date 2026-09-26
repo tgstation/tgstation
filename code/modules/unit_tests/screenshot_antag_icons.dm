@@ -1,3 +1,4 @@
+TEST_FOCUS(/datum/unit_test/screenshot_antag_icons)
 /// A screenshot test to make sure every antag icon in the preferences menu is consistent
 /datum/unit_test/screenshot_antag_icons
 

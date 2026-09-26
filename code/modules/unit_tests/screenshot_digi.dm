@@ -1,3 +1,4 @@
+TEST_FOCUS(/datum/unit_test/screenshot_digi)
 /// Ensures digitigrade legs and clothing are displayed correctly in screenshots
 /datum/unit_test/screenshot_digi
 

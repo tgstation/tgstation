@@ -1,3 +1,4 @@
+TEST_FOCUS(/datum/unit_test/screenshot_basic)
 /// This is an example for screenshot tests, and a meta-test to make sure they work in the success case.
 /// It creates a picture that is red on the left side, green on the other.
 /datum/unit_test/screenshot_basic

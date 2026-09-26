@@ -1,3 +1,4 @@
+TEST_FOCUS(/datum/unit_test/screenshot_hair_gradient)
 /datum/unit_test/screenshot_hair_gradient
 
 /datum/unit_test/screenshot_hair_gradient/Run()

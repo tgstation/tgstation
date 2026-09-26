@@ -1,6 +1,8 @@
 /// A screenshot test for husks
 /datum/unit_test/screenshot_husk
 
+TEST_FOCUS(/datum/unit_test/screenshot_husk)
+
 /datum/unit_test/screenshot_husk/Run()
 	var/mob/living/carbon/human/human = allocate(/mob/living/carbon/human/dummy/consistent) //we don't use a dummy as they have no organs
 	human.become_husk(BURN)
