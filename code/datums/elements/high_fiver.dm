@@ -40,9 +40,11 @@
 		// see how many hands the taker has open for high'ing
 		if(isnull(slap_check))
 			open_hands_taker++
+			continue
 		// see how many hands the offerer is using for high'ing
 		if(slap_check.item_flags & HAND_ITEM)
 			slappers_giver++
+			continue
 
 	var/high_ten = (slappers_giver >= 2)
 	var/descriptor = "high-[high_ten ? "ten" : "five"]"
