@@ -19,12 +19,13 @@ jobs:
         with:
           sparse-checkout: |
             .github
-            _maps/map_jsons
             tools/bootstrap
             tools/build
             tools/icon_cutter
             code
+            cutter_templates
             icons
+            interface
             sound
             tgui
             dependencies.sh
