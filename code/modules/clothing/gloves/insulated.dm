@@ -66,7 +66,7 @@
 	name = "spray-on insulated gloves"
 	icon_state = "sprayon"
 	inhand_icon_state = null
-	item_flags = DROPDEL
+	item_flags = parent_type::item_flags | DROPDEL
 	clothing_traits = list(TRAIT_CHUNKYFINGERS)
 	armor_type = /datum/armor/none
 	resistance_flags = ACID_PROOF

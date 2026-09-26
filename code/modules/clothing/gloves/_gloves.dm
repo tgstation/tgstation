@@ -20,6 +20,7 @@
 	strip_delay = 2 SECONDS
 	equip_delay_other = 4 SECONDS
 	article = "a pair of"
+	item_flags = CAN_BE_OVERSLOT
 
 	// Path variable. If defined, will produced the type through interaction with wirecutters.
 	var/cut_type = null

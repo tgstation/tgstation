@@ -1,4 +1,4 @@
-/obj/item/clothing/head/chaplain/
+/obj/item/clothing/head/chaplain
 	icon = 'icons/obj/clothing/head/chaplain.dmi'
 	worn_icon = 'icons/mob/clothing/head/chaplain.dmi'
 
@@ -11,11 +11,17 @@
 	name = "kippah"
 	desc = "Signals that you follow the Jewish Halakha. Keeps the head covered and the soul extra-Orthodox."
 	icon_state = "kippah"
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/head/chaplain/medievaljewhat
 	name = "medieval Jewish hat"
 	desc = "A silly looking hat, intended to be placed on the heads of the station's oppressed religious minorities."
 	icon_state = "medievaljewhat"
+	item_flags = CAN_BE_OVERSLOT
+
+/obj/item/clothing/head/chaplain/taqiyah
+	abstract_type = /obj/item/clothing/head/chaplain/taqiyah
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/head/chaplain/taqiyah/white
 	name = "white taqiyah"
