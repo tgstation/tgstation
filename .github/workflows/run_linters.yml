@@ -15,7 +15,10 @@ jobs:
           sparse-checkout: |
             .github
             _maps
+            code
+            icons
             tools
+            html/changelogs
             dependencies.sh
 
       # Grab pre-requisites
