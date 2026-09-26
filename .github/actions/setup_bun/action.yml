@@ -7,7 +7,6 @@ runs:
   using: composite
   steps:
     - name: Checkout dependencies file
-      if: ${{ !inputs.major }}
       uses: actions/checkout@v7
       with:
         sparse-checkout: |
