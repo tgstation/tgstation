@@ -24,11 +24,9 @@ runs:
 
     - name: Checkout dependencies file
       if: ${{ !inputs.major }}
-      uses: actions/checkout@v7
-      with:
-        sparse-checkout: |
-          dependencies.sh
-        sparse-checkout-cone-mode: false
+      run: |
+        git sparse-checkout set --no-cone dependencies.sh
+        git checkout
 
     - name: Configure BYOND version from dependencies.sh
       if: ${{ !inputs.major }}

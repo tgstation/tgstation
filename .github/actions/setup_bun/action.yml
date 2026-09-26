@@ -7,12 +7,9 @@ runs:
   using: composite
   steps:
     - name: Checkout dependencies file
-      uses: actions/checkout@v7
-      with:
-        clean: false
-        sparse-checkout: |
-          dependencies.sh
-        sparse-checkout-cone-mode: false
+      run: |
+        git sparse-checkout set --no-cone dependencies.sh
+        git checkout
 
     - name: Configure Bun version
       shell: bash
