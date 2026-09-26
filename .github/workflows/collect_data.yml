@@ -31,7 +31,7 @@ jobs:
       required_build_versions: ${{ steps.setup_required_build_versions.outputs.required_build_versions }}
 
     steps:
-      - name: Checkout
+      - name: Checkout required files
         uses: actions/checkout@v7
         with:
           sparse-checkout: |
@@ -39,7 +39,6 @@ jobs:
             _maps/map_jsons
             dependencies.sh
             tools/ci/install_byond.sh
-
 
       - name: Find maps
         id: map_finder

@@ -9,7 +9,19 @@ jobs:
     timeout-minutes: 5
 
     steps:
-      - uses: actions/checkout@v7
+      - name: Checkout required files
+        uses: actions/checkout@v7
+        with:
+          sparse-checkout: |
+            .github
+            _maps
+            tools/ci
+            tools/icon_cutter
+            tools/ticked_file_enforcement
+            tools/maplint
+            tools/mapmerge2
+            dependencies.sh
+            tools/requirements.txt
 
       # Grab pre-requisites
       - parallel:
