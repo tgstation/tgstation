@@ -36,7 +36,14 @@ jobs:
         uses: actions/checkout@v7
         with:
           sparse-checkout: |
+            _maps
             .github
+            build/behavior_trees
+            code/datums/greyscale/json_configs
+            sound/runtime
+            strings
+            tgui/public
+            tgui/packages/tgfont/dist
             dependencies.sh
             SQL/tgstation_schema.sql
             SQL/tgstation_schema_prefixed.sql
