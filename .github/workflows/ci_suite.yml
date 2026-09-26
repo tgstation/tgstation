@@ -30,6 +30,7 @@ jobs:
 
   checkout_repository:
     name: Checkout Repository
+    needs: start_gate
     uses: actions/checkout@v7
 
   run_linters:
