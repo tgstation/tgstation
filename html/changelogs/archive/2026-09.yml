@@ -396,6 +396,9 @@
   - bugfix: Fixed a bileworm devouring runtime
   - bugfix: Fixed heirophants not doing their final attack on death
   - bugfix: Fixed potential runtime when using plasmacutters as a tool
+  Gboster-0:
+  - bugfix: fixes monkeys not screeching in agony when crushed by doors, god bless
+      doors
   Melbert:
   - bugfix: Fixes a lot of mob AIs (such as vending machines) from being unable to
       move entirely
