@@ -509,16 +509,23 @@ GAME_VERB_HIDDEN_INSTANT(/client, toggle_walk_run, "toggle-walk-run")
 		user_mob.toggle_move_intent()
 
 /**
- * Toggle the move intent of the mob
- *
- * triggers an update the move intent hud as well
+ * Toggles move intent between walk and run, calling set_move_intent.
  */
 /mob/living/proc/toggle_move_intent()
 	if(move_intent == MOVE_INTENT_RUN)
-		move_intent = MOVE_INTENT_WALK
+		set_move_intent(MOVE_INTENT_WALK)
 	else
-		move_intent = MOVE_INTENT_RUN
+		set_move_intent(MOVE_INTENT_RUN)
 
+/**
+ * Sets the move intent of the mob. Triggers an update the move intent hud as well.
+ * Args:
+ * - new_state: The move state we're being set to.
+ */
+/mob/living/proc/set_move_intent(new_state)
+	if(move_intent == new_state)
+		return
+	move_intent = new_state
 	hud_used?.screen_objects[HUD_MOB_MOVE_INTENT]?.update_appearance()
 	update_move_intent_slowdown()
 	SEND_SIGNAL(src, COMSIG_MOVE_INTENT_TOGGLED)
