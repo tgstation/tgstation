@@ -35,15 +35,16 @@ jobs:
         uses: actions/checkout@v7
         with:
           sparse-checkout: |
+            .github
             _maps/map_jsons
 
-      - name: Checkout other files
-        uses: actions/checkout@v7
-        with:
-          sparse-checkout: |
-            .github/max_required_byond_client.txt
-            .github/alternate_byond_versions.txt
-          sparse-checkout-cone-mode: false
+      #- name: Checkout other files
+      #  uses: actions/checkout@v7
+      #  with:
+      #    sparse-checkout: |
+      #      .github/max_required_byond_client.txt
+      #      .github/alternate_byond_versions.txt
+      #    sparse-checkout-cone-mode: false
 
       - name: Find maps
         id: map_finder
