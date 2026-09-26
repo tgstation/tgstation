@@ -1,0 +1,4 @@
+author: "Gboster-0"
+delete-after: True
+changes:
+  - bugfix: "fixes monkeys not screeching in agony when crushed by doors, god bless doors"
