@@ -11,6 +11,7 @@
 	inhand_icon_state = "void_suit"
 	desc = "An old, NASA CentCom branch designed, dark red space suit."
 	allowed = list(/obj/item/flashlight, /obj/item/tank/internals, /obj/item/multitool)
+	cerulean_flipper_palette = "#a1181f"
 
 /obj/item/clothing/head/helmet/space/nasavoid/old
 	name = "\improper engineering void helmet"
@@ -33,6 +34,7 @@
 	inhand_icon_state = "s_suit"
 	desc = "A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies."
 	armor_type = /datum/armor/space_eva
+	cerulean_flipper_palette = "#888888"
 
 /obj/item/clothing/head/helmet/space/eva
 	name = "\improper EVA helmet"

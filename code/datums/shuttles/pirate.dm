@@ -34,3 +34,7 @@
 /datum/map_template/shuttle/pirate/medieval
 	suffix = "medieval"
 	name = "pirate ship (Siege Pod)"
+
+/datum/map_template/shuttle/pirate/siren
+	suffix = "siren"
+	name = "pirate ship (Siren Shimai)"

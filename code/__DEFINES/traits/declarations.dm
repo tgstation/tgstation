@@ -260,6 +260,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PLASMA_LOVER_METABOLISM "plasma_lover_metabolism"
 /// The mob is not harmed by tetrodotoxin. Instead, it heals them like omnizine
 #define TRAIT_TETRODOTOXIN_HEALING "tetrodotoxin_healing"
+/// Do not allow legs to be attached to a mob with this trait
+#define TRAIT_BLOCK_ATTACHING_LEGS "block_attaching_legs"
 #define TRAIT_EASYDISMEMBER "easy_dismember"
 #define TRAIT_LIMBATTACHMENT "limb_attach"
 #define TRAIT_NOLIMBDISABLE "no_limb_disable"
@@ -880,6 +882,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WADDLING "trait_waddling"
 /// Mobs with trait will still waddle even when lying on the floor and make a different footstep sound when doing so.
 #define TRAIT_FLOPPING "trait_flopping"
+/// To be used combined with TRAIT_FLOPPING, to make a mob flop exclusively when laying on the floor.
+#define TRAIT_FLOOR_FLOPPING "trait_floor_flopping"
 /// Required by the on_hit_effect element, which is in turn added by other elements.
 #define TRAIT_ON_HIT_EFFECT "trait_on_hit_effect"
 

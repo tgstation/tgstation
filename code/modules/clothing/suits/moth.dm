@@ -10,6 +10,7 @@
 	flags_1 = IS_PLAYER_COLORABLE_1
 	flags_inv = HIDEMUTWINGS
 	body_parts_covered = CHEST
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/flashlight/lantern) //lamp
 
 /obj/item/clothing/suit/mothcoat/original

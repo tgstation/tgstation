@@ -12,6 +12,7 @@
 /obj/item/clothing/suit/utility
 	icon = 'icons/obj/clothing/suits/utility.dmi'
 	worn_icon = 'icons/mob/clothing/suits/utility.dmi'
+	cerulean_flipper_palette = NONE
 
 /obj/item/clothing/suit/utility/fire
 	name = "emergency firesuit"
@@ -57,7 +58,7 @@
 /obj/item/clothing/suit/utility/fire/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
 	if(!isinhands)
-		. += emissive_appearance(icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
+		. += emissive_appearance((bodyshape & BODYSHAPE_CERULEAN) ? CERULEAN_SUIT_FILE : icon_file, "[icon_state]-emissive", src, alpha = src.alpha, effect_type = EMISSIVE_SPECULAR)
 
 /obj/item/clothing/suit/utility/fire/firefighter
 	icon_state = "firesuit"
@@ -66,6 +67,7 @@
 	heat_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
+	cerulean_flipper_palette = "#725c3e"
 
 /obj/item/clothing/suit/utility/fire/heavy
 	name = "heavy firesuit"
@@ -84,6 +86,7 @@
 	cold_protection = CHEST|GROIN|LEGS|FEET|ARMS
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS
 	flags_inv = HIDESHOES|HIDEJUMPSUIT
+	cerulean_flipper_palette = "#525765"
 
 /*
  * Bomb protection
@@ -227,6 +230,7 @@
 	equip_delay_other = 6 SECONDS
 	flags_inv = HIDEJUMPSUIT
 	resistance_flags = NONE
+	cerulean_flipper_palette = "#ffdb57"
 
 /obj/item/clothing/suit/utility/radiation/Initialize(mapload)
 	. = ..()
