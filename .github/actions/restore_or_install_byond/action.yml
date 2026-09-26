@@ -69,6 +69,13 @@ runs:
         key: ${{ runner.os }}-byond-${{ env.BYOND_MAJOR }}-${{ env.BYOND_MINOR }}
         lookup-only: ${{ inputs.skip_cache_download }}
 
+    - name: Checkout installation script
+      uses: actions/checkout@v7
+      with:
+        sparse-checkout: |
+          tools/ci/install_byond.sh
+        sparse-checkout-cone-mode: false
+
     - name: Install BYOND
       if: ${{ !steps.restore_byond_cache.outputs.cache-hit }}
       shell: bash

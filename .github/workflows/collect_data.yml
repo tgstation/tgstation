@@ -31,7 +31,19 @@ jobs:
       required_build_versions: ${{ steps.setup_required_build_versions.outputs.required_build_versions }}
 
     steps:
-      - uses: actions/checkout@v7
+      - name: Checkout map files
+        uses: actions/checkout@v7
+        with:
+          sparse-checkout: |
+            _maps/map_jsons
+
+      - name: Checkout other files
+        uses: actions/checkout@v7
+        with:
+          sparse-checkout: |
+            .github/max_required_byond_client.txt
+            .github/alternate_byond_versions.txt
+          sparse-checkout-cone-mode: false
 
       - name: Find maps
         id: map_finder
