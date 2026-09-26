@@ -127,6 +127,7 @@
 	inhand_icon_state = "hostrench"
 	resistance_flags = NONE
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
+	custom_materials = list(/datum/material/leather = 7 * SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/suit/jacket/leather/Initialize(mapload)
 	. = ..()

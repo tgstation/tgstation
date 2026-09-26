@@ -5,6 +5,9 @@
 	icon = 'icons/obj/medical/bodybag.dmi'
 	icon_state = "bodybag_folded"
 	w_class = WEIGHT_CLASS_SMALL
+	custom_materials = list(
+		/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 2,
+	)
 	///Stored path we use for spawning a new body bag entity when unfolded.
 	var/unfoldedbag_path = /obj/structure/closet/body_bag
 
@@ -59,7 +62,12 @@
 	unfoldedbag_path = /obj/structure/closet/body_bag/bluespace
 	w_class = WEIGHT_CLASS_SMALL
 	item_flags = NO_MAT_REDEMPTION
-	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/plasma = SHEET_MATERIAL_AMOUNT, /datum/material/diamond = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/bluespace = HALF_SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 0.25,
+		/datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 0.25,
+	)
 
 /obj/item/bodybag/bluespace/examine(mob/user)
 	. = ..()
@@ -111,6 +119,10 @@
 	unfoldedbag_path = /obj/structure/closet/body_bag/environmental
 	w_class = WEIGHT_CLASS_NORMAL //It's reinforced and insulated, like a beefed-up sleeping bag, so it has a higher bulkiness than regular bodybag
 	resistance_flags = ACID_PROOF | FIRE_PROOF | FREEZE_PROOF
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
+		/datum/material/cloth = SHEET_MATERIAL_AMOUNT,
+	)
 
 /obj/item/bodybag/environmental/nanotrasen
 	name = "elite environmental protection bag"
@@ -145,7 +157,10 @@
 	icon = 'icons/obj/medical/bodybag.dmi'
 	icon_state = "stasis_bag_folded"
 	unfoldedbag_path = /obj/structure/closet/body_bag/environmental/stasis
-	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 10, /datum/material/silver = HALF_SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.5,
+	)
 
 /obj/item/bodybag/stasis/deploy_bodybag(mob/user, atom/location)
 	var/obj/structure/closet/body_bag/environmental/stasis/bag = ..()

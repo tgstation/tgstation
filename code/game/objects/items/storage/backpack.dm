@@ -27,6 +27,7 @@
 	drop_sound = 'sound/items/handling/backpack/backpack_drop1.ogg'
 	equip_sound = 'sound/items/equip/backpack_equip.ogg'
 	sound_vary = TRUE
+	custom_materials = list(/datum/material/cloth = 4 * SHEET_MATERIAL_AMOUNT)
 
 /obj/item/storage/backpack/Initialize(mapload)
 	. = ..()
@@ -308,6 +309,7 @@
 	desc = "It's a very fancy satchel made with fine leather."
 	icon_state = "satchel-leather"
 	inhand_icon_state = "satchel"
+	custom_materials = list(/datum/material/leather = 5 * SHEET_MATERIAL_AMOUNT)
 
 /obj/item/storage/backpack/satchel/leather/withwallet/PopulateContents()
 	new /obj/item/storage/wallet/random(src)

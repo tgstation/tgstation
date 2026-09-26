@@ -8,6 +8,7 @@
 	alternate_worn_layer = UNDER_SUIT_LAYER
 	w_class = WEIGHT_CLASS_BULKY
 	storage_type = /datum/storage/holster
+	custom_materials = list(/datum/material/leather = 3 * SHEET_MATERIAL_AMOUNT)
 
 /obj/item/storage/belt/holster/equipped(mob/user, slot)
 	. = ..()

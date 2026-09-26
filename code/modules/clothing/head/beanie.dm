@@ -15,6 +15,7 @@
 	greyscale_config_worn = /datum/greyscale_config/beanie/worn
 	greyscale_colors = "#EEEEEE#EEEEEE"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	custom_materials = list(/datum/material/cloth = 2 * SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/head/beanie/black
 	name = "black beanie"
@@ -52,6 +53,7 @@
 	icon_state = "/obj/item/clothing/head/beanie/durathread"
 	greyscale_colors = "#8291A1#8291A1"
 	armor_type = /datum/armor/beanie_durathread
+	custom_materials = list(/datum/material/cloth/durathread = 2 * SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/head/rasta
 	name = "rastacap"
