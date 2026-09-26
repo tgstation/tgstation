@@ -5,6 +5,7 @@ SUBSYSTEM_DEF(atoms)
 		/datum/controller/subsystem/fluids,
 		/datum/controller/subsystem/mapping,
 		/datum/controller/subsystem/job,
+		/datum/controller/subsystem/research,
 	)
 	ss_flags = SS_NO_FIRE
 

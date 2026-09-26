@@ -53,6 +53,8 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 
 /obj/docking_port/mobile/supply/Initialize(mapload)
 	. = ..()
+
+	AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_bar_changed)), POWER_BAR_DEPARTMENT_CARGO)
 	// Apply speed traits to each shuttle, including ones loaded after roundstart.
 	if(HAS_TRAIT(SSstation, STATION_TRAIT_QUICK_SHUTTLE))
 		callTime *= 0.5
@@ -355,6 +357,15 @@ GLOBAL_LIST_INIT(blacklisted_cargo_types, typecacheof(list(
 			empty_turfs += shuttle_floor
 
 	new /obj/structure/closet/crate/mail/economy(pick(empty_turfs))
+
+/obj/docking_port/mobile/supply/proc/on_power_bar_changed(power_bars)
+	switch (power_bars)
+		if (0, 1)
+			engine_coeff = 1
+		if (2)
+			engine_coeff = 0.8
+		if (3)
+			engine_coeff = 0.5
 
 /// Takes a supply pack, returns the amount we currently have on order (or OVER_ORDER_LIMIT if we are over the hardcap on orders of this type)
 /obj/docking_port/mobile/supply/proc/get_order_count(datum/supply_pack/ordering)

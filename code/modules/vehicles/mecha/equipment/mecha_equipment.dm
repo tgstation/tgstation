@@ -39,6 +39,8 @@
 	var/destroy_sound = 'sound/vehicles/mecha/critdestr.ogg'
 	///The action type to use for this equipment. Override for custom action buttons.
 	var/action_type = /datum/action/vehicle/sealed/mecha/equipment
+	/// Hidden on examine
+	var/examine_hidden = FALSE
 
 /obj/item/mecha_parts/mecha_equipment/Destroy()
 	if(chassis)
@@ -276,4 +278,3 @@
 /// AI mech pilot: returns TRUE if the Ai should try to reload the mecha
 /obj/item/mecha_parts/mecha_equipment/proc/needs_rearm()
 	return FALSE
-

@@ -23,6 +23,7 @@
 		MECHA_ARMOR = 1,
 	)
 	bumpsmash = TRUE
+	forced_power_bar = 3
 
 	/// Reusable smoke generator system
 	var/datum/effect_system/fluid_spread/smoke/smoke_system
@@ -66,9 +67,10 @@
 
 /obj/vehicle/sealed/mecha/marauder/loaded/populate_parts()
 	cell = new /obj/item/stock_parts/power_store/cell/bluespace(src)
-	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
-	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
-	servo = new /obj/item/stock_parts/servo/femto(src)
+	if (!SSpower_bars.enabled)
+		new /obj/item/stock_parts/scanning_module/triphasic(src)
+		new /obj/item/stock_parts/capacitor/quadratic(src)
+		new /obj/item/stock_parts/servo/femto(src)
 	update_part_values()
 
 /obj/vehicle/sealed/mecha/marauder/remove_occupant(mob/driver)
@@ -229,7 +231,8 @@
 
 /obj/vehicle/sealed/mecha/marauder/mauler/loaded/populate_parts()
 	cell = new /obj/item/stock_parts/power_store/cell/bluespace(src)
-	scanmod = new /obj/item/stock_parts/scanning_module/triphasic(src)
-	capacitor = new /obj/item/stock_parts/capacitor/quadratic(src)
-	servo = new /obj/item/stock_parts/servo/femto(src)
+	if (!SSpower_bars.enabled)
+		new /obj/item/stock_parts/scanning_module/triphasic(src)
+		new /obj/item/stock_parts/capacitor/quadratic(src)
+		new /obj/item/stock_parts/servo/femto(src)
 	update_part_values()

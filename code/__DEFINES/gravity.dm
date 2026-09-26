@@ -56,3 +56,9 @@
 #define GRAVITY_DAMAGE_SCALING 0.5
 /// The maximum [BRUTE] damage a mob can take from high gravity per second.
 #define GRAVITY_DAMAGE_MAXIMUM 1.5
+
+/**
+ * Checks if the passed atom allows TRAIT_NEGATES_GRAVITY to work on it
+ * Groundless turfs (like space) don't allow gravity negation unless they have TRAIT_CAN_BE_MAGNETIZED
+ */
+#define ATOM_FORBIDS_GRAVITY_NEGATION(some_atom) (isgroundlessturf(some_atom) && !HAS_TRAIT(some_atom, TRAIT_ALLOWS_GRAVITY_NEGATION))

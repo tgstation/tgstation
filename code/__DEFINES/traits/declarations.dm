@@ -1744,6 +1744,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Objects with this trait may become a new prison for a revenant, in the event of its ectoplasm dispersing
 #define TRAIT_COZY_REVENANT_HOME "cozy_revenant_home"
 
+/// Applied to groundless turfs like space to allow gravity negating effects like magboots to function on them
+#define TRAIT_ALLOWS_GRAVITY_NEGATION "allows_gravity_negation"
+
 /// Mobs with this trait will appear as human to medical scanners even if they are not human
 #define TRAIT_HUMAN_DISGUISE "human_disguise"
 

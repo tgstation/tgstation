@@ -334,7 +334,8 @@
 	SSmachines.processing_early += src
 	if(anchored)
 		connect_to_network()
-	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity_if_active))
+	if(!SSpower_bars.enabled)
+		RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity_if_active))
 	set_wires(new /datum/wires/shieldwallgen(src))
 
 /obj/machinery/power/shieldwallgen/update_appearance(updates)
