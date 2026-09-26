@@ -141,11 +141,12 @@
 	// apply a flipper icon if we are sealed and have a female physique.
 	// ideally we color after the theme fetched from var/cerulean_flipper_palette
 	if(physique == FEM_FLIPPER && sealed && theme.cerulean_flipper_palette != NO_FLIPPERS)
+		var/color_to_use = (theme.cerulean_flipper_palette == FLIPPERS) ? greyscale_colors : theme.cerulean_flipper_palette
 		base_icon.Blend(
 			icon(
 				SSgreyscale.GetColoredIconByType(
 					/datum/greyscale_config/modular_mod_parts_cerulean/basic,
-					theme.cerulean_flipper_palette || greyscale_colors,
+					color_to_use,
 				),
 				"[FLIPPERS]",
 			),

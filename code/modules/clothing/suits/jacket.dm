@@ -96,6 +96,7 @@
 	greyscale_config_worn = /datum/greyscale_config/jacket_oversized/worn
 	greyscale_colors = "#414344"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/jacket/fancy

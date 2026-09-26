@@ -230,7 +230,7 @@
 	if(cap && rand(0,1) == 1)
 		cap.flip(equipped)
 	var/obj/item/clothing/under/uniform = equipped.get_item_by_slot(ITEM_SLOT_ICLOTHING)
-	if(uniform)
+	if(uniform && !istype(uniform, /obj/item/clothing/under/color/jumpskirt/rainbow))//kek...
 		uniform.rolldown(equipped)
 	equipped.update_lips("lipstick_lower", COLOR_BLACK)
 	equipped.adjust_wet_stacks(-3)

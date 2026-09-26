@@ -34,7 +34,7 @@
 	strip_delay = 4 SECONDS
 	equip_delay_other = 2 SECONDS
 	fishing_modifier = -3
-	cerulean_flipper_palette = "#492f1f"
+	cerulean_flipper_palette = "#86563b"
 
 /obj/item/clothing/head/helmet/space/pirate/tophat
 	name = "designer pirate helmet"
