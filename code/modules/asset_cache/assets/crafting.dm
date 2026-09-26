@@ -35,6 +35,10 @@
 		if(istype(style))
 			icon_file = style.icon
 			icon_state = style.icon_state
+	// Hardcoded for now, I suppose. Revisit later with bespoke "generic" icons for abstract types i.e. if(ingredient_typepath == ingredient_typepath::abstract_type) ?
+	else if(ingredient_typepath == /obj/item/food || ingredient_typepath == /obj/item/food/grown || ingredient_typepath == /obj/item/grown)
+		icon_file = 'icons/effects/random_spawners.dmi'
+		icon_state = "questionmark"
 
 	icon_file ||= preview_item::icon_preview || preview_item::icon
 	icon_state ||= preview_item::icon_state_preview || preview_item::icon_state
