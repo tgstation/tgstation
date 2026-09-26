@@ -72,7 +72,7 @@ export function AtomContent(props: Props) {
           }}
         >
           {hasRecipe.length > 1 && (
-            <Stack align="center" fill>
+            <Stack align="center" fill mb={0.5}>
               <Stack.Item grow>
                 <Button
                   fluid
