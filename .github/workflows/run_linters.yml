@@ -15,6 +15,7 @@ jobs:
           sparse-checkout: |
             .github
             _maps
+            tools/bootstrap
             tools/ci
             tools/icon_cutter
             tools/ticked_file_enforcement
