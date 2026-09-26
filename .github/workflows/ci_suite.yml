@@ -28,9 +28,13 @@ jobs:
       - name: Mandatory Empty Step
         run: exit 0
 
+  checkout_repository:
+    name: Checkout Repository
+    uses: actions/checkout@v7
+
   run_linters:
     name: Run Linters
-    needs: start_gate
+    needs: checkout_repository
     uses: ./.github/workflows/run_linters.yml
 
   collect_data:

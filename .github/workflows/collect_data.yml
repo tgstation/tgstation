@@ -31,12 +31,12 @@ jobs:
       required_build_versions: ${{ steps.setup_required_build_versions.outputs.required_build_versions }}
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-        with:
-          sparse-checkout: |
-            .github
-            _maps/map_jsons
+      #- name: Checkout
+      #  uses: actions/checkout@v7
+      #  with:
+      #    sparse-checkout: |
+      #      .github
+      #      _maps/map_jsons
 
       - name: Find maps
         id: map_finder
