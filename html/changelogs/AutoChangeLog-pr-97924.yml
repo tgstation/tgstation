@@ -1,6 +1,0 @@
-author: "Arceniu"
-delete-after: True
-changes:
-  - code_imp: "modified centcom - swapped cent captain's access with cent officer's access at airlocks"
-  - code_imp: "modified centcom - Replaced cent captain's access at centcom security room's windoors to cent general, to match airlock accesses, swapped same access to storage at centcom cargo bay"
-  - code_imp: "swapped cent captain's access with cent officer's access at corpse's trims and ERT commander's trim"

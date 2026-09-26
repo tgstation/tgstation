@@ -384,6 +384,14 @@
   vinylspiders:
   - bugfix: fixes a source of overflayer bluescreens
 2026-09-26:
+  Arceniu:
+  - code_imp: modified centcom - swapped cent captain's access with cent officer's
+      access at airlocks
+  - code_imp: modified centcom - Replaced cent captain's access at centcom security
+      room's windoors to cent general, to match airlock accesses, swapped same access
+      to storage at centcom cargo bay
+  - code_imp: swapped cent captain's access with cent officer's access at corpse's
+      trims and ERT commander's trim
   FlufflesTheDog:
   - bugfix: Fixed a bileworm devouring runtime
   - bugfix: Fixed heirophants not doing their final attack on death
@@ -393,6 +401,11 @@
       move entirely
   - bugfix: FIxes (maybe) a bug where vending machines project their warning on you
       forever
+  PapaMichael:
+  - bugfix: The Chameleon Scanner (that comes with a Chameleon Kit) that's supposed
+      to let you copy players' exact outfits now works
   Stonetear:
   - qol: Fishing capsules now only need a 3x3 space to deploy.  The actual fishing
       size is still 3x3.
+  vinylspiders:
+  - code_imp: rust-g has been updated to 7.0.0 please report any issues

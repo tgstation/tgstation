@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - code_imp: "rust-g has been updated to 7.0.0 please report any issues"
