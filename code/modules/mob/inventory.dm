@@ -11,7 +11,9 @@
 /mob/proc/get_held_items() as /list
 	RETURN_TYPE(/list/obj/item)
 
-	return (astype(held_items.Copy(), /list)).RemoveAll(null) // yeah the langserver isn't very smart
+	var/list/result = held_items.Copy()
+	result.RemoveAll(null)
+	return result
 
 /// Returns a list of all actively held items of a given type
 /mob/proc/get_held_items_of_type(typepath) as /list
@@ -142,7 +144,7 @@
 
 /// Returns TRUE/FALSE depending on if we're holding this item
 /mob/proc/is_holding(obj/item/item)
-	return !!get_held_index_of_item(item)
+	return (item in held_items)
 
 /// Checks if we're holding an item of this type
 /mob/proc/is_holding_item_of_type(typepath)
