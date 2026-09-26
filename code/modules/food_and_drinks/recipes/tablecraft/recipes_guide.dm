@@ -425,6 +425,7 @@
 	reqs = list(/obj/item/food/butter = 1)
 	result = /obj/item/food/butterslice
 	meal_category = MEAL_COMPONENT
+	dish_category = DISH_CONDIMENT
 
 /datum/crafting_recipe/food/knife/doughball
 	reqs = list(/obj/item/food/doughslice = 1)
@@ -801,6 +802,7 @@
 	reqs = list(/datum/reagent/consumable/milk = MILK_TO_BUTTER_COEFF)
 	result = /obj/item/food/butter
 	steps = list("Put into grinder and mix")
+	meal_category = MEAL_COMPONENT
 	dish_category = DISH_CONDIMENT
 
 /datum/crafting_recipe/food/grinder/mayonnaise
@@ -942,18 +944,18 @@
 	steps = list("Put into grinder and juice")
 
 /datum/crafting_recipe/food/grinder/milk
-	name = "Fresh Plant Milk"
+	name = "Fresh Plant-Based Milk"
 
-	reqs = list(/obj/item/seeds/soya/butter = 1)
+	reqs = list(/obj/item/food/grown/butterbeans = 1)
 	result = /datum/reagent/consumable/milk
 
 /datum/crafting_recipe/food/grinder/cream
-	name = "Fresh Plant Cream"
-	reqs = list(/obj/item/seeds/soya/butter = 1)
+	name = "Fresh Plant-Based Cream"
+	reqs = list(/obj/item/food/grown/butterbeans = 1)
 	result = /datum/reagent/consumable/cream
 
 /datum/crafting_recipe/food/grinder/vege_oil
-	name = "Fresh Vegetable Oil"
+	name = "Fresh Plant-Based Vegetable Oil"
 	reqs = list(/obj/item/food/grown/soybeans = 1)
 	result = /datum/reagent/consumable/nutriment/fat/oil
 
@@ -1392,6 +1394,7 @@
 
 /datum/crafting_recipe/food/order/egg
 	result = /obj/item/food/egg
+	meal_category = MEAL_COMPONENT
 
 /datum/crafting_recipe/food/egg_chicken
 	name = "Fresh Eggs"
@@ -1525,3 +1528,20 @@
 	result = /obj/item/food/icecream
 	non_craftable = TRUE
 	steps = list("Retrieve cone from holder")
+
+/datum/crafting_recipe/food/egg_from_egg_plant
+	name = "Fresh Plant-Based Eggs"
+	reqs = list(/obj/item/food/grown/eggy = 1)
+	result = /obj/item/food/egg
+	non_craftable = TRUE
+	steps = list("Open an egg-plant in your hands")
+	meal_category = MEAL_COMPONENT
+
+/datum/crafting_recipe/food/butter_from_plant
+	name = "Fresh Plant-Based Butter"
+	reqs = list(/obj/item/food/grown/butterbeans = 1)
+	result = /obj/item/food/butterslice
+	non_craftable = TRUE
+	steps = list("Crush a butterbean in your hands")
+	meal_category = MEAL_COMPONENT
+	dish_category = DISH_CONDIMENT
