@@ -22,13 +22,6 @@ runs:
         echo "BYOND_MAJOR=${{ inputs.major }}" >> $GITHUB_ENV
         echo "BYOND_MINOR=${{ inputs.minor }}" >> $GITHUB_ENV
 
-    #- name: Checkout dependencies file
-    #  if: ${{ !inputs.major }}
-    #  shell: bash
-    #  run: |
-    #    git sparse-checkout set --no-cone dependencies.sh
-    #    git checkout
-
     - name: Configure BYOND version from dependencies.sh
       if: ${{ !inputs.major }}
       shell: bash

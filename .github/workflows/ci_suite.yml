@@ -26,16 +26,11 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Mandatory Empty Step
-        run: exit 0
-
-  checkout_repository:
-    name: Checkout Repository
-    needs: start_gate
-    uses: actions/checkout@v7
+        run: exit
 
   run_linters:
     name: Run Linters
-    needs: checkout_repository
+    needs: start_gate
     uses: ./.github/workflows/run_linters.yml
 
   collect_data:

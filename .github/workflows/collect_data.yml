@@ -31,12 +31,16 @@ jobs:
       required_build_versions: ${{ steps.setup_required_build_versions.outputs.required_build_versions }}
 
     steps:
-      #- name: Checkout
-      #  uses: actions/checkout@v7
-      #  with:
-      #    sparse-checkout: |
-      #      .github
-      #      _maps/map_jsons
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          sparse-checkout: |
+            _maps/map_jsons
+            dependencies.sh
+            .github/max_required_byond_client.txt
+            .github/alternate_byond_versions.txt
+            tools/ci/install_byond.sh
+
 
       - name: Find maps
         id: map_finder

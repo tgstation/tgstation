@@ -6,12 +6,6 @@ description: Install Bun using the version specified in `dependencies.sh`
 runs:
   using: composite
   steps:
-    #- name: Checkout dependencies file
-    #  shell: bash
-    #  run: |
-    #    git sparse-checkout set --no-cone dependencies.sh
-    #    git checkout
-
     - name: Configure Bun version
       shell: bash
       run: |
