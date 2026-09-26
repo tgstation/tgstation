@@ -34,9 +34,11 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED
 	if(controller.blackboard[BB_VENDING_BUSY_TILTING])
 		return AI_BEHAVIOR_DELAY
+	var/turf/target_turf = get_turf(controller.blackboard[target_key])
+	if(!target_turf.IsReachableBy(vendor_pawn))
+		return AI_BEHAVIOR_FAILED
 	controller.ai_movement.stop_moving_towards(controller)
 	controller.set_blackboard_key(BB_VENDING_BUSY_TILTING, TRUE)
-	var/turf/target_turf = get_turf(controller.blackboard[target_key])
 	new /obj/effect/temp_visual/telegraphing/vending_machine_tilt(target_turf)
 	addtimer(CALLBACK(src, PROC_REF(tiltonmob), controller, target_turf), time_to_tilt)
 	return AI_BEHAVIOR_DELAY
@@ -59,6 +61,8 @@
 /datum/bt_node/ai_behavior/vendor_crush/finish_action(datum/ai_controller/controller, succeeded)
 	. = ..()
 	controller.set_blackboard_key(BB_VENDING_BUSY_TILTING, FALSE)
+	if(!succeeded)
+		controller.clear_blackboard_key(target_key)
 
 /// Untilts the machine. Sets a tilt cooldown if the previous hit was successful.
 /datum/bt_node/ai_behavior/vendor_rise_up
