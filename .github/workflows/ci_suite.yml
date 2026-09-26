@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Mandatory Empty Step
-        run: exit
+        run: exit 0
 
   run_linters:
     name: Run Linters

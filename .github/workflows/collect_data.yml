@@ -39,6 +39,7 @@ jobs:
             dependencies.sh
             .github/max_required_byond_client.txt
             .github/alternate_byond_versions.txt
+            .github/actions/restore_or_install_byond
             tools/ci/install_byond.sh
 
 
