@@ -427,10 +427,8 @@
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
-/datum/station_trait/skub/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
-	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_lobby_button_update_overlays))
-	lobby_button.desc = "Are you pro-skub or anti-skub? Click to cycle through pro-skub, anti-skub, random and neutral."
-	return ..()
+/datum/station_trait/skub/get_lobby_description()
+	return "Are you pro-skub or anti-skub? Click to cycle through pro-skub, anti-skub, random and neutral."
 
 /// Let late-joiners jump on this gimmick too.
 /datum/station_trait/skub/can_display_lobby_button(client/player)
@@ -440,47 +438,41 @@
 /datum/station_trait/skub/on_round_start()
 	return
 
-/datum/station_trait/skub/on_lobby_button_update_icon(atom/movable/screen/lobby/button/sign_up/lobby_button, location, control, params, mob/dead/new_player/user)
-	var/mob/player = lobby_button.get_mob()
-	var/skub_stance = skubbers[player.ckey]
-	switch(skub_stance)
+/datum/station_trait/skub/get_lobby_icon_state(mob/dead/new_player/player)
+	switch(skubbers[player.ckey])
 		if(PRO_SKUB)
-			lobby_button.base_icon_state = "signup_on"
+			return "signup_on"
 		if(ANTI_SKUB)
-			lobby_button.base_icon_state = "signup"
-		else
-			lobby_button.base_icon_state = "signup_neutral"
+			return "signup"
+	return "signup_neutral"
 
-/datum/station_trait/skub/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, updates)
-	var/mob/player = lobby_button.get_mob()
+/datum/station_trait/skub/get_lobby_overlay_states(mob/dead/new_player/player)
+	switch(skubbers[player.ckey])
+		if(PRO_SKUB)
+			return list("pro_skub")
+		if(ANTI_SKUB)
+			return list("anti_skub")
+		if(SKUB_IDFC)
+			return list("neutral_skub")
+		if(RANDOM_SKUB)
+			return list("random_skub")
+	return list()
+
+/datum/station_trait/skub/on_lobby_button_click(mob/dead/new_player/player)
 	var/skub_stance = skubbers[player.ckey]
 	switch(skub_stance)
 		if(PRO_SKUB)
 			skubbers[player.ckey] = ANTI_SKUB
-			lobby_button.balloon_alert(player, "anti-skub")
+			return "anti-skub"
 		if(ANTI_SKUB)
 			skubbers[player.ckey] = SKUB_IDFC
-			lobby_button.balloon_alert(player, "don't care")
+			return "don't care"
 		if(SKUB_IDFC)
 			skubbers[player.ckey] = RANDOM_SKUB
-			lobby_button.balloon_alert(player, "on the best side")
+			return "on the best side"
 		if(RANDOM_SKUB)
 			skubbers[player.ckey] = PRO_SKUB
-			lobby_button.balloon_alert(player, "pro-skub")
-
-/datum/station_trait/skub/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
-	SIGNAL_HANDLER
-	var/mob/player = lobby_button.get_mob()
-	var/skub_stance = skubbers[player.ckey]
-	switch(skub_stance)
-		if(PRO_SKUB)
-			overlays += "pro_skub"
-		if(ANTI_SKUB)
-			overlays += "anti_skub"
-		if(SKUB_IDFC)
-			overlays += "neutral_skub"
-		if(RANDOM_SKUB)
-			overlays += "random_skub"
+			return "pro-skub"
 
 /datum/station_trait/skub/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
 	SIGNAL_HANDLER
@@ -547,10 +539,11 @@
 	. = ..()
 	RegisterSignal(SSdcs, COMSIG_GLOB_JOB_AFTER_SPAWN, PROC_REF(on_job_after_spawn))
 
-/datum/station_trait/pet_day/setup_lobby_button(atom/movable/screen/lobby/button/sign_up/lobby_button)
-	lobby_button.desc = "Want to bring your innocent pet to a giant metal deathtrap? Click here to customize it!"
-	RegisterSignal(lobby_button, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(on_lobby_button_update_overlays))
-	return ..()
+/datum/station_trait/pet_day/get_lobby_description()
+	return "Want to bring your innocent pet to a giant metal deathtrap? Click here to customize it!"
+
+/datum/station_trait/pet_day/get_lobby_overlay_states(mob/dead/new_player/player)
+	return list("select_pet")
 
 /datum/station_trait/pet_day/can_display_lobby_button(client/player)
 	return sign_up_button
@@ -558,15 +551,14 @@
 /datum/station_trait/pet_day/on_round_start()
 	return
 
-/datum/station_trait/pet_day/on_lobby_button_click(atom/movable/screen/lobby/button/sign_up/lobby_button, updates)
-	var/mob/our_player = lobby_button.get_mob()
-	var/client/player_client = our_player.client
+/datum/station_trait/pet_day/on_lobby_button_click(mob/dead/new_player/player)
+	var/client/player_client = player.client
 	if(isnull(player_client))
 		return
 	var/datum/pet_customization/customization = GLOB.customized_pets[REF(player_client)]
 	if(isnull(customization))
 		customization = new(player_client)
-	INVOKE_ASYNC(customization, TYPE_PROC_REF(/datum, ui_interact), our_player)
+	INVOKE_ASYNC(customization, TYPE_PROC_REF(/datum, ui_interact), player)
 
 /datum/station_trait/pet_day/proc/on_job_after_spawn(datum/source, datum/job/job, mob/living/spawned, client/player_client)
 	SIGNAL_HANDLER
@@ -575,9 +567,6 @@
 	if(isnull(customization))
 		return
 	INVOKE_ASYNC(customization, TYPE_PROC_REF(/datum/pet_customization, create_pet), spawned, player_client)
-
-/datum/station_trait/pet_day/proc/on_lobby_button_update_overlays(atom/movable/screen/lobby/button/sign_up/lobby_button, list/overlays)
-	overlays += "select_pet"
 
 /// We're pulling a Jim Kramer with this one boys
 /datum/station_trait/gmm_spotlight
