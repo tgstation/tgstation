@@ -44,7 +44,6 @@ jobs:
             sound/runtime
             strings
             tgui/public
-            tgui/packages/tgfont/dist
             dependencies.sh
             SQL/tgstation_schema.sql
             SQL/tgstation_schema_prefixed.sql
