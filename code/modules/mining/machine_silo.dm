@@ -110,6 +110,19 @@
 	obj_flags |= EMAGGED
 	return TRUE
 
+/obj/machinery/ore_silo/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	for(var/datum/remote_materials/remote as anything in ore_connected_machines)
+		if(prob(35))
+			switch(severity)
+				if(EMP_HEAVY)
+					remote.disconnect()
+				if(EMP_LIGHT)
+					remote.toggle_holding()
+
 /obj/machinery/ore_silo/proc/setup_radio()
 	radio = new(src)
 	radio.subspace_transmission = TRUE

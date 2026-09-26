@@ -223,6 +223,14 @@
 		balloon_alert(user, "access overridden")
 	return TRUE
 
+/obj/machinery/button/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	if(prob(75 / severity) && device)
+		attempt_press(null, FALSE)
+
 /obj/machinery/button/attack_ai(mob/user)
 	if(!silicon_access_disabled && !panel_open)
 		return attempt_press(user)
@@ -291,14 +299,14 @@
 	board = null
 	update_appearance(UPDATE_ICON)
 
-/obj/machinery/button/proc/attempt_press(mob/user)
+/obj/machinery/button/proc/attempt_press(mob/user, require_id_check=TRUE)
 	if((machine_stat & (NOPOWER|BROKEN)))
 		return FALSE
 
 	if(device && device.next_activate > world.time)
 		return FALSE
 
-	if(!allowed(user))
+	if(require_id_check && !allowed(user))
 		balloon_alert(user, "access denied")
 		flick_overlay_view("[base_icon_state]-overlay-error", 1 SECONDS)
 		return FALSE
