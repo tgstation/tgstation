@@ -313,11 +313,11 @@
 	return TRUE
 
 /mob/living/get_photo_description(obj/item/camera/camera)
-	var/list/holding
+	var/list/holding = list()
 	var/list/held = get_held_items()
 	for(var/item_position in 1 to length(held))
 		var/obj/item/held_item = held[item_position]
-		if(LAZYINITLIST(holding))
+		if(!length(holding))
 			holding += "[p_They()] [p_are()] holding \a [held_item]"
 		else if(item_position != length(held))
 			holding += ", \a [held_item]"
