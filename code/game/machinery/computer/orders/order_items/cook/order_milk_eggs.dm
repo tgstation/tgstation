@@ -89,61 +89,73 @@
 	name = "Ready-Donk Meal: Bachelor Chow"
 	purchase_path = /obj/item/food/ready_donk
 	cost_per_order = 40
+	max_per_order = 4
 
 /datum/orderable_item/milk_eggs/ready_donk_mac
 	name = "Ready-Donk Meal: Donk-a-Roni"
 	purchase_path = /obj/item/food/ready_donk/mac_n_cheese
 	cost_per_order = 40
+	max_per_order = 4
 
 /datum/orderable_item/milk_eggs/ready_donk_mex
 	name = "Ready-Donk Meal: Donkhiladas"
 	purchase_path = /obj/item/food/ready_donk/donkhiladas
 	cost_per_order = 40
+	max_per_order = 4
 
 /datum/orderable_item/milk_eggs/ready_donk_nachos
 	name = "Ready-Donk Meal: Donk Sol Series Boritos Nachos Grandes"
 	purchase_path = /obj/item/food/ready_donk/nachos_grandes
 	cost_per_order = 40
+	max_per_order = 4
 
 /datum/orderable_item/milk_eggs/ready_donk_orange
 	name = "Ready-Donk Meal: Donk-range Chicken"
 	purchase_path = /obj/item/food/ready_donk/donkrange_chicken
 	cost_per_order = 40
+	max_per_order = 4
 
 /datum/orderable_item/milk_eggs/ready_donk_salisbury
 	name = "Ready-Donk Meal: Donkriginals Salisbury Steak"
 	purchase_path = /obj/item/food/ready_donk/salisbury_steak
 	cost_per_order = 40
+	max_per_order = 4
 
 /datum/orderable_item/milk_eggs/ready_donk_chicken
 	name = "Ready-Donk Meal: Donkriginals Country-Fried Chicken"
 	purchase_path = /obj/item/food/ready_donk/country_chicken
 	cost_per_order = 40
+	max_per_order = 4
 
 /datum/orderable_item/milk_eggs/tiziran_goods
 	name = "Tiziran Farm-Fresh Pack"
 	purchase_path = /obj/item/storage/box/tiziran_goods
 	cost_per_order = 120
+	max_per_order = 2
 
 /datum/orderable_item/milk_eggs/tiziran_cans
 	name = "Tiziran Canned Goods Pack"
 	purchase_path = /obj/item/storage/box/tiziran_cans
 	cost_per_order = 120
+	max_per_order = 2
 
 /datum/orderable_item/milk_eggs/tiziran_meats
 	name = "Tiziran Meatmarket Pack"
 	purchase_path = /obj/item/storage/box/tiziran_meats
 	cost_per_order = 120
+	max_per_order = 2
 
 /datum/orderable_item/milk_eggs/mothic_goods
 	name = "Mothic Farm-Fresh Pack"
 	purchase_path = /obj/item/storage/box/mothic_goods
 	cost_per_order = 120
+	max_per_order = 2
 
 /datum/orderable_item/milk_eggs/mothic_cans_sauces
 	name = "Mothic Pantry Pack"
 	purchase_path = /obj/item/storage/box/mothic_cans_sauces
 	cost_per_order = 120
+	max_per_order = 2
 
 /datum/orderable_item/milk_eggs/armorfish
 	name = "Cleaned Armorfish"

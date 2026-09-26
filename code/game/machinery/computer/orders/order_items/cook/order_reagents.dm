@@ -100,6 +100,7 @@
 	name = "Honey"
 	purchase_path = /obj/item/reagent_containers/condiment/honey
 	cost_per_order = 125 //its high quality honey :)
+	max_per_order = 2
 
 /datum/orderable_item/reagents/mayonnaise
 	name = "Mayonnaise"
