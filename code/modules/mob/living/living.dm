@@ -2032,7 +2032,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if (user.mob_size <= mob_size)
 			to_chat(user, span_warning("[src] is too big to pick up!"))
 			return
-	if(!user.get_empty_held_indexes())
+	if(!length(user.get_empty_held_indexes()))
 		to_chat(user, span_warning("Your hands are full!"))
 		return FALSE
 	if(buckled)

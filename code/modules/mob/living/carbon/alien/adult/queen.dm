@@ -139,7 +139,7 @@
 		qdel(existing_promotion)
 		return TRUE
 
-	if(!owner.get_empty_held_indexes())
+	if(!length(owner.get_empty_held_indexes()))
 		to_chat(owner, span_warning("You must have an empty hand before preparing the parasite."))
 		return FALSE
 

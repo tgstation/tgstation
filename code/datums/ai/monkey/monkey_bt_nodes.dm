@@ -104,7 +104,7 @@
 			return FALSE
 		return TRUE
 
-	if(living_pawn.get_empty_held_indexes()) // any free hand
+	if(length(living_pawn.get_empty_held_indexes())) // any free hand
 		living_pawn.put_in_hands(target)
 		return TRUE
 
@@ -351,7 +351,7 @@
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED // my boss is on duty!
 		if(IS_UNCONSCIOUS_OR_CRIT(human_mob) || HAS_TRAIT(human_mob, TRAIT_LESSER_HUMANOID))
 			continue
-		if(!human_mob.get_empty_held_indexes())
+		if(!length(human_mob.get_empty_held_indexes()))
 			continue
 		nearby_patrons += human_mob
 
