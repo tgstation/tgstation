@@ -1066,3 +1066,29 @@ ADMIN_VERB(export_save_to_dev_preference, R_DEBUG, "Export Save as Dev Preferenc
 	dev_save.save()
 	tgui_alert(user, "Exported preferences to [DEV_PREFS_PATH]. \
 		Next time you localhost as a guest it will use this savefile as-is.", "Export Complete", list("OK thanks"))
+
+// Important note: The generated CSV file will NOT include power usage from machinery which uses non-automatic power, such as through use_energy().
+ADMIN_VERB(generate_audit_file, R_DEBUG, "Generate Power Audit File", "Generate a large CSV-style text file, that details every piece of machinery with it's different electrical power settings.", ADMIN_CATEGORY_DEBUG)
+	var/list/final_list = list("/obj/machinery/example,Use Power,Idle Power,Active Power Usage,Power Channel")
+	for(var/obj/machinery/machine_test as anything in subtypesof(/obj/machinery))
+		var/power_channel_text = machine_test::power_channel
+		final_list += machine_test
+		switch(power_channel_text)
+			if(AREA_USAGE_EQUIP)
+				power_channel_text = "Equipment Power Channel"
+			if(AREA_USAGE_LIGHT)
+				power_channel_text = "Lighting Power Channel"
+			if(AREA_USAGE_ENVIRON)
+				power_channel_text = "Environment Power Channel"
+		final_list[machine_test] = "[machine_test],[machine_test::use_power],[machine_test::idle_power_usage],[machine_test::active_power_usage],[power_channel_text]"
+
+	var/file_suffix = GLOB.round_id
+	if(!file_suffix)
+		file_suffix = rand(1,1000)
+	var/csv_file = file("data/power_audit_file_[file_suffix].csv")
+	var/final_string
+	for(var/i in final_list)
+		final_string += "[final_list[i]]\n"
+	WRITE_FILE(csv_file, final_string)
+	to_chat(user, "Bzzzt, job's done!")
+	playsound(user, 'sound/machines/ping.ogg', 50)
