@@ -58,6 +58,23 @@
 	name = "dragonsbreath pellet"
 	icon_state = "pellet_tracer"
 	damage = 5
+	wound_bonus = 5
+	speed = 1.1
+	damage_falloff_tile = -0.5
+	wound_falloff_tile = -1
+	ricochets_max = 2
+	ricochet_chance = 120
+	ricochet_decay_chance = 1
+	ricochet_decay_damage = 2.5
+	ricochet_auto_aim_range = 2
+	ricochet_auto_aim_angle = 30
+	ricochet_incidence_leeway = 75
+	leaves_fire_trail = FALSE
+
+/obj/projectile/bullet/incendiary/shotgun/dragonsbreath/on_hit(atom/target, blocked = 0, pierce_hit)
+	..()
+	for(var/turf/nearby_turf as anything in RANGE_TURFS(1, target))
+		new /obj/effect/hotspot(nearby_turf)
 
 /obj/projectile/bullet/shotgun_stunslug
 	name = "stunslug"
