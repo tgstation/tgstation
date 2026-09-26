@@ -228,8 +228,8 @@
 	if(iscarbon(aggressor))
 		var/free_hands = 0
 		// Listen bud, you need at least 2 free hands for this
-		for(var/hand_i in 1 to length(aggressor.held_items))
-			if(!aggressor.has_hand_for_held_index(hand_i) || aggressor.held_items[hand_i])
+		for(var/hand_index in aggressor.get_empty_held_indexes())
+			if(!aggressor.has_hand_for_held_index(hand_index))
 				continue
 			free_hands += 1
 		if(free_hands < 2)

@@ -287,7 +287,7 @@
 		if(user.is_holding_item_of_type(/obj/item/blueprints))
 			return TRUE
 		if(!isnull(user.mind))
-			for(var/obj/item/photo/photo in user.held_items)
+			for(var/obj/item/photo/photo as anything in user.get_held_items_of_type(/obj/item/photo))
 				if(LAZYACCESS(studied_photos, REF(user.mind)) == REF(photo))
 					return TRUE
 
@@ -318,7 +318,7 @@
 		return
 	if(LAZYACCESS(studied_photos, REF(user.mind)))
 		return
-	for(var/obj/item/photo/photo in user.held_items)
+	for(var/obj/item/photo/photo as anything in user.get_held_items_of_type(/obj/item/photo))
 		if(!photo.picture?.has_blueprints)
 			continue
 

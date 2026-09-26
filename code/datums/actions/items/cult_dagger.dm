@@ -23,7 +23,7 @@
 
 	var/obj/item/target_item = target
 	var/mob/living/living_owner = owner
-	if(target in owner.held_items)
+	if(owner.is_holding(target))
 		target_item.attack_self(owner)
 		return TRUE
 

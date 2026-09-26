@@ -203,7 +203,7 @@
 	SIGNAL_HANDLER
 	var/mob/living/mob = borg_hose.origin
 	if(istype(mob))
-		var/index = mob.is_holding(src)
+		var/index = mob.get_held_index_of_item(src)
 		borg_hose.lefthand = IS_LEFT_INDEX(index)
 	if(prob(10))
 		playsound(src, 'sound/items/vacuum/vacuum_hose.ogg', 50, TRUE)

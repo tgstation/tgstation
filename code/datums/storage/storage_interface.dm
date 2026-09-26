@@ -58,7 +58,7 @@
 	atom/real_location,
 	list/datum/numbered_display/numbered_contents,
 )
-	var/number_of_hands = user_looking.held_items.len
+	var/number_of_hands = user_looking.get_num_hand_slots()
 	while(number_of_hands > user_looking.default_hand_amount)
 		number_of_hands /= user_looking.default_hand_amount
 		screen_start_y++

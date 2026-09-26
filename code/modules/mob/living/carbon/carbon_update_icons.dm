@@ -252,12 +252,11 @@
 /// Generate held item overlays
 /mob/living/carbon/proc/get_held_overlays()
 	var/list/hands = list()
-	for(var/obj/item/I in held_items)
-		var/icon_file = I.lefthand_file
-		if(IS_RIGHT_INDEX(get_held_index_of_item(I)))
-			icon_file = I.righthand_file
+	for(var/held_index in get_active_held_indexes())
+		var/obj/item/held_item = get_item_for_held_index(held_index)
+		var/icon_file = IS_LEFT_INDEX(held_index) ? held_item.lefthand_file : held_item.righthand_file
 
-		hands += I.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE, bodyshape = bodyshape)
+		hands += held_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE, bodyshape = bodyshape)
 	return hands
 
 /mob/living/carbon/proc/get_fire_icon_state(stacks, on_fire)

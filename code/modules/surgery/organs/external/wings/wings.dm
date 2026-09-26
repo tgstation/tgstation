@@ -190,7 +190,7 @@
 
 	playsound(human.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
-	for(var/obj/item/choking_hazard in human.held_items)
+	for(var/obj/item/choking_hazard as anything in human.get_held_items())
 		human.accident(choking_hazard)
 
 	var/olddir = human.dir

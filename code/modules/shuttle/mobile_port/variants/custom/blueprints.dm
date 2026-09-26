@@ -205,7 +205,7 @@
 		user.balloon_alert(user, "cancelled")
 		return
 	new_name = apply_text_macros(new_name)
-	var/obj/item/hitting_implement = (locate(/obj/item/reagent_containers/cup/glass/bottle) in user.held_items) || user.get_item_for_held_index(hand)
+	var/obj/item/hitting_implement = user.is_holding_item_of_type(/obj/item/reagent_containers/cup/glass/bottle) || user.get_item_for_held_index(hand)
 	if(!attacked.IsReachableBy(user, hitting_implement.reach))
 		user.balloon_alert(user, "out of range!")
 		return
@@ -464,7 +464,7 @@
 		return ITEM_INTERACT_SUCCESS
 	if(istype(interacting_with, /mob/living/silicon/robot))
 		var/mob/living/silicon/robot/borg = interacting_with
-		var/obj/item/shuttle_blueprints/borg/other_blueprints = (locate() in borg.model.modules) || (locate() in borg.held_items)
+		var/obj/item/shuttle_blueprints/borg/other_blueprints = (locate() in borg.model.modules) || (borg.is_holding_item_of_type(__IMPLIED_TYPE__))
 		if(!other_blueprints)
 			return
 		if(other_blueprints.shuttles.Find(shuttle_ref))

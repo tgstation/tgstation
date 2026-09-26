@@ -132,7 +132,7 @@
 	return TRUE
 
 /datum/action/cooldown/alien/promote/Activate(atom/target)
-	var/obj/item/queen_promotion/existing_promotion = locate() in owner.held_items
+	var/obj/item/queen_promotion/existing_promotion = owner.is_holding_item_of_type(__IMPLIED_TYPE__)
 	if(existing_promotion)
 		to_chat(owner, span_noticealien("You discard [existing_promotion]."))
 		owner.temporarilyRemoveItemFromInventory(existing_promotion)

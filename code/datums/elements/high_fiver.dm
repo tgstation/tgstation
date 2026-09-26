@@ -36,13 +36,11 @@
 
 	var/open_hands_taker = 0
 	var/slappers_giver = 0
-	// see how many hands the taker has open for high'ing
-	for(var/hand in taker.held_items)
-		if(isnull(hand))
+	for(var/obj/item/slap_check as anything in offerer.get_hand_slots())
+		// see how many hands the taker has open for high'ing
+		if(isnull(slap_check))
 			open_hands_taker++
-
-	// see how many hands the offerer is using for high'ing
-	for(var/obj/item/slap_check in offerer.held_items)
+		// see how many hands the offerer is using for high'ing
 		if(slap_check.item_flags & HAND_ITEM)
 			slappers_giver++
 

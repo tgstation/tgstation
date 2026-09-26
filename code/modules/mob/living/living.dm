@@ -268,10 +268,9 @@
 		if(borg.combat_mode && borg.stat != DEAD)
 			return TRUE
 	//anti-riot equipment is also anti-push
-	for(var/obj/item/I in M.held_items)
-		if(!isclothing(M))
-			if(prob(I.block_chance*2))
-				return
+	for(var/obj/item/I as anything in M.get_held_items())
+		if(!isclothing(M) && prob(I.block_chance*2))
+			return TRUE
 
 /mob/living/proc/can_mobswap_with(mob/other)
 	if (HAS_TRAIT(other, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP))
@@ -314,16 +313,16 @@
 	return TRUE
 
 /mob/living/get_photo_description(obj/item/camera/camera)
-	var/list/holding = list()
-	var/len = length(held_items)
-	if(len)
-		for(var/obj/item/held_item in held_items)
-			if(!holding.len)
-				holding += "[p_They()] [p_are()] holding \a [held_item]"
-			else if(held_items.Find(held_item) == len)
-				holding += ", and \a [held_item]"
-			else
-				holding += ", \a [held_item]"
+	var/list/holding
+	var/list/held = get_held_items()
+	for(var/item_position in 1 to length(held))
+		var/obj/item/held_item = held[item_position]
+		if(LAZYINITLIST(holding))
+			holding += "[p_They()] [p_are()] holding \a [held_item]"
+		else if(item_position != length(held))
+			holding += ", \a [held_item]"
+		else
+			holding += ", and \a [held_item]"
 	return "You can also see [src] on the photo[health < (maxHealth * 0.75) ? ", looking a bit hurt":""][holding.len ? ". [holding.Join("")].":"."]"
 
 //Called when we bump onto an obj
@@ -632,7 +631,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
  * * hand_firsts - boolean that checks the hands of the mob first if TRUE.
  */
 /mob/living/proc/get_idcard(hand_first)
-	if(!length(held_items)) //Early return for mobs without hands.
+	if(!can_hold_items()) //Early return for mobs without hands.
 		return
 	//Check hands
 	var/obj/item/held_item = get_active_held_item()
@@ -2615,7 +2614,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /mob/living/perform_hand_swap(held_index)
 	//safeguard for one-handed mobs lol
-	if(length(held_items) == 1)
+	if(get_num_hand_slots() == 1)
 		held_index = 1
 
 	return ..()

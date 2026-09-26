@@ -1081,7 +1081,7 @@
 /mob/living/carbon/wash(clean_types)
 	. = ..()
 	// Wash equipped stuff that cannot be covered
-	for(var/obj/item/held_thing in held_items)
+	for(var/obj/item/held_thing as anything in get_held_items())
 		. |= held_thing.wash(clean_types)
 
 	// Check and wash stuff that isn't covered

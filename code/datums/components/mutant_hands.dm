@@ -56,7 +56,7 @@
  */
 /datum/component/mutant_hands/proc/apply_mutant_hands()
 	var/mob/living/carbon/human/human_parent = parent
-	for(var/obj/item/hand_slot as anything in human_parent.held_items)
+	for(var/obj/item/hand_slot as anything in human_parent.get_hand_slots())
 		// This slot is already a mutant hand
 		if(istype(hand_slot, mutant_hand_path))
 			continue
@@ -79,7 +79,7 @@
  */
 /datum/component/mutant_hands/proc/remove_mutant_hands()
 	var/mob/living/carbon/human/human_parent = parent
-	for(var/obj/item/hand_slot in human_parent.held_items)
+	for(var/obj/item/hand_slot as anything in human_parent.get_held_items())
 		// Not a mutant hand, don't need to delete it
 		if(!istype(hand_slot, mutant_hand_path))
 			continue
@@ -132,7 +132,7 @@
 	if(QDELING(src) || QDELING(parent))
 		return
 
-	if(null in source.held_items)
+	if(source.is_holding(null)) // Finding a null implies an empty hand
 		INVOKE_ASYNC(src, PROC_REF(apply_mutant_hands))
 
 /**

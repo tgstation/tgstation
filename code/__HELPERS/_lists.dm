@@ -49,7 +49,7 @@
  */
 
 ///Initialize the lazylist
-#define LAZYINITLIST(L) L ||= list();
+#define LAZYINITLIST(L) L ||= list()
 ///If the provided list is empty, set it to null
 #define UNSETEMPTY(L) if (L && !length(L)) L = null
 ///If the provided key -> list is empty, remove it from the list

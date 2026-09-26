@@ -90,9 +90,7 @@
 /obj/item/robot_model/proc/get_inactive_modules()
 	. = list()
 	var/mob/living/silicon/robot/cyborg = loc
-	for(var/module in get_usable_modules())
-		if(!(module in cyborg.held_items))
-			. += module
+	. += get_usable_modules() - cyborg.get_held_items()
 	if(!cyborg.emagged)
 		. += emag_modules
 
@@ -130,7 +128,7 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	if (!istype(cyborg))
 		return
-	var/list/held_modules = cyborg.held_items.Copy()
+	var/list/held_modules = cyborg.get_held_items()
 	var/active_module = cyborg.module_active
 	//move everything out of the model's inventory
 	for(var/obj/item/module as anything in modules)

@@ -403,7 +403,7 @@ GLOBAL_LIST_EMPTY(unconscious_appearances)
 	alerttooltipstyle = "hisgrace"
 
 /datum/status_effect/his_wrath/tick(seconds_between_ticks)
-	for(var/obj/item/his_grace/HG in owner.held_items)
+	if(owner.is_holding_item_of_type(/obj/item/his_grace))
 		qdel(src)
 		return
 	var/need_mob_update

@@ -1,10 +1,30 @@
 //These procs handle putting stuff in your hands
 //as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
 
+/// Returns a list of all our hand slots, which could be null.
+/mob/proc/get_hand_slots() as /list
+	RETURN_TYPE(/list/obj/item)
+
+	return held_items.Copy()
+
+/// Returns a list of all actively held items
+/mob/proc/get_held_items() as /list
+	RETURN_TYPE(/list/obj/item)
+
+	return (astype(held_items.Copy(), /list)).RemoveAll(null) // yeah the langserver isn't very smart
+
+/// Returns a list of all actively held items of a given type
+/mob/proc/get_held_items_of_type(typepath) as /list
+	RETURN_TYPE(/list/obj/item)
+
+	. = list()
+	for(var/obj/item as anything in get_hand_slots())
+		if(istype(item, typepath))
+			. += item
+
 ///Returns the thing we're currently holding
 /mob/proc/get_active_held_item() as /obj/item
 	return get_item_for_held_index(active_hand_index)
-
 
 //Finds the opposite limb for the active one (eg: upper left arm will find the item in upper right arm)
 //So we're treating each "pair" of limbs as a team, so "both" refers to them
@@ -71,13 +91,17 @@
 			holding_items += I
 	return holding_items
 
+/mob/proc/get_active_held_indexes() as /list
+	. = list()
+	for(var/i in 1 to held_items.len)
+		if(held_items[i])
+			. += i
 
-/mob/proc/get_empty_held_indexes()
-	var/list/L
+/mob/proc/get_empty_held_indexes() as /list
+	. = list()
 	for(var/i in 1 to held_items.len)
 		if(!held_items[i])
-			LAZYADD(L, i)
-	return L
+			. += i
 
 /mob/proc/get_held_index_of_item(obj/item/I)
 	return held_items.Find(I)
@@ -91,7 +115,11 @@
 		return BODY_ZONE_R_ARM
 	return BODY_ZONE_L_ARM
 
-///Find number of held items, multihand compatible
+/// Returns the number of available hand slots
+/mob/proc/get_num_hand_slots() as num
+	return held_items.len
+
+/// Find number of held items, multihand compatible
 /mob/proc/get_num_held_items()
 	. = 0
 	for(var/i in 1 to held_items.len)
@@ -104,25 +132,30 @@
 			continue
 		.++
 
-//Sad that this will cause some overhead, but the alias seems necessary
-//*I* may be happy with a million and one references to "indexes" but others won't be
-/mob/proc/is_holding(obj/item/I)
-	return get_held_index_of_item(I)
+/// Can this mob hold items?
+/mob/proc/can_hold_items(obj/item/I)
+	return !!length(held_items)
 
+/// Returns true if a mob is holding something
+/mob/proc/is_holding_items()
+	return !!locate(/obj/item) in held_items
 
-//Checks if we're holding an item of type: typepath
+/// Returns TRUE/FALSE depending on if we're holding this item
+/mob/proc/is_holding(obj/item/item)
+	return !!get_held_index_of_item(item)
+
+/// Checks if we're holding an item of this type
 /mob/proc/is_holding_item_of_type(typepath)
-	for(var/obj/item/I in held_items)
-		if(istype(I, typepath))
-			return I
-	return FALSE
+	return locate(typepath) in held_items
 
 // List version of above proc
-// Returns ret_item, which is either the successfully located item or null
+/// Returns ret_item, which is either the successfully located item or null
 /mob/proc/is_holding_item_of_types(list/typepaths)
+	var/ret_item
 	for(var/typepath in typepaths)
-		var/ret_item = is_holding_item_of_type(typepath)
-		return ret_item
+		ret_item = is_holding_item_of_type(typepath)
+		if(ret_item)
+			return ret_item
 
 //Checks if we're holding a tool that has given quality
 //Returns the tool that has the best version of this quality
@@ -305,10 +338,6 @@
 	transferItemToLoc(I, location, force = TRUE, silent = TRUE, animated = !ignore_animation)
 	return FALSE
 
-/// Returns true if a mob is holding something
-/mob/proc/is_holding_items()
-	return !!locate(/obj/item) in held_items
-
 /**
  * Returns a list of all dropped held items.
  * If none were dropped, returns an empty list.
@@ -317,6 +346,7 @@
 	. = list()
 	for(var/obj/item/I in held_items)
 		. |= dropItemToGround(I)
+	. -= null
 
 //Here lie drop_from_inventory and before_item_take, already forgotten and not missed.
 
@@ -616,7 +646,7 @@
 		ITEM_SLOT_ICLOTHING,
 	)
 
-	var/list/possible_storages = user.held_items.Copy()
+	var/list/possible_storages = user.get_hand_slots()
 	var/obj/item/active_held = user.get_active_held_item()
 	possible_storages -= active_held
 	if(active_held != src)

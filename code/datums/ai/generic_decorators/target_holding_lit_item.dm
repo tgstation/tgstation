@@ -13,7 +13,7 @@
 	var/list/item_types = controller.blackboard[item_types_key]
 	if(!length(item_types))
 		return FALSE
-	for(var/obj/item/held_item in target.held_items)
+	for(var/obj/item/held_item as anything in target.get_hand_slots())
 		if(!is_type_in_list(held_item, item_types))
 			continue
 		if(held_item.light_on)
