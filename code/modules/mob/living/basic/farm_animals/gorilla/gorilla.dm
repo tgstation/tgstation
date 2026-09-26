@@ -33,7 +33,7 @@ GLOBAL_LIST_INIT(strippable_gorilla_items, create_strippable_list(list(
 	melee_attack_cooldown = CLICK_CD_MELEE
 	melee_damage_lower = 25
 	melee_damage_upper = 30
-	damage_coeff = list(BRUTE = 1, BURN = 1.5, TOX = 1.5, STAMINA = 1, OXY = 1.5)
+	physiology = list(BURN = 1.5, OXY = 1.5, TOX = 1.5)
 	obj_damage = 40
 	attack_verb_continuous = "pummels"
 	attack_verb_simple = "pummel"
@@ -61,7 +61,7 @@ GLOBAL_LIST_INIT(strippable_gorilla_items, create_strippable_list(list(
 
 /mob/living/basic/gorilla/Initialize(mapload)
 	. = ..()
-	add_traits(list(TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_CHUNKYFINGERS), ROUNDSTART_TRAIT)
+	add_traits(list(TRAIT_SIMIAN, TRAIT_ADVANCEDTOOLUSER, TRAIT_CAN_STRIP, TRAIT_CHUNKYFINGERS), INNATE_TRAIT)
 	AddElement(/datum/element/wall_tearer, allow_reinforced = FALSE)
 	AddElement(/datum/element/dextrous, can_throw = TRUE)
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_BAREFOOT)
@@ -74,6 +74,8 @@ GLOBAL_LIST_INIT(strippable_gorilla_items, create_strippable_list(list(
 	AddComponent(/datum/component/personal_crafting)
 	AddComponent(/datum/component/basic_inhands, y_offset = -1)
 	AddElement(/datum/element/strippable, GLOB.strippable_gorilla_items)
+
+	RegisterSignal(src, COMSIG_MOB_EMOTED("ooga"), PROC_REF(check_kong_state))
 
 	ai_controller?.set_blackboard_key(BB_BASIC_FOODS, typecacheof(gorilla_food))
 
@@ -136,6 +138,15 @@ GLOBAL_LIST_INIT(strippable_gorilla_items, create_strippable_list(list(
 		return
 	oogas = rand(2,6)
 	emote("ooga")
+
+/// Check how well we are roleplaying as King Kong
+/mob/living/basic/gorilla/proc/check_kong_state()
+	SIGNAL_HANDLER
+	if (!HAS_TRAIT(src, TRAIT_MOB_ELEVATED))
+		return
+	if (!isliving(pulling) || pulling.gender != FEMALE || grab_state < GRAB_AGGRESSIVE)
+		return
+	client?.give_award(/datum/award/achievement/misc/kong, src)
 
 /// Gorillas are slower when carrying something
 /datum/movespeed_modifier/gorilla_standing

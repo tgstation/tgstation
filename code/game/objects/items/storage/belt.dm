@@ -30,6 +30,7 @@
 /obj/item/storage/belt/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/attack_equip)
+	AddElement(/datum/element/strip_accessible_storage)
 	update_appearance()
 
 /obj/item/storage/belt/utility

@@ -130,6 +130,7 @@ Slimecrossing Armor
 	item_flags = IMMUTABLE_SLOW
 	slowdown = 4
 	emp_protection = EMP_PROTECTION_MODERATE
+	texture_type = /datum/bodypart_texture/mesh/biosuit_dark
 	var/hit_reflect_chance = 40
 
 /obj/item/clothing/suit/armor/heavy/adamantine/Initialize(mapload)

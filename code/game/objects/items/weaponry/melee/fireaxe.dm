@@ -8,6 +8,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 	desc = "Truly, the weapon of a madman. Who would think to fight fire with an axe?"
 	icon = 'icons/obj/weapons/fireaxe.dmi'
 	icon_state = "fireaxe0"
+	inhand_icon_state = "fireaxe0"
 	base_icon_state = "fireaxe"
 	lefthand_file = 'icons/mob/inhands/weapons/axes_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/axes_righthand.dmi'
@@ -81,6 +82,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 	name = "bone axe"
 	desc = "A large, vicious axe crafted out of several sharpened bone plates and crudely tied together. Made of monsters, by killing monsters, for killing monsters."
 	icon_state = "bone_axe0"
+	inhand_icon_state = "bone_axe0"
 	base_icon_state = "bone_axe"
 	icon_angle = 180
 	force_unwielded = 5
@@ -94,6 +96,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 	name = "metallic hydrogen axe"
 	desc = "A lightweight crowbar with an extreme sharp fire axe head attached. It trades its heft as a weapon by making it easier to carry around when holstered to suits without having to sacrifice your backpack."
 	icon_state = "metalh2_axe0"
+	inhand_icon_state = "metalh2_axe0"
 	base_icon_state = "metalh2_axe"
 	icon_angle = -45
 	force_unwielded = 5
@@ -108,6 +111,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 	name = "boarding axe"
 	desc = "A hulking cleaver that feels like a burden just looking at it. Seems excellent at halving obstacles like windows, airlocks, barricades and people."
 	icon_state = "boarding_axe0"
+	inhand_icon_state = "boarding_axe0"
 	base_icon_state = "boarding_axe"
 	force_unwielded = 5
 	force_wielded = 30

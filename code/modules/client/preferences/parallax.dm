@@ -18,7 +18,7 @@
 	return PARALLAX_HIGH
 
 /datum/preference/choiced/parallax/apply_to_client(client/client, value)
-	client.mob?.hud_used?.update_parallax_pref()
+	client?.update_parallax_prefs()
 
 /datum/preference/choiced/parallax/deserialize(input, datum/preferences/preferences)
 	// Old preferences were numbers, which causes annoyances when

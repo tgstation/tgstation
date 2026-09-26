@@ -84,5 +84,5 @@
 		winset(user, null, "command=[VERB_PRAY]")
 		return TRUE
 	winset(user, null, "command=[user.tgui_say_create_open_command(PRAY_CHANNEL)];")
-	winset(user, "tgui_say.browser", "focus=true")
+	winset(user, SKIN_TGUISAY_BROWSER, "focus=true")
 	return TRUE

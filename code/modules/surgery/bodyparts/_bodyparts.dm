@@ -44,7 +44,7 @@
 	///Defines when a bodypart should not be changed. Example: BP_BLOCK_CHANGE_SPECIES prevents the limb from being overwritten on species gain
 	var/change_exempt_flags = NONE
 	///Random flags that describe this bodypart
-	var/bodypart_flags = BODYPART_VIRGIN
+	var/bodypart_flags = NONE
 	///Does this part have an internal or external anatomy biostate? Assigned on init based on biological_state
 	VAR_FINAL/bio_status = NONE
 	///Mangling state (interior, exterior) of the bodypart
@@ -261,6 +261,8 @@
 
 /obj/item/bodypart/Initialize(mapload)
 	. = ..()
+	bodypart_flags |= BODYPART_VIRGIN
+
 	if(can_be_disabled)
 		RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_PARALYSIS), PROC_REF(on_paralysis_trait_gain))
 		RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_PARALYSIS), PROC_REF(on_paralysis_trait_loss))
@@ -737,6 +739,9 @@
 			wounding_type = WOUND_PIERCE
 
 	if(owner) // i tried to modularize the below, but the modifications to wounding_dmg and wounding_type cant be extracted to a proc
+		if(!forced)
+			brute *= GET_PHYSIOLOGY(owner, BRUTE)
+			burn *= GET_PHYSIOLOGY(owner, BURN)
 		var/easy_dismember = HAS_TRAIT(owner, TRAIT_EASYDISMEMBER) // if we have easydismember, we don't reduce damage when redirecting damage to different types (slashing weapons on mangled/skinless limbs attack at 100% instead of 50%)
 
 		var/has_exterior = (bio_status & ANATOMY_EXTERIOR)
@@ -1152,7 +1157,7 @@
 	if(IS_ORGANIC_LIMB(src))
 		// Try to add a cached blood type data, we must do it in here because for some reason DNA gets initialized AFTER the mob's limbs are created.
 		// Should be fine as this gets called before all the important stuff happens
-		if(is_creating && !(bodypart_flags & ORGAN_VIRGIN))
+		if(is_creating && !(bodypart_flags & BODYPART_VIRGIN))
 			blood_dna_info = owner.get_blood_dna_list()
 			// need to remove the synethic blood DNA that is initialized
 			// wash also adds the blood dna again
@@ -1760,6 +1765,10 @@
 	if(current_gauze)
 		factor *= current_gauze.splint_factor
 	return factor
+
+/// Returns TRUE if the limb is splinted with gauze or tape with an effective splint factor
+/obj/item/bodypart/proc/is_splinted()
+	return get_splint_factor() < 1
 
 /**
  * Attempts to use up some of gauze applied

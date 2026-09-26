@@ -142,8 +142,17 @@
 
 /datum/design/board/pacman
 	name = "PACMAN Board"
-	desc = "The circuit board for a PACMAN-type portable generator."
+	desc = "Used to build a PACMAN-type portable generator. Consumes plasma to generate a moderate amount of power."
 	build_path = /obj/item/circuitboard/machine/pacman
+	category = list(
+		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
+
+/datum/design/board/plankman
+	name = "PLANKMAN Board"
+	desc = "The circuit board for a PLANKMAN-type portable generator."
+	build_path = /obj/item/circuitboard/machine/plankman
 	category = list(
 		RND_CATEGORY_MACHINE + RND_SUBCATEGORY_MACHINE_ENGINEERING
 	)
@@ -198,7 +207,7 @@
 
 /datum/design/diode_disk_stamina
 	name = "Electrodisruptive Diode Disk"
-	desc = "A stamina damaging and supermatter crystal healing Diode Disk."
+	desc = "A stamina damaging and supermatter crystal healing diode disk. Should be placed within an emitter."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT, /datum/material/gold =SMALL_MATERIAL_AMOUNT)
 	construction_time = 0.5 SECONDS
@@ -210,7 +219,7 @@
 
 /datum/design/diode_disk_healing
 	name = "Bioregenerative Diode Disk"
-	desc = "A living creature healing Diode Disk."
+	desc = "A living creature healing diode disk. Should be placed within an emitter."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT, /datum/material/silver =SMALL_MATERIAL_AMOUNT) //silver is medical metal. Why? who knows.
 	construction_time = 0.5 SECONDS
@@ -222,7 +231,7 @@
 
 /datum/design/diode_disk_incendiary
 	name = "Conflagratory Diode Disk"
-	desc = "A high energy incendiary Diode Disk."
+	desc = "A high energy incendiary diode disk. Should be placed within an emitter."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT, /datum/material/diamond =SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/plasma =SMALL_MATERIAL_AMOUNT * 2)
 	construction_time = 0.5 SECONDS
@@ -234,7 +243,7 @@
 
 /datum/design/diode_disk_sanity
 	name = "Psychosiphoning Diode Disk"
-	desc = "An supermatter comforting creature depressing Diode Disk."
+	desc = "An supermatter comforting creature depressing diode disk. Should be placed within an emitter."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT, /datum/material/uranium =SMALL_MATERIAL_AMOUNT * 0.5) //Uranium, the metal of love and warmth (from decay heat).
 	construction_time = 0.5 SECONDS
@@ -246,7 +255,7 @@
 
 /datum/design/diode_disk_magnetic
 	name = "Magnetogenerative Diode Disk"
-	desc = "A mol absorbing item attracting Diode Disk."
+	desc = "A mol absorbing item attracting diode disk. Should be placed within an emitter."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT, /datum/material/titanium =SMALL_MATERIAL_AMOUNT * 0.5)
 	construction_time = 0.5 SECONDS

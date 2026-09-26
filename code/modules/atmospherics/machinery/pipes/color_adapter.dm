@@ -7,7 +7,7 @@
 
 	dir = SOUTH
 	initialize_directions = NORTH | SOUTH
-	pipe_flags = PIPING_CARDINAL_AUTONORMALIZE | PIPING_ALL_COLORS | PIPING_BRIDGE
+	pipe_flags = PIPING_CARDINAL_AUTONORMALIZE | PIPING_ALL_COLORS | PIPING_BRIDGE | PIPING_DONT_SHARE_COLOR
 	device_type = BINARY
 
 	construction_type = /obj/item/pipe/binary
@@ -47,15 +47,29 @@
 	for(var/i in 1 to device_type)
 		if(!nodes[i])
 			continue
-		var/applied_color = nodes[i].pipe_color
 		var/node_dir = get_dir(src, nodes[i])
-		if (istype(nodes[i], /obj/machinery/atmospherics/pipe/color_adapter) && ((node_dir & (SOUTH|EAST)) || nodes[i].pipe_color == ATMOS_COLOR_OMNI) && pipe_color != ATMOS_COLOR_OMNI)
-			applied_color = pipe_color
-		var/image/pipe = get_pipe_image('icons/obj/pipes_n_cables/manifold.dmi', "pipe-3", node_dir, applied_color)
+		var/image/pipe = get_pipe_image('icons/obj/pipes_n_cables/manifold.dmi', "pipe-3", node_dir, get_node_color(nodes[i], node_dir))
 		pipe.appearance_flags |= RESET_COLOR|KEEP_APART
 		PIPING_LAYER_DOUBLE_SHIFT(pipe, piping_layer)
 		pipe.layer = layer + 0.01
 		. += pipe
+
+/obj/machinery/atmospherics/pipe/color_adapter/proc/get_node_color(obj/machinery/atmospherics/node, node_dir = get_dir(src, node))
+	// If we are omni always use input color
+	if(pipe_color == ATMOS_COLOR_OMNI)
+		return node.pipe_color
+
+	// If we are connecting to a non-sharer (like another color adapter)
+	if(node.pipe_flags & PIPING_DONT_SHARE_COLOR)
+		// Use our own color if the other node is omni
+		if(node.pipe_color == ATMOS_COLOR_OMNI)
+			return pipe_color
+		// South/east are prioritized, so it doesn't change based on update order
+		if(node_dir & (SOUTH|EAST))
+			return pipe_color
+
+	// Otherwise just use the node's color
+	return node.pipe_color
 
 /obj/machinery/atmospherics/pipe/color_adapter/layer1
 	icon_state = "adapter_map-1"

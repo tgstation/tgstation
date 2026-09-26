@@ -167,8 +167,7 @@
 			if(SPT_PROB(round(-human.satiety/77), seconds_per_tick))
 				human.set_jitter_if_lower(10 SECONDS)
 			hunger_rate = 3 * HUNGER_FACTOR
-		hunger_rate *= hunger_modifier
-		hunger_rate *= human.physiology.hunger_mod
+		hunger_rate *= hunger_modifier * GET_PHYSIOLOGY(human, PHYS_COEFF_HUNGER_MOD)
 		human.adjust_nutrition(-hunger_rate * seconds_per_tick)
 
 	var/nutrition = human.nutrition
@@ -194,18 +193,6 @@
 		if(human.metabolism_efficiency == 1.25)
 			to_chat(human, span_notice("You no longer feel vigorous."))
 		human.metabolism_efficiency = 1
-
-	//Hunger slowdown for if mood isn't enabled
-	if(CONFIG_GET(flag/disable_human_mood))
-		handle_hunger_slowdown(human)
-
-///for when mood is disabled and hunger should handle slowdowns
-/obj/item/organ/stomach/proc/handle_hunger_slowdown(mob/living/carbon/human/human)
-	var/hungry = (500 - human.nutrition) / 5 //So overeat would be 100 and default level would be 80
-	if(hungry >= 70)
-		human.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/hunger, multiplicative_slowdown = (hungry / 50))
-	else
-		human.remove_movespeed_modifier(/datum/movespeed_modifier/hunger)
 
 /obj/item/organ/stomach/get_availability(datum/species/owner_species, mob/living/owner_mob)
 	return owner_species.mutantstomach
@@ -415,9 +402,9 @@
 	return span_boldwarning("Your stomach cramps in pain!")
 
 /// If damage is high enough, we may end up vomiting out whatever we had stored
-/obj/item/organ/stomach/proc/on_punched(datum/source, mob/living/carbon/human/attacker, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking, limb_sharpness)
+/obj/item/organ/stomach/proc/on_punched(datum/source, mob/living/carbon/human/attacker, damage, attack_type, atk_effect, obj/item/bodypart/affecting, final_armor_block, limb_sharpness)
 	SIGNAL_HANDLER
-	if (!LAZYLEN(stomach_contents) || damage < 9 || final_armor_block || kicking)
+	if (!LAZYLEN(stomach_contents) || damage < 9 || final_armor_block || atk_effect == ATTACK_EFFECT_KICK)
 		return
 	if (owner.vomit(MOB_VOMIT_MESSAGE | MOB_VOMIT_FORCE))
 		// Since we vomited with a force flag, we should've vomited out at least one item
@@ -487,13 +474,7 @@
 	icon_state = "stomach-bone"
 	metabolism_efficiency = 0.025 //very bad
 	organ_traits = list(TRAIT_NOHUNGER)
-
-/obj/item/organ/stomach/moth
-	name = "moth stomach"
-	desc = "An insectoid stomach adapted to the digestion of textile fibers from the get go. It's estimated that a young mothperson will eat 30 times their body weight in cloth \
-		before their stomach can fully produce the enzymes required to digest other matter as well."
-	icon_state = "spinner-x"
-	organ_traits = list(TRAIT_CLOTH_EATER)
+	organ_flags = ORGAN_MINERAL
 
 /obj/item/organ/stomach/bone/plasmaman
 	name = "digestive crystal"
@@ -501,6 +482,14 @@
 	icon_state = "stomach-p"
 	metabolism_efficiency = 0.06
 	organ_traits = null
+	organ_flags = parent_type::organ_flags | ORGAN_ORGANIC
+
+/obj/item/organ/stomach/moth
+	name = "moth stomach"
+	desc = "An insectoid stomach adapted to the digestion of textile fibers from the get go. It's estimated that a young mothperson will eat 30 times their body weight in cloth \
+		before their stomach can fully produce the enzymes required to digest other matter as well."
+	icon_state = "spinner-x"
+	organ_traits = list(TRAIT_CLOTH_EATER)
 
 /obj/item/organ/stomach/cybernetic
 	name = "basic cybernetic stomach"

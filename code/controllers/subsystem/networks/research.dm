@@ -130,7 +130,7 @@ SUBSYSTEM_DEF(research)
 		// Tell our unlocked designs that we unlock them
 		for(var/design_path in new_node.unlocked_designs)
 			var/datum/design/unlocked_design = techweb_designs[design_path]
-			unlocked_design.unlocked_by += node_path
+			LAZYADD(unlocked_design.unlocked_by, node_path)
 
 		// Register that our required items unlock us
 		for(var/required_item_path in new_node.required_items_to_unlock)

@@ -1,0 +1,2 @@
+/obj/item/mmi/posibrain/@SUBTYPES : /obj/item/brain_processor/positronic/@SUBTYPES{@OLD}
+/obj/item/mmi/@SUBTYPES : /obj/item/brain_processor/organic/@SUBTYPES{@OLD}

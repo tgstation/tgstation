@@ -28,21 +28,37 @@ jobs:
     #
     # Otherwise, it will output `Run Tests (map; max)`.
     # For example, `Run Tests (runtimestation; 515)`.
-    name: Run Tests (${{ inputs.major && format('{0}.{1}; ', inputs.major, inputs.minor) || '' }}${{ inputs.map }}; ${{ inputs.max_required_byond_client }})
+    name: ${{ inputs.map }} ${{ inputs.major && format('({0}.{1})', inputs.major, inputs.minor) || '' }} (${{ inputs.max_required_byond_client }})
     runs-on: ubuntu-24.04
     timeout-minutes: 55
     steps:
       - uses: actions/checkout@v7
-      - name: Restore BYOND from Cache
-        uses: ./.github/actions/restore_or_install_byond
+
+      - name: Configure BYOND version
+        uses: ./.github/actions/configure_byond_version
         with:
           major: ${{ inputs.major }}
           minor: ${{ inputs.minor }}
-      - name: Download build outputs
-        uses: actions/download-artifact@v8
-        with:
-          name: build-artifact-${{ inputs.major || env.BYOND_MAJOR }}-${{ inputs.minor || env.BYOND_MINOR }}
-          path: ./
+
+      - parallel:
+        - name: Restore or install BYOND
+          uses: ./.github/actions/restore_or_install_byond
+
+        - name: Download build artifact
+          uses: actions/download-artifact@v8
+          with:
+            name: build-artifact-${{ inputs.major || env.BYOND_MAJOR }}-${{ inputs.minor || env.BYOND_MINOR }}
+            path: ./
+
+        - name: Install rust-g
+          run: |
+            bash tools/ci/install_rust_g.sh
+
+        - name: Install dreamluau
+          run: |
+            bash tools/ci/install_dreamluau.sh
+
+      # Excluded from the above parallel group because it makes the database setup flaky. Probably something to do with IO ports being clogged
       - name: Setup database
         env:
           MYSQL_CONFIG_FILE: tools/ci/mysql_config.cnf
@@ -53,25 +69,22 @@ jobs:
           mysql --defaults-extra-file=${{ env.MYSQL_CONFIG_FILE }} -e 'CREATE DATABASE tg_ci_prefixed;'
           mysql --defaults-extra-file=${{ env.MYSQL_CONFIG_FILE }} tg_ci_prefixed < SQL/tgstation_schema_prefixed.sql
           echo "Sucessful MySQL Database Setup"
-      - name: Install rust-g
-        run: |
-          bash tools/ci/install_rust_g.sh
-      - name: Install dreamluau
-        run: |
-          bash tools/ci/install_dreamluau.sh
-      - name: Run Tests
+
+      - name: Run unit tests
         id: run_tests
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
           bash tools/ci/run_server.sh "${{ inputs.map }}" "${{ inputs.map_config }}"
+
       - name: Upload screenshot tests
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: test_artifacts_${{ inputs.map }}_${{ inputs.major || env.BYOND_MAJOR }}_${{ inputs.minor || env.BYOND_MINOR }}
+          name: test-artifact-${{ inputs.map }}-${{ inputs.major || env.BYOND_MAJOR }}-${{ inputs.minor || env.BYOND_MINOR }}
           path: data/screenshots_new/
           retention-days: 1
           if-no-files-found: ignore
+
       - name: On test fail, write a step summary
         if: always() && steps.run_tests.outcome == 'failure'
         run: |
@@ -95,7 +108,8 @@ jobs:
             echo '```' >> $GITHUB_STEP_SUMMARY
             echo "" >> $GITHUB_STEP_SUMMARY
           done
-      - name: Check client Compatibility
+
+      - name: Check client compatibility
         if: always() && steps.compile_tests.outcome == 'success'
         uses: tgstation/byond-client-compatibility-check@v3
         with:

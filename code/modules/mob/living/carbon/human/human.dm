@@ -7,8 +7,6 @@
 	setup_mood()
 	// This needs to be called very very early in human init (before organs / species are created at the minimum)
 	setup_organless_effects()
-	// Physiology needs to be created before species, as some species modify physiology
-	setup_physiology()
 
 
 	create_dna(species)
@@ -39,22 +37,17 @@
 	ADD_TRAIT(src, TRAIT_CAN_MOUNT_HUMANS, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_CAN_MOUNT_CYBORGS, INNATE_TRAIT)
 
-/mob/living/carbon/human/proc/setup_physiology()
-	physiology = new()
-
 /mob/living/carbon/human/get_unconscious_appearance()
 	return get_generic_humanoid_static_appearance()
 
 /mob/living/carbon/human/proc/setup_mood()
-	if (CONFIG_GET(flag/disable_human_mood))
-		return
 	mob_mood = new /datum/mood(src)
 
 /mob/living/carbon/human/dummy/get_unconscious_appearance()
 	return null
 
 /mob/living/carbon/human/dummy/setup_mood()
-	return
+	mob_mood = new /datum/mood/dummy(src)
 
 /// This proc is for holding effects applied when a mob is missing certain organs
 /// It is called very, very early in human init because all humans innately spawn with no organs and gain them during init
@@ -71,7 +64,6 @@
 	randomize_human_normie(src, randomize_mutations = TRUE, update_body = FALSE)
 
 /mob/living/carbon/human/Destroy()
-	QDEL_NULL(physiology)
 	GLOB.human_list -= src
 
 	if (mob_mood)
@@ -579,14 +571,17 @@
 
 #undef CPR_PANIC_SPEED
 
-/mob/living/carbon/human/cuff_resist(obj/item/I)
+/mob/living/carbon/human/get_all_attached_restraints()
+	. = ..()
+	if(wear_suit?.breakouttime)
+		. += wear_suit
+
+/mob/living/carbon/human/cuff_resist(obj/item/cuffs, breakouttime = null, cuff_break = 0)
 	if(HAS_TRAIT(src, TRAIT_HULK))
 		say(pick(";RAAAAAAAARGH!", ";HNNNNNNNNNGGGGGGH!", ";GWAAAAAAAARRRHHH!", "NNNNNNNNGGGGGGGGHH!", ";AAAAAAARRRGH!" ), forced = "hulk")
-		if(..(I, cuff_break = FAST_CUFFBREAK))
-			dropItemToGround(I)
+		. = ..(cuffs, cuff_break = FAST_CUFFBREAK)
 	else
-		if(..())
-			dropItemToGround(I)
+		. = ..()
 
 /**
  * Wash the hands, cleaning either the gloves if equipped and not obscured, otherwise the hands themselves if they're not obscured.
@@ -660,14 +655,6 @@
 /mob/living/carbon/human/proc/end_electrocution_animation(mutable_appearance/MA)
 	remove_atom_colour(TEMPORARY_COLOUR_PRIORITY, COLOR_BLACK)
 	cut_overlay(MA)
-
-/mob/living/carbon/human/resist_restraints()
-	if(wear_suit?.breakouttime)
-		changeNext_move(CLICK_CD_BREAKOUT)
-		last_special = world.time + CLICK_CD_BREAKOUT
-		cuff_resist(wear_suit)
-	else
-		..()
 
 /mob/living/carbon/human/clear_cuffs(obj/item/I, cuff_break)
 	. = ..()
@@ -862,10 +849,10 @@
 			to_chat(usr, "This mob has no brain to insert into an MMI.")
 			return
 
-		var/obj/item/mmi/new_mmi = new(get_turf(src))
+		var/obj/item/brain_processor/organic/new_mmi = new(get_turf(src))
 
 		target_brain.Remove(src)
-		new_mmi.force_brain_into(target_brain)
+		new_mmi.insert_brain(target_brain)
 
 		to_chat(usr, "Turned [src] into an MMI.")
 		log_admin("[key_name(usr)] turned [key_name_and_tag(src)] into an MMI.")

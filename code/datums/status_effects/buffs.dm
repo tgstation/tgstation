@@ -66,10 +66,10 @@
 		return
 	var/grace_heal = bloodlust * 0.02
 	var/need_mob_update = FALSE
-	need_mob_update += owner.adjust_brute_loss(-grace_heal * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-	need_mob_update += owner.adjust_fire_loss(-grace_heal * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-	need_mob_update += owner.adjust_tox_loss(-grace_heal * seconds_between_ticks, forced = TRUE)
-	need_mob_update += owner.adjust_oxy_loss(-(grace_heal * 2) * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+	need_mob_update += owner.adjust_brute_loss(-grace_heal * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjust_fire_loss(-grace_heal * seconds_between_ticks, updating_health = FALSE)
+	need_mob_update += owner.adjust_tox_loss(-grace_heal * seconds_between_ticks)
+	need_mob_update += owner.adjust_oxy_loss(-(grace_heal * 2) * seconds_between_ticks, updating_health = FALSE)
 	if(need_mob_update)
 		owner.updatehealth()
 
@@ -94,7 +94,7 @@
 
 /datum/status_effect/blooddrunk
 	id = "blooddrunk"
-	duration = 10
+	duration = 1 SECONDS
 	tick_interval = STATUS_EFFECT_NO_TICK
 	alert_type = /atom/movable/screen/alert/status_effect/blooddrunk
 
@@ -105,25 +105,21 @@
 
 /datum/status_effect/blooddrunk/on_apply()
 	owner.add_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology.brute_mod *= 0.1
-		human_owner.physiology.burn_mod *= 0.1
-		human_owner.physiology.tox_mod *= 0.1
-		human_owner.physiology.oxy_mod *= 0.1
-		human_owner.physiology.stamina_mod *= 0.1
+	MODIFY_PHYSIOLOGY(owner, BRUTE, 0.1)
+	MODIFY_PHYSIOLOGY(owner, BURN, 0.1)
+	MODIFY_PHYSIOLOGY(owner, TOX, 0.1)
+	MODIFY_PHYSIOLOGY(owner, OXY, 0.1)
+	MODIFY_PHYSIOLOGY(owner, STAMINA, 0.1)
 	owner.add_stun_absorption(source = id, priority = 4)
 	owner.playsound_local(get_turf(owner), 'sound/effects/singlebeat.ogg', 40, 1, use_reverb = FALSE)
 	return TRUE
 
 /datum/status_effect/blooddrunk/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		human_owner.physiology.brute_mod *= 10
-		human_owner.physiology.burn_mod *= 10
-		human_owner.physiology.tox_mod *= 10
-		human_owner.physiology.oxy_mod *= 10
-		human_owner.physiology.stamina_mod *= 10
+	MODIFY_PHYSIOLOGY(owner, BRUTE, 10)
+	MODIFY_PHYSIOLOGY(owner, BURN, 10)
+	MODIFY_PHYSIOLOGY(owner, TOX, 10)
+	MODIFY_PHYSIOLOGY(owner, OXY, 10)
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_PRESSURE, 10)
 	owner.remove_movespeed_mod_immunities(id, /datum/movespeed_modifier/damage_slowdown)
 	owner.remove_stun_absorption(id)
 
@@ -340,11 +336,11 @@
 			if(itemUser.health < itemUser.maxHealth)
 				new /obj/effect/temp_visual/heal(get_turf(itemUser), "#375637")
 			var/need_mob_update = FALSE
-			need_mob_update += itemUser.adjust_brute_loss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-			need_mob_update += itemUser.adjust_fire_loss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
+			need_mob_update += itemUser.adjust_brute_loss(-0.6 * seconds_between_ticks, updating_health = FALSE)
+			need_mob_update += itemUser.adjust_fire_loss(-0.6 * seconds_between_ticks, updating_health = FALSE)
 			need_mob_update += itemUser.adjust_tox_loss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE) //Because Slime People are people too
-			need_mob_update += itemUser.adjust_oxy_loss(-0.6 * seconds_between_ticks, updating_health = FALSE, forced = TRUE)
-			need_mob_update += itemUser.adjust_stamina_loss(-3 * seconds_between_ticks, updating_stamina = FALSE, forced = TRUE)
+			need_mob_update += itemUser.adjust_oxy_loss(-0.6 * seconds_between_ticks, updating_health = FALSE)
+			need_mob_update += itemUser.adjust_stamina_loss(-3 * seconds_between_ticks, updating_stamina = FALSE)
 			need_mob_update += itemUser.adjust_organ_loss(ORGAN_SLOT_BRAIN, -0.6 * seconds_between_ticks)
 			if(need_mob_update)
 				itemUser.updatehealth()
@@ -525,11 +521,7 @@
 	owner.balloon_alert_to_viewers("health buffed")
 	to_chat(owner, span_nicegreen("You feel healthy, like if your body is little stronger than it was a moment ago."))
 
-	if(isanimal(owner))	//dumb animals have their own proc for healing.
-		var/mob/living/simple_animal/healthy_animal = owner
-		healthy_animal.adjustHealth(-(health_increase * healing_modifier))
-	else
-		owner.adjust_brute_loss(-(health_increase * healing_modifier))
+	owner.adjust_brute_loss(-(health_increase * healing_modifier))
 
 /datum/status_effect/limited_buff/health_buff/maxed_out()
 	. = ..()
@@ -575,14 +567,11 @@
 	alert_type = null
 
 /datum/status_effect/blessing_of_insanity/on_apply()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		var/datum/physiology/owner_physiology = human_owner.physiology
-		owner_physiology.brute_mod *= 0.5
-		owner_physiology.burn_mod *= 0.5
-		owner_physiology.tox_mod *= 0.5
-		owner_physiology.oxy_mod *= 0.5
-		owner_physiology.stamina_mod *= 0.5
+	MODIFY_PHYSIOLOGY(owner, BRUTE, 0.5)
+	MODIFY_PHYSIOLOGY(owner, BURN, 0.5)
+	MODIFY_PHYSIOLOGY(owner, TOX, 0.5)
+	MODIFY_PHYSIOLOGY(owner, OXY, 0.5)
+	MODIFY_PHYSIOLOGY(owner, STAMINA, 0.5)
 	owner.add_filter("mad_glow", 2, list("type" = "outline", "color" = "#eed811c9", "size" = 2))
 	owner.AddElement(/datum/element/forced_gravity, 0)
 	owner.AddElement(/datum/element/simple_flying)
@@ -593,14 +582,11 @@
 	return TRUE
 
 /datum/status_effect/blessing_of_insanity/on_remove()
-	if(ishuman(owner))
-		var/mob/living/carbon/human/human_owner = owner
-		var/datum/physiology/owner_physiology = human_owner.physiology
-		owner_physiology.brute_mod *= 2
-		owner_physiology.burn_mod *= 2
-		owner_physiology.tox_mod *= 2
-		owner_physiology.oxy_mod *= 2
-		owner_physiology.stamina_mod *= 2
+	MODIFY_PHYSIOLOGY(owner, BRUTE, 2)
+	MODIFY_PHYSIOLOGY(owner, BURN, 2)
+	MODIFY_PHYSIOLOGY(owner, TOX, 2)
+	MODIFY_PHYSIOLOGY(owner, OXY, 2)
+	MODIFY_PHYSIOLOGY(owner, STAMINA, 2)
 	owner.remove_filter("mad_glow")
 	owner.RemoveElement(/datum/element/forced_gravity, 0)
 	owner.RemoveElement(/datum/element/simple_flying)

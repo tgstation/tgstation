@@ -11,11 +11,11 @@ jobs:
       - uses: actions/checkout@v7
       - name: Setup directory
         run: mkdir -p artifacts
-      # If we ever add more artifacts, this is going to break, but it'll be obvious.
       - name: Download screenshot tests
         uses: actions/download-artifact@v8
         with:
           path: artifacts
+          pattern: test-artifact-*
       - name: ls -R
         run: ls -R artifacts
       - name: Setup screenshot comparison

@@ -38,3 +38,8 @@
 /datum/movespeed_modifier/binocs_wielded
 	multiplicative_slowdown = 1.5
 
+/datum/movespeed_modifier/pillow_fortify
+	multiplicative_slowdown = 1.2
+
+/datum/movespeed_modifier/lance_charge
+	multiplicative_slowdown = -0.5

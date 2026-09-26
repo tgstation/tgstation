@@ -39,22 +39,27 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define STATION_TRAIT_PDA_GLITCHED "station_trait_pda_glitched"
 #define STATION_TRAIT_PREMIUM_INTERNALS "station_trait_premium_internals"
 #define STATION_TRAIT_PUN_PUN_GYM_DAY "station_trait_pun_pun_gym_day"
+#define STATION_TRAIT_QUICK_SHUTTLE "station_trait_quick_shuttle"
 #define STATION_TRAIT_RADIOACTIVE_NEBULA "station_trait_radioactive_nebula"
 #define STATION_TRAIT_RANDOM_ARRIVALS "station_trait_random_arrivals"
 #define STATION_TRAIT_REVOLUTIONARY_TRASHING "station_trait_revolutionary_trashing"
 #define STATION_TRAIT_SHUTTLE_SALE "station_trait_shuttle_sale"
+#define STATION_TRAIT_SLOW_SHUTTLE "station_trait_slow_shuttle"
 #define STATION_TRAIT_SMALLER_PODS "station_trait_smaller_pods"
 #define STATION_TRAIT_SPIDER_INFESTATION "station_trait_spider_infestation"
 #define STATION_TRAIT_UNIQUE_AI "station_trait_unique_ai"
 #define STATION_TRAIT_UNNATURAL_ATMOSPHERE "station_trait_unnatural_atmosphere"
 #define STATION_TRAIT_SPIKED_DRINKS "station_trait_spiked_drinks"
 #define STATION_TRAIT_SPAWN_WEAKPOINTS "station_trait_spawn_weakpoints"
+#define STATION_TRAIT_VENDING_SHORTAGE "station_trait_vending_shortage"
+
+// Client traits
+/// This client has parallax displayed on it on the specified map
+#define TRAIT_PARALLAX_DISPLAYED(submap) "parallax_displayed_[submap]_map"
 
 // Hud traits
 /// This hud is owned by a client with an open escape menu
 #define TRAIT_ESCAPE_MENU_OPEN "escape_menu_open"
-/// This hud has parallax displayed on it
-#define TRAIT_PARALLAX_DISPLAYED "parallax_displayed"
 
 // Mob traits
 /// Forces the user to stay unconscious.
@@ -535,8 +540,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MARTIAL_ARTS_IMMUNE "martial_arts_immune"
 /// Immune to being afflicted by time stop (spell)
 #define TRAIT_TIME_STOP_IMMUNE "time_stop_immune"
-/// Revenants draining you only get a very small benefit.
-#define TRAIT_WEAK_SOUL "weak_soul"
 /// This mob has no soul
 #define TRAIT_NO_SOUL "no_soul"
 /// Prevents mob from riding mobs when buckled onto something
@@ -732,6 +735,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait that makes you bite when attacking with an unarmed strike.
 #define TRAIT_FERAL_BITER "feral biter"
+
+/// Trait that makes you only SOMETIMES bite when attacking with an unarmed strike.
+#define TRAIT_REFINED_BITER "refined biter"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
@@ -1683,6 +1689,11 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Cannot be backstabbed with a crusher
 #define TRAIT_BACKSTAB_IMMUNE "backstab_immune"
 
+/// Mobs that are of a lesser species, like monkeys, compared to other humanoid species
+#define TRAIT_LESSER_HUMANOID "lesser_humanoid"
+/// Is an ape, gorilla, a man of the jungle, an ook ook fellow
+#define TRAIT_SIMIAN "simian"
+
 /// Makes the owner immune from the pacification from synthpax
 #define TRAIT_SYNTHPAX_IMMUNE "synthpax_immune"
 /// Allow the owner to eat cloth
@@ -1727,7 +1738,13 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Turfs with this trait allow whispers to be projected over it when the whisperer is facing it
 #define TRAIT_TURF_PROJECTS_WHISPERS  "turf_projects_whispers"
 
+/// Items with this trait interfere with bluespace teleportation
+#define TRAIT_BLUESPACE_INTERFERENCE "bluespace_interference"
+
 /// Objects with this trait may become a new prison for a revenant, in the event of its ectoplasm dispersing
 #define TRAIT_COZY_REVENANT_HOME "cozy_revenant_home"
+
+/// Mobs with this trait will appear as human to medical scanners even if they are not human
+#define TRAIT_HUMAN_DISGUISE "human_disguise"
 
 // END TRAIT DEFINES

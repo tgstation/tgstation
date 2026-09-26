@@ -171,29 +171,6 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/holiday/random)
 	icon_state = "trimline_box"
 	use_holiday_colors = TRUE
 
-/obj/effect/turf_decal/trimline/tram
-	pattern = PATTERN_VERTICAL_STRIPE
-
-/obj/effect/turf_decal/trimline/tram/filled/corner/Initialize(mapload)
-	if(use_holiday_colors)
-		var/current_holiday_color = request_decoration_colors(src, pattern)
-		if(current_holiday_color)
-			color = current_holiday_color
-			alpha = DECAL_ALPHA
-	else
-		color = "#ffc875"
-	return ..()
-
-/obj/effect/turf_decal/trimline/tram/filled/line/Initialize(mapload)
-	if(use_holiday_colors)
-		var/current_holiday_color = request_decoration_colors(src, pattern)
-		if(current_holiday_color)
-			color = current_holiday_color
-			alpha = DECAL_ALPHA
-	else
-		color = "#ffc875"
-	return ..()
-
 /// Automatically generates all trimlines for a decal with the given path.
 #define TRIMLINE_SUBTYPE_HELPER(path)\
 ##path/line {\
@@ -219,6 +196,12 @@ TILE_DECAL_SUBTYPE_HELPER(/obj/effect/turf_decal/tile/holiday/random)
 }\
 ##path/mid_joiner {\
 	icon_state = "trimline_mid";\
+}\
+##path/corner_long {\
+	icon_state = "trimline_corner_long";\
+}\
+##path/corner_long_alt {\
+	icon_state = "trimline_corner_long_alt";\
 }\
 ##path/filled {\
 	icon_state = "trimline_box_fill";\
@@ -324,10 +307,18 @@ TRIMLINE_SUBTYPE_HELPER(/obj/effect/turf_decal/trimline/neutral)
 
 /// Tram trimlines
 /obj/effect/turf_decal/trimline/tram
+	pattern = PATTERN_VERTICAL_STRIPE
 	color = "#D4D4D4"
 	alpha = 50
 
 TRIMLINE_SUBTYPE_HELPER(/obj/effect/turf_decal/trimline/tram)
+
+// These two tram decals specifically have its own color
+/obj/effect/turf_decal/trimline/tram/filled/corner
+	color = "#ffc875"
+
+/obj/effect/turf_decal/trimline/tram/filled/line
+	color = "#ffc875"
 
 /// Dark trimlines
 /obj/effect/turf_decal/trimline/dark

@@ -21,7 +21,7 @@
 	random_spawns_possible = FALSE
 	job_flags = JOB_NEW_PLAYER_JOINABLE | JOB_EQUIP_RANK | JOB_BOLD_SELECT_TEXT | JOB_CANNOT_OPEN_SLOTS
 	config_tag = "AI"
-
+	tgui_icon = FA_ICON_EYE
 
 /datum/job/ai/after_spawn(mob/living/spawned, client/player_client)
 	. = ..()
@@ -98,4 +98,4 @@
 	new_character.AIize()
 
 /datum/job/ai/get_lobby_icon()
-	return icon('icons/mob/huds/hud.dmi', "hudai")
+	return icon(DEFAULT_HUDS_DMI, "hudai")

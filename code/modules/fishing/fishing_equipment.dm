@@ -893,3 +893,19 @@
 	ADD_TRAIT(fish, TRAIT_FISH_GENEGUNNED, TRAIT_GENERIC)
 	playsound(fish, 'sound/items/hypospray.ogg', 25, TRUE)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/toy/hazard_warning
+	name = "lava hazard"
+	desc = "Watch for lava."
+	icon = 'icons/obj/toys/toy.dmi'
+	icon_state = "hazard_warning_lava"
+	inhand_icon_state = "hazard_warning_lava"
+	custom_materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
+	floor_placeable = TRUE
+	resistance_flags = LAVA_PROOF | FIRE_PROOF
+
+/obj/item/toy/hazard_warning/plasma
+	name = "plasma hazard"
+	desc = "Watch for plasma."
+	icon_state = "hazard_warning_plasma"
+	inhand_icon_state = "hazard_warning_plasma"

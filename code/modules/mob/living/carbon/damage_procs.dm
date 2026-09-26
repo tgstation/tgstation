@@ -29,58 +29,6 @@
 
 	return .
 
-/mob/living/carbon/human/get_damage_mod(damage_type)
-	if (!dna?.species?.damage_modifier)
-		return ..()
-	var/species_mod = (100 - dna.species.damage_modifier) / 100
-	return ..() * species_mod
-
-/mob/living/carbon/human/apply_damage(
-	damage = 0,
-	damagetype = BRUTE,
-	def_zone = null,
-	blocked = 0,
-	forced = FALSE,
-	spread_damage = FALSE,
-	wound_bonus = 0,
-	exposed_wound_bonus = 0,
-	sharpness = NONE,
-	attack_direction = null,
-	attacking_item,
-	wound_clothing = TRUE,
-)
-
-	// Add relevant DR modifiers into blocked value to pass to parent
-	blocked += physiology?.damage_resistance
-	blocked += dna?.species?.damage_modifier
-	return ..()
-
-/mob/living/carbon/human/get_incoming_damage_modifier(
-	damage = 0,
-	damagetype = BRUTE,
-	def_zone = null,
-	sharpness = NONE,
-	attack_direction = null,
-	attacking_item,
-)
-	var/final_mod = ..()
-
-	switch(damagetype)
-		if(BRUTE)
-			final_mod *= physiology.brute_mod
-		if(BURN)
-			final_mod *= physiology.burn_mod
-		if(TOX)
-			final_mod *= physiology.tox_mod
-		if(OXY)
-			final_mod *= physiology.oxy_mod
-		if(STAMINA)
-			final_mod *= physiology.stamina_mod
-		if(BRAIN)
-			final_mod *= physiology.brain_mod
-
-	return final_mod
-
 //These procs fetch a cumulative total damage from all bodyparts
 /mob/living/carbon/get_brute_loss()
 	var/amount = 0
@@ -125,7 +73,7 @@
 		amount += bodypart.burn_dam
 	return round(amount, DAMAGE_PRECISION)
 
-/mob/living/carbon/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+/mob/living/carbon/adjust_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
 	if(!can_adjust_brute_loss(amount, forced, required_bodytype))
 		return 0
 	if(amount > 0)
@@ -133,7 +81,7 @@
 	else
 		. = heal_overall_damage(brute = abs(amount), required_bodytype = required_bodytype, updating_health = updating_health, forced = forced)
 
-/mob/living/carbon/set_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+/mob/living/carbon/set_brute_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
 	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
 		return FALSE
 	var/current = get_brute_loss()
@@ -142,7 +90,7 @@
 		return FALSE
 	return adjust_brute_loss(diff, updating_health, forced, required_bodytype)
 
-/mob/living/carbon/adjust_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+/mob/living/carbon/adjust_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
 	if(!can_adjust_fire_loss(amount, forced, required_bodytype))
 		return 0
 	if(amount > 0)
@@ -150,7 +98,7 @@
 	else
 		. = heal_overall_damage(burn = abs(amount), required_bodytype = required_bodytype, updating_health = updating_health, forced = forced)
 
-/mob/living/carbon/set_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype)
+/mob/living/carbon/set_fire_loss(amount, updating_health = TRUE, forced = FALSE, required_bodytype = ALL)
 	if(!forced && HAS_TRAIT(src, TRAIT_GODMODE))
 		return FALSE
 	var/current = get_fire_loss()
@@ -159,25 +107,9 @@
 		return FALSE
 	return adjust_fire_loss(diff, updating_health, forced, required_bodytype)
 
-/mob/living/carbon/human/adjust_tox_loss(amount, updating_health = TRUE, forced = FALSE, required_biotype = ALL)
+/mob/living/carbon/on_damage_loss_changed(amount, updating_health, forced, damage_type)
 	. = ..()
-	if(. >= 0) // 0 = no damage, + values = healed damage
-		return .
-
-	if(AT_TOXIN_VOMIT_THRESHOLD(src))
-		apply_status_effect(/datum/status_effect/tox_vomit)
-
-/mob/living/carbon/human/set_tox_loss(amount, updating_health, forced, required_biotype)
-	. = ..()
-	if(. >= 0)
-		return .
-
-	if(AT_TOXIN_VOMIT_THRESHOLD(src))
-		apply_status_effect(/datum/status_effect/tox_vomit)
-
-/mob/living/carbon/received_stamina_damage(current_level, amount_actual, amount)
-	. = ..()
-	if((maxHealth - current_level) <= crit_threshold && stat != DEAD)
+	if(damage_type == STAMINA && amount > 0 && (maxHealth - staminaloss) <= crit_threshold && stat != DEAD)
 		apply_status_effect(/datum/status_effect/incapacitating/stamcrit)
 
 /**

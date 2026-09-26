@@ -13,6 +13,8 @@ type ReplaceInTextNodeParams = {
   captureAdjust?: (str: string) => string;
 };
 
+type HighlightNodeFilter = (node: Text) => boolean;
+
 /**
  * Replaces text matching a regular expression with a custom node.
  */
@@ -165,6 +167,7 @@ export function highlightNode(
   /** List of words to highlight */
   words: string[],
   createNode: NodeCreator = createHighlightNode,
+  filter: HighlightNodeFilter = () => true,
 ): number {
   if (!createNode) {
     createNode = createHighlightNode;
@@ -174,10 +177,10 @@ export function highlightNode(
   for (let i = 0; i < childNodes.length; i++) {
     const node = childNodes[i];
     // Is a text node
-    if (node.nodeType === 3) {
+    if (node.nodeType === 3 && filter(node as Text)) {
       n += replaceInTextNode(regex, words, createNode)(node);
     } else {
-      n += highlightNode(node, regex, words, createNode);
+      n += highlightNode(node, regex, words, createNode, filter);
     }
   }
   return n;

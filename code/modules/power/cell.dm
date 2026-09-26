@@ -247,7 +247,7 @@
 
 /obj/item/stock_parts/power_store/cell/crystal_cell
 	name = "crystal power cell"
-	desc = "A very high power cell made from crystallized plasma"
+	desc = "A high power cell made from crystallized plasma."
 	icon_state = "crystal_cell"
 	maxcharge = STANDARD_CELL_CHARGE * 50
 	chargerate = 0
