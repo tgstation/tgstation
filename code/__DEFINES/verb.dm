@@ -36,7 +36,7 @@ _GAME_VERB(owner_type, verb_path_name, verb_name, "", verb_category, TRUE, FALSE
 #define GAME_VERB_DESC(owner_type, verb_path_name, verb_name, verb_desc, verb_category) \
 _GAME_VERB(owner_type, verb_path_name, verb_name, verb_desc, verb_category, TRUE, FALSE, FALSE)
 
-#define _GAME_VERB_CONTEXT(owner_type, verb_path_name, verb_name, verb_desc, verb_category, context_type) \
+#define _GAME_VERB_CONTEXT(owner_type, verb_path_name, verb_name, verb_desc, verb_category, context_type, src_range) \
 /datum/verb_metadata##owner_type/##verb_path_name \
 { \
 	name = ##verb_name; \
@@ -45,7 +45,7 @@ _GAME_VERB(owner_type, verb_path_name, verb_name, verb_desc, verb_category, TRUE
 	verb_path = ##owner_type/verb/##verb_path_name; \
 	body_path = ##owner_type/proc/__gvb_##verb_path_name; \
 }; \
-##owner_type/verb/##verb_path_name(var##context_type/__context_target in world) \
+##owner_type/verb/##verb_path_name(var##context_type/__context_target in src_range) \
 { \
 	set name = ##verb_name; \
 	set desc = ##verb_desc; \
@@ -58,7 +58,10 @@ _GAME_VERB(owner_type, verb_path_name, verb_name, verb_desc, verb_category, TRUE
 ##owner_type/proc/__gvb_##verb_path_name(list/structured_args)
 
 #define GAME_VERB_CONTEXT(owner_type, verb_path_name, verb_name, verb_desc, verb_category, context_type) \
-_GAME_VERB_CONTEXT(owner_type, verb_path_name, verb_name, verb_desc, verb_category, context_type)
+_GAME_VERB_CONTEXT(owner_type, verb_path_name, verb_name, verb_desc, verb_category, context_type, world)
+
+#define GAME_VERB_CONTEXT_RANGE(owner_type, verb_path_name, verb_name, verb_desc, verb_category, context_type, src_range) \
+_GAME_VERB_CONTEXT(owner_type, verb_path_name, verb_name, verb_desc, verb_category, context_type, src_range)
 
 #define GAME_VERB_HIDDEN(owner_type, verb_path_name, verb_name) \
 _GAME_VERB(owner_type, verb_path_name, verb_name, "", null, FALSE, TRUE, FALSE)
@@ -124,6 +127,7 @@ _GAME_VERB_PROC(owner_type, verb_path_name, verb_name, verb_desc, verb_category,
 	category = ##verb_category; \
 	verb_path = ##owner_type/verb/##verb_path_name; \
 	body_path = ##owner_type/proc/__gvb_##verb_path_name; \
+	src_based = TRUE; \
 }; \
 ##owner_type/verb/##verb_path_name() \
 { \
@@ -178,6 +182,10 @@ _GAME_VERB_GLOBAL_PROC(verb_path_name, verb_name, verb_desc, verb_category, FALS
 
 #define VERB_ARG_TYPED(name, arg_type, source, type_path) \
 	var/static/____reg_##name = ____register_verb_arg(__TYPE__, __PROC__, #name, arg_type, type_path, source); \
+	var##type_path/##name = structured_args[#name]
+
+#define VERB_ARG_TYPED_RANGE(name, arg_type, source, type_path, view_range) \
+	var/static/____reg_##name = ____register_verb_arg(__TYPE__, __PROC__, #name, arg_type, type_path, source, view_range); \
 	var##type_path/##name = structured_args[#name]
 
 #define VERB_ARG_TYPE_TEXT (1<<0)
