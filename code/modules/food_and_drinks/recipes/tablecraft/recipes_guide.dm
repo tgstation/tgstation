@@ -1433,12 +1433,14 @@
 	result = /datum/reagent/consumable/eggyolk
 	steps = list("Break the egg into a beaker or bowl")
 	meal_category = MEAL_COMPONENT
+	non_craftable = TRUE
 
 /datum/crafting_recipe/food/egg_white
 	reqs = list(/obj/item/food/egg = 1)
 	result = /datum/reagent/consumable/eggwhite
 	steps = list("Break the egg into a beaker or bowl")
 	meal_category = MEAL_COMPONENT
+	non_craftable = TRUE
 
 /datum/crafting_recipe/food/vending
 	steps = list("Purchase from a vending machine")
