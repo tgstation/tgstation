@@ -23,13 +23,13 @@
 		if (!targetturf)
 			return FALSE
 		var/list/accounts_to_rob = assoc_to_values(SSeconomy.bank_accounts_by_id)
-		var/mob/living/L
+		var/mob/living/bogdanoff
 		if(isliving(user))
-			L = user
-			accounts_to_rob -= L.get_bank_account()
-		var/obj/effect/dumpeet_target/dump_machine = new /obj/effect/dumpeet_target(targetturf, L)
-		for(var/datum/bank_account/B as anything in accounts_to_rob)
-			B.dumpeet(dump_machine.dump)
+			bogdanoff = user
+			accounts_to_rob -= bogdanoff.get_bank_account()
+		var/obj/effect/dumpeet_target/dump_machine = new /obj/effect/dumpeet_target(targetturf, bogdanoff, src)
+		for(var/datum/bank_account/angel_investor as anything in accounts_to_rob)
+			angel_investor.dumpeet(dump_machine.dump)
 
 		to_chat(user, span_notice("You have activated Protocol CRAB-17."))
 		user.log_message("activated Protocol CRAB-17.", LOG_GAME)
@@ -51,11 +51,21 @@
 	/// List of bank accounts to take money from, determines in start_dumping()
 	var/list/accounts_to_rob
 	/// The original user of the suspicious phone
-	var/mob/living/bogdanoff
+	var/datum/weakref/bogdanoff
+	/// The phone we're going to print cash from
+	var/datum/weakref/phone
 	/// Are we able to start moving?
 	var/canwalk = FALSE
 	/// Our own internal bank account, serves as a fallback to transfer money to if Bogdanoff doesn't have one
 	var/datum/bank_account/internal_account
+
+/obj/structure/checkoutmachine/Initialize(mapload, mob/living/user, obj/item/evil_phone)
+	. = ..()
+	if(QDELETED(src))
+		return
+	bogdanoff = WEAKREF(user)
+	phone = WEAKREF(evil_phone)
+	internal_account = new /datum/bank_account/remote("CRAB-17", 0, player_account = FALSE)
 
 /obj/structure/checkoutmachine/examine(mob/living/user)
 	. = ..()
@@ -106,13 +116,6 @@
 		qdel(src)
 
 	return ITEM_INTERACT_SUCCESS
-
-/obj/structure/checkoutmachine/Initialize(mapload, mob/living/user)
-	. = ..()
-	if(QDELETED(src))
-		return
-	bogdanoff = user
-	internal_account = new /datum/bank_account/remote("CRAB-17", 0, player_account = FALSE)
 
 /obj/structure/checkoutmachine/proc/setup_siphoning()
 	add_overlay("flaps")
@@ -204,25 +207,38 @@
  */
 /obj/structure/checkoutmachine/proc/start_dumping()
 	accounts_to_rob = assoc_to_values(SSeconomy.bank_accounts_by_id)
-	accounts_to_rob -= bogdanoff?.get_bank_account()
+	accounts_to_rob -= bogdanoff.resolve()?.get_bank_account()
 	dump()
 
 /**
- * For each account being drained, pulls a random percentage of cash out the account and sends it to Bogdanoff's account.
- * If Bogdanoff did not have a bank account, stores the funds in the checkout's internal_account.
+ * For each account being drained, pulls a random percentage of cash out of the account and prints it out as notes
  * Sets a timer to call itself again after an interval.
  */
 /obj/structure/checkoutmachine/proc/dump()
 	var/percentage_lost = (rand(5, 15) / 100)
-	for(var/datum/bank_account/B as anything in accounts_to_rob)
-		if(!(B?.being_dumped))
-			accounts_to_rob -= B
+	var/total_siphoned = 0
+
+	for(var/datum/bank_account/sucker as anything in accounts_to_rob)
+		if(!(sucker?.being_dumped))
+			accounts_to_rob -= sucker
 			continue
-		var/amount = round(B.account_balance * percentage_lost) // We don't want fractions of a credit stolen. That's just agony for everyone.
-		var/datum/bank_account/account = bogdanoff?.get_bank_account() || internal_account
-		account.transfer_money(B, amount, "?VIVA¿: !LA CRABBE¡")
-		B.money_crabbed += amount
-		B.bank_card_talk("You have lost [percentage_lost * 100]% of your funds! A spacecoin credit deposit machine is located at: [get_area(src)].")
+		var/amount = round(sucker.account_balance * percentage_lost) // We don't want fractions of a credit stolen. That's just agony for everyone.
+		sucker.adjust_money(-amount, "?VIVA¿: !LA CRABBE¡")
+		sucker.money_crabbed += amount
+		total_siphoned += amount
+		sucker.bank_card_talk("You have lost [percentage_lost * 100]% of your funds! A spacecoin credit deposit machine is located at: [get_area(src)].")
+
+	var/list/notes_to_print = credits_to_spacecash(total_siphoned)
+	if (length(notes_to_print))
+		var/atom/drop_atom = phone.resolve() || src
+		var/atom/drop_loc = drop_atom.drop_location()
+		for(var/cash_typepath in notes_to_print)
+			var/atom/cash = new cash_typepath(drop_loc)
+			drop_atom.loc?.atom_storage?.attempt_insert(cash, override = FALSE, messages = FALSE)
+
+		var/sound_range = istype(drop_atom, /obj/item) ? -14 : MEDIUM_RANGE_SOUND_EXTRARANGE //Adjacent if it's from a phone
+		playsound(drop_atom, 'sound/machines/printer.ogg', 25, FALSE, extrarange = sound_range, ignore_walls = FALSE)
+
 	addtimer(CALLBACK(src, PROC_REF(dump)), 15 SECONDS) //Drain every 15 seconds
 
 /obj/structure/checkoutmachine/process()
@@ -272,12 +288,10 @@
 	light_range = 2
 	var/obj/effect/dumpeet_fall/DF
 	var/obj/structure/checkoutmachine/dump
-	var/mob/living/bogdanoff
 
-/obj/effect/dumpeet_target/Initialize(mapload, user)
+/obj/effect/dumpeet_target/Initialize(mapload, user, phone)
 	. = ..()
-	bogdanoff = user
-	dump = new /obj/structure/checkoutmachine(null, bogdanoff)
+	dump = new /obj/structure/checkoutmachine(null, user, phone)
 	addtimer(CALLBACK(src, PROC_REF(startLaunch)), 10 SECONDS)
 	sound_to_playing_players('sound/items/dump_it.ogg', 20)
 	deadchat_broadcast("Protocol CRAB-17 has been activated. A space-coin market has been launched at the station!", turf_target = get_turf(src), message_type=DEADCHAT_ANNOUNCEMENT)
