@@ -48,7 +48,6 @@
 /obj/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
 	damage = 25
-	fireblast_radius = 2
 
 /obj/projectile/bullet/incendiary/shotgun/milspec
 	name = "milspec incendiary slug"
@@ -69,7 +68,6 @@
 	ricochet_auto_aim_range = 2
 	ricochet_auto_aim_angle = 30
 	ricochet_incidence_leeway = 75
-	fireblast_radius = 1
 
 /obj/projectile/bullet/shotgun_stunslug
 	name = "stunslug"
