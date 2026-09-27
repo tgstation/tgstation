@@ -345,7 +345,7 @@
 		status = LIGHT_BURNED
 		icon_state = "[base_state]-burned"
 		on = FALSE
-		set_light(l_range = 0)
+		update()
 
 // attempt to set the light's on/off status
 // will not switch on if broken/burned/empty
@@ -717,6 +717,20 @@
 	if(explosive)
 		explosion(src, flame_range = 5, adminlog = FALSE)
 		qdel(src)
+
+/obj/machinery/light/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	var/obj/item/stock_parts/power_store/cell_to_emp = get_cell() // initializes mockup cells if needed
+	cell_to_emp?.emp_act(severity)
+
+	if(status != LIGHT_OK) // already broken or empty
+		return
+
+	if(prob(150 / severity))
+		burn_out()
 
 // called when area power state changes
 /obj/machinery/light/power_change()

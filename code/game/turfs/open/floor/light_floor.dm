@@ -162,7 +162,7 @@
 	currentcolor = pick(coloredlights)
 	if(state == LIGHTFLOOR_BROKEN)  /// he's dead, jim
 		return
-	if(prob(50))
+	if(prob(150 / severity))
 		state++
 	currentcolor = pick(coloredlights)
 	update_appearance()
