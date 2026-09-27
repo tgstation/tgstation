@@ -318,7 +318,7 @@
 	SIGNAL_HANDLER
 
 	remove_shared_particles(/particles/smoke/ash)
-
+	UnregisterSignal(src, COMSIG_VENT_WAVE_CONCLUDED)
 	//happens in COMSIG_QDELETING
 	if(QDELETED(node) || node.stat == DEAD)
 		initiate_wave_loss(loss_message = "\the [src] creaks and groans as the mining attempt fails, and the vent closes back up.")
@@ -328,7 +328,7 @@
 	if(get_turf(node) != get_turf(src))
 		initiate_wave_loss(loss_message = "The [node] detaches from the [src], and the vent closes back up!")
 		return //Start over!
-	UnregisterSignal(src, COMSIG_VENT_WAVE_CONCLUDED)
+	
 	initiate_wave_win()
 
 /**
