@@ -412,3 +412,13 @@
       size is still 3x3.
   vinylspiders:
   - code_imp: rust-g has been updated to 7.0.0 please report any issues
+2026-09-27:
+  Ben10Omintrix:
+  - balance: cowardly raptors now flee at 50% health as opposed to fleeing immediately
+      when attacked
+  Melbert:
+  - rscadd: Expands MODsuit "overslotting" to most form fitting equipment, such as
+      labcoats, aprons, armor vests, wigs, etc... - In other words, these items no
+      longer block a deployment and are simply hidden under the suit.
+  PapaMichael:
+  - bugfix: AIs can no longer see ghosts emote
