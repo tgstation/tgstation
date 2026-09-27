@@ -47,12 +47,12 @@
 
 /obj/projectile/bullet/incendiary/shotgun
 	name = "incendiary slug"
-	damage = 20
+	damage = 25
+	fireblast_radius = 2
 
-/obj/projectile/bullet/incendiary/shotgun/no_trail
-	name = "precision incendiary slug"
-	damage = 35
-	leaves_fire_trail = FALSE
+/obj/projectile/bullet/incendiary/shotgun/milspec
+	name = "milspec incendiary slug"
+	damage = 45
 
 /obj/projectile/bullet/incendiary/shotgun/dragonsbreath
 	name = "dragonsbreath pellet"
@@ -69,12 +69,7 @@
 	ricochet_auto_aim_range = 2
 	ricochet_auto_aim_angle = 30
 	ricochet_incidence_leeway = 75
-	leaves_fire_trail = FALSE
-
-/obj/projectile/bullet/incendiary/shotgun/dragonsbreath/on_hit(atom/target, blocked = 0, pierce_hit)
-	..()
-	for(var/turf/nearby_turf as anything in RANGE_TURFS(1, target))
-		new /obj/effect/hotspot(nearby_turf)
+	fireblast_radius = 1
 
 /obj/projectile/bullet/shotgun_stunslug
 	name = "stunslug"
