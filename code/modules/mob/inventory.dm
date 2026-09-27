@@ -1,13 +1,24 @@
 //These procs handle putting stuff in your hands
 //as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
 
-/// Returns a list of all our hand slots, which could be null.
+/**
+ * Returns a list of all our hand slots, which could contain nulls.
+ *
+ * It is preferrable to use [/mob/proc/get_num_hand_slots] for counting hand slots,
+ * or the get_held_items family of procs for filtering this list.
+ */
 /mob/proc/get_hand_slots() as /list
 	RETURN_TYPE(/list/obj/item)
 
 	return held_items.Copy()
 
-/// Returns a list of all actively held items
+/**
+ * Returns a list of all items currently being held.
+ *
+ * If this list needs to be filtered further, it is preferrable to use
+ * [/mob/proc/get_held_items_of_type] or [/mob/proc/get_held_items_of_typelist]
+ * instead of filtering this list by hand.
+ */
 /mob/proc/get_held_items() as /list
 	RETURN_TYPE(/list/obj/item)
 
@@ -15,7 +26,7 @@
 	result.RemoveAll(null)
 	return result
 
-/// Returns a list of all held items of a given type
+/// Returns a list of all held items that are a given type
 /mob/proc/get_held_items_of_type(typepath) as /list
 	RETURN_TYPE(/list/obj/item)
 
@@ -25,7 +36,7 @@
 			. += item
 
 // Doing is_type_in_list *halves* the efficiency of the proc, so this has to be a separate thing
-/// Returns a list of all actively held items of a given *list* of types
+/// Returns a list of all held items that are a given *list* of types
 /mob/proc/get_held_items_of_typelist(list/typepaths) as /list
 	RETURN_TYPE(/list/obj/item)
 
@@ -34,18 +45,22 @@
 		if(is_type_in_list(item))
 			. += item
 
-///Returns the thing we're currently holding
+/// Returns the item held in the [active hand][/mob/var/active_hand_index]. May be null.
 /mob/proc/get_active_held_item() as /obj/item
 	return get_item_for_held_index(active_hand_index)
 
-//Finds the opposite limb for the active one (eg: upper left arm will find the item in upper right arm)
-//So we're treating each "pair" of limbs as a team, so "both" refers to them
+/// Returns the item held in the [*opposite* hand][/mob/proc/get_inactive_hand_index] to the active hand. May be null.
 /mob/proc/get_inactive_held_item() as /obj/item
 	return get_item_for_held_index(get_inactive_hand_index())
 
 
-//Finds the opposite index for the active one (eg: upper left arm will find the item in upper right arm)
-//So we're treating each "pair" of limbs as a team, so "both" refers to them
+/**
+ * Returns the hand *opposite* to the [active hand][/mob/var/active_hand_index].
+ *
+ * The "opposite" hand refers to the other side of a given "set" of hands.<br>
+ * The opposite of the left hand would be the right hand,
+ * but it will not be an upper/lower right hand.
+ */
 /mob/proc/get_inactive_hand_index()
 	var/other_hand = 0
 	if(IS_RIGHT_INDEX(active_hand_index))
@@ -57,11 +72,12 @@
 	return other_hand
 
 
+/// Returns the item at the specified hand index.
+/// Throws if the index is out of bounds.
 /mob/proc/get_item_for_held_index(i)
-	if(i > 0 && i <= held_items.len)
-		return held_items[i]
-	return null
-
+	if(i < 1 || i > held_items.len)
+		CRASH("held_index out of bounds (received [i])")
+	return held_items[i]
 
 //Odd = left. Even = right
 /mob/proc/held_index_to_dir(i)
@@ -69,12 +85,12 @@
 		return "r"
 	return "l"
 
-//Check we have an organ for this hand slot (Dismemberment), Only relevant for humans
+/// Check we have an organ for this hand slot. Only relevant for carbons.
 /mob/proc/has_hand_for_held_index(i)
 	return TRUE
 
 
-//Check we have an organ for our active hand slot (Dismemberment),Only relevant for humans
+/// Check we have an organ for our active hand slot. Only relevant for carbons.
 /mob/proc/has_active_hand()
 	return has_hand_for_held_index(active_hand_index)
 
@@ -103,12 +119,14 @@
 			holding_items += I
 	return holding_items
 
+/// Returns a list of indexes for every hand that is *holding something*.
 /mob/proc/get_active_held_indexes() as /list
 	. = list()
 	for(var/i in 1 to held_items.len)
 		if(held_items[i])
 			. += i
 
+/// Returns a list of indexes for every hand that is *empty*.
 /mob/proc/get_empty_held_indexes() as /list
 	. = list()
 	for(var/i in 1 to held_items.len)
