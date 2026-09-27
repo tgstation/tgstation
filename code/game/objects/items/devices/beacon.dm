@@ -36,7 +36,15 @@
 		return
 
 	if(prob(75 / severity))
-		turn_off()
+		if(enabled)
+			enabled = FALSE
+			icon_state = "beacon-off"
+			GLOB.teleportbeacons -= src
+			SEND_SIGNAL(src, COMSIG_BEACON_DISABLED)
+		else
+			enabled = TRUE
+			icon_state = "beacon"
+			GLOB.teleportbeacons += src
 
 /obj/item/beacon/proc/turn_off()
 	icon_state = "beacon-off"
