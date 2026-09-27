@@ -276,29 +276,29 @@
 	TEST_ASSERT_EQUAL(apply_message_emphasis(base_input), expected_output, "")
 
 /datum/unit_test/emphasis_characters/basic
-	base_input = "Blah Blah Blah"
-	expected_output = "Blah Blah Blah"
+	base_input = @"Blah Blah Blah"
+	expected_output = @"Blah Blah Blah"
 
 /datum/unit_test/emphasis_characters/complex
-	base_input = "Blah + Blah = Blah :)"
-	expected_output = "Blah + Blah = Blah :)"
+	base_input = @"Blah + Blah = Blah :)"
+	expected_output = @"Blah + Blah = Blah :)"
 
 /datum/unit_test/emphasis_characters/italic
-	base_input = "|Blah| Blah Blah"
-	expected_output = "<i>Blah</i> Blah Blah"
+	base_input = @"|Blah| Blah Blah"
+	expected_output = @"<i>Blah</i> Blah Blah"
 
 /datum/unit_test/emphasis_characters/bold
-	base_input = "+Blah+ Blah Blah"
-	expected_output = "<b>Blah</b> Blah Blah"
+	base_input = @"+Blah+ Blah Blah"
+	expected_output = @"<b>Blah</b> Blah Blah"
 
 /datum/unit_test/emphasis_characters/small
-	base_input = "^Blah^ Blah Blah"
-	expected_output = "<small>Blah</small> Blah Blah"
+	base_input = @"^Blah^ Blah Blah"
+	expected_output = @"<small>Blah</small> Blah Blah"
 
 /datum/unit_test/emphasis_characters/multiple
-	base_input = "|Blah| Blah +Blah+"
-	expected_output = "<i>Blah</i> Blah <b>Blah</b>"
+	base_input = @"|Blah| Blah +Blah+"
+	expected_output = @"<i>Blah</i> Blah <b>Blah</b>"
 
 /datum/unit_test/emphasis_characters/escaped
-	base_input = "\|Blah\| \+Blah\+ Blah"
-	expected_output = "|Blah| +Blah+ Blah"
+	base_input = @"\|Blah\| \+Blah\+ Blah"
+	expected_output = @"|Blah| +Blah+ Blah"
