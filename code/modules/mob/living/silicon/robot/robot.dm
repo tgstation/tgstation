@@ -645,52 +645,6 @@
 
 	previous_health = health
 
-/mob/living/silicon/robot/update_sight()
-	if(!client)
-		return
-	if(stat == DEAD)
-		if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
-			set_sight(null)
-		else if(is_secret_level(z))
-			set_sight(initial(sight))
-		else
-			set_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-		set_invis_see(SEE_INVISIBLE_OBSERVER)
-		return
-
-	set_invis_see(initial(see_invisible))
-	var/new_sight = initial(sight)
-	lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
-	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
-
-	if(client.eye != src)
-		var/atom/A = client.eye
-		if(A.update_remote_sight(src)) //returns 1 if we override all other sight updates.
-			return
-
-	if(sight_mode & BORGMESON)
-		new_sight |= SEE_TURFS
-		lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(5, 15, 5))
-
-	if(sight_mode & BORGMATERIAL)
-		new_sight |= SEE_OBJS
-		lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(20, 25, 40))
-
-	if(sight_mode & BORGXRAY)
-		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
-		set_invis_see(SEE_INVISIBLE_LIVING)
-
-	if(sight_mode & BORGTHERM)
-		new_sight |= SEE_MOBS
-		lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, list(25, 8, 5))
-		set_invis_see(min(see_invisible, SEE_INVISIBLE_LIVING))
-
-	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
-		new_sight = null
-
-	set_sight(new_sight)
-	return ..()
-
 /mob/living/silicon/robot/update_stat()
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
@@ -703,7 +657,6 @@
 	diag_hud_set_aishell()
 	update_health_hud()
 	update_icons() //Updates eye_light overlay
-
 
 /mob/living/silicon/robot/revive(full_heal_flags = NONE, excess_healing = 0, force_grab_ghost = FALSE)
 	. = ..()
