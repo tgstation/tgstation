@@ -42,7 +42,7 @@
 
 	. = list()
 	for(var/obj/item/item as anything in get_hand_slots())
-		if(is_type_in_list(item))
+		if(is_type_in_list(item, typepaths))
 			. += item
 
 /// Returns the item held in the [active hand][/mob/var/active_hand_index]. May be null.
