@@ -83866,7 +83866,7 @@
 /area/station/medical/pharmacy)
 "wlx" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/random/maintenance/no_decals,
 /obj/item/storage/toolbox/fishing,
 /obj/item/storage/box/lights/mixed{
 	pixel_x = -8;

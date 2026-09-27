@@ -42,7 +42,16 @@
 
 /datum/bodypart_overlay/mutant/get_overlay(obj/item/bodypart/limb, layer_index, layer_real)
 	inherit_color(limb) // If draw_color is not set yet, go ahead and do that
-	return ..()
+	var/list/created_overlays = ..()
+	if(sprite_datum && sprite_datum.icon_state != SPRITE_ACCESSORY_NONE)
+		if(layer_index in sprite_datum.emissive_layers)
+			created_overlays += emissive_appearance(
+				icon = sprite_datum.icon,
+				icon_state = build_icon_state(layer_index, limb),
+				offset_spokesman = limb,
+				layer = layer_real,
+			)
+	return created_overlays
 
 ///Completely random image and color generation (obeys what a player can choose from)
 /datum/bodypart_overlay/mutant/proc/randomize_appearance()

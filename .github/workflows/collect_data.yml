@@ -32,8 +32,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
-      - name: Find Maps
+
+      - name: Find maps
         id: map_finder
+        background: true
         run: |
           > maps_output.txt
           > map_configs.txt
@@ -57,18 +59,31 @@ jobs:
           echo "map_config<<EOF" >> "$GITHUB_OUTPUT"
           cat map_configs.txt >> "$GITHUB_OUTPUT"
           echo "EOF" >> "$GITHUB_OUTPUT"
-      - name: Find Alternate Tests
-        id: alternate_test_finder
-        run: |
-          ALTERNATE_TESTS_JSON=$(jq -nRc '[inputs | capture("^(?<major>[0-9]+)\\.(?<minor>[0-9]+): (?<map>[^;]+);?(?<max_client_version>[0-9]+)?$")]' .github/alternate_byond_versions.txt)
-          echo "alternate_tests=$ALTERNATE_TESTS_JSON" >> $GITHUB_OUTPUT
-      - name: Collect byond client version configuration
+
+      - name: Collect BYOND client version configuration
         id: max_required_byond_client
+        background: true
         #the regex here does not filter out non-numbers because error messages about no input are less helpful then error messages about bad input (which includes the bad input)
         run: |
           echo "max_required_byond_client=$(grep -Ev '^[[:blank:]]{0,}#{1,}|^[[:blank:]]{0,}$' .github/max_required_byond_client.txt | tail -n1)" >> $GITHUB_OUTPUT
-      - name: Set up BYOND cache
+
+      - name: Set up BYOND and libcurl cache
+        id: restore_or_install_byond
+        background: true
         uses: ./.github/actions/restore_or_install_byond
+        with:
+          skip_cache_download: true
+
+      - name: Find alternate tests
+        id: alternate_test_finder
+        background: true
+        run: |
+          ALTERNATE_TESTS_JSON=$(jq -nRc '[inputs | capture("^(?<major>[0-9]+)\\.(?<minor>[0-9]+): (?<map>[^;]+);?(?<max_client_version>[0-9]+)?$")]' .github/alternate_byond_versions.txt)
+          echo "alternate_tests=$ALTERNATE_TESTS_JSON" >> $GITHUB_OUTPUT
+
+      - name: Wait for build information
+        wait: [restore_or_install_byond, alternate_test_finder]
+
       - name: Set up required build versions
         id: setup_required_build_versions
         run: |

@@ -7,7 +7,7 @@
 	stump_typepath = null
 	scarrable = FALSE
 	biological_state = NONE
-	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_STUMP | BODYPART_VIRGIN
+	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_STUMP
 
 	head_flags = NONE
 	teeth_count = 0 // lol?
@@ -25,7 +25,7 @@
 	stump_typepath = null
 	scarrable = FALSE
 	biological_state = NONE
-	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_STUMP | BODYPART_VIRGIN
+	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_STUMP
 
 /obj/item/bodypart/leg/left/stump/Initialize(mapload)
 	. = ..()
@@ -38,7 +38,7 @@
 	stump_typepath = null
 	scarrable = FALSE
 	biological_state = NONE
-	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_STUMP | BODYPART_VIRGIN
+	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_STUMP
 
 /obj/item/bodypart/leg/right/stump/Initialize(mapload)
 	. = ..()
@@ -51,7 +51,7 @@
 	stump_typepath = null
 	scarrable = FALSE
 	biological_state = NONE
-	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_STUMP | BODYPART_VIRGIN
+	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_STUMP
 
 /obj/item/bodypart/arm/left/stump/Initialize(mapload)
 	. = ..()
@@ -64,7 +64,7 @@
 	stump_typepath = null
 	scarrable = FALSE
 	biological_state = NONE
-	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_STUMP | BODYPART_VIRGIN
+	bodypart_flags = BODYPART_UNREMOVABLE | BODYPART_STUMP
 
 /obj/item/bodypart/arm/right/stump/Initialize(mapload)
 	. = ..()
