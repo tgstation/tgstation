@@ -207,7 +207,8 @@
  */
 /obj/structure/checkoutmachine/proc/start_dumping()
 	accounts_to_rob = assoc_to_values(SSeconomy.bank_accounts_by_id)
-	accounts_to_rob -= bogdanoff.resolve()?.get_bank_account()
+	var/datum/bank_account/rug_puller = bogdanoff?.resolve()?
+	accounts_to_rob -= rug_puller.get_bank_account()
 	dump()
 
 /**
