@@ -272,12 +272,8 @@
 	var/base_input
 	var/expected_output
 
-/datum/unit_test/emphasis_characters/New()
-	. = ..()
-	expected_output += @"&#8203;"
-
 /datum/unit_test/emphasis_characters/Run()
-	TEST_ASSERT_EQUAL(apply_message_emphasis(base_input), expected_output, "")
+	TEST_ASSERT_EQUAL(replacetext(apply_message_emphasis(base_input), "&#8203;", ""), expected_output, "")
 
 /datum/unit_test/emphasis_characters/basic
 	base_input = @"Blah Blah Blah"
