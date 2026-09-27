@@ -93,14 +93,10 @@
 	if(light_system == COMPLEX_LIGHT)
 		update_light()
 
-/obj/item/flashlight/proc/toggle_light(mob/user)
+/obj/item/flashlight/proc/toggle_light(mob/living/user)
 	playsound(src, light_on ? sound_off : sound_on, 40, TRUE)
 	if(!COOLDOWN_FINISHED(src, disabled_time))
-		if(user)
-			balloon_alert(user, "disrupted!")
-		set_light_on(FALSE)
-		update_brightness()
-		update_item_action_buttons()
+		user?.balloon_alert(user, "disrupted!")
 		return FALSE
 	var/old_light_on = light_on
 	set_light_on(!light_on)
