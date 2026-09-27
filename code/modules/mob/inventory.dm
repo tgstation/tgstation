@@ -71,13 +71,11 @@
 		other_hand = 0
 	return other_hand
 
-
 /// Returns the item at the specified hand index.
 /// Throws if the index is out of bounds.
 /mob/proc/get_item_for_held_index(i)
-	if(i < 1 || i > held_items.len)
-		CRASH("held_index out of bounds (received [i])")
-	return held_items[i]
+	if(i > 0 && i <= held_items.len)
+		return held_items[i]
 
 //Odd = left. Even = right
 /mob/proc/held_index_to_dir(i)
