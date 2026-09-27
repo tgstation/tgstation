@@ -7,8 +7,8 @@
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN
 	icon = 'icons/obj/pipes_n_cables/atmos.dmi'
 	icon_state = "electrolyzer-off"
-	name = "space electrolyzer"
-	desc = "Thanks to the fast and dynamic response of our electrolyzers, on-site hydrogen production is guaranteed. Warranty void if used by clowns"
+	name = "electrolyzer"
+	desc = "A portable electrolyzer, allowing for on-site production of Hydrogen. Warranty void if used by clowns."
 	max_integrity = 250
 	armor_type = /datum/armor/machinery_electrolyzer
 	circuit = /obj/item/circuitboard/machine/electrolyzer
@@ -71,9 +71,9 @@
 		. += "The charge meter reads [cell ? round(cell.percent(), 1) : 0]%."
 	else
 		. += "There is no power cell installed."
-	if(in_range(user, src) || isobserver(user))
+	if(in_range(user, src) && !isobserver(user))
 		. += span_notice("<b>Alt-click</b> to toggle [on ? "off" : "on"].")
-		. += span_notice("<b>Anchor</b> to drain power from APC instead of cell")
+		. += span_notice("<b>Anchor</b> it to drain power from the area's APC instead its internal power cell.")
 	. += span_notice("It will drain power from the [anchored ? "area's APC" : "internal power cell"].")
 
 

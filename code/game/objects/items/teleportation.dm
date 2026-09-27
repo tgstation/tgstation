@@ -404,7 +404,7 @@
 	var/turf/destination = get_teleport_loc(current_location, user, teleport_distance)
 	var/bagholdingcheck = FALSE
 	for(var/obj/item/check as anything in user.get_all_contents_type(/obj/item))
-		if(check.item_flags & BLUESPACE_INTERFERENCE)
+		if(HAS_TRAIT(check, TRAIT_BLUESPACE_INTERFERENCE))
 			bagholdingcheck = TRUE
 	if(isclosedturf(destination))
 		if(!triggered_by_emp && !bagholdingcheck)

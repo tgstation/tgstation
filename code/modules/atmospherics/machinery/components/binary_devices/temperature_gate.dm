@@ -6,6 +6,7 @@
 	shift_underlay_only = FALSE
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "tgate"
+	light_mask_on = TRUE
 	///If the temperature of the mix before the gate is lower than this, the gas will flow (if inverted, if the temperature of the mix before the gate is higher than this)
 	var/target_temperature = T0C
 	///Minimum allowed temperature
@@ -55,13 +56,18 @@
 		. += "The sensor's settings can be changed by using a multitool on the device."
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/update_icon_nopipes()
+	var/new_icon_state
 	if(on && is_operational && is_gas_flowing)
-		icon_state = "tgate_flow-[set_overlay_offset(piping_layer)]"
+		new_icon_state = "tgate_flow-[set_overlay_offset(piping_layer)]"
 	else if(on && is_operational && !is_gas_flowing)
-		icon_state = "tgate_on-[set_overlay_offset(piping_layer)]"
+		new_icon_state = "tgate_on-[set_overlay_offset(piping_layer)]"
 	else
-		icon_state = "tgate_off-[set_overlay_offset(piping_layer)]"
+		new_icon_state = "tgate_off-[set_overlay_offset(piping_layer)]"
 
+	var/old_icon_state = icon_state
+	icon_state = new_icon_state
+	if(new_icon_state != old_icon_state)
+		update_appearance(UPDATE_OVERLAYS)
 
 /obj/machinery/atmospherics/components/binary/temperature_gate/process_atmos()
 	if(!on || !is_operational)

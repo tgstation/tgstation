@@ -45,7 +45,7 @@
 
 	SSpoints_of_interest.make_point_of_interest(src)
 
-	RegisterSignal(src, COMSIG_ATOM_ENTERING, PROC_REF(on_entering_atom))
+	RegisterSignals(src, list(COMSIG_ATOM_ENTERING, COMSIG_MOVABLE_TURF_INITIALIZING), PROC_REF(on_entering_atom))
 
 	if(special_target)
 		GLOB.move_manager.home_onto(src, special_target)
@@ -53,7 +53,7 @@
 		GLOB.move_manager.move_towards(src, real_destination)
 
 /obj/effect/immovablerod/Destroy(force)
-	UnregisterSignal(src, COMSIG_ATOM_ENTERING)
+	UnregisterSignal(src, list(COMSIG_ATOM_ENTERING, COMSIG_MOVABLE_TURF_INITIALIZING))
 	SSaugury.unregister_doom(src)
 	destination_turf = null
 	special_target = null

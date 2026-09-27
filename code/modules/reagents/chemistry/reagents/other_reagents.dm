@@ -2642,6 +2642,13 @@
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
+/datum/reagent/wittelvirusfood
+	name = "Exotic Agar"
+	color = "#C3CF7C" // rgb: 195, 207, 124
+	taste_description = "sourness"
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
 // Bee chemicals
 
 /datum/reagent/royal_bee_jelly

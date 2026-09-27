@@ -24,6 +24,7 @@
 	var/static/list/clean_blacklist = typecacheof(list(
 		/obj/item/reagent_containers/cup/bucket,
 		/obj/structure/mop_bucket,
+		/obj/structure/sink,
 	))
 
 /obj/item/mop/apply_fantasy_bonuses(bonus)

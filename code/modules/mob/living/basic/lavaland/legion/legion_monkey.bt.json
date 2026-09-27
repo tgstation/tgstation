@@ -50,7 +50,8 @@
 										"type": "leaf",
 										"behavior": "/datum/bt_node/ai_behavior/maintain_distance",
 										"vars": {
-											"target_key": "BB_CURRENT_TARGET"
+											"target_key": "BB_CURRENT_TARGET",
+											"face_target": false
 										}
 									},
 									{

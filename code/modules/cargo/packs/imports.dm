@@ -406,3 +406,16 @@
 	contains = list(/obj/item/clothing/shoes/bhop/rocket/jet)
 	crate_name = "nuVoid Jet Boots Crate"
 	crate_type = /obj/structure/closet/crate/goldcrate
+
+/datum/supply_pack/imports/angry_mob
+	name = "Pitchfork and Torches Gardening Crate"
+	desc = "Sometimes, you need to help organize some \"gardening\" enthusiasts, and you just need some extra tools!\
+		Load up on \"gardening\" gear this this helpful supply crate."
+	cost = CARGO_CRATE_VALUE * 5
+	order_flags = ORDER_CONTRABAND
+	contains = list(
+		/obj/item/cultivator/rake/pitchfork = 4,
+		/obj/item/flashlight/flare/torch = 4,
+	)
+	crate_name = "gardening kit"
+	crate_type = /obj/structure/closet/crate/wooden

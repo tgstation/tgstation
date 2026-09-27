@@ -328,6 +328,28 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	storage.hide_contents(usr)
 	return TRUE
 
+/atom/movable/screen/storage_up
+	name = "go up a storage level"
+	plane = ABOVE_HUD_PLANE
+	icon = 'icons/hud/screen_midnight.dmi'
+	icon_state = "storage_up"
+	mouse_over_pointer = MOUSE_HAND_POINTER
+	hud_group_key = HUD_GROUP_STORAGE
+
+/atom/movable/screen/storage_up/Initialize(mapload, datum/hud/hud_owner, new_master)
+	. = ..()
+	master_ref = WEAKREF(new_master)
+
+/atom/movable/screen/storage_up/Click()
+	var/datum/storage/storage = master_ref?.resolve()
+	if(!storage)
+		return
+	var/datum/storage/up_storage = storage.parent.loc?.atom_storage
+	if(!up_storage)
+		return
+	up_storage.open_storage(usr)
+	return TRUE
+
 /atom/movable/screen/drop
 	name = "drop"
 	icon = 'icons/hud/screen_midnight.dmi'
@@ -1151,8 +1173,8 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	if(!istype(hungry))
 		return
 
-	if(!ishuman(hungry) || CONFIG_GET(flag/disable_human_mood))
-		screen_loc = ui_mood // Slot in where mood normally is if mood is disabled
+	if(isnull(hungry.mob_mood))
+		screen_loc = ui_mood // Slot in where mood normally is if mood is not here (we arent a human)
 
 	// Burger next to the bar
 	food_image = image(icon = food_icon, icon_state = food_icon_state, pixel_x = -5)
@@ -1172,7 +1194,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	if(!istype(hungry))
 		return
 
-	if(HAS_TRAIT(hungry, TRAIT_NOHUNGER) || !hungry.get_organ_slot(ORGAN_SLOT_STOMACH))
+	if(HAS_TRAIT(hungry, TRAIT_NOHUNGER) || (ishuman(hungry) && !hungry.get_organ_slot(ORGAN_SLOT_STOMACH)))
 		fullness = NUTRITION_LEVEL_FED
 		state = HUNGER_STATE_FINE
 		return
@@ -1332,6 +1354,37 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 
 #define FORMAT_XENOBIO_HUD_MAPTEXT(text_to_use) MAPTEXT_SPESSFONT("<span style='color: [COLOR_WHITE]; text-align: center; line-height: 1.9; '>[text_to_use]</span>")
 #define POTION_DROP_SPEED 5 DECISECONDS
+
+/atom/movable/screen/slime_power
+	name = "Power Level"
+	desc = "How much electricity they are generating. The higher this is, the stronger your attacks are."
+	icon_state = "slime_display"
+	base_icon_state = "slime_display"
+	screen_loc = ui_slime_powerlevel
+	maptext_x = 1
+	maptext_y = 8
+
+/atom/movable/screen/slime_power/Click(location, control, params)
+	. = ..()
+	to_chat(usr, span_notice("Shows you how much electricity they are generating. The higher this is, the higher chance you will strike with overwhelming electrical force."))
+
+/atom/movable/screen/slime_power/Initialize(mapload, datum/hud/hud_owner)
+	. = ..()
+	update_maptext()
+
+/atom/movable/screen/slime_power/update_icon_state()
+	. = ..()
+	icon_state = base_icon_state
+	var/mob/living/basic/slime/slime_owner = hud.mymob
+	if(istype(slime_owner) && slime_owner.powerlevel >= 7)
+		icon_state += "_shock"
+
+/atom/movable/screen/slime_power/proc/update_maptext()
+	var/mob/living/basic/slime/slime_owner = hud.mymob
+	if(!istype(slime_owner))
+		return
+	maptext = FORMAT_XENOBIO_HUD_MAPTEXT("[slime_owner.powerlevel]/[SLIME_MAX_POWER]")
+	update_appearance(UPDATE_ICON)
 
 /// Used to show how many monkeys & slimes are in the console
 /atom/movable/screen/xenobio_console

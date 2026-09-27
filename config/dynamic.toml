@@ -364,7 +364,7 @@ repeatable_weight_decrease = 2
 repeatable = 1
 minimum_required_age = 0
 
-["Midround Mass Changelings"]
+["Mass Changelings"]
 weight.1 = 0
 weight.2 = 3
 weight.3 = 4
@@ -437,7 +437,7 @@ repeatable_weight_decrease = 2
 repeatable = 1
 minimum_required_age = 0
 
-["Midround Mass Traitors"]
+["Mass Traitors"]
 weight.1 = 0
 weight.2 = 3
 weight.3 = 8

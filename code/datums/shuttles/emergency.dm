@@ -547,4 +547,107 @@
 /datum/map_template/shuttle/emergency/ark/prerequisites_met()
 	return SSshuttle.shuttle_purchase_requirements_met[SHUTTLE_UNLOCK_ARK]
 
+/datum/map_template/shuttle/emergency/departmental
+	who_can_purchase = null
+	admin_notes = "Parent shuttle for other departmental shuttles."
+	///requires a job_department datum to present it to communications console.
+	var/department_type = null
+	///requires a name of department to send it to ui.
+	var/department_name = ""
+	occupancy_limit = "null"
+
+/datum/map_template/shuttle/emergency/departmental/command
+	suffix = "dep_cap"
+	name = "Command Emergency Shuttle"
+	description = "It could have been some oligarch's personal shuttle, but the union wouldn't let us make a deal, \
+	so this shuttle is being put into operation as an elite shuttle."
+	admin_notes = "Has Shutters and an Axe in bridge area."
+	credit_cost = CARGO_CRATE_VALUE * 17.5
+	who_can_purchase = list(ACCESS_CAPTAIN)
+	department_type = /datum/job_department/command
+	department_name = DEPARTMENT_COMMAND
+	occupancy_limit = "40, also 7 people can take part in banquet."
+
+/datum/map_template/shuttle/emergency/departmental/civil
+	suffix = "dep_civ"
+	name = "Assistants Emergency Shuttle"
+	description = "A shuttle designed to satisfy assistants' wishes. Converted into Maintenance Rooms."
+	admin_notes = "Maintenance Shuttle."
+	credit_cost = CARGO_CRATE_VALUE * 5.5
+	who_can_purchase = list(ACCESS_CAPTAIN)
+	department_type = /datum/job_department/assistant
+	department_name = DEPARTMENT_ASSISTANT
+	occupancy_limit = "Fine for a bunch of assistans."
+
+/datum/map_template/shuttle/emergency/departmental/engineering
+	suffix = "dep_eng"
+	name = "Engineering Emergency Shuttle"
+	description = "According to the engineers, the laws of physics reports that the shuttle cannot fly without energy, \
+	so we installed supermatter shard and atmos shuttle with turbine and mixing chamber."
+	admin_notes = "Has inactive supermatter shard, axe, insuls, free engi vending machines and electrified grilles, if engineers powers the shuttle."
+	credit_cost = CARGO_CRATE_VALUE * 15.5
+	who_can_purchase = list(ACCESS_CAPTAIN)
+	department_type = /datum/job_department/engineering
+	department_name = DEPARTMENT_ENGINEERING
+	occupancy_limit = "20"
+
+/datum/map_template/shuttle/emergency/departmental/medical
+	suffix = "dep_med"
+	name = "Medical Emergency Shuttle"
+	description = "Someone decided that driving a shuttle and treating people is very convenient, \
+	so they decided to please the surgeons who perform heart operations and launched medical shuttle with a treating center, virology and chemistry lab."
+	admin_notes = "Has functioning pharmacy and virology."
+	credit_cost = CARGO_CRATE_VALUE * 12
+	who_can_purchase = list(ACCESS_CAPTAIN)
+	department_type = /datum/job_department/medical
+	department_name = DEPARTMENT_MEDICAL
+	occupancy_limit = "30 lives bodies and 1 dead body."
+
+/datum/map_template/shuttle/emergency/departmental/science
+	suffix = "dep_sci"
+	name = "Science Emergency Shuttle"
+	description = "We're so fed up with scientists that we built a separate shuttle for them. \
+	We took real asteroid to build up ordnance lab and extension to xenobiology."
+	admin_notes = "Has functional R&D."
+	credit_cost = CARGO_CRATE_VALUE * 10
+	who_can_purchase = list(ACCESS_CAPTAIN)
+	department_type = /datum/job_department/science
+	department_name = DEPARTMENT_SCIENCE
+	occupancy_limit = "50"
+
+/datum/map_template/shuttle/emergency/departmental/security
+	suffix = "dep_sec"
+	name = "Security Emergency Shuttle"
+	description = "Created in honor of the Security Officer, who saved head of CC Representative. \
+	He was a very good man, until he died at the hands of a traitor."
+	admin_notes = "Has 2 prison cells, 1 holding cell and permabrig instead of seating area."
+	credit_cost = CARGO_CRATE_VALUE * 16
+	who_can_purchase = list(ACCESS_CAPTAIN)
+	department_type = /datum/job_department/security
+	department_name = DEPARTMENT_SECURITY
+	occupancy_limit = "40 in prison crew and 10 freedom crew."
+
+/datum/map_template/shuttle/emergency/departmental/service
+	suffix = "dep_srv"
+	name = "Service Emergency Shuttle"
+	description = "Shuttle is built solely for bar hopping and has no tool storage or medbay."
+	admin_notes = "Shuttle is spacious, but many important things for a shuttle are missing."
+	credit_cost = CARGO_CRATE_VALUE * 8
+	who_can_purchase = list(ACCESS_CAPTAIN)
+	department_type = /datum/job_department/service
+	department_name = DEPARTMENT_SERVICE
+	occupancy_limit = "30"
+
+/datum/map_template/shuttle/emergency/departmental/cargo
+	suffix = "dep_sup"
+	name = "Cargo Emergency Shuttle"
+	description = "It was built by order of the Cargotic separatists. \
+	Don't worry, every single one of the separatists has already been jailed. Project was that good, that we made that for public sale."
+	admin_notes = "Has unloaded rocket launcher and express suply console."
+	credit_cost = CARGO_CRATE_VALUE * 9.5
+	who_can_purchase = list(ACCESS_CAPTAIN)
+	department_type = /datum/job_department/cargo
+	department_name = DEPARTMENT_CARGO
+	occupancy_limit = "40"
+
 #undef EMAG_LOCKED_SHUTTLE_COST

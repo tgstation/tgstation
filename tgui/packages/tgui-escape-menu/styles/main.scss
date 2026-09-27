@@ -27,6 +27,7 @@ body,
 .Tooltip {
   font-family: 'Pixellari', monospace;
   transform: translateY(-1.5rem);
+  z-index: 3;
 }
 
 .escape-menu {

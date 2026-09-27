@@ -16,10 +16,7 @@
 		return uni_icon(GLOB.ai_hologram_icons[value], GLOB.ai_hologram_icon_state[value])
 
 /datum/preference/choiced/ai_hologram_display/is_accessible(datum/preferences/preferences)
-	if (!..(preferences))
-		return FALSE
-
-	return istype(preferences.get_highest_priority_job(), /datum/job/ai)
+	return ..() && highest_priority_job_is(preferences, /datum/job/ai)
 
 /datum/preference/choiced/ai_hologram_display/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return

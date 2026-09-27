@@ -541,9 +541,9 @@
 		if(45 to 65)
 			examine_text = "It's badly damaged."
 		if(25 to 45)
-			examine_text = "It's heavily damaged."
+			examine_text = span_warning("It's heavily damaged.")
 		else
-			examine_text = "It's falling apart."
+			examine_text = span_warning("It's falling apart!")
 
 	return examine_text
 

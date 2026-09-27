@@ -100,7 +100,7 @@ const PrintButton = (props: PrintButtonProps) => {
           !canPrint && 'FabricatorRecipe__Button--disabled',
         ])}
         color={'transparent'}
-        onClick={() => act('build', { ref: design.id, amount: quantity })}
+        onClick={() => act('build', { design_path: design.path, amount: quantity })}
       >
         &times;{quantity}
       </div>
@@ -137,7 +137,7 @@ const CustomPrint = (props: CustomPrintProps) => {
         color="transparent"
         onCommit={(value) =>
           act('build', {
-            ref: design.id,
+            design_path: design.path,
             amount: value,
           })
         }
@@ -190,7 +190,7 @@ const Recipe = (props: RecipeProps) => {
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
           onClick={() =>
-            canPrint && act('build', { ref: design.id, amount: 1 })
+            canPrint && act('build', { design_path: design.path, amount: 1 })
           }
         >
           <div className="FabricatorRecipe__Icon">

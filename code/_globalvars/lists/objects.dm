@@ -31,8 +31,6 @@ GLOBAL_LIST_EMPTY(deliverybeacontags)
 /// List of all singularity components that exist
 GLOBAL_LIST_EMPTY_TYPED(singularities, /datum/component/singularity)
 
-GLOBAL_LIST_EMPTY(item_to_design_list)
-
 /// Global list of all non-cooking related crafting recipes.
 GLOBAL_LIST_EMPTY(crafting_recipes)
 /// Global list of all non-cooking related crafting recipes that don't need to be learned
@@ -91,8 +89,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_mechcharger_areas)
 GLOBAL_LIST_INIT(prototype_organs, typecacheof(list(
 	/obj/item/organ,
 	/obj/item/organ/wings,
-	/obj/item/organ/wings/functional,
-	/obj/item/organ/wings/functional/moth,
 	/obj/item/organ/cyberimp,
 	/obj/item/organ/cyberimp/brain,
 	/obj/item/organ/cyberimp/mouth,

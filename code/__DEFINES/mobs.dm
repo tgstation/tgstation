@@ -29,6 +29,9 @@
 /// Determines the rate at which humans lose blood when they have the blood deficiency quirk. The default is BLOOD_REGEN_FACTOR + BLOOD_DEFICIENCY_MODIFIER.
 #define BLOOD_DEFICIENCY_MODIFIER 0.025
 
+/// Determines how high saline can bring up your blood volume
+#define SALINE_DILUTION_CAP BLOOD_VOLUME_NORMAL
+
 /// Temperature at which blood loss and regen stops. [/mob/living/carbon/human/proc/handle_blood]
 #define BLOOD_STOP_TEMP 225
 
@@ -125,10 +128,6 @@
 	"skeletal", \
 )
 
-//Lung respiration type flags
-#define RESPIRATION_OXYGEN (1 << 0)
-#define RESPIRATION_N2 (1 << 1)
-#define RESPIRATION_PLASMA (1 << 2)
 #define DEFAULT_BODYPART_ICON_ORGANIC 'icons/mob/human/bodyparts_greyscale.dmi'
 
 //Bodytype defines for surgery, and other misc things.
@@ -426,6 +425,8 @@
 #define SLIPPERY_WHEN_LYING_DOWN (1<<6)
 ///Like sliding, but it's short, it doesn't knockdown, it doesn't stun, it just staggers a bit.
 #define WEAK_SLIDE (1<<7)
+/// You can even slip if you're experiencing nograv or flying
+#define SLIP_IN_NOGRAV (1<<8)
 
 #define MAX_CHICKENS 50
 

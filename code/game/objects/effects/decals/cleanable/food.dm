@@ -41,11 +41,6 @@
 	. = ..()
 	AddElement(/datum/element/connect_loc, loc_connections)
 
-/obj/effect/decal/cleanable/food/salt/Destroy(force)
-	// connect_loc only unregisters via COMSIG_MOVABLE_MOVED, which never fires when the turf we're on gets replaced by ChangeTurf()
-	RemoveElement(/datum/element/connect_loc, loc_connections)
-	return ..()
-
 /obj/effect/decal/cleanable/food/salt/CanAllowThrough(atom/movable/mover, border_dir)
 	. = ..()
 	if(is_species(mover, /datum/species/snail))

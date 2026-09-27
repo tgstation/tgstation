@@ -58,17 +58,15 @@
 	remove_knockdown_mod()
 
 /datum/status_effect/spacer/gravity_wellness/proc/apply_knockdown_mod()
-	if(knockdown_mod_applied || !ishuman(owner))
+	if(knockdown_mod_applied)
 		return
-	var/mob/living/carbon/human/the_spacer = owner
-	the_spacer.physiology.knockdown_mod *= knockdown_multiplier
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_KNOCKDOWN, knockdown_multiplier)
 	knockdown_mod_applied = TRUE
 
 /datum/status_effect/spacer/gravity_wellness/proc/remove_knockdown_mod()
-	if(!knockdown_mod_applied || !ishuman(owner))
+	if(!knockdown_mod_applied)
 		return
-	var/mob/living/carbon/human/the_spacer = owner
-	the_spacer.physiology.knockdown_mod /= knockdown_multiplier
+	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_KNOCKDOWN, 1/knockdown_multiplier)
 	knockdown_mod_applied = FALSE
 
 // The bad side (being on a planet)

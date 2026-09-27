@@ -38,7 +38,7 @@
 	},
 /obj/effect/mob_spawn/corpse/human/cargo_tech,
 /obj/effect/decal/cleanable/glass/titanium,
-/obj/item/modular_computer/pda/cargo,
+/obj/item/modular_computer/pda/crew/cargo,
 /obj/effect/decal/cleanable/blood/old,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/broken_floor,

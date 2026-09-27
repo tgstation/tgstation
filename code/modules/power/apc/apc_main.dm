@@ -243,6 +243,7 @@
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
 
 /obj/machinery/power/apc/Destroy()
+	SSmachines.processing_apcs -= src
 	if(malfai)
 		malfai.hacked_apcs -= src
 		malfai = null
@@ -273,7 +274,7 @@
 			offset_old = pixel_x
 			pixel_x = -APC_PIXEL_OFFSET
 
-	var/image/hud_image = image(icon = 'icons/mob/huds/hud.dmi', icon_state = "apc_hacked")
+	var/image/hud_image = image(icon = DEFAULT_HUDS_DMI, icon_state = "apc_hacked")
 	hud_image.pixel_w = pixel_x
 	hud_image.pixel_z = pixel_y
 	hud_list = list(

@@ -28,6 +28,7 @@
 #define ALERT_SHOES_KNOT "shoealert"
 #define ALERT_RADIOACTIVE_AREA "radioactive_area"
 #define ALERT_UNPOSSESS_OBJECT "unpossess_object"
+#define ALERT_BLOODWORM_INFO "bloodworm_info"
 
 //antag related
 #define ALERT_HYPNOSIS "hypnosis"

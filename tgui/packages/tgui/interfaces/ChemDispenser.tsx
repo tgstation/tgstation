@@ -1,8 +1,10 @@
+import { useState } from 'react';
 import {
   BlockQuote,
   Box,
   Button,
   Collapsible,
+  Floating,
   Icon,
   Input,
   LabeledList,
@@ -14,11 +16,16 @@ import {
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 import { createSearch, toTitleCase } from 'tgui-core/string';
-
 import { useBackend, useSharedState } from '../backend';
 import { Window } from '../layouts';
 import { type Beaker, BeakerDisplay } from './common/BeakerDisplay';
 import { bitflagInfo } from './Reagents/types';
+
+enum DropdownState {
+  NO_DROPDOWN = 0,
+  DROPDOWN_CLOSED = 1,
+  DROPDOWN_OPEN = 2,
+}
 
 type DispensableReagent = {
   title: string;
@@ -427,10 +434,14 @@ export const ChemDispenser = (props) => {
                           filteredReactions.map((reaction) => (
                             <Stack.Item key={reaction.name}>
                               <ReactionDisplay
+                                dropdownState={
+                                  pinnedReactions.includes(reaction.name)
+                                    ? DropdownState.DROPDOWN_OPEN
+                                    : DropdownState.DROPDOWN_CLOSED
+                                }
                                 reaction={reaction}
                                 pinnedReactions={pinnedReactions}
                                 setPinnedReactions={setPinnedReactions}
-                                setSearchTerm={setSearchTerm}
                               />
                             </Stack.Item>
                           ))
@@ -498,14 +509,85 @@ const ReagentDispenseButton = (props: ReagentDispenseButtonProps) => {
 };
 
 type ReactionDisplayProps = {
+  /// Determines how the collapsible/dropdown is displayed.
+  /// NO_DROPDOWN: no dropdown is displayed, just the recipe list is shown
+  /// DROPDOWN_CLOSED: dropdown is displayed, but closed by default
+  /// DROPDOWN_OPEN: dropdown is displayed and open by default
+  /// If undefined, the default behavior is DROPDOWN_CLOSED.
+  dropdownState?: DropdownState;
+  /// The reaction to display.
   reaction: ReagentReaction;
+  /// List of reactions that are pinned to the top of the list.
   pinnedReactions: ReactionTypepath[];
+  /// Callback to update the list of pinned reactions.
   setPinnedReactions: (reactions: ReactionTypepath[]) => void;
-  setSearchTerm: (term: string) => void;
+  /// Callback to force the parent component to keep their floating window open.
+  setParentForceFloating?: (force: boolean) => void;
 };
 
 const ReactionDisplay = (props: ReactionDisplayProps) => {
-  const { reaction, pinnedReactions, setPinnedReactions } = props;
+  const {
+    dropdownState,
+    reaction,
+    pinnedReactions,
+    setPinnedReactions,
+    setParentForceFloating,
+  } = props;
+
+  const recipeList = (
+    <BlockQuote>
+      <Stack vertical>
+        <Stack.Item>
+          <HorizontalBarWithText text="Formula" />
+        </Stack.Item>
+        {reaction.reaction.required_reagents.map((reagent) => (
+          <Stack.Item key={`${reaction.name}-${reagent.name}-req`}>
+            <ReactionComponentDisplay
+              reagentComponent={reagent}
+              pinnedReactions={pinnedReactions}
+              setPinnedReactions={setPinnedReactions}
+              setParentForceFloating={setParentForceFloating}
+            />
+          </Stack.Item>
+        ))}
+        {reaction.reaction.required_catalysts.length > 0 && (
+          <>
+            <Stack.Item>
+              <HorizontalBarWithText
+                text={`Catalyst${reaction.reaction.required_reagents.length === 1 ? '' : 's'}`}
+              />
+            </Stack.Item>
+            {reaction.reaction.required_catalysts.map((catalyst) => (
+              <Stack.Item key={`${reaction.name}-${catalyst.name}-cat`}>
+                <ReactionComponentDisplay
+                  reagentComponent={catalyst}
+                  pinnedReactions={pinnedReactions}
+                  setPinnedReactions={setPinnedReactions}
+                  setParentForceFloating={setParentForceFloating}
+                />
+              </Stack.Item>
+            ))}
+          </>
+        )}
+        <Stack.Item>
+          <HorizontalBarWithText text="Optimal temperature" />
+        </Stack.Item>
+        <Stack.Item fontSize="0.9em">
+          {getTemperatureMessage(
+            reaction.reaction.lower_temperature,
+            reaction.reaction.upper_temperature,
+          )}
+        </Stack.Item>
+        <Stack.Item>
+          <HorizontalBarWithText text="Optimal pH range" />
+        </Stack.Item>
+        <Stack.Item fontSize="0.9em">
+          {getPHMessage(reaction.reaction.lower_ph, reaction.reaction.upper_ph)}
+        </Stack.Item>
+      </Stack>
+    </BlockQuote>
+  );
+
   return (
     <Stack
       p={1}
@@ -569,65 +651,16 @@ const ReactionDisplay = (props: ReactionDisplayProps) => {
         </Stack>
       </Stack.Item>
       <Stack.Item>
-        <Collapsible
-          title="Recipe"
-          open={pinnedReactions.includes(reaction.name)}
-        >
-          <BlockQuote>
-            <Stack vertical>
-              <Stack.Item>
-                <HorizontalBarWithText text="Formula" />
-              </Stack.Item>
-              {reaction.reaction.required_reagents.map((reagent) => (
-                <Stack.Item key={`${reaction.name}-${reagent.name}-req`}>
-                  <ReactionComponentDisplay
-                    reagentComponent={reagent}
-                    setSearchTerm={props.setSearchTerm}
-                    pinnedReactions={pinnedReactions}
-                    setPinnedReactions={props.setPinnedReactions}
-                  />
-                </Stack.Item>
-              ))}
-              {reaction.reaction.required_catalysts.length > 0 && (
-                <>
-                  <Stack.Item>
-                    <HorizontalBarWithText
-                      text={`Catalyst${reaction.reaction.required_reagents.length === 1 ? '' : 's'}`}
-                    />
-                  </Stack.Item>
-                  {reaction.reaction.required_catalysts.map((catalyst) => (
-                    <Stack.Item key={`${reaction.name}-${catalyst.name}-cat`}>
-                      <ReactionComponentDisplay
-                        reagentComponent={catalyst}
-                        setSearchTerm={props.setSearchTerm}
-                        pinnedReactions={pinnedReactions}
-                        setPinnedReactions={props.setPinnedReactions}
-                      />
-                    </Stack.Item>
-                  ))}
-                </>
-              )}
-              <Stack.Item>
-                <HorizontalBarWithText text="Optimal temperature" />
-              </Stack.Item>
-              <Stack.Item fontSize="0.9em">
-                {getTemperatureMessage(
-                  reaction.reaction.lower_temperature,
-                  reaction.reaction.upper_temperature,
-                )}
-              </Stack.Item>
-              <Stack.Item>
-                <HorizontalBarWithText text="Optimal pH range" />
-              </Stack.Item>
-              <Stack.Item fontSize="0.9em">
-                {getPHMessage(
-                  reaction.reaction.lower_ph,
-                  reaction.reaction.upper_ph,
-                )}
-              </Stack.Item>
-            </Stack>
-          </BlockQuote>
-        </Collapsible>
+        {dropdownState === DropdownState.NO_DROPDOWN ? (
+          recipeList
+        ) : (
+          <Collapsible
+            title="Recipe"
+            open={dropdownState === DropdownState.DROPDOWN_OPEN}
+          >
+            {recipeList}
+          </Collapsible>
+        )}
       </Stack.Item>
     </Stack>
   );
@@ -660,10 +693,14 @@ function getPHMessage(lower: number, upper: number): string {
 }
 
 type ReactionComponentDisplayProps = {
+  /// What component of the reaction is being displayed.
   reagentComponent: ReactionComponent;
-  setSearchTerm: (term: string) => void;
+  /// List of reactions that are pinned to the top of the list.
   pinnedReactions: ReactionTypepath[];
+  /// Callback to update the list of pinned reactions.
   setPinnedReactions: (reactions: ReactionTypepath[]) => void;
+  /// Callback to force the parent component to keep their floating window open.
+  setParentForceFloating?: (force: boolean) => void;
 };
 
 // linkifies a reagent name in the reaction display
@@ -673,9 +710,9 @@ type ReactionComponentDisplayProps = {
 const ReactionComponentDisplay = (props: ReactionComponentDisplayProps) => {
   const {
     reagentComponent,
-    setSearchTerm,
     pinnedReactions,
     setPinnedReactions,
+    setParentForceFloating,
   } = props;
   const { data } = useBackend<Data>();
   const { chemicals, reaction_list } = data;
@@ -697,49 +734,82 @@ const ReactionComponentDisplay = (props: ReactionComponentDisplayProps) => {
   const reactionReagentList = reagentListToArray(reaction_list);
 
   // check if it's a recipe
-  const isRecipe = reactionReagentList
+  const foundRecipe = reactionReagentList
     .filter((reaction) => {
       return reaction.name === reagentComponent.name;
     })
     .find((reaction) => reaction.name === reagentComponent.name);
 
-  if (isRecipe) {
+  if (!foundRecipe)
     return (
-      <Button
-        icon="book"
-        fluid
-        ellipsis
-        backgroundColor="default"
-        onContextMenu={() => {
-          // put recipe name in search box
-          setSearchTerm(reagentComponent.name);
-        }}
-        onClick={() => {
-          // pin recipe
-          setPinnedReactions([...pinnedReactions, isRecipe.name]);
-        }}
-        selected={pinnedReactions.includes(isRecipe.name)}
-        tooltip={
-          <Stack vertical>
-            <Stack.Item fontSize="0.9em">
-              Left click to pin this recipe.
-            </Stack.Item>
-            <Stack.Item fontSize="0.9em">
-              Right click to search for this recipe.
-            </Stack.Item>
-          </Stack>
-        }
-      >
+      <Button fluid ellipsis disabled icon="question">
         {formatReagentName(reagentComponent.amount, reagentComponent.name)}
       </Button>
     );
-  }
 
-  // otherwise, just display the name
+  const [forceFloating, setForceFloating] = useState(false);
+
   return (
-    <Button fluid ellipsis disabled icon="question">
-      {formatReagentName(reagentComponent.amount, reagentComponent.name)}
-    </Button>
+    <Floating
+      // `|| undefined` is used to avoid passing `false`.
+      // The component treats `false` as `closed`,
+      // whereas `undefined` means "not controlled",
+      // allowing it to open and close normally.
+      handleOpen={forceFloating || undefined}
+      // No similar handling is necessary for `disabled`.
+      // If we don't disable it it will close on unhover, for some reason.
+      disabled={forceFloating}
+      placement="left"
+      closeAfterInteract={false}
+      // `hoverOpen` is obvious, but `hoverSafePolygon` is what is needed
+      // to allow the user to move their mouse over to the floating window.
+      hoverOpen={true}
+      hoverSafePolygon={true}
+      // When the window state changes, we go up the chain to inform the parent.
+      // At the same time we *always* reset forced state on close,
+      // to prevent it from being stuck in limbo if it somehow closes otherwise.
+      onOpenChange={(state) => {
+        if (setParentForceFloating) {
+          setParentForceFloating(state);
+        }
+        if (!state) {
+          setForceFloating(false);
+        }
+      }}
+      content={
+        <Box
+          p={0.5}
+          backgroundColor={`hsl(0, 0%, 15%)`}
+          style={{
+            borderRadius: '4px',
+            backdropFilter: 'blur(12px)',
+          }}
+        >
+          <Stack
+            backgroundColor="black"
+            p={1}
+            style={{
+              borderRadius: '4px',
+              flexDirection: 'column',
+            }}
+          >
+            <Stack.Item>
+              <ReactionDisplay
+                dropdownState={DropdownState.NO_DROPDOWN}
+                reaction={foundRecipe}
+                pinnedReactions={pinnedReactions}
+                setPinnedReactions={setPinnedReactions}
+                setParentForceFloating={setForceFloating}
+              />
+            </Stack.Item>
+          </Stack>
+        </Box>
+      }
+    >
+      <Button icon="book" fluid ellipsis backgroundColor="default">
+        {formatReagentName(reagentComponent.amount, reagentComponent.name)}
+      </Button>
+    </Floating>
   );
 };
 

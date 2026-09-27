@@ -355,13 +355,16 @@
 	can_be_sawn_off = TRUE
 	pb_knockback = 3 // it's a super shotgun!
 
+/obj/item/gun/ballistic/shotgun/doublebarrel/presawn
+	WHEN_MAP(icon_state = "dshotgun_sawn")
+	spawn_sawn_off = TRUE
+
 /obj/item/gun/ballistic/shotgun/doublebarrel/setup_reskins()
 	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/bar_shotgun)
 
-/obj/item/gun/ballistic/shotgun/doublebarrel/sawoff(mob/user)
+/obj/item/gun/ballistic/shotgun/doublebarrel/do_sawoff()
 	. = ..()
-	if(.)
-		weapon_weight = WEAPON_MEDIUM
+	weapon_weight = WEAPON_MEDIUM
 
 /obj/item/gun/ballistic/shotgun/doublebarrel/slugs
 	name = "hunting shotgun"

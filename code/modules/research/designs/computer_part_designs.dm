@@ -2,9 +2,11 @@
 ///////////Computer Parts///////////////
 ////////////////////////////////////////
 // Data disks
+/datum/design/portabledrive
+	abstract_type = /datum/design/portabledrive
+
 /datum/design/portabledrive/basic
 	name = "Data Disk"
-	id = "portadrive_basic"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/disk/computer
@@ -16,7 +18,6 @@
 
 /datum/design/portabledrive/advanced
 	name = "Advanced Data Disk"
-	id = "portadrive_advanced"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/disk/computer/advanced
@@ -28,7 +29,6 @@
 
 /datum/design/portabledrive/super
 	name = "Super Data Disk"
-	id = "portadrive_super"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass = SHEET_MATERIAL_AMOUNT * 4)
 	build_path = /obj/item/disk/computer/super

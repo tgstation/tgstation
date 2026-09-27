@@ -15,7 +15,7 @@
 	moles_archive.Cut()
 
 /datum/gas_mixture/immutable/archive()
-	return TRUE //nothing changes, so we do nothing and the archive is successful
+	return // nothing changes, so we do nothing
 
 /datum/gas_mixture/immutable/merge()
 	return FALSE //we're immutable.

@@ -37,10 +37,11 @@
 	// Handled here instead of in the saline reagent datum, because this way the modification order is consistent.
 	// E.g. if you have an effect that modifies blood volume over the dilution cap, then saline should do nothing.
 	var/datum/reagent/medicine/salglu_solution/saline = reagents?.has_reagent(/datum/reagent/medicine/salglu_solution)
-	if (saline && amount < saline.dilution_cap)
+	if (saline && amount < SALINE_DILUTION_CAP)
 		var/datum/blood_type/blood_type = get_bloodtype()
+		var/datum/status_effect/stacking/saline_glucose_dilution/dilution = has_status_effect(/datum/status_effect/stacking/saline_glucose_dilution)
 		if (blood_type?.restoration_chem == saline.required_restoration_chem)
-			amount = min(amount + saline.volume * saline.dilution_per_unit, BLOOD_VOLUME_NORMAL)
+			amount = min(amount + saline.volume * dilution.get_blood_multiplier(), BLOOD_VOLUME_NORMAL)
 
 	return amount
 
@@ -152,7 +153,7 @@
 // Takes care blood loss and regeneration
 /mob/living/carbon/human/handle_blood(seconds_per_tick)
 	// Under these circumstances blood handling is not necessary
-	if(bodytemperature < BLOOD_STOP_TEMP || HAS_TRAIT(src, TRAIT_FAKEDEATH))
+	if(bodytemperature < BLOOD_STOP_TEMP || HAS_TRAIT_NOT_FROM(src, TRAIT_FAKEDEATH, QUIRK_TRAIT))
 		return
 
 	// Run the signal, still allowing mobs with noblood to "handle blood" in their own way
@@ -168,7 +169,7 @@
 		if(satiety > 80)
 			nutrition_ratio *= 1.25
 
-		var/blood_to_restore = BLOOD_REGEN_FACTOR * physiology.blood_regen_mod * heart_blood_multiplier * nutrition_ratio * seconds_per_tick
+		var/blood_to_restore = BLOOD_REGEN_FACTOR * GET_PHYSIOLOGY(src, PHYS_COEFF_BLOOD_REGEN) * heart_blood_multiplier * nutrition_ratio * seconds_per_tick
 		var/blood_restored = adjust_blood_volume(blood_to_restore, maximum = BLOOD_VOLUME_NORMAL)
 		if (blood_restored > 0)
 			adjust_nutrition(-nutrition_ratio * HUNGER_FACTOR * seconds_per_tick * (blood_restored / blood_to_restore))
@@ -270,6 +271,7 @@
 	if(HAS_TRAIT(src, TRAIT_GODMODE) || !can_bleed())
 		return
 
+	amount *= GET_PHYSIOLOGY(src, PHYS_COEFF_BLEED)
 	var/amount_bled = -adjust_blood_volume(-amount)
 
 	// Blood loss still happens in locker, floor stays clean
@@ -277,7 +279,6 @@
 		add_splatter_floor(loc, (amount_bled <= 10))
 
 /mob/living/carbon/human/bleed(amount)
-	amount *= physiology.bleed_mod
 	return ..()
 
 /// A helper to see how much blood we're losing per tick
@@ -292,8 +293,7 @@
 	for(var/obj/item/bodypart/bodypart as anything in get_bodyparts())
 		. += bodypart.cached_bleed_rate
 
-/mob/living/carbon/human/get_bleed_rate()
-	return ..() * physiology.bleed_mod
+	. *= GET_PHYSIOLOGY(src, PHYS_COEFF_BLEED)
 
 /**
  * bleed_warn() is used to for carbons with an active client to occasionally receive messages warning them about their bleeding status (if applicable)

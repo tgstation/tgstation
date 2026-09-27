@@ -370,6 +370,14 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 	var/is_character_preference = savefile_identifier == PREFERENCE_CHARACTER
 	return is_on_character_page == is_character_preference
 
+/// Helper for checking if one/any of the passed job types are the highest priority job for the passed preferences object
+/// Useful for filtering out certain preferences unless certain jobs are/are not active
+/datum/preference/proc/highest_priority_job_is(datum/preferences/preferences, job_type_or_types)
+	if(islist(job_type_or_types))
+		return is_type_in_list(preferences.get_highest_priority_job(), job_type_or_types)
+
+	return istype(preferences.get_highest_priority_job(), job_type_or_types)
+
 /// A preference that is a choice of one option among a fixed set.
 /// Used for preferences such as clothing.
 /datum/preference/choiced

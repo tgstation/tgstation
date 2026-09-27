@@ -155,7 +155,7 @@
 /// - Must be a human (type, not species)
 /// - Skeletons cannot be husked (they are snowflaked instead of having a trait)
 /// - Monkeys are monkeys, not quite human (balance reasons)
-#define IS_VALID_GHOUL_MOB(mob) (ishuman(mob) && !isskeleton(mob) && !ismonkey(mob))
+#define IS_VALID_GHOUL_MOB(mob) (ishuman(mob) && !isskeleton(mob) && !HAS_TRAIT(mob, TRAIT_LESSER_HUMANOID))
 
 /// Forces the blob to place the core where they currently are, ignoring any checks.
 #define BLOB_FORCE_PLACEMENT -1
@@ -359,7 +359,7 @@ GLOBAL_LIST_INIT(human_invader_antagonists, list(
 /// Only appears for spy bounties
 #define OBJECTIVE_ITEM_TYPE_SPY "spy"
 
-// Progression traitor defines
+// Traitor objective defines
 
 /// Chance that the traitor could roll hijack if the pop limit is met.
 #define HIJACK_PROB 10

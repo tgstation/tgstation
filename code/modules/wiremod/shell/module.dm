@@ -1,5 +1,5 @@
 /obj/item/mod/module/circuit
-	name = "MOD circuit adapter module"
+	name = "\improper MOD circuit adapter module"
 	desc = "A module shell that allows a circuit to be inserted into, and interface with, a MODsuit."
 	module_type = MODULE_USABLE
 	complexity = 1

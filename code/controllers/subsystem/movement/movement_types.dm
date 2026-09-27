@@ -421,6 +421,8 @@
 
 /datum/move_loop/has_target/jps/Destroy()
 	avoid = null
+	// Pending pathfinds share this list so we need to clear it to release their callbacks to us
+	on_finish_callbacks.Cut()
 	on_finish_callbacks = null
 	return ..()
 
@@ -453,6 +455,10 @@
 	var/turf/next_step = movement_path[1]
 	var/atom/old_loc = moving.loc
 	moving.Move(next_step, get_dir(moving, next_step), FALSE, !(flags & MOVEMENT_LOOP_NO_DIR_UPDATE))
+	// Movement callbacks can stop this loop or delete its mover or target.
+	if(QDELETED(src))
+		return MOVELOOP_FAILURE
+
 	. = (old_loc != moving?.loc) ? MOVELOOP_SUCCESS : MOVELOOP_FAILURE
 
 	// this check if we're on exactly the next tile may be overly brittle for dense objects who may get bumped slightly
@@ -757,6 +763,9 @@
 
 /datum/move_loop/has_target/move_towards/proc/handle_move(source, atom/OldLoc, Dir, Forced = FALSE)
 	SIGNAL_HANDLER
+	if(QDELETED(src))
+		return
+
 	if(moving.loc != moving_towards && home) //If we didn't go where we should have, update slope to account for the deviation
 		update_slope()
 
@@ -777,6 +786,8 @@
 **/
 /datum/move_loop/has_target/move_towards/proc/update_slope()
 	SIGNAL_HANDLER
+	if(QDELETED(src))
+		return
 
 	//You'll notice this is rise over run, except we flip the formula upside down depending on the larger number
 	//This is so we never move more then one tile at once

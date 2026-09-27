@@ -147,7 +147,6 @@ SUBSYSTEM_DEF(tts)
 		else
 			hearer_atom = hearer
 		if(!hearer_atom || QDELING(hearer_atom))
-			stack_trace("TTS tried to play a sound to a deleted mob.")
 			continue
 		if(!ismob(hearer_atom))
 			continue
@@ -670,7 +669,7 @@ SUBSYSTEM_DEF(tts)
 	if(!SStts.tts_enabled)
 		return FALSE
 
-	if(HAS_TRAIT(hearer, TRAIT_DEAF))
+	if(HAS_TRAIT(hearer, TRAIT_DEAF) || IS_UNCONSCIOUS(hearer))
 		return FALSE
 
 	var/tts_pref = hearer.client?.prefs.read_preference(/datum/preference/choiced/sound_tts) || TTS_SOUND_OFF

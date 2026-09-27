@@ -158,6 +158,12 @@ again.
 	icon_state = "bronzewindow_spawner"
 	spawn_list = list(/obj/structure/grille, /obj/structure/window/bronze/fulltile)
 
+//bronze
+
+/obj/effect/spawner/structure/window/cult
+	name = "cult window spawner"
+	icon_state = "cultwindow_spawner"
+	spawn_list = list(/obj/structure/grille, /obj/structure/window/cult/fulltile)
 
 //shuttle window
 
@@ -170,6 +176,60 @@ again.
 	name = "indestructible shuttle window spawner"
 	icon_state = "swindow_spawner"
 	spawn_list = list(/obj/structure/grille/indestructible, /obj/structure/window/reinforced/shuttle/indestructible)
+
+/obj/effect/spawner/structure/window/hollow/titanium
+	name = "hollow titanium window spawner"
+	icon_state = "titaniumwindow_spawner_full"
+	spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/north, /obj/structure/window/reinforced/titanium/spawner/directional/east, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+
+/obj/effect/spawner/structure/window/hollow/titanium/end
+	icon_state = "titaniumwindow_spawner_end"
+
+/obj/effect/spawner/structure/window/hollow/titanium/end/Initialize(mapload)
+	switch(dir)
+		if(NORTH)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/north, /obj/structure/window/reinforced/titanium/spawner/directional/east, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+		if(EAST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/north, /obj/structure/window/reinforced/titanium/spawner/directional/east)
+		if(SOUTH)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/east, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+		if(WEST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/north, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+	return ..()
+
+/obj/effect/spawner/structure/window/hollow/titanium/middle
+	icon_state = "titaniumwindow_spawner_middle"
+
+/obj/effect/spawner/structure/window/hollow/titanium/middle/Initialize(mapload)
+	switch(dir)
+		if(NORTH,SOUTH)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/north)
+		if(EAST,WEST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/east, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+	return ..()
+
+/obj/effect/spawner/structure/window/hollow/titanium/directional
+	icon_state = "titaniumwindow_spawner_directional"
+
+/obj/effect/spawner/structure/window/hollow/titanium/directional/Initialize(mapload)
+	switch(dir)
+		if(NORTH)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/north)
+		if(NORTHEAST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/north, /obj/structure/window/reinforced/titanium/spawner/directional/east)
+		if(EAST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/east)
+		if(SOUTHEAST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/east)
+		if(SOUTH)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium)
+		if(SOUTHWEST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+		if(WEST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+		if(NORTHWEST)
+			spawn_list = list(/obj/structure/grille, /obj/structure/window/reinforced/titanium/spawner/directional/north, /obj/structure/window/reinforced/titanium/spawner/directional/west)
+	return ..()
 
 //plastitanium window
 

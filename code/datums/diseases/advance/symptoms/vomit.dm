@@ -30,6 +30,7 @@ and your disease can spread via people walking on vomit.
 	var/vomit_nebula = FALSE
 	var/vomit_blood = FALSE
 	var/proj_vomit = 0
+	var/suppress_warning = FALSE
 
 /datum/symptom/vomit/Start(datum/disease/advance/A)
 	. = ..()

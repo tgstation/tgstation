@@ -3,10 +3,7 @@
 	name = "design"
 
 /datum/asset/spritesheet_batched/research_designs/create_spritesheets()
-	for (var/datum/design/path as anything in subtypesof(/datum/design))
-		if(initial(path.id) == DESIGN_ID_IGNORE)
-			continue
-
+	for (var/datum/design/path as anything in valid_subtypesof(/datum/design))
 		var/icon_file
 		var/icon_state
 		var/datum/icon_transformer/transform = null
@@ -38,7 +35,7 @@
 
 			// GAGS icon short-circuit the rest of the checks
 			if (item::greyscale_config && item::greyscale_colors)
-				insert_icon(path::id, gags_to_universal_icon(item))
+				insert_icon(get_design_id(path), gags_to_universal_icon(item))
 				continue
 			else
 				icon_file = item::icon
@@ -53,8 +50,7 @@
 
 			// computers (and snowflakes) get their screen and keyboard sprites
 			if (ispath(item, /obj/machinery/computer) || ispath(item, /obj/machinery/power/solar_control))
-				if(!transform)
-					transform = new()
+				transform ||= new()
 				var/obj/machinery/computer/C = item
 				var/screen = initial(C.icon_screen)
 				var/keyboard = initial(C.icon_keyboard)
@@ -64,4 +60,8 @@
 				if (keyboard && (keyboard in all_states))
 					transform.blend_icon(uni_icon(icon_file, keyboard), ICON_OVERLAY)
 
-		insert_icon(initial(path.id), uni_icon(icon_file, icon_state, transform=transform))
+		insert_icon(get_design_id(path), uni_icon(icon_file, icon_state, transform=transform))
+
+/datum/asset/spritesheet_batched/research_designs/proc/get_design_id(design_path)
+	var/static/base_path_len = length("/datum/design/")
+	return replacetext(splicetext("[design_path]", 1, base_path_len + 1), "/", "_")

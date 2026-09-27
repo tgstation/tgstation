@@ -136,6 +136,9 @@
 	/// How desensitized this job is to seeing death as a base - applied with the job
 	var/desensitized_base = 1.0
 
+	///If set, adds this as the job icon map (from fontawesome5)
+	var/tgui_icon
+
 /datum/job/New()
 	. = ..()
 	var/new_spawn_positions = CHECK_MAP_JOB_CHANGE(title, "spawn_positions")
@@ -336,7 +339,7 @@
 	uniform = /obj/item/clothing/under/color/grey
 	id = /obj/item/card/id/advanced
 	ears = /obj/item/radio/headset
-	belt = /obj/item/modular_computer/pda
+	belt = /obj/item/modular_computer/pda/crew
 	back = /obj/item/storage/backpack
 	shoes = /obj/item/clothing/shoes/sneakers/black
 	box = /obj/item/storage/box/survival
@@ -622,12 +625,7 @@
 				return // Disconnected while checking the appearance ban.
 			organic_name = player_client.prefs.read_preference(/datum/preference/name/real_name)
 
-		mmi.name = "[initial(mmi.name)]: [organic_name]"
-		if(mmi.brain)
-			mmi.brain.name = "[organic_name]'s brain"
-		if(mmi.brainmob)
-			mmi.brainmob.real_name = organic_name //the name of the brain inside the cyborg is the robotized human's name.
-			mmi.brainmob.name = organic_name
+		mmi.set_name(organic_name)
 	// If this checks fails, then the name will have been handled during initialization.
 	if(!GLOB.current_anonymous_theme && player_client.prefs.read_preference(/datum/preference/name/cyborg) != DEFAULT_CYBORG_NAME)
 		apply_pref_name(/datum/preference/name/cyborg, player_client)
@@ -665,11 +663,12 @@
 	if(!job_outfit || !job_outfit::id_trim)
 		CRASH("[src.type] has no job outfit but isn't overwriting get_lobby_icon().")
 	var/datum/id_trim/job_trim = job_outfit::id_trim
+	var/icon = job_trim::sechud_icon
 	var/icon_state = job_trim::sechud_icon_state
-	if(!icon_state || icon_state == SECHUD_UNKNOWN)
-		CRASH("[src.type] has no job icon state.")
+	if(!icon || !icon_state || icon_state == SECHUD_UNKNOWN)
+		CRASH("[src.type] has no job icon or icon state.")
 
-	return icon('icons/mob/huds/hud.dmi', icon_state)
+	return icon(icon, icon_state)
 
 /datum/job/proc/display_order_with_department()
 	var/datum/job_department/main_department = departments_list?[1]

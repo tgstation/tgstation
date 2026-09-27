@@ -4,6 +4,7 @@
 		This oscillation weakens the molecular bonds of anything it cuts, thereby increasing its cutting ability."
 	icon = 'icons/obj/weapons/sword.dmi'
 	icon_state = "hfrequency0"
+	inhand_icon_state = "hfrequency0"
 	worn_icon_state = "hfrequency0"
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'

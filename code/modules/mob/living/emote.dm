@@ -120,6 +120,12 @@
 	var/custom_message = user.death_message
 	if(custom_message)
 		message_animal_or_basic = custom_message
+
+	if(user.has_quirk(/datum/quirk/death_mimicry))
+		user.Unconscious(30 SECONDS, ignore_canstun=TRUE)
+		ADD_TRAIT(user, TRAIT_FAKEDEATH, QUIRK_TRAIT)
+		addtimer(TRAIT_CALLBACK_REMOVE(user, TRAIT_FAKEDEATH, QUIRK_TRAIT), 30 SECONDS)
+
 	. = ..()
 	message_animal_or_basic = initial(message_animal_or_basic)
 
@@ -168,17 +174,14 @@
 		return
 	wings.make_flap_sound(human_user)
 
-	// open/close functional wings
-	var/obj/item/organ/wings/functional/wings_functional = wings
-	if(!istype(wings_functional))
+	if(!wings.has_open_sprite)
 		return
-	var/open = FALSE
-	if(wings_functional.wings_open)
-		open = TRUE
-		wings_functional.close_wings()
+	var/open = wings.wings_open
+	if(open)
+		wings.close_wings()
 	else
-		wings_functional.open_wings()
-	addtimer(CALLBACK(wings_functional, open ? TYPE_PROC_REF(/obj/item/organ/wings/functional, open_wings) : TYPE_PROC_REF(/obj/item/organ/wings/functional, close_wings)), wing_time)
+		wings.open_wings()
+	addtimer(CALLBACK(wings, open ? TYPE_PROC_REF(/obj/item/organ/wings, open_wings) : TYPE_PROC_REF(/obj/item/organ/wings, close_wings)), wing_time)
 
 /datum/emote/living/flap/aflap
 	key = "aflap"
@@ -840,6 +843,35 @@
 
 /datum/emote/living/custom/replace_pronoun(mob/user, message)
 	return message
+
+///Emotes only for le epic chimps
+/datum/emote/living/monkey
+	abstract_type = /datum/emote/living/monkey
+	trait_required = TRAIT_SIMIAN
+
+/datum/emote/living/monkey/gnarl
+	key = "gnarl"
+	key_third_person = "gnarls"
+	message = "gnarls and shows its teeth..."
+	message_mime = "gnarls silently, baring its teeth..."
+
+/datum/emote/living/monkey/roll
+	key = "roll"
+	key_third_person = "rolls"
+	message = "rolls."
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
+
+/datum/emote/living/monkey/scratch
+	key = "scratch"
+	key_third_person = "scratches"
+	message = "scratches."
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
+
+/datum/emote/living/monkey/sign
+	key = "sign"
+	key_third_person = "signs"
+	message_param = "signs the number %t."
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
 
 /datum/emote/living/inhale
 	key = "inhale"

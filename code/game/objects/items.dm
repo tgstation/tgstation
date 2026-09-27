@@ -116,7 +116,7 @@
 
 	///Price of an item in a vending machine, overriding the base vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
 	var/custom_price
-	///Price of an item in a vending machine, overriding the premium vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
+	///Price of a premium and contraband item in a vending machine, overriding the premium vending machine price. Define in terms of paycheck defines as opposed to raw numbers.
 	var/custom_premium_price
 	///Whether spessmen with an ID with an age below AGE_MINOR (20 by default) can buy this item
 	var/age_restricted = FALSE
@@ -438,12 +438,14 @@ GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", null)
 
 	if(item_flags & CRUEL_IMPLEMENT)
 		.[span_red("morbid")] = "It seems quite practical for particularly morbid procedures and experiments."
-	if(item_flags & BLUESPACE_INTERFERENCE)
+	if(HAS_TRAIT(src, TRAIT_BLUESPACE_INTERFERENCE))
 		.["bluespace-active"] = "It is highly active in bluespace and will cause malfunctions in teleporters."
 	if (siemens_coefficient == 0)
 		.["insulated"] = "It is made from a robust electrical insulator and will block any electricity passing through it!"
 	else if (siemens_coefficient <= 0.5)
 		.["partially insulated"] = "It is made from a poor insulator that will dampen (but not fully block) electric shocks passing through it."
+	if(item_flags & CAN_BE_OVERSLOT)
+		.["form-fitting"] = "It does not block MODsuits from deploying when worn."
 
 /obj/item/examine_descriptor(mob/user)
 	return "item"
@@ -461,21 +463,19 @@ GAME_VERB_SRC(/obj/item, move_to_top, oview(1), "Move To Top", null)
 		. += research_scan(user)
 
 /obj/item/proc/research_scan(mob/user)
-	/// Research prospects, including boostable nodes and point values. Deliver to a console to know whether the boosts have already been used.
+	// Research prospects, including boostable nodes and point values. Deliver to a console to know whether the boosts have already been used.
 	var/list/research_msg = list("<font color='purple'>Research prospects:</font> ")
-	///Separator between the items on the list
+	// Separator between the items on the list
 	var/sep = ""
-	///Nodes that can be boosted
-	var/list/boostable_nodes = techweb_item_unlock_check(src)
-	if (boostable_nodes)
-		for(var/id in boostable_nodes)
-			var/datum/techweb_node/node = SSresearch.techweb_node_by_id(id)
-			if(!node)
-				continue
+	// Nodes that can be boosted
+	var/list/boostable_nodes = SSresearch.techweb_unlock_items[type]
+	if(length(boostable_nodes))
+		for(var/boost_path in boostable_nodes)
+			var/datum/techweb_node/node = SSresearch.techweb_nodes[boost_path]
 			research_msg += sep
 			research_msg += node.display_name
 			sep = ", "
-	var/list/points = techweb_item_point_check(src)
+	var/list/points = SSresearch.techweb_point_items[type]
 	if (length(points))
 		sep = ", "
 		research_msg += techweb_point_display_generic(points)
@@ -1827,7 +1827,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 /obj/item/proc/item_start_equip(atom/target, obj/item/equipping, mob/user, show_visible_message = TRUE)
 
 	if(show_visible_message)
-		if(HAS_TRAIT(equipping, TRAIT_DANGEROUS_OBJECT))
+		if(HAS_TRAIT(equipping, TRAIT_DANGEROUS_EQUIP))
 			target.visible_message(
 				span_danger("[user] tries to put [equipping] on [target]."),
 				span_userdanger("[user] tries to put [equipping] on you."),

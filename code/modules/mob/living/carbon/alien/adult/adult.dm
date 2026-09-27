@@ -47,9 +47,9 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 	AddElement(/datum/element/footstep, FOOTSTEP_MOB_CLAW, 0.5, -11)
 	AddElement(/datum/element/strippable, GLOB.strippable_alien_humanoid_items)
 
-/mob/living/carbon/alien/adult/cuff_resist(obj/item/I)
+/mob/living/carbon/alien/adult/cuff_resist(obj/item/cuffs, breakouttime = null, cuff_break = 0)
 	playsound(src, 'sound/mobs/non-humanoids/hiss/hiss5.ogg', 40, TRUE, TRUE)  //Alien roars when starting to break free
-	..(I, cuff_break = INSTANT_CUFFBREAK)
+	..(cuffs, cuff_break = INSTANT_CUFFBREAK)
 
 /mob/living/carbon/alien/adult/resist_grab(moving_resist)
 	if(pulledby.grab_state)
@@ -86,9 +86,10 @@ GLOBAL_LIST_INIT(strippable_alien_humanoid_items, create_strippable_list(list(
 		return
 	if(newstate > GRAB_AGGRESSIVE)
 		newstate = GRAB_AGGRESSIVE
-	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_GRAB_STATE, newstate)
 	. = grab_state
 	grab_state = newstate
+	SEND_SIGNAL(src, COMSIG_MOVABLE_SET_GRAB_STATE, grab_state)
+	SEND_SIGNAL(pulling, COMSIG_MOVABLE_CHANGED_GRABBED_STATE, grab_state)
 	update_incapacitated()
 	switch(grab_state) // Current state.
 		if(GRAB_PASSIVE)

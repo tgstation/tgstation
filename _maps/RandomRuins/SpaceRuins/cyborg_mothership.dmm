@@ -87,7 +87,7 @@
 /turf/open/misc/asteroid/airless,
 /area/space)
 "C" = (
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /turf/open/misc/asteroid/airless,
 /area/space)
 "D" = (

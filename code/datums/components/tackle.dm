@@ -449,7 +449,8 @@
 
 	if(HAS_TRAIT(sacker, TRAIT_TACKLING_WINGED_ATTACKER))
 		var/obj/item/organ/wings/moth/sacker_moth_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
-		if(!sacker_moth_wing || sacker_moth_wing.burnt)
+		//Flight potion wings cannot burn off. Only the moth's natural fragile pair can cost us the bonus
+		if(isnull(sacker_moth_wing) || (istype(sacker_moth_wing) && sacker_moth_wing.burnt))
 			attack_mod -= 2
 	var/obj/item/organ/wings/sacker_wing = sacker.get_organ_slot(ORGAN_SLOT_EXTERNAL_WINGS)
 	if(sacker_wing)

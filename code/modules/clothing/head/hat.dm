@@ -65,6 +65,7 @@
 	flags_cover = NONE
 	dirt_state = null
 	alternate_worn_layer = HAIR_LAYER
+	texture_type = /datum/bodypart_texture/mesh/black
 
 /datum/armor/bio_hood_plague
 	bio = 100
@@ -282,6 +283,7 @@
 	name = "delinquent hat"
 	desc = "Good grief."
 	icon_state = "delinquent"
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/head/hats/intern
 	name = "\improper CentCom Head Intern beancap"
@@ -390,6 +392,7 @@
 
 /obj/item/clothing/head/costume/nightcap
 	abstract_type = /obj/item/clothing/head/costume/nightcap
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/head/costume/nightcap/blue
 	name = "blue nightcap"
@@ -408,6 +411,7 @@
 	worn_icon_state = "paper"
 	dog_fashion = /datum/dog_fashion/head
 	custom_materials = list(/datum/material/paper = HALF_SHEET_MATERIAL_AMOUNT / 2)
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/head/costume/paper_hat/savior
 	name = "ancient paper hat"

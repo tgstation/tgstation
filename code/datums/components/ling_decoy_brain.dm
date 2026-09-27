@@ -45,7 +45,7 @@
 	if(!istype(the_real_ling))
 		return
 
-	if(istype(source.loc, /obj/item/mmi) && talk_action?.owner != the_real_ling)
+	if(istype(source.loc, /obj/item/brain_processor/organic) && talk_action?.owner != the_real_ling)
 		if(isnull(talk_action))
 			talk_action = new() // Not linked to anything, we manage the reference (and don't want it disappearing on us)
 			talk_action.brain_ref = source

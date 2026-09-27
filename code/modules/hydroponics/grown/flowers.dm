@@ -5,6 +5,7 @@
 	icon_state = "rose"
 	abstract_type = /obj/item/food/grown/flower
 	foodtypes = VEGETABLES
+	item_flags = CAN_BE_OVERSLOT
 
 // Poppy
 /obj/item/seeds/poppy
@@ -267,6 +268,7 @@
 	throw_range = 3
 	attack_verb_continuous = list("roasts", "scorches", "burns")
 	attack_verb_simple = list("roast", "scorch", "burn")
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/grown/novaflower/grind_results()
 	return list(/datum/reagent/consumable/capsaicin = 0, /datum/reagent/consumable/condensedcapsaicin = 0)
@@ -342,6 +344,7 @@
 	name = "carbon rose"
 	desc = "The all new fleur d'amour gris - the flower of love, modernized, with no harsh thorns."
 	icon_state = "carbonrose"
+	inhand_icon_state = "carbonrose"
 	lefthand_file = 'icons/mob/inhands/weapons/plants_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/plants_righthand.dmi'
 	force = 0
@@ -350,3 +353,4 @@
 	alternate_worn_layer = ABOVE_BODY_FRONT_HEAD_LAYER
 	throw_speed = 1
 	throw_range = 3
+	item_flags = CAN_BE_OVERSLOT

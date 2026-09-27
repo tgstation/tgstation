@@ -104,7 +104,7 @@
 /datum/bt_node/ai_behavior/proc/start_async()
 	async_running = TRUE
 	INVOKE_ASYNC(src, PROC_REF(perform_async), owning_controller)
-	return AI_BEHAVIOR_DELAY
+	return handle_async() || AI_BEHAVIOR_DELAY
 
 ///Override this if you have sleeping behavior, be sure to implement the other async procs in perform()
 /datum/bt_node/ai_behavior/proc/perform_async(datum/ai_controller/controller)

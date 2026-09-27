@@ -46,6 +46,12 @@
 	database_id = MEDAL_SNAIL
 	icon_state = "snail"
 
+/datum/award/achievement/jobs/bag_of_holding
+	name = "Prepare for Unforeseen Consequences"
+	desc = "Cause significant amounts of property damage with your experimental technology."
+	database_id = MEDAL_BAG_OF_HOLDING
+	icon_state = "bag_of_holding"
+
 //all of service! hip hip!
 
 /datum/award/achievement/jobs/service_bad

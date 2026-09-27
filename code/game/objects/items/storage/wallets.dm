@@ -12,6 +12,10 @@
 	var/cached_flat_icon
 	var/overlay_icon_state = "wallet_overlay"
 
+/obj/item/storage/wallet/Initialize(mapload)
+	. = ..()
+	AddElement(/datum/element/strip_accessible_storage)
+
 /obj/item/storage/wallet/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(isidcard(gone))

@@ -220,17 +220,17 @@
 
 /// First, determine if we're going to execute our followup attack
 
-/datum/martial_art/kaza_ruk/proc/blow_followup(mob/living/source, mob/living/target, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking, limb_sharpness)
+/datum/martial_art/kaza_ruk/proc/blow_followup(mob/living/source, mob/living/target, damage, attack_type, atk_effect, obj/item/bodypart/affecting, final_armor_block, limb_sharpness)
 	SIGNAL_HANDLER
 
 	if(!prob(50))
 		return
 
-	addtimer(CALLBACK(src, PROC_REF(execute_followup), source, target, damage, attack_type, affecting, final_armor_block, kicking, limb_sharpness), 0.25 SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(execute_followup), source, target, damage, attack_type, atk_effect, affecting, final_armor_block, limb_sharpness), 0.25 SECONDS)
 
 /// After our delay, do the followup.
 
-/datum/martial_art/kaza_ruk/proc/execute_followup(mob/living/source, mob/living/target, damage, attack_type, obj/item/bodypart/affecting, final_armor_block, kicking, limb_sharpness)
+/datum/martial_art/kaza_ruk/proc/execute_followup(mob/living/source, mob/living/target, damage, attack_type, atk_effect, obj/item/bodypart/affecting, final_armor_block, limb_sharpness)
 	if(QDELETED(source) || QDELETED(target))
 		return
 
@@ -238,6 +238,7 @@
 		return
 
 	var/tail_usage = FALSE
+	var/kicking = (atk_effect == ATTACK_EFFECT_KICK)
 	var/kick_language = "an axe kick"
 	var/strike_language = "an elbow strike"
 	if(ishuman(source))

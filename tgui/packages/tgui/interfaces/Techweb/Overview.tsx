@@ -23,11 +23,11 @@ export function TechwebOverview(props) {
   let displayedNodes = nodes;
   if (searching) {
     displayedNodes = displayedNodes.filter((x) => {
-      const n = node_cache[x.id];
+      const n = node_cache[x.path];
       return (
         n.name.toLowerCase().includes(searchText) ||
         n.description.toLowerCase().includes(searchText) ||
-        n.design_ids.some((e) =>
+        n.unlocked_designs.some((e) =>
           design_cache[e].name.toLowerCase().includes(searchText),
         )
       );
@@ -37,7 +37,7 @@ export function TechwebOverview(props) {
       tabIndex < 2
         ? nodes.filter((x) => x.tier === tabIndex)
         : nodes.filter((x) => x.tier >= tabIndex),
-      [(x) => node_cache[x.id].name],
+      [(x) => node_cache[x.path].name],
     );
   }
 
@@ -90,7 +90,7 @@ export function TechwebOverview(props) {
         <Section fill scrollable>
           <VirtualList>
             {displayedNodes.map((n) => (
-              <TechNode node={n} key={n.id} />
+              <TechNode node={n} key={n.path} />
             ))}
           </VirtualList>
         </Section>

@@ -242,11 +242,13 @@
 /// Called when [TRAIT_STASIS] is added to the mob
 /mob/living/proc/on_stasis_trait_gain(datum/source)
 	SIGNAL_HANDLER
+	ADD_TRAIT(src, TRAIT_TUMOR_SUPPRESSED, TRAIT_STASIS)
 	update_incapacitated()
 
 /// Called when [TRAIT_STASIS] is removed from the mob
 /mob/living/proc/on_stasis_trait_loss(datum/source)
 	SIGNAL_HANDLER
+	REMOVE_TRAIT(src, TRAIT_TUMOR_SUPPRESSED, TRAIT_STASIS)
 	update_incapacitated()
 
 /// Called when [TRAIT_NODEATH] is added or removed from the mob

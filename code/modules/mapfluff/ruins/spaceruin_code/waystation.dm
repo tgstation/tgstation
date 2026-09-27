@@ -47,7 +47,7 @@
 	id = /obj/item/card/id/advanced
 	id_trim = /datum/id_trim/away/waystation/cargo_technician
 	uniform = /obj/item/clothing/under/rank/cargo/tech
-	belt = /obj/item/modular_computer/pda/cargo
+	belt = /obj/item/modular_computer/pda/crew/cargo
 	ears = /obj/item/radio/headset/headset_cargo
 	shoes = /obj/item/clothing/shoes/sneakers/black
 
@@ -56,7 +56,7 @@
 	id = /obj/item/card/id/advanced/silver
 	id_trim = /datum/id_trim/away/waystation/quartermaster
 	uniform = /obj/item/clothing/under/rank/cargo/qm
-	belt = /obj/item/modular_computer/pda/heads/quartermaster
+	belt = /obj/item/modular_computer/pda/crew/heads/quartermaster
 	ears = /obj/item/radio/headset/headset_cargo
 	glasses = /obj/item/clothing/glasses/sunglasses
 	shoes = /obj/item/clothing/shoes/sneakers/brown

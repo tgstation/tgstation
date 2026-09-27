@@ -285,16 +285,25 @@
 			building_window = new/obj/structure/window/reinforced/fulltile(drop_location()) //reinforced window
 		else if(istype(tool, /obj/item/stack/sheet/titaniumglass))
 			building_window = new/obj/structure/window/reinforced/shuttle(drop_location())
+		else if(istype(tool, /obj/item/stack/wall_filling/plastitaniumglass/basic))
+			building_window = new/obj/structure/window/reinforced/plasma/plastitanium/windowfill(drop_location())
+		else if(istype(tool, /obj/item/stack/wall_filling/plastitaniumglass/pod))
+			building_window = new/obj/structure/window/reinforced/shuttle/survival_pod(drop_location())
 		else if(istype(tool, /obj/item/stack/sheet/plastitaniumglass))
 			building_window = new/obj/structure/window/reinforced/plasma/plastitanium(drop_location())
 		else if(istype(tool, /obj/item/stack/sheet/bronze))
 			building_window = new/obj/structure/window/bronze/fulltile(drop_location())
+		else if(istype(tool, /obj/item/stack/sheet/runed_metal))
+			building_window = new/obj/structure/window/cult/fulltile(drop_location())
 		else
 			building_window = new/obj/structure/window/fulltile(drop_location()) //normal window
 		building_window.setDir(dir_to_set)
 		building_window.set_anchored(FALSE)
 		building_window.state = 0
-		to_spend.use(2)
+		if((istype(tool, /obj/item/stack/wall_filling)))
+			to_spend.use(1)
+		else
+			to_spend.use(2)
 		to_chat(user, span_notice("You place [to_spend] on [src]."))
 		return ITEM_INTERACT_SUCCESS
 //window placing end

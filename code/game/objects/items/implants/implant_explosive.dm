@@ -189,6 +189,21 @@
 		Upon arming, attempts to sync with any other detected microexplosives for increased detonation yield; \
 		the handshake process between microbombs, however, takes a bit, and only gets longer as more microbombs are detected."
 
+// Version with the same appearance and delay as a macrobomb, but is actually a microbomb with a surprise!
+/obj/item/implant/explosive/macro/fake
+	explosion_light = /obj/item/implant/explosive::explosion_light
+	explosion_heavy = /obj/item/implant/explosive::explosion_heavy
+	explosion_devastate = /obj/item/implant/explosive::explosion_devastate
+
+/obj/item/implant/explosive/macro/fake/explode(atom/override_explode_target)
+	honkerblast(
+		origin = override_explode_target || src,
+		light_range = /obj/item/implant/explosive/macro::explosion_light * 0.5,
+		medium_range = /obj/item/implant/explosive/macro::explosion_heavy * 0.5,
+		heavy_range = /obj/item/implant/explosive/macro::explosion_devastate * 0.5,
+	)
+	return ..()
+
 ///Microbomb which prevents you from going into critical condition but also explodes after a timer when you reach critical condition in the first place.
 /obj/item/implant/explosive/deniability
 	name = "tactical deniability implant"
@@ -247,6 +262,10 @@
 /obj/item/implanter/explosive_macro
 	name = "implanter (macrobomb)"
 	imp_type = /obj/item/implant/explosive/macro
+
+/obj/item/implanter/explosive_macro/fake
+	name = "implanter (fake macrobomb)"
+	imp_type = /obj/item/implant/explosive/macro/fake
 
 /obj/item/implanter/tactical_deniability
 	name = "implanter (tactical deniability)"

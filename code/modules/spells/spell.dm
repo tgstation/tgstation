@@ -186,7 +186,7 @@
 
 	if(ishuman(owner))
 		if(spell_requirements & SPELL_REQUIRES_WIZARD_GARB)
-			if(!HAS_TRAIT(owner.get_item_by_slot(ITEM_SLOT_OCLOTHING), TRAIT_CASTING_CLOTHING) && !ismonkey(owner)) // Monkeys don't need robes to cast as they are inherently imbued with power from the banana dimension
+			if(!HAS_TRAIT(owner.get_item_by_slot(ITEM_SLOT_OCLOTHING), TRAIT_CASTING_CLOTHING) && !HAS_TRAIT(owner, TRAIT_LESSER_HUMANOID)) // Monkeys don't need robes to cast as they are inherently imbued with power from the banana dimension
 				if(feedback)
 					to_chat(owner, span_warning("You don't feel strong enough without your robe!"))
 				return FALSE

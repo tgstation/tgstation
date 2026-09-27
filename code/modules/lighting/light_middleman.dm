@@ -80,7 +80,7 @@
 	if(!isnull(cone_intercept))
 		light_holder.vis_contents += cone_intercept
 
-	old_holder = WEAKREF(light_holder)
+	holder_ref = WEAKREF(light_holder)
 
 	var/old_target = primary_intercept.render_target
 	// This will halt any animations we have ongoing so if you care about that you've gotta react to it properly

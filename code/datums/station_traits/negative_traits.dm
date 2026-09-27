@@ -150,15 +150,7 @@
 	show_in_report = TRUE
 	report_message = "Due to distance to our supply station, the cargo shuttle will have a slower flight time to your cargo department."
 	blacklist = list(/datum/station_trait/quick_shuttle)
-
-/datum/station_trait/slow_shuttle/New()
-	. = ..()
-	RegisterSignal(SSshuttle, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(slow_the_shuttle))
-
-/datum/station_trait/slow_shuttle/proc/slow_the_shuttle(datum/source)
-	SIGNAL_HANDLER
-	SSshuttle.supply.callTime *= 1.5
-	UnregisterSignal(SSshuttle, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	trait_to_give = STATION_TRAIT_SLOW_SHUTTLE
 
 /datum/station_trait/bot_languages
 	name = "Bot Language Matrix Malfunction"
@@ -767,5 +759,15 @@
 	show_in_report = TRUE
 	report_message = "Our station subdivision informed us that this station may have been built with a number of structural weaknesses due to defective construction materials. Be on the lookout for them and try not to let anything explode."
 	trait_to_give = STATION_TRAIT_SPAWN_WEAKPOINTS
+
+///A negative trait that empties the food and drink products available from vending machines throughout the station.
+/datum/station_trait/vending_shortage
+	name = "Vending products shortage"
+	trait_type = STATION_TRAIT_NEGATIVE
+	weight = 3
+	show_in_report = TRUE
+	can_revert = FALSE // because it touches every maploaded vending machine on the station.
+	report_message = "We haven't had the time to take care of the station's food and drink vending machines. Food and drink products are empty and need to be restocked."
+	trait_to_give = STATION_TRAIT_VENDING_SHORTAGE
 
 #undef GLOW_NEBULA

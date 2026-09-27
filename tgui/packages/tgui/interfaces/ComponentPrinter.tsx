@@ -113,7 +113,7 @@ function Recipe(props: RecipeProps) {
             !canPrint && 'FabricatorRecipe__Title--disabled',
           ])}
           onClick={() =>
-            canPrint && act('print', { designId: design.id, amount: 1 })
+            canPrint && act('print', { design_path: design.path, amount: 1 })
           }
         >
           <div className="FabricatorRecipe__Icon">
