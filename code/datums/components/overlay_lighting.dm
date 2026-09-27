@@ -23,6 +23,8 @@
 	var/datum/light_overlay/light
 	/// The turf we are currently displaying light on, if any
 	var/turf/luminosity_turf
+	/// Spatial grid cells we're registered in, so we remove ourselves from exactly those
+	var/list/datum/spatial_grid_cell/registered_cells
 
 /datum/component/overlay_lighting/Initialize(_range, _power, _color, starts_on, is_directional, is_beam, force)
 	if(!ismovable(parent))
@@ -37,6 +39,8 @@
 
 	light = new(parent, is_directional, is_beam)
 	RegisterSignal(light, COMSIG_LIGHT_OVERLAY_UPDATE_HOLDER, PROC_REF(on_holder_changed))
+	// light_overlay picks its holder in New() before we're registered for the signal, so we grab it here
+	on_holder_changed(light, null, light.current_holder)
 
 	if(!isnull(_range))
 		movable_parent.set_light_range(_range)
@@ -83,31 +87,29 @@
 	QDEL_NULL(light)
 	return ..()
 
-/// Clears ourselves from spatial grid's dynlights lists
+/// Clears ourselves from the dynlights lists of the spatial grid cells we registered in
 /datum/component/overlay_lighting/proc/clean_old_cells()
-	if (isnull(luminosity_turf))
-		return
-	for (var/datum/spatial_grid_cell/grid_cell as anything in SSspatial_grid.get_cells_in_range(luminosity_turf, lumcount_range))
+	for (var/datum/spatial_grid_cell/grid_cell as anything in registered_cells)
 		GRID_CELL_REMOVE(grid_cell.dynamic_light_sources, src)
+	registered_cells = null
+	luminosity_turf = null
 
-/// Populates the affected_turfs lazylist, adding to its contents the effects of being near the light.
+/// Registers ourselves in the spatial grid cells our holder's light reaches
 /datum/component/overlay_lighting/proc/register_new_cells()
 	var/atom/movable/current_holder = light.current_holder
 	if(!current_holder || !isturf(current_holder.loc) || !(light.overlay_lighting_flags & LIGHTING_ON))
 		return
-	luminosity_turf = get_turf(current_holder)
-	if (isnull(luminosity_turf))
-		return
-	for (var/datum/spatial_grid_cell/grid_cell as anything in SSspatial_grid.get_cells_in_range(luminosity_turf, lumcount_range))
+	luminosity_turf = current_holder.loc
+	registered_cells = SSspatial_grid.get_cells_in_range(luminosity_turf, lumcount_range)
+	for (var/datum/spatial_grid_cell/grid_cell as anything in registered_cells)
 		GRID_CELL_ASSOC_SET(grid_cell.dynamic_light_sources, src, lum_power)
 
-/// Clears the old affected cells and populates the new ones.
+/// Moves our registration to wherever our holder is now, unless we're already registered there
 /datum/component/overlay_lighting/proc/update_luminosity_cells()
-	if(get_turf(light.current_holder) == luminosity_turf)
+	if(registered_cells && light.current_holder?.loc == luminosity_turf)
 		return
-	if(luminosity_turf)
-		clean_old_cells()
-	register_new_cells(light.current_holder)
+	clean_old_cells()
+	register_new_cells()
 
 /// Adds the luminosity and source for the affected movable atoms to keep track of their visibility.
 /datum/component/overlay_lighting/proc/add_dynamic_lumi(atom/movable/relevant_holder)
@@ -150,17 +152,20 @@
 ///Changes the range which the light reaches. 0 means no light, 6 is the maximum value.
 /datum/component/overlay_lighting/proc/set_range(atom/source, old_range)
 	SIGNAL_HANDLER
+	if(!source.light_range)
+		turn_off()
 	light.set_range(source.light_range)
+	var/old_lumcount_range = lumcount_range
 	lumcount_range = ceil(light.range)
-	update_luminosity_cells()
+	if(lumcount_range != old_lumcount_range)
+		clean_old_cells()
+		register_new_cells()
 
 /// Changes the intensity/brightness of the light by altering the visual object's alpha.
 /datum/component/overlay_lighting/proc/set_power(atom/source, old_power)
 	SIGNAL_HANDLER
 	light.set_power(source.light_power)
 	lum_power = source.light_power >= 0 ? 0.5 : -0.5
-	clean_old_cells()
-	register_new_cells()
 
 /// Changes the light's color, pretty straightforward.
 /datum/component/overlay_lighting/proc/set_color(atom/source, old_color)
@@ -208,14 +213,8 @@
 /datum/component/overlay_lighting/proc/turn_off()
 	if(!light.turn_off())
 		return
-
-	if(!light.current_holder)
-		if(luminosity_turf)
-			clean_old_cells()
-		return
-
 	remove_dynamic_lumi(light.current_holder)
-	update_luminosity_cells()
+	clean_old_cells()
 
 /// Handles putting the source for overlay lights into the light eater queue since we aren't tracked by [/atom/var/light_sources]
 /datum/component/overlay_lighting/proc/on_light_eater(datum/source, list/light_queue, datum/light_eater)
