@@ -15,13 +15,23 @@
 	result.RemoveAll(null)
 	return result
 
-/// Returns a list of all actively held items of a given type
+/// Returns a list of all held items of a given type
 /mob/proc/get_held_items_of_type(typepath) as /list
 	RETURN_TYPE(/list/obj/item)
 
 	. = list()
-	for(var/obj/item as anything in get_hand_slots())
+	for(var/obj/item/item as anything in get_hand_slots())
 		if(istype(item, typepath))
+			. += item
+
+// Doing is_type_in_list *halves* the efficiency of the proc, so this has to be a separate thing
+/// Returns a list of all actively held items of a given *list* of types
+/mob/proc/get_held_items_of_typelist(list/typepaths) as /list
+	RETURN_TYPE(/list/obj/item)
+
+	. = list()
+	for(var/obj/item/item as anything in get_hand_slots())
+		if(is_type_in_list(item))
 			. += item
 
 ///Returns the thing we're currently holding
