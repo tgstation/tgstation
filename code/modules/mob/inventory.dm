@@ -72,7 +72,6 @@
 	return other_hand
 
 /// Returns the item at the specified hand index.
-/// Throws if the index is out of bounds.
 /mob/proc/get_item_for_held_index(i)
 	if(i > 0 && i <= held_items.len)
 		return held_items[i]
