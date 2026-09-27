@@ -272,6 +272,10 @@
 	var/base_input
 	var/expected_output
 
+/datum/unit_test/emphasis_characters/New()
+	. = ..()
+	expected_output += "&#8203;"
+
 /datum/unit_test/emphasis_characters/Run()
 	TEST_ASSERT_EQUAL(apply_message_emphasis(base_input), expected_output, "")
 
