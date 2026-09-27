@@ -155,6 +155,52 @@
 	for(var/i in 1 to 7)
 		new /obj/item/food/grown/wheat(src)
 
+/obj/item/storage/box/ingredients //This box is for the randomly chosen version the chef used to spawn with, it shouldn't actually exist.
+	name = "ingredients box"
+	illustration = "fruit"
+	var/theme_name
+
+/obj/item/storage/box/ingredients/Initialize(mapload)
+	. = ..()
+	if(theme_name)
+		name = "[name] ([theme_name])"
+		desc = "A box containing supplementary ingredients for the aspiring chef. The box's theme is '[theme_name]'."
+		inhand_icon_state = "syringe_kit"
+
+/obj/item/storage/box/ingredients/wildcard
+	theme_name = "wildcard"
+
+/obj/item/storage/box/ingredients/wildcard/PopulateContents()
+	for(var/i in 1 to 7)
+		var/random_food = pick(
+			/obj/item/food/chocolatebar,
+			/obj/item/food/grown/apple,
+			/obj/item/food/grown/banana,
+			/obj/item/food/grown/cabbage,
+			/obj/item/food/grown/carrotlike/carrot,
+			/obj/item/food/grown/cherries,
+			/obj/item/food/grown/chili,
+			/obj/item/food/grown/corn,
+			/obj/item/food/grown/cucumber,
+			/obj/item/food/grown/mushroom/chanterelle,
+			/obj/item/food/grown/mushroom/plumphelmet,
+			/obj/item/food/grown/potato,
+			/obj/item/food/grown/potato/sweet,
+			/obj/item/food/grown/soybeans,
+			/obj/item/food/grown/tomato,
+		)
+		new random_food(src)
+
+/obj/item/storage/box/ingredients/american
+	theme_name = "american"
+
+/obj/item/storage/box/ingredients/american/PopulateContents()
+	for(var/i in 1 to 2)
+		new /obj/item/food/grown/corn(src)
+		new /obj/item/food/grown/potato(src)
+		new /obj/item/food/grown/tomato(src)
+	new /obj/item/food/meatball(src)
+
 /obj/item/storage/box/gum
 	name = "bubblegum packet"
 	desc = "The packaging is entirely in Japanese, apparently. You can't make out a single word of it."
