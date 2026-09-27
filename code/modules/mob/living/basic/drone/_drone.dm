@@ -229,7 +229,7 @@
 	. = list()
 
 	//Hands
-	for(var/held_index as anything in get_active_held_indexes())
+	for(var/held_index in get_active_held_indexes())
 		var/obj/item/held_thing = get_item_for_held_index(held_index)
 		if((held_thing.item_flags & (ABSTRACT|HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
 			continue
