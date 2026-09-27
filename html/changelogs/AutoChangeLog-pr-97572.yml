@@ -1,7 +1,0 @@
-author: "hry-gh"
-delete-after: True
-changes:
-  - bugfix: "in the command bar, exact matches weren't entering the verb, they now are"
-  - bugfix: "quotes aren't required around arguments in the command bar anymore, letting you use quotes yourself in messages"
-  - bugfix: "removes 100 pick-up verbs from the command bar"
-  - qol: "added a preference to disable showing autocomplete suggestions as you type (unless you press space)"
