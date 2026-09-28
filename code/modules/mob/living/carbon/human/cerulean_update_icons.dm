@@ -37,22 +37,6 @@
 
 		// no masks, we have custom sprites
 		else
-			// uniforms
-			var/obj/item/clothing/under/uniform_item = src
-			if(istype(uniform_item) && icon_exists(CERULEAN_UNIFORM_FILE, icon_state))
-			/*
-				if(greyscale_config_worn) //if we r gags we gotta color
-					cerulean_clothing_icon = icon(
-						SSgreyscale.GetColoredIconByType(
-							/datum/greyscale_config/uniform_worn_cerulean,
-							greyscale_colors,
-						),
-						icon_state,
-					)
-				else
-					cerulean_clothing_icon = icon(CERULEAN_UNIFORM_FILE, icon_state)
-			*/
-				cerulean_clothing_icon = icon(CERULEAN_UNIFORM_FILE, icon_state)
 			// suits
 			var/obj/item/clothing/suit/suit_item = src
 			if(istype(suit_item) && icon_exists(CERULEAN_SUIT_FILE, icon_state))
@@ -66,7 +50,6 @@
 					)
 				else
 					cerulean_clothing_icon = icon(CERULEAN_SUIT_FILE, icon_state)
-
 				// flippy flippers
 				if(physique == FEM_FLIPPER && suit_item.cerulean_flipper_palette != NO_FLIPPERS)
 					var/color_to_use = suit_item.cerulean_flipper_palette

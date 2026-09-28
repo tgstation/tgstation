@@ -18,15 +18,6 @@
 
 /*
  *
- *
-/datum/greyscale_config/uniform_worn_cerulean
-	name = "Cerulean Tail Uniforms (Worn)"
-	icon_file = CERULEAN_UNIFORM_FILE
-	json_config = 'code/datums/greyscale/json_configs/cerulean_uniform.json'
- */
-
-/*
- *
  */
 /datum/greyscale_config/suit_worn_cerulean
 	name = "Cerulean Tail Suits (Worn)"
