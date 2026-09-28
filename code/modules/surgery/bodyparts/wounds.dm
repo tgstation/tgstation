@@ -302,14 +302,6 @@
 		if((iter_wound.wound_flags & MANGLES_EXTERIOR))
 			mangled_state |= BODYPART_MANGLED_EXTERIOR
 
-	// var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(applied_items, LIMB_ITEM_GAUZE)
-	// if(!LAZYLEN(wounds) && current_gauze && !replaced) // no more wounds = no need for the gauze anymore
-	// 	if (owner)
-	// 		owner.visible_message(span_notice("\The [current_gauze.name] on [owner]'s [name] falls away."), span_notice("\The [current_gauze] on your [plaintext_zone] falls away."))
-	// 	else
-	// 		visible_message(span_notice("\The [current_gauze.name] on [name] falls away."))
-	// 	qdel(current_gauze)
-
 	refresh_bleed_rate()
 
 /**
