@@ -308,6 +308,12 @@
 /obj/machinery/power/floodlight/attack_ai(mob/user)
 	return attack_hand(user)
 
+/obj/machinery/power/floodlight/emp_act(severity)
+	. = ..()
+
+	if(prob(150 / severity))
+		atom_break(ENERGY)
+
 /obj/machinery/power/floodlight/on_saboteur(datum/source, disrupt_duration)
 	. = ..()
 	atom_break(ENERGY) // technically,
