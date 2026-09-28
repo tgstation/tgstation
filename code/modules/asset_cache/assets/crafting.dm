@@ -4,8 +4,8 @@
 
 /datum/asset/spritesheet_batched/crafting/create_spritesheets()
 	var/id = 1
-	for(var/atom in GLOB.crafting_recipes_atoms)
-		add_atom_icon(atom, id++)
+	for(var/datum in GLOB.crafting_recipes_datums)
+		add_atom_icon(datum, id++)
 	add_tool_icons()
 
 /datum/asset/spritesheet_batched/crafting/cooking
@@ -13,8 +13,8 @@
 
 /datum/asset/spritesheet_batched/crafting/cooking/create_spritesheets()
 	var/id = 1
-	for(var/atom in GLOB.cooking_recipes_atoms)
-		add_atom_icon(atom, id++)
+	for(var/datum in GLOB.cooking_recipes_datums)
+		add_atom_icon(datum, id++)
 
 /**
  * Adds the ingredient icon to the spritesheet with given ID
@@ -35,6 +35,10 @@
 		if(istype(style))
 			icon_file = style.icon
 			icon_state = style.icon_state
+	// Hardcoded for now, I suppose. Revisit later with bespoke "generic" icons for abstract types i.e. if(ingredient_typepath == ingredient_typepath::abstract_type) ?
+	else if(ingredient_typepath == /obj/item/food || ingredient_typepath == /obj/item/food/grown || ingredient_typepath == /obj/item/grown)
+		icon_file = 'icons/effects/random_spawners.dmi'
+		icon_state = "questionmark"
 
 	icon_file ||= preview_item::icon_preview || preview_item::icon
 	icon_state ||= preview_item::icon_state_preview || preview_item::icon_state
