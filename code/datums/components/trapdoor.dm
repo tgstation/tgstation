@@ -114,6 +114,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(try_link))
 	RegisterSignal(parent, COMSIG_SHUTTLE_TURF_SHOULD_MOVE_SPECIAL, PROC_REF(should_move_special))
 	RegisterSignal(parent, COMSIG_SHUTTLE_TURF_ON_MOVE_SPECIAL, PROC_REF(on_move_special))
+	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 
 /datum/component/trapdoor/UnregisterFromParent()
 	. = ..()
@@ -126,6 +127,7 @@
 	UnregisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION)
 	UnregisterSignal(parent, COMSIG_SHUTTLE_TURF_SHOULD_MOVE_SPECIAL)
 	UnregisterSignal(parent, COMSIG_SHUTTLE_TURF_ON_MOVE_SPECIAL)
+	UnregisterSignal(parent, COMSIG_ATOM_EMP_ACT)
 
 /datum/component/trapdoor/proc/try_unlink(turf/source, mob/user, obj/item/tool)
 	SIGNAL_HANDLER
@@ -324,6 +326,15 @@
 /datum/component/trapdoor/proc/on_move_special(datum/source, turf/new_turf)
 	SIGNAL_HANDLER
 	new_turf.TakeComponent(src)
+
+/datum/component/trapdoor/proc/on_emp_act(datum/source, severity, protection)
+	SIGNAL_HANDLER
+
+	if(protection & EMP_PROTECT_SELF)
+		return
+
+	if(prob(75 / severity))
+		toggle_trapdoor()
 
 #undef IS_OPEN
 
