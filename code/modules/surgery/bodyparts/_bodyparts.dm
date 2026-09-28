@@ -1180,10 +1180,12 @@
 
 	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(applied_items, LIMB_ITEM_GAUZE)
 	if(current_gauze)
+		// future todo : icon states for dirty bandages as well
+		// future todo : different color for different gauze types (med gauze is blue)
 		var/mutable_appearance/gauze_overlay = current_gauze.build_worn_icon(
 			default_layer = GAUZE_LAYER, // build_worn_icon inverts it for us
 			override_file = 'icons/mob/human/bandage.dmi',
-			override_state = current_gauze.worn_icon_state, // future todo : icon states for dirty bandages as well
+			override_state = current_gauze.worn_icon_state,
 		)
 		LAZYADD(overlays, gauze_overlay)
 
