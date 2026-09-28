@@ -285,7 +285,7 @@
 	remove_overlay(DAMAGE_LAYER)
 
 	var/mutable_appearance/damage_overlay
-	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
+	for(var/obj/item/bodypart/iter_part as anything in get_bodyparts())
 		var/list/part_overlays = iter_part.get_bodypart_damage_state()
 		if(!LAZYLEN(part_overlays))
 			continue
