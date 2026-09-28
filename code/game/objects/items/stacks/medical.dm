@@ -488,6 +488,7 @@
 				)
 
 	else
+		treatment_delay *= 1.5
 		if(user == patient)
 			user.visible_message(
 				span_notice("[user] begins to wrap [patient]'s [limb.plaintext_zone] with [src]..."),
@@ -504,7 +505,7 @@
 	if(heal_begin_sound)
 		playsound(src, heal_begin_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 
-	if(!do_after(user, treatment_delay * (any_wound ? 1 : 1.5), patient))
+	if(!do_after(user, treatment_delay, patient))
 		return FALSE
 
 	if(islist(heal_end_sound))
