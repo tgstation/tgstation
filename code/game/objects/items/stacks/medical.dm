@@ -488,7 +488,7 @@
 				)
 
 	else
-		treatment_delay *= 1.5
+		treatment_delay *= 1.25
 		if(user == patient)
 			user.visible_message(
 				span_notice("[user] begins to wrap [patient]'s [limb.plaintext_zone] with [src]..."),
