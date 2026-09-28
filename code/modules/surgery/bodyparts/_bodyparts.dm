@@ -470,7 +470,7 @@
 		else
 			check_list += span_warning(tourniquet_text)
 	if(current_gauze)
-		var/gauze_href = "<a href='?src=[REF(examiner)];gauze_limb=[REF(src)]'>[icon2html(current_gauze, examiner)] \a [current_gauze]</a>"
+		var/gauze_href = "<a href='byond://?src=[REF(examiner)];gauze_limb=[REF(src)]'>[icon2html(current_gauze, examiner)] \a [current_gauze]</a>"
 		var/gauze_text = "\tThere is [gauze_href] wrapped around your [name]."
 		check_list += span_notice(gauze_text)
 
