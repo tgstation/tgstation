@@ -653,7 +653,7 @@
 		else //telekinesis
 			visible_message(span_notice("[tool] cuts [src] into pieces of cloth."), \
 				blind_message = span_hear("You hear cutting."))
-		use(2)
+		use(absorption_capacity <= initial(absorption_capacity) * 0.5 ? 1 : 2)
 		return ITEM_INTERACT_SUCCESS
 
 	return NONE
