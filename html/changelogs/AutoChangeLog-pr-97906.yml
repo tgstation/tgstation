@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "When attempting to craft a recipe which has a craftable component, you can hover over said component to see its recipe. If that recipe has a craftable component, you can then hover over that, and so on.... allowing you to view entire recipes without losing your original place in the UI."
+  - qol: "Food crafting menu no longer has a third tab for \"food type\", you can instead filter by \"food type\" the same way you filter by cuisine or dish type on the left"
+  - qol: "Food crafting menu now informs you of alternate sources of ingredients, such as from the biogenerator"
