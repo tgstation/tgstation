@@ -79,6 +79,13 @@
 			else
 				. += span_notice(tourniquet_msg)
 
+		var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(body_part.applied_items, LIMB_ITEM_GAUZE)
+		if(current_gauze)
+			var/gauze_href = current_gauze.name
+			if(treatment_distance) // only shows the href if we're adjacent
+				gauze_href = "<a href='?src=[REF(src)];gauze_limb=[REF(body_part)]'>[gauze_href]</a>"
+			. += span_notice("There is some [icon2html(current_gauze, user)] [gauze_href] wrapped around [t_his] [body_part.plaintext_zone].")
+
 		for(var/datum/wound/iter_wound as anything in body_part.wounds)
 			if(isnull(iter_wound.examine_desc))
 				continue

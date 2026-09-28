@@ -285,19 +285,13 @@
 	remove_overlay(DAMAGE_LAYER)
 
 	var/mutable_appearance/damage_overlay
-	for(var/obj/item/bodypart/iter_part as anything in get_bodyparts())
-		if(!iter_part.dmg_overlay_type)
+	for(var/obj/item/bodypart/iter_part as anything in bodyparts)
+		var/list/part_overlays = iter_part.get_bodypart_damage_state()
+		if(!LAZYLEN(part_overlays))
 			continue
-		if(isnull(damage_overlay) && (iter_part.brutestate || iter_part.burnstate))
-			damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "blank", -DAMAGE_LAYER, appearance_flags = KEEP_TOGETHER)
-		if(iter_part.brutestate)
-			var/mutable_appearance/blood_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0", appearance_flags = RESET_COLOR) //we're adding icon_states of the base image as overlays
-			blood_damage_overlay.color = get_bloodtype()?.get_damage_color(src)
-			var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0_overlay", appearance_flags = RESET_COLOR)
-			blood_damage_overlay.overlays += brute_damage_overlay
-			damage_overlay.add_overlay(blood_damage_overlay)
-		if(iter_part.burnstate)
-			damage_overlay.add_overlay("[iter_part.dmg_overlay_type]_[iter_part.body_zone]_0[iter_part.burnstate]")
+
+		damage_overlay ||= mutable_appearance(layer = -DAMAGE_LAYER)
+		damage_overlay.overlays += part_overlays
 
 	if(isnull(damage_overlay))
 		return
