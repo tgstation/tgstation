@@ -19,6 +19,7 @@
 	heat_protection = CHEST|GROIN|LEGS|ARMS
 	max_heat_protection_temperature = ARMOR_MAX_TEMP_PROTECT
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie
+	bodyshapes_with_variations = NONE
 
 /datum/armor/hooded_cultrobes
 	melee = 40

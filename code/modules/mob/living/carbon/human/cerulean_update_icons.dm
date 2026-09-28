@@ -23,7 +23,7 @@
 	// if we are generating for modsuits, we need to run through a bespoke proc!
 	var/obj/item/clothing/suit/mod/modsuit_item = src
 	if(istype(modsuit_item))
-		cerulean_clothing_icon = modsuit_item.handle_cerulean_modsuit(base_icon, greyscale_colors, physique)
+		cerulean_clothing_icon = modsuit_item.handle_cerulean_modsuit(base_icon, key, greyscale_colors, physique)
 	// go to work
 	else if(bodyshapes_with_variations & BODYSHAPE_CERULEAN)
 		// if we have to mask
@@ -69,11 +69,14 @@
 
 				// flippy flippers
 				if(physique == FEM_FLIPPER && suit_item.cerulean_flipper_palette != NO_FLIPPERS)
+					var/color_to_use = suit_item.cerulean_flipper_palette
+					if(!color_to_use || color_to_use == FLIPPERS)
+						color_to_use = greyscale_colors
 					cerulean_clothing_icon.Blend(
 						icon(
 							SSgreyscale.GetColoredIconByType(
 								/datum/greyscale_config/modular_mod_parts_cerulean/basic,
-								suit_item.cerulean_flipper_palette || greyscale_colors,
+								color_to_use,
 							),
 							"[FLIPPERS]",
 						),
@@ -96,11 +99,11 @@
  *	If a drawn sprite exists, we prioritize it. If it doesn't, we'll look for an entry in var/list/cerulean_tail_palette
  *	If that doesn't, we'll generate a basic modsuit icon for the Cerulean.
  */
-/obj/item/clothing/suit/mod/proc/handle_cerulean_modsuit(icon/base_icon, greyscale_colors, physique)
+/obj/item/clothing/suit/mod/proc/handle_cerulean_modsuit(icon/base_icon, key, greyscale_colors, physique)
 	/// whether the modsuit is sealed or open, we read this from our lovely key
 	var/sealed = findtext(icon_state, SEALED) ? TRUE : FALSE
-	/// the entry in var/list/cerulean_tail_palette
-	var/datum/mod_theme/theme = GLOB.mod_themes[find_mod_theme(icon_state)]
+	///
+	var/datum/mod_theme/theme = find_mod_theme(key)
 
 	/// our full icon state string, lets find a pre-drawn modsuit!
 	var/icon_state_string = "[physique == FEM_FLIPPER ? "[FEM_FLIPPER]-" : ""][icon_state]"
@@ -140,8 +143,10 @@
 		)
 	// apply a flipper icon if we are sealed and have a female physique.
 	// ideally we color after the theme fetched from var/cerulean_flipper_palette
-	if(physique == FEM_FLIPPER && sealed && theme.cerulean_flipper_palette != NO_FLIPPERS)
-		var/color_to_use = (theme.cerulean_flipper_palette == FLIPPERS) ? greyscale_colors : theme.cerulean_flipper_palette
+	if(physique == FEM_FLIPPER && sealed && theme?.cerulean_flipper_palette != NO_FLIPPERS)
+		var/color_to_use = theme?.cerulean_flipper_palette
+		if(!color_to_use || color_to_use == FLIPPERS)
+			color_to_use = greyscale_colors
 		base_icon.Blend(
 			icon(
 				SSgreyscale.GetColoredIconByType(
@@ -156,11 +161,12 @@
 	// 🪸🐟
 	return base_icon
 
-/// Simple proc to search through mod_themes global to return a theme path
+/// Simple proc to search through mod_themes global to return a theme
 /proc/find_mod_theme(haystack)
-	for(var/datum/mod_theme/theme_entry as anything in GLOB.mod_themes)
-		if(findtext(haystack, theme_entry.name))
-			return theme_entry
+	for(var/entry in GLOB.mod_themes)
+		var/datum/mod_theme/theme_singleton = GLOB.mod_themes[entry]
+		if(findtext(haystack, theme_singleton.default_skin))
+			return theme_singleton
 
 #undef FEM_FLIPPER
 #undef SEALED

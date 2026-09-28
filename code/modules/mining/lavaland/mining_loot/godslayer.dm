@@ -12,6 +12,8 @@
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	resistance_flags = FIRE_PROOF | ACID_PROOF | FREEZE_PROOF
 	transparent_protection = HIDEGLOVES|HIDESUITSTORAGE|HIDEJUMPSUIT|HIDESHOES
+	bodyshapes_with_variations = BODYSHAPE_CERULEAN
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 	/// Amount to heal when the effect is triggered
 	var/heal_amount = 500
 	/// Time until the effect can take place again

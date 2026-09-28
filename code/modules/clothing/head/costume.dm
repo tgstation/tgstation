@@ -246,3 +246,5 @@
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES|HIDEFACE|HIDEHAIR|HIDESNOUT
 	flags_cover = HEADCOVERSEYES | HEADCOVERSMOUTH
 	dog_fashion = null
+	bodyshapes_with_variations = BODYSHAPE_CERULEAN
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS

@@ -69,6 +69,8 @@
 	clothing_flags = THICKMATERIAL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	bodyshapes_with_variations = BODYSHAPE_CERULEAN
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 //Bunny bag!
 /obj/item/storage/backpack/satchel/bunnysatchel

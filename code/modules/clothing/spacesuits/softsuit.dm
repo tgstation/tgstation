@@ -34,7 +34,7 @@
 	inhand_icon_state = "s_suit"
 	desc = "A lightweight space suit with the basic ability to protect the wearer from the vacuum of space during emergencies."
 	armor_type = /datum/armor/space_eva
-	cerulean_flipper_palette = "#888888"
+	cerulean_flipper_palette = "#2e2e2e"
 
 /obj/item/clothing/head/helmet/space/eva
 	name = "\improper EVA helmet"

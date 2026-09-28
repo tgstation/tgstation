@@ -23,6 +23,8 @@
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	clothing_flags = THICKMATERIAL|HEADINTERNALS
+	bodyshapes_with_variations = BODYSHAPE_CERULEAN
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /datum/armor/hooded_berserker
 	melee = 30

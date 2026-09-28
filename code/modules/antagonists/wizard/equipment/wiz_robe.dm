@@ -180,6 +180,7 @@
 	icon_state = "magusblue"
 	inhand_icon_state = null
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/suit/wizrobe/magusred
 	name = "\improper Magus robe"
@@ -187,12 +188,14 @@
 	icon_state = "magusred"
 	inhand_icon_state = null
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/suit/wizrobe/santa
 	name = "Santa's suit"
 	desc = "Festive!"
 	icon_state = "santa"
 	inhand_icon_state = "santa"
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/suit/wizrobe/fake
 	name = "wizard robe"
