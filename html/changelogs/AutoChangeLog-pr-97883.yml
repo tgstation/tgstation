@@ -1,0 +1,6 @@
+author: "timothymtorres"
+delete-after: True
+changes:
+  - bugfix: "Fix incorrect scaling for breath code heat messages."
+  - bugfix: "Fix breath temperature skipping damage effects in very rare situations."
+  - refactor: "Slight refactor of breath code temperature checks to be faster and cleaner."
