@@ -52,6 +52,10 @@
 	contract.try_to_unlock_contract(user)
 	return ITEM_INTERACT_SUCCESS
 
+/obj/machinery/computer/cargo/update_for_power_bars()
+	. = ..()
+	update_static_data_for_all_viewers()
+
 /obj/machinery/computer/cargo/emag_act(mob/user, obj/item/card/emag/emag_card)
 	if(obj_flags & EMAGGED)
 		return FALSE

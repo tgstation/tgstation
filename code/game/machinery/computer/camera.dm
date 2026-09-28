@@ -1,5 +1,3 @@
-#define DEFAULT_MAP_SIZE 15
-
 /obj/machinery/computer/security
 	name = "security camera console"
 	desc = "Used to access the various cameras on the station."
@@ -12,10 +10,7 @@
 
 	var/list/network = list(CAMERANET_NETWORK_SS13)
 	var/obj/machinery/camera/active_camera
-	/// The turf where the camera was last updated.
-	var/turf/last_camera_turf
 	var/list/concurrent_users = list()
-
 	// Stuff needed to render the map
 	var/atom/movable/screen/map_view/camera/cam_screen
 
@@ -32,6 +27,8 @@
 	// Initialize map objects
 	cam_screen = new
 	cam_screen.generate_view(map_name)
+
+	AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_bar_update)), POWER_BAR_DEPARTMENT_SECURITY) // security only
 
 /obj/machinery/computer/security/Destroy()
 	QDEL_NULL(cam_screen)
@@ -118,32 +115,8 @@
 		cam_screen.show_camera_static()
 		return
 
-	var/list/visible_turfs = list()
-
-	// Get the camera's turf to correctly gather what's visible from its turf, in case it's located in a moving object (borgs / mechs)
-	var/new_cam_turf = get_turf(active_camera)
-
-	// If we're not forcing an update for some reason and the cameras are in the same location,
-	// we don't need to update anything.
-	// Most security cameras will end here as they're not moving.
-	if(last_camera_turf == new_cam_turf)
-		return
-
-	// Cameras that get here are moving, and are likely attached to some moving atom such as cyborgs.
-	last_camera_turf = new_cam_turf
-
-	//Here we gather what's visible from the camera's POV based on its view_range and xray modifier if present
-	var/list/visible_things = active_camera.isXRay(ignore_malf_upgrades = TRUE) ? range(active_camera.view_range, new_cam_turf) : view(active_camera.view_range, new_cam_turf)
-
-	for(var/turf/visible_turf in visible_things)
-		visible_turfs += visible_turf
-
-	//Get coordinates for a rectangle area that contains the turfs we see so we can then clear away the static in the resulting rectangle area
-	var/list/bbox = get_bbox_of_atoms(visible_turfs)
-	var/size_x = bbox[3] - bbox[1] + 1
-	var/size_y = bbox[4] - bbox[2] + 1
-
-	cam_screen.show_camera(visible_turfs, size_x, size_y)
+	// Security only, but all camera consoles get access
+	active_camera.update_camera_screens(cam_screen, force_xray = SSpower_bars.power_bars_of_department(POWER_BAR_DEPARTMENT_SECURITY) == 3)
 
 /obj/machinery/computer/security/ui_close(mob/user)
 	. = ..()
@@ -158,7 +131,6 @@
 		active_camera?.on_stop_watching(src)
 		active_camera = null
 		cam_screen?.set_display(null)
-		last_camera_turf = null
 		playsound(src, 'sound/machines/terminal/terminal_off.ogg', 25, FALSE)
 
 /atom/movable/screen/map_view/camera
@@ -188,6 +160,10 @@
 	vis_contents.Cut()
 	cam_background.icon_state = "scanline2"
 	cam_background.fill_rect(1, 1, DEFAULT_MAP_SIZE, DEFAULT_MAP_SIZE)
+
+/obj/machinery/computer/security/proc/on_power_bar_update(new_power_bars)
+	update_active_camera_screen()
+	return POWER_BAR_DONT_REACT
 
 // SECURITY MONITORS
 /obj/machinery/computer/security/wooden_tv
@@ -230,5 +206,3 @@
 	desc = "A console with access to the mining, auxiliary base and vault camera networks."
 	network = list(CAMERANET_NETWORK_MINE, CAMERANET_NETWORK_AUXBASE, CAMERANET_NETWORK_VAULT)
 	circuit = null
-
-#undef DEFAULT_MAP_SIZE

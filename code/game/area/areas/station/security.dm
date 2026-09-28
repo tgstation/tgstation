@@ -8,6 +8,8 @@
 	sound_environment = SOUND_AREA_STANDARD_STATION
 	tacmap_color = TACMAP_AREA_SECURITY
 
+	power_bar_department = POWER_BAR_DEPARTMENT_SECURITY
+
 /area/station/security/office
 	name = "\improper Security Office"
 	icon_state = "security"

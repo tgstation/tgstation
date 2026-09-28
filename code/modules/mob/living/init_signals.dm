@@ -292,11 +292,10 @@
 /// Called when [TRAIT_NEGATES_GRAVITY] is gained or lost
 /mob/living/proc/on_negate_gravity(datum/source)
 	SIGNAL_HANDLER
-	if(!isgroundlessturf(loc))
-		if(HAS_TRAIT(src, TRAIT_NEGATES_GRAVITY))
-			ADD_TRAIT(src, TRAIT_IGNORING_GRAVITY, IGNORING_GRAVITY_NEGATION)
-		else
-			REMOVE_TRAIT(src, TRAIT_IGNORING_GRAVITY, IGNORING_GRAVITY_NEGATION)
+	if(!HAS_TRAIT(src, TRAIT_NEGATES_GRAVITY) || ATOM_FORBIDS_GRAVITY_NEGATION(loc))
+		REMOVE_TRAIT(src, TRAIT_IGNORING_GRAVITY, IGNORING_GRAVITY_NEGATION)
+	else
+		ADD_TRAIT(src, TRAIT_IGNORING_GRAVITY, IGNORING_GRAVITY_NEGATION)
 
 /// Called when [TRAIT_IGNORING_GRAVITY] is gained or lost
 /mob/living/proc/on_ignore_gravity(datum/source)

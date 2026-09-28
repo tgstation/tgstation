@@ -200,6 +200,10 @@
 	origin = null
 	return ..()
 
+/datum/beam/proc/set_icon_state(icon_state)
+	src.icon_state = icon_state
+	visuals?.icon_state = icon_state
+
 /**
  * Creates the beam effects and places them in a line from the origin to the target. Sets their rotation to make the beams face the target, too.
  */
@@ -214,6 +218,13 @@
 	var/origin_py = (isnull(override_origin_pixel_y) ? origin.pixel_y : override_origin_pixel_y) + origin.pixel_z
 	var/target_px = (isnull(override_target_pixel_x) ? target.pixel_x : override_target_pixel_x) + target.pixel_w
 	var/target_py = (isnull(override_target_pixel_y) ? target.pixel_y : override_target_pixel_y) + target.pixel_z
+
+	// Prototype: Why do I need this????????? Why is it offset???????????? // melbert todo
+	if (istype(target, /obj/contained_singularity))
+		origin_px = isnull(override_origin_pixel_x) ? 0 : override_origin_pixel_x
+		origin_py = isnull(override_origin_pixel_y) ? 0 : override_origin_pixel_y
+		target_px = isnull(override_target_pixel_x) ? 0 : override_target_pixel_x
+		target_py = isnull(override_target_pixel_y) ? 0 : override_target_pixel_y
 
 	// Seed from where segments visually are *now*, not where the last Draw asked them to end up.
 	// If the previous animation is still in flight (e.g. consecutive-tick or mid-diagonal moves),

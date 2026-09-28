@@ -64,6 +64,9 @@
 /proc/cmp_ckey_dsc(client/a, client/b)
 	return sorttext(a.ckey, b.ckey)
 
+/proc/cmp_list_first_index_asc(list/a, list/b)
+	return a[1] - b[1]
+
 /proc/cmp_playtime_asc(client/a, client/b)
 	return cmp_numeric_asc(a.get_exp_living(TRUE), b.get_exp_living(TRUE))
 

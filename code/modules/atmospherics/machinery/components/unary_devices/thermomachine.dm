@@ -25,6 +25,7 @@
 	greyscale_colors = COLOR_VIBRANT_LIME
 
 	set_dir_on_move = FALSE
+	forced_power_bar_tier = 3
 
 	var/min_temperature = T20C //actual temperature will be defined by RefreshParts()
 	var/max_temperature = T20C //actual temperature will be defined by RefreshParts()

@@ -153,10 +153,15 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 				thing.forceMove(machine)
 			machine.component_parts += part
 		replacement_parts = null
-	else
+
+	else if(!SSpower_bars.enabled)
+		// despite the name this instances a bunch of stuff
 		flatten_component_list(machine)
 
-	machine.RefreshParts()
+	if(SSpower_bars.enabled)
+		machine.update_for_power_bars()
+	else
+		machine.RefreshParts()
 
 /obj/item/circuitboard/machine/examine(mob/user)
 	. = ..()
@@ -185,6 +190,9 @@ micro-manipulator, console screen, beaker, Microlaser, matter bin, power cells.
 			else
 				var/datum/stock_part/datum_part = component_path
 				stock_part = initial(datum_part.physical_object_type)
+
+			if(!allowed_stockpart(stock_part))
+				continue
 
 			if(!specific_parts)
 				component_name = initial(stock_part.base_name)

@@ -2,10 +2,10 @@
 	. = ..()
 	update_turf_movespeed(loc)
 	if(HAS_TRAIT(src, TRAIT_NEGATES_GRAVITY))
-		if(!isgroundlessturf(loc))
-			ADD_TRAIT(src, TRAIT_IGNORING_GRAVITY, IGNORING_GRAVITY_NEGATION)
-		else
+		if(ATOM_FORBIDS_GRAVITY_NEGATION(loc))
 			REMOVE_TRAIT(src, TRAIT_IGNORING_GRAVITY, IGNORING_GRAVITY_NEGATION)
+		else
+			ADD_TRAIT(src, TRAIT_IGNORING_GRAVITY, IGNORING_GRAVITY_NEGATION)
 
 	var/turf/old_turf = get_turf(old_loc)
 	var/turf/new_turf = get_turf(src)

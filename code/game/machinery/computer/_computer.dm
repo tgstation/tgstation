@@ -8,6 +8,8 @@
 	armor_type = /datum/armor/machinery_computer
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_LITERACY
 	voice_filter = "alimiter=0.9,acompressor=threshold=0.2:ratio=20:attack=10:release=50:makeup=2,highpass=f=1000"
+
+	generate_map_preview = TRUE
 	/// How bright we are when turned on.
 	var/brightness_on = 1
 	/// Icon_state of the keyboard overlay.
@@ -22,7 +24,6 @@
 	var/authenticated = FALSE
 	/// Will projectiles be able to pass over this computer?
 	var/projectiles_pass_chance = 65
-	generate_map_preview = TRUE
 
 /datum/armor/machinery_computer
 	fire = 40

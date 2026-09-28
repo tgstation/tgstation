@@ -1,5 +1,3 @@
-#define DEFAULT_MAP_SIZE 15
-
 /datum/computer_file/program/secureye
 	filename = "secureye"
 	filedesc = "SecurEye"
@@ -238,5 +236,3 @@
 
 	cam_screen.show_camera(visible_turfs, size_x, size_y)
 	cam_screen.set_display(active_camera)
-
-#undef DEFAULT_MAP_SIZE

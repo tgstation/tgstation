@@ -78,8 +78,8 @@
 		/datum/design/medibot_upgrade/tier_four,
 		/datum/design/surgery/brainwashing,
 		/datum/design/surgery/brainwashing/mechanic,
-		/datum/design/surgery/tend_wounds_combo/upgrade/femto,
 		/datum/design/surgery/necrotic_revival,
+		/datum/design/surgery/tend_wounds_combo/upgrade/femto,
 	)
 	required_items_to_unlock = list(
 		/obj/item/cautery/alien,

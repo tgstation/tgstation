@@ -243,6 +243,8 @@
 	add_avail(power_to_energy(sgen))
 	if(control)
 		control.gen += sgen
+		if (sunfrac >= 0.9)
+			control.solar_panels_tracked += 1
 
 //Bit of a hack but this whole type is a hack
 /obj/machinery/power/solar/fake/Initialize(mapload, obj/item/solar_assembly/S)
@@ -440,6 +442,12 @@
 	var/record_interval = 60 SECONDS
 	///History record timer
 	var/next_record = 0
+	/// Number of solar panels tracked by this tracker
+	var/solar_panels_tracked = 0
+	/// Number of solar panels tracked by this tracker in the last tick
+	var/last_solar_panels_tracked = 0
+
+GLOBAL_LIST_EMPTY(solar_controls)
 
 /obj/machinery/power/solar_control/Initialize(mapload)
 	. = ..()
@@ -451,12 +459,14 @@
 	record_interval = SSsun.wait
 	history["supply"] = list()
 	history["capacity"] = list()
+	GLOB.solar_controls += src
 
 /obj/machinery/power/solar_control/Destroy()
 	for(var/obj/machinery/power/solar/M in connected_panels)
 		M.unset_control()
 	if(connected_tracker)
 		connected_tracker.unset_control()
+	GLOB.solar_controls -= src
 	return ..()
 
 //search for unconnected panels and trackers in the computer powernet and connect them
@@ -609,6 +619,10 @@
 /obj/machinery/power/solar_control/process()
 	lastgen = gen
 	gen = 0
+
+	last_solar_panels_tracked = solar_panels_tracked
+	solar_panels_tracked = 0
+
 	if(connected_tracker && (!powernet || connected_tracker.powernet != powernet))
 		connected_tracker.unset_control()
 	record()

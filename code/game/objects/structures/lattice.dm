@@ -63,6 +63,9 @@
 		log_mapping("multiple lattices found in ([loc.x], [loc.y], [loc.z], [get_area(LAT)])")
 		return INITIALIZE_HINT_QDEL
 
+	if (isturf(loc))
+		ADD_TRAIT(loc, TRAIT_ALLOWS_GRAVITY_NEGATION, type)
+
 /obj/structure/lattice/blob_act(obj/structure/blob/B)
 	return
 
@@ -112,6 +115,15 @@
 	var/new_catwalk = new /obj/structure/lattice/catwalk(turf)
 	for(var/datum/callback/callback as anything in post_replacement_callbacks)
 		callback.Invoke(new_catwalk)
+
+/obj/structure/lattice/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+
+	if (isturf(old_loc))
+		REMOVE_TRAIT(old_loc, TRAIT_ALLOWS_GRAVITY_NEGATION, type)
+
+	if (isturf(loc))
+		ADD_TRAIT(loc, TRAIT_ALLOWS_GRAVITY_NEGATION, type)
 
 /obj/structure/lattice/catwalk
 	name = "catwalk"

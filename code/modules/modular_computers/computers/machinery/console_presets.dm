@@ -7,9 +7,25 @@
 	if(!cpu)
 		return
 
+	if(SSpower_bars.initialized)
+		if(SSpower_bars.enabled)
+			starting_programs -= /datum/computer_file/program/supermatter_monitor
+	else
+		RegisterSignal(SSpower_bars, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(powerbars_init))
+
 	for(var/programs in starting_programs)
 		var/datum/computer_file/program_type = new programs
 		cpu.store_file(program_type)
+
+/obj/machinery/modular_computer/preset/proc/powerbars_init()
+	SIGNAL_HANDLER
+
+	if(!SSpower_bars.enabled)
+		return
+
+	UnregisterSignal(SSpower_bars, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	for(var/datum/computer_file/program/supermatter_monitor/sm_monitor in cpu.stored_files)
+		cpu.remove_file(sm_monitor)
 
 // ===== ENGINEERING CONSOLE =====
 /obj/machinery/modular_computer/preset/engineering

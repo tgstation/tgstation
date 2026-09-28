@@ -69,9 +69,35 @@
 	AddComponent(/datum/component/security_vision, judgement_criteria = NONE, update_judgement_criteria = CALLBACK(src, PROC_REF(judgement_criteria)))
 	add_arrest_component()
 
+	AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_bar_update)), POWER_BAR_DEPARTMENT_SECURITY)
+
 /mob/living/basic/bot/secbot/Destroy()
 	QDEL_NULL(weapon)
 	return ..()
+
+/mob/living/basic/bot/secbot/proc/on_power_bar_update(power_bars)
+	var/speed_setting = initial(speed)
+	switch (power_bars)
+		if (2)
+			speed_setting *= 1.5
+		if (3)
+			speed_setting *= 3
+
+	set_varspeed(speed_setting)
+
+/mob/living/basic/bot/secbot/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
+	. = ..()
+	if (SSpower_bars.enabled && isturf(loc))
+		switch (SSpower_bars.power_bars_of_department(POWER_BAR_DEPARTMENT_SECURITY))
+			if (2)
+				if (prob(3))
+					track_oil()
+			if (3)
+				if (prob(15))
+					track_oil()
+
+/mob/living/basic/bot/secbot/proc/track_oil()
+	new /obj/effect/decal/cleanable/blood/oil(loc)
 
 /mob/living/basic/bot/secbot/update_icon_state()
 	if(mode == BOT_HUNT)

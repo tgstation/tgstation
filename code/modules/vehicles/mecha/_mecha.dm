@@ -49,12 +49,6 @@
 	var/equipment_disabled = FALSE
 	/// Keeps track of the mech's cell
 	var/obj/item/stock_parts/power_store/cell
-	/// Keeps track of the mech's scanning module
-	var/obj/item/stock_parts/scanning_module/scanmod
-	/// Keeps track of the mech's capacitor
-	var/obj/item/stock_parts/capacitor/capacitor
-	/// Keeps track of the mech's servo motor
-	var/obj/item/stock_parts/servo/servo
 	/// Contains flags for the mecha
 	var/mecha_flags = CAN_STRAFE | IS_ENCLOSED | HAS_LIGHTS | MMI_COMPATIBLE | BEACON_TRACKABLE | AI_COMPATIBLE | BEACON_CONTROLLABLE
 
@@ -198,6 +192,19 @@
 	/// Whether we've been knocked down, unable to move
 	var/toppled = FALSE
 
+	/// If power bars are enabled, and this is a number, we force the mech to use that number for power level
+	var/forced_power_bar = null
+
+	var/power_dept = POWER_BAR_DEPARTMENT_SCIENCE
+
+	VAR_PRIVATE/capacitor_rating
+	VAR_PRIVATE/servo_rating
+	VAR_PRIVATE/scanmod_rating
+
+	VAR_PRIVATE/capacitor_name
+	VAR_PRIVATE/servo_name
+	VAR_PRIVATE/scanmod_name
+
 /datum/armor/sealed_mecha
 	melee = 20
 	bullet = 10
@@ -252,6 +259,8 @@
 	AddElement(/datum/element/falling_hazard, damage = 80, wound_bonus = 10, hardhat_safety = FALSE, crushes = TRUE)
 	AddElement(/datum/element/hostile_machine)
 
+	AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_bar_update)), POWER_BAR_DEPARTMENT_SCIENCE)
+
 /obj/vehicle/sealed/mecha/Destroy()
 	// If the former occupants get polymorphed, mutated, chestburstered,
 	// or otherwise replaced by another mob, that mob is no longer in .occupants
@@ -271,9 +280,6 @@
 	QDEL_NULL(ore_box)
 
 	QDEL_NULL(cell)
-	QDEL_NULL(scanmod)
-	QDEL_NULL(capacitor)
-	QDEL_NULL(servo)
 	QDEL_NULL(cabin_air)
 	QDEL_NULL(spark_system)
 	QDEL_NULL(ui_view)
@@ -288,19 +294,19 @@
 /// Add parts on mech spawning. Skipped in manual construction.
 /obj/vehicle/sealed/mecha/proc/populate_parts()
 	cell = new /obj/item/stock_parts/power_store/cell/high(src)
-	scanmod = new /obj/item/stock_parts/scanning_module(src)
-	capacitor = new /obj/item/stock_parts/capacitor(src)
-	servo = new /obj/item/stock_parts/servo(src)
+	if (!SSpower_bars.enabled)
+		new /obj/item/stock_parts/scanning_module(src)
+		new /obj/item/stock_parts/capacitor(src)
+		new /obj/item/stock_parts/servo(src)
 	update_part_values()
 
-/obj/vehicle/sealed/mecha/proc/locate_parts()
-	cell = locate(/obj/item/stock_parts/power_store) in contents
-	diag_hud_set_mechcell()
-	scanmod = locate(/obj/item/stock_parts/scanning_module) in contents
-	capacitor = locate(/obj/item/stock_parts/capacitor) in contents
-	servo = locate(/obj/item/stock_parts/servo) in contents
-	update_part_values()
+/obj/vehicle/sealed/mecha/Exited(atom/movable/gone, direction)
+	. = ..()
+	if(gone == cell)
+		cell = null
 
+	if(!QDELING(src) && istype(gone, /obj/item/stock_parts))
+		update_part_values()
 
 /obj/vehicle/sealed/mecha/update_icon_state()
 	icon_state = get_mecha_occupancy_state()
@@ -452,34 +458,112 @@
 		to_chat(mob_occupant, span_notice("Equipment control unit has been rebooted successfully."))
 	set_mouse_pointer()
 
-/// Updates the values given by scanning module and capacitor tier, called when a part is removed or inserted.
 /obj/vehicle/sealed/mecha/proc/update_part_values()
-	update_energy_drain()
+	SHOULD_CALL_PARENT(TRUE)
 
-	if(capacitor)
-		overclock_temp_danger = initial(overclock_temp_danger) * capacitor.rating
+	var/old_cell = cell
+	cell = locate(/obj/item/stock_parts/power_store) in contents
+	if(cell != old_cell)
+		diag_hud_set_mechcell()
+
+	scanmod_rating = 0
+	capacitor_rating = 1
+	servo_rating = 0.5
+
+	if (SSpower_bars.enabled)
+		var/power_tier = isnum(forced_power_bar) ? forced_power_bar : (isnull(power_dept) ? 1 : SSpower_bars.power_bars_of_department(power_dept))
+		switch (power_tier)
+			if(0)
+				pass()
+			if (1)
+				scanmod_rating = 1
+				capacitor_rating = 1
+				servo_rating = 1
+			if (2)
+				scanmod_rating = 2
+				capacitor_rating = 2
+				servo_rating = 2
+			if (3)
+				scanmod_rating = 4
+				capacitor_rating = 4
+				servo_rating = 4
+
+		capacitor_name = "Tier \roman[power_tier]"
+		servo_name = "Tier \roman[power_tier]"
+		scanmod_name = "Tier \roman[power_tier]"
+
 	else
-		overclock_temp_danger = initial(overclock_temp_danger)
+		var/obj/item/stock_parts/scanning_module/scanmod = locate() in contents
+		var/obj/item/stock_parts/capacitor/capacitor = locate() in contents
+		var/obj/item/stock_parts/servo/servo = locate() in contents
+
+		scanmod_rating = isnull(scanmod) ? 0 : scanmod.rating
+		capacitor_rating = isnull(capacitor) ? 1 : capacitor.rating
+		servo_rating = isnull(servo) ? 0.5 : servo.rating
+
+		scanmod_name = isnull(scanmod) ? "None" : scanmod.name
+		capacitor_name = isnull(capacitor) ? "None" : capacitor.name
+		servo_name = isnull(servo) ? "None" : servo.name
+
+	step_energy_drain = (initial(step_energy_drain) / servo_rating) * (overclock_mode ? overclock_coeff : 1)
+	melee_energy_drain = initial(melee_energy_drain) / capacitor_rating
+	light_power_drain = initial(light_power_drain) / capacitor_rating
+	overclock_temp_danger = initial(overclock_temp_danger) / capacitor_rating
+
+/obj/vehicle/sealed/mecha/proc/on_power_bar_update()
+	update_part_values()
 
 /obj/vehicle/sealed/mecha/examine(mob/user)
 	. = ..()
 	if(LAZYLEN(flat_equipment))
 		. += span_notice("It's equipped with:")
 		for(var/obj/item/mecha_parts/mecha_equipment/ME as anything in flat_equipment)
-			if(istype(ME, /obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay))
+			if(ME.examine_hidden)
 				continue
 			. += span_notice("[icon2html(ME, user)] \A [ME].")
+
 	if(mecha_flags & PANEL_OPEN)
-		if(servo)
-			. += span_notice("Servo reduces movement power usage by [100 - round(100 / servo.rating)]%")
+		var/servo_percent = round((1 / servo_rating - 1) * 100)
+		var/has_servo = SSpower_bars.enabled || !!(locate(/obj/item/stock_parts/servo) in contents)
+		if(has_servo)
+			if(servo_percent < 0)
+				. += span_notice("[SSpower_bars.enabled ? "Current [power_dept || "internal"] power setting" : "Its servo"] \
+					reduces movement power consumption by [abs(servo_percent)]%.")
+			else if(servo_percent > 0)
+				. += span_notice("[SSpower_bars.enabled ? "Current [power_dept] power setting" : "Its servo"] \
+					increases movement power consumption by [servo_percent]%.")
+			else
+				. += span_notice("[SSpower_bars.enabled ? "Current [power_dept] power setting" : "Its servo"] \
+					has no effect on movement power consumption.")
+
 		else
-			. += span_warning("It's missing a servo.")
-		if(capacitor)
-			. += span_notice("Capacitor increases armor against energy attacks by [capacitor.rating * 5].")
+			. += span_warning("It's missing a servo, increasing movement power consumption by [servo_percent]%.")
+
+		var/capacitor_percent = round((1 / capacitor_rating - 1) * 100)
+		var/capacitor_threshold = round((capacitor_rating - 1) * 100)
+		var/has_capacitor = SSpower_bars.enabled || !!(locate(/obj/item/stock_parts/capacitor) in contents)
+		if(has_capacitor)
+			if(capacitor_percent > 0)
+				. += span_notice("[SSpower_bars.enabled ? "Current [power_dept || "internal"] power setting" : "Its capacitor"] \
+					reduces component power usage by [abs(capacitor_percent)]%, \
+					increases overclocking threshold by [abs(capacitor_threshold)]%, \
+					and increases EMP resistance by [abs(capacitor_threshold)]%.")
+			else
+				. += span_notice("[SSpower_bars.enabled ? "Current [power_dept] power setting" : "Its capacitor"] \
+					has no effect on general power usage, overclocking threshold, or EMP resistance.")
+
 		else
 			. += span_warning("It's missing a capacitor.")
-		if(!scanmod)
-			. += span_warning("It's missing a scanning module.")
+
+		var/has_scanmod = SSpower_bars.enabled || !!(locate(/obj/item/stock_parts/scanning_module) in contents)
+		if(has_scanmod)
+			if(scanmod_rating < 1)
+				. += span_warning("[SSpower_bars.enabled ? "Current [power_dept] power setting" : "Its scanning module"] offers no damage monitoring.")
+			else
+				. += span_notice("[SSpower_bars.enabled ? "Current [power_dept] power setting" : "Its scanning module"] allows active damage monitoring.")
+		else
+			. += span_warning("It's missing a scanning module, preventing active damage monitoring.")
+
 	if(!(mecha_flags & IS_ENCLOSED))
 		if(mecha_flags & SILICON_PILOT)
 			. += span_notice("[src] appears to be piloting itself...")
@@ -906,25 +990,8 @@
 	else
 		movedelay *= overclock_coeff
 		visible_message(span_notice("[src] cools down and the humming stops."))
-	update_energy_drain()
+	update_part_values()
 	return TRUE
-
-/// Update the energy drain according to parts and status
-/obj/vehicle/sealed/mecha/proc/update_energy_drain()
-	if(servo)
-		step_energy_drain = initial(step_energy_drain) / servo.rating
-	else
-		step_energy_drain = 2 * initial(step_energy_drain)
-
-	if(overclock_mode)
-		step_energy_drain *= overclock_coeff
-
-	if(capacitor)
-		melee_energy_drain = initial(melee_energy_drain) / capacitor.rating
-		light_power_drain = initial(light_power_drain) / capacitor.rating
-	else
-		melee_energy_drain = initial(melee_energy_drain)
-		light_power_drain = initial(light_power_drain)
 
 /// Toggle lights on/off
 /obj/vehicle/sealed/mecha/proc/toggle_lights(forced_state = null, mob/user)

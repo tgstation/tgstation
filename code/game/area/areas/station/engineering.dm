@@ -5,6 +5,8 @@
 	sound_environment = SOUND_AREA_LARGE_ENCLOSED
 	tacmap_color = TACMAP_AREA_ENGINEERING
 
+	power_bar_department = POWER_BAR_DEPARTMENT_ENGINEERING
+
 /area/station/engineering/circuit_workshop
 	name = "\improper Circuit Workshop"
 	icon_state = "cir_wor"

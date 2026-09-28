@@ -1,0 +1,12 @@
+#define TRAIT_CONNECTED_TO_SINGULARITY_CONSOLE "TRAIT_CONNECTED_TO_SINGULARITY_CONSOLE"
+
+#define COMSIG_SINGULARITY_GENERATOR_CREATED_SINGULARITY "singularity_generator_created_singularity"
+
+#define COMSIG_SINGULARITY_SELF_DESTRUCTING "singularity_self_destructing"
+#define COMSIG_SINGULARITY_ADVANCE_SELF_DESTRUCT_STAGE "singularity_advance_self_destruct_stage"
+#define COMSIG_SINGULARITY_TAKE_DAMAGE "singularity_take_damage"
+
+#define SINGULARITY_BREACH_TIME 30
+
+#define COMSIG_GRAVITY_ANCHOR_CHARGER_CHARGED "gravity_anchor_charger_charged"
+#define COMSIG_GRAVITY_ANCHOR_CHARGER_LOST_CHARGE "gravity_anchor_charger_lost_charge"

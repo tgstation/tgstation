@@ -108,21 +108,12 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /// Grants all the languages this headset allows the mob to understand via installed chips.
 /obj/item/radio/headset/proc/grant_headset_languages(mob/grant_to)
-	var/list/language_list = keyslot?.language_data?.Copy()
+	var/list/language_list = list()
+	for(var/obj/item/encryptionkey/key in get_keys())
+		for(var/language, amount_understood in key.language_data)
+			language_list[language] = max(language_list[language], amount_understood)
 
-	if(keyslot2)
-		if(length(language_list))
-			for(var/language in keyslot2.language_data)
-				if(language_list[language] < keyslot2.language_data[language])
-					language_list[language] = keyslot2.language_data[language]
-					continue
-				language_list[language] = keyslot2.language_data[language]
-
-		else
-			language_list = keyslot2.language_data?.Copy()
-
-	for(var/language in language_list)
-		var/amount_understood = language_list[language]
+	for(var/language, amount_understood in language_list)
 		if(amount_understood >= 100)
 			grant_to.grant_language(language, language_flags = UNDERSTOOD_LANGUAGE, source = LANGUAGE_RADIOKEY)
 		else
@@ -439,14 +430,6 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 		if(!QDELING(src))
 			recalculateChannels()
 
-/obj/item/radio/headset/remove_keys(mob/living/user)
-	. = ..()
-	if(!keyslot2)
-		return
-
-	. += keyslot2
-	user.put_in_hands(keyslot2) // null via Exited
-
 /obj/item/radio/headset/install_key(mob/living/user, obj/item/encryptionkey/key)
 	if(!keyslot)
 		return ..()
@@ -467,21 +450,16 @@ GLOBAL_LIST_INIT(channel_tokens, list(
 
 /obj/item/radio/headset/recalculateChannels()
 	. = ..()
-	if(keyslot2)
-		for(var/channel_name in keyslot2.channels)
-			if(!(channel_name in channels))
-				channels[channel_name] = keyslot2.channels[channel_name]
-
-		special_channels |= keyslot2.special_channels
-
-		for(var/ch_name in channels)
-			LAZYSET(secure_radio_connections, ch_name, add_radio(src, GLOB.default_radio_channels[ch_name]))
-
 	// Updates radio languages entirely for the mob wearing the headset
 	var/mob/mob_loc = loc
 	if(istype(mob_loc) && mob_loc.get_item_by_slot(slot_flags) == src)
 		remove_headset_languages(mob_loc)
 		grant_headset_languages(mob_loc)
+
+/obj/item/radio/headset/get_keys()
+	. = ..()
+	if(istype(keyslot2))
+		. += keyslot2
 
 /obj/item/radio/headset/click_alt(mob/living/user)
 	if(!istype(user) || !command)

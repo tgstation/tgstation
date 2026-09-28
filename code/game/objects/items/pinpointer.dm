@@ -121,6 +121,11 @@
 	. = ..()
 	pinpointer_owner = null
 
+/obj/item/pinpointer/crew/Initialize(mapload)
+	. = ..()
+
+	AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_bar_update)), POWER_BAR_DEPARTMENT_MEDICAL)
+
 /obj/item/pinpointer/crew/proc/trackable(mob/living/carbon/human/H)
 	var/turf/here = get_turf(src)
 	var/turf/there = get_turf(H)
@@ -130,6 +135,42 @@
 			if(U.has_sensor && (U.sensor_mode >= SENSOR_COORDS || ignore_suit_sensor_level)) // Suit sensors must be on maximum or a contractor pinpointer
 				return TRUE
 	return FALSE
+
+/obj/item/pinpointer/crew/proc/on_power_bar_update()
+	update_appearance(UPDATE_ICON)
+	maptext = new_maptext()
+
+/obj/item/pinpointer/crew/proc/new_maptext()
+	if (isnull(target))
+		return ""
+
+	if (!SSpower_bars.enabled)
+		return ""
+
+	var/turf/here = get_turf(src)
+	var/turf/there = get_turf(target)
+	var/distance = round(get_dist_euclidean(here, there))
+
+	switch (SSpower_bars.power_bars_of_department(POWER_BAR_DEPARTMENT_MEDICAL))
+		if (2)
+			switch (distance)
+				if (1 to 4)
+					return MAPTEXT("I")
+				if (5 to 16)
+					return MAPTEXT("I I")
+				if (17 to 28)
+					return MAPTEXT("I I I")
+				if (29 to INFINITY)
+					return MAPTEXT("I I I I")
+		if (3)
+			if (distance < 10)
+				return MAPTEXT(distance)
+			else
+				return MAPTEXT("[round(distance / 10)]X")
+
+/obj/item/pinpointer/crew/process()
+	. = ..()
+	maptext = new_maptext()
 
 /obj/item/pinpointer/crew/attack_self(mob/living/user)
 	if(active)
@@ -186,6 +227,17 @@
 				target = null
 	if(!target) //target can be set to null from above code, or elsewhere
 		active = FALSE
+
+/obj/item/pinpointer/crew/examine(mob/user)
+	. = ..()
+
+	if (SSpower_bars.enabled)
+		if (!isnull(target))
+			switch (SSpower_bars.power_bars_of_area(POWER_BAR_DEPARTMENT_MEDICAL))
+				if (2)
+					. += span_notice("The extra power sent to medical allows you to see the proximity to the target.")
+				if (3)
+					. += span_notice("The extra power sent to medical allows you to see the approximate distance to the target.")
 
 /obj/item/pinpointer/pair
 	name = "pair pinpointer"

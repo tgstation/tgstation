@@ -61,7 +61,8 @@
 	print_sound = new(src,  FALSE)
 	rmat = new (src, mapload && link_on_init)
 	cached_designs = list()
-	return ..()
+	. = ..()
+	AddComponent(/datum/component/power_bar_reactor, CALLBACK(src, PROC_REF(on_power_bar_updated)), POWER_BAR_DEPARTMENT_COMMON)
 
 /obj/machinery/mecha_part_fabricator/Destroy()
 	QDEL_NULL(rmat)
@@ -102,6 +103,15 @@
 	// them together.
 	addtimer(CALLBACK(src, PROC_REF(update_menu_tech)), 2 SECONDS, TIMER_UNIQUE | TIMER_OVERRIDE)
 
+/obj/machinery/mecha_part_fabricator/proc/on_power_bar_updated(power_bars)
+	switch (SSpower_bars.power_bars_of_department(POWER_BAR_DEPARTMENT_COMMON))
+		if(0, 1)
+			component_coeff = 1
+		if(2)
+			component_coeff = 0.75
+		if(3)
+			component_coeff = 0.5
+
 /obj/machinery/mecha_part_fabricator/RefreshParts()
 	. = ..()
 	var/T = 0
@@ -111,11 +121,12 @@
 		T += matter_bin.tier
 	rmat.set_local_size(((100 * SHEET_MATERIAL_AMOUNT) + (T * (25 * SHEET_MATERIAL_AMOUNT))))
 
-	//resources adjustment coefficient (1 -> 0.85 -> 0.7 -> 0.55)
-	T = 1.15
-	for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
-		T -= micro_laser.tier * 0.15
-	component_coeff = T
+	if(!SSpower_bars.enabled)
+		//resources adjustment coefficient (1 -> 0.85 -> 0.7 -> 0.55)
+		T = 1.15
+		for(var/datum/stock_part/micro_laser/micro_laser in component_parts)
+			T -= micro_laser.tier * 0.15
+		component_coeff = T
 
 	//building time adjustment coefficient (1 -> 0.8 -> 0.6)
 	T = -1

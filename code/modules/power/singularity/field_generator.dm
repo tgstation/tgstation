@@ -14,15 +14,6 @@ no power level overlay is currently in the overlays list.
 
 #define field_generator_max_power 250
 
-#define FG_OFFLINE 0
-#define FG_CHARGING 1
-#define FG_ONLINE 2
-
-//field generator construction defines
-#define FG_UNSECURED 0
-#define FG_SECURED 1
-#define FG_WELDED 2
-
 /obj/machinery/field/generator
 	name = "field generator"
 	desc = "A large thermal battery that projects a high amount of energy when powered."
@@ -53,6 +44,10 @@ no power level overlay is currently in the overlays list.
 	var/clean_up = FALSE
 	/// we warm up and cool down instantly
 	var/instantenous = FALSE
+	/// The distance the generator will project its field
+	var/generator_distance = 7
+	/// The type of containment field this generator will create
+	var/containment_field_type = /obj/machinery/field/containment
 
 /datum/armor/field_generator
 	melee = 25
@@ -77,7 +72,9 @@ no power level overlay is currently in the overlays list.
 	AddElement(/datum/element/blocks_explosives)
 	. = ..()
 	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF | EMP_PROTECT_WIRES)
-	RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity_if_active))
+
+	if (!SSpower_bars.enabled)
+		RegisterSignal(src, COMSIG_ATOM_SINGULARITY_TRY_MOVE, PROC_REF(block_singularity_if_active))
 
 /obj/machinery/field/generator/anchored/Initialize(mapload)
 	. = ..()
@@ -93,14 +90,37 @@ no power level overlay is currently in the overlays list.
 		return
 	if(get_dist(src, user) > 1)//Need to actually touch the thing to turn it on
 		return
+
 	if(active >= FG_CHARGING)
-		to_chat(user, span_warning("You are unable to turn off [src] once it is online!"))
+		if (DOING_INTERACTION_WITH_TARGET(user, src))
+			return TRUE
+
+		add_fingerprint(user)
+
+		var/extended_delay = FALSE
+
+		if (iscarbon(user))
+			var/mob/living/carbon/carbon_user = user
+			var/obj/item/id_card = carbon_user.get_idcard(hand_first = TRUE)
+			extended_delay = !(ACCESS_ENGINEERING in id_card?.GetAccess())
+
+		if (extended_delay)
+			balloon_alert(user, "no access, reaching for override switch...")
+		else
+			balloon_alert(user, "disabling...")
+
+		if (!do_after(user, extended_delay ? 8 SECONDS : 2 SECONDS, src))
+			return TRUE
+
+		balloon_alert(user, "turned off")
+		playsound(src, 'sound/machines/synth/synth_no.ogg', 50, vary = TRUE, frequency = rand(5120, 8800), pressure_affected = FALSE)
+		turn_off()
+		investigate_log("deactivated by [key_name(user)].", INVESTIGATE_ENGINE)
+
 		return TRUE
 
-	user.visible_message(
-		span_notice("[user] turns on [src]."),
-		span_notice("You turn on [src]."),
-		span_hear("You hear heavy droning."))
+	balloon_alert(user, "turned on")
+	playsound(src, 'sound/machines/synth/synth_yes.ogg', 50, vary = TRUE, frequency = rand(5120, 8800), pressure_affected = FALSE)
 	turn_on()
 	investigate_log("activated by [key_name(user)].", INVESTIGATE_ENGINE)
 
@@ -273,8 +293,7 @@ no power level overlay is currently in the overlays list.
 	//Need more power
 	draw -= power
 	power = 0
-	for(var/connected_generator in connected_gens)
-		var/obj/machinery/field/generator/considered_generator = connected_generator
+	for(var/obj/machinery/field/generator/considered_generator as anything in connected_gens)
 		if(considered_generator == last)//We just asked you
 			continue
 		if(other_generator)//Another gen is askin for power and we dont have it
@@ -310,12 +329,16 @@ no power level overlay is currently in the overlays list.
 	var/steps = 0
 	if(!NSEW)//Make sure its ran right
 		return FALSE
-	for(var/dist in 0 to 7) // checks out to 8 tiles away for another generator
+	for(var/dist in 0 to generator_distance) // checks out to 8 tiles away for another generator
 		current_turf = get_step(current_turf, NSEW)
 		if(current_turf.density)//We cant shoot a field though this
 			return FALSE
 
-		found_generator = locate(/obj/machinery/field/generator) in current_turf
+		for (var/obj/machinery/field/generator/generator in current_turf)
+			if (generator.type == type)
+				found_generator = generator
+				break
+
 		if(found_generator)
 			steps -= 1
 			if(!found_generator.active)
@@ -338,8 +361,15 @@ no power level overlay is currently in the overlays list.
 	for(var/dist in 0 to steps) // creates each field tile
 		var/field_dir = get_dir(current_turf, get_step(found_generator.loc, NSEW))
 		current_turf = get_step(current_turf, NSEW)
-		if(!locate(/obj/machinery/field/containment) in current_turf)
-			var/obj/machinery/field/containment/created_field = new(current_turf)
+
+		var/found_containment_field = FALSE
+		for (var/obj/object as anything in current_turf)
+			if (object.type == containment_field_type)
+				found_containment_field = TRUE
+				break
+
+		if(!found_containment_field)
+			var/obj/machinery/field/containment/created_field = new containment_field_type(current_turf)
 			created_field.set_master(src,found_generator)
 			created_field.setDir(field_dir)
 			fields += created_field
@@ -443,11 +473,3 @@ no power level overlay is currently in the overlays list.
 
 /obj/machinery/field/generator/starts_on/magic/process()
 	return PROCESS_KILL // this is the only place calc_power is called, and doing it here avoids one unnecessary proc call
-
-#undef FG_UNSECURED
-#undef FG_SECURED
-#undef FG_WELDED
-
-#undef FG_OFFLINE
-#undef FG_CHARGING
-#undef FG_ONLINE

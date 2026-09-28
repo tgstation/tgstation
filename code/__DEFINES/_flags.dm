@@ -133,6 +133,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_GRAVITY (1<<14)
 /// This area can be teleported in, but -only- to locations within that same area.
 #define LOCAL_TELEPORT (1<<15)
+/// Machines and APCs ignore the effect of the current powerbar level
+#define NO_POWER_BAR_EFFECTS (1<<16)
 
 ////////////////Area Mapping Flags\\\\\\\\\\\\\\
 /// If false, loading multiple maps with this area type will create multiple instances.

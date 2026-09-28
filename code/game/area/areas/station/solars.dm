@@ -11,6 +11,7 @@
 	airlock_wires = /datum/wires/airlock/engineering
 	sound_environment = SOUND_AREA_SPACE
 	default_gravity = ZERO_GRAVITY
+	area_flags = parent_type::area_flags | NO_POWER_BAR_EFFECTS
 
 /area/station/solars/fore
 	name = "\improper Fore Solar Array"

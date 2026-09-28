@@ -3,6 +3,8 @@
 	sound_environment = SOUND_AREA_STANDARD_STATION
 	airlock_wires = /datum/wires/airlock/ai
 	motion_monitored = TRUE
+	area_flags = parent_type::area_flags | NO_POWER_BAR_EFFECTS
+	power_bar_department = null
 
 	ambientsounds = list('sound/ambience/engineering/ambitech.ogg', 'sound/ambience/engineering/ambitech2.ogg', 'sound/ambience/engineering/ambiatmos.ogg', 'sound/ambience/engineering/ambiatmos2.ogg')
 	/// Disables ambientsounds if TRUE. Used for mundane AI locations like the exterior or storage room.

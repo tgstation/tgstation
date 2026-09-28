@@ -78,12 +78,17 @@
 	phrases_to_return += read_memory() // must come first!!!
 	// now add some valuable lines every poly should have
 	phrases_to_return += list(
-		":e Check the crystal, you chucklefucks!",
-		":e OH GOD ITS ABOUT TO DELAMINATE CALL THE SHUTTLE",
 		":e WHO TOOK THE DAMN MODSUITS?",
 		":e Wire the solars, you lazy bums!",
 		"Poly wanna cracker!",
 	)
+	if (SSpower_bars.enabled)
+		phrases_to_return += ":e OH GOD ITS LOOSE CALL THE SHUTTLE"
+		phrases_to_return += ":e Overclock her, chef needs more meat!"
+	else
+		phrases_to_return += ":e OH GOD ITS ABOUT TO DELAMINATE CALL THE SHUTTLE"
+		phrases_to_return += ":e Check the crystal, you chucklefucks!"
+
 	switch(determine_special_poly())
 		if(POLY_DEFAULT)
 			phrases_to_return += pick("...alive?", "This isn't parrot heaven!", "I live, I die, I live again!", "The void fades!")
