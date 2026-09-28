@@ -489,7 +489,6 @@
 	armor_type = /datum/armor/eldritch_armor/lock
 	flags_inv = parent_type::flags_inv | HIDEMUTWINGS
 	texture_type = /datum/bodypart_texture/mesh/firesuit
-	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/lock/on_robes_gained(mob/living/user)
 	user.AddElement(/datum/element/digitalcamo)

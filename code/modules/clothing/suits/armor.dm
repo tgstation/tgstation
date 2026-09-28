@@ -439,7 +439,6 @@
 	slowdown = 0.7
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
-	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/suit/armor/swat/Initialize(mapload)
 	. = ..()
@@ -474,7 +473,6 @@
 	slowdown = 3
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor_type = /datum/armor/armor_heavy
-	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 	/// Type of texture applied by this
 	var/texture_type = /datum/bodypart_texture/mesh/black
 
@@ -555,7 +553,6 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 	)
-	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/suit/armor/riot/knight/init_rustle_component()
 	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
@@ -775,7 +772,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	clothing_flags = THICKMATERIAL
 	slowdown = 0.8
-	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /datum/armor/armor_warlord
 	melee = 70
@@ -804,7 +800,6 @@
 	equip_delay_other = 4 SECONDS
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 	max_integrity = 15
-	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/suit/armor/durability/watermelon/fire_resist
 	resistance_flags = FIRE_PROOF
@@ -839,7 +834,6 @@
 	equip_delay_other = 4 SECONDS
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 	max_integrity = 15
-	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/suit/armor/durability/holymelon/fire_resist
 	resistance_flags = FIRE_PROOF

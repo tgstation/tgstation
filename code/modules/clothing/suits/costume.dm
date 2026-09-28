@@ -532,7 +532,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDEBELT
 	allowed = list(/obj/item/clothing/mask/facehugger/toy)
-	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/suit/costume/nemes
 	name = "pharoah tunic"

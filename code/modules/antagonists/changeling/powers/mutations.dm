@@ -572,7 +572,6 @@
 	cold_protection = 0
 	heat_protection = 0
 	bodyshapes_with_variations = BODYSHAPE_CERULEAN
-	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /datum/armor/armor_changeling
 	melee = 40
