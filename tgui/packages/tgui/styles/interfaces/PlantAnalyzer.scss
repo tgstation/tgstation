@@ -1,0 +1,10 @@
+.PlantAnalyzer__nutrients {
+  // Keeps the reagent segments on one line under the overlay
+  position: relative;
+  white-space: nowrap;
+
+  &__reagent {
+    padding: 0;
+    border-width: 0;
+  }
+}
