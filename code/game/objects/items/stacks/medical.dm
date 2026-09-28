@@ -628,8 +628,6 @@
 
 /obj/item/stack/medical/wrap/gauze/wash(clean_types)
 	. = ..()
-	if(.)
-		return .
 	if(!(clean_types & CLEAN_TYPE_HARD_DECAL)) // gotta scrub realllly hard to clean gauze
 		return .
 	times_cleaned += 1
@@ -637,9 +635,7 @@
 	if(absorption_capacity < clean_to)
 		absorption_capacity = clean_to
 		update_appearance(UPDATE_NAME)
-		. = TRUE
-
-	return .
+		. |= COMPONENT_CLEANED
 
 /obj/item/stack/medical/wrap/gauze/twelve
 	amount = 12
