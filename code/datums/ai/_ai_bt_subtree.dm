@@ -29,6 +29,8 @@
 	var/list/bindings = null
 
 /datum/bt_node/subtree/Destroy()
+	if(!isnull(override_id) && LAZYACCESS(owning_controller?.override_slots, override_id) == src)
+		LAZYREMOVE(owning_controller.override_slots, override_id)
 	QDEL_NULL(root)
 	QDEL_NULL(override_node)
 	return ..()
