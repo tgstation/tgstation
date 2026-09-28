@@ -450,6 +450,16 @@
 	internals.pulsed(user)
 	return TRUE
 
+/obj/item/trapdoor_remote/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+	if(!(internals?.linked))
+		return
+
+	if(prob(75 / severity))
+		internals.pulsed()
+
 /obj/item/trapdoor_remote/item_ctrl_click(mob/user)
 	if (!user.is_holding(src))
 		return CLICK_ACTION_BLOCKING
