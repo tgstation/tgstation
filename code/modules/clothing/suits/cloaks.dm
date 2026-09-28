@@ -10,6 +10,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDESUITSTORAGE
+	item_flags = CAN_BE_OVERSLOT
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 

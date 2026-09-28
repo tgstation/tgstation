@@ -32,6 +32,7 @@
 	armor_type = /datum/armor/suit_apron
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE|BODYSHAPE_CERULEAN
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/suit/apron/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "apron_worn")
@@ -105,6 +106,7 @@
 	)
 	toggle_noun = "sleeves"
 	species_exception = list(/datum/species/golem)
+	item_flags = CAN_BE_OVERSLOT
 
 //Cook
 /datum/armor/toggle_chef
@@ -201,6 +203,7 @@
 	)
 	resistance_flags = NONE
 	species_exception = list(/datum/species/golem)
+	item_flags = CAN_BE_OVERSLOT
 	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/suit/hazardvest/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape)
@@ -225,6 +228,7 @@
 	body_parts_covered = CHEST|ARMS
 	species_exception = list(/datum/species/golem)
 	clothing_flags = parent_type::clothing_flags | CARP_STYLE_FACTOR
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/suit/toggle/lawyer/purple
 	name = "purple formal suit jacket"
@@ -256,6 +260,7 @@
 		/obj/item/storage/bag/mail,
 		/obj/item/universal_scanner,
 	)
+	item_flags = CAN_BE_OVERSLOT
 
 // Quartermaster
 
@@ -303,6 +308,7 @@
 	greyscale_config_worn = /datum/greyscale_config/suspenders/worn
 	greyscale_colors = "#972A2A"
 	flags_1 = IS_PLAYER_COLORABLE_1
+	item_flags = CAN_BE_OVERSLOT
 
 //Security
 /obj/item/clothing/suit/jacket/officer/blue
@@ -450,6 +456,7 @@
 	supports_variations_flags = CLOTHING_DIGITIGRADE_MASK
 	bodyshapes_with_variations = BODYSHAPE_DIGITIGRADE|BODYSHAPE_CERULEAN
 	cerulean_flipper_palette = NO_FLIPPERS
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/suit/atmos_overalls/generate_digitigrade_icons(icon/base_icon, greyscale_colors)
 	var/icon/legs = icon(SSgreyscale.GetColoredIconByType(/datum/greyscale_config/digitigrade, greyscale_colors), "apron_worn")

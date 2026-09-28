@@ -396,6 +396,9 @@
   - bugfix: Fixed a bileworm devouring runtime
   - bugfix: Fixed heirophants not doing their final attack on death
   - bugfix: Fixed potential runtime when using plasmacutters as a tool
+  Gboster-0:
+  - bugfix: fixes monkeys not screeching in agony when crushed by doors, god bless
+      doors
   Melbert:
   - bugfix: Fixes a lot of mob AIs (such as vending machines) from being unable to
       move entirely
@@ -409,3 +412,24 @@
       size is still 3x3.
   vinylspiders:
   - code_imp: rust-g has been updated to 7.0.0 please report any issues
+2026-09-27:
+  Ben10Omintrix:
+  - balance: cowardly raptors now flee at 50% health as opposed to fleeing immediately
+      when attacked
+  Melbert:
+  - rscadd: Expands MODsuit "overslotting" to most form fitting equipment, such as
+      labcoats, aprons, armor vests, wigs, etc... - In other words, these items no
+      longer block a deployment and are simply hidden under the suit.
+  PapaMichael:
+  - bugfix: AIs can no longer see ghosts emote
+  hry-gh:
+  - bugfix: in the command bar, exact matches weren't entering the verb, they now
+      are
+  - bugfix: quotes aren't required around arguments in the command bar anymore, letting
+      you use quotes yourself in messages
+  - bugfix: removes 100 pick-up verbs from the command bar
+  - qol: added a preference to disable showing autocomplete suggestions as you type
+      (unless you press space)
+2026-09-28:
+  lelandkemble:
+  - bugfix: Red & Blue cubes do not entangle you to your previous mount anymore
