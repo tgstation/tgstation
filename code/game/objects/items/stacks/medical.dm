@@ -421,10 +421,9 @@
 /obj/item/stack/medical/wrap/proc/can_gauze_limb(mob/user, mob/living/patient, obj/item/bodypart/limb)
 	var/can_gauze = always_applicable
 	for(var/datum/wound/wound as anything in limb.wounds)
-		if(!(wound.wound_flags & ACCEPTS_GAUZE))
-			continue
-		can_gauze = TRUE
-		break
+		if(wound.wound_flags & ACCEPTS_GAUZE)
+			can_gauze = TRUE
+			break
 
 	. = NONE
 	var/surgery_prepped = HAS_TRAIT(limb, TRAIT_READY_TO_OPERATE)
@@ -505,7 +504,7 @@
 	if(heal_begin_sound)
 		playsound(src, heal_begin_sound, 75, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 
-	if(!do_after(user, treatment_delay, patient))
+	if(!do_after(user, treatment_delay * (any_wound ? 1 : 1.5), patient))
 		return FALSE
 
 	if(islist(heal_end_sound))
