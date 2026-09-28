@@ -430,3 +430,6 @@
   - bugfix: removes 100 pick-up verbs from the command bar
   - qol: added a preference to disable showing autocomplete suggestions as you type
       (unless you press space)
+2026-09-28:
+  lelandkemble:
+  - bugfix: Red & Blue cubes do not entangle you to your previous mount anymore

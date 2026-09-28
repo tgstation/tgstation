@@ -1,4 +1,0 @@
-author: "lelandkemble"
-delete-after: True
-changes:
-  - bugfix: "Red & Blue cubes do not entangle you to your previous mount anymore"
