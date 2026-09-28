@@ -598,7 +598,7 @@
 /obj/item/stack/medical/wrap/gauze/add_context(atom/source, list/context, obj/item/held_item, mob/living/user)
 	. = ..()
 	if(held_item?.tool_behaviour == TOOL_WIRECUTTER || held_item?.get_sharpness())
-		context[SCREENTIP_CONTEXT_LMB] = "Shred into Cloth"
+		context[SCREENTIP_CONTEXT_LMB] = "Shred into cloth"
 		. = CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/stack/medical/wrap/gauze/update_name(updates)
