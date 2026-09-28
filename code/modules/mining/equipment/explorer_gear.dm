@@ -197,8 +197,6 @@
 	max_heat_protection_temperature = SPACE_SUIT_MAX_TEMP_PROTECT
 	resistance_flags = FIRE_PROOF
 	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 6)
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
-	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/suit/armor/bone/Initialize(mapload)
 	. = ..()

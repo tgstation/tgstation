@@ -29,8 +29,6 @@
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	transparent_protection = HIDEGLOVES|HIDESUITSTORAGE|HIDEJUMPSUIT|HIDESHOES
 	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 10)
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
-	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /datum/armor/cloak_drake
 	melee = 65

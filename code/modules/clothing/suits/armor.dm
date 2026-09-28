@@ -14,7 +14,6 @@
 	max_integrity = 250
 	resistance_flags = NONE
 	armor_type = /datum/armor/suit_armor
-	bodyshapes_with_variations = NONE
 
 /datum/armor/suit_armor
 	melee = 35
@@ -180,7 +179,6 @@
 	inhand_icon_state = "hostrench"
 	flags_inv = 0
 	strip_delay = 8 SECONDS
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/armor/hos/trenchcoat/winter
@@ -195,7 +193,6 @@
 	icon_state = "hosformal"
 	inhand_icon_state = "hostrench"
 	body_parts_covered = CHEST|GROIN|ARMS
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/armor/hos/hos_formal/Initialize(mapload)
@@ -208,7 +205,6 @@
 	icon_state = "warden_alt"
 	inhand_icon_state = "armor"
 	body_parts_covered = CHEST|GROIN|ARMS
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 	cold_protection = CHEST|GROIN|ARMS|HANDS
 	heat_protection = CHEST|GROIN|ARMS|HANDS
@@ -285,7 +281,6 @@
 	name = "syndicate captain's vest"
 	desc = "A sinister looking vest of advanced armor worn over a black and red fireproof jacket. The gold collar and shoulders denote that this belongs to a high ranking syndicate officer."
 	icon_state = "syndievest"
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal
@@ -294,7 +289,6 @@
 	icon_state = "capformal"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/armor/vest/capcarapace/captains_formal/Initialize(mapload)
@@ -445,7 +439,6 @@
 	slowdown = 0.7
 	body_parts_covered = CHEST|GROIN|LEGS|FEET|ARMS|HANDS
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/suit/armor/swat/Initialize(mapload)
@@ -481,7 +474,6 @@
 	slowdown = 3
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT
 	armor_type = /datum/armor/armor_heavy
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 	/// Type of texture applied by this
 	var/texture_type = /datum/bodypart_texture/mesh/black
@@ -563,7 +555,6 @@
 		/obj/item/tank/internals/emergency_oxygen,
 		/obj/item/tank/internals/plasmaman,
 	)
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/suit/armor/riot/knight/init_rustle_component()
@@ -700,7 +691,6 @@
 	icon_state = "centcom_formal"
 	inhand_icon_state = "centcom"
 	body_parts_covered = CHEST|GROIN|ARMS
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 	armor_type = /datum/armor/armor_centcom_formal
 
@@ -725,7 +715,6 @@
 	inhand_icon_state = "b_suit"
 	body_parts_covered = CHEST|GROIN|ARMS
 	dog_fashion = null
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/armor/militia
@@ -786,7 +775,6 @@
 	w_class = WEIGHT_CLASS_BULKY
 	clothing_flags = THICKMATERIAL
 	slowdown = 0.8
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /datum/armor/armor_warlord
@@ -816,7 +804,6 @@
 	equip_delay_other = 4 SECONDS
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 	max_integrity = 15
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/suit/armor/durability/watermelon/fire_resist
@@ -852,7 +839,6 @@
 	equip_delay_other = 4 SECONDS
 	clothing_traits = list(TRAIT_BRAWLING_KNOCKDOWN_BLOCKED)
 	max_integrity = 15
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/suit/armor/durability/holymelon/fire_resist

@@ -2,7 +2,6 @@
 	icon = 'icons/obj/clothing/suits/costume.dmi'
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
 	abstract_type = /obj/item/clothing/suit/costume
-	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/suit/hooded/flashsuit
 	name = "flashy costume"
@@ -33,7 +32,6 @@
 	icon_state = "pirate"
 	inhand_icon_state = null
 	body_parts_covered = CHEST|GROIN|ARMS
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 	allowed = list(
 		/obj/item/melee/energy/sword/pirate,
@@ -161,7 +159,6 @@
 	icon_state = "owl_wings"
 	icon = 'icons/obj/clothing/suits/costume.dmi'
 	worn_icon = 'icons/mob/clothing/suits/costume.dmi'
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 	inhand_icon_state = null
 	toggle_noun = "wings"
@@ -176,7 +173,6 @@
 	desc = "A plush white cloak made of synthetic feathers. Soft to the touch, stylish, and a 2 meter wing span that will drive your captives mad."
 	icon_state = "griffin_wings"
 	inhand_icon_state = null
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/costume/cardborg
@@ -518,7 +514,6 @@
 	desc = "A labcoat imbued with the power of features and freezes."
 	icon_state = "drfreeze_coat"
 	inhand_icon_state = null
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/costume/gothcoat
@@ -526,7 +521,6 @@
 	desc = "Perfect for those who want to stalk around a corner of a bar."
 	icon_state = "gothcoat"
 	inhand_icon_state = null
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 	flags_inv = HIDEBELT
 
@@ -538,7 +532,6 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEGLOVES|HIDESHOES|HIDEJUMPSUIT|HIDEBELT
 	allowed = list(/obj/item/clothing/mask/facehugger/toy)
-	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 	supports_variations_flags = CLOTHING_CERULEAN_MASK_LEGS
 
 /obj/item/clothing/suit/costume/nemes
