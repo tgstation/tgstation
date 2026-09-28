@@ -89,6 +89,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 /mob/living/basic/mining/tendril/Destroy()
 	GLOB.tendrils -= src
 	QDEL_NULL(soundloop)
+	QDEL_NULL(tendril_melee)
 	infected_turfs.Cut()
 
 	if(!SSachievements.achievements_enabled || (flags_1 & ADMIN_SPAWNED_1))
@@ -161,7 +162,7 @@ GLOBAL_LIST_INIT(tendrils, list())
 	duration = 0.4 SECONDS
 
 /mob/living/basic/mining/tendril/proc/snatch_react()
-	if (tendril_melee.IsAvailable())
+	if (tendril_melee?.IsAvailable())
 		tendril_melee.Activate(warning = FALSE)
 
 #undef HEARTBEAT_NORMAL
