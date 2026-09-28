@@ -21,6 +21,7 @@
 	. = ..()
 	music_player = new(src)
 	register_context()
+	AddComponent(/datum/component/leanable)
 
 /obj/machinery/jukebox/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()

@@ -1,0 +1,4 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - spellcheck: "Welded airlocks' tooltips don't suggest you can weld them shut again"
