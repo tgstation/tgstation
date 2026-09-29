@@ -55,6 +55,7 @@ GLOBAL_LIST_INIT(possible_smoker_addictions, setup_smoker_addictions(list(
 	/obj/item/storage/fancy/cigarettes/cigars,
 	/obj/item/storage/fancy/cigarettes/cigars/cohiba,
 	/obj/item/storage/fancy/cigarettes/cigars/havana,
+	/obj/item/vape,
 )))
 
 ///Options for the Alcoholic quirk to choose from
@@ -84,7 +85,8 @@ GLOBAL_LIST_INIT(possible_alcoholic_addictions, list(
 	"Moonlabor Yūyake" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/yuyake, "reagent" = /datum/reagent/consumable/ethanol/yuyake),
 	"Shu-Kouba Straight Shochu" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/shochu, "reagent" = /datum/reagent/consumable/ethanol/shochu),
 	"Camillo Aperitivo Rosso" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/aperitivo, "reagent" = /datum/reagent/consumable/ethanol/aperitivo),
-	"Dalmazia Originale Maraschino Liqueur" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/maraschino, "reagent" = /datum/reagent/consumable/ethanol/maraschino)
+	"Dalmazia Originale Maraschino Liqueur" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/maraschino, "reagent" = /datum/reagent/consumable/ethanol/maraschino),
+	"Quadruple Sec flask" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/flask/det, "reagent" = //datum/reagent/consumable/ethanol/quadruple_sec)
 ))
 
 ///Options for Prosthetic Organ
