@@ -46,7 +46,7 @@
 	if(use_alt_clean_method())
 		clean_counter = pick(10, 12, 14, 16)
 	else
-		owner.apply_damage(12, TOX)
+		owner.apply_damage(pick(10, 12), TOX)
 	COOLDOWN_START(src, last_tox_damage, 20 SECONDS)
 	COOLDOWN_START(src, last_burn, rand(30 SECONDS, 60 SECONDS))
 
