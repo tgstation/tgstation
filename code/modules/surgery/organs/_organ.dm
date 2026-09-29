@@ -351,8 +351,8 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	// Delegate to species if possible.
 	if(dna?.species)
 		for(var/obj/item/organ/organ as anything in organs)
-			if(organ.organ_flags & ORGAN_EMP)
-				organ.organ_flags &= ~ORGAN_EMP
+			organ.organ_flags &= ~ORGAN_EMP
+			organ.clear_radiation()
 			if(remove_hazardous && (organ.organ_flags & ORGAN_HAZARDOUS))
 				qdel(organ)
 				continue
@@ -570,12 +570,12 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 	if(!owner.apply_damage(1 * seconds_per_tick, TOX, zone))
 		return
 	// Another chance to feel the effect
-	if(prob(50) && !IS_UNCONSCIOUS(owner))
+	if(prob(20) && !IS_UNCONSCIOUS(owner))
 		if(owner.get_stamina_loss() < 50 && !HAS_TRAIT(owner, TRAIT_ANALGESIA))
-			owner.apply_damage(10 * seconds_per_tick, STAMINA, zone)
+			owner.apply_damage(pick(6, 8, 10, 12) * seconds_per_tick, STAMINA, zone)
 			to_chat(owner, span_warning("You feel a slight [pick("pain", "twinge", "throb", "ache")] in your [parse_zone(zone)]."))
 		if(owner.disgust < DISGUST_LEVEL_VERYGROSS)
-			owner.adjust_disgust(10 * seconds_per_tick)
+			owner.adjust_disgust(pick(5, 10, 15) * seconds_per_tick)
 	// And another chance to make you start glowing if you aren't
 	if(prob(10))
 		owner.make_irradiated()
