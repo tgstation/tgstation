@@ -90,7 +90,7 @@
 	for(var/obj/item/organ/organ as anything in shuffle(human_owner.organs))
 		if(organ.organ_flags & ORGAN_VITAL)
 			continue
-		if(IS_ROBOTIC(organ))
+		if(!IS_ORGANIC_ORGAN(organ))
 			continue
 		if(HAS_TRAIT(organ, TRAIT_IRRADIATED))
 			continue
