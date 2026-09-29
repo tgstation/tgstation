@@ -567,7 +567,7 @@
  *
  * (e.g. A mob with nightvision loses its nightvision while looking through a normal camera)
  */
-/atom/proc/update_remote_sight(mob/living/user)
+/atom/proc/update_remote_sight(mob/living/user, list/new_sight)
 	return
 
 

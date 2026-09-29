@@ -20,7 +20,6 @@
 	actions_types = list(/datum/action/item_action/toggle_mode)
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 	gender = PLURAL
-	vision_flags = NONE
 	color_cutoffs = null
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT)
 	/// List of selectable modes that can be used by the goggles
@@ -52,12 +51,12 @@
 		connection_images.Cut()
 	switch(mode)
 		if(MODE_MESON)
-			vision_flags = SEE_TURFS
+			attach_clothing_traits(TRAIT_MESON_VISION)
 			color_cutoffs = list(15, 12, 0)
 			change_glass_color(/datum/client_colour/glass_colour/yellow)
 
-		if(MODE_TRAY) //undoes the last mode, meson
-			vision_flags = NONE
+		if(MODE_TRAY)
+			detach_clothing_traits(TRAIT_MESON_VISION) //undoes the last mode, meson
 			color_cutoffs = null
 			change_glass_color(/datum/client_colour/glass_colour/lightblue)
 
