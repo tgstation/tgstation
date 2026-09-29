@@ -1240,49 +1240,14 @@
 	/// How radioactive is this reagent
 	var/rad_power = 1
 
+/datum/reagent/uranium/New()
+	. = ..()
+	AddElement(/datum/element/radioactive_reagent, rad_power = src.rad_power, volume_modifier = 5)
+
 /datum/reagent/uranium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(SSradiation.can_irradiate_basic(affected_mob))
-		var/chance = min(volume / (20 - rad_power * 5), rad_power)
-		if(SPT_PROB(chance, seconds_per_tick)) // ignore rad protection calculations bc it's inside of us
-			affected_mob.make_irradiated()
-
-	if(affected_mob.adjust_tox_loss(tox_damage * seconds_per_tick * metabolization_rate, updating_health = FALSE))
+	if(affected_mob.adjust_tox_loss(tox_damage * seconds_per_tick * metabolization_ratio, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
-
-/datum/reagent/uranium/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
-	. = ..()
-
-	if(!SSradiation.can_irradiate_basic(exposed_obj))
-		return
-
-	radiation_pulse(
-		source = exposed_obj,
-		max_range = 0,
-		threshold = RAD_VERY_LIGHT_INSULATION,
-		chance = (min(reac_volume * rad_power, CALCULATE_RAD_MAX_CHANCE(rad_power))),
-	)
-
-/datum/reagent/uranium/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message = TRUE, touch_protection = 0)
-	. = ..()
-
-	if(!SSradiation.can_irradiate_human_basic(exposed_mob))
-		return
-
-	if(!(methods & (TOUCH|VAPOR)))
-		return
-
-	var/exposure_probability = min(100 - (touch_protection * 100), 0, 100)
-	if(exposure_probability && !prob(exposure_probability))
-		return
-
-
-	radiation_pulse(
-		source = exposed_mob,
-		max_range = 0,
-		threshold = RAD_VERY_LIGHT_INSULATION,
-		chance = (min(reac_volume * rad_power, CALCULATE_RAD_MAX_CHANCE(rad_power))),
-	)
 
 /datum/reagent/uranium/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()

@@ -131,6 +131,7 @@
 
 	reagent.current_cycle++
 	need_mob_update += reagent.on_mob_life(owner, seconds_per_tick, metabolization_ratio)
+	SEND_SIGNAL(reagent, COMSIG_REAGENT_ON_LIFE, owner, seconds_per_tick, metabolization_ratio)
 
 	if(dead && !QDELETED(owner) && !QDELETED(reagent))
 		need_mob_update += reagent.on_mob_dead(owner, seconds_per_tick, metabolization_ratio)
