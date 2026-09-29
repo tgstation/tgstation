@@ -525,60 +525,77 @@
 	abstract_type = /datum/design/cargo_weapon
 	desc = "Uploads a set of schematics to Central Command, unlocking the ability for you to requisition one from Cargo."
 	/// Actual weapon type that is unlocked
-	var/datum/supply_pack/pack_type
+	var/list/datum/supply_pack/pack_types
 
 /datum/design/cargo_weapon/on_station_research()
 	// No native support for dynamic pack IDs here. buyer beware
-	var/datum/supply_pack/pack_real = SSshuttle.supply_packs[pack_type::id || pack_type]
-	if(isnull(pack_real))
-		CRASH("Couldn't find supply pack [pack_type] for design [type]")
-	if(!(pack_real.order_flags & ORDER_SPECIAL))
-		CRASH("Supply pack [pack_type] for design [type] is not a special order pack")
+	for(var/datum/supply_pack/pack_type as anything in pack_types)
+		var/datum/supply_pack/pack_real = SSshuttle.supply_packs[pack_type::id || pack_type]
+		if(isnull(pack_real))
+			CRASH("Couldn't find supply pack [pack_type] for design [type]")
+		if(!(pack_real.order_flags & ORDER_SPECIAL))
+			CRASH("Supply pack [pack_type] for design [type] is not a special order pack")
 
-	pack_real.order_flags |= ORDER_SPECIAL_ENABLED
+		pack_real.order_flags |= ORDER_SPECIAL_ENABLED
 
 /datum/design/cargo_weapon/on_station_unresearch()
-	var/datum/supply_pack/pack_real = SSshuttle.supply_packs[pack_type::id]
-	pack_real?.order_flags &= ~ORDER_SPECIAL_ENABLED
+	for(var/datum/supply_pack/pack_type as anything in pack_types)
+		var/datum/supply_pack/pack_real = SSshuttle.supply_packs[pack_type::id]
+		pack_real?.order_flags &= ~ORDER_SPECIAL_ENABLED
 
 /datum/design/cargo_weapon/tesla_cannon
 	name = "Tesla Cannon Schematics"
-	pack_type = /datum/supply_pack/security/armory/rnd_locked/tesla
+	pack_types = list(/datum/supply_pack/security/armory/rnd_locked/tesla)
 	research_icon = /obj/item/gun/energy/tesla_cannon::icon
 	research_icon_state = /obj/item/gun/energy/tesla_cannon::icon_state
 
 /datum/design/cargo_weapon/photon_cannon
 	name = "Photon Cannon Schematics"
-	pack_type = /datum/supply_pack/security/armory/rnd_locked/photon
+	pack_types = list(/datum/supply_pack/security/armory/rnd_locked/photon)
 	research_icon = /obj/item/gun/energy/photon::icon
 	research_icon_state = /obj/item/gun/energy/photon::icon_state
 
 /datum/design/cargo_weapon/ion_carbine
 	name = "Ion Carbine Schematics"
-	pack_type = /datum/supply_pack/security/armory/rnd_locked/ion
+	pack_types = list(
+		/datum/supply_pack/security/armory/rnd_locked/ion,
+		/datum/supply_pack/security/armory/rnd_locked/ion/three_pack,
+	)
 	research_icon = /obj/item/gun/energy/ionrifle/carbine::icon
 	research_icon_state = /obj/item/gun/energy/ionrifle/carbine::icon_state
 
 /datum/design/cargo_weapon/xray_laser
 	name = "Type-6 X-Ray Laser Schematics"
-	pack_type = /datum/supply_pack/security/armory/rnd_locked/xray
+	pack_types = list(
+		/datum/supply_pack/security/armory/rnd_locked/xray,
+		/datum/supply_pack/security/armory/rnd_locked/xray/three_pack,
+	)
 	research_icon = /obj/item/gun/energy/laser/xray::icon
 	research_icon_state = /obj/item/gun/energy/laser/xray::icon_state
 
 /datum/design/cargo_weapon/advanced_egun
 	name = "Advanced Energy Gun Schematics"
-	pack_type = /datum/supply_pack/security/armory/rnd_locked/aeg
+	pack_types = list(
+		/datum/supply_pack/security/armory/rnd_locked/aeg,
+		/datum/supply_pack/security/armory/rnd_locked/aeg/three_pack,
+	)
 	research_icon = /obj/item/gun/energy/e_gun/nuclear::icon
 	research_icon_state = /obj/item/gun/energy/e_gun/nuclear::icon_state
 
 /datum/design/cargo_weapon/ebow
 	name = "Energy Crossbow Schematics"
-	pack_type = /datum/supply_pack/security/armory/rnd_locked/ebow
+	pack_types = list(
+		/datum/supply_pack/security/armory/rnd_locked/ebow,
+		/datum/supply_pack/security/armory/rnd_locked/ebow/three_pack,
+	)
 	research_icon = /obj/item/gun/energy/recharge/ebow/large::icon
 	research_icon_state = /obj/item/gun/energy/recharge/ebow/large::icon_state
 
 /datum/design/cargo_weapon/temp_gun
 	name = "Temperature Gun Schematics"
-	pack_type = /datum/supply_pack/security/armory/rnd_locked/tempgun
+	pack_types = list(
+		/datum/supply_pack/security/armory/rnd_locked/tempgun,
+		/datum/supply_pack/security/armory/rnd_locked/tempgun/three_pack,
+	)
 	research_icon = /obj/item/gun/energy/temperature::icon
 	research_icon_state = /obj/item/gun/energy/temperature::icon_state
