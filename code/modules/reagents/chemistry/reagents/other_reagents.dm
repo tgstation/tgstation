@@ -1436,7 +1436,7 @@
 
 	if(HAS_TRAIT(affected_mob, TRAIT_TOXINLOVER) || SPT_PROB(5, seconds_per_tick))
 		for(var/obj/item/organ/organ as anything in affected_mob.organs)
-			if(organ.zone == BODY_ZONE_CHEST)
+			if(organ.zone == BODY_ZONE_CHEST || organ.zone == BODY_ZONE_PRECISE_MOUTH)
 				organ.wash(clean_types|CLEAN_RAD)
 
 /datum/reagent/space_cleaner/ez_clean
