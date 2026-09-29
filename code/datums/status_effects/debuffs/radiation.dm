@@ -29,7 +29,7 @@
 	if(HAS_TRAIT(owner, TRAIT_UNBOTHERED_BY_RADIATION))
 		return TRUE
 	// Toximmune and toxlover means we can't rely on toxins damage for cleaning
-	if(HAS_TRAIT(owner, TRAIT_TOXIMMUNE) || HAS_TRAIT(owner, TRAIT_TOXLOVER))
+	if(HAS_TRAIT(owner, TRAIT_TOXIMMUNE) || HAS_TRAIT(owner, TRAIT_TOXINLOVER))
 		return TRUE
 	return FALSE
 
