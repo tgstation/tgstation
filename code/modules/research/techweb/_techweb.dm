@@ -335,6 +335,8 @@
  * * research_source - The thing responsible for researching this node. Used in overrides.
  */
 /datum/techweb/proc/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE, atom/research_source)
+	SHOULD_NOT_OVERRIDE(TRUE)
+
 	if(ispath(node))
 		node = SSresearch.techweb_nodes[node]
 	if(!istype(node))
@@ -405,10 +407,14 @@
  * * node_path - The instance or typepath of the node to remove
  */
 /datum/techweb/proc/unresearch_node(datum/techweb_node/node_path)
-	if(istype(node_path))
-		node_path = node_path.type
+	SHOULD_NOT_OVERRIDE(TRUE)
 
-	node_removed(node_path)
+	var/datum/techweb_node/node_instance = istype(node_path, /datum/techweb_node) ? node_path : SSresearch.techweb_nodes[node_path]
+	node_path = ispath(node_path, /datum/techweb_node) ? node_path : node_instance.type
+	if(!istype(node_instance))
+		return
+
+	node_removed(node_instance)
 	researched_nodes -= node_path
 	recalculate_nodes(recalculate_designs = TRUE) //Fully rebuild the tree.
 

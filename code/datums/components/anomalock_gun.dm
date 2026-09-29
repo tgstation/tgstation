@@ -73,6 +73,8 @@
 	if(gone != core)
 		return
 	core = null
+	if(QDELING(source))
+		return
 	source.update_appearance()
 
 /datum/component/anomaly_locked_gun/proc/on_examine(obj/item/source, mob/examiner, list/examine_list)
