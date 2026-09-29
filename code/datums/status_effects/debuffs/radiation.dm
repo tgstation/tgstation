@@ -144,7 +144,7 @@
 		return NONE
 
 	COOLDOWN_START(src, clean_cooldown, (SSMACHINES_DT + (1 SECONDS)))
-	owner.adjust_tox_loss(-0.5, forced = TRUE)
+	owner.adjust_tox_loss(-0.25, forced = TRUE)
 	if(owner.get_tox_loss() <= 0)
 		qdel(src)
 	return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
