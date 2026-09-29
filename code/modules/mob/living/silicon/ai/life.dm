@@ -72,12 +72,9 @@
 	diag_hud_set_status()
 
 /mob/living/silicon/ai/update_sight()
-	set_invis_see(initial(see_invisible))
-	set_sight(initial(sight))
+	. = ..()
 	if(aiRestorePowerRoutine)
 		clear_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
-
-	return ..()
 
 
 /mob/living/silicon/ai/proc/start_RestorePowerRoutine()

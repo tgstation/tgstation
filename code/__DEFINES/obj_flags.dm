@@ -78,6 +78,8 @@
 #define SKIP_FANTASY_ON_SPAWN (1<<17)
 /// If an item has had its /datum/element/weapon_description initialized or not.
 #define WEAPON_DESCRIPTION_INITIALIZED (1<<18)
+/// MODsuits can overslot these items
+#define CAN_BE_OVERSLOT (1<<19)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 

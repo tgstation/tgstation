@@ -411,6 +411,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MESON_VISION "meson_vision"
 /// Gives us Night vision
 #define TRAIT_TRUE_NIGHT_VISION "true_night_vision"
+/// Gives us the ability to see objects thru walls and slight night vision
+#define TRAIT_MATERIAL_VISON "objects_vision"
 /// Negates our gravity, letting us move normally on floors in 0-g
 #define TRAIT_NEGATES_GRAVITY "negates_gravity"
 /// We are ignoring gravity
@@ -738,6 +740,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait that makes you only SOMETIMES bite when attacking with an unarmed strike.
 #define TRAIT_REFINED_BITER "refined biter"
+
+/// Trait that ignores whether or not a human's head can be decapitated, and permits it instead.
+#define TRAIT_ALWAYS_ALLOW_DECAPITATION "always_allow_decapitation"
 
 // METABOLISMS
 // Various jobs on the station have historically had better reactions

@@ -349,6 +349,7 @@
   ArcaneMusic:
   - code_imp: The round end screen now logs the amount of mail opened by players throughout
       the shift.
+  - bugfix: fixes logging for cargo crates and cargo crate requests by job.
   Jacquerel:
   - rscadd: You can earn meaningless awards from completing several new tasks
   Melbert:
@@ -358,6 +359,8 @@
   - balance: All plasmamen organs are now "organic + mineral", allowing most chems
       to work on them again
   - bugfix: Ensures bodyparts correctly track their parent's dna
+  PapaMichael:
+  - bugfix: The Detomatix disk now actually sends spoofed messages
   SmArtKar:
   - bugfix: Fixed potential medibot harddels
   TheRyeGuyWhoWillNowDie:
@@ -368,3 +371,107 @@
   - image: Changed lizard frills to have their west and east icon layer above hats
   vinylspiders:
   - bugfix: instrument volume slider now works as intended
+2026-09-23:
+  Co0kie-GG:
+  - rscadd: AI can now see emotes touch cameras
+  SmArtKar:
+  - bugfix: Fixed shoes and a bunch of other items not being washable
+  necromanceranne:
+  - bugfix: Cybernetic fangs use the correct, metallic icon state.
+2026-09-25:
+  Melbert:
+  - bugfix: Fix echolocation danger turf markers
+  vinylspiders:
+  - bugfix: fixes a source of overflayer bluescreens
+2026-09-26:
+  Arceniu:
+  - code_imp: modified centcom - swapped cent captain's access with cent officer's
+      access at airlocks
+  - code_imp: modified centcom - Replaced cent captain's access at centcom security
+      room's windoors to cent general, to match airlock accesses, swapped same access
+      to storage at centcom cargo bay
+  - code_imp: swapped cent captain's access with cent officer's access at corpse's
+      trims and ERT commander's trim
+  FlufflesTheDog:
+  - bugfix: Fixed a bileworm devouring runtime
+  - bugfix: Fixed heirophants not doing their final attack on death
+  - bugfix: Fixed potential runtime when using plasmacutters as a tool
+  Gboster-0:
+  - bugfix: fixes monkeys not screeching in agony when crushed by doors, god bless
+      doors
+  Melbert:
+  - bugfix: Fixes a lot of mob AIs (such as vending machines) from being unable to
+      move entirely
+  - bugfix: FIxes (maybe) a bug where vending machines project their warning on you
+      forever
+  PapaMichael:
+  - bugfix: The Chameleon Scanner (that comes with a Chameleon Kit) that's supposed
+      to let you copy players' exact outfits now works
+  Stonetear:
+  - qol: Fishing capsules now only need a 3x3 space to deploy.  The actual fishing
+      size is still 3x3.
+  vinylspiders:
+  - code_imp: rust-g has been updated to 7.0.0 please report any issues
+2026-09-27:
+  Ben10Omintrix:
+  - balance: cowardly raptors now flee at 50% health as opposed to fleeing immediately
+      when attacked
+  Melbert:
+  - rscadd: Expands MODsuit "overslotting" to most form fitting equipment, such as
+      labcoats, aprons, armor vests, wigs, etc... - In other words, these items no
+      longer block a deployment and are simply hidden under the suit.
+  PapaMichael:
+  - bugfix: AIs can no longer see ghosts emote
+  hry-gh:
+  - bugfix: in the command bar, exact matches weren't entering the verb, they now
+      are
+  - bugfix: quotes aren't required around arguments in the command bar anymore, letting
+      you use quotes yourself in messages
+  - bugfix: removes 100 pick-up verbs from the command bar
+  - qol: added a preference to disable showing autocomplete suggestions as you type
+      (unless you press space)
+2026-09-28:
+  lelandkemble:
+  - bugfix: Red & Blue cubes do not entangle you to your previous mount anymore
+2026-09-29:
+  Fghj240:
+  - balance: explosions inflict wounds
+  - balance: explosions respect ear protection
+  - balance: bomb armor reduces damage of devastating explosions
+  - balance: bomb armor can reduce explosive damage by 60% instead of just 50%
+  - balance: bomb armor respects locations and doesn't always spread damage equally
+  - balance: devastating explosion damage increased from 500 to 600
+  - balance: devastating explosion damage split between brute and burn (instead of
+      brute only)
+  - balance: devastating explosions deal ear damage and paralysis in case they're
+      survived
+  - bugfix: aliens are knocked out by heavy explosions, not light ones
+  Melbert:
+  - qol: When attempting to craft a recipe which has a craftable component, you can
+      hover over said component to see its recipe. If that recipe has a craftable
+      component, you can then hover over that, and so on.... allowing you to view
+      entire recipes without losing your original place in the UI.
+  - qol: Food crafting menu no longer has a third tab for "food type", you can instead
+      filter by "food type" the same way you filter by cuisine or dish type on the
+      left
+  - qol: Food crafting menu now informs you of alternate sources of ingredients, such
+      as from the biogenerator
+  - qol: You can lean on jukeboxes
+  PapaMichael:
+  - spellcheck: Welded airlocks' tooltips don't suggest you can weld them shut again
+  btcbuster:
+  - spellcheck: fixed the description of soup pots
+  necromanceranne:
+  - rscadd: Adds the Overconfident quirk! You got this!
+  timothymtorres:
+  - bugfix: Fix incorrect scaling for breath code heat messages.
+  - bugfix: Fix breath temperature skipping damage effects in very rare situations.
+  - refactor: Slight refactor of breath code temperature checks to be faster and cleaner.
+  - bugfix: Fix singularity runtime with thrown objects
+  vinylspiders:
+  - bugfix: fixes a bug that could cause a number of weighted rng events to not behave
+      as intended
+  - bugfix: the plantalyzer light level reading will now show accurately again
+  - bugfix: fixes an issue with looping sounds on machines like the oven/deepfryer,
+      please report any strange issues
+  - bugfix: invalid loadout gags colors now get sanitized

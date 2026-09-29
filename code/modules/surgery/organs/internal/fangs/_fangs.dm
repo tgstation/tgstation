@@ -89,6 +89,7 @@
 /obj/item/organ/fangs/cybernetic
 	name = "cybernetic fangs"
 	desc = "A set of fangs made from plastitanium. Extremely lethal."
+	icon_state = "fangs_cyber"
 	organ_flags = ORGAN_ROBOTIC
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.5)
 	bite_low = 9
@@ -99,6 +100,7 @@
 /obj/item/organ/fangs/cat/cybernetic
 	name = "cybernetic cat fangs"
 	desc = "A set of fangs made from plastitanium. Extremely lethal. These ones look suited to a felinid. Might leave you feeling a little... feral."
+	icon_state = "fangs_cyber_cat"
 	organ_flags = ORGAN_ROBOTIC
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.5)
 	bite_low = /obj/item/organ/fangs/cybernetic::bite_low
