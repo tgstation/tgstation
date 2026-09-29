@@ -577,7 +577,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		if(owner.disgust < DISGUST_LEVEL_VERYGROSS)
 			owner.adjust_disgust(pick(4, 8, 12) * seconds_per_tick)
 	// And another chance to make you start glowing if you aren't
-	if(prob(10))
+	if(prob(2))
 		owner.make_irradiated()
 
 /// Get all possible organ slots by checking every organ, and then store it and give it whenever needed
