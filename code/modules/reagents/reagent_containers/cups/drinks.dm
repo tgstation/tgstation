@@ -528,6 +528,10 @@
 /obj/item/reagent_containers/cup/glass/flask/det/minor
 	list_reagents = list(/datum/reagent/consumable/applejuice = 30)
 
+/obj/item/reagent_containers/cup/glass/flask/quadsec
+	name = "sec flask"
+	list_reagents = list(/datum/reagent/consumable/ethanol/quadruple_sec = 30)
+
 /obj/item/reagent_containers/cup/glass/mug/britcup
 	name = "cup"
 	desc = "A cup with the British flag emblazoned on it."
