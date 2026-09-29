@@ -22,16 +22,12 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 5)
 	var/obj/item/canvas/painting = null
 
-/obj/structure/easel/Destroy()
-	set_painting(null)
-	return ..()
-
 //Adding canvases
 /obj/structure/easel/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/canvas))
 		var/obj/item/canvas/canvas = tool
 		user.transfer_item_to_turf(canvas, get_turf(src), silent = FALSE)
-		set_painting(canvas)
+		painting = canvas
 		canvas.layer = layer+0.1
 		user.visible_message(span_notice("[user] puts \the [canvas] on \the [src]."),span_notice("You place \the [canvas] on \the [src]."))
 		return ITEM_INTERACT_SUCCESS
