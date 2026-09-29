@@ -184,9 +184,11 @@
 	if(HAS_TRAIT(owner, TRAIT_UNBOTHERED_BY_RADIATION))
 		return
 
-	render_list += "<span class='alert ml-1'>"
-	render_list += conditional_tooltip("Subject is irradiated.", "Supply antiradiation or antitoxin, such as [/datum/reagent/medicine/potass_iodide::name] or [/datum/reagent/medicine/pen_acid::name].", tochat)
-	render_list += "</span><br>"
+	render_list += "<span class='ml-1'><font color='#29b90f'>"
+	render_list += conditional_tooltip("Subject is irradiated.", \
+		"Supply anti-radiation or anti-toxin, such as [/datum/reagent/medicine/potass_iodide::name] or [/datum/reagent/medicine/pen_acid::name], \
+		or decontaminate directly via shower or other means.", tochat)
+	render_list += "</font></span><br>"
 
 /datum/status_effect/irradiated/proc/radimmune_gained(...)
 	SIGNAL_HANDLER
