@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(possible_alcoholic_addictions, list(
 	"Shu-Kouba Straight Shochu" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/shochu, "reagent" = /datum/reagent/consumable/ethanol/shochu),
 	"Camillo Aperitivo Rosso" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/aperitivo, "reagent" = /datum/reagent/consumable/ethanol/aperitivo),
 	"Dalmazia Originale Maraschino Liqueur" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/bottle/maraschino, "reagent" = /datum/reagent/consumable/ethanol/maraschino),
-	"Quadruple Sec flask" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/flask/det, "reagent" = //datum/reagent/consumable/ethanol/quadruple_sec)
+	"Quadruple Sec flask" = list("bottlepath" = /obj/item/reagent_containers/cup/glass/flask/det, "reagent" = /datum/reagent/consumable/ethanol/quadruple_sec)
 ))
 
 ///Options for Prosthetic Organ
