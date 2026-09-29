@@ -13,7 +13,7 @@
 	var/minimum_exposure_time
 
 /datum/component/radiation_countdown/Initialize(minimum_exposure_time)
-	if (!CAN_IRRADIATE(parent))
+	if (!SSradiation.can_irradiate_basic(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.minimum_exposure_time = minimum_exposure_time

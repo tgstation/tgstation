@@ -16,7 +16,6 @@
 	if (organ.organ_flags & ORGAN_EXTERNAL)
 		return
 
-	organ.organ_flags |= ORGAN_IRRADIATED
 	RegisterSignal(organ, COMSIG_ORGAN_IMPLANTED, PROC_REF(rad_organ_implanted))
 	RegisterSignal(organ, COMSIG_ORGAN_REMOVED, PROC_REF(rad_organ_removed))
 	if(organ.owner)
@@ -31,10 +30,9 @@
 		return ..()
 
 	var/obj/item/organ/organ = source
-	if((organ.organ_flags & ORGAN_EXTERNAL))
+	if (organ.organ_flags & ORGAN_EXTERNAL)
 		return ..()
 
-	organ.organ_flags &= ~ORGAN_IRRADIATED
 	UnregisterSignal(organ, list(COMSIG_ORGAN_IMPLANTED, COMSIG_ORGAN_REMOVED))
 	if(organ.owner)
 		rad_organ_removed(organ, organ.owner)
@@ -49,12 +47,12 @@
 		return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 	return NONE
 
-/datum/element/simple_rad/proc/rad_organ_implanted(obj/item/organ/internal/source, mob/living/carbon/new_owner)
+/datum/element/simple_rad/proc/rad_organ_implanted(obj/item/organ/source, mob/living/carbon/new_owner)
 	SIGNAL_HANDLER
 
 	new_owner.apply_status_effect(/datum/status_effect/grouped/has_irradiated_organs, REF(source))
 
-/datum/element/simple_rad/proc/rad_organ_removed(obj/item/organ/internal/source, mob/living/carbon/old_owner)
+/datum/element/simple_rad/proc/rad_organ_removed(obj/item/organ/source, mob/living/carbon/old_owner)
 	SIGNAL_HANDLER
 
 	old_owner.remove_status_effect(/datum/status_effect/grouped/has_irradiated_organs, REF(source))

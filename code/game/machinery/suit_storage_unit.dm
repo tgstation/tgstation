@@ -521,7 +521,7 @@
 			else
 				visible_message(span_warning("[src]'s door slides open, barraging you with the nauseating smell of charred flesh."))
 				mob_occupant.clear_radiation()
-				for(var/obj/item/organ/organ as anything in mob_occupant.organs)
+				for(var/obj/item/organ/organ as anything in astype(mob_occupant, /mob/living/carbon/human)?.organs)
 					organ.clear_radiation()
 
 			playsound(src, 'sound/machines/airlock/airlockclose.ogg', 25, TRUE)

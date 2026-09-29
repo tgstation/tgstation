@@ -1,6 +1,3 @@
-/// Whether or not it's possible for this atom to be irradiated
-#define CAN_IRRADIATE(atom) (ishuman(##atom) || isitem(##atom))
-
 /// Calculates the max chance for a radiation_pulse via a radioactive reagent
 #define CALCULATE_RAD_MAX_CHANCE(rad_power) (20 + (15 * (rad_power - 1)))
 
@@ -110,7 +107,7 @@
  * * organ_multiplier - The proc can also be used to heal irradiated organs, determined by this multiplier.
  * Clears radiation from irradiated organs if their damage is fully healed.
  */
-/mob/living/carbon/human/proc/heal_radiation(amount = 1, updating_health = TRUE, required_biotype = NONE, organ_multiplier = 0)
+/mob/living/carbon/proc/heal_radiation(amount = 1, updating_health = TRUE, required_biotype = NONE, organ_multiplier = 0)
 	if(!HAS_TRAIT(src, TRAIT_IRRADIATED))
 		return 0
 
@@ -119,7 +116,7 @@
 		return .
 
 	for(var/obj/item/organ/organ as anything in organs)
-		if(!(organ.organ_flags & ORGAN_IRRADIATED))
+		if(!HAS_TRAIT(organ, TRAIT_IRRADIATED))
 			continue
 		organ.apply_organ_damage(-amount * organ_multiplier)
 		if(organ.damage <= 0)
@@ -130,7 +127,7 @@
 /// Makes a target glow as if they are irradiated (only visual, last until stopped manually)
 /atom/proc/rad_glow(transparency = 1.0)
 	var/rad_alpha = 48 * transparency
-	add_filter("rad_glow", 2, list("type" = "outline", "color" = "#39ff14[num2hex(rad_alpha)]", "size" = 2))
+	add_filter("rad_glow", 2, list("type" = "outline", "color" = "#39ff14[num2hex(rad_alpha, 2)]", "size" = 2))
 	addtimer(CALLBACK(src, PROC_REF(rad_grow_loop), rad_alpha), rand(0.1 SECONDS, 1.9 SECONDS), TIMER_DELETE_ME) // Things should look uneven
 
 /// Used to animate the glow effect

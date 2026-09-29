@@ -521,7 +521,7 @@
 	ph = 12 //It's a reducing agent
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
-	metabolized_traits = list(TRAIT_HALT_RADIATION_EFFECTS)
+	metabolized_traits = list(TRAIT_NO_RADIATION_EFFECTS)
 
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -538,7 +538,7 @@
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	inverse_chem_val = 0.4
 	inverse_chem = /datum/reagent/inverse/pen_acid
-	metabolized_traits = list(TRAIT_HALT_RADIATION_EFFECTS)
+	metabolized_traits = list(TRAIT_NO_RADIATION_EFFECTS)
 
 /datum/reagent/medicine/pen_acid/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()

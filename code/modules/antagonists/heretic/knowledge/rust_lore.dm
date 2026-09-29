@@ -212,11 +212,10 @@
 	var/static/list/conditional_immunities = list(
 		TRAIT_BOMBIMMUNE,
 		TRAIT_IGNORESLOWDOWN,
-		TRAIT_NO_SLIP_ALL,
 		TRAIT_NOBREATH,
+		TRAIT_NO_SLIP_ALL,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_PUSHIMMUNE,
-		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHEAT,
 		TRAIT_RESISTHIGHPRESSURE,
@@ -224,6 +223,7 @@
 		TRAIT_SHOCKIMMUNE,
 		TRAIT_SLEEPIMMUNE,
 		TRAIT_STUNIMMUNE,
+		TRAIT_UNBOTHERED_BY_RADIATION,
 	)
 
 /datum/heretic_knowledge/ultimate/rust_final/on_research(mob/user, datum/antagonist/heretic/our_heretic)

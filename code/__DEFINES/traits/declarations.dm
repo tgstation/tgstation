@@ -1313,14 +1313,14 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 // Radiation defines
 
-/// Marks that this object is irradiated
+/// Marks that this object is irradiated.
 #define TRAIT_IRRADIATED "irradiated"
-
-/// Immune to being irradiated
+/// Immune to being irradiated entirely. Can't get it, can't spread it.
 #define TRAIT_RADIMMUNE "rad_immunity"
-
+/// Can pick up and spread radiation, but is immune to its effects entirely.
+#define TRAIT_UNBOTHERED_BY_RADIATION "unbothered_by_radiation"
 /// Harmful radiation effects, the toxin damage and the burns, will not occur while this trait is active
-#define TRAIT_HALT_RADIATION_EFFECTS "halt_radiation_effects"
+#define TRAIT_NO_RADIATION_EFFECTS "no_radiation_effects"
 
 /// This clothing protects the user from radiation.
 /// This should not be used on clothing_traits, but should be applied to the clothing itself.

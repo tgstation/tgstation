@@ -763,7 +763,7 @@
 
 /datum/reagent/toxin/polonium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(!HAS_TRAIT(affected_mob, TRAIT_IRRADIATED) && SSradiation.can_irradiate_basic(affected_mob))
+	if(SSradiation.can_irradiate_basic(affected_mob))
 		var/chance = min(volume / (20 - rad_power * 5), rad_power)
 		if(SPT_PROB(chance, seconds_per_tick)) // ignore rad protection calculations bc it's inside of us
 			affected_mob.make_irradiated()
@@ -787,10 +787,7 @@
 /datum/reagent/toxin/polonium/expose_mob(mob/living/exposed_mob, methods, reac_volume)
 	. = ..()
 
-	if(!SSradiation.can_irradiate_basic(exposed_mob))
-		return
-
-	if(ishuman(exposed_mob) && SSradiation.wearing_rad_protected_clothing(exposed_mob))
+	if(!SSradiation.can_irradiate_human_basic(exposed_mob))
 		return
 
 	if(!(methods & (TOUCH|VAPOR)))

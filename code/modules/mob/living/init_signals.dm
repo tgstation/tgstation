@@ -91,6 +91,9 @@
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_PASSTABLE), SIGNAL_REMOVETRAIT(TRAIT_PASSTABLE)), PROC_REF(on_passtable_trait_toggled))
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_PASSWINDOW), SIGNAL_REMOVETRAIT(TRAIT_PASSWINDOW)), PROC_REF(on_passwindow_trait_toggled))
 
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_UNBOTHERED_BY_RADIATION), PROC_REF(now_unbothered_by_radiation))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_UNBOTHERED_BY_RADIATION), PROC_REF(now_bothered_by_radiation))
+
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
 	SIGNAL_HANDLER
@@ -382,3 +385,13 @@
 		pass_flags |= PASSWINDOW
 	else
 		pass_flags &= ~PASSWINDOW
+
+/// Called when the mob gains [TRAIT_UNBOTHERED_BY_RADIATION]
+/mob/living/proc/now_unbothered_by_radiation(datum/source)
+	SIGNAL_HANDLER
+	ADD_TRAIT(src, TRAIT_NO_RADIATION_EFFECTS, TRAIT_UNBOTHERED_BY_RADIATION)
+
+/// Called when the mob loses [TRAIT_UNBOTHERED_BY_RADIATION]
+/mob/living/proc/now_bothered_by_radiation(datum/source)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(src, TRAIT_NO_RADIATION_EFFECTS, TRAIT_UNBOTHERED_BY_RADIATION)

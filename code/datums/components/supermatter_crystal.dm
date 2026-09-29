@@ -352,11 +352,9 @@
 	radiation_pulse(atom_source, max_range = radiation_range, threshold = 1.2 / max(object_size, 1), chance = 10 * object_size, can_propogate = TRUE)
 	for(var/mob/living/near_mob in range(10))
 		atom_source.investigate_log("has irradiated [key_name(near_mob)] after consuming [consumed_object].", INVESTIGATE_ENGINE)
-		if (HAS_TRAIT(near_mob, TRAIT_RADIMMUNE) || issilicon(near_mob))
+		if(!SSradiation.can_irradiate_human_basic(near_mob))
 			continue
-		if(ishuman(near_mob) && SSradiation.wearing_rad_protected_clothing(near_mob))
-			continue
-		if(near_mob in view())
+		if(near_mob in viewers())
 			near_mob.show_message(span_danger("As \the [atom_source] slowly stops resonating, you find your skin covered in new radiation burns."), MSG_VISUAL,
 				span_danger("The unearthly ringing subsides and you find your skin covered in new radiation burns."), MSG_AUDIBLE)
 		else

@@ -56,8 +56,6 @@
 /// Scarring on the left eye
 #define LEFT_EYE_SCAR (1<<1)
 
-#define ORGAN_IRRADIATED (1<<11)
-
 /// Helper to figure out if a limb is organic
 #define IS_ORGANIC_LIMB(limb) (limb.bodytype & BODYTYPE_ORGANIC)
 /// Helper to figure out if a limb is robotic
