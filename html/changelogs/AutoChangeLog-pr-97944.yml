@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes an issue with looping sounds on machines like the oven/deepfryer, please report any strange issues"

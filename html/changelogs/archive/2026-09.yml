@@ -433,3 +433,45 @@
 2026-09-28:
   lelandkemble:
   - bugfix: Red & Blue cubes do not entangle you to your previous mount anymore
+2026-09-29:
+  Fghj240:
+  - balance: explosions inflict wounds
+  - balance: explosions respect ear protection
+  - balance: bomb armor reduces damage of devastating explosions
+  - balance: bomb armor can reduce explosive damage by 60% instead of just 50%
+  - balance: bomb armor respects locations and doesn't always spread damage equally
+  - balance: devastating explosion damage increased from 500 to 600
+  - balance: devastating explosion damage split between brute and burn (instead of
+      brute only)
+  - balance: devastating explosions deal ear damage and paralysis in case they're
+      survived
+  - bugfix: aliens are knocked out by heavy explosions, not light ones
+  Melbert:
+  - qol: When attempting to craft a recipe which has a craftable component, you can
+      hover over said component to see its recipe. If that recipe has a craftable
+      component, you can then hover over that, and so on.... allowing you to view
+      entire recipes without losing your original place in the UI.
+  - qol: Food crafting menu no longer has a third tab for "food type", you can instead
+      filter by "food type" the same way you filter by cuisine or dish type on the
+      left
+  - qol: Food crafting menu now informs you of alternate sources of ingredients, such
+      as from the biogenerator
+  - qol: You can lean on jukeboxes
+  PapaMichael:
+  - spellcheck: Welded airlocks' tooltips don't suggest you can weld them shut again
+  btcbuster:
+  - spellcheck: fixed the description of soup pots
+  necromanceranne:
+  - rscadd: Adds the Overconfident quirk! You got this!
+  timothymtorres:
+  - bugfix: Fix incorrect scaling for breath code heat messages.
+  - bugfix: Fix breath temperature skipping damage effects in very rare situations.
+  - refactor: Slight refactor of breath code temperature checks to be faster and cleaner.
+  - bugfix: Fix singularity runtime with thrown objects
+  vinylspiders:
+  - bugfix: fixes a bug that could cause a number of weighted rng events to not behave
+      as intended
+  - bugfix: the plantalyzer light level reading will now show accurately again
+  - bugfix: fixes an issue with looping sounds on machines like the oven/deepfryer,
+      please report any strange issues
+  - bugfix: invalid loadout gags colors now get sanitized
