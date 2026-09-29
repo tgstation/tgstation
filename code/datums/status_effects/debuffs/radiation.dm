@@ -31,7 +31,8 @@
 	beginning_of_irradiation = world.time
 
 	owner.rad_glow(can_propogate ? 1.5 : 1.0)
-	owner.apply_damage(12, TOX)
+	if(!HAS_TRAIT(owner, TRAIT_NO_RADIATION_EFFECTS))
+		owner.apply_damage(12, TOX)
 	COOLDOWN_START(src, last_tox_damage, 20 SECONDS)
 	COOLDOWN_START(src, last_burn, rand(30 SECONDS, 60 SECONDS))
 
