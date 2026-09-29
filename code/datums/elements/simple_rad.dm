@@ -1,3 +1,4 @@
+/// Makes something look irradiated, but otherwise has no inherent negative effects.
 /datum/element/simple_rad
 
 /datum/element/simple_rad/Attach(atom/target)
@@ -57,6 +58,7 @@
 
 	old_owner.remove_status_effect(/datum/status_effect/grouped/has_irradiated_organs, REF(source))
 
+/// Tracks how many irradiated organs a mob has.
 /datum/status_effect/grouped/has_irradiated_organs
 	id = "has_irradiated_organs"
 	alert_type = null
