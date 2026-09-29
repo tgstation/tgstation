@@ -103,7 +103,7 @@ effective or pretty fucking useless.
 	return . | ITEM_INTERACT_BLOCKING
 
 /obj/item/healthanalyzer/rad_laser/proc/radiation_aftereffect(mob/living/M, passed_intensity)
-	if(QDELETED(M) || !ishuman(M) || HAS_TRAIT(M, TRAIT_RADIMMUNE) || HAS_TRAIT(M, TRAIT_UNBOTHERED_BY_RADIATION))
+	if(QDELETED(M) || !ishuman(M) || HAS_TRAIT(M, TRAIT_NO_RADIATION_EFFECTS))
 		return
 
 	if(passed_intensity >= 5)

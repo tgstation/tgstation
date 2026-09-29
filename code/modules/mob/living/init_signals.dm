@@ -94,6 +94,12 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_UNBOTHERED_BY_RADIATION), PROC_REF(now_unbothered_by_radiation))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_UNBOTHERED_BY_RADIATION), PROC_REF(now_bothered_by_radiation))
 
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_GODMODE), PROC_REF(on_godmode_gain))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_GODMODE), PROC_REF(on_godmode_loss))
+
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_RADIMMUNE), PROC_REF(on_radimmune_gain))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_RADIMMUNE), PROC_REF(on_radimmune_loss))
+
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
 	SIGNAL_HANDLER
@@ -395,3 +401,23 @@
 /mob/living/proc/now_bothered_by_radiation(datum/source)
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(src, TRAIT_NO_RADIATION_EFFECTS, TRAIT_UNBOTHERED_BY_RADIATION)
+
+/// Called when the mob gains [TRAIT_GODMODE]
+/mob/living/proc/on_godmode_gain(datum/source)
+	SIGNAL_HANDLER
+	ADD_TRAIT(src, TRAIT_NO_RADIATION_EFFECTS, TRAIT_GODMODE)
+
+/// Called when the mob loses [TRAIT_GODMODE]
+/mob/living/proc/on_godmode_loss(datum/source)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(src, TRAIT_NO_RADIATION_EFFECTS, TRAIT_GODMODE)
+
+/// Called when the mob gains [TRAIT_RADIMMUNE]
+/mob/living/proc/on_radimmune_gain(datum/source)
+	SIGNAL_HANDLER
+	ADD_TRAIT(src, TRAIT_NO_RADIATION_EFFECTS, TRAIT_RADIMMUNE)
+
+/// Called when the mob loses [TRAIT_RADIMMUNE]
+/mob/living/proc/on_radimmune_loss(datum/source)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(src, TRAIT_NO_RADIATION_EFFECTS, TRAIT_RADIMMUNE)
