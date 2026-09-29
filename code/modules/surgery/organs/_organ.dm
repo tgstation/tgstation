@@ -476,7 +476,7 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 	if(HAS_TRAIT(src, TRAIT_IRRADIATED) && IS_ORGANIC_ORGAN(src) && !(organ_flags & ORGAN_EXTERNAL))
 		var/show_percent = scanpower >= SCANPOWER_ADVANCED || owner.has_reagent(/datum/reagent/inverse/technetium)
-		var/shown_text = ""
+		var/shown_text = "Slightly"
 		if(show_percent)
 			shown_text = "[round((damage / maxHealth) * 100, 1)]%"
 		else if(organ_flags & ORGAN_FAILING)
@@ -485,8 +485,6 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 			shown_text = "Severely"
 		else if(damage > low_threshold)
 			shown_text = "Mildly"
-		else
-			shown_text = "Slightly"
 
 		if(organ_flags & ORGAN_FAILING)
 			return conditional_tooltip("[colored ? "<font color='#29b90f'>" : ""]<b>[shown_text]</b> Irradiated[colored ? "</font>" : ""]", \
