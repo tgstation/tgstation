@@ -16,6 +16,8 @@
 	COOLDOWN_DECLARE(last_tox_damage)
 	/// Cooldown for the last burn damage tick
 	COOLDOWN_DECLARE(last_burn)
+	/// Counts wash ticks to be cleaned off for irradiated mobs with [TRAIT_UNBOTHERED_BY_RADIATION]
+	VAR_PRIVATE/clean_counter = 0
 
 /datum/status_effect/irradiated/on_creation(mob/living/new_owner, can_propogate)
 	src.can_propogate = can_propogate
@@ -31,7 +33,9 @@
 	beginning_of_irradiation = world.time
 
 	owner.rad_glow(can_propogate ? 1.5 : 1.0)
-	if(!HAS_TRAIT(owner, TRAIT_NO_RADIATION_EFFECTS))
+	if(HAS_TRAIT(owner, TRAIT_UNBOTHERED_BY_RADIATION))
+		clean_counter = pick(10, 12, 14, 16)
+	else
 		owner.apply_damage(12, TOX)
 	COOLDOWN_START(src, last_tox_damage, 20 SECONDS)
 	COOLDOWN_START(src, last_burn, rand(30 SECONDS, 60 SECONDS))
@@ -55,9 +59,15 @@
 
 /datum/status_effect/irradiated/tick(seconds_between_ticks)
 	var/radlevel = owner.get_tox_loss()
-	if(radlevel <= 0)
-		qdel(src)
-		return
+	if(HAS_TRAIT(owner, TRAIT_UNBOTHERED_BY_RADIATION))
+		if(clean_counter <= 0)
+			qdel(src)
+			return
+
+	else
+		if(radlevel <= 0)
+			qdel(src)
+			return
 
 	if(!COOLDOWN_FINISHED(src, clean_cooldown))
 		return
@@ -146,8 +156,13 @@
 
 	COOLDOWN_START(src, clean_cooldown, (SSMACHINES_DT + (1 SECONDS)))
 	owner.adjust_tox_loss(-0.25, forced = TRUE)
-	if(owner.get_tox_loss() <= 0)
-		qdel(src)
+	clean_counter = max(clean_counter - 1, 0)
+	if(HAS_TRAIT(owner, TRAIT_UNBOTHERED_BY_RADIATION))
+		if(clean_counter <= 0)
+			qdel(src)
+	else
+		if(owner.get_tox_loss() <= 0)
+			qdel(src)
 	return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 /datum/status_effect/irradiated/proc/on_geiger_counter_scan(datum/source, mob/user, obj/item/geiger_counter/geiger_counter)
