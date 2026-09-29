@@ -23,17 +23,27 @@
 	src.can_propogate = can_propogate
 	return ..()
 
+/// Determines if we need to use the alternate method for tracking removal
+/datum/status_effect/irradiated/proc/use_alt_clean_method()
+	// Keeps things simple for unbothered mobs like Plasmamen
+	if(HAS_TRAIT(owner, TRAIT_UNBOTHERED_BY_RADIATION))
+		return TRUE
+	// Toximmune and toxlover means we can't rely on toxins damage for cleaning
+	if(HAS_TRAIT(owner, TRAIT_TOXIMMUNE) || HAS_TRAIT(owner, TRAIT_TOXLOVER))
+		return TRUE
+	return FALSE
+
 /datum/status_effect/irradiated/on_apply()
 	if(!ishuman(owner))
 		return FALSE
 	if(HAS_TRAIT(owner, TRAIT_RADIMMUNE) || HAS_TRAIT(owner, TRAIT_IRRADIATED))
 		return FALSE
 
-	ADD_TRAIT(owner, TRAIT_IRRADIATED, id)
+	ADD_TRAIT(owner, TRAIT_IRRADIATED, TRAIT_STATUS_EFFECT(id))
 	beginning_of_irradiation = world.time
 
 	owner.rad_glow(can_propogate ? 1.5 : 1.0)
-	if(HAS_TRAIT(owner, TRAIT_UNBOTHERED_BY_RADIATION))
+	if(use_alt_clean_method())
 		clean_counter = pick(10, 12, 14, 16)
 	else
 		owner.apply_damage(12, TOX)
@@ -48,7 +58,7 @@
 
 /datum/status_effect/irradiated/on_remove()
 	owner.remove_filter("rad_glow")
-	REMOVE_TRAIT(owner, TRAIT_IRRADIATED, id)
+	REMOVE_TRAIT(owner, TRAIT_IRRADIATED, TRAIT_STATUS_EFFECT(id))
 	UnregisterSignal(owner, list(
 		COMSIG_COMPONENT_CLEAN_ACT,
 		COMSIG_GEIGER_COUNTER_SCAN,
@@ -59,15 +69,10 @@
 
 /datum/status_effect/irradiated/tick(seconds_between_ticks)
 	var/radlevel = owner.get_tox_loss()
-	if(HAS_TRAIT(owner, TRAIT_UNBOTHERED_BY_RADIATION))
-		if(clean_counter <= 0)
-			qdel(src)
-			return
-
-	else
-		if(radlevel <= 0)
-			qdel(src)
-			return
+	var/use_alt = use_alt_clean_method()
+	if((use_alt ? clean_counter : radlevel) <= 0)
+		qdel(src)
+		return
 
 	if(!COOLDOWN_FINISHED(src, clean_cooldown))
 		return
@@ -83,7 +88,7 @@
 	if(owner.stat != DEAD)
 		random_effects(radtime, seconds_between_ticks)
 
-	if(COOLDOWN_FINISHED(src, last_tox_damage))
+	if(COOLDOWN_FINISHED(src, last_tox_damage) && !use_alt)
 		tox_effects(radtime, seconds_between_ticks)
 		COOLDOWN_START(src, last_tox_damage, 10 SECONDS)
 
@@ -157,12 +162,8 @@
 	COOLDOWN_START(src, clean_cooldown, (SSMACHINES_DT + (1 SECONDS)))
 	owner.adjust_tox_loss(-0.25, forced = TRUE)
 	clean_counter = max(clean_counter - 1, 0)
-	if(HAS_TRAIT(owner, TRAIT_UNBOTHERED_BY_RADIATION))
-		if(clean_counter <= 0)
-			qdel(src)
-	else
-		if(owner.get_tox_loss() <= 0)
-			qdel(src)
+	if((use_alt_clean_method() ? clean_counter : owner.get_tox_loss()) <= 0)
+		qdel(src)
 	return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 /datum/status_effect/irradiated/proc/on_geiger_counter_scan(datum/source, mob/user, obj/item/geiger_counter/geiger_counter)
