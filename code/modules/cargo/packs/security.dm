@@ -422,13 +422,13 @@
 	cost = CARGO_CRATE_VALUE * 16
 	contains = list(/obj/item/gun/energy/e_gun/nuclear = 1)
 	crate_name = "advanced energy gun crate"
-	order_flags = ORDER_NOT_DEPARTMENTAL
+	order_flags = parent_type::order_flags | ORDER_NOT_DEPARTMENTAL
 
 /datum/supply_pack/security/armory/rnd_locked/aeg/three_pack
 	name = "Advanced Energy Gun Requisition (x3)"
 	cost = parent_type::cost * 2.9
 	contains = list(/obj/item/gun/energy/e_gun/nuclear = 3)
-	order_flags = NONE
+	order_flags = parent_type::order_flags & ~ORDER_NOT_DEPARTMENTAL
 
 /datum/supply_pack/security/armory/rnd_locked/xray
 	name = "Type 6 X-ray Laser Gun Requisition"
@@ -437,13 +437,13 @@
 	cost = CARGO_CRATE_VALUE * 20
 	contains = list(/obj/item/gun/energy/laser/xray = 1)
 	crate_name = "x-ray gun crate"
-	order_flags = ORDER_NOT_DEPARTMENTAL
+	order_flags = parent_type::order_flags | ORDER_NOT_DEPARTMENTAL
 
 /datum/supply_pack/security/armory/rnd_locked/xray/three_pack
 	name = "Type 6 X-ray Laser Gun Requisition (x3)"
 	cost = parent_type::cost * 2.9
 	contains = list(/obj/item/gun/energy/laser/xray = 3)
-	order_flags = NONE
+	order_flags = parent_type::order_flags & ~ORDER_NOT_DEPARTMENTAL
 
 /datum/supply_pack/security/armory/rnd_locked/tempgun
 	name = "Temperature Gun Requisition"
@@ -451,13 +451,13 @@
 	cost = CARGO_CRATE_VALUE * 8
 	contains = list(/obj/item/gun/energy/temperature = 1)
 	crate_name = "temperature gun crate"
-	order_flags = ORDER_NOT_DEPARTMENTAL
+	order_flags = parent_type::order_flags | ORDER_NOT_DEPARTMENTAL
 
 /datum/supply_pack/security/armory/rnd_locked/tempgun/three_pack
 	name = "Temperature Gun Requisition (x3)"
 	cost = parent_type::cost * 2.9
 	contains = list(/obj/item/gun/energy/temperature = 3)
-	order_flags = NONE
+	order_flags = parent_type::order_flags & ~ORDER_NOT_DEPARTMENTAL
 
 /datum/supply_pack/security/armory/rnd_locked/tesla
 	name = "Tesla Cannon Requisition"
@@ -482,13 +482,13 @@
 	cost = CARGO_CRATE_VALUE * 12
 	contains = list(/obj/item/gun/energy/ionrifle/carbine = 1)
 	crate_name = "ion carbine crate"
-	order_flags = ORDER_NOT_DEPARTMENTAL
+	order_flags = parent_type::order_flags | ORDER_NOT_DEPARTMENTAL
 
 /datum/supply_pack/security/armory/rnd_locked/ion/three_pack
 	name = "Ion Carbine Requisition (x3)"
 	cost = parent_type::cost * 2.9
 	contains = list(/obj/item/gun/energy/ionrifle/carbine = 3)
-	order_flags = NONE
+	order_flags = parent_type::order_flags & ~ORDER_NOT_DEPARTMENTAL
 
 /datum/supply_pack/security/armory/rnd_locked/ebow
 	name = "Energy Bow Requisition"
@@ -497,13 +497,13 @@
 	cost = CARGO_CRATE_VALUE * 20
 	contains = list(/obj/item/gun/energy/recharge/ebow/large = 1)
 	crate_name = "energy bow crate"
-	order_flags = ORDER_NOT_DEPARTMENTAL
+	order_flags = parent_type::order_flags | ORDER_NOT_DEPARTMENTAL
 
 /datum/supply_pack/security/armory/rnd_locked/ebow/three_pack
 	name = "Energy Bow Requisition (x3)"
 	cost = parent_type::cost * 2.9
 	contains = list(/obj/item/gun/energy/recharge/ebow/large = 3)
-	order_flags = NONE
+	order_flags = parent_type::order_flags & ~ORDER_NOT_DEPARTMENTAL
 
 /datum/supply_pack/security/blood_worm_testers
 	name = "Hemoparasite Testing Crate"
