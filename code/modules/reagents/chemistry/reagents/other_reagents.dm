@@ -1242,7 +1242,7 @@
 
 /datum/reagent/uranium/New()
 	. = ..()
-	AddElement(/datum/element/radioactive_reagent, rad_power = src.rad_power, volume_modifier = 5)
+	AddElement(/datum/element/radioactive_reagent, rad_power = src.rad_power, exposed_volume_modifier = 5)
 
 /datum/reagent/uranium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
