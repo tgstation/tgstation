@@ -116,6 +116,14 @@
 		return .
 
 	for(var/obj/item/organ/organ as anything in organs)
+		if(organ_flags & ORGAN_FAILING)
+			continue
+		if((required_biotype & MOB_ORGANIC) && !IS_ORGANIC_ORGAN(organ))
+			continue
+		if((required_biotype & MOB_ROBOTIC) && !IS_ROBOTIC_ORGAN(organ))
+			continue
+		if((required_biotype & MOB_MINERAL) && !IS_MINERAL_ORGAN(organ))
+			continue
 		if(!HAS_TRAIT(organ, TRAIT_IRRADIATED))
 			continue
 		organ.apply_organ_damage(-amount * organ_multiplier)

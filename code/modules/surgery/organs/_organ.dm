@@ -496,8 +496,11 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		else
 			shown_text = "Slightly"
 
+		if((organ_flags & ORGAN_FAILING) || !IS_ORGANIC_ORGAN(src))
+			return conditional_tooltip("[colored ? "<font color='#29b90f'>" : ""][shown_text] Irradiated[colored ? "</font>" : ""]", "Replace or clean surgically.", add_tooltips)
+
 		return conditional_tooltip("[colored ? "<font color='#29b90f'>" : ""][shown_text] Irradiated[colored ? "</font>" : ""]", \
-			"Replace or use specialty medication, such as [/datum/reagent/medicine/potass_iodide::name] or [/datum/reagent/medicine/pen_acid::name].", add_tooltips)
+			"Replace or clean surgically, or use specialty medication, such as [/datum/reagent/medicine/potass_iodide::name] or [/datum/reagent/medicine/pen_acid::name].", add_tooltips)
 
 	var/tech_text = ""
 	if(owner.has_reagent(/datum/reagent/inverse/technetium))
