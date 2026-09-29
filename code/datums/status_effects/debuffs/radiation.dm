@@ -4,11 +4,17 @@
 	tick_interval = 1 SECONDS
 	remove_on_fullheal = TRUE
 	heal_flag_necessary = HEAL_ADMIN|HEAL_TOX|HEAL_NEGATIVE_MUTATIONS|HEAL_STATUS
-	var/beginning_of_irradiation
-	var/can_propogate
+	/// World time that the effect was applied
+	VAR_PRIVATE/beginning_of_irradiation
+	/// Whether the radiation can propagate to nearby entities
+	VAR_PRIVATE/can_propogate = FALSE
+	/// Cooldown for radiation propagation to nearby entities
 	COOLDOWN_DECLARE(propogation_cooldown)
+	/// Cooldown for healing from cleaning effects
 	COOLDOWN_DECLARE(clean_cooldown)
+	/// Cooldown for the last tox damage tick
 	COOLDOWN_DECLARE(last_tox_damage)
+	/// Cooldown for the last burn damage tick
 	COOLDOWN_DECLARE(last_burn)
 
 /datum/status_effect/irradiated/on_creation(mob/living/new_owner, can_propogate)
