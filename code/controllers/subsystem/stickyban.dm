@@ -14,7 +14,7 @@ SUBSYSTEM_DEF(stickyban)
 	if (ignored_conf && ignored_conf.len)
 		for (var/num in ignored_conf)
 			if (isnum(num))
-				ignored_cids[num2text(num)] = TRUE
+				ignored_cids[num2text(num, 14)] = TRUE
 
 	if (length(GLOB.stickybanadminexemptions))
 		restore_stickybans()
