@@ -185,6 +185,18 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 		apply_organ_damage(decay_factor * maxHealth * seconds_per_tick)
 		return
 
+	if((organ_flags & (ORGAN_ORGANIC|ORGAN_IRRADIATED)) == (ORGAN_ORGANIC|ORGAN_IRRADIATED))
+		if(SPT_PROB(50, seconds_per_tick) && (isnull(owner) || !HAS_TRAIT(owner, TRAIT_HALT_RADIATION_EFFECTS)))
+			apply_organ_damage(2 * decay_factor * maxHealth * seconds_per_tick)
+			// Chance to gain some free tox damage when taking irradiation organ damage, 50% chance on that to actually feel it
+			if(prob(10) && owner?.apply_damage(1 * seconds_per_tick, TOX, zone) && owner.stat <= SOFT_CRIT && prob(50))
+				if(owner.get_stamina_loss() < 50)
+					owner.apply_damage(10 * seconds_per_tick, STAMINA, zone)
+				if(owner.disgust < DISGUST_LEVEL_VERYGROSS)
+					owner.adjust_disgust(10 * seconds_per_tick)
+				to_chat(owner, span_warning("You feel a slight [pick("pain", "twinge", "throb", "ache")] in your [parse_zone(zone)]."))
+		return
+
 	if(!damage) // No sense healing if you're not even hurt bro
 		return
 
@@ -469,6 +481,11 @@ INITIALIZE_IMMEDIATE(/obj/item/organ)
 
 	if(organ_flags & ORGAN_EMP)
 		return conditional_tooltip("[colored ? "<font color='#cc3333'>" : ""]EMP-Derived Failure[colored ? "</font>" : ""]", "Repair or replace surgically.", add_tooltips)
+
+	if(organ_flags & ORGAN_IRRADIATED)
+		var/show_percent = scanpower >= SCANPOWER_ADVANCED || owner.has_reagent(/datum/reagent/inverse/technetium)
+		return conditional_tooltip("[colored ? "<font color='#29b90f'>" : ""][show_percent ? "[round((damage / maxHealth) * 100, 1)]% " : ""]Irradiated][colored ? "</font>" : ""]", \
+			"Replace or use specialty medication, such as [/datum/reagent/medicine/potass_iodide::name] or [/datum/reagent/medicine/pen_acid::name].", add_tooltips)
 
 	var/tech_text = ""
 	if(owner.has_reagent(/datum/reagent/inverse/technetium))
