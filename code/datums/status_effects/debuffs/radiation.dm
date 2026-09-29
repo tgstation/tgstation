@@ -88,7 +88,9 @@
 
 	var/mob/living/carbon/human/human_owner = owner
 	for(var/obj/item/organ/organ as anything in shuffle(human_owner.organs))
-		if(organ.organ_flags & (ORGAN_VITAL|ORGAN_ROBOTIC))
+		if(organ.organ_flags & ORGAN_VITAL)
+			continue
+		if(IS_ROBOTIC(organ))
 			continue
 		if(HAS_TRAIT(organ, TRAIT_IRRADIATED))
 			continue
