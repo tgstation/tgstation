@@ -84,7 +84,7 @@
 /datum/status_effect/irradiated/proc/tox_effects(time_since_irradiated, seconds_per_tick)
 	owner.apply_damage(1, TOX)
 
-	if(!SPT_PROB(20 * (time_since_irradiated / (5 MINUTES)), seconds_per_tick))
+	if(!SPT_PROB(20 * ((time_since_irradiated - 1 MINUTES) / (10 MINUTES)), seconds_per_tick))
 		return
 
 	var/mob/living/carbon/human/human_owner = owner
