@@ -24,11 +24,12 @@
 	seed = /obj/item/seeds/potato
 	name = "potato"
 	desc = "Boil 'em! Mash 'em! Stick 'em in a stew!"
-	throwforce = 15
+	throwforce = 0
 	wound_bonus = 15
 	icon_state = "potato"
 	foodtypes = VEGETABLES
 	distill_reagent = /datum/reagent/consumable/ethanol/vodka
+	var/speed_multiplier = 5
 
 /obj/item/food/grown/potato/juice_typepath()
 	return /datum/reagent/consumable/potato_juice
