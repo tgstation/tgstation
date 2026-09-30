@@ -376,7 +376,7 @@
 		vision_distance = COMBAT_MESSAGE_RANGE,
 	)
 
-	helper.balloon_alert(helper, "gauzed removed")
+	helper.balloon_alert(helper, "gauze removed")
 	if(helper != owner)
 		helper.balloon_alert(owner, "gauze removed")
 
