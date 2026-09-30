@@ -1,0 +1,10 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - image: "Gauze now shows up on your sprite"
+  - sound: "Gauze now plays a rip sound when applied"
+  - sound: "Sutures now play a snip sound when applied"
+  - rscadd: "Gauze can now ALWAYS be applied to a bodypart, no longer requiring a wound be present. (Note gauze alternatives like duct tape still require a wound be present)."
+  - rscadd: "Gauze can now be removed by hand, both from your own body or from others."
+  - balance: "Gauze no longer deletes itself when used up, instead dropping \"used gauze\". Used gauze can be washed to reuse it, but this has diminishing returns."
+  - balance: "If you sustain a wound to an already gauzed limb, the gauze will sustain a significant amount of wear, potentially even destroying it."
