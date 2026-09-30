@@ -16,7 +16,7 @@
 
 // Reminder to check to see if we can fix the weird maximum list macro size thing in `vox_sounds.dm`
 #if defined(CIBUILDING) && (DM_VERSION > 516 || (DM_VERSION == 516 && DM_BUILD > 1687))
-#warn vox_sounds.dm initializes a list in 2 steps to get around a weird BYOND macro bug. Check to see if this has been fixed in this BYOND version.
+#warn vox_sounds.dm initializes a list in 2 steps to get around a weird BYOND macro bug. This has been fixed in 516.1688, so this can now be cleaned up.
 #endif
 
 // Keep savefile compatibilty at minimum supported level
