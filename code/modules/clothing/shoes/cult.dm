@@ -14,7 +14,7 @@
 	icon_state = "cultalt"
 
 /obj/item/clothing/shoes/cult/alt/ghost
-	item_flags = DROPDEL
+	item_flags = parent_type::item_flags | DROPDEL
 
 /obj/item/clothing/shoes/cult/alt/ghost/Initialize(mapload)
 	. = ..()

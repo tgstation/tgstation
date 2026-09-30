@@ -115,6 +115,8 @@ GLOBAL_LIST_EMPTY(customized_pets)
 #define BB_RAPTOR_TROUGH_TARGET "raptor_trough_target"
 /// HP level at which we'll flee from attackers
 #define BB_RAPTOR_FLEE_THRESHOLD "raptor_flee_threshold"
+//If we have the cowardly trait, alternate hp level we flee at
+#define BB_RAPTOR_FLEE_THRESHOLD_COWARDLY "raptor_flee_threshold_cowardly"
 
 #define MAX_RAPTOR_POP 64
 

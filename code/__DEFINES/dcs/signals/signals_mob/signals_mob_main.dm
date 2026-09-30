@@ -131,6 +131,8 @@
 	#define COMSIG_BLOCK_EYECONTACT (1<<0)
 ///from base of /mob/update_sight(): ()
 #define COMSIG_MOB_UPDATE_SIGHT "mob_update_sight"
+///from base of /mob/living/restore_initial_sight(): ()
+#define COMSIG_LIVING_RESTORE_INITIAL_SIGHT "mob_restore_init_sight"
 ////from /mob/living/say(): ()
 #define COMSIG_MOB_SAY "mob_say"
 	#define COMPONENT_UPPERCASE_SPEECH (1<<0)

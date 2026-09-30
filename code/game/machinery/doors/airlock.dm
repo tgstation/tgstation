@@ -788,7 +788,7 @@
 
 			return CONTEXTUAL_SCREENTIP_SET
 		if (TOOL_WELDER)
-			context[SCREENTIP_CONTEXT_RMB] = "Weld shut"
+			context[SCREENTIP_CONTEXT_RMB] = welded ? "Unweld" : "Weld shut"
 
 			if (panel_open)
 				switch (security_level)
