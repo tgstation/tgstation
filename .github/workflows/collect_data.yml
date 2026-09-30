@@ -31,7 +31,14 @@ jobs:
       required_build_versions: ${{ steps.setup_required_build_versions.outputs.required_build_versions }}
 
     steps:
-      - uses: actions/checkout@v7
+      - name: Checkout required files
+        uses: actions/checkout@v7
+        with:
+          sparse-checkout: |
+            .github
+            _maps/map_jsons
+            dependencies.sh
+            tools/ci/install_byond.sh
 
       - name: Find maps
         id: map_finder
@@ -40,7 +47,7 @@ jobs:
           > maps_output.txt
           > map_configs.txt
 
-          for file in _maps/*.json; do
+          for file in _maps/map_jsons/*.json; do
             if ! jq -e '.exclude_from_ci == true' "$file" >/dev/null 2>&1; then
               map_name=$(basename "$file" .json)
 
