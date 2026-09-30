@@ -196,8 +196,7 @@
 			to_chat(user, span_warning("You can't lick wounds without a tongue!")) // f in chat
 			return
 
-	lick_wounds(user)
-	return TRUE
+	return lick_wounds(user)
 
 /// if a felinid is licking this cut to reduce bleeding
 /datum/wound/slash/flesh/proc/lick_wounds(mob/living/carbon/human/user)
@@ -207,10 +206,13 @@
 			continue
 		user.ForceContractDisease(iter_disease)
 
+	if(user.combat_mode)
+		return FALSE
+
 	user.visible_message(span_notice("[user] begins licking the wounds on [victim]'s [limb.plaintext_zone]."), span_notice("You begin licking the wounds on [victim]'s [limb.plaintext_zone]..."), ignored_mobs=victim)
 	to_chat(victim, span_notice("[user] begins to lick the wounds on your [limb.plaintext_zone]."))
 	if(!do_after(user, base_treat_time, target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
-		return
+		return FALSE
 
 	user.visible_message(span_notice("[user] licks the wounds on [victim]'s [limb.plaintext_zone]."), span_notice("You lick some of the wounds on [victim]'s [limb.plaintext_zone]"), ignored_mobs=victim)
 	to_chat(victim, span_green("[user] licks the wounds on your [limb.plaintext_zone]!"))
@@ -221,6 +223,8 @@
 		try_handling(user)
 	else if(demotes_to)
 		to_chat(user, span_green("You successfully lower the severity of [user == victim_stored ? "your" : "[victim_stored]'s"] cuts."))
+
+	return TRUE
 
 /datum/wound/slash/flesh/adjust_blood_flow(adjust_by, minimum)
 	. = ..()
