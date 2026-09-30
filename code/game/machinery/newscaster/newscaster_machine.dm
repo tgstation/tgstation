@@ -13,6 +13,10 @@
 	max_integrity = 200
 	integrity_failure = 0.25
 	interaction_flags_machine = INTERACT_MACHINE_ALLOW_SILICON|INTERACT_MACHINE_REQUIRES_LITERACY
+	light_system = OVERLAY_LIGHT
+	light_range = 1
+	light_power = 0.7
+	light_color = LIGHT_COLOR_VIVID_GREEN
 	///Reference to the currently logged in user.
 	var/datum/bank_account/current_user
 	///Name of the logged in user.
@@ -89,6 +93,13 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/newscaster, 30)
 	current_user = null
 	newscaster_username = null
 	return ..()
+
+/obj/machinery/newscaster/update_appearance(updates=ALL)
+	. = ..()
+	if(machine_stat & (NOPOWER|BROKEN))
+		set_light_on(FALSE)
+		return
+	set_light_on(TRUE)
 
 /obj/machinery/newscaster/update_overlays()
 	. = ..()

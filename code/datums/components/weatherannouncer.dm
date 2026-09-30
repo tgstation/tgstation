@@ -126,7 +126,6 @@
 				light.set_light_color(LIGHT_COLOR_INTENSE_RED)
 			else
 				light.set_light_color(LIGHT_COLOR_DIM_YELLOW)
-	light.update_light()
 
 /// Returns a string we should display to communicate what you should be doing
 /datum/component/weather_announcer/proc/get_warning_message()

@@ -19,6 +19,10 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.15
 	max_integrity = 300
 	armor_type = /datum/armor/machinery_requests_console
+	light_system = OVERLAY_LIGHT
+	light_range = 1
+	light_power = 0.7
+	light_color = LIGHT_COLOR_VIVID_GREEN
 	/// Reference to our area
 	var/area/area
 	/// Is autonaming by area on?
@@ -59,6 +63,13 @@ GLOBAL_LIST_EMPTY(req_console_ckey_departments)
 	energy = 30
 	fire = 90
 	acid = 90
+
+/obj/machinery/requests_console/update_appearance(updates=ALL)
+	. = ..()
+	if(machine_stat & NOPOWER)
+		set_light_on(FALSE)
+		return
+	set_light_on(TRUE)
 
 /obj/machinery/requests_console/examine(mob/user)
 	. = ..()
