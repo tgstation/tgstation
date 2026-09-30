@@ -37,5 +37,5 @@
 	if(flash_strength <= 0)
 		return
 
-	for(var/mob/living/victim in view(1, user))
+	for(var/mob/living/victim in viewers(1, source))
 		victim.flash_act(max(flash_strength, 1))
