@@ -50,6 +50,8 @@ SUBSYSTEM_DEF(economy)
 
 	/// Number of mail items generated.
 	var/mail_waiting = 0
+	/// Total quantity of mail that's been opened this shift. Displayed at round-end and blackbox'd.
+	var/mail_opened = 0
 	/// Mail Holiday: AKA does mail arrive today? Always blocked on Sundays.
 	var/mail_blocked = FALSE
 	/// List used to track partially completed processing steps

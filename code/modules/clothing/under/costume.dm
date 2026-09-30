@@ -146,6 +146,7 @@
 	name = "black yukata"
 	desc = "A comfortable black cotton yukata inspired by traditional designs, perfect for a non-formal setting."
 	icon_state = "yukata1"
+	inhand_icon_state = "yukata1"
 	body_parts_covered = CHEST|GROIN|ARMS
 	can_adjust = FALSE
 	supports_variations_flags = CLOTHING_DIGITIGRADE_VARIATION_NO_NEW_ICON
@@ -157,11 +158,13 @@
 	name = "green yukata"
 	desc = "A comfortable green cotton yukata inspired by traditional designs, perfect for a non-formal setting."
 	icon_state = "yukata2"
+	inhand_icon_state = "yukata2"
 
 /obj/item/clothing/under/costume/yukata/white
 	name = "white yukata"
 	desc = "A comfortable white cotton yukata inspired by traditional designs, perfect for a non-formal setting."
 	icon_state = "yukata3"
+	inhand_icon_state = "yukata3"
 
 /obj/item/clothing/under/costume/kimono
 	name = "black kimono"

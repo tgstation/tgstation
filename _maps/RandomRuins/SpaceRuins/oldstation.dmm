@@ -7694,7 +7694,7 @@
 /obj/structure/closet/crate/secure/science{
 	req_access = list("away_science")
 	},
-/obj/item/relic,
+/obj/item/assembly/relic,
 /obj/item/transfer_valve,
 /obj/item/raw_anomaly_core/bluespace,
 /obj/item/raw_anomaly_core/random,

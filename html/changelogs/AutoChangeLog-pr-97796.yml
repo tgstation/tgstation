@@ -1,4 +1,0 @@
-author: "Jacquerel"
-delete-after: True
-changes:
-  - rscadd: "Plasmamen wearing a human skin suit won't catch fire. The suit itself is flammable though, so make sure you change while under a shower or something."

@@ -54,6 +54,7 @@
 	name = "religious tunic"
 	desc = "No nunsene clothing."
 	icon_state = "habit"
+	inhand_icon_state = "habit"
 	alternate_worn_layer = GLOVES_LAYER // since the sleeves cover a part of the hands, this way it looks better while retaining glove overlay correctly.
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEJUMPSUIT|HIDEBELT

@@ -1,0 +1,5 @@
+author: "Dmeto"
+delete-after: True
+changes:
+  - bugfix: "fixed Kilo Ordnance igniter not igniting."
+  - map: "minor changes to Kilo Ordnance pipe devices."

@@ -150,15 +150,7 @@
 	show_in_report = TRUE
 	report_message = "Due to distance to our supply station, the cargo shuttle will have a slower flight time to your cargo department."
 	blacklist = list(/datum/station_trait/quick_shuttle)
-
-/datum/station_trait/slow_shuttle/New()
-	. = ..()
-	RegisterSignal(SSshuttle, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(slow_the_shuttle))
-
-/datum/station_trait/slow_shuttle/proc/slow_the_shuttle(datum/source)
-	SIGNAL_HANDLER
-	SSshuttle.supply.callTime *= 1.5
-	UnregisterSignal(SSshuttle, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	trait_to_give = STATION_TRAIT_SLOW_SHUTTLE
 
 /datum/station_trait/bot_languages
 	name = "Bot Language Matrix Malfunction"

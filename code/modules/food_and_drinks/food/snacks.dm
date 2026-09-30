@@ -6,6 +6,7 @@
 	name = "candy"
 	desc = "It's nougat, love it or hate it."
 	icon_state = "candy"
+	inhand_icon_state = "candy"
 	trash_type = /obj/item/trash/candy
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 1,
@@ -87,6 +88,7 @@
 	name = "chips"
 	desc = "Commander Riker's What-The-Crisps."
 	icon_state = "chips"
+	inhand_icon_state = "chips"
 	trash_type = /obj/item/trash/chips
 	bite_consumption = 1
 	food_reagents = list(

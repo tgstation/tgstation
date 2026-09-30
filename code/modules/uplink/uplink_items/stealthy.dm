@@ -94,7 +94,6 @@
 			also refuse to use dishonorable ranged weaponry, and armored clothing will make it harder to avoid attacks. \
 			Comes prepackaged with a set of martial arts clothing!"
 	item = /obj/item/storage/box/syndicate/sleeping_carp
-	progression_minimum = 30 MINUTES
 	population_minimum = TRAITOR_POPULATION_LOWPOP
 	cost = 17
 	surplus = 0

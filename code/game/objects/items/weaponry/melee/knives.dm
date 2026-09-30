@@ -423,7 +423,6 @@
 	icon_angle = -90
 	lefthand_file = 'icons/mob/inhands/equipment/boxcutter_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/boxcutter_righthand.dmi'
-	inhand_icon_state = null
 	attack_verb_continuous = list("prods", "pokes")
 	attack_verb_simple = list("prod", "poke")
 	w_class = WEIGHT_CLASS_SMALL

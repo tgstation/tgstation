@@ -440,18 +440,6 @@
 							U.uplink_handler.set_telecrystals(crystals)
 							message_admins("[key_name_admin(usr)] changed [current]'s telecrystal count to [crystals].")
 							log_admin("[key_name(usr)] changed [current]'s telecrystal count to [crystals].")
-			if("progression")
-				if(!check_rights(R_FUN))
-					return
-				var/datum/component/uplink/uplink = find_syndicate_uplink()
-				if(!uplink)
-					return
-				var/progression = input("Set new progression points for [key]","Syndicate uplink", uplink.uplink_handler.progression_points) as null | num
-				if(isnull(progression))
-					return
-				uplink.uplink_handler.progression_points = progression
-				message_admins("[key_name_admin(usr)] changed [current]'s progression point count to [progression].")
-				log_admin("[key_name(usr)] changed [current]'s progression point count to [progression].")
 			if("uplink")
 				var/datum/antagonist/traitor/traitor_datum = has_antag_datum(/datum/antagonist/traitor)
 				if(!give_uplink(antag_datum = traitor_datum || null))

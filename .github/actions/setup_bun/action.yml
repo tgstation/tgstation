@@ -11,6 +11,7 @@ runs:
       run: |
         source dependencies.sh
         echo "BUN_VERSION_REQUIRED=$BUN_VERSION" >> $GITHUB_ENV
+
     - name: Install Bun
       uses: oven-sh/setup-bun@v2
       with:

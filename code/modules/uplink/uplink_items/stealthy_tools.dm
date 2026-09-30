@@ -116,7 +116,6 @@
 	desc = "When purchased, a virus will be uploaded to the telecommunication processing servers to temporarily disable themselves."
 	item = ABSTRACT_UPLINK_ITEM
 	surplus = 0
-	progression_minimum = 15 MINUTES
 	limited_stock = 1
 	cost = 4
 	restricted = TRUE
@@ -131,7 +130,6 @@
 	desc = "When purchased, a virus will be uploaded to the engineering processing servers to force a routine power grid check, forcing all APCs on the station to be temporarily disabled."
 	item = ABSTRACT_UPLINK_ITEM
 	surplus = 0
-	progression_minimum = 15 MINUTES
 	limited_stock = 1
 	cost = 6
 	restricted = TRUE
