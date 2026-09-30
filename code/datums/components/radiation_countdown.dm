@@ -20,7 +20,7 @@
 
 	time_added = world.time
 
-	if(HAS_TRAIT(parent, TRAIT_UNBOTHERED_BY_RADIATION))
+	if(HAS_TRAIT(parent, TRAIT_NO_RADIATION_EFFECTS))
 		to_chat(parent, span_notice("The air around you feels warm."))
 	else
 		to_chat(parent, span_userdanger("The air around you feels warm...perhaps you should go somewhere else."))
@@ -32,7 +32,7 @@
 
 /datum/component/radiation_countdown/proc/remove_self()
 	if (!HAS_TRAIT(parent, TRAIT_IRRADIATED))
-		to_chat(parent, span_notice("The air here feels [HAS_TRAIT(parent, TRAIT_UNBOTHERED_BY_RADIATION) ? "normal" : "safer"]."))
+		to_chat(parent, span_notice("The air here feels [HAS_TRAIT(parent, TRAIT_NO_RADIATION_EFFECTS) ? "normal" : "safer"]."))
 
 	qdel(src)
 

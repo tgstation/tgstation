@@ -64,7 +64,7 @@
 	if(!SSradiation.can_irradiate_human_basic(living))
 		return
 
-	if(HAS_TRAIT(living, TRAIT_UNBOTHERED_BY_RADIATION))
+	if(HAS_TRAIT(living, TRAIT_NO_RADIATION_EFFECTS))
 		return
 
 	ASSERT(ishuman(living))

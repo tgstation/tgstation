@@ -16,22 +16,12 @@
 	COOLDOWN_DECLARE(last_tox_damage)
 	/// Cooldown for the last burn damage tick
 	COOLDOWN_DECLARE(last_burn)
-	/// Counts wash ticks to be cleaned off for irradiated mobs with [TRAIT_UNBOTHERED_BY_RADIATION]
+	/// Counts wash ticks to be cleaned off for irradiated mobs with [TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL]
 	VAR_PRIVATE/clean_counter = 0
 
 /datum/status_effect/irradiated/on_creation(mob/living/new_owner, can_propogate)
 	src.can_propogate = can_propogate
 	return ..()
-
-/// Determines if we need to use the alternate method for tracking removal
-/datum/status_effect/irradiated/proc/use_alt_clean_method()
-	// Keeps things simple for unbothered mobs like Plasmamen
-	if(HAS_TRAIT(owner, TRAIT_UNBOTHERED_BY_RADIATION))
-		return TRUE
-	// Toximmune and toxlover means we can't rely on toxins damage for cleaning
-	if(HAS_TRAIT(owner, TRAIT_TOXIMMUNE) || HAS_TRAIT(owner, TRAIT_TOXINLOVER))
-		return TRUE
-	return FALSE
 
 /datum/status_effect/irradiated/on_apply()
 	if(!ishuman(owner))
@@ -43,7 +33,7 @@
 	beginning_of_irradiation = world.time
 
 	owner.rad_glow(can_propogate ? 1.5 : 1.0)
-	if(use_alt_clean_method())
+	if(HAS_TRAIT(owner, TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL))
 		clean_counter = pick(10, 12, 14, 16)
 	else
 		owner.apply_damage(pick(10, 12), TOX)
@@ -54,6 +44,8 @@
 	RegisterSignal(owner, COMSIG_GEIGER_COUNTER_SCAN, PROC_REF(on_geiger_counter_scan))
 	RegisterSignal(owner, COMSIG_LIVING_HEALTHSCAN, PROC_REF(on_healthscan))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_RADIMMUNE), PROC_REF(radimmune_gained))
+	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL), PROC_REF(unbothered_by_radiation_lost))
+	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL), PROC_REF(unbothered_by_radiation_gained))
 	return TRUE
 
 /datum/status_effect/irradiated/on_remove()
@@ -64,12 +56,14 @@
 		COMSIG_GEIGER_COUNTER_SCAN,
 		COMSIG_LIVING_HEALTHSCAN,
 		SIGNAL_ADDTRAIT(TRAIT_RADIMMUNE),
+		SIGNAL_REMOVETRAIT(TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL),
+		SIGNAL_ADDTRAIT(TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL),
 	))
 	return ..()
 
 /datum/status_effect/irradiated/tick(seconds_between_ticks)
 	var/radlevel = owner.get_tox_loss()
-	var/use_alt = use_alt_clean_method()
+	var/use_alt = HAS_TRAIT(owner, TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL)
 	if((use_alt ? clean_counter : radlevel) <= 0)
 		qdel(src)
 		return
@@ -162,7 +156,7 @@
 	COOLDOWN_START(src, clean_cooldown, (SSMACHINES_DT + (1 SECONDS)))
 	owner.adjust_tox_loss(-0.25, forced = TRUE)
 	clean_counter = max(clean_counter - 1, 0)
-	if((use_alt_clean_method() ? clean_counter : owner.get_tox_loss()) <= 0)
+	if((HAS_TRAIT(owner, TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL) ? clean_counter : owner.get_tox_loss()) <= 0)
 		qdel(src)
 	return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
@@ -181,19 +175,48 @@
 /datum/status_effect/irradiated/proc/on_healthscan(datum/source, list/render_list, advanced, mob/user, mode, tochat)
 	SIGNAL_HANDLER
 
-	if(HAS_TRAIT(owner, TRAIT_UNBOTHERED_BY_RADIATION))
-		return
+	var/title = "Subject is irradiated"
+	var/explanation = "Supply anti-radiation or anti-toxin, \
+		such as [/datum/reagent/medicine/potass_iodide::name] or [/datum/reagent/medicine/pen_acid::name], \
+		or decontaminate directly via shower or similar means."
+
+	if(HAS_TRAIT(owner, TRAIT_NO_RADIATION_EFFECTS))
+		title += ", but unaffected"
+	if(HAS_TRAIT(owner, TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL))
+		title += "- requires direct decontamination"
+		explanation = "Can only be decontaminated directly via shower or similar means."
+	if(ishuman(source))
+		explanation += " Ensure internal organs have been treated to prevent re-contamination."
 
 	render_list += "<span class='ml-1'><font color='#29b90f'>"
-	render_list += conditional_tooltip("Subject is irradiated.", \
-		"Supply anti-radiation or anti-toxin, such as [/datum/reagent/medicine/potass_iodide::name] or [/datum/reagent/medicine/pen_acid::name], \
-		or decontaminate directly via shower or other means.", tochat)
+	render_list += conditional_tooltip("[title].", explanation, tochat)
 	render_list += "</font></span><br>"
 
+/// Should not exist at all if rad immune
 /datum/status_effect/irradiated/proc/radimmune_gained(...)
 	SIGNAL_HANDLER
 
 	qdel(src)
+
+/// If we become swap to the alternate method of cleansing irradiation, convert tox damage to "clean counter"
+/datum/status_effect/irradiated/proc/no_tox_radiation_gained(...)
+	SIGNAL_HANDLER
+
+	clean_counter = ceil(owner.get_tox_loss() ** 0.5) * 2
+	if(clean_counter <= 0)
+		qdel(src)
+	else if(!QDELING(owner))
+		to_chat(owner, span_notice("You suddenly feel a bit better."))
+
+/// If we swap back to the main method of cleansing irradiation, convert "clean counter" back to tox damage
+/datum/status_effect/irradiated/proc/no_tox_radiation_lost(...)
+	SIGNAL_HANDLER
+
+	owner.set_tox_loss(max(owner.get_tox_loss(), ceil(clean_counter ** 2) * 2), forced = TRUE)
+	if(owner.get_tox_loss() <= 0)
+		qdel(src)
+	else if(!QDELING(owner))
+		to_chat(owner, span_bolddanger("You suddenly feel very weak!"))
 
 /atom/movable/screen/alert/status_effect/irradiated
 	name = "Irradiated"
