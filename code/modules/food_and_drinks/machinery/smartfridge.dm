@@ -219,7 +219,7 @@
 
 /obj/machinery/smartfridge/update_appearance(updates=ALL)
 	. = ..()
-	if((machine_stat & BROKEN) || !powered())
+	if((machine_stat & BROKEN) || !powered() || !isturf(loc))
 		set_light(0)
 	else
 		set_light(l_range=light_range, l_power=light_power, l_color=LIGHT_COLOR_ELECTRIC_CYAN)
