@@ -7,22 +7,25 @@
 	plantname = "Potato Plants"
 	product = /obj/item/food/grown/potato
 	lifespan = 30
-	maturation = 10
-	production = 1
-	yield = 4
+	maturation = 15
+	production = 5
+	yield = 8
+	potency = 50
 	growthstages = 4
 	growing_icon = 'icons/obj/service/hydroponics/growing_vegetables.dmi'
 	icon_grow = "potato-grow"
 	icon_dead = "potato-dead"
 	genes = list(/datum/plant_gene/trait/soil_lover, /datum/plant_gene/trait/battery, /datum/plant_gene/trait/one_bite)
 	mutatelist = list(/obj/item/seeds/potato/sweet)
-	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.04, /datum/reagent/consumable/nutriment = 0.1)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.2, /datum/reagent/consumable/nutriment = 0.1)
 	graft_gene = /datum/plant_gene/trait/battery
 
 /obj/item/food/grown/potato
 	seed = /obj/item/seeds/potato
 	name = "potato"
 	desc = "Boil 'em! Mash 'em! Stick 'em in a stew!"
+	throwforce = 15
+	wound_bonus = 15
 	icon_state = "potato"
 	foodtypes = VEGETABLES
 	distill_reagent = /datum/reagent/consumable/ethanol/vodka
@@ -37,7 +40,17 @@
 	name = "potato wedges"
 	desc = "Slices of neatly cut potato."
 	icon_state = "potato_wedges"
+	sharpness = SHARP_POINTY
+	throwforce = 5
+	throw_speed = 1
+	throw_range = 6
+	embed_type = /datum/embedding/potato_wedges
 	bite_consumption_mod = 100
+
+/datum/embedding/potato_wedges
+	pain_mult = 0.5
+	embed_chance = 100
+	fall_chance = 1
 
 /obj/item/food/grown/potato/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!tool.get_sharpness())
