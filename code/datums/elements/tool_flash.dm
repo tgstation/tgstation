@@ -40,7 +40,4 @@
 	var/turf/weld_location = get_turf(source)
 	for(var/mob/living/victim in viewers(1, weld_location))
 		var/flash_strength_for_victim = max(flash_strength - get_dist(victim, weld_location), 0)
-		if(flash_strength_for_victim <= 0)
-			continue
-
 		victim.flash_act(flash_strength_for_victim)
