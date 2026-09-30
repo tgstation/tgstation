@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - code_imp: "Improved performance of talking a little bit, report anything weird you notice (particularly with emphasis characters)"
