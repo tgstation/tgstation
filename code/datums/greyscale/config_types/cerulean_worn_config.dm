@@ -17,7 +17,7 @@
 	json_config = 'code/datums/greyscale/json_configs/cerulean_mod_basic.json'
 
 /*
- *
+ * The greyscale config for suits that are GAGS colored. Add suits here that are given a Cerulean bespoke icon, and need to be handled by GAGS
  */
 /datum/greyscale_config/suit_worn_cerulean
 	name = "Cerulean Tail Suits (Worn)"

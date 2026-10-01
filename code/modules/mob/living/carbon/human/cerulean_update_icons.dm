@@ -83,7 +83,7 @@
 
 	/// whether the modsuit is sealed or open, we read this from our lovely key
 	var/sealed = findtext(icon_state, SEALED) ? TRUE : FALSE
-	///
+	/// find out what modsuit theme this mod has
 	var/datum/mod_theme/theme = find_mod_theme(key)
 	/// lets cut away the legs first, we really don't need them
 	var/icon/cerulean_mod_icon = apply_icon_mask(base_icon, LEGS_MASK)
