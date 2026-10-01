@@ -100,6 +100,7 @@
 	SSblackbox.record_feedback("tally", "warp_cube", 1, type)
 	new /obj/effect/temp_visual/warp_cube(get_turf(linked), user, linked.teleport_color, FALSE)
 	var/obj/effect/warp_cube/link_holder = new /obj/effect/warp_cube(T)
+	user.buckled?.unbuckle_mob(user, TRUE)
 	user.forceMove(link_holder) //mess around with loc so the user can't wander around
 	sleep(0.25 SECONDS)
 	if(QDELETED(user))

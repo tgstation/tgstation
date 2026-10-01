@@ -219,6 +219,7 @@
 	)
 
 	if(tray)
+		var/turf/tray_turf = get_turf(tray)
 		last_scan_data["tray_data"] = list(
 			"plant_health" = tray.plant_health,
 			"plant_age" = tray.age,
@@ -233,7 +234,7 @@
 			"yield_mod" = tray.yieldmod,
 			"being_pollinated" = tray.being_pollinated,
 			"self_sustaining" = tray.self_sustaining,
-			"light_level" = tray.light_level,
+			"light_level" = tray_turf?.get_lumcount() || 0,
 			"weeds" = tray.weedlevel,
 			"weeds_max" = MAX_TRAY_WEEDS,
 			"pests" = tray.pestlevel,
