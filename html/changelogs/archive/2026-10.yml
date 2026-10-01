@@ -1,0 +1,45 @@
+2026-10-01:
+  Dmeto:
+  - bugfix: fixed Kilo Ordnance igniter not igniting.
+  - map: minor changes to Kilo Ordnance pipe devices.
+  Maia-J:
+  - bugfix: Aggressive raptors are no longer TOO aggressive
+  Melbert:
+  - rscdel: Removed the ingredient choice beacon from the chef's roundstart equipment
+  - rscadd: Adds the cooking voucher to the chef's roundstart equipment, redeem it
+      at your produce order console to get 10 free ingredients of your choice
+  - rscadd: Tweaked the limit on the number of items you can purchase per (mining/bitrunning/chef)
+      order. Before it was a flat 20, but the UI sometimes lied to you and said it
+      was either 50 or 10. Now it's scaled directly based on how valuable the item
+      is (where cheaper items allow for bulk orders).
+  - bugfix: Large wings are now fully affected by suit meshes or voidwalker curse
+  - bugfix: Cream pies no longer get affected by suit meshes or voidwalker curse
+  - refactor: Refactored bodypart rendering ever so slightly to fix some bodypart
+      texture issues, report anything weird like missing overlays
+  - image: Gauze now shows up on your sprite
+  - sound: Gauze now plays a rip sound when applied
+  - sound: Sutures now play a snip sound when applied
+  - rscadd: Gauze can now ALWAYS be applied to a bodypart, no longer requiring a wound
+      be present. (Note gauze alternatives like duct tape still require a wound be
+      present).
+  - rscadd: Gauze can now be removed by hand, both from your own body or from others.
+  - balance: Gauze no longer deletes itself when used up, instead dropping "used gauze".
+      Used gauze can be washed to reuse it, but this has diminishing returns.
+  - balance: If you sustain a wound to an already gauzed limb, the gauze will sustain
+      a significant amount of wear, potentially even destroying it.
+  PapaMichael:
+  - bugfix: Failing to cuff an item no longer affects your arm's click cooldown
+  Swan:
+  - bugfix: fixes TGUI crashing when reseting to default a keybind which has no default
+      binding
+  hry-gh:
+  - refactor: the lobby menu now lives on the client, but should look and function
+      identically
+  mc-oofert:
+  - bugfix: fixed odd lighting in some hallways in the NT Museum away mission
+  necromanceranne:
+  - balance: You can purchase syringe guns as a single-pack goodie from cargo.
+  timothymtorres:
+  - bugfix: Fix seclite overlay for SMG disablers
+  vinylspiders:
+  - bugfix: fixes a memory leak in the tgui layout component

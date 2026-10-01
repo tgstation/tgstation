@@ -278,6 +278,7 @@
 	)
 	feature_key = FEATURE_WINGS
 	offset_location = ENTIRE_BODY
+	overlay_flags = parent_type::overlay_flags | LIMB_OVERLAY_WIDE_ICON
 	/// Slot we check against
 	var/slot_blocker = HIDEJUMPSUIT
 

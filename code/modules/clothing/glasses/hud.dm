@@ -87,7 +87,7 @@
 /obj/item/clothing/glasses/hud/health/night/meson
 	name = "night vision meson health scanner HUD"
 	desc = "Truly combat ready."
-	vision_flags = SEE_TURFS
+	clothing_traits = list(TRAIT_MEDICAL_HUD, TRAIT_MESON_VISION)
 
 /obj/item/clothing/glasses/hud/health/night/science
 	name = "night vision medical science scanner HUD"
@@ -273,30 +273,31 @@
 	name = "thermal HUD scanner"
 	desc = "Thermal imaging HUD in the shape of glasses."
 	icon_state = "thermal"
-	vision_flags = SEE_MOBS
 	color_cutoffs = list(25, 8, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/red
-	clothing_traits = list(TRAIT_SECURITY_HUD)
+	clothing_traits = list(TRAIT_THERMAL_VISION, TRAIT_SECURITY_HUD)
+	var/current_hud = TRAIT_SECURITY_HUD
 
 /obj/item/clothing/glasses/hud/toggle/thermal/attack_self(mob/user)
-	..()
-	var/hud_type
-	if (LAZYLEN(clothing_traits))
-		hud_type = clothing_traits[1]
-	switch (hud_type)
+	. = ..()
+	detach_clothing_traits(current_hud)
+	switch (current_hud)
 		if (TRAIT_MEDICAL_HUD)
+			current_hud = TRAIT_MESON_VISION
 			icon_state = "meson"
 			color_cutoffs = list(5, 15, 5)
 			change_glass_color(/datum/client_colour/glass_colour/green)
-		if (TRAIT_SECURITY_HUD)
+		if (TRAIT_MESON_VISION)
+			current_hud = TRAIT_SECURITY_HUD
 			icon_state = "thermal"
 			color_cutoffs = list(25, 8, 5)
 			change_glass_color(/datum/client_colour/glass_colour/red)
 		else
+			current_hud = TRAIT_MEDICAL_HUD
 			icon_state = "purple"
 			color_cutoffs = list(15, 0, 25)
 			change_glass_color(/datum/client_colour/glass_colour/purple)
-	user.update_sight()
+	attach_clothing_traits(current_hud)
 	user.update_worn_glasses()
 
 /obj/item/clothing/glasses/hud/toggle/thermal/emp_act(severity)

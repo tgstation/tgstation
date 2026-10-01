@@ -220,10 +220,6 @@
 		REMOVE_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
 	SEND_SIGNAL(src, COMSIG_BASICMOB_LOOK_ALIVE)
 
-/mob/living/basic/update_sight()
-	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
-	return ..()
-
 /mob/living/basic/examine(mob/user)
 	. = ..()
 	if(stat != DEAD)
