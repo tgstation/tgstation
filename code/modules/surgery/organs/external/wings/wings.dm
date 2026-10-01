@@ -279,6 +279,7 @@
 	feature_key = FEATURE_WINGS
 	color_source = ORGAN_COLOR_OVERRIDE
 	offset_location = ENTIRE_BODY
+	overlay_flags = parent_type::overlay_flags | LIMB_OVERLAY_WIDE_ICON
 	/// Slot we check against
 	var/slot_blocker = HIDEJUMPSUIT
 

@@ -268,22 +268,45 @@ GLOBAL_LIST_INIT(freqtospan, list(
 		else
 			return VOICE_DESCRIPTION_NEUTER
 
-/// Transforms the message emphasis mods from [/atom/proc/apply_message_emphasis] into the appropriate HTML tags. Includes escaping.
-#define ENCODE_HTML_EMPHASIS(input, char, html, varname) \
-	var/static/regex/##varname = regex("(?<!\\\\)[char](.+?)(?<!\\\\)[char]", "g");\
-	input = varname.Replace_char(input, "<[html]>$1</[html]>&#8203;") //zero-width space to force maptext to respect closing tags.
+/// Chat emphasis players can add to their chat messages - assoc (emphasis character) to (HTML tag)
+GLOBAL_LIST_INIT(emphasis_types, list(
+	"|" = "i",
+	"+" = "b",
+	"_" = "u",
+	"^" = "small",
+))
 
-/// Scans the input sentence for message emphasis modifiers, notably |italics|, +bold+, and _underline_ -mothblocks
-/atom/proc/apply_message_emphasis(input)
-	ENCODE_HTML_EMPHASIS(input, "\\|", "i", italics)
-	ENCODE_HTML_EMPHASIS(input, "\\+", "b", bold)
-	ENCODE_HTML_EMPHASIS(input, "\\_", "u", underline)
-	ENCODE_HTML_EMPHASIS(input, "\\^", "small", small)
-	var/static/regex/remove_escape_backlashes = regex("\\\\(\\_|\\+|\\||\\^)", "g") // Removes backslashes used to escape text modification.
-	input = remove_escape_backlashes.Replace_char(input, "$1")
-	return input
+/**
+ * Replaces player chat emphasis characters with the corresponding HTML tags in the input string.
+ *
+ * You do NOT (and SHOULD not) need to use on anything that isn't direct user input,
+ * as this is designed solely to transform user input. Just put in the HTML tags yourself.
+ *
+ * Returns the transformed input, which may have no change if no emphasis characters are present.
+ */
+/proc/apply_message_emphasis(input)
+	var/static/regex/emphasis_regex
+	if(!emphasis_regex)
+		var/list/escaped_emphasis_characters = list()
+		for(var/char in GLOB.emphasis_types)
+			escaped_emphasis_characters += "\\[char]"
 
-#undef ENCODE_HTML_EMPHASIS
+		// group 1 will be the emphasis character (like |, +, _, ^) including any escape backslashes
+		// group 2 will be all characters enclosed by the emphasis characters
+		// note the closing emphasis character is not grouped in either, but is still matched
+		emphasis_regex = regex("(\\\\?(?:[jointext(escaped_emphasis_characters, "|")]))(.+?)\\1", "g")
+
+	return emphasis_regex.Replace_char(input, GLOBAL_PROC_REF(__replace_message_emphasis))
+
+/proc/__replace_message_emphasis(match, group1, group2, ...)
+	// look for corresponding html tag for the emphasis character...
+	var/html = GLOB.emphasis_types[group1]
+	if(html)
+		return "<[html]>[group2]</[html]>&#8203;" // zero-width space to force maptext to respect closing tags.
+
+	// if we didn't find an html tag it means we are an escaped character, so we just need to unescape it.
+	var/unescaped = copytext_char(group1, 2)
+	return "[unescaped][group2][unescaped]"
 
 /// Modifies the message by comparing the languages of the speaker with the languages of the hearer. Called on the hearer.
 /atom/movable/proc/translate_language(atom/movable/speaker, datum/language/language, raw_message, list/spans, list/message_mods)

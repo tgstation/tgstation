@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes a bug that could cause a number of weighted rng events to not behave as intended"
