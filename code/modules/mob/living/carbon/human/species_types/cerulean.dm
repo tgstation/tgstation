@@ -231,7 +231,6 @@
 	/// which datums are blocked in get_global_feature_list
 	var/list/locked_sprite_datums = list(
 		/datum/sprite_accessory/tails/fish/cerulean/skeleton,
-		/datum/sprite_accessory/tails/fish/cerulean/cybernetic,
 	)
 
 /datum/bodypart_overlay/mutant/tail/fish/cerulean/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
@@ -287,42 +286,6 @@
 	return TRUE
 
 /*
- *
- */
-/obj/item/organ/tail/fish/cerulean/cybernetic
-	name = "robotic oversized fish tail"
-	desc = "A hugely sized robotic fish tail."
-	post_init_icon_state = null
-	greyscale_config = null
-	greyscale_colors = null
-
-	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish/cerulean/cybernetic
-
-	organ_flags = ORGAN_ROBOTIC
-	failing_desc = "seems to be broken."
-	restyle_flags  = NONE
-
-	food_reagents = list(/datum/reagent/fuel = 5)
-	fillet_type = /obj/item/stack/sheet/mineral/titanium
-	fillet_amount = 2
-
-/obj/item/organ/tail/fish/cerulean/cybernetic/emp_act(severity)
-	. = ..()
-	if(. & EMP_PROTECT_SELF)
-		return
-
-/datum/bodypart_overlay/mutant/tail/fish/cerulean/cybernetic
-	layers = list(
-		"mountedgun" = BODY_FRONT_LAYER,
-		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
-		EXTERNAL_BEHIND = BODY_BEHIND_LAYER,
-	)
-	locked_sprite_datums = list(
-		/datum/sprite_accessory/tails/fish/cerulean,
-		/datum/sprite_accessory/tails/fish/cerulean/skeleton,
-	)
-
-/*
  * same as parent, but for skeletons
  */
 /obj/item/organ/tail/fish/cerulean/skeletal
@@ -347,5 +310,4 @@
 /datum/bodypart_overlay/mutant/tail/fish/cerulean/skeletal
 	locked_sprite_datums = list(
 		/datum/sprite_accessory/tails/fish/cerulean,
-		/datum/sprite_accessory/tails/fish/cerulean/cybernetic,
 	)
