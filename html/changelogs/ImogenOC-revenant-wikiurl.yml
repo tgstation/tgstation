@@ -1,4 +1,0 @@
-author: "ImogenOC"
-delete-after: True
-changes:
-  - bugfix: "The revenant help link now uses the server's configured wiki URL."
