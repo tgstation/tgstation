@@ -1,0 +1,30 @@
+# This action configures the global BYOND version
+name: Configure BYOND version
+description: Configures the global BYOND version to the passed arguments or what's in `dependencies.sh`.
+
+inputs:
+  major:
+    description: "The major BYOND version to install. Defaults to the BYOND_MAJOR specified in `dependencies.sh`."
+    required: false
+    type: string
+  minor:
+    description: "The minor BYOND version to install. Defaults to the BYOND_MINOR specified in `dependencies.sh`."
+    required: false
+    type: string
+
+runs:
+  using: composite
+  steps:
+    - name: Configure BYOND version from inputs
+      if: ${{ inputs.major }}
+      shell: bash
+      run: |
+        echo "BYOND_MAJOR=${{ inputs.major }}" >> $GITHUB_ENV
+        echo "BYOND_MINOR=${{ inputs.minor }}" >> $GITHUB_ENV
+    - name: Configure BYOND version from dependencies.sh
+      if: ${{ !inputs.major }}
+      shell: bash
+      run: |
+        source dependencies.sh
+        echo "BYOND_MAJOR=$BYOND_MAJOR" >> $GITHUB_ENV
+        echo "BYOND_MINOR=$BYOND_MINOR" >> $GITHUB_ENV
