@@ -17,7 +17,7 @@
 	icon_dead = "potato-dead"
 	genes = list(/datum/plant_gene/trait/soil_lover, /datum/plant_gene/trait/battery, /datum/plant_gene/trait/one_bite)
 	mutatelist = list(/obj/item/seeds/potato/sweet)
-	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.2, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/medicine/omnizine/protozine = 0.1)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.2, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/medicine/omnizine/protozine = 0.025)
 	graft_gene = /datum/plant_gene/trait/battery
 
 /obj/item/food/grown/potato
