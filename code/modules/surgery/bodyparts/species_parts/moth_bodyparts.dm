@@ -161,4 +161,4 @@
 	)
 	offset_location = UPPER_BODY
 	icon = 'icons/mob/human/species/moth/moth_arms.dmi'
-	icon_state = "m_moth_arms_generic_FRONT"
+	icon_state = "m_moth_arms_generic"
