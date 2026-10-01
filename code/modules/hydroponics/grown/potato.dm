@@ -17,19 +17,18 @@
 	icon_dead = "potato-dead"
 	genes = list(/datum/plant_gene/trait/soil_lover, /datum/plant_gene/trait/battery, /datum/plant_gene/trait/one_bite)
 	mutatelist = list(/obj/item/seeds/potato/sweet)
-	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.2, /datum/reagent/consumable/nutriment = 0.1)
+	reagents_add = list(/datum/reagent/consumable/nutriment/vitamin = 0.2, /datum/reagent/consumable/nutriment = 0.1, /datum/reagent/medicine/omnizine/protozine = 0.1)
 	graft_gene = /datum/plant_gene/trait/battery
 
 /obj/item/food/grown/potato
 	seed = /obj/item/seeds/potato
 	name = "potato"
 	desc = "Boil 'em! Mash 'em! Stick 'em in a stew!"
-	throwforce = 0
+	throwforce = 15
 	wound_bonus = 15
 	icon_state = "potato"
 	foodtypes = VEGETABLES
 	distill_reagent = /datum/reagent/consumable/ethanol/vodka
-	var/speed_multiplier = 5
 
 /obj/item/food/grown/potato/juice_typepath()
 	return /datum/reagent/consumable/potato_juice
@@ -42,7 +41,7 @@
 	desc = "Slices of neatly cut potato."
 	icon_state = "potato_wedges"
 	sharpness = SHARP_POINTY
-	throwforce = 5
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 6
 	embed_type = /datum/embedding/potato_wedges
