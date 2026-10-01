@@ -24,7 +24,7 @@
 	seed = /obj/item/seeds/potato
 	name = "potato"
 	desc = "Boil 'em! Mash 'em! Stick 'em in a stew!"
-	throwforce = 15
+	throwforce = 10
 	wound_bonus = 15
 	icon_state = "potato"
 	foodtypes = VEGETABLES
@@ -41,7 +41,7 @@
 	desc = "Slices of neatly cut potato."
 	icon_state = "potato_wedges"
 	sharpness = SHARP_POINTY
-	throwforce = 10
+	throwforce = 6
 	throw_speed = 1
 	throw_range = 6
 	embed_type = /datum/embedding/potato_wedges
