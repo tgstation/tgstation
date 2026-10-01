@@ -448,38 +448,38 @@
 /datum/supply_pack/security/armory/rnd_locked/tempgun
 	name = "Temperature Gun Requisition"
 	desc = "Contains a Temperature Gun, a debatably useful weapon designed to rapidly heating or cooling targets."
-	cost = CARGO_CRATE_VALUE * 8
+	cost = CARGO_CRATE_VALUE * 4
 	contains = list(/obj/item/gun/energy/temperature = 1)
 	crate_name = "temperature gun crate"
 	order_flags = parent_type::order_flags | ORDER_NOT_DEPARTMENTAL
 
 /datum/supply_pack/security/armory/rnd_locked/tempgun/three_pack
 	name = "Temperature Gun Requisition (x3)"
-	cost = parent_type::cost * 2.9
+	cost = parent_type::cost * 2.75 // it's so bad it gets a better discount
 	contains = list(/obj/item/gun/energy/temperature = 3)
 	order_flags = parent_type::order_flags & ~ORDER_NOT_DEPARTMENTAL
 
 /datum/supply_pack/security/armory/rnd_locked/tesla
 	name = "Tesla Cannon Requisition"
 	desc = "Contains an anomaly powered Tesla Cannon, which fires high-voltage arc of electricity that can chain between multiple targets. \
-		While excellent for crowd control, you'll need to supply a flux anomaly core to power it, which is not included in this crate."
-	cost = CARGO_CRATE_VALUE * 20
-	contains = list(/obj/item/gun/energy/tesla_cannon = 1) // melbert todo: core support
+		Requires a flux anomaly core to power, which is not included."
+	cost = CARGO_CRATE_VALUE * 10
+	contains = list(/obj/item/gun/energy/tesla_cannon = 1)
 	crate_name = "tesla cannon crate"
 
 /datum/supply_pack/security/armory/rnd_locked/photon
 	name = "Photon Cannon Requisition"
 	desc = "Contains an anomaly powered Photon Cannon, which fires concentrated miniature suns that blind those without eye protection. \
-		While excellent for crowd control, you'll need to supply a flux anomaly core to power it, which is not included in this crate."
-	cost = CARGO_CRATE_VALUE * 20
-	contains = list(/obj/item/gun/energy/photon = 1) // melbert todo: core support
+		Requires a flux anomaly core to power, which is not included."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/item/gun/energy/photon = 1)
 	crate_name = "photon cannon crate"
 
 /datum/supply_pack/security/armory/rnd_locked/ion
 	name = "Ion Carbine Requisition"
 	desc = "Contains an Ion Carbine, a more portable form of the more unwieldy Ion Rifle. \
 		Fires electromagnetic pulses that can disable electronics."
-	cost = CARGO_CRATE_VALUE * 12
+	cost = CARGO_CRATE_VALUE * 6
 	contains = list(/obj/item/gun/energy/ionrifle/carbine = 1)
 	crate_name = "ion carbine crate"
 	order_flags = parent_type::order_flags | ORDER_NOT_DEPARTMENTAL
@@ -494,7 +494,7 @@
 	name = "Energy Bow Requisition"
 	desc = "Contains a reverse engineered Syndicate Energy Crossbow. Though less compact that the original, \
 		the projectiles it fires are just as capable of downing targets in a single shot - if not more."
-	cost = CARGO_CRATE_VALUE * 20
+	cost = CARGO_CRATE_VALUE * 10
 	contains = list(/obj/item/gun/energy/recharge/ebow/large = 1)
 	crate_name = "energy bow crate"
 	order_flags = parent_type::order_flags | ORDER_NOT_DEPARTMENTAL
