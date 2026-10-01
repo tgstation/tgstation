@@ -156,7 +156,7 @@
 
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	// Check that they're picking someone new for new character respawning
-	if(CONFIG_GET(flag/allow_respawn) == RESPAWN_FLAG_NEW_CHARACTER)
+	if((CONFIG_GET(flag/allow_respawn) == RESPAWN_FLAG_NEW_CHARACTER) && !client?.is_localhost())
 		if("[client.prefs.default_slot]" in persistent_client.joined_as_slots)
 			tgui_alert(usr, "You already have played this character in this round!")
 			return FALSE
