@@ -64,6 +64,7 @@
 	food_reagents = list(
 		/datum/reagent/consumable/nutriment = 10,
 		/datum/reagent/consumable/nutriment/vitamin = 5,
+		/datum/reagent/medicine/omnizine/protozine = 10,
 	)
 	tastes = list("creamy mashed potatoes" = 1, "garlic" = 1)
 	foodtypes = VEGETABLES | DAIRY
@@ -74,7 +75,7 @@
 	name = "baked potato"
 	desc = "A piping hot potato baked in an oven. A bit bland by itself."
 	icon_state = "baked_potato"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 4, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/medicine/omnizine/protozine = 5)
 	tastes = list("baked potato" = 1)
 	foodtypes = VEGETABLES
 	w_class = WEIGHT_CLASS_SMALL
@@ -84,7 +85,7 @@
 	name = "buttered baked potato"
 	desc = "A piping hot baked potato, now with a slice of butter mixed in. Perfection."
 	icon_state = "buttered_baked_potato"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 4)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 8, /datum/reagent/consumable/nutriment/vitamin = 4, /datum/reagent/medicine/omnizine/protozine = 8)
 	tastes = list("baked potato" = 1)
 	foodtypes = VEGETABLES | DAIRY
 	w_class = WEIGHT_CLASS_SMALL
@@ -94,7 +95,7 @@
 	name = "loaded baked potato"
 	desc = "A piping hot baked potato, with the insides scooped out and mixed with bacon bits, cheese, and cabbage."
 	icon_state = "loaded_baked_potato"
-	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/nutriment/protein = 4)
+	food_reagents = list(/datum/reagent/consumable/nutriment = 10, /datum/reagent/consumable/nutriment/vitamin = 6, /datum/reagent/consumable/nutriment/protein = 4, /datum/reagent/medicine/omnizine/protozine = 5)
 	tastes = list("baked potato" = 1, "bacon" = 1, "cheese" = 1, "cabbage" = 1)
 	foodtypes = VEGETABLES | DAIRY | MEAT
 	w_class = WEIGHT_CLASS_SMALL
