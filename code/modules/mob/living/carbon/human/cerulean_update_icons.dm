@@ -7,7 +7,7 @@
  *	Modifies the sprite of clothing to have no legs! For pants, which mer folk canonically can't wear.
  *	What we generate will be saved in a cache, how nice!
  */
-/obj/item/proc/wear_cerulean_version(icon/base_icon, key, greyscale_colors, bodyshape)
+/obj/item/proc/generate_cerulean_icons(icon/base_icon, key, greyscale_colors, bodyshape)
 	var/static/list/cerulean_icon_cache = list()
 	var/mob/living/carbon/human/wearer = loc
 	var/physique = wearer?.physique == FEMALE ? FEM_FLIPPER : NONE
@@ -51,20 +51,12 @@
 				else
 					cerulean_clothing_icon = icon(CERULEAN_SUIT_FILE, icon_state)
 				// flippy flippers
-				if(physique == FEM_FLIPPER && suit_item.cerulean_flipper_palette != NO_FLIPPERS)
-					var/color_to_use = suit_item.cerulean_flipper_palette
-					if(!color_to_use || color_to_use == FLIPPERS)
-						color_to_use = greyscale_colors
-					cerulean_clothing_icon.Blend(
-						icon(
-							SSgreyscale.GetColoredIconByType(
-								/datum/greyscale_config/modular_mod_parts_cerulean/basic,
-								color_to_use,
-							),
-							"[FLIPPERS]",
-						),
-						ICON_OVERLAY,
-					)
+				if(physique == FEM_FLIPPER)
+					var/flipper_color = greyscale_colors
+					if(suit_item.cerulean_flipper_palette != FLIPPERS)
+						flipper_color = suit_item.cerulean_flipper_palette
+					if(flipper_color != NO_FLIPPERS)
+						generate_fem_flippers(cerulean_clothing_icon, flipper_color)
 
 	//not gen'ing is ok
 	if(!cerulean_clothing_icon)
@@ -83,25 +75,24 @@
  *	If that doesn't, we'll generate a basic modsuit icon for the Cerulean.
  */
 /obj/item/clothing/suit/mod/proc/handle_cerulean_modsuit(icon/base_icon, key, greyscale_colors, physique)
-	/// whether the modsuit is sealed or open, we read this from our lovely key
-	var/sealed = findtext(icon_state, SEALED) ? TRUE : FALSE
-	///
-	var/datum/mod_theme/theme = find_mod_theme(key)
-
 	/// our full icon state string, lets find a pre-drawn modsuit!
 	var/icon_state_string = "[physique == FEM_FLIPPER ? "[FEM_FLIPPER]-" : ""][icon_state]"
 	if(icon_exists(CERULEAN_MODSUIT_FILE, icon_state_string))
 		// we have a pre-drawn modsuit, yay
 		return icon(CERULEAN_MODSUIT_FILE, icon_state_string)
 
-	// lets cut away the legs first, we really don't need them
-	apply_icon_mask(base_icon, LEGS_MASK)
+	/// whether the modsuit is sealed or open, we read this from our lovely key
+	var/sealed = findtext(icon_state, SEALED) ? TRUE : FALSE
+	///
+	var/datum/mod_theme/theme = find_mod_theme(key)
+	/// lets cut away the legs first, we really don't need them
+	var/icon/cerulean_mod_icon = apply_icon_mask(base_icon, LEGS_MASK)
 	// lets run through generating according to what our variables are set to
 	if(!isnull(theme?.cerulean_tail_palette))
 		// add a colored icon for each modular part, according to the theme fetched
 		var/list/modular_part_list = theme.cerulean_tail_palette.Copy()
 		for(var/index in 1 to length(modular_part_list))
-			base_icon.Blend(
+			cerulean_mod_icon.Blend(
 				icon(
 					SSgreyscale.GetColoredIconByType(
 						/datum/greyscale_config/modular_mod_parts_cerulean,
@@ -114,7 +105,7 @@
 	else
 		// we have no drawn sprite and no entry in the preset combinations alist. one little neglected modsuit :(
 		// lets generate from our broadstroke preset
-		base_icon.Blend(
+		cerulean_mod_icon.Blend(
 			icon(
 				SSgreyscale.GetColoredIconByType(
 					/datum/greyscale_config/modular_mod_parts_cerulean/basic,
@@ -124,25 +115,31 @@
 			),
 			ICON_OVERLAY,
 		)
-	// apply a flipper icon if we are sealed and have a female physique.
-	// ideally we color after the theme fetched from var/cerulean_flipper_palette
-	if(physique == FEM_FLIPPER && sealed && theme?.cerulean_flipper_palette != NO_FLIPPERS)
-		var/color_to_use = theme?.cerulean_flipper_palette
-		if(!color_to_use || color_to_use == FLIPPERS)
-			color_to_use = greyscale_colors
-		base_icon.Blend(
-			icon(
-				SSgreyscale.GetColoredIconByType(
-					/datum/greyscale_config/modular_mod_parts_cerulean/basic,
-					color_to_use,
-				),
-				"[FLIPPERS]",
-			),
-			ICON_OVERLAY,
-		)
+
+	if(physique == FEM_FLIPPER)
+		var/flipper_color = greyscale_colors
+		if(theme)
+			if(theme.cerulean_flipper_palette != FLIPPERS)
+				flipper_color = theme.cerulean_flipper_palette
+		if(flipper_color != NO_FLIPPERS)
+			generate_fem_flippers(cerulean_mod_icon, flipper_color)
 
 	// 🪸🐟
-	return base_icon
+	return cerulean_mod_icon
+
+/// apply a flipper icon if we are sealed and have a female physique.
+/// ideally we color after the theme fetched from var/cerulean_flipper_palette
+/obj/item/proc/generate_fem_flippers(icon/clothing_icon, set_color)
+	clothing_icon.Blend(
+		icon(
+			SSgreyscale.GetColoredIconByType(
+				/datum/greyscale_config/modular_mod_parts_cerulean/basic,
+				set_color,
+			),
+		"[FLIPPERS]",
+		),
+	ICON_OVERLAY,
+	)
 
 /// Simple proc to search through mod_themes global to return a theme
 /proc/find_mod_theme(haystack)
