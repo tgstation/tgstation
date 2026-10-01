@@ -61,6 +61,34 @@
 	for(var/state in icon_states(icons_large))
 		Insert("leave-[state]", icons_large, icon_state = state)
 
+/datum/asset/simple/namespaced/lobby_menu_font
+	assets = list(
+		"Pixellari.ttf" = file("interface/fonts/Pixellari.ttf"),
+		"Grand9K_Pixel.ttf" = file("interface/fonts/Grand9K_Pixel.ttf"),
+	)
+	parents = list(
+		"fonts.css" = file("tgui/packages/tgui-lobby/styles/fonts.css"),
+	)
+
+/// Registers all PNG/APNG files from icons/hud/lobby/png/ as named assets.
+/// To add a new lobby icon, just drop a .png file in that directory.
+/datum/asset/simple/namespaced/lobby_menu_icons
+
+/datum/asset/simple/namespaced/lobby_menu_icons/register()
+	var/dir_path = "icons/hud/lobby/png/"
+	for(var/filename in flist(dir_path))
+		if(!findtext(filename, ".png"))
+			continue
+		assets[filename] = file("[dir_path][filename]")
+	return ..()
+
+/datum/asset/simple/namespaced/lobby_menu_sounds
+	assets = list(
+		"ui_select1.ogg" = file("sound/misc/menu/ui_select1.ogg"),
+		"menu_rollup1.ogg" = file("sound/misc/menu/menu_rollup1.ogg"),
+		"menu_rolldown1.ogg" = file("sound/misc/menu/menu_rolldown1.ogg"),
+	)
+
 /datum/asset/simple/chat_dark
 	keep_local_name = FALSE
 	assets = list(

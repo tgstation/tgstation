@@ -22,6 +22,13 @@
 		if(WOUND_SEVERITY_CRITICAL)
 			return span_boldwarning("It's leaking blood from a major [LOWER_TEXT(undiagnosed_name || name)]!!")
 
+/datum/wound/slash/wound_injury(datum/wound/old_wound, attack_direction)
+	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
+	if(!old_wound && !isnull(current_gauze) && (wound_flags & ACCEPTS_GAUZE))
+		// oops your existing gauze got cut through! need a new one now
+		limb.seep_gauze(initial(current_gauze.absorption_capacity) * 0.8)
+	return ..()
+
 /datum/wound_pregen_data/flesh_slash
 	abstract = TRUE
 

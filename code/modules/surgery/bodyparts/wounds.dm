@@ -302,12 +302,82 @@
 		if((iter_wound.wound_flags & MANGLES_EXTERIOR))
 			mangled_state |= BODYPART_MANGLED_EXTERIOR
 
-	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(applied_items, LIMB_ITEM_GAUZE)
-	if(!LAZYLEN(wounds) && current_gauze && !replaced) // no more wounds = no need for the gauze anymore
-		if (owner)
-			owner.visible_message(span_notice("\The [current_gauze.name] on [owner]'s [name] falls away."), span_notice("\The [current_gauze] on your [plaintext_zone] falls away."))
-		else
-			visible_message(span_notice("\The [current_gauze.name] on [name] falls away."))
-		qdel(current_gauze)
-
 	refresh_bleed_rate()
+
+/**
+ * Get how splinted this bodypart is based on applied items
+ *
+ * Multiplier applied to maluses, so lower = better
+ */
+/obj/item/bodypart/proc/get_splint_factor()
+	var/factor = 1
+	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(applied_items, LIMB_ITEM_GAUZE)
+	if(current_gauze)
+		factor *= current_gauze.splint_factor
+	return factor
+
+/// Returns TRUE if the limb is splinted with gauze or tape with an effective splint factor
+/obj/item/bodypart/proc/is_splinted()
+	return get_splint_factor() < 1
+
+/**
+ * seep_gauze() is for when a gauze wrapping absorbs blood or pus from wounds, lowering its absorption capacity.
+ *
+ * The passed amount of seepage is deducted from the bandage's absorption capacity, and if we reach a negative absorption capacity, the bandages falls off and we're left with nothing.
+ *
+ * Arguments:
+ * * seep_amt - How much absorption capacity we're removing from our current bandages (think, how much blood or pus are we soaking up this tick?)
+ */
+/obj/item/bodypart/proc/seep_gauze(seep_amt = 0)
+	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(applied_items, LIMB_ITEM_GAUZE)
+	if(isnull(current_gauze))
+		return
+	current_gauze.absorption_capacity -= seep_amt
+	current_gauze.update_appearance(UPDATE_NAME)
+	if(current_gauze.absorption_capacity > 0)
+		return
+	owner.visible_message(
+		span_danger("[current_gauze] on [owner]'s [name] falls away in rags."),
+		span_warning("[current_gauze] on your [name] falls away in rags."),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
+	current_gauze.forceMove(drop_location())
+	owner.update_damage_overlays()
+
+/**
+ * Helper for someone helping to remove our gauze
+ */
+/obj/item/bodypart/proc/help_remove_gauze(mob/living/helper)
+	if(!istype(helper))
+		return
+	if(!helper.can_perform_action(owner, NEED_HANDS|FORBID_TELEKINESIS_REACH)) // telekinetic removal can be added later
+		return
+
+	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(applied_items, LIMB_ITEM_GAUZE)
+	ASSERT(!isnull(current_gauze))
+
+	helper.visible_message(
+		span_notice("[helper] starts carefully removing [current_gauze] from [helper == owner ? helper.p_their() : "[owner]'s"] [plaintext_zone]."),
+		span_notice("You start carefully removing [current_gauze] from [helper == owner ? "your" : "[owner]'s"] [plaintext_zone]..."),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
+	helper.balloon_alert(helper, "removing gauze...")
+	if(helper != owner)
+		helper.balloon_alert(owner, "removing your gauze...")
+
+	if(!do_after(helper, 3 SECONDS, owner))
+		return
+	if(QDELETED(current_gauze) || current_gauze.loc != src)
+		return
+
+	helper.visible_message(
+		span_notice("[helper] finishes removing [current_gauze] from [helper == owner ? helper.p_their() : "[owner]'s"] [plaintext_zone]."),
+		span_notice("You finish removing [current_gauze] from [helper == owner ? "your" : "[owner]'s"] [plaintext_zone]."),
+		vision_distance = COMBAT_MESSAGE_RANGE,
+	)
+
+	helper.balloon_alert(helper, "gauze removed")
+	if(helper != owner)
+		helper.balloon_alert(owner, "gauze removed")
+
+	helper.put_in_hands(current_gauze)
