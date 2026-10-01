@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Large wings are now fully affected by suit meshes or voidwalker curse"
-  - bugfix: "Cream pies no longer get affected by suit meshes or voidwalker curse"
-  - refactor: "Refactored bodypart rendering ever so slightly to fix some bodypart texture issues, report anything weird like missing overlays"

@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscdel: "Removed the ingredient choice beacon from the chef's roundstart equipment"
-  - rscadd: "Adds the cooking voucher to the chef's roundstart equipment, redeem it at your produce order console to get 10 free ingredients of your choice"
-  - rscadd: "Tweaked the limit on the number of items you can purchase per (mining/bitrunning/chef) order. Before it was a flat 20, but the UI sometimes lied to you and said it was either 50 or 10. Now it's scaled directly based on how valuable the item is (where cheaper items allow for bulk orders)."

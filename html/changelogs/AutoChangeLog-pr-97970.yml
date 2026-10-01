@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - bugfix: "Fix seclite overlay for SMG disablers"

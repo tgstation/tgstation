@@ -1,4 +1,0 @@
-author: "Swan"
-delete-after: True
-changes:
-  - bugfix: "fixes TGUI crashing when reseting to default a keybind which has no default binding"
