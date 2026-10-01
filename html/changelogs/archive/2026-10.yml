@@ -2,6 +2,8 @@
   Dmeto:
   - bugfix: fixed Kilo Ordnance igniter not igniting.
   - map: minor changes to Kilo Ordnance pipe devices.
+  Maia-J:
+  - bugfix: Aggressive raptors are no longer TOO aggressive
   Melbert:
   - rscdel: Removed the ingredient choice beacon from the chef's roundstart equipment
   - rscadd: Adds the cooking voucher to the chef's roundstart equipment, redeem it
