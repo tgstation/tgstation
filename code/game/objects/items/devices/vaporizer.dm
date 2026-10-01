@@ -12,7 +12,6 @@
 			A label on its back warns about the potential dangers of electro-magnetic pulses."
 	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "vaporizer"
-	worn_icon_state = "vaporizer"
 	slot_flags = ITEM_SLOT_BELT
 	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
 	drop_sound = SFX_GENERIC_DEVICE_DROP
