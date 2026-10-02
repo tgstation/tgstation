@@ -85,7 +85,7 @@
 
 /datum/wound/burn/robotic/proc/victim_exposed_to_reagents(datum/signal_source, list/reagents, datum/reagents/source, methods, volume_modifier, show_message)
 	SIGNAL_HANDLER
-	if(methods != TOUCH)
+	if(!(methods in list(TOUCH, VAPOR)))
 		return
 	var/blocked_by_clothing = FALSE
 	var/temp_delta = under_limit(source.chem_temp)
