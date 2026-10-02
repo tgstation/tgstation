@@ -72,10 +72,16 @@
 /obj/item/organ/fangs/cat/proc/nommies(mob/living/source, mob/living/target, damage, attack_type, atk_effect, obj/item/bodypart/affecting, final_armor_block, limb_sharpness)
 	SIGNAL_HANDLER
 
-	if(source != target && atk_effect == ATTACK_EFFECT_BITE && (target.mob_biotypes & MOB_ORGANIC)) //Good for you. You probably just ate someone alive.
-		var/datum/reagents/tasty_meal = new()
-		tasty_meal.add_reagent(/datum/reagent/consumable/nutriment/protein, round(damage/3, 1))
-		tasty_meal.trans_to(source, tasty_meal.total_volume, transferred_by = source, methods = INGEST)
+	if(!ishuman(source))
+		return
+
+	var/mob/living/carbon/human/wittle_kitty_cat_that_bities_real_hard_nya = source
+
+	if(wittle_kitty_cat_that_bities_real_hard_nya.nutrition > NUTRITION_LEVEL_WELL_FED)
+		return
+
+	if(wittle_kitty_cat_that_bities_real_hard_nya != target && atk_effect == ATTACK_EFFECT_BITE && (target.mob_biotypes & MOB_ORGANIC)) //Good for you. You probably just ate someone alive.
+		wittle_kitty_cat_that_bities_real_hard_nya.adjust_nutrition(damage*0.1)
 
 /obj/item/organ/fangs/lizard
 	name = "lizard fangs"
