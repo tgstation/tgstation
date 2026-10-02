@@ -7,7 +7,6 @@
 	lose_text = span_notice("You suddenly feel like your lungs just got a lot better at breathing!")
 	medical_record_text = "Patient suffers from asthma."
 	hardcore_value = 2
-	quirk_flags = QUIRK_HUMAN_ONLY
 	mail_goodies = list(/obj/item/reagent_containers/inhaler_canister/albuterol)
 
 	/// At this percentage of inflammation, our lung pressure mult reaches 0. From 0-1.

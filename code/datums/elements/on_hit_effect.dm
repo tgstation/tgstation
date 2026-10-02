@@ -49,7 +49,7 @@
 	on_hit(attacker, attacker, target, attacker.zone_selected)
 
 
-/datum/element/on_hit_effect/proc/human_punched(mob/living/carbon/human/attacker, mob/living/carbon/human/target, damage, damage_type, obj/item/bodypart/hit, ...)
+/datum/element/on_hit_effect/proc/human_punched(mob/living/carbon/human/attacker, mob/living/carbon/human/target, damage, damage_type, atk_effect, obj/item/bodypart/hit, ...)
 	SIGNAL_HANDLER
 
 	on_hit(attacker, attacker, target, hit.body_zone)

@@ -437,6 +437,11 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 			user.balloon_alert(user, "no room!")
 		return FALSE
 
+	if(to_insert.anchored)
+		if(messages && user && !silent_for_user)
+			user.balloon_alert(user, "anchored!")
+		return FALSE
+
 	var/can_hold_it = isnull(can_hold) || is_type_in_typecache(to_insert, can_hold) || is_type_in_typecache(to_insert, exception_hold)
 	var/cant_hold_it = is_type_in_typecache(to_insert, cant_hold)
 	var/trait_says_no = HAS_TRAIT(to_insert, TRAIT_NO_STORAGE_INSERT)
@@ -1026,6 +1031,12 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 /datum/storage/proc/close_all()
 	for(var/mob/user as anything in is_using)
 		hide_contents(user)
+
+/// Close the storage UI for everyone viewing us except if a viewer is holding us directly (and obsevers)
+/datum/storage/proc/close_all_non_wearers()
+	for(var/mob/user as anything in is_using)
+		if(parent.loc != user && !isobserver(user))
+			hide_contents(user)
 
 /// Closes the storage UIs of this and everything inside the parent for everyone viewing them.
 /datum/storage/proc/close_all_recursive()

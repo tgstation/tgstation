@@ -10,6 +10,8 @@
 	var/max_dist_key = BB_RANGED_SKIRMISH_MAX_DISTANCE
 	/// Movement type to use while approaching a target that's too far. Null falls back to the controller's default movement type. Reset on finish.
 	var/approach_movement_type = null
+	/// Should we keep facing the target while retreating?
+	var/face_target = TRUE
 
 /datum/bt_node/ai_behavior/maintain_distance/setup(datum/ai_controller/controller)
 	var/atom/target = controller.blackboard[target_key]
@@ -57,7 +59,8 @@
 /datum/bt_node/ai_behavior/maintain_distance/proc/retreat(datum/ai_controller/controller, atom/target, minimum_distance)
 	controller.change_ai_movement_type(/datum/ai_movement/basic_avoidance/backstep)
 	var/mob/pawn = controller.pawn
-	pawn.face_atom(target)
+	if(face_target)
+		pawn.face_atom(target)
 	var/turf/next_step = get_step_away(pawn, target)
 	if(!isnull(next_step) && !next_step.is_blocked_turf(exclude_mobs = TRUE))
 		controller.ai_movement.start_moving_towards(controller, next_step, 0, controller.movement_delay * 2)

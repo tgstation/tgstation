@@ -192,3 +192,17 @@
 		/obj/item/soulstone = 1,
 	)
 	category = CAT_ROBOT
+
+/datum/crafting_recipe/mod_core_candela
+	name = "MOD core (Candela)"
+	result = /obj/item/mod/core/candela
+	tool_behaviors = list(TOOL_SCREWDRIVER)
+	time = 10 SECONDS
+	reqs = list(
+		/obj/item/stack/cable_coil = 5,
+		/obj/item/stack/rods = 2,
+		/obj/item/stack/sheet/glass = 1,
+		/obj/item/stack/sheet/bluespace_crystal = 1,
+		/obj/item/stack/candela_beacon = 5,
+	)
+	category = CAT_ROBOT

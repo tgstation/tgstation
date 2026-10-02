@@ -168,6 +168,7 @@
 	pain_mult = 0.5
 	jostle_pain_mult = 1.5
 	rip_time = 0.5 SECONDS
+	stealthy_embed = FALSE
 
 /obj/projectile/bullet/pellet/flechette/donk
 	name = "\improper Donk Co. 'Donk Spike' flechette"

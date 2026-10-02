@@ -13,10 +13,13 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 
 	// Weakrefs of all our hud viewers -> a weakref to the hud datum they last used
 	var/list/datum/weakref/viewers_to_huds = list()
+	// Weakref to the location we are displaying "from", if any
+	var/datum/weakref/display_ref
 
 /atom/movable/screen/map_view/Destroy()
 	for(var/datum/weakref/client_ref in viewers_to_huds)
 		hide_from_client(client_ref.resolve())
+	display_ref = null
 
 	return ..()
 
@@ -28,7 +31,38 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 	assigned_map = map_key
 	set_position(1, 1)
 
-/**
+/atom/movable/screen/map_view/proc/set_display(atom/display_atom = null)
+	if(isnull(display_atom))
+		display_ref = null
+		for(var/datum/weakref/client_ref in viewers_to_huds)
+			var/client/viewer = client_ref.resolve()
+			if(!viewer)
+				continue
+			viewer.delete_parallax(assigned_map)
+		return
+
+	var/datum/weakref/new_display_ref = WEAKREF(display_atom)
+	if(new_display_ref == display_ref)
+		return
+	display_ref = new_display_ref
+	for(var/datum/weakref/client_ref in viewers_to_huds)
+		var/client/viewer = client_ref.resolve()
+		if(isnull(viewer))
+			continue
+
+		var/atom/movable/screen/parallax_home/working_parallax = viewer.create_parallax(assigned_map)
+		working_parallax.set_perspective(display_atom)
+
+		var/datum/weakref/hud_ref = viewers_to_huds[client_ref]
+		var/datum/hud/real_hud = hud_ref.resolve()
+		if(isnull(real_hud))
+			continue
+
+		var/datum/plane_master_group/popup/pop_planes = real_hud.get_plane_group(PLANE_GROUP_POPUP_WINDOW(src))
+		pop_planes.set_perspective(display_atom)
+
+
+	/**
  * Generates and displays the map view to a client
  * Make sure you at least try to pass tgui_window if map view needed on UI,
  * so it will wait a signal from TGUI, which tells windows is fully visible.
@@ -68,9 +102,15 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 
 	// Generate a new plane group for this case
 	var/datum/plane_master_group/popup/pop_planes = new(PLANE_GROUP_POPUP_WINDOW(src), assigned_map)
+	var/atom/displaying_from = display_ref?.resolve()
+
+	if(displaying_from)
+		var/atom/movable/screen/parallax_home/working_parallax = show_to.create_parallax(assigned_map)
+		working_parallax.set_perspective(displaying_from)
+		pop_planes.set_perspective(displaying_from)
+
 	viewers_to_huds[client_ref] = WEAKREF(show_to.mob.hud_used)
 	pop_planes.attach_to(show_to.mob.hud_used)
-
 	return pop_planes
 
 /atom/movable/screen/map_view/proc/hide_from(mob/hide_from)
@@ -85,6 +125,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen/map_view)
 	// Make sure we clear the *right* hud
 	var/datum/weakref/hud_ref = viewers_to_huds[client_ref]
 	viewers_to_huds -= client_ref
+	hide_from.delete_parallax(assigned_map)
 
 	var/datum/hud/clear_from = hud_ref?.resolve()
 	if(!clear_from)

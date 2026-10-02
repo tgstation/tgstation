@@ -316,6 +316,53 @@ rough example of the "cone" made by the 3 dirs checked
 		loc = loc.loc
 	return null
 
+//Gets the topmost loose container given the passed in LOOSE_CONTAINER flags
+/proc/get_loose_container(atom/movable/loose, container_flags = ALL)
+	while(ismovable(loose.loc))
+		if(!(container_flags & LOOSE_CONTAINER_INCLUDE_STORAGE) && isitem(loose))
+			var/obj/item/item = loose
+			if(item.item_flags & IN_STORAGE)
+				break
+		var/atom/movable/movable = loose.loc
+		if(movable.anchored)
+			break
+		if(isliving(movable))
+			var/mob/living/living = movable
+			if(!(container_flags & LOOSE_CONTAINER_INCLUDE_INVENTORY))
+				var/list/equipped = living.get_equipped_items(INCLUDE_HELD|INCLUDE_POCKETS)
+				if((loose in equipped) && !HAS_TRAIT(loose, TRAIT_NODROP))
+					if(istype(loose, /obj/item/mod/control) && (container_flags & LOOSE_CONTAINER_INCLUDE_SEALED_MODSUIT))
+						var/obj/item/mod/control/modsuit = loose
+						var/sealed = TRUE
+						for(var/datum/mod_part/part as anything in modsuit.get_part_datums(TRUE))
+							if((part.part_item == modsuit || part.part_item.loc != modsuit) && !part.sealed)
+								sealed = FALSE
+								break
+						if(!sealed)
+							break
+					else
+						break
+			if(living.buckled)
+				if(living.buckled.anchored)
+					break
+				else
+					var/obj/buckled_obj = living.buckled
+					buckled_obj.unbuckle_mob(living)
+		if(!(container_flags & LOOSE_CONTAINER_INCLUDE_CLOSET) && iscloset(movable))
+			break
+		if(!(container_flags & LOOSE_CONTAINER_INCLUDE_MECH_EQUIPMENT) && istype(movable, /obj/item/mecha_parts/mecha_equipment))
+			break
+		if(!(container_flags & LOOSE_CONTAINER_INCLUDE_VEHICLE) && isvehicle(movable))
+			var/obj/vehicle/vehicle = movable
+			if(vehicle.is_occupant(loose))
+				break
+		if(!(container_flags & LOOSE_CONTAINER_INCLUDE_STOMACH) && istype(movable, /obj/item/organ/stomach))
+			var/obj/item/organ/stomach/stomach = movable
+			if(loose in stomach.stomach_contents)
+				break
+		loose = movable
+	return loose
+
 /**
  * Line of sight check!
  * Spawns a dummy object and then iterates through each turf to see if it's blocked by something not handled by pass_args.

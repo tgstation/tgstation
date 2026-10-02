@@ -16,15 +16,15 @@
 /mob/living/brain/update_stat()
 	if(HAS_TRAIT(src, TRAIT_GODMODE))
 		return
-	if(health > HEALTH_THRESHOLD_DEAD)
+	if(health > dead_threshold)
 		return
 	if(stat != DEAD)
 		death()
 	var/obj/item/organ/brain/BR
-	if(container?.brain)
-		BR = container.brain
-	else if(istype(loc, /obj/item/organ/brain))
+	if(istype(loc, /obj/item/organ/brain))
 		BR = loc
+	else
+		BR = astype(container, /obj/item/brain_processor/organic)?.brain
 	if(BR)
 		BR.set_organ_damage(BRAIN_DAMAGE_DEATH) //beaten to a pulp
 

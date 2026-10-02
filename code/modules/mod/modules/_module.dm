@@ -244,7 +244,7 @@
 	if(!(allow_flags & MODULE_ALLOW_INCAPACITATED) && INCAPACITATED_IGNORING(mod.wearer, INCAPABLE_GRAB))
 		return FALSE
 	mod.wearer.face_atom(target)
-	if(!used())
+	if(!used() || (SEND_SIGNAL(target, COMSIG_ATOM_MOD_MODULE_USED, src) & COMPONENT_INTERRUPT_MODULE_USE))
 		return FALSE
 	return TRUE
 

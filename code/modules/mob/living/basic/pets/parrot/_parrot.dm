@@ -288,7 +288,8 @@ GLOBAL_LIST_INIT(strippable_parrot_items, create_strippable_list(list(
 	if(istype(target, /obj/item/food/cracker))
 		consume_cracker(target)
 		qdel(target)
-		return
+		// Eating it counts as 'handling' it. A FALSE return makes attempt_pickup() and put_in_hands() drop the deleted cracker onto the floor which hangs refs
+		return TRUE
 
 	if(..())
 		visible_message(

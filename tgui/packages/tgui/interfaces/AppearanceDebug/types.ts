@@ -10,6 +10,8 @@ export type AppearanceDebugData = {
   mapRefHover: string;
   mapRefSelected: string;
   updateWarning: boolean;
+  forcedPlane: number;
+  backdropColor: string;
 };
 
 export enum AppearanceType {
@@ -92,6 +94,10 @@ export type AppearanceData = {
   pixel_z: number;
   plane: number;
   plane_true: number;
+  plane_unregistered?: boolean;
+  plane_max_offset?: number;
+  plane_decoded_true?: number;
+  plane_decoded_offset?: number;
   render_source: string | null;
   render_target: string | null;
   screen_loc: string | null;

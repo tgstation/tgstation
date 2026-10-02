@@ -17,7 +17,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	basic_mob_flags = DEL_ON_DEATH
 	density = FALSE
 
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
+	physiology = list(TOX = 0, OXY = 0, STAMINA = 0)
 	habitable_atmos = null
 	hud_possible = list(DIAG_STAT_HUD, DIAG_BOT_HUD, DIAG_HUD, DIAG_BATT_HUD, DIAG_PATH_HUD = HUD_LIST_LIST)
 
@@ -814,7 +814,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	bot_reset(bypass_ai_reset = isAI(summoner))
 	var/turf/destination = turf_destination ? turf_destination : get_turf(summoner)
 	ai_controller?.set_blackboard_key(BB_BOT_SUMMON_TARGET, destination)
-	var/list/access_to_grant = grant_all_access ? REGION_ACCESS_ALL_STATION : user_access + initial_access
+	var/list/access_to_grant = grant_all_access ? SSid_access.accesses_by_region[REGION_ALL_STATION] : user_access + initial_access
 	access_card.set_access(access_to_grant)
 	speak("Responding.", radio_channel)
 	update_bot_mode(new_mode = BOT_SUMMON)

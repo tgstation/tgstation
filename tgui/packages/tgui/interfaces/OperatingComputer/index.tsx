@@ -16,7 +16,7 @@ import {
 export const OperatingComputer = () => {
   const [tab, setTab] = useSharedState('tab', 1);
   const { data } = useBackend<OperatingComputerData>();
-  const { surgeries } = data;
+  const { surgeries, techwebs } = data;
 
   const { query, setQuery, results } = useFuzzySearch({
     searchArray: surgeries,
@@ -51,12 +51,14 @@ export const OperatingComputer = () => {
               >
                 Operation Catalog
               </Tabs.Tab>
-              <Tabs.Tab
-                selected={tab === ComputerTabs.Experiments}
-                onClick={() => setTab(3)}
-              >
-                Experiments
-              </Tabs.Tab>
+              {!!techwebs.length && (
+                <Tabs.Tab
+                  selected={tab === ComputerTabs.Experiments}
+                  onClick={() => setTab(3)}
+                >
+                  Experiments
+                </Tabs.Tab>
+              )}
             </Tabs>
           </Stack.Item>
           <Stack.Item grow>

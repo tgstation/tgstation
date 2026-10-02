@@ -37,7 +37,7 @@
 	bubble_icon = "machine"
 	initial_language_holder = /datum/language_holder/drone
 	mob_size = MOB_SIZE_SMALL
-	damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 0, STAMINA = 0, OXY = 0)
+	physiology = list(TOX = 0, OXY = 0, STAMINA = 0)
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
 	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
@@ -171,18 +171,18 @@
 	return length(lines) ? jointext(lines, "\n") : base_laws
 
 /mob/living/basic/drone/med_hud_set_health()
-	set_hud_image_state(DIAG_HUD, "huddiag[RoundDiagBar(health/maxHealth)]")
+	set_hud_image_state(DIAG_HUD, hud_state = "huddiag[RoundDiagBar(health/maxHealth)]")
 
 /mob/living/basic/drone/med_hud_set_status()
 	if(stat == DEAD)
-		set_hud_image_state(DIAG_STAT_HUD, "huddead2")
+		set_hud_image_state(DIAG_STAT_HUD, hud_state = "huddead2")
 		return
 
 	if(incapacitated)
-		set_hud_image_state(DIAG_STAT_HUD, "hudoffline")
+		set_hud_image_state(DIAG_STAT_HUD, hud_state = "hudoffline")
 		return
 
-	set_hud_image_state(DIAG_STAT_HUD, "hudstat")
+	set_hud_image_state(DIAG_STAT_HUD, hud_state = "hudstat")
 
 /mob/living/basic/drone/Destroy()
 	GLOB.drones_list -= src

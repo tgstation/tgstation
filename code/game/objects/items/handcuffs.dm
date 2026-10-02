@@ -419,6 +419,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slowdown = 7
 	breakouttime = 30 SECONDS
+	resist_cooldown = CLICK_CD_RANGE
 	slot_flags = ITEM_SLOT_LEGCUFFED
 	/// Icon state for the legcuff overlay
 	var/legcuff_state = "legcuff"

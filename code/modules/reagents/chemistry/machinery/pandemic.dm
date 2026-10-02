@@ -1,6 +1,6 @@
 
 /obj/machinery/computer/pandemic
-	name = "PanD.E.M.I.C 2200"
+	name = "\improper PanD.E.M.I.C 2200"
 	desc = "Used to work with viruses."
 	density = TRUE
 	icon = 'icons/obj/medical/chemical.dmi'

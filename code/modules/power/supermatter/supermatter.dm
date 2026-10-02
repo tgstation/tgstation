@@ -26,7 +26,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	critical_machine = TRUE
 	base_icon_state = "sm"
 	icon_state = "sm"
-	light_on = FALSE
+	light_on = TRUE
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	light_power = 2
+	light_color = SUPERMATTER_COLOUR
 
 	///The id of our supermatter
 	var/uid = 1
@@ -185,6 +188,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	/// If the SM is decorated with holiday lights
 	var/holiday_lights = FALSE
+
+	/// The emissive light mask for the SM
+	var/light_mask_icon = "sm-emissive"
 
 	/// Cooldown for sending emergency alerts to the common radio channel
 	COOLDOWN_DECLARE(common_radio_cooldown)
@@ -521,6 +527,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		else
 			. += mutable_appearance(icon, "holiday_lights")
 			. += emissive_appearance(icon, "holiday_lights_e", src, alpha = src.alpha)
+	if(light_mask_icon)
+		. += emissive_appearance(icon, light_mask_icon, src, alpha = src.alpha)
 	return .
 
 /obj/machinery/power/supermatter_crystal/update_icon(updates)

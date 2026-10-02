@@ -189,8 +189,6 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 
 #define isshade(A) (istype(A, /mob/living/basic/shade))
 
-#define is_simian(A) (isgorilla(A) || ismonkey(A))
-
 #define isstargazer(A) (istype(A, /mob/living/basic/heretic_summon/star_gazer))
 
 #define isbloodworm(A) (istype(A, /mob/living/basic/blood_worm))

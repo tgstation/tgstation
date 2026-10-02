@@ -3,6 +3,7 @@
  * Handles assigning/unassigning it's users, as well as applying sight effects.
  */
 /mob/eye/camera/remote
+	sight = SEE_TURFS
 	/// Weakref to the current user of this eye. Must be a [living mob][/mob/living].
 	var/datum/weakref/user_ref
 	/// Weakref to the creator of this eye. Must be a [machine][/obj/machinery].
@@ -99,6 +100,8 @@
 
 /mob/eye/camera/remote/update_remote_sight(mob/living/user)
 	user.set_invis_see(SEE_INVISIBLE_LIVING) //can't see ghosts through cameras
+	user.lighting_cutoff = LIGHTING_CUTOFF_VISIBLE
+	user.lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
 	user.set_sight(SEE_TURFS)
 	return TRUE
 

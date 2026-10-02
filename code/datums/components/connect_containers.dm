@@ -23,8 +23,8 @@
 	return ..()
 
 /datum/component/connect_containers/CheckDupeComponent(datum/component/connect_containers/new_component, atom/movable/tracked, list/connections)
-	// Not equivalent. Checks if they are not the same list via shallow comparison.
-	if(!compare_list(src.connections, connections))
+	// Both the signal names and their handlers must match.
+	if(!deep_compare_list(src.connections, connections))
 		return FALSE // Different set of connections.
 	if(src.tracked != tracked)
 		set_tracked(tracked) // Different target for the same set of connections, track the new target.

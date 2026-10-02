@@ -35,7 +35,6 @@ GLOBAL_ALIST_EMPTY(reftracker_skip_typecache_b)
 		/datum/movespeed_modifier,
 		/datum/painting,
 		/datum/paper_input,
-		/datum/physiology,
 		/datum/plant_gene/reagent,
 		/datum/qdel_item,
 		/datum/stack_recipe,

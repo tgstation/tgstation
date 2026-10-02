@@ -110,6 +110,9 @@
 // If defined, we will NOT defer asset generation till later in the game, and will instead do it all at once, during initiialize
 //#define DO_NOT_DEFER_ASSETS
 
+// Forces init assets to generate regardless of config setting
+//#define FORCE_GENERATE_INIT_ASSETS
+
 /// If this is uncommented, Autowiki will generate edits and shut down the server.
 /// Prefer the autowiki build target instead.
 // #define AUTOWIKI
@@ -172,13 +175,14 @@
 #define GC_FAILURE_HARD_LOOKUP
 //Ensures all early assets can actually load early
 #define DO_NOT_DEFER_ASSETS
+//Always gen assets, unit tests will check if the contributor needs to update them
+#define FORCE_GENERATE_INIT_ASSETS
 //Test at full capacity, the extra cost doesn't matter
 #define TIMER_DEBUG
-
-// Checks if unit tests are being run locally or well, not
-#if !defined(CIBUILDING) && !defined(SPACEMAN_DMM) && !defined(OPENDREAM)
-#define RUNNING_LOCAL_TESTS
-#endif
+	// Checks if unit tests are being run locally or well, not
+	#if !defined(CIBUILDING) && !defined(SPACEMAN_DMM) && !defined(OPENDREAM)
+	#define RUNNING_LOCAL_TESTS
+	#endif
 #endif
 
 #ifdef TGS

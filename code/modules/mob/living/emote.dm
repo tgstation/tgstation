@@ -844,6 +844,35 @@
 /datum/emote/living/custom/replace_pronoun(mob/user, message)
 	return message
 
+///Emotes only for le epic chimps
+/datum/emote/living/monkey
+	abstract_type = /datum/emote/living/monkey
+	trait_required = TRAIT_SIMIAN
+
+/datum/emote/living/monkey/gnarl
+	key = "gnarl"
+	key_third_person = "gnarls"
+	message = "gnarls and shows its teeth..."
+	message_mime = "gnarls silently, baring its teeth..."
+
+/datum/emote/living/monkey/roll
+	key = "roll"
+	key_third_person = "rolls"
+	message = "rolls."
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
+
+/datum/emote/living/monkey/scratch
+	key = "scratch"
+	key_third_person = "scratches"
+	message = "scratches."
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
+
+/datum/emote/living/monkey/sign
+	key = "sign"
+	key_third_person = "signs"
+	message_param = "signs the number %t."
+	can_use_flags = EMOTE_CANUSE_REQUIRE_HANDS
+
 /datum/emote/living/inhale
 	key = "inhale"
 	key_third_person = "inhales"

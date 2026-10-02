@@ -9,6 +9,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	icon = 'icons/obj/devices/scanner.dmi'
 	icon_state = "experiscanner"
+	inhand_icon_state = "experiscanner"
 	lefthand_file = 'icons/mob/inhands/items/devices_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/devices_righthand.dmi'
 	sound_vary = TRUE

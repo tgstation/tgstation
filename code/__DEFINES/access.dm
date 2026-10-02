@@ -553,46 +553,6 @@
 /// Used to seed the accesses_by_region list in SSid_access. A list of all CENTCOM_ACCESS regional accesses.
 #define REGION_ACCESS_CENTCOM CENTCOM_ACCESS
 
-/**
- * A list of PDA paths that can be painted as well as the regional heads which should be able to paint them.
- * If a PDA is not in this list, it cannot be painted using the PDA & ID Painter.
- * If a PDA is in this list, it can always be painted with ACCESS_CHANGE_IDS.
- * Used to see pda_region in [/datum/controller/subsystem/id_access/proc/setup_tgui_lists]
- */
-#define PDA_PAINTING_REGIONS list( \
-	/obj/item/modular_computer/pda = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/clown = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/mime = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/medical = list(REGION_MEDBAY), \
-	/obj/item/modular_computer/pda/coroner = list(REGION_MEDBAY), \
-	/obj/item/modular_computer/pda/engineering = list(REGION_ENGINEERING), \
-	/obj/item/modular_computer/pda/security = list(REGION_SECURITY), \
-	/obj/item/modular_computer/pda/detective = list(REGION_SECURITY), \
-	/obj/item/modular_computer/pda/warden = list(REGION_SECURITY), \
-	/obj/item/modular_computer/pda/janitor = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/science = list(REGION_RESEARCH), \
-	/obj/item/modular_computer/pda/heads/quartermaster = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/heads/hop = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/heads/hos = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/heads/cmo = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/heads/ce = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/heads/rd = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/heads/captain = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/cargo = list(REGION_SUPPLY), \
-	/obj/item/modular_computer/pda/bitrunner = list(REGION_SUPPLY), \
-	/obj/item/modular_computer/pda/shaftminer = list(REGION_SUPPLY), \
-	/obj/item/modular_computer/pda/chaplain = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/lawyer = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/botanist = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/roboticist = list(REGION_RESEARCH), \
-	/obj/item/modular_computer/pda/curator = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/cook = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/bar = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/atmos = list(REGION_ENGINEERING), \
-	/obj/item/modular_computer/pda/chemist = list(REGION_MEDBAY), \
-	/obj/item/modular_computer/pda/geneticist = list(REGION_RESEARCH), \
-)
-
 /// All regions that make up the station area. Helper define to quickly designate a region as part of the station or not. Access via SSid_access.station_regions.
 #define REGION_AREA_STATION list( \
 	REGION_COMMAND, \

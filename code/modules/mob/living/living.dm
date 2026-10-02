@@ -55,6 +55,7 @@
 		QDEL_LIST(imaginary_group)
 	QDEL_LAZYLIST(diseases)
 	QDEL_LAZYLIST(quirks)
+	QDEL_NULL(inner_armor)
 
 	if(!isnull(unconscious_appearance))
 		// Not super necessary strictly speaking but just in case
@@ -528,8 +529,8 @@
 
 //mob verbs are a lot faster than object verbs
 //for more info on why this is not atom/pull, see examinate() in mob.dm
-GAME_VERB_CONTEXT(/mob/living, pulled, "Pull", "", null, /atom/movable)
-	VERB_ARG_TYPED(thing_pulled, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_VIEW, /atom/movable)
+GAME_VERB_CONTEXT_RANGE(/mob/living, pulled, "Pull", "", null, /atom/movable, oview(1))
+	VERB_ARG_TYPED_RANGE(thing_pulled, VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ, VERB_ARG_SOURCE_VIEW, /atom/movable, 1)
 	if(istype(thing_pulled) && Adjacent(thing_pulled))
 		start_pulling(thing_pulled)
 
@@ -564,7 +565,7 @@ GAME_VERB_HIDDEN(/mob/living, succumb, "succumb")
 			to_chat(src, span_warning("You are unable to succumb to death! This life continues."), type=MESSAGE_TYPE_INFO)
 			return
 	log_message("Has [whispered ? "whispered his final words" : "succumbed to death"] with [round(health, 0.1)] points of health!", LOG_ATTACK)
-	adjust_oxy_loss(health - HEALTH_THRESHOLD_DEAD)
+	adjust_oxy_loss(health - dead_threshold)
 	updatehealth()
 	if(!whispered)
 		to_chat(src, span_notice("You have given up life and succumbed to death."))
@@ -1036,7 +1037,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 /mob/living/proc/can_be_revived()
 	if(HAS_TRAIT(src, TRAIT_NODEATH))
 		return TRUE
-	if(health > HEALTH_THRESHOLD_DEAD)
+	if(health > dead_threshold)
 		return TRUE
 	return FALSE
 
@@ -1641,8 +1642,8 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 				/mob/living/basic/mining/mook/worker,
 				/mob/living/basic/mining/mook/worker/bard,
 				/mob/living/basic/mining/mook/worker/tribal_chief,
-				/mob/living/basic/mining/legion/monkey,
-				/mob/living/basic/mining/legion/monkey/snow,
+				/mob/living/basic/mining/legion/lesser,
+				/mob/living/basic/mining/legion/lesser/snow,
 				/mob/living/basic/mining/lobstrosity,
 				/mob/living/basic/mining/lobstrosity/lava,
 				/mob/living/basic/mining/ice_demon,
@@ -2025,6 +2026,88 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	user.visible_message(span_warning("[user] scoops up [src]!"))
 	user.put_in_hands(holder)
 
+/mob/living/update_sight()
+	if(!client)
+		return
+
+	if(stat == DEAD && !HAS_TRAIT(src, TRAIT_CORPSELOCKED))
+		if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
+			set_sight(NONE)
+		else if(is_secret_level(z))
+			set_sight(initial(sight))
+		else
+			set_sight(SEE_TURFS|SEE_MOBS|SEE_OBJS)
+		set_invis_see(SEE_INVISIBLE_OBSERVER)
+		return
+
+	var/new_sight = restore_initial_sight()
+
+	if(client.eye && client.eye != src)
+		var/atom/atom = client.eye
+		if(atom.update_remote_sight(src)) //returns TRUE if we override all other sight updates.
+			return ..() //still, call sync_lighting_plane_cutoff()
+
+	var/obj/item/organ/eyes/eyes = get_organ_slot(ORGAN_SLOT_EYES)
+	if(eyes)
+		set_invis_see(eyes.see_invisible)
+		if(!isnull(eyes.lighting_cutoff))
+			lighting_cutoff = eyes.lighting_cutoff
+		if(!isnull(eyes.color_cutoffs))
+			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, eyes.color_cutoffs)
+
+	var/obj/item/clothing/glasses/glasses = get_item_by_slot(ITEM_SLOT_EYES)
+	if(istype(glasses))
+		set_invis_see(glasses.invis_override || min(glasses.invis_view, see_invisible))
+		if(!isnull(glasses.lighting_cutoff))
+			lighting_cutoff = max(lighting_cutoff, glasses.lighting_cutoff)
+		if(length(glasses.color_cutoffs))
+			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, glasses.color_cutoffs)
+
+	// An average (ranging from 1 to 100) of the lighting_color_cutoffs values.
+	// Used to avoid the hardcoded lighting cutoff from overly stacking with the more specific lighting color cutoffs from eyes and glasses
+	// (or innate in the case of some mobs), with the exception of night vision I guess.
+	var/avg_light_color_cutoff = lighting_color_cutoffs = (lighting_color_cutoffs[1] + lighting_color_cutoffs[2] + lighting_color_cutoffs[3]) / 3
+
+	if(HAS_TRAIT(src, TRAIT_MESON_VISION))
+		new_sight |= SEE_TURFS
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_REAL_LOW - avg_light_color_cutoff)
+
+	if(HAS_TRAIT(src, TRAIT_THERMAL_VISION))
+		new_sight |= SEE_MOBS
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_MEDIUM - avg_light_color_cutoff)
+
+	if(HAS_TRAIT(src, TRAIT_XRAY_VISION))
+		new_sight |= SEE_TURFS|SEE_MOBS|SEE_OBJS
+
+	if(HAS_TRAIT(src, TRAIT_MATERIAL_VISON))
+		new_sight |= SEE_OBJS
+
+	if(SSmapping.level_trait(z, ZTRAIT_NOXRAY))
+		new_sight = NONE
+
+	if(HAS_TRAIT(src, TRAIT_TRUE_NIGHT_VISION))
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_HIGH)
+
+	if(HAS_TRAIT(src, TRAIT_ECHOLOCATOR))
+		new_sight |= SEE_MOBS|SEE_TURFS
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_FULLBRIGHT)
+
+	set_sight(new_sight)
+	return ..()
+
+///Part of the [/mob/living/update_sight()] stack. This shouldn't be used outside of it.
+/mob/living/proc/restore_initial_sight()
+	SHOULD_CALL_PARENT(TRUE)
+	PROTECTED_PROC(TRUE)
+	var/init_sight = initial(sight)
+	//we cannot see mobs and/or objects unless we have thermals/xray/material vision, but we can still see turfs to navigate around
+	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING))
+		init_sight |= SEE_TURFS|BLIND
+	init_sight |= SEND_SIGNAL(src, COMSIG_LIVING_RESTORE_INITIAL_SIGHT)
+	lighting_cutoff = initial(lighting_cutoff)
+	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
+	return initial(sight)
+
 /mob/living/proc/mob_try_pickup(mob/living/user, instant=FALSE)
 	if(!ishuman(user) && (user.mob_size <= mob_size || user.num_hands == 0))
 		if (!user.num_hands)
@@ -2150,6 +2233,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_DELUSION_HALLUCINATION, "Give Delusion Hallucination")
 	VV_DROPDOWN_OPTION(VV_HK_GIVE_GUARDIAN_SPIRIT, "Give Guardian Spirit")
 	VV_DROPDOWN_OPTION(VV_HK_ADMIN_RENAME, "Force Change Name")
+	VV_DROPDOWN_OPTION(VV_HK_NAVIGATE_TO_MARKED_OBJECT, "Navigate To Marked Object")
 
 /mob/living/vv_do_topic(list/href_list)
 	. = ..()
@@ -2197,6 +2281,18 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			"updated_prefs" = replace_preferences,
 		))
 		message_admins("[key_name_admin(usr)] has forcibly changed the real name of [key_name(src)] from '[old_name]' to '[real_name]'[(replace_preferences ? " and their preferences" : "")]")
+
+	if(href_list[VV_HK_NAVIGATE_TO_MARKED_OBJECT])
+		if(!check_rights(R_ADMIN))
+			return
+
+		if(!usr.client.holder.marked_datum)
+			to_chat(usr, span_warning("You don't have any object marked."))
+		else if(!isatom(usr.client.holder.marked_datum))
+			to_chat(usr, span_warning("The object you have marked cannot be used as a target. Target must be an atom."))
+		else
+			create_navigation_line(usr.client.holder.marked_datum)
+
 
 /mob/living/proc/move_to_error_room()
 	var/obj/effect/landmark/error/error_landmark = locate(/obj/effect/landmark/error) in GLOB.landmarks_list

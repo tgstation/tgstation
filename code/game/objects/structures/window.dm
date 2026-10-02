@@ -97,7 +97,7 @@
 			. += span_notice("The window is <i>unscrewed</i> but <b>pried</b> into the frame.")
 		if(WINDOW_OUT_OF_FRAME)
 			if (anchored)
-				. += span_notice("The window is <b>screwed</b> to the floor.")
+				. += span_notice("The window is <b>screwed</b> to the floor. It can be <b>pried</b> into a more secure position.")
 			else
 				. += span_notice("The window is <i>unscrewed</i> from the floor, and could be deconstructed by <b>wrenching</b>.")
 
@@ -942,6 +942,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/titanium/spawner, 0
 
 /obj/structure/window/reinforced/survival_pod/unanchored
 	anchored = FALSE
+	state = WINDOW_OUT_OF_FRAME
 
 MAPPING_DIRECTIONAL_HELPERS(/obj/structure/window/reinforced/survival_pod/spawner, 0)
 

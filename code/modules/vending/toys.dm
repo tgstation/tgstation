@@ -7,16 +7,35 @@
 	product_ads = "Feel robust with your toys!;Express your inner child today!;Toy weapons don't kill people, but valid hunters do!;Who needs responsibilities when you have toy weapons?;Make your next murder FUN!"
 	vend_reply = "Come back for more!"
 	light_mask = "donksoft-light-mask"
-	products = list(
-		/obj/item/card/emagfake = 4,
-		/obj/item/hot_potato/harmless/toy = 4,
-		/obj/item/toy/sword = 12,
-		/obj/item/toy/foamblade = 12,
-		/obj/item/gun/ballistic/automatic/pistol/toy = 8,
-		/obj/item/gun/ballistic/automatic/toy = 8,
-		/obj/item/gun/ballistic/shotgun/toy = 8,
-		/obj/item/ammo_box/foambox/mini = 20,
+	product_categories = list(
+		list(
+			"name" = "toys",
+			"icon" = "gifts",
+			"products" = list(
+				/obj/item/card/emagfake = 4,
+				/obj/item/hot_potato/harmless/toy = 4,
+				/obj/item/toy/sword = 12,
+				/obj/item/toy/foamblade = 12,
+				/obj/item/gun/ballistic/automatic/pistol/toy = 8,
+				/obj/item/gun/ballistic/automatic/toy = 8,
+				/obj/item/gun/ballistic/shotgun/toy = 8,
+				/obj/item/ammo_box/foambox/mini = 20,
+			)
+		),
+		list(
+			"name" = "pillow weapons",
+			"icon" = "bed",
+			"products" = list(
+				/obj/item/shield/mattress = 10,
+				/obj/item/spear/pillow = 10,
+				/obj/item/spear/pillow = 10,
+				/obj/item/pillow/clown = 10,
+				/obj/item/pillow/mime = 10,
+			)
+
+		)
 	)
+
 	contraband = list(
 		/obj/item/toy/balloon/syndicate = 1,
 		/obj/item/gun/ballistic/shotgun/toy/crossbow = 8,

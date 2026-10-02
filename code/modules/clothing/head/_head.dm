@@ -8,16 +8,19 @@
 	body_parts_covered = HEAD
 	slot_flags = ITEM_SLOT_HEAD
 
-///Special throw_impact for hats to frisbee hats at people to place them on their heads/attempt to de-hat them.
+/// Can we land on people's heads?
+/obj/item/clothing/head/proc/can_throw_equip(atom/hit_atom)
+	return TRUE
+
+// Special throw_impact for hats to frisbee hats at people to place them on their heads/attempt to de-hat them.
 /obj/item/clothing/head/throw_impact(atom/hit_atom, datum/thrownthing/thrownthing)
 	. = ..()
-	///if the thrown object's target zone isn't the head
+	if(!can_throw_equip(hit_atom))
+		return
+	// if the thrown object's target zone isn't the head
 	if(thrownthing.target_zone != BODY_ZONE_HEAD)
 		return
-	///ignore any hats with the tinfoil counter-measure enabled
-	if(clothing_flags & ANTI_TINFOIL_MANEUVER)
-		return
-	///if the hat happens to be capable of holding contents and has something in it. mostly to prevent super cheesy stuff like stuffing a mini-bomb in a hat and throwing it
+	// if the hat happens to be capable of holding contents and has something in it. mostly to prevent super cheesy stuff like stuffing a mini-bomb in a hat and throwing it
 	if(LAZYLEN(contents))
 		return
 	if(iscarbon(hit_atom))

@@ -33466,6 +33466,7 @@
 	id = "hydro_service";
 	name = "Service Shutter"
 	},
+/obj/item/producepad,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "lug" = (
@@ -46770,7 +46771,7 @@
 /area/station/command/heads_quarters/cmo)
 "pXV" = (
 /obj/structure/table,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/visible/layer4,
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/camera/autoname/directional/south,
@@ -52198,7 +52199,7 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "rPG" = (
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/structure/rack,
 /obj/effect/spawner/random/maintenance,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden/layer5,
@@ -63442,6 +63443,7 @@
 	},
 /obj/item/pen,
 /obj/structure/window/reinforced/spawner/directional/west,
+/obj/item/producepad,
 /turf/open/floor/iron,
 /area/station/hallway/secondary/service)
 "vEl" = (
@@ -67346,9 +67348,9 @@
 /area/station/service/hydroponics/garden)
 "wRD" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/mmi,
-/obj/item/mmi,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
 /obj/structure/table,
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)

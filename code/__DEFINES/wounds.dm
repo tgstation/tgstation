@@ -114,6 +114,8 @@ GLOBAL_LIST_INIT(bio_state_anatomy, list(
 #define WOUND_SERIES_METAL_BURN_OVERHEAT "wound_series_metal_burn_basic"
 #define WOUND_SERIES_METAL_SLASH_LEAK "wound_series_metal_slash_leak_basic"
 #define WOUND_SERIES_METAL_PIERCE_LEAK "wound_series_metal_pierce_leak_basic"
+/// Bruise wound.
+#define WOUND_SERIES_BRUISING "wound_series_bruising"
 
 /// A assoc list of (wound typepath -> wound_pregen_data instance). Every wound should have a pregen data.
 GLOBAL_LIST_INIT_TYPED(all_wound_pregen_data, /datum/wound_pregen_data, generate_wound_static_data())

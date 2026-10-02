@@ -555,10 +555,10 @@
 	update_greyscale()
 
 /obj/item/mod/core/soul/charge_source()
-	return CONFIG_GET(flag/disable_human_mood) ? src : mod.wearer?.mob_mood
+	return mod.wearer?.mob_mood
 
 /obj/item/mod/core/soul/max_charge_amount()
-	return CONFIG_GET(flag/disable_human_mood) ? INFINITY : SANITY_MAXIMUM
+	return SANITY_MAXIMUM
 
 /obj/item/mod/core/soul/charge_amount()
 	var/mob/living/wearer = mod.wearer
@@ -566,20 +566,14 @@
 		return 0
 	if(HAS_TRAIT(wearer, TRAIT_NO_SOUL))
 		return 0 // Can't draw from something that isn't there.
-	if(CONFIG_GET(flag/disable_human_mood))
-		return INFINITY
 	var/datum/mood/source = charge_source()
 	return source?.sanity
 
 /obj/item/mod/core/soul/check_charge(amount)
-	if(CONFIG_GET(flag/disable_human_mood))
-		return !!mod.wearer
 	return charge_amount() >= amount * 10 / STANDARD_CELL_CHARGE
 
 /obj/item/mod/core/soul/subtract_charge(amount)
 	var/mob/living/wearer = mod.wearer
-	if(CONFIG_GET(flag/disable_human_mood))
-		return !!wearer
 	var/datum/mood/source = charge_source()
 	source.adjust_sanity(-amount * 10 / STANDARD_CELL_CHARGE)
 	var/backlash_type = get_backlash_type(wearer)
@@ -593,8 +587,6 @@
 	var/mob/living/wearer = mod.wearer
 	if(!wearer || HAS_TRAIT(wearer, TRAIT_NO_SOUL))
 		return "No power source detected."
-	if(CONFIG_GET(flag/disable_human_mood))
-		return "Infinite"
 	return "[round(charge_amount() / max_charge_amount() * 100, 0.1)]%"
 
 /obj/item/mod/core/soul/get_chargebar_color()
@@ -662,3 +654,104 @@
 /obj/item/mod/core/soul/wizard
 	flags_1 = parent_type::flags_1 | NO_NEW_GAGS_PREVIEW_1
 	theme = THEME_WIZARD
+
+/obj/item/mod/core/candela
+	name = "\improper MOD luminetworked core"
+	desc = "A light, low-capacity networked MOD core capable of recharging from the \"Candela\" navigation network, offering a consistent supply of power for forward-operating miners."
+	icon_state = "mod-core-candela"
+	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 1.05, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 1.05, /datum/material/bluespace = SHEET_MATERIAL_AMOUNT)
+	/// How much charge we can store.
+	var/max_charge = 3 * STANDARD_CELL_CHARGE
+	/// How much charge we are currently storing.
+	var/charge = 3 * STANDARD_CELL_CHARGE
+	/// Amount of charge recovered per second when linked to a Candela network
+	var/charge_recovery_rate = STANDARD_CELL_CHARGE / 10 // 30 seconds to go from empty to full
+	/// Our network handler
+	var/datum/candela_item_handler/handler = null
+
+/obj/item/mod/core/candela/Initialize(mapload)
+	. = ..()
+	handler = new(src)
+
+/obj/item/mod/core/candela/Destroy()
+	QDEL_NULL(handler)
+	return ..()
+
+/obj/item/mod/core/candela/install(obj/item/mod/control/mod_unit)
+	. = ..()
+	RegisterSignal(mod_unit, COMSIG_MOD_WEARER_SET, PROC_REF(on_mod_wearer_set))
+	RegisterSignal(mod_unit, COMSIG_MOD_WEARER_UNSET, PROC_REF(on_mod_wearer_unset))
+	if(mod.wearer)
+		on_mod_wearer_set(mod, mod.wearer)
+
+/obj/item/mod/core/candela/uninstall()
+	UnregisterSignal(mod, list(COMSIG_MOD_WEARER_SET, COMSIG_MOD_WEARER_UNSET))
+	if(mod.wearer)
+		on_mod_wearer_unset(mod)
+	return ..()
+
+/obj/item/mod/core/candela/process(seconds_per_tick)
+	if (charge >= max_charge || !mod.active)
+		return
+
+	if (!handler.network)
+		handler.locate_closest_network()
+
+	if (handler.network?.powered & CANDELA_NETWORK_POWERED)
+		add_charge(charge_recovery_rate * seconds_per_tick)
+
+/obj/item/mod/core/candela/proc/on_mod_wearer_set(datum/source, mob/living/wearer)
+	SIGNAL_HANDLER
+
+	handler.set_owner(wearer)
+	START_PROCESSING(SSprocessing, src)
+
+/obj/item/mod/core/candela/proc/on_mod_wearer_unset(datum/source)
+	SIGNAL_HANDLER
+
+	handler.set_owner(null)
+	STOP_PROCESSING(SSprocessing, src)
+
+/obj/item/mod/core/candela/charge_source()
+	return src
+
+/obj/item/mod/core/candela/charge_amount()
+	return charge
+
+/obj/item/mod/core/candela/max_charge_amount()
+	return max_charge
+
+/obj/item/mod/core/candela/add_charge(amount)
+	charge = min(max_charge, charge + amount)
+	mod.update_charge_alert()
+	return TRUE
+
+/obj/item/mod/core/candela/subtract_charge(amount)
+	amount = min(amount, charge)
+	charge -= amount
+	mod.update_charge_alert()
+	return amount
+
+/obj/item/mod/core/candela/check_charge(amount)
+	return charge_amount() >= amount
+
+/obj/item/mod/core/candela/get_charge_icon_state()
+	switch(round(charge_amount() / max_charge_amount(), 0.01))
+		if(0.75 to INFINITY)
+			return SPACESUIT_CELL_HIGH
+		if(0.5 to 0.75)
+			return SPACESUIT_CELL_MID
+		if(0.25 to 0.5)
+			return SPACESUIT_CELL_LOW
+		if(0.02 to 0.25)
+			return SPACESUIT_CELL_VERY_LOW
+
+	return SPACESUIT_CELL_EMPTY
+
+/obj/item/mod/core/candela/get_chargebar_color()
+	switch(round(charge_amount() / max_charge_amount(), 0.01))
+		if(-INFINITY to 0.33)
+			return "bad"
+		if(0.33 to INFINITY)
+			return "cyan"
+

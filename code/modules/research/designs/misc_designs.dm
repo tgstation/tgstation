@@ -342,7 +342,7 @@
 
 /datum/design/quantum_keycard
 	name = "Quantum Keycard"
-	desc = "Allows for the construction of a quantum keycard."
+	desc = "Used to link quantum pads."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/silver =SMALL_MATERIAL_AMOUNT*5, /datum/material/bluespace =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/quantum_keycard
@@ -353,7 +353,7 @@
 
 /datum/design/botpad_remote
 	name = "Bot Launchpad Controller"
-	desc = "Allows you to control the connected bot launchpad"
+	desc = "Allows you to control a connected bot launchpad."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*5, /datum/material/iron =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/botpad_remote
@@ -364,7 +364,8 @@
 
 /datum/design/anomaly_neutralizer
 	name = "Anomaly Neutralizer"
-	desc = "An advanced tool capable of instantly neutralizing anomalies, designed to capture the fleeting aberrations created by the engine."
+	desc = "An advanced tool capable of instantly neutralizing anomalies, designed to capture the fleeting aberrations created by the engine. \
+		Also capable of stabilizing rifts in reality caused by Heretics or Wizards."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT, /datum/material/gold =SHEET_MATERIAL_AMOUNT, /datum/material/plasma =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/uranium =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/anomaly_neutralizer
@@ -1132,3 +1133,14 @@
 		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_CARGO | DEPARTMENT_BITFLAG_SCIENCE
+
+/datum/design/producepad
+	name = "Producepad"
+	desc = "This lightweight contraption acts as a beacon for produceporters, teleporting freshly grown food to this location."
+	build_type = PROTOLATHE
+	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
+	build_path = /obj/item/producepad
+	category = list(
+		RND_CATEGORY_EQUIPMENT + RND_SUBCATEGORY_EQUIPMENT_SERVICE
+	)
+	departmental_flags = DEPARTMENT_BITFLAG_SERVICE | DEPARTMENT_BITFLAG_SECURITY

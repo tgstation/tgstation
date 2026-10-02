@@ -15,6 +15,14 @@
 			"color_ids": [1]
 		}
 	],
+	"apron_worn": [
+		{
+			"type": "icon_state",
+			"icon_state": "apron",
+			"blend_mode": "overlay",
+			"color_ids": [1]
+		}
+	],
 	"sneakers_worn": [
 		{
 			"type": "icon_state",

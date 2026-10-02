@@ -84,19 +84,18 @@
 	// This is the amount of moles in a default canister
 	var/moleCount = (initial(fakeCanister.maximum_pressure) * initial(fakeCanister.filled)) * initial(fakeCanister.volume) / (R_IDEAL_GAS_EQUATION * T20C)
 
-	for(var/gasType in GLOB.meta_gas_info[META_GAS_ID])
-		var/datum/gas/gas = gasType
-		var/name = initial(gas.name)
-		if(!initial(gas.purchaseable))
+	for(var/datum/gas/gas as anything in GLOB.meta_gas_info[META_GAS_ID])
+		if(!(initial(gas.cargo_flags) & GAS_PURCHASABLE))
 			continue
 		var/datum/supply_pack/materials/pack = new
-		pack.name = "[name] Canister"
-		pack.desc = "Contains a canister of [name]."
-		if(initial(gas.dangerous))
+		var/canname = initial(gas.name)
+		pack.name = "[canname] Canister"
+		pack.desc = "Contains a canister of [canname]."
+		if(initial(gas.cargo_flags) & GAS_DANGEROUS)
 			pack.access = ACCESS_ATMOSPHERICS
 			pack.access_view = ACCESS_ATMOSPHERICS
-		pack.crate_name = "[name] canister crate"
-		pack.id = "[type]([name])"
+		pack.crate_name = "[canname] canister crate"
+		pack.id = "[type]([canname])"
 
 		pack.cost = cost + moleCount * initial(gas.base_value) * 1.6
 		pack.cost = CEILING(pack.cost, 10)

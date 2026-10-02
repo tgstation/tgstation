@@ -29,6 +29,8 @@ All ShuttleMove procs go here
 			var/mob/living/living_thing = thing
 			if(living_thing.incorporeal_move) // Don't crush incorporeal things
 				continue
+			if (isvehicle(living_thing.buckled))
+				living_thing.client?.give_award(/datum/award/achievement/misc/no_parking, living_thing)
 			living_thing.buckled?.unbuckle_mob(living_thing, force = TRUE)
 			living_thing.pulledby?.stop_pulling()
 			living_thing.stop_pulling()
@@ -131,8 +133,6 @@ All ShuttleMove procs go here
 	if(rotation)
 		shuttleRotate(rotation, params = ALL)
 
-	update_parallax_contents()
-
 	SEND_SIGNAL(src, COMSIG_ATOM_AFTER_SHUTTLE_MOVE, oldT)
 
 	return TRUE
@@ -169,14 +169,14 @@ All ShuttleMove procs go here
 	//The old turf has now been given back to the area that turf originaly belonged to
 
 	var/area/old_dest_area = newT.loc
-	parallax_movedir = old_dest_area.parallax_movedir
+	set_parallax_movedir(old_dest_area.parallax_movedir)
 	newT.change_area(old_dest_area, src)
 	shuttle.underlying_areas_by_turf[newT] = old_dest_area
 	return TRUE
 
 // Called on areas after everything has been moved
 /area/proc/afterShuttleMove(new_parallax_dir)
-	parallax_movedir = new_parallax_dir
+	set_parallax_movedir(new_parallax_dir)
 	return TRUE
 
 /area/proc/lateShuttleMove()
@@ -335,7 +335,7 @@ All ShuttleMove procs go here
 		buckled.user_unbuckle_mob(src, src)
 		return
 	if(knockdown > 0)
-		if(buckled)
+		if(buckled || HAS_TRAIT(src, TRAIT_NEGATES_GRAVITY))
 			Immobilize(knockdown * 0.5)
 			return
 		Paralyze(knockdown)

@@ -9,12 +9,14 @@
 	body_parts_covered = HEAD
 	heat_protection = HEAD
 	cold_protection = HEAD
+	item_flags = NONE
 
 // Even without a hat stabilizer, hats can be worn - however, they'll fall off very easily
 /obj/item/clothing/head/mod/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_SPEED_POTION, INNATE_TRAIT)
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = TRUE)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/space)
 
 /obj/item/clothing/suit/mod
 	name = "\improper MOD chestplate"
@@ -34,10 +36,12 @@
 	heat_protection = CHEST|GROIN
 	cold_protection = CHEST|GROIN
 	drop_sound = null
+	item_flags = NONE
 
 /obj/item/clothing/suit/mod/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_SPEED_POTION, INNATE_TRAIT)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/space)
 
 /obj/item/clothing/gloves/mod
 	name = "\improper MOD gauntlets"
@@ -53,6 +57,7 @@
 	equip_sound = null
 	pickup_sound = null
 	drop_sound = null
+	item_flags = NONE
 
 /obj/item/clothing/gloves/mod/Initialize(mapload)
 	. = ..()
@@ -76,6 +81,17 @@
 /obj/item/clothing/shoes/mod/Initialize(mapload)
 	. = ..()
 	ADD_TRAIT(src, TRAIT_NO_SPEED_POTION, INNATE_TRAIT)
+
+/obj/item/clothing/shoes/mod/proc/update_footstep_sounds()
+	switch(slowdown)
+		if(0.3 to INFINITY)
+			AddComponent(/datum/component/shoe_footstep, list('sound/items/modsuit/rigstep_chonk.ogg'), volume = 50)
+		if(0.2 to 0.3)
+			AddComponent(/datum/component/shoe_footstep, list('sound/items/modsuit/rigstep_heavy.ogg'), volume = 50)
+		if(0.1 to 0.2)
+			AddComponent(/datum/component/shoe_footstep, list('sound/items/modsuit/rigstep_medium.ogg'), volume = 50)
+		if(-INFINITY to 0.1)
+			AddComponent(/datum/component/shoe_footstep, list('sound/items/modsuit/rigstep.ogg'), volume = 50)
 
 /obj/item/clothing/glasses/mod
 	name = "\improper MOD glasses"
@@ -104,6 +120,7 @@
 	equip_sound = null
 	pickup_sound = null
 	drop_sound = null
+	item_flags = NONE
 
 /obj/item/clothing/neck/mod/Initialize(mapload)
 	. = ..()

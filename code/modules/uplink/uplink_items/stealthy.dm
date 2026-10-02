@@ -14,7 +14,7 @@
 	item = /obj/item/gun/syringe/syndicate
 	cost = 4
 	surplus = 50
-	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS
+	purchasable_from = ~UPLINK_SERIOUS_OPS
 
 /datum/uplink_item/stealthy_weapons/dehy_carp
 	name = "Dehydrated Space Carp"
@@ -74,7 +74,7 @@
 			falls asleep, they will be able to move and act."
 	item = /obj/item/pen/sleepy
 	cost = 4
-	purchasable_from = ~(UPLINK_NUKE_OPS | UPLINK_CLOWN_OPS)
+	purchasable_from = ~UPLINK_FIREBASE_OPS
 
 
 /datum/uplink_item/stealthy_weapons/origami_kit
@@ -94,7 +94,6 @@
 			also refuse to use dishonorable ranged weaponry, and armored clothing will make it harder to avoid attacks. \
 			Comes prepackaged with a set of martial arts clothing!"
 	item = /obj/item/storage/box/syndicate/sleeping_carp
-	progression_minimum = 30 MINUTES
 	population_minimum = TRAITOR_POPULATION_LOWPOP
 	cost = 17
 	surplus = 0
