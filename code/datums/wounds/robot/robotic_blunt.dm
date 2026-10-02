@@ -233,8 +233,8 @@
 
 
 /* Available during the screwdriver step of T2 and T3. Requires a crowbar. Improvised option.
-   Tears open the limb, exposing internals. This guarantees the next screwdriver step succeeding and removes the self-tend time penalty.
-   Deals minor damage to the limb, and shocks the user (causing failure) if victim is alive, this limb is wired, and the crowbarrer is not insulated.
+	Tears open the limb, exposing internals. This guarantees the next screwdriver step succeeding and removes the self-tend time penalty.
+	Deals minor damage to the limb, and shocks the user (causing failure) if victim is alive, this limb is wired, and the crowbarrer is not insulated.
 */
 /datum/wound/blunt/robotic/severe/proc/crowbar_open(obj/item/crowbarring_item, mob/living/user)
 	if (!crowbarring_item.tool_start_check())
