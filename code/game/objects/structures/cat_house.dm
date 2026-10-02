@@ -14,9 +14,9 @@
 	RegisterSignal(src, COMSIG_ATOM_ATTACK_BASIC_MOB, PROC_REF(enter_home))
 
 /obj/structure/cat_house/Destroy(force)
-	. = ..()
 	if(resident_cat)
 		resident_cat.forceMove(drop_location())
+	return ..()
 
 /obj/structure/cat_house/examine(mob/user)
 	. = ..()
