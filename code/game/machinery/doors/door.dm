@@ -429,6 +429,10 @@
 /obj/machinery/door/proc/try_to_crowbar(obj/item/acting_object, mob/user, forced = FALSE)
 	return
 
+/obj/machinery/door/proc/try_to_crowbar_secondary(obj/item/acting_object, mob/user, forced = FALSE)
+	try_to_crowbar(obj/item/acting_object, mob/user, forced = FALSE)
+	return
+
 /obj/machinery/door/welder_act(mob/living/user, obj/item/tool)
 	try_to_weld(tool, user)
 	return ITEM_INTERACT_SUCCESS
@@ -443,7 +447,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/crowbar_act_secondary(mob/living/user, obj/item/tool)
-	try_to_crowbar(tool, user, check_crowbar_force())
+	try_to_crowbar_secondary(tool, user, check_crowbar_force())
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
