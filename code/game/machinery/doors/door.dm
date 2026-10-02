@@ -426,28 +426,25 @@
 /obj/machinery/door/proc/try_to_weld_secondary(obj/item/weldingtool/tool, mob/user)
 	return
 
-
 /obj/machinery/door/proc/try_to_crowbar(obj/item/acting_object, mob/user, forced = FALSE)
-	return
-
-/// Called when the user right-clicks on the door with a crowbar.
-/obj/machinery/door/proc/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
 	return
 
 /obj/machinery/door/welder_act(mob/living/user, obj/item/tool)
 	try_to_weld(tool, user)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/door/crowbar_act(mob/living/user, obj/item/tool)
-	var/forced_open = FALSE
+/obj/machinery/door/check_crowbar_force(mob/living/user, obj/item/tool)
 	if(istype(tool, /obj/item/crowbar))
 		var/obj/item/crowbar/crowbar = tool
-		forced_open = crowbar.force_opens
-	try_to_crowbar(tool, user, forced_open)
+		return crowbar.force_opens
+
+/obj/machinery/door/crowbar_act(mob/living/user, obj/item/tool)
+	try_to_crowbar(tool, user, check_crowbar_force())
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/door/try_to_crowbar_secondary(obj/item/acting_object, mob/user)
-	try_to_crowbar(null, user, FALSE)
+/obj/machinery/door/proc/crowbar_act_secondary(mob/living/user, obj/item/tool)
+	try_to_crowbar(tool, user, check_crowbar_force())
+	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(istype(tool, /obj/item/access_key))
