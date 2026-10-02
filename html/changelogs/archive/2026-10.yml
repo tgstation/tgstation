@@ -2,6 +2,8 @@
   Dmeto:
   - bugfix: fixed Kilo Ordnance igniter not igniting.
   - map: minor changes to Kilo Ordnance pipe devices.
+  Maia-J:
+  - bugfix: Aggressive raptors are no longer TOO aggressive
   Melbert:
   - rscdel: Removed the ingredient choice beacon from the chef's roundstart equipment
   - rscadd: Adds the cooking voucher to the chef's roundstart equipment, redeem it
@@ -41,3 +43,17 @@
   - bugfix: Fix seclite overlay for SMG disablers
   vinylspiders:
   - bugfix: fixes a memory leak in the tgui layout component
+2026-10-02:
+  ArcaneMusic:
+  - balance: NODE drones are now immune to snow and ash storms, for the benefit of
+      wave defenses.
+  - bugfix: Ore vents should be runtiming less.
+  JohnFulpWillard:
+  - admin: Asay is now properly sanitized.
+  PapaMichael:
+  - bugfix: Fixed Runechat having a 1/256 chance of being dark and almost unreadable
+  Xander3359:
+  - spellcheck: fix Heretic ritual requirements having no spacing with the "or"
+  necromanceranne:
+  - code_imp: Biting can no longer overfeed you.
+  - code_imp: You do not lick people as a felinid if you have combat mode on.
