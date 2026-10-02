@@ -82,7 +82,7 @@
 		return SUCCESSFUL_BLOCK
 
 	var/block_chance_modifier = round(damage / -3)
-	for(var/obj/item/worn_thing in get_equipped_items(INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT) | get_active_handset_items())
+	for(var/obj/item/worn_thing in get_equipped_items(INCLUDE_HELD|INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT))
 		// Things that are supposed to be worn, being held = cannot block
 		if(isclothing(worn_thing))
 			if(worn_thing in held_items)
