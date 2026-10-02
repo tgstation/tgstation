@@ -1,12 +1,3 @@
-/// The multiplier put against our movement effects if our victim has determination
-#define ROBOTIC_WOUND_DETERMINATION_MOVEMENT_EFFECT_MOD 0.7
-/// The multiplier of stagger intensity on hit if our victim has determination
-#define ROBOTIC_WOUND_DETERMINATION_STAGGER_MOVEMENT_MULT 0.7
-/// The multiplier put against our movement effects if our limb is grasped
-#define ROBOTIC_BLUNT_GRASPED_MOVEMENT_MULT 0.7
-/// If our victim is lying down and is attacked in the chest, effective oscillation damage is multiplied against this.
-#define OSCILLATION_ATTACKED_LYING_DOWN_EFFECT_MULT 0.5
-
 /datum/wound/blunt/robotic
 	name = "Robotic Blunt (Screws and bolts) Wound"
 	wound_flags = (ACCEPTS_GAUZE|CAN_BE_GRASPED)
@@ -20,65 +11,8 @@
 	var/next_trauma_cycle
 	/// How long do we wait +/- 20% for the next trauma?
 	var/trauma_cycle_cooldown
-
-	/// The ratio stagger score will be multiplied against for determining the final chance of moving away from the attacker.
-	var/stagger_movement_chance_ratio = 1
-
-	/// The ratio of stagger score to shake duration during a stagger() call
-	var/stagger_score_to_shake_duration_ratio = 0.1
-
-	/// In the stagger aftershock, the stagger score will be multiplied against for determining the chance of dropping held items.
-	var/stagger_drop_chance_ratio = 1.25
-	/// In the stagger aftershock, the stagger score will be multiplied against for determining the chance of falling over.
-	var/stagger_fall_chance_ratio = 1
-
-	/// In the stagger aftershock, the stagger score will be multiplied against for determining how long we are knocked down for.
-	var/stagger_aftershock_knockdown_ratio = 0.5
-	/// In the stagger after shock, the stagger score will be multiplied against this (if caused by movement) for determining how long we are knocked down for.
-	var/stagger_aftershock_knockdown_movement_ratio = 0.1
-
-	/// If the victim stops moving before the aftershock, aftershock effects will be multiplied against this.
-	var/aftershock_stopped_moving_score_mult = 0.1
-
-	/// The ratio damage applied will be multiplied against for determining our stagger score.
-	var/chest_attacked_stagger_mult = 2.5
-	/// The minimum score an attack must do to trigger a stagger.
-	var/chest_attacked_stagger_minimum_score = 5
-	/// The ratio of damage to stagger chance on hit.
-	var/chest_attacked_stagger_chance_ratio = 2
-
-	/// The base score given to stagger() when we successfully stagger on a move.
-	var/base_movement_stagger_score = 30
-	/// The base chance of moving to trigger stagger().
-	var/chest_movement_stagger_chance = 1
-
-	/// The base duration of a stagger()'s sprite shaking.
-	var/base_stagger_shake_duration = 1.5 SECONDS
-	/// The base duration of a stagger()'s sprite shaking if caused by movement.
-	var/base_stagger_movement_shake_duration = 1.5 SECONDS
-
-	/// The ratio of stagger score to camera shake chance.
-	var/stagger_camera_shake_chance_ratio = 0.75
-	/// The base duration of a stagger's aftershock's camerashake.
-	var/base_aftershock_camera_shake_duration = 1.5 SECONDS
-	/// The base strength of a stagger's aftershock's camerashake.
-	var/base_aftershock_camera_shake_strength = 0.5
-
-	/// The amount of x and y pixels we will be shaken around by during a movement stagger.
-	var/movement_stagger_shift = 1
-
-	/// If we are currently oscillating. If true, we cannot stagger().
-	var/oscillating = FALSE
-
-	/// The time, in world time, that we will be allowed to do another movement shake. Useful because it lets us prioritize attacked shakes over movement shakes.
-	var/time_til_next_movement_shake_allowed = 0
-
-	/// The last time our victim has moved. Used for determining if we should increase or decrease the chance of having stagger aftershock.
-	var/last_time_victim_moved = 0
-
-	processes = TRUE
-	/// Whenever an oscillation is triggered by movement, we wait 4 seconds before trying to do another.
-	COOLDOWN_DECLARE(movement_stagger_cooldown)
+	/// The ratio damage taken to our chest will be multiplied against for determining our stagger and confusion duration.
+	var/stagger_multiplier = 1
 
 /datum/wound_pregen_data/blunt_metal
 	abstract = TRUE
@@ -89,10 +23,8 @@
 /datum/wound/blunt/robotic/set_victim(new_victim)
 	if(victim)
 		UnregisterSignal(victim, COMSIG_MOVABLE_MOVED)
-		UnregisterSignal(victim, COMSIG_MOB_AFTER_APPLY_DAMAGE)
 	if(new_victim)
 		RegisterSignal(new_victim, COMSIG_MOVABLE_MOVED, PROC_REF(victim_moved))
-		RegisterSignal(new_victim, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(victim_attacked))
 	return ..()
 
 /datum/wound/blunt/robotic/get_limb_examine_description()
@@ -141,180 +73,378 @@
 		next_trauma_cycle = world.time + (rand(100-WOUND_BONE_HEAD_TIME_VARIANCE, 100+WOUND_BONE_HEAD_TIME_VARIANCE) * 0.01 * trauma_cycle_cooldown)
 
 /// Signal handler proc to when our victim has damage applied via apply_damage(), which is a external attack.
-/datum/wound/blunt/robotic/proc/victim_attacked(datum/source, damage, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item)
-	SIGNAL_HANDLER
-
-	if (def_zone != limb.body_zone) // use this proc since receive damage can also be called for like, chems and shit
+/datum/wound/blunt/robotic/receive_damage(wounding_type, wounding_dmg, wound_bonus)
+	if(!victim || wounding_type = WOUND_BURN || wounding_dmg < WOUND_MINIMUM_DAMAGE)
 		return
-	if(!victim)
-		return
-
-	var/effective_damage = (damage - blocked)
 
 	var/obj/item/stack/medical/wrap/gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
 	if(gauze)
-		effective_damage *= gauze.splint_factor
+		wounding_dmg *= gauze.splint_factor
 
-	switch (limb.body_zone)
+	if(limb.body_zone == BODY_ZONE_CHEST && !victim.buckled)
+		var/stagger_duration = wounding_dmg * stagger_multiplier
+		var/confusion_duration = stagger_duration / 2
+		victim.adjust_staggered_up_to(stagger_duration DECISECONDS, 20 SECONDS)
+		victim.adjust_confusion_up_to(confusion_duration, 10 SECONDS)
+		to_chat(victim, span_warning("The blow to your chest causes you to start shaking uncontrollably!"))
 
-		if(BODY_ZONE_CHEST)
-			var/oscillation_mult = 1
-			if (victim.body_position == LYING_DOWN)
-				oscillation_mult *= OSCILLATION_ATTACKED_LYING_DOWN_EFFECT_MULT
-			var/oscillation_damage = effective_damage
-			var/stagger_damage = oscillation_damage * chest_attacked_stagger_mult
-			if (victim.has_status_effect(/datum/status_effect/determined))
-				oscillation_damage *= ROBOTIC_WOUND_DETERMINATION_STAGGER_MOVEMENT_MULT
-			if ((stagger_damage >= chest_attacked_stagger_minimum_score) && prob(oscillation_damage * chest_attacked_stagger_chance_ratio))
-				stagger(stagger_damage * oscillation_mult, attack_direction, attacking_item, shift = stagger_damage / 20)
+// Loosened Screws (Moderate Blunt)
+/datum/wound/blunt/robotic/moderate
+	name = "Loosened Screws"
+	desc = "Various semi-external fastening instruments have loosened, causing components to jostle, inhibiting limb control."
+	treat_text = "Recommend re-fastening of instruments with a screwdriver, though percussive maintenance via low-force bludgeoning may suffice - \
+	albeit at risk of worsening the injury."
+	examine_desc = "appears to be loosely secured"
+	occur_text = "jostles awkwardly and seems to slightly unfasten"
+	severity = WOUND_SEVERITY_MODERATE
+	simple_treat_text = "<b>Splinting</b> the wound will reduce the impact until it's <b>screws are secured."
+	homemade_treat_text = "In a pinch, <b>percussive maintenance</b> targeting the loose body part can reset the screws. However, effective percussive maintenance is difficult to perform on oneself."
 
-#undef OSCILLATION_ATTACKED_LYING_DOWN_EFFECT_MULT
+	status_effect_type = /datum/status_effect/wound/blunt/robotic/moderate
+	treat_text_short = "Apply screwdriver or percussive maintenance"
+	treatable_tools = list(TOOL_SCREWDRIVER)
+	interaction_efficiency_penalty = 1.2
+	limp_slowdown = 2.5
+	limp_chance = 30
+	series_threshold_penalty = 15
+	a_or_from = "from"
+	stagger_multiplier = 1
+	/// % chance for hitting our limb to fix something.
+	var/percussive_repair_chance = 12
+	/// Damage must be over this to proc percussive maintenance.
+	var/percussive_damage_min = 3
 
-/// The percent, in decimal, of a stagger's shake() duration, that will be used in a addtimer() to queue aftershock().
-#define STAGGER_PERCENT_OF_SHAKE_DURATION_TO_AFTERSHOCK_DELAY 0.65 // 1 = happens at the end, .5 = happens halfway through
+/datum/wound_pregen_data/blunt_metal/loose_screws
+	abstract = FALSE
+	wound_path_to_generate = /datum/wound/blunt/robotic/moderate
+	// logically you could have loose screws in a torso, but this is for parity and balance reasons
+	required_limb_biostate = BIO_JOINTED
+	threshold_minimum = 35
 
-/// Causes an oscillation, which 1. has a chance to move our victim away from the attacker, and 2. after a delay, calls aftershock().
-/datum/wound/blunt/robotic/proc/stagger(stagger_score, attack_direction, obj/item/attacking_item, from_movement, shake_duration = base_stagger_shake_duration, shift, knockdown_ratio = stagger_aftershock_knockdown_ratio)
-	if (oscillating)
+/datum/wound/blunt/robotic/moderate/treat(obj/item/potential_treater, mob/user)
+	if (potential_treater.tool_behaviour == TOOL_SCREWDRIVER)
+		fasten_screws(potential_treater, user)
+		return TRUE
+	return ..()
+
+/datum/wound/blunt/robotic/moderate/victim_attacked(datum/source, damage, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item)
+	. = ..()
+	if(damage < percussive_damage_min || damagetype != BRUTE || sharpness)
+		return
+	if (prob(percussive_repair_chance))
+		victim.visible_message(span_green("[victim]'s [limb.plaintext_zone] rattles from the impact, but looks a lot more secure!"), span_green("Your [limb.plaintext_zone] rattles into place!"))
+		remove_wound()
+	else
+		to_chat(victim, span_warning("Your [limb.plaintext_zone] rattles around."))
+
+/// The main treatment for T1 blunt. Uses a screwdriver, guaranteed to always work, better with a diag hud. Removes the wound.
+/datum/wound/blunt/robotic/moderate/proc/fasten_screws(obj/item/screwdriver_tool, mob/user)
+	if (!screwdriver_tool.tool_start_check())
 		return
 
-	var/self_message = "Your [limb.plaintext_zone] oscillates"
-	var/message = "[victim]'s [limb.plaintext_zone] oscillates"
-	if (attacking_item)
-		message += " from the impact"
-	else if (from_movement)
-		message += " from the movement"
-	message += "!"
-	self_message += "! You might be able to avoid an aftershock by stopping and waiting..."
+	var/delay_mult = 1
+	if (user == victim)
+		delay_mult *= 2
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		delay_mult *= 0.5
 
-	if (isnull(attack_direction) && !isnull(attacking_item))
-		attack_direction = get_dir(victim, attacking_item)
+	var/their_or_other = (user == victim ? "[user.p_their()]" : "[victim]'s")
+	var/your_or_other = (user == victim ? "your" : "[victim]'s")
+	victim.visible_message(span_notice("[user] begins fastening the screws of [their_or_other] [limb.plaintext_zone]..."), \
+		span_notice("You begin fastening the screws of [your_or_other] [limb.plaintext_zone]..."))
+	if (!screwdriver_tool.use_tool(target = victim, user = user, delay = (6 SECONDS * delay_mult), volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+		return
+	victim.visible_message(span_green("[user] finishes fastening [their_or_other] [limb.plaintext_zone]!"), \
+		span_green("You finish fastening [your_or_other] [limb.plaintext_zone]!"))
+	remove_wound()
 
-	if (!isnull(attack_direction) && prob(stagger_score * stagger_movement_chance_ratio))
-		to_chat(victim, span_warning("The force of the blow sends you reeling!"))
-		var/turf/target_loc = get_step(victim, attack_direction)
-		victim.Move(target_loc)
+// Detatched Fastenings (Severe Blunt)
+/datum/wound/blunt/robotic/severe
+	name = "Detached Fastenings"
+	desc = "Various fastening devices are extremely loose and wires within have been disconnected, causing significant jostling of internal components and \
+	noticable limb dysfunction."
+	treat_text = "Fastening of bolts and screws followed by rebooting the limb's electronics."
+	examine_desc = "jostles with every move, wires visible through cracks in the metal"
+	occur_text = "visibly cracks open, metal pieces flying everywhere"
+	severity = WOUND_SEVERITY_SEVERE
+	simple_treat_text = "<b>If on the <b>chest</b>, <b>walk</b>, <b>grasp it</b>, <b>splint</b>, <b>rest</b> or <b>buckle yourself</b> to something to reduce movement effects. \
+	Afterwards, <b>screwdriver/wrench</b> it, and then <b>reboot</b> the electronics inside!"
+	homemade_treat_text = "If <b>unable to screw/wrench</b>, <b>bone gel</b> can secure inner components. \
+	Alternatively, <b>crowbar</b> the limb open to expose the internals - this will make it <b>easier</b> to re-secure them, but has a <b>high risk</b> of <b>shocking</b> you, \
+	so use insulated gloves. This will also <b>cripple the limb</b>, so use it only as a last resort!"
+	treat_text_short = "Use a screwdriver or wrench, and then a multitool."
 
-	victim.visible_message(span_warning(message), ignored_mobs = victim)
-	to_chat(victim, span_warning(self_message))
-	victim.balloon_alert(victim, "oscillation! stop moving")
+	wound_flags = (ACCEPTS_GAUZE|MANGLES_INTERIOR|CAN_BE_GRASPED)
+	treatable_by = list(/obj/item/stack/medical/bone_gel)
+	status_effect_type = /datum/status_effect/wound/blunt/robotic/severe
+	interaction_efficiency_penalty = 2
+	limp_slowdown = 6
+	limp_chance = 60
+	series_threshold_penalty = 30
+	a_or_from = "from"
+	brain_trauma_group = BRAIN_TRAUMA_MILD
+	trauma_cycle_cooldown = 1.5 MINUTES
+	threshold_penalty = 5
+	stagger_multiplier = 1.5
+	/// If our external plating has been torn open and we can access our internals without a tool
+	var/crowbarred_open = FALSE
+	/// If internals are secured, and we are ready to restart electronics in the limb and end the wound
+	var/ready_to_restart = FALSE
 
-	victim.Shake(pixelshiftx = shift, pixelshifty = shift, duration = shake_duration)
-	var/aftershock_delay = (shake_duration * STAGGER_PERCENT_OF_SHAKE_DURATION_TO_AFTERSHOCK_DELAY)
-	var/knockdown_time = stagger_score * knockdown_ratio
-	addtimer(CALLBACK(src, PROC_REF(aftershock), stagger_score, attack_direction, attacking_item, world.time, knockdown_time), aftershock_delay)
-	oscillating = TRUE
+/datum/wound_pregen_data/blunt_metal/fastenings
+	abstract = FALSE
+	wound_path_to_generate = /datum/wound/blunt/robotic/severe
+	threshold_minimum = 65
 
-#undef STAGGER_PERCENT_OF_SHAKE_DURATION_TO_AFTERSHOCK_DELAY
+/datum/wound/blunt/robotic/severe/get_scanner_description(mob/user)
+	. = ..()
+	var/to_add = get_wound_status()
+	if (!isnull(to_add))
+		. += "\nWound status: [to_add]"
 
-#define AFTERSHOCK_GRACE_THRESHOLD_PERCENT 0.33 // lower mult = later grace period = more forgiving
+/datum/wound/blunt/robotic/severe/get_simple_scanner_description(mob/user)
+	. = ..()
+	var/to_add = get_wound_status()
+	if (!isnull(to_add))
+		. += "\nWound status: [to_add]"
 
-/**
- * Timer proc from stagger().
- *
- * Based on chance, causes items to be dropped, knockdown to be applied, and/or screenshake to occur.
- * Chance is massively reduced if the victim isn't moving.
- */
-/datum/wound/blunt/robotic/proc/aftershock(stagger_score, attack_direction, obj/item/attacking_item, stagger_starting_time, knockdown_time)
-	if (!still_exists())
+/// Returns info specific to the dynamic state of the wound.
+/datum/wound/blunt/robotic/severe/proc/get_wound_status(mob/user)
+	if (crowbarred_open)
+		. += "The limb has been torn open, allowing ease of access to internal components, but also disabling it. "
+	if (ready_to_restart)
+		. += "The components within have been secured, allowing them to be restarted using a multitool."
+
+/datum/wound/blunt/robotic/severe/item_can_treat(obj/item/potential_treater, mob/user)
+	if (ready_to_restart)
+		if(potential_treater.tool_behaviour == TOOL_MULTITOOL)
+			return TRUE
 		return FALSE
+	if(potential_treater.tool_behaviour == TOOL_CROWBAR && !crowbarred_open)
+		return TRUE
+	if (potential_treater.tool_behaviour == TOOL_SCREWDRIVER || potential_treater.tool_behaviour == TOOL_WRENCH || istype(potential_treater, /obj/item/stack/medical/bone_gel))
+		return TRUE
 
-	var/message = "The oscillations from your [limb.plaintext_zone] spread, "
-	var/limb_message = "causing "
-	var/limb_affected
+/datum/wound/blunt/robotic/severe/treat(obj/item/potential_treater, mob/user)
+	if (potential_treater.tool_behaviour == TOOL_MULTITOOL)
+		return restart(potential_treater, user)
+	if (istype(potential_treater, /obj/item/stack/medical/bone_gel))
+		return apply_gel(potential_treater, user)
+	if (potential_treater.tool_behaviour == TOOL_CROWBAR)
+		return crowbar_open(potential_treater, user)
+	if (potential_treater.tool_behaviour == TOOL_SCREWDRIVER || potential_treater.tool_behaviour == TOOL_WRENCH)
+		return secure_internals_normally(potential_treater, user)
+	return ..()
 
-	var/stopped_moving_grace_threshold = (world.time - ((world.time - stagger_starting_time) * AFTERSHOCK_GRACE_THRESHOLD_PERCENT))
-	var/victim_stopped_moving = (last_time_victim_moved <= stopped_moving_grace_threshold)
-	if (victim_stopped_moving)
-		stagger_score *= aftershock_stopped_moving_score_mult
+/*
+	Available during the screwdriver step of T2 and T3. Requires a crowbar. Improvised option.
+	Tears open the limb, exposing internals. This guarantees the next screwdriver step succeeding, and removes the self-tend time penalty.
+	Deals minor damage to the limb, and shocks the user (causing failure) if victim is alive, this limb is wired, and the crowbarrer is not insulated.
+ */
+/datum/wound/blunt/robotic/severe/proc/crowbar_open(obj/item/crowbarring_item, mob/living/user)
+	if (!crowbarring_item.tool_start_check())
+		return TRUE
 
-	if (prob(stagger_score * stagger_drop_chance_ratio))
-		limb_message += "your <b>hands</b>"
-		victim.drop_all_held_items()
-		limb_affected = TRUE
+	var/their_or_other = (user == victim ? "[user.p_their()]" : "[victim]'s")
+	var/your_or_other = (user == victim ? "your" : "[victim]'s")
+	var/self_message = span_warning("You start prying open [your_or_other] [limb.plaintext_zone] with [crowbarring_item][can_shock() ? ", risking electrocution" : ""]...")
+	user?.visible_message(span_bolddanger("[user] starts prying open [their_or_other] [limb.plaintext_zone] with [crowbarring_item]!"), self_message, ignored_mobs = list(victim))
 
-	if (prob(stagger_score * stagger_fall_chance_ratio))
-		if (limb_affected)
-			limb_message += " and "
-		limb_message += "your <b>legs</b>"
-		victim.Knockdown(knockdown_time)
-		limb_affected = TRUE
-
-	if (prob(stagger_score * stagger_camera_shake_chance_ratio))
-		if (limb_affected)
-			limb_message += " and "
-		limb_message += "your <b>head</b>"
-		shake_camera(victim, base_aftershock_camera_shake_duration, base_aftershock_camera_shake_strength)
-		limb_affected = TRUE
-
-	if (limb_affected)
-		message += "[limb_message] to shake uncontrollably!"
+	var/victim_message
+	if (user != victim) // this exists so we can do a userdanger
+		victim_message = span_userdanger("[user] starts prying open your [limb.plaintext_zone] with [crowbarring_item]!")
 	else
-		message += "but pass harmlessly"
-		if (victim_stopped_moving)
-			message += " thanks to your stillness"
-		message += "."
+		victim_message = self_message
+	to_chat(victim, victim_message)
 
-	to_chat(victim, span_danger(message))
-	victim.balloon_alert(victim, "oscillation over")
+	var/delay = 4 SECONDS / (user == victim ? 1 : 2)
+	playsound(get_turf(crowbarring_item), 'sound/machines/airlock/airlock_alien_prying.ogg', 30, TRUE)
+	if (!crowbarring_item.use_tool(target = victim, user = user, delay = delay, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+		return TRUE
 
-	oscillating = FALSE
+	var/message = ""
 
-#undef AFTERSHOCK_GRACE_THRESHOLD_PERCENT
-
-/// If our victim has no gravity, the effects of movement are multiplied by this.
-#define VICTIM_MOVED_NO_GRAVITY_EFFECT_MULT 0.5
-/// If our victim is resting, or is walking and isnt forced to move, the effects of movement are multiplied by this.
-#define VICTIM_MOVED_CAREFULLY_EFFECT_MULT 0.25
-
-/// Signal handler proc that applies movements affect to our victim if they were moved.
-/datum/wound/blunt/robotic/proc/victim_moved(datum/source, atom/old_loc, dir, forced, list/old_locs)
-	SIGNAL_HANDLER
-
-	var/overall_mult = 1
-
+	var/shock_damage = 20
 	var/obj/item/stack/medical/wrap/gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
 	if (gauze)
-		overall_mult *= gauze.splint_factor
-	if (!victim.has_gravity(get_turf(victim)))
-		overall_mult *= VICTIM_MOVED_NO_GRAVITY_EFFECT_MULT
-	else if (victim.body_position == LYING_DOWN || (!forced && victim.move_intent == MOVE_INTENT_WALK))
-		overall_mult *= VICTIM_MOVED_CAREFULLY_EFFECT_MULT
-	if (victim.has_status_effect(/datum/status_effect/determined))
-		overall_mult *= ROBOTIC_WOUND_DETERMINATION_MOVEMENT_EFFECT_MOD
-	if (limb.grasped_by)
-		overall_mult *= ROBOTIC_BLUNT_GRASPED_MOVEMENT_MULT
+		shock_damage *= gauze.splint_factor // yay gauze
+	var/successful_shock = user.electrocute_act(shock_damage, limb, flags = SHOCK_KNOCKDOWN)
 
-	overall_mult *= get_buckled_movement_consequence_mult(victim.buckled)
+	if (successful_shock && user && can_shock())
+		message = span_boldwarning("[user] is shocked by [their_or_other] [limb.plaintext_zone]!")
+		self_message = span_userdanger("You are shocked by [your_or_other] [limb.plaintext_zone]!")
+		if (user != victim)
+			victim_message = span_userdanger("[user] is shocked by your [limb.plaintext_zone] while [user.p_they()] tear it open!")
 
-	if (limb.body_zone == BODY_ZONE_CHEST && COOLDOWN_FINISHED(src, movement_stagger_cooldown))
-		var/stagger_chance = chest_movement_stagger_chance * overall_mult
-		if (prob(stagger_chance))
-			COOLDOWN_START(src, movement_stagger_cooldown, 4 SECONDS)
-			stagger(base_movement_stagger_score, shake_duration = base_stagger_movement_shake_duration, from_movement = TRUE, shift = movement_stagger_shift, knockdown_ratio = stagger_aftershock_knockdown_movement_ratio)
+	if (successful_shock)
+		var/other_shock_text = ""
+		var/self_shock_text = ""
+		other_shock_text = ", and is striken by bolts of electricity"
+		self_shock_text = ", but are immediately shocked by the electricity contained within"
+		message = span_boldwarning("[user] tears open [their_or_other] [limb.plaintext_zone] with [user.p_their()] crowbar[other_shock_text]!")
+		self_message = span_warning("You tear open [your_or_other] [limb.plaintext_zone] with your crowbar[self_shock_text]!")
+		if(user != victim)
+			victim_message = span_userdanger("Your [limb.plaintext_zone] fragments and splinters as [user] tears it open with [user.p_their()] crowbar!")
+		else
+			victim_message = self_message
 
-	last_time_victim_moved = world.time
+		playsound(get_turf(crowbarring_item), 'sound/effects/bang.ogg', 35, TRUE) // we did it!
+		to_chat(user, span_green("You've torn [your_or_other] [limb.plaintext_zone] open, heavily damaging it but making it a lot easier to screwdriver the internals!"))
+	limb.receive_damage(brute = 15, wound_bonus = CANT_WOUND, damage_source = crowbarring_item)
+	crowbarred_open = TRUE
+	user.visible_message(message, self_message, ignored_mobs = list(victim))
+	to_chat(victim, victim_message)
+	examine_desc = replacetext(examine_desc, "cracks", "large gaps")
+	set_disabling(TRUE)
+	return TRUE
 
-#undef VICTIM_MOVED_NO_GRAVITY_EFFECT_MULT
-#undef VICTIM_MOVED_CAREFULLY_EFFECT_MULT
+/datum/wound/blunt/robotic/severe/proc/can_shock()
+	return (victim.stat != DEAD && limb.biological_state & BIO_WIRED)
 
-/// If our victim is buckled to a generic object, movement effects will be multiplied against this.
-#define VICTIM_BUCKLED_BASE_MOVEMENT_EFFECT_MULT 0.5
-/// If our victim is buckled to a medical bed (e.g. rollerbed), movement effects will be multiplied against this.
-#define VICTIM_BUCKLED_ROLLER_BED_MOVEMENT_EFFECT_MULT 0.05
+/datum/wound/blunt/robotic/severe/proc/secure_internals_normally(obj/item/securing_item, mob/user)
+	if (!securing_item.tool_start_check())
+		return TRUE
 
-/// Returns a multiplier to our movement effects based on what our victim is buckled to.
-/datum/wound/blunt/robotic/proc/get_buckled_movement_consequence_mult(atom/movable/buckled_to)
-	if (!buckled_to)
-		return 1
+	var/chance = 50
+	var/delay = 3 SECONDS
 
-	if (istype(buckled_to, /obj/structure/bed/medical))
-		return VICTIM_BUCKLED_ROLLER_BED_MOVEMENT_EFFECT_MULT
+	if (user == victim && !crowbarred_open)
+		chance /= 2
+		delay *= 1.5
+	if (HAS_TRAIT(user, TRAIT_DIAGNOSTIC_HUD))
+		chance *= 2
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		chance *= 2
+		delay *= 0.5
+
+	var/their_or_other = (user == victim ? "[user.p_their()]" : "[victim]'s")
+	var/your_or_other = (user == victim ? "your" : "[victim]'s")
+	user?.visible_message(span_notice("[user] begins the delicate operation of securing the internals of [their_or_other] [limb.plaintext_zone]..."), \
+		span_notice("You begin the delicate operation of securing the internals of [your_or_other] [limb.plaintext_zone]..."))
+
+	if (!securing_item.use_tool(target = victim, user = user, delay = delay, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+		return TRUE
+
+	if (prob(chance) || crowbarred_open)
+		user?.visible_message(span_green("[user] finishes securing the internals of [their_or_other] [limb.plaintext_zone]!"), \
+			span_green("You finish securing the internals of [your_or_other] [limb.plaintext_zone]!"))
+		to_chat(user, span_green("[capitalize(your_or_other)] [limb.plaintext_zone]'s internals are now secure, but still need to be rebooted."))
+		make_ready_to_restart()
 	else
-		return VICTIM_BUCKLED_BASE_MOVEMENT_EFFECT_MULT
+		user?.visible_message(span_danger("[user] screws up and accidentally damages [their_or_other] [limb.plaintext_zone]!"))
+		limb.receive_damage(brute = 5, damage_source = securing_item, wound_bonus = CANT_WOUND)
 
-#undef VICTIM_BUCKLED_BASE_MOVEMENT_EFFECT_MULT
-#undef VICTIM_BUCKLED_ROLLER_BED_MOVEMENT_EFFECT_MULT
-#undef ROBOTIC_WOUND_DETERMINATION_MOVEMENT_EFFECT_MOD
-#undef ROBOTIC_WOUND_DETERMINATION_STAGGER_MOVEMENT_MULT
-#undef ROBOTIC_BLUNT_GRASPED_MOVEMENT_MULT
+	return TRUE
+
+/datum/wound/blunt/robotic/severe/proc/make_ready_to_restart()
+	ready_to_restart = TRUE
+	examine_desc = "twitches and sparks erratically."
+
+// Alternative to securing the wires. Requires bone gel. Guaranteed to work.
+/datum/wound/blunt/robotic/severe/proc/apply_gel(obj/item/stack/medical/bone_gel/gel, mob/user)
+	var/delay_mult = 1.5
+	if (victim == user)
+		delay_mult *= 1.5
+	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
+		delay_mult *= 0.5
+
+	user.visible_message(span_notice("[user] begins applying [gel] to [victim]'s [limb.plaintext_zone]."), span_warning("You begin applying [gel] to [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]."))
+	if (!do_after(user, (3 SECONDS * delay_mult), target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+		return TRUE
+
+	gel.use(1)
+	if(user != victim)
+		user.visible_message(span_notice("[user] finishes applying [gel] to [victim]'s [limb.plaintext_zone]!"), span_notice("You finish applying [gel] to [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)
+		to_chat(victim, span_userdanger("[user] finishes applying [gel] to your [limb.plaintext_zone]."))
+	else
+		victim.visible_message(span_notice("[victim] finishes applying [gel] to [victim.p_their()] [limb.plaintext_zone]!"), span_notice("You finish applying [gel] to your [limb.plaintext_zone]."))
+
+	to_chat(victim, span_green("The gel within your [limb.plaintext_zone] is holding down its components, allowing you to restart it!"))
+	make_ready_to_restart()
+
+/*
+	The second step of T2/T3, requires a multitool.
+	Once complete, removes the wound entirely.
+*/
+/datum/wound/blunt/robotic/severe/proc/restart(obj/item/multitool, mob/user)
+	if (!multitool.tool_start_check())
+		return TRUE
+
+	var/their_or_other = (user == victim ? "[user.p_their()]" : "[victim]'s")
+	var/your_or_other = (user == victim ? "your" : "[victim]'s")
+	victim.visible_message(span_notice("[user] begins rebooting [their_or_other] [limb.plaintext_zone]..."), \
+		span_notice("You begin restarting the electronics in [your_or_other] [limb.plaintext_zone]..."))
+
+	var/delay = 6 SECONDS / (HAS_TRAIT(src, TRAIT_WOUND_SCANNED) ? 1 : 2)
+
+	if (!multitool.use_tool(target = victim, user = user, delay = delay, volume = 50,  extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+		return TRUE
+
+	victim.visible_message(span_green("[user] finishes rebooting [their_or_other] [limb.plaintext_zone]!"), \
+		span_notice("You succesfully restart the electronics in [your_or_other] [limb.plaintext_zone]!"))
+	remove_wound()
+	return TRUE
+
+/// Returns a string with our current treatment step for use in health analyzers.
+/datum/wound/blunt/robotic/severe/proc/get_wound_step_info()
+
+	if(ready_to_restart)
+		. = "Apply a multitool to the limb to finalize repairs."
+	else
+		. = "Use a screwdriver, wrench, or bone gel to secure the internals of the limb. A diagnostic hud or wound scanner will help. \
+		In absence of those, a crowbar may be used."
+
+/datum/wound/blunt/robotic/severe/get_scanner_description(mob/user)
+	. = ..()
+
+	var/wound_step = get_wound_step_info()
+	if (wound_step)
+		. += "\n\n<b>Current step</b>: [span_notice(wound_step)]"
+
+/datum/wound/blunt/robotic/severe/get_simple_scanner_description(mob/user)
+	. = ..()
+
+	var/wound_step = get_wound_step_info()
+	if (wound_step)
+		. += "\n\n<b>Current step</b>: [span_notice(wound_step)]"
+/datum/wound/blunt/robotic/critical
+	name = "Collapsed Superstructure"
+	desc = "The superstructure has totally collapsed in one or more locations, causing extreme internal oscillation with every move and massive limb dysfunction"
+	treat_text = "Bind the affected limb with gauze or a splint. Repair surgically."
+	occur_text = "caves in on itself, damaged solder and shrapnel flying out in a miniature explosion"
+	examine_desc = "has caved in, with internal components visible through gaps in the metal"
+	severity = WOUND_SEVERITY_CRITICAL
+	treat_text_short = "Repair surgically."
+	disabling = TRUE
+	simple_treat_text = "If on the <b>chest</b>, <b>walk</b>, <b>grasp it</b>, <b>splint</b>, <b>rest</b> or <b>buckle yourself</b> to something to reduce movement effects. \
+	Afterwards, repair with surgery."
+	homemade_treat_text = "The metal can be made <b>malleable</b> by repeated harmful application of any heated instrument until it carries a <b>moderate burn</b>. Afterwards, a <b>crowbar</b> can reset the metal, \
+	reducing the severity of the wound."
+
+	interaction_efficiency_penalty = 2.5
+	limp_slowdown = 7
+	limp_chance = 70
+	threshold_penalty = 15
+	brain_trauma_group = BRAIN_TRAUMA_SEVERE
+	trauma_cycle_cooldown = 2.5 MINUTES
+	status_effect_type = /datum/status_effect/wound/blunt/robotic/critical
+	sound_effect = 'sound/effects/wounds/crack2.ogg'
+	wound_flags = (ACCEPTS_GAUZE|MANGLES_INTERIOR|CAN_BE_GRASPED)
+	status_effect_type = /datum/status_effect/wound/blunt/robotic/critical
+	treatable_tools = list(TOOL_CROWBAR)
+	a_or_from = "a"
+	stagger_multiplier = 1.75
+
+/datum/wound_pregen_data/blunt_metal/superstructure
+	abstract = FALSE
+	wound_path_to_generate = /datum/wound/blunt/robotic/critical
+	threshold_minimum = 125
+
+/datum/wound/blunt/robotic/critical/treat(obj/item/item, mob/treater)
+	var/delay = 4 SECONDS / (HAS_TRAIT(src, TRAIT_WOUND_SCANNED) ? 2 : 1)
+	if(!limb.get_wound_type(WOUND_SERIES_METAL_BURN_OVERHEAT) || victim?.bodytemperature < BODYTEMP_HEAT_WARNING_3)
+		to_chat(treater, span_warning("The metal isn't hot enough to bend back into place!"))
+		return
+	if(item.use_tool(target = victim, user = treater, delay = delay, volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+		replace_wound(new /datum/wound/blunt/robotic/severe)
+	return ..()
