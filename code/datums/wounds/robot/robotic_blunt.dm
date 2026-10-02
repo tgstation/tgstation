@@ -315,11 +315,6 @@
 
 #undef VICTIM_BUCKLED_BASE_MOVEMENT_EFFECT_MULT
 #undef VICTIM_BUCKLED_ROLLER_BED_MOVEMENT_EFFECT_MULT
-
-/// If this wound can be treated in its current state by just hitting it with a low force object. Exists for conditional logic, e.g. "Should we respond
-/// to percussive maintenance right now?". Critical blunt uses this to only react when the limb is malleable and superstructure is broken.
-
 #undef ROBOTIC_WOUND_DETERMINATION_MOVEMENT_EFFECT_MOD
 #undef ROBOTIC_WOUND_DETERMINATION_STAGGER_MOVEMENT_MULT
-
 #undef ROBOTIC_BLUNT_GRASPED_MOVEMENT_MULT

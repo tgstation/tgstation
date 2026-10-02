@@ -30,7 +30,7 @@
 	// The temperature we need to be under in order to begin passively cooling.
 	var/temperature_limit = BODYTEMP_NORMAL + 200
 	// Divisor for how much reagents cool the chassis. 10 means 10 units of water at 0K will reduce chassis_temperature by 1.
-	var/reagent_volume_coeff = 4
+	var/reagent_volume_coeff = 3
 	// The color of the light we will generate.
 	var/light_color
 	// The power of the light we will generate.
@@ -64,7 +64,7 @@
 	if(passive_cooling)
 		chassis_temperature -= 0.2 * passive_cooling
 	if(victim.stat != DEAD) // So we don't husk anyone with a burn
-		victim.adjust_bodytemperature((chassis_temperature + overheat_bonus) * 0.4) // This is how burns actually hurt you, our (very simple and much weaker) version of infection
+		victim.adjust_bodytemperature((chassis_temperature + overheat_bonus) * 0.4)
 	try_downgrade()
 	return
 
@@ -155,7 +155,7 @@
 	sound_volume = 18
 
 	chassis_temperature = CHASSIS_TEMPERATURE_DEFAULT
-	thermal_shock_mult = 0.5
+	thermal_shock_mult = 0.75
 	light_color = COLOR_RED
 	light_power = 0.1
 	light_range = 0.5
@@ -182,7 +182,7 @@
 	sound_volume = 20
 
 	chassis_temperature = CHASSIS_TEMPERATURE_DEFAULT
-	thermal_shock_mult = 0.5
+	thermal_shock_mult = 0.75
 	overheat_bonus = CHASSIS_TEMPERATURE_DEFAULT
 	light_color = COLOR_BRIGHT_ORANGE
 	light_power = 0.8
@@ -211,7 +211,7 @@
 	wound_flags = (ACCEPTS_GAUZE|CAN_BE_GRASPED)
 
 	chassis_temperature = CHASSIS_TEMPERATURE_DEFAULT
-	thermal_shock_mult = 0.5
+	thermal_shock_mult = 0.75
 	overheat_bonus = CHASSIS_TEMPERATURE_DEFAULT * 2
 	light_color = COLOR_VERY_SOFT_YELLOW
 	light_power = 1.3
