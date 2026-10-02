@@ -1,5 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - code_imp: "Biting can no longer overfeed you."
-  - code_imp: "You do not lick people as a felinid if you have combat mode on."

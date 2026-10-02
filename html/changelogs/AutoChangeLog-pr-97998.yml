@@ -1,4 +1,0 @@
-author: "PapaMichael"
-delete-after: True
-changes:
-  - bugfix: "Fixed Runechat having a 1/256 chance of being dark and almost unreadable"
