@@ -426,17 +426,17 @@
 /obj/machinery/door/proc/try_to_weld_secondary(obj/item/weldingtool/tool, mob/user)
 	return
 
-/obj/machinery/door/proc/check_crowbar_force(mob/living/user, obj/item/tool)
+/obj/machinery/door/proc/check_crowbar_force(obj/item/tool)
 	if(istype(tool, /obj/item/crowbar))
 		var/obj/item/crowbar/crowbar = tool
 		return crowbar.force_opens
 
 /obj/machinery/door/crowbar_act(mob/living/user, obj/item/tool)
-	try_to_crowbar(tool, user, check_crowbar_force())
+	try_to_crowbar(tool, user, check_crowbar_force(tool))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/crowbar_act_secondary(mob/living/user, obj/item/tool)
-	try_to_crowbar_secondary(tool, user, check_crowbar_force())
+	try_to_crowbar_secondary(tool, user, check_crowbar_force(tool))
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/proc/try_to_crowbar(obj/item/acting_object, mob/user, forced = FALSE)
