@@ -165,7 +165,8 @@
 		return FALSE
 
 	if(hurt_this_guy)
-		return by_gods_light_i_smite_you(mendicant, hurtguy, heal_multiplier)
+		by_gods_light_i_smite_you(mendicant, hurtguy, heal_multiplier)
+		return TRUE
 
 	// Heal more, hurt a bit more.
 	// If you crunch the numbers it sounds crazy good,
@@ -378,6 +379,7 @@
 ///If our target was undead or evil, we blast them with a firey beam rather than healing them. For, you know, 'holy' reasons. When did genes become so morally uptight?
 
 /datum/action/cooldown/spell/touch/lay_on_hands/proc/by_gods_light_i_smite_you(mob/living/carbon/smiter, mob/living/motherfucker_to_hurt, smite_multiplier)
+	set waitfor = FALSE
 	var/our_smite_multiplier = smite_multiplier
 	var/evil_smite = HAS_TRAIT(smiter, TRAIT_EVIL) ? TRUE : FALSE
 	var/divine_champion = smiter.mind?.holy_role >= HOLY_ROLE_PRIEST ? TRUE : FALSE
@@ -388,8 +390,6 @@
 		// Defaults for possible deity. You know, just in case.
 		var/possible_deity = evil_smite ? "Satan" : "God"
 
-		var/mob/living/carbon/human/human_smiter = smiter
-
 		// If we have a client, check their deity pref and use that instead of our chaps god if our smiter is a spiritualist
 		var/client/smiter_client = smiter.client
 
@@ -398,12 +398,11 @@
 		else if (GLOB.deity)
 			possible_deity = GLOB.deity
 
-		if(ishuman(human_smiter))
-			human_smiter.force_say()
-			if(evil_smite)
-				human_smiter.say("in [possible_deity]'s dark name, I COMMAND YOU TO PERISH!!!", forced = "compelled by the power of their deity")
-			else
-				human_smiter.say("By [possible_deity]'s might, I SMITE YOU!!!", forced = "compelled by the power of their deity")
+		astype(smiter, /mob/living/carbon/human)?.force_say()
+		if(evil_smite)
+			smiter.say("in [possible_deity]'s dark name, I COMMAND YOU TO PERISH!!!", forced = "compelled by the power of their deity")
+		else
+			smiter.say("By [possible_deity]'s might, I SMITE YOU!!!", forced = "compelled by the power of their deity")
 		our_smite_multiplier *= divine_champion ? 5 : 1 //good luck surviving this if they're a chap
 
 	if(evil_smite)
@@ -423,7 +422,6 @@
 	to_chat(motherfucker_to_hurt, span_bolddanger("[smiter] [smite_text_to_target], hurting you!"))
 	motherfucker_to_hurt.emote("scream")
 	new /obj/effect/temp_visual/explosion(get_turf(motherfucker_to_hurt), evil_smite ? LIGHT_COLOR_BLOOD_MAGIC : LIGHT_COLOR_HOLY_MAGIC)
-	. = TRUE
 
 /obj/item/melee/touch_attack/lay_on_hands
 	name = "mending touch"

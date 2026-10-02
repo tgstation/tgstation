@@ -386,6 +386,8 @@
 
 /// The invocation that accompanies the spell, called from spell_feedback() before cast().
 /datum/action/cooldown/spell/proc/invocation(mob/living/invoker)
+	set waitfor = FALSE
+
 	//lists can be sent by reference, a string would be sent by value
 	var/list/invocation_list = list(invocation, invocation_type, garbled_invocation_prob)
 	SEND_SIGNAL(invoker, COMSIG_MOB_PRE_INVOCATION, src, invocation_list)

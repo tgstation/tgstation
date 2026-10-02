@@ -244,7 +244,7 @@
 	if(ishuman(flashed))
 		var/mob/living/carbon/human/human_flashed = flashed
 		human_flashed.force_say()
-	flashed.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in. (April Fools)")
+	flashed.on_conversion()
 
 /datum/antagonist/rev/head/antag_listing_name()
 	return ..() + "(Leader)"

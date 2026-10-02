@@ -30,12 +30,14 @@
 				to_chat(affected_mob, span_danger("Your thoughts are interrupted by a loud <b>HONK!</b>"))
 		if(4)
 			if(SPT_PROB(2.5, seconds_per_tick))
-				affected_mob.say( pick( list("HONK!", "Honk!", "Honk.", "Honk?", "Honk!!", "Honk?!", "Honk...") ) , forced = "pierrot's throat")
-
+				utterance(pick("HONK!", "Honk!", "Honk.", "Honk?", "Honk!!", "Honk?!", "Honk..."))
 
 /datum/disease/pierrot_throat/after_add()
 	RegisterSignal(affected_mob, COMSIG_MOB_SAY, PROC_REF(handle_speech))
 
+/datum/disease/pierrot_throat/proc/utterance(message)
+	set waitfor = FALSE
+	affected_mob.say(message, forced = "pierrot's throat")
 
 /datum/disease/pierrot_throat/proc/handle_speech(datum/source, list/speech_args)
 	SIGNAL_HANDLER

@@ -276,6 +276,7 @@
 
 /// Our crit effect. For normal boxing, this applies a stagger, then applies a knockout if they're staggered. Other types of boxing apply different kinds of effects.
 /datum/martial_art/boxing/proc/crit_effect(mob/living/attacker, mob/living/defender, armor_block = 0, damage_type = STAMINA, damage = 0)
+	set waitfor = FALSE
 	if(defender.get_timed_status_effect_duration(/datum/status_effect/staggered))
 		defender.visible_message(
 			span_danger("[attacker] knocks [defender] out with a haymaker!"),

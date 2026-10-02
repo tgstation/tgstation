@@ -119,15 +119,20 @@
 	charge_distance = 8
 	knockdown_duration = 2.5 SECONDS
 
+/datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/proc/smash_and_grab(mob/living/basic/attacker, mob/living/target)
+	set waitfor = FALSE
+	attacker.melee_attack(target, ignore_cooldown = TRUE)
+	attacker.start_pulling(target)
+
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/hit_target(atom/movable/source, atom/target, damage_dealt)
 	. = ..()
 	if(!isbasicmob(source) || !isliving(target))
 		return
+
 	var/mob/living/basic/basic_source = source
-	var/mob/living/living_target = target
-	basic_source.melee_attack(living_target, ignore_cooldown = TRUE)
 	basic_source.ai_controller?.set_blackboard_key(BB_BASIC_MOB_STOP_FLEEING, TRUE)
-	basic_source.start_pulling(living_target)
+
+	smash_and_grab(source, target)
 
 /datum/action/cooldown/mob_cooldown/charge/basic_charge/lobster/do_charge(atom/movable/charger, atom/target_atom, delay, past)
 	. = ..()

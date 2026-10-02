@@ -25,11 +25,16 @@
 	if(!. || isnull(parrot_controller))
 		return
 
-	var/potential_phrase = parrot_controller.blackboard[BB_PARROT_REPEAT_STRING]
+	if(SPT_PROB(speak_chance, seconds_per_tick))
+		utterance(parrot_controller.blackboard[BB_PARROT_REPEAT_STRING])
 
-	if(SPT_PROB(speak_chance, seconds_per_tick) && !isnull(potential_phrase))
-		affected_mob.say(potential_phrase, forced = "parrot possession")
+/datum/disease/parrot_possession/proc/utterance(message)
+	set waitfor = FALSE
 
+	if(!message)
+		return
+
+	affected_mob.say(message, forced = "parrot possession")
 
 /datum/disease/parrot_possession/cure(add_resistance = FALSE)
 	var/atom/movable/inside_parrot = locate(/mob/living/basic/parrot/poly/ghost) in affected_mob

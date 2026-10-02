@@ -26,27 +26,32 @@
 		if(attacker == defender)//helps using apotheosis
 			return FALSE
 		reset_streak()
-		return Tornado(attacker, defender)
+		Tornado(attacker, defender)
+		return TRUE
 	if(findtext(streak,THROWBACK_COMBO))
 		if(attacker == defender)//helps using apotheosis
 			return FALSE
 		reset_streak()
-		return Throwback(attacker, defender)
+		Throwback(attacker, defender)
+		return TRUE
 	if(findtext(streak,PLASMA_COMBO))
 		reset_streak()
 		if(attacker == defender && !nobomb)
-			return Apotheosis(attacker, defender)
-		return Plasma(attacker, defender)
+			Apotheosis(attacker, defender)
+		else
+			Plasma(attacker, defender)
+		return TRUE
 	return FALSE
 
 /datum/martial_art/plasma_fist/proc/Tornado(mob/living/attacker, mob/living/defender)
+	set waitfor = FALSE
 	attacker.say("TORNADO SWEEP!", forced="plasma fist")
 	dance_rotate(attacker, CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), attacker, 'sound/items/weapons/punch1.ogg', 15, TRUE, -1))
 	tornado_spell.cast(attacker)
 	log_combat(attacker, defender, "tornado sweeped (Plasma Fist)")
-	return TRUE
 
 /datum/martial_art/plasma_fist/proc/Throwback(mob/living/attacker, mob/living/defender)
+	set waitfor = FALSE
 	defender.visible_message(
 		span_danger("[attacker] hits [defender] with Plasma Punch!"),
 		span_userdanger("You're hit with a Plasma Punch by [attacker]!"),
@@ -60,9 +65,9 @@
 	defender.throw_at(throw_target, 200, 4,attacker)
 	attacker.say("HYAH!", forced="plasma fist")
 	log_combat(attacker, defender, "threw back (Plasma Fist)")
-	return TRUE
 
 /datum/martial_art/plasma_fist/proc/Plasma(mob/living/attacker, mob/living/defender)
+	set waitfor = FALSE
 	var/hasclient = !!defender.client
 
 	attacker.do_attack_animation(defender, ATTACK_EFFECT_PUNCH)
@@ -100,9 +105,8 @@
 		flash_color(attacker, flash_color = "#9C00FF", flash_time = 3 SECONDS)
 		animate(attacker, color = oldcolor, time = 3 SECONDS)
 
-	return TRUE
-
 /datum/martial_art/plasma_fist/proc/Apotheosis(mob/living/user, mob/living/target)
+	set waitfor = FALSE
 	user.say("APOTHEOSIS!!", forced="plasma fist")
 	if (ishuman(user))
 		var/mob/living/carbon/human/human_attacker = user
@@ -128,7 +132,6 @@
 	playsound(boomspot, 'sound/items/weapons/punch1.ogg', 50, TRUE, -1)
 	explosion(user, devastation_range = plasma_power, heavy_impact_range = plasma_power*2, light_impact_range = plasma_power*4, ignorecap = TRUE, explosion_cause = src)
 	plasma_power = 1 //just in case there is any clever way to cause it to happen again
-	return TRUE
 
 /datum/martial_art/plasma_fist/proc/Apotheosis_end(mob/living/dying)
 	dying.remove_traits(list(TRAIT_FORCED_STANDING, TRAIT_BOMBIMMUNE), type)

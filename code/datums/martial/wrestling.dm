@@ -145,6 +145,7 @@ If you make a derivative work from this code, you must include this notification
 	return check_streak(attacker, defender) ? MARTIAL_ATTACK_SUCCESS : MARTIAL_ATTACK_INVALID
 
 /datum/martial_art/wrestling/proc/throw_wrassle(mob/living/attacker, mob/living/defender)
+	set waitfor = FALSE
 	if(!defender)
 		return
 	if(!attacker.pulling || attacker.pulling != defender)
@@ -229,6 +230,7 @@ If you make a derivative work from this code, you must include this notification
 		animate(defender, transform = null, time = 1, loop = 0)
 
 /datum/martial_art/wrestling/proc/slam(mob/living/attacker, mob/living/defender)
+	set waitfor = FALSE
 	if(!defender)
 		return
 	if(!attacker.pulling || attacker.pulling != defender)
@@ -345,6 +347,7 @@ If you make a derivative work from this code, you must include this notification
 		attacker.forceMove(T)
 
 /datum/martial_art/wrestling/proc/strike(mob/living/attacker, mob/living/defender)
+	set waitfor = FALSE
 	if(!defender)
 		return
 	var/turf/T = get_turf(attacker)
@@ -364,6 +367,7 @@ If you make a derivative work from this code, you must include this notification
 	log_combat(attacker, defender, "headbutted")
 
 /datum/martial_art/wrestling/proc/kick(mob/living/attacker, mob/living/defender)
+	set waitfor = FALSE
 	if(!defender)
 		return
 	attacker.emote("scream")
@@ -383,6 +387,7 @@ If you make a derivative work from this code, you must include this notification
 	log_combat(attacker, defender, "roundhouse-kicked")
 
 /datum/martial_art/wrestling/proc/drop(mob/living/attacker, mob/living/defender)
+	set waitfor = FALSE
 	if(!defender)
 		return
 	var/obj/surface = null

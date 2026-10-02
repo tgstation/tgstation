@@ -31,6 +31,10 @@
 	D.new_form = D.new_form
 	return D
 
+/datum/disease/transformation/proc/utterance(message)
+	set waitfor = FALSE
+
+	affected_mob.say(message, forced = name)
 
 /datum/disease/transformation/stage_act(seconds_per_tick)
 	. = ..()
@@ -145,7 +149,7 @@
 				affected_mob.adjust_confusion(10 SECONDS)
 		if(4)
 			if(SPT_PROB(1.5, seconds_per_tick))
-				affected_mob.say(pick("Eeee!", "Eeek, ook ook!", "Eee-eeek!", "Ungh, ungh."), forced = "jungle fever")
+				utterance(pick("Eeee!", "Eeek, ook ook!", "Eee-eeek!", "Ungh, ungh."))
 
 /datum/disease/transformation/robot
 	name = "Robotic Transformation"
@@ -177,14 +181,13 @@
 	switch(stage)
 		if(3)
 			if (SPT_PROB(4, seconds_per_tick))
-				affected_mob.say(pick("beep, beep!", "Beep, boop", "Boop...bop"), forced = "robotic transformation")
+				utterance(pick("beep, beep!", "Beep, boop", "Boop...bop"))
 			if (SPT_PROB(2, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
 				affected_mob.Unconscious(40)
 		if(4)
 			if (SPT_PROB(10, seconds_per_tick))
-				affected_mob.say(pick("beep, beep!", "Boop bop boop beep.", "I wwwaaannntt tttoo dddiiieeee...", "kkkiiiill mmme"), forced = "robotic transformation")
-
+				utterance(pick("beep, beep!", "Boop bop boop beep.", "I wwwaaannntt tttoo dddiiieeee...", "kkkiiiill mmme"))
 
 /datum/disease/transformation/xeno
 
@@ -225,8 +228,7 @@
 				affected_mob.Unconscious(40)
 		if(4)
 			if(SPT_PROB(10, seconds_per_tick))
-				affected_mob.say(pick("Going to... devour you...", "Hsssshhhhh!", "You look delicious."), forced = "xenomorph transformation")
-
+				utterance(pick("Going to... devour you...", "Hsssshhhhh!", "You look delicious."))
 
 /datum/disease/transformation/slime
 	name = "Advanced Mutation Transformation"
@@ -290,11 +292,10 @@
 	switch(stage)
 		if(3)
 			if (SPT_PROB(4, seconds_per_tick))
-				affected_mob.say(pick("Woof!", "YAP"), forced = "corgi transformation")
+				utterance(pick("Woof!", "YAP"))
 		if(4)
 			if (SPT_PROB(10, seconds_per_tick))
-				affected_mob.say(pick("AUUUUUU", "Bark!"), forced = "corgi transformation")
-
+				utterance(pick("AUUUUUU", "Bark!"))
 
 /datum/disease/transformation/morph
 	name = "Gluttony's Blessing"

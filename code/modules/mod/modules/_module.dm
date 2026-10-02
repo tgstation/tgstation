@@ -251,7 +251,7 @@
 /// Called when an activated module without a device is active and the user alt/middle-clicks
 /obj/item/mod/module/proc/on_special_click(mob/source, atom/target)
 	SIGNAL_HANDLER
-	on_select_use(target)
+	INVOKE_ASYNC(src, PROC_REF(on_select_use), target)
 	return COMSIG_MOB_CANCEL_CLICKON
 
 /// Called on the MODsuit's process

@@ -23,9 +23,16 @@
 	if(!(rendered[length(rendered)] in list(",",":",";",".","?","!","\'","-")))
 		rendered += "." //Good punctuation is important :)
 	deadchat_broadcast(rendered, "<b>[brainwash_victim]</b>", follow_target = brainwash_victim, turf_target = get_turf(brainwash_victim), message_type=DEADCHAT_ANNOUNCEMENT)
-	if(check_holidays(APRIL_FOOLS))
-		// Note: most of the time you're getting brainwashed you're unconscious
-		brainwash_victim.say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in. (April Fools)")
+	// Note: most of the time you're getting brainwashed you're unconscious
+	brainwash_victim.on_conversion()
+
+/mob/living/proc/on_conversion()
+	set waitfor = FALSE
+
+	if(!check_holidays(APRIL_FOOLS))
+		return
+
+	say("You son of a bitch! I'm in.", forced = "That son of a bitch! They're in. (April Fools)")
 
 /datum/antagonist/brainwashed
 	name = "\improper Brainwashed Victim"
