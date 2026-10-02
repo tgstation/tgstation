@@ -1,6 +1,6 @@
 /datum/wound/blunt/robotic
 	name = "Robotic Blunt (Screws and bolts) Wound"
-	wound_flags = (ACCEPTS_GAUZE|CAN_BE_GRASPED)
+	wound_flags = (ACCEPTS_GAUZE)
 	can_scar = FALSE
 
 	/// If we suffer severe head booboos, we can get brain traumas tied to them
@@ -19,13 +19,6 @@
 	required_limb_biostate = BIO_METAL
 	wound_series = WOUND_SERIES_METAL_BLUNT_BASIC
 	required_wounding_type = WOUND_BLUNT
-
-/datum/wound/blunt/robotic/set_victim(new_victim)
-	if(victim)
-		UnregisterSignal(victim, COMSIG_MOVABLE_MOVED)
-	if(new_victim)
-		RegisterSignal(new_victim, COMSIG_MOVABLE_MOVED, PROC_REF(victim_moved))
-	return ..()
 
 /datum/wound/blunt/robotic/get_limb_examine_description()
 	return span_warning("This limb looks loosely held together.")
@@ -74,7 +67,7 @@
 
 /// Signal handler proc to when our victim has damage applied via apply_damage(), which is a external attack.
 /datum/wound/blunt/robotic/receive_damage(wounding_type, wounding_dmg, wound_bonus)
-	if(!victim || wounding_type = WOUND_BURN || wounding_dmg < WOUND_MINIMUM_DAMAGE)
+	if(!victim || wounding_type == WOUND_BURN || wounding_dmg < WOUND_MINIMUM_DAMAGE)
 		return
 
 	var/obj/item/stack/medical/wrap/gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
@@ -97,8 +90,9 @@
 	examine_desc = "appears to be loosely secured"
 	occur_text = "jostles awkwardly and seems to slightly unfasten"
 	severity = WOUND_SEVERITY_MODERATE
-	simple_treat_text = "<b>Splinting</b> the wound will reduce the impact until it's <b>screws are secured."
-	homemade_treat_text = "In a pinch, <b>percussive maintenance</b> targeting the loose body part can reset the screws. However, effective percussive maintenance is difficult to perform on oneself."
+	simple_treat_text = "Splinting the wound will reduce the impact until it's <b>screws are secured."
+	homemade_treat_text = "In a pinch, percussive maintenance targeting the loose body part can reset the screws. \
+	However, effective percussive maintenance of robotic body parts requires being grabbed by another for stability."
 
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/moderate
 	treat_text_short = "Apply screwdriver or percussive maintenance"
@@ -110,7 +104,7 @@
 	a_or_from = "from"
 	stagger_multiplier = 1
 	/// % chance for hitting our limb to fix something.
-	var/percussive_repair_chance = 12
+	var/percussive_repair_chance = 20
 	/// Damage must be over this to proc percussive maintenance.
 	var/percussive_damage_min = 3
 
@@ -127,17 +121,7 @@
 		return TRUE
 	return ..()
 
-/datum/wound/blunt/robotic/moderate/victim_attacked(datum/source, damage, damagetype, def_zone, blocked, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item)
-	. = ..()
-	if(damage < percussive_damage_min || damagetype != BRUTE || sharpness)
-		return
-	if (prob(percussive_repair_chance))
-		victim.visible_message(span_green("[victim]'s [limb.plaintext_zone] rattles from the impact, but looks a lot more secure!"), span_green("Your [limb.plaintext_zone] rattles into place!"))
-		remove_wound()
-	else
-		to_chat(victim, span_warning("Your [limb.plaintext_zone] rattles around."))
-
-/// The main treatment for T1 blunt. Uses a screwdriver, guaranteed to always work, better with a diag hud. Removes the wound.
+/// The main treatment for moderate robotic blunt wounds. Uses a screwdriver, guaranteed to always work. Removes the wound.
 /datum/wound/blunt/robotic/moderate/proc/fasten_screws(obj/item/screwdriver_tool, mob/user)
 	if (!screwdriver_tool.tool_start_check())
 		return
@@ -152,11 +136,22 @@
 	var/your_or_other = (user == victim ? "your" : "[victim]'s")
 	victim.visible_message(span_notice("[user] begins fastening the screws of [their_or_other] [limb.plaintext_zone]..."), \
 		span_notice("You begin fastening the screws of [your_or_other] [limb.plaintext_zone]..."))
-	if (!screwdriver_tool.use_tool(target = victim, user = user, delay = (6 SECONDS * delay_mult), volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
+	if (!screwdriver_tool.use_tool(target = victim, user = user, delay = (3 SECONDS * delay_mult), volume = 50, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return
 	victim.visible_message(span_green("[user] finishes fastening [their_or_other] [limb.plaintext_zone]!"), \
 		span_green("You finish fastening [your_or_other] [limb.plaintext_zone]!"))
 	remove_wound()
+
+/// Alternative treatment: hitting the wounded bodypart until it works again.
+/datum/wound/blunt/robotic/moderate/receive_damage(wounding_type, wounding_dmg, wound_bonus)
+	. = ..()
+	if(wounding_dmg < percussive_damage_min || wounding_type != WOUND_BLUNT || !victim.pulledby)
+		return
+	if (prob(percussive_repair_chance))
+		victim.visible_message(span_green("[victim]'s [limb.plaintext_zone] rattles from the impact, but looks a lot more secure!"), span_green("Your [limb.plaintext_zone] rattles into place!"))
+		remove_wound()
+	else
+		to_chat(victim, span_warning("Your [limb.plaintext_zone] rattles around."))
 
 // Detatched Fastenings (Severe Blunt)
 /datum/wound/blunt/robotic/severe
@@ -167,14 +162,14 @@
 	examine_desc = "jostles with every move, wires visible through cracks in the metal"
 	occur_text = "visibly cracks open, metal pieces flying everywhere"
 	severity = WOUND_SEVERITY_SEVERE
-	simple_treat_text = "<b>If on the <b>chest</b>, <b>walk</b>, <b>grasp it</b>, <b>splint</b>, <b>rest</b> or <b>buckle yourself</b> to something to reduce movement effects. \
-	Afterwards, <b>screwdriver/wrench</b> it, and then <b>reboot</b> the electronics inside!"
-	homemade_treat_text = "If <b>unable to screw/wrench</b>, <b>bone gel</b> can secure inner components. \
-	Alternatively, <b>crowbar</b> the limb open to expose the internals - this will make it <b>easier</b> to re-secure them, but has a <b>high risk</b> of <b>shocking</b> you, \
-	so use insulated gloves. This will also <b>cripple the limb</b>, so use it only as a last resort!"
-	treat_text_short = "Use a screwdriver or wrench, and then a multitool."
+	simple_treat_text = "If on the chest, splint or buckle yourself to something to reduce oscillation. \
+	Afterwards, screwdriver it, and then reboot the electronics inside!"
+	homemade_treat_text = "If unable to screw, bone gel can secure inner components. \
+	Alternatively, crowbar the limb open to expose the internals - this will make it easier to re-secure them, but has a high risk of shocking you, \
+	so use insulated gloves. This will also disable the limb, so use it only as a last resort!"
+	treat_text_short = "Use a screwdriver and then a multitool."
 
-	wound_flags = (ACCEPTS_GAUZE|MANGLES_INTERIOR|CAN_BE_GRASPED)
+	wound_flags = (ACCEPTS_GAUZE|MANGLES_INTERIOR)
 	treatable_by = list(/obj/item/stack/medical/bone_gel)
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/severe
 	interaction_efficiency_penalty = 2
@@ -236,11 +231,11 @@
 		return secure_internals_normally(potential_treater, user)
 	return ..()
 
-/*
-	Available during the screwdriver step of T2 and T3. Requires a crowbar. Improvised option.
-	Tears open the limb, exposing internals. This guarantees the next screwdriver step succeeding, and removes the self-tend time penalty.
-	Deals minor damage to the limb, and shocks the user (causing failure) if victim is alive, this limb is wired, and the crowbarrer is not insulated.
- */
+
+/* Available during the screwdriver step of T2 and T3. Requires a crowbar. Improvised option.
+   Tears open the limb, exposing internals. This guarantees the next screwdriver step succeeding and removes the self-tend time penalty.
+   Deals minor damage to the limb, and shocks the user (causing failure) if victim is alive, this limb is wired, and the crowbarrer is not insulated.
+*/
 /datum/wound/blunt/robotic/severe/proc/crowbar_open(obj/item/crowbarring_item, mob/living/user)
 	if (!crowbarring_item.tool_start_check())
 		return TRUE
@@ -340,7 +335,7 @@
 	ready_to_restart = TRUE
 	examine_desc = "twitches and sparks erratically."
 
-// Alternative to securing the wires. Requires bone gel. Guaranteed to work.
+/// Alternative to securing the wires. Requires bone gel. Guaranteed to work.
 /datum/wound/blunt/robotic/severe/proc/apply_gel(obj/item/stack/medical/bone_gel/gel, mob/user)
 	var/delay_mult = 1.5
 	if (victim == user)
@@ -362,10 +357,7 @@
 	to_chat(victim, span_green("The gel within your [limb.plaintext_zone] is holding down its components, allowing you to restart it!"))
 	make_ready_to_restart()
 
-/*
-	The second step of T2/T3, requires a multitool.
-	Once complete, removes the wound entirely.
-*/
+// The second step of severe wounds. Requires a multitool. Once complete, removes the wound entirely.
 /datum/wound/blunt/robotic/severe/proc/restart(obj/item/multitool, mob/user)
 	if (!multitool.tool_start_check())
 		return TRUE
@@ -391,7 +383,7 @@
 	if(ready_to_restart)
 		. = "Apply a multitool to the limb to finalize repairs."
 	else
-		. = "Use a screwdriver, wrench, or bone gel to secure the internals of the limb. A diagnostic hud or wound scanner will help. \
+		. = "Use a screwdriver or bone gel to secure the internals of the limb. A diagnostic hud and/or wound scanner will help. \
 		In absence of those, a crowbar may be used."
 
 /datum/wound/blunt/robotic/severe/get_scanner_description(mob/user)
@@ -416,10 +408,10 @@
 	severity = WOUND_SEVERITY_CRITICAL
 	treat_text_short = "Repair surgically."
 	disabling = TRUE
-	simple_treat_text = "If on the <b>chest</b>, <b>walk</b>, <b>grasp it</b>, <b>splint</b>, <b>rest</b> or <b>buckle yourself</b> to something to reduce movement effects. \
+	simple_treat_text = "If on the chest, splint or buckle yourself to something to reduce oscillation. \
 	Afterwards, repair with surgery."
-	homemade_treat_text = "The metal can be made <b>malleable</b> by repeated harmful application of any heated instrument until it carries a <b>moderate burn</b>. Afterwards, a <b>crowbar</b> can reset the metal, \
-	reducing the severity of the wound."
+	homemade_treat_text = "The metal can be made malleable by repeated harmful application of any heated instrument until it carries a moderate burn. \
+	Afterwards, a crowbar can reset the metal, reducing the severity of the wound."
 
 	interaction_efficiency_penalty = 2.5
 	limp_slowdown = 7
@@ -429,7 +421,7 @@
 	trauma_cycle_cooldown = 2.5 MINUTES
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/critical
 	sound_effect = 'sound/effects/wounds/crack2.ogg'
-	wound_flags = (ACCEPTS_GAUZE|MANGLES_INTERIOR|CAN_BE_GRASPED)
+	wound_flags = (ACCEPTS_GAUZE|MANGLES_INTERIOR)
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/critical
 	treatable_tools = list(TOOL_CROWBAR)
 	a_or_from = "a"
