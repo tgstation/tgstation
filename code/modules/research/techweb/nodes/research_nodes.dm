@@ -44,6 +44,8 @@
 		/datum/design/light_replacer_blue,
 		/datum/design/bluespacebodybag,
 		/datum/design/radio_navigation_beacon,
+		/datum/design/board/gas_receiver,
+		/datum/design/board/bluespace_scrubber,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/points/bluespace_crystal = TECHWEB_TIER_2_POINTS)

@@ -422,11 +422,14 @@ SUBSYSTEM_DEF(air)
 			var/datum/pipeline/linepipe = pack[SSAIR_REBUILD_PIPELINE]
 			var/list/border = pack[SSAIR_REBUILD_QUEUE]
 			expand_pipeline(linepipe, border)
-			if(state != SS_RUNNING) //expand_pipeline can fail a tick check, we shouldn't let things get too fucky here
+			if(length(border)) //expand_pipeline failed a tick check before finishing, resume it next fire
 				return
 
 			linepipe.building = FALSE
 			queue.len--
+			// machinery was claimed by another pipeline before we could expand somehow, check if it has no pipes or machines left we can just delete it
+			if(!length(linepipe.members) && !length(linepipe.other_atmos_machines))
+				qdel(linepipe)
 			if (MC_TICK_CHECK)
 				return
 
@@ -714,9 +717,10 @@ SUBSYSTEM_DEF(air)
 // pipenet can be built.
 /datum/controller/subsystem/air/proc/setup_pipenets()
 	for (var/obj/machinery/atmospherics/AM in atmos_machinery)
-		var/list/targets = AM.get_rebuild_targets()
-		for(var/datum/pipeline/build_off as anything in targets)
-			build_off.build_pipeline_blocking(AM)
+		var/datum/pipeline/build_target = AM.get_rebuild_target()
+		while(build_target)
+			build_target.build_pipeline_blocking(AM)
+			build_target = AM.get_rebuild_target()
 		CHECK_TICK
 
 GLOBAL_LIST_EMPTY(colored_turfs)
@@ -743,9 +747,10 @@ GLOBAL_LIST_EMPTY(colored_images)
 
 	for(var/A in 1 to atmos_machines.len)
 		AM = atmos_machines[A]
-		var/list/targets = AM.get_rebuild_targets()
-		for(var/datum/pipeline/build_off as anything in targets)
-			build_off.build_pipeline_blocking(AM)
+		var/datum/pipeline/build_target = AM.get_rebuild_target()
+		while(build_target)
+			build_target.build_pipeline_blocking(AM)
+			build_target = AM.get_rebuild_target()
 		CHECK_TICK
 
 

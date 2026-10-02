@@ -3,6 +3,7 @@ GLOBAL_LIST_INIT(immerse_ignored_movable, typecacheof(list(
 	/obj/effect,
 	/mob/dead,
 	/obj/projectile,
+	/obj/item/toy/hazard_warning,
 )))
 
 /// A visual element that makes movables entering the attached turfs look immersed into that turf.

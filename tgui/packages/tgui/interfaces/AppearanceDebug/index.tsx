@@ -273,6 +273,23 @@ export function getReadablePlane(
   appearance: Appearance,
   planeToText: Record<string, number>,
 ) {
+  const {
+    plane,
+    plane_unregistered,
+    plane_decoded_true,
+    plane_decoded_offset,
+    plane_max_offset,
+  } = appearance.data;
+  if (plane_unregistered) {
+    if (typeof plane_decoded_true !== 'number') {
+      return `UNREGISTERED ${plane}`;
+    }
+    const trueName =
+      Object.keys(planeToText).find(
+        (x) => planeToText[x] === plane_decoded_true,
+      ) || plane_decoded_true.toString();
+    return `UNREGISTERED ${plane} (${trueName} at offset ${plane_decoded_offset}, max ${plane_max_offset})`;
+  }
   return (
     (Object.keys(planeToText).find(
       (x) => planeToText[x] === appearance.data.plane_true,

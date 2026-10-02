@@ -121,14 +121,14 @@ SUBSYSTEM_DEF(sounds)
 	free_channel(channel)
 
 /// Frees all the channels a datum is using.
-/datum/controller/subsystem/sounds/proc/free_datum_channels(datum/D)
-	var/list/L = using_channels_by_datum[D]
+/datum/controller/subsystem/sounds/proc/free_datum_channels(datum/channel_owner)
+	var/list/L = using_channels_by_datum[channel_owner]
 	if(!L)
 		return
 	for(var/channel in L)
 		using_channels -= num2text(channel)
 		free_channel(channel)
-	stop_tracking_datum(D)
+	stop_tracking_datum(channel_owner)
 
 /// Frees all datumless channels
 /datum/controller/subsystem/sounds/proc/free_datumless_channels()
@@ -145,18 +145,19 @@ SUBSYSTEM_DEF(sounds)
 	using_channels_by_datum[DATUMLESS] += .
 
 /// Reserves a channel for a datum. Automatic cleanup only when the datum is deleted. Returns an integer for channel.
-/datum/controller/subsystem/sounds/proc/reserve_sound_channel_for_datum(datum/D)
-	if(!D) //i don't like typechecks but someone will fuck it up
+/datum/controller/subsystem/sounds/proc/reserve_sound_channel_for_datum(datum/channel_owner)
+	if(!channel_owner) //i don't like typechecks but someone will fuck it up
 		CRASH("Attempted to reserve sound channel without datum using the managed proc.")
 	.= reserve_channel()
 	if(!.)
 		CRASH("No more sound channels can be reserved")
 	var/text_channel = num2text(.)
-	using_channels[text_channel] = D
-	LAZYINITLIST(using_channels_by_datum[D])
-	using_channels_by_datum[D] += .
+	using_channels[text_channel] = channel_owner
+	LAZYINITLIST(using_channels_by_datum[channel_owner])
+	using_channels_by_datum[channel_owner] += .
 
-	RegisterSignal(D, COMSIG_QDELETING, PROC_REF(tracked_datum_deleted))
+	if(length(using_channels_by_datum[channel_owner]) == 1)
+		RegisterSignal(channel_owner, COMSIG_QDELETING, PROC_REF(tracked_datum_deleted))
 
 /**
  * Reserves a channel and updates the datastructure. Private proc.
@@ -264,11 +265,11 @@ SUBSYSTEM_DEF(sounds)
 
 
 ///Call to free all channels reserved by a datum.
-/datum/controller/subsystem/sounds/proc/stop_tracking_datum(datum/D)
+/datum/controller/subsystem/sounds/proc/stop_tracking_datum(datum/channel_owner)
 	PRIVATE_PROC(TRUE)
 
-	using_channels_by_datum -= D
-	UnregisterSignal(D, COMSIG_QDELETING)
+	using_channels_by_datum -= channel_owner
+	UnregisterSignal(channel_owner, COMSIG_QDELETING)
 
 /// Handles a tracked datum being deleted, automatically freeing the channels.
 /datum/controller/subsystem/sounds/proc/tracked_datum_deleted(datum/source)

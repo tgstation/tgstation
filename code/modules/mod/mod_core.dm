@@ -555,10 +555,10 @@
 	update_greyscale()
 
 /obj/item/mod/core/soul/charge_source()
-	return CONFIG_GET(flag/disable_human_mood) ? src : mod.wearer?.mob_mood
+	return mod.wearer?.mob_mood
 
 /obj/item/mod/core/soul/max_charge_amount()
-	return CONFIG_GET(flag/disable_human_mood) ? INFINITY : SANITY_MAXIMUM
+	return SANITY_MAXIMUM
 
 /obj/item/mod/core/soul/charge_amount()
 	var/mob/living/wearer = mod.wearer
@@ -566,20 +566,14 @@
 		return 0
 	if(HAS_TRAIT(wearer, TRAIT_NO_SOUL))
 		return 0 // Can't draw from something that isn't there.
-	if(CONFIG_GET(flag/disable_human_mood))
-		return INFINITY
 	var/datum/mood/source = charge_source()
 	return source?.sanity
 
 /obj/item/mod/core/soul/check_charge(amount)
-	if(CONFIG_GET(flag/disable_human_mood))
-		return !!mod.wearer
 	return charge_amount() >= amount * 10 / STANDARD_CELL_CHARGE
 
 /obj/item/mod/core/soul/subtract_charge(amount)
 	var/mob/living/wearer = mod.wearer
-	if(CONFIG_GET(flag/disable_human_mood))
-		return !!wearer
 	var/datum/mood/source = charge_source()
 	source.adjust_sanity(-amount * 10 / STANDARD_CELL_CHARGE)
 	var/backlash_type = get_backlash_type(wearer)
@@ -593,8 +587,6 @@
 	var/mob/living/wearer = mod.wearer
 	if(!wearer || HAS_TRAIT(wearer, TRAIT_NO_SOUL))
 		return "No power source detected."
-	if(CONFIG_GET(flag/disable_human_mood))
-		return "Infinite"
 	return "[round(charge_amount() / max_charge_amount() * 100, 0.1)]%"
 
 /obj/item/mod/core/soul/get_chargebar_color()

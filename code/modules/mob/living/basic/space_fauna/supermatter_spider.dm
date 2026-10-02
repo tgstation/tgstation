@@ -41,6 +41,7 @@
 
 /mob/living/basic/supermatter_spider/Initialize(mapload)
 	. = ..()
+	ADD_TRAIT(src, TRAIT_WEB_SURFER, INNATE_TRAIT)
 	AddComponent(/datum/component/swarming)
 
 	AddElement(/datum/element/ai_retaliate)

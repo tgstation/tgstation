@@ -61,7 +61,7 @@
 
 /datum/heretic_knowledge/spell/opening_blast
 	name = "Wave Of Desperation"
-	desc = "Grants you Wave Of Desparation, a spell which can only be cast while restrained.<br>\
+	desc = "Grants you Wave Of Desperation, a spell which can only be cast while restrained.<br>\
 		It removes your restraints, repels and knocks down adjacent people, and applies the Mansus Grasp to everything nearby."
 	gain_text = "My shackles undone in dark fury, their feeble bindings crumble before my power."
 	required_atoms = list(
@@ -94,7 +94,7 @@
 	drafting_tier = 2
 
 /datum/heretic_knowledge/ether
-	name = "Ether Of The Newborn"
+	name = "Ether of the Newborn"
 	desc = "Brews a single use potion.<br>Imbibing it will restore you to full health and \
 		remove any sort of abnormality from your body (including diseases, traumas and implants) - \
 		however, you will lose consciousness for a full minute."

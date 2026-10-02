@@ -461,6 +461,13 @@
 	// Inhale Miasma. Exhale nothing.
 	breathe_gas_volume(breath, /datum/gas/miasma)
 	// Miasma side effects
+	if (prob(0.5 * miasma_pp))
+		for (var/datum/disease as anything in breather.diseases)
+			if (is_type_in_list(disease, GLOB.floor_diseases))
+				return
+		var/random_disease = pick_weight(GLOB.floor_diseases)
+		var/datum/disease/inflicted_disease = new random_disease
+		breather.ForceContractDisease(inflicted_disease, del_on_fail = TRUE)
 	if (HAS_TRAIT(breather, TRAIT_ANOSMIA)) //Anosmia quirk holder cannot smell miasma, but can get diseases from it.
 		return
 	switch(miasma_pp)
@@ -747,20 +754,25 @@
 
 /obj/item/organ/lungs/proc/handle_breath_temperature(datum/gas_mixture/breath, mob/living/carbon/human/breather) // called by human/life, handles temperatures
 	var/breath_temperature = breath.temperature
+	breath.temperature = breather.bodytemperature // The air you breathe out should match your body temperature
+
+	if((breath_temperature > cold_level_1_threshold) || (breath_temperature < heat_level_1_threshold))
+		return // safe air that isn't too hot or cold
 
 	if(!HAS_TRAIT(breather, TRAIT_RESISTCOLD)) // COLD DAMAGE
 		var/cold_modifier = breather.dna.species.coldmod
 		var/breath_effect_prob = 0
-		if(breath_temperature < cold_level_3_threshold)
+		if(breath_temperature <= cold_level_3_threshold)
 			breather.apply_damage(cold_level_3_damage * cold_modifier, cold_damage_type, spread_damage = TRUE)
 			breath_effect_prob = 100
-		if(breath_temperature > cold_level_3_threshold && breath_temperature < cold_level_2_threshold)
+		else if(breath_temperature <= cold_level_2_threshold)
 			breather.apply_damage(cold_level_2_damage * cold_modifier, cold_damage_type, spread_damage = TRUE)
 			breath_effect_prob = 50
-		if(breath_temperature > cold_level_2_threshold && breath_temperature < cold_level_1_threshold)
+		else if(breath_temperature <= cold_level_1_threshold)
 			breather.apply_damage(cold_level_1_damage * cold_modifier, cold_damage_type, spread_damage = TRUE)
 			breath_effect_prob = 25
-		if(breath_temperature < cold_level_1_threshold)
+
+		if(breath_temperature <= cold_level_1_threshold)
 			if(prob(sqrt(breath_effect_prob) * 4))
 				to_chat(breather, span_warning("You feel [cold_message] in your [name]!"))
 				if(prob(50))
@@ -777,21 +789,19 @@
 	if(!HAS_TRAIT(breather, TRAIT_RESISTHEAT)) // HEAT DAMAGE
 		var/heat_modifier = breather.dna.species.heatmod
 		var/heat_message_prob = 0
-		if(breath_temperature > heat_level_1_threshold && breath_temperature < heat_level_2_threshold)
-			breather.apply_damage(heat_level_1_damage * heat_modifier, heat_damage_type, spread_damage = TRUE)
+		if(breath_temperature >= heat_level_3_threshold)
+			breather.apply_damage(heat_level_3_damage * heat_modifier, heat_damage_type, spread_damage = TRUE)
 			heat_message_prob = 100
-		if(breath_temperature > heat_level_2_threshold && breath_temperature < heat_level_3_threshold)
+		else if(breath_temperature >= heat_level_2_threshold)
 			breather.apply_damage(heat_level_2_damage * heat_modifier, heat_damage_type, spread_damage = TRUE)
 			heat_message_prob = 50
-		if(breath_temperature > heat_level_3_threshold)
-			breather.apply_damage(heat_level_3_damage * heat_modifier, heat_damage_type, spread_damage = TRUE)
+		else if(breath_temperature >= heat_level_1_threshold)
+			breather.apply_damage(heat_level_1_damage * heat_modifier, heat_damage_type, spread_damage = TRUE)
 			heat_message_prob = 25
-		if(breath_temperature > heat_level_1_threshold)
+
+		if(breath_temperature >= heat_level_1_threshold)
 			if(prob(sqrt(heat_message_prob) * 4))
 				to_chat(breather, span_warning("You feel [hot_message] in your [name]!"))
-
-	// The air you breathe out should match your body temperature
-	breath.temperature = breather.bodytemperature
 
 /// Creates a particle effect off the mouth of the passed mob.
 /obj/item/organ/lungs/proc/emit_breath_particle(mob/living/carbon/human/breather, particle_type)
@@ -905,6 +915,7 @@
 	safe_oxygen_min = 0 //We don't breathe this
 	safe_plasma_min = 4 //We breathe THIS!
 	safe_plasma_max = 0
+	organ_flags = ORGAN_MINERAL | ORGAN_ORGANIC
 
 /obj/item/organ/lungs/plasmaman/plasmaman_smoker
 	name = "smoker plasma filter"

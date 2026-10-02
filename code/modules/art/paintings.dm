@@ -918,6 +918,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	desc = "paintbrush included"
 	icon = 'icons/obj/art/artstuff.dmi'
 	icon_state = "palette"
+	inhand_icon_state = "palette"
 	lefthand_file = 'icons/mob/inhands/equipment/palette_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/palette_righthand.dmi'
 	w_class = WEIGHT_CLASS_TINY

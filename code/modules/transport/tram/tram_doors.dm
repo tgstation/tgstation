@@ -28,7 +28,7 @@
 	if(!id_tag)
 		id_tag = assign_random_name()
 
-/obj/machinery/door/airlock/tram/open(forced = DEFAULT_DOOR_CHECKS)
+/obj/machinery/door/airlock/tram/open(forced = DEFAULT_DOOR_CHECKS, mob/living/opener)
 	if(welded || locked || seal)
 		return FALSE
 
@@ -39,6 +39,8 @@
 		return FALSE
 
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, FALSE)
+	if (opener)
+		SEND_SIGNAL(opener, COMSIG_MOB_OPENED_AIRLOCK, forced)
 	var/animate_open = forced == BYPASS_DOOR_CHECKS ? FALSE : TRUE
 	set_airlock_state(AIRLOCK_OPENING, animate_open, force_type = forced)
 
