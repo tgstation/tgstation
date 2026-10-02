@@ -497,14 +497,11 @@
 		return FALSE
 
 	if(victim)
-		victim.visible_message(span_warning("[src] snaps shut on [victim]'s hand!"), span_warning("You trigger [src] with your hand!"))
 		var/hand_zone = victim.held_index_to_dir(victim.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
-		spring_trap(victim, def_zone = hand_zone)
+		spring_trap(victim, def_zone = hand_zone, ignore_movetypes = TRUE)
 		return TRUE
-	else
-		visible_message(span_warning("[src] snaps shut!"))
-		spring_trap()
-		return FALSE
+
+	return FALSE
 
 /**
  * Closes a bear trap
