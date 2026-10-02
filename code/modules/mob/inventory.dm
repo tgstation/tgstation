@@ -71,6 +71,9 @@
 			holding_items += I
 	return holding_items
 
+/// Returns the items in your "active hand set", essentially your active hand and offhand
+/mob/proc/get_active_handset_items()
+	return list(get_active_held_item(), get_inactive_held_item())
 
 /mob/proc/get_empty_held_indexes()
 	var/list/L
