@@ -479,14 +479,6 @@
 	try_to_weld_secondary(tool, user)
 	return ITEM_INTERACT_SUCCESS
 
-/obj/machinery/door/crowbar_act_secondary(mob/living/user, obj/item/tool)
-	var/forced_open = FALSE
-	if(istype(tool, /obj/item/crowbar))
-		var/obj/item/crowbar/crowbar = tool
-		forced_open = crowbar.force_opens
-	try_to_crowbar_secondary(tool, user, forced_open)
-	return ITEM_INTERACT_SUCCESS
-
 /obj/machinery/door/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = 1, attack_dir)
 	. = ..()
 	if(. && atom_integrity > 0)
