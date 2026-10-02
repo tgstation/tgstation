@@ -97,6 +97,12 @@
 				themselves, such as against security officers or when welding. Welding \
 				masks will work.",
 		),
+		list(
+			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
+			SPECIES_PERK_ICON = "face-dizzy",
+			SPECIES_PERK_NAME = "Fragile",
+			SPECIES_PERK_DESC = "Moth anatomy is fragile at their size, it's easier to seriously hurt them."
+		)
 	)
 
 	return to_add

@@ -1,3 +1,8 @@
+#define BRUTE_MOD 1.15
+#define BURN_MOD 1.15
+#define WOUND_RES_LIMB_MALUS -10 // ouch
+#define WOUND_RES_CORE_MALUS -20 // ouch!!!
+
 /obj/item/bodypart/head/moth
 	icon = 'icons/mob/human/species/moth/bodyparts.dmi'
 	icon_state = "moth_head"
@@ -9,6 +14,10 @@
 	teeth_count = 0
 	bodypart_traits = list(TRAIT_ANTENNAE)
 
+	brute_modifier = BRUTE_MOD
+	burn_modifier = BURN_MOD
+	wound_resistance = /obj/item/bodypart/head::wound_resistance + WOUND_RES_CORE_MALUS
+
 /obj/item/bodypart/chest/moth
 	icon = 'icons/mob/human/species/moth/bodyparts.dmi'
 	icon_state = "moth_chest_m"
@@ -18,6 +27,10 @@
 	should_draw_greyscale = FALSE
 	wing_types = list(/obj/item/organ/wings/megamoth, /obj/item/organ/wings/mothra)
 	bodypart_traits = list(TRAIT_TACKLING_WINGED_ATTACKER)
+
+	brute_modifier = BRUTE_MOD
+	burn_modifier = BURN_MOD
+	wound_resistance = /obj/item/bodypart/chest::wound_resistance + WOUND_RES_CORE_MALUS
 	can_be_disabled = TRUE // to allow disabling the chest arms
 
 	VAR_PRIVATE/obj/item/bodypart/arm/left/moth/inner/left_inner
@@ -78,6 +91,10 @@
 	unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 
+	brute_modifier = BRUTE_MOD
+	burn_modifier = BURN_MOD
+	wound_resistance = /obj/item/bodypart/arm/left::wound_resistance + WOUND_RES_LIMB_MALUS
+
 /obj/item/bodypart/arm/right/moth
 	icon = 'icons/mob/human/species/moth/bodyparts.dmi'
 	icon_state = "moth_r_arm"
@@ -92,6 +109,10 @@
 	unarmed_attack_sound = 'sound/items/weapons/slash.ogg'
 	unarmed_miss_sound = 'sound/items/weapons/slashmiss.ogg'
 
+	brute_modifier = BRUTE_MOD
+	burn_modifier = BURN_MOD
+	wound_resistance = /obj/item/bodypart/arm/right::wound_resistance + WOUND_RES_LIMB_MALUS
+
 /obj/item/bodypart/leg/left/moth
 	icon = 'icons/mob/human/species/moth/bodyparts.dmi'
 	icon_state = "moth_l_leg"
@@ -99,12 +120,20 @@
 	limb_id = SPECIES_MOTH
 	should_draw_greyscale = FALSE
 
+	brute_modifier = BRUTE_MOD
+	burn_modifier = BURN_MOD
+	wound_resistance = /obj/item/bodypart/leg/left::wound_resistance + WOUND_RES_LIMB_MALUS
+
 /obj/item/bodypart/leg/right/moth
 	icon = 'icons/mob/human/species/moth/bodyparts.dmi'
 	icon_state = "moth_r_leg"
 	icon_static = 'icons/mob/human/species/moth/bodyparts.dmi'
 	limb_id = SPECIES_MOTH
 	should_draw_greyscale = FALSE
+
+	brute_modifier = BRUTE_MOD
+	burn_modifier = BURN_MOD
+	wound_resistance = /obj/item/bodypart/leg/right::wound_resistance + WOUND_RES_LIMB_MALUS
 
 /obj/item/bodypart/arm/left/moth/inner
 	body_zone = null
@@ -162,3 +191,8 @@
 	offset_location = UPPER_BODY
 	icon = 'icons/mob/human/species/moth/moth_arms.dmi'
 	icon_state = "m_moth_arms_generic"
+
+#undef BRUTE_MOD
+#undef BURN_MOD
+#undef WOUND_RES_LIMB_MALUS
+#undef WOUND_RES_CORE_MALUS
