@@ -44,6 +44,15 @@
 		var/mob/living/carbon/human/humie = new_owner
 		humie.update_mob_height()
 
+		RegisterSignal(new_owner, COMSIG_BODYPART_UPDATING_SURGERY_STATE, PROC_REF(on_surgery_state_change))
+
+	if(HAS_ANY_SURGERY_STATE(changed_states, SURGERY_BONE_SAWED))
+		RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+	else
+		UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
+
+
+
 /obj/item/bodypart/chest/get_butcher_drops()
 	. = ..()
 	var/datum/species/species = GLOB.species_list[species_id || limb_id]

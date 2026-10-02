@@ -1977,6 +1977,56 @@
 	else if(HAS_SURGERY_STATE(old_state, ALL_SURGERY_FISH_STATES(body_zone)))
 		qdel(owner.GetComponent(/datum/component/fishing_spot))
 
+/// Used to check if open surgery is happening
+/obj/item/bodypart/proc/on_surgery_state_change(datum/source, old_state, current_state, changed_states)
+	SIGNAL_HANDLER
+
+	if(HAS_ANY_SURGERY_STATE(current_state, SURGERY_BONE_SAWED)) // double check current_state (vs changed_state)
+		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
+		return
+
+	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+
+/// Tracks if the mob is moving while critical surgery (sawed open) is taking place
+/obj/item/bodypart/proc/on_moved(obj/item/bodypart, atom/OldLoc, Dir, forced)
+	SIGNAL_HANDLER
+
+	if(owner)
+		if(forced || CHECK_MOVE_LOOP_FLAGS(owner, MOVEMENT_LOOP_OUTSIDE_CONTROL))
+			return
+		if(owner.buckled || (owner.body_position == LYING_DOWN) || (owner.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || (owner.move_intent == MOVE_INTENT_WALK))
+			return
+
+	if(!(locate(/obj/item/organ) in contents))
+		return // no more organs to drop
+
+	var/obj/item/organ/bodypart_organ = pick(contents)
+	if(!isorgan(bodypart_organ) || (bodypart_organ.organ_flags & ORGAN_UNREMOVABLE))
+		return
+
+	if(prob(90))
+		if(prob(20))
+			owner?.to_chat(owner, span_warning("Your open [src] throbs painfully with every step!"))
+		return
+
+	var/atom/drop_loc = drop_location()
+	bodypart_organ.apply_organ_damage(bodypart_organ.maxHealth * 0.5)
+
+	if(owner)
+		bodypart_organ.Remove(bodypart_organ.owner)
+	else if(!bodypart_organ.bodypart_remove(src))
+		return
+
+	if(drop_loc) //can be null if being deleted
+		bodypart_organ.forceMove(get_turf(drop_loc))
+
+	if(IS_ORGANIC_LIMB(src))
+		playsound(drop_loc, 'sound/misc/splort.ogg', 50, TRUE, -1)
+
+	update_icon_dropped()
+	owner?.to_chat(owner, span_userdanger("Your [bodypart_organ] falls out of your open [src]!"))
+	owner?.painful_scream()
+
 /obj/item/bodypart/vv_edit_var(vname, vval)
 	if(vname != NAMEOF(src, surgery_state))
 		return ..()
