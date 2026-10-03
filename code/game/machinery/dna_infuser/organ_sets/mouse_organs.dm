@@ -1,104 +1,103 @@
-#define RAT_ORGAN_COLOR "#646464"
-#define RAT_SCLERA_COLOR "#f0e055"
-#define RAT_PUPIL_COLOR COLOR_BLACK
-#define RAT_COLORS RAT_ORGAN_COLOR + RAT_SCLERA_COLOR + RAT_PUPIL_COLOR
+#define MOUSE_ORGAN_COLOR "#646464"
+#define MOUSE_SCLERA_COLOR "#f0e055"
+#define MOUSE_PUPIL_COLOR COLOR_BLACK
+#define MOUSE_COLORS MOUSE_ORGAN_COLOR + MOUSE_SCLERA_COLOR + MOUSE_PUPIL_COLOR
 
-///bonus of the rat: you can ventcrawl!
-/datum/status_effect/organ_set_bonus/rat
-	id = "organ_set_bonus_rat"
+///bonus of the mouse: you can ventcrawl!
+/datum/status_effect/organ_set_bonus/mouse
+	id = "organ_set_bonus_mouse"
 	organs_needed = 4
 	bonus_activate_text = span_notice("Rodent DNA is deeply infused with you! You've learned how to traverse ventilation!")
-	bonus_deactivate_text = span_notice("Your DNA is no longer majority rat, and so fades your ventilation skills...")
+	bonus_deactivate_text = span_notice("Your DNA is no longer majority rodent, and so fades your ventilation skills...")
 	bonus_traits = list(TRAIT_VENTCRAWLER_NUDE)
 
 ///way better night vision, super sensitive. lotta things work like this, huh?
-/obj/item/organ/eyes/night_vision/rat
-	name = "mutated rat-eyes"
-	desc = "Rat DNA infused into what was once a normal pair of eyes."
+/obj/item/organ/eyes/night_vision/mouse
+	name = "mutated mouse-eyes"
+	desc = "Mouse DNA infused into what was once a normal pair of eyes."
 	flash_protect = FLASH_PROTECTION_HYPER_SENSITIVE
 	eye_color_left = COLOR_BLACK
 	eye_color_right = COLOR_BLACK
 
 	iris_overlay = null
 	icon = 'icons/map_icons/items/_item.dmi'
-	icon_state = "/obj/item/organ/eyes/night_vision/rat"
+	icon_state = "/obj/item/organ/eyes/night_vision/mouse"
 	post_init_icon_state = "eyes"
 	greyscale_config = /datum/greyscale_config/mutant_organ
-	greyscale_colors = RAT_COLORS
+	greyscale_colors = MOUSE_COLORS
 	low_light_cutoff = list(16, 11, 0)
 	medium_light_cutoff = list(30, 20, 5)
 	high_light_cutoff = list(45, 35, 10)
 
-/obj/item/organ/eyes/night_vision/rat/Initialize(mapload)
+/obj/item/organ/eyes/night_vision/mouse/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes have deep, shifty black pupils, surrounded by a sickening yellow sclera.", BODY_ZONE_PRECISE_EYES)
-	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes have deep black pupils, surrounded by an almost equally as dark sclera.", BODY_ZONE_PRECISE_EYES)
+	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/mouse)
 
 ///increases hunger, disgust recovers quicker, expands what is defined as "food"
-/obj/item/organ/stomach/rat
-	name = "mutated rat-stomach"
-	desc = "Rat DNA infused into what was once a normal stomach."
+/obj/item/organ/stomach/mouse
+	name = "mutate mouse-stomach"
+	desc = "Mouse DNA infused into what was once a normal stomach."
 	disgust_metabolism = 3
 
 	icon = 'icons/map_icons/items/_item.dmi'
-	icon_state = "/obj/item/organ/stomach/rat"
+	icon_state = "/obj/item/organ/stomach/mouse"
 	post_init_icon_state = "stomach"
 	greyscale_config = /datum/greyscale_config/mutant_organ
-	greyscale_colors = RAT_COLORS
+	greyscale_colors = MOUSE_COLORS
 	hunger_modifier = 10
 
-/obj/item/organ/stomach/rat/Initialize(mapload)
+/obj/item/organ/stomach/mouse/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
-	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their mouth is drooling excessively.", BODY_ZONE_PRECISE_MOUTH)
+	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/mouse)
 
 /// makes you smaller, walk over tables, and take 1.5x damage
-/obj/item/organ/heart/rat
-	name = "mutated rat-heart"
-	desc = "Rat DNA infused into what was once a normal heart."
+/obj/item/organ/heart/mouse
+	name = "mutated mouse-heart"
+	desc = "Mouse DNA infused into what was once a normal heart."
 	icon = 'icons/map_icons/items/_item.dmi'
-	icon_state = "/obj/item/organ/heart/rat"
+	icon_state = "/obj/item/organ/heart/mouse"
 	post_init_icon_state = "heart"
 	greyscale_config = /datum/greyscale_config/mutant_organ
-	greyscale_colors = RAT_COLORS
+	greyscale_colors = MOUSE_COLORS
 	beat_noise = "a fast-paced high-pitched pit-pat"
 	organ_traits = list(TRAIT_DWARF)
 
-/obj/item/organ/heart/rat/Initialize(mapload)
+/obj/item/organ/heart/mouse/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
-	AddElement(/datum/element/noticable_organ, "%PRONOUN_They hunch%PRONOUN_es over unnaturally!")
+	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/mouse)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_They have an inwardly posture and #PRONOUN_their movement is jittery and frail.")
 	AddElement(/datum/element/update_icon_blocker)
 
-/obj/item/organ/heart/rat/on_mob_insert(mob/living/carbon/receiver)
+/obj/item/organ/heart/mouse/on_mob_insert(mob/living/carbon/receiver)
 	. = ..()
 	receiver.damage_resistance -= 50 //but 1.5 damage
 
-/obj/item/organ/heart/rat/on_mob_remove(mob/living/carbon/heartless, special, movement_flags)
+/obj/item/organ/heart/mouse/on_mob_remove(mob/living/carbon/heartless, special, movement_flags)
 	. = ..()
 	heartless.damage_resistance += 50 //revert damage resistance
 
-/// you occasionally squeak, and have some rat related verbal tics
-/obj/item/organ/tongue/rat
-	name = "mutated rat-tongue"
-	desc = "Rat DNA infused into what was once a normal tongue."
+/// you occasionally squeak, and have some mouse related verbal tics
+/obj/item/organ/tongue/mouse
+	name = "mutated mouse-tongue"
+	desc = "Mouse DNA infused into what was once a normal tongue."
 	say_mod = "squeaks"
 	modifies_speech = TRUE
 	icon = 'icons/map_icons/items/_item.dmi'
-	icon_state = "/obj/item/organ/tongue/rat"
+	icon_state = "/obj/item/organ/tongue/mouse"
 	post_init_icon_state = "tongue"
 	greyscale_config = /datum/greyscale_config/mutant_organ
-	greyscale_colors = RAT_COLORS
+	greyscale_colors = MOUSE_COLORS
 	liked_foodtypes = DAIRY //mmm, cheese. doesn't especially like anything else
-	disliked_foodtypes = NONE //but a rat can eat anything without issue
+	disliked_foodtypes = NONE //but a mouse can eat anything without issue
 	toxic_foodtypes = NONE
 
-/obj/item/organ/tongue/rat/Initialize(mapload)
+/obj/item/organ/tongue/mouse/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their teeth are oddly shaped and yellowing.", BODY_ZONE_PRECISE_MOUTH)
-	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/rat)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their teeth are particularly bucktoothed!.", BODY_ZONE_PRECISE_MOUTH)
+	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/mouse)
 
-/obj/item/organ/tongue/rat/proc/whimsy_check(mob/living/checking)
+/obj/item/organ/tongue/mouse/proc/whimsy_check(mob/living/checking)
 	if(check_holidays(APRIL_FOOLS))
 		return TRUE
 	if(HAS_PERSONALITY(checking, /datum/personality/whimsical))
@@ -107,7 +106,7 @@
 		return TRUE
 	return FALSE
 
-/obj/item/organ/tongue/rat/modify_speech(datum/source, list/speech_args)
+/obj/item/organ/tongue/mouse/modify_speech(datum/source, list/speech_args)
 	. = ..()
 	if(!whimsy_check(source))
 		return
@@ -117,25 +116,25 @@
 	if(message == "hi?")
 		speech_args[SPEECH_MESSAGE] = "Um... cheesed to meet you?"
 
-/obj/item/organ/tongue/rat/on_mob_insert(mob/living/carbon/tongue_owner, special, movement_flags)
+/obj/item/organ/tongue/mouse/on_mob_insert(mob/living/carbon/tongue_owner, special, movement_flags)
 	. = ..()
 	RegisterSignal(tongue_owner, COMSIG_LIVING_ITEM_GIVEN, PROC_REF(its_on_the_mouse))
 
-/obj/item/organ/tongue/rat/on_mob_remove(mob/living/carbon/tongue_owner)
+/obj/item/organ/tongue/mouse/on_mob_remove(mob/living/carbon/tongue_owner)
 	. = ..()
 	UnregisterSignal(tongue_owner, COMSIG_LIVING_ITEM_GIVEN)
 
-/obj/item/organ/tongue/rat/proc/on_item_given(mob/living/carbon/offerer, mob/living/taker, obj/item/given)
+/obj/item/organ/tongue/mouse/proc/on_item_given(mob/living/carbon/offerer, mob/living/taker, obj/item/given)
 	SIGNAL_HANDLER
 	if(!whimsy_check(offerer))
 		return
 	INVOKE_ASYNC(src, PROC_REF(its_on_the_mouse), offerer, taker)
 
-/obj/item/organ/tongue/rat/proc/its_on_the_mouse(mob/living/carbon/offerer, mob/living/taker)
+/obj/item/organ/tongue/mouse/proc/its_on_the_mouse(mob/living/carbon/offerer, mob/living/taker)
 	offerer.say("For you, it's on the mouse.")
 	taker.add_mood_event("it_was_on_the_mouse", /datum/mood_event/it_was_on_the_mouse)
 
-/obj/item/organ/tongue/rat/on_life(seconds_per_tick)
+/obj/item/organ/tongue/mouse/on_life(seconds_per_tick)
 	. = ..()
 	if(prob(5))
 		owner.emote("squeaks")
@@ -185,7 +184,7 @@
 /datum/bodypart_overlay/mutant/tail/mouse/randomize_appearance()
 	set_appearance_from_name(/datum/sprite_accessory/tails/mouse/default::name)
 
-#undef RAT_ORGAN_COLOR
-#undef RAT_SCLERA_COLOR
-#undef RAT_PUPIL_COLOR
-#undef RAT_COLORS
+#undef MOUSE_ORGAN_COLOR
+#undef MOUSE_SCLERA_COLOR
+#undef MOUSE_PUPIL_COLOR
+#undef MOUSE_COLORS
