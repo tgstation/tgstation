@@ -30,9 +30,9 @@
 	/// Are we at all five organs?
 	var/color_active = FALSE
 
-/datum/status_effect/organ_set_bonus/fish/enable_bonus(obj/item/organ/inserted_organ)
+/datum/status_effect/organ_set_bonus/fish/enable_bonus(obj/item/organ/inserted_organ, visuals_only)
 	. = ..()
-	if(!.)
+	if(!. || visuals_only)
 		return
 	RegisterSignals(owner, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN), PROC_REF(check_tail))
 	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_IS_WET), SIGNAL_REMOVETRAIT(TRAIT_IS_WET)), PROC_REF(update_wetness))
@@ -52,8 +52,10 @@
 	owner.mind?.adjust_experience(/datum/skill/fishing, SKILL_EXP_JOURNEYMAN, silent = TRUE)
 	owner.grant_language(/datum/language/carptongue, ALL, type)
 
-/datum/status_effect/organ_set_bonus/fish/disable_bonus(obj/item/organ/removed_organ)
+/datum/status_effect/organ_set_bonus/fish/disable_bonus(obj/item/organ/removed_organ, visuals_only)
 	. = ..()
+	if(visuals_only)
+		return
 	UnregisterSignal(owner, list(
 		COMSIG_CARBON_GAIN_ORGAN,
 		COMSIG_CARBON_LOSE_ORGAN,
@@ -75,7 +77,7 @@
 	owner.mind?.adjust_experience(/datum/skill/fishing, -SKILL_EXP_JOURNEYMAN, silent = TRUE)
 	owner.remove_language(/datum/language/carptongue, ALL, type)
 
-/datum/status_effect/organ_set_bonus/fish/set_organs(new_value, obj/item/organ/organ)
+/datum/status_effect/organ_set_bonus/fish/set_organs(new_value, obj/item/organ/organ, visuals_only)
 	. = ..()
 	if (!iscarbon(owner))
 		return
@@ -171,7 +173,7 @@
 
 /datum/status_effect/organ_set_bonus/fish/proc/add_speed_buff(datum/source)
 	SIGNAL_HANDLER
-	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(check_body_position), TRUE)
+	RegisterSignal(owner, COMSIG_LIVING_SET_BODY_POSITION, PROC_REF(check_body_position))
 	check_body_position()
 
 /datum/status_effect/organ_set_bonus/fish/proc/remove_speed_buff(datum/source)
