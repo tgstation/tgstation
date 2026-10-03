@@ -43,15 +43,12 @@
 	if(ishuman(new_owner))
 		var/mob/living/carbon/human/humie = new_owner
 		humie.update_mob_height()
+		RegisterSignal(src, COMSIG_BODYPART_UPDATING_SURGERY_STATE, PROC_REF(on_surgery_state_change))
 
-		RegisterSignal(new_owner, COMSIG_BODYPART_UPDATING_SURGERY_STATE, PROC_REF(on_surgery_state_change))
-
-	if(HAS_ANY_SURGERY_STATE(changed_states, SURGERY_BONE_SAWED))
-		RegisterSignal(src, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-	else
-		UnregisterSignal(src, COMSIG_MOVABLE_MOVED)
-
-
+/// We need to clear out hand hud items and appearance, so do that here
+/obj/item/bodypart/chest/clear_ownership(mob/living/carbon/old_owner)
+	. = ..()
+	UnregisterSignal(src, COMSIG_BODYPART_UPDATING_SURGERY_STATE)
 
 /obj/item/bodypart/chest/get_butcher_drops()
 	. = ..()

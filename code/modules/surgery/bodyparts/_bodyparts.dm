@@ -1977,55 +1977,60 @@
 	else if(HAS_SURGERY_STATE(old_state, ALL_SURGERY_FISH_STATES(body_zone)))
 		qdel(owner.GetComponent(/datum/component/fishing_spot))
 
+/atom/movable/screen/alert/status_effect/surgery
+	name = "Surgery"
+	desc = "You are currently undergoing surgery. Moving around in this state is extremely dangerous."
+	use_user_hud_icon = USER_HUD_STYLE_INHERIT
+	overlay_state = "surgery"
+
 /// Used to check if open surgery is happening
 /obj/item/bodypart/proc/on_surgery_state_change(datum/source, old_state, current_state, changed_states)
 	SIGNAL_HANDLER
 
-	if(HAS_ANY_SURGERY_STATE(current_state, SURGERY_BONE_SAWED)) // double check current_state (vs changed_state)
-		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved))
-		return
-
-	UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+	if(!HAS_ANY_SURGERY_STATE(old_state, SURGERY_BONE_SAWED) && HAS_ANY_SURGERY_STATE(current_state, SURGERY_BONE_SAWED)) // added saw state
+		owner.throw_alert(ALERT_SURGERY, /atom/movable/screen/alert/status_effect/surgery)
+		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved), override=TRUE)
+	else if(HAS_ANY_SURGERY_STATE(old_state, SURGERY_BONE_SAWED) && !HAS_ANY_SURGERY_STATE(changed_states, SURGERY_BONE_SAWED)) // removed saw state
+		owner.clear_alert(ALERT_SURGERY)
+		UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
 /// Tracks if the mob is moving while critical surgery (sawed open) is taking place
 /obj/item/bodypart/proc/on_moved(obj/item/bodypart, atom/OldLoc, Dir, forced)
 	SIGNAL_HANDLER
 
-	if(owner)
-		if(forced || CHECK_MOVE_LOOP_FLAGS(owner, MOVEMENT_LOOP_OUTSIDE_CONTROL))
+	if(!owner)
+		return
+	if(forced || CHECK_MOVE_LOOP_FLAGS(owner, MOVEMENT_LOOP_OUTSIDE_CONTROL))
+		return
+	if(owner.buckled || owner.pulledby)
+		return
+	if((owner.body_position == LYING_DOWN) || (owner.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || (owner.move_intent == MOVE_INTENT_WALK))
+		return
+
+	if(prob(5))
+		var/list/elligible_organs = list()
+		for(var/obj/item/organ/organ in contents) // make implants or cavity items elgible later
+			if(!(organ.organ_flags & ORGAN_UNREMOVABLE))
+				elligible_organs += organ
+
+		if(!elligible_organs.len)
 			return
-		if(owner.buckled || (owner.body_position == LYING_DOWN) || (owner.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || (owner.move_intent == MOVE_INTENT_WALK))
+
+		var/obj/item/organ/picked_organ = pick(elligible_organs)
+		picked_organ.Remove(owner)
+		picked_organ.apply_organ_damage(picked_organ.maxHealth * 0.5)
+		owner.visible_message(span_danger("[owner] [picked_organ.name] spills out of [p_their()] [src]!"), span_danger("Your [picked_organ.name] spills out of your open [src]!"))
+		picked_organ.forceMove(owner.drop_location())
+		owner.painful_scream()
+		if(IS_ORGANIC_LIMB(src))
+			playsound(owner, 'sound/misc/splort.ogg', 50, TRUE, -1)
+		update_icon_dropped()
+	else
+		if(HAS_TRAIT(owner, TRAIT_ANALGESIA))
 			return
-
-	if(!(locate(/obj/item/organ) in contents))
-		return // no more organs to drop
-
-	var/obj/item/organ/bodypart_organ = pick(contents)
-	if(!isorgan(bodypart_organ) || (bodypart_organ.organ_flags & ORGAN_UNREMOVABLE))
-		return
-
-	if(prob(90))
-		if(prob(20))
-			owner?.to_chat(owner, span_warning("Your open [src] throbs painfully with every step!"))
-		return
-
-	var/atom/drop_loc = drop_location()
-	bodypart_organ.apply_organ_damage(bodypart_organ.maxHealth * 0.5)
-
-	if(owner)
-		bodypart_organ.Remove(bodypart_organ.owner)
-	else if(!bodypart_organ.bodypart_remove(src))
-		return
-
-	if(drop_loc) //can be null if being deleted
-		bodypart_organ.forceMove(get_turf(drop_loc))
-
-	if(IS_ORGANIC_LIMB(src))
-		playsound(drop_loc, 'sound/misc/splort.ogg', 50, TRUE, -1)
-
-	update_icon_dropped()
-	owner?.to_chat(owner, span_userdanger("Your [bodypart_organ] falls out of your open [src]!"))
-	owner?.painful_scream()
+		if(prob(10))
+			to_chat(owner, span_warning("Your open [plaintext_zone] throbs painfully with every step! You feel like you should walk very carefully..."))
+			owner.emote("grimace")
 
 /obj/item/bodypart/vv_edit_var(vname, vval)
 	if(vname != NAMEOF(src, surgery_state))
