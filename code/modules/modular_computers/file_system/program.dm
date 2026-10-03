@@ -93,8 +93,7 @@
 	temp.program_flags = program_flags
 	temp.can_run_on_flags = can_run_on_flags
 	if(program_flags & PROGRAM_UNIQUE_COPY)
-		if(computer)
-			computer.remove_file(src)
+		os?.filesystem.remove_file(src)
 		if(disk_host)
 			disk_host.remove_file(src)
 	return temp
@@ -211,45 +210,13 @@
 	SEND_SIGNAL(src, COMSIG_COMPUTER_PROGRAM_START, user)
 	return TRUE
 
-/**
- * Kills the running program
- *
- * Use this proc to kill the program.
- * Designed to be implemented by each program if it requires on-quit logic, such as the NTNRC client.
- * Args:
- * - user - If there's a user, this is the person killing the program.
- **/
-/datum/computer_file/program/proc/kill_program(mob/user)
-	SHOULD_CALL_PARENT(TRUE)
-
-	if(src == computer.active_program)
-		computer.active_program = null
-		if(!QDELETED(computer) && computer.enabled)
-			INVOKE_ASYNC(computer, TYPE_PROC_REF(/obj/item/modular_computer, update_tablet_open_uis), user)
-	else if(src in computer.idle_threads)
-		computer.idle_threads.Remove(src)
-	else //The program wasn't running to begin with.
-		return FALSE
-
-	if(program_flags & PROGRAM_REQUIRES_NTNET)
-		var/obj/item/card/id/ID = computer.stored_id?.GetID()
-		generate_network_log("Connection closed -- Program ID: [filename] User:[ID ? "[ID.registered_name]" : "None"]")
-
-	computer.update_appearance(UPDATE_ICON)
-	SEND_SIGNAL(src, COMSIG_COMPUTER_PROGRAM_KILL, user)
-	return TRUE
+/datum/computer_file/program/proc/on_kill(mob/living/user)
 
 ///Sends the running program to the background/idle threads. Header programs can't be minimized and will kill instead.
 /datum/computer_file/program/proc/background_program(mob/user)
-	SHOULD_CALL_PARENT(TRUE)
-	if(program_flags & PROGRAM_HEADER || length(computer.idle_threads) > computer.max_idle_programs)
-		return kill_program()
+	if(program_flags & PROGRAM_HEADER || length(os.idle_threads) > os.max_idle_programs)
+		return os.kill_program(src)
 
-	computer.idle_threads.Add(src)
-	computer.active_program = null
-
-	if(user)
-		INVOKE_ASYNC(computer, TYPE_PROC_REF(/obj/item/modular_computer, update_tablet_open_uis), user)
 	computer.update_appearance(UPDATE_ICON)
 	return TRUE
 

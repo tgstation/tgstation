@@ -8,8 +8,8 @@ import {
   Stack,
 } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 // byond defines for the program state
 const CLIENT_ONLINE = 2;
@@ -46,7 +46,7 @@ const NoChannelDimmer = (props) => {
 };
 
 export const NtosNetChat = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useNtos();
   const {
     title,
     can_admin,

@@ -109,7 +109,8 @@
 		return .
 
 	if(cpu.enabled)
-		. += cpu.active_program?.program_open_overlay || screen_icon_state_menu
+		var/datum/computer_file/program/active_program = cpu.os.get_active_thread(1)
+		. += active_program?.program_open_overlay || screen_icon_state_menu
 	else if(!(machine_stat & NOPOWER))
 		. += screen_icon_screensaver
 

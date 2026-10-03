@@ -137,10 +137,10 @@
 				logfile.stored_text = "[logfile.stored_text][channel.messages[message_id]]\[BR\]"
 			logfile.stored_text = "[logfile.stored_text]\[b\]Logfile dump completed.\[/b\]"
 			logfile.calculate_size()
-			if(!computer || !computer.store_file(logfile))
-				if(!computer)
+			if(!os || !os.filesystem.store_file(logfile))
+				if(!os)
 					// This program shouldn't even be runnable without computer.
-					CRASH("Var computer is null!")
+					CRASH("Var os is null!")
 				computer.visible_message(span_warning("\The [computer] shows an \"I/O Error - Hard drive may be full. Please free some space and try again. Required space: [logfile.size]GQ\" warning."))
 			return TRUE
 		if("PRG_renamechannel")
@@ -184,7 +184,7 @@
 /datum/computer_file/program/chatclient/process_tick(seconds_per_tick)
 	. = ..()
 
-	if(!(src in computer.idle_threads))
+	if(!(src in os.idle_threads))
 		return
 
 	var/datum/ntnet_conversation/watched_channel = SSmodular_computers.get_chat_channel_by_id(active_channel)
@@ -210,7 +210,7 @@
 			channel.offline_clients.Remove(src)
 			channel.active_clients.Add(src)
 
-/datum/computer_file/program/chatclient/kill_program(mob/user)
+/datum/computer_file/program/chatclient/on_kill(mob/user)
 	for(var/datum/ntnet_conversation/channel as anything in SSmodular_computers.chat_channels)
 		channel.go_offline(src)
 	active_channel = null
@@ -229,9 +229,9 @@
 
 /// Converts active/idle/closed to a numerical status for sorting clients by.
 /datum/computer_file/program/chatclient/proc/get_numerical_status()
-	if(src == computer.active_program)
+	if(src in os.active_threads)
 		return STATUS_ONLINE
-	if(src in computer.idle_threads)
+	if(src in os.idle_threads)
 		return STATUS_AWAY
 	return STATUS_OFFLINE
 
@@ -267,8 +267,8 @@
 				authed = TRUE
 			clients.Add(list(list(
 				"name" = channel_client.username,
-				"online" = (channel_client == channel_client.computer.active_program),
-				"away" = (channel_client in channel_client.computer.idle_threads),
+				"online" = (channel_client in channel_client.os.active_threads),
+				"away" = (channel_client in channel_client.os.idle_threads),
 				"muted" = (channel_client in channel.muted_clients),
 				"operator" = (channel.channel_operator == channel_client),
 				"status" = channel_client.get_numerical_status(),

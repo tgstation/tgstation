@@ -87,7 +87,7 @@
 		return FALSE
 	computer.crew_manifest_update = TRUE
 
-/datum/computer_file/program/card_mod/kill_program(mob/user)
+/datum/computer_file/program/card_mod/on_kill(mob/user)
 	computer.crew_manifest_update = FALSE
 	var/obj/item/card/id/modified_id = computer.alt_stored_id
 	if(modified_id)

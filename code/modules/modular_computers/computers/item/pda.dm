@@ -22,7 +22,6 @@
 	max_capacity = 64
 	allow_chunky = TRUE
 	hardware_flag = PROGRAM_PDA
-	max_idle_programs = 2
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_ID | ITEM_SLOT_BELT
 	has_light = TRUE //LED flashlight!
@@ -35,18 +34,14 @@
 	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
 	drop_sound = SFX_GENERIC_DEVICE_DROP
 
+	os_type = /datum/operating_system/default/ntos/mobile
+
 	///The item currently inserted into the PDA, starts with a pen.
 	var/obj/item/inserted_item = /obj/item/pen
 
 	///Whether the PDA should have 'pda_programs' apps installed on Initialize.
 	var/has_pda_programs = TRUE
-	///Static list of default PDA apps to install on Initialize.
-	var/static/list/datum/computer_file/pda_programs = list(
-		/datum/computer_file/program/messenger,
-		/datum/computer_file/program/nt_pay,
-		/datum/computer_file/program/notepad,
-		/datum/computer_file/program/crew_manifest,
-	)
+
 	///List of items that can be stored in a PDA
 	var/static/list/contained_item = list(
 		/obj/item/pen,
@@ -66,16 +61,6 @@
 	if(istype(inserted_item))
 		QDEL_NULL(inserted_item)
 	return ..()
-
-/obj/item/modular_computer/pda/install_default_programs()
-	var/list/apps_to_download = list()
-	if(has_pda_programs)
-		apps_to_download += default_programs + pda_programs
-	apps_to_download += starting_programs
-
-	for(var/programs in apps_to_download)
-		var/datum/computer_file/program/program_type = new programs
-		store_file(program_type)
 
 /obj/item/modular_computer/pda/update_overlays()
 	. = ..()
@@ -256,8 +241,9 @@
 				LAZYOR(theme_app.imported_themes, theme_name)
 
 	var/new_theme = owner_client.prefs.read_preference(/datum/preference/choiced/pda_theme)
-	if(new_theme)
-		device_theme = GLOB.pda_name_to_theme[new_theme]
+	if(new_theme && istype(os, /datum/operating_system/default/ntos))
+		var/datum/operating_system/default/ntos/ntos = os
+		ntos.device_theme = GLOB.pda_name_to_theme[new_theme]
 
 /// A simple proc to set the ringtone from a pda.
 /obj/item/modular_computer/pda/proc/update_ringtone(new_ringtone)
@@ -273,18 +259,29 @@
  * PDA that doesn't come with the default apps but has Fission360
  * Resistant to emags, these are given to nukies for disk pinpointer stuff.
  */
+/datum/operating_system/default/ntos/syndie
+	device_theme = PDA_THEME_SYNDICATE
+
+/datum/operating_system/default/ntos/syndie/nuke
+	starting_programs = list(
+		/datum/computer_file/program/radar/fission360,
+	)
+
+/datum/operating_system/default/ntos/syndie/uplink
+	starting_programs = list(
+		/datum/computer_file/program/contract_uplink,
+		/datum/computer_file/program/secureye/syndicate,
+	)
+
 /obj/item/modular_computer/pda/nukeops
 	name = "nuclear pda"
 	icon_state = "/obj/item/modular_computer/pda/nukeops"
-	device_theme = PDA_THEME_SYNDICATE
 	comp_light_luminosity = 6.3 //matching a flashlight
 	light_color = COLOR_RED
 	greyscale_config = /datum/greyscale_config/tablet/stripe_thick
 	greyscale_colors = "#a80001#5C070F#000000"
 	long_ranged = TRUE
-	starting_programs = list(
-		/datum/computer_file/program/radar/fission360,
-	)
+	os_type = /datum/operating_system/default/ntos/syndie/nuke
 
 /obj/item/modular_computer/pda/nukeops/Initialize(mapload)
 	. = ..()
@@ -297,16 +294,28 @@
 	name = "contractor tablet"
 	icon_state = "/obj/item/modular_computer/pda/syndicate_contract_uplink"
 	icon_state_menu = "contractor-assign"
-	device_theme = PDA_THEME_SYNDICATE
 	comp_light_luminosity = 6.3
 	has_pda_programs = FALSE
 	greyscale_config = /datum/greyscale_config/tablet/stripe_double
 	greyscale_colors = "#696969#000000#FFA500"
+	os_type = /datum/operating_system/default/ntos/syndie/uplink
 
-	starting_programs = list(
-		/datum/computer_file/program/contract_uplink,
-		/datum/computer_file/program/secureye/syndicate,
-	)
+/datum/operating_system/default/ntos/mobile/silicon
+
+
+/datum/operating_system/default/ntos/mobile/silicon/ui_state(mob/user)
+	return GLOB.deep_inventory_state
+
+//Makes the light settings reflect the borg's headlamp settings
+/datum/operating_system/default/ntos/mobile/silicon/ui_data(mob/user)
+	. = ..()
+	.["system"]["has_light"] = TRUE
+
+	var/datum/driver/silicon_power/driver = get_driver(/datum/driver/silicon_power)
+	if(driver && iscyborg(driver.silicon_owner))
+		var/mob/living/silicon/robot/robo = driver.silicon_owner
+		.["system"]["is_light_on"] = robo.lamp_enabled
+		.["system"]["light_color"] = robo.lamp_color
 
 /**
  * Silicon PDA
@@ -329,13 +338,10 @@
 	starting_programs = list(
 		/datum/computer_file/program/messenger,
 	)
+	os_type = /datum/operating_system/default/ntos/mobile/silicon
 
 	///Ref to the RoboTact app. Important enough to borgs to deserve a ref.
 	var/datum/computer_file/program/robotact/robotact
-	///IC log that borgs can view in their personal management app
-	var/list/borglog = list()
-	///Ref to the silicon we're installed in. Set by the silicon itself during its creation.
-	var/mob/living/silicon/silicon_owner
 
 /obj/item/modular_computer/pda/silicon/pai
 	starting_programs = list(
@@ -354,14 +360,16 @@
 /obj/item/modular_computer/pda/silicon/Initialize(mapload)
 	. = ..()
 	vis_flags |= VIS_INHERIT_ID
-	silicon_owner = loc
-	if(!istype(silicon_owner))
-		silicon_owner = null
+
+	var/datum/driver/silicon_power/driver = new(src, loc)
+	os.install_driver(/datum/driver/silicon_power, driver)
+
+	if(!istype(driver.silicon_owner))
+		driver.silicon_owner = null
 		stack_trace("[type] initialized outside of a silicon, deleting.")
 		return INITIALIZE_HINT_QDEL
 
 /obj/item/modular_computer/pda/silicon/Destroy()
-	silicon_owner = null
 	robotact = null
 	return ..()
 
@@ -370,22 +378,32 @@
 	return
 
 /obj/item/modular_computer/pda/silicon/turn_on(mob/user, open_ui = FALSE)
-	if(silicon_owner?.stat != DEAD)
+	var/datum/driver/silicon_power/driver = os.get_driver(/datum/driver/silicon_power)
+	if(driver && driver.silicon_owner?.stat != DEAD)
 		return ..()
 	return FALSE
 
 /obj/item/modular_computer/pda/silicon/get_ntnet_status()
-	//No borg found
-	if(!silicon_owner)
+	var/datum/driver/silicon_power/driver = os.get_driver(/datum/driver/silicon_power)
+
+	// The required driver not found
+	if(!driver)
 		return FALSE
-	// no AIs/pAIs
-	var/mob/living/silicon/robot/cyborg_check = silicon_owner
+
+	// No borg found
+	if(!driver.silicon_owner)
+		return FALSE
+
+	// No AIs or pAIs found
+	var/mob/living/silicon/robot/cyborg_check = driver.silicon_owner
 	if(!istype(cyborg_check))
 		return ..()
-	//lockdown restricts borg networking
+
+	// Lockdown restricts borg networking
 	if(cyborg_check.lockcharge)
 		return FALSE
-	//borg cell dying restricts borg networking
+
+	// Borg cell dying restricts borg networking
 	if(!cyborg_check.cell || cyborg_check.cell.charge == 0)
 		return FALSE
 
@@ -404,54 +422,55 @@
 /obj/item/modular_computer/pda/silicon/proc/get_robotact()
 	if(robotact)
 		return robotact
-	robotact = find_file_by_name("robotact")
+	robotact = os.filesystem.find_file_by_name("robotact")
 	if(robotact)
 		return robotact
-	stack_trace("Cyborg [silicon_owner] ( [silicon_owner.type] ) was somehow missing their self-manage app in their tablet. A new copy has been created.")
+
+	var/datum/driver/silicon_power/driver = os.get_driver(/datum/driver/silicon_power)
+	if(!driver)
+		CRASH("Silicon PDA [src] missing their 'silicon power' driver. Please make a bug report about this.")
+
+	stack_trace("Cyborg [driver.silicon_owner] ( [driver.silicon_owner.type] ) was somehow missing their self-manage app in their tablet. A new copy has been created.")
 	robotact = new(src)
-	if(store_file(robotact))
+	if(os.filesystem.store_file(robotact))
 		return robotact
+
 	qdel(robotact)
 	robotact = null
-	CRASH("Cyborg [silicon_owner]'s tablet hard drive rejected receiving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
-
-//Makes the light settings reflect the borg's headlamp settings
-/obj/item/modular_computer/pda/silicon/cyborg/ui_data(mob/user)
-	. = ..()
-	.["has_light"] = TRUE
-	if(iscyborg(silicon_owner))
-		var/mob/living/silicon/robot/robo = silicon_owner
-		.["light_on"] = robo.lamp_enabled
-		.["comp_light_color"] = robo.lamp_color
+	CRASH("Cyborg [driver.silicon_owner]'s tablet hard drive rejected receiving a new copy of the self-manage app. To fix, check the hard drive's space remaining. Please make a bug report about this.")
 
 //Makes the flashlight button affect the borg rather than the tablet
 /obj/item/modular_computer/pda/silicon/toggle_flashlight(mob/user)
-	if(!silicon_owner || QDELETED(silicon_owner))
+	var/datum/driver/silicon_power/driver = os.get_driver(/datum/driver/silicon_power)
+
+	if(!driver || !driver.silicon_owner || QDELETED(driver.silicon_owner))
 		return FALSE
-	if(iscyborg(silicon_owner))
-		var/mob/living/silicon/robot/robo = silicon_owner
+	if(iscyborg(driver.silicon_owner))
+		var/mob/living/silicon/robot/robo = driver.silicon_owner
 		robo.toggle_headlamp()
 	return TRUE
 
 //Makes the flashlight color setting affect the borg rather than the tablet
 /obj/item/modular_computer/pda/silicon/set_flashlight_color(color)
-	if(!silicon_owner || QDELETED(silicon_owner) || !color)
+	var/datum/driver/silicon_power/driver = os.get_driver(/datum/driver/silicon_power)
+
+	if(!driver || !driver.silicon_owner || QDELETED(driver.silicon_owner) || !color)
 		return FALSE
-	if(iscyborg(silicon_owner))
-		var/mob/living/silicon/robot/robo = silicon_owner
+
+	if(iscyborg(driver.silicon_owner))
+		var/mob/living/silicon/robot/robo = driver.silicon_owner
 		robo.lamp_color = color
 		robo.toggle_headlamp(FALSE, TRUE)
 	return TRUE
 
-/obj/item/modular_computer/pda/silicon/ui_state(mob/user)
-	return GLOB.deep_inventory_state
 
 /obj/item/modular_computer/pda/silicon/cyborg/syndicate
 	icon_state = "tablet-silicon-syndicate"
-	device_theme = PDA_THEME_SYNDICATE
+	os_type = /datum/operating_system/default/ntos/syndie
 
 /obj/item/modular_computer/pda/silicon/cyborg/syndicate/Initialize(mapload)
 	. = ..()
-	if(iscyborg(silicon_owner))
-		var/mob/living/silicon/robot/robo = silicon_owner
+	var/datum/driver/silicon_power/driver = os.get_driver(/datum/driver/silicon_power)
+	if(driver && iscyborg(driver.silicon_owner))
+		var/mob/living/silicon/robot/robo = driver.silicon_owner
 		robo.lamp_color = COLOR_RED //Syndicate likes it red

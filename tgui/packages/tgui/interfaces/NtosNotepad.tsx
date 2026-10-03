@@ -18,10 +18,9 @@ import {
   Stack,
 } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
-import type { NTOSData } from '../layouts/NtosWindow';
 import { createLogger } from '../logging';
+import { useNtos } from './NtosCore';
 
 const logger = createLogger('NtosNotepad');
 
@@ -320,7 +319,7 @@ type AboutDialogProps = {
 
 const AboutDialog = (props: AboutDialogProps) => {
   const { close } = props;
-  const { data } = useBackend<NTOSData>();
+  const { data } = useNtos();
   const { show_imprint, login } = data;
   const paragraphStyle = { padding: '.5rem 1rem 0 2rem' };
 
@@ -370,7 +369,7 @@ type NoteData = {
 type RetryActionType = (retrying?: boolean) => void;
 
 export const NtosNotepad = (props) => {
-  const { act, data } = useBackend<NoteData>();
+  const { act, data } = useNtos();
   const {
     note,
     documentName: backendDocumentName = DEFAULT_DOCUMENT_NAME,

@@ -1,15 +1,15 @@
 import { Button, LabeledList, Section } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 type Data = {
   armed: BooleanLike;
 };
 
 export const NtosRevelation = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const { armed } = data;
 
   return (

@@ -19,17 +19,23 @@ enum TAB {
 }
 
 export function Cargo(props) {
+  const { act, data } = useBackend<CargoData>();
   return (
     <Window width={800} height={750}>
       <Window.Content>
-        <CargoContent />
+        <CargoContent act={act} data={data} />
       </Window.Content>
     </Window>
   );
 }
 
-export function CargoContent(props) {
-  const { act, data } = useBackend<CargoData>();
+type CargoContentProps = {
+  act: any;
+  data: CargoData;
+};
+
+export function CargoContent(props: CargoContentProps) {
+  const { act, data } = props;
   const { cart = [], requests = [], requestonly } = data;
   const [tab, setTab] = useSharedState('cargotab', TAB.Catalog);
 
@@ -41,7 +47,7 @@ export function CargoContent(props) {
   return (
     <Stack fill vertical>
       <Stack.Item>
-        <CargoStatus />
+        <CargoStatus act={act} {...data} />
       </Stack.Item>
       <Stack.Item>
         <Section
@@ -58,7 +64,7 @@ export function CargoContent(props) {
                 </Button>
               )}
               {(tab === TAB.Catalog || tab === TAB.Cart) && (
-                <CargoCartButtons />
+                <CargoCartButtons act={act} {...data} />
               )}
             </>
           }
@@ -104,10 +110,10 @@ export function CargoContent(props) {
         </Section>
       </Stack.Item>
       <Stack.Item grow mt={-1}>
-        {tab === TAB.Catalog && <CargoCatalog />}
-        {tab === TAB.Requests && <CargoRequests />}
-        {tab === TAB.Cart && <CargoCart />}
-        {tab === TAB.Help && <CargoHelp />}
+        {tab === TAB.Catalog && <CargoCatalog act={act} data={data} />}
+        {tab === TAB.Requests && <CargoRequests act={act} {...data} />}
+        {tab === TAB.Cart && <CargoCart act={act} {...data} />}
+        {tab === TAB.Help && <CargoHelp act={act} {...data} />}
       </Stack.Item>
     </Stack>
   );

@@ -9,13 +9,19 @@ import {
   Table,
 } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
-
-import { useBackend } from '../../backend';
 import type { CargoData } from './types';
 
-export function CargoCart(props) {
-  const { act, data } = useBackend<CargoData>();
-  const { can_send, away, cart = [], docked, location } = data;
+type CargoCartProps = {
+  act: any;
+} & CargoCartData;
+
+type CargoCartData = Pick<
+  CargoData,
+  'can_send' | 'away' | 'cart' | 'docked' | 'location' | 'max_order'
+>;
+
+export function CargoCart(props: CargoCartProps) {
+  const { act, can_send, away, cart = [], docked, location, max_order } = props;
 
   const sendable = !!away && !!docked;
 
@@ -23,7 +29,12 @@ export function CargoCart(props) {
     <Stack fill vertical g={0}>
       <Stack.Item grow>
         <Section fill scrollable>
-          <CheckoutItems />
+          <CheckoutItems
+            act={act}
+            max_order={max_order}
+            can_send={can_send}
+            cart={cart}
+          />
         </Section>
       </Stack.Item>
       {cart.length > 0 && !!can_send && (
@@ -55,9 +66,14 @@ export function CargoCart(props) {
   );
 }
 
-function CheckoutItems(props) {
-  const { act, data } = useBackend<CargoData>();
-  const { can_send, cart = [], max_order } = data;
+type CheckoutItemsProps = {
+  act: any;
+} & CheckoutItemsData;
+
+type CheckoutItemsData = Pick<CargoData, 'can_send' | 'cart' | 'max_order'>;
+
+function CheckoutItems(props: CheckoutItemsProps) {
+  const { act, can_send, cart = [], max_order } = props;
 
   const [isValid, setIsValid] = useState(true);
 

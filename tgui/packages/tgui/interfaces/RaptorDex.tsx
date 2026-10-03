@@ -10,7 +10,7 @@ import { capitalizeAll, capitalizeFirst } from 'tgui-core/string';
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
-type Data = {
+export type RaptorDexData = {
   raptor_scan: boolean;
   raptor_attack: number;
   raptor_health: number;
@@ -37,17 +37,18 @@ type Data = {
 };
 
 export const RaptorDex = (props) => {
+  const { act, data } = useBackend<RaptorDexData>();
+
   return (
     <Window title="Raptor Data" width={770} height={370} theme="hackerman">
       <Window.Content>
-        <RaptorDexContent />
+        <RaptorDexContent {...data} />
       </Window.Content>
     </Window>
   );
 };
 
-export const RaptorDexContent = (props) => {
-  const { act, data } = useBackend<Data>();
+export const RaptorDexContent = (props: RaptorDexData) => {
   const {
     raptor_scan,
     raptor_attack,
@@ -72,7 +73,7 @@ export const RaptorDexContent = (props) => {
     inherited_traits,
     raptor_description,
     raptor_color,
-  } = data;
+  } = props;
 
   if (!raptor_scan) {
     return <Modal textAlign="center">No scan data present.</Modal>;

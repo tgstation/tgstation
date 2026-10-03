@@ -28,35 +28,24 @@
 	///Does the console update the crew manifest when the ID is removed?
 	var/crew_manifest_update = FALSE
 
-	///The amount of storage space the computer starts with.
-	var/max_capacity = 128
-	///The amount of storage space we've got filled
-	var/used_capacity = 0
-	///List of stored files on this drive. Use `store_file` and `remove_file` instead of modifying directly!
+	/// Better create new OS type (revision) for each type of computer. NOT THAT
+	var/list/datum/computer_file/starting_programs = list()
+
+	///List of stored files on this drive. Use `os.filesystem.store_file` and `os.filesystem.remove_file` instead of modifying directly!
 	var/list/datum/computer_file/stored_files = list()
 
-	///Non-static list of programs the computer should receive on Initialize.
-	var/list/datum/computer_file/starting_programs = list()
-	///Static list of default programs that come with ALL computers, here so computers don't have to repeat this.
-	var/static/list/datum/computer_file/default_programs = list(
-		/datum/computer_file/program/themeify,
-		/datum/computer_file/program/ntnetdownload,
-		/datum/computer_file/program/filemanager,
-	)
+	///The amount of storage space the computer starts with.
+	var/max_capacity = 128
 
-	///The program currently active on the tablet.
-	var/datum/computer_file/program/active_program
-	///Idle programs on background. They still receive process calls but can't be interacted with.
-	var/list/datum/computer_file/program/idle_threads = list()
-	/// Amount of programs that can be ran at once
-	var/max_idle_programs = 2
+	var/used_capacity
+
+	var/os_type = /datum/operating_system/default/ntos/desktop
+
+	var/datum/operating_system/default/os
 
 	///Flag of the type of device the modular computer is, deciding what types of apps it can run.
 	var/hardware_flag = PROGRAM_ALL
-//	Options: PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_PDA
-
-	///The theme, used for the main menu and file browser apps.
-	var/device_theme = PDA_THEME_NTOS
+	/// Options: PROGRAM_ALL | PROGRAM_CONSOLE | PROGRAM_LAPTOP | PROGRAM_PDA
 
 	///Bool on whether the computer is currently active or not.
 	var/enabled = FALSE
@@ -132,6 +121,10 @@
 	laser = 20
 	energy = 100
 
+/obj/item/modular_computer/New(loc, ...)
+	. = ..()
+	os = new os_type(src)
+
 /obj/item/modular_computer/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
@@ -151,7 +144,15 @@
 		internal_cell = new internal_cell(src)
 
 	AddElement(/datum/element/drag_to_activate)
-	install_default_programs()
+
+	if(!os)
+		os = new os_type(src)
+	os.install()
+
+	for(var/programs in starting_programs)
+		var/datum/computer_file/program_type = new programs
+		os.filesystem.store_file(program_type)
+
 	register_context()
 	update_appearance()
 	return INITIALIZE_HINT_LATELOAD
@@ -180,15 +181,11 @@
 	SIGNAL_HANDLER
 	UnregisterSignal(shell.attached_circuit, COMSIG_CIRCUIT_PRE_POWER_USAGE)
 
-/obj/item/modular_computer/proc/install_default_programs()
-	SHOULD_CALL_PARENT(FALSE)
-	for(var/programs in default_programs + starting_programs)
-		var/datum/computer_file/program_type = new programs
-		store_file(program_type)
-
 /obj/item/modular_computer/Destroy()
 	STOP_PROCESSING(SSobj, src)
-	close_all_programs()
+	if(os)
+		os.shutdown_os()
+		QDEL_NULL(os)
 	//Some components will actually try and interact with this, so let's do it later
 	QDEL_NULL(soundloop)
 	looping_sound = FALSE // Necessary to stop a possible runtime trying to call soundloop.stop() when soundloop has been qdel'd
@@ -207,11 +204,12 @@
 	return ..()
 
 /obj/item/modular_computer/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(active_program?.tap(interacting_with, user, modifiers))
-		user.do_attack_animation(interacting_with) //Emulate this animation since we kill the attack in three lines
-		playsound(loc, 'sound/items/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
-		addtimer(CALLBACK(src, PROC_REF(play_ping)), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
-		return ITEM_INTERACT_SUCCESS
+	for(var/datum/computer_file/program/program as anything in os.active_threads)
+		if(program?.tap(interacting_with, user, modifiers))
+			user.do_attack_animation(interacting_with) //Emulate this animation since we kill the attack in three lines
+			playsound(loc, 'sound/items/weapons/tap.ogg', get_clamped_volume(), TRUE, -1) //Likewise for the tap sound
+			addtimer(CALLBACK(src, PROC_REF(play_ping)), 0.5 SECONDS, TIMER_UNIQUE) //Slightly delayed ping to indicate success
+			return ITEM_INTERACT_SUCCESS
 	return ..()
 
 // shameless copy of newscaster photo saving
@@ -412,7 +410,7 @@
 	if(.)
 		return
 	if(enabled)
-		ui_interact(user)
+		os.interact(user)
 	else if(isAdminGhostAI(user))
 		var/response = tgui_alert(user, "This computer is turned off. Would you like to turn it on?", "Admin Override", list("Yes", "No"))
 		if(response == "Yes")
@@ -441,7 +439,10 @@
 	if(!forced)
 		add_log("manual overriding of permissions and modification of device firmware detected. Reboot and reinstall required.")
 	obj_flags |= EMAGGED
-	device_theme = PDA_THEME_SYNDICATE
+	// TODO: REFACTOR THAT IS NOT CORRECT
+	if(istype(os, /datum/operating_system/default/ntos))
+		var/datum/operating_system/default/ntos/ntos = os
+		ntos.device_theme = PDA_THEME_SYNDICATE
 	if(user)
 		balloon_alert(user, "syndieOS loaded")
 		if (emag_card)
@@ -528,11 +529,19 @@
 
 /obj/item/modular_computer/update_overlays()
 	. = ..()
+	//TODO: Fix runtime after modular computer destroying, when OS is null
+	var/datum/computer_file/program/active_program = os?.get_active_thread(1)
 	if(enabled)
 		. += active_program ? mutable_appearance(overlays_icon, active_program.program_open_overlay) : mutable_appearance(overlays_icon, icon_state_menu)
 	if(atom_integrity <= integrity_failure * max_integrity)
 		. += mutable_appearance(overlays_icon, "bsod")
 		. += mutable_appearance(overlays_icon, "broken")
+
+/obj/item/modular_computer/interact(mob/user)
+	if(enabled)
+		os.interact(user)
+	else
+		turn_on(user)
 
 /obj/item/modular_computer/Exited(atom/movable/gone, direction)
 	if(internal_cell == gone)
@@ -585,7 +594,7 @@
 			else
 				to_chat(user, span_notice("You press the power button and start up \the [src]."))
 			if(open_ui)
-				update_tablet_open_uis(user)
+				os.interact(user)
 		SEND_SIGNAL(src, COMSIG_MODULAR_COMPUTER_TURNED_ON, user)
 		return TRUE
 	else // Unpowered
@@ -605,18 +614,20 @@
 		shutdown_computer()
 		return
 
-	if(active_program && (active_program.program_flags & PROGRAM_REQUIRES_NTNET) && !get_ntnet_status())
-		active_program.event_networkfailure(FALSE) // Active program requires NTNet to run but we've just lost connection. Crash.
 
-	for(var/datum/computer_file/program/idle_programs as anything in idle_threads)
+	for(var/datum/computer_file/program/program as anything in os.active_threads)
+		if(program && (program.program_flags & PROGRAM_REQUIRES_NTNET) && !get_ntnet_status())
+			program.event_networkfailure(FALSE) // Active program requires NTNet to run but we've just lost connection. Crash.
+
+	for(var/datum/computer_file/program/idle_programs as anything in os.idle_threads)
 		idle_programs.process_tick(seconds_per_tick)
 		idle_programs.ntnet_status = get_ntnet_status()
 		if((idle_programs.program_flags & PROGRAM_REQUIRES_NTNET) && !idle_programs.ntnet_status)
 			idle_programs.event_networkfailure(TRUE)
 
-	if(active_program)
-		active_program.process_tick(seconds_per_tick)
-		active_program.ntnet_status = get_ntnet_status()
+	for(var/datum/computer_file/program/program as anything in os.active_threads)
+		program.process_tick(seconds_per_tick)
+		program.ntnet_status = get_ntnet_status()
 
 	handle_power(seconds_per_tick) // Handles all computer power interaction
 
@@ -656,107 +667,6 @@
 /obj/item/modular_computer/proc/send_sound()
 	playsound(src, 'sound/machines/terminal/terminal_success.ogg', 15, TRUE)
 
-// Function used by NanoUI's to obtain data for header. All relevant entries begin with "PC_"
-/obj/item/modular_computer/proc/get_header_data()
-	var/list/data = list()
-
-	data["PC_device_theme"] = device_theme
-
-	if(internal_cell)
-		data["PC_lowpower_mode"] = !internal_cell.charge
-		switch(internal_cell.percent())
-			if(80 to INFINITY)
-				data["PC_batteryicon"] = "batt_100.gif"
-			if(60 to 80)
-				data["PC_batteryicon"] = "batt_80.gif"
-			if(40 to 60)
-				data["PC_batteryicon"] = "batt_60.gif"
-			if(20 to 40)
-				data["PC_batteryicon"] = "batt_40.gif"
-			if(5 to 20)
-				data["PC_batteryicon"] = "batt_20.gif"
-			else
-				data["PC_batteryicon"] = "batt_5.gif"
-		data["PC_batterypercent"] = "[round(internal_cell.percent())]%"
-	else
-		data["PC_lowpower_mode"] = FALSE
-		data["PC_batteryicon"] = null
-		data["PC_batterypercent"] = null
-
-	switch(get_ntnet_status())
-		if(NTNET_NO_SIGNAL)
-			data["PC_ntneticon"] = "sig_none.gif"
-		if(NTNET_LOW_SIGNAL)
-			data["PC_ntneticon"] = "sig_low.gif"
-		if(NTNET_GOOD_SIGNAL)
-			data["PC_ntneticon"] = "sig_high.gif"
-		if(NTNET_ETHERNET_SIGNAL)
-			data["PC_ntneticon"] = "sig_lan.gif"
-
-	var/list/program_headers = list()
-	if(length(idle_threads))
-		for(var/datum/computer_file/program/idle_programs as anything in idle_threads)
-			if(!idle_programs.ui_header)
-				continue
-			program_headers.Add(list(list("icon" = idle_programs.ui_header)))
-
-	data["PC_programheaders"] = program_headers
-
-	data["PC_stationtime"] = round_timestamp()
-	data["PC_stationdate"] = "[time2text(world.realtime, "DDD, Month DD", NO_TIMEZONE)], [CURRENT_STATION_YEAR]"
-	data["PC_showexitprogram"] = !!active_program // Hides "Exit Program" button on mainscreen
-	return data
-
-/obj/item/modular_computer/proc/open_program(mob/user, datum/computer_file/program/program, open_ui = TRUE)
-	if(program.computer != src)
-		CRASH("tried to open program that does not belong to this computer")
-
-	if(isnull(program) || !istype(program)) // Program not found or it's not executable program.
-		if(user)
-			to_chat(user, span_danger("\The [src]'s screen shows \"I/O ERROR - Unable to run program\" warning."))
-		return FALSE
-
-	if(active_program == program)
-		return FALSE
-
-	// The program is already running. Resume it.
-	if(program in idle_threads)
-		active_program?.background_program()
-		active_program = program
-		program.alert_pending = FALSE
-		idle_threads.Remove(program)
-		program.on_made_active_program(user)
-		if(open_ui)
-			INVOKE_ASYNC(src, PROC_REF(update_tablet_open_uis), user)
-		update_appearance(UPDATE_ICON)
-		return TRUE
-
-	if(!program.is_supported_by_hardware(hardware_flag, loud = TRUE, user = user))
-		return FALSE
-
-	if(idle_threads.len > max_idle_programs)
-		if(user)
-			to_chat(user, span_danger("\The [src] displays a \"Maximal CPU load reached. Unable to run another program.\" error."))
-		return FALSE
-
-	if(program.program_flags & PROGRAM_REQUIRES_NTNET && !get_ntnet_status()) // The program requires NTNet connection, but we are not connected to NTNet.
-		if(user)
-			to_chat(user, span_danger("\The [src]'s screen shows \"Unable to connect to NTNet. Please retry. If problem persists contact your system administrator.\" warning."))
-		return FALSE
-
-	if(!program.on_start(user))
-		return FALSE
-
-	active_program?.background_program()
-
-	active_program = program
-	program.alert_pending = FALSE
-	program.on_made_active_program(user)
-	if(open_ui)
-		INVOKE_ASYNC(src, PROC_REF(update_tablet_open_uis), user)
-	update_appearance(UPDATE_ICON)
-	return TRUE
-
 // Returns 0 for No Signal, 1 for Low Signal and 2 for Good Signal. 3 is for wired connection (always-on)
 /obj/item/modular_computer/proc/get_ntnet_status()
 	// computers are connected through ethernet
@@ -786,13 +696,8 @@
 
 	return SSmodular_computers.add_log("[src]: [text]")
 
-/obj/item/modular_computer/proc/close_all_programs()
-	active_program?.kill_program()
-	for(var/datum/computer_file/program/idle as anything in idle_threads)
-		idle.kill_program()
-
 /obj/item/modular_computer/proc/shutdown_computer(loud = TRUE)
-	close_all_programs()
+	os.shutdown_os()
 	if(looping_sound)
 		soundloop.stop()
 	if(physical && loud)
@@ -985,7 +890,7 @@
 /obj/item/modular_computer/proc/photo_act(mob/user, obj/item/photo/scanned_photo)
 	var/datum/picture/source_picture = scanned_photo.picture
 	var/datum/computer_file/image/image_file = new /datum/computer_file/image(source_picture.picture_image, display_name = source_picture.picture_name, source_photo_or_painting = source_picture)
-	if(!store_file(image_file, user))
+	if(!os.filesystem.store_file(image_file, user))
 		balloon_alert(user, "no space!")
 		return ITEM_INTERACT_BLOCKING
 	balloon_alert(user, "photo scanned")

@@ -88,7 +88,7 @@
 	last_camera_turf = null
 	return ..()
 
-/datum/computer_file/program/secureye/kill_program(mob/user)
+/datum/computer_file/program/secureye/on_kill(mob/user)
 	if(user)
 		ui_close(user)
 	return ..()
