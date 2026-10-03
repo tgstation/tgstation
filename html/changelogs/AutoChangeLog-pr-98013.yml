@@ -1,4 +1,0 @@
-author: "hry-gh"
-delete-after: True
-changes:
-  - bugfix: "fixes the scaling in the lobby browser"
