@@ -1985,7 +1985,7 @@
 
 #define HEAVY_SURGERY (SURGERY_ORGANS_CUT|SURGERY_BONE_DRILLED|SURGERY_BONE_SAWED|SURGERY_CAVITY_WIDENED)
 
-/// Used to check if open surgery is happening
+/// Used to check if heavy surgery is happening
 /obj/item/bodypart/proc/on_surgery_state_change(datum/source, old_state, current_state, changed_states)
 	SIGNAL_HANDLER
 
@@ -2001,7 +2001,7 @@
 
 #undef HEAVY_SURGERY
 
-/// Tracks if the mob is moving while critical surgery (sawed open) is taking place
+/// Tracks if the mob is moving while heavy surgery is taking place
 /obj/item/bodypart/proc/on_moved(obj/item/bodypart, atom/OldLoc, Dir, forced)
 	SIGNAL_HANDLER
 

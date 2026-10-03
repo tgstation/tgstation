@@ -45,7 +45,6 @@
 		humie.update_mob_height()
 		RegisterSignal(src, COMSIG_BODYPART_UPDATING_SURGERY_STATE, PROC_REF(on_surgery_state_change))
 
-/// We need to clear out hand hud items and appearance, so do that here
 /obj/item/bodypart/chest/clear_ownership(mob/living/carbon/old_owner)
 	. = ..()
 	UnregisterSignal(src, COMSIG_BODYPART_UPDATING_SURGERY_STATE)
