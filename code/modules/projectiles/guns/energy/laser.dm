@@ -9,17 +9,6 @@
 	shaded_charge = TRUE
 	light_color = COLOR_SOFT_RED
 
-/obj/item/gun/energy/laser/Initialize(mapload)
-	. = ..()
-	// Only regular lasguns can be slapcrafted
-	if(type != /obj/item/gun/energy/laser)
-		return
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/laser/xraylaser, /datum/crafting_recipe/laser/hellgun, /datum/crafting_recipe/laser/ioncarbine)
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-	)
-
 /obj/item/gun/energy/laser/add_seclight_point()
 	AddComponent(/datum/component/seclite_attachable, \
 		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \

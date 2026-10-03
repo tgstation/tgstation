@@ -38,9 +38,7 @@
 	return ..()
 
 /obj/item/gun/ballistic/rifle/can_shoot()
-	if (bolt_locked)
-		return FALSE
-	return ..()
+	return ..() && !bolt_locked
 
 /obj/item/gun/ballistic/rifle/examine(mob/user)
 	. = ..()
@@ -292,9 +290,7 @@
 	rack()
 
 /obj/item/gun/ballistic/rifle/rebarxbow/can_shoot()
-	if (bolt_locked)
-		return FALSE
-	return ..()
+	return ..() && !bolt_locked
 
 /obj/item/gun/ballistic/rifle/rebarxbow/shoot_with_empty_chamber(mob/living/user)
 	if(chambered || !magazine || !length(magazine.contents))

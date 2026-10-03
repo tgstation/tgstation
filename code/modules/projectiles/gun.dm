@@ -220,9 +220,16 @@
 /obj/item/gun/proc/handle_chamber(empty_chamber = TRUE, from_firing = TRUE, chamber_next_round = TRUE)
 	return
 
-//check if there's enough ammo/energy/whatever to shoot one time
-//i.e if clicking would make it shoot
+/**
+ * Check if there's enough ammo/energy/whatever to shoot one time
+ * i.e if clicking would make it shoot
+ */
 /obj/item/gun/proc/can_shoot()
+	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_BE_PURE(TRUE)
+	if(SEND_SIGNAL(src, COMSIG_GUN_CAN_SHOOT) & COMPONENT_CANCEL_GUN_FIRE)
+		return FALSE
+
 	return TRUE
 
 /obj/item/gun/proc/tk_firing(mob/living/user)

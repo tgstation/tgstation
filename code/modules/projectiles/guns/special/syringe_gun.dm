@@ -55,7 +55,7 @@
 	return ..()
 
 /obj/item/gun/syringe/can_shoot()
-	return syringes.len
+	return ..() && syringes.len > 0
 
 /obj/item/gun/syringe/handle_chamber()
 	if(chambered && !chambered.loaded_projectile) //we just fired

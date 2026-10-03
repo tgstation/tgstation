@@ -134,13 +134,13 @@
 	contains = list(/obj/item/gun/energy/disabler/smg)
 
 /datum/supply_pack/goody/hell_single
-	name = "Hellgun Kit Single-Pack"
-	desc = "Contains one hellgun degradation kit, to convert regular laser guns into an older pattern of laser gun, \
-		infamous for its ability to horribly disfigure targets with burns. \
-		Technically violates the Space Geneva Convention when used on humanoids."
-	cost = PAYCHECK_CREW * 2
+	name = "Hellgun Laser Gun Single-Pack"
+	desc = "Contains a Hellfire Gun, an overclocked laser gun that fires \"enhanced\" laser beams that burn hotter than normal, \
+		at the expense of higher energy consumption."
+	cost = PAYCHECK_CREW * 8
 	access_view = ACCESS_WEAPONS
-	contains = list(/obj/item/weaponcrafting/gunkit/hellgun)
+	contains = list(/obj/item/gun/energy/laser/hellgun)
+	order_flags = ORDER_CONTRABAND
 
 /datum/supply_pack/goody/thermal_single
 	name = "Thermal Pistol Holster Single-Pack"

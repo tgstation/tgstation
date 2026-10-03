@@ -1253,6 +1253,7 @@
 #include "code\datums\components\ai_retaliate_advanced.dm"
 #include "code\datums\components\alternative_sharpness.dm"
 #include "code\datums\components\amputating_limbs.dm"
+#include "code\datums\components\anomalock_gun.dm"
 #include "code\datums\components\anomalock_module.dm"
 #include "code\datums\components\anti_magic.dm"
 #include "code\datums\components\appearance_on_aggro.dm"

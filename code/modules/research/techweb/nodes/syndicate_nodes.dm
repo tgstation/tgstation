@@ -4,17 +4,17 @@
 	node_flags = parent_type::node_flags | TECHWEB_NODE_HIDDEN
 	prerequisite_nodes = list(/datum/techweb_node/exp_tools, /datum/techweb_node/exotic_ammo)
 	unlocked_designs = list(
-		/datum/design/board/advanced_camera,
 		/datum/design/ai_cam_upgrade,
+		/datum/design/board/advanced_camera,
 		/datum/design/borg_syndicate_module,
+		/datum/design/cargo_weapon/ebow,
 		/datum/design/donksoft_refill,
-		/datum/design/largecrossbow,
 		/datum/design/mag_autorifle,
 		/datum/design/mag_autorifle/ap_mag,
 		/datum/design/mag_autorifle/ic_mag,
 		/datum/design/rapidsyringe,
-		/datum/design/suppressor,
 		/datum/design/super_pointy_tape,
+		/datum/design/suppressor,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_5_POINTS)
 
