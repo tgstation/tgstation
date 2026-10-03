@@ -15,6 +15,7 @@
 
 /obj/structure/cat_house/Destroy(force)
 	if(resident_cat)
+		stack_trace("[src] qdel'd with mob [resident_cat] still inside!")
 		resident_cat.forceMove(drop_location())
 	return ..()
 
@@ -40,6 +41,9 @@
 /obj/structure/cat_house/container_resist_act(mob/living/user)
 	if(resident_cat == user)
 		user.forceMove(drop_location())
+
+/obj/structure/cat_house/atom_deconstruct(disassembled)
+	resident_cat?.forceMove(drop_location())
 
 /obj/structure/cat_house/update_overlays()
 	. = ..()
