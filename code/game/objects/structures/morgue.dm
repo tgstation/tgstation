@@ -267,6 +267,14 @@ GLOBAL_LIST_EMPTY(bodycontainers) //Let them act as spawnpoints for revenants an
 /obj/structure/bodycontainer/morgue/return_air()
 	return internal_air
 
+/obj/structure/bodycontainer/morgue/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	if(prob(75 / severity))
+		beeper = pick(TRUE, FALSE)
+
 /obj/structure/bodycontainer/morgue/process(seconds_per_tick)
 	update_morgue_status()
 	update_appearance(UPDATE_ICON_STATE)

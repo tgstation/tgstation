@@ -85,6 +85,20 @@
 		playsound(src, 'sound/machines/compiler/compiler-failure.ogg', 50, TRUE)
 		return
 
+/obj/machinery/portable_atmospherics/canister/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	if(internal_cell)
+		internal_cell.emp_act(severity)
+
+	if(prob(75 / severity) && shielding_powered)
+		shielding_powered = !shielding_powered
+		SSair.start_processing_machine(src)
+		update_appearance()
+		investigate_log("shielding turned off due to EMP", INVESTIGATE_ATMOS)
+
 /obj/machinery/portable_atmospherics/canister/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 	if(holding)
@@ -524,7 +538,7 @@
 	else if(!internal_cell?.use(energy_consumed * 0.025))
 		shielding_powered = FALSE
 		SSair.start_processing_machine(src)
-		investigate_log("shielding turned off due to power loss")
+		investigate_log("shielding turned off due to power loss", INVESTIGATE_ATMOS)
 		update_appearance()
 
 ///return the icon_state component for the canister's indicator light based on its current pressure reading

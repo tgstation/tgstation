@@ -93,14 +93,10 @@
 	if(light_system == COMPLEX_LIGHT)
 		update_light()
 
-/obj/item/flashlight/proc/toggle_light(mob/user)
+/obj/item/flashlight/proc/toggle_light(mob/living/user)
 	playsound(src, light_on ? sound_off : sound_on, 40, TRUE)
 	if(!COOLDOWN_FINISHED(src, disabled_time))
-		if(user)
-			balloon_alert(user, "disrupted!")
-		set_light_on(FALSE)
-		update_brightness()
-		update_item_action_buttons()
+		user?.balloon_alert(user, "disrupted!")
 		return FALSE
 	var/old_light_on = light_on
 	set_light_on(!light_on)
@@ -114,6 +110,14 @@
 /obj/item/flashlight/attack_hand_secondary(mob/user, list/modifiers)
 	attack_self(user)
 	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/obj/item/flashlight/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	if(obj_flags & CONDUCTS_ELECTRICITY) // only electric lights should be effected
+		on_saboteur(src, (1 MINUTES / severity))
 
 /obj/item/flashlight/suicide_act(mob/living/user)
 	if (user.is_blind())
@@ -337,7 +341,6 @@
 	inhand_icon_state = ""
 	worn_icon_state = "pen"
 	w_class = WEIGHT_CLASS_TINY
-	obj_flags = CONDUCTS_ELECTRICITY
 	light_range = 2
 	light_power = 0.8
 	light_color = "#CCFFFF"
@@ -417,7 +420,6 @@
 	light_system = COMPLEX_LIGHT
 	light_color = LIGHT_COLOR_FAINT_BLUE
 	w_class = WEIGHT_CLASS_BULKY
-	obj_flags = CONDUCTS_ELECTRICITY
 	custom_materials = null
 	start_on = TRUE
 	has_closed_handle = FALSE
@@ -453,6 +455,7 @@
 	sound_on = 'sound/items/match_strike.ogg'
 	toggle_context = FALSE
 	has_closed_handle = FALSE
+	obj_flags = NONE
 	/// How many seconds of fuel we have left
 	var/fuel = 0
 	/// Do we randomize the fuel when initialized
@@ -810,6 +813,7 @@
 	light_color = "#ffff66"
 	light_system = OVERLAY_LIGHT
 	has_closed_handle = FALSE
+	obj_flags = NONE
 
 /obj/item/flashlight/emp
 	var/emp_max_charges = 4
@@ -821,6 +825,7 @@
 /obj/item/flashlight/emp/Initialize(mapload)
 	. = ..()
 	START_PROCESSING(SSobj, src)
+	AddElement(/datum/element/empprotection, EMP_PROTECT_SELF|EMP_NO_EXAMINE)
 
 /obj/item/flashlight/emp/Destroy()
 	STOP_PROCESSING(SSobj, src)
@@ -885,6 +890,7 @@
 	ignore_base_color = TRUE
 	has_closed_handle = FALSE
 	custom_materials = null
+	obj_flags = NONE
 	/// How much max fuel we have
 	var/max_fuel = 0
 	/// How much oxygen gets added upon cracking the stick. Doesn't actually produce a reaction with the fluid but it does allow for bootleg chemical "grenades"
@@ -1111,7 +1117,6 @@
 	name = "eyelight"
 	desc = "This shouldn't exist outside of someone's head, how are you seeing this?"
 	spawn_blacklisted = TRUE
-	obj_flags = CONDUCTS_ELECTRICITY
 	item_flags = DROPDEL
 	actions_types = list()
 

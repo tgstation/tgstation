@@ -99,6 +99,7 @@
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	RegisterSignal(parent, COMSIG_ATOM_SABOTEUR_ACT, PROC_REF(on_hit_by_saboteur))
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_parent_deleted))
+	RegisterSignal(parent, COMSIG_ATOM_EMP_ACT, PROC_REF(on_emp_act))
 
 /datum/component/seclite_attachable/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -112,6 +113,7 @@
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_ATOM_SABOTEUR_ACT,
 		COMSIG_QDELETING,
+		COMSIG_ATOM_EMP_ACT,
 	))
 
 /// Sets a new light as our current light for our parent.
@@ -302,3 +304,13 @@
 	. = light.on_saboteur(source, disrupt_duration)
 	update_light()
 	return .
+
+/datum/component/seclite_attachable/proc/on_emp_act(datum/source, severity, protection)
+	SIGNAL_HANDLER
+
+	if(protection & EMP_PROTECT_SELF)
+		return
+
+	if(light)
+		light.emp_act(severity)
+		update_light()

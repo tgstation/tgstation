@@ -427,6 +427,8 @@
 		internal_cell.emp_act(severity)
 		handle_power(1 SECONDS)
 
+	on_saboteur(src, (1 MINUTES / severity))
+
 /obj/item/modular_computer/emag_act(mob/user, obj/item/card/emag/emag_card, forced)
 	if(!enabled && !forced)
 		balloon_alert(user, "turn it on first!")
@@ -836,8 +838,7 @@
 	if(!has_light || !internal_cell?.charge)
 		return FALSE
 	if(!COOLDOWN_FINISHED(src, disabled_time))
-		if(user)
-			balloon_alert(user, "disrupted!")
+		user?.balloon_alert(user, "disrupted!")
 		return FALSE
 	set_light_on(!light_on)
 	update_appearance()
