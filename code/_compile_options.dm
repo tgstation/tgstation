@@ -152,7 +152,7 @@
 #endif // 1 to use the default behaviour;
 								// 2 for preloading absolutely everything;
 
-#define FORCE_MAP_DIRECTORY "_maps"
+#define FORCE_MAP_DIRECTORY MAP_DIRECTORY_MAPS
 
 //Additional code for the above flags.
 #ifdef TESTING
