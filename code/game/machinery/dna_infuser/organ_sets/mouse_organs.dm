@@ -94,7 +94,7 @@
 
 /obj/item/organ/tongue/mouse/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their teeth are particularly bucktoothed!.", BODY_ZONE_PRECISE_MOUTH)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their teeth are particularly bucktoothed!", BODY_ZONE_PRECISE_MOUTH)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/mouse)
 
 /obj/item/organ/tongue/mouse/proc/whimsy_check(mob/living/checking)
