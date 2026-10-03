@@ -409,3 +409,15 @@
 	command_feedback = "stares!"
 	pointed_reaction = "stares intensely!"
 	refuse_reaction = "..."
+
+//special interaction for giving Farstar Amrita, the cocktail that makes you hallucinate a fake gazer, to a real gazer.
+/mob/living/basic/heretic_summon/star_gazer/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	. = ..()
+	if(!istype(tool, /obj/item/reagent_containers/cup/glass/drinkingglass) || tool.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/farstar_amrita) < 5)
+		return
+
+	user.client?.give_award(/datum/award/achievement/misc/gazer_sippy, user)
+	src.befriend(user) //the gazer will no longer attack you, but you still gotta worry about the heretic that's leading the gazer around
+	playsound(src,'sound/items/drink.ogg', 50)
+	src.emote("flip") //it's silly that it can do this with no cooldown, allowing you to spin the gazer really fast, but this is a silly interaction.
+	tool.reagents.remove_reagent(/datum/reagent/consumable/ethanol/farstar_amrita, 5)

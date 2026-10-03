@@ -96,3 +96,20 @@
 	description = "Let your worries dissolve like sugar in tea."
 	mood_change = 4
 	timeout = 2.5 MINUTES
+
+//rubywise ruin events
+/datum/mood_event/rubywise_unsatisfied
+	description = "How sweet it would be, just a morsel of meat..."
+	mood_change = -3
+	timeout = 10 SECONDS //Enough to be maintained between ticks
+
+/datum/mood_event/rubywise_satisfied
+	description = "An Appetite... SATISFIED."
+	mood_change = 5
+	timeout = 3 MINUTES
+
+//Completed Farstar Amarita communion
+/datum/mood_event/farstar_shared
+	description = "I can feel a sense of appreciation from somewhere very, very far away."
+	mood_change = 3
+	timeout = 10 MINUTES
