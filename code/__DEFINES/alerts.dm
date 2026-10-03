@@ -77,4 +77,4 @@
 
 #define ALERT_SILICON_RECORDING "silicon_recording"
 
-#define ALERT_SURGERY "surgery"
+#define ALERT_EXPOSED_ORGANS "exposed_organs"
