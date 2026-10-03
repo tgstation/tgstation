@@ -12,6 +12,7 @@
 
 /obj/projectile/bullet/incendiary/fnx99
 	damage = 20
+	fireblast_radius = 3
 
 // Turrets
 
@@ -49,7 +50,7 @@
 
 /obj/projectile/bullet/incendiary/a7mm
 	name = "7mm incendiary bullet"
-	damage = 15
+	damage = 25
 	fire_stacks = 3
 
 /obj/projectile/bullet/a7mm/match
