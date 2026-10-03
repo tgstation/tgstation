@@ -129,6 +129,14 @@
 	return null
 
 /**
+ * Checks if our mob has their eyes visible.
+ * More verbose then directly checking HIDEEYES and lets you search for tint, flash protection, or covering clothing.
+ * Retuns TRUE or FALSE
+ */
+/mob/living/proc/is_eyes_visible(max_tint, max_flash_protection, requires_eyes = FALSE, covered_check_flags = NONE)
+	return TRUE
+
+/**
  * Check if the passed body zone is covered by some clothes
  *
  * * location: body zone to check

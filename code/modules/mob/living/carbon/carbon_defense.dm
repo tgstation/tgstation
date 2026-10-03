@@ -29,6 +29,29 @@
 	if(eyes && eyes.pepperspray_protect)
 		return eyes
 
+/mob/living/carbon/is_eyes_visible(max_tint, max_flash_protection, requires_eyes = FALSE, covered_check_flags = NONE)
+	if(obscured_slots & HIDEEYES)
+		return FALSE
+
+	if(requires_eyes && !get_organ_by_type(/obj/item/organ/eyes))
+		return FALSE
+
+	if(!isnull(max_tint) || !isnull(max_flash_protection))
+		var/tint = 0
+		var/flash_protect = 0
+		for(var/obj/item/clothing/clothing in get_equipped_items())
+			tint += clothing.tint
+			flash_protect += clothing.flash_protect
+		if(!isnull(max_tint) && tint >= max_tint)
+			return FALSE
+		if(!isnull(max_tint) && flash_protect >= max_flash_protection)
+			return FALSE
+
+	if(covered_check_flags && is_eyes_covered(covered_check_flags))
+		return FALSE
+
+	return TRUE
+
 /mob/living/carbon/is_ears_covered()
 	for(var/obj/item/worn_thing as anything in get_equipped_items(INCLUDE_ABSTRACT))
 		if(worn_thing.flags_cover & EARS_COVERED)
