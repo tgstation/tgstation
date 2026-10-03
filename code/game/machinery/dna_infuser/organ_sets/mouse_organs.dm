@@ -31,7 +31,7 @@
 
 /obj/item/organ/eyes/night_vision/mouse/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes have deep black pupils, surrounded by an almost equally as dark sclera.", BODY_ZONE_PRECISE_EYES)
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Their eyes have deep black pupils, surrounded by a dark sclera.", BODY_ZONE_PRECISE_EYES)
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/mouse)
 
 ///increases hunger, disgust recovers quicker, expands what is defined as "food"
@@ -66,7 +66,7 @@
 /obj/item/organ/heart/mouse/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/mouse)
-	AddElement(/datum/element/noticable_organ, "%PRONOUN_They have an inwardly posture and #PRONOUN_their movement is jittery and frail.")
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_They have an inwardly posture and %PRONOUN_their movement is jittery and frail.")
 	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/organ/heart/mouse/on_mob_insert(mob/living/carbon/receiver)
@@ -142,7 +142,7 @@
 
 /obj/item/organ/ears/mouse
 	name = "mouse ears"
-	desc = ""
+	desc = "Ears round as a satellite dish, with only a short fuzz on the inside."
 	icon = 'icons/obj/clothing/head/costume.dmi'
 	worn_icon = 'icons/mob/clothing/head/costume.dmi'
 	icon_state = "kitty"
@@ -162,13 +162,12 @@
 
 /obj/item/organ/tail/mouse
 	name = "mouse tail"
-	desc = ""
+	desc = "A long, dextrous and furless appendage."
 
 	dna_block = null
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/mouse
 
 	wag_flags = WAG_ABLE
-	organ_traits = list()
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
 
 /datum/bodypart_overlay/mutant/tail/mouse
@@ -176,6 +175,7 @@
 	feature_key = FEATURE_TAIL_MOUSE
 	draw_on_husks = HUSK_OVERLAY_GRAYSCALE
 	imprint_on_next_insertion = FALSE
+	offset_location = LOWER_BODY
 
 /datum/bodypart_overlay/mutant/tail/mouse/New()
 	. = ..()

@@ -56,7 +56,7 @@
 /datum/infuser_entry/mouse
 	name = "Mouse"
 	infuse_mob_name = "rodent"
-	desc = "Frail, small, positively cheesed to face the world. Easy to stuff yourself full of rat DNA, but perhaps not the best choice?"
+	desc = "Frail, small, positively cheesed to face the world. Easy to stuff yourself full of mouse DNA, but perhaps not the best choice?"
 	threshold_desc = "you become lithe enough to crawl through ventilation."
 	qualities = list(
 		"cheesy lines",
