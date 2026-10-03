@@ -15,7 +15,7 @@
 		and you feel much more vulnerable to nuclear apocalypses.")
 	// - Immunity to nuke gibs
 	// - Nukes come with radiation (not actually but yknow)
-	bonus_traits = list(TRAIT_NUKEIMMUNE, TRAIT_RADIMMUNE, TRAIT_VIRUS_RESISTANCE)
+	bonus_traits = list(TRAIT_NUKEIMMUNE, TRAIT_UNBOTHERED_BY_RADIATION, TRAIT_VIRUS_RESISTANCE)
 	bonus_biotype = MOB_BUG
 	/// Armor type attached to the owner's physiology
 	var/datum/armor/given_armor = /datum/armor/roach_internal_armor

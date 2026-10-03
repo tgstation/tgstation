@@ -338,26 +338,20 @@
 
 /datum/reagent/medicine/c2/seiver/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	var/chemtemp = min(holder.chem_temp, 1000)
-	chemtemp = chemtemp ? chemtemp : T0C //why do you have null sweaty
+	var/chemtemp = isnull(holder) ? T0C : min(holder.chem_temp, 1000)
 	var/healypoints = 0 //5 healypoints = 1 heart damage; 5 rads = 1 tox damage healed for the purpose of healypoints
 
 	//you're hot
-	var/toxcalc = min(1 * round(5 + ((chemtemp-1000)/175), 0.1), 5) * metabolization_ratio * seconds_per_tick * normalise_creation_purity() //max 2.5 tox healing per second
-	var/need_mob_update
+	var/toxcalc = min(1 * round(5 + ((chemtemp - 1000) / 175), 0.1), 5) * metabolization_ratio * seconds_per_tick * normalise_creation_purity() //max ~2.5 tox healing per second
+	var/need_mob_update = 0
 	if(toxcalc > 0)
-		need_mob_update = affected_mob.adjust_tox_loss(-toxcalc, updating_health = FALSE, required_biotype = affected_biotype)
+		need_mob_update += affected_mob.adjust_tox_loss(-toxcalc, updating_health = FALSE, required_biotype = affected_biotype)
 		healypoints += toxcalc
 
 	//and you're cold
-	var/radcalc = 1 * round((T0C-chemtemp) / 6, 0.1) * metabolization_ratio * seconds_per_tick //max ~45 rad loss unless you've hit below 0K. if so, wow.
-	if(radcalc > 0 && HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
-		radcalc *= normalise_creation_purity()
-		// extra rad healing if you are SUPER cold
-		if(chemtemp < rads_heal_threshold*0.1)
-			need_mob_update += affected_mob.adjust_tox_loss(-radcalc * 0.9, updating_health = FALSE, required_biotype = affected_biotype)
-		else if(chemtemp < rads_heal_threshold)
-			need_mob_update += affected_mob.adjust_tox_loss(-radcalc * 0.75, updating_health = FALSE, required_biotype = affected_biotype)
+	var/radcalc = 1 * round((T0C-chemtemp) / 33, 0.1) * metabolization_ratio * seconds_per_tick * normalise_creation_purity() //max ~8 tox healing per second if irradiated
+	if(radcalc > 0 && HAS_TRAIT(affected_mob, TRAIT_IRRADIATED) && chemtemp < rads_heal_threshold)
+		need_mob_update += affected_mob.heal_radiation(-radcalc * ((chemtemp < rads_heal_threshold * 0.1) ? 1 : 0.8), organ_multiplier = 0.75, updating_health = FALSE, required_biotype = affected_biotype)
 		healypoints += (radcalc / 5)
 
 	//you're yes and... oh no!

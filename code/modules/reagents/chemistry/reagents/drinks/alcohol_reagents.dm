@@ -680,15 +680,22 @@
 /datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	var/obj/item/organ/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
-	if(HAS_TRAIT(liver, TRAIT_ENGINEER_METABOLISM))
-		ADD_TRAIT(drinker, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
-		if (HAS_TRAIT(drinker, TRAIT_IRRADIATED))
-			if(drinker.adjust_tox_loss(-2 * metabolization_ratio * seconds_per_tick, updating_health = FALSE, required_biotype = affected_biotype))
-				return UPDATE_MOB_HEALTH
+	if(!isnull(liver) && HAS_TRAIT(liver, TRAIT_ENGINEER_METABOLISM))
+		if(drinker.heal_radiation(-2 * metabolization_ratio * seconds_per_tick, organ_multiplier = 0.5, updating_health = FALSE, required_biotype = affected_biotype))
+			return UPDATE_MOB_HEALTH
+
+	else
+		REMOVE_TRAIT(drinker, TRAIT_ENGINEER_METABOLISM, type)
+
+/datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_metabolize(mob/living/carbon/user)
+	. = ..()
+	var/obj/item/organ/liver/liver = user.get_organ_slot(ORGAN_SLOT_LIVER)
+	if(!isnull(liver) && HAS_TRAIT(liver, TRAIT_ENGINEER_METABOLISM))
+		ADD_TRAIT(user, TRAIT_NO_RADIATION_EFFECTS, type)
 
 /datum/reagent/consumable/ethanol/screwdrivercocktail/on_mob_end_metabolize(mob/living/drinker)
 	. = ..()
-	REMOVE_TRAIT(drinker, TRAIT_HALT_RADIATION_EFFECTS, "[type]")
+	REMOVE_TRAIT(drinker, TRAIT_NO_RADIATION_EFFECTS, type)
 
 /datum/reagent/consumable/ethanol/booger
 	name = "Booger"

@@ -73,7 +73,7 @@
 	return ranged_interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/geiger_counter/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!CAN_IRRADIATE(interacting_with))
+	if(!SSradiation.can_irradiate_basic(interacting_with))
 		return NONE
 
 	user.visible_message(span_notice("[user] scans [interacting_with] with [src]."), span_notice("You scan [interacting_with]'s radiation levels with [src]..."))

@@ -703,6 +703,10 @@
 		QDEL_NULL(handcuffed)
 		QDEL_NULL(legcuffed)
 
+	if(heal_flags & HEAL_TOX)
+		for(var/obj/item/organ/organ as anything in organs)
+			organ.clear_radiation()
+
 	return ..()
 
 /mob/living/carbon/do_strange_reagent_revival(healing_amount)

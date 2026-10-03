@@ -91,6 +91,21 @@
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_PASSTABLE), SIGNAL_REMOVETRAIT(TRAIT_PASSTABLE)), PROC_REF(on_passtable_trait_toggled))
 	RegisterSignals(src, list(SIGNAL_ADDTRAIT(TRAIT_PASSWINDOW), SIGNAL_REMOVETRAIT(TRAIT_PASSWINDOW)), PROC_REF(on_passwindow_trait_toggled))
 
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_UNBOTHERED_BY_RADIATION), PROC_REF(now_unbothered_by_radiation))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_UNBOTHERED_BY_RADIATION), PROC_REF(now_bothered_by_radiation))
+
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_GODMODE), PROC_REF(on_godmode_gain))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_GODMODE), PROC_REF(on_godmode_loss))
+
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_RADIMMUNE), PROC_REF(on_radimmune_gain))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_RADIMMUNE), PROC_REF(on_radimmune_loss))
+
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_TOXIMMUNE), PROC_REF(on_toximmune_gain))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_TOXIMMUNE), PROC_REF(on_toximmune_loss))
+
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_TOXLOVER), PROC_REF(on_toxlover_gain))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_TOXLOVER), PROC_REF(on_toxlover_loss))
+
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
 	SIGNAL_HANDLER
@@ -382,3 +397,56 @@
 		pass_flags |= PASSWINDOW
 	else
 		pass_flags &= ~PASSWINDOW
+
+/// Called when the mob gains [TRAIT_UNBOTHERED_BY_RADIATION]
+/mob/living/proc/now_unbothered_by_radiation(datum/source)
+	SIGNAL_HANDLER
+	ADD_TRAIT(src, TRAIT_NO_RADIATION_EFFECTS, TRAIT_UNBOTHERED_BY_RADIATION)
+	ADD_TRAIT(src, TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL, TRAIT_UNBOTHERED_BY_RADIATION)
+
+/// Called when the mob loses [TRAIT_UNBOTHERED_BY_RADIATION]
+/mob/living/proc/now_bothered_by_radiation(datum/source)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(src, TRAIT_NO_RADIATION_EFFECTS, TRAIT_UNBOTHERED_BY_RADIATION)
+	REMOVE_TRAIT(src, TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL, TRAIT_UNBOTHERED_BY_RADIATION)
+
+/// Called when the mob gains [TRAIT_GODMODE]
+/mob/living/proc/on_godmode_gain(datum/source)
+	SIGNAL_HANDLER
+	ADD_TRAIT(src, TRAIT_NO_RADIATION_EFFECTS, TRAIT_GODMODE)
+
+/// Called when the mob loses [TRAIT_GODMODE]
+/mob/living/proc/on_godmode_loss(datum/source)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(src, TRAIT_NO_RADIATION_EFFECTS, TRAIT_GODMODE)
+
+/// Called when the mob gains [TRAIT_RADIMMUNE]
+/mob/living/proc/on_radimmune_gain(datum/source)
+	SIGNAL_HANDLER
+	ADD_TRAIT(src, TRAIT_NO_RADIATION_EFFECTS, TRAIT_RADIMMUNE)
+
+/// Called when the mob loses [TRAIT_RADIMMUNE]
+/mob/living/proc/on_radimmune_loss(datum/source)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(src, TRAIT_NO_RADIATION_EFFECTS, TRAIT_RADIMMUNE)
+
+/// Called when the mob gains [TRAIT_TOXIMMUNE]
+/mob/living/proc/on_toximmune_gain(datum/source)
+	SIGNAL_HANDLER
+	ADD_TRAIT(src, TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL, TRAIT_TOXIMMUNE)
+	set_tox_loss(0, updating_health = TRUE, forced = TRUE)
+
+/// Called when the mob loses [TRAIT_TOXIMMUNE]
+/mob/living/proc/on_toximmune_loss(datum/source)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(src, TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL, TRAIT_TOXIMMUNE)
+
+/// Called when the mob gains [TRAIT_TOXLOVER]
+/mob/living/proc/on_toxlover_gain(datum/source)
+	SIGNAL_HANDLER
+	ADD_TRAIT(src, TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL, TRAIT_TOXLOVER)
+
+/// Called when the mob loses [TRAIT_TOXLOVER]
+/mob/living/proc/on_toxlover_loss(datum/source)
+	SIGNAL_HANDLER
+	REMOVE_TRAIT(src, TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL, TRAIT_TOXLOVER)

@@ -540,9 +540,8 @@
 
 	if(isvineimmune(attacker) || HAS_TRAIT(attacker, TRAIT_PLANT_SAFE))
 		return
-	if(!SSradiation.can_irradiate_basic(attacker))
-		return
-	if(ishuman(attacker) && SSradiation.wearing_rad_protected_clothing(attacker))
+
+	if(!SSradiation.can_irradiate_human_basic(attacker))
 		return
 
 	radiation_pulse(

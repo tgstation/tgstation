@@ -1240,52 +1240,14 @@
 	/// How radioactive is this reagent
 	var/rad_power = 1
 
+/datum/reagent/uranium/New()
+	. = ..()
+	AddElement(/datum/element/radioactive_reagent, rad_power = src.rad_power, exposed_volume_modifier = 5)
+
 /datum/reagent/uranium/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	if(!HAS_TRAIT(affected_mob, TRAIT_IRRADIATED) && SSradiation.can_irradiate_basic(affected_mob))
-		var/chance = min(volume / (20 - rad_power * 5), rad_power)
-		if(SPT_PROB(chance, seconds_per_tick)) // ignore rad protection calculations bc it's inside of us
-			affected_mob.AddComponent(/datum/component/irradiated)
-
-	if(affected_mob.adjust_tox_loss(tox_damage * seconds_per_tick * metabolization_rate, updating_health = FALSE))
+	if(affected_mob.adjust_tox_loss(tox_damage * seconds_per_tick * metabolization_ratio, updating_health = FALSE))
 		return UPDATE_MOB_HEALTH
-
-/datum/reagent/uranium/expose_obj(obj/exposed_obj, reac_volume, methods=TOUCH, show_message=TRUE)
-	. = ..()
-
-	if(!SSradiation.can_irradiate_basic(exposed_obj))
-		return
-
-	radiation_pulse(
-		source = exposed_obj,
-		max_range = 0,
-		threshold = RAD_VERY_LIGHT_INSULATION,
-		chance = (min(reac_volume * rad_power, CALCULATE_RAD_MAX_CHANCE(rad_power))),
-	)
-
-/datum/reagent/uranium/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message = TRUE, touch_protection = 0)
-	. = ..()
-
-	if(!SSradiation.can_irradiate_basic(exposed_mob))
-		return
-
-	if(ishuman(exposed_mob) && SSradiation.wearing_rad_protected_clothing(exposed_mob))
-		return
-
-	if(!(methods & (TOUCH|VAPOR)))
-		return
-
-	var/exposure_probability = min(100 - (touch_protection * 100), 0, 100)
-	if(exposure_probability && !prob(exposure_probability))
-		return
-
-
-	radiation_pulse(
-		source = exposed_mob,
-		max_range = 0,
-		threshold = RAD_VERY_LIGHT_INSULATION,
-		chance = (min(reac_volume * rad_power, CALCULATE_RAD_MAX_CHANCE(rad_power))),
-	)
 
 /datum/reagent/uranium/expose_turf(turf/exposed_turf, reac_volume)
 	. = ..()
@@ -1467,6 +1429,16 @@
 		burn_wound.victim.apply_damage(0.5, TOX)
 		burn_wound.victim.apply_damage(0.5, BURN, burn_wound.limb, wound_bonus = CANT_WOUND)
 
+/datum/reagent/space_cleaner/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	if(affected_mob.adjust_tox_loss(0.5 * metabolization_ratio * seconds_per_tick, updating_health = FALSE))
+		. = UPDATE_MOB_HEALTH
+
+	if(HAS_TRAIT(affected_mob, TRAIT_TOXINLOVER) || SPT_PROB(5, seconds_per_tick))
+		for(var/obj/item/organ/organ as anything in affected_mob.organs)
+			if(organ.zone == BODY_ZONE_CHEST || organ.zone == BODY_ZONE_PRECISE_MOUTH)
+				organ.wash(clean_types|CLEAN_RAD)
+
 /datum/reagent/space_cleaner/ez_clean
 	name = "EZ Clean"
 	description = "A powerful, acidic cleaner sold by Waffle Corp. Affects organic matter while leaving other objects unaffected."
@@ -1479,11 +1451,11 @@
 
 /datum/reagent/space_cleaner/ez_clean/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
-	var/heal = 1.1 * metabolization_ratio * seconds_per_tick
+	var/damage = 1.1 * metabolization_ratio * seconds_per_tick
 	var/need_mob_update
-	need_mob_update = affected_mob.adjust_brute_loss(heal, updating_health = FALSE)
-	need_mob_update += affected_mob.adjust_fire_loss(heal, updating_health = FALSE)
-	need_mob_update += affected_mob.adjust_tox_loss(heal, updating_health = FALSE)
+	need_mob_update += affected_mob.adjust_brute_loss(damage, updating_health = FALSE)
+	need_mob_update += affected_mob.adjust_fire_loss(damage, updating_health = FALSE)
+	need_mob_update += affected_mob.adjust_tox_loss(damage, updating_health = FALSE)
 	if(need_mob_update)
 		return UPDATE_MOB_HEALTH
 

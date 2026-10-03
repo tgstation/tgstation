@@ -1318,14 +1318,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 // Radiation defines
 
-/// Marks that this object is irradiated
+/// Marks that this object is irradiated.
 #define TRAIT_IRRADIATED "irradiated"
-
-/// Immune to being irradiated
+/// Immune to the irradiated effect entirely. Can't even be given the status effect, can't even spread it.
+/// Automatically applies [TRAIT_NO_RADIATION_EFFECTS], even if redundant, for the ease of use (consumers only need to check the latter for most purposes).
 #define TRAIT_RADIMMUNE "rad_immunity"
-
-/// Harmful radiation effects, the toxin damage and the burns, will not occur while this trait is active
-#define TRAIT_HALT_RADIATION_EFFECTS "halt_radiation_effects"
+/// Applies [TRAIT_NO_RADIATION_EFFECTS] and [TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL]. Basically a two-in-one trait for easy use.
+#define TRAIT_UNBOTHERED_BY_RADIATION "unbothered_by_radiation"
+	/// Irradiation affecting this entity is not tied to toxin damage - instead only being cleansed after sufficient decontamination.
+	#define TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL "no_tox_radiation"
+	/// Harmful radiation effects (toxin damage and the burns) will not occur while this trait is active, but the entity can still be irradiated.
+	#define TRAIT_NO_RADIATION_EFFECTS "no_radiation_effects"
 
 /// This clothing protects the user from radiation.
 /// This should not be used on clothing_traits, but should be applied to the clothing itself.
