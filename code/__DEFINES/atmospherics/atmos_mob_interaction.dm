@@ -31,6 +31,9 @@
 #define MIN_TOXIC_GAS_DAMAGE 1
 #define MAX_TOXIC_GAS_DAMAGE 10
 
+#define MIN_TOXIC_GAS_LUNG_DAMAGE 0.1
+#define MAX_TOXIC_GAS_LUNG_DAMAGE 15
+
 // Pressure limits.
 /// This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
 #define HAZARD_HIGH_PRESSURE 550
