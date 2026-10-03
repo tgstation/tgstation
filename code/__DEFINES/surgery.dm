@@ -2,6 +2,8 @@
 #define IS_ORGANIC_ORGAN(organ) (organ.organ_flags & ORGAN_ORGANIC)
 /// Helper to figure out if an organ is robotic
 #define IS_ROBOTIC_ORGAN(organ) (organ.organ_flags & ORGAN_ROBOTIC)
+/// Helper to figure out if an organ is mineral
+#define IS_MINERAL_ORGAN(organ) (organ.organ_flags & ORGAN_MINERAL)
 
 /// List of organ flags that can not be bioscrambled
 #define ORGAN_BIOSCRAMBLE_INCOMPATIBLE (ORGAN_ROBOTIC | ORGAN_MINERAL)

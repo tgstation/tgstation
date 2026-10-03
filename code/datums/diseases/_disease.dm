@@ -409,8 +409,10 @@
 	if(!istype(target_organ))
 		return FALSE
 
-	// robotic organs are immune to disease unless 'inorganic biology' symptom is present
+	// snowflake organ checks: grants immunity to disease unless 'inorganic biology' symptom is present
 	if(IS_ROBOTIC_ORGAN(target_organ) && !(infectable_biotypes & MOB_ROBOTIC))
+		return FALSE
+	if(IS_MINERAL_ORGAN(target_organ) && !(infectable_biotypes & MOB_MINERAL))
 		return FALSE
 
 	return TRUE

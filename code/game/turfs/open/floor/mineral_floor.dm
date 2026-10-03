@@ -267,6 +267,13 @@
 	if(isliving(arrived))
 		squeak()
 
+/turf/open/floor/mineral/bananium/initialize_occupant(atom/movable/occupant)
+	. = ..()
+	if(.)
+		return
+	if(isliving(occupant))
+		squeak()
+
 /turf/open/floor/mineral/bananium/attackby(obj/item/W, mob/user, list/modifiers)
 	.=..()
 	if(!.)
@@ -339,6 +346,13 @@
 	if(.)
 		return
 	if(isliving(arrived))
+		radiate()
+
+/turf/open/floor/mineral/uranium/initialize_occupant(atom/movable/occupant)
+	. = ..()
+	if(.)
+		return
+	if(isliving(occupant))
 		radiate()
 
 /turf/open/floor/mineral/uranium/attackby(obj/item/W, mob/user, list/modifiers)

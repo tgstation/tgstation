@@ -7,6 +7,7 @@
 	inhand_icon_state = "greyscale_softcap" //todo wip
 	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
 	custom_materials = list(/datum/material/cloth = 2 * SHEET_MATERIAL_AMOUNT)
+	item_flags = CAN_BE_OVERSLOT
 	/// For setting icon archetype
 	var/soft_type = "cargo"
 	/// If there is a suffix to append

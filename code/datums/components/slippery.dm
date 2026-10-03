@@ -27,6 +27,8 @@
 	var/daze_time = 3 SECONDS
 	/// Flags for how slippery the parent is. See [__DEFINES/mobs.dm]
 	var/lube_flags
+	/// If we slip when we are attacked with
+	var/slip_on_damage = FALSE
 	/// Optional callback allowing you to define custom conditions for slipping
 	var/datum/callback/can_slip_callback
 	/// Optional call back that is called when a mob slips on this component
@@ -59,6 +61,7 @@
  * * force_drop - should the crossing mob drop items in its hands or not
  * * slot_whitelist - flags controlling where on a mob this item can be equipped to make the parent mob slippery full list [here][ITEM_SLOT_OCLOTHING]
  * * datum/callback/on_slip_callback - Callback to add custom behaviours as the crossing mob is slipped
+ * * slip_on_damage - whether the component should cause slipping when the parent attacks the target
  */
 /datum/component/slippery/Initialize(
 	knockdown,
@@ -69,6 +72,7 @@
 	force_drop = FALSE,
 	slot_whitelist,
 	datum/callback/can_slip_callback,
+	slip_on_damage = FALSE,
 )
 	src.knockdown_time = max(knockdown, 0)
 	src.paralyze_time = max(paralyze, 0)
@@ -77,6 +81,7 @@
 	src.lube_flags = lube_flags
 	src.can_slip_callback = can_slip_callback
 	src.on_slip_callback = on_slip_callback
+	src.slip_on_damage = slip_on_damage
 	if(slot_whitelist)
 		src.slot_whitelist = slot_whitelist
 
@@ -89,6 +94,8 @@
 		RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_drop))
 		RegisterSignal(parent, COMSIG_ITEM_APPLY_FANTASY_BONUSES, PROC_REF(apply_fantasy_bonuses))
 		RegisterSignal(parent, COMSIG_ITEM_REMOVE_FANTASY_BONUSES, PROC_REF(remove_fantasy_bonuses))
+		RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, PROC_REF(slip_on_afterattack))
+		RegisterSignal(parent, COMSIG_MOVABLE_IMPACT, PROC_REF(slip_on_throw_impact))
 
 /datum/component/slippery/Destroy(force)
 	can_slip_callback = null
@@ -135,12 +142,13 @@
 	force_drop = FALSE,
 	slot_whitelist,
 	datum/callback/can_slip_callback,
+	slip_on_damage = FALSE,
 )
 	if(component)
 		knockdown = component.knockdown_time
 		lube_flags = component.lube_flags
 		on_slip_callback = component.on_slip_callback
-		can_slip_callback = component.on_slip_callback
+		can_slip_callback = component.can_slip_callback
 		paralyze = component.paralyze_time
 		daze = component.daze_time
 		force_drop = component.force_drop_items
@@ -153,6 +161,7 @@
 	src.lube_flags = lube_flags
 	src.on_slip_callback = on_slip_callback
 	src.can_slip_callback = can_slip_callback
+	src.slip_on_damage = slip_on_damage
 	if(slot_whitelist)
 		src.slot_whitelist = slot_whitelist
 /**
@@ -171,7 +180,7 @@
 		if(HAS_TRAIT(turf, TRAIT_TURF_IGNORE_SLIPPERY))
 			return
 	var/mob/living/victim = arrived
-	if(victim.movement_type & MOVETYPES_NOT_TOUCHING_GROUND)
+	if((victim.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) && !(lube_flags & SLIP_IN_NOGRAV))
 		return
 	if(can_slip_callback && !can_slip_callback.Invoke(holder, victim))
 		return
@@ -247,3 +256,19 @@
 /datum/component/slippery/UnregisterFromParent()
 	. = ..()
 	qdel(GetComponent(/datum/component/connect_loc_behalf))
+
+/datum/component/slippery/proc/slip_on_afterattack(datum/source, atom/target, mob/user, ...)
+	SIGNAL_HANDLER
+
+	if(!slip_on_damage || !isliving(target))
+		return
+
+	Slip(source, target)
+
+/datum/component/slippery/proc/slip_on_throw_impact(datum/source, atom/hit_atom, datum/thrownthing/throwing_datum, caught)
+	SIGNAL_HANDLER
+
+	if(!slip_on_damage || !isliving(hit_atom) || caught)
+		return
+
+	Slip(source, hit_atom)

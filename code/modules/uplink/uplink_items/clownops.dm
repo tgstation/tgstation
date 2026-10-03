@@ -30,18 +30,18 @@
 	purchasable_from = UPLINK_CLOWN_OPS | UPLINK_SPY
 
 /datum/uplink_item/weapon_kits/clownoppin
-	name = "Ultra Hilarious Firing Pin"
+	name = "Ultra Hilarious Firing Pins"
 	desc = "A firing pin that, when inserted into a gun, makes that gun only useable by clowns and clumsy people and makes that gun honk whenever anyone tries to fire it."
 	cost = 1 //much cheaper for clown ops than for clowns
-	item = /obj/item/firing_pin/clown/ultra
+	item = /obj/item/storage/box/syndie_kit/clownpins
 	purchasable_from = UPLINK_CLOWN_OPS
 	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
 /datum/uplink_item/weapon_kits/clownopsuperpin
-	name = "Super Ultra Hilarious Firing Pin"
+	name = "Super Ultra Hilarious Firing Pins"
 	desc = "Like the ultra hilarious firing pin, except the gun you insert this pin into explodes when someone who isn't clumsy or a clown tries to fire it."
 	cost = 4 //much cheaper for clown ops than for clowns
-	item = /obj/item/firing_pin/clown/ultra/selfdestruct
+	item = /obj/item/storage/box/syndie_kit/clownpins/super
 	purchasable_from = UPLINK_CLOWN_OPS
 	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND
 
@@ -152,9 +152,10 @@
 	purchasable_from = UPLINK_CLOWN_OPS
 
 /datum/uplink_item/badass/clownopclumsinessinjector //clowns can buy this too, but it's in the role-restricted items section for them
-	name = "Clumsiness Injector"
-	desc = "Inject yourself with this to become as clumsy as a clown... or inject someone ELSE with it to make THEM as clumsy as a clown. Useful for clown operatives who wish to reconnect with their former clownish nature or for clown operatives who wish to torment and play with their prey before killing them."
-	item = /obj/item/dnainjector/clumsymut
-	cost = 1
+	name = "Clumsiness Anti-Injector"
+	desc = "Inject yourself with this to clownteract your inherent clumsiness. \
+		A must have for operatives who require an extra level of precision for their planned routine."
+	item = /obj/item/dnainjector/anticlumsy
+	cost = 2
 	purchasable_from = UPLINK_CLOWN_OPS
 	uplink_item_flags = SYNDIE_TRIPS_CONTRABAND

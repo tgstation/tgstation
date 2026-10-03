@@ -1,5 +1,5 @@
 /mob/living/brain
-	var/obj/item/mmi/container = null
+	var/obj/item/brain_processor/container = null
 	var/emp_damage = 0//Handles a type of MMI damage
 	var/datum/dna/stored/stored_dna // dna var for brain. Used to store dna, brain dna is not considered like actual dna, brain.has_dna() returns FALSE.
 	stat = DEAD //we start dead by default
@@ -14,9 +14,6 @@
 		var/obj/item/organ/brain/OB = new(loc) //we create a new brain organ for it.
 		OB.brainmob = src
 		forceMove(OB)
-	if(!container?.mecha && (!container || container.immobilize)) //Unless inside a mecha, brains are rather helpless.
-		add_traits(list(TRAIT_IMMOBILIZED, TRAIT_HANDS_BLOCKED), BRAIN_UNAIDED)
-	ADD_TRAIT(src, TRAIT_SILICON_EMOTES_ALLOWED, INNATE_TRAIT)
 	ADD_TRAIT(src, TRAIT_NEVER_CONSIDERED_ALIVE, INNATE_TRAIT)
 
 /mob/living/brain/on_changed_z_level(turf/old_turf, turf/new_turf, same_z_layer, notify_contents)
@@ -80,34 +77,29 @@
 	stored_dna?.real_name = real_name
 
 /mob/living/brain/forceMove(atom/destination)
+	// Let's see if our destination is good first
+	var/static/list/safe_destinations = list(/obj/item/organ/brain, /obj/item/brain_processor)
+	if(is_type_in_list(destination, safe_destinations))
+		return doMove(destination)
+
+	// if not, let's try to move what's containing us instead
 	if(container)
 		return container.forceMove(destination)
 	else if (istype(loc, /obj/item/organ/brain))
-		var/obj/item/organ/brain/B = loc
-		B.forceMove(destination)
-	else if (istype(destination, /obj/item/organ/brain))
-		doMove(destination)
-	else if (istype(destination, /obj/item/mmi))
-		doMove(destination)
+		var/obj/item/organ/brain/brain_loc = loc
+		brain_loc.forceMove(destination)
 	else
 		CRASH("Brainmob without a container [src] attempted to move to [destination].")
 
 /mob/living/brain/update_mouse_pointer()
-	if (!client)
+	// This kind of sucks
+	if(!client)
 		return
-	client.mouse_pointer_icon = initial(client.mouse_pointer_icon)
-	if(!container)
-		return
-	if (container.mecha)
-		var/obj/vehicle/sealed/mecha/M = container.mecha
-		if(M.mouse_pointer)
-			client.mouse_pointer_icon = M.mouse_pointer
-
-/mob/living/brain/proc/get_traumas()
-	. = list()
-	if(istype(loc, /obj/item/organ/brain))
-		var/obj/item/organ/brain/B = loc
-		. = B.traumas
+	. = ..()
+	if(istype(loc?.loc, /obj/vehicle/sealed) && !client.mouse_override_icon)
+		var/obj/vehicle/sealed/probably_mech = loc.loc
+		if(probably_mech.mouse_pointer)
+			client.mouse_pointer_icon = probably_mech.mouse_pointer
 
 /mob/living/brain/get_policy_keywords()
 	. = ..()

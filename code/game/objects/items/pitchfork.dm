@@ -7,6 +7,7 @@
 /obj/item/pitchfork
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "pitchfork0"
+	inhand_icon_state = "pitchfork0"
 	base_icon_state = "pitchfork"
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'

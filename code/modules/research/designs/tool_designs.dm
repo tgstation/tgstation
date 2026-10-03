@@ -15,7 +15,7 @@
 
 /datum/design/handdrill
 	name = "Hand Drill"
-	desc = "A small electric hand drill with an interchangeable screwdriver and bolt bit"
+	desc = "A small electric hand drill with an interchangeable screwdriver and bolt bit."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*1.75, /datum/material/silver =HALF_SHEET_MATERIAL_AMOUNT * 1.5, /datum/material/titanium =SHEET_MATERIAL_AMOUNT*1.25)
 	build_path = /obj/item/screwdriver/power
@@ -26,7 +26,7 @@
 
 /datum/design/jawsoflife
 	name = "Jaws of Life"
-	desc = "A small, compact Jaws of Life with an interchangeable pry jaws and cutting jaws"
+	desc = "A small, compact Jaws of Life with an interchangeable pry jaws and cutting jaws."
 	build_path = /obj/item/crowbar/power
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*2.25, /datum/material/silver =SHEET_MATERIAL_AMOUNT*1.25, /datum/material/titanium =SHEET_MATERIAL_AMOUNT*1.75)
@@ -47,8 +47,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rangedanalyzer
-	name = "Experimental Long-range Gas Analyzer"
-	desc = "An experimental gas analyzer capable of operating at long distance"
+	name = "Long-range Gas Analyzer"
+	desc = "An gas analyzer capable of operating at long distance."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2, /datum/material/gold =SMALL_MATERIAL_AMOUNT * 3, /datum/material/bluespace=SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/analyzer/ranged
@@ -59,6 +59,7 @@
 
 /datum/design/rpd
 	name = "Rapid Pipe Dispenser (RPD)"
+	desc = "A tool that can rapidly dispense or disperse any variety of pipe."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*37.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT*18.75)
 	build_path = /obj/item/pipe_dispenser
@@ -68,7 +69,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rcd_loaded
-	name = "Rapid Construction Device"
+	name = "Rapid Construction Device (RCD)"
 	desc = "A tool that can construct and deconstruct walls, airlocks and floors on the fly."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 30, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 15)
@@ -82,8 +83,8 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING
 
 /datum/design/rtd_loaded
-	name = "Rapid Tiling Device"
-	desc = "A tool that can lay & destroy floor tiles on the fly."
+	name = "Rapid Tiling Device (RTD)"
+	desc = "A tool that can lay or destroy floor tiles on the fly."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 15, /datum/material/glass =SHEET_MATERIAL_AMOUNT*1.25)
 	build_path = /obj/item/construction/rtd/loaded
@@ -94,6 +95,7 @@
 
 /datum/design/rcd_ammo
 	name = "RCD Matter Cartridge"
+	desc = "A more compact and efficient method of reloading the RCD with new matter."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron= SHEET_MATERIAL_AMOUNT * 6, /datum/material/glass= SHEET_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/rcd_ammo
@@ -228,6 +230,7 @@
 
 /datum/design/biopsy_tool
 	name = "Biopsy Tool"
+	desc = "A tool used to extract tissue samples from organisms for cytological use."
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT*2, /datum/material/glass =SHEET_MATERIAL_AMOUNT*1.5)
 	build_path = /obj/item/biopsy_tool
@@ -402,7 +405,7 @@
 
 /datum/design/shuttle_blueprints
 	name = "Shuttle Blueprints"
-	desc = "Blueprints suitable for constructing shuttles"
+	desc = "A set of blueprints that aid in the construction of shuttles."
 	build_type = PROTOLATHE
 	materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/shuttle_blueprints

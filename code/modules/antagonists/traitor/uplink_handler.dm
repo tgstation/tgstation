@@ -1,7 +1,7 @@
 /**
  * Uplink Handler
  *
- * The uplink handler, used to handle a traitor's TC and experience points and the uplink UI.
+ * The uplink handler, used to handle a traitor's TC and the uplink UI.
 **/
 /datum/uplink_handler
 	/// The owner of this uplink handler.
@@ -10,10 +10,6 @@
 	var/telecrystals = 0
 	/// The current uplink flag of this uplink
 	var/uplink_flag = NONE
-	/// This uplink has progression
-	var/has_progression = TRUE
-	/// The amount of experience points this traitor has
-	var/progression_points = 0
 	/// The purchase log of this uplink handler
 	var/datum/uplink_purchase_log/purchase_log
 	/// Associative array of stock keys = stock left. For items that don't share stock, the key is their typepath
@@ -46,10 +42,6 @@
 /datum/uplink_handler/proc/on_update()
 	SEND_SIGNAL(src, COMSIG_UPLINK_HANDLER_ON_UPDATE)
 	return
-
-/// Checks if traitor has enough reputation to purchase an item
-/datum/uplink_handler/proc/not_enough_reputation(datum/uplink_item/to_purchase)
-	return has_progression && progression_points < to_purchase.progression_minimum
 
 /// Checks if there are enough joined players to purchase an item
 /datum/uplink_handler/proc/not_enough_population(datum/uplink_item/to_purchase)
@@ -84,7 +76,7 @@
 	if(!check_if_restricted(to_purchase))
 		return FALSE
 
-	if(not_enough_reputation(to_purchase) || not_enough_population(to_purchase))
+	if(not_enough_population(to_purchase))
 		return FALSE
 
 	if(telecrystals < to_purchase.cost)

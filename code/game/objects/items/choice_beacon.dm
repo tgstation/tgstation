@@ -100,22 +100,6 @@
 			instruments[initial(instrument.name)] = instrument
 	return instruments
 
-/obj/item/choice_beacon/ingredient
-	name = "ingredient delivery beacon"
-	desc = "Summon a box of ingredients to help you get started cooking."
-	icon_state = "sb_delivery"
-	inhand_icon_state = "sb_delivery"
-	company_source = "Sophronia Broadcasting"
-	company_message = span_bold("Please enjoy your Sophronia Broadcasting's 'Plasteel Chef' Ingredients Box, exactly as shown in the hit show!")
-
-/obj/item/choice_beacon/ingredient/generate_display_names()
-	var/static/list/ingredient_options
-	if(!ingredient_options)
-		ingredient_options = list()
-		for(var/obj/item/storage/box/ingredients/box as anything in subtypesof(/obj/item/storage/box/ingredients))
-			ingredient_options[initial(box.theme_name)] = box
-	return ingredient_options
-
 /obj/item/choice_beacon/hero
 	name = "heroic beacon"
 	desc = "To summon heroes from the past to protect the future."

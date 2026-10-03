@@ -568,7 +568,6 @@ GLOBAL_LIST_INIT(metalhydrogen_recipes, list(
 	name = "metal hydrogen"
 	icon_state = "sheet-metalhydrogen"
 	worn_icon_state = "sheet-metalhydrogen"
-	worn_icon_state = "sheet-metalhydrogen"
 	inhand_icon_state = "sheet-metalhydrogen"
 	singular_name = "metal hydrogen sheet"
 	w_class = WEIGHT_CLASS_NORMAL

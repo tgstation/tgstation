@@ -243,6 +243,7 @@
 	AddElement(/datum/element/contextual_screentip_mob_typechecks, hovering_mob_typechecks)
 
 /obj/machinery/power/apc/Destroy()
+	SSmachines.processing_apcs -= src
 	if(malfai)
 		malfai.hacked_apcs -= src
 		malfai = null

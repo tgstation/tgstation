@@ -14,5 +14,5 @@
 	var/mob/living/pawn = controller.pawn
 	if(!isobj(pawn.buckled))
 		return FALSE
-	controller.blackboard[target_key] = pawn.buckled
+	controller.set_blackboard_key(target_key, pawn.buckled)
 	return TRUE

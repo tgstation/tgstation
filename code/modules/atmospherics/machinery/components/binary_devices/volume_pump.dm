@@ -12,13 +12,14 @@
 
 /obj/machinery/atmospherics/components/binary/volume_pump
 	icon_state = "volpump_map-3"
-	name = "volumetric gas pump"
+	name = "volume pump"
 	desc = "A pump that moves gas by volume."
 	can_unwrench = TRUE
 	shift_underlay_only = FALSE
 	construction_type = /obj/item/pipe/directional
 	pipe_state = "volumepump"
 	vent_movement = NONE
+	light_mask_on = TRUE
 	///Transfer rate of the component in L/s
 	var/transfer_rate = MAX_TRANSFER_RATE
 	///Check if the component has been overclocked

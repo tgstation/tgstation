@@ -45,7 +45,7 @@
 
 
 	var/atom/move_target = path[path.len]
-	if(move_target != ai_controller.blackboard[BB_BEACON_TARGET])
+	if(move_target != get_turf(ai_controller.blackboard[BB_BEACON_TARGET]))
 		return
 
 

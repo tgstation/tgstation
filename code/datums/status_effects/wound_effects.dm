@@ -16,11 +16,41 @@
 	owner.visible_message(span_danger("[owner]'s body tenses up noticeably, gritting against [owner.p_their()] pain!"), span_notice("<b>Your senses sharpen as your body tenses up from the wounds you've sustained!</b>"), \
 		vision_distance=COMBAT_MESSAGE_RANGE)
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLEED, WOUND_DETERMINATION_BLEED_MOD)
+	RegisterSignal(owner, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(unarmed_strike))
 
 /datum/status_effect/determined/on_remove()
 	owner.visible_message(span_danger("[owner]'s body slackens noticeably!"), span_warning("<b>Your adrenaline rush dies off, and the pain from your wounds come aching back in...</b>"), vision_distance=COMBAT_MESSAGE_RANGE)
 	MODIFY_PHYSIOLOGY(owner, PHYS_COEFF_BLEED, 1/WOUND_DETERMINATION_BLEED_MOD)
+	UnregisterSignal(owner, COMSIG_LIVING_UNARMED_ATTACK)
 	return ..()
+
+/datum/status_effect/determined/proc/unarmed_strike(mob/living/source, atom/attack_target, proximity, modifiers)
+	SIGNAL_HANDLER
+
+	if(!proximity || !isliving(attack_target))
+		return NONE
+
+	var/obj/item/bodypart/arm = source.get_active_hand()
+	var/datum/wound/bruised/arm_bruises = arm.get_wound_type(/datum/wound/bruised)
+	if(!isnull(arm_bruises))
+		arm_bruises.bruise_ticks = initial(arm_bruises.bruise_ticks)
+		return
+	arm_bruises = new /datum/wound/bruised()
+
+	var/wound_source
+
+	if(LAZYACCESS(modifiers, RIGHT_CLICK))
+		wound_source = "defensive injuries from attempting to ward off"
+	else
+		wound_source = "offensive injuries from attempting to fight"
+
+	if(ishuman(attack_target))
+		wound_source += " a humanoid"
+	else if(issilicon(attack_target))
+		wound_source += " something mechanical"
+	else
+		wound_source += " an animal"
+	arm_bruises.apply_wound(arm, TRUE, wound_source = wound_source)
 
 /datum/status_effect/limp
 	id = "limp"

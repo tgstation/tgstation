@@ -57,6 +57,11 @@
 	. = ..()
 	if(movable.set_currently_z_moving(CURRENTLY_Z_FALLING))
 		zFall(movable, falling_from_move = TRUE)
+
+/turf/open/openspace/initialize_occupant(atom/movable/occupant)
+	. = ..()
+	zfall_if_on_turf(occupant)
+
 /**
  * Drops movables spawned on this turf after they are successfully initialized.
  * so that spawned movables that should fall to gravity, will fall.

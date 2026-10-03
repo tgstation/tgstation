@@ -16,6 +16,7 @@
 	greyscale_colors = "#EEEEEE#EEEEEE"
 	flags_1 = IS_PLAYER_COLORABLE_1
 	custom_materials = list(/datum/material/cloth = 2 * SHEET_MATERIAL_AMOUNT)
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/head/beanie/black
 	name = "black beanie"

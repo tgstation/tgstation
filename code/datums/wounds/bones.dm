@@ -20,9 +20,11 @@
 	threshold_penalty = 5
 
 	/// Have we been bone gel'd?
-	var/gelled
+	var/gelled = FALSE
 	/// Have we been taped?
-	var/taped
+	var/taped = FALSE
+	/// Another method is causing our bones to heal
+	var/healing = FALSE
 	/// If we did the gel + surgical tape healing method for fractures, how many ticks does it take to heal by default
 	var/regen_ticks_needed
 	/// Our current counter for gel + surgical tape regeneration
@@ -89,7 +91,7 @@
 		next_trauma_cycle = world.time + (rand(100-WOUND_BONE_HEAD_TIME_VARIANCE, 100+WOUND_BONE_HEAD_TIME_VARIANCE) * 0.01 * trauma_cycle_cooldown)
 
 	var/is_bone_limb = ((limb.biological_state & BIO_BONE) && !(limb.biological_state & (BIO_FLESH|BIO_CHITIN)))
-	if(!gelled || (!taped && !is_bone_limb))
+	if(!healing && (!gelled || (!taped && !is_bone_limb)))
 		return
 
 	regen_ticks_current++

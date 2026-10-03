@@ -72,3 +72,6 @@
 
 /// Ensures bodybag (item) and bodybag (closet) have the same material setup
 /datum/unit_test/focus_only/bodybag_materials
+
+///Checks primarily that emissives aren't mistakenly not tagged with the meta flag
+/datum/unit_test/focus_only/bodypart_overlay_flags

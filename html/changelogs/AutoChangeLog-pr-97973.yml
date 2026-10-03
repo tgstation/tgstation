@@ -1,0 +1,5 @@
+author: "ArcaneMusic"
+delete-after: True
+changes:
+  - balance: "NODE drones are now immune to snow and ash storms, for the benefit of wave defenses."
+  - bugfix: "Ore vents should be runtiming less."

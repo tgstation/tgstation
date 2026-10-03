@@ -559,6 +559,7 @@
 	sense_of_taste = FALSE
 	liked_foodtypes = GROSS | MEAT | RAW | GORE | DAIRY //skeletons eat spooky shit... and dairy, of course
 	disliked_foodtypes = NONE
+	organ_flags = ORGAN_MINERAL
 	modifies_speech = TRUE
 	var/chattering = FALSE
 	var/phomeme_type = "sans"
@@ -588,6 +589,7 @@
 	modifies_speech = FALSE
 	liked_foodtypes = VEGETABLES
 	disliked_foodtypes = FRUIT | CLOTH
+	organ_flags = parent_type::organ_flags | ORGAN_ORGANIC
 	languages_native = list(/datum/language/calcic)
 	emote_sounds = list(
 		/datum/emote/living/scream::key = list(

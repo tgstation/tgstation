@@ -1,74 +1,12 @@
-$badGradient: linear-gradient(
-  to right,
-  hsl(0, 67%, 37%),
-  hsl(0, 43%, 28%),
-  hsl(0, 67%, 37%)
-);
-$normalGradient: linear-gradient(
-  to right,
-  hsl(30, 14%, 34%),
-  hsl(30, 20%, 19%),
-  hsl(30, 14%, 34%)
-);
-$goodGradient: linear-gradient(
-  to right,
-  hsl(210, 11%, 37%),
-  hsl(210, 14%, 17%),
-  hsl(210, 11%, 37%)
-);
-$veryGoodGradient: linear-gradient(
+$titlebarGradient: linear-gradient(
   to right,
   hsl(36, 38%, 44%),
   hsl(36, 33%, 19%),
   hsl(36, 38%, 44%)
 );
-$superGoodGradient: linear-gradient(
-  to right,
-  hsl(60, 39%, 45%),
-  hsl(60, 35%, 34%),
-  hsl(60, 39%, 45%)
-);
-$bestGradient: linear-gradient(
-  to right,
-  hsl(330, 34%, 45%),
-  hsl(330, 43%, 26%),
-  hsl(330, 34%, 45%)
-);
-
-$_rep_map: (
-  'bad': $badGradient,
-  'normal': $normalGradient,
-  'good': $goodGradient,
-  'very-good': $veryGoodGradient,
-  'super-good': $superGoodGradient,
-  'best': $bestGradient,
-);
-
-@each $reputation-name, $gradient-value in $_rep_map {
-  .reputation-#{$reputation-name} {
-    background-image: $gradient-value !important;
-  }
-
-  .reputation-#{$reputation-name}.Button {
-    background-position: 0 0;
-    transition: background-position var(--transition-time-fast);
-
-    &:hover {
-      transition: background-position 0ms;
-    }
-
-    &:active {
-      transition: background-position var(--transition-time-medium);
-    }
-
-    &:hover,
-    &:active {
-      background-position: 50em 0;
-    }
-  }
-}
 
 .UplinkObjective__Titlebar {
+  background-image: $titlebarGradient;
   padding: var(--space-ml) var(--space-l) var(--space-m);
   font-weight: bold;
   border: var(--border-thickness-small) solid var(--color-black);

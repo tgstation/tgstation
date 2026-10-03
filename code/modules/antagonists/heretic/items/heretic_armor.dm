@@ -860,8 +860,6 @@
 	var/rusted = FALSE
 	/// Atom used to animate our overlay
 	var/atom/movable/rust_overlay
-	/// identifier for the overlay
-	var/static/overlay_id = 0
 	/// Overlay for the armor object
 	var/image/object_overlay
 	/// Overlay for the hood object
@@ -871,7 +869,6 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/Initialize(mapload)
 	. = ..()
-	overlay_id++
 	if(!object_overlay)
 		object_overlay = image(icon, icon_state = "rust_armor_overlay")
 	if(!hood_object_overlay)
@@ -883,7 +880,7 @@
 	register_turf_listener(user)
 	rust_overlay = new()
 	rust_overlay.icon = 'icons/mob/clothing/suits/armor.dmi'
-	rust_overlay.render_target = "*rust_overlay_[overlay_id]"
+	rust_overlay.render_target = "*rust_overlay_[REF(rust_overlay)]"
 	rust_overlay.vis_flags |= VIS_INHERIT_DIR | VIS_INHERIT_LAYER | VIS_INHERIT_ID
 	user.vis_contents += rust_overlay // Should be invisible, we just update the sprite as needed
 
@@ -1000,13 +997,16 @@
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/rust/worn_overlays(mutable_appearance/standing, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
+	// Visual-only previews and non-heretics have no animated rust target.
+	if(isnull(rust_overlay))
+		return
 	// Should basically catch toggling the hood on/off while standing on rust
 	if(rusted)
-		rust_overlay?.icon_state = "[worn_icon_state]" + "_overlay"
+		rust_overlay.icon_state = "[worn_icon_state]" + "_overlay"
 	else
-		rust_overlay?.icon_state = null
+		rust_overlay.icon_state = null
 	var/mutable_appearance/rust_appearance = mutable_appearance()
-	rust_appearance.render_source = "*rust_overlay_[overlay_id]"
+	rust_appearance.render_source = rust_overlay.render_target
 	. += rust_appearance
 
 /obj/item/clothing/head/hooded/cult_hoodie/eldritch/rust

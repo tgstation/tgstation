@@ -114,6 +114,13 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	var/skip_minimap_rendering = FALSE
 
 
+/// ChangeTurf passes the old signal tables here so initialization can update them directly.
+/// In particular, occupant initialization can move or delete existing contents before New() returns.
+/turf/New(loc, list/inherited_listen_lookup, list/inherited_signal_procs)
+	_listen_lookup = inherited_listen_lookup
+	_signal_procs = inherited_signal_procs
+	. = ..(loc)
+
 /turf/vv_edit_var(var_name, new_value)
 	var/static/list/banned_edits = list(NAMEOF_STATIC(src, x), NAMEOF_STATIC(src, y), NAMEOF_STATIC(src, z))
 	if(var_name in banned_edits)
@@ -162,7 +169,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		QUEUE_SMOOTH(src)
 
 	for(var/atom/movable/content as anything in src)
-		Entered(content, null)
+		initialize_occupant(content)
 
 	var/area/our_area = loc
 	if(!our_area.area_has_base_lighting && space_lit) //Only provide your own lighting if the area doesn't for you
@@ -185,6 +192,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		set_custom_materials(custom_materials)
 
 	return INITIALIZE_HINT_NORMAL
+
+/// Applies this turf to an existing occupant during Initialize(), without announcing movement.
+/// Call the parent first so the occupant can update turf-dependent state before subtype effects run.
+/turf/proc/initialize_occupant(atom/movable/occupant)
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(occupant, COMSIG_MOVABLE_TURF_INITIALIZING, src)
 
 /// Initializes our adjacent turfs. If you want to avoid this, do not override it, instead set init_air to FALSE
 /turf/proc/Initalize_Atmos(time)
@@ -221,11 +234,12 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		vis_contents.Cut()
 
 /// WARNING WARNING
-/// Turfs DO NOT lose their signals when they get replaced, REMEMBER THIS
+/// Turfs DO NOT lose their external signal connections when they get replaced, REMEMBER THIS
 /// It's possible because turfs are fucked, and if you have one in a list and it's replaced with another one, the list ref points to the new turf
-/// We do it because moving signals over was needlessly expensive, and bloated a very commonly used bit of code
+/// We do it to avoid unregistering and re-registering every signal in a very commonly used bit of code
+/// Signals registered by the turf on itself are cleared so the new type can register its own
 /turf/_clear_signal_refs()
-	return
+	UnregisterSignal(src, _signal_procs?[src])
 
 /turf/attack_hand(mob/user, list/modifiers)
 	. = ..()

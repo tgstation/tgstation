@@ -15,6 +15,7 @@
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	species_exception = list(/datum/species/golem)
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/suit/jacket/Initialize(mapload)
 	. = ..()
@@ -38,6 +39,7 @@
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	species_exception = list(/datum/species/golem)
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/suit/toggle/jacket/Initialize(mapload)
 	. = ..()
