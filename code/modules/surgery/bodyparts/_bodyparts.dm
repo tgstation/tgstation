@@ -2005,8 +2005,8 @@
 /obj/item/bodypart/proc/on_surgery_state_change(datum/source, old_state, current_state, changed_states)
 	SIGNAL_HANDLER
 
-	var/was_heavy_surgery = HAS_ANY_SURGERY_STATE(old_state, HEAVY_SURGERY)
-	var/is_heavy_surgery = HAS_ANY_SURGERY_STATE(current_state, HEAVY_SURGERY)
+	var/was_heavy_surgery = HAS_SURGERY_STATE(old_state, SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN) && HAS_ANY_SURGERY_STATE(old_state, HEAVY_SURGERY)
+	var/is_heavy_surgery = HAS_SURGERY_STATE(current_state, SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN) && HAS_ANY_SURGERY_STATE(current_state, HEAVY_SURGERY)
 
 	if(!was_heavy_surgery && is_heavy_surgery)
 		owner.throw_alert(ALERT_SURGERY, /atom/movable/screen/alert/status_effect/surgery)
