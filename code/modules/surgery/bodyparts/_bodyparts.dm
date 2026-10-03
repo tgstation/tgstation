@@ -1983,16 +1983,23 @@
 	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "surgery"
 
+#define HEAVY_SURGERY (SURGERY_ORGANS_CUT|SURGERY_BONE_DRILLED|SURGERY_BONE_SAWED|SURGERY_CAVITY_WIDENED)
+
 /// Used to check if open surgery is happening
 /obj/item/bodypart/proc/on_surgery_state_change(datum/source, old_state, current_state, changed_states)
 	SIGNAL_HANDLER
 
-	if(!HAS_ANY_SURGERY_STATE(old_state, SURGERY_BONE_SAWED) && HAS_ANY_SURGERY_STATE(current_state, SURGERY_BONE_SAWED)) // added saw state
+	var/was_heavy_surgery = HAS_ANY_SURGERY_STATE(old_state, HEAVY_SURGERY)
+	var/is_heavy_surgery = HAS_ANY_SURGERY_STATE(current_state, HEAVY_SURGERY)
+
+	if(!was_heavy_surgery && is_heavy_surgery)
 		owner.throw_alert(ALERT_SURGERY, /atom/movable/screen/alert/status_effect/surgery)
-		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved), override=TRUE)
-	else if(HAS_ANY_SURGERY_STATE(old_state, SURGERY_BONE_SAWED) && !HAS_ANY_SURGERY_STATE(changed_states, SURGERY_BONE_SAWED)) // removed saw state
+		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved), override = TRUE)
+	else if(was_heavy_surgery && !is_heavy_surgery)
 		owner.clear_alert(ALERT_SURGERY)
 		UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
+
+#undef HEAVY_SURGERY
 
 /// Tracks if the mob is moving while critical surgery (sawed open) is taking place
 /obj/item/bodypart/proc/on_moved(obj/item/bodypart, atom/OldLoc, Dir, forced)
