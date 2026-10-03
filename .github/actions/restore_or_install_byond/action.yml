@@ -16,13 +16,20 @@ runs:
     # Try to grab libcurl from the cache
     # If we fail, find the nearest server, download it, and upload it to the cache.
     # Only required for BYOND versions 516.1664+
+
+    - name: Determine installed libcurl version
+      id: libcurl_version
+      if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664
+      shell: bash
+      run: echo "version=$(dpkg-query -W -f='${Version}' libcurl4t64:amd64)" >> "$GITHUB_OUTPUT"
+
     - name: Restore libcurl cache
       id: restore_libcurl_cache
       if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664
       uses: actions/cache/restore@v6.1.0
       with:
         path: ~/apt-cache
-        key: ${{ runner.os }}-libcurl-i386
+        key: ${{ runner.os }}-libcurl-i386-${{ steps.libcurl_version.outputs.version }}
         lookup-only: ${{ inputs.skip_cache_download }}
 
     - name: Install libcurl from cache

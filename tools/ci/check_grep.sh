@@ -301,7 +301,7 @@ if $grep -i 'securaty|securiy|secuirty' "${code_files[@]}"; then
     st=1
 fi;
 part "map json naming"
-if ls _maps/*.json | $grep "[A-Z]"; then
+if ls _maps/map_jsons/*.json | $grep "[A-Z]"; then
 	echo
 	echo -e "${RED}ERROR: Uppercase in a map .JSON file detected, these must be all lowercase.${NC}"
 	st=1
@@ -315,7 +315,7 @@ if $grep 'easing\w*=\w*(EASE_IN|EASE_OUT|\(EASE_IN\w*\|\w*EASE_OUT\))' "${code_f
 fi;
 
 part "map json sanity"
-for json in _maps/*.json
+for json in _maps/map_jsons/*.json
 do
 	map_path=$(jq -r '.map_path' $json)
 	while read map_file; do
