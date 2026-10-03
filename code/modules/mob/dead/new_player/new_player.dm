@@ -159,7 +159,7 @@
 	if(CONFIG_GET(flag/allow_respawn) == RESPAWN_FLAG_NEW_CHARACTER)
 		if(client?.is_localhost())
 			to_chat(client.mob, span_notice("This character already played in this round, however this is bypassed as localhost."))
-			log_admin("[key_name_and_tag(client)] is bypassing rejoining the round as the same character."
+			log_admin("[key_name_and_tag(client)] is bypassing rejoining the round as the same character.")
 		else if("[client.prefs.default_slot]" in persistent_client.joined_as_slots)
 			tgui_alert(usr, "You already have played this character in this round!")
 			return FALSE
