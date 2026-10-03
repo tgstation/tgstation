@@ -62,7 +62,7 @@
 			to_chat(affected_mob, span_danger("You feel something building up inside... but the feeling passes."))
 			return
 
-		INVOKE_ASYNC(picked, TYPE_PROC_REF(/datum/action/cooldown/spell, spell_feedback), affected_mob)
+		picked.spell_feedback(affected_mob)
 		return
 
 	if(stage <= 3 && SPT_PROB(0.33 * stage, seconds_per_tick))
@@ -93,12 +93,12 @@
 						targets += potential_target
 
 					if(length(targets))
-						INVOKE_ASYNC(target_picked, TYPE_PROC_REF(/datum/action/cooldown/spell, Activate), pick(targets))
+						target_picked.Activate(pick(targets))
 						affected_mob.emote("cough")
 						return
 
 				var/datum/action/cooldown/spell/picked = pick(random_spells)
-				INVOKE_ASYNC(picked, TYPE_PROC_REF(/datum/action/cooldown/spell, Activate), affected_mob)
+				picked.Activate(affected_mob)
 				affected_mob.emote("sneeze")
 				return
 
