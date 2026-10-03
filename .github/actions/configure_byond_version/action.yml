@@ -21,6 +21,7 @@ runs:
       run: |
         echo "BYOND_MAJOR=${{ inputs.major }}" >> $GITHUB_ENV
         echo "BYOND_MINOR=${{ inputs.minor }}" >> $GITHUB_ENV
+
     - name: Configure BYOND version from dependencies.sh
       if: ${{ !inputs.major }}
       shell: bash

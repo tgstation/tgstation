@@ -8,21 +8,32 @@ jobs:
     timeout-minutes: 15
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v7
+      - name: Checkout required files
+        uses: actions/checkout@v7
+        with:
+          sparse-checkout: |
+            code/modules/unit_tests/screenshots
+            tools/screenshot-test-comparison
+
       - name: Setup directory
         run: mkdir -p artifacts
+
       - name: Download screenshot tests
         uses: actions/download-artifact@v8
         with:
           path: artifacts
           pattern: test-artifact-*
+
       - name: ls -R
         run: ls -R artifacts
+
       - name: Setup screenshot comparison
         run: npm i
         working-directory: tools/screenshot-test-comparison
+
       - name: Run screenshot comparison
         run: node tools/screenshot-test-comparison/index.js artifacts code/modules/unit_tests/screenshots artifacts/screenshot_comparisons
+
       # workflow_run does not give you the PR it ran on,
       # even through the thing literally named "matching pull requests".
       # However, in GraphQL, you can check if the check suite was ran
@@ -32,6 +43,7 @@ jobs:
         if: failure() && github.event.pull_request
         run: |
           echo ${{ github.event.pull_request.number }} > artifacts/screenshot_comparisons/pull_request_number.txt
+
       - name: Upload bad screenshots
         if: failure()
         uses: actions/upload-artifact@v7

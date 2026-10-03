@@ -28,6 +28,7 @@ type OrderDatum = {
   icon: string;
   name: string;
   ref: string;
+  max: number;
 };
 
 type Item = {
@@ -49,6 +50,7 @@ type Data = {
   points: number;
   purchase_tooltip: string;
   total_cost: number;
+  free_uses: number | null;
 };
 
 const buttonWidth = 2;
@@ -168,6 +170,7 @@ function ShoppingTab(props) {
                 <Table.Cell collapsing>
                   <Button
                     icon="minus"
+                    disabled={findAmount(item_amts, item.name) <= 0}
                     onClick={() =>
                       act('remove_one', {
                         target: item.ref,
@@ -176,6 +179,7 @@ function ShoppingTab(props) {
                   />
                   <Button
                     icon="plus"
+                    disabled={findAmount(item_amts, item.name) >= item.max}
                     onClick={() =>
                       act('add_one', {
                         target: item.ref,
@@ -186,7 +190,7 @@ function ShoppingTab(props) {
                     value={findAmount(item_amts, item.name)}
                     width="41px"
                     minValue={0}
-                    maxValue={20}
+                    maxValue={item.max}
                     step={1}
                     onChange={(value) =>
                       act('cart_set', {
@@ -205,6 +209,16 @@ function ShoppingTab(props) {
   );
 }
 
+type OrderDatumWithFreeUses = OrderDatum & {
+  // Amount of this order datum
+  amt: number;
+  // If this order datum is split between free and paid,
+  // this is the opposite amount (free amt if paid or paid amt if free)
+  other_amt: number;
+  // Whether this is the paid or free order
+  is_free: boolean;
+};
+
 function CheckoutTab(props) {
   const { data, act } = useBackend<Data>();
   const {
@@ -218,13 +232,52 @@ function CheckoutTab(props) {
     cargo_cost_multiplier,
     express_cost_multiplier,
     item_amts,
+    free_uses,
   } = data;
 
   const total_cargo_cost = Math.floor(total_cost * cargo_cost_multiplier);
 
-  const checkout_list = order_datums.filter(
-    (food) => food && findAmount(item_amts, food.name),
+  const total_item_count = item_amts.reduce(
+    (total, item) => total + item.amt,
+    0,
   );
+
+  let free_uses_remaining = free_uses ?? 0;
+  const checkout_list: OrderDatumWithFreeUses[] = [];
+  for (const item of order_datums.filter(
+    (food) => food && findAmount(item_amts, food.name),
+  )) {
+    const amount = findAmount(item_amts, item.name);
+    if (free_uses_remaining >= amount) {
+      checkout_list.push({
+        ...item,
+        amt: amount,
+        other_amt: 0,
+        is_free: true,
+      });
+    } else if (free_uses_remaining > 0) {
+      checkout_list.push({
+        ...item,
+        amt: free_uses_remaining,
+        other_amt: amount - free_uses_remaining,
+        is_free: true,
+      });
+      checkout_list.push({
+        ...item,
+        amt: amount - free_uses_remaining,
+        other_amt: free_uses_remaining,
+        is_free: false,
+      });
+    } else {
+      checkout_list.push({
+        ...item,
+        amt: amount,
+        other_amt: 0,
+        is_free: false,
+      });
+    }
+    free_uses_remaining -= amount;
+  }
 
   return (
     <Stack vertical fill>
@@ -257,24 +310,34 @@ function CheckoutTab(props) {
                   {`"${item.desc}"`}
                 </Table.Cell>
                 <Table.Cell fontSize="10px" collapsing textAlign="right">
-                  <Tooltip
-                    content={`Costs ${item.cost} ${credit_type} per order`}
-                    position="top"
-                  >
-                    {item.cost} <CreditIcon credit_type={credit_type} />
-                  </Tooltip>
+                  {item.is_free ? (
+                    <Box color="green" fontSize="10px">
+                      Free
+                    </Box>
+                  ) : (
+                    <Tooltip
+                      content={`Costs ${item.cost} ${credit_type} per order`}
+                      position="top"
+                    >
+                      {item.cost} <CreditIcon credit_type={credit_type} />
+                    </Tooltip>
+                  )}
                 </Table.Cell>
                 <Table.Cell collapsing>
                   <NumberInput
-                    value={findAmount(item_amts, item.name)}
+                    value={item.amt}
                     width="41px"
                     minValue={0}
-                    maxValue={(item.cost > 10 && 50) || 10}
+                    maxValue={
+                      item.is_free
+                        ? (free_uses ?? 10)
+                        : item.max - (item.other_amt ?? 0)
+                    }
                     step={1}
                     onChange={(value) =>
                       act('cart_set', {
                         target: item.ref,
-                        amt: value,
+                        amt: value + (item.other_amt ?? 0),
                       })
                     }
                   />
@@ -311,9 +374,11 @@ function CheckoutTab(props) {
                 fluid
                 icon="parachute-box"
                 color="yellow"
-                disabled={total_cost <= 0}
+                disabled={total_item_count <= 0}
                 tooltip={
-                  total_cost <= 0 ? 'Order atleast 1 item' : express_tooltip
+                  total_item_count <= 0
+                    ? 'Order at least 1 item'
+                    : express_tooltip
                 }
                 tooltipPosition="top-start"
                 onClick={() => act('express')}
@@ -351,10 +416,22 @@ enum Tab {
 
 export function ProduceConsole(props) {
   const { data } = useBackend<Data>();
-  const { credit_type, points = 0, off_cooldown, order_categories } = data;
+  const {
+    credit_type,
+    points = 0,
+    off_cooldown,
+    order_categories,
+    item_amts,
+    free_uses,
+  } = data;
 
   const [tabIndex, setTabIndex] = useState(Tab.Shopping);
   const [condensed, setCondensed] = useAtom(condensedAtom);
+
+  const free_uses_remaining = Math.max(
+    0,
+    (free_uses ?? 0) - item_amts.reduce((total, item) => total + item.amt, 0),
+  );
 
   return (
     <Window width={Math.max(order_categories.length * 125, 500)} height={400}>
@@ -401,7 +478,16 @@ export function ProduceConsole(props) {
                       </Button>
                     </Stack.Item>
                     <Stack.Item>
-                      {points} <CreditIcon credit_type={credit_type} />
+                      <Stack>
+                        <Stack.Item>
+                          {points} <CreditIcon credit_type={credit_type} />
+                        </Stack.Item>
+                        {free_uses !== null && (
+                          <Stack.Item color="grey">
+                            ~ Free Products: {free_uses_remaining} / {free_uses}
+                          </Stack.Item>
+                        )}
+                      </Stack>
                     </Stack.Item>
                   </Stack>
                 </Stack.Item>

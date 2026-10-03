@@ -10,6 +10,16 @@
 	a_or_from = "from"
 	sound_effect = 'sound/effects/wounds/sizzle1.ogg'
 
+/datum/wound/burn/wound_injury(datum/wound/old_wound, attack_direction)
+	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
+	if(!old_wound && !isnull(current_gauze) && (wound_flags & ACCEPTS_GAUZE))
+		qdel(current_gauze)
+		// oops your existing gauze got burned, need a new one now
+		var/obj/effect/decal/cleanable/ash/ash = new(limb.drop_location())
+		ash.desc += " It looks like it used to be some kind of bandage."
+
+	return ..()
+
 /datum/wound/burn/flesh
 	name = "Burn (Flesh) Wound"
 	a_or_from = "from"
