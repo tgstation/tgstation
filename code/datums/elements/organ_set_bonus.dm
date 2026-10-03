@@ -28,7 +28,7 @@
 	SIGNAL_HANDLER
 
 	var/datum/status_effect/organ_set_bonus/set_bonus = receiver.has_status_effect(bonus_type)
-	var/visuals_only = isdummy(receiver)
+	var/visuals_only = isdummy(receiver) //todo: COMSIG_ORGAN_IMPLANTED signals: movement_flags & VISUAL_ONLY
 	if(!set_bonus)
 		set_bonus = receiver.apply_status_effect(bonus_type)
 	set_bonus.set_organs(set_bonus.organs + 1, target, visuals_only)
