@@ -1993,9 +1993,9 @@
 	else if(HAS_SURGERY_STATE(old_state, ALL_SURGERY_FISH_STATES(body_zone)))
 		qdel(owner.GetComponent(/datum/component/fishing_spot))
 
-/atom/movable/screen/alert/status_effect/surgery
-	name = "Surgery"
-	desc = "You are currently undergoing surgery. Moving around in this state is extremely dangerous."
+/atom/movable/screen/alert/status_effect/exposed_organs
+	name = "Exposed Organs"
+	desc = "You have an open wound exposing your organs! Moving around in this state is extremely dangerous."
 	use_user_hud_icon = USER_HUD_STYLE_INHERIT
 	overlay_state = "surgery"
 
@@ -2009,10 +2009,10 @@
 	var/is_heavy_surgery = HAS_SURGERY_STATE(current_state, SURGERY_SKIN_CUT|SURGERY_SKIN_OPEN) && HAS_ANY_SURGERY_STATE(current_state, HEAVY_SURGERY)
 
 	if(!was_heavy_surgery && is_heavy_surgery)
-		owner.throw_alert(ALERT_SURGERY, /atom/movable/screen/alert/status_effect/surgery)
+		owner.throw_alert(ALERT_EXPOSED_ORGANS, /atom/movable/screen/alert/status_effect/exposed_organs)
 		RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_moved), override = TRUE)
 	else if(was_heavy_surgery && !is_heavy_surgery)
-		owner.clear_alert(ALERT_SURGERY)
+		owner.clear_alert(ALERT_EXPOSED_ORGANS)
 		UnregisterSignal(owner, COMSIG_MOVABLE_MOVED)
 
 #undef HEAVY_SURGERY
