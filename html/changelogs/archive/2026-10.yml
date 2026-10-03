@@ -61,3 +61,5 @@
   timothymtorres:
   - rscadd: Beartraps trigger when armed and inside containers or bags (similar to
       mousetraps)
+  uaioy:
+  - bugfix: knock should be able to unlock turret controls now
