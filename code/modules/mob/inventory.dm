@@ -11,19 +11,18 @@
 /mob/proc/get_inactive_held_item() as /obj/item
 	return get_item_for_held_index(get_inactive_hand_index())
 
-
-//Finds the opposite index for the active one (eg: upper left arm will find the item in upper right arm)
-//So we're treating each "pair" of limbs as a team, so "both" refers to them
 /mob/proc/get_inactive_hand_index()
-	var/other_hand = 0
-	if(IS_RIGHT_INDEX(active_hand_index))
-		other_hand = active_hand_index-1 //finding the matching "left" limb
-	else
-		other_hand = active_hand_index+1 //finding the matching "right" limb
-	if(other_hand < 0 || other_hand > held_items.len)
-		other_hand = 0
-	return other_hand
+	return get_offhand_index(active_hand_index)
 
+//Finds the opposite index for the given hand index (eg: upper left arm will find the item in upper right arm)
+//So we're treating each "pair" of limbs as a team, so "both" refers to them
+/mob/proc/get_offhand_index(hand_index)
+	if(hand_index > held_items.len || hand_index <= 0)
+		return 0
+	if(IS_RIGHT_INDEX(hand_index))
+		return hand_index-1 //finding the matching "left" limb
+	else
+		return hand_index+1 //finding the matching "right" limb
 
 /mob/proc/get_item_for_held_index(i)
 	if(i > 0 && i <= held_items.len)
