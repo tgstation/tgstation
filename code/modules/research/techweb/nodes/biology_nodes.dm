@@ -40,6 +40,7 @@
 		/datum/design/limb_disk/felinid,
 		/datum/design/limb_disk/lizard,
 		/datum/design/limb_disk/plasmaman,
+		/datum/design/limb_disk/cerulean,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_3_POINTS)
 	discount_experiments = list(/datum/experiment/scanning/cytology/slime = TECHWEB_TIER_3_POINTS)

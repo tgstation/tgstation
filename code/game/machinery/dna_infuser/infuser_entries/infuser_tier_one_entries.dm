@@ -173,8 +173,9 @@
 		"spit ink to blind foes",
 	)
 	output_organs = list(
-		/obj/item/organ/tongue/inky
+		/obj/item/organ/tongue/fish/inky
 	)
+	unreachable_effect = TRUE
 	tier = DNA_MUTANT_TIER_ONE
 
 /datum/infuser_entry/ttx_healing

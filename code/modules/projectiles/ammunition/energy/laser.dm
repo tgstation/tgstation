@@ -107,6 +107,12 @@
 	variance = 25
 	select_name = "scatter"
 
+/obj/item/ammo_casing/energy/laser/scatter/weak
+	projectile_type = /obj/projectile/beam/scatter/weak
+	delay = 8 DECISECONDS
+	pellets = 4
+	randomspread = TRUE
+
 /obj/item/ammo_casing/energy/laser/scatter/disabler
 	projectile_type = /obj/projectile/beam/disabler
 	pellets = 3

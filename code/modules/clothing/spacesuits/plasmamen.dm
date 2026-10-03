@@ -9,6 +9,7 @@
 	icon_state = "plasmaman_suit"
 	inhand_icon_state = "plasmaman_suit"
 	fishing_modifier = 0
+	bodyshapes_with_variations = NONE
 	COOLDOWN_DECLARE(extinguish_timer)
 	var/extinguish_cooldown = 100
 	var/extinguishes_left = 10

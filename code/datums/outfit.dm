@@ -268,6 +268,7 @@
 					user.equip_to_storage(SSwardrobe.provide_type(path, user), ITEM_SLOT_BELT, indirect_action = TRUE, del_on_fail = TRUE)
 
 	post_equip(user, visuals_only)
+	user.dna?.species?.post_equip_species_outfit(user, visuals_only)
 
 	if(!visuals_only)
 		apply_fingerprints(user)

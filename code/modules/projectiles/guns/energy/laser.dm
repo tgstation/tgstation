@@ -214,6 +214,21 @@
 	automatic_charge_overlays = FALSE
 	ammo_x_offset = 1
 
+/obj/item/gun/energy/laser/scatter/shotty/compact
+	name = "compact laser shotgun"
+	desc = "Equipped with a refraction kit for projectile seperation, and easy to carry and stow. Unfortunately, this is at the cost of trigger speed, accuracy and some damage. \n\
+		Shame, really, or it would be perfect..."
+	icon_state = "cshotgunc"
+	worn_icon_state = "clshotgun"
+	w_class = WEIGHT_CLASS_NORMAL
+	pin = /obj/item/firing_pin
+	recoil = 1
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter/weak)
+
+/obj/item/gun/energy/laser/scatter/shotty/compact/shoot_live_shot(mob/living/user)
+	. = ..()
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/weapons/gun/shotgun/rack.ogg', 30, TRUE), 0.2 SECONDS)
+
 ///Laser Cannon
 
 /obj/item/gun/energy/lasercannon
