@@ -1,0 +1,4 @@
+author: "uaioy"
+delete-after: True
+changes:
+  - bugfix: "knock should be able to unlock turret controls now"
