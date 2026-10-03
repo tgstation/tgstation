@@ -72,6 +72,8 @@
 		/obj/item/organ/heart/rat,
 		/obj/item/organ/stomach/rat,
 		/obj/item/organ/tongue/rat,
+		/obj/item/organ/tail/mouse,
+		/obj/item/organ/ears/mouse,
 	)
 	infusion_desc = "skittish"
 	tier = DNA_MUTANT_TIER_ONE

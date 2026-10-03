@@ -141,6 +141,50 @@
 		owner.emote("squeaks")
 		playsound(owner, 'sound/mobs/non-humanoids/mouse/mousesqueek.ogg', 100)
 
+/obj/item/organ/ears/mouse
+	name = "mouse ears"
+	desc = ""
+	icon = 'icons/obj/clothing/head/costume.dmi'
+	worn_icon = 'icons/mob/clothing/head/costume.dmi'
+	icon_state = "kitty"
+	visual = TRUE
+	damage_multiplier = 2
+
+	dna_block = /datum/dna_block/feature/accessory/ears
+	bodypart_overlay = /datum/bodypart_overlay/mutant/cat_ears/mouse_ears
+	sprite_accessory_override = /datum/sprite_accessory/ears/mouse
+
+/datum/bodypart_overlay/mutant/cat_ears/mouse_ears
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER
+	)
+	inner_layer = list(EXTERNAL_FRONT, EXTERNAL_ADJACENT)
+
+/obj/item/organ/tail/mouse
+	name = "mouse tail"
+	desc = ""
+
+	dna_block = null
+	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/mouse
+
+	wag_flags = WAG_ABLE
+	organ_traits = list()
+	restyle_flags = EXTERNAL_RESTYLE_FLESH
+
+/datum/bodypart_overlay/mutant/tail/mouse
+	color_source = NONE
+	feature_key = FEATURE_TAIL_MOUSE
+	draw_on_husks = HUSK_OVERLAY_GRAYSCALE
+	imprint_on_next_insertion = FALSE
+
+/datum/bodypart_overlay/mutant/tail/mouse/New()
+	. = ..()
+	set_appearance_from_name(/datum/sprite_accessory/tails/mouse/default::name) //only one mouse tail
+
+/datum/bodypart_overlay/mutant/tail/mouse/randomize_appearance()
+	set_appearance_from_name(/datum/sprite_accessory/tails/mouse/default::name)
+
 #undef RAT_ORGAN_COLOR
 #undef RAT_SCLERA_COLOR
 #undef RAT_PUPIL_COLOR
