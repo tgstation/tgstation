@@ -10,6 +10,8 @@
 	w_class = WEIGHT_CLASS_BULKY //Stops people from hiding it in their bags/pockets
 	/// The person dribbling the basketball
 	var/mob/living/wielder
+	/// Whether we're the ball with the dribbling signals registered on our wielder, so holding two balls doesn't double everything up
+	var/ball_effects_active = FALSE
 	/// So the basketball doesn't make sound every step
 	var/steps = 0
 	var/step_delay = 2
@@ -45,20 +47,37 @@
 		if(ball != src)
 			return // multiple balls in different hands so no need to setup signals again
 
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(movement_effect))
-	RegisterSignal(user, COMSIG_MOB_EMOTED("spin"), PROC_REF(on_spin))
-	RegisterSignal(user, COMSIG_LIVING_DISARM_HIT, PROC_REF(on_equipped_mob_disarm))
-	RegisterSignal(user, COMSIG_LIVING_STATUS_KNOCKDOWN, PROC_REF(on_equipped_mob_knockdown))
+	add_ball_effects()
+
+/// Sets up the dribbling signals on our wielder if we're actually in their hands. Returns TRUE if it worked
+/obj/item/toy/basketball/proc/add_ball_effects()
+	// on_equip() fires for any slot, and held_items can still have a ball that got moved without being unequipped, so check both
+	if(ball_effects_active || QDELETED(wielder) || loc != wielder || !wielder.is_holding(src))
+		return FALSE
+
+	RegisterSignal(wielder, COMSIG_MOVABLE_MOVED, PROC_REF(movement_effect))
+	RegisterSignal(wielder, COMSIG_MOB_EMOTED("spin"), PROC_REF(on_spin))
+	RegisterSignal(wielder, COMSIG_LIVING_DISARM_HIT, PROC_REF(on_equipped_mob_disarm))
+	RegisterSignal(wielder, COMSIG_LIVING_STATUS_KNOCKDOWN, PROC_REF(on_equipped_mob_knockdown))
+	ball_effects_active = TRUE
+	return TRUE
 
 /obj/item/toy/basketball/proc/remove_ball_effects()
 	SIGNAL_HANDLER
 
-	// unlike on_equip, this signal is triggered after the ball is removed from hands
-	// so we can just use is_holding_item_of_type() proc to check for multiple balls
-	if(!wielder.is_holding_item_of_type(/obj/item/toy/basketball))
-		UnregisterSignal(wielder, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTED("spin"), COMSIG_LIVING_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN))
-
+	var/mob/living/old_wielder = wielder
 	wielder = null
+	// put_in_hands() drops us without ever equipping us when the catcher's hands are full, so there might be nothing to clean up
+	if(!ball_effects_active)
+		return
+
+	UnregisterSignal(old_wielder, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_EMOTED("spin"), COMSIG_LIVING_DISARM_HIT, COMSIG_LIVING_STATUS_KNOCKDOWN))
+	ball_effects_active = FALSE
+
+	// we're already out of their hands by now, so if they're still holding another ball it takes over
+	for(var/obj/item/toy/basketball/other_ball in old_wielder.held_items)
+		if(other_ball.add_ball_effects())
+			break
 
 /**
  * After a ball is thrown we need to reset the pass_flags since shooting lets you shoot through mobs
