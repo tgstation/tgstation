@@ -50,7 +50,7 @@
 
 /mob/living/basic/node_drone/Initialize(mapload)
 	. = ..()
-	ADD_TRAIT(src, TRAIT_MINING_AOE_IMMUNE, INNATE_TRAIT)
+	add_traits(list(TRAIT_ASHSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE, TRAIT_MINING_AOE_IMMUNE), INNATE_TRAIT)
 	AddElement(/datum/element/ai_retaliate)
 
 /mob/living/basic/node_drone/death(gibbed)

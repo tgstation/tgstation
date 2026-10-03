@@ -492,6 +492,17 @@
 
 	return ..()
 
+/obj/item/restraints/legcuffs/beartrap/on_found(mob/living/victim)
+	if(!armed)
+		return FALSE
+
+	if(victim)
+		var/hand_zone = victim.held_index_to_dir(victim.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
+		spring_trap(victim, def_zone = hand_zone, ignore_movetypes = TRUE)
+		return TRUE
+
+	return FALSE
+
 /**
  * Closes a bear trap
  *

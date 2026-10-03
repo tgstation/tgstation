@@ -475,3 +475,10 @@
   - bugfix: fixes an issue with looping sounds on machines like the oven/deepfryer,
       please report any strange issues
   - bugfix: invalid loadout gags colors now get sanitized
+2026-09-30:
+  Jacquerel:
+  - balance: Instead of directly transferring money to your account, the crab-17 phone
+      is now equipped with a printer that disgorges bank notes at regular intervals.
+  Melbert:
+  - code_imp: Improved performance of talking a little bit, report anything weird
+      you notice (particularly with emphasis characters)
