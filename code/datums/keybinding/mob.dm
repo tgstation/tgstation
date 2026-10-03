@@ -56,11 +56,13 @@
 	. = ..()
 	if(.)
 		return
-
 	var/mob/user_mob = user.mob
-	var/active_hand_set = ceil(user_mob.active_hand_index / 2) - 1 //offset
-	var/desired_hand_index = hand_index + (2 * active_hand_set)
 
+	var/active_hand_index = user_mob.active_hand_index
+	var/active_hand_set = ceil(active_hand_index / 2) - 1 // offset
+	active_hand_set += ((active_hand_index - 1) % 2 == hand_index - 1) // conditionals are 1/0 booleans
+
+	var/desired_hand_index = hand_index + (2 * active_hand_set) % user_mob.held_items.len
 	user_mob.swap_hand(desired_hand_index)
 
 	return TRUE

@@ -263,6 +263,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 /atom/movable/screen/inventory/hand
 	var/mutable_appearance/handcuff_overlay
 	var/static/mutable_appearance/blocked_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "blocked")
+	var/static/mutable_appearance/shield_overlay = mutable_appearance('icons/hud/screen_gen.dmi', "shielding")
 	var/held_index = 0
 	interaction_flags_atom = NONE //so dragging objects into hands icon don't skip adjacency & other checks
 
@@ -276,17 +277,25 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	if(!hud?.mymob)
 		return
 
+	if(!held_index)
+		return // ?
+
+	if(held_index == hud.mymob.active_hand_index || held_index == hud.mymob.get_inactive_hand_index())
+		if(held_index == hud.mymob.active_hand_index)
+			. += IS_LEFT_INDEX(held_index) ? "lhandactive" : "rhandactive"
+
+		// Display that this item is blocking attacks
+		var/obj/item/held_item = hud.mymob.get_item_for_held_index(held_index)
+		if(!isclothing(held_item) && held_item?.block_chance)
+			. += shield_overlay
+
 	if(iscarbon(hud.mymob))
 		var/mob/living/carbon/C = hud.mymob
 		if(C.handcuffed)
 			. += handcuff_overlay
 
-		if(held_index)
-			if(!C.has_hand_for_held_index(held_index))
-				. += blocked_overlay
-
-	if(held_index == hud.mymob.active_hand_index)
-		. += IS_LEFT_INDEX(held_index) ? "lhandactive" : "rhandactive"
+		if(!C.has_hand_for_held_index(held_index))
+			. += blocked_overlay
 
 /atom/movable/screen/inventory/hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
