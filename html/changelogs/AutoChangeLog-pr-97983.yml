@@ -1,4 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - rscadd: "Beartraps trigger when armed and inside containers or bags (similar to mousetraps)"

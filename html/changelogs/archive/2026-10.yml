@@ -57,3 +57,7 @@
   necromanceranne:
   - code_imp: Biting can no longer overfeed you.
   - code_imp: You do not lick people as a felinid if you have combat mode on.
+2026-10-03:
+  timothymtorres:
+  - rscadd: Beartraps trigger when armed and inside containers or bags (similar to
+      mousetraps)
