@@ -72,6 +72,8 @@
 	var/directional_offset_y
 	///Cast range for the directional cast (how far away the atom is moved)
 	var/cast_range = 2
+	/// Spatial grid cells we're registered in as a dynamic light source, so we remove ourselves from exactly those
+	var/list/datum/spatial_grid_cell/registered_cells
 
 /datum/component/overlay_lighting/Initialize(_range, _power, _color, starts_on, is_directional, is_beam, force)
 	if(!ismovable(parent))
@@ -167,28 +169,27 @@
 	parent_attached_to = null
 	return ..()
 
-/// Clears ourselves from spatial grid's dynlights lists
-/datum/component/overlay_lighting/proc/clean_old_cells(atom/holder_loc)
-	var/turf/holder_turf = get_turf(holder_loc)
-	if (isnull(holder_turf))
-		return
-	for (var/datum/spatial_grid_cell/grid_cell as anything in SSspatial_grid.get_cells_in_range(holder_turf, lumcount_range))
+/// Clears ourselves from the dynlights lists of the spatial grid cells we registered in
+/datum/component/overlay_lighting/proc/clean_old_cells()
+	for (var/datum/spatial_grid_cell/grid_cell as anything in registered_cells)
 		GRID_CELL_REMOVE(grid_cell.dynamic_light_sources, src)
+	registered_cells = null
 
-/// Populates the affected_turfs lazylist, adding to its contents the effects of being near the light.
+/// Registers ourselves in the spatial grid cells our holder's light reaches, replacing our previous registration.
 /datum/component/overlay_lighting/proc/register_new_cells()
+	clean_old_cells()
 	if(!current_holder)
 		return
 	var/turf/holder_turf = get_turf(current_holder)
 	if (isnull(holder_turf))
 		return
-	for (var/datum/spatial_grid_cell/grid_cell as anything in SSspatial_grid.get_cells_in_range(holder_turf, lumcount_range))
+	registered_cells = SSspatial_grid.get_cells_in_range(holder_turf, lumcount_range)
+	for (var/datum/spatial_grid_cell/grid_cell as anything in registered_cells)
 		GRID_CELL_ASSOC_SET(grid_cell.dynamic_light_sources, src, lum_power)
 
 /// Clears the old affected cells and populates the new ones.
-/datum/component/overlay_lighting/proc/make_luminosity_update(atom/old_loc)
-	if(old_loc)
-		clean_old_cells(old_loc)
+/datum/component/overlay_lighting/proc/make_luminosity_update()
+	clean_old_cells()
 	if(!isturf(current_holder?.loc))
 		return
 	if(directional)
@@ -269,9 +270,7 @@
 	if(new_holder == current_holder)
 		return
 
-	var/atom/old_loc = null
 	if(current_holder)
-		old_loc = get_turf(current_holder)
 		if(current_holder != parent && current_holder != parent_attached_to)
 			UnregisterSignal(current_holder, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED, COMSIG_LIGHT_EATER_QUEUE))
 			if(directional)
@@ -282,7 +281,7 @@
 	current_holder = new_holder
 
 	if(new_holder == null)
-		clean_old_cells(old_loc)
+		clean_old_cells()
 		return
 
 	if(new_holder != parent && new_holder != parent_attached_to)
@@ -298,7 +297,7 @@
 
 	if(overlay_lighting_flags & LIGHTING_ON)
 		add_dynamic_lumi()
-		make_luminosity_update(old_loc)
+		make_luminosity_update()
 
 /// Used to determine the new valid current_holder from the parent's loc.
 /datum/component/overlay_lighting/proc/check_holder()
@@ -340,13 +339,13 @@
 	SIGNAL_HANDLER
 	if(!(overlay_lighting_flags & LIGHTING_ON))
 		return
-	make_luminosity_update(old_loc)
+	make_luminosity_update()
 
 ///Called when parent changes loc.
 /datum/component/overlay_lighting/proc/on_parent_moved(atom/movable/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
 	var/atom/movable/movable_parent = parent
-	clean_old_cells(old_loc) // Clean first, as we might swap holders
+	clean_old_cells() // Clean first, as we might swap holders
 	if(overlay_lighting_flags & LIGHTING_ATTACHED)
 		set_parent_attached_to(ismovable(movable_parent.loc) ? movable_parent.loc : null)
 	check_holder()
@@ -383,7 +382,7 @@
 /// Called when parent_attached_to changes loc.
 /datum/component/overlay_lighting/proc/on_parent_attached_to_moved(atom/movable/source, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
-	clean_old_cells(old_loc) // Clean first, as we might swap holders
+	clean_old_cells() // Clean first, as we might swap holders
 	check_holder()
 	if(!(overlay_lighting_flags & LIGHTING_ON) || !current_holder)
 		return
@@ -419,7 +418,7 @@
 		else
 			cast_range = clamp(round(new_range * 0.5), 1, 3)
 	if(overlay_lighting_flags & LIGHTING_ON)
-		make_luminosity_update(current_holder)
+		make_luminosity_update()
 
 /// Changes the intensity/brightness of the light by altering the visual object's alpha.
 /datum/component/overlay_lighting/proc/set_power(atom/source, old_power)
@@ -505,7 +504,7 @@
 	overlay_lighting_flags &= ~LIGHTING_ON
 	if(current_holder && current_holder != parent && current_holder != parent_attached_to)
 		UnregisterSignal(current_holder, COMSIG_MOVABLE_MOVED)
-	clean_old_cells(current_holder)
+	clean_old_cells()
 
 /// Here we append the behavior associated to changing lum_power.
 /datum/component/overlay_lighting/proc/cast_directional_light()
@@ -574,7 +573,7 @@
 		return
 	current_direction = newdir
 	if(overlay_lighting_flags & LIGHTING_ON)
-		make_luminosity_update(current_holder)
+		make_luminosity_update()
 
 /datum/component/overlay_lighting/proc/on_parent_crafted(datum/source, atom/movable/new_craft)
 	SIGNAL_HANDLER
