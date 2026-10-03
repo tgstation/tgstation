@@ -13,6 +13,9 @@
 	integrity_failure = 0.33
 	armor_type = /datum/armor/machinery_airalarm
 	resistance_flags = FIRE_PROOF
+	light_system = OVERLAY_LIGHT
+	light_range = 0.5
+	light_power = 0.7
 
 	/// Current alert level of our air alarm.
 	/// [AIR_ALARM_ALERT_NONE], [AIR_ALARM_ALERT_MINOR], [AIR_ALARM_ALERT_SEVERE]
@@ -524,7 +527,7 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	. = ..()
 
 	if(panel_open || (machine_stat & (NOPOWER|BROKEN)) || shorted)
-		set_light(0)
+		set_light_on(FALSE)
 		return
 
 	var/color
@@ -535,7 +538,8 @@ GLOBAL_LIST_EMPTY_TYPED(air_alarms, /obj/machinery/airalarm)
 	else
 		color = "#00FFCC" // teal
 
-	set_light(1.5, 1, color)
+	set_light_color(color)
+	set_light_on(TRUE)
 
 /obj/machinery/airalarm/update_icon_state()
 	if(panel_open)

@@ -28,9 +28,9 @@
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 	interaction_flags_click = ALLOW_SILICON_REACH
 	processing_flags = START_PROCESSING_MANUALLY
-
-	///Range of the light emitted when on
-	var/light_on_range = 1.5
+	light_system = OVERLAY_LIGHT
+	light_range = 0.5
+	light_power = 0.7
 	///Reference to our area
 	var/area/area
 	///Mapper helper to tie an apc to another area

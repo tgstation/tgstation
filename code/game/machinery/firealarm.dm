@@ -31,10 +31,6 @@
 	power_channel = AREA_USAGE_ENVIRON
 	resistance_flags = FIRE_PROOF
 
-	light_power = 1
-	light_range = 1.6
-	light_color = LIGHT_COLOR_ELECTRIC_CYAN
-
 	//We want to use area sensitivity, let us
 	always_area_sensitive = TRUE
 	///Buildstate for contruction steps
@@ -147,15 +143,6 @@
 		soundloop.stop()
 	update_appearance()
 
-/obj/machinery/firealarm/update_appearance(updates)
-	. = ..()
-	if(buildstage != FIRE_ALARM_BUILD_SECURED)
-		set_light(l_on = FALSE)
-	else if((my_area?.fire || LAZYLEN(my_area?.active_firelocks)) && !(obj_flags & EMAGGED) && !(machine_stat & (BROKEN|NOPOWER)))
-		set_light(l_on = TRUE, l_range = 2.5, l_power = 1.5)
-	else
-		set_light(l_on = TRUE, l_range = 1.6, l_power = 1)
-
 /obj/machinery/firealarm/update_icon_state()
 	if(panel_open)
 		icon_state = "fire_b[buildstage]"
@@ -177,7 +164,6 @@
 	if(obj_flags & EMAGGED)
 		. += mutable_appearance(icon, "fire_emag")
 		. += emissive_appearance(icon, "fire_emag_e", src, alpha = src.alpha)
-		set_light(l_color = LIGHT_COLOR_BLUE)
 
 	else if(!(my_area?.fire || LAZYLEN(my_area?.active_firelocks)))
 		if(my_area?.fire_detect) //If this is false, someone disabled it. Leave the light missing, a good hint to anyone paying attention.
@@ -185,24 +171,19 @@
 				var/current_level = SSsecurity_level.get_current_level_as_number()
 				. += mutable_appearance(icon, "fire_[current_level]")
 				. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
-				set_light(l_color = SSsecurity_level?.current_security_level?.fire_alarm_light_color || LIGHT_COLOR_BLUEGREEN)
 			else
 				. += mutable_appearance(icon, "fire_offstation")
 				. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
-				set_light(l_color = LIGHT_COLOR_FAINT_BLUE)
 		else
 			. += mutable_appearance(icon, "fire_disabled")
 			. += emissive_appearance(icon, "fire_level_e", src, alpha = src.alpha)
-			set_light(l_color = COLOR_WHITE)
 
 	else if(my_area?.fire_detect && my_area?.fire)
 		. += mutable_appearance(icon, "fire_alerting")
 		. += emissive_appearance(icon, "fire_alerting_e", src, alpha = src.alpha)
-		set_light(l_color = LIGHT_COLOR_INTENSE_RED)
 	else
 		. += mutable_appearance(icon, "fire_alerting")
 		. += emissive_appearance(icon, "fire_alerting_e", src, alpha = src.alpha)
-		set_light(l_color = LIGHT_COLOR_INTENSE_RED)
 
 /obj/machinery/firealarm/emp_act(severity)
 	. = ..()

@@ -2,6 +2,7 @@
 	name = "mass driver launch control"
 	desc = "A combined blastdoor and mass driver control unit."
 	processing_flags = START_PROCESSING_MANUALLY
+	brightness_on = 0
 	/// Connected mass driver
 	var/obj/machinery/mass_driver/connected = null
 	/// ID of the launch control
