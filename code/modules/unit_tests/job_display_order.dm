@@ -3,7 +3,7 @@
 
 /datum/unit_test/job_display_order/Run()
 	var/alist/unique_indexes = alist()
-	// joinable_occupations instead of all_occupations because human_ai and ai have the same index otherwise... Is this a source of flaky fails..? Unsure
+	// joinable_occupations instead of all_occupations: the other jobs are never listed in job menus and set no display order
 	for(var/datum/job/job in SSjob.joinable_occupations)
 		var/jobs_display_order = job.display_order_with_department()
 		if(!jobs_display_order || !job.display_order)
