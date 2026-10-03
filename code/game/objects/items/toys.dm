@@ -135,9 +135,10 @@
 	desc = "No birthday is complete without it. Sealed with a mechanical bluespace wrap so it remains floating no matter what."
 	icon = 'icons/obj/toys/balloons.dmi'
 	icon_state = "balloon"
-	inhand_icon_state = "balloon"
+	base_icon_state = "balloon"
 	lefthand_file = 'icons/mob/inhands/items/balloons_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items/balloons_righthand.dmi'
+	ONFLOOR_ICON_HELPER('icons/obj/toys/balloons_onfloor.dmi')
 	w_class = WEIGHT_CLASS_BULKY
 	throwforce = 0
 	throw_speed = 3
@@ -152,7 +153,7 @@
 	name = "long balloon"
 	desc = "A perfect balloon to contort into goofy forms. Sealed with a mechanical bluespace wrap so it remains floating no matter what."
 	icon_state = "balloon_long"
-	inhand_icon_state = "balloon"
+	base_icon_state = "balloon_long"
 	w_class = WEIGHT_CLASS_NORMAL
 	/// Combinations of balloon colours to make specific animals.
 	var/list/balloon_combos = list(
@@ -242,9 +243,9 @@
 
 /obj/item/toy/balloon/update_icon_state()
 	. = ..()
-	var/new_icon = "[initial(icon_state)][current_color ? "_[current_color]":null]"
-	inhand_icon_state = new_icon
-	icon_state = "[new_icon][isturf(loc) ? null : "_storage"]"
+	if(current_color)
+		var/new_icon = "[base_icon_state]_[current_color]"
+		icon_state = new_icon
 
 /obj/item/toy/balloon/Moved(atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)
 	. = ..()
@@ -254,21 +255,25 @@
 	name = "corgi balloon"
 	desc = "A balloon in the shape of a corgi's head. For the all year good boys."
 	icon_state = "corgi"
-	inhand_icon_state = "corgi"
+	base_icon_state = "corgi"
+	ONFLOOR_ICON_HELPER(null)
+	icon = 'icons/obj/toys/balloons.dmi' // This redefine is needed due to the behavoir of the helper define
 	random_color = FALSE
 
 /obj/item/toy/balloon/heart
 	name = "heart balloon"
 	desc = "A balloon in the shape of a heart. How lovely"
 	icon_state = "heart"
-	inhand_icon_state = "heart"
+	base_icon_state = "heart"
+	ONFLOOR_ICON_HELPER(null)
+	icon = 'icons/obj/toys/balloons.dmi' // This redefine is needed due to the behavoir of the helper define
 	random_color = FALSE
 
 /obj/item/toy/balloon/syndicate
 	name = "syndicate balloon"
 	desc = "There is a tag on the back that reads \"FUK NT!11!\"."
 	icon_state = "syndballoon"
-	inhand_icon_state = "syndballoon"
+	base_icon_state = "syndballoon"
 	random_color = FALSE
 
 /obj/item/toy/balloon/syndicate/pickup(mob/living/user)
@@ -291,7 +296,7 @@
 	name = "arreyst balloon"
 	desc = "A half inflated balloon about a boyband named Arreyst that was popular about ten years ago, famous for making fun of red jumpsuits as unfashionable."
 	icon_state = "arrestballoon"
-	inhand_icon_state = "arrestballoon"
+	base_icon_state = "arrestballoon"
 	random_color = FALSE
 
 #undef BALLOON_COLORS

@@ -25,6 +25,11 @@
 		if(belt && !belt.icon_states[inside_belt_icon_state])
 			TEST_FAIL("[belt.DebugName()] is missing a sprite for the belt overlay for [item_path]. Expected icon state: '[inside_belt_icon_state]'")
 
+		var/datum/greyscale_config/onfloor = SSgreyscale.configurations["[initial(item_path.greyscale_config_onfloor)]"]
+		var/onflooricon_state = item_path::onflooricon_state || item_path::post_init_icon_state || item_path::icon_state
+		if(onfloor && !onfloor.icon_states[onflooricon_state])
+			TEST_FAIL("[onfloor.DebugName()] is missing a sprite for the onfloor icon for [item_path]. Expected icon state: '[onflooricon_state]'")
+
 /// Makes sure objects using greyscale configs have, if any, the correct number of colors
 /datum/unit_test/greyscale_color_count
 
