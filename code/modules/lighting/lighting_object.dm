@@ -15,24 +15,14 @@
 	///the turf that our light is applied to
 	var/turf/affected_turf
 
-/atom/movable/lighting_object/Initialize(mapload, turf/affected_turf)
-	if(!isnull(loc))
-		if(isturf(loc))
-			affected_turf = loc
-			moveToNullspace()
-			stack_trace("a lighting object was improperly initialized - they should have a null loc, with the affected turf being the second argument")
-		else
-			qdel(src, force = TRUE)
-			CRASH("a lighting object tried to be spawned for a non-turf!")
-	if(!isturf(affected_turf))
-		qdel(src, force = TRUE)
-		CRASH("a lighting object was assigned to [affected_turf], a non turf!")
+/atom/movable/lighting_object/Initialize(mapload)
+	if(!isturf(loc))
+		stack_trace("Lighting object created in [loc?.type || "nullspace"]")
+		return INITIALIZE_HINT_QDEL
 
+	affected_turf = loc
 	. = ..()
-
 	verbs.Cut()
-
-	src.affected_turf = affected_turf
 	layer = affected_turf.z * 0.01
 	if(SSmapping.max_plane_offset)
 		// generates the offset lighting plane to use. NOTE: this assumes the turf lighting
@@ -44,7 +34,6 @@
 		stack_trace("a lighting object was assigned to a turf that already had a lighting object!")
 
 	affected_turf.lighting_object = src
-	affected_turf.vis_contents += src
 	// Default to fullbright, so things can "see" if they use view() before we update
 	affected_turf.luminosity = 1
 
@@ -57,13 +46,11 @@
 	SSlighting.objects_queue += src
 
 /atom/movable/lighting_object/Destroy(force)
-	if (!force)
+	if (!force && !isnull(affected_turf))
 		return QDEL_HINT_LETMELIVE
 	SSlighting.objects_queue -= src
-	if (isturf(affected_turf))
-		affected_turf.vis_contents -= src
-		affected_turf.lighting_object = null
-		affected_turf.luminosity = 1
+	affected_turf?.lighting_object = null
+	affected_turf?.luminosity = 1
 	affected_turf = null
 	return ..()
 
