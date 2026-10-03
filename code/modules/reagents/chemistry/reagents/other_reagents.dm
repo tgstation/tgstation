@@ -1933,7 +1933,7 @@
 
 /datum/reagent/plantnutriment/endurogrow
 	name = "Enduro Grow"
-	description = "A specialized nutriment, which decreases product quantity and potency, but strengthens the plants endurance."
+	description = "A specialized nutriment, which decreases product quantity and potency, but strengthens the plant's endurance."
 	color = "#a06fa7" // RBG: 160, 111, 167
 	tox_prob = 8
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
@@ -1944,23 +1944,69 @@
 	if(!isnull(myseed))
 		myseed.adjust_potency(-round(volume * 0.1))
 		myseed.adjust_yield(-round(volume * 0.075))
-		myseed.adjust_endurance(round(volume * 0.35))
+		myseed.adjust_endurance(round(volume * 0.50))
 
 /datum/reagent/plantnutriment/liquidearthquake
 	name = "Liquid Earthquake"
-	description = "A specialized nutriment, which increases the plant's production speed, as well as it's susceptibility to weeds."
+	description = "A specialized nutriment, which increases the plant's production speed, as well as its susceptibility to weeds."
 	color = "#912e00" // RBG: 145, 46, 0
 	tox_prob = 13
 	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 
 /datum/reagent/plantnutriment/liquidearthquake/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
-
 	var/obj/item/seeds/myseed = mytray.myseed
 	if(!isnull(myseed))
 		myseed.adjust_weed_rate(round(volume * 0.1))
 		myseed.adjust_weed_chance(round(volume * 0.3))
 		myseed.adjust_production(-round(volume * 0.075))
+
+/datum/reagent/plantnutriment/chemocultivate
+	name = "Chemo Cultivate"
+	description = "A specialized nutriment, which decreases the plant's vulnerability to weeds at the cost of its endurance and lifespan."
+	color = "#120202" // RBG: 18, 2, 2
+	tox_prob = 21
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/plantnutriment/chemocultivate/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	var/obj/item/seeds/myseed = mytray.myseed
+	if(!isnull(myseed))
+		myseed.adjust_weed_rate(-round(volume * 0.05))
+		myseed.adjust_weed_chance(-round(volume * 0.05))
+		myseed.adjust_endurance(-round(volume * 0.5))
+		myseed.adjust_lifespan(-round(volume * 1))
+
+/datum/reagent/plantnutriment/stabilifeed  //randomly removes a trait from the possible removable genes when the proc works, like gene shears except random
+	name = "Stabili Feed"
+	description = "A specialized nutriment, which decreases the plant's instability but may cull various genetic qualities such as traits and internal chemicals."
+	color = "#e8e5d8" // RBG: 232, 229, 216
+	tox_prob = 3
+	chemical_flags = REAGENT_CAN_BE_SYNTHESIZED
+	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
+
+/datum/reagent/plantnutriment/stabilifeed/on_hydroponics_apply(obj/machinery/hydroponics/mytray, mob/user)
+	var/obj/item/seeds/myseed = mytray.myseed
+	if(isnull(myseed))
+		return
+
+	myseed.adjust_instability(-round(volume * 0.4))
+
+	var/list/removable_genes = list()
+	for(var/datum/plant_gene/gene in myseed.genes)
+		if(gene.mutability_flags & PLANT_GENE_REMOVABLE)
+			removable_genes += gene
+	if(!length(removable_genes))
+		return
+
+	if(!prob(volume * 2))  //a 2% chance per unit for a proc, adjust if necessary
+		return
+
+	var/datum/plant_gene/removed_gene = pick(removable_genes)
+	myseed.genes.Remove(removed_gene)
+	removed_gene.on_removed(myseed)
+	qdel(removed_gene)
+	myseed.reagents_from_genes()
 
 // GOON OTHERS
 
