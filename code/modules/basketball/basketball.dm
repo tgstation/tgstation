@@ -41,7 +41,7 @@
 
 	// the equip signal is sent AFTER the object is put in hands
 	// so we need to manually check if the held object is different
-	for(var/obj/item/toy/basketball/ball in user.held_items)
+	for(var/obj/item/toy/basketball/ball as anything in user.get_held_items_of_type(/obj/item/toy/basketball))
 		if(ball != src)
 			return // multiple balls in different hands so no need to setup signals again
 

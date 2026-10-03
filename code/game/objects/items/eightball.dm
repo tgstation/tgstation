@@ -139,7 +139,7 @@
 	// notify ghosts that someone's shaking a haunted eightball
 	// and inform them of the message, (hopefully a yes/no question)
 	selected_message = tgui_input_text(user, "What is your question?", "Eightball", max_length = CHAT_MESSAGE_MAX_LENGTH) || initial(selected_message)
-	if (!(src in user.held_items))
+	if (!user.is_holding(src))
 		return FALSE
 	notify_ghosts(
 		"[user.real_name] is shaking [src], hoping to get an answer to \"[selected_message]\"",

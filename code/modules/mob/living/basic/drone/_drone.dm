@@ -229,10 +229,11 @@
 	. = list()
 
 	//Hands
-	for(var/obj/item/held_thing in held_items)
+	for(var/held_index in get_active_held_indexes())
+		var/obj/item/held_thing = get_item_for_held_index(held_index)
 		if((held_thing.item_flags & (ABSTRACT|HAND_ITEM)) || HAS_TRAIT(held_thing, TRAIT_EXAMINE_SKIP))
 			continue
-		. += "It has [held_thing.examine_title(user)] in its [get_held_index_name(get_held_index_of_item(held_thing))]."
+		. += "It has [held_thing.examine_title(user)] in its [get_held_index_name(held_index)]."
 
 	//Internal storage
 	if(internal_storage && !(internal_storage.item_flags & ABSTRACT))

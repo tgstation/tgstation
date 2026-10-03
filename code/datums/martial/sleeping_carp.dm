@@ -353,11 +353,11 @@
 		style_factor_points += 20
 
 	// We check for wielded objects. If they're not abstract items or exempt items, we add their weight as a penalty. And their block chance.
-	for(var/obj/item/possibly_a_held_object in human_carp_user.held_items)
+	for(var/obj/item/possibly_a_held_object as anything in human_carp_user.get_held_items())
 		if(possibly_a_held_object.item_flags & (ABSTRACT|HAND_ITEM) && !possibly_a_held_object.block_chance)
 			continue
 
-		if(possibly_a_held_object in exempt_objects)
+		if(is_type_in_list(possibly_a_held_object, exempt_objects))
 			continue
 
 		if(possibly_a_held_object.w_class <= WEIGHT_CLASS_SMALL && !possibly_a_held_object.block_chance)

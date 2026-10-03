@@ -199,7 +199,7 @@
 	qdel(tool)
 	loc.balloon_alert(user, "wheels added, honk!")
 	var/obj/item/bot_assembly/honkbot/assembly = new(drop_location())
-	var/held_index = user.is_holding(src)
+	var/held_index = user.get_held_index_of_item(src)
 	qdel(src)
 	if (held_index)
 		user.put_in_hand(assembly, held_index)

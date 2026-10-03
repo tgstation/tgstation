@@ -127,7 +127,7 @@ GLOBAL_DATUM_INIT(lost_crew_manager, /datum/lost_crew_manager, new)
 	var/datum/mind/mind
 
 /obj/item/storage/lockbox/mind/attack_hand(mob/user, list/modifiers)
-	if (!(src in user.held_items))
+	if (!user.is_holding(src))
 		return ..()
 	if(atom_storage.locked && can_unlock(user, silent = TRUE))
 		toggle_locked(user)

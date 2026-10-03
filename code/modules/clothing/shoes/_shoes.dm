@@ -259,9 +259,9 @@
 
 			if(6 to 13) // .7% chance to stumble and fling what we're holding
 				var/have_anything = FALSE
-				for(var/obj/item/I in our_guy.held_items)
+				for(var/obj/item/item as anything in our_guy.get_held_items())
 					have_anything = TRUE
-					our_guy.accident(I)
+					our_guy.accident(item)
 				to_chat(our_guy, span_danger("You trip on your [fastening_type] a bit[have_anything ? ", flinging what you were holding" : ""]!"))
 
 			if(14 to 25) // 1.3ish% chance to stumble and be a bit off balance (like being disarmed)

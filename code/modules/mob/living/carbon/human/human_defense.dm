@@ -49,7 +49,7 @@
 		span_userdanger("\The [hitting_projectile] gets reflected by [src]!"),
 	)
 	// Finds and plays the block_sound of item which reflected
-	for(var/obj/item/held_item in held_items)
+	for(var/obj/item/held_item as anything in get_held_items())
 		if(held_item.IsReflect(def_zone))
 			playsound(src, held_item.block_sound, BLOCK_SOUND_VOLUME, TRUE)
 	// Find a turf near or on the original location to bounce to
@@ -71,8 +71,8 @@
 	if(head)
 		if(head.IsReflect(def_zone))
 			return TRUE
-	for(var/obj/item/I in held_items)
-		if(I.IsReflect(def_zone))
+	for(var/obj/item/item as anything in get_held_items())
+		if(item.IsReflect(def_zone))
 			return TRUE
 	return FALSE
 
@@ -82,13 +82,13 @@
 		return SUCCESSFUL_BLOCK
 
 	var/block_chance_modifier = round(damage / -3)
-	for(var/obj/item/worn_thing in get_equipped_items(INCLUDE_HELD|INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT))
+	for(var/obj/item/worn_thing as anything in get_equipped_items(INCLUDE_HELD|INCLUDE_PROSTHETICS|INCLUDE_ABSTRACT))
 		// Things that are supposed to be worn, being held = cannot block
 		if(isclothing(worn_thing))
-			if(worn_thing in held_items)
+			if(is_holding(worn_thing))
 				continue
 		// Things that are supposed to be held, being worn = cannot block
-		else if(!(worn_thing in held_items))
+		else if(!is_holding(worn_thing))
 			continue
 
 		var/final_block_chance = worn_thing.block_chance - (clamp((armour_penetration - worn_thing.armour_penetration) / 2, 0, 100)) + block_chance_modifier
@@ -526,9 +526,9 @@
 		if(belt)
 			inventory_items_to_kill += belt
 
-		inventory_items_to_kill += held_items
+		inventory_items_to_kill += get_held_items()
 
-	for(var/obj/item/inventory_item in inventory_items_to_kill)
+	for(var/obj/item/inventory_item as anything in inventory_items_to_kill)
 		inventory_item.acid_act(acidpwr, acid_volume)
 	return TRUE
 
@@ -715,10 +715,10 @@
 		burning_items |= leg_clothes
 
 	if (!gloves || (!(gloves.resistance_flags & FIRE_PROOF) && (gloves.resistance_flags & FLAMMABLE)))
-		for(var/obj/item/burnable_item in held_items)
+		for(var/obj/item/burnable_item as anything in get_held_items())
 			burning_items |= burnable_item
 
-	for(var/obj/item/burning in burning_items)
+	for(var/obj/item/burning as anything in burning_items)
 		burning.fire_act((stacks * 25 * seconds_per_tick)) //damage taken is reduced to 2% of this value by fire_act()
 
 /mob/living/carbon/human/on_fire_stack(seconds_per_tick, datum/status_effect/fire_handler/fire_stacks/fire_handler)

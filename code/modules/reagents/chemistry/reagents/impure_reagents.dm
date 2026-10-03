@@ -71,7 +71,7 @@
 	. = ..()
 	if(!prob(creation_purity * 100))
 		return
-	var/list/cached_hand_items = affected_mob.held_items
+	var/list/cached_hand_items = affected_mob.get_hand_slots() // we're working with hand slots in this case
 	var/index = 1
 	for(var/thing in cached_hand_items)
 		index++

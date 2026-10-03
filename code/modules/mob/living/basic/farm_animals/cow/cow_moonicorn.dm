@@ -64,5 +64,5 @@
 
 	if(isliving(the_target)) //Targeting vs living mobs
 		var/mob/living/living_target = the_target
-		for(var/obj/item/food/grown/galaxythistle/tame_food in living_target.held_items)
+		if(living_target.is_holding_item_of_type(/obj/item/food/grown/galaxythistle))
 			return FALSE //heyyy this can tame me! let's NOT fight

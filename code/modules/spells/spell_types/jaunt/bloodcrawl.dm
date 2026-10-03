@@ -134,7 +134,7 @@
 	UnregisterSignal(jaunt, COMSIG_MOVABLE_MOVED)
 	exit_blood_effect(unjaunter)
 	if(equip_blood_hands && iscarbon(unjaunter))
-		for(var/obj/item/bloodcrawl/blood_hand in unjaunter.held_items)
+		for(var/obj/item/bloodcrawl/blood_hand as anything in unjaunter.get_held_items_of_type(/obj/item/bloodcrawl))
 			unjaunter.temporarilyRemoveItemFromInventory(blood_hand, force = TRUE)
 			qdel(blood_hand)
 	return ..()
