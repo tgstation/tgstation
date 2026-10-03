@@ -31,7 +31,7 @@
 	else
 		chambered = magazine.stored_ammo[1]
 		if (ispath(chambered))
-			chambered = new chambered(src)
+			chambered = new chambered(magazine)
 			magazine.stored_ammo[1] = chambered
 	if(chambered)
 		RegisterSignal(chambered, COMSIG_MOVABLE_MOVED, PROC_REF(clear_chambered))
