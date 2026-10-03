@@ -5,6 +5,13 @@
 		var/datum/mod_theme/new_theme = new path()
 		.[path] = new_theme
 
+/// Simple proc to search through mod_themes global to return a theme
+/proc/find_mod_theme(haystack)
+	for(var/entry in GLOB.mod_themes)
+		var/datum/mod_theme/theme_singleton = GLOB.mod_themes[entry]
+		if(findtext(haystack, theme_singleton.default_skin))
+			return theme_singleton
+
 /// MODsuit theme, instanced once and then used by MODsuits to grab various statistics.
 /datum/mod_theme
 	abstract_type = /datum/mod_theme

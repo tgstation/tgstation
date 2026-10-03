@@ -276,7 +276,7 @@
 /datum/bodypart_overlay/mutant/tail/fish/cerulean/abyss/removed_from_limb(obj/item/bodypart/limb)
 	limb.remove_bodypart_texture(/datum/bodypart_texture/cerulean_abyss, FALSE)
 
-///
+/// apply the bodypart texture (mask) to the limb and its visual organ aka fish tail
 /datum/bodypart_texture/cerulean_abyss/modify_bodypart_appearance(image/appearance)
 	var/icon/new_appearance = new(appearance.icon)
 	new_appearance.Blend(icon(/datum/sprite_accessory/tails/fish/cerulean::icon, "abyss_mask"), ICON_SUBTRACT)

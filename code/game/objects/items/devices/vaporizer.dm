@@ -57,7 +57,7 @@
 
 /obj/item/vaporizer/dropped(mob/living/user)
 	. = ..()
-	destroy_charge_bar()
+	QDEL_NULL(charge_bar)
 
 /// create a visual for how much power is left in the cell of the item
 /obj/item/vaporizer/proc/create_charge_bar(mob/living/user)
@@ -66,17 +66,12 @@
 	var/charge_bar_target = loc == user ? src : loc
 	charge_bar = new(user, 100/*%*/, charge_bar_target, cell.percent())
 
-/obj/item/vaporizer/proc/destroy_charge_bar()
-	if(!charge_bar)
-		return
-	QDEL_NULL(charge_bar)
-
 // remove the cell with a screwdriver
 /obj/item/vaporizer/screwdriver_act(mob/living/user, obj/item/tool)
 	if(!cell)
 		return FALSE
 	tool.play_tool_sound(src)
-	destroy_charge_bar()
+	QDEL_NULL(charge_bar)
 	balloon_alert(user, "removed [cell]")
 	cell.forceMove(get_turf(src))
 	cell = null

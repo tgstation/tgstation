@@ -226,9 +226,8 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter/weak)
 
 /obj/item/gun/energy/laser/scatter/shotty/compact/shoot_live_shot(mob/living/user)
-	..()
-	sleep(2 DECISECONDS)
-	playsound(src, 'sound/items/weapons/gun/shotgun/rack.ogg', 30, TRUE)
+	. = ..()
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/weapons/gun/shotgun/rack.ogg', 30, TRUE), 0.2 SECONDS)
 
 ///Laser Cannon
 

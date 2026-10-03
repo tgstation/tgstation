@@ -34,11 +34,6 @@
 /obj/item/clothing/shoes/Initialize(mapload)
 	. = ..()
 	register_context()
-	RegisterSignal(src, COMSIG_ITEM_GET_WORN_OVERLAYS, PROC_REF(wear_as_hat))
-
-/obj/item/clothing/shoes/Destroy()
-	. = ..()
-	UnregisterSignal(src, COMSIG_ITEM_GET_WORN_OVERLAYS, PROC_REF(wear_as_hat))
 
 /obj/item/clothing/shoes/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
@@ -353,9 +348,21 @@
 	return "doing something mysterious to"
 
 /obj/item/clothing/shoes/attach_clothing_traits(traits)
-	if(ismob(loc) && slot_flags & ITEM_SLOT_HEAD)
+	if(!(astype(loc, /mob)?.get_slot_by_item(src) & ITEM_SLOT_FEET))
 		return
 	return ..()
+
+/// when the shoes are worn on the headslot we have to override the overlay's icon to look for the correct file
+/obj/item/clothing/shoes/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
+	. = ..()
+	if(isinhands || !(bodyshape & BODYSHAPE_CERULEAN))
+		return
+	var/list/current_overlays = .
+	var/icon_to_use = worn_icon || DEFAULT_SHOES_FILE
+	var/mutable_appearance/standing_overlay = current_overlays[1]
+	standing_overlay.icon = icon_to_use
+	standing.icon = icon_to_use
+	worn_y_offset = 28 //about how many px up to draw on the head
 
 /// ceruleans wear shoes as a hat. are they doing a bit or are they dumb? i guess we will never know
 /obj/item/clothing/shoes/proc/oh_what_a_neat_hat(mob/living/carbon/user, up_or_down)
@@ -367,13 +374,3 @@
 	else
 		slot_flags = initial(slot_flags)
 		worn_y_offset = initial(worn_y_offset)
-
-/obj/item/clothing/shoes/proc/wear_as_hat(obj/item/source, list/overlays, mutable_appearance/standing, isinhands, icon_file, bodyshape)
-	SIGNAL_HANDLER
-	if(isinhands || !(bodyshape & BODYSHAPE_CERULEAN))
-		return
-	source.worn_y_offset = 28 //about how many px up to draw on the head
-	var/icon_to_use = worn_icon || DEFAULT_SHOES_FILE
-	var/mutable_appearance/standing_overlay = overlays[1]
-	standing_overlay.icon = icon_to_use
-	standing.icon = icon_to_use

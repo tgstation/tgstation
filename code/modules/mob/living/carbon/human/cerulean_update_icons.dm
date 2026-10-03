@@ -1,6 +1,3 @@
-/// define for lady physique Ceruleans, who have extra fins, to keep her eggs close. we'll cover these up if the modsuit is sealed
-#define FEM_FLIPPER "f"
-
 // File of procs for human_update_icons.dm specifically to render cerulean clothing appropriately. so it doesn't get any more lines than it already has...
 
 /**
@@ -10,7 +7,7 @@
 /obj/item/proc/generate_cerulean_icons(icon/base_icon, key, greyscale_colors, bodyshape)
 	var/static/list/cerulean_icon_cache = list()
 	var/mob/living/carbon/human/wearer = loc
-	var/physique = wearer?.physique == FEMALE ? FEM_FLIPPER : NONE
+	var/physique = wearer?.physique == FEMALE ? "f" : NONE
 	var/index = "[key][physique ? "-[physique]" : ""]-[type]-[greyscale_colors]"
 	var/icon/cerulean_clothing_icon = cerulean_icon_cache[index]
 
@@ -51,7 +48,7 @@
 				else
 					cerulean_clothing_icon = icon(CERULEAN_SUIT_FILE, icon_state)
 				// flippy flippers
-				if(physique == FEM_FLIPPER)
+				if(physique == "f")
 					var/flipper_color = greyscale_colors
 					if(suit_item.cerulean_flipper_palette != FLIPPERS)
 						flipper_color = suit_item.cerulean_flipper_palette
@@ -65,69 +62,7 @@
 	cerulean_icon_cache[index] = fcopy_rsc(cerulean_clothing_icon)
 	return icon(cerulean_clothing_icon)
 
-/// define for the string added to modsuit icon_states when sealed
-#define SEALED "sealed"
-
-
-/**
- *	This proc handles icon building for Ceruleans wearing modsuits.
- *	If a drawn sprite exists, we prioritize it. If it doesn't, we'll look for an entry in var/list/cerulean_tail_palette
- *	If that doesn't, we'll generate a basic modsuit icon for the Cerulean.
- */
-/obj/item/clothing/suit/mod/proc/handle_cerulean_modsuit(icon/base_icon, key, greyscale_colors, physique)
-	/// our full icon state string, lets find a pre-drawn modsuit!
-	var/icon_state_string = "[physique == FEM_FLIPPER ? "[FEM_FLIPPER]-" : ""][icon_state]"
-	if(icon_exists(CERULEAN_MODSUIT_FILE, icon_state_string))
-		// we have a pre-drawn modsuit, yay
-		return icon(CERULEAN_MODSUIT_FILE, icon_state_string)
-
-	/// whether the modsuit is sealed or open, we read this from our lovely key
-	var/sealed = findtext(icon_state, SEALED) ? TRUE : FALSE
-	/// find out what modsuit theme this mod has
-	var/datum/mod_theme/theme = find_mod_theme(key)
-	/// lets cut away the legs first, we really don't need them
-	var/icon/cerulean_mod_icon = apply_icon_mask(base_icon, LEGS_MASK)
-	// lets run through generating according to what our variables are set to
-	if(!isnull(theme?.cerulean_tail_palette))
-		// add a colored icon for each modular part, according to the theme fetched
-		var/list/modular_part_list = theme.cerulean_tail_palette.Copy()
-		for(var/index in 1 to length(modular_part_list))
-			cerulean_mod_icon.Blend(
-				icon(
-					SSgreyscale.GetColoredIconByType(
-						/datum/greyscale_config/modular_mod_parts_cerulean,
-						modular_part_list[modular_part_list[index]],
-					),
-					"[modular_part_list[index]][sealed ? "-[SEALED]" : ""]",
-				),
-				ICON_OVERLAY,
-			)
-	else
-		// we have no drawn sprite and no entry in the preset combinations alist. one little neglected modsuit :(
-		// lets generate from our broadstroke preset
-		cerulean_mod_icon.Blend(
-			icon(
-				SSgreyscale.GetColoredIconByType(
-					/datum/greyscale_config/modular_mod_parts_cerulean/basic,
-					greyscale_colors,
-				),
-				"undefined[sealed ? "-[SEALED]" : ""]",
-			),
-			ICON_OVERLAY,
-		)
-
-	if(physique == FEM_FLIPPER)
-		var/flipper_color = greyscale_colors
-		if(theme)
-			if(theme.cerulean_flipper_palette != FLIPPERS)
-				flipper_color = theme.cerulean_flipper_palette
-		if(flipper_color != NO_FLIPPERS)
-			generate_fem_flippers(cerulean_mod_icon, flipper_color)
-
-	// 🪸🐟
-	return cerulean_mod_icon
-
-/// apply a flipper icon if we are sealed and have a female physique.
+/// apply a flipper icon for female physique Ceruleans, who have extra fins to keep their eggs close
 /// ideally we color after the theme fetched from var/cerulean_flipper_palette
 /obj/item/proc/generate_fem_flippers(icon/clothing_icon, set_color)
 	clothing_icon.Blend(
@@ -140,13 +75,3 @@
 		),
 	ICON_OVERLAY,
 	)
-
-/// Simple proc to search through mod_themes global to return a theme
-/proc/find_mod_theme(haystack)
-	for(var/entry in GLOB.mod_themes)
-		var/datum/mod_theme/theme_singleton = GLOB.mod_themes[entry]
-		if(findtext(haystack, theme_singleton.default_skin))
-			return theme_singleton
-
-#undef FEM_FLIPPER
-#undef SEALED
