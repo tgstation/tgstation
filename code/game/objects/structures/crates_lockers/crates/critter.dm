@@ -6,8 +6,6 @@
 	horizontal = FALSE
 	allow_objects = FALSE
 	breakout_time = 600
-	material_drop = /obj/item/stack/sheet/mineral/wood
-	material_drop_amount = 4
 	delivery_icon = "deliverybox"
 	open_sound = 'sound/machines/closet/wooden_closet_open.ogg'
 	close_sound = 'sound/machines/closet/wooden_closet_close.ogg'
@@ -18,6 +16,7 @@
 	elevation = 21
 	elevation_open = 0
 	can_weld_shut = FALSE
+	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 4)
 
 	var/obj/item/tank/internals/emergency_oxygen/tank
 

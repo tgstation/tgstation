@@ -6,6 +6,7 @@
 	resistance_flags = FLAMMABLE
 	slot_flags = ITEM_SLOT_ID
 	storage_type = /datum/storage/wallet
+	custom_materials = list(/datum/material/leather = SHEET_MATERIAL_AMOUNT)
 
 	var/obj/item/card/id/front_id = null
 	var/list/combined_access

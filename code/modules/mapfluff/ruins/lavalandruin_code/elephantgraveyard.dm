@@ -136,8 +136,7 @@
 	icon_state = "grave"
 	base_icon_state = "grave"
 	density = FALSE
-	material_drop = /obj/item/stack/ore/glass/basalt
-	material_drop_amount = 5
+	custom_materials = list(/datum/material/sand = SHEET_MATERIAL_AMOUNT * 5)
 	anchorable = FALSE
 	anchored = TRUE
 	divable = FALSE //As funny as it may be, it would make little sense how you got yourself inside it in first place.
@@ -316,7 +315,7 @@
 	icon = 'icons/obj/storage/crates.dmi'
 	icon_state = "grave_fresh"
 	base_icon_state = "grave_fresh"
-	material_drop_amount = 0
+	custom_materials = null
 
 /obj/structure/closet/crate/grave/filled/lead_researcher
 	name = "ominous burial mound"

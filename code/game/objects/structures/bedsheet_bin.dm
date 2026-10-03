@@ -23,6 +23,7 @@ LINEN BINS
 	resistance_flags = FLAMMABLE
 	dying_key = DYE_REGISTRY_BEDSHEET
 	interaction_flags_click = NEED_DEXTERITY|ALLOW_RESTING
+	custom_materials = list(/datum/material/cloth = 3 * SHEET_MATERIAL_AMOUNT)
 
 	dog_fashion = /datum/dog_fashion/head/ghost
 	/// Custom nouns to act as the subject of dreams
@@ -42,6 +43,7 @@ LINEN BINS
 	if(bedsheet_type == BEDSHEET_DOUBLE)
 		stack_amount *= 2
 		dying_key = DYE_REGISTRY_DOUBLE_BEDSHEET
+		set_custom_materials(custom_materials, multiplier = 2)
 	register_context()
 	register_item_context()
 

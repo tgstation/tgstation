@@ -23,6 +23,7 @@
 	slot_flags = ITEM_SLOT_BELT
 	w_class = WEIGHT_CLASS_BULKY
 	storage_type = /datum/storage/bag
+	custom_materials = list(/datum/material/cloth = 4 * SHEET_MATERIAL_AMOUNT)
 
 /obj/item/storage/bag/trash
 	name = "trash bag"

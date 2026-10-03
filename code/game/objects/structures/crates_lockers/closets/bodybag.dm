@@ -10,7 +10,6 @@
 	open_sound_volume = 15
 	close_sound_volume = 15
 	integrity_failure = 0
-	material_drop = /obj/item/stack/sheet/cloth
 	delivery_icon = null //unwrappable
 	anchorable = FALSE
 	cutting_tool = null // Bodybags are not deconstructed by cutting
@@ -21,6 +20,9 @@
 	can_weld_shut = FALSE
 	door_anim_time = 0
 	obj_flags = parent_type::obj_flags | UNIQUE_RENAME | RENAME_NO_DESC
+	custom_materials = list(
+		/datum/material/cloth = SHEET_MATERIAL_AMOUNT * 2,
+	)
 
 	var/foldedbag_path = /obj/item/bodybag
 	var/obj/item/bodybag/foldedbag_instance = null
@@ -30,6 +32,18 @@
 	var/can_scan_through = FALSE
 	/// Paper pinned to this bag
 	var/obj/item/paper/pinned
+
+/obj/structure/closet/body_bag/Initialize(mapload)
+	. = ..()
+#ifdef UNIT_TESTS
+	if(PERFORM_ALL_TESTS(focus_only/bodybag_materials) && foldedbag_path)
+		foldedbag_instance = new foldedbag_path()
+		for(var/material_type in (SANITIZE_LIST(foldedbag_instance.custom_materials) ^ SANITIZE_LIST(custom_materials)))
+			stack_trace("Bodybag material mismatch between item and closet: [material_type] is not present in both the item and the closet.")
+		for(var/material_type in (SANITIZE_LIST(foldedbag_instance.custom_materials) & SANITIZE_LIST(custom_materials)))
+			if(custom_materials?[material_type] != foldedbag_instance.custom_materials?[material_type])
+				stack_trace("Bodybag material mismatch between item and closet: [material_type] has differing amounts.")
+#endif
 
 /obj/structure/closet/body_bag/Destroy()
 	// If we have a stored bag, and it's in nullspace (not in someone's hand), delete it.
@@ -127,6 +141,12 @@
 	foldedbag_path = /obj/item/bodybag/bluespace
 	mob_storage_capacity = 15
 	max_mob_size = MOB_SIZE_LARGE
+	custom_materials = list(
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.5,
+		/datum/material/diamond = SHEET_MATERIAL_AMOUNT * 0.25,
+		/datum/material/bluespace = SHEET_MATERIAL_AMOUNT * 0.25,
+	)
 
 /obj/structure/closet/body_bag/bluespace/attempt_fold(mob/living/carbon/human/the_folder)
 	. = FALSE
@@ -257,6 +277,10 @@
 	contents_pressure_protection = 0.8
 	contents_thermal_insulation = 0.5
 	foldedbag_path = /obj/item/bodybag/environmental
+	custom_materials = list(
+		/datum/material/iron = SHEET_MATERIAL_AMOUNT,
+		/datum/material/cloth = SHEET_MATERIAL_AMOUNT,
+	)
 	/// The list of weathers we protect from.
 	var/list/weather_protection = list(TRAIT_ASHSTORM_IMMUNE, TRAIT_RADSTORM_IMMUNE, TRAIT_SNOWSTORM_IMMUNE) // Does not protect against lava or the The Floor Is Lava spell.
 	/// The contents of the gas to be distributed to an occupant. Set in Initialize()
@@ -436,6 +460,7 @@
 	foldedbag_path = null
 	weather_protection = list(TRAIT_SNOWSTORM_IMMUNE)
 	can_scan_through = TRUE
+	custom_materials = null
 
 /obj/structure/closet/body_bag/environmental/hardlight/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(damage_type in list(BRUTE, BURN))
@@ -462,9 +487,13 @@
 	icon_state = "holobag_med"
 	breakout_time = 5 SECONDS
 	can_scan_through = TRUE
-	material_drop = /obj/item/stack/sheet/plastic
-	material_drop_amount = 2
 	appearance_flags = parent_type::appearance_flags | KEEP_TOGETHER
+	foldedbag_path = /obj/item/bodybag/stasis
+	custom_materials = list(
+		/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 4,
+		/datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.5,
+	)
+
 	/// Tracks how many seconds we've been freezing dudes for
 	var/seconds_freezing = -1
 	/// Cooldown for playing the freeze sound effect

@@ -16,6 +16,7 @@
 
 	flags_1 = IS_PLAYER_COLORABLE_1
 	interaction_flags_mouse_drop = NEED_HANDS
+	custom_materials = list(/datum/material/cloth = 2 * SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/shoes/sneakers/get_general_color(icon/base_icon)
 	var/colors = SSgreyscale.ParseColorString(greyscale_colors)

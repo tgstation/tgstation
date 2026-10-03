@@ -555,6 +555,8 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
 	pickup_sound = SFX_CLOTH_PICKUP
 	drop_sound = SFX_CLOTH_DROP
+	mats_per_unit = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT)
+	material_type = /datum/material/cloth
 
 /obj/item/stack/sheet/cloth/grind_results()
 	return list(/datum/reagent/cellulose = 20)
@@ -588,6 +590,8 @@ GLOBAL_LIST_INIT(durathread_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/durathread
 	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
 	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
+	mats_per_unit = list(/datum/material/cloth/durathread = SHEET_MATERIAL_AMOUNT)
+	material_type = /datum/material/cloth/durathread
 
 /obj/item/stack/sheet/durathread/Initialize(mapload)
 	. = ..()

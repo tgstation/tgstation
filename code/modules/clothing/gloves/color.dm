@@ -40,6 +40,7 @@
 	custom_price = PAYCHECK_CREW * 1.5
 	undyeable = TRUE
 	clothing_traits = list(TRAIT_FINGERPRINT_PASSTHROUGH)
+	custom_materials = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/gloves/fingerless/Initialize(mapload)
 	. = ..()

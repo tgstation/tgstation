@@ -5,6 +5,7 @@
 	inhand_icon_state = "duffel"
 	actions_types = list(/datum/action/item_action/zipper)
 	storage_type = /datum/storage/duffel
+	custom_materials = list(/datum/material/cloth = 6 * SHEET_MATERIAL_AMOUNT)
 	// How much to slow you down if your bag isn't zipped up
 	var/zip_slowdown = 1
 	/// If this bag is zipped (contents hidden) up or not
