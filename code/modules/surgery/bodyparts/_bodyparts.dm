@@ -2054,7 +2054,6 @@
 		if(prob(10))
 			to_chat(owner, span_warning("Your open [plaintext_zone] throbs painfully with every step! You feel like you should walk very carefully..."))
 			INVOKE_ASYNC(owner, TYPE_PROC_REF(/mob/living/, emote), "grimace")
-			owner.emote("grimace")
 
 /obj/item/bodypart/vv_edit_var(vname, vval)
 	if(vname != NAMEOF(src, surgery_state))
