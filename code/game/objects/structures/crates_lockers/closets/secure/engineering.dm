@@ -49,6 +49,11 @@
 	new /obj/item/clothing/gloves/color/yellow(src)
 	new /obj/item/clothing/gloves/color/yellow(src)
 
+/obj/structure/closet/secure_closet/engineering_electrical/noinsuls
+
+/obj/structure/closet/secure_closet/engineering_electrical/noinsuls/populate_contents_immediate()
+	return
+
 /obj/structure/closet/secure_closet/engineering_welding
 	name = "welding supplies locker"
 	req_access = list(ACCESS_ENGINE_EQUIP)

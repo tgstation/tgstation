@@ -24646,8 +24646,8 @@
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
 "hIE" = (
-/obj/structure/closet/secure_closet/engineering_electrical,
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/secure_closet/engineering_electrical/noinsuls,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/tram/right)
 "hIO" = (
@@ -45316,11 +45316,6 @@
 /area/station/service/theater)
 "oSi" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/storage/box/lights/mixed,
 /obj/item/stack/cable_coil,
 /obj/item/stock_parts/power_store/cell/emproof,
@@ -69883,10 +69878,14 @@
 	pixel_x = 1;
 	pixel_y = -1
 	},
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/t_scanner,
 /obj/item/multitool,
 /obj/effect/turf_decal/trimline/white/filled/line,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow{
+	pixel_x = 0;
+	pixel_y = 3
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "xsJ" = (

@@ -25213,9 +25213,6 @@
 /area/station/security/brig)
 "icw" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
@@ -57316,7 +57313,6 @@
 /area/station/commons/vacant_room/commissary)
 "seU" = (
 /obj/structure/table,
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/electronics/apc,
 /obj/item/electronics/airlock{
 	pixel_y = 6
@@ -57325,6 +57321,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/storage/toolbox/electrical,
 /obj/item/multitool,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow{
+	pixel_x = 0;
+	pixel_y = 4
+	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "seW" = (

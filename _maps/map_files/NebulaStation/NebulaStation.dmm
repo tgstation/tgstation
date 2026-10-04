@@ -104917,7 +104917,6 @@
 	},
 /area/station/security/prison)
 "pwG" = (
-/obj/structure/closet/secure_closet/engineering_electrical,
 /obj/effect/turf_decal/siding/thinplating_new/dark{
 	dir = 1
 	},
@@ -104928,6 +104927,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/box/corners,
+/obj/structure/closet/secure_closet/engineering_electrical/noinsuls,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "pwH" = (
@@ -120134,11 +120134,6 @@
 /obj/item/mod/module/plasma_stabilizer,
 /obj/item/mod/module/signlang_radio,
 /obj/item/mod/module/thermal_regulator,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/iron/dark/textured,
 /area/station/engineering/engine_smes)
 "rJH" = (
@@ -140092,11 +140087,15 @@
 	pixel_x = 1;
 	pixel_y = -1
 	},
-/obj/item/clothing/gloves/color/yellow,
 /obj/item/t_scanner,
 /obj/item/multitool,
 /obj/structure/rack,
 /obj/structure/cable,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow{
+	pixel_x = 0;
+	pixel_y = 3
+	},
 /turf/open/floor/iron/dark/small,
 /area/station/engineering/storage/tech)
 "uIS" = (

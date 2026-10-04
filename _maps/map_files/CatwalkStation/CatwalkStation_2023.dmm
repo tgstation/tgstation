@@ -12414,7 +12414,7 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/lobby)
 "dje" = (
-/obj/structure/closet/secure_closet/engineering_electrical,
+/obj/structure/closet/secure_closet/engineering_electrical/noinsuls,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/main)
 "djl" = (
@@ -18071,15 +18071,10 @@
 /obj/item/crowbar,
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/shoes/magboots,
-/obj/item/clothing/gloves/color/yellow{
-	pixel_y = 3
-	},
 /obj/item/clothing/ears/earmuffs{
 	pixel_x = -3;
 	pixel_y = -2
 	},
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow,
 /obj/machinery/camera/autoname/directional/west,
 /obj/item/clothing/ears/earmuffs{
 	pixel_x = -5;
@@ -91168,6 +91163,10 @@
 	},
 /obj/item/clothing/gloves/color/yellow{
 	pixel_y = 6
+	},
+/obj/item/clothing/gloves/color/yellow{
+	pixel_y = 9;
+	pixel_x = 0
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
