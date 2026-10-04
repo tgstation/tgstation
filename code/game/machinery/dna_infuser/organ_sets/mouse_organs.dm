@@ -66,7 +66,7 @@
 /obj/item/organ/heart/mouse/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/mouse)
-	AddElement(/datum/element/noticable_organ, "%PRONOUN_Theyve an inwardly posture and %PRONOUN_their movement is jittery and frail.")
+	AddElement(/datum/element/noticable_organ, "%PRONOUN_Theyve moving with a skitter and seems frail.")
 	AddElement(/datum/element/update_icon_blocker)
 
 /obj/item/organ/heart/mouse/on_mob_insert(mob/living/carbon/receiver)
