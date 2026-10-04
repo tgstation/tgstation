@@ -36,7 +36,7 @@
 		return
 	RegisterSignals(owner, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN), PROC_REF(check_tail))
 	RegisterSignals(owner, list(SIGNAL_ADDTRAIT(TRAIT_IS_WET), SIGNAL_REMOVETRAIT(TRAIT_IS_WET)), PROC_REF(update_wetness))
-	RegisterSignals(owner, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, PROC_REF(get_perceived_food_quality))
+	RegisterSignal(owner, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, PROC_REF(get_perceived_food_quality))
 
 	//Fish is slightly weaker to being cooked. oh oh.
 	MODIFY_PHYSIOLOGY(owner, BURN, 1.15)

@@ -143,7 +143,7 @@
 	if(!LAZYFIND(reflected_movables, target)) // not lazyaccess - value may be null
 		LAZYSET(reflected_movables, target, null)
 		RegisterSignals(target, check_reflect_signals, PROC_REF(update_reflection))
-		RegisterSignals(target, COMSIG_QDELETING, PROC_REF(nuke_reflection))
+		RegisterSignal(target, COMSIG_QDELETING, PROC_REF(nuke_reflection))
 	update_reflection(target)
 
 /datum/component/reflection/proc/nuke_reflection(atom/movable/target)
