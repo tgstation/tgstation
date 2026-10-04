@@ -2033,7 +2033,7 @@
 	if(prob(5))
 		var/list/elligible_organs = list()
 		for(var/obj/item/organ/organ in contents) // make implants or cavity items elgible later
-			if(!(organ.organ_flags & ORGAN_UNREMOVABLE))
+			if(!(organ.organ_flags & (ORGAN_UNREMOVABLE|ORGAN_VITAL)))
 				elligible_organs += organ
 
 		if(!elligible_organs.len)
