@@ -265,6 +265,8 @@
 #define COLD_GAS_DAMAGE_LEVEL_2 1.5 //Amount of damage applied when the current breath's temperature passes the 200K point
 #define COLD_GAS_DAMAGE_LEVEL_3 3 //Amount of damage applied when the current breath's temperature passes the 120K point
 
+#define TEMPERATURE_LUNG_DAMAGE 3 //Amount of damage applied when lungs are breathing air (LEVEL_3) that is too hot or cold
+
 /// These are for the default lungs
 #define COLD_LEVEL_1_THRESHOLD 260
 #define COLD_LEVEL_2_THRESHOLD 200
@@ -858,6 +860,10 @@ GLOBAL_ALIST_INIT(human_heights_to_offsets, alist(
 #define UNIFORM_LAYER 19
 	/// The layer underneath the uniform
 	#define UNDER_UNIFORM_LAYER 19.1
+	/// Gauze specifically
+	#define GAUZE_LAYER 19.8
+	/// Damage indicators with overlays
+	#define DAMAGE_OVERLAY_LAYER 19.9
 /// Damage indicators (cuts and burns)
 #define DAMAGE_LAYER 20
 	/// Mutations that should appear above everything else (e.g. laser eyes)

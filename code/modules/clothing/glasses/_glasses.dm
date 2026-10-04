@@ -757,7 +757,8 @@
 
 /obj/item/clothing/glasses/salesman/dropped(mob/living/carbon/human/user)
 	..()
-	UnregisterSignal(bigshot, COMSIG_CARBON_SANITY_UPDATE)
+	if(bigshot)
+		UnregisterSignal(bigshot, COMSIG_CARBON_SANITY_UPDATE)
 	bigshot = initial(bigshot)
 	icon_state = initial(icon_state)
 	desc = initial(desc)

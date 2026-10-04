@@ -1,5 +1,6 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "tgui-workspace",
@@ -68,6 +69,17 @@
     },
     "packages/tgui-escape-menu": {
       "name": "tgui-escape-menu",
+      "version": "1.0.0",
+      "dependencies": {
+        "common": "workspace:*",
+        "react": "^19.1.0",
+        "react-dom": "^19.1.0",
+        "tgui": "workspace:*",
+        "tgui-core": "^6.1.1",
+      },
+    },
+    "packages/tgui-lobby": {
+      "name": "tgui-lobby",
       "version": "1.0.0",
       "dependencies": {
         "common": "workspace:*",
@@ -1093,6 +1105,8 @@
     "tgui-dev-server": ["tgui-dev-server@workspace:packages/tgui-dev-server"],
 
     "tgui-escape-menu": ["tgui-escape-menu@workspace:packages/tgui-escape-menu"],
+
+    "tgui-lobby": ["tgui-lobby@workspace:packages/tgui-lobby"],
 
     "tgui-panel": ["tgui-panel@workspace:packages/tgui-panel"],
 

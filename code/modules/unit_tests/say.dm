@@ -266,3 +266,39 @@
 
 #undef NORMAL_HEARING_RANGE
 #undef WHISPER_HEARING_RANGE
+
+/datum/unit_test/emphasis_characters
+	abstract_type = /datum/unit_test/emphasis_characters
+	var/base_input
+	var/expected_output
+
+/datum/unit_test/emphasis_characters/Run()
+	TEST_ASSERT_EQUAL(replacetext(apply_message_emphasis(base_input), "&#8203;", ""), expected_output, "")
+
+/datum/unit_test/emphasis_characters/basic
+	base_input = @"Blah Blah Blah"
+	expected_output = @"Blah Blah Blah"
+
+/datum/unit_test/emphasis_characters/complex
+	base_input = @"Blah + Blah = Blah :)"
+	expected_output = @"Blah + Blah = Blah :)"
+
+/datum/unit_test/emphasis_characters/italic
+	base_input = @"|Blah| Blah Blah"
+	expected_output = @"<i>Blah</i> Blah Blah"
+
+/datum/unit_test/emphasis_characters/bold
+	base_input = @"+Blah+ Blah Blah"
+	expected_output = @"<b>Blah</b> Blah Blah"
+
+/datum/unit_test/emphasis_characters/small
+	base_input = @"^Blah^ Blah Blah"
+	expected_output = @"<small>Blah</small> Blah Blah"
+
+/datum/unit_test/emphasis_characters/multiple
+	base_input = @"|Blah| Blah +Blah+"
+	expected_output = @"<i>Blah</i> Blah <b>Blah</b>"
+
+/datum/unit_test/emphasis_characters/escaped
+	base_input = @"\|Blah\| \+Blah\+ Blah"
+	expected_output = @"|Blah| +Blah+ Blah"

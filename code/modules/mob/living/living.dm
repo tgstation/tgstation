@@ -2056,7 +2056,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, eyes.color_cutoffs)
 
 	var/obj/item/clothing/glasses/glasses = get_item_by_slot(ITEM_SLOT_EYES)
-	if(istype(glasses))
+	if(istype(glasses) && (glasses.item_flags & IN_INVENTORY))
 		set_invis_see(glasses.invis_override || min(glasses.invis_view, see_invisible))
 		if(!isnull(glasses.lighting_cutoff))
 			lighting_cutoff = max(lighting_cutoff, glasses.lighting_cutoff)
@@ -2066,7 +2066,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	// An average (ranging from 1 to 100) of the lighting_color_cutoffs values.
 	// Used to avoid the hardcoded lighting cutoff from overly stacking with the more specific lighting color cutoffs from eyes and glasses
 	// (or innate in the case of some mobs), with the exception of night vision I guess.
-	var/avg_light_color_cutoff = lighting_color_cutoffs = (lighting_color_cutoffs[1] + lighting_color_cutoffs[2] + lighting_color_cutoffs[3]) / 3
+	var/avg_light_color_cutoff = (lighting_color_cutoffs[1] + lighting_color_cutoffs[2] + lighting_color_cutoffs[3]) / 3
 
 	if(HAS_TRAIT(src, TRAIT_MESON_VISION))
 		new_sight |= SEE_TURFS

@@ -22,6 +22,8 @@
 	var/draw_on_husks = HUSK_OVERLAY_NONE
 	/// Determines body area of the overlay for height offsets
 	var/offset_location = NO_MODIFY
+	/// Flags that determine how the overlay is handled by the bodypart.
+	var/overlay_flags = LIMB_OVERLAY_TEXTURED
 
 /datum/bodypart_overlay/New()
 	. = ..()
@@ -29,9 +31,14 @@
 
 /// Used for adding a layer at runtime
 /datum/bodypart_overlay/proc/set_layer(layer_postfix, layer_number)
-	var/list/existing_layers = layers.Copy()
+	var/list/existing_layers = LAZYCOPY(layers)
 	existing_layers[layer_postfix] = layer_number
 	layers = string_assoc_list(existing_layers)
+
+/// Used for adding a layer at runtime without replacing existing layers
+/datum/bodypart_overlay/proc/add_layer(layer_postfix, layer_number)
+	if(isnull(LAZYACCESS(layers, layer_postfix)))
+		set_layer(layer_postfix, layer_number)
 
 /// Used for adding layers at runtime
 /datum/bodypart_overlay/proc/set_layers(list/layer_list)
@@ -81,9 +88,11 @@
 	else
 		color_image(main_image, limb, layer_index)
 
-	var/list/created_overlays = list(main_image)
+	var/list/created_overlays = list()
+	created_overlays[main_image] = overlay_flags
 	if(blocks_emissive != EMISSIVE_BLOCK_NONE && !isnull(limb))
-		created_overlays += emissive_blocker(main_image.icon, main_image.icon_state, limb, layer = main_image.layer, alpha = main_image.alpha)
+		var/mutable_appearance/blocker_overlay = emissive_blocker(main_image.icon, main_image.icon_state, limb, layer = main_image.layer, alpha = main_image.alpha)
+		created_overlays[blocker_overlay] = LIMB_OVERLAY_META
 
 	return created_overlays
 

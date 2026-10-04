@@ -715,6 +715,15 @@
 		'sound/items/gauze/bandage_end4.ogg',
 	)
 
+/datum/sound_effect/cloth_rip
+	key = SFX_CLOTH_RIP
+	file_paths = list(
+		'sound/items/handling/cloth/rip1.ogg',
+		'sound/items/handling/cloth/rip2.ogg',
+		'sound/items/handling/cloth/rip3.ogg',
+		'sound/items/handling/cloth/rip4.ogg',
+	)
+
 // Old cloth sounds are named cloth_...1.ogg, I wanted to keep them so these new ones go further down the line.
 /datum/sound_effect/cloth_drop
 	key = SFX_CLOTH_DROP

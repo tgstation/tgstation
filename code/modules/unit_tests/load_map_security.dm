@@ -9,7 +9,7 @@
 	// Copy our valid map into a bad directory
 	// We can technically load from /unitTestTempDir by passing it in our map name
 	// But it should fail when passed as a directory
-	fcopy("_maps/[VALID_TEST_MAP].json", "data/load_map_security_temp/[VALID_TEST_MAP].json")
+	fcopy("[MAP_DIRECTORY_MAPS]/[VALID_TEST_MAP].json", "data/load_map_security_temp/[VALID_TEST_MAP].json")
 
 	//Attempt to load our configs
 

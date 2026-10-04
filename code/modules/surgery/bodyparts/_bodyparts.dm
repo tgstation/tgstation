@@ -462,16 +462,18 @@
 
 	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(applied_items, LIMB_ITEM_GAUZE)
 	var/obj/item/tourniquet/current_tourniquet = LAZYACCESS(applied_items, LIMB_ITEM_TOURNIQUET)
-	if(current_tourniquet || current_gauze)
-		if(current_tourniquet)
-			var/tourniquet_href = "<a href='byond://?src=[REF(owner)];remove_tourniquet=[REF(src)]'>[icon2html(current_tourniquet, examiner)] \a [current_tourniquet]</a>"
-			var/tourniquet_text = "\tThere is [tourniquet_href] tightly secured around [body_zone == BODY_ZONE_HEAD ? "your neck!" : "it."]"
-			if(body_zone == BODY_ZONE_HEAD)
-				check_list += span_boldwarning(tourniquet_text)
-			else
-				check_list += span_warning(tourniquet_text)
-		if(current_gauze)
-			check_list += span_notice("\tThere is some [current_gauze.name] wrapped around it.")
+	if(current_tourniquet)
+		var/tourniquet_href = "<a href='byond://?src=[REF(owner)];remove_tourniquet=[REF(src)]'>[icon2html(current_tourniquet, examiner)] \a [current_tourniquet]</a>"
+		var/tourniquet_text = "\tThere is [tourniquet_href] tightly secured around [body_zone == BODY_ZONE_HEAD ? "your neck!" : "it."]"
+		if(body_zone == BODY_ZONE_HEAD)
+			check_list += span_boldwarning(tourniquet_text)
+		else
+			check_list += span_warning(tourniquet_text)
+	if(current_gauze)
+		var/gauze_href = "<a href='byond://?src=[REF(examiner)];gauze_limb=[REF(src)]'>[icon2html(current_gauze, examiner)] \a [current_gauze]</a>"
+		var/gauze_text = "\tThere is [gauze_href] wrapped around your [name]."
+		check_list += span_notice(gauze_text)
+
 	else if(can_bleed())
 		var/bleed_text = ""
 		switch(cached_bleed_rate)
@@ -1132,8 +1134,8 @@
 
 	set_can_be_disabled(initial(can_be_disabled))
 
-//Updates an organ's brute/burn states for use by update_damage_overlays()
-//Returns 1 if we need to update overlays. 0 otherwise.
+/// Updates an organ's brute/burn states for use by update_damage_overlays().
+/// Returns TRUE if state changed (IE, an update is needed)
 /obj/item/bodypart/proc/update_bodypart_damage_state()
 	SHOULD_CALL_PARENT(TRUE)
 
@@ -1144,6 +1146,50 @@
 		burnstate = tburn
 		return TRUE
 	return FALSE
+
+/// Gets overlays to apply to the mob when damaged.
+/obj/item/bodypart/proc/get_bodypart_damage_state()
+	if(!dmg_overlay_type)
+		return null
+
+	var/list/overlays
+	if(brutestate)
+		var/mutable_appearance/blood_overlay = mutable_appearance(
+			icon = 'icons/mob/effects/dam_mob.dmi',
+			icon_state = "[dmg_overlay_type]_[body_zone]_[brutestate]0",
+			layer = -DAMAGE_LAYER,
+		)
+		blood_overlay.color = owner?.get_bloodtype()?.get_damage_color(owner) || BLOOD_COLOR_RED // this should probably take from stored blood dna
+		LAZYADD(overlays, blood_overlay)
+
+		var/mutable_appearance/brute_damage_overlay = mutable_appearance(
+			icon = 'icons/mob/effects/dam_mob.dmi',
+			icon_state = "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay",
+			layer = -DAMAGE_OVERLAY_LAYER,
+			appearance_flags = RESET_COLOR,
+		)
+		LAZYADD(overlays, brute_damage_overlay)
+
+	if(burnstate)
+		var/mutable_appearance/burn_overlay = mutable_appearance(
+			icon = 'icons/mob/effects/dam_mob.dmi',
+			icon_state = "[dmg_overlay_type]_[body_zone]_0[burnstate]",
+			layer = -DAMAGE_LAYER,
+		)
+		LAZYADD(overlays, burn_overlay)
+
+	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(applied_items, LIMB_ITEM_GAUZE)
+	if(current_gauze)
+		// future todo : icon states for dirty bandages as well
+		// future todo : different color for different gauze types (med gauze is blue)
+		var/mutable_appearance/gauze_overlay = current_gauze.build_worn_icon(
+			default_layer = GAUZE_LAYER, // build_worn_icon inverts it for us
+			override_file = 'icons/mob/human/bandage.dmi',
+			override_state = current_gauze.worn_icon_state,
+		)
+		LAZYADD(overlays, gauze_overlay)
+
+	return overlays
 
 //we inform the bodypart of the changes that happened to the owner, or give it the informations from a source mob.
 //set is_creating to true if you want to change the appearance of the limb outside of mutation changes or forced changes.
@@ -1249,9 +1295,10 @@
 
 	cut_overlays()
 	var/list/standing = get_limb_icon(dropped = TRUE)
-	if(!standing.len)
+	if(!length(standing))
 		icon_state = initial(icon_state)//no overlays found, we default back to initial icon.
 		return
+
 	for(var/image/img as anything in standing)
 		img.pixel_w += px_x
 		img.pixel_z += px_y
@@ -1287,10 +1334,6 @@
 	icon_state = "" //to erase the default sprite, we're building the visual aspects of the bodypart through overlays alone.
 
 	. = list()
-	var/image_dir = null
-	if (dropped)
-		image_dir = SOUTH
-
 	// Stumps are FAKE limbs that hold the spot for REAL limbs. thusly no sprite of their own, so early return!
 	if(IS_STUMP(src))
 		SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped)
@@ -1302,74 +1345,73 @@
 		SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped)
 		return .
 
+	var/image_dir = dropped ? SOUTH : null
 	// Handles invisibility (not alpha or actual invisibility but invisibility)
 	if(is_invisible)
-		. += image(icon_invisible, "invisible_[body_zone]", -BODYPARTS_LAYER, dir = image_dir)
+		.[image(icon_invisible, "invisible_[body_zone]", -BODYPARTS_LAYER, dir = image_dir)] = NONE
 		SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped)
 		return .
 
 	// Normal non-husk handling
 	// This is the MEAT of limb icon code
-	var/used_icon = icon_greyscale
-	if(!should_draw_greyscale || !icon_greyscale)
-		used_icon = icon_static
-
-	var/used_state = "[limb_id]_[body_zone]"
-	if(is_dimorphic) // Does this type of limb have sexual dimorphism?
-		used_state = "[limb_id]_[body_zone]_[limb_gender]"
+	var/used_icon = (should_draw_greyscale && icon_greyscale) || icon_static
+	var/used_state = "[limb_id]_[body_zone][is_dimorphic ? "_[limb_gender]" : ""]"
 
 	var/image/limb = image(used_icon, used_state, -BODYPARTS_LAYER, dir = image_dir)
 	var/image/aux = null
 
 	icon_exists_or_scream(limb.icon, limb.icon_state) //Prints a stack trace on the first failure of a given iconstate.
 
-	. += limb
+	.[limb] = LIMB_OVERLAY_TEXTURED|LIMB_OVERLAY_CORE
 
 	if(aux_zone) //Hand shit
 		aux = image(limb.icon, "[limb_id]_[aux_zone]", -aux_layer, dir = image_dir)
-		. += aux
+		.[aux] = LIMB_OVERLAY_TEXTURED|LIMB_OVERLAY_CORE
 
 	if(dropped && dmg_overlay_type)
 		if(brutestate)
 			// divided into two overlays: one that gets colored and one that doesn't.
+			var/image/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay", -DAMAGE_LAYER)
+			brute_damage_overlay.appearance_flags |= RESET_COLOR
 			var/image/brute_blood_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0", -DAMAGE_LAYER, dir = SOUTH)
 			brute_blood_overlay.color = get_color_from_blood_list(blood_dna_info)
-			var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_[brutestate]0_overlay", -DAMAGE_LAYER, appearance_flags = RESET_COLOR)
-			if(brute_damage_overlay)
-				brute_blood_overlay.overlays += brute_damage_overlay
-			. += brute_blood_overlay
+			brute_blood_overlay.overlays += brute_damage_overlay
+			.[brute_blood_overlay] = NONE
 		if(burnstate)
-			. += image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, dir = SOUTH)
+			var/image/burn_damage_overlay = image('icons/mob/effects/dam_mob.dmi', "[dmg_overlay_type]_[body_zone]_0[burnstate]", -DAMAGE_LAYER, dir = SOUTH)
+			.[burn_damage_overlay] = NONE
 
 	var/atom/location = loc || owner || src
 	if(blocks_emissive != EMISSIVE_BLOCK_NONE)
 		var/mutable_appearance/limb_em_block = emissive_blocker(limb.icon, limb.icon_state, location, layer = limb.layer, alpha = limb.alpha)
 		if (dropped)
 			limb_em_block = image(limb_em_block, dir = SOUTH)
-		. += limb_em_block
+		.[limb_em_block] = LIMB_OVERLAY_META
 
 		if(aux_zone)
 			var/mutable_appearance/aux_em_block = emissive_blocker(aux.icon, aux.icon_state, location, layer = aux.layer, alpha = aux.alpha)
 			if (dropped)
 				aux_em_block = image(aux_em_block, dir = SOUTH)
-			. += aux_em_block
+			.[aux_em_block] = LIMB_OVERLAY_META
 
 	if(!is_husked && is_emissive)
 		var/mutable_appearance/limb_em = emissive_appearance(limb.icon, "[limb.icon_state]_e", location, layer = limb.layer, alpha = limb.alpha)
 		if (dropped)
 			limb_em = image(limb_em, dir = SOUTH)
-		. += limb_em
+		.[limb_em] = LIMB_OVERLAY_META
 
 		if(aux_zone)
 			var/mutable_appearance/aux_em = emissive_appearance(aux.icon, "[aux.icon_state]_e", location, layer = aux.layer, alpha = aux.alpha)
 			if (dropped)
 				aux_em = image(aux_em, dir = SOUTH)
-			. += aux_em
+			.[aux_em] = LIMB_OVERLAY_META
 
 	if(is_husked)
-		. += huskify_image(thing_to_husk = limb)
+		for(var/image/husk_image as anything in huskify_image(limb))
+			.[husk_image] = LIMB_OVERLAY_TEXTURED|LIMB_OVERLAY_CORE
 		if(aux)
-			. += huskify_image(thing_to_husk = aux)
+			for(var/image/husk_image as anything in huskify_image(aux))
+				.[husk_image] = LIMB_OVERLAY_TEXTURED|LIMB_OVERLAY_CORE
 		draw_color = is_husked == HUSKED_ZOMBIE ? zombie_color : husk_color
 	else
 		update_draw_color()
@@ -1380,22 +1422,25 @@
 			aux.color = "[draw_color]"
 
 	// No need to handle leg layering if dropped, we only face south anyways
-	if(!dropped && ((body_zone == BODY_ZONE_R_LEG) || (body_zone == BODY_ZONE_L_LEG)))
+	if(!dropped)
 		// Legs are a bit goofy in regards to layering, and we will need two images instead of one to fix that
-		var/obj/item/bodypart/leg/leg_source = src
-		for(var/image/limb_image in .)
+		for(var/generated_overlay, generated_overlay_flags in .)
+			var/list/maked_generated_overlays = handle_masking(generated_overlay)
+			if(!length(maked_generated_overlays))
+				continue
 			// Remove the old, unmasked image
-			. -= limb_image
-			// Add two masked images based on the old one
-			. += leg_source.generate_masked_leg(limb_image)
+			. -= generated_overlay
+			// Add in the new, masked images (with the same flags)
+			for(var/masked_image in maked_generated_overlays)
+				.[masked_image] = generated_overlay_flags
 
-	// Apply height to the overlays we generated so far
-	// This is done before collecting bodypart overlays so we don't apply height twice to the same overlays
-	if(!dropped && !isnull(owner))
-		for(var/image/generated_overlay as anything in .)
-			// While you may think that heads could be applied with UPPER_BODY instead of ENTIRE_BODY to save us one filter,
-			// it's more important to keep it consistent for things like getflaticon
-			owner.apply_height(generated_overlay, ENTIRE_BODY)
+		// Apply height to the overlays we generated so far
+		// This is done before collecting bodypart overlays so we don't apply height twice to the same overlays
+		if(!isnull(owner))
+			for(var/generated_overlay, generated_overlay_flags in .)
+				// While you may think that heads could be applied with UPPER_BODY instead of ENTIRE_BODY to save us one filter,
+				// it's more important to keep it consistent for things like getflaticon
+				owner.apply_height(generated_overlay, ENTIRE_BODY)
 
 	// Draw external organs like horns and frills
 	// Height is applied again in here so we can specify where the overlay is set (ie offset_location)
@@ -1403,27 +1448,34 @@
 		if(!overlay.can_draw_on_bodypart(src, owner))
 			continue
 
-		for (var/mutable_appearance/actual_overlay as anything in overlay.get_all_overlays(src))
+		for (var/actual_overlay, actual_overlay_flags in overlay.get_all_overlays(src))
 			if(dropped || isnull(owner))
-				. += image(actual_overlay, dir = SOUTH)
+				.[image(actual_overlay, dir = SOUTH)] = overlay.overlay_flags
 				continue
 
 			owner.apply_height(actual_overlay, overlay.offset_location)
-			. += actual_overlay
+			.[actual_overlay] = actual_overlay_flags
 
 	// Then texture everything at once, including bodypart overlays
 	for(var/datum/bodypart_texture/texture as anything in bodypart_textures)
 		if(!texture.can_texture_bodypart(src))
 			continue
-		for(var/image/generated_overlay as anything in .)
-			var/appearance_plane = PLANE_TO_TRUE(generated_overlay.plane)
-			if(appearance_plane != FLOAT_PLANE && appearance_plane != GAME_PLANE)
+		for(var/generated_overlay, generated_overlay_flags in .)
+			if(!(generated_overlay_flags & LIMB_OVERLAY_TEXTURED))
 				continue
 
-			texture.modify_bodypart_appearance(generated_overlay)
+			texture.modify_bodypart_appearance(generated_overlay, generated_overlay_flags)
+
+#ifndef UNIT_TESTS
+	if(PERFORM_ALL_TESTS(focus_only/bodypart_overlay_flags))
+		for(var/generated_overlay, generated_overlay_flags in .)
+			var/image/generated_overlay_real = generated_overlay
+			if(PLANE_TO_TRUE(generated_overlay_real.plane) == EMISSIVE_PLANE && !(generated_overlay_flags & LIMB_OVERLAY_META))
+				stack_trace("Emissive overlay without meta tag (icon state: [generated_overlay_real.icon_state])")
+#endif
 
 	SEND_SIGNAL(src, COMSIG_BODYPART_GET_LIMB_ICON, ., dropped)
-	return .
+	return assoc_to_keys(.)
 
 /**
  * Takes in an image and greyscales it to later be recolored to look like a husk
@@ -1753,42 +1805,6 @@
 			continue
 		LAZYREMOVE(applied_items, category)
 		SEND_SIGNAL(gone, COMSIG_ITEM_UNAPPLIED_FROM_LIMB, src)
-
-/**
- * Get how splinted this bodypart is based on applied items
- *
- * Multiplier applied to maluses, so lower = better
- */
-/obj/item/bodypart/proc/get_splint_factor()
-	var/factor = 1
-	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(applied_items, LIMB_ITEM_GAUZE)
-	if(current_gauze)
-		factor *= current_gauze.splint_factor
-	return factor
-
-/// Returns TRUE if the limb is splinted with gauze or tape with an effective splint factor
-/obj/item/bodypart/proc/is_splinted()
-	return get_splint_factor() < 1
-
-/**
- * Attempts to use up some of gauze applied
- * If we use up all of the gauze, it is deleted
- *
- * Arguments:
- * * seep_amt - How much absorption capacity we're removing from our current bandages (think, how much blood or pus are we soaking up this tick?)
- *
- * Return TRUE if we successfully used up some gauze
- * Return FALSE if we had no gauze to use up
- */
-/obj/item/bodypart/proc/seep_gauze(seep_amt = 0)
-	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(applied_items, LIMB_ITEM_GAUZE)
-	if(!current_gauze || !current_gauze.absorption_capacity)
-		return FALSE
-	current_gauze.absorption_capacity -= seep_amt
-	if(current_gauze.absorption_capacity <= 0)
-		owner.visible_message(span_danger("\The [current_gauze.name] on [owner]'s [name] falls away in rags."), span_warning("\The [current_gauze.name] on your [name] falls away in rags."), vision_distance=COMBAT_MESSAGE_RANGE)
-		qdel(current_gauze)
-	return TRUE
 
 ///A multi-purpose setter for all things immediately important to the icon and iconstate of the limb.
 /obj/item/bodypart/proc/change_appearance(icon, id, greyscale, dimorphic)
