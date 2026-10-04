@@ -2027,7 +2027,7 @@
 		return
 	if(owner.buckled || owner.pulledby)
 		return
-	if((owner.body_position == LYING_DOWN) || (owner.movement_type & MOVETYPES_NOT_TOUCHING_GROUND) || (owner.move_intent == MOVE_INTENT_WALK))
+	if((owner.body_position == LYING_DOWN) || (owner.movement_type & (FLYING|FLOATING)) || (owner.move_intent == MOVE_INTENT_WALK))
 		return
 
 	if(prob(5))
