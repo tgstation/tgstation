@@ -43,6 +43,11 @@
 	if(ishuman(new_owner))
 		var/mob/living/carbon/human/humie = new_owner
 		humie.update_mob_height()
+		RegisterSignal(src, COMSIG_BODYPART_UPDATING_SURGERY_STATE, PROC_REF(on_surgery_state_change))
+
+/obj/item/bodypart/chest/clear_ownership(mob/living/carbon/old_owner)
+	. = ..()
+	UnregisterSignal(src, COMSIG_BODYPART_UPDATING_SURGERY_STATE)
 
 /obj/item/bodypart/chest/get_butcher_drops()
 	. = ..()

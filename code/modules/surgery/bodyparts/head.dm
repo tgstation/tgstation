@@ -99,6 +99,14 @@
 	QDEL_NULL(worn_face_offset)
 	return ..()
 
+/obj/item/bodypart/head/apply_ownership(mob/living/carbon/new_owner)
+	. = ..()
+	RegisterSignal(src, COMSIG_BODYPART_UPDATING_SURGERY_STATE, PROC_REF(on_surgery_state_change))
+
+/obj/item/bodypart/head/clear_ownership(mob/living/carbon/old_owner)
+	. = ..()
+	UnregisterSignal(src, COMSIG_BODYPART_UPDATING_SURGERY_STATE)
+
 /obj/item/bodypart/head/get_butcher_drops()
 	. = ..()
 	var/datum/species/species = GLOB.species_list[species_id || limb_id]
