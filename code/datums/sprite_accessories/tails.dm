@@ -81,6 +81,15 @@
 	icon_state = "default"
 	color_src = FALSE
 
+/datum/sprite_accessory/tails/mouse
+	icon_state = "mouse"
+	color_src = NONE
+	locked = TRUE
+
+/datum/sprite_accessory/tails/mouse/default
+	name = "Mouse"
+	icon = 'icons/mob/human/mouse_features.dmi'
+
 /datum/sprite_accessory/tails/xeno
 	icon_state = "default"
 	color_src = FALSE

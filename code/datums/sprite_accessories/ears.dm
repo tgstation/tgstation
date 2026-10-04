@@ -38,3 +38,10 @@
 	icon_state = "fox"
 	color_src = HAIR_COLOR
 	locked = TRUE
+
+/datum/sprite_accessory/ears/mouse
+	icon = 'icons/mob/human/mouse_features.dmi'
+	name = "Mouse"
+	icon_state = "mouse"
+	color_src = HAIR_COLOR
+	locked = TRUE
