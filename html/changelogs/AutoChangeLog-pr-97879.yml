@@ -1,6 +1,0 @@
-author: "timothymtorres"
-delete-after: True
-changes:
-  - rscadd: "Add toxic and radioactive effects to breathing Antinoblium."
-  - balance: "Breathing harmful gases causes lung damage. (scales with partial pressure)"
-  - balance: "Plasmamen breathing oxygen now causes TOXIN damage."
