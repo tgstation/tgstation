@@ -38,6 +38,9 @@ SUBSYSTEM_DEF(lighting)
 			for(var/turf/area_turf as anything in zlevel_turfs)
 				if(area_turf.space_lit)
 					continue
+				var/atom/movable/lighting_object/existing_object = area_turf.lighting_object
+				if(!QDELETED(existing_object) && existing_object.affected_turf == area_turf)
+					continue
 				new /atom/movable/lighting_object(null, area_turf)
 			CHECK_TICK
 		CHECK_TICK
