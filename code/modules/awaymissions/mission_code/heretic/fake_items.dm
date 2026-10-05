@@ -19,7 +19,7 @@
 	anchored = 1
 
 /obj/item/fake_items/time_stopper
-	name = "MOD timestopper module"
+	name = "\improper MOD timestopper module"
 	desc = "A module that can halt time in a small radius around the user... for as long as they \
 			want! Great for monologues or lunch breaks. Keep in mind moving will end the stop, and the \
 			module has a hefty cooldown period to avoid reality errors."

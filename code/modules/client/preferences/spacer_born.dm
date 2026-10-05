@@ -16,5 +16,5 @@
 	associated_typepath = /datum/quirk/spacer_born
 	customization_options = list(/datum/preference/choiced/spacer_height)
 
-/datum/preference/choiced/spacer_height/apply_to_human(mob/living/carbon/human/target, value)
+/datum/preference/choiced/spacer_height/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return

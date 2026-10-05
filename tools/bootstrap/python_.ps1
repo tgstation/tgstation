@@ -11,6 +11,8 @@
 # regardless of ExecutionPolicy.
 $host.ui.RawUI.WindowTitle = "starting :: python $args"
 $ErrorActionPreference = "Stop"
+# stupid fucking workaround for powershell 5 vs 7 bullshit.
+$Env:PSModulePath = "$Env:ProgramFiles\WindowsPowerShell\Modules;$PSHOME\Modules"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 

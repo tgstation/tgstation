@@ -123,6 +123,12 @@ if $grep '^\t+ [^ *]' "${code_files[@]}"; then
 	echo -e "${RED}ERROR: Mixed <tab><space> indentation detected, please stick to tab indentation.${NC}"
 	st=1
 fi;
+part "CRLF line endings"
+if $grep -l '\r' "${code_files[@]}"; then
+	echo
+	echo -e "${RED}ERROR: File(s) with CRLF line endings detected, convert line endings to LF with 'git add --renormalize <file>' and re-commit.${NC}"
+	st=1
+fi;
 
 section "unit tests"
 unit_test_files="code/modules/unit_tests/**/**.dm"

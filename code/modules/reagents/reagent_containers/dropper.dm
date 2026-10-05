@@ -63,6 +63,7 @@
 		trans = round(reagents.trans_to(target, amount_per_transfer_from_this, transferred_by = user), CHEMICAL_VOLUME_ROUNDING)
 		if(trans)
 			to_chat(user, span_notice("You transfer [trans] unit\s of the solution."))
+		playsound(src, 'sound/effects/droplet.ogg', 70, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		update_appearance()
 		target.update_appearance()
 		return ITEM_INTERACT_SUCCESS

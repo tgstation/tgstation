@@ -140,3 +140,20 @@
 		return ITEM_INTERACT_BLOCKING
 
 	return ..()
+
+// Chasm produced by the Pride ruin. Leads to a random space Z-level at the same x/y coordinate.
+/turf/open/chasm/pride
+	desc = "It's beautiful down there, dotted with pinpricks of light."
+	baseturfs = /turf/open/chasm/pride
+	light_color = COLOR_STARLIGHT
+	light_range = 1.9
+	light_power = 0.65
+
+/turf/open/chasm/pride/apply_components(mapload)
+	var/list/levels = SSmapping.levels_by_trait(ZTRAIT_SPACE_RUINS)
+	var/turf/space_turf
+	if(length(levels))
+		space_turf = locate(src.x, src.y, pick(levels))
+
+	AddComponent(/datum/component/chasm, space_turf, mapload)
+

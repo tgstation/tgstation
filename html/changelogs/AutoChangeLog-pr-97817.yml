@@ -1,0 +1,4 @@
+author: "Ben10Omintrix"
+delete-after: True
+changes:
+  - balance: "cowardly raptors now flee at 50% health as opposed to fleeing immediately when attacked"

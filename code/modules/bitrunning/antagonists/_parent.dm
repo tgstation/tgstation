@@ -1,5 +1,6 @@
 /datum/job/bitrunning_glitch
 	title = ROLE_GLITCH
+	tgui_icon = FA_ICON_QRCODE
 
 /datum/antagonist/bitrunning_glitch
 	name = "Generic Bitrunning Glitch"

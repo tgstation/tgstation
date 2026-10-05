@@ -51,6 +51,7 @@
 	if(fishing_modifier)
 		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
 	add_stabilizer()
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_HEAD, /datum/bodypart_texture/mesh/space)
 
 /obj/item/clothing/head/helmet/space/proc/add_stabilizer(loose_hat = TRUE)
 	AddComponent(/datum/component/hat_stabilizer, loose_hat = loose_hat)
@@ -131,6 +132,7 @@
 
 	if(fishing_modifier)
 		AddElement(/datum/element/adjust_fishing_difficulty, fishing_modifier)
+	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/space)
 
 /obj/item/clothing/suit/space/on_outfit_equip(mob/living/carbon/human/outfit_wearer, visuals_only, item_slot)
 	. = ..()

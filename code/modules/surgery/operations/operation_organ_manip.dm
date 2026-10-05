@@ -21,12 +21,23 @@
 	/// Implements used to insert organs
 	var/list/insert_implements = list(
 		/obj/item/organ = 1,
+		/obj/item/food = 2,
+		/obj/item/grown = 2,
 	)
 	/// Implements used to remove organs
 	var/list/remove_implements = list(
 		TOOL_HEMOSTAT = 1,
 		TOOL_CROWBAR = 1.8,
 		/obj/item/kitchen/fork = 2.85,
+	)
+	/// List of organ typepaths we can instantiate as fake dummy organs for insertion
+	var/list/random_item_organ_pool = list(
+		/obj/item/organ/appendix,
+		/obj/item/organ/brain,
+		/obj/item/organ/heart,
+		/obj/item/organ/liver,
+		/obj/item/organ/lungs,
+		/obj/item/organ/stomach,
 	)
 
 /datum/surgery_operation/limb/organ_manipulation/New()
@@ -81,7 +92,28 @@
 	return length(get_removable_organs(limb, operated_zone)) > 0
 
 /// Check if inserting an organ is possible
-/datum/surgery_operation/limb/organ_manipulation/proc/is_insert_available(obj/item/bodypart/limb, obj/item/organ/organ, operated_zone)
+/datum/surgery_operation/limb/organ_manipulation/proc/is_insert_available(obj/item/bodypart/limb, obj/item/tool, operated_zone)
+	// Handling the case  of arbitrary items as organs
+	if(!isorgan(tool))
+		if(!LAZYLEN(random_item_organ_pool))
+			return FALSE
+		if(tool.w_class >= WEIGHT_CLASS_NORMAL)
+			return FALSE
+		if(tool.item_flags & (ABSTRACT|DROPDEL|HAND_ITEM))
+			return FALSE
+		if(limb.body_zone != deprecise_zone(operated_zone))
+			return FALSE
+		// Iterate over the organs we can have insert as dummy organs and check if any are applicable here
+		var/list/organ_pool = LAZYCOPY(random_item_organ_pool)
+		for(var/obj/item/organ/option as anything in organ_pool)
+			if(option::zone != operated_zone || (locate(option) in limb))
+				LAZYREMOVE(organ_pool, option)
+				continue
+
+		return LAZYLEN(organ_pool) > 0
+
+	// Normal organ insertion handling
+	var/obj/item/organ/organ = tool
 	if(!organ_check(limb, organ) || (organ.organ_flags & ORGAN_UNUSABLE))
 		return FALSE
 
@@ -94,29 +126,34 @@
 
 	return TRUE
 
+/datum/surgery_operation/limb/organ_manipulation/proc/is_inserting(obj/item/tool)
+	return is_type_in_list(tool, insert_implements)
+
 /datum/surgery_operation/limb/organ_manipulation/snowflake_check_availability(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, operated_zone)
-	return isorgan(tool) ? is_insert_available(limb, tool, operated_zone) : is_remove_available(limb, operated_zone)
+	return is_inserting(tool) ? is_insert_available(limb, tool, operated_zone) : is_remove_available(limb, operated_zone)
 
 /datum/surgery_operation/limb/organ_manipulation/get_radial_options(obj/item/bodypart/limb, obj/item/tool, operating_zone)
-	return isorgan(tool) ? get_insert_options(limb, tool, operating_zone) : get_remove_options(limb, operating_zone)
+	return is_inserting(tool) ? get_insert_options(limb, tool, operating_zone) : get_remove_options(limb, operating_zone)
 
 /datum/surgery_operation/limb/organ_manipulation/proc/get_remove_options(obj/item/bodypart/limb, operating_zone)
 	var/list/options = list()
 	for(var/obj/item/organ/organ as anything in get_removable_organs(limb, operating_zone))
-		var/datum/radial_menu_choice/option = LAZYACCESS(cached_organ_manipulation_options, "[organ.type]_remove")
+		var/obj/item/actually_removing = (organ.organ_flags & ORGAN_FAKE) ? organ.contents[1].type : organ.type
+		var/remove_key = "[actually_removing.type]_remove"
+		var/datum/radial_menu_choice/option = LAZYACCESS(cached_organ_manipulation_options, remove_key)
 		if(!option)
 			option = new()
 			option.image = image('icons/hud/surgery_radial.dmi', "base")
-			option.image.overlays += add_radial_overlays(organ.type)
-			option.name = "remove [initial(organ.name)]"
-			option.info = "Remove [initial(organ.name)] from the [limb.owner ? "patient" : "limb"]."
-			LAZYSET(cached_organ_manipulation_options, "[organ.type]_remove", option)
+			option.image.overlays += add_radial_overlays(actually_removing.type)
+			option.name = "remove [initial(actually_removing.name)]"
+			option.info = "Remove [initial(actually_removing.name)] from the [limb.owner ? "patient" : "limb"]."
+			LAZYSET(cached_organ_manipulation_options, remove_key, option)
 
 		options[option] = list("[OPERATION_ACTION]" = "remove", "[OPERATION_REMOVED_ORGAN]" = organ)
 
 	return options
 
-/datum/surgery_operation/limb/organ_manipulation/proc/get_insert_options(obj/item/bodypart/limb, obj/item/organ/organ)
+/datum/surgery_operation/limb/organ_manipulation/proc/get_insert_options(obj/item/bodypart/limb, obj/item/organ)
 	var/datum/radial_menu_choice/option = LAZYACCESS(cached_organ_manipulation_options, "[organ.type]_insert")
 	if(!option)
 		option = new()
@@ -139,24 +176,23 @@
 			var/obj/item/organ/organ = operation_args[OPERATION_REMOVED_ORGAN]
 			if(QDELETED(organ) || !(organ in limb))
 				return FALSE
+
 		if("insert")
-			var/obj/item/organ/organ = tool
-			for(var/obj/item/organ/existing_organ in limb)
-				if(existing_organ.slot == organ.slot)
-					return FALSE
+			if(!is_insert_available(limb, tool, operation_args[OPERATION_TARGET_ZONE]))
+				return FALSE
 
 	return TRUE
 
 /datum/surgery_operation/limb/organ_manipulation/on_preop(obj/item/bodypart/limb, mob/living/surgeon, obj/item/tool, list/operation_args)
 	switch(operation_args[OPERATION_ACTION])
 		if("remove")
-			var/obj/item/organ = operation_args[OPERATION_REMOVED_ORGAN]
+			var/obj/item/organ/organ = operation_args[OPERATION_REMOVED_ORGAN]
 			play_operation_sound(limb, surgeon, tool, remove_preop_sound)
 			display_results(
 				surgeon,
 				limb.owner,
-				span_notice("You begin to remove [organ.name] from [FORMAT_LIMB_OWNER(limb)]..."),
-				span_notice("[surgeon] begins to remove [organ.name] from [limb.owner || limb]."),
+				span_notice("You begin to remove [organ] from [FORMAT_LIMB_OWNER(limb)]..."),
+				span_notice("[surgeon] begins to remove [organ] from [limb.owner || limb]."),
 				span_notice("[surgeon] begins to remove something from [limb.owner || limb]."),
 			)
 			display_pain(limb.owner, "You feel a tugging sensation in your [limb.plaintext_zone]!")
@@ -165,8 +201,8 @@
 			display_results(
 				surgeon,
 				limb.owner,
-				span_notice("You begin to insert [tool.name] into [FORMAT_LIMB_OWNER(limb)]..."),
-				span_notice("[surgeon] begins to insert [tool.name] into [limb.owner || limb]."),
+				span_notice("You begin to insert [tool] into [FORMAT_LIMB_OWNER(limb)]..."),
+				span_notice("[surgeon] begins to insert [isorgan(tool) ? tool.name : tool] into [limb.owner || limb]."),
 				span_notice("[surgeon] begins to insert something into [limb.owner || limb]."),
 			)
 			display_pain(limb.owner, "You can feel something being placed in your [limb.plaintext_zone]!")
@@ -178,7 +214,7 @@
 			on_success_remove_organ(limb, surgeon, operation_args[OPERATION_REMOVED_ORGAN], tool)
 		if("insert")
 			play_operation_sound(limb, surgeon, tool, insert_success_sound)
-			on_success_insert_organ(limb, surgeon, tool)
+			on_success_insert_organ(limb, surgeon, operation_args[OPERATION_TARGET_ZONE], tool)
 	if(HAS_MIND_TRAIT(surgeon, TRAIT_MORBID))
 		surgeon.add_mood_event("morbid_abominable_surgery_success", /datum/mood_event/morbid_abominable_surgery_success)
 
@@ -186,8 +222,8 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully extract [organ.name] from [FORMAT_LIMB_OWNER(limb)]."),
-		span_notice("[surgeon] successfully extracts [organ.name] from [FORMAT_LIMB_OWNER(limb)]!"),
+		span_notice("You successfully extract [organ] from [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] successfully extracts [organ] from [FORMAT_LIMB_OWNER(limb)]!"),
 		span_notice("[surgeon] successfully extracts something from [FORMAT_LIMB_OWNER(limb)]!"),
 	)
 	display_pain(limb.owner, "Your [limb.plaintext_zone] throbs with pain, you can't feel your [organ.name] anymore!")
@@ -196,11 +232,27 @@
 		organ.Remove(limb.owner)
 	else
 		organ.bodypart_remove(limb)
-	organ.forceMove(limb.owner ? limb.owner.drop_location() : limb.drop_location())
+	organ.forceMove(limb.owner?.drop_location() || limb.drop_location())
 	organ.on_surgical_removal(surgeon, limb, tool)
 
-/datum/surgery_operation/limb/organ_manipulation/proc/on_success_insert_organ(obj/item/bodypart/limb, mob/living/surgeon, obj/item/organ/organ)
-	surgeon.temporarilyRemoveItemFromInventory(organ, TRUE)
+/datum/surgery_operation/limb/organ_manipulation/proc/on_success_insert_organ(obj/item/bodypart/limb, mob/living/surgeon, operated_zone, obj/item/tool)
+	var/obj/item/organ/organ
+	if(isorgan(tool))
+		organ = tool
+
+	else
+		for(var/obj/item/organ/option as anything in shuffle(random_item_organ_pool))
+			if(option::zone == operated_zone && !(locate(option) in limb))
+				organ = new option()
+				surgeon.temporarilyRemoveItemFromInventory(tool, TRUE)
+				organ.AddComponent(/datum/component/arbitrary_item_organ, tool)
+				break
+
+	if(isnull(organ))
+		CRASH("Somehow failed to find a valid organ to insert (inserting: [tool || "null"])")
+
+	if(organ.loc == surgeon)
+		surgeon.temporarilyRemoveItemFromInventory(organ, TRUE)
 	organ.pre_surgical_insertion(surgeon, limb, limb.body_zone)
 	if (limb.owner)
 		organ.Insert(limb.owner)
@@ -210,8 +262,8 @@
 	display_results(
 		surgeon,
 		limb.owner,
-		span_notice("You successfully insert [organ.name] into [FORMAT_LIMB_OWNER(limb)]."),
-		span_notice("[surgeon] successfully inserts [organ.name] into [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("You successfully insert [tool] into [FORMAT_LIMB_OWNER(limb)]."),
+		span_notice("[surgeon] successfully inserts [tool] into [FORMAT_LIMB_OWNER(limb)]."),
 		span_notice("[surgeon] successfully inserts something into [FORMAT_LIMB_OWNER(limb)]."),
 	)
 	display_pain(limb.owner, "Your [limb.plaintext_zone] throbs with pain as your new [organ.name] comes to life!")
@@ -266,6 +318,7 @@
 	replaced_by = /datum/surgery_operation/limb/organ_manipulation/external/abductor
 	all_surgery_states_required = SURGERY_SKIN_OPEN|SURGERY_BONE_SAWED
 	any_surgery_states_blocked = SURGERY_VESSELS_UNCLAMPED
+	random_item_organ_pool = null
 
 /datum/surgery_operation/limb/organ_manipulation/external/organ_check(obj/item/bodypart/limb, obj/item/organ/organ)
 	return (organ.organ_flags & ORGAN_EXTERNAL)

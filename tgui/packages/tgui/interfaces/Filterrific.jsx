@@ -324,7 +324,7 @@ const FilterMatrixEntry = (props) => {
               {matrix_row.map((matrix_elem, elem_index) => (
                 <Stack.Item key={elem_index}>
                   <NumberInput
-                    value={matrix[row_index * row_width + elem_index]}
+                    value={matrix[row_index * row_width + elem_index] || 0}
                     minValue={-4}
                     maxValue={4}
                     step={0.01}

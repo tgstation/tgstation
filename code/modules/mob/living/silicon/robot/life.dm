@@ -34,7 +34,7 @@
 
 	update_cell_hud_icon()
 
-/mob/living/silicon/robot/update_health_hud()
+/mob/living/silicon/robot/update_health_hud(healthpercent)
 	if(!client || !hud_used)
 		return
 

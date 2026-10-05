@@ -6,7 +6,7 @@
 	friendly_verb_simple = "quietly assess"
 	melee_damage_lower = 10
 	melee_damage_upper = 10
-	damage_coeff = list(BRUTE = 0.9, BURN = 0.9, TOX = 0.9, STAMINA = 0, OXY = 0.9)
+	physiology = list(BRUTE = 0.9, BURN = 0.9, TOX = 0.9, OXY = 0.9, STAMINA = 0)
 	range = 13
 	playstyle_string = span_holoparasite("As a <b>ranged</b> type, you have only light damage resistance, but are capable of spraying shards of crystal at incredibly high speed. You can also deploy surveillance snares to monitor enemy movement. Finally, you can switch to scout mode, in which you can't attack, but can move without limit.")
 	creator_name = "Ranged"
@@ -14,6 +14,7 @@
 	creator_icon = "ranged"
 	see_invisible = SEE_INVISIBLE_LIVING
 	toggle_button_type = /datum/action/cooldown/guardian/toggle_mode
+	var/current_sight_mode = LIGHTING_CUTOFF_VISIBLE
 
 /mob/living/basic/guardian/ranged/Initialize(mapload, datum/guardian_fluff/theme)
 	. = ..()
@@ -38,16 +39,18 @@
 
 /mob/living/basic/guardian/ranged/toggle_light()
 	var/msg
-	switch(lighting_cutoff)
+	switch(current_sight_mode)
 		if (LIGHTING_CUTOFF_VISIBLE)
 			lighting_cutoff_red = 10
 			lighting_cutoff_green = 10
 			lighting_cutoff_blue = 15
+			current_sight_mode = LIGHTING_CUTOFF_MEDIUM
 			msg = "You activate your night vision."
 		if (LIGHTING_CUTOFF_MEDIUM)
 			lighting_cutoff_red = 25
 			lighting_cutoff_green = 25
 			lighting_cutoff_blue = 35
+			current_sight_mode = LIGHTING_CUTOFF_HIGH
 			msg = "You increase your night vision."
 		if (LIGHTING_CUTOFF_HIGH)
 			lighting_cutoff_red = 35
@@ -58,8 +61,9 @@
 			lighting_cutoff_red = 0
 			lighting_cutoff_green = 0
 			lighting_cutoff_blue = 0
+			current_sight_mode = LIGHTING_CUTOFF_VISIBLE
 			msg = "You deactivate your night vision."
-	sync_lighting_plane_cutoff()
+	update_sight()
 	to_chat(src, span_notice(msg))
 
 /// Become an incorporeal scout

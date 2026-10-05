@@ -10,80 +10,135 @@ jobs:
 
     steps:
       - uses: actions/checkout@v7
-      - name: Restore SpacemanDMM cache
-        uses: actions/cache@v6
-        with:
-          path: ~/SpacemanDMM
-          key: ${{ runner.os }}-spacemandmm-${{ hashFiles('dependencies.sh') }}
-          restore-keys: |
-            ${{ runner.os }}-spacemandmm-
-      - name: Setup Bun
-        uses: ./.github/actions/setup_bun
-      - name: Restore Bootstrap cache
-        uses: actions/cache@v6
-        with:
-          path: tools/bootstrap/.cache
-          key: ${{ runner.os }}-bootstrap-${{ hashFiles('/tools/requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-bootstrap-
-      - name: Restore Rust cache
-        uses: actions/cache@v6
-        with:
-          path: ~/.cargo
-          key: ${{ runner.os }}-rust-${{ hashFiles('/tools/ci/ci_dependencies.sh')}}
-          restore-keys: |
-            ${{ runner.os }}-rust-
-      - name: Restore Cutter cache
-        uses: actions/cache@v6
-        with:
-          path: tools/icon_cutter/cache
-          key: ${{ runner.os }}-cutter-${{ hashFiles('dependencies.sh') }}
-      - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v6
-        with:
-          dotnet-version: 9.x
-      - name: Install OpenDream
-        uses: robinraju/release-downloader@v1.13
-        with:
-          repository: "OpenDreamProject/OpenDream"
-          tag: "latest"
-          fileName: "DMCompiler_linux-x64.tar.gz"
-          extract: true
-      - name: Install Tools
-        run: |
-          pip3 install setuptools
-          bash tools/ci/install_spaceman_dmm.sh dreamchecker
-          bash tools/ci/install_ripgrep.sh
-          tools/bootstrap/python -c ''
-      - name: Give Linters A Go
-        id: linter-setup
-        run: ":"
+
+      # Grab pre-requisites
+      - parallel:
+        - name: Restore SpacemanDMM cache
+          uses: actions/cache@v6
+          with:
+            path: ~/SpacemanDMM
+            key: ${{ runner.os }}-spacemandmm-${{ hashFiles('dependencies.sh') }}
+            restore-keys: |
+              ${{ runner.os }}-spacemandmm-
+
+        - name: Setup Bun
+          uses: ./.github/actions/setup_bun
+
+        - name: Restore Bootstrap cache
+          uses: actions/cache@v6
+          with:
+            path: tools/bootstrap/.cache
+            key: ${{ runner.os }}-bootstrap-${{ hashFiles('/tools/requirements.txt') }}
+            restore-keys: |
+              ${{ runner.os }}-bootstrap-
+
+        - name: Restore Rust cache
+          uses: actions/cache@v6
+          with:
+            path: ~/.cargo
+            key: ${{ runner.os }}-rust-${{ hashFiles('/tools/ci/ci_dependencies.sh')}}
+            restore-keys: |
+              ${{ runner.os }}-rust-
+
+        - name: Restore Cutter cache
+          uses: actions/cache@v6
+          with:
+            path: tools/icon_cutter/cache
+            key: ${{ runner.os }}-cutter-${{ hashFiles('dependencies.sh') }}
+
+        - name: Setup .NET SDK
+          uses: actions/setup-dotnet@v6
+          with:
+            dotnet-version: 9.x
+
+        - name: Install OpenDream
+          uses: robinraju/release-downloader@v1.13
+          with:
+            repository: "OpenDreamProject/OpenDream"
+            tag: "latest"
+            fileName: "DMCompiler_linux-x64.tar.gz"
+            extract: true
+
+        - name: Install tools
+          run: |
+            pip3 install setuptools
+            bash tools/ci/install_spaceman_dmm.sh dreamchecker
+            bash tools/ci/install_ripgrep.sh
+            tools/bootstrap/python -c ''
+
+      # Actually run the checks
       - name: Ensure genesis_call.dme is unchanged
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+        if: ${{ !cancelled() }}
+        background: true
         run: bash tools/ci/check_genesis.sh
-      - name: Run Grep Checks
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+
+      - name: Run grep checks
+        if: ${{ !cancelled() }}
+        background: true
         run: bash tools/ci/check_grep.sh
-      - name: Ticked File Enforcement
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+
+      - name: Ticked file enforcement
+        if: ${{ !cancelled() }}
+        background: true
         run: |
           tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/tgstation_dme.json
           tools/bootstrap/python tools/ticked_file_enforcement/ticked_file_enforcement.py < tools/ticked_file_enforcement/schemas/unit_tests.json
-      - name: Check Define Sanity
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+
+      - name: Check define sanity
+        if: ${{ !cancelled() }}
+        background: true
         run: tools/bootstrap/python -m define_sanity.check
-      - name: Check Trait Validity
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+
+      - name: Check trait validity
+        if: ${{ !cancelled() }}
+        background: true
         run: tools/bootstrap/python -m trait_validity.check
+
       - name: Run DreamChecker
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+        if: ${{ !cancelled() }}
+        background: true
         shell: bash
         run: ~/dreamchecker 2>&1 | bash tools/ci/annotate_dm.sh
+
       - name: Run OpenDream
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
+        if: ${{ !cancelled() }}
+        background: true
         run: ./DMCompiler_linux-x64/DMCompiler tgstation.dme --suppress-unimplemented --define=CIBUILDING | bash tools/ci/annotate_od.sh
-      - name: Check for Map & Maplint File Edits
+
+      - name: Check Icon Cutter
+        if: ${{ !cancelled() }}
+        background: true
+        run: tools/bootstrap/python -m tools.icon_cutter.check
+
+      - name: Run DMI tests
+        if: ${{ !cancelled() }}
+        background: true
+        run: tools/bootstrap/python -m dmi.test
+
+      - name: Check file directories
+        if: ${{ !cancelled() }}
+        background: true
+        run: bash tools/ci/check_filedirs.sh tgstation.dme
+
+      - name: Check changelogs
+        if: ${{ !cancelled() }}
+        background: true
+        run: bash tools/ci/check_changelogs.sh
+
+      - name: Check miscellaneous files
+        if: ${{ !cancelled() }}
+        background: true
+        run: bash tools/ci/check_misc.sh
+
+      - name: Run TGUI checks
+        if: ${{ !cancelled() }}
+        background: true
+        run: tools/build/build.sh --ci lint tgui-test
+
+      - name: Check for map and/or maplint file edits
         id: map-filter
+        if: ${{ !cancelled() }}
+        background: true
         uses: dorny/paths-filter@v4
         with:
           list-files: shell
@@ -94,8 +149,11 @@ jobs:
             map_edits:
               - '**.dmm'
 
-      - name: Run Map Checks
-        if: steps.linter-setup.conclusion == 'success' && !cancelled() && (steps.map-filter.outputs.tool_edits == 'true' || steps.map-filter.outputs.map_edits == 'true')
+      - name: Wait for map screener
+        wait: map-filter
+
+      - name: Run map checks
+        if: ${{ !cancelled() && (steps.map-filter.outputs.tool_edits == 'true' || steps.map-filter.outputs.map_edits == 'true') }}
         run: |
           if [ "${{ steps.map-filter.outputs.tool_edits }}" = "true" ]; then
             MAPS=$(find . -type f -name "*.dmm")
@@ -105,21 +163,3 @@ jobs:
 
           tools/bootstrap/python -m mapmerge2.dmm_test $MAPS
           tools/bootstrap/python -m tools.maplint.source $MAPS
-      - name: Check Cutter
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: tools/bootstrap/python -m tools.icon_cutter.check
-      - name: Run DMI Tests
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: tools/bootstrap/python -m dmi.test
-      - name: Check File Directories
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: bash tools/ci/check_filedirs.sh tgstation.dme
-      - name: Check Changelogs
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: bash tools/ci/check_changelogs.sh
-      - name: Check Miscellaneous Files
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: bash tools/ci/check_misc.sh
-      - name: Run TGUI Checks
-        if: steps.linter-setup.conclusion == 'success' && !cancelled()
-        run: tools/build/build.sh --ci lint tgui-test

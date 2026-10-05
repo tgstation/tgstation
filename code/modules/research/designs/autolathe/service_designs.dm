@@ -1,6 +1,5 @@
 /datum/design/bucket
 	name = "Bucket"
-	id = "bucket"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/reagent_containers/cup/bucket
@@ -12,7 +11,6 @@
 
 /datum/design/wet_floor_sign
 	name = "Wet Floor Sign"
-	id = "wet_floor_sign"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/clothing/suit/caution
@@ -24,7 +22,6 @@
 
 /datum/design/watering_can
 	name = "Watering Can"
-	id = "watering_can"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/reagent_containers/cup/watering_can
@@ -36,7 +33,6 @@
 
 /datum/design/mop
 	name = "Mop"
-	id = "mop"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/mop
@@ -48,7 +44,6 @@
 
 /datum/design/broom
 	name = "Push Broom"
-	id = "pushbroom"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/pushbroom
@@ -60,7 +55,6 @@
 
 /datum/design/camera
 	name = "Camera"
-	id = "camera"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/camera
@@ -72,7 +66,6 @@
 
 /datum/design/camera_film
 	name = "Camera Film Cartridge"
-	id = "camera_film"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.1, /datum/material/glass = SMALL_MATERIAL_AMOUNT*0.1)
 	build_path = /obj/item/camera_film
@@ -84,7 +77,6 @@
 
 /datum/design/kitchen_knife
 	name = "Kitchen Knife"
-	id = "kitchen_knife"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*6)
 	build_path = /obj/item/knife/kitchen
@@ -96,7 +88,6 @@
 
 /datum/design/plastic_knife
 	name = "Plastic Knife"
-	id = "plastic_knife"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/knife/plastic
@@ -108,7 +99,6 @@
 
 /datum/design/fork
 	name = "Fork"
-	id = "fork"
 	build_type =  AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/kitchen/fork
@@ -120,7 +110,6 @@
 
 /datum/design/plastic_fork
 	name = "Plastic Fork"
-	id = "plastic_fork"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/kitchen/fork/plastic
@@ -132,7 +121,6 @@
 
 /datum/design/spoon
 	name = "Spoon"
-	id = "spoon"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*1.2)
 	build_path = /obj/item/kitchen/spoon
@@ -144,7 +132,6 @@
 
 /datum/design/plastic_spoon
 	name = "Plastic Spoon"
-	id = "plastic_spoon"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT*1.2)
 	build_path = /obj/item/kitchen/spoon/plastic
@@ -156,7 +143,6 @@
 
 /datum/design/tongs
 	name = "Tongs"
-	id = "tongs"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/kitchen/tongs
@@ -168,7 +154,6 @@
 
 /datum/design/tray
 	name = "Serving Tray"
-	id = "servingtray"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/storage/bag/tray
@@ -180,7 +165,6 @@
 
 /datum/design/plate
 	name = "Plate"
-	id = "plate"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.5)
 	build_path = /obj/item/plate/iron
@@ -192,7 +176,6 @@
 
 /datum/design/cafeteria_tray
 	name = "Cafeteria Tray"
-	id = "foodtray"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 1.5)
 	build_path = /obj/item/storage/bag/tray/cafeteria
@@ -204,7 +187,6 @@
 
 /datum/design/bowl
 	name = "Bowl"
-	id = "bowl"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
@@ -216,7 +198,6 @@
 
 /datum/design/drinking_glass
 	name = "Drinking Glass"
-	id = "drinking_glass"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
@@ -228,7 +209,6 @@
 
 /datum/design/shot_glass
 	name = "Shot Glass"
-	id = "shot_glass"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
@@ -240,7 +220,6 @@
 
 /datum/design/shaker
 	name = "Shaker"
-	id = "shaker"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =HALF_SHEET_MATERIAL_AMOUNT * 1.5)
 	category = list(RND_CATEGORY_INITIAL, RND_CATEGORY_EQUIPMENT)
@@ -252,7 +231,6 @@
 
 /datum/design/cultivator
 	name = "Cultivator"
-	id = "cultivator"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/cultivator
@@ -264,7 +242,6 @@
 
 /datum/design/plant_analyzer
 	name = "Plant Analyzer"
-	id = "plant_analyzer"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
 	build_path = /obj/item/plant_analyzer
@@ -276,7 +253,6 @@
 
 /datum/design/shovel
 	name = "Shovel"
-	id = "shovel"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/shovel
@@ -288,7 +264,6 @@
 
 /datum/design/spade
 	name = "Spade"
-	id = "spade"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/shovel/spade
@@ -300,7 +275,6 @@
 
 /datum/design/hatchet
 	name = "Hatchet"
-	id = "hatchet"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7.5)
 	build_path = /obj/item/hatchet
@@ -312,7 +286,6 @@
 
 /datum/design/secateurs
 	name = "Secateurs"
-	id = "secateurs"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2)
 	build_path = /obj/item/secateurs
@@ -324,7 +297,6 @@
 
 /datum/design/radio_headset
 	name = "Radio Headset"
-	id = "radio_headset"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.75)
 	build_path = /obj/item/radio/headset
@@ -336,7 +308,6 @@
 
 /datum/design/bounced_radio
 	name = "Station Bounced Radio"
-	id = "bounced_radio"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.75, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.25)
 	build_path = /obj/item/radio/off
@@ -348,7 +319,6 @@
 
 /datum/design/handlabeler
 	name = "Hand Labeler"
-	id = "handlabel"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT*1.25)
 	build_path = /obj/item/hand_labeler
@@ -360,7 +330,6 @@
 
 /datum/design/pet_carrier
 	name = "Pet Carrier"
-	id = "pet_carrier"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*3.75, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/pet_carrier
@@ -372,7 +341,6 @@
 
 /datum/design/toygun
 	name = "Cap Gun"
-	id = "toygun"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/iron = SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/toy/gun
@@ -384,7 +352,6 @@
 
 /datum/design/capbox
 	name = "Box of Cap Gun Shots"
-	id = "capbox"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 3)
 	build_path = /obj/item/toy/ammo/gun
@@ -396,7 +363,6 @@
 
 /datum/design/toy_balloon
 	name = "Plastic Balloon"
-	id = "toy_balloon"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT * 0.6)
 	build_path = /obj/item/toy/balloon
@@ -408,7 +374,6 @@
 
 /datum/design/toy_armblade
 	name = "Plastic Armblade"
-	id = "toy_armblade"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/toy/foamblade
@@ -420,7 +385,6 @@
 
 /datum/design/toy_katana
 	name = "Plastic Katana"
-	id = "toy_katana"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/toy/katana
@@ -432,7 +396,6 @@
 
 /datum/design/plastic_tree
 	name = "Plastic Potted Plant"
-	id = "plastic_trees"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT*4)
 	build_path = /obj/item/kirbyplants/random/fullysynthetic
@@ -444,7 +407,6 @@
 
 /datum/design/beads
 	name = "Plastic Bead Necklace"
-	id = "plastic_necklace"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/clothing/neck/beads
@@ -456,7 +418,6 @@
 
 /datum/design/plastic_ring
 	name = "Plastic Can Rings"
-	id = "ring_holder"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic = HALF_SHEET_MATERIAL_AMOUNT*1.2)
 	build_path = /obj/item/storage/cans
@@ -468,7 +429,6 @@
 
 /datum/design/plastic_box
 	name = "Plastic Box"
-	id = "plastic_box"
 	build_type = AUTOLATHE
 	materials = list(/datum/material/plastic =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/storage/box/plastic
@@ -480,7 +440,6 @@
 
 /datum/design/sticky_tape
 	name = "Sticky Tape"
-	id = "sticky_tape"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/plastic =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/stack/medical/wrap/sticky_tape
@@ -492,7 +451,6 @@
 
 /datum/design/chisel
 	name = "Chisel"
-	id = "chisel"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.75)
 	build_path = /obj/item/chisel
@@ -504,7 +462,6 @@
 
 /datum/design/paperroll
 	name = "Hand Labeler Paper Roll"
-	id = "roll"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.25)
 	build_path = /obj/item/hand_labeler_refill
@@ -516,7 +473,6 @@
 
 /datum/design/toner
 	name = "Toner Cartridge"
-	id = "toner"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.1, /datum/material/glass = SMALL_MATERIAL_AMOUNT*0.1)
 	build_path = /obj/item/toner
@@ -528,7 +484,6 @@
 
 /datum/design/toner/large
 	name = "Toner Cartridge (Large)"
-	id = "toner_large"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/toner/large
@@ -540,7 +495,6 @@
 
 /datum/design/fishing_rod_basic
 	name = "Fishing Rod"
-	id = "fishing_rod"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/fishing_rod
@@ -552,7 +506,6 @@
 
 /datum/design/fishing_rod_material
 	name = "Material Fishing Rod"
-	id = "fishing_rod_material"
 	build_type = AUTOLATHE
 	materials = list(/datum/material_requirement/solid_material = SMALL_MATERIAL_AMOUNT * 4)
 	build_path = /obj/item/fishing_rod/material
@@ -563,7 +516,6 @@
 
 /datum/design/fish_case
 	name = "Stasis Fish Case"
-	id = "fish_case"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/plastic = SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/storage/fish_case
@@ -575,7 +527,6 @@
 
 /datum/design/aquarium_kit
 	name = "Aquarium Kit"
-	id = "aquarium_kit"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/aquarium_kit
@@ -587,7 +538,6 @@
 
 /datum/design/ticket_machine
 	name = "Ticket Machine Frame"
-	id = "ticket_machine"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*7, /datum/material/glass = SHEET_MATERIAL_AMOUNT*4)
 	build_path = /obj/item/wallframe/ticket_machine
@@ -599,7 +549,6 @@
 
 /datum/design/telescreen_bar
 	name = "Bar Telescreen"
-	id = "telescreen_bar"
 	build_type = PROTOLATHE
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT*5,
@@ -614,7 +563,6 @@
 
 /datum/design/telescreen_entertainment
 	name = "Entertainment Telescreen"
-	id = "telescreen_entertainment"
 	build_type =  AUTOLATHE | PROTOLATHE
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT*5,
@@ -629,7 +577,6 @@
 
 /datum/design/telescreen_monastery
 	name = "Monastery Telescreen"
-	id = "telescreen_monastery"
 	build_type = PROTOLATHE
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5,
@@ -645,12 +592,11 @@
 /datum/design/telescreen_monastery/New()
 	var/has_monastery = CHECK_MAP_JOB_CHANGE(JOB_CHAPLAIN, "has_monastery")
 	if(!has_monastery)
-		id = DESIGN_ID_IGNORE
+		qdel(src)
 	return ..()
 
 /datum/design/entertainment_radio
 	name = "Entertainment Radio"
-	id = "radio_entertainment"
 	build_type =  AUTOLATHE | PROTOLATHE
 	materials = list(
 		/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.75,
@@ -665,7 +611,6 @@
 
 /datum/design/barcode_scanner
 	name = "Barcode Scanner"
-	id = "barcode_scanner"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 2)
 	build_path = /obj/item/barcodescanner
@@ -676,7 +621,6 @@
 
 /datum/design/rdd
 	name = "Rapid Decoration Device (RDD)"
-	id = "rdd"
 	build_type = PROTOLATHE | AWAY_LATHE
 	materials = list(
 		/datum/material/iron = SHEET_MATERIAL_AMOUNT * 12,
@@ -693,4 +637,3 @@
 		RND_CATEGORY_TOOLS + RND_SUBCATEGORY_TOOLS_SERVICE,
 	)
 	departmental_flags = DEPARTMENT_BITFLAG_SERVICE
-

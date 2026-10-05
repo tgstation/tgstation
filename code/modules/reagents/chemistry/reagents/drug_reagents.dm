@@ -527,10 +527,23 @@
 			if(SPT_PROB(16, seconds_per_tick))
 				psychonaut.emote(pick("twitch","giggle"))
 
+/datum/reagent/drug/mushroomhallucinogen/on_mob_add(mob/living/affected_mob, amount)
+	. = ..()
+	RegisterSignal(affected_mob, COMSIG_MOB_LOGIN, PROC_REF(trip))
+
+/datum/reagent/drug/mushroomhallucinogen/on_mob_delete(mob/living/affected_mob)
+	. = ..()
+	UnregisterSignal(affected_mob, COMSIG_MOB_LOGIN)
+
 /datum/reagent/drug/mushroomhallucinogen/on_mob_metabolize(mob/living/psychonaut)
 	. = ..()
-
 	psychonaut.add_mood_event("tripping", /datum/mood_event/high)
+	if(!psychonaut.client)
+		return // No need to mess with a mob's plane masters if they physically can't see it.
+	trip(psychonaut)
+
+/// Proc that handles the changes
+/datum/reagent/drug/mushroomhallucinogen/proc/trip(mob/living/psychonaut)
 	if(!psychonaut.hud_used)
 		return
 

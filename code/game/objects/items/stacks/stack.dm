@@ -99,13 +99,19 @@
 	update_appearance()
 
 	if(is_path_in_list(merge_type, GLOB.golem_stack_food_directory))
-		AddComponent(/datum/component/golem_food, golem_food_key = merge_type)
+		var/processing_bonus = 1
+		if(ispath(merge_type, /obj/item/stack/sheet))
+			processing_bonus = GOLEMFOOD_PREPARED_MEAL
+		AddComponent(/datum/component/golem_food, golem_food_key = merge_type, food_multiplier = processing_bonus)
 
 /obj/item/stack/LateInitialize()
 	merge_with_loc()
 
 /obj/item/stack/Destroy()
 	mats_per_unit = null
+	if(source)
+		LAZYREMOVE(source.linked_modules, src)
+		source = null
 	return ..()
 
 /obj/item/stack/update_name(updates)
@@ -582,7 +588,9 @@
 		return FALSE
 	if(is_cyborg)
 		if(source.use_charge(used * cost))
-			update_appearance(UPDATE_NAME)
+			//this will include us
+			for(var/obj/item/stack/modules as anything in source.linked_modules)
+				modules.update_appearance(UPDATE_NAME)
 			return TRUE
 		return FALSE
 	if (amount < used)

@@ -10,6 +10,7 @@
 	w_class = WEIGHT_CLASS_SMALL
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	flags_inv = HIDESUITSTORAGE
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/neck/cloak/Initialize(mapload)
 	. = ..()

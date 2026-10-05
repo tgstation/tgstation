@@ -48,6 +48,13 @@
 	if(!. && isprojectile(mover)) // Its short enough to be shot over
 		return TRUE
 
+/obj/structure/holosign/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	take_damage(150/severity, BRUTE, ENERGY, FALSE)
+
 /obj/structure/holosign/proc/attack_holosign(mob/living/user, list/modifiers)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	user.changeNext_move(CLICK_CD_MELEE)

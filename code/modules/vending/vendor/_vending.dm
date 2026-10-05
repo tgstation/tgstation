@@ -187,6 +187,11 @@
 
 	//the path of the fish_source datum to use for the fishing_spot component
 	var/fish_source_path = /datum/fish_source/vending
+	/**
+	 * used to check for discounting and for displaying discounted prices in the UI; not a static proc-local var because the code for displaying and applying
+	 * discounts isn't unified across DM and tgui
+	 */
+	var/static/datum/id_trim/job/big_boss_trim = /datum/id_trim/job/captain
 
 /datum/armor/machinery_vending
 	melee = 20

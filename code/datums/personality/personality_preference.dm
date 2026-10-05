@@ -8,7 +8,7 @@
 /datum/preference/personality/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	if(isdummy(target) || !ishuman(target) || isnull(target.mob_mood))
 		return
-	if(CONFIG_GET(flag/disable_human_mood) || !CONFIG_GET(flag/roundstart_traits))
+	if(!CONFIG_GET(flag/roundstart_traits))
 		return
 	for(var/personality_key in value)
 		var/datum/personality/personality = SSpersonalities.personalities_by_key[personality_key]

@@ -13,26 +13,19 @@ GLOBAL_LIST_INIT(most_common_words_frequency, init_common_words_by_frequency())
 
 /proc/init_language_prototypes()
 	var/list/lang_list = list()
-	for(var/datum/language/lang_type as anything in typesof(/datum/language))
-		if(!initial(lang_type.key))
-			continue
-
+	for(var/datum/language/lang_type as anything in valid_subtypesof(/datum/language))
 		lang_list[lang_type] = new lang_type()
 	return lang_list
 
 /proc/init_all_languages()
 	var/list/lang_list = list()
-	for(var/datum/language/lang_type as anything in typesof(/datum/language))
-		if(!initial(lang_type.key))
-			continue
+	for(var/datum/language/lang_type as anything in valid_subtypesof(/datum/language))
 		lang_list += lang_type
 	return lang_list
 
 /proc/init_language_types_by_name()
 	var/list/lang_list = list()
-	for(var/datum/language/lang_type as anything in typesof(/datum/language))
-		if(!initial(lang_type.key))
-			continue
+	for(var/datum/language/lang_type as anything in valid_subtypesof(/datum/language))
 		lang_list[initial(lang_type.name)] = lang_type
 	return lang_list
 

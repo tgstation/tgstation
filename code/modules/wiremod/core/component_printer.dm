@@ -44,12 +44,12 @@
 		on_connected_techweb()
 
 /obj/machinery/component_printer/proc/on_connected_techweb()
-	for (var/researched_design_id in techweb.researched_designs)
-		var/datum/design/design = SSresearch.techweb_design_by_id(researched_design_id)
+	for (var/researched_design_path in techweb.researched_designs)
+		var/datum/design/design = SSresearch.techweb_designs[researched_design_path]
 		if (!(design.build_type & COMPONENT_PRINTER) || !ispath(design.build_path, /obj/item/circuit_component))
 			continue
 
-		current_unlocked_designs[design.build_path] = design.id
+		current_unlocked_designs[design.build_path] = researched_design_path
 
 	RegisterSignal(techweb, COMSIG_TECHWEB_ADD_DESIGN, PROC_REF(on_research))
 	RegisterSignal(techweb, COMSIG_TECHWEB_REMOVE_DESIGN, PROC_REF(on_removed))
@@ -63,7 +63,7 @@
 	SIGNAL_HANDLER
 	if (!(added_design.build_type & COMPONENT_PRINTER) || !ispath(added_design.build_path, /obj/item/circuit_component))
 		return
-	current_unlocked_designs[added_design.build_path] = added_design.id
+	current_unlocked_designs[added_design.build_path] = added_design.type
 
 /obj/machinery/component_printer/proc/on_removed(datum/source, datum/design/added_design, custom)
 	SIGNAL_HANDLER
@@ -125,9 +125,9 @@
  * user_data - data in the form rendered by ID_DATA(user), for print logging, see the proc on SSid_access
 */
 /obj/machinery/component_printer/proc/print_component(typepath, alist/user_data)
-	var/design_id = current_unlocked_designs[typepath]
+	var/design_path = current_unlocked_designs[typepath]
+	var/datum/design/design = SSresearch.techweb_designs[design_path]
 
-	var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
 	if (!(design.build_type & COMPONENT_PRINTER))
 		return
 
@@ -144,24 +144,28 @@
 	. = ..()
 	if (.)
 		return
+
 	var/alist/user_data = ID_DATA(usr)
 
 	switch (action)
 		if ("print")
-			var/design_id = params["designId"]
-			if (!techweb.researched_designs[design_id])
-				return TRUE
+			var/design_path = text2path(params["design_path"])
+			if (!techweb.researched_designs[design_path])
+				return
 
-			var/datum/design/design = SSresearch.techweb_design_by_id(design_id)
+			var/datum/design/design = SSresearch.techweb_designs[design_path]
+			if(!istype(design))
+				return
+
 			if (!(design.build_type & COMPONENT_PRINTER))
-				return TRUE
+				return
 
 			if (!materials.can_use_resource(user_data = user_data))
-				return TRUE
+				return
 
 			if (!materials.mat_container.has_materials(design.materials, efficiency_coeff))
 				say("Not enough materials.")
-				return TRUE
+				return
 
 			balloon_alert_to_viewers("printed [design.name]")
 
@@ -169,13 +173,15 @@
 			var/atom/printed_design = design.create_result(drop_location())
 			printed_design.pixel_x = printed_design.base_pixel_x + rand(-5, 5)
 			printed_design.pixel_y = printed_design.base_pixel_y + rand(-5, 5)
+			return TRUE
 		if ("remove_mat")
 			var/datum/material/material = locate(params["ref"])
 			var/amount = text2num(params["amount"])
+			if(!amount)
+				return
 			// SAFETY: eject_sheets checks for valid mats
 			materials.eject_sheets(material_ref = material, eject_amount = amount, user_data = user_data)
-
-	return TRUE
+			return TRUE
 
 /obj/machinery/component_printer/ui_data(mob/user)
 	var/list/data = list()
@@ -191,8 +197,8 @@
 	var/size32x32 = "[spritesheet.name]32x32"
 
 	// for (var/datum/design/component/component_design_type as anything in subtypesof(/datum/design/component))
-	for (var/researched_design_id in techweb.researched_designs)
-		var/datum/design/design = SSresearch.techweb_design_by_id(researched_design_id)
+	for (var/researched_design_path in techweb.researched_designs)
+		var/datum/design/design = SSresearch.techweb_designs[researched_design_path]
 		if (!(design.build_type & COMPONENT_PRINTER))
 			continue
 
@@ -200,14 +206,14 @@
 		for(var/datum/material/mat, amount in design.materials)
 			cost[mat.name] = OPTIMAL_COST(amount * efficiency_coeff)
 
-		var/icon_size = spritesheet.icon_size_id(design.id)
-		designs[researched_design_id] = list(
+		var/icon_size = spritesheet.icon_size_id(design.asset_id)
+		designs[researched_design_path] = list(
 			"name" = design.name,
 			"desc" = design.desc,
 			"cost" = cost,
-			"id" = researched_design_id,
+			"path" = researched_design_path,
 			"categories" = design.category,
-			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.id]"
+			"icon" = "[icon_size == size32x32 ? "" : "[icon_size] "][design.asset_id]"
 		)
 
 	data["designs"] = designs
@@ -256,39 +262,44 @@
 	desc = "Produces components for the creation of integrated circuits."
 	icon = 'icons/obj/machines/wiremod_fab.dmi'
 	icon_state = "fab-idle"
+	density = TRUE
 
 	/// All of the possible circuit designs stored by this debug printer
 	var/list/all_circuit_designs
-
-	density = TRUE
 
 /obj/machinery/debug_component_printer/Initialize(mapload)
 	. = ..()
 	all_circuit_designs = list()
 
-	for(var/id in SSresearch.techweb_designs)
-		var/datum/design/design = SSresearch.techweb_design_by_id(id)
-		if((design.build_type & COMPONENT_PRINTER) && design.build_path)
-			all_circuit_designs[design.build_path] = list(
-				"id" = design.build_path,
-				"categories" = design.category,
-				"cost" = design.materials,
-				"desc" = design.desc,
-				"name" = design.name,
-			)
+	for(var/design_path, _design in SSresearch.techweb_designs)
+		var/datum/design/design = _design
+		if(!(design.build_type & COMPONENT_PRINTER) || !ispath(design.build_path))
+			continue
+		all_circuit_designs[design.build_path] = list(
+			"id" = design.build_path,
+			"categories" = design.category,
+			"cost" = design.materials,
+			"desc" = design.desc,
+			"name" = design.name,
+		)
 
-	for(var/obj/item/circuit_component/component as anything in subtypesof(/obj/item/circuit_component))
-		var/categories = list("Inaccessible")
-		if(initial(component.circuit_flags) & CIRCUIT_FLAG_ADMIN)
+	for(var/obj/item/circuit_component/component_path as anything in subtypesof(/obj/item/circuit_component))
+		if(all_circuit_designs[component_path])
+			continue
+
+		var/list/categories
+		if(component_path::circuit_flags & CIRCUIT_FLAG_ADMIN)
 			categories = list("Admin")
-		if(!(component in all_circuit_designs))
-			all_circuit_designs[component] = list(
-				"id" = component.type,
-				"categories" = categories,
-				"cost" = list(),
-				"desc" = initial(component.desc),
-				"name" = initial(component.display_name),
-			)
+		else
+			categories = list("Inaccessible")
+
+		all_circuit_designs[component_path] = list(
+			"id" = component_path.type,
+			"categories" = categories,
+			"cost" = list(),
+			"desc" = component_path::desc,
+			"name" = component_path::display_name,
+		)
 
 /obj/machinery/debug_component_printer/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
@@ -309,20 +320,19 @@
 
 	switch (action)
 		if ("print")
-			var/build_path = text2path(params["designId"])
+			var/build_path = text2path(params["design_path"])
 			if (!build_path)
-				return TRUE
+				return
 
 			var/list/design = all_circuit_designs[build_path]
 			if (!design)
-				return TRUE
+				return
 
 			balloon_alert_to_viewers("printed [design["name"]]")
 			var/atom/printed_design = new build_path(drop_location())
 			printed_design.pixel_x = printed_design.base_pixel_x + rand(-5, 5)
 			printed_design.pixel_y = printed_design.base_pixel_y + rand(-5, 5)
-
-	return TRUE
+			return TRUE
 
 /obj/machinery/debug_component_printer/ui_static_data(mob/user)
 	var/list/data = list()
@@ -405,7 +415,7 @@
 
 	switch (action)
 		if ("print")
-			var/design_id = text2num(params["designId"])
+			var/design_id = text2num(params["design_path"])
 
 			if (design_id < 1 || design_id > length(scanned_designs))
 				return TRUE
@@ -476,8 +486,8 @@
 		data["name"] = integrated_circuit.display_name
 		data["desc"] = "An integrated circuit that has been loaded in by [user]."
 
-		var/datum/design/integrated_circuit/circuit_design = SSresearch.techweb_design_by_id("integrated_circuit")
-		var/materials = list(SSmaterials.get_material(/datum/material/glass) = integrated_circuit.current_size * cost_per_component)
+		var/datum/design/integrated_circuit/circuit_design = SSresearch.techweb_designs[/datum/design/integrated_circuit]
+		var/list/materials = list(SSmaterials.get_material(/datum/material/glass) = integrated_circuit.current_size * cost_per_component)
 		for(var/material_type, amount in circuit_design.materials)
 			materials[material_type] += amount
 

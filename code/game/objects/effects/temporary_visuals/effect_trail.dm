@@ -36,7 +36,7 @@
 		RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_target_invalid))
 
 /obj/effect/temp_visual/effect_trail/proc/add_spawner()
-	AddComponent(/datum/component/spawner, spawn_types = list(spawned_effect), max_spawned = max_spawned, spawn_time = spawn_interval)
+	AddComponent(/datum/component/spawner, spawn_types = list(spawned_effect), max_spawned = max_spawned, spawn_time = spawn_interval, spawner_logic = SPAWN_CONTINUOUS_BEHAVIOR)
 
 /// Destroy ourselves if the target is no longer valid
 /obj/effect/temp_visual/effect_trail/proc/on_target_invalid()

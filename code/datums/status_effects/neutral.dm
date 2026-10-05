@@ -918,3 +918,35 @@
 	SIGNAL_HANDLER
 
 	real_invis_see = see_invis
+
+// Applies a little arrow above the mobs head to let the players know that it's subject to holding up the waves being spawned.
+/datum/status_effect/heads_up
+	id = "heads_up_arrow"
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	alert_type = null
+	on_remove_on_mob_delete = TRUE
+	var/obj/effect/overlay/wave_headsup/arrow_overlay
+
+/datum/status_effect/heads_up/on_apply()
+	. = ..()
+	var/turf/owner_turf = get_turf(owner)
+	arrow_overlay = new /obj/effect/overlay/wave_headsup
+	arrow_overlay.pixel_x = -(owner.base_pixel_x)
+	SET_PLANE(arrow_overlay, PLANE_TO_TRUE(arrow_overlay.plane), owner_turf)
+	owner.vis_contents += arrow_overlay
+	RegisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED, PROC_REF(on_z_change))
+	RegisterSignal(owner, COMSIG_LIVING_DEATH, PROC_REF(on_death))
+
+/datum/status_effect/heads_up/on_remove()
+	owner.vis_contents -= arrow_overlay
+	QDEL_NULL(arrow_overlay)
+	UnregisterSignal(owner, COMSIG_MOVABLE_Z_CHANGED)
+
+/datum/status_effect/heads_up/proc/on_z_change(mob/living/source, turf/old_turf, turf/new_turf, same_z_layer)
+	SIGNAL_HANDLER
+	SET_PLANE(arrow_overlay, PLANE_TO_TRUE(arrow_overlay.plane), new_turf)
+
+/// We delete the status effect and visual on mob death.
+/datum/status_effect/heads_up/proc/on_death(mob/living/source)
+	SIGNAL_HANDLER
+	qdel(src)

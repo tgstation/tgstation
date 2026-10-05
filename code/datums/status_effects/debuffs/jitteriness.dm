@@ -24,7 +24,7 @@
 	owner.clear_mood_event(id)
 	owner.update_offsets()
 
-/datum/status_effect/jitter/get_examine_text()
+/datum/status_effect/jitter/get_examine_text(mob/examiner)
 	switch(duration)
 		if(5 MINUTES to INFINITY)
 			return span_boldwarning("[owner.p_They()] [owner.p_are()] convulsing violently!")

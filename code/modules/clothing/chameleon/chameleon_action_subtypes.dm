@@ -17,7 +17,7 @@
 
 /datum/action/item_action/chameleon/change/tablet/initialize_blacklist()
 	. = ..()
-	chameleon_blacklist |= typecacheof(list(/obj/item/modular_computer/pda/heads), only_root_path = TRUE)
+	chameleon_blacklist |= typecacheof(list(/obj/item/modular_computer/pda/crew/heads), only_root_path = TRUE)
 
 /datum/action/item_action/chameleon/change/tablet/update_item(obj/item/picked_item)
 	..()

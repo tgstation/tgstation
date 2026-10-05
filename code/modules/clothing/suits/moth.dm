@@ -11,6 +11,7 @@
 	flags_inv = HIDEMUTWINGS
 	body_parts_covered = CHEST
 	allowed = list(/obj/item/tank/internals/emergency_oxygen, /obj/item/flashlight/lantern) //lamp
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/suit/mothcoat/original
 	desc = "An old-school flightsuit from the moth fleet. A perfect token of mothic survivalistic and adaptable attitude, yet a bitter reminder that with the loss of their home planet and institution of the fleet, their beloved wings remain as a burden to bear, condemned to never fly again."

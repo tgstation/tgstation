@@ -28,7 +28,7 @@
 		for(var/datum/reagent/blood/usable_reagent as anything in requirement.reagents?.reagent_list)
 			if(!istype(usable_reagent, /datum/reagent/blood))
 				continue
-			blood_samples[usable_reagent.data["blood_DNA"]] = TRUE
+			blood_samples[usable_reagent.data[BLOOD_DATA_DNA]] = TRUE
 
 	return TRUE
 
@@ -90,7 +90,7 @@
 		if(!to_drain.reagents?.reagent_list)
 			continue
 		for(var/datum/reagent/to_match in to_drain.reagents.reagent_list)
-			if(to_match.data["blood_DNA"] != to_curse.dna.unique_enzymes)
+			if(to_match.data[BLOOD_DATA_DNA] != to_curse.dna.unique_enzymes)
 				continue
 			to_drain.reagents.remove_reagent(to_match.type, 5)
 	return TRUE

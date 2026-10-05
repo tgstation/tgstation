@@ -14,7 +14,7 @@
 	resistance = 1
 	stage_speed = 1
 	transmittable = 2
-	level = 4
+	level = 3
 	severity = 2
 	base_message_chance = 25
 	symptom_delay = 20
@@ -26,6 +26,7 @@
 	)
 	var/brain_damage = FALSE
 	var/causes_illiteracy = FALSE
+	var/suppress_warning = FALSE
 
 /datum/symptom/confusion/Start(datum/disease/advance/advanced_disease)
 	. = ..()

@@ -1,17 +1,21 @@
 import { useAtomValue } from 'jotai';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import {
   Box,
   Button,
   ColorBox,
   Divider,
+  Dropdown,
   Floating,
   Icon,
   Input,
+  Knob,
   Section,
   Stack,
   TextArea,
 } from 'tgui-core/components';
+import { toFixed } from 'tgui-core/math';
+
 import { chatRenderer } from '../chat/renderer';
 import { characterProfilesAtom, currentCharacterAtom } from '../game/atoms';
 import { WARN_AFTER_HIGHLIGHT_AMT } from './constants';
@@ -65,6 +69,15 @@ export function TextHighlightSettings(props) {
   );
 }
 
+const HIGHLIGHT_SOUND_OPTIONS = [
+  { label: 'Beep', value: 'sound/misc/highlight_sounds/Beep.ogg' },
+  { label: 'Pillow Hit', value: 'sound/items/pillow/pillow_hit.ogg' },
+  { label: 'Coin Flip', value: 'sound/items/coinflip.ogg' },
+  { label: 'Pen Click', value: 'sound/items/pen_click.ogg' },
+  { label: 'Rattling Keys', value: 'sound/items/rattling_keys.ogg' },
+  { label: 'Honk!', value: 'sound/items/bikehorn.ogg' },
+];
+
 const oneCharacterRegex = /^(\[.*\]|\\.|.)$/;
 
 function extractRegex(highlight: string): string | null {
@@ -95,11 +108,15 @@ function TextHighlightSetting(props) {
     highlightWholeMessage,
     matchWord,
     matchCase,
+    playSound,
+    soundFile,
+    soundVolume,
     jobFilter,
     characterFilter,
   } = highlightSettingById[id];
   const currentCharacter = useAtomValue(currentCharacterAtom);
   const characterProfiles = useAtomValue(characterProfilesAtom);
+  const jobsPopover = useRef<{ close: () => void }>(null);
   const jobCount = jobFilter.split(',').filter((str) => str.trim()).length;
 
   // Known characters plus any selected names no longer in the save slots,
@@ -198,6 +215,73 @@ function TextHighlightSetting(props) {
             Case
           </Button.Checkbox>
         </Stack.Item>
+
+        <Stack.Item>
+          <Button.Checkbox
+            checked={!!playSound}
+            tooltip="If this option is selected, a sound will play when the highlight is triggered."
+            onClick={() =>
+              updateHighlight({
+                id,
+                playSound: !playSound,
+              })
+            }
+          >
+            Sound
+          </Button.Checkbox>
+        </Stack.Item>
+
+        <Stack.Item>
+          <Box>
+            <Dropdown
+              width="160px"
+              options={HIGHLIGHT_SOUND_OPTIONS.map((option) => option.label)}
+              selected={
+                HIGHLIGHT_SOUND_OPTIONS.find(
+                  (option) => option.value === soundFile,
+                )?.label ?? 'Beep'
+              }
+              disabled={!playSound}
+              onSelected={(label) => {
+                const option = HIGHLIGHT_SOUND_OPTIONS.find(
+                  (item) => item.label === label,
+                );
+                if (!option) {
+                  return;
+                }
+                updateHighlight({
+                  id,
+                  soundFile: option.value,
+                });
+              }}
+            />
+          </Box>
+        </Stack.Item>
+
+        <Stack.Item>
+          <Knob
+            minValue={0}
+            maxValue={1}
+            value={soundVolume}
+            step={0.01}
+            stepPixelSize={1}
+            style={{
+              opacity: playSound ? 1 : 0.45,
+              pointerEvents: playSound ? 'auto' : 'none',
+            }}
+            format={(value) => `${toFixed(value * 100)}%`}
+            onChange={(_event, value) => {
+              if (!playSound) {
+                return;
+              }
+              updateHighlight({
+                id,
+                soundVolume: value,
+              });
+            }}
+          />
+        </Stack.Item>
+
         <Stack.Item>
           <ColorBox mr={1} color={highlightColor} />
           <Input
@@ -250,6 +334,7 @@ function TextHighlightSetting(props) {
             </Box>
           </Floating>
           <Floating
+            ref={jobsPopover}
             placement="bottom-start"
             contentClasses="Dropdown__menu--wrapper"
             contentStyles={{ width: '20em' }}
@@ -265,6 +350,13 @@ function TextHighlightSetting(props) {
                       jobFilter: value,
                     })
                   }
+                  onEnter={(value) => {
+                    updateHighlight({
+                      id,
+                      jobFilter: value,
+                    });
+                    jobsPopover.current?.close();
+                  }}
                 />
               </div>
             }

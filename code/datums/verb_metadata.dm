@@ -31,6 +31,8 @@
 	if(arg_type & VERB_ARG_TYPE_SOUND)
 		return input(user, name, verb_name) as null|sound
 	if(arg_type & VERB_ARG_TYPE_TYPEPATH)
+		if(!type_path)
+			return ""
 		return input(user, name, verb_name) as null|anything in typesof(type_path)
 	var/list/targets = get_targets(user)
 	if(length(targets))

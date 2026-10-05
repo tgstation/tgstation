@@ -693,7 +693,7 @@ GAME_VERB_HIDDEN(/mob/dead/observer, add_view_range, "Add View Range")
 		set_invis_see(SEE_INVISIBLE_OBSERVER)
 
 	updateghostimages()
-	..()
+	return ..()
 
 /proc/updateallghostimages()
 	list_clear_nulls(GLOB.ghost_images_default)

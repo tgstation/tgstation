@@ -87,7 +87,7 @@
 	UnregisterSignal(owner, incapacitation_effect_signals)
 	UnregisterSignal(owner, COMSIG_LIVING_GENERIC_STUN_CHECK)
 
-/datum/status_effect/stun_absorption/get_examine_text()
+/datum/status_effect/stun_absorption/get_examine_text(mob/examiner)
 	if(can_absorb_stun())
 		return replacetext(examine_message, "%EFFECT_OWNER_THEYRE", owner.p_Theyre())
 	return null // no message if we can't absorb stuns, duh.

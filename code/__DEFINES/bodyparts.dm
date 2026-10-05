@@ -66,6 +66,7 @@
 #define BODYPART_OVERLAY_CARP_INFUSION 2
 #define BODYPART_OVERLAY_CSS_SUICIDE 3
 #define BODYPART_OVERLAY_VOIDWALKER_CURSE 4
+#define BODYPART_OVERLAY_MESH 5
 
 /// This limb cannot be disabled via damage thresholds
 #define LIMB_NO_DISABLE -1
@@ -93,8 +94,6 @@
 #define BODYPART_VIRGIN (1<<4)
 /// Not a full bodypart, but in fact is part of a missing limb
 #define BODYPART_STUMP (1<<5)
-/// This leg type is compatible with dna-based digitigrade legs. DON'T ADD THIS DIRECTLY TO THE LEG PATHS, use the digitigrade_compatible element instead.
-#define BODYPART_DIGITIGRADE_COMPATIBLE (1<<6)
 
 // Bodypart change blocking flags
 ///Bodypart does not get replaced during set_species()

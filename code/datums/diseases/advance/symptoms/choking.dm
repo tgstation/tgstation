@@ -15,7 +15,7 @@
 	resistance = 0
 	stage_speed = -1
 	transmittable = -1
-	level = 3
+	level = 6
 	severity = 3
 	base_message_chance = 15
 	symptom_delay = 20
@@ -26,6 +26,7 @@
 		"Stage Speed 8" = "Causes choking more frequently.",
 		"Stealth 4" = "The symptom remains hidden until active."
 	)
+	var/suppress_warning = FALSE
 
 /datum/symptom/choking/Start(datum/disease/advance/A)
 	. = ..()
@@ -79,20 +80,19 @@ Asphyxiation
 Bonus
 	Inflicts large spikes of oxyloss
 	Introduces Asphyxiating drugs to the system
-	Causes cardiac arrest on dying victims.
 
 //////////////////////////////////////
 */
 
 /datum/symptom/asphyxiation
 	name = "Acute respiratory distress syndrome"
-	desc = "The virus causes shrinking of the host's lungs, causing severe asphyxiation. May also lead to heart attacks."
+	desc = "The virus causes shrinking of the host's lungs, causing severe asphyxiation."
 	illness = "Iron Lungs"
 	stealth = -2
 	resistance = 0
 	stage_speed = -1
 	transmittable = -2
-	level = 7
+	level = 9
 	severity = 6
 	base_message_chance = 15
 	symptom_delay = 22

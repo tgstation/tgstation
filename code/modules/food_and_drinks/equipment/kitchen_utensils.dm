@@ -24,6 +24,7 @@
 	name = "fork"
 	desc = "Pointy."
 	icon_state = "fork"
+	inhand_icon_state = "fork"
 	icon_angle = -90
 	force = 4
 	w_class = WEIGHT_CLASS_TINY
@@ -199,6 +200,7 @@
 	name = "spoon"
 	desc = "Just be careful your food doesn't melt the spoon first."
 	icon_state = "spoon"
+	inhand_icon_state = "spoon"
 	base_icon_state = "spoon"
 	icon_angle = -90
 	w_class = WEIGHT_CLASS_TINY
@@ -326,6 +328,7 @@
 /obj/item/kitchen/spoon/plastic
 	name = "plastic spoon"
 	icon_state = "plastic_spoon"
+	inhand_icon_state = "plastic_spoon"
 	force = 0
 	custom_materials = list(/datum/material/plastic = SMALL_MATERIAL_AMOUNT * 1.2)
 	toolspeed = 75 // The plastic spoon takes 5 minutes to dig through a single mineral turf... It's one, continuous, breakable, do_after...

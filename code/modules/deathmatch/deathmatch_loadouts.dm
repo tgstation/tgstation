@@ -677,7 +677,7 @@
 	r_pocket = /obj/item/grenade/gluon
 	l_hand = /obj/item/gun/energy/alien
 	r_hand = /obj/item/gun/energy/alien
-	belt = /obj/item/gun/energy/shrink_ray
+	belt = /obj/item/gun/energy/recharge/shrink_ray
 
 /datum/outfit/deathmatch_loadout/battler/clown/upgraded
 	name = "Deathmatch: Clown (Syndicate Gear)"

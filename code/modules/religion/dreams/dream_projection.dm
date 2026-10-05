@@ -69,7 +69,7 @@
 	src.target = target
 	return ..()
 
-/datum/status_effect/dream_projection/get_examine_text()
+/datum/status_effect/dream_projection/get_examine_text(mob/examiner)
 	return "[owner.p_They()] [owner.p_are()] in a deep slumber, yet [owner.p_their()] eyes show a distant look, as if [owner.p_they()] [owner.p_are()] somewhere far away..."
 
 /datum/status_effect/dream_projection/on_apply()

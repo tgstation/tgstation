@@ -27,7 +27,7 @@
 	owner.apply_status_effect(/datum/status_effect/crucible_soul_cooldown)
 	location = null
 
-/datum/status_effect/crucible_soul/get_examine_text()
+/datum/status_effect/crucible_soul/get_examine_text(mob/examiner)
 	return span_notice("[owner.p_They()] [owner.p_do()]n't seem to be all here.")
 
 /datum/action/cancel_crucible_soul
@@ -317,7 +317,7 @@
 		span_notice("You exit the refuge."),
 	)
 
-/datum/status_effect/caretaker_refuge/get_examine_text()
+/datum/status_effect/caretaker_refuge/get_examine_text(mob/examiner)
 	return span_warning("[owner.p_Theyre()] enveloped in an unholy haze!")
 
 /datum/status_effect/caretaker_refuge/proc/nullrod_handler(datum/source, obj/item/weapon)

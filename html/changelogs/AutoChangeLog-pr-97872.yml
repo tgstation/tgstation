@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscadd: "Expands MODsuit \"overslotting\" to most form fitting equipment, such as labcoats, aprons, armor vests, wigs, etc... - In other words, these items no longer block a deployment and are simply hidden under the suit."

@@ -182,7 +182,7 @@ export const DesignBrowser = <T extends Design = Design>(
       let parent = root;
 
       while (nodes.length > 0) {
-        parent.descendants[design.id] = design;
+        parent.descendants[design.path] = design;
 
         const node = nodes.shift()!;
 
@@ -200,7 +200,7 @@ export const DesignBrowser = <T extends Design = Design>(
       }
 
       // This is our leaf.
-      parent.descendants[design.id] = design;
+      parent.descendants[design.path] = design;
       parent.children.push(design);
     }
   }

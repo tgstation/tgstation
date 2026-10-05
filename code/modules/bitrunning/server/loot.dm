@@ -152,10 +152,7 @@
 	if(!LAZYLEN(SSresearch.techweb_nodes_experimental))
 		return FALSE
 
-	var/static/list/passing_grades = list()
-	if(!passing_grades.len)
-		passing_grades = list(BITRUNNING_GRADE_A,BITRUNNING_GRADE_S)
-
+	var/static/list/passing_grades = list(BITRUNNING_GRADE_A,BITRUNNING_GRADE_S)
 	return  generated_domain.difficulty >= BITRUNNER_DIFFICULTY_MEDIUM && (grade in passing_grades)
 
 

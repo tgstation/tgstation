@@ -15,10 +15,7 @@
 		return uni_icon('icons/mob/silicon/ai.dmi', resolve_ai_icon_sync(value))
 
 /datum/preference/choiced/ai_core_display/is_accessible(datum/preferences/preferences)
-	if (!..(preferences))
-		return FALSE
-
-	return istype(preferences.get_highest_priority_job(), /datum/job/ai)
+	return ..() && highest_priority_job_is(preferences, /datum/job/ai)
 
 /datum/preference/choiced/ai_core_display/apply_to_human(mob/living/carbon/human/target, value, datum/preferences/preferences)
 	return

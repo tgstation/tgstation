@@ -9,7 +9,7 @@
 	var/obj/act_module = get_active_held_item()
 	if(act_module)
 		. += "[p_Theyre()] holding [icon2html(act_module, user)] \a [act_module]."
-	. += get_status_effect_examinations()
+	. += get_status_effect_examinations(user)
 	if (get_brute_loss())
 		if (get_brute_loss() < maxHealth*0.5)
 			. += span_warning("[p_They()] look[p_s()] slightly dented.")
@@ -31,7 +31,13 @@
 	if(opened)
 		. += span_warning("[p_Their()] cover is open and the power cell is [cell ? "installed" : "missing"].")
 	else
-		. += "[p_Their()] cover is closed[locked ? "" : ", and looks unlocked"]."
+		var/cover_message = "[p_Their()] cover is closed"
+		if(locked)
+			if(user == src)
+				cover_message += ", though <a href='byond://?src=[REF(src)];unlock_self=1'>you may unlock it</a>"
+		else
+			cover_message += ", and looks unlocked"
+		. += span_notice("[cover_message].")
 
 	if(cell && cell.charge <= 0)
 		. += span_warning("[p_Their()] battery indicator is blinking red!")

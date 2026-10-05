@@ -29,10 +29,7 @@
 	var/feedback_cooldown_time = 0.2 SECONDS
 
 /datum/gizmo_puzzle/New(datum/callback/pulsed)
-	if(pulsed)
-		pulsed_callback = pulsed
-	else
-		pulsed_callback = CALLBACK(src, PROC_REF(default_on_pulsed))
+	pulsed_callback = pulsed || CALLBACK(src, PROC_REF(default_on_pulsed))
 	return ..()
 
 /// Make up a sequence
@@ -74,23 +71,23 @@
 
 /// Just some feedback so people can start forcing sequences. No feedback if it's done automatically
 /datum/gizmo_puzzle/proc/default_on_pulsed(atom/movable/holder, mob/living/user, solved_type, no_feedback = FALSE)
-	if(!COOLDOWN_FINISHED(src, feedback_cooldown) || !isliving(user) || no_feedback)
+	if(!COOLDOWN_FINISHED(src, feedback_cooldown) || no_feedback)
 		return
 
 	COOLDOWN_START(src, feedback_cooldown, feedback_cooldown_time)
 
 	switch(solved_type)
 		if(GIZMO_PUZZLE_WRONG)
-			holder.balloon_alert(user, "buzz")
+			holder.balloon_alert_to_viewers("buzz")
 			playsound(holder, 'sound/machines/buzz/buzz-sigh.ogg', 30, FALSE)
 		if(GIZMO_PUZZLE_CORRECT)
-			holder.balloon_alert(user, "ping")
+			holder.balloon_alert_to_viewers("ping")
 			playsound(holder, 'sound/machines/ping.ogg', 30, FALSE)
 		if(GIZMO_PUZZLE_SOLVED)
-			holder.balloon_alert(user, "creak")
+			holder.balloon_alert_to_viewers("creak")
 			playsound(holder, 'sound/machines/creak.ogg', 30, FALSE)
 		if(GIZMO_PUZZLE_SOLVED_MODE_CONTROL)
-			holder.balloon_alert(user, "clunk")
+			holder.balloon_alert_to_viewers("clunk")
 			playsound(holder, 'sound/machines/machine_vend.ogg', 30, FALSE)
 
 /// Sequences can be a bit shorter since you have to constantly type and scream them

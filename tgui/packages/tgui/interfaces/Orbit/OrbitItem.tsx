@@ -17,13 +17,13 @@ type Props = {
 /** Each button on the observable section */
 export function OrbitItem(props: Props) {
   const { item, realNameDisplay, viewMode, color } = props;
-  const { full_name, icon, job, name, orbiters, ref } = item;
+  const { full_name, icon_state, name, orbiters, ref } = item;
 
   const { data } = useBackend<OrbitData>();
   const { orbiting } = data;
 
   const selected = ref === orbiting?.ref;
-  const validIcon = !!job && !!icon && icon !== 'hudunknown';
+  const validIcon = !!icon_state && icon_state !== 'hudunknown';
 
   const hasTooltip = item.health || item.extra;
 

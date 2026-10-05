@@ -112,7 +112,10 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	organ_flags = parent_type::organ_flags | ORGAN_EXTERNAL
 
 /datum/bodypart_overlay/mutant/horns
-	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+		)
 	feature_key = FEATURE_HORNS
 	dyable = TRUE
 	draw_on_husks = HUSK_OVERLAY_NORMAL
@@ -138,7 +141,10 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 	organ_flags = parent_type::organ_flags | ORGAN_EXTERNAL
 
 /datum/bodypart_overlay/mutant/frills
-	layers = list(EXTERNAL_ADJACENT = BODY_ADJ_LAYER)
+	layers = list(
+		EXTERNAL_FRONT = BODY_FRONT_LAYER,
+		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
+		)
 	feature_key = FEATURE_FRILLS
 	offset_location = UPPER_BODY
 

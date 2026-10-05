@@ -85,71 +85,46 @@
 	// We can actually do this just fine as we do not render anything onto ourselves but our particles
 	add_filter("weather_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(WEATHER_MASK_RENDER_TARGET, offset)))
 
-/atom/movable/screen/plane_master/rendering_plate/particle_weather/Destroy()
-	SSweather.particle_planemasters -= src
-	return ..()
-
 /atom/movable/screen/plane_master/rendering_plate/particle_weather/set_home(datum/plane_master_group/home)
 	. = ..()
 	if(!.)
 		return
 	home.AddComponent(/datum/component/hide_weather_planes, src)
-	RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
-	if (home.our_hud)
-		attach_hud(home.our_hud)
-	update_state(home.our_hud?.mymob)
+	AddComponent(/datum/component/connect_perspective, home, list(COMSIG_MOVABLE_Z_CHANGED = PROC_REF(z_changed)))
+	RegisterSignal(home, COMSIG_PLANE_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
+	RegisterSignal(home, COMSIG_PLANE_GROUP_PERSPECTIVE_CHANGED, PROC_REF(perspective_changed))
+	update_state()
 
-/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/z_changed(datum/source)
 	SIGNAL_HANDLER
-	if (old_hud)
-		UnregisterSignal(old_hud, COMSIG_HUD_Z_CHANGED)
-	attach_hud(new_hud)
-	update_state(new_hud?.mymob)
+	update_state()
 
-/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/attach_hud(datum/hud/new_hud)
-	RegisterSignal(new_hud, COMSIG_HUD_Z_CHANGED, PROC_REF(z_changed))
-	var/mob/eye = new_hud?.mymob?.client?.eye
-	var/turf/eye_location = get_turf(eye)
-	z_changed(new_hud, eye_location?.z)
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/hud_changed(datum/source)
+	SIGNAL_HANDLER
+	update_state()
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/perspective_changed(datum/source)
+	SIGNAL_HANDLER
+	update_state()
 
 /// Updates ourselves based on our mob's preferences state
-/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/update_state(mob/mymob)
-	SSweather.particle_planemasters -= src
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/update_state()
 	vis_contents.Cut()
 
+	var/mob/mymob = home?.our_hud?.mymob
 	if(!istype(mymob) || !mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/particle_weather))
 		return
-
-	SSweather.particle_planemasters += src
-
 	// Lobby HUDs, we don't care about weather during init anyways
 	if(!SSmapping.initialized)
 		return
 
-	var/list/stack_levels = SSmapping.get_connected_levels(get_turf(mymob.client?.eye || mymob))
-	// And add all ongoing weather to ourselves
-	for (var/holder_offset, holder_list in SSweather.particle_holders)
-		for (var/obj/effect/abstract/weather_holder/holder as anything in holder_list)
-			// Only display particles from the same Z-stack as our mob's
-			if (holder.plane == plane && length(holder_list[holder] & stack_levels))
-				vis_contents += holder
-
-/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/z_changed(datum/source, new_z)
-	SIGNAL_HANDLER
-
-	if(!SSmapping.initialized)
+	var/list/stack_levels = SSmapping.get_connected_levels(get_turf(home.get_perspective()))
+	var/max_z = max(stack_levels)
+	var/our_z = max_z - offset
+	if(!(our_z in stack_levels))
 		return
 
-	var/list/stack_levels = SSmapping.get_connected_levels(new_z)
-	for (var/holder_offset, holder_list in SSweather.particle_holders)
-		for (var/obj/effect/abstract/weather_holder/holder as anything in holder_list)
-			if (holder.plane != plane)
-				continue
-
-			if (length(holder_list[holder] & stack_levels))
-				vis_contents |= holder
-			else
-				vis_contents -= holder
+	vis_contents += SSweather.z_particles[our_z][plane]
 
 /atom/movable/screen/plane_master/rendering_plate/particle_weather/emissive
 	name = "Emissive Particle Weather Holder Plate"
@@ -323,8 +298,8 @@
 /atom/movable/screen/plane_master/rendering_plate/lighting/set_home(datum/plane_master_group/home)
 	. = ..()
 	if(home)
-		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
-		hud_changed(null, null, home.our_hud)
+		RegisterSignal(home, COMSIG_PLANE_GROUP_OFFSET_CHANGED, PROC_REF(on_offset_change))
+		offset_change(home.active_offset || 0)
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/show_to(mob/mymob)
 	. = ..()
@@ -347,14 +322,6 @@
 	. = ..()
 	oldmob.clear_fullscreen("lighting_backdrop_lit_[home.key]#[offset]")
 	oldmob.clear_fullscreen("lighting_backdrop_unlit_[home.key]#[offset]")
-
-/atom/movable/screen/plane_master/rendering_plate/lighting/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
-	SIGNAL_HANDLER
-	if(old_hud)
-		UnregisterSignal(old_hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
-	if(new_hud)
-		RegisterSignal(new_hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
-	offset_change(new_hud?.current_plane_offset || 0)
 
 /atom/movable/screen/plane_master/rendering_plate/lighting/proc/on_offset_change(datum/source, old_offset, new_offset)
 	SIGNAL_HANDLER
@@ -569,16 +536,8 @@
 	if(offset == 0)
 		return
 	if(home)
-		RegisterSignal(home, COMSIG_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
-		hud_changed(null, null, home.our_hud)
-
-/atom/movable/screen/plane_master/rendering_plate/master/proc/hud_changed(datum/source, datum/hud/old_hud, datum/hud/new_hud)
-	SIGNAL_HANDLER
-	if(old_hud)
-		UnregisterSignal(old_hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
-	if(new_hud)
-		RegisterSignal(new_hud, COMSIG_HUD_OFFSET_CHANGED, PROC_REF(on_offset_change))
-	offset_change(new_hud?.current_plane_offset || 0)
+		RegisterSignal(home, COMSIG_PLANE_GROUP_OFFSET_CHANGED, PROC_REF(on_offset_change))
+		offset_change(home.active_offset || 0)
 
 /atom/movable/screen/plane_master/rendering_plate/master/proc/on_offset_change(datum/source, old_offset, new_offset)
 	SIGNAL_HANDLER
@@ -666,7 +625,7 @@
 	if(show_to)
 		show_to.screen += relay
 	if(offsetting_flags & OFFSET_RELAYS_MATCH_HIGHEST && home.our_hud)
-		offset_relay(relay, home.our_hud.current_plane_offset)
+		offset_relay(relay, home.active_offset)
 	return relay
 
 /// Breaks a connection between this plane master, and the passed in place

@@ -224,7 +224,12 @@
 	endurance = 8
 	yield = 4
 	growthstages = 2
-	genes = list(/datum/plant_gene/trait/plant_type/fungal_metabolism, /datum/plant_gene/reagent/preset/liquidelectricity, /datum/plant_gene/trait/carnivory/jupitercup)
+	genes = list(
+		/datum/plant_gene/reagent/preset/liquidelectricity,
+		/datum/plant_gene/trait/carnivory/jupitercup,
+		/datum/plant_gene/trait/cell_charge,
+		/datum/plant_gene/trait/plant_type/fungal_metabolism,
+	)
 	growing_icon = 'icons/obj/service/hydroponics/growing_mushrooms.dmi'
 	reagents_add = list(/datum/reagent/consumable/nutriment = 0.1)
 	mutatelist = null
@@ -300,7 +305,11 @@
 	icon_harvest = "glowcap-harvest"
 	plantname = "Glowcaps"
 	product = /obj/item/food/grown/mushroom/glowshroom/glowcap
-	genes = list(/datum/plant_gene/trait/glow/red, /datum/plant_gene/trait/cell_charge, /datum/plant_gene/trait/plant_type/fungal_metabolism)
+	genes = list(
+		/datum/plant_gene/trait/glow/red,
+		/datum/plant_gene/trait/cell_charge,
+		/datum/plant_gene/trait/plant_type/fungal_metabolism,
+	)
 	mutatelist = null
 	reagents_add = list(/datum/reagent/teslium = 0.1, /datum/reagent/consumable/nutriment = 0.04)
 	rarity = 30

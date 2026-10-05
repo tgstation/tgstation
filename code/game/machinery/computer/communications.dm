@@ -269,6 +269,19 @@
 				return
 			if (!can_purchase_this_shuttle(shuttle))
 				return
+			if (istype(shuttle, /datum/map_template/shuttle/emergency/departmental))
+				var/datum/map_template/shuttle/emergency/departmental/dept_shuttle = shuttle
+				if(dept_shuttle.department_type)
+					var/max_crew_count = 0
+					for(var/dept_type in SSjob.joinable_departments_by_type)
+						var/crew_count = get_department_employee_count(dept_type)
+						if(crew_count > max_crew_count)
+							max_crew_count = crew_count
+
+					var/crew_in_department = get_department_employee_count(dept_shuttle.department_type)
+					if(crew_in_department <= 0 || crew_in_department < max_crew_count)
+						to_chat(user, span_alert("This shuttle can be buyed only if this department has most employees."))
+						return
 			if (!shuttle.prerequisites_met())
 				to_chat(user, span_alert("You have not met the requirements for purchasing this shuttle."))
 				return
@@ -608,6 +621,27 @@
 					if (!can_purchase_this_shuttle(shuttle_template))
 						continue
 
+					var/department_locked = FALSE
+					var/department_name_string = ""
+
+					if (istype(shuttle_template, /datum/map_template/shuttle/emergency/departmental))
+						var/datum/map_template/shuttle/emergency/departmental/dept_shuttle = shuttle_template
+						department_name_string = dept_shuttle.department_name
+
+						if (dept_shuttle.department_type)
+							var/crew_in_department = get_department_employee_count(dept_shuttle.department_type)
+							if(crew_in_department <= 0)
+								department_locked = TRUE
+							else
+								for(var/other_id in SSmapping.shuttle_templates)
+									var/datum/map_template/shuttle/emergency/departmental/other_shuttle = SSmapping.shuttle_templates[other_id]
+									if(!istype(other_shuttle) || other_shuttle == dept_shuttle || !other_shuttle.department_type)
+										continue
+									var/crew_in_other_department = get_department_employee_count(other_shuttle.department_name)
+									if(crew_in_department < crew_in_other_department)
+										department_locked = TRUE
+										break
+
 					shuttles += list(list(
 						"name" = shuttle_template.name,
 						"description" = shuttle_template.description,
@@ -617,6 +651,8 @@
 						"emagOnly" = shuttle_template.emag_only,
 						"prerequisites" = shuttle_template.prerequisites,
 						"ref" = REF(shuttle_template),
+						"department_locked" = department_locked,
+						"department_name" = department_name_string,
 					))
 
 				data["budget"] = bank_account.account_balance
@@ -719,6 +755,19 @@
 			return TRUE
 
 	return FALSE
+
+/// Used in checks of dept-locked shuttles.
+/// Determines number of employees in department.
+/obj/machinery/computer/communications/proc/get_department_employee_count(datum/job_department/target_department_type)
+	if(!target_department_type)
+		return
+	var/datum/job_department/current_department = SSjob.joinable_departments_by_type[target_department_type]
+	if(!istype(current_department))
+		return
+	var/total_crew_count = 0
+	for(var/datum/job/current_job in current_department.department_jobs)
+		total_crew_count += current_job.current_positions
+	return total_crew_count
 
 /obj/machinery/computer/communications/proc/can_send_messages_to_other_sectors(mob/user)
 	if (!authenticated_as_non_silicon_captain(user))

@@ -141,7 +141,7 @@
 
 	AddComponent(
 		/datum/component/bloody_spreader,\
-		blood_dna = list("Alien DNA" = get_blood_type(BLOOD_TYPE_XENO)),\
+		blood_dna = list("Alien DNA" = get_blood_type(/datum/blood_type/xeno)),\
 	)
 
 // Path of Void's blade

@@ -8,11 +8,11 @@
 	)
 	multipliers = list(SCIPAPER_COOPERATION_INDEX = 0.75, SCIPAPER_FUNDING_INDEX = 0.75)
 	boostable_nodes = list(
-		TECHWEB_NODE_LOW_PRESSURE_EXCAVATION = TECHWEB_TIER_2_POINTS,
-		TECHWEB_NODE_PLASMA_MINING = TECHWEB_TIER_3_POINTS,
-		TECHWEB_NODE_MINING_ADV = TECHWEB_TIER_4_POINTS,
-		TECHWEB_NODE_NIGHT_VISION = TECHWEB_TIER_4_POINTS,
-		TECHWEB_NODE_BORG_ENGI = TECHWEB_TIER_3_POINTS,
+		/datum/techweb_node/low_pressure_excavation = TECHWEB_TIER_2_POINTS,
+		/datum/techweb_node/plasma_mining = TECHWEB_TIER_3_POINTS,
+		/datum/techweb_node/mining_adv = TECHWEB_TIER_4_POINTS,
+		/datum/techweb_node/night_vision = TECHWEB_TIER_4_POINTS,
+		/datum/techweb_node/borg_engi = TECHWEB_TIER_3_POINTS,
 	)
 
 /datum/scientific_partner/baron
@@ -20,10 +20,10 @@
 	flufftext = "A nearby research station ran by a very wealthy captain seems to be struggling with their scientific output. They might reward us handsomely if we ghostwrite for them."
 	multipliers = list(SCIPAPER_COOPERATION_INDEX = 0.25, SCIPAPER_FUNDING_INDEX = 2)
 	boostable_nodes = list(
-		TECHWEB_NODE_CONSOLES = TECHWEB_TIER_1_POINTS,
-		TECHWEB_NODE_GAMING = TECHWEB_TIER_2_POINTS,
-		TECHWEB_NODE_BITRUNNING = TECHWEB_TIER_3_POINTS,
-		TECHWEB_NODE_PROGRAMMED_SERVER = TECHWEB_TIER_3_POINTS,
+		/datum/techweb_node/consoles = TECHWEB_TIER_1_POINTS,
+		/datum/techweb_node/gaming = TECHWEB_TIER_2_POINTS,
+		/datum/techweb_node/bitrunning = TECHWEB_TIER_3_POINTS,
+		/datum/techweb_node/programmed_server = TECHWEB_TIER_3_POINTS,
 	)
 
 /datum/scientific_partner/defense
@@ -36,11 +36,11 @@
 		/datum/experiment/ordnance/explosive/hydrogenbomb,
 	)
 	boostable_nodes = list(
-		TECHWEB_NODE_RIOT_SUPRESSION = TECHWEB_TIER_2_POINTS,
-		TECHWEB_NODE_EXPLOSIVES = TECHWEB_TIER_3_POINTS,
-		TECHWEB_NODE_MECH_ENERGY_GUNS = TECHWEB_TIER_4_POINTS,
-		TECHWEB_NODE_MECH_FIREARMS = TECHWEB_TIER_5_POINTS,
-		TECHWEB_NODE_MECH_HEAVY_ARMS = TECHWEB_TIER_5_POINTS,
+		/datum/techweb_node/riot_supression = TECHWEB_TIER_2_POINTS,
+		/datum/techweb_node/explosives = TECHWEB_TIER_3_POINTS,
+		/datum/techweb_node/mech_energy_guns = TECHWEB_TIER_4_POINTS,
+		/datum/techweb_node/mech_firearms = TECHWEB_TIER_5_POINTS,
+		/datum/techweb_node/mech_heavy_arms = TECHWEB_TIER_5_POINTS,
 	)
 
 /datum/scientific_partner/medical
@@ -51,12 +51,12 @@
 		/datum/experiment/ordnance/gaseous/bz,
 	)
 	boostable_nodes = list(
-		TECHWEB_NODE_CYBER_ORGANS = TECHWEB_TIER_2_POINTS,
-		TECHWEB_NODE_CYBER_ORGANS_UPGRADED = TECHWEB_TIER_3_POINTS,
-		TECHWEB_NODE_MEDBAY_EQUIP_ADV = TECHWEB_TIER_3_POINTS,
-		TECHWEB_NODE_CYTOLOGY = TECHWEB_TIER_2_POINTS,
-		TECHWEB_NODE_BORG_MEDICAL = TECHWEB_TIER_3_POINTS,
-		TECHWEB_NODE_COMBAT_IMPLANTS = TECHWEB_TIER_4_POINTS,
+		/datum/techweb_node/cyber/cyber_organs = TECHWEB_TIER_2_POINTS,
+		/datum/techweb_node/cyber/cyber_organs_upgraded = TECHWEB_TIER_3_POINTS,
+		/datum/techweb_node/medbay_equip_adv = TECHWEB_TIER_3_POINTS,
+		/datum/techweb_node/cytology = TECHWEB_TIER_2_POINTS,
+		/datum/techweb_node/borg_medical = TECHWEB_TIER_3_POINTS,
+		/datum/techweb_node/cyber/combat_implants = TECHWEB_TIER_4_POINTS,
 	)
 
 /datum/scientific_partner/physics
@@ -69,9 +69,9 @@
 		/datum/experiment/ordnance/explosive/nobliumbomb,
 	)
 	boostable_nodes = list(
-		TECHWEB_NODE_PARTS_ADV = TECHWEB_TIER_3_POINTS,
-		TECHWEB_NODE_BLUESPACE_TRAVEL = TECHWEB_TIER_3_POINTS,
-		TECHWEB_NODE_ANOMALY_RESEARCH = TECHWEB_TIER_3_POINTS,
-		TECHWEB_NODE_TELECOMS =  TECHWEB_TIER_5_POINTS,
-		TECHWEB_NODE_MECH_EQUIP_BLUESPACE = TECHWEB_TIER_5_POINTS,
+		/datum/techweb_node/parts_adv = TECHWEB_TIER_3_POINTS,
+		/datum/techweb_node/bluespace_travel = TECHWEB_TIER_3_POINTS,
+		/datum/techweb_node/anomaly_research = TECHWEB_TIER_3_POINTS,
+		/datum/techweb_node/telecomms =  TECHWEB_TIER_5_POINTS,
+		/datum/techweb_node/mech_equip_bluespace = TECHWEB_TIER_5_POINTS,
 	)

@@ -43,7 +43,7 @@
 /datum/status_effect/temperature_over_time/on_remove()
 	return ..()
 
-/datum/status_effect/temperature_over_time/get_examine_text()
+/datum/status_effect/temperature_over_time/get_examine_text(mob/examiner)
 
 	if(temperature_value > 0)
 		return "[owner.p_They()] [owner.p_are()] sweating bullets!"
@@ -51,7 +51,7 @@
 	return "[owner.p_They()] [owner.p_are()] shivering!"
 
 /datum/status_effect/temperature_over_time/tick(seconds_between_ticks)
-	if((TRAIT_RESISTHEAT && temperature_value > 1) || (TRAIT_RESISTCOLD && temperature_value < 1))
+	if((HAS_TRAIT(owner, TRAIT_RESISTHEAT) && temperature_value > 1) || (HAS_TRAIT(owner, TRAIT_RESISTCOLD) && temperature_value < 1))
 		qdel(src) // git out
 		return
 	temperaturetion(seconds_between_ticks)

@@ -626,9 +626,10 @@
 		/datum/reagent/consumable/nutriment/protein,
 		/datum/reagent/consumable/nutriment/vitamin,
 		/datum/reagent/consumable/nutriment/peptides,
-		/datum/reagent/consumable/liquidelectricity/enriched,
+		/datum/reagent/consumable/liquidelectricity,
 		/datum/reagent/growthserum,
-		/datum/reagent/yuck)
+		/datum/reagent/yuck,
+	)
 
 	supplementary_reagents = list(
 		/datum/reagent/medicine/rezadone = 3,
@@ -636,11 +637,13 @@
 		/datum/reagent/consumable/red_queen = 2,
 		/datum/reagent/consumable/peachjuice = 2,
 		/datum/reagent/uranium = 1,
-		/datum/reagent/consumable/liquidgibs = 1)
+		/datum/reagent/consumable/liquidgibs = 1,
+	)
 
 	suppressive_reagents = list(
 		/datum/reagent/consumable/salt = -3,
-		/datum/reagent/medicine/c2/syriniver = -2)
+		/datum/reagent/medicine/c2/syriniver = -2,
+	)
 
 	virus_suspectibility = 0.5
 	resulting_atom = /mob/living/basic/vatbeast

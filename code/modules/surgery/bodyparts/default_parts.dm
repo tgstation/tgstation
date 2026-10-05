@@ -36,7 +36,7 @@
 	/// Offset to apply to equipment worn on the neck
 	var/datum/worn_feature_offset/worn_neck_offset
 	/// Which functional (i.e. flightpotion) wing types (if any) does this bodypart support? If count is >1 a radial menu is used to choose between all icons in list
-	var/list/wing_types = list(/obj/item/organ/wings/functional/angel)
+	var/list/wing_types = list(/obj/item/organ/wings/angel)
 
 /obj/item/bodypart/chest/apply_ownership(mob/living/carbon/new_owner)
 	. = ..()
@@ -406,6 +406,7 @@
 			FOOTSTEP_MOB_CLAW,
 			FOOTSTEP_MOB_HEAVY,
 			FOOTSTEP_MOB_SHOE,
+			FOOTSTEP_MOB_SYNTHETIC,
 		)
 		if(!(footstep_type in supported_types))
 			stack_trace("Invalid footstep type set on leg: \[[footstep_type]\] \

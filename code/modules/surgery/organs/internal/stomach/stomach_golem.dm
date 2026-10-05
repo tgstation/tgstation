@@ -5,7 +5,7 @@
 	color = COLOR_GOLEM_GRAY
 	organ_flags = ORGAN_MINERAL
 	organ_traits = list(TRAIT_ROCK_EATER)
-	hunger_modifier = 10 // golems burn fuel quickly
+	hunger_modifier = 8 // golems burn fuel quickly
 	/// How slow are you when the "hungry" icon appears?
 	var/min_hunger_slowdown = 0.5
 	/// How slow are you if you have absolutely nothing in the tank?
@@ -74,7 +74,7 @@
 	owner.add_traits(list(TRAIT_IMMOBILIZED, TRAIT_FORCED_STANDING, TRAIT_HANDS_BLOCKED, TRAIT_INCAPACITATED), TRAIT_STATUS_EFFECT(id))
 	return TRUE
 
-/datum/status_effect/golem_statued/get_examine_text()
+/datum/status_effect/golem_statued/get_examine_text(mob/examiner)
 	return span_warning("[owner.p_They()] [owner.p_are()] as still as a statue!")
 
 /datum/status_effect/golem_statued/on_remove()

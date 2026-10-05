@@ -225,6 +225,12 @@
 	holywater_drain_amount = 0.33
 	notice = "&bull; Cannot be used near living sentient beings.<br>&bull; Cancelled if you are hit with an anti-magic item."
 
+/datum/heretic_knowledge/spell/caretaker_refuge/has_charges(mob/living/user)
+	return user.has_status_effect(/datum/status_effect/caretaker_refuge) || ..()
+
+/datum/heretic_knowledge/spell/caretaker_refuge/should_deduct_charge(mob/living/user)
+	return !user.has_status_effect(/datum/status_effect/caretaker_refuge)
+
 /datum/heretic_knowledge/ultimate/lock_final
 	name = "Unlock the Labyrinth"
 	desc = "The ascension ritual of the Path of Knock. \

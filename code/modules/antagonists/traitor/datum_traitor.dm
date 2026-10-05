@@ -64,14 +64,9 @@
 			uplink_handler = uplink.uplink_handler
 		uplink_handler.uplink_flag = uplink_flag_given
 		uplink_handler.primary_objectives = objectives
-		uplink_handler.has_progression = TRUE
-		SStraitor.register_uplink_handler(uplink_handler)
 
 		uplink_handler.can_replace_objectives = CALLBACK(src, PROC_REF(can_change_objectives))
 		uplink_handler.replace_objectives = CALLBACK(src, PROC_REF(submit_player_objective))
-
-		if(uplink_handler.progression_points < SStraitor.current_global_progression)
-			uplink_handler.progression_points = SStraitor.current_global_progression * SStraitor.newjoin_progression_coeff
 
 		var/list/uplink_items = list()
 		for(var/datum/uplink_item/item as anything in SStraitor.uplink_items)

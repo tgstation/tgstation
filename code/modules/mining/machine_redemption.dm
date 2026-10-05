@@ -50,8 +50,7 @@
 
 /obj/machinery/mineral/ore_redemption/Initialize(mapload)
 	. = ..()
-	if(!GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter])
-		GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter] = new /datum/techweb/autounlocking/smelter
+	GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter] ||= new /datum/techweb/autounlocking/smelter()
 	stored_research = GLOB.autounlock_techwebs[/datum/techweb/autounlocking/smelter]
 
 	//mat_container_signals is for reedeming points from local storage if silo is not required
@@ -105,7 +104,7 @@
 		if(!amount || !redemption_mat_amount)
 			return FALSE
 
-		var/smeltable_sheets = FLOOR(redemption_mat_amount / amount, 1)
+		var/smeltable_sheets = floor(redemption_mat_amount / amount)
 
 		if(!smeltable_sheets)
 			return FALSE
@@ -264,12 +263,12 @@
 				"icon_state" = sheet_type::icon_state,
 			))
 
-		for(var/research in stored_research.researched_designs)
-			var/datum/design/alloy = SSresearch.techweb_design_by_id(research)
+		for(var/design_path in stored_research.researched_designs)
+			var/datum/design/alloy = SSresearch.techweb_designs[design_path]
 			var/obj/alloy_type = alloy.build_path
 			data["materials"] += list(list(
 				"name" = alloy.name,
-				"id" = alloy.id,
+				"id" = design_path,
 				"category" = "alloy",
 				"amount" = can_smelt_alloy(alloy),
 				"icon" = alloy_type::icon,
@@ -338,28 +337,32 @@
 				return
 			else if(!allowed(usr)) //Check the ID inside, otherwise check the user
 				to_chat(usr, span_warning("Required access not found."))
-			else
-				var/datum/material/mat = locate(params["id"])
+				return
 
-				var/amount = mat_container.materials[mat]
-				if(!amount)
-					return
+			var/datum/material/mat = locate(params["material_ref"])
 
-				var/stored_amount = CEILING(amount / SHEET_MATERIAL_AMOUNT, 0.1)
-				if(!stored_amount)
-					return
+			var/amount = mat_container.materials[mat]
+			if(!amount)
+				return
 
-				var/desired = text2num(params["sheets"])
-				var/sheets_to_remove = round(min(desired, 50, stored_amount))
-				materials.eject_sheets(mat, sheets_to_remove, get_step(src, output_dir), user_data = ID_DATA(usr))
+			var/stored_amount = CEILING(amount / SHEET_MATERIAL_AMOUNT, 0.1)
+			if(!stored_amount)
+				return
+
+			var/desired = text2num(params["sheets"])
+			var/sheets_to_remove = round(min(desired, 50, stored_amount))
+			materials.eject_sheets(mat, sheets_to_remove, get_step(src, output_dir), user_data = ID_DATA(usr))
 			return TRUE
 		if("Smelt")
 			if(!mat_container)
 				return
 			if(!materials.can_use_resource(user_data = ID_DATA(usr)))
 				return
-			var/alloy_id = params["id"]
-			var/datum/design/alloy = stored_research.isDesignResearchedID(alloy_id)
+			var/alloy_path = text2path(params["path"])
+			if(!stored_research.researched_designs[alloy_path])
+				return
+			var/datum/design/alloy = SSresearch.techweb_designs[alloy_path]
+
 			var/obj/item/card/id/user_id_card
 			if(isliving(usr))
 				var/mob/living/user = usr

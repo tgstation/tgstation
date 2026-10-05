@@ -1,6 +1,5 @@
 /datum/design/solar
 	name = "Solar Panel Frame"
-	id = "solar_panel"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*1.75, /datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/solar_assembly
@@ -12,7 +11,6 @@
 
 /datum/design/tracker_electronics
 	name = "Solar Tracking Electronics"
-	id = "solar_tracker"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/electronics/tracker
@@ -24,7 +22,6 @@
 
 /datum/design/control
 	name = "Blast Door Controller"
-	id = "blast"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/assembly/control/blast_door
@@ -36,7 +33,6 @@
 
 /datum/design/ignition_control
 	name = "Ignition Switch Controller"
-	id = "ignition"
 	build_type = PROTOLATHE | AWAY_LATHE | AUTOLATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 0.5)
 	build_path = /obj/item/assembly/control/igniter
@@ -48,7 +44,6 @@
 
 /datum/design/custom_vendor_refill
 	name = "Custom Vendor Refill"
-	id = "custom_vendor_refill"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/vending_refill/custom
@@ -61,7 +56,6 @@
 
 /datum/design/miniature_power_cell
 	name = "Light Fixture Battery"
-	id = "miniature_power_cell"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
 	build_path = /obj/item/stock_parts/power_store/cell/emergency_light
@@ -73,7 +67,6 @@
 
 /datum/design/geiger
 	name = "Geiger Counter"
-	id = "geigercounter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*1.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT*1.5)
 	build_path = /obj/item/geiger_counter
@@ -85,7 +78,6 @@
 
 /datum/design/large_welding_tool
 	name = "Industrial Welding Tool"
-	id = "large_welding_tool"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.7, /datum/material/glass = SMALL_MATERIAL_AMOUNT*0.6)
 	build_path = /obj/item/weldingtool/largetank/empty
@@ -97,7 +89,6 @@
 
 /datum/design/earmuffs
 	name = "Earmuffs"
-	id = "earmuffs"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*5)
 	build_path = /obj/item/clothing/ears/earmuffs
@@ -109,7 +100,6 @@
 
 /datum/design/pipe_painter
 	name = "Pipe Painter"
-	id = "pipe_painter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SHEET_MATERIAL_AMOUNT * 2.5, /datum/material/glass =SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/pipe_painter
@@ -121,7 +111,6 @@
 
 /datum/design/airlock_painter
 	name = "Airlock Painter"
-	id = "airlock_painter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/airlock_painter
@@ -133,7 +122,6 @@
 
 /datum/design/airlock_painter/decal
 	name = "Decal Painter"
-	id = "decal_painter"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/airlock_painter/decal
@@ -145,7 +133,6 @@
 
 /datum/design/apc_board
 	name = "APC Module"
-	id = "power_control"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT, /datum/material/glass =SMALL_MATERIAL_AMOUNT)
 	build_path = /obj/item/electronics/apc
@@ -157,7 +144,6 @@
 
 /datum/design/airlock_board
 	name = "Airlock Electronics"
-	id = "airlock_board"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/electronics/airlock
@@ -169,7 +155,6 @@
 
 /datum/design/firelock_board
 	name = "Firelock Circuitry"
-	id = "firelock_board"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/electronics/firelock
@@ -181,7 +166,6 @@
 
 /datum/design/airalarm_electronics
 	name = "Air Alarm Electronics"
-	id = "airalarm_electronics"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/electronics/airalarm
@@ -193,7 +177,6 @@
 
 /datum/design/firealarm_electronics
 	name = "Fire Alarm Electronics"
-	id = "firealarm_electronics"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/electronics/firealarm
@@ -205,7 +188,6 @@
 
 /datum/design/trapdoor_electronics
 	name = "Trapdoor Controller Electronics"
-	id = "trapdoor_electronics"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.5)
 	build_path = /obj/item/assembly/trapdoor
@@ -217,7 +199,6 @@
 
 /datum/design/extinguisher
 	name = "Fire Extinguisher"
-	id = "extinguisher"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/extinguisher/empty
@@ -229,7 +210,6 @@
 
 /datum/design/pocketfireextinguisher
 	name = "Pocket Fire Extinguisher"
-	id = "pocketfireextinguisher"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron =SMALL_MATERIAL_AMOUNT*0.5, /datum/material/glass = SMALL_MATERIAL_AMOUNT*0.4)
 	build_path = /obj/item/extinguisher/mini/empty
