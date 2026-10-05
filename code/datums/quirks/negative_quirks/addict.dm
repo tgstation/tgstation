@@ -171,10 +171,11 @@
 
 	var/obj/item/organ/lungs/normal_lungs = mob_species::mutantlungs
 	var/obj/item/organ/lungs/smoker_lungs = mob_species::smoker_lungs
+	// don't think about this one too hard ok?
+	if(isnull(normal_lungs))
+		return TRUE
 	// both lungs need to breathe the same thing. if they don't, block the quirk
 	// ...at least until someone wants to add a subtype for whatever species fails the check
-	if(isnull(normal_lungs))
-		return isnull(smoker_lungs)
 	if(normal_lungs::safe_plasma_min > 0)
 		return smoker_lungs::safe_plasma_min > 0
 	if(normal_lungs::safe_nitro_min > 0)
