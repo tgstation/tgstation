@@ -37,7 +37,7 @@
 	. = ..()
 	if(length(icon_states))
 		icon_state = pick(icon_states)
-	AddElement(/datum/element/stickerable)
+	AddElement(/datum/element/stickerable, 15, examine_text)
 
 /obj/item/sticker/smile
 	name = "smiley sticker"

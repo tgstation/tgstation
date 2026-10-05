@@ -18,7 +18,7 @@
 
 /obj/item/tail_pin/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/stickerable)
+	AddElement(/datum/element/stickerable, 9)
 
 /datum/embedding/corgi_pin
 	pain_chance = 0

@@ -1,14 +1,17 @@
-/// Stops more than this many stickers from being applied to one atom
-#define MAX_STICKER_COUNT 15
-
 /// Apply to an item to make it so you can click on anything with that item to stick it as a sticker
 /datum/element/stickerable
+	element_flags = ELEMENT_BESPOKE
+	argument_hash_start_idx = 2
+	var/max = 15
+	var/examine_text
 
-/datum/element/stickerable/Attach(datum/target)
+/datum/element/stickerable/Attach(datum/target, max = 15, examine_text)
 	. = ..()
 	if(!isitem(target))
 		return ELEMENT_INCOMPATIBLE
 
+	src.max = max
+	src.examine_text = examine_text
 	RegisterSignal(target, COMSIG_ITEM_INTERACTING_WITH_ATOM, PROC_REF(on_item_interact))
 	RegisterSignal(target, COMSIG_MOVABLE_BUMP, PROC_REF(on_bump))
 
@@ -45,7 +48,7 @@
  * picks random coordinates based on a `target`'s icon.
  */
 /datum/element/stickerable/proc/attempt_attach(obj/item/source, atom/target, mob/user, px, py)
-	if(COUNT_TRAIT_SOURCES(target, TRAIT_STICKERED) >= MAX_STICKER_COUNT)
+	if(COUNT_TRAIT_SOURCES(target, TRAIT_STICKERED) >= max)
 		source.balloon_alert_to_viewers("sticker won't stick!")
 		return FALSE
 
@@ -68,5 +71,3 @@
 
 	target.AddComponent(/datum/component/sticker, source, get_dir(target, source), px, py, null, null, examine_text)
 	return TRUE
-
-#undef MAX_STICKER_COUNT
