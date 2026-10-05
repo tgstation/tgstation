@@ -182,7 +182,10 @@
 		return smoker_lungs::safe_nitro_min > 0
 	if(normal_lungs::safe_oxygen_min > 0)
 		return smoker_lungs::safe_oxygen_min > 0
-
+	// edge case: smoker lungs that are a subtype of the normal lungs. probably safe
+	if(ispath(smoker_lungs, normal_lungs))
+		return TRUE
+	// default to false because whatever setup we have at this point is weird and arcane
 	return FALSE
 
 /datum/quirk/item_quirk/addict/alcoholic
