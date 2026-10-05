@@ -141,6 +141,8 @@
 	thing.forceMove(drop_location)
 	if (isopenturf(drop_location))
 		make_mess(drop_location)
+		if (QDELETED(thing)) // Stacks can merge and delete themselves
+			return
 		var/destination = get_edge_target_turf(drop_location, pick(GLOB.alldirs))
 		var/throwRange = vomit_strongly ? rand(2, 8) : 1
 		thing.safe_throw_at(destination, throwRange, 2)

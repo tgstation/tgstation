@@ -20,6 +20,13 @@
 		if(WOUND_SEVERITY_CRITICAL)
 			return span_boldwarning("It's leaking blood from a major [LOWER_TEXT(undiagnosed_name || name)]!!")
 
+/datum/wound/pierce/wound_injury(datum/wound/old_wound, attack_direction)
+	var/obj/item/stack/medical/wrap/current_gauze = LAZYACCESS(limb.applied_items, LIMB_ITEM_GAUZE)
+	if(!old_wound && !isnull(current_gauze) && (wound_flags & ACCEPTS_GAUZE))
+		// oops your existing gauze got penetrated through! need a new one now
+		limb.seep_gauze(initial(current_gauze.absorption_capacity) * 0.8)
+	return ..()
+
 /datum/wound/pierce/bleed
 	name = "Piercing Wound"
 	sound_effect = 'sound/items/weapons/slice.ogg'
@@ -48,7 +55,6 @@
 	set_blood_flow(initial_flow)
 	if(limb.can_bleed() && attack_direction && victim.get_blood_volume() > BLOOD_VOLUME_OKAY)
 		victim.spray_blood(attack_direction, severity)
-
 	return ..()
 
 /datum/wound/pierce/bleed/receive_damage(wounding_type, wounding_dmg, wound_bonus, attack_direction, damage_source)

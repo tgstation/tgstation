@@ -181,7 +181,6 @@
 	id = "Exercised"
 	duration = 15 SECONDS
 	status_type = STATUS_EFFECT_REFRESH // New effects will add to total duration
-	alert_type = null
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	alert_type = /atom/movable/screen/alert/status_effect/exercised
 	/// Having any of these reagents in your system extends the duration

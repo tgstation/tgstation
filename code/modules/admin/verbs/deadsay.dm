@@ -8,7 +8,7 @@ ADMIN_VERB(dsay, R_NONE, "DSay", "Speak to the dead.", ADMIN_CATEGORY_GAME)
 	if (user.handle_spam_prevention(message,MUTE_DEADCHAT))
 		return
 
-	message = copytext_char(sanitize(message), 1, MAX_MESSAGE_LEN)
+	message = copytext_char(message, 1, MAX_MESSAGE_LEN)
 	user.mob.log_talk(message, LOG_DSAY)
 
 	if (!message)

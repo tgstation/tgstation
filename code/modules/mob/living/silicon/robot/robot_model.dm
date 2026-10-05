@@ -414,8 +414,8 @@
 	model_select_icon = "engineer"
 	model_traits = list(TRAIT_NEGATES_GRAVITY)
 	hat_offset = list("north" = list(0, -4), "south" = list(0, -4), "east" = list(4, -4), "west" = list(-4, -4))
-	///Weakref to the night vision action
-	var/datum/weakref/night_vision_ref
+	///Weakref to the meson vision action
+	var/datum/weakref/meson_vision_ref
 
 /datum/action/cooldown/borg_meson
 	name = "Toggle Meson Vision"
@@ -423,12 +423,22 @@
 	button_icon_state = "meson"
 
 /datum/action/cooldown/borg_meson/Activate()
-	var/mob/living/silicon/robot/borg = owner
-	if(borg.sight & SEE_TURFS)
-		borg.sight_mode = BORGDEFAULT
+	if(HAS_TRAIT_FROM(owner, TRAIT_MESON_VISION, ACTION_TRAIT))
+		UnregisterSignal(owner, COMSIG_LIVING_RESTORE_INITIAL_SIGHT)
+		REMOVE_TRAIT(owner, TRAIT_MESON_VISION, ACTION_TRAIT)
 	else
-		borg.sight_mode = BORGMESON
-	borg.update_sight()
+		RegisterSignal(owner, COMSIG_LIVING_RESTORE_INITIAL_SIGHT, PROC_REF(on_initial_sight)) //order is important as update_sight() is called when the vision trait is added/removed
+		ADD_TRAIT(owner, TRAIT_MESON_VISION, ACTION_TRAIT)
+
+/datum/action/cooldown/borg_meson/Remove(mob/remove_from)
+	UnregisterSignal(owner, COMSIG_LIVING_RESTORE_INITIAL_SIGHT)
+	REMOVE_TRAIT(remove_from, TRAIT_MESON_VISION, ACTION_TRAIT)
+	return ..()
+
+///Add meson green shading to darker areas
+/datum/action/cooldown/borg_meson/proc/on_initial_sight(mob/living/source)
+	SIGNAL_HANDLER
+	source.lighting_color_cutoffs = blend_cutoff_colors(source.lighting_color_cutoffs, list(5, 15, 5))
 
 /obj/item/robot_model/engineering/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
 	. = ..()
@@ -436,12 +446,12 @@
 		return
 
 	//Grant night vision action
-	var/datum/action/cooldown/borg_meson/night_vision = new(loc)
-	night_vision.Grant(loc)
-	night_vision_ref = WEAKREF(night_vision)
+	var/datum/action/cooldown/borg_meson/meson = new(loc)
+	meson.Grant(loc)
+	meson_vision_ref = WEAKREF(meson)
 
 /obj/item/robot_model/engineering/Destroy()
-	QDEL_NULL(night_vision_ref)
+	QDEL_NULL(meson_vision_ref)
 	return ..()
 
 /obj/item/robot_model/janitor
@@ -1012,12 +1022,22 @@
 	button_icon_state = "thermal"
 
 /datum/action/cooldown/borg_thermal/Activate()
-	var/mob/living/silicon/robot/borg = owner
-	if(borg.sight & SEE_MOBS)
-		borg.sight_mode = BORGDEFAULT
+	if(HAS_TRAIT_FROM(owner, COMSIG_LIVING_RESTORE_INITIAL_SIGHT, ACTION_TRAIT))
+		UnregisterSignal(owner, COMSIG_MOB_UPDATE_SIGHT)
+		REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, ACTION_TRAIT)
 	else
-		borg.sight_mode = BORGTHERM
-	borg.update_sight()
+		RegisterSignal(owner, COMSIG_LIVING_RESTORE_INITIAL_SIGHT, PROC_REF(on_initial_sight)) //order is important as update_sight() is called when the vision trait is added/removed
+		ADD_TRAIT(owner, TRAIT_THERMAL_VISION, ACTION_TRAIT)
+
+/datum/action/cooldown/borg_thermal/Remove(mob/remove_from)
+	UnregisterSignal(owner, COMSIG_LIVING_RESTORE_INITIAL_SIGHT)
+	REMOVE_TRAIT(remove_from, TRAIT_THERMAL_VISION, ACTION_TRAIT)
+	return ..()
+
+///Add thermal reddish tint to darker areas
+/datum/action/cooldown/borg_thermal/proc/on_initial_sight(mob/living/source)
+	SIGNAL_HANDLER
+	source.lighting_color_cutoffs = blend_cutoff_colors(source.lighting_color_cutoffs, list(25, 8, 5))
 
 /obj/item/robot_model/saboteur/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
 	var/datum/action/cooldown/borg_thermal/thermal_vision = new(loc)

@@ -571,6 +571,7 @@
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0
 	heat_protection = 0
+	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 
 /datum/armor/armor_changeling
 	melee = 40

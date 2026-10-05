@@ -260,6 +260,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PLASMA_LOVER_METABOLISM "plasma_lover_metabolism"
 /// The mob is not harmed by tetrodotoxin. Instead, it heals them like omnizine
 #define TRAIT_TETRODOTOXIN_HEALING "tetrodotoxin_healing"
+/// Do not allow legs to be attached to a mob with this trait
+#define TRAIT_BLOCK_ATTACHING_LEGS "block_attaching_legs"
 #define TRAIT_EASYDISMEMBER "easy_dismember"
 #define TRAIT_LIMBATTACHMENT "limb_attach"
 #define TRAIT_NOLIMBDISABLE "no_limb_disable"
@@ -411,6 +413,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_MESON_VISION "meson_vision"
 /// Gives us Night vision
 #define TRAIT_TRUE_NIGHT_VISION "true_night_vision"
+/// Gives us the ability to see objects thru walls and slight night vision
+#define TRAIT_MATERIAL_VISON "objects_vision"
 /// Negates our gravity, letting us move normally on floors in 0-g
 #define TRAIT_NEGATES_GRAVITY "negates_gravity"
 /// We are ignoring gravity
@@ -739,6 +743,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait that makes you only SOMETIMES bite when attacking with an unarmed strike.
 #define TRAIT_REFINED_BITER "refined biter"
 
+/// Trait that ignores whether or not a human's head can be decapitated, and permits it instead.
+#define TRAIT_ALWAYS_ALLOW_DECAPITATION "always_allow_decapitation"
+
 // METABOLISMS
 // Various jobs on the station have historically had better reactions
 // to various drinks and foodstuffs. Security liking donuts is a classic
@@ -880,6 +887,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WADDLING "trait_waddling"
 /// Mobs with trait will still waddle even when lying on the floor and make a different footstep sound when doing so.
 #define TRAIT_FLOPPING "trait_flopping"
+/// To be used combined with TRAIT_FLOPPING, to make a mob flop exclusively when laying on the floor.
+#define TRAIT_FLOOR_FLOPPING "trait_floor_flopping"
 /// Required by the on_hit_effect element, which is in turn added by other elements.
 #define TRAIT_ON_HIT_EFFECT "trait_on_hit_effect"
 

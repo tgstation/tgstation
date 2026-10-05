@@ -542,3 +542,10 @@
 	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
 	slowdown = 0
 	fish_source_type = null
+
+//Fishing portal plasma with station atmos
+/turf/open/lava/plasma/station
+	desc = "A pool of chilled liquid plasma.  Only the most extreme fish live here."
+	initial_gas_mix = OPENTURF_DEFAULT_ATMOS
+	planetary_atmos = FALSE
+	baseturfs = /turf/open/lava/plasma/station
