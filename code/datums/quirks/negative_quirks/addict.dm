@@ -165,6 +165,25 @@
 		else
 			quirk_holder.add_mood_event("wrong_cigs", /datum/mood_event/wrong_brand)
 
+/datum/quirk/item_quirk/addict/smoker/is_species_appropriate(datum/species/mob_species)
+	if(!..())
+		return FALSE
+
+	var/obj/item/organ/lungs/normal_lungs = mob_species::mutantlungs
+	var/obj/item/organ/lungs/smoker_lungs = mob_species::smoker_lungs
+	// both lungs need to breathe the same thing. if they don't, block the quirk
+	// ...at least until someone wants to add a subtype for whatever species fails the check
+	if(isnull(normal_lungs))
+		return isnull(smoker_lungs)
+	if(normal_lungs::safe_plasma_min > 0)
+		return smoker_lungs::safe_plasma_min > 0
+	if(normal_lungs::safe_nitro_min > 0)
+		return smoker_lungs::safe_nitro_min > 0
+	if(normal_lungs::safe_oxygen_min > 0)
+		return smoker_lungs::safe_oxygen_min > 0
+
+	return FALSE
+
 /datum/quirk/item_quirk/addict/alcoholic
 	name = "Alcoholic"
 	desc = "You just can't live without alcohol. Your liver is a machine that turns ethanol into acetaldehyde."
