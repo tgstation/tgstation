@@ -104927,7 +104927,7 @@
 	dir = 8
 	},
 /obj/effect/turf_decal/box/corners,
-/obj/structure/closet/secure_closet/engineering_electrical/noinsuls,
+/obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "pwH" = (

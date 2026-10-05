@@ -32789,7 +32789,7 @@
 	dir = 4
 	},
 /obj/structure/sign/warning/radiation/rad_area/directional/north,
-/obj/structure/closet/secure_closet/engineering_electrical/noinsuls,
+/obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "jmI" = (

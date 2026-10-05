@@ -1077,8 +1077,8 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
-/obj/structure/closet/radiation,
 /obj/structure/sign/warning/no_smoking/directional/west,
+/obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "apa" = (
@@ -12414,9 +12414,12 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/lobby)
 "dje" = (
-/obj/structure/closet/secure_closet/engineering_electrical/noinsuls,
-/turf/open/floor/iron/smooth,
-/area/station/engineering/main)
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/structure/closet/radiation,
+/turf/open/floor/iron,
+/area/station/engineering/lobby)
 "djl" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -55453,6 +55456,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
+/obj/item/inducer,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/hop)
 "oJj" = (
@@ -134360,9 +134364,9 @@ mfT
 lpE
 mwx
 wrQ
-dje
+wrQ
 lEH
-dje
+wrQ
 wrQ
 mwx
 dGY
@@ -197839,7 +197843,7 @@ rvo
 cbA
 jVB
 wPp
-oOs
+dje
 aoY
 qww
 kOk

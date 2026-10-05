@@ -17647,7 +17647,8 @@
 /obj/effect/decal/cleanable/dirt,
 /obj/item/multitool,
 /obj/machinery/newscaster/directional/west,
-/obj/structure/closet/secure_closet/engineering_electrical/noinsuls,
+/obj/structure/closet/toolcloset,
+/obj/item/inducer,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "erX" = (
@@ -45603,9 +45604,7 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "lko" = (
-/obj/effect/turf_decal/bot,
 /obj/structure/sign/warning/no_smoking/directional/south,
-/obj/structure/closet/secure_closet/engineering_electrical/noinsuls,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
 "lks" = (
@@ -95050,6 +95049,8 @@
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "xwu" = (
+/obj/structure/closet/secure_closet/engineering_electrical,
+/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "xwA" = (

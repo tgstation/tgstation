@@ -38,7 +38,7 @@
 	..()
 	var/list/items_inside = list(
 		/obj/item/inducer = 2,
-		/obj/item/storage/toolbox/electrical = 3,
+		/obj/item/storage/toolbox/electrical = 2,
 		/obj/item/electronics/apc = 3,
 		/obj/item/multitool = 3)
 	generate_items_inside(items_inside,src)
@@ -48,12 +48,6 @@
 
 	new /obj/item/clothing/gloves/color/yellow(src)
 	new /obj/item/clothing/gloves/color/yellow(src)
-	new /obj/item/clothing/gloves/color/yellow(src)
-
-/obj/structure/closet/secure_closet/engineering_electrical/noinsuls
-
-/obj/structure/closet/secure_closet/engineering_electrical/noinsuls/populate_contents_immediate()
-	return
 
 /obj/structure/closet/secure_closet/engineering_welding
 	name = "welding supplies locker"
