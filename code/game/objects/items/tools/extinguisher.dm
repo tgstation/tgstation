@@ -379,7 +379,7 @@
 	to_chat(user, span_notice("You add [tool] to [src]."))
 	qdel(tool)
 	var/obj/item/bot_assembly/firebot/assembly = new(drop_location())
-	var/held_index = user.is_holding(src)
+	var/held_index = user.get_held_index_of_item(src)
 	qdel(src)
 	if (held_index)
 		user.put_in_hand(assembly, held_index)

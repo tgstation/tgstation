@@ -62,7 +62,7 @@
 		return FALSE
 	if(istype(target, /mob/living/basic/stoat))
 		return owner.gender == MALE && target.gender == MALE // other stoats are ENEMIES if we are both males
-	for(var/obj/item/weapon in target.held_items)
+	for(var/obj/item/weapon as anything in target.get_held_items())
 		if(weapon.force > 15 || isgun(weapon))
 			return TRUE
 	if(target.mob_size > owner.mob_size)

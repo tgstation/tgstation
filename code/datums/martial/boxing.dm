@@ -83,7 +83,7 @@
 /datum/martial_art/boxing/disarm_act(mob/living/attacker, mob/living/defender)
 	if(honor_check(defender))
 		add_to_streak("D", defender)
-	tussle(attacker, defender)
+	INVOKE_ASYNC(src, PROC_REF(tussle), attacker, defender)
 	return MARTIAL_ATTACK_SUCCESS
 
 /datum/martial_art/boxing/grab_act(mob/living/attacker, mob/living/defender)
@@ -95,7 +95,7 @@
 /datum/martial_art/boxing/harm_act(mob/living/attacker, mob/living/defender)
 	if(honor_check(defender))
 		add_to_streak("H", defender)
-	tussle(attacker, defender)
+	INVOKE_ASYNC(src, PROC_REF(tussle), attacker, defender)
 	return MARTIAL_ATTACK_SUCCESS
 
 // Our only boxing move, which occurs on literally all attacks; the tussle. However, quite a lot morphs the results of this proc. Combos, unlike most martial arts attacks, are checked in this proc rather than our standard unarmed procs

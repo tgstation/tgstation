@@ -39,6 +39,7 @@
 			qdel(src)
 			return
 		bodypart_overlay = new()
+		bodypart_overlay.overlay_flags = NONE
 		bodypart_overlay.set_layers(layers)
 		bodypart_overlay.offset_location = UPPER_BODY
 		if(carbon_parent.bodyshape & BODYSHAPE_SNOUTED) //stupid, but external organ bodytypes are not stored on the limb

@@ -8,6 +8,7 @@
 			"playfully leans against"
 		),
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_HUNT_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_PET_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BABIES_PARTNER_TYPES = list(/mob/living/basic/raptor),
 		BB_MAX_CHILDREN = 5,

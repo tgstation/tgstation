@@ -55,7 +55,7 @@
 /datum/status_effect/his_grace/tick(seconds_between_ticks)
 	bloodlust = 0
 	var/graces = 0
-	for(var/obj/item/his_grace/HG in owner.held_items)
+	for(var/obj/item/his_grace/HG as anything in owner.get_held_items_of_type(/obj/item/his_grace))
 		if(HG.bloodthirst > bloodlust)
 			bloodlust = HG.bloodthirst
 		if(HG.awakened)
@@ -181,7 +181,6 @@
 	id = "Exercised"
 	duration = 15 SECONDS
 	status_type = STATUS_EFFECT_REFRESH // New effects will add to total duration
-	alert_type = null
 	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
 	alert_type = /atom/movable/screen/alert/status_effect/exercised
 	/// Having any of these reagents in your system extends the duration

@@ -5,6 +5,13 @@
 		var/datum/mod_theme/new_theme = new path()
 		.[path] = new_theme
 
+/// Simple proc to search through mod_themes global to return a theme
+/proc/find_mod_theme(haystack)
+	for(var/entry in GLOB.mod_themes)
+		var/datum/mod_theme/theme_singleton = GLOB.mod_themes[entry]
+		if(findtext(haystack, theme_singleton.default_skin))
+			return theme_singleton
+
 /// MODsuit theme, instanced once and then used by MODsuits to grab various statistics.
 /datum/mod_theme
 	abstract_type = /datum/mod_theme
@@ -79,6 +86,10 @@
 			),
 		),
 	)
+	///	associated list with parts to assemble a sprite from code. Check CERULEAN_MODSUIT_GEN_FILE for existing parts to pick from. Sprites at the top of the list load first.
+	var/list/cerulean_tail_palette
+	/// the color given for the flippers which female physique Ceruleans have, when the modsuit is sealed. FLIPPERS autogenerates
+	var/cerulean_flipper_palette = FLIPPERS
 
 #ifdef UNIT_TESTS
 /datum/mod_theme/New()
@@ -219,7 +230,8 @@
 			),
 		),
 	)
-
+	cerulean_tail_palette = list("security" = list("#292929", "#414146", "#585858"))
+	cerulean_flipper_palette = "#414146"
 
 /datum/mod_theme/civilian
 	name = "civilian"
@@ -599,6 +611,8 @@
 			),
 		),
 	)
+	cerulean_tail_palette = list("security" = list("#363740", "#31313d", "#4f4f52"))
+	cerulean_flipper_palette = "#40404e"
 
 /datum/mod_theme/mining/New()
 	.=..()
@@ -668,6 +682,8 @@
 			),
 		),
 	)
+	cerulean_tail_palette = list(/* sorry nothing */)
+	cerulean_flipper_palette = NO_FLIPPERS
 
 /datum/armor/mod_theme_loader
 	melee = 15
@@ -923,6 +939,8 @@
 			),
 		),
 	)
+	cerulean_tail_palette =  list("medical" = list("#1e1e32", "#343442", "#7a0bb7"))
+	cerulean_flipper_palette = "#7a0bb7"
 
 /datum/armor/mod_theme_research
 	melee = 20
@@ -1189,6 +1207,7 @@
 			),
 		),
 	)
+	cerulean_tail_palette = list("medical" = list("#7e1c29", "#adad95", "#d9d7c7"))
 
 /datum/armor/mod_theme_cosmohonk
 	melee = 5
@@ -1364,6 +1383,8 @@
 			),
 		),
 	)
+	cerulean_tail_palette = list("security" = list("#1d1d1f", "#34333a", "#545350"))
+	cerulean_flipper_palette = "#34333a"
 
 /datum/armor/mod_theme_elite
 	melee = 60
@@ -1433,6 +1454,8 @@
 			),
 		),
 	)
+	cerulean_tail_palette = list("medical" = list("#1e1e32", "#820a16", "#b22c20"))
+	cerulean_flipper_palette = "#1e1e32"
 
 /datum/armor/mod_theme_infiltrator
 	melee = 40
@@ -1518,6 +1541,8 @@
 			),
 		),
 	)
+	cerulean_tail_palette = list("medical" = list("#222222", "#c2c1c9", "#b22c20"))
+	cerulean_flipper_palette = "#3d667a"
 
 /datum/armor/mod_theme_interdyne
 	melee = 30
@@ -1589,6 +1614,8 @@
 			),
 		),
 	)
+	cerulean_tail_palette = list("security" = list("#8637af", "#490869", "#994dc5"))
+	cerulean_flipper_palette = "#47bfff"
 
 /datum/armor/mod_theme_enchanted
 	melee = 40
@@ -1656,6 +1683,8 @@
 			),
 		),
 	)
+	cerulean_tail_palette = list("security" = list("#212022", "#2f2e31", "#2f2e31"))
+	cerulean_flipper_palette = "#21a52e"
 
 /datum/armor/mod_theme_ninja
 	melee = 40
@@ -1724,6 +1753,8 @@
 			),
 		),
 	)
+	cerulean_tail_palette = list("security" = list("#72452a", "#55322e", "#9f6f3d"))
+	cerulean_flipper_palette = "#573431"
 
 /datum/armor/mod_theme_prototype
 	melee = 20
@@ -2033,6 +2064,8 @@
 			),
 		),
 	)
+	cerulean_tail_palette = list("security" = list("#29722e", "#ffce5b", "#488c40"))
+	cerulean_flipper_palette = "#2b2c38"
 
 /datum/armor/mod_theme_corporate
 	melee = 65
@@ -2095,6 +2128,8 @@
 			),
 		),
 	)
+	cerulean_tail_palette = list("medical" = list("#39393f", "#eeeeee", "#eeeeee"))
+	cerulean_flipper_palette = "#7ed2ff"
 
 /datum/armor/mod_theme_chrono
 	melee = 60
@@ -2159,6 +2194,8 @@
 			),
 		),
 	)
+	cerulean_tail_palette = list("security" = list("#00289f", "#343442", "#0050d5"))
+	cerulean_flipper_palette = "#001775"
 
 /datum/armor/mod_theme_debug
 	melee = 50

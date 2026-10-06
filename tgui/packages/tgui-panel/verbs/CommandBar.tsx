@@ -9,6 +9,7 @@ import {
 import { useAtomValue } from 'jotai';
 import { type KeyboardEvent, useEffect, useRef, useState } from 'react';
 
+import { settingsAtom } from '../settings/atoms';
 import {
   adminTargetsAtom,
   adminVerbsAtom,
@@ -69,15 +70,28 @@ function serializeInput(verb: Verb, filled: string[], suffix = ''): string {
   if (filled.length === 0) return kebab + suffix;
   const parts = filled.map((a, i) => {
     const arg = verb.args[i];
-    return arg && isTextArg(arg) ? `"${a}"` : a;
+    return arg && isTextArg(arg) && i < verb.args.length - 1 ? `"${a}"` : a;
   });
   return `${kebab} ${parts.join(' ')}${suffix}`;
 }
 
-function suffixForArg(arg: VerbArg | undefined): string {
+function suffixForArg(
+  arg: VerbArg | undefined,
+  isLastArg: boolean,
+): string {
   if (!arg) return '';
-  if (isTextArg(arg)) return ' "';
+  if (isTextArg(arg) && !isLastArg) return ' "';
   return ' ';
+}
+
+function skipTokens(raw: string, count: number): number {
+  let pos = 0;
+  for (let j = 0; j < count; j++) {
+    while (pos < raw.length && raw[pos] === ' ') pos++;
+    while (pos < raw.length && raw[pos] !== ' ') pos++;
+  }
+  while (pos < raw.length && raw[pos] === ' ') pos++;
+  return pos;
 }
 
 const MODES = ['Command', 'Say', 'Me', 'OOC'] as const;
@@ -179,6 +193,7 @@ export function CommandBar() {
   const focusSignal = useAtomValue(focusCommandBarAtom);
   const clearSignal = useAtomValue(clearCommandBarAtom);
   const hotkeys = useAtomValue(hotkeysAtom);
+  const { eagerCommandBarSuggestions } = useAtomValue(settingsAtom);
   const initializeSignal = useAtomValue(initializeCommandBarAtom);
   const [input, setInput] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -188,6 +203,7 @@ export function CommandBar() {
   const inputRef = useRef<HTMLInputElement>(null);
   const historyRef = useRef<string[]>([]);
   const [historyIndex, setHistoryIndex] = useState(-1);
+  const [showSuggestions, setShowSuggestions] = useState(false);
 
   const verbArgs = selectedVerb?.args || [];
   const currentArgIndex = selectedVerb ? filledArgs.length : -1;
@@ -212,6 +228,8 @@ export function CommandBar() {
     allSuggestions,
   } = useSuggestions(input, selectedVerb, currentArg, currentToken);
   const hasSuggestions = allSuggestions.length > 0;
+  const displaySuggestions =
+    hasSuggestions && (eagerCommandBarSuggestions || showSuggestions);
   const isCurrentArgTypepath = currentArg ? isTypepathArg(currentArg) : false;
   const isCurrentArgList = currentArg ? isListArg(currentArg) : false;
 
@@ -267,7 +285,13 @@ export function CommandBar() {
     if (verb) {
       setSelectedVerb(verb);
       const argPart = entry.slice(toKebab(verb.name).length + 1);
-      setFilledArgs(parseArgs(argPart));
+      const parsed = parseArgs(argPart);
+      const filled: string[] = [];
+      for (let i = 0; i < verb.args.length && i < parsed.length; i++) {
+        if (isTextArg(verb.args[i]) && i === verb.args.length - 1) break;
+        filled.push(parsed[i]);
+      }
+      setFilledArgs(filled);
     } else {
       setSelectedVerb(null);
       setFilledArgs([]);
@@ -281,6 +305,7 @@ export function CommandBar() {
     setSelectedVerb(null);
     setFilledArgs([]);
     setSelectedIndex(0);
+    setShowSuggestions(false);
   };
 
   const enterChatMode = (chatMode: Mode) => {
@@ -289,7 +314,13 @@ export function CommandBar() {
     setSelectedVerb(verb);
     setFilledArgs([]);
     setSelectedIndex(0);
-    setInput(serializeInput(verb, [], suffixForArg(verb.args[0])));
+    setInput(
+      serializeInput(
+        verb,
+        [],
+        suffixForArg(verb.args[0], verb.args.length === 1),
+      ),
+    );
   };
 
   const cycleMode = () => {
@@ -309,7 +340,13 @@ export function CommandBar() {
     setSelectedVerb(verb);
     setFilledArgs([]);
     setSelectedIndex(0);
-    setInput(serializeInput(verb, [], suffixForArg(verb.args[0])));
+    setInput(
+      serializeInput(
+        verb,
+        [],
+        suffixForArg(verb.args[0], verb.args.length === 1),
+      ),
+    );
     const firstArg = verb.args[0];
     if (firstArg && isEntityArg(firstArg)) {
       Byond.sendMessage('verbs/request_targets', { verb_type: verb.type });
@@ -322,7 +359,13 @@ export function CommandBar() {
     setFilledArgs(newFilled);
     setSelectedIndex(0);
     const nextArg = verbArgs[newFilled.length];
-    setInput(serializeInput(selectedVerb, newFilled, suffixForArg(nextArg)));
+    setInput(
+      serializeInput(
+        selectedVerb,
+        newFilled,
+        suffixForArg(nextArg, newFilled.length === verbArgs.length - 1),
+      ),
+    );
   };
 
   const selectTypepath = (path: string) => {
@@ -335,7 +378,20 @@ export function CommandBar() {
   const invokeVerb = () => {
     if (!selectedVerb) return;
     const argValues: Record<string, string> = {};
-    for (let i = 0; i < verbArgs.length && i < parsedArgs.length; i++) {
+    for (let i = 0; i < verbArgs.length; i++) {
+      if (isTextArg(verbArgs[i]) && i === verbArgs.length - 1) {
+        const offset = skipTokens(argPortion, i);
+        let val = argPortion.slice(offset);
+        if (val.startsWith('"') && val.endsWith('"') && val.length > 1) {
+          val = val.slice(1, -1);
+        } else if (val.startsWith('"')) {
+          val = val.slice(1);
+        }
+        val = val.trim();
+        if (val) argValues[verbArgs[i].name] = val;
+        break;
+      }
+      if (i >= parsedArgs.length) break;
       let val = parsedArgs[i];
       if (isTypepathArg(verbArgs[i])) {
         val = val.replace(/\/+$/, '');
@@ -413,7 +469,7 @@ export function CommandBar() {
             setHistoryIndex(-1);
             resetState();
           }
-        } else if (hasSuggestions) {
+        } else if (displaySuggestions) {
           e.preventDefault();
           setSelectedIndex((i) => Math.min(i + 1, allSuggestions.length - 1));
         } else {
@@ -429,7 +485,7 @@ export function CommandBar() {
             setHistoryIndex(newIndex);
             restoreFromHistory(historyRef.current[newIndex]);
           }
-        } else if (hasSuggestions) {
+        } else if (displaySuggestions) {
           e.preventDefault();
           setSelectedIndex((i) => Math.max(i - 1, 0));
         } else {
@@ -451,18 +507,29 @@ export function CommandBar() {
         return;
       case ' ':
         if (inQuotedArg) return;
-        if (selectedVerb && hasSuggestions) {
+        if (selectedVerb && displaySuggestions) {
           e.preventDefault();
           selectCurrentSuggestion();
           return;
         }
         if (!selectedVerb && verbSuggestions.length > 0) {
           e.preventDefault();
+          const query = input.toLowerCase();
+          const exactMatch = verbSuggestions.find(
+            (v) => toKebab(v.name).toLowerCase() === query,
+          );
+          if (exactMatch) {
+            selectVerb(exactMatch);
+            return;
+          }
+          if (!displaySuggestions) {
+            setShowSuggestions(true);
+            return;
+          }
           if (selectedIndex > 0) {
             selectVerb(verbSuggestions[selectedIndex]);
             return;
           }
-          const query = input.toLowerCase();
           const prefixMatches = verbSuggestions.filter((v) =>
             toKebab(v.name).toLowerCase().startsWith(query),
           );
@@ -487,7 +554,11 @@ export function CommandBar() {
         return;
       case 'Tab':
         e.preventDefault();
-        if (!hasSuggestions || !selectCurrentSuggestion()) {
+        if (!hasSuggestions) {
+          blurToMap();
+        } else if (!displaySuggestions) {
+          setShowSuggestions(true);
+        } else if (!selectCurrentSuggestion()) {
           blurToMap();
         }
         return;
@@ -505,7 +576,7 @@ export function CommandBar() {
           } else {
             selectVerb(verb);
           }
-        } else if (selectedVerb && hasSuggestions && !isCurrentArgTypepath) {
+        } else if (selectedVerb && displaySuggestions && !isCurrentArgTypepath) {
           selectCurrentSuggestion();
         } else if (selectedVerb) {
           invokeVerb();
@@ -534,6 +605,8 @@ export function CommandBar() {
   };
 
   const handleChange = (value: string) => {
+    setShowSuggestions(false);
+
     if (!selectedVerb) {
       value = value.replaceAll(' ', '');
     }
@@ -550,7 +623,12 @@ export function CommandBar() {
     setInput(value);
     setSelectedIndex(0);
 
-    if (selectedVerb && currentArg && isTextArg(currentArg)) {
+    if (
+      selectedVerb &&
+      currentArg &&
+      isTextArg(currentArg) &&
+      currentArgIndex < verbArgs.length - 1
+    ) {
       const afterVerb = value.slice(toKebab(selectedVerb.name).length + 1);
       const parsed = parseArgs(afterVerb);
       if (parsed.length > filledArgs.length && !isInQuotedArg(afterVerb)) {
@@ -559,7 +637,14 @@ export function CommandBar() {
         const nextArg = verbArgs[newFilled.length];
         if (nextArg) {
           setInput(
-            serializeInput(selectedVerb, newFilled, suffixForArg(nextArg)),
+            serializeInput(
+              selectedVerb,
+              newFilled,
+              suffixForArg(
+                nextArg,
+                newFilled.length === verbArgs.length - 1,
+              ),
+            ),
           );
         }
       }
@@ -573,7 +658,7 @@ export function CommandBar() {
   return (
     <div className="CommandBar">
       <div className="CommandBar__input-wrap">
-        {hasSuggestions && (
+        {displaySuggestions && (
           <div className="CommandBar__suggestions">
             {!selectedVerb
               ? verbSuggestions.map((verb, i) => (
