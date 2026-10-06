@@ -26,15 +26,17 @@
 		SSpersonalities.init_personalities()
 
 	var/list/input_sanitized
+	var/list/sanitized_types
 	for(var/personality_key in input)
 		var/datum/personality/personality = SSpersonalities.personalities_by_key[personality_key]
 		if(!istype(personality))
 			continue
-		if(SSpersonalities.is_incompatible(input_sanitized, personality.type))
+		if(SSpersonalities.is_incompatible(sanitized_types, personality.type))
 			continue
 		if(LAZYLEN(input_sanitized) >= CONFIG_GET(number/max_personalities))
 			break
 		LAZYADD(input_sanitized, personality_key)
+		LAZYADD(sanitized_types, personality.type)
 
 	return input_sanitized
 
