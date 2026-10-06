@@ -2102,10 +2102,10 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	//we cannot see mobs and/or objects unless we have thermals/xray/material vision, but we can still see turfs to navigate around
 	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING))
 		init_sight |= SEE_TURFS|BLIND
-	init_sight |= SEND_SIGNAL(src, COMSIG_LIVING_RESTORE_INITIAL_SIGHT)
 	lighting_cutoff = initial(lighting_cutoff)
 	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
-	return initial(sight)
+	init_sight |= SEND_SIGNAL(src, COMSIG_LIVING_RESTORE_INITIAL_SIGHT)
+	return init_sight
 
 /mob/living/proc/mob_try_pickup(mob/living/user, instant=FALSE)
 	if(!ishuman(user) && (user.mob_size <= mob_size || user.num_hands == 0))
