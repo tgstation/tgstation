@@ -145,6 +145,7 @@
 	spawn_loot_chance = 50
 	loot = list(
 		/obj/effect/mob_spawn/corpse/human/skeleton = 27,
+		/obj/effect/mob_spawn/corpse/human/skeleton/cerulean = 3,
 		/obj/item/instrument/trumpet/spectral/one_doot = 1,
 		/obj/item/instrument/saxophone/spectral/one_doot = 1,
 		/obj/item/instrument/trombone/spectral/one_doot = 1,

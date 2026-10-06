@@ -1,0 +1,10 @@
+author: "tontyGH"
+delete-after: True
+changes:
+  - refactor: "A lot of code relating to hands was altered for technical reasons, which fixed these issues:"
+  - bugfix: "Sleeping Carp's style malus did not ignore \"cool\" held items"
+  - bugfix: "Cursed blade could not be used to bind haunted longsword"
+  - bugfix: "Amber focus could not be used to bind haunted longsword"
+  - bugfix: "Items that could block did not correctly block push/shuffle attempts"
+  - bugfix: "The swap_hands tutorial did not account for 3+ hands"
+  - bugfix: "High-tenning a mob did not account for more than 2 hands (you can high-twenty now!)"

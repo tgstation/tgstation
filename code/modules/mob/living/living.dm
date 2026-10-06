@@ -268,10 +268,9 @@
 		if(borg.combat_mode && borg.stat != DEAD)
 			return TRUE
 	//anti-riot equipment is also anti-push
-	for(var/obj/item/I in M.held_items)
-		if(!isclothing(M))
-			if(prob(I.block_chance*2))
-				return
+	for(var/obj/item/I as anything in M.get_held_items())
+		if(!isclothing(M) && prob(I.block_chance*2))
+			return TRUE
 
 /mob/living/proc/can_mobswap_with(mob/other)
 	if (HAS_TRAIT(other, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP))
@@ -315,15 +314,15 @@
 
 /mob/living/get_photo_description(obj/item/camera/camera)
 	var/list/holding = list()
-	var/len = length(held_items)
-	if(len)
-		for(var/obj/item/held_item in held_items)
-			if(!holding.len)
-				holding += "[p_They()] [p_are()] holding \a [held_item]"
-			else if(held_items.Find(held_item) == len)
-				holding += ", and \a [held_item]"
-			else
-				holding += ", \a [held_item]"
+	var/list/held = get_held_items()
+	for(var/item_position in 1 to length(held))
+		var/obj/item/held_item = held[item_position]
+		if(!length(holding))
+			holding += "[p_They()] [p_are()] holding \a [held_item]"
+		else if(item_position != length(held))
+			holding += ", \a [held_item]"
+		else
+			holding += ", and \a [held_item]"
 	return "You can also see [src] on the photo[health < (maxHealth * 0.75) ? ", looking a bit hurt":""][holding.len ? ". [holding.Join("")].":"."]"
 
 //Called when we bump onto an obj
@@ -632,7 +631,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
  * * hand_firsts - boolean that checks the hands of the mob first if TRUE.
  */
 /mob/living/proc/get_idcard(hand_first)
-	if(!length(held_items)) //Early return for mobs without hands.
+	if(!can_hold_items()) //Early return for mobs without hands.
 		return
 	//Check hands
 	var/obj/item/held_item = get_active_held_item()
@@ -2056,7 +2055,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 			lighting_color_cutoffs = blend_cutoff_colors(lighting_color_cutoffs, eyes.color_cutoffs)
 
 	var/obj/item/clothing/glasses/glasses = get_item_by_slot(ITEM_SLOT_EYES)
-	if(istype(glasses))
+	if(istype(glasses) && (glasses.item_flags & IN_INVENTORY))
 		set_invis_see(glasses.invis_override || min(glasses.invis_view, see_invisible))
 		if(!isnull(glasses.lighting_cutoff))
 			lighting_cutoff = max(lighting_cutoff, glasses.lighting_cutoff)
@@ -2066,7 +2065,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	// An average (ranging from 1 to 100) of the lighting_color_cutoffs values.
 	// Used to avoid the hardcoded lighting cutoff from overly stacking with the more specific lighting color cutoffs from eyes and glasses
 	// (or innate in the case of some mobs), with the exception of night vision I guess.
-	var/avg_light_color_cutoff = lighting_color_cutoffs = (lighting_color_cutoffs[1] + lighting_color_cutoffs[2] + lighting_color_cutoffs[3]) / 3
+	var/avg_light_color_cutoff = (lighting_color_cutoffs[1] + lighting_color_cutoffs[2] + lighting_color_cutoffs[3]) / 3
 
 	if(HAS_TRAIT(src, TRAIT_MESON_VISION))
 		new_sight |= SEE_TURFS
@@ -2115,7 +2114,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if (user.mob_size <= mob_size)
 			to_chat(user, span_warning("[src] is too big to pick up!"))
 			return
-	if(!user.get_empty_held_indexes())
+	if(!length(user.get_empty_held_indexes()))
 		to_chat(user, span_warning("Your hands are full!"))
 		return FALSE
 	if(buckled)
@@ -2697,7 +2696,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /mob/living/perform_hand_swap(held_index)
 	//safeguard for one-handed mobs lol
-	if(length(held_items) == 1)
+	if(get_num_hand_slots() == 1)
 		held_index = 1
 
 	return ..()

@@ -1,0 +1,6 @@
+author: "the-orange-cow"
+delete-after: True
+changes:
+  - rscadd: "New fertilizer at your local biogenerator, Chemo Cultivate. Reduces weeds, reduces lifespan and endurance of plants. Use with care."
+  - rscadd: "New fertilizer at your local biogenerator, Stabili Feed. Reduces instability, has a chance of culling plant traits and reagents. USE WITH EXTREME CARE."
+  - balance: "Enduro Grow endurance gain per unit per cycle increased from .35 to .5"

@@ -37,7 +37,7 @@ If you make a derivative work from this code, you must include this notification
 	switch(streak)
 		if("drop")
 			streak = ""
-			drop(attacker, defender)
+			INVOKE_ASYNC(src, PROC_REF(drop), attacker, defender)
 			return TRUE
 		if("strike")
 			streak = ""
@@ -49,11 +49,11 @@ If you make a derivative work from this code, you must include this notification
 			return TRUE
 		if("throw")
 			streak = ""
-			throw_wrassle(attacker, defender)
+			INVOKE_ASYNC(src, PROC_REF(throw_wrassle), attacker, defender)
 			return TRUE
 		if("slam")
 			streak = ""
-			slam(attacker, defender)
+			INVOKE_ASYNC(src, PROC_REF(slam), attacker, defender)
 			return TRUE
 	return FALSE
 

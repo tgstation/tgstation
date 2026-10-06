@@ -58,7 +58,7 @@
 
 	var/obj/item/the_piz = new special_slice()
 
-	if (!length(lunch_haver.held_items))
+	if (!lunch_haver.can_hold_items())
 		the_piz.forceMove(lunch_haver.drop_location())
 	else
 		if (!iscarbon(lunch_haver))
