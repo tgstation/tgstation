@@ -94,6 +94,12 @@
   - bugfix: fixes salesman glasses occasionally being stuck mimicking their previous
       wearer's lack of sanity
 2026-10-06:
+  FalloutFalcon:
+  - bugfix: some mobs like Migo, Creatures, and blank bodies now properly attack you
+      and obstacles in there way
+  Melbert:
+  - bugfix: Fish cannot be paraplegics
+  - bugfix: Fish can no longer breathe air via a history of nicotine abuse
   SmArtKar, LemonInTheDark:
   - refactor: Separated overlay light visuals from the component/turf lumcount
   the-orange-cow:
@@ -112,3 +118,6 @@
   - bugfix: The swap_hands tutorial did not account for 3+ hands
   - bugfix: High-tenning a mob did not account for more than 2 hands (you can high-twenty
       now!)
+  vinylspiders:
+  - bugfix: fixes lighting getting created twice on some tiles during round startup
+  - bugfix: fixed crates and beds losing their elevation after a shuttle moves.

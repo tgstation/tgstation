@@ -1,0 +1,5 @@
+author: "PapaMichael"
+delete-after: True
+changes:
+  - qol: "AIs and Cyborgs can set the zoom of their photo cameras."
+  - bugfix: "pAI photo zoom is no longer broken"
