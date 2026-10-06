@@ -18,7 +18,7 @@
 /mob/living/carbon/human/can_equip(obj/item/equip_target, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE, indirect_action = FALSE)
 	if(SEND_SIGNAL(src, COMSIG_HUMAN_EQUIPPING_ITEM, equip_target, slot) == COMPONENT_BLOCK_EQUIP)
 		return FALSE
-	if(HAS_TRAIT(equip_target, TRAIT_NODROP) && (equip_target in held_items))
+	if(HAS_TRAIT(equip_target, TRAIT_NODROP) && is_holding(equip_target))
 		if(!disable_warning)
 			to_chat(src, span_warning("[equip_target] won't budge, it's impossible to put it on!"))
 		return FALSE
@@ -364,6 +364,7 @@
 	if(override_outfit_path)
 		outfit_to_equip = new override_outfit_path
 	else
+		dna.species.give_important_for_life()
 		outfit_to_equip = new outfit
 
 	if(isnull(outfit_to_equip))
@@ -374,9 +375,9 @@
 
 //delete all equipment without dropping anything
 /mob/living/carbon/human/proc/delete_equipment()
-	for(var/slot in get_equipped_items(INCLUDE_POCKETS|INCLUDE_HELD))//order matters, dependant slots go first
+	for(var/slot in get_equipped_items(INCLUDE_POCKETS))//order matters, dependant slots go first
 		qdel(slot)
-	for(var/obj/item/held_item in held_items)
+	for(var/obj/item/held_item as anything in get_held_items())
 		qdel(held_item)
 
 /// take the most recent item out of a slot or place held item in a slot
@@ -424,7 +425,7 @@
 	return
 
 /mob/living/carbon/human/change_number_of_hands(amt)
-	var/old_limbs = held_items.len
+	var/old_limbs = get_num_hand_slots()
 	if(amt < old_limbs)
 		for(var/i in hand_bodyparts.len to amt step -1)
 			var/obj/item/bodypart/BP = hand_bodyparts[i]

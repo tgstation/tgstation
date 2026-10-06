@@ -426,7 +426,7 @@
 	var/bonus_spread = 0
 	var/loop_counter = 0
 	if(user.combat_mode && !HAS_TRAIT(user, TRAIT_NO_GUN_AKIMBO))
-		for(var/obj/item/gun/gun in user.held_items)
+		for(var/obj/item/gun/gun as anything in user.get_held_items_of_type(/obj/item/gun))
 			if(gun == src || gun.weapon_weight >= WEAPON_MEDIUM)
 				continue
 			else if(gun.can_trigger_gun(user, akimbo_usage = TRUE))

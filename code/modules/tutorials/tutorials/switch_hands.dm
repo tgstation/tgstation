@@ -17,7 +17,7 @@
 /datum/tutorial/switch_hands/New(mob/user)
 	. = ..()
 
-	hand_to_watch = (user.active_hand_index % user.held_items.len) + 1
+	hand_to_watch = user.get_inactive_hand_index()
 
 /datum/tutorial/switch_hands/Destroy(force)
 	user.client?.screen -= hand_preview

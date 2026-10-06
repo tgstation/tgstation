@@ -257,7 +257,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	var/frame_path = null
 	var/cost = 2 // Default girder cost
 	var/time = 4 SECONDS //Default girder build time
-	var/obj/item/circuitboard/held_board = locate() in user.held_items
+	var/obj/item/circuitboard/held_board = user.is_holding_item_of_type(__IMPLIED_TYPE__)
 	if(!isnull(held_board))
 		if(istype(held_board, /obj/item/circuitboard/machine))
 			frame_path = /obj/structure/frame/machine

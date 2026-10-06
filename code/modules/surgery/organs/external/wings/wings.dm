@@ -190,7 +190,7 @@
 
 	playsound(human.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
-	for(var/obj/item/choking_hazard in human.held_items)
+	for(var/obj/item/choking_hazard as anything in human.get_held_items())
 		human.accident(choking_hazard)
 
 	var/olddir = human.dir
@@ -277,6 +277,7 @@
 		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
 	)
 	feature_key = FEATURE_WINGS
+	color_source = ORGAN_COLOR_OVERRIDE
 	offset_location = ENTIRE_BODY
 	overlay_flags = parent_type::overlay_flags | LIMB_OVERLAY_WIDE_ICON
 	/// Slot we check against
@@ -284,6 +285,11 @@
 
 /datum/bodypart_overlay/mutant/wings/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & slot_blocker)
+
+/datum/bodypart_overlay/mutant/wings/override_color(obj/item/bodypart/bodypart_owner)
+	if(bodypart_owner.owner?.get_organ_by_type(/obj/item/organ/tail/fish/cerulean))
+		return bodypart_owner.owner.dna.features[FEATURE_TAIL_FISH_COLOR]
+	return bodypart_owner.draw_color
 
 /datum/bodypart_overlay/mutant/wings/proc/open_wings()
 	return

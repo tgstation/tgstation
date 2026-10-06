@@ -420,12 +420,8 @@ There are several things that need to be remembered:
 /mob/living/carbon/human/get_held_overlays()
 	hud_used?.update_inventory_slot(ITEM_SLOT_HANDS)
 	var/list/hands = list()
-	for(var/obj/item/worn_item in held_items)
-		var/held_index = get_held_index_of_item(worn_item)
-		var/t_state = worn_item.inhand_icon_state
-		if(!t_state)
-			t_state = worn_item.icon_state
-
+	for(var/held_index in get_active_held_indexes())
+		var/obj/item/worn_item = get_item_for_held_index(held_index)
 
 		var/icon_file = IS_RIGHT_INDEX(held_index) ? worn_item.righthand_file : worn_item.lefthand_file
 		var/mutable_appearance/hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE, bodyshape = bodyshape)
@@ -454,6 +450,9 @@ There are several things that need to be remembered:
 /// Modifies a sprite to conform to custom body shapes
 /obj/item/proc/get_bodyshape_icon(icon/base_icon, key, greyscale_colors, bodyshape)
 	ASSERT(istext(key), "get_bodyshape_icon: no key passed")
+	if(bodyshape & BODYSHAPE_CERULEAN)
+		if((bodyshapes_with_variations & BODYSHAPE_CERULEAN) || (supports_variations_flags & (CERULEAN_MASKING)))
+			return generate_cerulean_icons(base_icon, key, greyscale_colors, bodyshape)
 	if((bodyshape & BODYSHAPE_DIGITIGRADE) && (supports_variations_flags & CLOTHING_DIGITIGRADE_MASK))
 		if(isnull(greyscale_colors) || length(SSgreyscale.ParseColorString(greyscale_colors)) > 1)
 			greyscale_colors = get_general_color(base_icon)
@@ -469,18 +468,6 @@ There are several things that need to be remembered:
 			digitigrade_clothing_cache[index] = fcopy_rsc(resulting_icon)
 
 		return icon(resulting_icon)
-
-/// Modifies a sprite to replace the legs with a new version
-/proc/replace_icon_legs(icon/base_icon, icon/new_legs)
-	var/static/icon/leg_mask
-	if(!leg_mask)
-		leg_mask = icon('icons/mob/clothing/under/masking_helpers.dmi', "digi_leg_mask")
-
-	// cuts the legs off
-	base_icon.Blend(leg_mask, ICON_SUBTRACT)
-	// staples the new legs on
-	base_icon.Blend(new_legs, ICON_OVERLAY)
-	return base_icon
 
 /**
  * Generates a digitigrade version of this item's worn icon

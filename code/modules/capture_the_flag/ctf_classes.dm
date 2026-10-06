@@ -44,7 +44,7 @@
 	for(var/slot in nodrop_slots)
 		no_drops += human_to_equip.get_item_by_slot(slot)
 	// Make items in the hands NODROP
-	for(var/obj/item/held_item in human_to_equip.held_items)
+	for(var/obj/item/held_item as anything in human_to_equip.get_held_items())
 		no_drops += held_item
 	list_clear_nulls(no_drops) // For any slots we didn't have filled
 	// Apply TRAIT_NODROP to everything

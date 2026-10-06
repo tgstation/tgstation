@@ -95,12 +95,13 @@
 	var/furthest_range = 0
 	for (var/datum/component/overlay_lighting/light as anything in grid_cell.dynamic_light_sources)
 		furthest_range = max(furthest_range, light.lumcount_range)
-		if (isnull(light_sources[light.current_holder]))
-			light_sources[light.current_holder] = light
-		else if (islist(light_sources[light.current_holder]))
-			light_sources[light.current_holder] |= light
+		var/atom/current_holder = light.light.current_holder
+		if (isnull(light_sources[current_holder]))
+			light_sources[current_holder] = light
+		else if (islist(light_sources[current_holder]))
+			light_sources[current_holder] |= light
 		else
-			light_sources[light.current_holder] = list(light_sources[light.current_holder], light)
+			light_sources[current_holder] = list(light_sources[current_holder], light)
 
 	var/list/assigned_oranges_ears = SSspatial_grid.assign_oranges_ears(light_sources)
 	for(var/mob/oranges_ear/ear in hearers(furthest_range, src))

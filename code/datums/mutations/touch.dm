@@ -401,9 +401,9 @@
 		if(ishuman(human_smiter))
 			human_smiter.force_say()
 			if(evil_smite)
-				human_smiter.say("in [possible_deity]'s dark name, I COMMAND YOU TO PERISH!!!", forced = "compelled by the power of their deity")
+				INVOKE_ASYNC(human_smiter, TYPE_PROC_REF(/atom/movable, say), "in [possible_deity]'s dark name, I COMMAND YOU TO PERISH!!!", forced = "compelled by the power of their deity")
 			else
-				human_smiter.say("By [possible_deity]'s might, I SMITE YOU!!!", forced = "compelled by the power of their deity")
+				INVOKE_ASYNC(human_smiter, TYPE_PROC_REF(/atom/movable, say), "By [possible_deity]'s might, I SMITE YOU!!!", forced = "compelled by the power of their deity")
 		our_smite_multiplier *= divine_champion ? 5 : 1 //good luck surviving this if they're a chap
 
 	if(evil_smite)
