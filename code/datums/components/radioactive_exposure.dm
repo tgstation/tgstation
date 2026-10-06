@@ -44,13 +44,14 @@
 
 /// Try and irradiate them. If we chance fail, we come back harder
 /datum/component/radioactive_exposure/proc/attempt_irradiate()
-	if(!SSradiation.wearing_rad_protected_clothing(parent) && SSradiation.can_irradiate_basic(parent))
+	if(SSradiation.can_irradiate_human_basic(parent))
 		if(prob(irradiation_chance))
-			SSradiation.irradiate(parent)
 			var/atom/atom = parent
+			atom.make_irradiated()
 			atom.investigate_log("was irradiated by [source].", INVESTIGATE_RADIATION)
 		else
 			irradiation_chance += irradiation_chance_increment
+
 	else // we're immune, either through species, clothing, already being irradiated, etcetera
 		// we slowly decrease the prob chance untill we hit the base probability again
 		irradiation_chance = max(irradiation_chance - irradiation_chance_increment, irradiation_chance_base)
