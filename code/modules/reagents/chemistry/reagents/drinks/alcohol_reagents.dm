@@ -3642,7 +3642,7 @@
 	if(prob(50))
 		drinker.emote(pick("scream","moan"))
 	to_chat(drinker, span_userdanger("A searing flame scours your mind, leaving it raw and sensitive to new experiences!"))
-	SEND_SOUND(drinker, sound('sound/effects/wounds/sizzle2.ogg', volume=70))
+	drinker.playsound_local(drinker, 'sound/effects/wounds/sizzle2.ogg', 70, FALSE)
 	drinker.flash_act(INFINITY, override_blindness_check = TRUE, visual = TRUE) //Cover your eyes, if you like. It will serve no purpose.
 
 /datum/reagent/consumable/ethanol/watchmans_nightcap/on_mob_life(mob/living/carbon/drinker, seconds_per_tick, metabolization_ratio)
@@ -3652,7 +3652,7 @@
 
 /datum/reagent/consumable/ethanol/watchmans_nightcap/on_mob_end_metabolize(mob/living/drinker)
 	. = ..()
-	drinker?.mind?.experience_multiplier_reasons -= type
+	drinker.mind?.experience_multiplier_reasons -= type
 
 //Blade
 /datum/reagent/consumable/ethanol/footsoldiers_razor
@@ -3674,7 +3674,7 @@
 
 	ADD_TRAIT(drinker, TRAIT_HAD_FOOTSOLDIERS_RAZOR, type)
 	to_chat(drinker, span_warning("You cut your lip on something sharp!"))
-	SEND_SOUND(drinker, sound('sound/items/weapons/slice.ogg', volume=50))
+	drinker.playsound_local(drinker, 'sound/items/weapons/slice.ogg', 50, TRUE)
 	drinker.bleed(5)
 	drinker.apply_damage(10, BRUTE, BODY_ZONE_HEAD)
 	addtimer(TRAIT_CALLBACK_REMOVE(drinker, TRAIT_HAD_FOOTSOLDIERS_RAZOR, type), 60 SECONDS)
@@ -3715,6 +3715,11 @@
 		return
 	var/turf/gazer_source = get_step(drinker, REVERSE_DIR(drinker.dir)) //directly behind the drinker.
 	gazer = new gazer_type(gazer_source, drinker)
+	RegisterSignal(gazer, COMSIG_QDELETING, PROC_REF(on_gazer_deleted))
+
+/datum/reagent/consumable/ethanol/farstar_amrita/proc/on_gazer_deleted()
+	SIGNAL_HANDLER
+	gazer = null
 
 /obj/effect/client_image_holder/thirsty_gazer/Initialize(mapload)
 	. = ..()
@@ -3728,10 +3733,11 @@
 	return image
 
 /obj/effect/client_image_holder/thirsty_gazer/item_interaction(mob/living/drinker, obj/item/tool, list/modifiers)
-	. = ..()
-	if(!istype(tool, /obj/item/reagent_containers/cup/glass/drinkingglass) || tool.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/farstar_amrita) < 5) //a good host serves their guests with proper glassware. need at least 5u for a proper sippy.
+	if(!istype(tool, /obj/item/reagent_containers/cup/glass/drinkingglass))
+		return ..()
+	if(tool.reagents.get_reagent_amount(/datum/reagent/consumable/ethanol/farstar_amrita) < 5) //a good host serves their guests with proper glassware. need at least 5u for a proper sippy.
 		to_chat(drinker, span_notice("You feel like something's missing..."))
-		return
+		return ITEM_INTERACT_BLOCKING
 
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(drinker) //gives heretics a knowledge point upon doing this correctly
 	if(heretic_datum)
@@ -3743,7 +3749,8 @@
 	drinker.add_mood_event("farstar_shared", /datum/mood_event/farstar_shared)
 	ADD_TRAIT(drinker, TRAIT_FARSTAR_SHARED, type)
 	tool.reagents.remove_reagent(/datum/reagent/consumable/ethanol/farstar_amrita, 5)
-	QDEL_NULL(src)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
 
 /datum/reagent/consumable/ethanol/farstar_amrita/on_mob_add(mob/living/carbon/drinker)
 	. = ..()
@@ -3806,6 +3813,7 @@
 	drinker.adjust_nutrition(-5 * metabolization_ratio * seconds_per_tick)
 
 /datum/reagent/consumable/ethanol/rubywise_ruin/on_mob_delete(mob/living/drinker)
+	. = ..()
 	REMOVE_TRAIT(drinker, TRAIT_GLUTTON, type)
 	drinker.clear_mood_event("rubywise_unsatisfied")
 
@@ -3879,11 +3887,7 @@
 
 /datum/reagent/consumable/ethanol/entropic_brew/proc/on_vomit(mob/living/carbon/drinker, distance, force)
 	SIGNAL_HANDLER
-	//if you vomit with this in your system, you rust the tile beneath you. Note, this still applies even when you're apathetic if you vomit due to non-disgust related reasons.
-	var/atom/tile = get_turf(drinker)
-	if(isnull(tile))
-		return
-	tile.rust_heretic_act()
+	astype(drinker.loc, /turf)?.rust_heretic_act()
 
 /datum/reagent/consumable/ethanol/entropic_brew/overdose_start(mob/living/drinker, metabolization_ratio)
 	to_chat(drinker, span_boldwarning("You feel something inside you break as the feeling of illness recedes. In the face of the inevitability of decay, your troubles seem quaint."))
