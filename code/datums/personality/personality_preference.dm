@@ -10,6 +10,7 @@
 		return
 	if(!CONFIG_GET(flag/roundstart_traits))
 		return
+	target.clear_personalities()
 	for(var/personality_key in value)
 		var/datum/personality/personality = SSpersonalities.personalities_by_key[personality_key]
 		personality.apply_to_mob(target)
