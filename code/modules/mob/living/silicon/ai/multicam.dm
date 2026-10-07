@@ -288,9 +288,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 	select_main_multicam_window(null)
 
 	var/list/windows = multicam_screens.Copy()
-	for(var/atom/movable/screen/movable/pic_in_pic/ai/pip_window as anything in windows)
-		if(QDELETED(pip_window))
-			continue
+	for(var/atom/movable/screen/movable/pic_in_pic/ai/pip_window in windows)
 		qdel(pip_window)
 
 	multicam_screens.Cut()
