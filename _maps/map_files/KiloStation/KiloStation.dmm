@@ -63027,12 +63027,12 @@
 	output_dir = 8
 	},
 /obj/machinery/door/window/left/directional/west{
-	name = "Ore Redemtion Window";
+	name = "Ore Redemption Window";
 	req_access = list("mineral_storeroom")
 	},
 /obj/machinery/door/window/right/directional/east{
 	name = "Cargo Security Window";
-	req_access = list("shipping")
+	req_access = list("cargo")
 	},
 /turf/open/floor/plating,
 /area/station/cargo/office)
