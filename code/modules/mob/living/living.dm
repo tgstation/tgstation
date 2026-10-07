@@ -2098,14 +2098,15 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/restore_initial_sight()
 	SHOULD_CALL_PARENT(TRUE)
 	PROTECTED_PROC(TRUE)
-	var/init_sight = initial(sight)
-	//we cannot see mobs and/or objects unless we have thermals/xray/material vision, but we can still see turfs to navigate around
-	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING))
-		init_sight |= SEE_TURFS|BLIND
-	init_sight |= SEND_SIGNAL(src, COMSIG_LIVING_RESTORE_INITIAL_SIGHT)
 	lighting_cutoff = initial(lighting_cutoff)
 	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
-	return initial(sight)
+	var/init_sight = initial(sight)
+	//we cannot see mobs and/or objects unless we have thermals/xray/material vision, but we can still see turfs to navigate around
+	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics))
+		init_sight |= SEE_TURFS|BLIND
+	//after the reset above, so handlers can tint the cutoffs
+	init_sight |= SEND_SIGNAL(src, COMSIG_LIVING_RESTORE_INITIAL_SIGHT)
+	return init_sight
 
 /mob/living/proc/mob_try_pickup(mob/living/user, instant=FALSE)
 	if(!ishuman(user) && (user.mob_size <= mob_size || user.num_hands == 0))
