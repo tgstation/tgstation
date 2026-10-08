@@ -38,7 +38,7 @@
 	..()
 	var/list/items_inside = list(
 		/obj/item/inducer = 2,
-		/obj/item/storage/toolbox/electrical = 2,
+		/obj/item/storage/toolbox/electrical = 3,
 		/obj/item/electronics/apc = 3,
 		/obj/item/multitool = 3)
 	generate_items_inside(items_inside,src)
