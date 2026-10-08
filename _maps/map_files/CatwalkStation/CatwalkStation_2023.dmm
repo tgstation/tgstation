@@ -1077,8 +1077,8 @@
 /obj/effect/turf_decal/trimline/yellow/filled/line{
 	dir = 8
 	},
+/obj/structure/closet/radiation,
 /obj/structure/sign/warning/no_smoking/directional/west,
-/obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/iron,
 /area/station/engineering/lobby)
 "apa" = (
@@ -12414,12 +12414,9 @@
 /turf/open/floor/iron/dark,
 /area/station/medical/medbay/lobby)
 "dje" = (
-/obj/effect/turf_decal/trimline/yellow/filled/line{
-	dir = 8
-	},
-/obj/structure/closet/radiation,
-/turf/open/floor/iron,
-/area/station/engineering/lobby)
+/obj/structure/closet/secure_closet/engineering_electrical,
+/turf/open/floor/iron/smooth,
+/area/station/engineering/main)
 "djl" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -18074,10 +18071,15 @@
 /obj/item/crowbar,
 /obj/item/clothing/shoes/magboots,
 /obj/item/clothing/shoes/magboots,
+/obj/item/clothing/gloves/color/yellow{
+	pixel_y = 3
+	},
 /obj/item/clothing/ears/earmuffs{
 	pixel_x = -3;
 	pixel_y = -2
 	},
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
 /obj/machinery/camera/autoname/directional/west,
 /obj/item/clothing/ears/earmuffs{
 	pixel_x = -5;
@@ -55456,7 +55458,6 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 6
 	},
-/obj/item/inducer,
 /turf/open/floor/carpet/green,
 /area/station/command/heads_quarters/hop)
 "oJj" = (
@@ -91167,10 +91168,6 @@
 	},
 /obj/item/clothing/gloves/color/yellow{
 	pixel_y = 6
-	},
-/obj/item/clothing/gloves/color/yellow{
-	pixel_y = 9;
-	pixel_x = 0
 	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
@@ -134364,9 +134361,9 @@ mfT
 lpE
 mwx
 wrQ
-wrQ
+dje
 lEH
-wrQ
+dje
 wrQ
 mwx
 dGY
@@ -197843,7 +197840,7 @@ rvo
 cbA
 jVB
 wPp
-dje
+oOs
 aoY
 qww
 kOk

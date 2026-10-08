@@ -4166,16 +4166,12 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/machinery/power/apc/auto_name/directional/west,
 /obj/structure/cable,
+/obj/item/clothing/gloves/color/yellow,
 /obj/item/book/manual/wiki/engineering_hacking{
 	pixel_y = 3
 	},
 /obj/item/storage/toolbox/electrical,
 /obj/item/multitool,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow{
-	pixel_x = 0;
-	pixel_y = 3
-	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "aZp" = (
@@ -16315,6 +16311,7 @@
 "dYz" = (
 /obj/structure/table/reinforced,
 /obj/item/storage/toolbox/electrical,
+/obj/item/clothing/gloves/color/yellow,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 4
@@ -17645,10 +17642,9 @@
 /area/station/science/research)
 "erV" = (
 /obj/effect/decal/cleanable/dirt,
+/obj/structure/closet/secure_closet/engineering_electrical,
 /obj/item/multitool,
 /obj/machinery/newscaster/directional/west,
-/obj/structure/closet/toolcloset,
-/obj/item/inducer,
 /turf/open/floor/plating,
 /area/station/maintenance/department/electrical)
 "erX" = (
@@ -28521,6 +28517,7 @@
 	pixel_y = 5
 	},
 /obj/effect/turf_decal/bot,
+/obj/item/clothing/gloves/color/yellow,
 /obj/machinery/newscaster/directional/east,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
@@ -45604,6 +45601,8 @@
 /turf/open/floor/iron,
 /area/station/cargo/office)
 "lko" = (
+/obj/structure/closet/secure_closet/engineering_electrical,
+/obj/effect/turf_decal/bot,
 /obj/structure/sign/warning/no_smoking/directional/south,
 /turf/open/floor/iron,
 /area/station/engineering/supermatter/room)
@@ -55958,6 +55957,7 @@
 /obj/item/weldingtool,
 /obj/item/wrench,
 /obj/item/clothing/head/utility/welding,
+/obj/item/clothing/gloves/color/yellow,
 /obj/effect/turf_decal/bot,
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
@@ -86648,6 +86648,7 @@
 /area/station/hallway/secondary/command)
 "vpV" = (
 /obj/structure/closet/toolcloset,
+/obj/item/clothing/gloves/color/yellow,
 /obj/item/storage/belt/utility,
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
@@ -94587,6 +94588,7 @@
 /obj/effect/turf_decal/stripes/line{
 	dir = 8
 	},
+/obj/item/clothing/gloves/color/yellow,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "xrd" = (
@@ -95049,8 +95051,6 @@
 /turf/open/floor/iron/white,
 /area/station/science/robotics/lab)
 "xwu" = (
-/obj/structure/closet/secure_closet/engineering_electrical,
-/obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/engineering/storage)
 "xwA" = (

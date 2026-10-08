@@ -12343,6 +12343,11 @@
 	dir = 1
 	},
 /obj/structure/table,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
 /obj/structure/cable,
 /obj/item/mod/module/plasma_stabilizer,
 /obj/item/stock_parts/power_store/cell/emproof{
@@ -32784,12 +32789,12 @@
 /turf/open/floor/wood/large,
 /area/mine/eva/lower)
 "jmD" = (
+/obj/structure/closet/secure_closet/engineering_electrical,
 /obj/machinery/status_display/evac/directional/east,
 /obj/effect/turf_decal/tile/yellow/anticorner/contrasted{
 	dir = 4
 	},
 /obj/structure/sign/warning/radiation/rad_area/directional/north,
-/obj/structure/closet/secure_closet/engineering_electrical,
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "jmI" = (

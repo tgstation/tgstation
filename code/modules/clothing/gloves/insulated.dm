@@ -12,7 +12,7 @@
 	armor_type = /datum/armor/color_yellow
 	resistance_flags = NONE
 	custom_price = PAYCHECK_CREW * 10
-	custom_premium_price = PAYCHECK_COMMAND * 5
+	custom_premium_price = PAYCHECK_COMMAND * 6
 	cut_type = /obj/item/clothing/gloves/cut
 	equip_sound = 'sound/items/equip/glove_equip.ogg'
 

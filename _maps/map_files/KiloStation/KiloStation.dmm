@@ -25213,6 +25213,9 @@
 /area/station/security/brig)
 "icw" = (
 /obj/structure/table,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/suit/hazardvest,
@@ -44175,8 +44178,8 @@
 /obj/effect/turf_decal/tile/neutral{
 	dir = 4
 	},
-/obj/structure/closet/secure_closet/engineering_electrical,
-/obj/effect/turf_decal/bot,
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/effect/turf_decal/bot_red,
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage_shared)
 "nVc" = (
@@ -48526,8 +48529,6 @@
 /obj/effect/turf_decal/tile/neutral/half/contrasted{
 	dir = 8
 	},
-/obj/machinery/portable_atmospherics/canister/air,
-/obj/effect/turf_decal/bot_red,
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "prf" = (
@@ -57315,6 +57316,7 @@
 /area/station/commons/vacant_room/commissary)
 "seU" = (
 /obj/structure/table,
+/obj/item/clothing/gloves/color/yellow,
 /obj/item/electronics/apc,
 /obj/item/electronics/airlock{
 	pixel_y = 6
@@ -57323,11 +57325,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /obj/item/storage/toolbox/electrical,
 /obj/item/multitool,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow{
-	pixel_x = 0;
-	pixel_y = 4
-	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "seW" = (

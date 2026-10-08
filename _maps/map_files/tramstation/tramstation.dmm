@@ -22449,13 +22449,15 @@
 /turf/open/floor/iron/white,
 /area/station/science/ordnance)
 "gPP" = (
+/obj/effect/turf_decal/trimline/yellow/filled/corner{
+	dir = 8
+	},
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/obj/effect/turf_decal/trimline/yellow/filled/line,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "gPT" = (
@@ -24643,6 +24645,11 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/hidden,
 /turf/closed/wall/r_wall,
 /area/station/engineering/atmos)
+"hIE" = (
+/obj/structure/closet/secure_closet/engineering_electrical,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/iron/smooth,
+/area/station/maintenance/tram/right)
 "hIO" = (
 /obj/effect/turf_decal/trimline/red/filled/line{
 	dir = 10
@@ -45309,6 +45316,11 @@
 /area/station/service/theater)
 "oSi" = (
 /obj/structure/table,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
+/obj/item/clothing/gloves/color/yellow,
 /obj/item/storage/box/lights/mixed,
 /obj/item/stack/cable_coil,
 /obj/item/stock_parts/power_store/cell/emproof,
@@ -57024,8 +57036,6 @@
 "sVs" = (
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/closet/toolcloset,
-/obj/item/inducer,
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/tram/right)
 "sVz" = (
@@ -58222,6 +58232,16 @@
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /turf/open/floor/iron,
 /area/station/cargo/miningdock/cafeteria)
+"trO" = (
+/obj/effect/turf_decal/trimline/yellow/filled/corner,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/turf/open/floor/iron,
+/area/station/engineering/engine_smes)
 "trY" = (
 /obj/structure/closet/secure_closet/contraband/armory,
 /obj/effect/spawner/random/contraband/armory,
@@ -61389,11 +61409,10 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
 "utj" = (
-/obj/structure/closet/secure_closet/engineering_electrical,
-/obj/effect/turf_decal/bot{
-	dir = 1
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 6
 	},
-/turf/open/floor/iron/dark,
+/turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "utk" = (
 /obj/effect/turf_decal/trimline/yellow/filled/warning{
@@ -66985,8 +67004,10 @@
 /turf/open/floor/iron,
 /area/station/security/checkpoint/supply)
 "wng" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 10
+	},
 /obj/structure/cable,
-/obj/effect/turf_decal/tile/yellow/fourcorners,
 /turf/open/floor/iron,
 /area/station/engineering/engine_smes)
 "wnh" = (
@@ -69862,14 +69883,10 @@
 	pixel_x = 1;
 	pixel_y = -1
 	},
+/obj/item/clothing/gloves/color/yellow,
 /obj/item/t_scanner,
 /obj/item/multitool,
 /obj/effect/turf_decal/trimline/white/filled/line,
-/obj/item/clothing/gloves/color/yellow,
-/obj/item/clothing/gloves/color/yellow{
-	pixel_x = 0;
-	pixel_y = 3
-	},
 /turf/open/floor/iron/dark,
 /area/station/engineering/storage/tech)
 "xsJ" = (
@@ -101542,7 +101559,7 @@ eNW
 vyq
 hGK
 vyq
-gPP
+trO
 utj
 uGy
 wgc
@@ -121051,7 +121068,7 @@ utB
 aHO
 rCL
 aCe
-hKj
+hIE
 oys
 qxm
 qxm
