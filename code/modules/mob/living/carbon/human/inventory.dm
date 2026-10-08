@@ -364,7 +364,7 @@
 	if(override_outfit_path)
 		outfit_to_equip = new override_outfit_path
 	else
-		dna.species.give_important_for_life()
+		dna.species.give_important_for_life(src)
 		outfit_to_equip = new outfit
 
 	if(isnull(outfit_to_equip))
