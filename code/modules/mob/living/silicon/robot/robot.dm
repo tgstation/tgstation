@@ -992,7 +992,7 @@
 	charge_cell.Invoke(cell, seconds_per_tick)
 
 /mob/living/silicon/robot/proc/set_connected_ai(mob/living/silicon/ai/new_ai)
-	if(!isnull(new_ai) && QDELETED(new_ai))
+	if(!isnull(new_ai) && QDELING(new_ai))
 		return
 	if(connected_ai == new_ai)
 		return

@@ -162,8 +162,8 @@
 	GLOB.ai_list -= src
 	GLOB.shuttle_caller_list -= src
 	// Release linked cyborgs before deleting the resources they access through us.
-	for(var/mob/living/silicon/robot/cyborg as anything in connected_robots.Copy())
-		if(cyborg?.connected_ai == src)
+	for(var/mob/living/silicon/robot/cyborg in connected_robots)
+		if(cyborg.connected_ai == src)
 			cyborg.set_connected_ai(null)
 	connected_robots.Cut()
 	SSshuttle.autoEvac()
