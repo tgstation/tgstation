@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "suit meshes and the voidwalker curse now cover large wings completely, instead of missing their left side and edges."

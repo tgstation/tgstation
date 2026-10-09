@@ -88,6 +88,8 @@ GLOBAL_LIST_EMPTY(raptor_population)
 	AddElement(/datum/element/clever_girl)
 	AddElement(/datum/element/basic_eating, food_types = food_types)
 	raptor_color = GLOB.raptor_colors[color_type || raptor_color || pick(GLOB.raptor_colors)]
+	// Anything that isn't a real colour, like the base type, means any colour
+	raptor_color ||= GLOB.raptor_colors[pick(GLOB.raptor_colors)]
 	raptor_color.setup_raptor(src)
 
 	if (growth_stage == RAPTOR_ADULT)

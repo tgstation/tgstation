@@ -376,7 +376,7 @@ All ShuttleMove procs go here
 	. = ..()
 	cut_cable_from_powernet(FALSE)
 
-/obj/structure/cable/afterShuttleMove(turf/oldT, list/movement_force, shuttle_dir, shuttle_preferred_direction, move_dir, rotation)
+/obj/structure/cable/lateShuttleMove(turf/oldT, list/movement_force, move_dir)
 	. = ..()
 	connect_cable(TRUE)
 	propagate_if_no_network()

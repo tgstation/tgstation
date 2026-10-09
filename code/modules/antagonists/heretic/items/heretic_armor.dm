@@ -488,7 +488,7 @@
 	hoodtype = /obj/item/clothing/head/hooded/cult_hoodie/eldritch/lock
 	armor_type = /datum/armor/eldritch_armor/lock
 	flags_inv = parent_type::flags_inv | HIDEMUTWINGS
-	texture_type = /datum/bodypart_texture/mesh/firesuit
+	texture_type = NONE
 
 /obj/item/clothing/suit/hooded/cultrobes/eldritch/lock/on_robes_gained(mob/living/user)
 	user.AddElement(/datum/element/digitalcamo)
@@ -513,7 +513,8 @@
 	name = "\improper Shifting Guise"
 	icon_state = "lock_armor"
 	armor_type = /datum/armor/eldritch_armor/lock
-	texture_type = /datum/bodypart_texture/mesh/firesuit
+	texture_type = NONE
+	flags_inv = parent_type::flags_inv | HIDEANTENNAE
 
 /datum/armor/eldritch_armor/lock
 	melee = 40

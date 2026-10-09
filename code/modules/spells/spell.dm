@@ -396,15 +396,15 @@
 	switch(used_invocation_type)
 		if(INVOCATION_SHOUT)
 			if(prob(used_invocation_garble_prob))
-				invoker.say(replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
+				INVOKE_ASYNC(invoker, TYPE_PROC_REF(/atom/movable, say), replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
 			else
-				invoker.say(used_invocation_message, forced = "spell ([src])")
+				INVOKE_ASYNC(invoker, TYPE_PROC_REF(/atom/movable, say), used_invocation_message, forced = "spell ([src])")
 
 		if(INVOCATION_WHISPER)
 			if(prob(used_invocation_garble_prob))
-				invoker.whisper(replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
+				INVOKE_ASYNC(invoker, TYPE_PROC_REF(/mob, whisper), replacetext(used_invocation_message," ","`"), forced = "spell ([src])")
 			else
-				invoker.whisper(used_invocation_message, forced = "spell ([src])")
+				INVOKE_ASYNC(invoker, TYPE_PROC_REF(/mob, whisper), used_invocation_message, forced = "spell ([src])")
 
 		if(INVOCATION_EMOTE)
 			invoker.visible_message(

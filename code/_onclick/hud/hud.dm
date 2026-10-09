@@ -357,7 +357,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 				screenmob.client.screen += group_info
 
 			// Hands are apart of the static group but still should be presetn in the reduced mode
-			for (var/i in 1 to length(mymob.held_items))
+			for (var/i in 1 to mymob.get_num_hand_slots())
 				var/atom/movable/screen/hand = screen_objects[HUD_KEY_HAND_SLOT(i)]
 				if (hand)
 					screenmob.client.screen += hand
@@ -457,7 +457,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	for (var/atom/movable/screen/inventory/hand/hand in screen_groups[HUD_GROUP_STATIC])
 		remove_screen_object(hand, FALSE)
 
-	for(var/i in 1 to length(mymob.held_items))
+	for(var/i in 1 to mymob.get_num_hand_slots())
 		var/atom/movable/screen/inventory/hand/hand_box = add_screen_object(/atom/movable/screen/inventory/hand, HUD_KEY_HAND_SLOT(i), HUD_GROUP_STATIC, ui_style, ui_hand_position(i))
 		hand_box.name = mymob.get_held_index_name(i)
 		hand_box.icon_state = "hand_[mymob.held_index_to_dir(i)]"

@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "manning a deployable turret gives you its controls in your hands again."
+  - bugfix: "the prototype emitter's manual firing mode gives you its controls in your hands again."

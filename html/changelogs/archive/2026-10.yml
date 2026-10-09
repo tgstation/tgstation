@@ -57,3 +57,147 @@
   necromanceranne:
   - code_imp: Biting can no longer overfeed you.
   - code_imp: You do not lick people as a felinid if you have combat mode on.
+2026-10-03:
+  hry-gh:
+  - bugfix: fixes the scaling in the lobby browser
+  timothymtorres:
+  - rscadd: Beartraps trigger when armed and inside containers or bags (similar to
+      mousetraps)
+  uaioy:
+  - bugfix: knock should be able to unlock turret controls now
+2026-10-04:
+  Melbert:
+  - bugfix: Fix night vision goggles
+  desertmote:
+  - rscadd: 'A new species to play: Cerulean!'
+  - rscadd: The hydro-vaporizer, a wearable device functional like an internals tank,
+      but for water vapor
+  - rscadd: A new light/two person pirate team, the Siren Shimai
+  - rscadd: A compact laser shotgun, for the aforementioned pirate team
+  - rscadd: An armored leather jacket, for the aforementioned pirate team
+  - code_imp: Updates species gain code so it can accurately tell when to regenerate
+      limbs that were previously missing (#92712)
+  - code_imp: Add a proc to equip code for post-equipping species outfitting
+  - balance: Makes wheelchairs ever-so-slightly faster
+  timothymtorres:
+  - rscadd: Add toxic and radioactive effects to breathing Antinoblium.
+  - balance: Breathing harmful gases causes lung damage. (scales with partial pressure)
+  - balance: Plasmamen breathing oxygen now causes TOXIN damage.
+  - code_imp: Cleanup exercise code `null` value
+  vinylspiders:
+  - bugfix: fixes an issue where occasionally an ejected revolver casing could remain
+      quantum entangled with the gun
+  - bugfix: bitrunning safehouse walls and windows no longer try to connect to walls
+      that don't fully exist yet
+  - bugfix: big manipulators will no longer try to use items their monkey failed to
+      pick up.
+  - bugfix: fixes salesman glasses occasionally being stuck mimicking their previous
+      wearer's lack of sanity
+2026-10-06:
+  FalloutFalcon:
+  - bugfix: some mobs like Migo, Creatures, and blank bodies now properly attack you
+      and obstacles in there way
+  Melbert:
+  - bugfix: Fish cannot be paraplegics
+  - bugfix: Fish can no longer breathe air via a history of nicotine abuse
+  PapaMichael:
+  - qol: AIs and Cyborgs can set the zoom of their photo cameras.
+  - bugfix: pAI photo zoom is no longer broken
+  SmArtKar, LemonInTheDark:
+  - refactor: Separated overlay light visuals from the component/turf lumcount
+  the-orange-cow:
+  - rscadd: New fertilizer at your local biogenerator, Chemo Cultivate. Reduces weeds,
+      reduces lifespan and endurance of plants. Use with care.
+  - rscadd: New fertilizer at your local biogenerator, Stabili Feed. Reduces instability,
+      has a chance of culling plant traits and reagents. USE WITH EXTREME CARE.
+  - balance: Enduro Grow endurance gain per unit per cycle increased from .35 to .5
+  tontyGH:
+  - refactor: 'A lot of code relating to hands was altered for technical reasons,
+      which fixed these issues:'
+  - bugfix: Sleeping Carp's style malus did not ignore "cool" held items
+  - bugfix: Cursed blade could not be used to bind haunted longsword
+  - bugfix: Amber focus could not be used to bind haunted longsword
+  - bugfix: Items that could block did not correctly block push/shuffle attempts
+  - bugfix: The swap_hands tutorial did not account for 3+ hands
+  - bugfix: High-tenning a mob did not account for more than 2 hands (you can high-twenty
+      now!)
+  vinylspiders:
+  - bugfix: fixes lighting getting created twice on some tiles during round startup
+  - bugfix: fixed crates and beds losing their elevation after a shuttle moves.
+2026-10-07:
+  Jacquerel:
+  - bugfix: Colossus no longer enrages for no reason upon seeing a Golem
+  - bugfix: Golems who eat rocks will look different, like they are supposed to
+  Melbert:
+  - refactor: You can now pin the corgi's tail from "pin the tail on the corgi" on
+      anything
+  - qol: Pin the tail on the corgi kit comes with 1 poster, 4 pins, and 1 blindfold.
+  RusselNotSCP:
+  - rscadd: Eight new cocktails from the halls of the Mansus are now available to
+      be mixed and enjoyed (at your own risk.)
+  timothymtorres:
+  - bugfix: Fix wound chance for legs from falling z-levels decreasing the more z-levels
+      you fall down
+  vinylspiders:
+  - bugfix: raptor eggs that weren't laid by a raptor (mapped or spawned in) now hatch
+      a proper chick instead of a bugged, invisible one.
+2026-10-08:
+  FalloutFalcon:
+  - bugfix: Handling on if you can make eye contact is a bit more robust
+  - bugfix: Some examine text for eye effects acctaully checks if you have eyes
+  Melbert:
+  - rscadd: Fishes can toggle snouts in character creation (the same way they can
+      toggle frills)
+  - bugfix: Fishes cannot be as dark as the abyss
+  - bugfix: Maybe fixes lighting
+  alexguinea:
+  - rscadd: Added the litigation set of forms to the blanks in the photocopier.
+  necromanceranne:
+  - rscadd: Knives do additional damage if you first grab hold of your target.
+  - rscadd: Some knives can be impaled into someone with right click.
+  - balance: Kitchen knives and shivs have embedding behaviour.
+  - balance: Most knives have better chances of embedding. Only combat knives have
+      particularly lethal embed effects.
+  timothymtorres:
+  - rscadd: Add EMP effects to Thermomachines, Portable Canisters, Lights, Flashlights,
+      Floorlights, Floodlights, Seclights on Guns, Lights on Plasmamen Helmets, Hardhat
+      Lights, PDA Flashlights, Ore Silos, Buttons, Turret Controllers, Teleporter
+      Beacons, Trapdoors, and Morgue Trays. Also improves admin logging for atmospheric
+      EMP effects.
+  - rscadd: Add EMP protection to EMP flashlights
+  - rscadd: Flares, candles, slime lights, and glowsticks no longer directly conduct
+      electricity
+  - rscadd: Welding affects nearby mobs that don't have flash protection. Special
+      welding tools like the CE's experimental welder or the alien welding object
+      can safely ignore harming nearby mobs.
+  tontyGH:
+  - qol: Added multiple new keybinds for hand control
+  - qol: Hand-related keybinds were moved to DEXTROUS category
+  - bugfix: Cycling hands would get stuck on offhand items instead of skipping over
+      them
+  - bugfix: Catching now tries to put caught items in every possible open hand instead
+      of just the active offhand
+  - bugfix: Tentacle's aggro grab had weird behaviour that made it ignore a lot of
+      systems
+  vinylspiders:
+  - bugfix: Monkeys no longer pull a weapon out of your hands or off your back when
+      you picked it up before they got to it.
+  - bugfix: Fish infusion organs now make better bait taste better to you, and a stoat
+      tongue makes eggs and dead mice taste better, as intended.
+  - bugfix: hardcore random, anonymous theme and appearance-banned characters now
+      get just a random set of personalities instead of a random set piled on top
+      of their own
+  - bugfix: random personalities can no longer come with two that contradict each
+      other, like loyal and disillusioned.
+2026-10-09:
+  JohnFulpWillard:
+  - qol: Precise Drop's default action is now CtrlQ instead of CtrlX, to match Drop
+      once again being Q.
+  KingkumaArt:
+  - bugfix: Giantslayer Spear shows when equipped in suit storage. Enjoy your monster
+      hunter cosplays.
+  PapaMichael:
+  - bugfix: Harmonicas and headphones play music while equipped again
+  vinylspiders:
+  - bugfix: fixes ore bags throwing runtimes when you get in and out of closets/containers
+      or drop them inside one
