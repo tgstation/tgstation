@@ -75,7 +75,7 @@
 	ball_effects_active = FALSE
 
 	// we're already out of their hands by now, so if they're still holding another ball it takes over
-	for(var/obj/item/toy/basketball/other_ball in old_wielder.held_items)
+	for(var/obj/item/toy/basketball/other_ball as anything in old_wielder.get_held_items_of_type(/obj/item/toy/basketball))
 		if(other_ball.add_ball_effects())
 			break
 
