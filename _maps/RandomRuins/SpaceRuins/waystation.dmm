@@ -2028,7 +2028,7 @@
 /area/ruin/space/has_grav/waystation/cargobay)
 "KU" = (
 /obj/structure/closet/secure_closet/freezer/fridge/open,
-/obj/item/storage/box/ingredients/random,
+/obj/item/storage/box/ingredients/wildcard,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/cafeteria,
 /area/ruin/space/has_grav/waystation/kitchen)

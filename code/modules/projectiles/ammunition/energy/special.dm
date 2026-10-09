@@ -73,7 +73,7 @@
 /obj/item/ammo_casing/energy/shrink
 	projectile_type = /obj/projectile/magic/shrink/alien
 	select_name = "shrink ray"
-	e_cost = LASER_SHOTS(5, STANDARD_CELL_CHARGE)
+	e_cost = LASER_SHOTS(3, STANDARD_CELL_CHARGE)
 
 /obj/item/ammo_casing/energy/marksman
 	projectile_type = /obj/projectile/bullet/marksman

@@ -48,6 +48,13 @@
 	if(!. && isprojectile(mover)) // Its short enough to be shot over
 		return TRUE
 
+/obj/structure/holosign/emp_act(severity)
+	. = ..()
+	if(. & EMP_PROTECT_SELF)
+		return
+
+	take_damage(150/severity, BRUTE, ENERGY, FALSE)
+
 /obj/structure/holosign/proc/attack_holosign(mob/living/user, list/modifiers)
 	user.do_attack_animation(src, ATTACK_EFFECT_PUNCH)
 	user.changeNext_move(CLICK_CD_MELEE)
@@ -191,6 +198,10 @@
 	alpha = 150
 	rad_insulation = RAD_LIGHT_INSULATION
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
+
+/obj/structure/holosign/barrier/atmos/emp_act(severity)
+	. = ..()
+	investigate_log("was destroyed due to EMP", INVESTIGATE_ATMOS)
 
 /obj/structure/holosign/barrier/atmos/proc/clearview_transparency()
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

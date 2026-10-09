@@ -51,13 +51,13 @@
 
 /datum/voucher_set/mining/extraction_kit
 	name = "Extraction and Rescue Kit"
-	description = "Contains a fulton extraction pack and a beacon signaller, which allows you to send back home minerals, items and dead bodies without having to use the mining shuttle. And as a bonus, you get 30 marker beacons to help you better mark your path."
+	description = "Contains a fulton extraction pack and a beacon signaller, which allows you to send minerals, items, dead bodies and yourself through the \"Candela\" navigation network. And as a bonus, you get 30 navigation beacons for free."
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_pack"
 	set_items = list(
-		/obj/item/extraction_pack,
-		/obj/item/fulton_core,
-		/obj/item/stack/marker_beacon/thirty,
+		/obj/item/extraction_pack/networked,
+		/obj/item/fulton_core/networked,
+		/obj/item/stack/candela_beacon/thirty,
 	)
 
 /datum/voucher_set/mining/resonator_kit

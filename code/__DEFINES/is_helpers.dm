@@ -148,6 +148,7 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 #define isethereal(A) (is_species(A, /datum/species/ethereal))
 #define isvampire(A) (is_species(A,/datum/species/human/vampire))
 #define isdullahan(A) (is_species(A, /datum/species/dullahan))
+#define iscerulean(A) (is_species(A, /datum/species/human/cerulean))
 #define ismonkey(A) (is_species(A, /datum/species/monkey))
 #define isandroid(A) (is_species(A, /datum/species/android))
 #define isnightmare(A) (is_species(A, /datum/species/shadow/nightmare))
@@ -188,8 +189,6 @@ GLOBAL_LIST_INIT(turfs_pass_meteor, typecacheof(list(
 #define isgorilla(A) (istype(A, /mob/living/basic/gorilla))
 
 #define isshade(A) (istype(A, /mob/living/basic/shade))
-
-#define is_simian(A) (isgorilla(A) || ismonkey(A))
 
 #define isstargazer(A) (istype(A, /mob/living/basic/heretic_summon/star_gazer))
 

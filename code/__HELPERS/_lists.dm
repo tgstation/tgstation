@@ -510,6 +510,10 @@
 	for(var/item in list_to_pick)
 		if(!list_to_pick[item])
 			list_to_pick[item] = 0
+		TEST_ONLY_ASSERT( \
+			IS_FINITE(list_to_pick[item]) && list_to_pick[item] >= 0 && list_to_pick[item] == round(list_to_pick[item]), \
+			"pick_weight received invalid weight [list_to_pick[item]] for [item]; expected a non-negative integer." \
+		)
 		total += list_to_pick[item]
 
 	total = rand(1, total)
@@ -771,7 +775,7 @@
  *
  * If no record is found, returns null
  */
-/proc/find_record(value, locked_only = FALSE)
+/proc/find_record(value, locked_only = FALSE) as /datum/record
 	if(locked_only)
 		for(var/datum/record/locked/target in GLOB.manifest.locked)
 			if(target.name != value)

@@ -113,7 +113,7 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 
 /obj/effect/landmark/ai_multicam_room
 	name = "ai camera room"
-	icon = 'icons/mob/landmarks.dmi'
+	icon = 'icons/effects/landmarks_static.dmi'
 	icon_state = "x"
 
 /obj/effect/landmark/ai_multicam_room/Initialize(mapload)
@@ -280,3 +280,20 @@ GLOBAL_DATUM(ai_camera_room_landmark, /obj/effect/landmark/ai_multicam_room)
 		eyeobj.setLoc(get_turf(P.center))
 		P.set_view_center(eyeobj)
 		master_multicam = P
+
+/mob/living/silicon/ai/proc/cleanup_multicam_windows()
+	if(multicam_on)
+		end_multicam()
+
+	select_main_multicam_window(null)
+
+	var/list/windows = multicam_screens.Copy()
+	for(var/atom/movable/screen/movable/pic_in_pic/ai/pip_window in windows)
+		qdel(pip_window)
+
+	multicam_screens.Cut()
+	master_multicam = null
+
+	all_eyes.Cut()
+	if(eyeobj && !QDELETED(eyeobj))
+		all_eyes += eyeobj

@@ -21,8 +21,7 @@
 
 /datum/quirk/pyromania/add(client/client_source)
 	. = ..()
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.physiology.heat_mod *= damage_mod
+	MODIFY_PHYSIOLOGY(quirk_holder, PHYS_COEFF_HEAT, damage_mod)
 	RegisterSignal(quirk_holder, COMSIG_MOB_APPLY_DAMAGE, PROC_REF(damage_taken))
 
 /datum/quirk/pyromania/remove()
@@ -31,9 +30,8 @@
 	if(QDELING(quirk_holder))
 		return
 
-	var/mob/living/carbon/human/human_holder = quirk_holder
-	human_holder.physiology.heat_mod /= damage_mod
-	human_holder.clear_mood_event("pyromania_fire")
+	MODIFY_PHYSIOLOGY(quirk_holder, PHYS_COEFF_HEAT, 1 / damage_mod)
+	quirk_holder.clear_mood_event("pyromania_fire")
 
 /datum/quirk/pyromania/process(seconds_per_tick)
 	var/fire_size = quirk_holder.count_nearby_fire_sources()
@@ -45,7 +43,7 @@
 	last_fire_size = fire_size
 
 	if(COOLDOWN_FINISHED(src, start_fire_cd) && SPT_PROB((SANITY_NEUTRAL - quirk_holder.mob_mood?.sanity) / 5, seconds_per_tick))
-		for(var/obj/item/lighter/lighter in quirk_holder.held_items)
+		for(var/obj/item/lighter/lighter as anything in quirk_holder.get_held_items_of_type(/obj/item/lighter))
 			if(lighter.lit)
 				continue
 			to_chat(quirk_holder, span_warning("You impulsively strike [lighter], trying to start a flame..."))

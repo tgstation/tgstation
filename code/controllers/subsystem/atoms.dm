@@ -13,6 +13,9 @@ SUBSYSTEM_DEF(atoms)
 	var/list/initialized_state = list()
 	var/base_initialized
 
+	/// How many InitializeAtoms calls are still creating atoms, including ones asleep in CreateAtoms
+	var/active_initializations = 0
+
 	var/list/late_loaders = list()
 
 	var/list/BadInitializeCalls = list()
@@ -52,7 +55,9 @@ SUBSYSTEM_DEF(atoms)
 	set_tracked_initalized(INITIALIZATION_INNEW_MAPLOAD, source)
 
 	// This may look a bit odd, but if the actual atom creation runtimes for some reason, we absolutely need to set initialized BACK
+	active_initializations++
 	CreateAtoms(atoms, atoms_to_return, source)
+	active_initializations--
 	clear_tracked_initalize(source)
 	SSicon_smooth.free_deferred(source)
 
@@ -167,7 +172,7 @@ SUBSYSTEM_DEF(atoms)
 
 /// Returns TRUE if anything is currently being initialized
 /datum/controller/subsystem/atoms/proc/initializing_something()
-	return length(initialized_state) > 1
+	return active_initializations > 0
 
 /datum/controller/subsystem/atoms/Recover()
 	initialized = SSatoms.initialized

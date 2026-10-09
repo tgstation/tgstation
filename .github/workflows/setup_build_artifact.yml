@@ -10,29 +10,39 @@ on:
 
 jobs:
   setup_build_artifact:
-    name: Setup build artifact (${{ format('{0}.{1}', inputs.major, inputs.minor) }})
+    name: Compile ${{ format('{0}.{1}', inputs.major, inputs.minor) }}
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v7
-      - name: Setup Bun
-        uses: ./.github/actions/setup_bun
-      - name: Restore BYOND from Cache
-        uses: ./.github/actions/restore_or_install_byond
+
+      - name: Configure BYOND Version
+        uses: ./.github/actions/configure_byond_version
         with:
           major: ${{ inputs.major }}
           minor: ${{ inputs.minor }}
+
+      - parallel:
+        - name: Setup Bun
+          uses: ./.github/actions/setup_bun
+
+        - name: Restore or install BYOND
+          uses: ./.github/actions/restore_or_install_byond
+
       - name: Compile
         run: |
           source $HOME/BYOND/byond/bin/byondsetup
           tools/build/build.sh --ci dm -DCIBUILDING -DANSICOLORS -Werror -ITG0001 -I"loop_checks"
+
       - name: Setup variable for output path
         run: |
           OUTPUT_DIR="target"
           echo "OUTPUT_DIR=$OUTPUT_DIR" >> $GITHUB_ENV
+
       - name: Copy output files
         run: |
           bash tools/ci/copy_build_output.sh $OUTPUT_DIR
+
       - name: Upload artifact
         if: success()
         uses: actions/upload-artifact@v7

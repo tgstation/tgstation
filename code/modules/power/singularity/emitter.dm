@@ -478,9 +478,8 @@
 /obj/machinery/power/emitter/prototype/unbuckle_mob(mob/living/buckled_mob, force = FALSE, can_fall = TRUE)
 	playsound(src,'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
 	manual = FALSE
-	for(var/obj/item/item in buckled_mob.held_items)
-		if(istype(item, /obj/item/turret_control))
-			qdel(item)
+	for(var/obj/item/turret_control/item as anything in buckled_mob.get_held_items_of_type(/obj/item/turret_control))
+		qdel(item)
 	if(istype(buckled_mob))
 		buckled_mob.pixel_x = buckled_mob.base_pixel_x
 		buckled_mob.pixel_y = buckled_mob.base_pixel_y
@@ -535,9 +534,8 @@
 		name = "Switch to Manual Firing"
 		desc = "The emitter will only fire on your command and at your designated target"
 		button_icon_state = "mech_zoom_on"
-		for(var/obj/item/item in buckled_mob.held_items)
-			if(istype(item, /obj/item/turret_control))
-				qdel(item)
+		for(var/obj/item/turret_control/item in buckled_mob.get_held_items_of_type(/obj/item/turret_control))
+			qdel(item)
 		build_all_button_icons()
 		return
 	playsound(proto_emitter,'sound/vehicles/mecha/mechmove01.ogg', 50, TRUE)
@@ -545,16 +543,11 @@
 	desc = "Emitters will switch to periodic firing at your last target"
 	button_icon_state = "mech_zoom_off"
 	proto_emitter.manual = TRUE
-	for(var/things in buckled_mob.held_items)
-		var/obj/item/item = things
-		if(istype(item))
-			if(!buckled_mob.dropItemToGround(item))
-				continue
-			var/obj/item/turret_control/turret_control = new /obj/item/turret_control()
-			buckled_mob.put_in_hands(turret_control)
-		else //Entries in the list should only ever be items or null, so if it's not an item, we can assume it's an empty hand
-			var/obj/item/turret_control/turret_control = new /obj/item/turret_control()
-			buckled_mob.put_in_hands(turret_control)
+	buckled_mob.drop_all_held_items() // Some stuff might not be dropped here
+	for(var/empty_hand_index in buckled_mob.get_empty_held_indexes())
+		var/obj/item/turret_control/control = new()
+		if(!buckled_mob.put_in_hand(control, empty_hand_index)) // fuck.
+			qdel(control)
 	build_all_button_icons()
 
 

@@ -3,7 +3,7 @@
 
 /datum/unit_test/moth_food/Run()
 	var/obj/item/clothing/suit/armor/bulletproof/light_snack = allocate(/obj/item/clothing/suit/armor/bulletproof)
-	light_snack.create_moth_snack()
+	light_snack.moth_snack = light_snack.create_moth_snack()
 	var/datum/component/edible/eatability = light_snack.moth_snack.GetComponent(/datum/component/edible)
 	eatability.eat_time = 0
 

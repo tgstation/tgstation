@@ -215,9 +215,12 @@ Nothing else in the console has ID requirements.
 	data["locked"] = board.locked
 	if(!stored_research) //lack of a research node is all we care about.
 		return data
+	var/list/queued_nodes = list()
+	for(var/node, weakref in stored_research.research_queue_nodes)
+		queued_nodes[node] = astype(weakref, /datum/weakref)?.resolve()
 	data += list(
 		"nodes" = list(),
-		"queue_nodes" = stored_research.research_queue_nodes,
+		"queue_nodes" = queued_nodes,
 		"experiments" = list(),
 		"researched_designs" = stored_research.researched_designs,
 		"points" = stored_research.research_points,
@@ -245,7 +248,8 @@ Nothing else in the console has ID requirements.
 		if (stored_research.hidden_nodes[node_path])
 			continue
 
-		var/mob/node_queuer = stored_research.research_queue_nodes[node_path]
+		var/datum/weakref/queuer_weakref = stored_research.research_queue_nodes[node_path]
+		var/mob/node_queuer = queuer_weakref?.resolve()
 		var/enqueued_by_user = !isnull(node_queuer) && node_queuer == user
 
 		data["nodes"] += list(list(

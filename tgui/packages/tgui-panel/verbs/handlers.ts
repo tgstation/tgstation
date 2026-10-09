@@ -7,6 +7,7 @@ import {
   clearCommandBarAtom,
   focusCommandBarAtom,
   hotkeysAtom,
+  initializeCommandBarAtom,
   type Target,
   typepathsAtom,
   type Verb,
@@ -29,6 +30,7 @@ function loadTypepaths() {
 
 export function handleVerbsInit(payload: { verbs: Verb[] }) {
   store.set(adminVerbsAtom, payload.verbs || []);
+  store.set(initializeCommandBarAtom, (n) => n + 1);
   loadTypepaths();
 }
 
@@ -54,7 +56,6 @@ export function handleRemoveVerbs(payload: { names: string[] }) {
 export function handleTargets(payload: { targets: Target[] }) {
   store.set(adminTargetsAtom, payload.targets || []);
 }
-
 
 export function handleFocusCommandBar() {
   store.set(focusCommandBarAtom, (n) => n + 1);

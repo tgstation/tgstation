@@ -244,14 +244,14 @@
 	if(!(allow_flags & MODULE_ALLOW_INCAPACITATED) && INCAPACITATED_IGNORING(mod.wearer, INCAPABLE_GRAB))
 		return FALSE
 	mod.wearer.face_atom(target)
-	if(!used())
+	if(!used() || (SEND_SIGNAL(target, COMSIG_ATOM_MOD_MODULE_USED, src) & COMPONENT_INTERRUPT_MODULE_USE))
 		return FALSE
 	return TRUE
 
 /// Called when an activated module without a device is active and the user alt/middle-clicks
 /obj/item/mod/module/proc/on_special_click(mob/source, atom/target)
 	SIGNAL_HANDLER
-	on_select_use(target)
+	INVOKE_ASYNC(src, PROC_REF(on_select_use), target)
 	return COMSIG_MOB_CANCEL_CLICKON
 
 /// Called on the MODsuit's process

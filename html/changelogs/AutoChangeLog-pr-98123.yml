@@ -1,0 +1,4 @@
+author: "FalloutFalcon"
+delete-after: True
+changes:
+  - bugfix: "AI attempting to destroy obstructions wont friendly fire random other mobs."

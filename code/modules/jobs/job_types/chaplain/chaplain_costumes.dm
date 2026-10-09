@@ -4,6 +4,7 @@
 	allowed = null
 	icon = 'icons/obj/clothing/suits/chaplain.dmi'
 	worn_icon = 'icons/mob/clothing/suits/chaplain.dmi'
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/suit/chaplainsuit/Initialize(mapload)
 	. = ..()
@@ -54,6 +55,7 @@
 	name = "religious tunic"
 	desc = "No nunsene clothing."
 	icon_state = "habit"
+	inhand_icon_state = "habit"
 	alternate_worn_layer = GLOVES_LAYER // since the sleeves cover a part of the hands, this way it looks better while retaining glove overlay correctly.
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS|HANDS
 	flags_inv = HIDEJUMPSUIT|HIDEBELT
@@ -72,6 +74,7 @@
 	icon_state = "studentuni"
 	inhand_icon_state = null
 	body_parts_covered = ARMS|CHEST
+	supports_variations_flags = CLOTHING_CERULEAN_MASK_INBETWEEN
 
 /obj/item/clothing/suit/chaplainsuit/armor/witchhunter
 	name = "witchunter garb"
@@ -89,6 +92,7 @@
 	inhand_icon_state = "monkfrock"
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	hoodtype = /obj/item/clothing/head/hooded/monkhabit
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/head/hooded/monkhabit
 	name = "monk's hood"
@@ -287,6 +291,7 @@
 	body_parts_covered = CHEST|GROIN|LEGS|ARMS
 	allowed = null
 	hoodtype = /obj/item/clothing/head/hooded/chaplain_hood
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/suit/hooded/chaplain_hoodie/Initialize(mapload)
 	. = ..()

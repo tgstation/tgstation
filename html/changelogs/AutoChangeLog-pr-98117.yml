@@ -1,0 +1,4 @@
+author: "TealSeer"
+delete-after: True
+changes:
+  - bugfix: "fixed miners not having access to the ORM windoor on kilostation"

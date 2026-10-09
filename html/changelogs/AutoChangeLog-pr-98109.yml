@@ -1,0 +1,6 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - bugfix: "APCs rotate properly with shuttles"
+  - bugfix: "cable networks on shuttles  should maintain proper connections better"
+  - bugfix: "shuttle subrooms no longer have free power"

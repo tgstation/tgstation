@@ -4,7 +4,7 @@
 /////////////////////////////////////////
 /datum/design/cargo_express
 	name = "Express Supply Console Board"//shes beautiful
-	desc = "Allows for the construction of circuit boards used to build an Express Supply Console."//who?
+	desc = "Used to build an express supply console, a method of ordering supplies from Central Command without the use of the slow supply shuttle."//who?
 	build_type = IMPRINTER
 	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/circuitboard/computer/cargo/express
@@ -15,7 +15,7 @@
 
 /datum/design/bluespace_pod
 	name = "Express Supply Drop Pod Upgrade Disk"
-	desc = "Allows the Cargo Express Console to call down the Bluespace Drop Pod, greatly increasing user safety."//who?
+	desc = "Allows an express supply console to call down the bluespace drop pod, greatly increasing user safety."
 	build_type = PROTOLATHE
 	materials = list(/datum/material/glass =HALF_SHEET_MATERIAL_AMOUNT)
 	build_path = /obj/item/disk/cargo/bluespace_pod

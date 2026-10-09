@@ -19,11 +19,11 @@
 	return ..()
 
 /mob/living/brain/can_speak(allow_mimes)
-	return istype(container, /obj/item/mmi) && ..()
+	return istype(container, /obj/item/brain_processor) && ..()
 
 /mob/living/brain/radio(message, list/message_mods = list(), list/spans, language)
-	if(message_mods[MODE_HEADSET] && istype(container, /obj/item/mmi))
-		var/obj/item/mmi/R = container
+	if(message_mods[MODE_HEADSET] && istype(container, /obj/item/brain_processor))
+		var/obj/item/brain_processor/R = container
 		if(R.radio)
 			R.radio.talk_into(src, message, language = language, message_mods = message_mods)
 			return ITALICS | REDUCE_RANGE

@@ -709,24 +709,15 @@ GAME_VERB_CONTEXT(/mob, examinate, "Examine", "", null, /atom)
 		return
 
 	// check to see if their face is blocked or, if not, a signal blocks it
-	if(examined_mob.can_eye_contact() && SEND_SIGNAL(src, COMSIG_MOB_EYECONTACT, examined_mob, TRUE) != COMSIG_BLOCK_EYECONTACT)
-		var/obj/item/clothing/eye_cover = examined_mob.is_eyes_covered()
-		if (!eye_cover || (!eye_cover.tint && !eye_cover.flash_protect))
+	if(examined_mob.is_eyes_visible(1, FLASH_PROTECTION_FLASH, requires_eyes = TRUE))
+		if(SEND_SIGNAL(src, COMSIG_MOB_EYECONTACT, examined_mob, TRUE) != COMSIG_BLOCK_EYECONTACT)
 			var/msg = span_smallnotice("You make eye contact with [examined_mob].")
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), src, msg), 0.3 SECONDS) // so the examine signal has time to fire and this will print after
 
-	if(!imagined_eye_contact && can_eye_contact() && !examined_mob.is_blind() && SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
-		var/obj/item/clothing/eye_cover = is_eyes_covered()
-		if (!eye_cover || (!eye_cover.tint && !eye_cover.flash_protect))
+	if(!imagined_eye_contact && !examined_mob.is_blind() && is_eyes_visible(1, FLASH_PROTECTION_FLASH, requires_eyes = TRUE))
+		if(SEND_SIGNAL(examined_mob, COMSIG_MOB_EYECONTACT, src, FALSE) != COMSIG_BLOCK_EYECONTACT)
 			var/msg = span_smallnotice("[src] makes eye contact with you.")
 			addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(to_chat), examined_mob, msg), 0.3 SECONDS)
-
-/// Checks if we can make eye contact or someone can make eye contact with us
-/mob/living/proc/can_eye_contact()
-	return TRUE
-
-/mob/living/carbon/can_eye_contact()
-	return !(obscured_slots & HIDEFACE)
 
 /**
  * Called by using Activate Held Object with an empty hand/limb
@@ -900,33 +891,88 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 	SEND_SIGNAL(src, COMSIG_MOB_GET_STATUS_TAB_ITEMS, .)
 	return .
 
+/**
+ * Attempts to cycle through hands to select a new hand.
+ *
+ * - cycle_dir: A cardinal (NORTH, SOUTH, EAST, WEST) direction. Defaults to WEST, which is forwards.
+ * - climb: If TRUE, wrapping will also shift rows/columns.
+ * - silent: If applicable and TRUE, will output messages to the mob.
+ * - intial_index: The starting point for the iteration loop. Note that this hand is considered *last*.
+ */
+/mob/proc/cycle_hand(cycle_dir = WEST, climb = TRUE, silent = FALSE, initial_index = active_hand_index)
+	if(!(cycle_dir in GLOB.cardinals))
+		stack_trace("received invalid cycle_dir [!isnull(cycle_dir) ? cycle_dir : "null"]")
+		return FALSE
 
+	if(SEND_SIGNAL(src, COMSIG_MOB_CYCLE_HAND, cycle_dir, climb, silent) & COMPONENT_BLOCK_CYCLE)
+		return FALSE
+
+	var/step = ((cycle_dir & NORTHWEST) != 0) ? 1 : -1
+	var/by_row = cycle_dir & (NORTH|SOUTH)
+
+	var/hand_count = held_items.len
+	var/num_rows = floor(hand_count / 2)
+	var/row = floor((initial_index - 1) / 2)
+	var/column = (initial_index - 1) % 2
+
+	var/max_iterations // worst case, we iterate this many times up to our initial_index
+	if(climb)
+		max_iterations = hand_count
+	else if(!by_row)
+		max_iterations = 2
+	else
+		max_iterations = num_rows
+	for(var/i in 1 to max_iterations)
+		if(by_row) // vertically
+			row += step
+			if(row < 0 || row >= num_rows)
+				row = ((row % num_rows) + num_rows) % num_rows
+				if(climb)
+					column = abs(column + step) % 2
+		else // horizontally
+			column += step
+			if(column < 0 || column >= 2)
+				column = abs(column) % 2
+				if(climb)
+					row = (((row + step) % num_rows) + num_rows) % num_rows
+
+		var/desired_index = (row * 2 + column) + 1
+
+		var/sigresult = SEND_SIGNAL(src, COMSIG_MOB_CYCLE_HAND_INDEX(desired_index), cycle_dir, climb, silent)
+		if(sigresult & COMPONENT_BLOCK_CYCLE)
+			return FALSE
+		if(sigresult & COMPONENT_CONTINUE_CYCLE)
+			continue
+
+		return swap_hand(desired_index, silent = silent)
+	return FALSE
+
+/// Swaps the mob's active hand to the specified held_index.
+/// If intending to swap to the "next" hand, use [/mob/proc/cycle_hand] instead.
 /mob/proc/swap_hand(held_index, silent = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE) // Override perform_hand_swap instead
 
-	var/obj/item/held_item = get_active_held_item()
-	if(SEND_SIGNAL(src, COMSIG_MOB_SWAPPING_HANDS, held_item) & COMPONENT_BLOCK_SWAP)
-		if (!silent)
-			to_chat(src, span_warning("Your other hand is too busy holding [held_item]."))
+	if(!isnum(held_index))
+		stack_trace("You passed [held_index] into swap_hand instead of a number. WTF man")
 		return FALSE
 
-	var/result = perform_hand_swap(held_index)
-	if (result)
-		SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, get_active_held_item(), held_item)
+	if(held_index < 1 || held_index > get_num_hand_slots())
+		stack_trace("held_index out of bounds ([held_index])")
+		return FALSE
 
-	return result
+	if(SEND_SIGNAL(src, COMSIG_MOB_SWAPPING_HANDS, held_index, silent) & COMPONENT_BLOCK_SWAP)
+		return FALSE
+
+	var/obj/item/old_active_held_item = get_active_held_item()
+	. = perform_hand_swap(held_index)
+	if(.)
+		SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, get_active_held_item(), old_active_held_item)
 
 /// Performs the actual ritual of swapping hands, such as setting the held index variables
 /mob/proc/perform_hand_swap(held_index)
 	PROTECTED_PROC(TRUE)
 	if (!HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS))
 		return FALSE
-
-	if(!held_index)
-		held_index = (active_hand_index % held_items.len) + 1
-
-	if(!isnum(held_index))
-		CRASH("You passed [held_index] into swap_hand instead of a number. WTF man")
 
 	var/previous_index = active_hand_index
 	active_hand_index = held_index
@@ -1554,10 +1600,6 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 
 	for(var/datum/callback/CB as anything in persistent_client.post_logout_callbacks)
 		CB.Invoke()
-
-	if(canon_client?.movingmob)
-		LAZYREMOVE(canon_client.movingmob.client_mobs_in_contents, src)
-		canon_client.movingmob = null
 
 	clear_important_client_contents()
 	canon_client = null

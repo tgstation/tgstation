@@ -53,6 +53,8 @@
 		if(5)
 			do_disease_transformation(affected_mob)
 
+/datum/disease/transformation/proc/force_say(message)
+	affected_mob.say(message, forced = name)
 
 /datum/disease/transformation/proc/do_disease_transformation(mob/living/affected_mob)
 	if(iscarbon(affected_mob) && affected_mob.stat != DEAD)
@@ -63,10 +65,7 @@
 		if(HAS_TRAIT_FROM(affected_mob, TRAIT_NO_TRANSFORM, REF(src)))
 			return
 		ADD_TRAIT(affected_mob, TRAIT_NO_TRANSFORM, REF(src))
-		for(var/obj/item/W in affected_mob.get_equipped_items(INCLUDE_POCKETS))
-			affected_mob.dropItemToGround(W)
-		for(var/obj/item/I in affected_mob.held_items)
-			affected_mob.dropItemToGround(I)
+		affected_mob.drop_everything()
 		var/mob/living/new_mob = new new_form(affected_mob.loc)
 		if(istype(new_mob))
 			if(bantype && is_banned_from(affected_mob.ckey, bantype))
@@ -145,7 +144,7 @@
 				affected_mob.adjust_confusion(10 SECONDS)
 		if(4)
 			if(SPT_PROB(1.5, seconds_per_tick))
-				affected_mob.say(pick("Eeee!", "Eeek, ook ook!", "Eee-eeek!", "Ungh, ungh."), forced = "jungle fever")
+				INVOKE_ASYNC(src, PROC_REF(force_say), pick("Eeee!", "Eeek, ook ook!", "Eee-eeek!", "Ungh, ungh."))
 
 /datum/disease/transformation/robot
 	name = "Robotic Transformation"
@@ -177,13 +176,13 @@
 	switch(stage)
 		if(3)
 			if (SPT_PROB(4, seconds_per_tick))
-				affected_mob.say(pick("beep, beep!", "Beep, boop", "Boop...bop"), forced = "robotic transformation")
+				INVOKE_ASYNC(src, PROC_REF(force_say), pick("beep, beep!", "Beep, boop", "Boop...bop"))
 			if (SPT_PROB(2, seconds_per_tick))
 				to_chat(affected_mob, span_danger("You feel a stabbing pain in your head."))
 				affected_mob.Unconscious(40)
 		if(4)
 			if (SPT_PROB(10, seconds_per_tick))
-				affected_mob.say(pick("beep, beep!", "Boop bop boop beep.", "I wwwaaannntt tttoo dddiiieeee...", "kkkiiiill mmme"), forced = "robotic transformation")
+				INVOKE_ASYNC(src, PROC_REF(force_say), pick("beep, beep!", "Boop bop boop beep.", "I wwwaaannntt tttoo dddiiieeee...", "kkkiiiill mmme"))
 
 
 /datum/disease/transformation/xeno
@@ -225,7 +224,7 @@
 				affected_mob.Unconscious(40)
 		if(4)
 			if(SPT_PROB(10, seconds_per_tick))
-				affected_mob.say(pick("Going to... devour you...", "Hsssshhhhh!", "You look delicious."), forced = "xenomorph transformation")
+				INVOKE_ASYNC(src, PROC_REF(force_say), pick("Going to... devour you...", "Hsssshhhhh!", "You look delicious."))
 
 
 /datum/disease/transformation/slime
@@ -259,14 +258,12 @@
 		if(3)
 			if(ishuman(affected_mob))
 				var/mob/living/carbon/human/human = affected_mob
-				if(!ismonkey(human) && !isjellyperson(human))
+				if(!HAS_TRAIT(human, TRAIT_LESSER_HUMANOID) && !isjellyperson(human))
 					human.set_species(/datum/species/jelly/slime)
 
 /datum/disease/transformation/slime/do_disease_transformation(mob/living/affected_mob)
-	if(affected_mob.client && ishuman(affected_mob)) // if they are a human who's not a monkey and are sentient, then let them have the old fun
-		var/mob/living/carbon/human/human = affected_mob
-		if(!ismonkey(human))
-			new_form = /mob/living/basic/slime/random
+	if(affected_mob.client &&!HAS_TRAIT(affected_mob, TRAIT_LESSER_HUMANOID)) // if they are a human who's not a monkey and are sentient, then let them have the old fun
+		new_form = /mob/living/basic/slime/random
 	return ..()
 
 /datum/disease/transformation/corgi
@@ -292,10 +289,10 @@
 	switch(stage)
 		if(3)
 			if (SPT_PROB(4, seconds_per_tick))
-				affected_mob.say(pick("Woof!", "YAP"), forced = "corgi transformation")
+				INVOKE_ASYNC(src, PROC_REF(force_say), pick("Woof!", "YAP"))
 		if(4)
 			if (SPT_PROB(10, seconds_per_tick))
-				affected_mob.say(pick("AUUUUUU", "Bark!"), forced = "corgi transformation")
+				INVOKE_ASYNC(src, PROC_REF(force_say), pick("AUUUUUU", "Bark!"))
 
 
 /datum/disease/transformation/morph

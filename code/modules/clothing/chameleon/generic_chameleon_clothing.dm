@@ -63,6 +63,7 @@ do { \
 	armor_type = /datum/armor/suit_chameleon
 	actions_types = list(/datum/action/item_action/chameleon/change/suit)
 	action_slots = ALL
+	bodyshapes_with_variations = NONE
 
 /obj/item/clothing/suit/chameleon/Initialize(mapload)
 	. = ..()

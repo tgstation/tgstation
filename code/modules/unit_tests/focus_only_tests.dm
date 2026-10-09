@@ -69,3 +69,6 @@
 
 ///Checks that items have roughly the same materials whenever spawned via processing/microwaving/baking etc. or any other mean.
 /datum/unit_test/focus_only/check_materials_when_processed
+
+///Checks primarily that emissives aren't mistakenly not tagged with the meta flag
+/datum/unit_test/focus_only/bodypart_overlay_flags

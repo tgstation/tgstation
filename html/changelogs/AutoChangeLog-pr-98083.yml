@@ -1,0 +1,4 @@
+author: "FlufflesTheDog"
+delete-after: True
+changes:
+  - bugfix: "Apples, tower caps, starthistle seeds, and randomly-mutated crops now go into plant bags on harvest."

@@ -11,7 +11,7 @@
 	exp_required_type = EXP_TYPE_CREW
 	exp_required_type_department = EXP_TYPE_SILICON
 	exp_granted_type = EXP_TYPE_CREW
-	display_order = JOB_DISPLAY_ORDER_AI
+	display_order = JOB_DISPLAY_ORDER_HUMAN_AI
 	config_tag = "HUMAN_AI"
 
 	outfit = /datum/outfit/job/human_ai
@@ -28,7 +28,7 @@
 	)
 
 	family_heirlooms = list(
-		/obj/item/mmi/posibrain/display,
+		/obj/item/brain_processor/positronic/display,
 	)
 
 	mail_goodies = list(
@@ -38,8 +38,9 @@
 	rpg_title = "Omnissiah"
 	random_spawns_possible = FALSE
 	allow_bureaucratic_error = FALSE
-	job_flags = STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS | JOB_ANTAG_PROTECTED
+	job_flags = (STATION_JOB_FLAGS | STATION_TRAIT_JOB_FLAGS | JOB_ANTAG_PROTECTED) & ~JOB_REOPEN_ON_ROUNDSTART_LOSS
 	human_authority = JOB_AUTHORITY_NON_HUMANS_ALLOWED //we can safely assume NT doesn't care what species AIs are made of, much less if they can't even afford an AI.
+	tgui_icon = /datum/job/ai::tgui_icon
 
 /datum/job/human_ai/get_roundstart_spawn_point()
 	return get_latejoin_spawn_point()

@@ -40,9 +40,7 @@
 		to_chat(user, span_alert("Encryption Key ports not configured."))
 		return ITEM_INTERACT_BLOCKING
 
-	pai.radio.attackby(tool, user, modifiers)
-	to_chat(user, span_notice("You insert [tool] into the [src]."))
-	return ITEM_INTERACT_SUCCESS
+	return pai.radio.install_key(user, tool)
 
 /obj/item/pai_card/attack_self(mob/user)
 	if(!in_range(src, user))

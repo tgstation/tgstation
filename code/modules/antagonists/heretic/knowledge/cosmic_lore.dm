@@ -272,7 +272,6 @@
 	if(ishuman(user))
 		var/mob/living/carbon/human/ascended_human = user
 		var/obj/item/organ/eyes/heretic_eyes = ascended_human.get_organ_slot(ORGAN_SLOT_EYES)
-		ascended_human.update_sight()
 		heretic_eyes?.color_cutoffs = list(30, 30, 30)
 		ascended_human.update_sight()
 

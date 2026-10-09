@@ -51,7 +51,7 @@
 	#define MOVE_ARG_NEW_LOC 1
 	/// The argument of move_args which dictates our movement direction
 	#define MOVE_ARG_DIRECTION 2
-/// From base of /client/Move(): (direction, old_dir)
+/// From base of /client/Move(): (direction, old_dir, atom/old_loc)
 #define COMSIG_MOB_CLIENT_MOVED "mob_client_moved"
 /// From base of /client/proc/change_view() (mob/source, new_size)
 #define COMSIG_MOB_CLIENT_CHANGE_VIEW "mob_client_change_view"
@@ -131,6 +131,8 @@
 	#define COMSIG_BLOCK_EYECONTACT (1<<0)
 ///from base of /mob/update_sight(): ()
 #define COMSIG_MOB_UPDATE_SIGHT "mob_update_sight"
+///from base of /mob/living/restore_initial_sight(): ()
+#define COMSIG_LIVING_RESTORE_INITIAL_SIGHT "mob_restore_init_sight"
 ////from /mob/living/say(): ()
 #define COMSIG_MOB_SAY "mob_say"
 	#define COMPONENT_UPPERCASE_SPEECH (1<<0)
@@ -166,6 +168,15 @@
 	#define EMOTE_SOUND_TONGUE 1
 	#define EMOTE_SOUND_MASK 2
 	#define EMOTE_SOUND_STATUS_EFFECT 3
+/// from base of mob/cycle_hand(): (cycle_dir, climb, silent)<br>
+/// Ran before hand cycling behaviour is started<br>
+#define COMSIG_MOB_CYCLE_HAND "mob_cycle_hand"
+	#define COMPONENT_BLOCK_CYCLE (1<<0) //! Do not continue cycling hands
+/// from base of mob/cycle_hand(): (cycle_dir, climb, silent)<br>
+/// Ran while hands are being cycled, firing once a hand_index has been selected<br>
+/// hand_index: the hand index we want to react to
+#define COMSIG_MOB_CYCLE_HAND_INDEX(hand_index) "mob_cycle_hand_index_[hand_index]"
+	#define COMPONENT_CONTINUE_CYCLE (1<<1) //! This index was invalid, but don't give up yet
 ///from base of mob/swap_hand(): (obj/item/currently_held_item)
 #define COMSIG_MOB_SWAPPING_HANDS "mob_swapping_hands"
 	#define COMPONENT_BLOCK_SWAP (1<<0)

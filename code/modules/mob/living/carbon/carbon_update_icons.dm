@@ -252,12 +252,11 @@
 /// Generate held item overlays
 /mob/living/carbon/proc/get_held_overlays()
 	var/list/hands = list()
-	for(var/obj/item/I in held_items)
-		var/icon_file = I.lefthand_file
-		if(IS_RIGHT_INDEX(get_held_index_of_item(I)))
-			icon_file = I.righthand_file
+	for(var/held_index in get_active_held_indexes())
+		var/obj/item/held_item = get_item_for_held_index(held_index)
+		var/icon_file = IS_LEFT_INDEX(held_index) ? held_item.lefthand_file : held_item.righthand_file
 
-		hands += I.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE, bodyshape = bodyshape)
+		hands += held_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE, bodyshape = bodyshape)
 	return hands
 
 /mob/living/carbon/proc/get_fire_icon_state(stacks, on_fire)
@@ -286,18 +285,12 @@
 
 	var/mutable_appearance/damage_overlay
 	for(var/obj/item/bodypart/iter_part as anything in get_bodyparts())
-		if(!iter_part.dmg_overlay_type)
+		var/list/part_overlays = iter_part.get_bodypart_damage_state()
+		if(!LAZYLEN(part_overlays))
 			continue
-		if(isnull(damage_overlay) && (iter_part.brutestate || iter_part.burnstate))
-			damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "blank", -DAMAGE_LAYER, appearance_flags = KEEP_TOGETHER)
-		if(iter_part.brutestate)
-			var/mutable_appearance/blood_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0", appearance_flags = RESET_COLOR) //we're adding icon_states of the base image as overlays
-			blood_damage_overlay.color = get_bloodtype()?.get_damage_color(src)
-			var/mutable_appearance/brute_damage_overlay = mutable_appearance('icons/mob/effects/dam_mob.dmi', "[iter_part.dmg_overlay_type]_[iter_part.body_zone]_[iter_part.brutestate]0_overlay", appearance_flags = RESET_COLOR)
-			blood_damage_overlay.overlays += brute_damage_overlay
-			damage_overlay.add_overlay(blood_damage_overlay)
-		if(iter_part.burnstate)
-			damage_overlay.add_overlay("[iter_part.dmg_overlay_type]_[iter_part.body_zone]_0[iter_part.burnstate]")
+
+		damage_overlay ||= mutable_appearance(layer = -DAMAGE_LAYER)
+		damage_overlay.overlays += part_overlays
 
 	if(isnull(damage_overlay))
 		return
@@ -511,7 +504,11 @@ GLOBAL_LIST_EMPTY(masked_leg_icons_cache)
  * * limb_overlay - The limb image being masked, not necessarily the original limb image as it could be an overlay on top of it
  * Returns the list of masked images, or `null` if the limb_overlay didn't exist
  */
-/obj/item/bodypart/leg/proc/generate_masked_leg(image/limb_overlay)
+/obj/item/bodypart/proc/handle_masking(image/limb_overlay)
+	PROTECTED_PROC(TRUE)
+	return
+
+/obj/item/bodypart/leg/handle_masking(image/limb_overlay)
 	RETURN_TYPE(/list)
 	if(!limb_overlay)
 		return

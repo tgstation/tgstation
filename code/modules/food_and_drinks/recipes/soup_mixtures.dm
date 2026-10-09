@@ -1081,6 +1081,30 @@
 	)
 	percentage_of_nutriment_converted = 0.1
 
+// Red beet soup
+/datum/reagent/consumable/nutriment/soup/drake_beet
+	name = "Drake Beet Soup"
+	description = "A soup made out of drake beets and sinew clinging to drake hide."
+	data = list("drake beet" = 4, "spice" = 1)
+	color = "#851127"
+
+/datum/glass_style/has_foodtype/soup/drake_beet
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/drake_beet
+	icon_state = "drakebeetsoup"
+	drink_type = VEGETABLES | MEAT
+
+/datum/chemical_reaction/food/soup/drake_beet
+	required_reagents = list(/datum/reagent/water = 50)
+	required_ingredients = list(
+		/obj/item/food/grown/drake_beet = 2,
+		/obj/item/stack/sheet/animalhide/ashdrake = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/drake_beet = 30,
+		/datum/reagent/water = 10,
+	)
+	percentage_of_nutriment_converted = 0.2
+
 // French Onion soup
 /datum/reagent/consumable/nutriment/soup/french_onion
 	name = "French Onion Soup"
@@ -1131,6 +1155,32 @@
 		/datum/reagent/consumable/nutriment/protein = 6,
 		/datum/reagent/consumable/nutriment/vitamin = 4,
 		/datum/reagent/water = 5,
+	)
+
+// Iceberg soup
+/datum/reagent/consumable/nutriment/soup/iceberg
+	name = "Iceberg Soup"
+	description = "A slight upgrade upon the wish soup, this one has some nutrient content."
+	data = list("cold" = 4, "tundra wilds" = 1)
+	color = "#26AEB9"
+
+/datum/glass_style/has_foodtype/soup/iceberg
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/iceberg
+	icon_state = "icebergbowl"
+	drink_type = VEGETABLES
+
+/datum/chemical_reaction/food/soup/iceberg
+	required_reagents = list(
+		/datum/reagent/water = 40,
+		/datum/reagent/consumable/frostoil = 10,
+	)
+	required_ingredients = list(
+		/obj/item/food/grown/ash_flora/fonarstolbe = 1,
+		/obj/item/food/grown/ash_flora/podsneyzka = 1,
+		/obj/item/food/grown/peas = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/iceberg = 40,
 	)
 
 // Bungo Tree Curry
@@ -1270,6 +1320,38 @@
 		/datum/reagent/consumable/nutriment/vitamin = 8,
 	)
 	percentage_of_nutriment_converted = 0 // Oats have barely any nutrients
+
+// Wolf Goulash
+/datum/reagent/consumable/nutriment/soup/goulash
+	name = "Wolf Goulash"
+	description = "A thick soup with heavy focus on the meat. In this rendition, the meat from wolf sinew."
+	data = list("meat" = 4, "vegetables" = 1, "spice" = 1)
+	color = "#CA3518"
+
+/datum/glass_style/has_foodtype/soup/goulash
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/goulash
+	icon_state = "goulash"
+	drink_type = VEGETABLES | MEAT
+
+/datum/chemical_reaction/food/soup/goulash
+	required_reagents = list(
+		/datum/reagent/water = 40,
+		/datum/reagent/consumable/flour = 10,
+	)
+	required_ingredients = list(
+		/obj/item/stack/sheet/sinew/wolf = 1,
+		/obj/item/food/grown/drake_beet = 1,
+		/obj/item/food/grown/bell_pepper = 1,
+		/obj/item/food/grown/onion = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/goulash = 30,
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/protein = 3,
+		/datum/reagent/consumable/nutriment/vitamin = 3,
+	)
+	ingredient_reagent_multiplier = 0.5
+	percentage_of_nutriment_converted = 0.1
 
 // Zurek, a Polish soup
 /datum/reagent/consumable/nutriment/soup/zurek
@@ -2306,3 +2388,28 @@
 	resulting_food_path = /obj/item/food/volt_fish
 	ingredient_reagent_multiplier = 0
 	mix_message = "The air fills with a hellish mix of fish and artificial flavouring."
+
+//Rubywise Ruin
+//actual reagent defined in alcohol_reagents
+/datum/chemical_reaction/food/soup/rubywise_ruin
+	required_reagents = list(
+		/datum/reagent/consumable/ethanol/sangria = 30,
+		/datum/reagent/blood = 10,
+		/datum/reagent/consumable/ethanol/aperitivo = 10
+	)
+	required_ingredients = list(
+		/obj/item/food/drug/opium = 1,
+		/obj/item/food/grown/flower = 1
+	)
+	results=list(
+		/datum/reagent/consumable/ethanol/rubywise_ruin = 50
+	)
+	mix_message = "The flower becomes dissolute in the bloody mixture as a carnal pefume wafts from the pot."
+	mix_sound = 'sound/effects/changeling_absorb/changeling_absorb5.ogg'
+
+/datum/glass_style/has_foodtype/soup/rubywise_ruin
+	required_drink_type = /datum/reagent/consumable/ethanol/rubywise_ruin
+	name = "Rubywise Ruin"
+	desc = "A stimulant of appetites; Those oldest, deepest, reddest, most regretable appetites."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi' //Drinking a cocktail out a bowl...?
+	icon_state = "rubywise_ruin"

@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Megafauna / Tendrils prevent mining mobs within 10 / 7 tiles of them from respawning during a storm"
+  - balance: "The radius that which candelas block mining mob respawns during storms now reaches through walls"
+  - balance: "Living players prevent mining mobs within 3 tiles from respawning during a storm (if the respawn point is in sight)."

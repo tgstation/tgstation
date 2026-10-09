@@ -435,6 +435,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	tgui_say.initialize()
 
 	initialize_escape_menu()
+	initialize_lobby_menu()
 
 	if(alert_mob_dupe_login && !holder)
 		// Notify admins if the connecting player's CID is configured to be ignored by stickybans
@@ -650,7 +651,8 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	QDEL_NULL(void)
 	QDEL_NULL(tooltips)
 	QDEL_NULL(loot_panel)
-	QDEL_NULL(parallax_rock)
+	QDEL_LIST(parallax_instances)
+	eye_parallax = null
 	seen_messages = null
 	Master.UpdateTickRate()
 	..() //Even though we're going to be hard deleted there are still some things that want to know the destroy is happening
@@ -1016,7 +1018,12 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 		return
 	var/atom/old_eye = eye
 	eye = new_eye
+
+	// Draws to the default map
+	eye_parallax = create_parallax("")
+	eye_parallax.set_perspective(eye)
 	SEND_SIGNAL(src, COMSIG_CLIENT_SET_EYE, old_eye, new_eye)
+
 /**
  * Updates the keybinds for special keys
  *
@@ -1075,6 +1082,29 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	var/list/actualview = getviewsize(view)
 	void.UpdateGreed(actualview[1],actualview[2])
 
+/client/proc/apply_parallax()
+	if(length(parallax_instances))
+		screen |= parallax_instances
+
+/// Gets a parallax holder if one exists on the specified map
+/client/proc/get_parallax(map)
+	for(var/atom/movable/screen/parallax_home/instance as anything in parallax_instances)
+		if(instance.submap == map)
+			return instance
+
+/// Creates a new parallax holder if one does not already exist on the passed in map
+/client/proc/create_parallax(map)
+	var/atom/movable/screen/parallax_home/existing = get_parallax(map)
+	if(existing)
+		return existing
+	return new /atom/movable/screen/parallax_home(null, null, src, map)
+
+/// Deletes the parallax holder for the passed in map
+/client/proc/delete_parallax(map)
+	var/atom/movable/screen/parallax_home/existing = get_parallax(map)
+	if(existing)
+		qdel(existing)
+
 /client/proc/AnnouncePR(announcement)
 	if(get_chat_toggles(src) & CHAT_PULLR)
 		to_chat(src, announcement)
@@ -1123,7 +1153,10 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	for(var/procpath/verb_to_init as anything in verbstoprocess)
 		if(!verb_to_init || verb_to_init.hidden)
 			continue
-		if(!SSverbs.verbs_by_verb_path[verb_to_init] && !SSadmin_verbs.admin_verbs_by_verb_path[verb_to_init])
+		var/datum/verb_metadata/meta = SSverbs.verbs_by_verb_path[verb_to_init]
+		if(!meta && !SSadmin_verbs.admin_verbs_by_verb_path[verb_to_init])
+			continue
+		if(meta?.src_based)
 			continue
 		panel_verbs += list(SSverbs.serialize_verb(verb_to_init))
 	tgui_panel?.window?.send_message("verbs/init", list("verbs" = panel_verbs))

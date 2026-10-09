@@ -83,7 +83,7 @@
 	. = ..()
 	if (!firer)
 		return
-	tentacle_beam = Beam(firer, "goliath_tentacle", beam_type = (reel_in ? /obj/effect/ebeam/reacting : /obj/effect/ebeam), emissive = FALSE)
+	tentacle_beam = Beam(firer, "goliath_tentacle", beam_type = (reel_in ? /obj/effect/ebeam/reacting : /obj/effect/ebeam), emissive = NONE)
 	if (reel_in)
 		RegisterSignal(tentacle_beam, COMSIG_BEAM_ENTERED, PROC_REF(on_beam_entered))
 
@@ -100,7 +100,7 @@
 	holder.transform = transform
 	holder.pixel_x = (firer_turf.x - our_turf.x) * ICON_SIZE_X + pixel_x
 	holder.pixel_y = (firer_turf.y - our_turf.y) * ICON_SIZE_Y + pixel_y
-	holder.Beam(firer, "goliath_tentacle", emissive = FALSE)
+	holder.Beam(firer, "goliath_tentacle", emissive = NONE)
 	var/anim_time = sqrt((holder.pixel_x / ICON_SIZE_X) ** 2 + (holder.pixel_y / ICON_SIZE_Y) ** 2) / (speed * SSprojectiles.wait * retract_speed)
 	animate(holder, pixel_x = 0, pixel_y = 0, time = anim_time)
 	QDEL_IN_CLIENT_TIME(holder, anim_time)
@@ -396,6 +396,7 @@
 	projectile_type = /obj/projectile/tentacle_lash/stab
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/tendril_melee/Activate(atom/target_atom, warning = TRUE)
+	disable_cooldown_actions()
 	if (warning)
 		for (var/stab_dir in GLOB.alldirs)
 			var/turf/open/stab_turf = get_step(owner, stab_dir)
@@ -411,4 +412,5 @@
 
 	SLEEP_CHECK_DEATH(0.5 SECONDS, owner)
 	StartCooldown()
+	enable_cooldown_actions()
 	return TRUE

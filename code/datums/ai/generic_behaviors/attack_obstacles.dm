@@ -7,6 +7,8 @@
 	var/can_attack_turfs = FALSE
 	/// For if you want your mob to be able to attack dense objects
 	var/can_attack_dense_objects = FALSE
+	/// If TRUE, consider other mobs (even our allies) as obstructions
+	var/can_attack_mobs = FALSE
 	/// Set this for navmap A* movement, which already validates the next step.
 	var/can_ignore_step = FALSE
 
@@ -57,6 +59,8 @@
 	return FALSE
 
 /datum/bt_node/ai_behavior/attack_obstructions/proc/can_smash_object(mob/living/basic/basic_mob, obj/object)
+	if(!can_attack_mobs && ismob(object))
+		return FALSE
 	if(!object.density && !can_attack_dense_objects)
 		return FALSE
 	if(object.IsObscured())

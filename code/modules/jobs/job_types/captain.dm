@@ -49,6 +49,7 @@
 	human_authority = JOB_AUTHORITY_HUMANS_ONLY
 
 	voice_of_god_power = 1.4 //Command staff has authority
+	tgui_icon = FA_ICON_CROWN
 
 
 /datum/job/captain/get_captaincy_announcement(mob/living/captain)
@@ -70,7 +71,7 @@
 		/obj/item/melee/baton/telescopic/gold = 1,
 		/obj/item/station_charter = 1,
 		)
-	belt = /obj/item/modular_computer/pda/heads/captain
+	belt = /obj/item/modular_computer/pda/crew/heads/captain
 	ears = /obj/item/radio/headset/heads/captain/alt
 	glasses = /obj/item/clothing/glasses/sunglasses
 	gloves = /obj/item/clothing/gloves/captain
@@ -113,7 +114,7 @@
 	if(visuals_only || !special_charter)
 		return
 
-	var/obj/item/station_charter/banner/celestial_charter = locate() in equipped.held_items
+	var/obj/item/station_charter/banner/celestial_charter = equipped.is_holding_item_of_type(__IMPLIED_TYPE__)
 	if(isnull(celestial_charter))
 		// failed to give out the unique charter, plop on the ground
 		celestial_charter = new(get_turf(equipped))

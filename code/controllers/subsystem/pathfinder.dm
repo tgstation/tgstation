@@ -39,13 +39,10 @@ SUBSYSTEM_DEF(pathfinder)
 		var/step_ok = path.search_step()
 		if(!step_ok) // Something's wrong
 			path.early_exit()
-			currentrun.len--
 			continue
 		if(MC_TICK_CHECK)
 			return
 		path.finished()
-		// Next please
-		currentrun.len--
 
 	var/list/datum/pathfind/navmap/current_navmap_run = src.current_navmap_run
 	while(length(current_navmap_run))

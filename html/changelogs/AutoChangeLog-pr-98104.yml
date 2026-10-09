@@ -1,0 +1,5 @@
+author: "Co0kie-GG"
+delete-after: True
+changes:
+  - bugfix: "The AI will no longer see its eyes after revive"
+  - bugfix: "The AI's second eyes are removed upon death or loading onto the card"

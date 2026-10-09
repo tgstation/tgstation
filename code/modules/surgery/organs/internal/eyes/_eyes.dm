@@ -20,8 +20,6 @@
 	high_threshold_cleared = span_info("Your vision functions passably once more.")
 	low_threshold_cleared = span_info("Your vision is cleared of any ailment.")
 
-	/// Sight flags this eye pair imparts on its user.
-	var/sight_flags = NONE
 	/// How much innate tint these eyes have
 	var/tint = 0
 	/// How much innare flash protection these eyes have, usually paired with tint
@@ -51,7 +49,7 @@
 	var/obj/effect/abstract/eyelid_effect/eyelid_left
 	var/obj/effect/abstract/eyelid_effect/eyelid_right
 
-	/// Glasses cannot be worn over these eyes. Currently unused
+	/// Glasses cannot be worn over these eyes.
 	var/no_glasses = FALSE
 	/// Native FOV that will be applied if a config is enabled
 	var/native_fov = FOV_90_DEGREES
@@ -136,6 +134,9 @@
 
 /obj/item/organ/eyes/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
+	// Don't forget about the eyelids
+	organ_owner.vis_contents -= eyelid_left
+	organ_owner.vis_contents -= eyelid_right
 
 	if(ishuman(organ_owner))
 		var/mob/living/carbon/human/human_owner = organ_owner
@@ -609,7 +610,6 @@
 	light_level = NIGHTVISION_LIGHT_LOW
 
 /obj/item/organ/eyes/night_vision/ui_action_click()
-	sight_flags = initial(sight_flags)
 	switch(light_level)
 		if (NIGHTVISION_LIGHT_OFF)
 			color_cutoffs = low_light_cutoff.Copy()

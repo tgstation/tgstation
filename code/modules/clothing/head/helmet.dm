@@ -65,7 +65,7 @@
 
 	qdel(attached_signaler)
 	var/obj/item/bot_assembly/secbot/secbot_frame = new(drop_location())
-	var/held_index = user.is_holding(src)
+	var/held_index = user.get_held_index_of_item(src)
 	qdel(src)
 	if (held_index)
 		user.put_in_hand(secbot_frame, held_index)

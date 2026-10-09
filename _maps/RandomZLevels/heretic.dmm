@@ -3157,10 +3157,6 @@
 /obj/structure/flora/grass/jungle/a/style_random,
 /turf/open/misc/grass/jungle/station,
 /area/awaymission/beach/heretic)
-"qr" = (
-/obj/effect/mapping_helpers/airlock/access/all/supply,
-/turf/open/floor/plating,
-/area/awaymission/caves/heretic_laboratory)
 "qt" = (
 /obj/structure/cable,
 /obj/machinery/power/port_gen/pacman/pre_loaded,
@@ -8176,7 +8172,7 @@
 "Qz" = (
 /obj/structure/table,
 /obj/machinery/light/floor,
-/obj/item/gun/energy/shrink_ray/one_shot,
+/obj/item/gun/energy/recharge/shrink_ray/one_shot,
 /turf/open/floor/iron/large,
 /area/awaymission/caves/heretic_laboratory_clean)
 "QA" = (
@@ -25290,7 +25286,7 @@ fW
 fW
 fW
 fW
-qr
+ay
 hp
 bq
 wC

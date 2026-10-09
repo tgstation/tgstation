@@ -1,0 +1,7 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "ventcrawling once again shows only the pipes and the layout of the area around you, not the mobs and objects in it."
+  - bugfix: "engineering and mining cyborgs' meson vision and syndicate saboteur cyborgs' thermal vision tint dark areas again."
+  - bugfix: "syndicate saboteur cyborgs can turn their thermal vision off again."
+  - bugfix: "engineering scanner goggles only give meson vision in meson mode again. Shuttle region scanners, atmospheric thermal imaging goggles and admin imaging goggles no longer give meson vision at all."

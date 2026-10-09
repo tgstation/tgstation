@@ -33,6 +33,7 @@
 	// NB: This is the only time we init a link without having any other signal registered
 	// This can cause issues due do signal registration order where some stuff gets resolved before the link instead of after the link
 	if(isnull(cuffed_to) || !update_link())
+		cuffed_to = null // we need to keep track if the cuffing failed, so we don't "revert" the nonexistent slowdown
 		owner.put_in_hands(cuffs)
 		qdel(src)
 		return FALSE
@@ -84,10 +85,11 @@
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_QDELETING,
 	))
-	UnregisterSignal(cuffed_to, list(
-		COMSIG_BODYPART_REMOVED,
-		COMSIG_QDELETING,
-	))
+	if(cuffed_to)
+		UnregisterSignal(cuffed_to, list(
+			COMSIG_BODYPART_REMOVED,
+			COMSIG_QDELETING,
+		))
 	UnregisterSignal(owner, list(
 		COMSIG_CARBON_POST_ATTACH_LIMB,
 		COMSIG_MOVABLE_MOVED,
@@ -100,8 +102,9 @@
 			cuffs.forceMove(owner.drop_location())
 	cuffs = null
 
-	cuffed_to.set_speed_modifiers(cuffed_to.interaction_modifier - 0.25, cuffed_to.click_cd_modifier - 0.25)
-	cuffed_to = null
+	if(cuffed_to)
+		cuffed_to.set_speed_modifiers(cuffed_to.interaction_modifier - 0.25, cuffed_to.click_cd_modifier - 0.25)
+		cuffed_to = null
 
 	break_leash()
 

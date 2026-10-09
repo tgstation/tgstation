@@ -70,7 +70,7 @@ function migrateHighlights(next: HighlightState): HighlightState {
       setting.enabled = true;
     }
     if (setting.playSound === undefined) {
-      setting.playSound = true;
+      setting.playSound = false;
     }
     if (!setting.soundFile) {
       setting.soundFile = defaultHighlightSetting.soundFile;

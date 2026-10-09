@@ -27,6 +27,8 @@
 	var/barometer_accuracy
 	/// Cached gasmix data from ui_interact
 	var/list/last_gasmix_data
+
+	var/datum/weakref/last_scanned
 	/// Max scan distance
 	var/ranged_scan_distance = 1
 
@@ -134,39 +136,59 @@
 	return return_atmos_handbooks()
 
 /obj/item/analyzer/ui_data(mob/user)
-	LAZYINITLIST(last_gasmix_data)
-	return list("gasmixes" = last_gasmix_data)
+	var/obj/item/last_scanned_real = last_scanned?.resolve()
+	if(!QDELETED(last_scanned_real) && can_see(user, last_scanned_real, ranged_scan_distance))
+		collect_scan_info(last_scanned_real) // updates last_gasmix_data as long as we're in range
+
+	return list(
+		"gasmixes" = last_gasmix_data,
+	)
+
+/// Checks if we can use the analyzer at all
+/obj/item/analyzer/proc/can_use(mob/user)
+	if(!user.can_read(src))
+		return FALSE
+	// Logical, but it contains "tutorial information", so we should allow it.
+	// if(user.is_blind())
+	// 	return FALSE
+	return TRUE
+
+/obj/item/analyzer/ui_status(mob/user)
+	return can_use(user) ? ..() : UI_CLOSE
 
 /obj/item/analyzer/attack_self(mob/user, modifiers)
-	if(IS_UNCONSCIOUS_OR_CRIT(user) || !user.can_read(src) || user.is_blind())
-		return
-	atmos_scan(user=user, target=get_turf(src), silent=FALSE)
-	on_analyze(source=src, target=get_turf(src))
+	scan_atom(get_turf(src), user)
+	return TRUE
 
 /obj/item/analyzer/attack_self_secondary(mob/user, modifiers)
-	if(IS_UNCONSCIOUS_OR_CRIT(user) || !user.can_read(src) || user.is_blind())
-		return
-
 	ui_interact(user)
+	return TRUE
 
 /obj/item/analyzer/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(istype(interacting_with, /obj/effect/anomaly) && can_see(user, interacting_with, ranged_scan_distance))
 		var/obj/effect/anomaly/ranged_anomaly = interacting_with
 		ranged_anomaly.analyzer_act(user, src)
 		return ITEM_INTERACT_SUCCESS
+
 	return interact_with_atom(interacting_with, user, modifiers)
 
 /obj/item/analyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!HAS_TRAIT(interacting_with, TRAIT_COMBAT_MODE_SKIP_INTERACTION) && can_see(user, interacting_with, ranged_scan_distance))
-		atmos_scan(user, (interacting_with.return_analyzable_air() ? interacting_with : get_turf(interacting_with)))
+		scan_atom(interacting_with.return_analyzable_air() ? interacting_with : get_turf(interacting_with), user)
 	return NONE // Non-blocking
 
-/// Called when our analyzer is used on something
-/obj/item/analyzer/proc/on_analyze(datum/source, atom/target)
-	SIGNAL_HANDLER
+/obj/item/analyzer/proc/scan_atom(atom/target, mob/living/user)
+	if(!can_use(user))
+		return
+
+	atmos_scan(user, target, silent = FALSE)
+	collect_scan_info(target)
+
+/obj/item/analyzer/proc/collect_scan_info(atom/target)
 	var/mixture = target.return_analyzable_air()
 	if(!mixture)
-		return FALSE
+		return
+
 	var/list/airs = islist(mixture) ? mixture : list(mixture)
 	var/list/new_gasmix_data = list()
 	for(var/datum/gas_mixture/air as anything in airs)
@@ -175,6 +197,12 @@
 			mix_name += " - Node [airs.Find(air)]"
 		new_gasmix_data += list(gas_mixture_parser(air, mix_name))
 	last_gasmix_data = new_gasmix_data
+	last_scanned = WEAKREF(target)
+
+/// Called when our analyzer is used on something
+/obj/item/analyzer/proc/on_analyze(datum/source, atom/target)
+	SIGNAL_HANDLER
+	collect_scan_info(target)
 
 /**
  * Outputs a message to the user describing the target's gasmixes.

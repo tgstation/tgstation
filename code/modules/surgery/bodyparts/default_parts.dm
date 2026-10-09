@@ -406,6 +406,7 @@
 			FOOTSTEP_MOB_CLAW,
 			FOOTSTEP_MOB_HEAVY,
 			FOOTSTEP_MOB_SHOE,
+			FOOTSTEP_MOB_SYNTHETIC,
 		)
 		if(!(footstep_type in supported_types))
 			stack_trace("Invalid footstep type set on leg: \[[footstep_type]\] \
@@ -451,6 +452,12 @@
 
 	speed_modifier = new_modifier
 	owner?.update_bodypart_speed_modifier()
+
+/// block attachment of legs if the owner has the related trait
+/obj/item/bodypart/leg/can_attach_limb(mob/living/carbon/owner, special)
+	if(!special && HAS_TRAIT(owner, TRAIT_BLOCK_ATTACHING_LEGS))
+		return FALSE
+	return ..()
 
 /obj/item/bodypart/leg/left
 	name = "left leg"

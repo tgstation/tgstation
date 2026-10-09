@@ -7,7 +7,7 @@
 	var/outdoor_only = TRUE
 	/// Are we waiting for a mob to spawn so we can link to it?
 	var/registered_spawn_signal = FALSE
-	// Spawn somewhere in an area around the spawner rather than dead on it
+	/// Spawn somewhere in an area around the spawner rather than dead on it
 	var/respawn_range = 3
 	/// Min time from storm to spawn a mob
 	var/min_delay = 1 SECONDS
@@ -110,6 +110,17 @@
 	var/mob/living/resolved = our_mob?.resolve()
 	if (resolved && resolved.stat != DEAD)
 		return
+
+	// Check all turfs that have a blocker on it
+	for(var/blocker, blocker_range in GLOB.mining_mob_respawn_blockers)
+		if(get_dist(src, blocker) <= blocker_range)
+			return
+
+	// Check for any (living, active, nearby) players
+	for(var/mob/living/miner in viewers(loc, 3))
+		if(miner.stat != DEAD && !isnull(miner.mind))
+			return
+
 	if (prob(respawn_chance))
 		addtimer(CALLBACK(src, PROC_REF(make_mob)), rand(min_delay, max_delay), TIMER_DELETE_ME)
 

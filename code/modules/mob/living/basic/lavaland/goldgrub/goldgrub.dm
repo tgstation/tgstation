@@ -147,16 +147,6 @@
 		max_eggs_held = 1,\
 	)
 
-/mob/living/basic/mining/goldgrub/Entered(atom/movable/arrived, atom/old_loc, list/atom/old_locs)
-	. = ..()
-	if(!istype(arrived, /obj/item/stack/ore))
-		return
-	if(!can_lay_eggs)
-		return
-	if(!istype(arrived, /obj/item/stack/ore/bluespace_crystal) || prob(60))
-		return
-	new /obj/item/food/egg/green/grub_egg(get_turf(src))
-
 /mob/living/basic/mining/goldgrub/update_overlays()
 	. = ..()
 	if(has_emissive)

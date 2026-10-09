@@ -97,6 +97,7 @@
 		/datum/design/jackhammer,
 		/datum/design/drill_diamond,
 		/datum/design/mech_diamond_drill,
+		/datum/design/module/mod_candela_spool,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_4_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SUPPLY)

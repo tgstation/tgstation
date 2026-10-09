@@ -44,6 +44,7 @@
 	)
 	output_organs = list(
 		/obj/item/organ/brain/carp,
+		/obj/item/organ/fangs/carp,
 		/obj/item/organ/heart/carp,
 		/obj/item/organ/lungs/carp,
 		/obj/item/organ/tongue/carp,
@@ -172,8 +173,9 @@
 		"spit ink to blind foes",
 	)
 	output_organs = list(
-		/obj/item/organ/tongue/inky
+		/obj/item/organ/tongue/fish/inky
 	)
+	unreachable_effect = TRUE
 	tier = DNA_MUTANT_TIER_ONE
 
 /datum/infuser_entry/ttx_healing
@@ -235,6 +237,7 @@
 	output_organs = list(
 		/obj/item/organ/eyes/stoat,
 		/obj/item/organ/ears/stoat,
+		/obj/item/organ/fangs/stoat,
 		/obj/item/organ/heart/stoat,
 		/obj/item/organ/tongue/stoat,
 		/obj/item/organ/snout/stoat,

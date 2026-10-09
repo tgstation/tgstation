@@ -5,19 +5,20 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
  */
 /proc/electrolyzer_reactions_list()
 	var/list/built_reaction_list = list()
-	for(var/reaction_path in subtypesof(/datum/electrolyzer_reaction))
-		var/datum/electrolyzer_reaction/reaction = new reaction_path()
+	for(var/reaction_path in subtypesof(/datum/gas_reaction/electrolyzer))
+		var/datum/gas_reaction/electrolyzer/reaction = new reaction_path()
 
 		built_reaction_list[reaction.id] = reaction
 
 	return built_reaction_list
 
-/datum/electrolyzer_reaction
-	var/list/requirements
-	var/name = "reaction"
-	var/id = "r"
-	var/desc = ""
-	var/list/factor
+/datum/gas_reaction/electrolyzer
+	abstract_type = /datum/gas_reaction/electrolyzer
+
+/datum/gas_reaction/electrolyzer/New()
+	. = ..()
+	factor ||= list()
+	factor["Location"] ||= "Can only happen on tiles with an active Electrolyzer."
 
 /**
  * Electrolyzer reaction.
@@ -26,7 +27,7 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
  * * working_power: How much energy to put into the electrolysis, in electrolyzer units. A value of 1 is what a tier 1 electrolyzer would put in.
  * * electrolyzer_args: Additional arguments for alternative methods of electrolysis.
  */
-/datum/electrolyzer_reaction/proc/react(datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
+/datum/gas_reaction/electrolyzer/proc/react(datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
 	return
 
 /**
@@ -35,7 +36,7 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
  * * air_mixture: The air mixture to check the requirements for.
  * * electrolyzer_args: Additional arguments for alternative methods of electrolysis.
  */
-/datum/electrolyzer_reaction/proc/reaction_check(datum/gas_mixture/air_mixture, list/electrolyzer_args = list())
+/datum/gas_reaction/electrolyzer/proc/reaction_check(datum/gas_mixture/air_mixture, list/electrolyzer_args = list())
 	var/temp = air_mixture.temperature
 	var/list/cached_moles = air_mixture.moles
 	if((requirements["MIN_TEMP"] && temp < requirements["MIN_TEMP"]) || (requirements["MAX_TEMP"] && temp > requirements["MAX_TEMP"]))
@@ -47,21 +48,20 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 			return FALSE
 	return TRUE
 
-/datum/electrolyzer_reaction/h2o_conversion
+/datum/gas_reaction/electrolyzer/h2o_conversion
 	name = "H2O Conversion"
 	id = "h2o_conversion"
-	desc = "Conversion of H2o into O2 and H2"
+	desc = "Conversion of H2O into H2 and O2."
 	requirements = list(
 		/datum/gas/water_vapor = MINIMUM_MOLE_COUNT
 	)
 	factor = list(
-		/datum/gas/water_vapor = "2 moles of H2O get consumed",
-		/datum/gas/oxygen = "1 mole of O2 gets produced",
-		/datum/gas/hydrogen = "2 moles of H2 get produced",
-		"Location" = "Can only happen on turfs with an active Electrolyzer.",
+		/datum/gas/water_vapor = "2 moles of H2O is consumed.",
+		/datum/gas/oxygen = "1 mole of O2 is produced.",
+		/datum/gas/hydrogen = "2 moles of H2 is produced.",
 	)
 
-/datum/electrolyzer_reaction/h2o_conversion/react(datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
+/datum/gas_reaction/electrolyzer/h2o_conversion/react(datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
 
 	var/old_heat_capacity = air_mixture.heat_capacity()
 
@@ -73,25 +73,25 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 		air_mixture.temperature = max(air_mixture.temperature * old_heat_capacity / new_heat_capacity, TCMB)
 
-/datum/electrolyzer_reaction/nob_conversion
-	name = "Hypernob conversion"
+/datum/gas_reaction/electrolyzer/nob_conversion
+	name = "Hyper-Noblium Conversion"
 	id = "nob_conversion"
-	desc = "Conversion of Hypernoblium into Antinoblium"
+	desc = "Conversion of Hyper-Noblium into Anti-Noblium."
 	requirements = list(
 		/datum/gas/hypernoblium = MINIMUM_MOLE_COUNT,
 	)
 	factor = list(
-		/datum/gas/hypernoblium = "1 mole of Hypernoblium gets consumed",
-		/datum/gas/antinoblium = "1 mole of Antinoblium get produced",
-		"Location" = "Can only happen on turfs that are being struck by supermatter zaps with a power level above 5 GeV.",
+		/datum/gas/hypernoblium = "1 mole of Hyper-Noblium is consumed.",
+		/datum/gas/antinoblium = "1 mole of Anti-Noblium is produced.",
+		"Location" = "Can only happen on tiles that are being struck by Supermatter zaps with a power level above 5 GeV.",
 	)
 
-/datum/electrolyzer_reaction/nob_conversion/reaction_check(datum/gas_mixture/air_mixture, list/electrolyzer_args = list())
+/datum/gas_reaction/electrolyzer/nob_conversion/reaction_check(datum/gas_mixture/air_mixture, list/electrolyzer_args = list())
 	if(!electrolyzer_args[ELECTROLYSIS_ARGUMENT_SUPERMATTER_POWER] || electrolyzer_args[ELECTROLYSIS_ARGUMENT_SUPERMATTER_POWER] <= POWER_PENALTY_THRESHOLD)
 		return FALSE
-	. = ..()
+	return ..()
 
-/datum/electrolyzer_reaction/nob_conversion/react(datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
+/datum/gas_reaction/electrolyzer/nob_conversion/react(datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
 	/// The supermatter zap power_level.
 	var/supermatter_power = electrolyzer_args[ELECTROLYSIS_ARGUMENT_SUPERMATTER_POWER]
 	var/list/cached_moles = air_mixture.moles
@@ -107,23 +107,22 @@ GLOBAL_LIST_INIT(electrolyzer_reactions, electrolyzer_reactions_list())
 	if(new_heat_capacity > MINIMUM_HEAT_CAPACITY)
 		air_mixture.temperature = max(air_mixture.temperature * old_heat_capacity / new_heat_capacity, TCMB)
 
-/datum/electrolyzer_reaction/halon_generation
-	name = "Halon generation"
+/datum/gas_reaction/electrolyzer/halon_generation
+	name = "Halon Generation"
 	id = "halon_generation"
 	desc = "Production of halon from the electrolysis of BZ."
 	requirements = list(
 		/datum/gas/bz = MINIMUM_MOLE_COUNT,
 	)
 	factor = list(
-		/datum/gas/bz = "Consumed during reaction.",
-		/datum/gas/oxygen = "0.2 moles of oxygen gets produced per mole of BZ consumed.",
-		/datum/gas/halon = "2 moles of Halon gets produced per mole of BZ consumed.",
+		/datum/gas/bz = "All moles of BZ are consumed.",
+		/datum/gas/oxygen = "0.2 moles of oxygen is produced per mole of BZ consumed.",
+		/datum/gas/halon = "2 moles of Halon is produced per mole of BZ consumed.",
 		"Energy" = "91.2321 kJ of thermal energy is released per mole of BZ consumed.",
 		"Temperature" = "Reaction efficiency is proportional to temperature.",
-		"Location" = "Can only happen on turfs with an active Electrolyzer.",
 	)
 
-/datum/electrolyzer_reaction/halon_generation/react(datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
+/datum/gas_reaction/electrolyzer/halon_generation/react(datum/gas_mixture/air_mixture, working_power, list/electrolyzer_args = list())
 	var/old_heat_capacity = air_mixture.heat_capacity()
 	air_mixture.assert_gases(/datum/gas/bz, /datum/gas/oxygen, /datum/gas/halon)
 	var/bz_moles = air_mixture.moles[/datum/gas/bz]

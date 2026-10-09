@@ -29,7 +29,31 @@
 	return our_armor
 
 /mob/living/proc/getarmor(def_zone, type)
+	SHOULD_CALL_PARENT(TRUE)
+	var/worn_armor = get_worn_armor_value(def_zone, type)
+	var/inner_armor_percent = min(inner_armor?.get_rating(type) * 0.01, 1)
+	var/not_blocked = (100 - worn_armor) * (1 - inner_armor_percent)
+	return 100 - not_blocked
+
+/mob/living/proc/get_worn_armor_value(obj/item/bodypart/def_zone, damage_type)
 	return 0
+
+///This proc adds the ratings of an armor type to our inner armor, which is initialized if previously null.
+/mob/living/proc/add_inner_armor(datum/armor/armor_to_add)
+	if(isnull(inner_armor))
+		inner_armor = new
+	inner_armor = inner_armor.add_other_armor(armor_to_add)
+
+///This proc removes the ratings of an armor type from our inner armor, then deletes it if all ratings are 0.
+/mob/living/proc/remove_inner_armor(datum/armor/armor_to_remove)
+	if(isnull(inner_armor))
+		return
+	inner_armor = inner_armor.subtract_other_armor(armor_to_remove)
+	var/list/ratings_list = inner_armor.get_rating_list()
+	for(var/rating in ratings_list)
+		if(ratings_list[rating] != 0)
+			return
+	QDEL_NULL(inner_armor) //all ratings are 0, meaning we no longer have an intrinsic armor of some kind.
 
 /// This returns the mob's protection against eye damage (number between -1 and 2) from bright lights
 /mob/living/proc/get_eye_protection()
@@ -51,7 +75,7 @@
 	SEND_SIGNAL(src, COMSIG_LIVING_GET_EAR_PROTECTION, sig_protection)
 	var/protection = sig_protection[EAR_PROTECTION_ARG]
 	var/turf/current_turf = get_turf(src)
-	var/datum/gas_mixture/environment = current_turf.return_air()
+	var/datum/gas_mixture/environment = current_turf?.return_air()
 	var/pressure = environment?.return_pressure()
 	if(pressure < SOUND_MINIMUM_PRESSURE) //space is empty
 		protection += EAR_PROTECTION_VACUUM
@@ -103,6 +127,14 @@
 /// Returns the atom covering the mob's ears, or null if their ears are uncovered.
 /mob/living/proc/is_ears_covered()
 	return null
+
+/**
+ * Checks if our mob has their eyes visible.
+ * More verbose then directly checking HIDEEYES and lets you search for tint, flash protection, or covering clothing.
+ * Retuns TRUE or FALSE
+ */
+/mob/living/proc/is_eyes_visible(max_tint, max_flash_protection, requires_eyes = FALSE, covered_check_flags = NONE)
+	return TRUE
 
 /**
  * Check if the passed body zone is covered by some clothes
@@ -320,8 +352,13 @@
 /mob/living/proc/can_catch_item(skip_throw_mode_check = FALSE, try_offhand = FALSE)
 	if(HAS_TRAIT(src, TRAIT_HANDS_BLOCKED))
 		return FALSE
-	if(get_active_held_item() && (!try_offhand || get_inactive_held_item() || !swap_hand()))
-		return FALSE
+
+	if(get_active_held_item())
+		if(!try_offhand)
+			return FALSE
+		var/empty_held_indexes = get_empty_held_indexes()
+		if(!length(empty_held_indexes) || !swap_hand(pick(empty_held_indexes)))
+			return FALSE
 	return TRUE
 
 /mob/living/fire_act()
@@ -593,6 +630,7 @@
 /mob/living/proc/electrocute_act(shock_damage, source, siemens_coeff = 1, flags = NONE)
 	if(SEND_SIGNAL(src, COMSIG_LIVING_ELECTROCUTE_ACT, shock_damage, source, siemens_coeff, flags) & COMPONENT_LIVING_BLOCK_SHOCK)
 		return FALSE
+	siemens_coeff *= GET_PHYSIOLOGY(src, PHYS_COEFF_ELEC_CONDUCTIVITY)
 	shock_damage *= siemens_coeff
 	if((flags & SHOCK_TESLA) && HAS_TRAIT(src, TRAIT_TESLA_SHOCKIMMUNE))
 		return FALSE

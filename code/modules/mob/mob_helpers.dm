@@ -429,10 +429,6 @@
 /mob/proc/can_see_reagents()
 	return stat == DEAD || HAS_TRAIT(src, TRAIT_REAGENT_SCANNER) //Dead guys and silicons can always see reagents
 
-///Can this mob hold items
-/mob/proc/can_hold_items(obj/item/I)
-	return length(held_items)
-
 /// Returns this mob's default lighting alpha
 /mob/proc/default_lighting_cutoff()
 	if(client?.combo_hud_enabled && (client?.prefs?.toggles & COMBOHUD_LIGHTING))
@@ -495,7 +491,7 @@
 	if(iscyborg(mob) || islarva(mob))
 		divided_health = (mob.health + mob.maxHealth) / (mob.maxHealth * 2)
 	else if(iscarbon(mob) || isAI(mob) || isbrain(mob))
-		divided_health = abs(HEALTH_THRESHOLD_DEAD - mob.health) / abs(HEALTH_THRESHOLD_DEAD - mob.maxHealth)
+		divided_health = abs(mob.dead_threshold - mob.health) / abs(mob.dead_threshold - mob.maxHealth)
 	return divided_health * 100
 
 /**

@@ -87,8 +87,8 @@
 	if(QDELETED(linked_swapper) || isnull(linked_swapper.loc) || world.time < linked_swapper.cooldown)
 		return
 
-	var/atom/movable/container_A = get_teleportable_container(src)
-	var/atom/movable/container_B = get_teleportable_container(linked_swapper)
+	var/atom/movable/container_A = get_loose_container(src)
+	var/atom/movable/container_B = get_loose_container(linked_swapper)
 	var/target_A = container_A.drop_location()
 	var/target_B = container_B.drop_location()
 

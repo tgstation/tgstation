@@ -244,6 +244,7 @@ GLOBAL_LIST_EMPTY(sfx_datum_by_key)
 #define SFX_HEADSET_PICKUP "headset_pickup"
 #define SFX_BANDAGE_BEGIN "bandage_begin"
 #define SFX_BANDAGE_END "bandage_end"
+#define SFX_CLOTH_RIP "cloth_rip"
 #define SFX_CLOTH_DROP "cloth_drop"
 #define SFX_CLOTH_PICKUP "cloth_pickup"
 #define SFX_SUTURE_BEGIN "suture_begin"

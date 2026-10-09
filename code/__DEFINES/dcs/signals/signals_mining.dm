@@ -11,3 +11,7 @@
 #define COMSIG_GOLIATH_TENTACLE_RETRACTING 	"comsig_goliath_tentacle_retracting"
 /// Fired by a mob which has triggered a brimdust explosion from itself (not the mobs that get hit)
 #define COMSIG_BRIMDUST_EXPLOSION "comsig_brimdust_explosion"
+/// From /datum/component/candela_node/set_network() : (old_network, new_network)
+#define COMSIG_CANDELA_NODE_NETWORK_CHANGED "candela_node_network_changed"
+/// From /datum/mining_beacon_network/set_power_state() : (old_state, new_state)
+#define COMSIG_CANDELA_NETWORK_POWER_CHANGED "candela_network_power_changed"
