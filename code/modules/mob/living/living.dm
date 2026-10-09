@@ -2105,7 +2105,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	init_sight |= SEND_SIGNAL(src, COMSIG_LIVING_RESTORE_INITIAL_SIGHT)
 	lighting_cutoff = initial(lighting_cutoff)
 	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
-	return initial(sight)
+	return init_sight
 
 /mob/living/proc/mob_try_pickup(mob/living/user, instant=FALSE)
 	if(!ishuman(user) && (user.mob_size <= mob_size || user.num_hands == 0))
