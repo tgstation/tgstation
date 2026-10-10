@@ -34,6 +34,7 @@
 // This is a visual depression, not an already-dug /asteroid/dug turf.
 /turf/open/misc/asteroid/crater
 	icon_state = "asteroid_dug"
+	floor_variance = 0
 
 /turf/open/misc/asteroid/variant_0
 	icon_state = "asteroid0"
@@ -236,6 +237,7 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 
 /turf/open/misc/asteroid/basalt/lava_land_surface/crater
 	icon_state = "basalt_dug"
+	floor_variance = 0
 
 /// Used for the lavaland icemoon ruin.
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins

@@ -212,11 +212,11 @@
 	icon_state = "plastitanium_red"
 	floor_tile = /obj/item/stack/tile/mineral/plastitanium/red
 
-/turf/open/floor/mineral/plastitanium/red/dark
-	icon_state = "darkfull"
-
 /turf/open/floor/mineral/plastitanium/red/airless
 	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/mineral/plastitanium/red/dark
+	icon_state = "darkfull"
 
 /turf/open/floor/mineral/plastitanium/pod
 	name = "pod floor"

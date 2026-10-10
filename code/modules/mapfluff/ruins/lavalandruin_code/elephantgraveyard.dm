@@ -52,9 +52,10 @@
 	slowdown = 0.5
 	floor_variance = 30
 
-// Keeps normal wasteland variance, unlike the permanently dug /basin.
+// Uses the dug sprite without being excavated, unlike the permanently dug /basin.
 /turf/open/misc/asteroid/basalt/wasteland/depression
 	icon_state = "wasteland_dug"
+	floor_variance = 0
 
 /turf/open/misc/asteroid/basalt/wasteland/break_tile()
 	return
