@@ -1,4 +1,4 @@
-/// Base transition contract. Concrete stairs/ladders provide their own execution behavior.
+/// Datum to define the behavior and linkage between two turfs for things like stairs and ladders (or maybe even jumping in the future pog)
 /datum/nav_link
 	var/id
 	var/turf/source
@@ -51,9 +51,11 @@
 		return stair.stair_ascend(mover, completion)
 	return stair.stair_descend(mover, completion)
 
+///Climb up to greatness, cost is 5 tiles worth because it takes so long to do.
 /datum/nav_link/ladder
 	var/obj/structure/ladder/ladder
 	var/going_up
+	cost = 50
 
 /datum/nav_link/ladder/New(obj/structure/ladder/ladder, turf/source, turf/destination, going_up)
 	src.ladder = ladder
