@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes salesman glasses occasionally being stuck mimicking their previous wearer's lack of sanity"

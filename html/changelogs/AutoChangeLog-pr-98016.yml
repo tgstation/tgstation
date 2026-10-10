@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "big manipulators will no longer try to use items their monkey failed to pick up."

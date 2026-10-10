@@ -39,6 +39,7 @@
 
 	if(LAZYLEN(test_organ.organ_traits))
 		TEST_ASSERT(LAZYLEN(lab_rat._status_traits), TEST_ORGAN_INSERT_MESSAGE(test_organ, "should add Traits to lazylist `human._status_traits`."))
+		TEST_ASSERT(!(null in test_organ.organ_traits), "[test_organ.type] contains a null organ trait.")
 		for(var/test_trait in test_organ.organ_traits)
 			TEST_ASSERT(HAS_TRAIT(lab_rat, test_trait), TEST_ORGAN_INSERT_MESSAGE(test_organ, "should add Trait `[test_trait]` to lazylist `human._status_traits`"))
 

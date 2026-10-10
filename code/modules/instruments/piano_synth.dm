@@ -30,6 +30,7 @@
 	icon_state = "headphones"
 	inhand_icon_state = "headphones"
 	slot_flags = ITEM_SLOT_EARS | ITEM_SLOT_HEAD
+	playable_while_worn = TRUE
 	force = 0
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_CREW * 2.5

@@ -396,6 +396,7 @@
 	projectile_type = /obj/projectile/tentacle_lash/stab
 
 /datum/action/cooldown/mob_cooldown/projectile_attack/tendril_melee/Activate(atom/target_atom, warning = TRUE)
+	disable_cooldown_actions()
 	if (warning)
 		for (var/stab_dir in GLOB.alldirs)
 			var/turf/open/stab_turf = get_step(owner, stab_dir)
@@ -411,4 +412,5 @@
 
 	SLEEP_CHECK_DEATH(0.5 SECONDS, owner)
 	StartCooldown()
+	enable_cooldown_actions()
 	return TRUE

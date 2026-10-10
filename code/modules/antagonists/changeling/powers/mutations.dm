@@ -41,9 +41,9 @@
 /// Removes weapon if it exists, returns true if we removed something
 /datum/action/changeling/weapon/proc/unequip_held(mob/user)
 	var/found_weapon = FALSE
-	for(var/obj/item/held in user.held_items)
+	for(var/obj/item/held as anything in user.get_held_items())
 		found_weapon = check_weapon(user, held) || found_weapon
-	return found_weapon
+	return !!found_weapon
 
 /datum/action/changeling/weapon/try_to_sting(mob/user, mob/target)
 	if (unequip_held(user))
@@ -377,23 +377,12 @@
 	if(!user.Adjacent(victim))
 		return
 
-	if(user.get_active_held_item() && !user.get_inactive_held_item())
-		user.swap_hand()
-
-	if(user.get_active_held_item())
-		return
-
 	victim.grabbedby(user)
 	victim.grippedby(user, instant = TRUE) //instant aggro grab
 
-	for(var/obj/item/weapon in user.held_items)
+	for(var/obj/item/weapon as anything in user.get_held_items())
 		if(weapon.get_sharpness())
-			victim.visible_message(span_danger("[user] impales [victim] with [user.p_their()] [weapon.name]!"), span_userdanger("[user] impales you with [user.p_their()] [weapon.name]!"))
-			victim.apply_damage(weapon.force, BRUTE, BODY_ZONE_CHEST, attacking_item = weapon)
-			user.do_item_attack_animation(victim, used_item = weapon, animation_type = ATTACK_ANIMATION_PIERCE)
-			user.add_blood_DNA_to_items(victim.get_blood_dna_list(), ITEM_SLOT_ICLOTHING|ITEM_SLOT_OCLOTHING)
-			playsound(get_turf(user),weapon.hitsound,75,TRUE)
-			return
+			weapon.melee_attack_chain(user, victim)
 
 /obj/projectile/tentacle/on_hit(atom/movable/target, blocked = 0, pierce_hit)
 	if(!isliving(firer) || !ismovable(target))
@@ -571,6 +560,7 @@
 	flags_inv = HIDEJUMPSUIT
 	cold_protection = 0
 	heat_protection = 0
+	bodyshapes_with_variations = BODYSHAPE_CERULEAN
 
 /datum/armor/armor_changeling
 	melee = 40

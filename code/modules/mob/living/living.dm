@@ -135,8 +135,8 @@
 
 	if(body_position == STANDING_UP)
 		var/damage_for_each_leg = round((incoming_damage / 2) * damage_softening_multiplier)
-		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_L_LEG, wound_bonus = -2.5 * levels)
-		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_R_LEG, wound_bonus = -2.5 * levels)
+		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_L_LEG)
+		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_R_LEG)
 	else
 		apply_damage(incoming_damage, BRUTE, spread_damage = TRUE)
 
@@ -268,10 +268,9 @@
 		if(borg.combat_mode && borg.stat != DEAD)
 			return TRUE
 	//anti-riot equipment is also anti-push
-	for(var/obj/item/I in M.held_items)
-		if(!isclothing(M))
-			if(prob(I.block_chance*2))
-				return
+	for(var/obj/item/I as anything in M.get_held_items())
+		if(!isclothing(M) && prob(I.block_chance*2))
+			return TRUE
 
 /mob/living/proc/can_mobswap_with(mob/other)
 	if (HAS_TRAIT(other, TRAIT_NOMOBSWAP) || HAS_TRAIT(src, TRAIT_NOMOBSWAP))
@@ -315,15 +314,15 @@
 
 /mob/living/get_photo_description(obj/item/camera/camera)
 	var/list/holding = list()
-	var/len = length(held_items)
-	if(len)
-		for(var/obj/item/held_item in held_items)
-			if(!holding.len)
-				holding += "[p_They()] [p_are()] holding \a [held_item]"
-			else if(held_items.Find(held_item) == len)
-				holding += ", and \a [held_item]"
-			else
-				holding += ", \a [held_item]"
+	var/list/held = get_held_items()
+	for(var/item_position in 1 to length(held))
+		var/obj/item/held_item = held[item_position]
+		if(!length(holding))
+			holding += "[p_They()] [p_are()] holding \a [held_item]"
+		else if(item_position != length(held))
+			holding += ", \a [held_item]"
+		else
+			holding += ", and \a [held_item]"
 	return "You can also see [src] on the photo[health < (maxHealth * 0.75) ? ", looking a bit hurt":""][holding.len ? ". [holding.Join("")].":"."]"
 
 //Called when we bump onto an obj
@@ -632,7 +631,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
  * * hand_firsts - boolean that checks the hands of the mob first if TRUE.
  */
 /mob/living/proc/get_idcard(hand_first)
-	if(!length(held_items)) //Early return for mobs without hands.
+	if(!can_hold_items()) //Early return for mobs without hands.
 		return
 	//Check hands
 	var/obj/item/held_item = get_active_held_item()
@@ -2099,14 +2098,15 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/restore_initial_sight()
 	SHOULD_CALL_PARENT(TRUE)
 	PROTECTED_PROC(TRUE)
-	var/init_sight = initial(sight)
-	//we cannot see mobs and/or objects unless we have thermals/xray/material vision, but we can still see turfs to navigate around
-	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING))
-		init_sight |= SEE_TURFS|BLIND
-	init_sight |= SEND_SIGNAL(src, COMSIG_LIVING_RESTORE_INITIAL_SIGHT)
 	lighting_cutoff = initial(lighting_cutoff)
 	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
-	return initial(sight)
+	var/init_sight = initial(sight)
+	//we cannot see mobs and/or objects unless we have thermals/xray/material vision, but we can still see turfs to navigate around
+	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics))
+		init_sight |= SEE_TURFS|BLIND
+	//after the reset above, so handlers can tint the cutoffs
+	init_sight |= SEND_SIGNAL(src, COMSIG_LIVING_RESTORE_INITIAL_SIGHT)
+	return init_sight
 
 /mob/living/proc/mob_try_pickup(mob/living/user, instant=FALSE)
 	if(!ishuman(user) && (user.mob_size <= mob_size || user.num_hands == 0))
@@ -2115,7 +2115,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		if (user.mob_size <= mob_size)
 			to_chat(user, span_warning("[src] is too big to pick up!"))
 			return
-	if(!user.get_empty_held_indexes())
+	if(!length(user.get_empty_held_indexes()))
 		to_chat(user, span_warning("Your hands are full!"))
 		return FALSE
 	if(buckled)
@@ -2697,7 +2697,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 
 /mob/living/perform_hand_swap(held_index)
 	//safeguard for one-handed mobs lol
-	if(length(held_items) == 1)
+	if(get_num_hand_slots() == 1)
 		held_index = 1
 
 	return ..()

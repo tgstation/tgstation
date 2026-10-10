@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes an issue where occasionally an ejected revolver casing could remain quantum entangled with the gun"

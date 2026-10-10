@@ -312,14 +312,14 @@
 
 /datum/brain_trauma/mild/possessive/on_lose(silent)
 	. = ..()
-	for(var/obj/item/thing in owner.held_items)
+	for(var/obj/item/thing as anything in owner.get_held_items())
 		clear_trait(thing)
 
 /datum/brain_trauma/mild/possessive/on_life(seconds_per_tick)
 	if(!SPT_PROB(5, seconds_per_tick))
 		return
 
-	var/obj/item/my_thing = pick(owner.held_items) // can pick null, that's fine
+	var/obj/item/my_thing = pick(owner.get_hand_slots()) // can pick null, that's fine
 	if(isnull(my_thing) || HAS_TRAIT(my_thing, TRAIT_NODROP) || (my_thing.item_flags & (HAND_ITEM|ABSTRACT)))
 		return
 
