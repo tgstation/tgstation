@@ -681,10 +681,10 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			for(var/obj/machinery/power/supermatter_crystal/S in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/supermatter_crystal))
 				if(!S.is_main_engine)
 					continue
-				S.explosion_point = 0
-				S.set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade)
+				if(!S.set_delam(SM_DELAM_PRIO_ADMIN, /datum/sm_delam/cascade))
+					return
 				S.external_damage_immediate += 200
-				S.count_down()
+				S.count_down(force = TRUE)
 				return
 			return
 
