@@ -36,10 +36,10 @@ GLOBAL_LIST_INIT(jelly_eye_choices, list(
 	priority = PREFERENCE_PRIORITY_BODY_TYPE
 
 /datum/preference/choiced/jelly_bodypart/init_possible_values()
-	return assoc_to_keys(GLOB.jelly_style_limb_ids)
+	return list("Slimeperson", "Luminescent", "Stargazer")
 
 /datum/preference/choiced/jelly_bodypart/create_default_value()
-	return "Jellyperson"
+	return "Stargazer"
 
 /datum/preference/choiced/jelly_bodypart/is_accessible(datum/preferences/preferences)
 	if(!..())
@@ -52,7 +52,7 @@ GLOBAL_LIST_INIT(jelly_eye_choices, list(
 	apply_jelly_style(target.get_bodypart(body_zone), value)
 
 /datum/preference/choiced/jelly_eyes/init_possible_values()
-	return assoc_to_keys(GLOB.jelly_eye_choices)
+	return list("Normal", "Three eyes")
 
 /datum/preference/choiced/jelly_eyes/create_default_value()
 	return "Three eyes"
