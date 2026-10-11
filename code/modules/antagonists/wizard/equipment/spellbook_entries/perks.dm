@@ -170,6 +170,8 @@
 
 /obj/effect/wizard_magnetism/orbit(atom/new_owner, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 	. = ..()
+	if(QDELETED(src))
+		return null
 	if(!isliving(new_owner))
 		return
 	owner = WEAKREF(new_owner)

@@ -20,7 +20,7 @@
 	orbiter_list = list()
 	orbiter_params = list()
 
-	begin_orbit(orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
+	return begin_orbit(orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 
 /datum/component/orbiter/RegisterWithParent()
 	var/atom/target = parent
@@ -77,6 +77,9 @@
 			orbiter.orbiting.end_orbit(orbiter, TRUE)
 		else
 			orbiter.orbiting.end_orbit(orbiter)
+
+	if(QDELETED(orbiter))
+		return COMPONENT_REDUNDANT
 
 	orbiter_params[orbiter] = args.Copy(2)
 	orbiter_list[orbiter] = TRUE
@@ -192,7 +195,7 @@
 /////////////////////
 
 /atom/movable/proc/orbit(atom/A, radius = 10, clockwise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE)
-	if(!istype(A) || !get_turf(A) || A == src)
+	if(QDELETED(src) || !istype(A) || !get_turf(A) || A == src)
 		return
 	if (HAS_TRAIT(A, TRAIT_ORBITING_FORBIDDEN))
 		// Stealth-mins have an empty name, don't want "You cannot orbit   at this time."
