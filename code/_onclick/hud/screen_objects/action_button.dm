@@ -105,6 +105,11 @@
 	closeToolTip(usr)
 	return ..()
 
+/atom/movable/screen/movable/action_button/proc/update_tooltip(mob/user)
+	if(user?.client?.tooltips?.last_target != src)
+		return
+	updateToolTip(user, title = name, content = desc)
+
 /atom/movable/screen/movable/action_button/mouse_drop_dragged(atom/over_object, mob/user, src_location, over_location, params)
 	last_hovored_ref = null
 	if(!can_use(usr))
