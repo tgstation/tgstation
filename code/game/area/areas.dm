@@ -584,6 +584,8 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 
 	if(!arrived.important_recursive_contents?[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		return
+	if(get_area(arrived) != src)
+		return
 	for(var/atom/movable/recipient as anything in arrived.important_recursive_contents[RECURSIVE_CONTENTS_AREA_SENSITIVE])
 		SEND_SIGNAL(recipient, COMSIG_ENTER_AREA, src)
 
