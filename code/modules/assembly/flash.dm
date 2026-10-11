@@ -351,10 +351,8 @@
 		return INITIALIZE_HINT_QDEL
 	arm = WEAKREF(loc)
 
-/obj/item/assembly/flash/armimplant/on_equipped(mob/user, slot, initial)
+/obj/item/assembly/flash/armimplant/equipped(mob/user, slot, initial = FALSE)
 	. = ..()
-	if(!.)
-		return
 	set_light_on(TRUE)
 
 /obj/item/assembly/flash/armimplant/dropped(mob/user, silent)
