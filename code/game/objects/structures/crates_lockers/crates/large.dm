@@ -5,8 +5,6 @@
 	base_icon_state = "largecrate"
 	density = TRUE
 	pass_flags_self = PASSSTRUCTURE
-	material_drop = /obj/item/stack/sheet/mineral/wood
-	material_drop_amount = 4
 	delivery_icon = "deliverybox"
 	integrity_failure = 0 //Makes the crate break when integrity reaches 0, instead of opening and becoming an invisible sprite.
 	open_sound = 'sound/machines/closet/wooden_closet_open.ogg'
@@ -42,17 +40,15 @@
 		tear_manifest(user)
 	if(!open(user))
 		return ITEM_INTERACT_BLOCKING
-	user.visible_message(span_notice("[user] pries \the [src] open."), \
-						span_notice("You pry open \the [src]."), \
-						span_hear("You hear splitting wood."))
-	playsound(src.loc, 'sound/items/weapons/slashmiss.ogg', 75, TRUE)
-
-	var/turf/dump = get_turf(src)
-	for(var/i in 1 to material_drop_amount)
-		new material_drop(src)
-	for(var/atom/movable/stuff in contents)
-		stuff.forceMove(dump)
-	qdel(src)
+	user.visible_message(
+		span_notice("[user] pries \the [src] open."),
+		span_notice("You pry open \the [src]."),
+		span_hear("You hear splitting wood."),
+	)
+	playsound(src, 'sound/items/weapons/slashmiss.ogg', 75, TRUE)
+	for(var/atom/movable/stuff in src)
+		stuff.forceMove(drop_location())
+	deconstruct(TRUE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/structure/closet/crate/large/hats/PopulateContents()

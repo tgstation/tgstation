@@ -241,6 +241,7 @@
 	armor_type = /datum/armor/robe_durathread
 	allowed = /obj/item/clothing/suit/apron::allowed
 	fishing_modifier = -6
+	custom_materials = list(/datum/material/cloth/durathread = 3 * SHEET_MATERIAL_AMOUNT, /datum/material/leather = 6 * SHEET_MATERIAL_AMOUNT)
 
 /datum/armor/robe_durathread
 	melee = 15

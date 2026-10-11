@@ -588,6 +588,7 @@
 	heal_begin_sound = SFX_BANDAGE_BEGIN
 	drop_sound = SFX_CLOTH_DROP
 	pickup_sound = SFX_CLOTH_PICKUP
+	mats_per_unit = list(/datum/material/cloth = SHEET_MATERIAL_AMOUNT)
 	always_applicable = TRUE
 	/// tracks how many times we've been scrubbed thoroughly
 	var/times_cleaned = 0
@@ -677,6 +678,7 @@
 	sanitization = 1
 	flesh_regeneration = 3
 	merge_type = /obj/item/stack/medical/wrap/gauze/improvised
+	mats_per_unit = list(/datum/material/cloth = 0.5 * SHEET_MATERIAL_AMOUNT)
 
 	/*
 	The idea is for the following medical devices to work like a hybrid of the old brute packs and tend wounds,

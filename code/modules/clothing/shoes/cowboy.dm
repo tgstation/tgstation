@@ -6,6 +6,7 @@
 	custom_price = PAYCHECK_CREW
 	fastening_type = SHOES_SLIPON
 	interaction_flags_mouse_drop = NEED_HANDS | NEED_DEXTERITY
+	custom_materials = list(/datum/material/leather = 2 * SHEET_MATERIAL_AMOUNT)
 
 	var/max_occupants = 4
 	/// Do these boots have spur sounds?

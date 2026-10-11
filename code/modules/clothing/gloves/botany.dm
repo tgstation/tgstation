@@ -11,6 +11,7 @@
 	resistance_flags = NONE
 	clothing_traits = list(TRAIT_PLANT_SAFE)
 	armor_type = /datum/armor/gloves_botanic_leather
+	custom_materials = list(/datum/material/leather = 3 * SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/gloves/botanic_leather/Initialize(mapload)
 	. = ..()

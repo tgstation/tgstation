@@ -1,9 +1,6 @@
 /obj/structure/closet/crate/wooden
 	name = "wooden crate"
 	desc = "Works just as well as a metal one."
-	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 6)
-	material_drop = /obj/item/stack/sheet/mineral/wood
-	material_drop_amount = 6
 	icon_state = "wooden"
 	base_icon_state = "wooden"
 	open_sound = 'sound/machines/closet/wooden_closet_open.ogg'
