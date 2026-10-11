@@ -95,6 +95,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_ILLITERATE "illiterate"
 /// Mute. Can't talk.
 #define TRAIT_MUTE "mute"
+/// Wearing something that muffles our speech, one source per item. See /datum/element/muffles_speech
+#define TRAIT_MUFFLED_SPEECH "muffled_speech"
 /// Softspoken. Always whisper.
 #define TRAIT_FORCE_WHISPER "softspoken"
 /// Gibs on death and slips like ice.
