@@ -115,7 +115,7 @@
 
 	occupant_vis = new(mapload, src)
 	vis_contents += occupant_vis
-	internal_connector = new(loc, src, dir, CELL_VOLUME * 0.5)
+	internal_connector = new(src, CELL_VOLUME * 0.5)
 	soundloop = new(src)
 
 	register_context()

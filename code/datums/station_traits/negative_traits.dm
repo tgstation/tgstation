@@ -659,11 +659,9 @@
 		//Send a care package to temporarily lift the storm!
 		if(COOLDOWN_FINISHED(src, send_care_package_at))
 			COOLDOWN_START(src, send_care_package_at, send_care_package_time)
-			var/obj/machinery/nebula_shielding/emergency/rad_shield = /obj/machinery/nebula_shielding/emergency/radiation
-
 			priority_announce(
 				{"Is everything okay there? We're getting high radiation readings from inside the station. \
-				We're sending an emergency shielding unit for now, it will last [initial(rad_shield.detonate_in) / (1 MINUTES)] minutes. \n\n\
+				We're sending an emergency shielding unit for now, it will last [DisplayTimeText(/obj/machinery/nebula_shielding/radiation/emergency::detonate_in)]. \n\n\
 				Set up the nebula shielding. You can order construction kits at cargo if yours have been lost.
 				"}
 			)
@@ -678,7 +676,7 @@
 
 ///Send a care package because it is not going well
 /datum/station_trait/nebula/hostile/radiation/proc/send_care_package()
-	new /obj/effect/pod_landingzone (get_safe_random_station_turf_equal_weight(), new /obj/structure/closet/supplypod/centcompod (), new /obj/machinery/nebula_shielding/emergency/radiation ())
+	new /obj/effect/pod_landingzone (get_safe_random_station_turf_equal_weight(), new /obj/structure/closet/supplypod/centcompod (), new /obj/machinery/nebula_shielding/radiation/emergency ())
 
 /datum/station_trait/nebula/hostile/radiation/send_instructions()
 	var/obj/machinery/nebula_shielding/shielder = /obj/machinery/nebula_shielding/radiation
