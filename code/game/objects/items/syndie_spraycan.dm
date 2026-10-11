@@ -160,6 +160,8 @@
 	icon_state = "traitor_rune_outline"
 	pixel_x = -32
 	pixel_y = -32
+	bound_width = 96
+	bound_height = 96
 	gender = NEUTER
 	mergeable_decal = FALSE
 	resistance_flags = FIRE_PROOF | UNACIDABLE | ACID_PROOF
@@ -177,6 +179,10 @@
 	var/clean_proof = FALSE
 	/// Timer until the rune can be cleaned up off the floor
 	var/protected_timer
+
+/obj/effect/decal/cleanable/traitor_rune/Initialize(mapload, list/datum/disease/diseases)
+	. = ..()
+	AddComponent(/datum/component/multi_tile_rotation)
 
 /obj/effect/decal/cleanable/traitor_rune/Destroy()
 	deltimer(protected_timer)
