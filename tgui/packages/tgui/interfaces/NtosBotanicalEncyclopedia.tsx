@@ -1,5 +1,5 @@
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 import { type SeedData, SeedTable, type TraitData } from './SeedTable';
 
 type Data = {
@@ -9,7 +9,7 @@ type Data = {
 };
 
 export const NtosBotanicalEncyclopedia = (props) => {
-  const { data } = useBackend<Data>();
+  const { data } = useNtos<Data>();
 
   return (
     <NtosWindow width={800} height={700}>

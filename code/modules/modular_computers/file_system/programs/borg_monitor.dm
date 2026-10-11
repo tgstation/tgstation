@@ -20,7 +20,7 @@
 	DL_source = null
 	return ..()
 
-/datum/computer_file/program/borg_monitor/kill_program(mob/user)
+/datum/computer_file/program/borg_monitor/on_kill(mob/user)
 	loglist = null //Not everything is saved if you close an app
 	DL_source = null
 	DL_progress = 0
@@ -60,8 +60,13 @@
 			loglist = list("System log of unit [DL_source.name]")
 			loglist += "Error -- Download corrupted."
 		else
-			loglist = DL_source.modularInterface.borglog.Copy()
-			loglist.Insert(1,"System log of unit [DL_source.name]")
+			var/datum/driver/silicon_power/driver = DL_source.modularInterface.os.get_driver(/datum/driver/silicon_power)
+			if(!driver)
+				loglist.Insert("ERROR: Unit [DL_source] has no driver 'silicon power' driver in their operating system!")
+				return
+
+			loglist = driver.borg_log.Copy()
+			loglist.Insert(1, "System log of unit [DL_source.name]")
 		DL_progress = -1
 		DL_source = null
 		return
