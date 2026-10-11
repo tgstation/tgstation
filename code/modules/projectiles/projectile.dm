@@ -284,6 +284,7 @@
 		generate_hitscan_tracers()
 	STOP_PROCESSING(SSprojectiles, src)
 	firer = null
+	fired_from = null
 	original = null
 	QDEL_NULL(embed_data)
 	if (movement_vector)
