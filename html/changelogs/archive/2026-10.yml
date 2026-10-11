@@ -282,3 +282,13 @@
   - bugfix: cyborgs disconnect cleanly from deleted AIs, keeping RoboTact usable with
       their own camera photos.
   - refactor: gives all the icon_state mapping turf varedits their own types
+2026-10-11:
+  necromanceranne:
+  - balance: Dragonsbreath is now printable with Riot Suppression tech. They are no
+      longer crafted.
+  - balance: Incendiary now conflagrates in a small fireball for each pellet that
+      hits. They no longer leaves a fire trail.
+  - balance: Incendiary projectiles now do more damage on the projectile itself.
+  - balance: Dragonsbreath also now bounces.
+  - code_imp: Correctly identifies the Tesla Cannon's design datum path as being the
+      tesla revolver, no the stun revolver.
