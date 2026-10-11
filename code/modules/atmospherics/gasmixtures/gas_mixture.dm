@@ -179,7 +179,7 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 /datum/gas_mixture/proc/adjust_multiple_gases(list/gases_moles)
 	var/cached_moles = moles
 	for(var/gas_id, value in gases_moles)
-		cached_moles[gas_id] += QUANTIZE(value)
+		cached_moles[gas_id] += value
 	garbage_collect()
 
 
