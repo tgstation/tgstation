@@ -40,9 +40,6 @@
 	max_integrity = 150
 	payment_department = ACCOUNT_MED
 	armor_type = /datum/armor/obj_machinery/vitals_reader
-	light_range = 1.5
-	light_power = 0.75
-	light_color = LIGHT_COLOR_FAINT_CYAN
 
 	/// Whether we perform an advanced scan on examine or not
 	var/scanpower = SCANPOWER_BASIC
@@ -102,8 +99,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 /obj/machinery/vitals_reader/post_machine_initialize()
 	. = ..()
 	find_machine(prioritize_by_id = TRUE) // mappers can set an id tag to connect it to specific machines
-	if(is_operational)
-		set_light_on(TRUE)
 
 /obj/machinery/vitals_reader/Destroy(force)
 	set_connection(null)
@@ -412,7 +407,6 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/vitals_reader/advanced, 32)
 
 /obj/machinery/vitals_reader/on_set_is_operational(old_value)
 	update_appearance()
-	set_light_on(is_operational)
 
 /obj/machinery/vitals_reader/process()
 	if(!COOLDOWN_FINISHED(src, beep_cd) || !is_operational)

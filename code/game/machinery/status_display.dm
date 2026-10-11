@@ -175,17 +175,6 @@ GLOBAL_LIST_EMPTY(key_to_status_display)
 	new_overlay.own(src)
 	return new_overlay.status_key
 
-/obj/machinery/status_display/update_appearance(updates=ALL)
-	. = ..()
-	if( \
-		(machine_stat & (NOPOWER|BROKEN)) || \
-		(current_mode == SD_BLANK) || \
-		(current_mode != SD_PICTURE && message1 == "" && message2 == "") \
-	)
-		set_light(0)
-		return
-	set_light(1.5, 0.7, LIGHT_COLOR_FAINT_CYAN) // blue light
-
 /obj/machinery/status_display/update_overlays(updates)
 	. = ..()
 

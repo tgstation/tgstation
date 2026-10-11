@@ -95,13 +95,6 @@
 		if(panel_open)
 			. += span_notice("The machine can be [EXAMINE_HINT("pried")] apart.")
 
-/obj/machinery/chem_master/update_appearance(updates)
-	. = ..()
-	if(panel_open || !is_operational)
-		set_light(0)
-	else
-		set_light(1, 1, "#fffb00")
-
 /obj/machinery/chem_master/update_overlays()
 	. = ..()
 	if(!isnull(beaker))

@@ -11,8 +11,6 @@
 	/// Set this to a string, path, or area instance to control that area
 	/// instead of the switch's location.
 	var/area/area = null
-	///Range of the light emitted when powered, but off
-	var/light_on_range = 1
 	/// Should this lightswitch automatically rename itself to match the area it's in?
 	var/autoname = TRUE
 	/// The sound the light makes when it's turned on
@@ -51,12 +49,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/light_switch, 26)
 		return CONTEXTUAL_SCREENTIP_SET
 	return .
 
-/obj/machinery/light_switch/update_appearance(updates=ALL)
-	. = ..()
-	luminosity = (machine_stat & NOPOWER) ? 0 : 1
-
 /obj/machinery/light_switch/update_icon_state()
-	set_light(area.lightswitch ? 0 : light_on_range)
 	icon_state = "[base_icon_state]"
 	if(machine_stat & NOPOWER)
 		icon_state += "-nopower"
