@@ -1,41 +1,53 @@
 /// Updates the limb id of a bodypart if the mob is wearing digitigrade squishing clothing
 /datum/component/digitigrade_limb
-	/// Id when wearing digitigrade squishing clothing
-	var/squashed_id
 	/// Id when not wearing digitigrade squishing clothing
 	var/free_id
+	/// Id when wearing digitigrade squishing clothing
+	var/squashed_id
+
+	var/always_on = TRUE
 
 	/// Lazylist of refs that are squishing this limb
 	VAR_PRIVATE/list/squashing_us
 
-/datum/component/digitigrade_limb/Initialize(squashed_id, free_id)
+/datum/component/digitigrade_limb/Initialize(free_id, squashed_id, always_on = FALSE)
 	if(!istype(parent, /obj/item/bodypart/leg))
 		return COMPONENT_INCOMPATIBLE
 
-	var/obj/item/bodypart/limb = parent
-	limb.bodytype |= BODYTYPE_DIGITIGRADE
+	if(!free_id)
+		CRASH("/datum/component/digitigrade_limb added with null free_id")
 
-	src.squashed_id = squashed_id
-	src.free_id = free_id || initial(limb.limb_id)
+	var/obj/item/bodypart/limb = parent
+
+	src.free_id = free_id
+	src.squashed_id = squashed_id || initial(limb.limb_id)
+	src.always_on = always_on
 
 	RegisterSignal(parent, COMSIG_BODYPART_UPDATED, PROC_REF(update_limb_id_comsig))
 	RegisterSignal(parent, COMSIG_BODYPART_ATTACHED, PROC_REF(on_attach))
 	RegisterSignal(parent, COMSIG_BODYPART_REMOVED, PROC_REF(on_remove))
-	RegisterSignal(parent, COMSIG_BODYPART_BUTCHERED, PROC_REF(on_butchered))
 
+	var/mob/living/carbon/human/owner = parent
 	if(ishuman(limb.owner))
-		on_attach(limb, limb.owner)
+		owner = limb.owner
+		on_attach(limb, owner)
+	if(always_on || owner?.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS)
+		limb.bodytype |= BODYTYPE_DIGITIGRADE
+
+	limb.name = "digitigrade [limb.name]"
 
 /datum/component/digitigrade_limb/Destroy()
-	UnregisterSignal(parent, COMSIG_BODYPART_UPDATED)
-	UnregisterSignal(parent, COMSIG_BODYPART_ATTACHED)
-	UnregisterSignal(parent, COMSIG_BODYPART_REMOVED)
+	UnregisterSignal(parent, list(
+		COMSIG_BODYPART_UPDATED,
+		COMSIG_BODYPART_ATTACHED,
+		COMSIG_BODYPART_REMOVED,
+	))
 
-	UnregisterSignal(parent, COMSIG_BODYPART_BUTCHERED)
 	var/obj/item/bodypart/limb = parent
 	if(!QDELING(parent) && ishuman(limb.owner))
 		on_remove(limb, limb.owner)
 	limb.bodytype &= ~BODYTYPE_DIGITIGRADE
+	limb.name = "[limb.limb_id] [parse_zone(limb.body_zone)]"
 	return ..()
 
 /datum/component/digitigrade_limb/proc/on_attach(obj/item/bodypart/limb, mob/living/carbon/new_limb_owner)
@@ -104,22 +116,44 @@
 
 	return FALSE
 
-/// This is just ran on update_limb() to ensure we always have the correct ID
-/datum/component/digitigrade_limb/proc/update_limb_id_comsig()
+/// This is ran on update_limb() to ensure we always have the correct ID and bodytype
+/datum/component/digitigrade_limb/proc/update_limb_id_comsig(obj/item/bodypart/leg/source, dropping_limb, is_creating)
 	SIGNAL_HANDLER
-	update_limb_id(sprite_update = FALSE)
+	if(!is_creating || always_on || !source.owner)
+		update_limb_id(sprite_update = FALSE)
+		return
 
-/// Digitigrade limbs that are butchered add the component to the replacement limb
-/datum/component/digitigrade_limb/proc/on_butchered(datum/source, obj/item/bodypart/replacement)
-	SIGNAL_HANDLER
-	squashed_id = "[initial(replacement.limb_id)]_[BODYPART_ID_DIGITIGRADE]"
-	free_id = initial(replacement.limb_id)
-	replacement.TakeComponent(src)
+	update_bodytype_to_owner_dna(source)
+
+/// Handles updating the bodytype of the limb to match the owner's dna feature
+/datum/component/digitigrade_limb/proc/update_bodytype_to_owner_dna(obj/item/bodypart/leg/limb)
+	var/changed = FALSE
+	var/mob/living/carbon/owner = limb.owner
+	var/digiti_owner =  owner.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS
+	if(digiti_owner && !(limb.bodytype & BODYTYPE_DIGITIGRADE))
+		limb.bodytype |= BODYTYPE_DIGITIGRADE
+		update_limb_id(sprite_update = TRUE)
+		changed = TRUE
+	// As of 2026, the only situation where this code is reached is species/replace_body(), and only in the case of character menu dummies when the digi legs feature is disabled
+	// But it may change in the future if digitigrade legs are made into a modifiable dna feature block, hence why this is proc is atomized from update_limb_id_comsig
+	// Remove this comment when it happens
+	else if(!digiti_owner && (limb.bodytype & BODYTYPE_DIGITIGRADE))
+		limb.bodytype &= ~BODYTYPE_DIGITIGRADE
+		limb.limb_id = squashed_id
+		limb.remove_bodyshape(BODYSHAPE_DIGITIGRADE)
+		perform_sprite_update()
+		changed = TRUE
+
+	if(changed)
+		SEND_SIGNAL(limb, SIGNAL_BODYPART_LEG_DIGITIGRADE_CHANGED, digiti_owner)
 
 /datum/component/digitigrade_limb/proc/update_limb_id(sprite_update = TRUE)
 	var/obj/item/bodypart/limb = parent
+	if(!(limb.bodytype & BODYTYPE_DIGITIGRADE)) //not currently digitigrade
+		return
+
 	var/old_id = limb.limb_id
-	if(LAZYLEN(squashing_us))
+	if(QDELETED(src) || LAZYLEN(squashing_us))
 		limb.limb_id = squashed_id
 		limb.remove_bodyshape(BODYSHAPE_DIGITIGRADE)
 
@@ -127,9 +161,11 @@
 		limb.limb_id = free_id
 		limb.add_bodyshape(BODYSHAPE_DIGITIGRADE)
 
-	if(!sprite_update || old_id == limb.limb_id)
-		return
+	if(sprite_update && old_id != limb.limb_id)
+		perform_sprite_update()
 
+/datum/component/digitigrade_limb/proc/perform_sprite_update()
+	var/obj/item/bodypart/limb = parent
 	if(isnull(limb.owner))
 		limb.update_icon_dropped()
 		return

@@ -64,8 +64,9 @@
 #define COMSIG_BODYPART_UPDATED "bodypart_updated"
 /// Also from /obj/item/bodypart/proc/update_limb(), sent to the mob: (dropping_limb, is_creating)
 #define COMSIG_CARBON_BODYPART_UPDATED "carbon_bodypart_updated"
-/// From /datum/component/butchering/create_replacement_limb(): (replacement limb)
-#define COMSIG_BODYPART_BUTCHERED "bodypart_butchered"
+
+///Called from /datum/component/digitigrade_limb/update_limb_id_comsig(): (is_digi)
+#define SIGNAL_BODYPART_LEG_DIGITIGRADE_CHANGED "bodypart_leg_digitigrade_changed"
 
 /// Sent to a limb when something *attempts* to change its surgery state (old_state, new_state, changed_states)
 #define COMSIG_BODYPART_UPDATING_SURGERY_STATE "bodypart_updating_surgery_state"
