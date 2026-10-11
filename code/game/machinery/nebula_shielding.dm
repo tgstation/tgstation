@@ -143,8 +143,7 @@
 
 	nebula_type = /datum/station_trait/nebula/hostile/radiation
 
-	max_pressure = parent_type::max_pressure * 1.15 // slight extra leeway with pressure
-	internal_volume = parent_type::internal_volume * 0.2 // but significantly less volume!
+	internal_volume = parent_type::internal_volume * 0.3
 
 	///How long we work untill we self-destruct
 	var/detonate_in = 10 MINUTES
