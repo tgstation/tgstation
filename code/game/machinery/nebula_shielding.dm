@@ -19,19 +19,19 @@
 	add_to_nebula_shielding(src, nebula_type, PROC_REF(get_nebula_shielding))
 
 ///Nebula is asking us how strong we are. Return our shield strength is all is well
-/obj/machinery/nebula_shielding/proc/get_nebula_shielding()
+/obj/machinery/nebula_shielding/proc/get_nebula_shielding(seconds_per_tick)
 	if(!is_operational)
 		if(use_power != NO_POWER_USE)
 			update_use_power(IDLE_POWER_USE)
 		return 0
 
-	generate_reward()
+	generate_reward(seconds_per_tick)
 	if(use_power != NO_POWER_USE)
 		update_use_power(ACTIVE_POWER_USE)
 	return shielding_strength
 
 ///Generate a resource for defending against the nebula
-/obj/machinery/nebula_shielding/proc/generate_reward()
+/obj/machinery/nebula_shielding/proc/generate_reward(seconds_per_tick)
 	return
 
 /obj/machinery/nebula_shielding/on_set_is_operational(old_value)
@@ -89,10 +89,10 @@
 	. = ..()
 	. += span_notice("Passively generates tritium. Provides [shielding_strength] levels of nebula shielding when active.")
 
-/obj/machinery/nebula_shielding/radiation/generate_reward()
+/obj/machinery/nebula_shielding/radiation/generate_reward(seconds_per_tick)
 	var/datum/gas_mixture/output_air = tritium_output.gas_connector.airs[1]
-	// adds 1 mol of tritium to the output port
-	var/datum/gas_mixture/excess_tritium = output_air.add_gas_up_to_pressure(/datum/gas/tritium, 1, max_pressure)
+	// adds 0.5 mol of tritium per second to the output port
+	var/datum/gas_mixture/excess_tritium = output_air.add_gas_up_to_pressure(/datum/gas/tritium, 0.5 * seconds_per_tick, max_pressure)
 	// any excess tritium is dumped into the air
 	loc.assume_air(excess_tritium)
 

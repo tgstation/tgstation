@@ -497,7 +497,7 @@
 /datum/station_trait/nebula/hostile/process(seconds_per_tick)
 	calculate_nebula_strength()
 
-	apply_nebula_effect(nebula_intensity - get_shielding_level())
+	apply_nebula_effect(nebula_intensity - get_shielding_level(seconds_per_tick))
 
 /datum/station_trait/nebula/hostile/on_round_start()
 	. = ..()
@@ -513,13 +513,13 @@
 	nebula_intensity = min(STATION_TIME_PASSED(), maximum_nebula_intensity) / intensity_increment_time
 
 ///Check how strong the stations shielding is
-/datum/station_trait/nebula/hostile/proc/get_shielding_level()
+/datum/station_trait/nebula/hostile/proc/get_shielding_level(seconds_per_tick)
 	var/shield_strength = 0
 	for(var/atom/movable/shielder as anything in shielding)
 		if(!is_station_level(shielder.z))
 			continue
 		var/datum/callback/callback = shielding[shielder]
-		shield_strength += callback.Invoke()
+		shield_strength += callback.Invoke(seconds_per_tick)
 
 	return shield_strength
 
