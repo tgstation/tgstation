@@ -80,6 +80,7 @@
 /datum/sound_token/proc/update_sound(_sound, start_playing = FALSE, _repeating = null)
 	if(!isnull(_repeating))
 		repeating = _repeating
+	_sound = get_sfx(_sound)
 	sound = sound(_sound)
 	sound.repeat = repeating
 	if(!sound_channel)
