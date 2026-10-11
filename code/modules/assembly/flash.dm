@@ -338,10 +338,28 @@
 /obj/item/assembly/flash/armimplant
 	name = "photon projector"
 	desc = "A high-powered photon projector implant normally used for lighting purposes, but also doubles as a flashbulb weapon. Self-repair protocols fix the flashbulb if it ever burns out."
+	light_range = 7
+	light_on = FALSE
 	var/flashcd = 20
 	var/overheat = 0
 	//Wearef to our arm
 	var/datum/weakref/arm
+
+/obj/item/assembly/flash/armimplant/Initialize(mapload)
+	. = ..()
+	if(!istype(loc, /obj/item/organ/cyberimp/arm/toolkit))
+		return INITIALIZE_HINT_QDEL
+	arm = WEAKREF(loc)
+
+/obj/item/assembly/flash/armimplant/on_equipped(mob/user, slot, initial)
+	. = ..()
+	if(!.)
+		return
+	set_light_on(TRUE)
+
+/obj/item/assembly/flash/armimplant/dropped(mob/user, silent)
+	. = ..()
+	set_light_on(FALSE)
 
 /obj/item/assembly/flash/armimplant/burn_out()
 	var/obj/item/organ/cyberimp/arm/toolkit/flash/real_arm = arm.resolve()
