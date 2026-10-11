@@ -1,6 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "catching a basketball and dribbling it no longer leaves a phantom ball stuck in your other hand"
-  - bugfix: "a basketball you've let go of no longer keeps bouncing when you walk, or gets pulled back to your feet when you're knocked down"
-  - bugfix: "if you're holding two basketballs and drop one, the one still in your hand does the dribbling now"

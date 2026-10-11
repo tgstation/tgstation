@@ -68,7 +68,10 @@
 /obj/item/stack/Initialize(mapload, new_amount = amount, merge = TRUE, list/mat_override = null, mat_amt = 1)
 	amount = new_amount
 	if(amount <= 0)
-		stack_trace("invalid amount [amount]!")
+		stack_trace("[sanitize(name)] generated with an invalid amount ([amount]) of sheets!")
+		return INITIALIZE_HINT_QDEL
+	if(isnan(amount))
+		stack_trace("[sanitize(name)] generated with NaN sheets!")
 		return INITIALIZE_HINT_QDEL
 	while(amount > max_amount)
 		amount -= max_amount

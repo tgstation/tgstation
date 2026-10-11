@@ -241,3 +241,54 @@
   - bugfix: manning a deployable turret gives you its controls in your hands again.
   - bugfix: the prototype emitter's manual firing mode gives you its controls in your
       hands again.
+2026-10-10:
+  Aliceee2ch:
+  - balance: Station Engineers start with insulated gloves now.
+  JohnFulpWillard:
+  - bugfix: The cat house no longer deletes cats, amongst some other niceties.
+  KingkumaArt:
+  - rscadd: Ethereals can now equip underwear in the character customization menu!
+      Now you too can impress your friends with your pride flag socks and union jack
+      boxer shorts.
+  Moonridden:
+  - config: The help link for revenants now uses the config set, rather than a hard-coded
+      link.
+  PapaMichael:
+  - bugfix: Imported chat settings will last longer than one round
+  RusselNotSCP:
+  - bugfix: Footsoldier's Razor recipe no longer has dumb overlap with Pump-up, and
+      instead now uses it as an ingredient
+  headband0536:
+  - bugfix: Cuffed items no longer lag the server when their owner travels through
+      vents or disposals. The item now goes along with its owner into vents, disposals,
+      closets and mechs.
+  - bugfix: The chain of a cuffed item no longer stretches across the map when its
+      owner is inside something.
+  - bugfix: Cuffed items on the floor follow their owner smoothly.
+  - bugfix: You can remove someone's cuffed item from the strip menu when it is not
+      in their hand.
+  - bugfix: Naked-only ventcrawlers can't enter vents while chained to an item.
+  vinylspiders:
+  - bugfix: catching a basketball and dribbling it no longer leaves a phantom ball
+      stuck in your other hand
+  - bugfix: a basketball you've let go of no longer keeps bouncing when you walk,
+      or gets pulled back to your feet when you're knocked down
+  - bugfix: if you're holding two basketballs and drop one, the one still in your
+      hand does the dribbling now
+  - bugfix: pyrophobia now builds fear from being on fire when no fire hallucination
+      is present.
+  - admin: forcing a resonance cascade no longer breaks supermatter integrity calculations
+      or turns into a normal explosion if the crystal heals
+  - bugfix: cyborgs disconnect cleanly from deleted AIs, keeping RoboTact usable with
+      their own camera photos.
+  - refactor: gives all the icon_state mapping turf varedits their own types
+2026-10-11:
+  necromanceranne:
+  - balance: Dragonsbreath is now printable with Riot Suppression tech. They are no
+      longer crafted.
+  - balance: Incendiary now conflagrates in a small fireball for each pellet that
+      hits. They no longer leaves a fire trail.
+  - balance: Incendiary projectiles now do more damage on the projectile itself.
+  - balance: Dragonsbreath also now bounces.
+  - code_imp: Correctly identifies the Tesla Cannon's design datum path as being the
+      tesla revolver, no the stun revolver.

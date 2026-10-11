@@ -436,8 +436,7 @@
 	icon_state = "trails_1";
 	name = "dried blood trail"
 	},
-/turf/open/floor/plating{
-	icon_state = "wall_thermite";
+/turf/open/floor/plating/melted{
 	name = "melted wall"
 	},
 /area/ruin/space/has_grav/derelictoutpost)
@@ -836,8 +835,7 @@
 	name = "dried blood trail"
 	},
 /obj/structure/alien/resin/membrane/creature,
-/turf/open/floor/plating{
-	icon_state = "wall_thermite";
+/turf/open/floor/plating/melted{
 	name = "melted wall"
 	},
 /area/ruin/space/has_grav/derelictoutpost)

@@ -682,7 +682,7 @@
  * * new_fee - The new fee to be set.
  */
 /obj/item/card/id/proc/set_holopay_fee(new_fee)
-	if(!isnum(new_fee))
+	if(!isnum(new_fee) || isnan(new_fee))
 		CRASH("User input a non number into the holopay fee field.")
 	if(new_fee < holopay_min_fee || new_fee > holopay_max_fee)
 		CRASH("User input a number outside of the valid range into the holopay fee field.")

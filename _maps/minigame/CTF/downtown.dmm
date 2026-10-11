@@ -17,8 +17,7 @@
 	resistance_flags = 64
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark{
-	icon_state = "bus";
+/turf/open/floor/iron/dark/bus{
 	name = "bus"
 	},
 /area/centcom/ctf)
@@ -162,8 +161,7 @@
 /obj/structure/fluff/bus/passable/seat{
 	resistance_flags = 64
 	},
-/turf/open/floor/iron/dark{
-	icon_state = "bus";
+/turf/open/floor/iron/dark/bus{
 	name = "bus"
 	},
 /area/centcom/ctf)
@@ -213,8 +211,7 @@
 	resistance_flags = 64
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark{
-	icon_state = "bus";
+/turf/open/floor/iron/dark/bus{
 	name = "bus"
 	},
 /area/centcom/ctf)
@@ -318,8 +315,7 @@
 /obj/structure/fluff/bus/passable{
 	resistance_flags = 64
 	},
-/turf/open/floor/iron/dark{
-	icon_state = "bus";
+/turf/open/floor/iron/dark/bus{
 	name = "bus"
 	},
 /area/centcom/ctf)
@@ -545,8 +541,7 @@
 	resistance_flags = 64
 	},
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark{
-	icon_state = "bus";
+/turf/open/floor/iron/dark/bus{
 	name = "bus"
 	},
 /area/centcom/ctf)
@@ -1278,8 +1273,7 @@
 /obj/structure/fluff/bus/passable{
 	resistance_flags = 64
 	},
-/turf/open/floor/iron/dark{
-	icon_state = "bus";
+/turf/open/floor/iron/dark/bus{
 	name = "bus"
 	},
 /area/centcom/ctf)
@@ -1288,8 +1282,7 @@
 /obj/structure/fluff/bus/passable/seat{
 	resistance_flags = 64
 	},
-/turf/open/floor/iron/dark{
-	icon_state = "bus";
+/turf/open/floor/iron/dark/bus{
 	name = "bus"
 	},
 /area/centcom/ctf)
@@ -1618,8 +1611,7 @@
 	pixel_y = 15;
 	resistance_flags = 64
 	},
-/turf/open/floor/iron/dark{
-	icon_state = "bus";
+/turf/open/floor/iron/dark/bus{
 	name = "bus"
 	},
 /area/centcom/ctf)
@@ -1723,8 +1715,7 @@
 /area/centcom/ctf)
 "LY" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/iron/dark{
-	icon_state = "bus";
+/turf/open/floor/iron/dark/bus{
 	name = "bus"
 	},
 /area/centcom/ctf)
@@ -1941,8 +1932,7 @@
 /obj/structure/fluff/bus/passable{
 	resistance_flags = 64
 	},
-/turf/open/floor/iron/dark{
-	icon_state = "bus";
+/turf/open/floor/iron/dark/bus{
 	name = "bus"
 	},
 /area/centcom/ctf)
