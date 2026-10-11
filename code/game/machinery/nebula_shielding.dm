@@ -151,12 +151,12 @@
 /obj/machinery/nebula_shielding/radiation/emergency/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/update_icon_blocker)
-	addtimer(CALLBACK(src, PROC_REF(self_destruct)), detonate_in)
+	addtimer(CALLBACK(src, PROC_REF(self_destruct)), detonate_in, TIMER_DELETE_ME)
 
 /obj/machinery/nebula_shielding/radiation/emergency/examine(mob/user)
 	. = ..()
 
-	. += span_notice("[p_They()] will block the nebula for [round(detonate_in / (1 MINUTES))] minute\s with a shield strength of [shielding_strength].")
+	. += span_notice("[p_They()] will last [DisplayTimeText(detonate_in)] before overloading.")
 
 ///We don't live for very long, so self-destruct
 /obj/machinery/nebula_shielding/radiation/emergency/proc/self_destruct()
