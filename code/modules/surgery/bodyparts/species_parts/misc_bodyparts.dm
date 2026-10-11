@@ -84,6 +84,19 @@
 	limb_id = SPECIES_ABDUCTOR
 	should_draw_greyscale = FALSE
 
+/proc/apply_jelly_style(obj/item/bodypart/part, style)
+	if(!istype(part, /obj/item/bodypart/head/jelly) && !istype(part, /obj/item/bodypart/chest/jelly))
+		return
+
+	var/new_id = GLOB.jelly_style_limb_ids[style] || initial(part.limb_id)
+	var/dimorphic = icon_exists(DEFAULT_BODYPART_ICON_ORGANIC, "[new_id]_[part.body_zone]_m")
+
+	if(part.limb_id == new_id && part.is_dimorphic == dimorphic)
+		return
+
+	part.species_id ||= initial(part.limb_id)
+	part.change_appearance(DEFAULT_BODYPART_ICON_ORGANIC, new_id, TRUE, dimorphic)
+
 ///JELLY
 /obj/item/bodypart/head/jelly
 	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JELLY)
@@ -95,6 +108,10 @@
 	butcher_replacement = null
 	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/slime_passgrille)
 
+/obj/item/bodypart/head/jelly/apply_ownership(mob/living/carbon/new_owner)
+	. = ..()
+	apply_jelly_style(src, new_owner.dna?.features[FEATURE_JELLY_HEAD])
+
 /obj/item/bodypart/chest/jelly
 	biological_state = (BIO_FLESH|BIO_BLOODED|BIO_JELLY)
 	limb_id = SPECIES_JELLYPERSON
@@ -104,6 +121,10 @@
 	wing_types = list(/obj/item/organ/wings/slime)
 	butcher_replacement = null
 	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/slime_passgrille)
+
+/obj/item/bodypart/chest/jelly/apply_ownership(mob/living/carbon/new_owner)
+	. = ..()
+	apply_jelly_style(src, new_owner.dna?.features[FEATURE_JELLY_CHEST])
 
 /obj/item/bodypart/chest/jelly/get_butt_sprite()
 	return icon('icons/mob/butts.dmi', BUTT_SPRITE_SLIME)

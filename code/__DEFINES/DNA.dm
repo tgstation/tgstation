@@ -75,6 +75,8 @@
 #define FEATURE_TAIL_XENO "tail_xeno"
 #define FEATURE_TAILSPINES "tailspines" // Different from regular spines, these appear on tails
 #define FEATURE_LEGS "legs"
+#define FEATURE_JELLY_HEAD "jelly_head"
+#define FEATURE_JELLY_CHEST "jelly_chest"
 
 // flag for the transfer_flag argument from dna/proc/copy_dna().
 /// Copies SE (mob's innate mutations)
