@@ -5,8 +5,7 @@
 	icon = 'icons/obj/machines/nebula_shielding.dmi'
 	pixel_x = -16
 
-	layer = FLY_LAYER
-	plane = ABOVE_GAME_PLANE
+	layer = NOT_HIGH_OBJ_LAYER
 	use_power = IDLE_POWER_USE // power draw is manually handled
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 2
 
