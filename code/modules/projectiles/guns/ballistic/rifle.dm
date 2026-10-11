@@ -251,13 +251,11 @@
 	bolt_type = BOLT_TYPE_OPEN
 	semi_auto = FALSE
 	internal_magazine = TRUE
-	can_modify_ammo = FALSE
 	slot_flags = ITEM_SLOT_BACK|ITEM_SLOT_SUITSTORE
 	bolt_wording = "bowstring"
 	magazine_wording = "rod"
 	cartridge_wording = "rod"
 	weapon_weight = WEAPON_HEAVY
-	initial_caliber = CALIBER_REBAR
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/rebarxbow/normal
 	fire_sound = 'sound/items/xbow_lock.ogg'
 	can_be_sawn_off = FALSE
@@ -316,7 +314,7 @@
 	name = "stressed rebar crossbow"
 	desc = "Some idiot decided that they would risk shooting themselves in the face if it meant they could rack and reload the crossbow faster. Hopefully it was worth it."
 	// Feel free to add a recipe to allow you to change it back if you would like, I just wasn't sure if you could have two recipes for the same thing.
-	can_misfire = TRUE
+	pressure_threshold = AMMO_CASING_PRESSURE_LOW
 	draw_time = 0.5 SECONDS
 	reload_time = 0.5 SECONDS
 	doafter_flags = IGNORE_USER_LOC_CHANGE
@@ -332,7 +330,6 @@
 	inhand_icon_state = "rebarxbowsyndie"
 	worn_icon_state = "rebarxbowsyndie"
 	w_class = WEIGHT_CLASS_NORMAL
-	initial_caliber = CALIBER_REBAR
 	draw_time = 0.5 SECONDS
 	reload_time = 1.2 SECONDS
 	doafter_flags = IGNORE_USER_LOC_CHANGE
@@ -353,12 +350,13 @@
 	fire_sound = 'sound/items/weapons/gun/sniper/shot.ogg'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 8.05, /datum/material/wood = SHEET_MATERIAL_AMOUNT * 8, /datum/material/cardboard = SHEET_MATERIAL_AMOUNT, /datum/material/plastic = SMALL_MATERIAL_AMOUNT * 3)
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/boltaction/pipegun
-	projectile_damage_multiplier = 1.75
+	projectile_damage_multiplier = 1.6
 	projectile_speed_multiplier = 1.6
 	obj_flags = UNIQUE_RENAME
 	can_be_sawn_off = FALSE
 	trigger_guard = TRIGGER_GUARD_ALLOW_ALL
 	pb_knockback = 3
+	pressure_threshold = AMMO_CASING_PRESSURE_EXTREME //Don't ask how assistants do it, they jsut do.
 
 	SET_BASE_PIXEL(-8, 0)
 

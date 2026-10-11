@@ -97,9 +97,8 @@
 
 /obj/item/ammo_casing/shotgun/buckshot/old
 	projectile_type = /obj/projectile/bullet/pellet/shotgun_buckshot/old
-	can_misfire = TRUE
 	misfire_increment = 2
-	integrity_damage = 4
+	casing_pressure = AMMO_CASING_PRESSURE_EXTREME //Little too much powder in there
 
 /obj/item/ammo_casing/shotgun/buckshot/old/fire_casing(atom/target, mob/living/user, params, distro, quiet, zone_override, spread, atom/fired_from)
 	. = ..()
