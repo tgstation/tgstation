@@ -72,7 +72,9 @@
 
 /obj/item/organ/cyberimp/arm/toolkit/on_mob_insert(mob/living/carbon/organ_owner)
 	. = ..()
-	RegisterSignal(organ_owner, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(on_drop_key)) //We're nodrop, but we'll watch for the drop hotkey anyway and then stow if possible.
+	//We're nodrop, but we'll watch for the drop hotkey anyway and then stow if possible.
+	//FIXME: This makes it so that AI-controlled mobs can't drop their items... hook into dropped signal instead
+	RegisterSignal(organ_owner, COMSIG_KB_MOB_DROPITEM_DOWN, PROC_REF(on_drop_key))
 
 /obj/item/organ/cyberimp/arm/toolkit/on_mob_remove(mob/living/carbon/organ_owner)
 	. = ..()
