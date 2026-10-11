@@ -255,7 +255,7 @@
 	force_wielded = 18
 	icon_state = "pillow_lance0"
 	inhand_icon_state = "pillow_lance0"
-	icon_prefix = "pillow_lance"
+	base_icon_state = "pillow_lance"
 	hitsound = 'sound/items/pillow/pillow_hit.ogg'
 	///The current direction of the jousting.
 	VAR_FINAL/current_direction = NONE

@@ -35,12 +35,8 @@
 	AddElement(/datum/element/kneejerk)
 	AddComponent(/datum/component/two_handed, \
 		force_multiplier = 4, \
-		icon_wielded = "[base_icon_state]1", \
+		update_icon_state = TRUE, \
 	)
-
-/obj/item/singularityhammer/update_icon_state()
-	icon_state = "[base_icon_state]0"
-	return ..()
 
 /obj/item/singularityhammer/proc/vortex(turf/pull, mob/wielder)
 	for(var/atom/X in orange(5,pull))
@@ -96,13 +92,9 @@
 	. = ..()
 	AddComponent(/datum/component/two_handed, \
 		force_multiplier = 5, \
-		icon_wielded = "[base_icon_state]1", \
+		update_icon_state = TRUE, \
 		attacksound = SFX_SPARKS, \
 	)
-
-/obj/item/mjollnir/update_icon_state()
-	icon_state = "[base_icon_state]0"
-	return ..()
 
 /obj/item/mjollnir/proc/yeet_shock(mob/living/target)
 	target.Stun(1.5 SECONDS)

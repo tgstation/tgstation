@@ -22,8 +22,8 @@
 	var/attacksound = FALSE
 	/// Boolean on whether it has to be held in both hands
 	var/require_twohands = FALSE
-	/// The icon that will be used when wielded
-	var/icon_wielded = FALSE
+	/// When wielding, change icon state and inhand icon state
+	var/update_icon_state = FALSE
 	/// Reference to the offhand created for the item
 	var/obj/item/offhand/offhand_item = null
 	/// The index of the offhand item.
@@ -47,7 +47,7 @@
  * * force_multiplier (optional) The force multiplier when wielded, do not use with force_wielded, and force_unwielded
  * * force_wielded (optional) The force setting when the item is wielded, do not use with force_multiplier
  * * force_unwielded (optional) The force setting when the item is unwielded, do not use with force_multiplier
- * * icon_wielded (optional) The icon to be used when wielded
+ * * update_icon_state (optional) When wielding, change the icon state and inhand icon state
  */
 /datum/component/two_handed/Initialize(
 	require_twohands = FALSE,
@@ -57,7 +57,7 @@
 	force_multiplier = 1,
 	force_wielded = 0,
 	force_unwielded = 0,
-	icon_wielded = FALSE,
+	update_icon_state = FALSE,
 	datum/callback/wield_callback,
 	datum/callback/unwield_callback,
 )
@@ -71,12 +71,21 @@
 	src.force_multiplier = force_multiplier
 	src.force_wielded = force_wielded
 	src.force_unwielded = force_unwielded
-	src.icon_wielded = icon_wielded
 	src.wield_callback = wield_callback
 	src.unwield_callback = unwield_callback
+	src.update_icon_state = update_icon_state
 
 	if(require_twohands)
 		ADD_TRAIT(parent, TRAIT_NEEDS_TWO_HANDS, ABSTRACT_ITEM_TRAIT)
+
+	if(PERFORM_ALL_TESTS(focus_only/two_handed_icons) && update_icon_state)
+		var/obj/item/item_parent = parent
+		icon_exists_or_scream(item_parent.icon, "[BASE_OR_INITIAL_ICON_STATE(item_parent)]0")
+		icon_exists_or_scream(item_parent.righthand_file, "[BASE_OR_INITIAL_ICON_STATE(item_parent)]0")
+		icon_exists_or_scream(item_parent.lefthand_file, "[BASE_OR_INITIAL_ICON_STATE(item_parent)]0")
+		icon_exists_or_scream(item_parent.icon, "[BASE_OR_INITIAL_ICON_STATE(item_parent)]1")
+		icon_exists_or_scream(item_parent.righthand_file, "[BASE_OR_INITIAL_ICON_STATE(item_parent)]1")
+		icon_exists_or_scream(item_parent.lefthand_file, "[BASE_OR_INITIAL_ICON_STATE(item_parent)]1")
 
 /datum/component/two_handed/Destroy(force)
 	offhand_item = null
@@ -95,7 +104,7 @@
 	force_multiplier,
 	force_wielded,
 	force_unwielded,
-	icon_wielded,
+	update_icon_state,
 	datum/callback/wield_callback,
 	datum/callback/unwield_callback,
 )
@@ -123,8 +132,8 @@
 		src.force_wielded = force_wielded
 	if(!isnull(force_unwielded))
 		src.force_unwielded = force_unwielded
-	if(icon_wielded)
-		src.icon_wielded = icon_wielded
+	if(update_icon_state)
+		src.update_icon_state = update_icon_state
 	if(wield_callback)
 		src.wield_callback = wield_callback
 	if(unwield_callback)
@@ -360,17 +369,13 @@
 
 /**
  * on_update_icon triggers on call to update parent items icon
- *
- * Updates the icon using icon_wielded if set
  */
 /datum/component/two_handed/proc/on_update_icon(obj/item/source)
 	SIGNAL_HANDLER
-	if(!wielded)
-		return NONE
-	if(!icon_wielded)
-		return NONE
-	source.icon_state = icon_wielded
-	return COMSIG_ATOM_NO_UPDATE_ICON_STATE
+	if(update_icon_state)
+		source.icon_state = source.inhand_icon_state = "[BASE_OR_INITIAL_ICON_STATE(source)][wielded]"
+		return COMSIG_ATOM_NO_UPDATE_ICON_STATE
+	return NONE
 
 /**
  * on_moved Triggers on item moved
