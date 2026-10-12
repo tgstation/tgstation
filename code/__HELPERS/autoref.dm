@@ -1,5 +1,5 @@
 /// Checks if potential_autoref is a autoref of thing.
-#define IS_AUTOREF_OF(thing, potential_autoref) (isdatum(thing) && !isnull(potential_autoref) && thing.weak_reference == potential_autoref)
+#define IS_AUTOREF_OF(thing, potential_autoref) (isdatum(thing) && !isnull(potential_autoref) && thing.auto_reference == potential_autoref)
 
 //For these two procs refs MUST be ref = TRUE format like typecaches!
 /proc/autoref_filter_list(list/things, list/refs)

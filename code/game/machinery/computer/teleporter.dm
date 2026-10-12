@@ -36,7 +36,7 @@
 /obj/machinery/computer/teleporter/proc/check_for_disabled_beacon(datum/target)
 	if (!target)
 		return
-	if (target.weak_reference != target_ref)
+	if (target.auto_reference != target_ref)
 		return
 	turn_off()
 	set_teleport_target(null)

@@ -4,7 +4,7 @@
 	if(istype(input) && !QDELING(input))
 		if(isautoref(input))
 			return input
-		return input.weak_reference ||= new(input)
+		return input.auto_reference ||= new(input)
 
 /**
  * An autoref holds an automatically managed reference to a datum.
