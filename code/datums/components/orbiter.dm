@@ -7,6 +7,8 @@
 	var/list/orbiter_params
 	/// Movement tracker used to check when our owner moves
 	var/datum/movement_detector/tracker
+	/// The next registration completes a component transfer, rather than initial construction.
+	var/transferring = FALSE
 
 //radius: range to orbit at, radius of the circle formed by orbiting (in pixels)
 //clockwise: whether you orbit clockwise or anti clockwise
@@ -30,6 +32,11 @@
 		tracker = new(target, CALLBACK(src, PROC_REF(move_react)))
 
 	RegisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(orbiter_glide_size_update))
+	if(transferring)
+		transferring = FALSE
+		for(var/atom/movable/orbiter as anything in orbiter_list)
+			orbiter.orbit_target = target
+			SEND_SIGNAL(target, COMSIG_ATOM_ORBIT_BEGIN, orbiter)
 	move_react(target)
 
 /datum/component/orbiter/UnregisterFromParent()
@@ -61,15 +68,24 @@
 		RegisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED, PROC_REF(orbiter_move_react))
 		RegisterSignal(incoming_orbiter, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, PROC_REF(orbiter_before_shuttle_move))
 
-	orbiter_list += newcomp.orbiter_list
+	var/list/incoming_orbiters = newcomp.orbiter_list
+	orbiter_list += incoming_orbiters
 	orbiter_params += newcomp.orbiter_params
 	newcomp.orbiter_list = null
 	newcomp.orbiter_params = null
+	for(var/atom/movable/incoming_orbiter as anything in incoming_orbiters)
+		incoming_orbiter.orbit_target = parent
+		SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_BEGIN, incoming_orbiter)
 	move_react(parent)
+
+/datum/component/orbiter/PreTransfer(datum/new_parent)
+	for(var/atom/movable/orbiter as anything in orbiter_list)
+		SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_STOP, orbiter)
 
 /datum/component/orbiter/PostTransfer(datum/new_parent)
 	if(!isatom(new_parent) || isarea(new_parent) || !get_turf(new_parent))
 		return COMPONENT_INCOMPATIBLE
+	transferring = TRUE
 
 /datum/component/orbiter/proc/begin_orbit(atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 	if(orbiter.orbiting)
