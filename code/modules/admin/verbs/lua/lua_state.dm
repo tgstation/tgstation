@@ -127,7 +127,7 @@ GLOBAL_PROTECT(lua_state_stack)
 		for(var/path_element in function)
 			if(isweakref(path_element))
 				var/datum/weakref/weak_ref = path_element
-				var/resolved = weak_ref.hard_resolve()
+				var/resolved = weak_ref.resolve()
 				if(!resolved)
 					return list("status" = "error", "message" = "Weakref in function path ([weak_ref] [text_ref(weak_ref)]) resolved to null.", "name" = jointext(function, "."))
 				new_function_path += resolved

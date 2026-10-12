@@ -407,16 +407,15 @@
 /// Helper proc that sends a message to everyone
 /datum/computer_file/program/messenger/proc/send_message_to_all(mob/living/user, message)
 	var/list/datum/pda_chat/chats = list()
-	var/list/messenger_targets = list()
-
-	for(var/mc in get_messengers())
-		messenger_targets += mc
+	var/list/messenger_targets = assoc_to_keys(get_messengers())
 
 	for(var/chatref, data in saved_chats)
 		var/datum/pda_chat/chat = data
-		if(!(chat.recipient?.reference in messenger_targets)) // if its in messenger_targets, it's valid
+
+		var/recipient_ref = REF(chat.recipient?.resolve())
+		if(!(recipient_ref in messenger_targets)) // if its in messenger_targets, it's valid
 			continue
-		messenger_targets -= chat.recipient.reference
+		messenger_targets -= recipient_ref
 		chats += chat
 
 	for(var/missing_messenger in messenger_targets)
@@ -451,9 +450,7 @@
 /datum/computer_file/program/messenger/proc/find_chat_by_recipient(recipient, fake_user = FALSE)
 	for(var/chat_ref, data in saved_chats)
 		var/datum/pda_chat/chat = data
-		if(fake_user && chat.cached_name == recipient)
-			return chat
-		else if(chat.recipient?.reference == recipient)
+		if((fake_user && chat.cached_name == recipient) || REF(chat.recipient?.resolve()) == recipient)
 			return chat
 	return null
 

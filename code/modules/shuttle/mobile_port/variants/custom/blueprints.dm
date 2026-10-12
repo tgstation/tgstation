@@ -340,15 +340,14 @@
 	var/data = list()
 	var/turf/current_turf = get_turf(user)
 	var/obj/docking_port/mobile/custom/linked_shuttle = shuttle_ref?.resolve()
-	var/linked_to_shuttle = istype(linked_shuttle)
 	var/on_shuttle_frame = HAS_TRAIT(current_turf, TRAIT_SHUTTLE_CONSTRUCTION_TURF)
 	var/datum/shuttle_frame/frame = GLOB.shuttle_frames_by_turf[current_turf]
-	data["linkedShuttle"] = linked_to_shuttle && shuttle_ref.reference
 	data["visualizing"] = visualize_frame_turfs
 	data["onShuttleFrame"] = on_shuttle_frame
 	if(on_shuttle_frame)
 		data["maxShuttleSize"] = CONFIG_GET(number/max_shuttle_size)
-	if(!linked_to_shuttle)
+	if(!istype(linked_shuttle))
+		data["linkedShuttle"] = FALSE
 		var/obj/docking_port/mobile/custom/loc_shuttle = SSshuttle.get_containing_shuttle(current_turf)
 		data["tooManyShuttles"] = length(SSshuttle.custom_shuttles) >= CONFIG_GET(number/max_shuttle_count)
 		var/on_custom_shuttle = istype(loc_shuttle)
@@ -359,6 +358,7 @@
 			data["size"] = length(frame.turfs) - length(frame.shuttle_covered_turfs)
 			data["problems"] = shuttle_build_check(current_turf)
 	else
+		data["linkedShuttle"] = REF(linked_shuttle)
 		var/obj/item/shuttle_blueprints/master = linked_shuttle.master_blueprint?.resolve()
 		data["masterExists"] = master
 		data["isMaster"] = master == src
@@ -753,7 +753,7 @@
 		var/shuttle_name = shuttle.name
 		if(!shuttle_name_count[shuttle_name])
 			shuttle_name_count[shuttle_name] = 0
-		var/ref = shuttle_weakref.reference
+		var/ref = REF(shuttle)
 		shuttle_data[ref] = shuttle_name
 		if(shuttle_name_count[shuttle_name]++ > 1)
 			shuttle_data[ref] += " ([shuttle_name_count[shuttle_name]])"

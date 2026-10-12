@@ -90,7 +90,10 @@ GLOBAL_LIST_EMPTY_TYPED(pda_messengers_by_name, /datum/computer_file/program/mes
 
 	recipient_data["name"] = get_recipient_name()
 	recipient_data["job"] = get_recipient_job()
-	recipient_data["ref"] = recipient?.reference
+
+	var/datum/computer_file/program/messenger/resolved_recipient = recipient?.resolve()
+	if(resolved_recipient)
+		recipient_data["ref"] = REF(resolved_recipient)
 
 	data["ref"] = REF(src)
 	data["recipient"] = recipient_data
@@ -110,14 +113,14 @@ GLOBAL_LIST_EMPTY_TYPED(pda_messengers_by_name, /datum/computer_file/program/mes
 /// Returns the messenger's name, caches the name in case the recipient becomes invalid later.
 /datum/pda_chat/proc/get_recipient_name()
 	var/datum/computer_file/program/messenger/messenger = recipient?.resolve()
-	if(istype(messenger) && (recipient.reference in GLOB.pda_messengers))
+	if(istype(messenger) && (REF(messenger) in GLOB.pda_messengers))
 		cached_name = messenger.computer.saved_identification
 	return cached_name
 
 /// Returns the messenger's job, caches the job in case the recipient becomes invalid later.
 /datum/pda_chat/proc/get_recipient_job()
 	var/datum/computer_file/program/messenger/messenger = recipient?.resolve()
-	if(istype(messenger) && (recipient.reference in GLOB.pda_messengers))
+	if(istype(messenger) && (REF(messenger) in GLOB.pda_messengers))
 		cached_job = messenger.computer.saved_job
 	return cached_job
 
