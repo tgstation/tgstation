@@ -21,6 +21,10 @@
 	newtonian_force = 10
 	slowdown = 2 //tank shells weigh a lot
 
+/obj/item/ammo_casing/mm40/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/detonatable_by_hammer)
+
 /obj/projectile/bullet/mm40
 	name ="40mm shell"
 	icon_state = "40mm"
