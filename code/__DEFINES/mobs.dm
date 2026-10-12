@@ -171,6 +171,7 @@
 	!(bodypart.bodytype & (BODYTYPE_ROBOTIC | BODYTYPE_LARVA_PLACEHOLDER | BODYTYPE_GOLEM | BODYTYPE_PEG)) \
 	&& !(bodypart.flags_1 & HOLOGRAM_1) \
 	&& !(bodypart.bodypart_flags & BODYPART_STUMP) \
+	&& !(bodypart.bodypart_flags & BODYPART_ABSTRACT) \
 )
 
 // Defines for Species IDs. Used to refer to the name of a species, for things like bodypart names or species preferences.
