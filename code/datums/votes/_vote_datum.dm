@@ -210,7 +210,7 @@
 				percentage_text += "[text]%"
 			else
 				percentage_text = "    0%"
-			returned_text += "[percentage_text] | [span_bold(option)]: [choices[option]]"
+			returned_text += "[percentage_text] | [span_bold(html_encode(option))]: [choices[option]]"
 
 	if(!real_winner) // vote has no winner or cannot be won, but still had votes
 		return returned_text
