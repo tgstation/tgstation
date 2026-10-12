@@ -201,6 +201,10 @@
 		// Stealth-mins have an empty name, don't want "You cannot orbit   at this time."
 		to_chat(src, span_notice("You cannot orbit ["[A]" || "them"] at this time."))
 		return
+	if(orbiting && orbiting.parent != A)
+		orbiting.end_orbit(src)
+		if(QDELETED(src))
+			return
 	orbit_target = A
 	return A.AddComponent(/datum/component/orbiter, src, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 
