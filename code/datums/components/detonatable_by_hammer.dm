@@ -6,10 +6,18 @@
 	var/mob/living/registered_holder
 	/// Set before firing so multi-pellet casings cannot be triggered more than once.
 	var/activated = FALSE
+	/// The radius of the directional flame backblast.
+	var/backblast_flame_range = 2
+	/// Sound played when the casing fires.
+	var/discharge_sound = 'sound/items/weapons/gun/general/grenade_launch.ogg'
 
-/datum/component/detonatable_by_hammer/Initialize()
+/datum/component/detonatable_by_hammer/Initialize(backblast_flame_range = 2, discharge_sound = 'sound/items/weapons/gun/general/grenade_launch.ogg')
 	if(!istype(parent, /obj/item/ammo_casing)) //only those who can be shot may pass
 		return COMPONENT_INCOMPATIBLE
+	if(backblast_flame_range < 0)
+		return COMPONENT_INCOMPATIBLE
+	src.backblast_flame_range = backblast_flame_range
+	src.discharge_sound = discharge_sound
 
 /datum/component/detonatable_by_hammer/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_casing_attackby))
@@ -121,13 +129,13 @@
 	activated = TRUE
 	if(holder)
 		holder.visible_message(
-			span_danger("[hitter] swings at [holder]'s mouth, but [casing] in [holder.p_their()] hand discharges!"),
-			span_userdanger("[hitter] swings at your mouth, but [casing] in your hand discharges!"),
+			span_danger("[hitter] swings over [holder]'s shoulder, hitting [casing]!"),
+			span_userdanger("[hitter] swings over your shoulder, hitting [casing]!"),
 		)
 	else
-		hitter.visible_message(span_danger("[hitter] strikes [casing] with a claw hammer, setting it off!"))
+		hitter.visible_message(span_danger("[hitter] strikes [casing], setting it off!"))
 
-	playsound(launch_turf, 'sound/items/weapons/gun/general/grenade_launch.ogg', 80, TRUE)
+	playsound(launch_turf, discharge_sound, 80, TRUE)
 	if(!casing.fire_casing(target_turf, hitter, null, 0, FALSE, BODY_ZONE_CHEST, 0, launch_turf))
 		activated = FALSE
 		return FALSE
@@ -136,8 +144,7 @@
 	var/backblast_direction = get_angle(target_turf, launch_turf)
 	explosion(
 		casing,
-		light_impact_range = 0,
-		flame_range = 2,
+		flame_range = backblast_flame_range,
 		adminlog = FALSE,
 		protect_epicenter = TRUE,
 		explosion_direction = backblast_direction,

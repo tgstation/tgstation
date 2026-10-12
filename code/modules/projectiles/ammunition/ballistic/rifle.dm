@@ -55,7 +55,7 @@
 
 /obj/item/ammo_casing/a40mm/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/detonatable_by_hammer)
+	AddComponent(/datum/component/detonatable_by_hammer, backblast_flame_range = 2)
 
 /obj/item/ammo_casing/a40mm/rubber
 	name = "40mm rubber shell"

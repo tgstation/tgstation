@@ -23,7 +23,7 @@
 
 /obj/item/ammo_casing/mm40/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/detonatable_by_hammer)
+	AddComponent(/datum/component/detonatable_by_hammer, backblast_flame_range = 2, discharge_sound = 'sound/items/weapons/gun/general/cannon.ogg')
 
 /obj/projectile/bullet/mm40
 	name ="40mm shell"
