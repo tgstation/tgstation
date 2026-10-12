@@ -143,7 +143,9 @@
 	var/list/part_options = GLOB.part_choice_transhuman.Copy()
 	var/part_type = part_options[client_source?.prefs?.read_preference(/datum/preference/choiced/trans_prosthetic)]
 	if(isnull(part_type))  //Client gone or they chose a random part
-		part_type = part_options[pick_n_take(part_options)]
+		var/picked_type = pick(part_options)
+		part_type = part_options[picked_type]
+		part_options -= picked_type
 
 	if(quirk_holder.has_quirk(/datum/quirk/prosthetic_limb) && ispath(part_type, /obj/item/bodypart))
 		var/obj/item/bodypart/bodypart_check = part_type
@@ -155,7 +157,9 @@
 	while(!can_add_part(part_type))
 		if(!length(part_options))
 			return // you get NOTHING good day
-		part_type = part_options[pick_n_take(part_options)]
+		var/picked_type = pick(part_options)
+		part_type = part_options[picked_type]
+		part_options -= picked_type
 
 	var/obj/item/new_part = new part_type()
 	if(isbodypart(new_part))
