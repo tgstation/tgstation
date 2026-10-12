@@ -354,11 +354,11 @@
 			if(!iscyborg(usr))
 				return
 			if (reagent_search_container == REAGENT_CONTAINER_BEVAPPARATUS)
-				var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in user.model.modules) || (locate() in user.held_items)
+				var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in user.model.modules) || (user.is_holding_item_of_type(__IMPLIED_TYPE__))
 				if (!isnull(beverage_apparatus) && !isnull(beverage_apparatus.stored))
 					beverage_apparatus.stored.reagents.ui_interact(user)
 			else if (reagent_search_container == REAGENT_CONTAINER_INTERNAL)
-				var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in user.model.modules) || (locate() in user.held_items)
+				var/obj/item/reagent_containers/cup/beaker/large/internal_beaker = (locate() in user.model.modules) || (user.is_holding_item_of_type(__IMPLIED_TYPE__))
 				if (!isnull(internal_beaker))
 					internal_beaker.reagents.ui_interact(user)
 		if ("set_preferred_container")
@@ -391,7 +391,7 @@
 
 	if(iscyborg(user))
 		var/mob/living/silicon/robot/cyborg = user
-		var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.modules) || (locate() in cyborg.held_items)
+		var/obj/item/borg/apparatus/beaker/service/beverage_apparatus = (locate() in cyborg.model.modules) || (user.is_holding_item_of_type(__IMPLIED_TYPE__))
 
 		if (isnull(beverage_apparatus))
 			to_chat(user, span_warning("This unit has no beverage apparatus. This shouldn't be possible. Delete yourself, NOW!"))

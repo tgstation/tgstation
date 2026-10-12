@@ -14,12 +14,17 @@
 	cached_texture_icon = icon(texture_icon, texture_icon_state)
 
 /datum/bodypart_texture/proc/modify_bodypart_appearance(image/appearance, overlay_flags)
-	var/filter_width =  ICON_SIZE_X * ((overlay_flags & LIMB_OVERLAY_WIDE_ICON) ? 3 : 1)
-	var/filter_height = ICON_SIZE_Y * ((overlay_flags & LIMB_OVERLAY_TALL_ICON) ? 3 : 1)
+	// filter icons are centered on the overlay, so wide/tall overlays get one more tile on each side
+	var/filter_width = (overlay_flags & LIMB_OVERLAY_WIDE_ICON) ? ICON_SIZE_X : 0
+	var/filter_height = (overlay_flags & LIMB_OVERLAY_TALL_ICON) ? ICON_SIZE_Y : 0
 
-	for(var/i in 0 to filter_width step ICON_SIZE_X)
-		for(var/j in 0 to filter_height step ICON_SIZE_Y)
-			appearance.add_filter("bodypart_texture_[texture_icon_state]_[i]/[j]", 1, layering_filter(cached_texture_icon, x = i, y = j, blend_mode = BLEND_INSET_OVERLAY))
+	for(var/i in -filter_width to filter_width step ICON_SIZE_X)
+		for(var/j in -filter_height to filter_height step ICON_SIZE_Y)
+			apply_filters(appearance, i, j)
+
+/// Applies the texture's filters to one tile of the appearance, offset from its center
+/datum/bodypart_texture/proc/apply_filters(image/appearance, x_offset = 0, y_offset = 0)
+	appearance.add_filter("bodypart_texture_[texture_icon_state]_[x_offset]/[y_offset]", 1, layering_filter(cached_texture_icon, x = x_offset, y = y_offset, blend_mode = BLEND_INSET_OVERLAY))
 
 /datum/bodypart_texture/proc/icon_render_key()
 	return type
@@ -90,14 +95,12 @@
 	// forces white (blends better with the texture)
 	appearance.color = COLOR_WHITE
 
-	var/filter_width =  ICON_SIZE_X * ((overlay_flags & LIMB_OVERLAY_WIDE_ICON) ? 3 : 1)
-	var/filter_height = ICON_SIZE_Y * ((overlay_flags & LIMB_OVERLAY_TALL_ICON) ? 3 : 1)
-	for(var/i in 0 to filter_width step ICON_SIZE_X)
-		for(var/j in 0 to filter_height step ICON_SIZE_Y)
-			// adds a displacement map so the outline lines up with the bottom of the sprite
-			appearance.add_filter("displacement_[i]/[j]", 2, displacement_map_filter(cached_displacement_icon, x = i, y = j, size = 1))
-			// adds a bit of lighting to make the texture look less flat
-			appearance.add_filter("lighting_[i]/[j]", 4, layering_filter(cached_lighting_icon, x = i, y = j, blend_mode = BLEND_MULTIPLY))
+/datum/bodypart_texture/mesh/apply_filters(image/appearance, x_offset = 0, y_offset = 0)
+	. = ..()
+	// adds a displacement map so the outline lines up with the bottom of the sprite
+	appearance.add_filter("displacement_[x_offset]/[y_offset]", 2, displacement_map_filter(cached_displacement_icon, x = x_offset, y = y_offset, size = 1))
+	// adds a bit of lighting to make the texture look less flat
+	appearance.add_filter("lighting_[x_offset]/[y_offset]", 4, layering_filter(cached_lighting_icon, x = x_offset, y = y_offset, blend_mode = BLEND_MULTIPLY))
 
 /datum/bodypart_texture/mesh/black
 	texture_icon_state = "mesh_mask"

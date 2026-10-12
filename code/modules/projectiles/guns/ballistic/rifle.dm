@@ -479,7 +479,7 @@
 		var/obj/item/gun/ballistic/rifle/enchanted/gun = new type
 		gun.guns_left = guns_left - 1
 		discard_gun(user)
-		user.swap_hand()
+		user.cycle_hand()
 		user.put_in_hands(gun)
 	else
 		user.dropItemToGround(src, TRUE)

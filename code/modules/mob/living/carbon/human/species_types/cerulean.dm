@@ -97,15 +97,11 @@
 	preview_human.set_haircolor("#C2DFED", update = FALSE)
 	preview_human.set_hairstyle(/datum/sprite_accessory/hair/highponytail::name, update = TRUE)
 	preview_human.dna.features[FEATURE_FRILLS] = /datum/sprite_accessory/frills/aquatic::name
+	preview_human.dna.features[FEATURE_SNOUT] = /datum/sprite_accessory/snouts/roundlight::name
 	preview_human.dna.species.mutant_organs[/obj/item/organ/frills] = /datum/sprite_accessory/frills/aquatic::name
+	preview_human.dna.species.mutant_organs[/obj/item/organ/snout] = /datum/sprite_accessory/snouts/roundlight::name
 	regenerate_organs(preview_human, excluded_zones = GLOB.leg_zones)
 	preview_human.update_body(is_creating = TRUE)
-
-/datum/species/human/cerulean/get_features()
-	var/list/features = ..()
-	LAZYOR(features, /datum/preference/toggle/cerulean_frills::savefile_key)
-	LAZYOR(features, /datum/preference/color/fish_tail_color::savefile_key)
-	return features
 
 /datum/species/human/cerulean/randomize_features()
 	var/list/features = ..()

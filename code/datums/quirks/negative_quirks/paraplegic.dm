@@ -40,7 +40,7 @@
 	human_holder.cure_trauma_type(/datum/brain_trauma/severe/paralysis/paraplegic, TRAUMA_RESILIENCE_ABSOLUTE)
 
 /datum/quirk/paraplegic/is_species_appropriate(datum/species/mob_species)
-	if(istype(mob_species, /datum/species/human/cerulean)) //prevent weird interactions
+	if(ispath(mob_species, /datum/species/human/cerulean)) //prevent weird interactions
 		return FALSE
 	return ..()
 

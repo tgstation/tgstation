@@ -112,7 +112,7 @@
 		span_notice("[user] starts fishing around in [src]..."),
 		span_notice("You start fishing around in [src]..."),
 	)
-	Shake(1, 1, 5 SECONDS, 0.1 SECONDS)
+	Shake(1, 1, 5 SECONDS, 0.5 SECONDS)
 	if(!do_after(user, 5 SECONDS, src) || !length(contents))
 		animate(src)
 		pixel_x = base_pixel_x
