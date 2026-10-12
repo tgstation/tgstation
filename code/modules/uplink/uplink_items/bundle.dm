@@ -142,13 +142,14 @@
 			existing_entry.amount_purchased += 1
 			continue
 
+		var/datum/uplink_item/original_datum = SStraitor.uplink_items_by_type[loot.type]
 		var/datum/uplink_purchase_entry/custom_entry = new()
 		custom_entry.set_item(loot)
 		custom_entry.base_cost = 0
 		custom_entry.spent_cost = 0
 		custom_entry.amount_purchased = 1
-		custom_entry.name = "Surplus Item: [format_text(loot.name)]"
-		custom_entry.desc = "Obtained via surplus crate."
+		custom_entry.name = "Surplus Item: [original_datum?.name || format_text(loot.name)]"
+		custom_entry.desc = "[original_datum?.desc || loot.desc]<br>Obtained via <i>surplus crate</i>."
 		entries[loot.type] = custom_entry
 
 	for(var/entry_type, entry_datum in entries)
