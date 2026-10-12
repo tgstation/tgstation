@@ -145,13 +145,12 @@
 	if(isnull(part_type))  //Client gone or they chose a random part
 		part_type = part_options[pick_n_take(part_options)]
 
-	if(quirk_holder.has_quirk(/datum/quirk/prosthetic_limb))
-		var/obj/item/bodypart/shit_limb = GLOB.prosthetic_limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic)]
-		var/obj/item/bodypart/part_part = part_type
-		if(ispath(shit_limb, /obj/item/bodypart) && ispath(part_part, /obj/item/bodypart))
-			// dumbass already has a part in the same spot so let's just let the shoddy trait do its thing instead
-			if(shit_limb::body_zone == part_part::body_zone)
-				return
+	if(quirk_holder.has_quirk(/datum/quirk/prosthetic_limb) && ispath(part_type, /obj/item/bodypart))
+		var/obj/item/bodypart/bodypart_check = part_type
+		var/preferred_prosthetic_zone = GLOB.prosthetic_limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic)]
+		// dumbass already has a part in the same spot so let's just let the shoddy trait do its thing instead
+		if(preferred_prosthetic_zone == bodypart_check::body_zone)
+			return
 
 	while(!can_add_part(part_type))
 		if(!length(part_options))
