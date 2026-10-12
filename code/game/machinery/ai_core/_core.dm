@@ -13,8 +13,8 @@
 	var/state = CORE_STATE_EMPTY
 	var/obj/item/circuitboard/aicore/circuit
 	var/obj/item/brain_processor/core_mmi
-	/// Weakref to an ai module rack, if present we will try to link new AI to it instead of the station core
-	var/datum/weakref/default_link_ref
+	/// Autoref to an ai module rack, if present we will try to link new AI to it instead of the station core
+	var/datum/autoref/default_link_ref
 
 /obj/structure/ai_core/Initialize(mapload, state = src.state, obj/item/brain_processor/core_mmi = null)
 	. = ..()

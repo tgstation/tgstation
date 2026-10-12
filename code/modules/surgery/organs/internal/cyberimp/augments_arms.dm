@@ -71,12 +71,12 @@
 	if(ispath(active_item))
 		active_item = new active_item(src)
 		active_item.set_custom_materials(null)
-		items_list += WEAKREF(active_item)
+		items_list += AUTOREF(active_item)
 
 	for(var/typepath in items_to_create)
 		var/atom/new_item = new typepath(src)
 		new_item.set_custom_materials(null)
-		items_list += WEAKREF(new_item)
+		items_list += AUTOREF(new_item)
 
 	if(hand_state)
 		// Overlay is done in two layers, "[state]" and "[state]_hand"
@@ -85,7 +85,7 @@
 /obj/item/organ/cyberimp/arm/toolkit/Destroy()
 	hand = null
 	active_item = null
-	for(var/datum/weakref/ref in items_list)
+	for(var/datum/autoref/ref in items_list)
 		var/obj/item/to_del = ref.resolve()
 		if(!to_del)
 			continue
@@ -219,7 +219,7 @@
 			Extend(contents[1])
 		else
 			var/list/choice_list = list()
-			for(var/datum/weakref/augment_ref in items_list)
+			for(var/datum/autoref/augment_ref in items_list)
 				var/obj/item/augment_item = augment_ref.resolve()
 				if(!augment_item)
 					items_list -= augment_ref
@@ -294,23 +294,23 @@
 	name = "integrated electronic stamp"
 
 /obj/item/organ/cyberimp/arm/toolkit/paperwork/emag_act(mob/user, obj/item/card/emag/emag_card)
-	for(var/datum/weakref/created_item in items_list)
+	for(var/datum/autoref/created_item in items_list)
 		var/obj/potential_tool = created_item.resolve()
 		if(istype(potential_tool, /obj/item/stamp/chameleon))
 			return FALSE
 
 	balloon_alert(user, "experimental stamp unlocked")
-	items_list += WEAKREF(new /obj/item/stamp/chameleon(src))
+	items_list += AUTOREF(new /obj/item/stamp/chameleon(src))
 	return TRUE
 
 /obj/item/organ/cyberimp/arm/toolkit/toolset/emag_act(mob/user, obj/item/card/emag/emag_card)
-	for(var/datum/weakref/created_item in items_list)
+	for(var/datum/autoref/created_item in items_list)
 		var/obj/potential_knife = created_item.resolve()
 		if(istype(potential_knife, /obj/item/knife/combat/cyborg))
 			return FALSE
 
 	balloon_alert(user, "integrated knife unlocked")
-	items_list += WEAKREF(new /obj/item/knife/combat/cyborg(src))
+	items_list += AUTOREF(new /obj/item/knife/combat/cyborg(src))
 	return TRUE
 
 /obj/item/organ/cyberimp/arm/toolkit/esword
@@ -333,12 +333,12 @@
 
 /obj/item/organ/cyberimp/arm/toolkit/flash/Initialize(mapload)
 	. = ..()
-	for(var/datum/weakref/created_item in items_list)
+	for(var/datum/autoref/created_item in items_list)
 		var/obj/potential_flash = created_item.resolve()
 		if(!istype(potential_flash, /obj/item/assembly/flash/armimplant))
 			continue
 		var/obj/item/assembly/flash/armimplant/flash = potential_flash
-		flash.arm = WEAKREF(src)
+		flash.arm = AUTOREF(src)
 
 /obj/item/organ/cyberimp/arm/toolkit/flash/Extend()
 	. = ..()
@@ -369,12 +369,12 @@
 
 /obj/item/organ/cyberimp/arm/toolkit/combat/Initialize(mapload)
 	. = ..()
-	for(var/datum/weakref/created_item in items_list)
+	for(var/datum/autoref/created_item in items_list)
 		var/obj/potential_flash = created_item.resolve()
 		if(!istype(potential_flash, /obj/item/assembly/flash/armimplant))
 			continue
 		var/obj/item/assembly/flash/armimplant/flash = potential_flash
-		flash.arm = WEAKREF(src)
+		flash.arm = AUTOREF(src)
 
 /obj/item/organ/cyberimp/arm/toolkit/surgery
 	name = "surgical toolset implant"

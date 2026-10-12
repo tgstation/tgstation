@@ -9,7 +9,7 @@
 
 #define isdatum(thing) (istype(thing, /datum))
 
-#define isweakref(D) (istype(D, /datum/weakref))
+#define isautoref(D) (istype(D, /datum/autoref))
 
 #define isimage(thing) (istype(thing, /image))
 

@@ -5,7 +5,7 @@
  */
 /datum/component/death_linked
 	///The mob that also dies when the user dies
-	var/datum/weakref/linked_mob
+	var/datum/autoref/linked_mob
 
 /datum/component/death_linked/Initialize(mob/living/target_mob)
 	. = ..()
@@ -13,7 +13,7 @@
 		return COMPONENT_INCOMPATIBLE
 	if(isnull(target_mob))
 		stack_trace("[type] added to [parent] with no linked mob.")
-	src.linked_mob = WEAKREF(target_mob)
+	src.linked_mob = AUTOREF(target_mob)
 
 /datum/component/death_linked/RegisterWithParent()
 	. = ..()

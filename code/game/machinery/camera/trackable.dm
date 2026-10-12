@@ -54,9 +54,9 @@
 		namecounts[name] = 1
 
 		if(ishuman(living_mob))
-			humans[name] = WEAKREF(living_mob)
+			humans[name] = AUTOREF(living_mob)
 		else
-			others[name] = WEAKREF(living_mob)
+			others[name] = AUTOREF(living_mob)
 
 	var/list/targets = sort_list(humans) + sort_list(others)
 	return targets
@@ -158,7 +158,7 @@
 	var/target_name = tgui_input_list(tracker, "Select a target", "Tracking", find_trackable_mobs())
 	if(!target_name || isnull(target_name))
 		return
-	var/datum/weakref/mob_ref = isnull(humans[target_name]) ? others[target_name] : humans[target_name]
+	var/datum/autoref/mob_ref = isnull(humans[target_name]) ? others[target_name] : humans[target_name]
 	if(isnull(mob_ref))
 		to_chat(tracker, span_notice("Target is not on or near any active cameras. Tracking failed."))
 		return
@@ -177,7 +177,7 @@
 		return
 
 	find_trackable_mobs() //this is in case the tracked mob is newly/no-longer in camera field of view.
-	var/datum/weakref/mob_ref = isnull(humans[tracked_mob_name]) ? others[tracked_mob_name] : humans[tracked_mob_name]
+	var/datum/autoref/mob_ref = isnull(humans[tracked_mob_name]) ? others[tracked_mob_name] : humans[tracked_mob_name]
 	if(isnull(mob_ref))
 		to_chat(tracker, span_notice("Target is not on or near any active cameras. Tracking failed."))
 		return

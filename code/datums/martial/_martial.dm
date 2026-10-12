@@ -15,8 +15,8 @@
 	VAR_PRIVATE/datum/origin
 	/// The current mob associated with this martial art datum. Do not set directly.
 	VAR_PRIVATE/mob/living/holder
-	/// Weakref to the last mob we attacked, for determining when to reset streaks
-	VAR_PRIVATE/datum/weakref/current_target
+	/// Autoref to the last mob we attacked, for determining when to reset streaks
+	VAR_PRIVATE/datum/autoref/current_target
 
 	/// Path to verb to display help text for this martial art.
 	var/help_verb = "Remember the Basics"
@@ -280,7 +280,7 @@
  * * mob/living/defender - The mob being attacked
  */
 /datum/martial_art/proc/add_to_streak(element, mob/living/defender)
-	if(!IS_WEAKREF_OF(defender, current_target))
+	if(!IS_AUTOREF_OF(defender, current_target))
 		reset_streak(defender)
 	streak += element
 	if(length(streak) > max_streak_length)
@@ -302,7 +302,7 @@
 /datum/martial_art/proc/reset_streak(mob/living/new_target, update_icon = TRUE)
 	if(timerid)
 		deltimer(timerid)
-	current_target = WEAKREF(new_target)
+	current_target = AUTOREF(new_target)
 	streak = ""
 	var/atom/movable/screen/combo/combo_display = holder.hud_used?.screen_objects[HUD_MOB_COMBO]
 	if(istype(combo_display) && display_combos && update_icon)

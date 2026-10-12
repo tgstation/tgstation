@@ -57,8 +57,8 @@
 	var/datum/atom_hud/alternate_appearance/basic/antagonist_hud/antag_hud = null
 	var/holy_role = NONE //is this person a chaplain or admin role allowed to use bibles, Any rank besides 'NONE' allows for this.
 
-	///If this mind's master is another mob (i.e. adamantine golems). Weakref of a /living.
-	var/datum/weakref/enslaved_to
+	///If this mind's master is another mob (i.e. adamantine golems). Autoref of a /living.
+	var/datum/autoref/enslaved_to
 
 	var/late_joiner = FALSE
 	/// has this mind ever been an AI
@@ -78,8 +78,8 @@
 	var/list/skills_rewarded
 	///Assoc list of skills. Use SKILL_LVL to access level, and SKILL_EXP to access skill's exp.
 	var/list/known_skills = list()
-	///Weakref to thecharacter we joined in as- either at roundstart or latejoin, so we know for persistent scars if we ended as the same person or not
-	var/datum/weakref/original_character
+	///Autoref to thecharacter we joined in as- either at roundstart or latejoin, so we know for persistent scars if we ended as the same person or not
+	var/datum/autoref/original_character
 	/// The index for what character slot, if any, we were loaded from, so we can track persistent scars on a per-character basis. Each character slot gets PERSISTENT_SCAR_SLOTS scar slots
 	var/original_character_slot_index
 	/// The index for our current scar slot, so we don't have to constantly check the savefile (unlike the slots themselves, this index is independent of selected char slot, and increments whenever a valid char is joined with)
@@ -226,7 +226,7 @@
 
 //I cannot trust you fucks to do this properly
 /datum/mind/proc/set_original_character(new_original_character)
-	original_character = WEAKREF(new_original_character)
+	original_character = AUTOREF(new_original_character)
 
 /datum/mind/proc/set_death_time()
 	SIGNAL_HANDLER

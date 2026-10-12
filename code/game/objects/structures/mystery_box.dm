@@ -146,8 +146,8 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	var/current_sound_channel
 	/// How many time can it still be used?
 	var/uses_left = INFINITY
-	/// A list of weakrefs to mind datums of people that opened it and how many times.
-	var/list/datum/weakref/minds_that_opened_us
+	/// A list of autorefs to mind datums of people that opened it and how many times.
+	var/list/datum/autoref/minds_that_opened_us
 
 /obj/structure/mystery_box/Initialize(mapload)
 	. = ..()
@@ -194,7 +194,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	playsound(src, crate_open_sound, 80)
 	if(user.mind)
 		LAZYINITLIST(minds_that_opened_us)
-		var/datum/weakref/ref = WEAKREF(user.mind)
+		var/datum/autoref/ref = AUTOREF(user.mind)
 		minds_that_opened_us[ref] += 1
 	uses_left--
 
@@ -297,7 +297,7 @@ GLOBAL_LIST_INIT(mystery_fishing, list(
 	valid_types = GLOB.mystery_fishing
 
 /obj/structure/mystery_box/fishing/activate(mob/living/user)
-	if(user.mind && minds_that_opened_us?[WEAKREF(user.mind)] >= 3)
+	if(user.mind && minds_that_opened_us?[AUTOREF(user.mind)] >= 3)
 		to_chat(user, span_warning("[src] refuses to open to you anymore. Perhaps you should present it to someone else..."))
 		return
 	return ..()

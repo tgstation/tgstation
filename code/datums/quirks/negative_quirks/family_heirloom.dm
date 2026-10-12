@@ -6,8 +6,8 @@
 	medical_record_text = "Patient demonstrates an unnatural attachment to a family heirloom."
 	hardcore_value = 1
 	quirk_flags = QUIRK_HUMAN_ONLY|QUIRK_PROCESSES
-	/// A weak reference to our heirloom.
-	var/datum/weakref/heirloom
+	/// An auto reference to our heirloom.
+	var/datum/autoref/heirloom
 	mail_goodies = list(/obj/item/storage/briefcase/secure)
 
 /datum/quirk/item_quirk/family_heirloom/add_unique(client/client_source)
@@ -29,7 +29,7 @@
 		heirloom_type = pick(/obj/item/toy/cards/deck, /obj/item/lighter, /obj/item/dice/d20)
 
 	var/obj/new_heirloom = new heirloom_type(get_turf(human_holder))
-	heirloom = WEAKREF(new_heirloom)
+	heirloom = AUTOREF(new_heirloom)
 
 	give_item_to_holder(
 		new_heirloom,

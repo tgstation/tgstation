@@ -77,7 +77,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	/// These are singletons, do not modify individual slots!
 	var/list/datum/inventory_slot/inventory_slots = alist()
 
-	/// List of weakrefs to objects that we add to our screen that we don't expect to DO anything
+	/// List of autorefs to objects that we add to our screen that we don't expect to DO anything
 	/// They typically use * in their render target. They exist solely so we can reuse them,
 	/// and avoid needing to make changes to all idk 300 consumers if we want to change the appearance
 	var/list/asset_refs_for_reuse = list()
@@ -436,15 +436,15 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	build_hand_slots(update_hud = TRUE)
 
 /datum/hud/proc/register_reuse(atom/movable/screen/reuse)
-	asset_refs_for_reuse += WEAKREF(reuse)
+	asset_refs_for_reuse += AUTOREF(reuse)
 	mymob?.client?.screen += reuse
 
 /datum/hud/proc/unregister_reuse(atom/movable/screen/reuse)
-	asset_refs_for_reuse -= WEAKREF(reuse)
+	asset_refs_for_reuse -= AUTOREF(reuse)
 	mymob?.client?.screen -= reuse
 
 /datum/hud/proc/update_reuse(mob/show_to)
-	for(var/datum/weakref/screen_ref as anything in asset_refs_for_reuse)
+	for(var/datum/autoref/screen_ref as anything in asset_refs_for_reuse)
 		var/atom/movable/screen/reuse = screen_ref.resolve()
 		if(isnull(reuse))
 			asset_refs_for_reuse -= screen_ref

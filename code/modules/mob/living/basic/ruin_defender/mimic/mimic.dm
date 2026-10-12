@@ -261,15 +261,15 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	mob_biotypes = MOB_SPECIAL
 	ai_controller = /datum/ai_controller/basic_controller/mimic_copy
 	/// our creator
-	var/datum/weakref/creator_ref
+	var/datum/autoref/creator_ref
 	/// googly eyes overlay
 	var/static/mutable_appearance/googly_eyes = mutable_appearance('icons/mob/simple/mob.dmi', "googly_eyes")
 	/// do we overlay googly eyes over whatever we copy
 	var/overlay_googly_eyes = TRUE
 	/// do we take damage when we are not sentient and have no target
 	var/idledamage = TRUE
-	/// copied object weakref
-	var/datum/weakref/copied_ref
+	/// copied object autoref
+	var/datum/autoref/copied_ref
 
 /mob/living/basic/mimic/copy/Initialize(mapload, obj/copy, mob/living/creator, destroy_original = FALSE, no_googlies = FALSE)
 	. = ..()
@@ -323,7 +323,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 	if(istype(owner))
 		unfriend(creator_resolved)
 		befriend(owner)
-	creator_ref = WEAKREF(owner)
+	creator_ref = AUTOREF(owner)
 
 /// Check whether this object can be copied. If destroy_original is true, this proc is ignored.
 /mob/living/basic/mimic/copy/proc/check_object(obj/target)
@@ -334,7 +334,7 @@ GLOBAL_LIST_INIT(animatable_blacklist, typecacheof(list(
 		return FALSE
 	if(!destroy_original)
 		original.forceMove(src)
-	copied_ref = WEAKREF(original)
+	copied_ref = AUTOREF(original)
 	CopyObjectVisuals(original)
 	if (overlay_googly_eyes)
 		add_overlay(googly_eyes)

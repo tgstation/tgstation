@@ -577,7 +577,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/status_display/evac, 32)
 						else
 							update_appearance()
 		if("greenscreen")
-			var/datum/weakref/display_ref = signal.data["display"]
+			var/datum/autoref/display_ref = signal.data["display"]
 			var/obj/effect/abstract/greenscreen_display/new_display = display_ref?.resolve()
 			if(istype(new_display))
 				if(isnull(speakers))
@@ -1087,7 +1087,7 @@ GLOBAL_LIST_EMPTY_TYPED(greenscreen_displays, /obj/effect/abstract/greenscreen_d
 
 	become_hearing_sensitive("active")
 
-	INVOKE_ASYNC(src, PROC_REF(update_status_displays), list("command" = "greenscreen", "display" = WEAKREF(display)))
+	INVOKE_ASYNC(src, PROC_REF(update_status_displays), list("command" = "greenscreen", "display" = AUTOREF(display)))
 	update_appearance(UPDATE_OVERLAYS)
 
 /// Sends a signal to all relevant status displays to update their greenscreen

@@ -91,8 +91,8 @@
 	tastes = list("dust" = 1, "lint" = 1)
 	foodtypes = CLOTH
 
-	/// A weak reference to the clothing that created us
-	var/datum/weakref/clothing
+	/// An auto reference to the clothing that created us
+	var/datum/autoref/clothing
 
 /obj/item/food/clothing/make_edible()
 	. = ..()
@@ -118,7 +118,7 @@
 /obj/item/clothing/proc/create_moth_snack()
 	var/obj/item/food/clothing/new_moth_snack = new
 	new_moth_snack.name = name
-	new_moth_snack.clothing = WEAKREF(src)
+	new_moth_snack.clothing = AUTOREF(src)
 	return new_moth_snack
 
 /obj/item/clothing/item_interaction(mob/living/user, obj/item/weapon, list/modifiers)

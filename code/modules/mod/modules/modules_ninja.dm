@@ -875,11 +875,11 @@
 	/// Reference to the beam following the projectile.
 	var/line
 	/// Reference to the energy net module.
-	var/datum/weakref/net_module
+	var/datum/autoref/net_module
 
 /obj/projectile/energy_net/Initialize(mapload, net_module)
 	. = ..()
-	src.net_module = WEAKREF(net_module)
+	src.net_module = AUTOREF(net_module)
 
 /obj/projectile/energy_net/fire(setAngle)
 	if(firer)

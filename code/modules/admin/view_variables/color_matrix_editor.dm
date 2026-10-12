@@ -1,6 +1,6 @@
 /datum/color_matrix_editor
 	var/client/owner
-	var/datum/weakref/target
+	var/datum/autoref/target
 	var/atom/movable/screen/map_view/proxy_view
 	var/list/current_color
 	var/closed
@@ -16,7 +16,7 @@
 
 	var/mutable_appearance/view = image('icons/testing/colortest.dmi', "colors")
 	if(_target)
-		target = WEAKREF(_target)
+		target = AUTOREF(_target)
 		if(!(_target.appearance_flags & PLANE_MASTER))
 			view = image(_target)
 

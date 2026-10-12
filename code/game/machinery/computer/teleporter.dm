@@ -17,8 +17,8 @@
 	var/obj/machinery/teleport/station/power_station
 	/// Whether the teleporter is currently calibrating
 	var/calibrating
-	///Weakref to the target atom we're pointed at currently
-	var/datum/weakref/target_ref
+	///Autoref to the target atom we're pointed at currently
+	var/datum/autoref/target_ref
 
 /obj/machinery/computer/teleporter/Initialize(mapload)
 	. = ..()
@@ -120,7 +120,7 @@
 
 /obj/machinery/computer/teleporter/proc/set_teleport_target(new_target)
 	var/datum/old_target
-	var/datum/weakref/new_target_ref = WEAKREF(new_target)
+	var/datum/autoref/new_target_ref = AUTOREF(new_target)
 	if (target_ref == new_target_ref)
 		return
 	if (target_ref)

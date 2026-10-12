@@ -56,9 +56,9 @@
 	var/input_field_count = 0
 
 	/// Paper can be shown via cameras. When that is done, a deep copy of the paper is made and stored as a var on the camera.
-	/// The paper is located in nullspace, and holds a weak ref to the camera that once contained it so the paper can do some
+	/// The paper is located in nullspace, and holds a auto ref to the camera that once contained it so the paper can do some
 	/// state checking on if it should be shown to a viewer.
-	var/datum/weakref/camera_holder
+	var/datum/autoref/camera_holder
 
 	///If TRUE, staff can read paper everywhere, but usually from requests panel.
 	var/request_state = FALSE
@@ -475,7 +475,7 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 	return ITEM_INTERACT_BLOCKING // Stop the UI from opening.
 /**
  * Attempts to ui_interact the paper to the given user, with some sanity checking
- * to make sure the camera still exists via the weakref and that this paper is still
+ * to make sure the camera still exists via the autoref and that this paper is still
  * attached to it.
  */
 /obj/item/paper/proc/show_through_camera(mob/living/user)

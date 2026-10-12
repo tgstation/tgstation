@@ -40,7 +40,7 @@ GLOBAL_ALIST_EMPTY(reftracker_skip_typecache_b)
 		/datum/stack_recipe,
 		/datum/tlv,
 		/datum/universal_icon,
-		/datum/weakref,
+		/datum/autoref,
 		/datum/z_pillar,
 		/obj/effect/abstract/z_holder,
 		// stuff below isn't 100% guaranteed to be ref-free, but they're prolly not an issue

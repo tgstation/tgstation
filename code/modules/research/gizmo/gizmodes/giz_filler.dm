@@ -53,10 +53,10 @@
 	var/object_to_spawn
 
 	/// List of softrefs of the objects we spawned. Exists only to prevent game-crashing object spam
-	var/list/spawned_objects_weakrefs = list()
+	var/list/spawned_objects_autorefs = list()
 	/// Max objects that can exist at once
 	var/max_objects = 50
-	/// The position of the next object to spawn in spawned_objects_weakrefs
+	/// The position of the next object to spawn in spawned_objects_autorefs
 	var/next_object_position = 0
 
 /datum/gizpulse/dispense/activate(atom/movable/holder, datum/gizmodes/master, datum/gizmo_interface/interface)
@@ -64,12 +64,12 @@
 		object_to_spawn = pick_weight(possible_objects)
 
 	// We don't technically track to make sure we dont make more than [max_objects] objects, we just delete whatever was made [max_objects] ago
-	if(spawned_objects_weakrefs.len > (next_object_position % max_objects))
-		qdel(spawned_objects_weakrefs["[(next_object_position % max_objects) + 1]"])
+	if(spawned_objects_autorefs.len > (next_object_position % max_objects))
+		qdel(spawned_objects_autorefs["[(next_object_position % max_objects) + 1]"])
 
 	var/new_object = new object_to_spawn (get_turf(holder))
 	modify(new_object)
-	spawned_objects_weakrefs["[(next_object_position % max_objects) + 1]"] = WEAKREF(new_object)
+	spawned_objects_autorefs["[(next_object_position % max_objects) + 1]"] = AUTOREF(new_object)
 	next_object_position++
 
 /datum/gizpulse/dispense/proc/modify(atom/movable/new_object)

@@ -1,9 +1,9 @@
 /datum/picture
 	var/picture_name = "picture"
 	var/picture_desc = "This is a picture."
-	/// List of weakrefs pointing at mobs that appear in this photo
+	/// List of autorefs pointing at mobs that appear in this photo
 	var/list/mobs_seen = list()
-	/// List of weakrefs pointing at dead mobs that appear in this photo
+	/// List of autorefs pointing at dead mobs that appear in this photo
 	var/list/dead_seen = list()
 	/// List of strings of face-visible humans in this photo
 	var/list/names_seen = list()
@@ -27,10 +27,10 @@
 		picture_desc = desc
 	if(!isnull(mobs_spotted))
 		for(var/mob/seen as anything in mobs_spotted)
-			mobs_seen += WEAKREF(seen)
+			mobs_seen += AUTOREF(seen)
 	if(!isnull(dead_spotted))
 		for(var/mob/seen as anything in dead_spotted)
-			dead_seen += WEAKREF(seen)
+			dead_seen += AUTOREF(seen)
 	if(!isnull(names))
 		for(var/seen in names)
 			names_seen += seen

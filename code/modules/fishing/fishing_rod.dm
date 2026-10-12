@@ -426,7 +426,7 @@
 	cast_projectile.original = target
 	cast_projectile.fired_from = src
 	cast_projectile.firer = user
-	cast_projectile.impacted = list(WEAKREF(user) = TRUE)
+	cast_projectile.impacted = list(AUTOREF(user) = TRUE)
 	if(line?.fishing_line_traits & FISHING_LINE_PHASE)
 		cast_projectile.pass_flags = ALL
 	cast_projectile.aim_projectile(target, user)

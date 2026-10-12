@@ -229,7 +229,7 @@
 		res.Release()
 
 	var/list/creatures = spawned_threat_refs + mutation_candidate_refs
-	for(var/datum/weakref/creature_ref as anything in creatures)
+	for(var/datum/autoref/creature_ref as anything in creatures)
 		var/mob/living/creature = creature_ref?.resolve()
 		if(isnull(creature))
 			continue

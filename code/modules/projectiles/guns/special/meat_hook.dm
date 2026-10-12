@@ -94,12 +94,12 @@
 /// Lightweight datum that just handles moving a target for the hook.
 /// For the love of God, do not use this outside this file.
 /datum/hook_and_move
-	/// Weakref to the victim we are dragging
-	var/datum/weakref/victim_ref = null
-	/// Weakref of the destination that the victim is heading towards.
-	var/datum/weakref/destination_ref = null
-	/// Weakref to the firer of the hook
-	var/datum/weakref/firer_ref = null
+	/// Autoref to the victim we are dragging
+	var/datum/autoref/victim_ref = null
+	/// Autoref of the destination that the victim is heading towards.
+	var/datum/autoref/destination_ref = null
+	/// Autoref to the firer of the hook
+	var/datum/autoref/firer_ref = null
 	/// String to the REF() of the dude that fired us so we can ensure we always cleanup our traits
 	var/firer_ref_string = null
 
@@ -135,9 +135,9 @@
 		var/mob/living/fresh_meat = victim
 		fresh_meat.Knockdown(knockdown_time)
 
-	destination_ref = WEAKREF(destination)
-	victim_ref = WEAKREF(victim)
-	firer_ref = WEAKREF(firer)
+	destination_ref = AUTOREF(destination)
+	victim_ref = AUTOREF(victim)
+	firer_ref = AUTOREF(firer)
 
 	START_PROCESSING(SSfastprocess, src)
 

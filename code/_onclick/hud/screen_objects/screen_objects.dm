@@ -18,7 +18,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	appearance_flags = APPEARANCE_UI
 	interaction_flags_atom = parent_type::interaction_flags_atom | INTERACT_ATOM_MOUSEDROP_IGNORE_CHECKS
 	/// A reference to the object in the slot. Grabs or items, generally, but any datum will do.
-	var/datum/weakref/master_ref = null
+	var/datum/autoref/master_ref = null
 	/// A reference to the owner HUD, if any.
 	VAR_PRIVATE/datum/hud/hud = null
 	/**
@@ -319,7 +319,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 
 /atom/movable/screen/close/Initialize(mapload, datum/hud/hud_owner, new_master)
 	. = ..()
-	master_ref = WEAKREF(new_master)
+	master_ref = AUTOREF(new_master)
 
 /atom/movable/screen/close/Click()
 	var/datum/storage/storage = master_ref?.resolve()
@@ -338,7 +338,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 
 /atom/movable/screen/storage_up/Initialize(mapload, datum/hud/hud_owner, new_master)
 	. = ..()
-	master_ref = WEAKREF(new_master)
+	master_ref = AUTOREF(new_master)
 
 /atom/movable/screen/storage_up/Click()
 	var/datum/storage/storage = master_ref?.resolve()
@@ -648,7 +648,7 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 
 /atom/movable/screen/storage/Initialize(mapload, datum/hud/hud_owner, new_master)
 	. = ..()
-	master_ref = WEAKREF(new_master)
+	master_ref = AUTOREF(new_master)
 
 /atom/movable/screen/storage/Click(location, control, params)
 	var/datum/storage/storage_master = master_ref?.resolve()

@@ -8,7 +8,7 @@
 	difficulty = 8
 	mutation_icon_state = "antenna"
 	layer_used = FRONT_MUTATIONS_LAYER
-	var/datum/weakref/radio_weakref
+	var/datum/autoref/radio_autoref
 
 /obj/item/implant/radio/antenna
 	name = "internal antenna organ"
@@ -26,12 +26,12 @@
 		return
 	var/obj/item/implant/radio/antenna/linked_radio = new(owner)
 	linked_radio.implant(owner, null, TRUE, TRUE)
-	radio_weakref = WEAKREF(linked_radio)
+	radio_autoref = AUTOREF(linked_radio)
 
 /datum/mutation/antenna/on_losing(mob/living/carbon/human/owner)
 	if(..())
 		return
-	var/obj/item/implant/radio/antenna/linked_radio = radio_weakref.resolve()
+	var/obj/item/implant/radio/antenna/linked_radio = radio_autoref.resolve()
 	if(linked_radio)
 		QDEL_NULL(linked_radio)
 

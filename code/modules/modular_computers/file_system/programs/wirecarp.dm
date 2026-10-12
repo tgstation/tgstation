@@ -103,7 +103,7 @@
 	var/list/computers_with_messenger = list()
 	for(var/messenger_ref in GLOB.pda_messengers)
 		var/datum/computer_file/program/messenger/messenger = GLOB.pda_messengers[messenger_ref]
-		computers_with_messenger |= WEAKREF(messenger.computer)
+		computers_with_messenger |= AUTOREF(messenger.computer)
 	all_messengers.set_output(computers_with_messenger)
 
 /obj/item/circuit_component/mod_program/ntnetmonitor/proc/toggle_ids(datum/port/port)

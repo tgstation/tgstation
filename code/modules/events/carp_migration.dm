@@ -71,7 +71,7 @@
 	if (!station_turf)
 		return list()
 	var/turf/exit_turf = get_edge_target_turf(station_turf, pick(GLOB.alldirs))
-	return list(WEAKREF(station_turf), WEAKREF(exit_turf))
+	return list(AUTOREF(station_turf), AUTOREF(exit_turf))
 
 /datum/round_event/carp_migration/proc/fishannounce(atom/fish)
 	if (!hasAnnounced)
@@ -96,7 +96,7 @@
 	var/z_level_key = "[aimed_turf.z]"
 	if (!targets_per_z[z_level_key])
 		targets_per_z[z_level_key] = list()
-	targets_per_z[z_level_key] += WEAKREF(aimed_turf)
+	targets_per_z[z_level_key] += AUTOREF(aimed_turf)
 
 /datum/event_admin_setup/carp_migration/apply_to_event(datum/round_event/carp_migration/event)
 	event.z_migration_paths = targets_per_z

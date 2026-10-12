@@ -134,8 +134,8 @@
 	var/base_desc = "A blank sheet of synthetic engineering-grade paper."
 	var/linked_desc = "A sheet of synthetic engineering-grade paper with shuttle schematics printed on it."
 
-	//A weakref to the mobile docking port of the shuttle these blueprints are linked to, if any.
-	var/datum/weakref/shuttle_ref
+	//A autoref to the mobile docking port of the shuttle these blueprints are linked to, if any.
+	var/datum/autoref/shuttle_ref
 
 	//Whether the holder can visualize shuttle frames (and any turfs preventing them from becoming complete shuttles)
 	var/visualize_frame_turfs = FALSE
@@ -379,9 +379,9 @@
 	return data
 
 /obj/item/shuttle_blueprints/proc/link_to_shuttle(obj/docking_port/mobile/custom/shuttle, is_master = FALSE)
-	shuttle_ref = WEAKREF(shuttle)
+	shuttle_ref = AUTOREF(shuttle)
 	if(is_master)
-		shuttle.master_blueprint = WEAKREF(src)
+		shuttle.master_blueprint = AUTOREF(src)
 	RegisterSignal(shuttle, COMSIG_QDELETING, PROC_REF(on_shuttle_deleted))
 	update_appearance()
 
@@ -553,7 +553,7 @@
 			if(master)
 				balloon_alert(usr, "master blueprint already exists!")
 				return TRUE
-			shuttle.master_blueprint = WEAKREF(src)
+			shuttle.master_blueprint = AUTOREF(src)
 			return TRUE
 		if("createNewArea")
 			var/obj/docking_port/mobile/custom/shuttle = shuttle_ref?.resolve()
@@ -746,8 +746,8 @@
 	var/list/data = ..()
 	var/list/shuttle_data = list()
 	var/list/shuttle_name_count = list()
-	for(var/datum/weakref/shuttle_weakref as anything in shuttles)
-		var/obj/docking_port/mobile/shuttle = shuttle_weakref.resolve()
+	for(var/datum/autoref/shuttle_autoref as anything in shuttles)
+		var/obj/docking_port/mobile/shuttle = shuttle_autoref.resolve()
 		if(!shuttle)
 			continue
 		var/shuttle_name = shuttle.name
@@ -771,7 +771,7 @@
 			var/obj/docking_port/mobile/shuttle = locate(ref)
 			if(!shuttle)
 				return TRUE
-			if(shuttles.Find(WEAKREF(shuttle)))
+			if(shuttles.Find(AUTOREF(shuttle)))
 				link_to_shuttle(shuttle)
 			return TRUE
 		if("unsetShuttle")
@@ -780,7 +780,7 @@
 
 /obj/item/shuttle_blueprints/borg/link_to_shuttle(obj/docking_port/mobile/custom/shuttle, is_master)
 	. = ..()
-	shuttles |= WEAKREF(shuttle)
+	shuttles |= AUTOREF(shuttle)
 
 /obj/item/shuttle_blueprints/borg/get_linked_name(obj/docking_port/mobile/shuttle)
 	name = "shuttle blueprint database ([shuttle.name])"

@@ -78,14 +78,14 @@
 
 	if(!was_hit_already(victim))
 		victim.apply_status_effect(/datum/status_effect/moon_parade, src)
-		mobs_hit += WEAKREF(victim)
+		mobs_hit += AUTOREF(victim)
 
 	victim.add_mood_event("Moon Insanity", /datum/mood_event/moon_insanity)
 	victim.cause_hallucination(/datum/hallucination/delusion/preset/moon, name)
 	victim.mob_mood.adjust_sanity(-20)
 
 /obj/projectile/moon_parade/proc/was_hit_already(mob/living/victim)
-	for(var/datum/weakref/ref as anything in mobs_hit)
+	for(var/datum/autoref/ref as anything in mobs_hit)
 		var/mob/living/hit_victim = ref.resolve()
 		if(hit_victim == victim)
 			return TRUE

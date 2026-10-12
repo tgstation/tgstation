@@ -183,7 +183,7 @@
 	var/obj/item/paper/paper = tool
 	last_shown_paper = paper.copy(paper.type, null)
 	var/note_name = sanitize(last_shown_paper.name)
-	last_shown_paper.camera_holder = WEAKREF(src)
+	last_shown_paper.camera_holder = AUTOREF(src)
 	display_note(user, note_name, null, FALSE)
 	return ITEM_INTERACT_SUCCESS
 

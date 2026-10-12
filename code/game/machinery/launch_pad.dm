@@ -324,9 +324,9 @@
 	if(!istype(tool, /obj/item/launchpad_remote))
 		return NONE
 	var/obj/item/launchpad_remote/remote = tool
-	if(IS_WEAKREF_OF(src, remote.pad)) //do not attempt to link when already linked
+	if(IS_AUTOREF_OF(src, remote.pad)) //do not attempt to link when already linked
 		return ITEM_INTERACT_BLOCKING
-	remote.pad = WEAKREF(src)
+	remote.pad = AUTOREF(src)
 	to_chat(user, span_notice("You link [src] to [remote]."))
 	return ITEM_INTERACT_SUCCESS
 
@@ -338,12 +338,12 @@
 	icon_state = "folder"
 	w_class = WEIGHT_CLASS_SMALL
 	var/sending = TRUE
-	//A weakref to our linked pad
-	var/datum/weakref/pad
+	//A autoref to our linked pad
+	var/datum/autoref/pad
 
 /obj/item/launchpad_remote/Initialize(mapload, pad) //remote spawns linked to the briefcase pad
 	. = ..()
-	src.pad = WEAKREF(pad)
+	src.pad = AUTOREF(pad)
 
 /obj/item/launchpad_remote/attack_self(mob/user)
 	. = ..()

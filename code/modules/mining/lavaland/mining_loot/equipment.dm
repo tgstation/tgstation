@@ -170,8 +170,8 @@
 	icon_state = "blank"
 	icon = 'icons/effects/effects.dmi'
 	var/vanish_description = "vanishes from reality"
-	// Weakref to the user who we're "acting" on
-	var/datum/weakref/user_ref
+	// Autoref to the user who we're "acting" on
+	var/datum/autoref/user_ref
 
 /obj/effect/immortality_talisman/Initialize(mapload, mob/new_user)
 	. = ..()
@@ -204,7 +204,7 @@
 	user.forceMove(src)
 	user.add_traits(list(TRAIT_GODMODE, TRAIT_NO_TRANSFORM), REF(src))
 
-	user_ref = WEAKREF(user)
+	user_ref = AUTOREF(user)
 
 	addtimer(CALLBACK(src, PROC_REF(dissipate)), 10 SECONDS)
 

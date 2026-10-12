@@ -879,7 +879,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	if(dragged && button_clicked != dragged)
 		return
 
-	if (object && IS_WEAKREF_OF(object, middle_drag_atom_ref) && button_clicked == LEFT_CLICK)
+	if (object && IS_AUTOREF_OF(object, middle_drag_atom_ref) && button_clicked == LEFT_CLICK)
 		ab = max(0, 5 SECONDS-(world.time-middragtime)*0.1)
 
 	var/mcl = CONFIG_GET(number/minute_click_limit)

@@ -18,8 +18,8 @@
 	drop_sound = SFX_GENERIC_DEVICE_DROP
 	/// Cached data from ui_interact
 	var/list/last_scan_data
-	/// Weakref to the last thing we scanned
-	var/datum/weakref/last_tray_scanned
+	/// Autoref to the last thing we scanned
+	var/datum/autoref/last_tray_scanned
 	/// Cached data for the product grinder results
 	var/static/list/product_grinder_results = list()
 	/// If TRUE the UI opens to the second tab / the chem tab
@@ -209,7 +209,7 @@
 		if(!user.can_read(src))
 			return ITEM_INTERACT_BLOCKING
 		START_PROCESSING(SSobj, src)
-		last_tray_scanned = WEAKREF(tray) // sets it to null if no tray
+		last_tray_scanned = AUTOREF(tray) // sets it to null if no tray
 
 	last_scan_data = list(
 		"tray_data" = null,

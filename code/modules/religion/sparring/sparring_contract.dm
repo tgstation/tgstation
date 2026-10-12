@@ -13,8 +13,8 @@
 	var/arena_condition = /area/station/service/chapel
 	///what stakes the fight will have
 	var/stakes_condition = STAKES_NONE
-	///who has signed this contract. fills itself with WEAKREFS, to prevent hanging references
-	var/list/datum/weakref/signed_by = list(null, null)
+	///who has signed this contract. fills itself with aautorefs, to prevent hanging references
+	var/list/datum/autoref/signed_by = list(null, null)
 
 /obj/item/sparring_contract/Initialize(mapload)
 	. = ..()
@@ -79,7 +79,7 @@
 	var/datum/religion_sect/spar/sect = GLOB.religious_sect
 
 	var/list/resolved_opponents = list()
-	for(var/datum/weakref/resolve_me as anything in sect.past_opponents)
+	for(var/datum/autoref/resolve_me as anything in sect.past_opponents)
 		var/resolved = resolve_me.resolve()
 		if(!isnull(resolved))
 			resolved_opponents += resolved
@@ -99,7 +99,7 @@
 
 	switch(action)
 		if("clear")
-			signed_by = list(null, null)//remove weakrefs
+			signed_by = list(null, null)//remove autorefs
 		if("fight")
 			if(!left_partner || !right_partner || !left_partner.mind || !right_partner.mind)
 				return
@@ -136,10 +136,10 @@
 				stakes_condition = params["stakes"]
 			//if you change the terms you have to get the other person to sign again.
 			if(terms_changed && (left_partner || right_partner))
-				signed_by = list(null, null)//remove weakrefs
+				signed_by = list(null, null)//remove autorefs
 				to_chat(user, span_warning("You will need to get your sparring partner to sign again under these new terms you've set."))
 			//fluff and signing
-			var/datum/weakref/user_ref = WEAKREF(user)
+			var/datum/autoref/user_ref = AUTOREF(user)
 			if(params["sign_position"] == CONTRACT_LEFT_FIELD)
 				signed_by[1] = user_ref
 			else

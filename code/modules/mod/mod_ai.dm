@@ -170,7 +170,7 @@
 	desc = "A small card designed to eject dead AIs. You could use an intellicard to recover it."
 	icon = 'icons/obj/aicards.dmi'
 	icon_state = "minicard"
-	var/datum/weakref/stored_ai
+	var/datum/autoref/stored_ai
 
 /obj/item/mod/ai_minicard/Initialize(mapload, mob/living/silicon/ai/ai)
 	. = ..()
@@ -181,7 +181,7 @@
 	ai.apply_damage(150, BURN)
 	INVOKE_ASYNC(ai, TYPE_PROC_REF(/mob/living/silicon/ai, death))
 	ai.forceMove(src)
-	stored_ai = WEAKREF(ai)
+	stored_ai = AUTOREF(ai)
 	icon_state = "minicard-filled"
 
 /obj/item/mod/ai_minicard/Destroy()

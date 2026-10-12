@@ -527,7 +527,7 @@
 	var/turf/target_turf = get_turf(target)
 	while (target && !QDELETED(src) && !deletion_queued)
 		// Doublehitting can be an issue with slow projectiles or when the server is chugging
-		impacted[WEAKREF(target)] = TRUE
+		impacted[AUTOREF(target)] = TRUE
 		var/mode = prehit_pierce(target)
 		if(mode == PROJECTILE_DELETE_WITHOUT_HITTING)
 			return PROJECTILE_IMPACT_INTERRUPTED
@@ -1394,7 +1394,7 @@
 	var/obj/projectile/bullet = new projectile_type(startloc)
 	bullet.starting = startloc
 	for (var/atom/thing as anything in ignore_targets)
-		bullet.impacted[WEAKREF(thing)] = TRUE
+		bullet.impacted[AUTOREF(thing)] = TRUE
 	bullet.firer = firer || src
 	bullet.fired_from = src
 	bullet.yo = target.y - startloc.y

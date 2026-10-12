@@ -39,14 +39,14 @@
 	amount--
 	if(delay > 0)
 		drone.set_busy(delay_message,delay)
-		addtimer(CALLBACK(src, PROC_REF(delay_finished),WEAKREF(drone)),delay)
+		addtimer(CALLBACK(src, PROC_REF(delay_finished),AUTOREF(drone)),delay)
 	else
 		finish_event(drone)
 
 /datum/exploration_event/simple/resource/is_targetable()
 	return visited && amount > 0 ///Can go back if something is left.
 
-/datum/exploration_event/simple/resource/proc/delay_finished(datum/weakref/drone_ref)
+/datum/exploration_event/simple/resource/proc/delay_finished(datum/autoref/drone_ref)
 	var/obj/item/exodrone/drone = drone_ref.resolve()
 	if(QDELETED(drone)) //drone blown up in the meantime
 		return

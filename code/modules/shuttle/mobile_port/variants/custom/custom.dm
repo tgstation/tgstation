@@ -2,10 +2,10 @@
 	name = "custom shuttle"
 	shuttle_id = "custom"
 	launch_status = UNLAUNCHED
-	var/datum/weakref/master_blueprint
+	var/datum/autoref/master_blueprint
 	var/area/default_area
-	var/datum/weakref/control_console
-	var/datum/weakref/navigation_console
+	var/datum/autoref/control_console
+	var/datum/autoref/navigation_console
 
 /obj/docking_port/mobile/custom/Initialize(mapload, list/areas)
 	. = ..()

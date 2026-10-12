@@ -83,7 +83,7 @@
 		return
 
 	linked_alert.desc = "You're in love with [date.real_name]! How lovely."
-	hearts = WEAKREF(date.add_alt_appearance(
+	hearts = AUTOREF(date.add_alt_appearance(
 		/datum/atom_hud/alternate_appearance/basic/one_person,
 		"in_love",
 		image(icon = 'icons/effects/effects.dmi', icon_state = "love_hearts", loc = date),

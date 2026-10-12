@@ -80,7 +80,7 @@ SUBSYSTEM_DEF(verb_manager)
 	//to happen as if it was actually from player input if its called on a mob.
 #ifdef UNIT_TESTS
 	if(QDELETED(usr) && ismob(incoming_callback.object))
-		incoming_callback.user = WEAKREF(incoming_callback.object)
+		incoming_callback.user = AUTOREF(incoming_callback.object)
 		var/datum/callback/new_us = CALLBACK(arglist(list(GLOBAL_PROC, GLOBAL_PROC_REF(_queue_verb)) + args.Copy()))
 		return world.push_usr(incoming_callback.object, new_us)
 

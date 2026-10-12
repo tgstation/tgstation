@@ -54,7 +54,7 @@
 		to_chat(user, span_warning("... so long as you still perform your other objectives that is!"))
 	holder = user
 	if(!HAS_TRAIT(user, TRAIT_GREENTEXT_CURSED))
-		LAZYOR(color_altered_mobs, WEAKREF(user))
+		LAZYOR(color_altered_mobs, AUTOREF(user))
 		ADD_TRAIT(user, TRAIT_GREENTEXT_CURSED, REF(src))
 	user.add_atom_colour("#00ff00", ADMIN_COLOUR_PRIORITY)
 
@@ -74,7 +74,7 @@
 
 /obj/item/greentext/proc/release_victims()
 	var/list/victims = list()
-	for (var/datum/weakref/player_ref as anything in color_altered_mobs)
+	for (var/datum/autoref/player_ref as anything in color_altered_mobs)
 		var/mob/player_mob = player_ref.resolve()
 		if (player_mob)
 			victims += player_mob

@@ -27,7 +27,7 @@
 
 	var/color_val = FALSE
 
-	var/datum/weakref/current
+	var/datum/autoref/current
 
 /obj/item/hot_potato/Destroy()
 	if(active)
@@ -45,7 +45,7 @@
 	//Swap colors
 	color_val = !color_val
 	if(istype(target))
-		current = WEAKREF(target)
+		current = AUTOREF(target)
 		target.add_atom_colour(color_val? "#ffff00" : "#00ffff", FIXED_COLOUR_PRIORITY)
 
 /obj/item/hot_potato/proc/detonate()

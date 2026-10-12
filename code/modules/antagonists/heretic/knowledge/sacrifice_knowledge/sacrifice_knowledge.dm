@@ -23,7 +23,7 @@
 	var/num_targets_to_generate = 5
 	/// Whether we've generated a heretic sacrifice z-level yet, from any heretic.
 	var/static/heretic_level_generated = FALSE
-	/// A weakref to the mind of our heretic.
+	/// A autoref to the mind of our heretic.
 	var/datum/mind/heretic_mind
 	/// Lazylist of minds that we won't pick as targets.
 	var/static/list/datum/mind/target_blacklist

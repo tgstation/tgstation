@@ -62,7 +62,7 @@
 		customer_types -= customer_type
 
 	var/mob/living/basic/robot_customer/new_customer = new /mob/living/basic/robot_customer(get_turf(chosen_portal), customer_type, src)
-	current_visitors[new_customer] = WEAKREF(chosen_portal)
+	current_visitors[new_customer] = AUTOREF(chosen_portal)
 
 /datum/venue/proc/order_food(mob/living/basic/robot_customer/customer_pawn, datum/customer_data/customer_data)
 	var/order = pick_weight(customer_data.orderable_objects[venue_type])
@@ -173,8 +173,8 @@
 	///What venue is this portal for? Uses a typepath which is turned into an instance on Initialize
 	var/datum/venue/linked_venue
 
-	/// A weak reference to the mob who turned on the portal
-	var/datum/weakref/turned_on_portal
+	/// An auto reference to the mob who turned on the portal
+	var/datum/autoref/turned_on_portal
 
 /datum/armor/restaurant_portal
 	melee = 50
@@ -253,7 +253,7 @@
 	board.venue_type = venue_type
 	var/datum/venue/chosen_venue = SSrestaurant.all_venues[venue_type]
 
-	turned_on_portal = WEAKREF(user)
+	turned_on_portal = AUTOREF(user)
 
 	balloon_alert(user, "venue changed to [chosen_venue.name]")
 

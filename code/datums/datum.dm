@@ -44,8 +44,8 @@
 	/// Datum level flags
 	var/datum_flags = NONE
 
-	/// A weak reference to another datum
-	var/datum/weakref/weak_reference
+	/// An auto reference to another datum
+	var/datum/autoref/weak_reference
 
 	/*
 	* Lazy associative list of currently active cooldowns.
@@ -130,8 +130,8 @@
 	datum_flags &= ~DF_USE_TAG //In case something tries to REF us
 
 	if(weak_reference)
-		UNLINT(weak_reference.instance = null) //stop referencing us please Mr. Weakref
-		weak_reference = null //ensure prompt GCing of weakref.
+		UNLINT(weak_reference.instance = null) //stop referencing us please Mr. Autoref
+		weak_reference = null //ensure prompt GCing of autoref.
 
 	if(_active_timers)
 		var/list/timers = _active_timers
@@ -314,7 +314,7 @@
 	TIMER_COOLDOWN_END(source, index)
 
 ///Generate a tag for this /datum, if it implements one
-///Should be called as early as possible, best would be in New, to avoid weakref mistargets
+///Should be called as early as possible, best would be in New, to avoid autoref mistargets
 ///Really just don't use this, you don't need it, global lists will do just fine MOST of the time
 ///We really only use it for mobs to make id'ing people easier
 /datum/proc/GenerateTag()

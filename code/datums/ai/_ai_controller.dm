@@ -723,9 +723,9 @@ multiple modular subtrees with behaviors
  * * key - the associated key
  */
 #define TRACK_AI_DATUM_TARGET(tracked_datum, key) do { \
-	if(isweakref(tracked_datum)) { \
-		var/datum/weakref/_bad_weakref = tracked_datum; \
-		stack_trace("Weakref (Actual datum: [_bad_weakref.resolve()]) found in ai datum blackboard! \
+	if(isautoref(tracked_datum)) { \
+		var/datum/autoref/_bad_autoref = tracked_datum; \
+		stack_trace("Autoref (Actual datum: [_bad_autoref.resolve()]) found in ai datum blackboard! \
 			This is an outdated method of ai reference handling, please remove it."); \
 	}; \
 	else if(isdatum(tracked_datum)) { \

@@ -96,7 +96,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 
 	var/list/old_baseturfs = baseturfs
 	var/old_type = type
-	var/datum/weakref/old_ref = weak_reference
+	var/datum/autoref/old_ref = weak_reference
 	weak_reference = null
 
 	var/list/post_change_callbacks = list()

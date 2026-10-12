@@ -11,7 +11,7 @@
 	///Datum giving us details about what offset to apply to the limb
 	var/datum/worn_feature_offset/feature_offset
 	///The bodypart that the overlay is currently applied to
-	var/datum/weakref/attached_bodypart
+	var/datum/autoref/attached_bodypart
 
 /datum/bodypart_overlay/simple/emote/get_image(obj/item/bodypart/limb, layer_index, layer_real)
 	var/image/image = ..()
@@ -19,7 +19,7 @@
 	return image
 
 /datum/bodypart_overlay/simple/emote/added_to_limb(obj/item/bodypart/limb)
-	attached_bodypart = WEAKREF(limb)
+	attached_bodypart = AUTOREF(limb)
 	if (offset_key in limb.feature_offsets)
 		feature_offset = limb.feature_offsets[offset_key]
 

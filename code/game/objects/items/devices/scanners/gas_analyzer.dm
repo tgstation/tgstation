@@ -28,7 +28,7 @@
 	/// Cached gasmix data from ui_interact
 	var/list/last_gasmix_data
 
-	var/datum/weakref/last_scanned
+	var/datum/autoref/last_scanned
 	/// Max scan distance
 	var/ranged_scan_distance = 1
 
@@ -197,7 +197,7 @@
 			mix_name += " - Node [airs.Find(air)]"
 		new_gasmix_data += list(gas_mixture_parser(air, mix_name))
 	last_gasmix_data = new_gasmix_data
-	last_scanned = WEAKREF(target)
+	last_scanned = AUTOREF(target)
 
 /// Called when our analyzer is used on something
 /obj/item/analyzer/proc/on_analyze(datum/source, atom/target)

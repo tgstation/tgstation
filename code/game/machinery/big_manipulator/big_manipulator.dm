@@ -20,11 +20,11 @@
 	var/max_speed_multiplier = MAX_SPEED_MULTIPLIER_TIER_1
 
 	/// The object inside the manipulator.
-	var/datum/weakref/held_object = null
+	var/datum/autoref/held_object = null
 	/// The chimp worker that uses the manipulator (handles USE cases).
-	var/datum/weakref/monkey_worker = null
-	/// Weakref to the ID that locked this manipulator.
-	var/datum/weakref/id_lock = null
+	var/datum/autoref/monkey_worker = null
+	/// Autoref to the ID that locked this manipulator.
+	var/datum/autoref/id_lock = null
 	/// Inserted manipulator task disk.
 	var/obj/item/disk/manipulator/task_disk = null
 	/// The manipulator's arm.
@@ -294,7 +294,7 @@
 
 	if(isidcard(tool))
 		if(!id_lock)
-			id_lock = WEAKREF(tool)
+			id_lock = AUTOREF(tool)
 			balloon_alert(user, "successfully locked")
 			return ITEM_INTERACT_SUCCESS
 		if(tool != id_lock.resolve())
@@ -353,7 +353,7 @@
 		return
 
 	balloon_alert(user, "buckled")
-	monkey_worker = WEAKREF(poor_monkey)
+	monkey_worker = AUTOREF(poor_monkey)
 	poor_monkey.drop_all_held_items()
 	poor_monkey.forceMove(src)
 	manipulator_arm.vis_contents += poor_monkey

@@ -11,8 +11,8 @@
  * Human mobs do not need this component because they can already do all of those things.
  */
 /datum/component/nuclear_bomb_operator
-	/// A weak reference to a held nuclear disk, in place of holding it in our inventory, because we don't have one
-	var/datum/weakref/disky
+	/// An auto reference to a held nuclear disk, in place of holding it in our inventory, because we don't have one
+	var/datum/autoref/disky
 	/// Something to call when we collect the disk
 	var/datum/callback/on_disk_collected
 	/// Should return some overlays to display on the mob to show they're carrying a disk
@@ -103,7 +103,7 @@
 		return
 	var/mob/mob_parent = parent
 	potential_disky.forceMove(mob_parent)
-	disky = WEAKREF(potential_disky)
+	disky = AUTOREF(potential_disky)
 	mob_parent.update_appearance(updates = UPDATE_ICON)
 	mob_parent.balloon_alert(mob_parent, "disk secured!")
 	on_disk_collected?.InvokeAsync(potential_disky)

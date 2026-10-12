@@ -7,7 +7,7 @@
 	var/core_objective = /datum/objective/nuclear
 	var/memorized_code
 	var/list/team_discounts
-	var/datum/weakref/war_button_ref
+	var/datum/autoref/war_button_ref
 
 /datum/team/nuclear/New()
 	..()

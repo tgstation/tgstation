@@ -8,8 +8,8 @@
 	dir = EAST
 	active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION * 0.1
 	circuit = /obj/item/circuitboard/machine/mech_recharger
-	///Weakref to currently recharging mech on our recharging_turf
-	var/datum/weakref/recharging_mech_ref
+	///Autoref to currently recharging mech on our recharging_turf
+	var/datum/autoref/recharging_mech_ref
 	///Ref to charge console for seeing charge for this port, cyclical reference
 	var/obj/machinery/computer/mech_bay_power_console/recharge_console
 	///Power unit per second to charge by
@@ -61,7 +61,7 @@
 	if(!recharging_mech)
 		recharging_mech = locate(/obj/vehicle/sealed/mecha) in recharging_turf
 		if(recharging_mech)
-			recharging_mech_ref = WEAKREF(recharging_mech)
+			recharging_mech_ref = AUTOREF(recharging_mech)
 			recharge_console.update_appearance()
 	if(!recharging_mech?.cell)
 		return

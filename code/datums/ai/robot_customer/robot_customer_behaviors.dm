@@ -122,7 +122,7 @@
 	var/datum/venue/attending_venue = controller.blackboard[BB_CUSTOMER_ATTENDING_VENUE]
 	if(isnull(attending_venue))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
-	var/datum/weakref/portal_ref = attending_venue.current_visitors[controller.pawn]
+	var/datum/autoref/portal_ref = attending_venue.current_visitors[controller.pawn]
 	var/atom/portal = portal_ref?.resolve()
 	if(isnull(portal) || QDELETED(portal))
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED

@@ -19,11 +19,11 @@
 	var/spying = FALSE
 
 	var/list/network = list(CAMERANET_NETWORK_SS13)
-	///List of weakrefs of all users watching the program.
+	///List of autorefs of all users watching the program.
 	var/list/concurrent_users = list()
 
-	/// Weakref to the active camera
-	var/datum/weakref/camera_ref
+	/// Autoref to the active camera
+	var/datum/autoref/camera_ref
 	/// The turf where the camera was last updated.
 	var/turf/last_camera_turf
 
@@ -147,7 +147,7 @@
 
 			var/obj/machinery/camera/selected_camera = locate(params["camera"]) in SScameras.cameras
 			if(selected_camera)
-				camera_ref = WEAKREF(selected_camera)
+				camera_ref = AUTOREF(selected_camera)
 			else
 				camera_ref = null
 				return TRUE
@@ -176,7 +176,7 @@
 		// We need to find a particular camera that can see this turf
 		if(!(length(cameras.can_see() & list(target_turf))))
 			continue
-		var/new_camera = WEAKREF(cameras)
+		var/new_camera = AUTOREF(cameras)
 		if(camera_ref == new_camera)
 			return
 		camera_ref = new_camera

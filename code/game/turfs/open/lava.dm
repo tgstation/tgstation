@@ -277,7 +277,7 @@
 	var/check_result = checked_atoms[burn_target.weak_reference]
 	if(isnull(check_result))
 		check_result = can_burn_stuff(burn_target)
-		checked_atoms[WEAKREF(burn_target)] = check_result
+		checked_atoms[AUTOREF(burn_target)] = check_result
 	return check_result
 
 /turf/open/lava/proc/can_burn_stuff(atom/movable/burn_target)

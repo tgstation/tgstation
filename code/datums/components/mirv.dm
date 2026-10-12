@@ -39,5 +39,5 @@
 			proj.range = override_projectile_range
 		proj.aim_projectile(shootat_turf, target)
 		proj.firer = firer // don't hit ourself that would be really annoying
-		proj.impacted = list(WEAKREF(target) = TRUE) // don't hit the target we hit already with the flak
+		proj.impacted = list(AUTOREF(target) = TRUE) // don't hit the target we hit already with the flak
 		proj.fire()

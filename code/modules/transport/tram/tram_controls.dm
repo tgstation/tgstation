@@ -21,8 +21,8 @@
 	var/static/list/available_faces = list()
 	/// The sign face we're displaying
 	var/sign_face
-	/// Weakref to the tram piece we control
-	var/datum/weakref/transport_ref
+	/// Autoref to the tram piece we control
+	var/datum/autoref/transport_ref
 	/// The ID of the tram we're controlling
 	var/specific_transport_id
 	/// If we are window mounted, split window mounted, or standalone
@@ -103,7 +103,7 @@
 /obj/machinery/computer/tram_controls/proc/find_tram()
 	for(var/datum/transport_controller/linear/transport as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 		if(transport.specific_transport_id == specific_transport_id)
-			transport_ref = WEAKREF(transport)
+			transport_ref = AUTOREF(transport)
 			return
 
 /obj/machinery/computer/tram_controls/ui_state(mob/user)

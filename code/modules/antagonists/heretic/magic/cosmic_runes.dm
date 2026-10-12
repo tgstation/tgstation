@@ -16,9 +16,9 @@
 	spell_requirements = NONE
 
 	/// Storage for the first rune.
-	var/datum/weakref/first_rune
+	var/datum/autoref/first_rune
 	/// Storage for the second rune.
-	var/datum/weakref/second_rune
+	var/datum/autoref/second_rune
 	/// Rune removal effect.
 	var/obj/effect/rune_remove_effect = /obj/effect/temp_visual/cosmic_rune_fade
 
@@ -30,8 +30,8 @@
 		var/obj/effect/cosmic_rune/new_rune = new /obj/effect/cosmic_rune(get_turf(cast_on))
 		new rune_remove_effect(get_turf(first_rune_resolved))
 		QDEL_NULL(first_rune_resolved)
-		first_rune = WEAKREF(second_rune_resolved)
-		second_rune = WEAKREF(new_rune)
+		first_rune = AUTOREF(second_rune_resolved)
+		second_rune = AUTOREF(new_rune)
 		second_rune_resolved.link_rune(new_rune)
 		new_rune.link_rune(second_rune_resolved)
 		return
@@ -41,13 +41,13 @@
 	if(!second_rune_resolved)
 		second_rune = make_new_rune(get_turf(cast_on), first_rune_resolved)
 
-/// Returns a weak reference to a new rune, linked to an existing rune if provided
+/// Returns a auto reference to a new rune, linked to an existing rune if provided
 /datum/action/cooldown/spell/cosmic_rune/proc/make_new_rune(turf/target_turf, obj/effect/cosmic_rune/other_rune)
 	var/obj/effect/cosmic_rune/new_rune = new /obj/effect/cosmic_rune(target_turf)
 	if(other_rune)
 		other_rune.link_rune(new_rune)
 		new_rune.link_rune(other_rune)
-	return WEAKREF(new_rune)
+	return AUTOREF(new_rune)
 
 /// A rune that allows you to teleport to the location of a linked rune.
 /obj/effect/cosmic_rune
@@ -60,7 +60,7 @@
 	plane = FLOOR_PLANE
 	layer = RUNE_LAYER
 	/// The other rune this rune is linked with
-	var/datum/weakref/linked_rune
+	var/datum/autoref/linked_rune
 	/// Effect for when someone teleports
 	var/obj/effect/rune_effect = /obj/effect/temp_visual/rune_light
 
@@ -151,8 +151,8 @@
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_atom_colour)), 0.5 SECONDS)
 
 /// For linking a new rune
-/obj/effect/cosmic_rune/proc/link_rune(datum/weakref/new_rune)
-	linked_rune = WEAKREF(new_rune)
+/obj/effect/cosmic_rune/proc/link_rune(datum/autoref/new_rune)
+	linked_rune = AUTOREF(new_rune)
 
 /obj/effect/cosmic_rune/Destroy()
 	var/obj/effect/cosmic_rune/linked_rune_resolved = linked_rune?.resolve()

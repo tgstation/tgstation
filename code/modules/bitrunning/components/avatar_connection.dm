@@ -4,13 +4,13 @@
  */
 /datum/component/avatar_connection
 	/// The person in the netpod
-	var/datum/weakref/old_body_ref
+	var/datum/autoref/old_body_ref
 	/// The mind of the person in the netpod
-	var/datum/weakref/old_mind_ref
+	var/datum/autoref/old_mind_ref
 	/// The server connected to the netpod
-	var/datum/weakref/server_ref
+	var/datum/autoref/server_ref
 	/// The netpod the avatar is in
-	var/datum/weakref/netpod_ref
+	var/datum/autoref/netpod_ref
 	/// If we've taken any damage, is set to FALSE - for tracking nohit bonus
 	var/nohit = TRUE
 
@@ -28,12 +28,12 @@
 
 	var/mob/living/avatar = parent
 
-	netpod_ref = WEAKREF(pod)
-	old_body_ref = WEAKREF(old_body)
-	old_mind_ref = WEAKREF(old_mind)
-	pod.avatar_ref = WEAKREF(avatar)
-	server_ref = WEAKREF(server)
-	server.avatar_connection_refs.Add(WEAKREF(src))
+	netpod_ref = AUTOREF(pod)
+	old_body_ref = AUTOREF(old_body)
+	old_mind_ref = AUTOREF(old_mind)
+	pod.avatar_ref = AUTOREF(avatar)
+	server_ref = AUTOREF(server)
+	server.avatar_connection_refs.Add(AUTOREF(src))
 
 	avatar.PossessByPlayer(old_body.key)
 	ADD_TRAIT(avatar, TRAIT_NO_MINDSWAP, REF(src)) // do not remove this one
@@ -97,7 +97,7 @@
 	if(!isliving(new_parent))
 		return COMPONENT_INCOMPATIBLE
 
-	pod.avatar_ref = WEAKREF(new_parent)
+	pod.avatar_ref = AUTOREF(new_parent)
 
 
 /datum/component/avatar_connection/RegisterWithParent()
@@ -154,7 +154,7 @@
 	hosting_netpod?.disconnect_occupant(cause_damage)
 
 	var/obj/machinery/quantum_server/server = server_ref?.resolve()
-	server?.avatar_connection_refs.Remove(WEAKREF(src))
+	server?.avatar_connection_refs.Remove(AUTOREF(src))
 
 	qdel(src)
 

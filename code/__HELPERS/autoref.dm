@@ -1,8 +1,8 @@
-/// Checks if potential_weakref is a weakref of thing.
-#define IS_WEAKREF_OF(thing, potential_weakref) (isdatum(thing) && !isnull(potential_weakref) && thing.weak_reference == potential_weakref)
+/// Checks if potential_autoref is a autoref of thing.
+#define IS_AUTOREF_OF(thing, potential_autoref) (isdatum(thing) && !isnull(potential_autoref) && thing.weak_reference == potential_autoref)
 
 //For these two procs refs MUST be ref = TRUE format like typecaches!
-/proc/weakref_filter_list(list/things, list/refs)
+/proc/autoref_filter_list(list/things, list/refs)
 	if(!islist(things) || !islist(refs))
 		return
 	if(!refs.len)
@@ -10,7 +10,7 @@
 	if(things.len > refs.len)
 		var/list/f = list()
 		for(var/i in refs)
-			var/datum/weakref/r = i
+			var/datum/autoref/r = i
 			var/datum/d = r.resolve()
 			if(d)
 				f |= d
@@ -19,11 +19,11 @@
 	else
 		. = list()
 		for(var/i in things)
-			if(!refs[WEAKREF(i)])
+			if(!refs[AUTOREF(i)])
 				continue
 			. |= i
 
-/proc/weakref_filter_list_reverse(list/things, list/refs)
+/proc/autoref_filter_list_reverse(list/things, list/refs)
 	if(!islist(things) || !islist(refs))
 		return
 	if(!refs.len)
@@ -31,7 +31,7 @@
 	if(things.len > refs.len)
 		var/list/f = list()
 		for(var/i in refs)
-			var/datum/weakref/r = i
+			var/datum/autoref/r = i
 			var/datum/d = r.resolve()
 			if(d)
 				f |= d
@@ -40,6 +40,6 @@
 	else
 		. = list()
 		for(var/i in things)
-			if(refs[WEAKREF(i)])
+			if(refs[AUTOREF(i)])
 				continue
 			. |= i

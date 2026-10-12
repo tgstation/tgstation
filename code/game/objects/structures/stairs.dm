@@ -200,7 +200,7 @@
 		return
 
 	var/mob/living/climber = entered
-	var/datum/weakref/climber_ref = WEAKREF(climber)
+	var/datum/autoref/climber_ref = AUTOREF(climber)
 	if(!climber.client || !climber.client.prefs.read_preference(/datum/preference/toggle/stair_indicator))
 		return
 	if(climber.dir == REVERSE_DIR(dir))
@@ -226,7 +226,7 @@
 	if(!isliving(exited))
 		return
 
-	var/datum/weakref/climber_ref = WEAKREF(exited)
+	var/datum/autoref/climber_ref = AUTOREF(exited)
 	if(!LAZYACCESS(mob_to_image, climber_ref))
 		return // not seeing anything
 	if(exited in viewers(STAIR_INDICATOR_RANGE, src))
@@ -234,7 +234,7 @@
 
 	clear_climber_image(climber_ref)
 
-/obj/structure/stairs/proc/clear_climber_image(datum/weakref/climber_ref, instant = FALSE)
+/obj/structure/stairs/proc/clear_climber_image(datum/autoref/climber_ref, instant = FALSE)
 	var/image/pointing_image = LAZYACCESS(mob_to_image, climber_ref)
 	if(!pointing_image)
 		LAZYREMOVE(mob_to_image, climber_ref) // just in case
@@ -247,7 +247,7 @@
 	// note: the player won't see a new indicator until the image is fully a removed, so this timer also serves as a cooldown
 	addtimer(CALLBACK(src, PROC_REF(clear_climber_image_callback), climber_ref, pointing_image), 1.5 SECONDS, TIMER_UNIQUE)
 
-/obj/structure/stairs/proc/clear_climber_image_callback(datum/weakref/climber_ref, image/pointing_image)
+/obj/structure/stairs/proc/clear_climber_image_callback(datum/autoref/climber_ref, image/pointing_image)
 	PRIVATE_PROC(TRUE)
 	var/mob/living/climber = climber_ref?.resolve()
 	climber?.client?.images -= pointing_image

@@ -148,12 +148,12 @@
 	var/obj/item/reagent_containers/cup/soup_pot/pot = holder.my_atom
 	var/list/tracked_ingredients = list()
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
-		// Track all ingredients in data. Assoc list of weakref to ingredient to initial total volume.
-		tracked_ingredients[WEAKREF(ingredient)] = ingredient.reagents?.total_volume || 1
+		// Track all ingredients in data. Assoc list of autoref to ingredient to initial total volume.
+		tracked_ingredients[AUTOREF(ingredient)] = ingredient.reagents?.total_volume || 1
 		// Equalize temps. Otherwise when we add ingredient temps in, it'll lower reaction temp
 		ingredient.reagents?.chem_temp = holder.chem_temp
 
-	// Store a list of weakrefs to ingredients as
+	// Store a list of autorefs to ingredients as
 	reaction.data["ingredients"] = tracked_ingredients
 
 	testing("Soup reaction started of type [type]! [length(pot.added_ingredients)] inside.")
@@ -181,14 +181,14 @@
 	// Throw it in the ingredients list
 	else if(num_current_ingredients > num_cached_ingredients)
 		for(var/obj/item/new_ingredient as anything in pot.added_ingredients)
-			var/datum/weakref/new_ref = WEAKREF(new_ingredient)
+			var/datum/autoref/new_ref = AUTOREF(new_ingredient)
 			if(cached_ingredients[new_ref])
 				continue
 			new_ingredient.reagents?.chem_temp = holder.chem_temp
 			cached_ingredients[new_ref] = new_ingredient.reagents?.total_volume || 1
 
 	var/turf/below_pot = get_turf(pot)
-	for(var/datum/weakref/ingredient_ref as anything in cached_ingredients)
+	for(var/datum/autoref/ingredient_ref as anything in cached_ingredients)
 		var/obj/item/ingredient = ingredient_ref.resolve()
 
 		// An ingredient has gone missing, stop the reaction

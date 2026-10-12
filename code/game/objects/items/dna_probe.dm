@@ -25,8 +25,8 @@
 	var/list/stored_dna_plants = list()
 	///List of all Human DNA scanned with this sampler.
 	var/list/stored_dna_human = list()
-	///weak ref to the dna vault
-	var/datum/weakref/dna_vault_ref
+	///auto ref to the dna vault
+	var/datum/autoref/dna_vault_ref
 	/// Things we consider to be animals
 	var/static/list/animal_typecache = typecacheof(list(
 		/mob/living/basic,
@@ -53,7 +53,7 @@
 /obj/item/dna_probe/proc/try_linking_vault(obj/machinery/dna_vault/target, mob/user)
 	var/obj/machinery/dna_vault/our_vault = dna_vault_ref?.resolve()
 	if(!our_vault)
-		dna_vault_ref = WEAKREF(target)//linking the dna vault with the probe
+		dna_vault_ref = AUTOREF(target)//linking the dna vault with the probe
 		balloon_alert(user, "vault linked")
 		playsound(src, 'sound/machines/terminal/terminal_success.ogg', 50)
 		return TRUE

@@ -4,7 +4,7 @@
 GLOBAL_DATUM(lua_usr, /mob)
 GLOBAL_PROTECT(lua_usr)
 
-GLOBAL_LIST_EMPTY_TYPED(lua_state_stack, /datum/weakref)
+GLOBAL_LIST_EMPTY_TYPED(lua_state_stack, /datum/autoref)
 GLOBAL_PROTECT(lua_state_stack)
 
 /datum/lua_state
@@ -77,7 +77,7 @@ GLOBAL_PROTECT(lua_state_stack)
 	if(append_to_log)
 		if(islist(result["return_values"]))
 			add_lua_return_value_variants(result["return_values"], result["variants"])
-			result["return_values"] = weakrefify_list(result["return_values"])
+			result["return_values"] = autorefify_list(result["return_values"])
 		log += list(result)
 		index_of_log = log.len
 	INVOKE_ASYNC(src, TYPE_PROC_REF(/datum/lua_state, update_editors))
@@ -93,7 +93,7 @@ GLOBAL_PROTECT(lua_state_stack)
 	var/tmp_usr = GLOB.lua_usr
 	GLOB.lua_usr = usr
 	DREAMLUAU_SET_USR
-	GLOB.lua_state_stack += WEAKREF(src)
+	GLOB.lua_state_stack += AUTOREF(src)
 	var/result = DREAMLUAU_LOAD(internal_id, script, "input")
 	SSlua.needs_gc_cycle |= src
 	pop(GLOB.lua_state_stack)
@@ -125,11 +125,11 @@ GLOBAL_PROTECT(lua_state_stack)
 	if(islist(function))
 		var/list/new_function_path = list()
 		for(var/path_element in function)
-			if(isweakref(path_element))
-				var/datum/weakref/weak_ref = path_element
+			if(isautoref(path_element))
+				var/datum/autoref/weak_ref = path_element
 				var/resolved = weak_ref.resolve()
 				if(!resolved)
-					return list("status" = "error", "message" = "Weakref in function path ([weak_ref] [text_ref(weak_ref)]) resolved to null.", "name" = jointext(function, "."))
+					return list("status" = "error", "message" = "Autoref in function path ([weak_ref] [text_ref(weak_ref)]) resolved to null.", "name" = jointext(function, "."))
 				new_function_path += resolved
 			else
 				new_function_path += path_element
@@ -140,7 +140,7 @@ GLOBAL_PROTECT(lua_state_stack)
 	var/tmp_usr = GLOB.lua_usr
 	GLOB.lua_usr = usr
 	DREAMLUAU_SET_USR
-	GLOB.lua_state_stack += WEAKREF(src)
+	GLOB.lua_state_stack += AUTOREF(src)
 	var/result = DREAMLUAU_CALL_FUNCTION(internal_id, function, call_args)
 	SSlua.needs_gc_cycle |= src
 	pop(GLOB.lua_state_stack)
@@ -167,7 +167,7 @@ GLOBAL_PROTECT(lua_state_stack)
 
 /datum/lua_state/proc/awaken()
 	DREAMLUAU_SET_USR
-	GLOB.lua_state_stack += WEAKREF(src)
+	GLOB.lua_state_stack += AUTOREF(src)
 	var/result = DREAMLUAU_AWAKEN(internal_id)
 	SSlua.needs_gc_cycle |= src
 	pop(GLOB.lua_state_stack)
@@ -184,7 +184,7 @@ GLOBAL_PROTECT(lua_state_stack)
 	var/call_args = length(args) > 1 ? args.Copy(2) : list()
 
 	DREAMLUAU_SET_USR
-	GLOB.lua_state_stack += WEAKREF(src)
+	GLOB.lua_state_stack += AUTOREF(src)
 	var/result = DREAMLUAU_RESUME(internal_id, index, call_args)
 	SSlua.needs_gc_cycle |= src
 	pop(GLOB.lua_state_stack)
@@ -206,7 +206,7 @@ GLOBAL_PROTECT(lua_state_stack)
 	var/list/values = new_globals["values"]
 	var/list/variants = new_globals["variants"]
 	add_lua_editor_variants(values, variants)
-	globals = list("values" = weakrefify_list(values), "variants" = variants)
+	globals = list("values" = autorefify_list(values), "variants" = variants)
 
 /datum/lua_state/proc/get_tasks()
 	var/result = DREAMLUAU_LIST_THREADS(internal_id)

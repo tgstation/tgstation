@@ -162,7 +162,7 @@
 	var/tts_radio_id = LAZYACCESS(message_mods, MODE_TTS_IDENTIFIER)
 	// Flat list of mobs who can hear the message
 	var/list/receive
-	// Assoc list of weakref to a radio to list of weakrefs to mobs who can hear the message
+	// Assoc list of autoref to a radio to list of autorefs to mobs who can hear the message
 	var/list/receive_radios
 
 	if(tts_radio_id) // only do this if we have a TTS identifier to save on perf
@@ -170,11 +170,11 @@
 		receive_radios = list()
 		for(var/radio, radio_hearers in get_hearers_in_radio_ranges_track_radios(radios))
 			receive |= radio_hearers
-			var/datum/weakref/radio_ref = WEAKREF(radio)
+			var/datum/autoref/radio_ref = AUTOREF(radio)
 			for(var/mob/possible_hearer in radio_hearers)
 				if(!isnull(possible_hearer.client) && can_hear_radio_tts(possible_hearer, frequency))
 					receive_radios[radio_ref] ||= list()
-					receive_radios[radio_ref] += WEAKREF(possible_hearer)
+					receive_radios[radio_ref] += AUTOREF(possible_hearer)
 
 	else
 		receive = get_hearers_in_radio_ranges(radios)
@@ -185,7 +185,7 @@
 			receive |= ghost
 			if(tts_radio_id && can_hear_radio_tts(ghost, frequency))
 				receive_radios[TTS_GHOST_RADIO] ||= list()
-				receive_radios[TTS_GHOST_RADIO] += WEAKREF(ghost)
+				receive_radios[TTS_GHOST_RADIO] += AUTOREF(ghost)
 
 	if(tts_radio_id && length(receive_radios))
 		SStts.queued_radio_messages[tts_radio_id] = receive_radios

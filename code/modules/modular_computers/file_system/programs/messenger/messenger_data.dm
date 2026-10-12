@@ -57,8 +57,8 @@ GLOBAL_LIST_EMPTY_TYPED(pda_messengers_by_name, /datum/computer_file/program/mes
 	var/cached_name = "Unknown"
 	/// The cached job of the recipient
 	var/cached_job = "Unknown"
-	/// Weakref to the recipient messenger
-	var/datum/weakref/recipient = null
+	/// Autoref to the recipient messenger
+	var/datum/autoref/recipient = null
 	/// A list of messages in this chat
 	var/list/datum/pda_message/messages = list()
 	/// Used to determine if we should show this in recents
@@ -71,7 +71,7 @@ GLOBAL_LIST_EMPTY_TYPED(pda_messengers_by_name, /datum/computer_file/program/mes
 	var/unread_messages = 0
 
 /datum/pda_chat/New(datum/computer_file/program/messenger/recipient)
-	src.recipient = WEAKREF(recipient)
+	src.recipient = AUTOREF(recipient)
 	src.can_reply = !isnull(recipient)
 
 /// Adds a message to the chat log and optionally shows the chat in recents.

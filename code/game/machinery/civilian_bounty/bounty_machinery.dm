@@ -53,7 +53,7 @@
 /obj/machinery/computer/piratepad_control/multitool_act(mob/living/user, obj/item/multitool/I)
 	if(istype(I) && istype(I.buffer,/obj/machinery/piratepad/civilian))
 		to_chat(user, span_notice("You link [src] with [I.buffer] in [I] buffer."))
-		pad_ref = WEAKREF(I.buffer)
+		pad_ref = AUTOREF(I.buffer)
 		return TRUE
 
 /obj/machinery/computer/piratepad_control/civilian/post_machine_initialize()
@@ -61,11 +61,11 @@
 	if(cargo_hold_id)
 		for(var/obj/machinery/piratepad/civilian/C as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/piratepad/civilian))
 			if(C.cargo_hold_id == cargo_hold_id)
-				pad_ref = WEAKREF(C)
+				pad_ref = AUTOREF(C)
 				return
 	else
 		var/obj/machinery/piratepad/civilian/pad = locate() in range(4,src)
-		pad_ref = WEAKREF(pad)
+		pad_ref = AUTOREF(pad)
 
 /obj/machinery/computer/piratepad_control/civilian/recalc()
 	if(sending)
