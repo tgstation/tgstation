@@ -185,7 +185,7 @@
 	for(var/mob/living/carbon/human/human_target in oview(search_range, living_pawn))
 		if(IS_UNCONSCIOUS_OR_CRIT(human_target) || isnull(human_target.mind))
 			continue
-		for(var/obj/item/held_item in human_target.held_items)
+		for(var/obj/item/held_item as anything in human_target.get_held_items())
 			if(is_type_in_typecache(held_item, locate_items))
 				controller.set_blackboard_key(target_key, human_target)
 				return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_SUCCEEDED

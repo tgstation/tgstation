@@ -1,19 +1,66 @@
 //These procs handle putting stuff in your hands
 //as they handle all relevant stuff like adding it to the player's screen and updating their overlays.
 
-///Returns the thing we're currently holding
+/**
+ * Returns a list of all our hand slots, which could contain nulls.
+ *
+ * It is preferrable to use [/mob/proc/get_num_hand_slots] for counting hand slots,
+ * or the get_held_items family of procs for filtering this list.
+ */
+/mob/proc/get_hand_slots() as /list
+	RETURN_TYPE(/list/obj/item)
+
+	return held_items.Copy()
+
+/**
+ * Returns a list of all items currently being held.
+ *
+ * If this list needs to be filtered further, it is preferrable to use
+ * [/mob/proc/get_held_items_of_type] or [/mob/proc/get_held_items_of_typelist]
+ * instead of filtering this list by hand.
+ */
+/mob/proc/get_held_items() as /list
+	RETURN_TYPE(/list/obj/item)
+
+	var/list/result = held_items.Copy()
+	result.RemoveAll(null)
+	return result
+
+/// Returns a list of all held items that are a given type
+/mob/proc/get_held_items_of_type(typepath) as /list
+	RETURN_TYPE(/list/obj/item)
+
+	. = list()
+	for(var/obj/item/item as anything in get_hand_slots())
+		if(istype(item, typepath))
+			. += item
+
+// Doing is_type_in_list *halves* the efficiency of the proc, so this has to be a separate thing
+/// Returns a list of all held items that are a given *list* of types
+/mob/proc/get_held_items_of_typelist(list/typepaths) as /list
+	RETURN_TYPE(/list/obj/item)
+
+	. = list()
+	for(var/obj/item/item as anything in get_hand_slots())
+		if(is_type_in_list(item, typepaths))
+			. += item
+
+/// Returns the item held in the [active hand][/mob/var/active_hand_index]. May be null.
 /mob/proc/get_active_held_item() as /obj/item
 	return get_item_for_held_index(active_hand_index)
 
-
-//Finds the opposite limb for the active one (eg: upper left arm will find the item in upper right arm)
-//So we're treating each "pair" of limbs as a team, so "both" refers to them
+/// Returns the item held in the [*opposite* hand][/mob/proc/get_inactive_hand_index] to the active hand. May be null.
 /mob/proc/get_inactive_held_item() as /obj/item
 	return get_item_for_held_index(get_inactive_hand_index())
 
 
-//Finds the opposite index for the active one (eg: upper left arm will find the item in upper right arm)
-//So we're treating each "pair" of limbs as a team, so "both" refers to them
+/**
+ * Returns the hand *opposite* to the [active hand][/mob/var/active_hand_index].
+ *
+ * The "opposite" hand refers to the other side of a given "set" of hands.<br>
+ * The opposite of the left hand would be the right hand,
+ * but it will not be an upper/lower right hand.
+ */
 /mob/proc/get_inactive_hand_index()
 	var/other_hand = 0
 	if(IS_RIGHT_INDEX(active_hand_index))
@@ -24,12 +71,10 @@
 		other_hand = 0
 	return other_hand
 
-
+/// Returns the item at the specified hand index.
 /mob/proc/get_item_for_held_index(i)
 	if(i > 0 && i <= held_items.len)
 		return held_items[i]
-	return null
-
 
 //Odd = left. Even = right
 /mob/proc/held_index_to_dir(i)
@@ -37,12 +82,12 @@
 		return "r"
 	return "l"
 
-//Check we have an organ for this hand slot (Dismemberment), Only relevant for humans
+/// Check we have an organ for this hand slot. Only relevant for carbons.
 /mob/proc/has_hand_for_held_index(i)
 	return TRUE
 
 
-//Check we have an organ for our active hand slot (Dismemberment),Only relevant for humans
+/// Check we have an organ for our active hand slot. Only relevant for carbons.
 /mob/proc/has_active_hand()
 	return has_hand_for_held_index(active_hand_index)
 
@@ -71,13 +116,19 @@
 			holding_items += I
 	return holding_items
 
+/// Returns a list of indexes for every hand that is *holding something*.
+/mob/proc/get_active_held_indexes() as /list
+	. = list()
+	for(var/i in 1 to held_items.len)
+		if(held_items[i])
+			. += i
 
-/mob/proc/get_empty_held_indexes()
-	var/list/L
+/// Returns a list of indexes for every hand that is *empty*.
+/mob/proc/get_empty_held_indexes() as /list
+	. = list()
 	for(var/i in 1 to held_items.len)
 		if(!held_items[i])
-			LAZYADD(L, i)
-	return L
+			. += i
 
 /mob/proc/get_held_index_of_item(obj/item/I)
 	return held_items.Find(I)
@@ -91,7 +142,11 @@
 		return BODY_ZONE_R_ARM
 	return BODY_ZONE_L_ARM
 
-///Find number of held items, multihand compatible
+/// Returns the number of available hand slots
+/mob/proc/get_num_hand_slots() as num
+	return held_items.len
+
+/// Find number of held items, multihand compatible
 /mob/proc/get_num_held_items()
 	. = 0
 	for(var/i in 1 to held_items.len)
@@ -104,25 +159,30 @@
 			continue
 		.++
 
-//Sad that this will cause some overhead, but the alias seems necessary
-//*I* may be happy with a million and one references to "indexes" but others won't be
-/mob/proc/is_holding(obj/item/I)
-	return get_held_index_of_item(I)
+/// Can this mob hold items?
+/mob/proc/can_hold_items(obj/item/I)
+	return !!length(held_items)
 
+/// Returns true if a mob is holding something
+/mob/proc/is_holding_items()
+	return !!locate(/obj/item) in held_items
 
-//Checks if we're holding an item of type: typepath
+/// Returns TRUE/FALSE depending on if we're holding this item
+/mob/proc/is_holding(obj/item/item)
+	return (item in held_items)
+
+/// Checks if we're holding an item of this type
 /mob/proc/is_holding_item_of_type(typepath)
-	for(var/obj/item/I in held_items)
-		if(istype(I, typepath))
-			return I
-	return FALSE
+	return locate(typepath) in held_items
 
 // List version of above proc
-// Returns ret_item, which is either the successfully located item or null
+/// Returns ret_item, which is either the successfully located item or null
 /mob/proc/is_holding_item_of_types(list/typepaths)
+	var/ret_item
 	for(var/typepath in typepaths)
-		var/ret_item = is_holding_item_of_type(typepath)
-		return ret_item
+		ret_item = is_holding_item_of_type(typepath)
+		if(ret_item)
+			return ret_item
 
 //Checks if we're holding a tool that has given quality
 //Returns the tool that has the best version of this quality
@@ -305,10 +365,6 @@
 	transferItemToLoc(I, location, force = TRUE, silent = TRUE, animated = !ignore_animation)
 	return FALSE
 
-/// Returns true if a mob is holding something
-/mob/proc/is_holding_items()
-	return !!locate(/obj/item) in held_items
-
 /**
  * Returns a list of all dropped held items.
  * If none were dropped, returns an empty list.
@@ -317,6 +373,7 @@
 	. = list()
 	for(var/obj/item/I in held_items)
 		. |= dropItemToGround(I)
+	. -= null
 
 //Here lie drop_from_inventory and before_item_take, already forgotten and not missed.
 
@@ -616,7 +673,7 @@
 		ITEM_SLOT_ICLOTHING,
 	)
 
-	var/list/possible_storages = user.held_items.Copy()
+	var/list/possible_storages = user.get_hand_slots()
 	var/obj/item/active_held = user.get_active_held_item()
 	possible_storages -= active_held
 	if(active_held != src)

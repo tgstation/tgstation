@@ -130,9 +130,7 @@
 /area/ruin/space)
 "D" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/iron/airless{
-	icon_state = "recharge_floor_asteroid"
-	},
+/turf/open/floor/iron/recharge_floor/asteroid/airless,
 /area/ruin/space)
 "E" = (
 /obj/effect/turf_decal/sand,
@@ -166,21 +164,15 @@
 /area/ruin/space)
 "J" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/iron/airless{
-	icon_state = "stairs-l"
-	},
+/turf/open/floor/iron/stairs/left/airless,
 /area/ruin/space)
 "K" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/iron/airless{
-	icon_state = "stairs-m"
-	},
+/turf/open/floor/iron/stairs/medium/airless,
 /area/ruin/space)
 "L" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/iron/airless{
-	icon_state = "stairs-r"
-	},
+/turf/open/floor/iron/stairs/right/airless,
 /area/ruin/space)
 "O" = (
 /obj/structure/chair/comfy/black{

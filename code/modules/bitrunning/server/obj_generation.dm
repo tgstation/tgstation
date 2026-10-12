@@ -64,7 +64,7 @@
 		hat.set_armor(/datum/armor/none)
 
 	if(!generated_domain.forced_outfit)
-		for(var/obj/thing in avatar.held_items)
+		for(var/obj/item/thing as anything in avatar.get_held_items())
 			qdel(thing)
 
 	var/obj/item/storage/backpack/bag = avatar.back

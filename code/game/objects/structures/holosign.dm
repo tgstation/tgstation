@@ -199,6 +199,10 @@
 	rad_insulation = RAD_LIGHT_INSULATION
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
 
+/obj/structure/holosign/barrier/atmos/emp_act(severity)
+	. = ..()
+	investigate_log("was destroyed due to EMP", INVESTIGATE_ATMOS)
+
 /obj/structure/holosign/barrier/atmos/proc/clearview_transparency()
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	alpha = 25

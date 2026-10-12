@@ -198,7 +198,7 @@
 	if(!offered_item || offerer.get_active_held_item() != offered_item && !bypass)
 		to_chat(src, span_warning("[offerer] is no longer holding the item they were offering!"))
 		return
-	if(!get_empty_held_indexes())
+	if(!length(get_empty_held_indexes()))
 		to_chat(src, span_warning("You have no empty hands!"))
 		return
 

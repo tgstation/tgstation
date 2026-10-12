@@ -260,6 +260,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_PLASMA_LOVER_METABOLISM "plasma_lover_metabolism"
 /// The mob is not harmed by tetrodotoxin. Instead, it heals them like omnizine
 #define TRAIT_TETRODOTOXIN_HEALING "tetrodotoxin_healing"
+/// Do not allow legs to be attached to a mob with this trait
+#define TRAIT_BLOCK_ATTACHING_LEGS "block_attaching_legs"
 #define TRAIT_EASYDISMEMBER "easy_dismember"
 #define TRAIT_LIMBATTACHMENT "limb_attach"
 #define TRAIT_NOLIMBDISABLE "no_limb_disable"
@@ -885,6 +887,8 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_WADDLING "trait_waddling"
 /// Mobs with trait will still waddle even when lying on the floor and make a different footstep sound when doing so.
 #define TRAIT_FLOPPING "trait_flopping"
+/// To be used combined with TRAIT_FLOPPING, to make a mob flop exclusively when laying on the floor.
+#define TRAIT_FLOOR_FLOPPING "trait_floor_flopping"
 /// Required by the on_hit_effect element, which is in turn added by other elements.
 #define TRAIT_ON_HIT_EFFECT "trait_on_hit_effect"
 
@@ -1244,8 +1248,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to a dreaming carbon when they are currently doing dreaming stuff
 #define TRAIT_DREAMING "currently_dreaming"
 
+/// Trait for if you've recently had drink that helps you sleep
+#define TRAIT_HAD_SLEEPY_DRINK "had_sleepy_drink"
+
 /// Trait for if you've recently had a Last Word cocktail
 #define TRAIT_HAD_LAST_WORD "had_last_word"
+
+/// Trait for if you've recently had a Footsoldier's Razor cocktail
+#define TRAIT_HAD_FOOTSOLDIERS_RAZOR "had_footsoldiers_razor"
+
+/// Trait for if you've completed the farstar amarita's communion
+#define TRAIT_FARSTAR_SHARED "farstar_shared"
 
 /// Whether bots will salute this mob.
 #define TRAIT_COMMISSIONED "commissioned"
@@ -1439,6 +1452,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait used by the /obj/item/wallframe/painting/eldritch/desire status effect to change their preferences of what they eat
 #define TRAIT_FLESH_DESIRE "flesh_desire"
+
+///Softer version of the above trait which just adds the same preferences as flesh desire without also making everything else toxic
+#define TRAIT_FLESH_PECKISH "flesh_peckish"
 
 ///Trait granted by janitor skillchip, allows communication with cleanbots
 #define TRAIT_CLEANBOT_WHISPERER "cleanbot_whisperer"
@@ -1748,6 +1764,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Objects with this trait may become a new prison for a revenant, in the event of its ectoplasm dispersing
 #define TRAIT_COZY_REVENANT_HOME "cozy_revenant_home"
+
+/// Objects that do not let overlay light holders shine through themselves
+#define TRAIT_BLOCKS_OVERLAY_LIGHT "blocks_overlay_light"
 
 /// Mobs with this trait will appear as human to medical scanners even if they are not human
 #define TRAIT_HUMAN_DISGUISE "human_disguise"
