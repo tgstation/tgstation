@@ -129,6 +129,13 @@
 	associated_typepath = /datum/quirk/transhumanist
 	customization_options = list(/datum/preference/choiced/trans_prosthetic)
 
+/datum/quirk/transhumanist/proc/can_add_part(part_type)
+	if(ispath(part_type, /obj/item/bodypart))
+		return !!quirk_holder.get_bodypart(part_type::body_zone)
+	if(ispath(part_type, /obj/item/organ))
+		return !!quirk_holder.get_organ_slot(part_type::slot)
+	return FALSE
+
 /datum/quirk/transhumanist/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
 	var/list/part_options = GLOB.part_choice_transhuman.Copy()
@@ -144,12 +151,10 @@
 			if(shit_limb::body_zone == part_part::body_zone)
 				return
 
-	if(ispath(part_type, /obj/item/bodypart))
-		var/obj/item/bodypart/part_typepath = part_type
-		while(!quirk_holder.get_bodypart(part_typepath::body_zone))
-			if(!length(part_options))
-				return // you get NOTHING good day
-			part_type = part_options[pick_n_take(part_options)]
+	while(!can_add_part(part_type))
+		if(!length(part_options))
+			return // you get NOTHING good day
+		part_type = part_options[pick_n_take(part_options)]
 
 	var/obj/item/new_part = new part_type()
 	if(isbodypart(new_part))
