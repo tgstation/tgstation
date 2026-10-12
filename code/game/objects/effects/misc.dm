@@ -36,6 +36,9 @@
 /obj/effect/spawner/Destroy(force)
 	SHOULD_CALL_PARENT(FALSE)
 	moveToNullspace()
+	if(auto_reference)
+		UNLINT(auto_reference.instance = null) //stop referencing us please Mr. Autoref
+		auto_reference = null //ensure prompt GCing of autoref.
 	return QDEL_HINT_QUEUE
 
 /obj/effect/spawner/forceMove(atom/destination)
