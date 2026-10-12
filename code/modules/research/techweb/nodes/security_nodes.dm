@@ -55,6 +55,7 @@
 		/datum/design/ballistic_shield,
 		/datum/design/handcuffs/sec,
 		/datum/design/bola_energy,
+		/datum/design/dragonshell,
 	)
 	research_costs = list(TECHWEB_POINT_TYPE_GENERIC = TECHWEB_TIER_2_POINTS)
 	announce_channels = list(RADIO_CHANNEL_SECURITY)

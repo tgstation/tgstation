@@ -14,7 +14,7 @@
 	var/visor_flags_inv = NONE //same as visor_flags, but for flags_inv
 	var/visor_flags_cover = NONE //same as above, but for flags_cover
 	///What to toggle when toggled with adjust_visor()
-	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_VISIONFLAGS | VISOR_INVISVIEW
+	var/visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT | VISOR_INVISVIEW
 	///Sound this item makes when its visor is flipped down
 	var/visor_toggle_down_sound = null
 	///Sound this item makes when its visor is flipped up

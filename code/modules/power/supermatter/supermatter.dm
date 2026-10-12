@@ -26,7 +26,10 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	critical_machine = TRUE
 	base_icon_state = "sm"
 	icon_state = "sm"
-	light_on = FALSE
+	light_on = TRUE
+	light_range = MINIMUM_USEFUL_LIGHT_RANGE
+	light_power = 2
+	light_color = SUPERMATTER_COLOUR
 
 	///The id of our supermatter
 	var/uid = 1
@@ -78,6 +81,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/explosion_point = 100
 	///Are we exploding?
 	var/final_countdown = FALSE
+	/// Whether this countdown must continue despite healing.
+	var/countdown_forced = FALSE
 	///A scaling value that affects the severity of explosions.
 	var/explosion_power = 35
 	///Time in 1/10th of seconds since the last sent warning
@@ -185,6 +190,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	/// If the SM is decorated with holiday lights
 	var/holiday_lights = FALSE
+
+	/// The emissive light mask for the SM
+	var/light_mask_icon = "sm-emissive"
 
 	/// Cooldown for sending emergency alerts to the common radio channel
 	COOLDOWN_DECLARE(common_radio_cooldown)
@@ -521,6 +529,8 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		else
 			. += mutable_appearance(icon, "holiday_lights")
 			. += emissive_appearance(icon, "holiday_lights_e", src, alpha = src.alpha)
+	if(light_mask_icon)
+		. += emissive_appearance(icon, light_mask_icon, src, alpha = src.alpha)
 	return .
 
 /obj/machinery/power/supermatter_crystal/update_icon(updates)
@@ -556,12 +566,19 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
  * By last second changes, we mean that it's possible for say, a tesla delam to
  * just explode normally if at the absolute last second it loses power and switches to default one.
  * Even after countdown is already in progress.
+ *
+ * Setting force prevents healing from stopping the countdown. An active countdown
+ * is promoted without restarting its timer.
  */
-/obj/machinery/power/supermatter_crystal/proc/count_down()
+/obj/machinery/power/supermatter_crystal/proc/count_down(force = FALSE)
 	set waitfor = FALSE
 
+	if(force)
+		countdown_forced = TRUE
+
 	if(final_countdown) // We're already doing it go away
-		stack_trace("[src] told to delaminate again while it's already delaminating.")
+		if(!force)
+			stack_trace("[src] told to delaminate again while it's already delaminating.")
 		return
 
 	final_countdown = TRUE
@@ -597,7 +614,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 		var/message
 		var/healed = FALSE
 
-		if(damage < explosion_point) // Cutting it a bit close there engineers
+		if(!countdown_forced && damage < explosion_point) // Cutting it a bit close there engineers
 			message = count_down_messages[2]
 			healed = TRUE
 		else if((i % 50) != 0 && i > 50) // A message once every 5 seconds until the final 5 seconds which count down individualy

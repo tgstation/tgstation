@@ -4,6 +4,7 @@
 	var/category
 	var/verb_path
 	var/body_path
+	var/src_based = FALSE
 	var/list/arguments = list()
 
 /datum/verb_metadata/proc/assign_to(target)
@@ -18,6 +19,7 @@
 	var/type_path
 	var/source
 	var/list/options
+	var/view_range
 
 /datum/verb_arg_metadata/proc/prompt(client/user, verb_name)
 	if(source == VERB_ARG_SOURCE_LIST && length(options))
@@ -72,12 +74,13 @@
 		structured_args[arg.name] = value
 	return structured_args
 
-/datum/verb_arg_metadata/New(name, arg_type, type_path, source, list/options)
+/datum/verb_arg_metadata/New(name, arg_type, type_path, source, list/options, view_range)
 	src.name = name
 	src.arg_type = arg_type
 	src.type_path = type_path
 	src.source = source
 	src.options = options
+	src.view_range = view_range
 
 /datum/verb_arg_metadata/proc/get_targets(client/viewer)
 	switch(source)
@@ -111,27 +114,24 @@
 /datum/verb_arg_metadata/proc/get_view_targets(client/viewer)
 	if(!viewer.mob)
 		return list()
-	var/list/visible = view(viewer.view, viewer.mob)
+	var/list/visible = view_range ? oview(view_range, viewer.mob) : view(viewer.view, viewer.mob)
+	if(!(arg_type & (VERB_ARG_TYPE_MOB | VERB_ARG_TYPE_OBJ | VERB_ARG_TYPE_TURF)))
+		return visible
+	var/list/filtered = list()
 	if(arg_type & VERB_ARG_TYPE_MOB)
-		var/list/mobs = list()
 		for(var/mob/target in visible)
-			mobs += target
-		return mobs
+			filtered += target
 	if(arg_type & VERB_ARG_TYPE_OBJ)
-		var/list/objs = list()
 		for(var/obj/target in visible)
-			objs += target
-		return objs
+			filtered += target
 	if(arg_type & VERB_ARG_TYPE_TURF)
-		var/list/turfs = list()
 		for(var/turf/target in visible)
-			turfs += target
-		return turfs
-	return visible
+			filtered += target
+	return filtered
 
 GLOBAL_LIST_INIT(____pending_verb_args, list())
 
-/proc/____register_verb_arg(owner_type, proc_path, arg_name, arg_type, arg_type_path, arg_source)
+/proc/____register_verb_arg(owner_type, proc_path, arg_name, arg_type, arg_type_path, arg_source, arg_view_range)
 	var/verb_key
 	if(ispath(owner_type, /datum/admin_verb))
 		verb_key = owner_type
@@ -140,7 +140,7 @@ GLOBAL_LIST_INIT(____pending_verb_args, list())
 
 	if(!GLOB.____pending_verb_args[verb_key])
 		GLOB.____pending_verb_args[verb_key] = list()
-	GLOB.____pending_verb_args[verb_key] += list(new /datum/verb_arg_metadata(arg_name, arg_type, arg_type_path, arg_source))
+	GLOB.____pending_verb_args[verb_key] += list(new /datum/verb_arg_metadata(arg_name, arg_type, arg_type_path, arg_source, null, arg_view_range))
 	return TRUE
 
 /proc/____register_verb_arg_list(owner_type, proc_path, arg_name, list/options)

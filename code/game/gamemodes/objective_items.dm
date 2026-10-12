@@ -912,12 +912,12 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 	return add_item_to_steal(src, /obj/item/mod/control/pre_equipped/rescue)
 
 /datum/objective_item/steal/spy/cmo_defib
-	name = "Chief Medical Officer's Compact Defibrillator"
+	name = "the chief medical officer's experimental compact defibrillator"
 	targetitem = /obj/item/defibrillator/compact/loaded/cmo
 	excludefromjob = list(JOB_CHIEF_MEDICAL_OFFICER)
 	exists_on_map = TRUE
 	difficulty = 2
-	steal_hint = "The Compact Defibrillator, found on their person, or in their closet."
+	steal_hint = "An experimental compact defibrillator that is usually located somewhere near the Chief Medical Officer when corpses pile up."
 
 /obj/item/defibrillator/compact/loaded/cmo/add_stealing_item_objective()
 	return add_item_to_steal(src, /obj/item/defibrillator/compact/loaded/cmo)

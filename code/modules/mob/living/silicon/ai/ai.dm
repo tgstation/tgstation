@@ -158,9 +158,14 @@
 				return
 	return ..()
 
-/mob/living/silicon/ai/Destroy()
+/mob/living/silicon/ai/Destroy(force)
 	GLOB.ai_list -= src
 	GLOB.shuttle_caller_list -= src
+	// Release linked cyborgs before deleting the resources they access through us.
+	for(var/mob/living/silicon/robot/cyborg in connected_robots)
+		if(cyborg.connected_ai == src)
+			cyborg.set_connected_ai(null)
+	connected_robots.Cut()
 	SSshuttle.autoEvac()
 	QDEL_NULL(eyeobj) // No AI, no Eye
 	QDEL_NULL(spark_system)
@@ -401,32 +406,18 @@ GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "AI Comma
 		ADD_TRAIT(src, TRAIT_NO_TELEPORT, AI_ANCHOR_TRAIT)
 
 /// Creates an MMI of the AI based on its configuration.
-/mob/living/silicon/ai/proc/make_mmi(atom/destination) as /obj/item/mmi
-	RETURN_TYPE(/obj/item/mmi)
-	//FIXME: this code is really bad, we shouldn't be doing most of this ourselves. MMI code needs a good refactoring....
-	var/obj/item/mmi/copied_mmi
+/mob/living/silicon/ai/proc/make_mmi(atom/destination) as /obj/item/brain_processor
+	RETURN_TYPE(/obj/item/brain_processor)
+	var/obj/item/brain_processor/copied_mmi
 	if(posibrain_inside)
-		copied_mmi = new /obj/item/mmi/posibrain(destination, FALSE)
-		copied_mmi.name = "[initial(copied_mmi.name)] ([real_name])"
+		copied_mmi = new /obj/item/brain_processor/positronic(destination, FALSE)
+		copied_mmi.brainmob.set_stat(STABLE) // posis are dead by default
 	else
-		copied_mmi = new /obj/item/mmi(destination)
-		copied_mmi.name = "[initial(copied_mmi.name)]: [real_name]"
-		copied_mmi.brain = new /obj/item/organ/brain(copied_mmi)
-		copied_mmi.brain.organ_flags |= ORGAN_FROZEN
-		copied_mmi.brain.name = "[real_name]'s brain"
-		copied_mmi.set_brainmob(new /mob/living/brain(copied_mmi))
-		copied_mmi.brainmob.container = copied_mmi
+		copied_mmi = new /obj/item/brain_processor/organic(destination, new /obj/item/organ/brain())
 
-	copied_mmi.brainmob.name = real_name
-	copied_mmi.brainmob.real_name = real_name
 	copied_mmi.brainmob.gender = gender
-
-	var/suicided = HAS_TRAIT(src, TRAIT_SUICIDED)
-	copied_mmi.brainmob.set_suicide(suicided)
-	copied_mmi.brain?.suicided = suicided // we can't guarantee that the MMI has a brain... sigh
-
-	if(copied_mmi.brainmob.stat == DEAD && !suicided)
-		copied_mmi.brainmob.set_stat(STABLE)
+	copied_mmi.set_name(real_name)
+	copied_mmi.set_suicide(HAS_TRAIT(src, TRAIT_SUICIDED))
 
 	copied_mmi.update_appearance()
 	return copied_mmi
@@ -810,6 +801,7 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto
 		balloon_alert(user, "transfer failed!")
 		return
 	disconnect_shell() //If the AI is controlling a borg, force the player back to core!
+	cleanup_multicam_windows()
 	if(!mind)
 		balloon_alert(user, "no intelligence detected!") // average tg coder am i right
 		return
@@ -951,6 +943,11 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto
 	. = ..()
 	if(!.)
 		return
+
+	cleanup_multicam_windows()
+
+	see_invisible = initial(see_invisible)
+	update_sight()
 
 	update_appearance()
 
@@ -1228,14 +1225,14 @@ GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Tran
 /mob/living/silicon/ai/proc/on_core_exited(datum/source, atom/movable/gone, direction)
 	SIGNAL_HANDLER
 
-	if(istype(gone, /obj/item/mmi))
-		var/obj/item/mmi/mmi_gone = gone
+	if(istype(gone, /obj/item/brain_processor))
+		var/obj/item/brain_processor/processor_gone = gone
 		on_core_destroyed(source, NONE)
 		if(!IS_MALF_AI(src)) //don't pull back shunted malf AIs
 			death(gibbed = TRUE, drop_mmi = FALSE)
 			///the drop_mmi param determines whether the MMI is dropped at their current location
 			///which in this case would be somewhere else, so we drop their MMI at the core instead
-			mind?.transfer_to(mmi_gone.brainmob)
+			mind?.transfer_to(processor_gone.brainmob)
 			qdel(src)
 
 

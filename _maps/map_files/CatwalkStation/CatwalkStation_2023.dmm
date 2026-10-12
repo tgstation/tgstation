@@ -20274,9 +20274,9 @@
 /area/station/service/kitchen)
 "fqD" = (
 /obj/structure/table,
-/obj/item/mmi,
-/obj/item/mmi,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
 /obj/effect/turf_decal/tile/dark_blue/anticorner,
 /obj/item/borg/upgrade/rename{
 	pixel_y = 14
@@ -32938,9 +32938,7 @@
 /obj/effect/spawner/random/entertainment/deck,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet{
-	icon_state = "carpet-110"
-	},
+/turf/open/floor/carpet,
 /area/station/service/abandoned_gambling_den)
 "iJa" = (
 /obj/effect/decal/cleanable/dirt,
@@ -35079,7 +35077,7 @@
 /area/station/service/kitchen/abandoned)
 "jpG" = (
 /obj/structure/table/reinforced,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /turf/open/floor/iron/dark/textured_large,
 /area/station/ai/satellite/chamber)
 "jqd" = (
@@ -68159,9 +68157,7 @@
 "sgQ" = (
 /obj/structure/table/wood/poker,
 /obj/effect/spawner/random/entertainment/gambling,
-/turf/open/floor/carpet{
-	icon_state = "carpet-137"
-	},
+/turf/open/floor/carpet,
 /area/station/service/abandoned_gambling_den)
 "sgT" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners{
@@ -71859,9 +71855,7 @@
 /obj/effect/spawner/random/entertainment/gambling,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet{
-	icon_state = "carpet-38"
-	},
+/turf/open/floor/carpet,
 /area/station/service/abandoned_gambling_den)
 "tgi" = (
 /obj/structure/cable,
@@ -74999,7 +74993,7 @@
 /area/station/hallway/secondary/command)
 "tXT" = (
 /obj/structure/table,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/effect/turf_decal/trimline/purple/filled/line,
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/dark,
@@ -83866,7 +83860,7 @@
 /area/station/medical/pharmacy)
 "wlx" = (
 /obj/structure/rack,
-/obj/effect/spawner/random/maintenance,
+/obj/effect/spawner/random/maintenance/no_decals,
 /obj/item/storage/toolbox/fishing,
 /obj/item/storage/box/lights/mixed{
 	pixel_x = -8;

@@ -142,7 +142,7 @@
 		return
 	switch(action)
 		if("submit")
-			if(!isnum(params["entry"]))
+			if(!isnum(params["entry"]) || isnan(params["entry"]))
 				CRASH("A non number was input into tgui input number by [usr]")
 			var/choice = round_value ? round(params["entry"]) : params["entry"]
 			if(choice > max_value)

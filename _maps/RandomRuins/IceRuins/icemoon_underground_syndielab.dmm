@@ -842,7 +842,7 @@
 /area/ruin/syndielab)
 "Xm" = (
 /obj/structure/closet/crate/secure/trashcart,
-/obj/item/relic,
+/obj/item/assembly/relic,
 /obj/item/storage/bag/trash/filled{
 	pixel_y = 1;
 	pixel_x = 6

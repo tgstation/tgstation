@@ -836,8 +836,8 @@
 "akf" = (
 /obj/structure/table/reinforced,
 /obj/item/bodypart/chest/robot,
-/obj/item/mmi,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -2268,9 +2268,7 @@
 /obj/structure/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/meter/layer2,
-/turf/open/floor/plating{
-	icon_state = "foam_plating"
-	},
+/turf/open/floor/plating/foam_pattern,
 /area/station/maintenance/department/science/xenobiology)
 "aAS" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
@@ -8718,7 +8716,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmos)
 "ccY" = (
-/obj/item/relic,
+/obj/item/assembly/relic,
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/closet/crate/cardboard,
 /obj/item/book/manual/wiki/experimentor,
@@ -8863,9 +8861,7 @@
 "cfb" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/generic,
-/turf/open/floor/plating{
-	icon_state = "foam_plating"
-	},
+/turf/open/floor/plating/foam_pattern,
 /area/station/maintenance/department/science/xenobiology)
 "cfu" = (
 /turf/open/floor/circuit/green,
@@ -15636,9 +15632,7 @@
 "dOA" = (
 /obj/machinery/airalarm/directional/north,
 /obj/effect/spawner/random/trash/caution_sign,
-/turf/open/floor/plating{
-	icon_state = "foam_plating"
-	},
+/turf/open/floor/plating/foam_pattern,
 /area/station/maintenance/department/science/xenobiology)
 "dOE" = (
 /obj/structure/closet/secure_closet/personal/patient,
@@ -15706,7 +15700,7 @@
 	dir = 6
 	},
 /obj/structure/table,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/engineering/circuit_workshop)
@@ -17206,7 +17200,7 @@
 	network = list("ss13","rd")
 	},
 /obj/structure/table,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
 /area/station/science/circuits)
@@ -30708,7 +30702,7 @@
 "hxT" = (
 /obj/structure/table/reinforced,
 /obj/structure/sign/poster/official/random/directional/south,
-/obj/item/relic,
+/obj/item/assembly/relic,
 /obj/effect/spawner/random/maintenance,
 /obj/effect/turf_decal/tile/neutral/half/contrasted,
 /turf/open/floor/iron,
@@ -31326,9 +31320,7 @@
 /turf/open/floor/wood,
 /area/station/service/theater/abandoned)
 "hHF" = (
-/turf/open/floor/plating{
-	icon_state = "foam_plating"
-	},
+/turf/open/floor/plating/foam_pattern,
 /area/station/maintenance/department/science/xenobiology)
 "hHJ" = (
 /obj/effect/turf_decal/stripes/white/line,
@@ -32095,7 +32087,7 @@
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
 	},
-/obj/item/relic,
+/obj/item/assembly/relic,
 /obj/item/assembly/signaler{
 	pixel_x = 6;
 	pixel_y = 5
@@ -39168,9 +39160,7 @@
 /area/station/hallway/primary/central/aft)
 "jDc" = (
 /obj/structure/cable,
-/turf/open/floor/plating{
-	icon_state = "foam_plating"
-	},
+/turf/open/floor/plating/foam_pattern,
 /area/station/maintenance/department/science/xenobiology)
 "jDd" = (
 /turf/closed/wall/r_wall,
@@ -41380,7 +41370,7 @@
 /area/station/maintenance/port/aft)
 "kfj" = (
 /obj/structure/table/reinforced,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/item/assembly/prox_sensor,
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/plating,
@@ -42829,7 +42819,7 @@
 /obj/structure/table/reinforced,
 /obj/item/crowbar,
 /obj/item/wrench,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
 /obj/machinery/status_display/ai/directional/east,
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron/dark,
@@ -60666,9 +60656,7 @@
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
 /obj/machinery/light/small/red/directional/east,
-/turf/open/floor/plating{
-	icon_state = "foam_plating"
-	},
+/turf/open/floor/plating/foam_pattern,
 /area/station/maintenance/department/science/xenobiology)
 "pbq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -62257,9 +62245,7 @@
 "pvx" = (
 /obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "foam_plating"
-	},
+/turf/open/floor/plating/foam_pattern,
 /area/station/maintenance/department/science/xenobiology)
 "pvB" = (
 /obj/effect/decal/cleanable/dirt,
@@ -87677,9 +87663,7 @@
 /area/station/commons/dorms)
 "vBO" = (
 /obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating{
-	icon_state = "foam_plating"
-	},
+/turf/open/floor/plating/foam_pattern,
 /area/station/maintenance/department/science/xenobiology)
 "vBY" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
@@ -88670,9 +88654,9 @@
 /area/station/maintenance/department/science/xenobiology)
 "vPV" = (
 /obj/structure/table/reinforced,
-/obj/item/mmi,
-/obj/item/mmi,
-/obj/item/mmi,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
+/obj/item/brain_processor/organic,
 /obj/structure/sign/departments/medbay/alt/directional/south,
 /obj/machinery/status_display/ai/directional/west,
 /turf/open/floor/iron,

@@ -260,6 +260,11 @@ type Interactable = {
   interacting: BooleanLike;
 };
 
+type AlternateActions = {
+  alternate?: string[];
+  alternate_icons?: Record<string, string> | null;
+};
+
 /**
  * Some possible options:
  *
@@ -274,15 +279,14 @@ type StripMenuItem =
   | null
   | Interactable
   | ((
-      | {
+      | ({
           icon: string;
           name: string;
-          alternate?: string[];
           obscured: ObscuringLevel;
-        }
-      | {
+        } & AlternateActions)
+      | ({
           obscured: ObscuringLevel;
-        }
+        } & AlternateActions)
     ) &
       Partial<Interactable>);
 
@@ -346,53 +350,6 @@ export const StripMenu = (props) => {
                     );
 
                     tooltip = item.name;
-                    if (item.alternate?.length) {
-                      alternateActions = item.alternate.map(
-                        (alternateKey, idx) => {
-                          const alternateAction =
-                            ALTERNATE_ACTIONS[alternateKey];
-
-                          const alternateActionStyle: CSSProperties = {
-                            background: 'rgba(0, 0, 0, 0.6)',
-                            position: 'absolute',
-                            overflow: 'hidden',
-                            margin: '0',
-                            width: '20px',
-                            height: '20px',
-                            zIndex: '2',
-                            left: `${idx === 0 ? '0' : undefined}`,
-                            right: `${idx === 1 ? '0' : undefined}`,
-                            top: `${idx === 2 ? '0' : undefined}`,
-                            bottom: '0',
-                            padding: '0',
-                            textAlign: 'center',
-                          };
-                          return (
-                            <Button
-                              key={alternateAction.text}
-                              onClick={() => {
-                                act('alt', {
-                                  key: keyAtSpot,
-                                  alternate_action: alternateKey,
-                                });
-                              }}
-                              tooltip={alternateAction.text}
-                              style={alternateActionStyle}
-                              disabled={
-                                item.obscured === ObscuringLevel.Inaccessible
-                              }
-                              opacity={
-                                item.obscured === ObscuringLevel.Inaccessible
-                                  ? 0.7
-                                  : 1
-                              }
-                            >
-                              <Icon name={alternateAction.icon} />
-                            </Button>
-                          );
-                        },
-                      );
-                    }
                   } else if (
                     'obscured' in item &&
                     (item.obscured === ObscuringLevel.Hidden ||
@@ -418,6 +375,64 @@ export const StripMenu = (props) => {
                     );
 
                     tooltip = `obscured ${slot.displayName}`;
+                  }
+
+                  if (item && 'alternate' in item && item.alternate?.length) {
+                    alternateActions = item.alternate.map(
+                      (alternateKey, idx) => {
+                        const alternateAction =
+                          ALTERNATE_ACTIONS[alternateKey];
+                        const alternateIcon =
+                          item.alternate_icons?.[alternateKey];
+
+                        const alternateActionStyle: CSSProperties = {
+                          background: 'rgba(0, 0, 0, 0.6)',
+                          position: 'absolute',
+                          overflow: 'hidden',
+                          margin: '0',
+                          width: '20px',
+                          height: '20px',
+                          zIndex: '2',
+                          left: idx === 0 ? '0' : undefined,
+                          right: idx === 1 ? '0' : undefined,
+                          top: idx === 2 ? '0' : undefined,
+                          bottom: '0',
+                          padding: '0',
+                          textAlign: 'center',
+                        };
+                        return (
+                          <Button
+                            key={alternateAction.text}
+                            onClick={() => {
+                              act('alt', {
+                                key: keyAtSpot,
+                                alternate_action: alternateKey,
+                              });
+                            }}
+                            tooltip={alternateAction.text}
+                            style={alternateActionStyle}
+                            disabled={
+                              item.obscured === ObscuringLevel.Inaccessible
+                            }
+                            opacity={
+                              item.obscured === ObscuringLevel.Inaccessible
+                                ? 0.7
+                                : 1
+                            }
+                          >
+                            {alternateIcon ? (
+                              <Image
+                                src={`data:image/jpeg;base64,${alternateIcon}`}
+                                width="20px"
+                                height="20px"
+                              />
+                            ) : (
+                              <Icon name={alternateAction.icon} />
+                            )}
+                          </Button>
+                        );
+                      },
+                    );
                   }
 
                   return (

@@ -70,6 +70,13 @@ GLOBAL_VAR_INIT(running_create_and_destroy, FALSE)
 		if(length(to_del))
 			for(var/atom/to_kill in to_del)
 				qdel(to_kill, force = TRUE)
+				// this does clear itself back to null once we leave this loop, but I do not trust
+				// BYOND to not fuck it up in the future. so it goes. this unfortunately makes the other comment
+				// slightly less funny since it means BYOND isn't THAT sinful but whatev, its still funny
+				to_kill = null
+		//This will hold a ref to the last thing we qdel unless we set it to null
+		//Yes, byond is VERY fucking sinful!
+		to_del = null
 
 	GLOB.running_create_and_destroy = FALSE
 

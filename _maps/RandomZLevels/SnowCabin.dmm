@@ -1132,11 +1132,9 @@
 	},
 /area/awaymission/cabin/caves/mountain)
 "gd" = (
-/turf/open/indestructible/binary{
+/turf/open/indestructible/binary/water{
 	density = 1;
 	desc = "No, I am not going through this.";
-	icon = 'icons/obj/fluff/beach.dmi';
-	icon_state = "water";
 	name = "dirty water"
 	},
 /area/awaymission/cabin/caves/mountain)
@@ -1177,8 +1175,7 @@
 /turf/open/floor/engine,
 /area/awaymission/cabin/caves/mountain)
 "gr" = (
-/turf/open/indestructible{
-	icon_state = "plating";
+/turf/open/indestructible/plating_pattern{
 	name = "plating"
 	},
 /area/awaymission/cabin/caves/mountain)
@@ -1241,8 +1238,7 @@
 "gD" = (
 /obj/structure/girder,
 /obj/effect/decal/cleanable/shreds,
-/turf/open/indestructible{
-	icon_state = "plating";
+/turf/open/indestructible/plating_pattern{
 	name = "plating"
 	},
 /area/awaymission/cabin/caves/mountain)
@@ -1525,8 +1521,7 @@
 /area/awaymission/cabin)
 "hJ" = (
 /obj/structure/lattice/catwalk,
-/turf/open/indestructible{
-	icon_state = "plating";
+/turf/open/indestructible/plating_pattern{
 	name = "bridge"
 	},
 /area/awaymission/cabin/caves/mountain)
@@ -2568,8 +2563,7 @@
 	set_luminosity = 6;
 	light_color = "#9bbbff"
 	},
-/turf/open/indestructible{
-	icon_state = "plating";
+/turf/open/indestructible/plating_pattern{
 	name = "plating"
 	},
 /area/awaymission/cabin/caves/mountain)
@@ -3191,9 +3185,7 @@
 /area/awaymission/cabin/caves)
 "uo" = (
 /obj/machinery/light/directional/north,
-/turf/open/misc/asteroid/snow/snow_cabin{
-	floor_variance = 0;
-	icon_state = "snow_dug";
+/turf/open/misc/asteroid/snow/snow_cabin/trampled{
 	slowdown = 1
 	},
 /area/awaymission/cabin/caves)
@@ -3786,9 +3778,7 @@
 /area/awaymission/cabin/caves)
 "At" = (
 /obj/machinery/light/directional/east,
-/turf/open/misc/asteroid/snow/snow_cabin{
-	floor_variance = 0;
-	icon_state = "snow_dug";
+/turf/open/misc/asteroid/snow/snow_cabin/trampled{
 	slowdown = 1
 	},
 /area/awaymission/cabin/caves)
@@ -4407,9 +4397,7 @@
 	},
 /area/awaymission/cabin/snowforest)
 "JL" = (
-/turf/open/misc/asteroid/snow/snow_cabin{
-	floor_variance = 0;
-	icon_state = "snow_dug";
+/turf/open/misc/asteroid/snow/snow_cabin/trampled{
 	slowdown = 1
 	},
 /area/awaymission/cabin/caves)
@@ -4593,9 +4581,7 @@
 /area/awaymission/cabin/lumbermill)
 "LW" = (
 /obj/structure/barricade/wooden/snowed,
-/turf/open/misc/asteroid/snow/snow_cabin{
-	floor_variance = 0;
-	icon_state = "snow_dug";
+/turf/open/misc/asteroid/snow/snow_cabin/trampled{
 	slowdown = 1
 	},
 /area/awaymission/cabin/caves)
@@ -4626,9 +4612,7 @@
 	melee_damage_upper = 25;
 	name = "Artyom"
 	},
-/turf/open/misc/asteroid/snow/snow_cabin{
-	floor_variance = 0;
-	icon_state = "snow_dug";
+/turf/open/misc/asteroid/snow/snow_cabin/trampled{
 	slowdown = 1
 	},
 /area/awaymission/cabin/caves)

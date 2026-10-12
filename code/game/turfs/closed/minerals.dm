@@ -979,7 +979,6 @@
 /// Wall piece
 /turf/closed/mineral/ash_rock
 	name = "rock"
-	icon = 'icons/turf/mining.dmi'
 	icon = MAP_SWITCH('icons/turf/walls/rock_wall.dmi', 'icons/turf/mining.dmi')
 	icon_state = "rock2"
 	base_icon_state = "rock_wall"

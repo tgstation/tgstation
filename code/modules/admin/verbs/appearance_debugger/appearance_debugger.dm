@@ -87,6 +87,19 @@
 		"screen_loc" = target.screen_loc,
 	)
 
+	// A plane with no plane master... let's not break the ui and try to decode the likely extra offset
+	if (isnull(data["plane_true"]))
+		data["plane_true"] = target.plane
+		data["plane_unregistered"] = TRUE
+		data["plane_max_offset"] = SSmapping.max_plane_offset
+		for (var/extra_offset in 1 to 50)
+			var/candidate = "[target.plane + PLANE_RANGE * extra_offset]"
+			var/candidate_true = SSmapping.plane_offset_to_true[candidate]
+			if (!isnull(candidate_true))
+				data["plane_decoded_true"] = candidate_true
+				data["plane_decoded_offset"] = SSmapping.plane_to_offset[candidate] + extra_offset
+				break
+
 	if (!(target in appearance_copies))
 		appearance_copies += target
 		data["id"] = length(appearance_copies)

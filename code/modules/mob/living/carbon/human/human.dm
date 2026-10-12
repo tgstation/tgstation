@@ -41,15 +41,13 @@
 	return get_generic_humanoid_static_appearance()
 
 /mob/living/carbon/human/proc/setup_mood()
-	if (CONFIG_GET(flag/disable_human_mood))
-		return
 	mob_mood = new /datum/mood(src)
 
 /mob/living/carbon/human/dummy/get_unconscious_appearance()
 	return null
 
 /mob/living/carbon/human/dummy/setup_mood()
-	return
+	mob_mood = new /datum/mood/dummy(src)
 
 /// This proc is for holding effects applied when a mob is missing certain organs
 /// It is called very, very early in human init because all humans innately spawn with no organs and gain them during init
@@ -444,8 +442,8 @@
 	//Check for weapons
 	if((judgement_criteria & JUDGE_WEAPONCHECK))
 		if(isnull(idcard) || !(ACCESS_WEAPONS in idcard.access))
-			for(var/obj/item/toy_gun in held_items) //if they're holding a gun
-				if(CHECK_PERMIT(toy_gun))
+			for(var/obj/item/potential_weapon as anything in get_held_items()) //if they're holding a weapon
+				if(CHECK_PERMIT(potential_weapon))
 					threatcount += 4
 			if(CHECK_PERMIT(belt) || CHECK_PERMIT(back)) //if a weapon is present in the belt or back slot
 				threatcount += 2 //not enough to trigger look_for_perp() on it's own unless they also have criminal status.
@@ -494,7 +492,7 @@
 /mob/living/carbon/human/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_THREE)
-		for(var/obj/item/hand in held_items)
+		for(var/obj/item/hand as anything in get_held_items())
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && dropItemToGround(hand))
 				step_towards(hand, src)
 				to_chat(src, span_warning("\The [singularity] pulls \the [hand] from your grip!"))
@@ -851,10 +849,10 @@
 			to_chat(usr, "This mob has no brain to insert into an MMI.")
 			return
 
-		var/obj/item/mmi/new_mmi = new(get_turf(src))
+		var/obj/item/brain_processor/organic/new_mmi = new(get_turf(src))
 
 		target_brain.Remove(src)
-		new_mmi.force_brain_into(target_brain)
+		new_mmi.insert_brain(target_brain)
 
 		to_chat(usr, "Turned [src] into an MMI.")
 		log_admin("[key_name(usr)] turned [key_name_and_tag(src)] into an MMI.")
@@ -1131,6 +1129,35 @@
 /mob/living/carbon/human/species/ethereal
 	race = /datum/species/ethereal
 
+#define COLOR_AMP_DARKER 0.33
+
+/mob/living/carbon/human/species/cerulean
+	race = /datum/species/human/cerulean
+
+/mob/living/carbon/human/species/cerulean/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
+	. = ..()
+	dna.features[FEATURE_FRILLS] = /datum/sprite_accessory/frills/aquatic::name
+	dna.species.mutant_organs[/obj/item/organ/frills] = /datum/sprite_accessory/frills/aquatic::name
+	dna.species.regenerate_organs(src, excluded_zones = (GLOB.all_body_zones - BODY_ZONE_HEAD))
+
+/mob/living/carbon/human/species/cerulean/abyss/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
+	. = ..()
+	dna.features[FEATURE_TAIL_FISH_COLOR] = sanitize_hexcolor(rgb(
+		min(255, hex2num(copytext(copytext(dna.features[FEATURE_TAIL_FISH_COLOR], 2), 1, 3)) * COLOR_AMP_DARKER),
+		min(255, hex2num(copytext(copytext(dna.features[FEATURE_TAIL_FISH_COLOR], 2), 3, 5)) * COLOR_AMP_DARKER),
+		min(255, hex2num(copytext(copytext(dna.features[FEATURE_TAIL_FISH_COLOR], 2), 5, 7)) * COLOR_AMP_DARKER),
+	))
+	dna.features[FEATURE_HORNS] = /datum/sprite_accessory/horns/angler::name
+	dna.species.mutantlungs = /obj/item/organ/lungs/fish/amphibious
+	dna.species.mutant_organs = list(
+		/obj/item/organ/tail/fish/cerulean/abyss = /datum/sprite_accessory/tails/fish/cerulean::name,
+		/obj/item/organ/horns = /datum/sprite_accessory/horns/angler::name,
+		/obj/item/organ/frills = /datum/sprite_accessory/frills/aquatic::name,
+	)
+	dna.species.regenerate_organs(src, excluded_zones = GLOB.limb_zones)
+
+#undef COLOR_AMP_DARKER
+
 /mob/living/carbon/human/species/moth
 	race = /datum/species/moth
 
@@ -1151,6 +1178,18 @@
 
 /mob/living/carbon/human/species/skeleton
 	race = /datum/species/skeleton
+
+/mob/living/carbon/human/species/skeleton/cerulean/set_species(datum/species/mrace, icon_update, pref_load, replace_missing)
+	. = ..()
+	for(var/zone in GLOB.leg_zones)
+		dna.species.bodypart_overrides -= zone
+	dna.features[FEATURE_TAIL_FISH_COLOR] = "#fee5ca"
+	dna.features[FEATURE_FRILLS] = /datum/sprite_accessory/frills/aquatic::name
+	dna.species.mutant_organs[/obj/item/organ/tail/fish/cerulean/skeletal] = /datum/sprite_accessory/tails/fish/cerulean/skeleton::name
+	dna.species.mutant_organs[/obj/item/organ/frills] = /datum/sprite_accessory/frills/aquatic::name
+	dna.species.regenerate_organs(src)
+	if(has_gravity() && !buckled)
+		set_resting(TRUE, silent = TRUE, instant = TRUE)
 
 /mob/living/carbon/human/species/snail
 	race = /datum/species/snail
