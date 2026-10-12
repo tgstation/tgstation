@@ -95,4 +95,8 @@
 	// off an enormous amount of procs, signals, etc, that this temporary effect object
 	// never needs or affects.
 	loc = null
+	// I don't trust people enough to not make autorefs of decals.
+	if(auto_reference)
+		UNLINT(auto_reference.instance = null) //stop referencing us please Mr. Autoref
+		auto_reference = null //ensure prompt GCing of autoref.
 	return QDEL_HINT_QUEUE
