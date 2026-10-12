@@ -91,10 +91,16 @@
 
 /obj/machinery/nebula_shielding/radiation/generate_reward(seconds_per_tick)
 	var/datum/gas_mixture/output_air = tritium_output.gas_connector.airs[1]
+	// heat up a tiny bit, radiation is hot right? (tritium won't burn out oxygen anyways)
+	output_air.temperature = output_air.total_moles() <= 0 ? T20C : max(TCMB, output_air.temperature + (1 * seconds_per_tick))
 	// adds 0.5 mol of tritium per second to the output port
 	var/datum/gas_mixture/excess_tritium = output_air.add_gas_up_to_pressure(/datum/gas/tritium, 0.5 * seconds_per_tick, max_pressure)
+	tritium_output.gas_connector.update_parents()
 	// any excess tritium is dumped into the air
 	loc.assume_air(excess_tritium)
+
+/obj/machinery/nebula_shielding/radiation/return_analyzable_air()
+	return tritium_output.gas_connector.airs[1]
 
 /obj/machinery/nebula_shielding/radiation/on_set_panel_open(old_value)
 	. = ..()
