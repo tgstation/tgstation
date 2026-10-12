@@ -544,7 +544,7 @@
 		balloon_alert(user, "[magazine_wording] unloaded")
 
 /obj/item/gun/ballistic/can_shoot()
-	return chambered?.loaded_projectile
+	return ..() && chambered?.loaded_projectile
 
 /obj/item/gun/ballistic/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
