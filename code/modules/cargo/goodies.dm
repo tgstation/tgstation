@@ -134,7 +134,7 @@
 	contains = list(/obj/item/gun/energy/disabler/smg)
 
 /datum/supply_pack/goody/hell_single
-	name = "Hellgun Laser Gun Single-Pack"
+	name = "Type 4 'Hellfire' Laser Gun Single-Pack"
 	desc = "Contains a Hellfire Gun, an overclocked laser gun that fires \"enhanced\" laser beams that burn hotter than normal, \
 		at the expense of higher energy consumption."
 	cost = PAYCHECK_CREW * 8
