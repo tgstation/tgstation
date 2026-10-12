@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Dynamic avoids spawning midrounds while the shuttle is called. (Previously, it only avoided spawning midrounds if the shuttle was half way to the station)."

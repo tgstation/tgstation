@@ -292,3 +292,7 @@
   - balance: Dragonsbreath also now bounces.
   - code_imp: Correctly identifies the Tesla Cannon's design datum path as being the
       tesla revolver, no the stun revolver.
+2026-10-12:
+  Melbert:
+  - qol: Dynamic avoids spawning midrounds while the shuttle is called. (Previously,
+      it only avoided spawning midrounds if the shuttle was half way to the station).
