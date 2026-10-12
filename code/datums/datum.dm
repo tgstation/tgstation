@@ -148,13 +148,13 @@
 	//BEGIN: ECS SHIT
 	if(_datum_components)
 		var/list/dc = _datum_components
-		_datum_components = null
 		for(var/component_key, component_or_list in dc)
 			if(islist(component_or_list))
 				for(var/datum/component/component as anything in component_or_list)
 					qdel(component)
 			else
 				qdel(component_or_list)
+		dc.Cut()
 
 	_clear_signal_refs()
 	//END: ECS SHIT
