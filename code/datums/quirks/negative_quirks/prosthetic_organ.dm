@@ -23,15 +23,20 @@
 		preferred_organ = GLOB.organ_choice[pick(GLOB.organ_choice)]
 
 	var/list/possible_organ_slots = assoc_to_values(GLOB.organ_choice)
-	if(!CAN_HAVE_BLOOD(human_holder) || !human_holder.get_organ_slot(ORGAN_SLOT_HEART))
+	for(var/slot in possible_organ_slots)
+		if(!human_holder.get_organ_slot(slot))
+			possible_organ_slots -= slot
+
+	if(!CAN_HAVE_BLOOD(human_holder))
 		possible_organ_slots -= ORGAN_SLOT_HEART
-	if(HAS_TRAIT(human_holder, TRAIT_NOBREATH) || human_holder.dna.species.get_breath_type() != GAS_O2 || !human_holder.get_organ_slot(ORGAN_SLOT_LUNGS))
+	if(HAS_TRAIT(human_holder, TRAIT_NOBREATH) || human_holder.dna.species.get_breath_type() != GAS_O2)
 		possible_organ_slots -= ORGAN_SLOT_LUNGS
-	if(HAS_TRAIT(human_holder, TRAIT_LIVERLESS_METABOLISM) || !human_holder.get_organ_slot(ORGAN_SLOT_LIVER))
+	if(HAS_TRAIT(human_holder, TRAIT_LIVERLESS_METABOLISM))
 		possible_organ_slots -= ORGAN_SLOT_LIVER
-	if(HAS_TRAIT(human_holder, TRAIT_NOHUNGER) || !human_holder.get_organ_slot(ORGAN_SLOT_STOMACH))
+	if(HAS_TRAIT(human_holder, TRAIT_NOHUNGER))
 		possible_organ_slots -= ORGAN_SLOT_STOMACH
-	if(!length(possible_organ_slots)) //what the hell, no available organ slots for this species
+	i
+	f(!length(possible_organ_slots)) //what the hell, no available organ slots for this species
 		stack_trace("Prosthetic organ applied to a mob who had no available organ slots, consider blacklisting their species ([human_holder.dna.species.type]) from this quirk")
 		return // you get NOTHING I guess
 
