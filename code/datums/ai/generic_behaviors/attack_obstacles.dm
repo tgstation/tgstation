@@ -74,3 +74,22 @@
 
 /datum/bt_node/ai_behavior/attack_obstructions/attack_turfs
 	can_attack_turfs = TRUE
+
+///Destroy shit in the way, unless it can be shot through by the user
+/datum/bt_node/ai_behavior/attack_obstructions/ignore_shot_canpass
+
+/datum/bt_node/ai_behavior/attack_obstructions/ignore_shot_canpass/can_smash_object(mob/living/basic/basic_mob, obj/object)
+	. = ..(basic_mob, object)
+
+	if(.)
+		var/shot_type = basic_mob.ai_controller.blackboard[BB_PROJECTILE_TYPE]
+		var/target = basic_mob.ai_controller.blackboard[BB_CURRENT_TARGET]
+		var/obj/projectile/shot_obj
+		if(!isnull(shot_type) && !isnull(target))
+			shot_obj = basic_mob.fire_projectile(shot_type, target, sound = null)
+			if(!isnull(shot_obj) && object.CanPass(shot_obj)) //if shot can go thru object then ignore it; just shoot through
+				. = FALSE
+		qdel(shot_type)
+		qdel(shot_obj)
+
+	return .

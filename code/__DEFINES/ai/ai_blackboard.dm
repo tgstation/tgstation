@@ -133,6 +133,8 @@
 #define BB_BASIC_MOB_ESCAPE_TARGET "BB_basic_mob_escape_target"
 ///Blackboard key for a whitelist typecache of "things we can target while trying to move"
 #define BB_OBSTACLE_TARGETING_WHITELIST "BB_targeting_whitelist"
+///Blackboard key for the user's projectile type
+#define BB_PROJECTILE_TYPE "BB_projectile_type"
 /// Key for the minimum status at which we want to target mobs (does not need to be specified if STABLE)
 #define BB_TARGET_MINIMUM_STAT "BB_target_minimum_stat"
 /// If set, unconscious mobs will be treated as hard crit for the purposes of targeting and attacking. (So you can have a mob fooled by someone sleeping)
