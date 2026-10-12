@@ -14,14 +14,19 @@
 
 /datum/element/muffles_speech/proc/equipped(obj/item/source, mob/user, slot)
 	SIGNAL_HANDLER
-	if(source.slot_flags & slot)
+	if(!(source.slot_flags & slot))
+		return
+	if(!HAS_TRAIT(user, TRAIT_MUFFLED_SPEECH))
 		RegisterSignal(user, COMSIG_MOB_SAY, PROC_REF(muzzle_talk))
 		RegisterSignal(user, COMSIG_MOB_PRE_EMOTED, PROC_REF(emote_override))
 		RegisterSignal(user, COMSIG_MOB_BEFORE_SPELL_CAST, PROC_REF(try_spellcast))
+	ADD_TRAIT(user, TRAIT_MUFFLED_SPEECH, REF(source))
 
 /datum/element/muffles_speech/proc/dropped(obj/item/source, mob/user)
 	SIGNAL_HANDLER
-	UnregisterSignal(user, list(COMSIG_MOB_PRE_EMOTED, COMSIG_MOB_SAY, COMSIG_MOB_BEFORE_SPELL_CAST))
+	REMOVE_TRAIT(user, TRAIT_MUFFLED_SPEECH, REF(source))
+	if(!HAS_TRAIT(user, TRAIT_MUFFLED_SPEECH))
+		UnregisterSignal(user, list(COMSIG_MOB_PRE_EMOTED, COMSIG_MOB_SAY, COMSIG_MOB_BEFORE_SPELL_CAST))
 
 /datum/element/muffles_speech/proc/emote_override(mob/living/source, key, params, type_override, intentional, datum/emote/emote)
 	SIGNAL_HANDLER
