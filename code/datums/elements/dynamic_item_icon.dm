@@ -1,0 +1,72 @@
+/datum/element/dynamic_item_icon
+
+/datum/element/dynamic_item_icon/Attach(datum/target)
+	. = ..()
+
+	if (!isitem(target))
+		return ELEMENT_INCOMPATIBLE
+	var/obj/item/item_target = target
+	if (!item_target.onflooricon)
+		return ELEMENT_INCOMPATIBLE
+
+	if (isturf(item_target.loc))
+		apply_onfloor_icon(item_target)
+
+	RegisterSignal(target, COMSIG_ITEM_EQUIPPED, PROC_REF(handle_item_equipped))
+	RegisterSignal(target, COMSIG_ITEM_DROPPED, PROC_REF(handle_item_dropped))
+
+/datum/element/dynamic_item_icon/Detach(datum/source, ...)
+	. = ..()
+
+	// Reset to normal icon
+	apply_equipped_icon(source)
+	UnregisterSignal(source, COMSIG_ITEM_EQUIPPED)
+	UnregisterSignal(source, COMSIG_ITEM_DROPPED)
+
+/datum/element/dynamic_item_icon/proc/handle_item_equipped(obj/item/source, mob/equipper, slot)
+	SIGNAL_HANDLER
+
+	apply_equipped_icon(source)
+
+/datum/element/dynamic_item_icon/proc/handle_item_dropped(obj/item/source, mob/user)
+	SIGNAL_HANDLER
+
+	if (!isturf(source.loc))
+		return
+
+	apply_onfloor_icon(source)
+
+/datum/element/dynamic_item_icon/proc/apply_equipped_icon(obj/item/item)
+	item.icon = initial(item.icon)
+	item.pixel_w = initial(item.pixel_w)
+
+	item.item_flags &= ~ACTIVE_ONFLOOR_ICON
+
+	if(item.greyscale_config)
+		item.update_greyscale() // Helps reset our icon back to the right one
+	item.update_appearance(UPDATE_ICON)
+
+/datum/element/dynamic_item_icon/proc/apply_onfloor_icon(obj/item/item)
+	item.icon = item.onflooricon
+	item.pixel_w = 0
+
+	if (item.onflooricon_state)
+		item.icon_state = item.onflooricon_state
+
+	item.item_flags |= ACTIVE_ONFLOOR_ICON
+
+	item.update_appearance(UPDATE_ICON)
+
+
+/obj/item/clothing/head/collectable/flatcap/onfloor_example
+	name = "developer gags onfloor example"
+	desc = "Hi im Abby! This is an example type to show how to do gags for onfloors. And to ensure the unit test works!"
+	greyscale_config_onfloor = /datum/greyscale_config/beret/onfloor_example
+
+/datum/greyscale_config/beret/onfloor_example
+	name = "Badged (Onfloor)"
+	icon_file = 'icons/obj/clothing/head/beret_onfloor_example.dmi'
+
+/datum/greyscale_config/beret_badge/onfloor_example
+	name = "Badged Beret (Onfloor)"
+	icon_file = 'icons/obj/clothing/head/beret_onfloor_example.dmi'

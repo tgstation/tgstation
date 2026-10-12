@@ -80,6 +80,8 @@
 #define WEAPON_DESCRIPTION_INITIALIZED (1<<18)
 /// MODsuits can overslot these items
 #define CAN_BE_OVERSLOT (1<<19)
+/// If the item has an onfloor element and is current on the floor/active
+#define ACTIVE_ONFLOOR_ICON (1<<20)
 
 // Flags for the clothing_flags var on /obj/item/clothing
 
