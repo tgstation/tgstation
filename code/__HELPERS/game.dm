@@ -172,6 +172,15 @@
 /proc/get_active_player_count(alive_check = FALSE, afk_check = FALSE, human_check = FALSE)
 	return length(get_active_player_list(alive_check, afk_check, human_check))
 
+/proc/get_crew_casualty_ratio()
+	var/total_crew = 0
+	var/dead_or_mia = 0
+	for(var/datum/mind/crew_mind as anything in get_crewmember_minds())
+		if(isnull(crew_mind.current) || crew_mind.current.stat >= HARD_CRIT)
+			dead_or_mia += 1
+		total_crew += 1
+	return total_crew > 0 ? (dead_or_mia / total_crew) : 0
+
 ///Uses stripped down and bastardized code from respawn character
 /proc/make_body(mob/dead/observer/ghost_player)
 	if(!ghost_player || !ghost_player.key)
@@ -186,6 +195,12 @@
 	new_character.PossessByPlayer(ghost_player.ckey)
 
 	return new_character
+
+/proc/get_non_admin_ghosts()
+	. = GLOB.current_observers_list | GLOB.dead_player_list
+	for(var/client/admin as anything in GLOB.admins)
+		. -= admin.mob
+	return .
 
 ///sends a whatever to all playing players; use instead of to_chat(world, where needed)
 /proc/send_to_playing_players(thing)

@@ -28,16 +28,15 @@ ADMIN_VERB(dynamic_tester, R_DEBUG, "Dynamic Tester", "See dynamic probabilities
 		if(!initial(rtype.config_tag))
 			continue
 		var/datum/dynamic_ruleset/roundstart/created = new rtype(SSdynamic.get_config())
+		created.dynamic_tester_init()
 		roundstart_rulesets += created
-		// snowflake so we can see headrev stats
-		if(istype(created, /datum/dynamic_ruleset/roundstart/revolution))
-			var/datum/dynamic_ruleset/roundstart/revolution/revs = created
-			revs.heads_necessary = 0
 
 	for(var/datum/dynamic_ruleset/rtype as anything in subtypesof(/datum/dynamic_ruleset/midround))
 		if(!initial(rtype.config_tag))
 			continue
 		var/datum/dynamic_ruleset/midround/created = new rtype(SSdynamic.get_config())
+		created.dynamic_tester_init()
+		created.ruleset_flags &= ~RULESET_NEEDS_GHOSTS
 		midround_rulesets += created
 
 	update_reports()
@@ -88,17 +87,12 @@ ADMIN_VERB(dynamic_tester, R_DEBUG, "Dynamic Tester", "See dynamic probabilities
 /datum/dynamic_tester/proc/update_reports()
 	roundstart_ruleset_report.Cut()
 	for(var/datum/dynamic_ruleset/roundstart/ruleset as anything in roundstart_rulesets)
-		var/comment = ""
-		if(istype(ruleset, /datum/dynamic_ruleset/roundstart/revolution))
-			var/datum/dynamic_ruleset/roundstart/revolution/revs = ruleset
-			comment = " (Assuming [initial(revs.heads_necessary)] heads of staff)"
-
 		roundstart_ruleset_report[ruleset] = list(
 			"name" = ruleset.name,
 			"weight" = ruleset.get_weight(num_players, tier),
 			"max_candidates" = ruleset.get_antag_cap(num_players, ruleset.max_antag_cap || ruleset.min_antag_cap),
 			"min_candidates" = ruleset.get_antag_cap(num_players, ruleset.min_antag_cap),
-			"comment" = comment,
+			"comment" = ruleset.dynamic_tester_comments(),
 		)
 
 	light_midround_ruleset_report.Cut()
@@ -110,6 +104,7 @@ ADMIN_VERB(dynamic_tester, R_DEBUG, "Dynamic Tester", "See dynamic probabilities
 			"weight" = ruleset.get_weight(num_players, tier),
 			"max_candidates" = ruleset.get_antag_cap(num_players, ruleset.max_antag_cap || ruleset.min_antag_cap),
 			"min_candidates" = ruleset.get_antag_cap(num_players, ruleset.min_antag_cap),
+			"comment" = ruleset.dynamic_tester_comments(),
 		)
 
 
