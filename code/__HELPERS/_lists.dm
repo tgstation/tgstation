@@ -450,12 +450,12 @@
 
 
 /**
- * Removes any empty weakrefs from the list
+ * Removes any empty autorefs from the list
  * Returns TRUE if the list had empty refs, FALSE otherwise
 **/
-/proc/list_clear_empty_weakrefs(list/list_to_clear)
+/proc/list_clear_empty_autorefs(list/list_to_clear)
 	var/start_len = list_to_clear.len
-	for(var/datum/weakref/entry in list_to_clear)
+	for(var/datum/autoref/entry in list_to_clear)
 		if(!entry.resolve())
 			list_to_clear -= entry
 	return list_to_clear.len < start_len
@@ -1032,7 +1032,7 @@
 		if(condition.Invoke(i))
 			. |= LIST_VALUE_WRAP_LISTS(i)
 
-///Returns a list with all weakrefs resolved
+///Returns a list with all autorefs resolved
 /proc/recursive_list_resolve(list/list_to_resolve)
 	. = list()
 	for(var/element in list_to_resolve)
@@ -1049,15 +1049,15 @@
 	if(islist(element))
 		var/list/inner_list = element
 		return recursive_list_resolve(inner_list)
-	else if(isweakref(element))
-		var/datum/weakref/ref = element
+	else if(isautoref(element))
+		var/datum/autoref/ref = element
 		return ref.resolve()
 	else
 		return element
 
 /**
  * Intermediate step for preparing lists to be passed into the lua editor tgui.
- * Resolves weakrefs, converts some values without a standard textual representation to text,
+ * Resolves autorefs, converts some values without a standard textual representation to text,
  * and can handle self-referential lists and potential duplicate output keys.
  */
 /proc/prepare_lua_editor_list(list/target_list, list/visited)
@@ -1069,9 +1069,9 @@
 	for(var/i in 1 to target_list.len)
 		var/key = target_list[i]
 		var/new_key = key
-		if(isweakref(key))
-			var/datum/weakref/ref = key
-			new_key = ref.resolve() || "null weakref"
+		if(isautoref(key))
+			var/datum/autoref/ref = key
+			new_key = ref.resolve() || "null autoref"
 		else if(key == world)
 			new_key = world.name
 		else if(ref(key) == "\[0xe000001\]")
@@ -1084,9 +1084,9 @@
 		var/value
 		if(!isnull(key) && !isnum(key))
 			value = target_list[key]
-		if(isweakref(value))
-			var/datum/weakref/ref = value
-			value = ref.resolve() || "null weakref"
+		if(isautoref(value))
+			var/datum/autoref/ref = value
+			value = ref.resolve() || "null autoref"
 		if(value == world)
 			value = "world"
 		else if(ref(value) == "\[0xe000001\]")
@@ -1175,8 +1175,8 @@
 				return FALSE
 	return TRUE
 
-/// Returns a copy of the list where any element that is a datum is converted into a weakref
-/proc/weakrefify_list(list/target_list, list/visited)
+/// Returns a copy of the list where any element that is a datum is converted into a autoref
+/proc/autorefify_list(list/target_list, list/visited)
 	if(!visited)
 		visited = list()
 	var/list/ret = list()
@@ -1185,22 +1185,22 @@
 		var/key = target_list[i]
 		var/new_key = key
 		if(isdatum(key))
-			new_key = WEAKREF(key)
+			new_key = AUTOREF(key)
 		else if(islist(key))
 			if(visited.Find(key))
 				new_key = visited[key]
 			else
-				new_key = weakrefify_list(key, visited)
+				new_key = autorefify_list(key, visited)
 		var/value
 		if(!isnull(key) && !isnum(key))
 			value = target_list[key]
 		if(isdatum(value))
-			value = WEAKREF(value)
+			value = AUTOREF(value)
 		else if(islist(value))
 			if(visited[value])
 				value = visited[value]
 			else
-				value = weakrefify_list(value, visited)
+				value = autorefify_list(value, visited)
 		var/list/to_add = list(new_key)
 		if(!isnull(value))
 			to_add[new_key] = value

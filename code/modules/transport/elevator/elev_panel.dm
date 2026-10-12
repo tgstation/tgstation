@@ -27,8 +27,8 @@
 	/// Were we instantiated at mapload? Used to determine when we should link / throw errors
 	var/maploaded = FALSE
 
-	/// A weakref to the transport_controller datum we control
-	var/datum/weakref/lift_weakref
+	/// A autoref to the transport_controller datum we control
+	var/datum/autoref/lift_autoref
 	/// What specific_transport_id do we link with?
 	var/linked_elevator_id
 
@@ -87,7 +87,7 @@
 			log_mapping("Elevator control panel at [AREACOORD(src)] found no associated lift to link with, this may be a mapping error.")
 		return
 
-	lift_weakref = WEAKREF(lift)
+	lift_autoref = AUTOREF(lift)
 	populate_destinations_list(lift)
 	if ((linked_elevator_id in GLOB.elevator_music))
 		var/obj/effect/abstract/elevator_music_zone/music = GLOB.elevator_music[linked_elevator_id]
@@ -99,7 +99,7 @@
 
 	obj_flags |= EMAGGED
 
-	var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
+	var/datum/transport_controller/linear/lift = lift_autoref?.resolve()
 	if(!lift)
 		return FALSE
 
@@ -122,7 +122,7 @@
 	return TRUE
 
 /obj/machinery/elevator_control_panel/multitool_act(mob/living/user)
-	var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
+	var/datum/transport_controller/linear/lift = lift_autoref?.resolve()
 	if(!lift)
 		return
 
@@ -257,7 +257,7 @@
 		return UI_CLOSE
 
 	// Our lift is gone entirely - look, but don't touch.
-	if(!lift_weakref?.resolve())
+	if(!lift_autoref?.resolve())
 		return UI_UPDATE
 
 	// We're non-functional - don't do anything.
@@ -274,7 +274,7 @@
 	data["is_emergency"] = SSsecurity_level.get_current_level_as_number() >= SEC_LEVEL_RED
 	data["doors_open"] = !!door_reset_timerid
 
-	var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
+	var/datum/transport_controller/linear/lift = lift_autoref?.resolve()
 	if(lift)
 		data["lift_exists"] = TRUE
 		data["currently_moving"] = lift.controller_status & CONTROLS_LOCKED
@@ -319,7 +319,7 @@
 			if(!(num2text(desired_z) in linked_elevator_destination))
 				return TRUE // Something is inaccurate, update UI
 
-			var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
+			var/datum/transport_controller/linear/lift = lift_autoref?.resolve()
 			if(!lift || lift.controller_status & CONTROLS_LOCKED)
 				return TRUE // We shouldn't be moving anything, update UI
 
@@ -328,7 +328,7 @@
 			return TRUE // Succcessfully initiated a move. Regardless of whether it actually works, update the UI
 
 		if("emergency_door")
-			var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
+			var/datum/transport_controller/linear/lift = lift_autoref?.resolve()
 			if(!lift)
 				return TRUE // Something is wrong, update UI
 
@@ -362,7 +362,7 @@
 /// Helper proc to go through all of our desetinations and reset all elevator doors,
 /// closing doors on z-levels the elevator is away from, and opening doors on the z the elevator is
 /obj/machinery/elevator_control_panel/proc/reset_doors()
-	var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
+	var/datum/transport_controller/linear/lift = lift_autoref?.resolve()
 	if(!lift)
 		return
 

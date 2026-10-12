@@ -30,9 +30,9 @@
 
 	// Firing data.
 	/// The person who opened the valve on the TTV loaded into this.
-	var/datum/weakref/cached_firer
+	var/datum/autoref/cached_firer
 	/// The target from the last click.
-	var/datum/weakref/cached_target
+	var/datum/autoref/cached_target
 	/// The modifiers from the last click.
 	var/cached_modifiers
 
@@ -113,7 +113,7 @@
 	if((!bomb && bombcheck) || isnull(target) || (get_dist(get_turf(target), get_turf(user)) <= 2))
 		return ..()
 
-	cached_target = WEAKREF(target)
+	cached_target = AUTOREF(target)
 	cached_modifiers = params
 	if(bomb?.valve_open)
 		user.visible_message(
@@ -122,7 +122,7 @@
 		)
 		return FALSE
 
-	cached_firer = WEAKREF(user)
+	cached_firer = AUTOREF(user)
 	if(!bomb)
 		fire_debug(target, user, params)
 		return TRUE

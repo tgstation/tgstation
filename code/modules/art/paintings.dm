@@ -85,7 +85,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	var/no_save = FALSE
 
 	///reference to the last patron's mind datum, used to allow them (and no others) to change the frame before the round ends.
-	var/datum/weakref/last_patron
+	var/datum/autoref/last_patron
 
 	var/datum/painting/painting_metadata
 
@@ -322,7 +322,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	painting_metadata.patron_ckey = user.ckey
 	painting_metadata.patron_name = user.real_name
 	painting_metadata.credit_value = offer_amount
-	last_patron = WEAKREF(user.mind)
+	last_patron = AUTOREF(user.mind)
 
 	to_chat(user, span_notice("Nanotrasen Trust Foundation thanks you for your contribution. You're now an official patron of this painting."))
 	if(HAS_PERSONALITY(user, /datum/personality/creative))
@@ -360,7 +360,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 		return FALSE
 	if(!loc.IsReachableBy(user) || user.incapacitated)
 		return FALSE
-	if(!last_patron || !IS_WEAKREF_OF(user?.mind, last_patron))
+	if(!last_patron || !IS_AUTOREF_OF(user?.mind, last_patron))
 		return FALSE
 	return TRUE
 
@@ -630,7 +630,7 @@ GLOBAL_LIST_INIT(canvas_dimensions, init_canvas_dimensions())
 	if(current_canvas)
 		current_canvas.ui_interact(user)
 		. += span_notice("Use wirecutters to remove the painting.")
-		if(IS_WEAKREF_OF(user?.mind, current_canvas.last_patron))
+		if(IS_AUTOREF_OF(user?.mind, current_canvas.last_patron))
 			. += span_notice("<b>Alt-Click</b> to change select a new appearance for the frame of this painting.")
 
 /obj/structure/sign/painting/wirecutter_act(mob/living/user, obj/item/I)

@@ -18,8 +18,8 @@
 	antimagic_flags = MAGIC_RESISTANCE
 
 	hand_path = /obj/item/melee/touch_attack/star_touch
-	/// Stores the weakref for the Star Gazer after ascending
-	var/datum/weakref/star_gazer
+	/// Stores the autoref for the Star Gazer after ascending
+	var/datum/autoref/star_gazer
 	/// If the heretic is ascended or not
 	var/ascended = FALSE
 
@@ -55,7 +55,7 @@
 
 /// To set the star gazer
 /datum/action/cooldown/spell/touch/star_touch/proc/set_star_gazer(mob/living/basic/heretic_summon/star_gazer/star_gazer_mob)
-	star_gazer = WEAKREF(star_gazer_mob)
+	star_gazer = AUTOREF(star_gazer_mob)
 
 /// To obtain the star gazer if there is one
 /datum/action/cooldown/spell/touch/star_touch/proc/get_star_gazer()

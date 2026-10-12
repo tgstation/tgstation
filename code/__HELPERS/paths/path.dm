@@ -311,10 +311,10 @@
 	/// Let's avoid this
 	var/camera_type
 
-	/// Weakref to the requester used to generate this info
+	/// Autoref to the requester used to generate this info
 	/// Should not use this almost ever, it's for context and to allow for proc chains that
 	/// Require a movable
-	var/datum/weakref/requester_ref = null
+	var/datum/autoref/requester_ref = null
 
 /datum/can_pass_info/New(atom/movable/construct_from, list/access, no_id = FALSE, call_depth = 0)
 	// No infiniloops
@@ -327,7 +327,7 @@
 	if(isnull(construct_from))
 		return
 
-	src.requester_ref = WEAKREF(construct_from)
+	src.requester_ref = AUTOREF(construct_from)
 	src.pass_flags = construct_from.pass_flags
 	src.movement_type = construct_from.movement_type
 	src.thrown = !!construct_from.throwing

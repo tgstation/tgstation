@@ -154,12 +154,12 @@
 /mob/living/basic/carp/ranged_secondary_attack(atom/atom_target, modifiers)
 	teleport.Trigger(target = atom_target)
 
-/// Gives the carp a list of weakrefs of destinations to try and travel between when it has nothing better to do
-/mob/living/basic/carp/proc/migrate_to(list/datum/weakref/migration_points)
+/// Gives the carp a list of autorefs of destinations to try and travel between when it has nothing better to do
+/mob/living/basic/carp/proc/migrate_to(list/datum/autoref/migration_points)
 	ai_controller.ai_traits |= RUN_WHILE_UNWATCHED
 	ai_controller.reset_ai_status() // We need them to actually keep walking to the station
 	var/list/actual_points = list()
-	for(var/datum/weakref/point_ref as anything in migration_points)
+	for(var/datum/autoref/point_ref as anything in migration_points)
 		var/turf/point_resolved = point_ref.resolve()
 		if(QDELETED(point_resolved))
 			return // invalid list, we can't migrate to this

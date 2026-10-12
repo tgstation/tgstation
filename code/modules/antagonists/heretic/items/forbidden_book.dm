@@ -142,7 +142,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/codex_cicatrix/morbus/atom_destruction(damage_flag)
-	for(var/datum/weakref/to_uncurse_ref as anything in transmuted_victims)
+	for(var/datum/autoref/to_uncurse_ref as anything in transmuted_victims)
 		var/mob/to_uncurse = to_uncurse_ref.resolve()
 		if(!to_uncurse || !ismob(to_uncurse))
 			continue

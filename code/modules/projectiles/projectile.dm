@@ -480,7 +480,7 @@
 		return
 
 	// never doublehit, otherwise someone may end up running into a projectile from the back
-	if(impacted[target.weak_reference])
+	if(impacted[target.auto_reference])
 		return
 
 	if(ricochets < ricochets_max && check_ricochet_flag(target) && check_ricochet(target) && target.handle_ricochet(src))
@@ -527,7 +527,7 @@
 	var/turf/target_turf = get_turf(target)
 	while (target && !QDELETED(src) && !deletion_queued)
 		// Doublehitting can be an issue with slow projectiles or when the server is chugging
-		impacted[WEAKREF(target)] = TRUE
+		impacted[AUTOREF(target)] = TRUE
 		var/mode = prehit_pierce(target)
 		if(mode == PROJECTILE_DELETE_WITHOUT_HITTING)
 			return PROJECTILE_IMPACT_INTERRUPTED
@@ -621,7 +621,7 @@
 /// Returns true if the target atom is on our current turf and above the right layer
 /// If direct target is true it's the originally clicked target.
 /obj/projectile/proc/can_hit_target(atom/target, direct_target = FALSE, ignore_loc = FALSE, cross_failed = FALSE)
-	if(QDELETED(target) || impacted[target.weak_reference])
+	if(QDELETED(target) || impacted[target.auto_reference])
 		return FALSE
 	if(!ignore_loc && (loc != target.loc) && !(can_hit_turfs && direct_target && loc == target))
 		return FALSE
@@ -711,7 +711,7 @@
  * Used to not even attempt to Bump() or fail to Cross() anything we already hit.
  */
 /obj/projectile/CanPassThrough(atom/blocker, movement_dir, blocker_opinion)
-	return impacted[blocker.weak_reference] || ..()
+	return impacted[blocker.auto_reference] || ..()
 
 /**
  * Projectile moved:
@@ -1394,7 +1394,7 @@
 	var/obj/projectile/bullet = new projectile_type(startloc)
 	bullet.starting = startloc
 	for (var/atom/thing as anything in ignore_targets)
-		bullet.impacted[WEAKREF(thing)] = TRUE
+		bullet.impacted[AUTOREF(thing)] = TRUE
 	bullet.firer = firer || src
 	bullet.fired_from = src
 	bullet.yo = target.y - startloc.y

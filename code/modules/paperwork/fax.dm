@@ -16,8 +16,8 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	var/fax_id
 	/// The name of the fax displayed in the list. Not necessarily unique to some EMAG jokes.
 	var/fax_name
-	/// A weak reference to an inserted object.
-	var/datum/weakref/loaded_item_ref
+	/// An auto reference to an inserted object.
+	var/datum/autoref/loaded_item_ref
 	/// World ticks the machine is electified for.
 	var/seconds_electrified = MACHINE_NOT_ELECTRIFIED
 	/// If true, the fax machine is jammed and needs cleaning
@@ -32,7 +32,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	var/allow_exotic_faxes = FALSE
 	/// This is where the dispatch and reception history for each fax is stored.
 	var/list/fax_history = list()
-	/// Lazy assoc list of (FaxBond ref string = FaxBond weakref) connected to us
+	/// Lazy assoc list of (FaxBond ref string = FaxBond autoref) connected to us
 	var/list/fax_listeners
 	/// List of types which should always be allowed to be faxed
 	var/static/list/allowed_types = list(
@@ -231,7 +231,7 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 		if(loaded_item_ref?.resolve())
 			balloon_alert(user, "item already loaded!")
 			return ITEM_INTERACT_BLOCKING
-		loaded_item_ref = WEAKREF(tool)
+		loaded_item_ref = AUTOREF(tool)
 		tool.forceMove(src)
 		update_appearance()
 		return ITEM_INTERACT_SUCCESS
@@ -455,8 +455,8 @@ GLOBAL_VAR_INIT(fax_autoprinting, FALSE)
 	set waitfor = FALSE
 
 	var/list/targets = list()
-	for(var/refstring, weakref in fax_listeners)
-		var/datum/weakref/app_ref = weakref
+	for(var/refstring, autoref in fax_listeners)
+		var/datum/autoref/app_ref = autoref
 		var/datum/computer_file/program/faxbond/app = app_ref?.resolve()
 		if(!app || app.connected_faxes[fax_id]["muted"])
 			continue

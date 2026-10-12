@@ -14,8 +14,8 @@
 	var/obj/effect/abstract/light_middleman/cone_intercept
 	/// Are we overriding the light already?
 	var/overriding = FALSE
-	/// Weakref to the object we are displaying our effects on
-	var/datum/weakref/holder_ref
+	/// Autoref to the object we are displaying our effects on
+	var/datum/autoref/holder_ref
 
 /datum/light_middleman/New(atom/parent, unique_string)
 	. = ..()
@@ -80,7 +80,7 @@
 	if(!isnull(cone_intercept))
 		light_holder.vis_contents += cone_intercept
 
-	holder_ref = WEAKREF(light_holder)
+	holder_ref = AUTOREF(light_holder)
 
 	var/old_target = primary_intercept.render_target
 	// This will halt any animations we have ongoing so if you care about that you've gotta react to it properly

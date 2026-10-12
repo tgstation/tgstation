@@ -37,7 +37,7 @@
 	/// The cameras in this area that we are tracking. Lazy.
 	var/list/obj/machinery/camera/motion_cameras
 	/// Our motion targets. This gets referenced by cameras.
-	var/list/datum/weakref/motion_targets = list()
+	var/list/datum/autoref/motion_targets = list()
 
 /datum/motion_group/proc/track_camera(obj/machinery/camera/gain_camera)
 	if(!gain_camera.isMotion())
@@ -54,7 +54,7 @@
 	UnregisterSignal(lost_camera, COMSIG_QDELETING)
 	if(!LAZYLEN(motion_cameras))
 		// clear targets if we don't have any cameras so we don't have hanging references
-		// (they're weakrefs but still we should be doing this)
+		// (they're autorefs but still we should be doing this)
 		LAZYNULL(motion_targets)
 
 /datum/motion_group/proc/track_mob(mob/gain_mob)

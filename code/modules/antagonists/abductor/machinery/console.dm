@@ -120,7 +120,7 @@
 		data["credits"] = experiment.credits
 	data["pad"] = pad ? TRUE : FALSE
 	if(pad)
-		data["gizmo"] = gizmo && gizmo.marked_target_weakref?.resolve() ? TRUE : FALSE
+		data["gizmo"] = gizmo && gizmo.marked_target_autoref?.resolve() ? TRUE : FALSE
 	data["vest"] = vest ? TRUE : FALSE
 	if(vest)
 		data["vest_mode"] = vest.mode
@@ -168,7 +168,7 @@
 			return TRUE
 
 /obj/machinery/abductor/console/proc/TeleporterRetrieve()
-	var/mob/living/marked = gizmo.marked_target_weakref?.resolve()
+	var/mob/living/marked = gizmo.marked_target_autoref?.resolve()
 	if(pad && marked)
 		pad.Retrieve(marked)
 

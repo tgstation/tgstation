@@ -347,8 +347,8 @@
 	var/list/visual_overlays = list()
 	/// A reference to the call between two MODlinks.
 	var/datum/mod_link_call/link_call
-	/// Weakref to the user that is involved in our current call, for cleaning up after ourselves.
-	var/datum/weakref/user_in_call_ref
+	/// Autoref to the user that is involved in our current call, for cleaning up after ourselves.
+	var/datum/autoref/user_in_call_ref
 	/// A callback that returns the user of the MODlink.
 	var/datum/callback/get_user_callback
 	/// A callback that returns whether the MODlink can currently call.
@@ -431,16 +431,16 @@
 	link_target.playsound_local(get_turf(called.holder), 'sound/items/weapons/ring.ogg', 15, vary = TRUE)
 	var/atom/movable/screen/alert/modlink_call/alert = link_target.throw_alert("[REF(src)]_modlink", /atom/movable/screen/alert/modlink_call)
 	alert.desc = "[holder] ([id]) is calling you! Left-click this to accept the call. Right-click to deny it."
-	alert.link_caller_ref = WEAKREF(src)
-	alert.link_receiver_ref = WEAKREF(called)
-	alert.user_ref = WEAKREF(user)
+	alert.link_caller_ref = AUTOREF(src)
+	alert.link_receiver_ref = AUTOREF(called)
+	alert.user_ref = AUTOREF(user)
 
 /datum/mod_link/proc/end_call()
 	QDEL_NULL(link_call)
 
 /datum/mod_link/proc/entered_call(datum/mod_link/other_link)
 	var/mob/living/user = get_user_callback.Invoke()
-	user_in_call_ref = WEAKREF(user)
+	user_in_call_ref = AUTOREF(user)
 	ADD_TRAIT(user, TRAIT_IN_CALL, REF(src))
 
 	var/other_visual = other_link.make_visual_callback.Invoke()
@@ -518,12 +518,12 @@
 	timeout = 10 SECONDS
 	clickable_glow = TRUE
 	var/end_message = "call timed out!"
-	/// A weak reference to the MODlink that is calling.
-	var/datum/weakref/link_caller_ref
-	/// A weak reference to the MODlink that is being called.
-	var/datum/weakref/link_receiver_ref
-	/// A weak reference to the mob that is calling.
-	var/datum/weakref/user_ref
+	/// An auto reference to the MODlink that is calling.
+	var/datum/autoref/link_caller_ref
+	/// An auto reference to the MODlink that is being called.
+	var/datum/autoref/link_receiver_ref
+	/// An auto reference to the mob that is calling.
+	var/datum/autoref/user_ref
 
 /atom/movable/screen/alert/modlink_call/Click(location, control, params)
 	. = ..()

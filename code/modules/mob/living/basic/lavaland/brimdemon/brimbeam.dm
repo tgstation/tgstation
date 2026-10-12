@@ -135,7 +135,7 @@
 	light_power = 3
 	light_range = 2
 	/// Who made us?
-	var/datum/weakref/creator
+	var/datum/autoref/creator
 
 /obj/effect/brimbeam/Initialize(mapload)
 	. = ..()
@@ -153,7 +153,7 @@
 
 /// Ignore damage dealt to this mob
 /obj/effect/brimbeam/proc/assign_creator(mob/living/maker)
-	creator = WEAKREF(maker)
+	creator = AUTOREF(maker)
 
 /// Disappear
 /obj/effect/brimbeam/proc/disperse()

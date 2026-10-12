@@ -320,7 +320,7 @@
 		var/mob/living/victim = target
 		var/datum/status_effect/grouped/heldup/gunpoint = victim.has_status_effect(/datum/status_effect/grouped/heldup)
 		if (gunpoint)
-			for (var/datum/weakref/pointer_ref as anything in gunpoint.sources)
+			for (var/datum/autoref/pointer_ref as anything in gunpoint.sources)
 				if (pointer_ref.resolve() == user)
 					dmg_multiplier *= 1.5 // Caps at 60 damage
 					break

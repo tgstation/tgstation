@@ -50,8 +50,8 @@
 	if(!stored_research) //lack of a research node is all we care about.
 		return data
 	var/list/queued_nodes = list()
-	for(var/node, weakref in stored_research.research_queue_nodes)
-		queued_nodes[node] = astype(weakref, /datum/weakref)?.resolve()
+	for(var/node, autoref in stored_research.research_queue_nodes)
+		queued_nodes[node] = astype(autoref, /datum/autoref)?.resolve()
 	data += list(
 		"nodes" = list(),
 		"queue_nodes" = queued_nodes,
@@ -74,8 +74,8 @@
 		if (stored_research.hidden_nodes[node_path])
 			continue
 
-		var/datum/weakref/queuer_weakref = stored_research.research_queue_nodes[node_path]
-		var/mob/node_queuer = queuer_weakref?.resolve()
+		var/datum/autoref/queuer_autoref = stored_research.research_queue_nodes[node_path]
+		var/mob/node_queuer = queuer_autoref?.resolve()
 		var/enqueued_by_user = !isnull(node_queuer) && node_queuer == user
 
 		data["nodes"] += list(list(

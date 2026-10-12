@@ -166,7 +166,7 @@
 	/// fake static image
 	var/list/image/static_images = list()
 	/// the client that we shoved those images to
-	var/datum/weakref/static_viewer
+	var/datum/autoref/static_viewer
 	/// timerid for the timer that makes em disappear
 	var/static_disappear_timer
 	/// cooldown for actually doing a static scan
@@ -290,7 +290,7 @@
 			SET_PLANE(img, GAME_PLANE, seen_turf)
 			new_images += img
 	user.client.images |= new_images
-	static_viewer = WEAKREF(user.client)
+	static_viewer = AUTOREF(user.client)
 	balloon_alert(user, "nearby unseen spots shown")
 	static_disappear_timer = addtimer(CALLBACK(src, PROC_REF(cleanup_static)), 8 SECONDS, TIMER_STOPPABLE)
 	COOLDOWN_START(src, static_scan_cd, 4 SECONDS)

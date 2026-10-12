@@ -28,12 +28,12 @@
 	receiver.clear_mood_event("tail_balance_lost")
 
 	if(!special) // if some admin wants to give someone tail moodles for tail shenanigans, they can spawn it and do it by hand
-		original_owner ||= WEAKREF(receiver)
+		original_owner ||= AUTOREF(receiver)
 
 		// If it's your tail, an infinite debuff is replaced with a timed one
 		// If it's not your tail but of same species, I guess it works, but we are more sad
 		// If it's not your tail AND of different species, we are horrified
-		if(IS_WEAKREF_OF(receiver, original_owner))
+		if(IS_AUTOREF_OF(receiver, original_owner))
 			receiver.add_mood_event("tail_regained", /datum/mood_event/tail_regained_right)
 		else if(type in receiver.dna.species.mutant_organs)
 			receiver.add_mood_event("tail_regained", /datum/mood_event/tail_regained_species)

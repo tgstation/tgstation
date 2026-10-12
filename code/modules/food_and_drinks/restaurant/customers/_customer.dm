@@ -314,7 +314,7 @@
 	return TRUE
 
 /datum/customer_data/moth/proc/get_wings(mob/living/basic/robot_customer/customer)
-	var/customer_ref = WEAKREF(customer)
+	var/customer_ref = AUTOREF(customer)
 	if (!LAZYACCESS(wings_chosen, customer_ref))
 		var/picked_wings = pick(SSaccessories.feature_list[FEATURE_MOTH_WINGS])
 		LAZYSET(wings_chosen, customer_ref, SSaccessories.feature_list[FEATURE_MOTH_WINGS][picked_wings])

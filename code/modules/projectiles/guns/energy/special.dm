@@ -253,10 +253,10 @@
 	for(var/i in 1 to ammo_type.len)
 		var/obj/item/ammo_casing/energy/wormhole/W = ammo_type[i]
 		if(istype(W))
-			W.gun = WEAKREF(src)
+			W.gun = AUTOREF(src)
 			var/obj/projectile/beam/wormhole/WH = W.loaded_projectile
 			if(istype(WH))
-				WH.gun = WEAKREF(src)
+				WH.gun = AUTOREF(src)
 
 /obj/item/gun/energy/wormhole_projector/try_fire_gun(atom/target, mob/living/user, params)
 	if(LAZYACCESS(params2list(params), RIGHT_CLICK))

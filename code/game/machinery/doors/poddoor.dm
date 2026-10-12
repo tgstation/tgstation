@@ -25,7 +25,7 @@
 	var/animation_sound = 'sound/machines/blastdoor.ogg'
 	var/show_nav_computer_icon = TRUE
 	///The mob who crafted this blastdoor
-	var/datum/weakref/owner
+	var/datum/autoref/owner
 
 /obj/machinery/door/poddoor/Initialize(mapload)
 	. = ..()
@@ -90,7 +90,7 @@
 
 /obj/machinery/door/poddoor/on_craft_completion(list/components, datum/crafting_recipe/current_recipe, atom/crafter)
 	. = ..()
-	owner = WEAKREF(crafter)
+	owner = AUTOREF(crafter)
 
 /obj/machinery/door/poddoor/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(deconstruction == BLASTDOOR_NEEDS_WIRES && istype(tool, /obj/item/stack/cable_coil))
@@ -139,7 +139,7 @@
 				new_id += 1
 			controller_item.id = "[new_id]"
 		id = controller_item.id
-		owner = WEAKREF(user)
+		owner = AUTOREF(user)
 		balloon_alert(user, "id changed to [id]")
 		return ITEM_INTERACT_SUCCESS
 

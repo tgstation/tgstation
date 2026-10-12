@@ -4,10 +4,10 @@
  */
 /mob/eye/camera/remote
 	sight = SEE_TURFS
-	/// Weakref to the current user of this eye. Must be a [living mob][/mob/living].
-	var/datum/weakref/user_ref
-	/// Weakref to the creator of this eye. Must be a [machine][/obj/machinery].
-	var/datum/weakref/origin_ref
+	/// Autoref to the current user of this eye. Must be a [living mob][/mob/living].
+	var/datum/autoref/user_ref
+	/// Autoref to the creator of this eye. Must be a [machine][/obj/machinery].
+	var/datum/autoref/origin_ref
 
 	/// TRUE if this camera should show itself to the user.
 	var/visible_to_user = FALSE
@@ -36,7 +36,7 @@
 
 	. = ..()
 
-	origin_ref = WEAKREF(creator)
+	origin_ref = AUTOREF(creator)
 	if(visible_to_user)
 		set_user_icon(icon, icon_state)
 
@@ -63,7 +63,7 @@
 			old_user_client.images -= user_image
 		clear_camera_chunks()
 
-	user_ref = WEAKREF(new_user) //The user_ref can still be null!
+	user_ref = AUTOREF(new_user) //The user_ref can still be null!
 
 	if(new_user)
 		new_user.remote_control = src

@@ -36,7 +36,7 @@
 	var/list/traitor_flavor
 
 	///reference to the uplink this traitor was given, if they were.
-	var/datum/weakref/uplink_ref
+	var/datum/autoref/uplink_ref
 
 	/// The uplink handler that this traitor belongs to.
 	var/datum/uplink_handler/uplink_handler
@@ -56,7 +56,7 @@
 		owner.give_uplink(silent = TRUE, antag_datum = src)
 
 	var/datum/component/uplink/uplink = owner.find_syndicate_uplink()
-	uplink_ref = WEAKREF(uplink)
+	uplink_ref = AUTOREF(uplink)
 	if(uplink)
 		if(uplink_handler)
 			uplink.uplink_handler = uplink_handler

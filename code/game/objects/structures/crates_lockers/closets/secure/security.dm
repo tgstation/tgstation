@@ -213,7 +213,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	say("Prisoner ID linked to locker.")
-	id_card = WEAKREF(tool)
+	id_card = AUTOREF(tool)
 	name = "genpop storage locker - [astype(tool, /obj/item/card/id/advanced/prisoner).registered_name]"
 	return ITEM_INTERACT_SUCCESS
 

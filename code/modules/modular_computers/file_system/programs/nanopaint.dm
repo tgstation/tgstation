@@ -16,8 +16,8 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 	program_icon = "paintbrush"
 	size = 5
 	can_run_on_flags = PROGRAM_ALL
-	/// A weak reference to the data file containing the workspace currently being worked on.
-	var/datum/weakref/backing_file
+	/// An auto reference to the data file containing the workspace currently being worked on.
+	var/datum/autoref/backing_file
 	/// The name of the file that was opened, in case we are trying to save a file that is no longer accessible.
 	var/opened_file_name
 	/// The typepath of the file that was opened, in case we are trying to save a file that is no longer accessible.
@@ -251,7 +251,7 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 		if(/datum/computer_file/data/paint_project)
 			var/datum/computer_file/data/paint_project/project_file = file_being_opened
 			current_workspace = project_file.workspace.copy()
-			backing_file = WEAKREF(file_being_opened)
+			backing_file = AUTOREF(file_being_opened)
 			opened_file_name = project_file.filename
 			source_photo_or_painting = project_file.source_photo_or_painting
 		if(/datum/computer_file/image)
@@ -276,7 +276,7 @@ GLOBAL_LIST_INIT(nanopaint_supported_filetypes, zebra_typecacheof(list(\
 			var/datum/computer_file/data/paint_project/project_file = file
 			project_file.workspace = current_workspace.copy()
 			project_file.set_source(source_photo_or_painting)
-			backing_file = WEAKREF(project_file)
+			backing_file = AUTOREF(project_file)
 		if(/datum/computer_file/image)
 			var/datum/computer_file/image/image_file = file
 			image_file.stored_icon = current_workspace.to_icon()

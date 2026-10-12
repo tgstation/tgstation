@@ -16,8 +16,8 @@
 	var/singularity_icon_variant = "singularity"
 
 	/// The singularity component itself.
-	/// A weak ref in case an admin removes the component to preserve the functionality.
-	var/datum/weakref/singularity_component
+	/// An auto ref in case an admin removes the component to preserve the functionality.
+	var/datum/autoref/singularity_component
 	/// type of singularity component made
 	var/singularity_component_type = /datum/component/singularity
 	///Current singularity size, from 1 to 6
@@ -69,7 +69,7 @@
 		roaming = (move_self && current_size >= STAGE_TWO), \
 	)
 
-	singularity_component = WEAKREF(new_component)
+	singularity_component = AUTOREF(new_component)
 
 	check_energy()
 

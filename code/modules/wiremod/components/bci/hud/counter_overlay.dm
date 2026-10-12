@@ -21,7 +21,7 @@
 
 	var/obj/item/organ/cyberimp/bci/bci
 	var/list/numbers = list()
-	var/datum/weakref/counter_appearance
+	var/datum/autoref/counter_appearance
 
 /obj/item/circuit_component/counter_overlay/populate_ports()
 	counter_number = add_input_port("Displayed Number", PORT_TYPE_NUMBER)
@@ -38,7 +38,7 @@
 
 /obj/item/circuit_component/counter_overlay/unregister_shell(atom/movable/shell)
 	bci = null
-	for(var/datum/weakref/number in numbers)
+	for(var/datum/autoref/number in numbers)
 		var/datum/atom_hud/number_overlay = number?.resolve()
 		QDEL_NULL(number_overlay)
 	numbers = list()
@@ -56,7 +56,7 @@
 	if(!owner || !istype(owner) || !owner.client)
 		return
 
-	for(var/datum/weakref/number in numbers)
+	for(var/datum/autoref/number in numbers)
 		var/datum/atom_hud/number_overlay = number?.resolve()
 		QDEL_NULL(number_overlay)
 	numbers = list()
@@ -81,7 +81,7 @@
 	)
 	alt_appearance.show_to(owner)
 
-	counter_appearance = WEAKREF(alt_appearance)
+	counter_appearance = AUTOREF(alt_appearance)
 
 	var/cleared_number = clamp(round(counter_number.value), 0, 999)
 
@@ -107,11 +107,11 @@
 		)
 		number_alt_appearance.show_to(owner)
 
-		numbers += WEAKREF(number_alt_appearance)
+		numbers += AUTOREF(number_alt_appearance)
 
 /obj/item/circuit_component/counter_overlay/proc/on_organ_removed(datum/source, mob/living/carbon/owner)
 	SIGNAL_HANDLER
-	for(var/datum/weakref/number in numbers)
+	for(var/datum/autoref/number in numbers)
 		var/datum/atom_hud/number_overlay = number?.resolve()
 		QDEL_NULL(number_overlay)
 	numbers = list()
@@ -121,7 +121,7 @@
 	QDEL_NULL(overlay)
 
 /obj/item/circuit_component/counter_overlay/Destroy()
-	for(var/datum/weakref/number in numbers)
+	for(var/datum/autoref/number in numbers)
 		var/datum/atom_hud/number_overlay = number?.resolve()
 		QDEL_NULL(number_overlay)
 	numbers = list()

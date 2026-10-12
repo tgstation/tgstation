@@ -42,7 +42,7 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/star_gazer
 	/// Reference to the mob which summoned us
-	var/datum/weakref/summoner
+	var/datum/autoref/summoner
 	/// How far we can go before being pulled back
 	var/leash_range = 20
 	/// Timer for finding a ghost so it doesn't spam dead chat with requests
@@ -62,9 +62,9 @@
 		spell.Grant(src)
 	var/datum/action/cooldown/spell/stargazer_laser/laser = locate() in actions
 	if(master)
-		summoner = WEAKREF(master)
+		summoner = AUTOREF(master)
 		if(laser)
-			laser.our_master = WEAKREF(master)
+			laser.our_master = AUTOREF(master)
 	AddComponent(/datum/component/seethrough_mob)
 	var/static/list/death_loot = list(/obj/effect/temp_visual/cosmic_domain)
 	AddElement(/datum/element/death_drops, death_loot)
@@ -178,7 +178,7 @@
 	/// Timer that handles the damage ticking
 	var/damage_timer
 	/// Reference to our summoner so that we don't disintegrate them by accident
-	var/datum/weakref/our_master
+	var/datum/autoref/our_master
 	/// The overlay on the caster when they fire the beam
 	var/obj/effect/abstract/gazer_orb/orb_visual
 	/// The visual effect at the beginning of the laser

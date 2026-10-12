@@ -496,7 +496,7 @@
 	blown_kiss.original = target
 	blown_kiss.fired_from = user
 	blown_kiss.firer = user // don't hit ourself that would be really annoying
-	blown_kiss.impacted = list(WEAKREF(user) = TRUE) // just to make sure we don't hit the wearer
+	blown_kiss.impacted = list(AUTOREF(user) = TRUE) // just to make sure we don't hit the wearer
 	blown_kiss.aim_projectile(target, user)
 	blown_kiss.fire()
 	qdel(src)
@@ -527,7 +527,7 @@
 	blown_kiss.original = taker
 	blown_kiss.fired_from = offerer
 	blown_kiss.firer = offerer // don't hit ourself that would be really annoying
-	blown_kiss.impacted = list(WEAKREF(offerer) = TRUE) // just to make sure we don't hit the wearer
+	blown_kiss.impacted = list(AUTOREF(offerer) = TRUE) // just to make sure we don't hit the wearer
 	blown_kiss.aim_projectile(taker, offerer)
 	blown_kiss.suppressed = SUPPRESSED_VERY // this also means it's a direct offer
 	blown_kiss.fire()

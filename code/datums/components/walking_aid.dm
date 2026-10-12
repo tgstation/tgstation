@@ -13,8 +13,8 @@
 	var/waddling = FALSE
 	/// If set, the parent item must have this trait for the support to function
 	var/required_trait
-	/// Weakref to the mob currently being supported
-	var/datum/weakref/current_user_ref
+	/// Autoref to the mob currently being supported
+	var/datum/autoref/current_user_ref
 	/// The amount of slowdown to reduce for a limbless leg
 	var/limbless_slowdown_modifier = 0.6 // reduces slowdown by 40%
 
@@ -82,7 +82,7 @@
 	if(current_user_ref)
 		remove_support()
 
-	current_user_ref = WEAKREF(user)
+	current_user_ref = AUTOREF(user)
 	RegisterSignal(user, COMSIG_CARBON_LIMPING, PROC_REF(handle_limping))
 	RegisterSignal(user, COMSIG_LIVING_LIMBLESS_SLOWDOWN, PROC_REF(handle_slowdown))
 	user.update_usable_leg_status()

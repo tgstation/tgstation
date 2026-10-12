@@ -247,16 +247,16 @@
 	trait_flags = TRAIT_SHOW_EXAMINE
 	genes_to_check = list(/datum/plant_gene/trait/chem_heating)
 	/// The mob currently holding the chili.
-	var/datum/weakref/held_mob
+	var/datum/autoref/held_mob
 	/// The chili this gene is tied to, to track it for processing.
-	var/datum/weakref/our_chili
+	var/datum/autoref/our_chili
 
 /datum/plant_gene/trait/backfire/chili_heat/on_new_plant(obj/item/our_plant, newloc)
 	. = ..()
 	if(!.)
 		return
 
-	our_chili = WEAKREF(our_plant)
+	our_chili = AUTOREF(our_plant)
 	RegisterSignals(our_plant, list(COMSIG_QDELETING, COMSIG_ITEM_DROPPED), PROC_REF(stop_backfire_effect))
 
 /*
@@ -266,7 +266,7 @@
  * user - the mob holding our plant
  */
 /datum/plant_gene/trait/backfire/chili_heat/backfire_effect(obj/item/our_plant, mob/living/carbon/user)
-	held_mob = WEAKREF(user)
+	held_mob = AUTOREF(user)
 	START_PROCESSING(SSobj, src)
 
 /*
@@ -288,7 +288,7 @@
 	var/mob/living/carbon/our_mob = held_mob?.resolve()
 	var/obj/item/our_plant = our_chili?.resolve()
 
-	// If our weakrefs don't resolve, or if our mob is not holding our plant, stop processing.
+	// If our autorefs don't resolve, or if our mob is not holding our plant, stop processing.
 	if(!our_mob || !our_plant || !our_mob.is_holding(our_plant))
 		stop_backfire_effect()
 		return
@@ -617,15 +617,15 @@
 	description = "This plant stinks when grown."
 	icon = FA_ICON_WIND
 	/// The location of our tray, if we have one.
-	var/datum/weakref/home_tray
+	var/datum/autoref/home_tray
 	/// The seed emitting gas.
-	var/datum/weakref/stinky_seed
+	var/datum/autoref/stinky_seed
 
 /datum/plant_gene/trait/gas_production/on_new_seed(obj/item/seeds/new_seed)
 	RegisterSignal(new_seed, COMSIG_SEED_ON_PLANTED, PROC_REF(set_home_tray))
 	RegisterSignal(new_seed, COMSIG_SEED_ON_GROW, PROC_REF(try_release_gas))
 	RegisterSignal(new_seed, COMSIG_QDELETING, PROC_REF(stop_gas))
-	stinky_seed = WEAKREF(new_seed)
+	stinky_seed = AUTOREF(new_seed)
 
 /datum/plant_gene/trait/gas_production/on_removed(obj/item/seeds/old_seed)
 	UnregisterSignal(old_seed, list(COMSIG_QDELETING, COMSIG_SEED_ON_PLANTED, COMSIG_SEED_ON_GROW))
@@ -640,7 +640,7 @@
 /datum/plant_gene/trait/gas_production/proc/set_home_tray(obj/item/seeds/our_seed, obj/machinery/hydroponics/grown_tray)
 	SIGNAL_HANDLER
 
-	home_tray = WEAKREF(grown_tray)
+	home_tray = AUTOREF(grown_tray)
 
 /*
  * Whenever the plant starts to grow in a tray, check if we can release gas.
@@ -671,7 +671,7 @@
 	var/obj/item/seeds/seed = stinky_seed?.resolve()
 	var/obj/machinery/hydroponics/tray = home_tray?.resolve()
 
-	// If our weakrefs don't resolve, or if our seed is /somehow/ not in the tray it was planted in, stop processing.
+	// If our autorefs don't resolve, or if our seed is /somehow/ not in the tray it was planted in, stop processing.
 	if(!seed || !tray || seed.loc != tray)
 		stop_gas()
 		return

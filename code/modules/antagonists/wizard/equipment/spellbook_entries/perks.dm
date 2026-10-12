@@ -162,7 +162,7 @@
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield2"
 	/// We need to orbit around someone.
-	var/datum/weakref/owner
+	var/datum/autoref/owner
 
 /obj/effect/wizard_magnetism/New(loc, ...)
 	. = ..()
@@ -172,7 +172,7 @@
 	. = ..()
 	if(!isliving(new_owner))
 		return
-	owner = WEAKREF(new_owner)
+	owner = AUTOREF(new_owner)
 	RegisterSignal(new_owner, COMSIG_ENTER_AREA, PROC_REF(check_area))
 	RegisterSignal(new_owner, COMSIG_LIVING_DEATH, PROC_REF(on_owner_death))
 

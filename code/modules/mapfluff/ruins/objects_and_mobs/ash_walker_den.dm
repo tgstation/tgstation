@@ -136,7 +136,7 @@
 	icon_state = "tendril"
 	anchored = TRUE
 	density = TRUE
-	/// weakref list of which mobs have gotten their loot from this effect.
+	/// autoref list of which mobs have gotten their loot from this effect.
 	var/list/collected = list()
 	/// a bit of light as to make less unfair deaths from the chasm
 	var/obj/effect/light_emitter/tendril/emitted_light
@@ -166,17 +166,17 @@
 	visible_message(span_warning("Something falls free of the tendril!"))
 	var/obj/structure/closet/crate/necropolis/tendril/loot = new /obj/structure/closet/crate/necropolis/tendril(loc)
 	collector.start_pulling(loot)
-	collected += WEAKREF(collector)
+	collected += AUTOREF(collector)
 
 /obj/effect/collapse/Destroy()
 	collected.Cut()
 	QDEL_NULL(emitted_light)
 	return ..()
 
-///Helper proc that resolves weakrefs to determine if collector is in collected list, returning a boolean.
+///Helper proc that resolves autorefs to determine if collector is in collected list, returning a boolean.
 /obj/effect/collapse/proc/has_collected(mob/collector)
-	for(var/datum/weakref/weakref as anything in collected)
-		var/mob/living/resolved = weakref.resolve()
+	for(var/datum/autoref/autoref as anything in collected)
+		var/mob/living/resolved = autoref.resolve()
 		//it could have been collector, it could not have been, we don't care
 		if(!resolved)
 			continue

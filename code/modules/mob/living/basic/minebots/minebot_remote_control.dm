@@ -8,7 +8,7 @@
 	///are we currently primed to drop a bomb?
 	var/primed = FALSE
 	///our last user
-	var/datum/weakref/last_user
+	var/datum/autoref/last_user
 	///cooldown till we can drop the next bomb
 	COOLDOWN_DECLARE(bomb_timer)
 
@@ -39,7 +39,7 @@
 
 /obj/item/minebot_remote_control/proc/prime_bomb(mob/user)
 	primed = TRUE
-	last_user = WEAKREF(user)
+	last_user = AUTOREF(user)
 	user.client?.mouse_override_icon = 'icons/effects/mouse_pointers/weapon_pointer.dmi'
 	user.update_mouse_pointer()
 

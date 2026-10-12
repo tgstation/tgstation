@@ -64,7 +64,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	///Standardizes the vars that indicate the bot is busy with its function.
 	var/mode = BOT_IDLE
 	///Links a bot to the AI calling it.
-	var/datum/weakref/calling_ai_ref
+	var/datum/autoref/calling_ai_ref
 	///The bot's radio, for speaking to people.
 	var/obj/item/radio/internal_radio
 	///which channels can the bot listen to
@@ -826,7 +826,7 @@ GLOBAL_LIST_INIT(command_strings, list(
 	var/atom/calling_ai = calling_ai_ref?.resolve()
 	if(!isnull(calling_ai) && calling_ai != src)
 		return FALSE
-	calling_ai_ref = WEAKREF(ai_caller)
+	calling_ai_ref = AUTOREF(ai_caller)
 	return TRUE
 
 /mob/living/basic/bot/proc/update_bot_mode(new_mode, update_hud = TRUE)

@@ -30,8 +30,8 @@
 	flags_1 = SUPERMATTER_IGNORES_1
 
 	/// The singularity component to move around Nar'Sie.
-	/// A weak ref in case an admin removes the component to preserve the functionality.
-	var/datum/weakref/singularity
+	/// An auto ref in case an admin removes the component to preserve the functionality.
+	var/datum/autoref/singularity
 
 	var/list/souls_needed = list()
 	var/soul_goal = 0
@@ -56,7 +56,7 @@
 	GLOB.cult_narsie = src
 	SSpoints_of_interest.make_point_of_interest(src)
 
-	singularity = WEAKREF(AddComponent(
+	singularity = AUTOREF(AddComponent(
 		/datum/component/singularity, \
 		bsa_targetable = FALSE, \
 		consume_callback = CALLBACK(src, PROC_REF(consume)), \

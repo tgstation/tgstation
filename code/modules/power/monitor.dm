@@ -9,8 +9,8 @@
 	use_power = ACTIVE_POWER_USE
 	circuit = /obj/item/circuitboard/computer/powermonitor
 
-	var/datum/weakref/attached_wire_ref
-	var/datum/weakref/local_apc_ref
+	var/datum/autoref/attached_wire_ref
+	var/datum/autoref/local_apc_ref
 
 	var/list/history = list()
 	var/record_size = 60
@@ -39,7 +39,7 @@
 
 /obj/machinery/computer/monitor/proc/search() //keep in sync with /obj/machinery/computer/monitor's version
 	var/turf/T = get_turf(src)
-	attached_wire_ref = WEAKREF(locate(/obj/structure/cable) in T)
+	attached_wire_ref = AUTOREF(locate(/obj/structure/cable) in T)
 	if(attached_wire_ref)
 		return
 	var/area/A = get_area(src) //if the computer isn't directly connected to a wire, attempt to find the APC powering it to pull its powernet instead
@@ -50,7 +50,7 @@
 		return
 	if(!local_apc.terminal) //this really shouldn't happen without badminnery.
 		local_apc = null
-	local_apc_ref = WEAKREF(local_apc)
+	local_apc_ref = AUTOREF(local_apc)
 
 /obj/machinery/computer/monitor/proc/get_powernet() //keep in sync with /datum/computer_file/program/power_monitor's version //np
 	var/obj/structure/cable/attached_wire = attached_wire_ref?.resolve()

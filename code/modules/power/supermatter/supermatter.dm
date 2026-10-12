@@ -183,7 +183,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	var/delam_priority = SM_DELAM_PRIO_NONE
 
 	/// Lazy list of the crazy engineers who managed to turn a cascading engine around.
-	var/list/datum/weakref/saviors = null
+	var/list/datum/autoref/saviors = null
 
 	/// If a sliver of the supermatter has been removed. Almost certainly by a traitor. Lowers the delamination countdown time.
 	var/supermatter_sliver_removed = FALSE
@@ -362,7 +362,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 
 	// handle the engineers that saved the engine from cascading, if there were any
 	if(get_status() < SUPERMATTER_EMERGENCY && !isnull(saviors))
-		for(var/datum/weakref/savior_ref as anything in saviors)
+		for(var/datum/autoref/savior_ref as anything in saviors)
 			var/mob/living/savior = savior_ref.resolve()
 			if(!istype(savior)) // didn't live to tell the tale, sadly.
 				continue
@@ -638,7 +638,7 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 					continue
 				if(isanimal_or_basicmob(lucky_engi))
 					continue
-				LAZYADD(saviors, WEAKREF(lucky_engi))
+				LAZYADD(saviors, AUTOREF(lucky_engi))
 
 			return // delam averted
 		sleep(1 SECONDS)

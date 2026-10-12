@@ -274,10 +274,10 @@
 
 /// Wrapper for can_burn_stuff that checks if something can be burnt and caches the result
 /turf/open/lava/proc/cache_burn_check(atom/movable/burn_target)
-	var/check_result = checked_atoms[burn_target.weak_reference]
+	var/check_result = checked_atoms[burn_target.auto_reference]
 	if(isnull(check_result))
 		check_result = can_burn_stuff(burn_target)
-		checked_atoms[WEAKREF(burn_target)] = check_result
+		checked_atoms[AUTOREF(burn_target)] = check_result
 	return check_result
 
 /turf/open/lava/proc/can_burn_stuff(atom/movable/burn_target)

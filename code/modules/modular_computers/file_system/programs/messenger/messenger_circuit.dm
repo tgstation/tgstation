@@ -47,8 +47,8 @@
 
 /obj/item/circuit_component/mod_program/messenger/input_received(datum/port/port)
 	var/list/messenger_targets = list()
-	for(var/datum/weakref/ref as anything in targets.value)
-		var/obj/item/modular_computer/modpc = ref?.resolve() //entity ports are hardrefs, entity list ports are weakref. :thonking:
+	for(var/datum/autoref/ref as anything in targets.value)
+		var/obj/item/modular_computer/modpc = ref?.resolve() //entity ports are hardrefs, entity list ports are autoref. :thonking:
 		if(!istype(modpc))
 			continue
 		var/datum/computer_file/program/messenger/messenger = locate() in modpc.stored_files

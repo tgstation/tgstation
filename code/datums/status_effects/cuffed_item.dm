@@ -360,8 +360,8 @@
 // Chains two movable to be adjacent to each other. YMMV using this
 /datum/component/chained_together
 	dupe_mode = COMPONENT_DUPE_SOURCES
-	/// Weakref to the thing we're chained to
-	var/datum/weakref/chained_to_weakref
+	/// Autoref to the thing we're chained to
+	var/datum/autoref/chained_to_autoref
 	// Tracks the various things we apply to whatever we are cuffed to for cleanup
 	VAR_PRIVATE/datum/component/leash/link_effect
 	VAR_PRIVATE/datum/component/tug_towards/tug_effect
@@ -370,13 +370,13 @@
 /datum/component/chained_together/on_source_add(source, atom/movable/chained_to)
 	// more sources are only allowed if they're chaining to the same thing
 	// having something linked to two different things is not supported now, and will break horribly
-	return chained_to_weakref?.resolve() == chained_to ? ..() : COMPONENT_REDUNDANT
+	return chained_to_autoref?.resolve() == chained_to ? ..() : COMPONENT_REDUNDANT
 
 /datum/component/chained_together/Initialize(atom/movable/chained_to)
 	if(!ismovable(parent) || !ismovable(chained_to))
 		return COMPONENT_INCOMPATIBLE
 
-	chained_to_weakref = WEAKREF(chained_to)
+	chained_to_autoref = AUTOREF(chained_to)
 	var/atom/movable/movable_parent = parent
 	RegisterSignal(chained_to, COMSIG_MOVABLE_MOVED, PROC_REF(on_chained_to_moved))
 	link_effect = movable_parent.AddComponent(/datum/component/leash, owner = chained_to, distance = 1)
@@ -426,7 +426,7 @@
 	if(QDELETED(src))
 		return
 	var/atom/movable/parent_anchor = get_beam_anchor(parent)
-	var/atom/movable/chained_to_anchor = get_beam_anchor(chained_to_weakref.resolve())
+	var/atom/movable/chained_to_anchor = get_beam_anchor(chained_to_autoref.resolve())
 	if(isnull(parent_anchor) || isnull(chained_to_anchor) || parent_anchor == chained_to_anchor || parent_anchor.z != chained_to_anchor.z)
 		clear_beam()
 		return

@@ -28,7 +28,7 @@
 	/// Previous y position of where we clicked on the target's icon
 	var/previous_y
 	/// The previous target we attacked
-	var/datum/weakref/previous_target
+	var/datum/autoref/previous_target
 
 /datum/embedding/hfr_blade
 	embed_chance = 100
@@ -87,7 +87,7 @@
 		var/x_mod = previous_x - x_slashed
 		var/y_mod = previous_y - y_slashed
 		damage_mod = max(1, round((sqrt(x_mod ** 2 + y_mod ** 2) / 10), 0.1))
-	previous_target = WEAKREF(target)
+	previous_target = AUTOREF(target)
 	previous_x = x_slashed
 	previous_y = y_slashed
 	playsound(src, 'sound/items/weapons/bladeslice.ogg', 100, vary = TRUE)

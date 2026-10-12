@@ -154,14 +154,14 @@
 	var/list/atom/selected_target[2]
 	///Used in MouseDrag to preserve the original mouse click parameters
 	var/mouseParams = ""
-	///Used in MouseDrag to preserve the last mouse-entered location. Weakref
-	var/datum/weakref/mouse_location_ref = null
-	///Used in MouseDrag to preserve the last mouse-entered object. Weakref
-	var/datum/weakref/mouse_object_ref
+	///Used in MouseDrag to preserve the last mouse-entered location. Autoref
+	var/datum/autoref/mouse_location_ref = null
+	///Used in MouseDrag to preserve the last mouse-entered object. Autoref
+	var/datum/autoref/mouse_object_ref
 	//Middle-mouse-button click dragtime control for aimbot exploit detection.
 	var/middragtime = 0
-	//Middle-mouse-button clicked object control for aimbot exploit detection. Weakref
-	var/datum/weakref/middle_drag_atom_ref
+	//Middle-mouse-button clicked object control for aimbot exploit detection. Autoref
+	var/datum/autoref/middle_drag_atom_ref
 	//When we started the currently active drag
 	var/drag_start = 0
 	//The params we were passed at the start of the drag, in list form

@@ -27,8 +27,8 @@
 	var/linked_elevator_id
 	/// 'Floors' for display purposes are by default offset by 1 from their actual z-levels
 	var/lowest_floor_offset = 1
-	/// Weakref to the transport.
-	var/datum/weakref/lift_ref
+	/// Autoref to the transport.
+	var/datum/autoref/lift_ref
 	/// The lowest floor number. Determined by transport module init.
 	var/lowest_floor_num = 1
 	/// Positive for going up, negative going down, 0 for stopped
@@ -43,7 +43,7 @@
 		if(possible_match.specific_transport_id != linked_elevator_id)
 			continue
 
-		lift_ref = WEAKREF(possible_match)
+		lift_ref = AUTOREF(possible_match)
 		RegisterSignal(possible_match, COMSIG_LIFT_SET_DIRECTION, PROC_REF(on_lift_direction))
 
 /obj/machinery/lift_indicator/examine(mob/user)

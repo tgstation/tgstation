@@ -341,7 +341,7 @@
 	var/flashcd = 20
 	var/overheat = 0
 	//Wearef to our arm
-	var/datum/weakref/arm
+	var/datum/autoref/arm
 
 /obj/item/assembly/flash/armimplant/burn_out()
 	var/obj/item/organ/cyberimp/arm/toolkit/flash/real_arm = arm.resolve()

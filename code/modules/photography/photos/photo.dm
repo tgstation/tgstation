@@ -50,7 +50,7 @@
 
 	if(!P.see_ghosts) ///Dont bother with this last bit if we can't see ghosts
 		return
-	for(var/datum/weakref/seen_ref in P.mobs_seen) //Any ghosts in the pic? its a haunted photo ooooo~
+	for(var/datum/autoref/seen_ref in P.mobs_seen) //Any ghosts in the pic? its a haunted photo ooooo~
 		var/mob/seen = seen_ref.resolve()
 		if(!seen)
 			P.mobs_seen -= seen_ref

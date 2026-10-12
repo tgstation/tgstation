@@ -48,8 +48,8 @@
 	var/delegate
 	///A list of arguments to pass into the proc
 	var/list/arguments
-	///A weak reference to the user who triggered this callback
-	var/datum/weakref/user
+	///An auto reference to the user who triggered this callback
+	var/datum/autoref/user
 
 /**
  * Create a new callback datum
@@ -66,7 +66,7 @@
 	if (length(args) > 2)
 		arguments = args.Copy(3)
 	if(usr)
-		user = WEAKREF(usr)
+		user = AUTOREF(usr)
 
 /**
  * Qdel a callback datum
@@ -93,7 +93,7 @@
  */
 /datum/callback/proc/Invoke(...)
 	if(!usr)
-		var/datum/weakref/W = user
+		var/datum/autoref/W = user
 		if(W)
 			var/mob/M = W.resolve()
 			if(M)
@@ -130,7 +130,7 @@
 	set waitfor = FALSE
 
 	if(!usr)
-		var/datum/weakref/W = user
+		var/datum/autoref/W = user
 		if(W)
 			var/mob/M = W.resolve()
 			if(M)

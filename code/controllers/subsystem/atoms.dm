@@ -221,7 +221,7 @@ SUBSYSTEM_DEF(atoms)
 		// Atoms SS has already completed, just kill it now.
 		qdel(target)
 	else
-		queued_deletions += WEAKREF(target)
+		queued_deletions += AUTOREF(target)
 
 /datum/controller/subsystem/atoms/Shutdown()
 	var/initlog = InitLog()

@@ -8,7 +8,7 @@
 	var/track_duration
 
 	///List of all mobs listening to the boss music currently. Cleared on Destroy or after `track_duration`.
-	var/list/datum/weakref/players_listening_refs = list()
+	var/list/datum/autoref/players_listening_refs = list()
 	///List of callback timers, used to clear out mobs listening to boss music after `track_duration`.
 	var/list/music_callbacks = list()
 
@@ -59,7 +59,7 @@
 	if(QDELETED(source) || !istype(new_target))
 		return
 
-	var/datum/weakref/new_ref = WEAKREF(new_target)
+	var/datum/autoref/new_ref = AUTOREF(new_target)
 	if(new_ref in players_listening_refs)
 		return
 
@@ -71,12 +71,12 @@
 ///Called when a mob listening to boss music dies- ends their music early.
 /datum/component/boss_music/proc/on_mob_death(mob/living/source)
 	SIGNAL_HANDLER
-	var/datum/weakref/player_ref = WEAKREF(source)
+	var/datum/autoref/player_ref = AUTOREF(source)
 	clear_target(player_ref)
 
 ///Removes `old_target` from the list of players listening, and stops their music if it is still playing.
 ///This allows them to have music played again if they re-enter combat with this fauna.
-/datum/component/boss_music/proc/clear_target(datum/weakref/old_ref)
+/datum/component/boss_music/proc/clear_target(datum/autoref/old_ref)
 	players_listening_refs -= old_ref
 
 	var/mob/old_target = old_ref?.resolve()

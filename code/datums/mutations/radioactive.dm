@@ -8,15 +8,15 @@
 	power_coeff = 1
 	mutation_icon_state = "radiation"
 	offset_location = ENTIRE_BODY
-	/// Weakref to our radiation emitter component
-	var/datum/weakref/radioactivity_source_ref
+	/// Autoref to our radiation emitter component
+	var/datum/autoref/radioactivity_source_ref
 
 /datum/mutation/radioactive/on_acquiring(mob/living/carbon/human/acquirer)
 	. = ..()
 	if(!.)
 		return
 	var/datum/component/radioactive_emitter/radioactivity_source = make_radioactive(acquirer)
-	radioactivity_source_ref = WEAKREF(radioactivity_source)
+	radioactivity_source_ref = AUTOREF(radioactivity_source)
 
 /datum/mutation/radioactive/setup()
 	. = ..()

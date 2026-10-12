@@ -14,8 +14,8 @@
 	announce_when = 10 // 20 seconds in
 	end_when = 150 // 300 seconds / ~5 minutes in
 
-	/// Weakref to the machine spitting out rads
-	var/datum/weakref/picked_machine_ref
+	/// Autoref to the machine spitting out rads
+	var/datum/autoref/picked_machine_ref
 	/// List of signals added to the picked machine, so we can clear them later
 	var/list/signals_to_add
 
@@ -45,7 +45,7 @@
 				continue
 
 			// We found something, we can just return now
-			picked_machine_ref = WEAKREF(sick_device)
+			picked_machine_ref = AUTOREF(sick_device)
 			return
 
 /datum/round_event/radiation_leak/announce(fake)

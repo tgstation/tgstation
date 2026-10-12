@@ -51,7 +51,7 @@
 	to_chat(hallucinator, span_userdanger("You're set on fire!"))
 	hallucinator.add_mood_event("on_fire", /datum/mood_event/on_fire)
 	var/atom/movable/screen/alert/fire/fake/alert = hallucinator.throw_alert(ALERT_FIRE, /atom/movable/screen/alert/fire/fake, override = TRUE)
-	alert.hallucination_weakref = WEAKREF(src)
+	alert.hallucination_autoref = AUTOREF(src)
 	times_to_lower_stamina = rand(5, 10)
 	addtimer(CALLBACK(src, PROC_REF(start_expanding)), 2 SECONDS)
 	return TRUE
@@ -143,10 +143,10 @@
 /// This alert is thrown when hallucinating fire
 /atom/movable/screen/alert/fire/fake
 	/// We need to track the original hallucination so we can pass it to the status effect
-	var/datum/weakref/hallucination_weakref
+	var/datum/autoref/hallucination_autoref
 
 /atom/movable/screen/alert/fire/fake/handle_stop_drop_roll(mob/living/roller)
-	return !!roller.apply_status_effect(/datum/status_effect/stop_drop_roll/hallucinating, hallucination_weakref)
+	return !!roller.apply_status_effect(/datum/status_effect/stop_drop_roll/hallucinating, hallucination_autoref)
 
 /datum/mood_event/fake_fire
 	description = "Oh... I was just imagining those flames."

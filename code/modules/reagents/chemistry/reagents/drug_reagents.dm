@@ -965,7 +965,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 	randomized_spawns = REAGENT_SPAWN_ALL_RANDOM_SPAWNS
 	addiction_types = list(/datum/addiction/hallucinogens = 50)
 	/// Track the active hallucination we're giving out so we don't replace it by accident
-	VAR_PRIVATE/datum/weakref/active_hallucination_weakref
+	VAR_PRIVATE/datum/autoref/active_hallucination_autoref
 
 /datum/reagent/drug/syndol/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
@@ -976,11 +976,11 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 	liver.apply_organ_damage(0.5 * metabolization_ratio * seconds_per_tick)
 	// anti-hallucinogens can counteract the effects
 	if(HAS_TRAIT(affected_mob, TRAIT_HALLUCINATION_IMMUNE) || affected_mob.reagents.has_reagent(/datum/reagent/medicine/haloperidol, amount = 3, needs_metabolizing = TRUE))
-		QDEL_NULL(active_hallucination_weakref)
+		QDEL_NULL(active_hallucination_autoref)
 		return
 
 	// and the main event, funny hallucinations
-	if(active_hallucination_weakref?.resolve())
+	if(active_hallucination_autoref?.resolve())
 		return
 	var/greatest_fear
 	if(HAS_TRAIT(liver, TRAIT_LAW_ENFORCEMENT_METABOLISM))
@@ -990,7 +990,7 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 
 	if(greatest_fear)
 		// 5 minutes = 15 units, roughly. we cancel the hallucination early when we exit the mob, anyway
-		active_hallucination_weakref = WEAKREF(affected_mob.cause_hallucination(greatest_fear, name, duration = 5 MINUTES, skip_nearby = !overdosed))
+		active_hallucination_autoref = AUTOREF(affected_mob.cause_hallucination(greatest_fear, name, duration = 5 MINUTES, skip_nearby = !overdosed))
 	else
 		// if they're just some random schmuck, give them random hallucinations
 		affected_mob.adjust_hallucinations_up_to(4 SECONDS * metabolization_ratio * seconds_per_tick, 30 SECONDS)
@@ -998,8 +998,8 @@ If you have at over 25u in your body you restore more than 20 stamina per cycle,
 /datum/reagent/drug/syndol/on_mob_end_metabolize(mob/living/affected_mob)
 	. = ..()
 	affected_mob.adjust_hallucinations(-16 SECONDS)
-	QDEL_NULL(active_hallucination_weakref)
+	QDEL_NULL(active_hallucination_autoref)
 
 /datum/reagent/drug/syndol/overdose_start(mob/living/affected_mob, metabolization_ratio)
 	// no message, just refresh the hallucination
-	QDEL_NULL(active_hallucination_weakref)
+	QDEL_NULL(active_hallucination_autoref)

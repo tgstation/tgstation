@@ -21,17 +21,17 @@
 /obj/effect/forcefield/wizard
 	/// Flags for what antimagic can just ignore our forcefields
 	var/antimagic_flags = MAGIC_RESISTANCE
-	/// A weakref to whoever casted our forcefield.
-	var/datum/weakref/caster_weakref
+	/// A autoref to whoever casted our forcefield.
+	var/datum/autoref/caster_autoref
 
 /obj/effect/forcefield/wizard/Initialize(mapload, mob/caster, flags = MAGIC_RESISTANCE)
 	. = ..()
 	if(caster)
-		caster_weakref = WEAKREF(caster)
+		caster_autoref = AUTOREF(caster)
 	antimagic_flags = flags
 
 /obj/effect/forcefield/wizard/CanAllowThrough(atom/movable/mover, border_dir)
-	if(IS_WEAKREF_OF(mover, caster_weakref))
+	if(IS_AUTOREF_OF(mover, caster_autoref))
 		return TRUE
 	if(isliving(mover))
 		var/mob/living/living_mover = mover

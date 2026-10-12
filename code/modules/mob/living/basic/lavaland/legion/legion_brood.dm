@@ -32,7 +32,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/legion_brood
 	kill_count = FALSE
 	/// Reference to a guy who made us
-	var/datum/weakref/created_by
+	var/datum/autoref/created_by
 	/// How many random icon_states we can pick from
 	var/random_states = 3
 	/// Do we have emissives?
@@ -102,7 +102,7 @@
 		set_faction(creator.get_faction())
 	else
 		add_ally(creator)
-	created_by = WEAKREF(creator)
+	created_by = AUTOREF(creator)
 	RegisterSignal(creator, COMSIG_QDELETING, PROC_REF(creator_destroyed))
 	if (!ai_controller)
 		return

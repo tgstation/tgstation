@@ -4,7 +4,7 @@
 	/// Remember the number of species damage_modifier.
 	var/remember_modifier = 0
 	/// Remember last heart we ate and reset bites_taken counter if we start eat new one
-	var/datum/weakref/last_heart_we_ate
+	var/datum/autoref/last_heart_we_ate
 	/// List of all mutations allowed to get.
 	var/static/list/datum/mutation/mutations_list = list(
 		/datum/mutation/adaptation/cold,
@@ -75,7 +75,7 @@
 		return
 	bites_taken = 0
 
-	last_heart_we_ate = WEAKREF(we_ate_heart)
+	last_heart_we_ate = AUTOREF(we_ate_heart)
 	bites_taken++
 	if(bites_taken < (we_ate_heart.reagents.total_volume/2))
 		return

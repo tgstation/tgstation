@@ -335,7 +335,7 @@
 		toast.click_interact = click_interact
 		toast.desc = "Click to [click_interact ? "play" : "view"]."
 		toast.name = header
-		toast.target_ref = WEAKREF(source)
+		toast.target_ref = AUTOREF(source)
 
 
 

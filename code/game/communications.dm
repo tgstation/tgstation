@@ -138,7 +138,7 @@ GLOBAL_LIST_INIT(reserved_radio_colors, list(
 	/// The frequency of this radio frequency. Of course.
 	var/frequency
 	/// List of filters -> list of devices
-	var/list/list/datum/weakref/devices = list()
+	var/list/list/datum/autoref/devices = list()
 
 /datum/radio_frequency/New(freq)
 	frequency = freq
@@ -168,7 +168,7 @@ GLOBAL_LIST_INIT(reserved_radio_colors, list(
 
 	//Send the data
 	for(var/current_filter in filter_list)
-		for(var/datum/weakref/device_ref as anything in devices[current_filter])
+		for(var/datum/autoref/device_ref as anything in devices[current_filter])
 			var/obj/device = device_ref.resolve()
 			if(!device)
 				devices[current_filter] -= device_ref
@@ -189,7 +189,7 @@ GLOBAL_LIST_INIT(reserved_radio_colors, list(
 	if (!filter)
 		filter = "_default"
 
-	var/datum/weakref/new_listener = WEAKREF(device)
+	var/datum/autoref/new_listener = AUTOREF(device)
 	if(isnull(new_listener))
 		return stack_trace("null, non-datum, or qdeleted device")
 	var/list/devices_line = devices[filter]
@@ -203,7 +203,7 @@ GLOBAL_LIST_INIT(reserved_radio_colors, list(
 		var/list/devices_line = devices[devices_filter]
 		if(!devices_line)
 			devices -= devices_filter
-		devices_line -= WEAKREF(device)
+		devices_line -= AUTOREF(device)
 		if(!devices_line.len)
 			devices -= devices_filter
 

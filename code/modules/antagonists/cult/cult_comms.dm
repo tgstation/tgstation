@@ -361,8 +361,8 @@
 	click_action = TRUE
 	enable_text = span_cult("You prepare to tear through the fabric of reality... <b>Click a target to sieze them!</b>")
 	disable_text = span_cult("You cease your preparations.")
-	/// Weakref to whoever we're currently about to toss
-	var/datum/weakref/throwee_ref
+	/// Autoref to whoever we're currently about to toss
+	var/datum/autoref/throwee_ref
 	/// Cooldown of the ability
 	var/pulse_cooldown_duration = 15 SECONDS
 	/// The actual cooldown tracked of the action
@@ -436,11 +436,11 @@
 			return FALSE
 		SEND_SOUND(clicker, sound('sound/items/weapons/thudswoosh.ogg'))
 		to_chat(clicker, span_cult_bold("You reach through the veil with your mind's eye and seize [clicked_on]! <b>Click anywhere nearby to teleport [clicked_on.p_them()]!</b>"))
-		throwee_ref = WEAKREF(clicked_on)
+		throwee_ref = AUTOREF(clicked_on)
 		return TRUE
 
 	if(istype(clicked_on, /obj/structure/destructible/cult))
 		to_chat(clicker, span_cult_bold("You reach through the veil with your mind's eye and lift [clicked_on]! <b>Click anywhere nearby to teleport it!</b>"))
-		throwee_ref = WEAKREF(clicked_on)
+		throwee_ref = AUTOREF(clicked_on)
 		return TRUE
 	return FALSE

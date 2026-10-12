@@ -302,8 +302,8 @@
 
 /// Weaps around a book's sql data, feeds it into a ui that allows us to at base view the contents of the book
 /datum/admin_book_viewer
-	/// Weakref to the /obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker that spawned us
-	var/datum/weakref/owner_ref
+	/// Autoref to the /obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker that spawned us
+	var/datum/autoref/owner_ref
 	/// If we're displaying raw data or rendered markdown
 	var/view_raw = FALSE
 	/// The book id. Incremental, goes up over time
@@ -328,7 +328,7 @@
 	var/list/datum/book_history_entry/history
 
 /datum/admin_book_viewer/proc/set_owner(obj/machinery/computer/libraryconsole/admin_only_do_not_map_in_you_fucker/owner)
-	owner_ref = WEAKREF(owner)
+	owner_ref = AUTOREF(owner)
 	view_raw = owner.view_raw
 
 /datum/admin_book_viewer/ui_interact(mob/user, datum/tgui/ui)

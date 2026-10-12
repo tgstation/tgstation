@@ -63,7 +63,7 @@
 	loopy_rod = TRUE
 	dnd_style_level_up = FALSE
 	/// The wizard who's piloting our rod.
-	var/datum/weakref/our_wizard
+	var/datum/autoref/our_wizard
 	/// The distance the rod will go.
 	var/max_distance = BASE_WIZ_ROD_RANGE
 	/// The damage bonus of the rod when it smacks people.
@@ -135,7 +135,7 @@
  * and preparing them for travel.
  */
 /obj/effect/immovablerod/wizard/proc/set_wizard(mob/living/wizard)
-	our_wizard = WEAKREF(wizard)
+	our_wizard = AUTOREF(wizard)
 
 	wizard.forceMove(src)
 	wizard.add_traits(list(TRAIT_GODMODE, TRAIT_MAGICALLY_PHASED, TRAIT_NO_TRANSFORM), REF(src))

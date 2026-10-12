@@ -25,7 +25,7 @@
 #define VV_BITFIELD "Bitfield"
 #define VV_TEXT_LOCATE "Custom Reference Locate"
 #define VV_PROCCALL_RETVAL "Return Value of Proccall"
-#define VV_WEAKREF "Weak Reference Datum"
+#define VV_AUTOREF "Auto Reference Datum"
 
 #define VV_MSG_MARKED "<br><font size='1' color='red'><b>Marked Object</b></font>"
 #define VV_MSG_TAGGED(num) "<br><font size='1' color='red'><b>Tagged Datum #[num]</b></font>"
@@ -178,7 +178,8 @@
 //outfits
 #define VV_HK_TO_OUTFIT_EDITOR "outfit_editor"
 
-#define VV_HK_WEAKREF_RESOLVE "weakref_resolve"
+// autoref
+#define VV_HK_AUTOREF_RESOLVE "autoref_resolve"
 
 // Flags for debug_variable() that do little things to what we end up rendering
 

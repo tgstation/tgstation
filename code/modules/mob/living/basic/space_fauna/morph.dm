@@ -36,8 +36,8 @@
 
 	ai_controller = /datum/ai_controller/basic_controller/morph
 
-	/// A weakref pointing to the form we are currently assumed as.
-	var/datum/weakref/form_weakref = null
+	/// A autoref pointing to the form we are currently assumed as.
+	var/datum/autoref/form_autoref = null
 	/// A typepath pointing of the form we are currently assumed as. Remember, TYPEPATH!!!
 	var/atom/movable/form_typepath = null
 	/// The ability that allows us to disguise ourselves.
@@ -65,7 +65,7 @@
 	if(!HAS_TRAIT(src, TRAIT_DISGUISED))
 		return ..()
 
-	var/atom/movable/form_reference = form_weakref.resolve()
+	var/atom/movable/form_reference = form_autoref.resolve()
 	if(!isnull(form_reference))
 		. = form_reference.examine(user)
 
@@ -116,7 +116,7 @@
 		span_notice("You twist your body and assume the form of [target]."),
 	)
 
-	form_weakref = WEAKREF(target)
+	form_autoref = AUTOREF(target)
 	form_typepath = target.type
 
 /// Do some more logic for the morph when we undisguise through the action.
@@ -135,7 +135,7 @@
 	med_hud_set_health()
 	med_hud_set_status() //we are no longer an object
 
-	form_weakref = null
+	form_autoref = null
 	form_typepath = null
 
 /// Alias for the disguise ability to be used as a keybind.

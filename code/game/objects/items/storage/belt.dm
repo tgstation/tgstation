@@ -742,7 +742,7 @@
 
 	click_action = TRUE
 
-	var/datum/weakref/eyed_fool
+	var/datum/autoref/eyed_fool
 
 /datum/action/innate/blade_counter/IsAvailable(feedback = TRUE)
 	if(!isliving(owner))
@@ -783,7 +783,7 @@
 	var/obj/item/storage/belt/sheath/used_sheath = target
 	RegisterSignal(swordsman, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(counter_attack))
 	swordsman.Immobilize(1 SECONDS)
-	eyed_fool = WEAKREF(cast_on)
+	eyed_fool = AUTOREF(cast_on)
 	swordsman.visible_message(span_danger("[swordsman] widens [swordsman.p_their()] stance, [swordsman.p_their()] hand hovering over \the [used_sheath]!"), span_notice("You prepare to counterattack [cast_on]!"))
 	addtimer(CALLBACK(src, PROC_REF(relax), swordsman, used_sheath), 1 SECONDS)
 	COOLDOWN_START(used_sheath, full_ability_cooldown, 60 SECONDS)

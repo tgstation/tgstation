@@ -123,7 +123,7 @@ SUBSYSTEM_DEF(tts)
 		return SS_INIT_FAILURE
 	return SS_INIT_SUCCESS
 
-/datum/controller/subsystem/tts/proc/play_tts(datum/weakref/target, list/listeners, sound/audio, sound/audio_blips, datum/language/language, range = 7, volume_offset = 0, ignore_observers = FALSE, source_speaker = null, audio_length = 10 SECONDS, audio_length_blips = 10 SECONDS, volume_preference = /datum/preference/numeric/volume/sound_tts_volume, volume_signal = COMSIG_MOB_TTS_VOLUME_PREFERENCE_APPLIED)
+/datum/controller/subsystem/tts/proc/play_tts(datum/autoref/target, list/listeners, sound/audio, sound/audio_blips, datum/language/language, range = 7, volume_offset = 0, ignore_observers = FALSE, source_speaker = null, audio_length = 10 SECONDS, audio_length_blips = 10 SECONDS, volume_preference = /datum/preference/numeric/volume/sound_tts_volume, volume_signal = COMSIG_MOB_TTS_VOLUME_PREFERENCE_APPLIED)
 	var/atom/actual_target = target?.resolve()
 	var/turf/turf_source
 	if(actual_target)
@@ -141,9 +141,9 @@ SUBSYSTEM_DEF(tts)
 		if(isnull(hearer))
 			continue
 		var/atom/movable/hearer_atom
-		if(isweakref(hearer))
-			var/datum/weakref/weakref = hearer
-			hearer_atom = weakref?.resolve()
+		if(isautoref(hearer))
+			var/datum/autoref/autoref = hearer
+			hearer_atom = autoref?.resolve()
 		else
 			hearer_atom = hearer
 		if(!hearer_atom || QDELING(hearer_atom))
@@ -402,9 +402,9 @@ SUBSYSTEM_DEF(tts)
 			continue
 
 		for(var/radio, hearer_list in radio_list)
-			if(isweakref(radio))
-				var/datum/weakref/weakref = radio
-				var/obj/radio_obj = weakref.resolve()
+			if(isautoref(radio))
+				var/datum/autoref/autoref = radio
+				var/obj/radio_obj = autoref.resolve()
 				if(QDELETED(radio_obj))
 					queued_radio_messages[identifier] -= radio
 					continue
@@ -459,9 +459,9 @@ SUBSYSTEM_DEF(tts)
 	var/shell_scrubbed_input = tts_speech_filter(message)
 	if(!(speaker in available_speakers))
 		return
-	var/list/listener_weakrefs = list()
+	var/list/listener_autorefs = list()
 	for(var/listener in listeners)
-		listener_weakrefs += WEAKREF(listener)
+		listener_autorefs += AUTOREF(listener)
 	var/list/headers = list()
 	headers["Content-Type"] = "application/json"
 	headers["Authorization"] = CONFIG_GET(string/tts_http_token)
@@ -480,11 +480,11 @@ SUBSYSTEM_DEF(tts)
 	request_radio.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts-radio?voice=[speaker]&identifier=[identifier]&filter=[tts_filter_encode(filter, speaker, pitch)]&pitch=[pitch]&special_filters=[url_encode(special_filters)]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name_radio, timeout_seconds = CONFIG_GET(number/tts_http_timeout_seconds))
 	request_blips_radio.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts-blips-radio?voice=[speaker]&identifier=[identifier]&filter=[tts_filter_encode(filter, speaker, pitch, blips = TRUE)]&pitch=[pitch]&special_filters=[url_encode(special_filters)]&blip_base=[blip_base]&blip_number=[blip_number]", json_encode(list("text" = shell_scrubbed_input)), headers, file_name_blips_radio, timeout_seconds = CONFIG_GET(number/tts_http_timeout_seconds))
 	request_radio_gibberish.prepare(RUSTG_HTTP_METHOD_GET, "[CONFIG_GET(string/tts_http_url)]/tts-radio?voice=[speaker]&identifier=[identifier]&filter=[tts_filter_encode(filter, speaker, pitch)]&pitch=[pitch]&special_filters=[url_encode(special_filters)]", json_encode(list("raw_text" = shell_scrubbed_input, "gibberish_text" = shell_scrubbed_input)), headers, file_name_radio_gibberish, timeout_seconds = CONFIG_GET(number/tts_http_timeout_seconds))
-	var/datum/tts_request/current_request = new /datum/tts_request(identifier, request, request_blips, request_radio, request_blips_radio, request_radio_gibberish, shell_scrubbed_input, target, local, language, message_range, volume_offset, listener_weakrefs, pitch, force_blips)
-	var/list/player_queued_tts_messages = queued_tts_messages[WEAKREF(target)]
+	var/datum/tts_request/current_request = new /datum/tts_request(identifier, request, request_blips, request_radio, request_blips_radio, request_radio_gibberish, shell_scrubbed_input, target, local, language, message_range, volume_offset, listener_autorefs, pitch, force_blips)
+	var/list/player_queued_tts_messages = queued_tts_messages[AUTOREF(target)]
 	if(!player_queued_tts_messages)
 		player_queued_tts_messages = list()
-		queued_tts_messages[WEAKREF(target)] = player_queued_tts_messages
+		queued_tts_messages[AUTOREF(target)] = player_queued_tts_messages
 	player_queued_tts_messages += current_request
 	if(length(in_process_http_messages) < max_concurrent_requests)
 		current_request.start_requests()

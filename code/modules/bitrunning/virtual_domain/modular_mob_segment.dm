@@ -12,12 +12,12 @@
 
 	SEND_SIGNAL(src, COMSIG_BITRUNNING_MOB_SEGMENT_SPAWNED, spawned_mobs)
 
-	var/list/datum/weakref/mob_refs = list()
+	var/list/datum/autoref/mob_refs = list()
 	for(var/mob/living/spawned as anything in spawned_mobs)
 		if(QDELETED(spawned))
 			continue
 
-		mob_refs += WEAKREF(spawned)
+		mob_refs += AUTOREF(spawned)
 
 	return mob_refs
 

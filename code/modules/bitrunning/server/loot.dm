@@ -19,7 +19,7 @@
 /obj/machinery/quantum_server/proc/get_multiplayer_bonus()
 	var/total = 0
 	var/multiplayer = FALSE
-	for(var/datum/weakref/connection_ref as anything in avatar_connection_refs)
+	for(var/datum/autoref/connection_ref as anything in avatar_connection_refs)
 		var/datum/component/avatar_connection/connection = connection_ref.resolve()
 		if(isnull(connection))
 			continue
@@ -34,7 +34,7 @@
 		return 0
 
 	var/total = 0
-	for(var/datum/weakref/connection_ref as anything in avatar_connection_refs)
+	for(var/datum/autoref/connection_ref as anything in avatar_connection_refs)
 		var/datum/component/avatar_connection/connection = connection_ref.resolve()
 		if(connection?.nohit)
 			total += nohit_bonus
@@ -64,7 +64,7 @@
 	certificate.update_appearance()
 
 	var/obj/structure/closet/crate/secure/bitrunning/decrypted/reward_cache = new(src, generated_domain, bonus)
-	reward_cache.manifest = WEAKREF(certificate)
+	reward_cache.manifest = AUTOREF(certificate)
 	reward_cache.update_appearance()
 
 	generated_domain.submit_grade(grade)

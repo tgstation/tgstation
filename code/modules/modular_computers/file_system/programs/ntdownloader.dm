@@ -11,8 +11,8 @@
 
 	///The program currently being downloaded.
 	var/datum/computer_file/program/downloaded_file
-	///weak ref to the user who began the download
-	var/datum/weakref/download_user
+	///auto ref to the user who began the download
+	var/datum/autoref/download_user
 	///Boolean on whether the `downloaded_file` is being downloaded from the Syndicate store,
 	///in which case it will appear as 'ENCRYPTED' in logs, rather than display file name.
 	var/hacked_download = FALSE
@@ -67,7 +67,7 @@
 		hacked_download = FALSE
 
 	downloaded_file = PRG.clone()
-	download_user = WEAKREF(user)
+	download_user = AUTOREF(user)
 
 	// If the filesize is 0 (or somehow lower), we instantly download to avoid invalid number issues with stepwise download.
 	if(downloaded_file.size <= 0)

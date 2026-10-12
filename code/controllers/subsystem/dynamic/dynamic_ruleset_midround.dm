@@ -748,8 +748,8 @@
 	signup_atom_appearance = /obj/effect/bluespace_stream
 	/// Chance of getting another clone for the price of free
 	var/bonus_clone_chance = 20
-	/// Weakref to the crewmember we picked to clone, chosen before the ghost poll so it can name them
-	var/datum/weakref/clone_target_ref
+	/// Autoref to the crewmember we picked to clone, chosen before the ghost poll so it can name them
+	var/datum/autoref/clone_target_ref
 
 /datum/dynamic_ruleset/midround/from_ghosts/paradox_clone/New(list/dynamic_config)
 	. = ..()
@@ -770,7 +770,7 @@
 	if(!picked || picked == RULESET_CONFIG_CANCEL)
 		return RULESET_CONFIG_CANCEL
 	if(picked != RANDOM_CLONE_TARGET)
-		clone_target_ref = WEAKREF(admin_pool[picked])
+		clone_target_ref = AUTOREF(admin_pool[picked])
 	return null
 
 #undef RANDOM_CLONE_TARGET
@@ -779,7 +779,7 @@
 	var/mob/living/carbon/human/original = clone_target_ref?.resolve() || find_clone()
 	if(isnull(original))
 		return list()
-	clone_target_ref = WEAKREF(original)
+	clone_target_ref = AUTOREF(original)
 	candidate_role = "clone of [original.real_name] ([original.mind.assigned_role.title])"
 	return ..()
 

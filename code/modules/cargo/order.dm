@@ -177,7 +177,7 @@
 
 	if(istype(container, /obj/structure/closet/crate))
 		var/obj/structure/closet/crate/crate = container
-		crate.manifest = WEAKREF(manifest_paper)
+		crate.manifest = AUTOREF(manifest_paper)
 		crate.update_appearance()
 
 	return manifest_paper

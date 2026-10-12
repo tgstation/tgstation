@@ -13,7 +13,7 @@
 	TEST_ASSERT_EQUAL(computer.power_station, station, "Teleporter console didn't link to the hub")
 
 	computer.set_teleport_target(beacon)
-	TEST_ASSERT_EQUAL(computer.target_ref, beacon.weak_reference, "Teleporter didn't target beacon correctly")
+	TEST_ASSERT_EQUAL(computer.target_ref, beacon.auto_reference, "Teleporter didn't target beacon correctly")
 
 	computer.set_teleport_target(beacon)
 	beacon.turn_off()

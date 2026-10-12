@@ -858,7 +858,7 @@
 /datum/status_effect/stabilized/pink
 	id = "stabilizedpink"
 	colour = SLIME_TYPE_PINK
-	/// List of weakrefs to mobs we have pacified
+	/// List of autorefs to mobs we have pacified
 	var/list/mobs = list()
 	/// Name of our faction
 	var/faction_name = ""
@@ -885,7 +885,7 @@
 /datum/status_effect/stabilized/pink/proc/update_nearby_mobs()
 	var/list/visible_things = view(7, get_turf(owner))
 	// Unpacify far away or offended mobs
-	for(var/datum/weakref/weak_mob as anything in mobs)
+	for(var/datum/autoref/weak_mob as anything in mobs)
 		var/mob/living/beast = weak_mob.resolve()
 		if(isnull(beast))
 			mobs -= weak_mob
@@ -905,7 +905,7 @@
 	for(var/mob/living/beast in visible_things)
 		if(!isanimal_or_basicmob(beast))
 			continue
-		var/datum/weakref/weak_mob = WEAKREF(beast)
+		var/datum/autoref/weak_mob = AUTOREF(beast)
 		if(weak_mob in mobs)
 			continue
 		mobs += weak_mob
@@ -913,7 +913,7 @@
 		beast.add_faction(faction_name)
 
 /datum/status_effect/stabilized/pink/on_remove()
-	for(var/datum/weakref/weak_mob as anything in mobs)
+	for(var/datum/autoref/weak_mob as anything in mobs)
 		var/mob/living/beast = weak_mob.resolve()
 		if(isnull(beast))
 			continue
@@ -943,8 +943,8 @@
 	colour = SLIME_TYPE_BLACK
 	/// How much we heal per tick (also how much we damage per tick times DRAIN_DAMAGE_MULTIPLIER).
 	var/heal_amount = 1
-	/// Weakref to the mob we're currently draining every tick.
-	var/datum/weakref/draining_ref
+	/// Autoref to the mob we're currently draining every tick.
+	var/datum/autoref/draining_ref
 
 /datum/status_effect/stabilized/black/on_apply()
 	RegisterSignal(owner, COMSIG_MOVABLE_SET_GRAB_STATE, PROC_REF(on_grab))
@@ -954,7 +954,7 @@
 	UnregisterSignal(owner, COMSIG_MOVABLE_SET_GRAB_STATE)
 	return ..()
 
-/// Whenever we grab someone by the neck, set "draining" to a weakref of them.
+/// Whenever we grab someone by the neck, set "draining" to a autoref of them.
 /datum/status_effect/stabilized/black/proc/on_grab(mob/living/source, new_state)
 	SIGNAL_HANDLER
 
@@ -966,7 +966,7 @@
 	if(draining.stat == DEAD)
 		return
 
-	draining_ref = WEAKREF(draining)
+	draining_ref = AUTOREF(draining)
 	to_chat(owner, span_boldnotice("You feel your hands melt around [draining]'s neck as you start to drain [draining.p_them()] of [draining.p_their()] life!"))
 	to_chat(draining, span_userdanger("[owner]'s hands melt around your neck as you can feel your life starting to drain away!"))
 
@@ -978,7 +978,7 @@
 	return span_warning("[owner.p_They()] [owner.p_are()] draining health from [draining]!")
 
 /datum/status_effect/stabilized/black/tick(seconds_between_ticks)
-	if(owner.grab_state < GRAB_KILL || !IS_WEAKREF_OF(owner.pulling, draining_ref))
+	if(owner.grab_state < GRAB_KILL || !IS_AUTOREF_OF(owner.pulling, draining_ref))
 		return
 
 	var/mob/living/drained = draining_ref.resolve()

@@ -44,8 +44,8 @@
 	/// Datum level flags
 	var/datum_flags = NONE
 
-	/// A weak reference to another datum
-	var/datum/weakref/weak_reference
+	/// An auto reference to another datum
+	var/datum/autoref/auto_reference
 
 	/*
 	* Lazy associative list of currently active cooldowns.
@@ -128,7 +128,10 @@
 	SHOULD_NOT_SLEEP(TRUE)
 	tag = null
 	datum_flags &= ~DF_USE_TAG //In case something tries to REF us
-	weak_reference = null //ensure prompt GCing of weakref.
+
+	if(auto_reference)
+		UNLINT(auto_reference.instance = null) //stop referencing us please Mr. Autoref
+		auto_reference = null //ensure prompt GCing of autoref.
 
 	if(_active_timers)
 		var/list/timers = _active_timers
@@ -138,23 +141,19 @@
 				continue
 			qdel(timer)
 
-	#ifdef REFERENCE_TRACKING
-	#ifdef REFERENCE_TRACKING_DEBUG
+#if defined(REFERENCE_TRACKING) && defined(REFERENCE_TRACKING_DEBUG)
 	found_refs = null
-	#endif
-	#endif
+#endif
 
 	//BEGIN: ECS SHIT
-	var/list/dc = _datum_components
-	if(dc)
-		for(var/component_key in dc)
-			var/component_or_list = dc[component_key]
+	if(_datum_components)
+		var/list/dc = _datum_components
+		for(var/component_key, component_or_list in dc)
 			if(islist(component_or_list))
 				for(var/datum/component/component as anything in component_or_list)
-					qdel(component, FALSE)
+					qdel(component)
 			else
-				var/datum/component/C = component_or_list
-				qdel(C, FALSE)
+				qdel(component_or_list)
 		dc.Cut()
 
 	_clear_signal_refs()
@@ -315,7 +314,7 @@
 	TIMER_COOLDOWN_END(source, index)
 
 ///Generate a tag for this /datum, if it implements one
-///Should be called as early as possible, best would be in New, to avoid weakref mistargets
+///Should be called as early as possible, best would be in New, to avoid autoref mistargets
 ///Really just don't use this, you don't need it, global lists will do just fine MOST of the time
 ///We really only use it for mobs to make id'ing people easier
 /datum/proc/GenerateTag()
