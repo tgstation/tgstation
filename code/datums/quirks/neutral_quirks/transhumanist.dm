@@ -131,9 +131,11 @@
 
 /datum/quirk/transhumanist/proc/can_add_part(part_type)
 	if(ispath(part_type, /obj/item/bodypart))
-		return !!quirk_holder.get_bodypart(part_type::body_zone)
+		var/obj/item/bodypart/bodypart_check = part_type
+		return !!quirk_holder.get_bodypart(bodypart_check::body_zone)
 	if(ispath(part_type, /obj/item/organ))
-		return !!quirk_holder.get_organ_slot(part_type::slot)
+		var/obj/item/organ/organ_check = part_type
+		return !!quirk_holder.get_organ_slot(organ_check::slot)
 	return FALSE
 
 /datum/quirk/transhumanist/add_unique(client/client_source)
