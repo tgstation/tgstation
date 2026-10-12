@@ -108,6 +108,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/power/apc/auto_name/directional/north,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "s" = (
@@ -193,6 +196,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "B" = (
@@ -308,6 +314,16 @@
 	},
 /obj/effect/decal/cleanable/dirt,
 /turf/open/floor/iron/smooth,
+/area/station/maintenance/starboard/lesser)
+"S" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "U" = (
 /turf/template_noop,
@@ -680,14 +696,14 @@ U
 l
 q
 b
-A
-A
-A
-A
-A
-A
-A
-A
+S
+S
+S
+S
+S
+S
+S
+S
 A
 U
 U
@@ -728,9 +744,9 @@ a
 a
 a
 a
-a
-a
-a
+U
+U
+U
 "}
 (20,1,1) = {"
 U
@@ -748,9 +764,9 @@ a
 a
 a
 a
-a
-a
-a
+U
+U
+U
 "}
 (21,1,1) = {"
 U
@@ -768,9 +784,9 @@ a
 a
 a
 a
-a
-a
-a
+U
+U
+U
 "}
 (22,1,1) = {"
 U
@@ -788,9 +804,9 @@ a
 a
 a
 a
-a
-a
-a
+U
+U
+U
 "}
 (23,1,1) = {"
 U
@@ -808,9 +824,9 @@ a
 a
 a
 a
-a
-a
-a
+U
+U
+U
 "}
 (24,1,1) = {"
 U
@@ -830,7 +846,7 @@ a
 a
 a
 a
-a
+U
 "}
 (25,1,1) = {"
 U
@@ -850,7 +866,7 @@ a
 a
 a
 a
-a
+U
 "}
 (26,1,1) = {"
 U
@@ -870,7 +886,7 @@ a
 a
 a
 a
-a
+U
 "}
 (27,1,1) = {"
 U
@@ -890,7 +906,7 @@ a
 a
 a
 a
-a
+U
 "}
 (28,1,1) = {"
 U
@@ -910,7 +926,7 @@ a
 a
 a
 a
-a
+U
 "}
 (29,1,1) = {"
 U
@@ -930,7 +946,7 @@ a
 a
 a
 a
-a
+U
 "}
 (30,1,1) = {"
 U
@@ -950,7 +966,7 @@ l
 l
 a
 a
-a
+U
 "}
 (31,1,1) = {"
 U
@@ -970,7 +986,7 @@ Y
 l
 a
 a
-a
+U
 "}
 (32,1,1) = {"
 U

@@ -53,12 +53,12 @@
 /area/station/maintenance/starboard/lesser)
 "dY" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/disposalpipe/junction{
-	dir = 8
-	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 4
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "eO" = (
@@ -175,6 +175,9 @@
 /obj/item/stack/sheet/iron{
 	amount = 2
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 2
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "sJ" = (
@@ -218,6 +221,9 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 6
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "zB" = (
@@ -286,6 +292,9 @@
 	name = "External Access"
 	},
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
+/obj/structure/disposalpipe/segment{
+	dir = 2
+	},
 /turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "EY" = (
@@ -404,6 +413,9 @@
 /obj/effect/turf_decal/stripes/asteroid/line{
 	dir = 4
 	},
+/obj/structure/disposalpipe/segment{
+	dir = 2
+	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "Nn" = (
@@ -428,6 +440,16 @@
 "Pl" = (
 /obj/item/flashlight/flare,
 /turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"PS" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 9
+	},
+/turf/open/floor/catwalk_floor,
 /area/station/maintenance/starboard/lesser)
 "Qz" = (
 /obj/effect/decal/cleanable/dirt,
@@ -471,6 +493,33 @@
 /obj/item/clothing/suit/hazardvest,
 /obj/item/clothing/head/utility/hardhat,
 /turf/open/misc/asteroid,
+/area/station/maintenance/starboard/lesser)
+"TO" = (
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/structure/cable,
+/obj/structure/disposalpipe/segment{
+	dir = 1
+	},
+/turf/open/floor/catwalk_floor,
+/area/station/maintenance/starboard/lesser)
+"Uu" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/turf_decal/sand/plating,
+/obj/effect/turf_decal/stripes/asteroid/line{
+	dir = 1
+	},
+/obj/effect/turf_decal/stripes/asteroid/corner,
+/obj/effect/turf_decal/stripes/asteroid/corner{
+	dir = 8
+	},
+/obj/structure/disposalpipe/junction{
+	dir = 4
+	},
+/turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
 "UB" = (
 /obj/structure/railing/corner{
@@ -844,7 +893,7 @@ hk
 hk
 OK
 uF
-sa
+Uu
 Ni
 Ni
 sx
@@ -852,8 +901,8 @@ Ni
 Ni
 Ni
 EA
-yY
-yY
+TO
+PS
 CX
 CX
 "}
@@ -893,9 +942,9 @@ HJ
 nt
 nt
 HJ
-Dw
-Dw
-Dw
+CX
+CX
+CX
 "}
 (20,1,1) = {"
 Dw
@@ -913,9 +962,9 @@ HJ
 HJ
 HJ
 HJ
-Dw
-Dw
-Dw
+CX
+CX
+CX
 "}
 (21,1,1) = {"
 Dw
@@ -933,9 +982,9 @@ Dw
 Dw
 Dw
 Dw
-Dw
-Dw
-Dw
+CX
+CX
+CX
 "}
 (22,1,1) = {"
 CX
@@ -953,9 +1002,9 @@ Dw
 Dw
 Dw
 Dw
-Dw
-Dw
-Dw
+CX
+CX
+CX
 "}
 (23,1,1) = {"
 CX
@@ -973,9 +1022,9 @@ HJ
 HJ
 HJ
 Dw
-Dw
-Dw
-Dw
+CX
+CX
+CX
 "}
 (24,1,1) = {"
 CX
@@ -995,7 +1044,7 @@ HJ
 HJ
 Dw
 Dw
-Dw
+CX
 "}
 (25,1,1) = {"
 CX
@@ -1015,7 +1064,7 @@ QF
 HJ
 Dw
 Dw
-Dw
+CX
 "}
 (26,1,1) = {"
 CX
@@ -1035,7 +1084,7 @@ Eb
 HJ
 Dw
 Dw
-Dw
+CX
 "}
 (27,1,1) = {"
 CX
@@ -1055,7 +1104,7 @@ HJ
 HJ
 Dw
 Dw
-Dw
+CX
 "}
 (28,1,1) = {"
 CX
@@ -1075,7 +1124,7 @@ HJ
 Dw
 Dw
 Dw
-Dw
+CX
 "}
 (29,1,1) = {"
 CX
@@ -1095,7 +1144,7 @@ Dw
 Dw
 Dw
 Dw
-Dw
+CX
 "}
 (30,1,1) = {"
 CX
@@ -1115,7 +1164,7 @@ MO
 MO
 Dw
 Dw
-Dw
+CX
 "}
 (31,1,1) = {"
 CX
@@ -1135,7 +1184,7 @@ KP
 MO
 Dw
 Dw
-Dw
+CX
 "}
 (32,1,1) = {"
 CX
