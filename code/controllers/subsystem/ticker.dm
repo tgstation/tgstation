@@ -37,8 +37,8 @@ SUBSYSTEM_DEF(ticker)
 
 	/// Time left until the round starts after all subsystems initialize
 	var/timeLeft = 120 SECONDS
-	/// value used to initialize `timeLeft` when the master subsystem finishes initializing. 
-	/// We do this to allow for the timer to be set manually before all subsystems initialize, 
+	/// value used to initialize `timeLeft` when the master subsystem finishes initializing.
+	/// We do this to allow for the timer to be set manually before all subsystems initialize,
 	/// while also making sure that when the timer does start, it does so at the value we have set.
 	/// This is set to the config value when SSticker initializes, so setting this only makes sense after that point.
 	var/start_at = 120 SECONDS
@@ -75,6 +75,10 @@ SUBSYSTEM_DEF(ticker)
 	var/atom/movable/screen/reboot_timer/reboot_hud
 	/// ID of round reboot timer, if it exists
 	var/reboot_timer = null
+
+	var/list/ready_jobs = list()
+
+	var/list/reported_jobs = list()
 
 /datum/controller/subsystem/ticker/Initialize()
 	var/list/provisional_title_music = flist("[global.config.directory]/title_music/sounds/")
@@ -877,6 +881,36 @@ SUBSYSTEM_DEF(ticker)
 	if(override)
 		for(var/mob/dead/new_player/new_player as anything in GLOB.new_player_list)
 			new_player?.client.playtitlemusic()
+
+/datum/controller/subsystem/ticker/proc/update_aggregate_ready_report()
+	var/list/job_to_score = list()
+	for(var/ckey, job_info in SSticker.ready_jobs)
+		for(var/job_title, priority in job_info)
+			job_to_score[job_title] += (priority == JP_HIGH ? 1 : priority == JP_MEDIUM ? 0.5 : 0.125)
+
+	reported_jobs.Cut()
+	for(var/job_title, score in job_to_score)
+		// only one or two people have the job on "low", so the chance of it showing up is, well, low.
+		// low enough that we'll just skip reporting it entirely, to avoid useless spam.
+		if(score < 0.5)
+			continue
+
+		reported_jobs[SSjob.get_job(job_title)] = vector(floor(score * 0.5), ceil(score))
+
+	sortTim(reported_jobs, GLOBAL_PROC_REF(cmp_job_display_with_departments_asc))
+
+/datum/controller/subsystem/ticker/proc/test_fill_ready_report()
+	for(var/fake_ckey in GLOB.greek_letters)
+		ready_jobs[fake_ckey] = list()
+		for(var/datum/job/job as anything in shuffle(SSjob.joinable_occupations))
+			if(prob(10))
+				ready_jobs[fake_ckey][job.title] = JP_HIGH
+			else if(prob(20))
+				ready_jobs[fake_ckey][job.title] = JP_MEDIUM
+			else if(prob(50))
+				ready_jobs[fake_ckey][job.title] = JP_LOW
+
+	update_aggregate_ready_report()
 
 #undef ROUND_START_MUSIC_LIST
 #undef SS_TICKER_TRAIT

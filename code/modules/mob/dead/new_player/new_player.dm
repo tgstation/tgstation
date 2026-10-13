@@ -71,7 +71,7 @@
 //When you cop out of the round (NB: this HAS A SLEEP FOR PLAYER INPUT IN IT)
 /mob/dead/new_player/proc/make_me_an_observer()
 	if(QDELETED(src) || !src.client)
-		ready = PLAYER_NOT_READY
+		unready()
 		return FALSE
 
 	var/less_input_message
@@ -80,7 +80,7 @@
 	// Don't convert this to tgui please, it's way too important
 	var/this_is_like_playing_right = alert(usr, "Are you sure you wish to observe? You will not be able to play this round![less_input_message]", "Observe", "Yes", "No")
 	if(QDELETED(src) || !src.client || this_is_like_playing_right != "Yes")
-		ready = PLAYER_NOT_READY
+		unready()
 		return FALSE
 
 	var/mob/dead/observer/observer = new()
@@ -110,6 +110,49 @@
 	QDEL_NULL(mind)
 	qdel(src)
 	return TRUE
+
+/mob/dead/new_player/proc/ready()
+	if(ready == PLAYER_READY_TO_PLAY)
+		return
+	ready = PLAYER_READY_TO_PLAY
+	update_ready_report()
+
+/mob/dead/new_player/proc/unready()
+	if(ready == PLAYER_NOT_READY)
+		return
+	ready = PLAYER_NOT_READY
+	update_ready_report()
+
+/mob/dead/new_player/proc/update_ready_report()
+	if(ready != PLAYER_READY_TO_PLAY)
+		SSticker.ready_jobs -= ckey
+		return
+	if(SSticker.HasRoundStarted())
+		return
+
+	SSticker.ready_jobs[ckey] = list()
+	for(var/job, priority in client?.prefs?.job_preferences)
+		SSticker.ready_jobs[ckey][job] = priority
+
+	if(client?.prefs?.read_preference(/datum/preference/choiced/jobless_role) == BEOVERFLOW)
+		var/datum/job/overflow = SSjob.get_job_type(SSjob.overflow_role)
+		SSticker.ready_jobs[ckey][overflow.title] ||= JP_LOW
+
+	SSticker.update_aggregate_ready_report()
+
+/mob/dead/new_player/get_status_tab_items()
+	. = ..()
+	. += "Potential manifest:"
+	if(!length(SSticker?.reported_jobs))
+		. += "No one"
+		return
+
+	for(var/datum/job/job as anything in SSticker.reported_jobs)
+		var/vector/score_vector = SSticker.reported_jobs[job]
+		if(score_vector.y == 0)
+			continue
+
+		. += "- [job.title]: [score_vector.x][score_vector.x == score_vector.y ? "" : " - [score_vector.y]"]"
 
 /proc/get_job_unavailable_error_message(retval, jobtitle)
 	switch(retval)
