@@ -40,7 +40,7 @@
 	SIGNAL_HANDLER
 
 	if(istype(A, /obj/structure/headpike))
-		owner.current.add_mood_event("oogabooga", /datum/mood_event/sacrifice_good)
+		owner.current.add_mood_event("tendril sacrifice", /datum/mood_event/sacrifice_good)
 
 /datum/team/ashwalkers
 	name = "Ash Walker Tribe"
