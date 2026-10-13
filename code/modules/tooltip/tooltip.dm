@@ -16,6 +16,8 @@ Notes:
 - You may have noticed 90% of the work is done via javascript on the client. Gotta save those cycles man.
 */
 
+#define TOOLTIP_TITLE 1
+#define TOOLTIP_DESCRIPTION 2
 
 /datum/tooltip
 	var/client/owner
@@ -62,7 +64,7 @@ Notes:
 
 	//Send stuff to the tooltip
 	view_size = getviewsize(owner.view)
-	owner << output(list2params(list(src.params, view_size[1] , view_size[2], "[contents[1]][contents[2]]", theme, special)), "[control]:tooltip.update")
+	owner << output(list2params(list(src.params, view_size[1] , view_size[2], "[contents[TOOLTIP_TITLE]][contents[TOOLTIP_DESCRIPTION]]", theme, special)), "[control]:tooltip.update")
 
 	//If a hide() was hit while we were showing, run hide() again to avoid stuck tooltips
 	showing = 0
@@ -76,7 +78,7 @@ Notes:
 	if (!params || !length(contents) || !owner)
 		return FALSE
 	set_title(contents)
-	owner << output(list2params(list(src.params, view_size[1] , view_size[2], "[contents[1]][contents[2]]")), "[control]:tooltip.update")
+	owner << output(list2params(list(src.params, view_size[1] , view_size[2], "[contents[TOOLTIP_TITLE]][contents[TOOLTIP_DESCRIPTION]]")), "[control]:tooltip.update")
 	return TRUE
 
 /datum/tooltip/proc/hide()
@@ -90,8 +92,8 @@ Notes:
 	return TRUE
 
 /datum/tooltip/proc/set_title(list/contents)
-	var/title = contents[1]
-	var/content = contents[2]
+	var/title = contents[TOOLTIP_TITLE]
+	var/content = contents[TOOLTIP_DESCRIPTION]
 
 	if (title && content)
 		title = "<h1>[title]</h1>"
@@ -105,8 +107,8 @@ Notes:
 	title = replacetext(title, "\proper", "")
 	title = replacetext(title, "\improper", "")
 
-	contents[1] = title
-	contents[2] = content
+	contents[TOOLTIP_TITLE] = title
+	contents[TOOLTIP_DESCRIPTION] = content
 
 /datum/tooltip/proc/on_target_qdel()
 	SIGNAL_HANDLER
@@ -147,3 +149,6 @@ Notes:
 	if(!istype(user) || !user.client?.tooltips)
 		return
 	user.client.tooltips.update_text(list(title, content))
+
+#undef TOOLTIP_TITLE
+#undef TOOLTIP_DESCRIPTION
