@@ -152,11 +152,11 @@
 
 	for(var/datum/job/job as anything in SSticker.reported_jobs)
 		var/vector/score_vector = SSticker.reported_jobs[job]
-		if(score_vector.y == 0)
+		if(score_vector.y == 0 || job.spawn_positions <= 0)
 			continue
 
-		var/lower_end = min(score_vector.x, job.spawn_positions - 1)
-		var/upper_end = min(score_vector.y, job.spawn_positions)
+		var/lower_end = clamp(score_vector.x, 0, job.spawn_positions - 1)
+		var/upper_end = clamp(score_vector.y, 0, job.spawn_positions)
 
 		. += "- [job.title]: [lower_end][lower_end == upper_end ? "" : " - [upper_end]"]"
 
