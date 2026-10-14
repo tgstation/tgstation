@@ -282,3 +282,24 @@
   - bugfix: cyborgs disconnect cleanly from deleted AIs, keeping RoboTact usable with
       their own camera photos.
   - refactor: gives all the icon_state mapping turf varedits their own types
+2026-10-11:
+  necromanceranne:
+  - balance: Dragonsbreath is now printable with Riot Suppression tech. They are no
+      longer crafted.
+  - balance: Incendiary now conflagrates in a small fireball for each pellet that
+      hits. They no longer leaves a fire trail.
+  - balance: Incendiary projectiles now do more damage on the projectile itself.
+  - balance: Dragonsbreath also now bounces.
+  - code_imp: Correctly identifies the Tesla Cannon's design datum path as being the
+      tesla revolver, no the stun revolver.
+2026-10-12:
+  Melbert:
+  - qol: Dynamic avoids spawning midrounds while the shuttle is called. (Previously,
+      it only avoided spawning midrounds if the shuttle was half way to the station).
+2026-10-14:
+  hry-gh:
+  - bugfix: when typing in the command bar, thinking/typing indicators will be reflected
+      in game again
+  necromanceranne:
+  - balance: Removes skeleton keys. Tendril chests can simply be opened like any other
+      megafauna loot.
