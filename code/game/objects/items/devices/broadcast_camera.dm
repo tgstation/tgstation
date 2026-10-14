@@ -48,6 +48,7 @@
 
 /obj/item/broadcast_camera/update_icon_state()
 	icon_state = "[base_icon_state][active]"
+	inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
 	return ..()
 
 /obj/item/broadcast_camera/attack_self(mob/user, modifiers)
