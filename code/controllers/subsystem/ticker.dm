@@ -899,18 +899,5 @@ SUBSYSTEM_DEF(ticker)
 
 	sortTim(reported_jobs, GLOBAL_PROC_REF(cmp_job_display_with_departments_asc))
 
-/datum/controller/subsystem/ticker/proc/test_fill_ready_report()
-	for(var/fake_ckey in GLOB.greek_letters)
-		ready_jobs[fake_ckey] = list()
-		for(var/datum/job/job as anything in shuffle(SSjob.joinable_occupations))
-			if(prob(10))
-				ready_jobs[fake_ckey][job.title] = JP_HIGH
-			else if(prob(20))
-				ready_jobs[fake_ckey][job.title] = JP_MEDIUM
-			else if(prob(50))
-				ready_jobs[fake_ckey][job.title] = JP_LOW
-
-	update_aggregate_ready_report()
-
 #undef ROUND_START_MUSIC_LIST
 #undef SS_TICKER_TRAIT
