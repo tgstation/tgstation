@@ -111,18 +111,21 @@
 	qdel(src)
 	return TRUE
 
+/// Readies up for the round
 /mob/dead/new_player/proc/ready()
 	if(ready == PLAYER_READY_TO_PLAY)
 		return
 	ready = PLAYER_READY_TO_PLAY
 	update_ready_report()
 
+/// Unreadies for the round
 /mob/dead/new_player/proc/unready()
 	if(ready == PLAYER_NOT_READY)
 		return
 	ready = PLAYER_NOT_READY
 	update_ready_report()
 
+/// Updates the ready report for this player
 /mob/dead/new_player/proc/update_ready_report()
 	if(ready != PLAYER_READY_TO_PLAY)
 		SSticker.ready_jobs -= ckey

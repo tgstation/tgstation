@@ -75,9 +75,9 @@ SUBSYSTEM_DEF(ticker)
 	var/atom/movable/screen/reboot_timer/reboot_hud
 	/// ID of round reboot timer, if it exists
 	var/reboot_timer = null
-
+	/// Assoc list of ckey to list of jobs to what priority they are ready for
 	var/list/ready_jobs = list()
-
+	/// Formatted version of the ready jobs for display to the players
 	var/list/reported_jobs = list()
 
 /datum/controller/subsystem/ticker/Initialize()
