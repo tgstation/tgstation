@@ -1,0 +1,4 @@
+author: "hry-gh"
+delete-after: True
+changes:
+  - bugfix: "when typing in the command bar, thinking/typing indicators will be reflected in game again"
