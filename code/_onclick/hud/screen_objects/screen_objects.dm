@@ -114,19 +114,20 @@ INITIALIZE_IMMEDIATE(/atom/movable/screen) // I hate this place
 	name = "swap hand"
 	mouse_over_pointer = MOUSE_HAND_POINTER
 
-/atom/movable/screen/swap_hand/Click()
+/atom/movable/screen/swap_hand/Click(location, control, params)
 	// At this point in client Click() code we have passed the 1/10 sec check and little else
 	// We don't even know if it's a middle click
-	if(world.time <= usr.next_move)
-		return 1
+	. = TRUE // but we're definitely handling this click
 
-	if(usr.incapacitated)
-		return 1
+	if(!ismob(usr))
+		return
 
-	if(ismob(usr))
-		var/mob/M = usr
-		M.cycle_hand()
-	return 1
+	if(world.time <= usr.next_move || usr.incapacitated)
+		return
+
+	var/list/modifiers = params2list(params)
+	var/cycle_dir = modifiers[SHIFT_CLICK] ? NORTH : WEST
+	usr.cycle_hand(cycle_dir, FALSE)
 
 /atom/movable/screen/navigate
 	name = "navigate"
