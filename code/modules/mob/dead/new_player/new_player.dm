@@ -155,7 +155,10 @@
 		if(score_vector.y == 0)
 			continue
 
-		. += "- [job.title]: [score_vector.x][score_vector.x == score_vector.y ? "" : " - [score_vector.y]"]"
+		var/lower_end = min(score_vector.x, job.spawn_positions - 1)
+		var/upper_end = min(score_vector.y, job.spawn_positions)
+
+		. += "- [job.title]: [lower_end][lower_end == upper_end ? "" : " - [upper_end]"]"
 
 /proc/get_job_unavailable_error_message(retval, jobtitle)
 	switch(retval)
