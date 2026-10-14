@@ -296,3 +296,7 @@
   Melbert:
   - qol: Dynamic avoids spawning midrounds while the shuttle is called. (Previously,
       it only avoided spawning midrounds if the shuttle was half way to the station).
+2026-10-14:
+  hry-gh:
+  - bugfix: when typing in the command bar, thinking/typing indicators will be reflected
+      in game again
