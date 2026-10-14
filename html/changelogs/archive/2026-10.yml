@@ -300,3 +300,6 @@
   hry-gh:
   - bugfix: when typing in the command bar, thinking/typing indicators will be reflected
       in game again
+  necromanceranne:
+  - balance: Removes skeleton keys. Tendril chests can simply be opened like any other
+      megafauna loot.
