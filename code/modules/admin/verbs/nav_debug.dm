@@ -35,7 +35,18 @@ ADMIN_VERB(navmap_inspect_turf, R_DEBUG, "Navmap: Inspect Turf", "Prints the bak
 		var/flight = (here.nav_pass & NAV_FLIGHT(dir)) ? "Pass" : "Blocked"
 		var/conditional = (here.nav_pass & NAV_COND(dir)) ? "Yes" : "No"
 		var/entries = here.nav_blockers?["[dir]"]
-		lines += "  [direction_name]: Ground: [ground], Flying: [flight], Conditional: [conditional][length(entries) ? " (blockers: [json_encode(entries)])" : ""]"
+		var/list/display_entries = list()
+		for(var/entry in entries)
+			if(isnum(entry))
+				display_entries += entry
+				continue
+			var/datum/weakref/blocker_ref = entry
+			var/atom/blocker = blocker_ref.resolve()
+			if(blocker)
+				display_entries += "[blocker.type] ([REF(blocker)])"
+			else
+				display_entries += "deleted blocker"
+		lines += "  [direction_name]: Ground: [ground], Flying: [flight], Conditional: [conditional][length(display_entries) ? " (blockers: [json_encode(display_entries)])" : ""]"
 	to_chat(user, span_notice(jointext(lines, "\n")))
 
 ADMIN_VERB(navmap_prebake_z, R_DEBUG, "Navmap: Prebake Z-Level", "Eagerly bakes every turf on your current z-level.", ADMIN_CATEGORY_DEBUG)

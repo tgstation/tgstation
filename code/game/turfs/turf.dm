@@ -943,6 +943,10 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		var/list/edge_blockers = list()
 		packed |= nav_evaluate_edge(dir, dest, edge_blockers)
 		if(length(edge_blockers))
+			for(var/index in 1 to length(edge_blockers))
+				var/entry = edge_blockers[index]
+				if(isdatum(entry))
+					edge_blockers[index] = WEAKREF(entry)
 			LAZYINITLIST(blockers)
 			blockers["[dir]"] = edge_blockers
 
