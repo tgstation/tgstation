@@ -392,9 +392,9 @@
 				return
 
 			if(SSshuttle.supply.getDockedId() == docking_home)
+				ui.user.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
 				say("The supply shuttle is departing.")
-				ui.user.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
 				//create the paper from the SSshuttle.shopping_list
 				if(length(SSshuttle.shopping_list))

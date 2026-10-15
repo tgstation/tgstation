@@ -9,6 +9,7 @@
 	size = 10
 	tgui_id = "NtosCargo"
 	program_icon = FA_ICON_CART_FLATBED
+	always_update_ui = TRUE
 	///Are you actually placing orders with it?
 	var/requestonly = TRUE
 	///Can the tablet see or buy illegal stuff?
@@ -33,6 +34,8 @@
 	var/stationcargo = TRUE
 	///The account this console processes and displays. Independent from the account the shuttle processes.
 	var/cargo_account = ACCOUNT_CAR
+	///The catalogue key each viewer was last sent, by REF(), so the catalogue is only resent when it changes.
+	var/list/sent_catalogue_keys
 
 /datum/computer_file/program/budgetorders/proc/is_visible_pack(mob/user, paccess_to_check, list/access, contraband)
 	if(HAS_SILICON_ACCESS(user)) //Borgs can't buy things.
@@ -56,6 +59,26 @@
 		return TRUE
 
 	return FALSE
+
+///Returns everything that can change this user's catalogue while it's open - silicon access, emag, ID access, special packs and prices.
+/datum/computer_file/program/budgetorders/proc/get_catalogue_key(mob/user)
+	if(HAS_SILICON_ACCESS(user))
+		return "silicon"
+	var/static/list/special_packs
+	if(isnull(special_packs))
+		special_packs = list()
+		for(var/pack_id in SSshuttle.supply_packs)
+			var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
+			if(pack.order_flags & ORDER_SPECIAL)
+				special_packs += pack
+	var/list/key = list(SSeconomy.pack_price_modifier)
+	for(var/datum/supply_pack/pack as anything in special_packs)
+		key += pack.order_flags & ORDER_SPECIAL_ENABLED
+	if(computer.obj_flags & EMAGGED)
+		key += "emagged"
+	else
+		key += computer.GetAccess()
+	return jointext(key, ",")
 
 /datum/computer_file/program/budgetorders/ui_data(mob/user)
 	var/list/data = list()
@@ -83,35 +106,7 @@
 		//ID card, not a head of staff: can request items from cargo using departmental budget.
 		//No ID card, can request items from cargo using the cargo budget.
 
-	//Otherwise static data, that is being applied in ui_data as the crates visible and buyable are not static, and are determined by inserted ID.
 	data["requestonly"] = requestonly
-	data["supplies"] = list()
-	for(var/pack in SSshuttle.supply_packs)
-		var/datum/supply_pack/P = SSshuttle.supply_packs[pack]
-		if(P.order_flags & ORDER_INVISIBLE)
-			continue
-		if(!is_visible_pack(user, P.access_view , null, (P.order_flags & ORDER_CONTRABAND)) || (P.order_flags & ORDER_EMAG_ONLY))
-			continue
-		if(!data["supplies"][P.group])
-			data["supplies"][P.group] = list(
-				"name" = P.group,
-				"packs" = list()
-			)
-		if(((P.order_flags & ORDER_EMAG_ONLY) && ((P.order_flags & ORDER_CONTRABAND) && !contraband) || ((P.order_flags & ORDER_SPECIAL) && !(P.order_flags & ORDER_SPECIAL_ENABLED)) || (P.order_flags & ORDER_POD_ONLY)))
-			continue
-
-		var/obj/item/first_item = length(P.contains) > 0 ? P.contains[1] : null
-		data["supplies"][P.group]["packs"] += list(list(
-			"name" = P.name,
-			"cost" = P.get_cost(),
-			"id" = pack,
-			"desc" = P.desc || P.name, // If there is a description, use it. Otherwise use the pack's name.
-			"first_item_icon" = first_item?.icon,
-			"first_item_icon_state" = first_item?.icon_state,
-			"goody" = P.order_flags & ORDER_GOODY,
-			"access" = P.access,
-			"contains" = P.get_contents_ui_data(),
-		))
 
 	//Data regarding the User's capability to buy things.
 	data["away"] = SSshuttle.supply.getDockedId() == docking_away
@@ -169,11 +164,53 @@
 
 	return data
 
+/datum/computer_file/program/budgetorders/ui_interact(mob/user, datum/tgui/ui)
+	var/sent_key = LAZYACCESS(sent_catalogue_keys, REF(user))
+	if(sent_key && sent_key != get_catalogue_key(user))
+		ui.send_full_update(always_instant = TRUE)
+
+/datum/computer_file/program/budgetorders/on_made_active_program(mob/user)
+	. = ..()
+	sent_catalogue_keys = null
+
+/datum/computer_file/program/budgetorders/ui_close(mob/user)
+	. = ..()
+	LAZYREMOVE(sent_catalogue_keys, REF(user))
+
 /datum/computer_file/program/budgetorders/ui_static_data(mob/user)
 	var/list/data = list()
 	data["max_order"] = CARGO_MAX_ORDER
 	data["displayed_currency_full_name"] = " [MONEY_NAME]"
 	data["displayed_currency_name"] = " [MONEY_SYMBOL]"
+
+	LAZYSET(sent_catalogue_keys, REF(user), get_catalogue_key(user))
+	data["supplies"] = list()
+	for(var/pack_id in SSshuttle.supply_packs)
+		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
+		if(pack.order_flags & ORDER_INVISIBLE)
+			continue
+		if(!is_visible_pack(user, pack.access_view, null, (pack.order_flags & ORDER_CONTRABAND)) || (pack.order_flags & ORDER_EMAG_ONLY))
+			continue
+		if(!data["supplies"][pack.group])
+			data["supplies"][pack.group] = list(
+				"name" = pack.group,
+				"packs" = list()
+			)
+		if(((pack.order_flags & ORDER_EMAG_ONLY) && ((pack.order_flags & ORDER_CONTRABAND) && !contraband) || ((pack.order_flags & ORDER_SPECIAL) && !(pack.order_flags & ORDER_SPECIAL_ENABLED)) || (pack.order_flags & ORDER_POD_ONLY)))
+			continue
+
+		var/obj/item/first_item = length(pack.contains) > 0 ? pack.contains[1] : null
+		data["supplies"][pack.group]["packs"] += list(list(
+			"name" = pack.name,
+			"cost" = pack.get_cost(),
+			"id" = pack_id,
+			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
+			"first_item_icon" = first_item?.icon,
+			"first_item_icon_state" = first_item?.icon_state,
+			"goody" = pack.order_flags & ORDER_GOODY,
+			"access" = pack.access,
+			"contains" = pack.get_contents_ui_data(),
+		))
 	return data
 
 /datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
