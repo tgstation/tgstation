@@ -458,6 +458,7 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 
 /obj/item/bodypart/leg/left/skeleton/nonfunctional/digitigrade/Initialize(mapload)
+	. = ..()
 	AddComponent(/datum/component/digitigrade_limb, "[initial(limb_id)]_[BODYPART_ID_DIGITIGRADE]", limb_id, TRUE)
 
 /obj/item/bodypart/leg/right/skeleton/nonfunctional
@@ -474,6 +475,7 @@
 	footstep_type = FOOTSTEP_MOB_CLAW
 
 /obj/item/bodypart/leg/right/skeleton/nonfunctional/digitigrade/Initialize(mapload)
+	. = ..()
 	AddComponent(/datum/component/digitigrade_limb, "[initial(limb_id)]_[BODYPART_ID_DIGITIGRADE]", limb_id, TRUE)
 
 

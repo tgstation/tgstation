@@ -27,11 +27,9 @@
 	RegisterSignal(parent, COMSIG_BODYPART_ATTACHED, PROC_REF(on_attach))
 	RegisterSignal(parent, COMSIG_BODYPART_REMOVED, PROC_REF(on_remove))
 
-	var/mob/living/carbon/human/owner = parent
 	if(ishuman(limb.owner))
-		owner = limb.owner
-		on_attach(limb, owner)
-	if(always_on || owner?.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS)
+		on_attach(limb, limb.owner)
+	if(always_on || limb.owner?.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS)
 		limb.bodytype |= BODYTYPE_DIGITIGRADE
 
 	limb.name = "digitigrade [limb.name]"
