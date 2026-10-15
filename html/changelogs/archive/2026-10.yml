@@ -303,3 +303,16 @@
   necromanceranne:
   - balance: Removes skeleton keys. Tendril chests can simply be opened like any other
       megafauna loot.
+2026-10-15:
+  Melbert:
+  - bugfix: Fixes two handed weapons not updated when wielded
+  SmArtKar:
+  - bugfix: Gibtonite tiles can no longer contain ore in them
+  necromanceranne:
+  - qol: You no longer suffer from a mood malice from seeing the ashwalker tendril
+      eat things if you're not an ashwalker yourself.
+  vinylspiders:
+  - bugfix: you can once again get a medical bounty report from the same patient after
+      waiting five minutes.
+  - bugfix: strange reagent now gets properly set in the HoP's mail delivery goodies
+      if the conditions meet

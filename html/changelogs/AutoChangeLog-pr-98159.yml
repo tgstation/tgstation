@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "strange reagent now gets properly set in the HoP's mail delivery goodies if the conditions meet"
