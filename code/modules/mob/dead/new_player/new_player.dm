@@ -147,7 +147,7 @@
 	. = ..()
 	. += "Potential manifest:"
 	if(!length(SSticker?.reported_jobs))
-		. += "No one"
+		. += "- No one!"
 		return
 
 	for(var/datum/job/job as anything in SSticker.reported_jobs)
@@ -158,7 +158,12 @@
 		var/lower_end = clamp(score_vector.x, 0, job.spawn_positions - 1)
 		var/upper_end = clamp(score_vector.y, 0, job.spawn_positions)
 
-		. += "- [job.title]: [lower_end][lower_end == upper_end ? "" : " - [upper_end]"]"
+		var/display = ""
+		for(var/i in 1 to job.spawn_positions)
+			display += i <= lower_end ? "◼" : i <= upper_end ? "◩" : "◻"
+
+		var/icon = "data:image/png;base64,[icon2base64(get_job_hud_icon(job, scale = 2))]"
+		. += list(list("img", icon, job.title, display))
 
 /proc/get_job_unavailable_error_message(retval, jobtitle)
 	switch(retval)
