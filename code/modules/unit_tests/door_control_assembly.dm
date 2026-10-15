@@ -18,7 +18,7 @@
 	click_wrapper(engineer, big_door)
 	TEST_ASSERT(big_door.panel_open, "Failed to open blast door panel with screwdriver")
 
-	engineer.swap_hand()
+	engineer.swap_hand(engineer.get_inactive_hand_index())
 	engineer.put_in_active_hand(controller_two)
 
 	click_wrapper(engineer, controller_one)
@@ -30,12 +30,12 @@
 	click_wrapper(engineer, bigger_button)
 	TEST_ASSERT_EQUAL(bigger_button.device, controller_two, "Failed to put an assembly in a button")
 
-	engineer.swap_hand() // Remember the screwdriver?
+	engineer.swap_hand(engineer.get_inactive_hand_index()) // Remember the screwdriver?
 
 	click_wrapper(engineer, bigger_button)
 	TEST_ASSERT(!bigger_button.panel_open, "Failed to close a button panel with a screwdriver")
 
-	engineer.swap_hand()
+	engineer.swap_hand(engineer.get_inactive_hand_index())
 
 	click_wrapper(engineer, bigger_button)
 	TEST_ASSERT(big_door.operating, "Pressing a linked button did not make a blast door begin to close")
