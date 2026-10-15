@@ -3,6 +3,7 @@
 /////////////////////////////////////
 
 /datum/design/bodypart
+	abstract_type = /datum/design/bodypart
 	build_type = LIMBGROWER
 	reagents_list = list(/datum/reagent/medicine/c2/synthflesh = 25)
 	category = list(RND_CATEGORY_INITIAL, SPECIES_HUMAN, SPECIES_LIZARD, SPECIES_MOTH, SPECIES_PLASMAMAN, SPECIES_ETHEREAL)
