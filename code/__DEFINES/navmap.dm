@@ -44,14 +44,11 @@
 						break; \
 					} \
 				} else { \
-					var/datum/weakref/_navec_blocker_ref = _navec_entry; \
-					var/atom/_navec_blocker = _navec_blocker_ref.resolve(); \
-					if(_navec_blocker) { \
-						var/_navec_eval_dir = (_navec_blocker.loc == (T)) ? (dir) : REVERSE_DIR(dir); \
-						if(!_navec_blocker.CanAStarPass(_navec_eval_dir, (pass_info))) { \
-							result = FALSE; \
-							break; \
-						} \
+					var/atom/movable/_navec_blocker = _navec_entry; \
+					var/_navec_eval_dir = (_navec_blocker.loc == (T)) ? (dir) : REVERSE_DIR(dir); \
+					if(!_navec_blocker.CanAStarPass(_navec_eval_dir, (pass_info))) { \
+						result = FALSE; \
+						break; \
 					} \
 				} \
 			} \
