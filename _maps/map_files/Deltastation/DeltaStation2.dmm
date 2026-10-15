@@ -68117,6 +68117,9 @@
 /obj/structure/table/wood,
 /obj/item/folder,
 /obj/item/pen,
+/obj/structure/plaque/kiddie/library{
+	pixel_x = 32
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "qMf" = (
@@ -82500,11 +82503,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"uow" = (
-/obj/effect/spawner/structure/window,
-/obj/structure/plaque/kiddie/library,
-/turf/open/floor/plating,
-/area/station/service/library)
 "uoz" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -147349,7 +147347,7 @@ cao
 cao
 hvm
 vmL
-uow
+hvm
 hCe
 hvm
 cao
