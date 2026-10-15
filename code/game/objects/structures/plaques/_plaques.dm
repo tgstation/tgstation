@@ -137,7 +137,7 @@
 	icon = 'icons/obj/signs.dmi'
 	icon_state = "goldenplaque"
 	base_icon_state = "goldenplaque"
-	inhand_icon_state = "goldenplaque"
+	inhand_icon_state = "blankplaque"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	name = "blank plaque"
