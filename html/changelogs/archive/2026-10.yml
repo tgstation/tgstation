@@ -308,6 +308,8 @@
   - spellcheck: ','
   Melbert:
   - bugfix: Fixes two handed weapons not updated when wielded
+  - bugfix: 'Surplus items get uplink datum data if possible in roundend report (meaning
+      it''ll report "Surplus item: stealth implant" rather than "Surplus item: box").'
   NanoCats:
   - spellcheck: Standardized the names and acronyms of the rapid device family.
   SmArtKar:

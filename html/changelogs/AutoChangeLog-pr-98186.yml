@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Surplus items get uplink datum data if possible in roundend report (meaning it'll report \"Surplus item: stealth implant\" rather than \"Surplus item: box\")."
