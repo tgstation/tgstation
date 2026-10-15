@@ -51,7 +51,7 @@
 
 /obj/item/assembly/control/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!copyable || !istype(tool, /obj/item/assembly/control))
-		return NONE
+		return ..()
 
 	astype(tool, /obj/item/assembly/control).id = id
 	balloon_alert(user, "id changed")
