@@ -405,6 +405,17 @@ GLOBAL_LIST_EMPTY(teleportlocs)
 		GLOB.areas -= src
 	if(!isnull(GLOB.custom_areas))
 		GLOB.custom_areas -= src
+	// reg_in_areas_in_z() lists an area under the z it had at each call, with no duplicate check
+	var/list/areas_in_z = SSmapping.areas_in_z
+	for(var/z_key, z_list in areas_in_z)
+		var/list/z_areas = z_list
+		if(z_areas.RemoveAll(src) && !length(z_areas))
+			areas_in_z -= z_key
+	// teleportlocs keys an area by its name at map load, which barsigns and blueprints can change
+	for(var/loc_name, loc_area in GLOB.teleportlocs)
+		if(loc_area == src)
+			GLOB.teleportlocs -= loc_name
+			break
 	//machinery cleanup
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(alarm_manager)
