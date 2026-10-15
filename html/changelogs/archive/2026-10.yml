@@ -310,8 +310,20 @@
   - bugfix: Fixes two handed weapons not updated when wielded
   - bugfix: 'Surplus items get uplink datum data if possible in roundend report (meaning
       it''ll report "Surplus item: stealth implant" rather than "Surplus item: box").'
+  - balance: Added a new access, "Atmospherics Equipment", which controls access to
+      Air Alarms, as well as atmospherics equipment lockers and supply packs. In the
+      future this access may extend to some map areas (such as atmos gas storage).
+  - balance: Atmospheric Technician, Station Engineer, and the Chief Engineer all
+      have "Atmospherics Equipment" access by default.
+  - balance: Head of Security and Head of Personnel do not have "Atmospherics Equipment",
+      and thus cannot access air alarms by default anymore.
+  - balance: Engineering Security Officers is only given "Atmospherics Equipment"
+      access on skeleton crews, and thus cannot access air alarms on higher pop shifts.
   NanoCats:
   - spellcheck: Standardized the names and acronyms of the rapid device family.
+  PapaMichael:
+  - bugfix: Words no longer escape your muzzled mouth if you use an internal exclamation
+      mark
   SmArtKar:
   - bugfix: Gibtonite tiles can no longer contain ore in them
   necromanceranne:

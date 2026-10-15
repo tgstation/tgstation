@@ -1,4 +1,0 @@
-author: "PapaMichael"
-delete-after: True
-changes:
-  - bugfix: "Words no longer escape your muzzled mouth if you use an internal exclamation mark"
