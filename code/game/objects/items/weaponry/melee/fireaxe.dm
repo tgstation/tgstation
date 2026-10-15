@@ -47,7 +47,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 		butcher_sound = hitsound, \
 	)
 	//axes are not known for being precision butchering tools
-	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[base_icon_state]1")
+	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, update_icon_state=TRUE)
 
 /obj/item/fireaxe/Destroy()
 	if(GLOB.bridge_axe == src)
