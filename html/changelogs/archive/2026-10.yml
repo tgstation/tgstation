@@ -306,6 +306,8 @@
 2026-10-15:
   Melbert:
   - bugfix: Fixes two handed weapons not updated when wielded
+  NanoCats:
+  - spellcheck: Standardized the names and acronyms of the rapid device family.
   SmArtKar:
   - bugfix: Gibtonite tiles can no longer contain ore in them
   necromanceranne:
