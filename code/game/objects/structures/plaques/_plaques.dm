@@ -3,7 +3,7 @@
 	icon_state = "goldenplaque"
 	base_icon_state = "goldenplaque"
 	name = "blank plaque"
-	desc = "A blank plaque, use a fancy pen to engrave it. It can be detached from the wall with a wrench."
+	desc = "A blank plaque, use a pen to engrave it. It can be detached from the wall with a wrench."
 	anchored = TRUE
 	opacity = FALSE
 	density = FALSE
@@ -36,7 +36,7 @@
 		if (TOOL_WRENCH)
 			context[SCREENTIP_CONTEXT_LMB] = "Unfasten"
 			return CONTEXTUAL_SCREENTIP_SET
-	if(istype(held_item, /obj/item/pen/fountain) && !engraved)
+	if(istype(held_item, /obj/item/pen) && !engraved)
 		context[SCREENTIP_CONTEXT_LMB] = "Engrave"
 		return CONTEXTUAL_SCREENTIP_SET
 
@@ -96,14 +96,6 @@
 	if(!istype(tool, /obj/item/pen))
 		return NONE
 
-	if(!istype(tool, /obj/item/pen/fountain))
-		if(engraved)
-			to_chat(user, span_warning("This plaque has already been engraved, and your pen isn't fancy enough to engrave it anyway! Find a fountain pen."))
-			return ITEM_INTERACT_BLOCKING
-
-		to_chat(user, span_warning("Your pen isn't fancy enough to engrave this! Find a fountain pen.")) //Go steal the Curator's.
-		return ITEM_INTERACT_BLOCKING
-
 	if(engraved)
 		to_chat(user, span_warning("This plaque has already been engraved."))
 		return ITEM_INTERACT_BLOCKING
@@ -141,7 +133,7 @@
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	name = "blank plaque"
-	desc = "A blank plaque, use a fancy pen to engrave it. It can be placed on a wall."
+	desc = "A blank plaque, use a pen to engrave it. It can be placed on a wall."
 	w_class = WEIGHT_CLASS_NORMAL
 	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT)
 	max_integrity = 200
@@ -200,14 +192,6 @@
 /obj/item/plaque/item_interaction(mob/living/user, obj/item/tool, list/modifiers) //Same as part of the above, except for the item in hand instead of the structure.
 	if(!istype(tool, /obj/item/pen))
 		return NONE
-
-	if(!istype(tool, /obj/item/pen/fountain))
-		if(engraved)
-			to_chat(user, span_warning("This plaque has already been engraved, and your pen isn't fancy enough to engrave it anyway! Find a fountain pen."))
-			return ITEM_INTERACT_BLOCKING
-
-		to_chat(user, span_warning("Your pen isn't fancy enough to engrave this! Find a fountain pen.")) //Go steal the Curator's.
-		return ITEM_INTERACT_BLOCKING
 
 	if(engraved)
 		to_chat(user, span_warning("This plaque has already been engraved."))
