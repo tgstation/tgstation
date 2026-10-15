@@ -1,6 +1,6 @@
 ///The plumbing RCD. All the blueprints are located in _globalvars > lists > construction.dm
 /obj/item/construction/plumbing
-	name = "Plumbing Constructor"
+	name = "plumbing constructor"
 	desc = "An expertly modified RCD outfitted to construct plumbing machinery."
 	icon_state = "plumberer2"
 	inhand_icon_state = "plumberer"
