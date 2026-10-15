@@ -304,6 +304,8 @@
   - balance: Removes skeleton keys. Tendril chests can simply be opened like any other
       megafauna loot.
 2026-10-15:
+  Fikou:
+  - spellcheck: ','
   Melbert:
   - bugfix: Fixes two handed weapons not updated when wielded
   NanoCats:
