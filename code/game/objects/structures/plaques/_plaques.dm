@@ -1,15 +1,18 @@
 /obj/structure/plaque //This is a plaque you can craft with gold, then permanently engrave a title and description on, with a fountain pen.
 	icon = 'icons/obj/signs.dmi'
-	icon_state = "blankplaque"
+	icon_state = "goldenplaque"
+	base_icon_state = "goldenplaque"
 	name = "blank plaque"
 	desc = "A blank plaque, use a fancy pen to engrave it. It can be detached from the wall with a wrench."
 	anchored = TRUE
 	opacity = FALSE
 	density = FALSE
 	layer = SIGN_LAYER
-	custom_materials = list(/datum/material/gold =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT)
 	max_integrity = 200 //Twice as durable as regular signs.
 	armor_type = /datum/armor/structure_plaque
+	///Boolean whether this has a custom sprite, if it does then we won't update to a "written" version.
+	var/custom_sprite = FALSE
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again. Static plaques are already engraved.
 	var/engraved = FALSE
 
@@ -37,6 +40,11 @@
 		context[SCREENTIP_CONTEXT_LMB] = "Engrave"
 		return CONTEXTUAL_SCREENTIP_SET
 
+/obj/structure/plaque/update_icon_state()
+	. = ..()
+	if(engraved && !custom_sprite)
+		icon_state = "[base_icon_state]_written"
+
 /obj/structure/plaque/attack_hand(mob/user, list/modifiers)
 	. = ..()
 	if(. || user.is_blind())
@@ -53,14 +61,16 @@
 	playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	user.visible_message(span_notice("[user] unfastens [src]."), \
 		span_notice("You unfasten [src]."))
-	var/obj/item/plaque/unwrenched_plaque = new (get_turf(user))
+	var/obj/item/plaque/unwrenched_plaque = new(get_turf(user))
 	if(engraved) //If it's still just a basic unengraved plaque, we can (and should) skip some of the below variable transfers.
 		unwrenched_plaque.name = name //Copy over the plaque structure variables to the plaque item we're creating when we unwrench it.
 		unwrenched_plaque.desc = desc
 		unwrenched_plaque.engraved = engraved
 	unwrenched_plaque.icon_state = icon_state
+	unwrenched_plaque.base_icon_state = base_icon_state
 	unwrenched_plaque.update_integrity(get_integrity())
 	unwrenched_plaque.setDir(dir)
+	unwrenched_plaque.update_appearance(UPDATE_ICON)
 	qdel(src) //The plaque structure on the wall goes poof and only the plaque item from unwrenching remains.
 	return TRUE
 
@@ -120,12 +130,14 @@
 	engraved = TRUE //The plaque now has a name, description, and can't be altered again.
 	user.visible_message(span_notice("[user] engraves [src]."), \
 						span_notice("You engrave [src]."))
+	update_appearance(UPDATE_ICON)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/plaque //The item version of the above.
 	icon = 'icons/obj/signs.dmi'
-	icon_state = "blankplaque"
-	inhand_icon_state = "blankplaque"
+	icon_state = "goldenplaque"
+	base_icon_state = "goldenplaque"
+	inhand_icon_state = "goldenplaque"
 	lefthand_file = 'icons/mob/inhands/items_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	name = "blank plaque"
@@ -136,6 +148,8 @@
 	armor_type = /datum/armor/item_plaque
 	///This points the item to make the proper structure when placed on a wall.
 	var/plaque_path = /obj/structure/plaque
+	///Boolean whether this has a custom sprite, if it does then we won't update to a "written" version.
+	var/custom_sprite = FALSE
 	///Custom plaque structures and items both start "unengraved", once engraved with a fountain pen their text can't be altered again.
 	var/engraved = FALSE
 
@@ -143,6 +157,24 @@
 	melee = 50
 	fire = 50
 	acid = 50
+
+/obj/item/plaque/kiddie
+	icon_state = "kiddieplaque"
+	base_icon_state = "kiddieplaque"
+	plaque_path = /obj/structure/plaque/kiddie
+
+/obj/item/plaque/commissionplaque
+	icon_state = "commissionplaque"
+	base_icon_state = "commissionplaque"
+
+/obj/item/plaque/goldcommissionplaque
+	icon_state = "goldcommissionplaque"
+	base_icon_state = "goldcommissionplaque"
+
+/obj/item/plaque/update_icon_state()
+	. = ..()
+	if(engraved && !custom_sprite)
+		icon_state = "[base_icon_state]_written"
 
 /obj/item/plaque/welder_act(mob/living/user, obj/item/I)
 	. = ..()
@@ -201,6 +233,7 @@
 	engraved = TRUE //The plaque now has a name, description, and can't be altered again.
 	user.visible_message(span_notice("[user] engraves [src]."), \
 						span_notice("You engrave [src]."))
+	update_appearance(UPDATE_ICON)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/plaque/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -227,7 +260,9 @@
 		placed_plaque.desc = desc
 		placed_plaque.engraved = engraved
 	placed_plaque.icon_state = icon_state
+	placed_plaque.base_icon_state = base_icon_state
 	placed_plaque.update_integrity(get_integrity())
 	placed_plaque.setDir(dir)
+	placed_plaque.update_appearance(UPDATE_ICON)
 	qdel(src)
 	return ITEM_INTERACT_SUCCESS

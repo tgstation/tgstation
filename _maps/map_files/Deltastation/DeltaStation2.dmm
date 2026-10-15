@@ -7608,7 +7608,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/mess)
 "bPH" = (
-/obj/structure/sign/plaques/kiddie,
+/obj/structure/plaque/kiddie/developer,
 /turf/closed/wall/r_wall,
 /area/station/ai/satellite/interior)
 "bPY" = (
@@ -7966,7 +7966,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "bTK" = (
-/obj/structure/sign/plaques/kiddie/badger{
+/obj/structure/plaque/kiddie/badger{
 	pixel_y = 32
 	},
 /obj/structure/table/wood,
@@ -82499,7 +82499,7 @@
 /area/station/hallway/secondary/entry)
 "uow" = (
 /obj/effect/spawner/structure/window,
-/obj/structure/sign/plaques/kiddie/library,
+/obj/structure/plaque/kiddie/library,
 /turf/open/floor/plating,
 /area/station/service/library)
 "uoz" = (
@@ -91016,7 +91016,7 @@
 /area/station/science/research)
 "wtU" = (
 /obj/structure/cable,
-/obj/structure/sign/plaques/kiddie/library{
+/obj/structure/plaque/kiddie/library{
 	dir = 1;
 	pixel_y = 32
 	},
@@ -98226,7 +98226,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "ykl" = (
-/obj/structure/sign/plaques/kiddie/library{
+/obj/structure/plaque/kiddie/library{
 	dir = 1;
 	pixel_y = 32
 	},

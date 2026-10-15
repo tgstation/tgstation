@@ -29027,7 +29027,7 @@
 	},
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/structure/sign/plaques/kiddie/library{
+/obj/structure/plaque/kiddie/library{
 	pixel_x = 32;
 	dir = 4
 	},
@@ -30145,7 +30145,7 @@
 /turf/open/floor/iron/grimy,
 /area/station/commons/vacant_room/office)
 "ixl" = (
-/obj/structure/sign/plaques/kiddie/devils_tooth{
+/obj/structure/plaque/kiddie/devils_tooth{
 	pixel_y = 32;
 	dir = 1
 	},
@@ -65238,7 +65238,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/tile/dark_green,
-/obj/structure/sign/plaques/kiddie{
+/obj/structure/plaque/kiddie/developer{
 	pixel_y = 32
 	},
 /obj/effect/spawner/round_default_module,
@@ -65455,7 +65455,7 @@
 /obj/effect/spawner/random/trash/cigbutt,
 /obj/effect/spawner/random/trash/cigbutt,
 /obj/effect/decal/cleanable/dirt,
-/obj/structure/sign/plaques/kiddie/perfect_drone{
+/obj/structure/plaque/kiddie/perfect_drone{
 	pixel_x = 32;
 	dir = 4
 	},
@@ -84989,7 +84989,7 @@
 /turf/open/floor/plating,
 /area/station/cargo/storage)
 "xKk" = (
-/obj/structure/sign/plaques/kiddie/gameoflife{
+/obj/structure/plaque/kiddie/gameoflife{
 	pixel_y = 32;
 	dir = 1
 	},
