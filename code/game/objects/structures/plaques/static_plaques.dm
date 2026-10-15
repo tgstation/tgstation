@@ -146,6 +146,7 @@
 /obj/structure/plaque/static_plaque/golden/commission/ks13
 	desc = "космическая-станция-13\nфорпост класса разработчика\nстанция сдана 30.12.2322\nво славу тружеников третьего советского союза"
 	icon_state = "commissionplaque"
+	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT)
 
 /obj/structure/plaque/kiddie
 	name = "\improper kiddie plaque"

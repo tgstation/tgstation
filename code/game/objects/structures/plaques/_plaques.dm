@@ -143,7 +143,7 @@
 	name = "blank plaque"
 	desc = "A blank plaque, use a fancy pen to engrave it. It can be placed on a wall."
 	w_class = WEIGHT_CLASS_NORMAL
-	custom_materials = list(/datum/material/gold =SHEET_MATERIAL_AMOUNT)
+	custom_materials = list(/datum/material/gold = SHEET_MATERIAL_AMOUNT)
 	max_integrity = 200
 	armor_type = /datum/armor/item_plaque
 	///This points the item to make the proper structure when placed on a wall.
@@ -162,10 +162,12 @@
 	icon_state = "kiddieplaque"
 	base_icon_state = "kiddieplaque"
 	plaque_path = /obj/structure/plaque/kiddie
+	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/plaque/commissionplaque
 	icon_state = "commissionplaque"
 	base_icon_state = "commissionplaque"
+	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT)
 
 /obj/item/plaque/goldcommissionplaque
 	icon_state = "goldcommissionplaque"
