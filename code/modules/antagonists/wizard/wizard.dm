@@ -195,6 +195,8 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	var/mob/living/carbon/human/H = owner.current
 	if(!istype(H))
 		return
+	var/datum/action/cooldown/spell/announcement/announcement = new(owner)
+	announcement.Grant(H)
 	if(strip)
 		H.delete_equipment()
 	//Wizards are human by default. Use the mirror if you want something else.
@@ -202,6 +204,7 @@ GLOBAL_LIST_EMPTY(wizard_spellbook_purchases_by_key)
 	if(H.age < wiz_age)
 		H.age = wiz_age
 	H.equipOutfit(outfit_type)
+
 
 /datum/antagonist/wizard/ui_static_data(mob/user)
 	var/list/data = list()
