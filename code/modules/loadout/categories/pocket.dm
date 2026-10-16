@@ -338,15 +338,3 @@
 /datum/loadout_item/pocket_items/plaque
 	name = "Plaque"
 	item_path = /obj/item/plaque
-
-/datum/loadout_item/pocket_items/plauqe_kiddie
-	name = "Plaque (Kiddie)"
-	item_path = /obj/item/plaque/kiddie
-
-/datum/loadout_item/pocket_items/plauqe_commission
-	name = "Plaque (Commissioned)"
-	item_path = /obj/item/plaque/commissionplaque
-
-/datum/loadout_item/pocket_items/plauqe_goldcommission
-	name = "Plaque (Golden Commissioned)"
-	item_path = /obj/item/plaque/goldcommissionplaque

@@ -125,6 +125,27 @@
 	update_appearance(UPDATE_ICON)
 	return ITEM_INTERACT_SUCCESS
 
+// Plaque skins
+/datum/atom_skin/plaque
+	abstract_type = /datum/atom_skin/plaque
+	change_base_icon_state = TRUE
+
+/datum/atom_skin/plaque/default
+	preview_name = "Default"
+	new_icon_state = "goldenplaque"
+
+/datum/atom_skin/plaque/kiddie
+	preview_name = "Kiddie"
+	new_icon_state = "kiddieplaque"
+
+/datum/atom_skin/plaque/commissionplaque
+	preview_name = "Commissioned"
+	new_icon_state = "commissionplaque"
+
+/datum/atom_skin/plaque/goldcommissionplaque
+	preview_name = "Commissioned (Gold)"
+	new_icon_state = "goldcommissionplaque"
+
 /obj/item/plaque //The item version of the above.
 	icon = 'icons/obj/signs.dmi'
 	icon_state = "goldenplaque"
@@ -150,20 +171,8 @@
 	fire = 50
 	acid = 50
 
-/obj/item/plaque/kiddie
-	icon_state = "kiddieplaque"
-	base_icon_state = "kiddieplaque"
-	plaque_path = /obj/structure/plaque/kiddie
-	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
-
-/obj/item/plaque/commissionplaque
-	icon_state = "commissionplaque"
-	base_icon_state = "commissionplaque"
-	custom_materials = list(/datum/material/silver = SHEET_MATERIAL_AMOUNT)
-
-/obj/item/plaque/goldcommissionplaque
-	icon_state = "goldcommissionplaque"
-	base_icon_state = "goldcommissionplaque"
+/obj/item/plaque/setup_reskins()
+	AddComponent(/datum/component/reskinable_item, /datum/atom_skin/plaque)
 
 /obj/item/plaque/update_icon_state()
 	. = ..()
