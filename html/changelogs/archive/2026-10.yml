@@ -334,3 +334,9 @@
       waiting five minutes.
   - bugfix: strange reagent now gets properly set in the HoP's mail delivery goodies
       if the conditions meet
+2026-10-16:
+  Neocloudy:
+  - spellcheck: Fixed or tweaked spelling/grammar in new Cerulean content, including
+      the hydro vaporizer, the deadbeat musician, the armored leather jacket, the
+      black pearl necklace, the translucent fish tail, and some of the Cerulean perks
+      (in the species menu).
