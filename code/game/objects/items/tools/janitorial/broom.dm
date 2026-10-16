@@ -6,7 +6,6 @@
 	desc = "This is my BROOMSTICK! It can be used manually or braced with two hands to sweep items as you move. It has a telescopic handle for compact storage."
 	icon = 'icons/obj/service/janitor.dmi'
 	icon_state = "broom0"
-	inhand_icon_state = "broom0"
 	base_icon_state = "broom"
 	icon_angle = 135
 	lefthand_file = 'icons/mob/inhands/equipment/custodial_lefthand.dmi'
@@ -27,7 +26,7 @@
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 8, \
 		force_wielded = 12, \
-		icon_wielded = "[base_icon_state]1", \
+		update_icon_state = TRUE, \
 		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)

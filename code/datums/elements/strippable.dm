@@ -178,6 +178,7 @@
  * Returns a list of alternate actions that can be performed on this strippable_item.
  * All string keys in the list must be inside tgui\packages\tgui\interfaces\StripMenu.tsx
  * You can also return null if there are no alternate actions.
+ * The item is null when the slot is empty.
  */
 /datum/strippable_item/proc/get_alternate_actions(atom/source, mob/user, obj/item/item)
 	RETURN_TYPE(/list)
@@ -187,6 +188,15 @@
 	if(item)
 		SEND_SIGNAL(item, COMSIG_ITEM_GET_STRIPPABLE_ALT_ACTIONS, source, user, alt_actions)
 	return alt_actions
+
+/**
+ * Returns an assoc list of alternate action keys to base64 icons shown in place of the action's default icon.
+ * You can also return null to keep the default icons.
+ * The item is null when the slot is empty.
+ */
+/datum/strippable_item/proc/get_alternate_action_icons(atom/source, mob/user, obj/item/item)
+	RETURN_TYPE(/list)
+	return null
 
 /**
  * Performs an alternate action on this strippable_item.
@@ -369,16 +379,18 @@
 			continue
 
 		var/obj/item/item = item_data.get_item(owner)
-		if (isnull(item) || (HAS_TRAIT(item, TRAIT_NO_STRIP) || HAS_TRAIT(item, TRAIT_EXAMINE_SKIP)))
+		if (!isnull(item) && (HAS_TRAIT(item, TRAIT_NO_STRIP) || HAS_TRAIT(item, TRAIT_EXAMINE_SKIP)))
 			items[strippable_key] = result
 			continue
 
 		LAZYINITLIST(result)
 
-		result["icon"] = icon2base64(icon(item.icon, item.icon_state, frame = 1))
-		result["name"] = item.name
+		if (!isnull(item))
+			result["icon"] = icon2base64(icon(item.icon, item.icon_state, frame = 1))
+			result["name"] = item.name
 		result["alternate"] = item_data.get_alternate_actions(owner, user, item)
 		list_clear_nulls(result["alternate"])
+		result["alternate_icons"] = item_data.get_alternate_action_icons(owner, user, item)
 		var/static/list/already_cried = list()
 		if(length(result["alternate"]) > 3 && !(type in already_cried))
 			stack_trace("Too many alternate actions for [type]! Only three are supported at the moment! This will look bad!")

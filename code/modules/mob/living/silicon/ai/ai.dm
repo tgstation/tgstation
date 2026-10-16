@@ -158,9 +158,14 @@
 				return
 	return ..()
 
-/mob/living/silicon/ai/Destroy()
+/mob/living/silicon/ai/Destroy(force)
 	GLOB.ai_list -= src
 	GLOB.shuttle_caller_list -= src
+	// Release linked cyborgs before deleting the resources they access through us.
+	for(var/mob/living/silicon/robot/cyborg in connected_robots)
+		if(cyborg.connected_ai == src)
+			cyborg.set_connected_ai(null)
+	connected_robots.Cut()
 	SSshuttle.autoEvac()
 	QDEL_NULL(eyeobj) // No AI, no Eye
 	QDEL_NULL(spark_system)

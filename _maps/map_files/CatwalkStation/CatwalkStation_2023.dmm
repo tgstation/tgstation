@@ -32938,9 +32938,7 @@
 /obj/effect/spawner/random/entertainment/deck,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet{
-	icon_state = "carpet-110"
-	},
+/turf/open/floor/carpet,
 /area/station/service/abandoned_gambling_den)
 "iJa" = (
 /obj/effect/decal/cleanable/dirt,
@@ -68159,9 +68157,7 @@
 "sgQ" = (
 /obj/structure/table/wood/poker,
 /obj/effect/spawner/random/entertainment/gambling,
-/turf/open/floor/carpet{
-	icon_state = "carpet-137"
-	},
+/turf/open/floor/carpet,
 /area/station/service/abandoned_gambling_den)
 "sgT" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners{
@@ -71859,9 +71855,7 @@
 /obj/effect/spawner/random/entertainment/gambling,
 /obj/effect/decal/cleanable/cobweb,
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet{
-	icon_state = "carpet-38"
-	},
+/turf/open/floor/carpet,
 /area/station/service/abandoned_gambling_den)
 "tgi" = (
 /obj/structure/cable,

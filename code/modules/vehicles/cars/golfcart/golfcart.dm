@@ -625,6 +625,8 @@
 			var/mutable_appearance/base_overlay = overlays[1]
 			overlays.Remove(base_overlay)
 			cargo_image = SSvis_overlays.add_vis_overlay(src, base_overlay.icon, base_overlay.icon_state, base_overlay.layer, plane, dir)
+			if (isnull(cargo_image)) // Carts being deleted get no vis overlays
+				return
 			cargo_image.overlays = overlays
 			cargo_image.pixel_x = offsets.x
 			cargo_image.pixel_y = offsets.y

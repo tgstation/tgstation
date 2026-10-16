@@ -279,6 +279,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 10, \
 		force_wielded = 18, \
+		update_icon_state = TRUE, \
 	)
 	AddComponent(
 		/datum/component/butchering, \
@@ -291,10 +292,6 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 		return TRUE
 	return FALSE
-
-/obj/item/nullrod/vibro/update_icon_state()
-	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
-	return ..()
 
 // God Hand - Cannot be dropped. Does burn damage.
 
@@ -635,12 +632,9 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 14, \
 		force_wielded = 18, \
+		update_icon_state = TRUE, \
 	)
 	AddComponent(/datum/component/walking_aid)
-
-/obj/item/nullrod/bostaff/update_icon_state()
-	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
-	return ..()
 
 /obj/item/nullrod/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)
