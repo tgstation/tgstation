@@ -340,6 +340,8 @@
       the hydro vaporizer, the deadbeat musician, the armored leather jacket, the
       black pearl necklace, the translucent fish tail, and some of the Cerulean perks
       (in the species menu).
+  PapaMichael:
+  - bugfix: The escape menu players list no longer reveals stealthed admins
   PetyaFX:
   - bugfix: Fixed SFX-keyed sounds being silent through sound tokens.
   vinylspiders:
