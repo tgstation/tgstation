@@ -48,7 +48,10 @@
 	var/json_file = file(RUNTIME_JSON_DATA)
 	if(!fexists(json_file))
 		return
-	var/list/json_list = json_decode(file2text(json_file))
+	var/json_text = file2text(json_file)
+	if(!rustg_json_is_valid(json_text))
+		return
+	var/list/json_list = json_decode(json_text)
 	family = json_list["family"]
 
 /mob/living/basic/pet/cat/runtime/Destroy()

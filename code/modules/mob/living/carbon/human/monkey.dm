@@ -92,7 +92,10 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living)
 	var/json_file = file("data/npc_saves/Punpun.json")
 	if(!fexists(json_file))
 		return
-	var/list/json = json_decode(file2text(json_file))
+	var/json_text = file2text(json_file)
+	if(!rustg_json_is_valid(json_text))
+		return
+	var/list/json = json_decode(json_text)
 	ancestor_name = json["ancestor_name"]
 	ancestor_chain = json["ancestor_chain"]
 	relic_hat = json["relic_hat"]

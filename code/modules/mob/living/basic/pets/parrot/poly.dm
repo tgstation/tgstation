@@ -119,7 +119,10 @@
 	var/json_file = file("data/npc_saves/Poly.json")
 	if(!fexists(json_file))
 		return list()
-	var/list/json = json_decode(file2text(json_file))
+	var/json_text = file2text(json_file)
+	if(!rustg_json_is_valid(json_text))
+		return list()
+	var/list/json = json_decode(json_text)
 	rounds_survived = json["roundssurvived"]
 	longest_survival = json["longestsurvival"]
 	longest_deathstreak = json["longestdeathstreak"]

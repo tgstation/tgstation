@@ -461,7 +461,10 @@
 	var/json_file = file("data/npc_saves/Ian.json")
 	if(!fexists(json_file))
 		return
-	var/list/json = json_decode(file2text(json_file))
+	var/json_text = file2text(json_file)
+	if(!rustg_json_is_valid(json_text))
+		return
+	var/list/json = json_decode(json_text)
 	age = json["age"]
 	record_age = json["record_age"]
 	saved_head = json["saved_head"]
