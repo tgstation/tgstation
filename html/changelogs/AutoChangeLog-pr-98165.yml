@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "ghosts can stop orbiting by moving away after their orbit is transferred to another target."
