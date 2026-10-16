@@ -182,6 +182,8 @@
 		if(gun.magazine?.item_flags & ABSTRACT) //we cannot insert an internal magazine into the new gun, so we insert the individual casings instead.
 			for(var/i in 1 to length(gun.magazine.stored_ammo))
 				var/obj/item/ammo_casing/round = gun.magazine.get_round()
+				if(isnull(round))
+					continue
 				if(!magazine.give_round(round))
 					round.forceMove(drop_location())
 		else if(gun.magazine && istype(gun.magazine, accepted_magazine_type)) //insert the new magazine into the gun
