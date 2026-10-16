@@ -449,7 +449,7 @@ GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
 /mob/proc/get_items_by_slots(slot_ids)
 	. = list()
 	for (var/slot_id in bitfield_to_list(slot_ids))
-		. += get_item_by_slot(slot_id)
+		. |= get_item_by_slot(slot_id)
 
 /// Gets what slot the item on the mob is held in.
 /// Returns null if the item isn't in any slots on our mob.
