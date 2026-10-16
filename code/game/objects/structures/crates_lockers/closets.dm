@@ -61,8 +61,6 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	var/unlock_sound = 'sound/machines/closet/closet_unlock.ogg'
 	var/open_sound_volume = 35
 	var/close_sound_volume = 50
-	var/material_drop = /obj/item/stack/sheet/iron
-	var/material_drop_amount = 2
 	var/delivery_icon = "deliverycloset" //which icon to use when packagewrapped. null to be unwrappable.
 	var/anchorable = TRUE
 	var/icon_welded = "welded"
@@ -642,8 +640,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 	if(obj_flags & NO_DEBRIS_AFTER_DECONSTRUCTION)
 		return
 
-	if(ispath(material_drop) && material_drop_amount)
-		new material_drop(loc, material_drop_amount)
+	drop_custom_materials()
 	if (secure)
 		var/obj/item/electronics/airlock/electronics = new(drop_location())
 		if(length(req_one_access))

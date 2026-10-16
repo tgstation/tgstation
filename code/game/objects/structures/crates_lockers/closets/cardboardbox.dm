@@ -8,8 +8,6 @@
 	integrity_failure = 0
 	can_weld_shut = 0
 	cutting_tool = /obj/item/wirecutters
-	material_drop = /obj/item/stack/sheet/cardboard
-	material_drop_amount = 4
 	custom_materials = list(/datum/material/cardboard = SHEET_MATERIAL_AMOUNT * 4)
 	delivery_icon = "deliverybox"
 	anchorable = FALSE
@@ -123,4 +121,3 @@
 	open_sound_volume = 35
 	close_sound_volume = 50
 	custom_materials = list(/datum/material/alloy/plasteel = SHEET_MATERIAL_AMOUNT * 4)
-	material_drop = /obj/item/stack/sheet/plasteel

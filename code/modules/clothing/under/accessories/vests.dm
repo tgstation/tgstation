@@ -40,6 +40,7 @@
 	inhand_icon_state = "vest_sheriff"
 	minimize_when_attached = TRUE
 	attachment_slot = NONE
+	custom_materials = list(/datum/material/leather = 4 * SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/accessory/maidapron
 	name = "maid apron"
