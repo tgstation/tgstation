@@ -152,7 +152,7 @@
 	say_mod = "chirps"
 	modifies_speech = TRUE
 	icon = 'icons/map_icons/items/_item.dmi'
-	icon_state = "/obj/item/organ/tongue/rat"
+	icon_state = "/obj/item/organ/tongue/mouse"
 	post_init_icon_state = "tongue"
 	greyscale_config = /datum/greyscale_config/mutant_organ
 	greyscale_colors = STOAT_COLORS
