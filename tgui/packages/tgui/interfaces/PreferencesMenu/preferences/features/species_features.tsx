@@ -140,3 +140,30 @@ export const feature_cerulean_snout: FeatureToggle = {
   name: 'Fish snout',
   component: CheckboxInput,
 };
+
+export const feature_jelly_head: FeatureChoiced = {
+  name: 'Jellyperson Head',
+  component: (
+    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+  ) => {
+    return <FeatureDropdownInput buttons {...props} />;
+  },
+};
+
+export const feature_jelly_chest: FeatureChoiced = {
+  name: 'Jellyperson Chest',
+  component: (
+    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+  ) => {
+    return <FeatureDropdownInput buttons {...props} />;
+  },
+};
+
+export const feature_jelly_eyes: FeatureChoiced = {
+  name: 'Jellyperson Eyes',
+  component: (
+    props: FeatureValueProps<string, string, FeatureChoicedServerData>,
+  ) => {
+    return <FeatureDropdownInput buttons {...props} />;
+  },
+};
