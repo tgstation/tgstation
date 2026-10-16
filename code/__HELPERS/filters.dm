@@ -352,7 +352,7 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 		var/random_roll = rand()
 		in_atom.add_filter("wibbly-[i]", 5, wave_filter(x = X, y = Y, size = rand() * 2.5 + 0.5, offset = random_roll))
 		var/filter = in_atom.get_filter("wibbly-[i]")
-		animate(filter, offset = random_roll, time = 0, loop = -1, flags = ANIMATION_PARALLEL)
+		animate(filter, offset = random_roll, time = 0, loop = -1, flags = ANIMATION_PARALLEL, tag = "wibbly-[i]")
 		animate(offset = random_roll - 1, time = rand() * 20 + 10)
 
 /proc/remove_wibbly_filters(atom/in_atom, remove_duration = 0)
@@ -362,10 +362,11 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 	for(var/i in 1 to 7)
 		filter = in_atom.get_filter("wibbly-[i]")
 		if(remove_duration == 0)
-			animate(filter)
+			if(filter)
+				animate(filter, tag = "wibbly-[i]")
 			in_atom.remove_filter("wibbly-[i]")
 			continue
-		animate(filter, x = 0, y = 0, size = 0, offset = 0, time = remove_duration)
+		animate(filter, x = 0, y = 0, size = 0, offset = 0, time = remove_duration, tag = "wibbly-[i]")
 		addtimer(CALLBACK(in_atom, TYPE_PROC_REF(/datum, remove_filter), "wibbly-[i]"), remove_duration)
 
 /proc/convert_list_to_filter(list/list_filter)
