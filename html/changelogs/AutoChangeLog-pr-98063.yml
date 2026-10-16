@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscdel: "Removed the ability for id cards to project a pay stand"
+  - rscdel: "Removed the vend-a-tray entirely"
+  - rscadd: "You can construct tip jars with glass or plasmaglass (though not with their reinforced variants). Tip jars accept many tiny methods of gratuity, such as coins, cash, holochips, IOUs, or... a cigarette, sure."
+  - rscadd: "Adds tip jars to the kitchen in the bar, where the vend-a-trays once sat."
