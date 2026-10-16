@@ -1,11 +1,11 @@
 import { Box, Section } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 import { sanitizeText } from '../sanitize';
+import { useNtos } from './NtosCore';
 
 export const NtosPhysScanner = (props) => {
-  const { act, data } = useBackend();
+  const { act, data } = useNtos();
   const { last_record } = data;
   const textHtml = {
     __html: sanitizeText(last_record),

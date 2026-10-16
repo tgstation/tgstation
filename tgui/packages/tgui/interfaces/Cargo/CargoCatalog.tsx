@@ -13,18 +13,30 @@ import {
 } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
 
-import { useBackend, useSharedState } from '../../backend';
+import { useSharedState } from '../../backend';
 import { SearchBar } from '../common/SearchBar';
 import { searchForSupplies } from './helpers';
 import type { CargoData, Supply, SupplyCategory } from './types';
 
-type Props = {
+type CargoCatalogProps = {
+  act: any;
+  data: CargoCatalogData;
   express?: boolean;
 };
 
-export function CargoCatalog(props: Props) {
-  const { data } = useBackend<CargoData>();
-  const { express } = props;
+type CargoCatalogData = Pick<
+  CargoData,
+  | 'self_paid'
+  | 'supplies'
+  | 'cart'
+  | 'max_order'
+  | 'self_paid'
+  | 'app_cost'
+  | 'displayed_currency_name'
+>;
+
+export function CargoCatalog(props: CargoCatalogProps) {
+  const { act, data, express } = props;
 
   const supplies = Object.values(data.supplies);
   const [showContents, setShowContents] = useState('');
@@ -65,6 +77,8 @@ export function CargoCatalog(props: Props) {
         <Stack.Item grow mr={-0.33}>
           <Section fill>
             <CatalogTabs
+              act={act}
+              data={data}
               express={express}
               activeSupplyName={activeSupplyName}
               categories={supplies}
@@ -77,7 +91,12 @@ export function CargoCatalog(props: Props) {
         <Stack.Divider />
         <Stack.Item grow={express ? 2 : 3}>
           <Section fill scrollable>
-            <CatalogList packs={packs} openContents={setShowContents} />
+            <CatalogList
+              act={act}
+              {...data}
+              packs={packs}
+              openContents={setShowContents}
+            />
           </Section>
         </Stack.Item>
       </Stack>
@@ -91,18 +110,20 @@ type CatalogTabsProps = {
   searchText: string;
   setActiveSupplyName: (name: string) => void;
   setSearchText: (text: string) => void;
-};
+} & CargoCatalogProps;
 
-function CatalogTabs(props: CatalogTabsProps & Props) {
-  const { act, data } = useBackend<CargoData>();
+function CatalogTabs(props: CatalogTabsProps) {
   const {
+    act,
     activeSupplyName,
     categories,
     searchText,
     setActiveSupplyName,
     setSearchText,
     express,
+    data,
   } = props;
+
   const { self_paid } = data;
 
   const sorted = sortBy(categories, [(supply) => supply.name]);
@@ -175,14 +196,27 @@ function CatalogTabs(props: CatalogTabsProps & Props) {
 }
 
 type CatalogListProps = {
+  act: any;
   packs: SupplyCategory['packs'];
   openContents: Dispatch<SetStateAction<string>>;
-};
+} & CatalogListData;
+
+type CatalogListData = Pick<
+  CargoData,
+  'cart' | 'max_order' | 'self_paid' | 'app_cost' | 'displayed_currency_name'
+>;
 
 function CatalogList(props: CatalogListProps) {
-  const { act, data } = useBackend<CargoData>();
-  const { cart = [], max_order, self_paid, app_cost, displayed_currency_name } = data;
-  const { packs = [], openContents } = props;
+  const {
+    act,
+    cart = [],
+    max_order,
+    self_paid,
+    app_cost,
+    displayed_currency_name,
+    packs = [],
+    openContents,
+  } = props;
 
   return (
     <>
@@ -258,11 +292,13 @@ function CatalogList(props: CatalogListProps) {
                     opacity={privateBuy && 0.75}
                     style={{ textDecoration: privateBuy && 'red line-through' }}
                   >
-                    {formatMoney(pack.cost)}{displayed_currency_name}
+                    {formatMoney(pack.cost)}
+                    {displayed_currency_name}
                   </Stack.Item>
                   {!!privateBuy && (
                     <Stack.Item>
-                      {formatMoney(Math.round(pack.cost * 1.1))}{displayed_currency_name}
+                      {formatMoney(Math.round(pack.cost * 1.1))}
+                      {displayed_currency_name}
                     </Stack.Item>
                   )}
                 </Stack>
