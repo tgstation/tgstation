@@ -4,7 +4,6 @@
 	pref_flag = ROLE_BROTHER
 	var/special_role = ROLE_BROTHER
 	antag_hud_name = "brother"
-	hijack_speed = 0.5
 	ui_name = "AntagInfoBrother"
 	suicide_cry = "FOR MY BROTHER!!"
 	antag_moodlet = /datum/mood_event/focused
@@ -278,14 +277,16 @@
 
 	add_objective(new /datum/objective/convert_brother)
 
-	var/is_hijacker = prob(10)
+	var/is_hijacker = prob(HIJACK_PROB)
 	for(var/i = 1 to max(1, CONFIG_GET(number/brother_objectives_amount) + (brothers_left > 2) - is_hijacker))
 		forge_single_objective()
+
 	if(is_hijacker)
-		if(!locate(/datum/objective/hijack) in objectives)
+		if(!(locate(/datum/objective/hijack) in objectives))
 			add_objective(new /datum/objective/hijack)
-	else if(!locate(/datum/objective/escape) in objectives)
-		add_objective(new /datum/objective/escape)
+	else
+		if(!(locate(/datum/objective/escape) in objectives))
+			add_objective(new /datum/objective/escape)
 
 /datum/team/brother_team/proc/forge_single_objective()
 	if(prob(50))

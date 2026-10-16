@@ -5,7 +5,6 @@
 	antag_hud_name = "spy"
 	pref_flag = ROLE_SPY
 	antag_moodlet = /datum/mood_event/focused
-	hijack_speed = 1
 	ui_name = "AntagInfoSpy"
 	preview_outfit = /datum/outfit/spy
 	can_assign_self_objectives = TRUE
@@ -165,12 +164,12 @@
 		leave_no_trace.owner = owner
 		objectives += leave_no_trace
 
-	else if(prob(3)) //3% chance on 90% chance
+	else if(prob(HIJACK_PROB * 0.66)) //8% chance on 90% chance
 		var/datum/objective/hijack/steal_the_shuttle = new()
 		steal_the_shuttle.owner = owner
 		objectives += steal_the_shuttle
 
-	else if(prob(10)) //10% chance on 87.3% chance
+	else if(prob(10)) //10% chance on 82.56% chance
 		var/datum/objective/exile/hit_the_bricks = new()
 		hit_the_bricks.owner = owner
 		objectives += hit_the_bricks
