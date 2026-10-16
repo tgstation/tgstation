@@ -634,15 +634,14 @@
 	var/slot_priority = W.slot_equipment_priority
 
 	if(!slot_priority)
-		slot_priority = list( \
-			ITEM_SLOT_BACK, ITEM_SLOT_ID,\
-			ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING,\
-			ITEM_SLOT_MASK, ITEM_SLOT_HEAD, ITEM_SLOT_NECK,\
-			ITEM_SLOT_FEET, ITEM_SLOT_GLOVES,\
-			ITEM_SLOT_EARS, ITEM_SLOT_EYES,\
-			ITEM_SLOT_BELT, ITEM_SLOT_SUITSTORE,\
-			ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET,\
-			ITEM_SLOT_DEX_STORAGE\
+		slot_priority = list(
+			ITEM_SLOT_BACK, ITEM_SLOT_ID,
+			ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING,
+			ITEM_SLOT_MASK, ITEM_SLOT_HEAD, ITEM_SLOT_NECK,
+			ITEM_SLOT_FEET, ITEM_SLOT_GLOVES,
+			ITEM_SLOT_EARS, ITEM_SLOT_EYES,
+			ITEM_SLOT_BELT, ITEM_SLOT_SUITSTORE,
+			ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET,
 		)
 
 	for(var/slot in slot_priority)
@@ -668,7 +667,6 @@
 	var/static/list/equip_priorities = list(
 		ITEM_SLOT_BELT,
 		ITEM_SLOT_BACK,
-		ITEM_SLOT_DEX_STORAGE,
 		ITEM_SLOT_OCLOTHING,
 		ITEM_SLOT_ICLOTHING,
 	)
@@ -714,10 +712,6 @@ GAME_VERB_HIDDEN(/mob, quick_equip, "quick-equip")
 		return
 	if(!QDELETED(I))
 		I.equip_to_best_slot(src)
-
-//used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
-/mob/proc/getBackSlot()
-	return ITEM_SLOT_BACK
 
 //Inventory.dm is -kind of- an ok place for this I guess
 

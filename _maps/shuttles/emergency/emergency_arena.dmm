@@ -6,24 +6,18 @@
 /turf/closed/indestructible/necropolis,
 /area/shuttle/escape/arena)
 "h" = (
-/turf/open/indestructible{
-	icon_state = "cult"
-	},
+/turf/open/indestructible/cult,
 /area/shuttle/escape/arena)
 "i" = (
 /obj/structure/closet/crate/necropolis/dragon,
-/turf/open/indestructible{
-	icon_state = "cult"
-	},
+/turf/open/indestructible/cult,
 /area/shuttle/escape/arena)
 "j" = (
 /turf/open/indestructible/necropolis/air,
 /area/shuttle/escape/arena)
 "k" = (
 /obj/structure/fluff/drake_statue,
-/turf/open/indestructible{
-	icon_state = "cult"
-	},
+/turf/open/indestructible/cult,
 /area/shuttle/escape/arena)
 "l" = (
 /obj/structure/closet/crate/necropolis/tendril,
@@ -52,9 +46,7 @@
 /obj/machinery/computer/emergency_shuttle{
 	dir = 1
 	},
-/turf/open/indestructible{
-	icon_state = "cult"
-	},
+/turf/open/indestructible/cult,
 /area/shuttle/escape/arena)
 "V" = (
 /obj/structure/healingfountain,

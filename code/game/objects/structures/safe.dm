@@ -222,7 +222,10 @@ FLOOR SAFES
 				to_chat(user, span_warning("The dial will not turn, as the mechanism is destroyed!"))
 				return
 			var/ticks = text2num(params["num"])
-			for(var/iterate in 1 to ticks)
+			if(!IS_FINITE(ticks) || ((ticks != 1) && (ticks != 10) && (ticks != 50)))
+				message_admins("[ADMIN_LOOKUPFLW(user)] tried to turn the dial on a safe by [sanitize(num2text(ticks))] ticks when normal operation only allows 1, 10, 50 ticks. Likely a malicious HREF attack.")
+				return
+			for(var/iterate in 1 to min(50, ticks))
 				dial = WRAP(dial - 1, 0, 100)
 
 				var/invalid_turn = current_tumbler_index % 2 == 0 || current_tumbler_index > number_of_tumblers
@@ -243,7 +246,10 @@ FLOOR SAFES
 				to_chat(user, span_warning("The dial will not turn, as the mechanism is destroyed!"))
 				return
 			var/ticks = text2num(params["num"])
-			for(var/iterate in 1 to ticks)
+			if(!IS_FINITE(ticks) || ((ticks != 1) && (ticks != 10) && (ticks != 50)))
+				message_admins("[ADMIN_LOOKUPFLW(user)] tried to turn the dial on a safe by [sanitize(num2text(ticks))] ticks when normal operation only allows 1, 10, 50 ticks. Likely a malicious HREF attack.")
+				return
+			for(var/iterate in 1 to min(50, ticks))
 				dial = WRAP(dial + 1, 0, 100)
 
 				var/invalid_turn = current_tumbler_index % 2 != 0 || current_tumbler_index > number_of_tumblers
