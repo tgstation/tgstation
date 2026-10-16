@@ -1,4 +1,3 @@
-#define RUNTIME_SAVE_DATA "data/npc_saves/Runtime.sav"
 #define RUNTIME_JSON_DATA "data/npc_saves/Runtime.json"
 #define MAX_CAT_DEPLOY 50
 
@@ -46,11 +45,6 @@
 	LAZYADD(children, baby)
 
 /mob/living/basic/pet/cat/runtime/proc/read_memory()
-	if(fexists(RUNTIME_SAVE_DATA))
-		var/savefile/save_data = new(RUNTIME_SAVE_DATA)
-		save_data["family"] >> family
-		fdel(RUNTIME_SAVE_DATA)
-		return
 	var/json_file = file(RUNTIME_JSON_DATA)
 	if(!fexists(json_file))
 		return
@@ -89,6 +83,5 @@
 		for(var/index in 1 to min(family[cat_type], MAX_CAT_DEPLOY))
 			new cat_type(loc)
 
-#undef RUNTIME_SAVE_DATA
 #undef RUNTIME_JSON_DATA
 #undef MAX_CAT_DEPLOY
