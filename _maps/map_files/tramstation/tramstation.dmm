@@ -2772,6 +2772,7 @@
 	},
 /obj/structure/sign/clock/directional/east,
 /obj/structure/extinguisher_cabinet/directional/south,
+/obj/item/storage/box/lights/mixed,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/office)
 "anH" = (
@@ -12544,6 +12545,9 @@
 	network = list("ss13","engineering");
 	c_tag = "Engineering - Lobby South"
 	},
+/obj/structure/rack,
+/obj/item/storage/box/lights/mixed,
+/obj/item/lightreplacer,
 /turf/open/floor/iron,
 /area/station/engineering/break_room)
 "dgA" = (
