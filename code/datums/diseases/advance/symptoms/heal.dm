@@ -590,7 +590,7 @@
 	// Obviously this is not ideal. Thus it swaps the mob to the alternate cleaning method (direct decontamination only).
 	ADD_TRAIT(our_disease.affected_mob, TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL, type)
 
-/datum/symptom/heal/radiation/End(datum/disease/advance/A)
+/datum/symptom/heal/radiation/End(datum/disease/advance/our_disease)
 	. = ..()
 	if(!.)
 		return

@@ -44,8 +44,8 @@
 	RegisterSignal(owner, COMSIG_GEIGER_COUNTER_SCAN, PROC_REF(on_geiger_counter_scan))
 	RegisterSignal(owner, COMSIG_LIVING_HEALTHSCAN, PROC_REF(on_healthscan))
 	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_RADIMMUNE), PROC_REF(radimmune_gained))
-	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL), PROC_REF(unbothered_by_radiation_lost))
-	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL), PROC_REF(unbothered_by_radiation_gained))
+	RegisterSignal(owner, SIGNAL_REMOVETRAIT(TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL), PROC_REF(no_tox_radiation_gained))
+	RegisterSignal(owner, SIGNAL_ADDTRAIT(TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL), PROC_REF(no_tox_radiation_lost))
 	return TRUE
 
 /datum/status_effect/irradiated/on_remove()

@@ -103,8 +103,8 @@
 	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_TOXIMMUNE), PROC_REF(on_toximmune_gain))
 	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_TOXIMMUNE), PROC_REF(on_toximmune_loss))
 
-	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_TOXLOVER), PROC_REF(on_toxlover_gain))
-	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_TOXLOVER), PROC_REF(on_toxlover_loss))
+	RegisterSignal(src, SIGNAL_ADDTRAIT(TRAIT_TOXINLOVER), PROC_REF(on_toxlover_gain))
+	RegisterSignal(src, SIGNAL_REMOVETRAIT(TRAIT_TOXINLOVER), PROC_REF(on_toxlover_loss))
 
 /// Called when [TRAIT_KNOCKEDOUT] is added to the mob.
 /mob/living/proc/on_knockedout_trait_gain(datum/source)
@@ -441,12 +441,12 @@
 	SIGNAL_HANDLER
 	REMOVE_TRAIT(src, TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL, TRAIT_TOXIMMUNE)
 
-/// Called when the mob gains [TRAIT_TOXLOVER]
+/// Called when the mob gains [TRAIT_TOXINLOVER]
 /mob/living/proc/on_toxlover_gain(datum/source)
 	SIGNAL_HANDLER
-	ADD_TRAIT(src, TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL, TRAIT_TOXLOVER)
+	ADD_TRAIT(src, TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL, TRAIT_TOXINLOVER)
 
-/// Called when the mob loses [TRAIT_TOXLOVER]
+/// Called when the mob loses [TRAIT_TOXINLOVER]
 /mob/living/proc/on_toxlover_loss(datum/source)
 	SIGNAL_HANDLER
-	REMOVE_TRAIT(src, TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL, TRAIT_TOXLOVER)
+	REMOVE_TRAIT(src, TRAIT_ONLY_DIRECT_IRRADIATION_REMOVAL, TRAIT_TOXINLOVER)
