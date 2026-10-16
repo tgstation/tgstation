@@ -264,6 +264,8 @@
 	button.name = name
 	if(desc)
 		button.desc = desc
+	for(var/datum/hud/hud as anything in viewers)
+		button.update_tooltip(hud.mymob)
 
 /**
  * Creates the background underlay for the button
