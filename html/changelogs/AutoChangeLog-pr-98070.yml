@@ -1,4 +1,0 @@
-author: "JohnFulpWillard"
-delete-after: True
-changes:
-  - qol: "Action buttons with dynamic names (such as martial art swapping) now updates their names without requiring you to unhover/rehover your mouse over it."

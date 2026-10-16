@@ -335,6 +335,11 @@
   - bugfix: strange reagent now gets properly set in the HoP's mail delivery goodies
       if the conditions meet
 2026-10-16:
+  JohnFulpWillard:
+  - qol: Action buttons with dynamic names (such as martial art swapping) now updates
+      their names without requiring you to unhover/rehover your mouse over it.
+  Melbert:
+  - bugfix: Build mode copy on humans no longer mangles the source terribly
   Neocloudy:
   - spellcheck: Fixed or tweaked spelling/grammar in new Cerulean content, including
       the hydro vaporizer, the deadbeat musician, the armored leather jacket, the
@@ -344,7 +349,22 @@
   - bugfix: The escape menu players list no longer reveals stealthed admins
   PetyaFX:
   - bugfix: Fixed SFX-keyed sounds being silent through sound tokens.
+  SmArtKar:
+  - bugfix: Fixed Candela nodes not working from mining webbings
+  desertmote:
+  - balance: Makes MOD stealth module less strict about part requirements
+  - bugfix: Ceruleans can activate MOD stealth modules
+  lelandkemble:
+  - bugfix: fixed being unable to copy blast door controller ids
   vinylspiders:
   - bugfix: ghosts can stop orbiting by moving away after their orbit is transferred
       to another target.
   - bugfix: multiple sources of muffled speech now respect one another
+  - bugfix: handling tips for single-contributor bounty cubes now reach the scanner's
+      bank account, and cargo receives the correct remaining value.
+  - bugfix: holograms can no longer get stuck wobbling when you walk back through
+      them just as their last glitch is fading
+  - bugfix: revolver crafting now transfers ammunition correctly past empty cylinder
+      slots.
+  - bugfix: stacks printed by autolathes and protolathes keep the correct material
+      contents when printed in batches or merged with existing stacks.

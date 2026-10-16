@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "revolver crafting now transfers ammunition correctly past empty cylinder slots."

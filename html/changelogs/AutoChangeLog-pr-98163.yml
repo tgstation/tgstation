@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "handling tips for single-contributor bounty cubes now reach the scanner's bank account, and cargo receives the correct remaining value."
