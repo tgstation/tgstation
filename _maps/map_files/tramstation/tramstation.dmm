@@ -4414,6 +4414,7 @@
 "aFT" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/office)
 "aFU" = (
@@ -12492,6 +12493,12 @@
 	},
 /turf/open/floor/iron,
 /area/station/command/teleporter)
+"dfY" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/structure/cable,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/station/security/checkpoint/engineering)
 "dgd" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/mapping_helpers/airlock/access/all/engineering/maintenance,
@@ -17697,6 +17704,7 @@
 /obj/machinery/atmospherics/components/unary/thermomachine/freezer/on{
 	dir = 4
 	},
+/obj/machinery/airalarm/directional/west,
 /turf/open/floor/iron,
 /area/station/engineering/atmos/pumproom)
 "eVQ" = (
@@ -18462,6 +18470,7 @@
 "fkL" = (
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible,
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/pumproom)
 "fkQ" = (
@@ -23455,6 +23464,7 @@
 "gYI" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/engineering/break_room)
 "gYK" = (
@@ -24357,6 +24367,7 @@
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/pumproom)
 "hpt" = (
@@ -29405,6 +29416,7 @@
 "jim" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/purple/visible,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/pumproom)
 "jit" = (
@@ -37004,6 +37016,7 @@
 	dir = 4
 	},
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/pumproom)
 "lAR" = (
@@ -45878,6 +45891,13 @@
 	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos)
+"oMf" = (
+/obj/effect/turf_decal/trimline/yellow/filled/line{
+	dir = 8
+	},
+/obj/machinery/airalarm/directional/north,
+/turf/open/floor/iron,
+/area/station/engineering/atmos)
 "oMh" = (
 /obj/machinery/airalarm/directional/north,
 /obj/structure/detectiveboard/directional/east,
@@ -46542,6 +46562,7 @@
 /obj/machinery/atmospherics/pipe/smart/simple/cyan/visible{
 	dir = 4
 	},
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/pumproom)
 "oYH" = (
@@ -50875,6 +50896,11 @@
 /obj/structure/extinguisher_cabinet/directional/south,
 /turf/open/floor/wood,
 /area/station/service/bar/backroom)
+"qwS" = (
+/obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor,
+/turf/open/floor/plating,
+/area/station/engineering/atmos/pumproom)
 "qwU" = (
 /obj/effect/turf_decal/trimline/brown/filled/line{
 	dir = 6
@@ -51634,6 +51660,7 @@
 /obj/effect/mapping_helpers/airlock/cyclelink_helper_multi{
 	cycle_id = "atmos-entrance"
 	},
+/obj/machinery/door/firedoor/heavy,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "qKt" = (
@@ -55130,6 +55157,7 @@
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
+/obj/machinery/airalarm/directional/north,
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "rRp" = (
@@ -58715,6 +58743,7 @@
 	id = "ceprivacy"
 	},
 /obj/structure/cable,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/command/heads_quarters/ce)
 "tda" = (
@@ -63119,6 +63148,7 @@
 /obj/structure/extinguisher_cabinet/directional/north,
 /obj/effect/spawner/structure/window/reinforced,
 /obj/structure/cable,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/security/checkpoint/engineering)
 "uBA" = (
@@ -69963,6 +69993,7 @@
 "wWv" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/visible,
 /obj/effect/spawner/structure/window/reinforced,
+/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/engineering/atmos/office)
 "wWC" = (
@@ -104354,7 +104385,7 @@ kUs
 vpP
 roB
 uBy
-fXQ
+dfY
 roB
 pCr
 hJd
@@ -105380,7 +105411,7 @@ amT
 wYO
 iXQ
 foi
-fXQ
+dfY
 flV
 sjm
 wgB
@@ -105894,7 +105925,7 @@ amV
 mvy
 iXQ
 foi
-fXQ
+dfY
 dor
 fSp
 vKv
@@ -106923,8 +106954,8 @@ qsP
 tTe
 aog
 roB
-fXQ
-fXQ
+dfY
+dfY
 roB
 hmF
 iQU
@@ -107953,13 +107984,13 @@ xZC
 mwK
 lml
 oYE
-nNQ
+qwS
 lml
 lml
 lAO
 hpf
 lml
-nNQ
+qwS
 hAW
 lrX
 wQm
@@ -110008,14 +110039,14 @@ abM
 itE
 mwK
 lml
-nNQ
+qwS
 jim
 lml
 lml
-nNQ
+qwS
 hpf
 lml
-nNQ
+qwS
 vRQ
 sOl
 wQm
@@ -110522,7 +110553,7 @@ abM
 abM
 mwK
 mwK
-kWV
+oMf
 rik
 rik
 wWC

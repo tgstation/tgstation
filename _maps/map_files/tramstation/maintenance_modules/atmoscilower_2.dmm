@@ -516,8 +516,8 @@
 /obj/effect/turf_decal/stripes/asteroid/corner{
 	dir = 8
 	},
-/obj/structure/disposalpipe/junction{
-	dir = 4
+/obj/structure/disposalpipe/junction/flip{
+	dir = 8
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/lesser)
