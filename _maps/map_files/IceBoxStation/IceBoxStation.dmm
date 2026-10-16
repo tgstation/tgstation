@@ -25678,7 +25678,7 @@
 	id = "kitchencounter";
 	name = "Kitchen Counter Shutters"
 	},
-/obj/structure/displaycase/forsale/kitchen,
+/obj/structure/tipjar/prefilled,
 /turf/open/floor/iron/white/smooth_large,
 /area/station/service/kitchen)
 "hhP" = (
@@ -29187,9 +29187,7 @@
 "iiE" = (
 /obj/structure/table/wood,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
-/obj/structure/displaycase/forsale/kitchen{
-	pixel_y = 8
-	},
+/obj/structure/tipjar/prefilled,
 /turf/open/floor/iron,
 /area/station/service/bar)
 "iiH" = (
