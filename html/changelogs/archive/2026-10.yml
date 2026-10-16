@@ -340,6 +340,12 @@
       their names without requiring you to unhover/rehover your mouse over it.
   Melbert:
   - bugfix: Build mode copy on humans no longer mangles the source terribly
+  - rscdel: Removed the ability for id cards to project a pay stand
+  - rscdel: Removed the vend-a-tray entirely
+  - rscadd: You can construct tip jars with glass or plasmaglass (though not with
+      their reinforced variants). Tip jars accept many tiny methods of gratuity, such
+      as coins, cash, holochips, IOUs, or... a cigarette, sure.
+  - rscadd: Adds tip jars to the kitchen in the bar, where the vend-a-trays once sat.
   Neocloudy:
   - spellcheck: Fixed or tweaked spelling/grammar in new Cerulean content, including
       the hydro vaporizer, the deadbeat musician, the armored leather jacket, the
