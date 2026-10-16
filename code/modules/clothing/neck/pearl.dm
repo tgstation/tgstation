@@ -96,12 +96,8 @@
 	var/type_path
 
 	if(user.dna.species.bodypart_overrides[zone])
-		if(user.dna.species.digitigrade_customization && user.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS)
-			type_path = left_or_right ? /obj/item/bodypart/leg/left/digitigrade : /obj/item/bodypart/leg/right/digitigrade //:steam_happy:
-			return new type_path(user)
-		else
-			type_path = user.dna.species.bodypart_overrides[zone]
-			return new type_path(user)
+		type_path = user.dna.species.bodypart_overrides[zone]
+		return new type_path(user)
 	else
 		type_path = left_or_right ? /obj/item/bodypart/leg/left : /obj/item/bodypart/leg/right
 		return new type_path(user)
