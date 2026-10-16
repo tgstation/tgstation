@@ -63,7 +63,7 @@
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
 			SPECIES_PERK_ICON = "fish-fins",
 			SPECIES_PERK_NAME = "Flip-Flap",
-			SPECIES_PERK_DESC = "Ceruleans are hard to keep ahold of, becoming slippery and tough to grab if soaked in water.",
+			SPECIES_PERK_DESC = "Ceruleans are hard to keep a hold of, becoming slippery and tough to grab if soaked in water.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_POSITIVE_PERK,
@@ -75,7 +75,7 @@
 			SPECIES_PERK_TYPE = SPECIES_NEUTRAL_PERK,
 			SPECIES_PERK_ICON = "dragon",
 			SPECIES_PERK_NAME = "Little Space Dragon",
-			SPECIES_PERK_DESC = "Ceruleans and their dexterity are tied to gravity, turning lethally agile if its taken out the question.",
+			SPECIES_PERK_DESC = "Ceruleans and their dexterity are tied to gravity, turning lethally agile if it's taken out of the question.",
 		),
 		list(
 			SPECIES_PERK_TYPE = SPECIES_NEGATIVE_PERK,
@@ -97,7 +97,6 @@
 	preview_human.set_haircolor("#C2DFED", update = FALSE)
 	preview_human.set_hairstyle(/datum/sprite_accessory/hair/highponytail::name, update = TRUE)
 	preview_human.dna.features[FEATURE_FRILLS] = /datum/sprite_accessory/frills/aquatic::name
-	preview_human.dna.features[FEATURE_SNOUT] = /datum/sprite_accessory/snouts/roundlight::name
 	preview_human.dna.species.mutant_organs[/obj/item/organ/frills] = /datum/sprite_accessory/frills/aquatic::name
 	preview_human.dna.species.mutant_organs[/obj/item/organ/snout] = /datum/sprite_accessory/snouts/roundlight::name
 	regenerate_organs(preview_human, excluded_zones = GLOB.leg_zones)
@@ -255,7 +254,7 @@
  */
 /obj/item/organ/tail/fish/cerulean/abyss
 	name = "translucent oversized fish tail"
-	desc = "A hugely sized and scaled fish tail, it is partially translucent and shows the skeleton inside."
+	desc = "A hugely sized and scaled fish tail. It's semi-translucent and shows the skeleton inside."
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/fish/cerulean/abyss
 
 /// apply an emissive for the skeleton

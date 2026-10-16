@@ -1,4 +1,0 @@
-author: "Moonridden"
-delete-after: True
-changes:
-  - config: "The help link for revenants now uses the config set, rather than a hard-coded link."

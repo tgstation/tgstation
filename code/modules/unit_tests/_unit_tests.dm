@@ -173,6 +173,7 @@
 #include "dismemberment.dm"
 #include "dna_infusion.dm"
 #include "door_access.dm"
+#include "door_control_assembly.dm"
 #include "dragon_expiration.dm"
 #include "drink_icons.dm"
 #include "dropper.dm"
