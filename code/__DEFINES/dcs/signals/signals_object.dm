@@ -106,10 +106,15 @@
 // /obj access signals
 #define COMSIG_AIRLOCK_SHELL_ALLOWED "airlock_shell_try_allowed"
 
+//from /obj/machinery/door/open(): (forced)
+#define COMSIG_MOB_OPENED_DOOR "mob_opened_door"
+
 // /obj/machinery/door/airlock signals
 
 //from /obj/machinery/door/airlock/open(): (forced)
 #define COMSIG_AIRLOCK_OPEN "airlock_open"
+//from /obj/machinery/door/airlock/open(): (forced)
+#define COMSIG_MOB_OPENED_AIRLOCK "mob_opened_airlock"
 //from /obj/machinery/door/airlock/close(): (forced)
 #define COMSIG_AIRLOCK_CLOSE "airlock_close"
 ///from /obj/machinery/door/airlock/set_bolt():

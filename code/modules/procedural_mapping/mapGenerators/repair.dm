@@ -64,6 +64,8 @@
 				atmos_machines += atom
 
 	SSatoms.InitializeAtoms(atoms)
+	for(var/turf/gen_turf as anything in generation_turfs)
+		CALCULATE_ADJACENT_TURFS(gen_turf, NORMAL_TURF)
 	SSmachines.setup_template_powernets(cables)
 	SSair.setup_template_machinery(atmos_machines)
 	GLOB.reloading_map = FALSE

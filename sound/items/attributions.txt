@@ -70,3 +70,6 @@ ported from Aurora (...in turn ported from Hestia), assumed to be licensed under
 - rigstep_heavy.ogg
 - rigstep_medium.ogg
 ported from Aurora, by majormoth(Discord), licensed under CC-BY-SA-3.0
+
+- snip.ogg
+from Scissor Snip 2 by Aesterial-Arts -- https://freesound.org/s/633925/ -- License: Attribution 4.0

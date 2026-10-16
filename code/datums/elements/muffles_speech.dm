@@ -38,7 +38,8 @@
 	var/spoken_message = speech_args[SPEECH_MESSAGE]
 	if(spoken_message)
 		var/list/words = splittext(spoken_message, " ")
-		var/yell_suffix = copytext(spoken_message, findtext(spoken_message, "!"))
+		var/static/regex/yell_regex = regex(@"!+$")
+		var/yell_suffix = yell_regex.Find(spoken_message) ? yell_regex.match : ""
 		spoken_message = ""
 
 		for(var/ind = 1 to length(words))

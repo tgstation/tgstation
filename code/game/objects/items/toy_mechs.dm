@@ -165,17 +165,15 @@
 		if(!check_battle_start(user)) //if the user's mech isn't ready, don't bother checking
 			return
 
-		for(var/obj/item/I in target.held_items)
-			if(istype(I, /obj/item/toy/mecha)) //if you attack someone with a mech who's also holding a mech, offer to battle them
-				var/obj/item/toy/mecha/P = I
-				if(!P.check_battle_start(target, null, user)) //check if the attacker mech is ready
-					break
+		for(var/obj/item/toy/mecha/gundam as anything in target.get_held_items_of_type(/obj/item/toy/mecha))
+			if(!gundam.check_battle_start(target, null, user)) //check if the attacker mech is ready
+				break
 
-				//slap them with the metaphorical white glove
-				if(P.wants_to_battle) //if the target mech wants to battle, initiate the battle from their POV
-					mecha_brawl(P, target, user) //P = defender's mech / SRC = attacker's mech / target = defender / user = attacker
-					P.wants_to_battle = FALSE
-					return
+			//slap them with the metaphorical white glove
+			if(gundam.wants_to_battle) //if the target mech wants to battle, initiate the battle from their POV
+				mecha_brawl(gundam, target, user) //P = defender's mech / SRC = attacker's mech / target = defender / user = attacker
+				gundam.wants_to_battle = FALSE
+				return
 
 		//extend the offer of battle to the other mech
 		to_chat(user, span_notice("You offer battle to [target.name]!"))

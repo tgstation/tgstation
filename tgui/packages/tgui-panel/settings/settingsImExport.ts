@@ -1,3 +1,4 @@
+import { storage } from 'common/storage';
 import { omit } from 'es-toolkit';
 import { chatPagesRecordAtom, mainPage } from '../chat/atom';
 import { startChatStateMigration } from '../chat/migration';
@@ -61,6 +62,7 @@ export function importChatSettings(settings: string | string[]): void {
   }
 
   startSettingsMigration(settingsPart);
+  storage.set('panel-settings', store.get(storedSettingsAtom));
 }
 
 /** Reconstructs chat settings from just the record */

@@ -164,6 +164,7 @@
 #include "crafting.dm"
 #include "crayons.dm"
 #include "create_and_destroy.dm"
+#include "cuffed_item.dm"
 #include "damp_rag.dm"
 #include "dcs_check_list_arguments.dm"
 #include "dcs_get_id_from_elements.dm"
