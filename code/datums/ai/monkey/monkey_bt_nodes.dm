@@ -28,6 +28,11 @@
 	if(async_flags)
 		return async_flags
 
+	// Someone may have picked it up while we walked over, don't yank it out of their inventory.
+	var/obj/item/target = controller.blackboard[target_key]
+	if(QDELETED(target) || !isturf(target.loc))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
 	return start_async()
 
 /datum/bt_node/ai_behavior/monkey_equip/ground/perform_async(datum/ai_controller/controller)

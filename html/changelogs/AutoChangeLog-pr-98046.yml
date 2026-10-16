@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - refactor: "You can now pin the corgi's tail from \"pin the tail on the corgi\" on anything"
-  - qol: "Pin the tail on the corgi kit comes with 1 poster, 4 pins, and 1 blindfold."

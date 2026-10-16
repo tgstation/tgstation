@@ -171,7 +171,7 @@
 
 /obj/item/organ/tongue/stoat/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
-	RegisterSignals(receiver, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, PROC_REF(get_perceived_food_quality))
+	RegisterSignal(receiver, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, PROC_REF(get_perceived_food_quality))
 	MODIFY_PHYSIOLOGY(receiver, PHYS_COEFF_HUNGER_MOD, 2)
 
 /obj/item/organ/tongue/stoat/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
@@ -179,12 +179,12 @@
 	UnregisterSignal(organ_owner, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY)
 	MODIFY_PHYSIOLOGY(organ_owner, PHYS_COEFF_HUNGER_MOD, 0.5)
 
-/obj/item/organ/tongue/stoat/proc/get_perceived_food_quality(mob/living/carbon/consumer, obj/item/food/consumed_food, list/extra_quality)
+/obj/item/organ/tongue/stoat/proc/get_perceived_food_quality(mob/living/carbon/consumer, datum/component/edible/edible, list/extra_quality)
 	SIGNAL_HANDLER
 
 	if(organ_flags & ORGAN_FAILING)
 		return
-	if(istype(consumed_food, /obj/item/food/deadmouse) || istype(consumed_food, /obj/item/food/egg))
+	if(istype(edible.parent, /obj/item/food/deadmouse) || istype(edible.parent, /obj/item/food/egg))
 		extra_quality += LIKED_FOOD_QUALITY_CHANGE
 
 /obj/item/organ/eyes/stoat

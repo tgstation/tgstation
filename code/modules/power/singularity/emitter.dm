@@ -545,7 +545,7 @@
 	proto_emitter.manual = TRUE
 	buckled_mob.drop_all_held_items() // Some stuff might not be dropped here
 	for(var/empty_hand_index in buckled_mob.get_empty_held_indexes())
-		var/obj/item/gun_control/control = new()
+		var/obj/item/turret_control/control = new()
 		if(!buckled_mob.put_in_hand(control, empty_hand_index)) // fuck.
 			qdel(control)
 	build_all_button_icons()

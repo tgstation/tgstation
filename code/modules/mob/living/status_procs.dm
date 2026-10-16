@@ -539,6 +539,8 @@
 
 /// Helper to easily add a personality by a typepath
 /mob/living/proc/add_personality(personality_type)
+	if(HAS_PERSONALITY(src, personality_type))
+		return
 	var/datum/personality/personality = SSpersonalities.personalities_by_type[personality_type]
 	personality.apply_to_mob(src)
 

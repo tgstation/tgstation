@@ -60,7 +60,7 @@ SUBSYSTEM_DEF(dynamic)
 	var/antag_events_enabled = TRUE
 
 /datum/controller/subsystem/dynamic/fire(resumed)
-	if(!COOLDOWN_FINISHED(src, midround_cooldown) || EMERGENCY_PAST_POINT_OF_NO_RETURN)
+	if(!COOLDOWN_FINISHED(src, midround_cooldown) || !EMERGENCY_IDLE_OR_RECALLED)
 		return
 
 	if(COOLDOWN_FINISHED(src, light_ruleset_start))

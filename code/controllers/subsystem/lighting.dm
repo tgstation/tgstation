@@ -41,7 +41,7 @@ SUBSYSTEM_DEF(lighting)
 				var/atom/movable/lighting_object/existing_object = area_turf.lighting_object
 				if(!QDELETED(existing_object) && existing_object.affected_turf == area_turf)
 					continue
-				new /atom/movable/lighting_object(null, area_turf)
+				new /atom/movable/lighting_object(area_turf)
 			CHECK_TICK
 		CHECK_TICK
 

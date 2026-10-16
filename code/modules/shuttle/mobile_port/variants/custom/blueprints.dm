@@ -574,7 +574,7 @@
 				balloon_alert(usr, "invalid room!")
 				return TRUE
 			var/area/shuttle/custom/new_area = new()
-			new_area.name = area_name
+			new_area.setup(area_name)
 			shuttle.shuttle_areas[new_area] = TRUE
 			set_turfs_to_area(turfs, new_area)
 			new_area.reg_in_areas_in_z()

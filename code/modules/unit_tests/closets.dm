@@ -43,14 +43,14 @@
 	click_wrapper(placer, locked_crate)
 	TEST_ASSERT_NOTNULL(placer.get_active_held_item(), "Successfully placed item in closed, locked crate")
 
-	placer.swap_hand()
+	placer.cycle_hand()
 	click_wrapper(placer, locked_crate)
 	TEST_ASSERT(!locked_crate.locked, "Was unable to unlock locked crate despite adequate access")
 
 	click_wrapper(placer, locked_crate)
 	TEST_ASSERT(locked_crate.opened, "Was unable to open unlocked crate")
 
-	placer.swap_hand()
+	placer.cycle_hand()
 	click_wrapper(placer, locked_crate)
 	TEST_ASSERT(placing_tester in locked_crate.loc, "Was unable to place item in open crate")
 
