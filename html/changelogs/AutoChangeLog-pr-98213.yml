@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "holograms can no longer get stuck wobbling when you walk back through them just as their last glitch is fading"
