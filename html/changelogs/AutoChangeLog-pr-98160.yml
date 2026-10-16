@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "stacks printed by autolathes and protolathes keep the correct material contents when printed in batches or merged with existing stacks."

@@ -1,0 +1,5 @@
+author: "desertmote"
+delete-after: True
+changes:
+  - balance: "Makes MOD stealth module less strict about part requirements"
+  - bugfix: "Ceruleans can activate MOD stealth modules"
