@@ -1,4 +1,0 @@
-author: "PetyaFX"
-delete-after: True
-changes:
-  - bugfix: "Fixed SFX-keyed sounds being silent through sound tokens."

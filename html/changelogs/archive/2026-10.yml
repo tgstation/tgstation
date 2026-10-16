@@ -340,3 +340,9 @@
       the hydro vaporizer, the deadbeat musician, the armored leather jacket, the
       black pearl necklace, the translucent fish tail, and some of the Cerulean perks
       (in the species menu).
+  PetyaFX:
+  - bugfix: Fixed SFX-keyed sounds being silent through sound tokens.
+  vinylspiders:
+  - bugfix: ghosts can stop orbiting by moving away after their orbit is transferred
+      to another target.
+  - bugfix: multiple sources of muffled speech now respect one another
