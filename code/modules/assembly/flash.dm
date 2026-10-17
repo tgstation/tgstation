@@ -187,20 +187,13 @@
 
 	if(flash_result != FLASH_COMPLETED) //If the behavior was overwritten, we just skip the flashy stunny part and go with the override behavior instead
 		if(issilicon(flashed))
-			if(flashed.is_blind())
-				var/flash_duration = rand(8,12) SECONDS
-				flashed.Paralyze(flash_duration)
-				flashed.set_temp_blindness_if_lower(flash_duration)
-				if(user)
-					user.visible_message(span_warning("[user] overloads [flashed]'s sensors and computing with the flash!"), span_danger("You overload [flashed]'s sensors and computing with the flash!"))
-				else
-					to_chat(flashed, "[src] overloads your sensors and computing!")
+			var/flash_duration = rand(8,12) SECONDS
+			flashed.Paralyze(flash_duration)
+			flashed.set_temp_blindness_if_lower(flash_duration)
+			if(user)
+				user.visible_message(span_warning("[user] overloads [flashed]'s sensors and computing with the flash!"), span_danger("You overload [flashed]'s sensors and computing with the flash!"))
 			else
-				flashed.set_temp_blindness_if_lower( (rand(5,15) SECONDS))
-				if(user)
-					user.visible_message(span_warning("[user] blinds [flashed] with the flash!"), span_danger("You blind [flashed] with the flash!"))
-				else
-					to_chat(flashed, "You're blinded by [src]!")
+				to_chat(flashed, "[src] overloads your sensors and computing!")
 		else
 			//easy way to make sure that you can only long stun someone who is facing in your direction
 			flashed.adjust_stamina_loss(rand(80, 120) * (1 - (deviation * 0.5)))
