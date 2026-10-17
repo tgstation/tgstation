@@ -1,0 +1,11 @@
+author: "tontyGH"
+delete-after: True
+changes:
+  - rscadd: "Mothpeople now have 2 extra arms in their chest, giving them 4 total arms"
+  - balance: "Mothpeople are now generally a bit more fragile"
+  - bugfix: "Akimbo used the wrong gun when determining spread penalty"
+  - bugfix: "Akimbo penalty did not include the gun that was firing"
+  - balance: "Akimbo penalty now has multiplicative scaling (double PKA was adjusted to consider this)"
+  - bugfix: "Catching items now considers all empty hands and not just your active offhand"
+  - balance: "Blocking now only works if the blocking item is in your active set of hands"
+  - rscdel: "Wizard's 4-arms perk and the deathmatch modifier had to be removed for technical reasons. Sorry."
