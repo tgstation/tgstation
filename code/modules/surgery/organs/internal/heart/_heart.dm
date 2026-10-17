@@ -25,6 +25,8 @@
 	cells_minimum = 1
 	cells_maximum = 2
 	visual = FALSE
+	woundable = TRUE
+	wounded_desc = "has been torn open and is leaking fluid."
 
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 
@@ -114,6 +116,11 @@
 		return conditional_tooltip("<font color='#cc3333'>Cardiac Arrest</font>", "Repair tissue damage and apply defibrillation immediately.", add_tooltips)
 	return ..()
 
+/obj/item/organ/heart/get_status_appendix(scanpower, add_tooltips)
+	if(organ_flags & ORGAN_WOUNDED)
+		return conditional_tooltip(span_warning("Cardiac Tamponade"), "Apply a chest drain and coagulants or fix surgically.", add_tooltips)
+	. = ..()
+
 /obj/item/organ/heart/show_on_condensed_scans()
 	// Always show if the guy needs a heart (so its status can be monitored)
 	return ..() || owner.needs_heart()
@@ -167,6 +174,29 @@
 /// by default, returns the hearts beat_noise var as a notice span. May do other things when overridden, such as eldritch insanity or electrocution. Whatever you want, really.
 /obj/item/organ/heart/proc/hear_beat_noise(mob/living/hearer)
 	return span_notice("[owner.p_Their()] heart produces [beat_noise].")
+
+/obj/item/organ/heart/on_wounded_life(seconds_per_tick)
+	. = ..()
+	var/wounded_scaling = min(wounded_time / 320, 1) // The slowest and most lethal
+	apply_organ_damage(wounded_scaling) // No maximum damage, unlike other organ wounds.
+	if(SPT_PROB(wounded_scaling * 8, seconds_per_tick))
+		owner.adjust_drowsiness(wounded_scaling * 6 SECONDS)
+		if(prob(50))
+			to_chat(owner, span_warning("You feel tired."))
+	if(SPT_PROB((2.5), seconds_per_tick))
+		owner.losebreath++ // to punctuate the chat message
+		var/self_aware = HAS_TRAIT(owner, TRAIT_SELF_AWARE) || wounded_scaling > 0.5
+		var/alert_message = ""
+		if(self_aware)
+			if(HAS_TRAIT(owner, TRAIT_ANALGESIA))
+				alert_message = "You feel dizzy. Your heart rate is speeding up."
+			else
+				alert_message = "You feel a sharp pain in your chest. Your heart rate is speeding up."
+		else if(HAS_TRAIT(owner, TRAIT_ANALGESIA))
+			alert_message = "You feel dizzy."
+		else
+			alert_message = pick("You feel dizzy.", "Your chest hurts.")
+		to_chat(owner, span_warning(alert_message))
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"

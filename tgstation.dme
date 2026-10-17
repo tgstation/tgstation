@@ -2769,6 +2769,7 @@
 #include "code\game\objects\items\cardboard_cutouts.dm"
 #include "code\game\objects\items\cards_ids.dm"
 #include "code\game\objects\items\charter.dm"
+#include "code\game\objects\items\chest_drain.dm"
 #include "code\game\objects\items\choice_beacon.dm"
 #include "code\game\objects\items\chromosome.dm"
 #include "code\game\objects\items\cigarettes.dm"
