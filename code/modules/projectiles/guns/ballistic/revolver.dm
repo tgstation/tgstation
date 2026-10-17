@@ -248,7 +248,10 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 		spun = TRUE
 
 /obj/item/gun/ballistic/revolver/russian/can_shoot()
-	return TRUE // we ALWAYS want to shoot. even if we don't have a chambered round, even if our chambered round has no bullet
+	SHOULD_CALL_PARENT(FALSE)
+	// we ALWAYS want to shoot.
+	// even if we don't have a chambered round, even if our chambered round has no bullet
+	return TRUE
 
 /obj/item/gun/ballistic/revolver/russian/load_gun(obj/item/ammo, mob/living/user)
 	. = ..()
