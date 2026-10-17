@@ -25,12 +25,13 @@
 	r_hand = /obj/item/gun/ballistic/automatic/pistol
 	corpse = /obj/effect/mob_spawn/corpse/human/russian/ranged
 	loot = list(/obj/item/gun/ballistic/revolver/nagant)
-	var/casingtype = /obj/item/ammo_casing/n762
+	var/obj/item/ammo_casing/casingtype = /obj/item/ammo_casing/n762
 	var/projectilesound = 'sound/items/weapons/gun/revolver/shot.ogg'
 
 /mob/living/basic/trooper/russian/ranged/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/ranged_attacks, casing_type = casingtype, projectile_sound = projectilesound, cooldown_time = 1 SECONDS)
+	ai_controller.set_blackboard_key(BB_PROJECTILE_TYPE, initial(casingtype.projectile_type))
 
 /mob/living/basic/trooper/russian/ranged/lootless
 	loot = null
