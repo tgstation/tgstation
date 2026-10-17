@@ -455,7 +455,7 @@ GAME_VERB_PROC(/mob, Cell, "Cell", "Admin")
 /// Returns null if the item isn't in any slots on our mob.
 /// Does not check if the passed item is null, which may result in unexpected outcoms.
 /mob/proc/get_slot_by_item(obj/item/looking_for)
-	if(looking_for in held_items)
+	if(is_holding(looking_for))
 		return ITEM_SLOT_HANDS
 
 	return null
