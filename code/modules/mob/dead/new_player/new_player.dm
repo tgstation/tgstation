@@ -155,7 +155,8 @@
 
 	for(var/datum/job/job as anything in SSticker.reported_jobs)
 		var/vector/score_vector = SSticker.reported_jobs[job]
-		var/job_slot_count = job.spawn_positions == -1 ? ceil(length(GLOB.player_list) * 0.15) : job.spawn_positions
+		var/is_infinite_overflow = job.spawn_positions == -1
+		var/job_slot_count = is_infinite_overflow ? ceil(length(GLOB.player_list) * 0.15) : job.spawn_positions
 		if(score_vector.y == 0 || job_slot_count <= 0)
 			continue
 
@@ -164,8 +165,8 @@
 
 		var/display = "[lower_end] to [upper_end] "
 		for(var/i in 1 to job_slot_count)
-			display += i <= lower_end ? "◼" : i <= upper_end ? "◩" : job.spawn_positions == -1 ? "" : "◻"
-		if(job.spawn_positions == -1)
+			display += i <= lower_end ? "◼" : i <= upper_end ? "◩" : is_infinite_overflow ? "" : "◻"
+		if(is_infinite_overflow)
 			display += "…"
 
 		var/icon = "data:image/png;base64,[icon2base64(get_job_hud_icon(job, scale = 2))]"
