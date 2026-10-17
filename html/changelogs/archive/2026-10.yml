@@ -374,3 +374,37 @@
       slots.
   - bugfix: stacks printed by autolathes and protolathes keep the correct material
       contents when printed in batches or merged with existing stacks.
+2026-10-17:
+  Fghj240:
+  - bugfix: right clicking a powered door with powered crowbars no longer fails to
+      open it
+  Melbert:
+  - rscdel: Most gun crafting kits have been removed. The Horizon and SKS still require
+      one to build.
+  - rscadd: Weapon research tech nodes now allows the station to requisition unlocked
+      weapons from Cargo (Advanced Energy Gun, X-ray gun, ion carbine, etc.). Security
+      can departmental order them in bulk. Requisitions come without firing pins.
+  - rscadd: You can now purchase a hellfire laser gun directly from Cargo, though
+      it requires the contraband wire be cut.
+  PapaMichael:
+  - balance: Departmental security officers are now spread evenly across departments.
+  headband0536:
+  - qol: runechat for broadcasters
+  tontyGH:
+  - rscadd: Mothpeople now have 2 extra arms in their chest, giving them 4 total arms
+  - balance: Mothpeople are now generally a bit more fragile
+  - bugfix: Akimbo used the wrong gun when determining spread penalty
+  - bugfix: Akimbo penalty did not include the gun that was firing
+  - balance: Akimbo penalty now has multiplicative scaling (double PKA was adjusted
+      to consider this)
+  - bugfix: Catching items now considers all empty hands and not just your active
+      offhand
+  - balance: Blocking now only works if the blocking item is in your active set of
+      hands
+  - rscdel: Wizard's 4-arms perk and the deathmatch modifier had to be removed for
+      technical reasons. Sorry.
+  vinylspiders:
+  - bugfix: ore vents loaded in after roundstart, or on a level without a mining epicenter,
+      now actually have ores and show up on ventpointers
+  - refactor: NT Shopping Network  no longer resends the whole cargo catalogue every
+      second while it's open

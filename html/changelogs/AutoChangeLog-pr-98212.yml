@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - refactor: "NT Shopping Network  no longer resends the whole cargo catalogue every second while it's open"

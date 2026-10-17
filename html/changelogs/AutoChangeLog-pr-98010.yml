@@ -1,4 +1,0 @@
-author: "Fghj240"
-delete-after: True
-changes:
-  - bugfix: "right clicking a powered door with powered crowbars no longer fails to open it"

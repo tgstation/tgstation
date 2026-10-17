@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "ore vents loaded in after roundstart, or on a level without a mining epicenter, now actually have ores and show up on ventpointers"
