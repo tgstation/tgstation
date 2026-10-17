@@ -392,11 +392,6 @@
 	RegisterSignal(our_mob, COMSIG_LIVING_POST_FULLY_HEAL, PROC_REF(after_fully_healed))
 	RegisterSignal(our_mob, COMSIG_ATOM_EXAMINE, PROC_REF(on_heretic_examine))
 
-	RegisterSignals(
-		our_mob,
-		list(SIGNAL_ADDTRAIT(TRAIT_HERETIC_AURA_HIDDEN), SIGNAL_REMOVETRAIT(TRAIT_HERETIC_AURA_HIDDEN)),
-		PROC_REF(update_heretic_aura)
-	)
 	RegisterSignal(our_mob, COMSIG_ATOM_UPDATE_OVERLAYS, PROC_REF(add_aura_overlay))
 	our_mob.update_appearance(UPDATE_OVERLAYS)
 
@@ -418,30 +413,32 @@
 			COMSIG_LIVING_CULT_SACRIFICED,
 			COMSIG_ATOM_EXAMINE,
 			COMSIG_ATOM_UPDATE_OVERLAYS,
-			SIGNAL_ADDTRAIT(TRAIT_HERETIC_AURA_HIDDEN),
-			SIGNAL_REMOVETRAIT(TRAIT_HERETIC_AURA_HIDDEN),
 		)
 	)
 	our_mob.update_appearance(UPDATE_OVERLAYS)
 
 /// Removes the ability to blade break, removes cloak of shadows and removes the cap on how many blades you can craft
 /datum/antagonist/heretic/proc/disable_blade_breaking()
-	if(unlimited_blades)
+	if(unlimited_blades || feast_of_owls)
 		return
 	var/mob/heretic_mob = owner.current
 	unlimited_blades = TRUE
 	to_chat(heretic_mob, span_boldwarning("You have gained a lot of power, the mansus will no longer allow you to break your blades, but you can now make as many as you wish."))
 	heretic_mob.balloon_alert(heretic_mob, "blade breaking disabled!")
 	update_heretic_aura()
-	var/datum/action/cooldown/spell/shadow_cloak/cloak_spell = locate() in heretic_mob.actions
-	cloak_spell.Remove(heretic_mob)
 
 /datum/antagonist/heretic/proc/add_aura_overlay(mob/living/source, list/overlays)
 	SIGNAL_HANDLER
 	if(!should_show_aura())
 		return
 	overlays += eldritch_overlay
-	overlays += emissive_appearance(eldritch_overlay.icon, eldritch_overlay.icon_state, source)
+	overlays += emissive_appearance(
+		icon = eldritch_overlay.icon,
+		icon_state = eldritch_overlay.icon_state,
+		offset_spokesman = source,
+		alpha = 200 * (heretic_path?.route == PATH_LOCK ? 0.25 : 1),
+		effect_type = (heretic_path?.route == PATH_LOCK ? EMISSIVE_SPECULAR : EMISSIVE_BLOOM),
+	)
 
 /// Adds an overlay to the heretic
 /datum/antagonist/heretic/proc/update_heretic_aura()
@@ -452,12 +449,12 @@
 /datum/antagonist/heretic/proc/should_show_aura()
 	if(!can_assign_self_objectives)
 		return FALSE // We spurned the offer of the Mansus :(
-	if(!unlimited_blades || HAS_TRAIT(owner.current, TRAIT_HERETIC_AURA_HIDDEN))
-		return FALSE // No aura if we have the trait or is too early still
+	if(!unlimited_blades)
+		return FALSE // Not at the aura stage
 	if(feast_of_owls)
 		return FALSE // No use in giving the aura to a heretic that can't ascend
-	if(heretic_path?.route == PATH_LOCK)
-		return FALSE // Lock heretics never get this aura
+	if(heretic_path?.route == PATH_LOCK && !istype(owner.current?.get_item_by_slot(ITEM_SLOT_OCLOTHING), /obj/item/clothing/suit/hooded/cultrobes/eldritch))
+		return FALSE // Lock heretics don't get aura unless they're wearing the guise
 	return TRUE
 
 /datum/antagonist/heretic/proc/on_heretic_examine(datum/source, mob/user, text)
@@ -766,7 +763,7 @@
 /datum/antagonist/heretic/proc/adjust_knowledge_points(amount, update = TRUE)
 	knowledge_points = max(0, knowledge_points + amount) // Don't allow negative knowledge points
 	knowledge_gained += max(0, amount)
-	if(knowledge_gained > points_to_aura && !unlimited_blades)
+	if(knowledge_gained > points_to_aura)
 		disable_blade_breaking()
 	if(update)
 		update_data_for_all_viewers()
