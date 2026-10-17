@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fuel tanks with other reagents mixed in no longer sometimes fail to explode around plasma"
+  - bugfix: "swapping a water cooler's jug now hands you the old jug with whatever was left in the cooler"
