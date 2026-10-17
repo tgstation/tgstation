@@ -3395,6 +3395,7 @@
 #include "code\modules\admin\smites\scarify.dm"
 #include "code\modules\admin\smites\supply_pod.dm"
 #include "code\modules\admin\smites\supply_pod_quick.dm"
+#include "code\modules\admin\smites\temp_shapeshift.dm"
 #include "code\modules\admin\spawn_panel\admin_hotkeys.dm"
 #include "code\modules\admin\spawn_panel\assets.dm"
 #include "code\modules\admin\spawn_panel\spawn_handling.dm"
