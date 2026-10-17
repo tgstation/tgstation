@@ -377,6 +377,7 @@ function draw_status() {
         mainrow.appendChild(img_td);
         const caption_td = document.createElement('td');
         caption_td.textContent = part[3];
+        caption_td.title = part.length > 4 ? part[4] : '';
         mainrow.appendChild(caption_td);
         img_with_caption_table.appendChild(mainrow);
         table.appendChild(img_with_caption_table);

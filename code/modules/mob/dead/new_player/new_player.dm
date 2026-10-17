@@ -155,18 +155,19 @@
 
 	for(var/datum/job/job as anything in SSticker.reported_jobs)
 		var/vector/score_vector = SSticker.reported_jobs[job]
-		if(score_vector.y == 0 || job.spawn_positions <= 0)
+		var/job_slot_count = job.spawn_positions == -1 ? ceil(length(GLOB.player_list) * 0.15) : job.spawn_positions
+		if(score_vector.y == 0 || job_slot_count <= 0)
 			continue
 
-		var/lower_end = clamp(score_vector.x, 0, job.spawn_positions - 1)
-		var/upper_end = clamp(score_vector.y, 0, job.spawn_positions)
+		var/lower_end = clamp(score_vector.x, 0, job_slot_count - 1)
+		var/upper_end = clamp(score_vector.y, 0, job_slot_count)
 
-		var/display = ""
-		for(var/i in 1 to job.spawn_positions)
-			display += i <= lower_end ? "✔" : i <= upper_end ? "?" : "✘"
+		var/display = "[lower_end] to [upper_end] "
+		for(var/i in 1 to job_slot_count)
+			display += i <= lower_end ? "◼" : i <= upper_end ? "◩" : job.spawn_positions == -1 ? "?" : "◻"
 
 		var/icon = "data:image/png;base64,[icon2base64(get_job_hud_icon(job, scale = 2))]"
-		. += list(list("img", icon, job.title, display))
+		. += list(list("img", icon, job.title, display, "There will likely be between [lower_end] and [upper_end] [job.title]\s."))
 
 /proc/get_job_unavailable_error_message(retval, jobtitle)
 	switch(retval)
