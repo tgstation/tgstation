@@ -1,5 +1,11 @@
 import { sortBy } from 'es-toolkit';
-import { type Dispatch, type SetStateAction, useMemo, useState } from 'react';
+import {
+  type Dispatch,
+  type SetStateAction,
+  Suspense,
+  useMemo,
+  useState,
+} from 'react';
 import {
   BlockQuote,
   Button,
@@ -14,19 +20,32 @@ import {
 import { formatMoney } from 'tgui-core/format';
 
 import { useBackend, useSharedState } from '../../backend';
+import { LoadingScreen } from '../common/LoadingScreen';
 import { SearchBar } from '../common/SearchBar';
-import { searchForSupplies } from './helpers';
-import type { CargoData, Supply, SupplyCategory } from './types';
+import { searchForSupplies, useCatalogue, useShownCatalogue } from './helpers';
+import type { CargoData, Catalogue, Supply, SupplyCategory } from './types';
 
 type Props = {
   express?: boolean;
 };
 
+/** The cargo catalogue - when a new build comes in, the old one stays on screen until it's loaded */
 export function CargoCatalog(props: Props) {
   const { data } = useBackend<CargoData>();
-  const { express } = props;
+  const catalogue = useShownCatalogue(data.catalogue);
 
-  const supplies = Object.values(data.supplies);
+  return (
+    <Suspense fallback={<LoadingScreen />}>
+      <CatalogContents {...props} catalogue={catalogue} />
+    </Suspense>
+  );
+}
+
+function CatalogContents(props: Props & { catalogue: Catalogue }) {
+  const { data } = useBackend<CargoData>();
+  const { express, catalogue } = props;
+
+  const supplies = useCatalogue(catalogue);
   const [showContents, setShowContents] = useState('');
   const [searchText, setSearchText] = useSharedState('search_text', '');
   const [activeSupplyName, setActiveSupplyName] = useSharedState(

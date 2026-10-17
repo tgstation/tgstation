@@ -67,8 +67,8 @@
 	var/static/list/special_packs
 	if(isnull(special_packs))
 		special_packs = list()
-		for(var/pack_id in SSshuttle.supply_packs)
-			var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
+		for(var/pack_id, pack_data in SSshuttle.supply_packs)
+			var/datum/supply_pack/pack = pack_data
 			if(pack.order_flags & ORDER_SPECIAL)
 				special_packs += pack
 	var/list/key = list(SSeconomy.pack_price_modifier)
@@ -184,34 +184,37 @@
 	data["displayed_currency_name"] = " [MONEY_SYMBOL]"
 
 	LAZYSET(sent_catalogue_keys, REF(user), get_catalogue_key(user))
-	data["supplies"] = list()
-	for(var/pack_id in SSshuttle.supply_packs)
-		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
+	var/datum/asset/json/cargo_catalogue/catalogue = get_asset_datum(/datum/asset/json/cargo_catalogue)
+	var/list/groups = get_catalogue_groups(user, catalogue)
+	if(catalogue.needs_build)
+		groups = get_catalogue_groups(user, catalogue.ensure_ready())
+	data["catalogue"] = catalogue.get_window_data(user, groups)
+	return data
+
+/// Returns the packs this user can see by group, as index/price pairs into the catalogue - packs it's missing get skipped and mark it for a rebuild
+/datum/computer_file/program/budgetorders/proc/get_catalogue_groups(mob/user, datum/asset/json/cargo_catalogue/catalogue)
+	var/list/groups
+	for(var/pack_id, pack_data in SSshuttle.supply_packs)
+		var/datum/supply_pack/pack = pack_data
 		if(pack.order_flags & ORDER_INVISIBLE)
 			continue
 		if(!is_visible_pack(user, pack.access_view, null, (pack.order_flags & ORDER_CONTRABAND)) || (pack.order_flags & ORDER_EMAG_ONLY))
 			continue
-		if(!data["supplies"][pack.group])
-			data["supplies"][pack.group] = list(
-				"name" = pack.group,
-				"packs" = list()
-			)
+		LAZYINITLIST(groups)
+		groups[pack.group] ||= list()
 		if(((pack.order_flags & ORDER_EMAG_ONLY) && ((pack.order_flags & ORDER_CONTRABAND) && !contraband) || ((pack.order_flags & ORDER_SPECIAL) && !(pack.order_flags & ORDER_SPECIAL_ENABLED)) || (pack.order_flags & ORDER_POD_ONLY)))
 			continue
+		var/index = catalogue.pack_indices[pack]
+		if(isnull(index))
+			catalogue.needs_build = TRUE
+			continue
+		groups[pack.group] += list(index, pack.get_cost())
+	return groups
 
-		var/obj/item/first_item = length(pack.contains) > 0 ? pack.contains[1] : null
-		data["supplies"][pack.group]["packs"] += list(list(
-			"name" = pack.name,
-			"cost" = pack.get_cost(),
-			"id" = pack_id,
-			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
-			"first_item_icon" = first_item?.icon,
-			"first_item_icon_state" = first_item?.icon_state,
-			"goody" = pack.order_flags & ORDER_GOODY,
-			"access" = pack.access,
-			"contains" = pack.get_contents_ui_data(),
-		))
-	return data
+/// Silicons can't see any packs, so they don't need the catalogue
+/datum/computer_file/program/budgetorders/ui_assets(mob/user)
+	if(!HAS_SILICON_ACCESS(user))
+		return list(get_asset_datum(/datum/asset/json/cargo_catalogue))
 
 /datum/computer_file/program/budgetorders/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
