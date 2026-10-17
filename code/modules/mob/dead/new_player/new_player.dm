@@ -163,14 +163,14 @@
 		var/lower_end = clamp(score_vector.x, 0, job_slot_count - 1)
 		var/upper_end = clamp(score_vector.y, 0, job_slot_count)
 
-		var/display = "[lower_end] to [upper_end] "
+		var/display = " [lower_end] to [upper_end] "
 		for(var/i in 1 to job_slot_count)
 			display += i <= lower_end ? "◼" : i <= upper_end ? "◩" : is_infinite_overflow ? "" : "◻"
 		if(is_infinite_overflow)
 			display += "…"
 
 		var/icon = "data:image/png;base64,[icon2base64(get_job_hud_icon(job, scale = 2))]"
-		. += list(list("img", icon, job.title, display, "There will likely be between [lower_end] and [upper_end] [job.title]\s."))
+		. += list(list("img", icon, job.title, display, "There will likely be between [lower_end] and [upper_end] [job.title]s."))
 
 /proc/get_job_unavailable_error_message(retval, jobtitle)
 	switch(retval)
