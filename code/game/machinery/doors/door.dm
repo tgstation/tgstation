@@ -430,6 +430,7 @@
 	if(istype(tool, /obj/item/crowbar))
 		var/obj/item/crowbar/crowbar = tool
 		return crowbar.force_opens
+	return FALSE
 
 /obj/machinery/door/crowbar_act(mob/living/user, obj/item/tool)
 	try_to_crowbar(tool, user, check_crowbar_force(tool))
