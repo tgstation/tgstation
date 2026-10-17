@@ -79,10 +79,6 @@
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
 
-/obj/item/spear/update_icon_state()
-	worn_icon_state = (base_icon_state == SPEAR_CUSTOM_TIP_PREFIX) ? "spearglass0" : null
-	return ..()
-
 /obj/item/spear/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
 	if (!do_after(user, 4 SECONDS, target = src))
@@ -131,6 +127,7 @@
 			base_icon_state = "spearplastitanium"
 		else
 			base_icon_state = SPEAR_CUSTOM_TIP_PREFIX
+	worn_icon_state = (base_icon_state == SPEAR_CUSTOM_TIP_PREFIX) ? "spearglass0" : null
 
 	AddComponent(/datum/component/two_handed, \
 		update_icon_state = TRUE, \
@@ -310,6 +307,7 @@
 		var/obj/item/spear/lancePart = locate() in components
 		throwforce = lancePart.throwforce
 		base_icon_state = lancePart.base_icon_state
+		worn_icon_state = lancePart.worn_icon_state
 		set_explosive(nade)
 	return ..()
 
