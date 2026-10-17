@@ -895,7 +895,12 @@ SUBSYSTEM_DEF(ticker)
 		if(score < 0.5)
 			continue
 
-		reported_jobs[SSjob.get_job(job_title)] = vector(floor(score * 0.5), ceil(score))
+		var/datum/job/job_datum = SSjob.get_job(job_title)
+		// can happen from removed jobs
+		if(isnull(job_datum))
+			continue
+
+		reported_jobs[job_datum] = vector(floor(score * 0.5), ceil(score))
 
 	sortTim(reported_jobs, GLOBAL_PROC_REF(cmp_job_display_with_departments_asc))
 
