@@ -2109,7 +2109,7 @@
 "ahG" = (
 /obj/effect/spawner/random/decoration/showcase,
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/sign/plaques/kiddie/perfect_man{
+/obj/structure/plaque/kiddie/perfect_man{
 	pixel_y = -32
 	},
 /turf/open/floor/carpet/royalblack,
@@ -2489,7 +2489,7 @@
 /area/station/service/hydroponics)
 "alf" = (
 /obj/structure/window/reinforced/spawner/directional/north,
-/obj/structure/sign/plaques/kiddie/perfect_drone{
+/obj/structure/plaque/kiddie/perfect_drone{
 	pixel_y = -32
 	},
 /obj/structure/table/wood,
@@ -56426,7 +56426,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/starboard/greater)
 "sKA" = (
-/obj/structure/sign/plaques/kiddie{
+/obj/structure/plaque/kiddie/developer{
 	pixel_y = -32
 	},
 /turf/open/floor/circuit,
