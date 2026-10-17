@@ -12,7 +12,7 @@
 	integrity_failure = 0
 	armor_type = /datum/armor/door_window
 	visible = FALSE
-	flags_1 = ON_BORDER_1
+	flags_1 = parent_type::flags_1 | ON_BORDER_1
 	opacity = FALSE
 	pass_flags_self = PASSGLASS | PASSWINDOW
 	can_atmos_pass = ATMOS_PASS_PROC

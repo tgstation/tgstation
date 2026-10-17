@@ -1,7 +1,7 @@
 ///Cooldown for the Reset Lobby Menu HUD verb
 #define RESET_HUD_INTERVAL 15 SECONDS
 /mob/dead/new_player
-	flags_1 = NONE
+	flags_1 = parent_type::flags_1
 	invisibility = INVISIBILITY_ABSTRACT
 	density = FALSE
 	stat = DEAD
