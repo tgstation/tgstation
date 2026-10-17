@@ -171,7 +171,7 @@
 /obj/item/organ/tail/fish/cerulean/on_mob_remove(mob/living/carbon/owner, special)
 	. = ..()
 	UnregisterSignal(owner, list(COMSIG_CARBON_GAIN_ORGAN, COMSIG_CARBON_LOSE_ORGAN))
-	if(special)
+	if(special || QDELING(src))
 		return
 	var/limb_name = "\improper [bodypart_owner.name]"
 	var/tail_name = "\improper [name]"
