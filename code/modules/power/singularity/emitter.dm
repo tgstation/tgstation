@@ -137,7 +137,8 @@
 /obj/machinery/power/emitter/should_have_node()
 	return welded
 
-/obj/machinery/power/emitter/Destroy()
+/obj/machinery/power/emitter/Destroy(force)
+	SSmachines.processing_early -= src
 	if(SSticker.IsRoundInProgress())
 		var/turf/T = get_turf(src)
 		message_admins("[src] deleted at [ADMIN_VERBOSEJMP(T)].")
