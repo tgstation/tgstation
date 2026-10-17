@@ -79,7 +79,7 @@
 		return ITEM_SLOT_STORAGE
 	return ..()
 
-/mob/living/basic/guardian/dextrous/put_item_in_slot(obj/item/equipping, slot)
+/mob/living/basic/guardian/dextrous/handle_set_item_in_slot(obj/item/equipping, slot)
 	. = ..()
 	if(.)
 		return

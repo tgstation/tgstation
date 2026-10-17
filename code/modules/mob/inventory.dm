@@ -617,7 +617,7 @@
 	if(slot == ITEM_SLOT_HANDS)
 		put_in_hands(equipping)
 		update_hands = TRUE
-	else if(put_item_in_slot(equipping, slot)) // Should not fail unless an error occurred
+	else if(handle_set_item_in_slot(equipping, slot)) // Should not fail unless an error occurred
 		has_equipped(equipping, slot, initial)
 
 	if(update_hands)
@@ -629,7 +629,7 @@
  * ## You may think you have a good reason, but you don't. Call [/mob/proc/equip_to_slot_if_possible] instead.
  * Handles the work of assigning an item to an item slot. Returns TRUE if an item was successfully put into a slot.
  */
-/mob/proc/put_item_in_slot(obj/item/equipping, slot)
+/mob/proc/handle_set_item_in_slot(obj/item/equipping, slot)
 	SHOULD_CALL_PARENT(TRUE)
 	PROTECTED_PROC(TRUE)
 	return FALSE
