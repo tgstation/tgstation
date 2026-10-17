@@ -36,12 +36,13 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	/// List of immunities given to our combatants
 	var/static/list/given_immunities = list(
 		TRAIT_BOMBIMMUNE,
+		TRAIT_FORCED_GRAVITY,
 		TRAIT_IGNORESLOWDOWN,
-		TRAIT_NO_SLIP_ALL,
 		TRAIT_NOBREATH,
+		TRAIT_NO_RADIATION_EFFECTS,
+		TRAIT_NO_SLIP_ALL,
 		TRAIT_PIERCEIMMUNE,
 		TRAIT_PUSHIMMUNE,
-		TRAIT_RADIMMUNE,
 		TRAIT_RESISTCOLD,
 		TRAIT_RESISTHEAT,
 		TRAIT_RESISTHIGHPRESSURE,
@@ -49,7 +50,6 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 		TRAIT_SHOCKIMMUNE,
 		TRAIT_SLEEPIMMUNE,
 		TRAIT_STUNIMMUNE,
-		TRAIT_FORCED_GRAVITY,
 	)
 
 /datum/proximity_monitor/advanced/heretic_arena/New(atom/_host, range, _ignore_if_not_on_turf)

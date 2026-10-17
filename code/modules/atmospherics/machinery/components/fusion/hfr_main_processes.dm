@@ -401,7 +401,7 @@
 
 	check_gravity_pulse(seconds_per_tick)
 
-	radiation_pulse(src, max_range = 6, threshold = 0.3)
+	radiation_pulse(src, max_range = 6, threshold = 0.3, can_propogate = TRUE)
 
 /obj/machinery/atmospherics/components/unary/hypertorus/core/proc/evaporate_moderator(seconds_per_tick)
 	// Don't evaporate if the reaction is dead
