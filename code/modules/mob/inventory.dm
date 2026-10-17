@@ -582,7 +582,7 @@
 		else if(!disable_warning)
 			to_chat(src, span_warning("You are unable to equip that!"))
 		return FALSE
-	equip_to_slot(W, slot, initial, redraw_mob, indirect_action = indirect_action) //This proc should not ever fail.
+	equip_to_slot(W, slot, initial) //This proc should not ever fail.
 	return TRUE
 
 /**
@@ -591,16 +591,17 @@
  *
  * In most cases you will want to use [/mob/proc/equip_to_slot_if_possible] or at the very least call [/obj/item/proc/mob_can_equip] first.
  */
-/mob/proc/equip_to_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
+/mob/proc/equip_to_slot(obj/item/equipping, slot, initial = FALSE)
 	if(!slot)
 		return
 	if(!istype(equipping))
 		return
 
+	var/update_hands = FALSE
 	var/held_index = get_held_index_of_item(equipping)
 	if(held_index)
 		held_items[held_index] = null
-		update_held_items()
+		update_hands = TRUE
 
 	equipping.pulledby?.stop_pulling()
 	hud_used?.update_inventory_slot(slot)
@@ -615,11 +616,13 @@
 	// We have to handle this here because put_in_hands also calls has_equipped
 	if(slot == ITEM_SLOT_HANDS)
 		put_in_hands(equipping)
-		update_held_items()
-		return
-
-	if(put_item_in_slot(equipping, slot, initial, redraw_mob, indirect_action)) // Should not fail unless an error occurred
+		update_hands = TRUE
+	else if(put_item_in_slot(equipping, slot)) // Should not fail unless an error occurred
 		has_equipped(equipping, slot, initial)
+
+	if(update_hands)
+		update_held_items()
+
 
 /**
  * # Never call this proc.
