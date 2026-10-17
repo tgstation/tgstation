@@ -145,6 +145,9 @@
 
 /mob/dead/new_player/get_status_tab_items()
 	. = ..()
+	if(SSticker.HasRoundStarted())
+		return
+
 	. += "Potential manifest:"
 	if(!length(SSticker?.reported_jobs))
 		. += "- No one!"
@@ -160,7 +163,7 @@
 
 		var/display = ""
 		for(var/i in 1 to job.spawn_positions)
-			display += i <= lower_end ? "◼" : i <= upper_end ? "◩" : "◻"
+			display += i <= lower_end ? "✔" : i <= upper_end ? "?" : "✘"
 
 		var/icon = "data:image/png;base64,[icon2base64(get_job_hud_icon(job, scale = 2))]"
 		. += list(list("img", icon, job.title, display))
