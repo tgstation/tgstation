@@ -11,7 +11,7 @@
 	/// The slot to replace, in GLOB.limb_zones (both arms and both legs)
 	var/limb_zone
 	/// Body zone to corresponding surplus prosthetic limb
-	var/static/list/zone_to_limb_type = list(
+	var/static/alist/zone_to_limb_type = alist(
 		BODY_ZONE_L_LEG = /obj/item/bodypart/leg/left/robot/surplus,
 		BODY_ZONE_R_LEG = /obj/item/bodypart/leg/right/robot/surplus,
 		BODY_ZONE_L_ARM = /obj/item/bodypart/arm/left/robot/surplus,
@@ -29,9 +29,8 @@
 		if(human_holder.get_bodypart(zone))
 			zone_options += zone
 
-	if(!length(zone_options))
-		stack_trace("Prosthetic limb applied to a mob who had no available places to put one, consider blacklisting their species ([human_holder.dna.species.type]) from this quirk")
-		return // you get NOTHING I guess
+	if(!length(zone_options)) // you get NOTHING I guess
+		CRASH("Prosthetic limb applied to a mob who had no available places to put one, consider blacklisting their species ([human_holder.dna.species.type]) from this quirk")
 
 	var/preferred_zone = GLOB.prosthetic_limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic)]
 	limb_zone = (preferred_zone in zone_options) ? preferred_zone : pick(zone_options)

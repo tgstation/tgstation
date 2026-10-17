@@ -36,9 +36,8 @@
 	if(HAS_TRAIT(human_holder, TRAIT_NOHUNGER))
 		possible_organ_slots -= ORGAN_SLOT_STOMACH
 
-	if(!length(possible_organ_slots)) //what the hell, no available organ slots for this species
-		stack_trace("Prosthetic organ applied to a mob who had no available organ slots, consider blacklisting their species ([human_holder.dna.species.type]) from this quirk")
-		return // you get NOTHING I guess
+	if(!length(possible_organ_slots)) // you get NOTHING I guess
+		CRASH("Prosthetic organ applied to a mob who had no available organ slots, consider blacklisting their species ([human_holder.dna.species.type]) from this quirk")
 
 	var/organ_slot = pick(possible_organ_slots)
 	if(preferred_organ in possible_organ_slots)
