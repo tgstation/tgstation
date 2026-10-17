@@ -1,0 +1,6 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - rscdel: "Most gun crafting kits have been removed. The Horizon and SKS still require one to build."
+  - rscadd: "Weapon research tech nodes now allows the station to requisition unlocked weapons from Cargo (Advanced Energy Gun, X-ray gun, ion carbine, etc.). Security can departmental order them in bulk. Requisitions come without firing pins."
+  - rscadd: "You can now purchase a hellfire laser gun directly from Cargo, though it requires the contraband wire be cut."
