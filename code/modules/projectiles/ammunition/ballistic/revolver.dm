@@ -3,7 +3,8 @@
 /obj/item/ammo_casing/c357
 	name = ".357 bullet casing"
 	desc = "A .357 bullet casing."
-	caliber = CALIBER_357
+	caliber = CALIBER_357_38
+	misfire_increment = 50
 	projectile_type = /obj/projectile/bullet/c357
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3)
 
@@ -41,8 +42,9 @@
 /obj/item/ammo_casing/c38
 	name = ".38 bullet casing"
 	desc = "A .38 bullet casing."
-	caliber = CALIBER_38
+	caliber = CALIBER_357_38
 	projectile_type = /obj/projectile/bullet/c38
+	casing_pressure = AMMO_CASING_PRESSURE_LOW // .38 rounds can be fired from .357 chambered guns, and technically vice versa, but watch out!
 	/// Used for icon building for things like speedloaders and the like to determine what kind of sprite this casing uses. Actually accepts any string, just make sure there is a matching positional sprite in _/icons/obj/weapons/guns/ammo.dmi.
 	var/lead_or_laser = "lead"
 
