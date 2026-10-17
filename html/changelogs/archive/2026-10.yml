@@ -403,6 +403,8 @@
       hands
   - rscdel: Wizard's 4-arms perk and the deathmatch modifier had to be removed for
       technical reasons. Sorry.
+  - refactor: Cybernetic arm implants got refactored. Report weird behaviour on the
+      GitHub.
   vinylspiders:
   - bugfix: ore vents loaded in after roundstart, or on a level without a mining epicenter,
       now actually have ores and show up on ventpointers
