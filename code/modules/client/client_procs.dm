@@ -253,6 +253,7 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	///////////
 
 /client/New(TopicData)
+	new_started = TRUE
 	var/tdata = TopicData //save this for later use
 	TopicData = null //Prevent calls to client.Topic from connect
 
@@ -614,6 +615,10 @@ GLOBAL_LIST_INIT(unrecommended_builds, list(
 	return ..()
 
 /client/Destroy()
+	if(!new_started)
+		..()
+		return QDEL_HINT_HARDDEL_NOW
+
 	if(mob)
 		var/stealth_admin = mob.client?.holder?.fakekey
 		var/announce_join = mob.client?.prefs?.read_preference(/datum/preference/toggle/broadcast_login_logout)
