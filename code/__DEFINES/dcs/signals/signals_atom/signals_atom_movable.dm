@@ -2,12 +2,12 @@
 // When the signal is called: (signal arguments)
 // All signals send the source datum of the signal as the first argument
 
-///from base of atom/movable/Moved(): (/atom, newloc, direction)
+///from base of atom/movable/Moved(): (newloc, direction)
 #define COMSIG_MOVABLE_ATTEMPTED_MOVE "movable_attempted_move"
 ///from base of atom/movable/Moved(): (/atom)
 #define COMSIG_MOVABLE_PRE_MOVE "movable_pre_move"
 	#define COMPONENT_MOVABLE_BLOCK_PRE_MOVE (1<<0)
-///from base of atom/movable/Moved(): (atom/old_loc, dir, forced, list/old_locs)
+///from base of atom/movable/Moved(): (/atom/old_loc, dir, forced, list/old_locs)
 #define COMSIG_MOVABLE_MOVED "movable_moved"
 /// Sent to an existing occupant during base turf Initialize(), before subtype effects: (turf/initializing_turf)
 #define COMSIG_MOVABLE_TURF_INITIALIZING "movable_turf_initializing"
