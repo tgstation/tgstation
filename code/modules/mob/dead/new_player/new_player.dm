@@ -164,7 +164,9 @@
 
 		var/display = "[lower_end] to [upper_end] "
 		for(var/i in 1 to job_slot_count)
-			display += i <= lower_end ? "◼" : i <= upper_end ? "◩" : job.spawn_positions == -1 ? "?" : "◻"
+			display += i <= lower_end ? "◼" : i <= upper_end ? "◩" : job.spawn_positions == -1 ? "" : "◻"
+		if(job.spawn_positions == -1)
+			display += "…"
 
 		var/icon = "data:image/png;base64,[icon2base64(get_job_hud_icon(job, scale = 2))]"
 		. += list(list("img", icon, job.title, display, "There will likely be between [lower_end] and [upper_end] [job.title]\s."))
