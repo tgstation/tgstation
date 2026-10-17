@@ -16980,7 +16980,8 @@
 /area/station/science/ordnance/freezerchamber)
 "eJq" = (
 /obj/effect/decal/cleanable/dirt,
-/obj/item/stack/cable_coil/cut,
+/obj/structure/cable,
+/obj/effect/mapping_helpers/cable_snip,
 /turf/open/floor/plating,
 /area/station/hallway/secondary/construction/engineering)
 "eJz" = (
@@ -37270,6 +37271,9 @@
 /turf/open/floor/carpet,
 /area/station/commons/dorms)
 "lFa" = (
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 1
+	},
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos)
 "lFk" = (
@@ -53304,9 +53308,7 @@
 /turf/open/floor/iron/smooth,
 /area/station/maintenance/tram/right)
 "rlm" = (
-/obj/machinery/atmospherics/components/unary/thermomachine/heater{
-	dir = 2
-	},
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer,
 /turf/open/floor/iron/smooth,
 /area/station/engineering/atmos)
 "rlo" = (
