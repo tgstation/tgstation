@@ -408,3 +408,7 @@
       now actually have ores and show up on ventpointers
   - refactor: NT Shopping Network  no longer resends the whole cargo catalogue every
       second while it's open
+  - bugfix: fuel tanks with other reagents mixed in no longer sometimes fail to explode
+      around plasma
+  - bugfix: swapping a water cooler's jug now hands you the old jug with whatever
+      was left in the cooler
