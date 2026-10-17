@@ -29,7 +29,7 @@
 
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
-///from base of mob/living typing and thinking indicator create/remove procs: ()
+///from base of mob/living/proc/on_typing_indicator_updated(): ()
 #define COMSIG_LIVING_TYPING_INDICATOR_UPDATED "living_typing_indicator_updated"
 
 /// from /datum/status_effect/incapacitating/stamcrit/on_apply()

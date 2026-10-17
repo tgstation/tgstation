@@ -70,7 +70,7 @@
 		return FALSE
 	active_thinking_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "[bubble_icon]3", TYPING_LAYER)
 	add_overlay(active_thinking_indicator)
-	SEND_SIGNAL(src, COMSIG_LIVING_TYPING_INDICATOR_UPDATED)
+	on_typing_indicator_updated()
 	play_fov_effect(src, 6, "talk", ignore_self = TRUE)
 
 /mob/living/remove_thinking_indicator()
@@ -78,14 +78,14 @@
 		return FALSE
 	cut_overlay(active_thinking_indicator)
 	active_thinking_indicator = null
-	SEND_SIGNAL(src, COMSIG_LIVING_TYPING_INDICATOR_UPDATED)
+	on_typing_indicator_updated()
 
 /mob/living/create_typing_indicator()
 	if(active_typing_indicator || active_thinking_indicator || IS_UNCONSCIOUS_OR_CRIT(src) || !HAS_TRAIT(src, TRAIT_THINKING_IN_CHARACTER))
 		return FALSE
 	active_typing_indicator = mutable_appearance('icons/mob/effects/talk.dmi', "[bubble_icon]0", TYPING_LAYER)
 	add_overlay(active_typing_indicator)
-	SEND_SIGNAL(src, COMSIG_LIVING_TYPING_INDICATOR_UPDATED)
+	on_typing_indicator_updated()
 	play_fov_effect(src, 6, "talk", ignore_self = TRUE)
 
 /mob/living/remove_typing_indicator()
@@ -93,9 +93,12 @@
 		return FALSE
 	cut_overlay(active_typing_indicator)
 	active_typing_indicator = null
-	SEND_SIGNAL(src, COMSIG_LIVING_TYPING_INDICATOR_UPDATED)
+	on_typing_indicator_updated()
 
 /mob/living/remove_all_indicators()
 	REMOVE_TRAIT(src, TRAIT_THINKING_IN_CHARACTER, CURRENTLY_TYPING_TRAIT)
 	remove_thinking_indicator()
 	remove_typing_indicator()
+
+/mob/living/proc/on_typing_indicator_updated()
+	SEND_SIGNAL(src, COMSIG_LIVING_TYPING_INDICATOR_UPDATED)
