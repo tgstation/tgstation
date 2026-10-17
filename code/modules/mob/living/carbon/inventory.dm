@@ -77,7 +77,7 @@
 		qdel(equipping)
 	return null
 
-/mob/living/carbon/put_item_in_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
+/mob/living/carbon/put_item_in_slot(obj/item/equipping, slot)
 	. = ..()
 	if(.)
 		return

@@ -39,7 +39,7 @@
 		return ITEM_SLOT_HEAD
 	return ..()
 
-/mob/living/basic/drone/put_item_in_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
+/mob/living/basic/drone/put_item_in_slot(obj/item/equipping, slot)
 	. = ..()
 	if(.)
 		return

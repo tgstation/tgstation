@@ -117,7 +117,7 @@
 		visible_items += under.attached_accessories
 	return visible_items
 
-/mob/living/carbon/human/put_item_in_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
+/mob/living/carbon/human/put_item_in_slot(obj/item/equipping, slot)
 	. = ..()
 	if(.)
 		return
