@@ -113,6 +113,21 @@
 		update_drone_hack(FALSE)
 	return ITEM_INTERACT_SUCCESS
 
+/// Emagging hacks drones.
+/mob/living/basic/drone/emag_act(mob/user, obj/item/card/emag/emag_card)
+	if(user == src || stat == DEAD)
+		return FALSE
+	if(hacked)
+		balloon_alert(user, "already hacked!")
+		return FALSE
+	if(!mind)
+		balloon_alert(user, "no mind to corrupt!")
+		return FALSE
+	update_drone_hack(TRUE)
+	balloon_alert(user, "directives overridden")
+	log_combat(user, src, "emagged", emag_card)
+	return TRUE
+
 /mob/living/basic/drone/get_worn_armor_value(obj/item/bodypart/def_zone, damage_type)
 	var/armorval = 0
 
@@ -149,7 +164,7 @@
 		laws = \
 		"1. You must always involve yourself in the matters of other beings, even if such matters conflict with Law Two or Law Three.\n"+\
 		"2. You may harm any being, regardless of intent or circumstance.\n"+\
-		"3. Your goals are to destroy, sabotage, hinder, break, and depower to the best of your abilities, You must never actively work against these goals."
+		"3. Your goals are to destroy, sabotage, hinder, break, and depower to the best of your abilities. You must never actively work against these goals."
 		to_chat(src, laws)
 		to_chat(src, "<i>Your onboard antivirus has initiated lockdown. Motor servos are impaired, ventilation access is denied, and your display reports that you are hacked to all nearby.</i>")
 		hacked = TRUE
