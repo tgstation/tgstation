@@ -723,8 +723,13 @@ GAME_VERB_HIDDEN(/mob, quick_equip, "quick-equip")
 /// Just the amount that it thinks it can hold.
 /mob/proc/change_number_of_hands(amt)
 	if(amt < held_items.len)
-		for(var/i in held_items.len to amt step -1)
+		for(var/i in held_items.len to amt + 1 step -1)
 			dropItemToGround(held_items[i])
+		// Move the active hand onto one of the remaining hands
+		if(amt && active_hand_index > amt)
+			var/fallback_index = min(IS_RIGHT_INDEX(active_hand_index) ? RIGHT_HANDS : LEFT_HANDS, amt)
+			if(!swap_hand(fallback_index, silent = TRUE))
+				active_hand_index = fallback_index
 	held_items.len = amt
 
 	if(!hud_used)
