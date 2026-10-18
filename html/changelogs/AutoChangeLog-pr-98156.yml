@@ -1,7 +1,0 @@
-author: "necromanceranne"
-delete-after: True
-changes:
-  - balance: "Misfiring has been completely reworked."
-  - balance: ".38 and .357 are interchangeable in all compatible guns without needing to wrench the gun. Just load it in! Nothing bad could possibly happen."
-  - balance: "Junk rounds are once again shotgun rounds, and pipeguns/pipe pistols now fit shotgun shells again."
-  - balance: "Guns now have pressure mechanics to handle misfiring. Check you gun carefully to determine its pressure rating."

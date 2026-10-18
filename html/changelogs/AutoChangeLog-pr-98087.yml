@@ -1,4 +1,0 @@
-author: "TheBoondock"
-delete-after: True
-changes:
-  - rscadd: "Added a pillow supplies crate and category to the games vendor"

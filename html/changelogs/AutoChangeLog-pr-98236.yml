@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "crafted spears and explosive lances no longer turn invisible when worn on your back"
