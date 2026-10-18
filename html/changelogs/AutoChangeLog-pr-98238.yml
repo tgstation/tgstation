@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "losing a moth's chest arms no longer drops what's in your right hand, and your active hand moves to a hand you still have"
+  - bugfix: "moth chest-arms are named what you'd expect now instead of just \"moth\""
