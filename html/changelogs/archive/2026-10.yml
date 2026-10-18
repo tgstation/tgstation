@@ -414,3 +414,6 @@
       around plasma
   - bugfix: swapping a water cooler's jug now hands you the old jug with whatever
       was left in the cooler
+2026-10-18:
+  Absolucy:
+  - bugfix: Pun Pun should now properly get roundstart masks sometime
