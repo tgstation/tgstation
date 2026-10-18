@@ -94,7 +94,7 @@
 	regenerate_icons()
 
 /mob/living/carbon/has_hand_for_held_index(i)
-	if(!i)
+	if(!i || i > length(hand_bodyparts))
 		return FALSE
 	var/obj/item/bodypart/hand_instance = hand_bodyparts[i]
 	if(hand_instance && !hand_instance.bodypart_disabled)
