@@ -616,7 +616,7 @@
 	// We have to handle this here because put_in_hands also calls has_equipped
 	if(slot == ITEM_SLOT_HANDS)
 		put_in_hands(equipping)
-		update_hands = TRUE
+		update_hands = FALSE // we already called this
 	else if(handle_set_item_in_slot(equipping, slot)) // Should not fail unless an error occurred
 		has_equipped(equipping, slot, initial)
 
