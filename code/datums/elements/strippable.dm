@@ -265,7 +265,7 @@
 		return FALSE
 
 	var/mob/mob_source = source
-	mob_source.equip_to_slot(equipping, item_slot)
+	mob_source.equip_to_slot(equipping, item_slot) // We check if conditions are valid in the above proc
 
 	return finish_equip_mob(equipping, source, user)
 

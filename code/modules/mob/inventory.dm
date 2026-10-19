@@ -56,7 +56,7 @@
 /// Returns the items in your "active hand set", essentially your active hand and offhand
 /mob/proc/get_active_handset_items() as /list
 	RETURN_TYPE(/list/obj/item)
-	
+
 	var/list/ret = list(get_active_held_item(), get_inactive_held_item())
 	ret.RemoveAll(null)
 	return ret
@@ -582,19 +582,57 @@
 		else if(!disable_warning)
 			to_chat(src, span_warning("You are unable to equip that!"))
 		return FALSE
-	equip_to_slot(W, slot, initial, redraw_mob, indirect_action = indirect_action) //This proc should not ever fail.
+	equip_to_slot(W, slot, initial) //This proc should not ever fail.
 	return TRUE
 
 /**
- * Actually equips an item to a slot (UNSAFE)
+ * # This is an UNSAFE proc. Do not call this unless you know you have to.
+ * Actually equips an item to a slot, bypassing checks or sanity.
  *
- * This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on
- * whether you can or can't equip need to be done before! Use mob_can_equip() for that task.
- *
- *In most cases you will want to use equip_to_slot_if_possible()
+ * In most cases you will want to use [/mob/proc/equip_to_slot_if_possible] or at the very least call [/obj/item/proc/mob_can_equip] first.
  */
-/mob/proc/equip_to_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
-	return
+/mob/proc/equip_to_slot(obj/item/equipping, slot, initial = FALSE)
+	if(!slot)
+		return
+	if(!istype(equipping))
+		return
+
+	var/update_hands = FALSE
+	var/held_index = get_held_index_of_item(equipping)
+	if(held_index)
+		held_items[held_index] = null
+		update_hands = TRUE
+
+	equipping.pulledby?.stop_pulling()
+	hud_used?.update_inventory_slot(slot)
+
+	for(var/mob/dead/observe as anything in observers)
+		observe.client?.screen -= equipping
+
+	equipping.forceMove(src) //This has to come before has_equipped is called.
+	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
+	equipping.appearance_flags |= NO_CLIENT_COLOR
+
+	// We have to handle this here because put_in_hands also calls has_equipped
+	if(slot == ITEM_SLOT_HANDS)
+		put_in_hands(equipping)
+		update_hands = FALSE // we already called this
+	else if(handle_set_item_in_slot(equipping, slot)) // Should not fail unless an error occurred
+		has_equipped(equipping, slot, initial)
+
+	if(update_hands)
+		update_held_items()
+
+
+/**
+ * # Never call this proc.
+ * ## You may think you have a good reason, but you don't. Call [/mob/proc/equip_to_slot_if_possible] instead.
+ * Handles the work of assigning an item to an item slot. Returns TRUE if an item was successfully put into a slot.
+ */
+/mob/proc/handle_set_item_in_slot(obj/item/equipping, slot)
+	SHOULD_CALL_PARENT(TRUE)
+	PROTECTED_PROC(TRUE)
+	return FALSE
 
 /// This proc is called after an item has been successfully handled and equipped to a slot.
 /mob/proc/has_equipped(obj/item/item, slot, initial = FALSE)
