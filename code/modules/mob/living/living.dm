@@ -2107,8 +2107,6 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 		init_sight |= SEE_TURFS|BLIND
 	//after the reset above, so handlers can tint the cutoffs
 	init_sight |= SEND_SIGNAL(src, COMSIG_LIVING_RESTORE_INITIAL_SIGHT)
-	lighting_cutoff = initial(lighting_cutoff)
-	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
 	return init_sight
 
 /mob/living/proc/mob_try_pickup(mob/living/user, instant=FALSE)
