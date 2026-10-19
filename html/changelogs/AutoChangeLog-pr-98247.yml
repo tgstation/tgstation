@@ -1,0 +1,4 @@
+author: "TealSeer"
+delete-after: True
+changes:
+  - bugfix: "fixed wizard's heart eater perk not actually increasing damage resistance"
