@@ -1,0 +1,4 @@
+author: "Aeri"
+delete-after: True
+changes:
+  - bugfix: "The Icebox prison rec room and mess hall no longer trigger a fire alarm when there's no atmospheric problem"
