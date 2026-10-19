@@ -91,6 +91,7 @@
 	projectile_damage_multiplier = 1.5
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com
 	w_class = WEIGHT_CLASS_HUGE
+	pressure_threshold = AMMO_CASING_PRESSURE_EXTREME
 
 //component for seclight attachment
 /obj/item/gun/ballistic/shotgun/automatic/combat/add_seclight_point()
@@ -102,11 +103,12 @@
 
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact
 	name = "compact combat shotgun"
-	desc = "A compact version of the semi automatic combat shotgun. Lower magazine capacity, but more easily carried."
+	desc = "A compact version of the semi automatic combat shotgun. Lower magazine capacity and worse pressure handling, but more easily carried."
 	icon_state = "cshotgunc"
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/shot/com/compact
 	w_class = WEIGHT_CLASS_BULKY
 	weapon_weight = WEAPON_MEDIUM
+	pressure_threshold = AMMO_CASING_PRESSURE_MEDIUM
 
 //component for seclight attachment
 /obj/item/gun/ballistic/shotgun/automatic/combat/compact/add_seclight_point()
@@ -214,6 +216,7 @@
 	internal_magazine = FALSE
 	tac_reloads = TRUE
 	burst_fire_selection = TRUE
+	pressure_threshold = AMMO_CASING_PRESSURE_EXTREME
 	/// The type of secondary magazine for the bulldog
 	var/secondary_magazine_type
 	/// The secondary magazine
@@ -450,7 +453,6 @@
 	worn_icon_state = "donk_musket"
 	desc = "A large-bore boltloading firearm with a classy wooden frame. Cheap, accurate, and easy to maintain. Reload and rack after every shot."
 	semi_auto = TRUE
-	alternative_caliber = CALIBER_50BMG
 	casing_ejector = TRUE
 	bolt_type = BOLT_TYPE_LOCKING
 	bolt_wording = "bolt"

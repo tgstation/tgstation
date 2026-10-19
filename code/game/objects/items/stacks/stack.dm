@@ -724,7 +724,8 @@
 		return
 
 	if(pulledby && is_zero_amount(delete_if_zero = FALSE))
-		pulledby.start_pulling(target_stack)
+		// Annoyingly this makes dreamchecker throw a hissy fit. Might cause bugs, who knows really
+		INVOKE_ASYNC(pulledby, TYPE_PROC_REF(/atom/movable, start_pulling), target_stack)
 
 	target_stack.copy_evidences(src)
 	use(transfer, transfer = TRUE, check = FALSE)

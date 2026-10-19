@@ -39,7 +39,8 @@
 
 	soup_sound = new(parent)
 
-/datum/component/stove/Destroy()
+/datum/component/stove/Destroy(force)
+	STOP_PROCESSING(SSmachines, src)
 	QDEL_NULL(soup_sound)
 	return ..()
 
@@ -60,12 +61,14 @@
 	var/obj/machinery/real_parent = parent
 	if(container && !QDELING(parent))
 		container.forceMove(real_parent.drop_location())
+	container = null
 
 	if (particle_type)
 		real_parent.remove_shared_particles("[particle_type]_stove_[container_x]")
 
 	UnregisterSignal(parent, list(
 		COMSIG_ATOM_ATTACK_HAND_SECONDARY,
+		COMSIG_ATOM_ATTACK_ROBOT_SECONDARY,
 		COMSIG_ATOM_EXITED,
 		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
 		COMSIG_ATOM_UPDATE_OVERLAYS,

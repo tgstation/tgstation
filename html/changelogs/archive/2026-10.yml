@@ -282,3 +282,171 @@
   - bugfix: cyborgs disconnect cleanly from deleted AIs, keeping RoboTact usable with
       their own camera photos.
   - refactor: gives all the icon_state mapping turf varedits their own types
+2026-10-11:
+  necromanceranne:
+  - balance: Dragonsbreath is now printable with Riot Suppression tech. They are no
+      longer crafted.
+  - balance: Incendiary now conflagrates in a small fireball for each pellet that
+      hits. They no longer leaves a fire trail.
+  - balance: Incendiary projectiles now do more damage on the projectile itself.
+  - balance: Dragonsbreath also now bounces.
+  - code_imp: Correctly identifies the Tesla Cannon's design datum path as being the
+      tesla revolver, no the stun revolver.
+2026-10-12:
+  Melbert:
+  - qol: Dynamic avoids spawning midrounds while the shuttle is called. (Previously,
+      it only avoided spawning midrounds if the shuttle was half way to the station).
+2026-10-14:
+  hry-gh:
+  - bugfix: when typing in the command bar, thinking/typing indicators will be reflected
+      in game again
+  necromanceranne:
+  - balance: Removes skeleton keys. Tendril chests can simply be opened like any other
+      megafauna loot.
+2026-10-15:
+  Fikou:
+  - spellcheck: ','
+  Melbert:
+  - bugfix: Fixes two handed weapons not updated when wielded
+  - bugfix: 'Surplus items get uplink datum data if possible in roundend report (meaning
+      it''ll report "Surplus item: stealth implant" rather than "Surplus item: box").'
+  - balance: Added a new access, "Atmospherics Equipment", which controls access to
+      Air Alarms, as well as atmospherics equipment lockers and supply packs. In the
+      future this access may extend to some map areas (such as atmos gas storage).
+  - balance: Atmospheric Technician, Station Engineer, and the Chief Engineer all
+      have "Atmospherics Equipment" access by default.
+  - balance: Head of Security and Head of Personnel do not have "Atmospherics Equipment",
+      and thus cannot access air alarms by default anymore.
+  - balance: Engineering Security Officers is only given "Atmospherics Equipment"
+      access on skeleton crews, and thus cannot access air alarms on higher pop shifts.
+  NanoCats:
+  - spellcheck: Standardized the names and acronyms of the rapid device family.
+  PapaMichael:
+  - bugfix: Words no longer escape your muzzled mouth if you use an internal exclamation
+      mark
+  SmArtKar:
+  - bugfix: Gibtonite tiles can no longer contain ore in them
+  necromanceranne:
+  - qol: You no longer suffer from a mood malice from seeing the ashwalker tendril
+      eat things if you're not an ashwalker yourself.
+  vinylspiders:
+  - bugfix: you can once again get a medical bounty report from the same patient after
+      waiting five minutes.
+  - bugfix: strange reagent now gets properly set in the HoP's mail delivery goodies
+      if the conditions meet
+2026-10-16:
+  JohnFulpWillard:
+  - qol: Action buttons with dynamic names (such as martial art swapping) now updates
+      their names without requiring you to unhover/rehover your mouse over it.
+  Melbert:
+  - bugfix: Build mode copy on humans no longer mangles the source terribly
+  - rscdel: Removed the ability for id cards to project a pay stand
+  - rscdel: Removed the vend-a-tray entirely
+  - rscadd: You can construct tip jars with glass or plasmaglass (though not with
+      their reinforced variants). Tip jars accept many tiny methods of gratuity, such
+      as coins, cash, holochips, IOUs, or... a cigarette, sure.
+  - rscadd: Adds tip jars to the kitchen in the bar, where the vend-a-trays once sat.
+  Neocloudy:
+  - spellcheck: Fixed or tweaked spelling/grammar in new Cerulean content, including
+      the hydro vaporizer, the deadbeat musician, the armored leather jacket, the
+      black pearl necklace, the translucent fish tail, and some of the Cerulean perks
+      (in the species menu).
+  PapaMichael:
+  - bugfix: The escape menu players list no longer reveals stealthed admins
+  PetyaFX:
+  - bugfix: Fixed SFX-keyed sounds being silent through sound tokens.
+  SmArtKar:
+  - bugfix: Fixed Candela nodes not working from mining webbings
+  desertmote:
+  - balance: Makes MOD stealth module less strict about part requirements
+  - bugfix: Ceruleans can activate MOD stealth modules
+  lelandkemble:
+  - bugfix: fixed being unable to copy blast door controller ids
+  vinylspiders:
+  - bugfix: ghosts can stop orbiting by moving away after their orbit is transferred
+      to another target.
+  - bugfix: multiple sources of muffled speech now respect one another
+  - bugfix: handling tips for single-contributor bounty cubes now reach the scanner's
+      bank account, and cargo receives the correct remaining value.
+  - bugfix: holograms can no longer get stuck wobbling when you walk back through
+      them just as their last glitch is fading
+  - bugfix: revolver crafting now transfers ammunition correctly past empty cylinder
+      slots.
+  - bugfix: stacks printed by autolathes and protolathes keep the correct material
+      contents when printed in batches or merged with existing stacks.
+2026-10-17:
+  Fghj240:
+  - bugfix: right clicking a powered door with powered crowbars no longer fails to
+      open it
+  Melbert:
+  - rscdel: Most gun crafting kits have been removed. The Horizon and SKS still require
+      one to build.
+  - rscadd: Weapon research tech nodes now allows the station to requisition unlocked
+      weapons from Cargo (Advanced Energy Gun, X-ray gun, ion carbine, etc.). Security
+      can departmental order them in bulk. Requisitions come without firing pins.
+  - rscadd: You can now purchase a hellfire laser gun directly from Cargo, though
+      it requires the contraband wire be cut.
+  PapaMichael:
+  - balance: Departmental security officers are now spread evenly across departments.
+  headband0536:
+  - qol: runechat for broadcasters
+  tontyGH:
+  - rscadd: Mothpeople now have 2 extra arms in their chest, giving them 4 total arms
+  - balance: Mothpeople are now generally a bit more fragile
+  - bugfix: Akimbo used the wrong gun when determining spread penalty
+  - bugfix: Akimbo penalty did not include the gun that was firing
+  - balance: Akimbo penalty now has multiplicative scaling (double PKA was adjusted
+      to consider this)
+  - bugfix: Catching items now considers all empty hands and not just your active
+      offhand
+  - balance: Blocking now only works if the blocking item is in your active set of
+      hands
+  - rscdel: Wizard's 4-arms perk and the deathmatch modifier had to be removed for
+      technical reasons. Sorry.
+  - refactor: Cybernetic arm implants got refactored. Report weird behaviour on the
+      GitHub.
+  vinylspiders:
+  - bugfix: ore vents loaded in after roundstart, or on a level without a mining epicenter,
+      now actually have ores and show up on ventpointers
+  - refactor: NT Shopping Network  no longer resends the whole cargo catalogue every
+      second while it's open
+  - bugfix: fuel tanks with other reagents mixed in no longer sometimes fail to explode
+      around plasma
+  - bugfix: swapping a water cooler's jug now hands you the old jug with whatever
+      was left in the cooler
+2026-10-18:
+  Absolucy:
+  - bugfix: Pun Pun should now properly get roundstart masks sometime
+  PapaMichael:
+  - rscadd: Added new AI VOX lines, including "jellyperson", "cerulean", "worm", and
+      some station areas and jobs
+  TheBoondock:
+  - rscadd: Added a pillow supplies crate and category to the games vendor
+  necromanceranne:
+  - balance: Misfiring has been completely reworked.
+  - balance: .38 and .357 are interchangeable in all compatible guns without needing
+      to wrench the gun. Just load it in! Nothing bad could possibly happen.
+  - balance: Junk rounds are once again shotgun rounds, and pipeguns/pipe pistols
+      now fit shotgun shells again.
+  - balance: Guns now have pressure mechanics to handle misfiring. Check you gun carefully
+      to determine its pressure rating.
+  vinylspiders:
+  - bugfix: crafted spears and explosive lances no longer turn invisible when worn
+      on your back
+2026-10-19:
+  Melbert:
+  - bugfix: Prosthetic Limb quirk cannot replace limbs that you don't have
+  - bugfix: Transhumanist cannot replace limbs nor organs that you don't have
+  - bugfix: Prosthetic organ cannot replace organs that you don't have
+  - bugfix: Prosthetic organ will not give lungs to species that don't breathe oxygen
+  - bugfix: Quadruple Amputee won't give you limbs that you don't have
+  tontyGH:
+  - bugfix: Cyborgs are now properly severed from the paranormal plane when revived
+  - bugfix: Changing your bible to insuls should make the received insuls no longer
+      disappear sometimes
+  vinylspiders:
+  - bugfix: losing a moth's chest arms no longer drops what's in your right hand,
+      and your active hand moves to a hand you still have
+  - bugfix: moth chest-arms are named what you'd expect now instead of just "moth"
+  - bugfix: papers no longer pop open on their own when you pick up a pen or stamp
+      after an earlier attempt to read them failed, or after you ghosted while reading
