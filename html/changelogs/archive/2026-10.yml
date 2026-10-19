@@ -434,6 +434,12 @@
   - bugfix: crafted spears and explosive lances no longer turn invisible when worn
       on your back
 2026-10-19:
+  Melbert:
+  - bugfix: Prosthetic Limb quirk cannot replace limbs that you don't have
+  - bugfix: Transhumanist cannot replace limbs nor organs that you don't have
+  - bugfix: Prosthetic organ cannot replace organs that you don't have
+  - bugfix: Prosthetic organ will not give lungs to species that don't breathe oxygen
+  - bugfix: Quadruple Amputee won't give you limbs that you don't have
   tontyGH:
   - bugfix: Cyborgs are now properly severed from the paranormal plane when revived
   - bugfix: Changing your bible to insuls should make the received insuls no longer
@@ -442,3 +448,5 @@
   - bugfix: losing a moth's chest arms no longer drops what's in your right hand,
       and your active hand moves to a hand you still have
   - bugfix: moth chest-arms are named what you'd expect now instead of just "moth"
+  - bugfix: papers no longer pop open on their own when you pick up a pen or stamp
+      after an earlier attempt to read them failed, or after you ghosted while reading
