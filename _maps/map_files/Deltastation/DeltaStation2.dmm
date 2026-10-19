@@ -3275,11 +3275,10 @@
 /area/station/security/execution/education)
 "alC" = (
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/turf/open/floor/iron/dark,
-/area/station/security/execution/education)
+/obj/effect/decal/cleanable/dirt,
+/obj/machinery/light/small/red/directional/east,
+/turf/open/floor/plating/foam_pattern,
+/area/station/maintenance/department/science/xenobiology)
 "alD" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/hidden,
@@ -7373,12 +7372,9 @@
 /turf/open/floor/iron,
 /area/station/maintenance/port/aft)
 "aTV" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden,
-/obj/structure/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/meter/layer2,
-/turf/open/floor/plating/foam_pattern,
-/area/station/maintenance/department/science/xenobiology)
+/obj/structure/lattice,
+/turf/open/space/basic,
+/area/space)
 "aUo" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 1
@@ -12943,10 +12939,8 @@
 /turf/open/floor/iron,
 /area/station/engineering/atmos)
 "cmy" = (
-/obj/structure/cable,
-/obj/machinery/computer/security/telescreen/prison/directional/east,
-/turf/open/floor/iron,
-/area/station/security/execution/transfer)
+/turf/closed/wall/r_wall,
+/area/space)
 "cmI" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -68461,11 +68455,10 @@
 /turf/open/floor/iron/herringbone,
 /area/station/cargo/miningoffice)
 "qxM" = (
-/obj/structure/cable,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/structure/disposalpipe/junction/flip,
-/turf/open/floor/iron,
-/area/station/hallway/primary/central/fore)
+/obj/structure/lattice,
+/obj/structure/grille,
+/turf/open/space/basic,
+/area/space)
 "qya" = (
 /obj/effect/turf_decal/tile/yellow/half/contrasted{
 	dir = 8
@@ -116947,6 +116940,7 @@ vVc
 vVc
 nCi
 lOC
+alC
 nCi
 nCi
 nCi
@@ -116956,11 +116950,9 @@ nCi
 nCi
 kwd
 pKc
-nCi
-aaa
-uHd
-aaa
-aaa
+cmy
+sHt
+qxM
 aaa
 aaa
 aaa
@@ -116976,9 +116968,11 @@ aaa
 aaa
 aaa
 aaa
-qYo
 aaa
-qYo
+sHt
+aTV
+sHt
+aTV
 aaa
 aaa
 aaa
@@ -118228,7 +118222,7 @@ ihs
 gRd
 acX
 aMl
-aTV
+aAH
 iAZ
 exZ
 nCi
@@ -142364,7 +142358,7 @@ drr
 nLN
 bgS
 nLN
-qxM
+nLN
 nLN
 nLN
 nLN
@@ -155428,7 +155422,7 @@ viu
 azX
 doM
 agb
-alC
+aAA
 ald
 akD
 akm
