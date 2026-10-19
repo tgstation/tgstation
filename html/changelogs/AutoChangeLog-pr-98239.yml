@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - qol: "Rat spit no longer causes vomitting directly, instead now causing more direct disgust."
