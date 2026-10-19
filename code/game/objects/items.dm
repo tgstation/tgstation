@@ -892,7 +892,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 	if(HAS_TRAIT(src, TRAIT_NODROP))
 		return
 	callback = CALLBACK(src, PROC_REF(after_throw), callback) //replace their callback with our own
-	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle, quickstart = quickstart)
+	. = ..(target, range, speed, thrower, spin, diagonals_first, callback, force, gentle, quickstart = quickstart, throw_datum_typepath = throw_type_path)
 
 /obj/item/proc/after_throw(datum/callback/callback)
 	if (callback) //call the original callback
