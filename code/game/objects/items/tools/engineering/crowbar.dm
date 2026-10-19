@@ -375,10 +375,6 @@
 	transform = transform.Translate(0, -8)
 	AddComponent(/datum/component/two_handed, force_unwielded = 5, force_wielded = 19, update_icon_state = TRUE)
 
-/obj/item/crowbar/mechremoval/update_icon_state()
-	icon_state = "[base_icon_state]0"
-	return ..()
-
 /obj/item/crowbar/mechremoval/proc/empty_mech(obj/vehicle/sealed/mecha/mech, mob/user)
 	if(!HAS_TRAIT(src, TRAIT_WIELDED))
 		mech.balloon_alert(user, "not wielded!")

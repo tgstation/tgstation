@@ -46,11 +46,6 @@ jobs:
             path: tools/icon_cutter/cache
             key: ${{ runner.os }}-cutter-${{ hashFiles('dependencies.sh') }}
 
-        - name: Setup .NET SDK
-          uses: actions/setup-dotnet@v6
-          with:
-            dotnet-version: 9.x
-
         - name: Install OpenDream
           uses: robinraju/release-downloader@v1.13
           with:
@@ -58,6 +53,12 @@ jobs:
             tag: "latest"
             fileName: "DMCompiler_linux-x64.tar.gz"
             extract: true
+
+      # Excluded from the above parallel group because it reads event.json as it loads, and the runner empties and rewrites that file whenever another step starts (actions/runner#4641)
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 9.x
 
       # Excluded from the above parallel group because it reads the SpacemanDMM, Bootstrap and Rust caches, which are still being restored there
       - name: Install tools

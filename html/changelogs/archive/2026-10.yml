@@ -414,3 +414,29 @@
       around plasma
   - bugfix: swapping a water cooler's jug now hands you the old jug with whatever
       was left in the cooler
+2026-10-18:
+  Absolucy:
+  - bugfix: Pun Pun should now properly get roundstart masks sometime
+  PapaMichael:
+  - rscadd: Added new AI VOX lines, including "jellyperson", "cerulean", "worm", and
+      some station areas and jobs
+  TheBoondock:
+  - rscadd: Added a pillow supplies crate and category to the games vendor
+  necromanceranne:
+  - balance: Misfiring has been completely reworked.
+  - balance: .38 and .357 are interchangeable in all compatible guns without needing
+      to wrench the gun. Just load it in! Nothing bad could possibly happen.
+  - balance: Junk rounds are once again shotgun rounds, and pipeguns/pipe pistols
+      now fit shotgun shells again.
+  - balance: Guns now have pressure mechanics to handle misfiring. Check you gun carefully
+      to determine its pressure rating.
+  vinylspiders:
+  - bugfix: crafted spears and explosive lances no longer turn invisible when worn
+      on your back
+2026-10-19:
+  tontyGH:
+  - bugfix: Cyborgs are now properly severed from the paranormal plane when revived
+  vinylspiders:
+  - bugfix: losing a moth's chest arms no longer drops what's in your right hand,
+      and your active hand moves to a hand you still have
+  - bugfix: moth chest-arms are named what you'd expect now instead of just "moth"
