@@ -82,6 +82,7 @@
 
 /mob/living/basic/node_drone/proc/arrive(obj/structure/ore_vent/parent_vent)
 	attached_vent = parent_vent
+	parent_vent.buckle_mob(src, force = TRUE) // Latch onto the vent so we stick around for the whole wave instead of wandering off to another vent.
 	maxHealth = 300 + ((attached_vent.boulder_size/BOULDER_SIZE_SMALL) * 100)
 	health = maxHealth
 	flying_state = FLY_IN_STATE
