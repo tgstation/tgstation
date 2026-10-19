@@ -86,7 +86,7 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 	var/old_opacity = opacity
 	// I'm so sorry brother
 	// This is used for a starlight optimization
-	var/old_light_range = light_range
+	var/old_light_on = light_on
 	// We get just the bits of explosive_resistance that aren't the turf
 	var/old_explosive_resistance = explosive_resistance - get_explosive_block()
 	var/old_lattice_underneath = lattice_underneath
@@ -152,10 +152,10 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 		if(!space_lit)
 			if(old_lighting_object)
 				lighting_object = old_lighting_object
-				vis_contents += lighting_object
 			// Should have a lighting object if we never had one
-			else
-				new /atom/movable/lighting_object(null, src)
+			// New turf init could have ALSO created a lighting object so we have to double check
+			else if(!lighting_object)
+				new /atom/movable/lighting_object(src)
 		else if (old_lighting_object)
 			qdel(old_lighting_object, force = TRUE)
 
@@ -173,7 +173,8 @@ GLOBAL_LIST_INIT(blacklisted_automated_baseturfs, typecacheof(list(
 			lit_turf.update_starlight()
 			for(var/turf/open/space/space_tile in RANGE_TURFS(1, src) - src)
 				space_tile.update_starlight()
-		else if(old_light_range)
+		// Space to space doesn't change our neighbours, so we keep the starlight we had
+		else if(old_light_on)
 			lit_turf.enable_starlight()
 
 	// If we're a cordon we count against a light, but also don't produce any ourselves

@@ -359,14 +359,27 @@ GLOBAL_LIST_INIT(master_filter_info, list(
 	if(QDELETED(in_atom))
 		return
 	var/filter
+	var/list/faded_filters
 	for(var/i in 1 to 7)
 		filter = in_atom.get_filter("wibbly-[i]")
+		if(!filter)
+			continue
 		if(remove_duration == 0)
 			animate(filter)
 			in_atom.remove_filter("wibbly-[i]")
 			continue
 		animate(filter, x = 0, y = 0, size = 0, offset = 0, time = remove_duration)
-		addtimer(CALLBACK(in_atom, TYPE_PROC_REF(/datum, remove_filter), "wibbly-[i]"), remove_duration)
+		LAZYADD(faded_filters, list(in_atom.get_filter_data("wibbly-[i]", copy_data = FALSE)))
+	if(faded_filters)
+		addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_faded_filters), in_atom, faded_filters), remove_duration)
+
+/// Removes filters once they've faded out, skipping any that were replaced in the meantime
+/proc/remove_faded_filters(atom/in_atom, list/faded_filters)
+	if(QDELETED(in_atom))
+		return
+	for(var/list/filter_info as anything in faded_filters)
+		if(filter_info in in_atom.filter_data)
+			in_atom.remove_filter(filter_info["name"])
 
 /proc/convert_list_to_filter(list/list_filter)
 	var/list/arguments = list_filter.Copy()

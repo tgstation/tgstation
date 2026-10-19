@@ -103,14 +103,14 @@
 			if(ID.trim)
 				outfit.id_trim = ID.trim.type
 	//Copy hands
-	if(held_items.len >= 2) //Not in the mood to let outfits transfer amputees
-		var/obj/item/left_hand = held_items[1]
-		var/obj/item/right_hand = held_items[2]
+	if(get_num_hand_slots() >= 2) //Not in the mood to let outfits transfer amputees
+		var/obj/item/left_hand = get_item_for_held_index(LEFT_HANDS)
 		if(istype(left_hand))
 			outfit.l_hand = left_hand.type
 			var/vedits = collect_vv(left_hand)
 			if(vedits)
 				result["LHAND"] = vedits
+		var/obj/item/right_hand = get_item_for_held_index(RIGHT_HANDS)
 		if(istype(right_hand))
 			outfit.r_hand = right_hand.type
 			var/vedits = collect_vv(left_hand)
@@ -147,9 +147,9 @@
 		var/obj/item/item
 		switch(slot)
 			if("LHAND")
-				item = human.held_items[1]
+				item = human.get_item_for_held_index(LEFT_HANDS)
 			if("RHAND")
-				item = human.held_items[2]
+				item = human.get_item_for_held_index(RIGHT_HANDS)
 			else
 				item = human.get_item_by_slot(text2num(slot))
 		for(var/vname in edits)

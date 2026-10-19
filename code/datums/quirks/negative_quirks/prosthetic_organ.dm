@@ -18,27 +18,26 @@
 
 /datum/quirk/prosthetic_organ/add_unique(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/static/list/organ_slots = list(
-		ORGAN_SLOT_HEART,
-		ORGAN_SLOT_LUNGS,
-		ORGAN_SLOT_LIVER,
-		ORGAN_SLOT_STOMACH,
-	)
 	var/preferred_organ = GLOB.organ_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic_organ)]
 	if(isnull(preferred_organ))  //Client is gone or they chose a random prosthetic
 		preferred_organ = GLOB.organ_choice[pick(GLOB.organ_choice)]
 
-	var/list/possible_organ_slots = organ_slots.Copy()
+	var/list/possible_organ_slots = assoc_to_values(GLOB.organ_choice)
+	for(var/slot in possible_organ_slots)
+		if(!human_holder.get_organ_slot(slot))
+			possible_organ_slots -= slot
+
 	if(!CAN_HAVE_BLOOD(human_holder))
 		possible_organ_slots -= ORGAN_SLOT_HEART
-	if(HAS_TRAIT(human_holder, TRAIT_NOBREATH))
+	if(HAS_TRAIT(human_holder, TRAIT_NOBREATH) || human_holder.dna.species.get_breath_type() != GAS_O2)
 		possible_organ_slots -= ORGAN_SLOT_LUNGS
 	if(HAS_TRAIT(human_holder, TRAIT_LIVERLESS_METABOLISM))
 		possible_organ_slots -= ORGAN_SLOT_LIVER
 	if(HAS_TRAIT(human_holder, TRAIT_NOHUNGER))
 		possible_organ_slots -= ORGAN_SLOT_STOMACH
-	if(!length(organ_slots)) //what the hell
-		return
+
+	if(!length(possible_organ_slots)) // you get NOTHING I guess
+		CRASH("Prosthetic organ applied to a mob who had no available organ slots, consider blacklisting their species ([human_holder.dna.species.type]) from this quirk")
 
 	var/organ_slot = pick(possible_organ_slots)
 	if(preferred_organ in possible_organ_slots)

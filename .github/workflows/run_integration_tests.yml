@@ -63,12 +63,6 @@ jobs:
         - name: Restore or install BYOND
           uses: ./.github/actions/restore_or_install_byond
 
-        - name: Download build artifact
-          uses: actions/download-artifact@v8
-          with:
-            name: build-artifact-${{ inputs.major || env.BYOND_MAJOR }}-${{ inputs.minor || env.BYOND_MINOR }}
-            path: ./
-
         - name: Install rust-g
           run: |
             bash tools/ci/install_rust_g.sh
@@ -76,6 +70,13 @@ jobs:
         - name: Install dreamluau
           run: |
             bash tools/ci/install_dreamluau.sh
+
+      # Excluded from the above parallel group because it reads event.json as it loads, and the runner empties and rewrites that file whenever another step starts (actions/runner#4641)
+      - name: Download build artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: build-artifact-${{ inputs.major || env.BYOND_MAJOR }}-${{ inputs.minor || env.BYOND_MINOR }}
+          path: ./
 
       # Excluded from the above parallel group because it makes the database setup flaky. Probably something to do with IO ports being clogged
       - name: Setup database

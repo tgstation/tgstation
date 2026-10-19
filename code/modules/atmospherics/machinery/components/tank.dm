@@ -55,11 +55,6 @@
 	/// Shared images for the knob overlay representing a side of the tank that is open to connections
 	var/static/list/knob_overlays
 
-	/// Number of crack states to fill the list with. This exists because I'm lazy and didn't want to keeping adding more things manually to the below list.
-	var/crack_states_count = 10
-	/// The icon states for the cracks in the tank dmi
-	var/static/list/crack_states
-
 	/// The merger id used to create/get the merger group in charge of handling tanks that share an internal gas storage
 	var/merger_id = "stationary_tanks"
 	/// The typecache of types which are allowed to merge internal storage
@@ -79,11 +74,6 @@
 		for(var/dir in GLOB.cardinals)
 			knob_overlays["[dir]"] = image('icons/obj/pipes_n_cables/stationary_canisters_misc.dmi', icon_state = "knob", dir = dir, layer = FLOAT_LAYER)
 
-	if(!crack_states)
-		crack_states = list()
-		for(var/i in 1 to crack_states_count)
-			crack_states += "crack[i]"
-
 	if(!merger_typecache)
 		merger_typecache = typecacheof(/obj/machinery/atmospherics/components/tank)
 
@@ -95,7 +85,7 @@
 
 	AddComponent(/datum/component/gas_leaker, leak_rate = 0.05)
 	AddElement(/datum/element/volatile_gas_storage)
-	AddElement(/datum/element/crackable, 'icons/obj/pipes_n_cables/stationary_canisters_misc.dmi', crack_states)
+	AddElement(/datum/element/crackable)
 
 	RegisterSignal(src, COMSIG_MERGER_ADDING, PROC_REF(merger_adding))
 	RegisterSignal(src, COMSIG_MERGER_REMOVING, PROC_REF(merger_removing))

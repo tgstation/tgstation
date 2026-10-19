@@ -90,9 +90,7 @@
 /obj/item/robot_model/proc/get_inactive_modules()
 	. = list()
 	var/mob/living/silicon/robot/cyborg = loc
-	for(var/module in get_usable_modules())
-		if(!(module in cyborg.held_items))
-			. += module
+	. += get_usable_modules() - cyborg.get_held_items()
 	if(!cyborg.emagged)
 		. += emag_modules
 
@@ -130,7 +128,7 @@
 	var/mob/living/silicon/robot/cyborg = loc
 	if (!istype(cyborg))
 		return
-	var/list/held_modules = cyborg.held_items.Copy()
+	var/list/held_modules = cyborg.get_held_items()
 	var/active_module = cyborg.module_active
 	//move everything out of the model's inventory
 	for(var/obj/item/module as anything in modules)
@@ -1022,8 +1020,8 @@
 	button_icon_state = "thermal"
 
 /datum/action/cooldown/borg_thermal/Activate()
-	if(HAS_TRAIT_FROM(owner, COMSIG_LIVING_RESTORE_INITIAL_SIGHT, ACTION_TRAIT))
-		UnregisterSignal(owner, COMSIG_MOB_UPDATE_SIGHT)
+	if(HAS_TRAIT_FROM(owner, TRAIT_THERMAL_VISION, ACTION_TRAIT))
+		UnregisterSignal(owner, COMSIG_LIVING_RESTORE_INITIAL_SIGHT)
 		REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, ACTION_TRAIT)
 	else
 		RegisterSignal(owner, COMSIG_LIVING_RESTORE_INITIAL_SIGHT, PROC_REF(on_initial_sight)) //order is important as update_sight() is called when the vision trait is added/removed

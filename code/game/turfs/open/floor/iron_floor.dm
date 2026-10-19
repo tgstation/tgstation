@@ -3,6 +3,26 @@
 	floor_tile = /obj/item/stack/tile/iron/base
 	rust_resistance = RUST_RESISTANCE_BASIC
 
+/turf/open/floor/iron/asteroid_5
+	icon_state = "asteroid5"
+	base_icon_state = "asteroid5"
+
+/turf/open/floor/iron/asteroid_8
+	icon_state = "asteroid8"
+	base_icon_state = "asteroid8"
+
+/turf/open/floor/iron/pod_dark
+	icon_state = "podfloor_dark"
+	base_icon_state = "podfloor_dark"
+
+/turf/open/floor/iron/pod_dark/airless
+	initial_gas_mix = AIRLESS_ATMOS
+
+/turf/open/floor/iron/sand
+	icon = 'icons/turf/sand.dmi'
+	icon_state = "sand"
+	base_icon_state = "sand"
+
 /turf/open/floor/iron/broken_states()
 	return list("damaged1", "damaged2", "damaged3", "damaged4", "damaged5")
 
@@ -100,6 +120,13 @@
 	icon_state = "darkfull"
 	base_icon_state = "darkfull"
 	floor_tile = /obj/item/stack/tile/iron/dark
+
+/turf/open/floor/iron/dark/bus
+	icon_state = "bus"
+	base_icon_state = "bus"
+
+/turf/open/floor/iron/dark/bus/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/iron/dark/smooth_edge
 	icon_state = "dark_edge"
@@ -331,6 +358,9 @@
 /turf/open/floor/iron/recharge_floor/asteroid
 	icon_state = "recharge_floor_asteroid"
 	base_icon_state = "recharge_floor_asteroid"
+
+/turf/open/floor/iron/recharge_floor/asteroid/airless
+	initial_gas_mix = AIRLESS_ATMOS
 
 /turf/open/floor/iron/smooth
 	icon_state = "smooth"

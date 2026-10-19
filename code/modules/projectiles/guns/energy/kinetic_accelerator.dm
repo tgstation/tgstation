@@ -14,6 +14,7 @@
 	weapon_weight = WEAPON_LIGHT
 	gun_flags = NOT_A_REAL_GUN
 	recharge_time = STANDARD_RECHARGE_TIME
+	dual_wield_spread = 13 // Double PKA is a valid strat
 	///List of all mobs that projectiles fired from this gun will ignore.
 	var/list/ignored_mob_types
 	///List of all modkits currently in the kinetic accelerator.
@@ -23,18 +24,6 @@
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/add_bayonet_point()
 	AddComponent(/datum/component/bayonet_attachable, offset_x = 20, offset_y = 12)
-
-/obj/item/gun/energy/recharge/kinetic_accelerator/Initialize(mapload)
-	. = ..()
-	// Only actual KAs can be converted
-	if(type != /obj/item/gun/energy/recharge/kinetic_accelerator)
-		return
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/ebow)
-
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-	)
 
 /obj/item/gun/energy/recharge/kinetic_accelerator/apply_fantasy_bonuses(bonus)
 	. = ..()

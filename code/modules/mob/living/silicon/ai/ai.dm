@@ -158,9 +158,14 @@
 				return
 	return ..()
 
-/mob/living/silicon/ai/Destroy()
+/mob/living/silicon/ai/Destroy(force)
 	GLOB.ai_list -= src
 	GLOB.shuttle_caller_list -= src
+	// Release linked cyborgs before deleting the resources they access through us.
+	for(var/mob/living/silicon/robot/cyborg in connected_robots)
+		if(cyborg.connected_ai == src)
+			cyborg.set_connected_ai(null)
+	connected_robots.Cut()
 	SSshuttle.autoEvac()
 	QDEL_NULL(eyeobj) // No AI, no Eye
 	QDEL_NULL(spark_system)
@@ -796,6 +801,7 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto
 		balloon_alert(user, "transfer failed!")
 		return
 	disconnect_shell() //If the AI is controlling a borg, force the player back to core!
+	cleanup_multicam_windows()
 	if(!mind)
 		balloon_alert(user, "no intelligence detected!") // average tg coder am i right
 		return
@@ -937,6 +943,11 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, set_automatic_say_channel, "Set Auto
 	. = ..()
 	if(!.)
 		return
+
+	cleanup_multicam_windows()
+
+	see_invisible = initial(see_invisible)
+	update_sight()
 
 	update_appearance()
 

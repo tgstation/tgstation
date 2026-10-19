@@ -474,9 +474,7 @@
 /obj/machinery/shieldgen{
 	anchored = 1
 	},
-/turf/open/floor/mineral/plastitanium/red{
-	icon_state = "darkfull"
-	},
+/turf/open/floor/mineral/plastitanium/red/dark,
 /area/shuttle/escape/brig)
 "bt" = (
 /obj/effect/turf_decal/stripes/line{

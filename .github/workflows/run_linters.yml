@@ -46,11 +46,6 @@ jobs:
             path: tools/icon_cutter/cache
             key: ${{ runner.os }}-cutter-${{ hashFiles('dependencies.sh') }}
 
-        - name: Setup .NET SDK
-          uses: actions/setup-dotnet@v6
-          with:
-            dotnet-version: 9.x
-
         - name: Install OpenDream
           uses: robinraju/release-downloader@v1.13
           with:
@@ -59,12 +54,19 @@ jobs:
             fileName: "DMCompiler_linux-x64.tar.gz"
             extract: true
 
-        - name: Install tools
-          run: |
-            pip3 install setuptools
-            bash tools/ci/install_spaceman_dmm.sh dreamchecker
-            bash tools/ci/install_ripgrep.sh
-            tools/bootstrap/python -c ''
+      # Excluded from the above parallel group because it reads event.json as it loads, and the runner empties and rewrites that file whenever another step starts (actions/runner#4641)
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 9.x
+
+      # Excluded from the above parallel group because it reads the SpacemanDMM, Bootstrap and Rust caches, which are still being restored there
+      - name: Install tools
+        run: |
+          pip3 install setuptools
+          bash tools/ci/install_spaceman_dmm.sh dreamchecker
+          bash tools/ci/install_ripgrep.sh
+          tools/bootstrap/python -c ''
 
       # Actually run the checks
       - name: Ensure genesis_call.dme is unchanged
@@ -106,14 +108,10 @@ jobs:
         run: ./DMCompiler_linux-x64/DMCompiler tgstation.dme --suppress-unimplemented --define=CIBUILDING | bash tools/ci/annotate_od.sh
 
       - name: Check Icon Cutter
+        id: icon-cutter
         if: ${{ !cancelled() }}
         background: true
         run: tools/bootstrap/python -m tools.icon_cutter.check
-
-      - name: Run DMI tests
-        if: ${{ !cancelled() }}
-        background: true
-        run: tools/bootstrap/python -m dmi.test
 
       - name: Check file directories
         if: ${{ !cancelled() }}
@@ -163,3 +161,11 @@ jobs:
 
           tools/bootstrap/python -m mapmerge2.dmm_test $MAPS
           tools/bootstrap/python -m tools.maplint.source $MAPS
+
+      # The icon cutter check recuts .dmi files in place, so the DMI tests can't parse them until it's done
+      - name: Wait for icon cutter
+        wait: icon-cutter
+
+      - name: Run DMI tests
+        if: ${{ !cancelled() }}
+        run: tools/bootstrap/python -m dmi.test

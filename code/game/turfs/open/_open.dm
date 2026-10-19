@@ -302,6 +302,19 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_turf = TRUE
 
+/turf/open/indestructible/cult
+	icon_state = "cult"
+
+// A plating pattern without /plating's underfloor access.
+/turf/open/indestructible/plating_pattern
+	icon_state = "plating"
+
+/turf/open/indestructible/recharge_floor
+	icon_state = "recharge_floor"
+
+/turf/open/indestructible/whitehall
+	icon_state = "whitehall"
+
 /turf/open/indestructible/Melt()
 	to_be_destroyed = FALSE
 	return src
@@ -318,6 +331,9 @@
 
 /turf/open/indestructible/white
 	icon_state = "white"
+
+/turf/open/indestructible/white/showroom
+	icon_state = "showroomfloor"
 
 /turf/open/indestructible/white/smooth_large
 	icon_state = "white_large"
@@ -456,6 +472,10 @@
 	clawfootstep = null
 	heavyfootstep = null
 
+/turf/open/indestructible/binary/water
+	icon = 'icons/turf/beach.dmi'
+	icon_state = "water"
+
 /turf/open/indestructible/airblock
 	icon_state = "bluespace"
 	blocks_air = TRUE
@@ -577,7 +597,7 @@
 	SEND_SIGNAL(slipper, COMSIG_ON_CARBON_SLIP)
 	if(force_drop && iscarbon(slipper)) //carbon specific behavior that living doesn't have
 		var/mob/living/carbon/carbon = slipper
-		for(var/obj/item/item in slipper.held_items)
+		for(var/obj/item/item as anything in slipper.get_held_items())
 			carbon.accident(item)
 
 	var/olddir = slipper.dir
