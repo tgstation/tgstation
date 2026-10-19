@@ -3103,15 +3103,18 @@
 	. = ..()
 	if(methods & (VAPOR|INHALE))
 		var/obj/item/organ/lungs = exposed_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
-		metal_morph(lungs)
+		if(!isnull(lungs))
+			metal_morph(lungs)
 
 	if(methods & (INGEST))
 		var/obj/item/organ/stomach = exposed_mob.get_organ_slot(ORGAN_SLOT_STOMACH)
-		metal_morph(stomach)
+		if(!isnull(stomach))
+			metal_morph(stomach)
 
 	if(methods & (INJECT|PATCH))
 		var/obj/item/organ/liver = exposed_mob.get_organ_slot(ORGAN_SLOT_LIVER)
-		metal_morph(liver)
+		if(!isnull(liver))
+			metal_morph(liver)
 
 ///turn an object into a special material
 /datum/reagent/metalgen/proc/metal_morph(atom/target)
