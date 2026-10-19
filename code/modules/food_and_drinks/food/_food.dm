@@ -180,6 +180,8 @@
 			subject.add_mood_event("saw good food", /datum/mood_event/hungry)
 			if(prob(10))
 				subject.nutrition -= 10 * crafting_complexity
+			if(prob(15))
+				playsound(subject, 'sound/effects/stomach_growl.ogg', 50, TRUE)
 
 	///Update the foodtypes
 	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, foodtypes = final_foodtypes)
