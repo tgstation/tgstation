@@ -434,6 +434,8 @@
   - bugfix: crafted spears and explosive lances no longer turn invisible when worn
       on your back
 2026-10-19:
+  tontyGH:
+  - bugfix: Cyborgs are now properly severed from the paranormal plane when revived
   vinylspiders:
   - bugfix: losing a moth's chest arms no longer drops what's in your right hand,
       and your active hand moves to a hand you still have
