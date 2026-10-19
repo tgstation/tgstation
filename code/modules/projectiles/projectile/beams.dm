@@ -215,7 +215,8 @@
 	name = "pulse"
 	icon_state = "u_laser"
 	damage = 50
-	armour_penetration = 30
+	armour_penetration = 50
+	speed = 2.5
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/blue_laser
 	light_color = LIGHT_COLOR_BLUE
 	tracer_type = /obj/effect/projectile/tracer/pulse
@@ -233,6 +234,7 @@
 
 /obj/projectile/beam/laser/pulse/shotgun
 	damage = 40
+	armour_penetration = 30
 
 /obj/projectile/beam/laser/pulse/heavy
 	name = "heavy pulse laser"
