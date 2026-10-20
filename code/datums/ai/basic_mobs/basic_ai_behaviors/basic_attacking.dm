@@ -72,12 +72,21 @@
 	var/max_range = 9
 	/// Avoid shooting through friendlies.
 	var/avoid_friendly_fire = FALSE
+	/// Method used to determine "Can I currently shoot my target?"
+	var/can_shoot_method = CAN_SHOOT_METHOD_CANSEE
+	/// Moveflags used to determine if obstacles can be shot through
+	var/can_shoot_loscheck_passflags
 
 /datum/bt_node/ai_behavior/basic_ranged_attack/setup(datum/ai_controller/controller)
 	. = ..()
 	if(HAS_TRAIT(controller.pawn, TRAIT_HANDS_BLOCKED))
 		return FALSE
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
+
+	if(!isnull(controller.blackboard[BB_RANGED_CAN_SHOOT_METHOD]))
+		can_shoot_method = controller.blackboard[BB_RANGED_CAN_SHOOT_METHOD]
+	can_shoot_loscheck_passflags = controller.blackboard[BB_RANGED_PROJECTILE_MOVE_FLAGS]
+
 	if(QDELETED(target))
 		return FALSE
 	return TRUE
@@ -95,8 +104,17 @@
 	var/atom/final_target = hiding_target ? hiding_target : target
 	controller.set_blackboard_key(hiding_location_key, hiding_target)
 
-	if(!can_see(basic_mob, final_target, max_range))
-		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+	switch(can_shoot_method)
+		if(CAN_SHOOT_METHOD_CANSEE)
+			if(!can_see(basic_mob, final_target, max_range))
+				return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+		if(CAN_SHOOT_METHOD_LOSCHECK)
+			if(!los_check(basic_mob, final_target, can_shoot_loscheck_passflags))
+				return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+		else
+			stack_trace("Error: [basic_mob] has an undefined CAN_SHOOT_METHOD set in its behavior tree!")
+			return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
+
 
 	if(avoid_friendly_fire && check_friendly_in_path(basic_mob, target, strategy))
 		adjust_position(basic_mob, target)

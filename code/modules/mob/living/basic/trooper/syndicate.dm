@@ -122,7 +122,12 @@
 	)
 	if (ranged_cooldown <= 1 SECONDS)
 		AddComponent(/datum/component/ranged_mob_full_auto)
-	ai_controller.set_blackboard_key(BB_PROJECTILE_TYPE, initial(casingtype.projectile_type))
+	ai_controller.set_blackboard_key(BB_RANGED_CAN_SHOOT_METHOD, CAN_SHOOT_METHOD_LOSCHECK)
+	var/obj/projectile/myproj = initial(casingtype.projectile_type)
+	var/temp = initial(myproj::pass_flags)
+	var/temp2 = PASSTABLE
+	var/temp3 = PASSTABLE | PASSGLASS | PASSGRILLE
+	ai_controller.set_blackboard_key(BB_RANGED_PROJECTILE_MOVE_FLAGS, initial(myproj.pass_flags))
 
 /mob/living/basic/trooper/syndicate/ranged/infiltrator //shuttle loan event
 	projectilesound = 'sound/items/weapons/gun/smg/shot_suppressed.ogg'

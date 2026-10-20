@@ -39,4 +39,7 @@
 		cooldown_time = ranged_cooldown,\
 		burst_shots = burst_shots,\
 	)
-	ai_controller.set_blackboard_key(BB_PROJECTILE_TYPE, initial(casingtype.projectile_type))
+	ai_controller.set_blackboard_key(BB_RANGED_CAN_SHOOT_METHOD, CAN_SHOOT_METHOD_LOSCHECK)
+	if(istype(initial(casingtype.projectile_type), /obj/projectile))
+		var/obj/projectile/myproj = initial(casingtype.projectile_type)
+		ai_controller.set_blackboard_key(BB_RANGED_PROJECTILE_MOVE_FLAGS, initial(myproj.pass_flags))

@@ -77,13 +77,6 @@
 													},
 													{
 														"type": "leaf",
-														"behavior": "/datum/bt_node/ai_behavior/attack_obstructions/ignore_shot_canpass",
-														"vars": {
-															"target_key": "BB_CURRENT_TARGET"
-														}
-													},
-													{
-														"type": "leaf",
 														"behavior": "/datum/bt_node/ai_behavior/basic_ranged_attack",
 														"vars": {
 															"target_key": "BB_CURRENT_TARGET",
@@ -93,6 +86,10 @@
 															"max_range": "$beslksyc",
 															"avoid_friendly_fire": "$bnr1aazo"
 														}
+													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/attack_obstructions"
 													},
 													{
 														"type": "leaf",
