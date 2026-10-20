@@ -1938,13 +1938,13 @@ GLOBAL_LIST_EMPTY(features_by_species)
 			new_part.set_initial_damage(old_part.brute_dam, old_part.burn_dam)
 		qdel(old_part)
 
-	var/list/old_bodypart_overrides = old_species.bodypart_overrides.Copy()
+	var/list/old_bodypart_overrides = old_species?.bodypart_overrides.Copy()
 	if(length(new_bodypart_overrides) <= length(old_bodypart_overrides))
 		return // we updated all the limbs the character deserves
 	// but there are cases where the old species naturally lacked limbs
 	for(var/zone in new_bodypart_overrides)
 		// find a limb that the character doesn't have because of their old species
-		if(new_bodypart_overrides.Find(zone) && old_bodypart_overrides.Find(zone))
+		if(new_bodypart_overrides.Find(zone) && old_bodypart_overrides?.Find(zone))
 			continue
 		var/path = new_bodypart_overrides[zone]
 		if(!path)
