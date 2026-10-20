@@ -2450,7 +2450,6 @@
 		/datum/reagent/consumable/nutriment/soup/rich_stock = 30,
 		/datum/reagent/consumable/nutriment/protein = 6,
 	)
-	var/stock_boost = 2
 
 /datum/chemical_reaction/food/soup/rich_stock/snowflake_ingredient_check(ingredient)
 	if(!istype(ingredient, /obj/item/stock_block))
@@ -2458,7 +2457,23 @@
 	var/obj/item/stock_block/block = ingredient
 	if(!block.fluid)
 		return FALSE
-	switch(block.export_value)
+	return TRUE
+
+/datum/chemical_reaction/food/soup/rich_stock/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
+	. = ..()
+	var/list/ingredients = reaction.data["ingredients"]
+	if(!ingredients)
+		return
+	var/obj/item/stock_block/food_block
+	for(var/datum/weakref/ingreident_ref as anything in ingredients)
+		var/obj/real_ingred = ingreident_ref.resolve()
+		if(istype(real_ingred, /obj/item/stock_block))
+			food_block = real_ingred
+			break
+	if(!food_block)
+		return FALSE
+	var/stock_boost = 2
+	switch(food_block.export_value)
 		if(0 to 100)
 			stock_boost = 2
 		if(101 to 1000)
@@ -2467,9 +2482,6 @@
 			stock_boost = 7.5
 		if(5001 to INFINITY)
 			stock_boost = 12.5
-	return TRUE
 
-/datum/chemical_reaction/food/soup/rich_stock/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
-	. = ..()
 	holder.add_reagent(/datum/reagent/consumable/nutriment/vitamin, stock_boost)
 	holder.add_reagent(/datum/reagent/consumable/nutriment/soup/rich_stock, stock_boost)
