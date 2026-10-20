@@ -30,7 +30,7 @@ SUBSYSTEM_DEF(sounds)
 	/// k:v list of file_path : length
 	VAR_PRIVATE/list/sound_lengths
 	/// A list of sounds to cache upon initialize.
-	VAR_PRIVATE/list/sounds_to_precache
+	VAR_PRIVATE/list/sounds_to_precache = list()
 	/// Any errors from precaching.
 	VAR_PRIVATE/list/precache_errors = list()
 
@@ -87,7 +87,8 @@ SUBSYSTEM_DEF(sounds)
 		return ..()
 
 	// Precache ambience sounds
-	sounds_to_precache = assoc_to_values(GLOB.ambience_assoc)
+	for(var/key, value in GLOB.ambience_assoc)
+		sounds_to_precache |= value
 	precache_sounds()
 
 	return SS_INIT_SUCCESS
