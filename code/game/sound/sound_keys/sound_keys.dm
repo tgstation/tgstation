@@ -1,10 +1,12 @@
+/// An associative list of sound effect paths to instances
+GLOBAL_LIST_INIT(sfx_datums_by_paths, init_subtypes_w_path_keys(/datum/sound_effect))
+
 /**
-# sound_effect datum
-* use for when you need multiple sound files to play at random in a playsound
-* see var documentation below
-* initialized and added to sfx_datum_by_key in /datum/controller/subsystem/sounds/init_sound_keys()
-*/
+ * The sound effect datum is a helper datum to easily get a sound effect from a group.
+ * Simply create a new sub-type, and specify your file_paths list.
+ */
 /datum/sound_effect
+	abstract_type = /datum/sound_effect
 	/// sfx key define with which we are associated with, see code\__DEFINES\sound.dm
 	var/key
 	/// list of paths to our files, use the /assoc subtype if your paths are weighted

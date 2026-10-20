@@ -1,5 +1,6 @@
 /// subtype that accepts weighted lists
 /datum/sound_effect/assoc
+	abstract_type = /datum/sound_effect/assoc
 
 /datum/sound_effect/assoc/return_sfx()
 	return pick_weight(file_paths)
