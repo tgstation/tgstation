@@ -40,8 +40,8 @@
 	custom_price = PAYCHECK_LOWER * 8
 	fill_icon_thresholds = null
 	sound_vary = TRUE
-	pickup_sound = SFX_POT_PICKUP
-	drop_sound = SFX_POT_DROP
+	pickup_sound = /datum/sound_effect/pot_pickup
+	drop_sound = /datum/sound_effect/pot_drop
 
 	/// Max number of ingredients we can add
 	var/max_ingredients = 24

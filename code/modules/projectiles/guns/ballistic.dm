@@ -135,7 +135,7 @@
 	/// Suppressor attached to the gun, if any
 	var/obj/item/suppressor/suppressor = null
 	/// Sound played when the burst mode is changed
-	var/burst_select_sound = SFX_FIRE_MODE_SWITCH
+	var/burst_select_sound = /datum/sound_effect/fire_mode_switch
 
 /obj/item/gun/ballistic/Initialize(mapload)
 	. = ..()

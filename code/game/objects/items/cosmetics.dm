@@ -195,8 +195,8 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	w_class = WEIGHT_CLASS_TINY
 	sound_vary = TRUE
-	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
-	drop_sound = SFX_GENERIC_DEVICE_DROP
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 0.7)
 
 /obj/item/razor/suicide_act(mob/living/user)

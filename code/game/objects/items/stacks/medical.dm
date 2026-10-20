@@ -584,10 +584,10 @@
 	splint_factor = 0.7
 	burn_cleanliness_bonus = 0.35
 	merge_type = /obj/item/stack/medical/wrap/gauze
-	heal_end_sound = list(SFX_BANDAGE_END = 75, SFX_CLOTH_RIP = 50)
-	heal_begin_sound = SFX_BANDAGE_BEGIN
-	drop_sound = SFX_CLOTH_DROP
-	pickup_sound = SFX_CLOTH_PICKUP
+	heal_end_sound = list(/datum/sound_effect/bandage_end = 75, /datum/sound_effect/cloth_rip = 50)
+	heal_begin_sound = /datum/sound_effect/bandage_begin
+	drop_sound = /datum/sound_effect/cloth_drop
+	pickup_sound = /datum/sound_effect/cloth_pickup
 	always_applicable = TRUE
 	/// tracks how many times we've been scrubbed thoroughly
 	var/times_cleaned = 0
@@ -701,11 +701,11 @@
 	stop_bleeding = 0.5
 	merge_type = /obj/item/stack/medical/suture
 	apply_verb = "suturing"
-	drop_sound = SFX_SUTURE_DROP
-	pickup_sound = SFX_SUTURE_PICKUP
-	heal_begin_sound = SFX_SUTURE_BEGIN
-	heal_continuous_sound = SFX_SUTURE_CONTINUOUS
-	heal_end_sound = list(SFX_SUTURE_END = 75, 'sound/items/snip.ogg' = 50)
+	drop_sound = /datum/sound_effect/suture_drop
+	pickup_sound = /datum/sound_effect/suture_pickup
+	heal_begin_sound = /datum/sound_effect/suture_begin
+	heal_continuous_sound = /datum/sound_effect/suture_continuous
+	heal_end_sound = list(/datum/sound_effect/suture_end = 75, 'sound/items/snip.ogg' = 50)
 
 /obj/item/stack/medical/suture/grind_results()
 	return list(/datum/reagent/medicine/spaceacillin = 2)
@@ -761,11 +761,11 @@
 	repeating = TRUE
 	sanitization = 0.75
 	flesh_regeneration = 3
-	pickup_sound = SFX_REGEN_MESH_PICKUP
-	drop_sound = SFX_REGEN_MESH_DROP
-	heal_begin_sound = SFX_REGEN_MESH_BEGIN
-	heal_continuous_sound = SFX_REGEN_MESH_CONTINUOUS
-	heal_end_sound = SFX_REGEN_MESH_END
+	pickup_sound = /datum/sound_effect/regen_mesh_pickup
+	drop_sound = /datum/sound_effect/regen_mesh_drop
+	heal_begin_sound = /datum/sound_effect/regen_mesh_begin
+	heal_continuous_sound = /datum/sound_effect/regen_mesh_continuous
+	heal_end_sound = /datum/sound_effect/regen_mesh_end
 	merge_type = /obj/item/stack/medical/mesh
 
 	///This var determines if the sterile packaging of the mesh has been opened.
@@ -950,7 +950,7 @@
 	self_delay = 3 SECONDS
 	other_delay = 1 SECONDS
 	apply_verb = "applying to"
-	pickup_sound = SFX_CLOTH_PICKUP
+	pickup_sound = /datum/sound_effect/cloth_pickup
 
 /obj/item/stack/medical/bandage/grind_results()
 	return list(/datum/reagent/medicine/c2/libital = 2)

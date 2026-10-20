@@ -148,7 +148,7 @@
 
 /obj/item/clothing/suit/chaplainsuit/armor/clock/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
+	AddComponent(/datum/component/item_equipped_movement_rustle, /datum/sound_effect/assoc/plate_armor_rustle, 8)
 	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/drake)
 
 /obj/item/clothing/head/helmet/chaplain
@@ -173,7 +173,7 @@
 
 /obj/item/clothing/suit/chaplainsuit/armor/templar/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
+	AddComponent(/datum/component/item_equipped_movement_rustle, /datum/sound_effect/assoc/plate_armor_rustle, 8)
 	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/biosuit_dark)
 
 /obj/item/clothing/head/helmet/chaplain/cage
@@ -203,7 +203,7 @@
 
 /obj/item/clothing/suit/chaplainsuit/armor/ancient/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
+	AddComponent(/datum/component/item_equipped_movement_rustle, /datum/sound_effect/assoc/plate_armor_rustle, 8)
 	AddElement(/datum/element/equipment_bodypart_texture, BODY_ZONE_CHEST, /datum/bodypart_texture/mesh/biosuit_dark)
 
 /obj/item/clothing/head/helmet/chaplain/witchunter_hat
@@ -240,7 +240,7 @@
 
 /obj/item/clothing/suit/chaplainsuit/armor/crusader/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
+	AddComponent(/datum/component/item_equipped_movement_rustle, /datum/sound_effect/assoc/plate_armor_rustle, 8)
 
 
 /datum/armor/armor_crusader

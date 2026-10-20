@@ -269,7 +269,7 @@
 		if(damtype == BURN)
 			hitsound = 'sound/items/tools/welder.ogg'
 		if(damtype == BRUTE)
-			hitsound = SFX_SWING_HIT
+			hitsound = /datum/sound_effect/swing_hit
 
 	SEND_GLOBAL_SIGNAL(COMSIG_GLOB_NEW_ITEM, src)
 
@@ -950,9 +950,9 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 
 /obj/item/proc/get_dismember_sound()
 	if(damtype == BURN)
-		. = SFX_SEAR
+		. = /datum/sound_effect/sear
 	else
-		. = SFX_DESECRATION
+		. = /datum/sound_effect/desecration
 
 /// Creates an ignition hotspot if item is lit and located on turf, in mask, or in hand
 /obj/item/proc/open_flame(flame_heat = 700, mob_slots = ITEM_SLOT_MASK|ITEM_SLOT_HANDS)
@@ -1404,12 +1404,12 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
 				var/obj/item/shard/broken_glass = new /obj/item/shard(loc)
 				broken_glass.name = "broken [name]"
 				broken_glass.desc = "This used to be \a [name], but it sure isn't anymore."
-				playsound(victim, SFX_SHATTER, 25, TRUE)
+				playsound(victim, /datum/sound_effect/shatter, 25, TRUE)
 				qdel(src)
 				if(QDELETED(source_item))
 					broken_glass.on_accidental_consumption(victim, user)
 			else //33% chance to just "crack" it (play a sound) and leave it in the bread
-				playsound(victim, SFX_SHATTER, 15, TRUE)
+				playsound(victim, /datum/sound_effect/shatter, 15, TRUE)
 			discover_after = FALSE
 
 		victim.adjust_disgust(33)
