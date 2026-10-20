@@ -273,10 +273,7 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden{
 	dir = 4
 	},
-/turf/open/floor/iron{
-	icon = 'icons/obj/fluff/beach.dmi';
-	icon_state = "sand"
-	},
+/turf/open/floor/iron/sand,
 /area/ruin/powered/beach)
 "hq" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer4{
@@ -479,10 +476,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/sand,
-/turf/open/floor/iron{
-	icon = 'icons/obj/fluff/beach.dmi';
-	icon_state = "sand"
-	},
+/turf/open/floor/iron/sand,
 /area/ruin/powered/beach)
 "qc" = (
 /obj/structure/mirror/directional/west,

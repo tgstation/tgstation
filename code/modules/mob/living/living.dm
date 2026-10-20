@@ -135,8 +135,8 @@
 
 	if(body_position == STANDING_UP)
 		var/damage_for_each_leg = round((incoming_damage / 2) * damage_softening_multiplier)
-		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_L_LEG, wound_bonus = -2.5 * levels)
-		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_R_LEG, wound_bonus = -2.5 * levels)
+		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_L_LEG)
+		apply_damage(damage_for_each_leg, BRUTE, BODY_ZONE_R_LEG)
 	else
 		apply_damage(incoming_damage, BRUTE, spread_damage = TRUE)
 
@@ -2098,14 +2098,16 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 /mob/living/proc/restore_initial_sight()
 	SHOULD_CALL_PARENT(TRUE)
 	PROTECTED_PROC(TRUE)
-	var/init_sight = initial(sight)
-	//we cannot see mobs and/or objects unless we have thermals/xray/material vision, but we can still see turfs to navigate around
-	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING))
-		init_sight |= SEE_TURFS|BLIND
-	init_sight |= SEND_SIGNAL(src, COMSIG_LIVING_RESTORE_INITIAL_SIGHT)
+	set_invis_see(initial(see_invisible))
 	lighting_cutoff = initial(lighting_cutoff)
 	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
-	return initial(sight)
+	var/init_sight = initial(sight)
+	//we cannot see mobs and/or objects unless we have thermals/xray/material vision, but we can still see turfs to navigate around
+	if(HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics))
+		init_sight |= SEE_TURFS|BLIND
+	//after the reset above, so handlers can tint the cutoffs
+	init_sight |= SEND_SIGNAL(src, COMSIG_LIVING_RESTORE_INITIAL_SIGHT)
+	return init_sight
 
 /mob/living/proc/mob_try_pickup(mob/living/user, instant=FALSE)
 	if(!ishuman(user) && (user.mob_size <= mob_size || user.num_hands == 0))

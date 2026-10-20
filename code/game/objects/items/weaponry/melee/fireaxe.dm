@@ -47,7 +47,7 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 		butcher_sound = hitsound, \
 	)
 	//axes are not known for being precision butchering tools
-	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, icon_wielded="[base_icon_state]1")
+	AddComponent(/datum/component/two_handed, force_unwielded=force_unwielded, force_wielded=force_wielded, update_icon_state=TRUE)
 
 /obj/item/fireaxe/Destroy()
 	if(GLOB.bridge_axe == src)
@@ -56,10 +56,6 @@ GLOBAL_DATUM(bridge_axe, /obj/item/fireaxe)
 
 /obj/item/fireaxe/get_demolition_modifier(obj/target)
 	return HAS_TRAIT(src, TRAIT_WIELDED) ? demolition_mod : 0.8
-
-/obj/item/fireaxe/update_icon_state()
-	icon_state = "[base_icon_state]0"
-	return ..()
 
 /obj/item/fireaxe/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] axes [user.p_them()]self from head to toe! It looks like [user.p_theyre()] trying to commit suicide!"))

@@ -20,6 +20,8 @@
 	. = ..()
 
 	twitchers.Remove(source)
+	if(!length(twitchers))
+		STOP_PROCESSING(SSdcs, src)
 	UnregisterSignal(source, list(COMSIG_ATOM_ORBIT_BEGIN, COMSIG_ATOM_ORBIT_STOP))
 
 /datum/element/orbit_twitcher/process(seconds_per_tick)
@@ -47,7 +49,7 @@
 
 	twitchers.Remove(source)
 
-	if(!twitchers.len)
+	if(!length(twitchers))
 		STOP_PROCESSING(SSdcs, src)
 
 /datum/element/orbit_twitcher/OnTargetDelete(datum/source)

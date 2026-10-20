@@ -4,8 +4,8 @@
  */
 /obj/item/clothing/neck/necklace/pearl
 	name = "black pearl necklace"
-	desc = "A necklace of black pearls gathered from somewhere within the \"Abyss\" region of planet Moryana, \
-		a strange infusion seems to actively swirl within the tiny dark beads."
+	desc = "A necklace of black pearls gathered from somewhere within the \"Abyss\" region of planet Moryana. \
+		A strange infusion seems to actively swirl within the tiny dark beads."
 	icon = 'icons/obj/clothing/neck.dmi'
 	icon_state = "beads"
 	color = "#272526"
@@ -62,7 +62,7 @@
 	ephemeral_tail = new tail_type
 	for(var/zone in ephemeral_limbs)
 		ephemeral_limbs[zone] = (user.get_bodypart(zone) && !istype(real_tail, /obj/item/organ/tail/fish/cerulean)) ? user.get_bodypart(zone) : gift_leg(user, zone)
-		user.dna.species.bodypart_overrides[zone] = ephemeral_limbs[zone].type
+		user.dna.species.bodypart_overrides[zone] = astype(ephemeral_limbs[zone], /atom).type
 	update_healthdoll(user)
 
 /// restore our original appearance and organs/limbs. delete the fake spooky bits

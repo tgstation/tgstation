@@ -4,8 +4,8 @@
 	icon = 'icons/mob/simple/lavaland/raptor_baby.dmi'
 	icon_state = "raptor_egg"
 	resistance_flags = LAVA_PROOF|FIRE_PROOF
-	/// Color typepath of the child we spawn
-	var/datum/raptor_color/child_color = /datum/raptor_color
+	/// Color typepath of the child we spawn, null for a random one
+	var/datum/raptor_color/child_color = null
 	/// Inheritance data to pass onto the child
 	var/datum/raptor_inheritance/inherited_stats = null
 	/// Current growth progress

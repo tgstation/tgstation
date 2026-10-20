@@ -302,6 +302,19 @@
 	heavyfootstep = FOOTSTEP_GENERIC_HEAVY
 	tiled_turf = TRUE
 
+/turf/open/indestructible/cult
+	icon_state = "cult"
+
+// A plating pattern without /plating's underfloor access.
+/turf/open/indestructible/plating_pattern
+	icon_state = "plating"
+
+/turf/open/indestructible/recharge_floor
+	icon_state = "recharge_floor"
+
+/turf/open/indestructible/whitehall
+	icon_state = "whitehall"
+
 /turf/open/indestructible/Melt()
 	to_be_destroyed = FALSE
 	return src
@@ -318,6 +331,9 @@
 
 /turf/open/indestructible/white
 	icon_state = "white"
+
+/turf/open/indestructible/white/showroom
+	icon_state = "showroomfloor"
 
 /turf/open/indestructible/white/smooth_large
 	icon_state = "white_large"
@@ -455,6 +471,10 @@
 	barefootstep = null
 	clawfootstep = null
 	heavyfootstep = null
+
+/turf/open/indestructible/binary/water
+	icon = 'icons/turf/beach.dmi'
+	icon_state = "water"
 
 /turf/open/indestructible/airblock
 	icon_state = "bluespace"
