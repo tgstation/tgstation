@@ -76,6 +76,8 @@
 	alpha = 0
 	SSvis_overlays.remove_vis_overlay(src, managed_vis_overlays)
 	var/obj/effect/overlay/vis/overlay = SSvis_overlays.add_vis_overlay(src, icon, icon_state, ABOVE_MOB_LAYER, MUTATE_PLANE(GAME_PLANE, our_turf), dir, add_appearance_flags = KEEP_APART|RESET_ALPHA) //you see mobs under it, but you hit them like they are above it
+	if(isnull(overlay)) // Signs being deleted get no vis overlays
+		return
 	if (color || cached_color_filter)
 		overlay.add_atom_colour(cached_color_filter || color, FIXED_COLOUR_PRIORITY)
 
@@ -198,6 +200,10 @@
 	alpha = 150
 	rad_insulation = RAD_LIGHT_INSULATION
 	resistance_flags = FIRE_PROOF | FREEZE_PROOF
+
+/obj/structure/holosign/barrier/atmos/emp_act(severity)
+	. = ..()
+	investigate_log("was destroyed due to EMP", INVESTIGATE_ATMOS)
 
 /obj/structure/holosign/barrier/atmos/proc/clearview_transparency()
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT

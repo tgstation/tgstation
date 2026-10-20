@@ -2,8 +2,10 @@
 #define CAMERA_TICK_LIMIT 10
 
 /datum/trackable
-	///Reference to the atom that owns us, used for tracking.
-	var/atom/tracking_holder
+	///Datum that owns us, such as an AI or camera program.
+	var/datum/tracking_holder
+	///The mob requesting the current tracking session, used for permission checks and feedback.
+	var/datum/weakref/tracking_user_ref
 
 	///What mob are we currently tracking, if any
 	var/mob/living/tracked_mob
@@ -21,19 +23,20 @@
 	///List of all non-humans trackable by cameras, split so humans take priority.
 	VAR_PRIVATE/static/list/others = list()
 
-/datum/trackable/New(atom/source)
+/datum/trackable/New(datum/source)
 	. = ..()
 	tracking_holder = source
 	RegisterSignal(tracking_holder, COMSIG_MOB_RESET_PERSPECTIVE, PROC_REF(perspective_reset))
 
 /datum/trackable/Destroy(force)
 	tracking_holder = null
+	tracking_user_ref = null
 	tracked_mob = null
 	STOP_PROCESSING(SSprocessing, src)
 	return ..()
 
 ///Generates a list of trackable people by name, returning a list of Humans + Non-Humans that can be tracked.
-/datum/trackable/proc/find_trackable_mobs()
+/datum/trackable/proc/find_trackable_mobs(mob/living/tracker)
 	RETURN_TYPE(/list)
 
 	names.Cut()
@@ -43,7 +46,7 @@
 	others.Cut()
 
 	for(var/mob/living/living_mob as anything in GLOB.mob_living_list)
-		if(!living_mob.can_track(usr))
+		if(!living_mob.can_track(tracker))
 			continue
 
 		var/name = living_mob.name
@@ -63,8 +66,9 @@
 
 /// Takes a mob to track, resets our state and begins trying to follow it
 /// Best we can at least
-/datum/trackable/proc/set_tracked_mob(mob/living/track)
+/datum/trackable/proc/set_tracked_mob(mob/living/track, mob/living/tracker)
 	set_rechecking(FALSE)
+	tracking_user_ref = null
 	if(tracked_mob)
 		UnregisterSignal(tracked_mob, list(COMSIG_QDELETING, COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE))
 	if(track && !isliving(track))
@@ -72,6 +76,7 @@
 		return
 	tracked_mob = track
 	if(tracked_mob)
+		tracking_user_ref = WEAKREF(tracker)
 		SEND_SIGNAL(src, COMSIG_TRACKABLE_TRACKING_STARTED, tracked_mob)
 		RegisterSignal(tracked_mob, COMSIG_QDELETING, PROC_REF(target_deleted))
 		RegisterSignal(tracked_mob, COMSIG_MOVABLE_MOVED, PROC_REF(target_moved))
@@ -82,13 +87,13 @@
 	SIGNAL_HANDLER
 	reset_tracking()
 
-/datum/trackable/proc/perspective_reset(atom/source)
+/datum/trackable/proc/perspective_reset(datum/source)
 	SIGNAL_HANDLER
 	reset_tracking()
 
 /datum/trackable/proc/target_moved(datum/source)
 	SIGNAL_HANDLER
-	if(attempt_track())
+	if(attempt_track() || !tracked_mob)
 		return
 	set_rechecking(TRUE)
 
@@ -110,22 +115,31 @@
 		set_rechecking(FALSE)
 		return
 
+	if(!rechecking)
+		return PROCESS_KILL
+
+	var/mob/tracker = tracking_user_ref?.resolve()
+	if(isnull(tracker))
+		reset_tracking()
+		return
+
 	if(cameraticks < CAMERA_TICK_LIMIT)
 		if(!cameraticks)
-			to_chat(tracking_holder, span_warning("Target is not near any active cameras. Attempting to reacquire..."))
+			to_chat(tracker, span_warning("Target is not near any active cameras. Attempting to reacquire..."))
 		cameraticks++
 		return
 
-	to_chat(tracking_holder, span_warning("Unable to reacquire, cancelling track..."))
+	to_chat(tracker, span_warning("Unable to reacquire, cancelling track..."))
 	reset_tracking()
 
 /// Tries to track onto our target mob. Returns true if it succeeds, false otherwise
 /datum/trackable/proc/attempt_track()
-	if(!tracked_mob)
+	var/mob/living/tracker = tracking_user_ref?.resolve()
+	if(!tracked_mob || !tracker)
 		reset_tracking()
 		return FALSE
 
-	if(!tracked_mob.can_track(tracking_holder))
+	if(!tracked_mob.can_track(tracker))
 		return FALSE
 	// In case we've been checking
 	set_rechecking(FALSE)
@@ -149,47 +163,47 @@
  *
  * Sets a mob as being tracked, will give a tgui input list to find targets to track.
  * Args:
- *  tracker - The person trying to track, used for feedback messages. This is not the same as tracking_holder
+ *  tracker - The person trying to track, used for permission checks and feedback. This is not the same as tracking_holder
  */
 /datum/trackable/proc/track_input(mob/living/tracker)
 	if(!tracker || tracker.stat == DEAD)
 		return
 
-	var/target_name = tgui_input_list(tracker, "Select a target", "Tracking", find_trackable_mobs())
+	var/target_name = tgui_input_list(tracker, "Select a target", "Tracking", find_trackable_mobs(tracker))
 	if(!target_name || isnull(target_name))
 		return
 	var/datum/weakref/mob_ref = isnull(humans[target_name]) ? others[target_name] : humans[target_name]
 	if(isnull(mob_ref))
 		to_chat(tracker, span_notice("Target is not on or near any active cameras. Tracking failed."))
 		return
-	set_tracked_mob(mob_ref.resolve())
+	set_tracked_mob(mob_ref.resolve(), tracker)
 
 /**
  * track_name
  *
  * Sets a mob as being tracked, will track the passed in target name's target
  * Args:
- *  tracker - The person trying to track, used for feedback messages. This is not the same as tracking_holder
+ *  tracker - The person trying to track, used for permission checks and feedback. This is not the same as tracking_holder
  *  tracked_mob_name - The person being tracked.
  */
 /datum/trackable/proc/track_name(mob/living/tracker, tracked_mob_name)
 	if(!tracker || tracker.stat == DEAD)
 		return
 
-	find_trackable_mobs() //this is in case the tracked mob is newly/no-longer in camera field of view.
+	find_trackable_mobs(tracker) //this is in case the tracked mob is newly/no-longer in camera field of view.
 	var/datum/weakref/mob_ref = isnull(humans[tracked_mob_name]) ? others[tracked_mob_name] : humans[tracked_mob_name]
 	if(isnull(mob_ref))
 		to_chat(tracker, span_notice("Target is not on or near any active cameras. Tracking failed."))
 		return
 	to_chat(tracker, span_notice("Now tracking [tracked_mob_name] on camera."))
-	set_tracked_mob(mob_ref.resolve())
+	set_tracked_mob(mob_ref.resolve(), tracker)
 
 /**
  * track_mob
  *
  * Sets a mob as being tracked, will track the passed in target
  * Args:
- *  tracker - The person trying to track, used for feedback messages. This is not the same as tracking_holder
+ *  tracker - The person trying to track, used for permission checks and feedback. This is not the same as tracking_holder
  *  tracked - The person being tracked.
  */
 /datum/trackable/proc/track_mob(mob/living/tracker, mob/living/tracked)

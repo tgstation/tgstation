@@ -181,7 +181,7 @@
 	var/datum/hallucination/fire/fire_hallucination = fire_hallucination_weakref?.resolve()
 	if(owner.on_fire || !QDELETED(fire_hallucination))
 		owner.clear_mood_event("pyrophobia") // they have the "ON FIRE" moodlet
-		return max(owner.fire_stacks, fire_hallucination.fake_firestacks) * 2
+		return max(owner.fire_stacks, fire_hallucination?.fake_firestacks) * 2
 
 	var/fire_size = owner.count_nearby_fire_sources()
 	if(fire_size != last_fire_size)

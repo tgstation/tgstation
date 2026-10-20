@@ -9,17 +9,6 @@
 	shaded_charge = TRUE
 	light_color = COLOR_SOFT_RED
 
-/obj/item/gun/energy/laser/Initialize(mapload)
-	. = ..()
-	// Only regular lasguns can be slapcrafted
-	if(type != /obj/item/gun/energy/laser)
-		return
-	var/static/list/slapcraft_recipe_list = list(/datum/crafting_recipe/laser/xraylaser, /datum/crafting_recipe/laser/hellgun, /datum/crafting_recipe/laser/ioncarbine)
-	AddElement(
-		/datum/element/slapcrafting,\
-		slapcraft_recipes = slapcraft_recipe_list,\
-	)
-
 /obj/item/gun/energy/laser/add_seclight_point()
 	AddComponent(/datum/component/seclite_attachable, \
 		light_overlay_icon = 'icons/obj/weapons/guns/flashlights.dmi', \
@@ -213,6 +202,21 @@
 	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter/disabler, /obj/item/ammo_casing/energy/electrode)
 	automatic_charge_overlays = FALSE
 	ammo_x_offset = 1
+
+/obj/item/gun/energy/laser/scatter/shotty/compact
+	name = "compact laser shotgun"
+	desc = "Equipped with a refraction kit for projectile seperation, and easy to carry and stow. Unfortunately, this is at the cost of trigger speed, accuracy and some damage. \n\
+		Shame, really, or it would be perfect..."
+	icon_state = "cshotgunc"
+	worn_icon_state = "clshotgun"
+	w_class = WEIGHT_CLASS_NORMAL
+	pin = /obj/item/firing_pin
+	recoil = 1
+	ammo_type = list(/obj/item/ammo_casing/energy/laser/scatter/weak)
+
+/obj/item/gun/energy/laser/scatter/shotty/compact/shoot_live_shot(mob/living/user)
+	. = ..()
+	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(playsound), src, 'sound/items/weapons/gun/shotgun/rack.ogg', 30, TRUE), 0.2 SECONDS)
 
 ///Laser Cannon
 

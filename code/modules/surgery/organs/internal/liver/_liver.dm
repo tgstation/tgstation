@@ -202,7 +202,7 @@
 		return
 
 	var/mob/living/carbon/human/humie_owner = owner
-	if(!humie_owner.get_organ_slot(ORGAN_SLOT_EYES) || humie_owner.is_eyes_covered())
+	if(!humie_owner.is_eyes_visible(requires_eyes = TRUE))
 		return
 	switch(failure_time)
 		if(0 to 3 * LIVER_FAILURE_STAGE_SECONDS - 1)

@@ -43,3 +43,427 @@
   - bugfix: Fix seclite overlay for SMG disablers
   vinylspiders:
   - bugfix: fixes a memory leak in the tgui layout component
+2026-10-02:
+  ArcaneMusic:
+  - balance: NODE drones are now immune to snow and ash storms, for the benefit of
+      wave defenses.
+  - bugfix: Ore vents should be runtiming less.
+  JohnFulpWillard:
+  - admin: Asay is now properly sanitized.
+  PapaMichael:
+  - bugfix: Fixed Runechat having a 1/256 chance of being dark and almost unreadable
+  Xander3359:
+  - spellcheck: fix Heretic ritual requirements having no spacing with the "or"
+  necromanceranne:
+  - code_imp: Biting can no longer overfeed you.
+  - code_imp: You do not lick people as a felinid if you have combat mode on.
+2026-10-03:
+  hry-gh:
+  - bugfix: fixes the scaling in the lobby browser
+  timothymtorres:
+  - rscadd: Beartraps trigger when armed and inside containers or bags (similar to
+      mousetraps)
+  uaioy:
+  - bugfix: knock should be able to unlock turret controls now
+2026-10-04:
+  Melbert:
+  - bugfix: Fix night vision goggles
+  desertmote:
+  - rscadd: 'A new species to play: Cerulean!'
+  - rscadd: The hydro-vaporizer, a wearable device functional like an internals tank,
+      but for water vapor
+  - rscadd: A new light/two person pirate team, the Siren Shimai
+  - rscadd: A compact laser shotgun, for the aforementioned pirate team
+  - rscadd: An armored leather jacket, for the aforementioned pirate team
+  - code_imp: Updates species gain code so it can accurately tell when to regenerate
+      limbs that were previously missing (#92712)
+  - code_imp: Add a proc to equip code for post-equipping species outfitting
+  - balance: Makes wheelchairs ever-so-slightly faster
+  timothymtorres:
+  - rscadd: Add toxic and radioactive effects to breathing Antinoblium.
+  - balance: Breathing harmful gases causes lung damage. (scales with partial pressure)
+  - balance: Plasmamen breathing oxygen now causes TOXIN damage.
+  - code_imp: Cleanup exercise code `null` value
+  vinylspiders:
+  - bugfix: fixes an issue where occasionally an ejected revolver casing could remain
+      quantum entangled with the gun
+  - bugfix: bitrunning safehouse walls and windows no longer try to connect to walls
+      that don't fully exist yet
+  - bugfix: big manipulators will no longer try to use items their monkey failed to
+      pick up.
+  - bugfix: fixes salesman glasses occasionally being stuck mimicking their previous
+      wearer's lack of sanity
+2026-10-06:
+  FalloutFalcon:
+  - bugfix: some mobs like Migo, Creatures, and blank bodies now properly attack you
+      and obstacles in there way
+  Melbert:
+  - bugfix: Fish cannot be paraplegics
+  - bugfix: Fish can no longer breathe air via a history of nicotine abuse
+  PapaMichael:
+  - qol: AIs and Cyborgs can set the zoom of their photo cameras.
+  - bugfix: pAI photo zoom is no longer broken
+  SmArtKar, LemonInTheDark:
+  - refactor: Separated overlay light visuals from the component/turf lumcount
+  the-orange-cow:
+  - rscadd: New fertilizer at your local biogenerator, Chemo Cultivate. Reduces weeds,
+      reduces lifespan and endurance of plants. Use with care.
+  - rscadd: New fertilizer at your local biogenerator, Stabili Feed. Reduces instability,
+      has a chance of culling plant traits and reagents. USE WITH EXTREME CARE.
+  - balance: Enduro Grow endurance gain per unit per cycle increased from .35 to .5
+  tontyGH:
+  - refactor: 'A lot of code relating to hands was altered for technical reasons,
+      which fixed these issues:'
+  - bugfix: Sleeping Carp's style malus did not ignore "cool" held items
+  - bugfix: Cursed blade could not be used to bind haunted longsword
+  - bugfix: Amber focus could not be used to bind haunted longsword
+  - bugfix: Items that could block did not correctly block push/shuffle attempts
+  - bugfix: The swap_hands tutorial did not account for 3+ hands
+  - bugfix: High-tenning a mob did not account for more than 2 hands (you can high-twenty
+      now!)
+  vinylspiders:
+  - bugfix: fixes lighting getting created twice on some tiles during round startup
+  - bugfix: fixed crates and beds losing their elevation after a shuttle moves.
+2026-10-07:
+  Jacquerel:
+  - bugfix: Colossus no longer enrages for no reason upon seeing a Golem
+  - bugfix: Golems who eat rocks will look different, like they are supposed to
+  Melbert:
+  - refactor: You can now pin the corgi's tail from "pin the tail on the corgi" on
+      anything
+  - qol: Pin the tail on the corgi kit comes with 1 poster, 4 pins, and 1 blindfold.
+  RusselNotSCP:
+  - rscadd: Eight new cocktails from the halls of the Mansus are now available to
+      be mixed and enjoyed (at your own risk.)
+  timothymtorres:
+  - bugfix: Fix wound chance for legs from falling z-levels decreasing the more z-levels
+      you fall down
+  vinylspiders:
+  - bugfix: raptor eggs that weren't laid by a raptor (mapped or spawned in) now hatch
+      a proper chick instead of a bugged, invisible one.
+2026-10-08:
+  FalloutFalcon:
+  - bugfix: Handling on if you can make eye contact is a bit more robust
+  - bugfix: Some examine text for eye effects acctaully checks if you have eyes
+  Melbert:
+  - rscadd: Fishes can toggle snouts in character creation (the same way they can
+      toggle frills)
+  - bugfix: Fishes cannot be as dark as the abyss
+  - bugfix: Maybe fixes lighting
+  alexguinea:
+  - rscadd: Added the litigation set of forms to the blanks in the photocopier.
+  necromanceranne:
+  - rscadd: Knives do additional damage if you first grab hold of your target.
+  - rscadd: Some knives can be impaled into someone with right click.
+  - balance: Kitchen knives and shivs have embedding behaviour.
+  - balance: Most knives have better chances of embedding. Only combat knives have
+      particularly lethal embed effects.
+  timothymtorres:
+  - rscadd: Add EMP effects to Thermomachines, Portable Canisters, Lights, Flashlights,
+      Floorlights, Floodlights, Seclights on Guns, Lights on Plasmamen Helmets, Hardhat
+      Lights, PDA Flashlights, Ore Silos, Buttons, Turret Controllers, Teleporter
+      Beacons, Trapdoors, and Morgue Trays. Also improves admin logging for atmospheric
+      EMP effects.
+  - rscadd: Add EMP protection to EMP flashlights
+  - rscadd: Flares, candles, slime lights, and glowsticks no longer directly conduct
+      electricity
+  - rscadd: Welding affects nearby mobs that don't have flash protection. Special
+      welding tools like the CE's experimental welder or the alien welding object
+      can safely ignore harming nearby mobs.
+  tontyGH:
+  - qol: Added multiple new keybinds for hand control
+  - qol: Hand-related keybinds were moved to DEXTROUS category
+  - bugfix: Cycling hands would get stuck on offhand items instead of skipping over
+      them
+  - bugfix: Catching now tries to put caught items in every possible open hand instead
+      of just the active offhand
+  - bugfix: Tentacle's aggro grab had weird behaviour that made it ignore a lot of
+      systems
+  vinylspiders:
+  - bugfix: Monkeys no longer pull a weapon out of your hands or off your back when
+      you picked it up before they got to it.
+  - bugfix: Fish infusion organs now make better bait taste better to you, and a stoat
+      tongue makes eggs and dead mice taste better, as intended.
+  - bugfix: hardcore random, anonymous theme and appearance-banned characters now
+      get just a random set of personalities instead of a random set piled on top
+      of their own
+  - bugfix: random personalities can no longer come with two that contradict each
+      other, like loyal and disillusioned.
+2026-10-09:
+  Co0kie-GG:
+  - bugfix: The AI will no longer see its eyes after revive
+  - bugfix: The AI's second eyes are removed upon death or loading onto the card
+  FalloutFalcon:
+  - bugfix: AI attempting to destroy obstructions wont friendly fire random other
+      mobs.
+  FlufflesTheDog:
+  - bugfix: Apples, tower caps, starthistle seeds, and randomly-mutated crops now
+      go into plant bags on harvest.
+  - bugfix: APCs rotate properly with shuttles
+  - bugfix: cable networks on shuttles  should maintain proper connections better
+  - bugfix: shuttle subrooms no longer have free power
+  JohnFulpWillard:
+  - qol: Precise Drop's default action is now CtrlQ instead of CtrlX, to match Drop
+      once again being Q.
+  KingkumaArt:
+  - bugfix: Giantslayer Spear shows when equipped in suit storage. Enjoy your monster
+      hunter cosplays.
+  Melbert:
+  - balance: Megafauna / Tendrils prevent mining mobs within 10 / 7 tiles of them
+      from respawning during a storm
+  - balance: The radius that which candelas block mining mob respawns during storms
+      now reaches through walls
+  - balance: Living players prevent mining mobs within 3 tiles from respawning during
+      a storm (if the respawn point is in sight).
+  PapaMichael:
+  - bugfix: Harmonicas and headphones play music while equipped again
+  SmArtKar:
+  - bugfix: Fixed raptors not inheriting their parents' food stat modifications
+  - bugfix: Fixed amphibious lungs functionally giving the user nobreath
+  - bugfix: Fixed tendril melee being able to queue multiple attacks and oneshot mobs
+  TealSeer:
+  - bugfix: fixed miners not having access to the ORM windoor on kilostation
+  - bugfix: fixed save button in NTOS Notepad doing nothing
+  vinylspiders:
+  - bugfix: fixes ore bags throwing runtimes when you get in and out of closets/containers
+      or drop them inside one
+  - bugfix: fixes a spammy runtime when microwaves eject their content
+  - bugfix: suit meshes and the voidwalker curse now cover large wings completely,
+      instead of missing their left side and edges.
+  - bugfix: ventcrawling once again shows only the pipes and the layout of the area
+      around you, not the mobs and objects in it.
+  - bugfix: engineering and mining cyborgs' meson vision and syndicate saboteur cyborgs'
+      thermal vision tint dark areas again.
+  - bugfix: syndicate saboteur cyborgs can turn their thermal vision off again.
+  - bugfix: engineering scanner goggles only give meson vision in meson mode again.
+      Shuttle region scanners, atmospheric thermal imaging goggles and admin imaging
+      goggles no longer give meson vision at all.
+  - bugfix: manning a deployable turret gives you its controls in your hands again.
+  - bugfix: the prototype emitter's manual firing mode gives you its controls in your
+      hands again.
+2026-10-10:
+  Aliceee2ch:
+  - balance: Station Engineers start with insulated gloves now.
+  JohnFulpWillard:
+  - bugfix: The cat house no longer deletes cats, amongst some other niceties.
+  KingkumaArt:
+  - rscadd: Ethereals can now equip underwear in the character customization menu!
+      Now you too can impress your friends with your pride flag socks and union jack
+      boxer shorts.
+  Moonridden:
+  - config: The help link for revenants now uses the config set, rather than a hard-coded
+      link.
+  PapaMichael:
+  - bugfix: Imported chat settings will last longer than one round
+  RusselNotSCP:
+  - bugfix: Footsoldier's Razor recipe no longer has dumb overlap with Pump-up, and
+      instead now uses it as an ingredient
+  headband0536:
+  - bugfix: Cuffed items no longer lag the server when their owner travels through
+      vents or disposals. The item now goes along with its owner into vents, disposals,
+      closets and mechs.
+  - bugfix: The chain of a cuffed item no longer stretches across the map when its
+      owner is inside something.
+  - bugfix: Cuffed items on the floor follow their owner smoothly.
+  - bugfix: You can remove someone's cuffed item from the strip menu when it is not
+      in their hand.
+  - bugfix: Naked-only ventcrawlers can't enter vents while chained to an item.
+  vinylspiders:
+  - bugfix: catching a basketball and dribbling it no longer leaves a phantom ball
+      stuck in your other hand
+  - bugfix: a basketball you've let go of no longer keeps bouncing when you walk,
+      or gets pulled back to your feet when you're knocked down
+  - bugfix: if you're holding two basketballs and drop one, the one still in your
+      hand does the dribbling now
+  - bugfix: pyrophobia now builds fear from being on fire when no fire hallucination
+      is present.
+  - admin: forcing a resonance cascade no longer breaks supermatter integrity calculations
+      or turns into a normal explosion if the crystal heals
+  - bugfix: cyborgs disconnect cleanly from deleted AIs, keeping RoboTact usable with
+      their own camera photos.
+  - refactor: gives all the icon_state mapping turf varedits their own types
+2026-10-11:
+  necromanceranne:
+  - balance: Dragonsbreath is now printable with Riot Suppression tech. They are no
+      longer crafted.
+  - balance: Incendiary now conflagrates in a small fireball for each pellet that
+      hits. They no longer leaves a fire trail.
+  - balance: Incendiary projectiles now do more damage on the projectile itself.
+  - balance: Dragonsbreath also now bounces.
+  - code_imp: Correctly identifies the Tesla Cannon's design datum path as being the
+      tesla revolver, no the stun revolver.
+2026-10-12:
+  Melbert:
+  - qol: Dynamic avoids spawning midrounds while the shuttle is called. (Previously,
+      it only avoided spawning midrounds if the shuttle was half way to the station).
+2026-10-14:
+  hry-gh:
+  - bugfix: when typing in the command bar, thinking/typing indicators will be reflected
+      in game again
+  necromanceranne:
+  - balance: Removes skeleton keys. Tendril chests can simply be opened like any other
+      megafauna loot.
+2026-10-15:
+  Fikou:
+  - spellcheck: ','
+  Melbert:
+  - bugfix: Fixes two handed weapons not updated when wielded
+  - bugfix: 'Surplus items get uplink datum data if possible in roundend report (meaning
+      it''ll report "Surplus item: stealth implant" rather than "Surplus item: box").'
+  - balance: Added a new access, "Atmospherics Equipment", which controls access to
+      Air Alarms, as well as atmospherics equipment lockers and supply packs. In the
+      future this access may extend to some map areas (such as atmos gas storage).
+  - balance: Atmospheric Technician, Station Engineer, and the Chief Engineer all
+      have "Atmospherics Equipment" access by default.
+  - balance: Head of Security and Head of Personnel do not have "Atmospherics Equipment",
+      and thus cannot access air alarms by default anymore.
+  - balance: Engineering Security Officers is only given "Atmospherics Equipment"
+      access on skeleton crews, and thus cannot access air alarms on higher pop shifts.
+  NanoCats:
+  - spellcheck: Standardized the names and acronyms of the rapid device family.
+  PapaMichael:
+  - bugfix: Words no longer escape your muzzled mouth if you use an internal exclamation
+      mark
+  SmArtKar:
+  - bugfix: Gibtonite tiles can no longer contain ore in them
+  necromanceranne:
+  - qol: You no longer suffer from a mood malice from seeing the ashwalker tendril
+      eat things if you're not an ashwalker yourself.
+  vinylspiders:
+  - bugfix: you can once again get a medical bounty report from the same patient after
+      waiting five minutes.
+  - bugfix: strange reagent now gets properly set in the HoP's mail delivery goodies
+      if the conditions meet
+2026-10-16:
+  JohnFulpWillard:
+  - qol: Action buttons with dynamic names (such as martial art swapping) now updates
+      their names without requiring you to unhover/rehover your mouse over it.
+  Melbert:
+  - bugfix: Build mode copy on humans no longer mangles the source terribly
+  - rscdel: Removed the ability for id cards to project a pay stand
+  - rscdel: Removed the vend-a-tray entirely
+  - rscadd: You can construct tip jars with glass or plasmaglass (though not with
+      their reinforced variants). Tip jars accept many tiny methods of gratuity, such
+      as coins, cash, holochips, IOUs, or... a cigarette, sure.
+  - rscadd: Adds tip jars to the kitchen in the bar, where the vend-a-trays once sat.
+  Neocloudy:
+  - spellcheck: Fixed or tweaked spelling/grammar in new Cerulean content, including
+      the hydro vaporizer, the deadbeat musician, the armored leather jacket, the
+      black pearl necklace, the translucent fish tail, and some of the Cerulean perks
+      (in the species menu).
+  PapaMichael:
+  - bugfix: The escape menu players list no longer reveals stealthed admins
+  PetyaFX:
+  - bugfix: Fixed SFX-keyed sounds being silent through sound tokens.
+  SmArtKar:
+  - bugfix: Fixed Candela nodes not working from mining webbings
+  desertmote:
+  - balance: Makes MOD stealth module less strict about part requirements
+  - bugfix: Ceruleans can activate MOD stealth modules
+  lelandkemble:
+  - bugfix: fixed being unable to copy blast door controller ids
+  vinylspiders:
+  - bugfix: ghosts can stop orbiting by moving away after their orbit is transferred
+      to another target.
+  - bugfix: multiple sources of muffled speech now respect one another
+  - bugfix: handling tips for single-contributor bounty cubes now reach the scanner's
+      bank account, and cargo receives the correct remaining value.
+  - bugfix: holograms can no longer get stuck wobbling when you walk back through
+      them just as their last glitch is fading
+  - bugfix: revolver crafting now transfers ammunition correctly past empty cylinder
+      slots.
+  - bugfix: stacks printed by autolathes and protolathes keep the correct material
+      contents when printed in batches or merged with existing stacks.
+2026-10-17:
+  Fghj240:
+  - bugfix: right clicking a powered door with powered crowbars no longer fails to
+      open it
+  Melbert:
+  - rscdel: Most gun crafting kits have been removed. The Horizon and SKS still require
+      one to build.
+  - rscadd: Weapon research tech nodes now allows the station to requisition unlocked
+      weapons from Cargo (Advanced Energy Gun, X-ray gun, ion carbine, etc.). Security
+      can departmental order them in bulk. Requisitions come without firing pins.
+  - rscadd: You can now purchase a hellfire laser gun directly from Cargo, though
+      it requires the contraband wire be cut.
+  PapaMichael:
+  - balance: Departmental security officers are now spread evenly across departments.
+  headband0536:
+  - qol: runechat for broadcasters
+  tontyGH:
+  - rscadd: Mothpeople now have 2 extra arms in their chest, giving them 4 total arms
+  - balance: Mothpeople are now generally a bit more fragile
+  - bugfix: Akimbo used the wrong gun when determining spread penalty
+  - bugfix: Akimbo penalty did not include the gun that was firing
+  - balance: Akimbo penalty now has multiplicative scaling (double PKA was adjusted
+      to consider this)
+  - bugfix: Catching items now considers all empty hands and not just your active
+      offhand
+  - balance: Blocking now only works if the blocking item is in your active set of
+      hands
+  - rscdel: Wizard's 4-arms perk and the deathmatch modifier had to be removed for
+      technical reasons. Sorry.
+  - refactor: Cybernetic arm implants got refactored. Report weird behaviour on the
+      GitHub.
+  vinylspiders:
+  - bugfix: ore vents loaded in after roundstart, or on a level without a mining epicenter,
+      now actually have ores and show up on ventpointers
+  - refactor: NT Shopping Network  no longer resends the whole cargo catalogue every
+      second while it's open
+  - bugfix: fuel tanks with other reagents mixed in no longer sometimes fail to explode
+      around plasma
+  - bugfix: swapping a water cooler's jug now hands you the old jug with whatever
+      was left in the cooler
+2026-10-18:
+  Absolucy:
+  - bugfix: Pun Pun should now properly get roundstart masks sometime
+  PapaMichael:
+  - rscadd: Added new AI VOX lines, including "jellyperson", "cerulean", "worm", and
+      some station areas and jobs
+  TheBoondock:
+  - rscadd: Added a pillow supplies crate and category to the games vendor
+  necromanceranne:
+  - balance: Misfiring has been completely reworked.
+  - balance: .38 and .357 are interchangeable in all compatible guns without needing
+      to wrench the gun. Just load it in! Nothing bad could possibly happen.
+  - balance: Junk rounds are once again shotgun rounds, and pipeguns/pipe pistols
+      now fit shotgun shells again.
+  - balance: Guns now have pressure mechanics to handle misfiring. Check you gun carefully
+      to determine its pressure rating.
+  vinylspiders:
+  - bugfix: crafted spears and explosive lances no longer turn invisible when worn
+      on your back
+2026-10-19:
+  Melbert:
+  - bugfix: Prosthetic Limb quirk cannot replace limbs that you don't have
+  - bugfix: Transhumanist cannot replace limbs nor organs that you don't have
+  - bugfix: Prosthetic organ cannot replace organs that you don't have
+  - bugfix: Prosthetic organ will not give lungs to species that don't breathe oxygen
+  - bugfix: Quadruple Amputee won't give you limbs that you don't have
+  tontyGH:
+  - bugfix: Cyborgs are now properly severed from the paranormal plane when revived
+  - bugfix: Changing your bible to insuls should make the received insuls no longer
+      disappear sometimes
+  vinylspiders:
+  - bugfix: losing a moth's chest arms no longer drops what's in your right hand,
+      and your active hand moves to a hand you still have
+  - bugfix: moth chest-arms are named what you'd expect now instead of just "moth"
+  - bugfix: papers no longer pop open on their own when you pick up a pen or stamp
+      after an earlier attempt to read them failed, or after you ghosted while reading
+2026-10-20:
+  Aeri:
+  - bugfix: The Icebox prison rec room and mess hall no longer trigger a fire alarm
+      when there's no atmospheric problem
+  Melbert:
+  - qol: Rat spit no longer causes vomitting directly, instead now causing more direct
+      disgust.
+  - qol: Using Sitalesse or Sumalism as your chaplain religion now gives your bible
+      a unique description
+  - bugfix: Fixes default bible name producing "The holy book of default bible name"
+      instead of "The holy book of [my diety]"
+  - map: 'Tram: Remapped Atmospherics entirely, a bit of Engineering, and a bit of
+      the hallway outside'
+  NoHaxJustPi:
+  - rscadd: Headslugs and alien larvae can doorcrawl.
+  TealSeer:
+  - bugfix: fixed wizard's heart eater perk not actually increasing damage resistance

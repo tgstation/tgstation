@@ -175,7 +175,7 @@
 			return ITEM_INTERACT_BLOCKING
 		var/obj/item/bot_assembly/ed209/assembly = new(drop_location())
 		to_chat(user, span_notice("You arm the robot frame."))
-		var/held_index = user.is_holding(src)
+		var/held_index = user.get_held_index_of_item(src)
 		qdel(src)
 		if (held_index)
 			user.put_in_hand(assembly, held_index)

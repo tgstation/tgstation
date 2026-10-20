@@ -813,7 +813,7 @@
 
 	new_bodypart.on_adding(src)
 	bodyparts += new_bodypart
-	if(!IS_STUMP(new_bodypart))
+	if(!IS_STUMP(new_bodypart) && !isnull(new_bodypart.body_zone))
 		real_bodypart_cache[new_bodypart.body_zone] = new_bodypart
 	new_bodypart.update_owner(src)
 
@@ -1024,7 +1024,7 @@
 /mob/living/carbon/wash(clean_types)
 	. = ..()
 	// Wash equipped stuff that cannot be covered
-	for(var/obj/item/held_thing in held_items)
+	for(var/obj/item/held_thing as anything in get_held_items())
 		. |= held_thing.wash(clean_types)
 
 	// Check and wash stuff that isn't covered

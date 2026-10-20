@@ -48,6 +48,7 @@
 
 /obj/item/broadcast_camera/update_icon_state()
 	icon_state = "[base_icon_state][active]"
+	inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
 	return ..()
 
 /obj/item/broadcast_camera/attack_self(mob/user, modifiers)
@@ -143,3 +144,8 @@
 	// Gives each cargo camera a unique network id
 	var/static/cargo_camera_network_id = 0
 	camera_networks = list("cargo_camera_id_[cargo_camera_network_id++]")
+
+/obj/item/broadcast_camera/siren_pirates
+	name = "Livestreaming Camera"
+	broadcast_name = "Siren Shimai!"
+	camera_networks = list(CAMERA_NETWORK_PIRATE)

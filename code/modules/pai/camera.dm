@@ -46,5 +46,5 @@
 			var/obj/item/camera/siliconcam/pai_camera/paicam = aicamera
 			paicam.pai_print(user)
 		if(PAI_PHOTO_MODE_ZOOM)
-			aicamera.adjust_zoom(user)
+			aicamera.adjust_zoom(user = user)
 	return TRUE
