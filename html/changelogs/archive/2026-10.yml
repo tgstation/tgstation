@@ -450,3 +450,20 @@
   - bugfix: moth chest-arms are named what you'd expect now instead of just "moth"
   - bugfix: papers no longer pop open on their own when you pick up a pen or stamp
       after an earlier attempt to read them failed, or after you ghosted while reading
+2026-10-20:
+  Aeri:
+  - bugfix: The Icebox prison rec room and mess hall no longer trigger a fire alarm
+      when there's no atmospheric problem
+  Melbert:
+  - qol: Rat spit no longer causes vomitting directly, instead now causing more direct
+      disgust.
+  - qol: Using Sitalesse or Sumalism as your chaplain religion now gives your bible
+      a unique description
+  - bugfix: Fixes default bible name producing "The holy book of default bible name"
+      instead of "The holy book of [my diety]"
+  - map: 'Tram: Remapped Atmospherics entirely, a bit of Engineering, and a bit of
+      the hallway outside'
+  NoHaxJustPi:
+  - rscadd: Headslugs and alien larvae can doorcrawl.
+  TealSeer:
+  - bugfix: fixed wizard's heart eater perk not actually increasing damage resistance

@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Using Sitalesse or Sumalism as your chaplain religion now gives your bible a unique description"
-  - bugfix: "Fixes default bible name producing \"The holy book of default bible name\" instead of \"The holy book of [my diety]\""
