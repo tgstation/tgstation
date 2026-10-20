@@ -37,7 +37,7 @@
 	do { \
 		result = ((T).nav_pass & NAV_CLASS_BIT_FAST((dir), (is_flying))) ? TRUE : FALSE; \
 		if(result && ((T).nav_pass & NAV_COND(dir))) { \
-			for(var/_navec_entry in (T).nav_blockers?["[(dir)]"]) { \
+			for(var/_navec_entry in (T).nav_blockers?[(dir)]) { \
 				if(isnum(_navec_entry)) { \
 					if(!((pass_info).pass_flags & _navec_entry)) { \
 						result = FALSE; \

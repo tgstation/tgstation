@@ -18,9 +18,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	/// Packed navmap passability bits. null = unbaked / dirty. See code/__DEFINES/navmap.dm for layout.
 	var/nav_pass = null
-	/// Lazy assoc: "[dir]" -> flat list of conditional blocker entries (numbers = pass_flags masks,
-	/// atom refs = evaluated live via CanAStarPass). Only present on turfs with conditional edges.
-	var/list/nav_blockers
+	/// Lazy alist: numeric dir -> flat list of conditional blocker entries (numbers = pass_flags masks,  atom refs = evaluated live via CanAStarPass). Only present on turfs with conditional edges.
+	var/alist/nav_blockers
 
 	/// If there's a tile over a basic floor that can be ripped out
 	var/overfloor_placed = FALSE
@@ -934,7 +933,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 /// Bakes this turf's outgoing edges and publishes them to the DLL navmap cache.
 /turf/proc/nav_bake(skip_navmap_push = FALSE)
 	var/packed = NAV_BAKED | (SSnavmap.space_type_cache[type] ? NONE : NAV_SIMULATED)
-	var/list/blockers = null
+	var/alist/blockers = null
 
 	for(var/dir in GLOB.cardinals)
 		var/turf/dest = get_step(src, dir)
@@ -943,8 +942,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 		var/list/edge_blockers = list()
 		packed |= nav_evaluate_edge(dir, dest, edge_blockers)
 		if(length(edge_blockers))
-			LAZYINITLIST(blockers)
-			blockers["[dir]"] = edge_blockers
+			blockers ||= alist()
+			blockers[dir] = edge_blockers
 
 	// Raw vertical edges are intentionally available only to flying movers. Their
 	// destination remains at the same x/y on the adjacent mapped layer.

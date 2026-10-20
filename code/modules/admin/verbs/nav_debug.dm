@@ -34,7 +34,7 @@ ADMIN_VERB(navmap_inspect_turf, R_DEBUG, "Navmap: Inspect Turf", "Prints the bak
 		var/ground = (here.nav_pass & NAV_GROUND(dir)) ? "Pass" : "Blocked"
 		var/flight = (here.nav_pass & NAV_FLIGHT(dir)) ? "Pass" : "Blocked"
 		var/conditional = (here.nav_pass & NAV_COND(dir)) ? "Yes" : "No"
-		var/entries = here.nav_blockers?["[dir]"]
+		var/entries = here.nav_blockers?[dir]
 		lines += "  [direction_name]: Ground: [ground], Flying: [flight], Conditional: [conditional][length(entries) ? " (blockers: [json_encode(entries)])" : ""]"
 	to_chat(user, span_notice(jointext(lines, "\n")))
 
