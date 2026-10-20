@@ -174,7 +174,7 @@
 	final_foodtypes &= ~food_recipe.removed_foodtypes
 	if(crafting_complexity >= FOOD_COMPLEXITY_4)
 		for(var/mob/living/carbon/human/subject in oviewers(5, crafter.loc))
-			if(IS_UNCONSCIOUS(subject) || subject.is_blind())
+			if(subject.is_blind() || subject == crafter)
 				continue
 			subject.emote("drool")
 			subject.add_mood_event("saw good food", /datum/mood_event/hungry)
