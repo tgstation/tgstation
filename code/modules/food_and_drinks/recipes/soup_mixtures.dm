@@ -2472,4 +2472,4 @@
 /datum/chemical_reaction/food/soup/rich_stock/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
 	. = ..()
 	holder.add_reagent(/datum/reagent/consumable/nutriment/vitamin, stock_boost)
-	holder.add_reagent(src, stock_boost)
+	holder.add_reagent(/datum/reagent/consumable/nutriment/soup/rich_stock, stock_boost)
