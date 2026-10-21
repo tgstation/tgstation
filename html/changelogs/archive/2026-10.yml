@@ -467,3 +467,6 @@
   - rscadd: Headslugs and alien larvae can doorcrawl.
   TealSeer:
   - bugfix: fixed wizard's heart eater perk not actually increasing damage resistance
+2026-10-21:
+  SmArtKar:
+  - bugfix: Ceruleans no longer flop in zero-g
