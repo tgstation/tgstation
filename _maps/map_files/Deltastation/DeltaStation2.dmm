@@ -49419,12 +49419,12 @@
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
 "lDY" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
 /obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/fore)
+/turf/open/floor/iron/dark,
+/area/station/security/holding_cell)
 "lEe" = (
 /obj/effect/turf_decal/bot/right,
 /obj/machinery/firealarm/directional/west,
@@ -63738,6 +63738,11 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
+"pss" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
 "psF" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron,
@@ -78628,13 +78633,6 @@
 	dir = 1
 	},
 /area/station/science/research)
-"sZM" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
-/obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/security/holding_cell)
 "sZT" = (
 /obj/structure/table/wood,
 /obj/item/paper_bin,
@@ -83625,9 +83623,12 @@
 /turf/open/floor/plating,
 /area/station/service/library)
 "uoz" = (
-/obj/structure/sign/warning/secure_area/directional/east,
-/turf/open/space/basic,
-/area/space)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/fore)
 "uoI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -92569,11 +92570,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/security/checkpoint/medical/medsci)
-"wDL" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood,
-/area/station/service/lawoffice)
 "wDO" = (
 /obj/machinery/modular_computer/preset/id{
 	dir = 1
@@ -116549,7 +116545,7 @@ fqm
 fqm
 nCi
 nCi
-uoz
+aaa
 aaa
 qYo
 aaa
@@ -116807,7 +116803,7 @@ gXI
 lOC
 nCi
 nCi
-qYo
+hrs
 uHd
 aaa
 aaa
@@ -145284,7 +145280,7 @@ xYl
 aaa
 qYo
 tpZ
-lDY
+uoz
 lSz
 lSz
 lSz
@@ -145541,7 +145537,7 @@ tpZ
 tpZ
 tpZ
 tpZ
-lDY
+uoz
 lSz
 kJb
 qud
@@ -145810,7 +145806,7 @@ rTO
 ljd
 rEf
 uXK
-wDL
+pss
 lMk
 fSg
 tJt
@@ -146052,7 +146048,7 @@ qUq
 mwM
 tpZ
 iNe
-lDY
+uoz
 acP
 acP
 acP
@@ -149655,7 +149651,7 @@ wcS
 vHq
 oiH
 aaT
-sZM
+lDY
 dmO
 fJq
 ixG
