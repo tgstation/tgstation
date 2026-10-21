@@ -139,7 +139,7 @@
 	///How many usable hands does this mob currently have. Should only be changed through set_usable_hands()
 	var/usable_hands = 2
 
-	var/list/pipes_shown = list()
+	var/list/pipes_shown
 	var/last_played_vent = 0
 	/// The last direction we moved in a vent. Used to make holding two directions feel nice
 	var/last_vent_dir = 0
