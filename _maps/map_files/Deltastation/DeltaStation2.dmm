@@ -18121,6 +18121,11 @@
 /obj/item/flashlight/lamp/green,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
+"dFr" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
 "dFw" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -49419,12 +49424,12 @@
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
 "lDY" = (
-/obj/effect/turf_decal/tile/red{
-	dir = 4
-	},
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /obj/structure/cable,
-/turf/open/floor/iron/dark,
-/area/station/security/holding_cell)
+/obj/effect/decal/cleanable/dirt,
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/fore)
 "lEe" = (
 /obj/effect/turf_decal/bot/right,
 /obj/machinery/firealarm/directional/west,
@@ -55666,13 +55671,12 @@
 /turf/open/floor/iron,
 /area/station/commons/fitness/recreation)
 "nkO" = (
+/obj/effect/turf_decal/tile/red{
+	dir = 4
+	},
 /obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/light/floor,
 /turf/open/floor/iron/dark,
-/area/station/command/vault)
+/area/station/security/holding_cell)
 "nkU" = (
 /obj/effect/turf_decal/tile/blue/half/contrasted,
 /turf/open/floor/iron/dark,
@@ -63738,11 +63742,6 @@
 /obj/effect/turf_decal/tile/neutral/fourcorners,
 /turf/open/floor/iron,
 /area/station/cargo/sorting)
-"pss" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood,
-/area/station/service/lawoffice)
 "psF" = (
 /obj/effect/turf_decal/tile/red/half/contrasted,
 /turf/open/floor/iron,
@@ -83623,12 +83622,13 @@
 /turf/open/floor/plating,
 /area/station/service/library)
 "uoz" = (
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/fore)
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
+/area/station/command/vault)
 "uoI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -143218,7 +143218,7 @@ aaa
 aaa
 aaa
 teY
-nkO
+uoz
 teY
 aaa
 qYo
@@ -145280,7 +145280,7 @@ xYl
 aaa
 qYo
 tpZ
-uoz
+lDY
 lSz
 lSz
 lSz
@@ -145537,7 +145537,7 @@ tpZ
 tpZ
 tpZ
 tpZ
-uoz
+lDY
 lSz
 kJb
 qud
@@ -145806,7 +145806,7 @@ rTO
 ljd
 rEf
 uXK
-pss
+dFr
 lMk
 fSg
 tJt
@@ -146048,7 +146048,7 @@ qUq
 mwM
 tpZ
 iNe
-uoz
+lDY
 acP
 acP
 acP
@@ -149651,7 +149651,7 @@ wcS
 vHq
 oiH
 aaT
-lDY
+nkO
 dmO
 fJq
 ixG
