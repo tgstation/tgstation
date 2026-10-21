@@ -133,8 +133,6 @@
 #define BB_BASIC_MOB_ESCAPE_TARGET "BB_basic_mob_escape_target"
 ///Blackboard key for a whitelist typecache of "things we can target while trying to move"
 #define BB_OBSTACLE_TARGETING_WHITELIST "BB_targeting_whitelist"
-///Blackboard key for the user's projectile type
-#define BB_PROJECTILE_TYPE "BB_projectile_type"
 /// Key for the minimum status at which we want to target mobs (does not need to be specified if STABLE)
 #define BB_TARGET_MINIMUM_STAT "BB_target_minimum_stat"
 /// If set, unconscious mobs will be treated as hard crit for the purposes of targeting and attacking. (So you can have a mob fooled by someone sleeping)
@@ -156,6 +154,8 @@
 
 /// When shooting enemies, what method do I use to determine if I can shoot them right now?
 #define BB_RANGED_CAN_SHOOT_METHOD "BB_ranged_can_shoot_method"
+/// Always try to shoot
+#define CAN_SHOOT_METHOD_ALWAYSSHOOT "can_shoot_method_alwaysshoot"
 /// Use can_see to determine if enemy is currently shootable
 #define CAN_SHOOT_METHOD_CANSEE "can_shoot_method_cansee"
 /// Use los_check to determine if enemy is currently shootable

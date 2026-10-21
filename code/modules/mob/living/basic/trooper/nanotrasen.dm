@@ -39,9 +39,8 @@
 	if (ranged_cooldown <= 1 SECONDS)
 		AddComponent(/datum/component/ranged_mob_full_auto)
 	ai_controller.set_blackboard_key(BB_RANGED_CAN_SHOOT_METHOD, CAN_SHOOT_METHOD_LOSCHECK)
-	if(istype(initial(casingtype.projectile_type), /obj/projectile))
-		var/obj/projectile/myproj = initial(casingtype.projectile_type)
-		ai_controller.set_blackboard_key(BB_RANGED_PROJECTILE_MOVE_FLAGS, initial(myproj.pass_flags))
+	var/obj/projectile/myproj = initial(casingtype.projectile_type)
+	ai_controller.set_blackboard_key(BB_RANGED_PROJECTILE_MOVE_FLAGS, initial(myproj.pass_flags))
 
 /mob/living/basic/trooper/nanotrasen/ranged/smg
 	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged/burst
