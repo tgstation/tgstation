@@ -470,3 +470,8 @@
 2026-10-21:
   SmArtKar:
   - bugfix: Ceruleans no longer flop in zero-g
+  vinylspiders:
+  - bugfix: fixed mood sometimes sticking to the room you just fell or got teleported
+      out of.
+  - admin: jumping somewhere in your own body, or with Jump To Ghost, no longer leaves
+      your mood stuck on the area you jumped out of.
