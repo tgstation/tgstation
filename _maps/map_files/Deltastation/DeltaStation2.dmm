@@ -18121,11 +18121,6 @@
 /obj/item/flashlight/lamp/green,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/captain)
-"dFr" = (
-/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
-/turf/open/floor/wood,
-/area/station/service/lawoffice)
 "dFw" = (
 /obj/structure/disposalpipe/segment{
 	dir = 4
@@ -49424,12 +49419,13 @@
 /turf/open/floor/iron,
 /area/station/security/prison/safe)
 "lDY" = (
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/structure/cable,
-/obj/effect/decal/cleanable/dirt,
-/turf/open/floor/plating,
-/area/station/maintenance/starboard/fore)
+/obj/effect/turf_decal/tile/neutral/fourcorners,
+/obj/machinery/light/floor,
+/turf/open/floor/iron/dark,
+/area/station/command/vault)
 "lEe" = (
 /obj/effect/turf_decal/bot/right,
 /obj/machinery/firealarm/directional/west,
@@ -68586,9 +68582,12 @@
 /turf/open/floor/iron,
 /area/station/engineering/main)
 "qyX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
+/obj/structure/cable,
 /obj/effect/decal/cleanable/dirt,
-/turf/closed/wall,
-/area/station/cargo/miningoffice)
+/turf/open/floor/plating,
+/area/station/maintenance/starboard/fore)
 "qze" = (
 /obj/machinery/door/poddoor/preopen{
 	id = "brigprison";
@@ -83622,13 +83621,10 @@
 /turf/open/floor/plating,
 /area/station/service/library)
 "uoz" = (
-/obj/structure/cable,
-/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
-/obj/effect/turf_decal/tile/neutral/fourcorners,
-/obj/machinery/light/floor,
-/turf/open/floor/iron/dark,
-/area/station/command/vault)
+/obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
+/turf/open/floor/wood,
+/area/station/service/lawoffice)
 "uoI" = (
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4{
 	dir = 1
@@ -143218,7 +143214,7 @@ aaa
 aaa
 aaa
 teY
-uoz
+lDY
 teY
 aaa
 qYo
@@ -144498,7 +144494,7 @@ pBN
 vsR
 lyx
 rPi
-qyX
+ige
 aaa
 lhY
 qea
@@ -145280,7 +145276,7 @@ xYl
 aaa
 qYo
 tpZ
-lDY
+qyX
 lSz
 lSz
 lSz
@@ -145537,7 +145533,7 @@ tpZ
 tpZ
 tpZ
 tpZ
-lDY
+qyX
 lSz
 kJb
 qud
@@ -145806,7 +145802,7 @@ rTO
 ljd
 rEf
 uXK
-dFr
+uoz
 lMk
 fSg
 tJt
@@ -146048,7 +146044,7 @@ qUq
 mwM
 tpZ
 iNe
-lDY
+qyX
 acP
 acP
 acP
