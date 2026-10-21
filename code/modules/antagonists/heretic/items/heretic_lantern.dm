@@ -40,6 +40,17 @@
 	AddElement(/datum/element/update_icon_updates_onmob)
 	START_PROCESSING(SSobj, src)
 
+/obj/item/flashlight/lantern/heretic/examine(mob/user)
+	. = ..()
+	if(!IS_HERETIC(user) && !isobserver(user))
+		return
+	if(!COOLDOWN_FINISHED(src, unleash_cooldown))
+		. += span_notice("It will be able to unleash another flash in [span_bold(DisplayTimeText(COOLDOWN_TIMELEFT(src, unleash_cooldown)))].")
+	else if(stored_stacks >= LANTERN_MAX_STACKS)
+		. += span_notice("It has enough fire stored within to unleash a flash!")
+	else
+		. += span_notice("It has not stored enough fire to unlesh a flash yet.")
+
 /obj/item/flashlight/lantern/heretic/init_slapcrafting()
 	return
 
@@ -48,14 +59,12 @@
 	if(isnull(.))
 		return
 	if(new_value)
-		add_filter("lantern_pulse", 1, outline_filter(color = "#0b8000", size = 1))
 		update_weight_class(WEIGHT_CLASS_BULKY)
 		var/atom/message_loc = isturf(loc) ? src : loc
 		message_loc.visible_message(
 			span_notice("[isturf(loc) ? src : "[loc]'s [src]"] flickers to life, casting eerie shadows around it.")
 		)
 	else
-		remove_filter("lantern_pulse")
 		update_weight_class(WEIGHT_CLASS_NORMAL)
 		var/atom/message_loc = isturf(loc) ? src : loc
 		message_loc.visible_message(
@@ -66,6 +75,15 @@
 	STOP_PROCESSING(SSobj, src)
 	QDEL_NULL(middleman)
 	return ..()
+
+/obj/item/flashlight/lantern/heretic/equipped(mob/user, slot, initial)
+	. = ..()
+	if(slot & ITEM_SLOT_HANDS)
+		COOLDOWN_START(src, stack_transfer, 5 SECONDS)
+
+/obj/item/flashlight/lantern/heretic/dropped(mob/user, silent = FALSE)
+	. = ..()
+	set_stacks(0)
 
 /obj/item/flashlight/lantern/heretic/proc/light_updated(datum/source)
 	SIGNAL_HANDLER
@@ -112,13 +130,13 @@
 		return
 	var/mob/living/holder = astype(loc, /mob/living)
 	if(holder?.is_holding(src) && IS_HERETIC(holder) && holder.on_fire && holder.fire_stacks >= 1)
-		COOLDOWN_START(src, stack_decay, 10 SECONDS)
+		COOLDOWN_START(src, stack_decay, 5 SECONDS)
 		if(stored_stacks < LANTERN_MAX_STACKS && COOLDOWN_FINISHED(src, stack_transfer))
 			COOLDOWN_START(src, stack_transfer, 5 SECONDS)
 			holder.adjust_fire_stacks(-1)
 			set_stacks(stored_stacks + 1)
 	else if(stored_stacks && COOLDOWN_FINISHED(src, stack_decay))
-		COOLDOWN_START(src, stack_decay, 10 SECONDS)
+		COOLDOWN_START(src, stack_decay, 5 SECONDS)
 		set_stacks(stored_stacks - 1)
 
 	if(!stored_stacks)
@@ -133,15 +151,16 @@
 	if(!isliving(user) || !IS_HERETIC(user) || !user.is_holding(src))
 		return
 	if(!COOLDOWN_FINISHED(src, unleash_cooldown))
-		user.balloon_alert(user, "still recovering!")
+		balloon_alert(user, "still recovering, wait [DisplayTimeText(src, unleash_cooldown)]!")
 		return
 	if(stored_stacks < LANTERN_MAX_STACKS)
-		user.balloon_alert(user, "not fully charged")
+		balloon_alert(user, "not fully charged")
 		return
 
 	set_stacks(0)
 	COOLDOWN_START(src, unleash_cooldown, 2 MINUTES)
-	playsound(user, 'sound/items/weapons/flash.ogg', 100, TRUE)
+	balloon_alert(user, "2 minutes until next unleash!")
+	playsound(user, 'sound/effects/magic/fireball.ogg', 100, TRUE)
 	user.visible_message(
 		span_danger("[user] thrusts [src] forward, and it erupts in a blinding wave of fire-lit light!"),
 		span_notice("You unleash the lantern's stored flame!"),
@@ -281,7 +300,10 @@
 		carbon_seer.gain_trauma(new /datum/brain_trauma/hypnosis(pick_list(HERETIC_INFLUENCE_FILE, "hypnosis")), TRAUMA_RESILIENCE_BASIC)
 
 /datum/action/item_action/unleash_lantern
-	name = "Unleash Flash"
+	name = "Conflagratio Mentis"
+	desc = "Siphons your fire stacks into the lantern. Each stack absorbed strengthens the blinding effect. \
+		Unleash it to release a blast that blinds heathens and makes them hallucinate that everything around them is ablaze. \
+		If the blast strikes at least one living creature, Path Recharge is activated."
 
 /obj/effect/temp_visual/circle_wave/heretic_lantern
 	color = "#ff3333"

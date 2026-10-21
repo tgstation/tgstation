@@ -22,7 +22,8 @@
 	return ..()
 
 /datum/hallucination/everything_on_fire/Destroy()
-	if(!QDELETED(hallucinator) && hallucinator.client)
+	if(!QDELETED(hallucinator))
+		UnregisterSignal(hallucinator, COMSIG_MOB_LOGIN)
 		hallucinator.client?.images -= item_images
 		hallucinator.client?.images -= assoc_to_values(mob_images)
 	for(var/mob/living/burning as anything in mob_images)
@@ -74,9 +75,16 @@
 
 	hallucinator.client?.images += item_images
 	hallucinator.client?.images += assoc_to_values(mob_images)
+	RegisterSignal(hallucinator, COMSIG_MOB_LOGIN, PROC_REF(on_login))
 	to_chat(hallucinator, span_userdanger("The whole world bursts into flame around you!"))
 	QDEL_IN(src, duration)
 	return TRUE
+
+/datum/hallucination/everything_on_fire/proc/on_login(mob/living/source)
+	SIGNAL_HANDLER
+
+	source.client.images += item_images
+	source.client.images += assoc_to_values(mob_images)
 
 /datum/hallucination/everything_on_fire/proc/on_mob_delete(mob/living/source)
 	SIGNAL_HANDLER
