@@ -2,7 +2,7 @@
 #define LANTERN_PULSE_BONUS_PER_STACK 0.25
 
 /obj/item/flashlight/lantern/heretic
-	name = "burning lantern"
+	name = "Lumen Mendax"
 	desc = "A strange lantern that hurts your eyes to look at, even when it's quelled. It drinks flame from the hand that holds it."
 	icon = 'icons/obj/antags/eldritch_lantern.dmi'
 	base_icon_state = "lantern"
