@@ -76,15 +76,17 @@ export enum NodeFlag {
 export type TechWebData = {
   /** Not just catalogue, as NT Shopping's static data can still be around for a moment after an app switch */
   techweb_catalogue?: CatalogueRef;
-  /** Experiment descriptions by id */
+  /** Experiment descriptions by id, with the type and text of each stage of their progress */
   experiment_metadata?: Record<
     string,
-    Omit<ExperimentData, 'progress' | 'completed'>
+    Omit<ExperimentData, 'progress' | 'completed'> & {
+      stages: [string, string][];
+    }
   >;
   /** Each slot's design id, null when empty */
   d_disk: (number | null)[] | null;
-  /** Id, progress, completed triples */
-  experiments: (number | ExperimentData['progress'] | BooleanLike)[];
+  /** Id, stage values, completed triples */
+  experiments: (number | number[][] | BooleanLike)[];
   locked: BooleanLike;
   /** Id, tier, NodeFlag triples */
   nodes: number[];

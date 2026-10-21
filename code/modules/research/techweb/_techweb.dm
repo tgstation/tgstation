@@ -44,6 +44,10 @@
 	var/list/completed_experiments = list()
 	/// Gets bumped when an admin edits one of our experiments, so the research UIs know to resend descriptions
 	var/experiment_edits = 0
+	/// The type and text of each stage of the experiments the research UIs show, by experiment type, as their live data last saw them
+	var/list/ui_stage_texts
+	/// Gets bumped when ui_stage_texts changes, as the research UIs send stage texts as static data
+	var/ui_stage_texts_version = 0
 	/// Assoc list of all experiment datums that have been skipped, to tech point reward for completing them -
 	/// That is, upon researching a node without completing its associated discounts, their experiments go here.
 	/// Completing these experiments will have a refund.
@@ -547,7 +551,7 @@
 /datum/techweb/proc/get_ui_static_key()
 	var/datum/asset/json/techweb_catalogue/catalogue = get_asset_datum(/datum/asset/json/techweb_catalogue)
 	// Experiments only ever get added, and completing one just moves it between lists, so the count is all we need
-	return "[catalogue.version];[REF(src)];[experiment_edits];[length(available_experiments) + length(completed_experiments)]"
+	return "[catalogue.version];[REF(src)];[experiment_edits];[length(available_experiments) + length(completed_experiments)];[ui_stage_texts_version]"
 
 /// Returns the descriptions of the experiments the research UIs show, by catalogue id
 /datum/techweb/proc/get_ui_static_data(datum/asset/json/techweb_catalogue/catalogue)
@@ -555,19 +559,39 @@
 	for(var/datum/experiment/experiment as anything in available_experiments)
 		var/id = catalogue.ids[experiment.type]
 		if(id)
-			descriptions["[id]"] = experiment.to_ui_static_data()
+			descriptions["[id]"] = get_ui_experiment_description(experiment)
 	for(var/experiment_type, completed_experiment in completed_experiments)
 		var/id = catalogue.ids[experiment_type]
 		if(id)
-			var/datum/experiment/experiment = completed_experiment
-			descriptions["[id]"] = experiment.to_ui_static_data()
+			descriptions["[id]"] = get_ui_experiment_description(completed_experiment)
 	return descriptions
+
+/// Returns an experiment's description for the research UIs, with the type and text of each stage of its progress
+/datum/techweb/proc/get_ui_experiment_description(datum/experiment/experiment)
+	var/list/stages = list()
+	for(var/list/stage as anything in experiment.check_progress())
+		stages += list(list(stage[1], stage[2]))
+	var/list/description = experiment.to_ui_static_data()
+	description["stages"] = stages
+	return description
+
+/// Returns the values of each stage of an experiment's progress, bumping ui_stage_texts_version if the stage types or texts changed
+/datum/techweb/proc/get_ui_stage_values(datum/experiment/experiment)
+	var/list/values = list()
+	var/list/texts = list()
+	for(var/list/stage as anything in experiment.check_progress())
+		texts.Add(stage[1], stage[2])
+		values += list(stage.Copy(3))
+	if(!(texts ~= ui_stage_texts?[experiment.type]))
+		LAZYSET(ui_stage_texts, experiment.type, texts)
+		ui_stage_texts_version++
+	return values
 
 /**
  * Returns the live data the research UIs show, with everything referenced by catalogue id.
  *
- * Nodes are id, tier and TECHWEB_UI_* flag triples, the queue is id and queuer pairs, and experiments are id, progress and completed triples.
- * Only experiments a node lists get an id, since those are the only ones the UIs show anyway.
+ * Nodes are id, tier and TECHWEB_UI_* flag triples, the queue is id and queuer pairs, and experiments are id, stage values and completed triples.
+ * Only experiments a node lists get an id, since those are the only ones the UIs show anyway. Stage types and texts are in the static data.
  *
  * Arguments:
  * * user - the mob looking at the UI
@@ -581,11 +605,14 @@
 		if(!id || hidden_nodes[node_path])
 			continue
 		var/datum/techweb_node/node = SSresearch.techweb_nodes[node_path]
-		var/list/price = node.get_price(src)
+		// Only discounts make a price differ from the costs, so we only copy the costs for nodes they can apply to
+		var/list/price = node.research_costs
+		if(LAZYLEN(node.discount_experiments) || (LAZYLEN(node.discount_boosts) && boosted_nodes[node_path]))
+			price = node.get_price(src)
 		var/row_flags = NONE
-		if(!values_sum(price))
+		if(!price || !values_sum(price))
 			row_flags |= TECHWEB_UI_FREE
-		if(have_experiments_for_node(node))
+		if(!length(node.required_experiments) || have_experiments_for_node(node)) // most nodes need no experiments, so we skip the call for those
 			row_flags |= TECHWEB_UI_EXPERIMENTS_DONE
 			if(can_afford(price))
 				row_flags |= TECHWEB_UI_CAN_UNLOCK
@@ -606,12 +633,12 @@
 	for(var/datum/experiment/experiment as anything in available_experiments)
 		var/id = ids[experiment.type]
 		if(id)
-			experiments += list(id, experiment.check_progress(), experiment.completed)
+			experiments += list(id, get_ui_stage_values(experiment), experiment.completed)
 	for(var/experiment_type, completed_experiment in completed_experiments)
 		var/id = ids[experiment_type]
 		if(id)
 			var/datum/experiment/experiment = completed_experiment
-			experiments += list(id, experiment.check_progress(), experiment.completed)
+			experiments += list(id, get_ui_stage_values(experiment), experiment.completed)
 
 	return list(
 		"nodes" = nodes,

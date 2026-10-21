@@ -43,12 +43,13 @@
 
 // heavy data from this proc should be moved to static data when possible
 /datum/computer_file/program/science/ui_data(mob/user)
-	update_static_data_if_outdated(user)
 	var/list/data = list()
 	data["stored_research"] = !!stored_research
 	if(!stored_research) //lack of a research node is all we care about.
+		update_static_data_if_outdated(user)
 		return data
 	data += stored_research.get_ui_data(user, get_asset_datum(/datum/asset/json/techweb_catalogue))
+	update_static_data_if_outdated(user) // after get_ui_data(), which notices the experiment stage texts in our static data changing
 	data += list(
 		"sec_protocols" = !(computer.obj_flags & EMAGGED),
 		"t_disk" = null, //Not doing disk operations on the app, use the console for that.

@@ -105,6 +105,8 @@ export type ResearchData = ReturnType<typeof remapCatalogue> & {
   experiments: Record<string, ExperimentData>;
   locked: BooleanLike;
   nodes: TechwebNode[];
+  /** Each node's tier by path, for looking prerequisites up */
+  node_tiers: Record<string, number>;
   points_last_tick: Record<string, number>;
   points: Record<string, number>;
   queue_nodes: Record<string, string>[];
@@ -121,18 +123,21 @@ export function joinResearch(
   const { node_cache, design_cache, remapId } = catalogue;
 
   const nodes: TechwebNode[] = [];
+  const node_tiers: Record<string, number> = {};
   for (let offset = 0; offset < data.nodes.length; offset += 3) {
     const path = remapId(data.nodes[offset]);
     if (!node_cache[path]) {
       continue;
     }
     const flags = data.nodes[offset + 2];
+    const tier = data.nodes[offset + 1];
+    node_tiers[path] = tier;
     nodes.push({
       path,
       is_free: flags & NodeFlag.Free ? 1 : 0,
       can_unlock: flags & NodeFlag.CanUnlock ? 1 : 0,
       have_experiments_done: flags & NodeFlag.ExperimentsDone ? 1 : 0,
-      tier: data.nodes[offset + 1],
+      tier,
       enqueued_by_user: flags & NodeFlag.QueuedByViewer ? 1 : 0,
       discount_boosted: flags & NodeFlag.Boosted ? 1 : 0,
     });
@@ -154,11 +159,17 @@ export function joinResearch(
   const experiments: Record<string, ExperimentData> = {};
   for (let offset = 0; offset < data.experiments.length; offset += 3) {
     const id = data.experiments[offset] as number;
-    const metadata = data.experiment_metadata?.[id];
-    if (metadata) {
+    const values = data.experiments[offset + 1] as number[][];
+    const description = data.experiment_metadata?.[id];
+    // The stage texts come with our static data, so they can only fail to line up while that is on its way
+    if (description?.stages.length === values.length) {
+      const { stages, ...metadata } = description;
       experiments[remapId(id)] = {
         ...metadata,
-        progress: data.experiments[offset + 1] as ExperimentData['progress'],
+        progress: stages.map((stage, index) => [
+          ...stage,
+          ...values[index],
+        ]) as ExperimentData['progress'],
         completed: data.experiments[offset + 2] as BooleanLike,
       };
     }
@@ -167,6 +178,7 @@ export function joinResearch(
   return {
     ...catalogue,
     nodes,
+    node_tiers,
     queue_nodes: queue_nodes as Record<string, string>[],
     experiments,
     t_disk: data.t_disk && {

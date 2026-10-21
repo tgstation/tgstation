@@ -205,17 +205,18 @@ Nothing else in the console has ID requirements.
 
 // heavy data from this proc should be moved to static data when possible
 /obj/machinery/computer/rdconsole/ui_data(mob/user)
-	update_static_data_if_outdated(user)
 	var/obj/item/circuitboard/computer/rdconsole/board = circuit
 	var/list/data = list(
 		"stored_research" = !!stored_research,
 		"locked" = board.locked,
 	)
 	if(!stored_research) //lack of a research node is all we care about.
+		update_static_data_if_outdated(user)
 		return data
 
 	var/datum/asset/json/techweb_catalogue/catalogue = get_asset_datum(/datum/asset/json/techweb_catalogue)
 	data += stored_research.get_ui_data(user, catalogue)
+	update_static_data_if_outdated(user) // after get_ui_data(), which notices the experiment stage texts in our static data changing
 	data["sec_protocols"] = !(obj_flags & EMAGGED)
 	data["t_disk"] = null
 	data["d_disk"] = null
