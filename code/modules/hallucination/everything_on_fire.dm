@@ -38,10 +38,6 @@
 	return ..()
 
 /datum/hallucination/everything_on_fire/start()
-	if(!hallucinator.client)
-		fake_source = null
-		return FALSE
-
 	var/list/seen = view(hallucinator)
 	if(!item_images)
 		item_images = list()

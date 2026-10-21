@@ -151,7 +151,7 @@
 	if(!isliving(user) || !IS_HERETIC(user) || !user.is_holding(src))
 		return
 	if(!COOLDOWN_FINISHED(src, unleash_cooldown))
-		balloon_alert(user, "still recovering, wait [DisplayTimeText(src, unleash_cooldown)]!")
+		balloon_alert(user, "still recovering, wait [DisplayTimeText(COOLDOWN_TIMELEFT(src, unleash_cooldown))]!")
 		return
 	if(stored_stacks < LANTERN_MAX_STACKS)
 		balloon_alert(user, "not fully charged")
@@ -159,6 +159,7 @@
 
 	set_stacks(0)
 	COOLDOWN_START(src, unleash_cooldown, 2 MINUTES)
+	addtimer(CALLBACK(src, PROC_REF(update_item_action_buttons)), 2 MINUTES, TIMER_DELETE_ME)
 	balloon_alert(user, "2 minutes until next unleash!")
 	playsound(user, 'sound/effects/magic/fireball.ogg', 100, TRUE)
 	user.visible_message(
@@ -304,6 +305,23 @@
 	desc = "Siphons your fire stacks into the lantern. Each stack absorbed strengthens the blinding effect. \
 		Unleash it to release a blast that blinds heathens and makes them hallucinate that everything around them is ablaze. \
 		If the blast strikes at least one living creature, Path Recharge is activated."
+
+/datum/action/item_action/unleash_lantern/IsAvailable(feedback = FALSE)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/obj/item/flashlight/lantern/heretic/lantern = astype(target, /obj/item/flashlight/lantern/heretic)
+	if(!lantern)
+		return FALSE
+	if(!COOLDOWN_FINISHED(lantern, unleash_cooldown))
+		if(feedback)
+			owner.balloon_alert(owner, "still recovering, wait [DisplayTimeText(COOLDOWN_TIMELEFT(lantern, unleash_cooldown))]!")
+		return FALSE
+	if(lantern.stored_stacks < LANTERN_MAX_STACKS)
+		if(feedback)
+			owner.balloon_alert(owner, "not fully charged")
+		return FALSE
+	return TRUE
 
 /obj/effect/temp_visual/circle_wave/heretic_lantern
 	color = "#ff3333"
