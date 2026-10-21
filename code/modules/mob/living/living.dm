@@ -2335,7 +2335,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  * * amount (int) The amount of change from the base body temperature
  */
 /mob/living/proc/add_body_temperature_change(key_name, amount)
-	body_temp_changes["[key_name]"] = amount
+	LAZYSET(body_temp_changes, "[key_name]", amount)
 
 /**
  * remove_body_temperature_change Removes the modifications to the body temperature
@@ -2346,7 +2346,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  * * key_name (str) The unique key for this change that will be removed
  */
 /mob/living/proc/remove_body_temperature_change(key_name)
-	body_temp_changes -= key_name
+	LAZYREMOVE(body_temp_changes, key_name)
 
 /**
  * get_body_temp_normal_change Returns the aggregate change to body temperature
@@ -2354,10 +2354,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  * This aggregates all the changes in the body_temp_changes list and returns the result
  */
 /mob/living/proc/get_body_temp_normal_change()
+	if(!body_temp_changes)
+		return 0
 	var/total_change = 0
-	if(body_temp_changes.len)
-		for(var/change in body_temp_changes)
-			total_change += body_temp_changes["[change]"]
+	for(var/change in body_temp_changes)
+		total_change += body_temp_changes["[change]"]
 	return total_change
 
 /**

@@ -188,7 +188,7 @@
 	var/list/alerts = list()
 	var/list/screens = list()
 	/// Assoc list of client_colour datum -> source it came from
-	var/list/client_colours = list()
+	var/list/client_colours
 	/// List of filter names used in the past client color update for cleanup
 	var/list/color_filter_store = list()
 	var/datum/hud/hud_type = /datum/hud
