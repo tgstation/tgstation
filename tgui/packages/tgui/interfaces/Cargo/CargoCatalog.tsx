@@ -32,7 +32,16 @@ type Props = {
 /** The cargo catalogue - when a new build comes in, the old one stays on screen until it's loaded */
 export function CargoCatalog(props: Props) {
   const { data } = useBackend<CargoData>();
-  const catalogue = useShownCatalogue(data.catalogue);
+  // NtOS can send the app's data before its static data the first time it's opened (while assets are still sending)
+  if (!data.catalogue) {
+    return <LoadingScreen />;
+  }
+
+  return <ShownCatalog {...props} catalogue={data.catalogue} />;
+}
+
+function ShownCatalog(props: Props & { catalogue: Catalogue }) {
+  const catalogue = useShownCatalogue(props.catalogue);
 
   return (
     <Suspense fallback={<LoadingScreen />}>

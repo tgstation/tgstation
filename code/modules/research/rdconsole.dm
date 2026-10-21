@@ -239,7 +239,7 @@ Nothing else in the console has ID requirements.
 		return list()
 	var/datum/asset/json/techweb_catalogue/catalogue = get_asset_datum(/datum/asset/json/techweb_catalogue)
 	return list(
-		"catalogue" = catalogue.get_window_data(user),
+		"techweb_catalogue" = catalogue.get_window_data(user),
 		"experiment_metadata" = stored_research.get_ui_static_data(catalogue),
 	)
 

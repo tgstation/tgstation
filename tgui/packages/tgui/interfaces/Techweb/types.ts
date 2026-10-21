@@ -74,7 +74,8 @@ export enum NodeFlag {
 
 /** The data we get sent, with nodes, designs and experiments all referenced by catalogue id */
 export type TechWebData = {
-  catalogue?: CatalogueRef;
+  /** Not just catalogue, as NT Shopping's static data can still be around for a moment after an app switch */
+  techweb_catalogue?: CatalogueRef;
   /** Experiment descriptions by id */
   experiment_metadata?: Record<
     string,

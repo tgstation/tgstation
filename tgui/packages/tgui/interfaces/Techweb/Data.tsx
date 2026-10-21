@@ -16,13 +16,13 @@ type Props = {
 /** Joins our data with the catalogue for the techweb. When a new build comes in, we keep the old one up until it's loaded */
 export function TechwebDataProvider(props: Props) {
   const { data } = useBackend<TechWebData>();
-  // Both of these come in with the first update after we get linked to a techweb
-  if (!data.catalogue || !data.nodes) {
+  // NtOS can send our data before our static data the first time the app's opened, so wait for both
+  if (!data.techweb_catalogue || !data.nodes) {
     return <LoadingScreen />;
   }
 
   return (
-    <TechwebCatalogue catalogue={data.catalogue}>
+    <TechwebCatalogue catalogue={data.techweb_catalogue}>
       {props.children}
     </TechwebCatalogue>
   );
