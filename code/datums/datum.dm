@@ -138,24 +138,19 @@
 				continue
 			qdel(timer)
 
-	#ifdef REFERENCE_TRACKING
-	#ifdef REFERENCE_TRACKING_DEBUG
+#if defined(REFERENCE_TRACKING) && defined(REFERENCE_TRACKING_DEBUG)
 	found_refs = null
-	#endif
-	#endif
+#endif
 
 	//BEGIN: ECS SHIT
-	var/list/dc = _datum_components
-	if(dc)
-		for(var/component_key in dc)
-			var/component_or_list = dc[component_key]
+	if(_datum_components)
+		for(var/component_key, component_or_list in _datum_components)
 			if(islist(component_or_list))
 				for(var/datum/component/component as anything in component_or_list)
-					qdel(component, FALSE)
+					qdel(component)
 			else
-				var/datum/component/C = component_or_list
-				qdel(C, FALSE)
-		dc.Cut()
+				qdel(component_or_list)
+		_datum_components = null
 
 	_clear_signal_refs()
 	//END: ECS SHIT
