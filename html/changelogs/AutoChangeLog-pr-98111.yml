@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "fixed mood sometimes sticking to the room you just fell or got teleported out of."
+  - admin: "jumping somewhere in your own body, or with Jump To Ghost, no longer leaves your mood stuck on the area you jumped out of."
