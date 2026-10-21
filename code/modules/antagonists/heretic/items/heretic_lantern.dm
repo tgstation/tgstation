@@ -1,5 +1,4 @@
 #define LANTERN_MAX_STACKS 5
-#define LANTERN_PULSE_BONUS_PER_STACK 0.25
 
 /obj/item/flashlight/lantern/heretic
 	name = "burning lantern"
@@ -328,4 +327,3 @@
 	amount_to_scale = 5
 
 #undef LANTERN_MAX_STACKS
-#undef LANTERN_PULSE_BONUS_PER_STACK
