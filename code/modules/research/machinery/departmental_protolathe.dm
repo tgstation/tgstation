@@ -8,40 +8,40 @@
 	name = "department protolathe (Engineering)"
 	allowed_department_flags = DEPARTMENT_BITFLAG_ENGINEERING
 	circuit = /obj/item/circuitboard/machine/protolathe/department/engineering
-	stripe_color = "#EFB341"
+	department_overlay = "eng"
 	payment_department = ACCOUNT_ENG
 
 /obj/machinery/rnd/production/protolathe/department/service
 	name = "department protolathe (Service)"
 	allowed_department_flags = DEPARTMENT_BITFLAG_SERVICE
 	circuit = /obj/item/circuitboard/machine/protolathe/department/service
-	stripe_color = "#83ca41"
+	department_overlay = "srv"
 	payment_department = ACCOUNT_SRV
 
 /obj/machinery/rnd/production/protolathe/department/medical
 	name = "department protolathe (Medical)"
 	allowed_department_flags = DEPARTMENT_BITFLAG_MEDICAL
 	circuit = /obj/item/circuitboard/machine/protolathe/department/medical
-	stripe_color = "#52B4E9"
+	department_overlay = "med"
 	payment_department = ACCOUNT_MED
 
 /obj/machinery/rnd/production/protolathe/department/cargo
 	name = "department protolathe (Cargo)"
 	allowed_department_flags = DEPARTMENT_BITFLAG_CARGO
 	circuit = /obj/item/circuitboard/machine/protolathe/department/cargo
-	stripe_color = "#956929"
+	department_overlay = "car"
 	payment_department = ACCOUNT_CAR
 
 /obj/machinery/rnd/production/protolathe/department/science
 	name = "department protolathe (Science)"
 	allowed_department_flags = DEPARTMENT_BITFLAG_SCIENCE
 	circuit = /obj/item/circuitboard/machine/protolathe/department/science
-	stripe_color = "#D381C9"
+	department_overlay = "sci"
 	payment_department = ACCOUNT_SCI
 
 /obj/machinery/rnd/production/protolathe/department/security
 	name = "department protolathe (Security)"
 	allowed_department_flags = DEPARTMENT_BITFLAG_SECURITY
 	circuit = /obj/item/circuitboard/machine/protolathe/department/security
-	stripe_color = "#DE3A3A"
+	department_overlay = "sec"
 	payment_department = ACCOUNT_SEC
