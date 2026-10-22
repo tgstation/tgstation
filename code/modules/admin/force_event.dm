@@ -26,18 +26,18 @@ ADMIN_VERB(force_event, R_FUN, "Trigger Event", "Forces an event to occur.", ADM
 	var/static/list/category_to_icons
 	if(!category_to_icons)
 		category_to_icons = list(
-			EVENT_CATEGORY_AI = "robot",
-			EVENT_CATEGORY_ANOMALIES = "cloud-bolt",
-			EVENT_CATEGORY_BUREAUCRATIC = "print",
-			EVENT_CATEGORY_ENGINEERING = "wrench",
-			EVENT_CATEGORY_ENTITIES = "ghost",
-			EVENT_CATEGORY_FRIENDLY = "face-smile",
-			EVENT_CATEGORY_HEALTH = "brain",
-			EVENT_CATEGORY_HOLIDAY = "calendar",
-			EVENT_CATEGORY_INVASION = "user-group",
-			EVENT_CATEGORY_JANITORIAL = "bath",
-			EVENT_CATEGORY_SPACE = "meteor",
-			EVENT_CATEGORY_WIZARD = "hat-wizard",
+			EVENT_CATEGORY_AI = FA_ICON_ROBOT,
+			EVENT_CATEGORY_ANOMALIES = FA_ICON_CLOUD_BOLT,
+			EVENT_CATEGORY_BUREAUCRATIC = FA_ICON_PRINT,
+			EVENT_CATEGORY_ENGINEERING = FA_ICON_WRENCH,
+			EVENT_CATEGORY_ENTITIES = FA_ICON_GHOST,
+			EVENT_CATEGORY_FRIENDLY = FA_ICON_FACE_SMILE,
+			EVENT_CATEGORY_HEALTH = FA_ICON_BRAIN,
+			EVENT_CATEGORY_HOLIDAY = FA_ICON_CALENDAR,
+			EVENT_CATEGORY_INVASION = FA_ICON_USER_GROUP,
+			EVENT_CATEGORY_JANITORIAL = FA_ICON_BATH,
+			EVENT_CATEGORY_SPACE = FA_ICON_METEOR,
+			EVENT_CATEGORY_WIZARD = FA_ICON_HAT_WIZARD,
 		)
 	var/list/data = list()
 
@@ -52,7 +52,7 @@ ADMIN_VERB(force_event, R_FUN, "Trigger Event", "Forces an event to occur.", ADM
 			categories_seen[event_control.category] = TRUE
 			UNTYPED_LIST_ADD(categories, list(
 				"name" = event_control.category,
-				"icon" = category_to_icons[event_control.category],
+				"icon" = category_to_icons[event_control.category] || FA_ICON_QUESTION,
 			))
 		//add event, with one value matching up the category
 		UNTYPED_LIST_ADD(events, list(
@@ -60,6 +60,7 @@ ADMIN_VERB(force_event, R_FUN, "Trigger Event", "Forces an event to occur.", ADM
 			"description" = event_control.description,
 			"type" = event_control.type,
 			"category" = event_control.category,
+			"disabled" = event_control.admin_disabled,
 			"has_customization" = !!length(event_control.admin_setup),
 		))
 	data["categories"] = categories
@@ -74,21 +75,30 @@ ADMIN_VERB(force_event, R_FUN, "Trigger Event", "Forces an event to occur.", ADM
 	switch(action)
 		if("forceevent")
 			var/announce_event = params["announce"]
-			var/string_path = params["type"]
-			if(!string_path)
-				return
-			var/event_to_run_type = text2path(string_path)
+			var/event_to_run_type = text2path(params["type"])
 			if(!event_to_run_type)
 				return
 			var/datum/round_event_control/event = locate(event_to_run_type) in SSevents.control
 			if(!event)
 				return
-			if(length(event.admin_setup))
-				for(var/datum/event_admin_setup/admin_setup_datum as anything in event.admin_setup)
-					if(admin_setup_datum.prompt_admins() == ADMIN_CANCEL_EVENT)
-						return
+			for(var/datum/event_admin_setup/admin_setup_datum as anything in event.admin_setup)
+				if(admin_setup_datum.prompt_admins() == ADMIN_CANCEL_EVENT)
+					return
 			var/always_announce_chance = 100
 			var/no_announce_chance = 0
 			event.run_event(announce_chance_override = announce_event ? always_announce_chance : no_announce_chance, admin_forced = TRUE)
 			message_admins("[key_name_admin(usr)] has triggered an event. ([event.name])")
 			log_admin("[key_name(usr)] has triggered an event. ([event.name])")
+
+		if("toggleevent")
+			var/event_to_run_type = text2path(params["type"])
+			if(!event_to_run_type)
+				return
+			var/datum/round_event_control/event = locate(event_to_run_type) in SSevents.control
+			if(!event)
+				return
+
+			event.admin_disabled = !event.admin_disabled
+			message_admins("[key_name_admin(usr)] has [event.admin_disabled ? "blocked" : "unblocked"] an event from triggering randomly. ([event.name])")
+			log_admin("[key_name(usr)] has [event.admin_disabled ? "blocked" : "unblocked"] an event from triggering randomly. ([event.name])")
+			update_static_data(usr)

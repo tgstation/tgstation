@@ -446,8 +446,8 @@
 
 	// Basic mobs
 	var/mob/living/basic/mouse/gray/gusgus = allocate(/mob/living/basic/mouse/gray)
-	// give gusgus a damage_coeff of 1 for this test
-	gusgus.damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
+	// give gusgus default physiology for this test
+	gusgus.physiology = null //defaults to 1 in each case
 	// tank mouse
 	gusgus.maxHealth = 200
 
@@ -456,8 +456,8 @@
 
 	// Simplemobs
 	var/mob/living/simple_animal/abstract_thing = allocate(/mob/living/simple_animal)
-	// give the mob a damage_coeff of 1 for this test
-	abstract_thing.damage_coeff = list(BRUTE = 1, BURN = 1, TOX = 1, STAMINA = 1, OXY = 1)
+	// give the mob default physiology for this test
+	abstract_thing.physiology = null //defaults to 1 in each case
 	abstract_thing.maxHealth = 200
 
 	test_sanity_simple(abstract_thing)

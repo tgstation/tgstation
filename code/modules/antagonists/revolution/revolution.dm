@@ -45,7 +45,7 @@
 /datum/antagonist/rev/on_gain()
 	. = ..()
 	equip_rev()
-	owner.current.log_message("has been converted to the revolution!", LOG_ATTACK, color="red")
+	owner.current.log_message("has been converted to the revolution!", LOG_ATTACK, color = COLOR_CULT_RED)
 
 /datum/antagonist/rev/create_team(datum/team/revolution/new_team)
 	if(!new_team)
@@ -94,6 +94,27 @@
 	.["code_phrases"] = rev_team.head_chose_phrase_raw
 	.["code_responses"] = rev_team.head_code_responses_raw
 	.["lone_wolf"] = !roundstart || length(rev_team.get_head_revolutionaries()) == 1
+	.["conversion_objective_max_length"] = MAX_CHARTER_LEN // it's poetic, not lazy reuse, I swear
+	.["conversion_objective"] = html_decode(conversion_objective)
+
+/datum/antagonist/rev/head/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	switch(action)
+		if("set_conversion_objective")
+			if(!params["conversion_objective"])
+				conversion_objective = ""
+				return
+
+			var/new_objective = trim(sanitize(params["conversion_objective"]), MAX_CHARTER_LEN)
+			if(!new_objective)
+				tgui_alert(usr, "Your objective is invalid. Please try again.")
+				return
+			if(is_ic_filtered(new_objective))
+				tgui_alert(usr, "Your objective contains IC filtered words. Please remove them and try again.")
+				return
+
+			conversion_objective = new_objective
+			owner.current.log_message("set their conversion guideline to: [conversion_objective]", color = COLOR_CULT_RED)
 
 /datum/antagonist/rev/head/admin_add(datum/mind/new_owner, mob/admin)
 	give_flash = TRUE
@@ -154,6 +175,9 @@
 
 	preview_outfit = /datum/outfit/revolutionary
 	hardcore_random_bonus = TRUE
+
+	/// Headrev-set objective sent to any player they convert
+	var/conversion_objective = ""
 
 	var/remove_clumsy = FALSE
 	var/give_flash = FALSE
@@ -283,8 +307,34 @@
 		rev_mind.current.Stun(10 SECONDS)
 
 	rev_mind.add_memory(/datum/memory/recruited_by_headrev, protagonist = rev_mind.current, antagonist = owner.current)
-	rev_mind.add_antag_datum(/datum/antagonist/rev,rev_team)
+	rev_mind.add_antag_datum(/datum/antagonist/rev, rev_team)
 	return TRUE
+
+/datum/antagonist/rev/head/add_revolutionary(datum/mind/rev_mind, stun = TRUE, mute = TRUE)
+	. = ..()
+	if(!. || !conversion_objective)
+		return
+
+	addtimer(CALLBACK(src, PROC_REF(report_conversion_objective), rev_mind, conversion_objective), 2 SECONDS, TIMER_DELETE_ME)
+
+/datum/antagonist/rev/head/proc/report_conversion_objective(datum/mind/rev_mind, set_conversion_objective)
+	if(QDELETED(rev_mind))
+		return
+
+	if(isnull(rev_mind?.current?.client))
+		if(isnull(rev_mind?.current))
+			return
+		// Try again until they get a client - presumably they're actively being polled for (due to a jobban or something).
+		addtimer(CALLBACK(src, PROC_REF(report_conversion_objective), rev_mind, set_conversion_objective), 3 SECONDS, TIMER_DELETE_ME)
+		return
+
+	var/conversion_formatted = span_slightly_larger(span_hypnophrase(set_conversion_objective))
+	var/hint_formatted = span_warning("This is a guideline instilled upon you from your (new) leader - \
+		while you are expected to follow it where possible, it is not a strict order. \
+		Further orders from your (new) leader(s) may supersede this.")
+
+	to_chat(rev_mind.current, fieldset_block(span_warning("A directive echoes through your mind..."), "[conversion_formatted]<br>[hint_formatted]", "boxed_message red_box"))
+	rev_mind.current.log_message("has been given a conversion guideline from [key_name(owner.current)]: [set_conversion_objective]", color = COLOR_CULT_RED)
 
 /datum/antagonist/rev/head/proc/demote()
 	var/datum/mind/old_owner = owner
@@ -324,7 +374,7 @@
 
 /// Handles rev removal via IC methods such as borging, mindshielding, blunt force trauma to the head or revs losing.
 /datum/antagonist/rev/proc/remove_revolutionary(deconverter)
-	owner.current.log_message("has been deconverted from the revolution by [ismob(deconverter) ? key_name(deconverter) : deconverter]!", LOG_ATTACK, color=COLOR_CULT_RED)
+	owner.current.log_message("has been deconverted from the revolution by [ismob(deconverter) ? key_name(deconverter) : deconverter]!", LOG_ATTACK, color = COLOR_CULT_RED)
 	if(deconverter == DECONVERTER_BORGED)
 		message_admins("[ADMIN_LOOKUPFLW(owner.current)] has been borged while being a [name]")
 	if(iscarbon(owner.current) && deconverter)

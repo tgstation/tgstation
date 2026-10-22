@@ -60,6 +60,8 @@
 #define ACCESS_MAINT_TUNNELS "maint_tunnels"
 /// Access to get into APCs, engineering equipment lockers, typically mapped in for key power rooms across the station, engineering vending machines, emitters, and some other stuff.
 #define ACCESS_ENGINE_EQUIP "engine_equip"
+/// Access to get into air alarms, atmos equipment lockers, potentially atmos storage rooms (like the gas storage room).
+#define ACCESS_ATMOS_EQUIP "atmos_equip"
 /// Access to "construction" areas of the station. However, in mapping, it's used to get access to the front door and lathe room of the engineering department.
 #define ACCESS_CONSTRUCTION "construction"
 /// Access to the technical storage room (contains all the boards and other miscellaneous engineering gear).
@@ -295,6 +297,7 @@
 /// Departmental/general/common area accesses. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMON)
 #define COMMON_ACCESS list( \
 	ACCESS_ATMOSPHERICS, \
+	ACCESS_ATMOS_EQUIP, \
 	ACCESS_AUX_BASE, \
 	ACCESS_BAR, \
 	ACCESS_BIT_DEN, \
@@ -502,6 +505,7 @@
 /// Used to seed the accesses_by_region list in SSid_access. A list of all engineering regional accesses that are overseen by the CE.
 #define REGION_ACCESS_ENGINEERING list( \
 	ACCESS_ATMOSPHERICS, \
+	ACCESS_ATMOS_EQUIP, \
 	ACCESS_AUX_BASE, \
 	ACCESS_BUDGET, \
 	ACCESS_CE, \
@@ -552,46 +556,6 @@
 #define REGION_CENTCOM "Central Command"
 /// Used to seed the accesses_by_region list in SSid_access. A list of all CENTCOM_ACCESS regional accesses.
 #define REGION_ACCESS_CENTCOM CENTCOM_ACCESS
-
-/**
- * A list of PDA paths that can be painted as well as the regional heads which should be able to paint them.
- * If a PDA is not in this list, it cannot be painted using the PDA & ID Painter.
- * If a PDA is in this list, it can always be painted with ACCESS_CHANGE_IDS.
- * Used to see pda_region in [/datum/controller/subsystem/id_access/proc/setup_tgui_lists]
- */
-#define PDA_PAINTING_REGIONS list( \
-	/obj/item/modular_computer/pda = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/clown = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/mime = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/medical = list(REGION_MEDBAY), \
-	/obj/item/modular_computer/pda/coroner = list(REGION_MEDBAY), \
-	/obj/item/modular_computer/pda/engineering = list(REGION_ENGINEERING), \
-	/obj/item/modular_computer/pda/security = list(REGION_SECURITY), \
-	/obj/item/modular_computer/pda/detective = list(REGION_SECURITY), \
-	/obj/item/modular_computer/pda/warden = list(REGION_SECURITY), \
-	/obj/item/modular_computer/pda/janitor = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/science = list(REGION_RESEARCH), \
-	/obj/item/modular_computer/pda/heads/quartermaster = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/heads/hop = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/heads/hos = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/heads/cmo = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/heads/ce = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/heads/rd = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/heads/captain = list(REGION_COMMAND), \
-	/obj/item/modular_computer/pda/cargo = list(REGION_SUPPLY), \
-	/obj/item/modular_computer/pda/bitrunner = list(REGION_SUPPLY), \
-	/obj/item/modular_computer/pda/shaftminer = list(REGION_SUPPLY), \
-	/obj/item/modular_computer/pda/chaplain = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/lawyer = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/botanist = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/roboticist = list(REGION_RESEARCH), \
-	/obj/item/modular_computer/pda/curator = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/cook = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/bar = list(REGION_GENERAL), \
-	/obj/item/modular_computer/pda/atmos = list(REGION_ENGINEERING), \
-	/obj/item/modular_computer/pda/chemist = list(REGION_MEDBAY), \
-	/obj/item/modular_computer/pda/geneticist = list(REGION_RESEARCH), \
-)
 
 /// All regions that make up the station area. Helper define to quickly designate a region as part of the station or not. Access via SSid_access.station_regions.
 #define REGION_AREA_STATION list( \

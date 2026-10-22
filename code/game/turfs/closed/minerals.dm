@@ -979,7 +979,6 @@
 /// Wall piece
 /turf/closed/mineral/ash_rock
 	name = "rock"
-	icon = 'icons/turf/mining.dmi'
 	icon = MAP_SWITCH('icons/turf/walls/rock_wall.dmi', 'icons/turf/mining.dmi')
 	icon_state = "rock2"
 	base_icon_state = "rock_wall"
@@ -1082,6 +1081,9 @@
 /turf/closed/mineral/gibtonite/Initialize(mapload)
 	det_time = rand(8,10) //So you don't know exactly when the hot potato will explode
 	. = ..()
+
+/turf/closed/mineral/gibtonite/change_ore(ore_type, random)
+	return
 
 /turf/closed/mineral/gibtonite/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	var/previous_stage = stage

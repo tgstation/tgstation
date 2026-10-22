@@ -158,6 +158,6 @@
 	return ..()
 
 /mob/living/keybind_face_direction(direction)
-	if(IS_UNCONSCIOUS(src))
+	if(!(mobility_flags & MOBILITY_MOVE))
 		return
 	return ..()

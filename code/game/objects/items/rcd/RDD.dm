@@ -165,11 +165,12 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 ))
 
 /obj/item/construction/rdd
-	name = "rapid-decoration-device (RDD)"
+	name = "rapid decoration device (RDD)"
 	desc = "A device used to rapidly deploy plastic decorative flora. \
 		Internally synthesizes cheap plastic replicas of natural scenery."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rdd"
+	inhand_icon_state = "rdd"
 	worn_icon_state = "RCD"
 	lefthand_file = 'icons/mob/inhands/equipment/tools_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'

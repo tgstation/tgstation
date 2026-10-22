@@ -52,3 +52,8 @@
 
 /// Abstraction over using mob.client to just check if there's a connected player.
 #define HAS_CONNECTED_PLAYER(mob) (mob.client)
+
+/// Returns the initial icon state of the atom factoring in post_init_icon_state as well.
+#define INITIAL_ICON_STATE(some_atom) (initial(some_atom.post_init_icon_state) || initial(some_atom.icon_state))
+/// Returns either the base_icon_state, OR its initial icon state.
+#define BASE_OR_INITIAL_ICON_STATE(some_atom) (some_atom.base_icon_state || INITIAL_ICON_STATE(some_atom))

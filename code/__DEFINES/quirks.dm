@@ -10,12 +10,10 @@
 #define QUIRK_PROCESSES (1<<1)
 /// This quirk is has a visual aspect in that it changes how the player looks. Used in generating dummies.
 #define QUIRK_CHANGES_APPEARANCE (1<<2)
-/// The only thing this quirk effects is mood so it should be disabled if mood is
-#define QUIRK_MOODLET_BASED (1<<3)
 /// This quirk shouldn't be shown by health analyzers and hud, perhaps as considering it medical condition is a far stretch.
-#define QUIRK_HIDE_FROM_SCAN (1<<4)
+#define QUIRK_HIDE_FROM_SCAN (1<<3)
 /// Quirk is similar to brain trauma and should be shown in medical guides as one.
 /// You don't need to set this on quirks that apply a trauma, that's redundant.
-#define QUIRK_TRAUMALIKE (1<<5)
+#define QUIRK_TRAUMALIKE (1<<4)
 /// Do not transfer this quirk via transfer_quirk_datums
-#define QUIRK_NO_TRANSFER (1<<6)
+#define QUIRK_NO_TRANSFER (1<<5)

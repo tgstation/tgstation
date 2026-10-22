@@ -7,6 +7,7 @@
 	worn_icon = 'icons/mob/clothing/suits/wintercoat.dmi'
 	inhand_icon_state = "coatwinter"
 	body_parts_covered = CHEST|GROIN|ARMS
+	bodyshapes_with_variations = NONE
 	cold_protection = CHEST|GROIN|ARMS
 	min_cold_protection_temperature = FIRE_SUIT_MIN_TEMP_PROTECT
 	allowed = list()
@@ -55,7 +56,7 @@
 		return CLICK_ACTION_BLOCKING
 	zipped = !zipped
 	playsound(src, 'sound/items/zip/zip_up.ogg', 30, TRUE, -3)
-	worn_icon_state = "[initial(post_init_icon_state) || initial(icon_state)][zipped ? "_t" : ""]"
+	worn_icon_state = "[INITIAL_ICON_STATE(src)][zipped ? "_t" : ""]"
 	balloon_alert(user, "[zipped ? "" : "un"]zipped")
 
 	if(ishuman(loc))
@@ -766,7 +767,7 @@
 		return
 
 	var/suffix = (zipped ? "hood_t" : "hood")
-	var/state = "[initial(post_init_icon_state) || initial(icon_state)]_[suffix]"
+	var/state = "[INITIAL_ICON_STATE(src)]_[suffix]"
 	. += mutable_appearance(icon_file, state, -SUIT_LAYER)
 
 /obj/item/clothing/head/hooded/winterhood/zipup

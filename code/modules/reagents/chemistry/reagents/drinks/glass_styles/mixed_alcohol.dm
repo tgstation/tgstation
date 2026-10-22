@@ -117,6 +117,27 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "manlydorfglass"
 
+/datum/glass_style/drinking_glass/frosty_dorf
+	required_drink_type = /datum/reagent/consumable/ethanol/frosty_dorf
+	name = "The Frosty Dorf"
+	desc = "A herbal variant of the dwarven classic. Makes you feel like digging a mountain keep."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "frosty_dorf"
+
+/datum/glass_style/drinking_glass/stone_cold_stout
+	required_drink_type = /datum/reagent/consumable/ethanol/stone_cold_stout
+	name = "Stone Cold Stout"
+	desc = "Stone-cold drink, challenging even for seasoned drinkers. If you can survive it, you can take on anything."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "stone_cold_stout"
+
+/datum/glass_style/drinking_glass/ramp_rager
+	required_drink_type = /datum/reagent/consumable/ethanol/ramp_rager
+	name = "Ramp Rager"
+	desc = "Furiously bubbling drink, capable of making people go berserk. An invitation for a bar fight."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "ramprager"
+
 /datum/glass_style/drinking_glass/longislandicedtea
 	required_drink_type = /datum/reagent/consumable/ethanol/longislandicedtea
 	name = "Long Island Iced Tea"
@@ -1233,6 +1254,83 @@
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "vieux_carre"
 
+/datum/glass_style/drinking_glass/mouthwash_strong
+	required_drink_type = /datum/reagent/consumable/ethanol/mouthwash_strong
+	name = "Strong Mouthwash"
+	desc = "A bottle of strong mouthwash, with increased alcohol content. The label proudly proclaims 'Kills 99.9% of all germs'. Another, smaller label reads 'Take responsibility for your hygiene'."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "mouthwash_strong"
+
+/datum/glass_style/drinking_glass/sea_lantern
+	required_drink_type = /datum/reagent/consumable/ethanol/sea_lantern
+	name = "Sea Lantern"
+	desc = "A layered cocktail of fonarstolbe and strawberry shake composed to roughly mimic a sea lantern, as seen in history books. Advancement in sonar technology and sensors made these buildings long absolote."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "sea_lantern"
+
+/datum/glass_style/drinking_glass/icegrave
+	required_drink_type = /datum/reagent/consumable/ethanol/icegrave
+	name = "Icegrave"
+	desc = "A single big ice cube suspended in liquids mostly unsafe for human consumption. The glass its held in is frosted, its a miracle it hasn't shattered yet."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "icegrave"
+
+/datum/glass_style/drinking_glass/watchmans_nightcap
+	required_drink_type = /datum/reagent/consumable/ethanol/watchmans_nightcap
+	name = "Watchman's Nightcap"
+	desc = "Fire illuminates, thus we understand our world. Fire purifies, thus we understand our dreams."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "watchmans_nightcap"
+
+/datum/glass_style/drinking_glass/footsoldiers_razor
+	required_drink_type = /datum/reagent/consumable/ethanol/footsoldiers_razor
+	name = "Footsoldier's Razor"
+	desc = "Sunrise Parabellum."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "footsoldiers_razor"
+
+/datum/glass_style/drinking_glass/farstar_amrita
+	required_drink_type = /datum/reagent/consumable/ethanol/farstar_amrita
+	name = "Farstar Amrita"
+	desc = "Any Spaceman knows that if you stare too long into the abyss, something might stare back. What fewer know, is that the abyss will always accept a drink."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "farstar_amrita"
+
+/datum/glass_style/drinking_glass/rubywise_ruin
+	required_drink_type = /datum/reagent/consumable/ethanol/rubywise_ruin
+	name = "Rubywise Ruin"
+	desc = "A stimulant of appetites; Those oldest, deepest, reddest, most regretable appetites."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "rubywise_ruin"
+
+/datum/glass_style/drinking_glass/openthroat_draught
+	required_drink_type = /datum/reagent/consumable/ethanol/openthroat_draught
+	name = "Open-Throat Draught"
+	desc = "Speech is a wound, and wounds always open both ways. Drink and understand."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "openthroat_draught"
+
+/datum/glass_style/drinking_glass/lunacy
+	required_drink_type = /datum/reagent/consumable/ethanol/lunacy
+	name = "Lunacy"
+	desc = "Kill the truth, or speak the name..."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "lunacy"
+
+/datum/glass_style/drinking_glass/entropic_brew
+	required_drink_type = /datum/reagent/consumable/ethanol/entropic_brew
+	name = "Entropic Brew"
+	desc = "It's like if someone distilled existential despair into a glass. Theoretically, you could get drunk off it, but you would certainly regret it."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "entropic_brew"
+
+/datum/glass_style/drinking_glass/emptiest_glass
+	required_drink_type = /datum/reagent/consumable/ethanol/emptiest_glass
+	name = "Emptiest Glass"
+	desc = "All of your senses agree: there is nothing here. And yet, some part of your soul begs you to take a sip..."
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "emptiest_glass"
+
 // Shot glasses
 
 /datum/glass_style/shot_glass/toxins_special
@@ -1244,6 +1342,11 @@
 	required_drink_type = /datum/reagent/consumable/ethanol/b52
 	icon = 'icons/obj/drinks/mixed_drinks.dmi'
 	icon_state = "b52glass"
+
+/datum/glass_style/shot_glass/icegrave
+	required_drink_type = /datum/reagent/consumable/ethanol/icegrave
+	icon = 'icons/obj/drinks/mixed_drinks.dmi'
+	icon_state = "shot_icegrave"
 
 /datum/glass_style/shot_glass/hcider
 	required_drink_type = /datum/reagent/consumable/ethanol/hcider

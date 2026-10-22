@@ -33,6 +33,7 @@
 	// NB: This is the only time we init a link without having any other signal registered
 	// This can cause issues due do signal registration order where some stuff gets resolved before the link instead of after the link
 	if(isnull(cuffed_to) || !update_link())
+		cuffed_to = null // we need to keep track if the cuffing failed, so we don't "revert" the nonexistent slowdown
 		owner.put_in_hands(cuffs)
 		qdel(src)
 		return FALSE
@@ -42,8 +43,6 @@
 	RegisterSignal(cuffed, COMSIG_ATOM_UPDATE_APPEARANCE, PROC_REF(on_item_update_appearance))
 	RegisterSignal(cuffed, COMSIG_ATOM_EXAMINE, PROC_REF(cuffed_examine))
 	RegisterSignal(cuffed, COMSIG_TOPIC, PROC_REF(topic_handler))
-	RegisterSignal(cuffed, COMSIG_ITEM_GET_STRIPPABLE_ALT_ACTIONS, PROC_REF(get_strippable_action))
-	RegisterSignal(cuffed, COMSIG_ITEM_STRIPPABLE_ALT_ACTION, PROC_REF(do_strippable_action))
 	RegisterSignal(cuffed, COMSIG_ITEM_PRE_STORAGE_INSERTION, PROC_REF(block_storage_insert))
 	RegisterSignal(cuffed, COMSIG_ITEM_PRE_CUFFED_TO_MOB, PROC_REF(block_item_cuff))
 	RegisterSignal(cuffed, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(try_unequip))
@@ -55,7 +54,7 @@
 	RegisterSignal(cuffed_to, COMSIG_QDELETING, PROC_REF(cleanup_effect))
 	RegisterSignal(cuffed_to, COMSIG_BODYPART_REMOVED, PROC_REF(cuffed_to_removed))
 
-	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(check_for_link))
+	RegisterSignal(owner, COMSIG_MOVABLE_MOVED, PROC_REF(on_owner_moved))
 
 	owner.log_message("bound [cuffed] to [owner.p_themselves()] with restraints", LOG_GAME)
 	SSblackbox.record_feedback("tally", "cuffed_item", 1, cuffed.type)
@@ -69,11 +68,9 @@
 		COMSIG_ATOM_UPDATE_APPEARANCE,
 		COMSIG_ITEM_DROPPED,
 		COMSIG_ITEM_EQUIPPED,
-		COMSIG_ITEM_GET_STRIPPABLE_ALT_ACTIONS,
 		COMSIG_ITEM_PRE_CUFFED_TO_MOB,
 		COMSIG_ITEM_PRE_STORAGE_INSERTION,
 		COMSIG_ITEM_PRE_UNEQUIP,
-		COMSIG_ITEM_STRIPPABLE_ALT_ACTION,
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_QDELETING,
 		COMSIG_TOPIC,
@@ -84,10 +81,11 @@
 		COMSIG_MOVABLE_MOVED,
 		COMSIG_QDELETING,
 	))
-	UnregisterSignal(cuffed_to, list(
-		COMSIG_BODYPART_REMOVED,
-		COMSIG_QDELETING,
-	))
+	if(cuffed_to)
+		UnregisterSignal(cuffed_to, list(
+			COMSIG_BODYPART_REMOVED,
+			COMSIG_QDELETING,
+		))
 	UnregisterSignal(owner, list(
 		COMSIG_CARBON_POST_ATTACH_LIMB,
 		COMSIG_MOVABLE_MOVED,
@@ -100,8 +98,9 @@
 			cuffs.forceMove(owner.drop_location())
 	cuffs = null
 
-	cuffed_to.set_speed_modifiers(cuffed_to.interaction_modifier - 0.25, cuffed_to.click_cd_modifier - 0.25)
-	cuffed_to = null
+	if(cuffed_to)
+		cuffed_to.set_speed_modifiers(cuffed_to.interaction_modifier - 0.25, cuffed_to.click_cd_modifier - 0.25)
+		cuffed_to = null
 
 	break_leash()
 
@@ -157,8 +156,7 @@
 /// Updates our link and beam effect based on our state
 /// Returns TRUE if we are in a valid link state, FALSE otherwise
 /datum/status_effect/cuffed_item/proc/update_link()
-	// when held, we need no tether
-	if(cuffed.loc == owner)
+	if(get_atom_on_turf(cuffed) == get_atom_on_turf(owner))
 		return break_leash()
 
 	// when on the ground, init a tether between item <-> owner
@@ -187,8 +185,10 @@
 
 	link_effect = leash_to.AddComponentFrom(REF(src), /datum/component/chained_together, chained_to = leash_from)
 	if(!QDELETED(link_effect))
+		RegisterSignal(link_effect, COMSIG_QDELETING, PROC_REF(on_link_deleted))
 		return TRUE // successful application
 
+	link_effect = null
 	// chain component failed to apply
 	if(ismob(leash_to))
 		var/mob/leash_to_mob = leash_to
@@ -199,10 +199,14 @@
 
 /datum/status_effect/cuffed_item/proc/break_leash()
 	if(!isnull(link_effect))
-		UnregisterSignal(link_effect.parent, COMSIG_MOVABLE_SET_ANCHORED)
+		UnregisterSignal(link_effect, COMSIG_QDELETING)
 		link_effect.parent.RemoveComponentSource(REF(src), /datum/component/chained_together)
 		link_effect = null
 	return TRUE
+
+/datum/status_effect/cuffed_item/proc/on_link_deleted(datum/source)
+	SIGNAL_HANDLER
+	link_effect = null
 
 // Delayed unequip after an invalid pickup. This sucks but I can't think of a better way around due to move order shenanigans
 /datum/status_effect/cuffed_item/proc/eject_item(mob/leash_to_mob)
@@ -212,6 +216,25 @@
 		qdel(src)
 		return
 	to_chat(leash_to_mob, span_warning("[cuffs] binding [cuffed] to [owner] tugs it out of your grasp!"))
+
+/// Takes the item along when the owner enters an object, moves between objects or climbs out of one
+/datum/status_effect/cuffed_item/proc/on_owner_moved(datum/source, atom/old_loc)
+	SIGNAL_HANDLER
+	if(QDELETED(src))
+		return
+	var/atom/destination = owner.loc
+	var/shared_old_loc = !isturf(old_loc) && cuffed.loc == old_loc
+	var/dragged_into_object = isobj(destination) && !isnull(link_effect) && link_effect.parent != owner
+	var/can_hold_item = destination != cuffed && (isobj(destination) || isturf(destination))
+	if(can_hold_item && (shared_old_loc || dragged_into_object))
+		if(ismob(cuffed.loc))
+			var/mob/holding_mob = cuffed.loc
+			holding_mob.transferItemToLoc(cuffed, destination, force = TRUE)
+		else
+			cuffed.forceMove(destination)
+		if(QDELETED(src))
+			return
+	check_for_link()
 
 /// Stops it from being stored anywhere
 /datum/status_effect/cuffed_item/proc/block_storage_insert(obj/item/source, atom/target_storage, mob/user, force, messages)
@@ -248,20 +271,6 @@
 	if(href_list["remove_cuffs_item"])
 		INVOKE_ASYNC(src, PROC_REF(try_remove_cuffs), user)
 
-/datum/status_effect/cuffed_item/proc/get_strippable_action(obj/item/source, atom/owner, mob/user, list/alt_actions)
-	SIGNAL_HANDLER
-	alt_actions += "remove_item_cuffs"
-
-/datum/status_effect/cuffed_item/proc/do_strippable_action(obj/item/source, atom/owner, mob/user, action_key)
-	SIGNAL_HANDLER
-	if(action_key != "remove_item_cuffs")
-		return NONE
-	if(source != cuffed || !isliving(user))
-		return NONE
-
-	INVOKE_ASYNC(src, PROC_REF(try_remove_cuffs), user)
-	return COMPONENT_ALT_ACTION_DONE
-
 ///The main proc responsible for attempting to remove the hancfuss.
 /datum/status_effect/cuffed_item/proc/try_remove_cuffs(mob/living/user)
 
@@ -275,6 +284,10 @@
 
 	if(!cuffed.IsReachableBy(user))
 		owner.balloon_alert(user, "can't reach [cuffed]!")
+		return FALSE
+
+	if(!owner.IsReachableBy(user))
+		owner.balloon_alert(user, "can't reach [owner]!")
 		return FALSE
 
 	if(user == owner)
@@ -365,16 +378,14 @@
 
 	chained_to_weakref = WEAKREF(chained_to)
 	var/atom/movable/movable_parent = parent
+	RegisterSignal(chained_to, COMSIG_MOVABLE_MOVED, PROC_REF(on_chained_to_moved))
 	link_effect = movable_parent.AddComponent(/datum/component/leash, owner = chained_to, distance = 1)
 	tug_effect  = movable_parent.AddComponent(/datum/component/tug_towards, tugging_to = chained_to, strength = 0.66)
-	beam_effect = movable_parent.Beam(chained_to, "chain", animate = FALSE)
 	RegisterSignal(link_effect, COMSIG_QDELETING, PROC_REF(delete_self))
 	RegisterSignal(tug_effect,  COMSIG_QDELETING, PROC_REF(delete_self))
-	RegisterSignal(beam_effect, COMSIG_QDELETING, PROC_REF(recreate_beam))
+	update_beam()
 
 /datum/component/chained_together/Destroy()
-	if(!isnull(beam_effect))
-		UnregisterSignal(beam_effect, COMSIG_QDELETING)
 	if(!isnull(link_effect))
 		UnregisterSignal(link_effect, COMSIG_QDELETING)
 	if(!isnull(tug_effect))
@@ -383,37 +394,66 @@
 		qdel(link_effect)
 	if(!QDELETED(tug_effect))
 		qdel(tug_effect)
-	if(!QDELETED(beam_effect))
-		qdel(beam_effect)
+	clear_beam()
 
-	beam_effect = null
 	link_effect = null
 	tug_effect = null
 	return ..()
 
-/datum/component/chained_together/proc/recreate_beam(...)
+/datum/component/chained_together/RegisterWithParent()
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, PROC_REF(update_beam))
+
+/datum/component/chained_together/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
+
+/// Drags us into the tile the thing we're chained to just left, like pulling does, so the leash only has to pathfind when that fails
+/datum/component/chained_together/proc/on_chained_to_moved(atom/movable/source, atom/old_loc, movement_dir, forced)
 	SIGNAL_HANDLER
 
-	if(!isnull(beam_effect))
-		UnregisterSignal(beam_effect, COMSIG_QDELETING)
-		beam_effect = null
-
-	var/atom/movable/movable_parent = parent
-	if(!isturf(movable_parent.loc))
-		RegisterSignal(movable_parent, COMSIG_MOVABLE_MOVED, PROC_REF(check_for_recreate_beam), override = TRUE)
+	if(QDELETED(src))
 		return
+	var/atom/movable/movable_parent = parent
+	var/can_step_into_old_loc = !forced && isturf(old_loc) && isturf(movable_parent.loc) && get_dist(movable_parent, old_loc) == 1
+	var/would_block_pull = movable_parent.density && !isnull(source.pulling)
+	if(can_step_into_old_loc && !would_block_pull && get_dist(movable_parent, source) > 1)
+		movable_parent.Move(old_loc, get_dir(movable_parent, old_loc), source.glide_size)
+	update_beam()
 
-	beam_effect = movable_parent.Beam(chained_to_weakref.resolve(), "chain", animate = FALSE)
-	RegisterSignal(beam_effect, COMSIG_QDELETING, PROC_REF(recreate_beam))
-
-/datum/component/chained_together/proc/check_for_recreate_beam(atom/movable/source, atom/movable/moved_atom, ...)
+/// Draws the chain between the outermost holders of both ends, hiding it while they share a holder
+/datum/component/chained_together/proc/update_beam(...)
 	SIGNAL_HANDLER
 
-	var/atom/movable/movable_parent = parent
-	if(!isturf(movable_parent.loc))
+	if(QDELETED(src))
 		return
-	recreate_beam()
-	UnregisterSignal(movable_parent, COMSIG_MOVABLE_MOVED)
+	var/atom/movable/parent_anchor = get_beam_anchor(parent)
+	var/atom/movable/chained_to_anchor = get_beam_anchor(chained_to_weakref.resolve())
+	if(isnull(parent_anchor) || isnull(chained_to_anchor) || parent_anchor == chained_to_anchor || parent_anchor.z != chained_to_anchor.z)
+		clear_beam()
+		return
+	if(!isnull(beam_effect) && beam_effect.origin == parent_anchor && beam_effect.target == chained_to_anchor)
+		return
+	clear_beam()
+	beam_effect = parent_anchor.Beam(chained_to_anchor, "chain", animate = FALSE)
+	RegisterSignal(beam_effect, COMSIG_QDELETING, PROC_REF(on_beam_deleted))
+
+/// Returns the atom on a turf that holds the passed end of the chain, or null if the chain should not be drawn to it
+/datum/component/chained_together/proc/get_beam_anchor(atom/movable/chain_end)
+	var/atom/movable/anchor = get_atom_on_turf(chain_end)
+	if(QDELETED(anchor) || !isturf(anchor.loc))
+		return null
+	return anchor
+
+/datum/component/chained_together/proc/on_beam_deleted(datum/source)
+	SIGNAL_HANDLER
+
+	beam_effect = null
+	update_beam()
+
+/datum/component/chained_together/proc/clear_beam()
+	if(isnull(beam_effect))
+		return
+	UnregisterSignal(beam_effect, COMSIG_QDELETING)
+	QDEL_NULL(beam_effect)
 
 /datum/component/chained_together/proc/delete_self(datum/source)
 	SIGNAL_HANDLER

@@ -31,7 +31,7 @@
 		/obj/item/flashlight/emp/debug=1,
 		/obj/item/geiger_counter=1,
 		/obj/item/healthanalyzer/super=1,
-		/obj/item/modular_computer/pda/heads/captain=1,
+		/obj/item/modular_computer/pda/crew/heads/captain=1,
 		/obj/item/pipe_dispenser=1,
 		/obj/item/stack/spacecash/c1000=50,
 		/obj/item/storage/box/beakers/bluespace=1,

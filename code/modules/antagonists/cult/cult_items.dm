@@ -833,16 +833,11 @@ Striking a noncultist, however, will tear their flesh."}
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 17, \
 		force_wielded = 24, \
+		update_icon_state = TRUE, \
 	)
 
-/obj/item/melee/cultblade/halberd/update_icon_state()
-	icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "[base_icon_state]1" : "[base_icon_state]0"
-	inhand_icon_state = HAS_TRAIT(src, TRAIT_WIELDED) ? "[base_icon_state]1" : "[base_icon_state]0"
-	return ..()
-
 /obj/item/melee/cultblade/halberd/Destroy()
-	if(halberd_act)
-		QDEL_NULL(halberd_act)
+	QDEL_NULL(halberd_act)
 	return ..()
 
 /obj/item/melee/cultblade/halberd/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -956,7 +951,7 @@ Striking a noncultist, however, will tear their flesh."}
 	if(isshade(our_target) || isconstruct(our_target))
 		var/mob/living/basic/construct/undead_abomination = our_target
 		if(undead_abomination.health + 5 < undead_abomination.maxHealth)
-			undead_abomination.adjust_health(-5)
+			undead_abomination.adjust_brute_loss(-5)
 	return PROJECTILE_DELETE_WITHOUT_HITTING
 
 /obj/item/blood_beam
@@ -1073,7 +1068,7 @@ Striking a noncultist, however, will tear their flesh."}
 
 				var/mob/living/basic/construct/healed_guy = target
 				if(healed_guy.health + 15 < healed_guy.maxHealth)
-					healed_guy.adjust_health(-15)
+					healed_guy.adjust_brute_loss(-15)
 				else
 					healed_guy.health = healed_guy.maxHealth
 

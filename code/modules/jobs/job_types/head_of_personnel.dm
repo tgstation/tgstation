@@ -100,7 +100,7 @@
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic/silver = 1,
 		)
-	belt = /obj/item/modular_computer/pda/heads/hop
+	belt = /obj/item/modular_computer/pda/crew/heads/hop
 	ears = /obj/item/radio/headset/heads/hop
 	head = /obj/item/clothing/head/hats/hopcap
 	shoes = /obj/item/clothing/shoes/laceup
@@ -120,8 +120,9 @@
 
 //only pet worth reviving
 /datum/job/head_of_personnel/get_mail_goodies(mob/recipient)
-	. = ..()
+	var/list/base_goodies = ..()
+	. = base_goodies.Copy()
 	// Strange Reagent if the pet is dead.
-	for(var/mob/living/basic/pet/dog/corgi/ian/staff_pet in GLOB.dead_mob_list)
-		. += list(/datum/reagent/medicine/strange_reagent = 20)
-		break
+	var/mob/living/basic/pet/dog/corgi/ian/staff_pet = locate() in GLOB.dead_mob_list
+	if(staff_pet)
+		. += list(/obj/item/reagent_containers/cup/bottle/strange_reagent = 20)

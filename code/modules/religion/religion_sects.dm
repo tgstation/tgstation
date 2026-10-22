@@ -270,8 +270,7 @@
 	tgui_icon = FA_ICON_DOLLAR_SIGN
 	altar_icon_state = "convertaltar-yellow"
 	alignment = ALIGNMENT_EVIL //greed is not good wtf
-	rites_list = list(/datum/religion_rites/greed/vendatray, /datum/religion_rites/greed/custom_vending)
-	altar_icon_state = "convertaltar-yellow"
+	rites_list = list(/datum/religion_rites/greed/custom_vending)
 
 /datum/religion_sect/greed/tool_examine(mob/living/holy_creature) //display money policy
 	return "In the eyes of [GLOB.deity], your wealth is your favor."
@@ -391,7 +390,7 @@
 	if(suffocation_damage && !HAS_TRAIT(chaplain, TRAIT_NOBREATH))
 		transferred = TRUE
 		target.adjust_oxy_loss(-suffocation_damage)
-		chaplain.adjust_oxy_loss(suffocation_damage * burden_modifier, forced = TRUE)
+		chaplain.adjust_oxy_loss(suffocation_damage * burden_modifier)
 
 	var/cached_blood_volume = target.get_blood_volume()
 	if (cached_blood_volume < BLOOD_VOLUME_SAFE)

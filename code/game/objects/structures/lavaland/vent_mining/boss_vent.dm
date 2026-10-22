@@ -5,17 +5,18 @@
 	unique_vent = TRUE
 	spawn_drone_on_tap = FALSE
 	boulder_size = BOULDER_SIZE_LARGE
+	// pick_weight() requires integer weights. rare minerals have one tenth the common weight.
 	mineral_breakdown = list( // All the riches of the world, eeny meeny boulder room.
-		/datum/material/iron = 1,
-		/datum/material/glass = 1,
-		/datum/material/plasma = 1,
-		/datum/material/titanium = 1,
-		/datum/material/silver = 1,
-		/datum/material/gold = 1,
-		/datum/material/diamond = 0.1,
-		/datum/material/uranium = 1,
-		/datum/material/bluespace = 0.1,
-		/datum/material/plastic = 1,
+		/datum/material/iron = 10,
+		/datum/material/glass = 10,
+		/datum/material/plasma = 10,
+		/datum/material/titanium = 10,
+		/datum/material/silver = 10,
+		/datum/material/gold = 10,
+		/datum/material/diamond = 1,
+		/datum/material/uranium = 10,
+		/datum/material/bluespace = 1,
+		/datum/material/plastic = 10,
 	)
 	defending_mobs = list(
 		/mob/living/simple_animal/hostile/megafauna/bubblegum,

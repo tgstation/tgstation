@@ -41,7 +41,7 @@
 /obj/item/watertank/proc/toggle_mister(mob/living/user)
 	if(!istype(user))
 		return
-	if(user.get_item_by_slot(user.getBackSlot()) != src)
+	if(user.get_item_by_slot(ITEM_SLOT_BACK) != src)
 		to_chat(user, span_warning("The watertank must be worn properly to use!"))
 		return
 	if(user.incapacitated)
@@ -84,7 +84,7 @@ GAME_VERB(/obj/item/watertank, toggle_mister_verb, "Toggle Mister", null)
 		noz.forceMove(src)
 
 /obj/item/watertank/attack_hand(mob/user, list/modifiers)
-	if (user.get_item_by_slot(user.getBackSlot()) == src)
+	if (user.get_item_by_slot(ITEM_SLOT_BACK) == src)
 		toggle_mister(user)
 	else
 		return ..()

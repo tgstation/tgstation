@@ -88,6 +88,8 @@
 	var/passive_level = 1
 	/// How many points are needed to gain a visible heretic aura
 	var/points_to_aura = 8
+	/// Lazylist of weakrefs of items we can track with the heart
+	var/list/tracked_items
 
 /datum/antagonist/heretic/Destroy()
 	LAZYNULL(sac_targets)

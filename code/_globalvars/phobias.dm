@@ -280,7 +280,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 		/obj/item/gun/magic/staff/honk,
 		/obj/item/instrument/bikehorn,
 		/obj/item/megaphone/clown,
-		/obj/item/modular_computer/pda/clown,
+		/obj/item/modular_computer/pda/crew/clown,
 		/obj/item/pneumatic_cannon/pie,
 		/obj/item/stack/ore/bananium,
 		/obj/item/stack/tile/mineral/bananium,
@@ -453,7 +453,7 @@ GLOBAL_LIST_INIT(phobia_objs, list(
 	"robots" = typecacheof(list(
 		/obj/item/ai_module,
 		/obj/item/aicard,
-		/obj/item/mmi/posibrain,
+		/obj/item/brain_processor/positronic,
 		/obj/item/toy/figure/borg,
 		/obj/item/toy/talking/ai,
 		/obj/machinery/ai_law_rack,

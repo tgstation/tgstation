@@ -185,6 +185,9 @@
 		overlays.Cut()
 
 	LAZYNULL(managed_overlays)
+	// SSvis_overlays shares these between atoms and deletes them on its own, so don't hold them while we wait in the gc queue
+	if(managed_vis_overlays)
+		managed_vis_overlays = null
 	if(ai_controller)
 		QDEL_NULL(ai_controller)
 	if(light)
@@ -567,7 +570,7 @@
  *
  * (e.g. A mob with nightvision loses its nightvision while looking through a normal camera)
  */
-/atom/proc/update_remote_sight(mob/living/user)
+/atom/proc/update_remote_sight(mob/living/user, list/new_sight)
 	return
 
 
@@ -600,14 +603,10 @@
 /atom/proc/wash(clean_types)
 	SHOULD_CALL_PARENT(TRUE)
 	. = SEND_SIGNAL(src, COMSIG_COMPONENT_CLEAN_ACT, clean_types)
-	if(.)
-		return
-
 	// Basically "if has washable coloration"
 	if(length(atom_colours) >= WASHABLE_COLOUR_PRIORITY && atom_colours[WASHABLE_COLOUR_PRIORITY])
 		remove_atom_colour(WASHABLE_COLOUR_PRIORITY)
-		return COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
-	return NONE
+		. |= COMPONENT_CLEANED|COMPONENT_CLEANED_GAIN_XP
 
 ///Where atoms should drop if taken from this atom
 /atom/proc/drop_location()

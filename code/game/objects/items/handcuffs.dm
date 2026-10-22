@@ -419,6 +419,7 @@
 	w_class = WEIGHT_CLASS_NORMAL
 	slowdown = 7
 	breakouttime = 30 SECONDS
+	resist_cooldown = CLICK_CD_RANGE
 	slot_flags = ITEM_SLOT_LEGCUFFED
 	/// Icon state for the legcuff overlay
 	var/legcuff_state = "legcuff"
@@ -490,6 +491,17 @@
 		return TRUE
 
 	return ..()
+
+/obj/item/restraints/legcuffs/beartrap/on_found(mob/living/victim)
+	if(!armed)
+		return FALSE
+
+	if(victim)
+		var/hand_zone = victim.held_index_to_dir(victim.active_hand_index) == "r" ? BODY_ZONE_PRECISE_R_HAND : BODY_ZONE_PRECISE_L_HAND
+		spring_trap(victim, def_zone = hand_zone, ignore_movetypes = TRUE)
+		return TRUE
+
+	return FALSE
 
 /**
  * Closes a bear trap

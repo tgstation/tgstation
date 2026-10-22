@@ -85,6 +85,7 @@
 	display_order = 1
 	ui_color = "#fcd203"
 	primary_work_area = /area/station/command
+	department_access = REGION_ACCESS_COMMAND
 
 /datum/job_department/security
 	department_name = DEPARTMENT_SECURITY
@@ -100,7 +101,11 @@
 		/area/station/security/brig,
 		/area/station/security/brig/upper,
 	)
-	associated_cargo_groups = list("Security", "Armory")
+	associated_cargo_groups = list(
+		/datum/supply_pack/security::group,
+		/datum/supply_pack/security/armory::group,
+		/datum/supply_pack/security/armory/rnd_locked::group,
+	)
 	head_of_staff_access = ACCESS_HOS
 	department_access = REGION_ACCESS_SECURITY
 

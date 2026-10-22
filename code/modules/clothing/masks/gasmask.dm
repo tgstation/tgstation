@@ -349,6 +349,13 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		to_chat(user, span_notice("Your Clown Mask has now morphed into [choice], all praise the Honkmother!"))
 		return TRUE
 
+/obj/item/clothing/mask/gas/clown_hat/clownops
+	name = "tactical clown wig and mask"
+	desc = "A tactical twist on a troubadour's tradition."
+	flash_protect = FLASH_PROTECTION_FLASH
+	resistance_flags = FIRE_PROOF
+	flags_cover = MASKCOVERSEYES | PEPPERPROOF
+
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."

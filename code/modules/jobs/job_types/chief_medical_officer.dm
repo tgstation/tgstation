@@ -65,12 +65,12 @@
 	backpack_contents = list(
 		/obj/item/melee/baton/telescopic/silver = 1,
 		)
-	belt = /obj/item/modular_computer/pda/heads/cmo
+	belt = /obj/item/modular_computer/pda/crew/heads/cmo
 	ears = /obj/item/radio/headset/heads/cmo
 	shoes = /obj/item/clothing/shoes/sneakers/white
 	l_pocket = /obj/item/laser_pointer/blue
 	r_pocket = /obj/item/pinpointer/crew
-	l_hand = /obj/item/storage/medkit/surgery
+	l_hand = /obj/item/storage/medkit/surgery/cmo
 
 	backpack = /obj/item/storage/backpack/chief_medic
 	satchel = /obj/item/storage/backpack/satchel/chief_medic

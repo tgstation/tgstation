@@ -62,7 +62,7 @@
 		return FALSE
 	if(istype(target, /mob/living/basic/stoat))
 		return owner.gender == MALE && target.gender == MALE // other stoats are ENEMIES if we are both males
-	for(var/obj/item/weapon in target.held_items)
+	for(var/obj/item/weapon as anything in target.get_held_items())
 		if(weapon.force > 15 || isgun(weapon))
 			return TRUE
 	if(target.mob_size > owner.mob_size)
@@ -132,8 +132,8 @@
 	AddElement(/datum/element/organ_set_bonus, /datum/status_effect/organ_set_bonus/stoat)
 	AddElement(/datum/element/update_icon_blocker)
 
-/obj/item/organ/fangs/stout
-	desc = "Stout DNA infused into what was once some normal teeth."
+/obj/item/organ/fangs/stoat
+	desc = "Stoat DNA infused into what was once some normal teeth."
 	bite_low = 7
 	bite_high = 7
 	bite_effectiveness = 20
@@ -171,24 +171,20 @@
 
 /obj/item/organ/tongue/stoat/on_mob_insert(mob/living/carbon/receiver, special, movement_flags)
 	. = ..()
-	RegisterSignals(receiver, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, PROC_REF(get_perceived_food_quality))
-	if(ishuman(receiver))
-		var/mob/living/carbon/human/human_receiver = receiver
-		human_receiver.physiology.hunger_mod *= 2
+	RegisterSignal(receiver, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY, PROC_REF(get_perceived_food_quality))
+	MODIFY_PHYSIOLOGY(receiver, PHYS_COEFF_HUNGER_MOD, 2)
 
 /obj/item/organ/tongue/stoat/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
 	UnregisterSignal(organ_owner, COMSIG_LIVING_GET_PERCEIVED_FOOD_QUALITY)
-	if(ishuman(organ_owner))
-		var/mob/living/carbon/human/human_remover = organ_owner
-		human_remover.physiology.hunger_mod /= 2
+	MODIFY_PHYSIOLOGY(organ_owner, PHYS_COEFF_HUNGER_MOD, 0.5)
 
-/obj/item/organ/tongue/stoat/proc/get_perceived_food_quality(mob/living/carbon/consumer, obj/item/food/consumed_food, list/extra_quality)
+/obj/item/organ/tongue/stoat/proc/get_perceived_food_quality(mob/living/carbon/consumer, datum/component/edible/edible, list/extra_quality)
 	SIGNAL_HANDLER
 
 	if(organ_flags & ORGAN_FAILING)
 		return
-	if(istype(consumed_food, /obj/item/food/deadmouse) || istype(consumed_food, /obj/item/food/egg))
+	if(istype(edible.parent, /obj/item/food/deadmouse) || istype(edible.parent, /obj/item/food/egg))
 		extra_quality += LIKED_FOOD_QUALITY_CHANGE
 
 /obj/item/organ/eyes/stoat

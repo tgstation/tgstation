@@ -102,7 +102,10 @@ function formatKeyboardEvent(event: KeyboardEvent): string {
   }
 
   if (isStandardKey(event)) {
-    const key = event.key.toUpperCase();
+    // Seperately pull out digits, otherwise SHIFT+1 turns into '!' and
+    // the keybinding is unusable
+    const digit = event.code?.match(/^Digit(\d)$/)?.[1];
+    const key = digit ?? event.key.toUpperCase();
     text += KEY_CODE_TO_BYOND[key] || key;
   }
 

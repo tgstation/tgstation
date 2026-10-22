@@ -80,12 +80,13 @@
 /datum/sound_token/proc/update_sound(_sound, start_playing = FALSE, _repeating = null)
 	if(!isnull(_repeating))
 		repeating = _repeating
-	sound = sound(_sound)
+	var/resolved_sound = get_sfx(_sound)
+	sound = sound(resolved_sound)
 	sound.repeat = repeating
 	if(!sound_channel)
 		sound_channel = SSsounds.reserve_sound_channel_for_datum(src)
 	sound.channel = sound_channel
-	sound_duration = sound_duration_override || SSsounds.get_sound_length(_sound)
+	sound_duration = sound_duration_override || SSsounds.get_sound_length(resolved_sound)
 	start_time = REALTIMEOFDAY
 	if(start_playing)
 		force_update_all_listeners(FALSE)

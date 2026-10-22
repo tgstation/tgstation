@@ -31,6 +31,9 @@
 #define MIN_TOXIC_GAS_DAMAGE 1
 #define MAX_TOXIC_GAS_DAMAGE 10
 
+#define MIN_TOXIC_GAS_LUNG_DAMAGE 0.1
+#define MAX_TOXIC_GAS_LUNG_DAMAGE 15
+
 // Pressure limits.
 /// This determins at what pressure the ultra-high pressure red icon is displayed. (This one is set as a constant)
 #define HAZARD_HIGH_PRESSURE 550
@@ -91,8 +94,6 @@
 #define BODYTEMP_HEAT_WOUND_LIMIT (BODYTEMP_NORMAL + 90) // 400.5 k
 /// The modifier on cold damage limit hulks get ontop of their regular limit
 #define BODYTEMP_HULK_COLD_DAMAGE_LIMIT_MODIFIER 25
-/// The modifier on cold damage hulks get.
-#define HULK_COLD_DAMAGE_MOD 2
 
 // Body temperature warning icons
 /// The temperature the red icon is displayed.

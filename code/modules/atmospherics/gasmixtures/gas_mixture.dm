@@ -470,6 +470,10 @@ GLOBAL_LIST_INIT(meta_gas_info, meta_gas_list()) //see ATMOSPHERICS/gas_types.dm
 /datum/gas_mixture/proc/compare(datum/gas_mixture/sample, cmp_archive)
 	var/list/cached_moles = (cmp_archive) ? moles_archive : moles
 	var/list/sample_cached_moles = (cmp_archive) ? sample.moles_archive : sample.moles  //accessing datum vars is slower than proc vars
+	var/total_delta = abs(values_sum(moles) - values_sum(sample.moles))
+
+	if(total_delta > MINIMUM_MOLES_DELTA_TO_MOVE) //difference in total moles no need for further iterration
+		return "total_moles"
 
 	for(var/gas_id in cached_moles | sample_cached_moles) // compare gases from either mixture
 		var/gas_moles = cached_moles[gas_id] // it can be null, but everything coerce to 0 after, so we save JMP and Tst

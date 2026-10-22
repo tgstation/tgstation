@@ -144,15 +144,17 @@
 
 	var/list/created_slimes = list(src)
 	var/list/slime_friends = list()
-	for(var/faction_member in get_faction())
-		var/mob/living/possible_friend = locate(faction_member) in GLOB.mob_living_list
+	for(var/ally_ref in allies)
+		var/mob/living/possible_friend = locate(ally_ref) in GLOB.mob_living_list
 		if(QDELETED(possible_friend))
 			continue
 		slime_friends += possible_friend
+	var/our_faction = get_faction()
 
 	for(var/i in 1 to 3)
 		var/mob/living/basic/slime/baby = new(drop_loc, get_random_mutation())
 		created_slimes += baby
+		baby.add_faction(our_faction)
 		for(var/slime_friend in slime_friends)
 			baby.befriend(slime_friend)
 

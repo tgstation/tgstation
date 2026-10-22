@@ -16,7 +16,7 @@
 
 	for(var/mob/living/basic/heretic_summon/helper in created_atoms)
 		helper.ai_controller = new /datum/ai_controller/basic_controller/simple/simple_hostile(helper)
-		helper.ai_controller.blackboard[BB_BASIC_MOB_IDLE_WALK_CHANCE] = 0.1
+		helper.ai_controller.set_blackboard_key(BB_BASIC_MOB_IDLE_WALK_CHANCE, 0.1)
 
 	var/obj/effect/heretic_rune/big/rune = locate() in created_atoms
 	rune.set_greyscale(pick(assoc_to_values(GLOB.heretic_path_to_color)))
@@ -148,7 +148,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/fake_crewman/instant_hostile
 	death_spawner = /obj/effect/mob_spawn/corpse/human/secoff
 	weapon = /obj/item/knife/combat/survival
-	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 1, STAMINA = 1, OXY = 1)
+	physiology = list(BURN = 0.6, BRUTE = 0.6)
 
 /mob/living/basic/fake_crewman/engi
 	name = "engineer"
@@ -156,11 +156,11 @@
 	weapon = /obj/item/weldingtool
 	attack_sound = 'sound/items/tools/welder.ogg'
 	melee_damage_type = BURN
-	damage_coeff = list(BRUTE = 1, BURN = 0.9, TOX = 1, STAMINA = 1, OXY = 1)
+	physiology = list(BURN = 0.9)
 
 /mob/living/basic/fake_crewman/engi/mod
 	death_spawner = /obj/effect/mob_spawn/corpse/human/engineer/mod
-	damage_coeff = list(BRUTE = 0.8, BURN = 0.8, TOX = 1, STAMINA = 1, OXY = 1)
+	physiology = list(BURN = 0.8, BRUTE = 0.8)
 
 /mob/living/basic/fake_crewman/assistant
 	name = "assistant"
@@ -199,7 +199,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/fake_crewman/instant_hostile/ranged
 	death_spawner = /obj/effect/mob_spawn/corpse/human/hos
 	weapon = /obj/item/gun/energy/e_gun/hos
-	damage_coeff = list(BRUTE = 0.6, BURN = 0.6, TOX = 1, STAMINA = 1, OXY = 1)
+	physiology = list(BURN = 0.6, BRUTE = 0.6)
 
 /mob/living/basic/fake_crewman/boss/hos/Initialize(mapload)
 	. = ..()

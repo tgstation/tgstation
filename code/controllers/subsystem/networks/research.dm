@@ -130,7 +130,7 @@ SUBSYSTEM_DEF(research)
 		// Tell our unlocked designs that we unlock them
 		for(var/design_path in new_node.unlocked_designs)
 			var/datum/design/unlocked_design = techweb_designs[design_path]
-			unlocked_design.unlocked_by += node_path
+			LAZYADD(unlocked_design.unlocked_by, node_path)
 
 		// Register that our required items unlock us
 		for(var/required_item_path in new_node.required_items_to_unlock)
@@ -157,6 +157,16 @@ SUBSYSTEM_DEF(research)
 			for (var/datum/experiment/ordnance/ordnance_experiment as anything in ordnance_experiments)
 				partner.accepted_experiments += ordnance_experiment.type
 		scientific_partners += partner
+
+/datum/controller/subsystem/research/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(!.)
+		return
+	switch(var_name)
+		// VV's list editor calls this after editing these in place too, so we catch those as well
+		if(NAMEOF(src, techweb_nodes), NAMEOF(src, techweb_designs), NAMEOF(src, point_types))
+			var/datum/asset/json/techweb_catalogue/catalogue = load_asset_datum(/datum/asset/json/techweb_catalogue)
+			catalogue.needs_build = TRUE
 
 /**
  * Goes through all techwebs and goes through their servers to find ones on a valid z-level

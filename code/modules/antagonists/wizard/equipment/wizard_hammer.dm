@@ -4,6 +4,7 @@
 	desc = "The pinnacle of close combat technology, the hammer harnesses the power of a miniaturized singularity to deal crushing blows."
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "singularity_hammer0"
+	inhand_icon_state = "singularity_hammer0"
 	base_icon_state = "singularity_hammer"
 	icon_angle = -45
 	lefthand_file = 'icons/mob/inhands/weapons/hammers_lefthand.dmi'
@@ -34,12 +35,8 @@
 	AddElement(/datum/element/kneejerk)
 	AddComponent(/datum/component/two_handed, \
 		force_multiplier = 4, \
-		icon_wielded = "[base_icon_state]1", \
+		update_icon_state = TRUE, \
 	)
-
-/obj/item/singularityhammer/update_icon_state()
-	icon_state = "[base_icon_state]0"
-	return ..()
 
 /obj/item/singularityhammer/proc/vortex(turf/pull, mob/wielder)
 	for(var/atom/X in orange(5,pull))
@@ -78,6 +75,7 @@
 	desc = "A weapon worthy of a god, able to strike with the force of a lightning bolt. It crackles with barely contained energy."
 	icon = 'icons/obj/weapons/hammer.dmi'
 	icon_state = "mjollnir0"
+	inhand_icon_state = "mjollnir0"
 	base_icon_state = "mjollnir"
 	worn_icon_state = "mjollnir"
 	icon_angle = -45
@@ -94,13 +92,9 @@
 	. = ..()
 	AddComponent(/datum/component/two_handed, \
 		force_multiplier = 5, \
-		icon_wielded = "[base_icon_state]1", \
+		update_icon_state = TRUE, \
 		attacksound = SFX_SPARKS, \
 	)
-
-/obj/item/mjollnir/update_icon_state()
-	icon_state = "[base_icon_state]0"
-	return ..()
 
 /obj/item/mjollnir/proc/yeet_shock(mob/living/target)
 	target.Stun(1.5 SECONDS)

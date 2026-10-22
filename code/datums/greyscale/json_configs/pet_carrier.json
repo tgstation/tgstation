@@ -10,14 +10,14 @@
 			"icon_state": "pet_carrier_gags",
 			"blend_mode": "overlay",
 			"color_ids": [1]
-		}
-	],
-	"pet_carrier_closed_unlocked": [
+		},
 		{
 			"type": "icon_state",
-			"icon_state": "pet_carrier_unlocked",
+			"icon_state": "pet_carrier_door",
 			"blend_mode": "overlay"
-		},
+		}
+	],
+	"pet_carrier_closed": [
 		{
 			"type": "icon_state",
 			"icon_state": "pet_carrier_closed",
@@ -30,15 +30,10 @@
 			"color_ids": [1]
 		}
 	],
-	"pet_carrier_closed_locked": [
+	"pet_carrier_occupied": [
 		{
 			"type": "icon_state",
-			"icon_state": "pet_carrier_locked",
-			"blend_mode": "overlay"
-		},
-		{
-			"type": "icon_state",
-			"icon_state": "pet_carrier_closed",
+			"icon_state": "pet_carrier_occupied",
 			"blend_mode": "overlay"
 		},
 		{
@@ -48,40 +43,18 @@
 			"color_ids": [1]
 		}
 	],
-	"pet_carrier_occupied_unlocked": [
+	"pet_carrier_unlocked": [
 		{
 			"type": "icon_state",
 			"icon_state": "pet_carrier_unlocked",
 			"blend_mode": "overlay"
-		},
-		{
-			"type": "icon_state",
-			"icon_state": "pet_carrier_occupied",
-			"blend_mode": "overlay"
-		},
-		{
-			"type": "icon_state",
-			"icon_state": "pet_carrier_gags",
-			"blend_mode": "overlay",
-			"color_ids": [1]
 		}
 	],
-	"pet_carrier_occupied_locked": [
+	"pet_carrier_locked": [
 		{
 			"type": "icon_state",
 			"icon_state": "pet_carrier_locked",
 			"blend_mode": "overlay"
-		},
-		{
-			"type": "icon_state",
-			"icon_state": "pet_carrier_occupied",
-			"blend_mode": "overlay"
-		},
-		{
-			"type": "icon_state",
-			"icon_state": "pet_carrier_gags",
-			"blend_mode": "overlay",
-			"color_ids": [1]
 		}
 	]
 }

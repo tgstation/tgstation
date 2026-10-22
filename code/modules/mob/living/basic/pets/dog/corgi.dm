@@ -94,22 +94,22 @@
  * which usually means any direct attack like melee or gunshot. Anything abstract like a bomb or acid or something
  * will instead give half the armor value.
  */
-/mob/living/basic/pet/dog/corgi/getarmor(def_zone, type)
+/mob/living/basic/pet/dog/corgi/get_worn_armor_value(obj/item/bodypart/def_zone, damage_type)
 	var/armorval = 0
 
 	if(def_zone)
 		if(def_zone == BODY_ZONE_HEAD)
 			if(inventory_head)
-				armorval = inventory_head.get_armor_rating(type)
+				armorval = inventory_head.get_armor_rating(damage_type)
 		else
 			if(inventory_back)
-				armorval = inventory_back.get_armor_rating(type)
+				armorval = inventory_back.get_armor_rating(damage_type)
 		return armorval
 	else
 		if(inventory_head)
-			armorval += inventory_head.get_armor_rating(type)
+			armorval += inventory_head.get_armor_rating(damage_type)
 		if(inventory_back)
-			armorval += inventory_back.get_armor_rating(type)
+			armorval += inventory_back.get_armor_rating(damage_type)
 	return armorval * 0.5
 
 /mob/living/basic/pet/dog/corgi/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
@@ -458,20 +458,16 @@
 
 ///Reads the database's persistence json file and applies age, record_age and saved_head to Ian.
 /mob/living/basic/pet/dog/corgi/ian/proc/Read_Memory()
-	if(fexists("data/npc_saves/Ian.sav")) //legacy compatability to convert old format to new
-		var/savefile/S = new /savefile("data/npc_saves/Ian.sav")
-		S["age"] >> age
-		S["record_age"] >> record_age
-		S["saved_head"] >> saved_head
-		fdel("data/npc_saves/Ian.sav")
-	else
-		var/json_file = file("data/npc_saves/Ian.json")
-		if(!fexists(json_file))
-			return
-		var/list/json = json_decode(file2text(json_file))
-		age = json["age"]
-		record_age = json["record_age"]
-		saved_head = json["saved_head"]
+	var/json_file = file("data/npc_saves/Ian.json")
+	if(!fexists(json_file))
+		return
+	var/json_text = file2text(json_file)
+	if(!rustg_json_is_valid(json_text))
+		return
+	var/list/json = json_decode(json_text)
+	age = json["age"]
+	record_age = json["record_age"]
+	saved_head = json["saved_head"]
 	if(isnull(age))
 		age = 0
 	if(isnull(record_age))

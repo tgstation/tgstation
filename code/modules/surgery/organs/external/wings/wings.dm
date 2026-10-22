@@ -190,7 +190,7 @@
 
 	playsound(human.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
-	for(var/obj/item/choking_hazard in human.held_items)
+	for(var/obj/item/choking_hazard as anything in human.get_held_items())
 		human.accident(choking_hazard)
 
 	var/olddir = human.dir
@@ -206,7 +206,7 @@
 ///UNSAFE PROC, should only be called through the Activate or other sources that check for CanFly
 /obj/item/organ/wings/proc/toggle_flight(mob/living/carbon/human/human)
 	if(!HAS_TRAIT_FROM(human, TRAIT_MOVE_FLOATING, SPECIES_FLIGHT_TRAIT))
-		human.physiology.stun_mod *= 2
+		MODIFY_PHYSIOLOGY(human, PHYS_COEFF_STUN, 2)
 		human.add_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SPECIES_FLIGHT_TRAIT)
 		human.add_movespeed_modifier(/datum/movespeed_modifier/jetpack/wings)
 		human.AddElement(/datum/element/forced_gravity, 0)
@@ -215,9 +215,10 @@
 		to_chat(human, span_notice("You beat your wings and begin to hover gently above the ground..."))
 		human.set_resting(FALSE, TRUE)
 		human.refresh_gravity()
+		RegisterSignal(human, COMSIG_HUMAN_SPEC_STUN, PROC_REF(on_spec_stun))
 		return
 
-	human.physiology.stun_mod *= 0.5
+	MODIFY_PHYSIOLOGY(human, PHYS_COEFF_STUN, 0.5)
 	human.remove_traits(list(TRAIT_MOVE_FLOATING, TRAIT_IGNORING_GRAVITY, TRAIT_NOGRAV_ALWAYS_DRIFT), SPECIES_FLIGHT_TRAIT)
 	human.remove_movespeed_modifier(/datum/movespeed_modifier/jetpack/wings)
 	human.RemoveElement(/datum/element/forced_gravity, 0)
@@ -225,6 +226,14 @@
 	to_chat(human, span_notice("You settle gently back onto the ground..."))
 	close_wings()
 	human.refresh_gravity()
+	UnregisterSignal(human, COMSIG_HUMAN_SPEC_STUN)
+
+/obj/item/organ/wings/proc/on_spec_stun(datum/source, list/amount)
+	SIGNAL_HANDLER
+	if(owner.buckled)
+		return
+	toggle_flight(owner)
+	INVOKE_ASYNC(src, PROC_REF(fly_slip), owner)
 
 ///Spread wings. Activate Jetpack component
 /obj/item/organ/wings/proc/open_wings()
@@ -268,12 +277,19 @@
 		EXTERNAL_ADJACENT = BODY_ADJ_LAYER,
 	)
 	feature_key = FEATURE_WINGS
+	color_source = ORGAN_COLOR_OVERRIDE
 	offset_location = ENTIRE_BODY
+	overlay_flags = parent_type::overlay_flags | LIMB_OVERLAY_WIDE_ICON | LIMB_OVERLAY_TALL_ICON
 	/// Slot we check against
 	var/slot_blocker = HIDEJUMPSUIT
 
 /datum/bodypart_overlay/mutant/wings/can_draw_on_bodypart(obj/item/bodypart/bodypart_owner, mob/living/carbon/owner)
 	return ..() && !(bodypart_owner.owner?.obscured_slots & slot_blocker)
+
+/datum/bodypart_overlay/mutant/wings/override_color(obj/item/bodypart/bodypart_owner)
+	if(bodypart_owner.owner?.get_organ_by_type(/obj/item/organ/tail/fish/cerulean))
+		return bodypart_owner.owner.dna.features[FEATURE_TAIL_FISH_COLOR]
+	return bodypart_owner.draw_color
 
 /datum/bodypart_overlay/mutant/wings/proc/open_wings()
 	return

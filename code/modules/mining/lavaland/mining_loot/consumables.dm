@@ -80,24 +80,35 @@
 	layer = ABOVE_ALL_MOB_LAYER
 	plane = ABOVE_GAME_PLANE
 	var/static/list/color_cutoffs = list(10, 25, 25)
+	/// Vision stays with its original recipient when the orbit component is transferred.
+	var/mob/vision_owner
 
 /obj/effect/wisp/orbit(atom/thing, radius, clockwise, rotation_speed, rotation_segments, pre_rotation, lockinorbit)
 	. = ..()
-	if(!ismob(thing))
+	if(!. || !ismob(thing))
 		return
 	var/mob/being = thing
-	RegisterSignal(being, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(update_user_sight))
+	if(vision_owner != being)
+		if(vision_owner)
+			clear_vision(vision_owner)
+		vision_owner = being
+		RegisterSignal(being, COMSIG_QDELETING, PROC_REF(clear_vision))
+		RegisterSignal(being, COMSIG_MOB_UPDATE_SIGHT, PROC_REF(update_user_sight))
 	to_chat(being, span_notice("The wisp enhances your vision."))
 	ADD_TRAIT(being, TRAIT_THERMAL_VISION, REF(src))
 
 /obj/effect/wisp/stop_orbit(datum/component/orbiter/orbits, refreshing = FALSE)
-	if(!ismob(orbit_target) || refreshing)
-		return ..()
-	var/mob/being = orbit_target
-	UnregisterSignal(being, COMSIG_MOB_UPDATE_SIGHT)
-	to_chat(being, span_notice("Your vision returns to normal."))
-	REMOVE_TRAIT(being, TRAIT_THERMAL_VISION, REF(src))
+	if(!refreshing && vision_owner)
+		to_chat(vision_owner, span_notice("Your vision returns to normal."))
+		clear_vision(vision_owner)
 	return ..()
+
+/obj/effect/wisp/proc/clear_vision(mob/being)
+	SIGNAL_HANDLER
+	if(vision_owner == being)
+		vision_owner = null
+	UnregisterSignal(being, list(COMSIG_MOB_UPDATE_SIGHT, COMSIG_QDELETING))
+	REMOVE_TRAIT(being, TRAIT_THERMAL_VISION, REF(src))
 
 /obj/effect/wisp/proc/update_user_sight(mob/user)
 	SIGNAL_HANDLER
@@ -202,7 +213,7 @@
 	else
 		to_chat(exposed_human, span_userdanger("A terrible pain travels down your back as wings burst out!"))
 	playsound(exposed_human.loc, 'sound/items/poster/poster_ripped.ogg', 50, TRUE, -1)
-	exposed_human.apply_damage(20, def_zone = BODY_ZONE_CHEST, forced = TRUE, wound_bonus = CANT_WOUND)
+	exposed_human.apply_damage(20, def_zone = BODY_ZONE_CHEST, wound_bonus = CANT_WOUND)
 	exposed_human.emote("scream")
 
 /datum/reagent/flightpotion/proc/get_wing_choice(mob/living/carbon/human/needs_wings, obj/item/bodypart/chest/chest)

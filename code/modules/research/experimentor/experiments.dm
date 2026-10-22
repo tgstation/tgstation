@@ -346,7 +346,7 @@
 	machine.show_start_message(final_message, start_message_type)
 	playsound(machine, 'sound/effects/supermatter.ogg', 50, 3, -1)
 
-	var/obj/item/relic/loaded_artifact = machine.loaded_item
+	var/obj/item/assembly/relic/loaded_artifact = machine.loaded_item
 	if(loaded_artifact)
 		loaded_artifact.reveal()
 		machine.investigate_log("Experimentor has revealed a relic with [span_danger("[loaded_artifact.hidden_power]")] effect.", INVESTIGATE_EXPERIMENTOR)

@@ -53,9 +53,7 @@
 /turf/open/floor/holofloor/asteroid,
 /area/template_noop)
 "B" = (
-/turf/open/floor/holofloor{
-	icon_state = "stairs-old"
-	},
+/turf/open/floor/holofloor/stairs/old,
 /area/template_noop)
 "C" = (
 /obj/structure/table/wood/fancy,

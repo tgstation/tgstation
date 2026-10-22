@@ -343,7 +343,7 @@
 "lL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/sand/plating,
-/obj/item/gun/ballistic/revolver/badass{
+/obj/item/gun/ballistic/revolver/syndicate/badass{
 	pixel_x = 5;
 	pixel_y = 6
 	},
@@ -1529,7 +1529,7 @@
 /turf/open/misc/asteroid/airless,
 /area/deathmatch)
 "TP" = (
-/obj/effect/mob_spawn/corpse/human/skeleton,
+/obj/effect/mob_spawn/corpse/human/skeleton/cerulean,
 /turf/open/misc/asteroid/airless,
 /area/deathmatch)
 "Uy" = (

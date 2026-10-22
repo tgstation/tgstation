@@ -192,7 +192,7 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		return SUCCESSFUL_BLOCK
 
 	var/block_chance_modifier = round(damage / -3)
-	for(var/obj/item/module in held_items)
+	for(var/obj/item/module as anything in get_held_items())
 		var/final_block_chance = module.block_chance - (clamp((armour_penetration - module.armour_penetration) / 2, 0, 100)) + block_chance_modifier
 		if(module.hit_reaction(src, hit_by, attack_text, final_block_chance, damage, attack_type, damage_type))
 			return SUCCESSFUL_BLOCK
@@ -507,7 +507,20 @@ GLOBAL_LIST_INIT(blacklisted_borg_hats, typecacheof(list( //Hats that don't real
 		. = TRUE
 	return ..() || .
 
-/mob/living/silicon/robot/apply_damage(damage, damagetype, def_zone, blocked, forced, spread_damage, wound_bonus, exposed_wound_bonus, sharpness, attack_direction, attacking_item, wound_clothing)
+/mob/living/silicon/robot/apply_damage/apply_damage(
+	damage = 0,
+	damagetype = BRUTE,
+	def_zone = null,
+	blocked = 0,
+	forced = FALSE,
+	spread_damage = FALSE,
+	wound_bonus = 0,
+	exposed_wound_bonus = 0,
+	sharpness = NONE,
+	attack_direction = null,
+	attacking_item,
+	wound_clothing = TRUE,
+)
 	var/mob/living/silicon/robot/borg = src
 	var/obj/item/shield_module/shield = locate() in borg
 	if(!shield)

@@ -27,6 +27,9 @@
 	var/obj/item/clothing/suit = mod.get_part_from_slot(ITEM_SLOT_OCLOTHING)
 	if(istype(suit))
 		RegisterSignal(suit, COMSIG_ITEM_PRE_UNEQUIP, PROC_REF(on_suit_unequip))
+	// You could easily allow modsuits to be strip accessible like backpacks like so
+	// But we figured there should be special handling for stuff like DNA locks first
+	// mod.AddElement(/datum/element/strip_accessible_storage)
 
 /obj/item/mod/module/storage/on_uninstall(deleting = FALSE)
 	. = ..()
@@ -37,6 +40,7 @@
 	var/obj/item/clothing/suit = mod.get_part_from_slot(ITEM_SLOT_OCLOTHING)
 	if(istype(suit))
 		UnregisterSignal(suit, COMSIG_ITEM_PRE_UNEQUIP)
+	// mod.RemoveElement(/datum/element/strip_accessible_storage)
 
 /obj/item/mod/module/storage/proc/on_suit_unequip(obj/item/source, force, atom/newloc, no_move, invdrop, silent)
 	if(QDELETED(source) || !invdrop || !mod.wearer || newloc == mod.wearer || !mod.wearer.s_store)
