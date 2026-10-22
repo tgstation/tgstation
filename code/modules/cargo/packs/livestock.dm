@@ -102,6 +102,13 @@
 	contains = list(/mob/living/basic/pig)
 	crate_name = "pig crate"
 
+/datum/supply_pack/critter/turkey
+	name = "Turkey Crate"
+	desc = "The turkey goes gobble! Contains one turkey."
+	cost = CARGO_CRATE_VALUE * 3
+	contains = list(/mob/living/basic/turkey)
+	crate_name = "turkey crate"
+
 /datum/supply_pack/critter/pony
 	name = "Pony Crate"
 	desc = "Ponies, yay! (Just the one.)"
