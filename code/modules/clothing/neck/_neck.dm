@@ -282,7 +282,7 @@
 			if(isnull(lungs) \
 				|| carbon_patient.stat == DEAD \
 				|| (HAS_TRAIT(carbon_patient, TRAIT_FAKEDEATH)) \
-				|| (HAS_TRAIT(carbon_patient, TRAIT_NOBREATH))\
+				|| (HAS_TRAIT_NOT_FROM(carbon_patient, TRAIT_NOBREATH, BLOOD_WORM_HOST_TRAIT))\
 				|| carbon_patient.failed_last_breath \
 				|| carbon_patient.losebreath)//If pt is dead or otherwise not breathing
 				render_list += "<span class='danger ml-1'>[target.p_Theyre()] not breathing!</span>\n"

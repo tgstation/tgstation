@@ -66,6 +66,8 @@
 		host.balloon_alert(owner, "revival failed!")
 		return FALSE
 
+	host.set_heartattack(FALSE)
+
 	host.visible_message(
 		message = span_danger("\The [host] rise[host.p_s()] from the dead!"),
 		ignored_mobs = owner
