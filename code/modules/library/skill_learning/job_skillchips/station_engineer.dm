@@ -13,6 +13,6 @@
 	desc = "Smells faintly of plasma."
 	auto_traits = list(TRAIT_KNOW_ATMOS_WIRES)
 	skill_name = "Atmospherics Circuitry"
-	skill_description = "Recognise air alarm wire layouts and understand their functionality at a glance."
-	activate_message = span_notice("You suddenly comprehend the secrets behind air alarm circuitry.")
-	deactivate_message = span_notice("Air alarm circuitry stops making sense as images of coloured wires fade from your mind.")
+	skill_description = "Recognise air alarm and fire alarm wire layouts and understand their functionality at a glance."
+	activate_message = span_notice("You suddenly comprehend the secrets behind air alarm and fire alarm circuitry.")
+	deactivate_message = span_notice("Air alarm and fire alarm circuitry stops making sense as images of coloured wires fade from your mind.")
