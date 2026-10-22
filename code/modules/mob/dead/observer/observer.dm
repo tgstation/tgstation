@@ -766,9 +766,6 @@ GAME_VERB_HIDDEN(/mob/dead/observer, add_view_range, "Add View Range")
 	if(usr == src)
 		if(href_list["follow"])
 			var/atom/movable/target = locate(href_list["follow"])
-			var/client/target_client = target
-			if(istype(target_client))
-				target = target_client.mob
 			if(istype(target) && (target != src))
 				ManualFollow(target)
 				return
