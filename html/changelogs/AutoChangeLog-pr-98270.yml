@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - refactor: "(performance) the R&D console no longer resends the whole techweb every second while connected to it"
