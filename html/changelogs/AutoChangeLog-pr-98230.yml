@@ -1,5 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "Eigenstasium spirits no longer vanish the moment someone walks through them"
-  - bugfix: "walking through an Eigenstasium spirit no longer curses the area to look pixel shifted and weird for five minutes"

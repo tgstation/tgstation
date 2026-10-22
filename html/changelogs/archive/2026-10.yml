@@ -475,3 +475,13 @@
       out of.
   - admin: jumping somewhere in your own body, or with Jump To Ghost, no longer leaves
       your mood stuck on the area you jumped out of.
+2026-10-22:
+  SmArtKar:
+  - bugfix: Fixed some MODsuit modules having broken names in action bar
+  uaioy:
+  - balance: silicons take 1 flash to be stunned again (syndie borgs unchanged)
+  vinylspiders:
+  - bugfix: Eigenstasium spirits no longer vanish the moment someone walks through
+      them
+  - bugfix: walking through an Eigenstasium spirit no longer curses the area to look
+      pixel shifted and weird for five minutes
