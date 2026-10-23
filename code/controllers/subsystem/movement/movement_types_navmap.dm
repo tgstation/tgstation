@@ -18,7 +18,8 @@
 	datum/extra_info,
 	initial_path,
 	allow_multiz = FALSE,
-	max_path_cost = 0)
+	max_path_cost = 0,
+	allow_nav_links = TRUE)
 	return add_to_loop(moving,
 		subsystem,
 		/datum/move_loop/has_target/navmap_astar,
@@ -38,7 +39,8 @@
 		diagonal_handling,
 		initial_path,
 		allow_multiz,
-		max_path_cost)
+		max_path_cost,
+		allow_nav_links)
 
 /datum/move_loop/has_target/navmap_astar
 	///How often we're allowed to recalculate our path
@@ -54,6 +56,7 @@
 	var/diagonal_handling
 	var/allow_multiz = FALSE
 	var/max_path_cost = 0
+	var/allow_nav_links = TRUE
 	///The path we're currently following
 	var/list/movement_path
 	var/list/movement_actions
@@ -69,7 +72,7 @@
 	var/is_link_traversing = FALSE
 
 /// Stores pathing options and creates the mover's passability profile.
-/datum/move_loop/has_target/navmap_astar/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, list/initial_path, allow_multiz = FALSE, max_path_cost = 0)
+/datum/move_loop/has_target/navmap_astar/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, list/initial_path, allow_multiz = FALSE, max_path_cost = 0, allow_nav_links = TRUE)
 	. = ..()
 	if(!.)
 		return
@@ -84,11 +87,12 @@
 	src.diagonal_handling = isnull(diagonal_handling) ? DIAGONAL_DO_NOTHING : diagonal_handling
 	src.allow_multiz = allow_multiz
 	src.max_path_cost = max_path_cost
+	src.allow_nav_links = allow_nav_links
 	movement_path = initial_path?.Copy()
 
 /// Returns whether another request can reuse this loop.
-/datum/move_loop/has_target/navmap_astar/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, initial_path, allow_multiz = FALSE, max_path_cost = 0)
-	if(..() && repath_delay == src.repath_delay && max_path_length == src.max_path_length && minimum_distance == src.minimum_distance && access ~= src.access && simulated_only == src.simulated_only && avoid == src.avoid && skip_first == src.skip_first && diagonal_handling == src.diagonal_handling && allow_multiz == src.allow_multiz && max_path_cost == src.max_path_cost)
+/datum/move_loop/has_target/navmap_astar/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, initial_path, allow_multiz = FALSE, max_path_cost = 0, allow_nav_links = TRUE)
+	if(..() && repath_delay == src.repath_delay && max_path_length == src.max_path_length && minimum_distance == src.minimum_distance && access ~= src.access && simulated_only == src.simulated_only && avoid == src.avoid && skip_first == src.skip_first && diagonal_handling == src.diagonal_handling && allow_multiz == src.allow_multiz && max_path_cost == src.max_path_cost && allow_nav_links == src.allow_nav_links)
 		return TRUE
 	return FALSE
 
@@ -138,7 +142,7 @@
 		return
 	COOLDOWN_START(src, repath_cooldown, repath_delay)
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_NAVMAP_REPATH)
-	pathfinding = SSpathfinder.navmap_pathfind(moving, target, max_path_length, minimum_distance, access, simulated_only, avoid, skip_first, diagonal_handling, list(CALLBACK(src, PROC_REF(on_finish_pathing))), allow_multiz, max_path_cost)
+	pathfinding = SSpathfinder.navmap_pathfind(moving, target, max_path_length, minimum_distance, access, simulated_only, avoid, skip_first, diagonal_handling, list(CALLBACK(src, PROC_REF(on_finish_pathing))), allow_multiz, max_path_cost, allow_nav_links)
 	is_pathing = !!pathfinding
 
 /// Accepts the completed path returned by SSpathfinder.
@@ -167,13 +171,13 @@
 	var/turf/next_step = movement_path[1]
 	var/action = movement_actions?[1]
 	if(action && action < 0)
-		var/datum/nav_link/link = SSnavmap.nav_links[-action]
-		if(!link)
+		var/datum/nav_link/nav_link = SSnavmap.nav_links[-action]
+		if(!nav_link)
 			return handle_move_attempt_failure()
-		active_link = link
+		active_link = nav_link
 		link_target = next_step
 		is_link_traversing = TRUE
-		link.begin_traversal(moving, CALLBACK(src, PROC_REF(on_link_finished)))
+		nav_link.begin_traversal(moving, CALLBACK(src, PROC_REF(on_link_finished)))
 		return MOVELOOP_NOT_READY
 	var/atom/old_loc = moving.loc
 	if(action == UP || action == DOWN)

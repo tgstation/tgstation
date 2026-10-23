@@ -80,7 +80,7 @@ GAME_VERB_HIDDEN(/mob/living, navigate, "Navigate")
 
 	navigating = TRUE
 	var/list/datum/callback/await = list(CALLBACK(src, PROC_REF(finish_navigation)))
-	if(!SSpathfinder.pathfind(src, navigate_target, MAX_NAVIGATE_RANGE, mintargetdist = 0, access = get_access(), skip_first = FALSE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, on_finish = await, allow_multiz = TRUE, max_path_cost = MAX_NAVIGATE_RANGE * 10))
+	if(!SSpathfinder.pathfind(src, navigate_target, MAX_NAVIGATE_RANGE, mintargetdist = 0, access = get_access(), skip_first = FALSE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, on_finish = await, allow_multiz = TRUE, max_path_cost = MAX_NAVIGATE_RANGE * 10, allow_nav_links = TRUE))
 		// An unreachable multi-z search invokes the callback before returning FALSE.
 		// Avoid reporting two failures in that case.
 		if(navigating)

@@ -43,11 +43,11 @@
 #define NAVMAP_PATH_STALE_TOPOLOGY "stale_topology"
 
 /** Synchronous call. Use this sparingly for long distances. */
-#define navmap_pathfinder(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost) \
-	NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_pathfinder_ffi")(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost)
+#define navmap_pathfinder(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost, allow_nav_links) \
+	NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_pathfinder_ffi")(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost, allow_nav_links)
 
-#define navmap_pathfinder_start(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost) \
-	NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_pathfinder_start_ffi")(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost)
+#define navmap_pathfinder_start(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost, allow_nav_links) \
+	NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_pathfinder_start_ffi")(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost, allow_nav_links)
 
 /** Resume an in-progress job. Re-supply the current mover pass_info. */
 #define navmap_pathfinder_resume(job_id, pass_info) \

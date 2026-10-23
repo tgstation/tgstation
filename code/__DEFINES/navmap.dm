@@ -44,9 +44,7 @@
 						break; \
 					} \
 				} else { \
-					var/atom/movable/_navec_blocker = _navec_entry; \
-					var/_navec_eval_dir = (_navec_blocker.loc == (T)) ? (dir) : REVERSE_DIR(dir); \
-					if(!_navec_blocker.CanAStarPass(_navec_eval_dir, (pass_info))) { \
+					if(!(T).nav_blocker_can_pass(_navec_entry, (dir), (pass_info))) { \
 						result = FALSE; \
 						break; \
 					} \

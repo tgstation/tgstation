@@ -27,7 +27,7 @@
 	var/datum/move_loop/has_target/navmap_astar/loop = GLOB.move_manager.navmap_astar_move(src,
 		target,
 		delay = 0.5 SECONDS,
-		repath_delay = 1 SECONDS,
+		repath_delay = 0.1 SECONDS,
 		max_path_length = 200,
 		minimum_distance = 0,
 		access = get_access(),

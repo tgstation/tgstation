@@ -14,7 +14,7 @@
  * * skip_first: Whether or not to delete the first item in the path. This would be done because the first item is the starting tile, which can break movement for some creatures.
  * * diagonal_handling: defines how we handle diagonal moves. see __DEFINES/path.dm
  */
-/proc/get_path_to(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access=list(), simulated_only = TRUE, turf/exclude, skip_first=TRUE, diagonal_handling=DIAGONAL_REMOVE_CLUNKY, allow_multiz = FALSE, max_path_cost = 0, list/action_sidecar)
+/proc/get_path_to(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access=list(), simulated_only = TRUE, turf/exclude, skip_first=TRUE, diagonal_handling=DIAGONAL_REMOVE_CLUNKY, allow_multiz = FALSE, max_path_cost = 0, list/action_sidecar, allow_nav_links = FALSE)
 	var/list/hand_around = list()
 	var/list/datum/callback/await
 	if(action_sidecar)
@@ -22,7 +22,7 @@
 	else
 		await = list(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(pathfinding_finished), hand_around))
 	// We're guaranteed that list will be the first list in pathfinding_finished's argset because of how callback handles the arguments list
-	if(!SSpathfinder.pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, await, allow_multiz, max_path_cost))
+	if(!SSpathfinder.pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, await, allow_multiz, max_path_cost, allow_nav_links))
 		return list()
 
 	UNTIL(length(hand_around))

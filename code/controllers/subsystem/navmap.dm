@@ -22,7 +22,7 @@ SUBSYSTEM_DEF(navmap)
 	var/topology_generation = 0
 	var/topology_rebuild_in_progress = FALSE
 	var/alist/nav_links = alist()
-	/// Cross-z links indexed by their source turf for the DM fallback search.
+	/// Navigation links indexed by their source turf for the DM fallback search.
 	var/alist/nav_links_by_source = alist()
 	var/next_nav_link_id = 1
 
@@ -63,7 +63,7 @@ SUBSYSTEM_DEF(navmap)
 
 	return SS_INIT_SUCCESS
 
-/// Preserves baked and nav-link state when the subsystem is replaced.
+/// Preserves baked navigation-link state when the subsystem is replaced.
 /datum/controller/subsystem/navmap/Recover()
 	ss_flags |= SS_NO_INIT
 	initialized = SSnavmap.initialized
@@ -134,53 +134,53 @@ SUBSYSTEM_DEF(navmap)
 	var/success = navmap_pathfinder_topology_update(topology_generation, flat)
 	return success
 
-/// Re-publishes native topology and links when state is stale.
+/// Re-publishes native topology and navigation links when state is stale.
 /datum/controller/subsystem/navmap/proc/sync_native_state()
 	if(!topology_rebuild_in_progress && world.maxz > 0 && (!topology_generation || !length(z_to_nav_layer)))
 		rebuild_topology()
 	if(!navmap_pathfinder_available())
 		return FALSE
 	var/list/native_state = navmap_pathfinder_state()
-	var/valid_link_count = 0
+	var/valid_nav_link_count = 0
 	for(var/id in nav_links)
-		var/datum/nav_link/link = nav_links[id]
-		if(!QDELETED(link) && link.source && link.destination)
-			valid_link_count++
+		var/datum/nav_link/nav_link = nav_links[id]
+		if(!QDELETED(nav_link) && nav_link.source && nav_link.destination)
+			valid_nav_link_count++
 	if(native_state \
 		&& (topology_generation || !world.maxz) \
 		&& native_state["generation"] == topology_generation \
 		&& native_state["z_count"] == length(z_to_nav_layer) \
 		&& native_state["layer_count"] == length(z_to_nav_layer) \
-		&& native_state["link_count"] == valid_link_count)
+		&& native_state["nav_link_count"] == valid_nav_link_count)
 		return TRUE
 	var/topology_success = publish_topology()
-	var/links_success = topology_success && sync_nav_links()
-	if(!topology_success || !links_success)
+	var/nav_links_success = topology_success && sync_nav_links()
+	if(!topology_success || !nav_links_success)
 		return FALSE
 	return TRUE
 
 /// Registers a reusable transition and publishes its endpoints to the native cache.
-/datum/controller/subsystem/navmap/proc/register_nav_link(datum/nav_link/link)
-	if(!link.id)
-		link.id = next_nav_link_id++
-	nav_links[link.id] = link
-	if(!nav_links_by_source[link.source])
-		nav_links_by_source[link.source] = alist()
-	nav_links_by_source[link.source][link.id] = link
+/datum/controller/subsystem/navmap/proc/register_nav_link(datum/nav_link/nav_link)
+	if(!nav_link.id)
+		nav_link.id = next_nav_link_id++
+	nav_links[nav_link.id] = nav_link
+	if(!nav_links_by_source[nav_link.source])
+		nav_links_by_source[nav_link.source] = alist()
+	nav_links_by_source[nav_link.source][nav_link.id] = nav_link
 	topology_generation++
 	sync_native_state()
-	return link.id
+	return nav_link.id
 
-/// Removes a transition and republishes the native link cache.
-/datum/controller/subsystem/navmap/proc/unregister_nav_link(datum/nav_link/link)
-	if(link.id && nav_links[link.id] == link)
-		nav_links[link.id] = null
-		nav_links.Remove(link.id)
-		var/alist/source_links = nav_links_by_source[link.source]
+/// Removes a transition and republishes the native navigation-link cache.
+/datum/controller/subsystem/navmap/proc/unregister_nav_link(datum/nav_link/nav_link)
+	if(nav_link.id && nav_links[nav_link.id] == nav_link)
+		nav_links[nav_link.id] = null
+		nav_links.Remove(nav_link.id)
+		var/alist/source_links = nav_links_by_source[nav_link.source]
 		if(source_links)
-			source_links[link.id] = null
+			source_links[nav_link.id] = null
 			if(!length(source_links))
-				nav_links_by_source[link.source] = null
+				nav_links_by_source[nav_link.source] = null
 		topology_generation++
 		sync_native_state()
 
@@ -188,19 +188,19 @@ SUBSYSTEM_DEF(navmap)
 /datum/controller/subsystem/navmap/proc/sync_nav_links()
 	var/list/flat = list()
 	for(var/id in nav_links)
-		var/datum/nav_link/link = nav_links[id]
-		if(QDELETED(link) || !link.source || !link.destination)
+		var/datum/nav_link/nav_link = nav_links[id]
+		if(QDELETED(nav_link) || !nav_link.source || !nav_link.destination)
 			continue
-		flat += list(link.id, link.source.x, link.source.y, link.source.z, link.destination.x, link.destination.y, link.destination.z, link.cost)
+		flat += list(nav_link.id, nav_link.source.x, nav_link.source.y, nav_link.source.z, nav_link.destination.x, nav_link.destination.y, nav_link.destination.z, nav_link.cost)
 	var/success = navmap_pathfinder_links_update(flat)
 	return success
 
 /// Native callback for side-effect-free, mover-specific link eligibility.
 /proc/navmap_pathfinder_link_can_plan(id, datum/can_pass_info/pass_info)
-	var/datum/nav_link/link = SSnavmap.nav_links[id]
-	return link && !QDELETED(link) && link.can_plan(pass_info)
+	var/datum/nav_link/nav_link = SSnavmap.nav_links[id]
+	return nav_link && !QDELETED(nav_link) && nav_link.can_plan(pass_info)
 
-/// Checks whether two turfs are connected by z-levels and links.
+/// Checks whether two turfs are connected by z-levels and navigation links.
 /datum/controller/subsystem/navmap/proc/groups_reachable(turf/start, turf/goal)
 	var/list/start_layer = z_to_nav_layer[start?.z]
 	var/list/goal_layer = z_to_nav_layer[goal?.z]
@@ -210,9 +210,9 @@ SUBSYSTEM_DEF(navmap)
 		return TRUE
 	var/alist/adjacency = alist()
 	for(var/id in nav_links)
-		var/datum/nav_link/link = nav_links[id]
-		var/list/source_layer = z_to_nav_layer[link.source?.z]
-		var/list/destination_layer = z_to_nav_layer[link.destination?.z]
+		var/datum/nav_link/nav_link = nav_links[id]
+		var/list/source_layer = z_to_nav_layer[nav_link.source?.z]
+		var/list/destination_layer = z_to_nav_layer[nav_link.destination?.z]
 		if(!source_layer || !destination_layer)
 			continue
 		if(!adjacency[source_layer["group"]])
