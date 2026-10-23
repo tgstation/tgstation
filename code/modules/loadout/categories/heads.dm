@@ -28,49 +28,14 @@
 	name = "Red Beret (Colorable)"
 	item_path = /obj/item/clothing/head/beret
 
-/datum/loadout_item/head/black_cap
-	name = "Cap (Black)"
-	item_path = /obj/item/clothing/head/soft/black
-
-/datum/loadout_item/head/blue_cap
-	name = "Cap (Blue)"
-	item_path = /obj/item/clothing/head/soft/blue
+/datum/loadout_item/head/cap
+	name = "Cap"
+	item_path = /obj/item/clothing/head/soft
+	reskin_datum = /datum/atom_skin/cap
 
 /datum/loadout_item/head/delinquent_cap
 	name = "Cap (Delinquent)"
 	item_path = /obj/item/clothing/head/costume/delinquent
-
-/datum/loadout_item/head/green_cap
-	name = "Cap (Green)"
-	item_path = /obj/item/clothing/head/soft/green
-
-/datum/loadout_item/head/grey_cap
-	name = "Cap (Grey)"
-	item_path = /obj/item/clothing/head/soft/grey
-
-/datum/loadout_item/head/orange_cap
-	name = "Cap (Orange)"
-	item_path = /obj/item/clothing/head/soft/orange
-
-/datum/loadout_item/head/purple_cap
-	name = "Cap (Purple)"
-	item_path = /obj/item/clothing/head/soft/purple
-
-/datum/loadout_item/head/rainbow_cap
-	name = "Cap (Rainbow)"
-	item_path = /obj/item/clothing/head/soft/rainbow
-
-/datum/loadout_item/head/red_cap
-	name = "Cap (Red)"
-	item_path = /obj/item/clothing/head/soft/red
-
-/datum/loadout_item/head/white_cap
-	name = "Cap (White)"
-	item_path = /obj/item/clothing/head/soft/mime
-
-/datum/loadout_item/head/yellow_cap
-	name = "Cap (Yellow)"
-	item_path = /obj/item/clothing/head/soft/yellow
 
 /datum/loadout_item/head/flatcap
 	name = "Cap (Flat)"
