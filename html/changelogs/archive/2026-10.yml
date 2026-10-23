@@ -485,3 +485,10 @@
       them
   - bugfix: walking through an Eigenstasium spirit no longer curses the area to look
       pixel shifted and weird for five minutes
+2026-10-23:
+  13spacemen:
+  - bugfix: The follow link in ghost poll "was selected" announcements now follows
+      the chosen player instead of doing nothing.
+  vinylspiders:
+  - refactor: (performance) the R&D console no longer resends the whole techweb every
+      second while connected to it
