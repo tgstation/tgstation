@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "wearing a space suit or bio suit without a helmet no longer hides your gender, and being fully covered (like a bomb suit and hood or a sealed modsuit) now does"
+  - bugfix: "plasmamen, ethereals and shadowpeople/any other nondimorphic gendered species no longer get the female cut on their underwear"
