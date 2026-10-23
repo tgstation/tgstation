@@ -788,6 +788,9 @@ ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an it
 			if("Cancel")
 				return
 			if("Marked Object")
+				if(!isobj(user.holder.marked_datum))
+					to_chat(user, span_boldwarning("Failed! Marked datum is not an object!"))
+					return
 				chosen = user.holder.marked_datum
 	//first: have admins select a typepath for the item they want to offer.
 	if(!chosen)
