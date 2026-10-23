@@ -130,6 +130,9 @@
 			human.reset_perspective(my_head, TRUE)
 			prevent_perspective_change = TRUE
 
+/datum/species/dullahan/get_locked_perspective(mob/living/carbon/human/owner)
+	return my_head
+
 /datum/species/dullahan/on_owner_login(mob/living/carbon/human/owner)
 	var/obj/item/organ/eyes/eyes = owner.get_organ_slot(ORGAN_SLOT_EYES)
 	if(owner_first_client_connection_handled)

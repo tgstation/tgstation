@@ -1442,6 +1442,16 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	return
 
 /**
+ * While prevent_perspective_change is set, returns the atom the owner's view is locked to (null for none).
+ * Used to put the view back there after something (like a camera console) temporarily moved it.
+ *
+ * Arguments:
+ * * owner - The owner of our species.
+ */
+/datum/species/proc/get_locked_perspective(mob/living/carbon/human/owner)
+	return null
+
+/**
  * Gets a description of the species' *physical* attributes. What makes playing as one different. Used in magic mirrors.
  *
  * Returns a string.
