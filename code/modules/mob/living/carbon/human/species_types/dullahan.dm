@@ -213,7 +213,9 @@
 				var/obj/head = dullahan_species.my_head.loc
 				if(speech_args[SPEECH_MODS][WHISPER_MODE]) // whisper away
 					speech_args[SPEECH_SPANS] |= SPAN_ITALICS
-				head.say(speech_args[SPEECH_MESSAGE], spans = speech_args[SPEECH_SPANS], sanitize = FALSE, language = speech_args[SPEECH_LANGUAGE], message_range = speech_args[SPEECH_RANGE], message_mods = speech_args[SPEECH_MODS])
+				// The body's own speech is blanked below, so its treat_message() (capitalization, accents, ...) never runs on this message
+				var/list/treated_message = human.treat_message(speech_args[SPEECH_MESSAGE])
+				head.say(treated_message["message"], spans = speech_args[SPEECH_SPANS], sanitize = FALSE, language = speech_args[SPEECH_LANGUAGE], message_range = speech_args[SPEECH_RANGE], message_mods = speech_args[SPEECH_MODS])
 	speech_args[SPEECH_MESSAGE] = ""
 
 /obj/item/organ/ears/dullahan
@@ -276,9 +278,10 @@
 	if (!istype(detached_head))
 		return // It's so over
 	detached_head.real_name = headless.real_name
+	detached_head.name = "[headless.real_name]'s head"
 	name = headless.real_name
 	detached_head.voice = headless.voice
-	detached_head.pitch = pitch
+	detached_head.pitch = headless.pitch
 	var/obj/item/organ/brain/brain = locate(/obj/item/organ/brain) in detached_head
 	brain.name = "[headless.name]'s brain"
 
