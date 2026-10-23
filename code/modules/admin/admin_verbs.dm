@@ -798,7 +798,7 @@ ADMIN_VERB(new_blackmarket_item, R_BUILD, "Create Black Market Item", "Add an it
 	// second: poll admins for the name, description, price, and quantity.
 	if(!chosen) //Since we can still return null
 		return
-	var/name = tgui_input_text(user, "Name of the item to sell?", "Item listing name", "Arcane Object", max_length = MAX_NAME_LEN)
+	var/name = tgui_input_text(user, "Name of the item to sell?", "Item listing name", "[chosen::name]", max_length = MAX_NAME_LEN)
 	if(isnull(name))
 		return
 	var/description = tgui_input_text(user, "Custom description of the item to sell?", "Item listing description", "[chosen::desc]", max_length = 200)
