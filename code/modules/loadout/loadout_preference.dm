@@ -62,7 +62,8 @@
 		if(!migration || !isnull(normalized_list[migration[1]]))
 			continue
 
-		var/list/data = LAZYLISTDUPLICATE(passed_list[path]) || list()
+		var/list/legacy_data = passed_list[path]
+		var/list/data = LAZYLISTDUPLICATE(legacy_data) || list()
 		data[INFO_RESKIN] = migration[2]
 		LAZYSET(normalized_list, migration[1], data)
 
