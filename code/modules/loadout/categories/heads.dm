@@ -41,17 +41,10 @@
 	name = "Cap (Flat)"
 	item_path = /obj/item/clothing/head/flatcap
 
-/datum/loadout_item/head/beige_fedora
-	name = "Fedora (Beige)"
-	item_path = /obj/item/clothing/head/fedora/beige
-
-/datum/loadout_item/head/black_fedora
-	name = "Fedora (Black)"
+/datum/loadout_item/head/fedora
+	name = "Fedora"
 	item_path = /obj/item/clothing/head/fedora
-
-/datum/loadout_item/head/white_fedora
-	name = "Fedora (White)"
-	item_path = /obj/item/clothing/head/fedora/white
+	reskin_datum = /datum/atom_skin/fedora
 
 /datum/loadout_item/head/mail_cap
 	name = "Cap (Mail)"
