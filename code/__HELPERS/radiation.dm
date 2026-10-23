@@ -110,8 +110,7 @@
 	remove_status_effect(/datum/status_effect/irradiated)
 
 /**
- * Heals a bit of toxin damage if the mob is irradiated
- * When the mob has no more toxin damage, the radiation will be cleared.
+ * Heals a bit of toxin damage, then tries to heal organ damage caused by irradiation.
  *
  * * amount - The amount of toxin damage to heal.
  * * updating_health - Whether to update the mob's health after healing.
@@ -120,9 +119,6 @@
  * Clears radiation from irradiated organs if their damage is fully healed.
  */
 /mob/living/carbon/proc/heal_radiation(amount = 1, updating_health = TRUE, required_biotype = NONE, organ_multiplier = 0)
-	if(!HAS_TRAIT(src, TRAIT_IRRADIATED))
-		return 0
-
 	. = adjust_tox_loss(amount, updating_health = updating_health, required_biotype = required_biotype)
 	if(organ_multiplier <= 0)
 		return .

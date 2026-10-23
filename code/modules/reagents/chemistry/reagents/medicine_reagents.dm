@@ -525,6 +525,8 @@
 
 /datum/reagent/medicine/potass_iodide/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
+	if(!HAS_TRAIT(affected_mob, TRAIT_IRRADIATED))
+		return
 	if(affected_mob.heal_radiation(-0.25 * metabolization_ratio * seconds_per_tick, organ_multiplier = 4, updating_health = FALSE, required_biotype = affected_biotype))
 		return UPDATE_MOB_HEALTH
 

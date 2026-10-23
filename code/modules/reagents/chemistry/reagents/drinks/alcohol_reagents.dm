@@ -681,6 +681,8 @@
 	. = ..()
 	var/obj/item/organ/liver/liver = drinker.get_organ_slot(ORGAN_SLOT_LIVER)
 	if(!isnull(liver) && HAS_TRAIT(liver, TRAIT_ENGINEER_METABOLISM))
+		if(!HAS_TRAIT(drinker, TRAIT_IRRADIATED))
+			return
 		if(drinker.heal_radiation(-2 * metabolization_ratio * seconds_per_tick, organ_multiplier = 0.5, updating_health = FALSE, required_biotype = affected_biotype))
 			return UPDATE_MOB_HEALTH
 
