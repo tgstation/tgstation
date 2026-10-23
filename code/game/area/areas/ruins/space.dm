@@ -205,6 +205,7 @@
 	name = "\improper ASRC Laboratory"
 
 /area/ruin/space/has_grav/dangerous_research/maint
+	nav_cost_flags = NAV_COST_MAINTENANCE
 	name = "\improper ASRC Maintenance"
 
 //Interdyne Ruin
@@ -734,6 +735,7 @@
 	name = "\improper Donk Co. Trading Outpost Break Room"
 
 /area/ruin/space/has_grav/hauntedtradingpost/maint
+	nav_cost_flags = NAV_COST_MAINTENANCE
 	name = "\improper Donk Co. Trading Outpost Auxiliary Storage Room"
 	icon_state = "donk_maints"
 	airlock_wires = /datum/wires/airlock/maint

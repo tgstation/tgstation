@@ -445,7 +445,7 @@
 /datum/pathfind/navmap/proc/navmap_astar_step_cost(turf/tile, base_cost)
 	if(!length(nav_cost_modifiers_native))
 		return base_cost
-	var/flags = tile.nav_cost_flags
+	var/flags = tile.get_nav_cost_flags()
 	var/multiplier = navmap_astar_cost_multiplier_cache[flags]
 	if(isnull(multiplier))
 		multiplier = 1

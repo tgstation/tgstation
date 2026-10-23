@@ -20,7 +20,7 @@ SUBSYSTEM_DEF(navmap)
 	var/alist/nav_groups = alist()
 	var/alist/z_to_nav_layer = alist()
 	var/topology_generation = 0
-	/// Changes when manually assigned turf terrain-cost flags are published.
+	/// Changes when turf terrain-cost flags or their passability dependencies are invalidated.
 	var/nav_cost_generation = 0
 	var/topology_rebuild_in_progress = FALSE
 	var/alist/nav_links = alist()
@@ -274,7 +274,7 @@ SUBSYSTEM_DEF(navmap)
 	var/list/navmap_batch = list()
 	for(var/turf/baking_turf as anything in Z_TURFS(z_level))
 		baking_turf.nav_bake(skip_navmap_push = TRUE)
-		navmap_batch += list(baking_turf.x, baking_turf.y, baking_turf.z, baking_turf.nav_pass, baking_turf.nav_cost_flags)
+		navmap_batch += list(baking_turf.x, baking_turf.y, baking_turf.z, baking_turf.nav_pass, baking_turf.get_nav_cost_flags())
 		count++
 		CHECK_TICK
 	if(length(navmap_batch))

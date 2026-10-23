@@ -18,7 +18,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	/// Packed navmap passability bits. null = unbaked / dirty. See code/__DEFINES/navmap.dm for layout.
 	var/nav_pass = null
-	/// Terrain cost modifier flags for this turf. Set by turf type or directly; call nav_cost_dirty() after runtime changes.
+	/// Terrain cost flags assigned directly to this turf. Area cost flags are combined when queried.
 	var/nav_cost_flags = NONE
 	/// Lazy alist: numeric dir -> flat list of pass_flags masks or (weakref, evaluation direction) pairs. Only present on turfs with conditional edges.
 	var/alist/nav_blockers
@@ -275,6 +275,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /// Allows for reactions to an area change without inherently requiring change_area() be called (I hate maploading)
 /turf/proc/on_change_area(area/old_area, area/new_area)
+	if((old_area?.nav_cost_flags || NONE) != (new_area?.nav_cost_flags || NONE))
+		nav_cost_dirty()
 	transfer_area_lighting(old_area, new_area)
 
 /turf/proc/multiz_turf_del(turf/T, dir)
@@ -909,32 +911,37 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	nav_blockers = null
 	SSnavmap.queue_turf_bake(src)
 	// Clear the navmap DLL's baked flag before the asynchronous re-bake.
-	navmap_pathfinder_update(x, y, z, 0, nav_cost_flags)
+	navmap_pathfinder_update(x, y, z, 0, get_nav_cost_flags())
 	for(var/dir in GLOB.cardinals)
 		var/turf/neighbor = get_step(src, dir)
 		if(neighbor)
 			neighbor.nav_pass = null
 			neighbor.nav_blockers = null
 			SSnavmap.queue_turf_bake(neighbor)
-			navmap_pathfinder_update(neighbor.x, neighbor.y, neighbor.z, 0, neighbor.nav_cost_flags)
+			navmap_pathfinder_update(neighbor.x, neighbor.y, neighbor.z, 0, neighbor.get_nav_cost_flags())
 	for(var/dir in list(UP, DOWN))
 		var/turf/neighbor = get_step_multiz(src, dir)
 		if(neighbor)
 			neighbor.nav_pass = null
 			SSnavmap.queue_turf_bake(neighbor)
-			navmap_pathfinder_update(neighbor.x, neighbor.y, neighbor.z, 0, neighbor.nav_cost_flags)
+			navmap_pathfinder_update(neighbor.x, neighbor.y, neighbor.z, 0, neighbor.get_nav_cost_flags())
 			// Proc-based turfs may have passability that depends on the adjacent z-level.
 			// Avoid a virtual call for the overwhelmingly common density-based turfs.
 			if(neighbor.pathing_pass_method == TURF_PATHING_PASS_PROC)
 				neighbor.nav_dirty_vertical_dependents()
 
-/// Publishes a manual terrain-cost flag change without rebaking passability edges.
+/// Returns this turf's terrain costs combined with those assigned to its area.
+/turf/proc/get_nav_cost_flags()
+	var/area/our_area = loc
+	return nav_cost_flags | (our_area?.nav_cost_flags || NONE)
+
+/// Publishes a terrain-cost flag change without rebaking passability edges.
 /turf/proc/nav_cost_dirty()
 	if(!SSnavmap.initialized)
 		return
 	SSnavmap.nav_cost_generation++
 	// Publish the current edge cache with the new flags, or preserve the dirty marker if not baked.
-	navmap_pathfinder_update(x, y, z, nav_pass || 0, nav_cost_flags)
+	navmap_pathfinder_update(x, y, z, nav_pass || 0, get_nav_cost_flags())
 
 /// Invalidates nav edges whose passability depends on this turf's vertical neighbours.
 /// Most turfs have no such dependencies; specialized proc-based turfs can override this.
@@ -968,7 +975,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	nav_blockers = blockers
 	// Mass prebakes publish the completed z-level in one FFI call when the DLL is present.
 	if(!skip_navmap_push)
-		navmap_pathfinder_update(x, y, z, packed, nav_cost_flags)
+		navmap_pathfinder_update(x, y, z, packed, get_nav_cost_flags())
 
 /// Builds packed passability bits and live blockers for one outgoing edge.
 /turf/proc/nav_evaluate_edge(dir, turf/dest, list/edge_blockers)

@@ -192,7 +192,7 @@
 		edge_neighbor.nav_pass = null
 		edge_neighbor.nav_blockers = null
 		SSnavmap.queue_turf_bake(edge_neighbor)
-		navmap_pathfinder_update(edge_neighbor.x, edge_neighbor.y, edge_neighbor.z, 0, edge_neighbor.nav_cost_flags)
+		navmap_pathfinder_update(edge_neighbor.x, edge_neighbor.y, edge_neighbor.z, 0, edge_neighbor.get_nav_cost_flags())
 
 /turf/open/openspace/replace_floor(turf/open/new_floor_path, flags)
 	if (!initial(new_floor_path.overfloor_placed))

@@ -60,11 +60,8 @@ GAME_VERB_HIDDEN(/mob/living, navigate, "Navigate")
 
 	cut_navigation()
 
-	COOLDOWN_START(src, navigate_cooldown, 15 SECONDS)
+	COOLDOWN_START(src, navigate_cooldown, 2 SECONDS)
 	if(navigate_target == UP || navigate_target == DOWN)
-		// lowering the cooldown to 5 seconds if we're navigating to a ladder or staircase instead of a proper destination
-		// (so we can decide to move to another destination right off the bat, rather than needing to wait)
-		COOLDOWN_START(src, navigate_cooldown, 5 SECONDS)
 		var/direction_name = navigate_target == UP ? "up" : "down"
 		var/nav_dir = navigate_target
 		var/atom/new_target = find_nearest_stair_or_ladder(nav_dir)
@@ -80,7 +77,7 @@ GAME_VERB_HIDDEN(/mob/living, navigate, "Navigate")
 
 	navigating = TRUE
 	var/list/datum/callback/await = list(CALLBACK(src, PROC_REF(finish_navigation)))
-	if(!SSpathfinder.pathfind(src, navigate_target, MAX_NAVIGATE_RANGE, mintargetdist = 0, access = get_access(), skip_first = FALSE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, on_finish = await, allow_multiz = TRUE, max_path_cost = MAX_NAVIGATE_RANGE * 10, allow_nav_links = TRUE))
+	if(!SSpathfinder.pathfind(src, navigate_target, MAX_NAVIGATE_RANGE, mintargetdist = 0, access = get_access(), skip_first = FALSE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, on_finish = await, allow_multiz = TRUE, max_path_cost = MAX_NAVIGATE_RANGE * 10 * 5, allow_nav_links = TRUE, nav_cost_modifiers = alist(NAV_COST_MAINTENANCE = 5)))
 		// An unreachable multi-z search invokes the callback before returning FALSE.
 		// Avoid reporting two failures in that case.
 		if(navigating)

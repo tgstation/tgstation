@@ -54,6 +54,7 @@
 	secure = FALSE
 
 /area/station/ai/satellite/maintenance
+	nav_cost_flags = NAV_COST_MAINTENANCE
 	name = "\improper AI Satellite Maintenance"
 	icon_state = "ai_maint"
 
