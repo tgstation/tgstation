@@ -453,6 +453,7 @@
 
 	test_sanity_simple(gusgus)
 	test_sanity_complex(gusgus)
+	test_health_updates(gusgus)
 
 	// Simplemobs
 	var/mob/living/simple_animal/abstract_thing = allocate(/mob/living/simple_animal)
@@ -462,6 +463,7 @@
 
 	test_sanity_simple(abstract_thing)
 	test_sanity_complex(abstract_thing)
+	test_health_updates(abstract_thing)
 
 /**
  * Check that the mob has a specific amount of damage. Note: basic mobs have all incoming damage types besides stam converted into brute damage.
@@ -490,6 +492,19 @@
 		TEST_ASSERT_EQUAL(testing_mob.get_stamina_loss(), amount, \
 			"[testing_mob] should have [amount] stamina damage, instead they have [testing_mob.get_stamina_loss()]!")
 	return TRUE
+
+/// Tests that healing each damage type updates both the shared damage pool and the animal's health.
+/datum/unit_test/mob_damage/animal/proc/test_health_updates(mob/living/test_mob)
+	for(var/damage_type in list(BRUTE, BURN, TOX, OXY))
+		test_mob.set_brute_loss(20)
+		TEST_ASSERT_EQUAL(test_mob.health, test_mob.maxHealth - 20, "The animal should start with 20 damage.")
+		TEST_ASSERT_EQUAL(test_mob.heal_damage_type(5, damage_type), 5, \
+			"Healing [damage_type] damage should return the amount healed on [test_mob.type].")
+		TEST_ASSERT_EQUAL(test_mob.get_brute_loss(), 15, "Healing [damage_type] damage should reduce the shared damage pool.")
+		TEST_ASSERT_EQUAL(test_mob.health, test_mob.maxHealth - 15, "Healing [damage_type] damage should immediately update health.")
+		TEST_ASSERT_EQUAL(test_mob.heal_damage_type(20, damage_type), 15, "Healing should not exceed the remaining damage.")
+		TEST_ASSERT_EQUAL(test_mob.health, test_mob.maxHealth, "Overhealing should restore the animal to full health.")
+		TEST_ASSERT_EQUAL(test_mob.heal_damage_type(5, damage_type), 0, "Healing a healthy animal should return zero.")
 
 /datum/unit_test/mob_damage/animal/test_sanity_simple(mob/living/carbon/test_mob)
 	// check to see if basic mob damage works
