@@ -41,13 +41,23 @@
 #define NAVMAP_PATH_NO_PATH "no_path"
 #define NAVMAP_PATH_ERROR "error"
 #define NAVMAP_PATH_STALE_TOPOLOGY "stale_topology"
+#define NAVMAP_PATH_STALE_COSTS "stale_costs"
+#define NAVMAP_PATHFINDER_VERSION "1.0.6"
+
+/proc/nav_cost_modifiers_equal(alist/first, alist/second)
+	if(length(first) != length(second))
+		return FALSE
+	for(var/flag in first)
+		if(first[flag] != second[flag])
+			return FALSE
+	return TRUE
 
 /** Synchronous call. Use this sparingly for long distances. */
-#define navmap_pathfinder(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost, allow_nav_links) \
-	NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_pathfinder_ffi")(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost, allow_nav_links)
+#define navmap_pathfinder(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost, allow_nav_links, cost_modifiers) \
+	NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_pathfinder_ffi")(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost, allow_nav_links, cost_modifiers)
 
-#define navmap_pathfinder_start(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost, allow_nav_links) \
-	NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_pathfinder_start_ffi")(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost, allow_nav_links)
+#define navmap_pathfinder_start(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost, allow_nav_links, cost_modifiers) \
+	NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_pathfinder_start_ffi")(start, end, pass_info, is_flying, max_range, min_target_distance, simulated_only, avoid_turf, diagonal_handling, skip_first, allow_multiz, max_path_cost, allow_nav_links, cost_modifiers)
 
 /** Resume an in-progress job. Re-supply the current mover pass_info. */
 #define navmap_pathfinder_resume(job_id, pass_info) \
@@ -57,8 +67,8 @@
 #define navmap_pathfinder_cancel(job_id) \
 	NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_pathfinder_cancel_ffi")(job_id)
 
-#define navmap_update(x, y, z, nav_pass) \
-	NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_update_ffi")(x, y, z, nav_pass)
+#define navmap_update(x, y, z, nav_pass, nav_cost_flags) \
+	NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_update_ffi")(x, y, z, nav_pass, nav_cost_flags)
 
 #define navmap_bulk_update(flat_list) \
 	NAVMAP_PATHFINDER_CALL(NAVMAP_PATHFINDER, "byond:navmap_bulk_update_ffi")(flat_list)
@@ -72,6 +82,8 @@
 // Cache the extension probe so a missing or unloadable library does not produce
 // repeated call_ext errors from the game.
 /var/__navmap_pathfinder_available = null
+/var/__navmap_pathfinder_version = null
+/var/__navmap_pathfinder_error = null
 
 /proc/navmap_pathfinder_available()
 	if(!isnull(__navmap_pathfinder_available))
@@ -79,17 +91,21 @@
 	var/version
 	try
 		version = navmap_pathfinder_get_version()
-	catch
+	catch(var/exception/error)
 		__navmap_pathfinder_available = FALSE
+		__navmap_pathfinder_error = "Could not load [NAVMAP_PATHFINDER]: [error.name]: [copytext(error.desc, 1, 201)]"
 		return FALSE
-	__navmap_pathfinder_available = !!version
+	__navmap_pathfinder_version = version
+	__navmap_pathfinder_available = version == NAVMAP_PATHFINDER_VERSION
+	if(!__navmap_pathfinder_available)
+		__navmap_pathfinder_error = "Version mismatch: loaded [version], expected [NAVMAP_PATHFINDER_VERSION]"
 	return __navmap_pathfinder_available
 
-/proc/navmap_pathfinder_update(x, y, z, nav_pass)
+/proc/navmap_pathfinder_update(x, y, z, nav_pass, nav_cost_flags)
 	if(!navmap_pathfinder_available())
 		return
 	try
-		navmap_update(x, y, z, nav_pass)
+		navmap_update(x, y, z, nav_pass, nav_cost_flags)
 	catch
 		return
 

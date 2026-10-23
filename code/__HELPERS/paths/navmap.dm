@@ -1,5 +1,18 @@
 #define NAVMAP_ASTAR_NODE_BEFORE(A, B) (f_score[(A)] < f_score[(B)] || (f_score[(A)] == f_score[(B)] && g_score[(A)] > g_score[(B)]))
 
+/// Converts a numeric-keyed modifier alist to alternating flag/multiplier entries for the DLL.
+/proc/nav_cost_modifiers_to_native(alist/nav_cost_modifiers)
+	var/list/flat_modifiers = list()
+	if(!length(nav_cost_modifiers))
+		return flat_modifiers
+	for(var/flag in nav_cost_modifiers)
+		var/multiplier = nav_cost_modifiers[flag]
+		if(!isnum(flag) || flag <= 0 || flag != round(flag) || (flag & (flag - 1)) || !IS_FINITE(multiplier) || multiplier < 1)
+			stack_trace("Invalid nav cost modifier: flag [flag], multiplier [multiplier]")
+			return null
+		flat_modifiers += list(flag, multiplier)
+	return flat_modifiers
+
 /// Native-compatible asynchronous navmap A* fallback.
 /datum/pathfind/navmap
 	/// The mover requesting the path.
@@ -16,6 +29,12 @@
 	var/allow_multiz = FALSE
 	/// Whether the search may traverse registered navigation links.
 	var/allow_nav_links = FALSE
+	/// Per-search flag-to-multiplier map used by both native and DM searches.
+	var/alist/nav_cost_modifiers
+	/// Flat flag/multiplier values passed through the DLL
+	var/list/nav_cost_modifiers_native
+	/// Snapshot of turf cost data when this search began.
+	var/nav_cost_generation
 	/// The maximum total path cost.
 	var/max_path_cost = 0
 	/// Actions associated with each path tile (used for nav links).
@@ -52,19 +71,23 @@
 	var/list/navmap_astar_simulated_cache
 	/// Cached relaxed lower-bound estimates for multi-z A*.
 	var/list/navmap_astar_heuristic_cache
+	/// Cached combined multipliers indexed by the turf's numeric flag combination.
+	var/alist/navmap_astar_cost_multiplier_cache
+	/// Cardinal intermediate selected when an expanded diagonal was priced.
+	var/list/navmap_astar_diagonal_intermediate
 	/// Whether the mover uses flying navigation.
 	var/navmap_astar_is_flying = FALSE
 	/// Cheapest registered nav link, used as a constant admissible cross-z lower bound.
 	var/navmap_astar_min_link_cost = 0
 
 /// Configures a navmap search from a requester and access list.
-/datum/pathfind/navmap/proc/setup(atom/movable/requester, atom/goal, max_distance, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, list/datum/callback/on_finish, allow_multiz = FALSE, max_path_cost = 0, allow_nav_links = FALSE)
+/datum/pathfind/navmap/proc/setup(atom/movable/requester, atom/goal, max_distance, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, list/datum/callback/on_finish, allow_multiz = FALSE, max_path_cost = 0, allow_nav_links = FALSE, alist/nav_cost_modifiers)
 	// Build pass information for this requester.
 	var/datum/can_pass_info/info = new /datum/can_pass_info(requester, access)
-	setup_with_pass_info(requester, goal, max_distance, minimum_distance, info, simulated_only, avoid, skip_first, diagonal_handling, on_finish, allow_multiz, max_path_cost, allow_nav_links)
+	setup_with_pass_info(requester, goal, max_distance, minimum_distance, info, simulated_only, avoid, skip_first, diagonal_handling, on_finish, allow_multiz, max_path_cost, allow_nav_links, nav_cost_modifiers)
 
 /// Configures a navmap search with prepared pass information.
-/datum/pathfind/navmap/proc/setup_with_pass_info(atom/movable/requester, atom/goal, max_distance, minimum_distance, datum/can_pass_info/pass_info, simulated_only, turf/avoid, skip_first, diagonal_handling, list/datum/callback/on_finish, allow_multiz = FALSE, max_path_cost = 0, allow_nav_links = FALSE)
+/datum/pathfind/navmap/proc/setup_with_pass_info(atom/movable/requester, atom/goal, max_distance, minimum_distance, datum/can_pass_info/pass_info, simulated_only, turf/avoid, skip_first, diagonal_handling, list/datum/callback/on_finish, allow_multiz = FALSE, max_path_cost = 0, allow_nav_links = FALSE, alist/nav_cost_modifiers)
 	src.requester = requester
 	src.end = get_turf(goal)
 	src.max_distance = max_distance
@@ -76,6 +99,8 @@
 	src.diagonal_handling = diagonal_handling
 	src.allow_multiz = allow_multiz
 	src.allow_nav_links = allow_nav_links
+	src.nav_cost_modifiers = nav_cost_modifiers?.Copy()
+	src.nav_cost_modifiers_native = nav_cost_modifiers_to_native(src.nav_cost_modifiers)
 	src.max_path_cost = max_path_cost
 	src.on_finish = on_finish
 
@@ -83,7 +108,7 @@
 /datum/pathfind/navmap/start()
 	start = start || get_turf(requester)
 	. = ..()
-	if(!. || !end || (!allow_multiz && start.z != end.z))
+	if(!. || !end || (!allow_multiz && start.z != end.z) || isnull(nav_cost_modifiers_native))
 		return FALSE
 
 	if((allow_multiz || allow_nav_links) && !force_dm)
@@ -96,7 +121,7 @@
 	// Result returned by the native search.
 	var/list/result
 	try
-		result = navmap_pathfinder_start(start, end, pass_info, NAV_IS_FLYING(pass_info), max_distance, minimum_distance, simulated_only, avoid, diagonal_handling, skip_first, allow_multiz, max_path_cost, allow_nav_links)
+		result = navmap_pathfinder_start(start, end, pass_info, NAV_IS_FLYING(pass_info), max_distance, minimum_distance, simulated_only, avoid, diagonal_handling, skip_first, allow_multiz, max_path_cost, allow_nav_links, nav_cost_modifiers_native)
 	catch
 		return FALSE
 	return handle_result(result)
@@ -108,6 +133,10 @@
 	if(complete)
 		return TRUE
 	if(!use_native)
+		if(length(nav_cost_modifiers) && nav_cost_generation != SSnavmap.nav_cost_generation)
+			path = list()
+			complete = TRUE
+			return TRUE
 		return navmap_astar_search_step()
 
 	// Result returned by the native search.
@@ -135,6 +164,10 @@
 			path = list()
 			complete = TRUE
 			return TRUE
+		if(NAVMAP_PATH_STALE_COSTS)
+			path = list()
+			complete = TRUE
+			return TRUE
 		if(NAVMAP_PATH_ERROR)
 			path = list()
 			complete = TRUE
@@ -153,6 +186,9 @@
 	navmap_astar_edge_cache = list()
 	navmap_astar_simulated_cache = list()
 	navmap_astar_heuristic_cache = list()
+	navmap_astar_cost_multiplier_cache = alist()
+	navmap_astar_diagonal_intermediate = list()
+	nav_cost_generation = SSnavmap.nav_cost_generation
 	navmap_astar_min_link_cost = 0
 	for(var/link_id in SSnavmap.nav_links)
 		var/datum/nav_link/nav_link = SSnavmap.nav_links[link_id]
@@ -383,7 +419,7 @@
 		index = best
 
 /// Adds or reprioritizes a node in the A* heap.
-/datum/pathfind/navmap/proc/navmap_astar_queue_update(turf/tile, turf/parent, new_cost)
+/datum/pathfind/navmap/proc/navmap_astar_queue_update(turf/tile, turf/parent, new_cost, action = 0, turf/diagonal_intermediate)
 	if(navmap_astar_closed[tile] || (max_path_cost && new_cost > max_path_cost))
 		return
 	// Existing cost for this tile, if it has been queued.
@@ -393,6 +429,8 @@
 	navmap_astar_g_score[tile] = new_cost
 	navmap_astar_f_score[tile] = new_cost + navmap_astar_heuristic(tile)
 	navmap_astar_parent[tile] = parent
+	navmap_astar_action[tile] = action
+	navmap_astar_diagonal_intermediate[tile] = diagonal_intermediate
 	// Current heap position for this tile.
 	var/index = navmap_astar_heap_index[tile]
 	if(index)
@@ -402,6 +440,24 @@
 	index = navmap_astar_open.len
 	navmap_astar_heap_index[tile] = index
 	navmap_astar_heap_sift_up(index)
+
+/// Applies matching turf modifiers to a base movement cost.
+/datum/pathfind/navmap/proc/navmap_astar_step_cost(turf/tile, base_cost)
+	if(!length(nav_cost_modifiers_native))
+		return base_cost
+	var/flags = tile.nav_cost_flags
+	var/multiplier = navmap_astar_cost_multiplier_cache[flags]
+	if(isnull(multiplier))
+		multiplier = 1
+		var/list/modifiers = nav_cost_modifiers_native
+		var/modifier_index = 1
+		while(modifier_index <= length(modifiers))
+			var/flag = modifiers[modifier_index]
+			if(flags & flag)
+				multiplier *= modifiers[modifier_index + 1]
+			modifier_index += 2
+		navmap_astar_cost_multiplier_cache[flags] = multiplier
+	return CEILING(base_cost * multiplier, 1)
 
 /// Removes the best node from the A* heap.
 /datum/pathfind/navmap/proc/navmap_astar_heap_pop()
@@ -455,11 +511,13 @@
 			var/routes = navmap_astar_diagonal_routes(from, next, dir)
 			if(!routes)
 				return list()
-			// North/south component used for route insertion.
-			var/vertical = dir & (NORTH | SOUTH)
-			if(diagonal_handling == DIAGONAL_REMOVE_ALL)
-				// Direction of the inserted cardinal step.
-				var/insert_dir = (routes & 1) ? vertical : (dir & (EAST | WEST))
+			var/turf/diagonal_intermediate = navmap_astar_diagonal_intermediate[next]
+			if(diagonal_intermediate)
+				expanded_path += diagonal_intermediate
+				expanded_actions += 0
+			else if(diagonal_handling == DIAGONAL_REMOVE_ALL)
+				// Keep the legacy north/south-first route when equal costs tie.
+				var/insert_dir = (routes & 1) ? (dir & (NORTH | SOUTH)) : (dir & (EAST | WEST))
 				expanded_path += get_step(from, insert_dir)
 				expanded_actions += 0
 			else if(diagonal_handling == DIAGONAL_REMOVE_CLUNKY && !(routes & 1) && (routes & 2))
@@ -478,6 +536,10 @@
 	// Directions considered from each expanded node.
 	var/static/list/directions = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST)
 	while(length(navmap_astar_open))
+		if(length(nav_cost_modifiers) && nav_cost_generation != SSnavmap.nav_cost_generation)
+			path = list()
+			complete = TRUE
+			return TRUE
 		// Node with the lowest estimated total cost.
 		var/turf/current = navmap_astar_heap_pop()
 		if((!allow_multiz || current.z == end.z) && max(abs(current.x - end.x), abs(current.y - end.y)) <= minimum_distance)
@@ -491,20 +553,37 @@
 			// Neighbor in the current direction.
 			var/turf/next = get_step(current, dir)
 			if(dir & (dir - 1))
-				if(navmap_astar_diagonal_routes(current, next, dir, TRUE))
-					navmap_astar_action[next] = 0
-					navmap_astar_queue_update(next, current, navmap_astar_g_score[current] + 14)
+				var/routes = navmap_astar_diagonal_routes(current, next, dir)
+				if(!routes)
+					continue
+				var/diagonal_cost
+				var/turf/diagonal_intermediate
+				var/turf/north_south_mid = get_step(current, dir & (NORTH | SOUTH))
+				var/turf/east_west_mid = get_step(current, dir & (EAST | WEST))
+				if(diagonal_handling == DIAGONAL_REMOVE_ALL)
+					var/north_south_cost = (routes & 1) ? navmap_astar_step_cost(north_south_mid, 10) + navmap_astar_step_cost(next, 10) : INFINITY
+					var/east_west_cost = (routes & 2) ? navmap_astar_step_cost(east_west_mid, 10) + navmap_astar_step_cost(next, 10) : INFINITY
+					if(north_south_cost <= east_west_cost)
+						diagonal_cost = north_south_cost
+						diagonal_intermediate = north_south_mid
+					else
+						diagonal_cost = east_west_cost
+						diagonal_intermediate = east_west_mid
+				else if(diagonal_handling == DIAGONAL_REMOVE_CLUNKY && !(routes & 1) && (routes & 2))
+					diagonal_cost = navmap_astar_step_cost(east_west_mid, 10) + navmap_astar_step_cost(next, 10)
+					diagonal_intermediate = east_west_mid
+				else
+					diagonal_cost = navmap_astar_step_cost(next, 14)
+				navmap_astar_queue_update(next, current, navmap_astar_g_score[current] + diagonal_cost, 0, diagonal_intermediate)
 			else if((source_edges & dir) && navmap_astar_turf_occupiable(next))
-				navmap_astar_action[next] = 0
-				navmap_astar_queue_update(next, current, navmap_astar_g_score[current] + 10)
+				navmap_astar_queue_update(next, current, navmap_astar_g_score[current] + navmap_astar_step_cost(next, 10))
 		if(allow_multiz && navmap_astar_is_flying)
 			// Explore vertical neighbors for flying movers.
 			for(var/vertical_dir in list(UP, DOWN))
 				// Neighbor on the adjacent z-level.
 				var/turf/vertical_next = get_step_multiz(current, vertical_dir)
 				if(navmap_astar_vertical_open(current, vertical_next, vertical_dir))
-					navmap_astar_action[vertical_next] = vertical_dir
-					navmap_astar_queue_update(vertical_next, current, navmap_astar_g_score[current] + 10)
+					navmap_astar_queue_update(vertical_next, current, navmap_astar_g_score[current] + navmap_astar_step_cost(vertical_next, 10), vertical_dir)
 		if(allow_nav_links)
 			// Explore registered navigation links, restricting flat searches to the current z-level.
 			var/alist/source_links = SSnavmap.nav_links_by_source[current]
@@ -521,10 +600,7 @@
 				var/turf/link_destination = nav_link.destination
 				if(!navmap_astar_turf_occupiable(link_destination))
 					continue
-				if(max_path_cost && navmap_astar_g_score[current] + nav_link.cost > max_path_cost)
-					continue
-				navmap_astar_action[link_destination] = -nav_link.id
-				navmap_astar_queue_update(link_destination, current, navmap_astar_g_score[current] + nav_link.cost)
+				navmap_astar_queue_update(link_destination, current, navmap_astar_g_score[current] + navmap_astar_step_cost(link_destination, nav_link.cost), -nav_link.id)
 		if(allow_tick_yield)
 			CHECK_TICK
 	path = list()
@@ -580,12 +656,15 @@
 #undef NAVMAP_ASTAR_NODE_BEFORE
 
 /// Runs a navmap search synchronously.
-/proc/navmap_pathfinder_blocking(atom/movable/requester, turf/start_turf, turf/end_turf, datum/can_pass_info/pass_info, max_distance, minimum_distance, simulated_only, turf/avoid, diagonal_handling, skip_first, use_dm_implementation = FALSE, allow_tick_yield = TRUE, allow_multiz = FALSE, max_path_cost = 0, allow_nav_links = FALSE, list/action_sidecar)
+/proc/navmap_pathfinder_blocking(atom/movable/requester, turf/start_turf, turf/end_turf, datum/can_pass_info/pass_info, max_distance, minimum_distance, simulated_only, turf/avoid, diagonal_handling, skip_first, use_dm_implementation = FALSE, allow_tick_yield = TRUE, allow_multiz = FALSE, max_path_cost = 0, allow_nav_links = FALSE, list/action_sidecar, alist/nav_cost_modifiers)
+	var/list/native_cost_modifiers = nav_cost_modifiers_to_native(nav_cost_modifiers)
+	if(isnull(native_cost_modifiers))
+		return list()
 	if((allow_multiz || allow_nav_links) && !use_dm_implementation)
 		SSnavmap.sync_native_state()
 	if(!use_dm_implementation && navmap_pathfinder_available())
 		try
-			var/list/result = navmap_pathfinder(start_turf, end_turf, pass_info, NAV_IS_FLYING(pass_info), max_distance, minimum_distance, simulated_only, avoid, diagonal_handling, skip_first, allow_multiz, max_path_cost, allow_nav_links)
+			var/list/result = navmap_pathfinder(start_turf, end_turf, pass_info, NAV_IS_FLYING(pass_info), max_distance, minimum_distance, simulated_only, avoid, diagonal_handling, skip_first, allow_multiz, max_path_cost, allow_nav_links, native_cost_modifiers)
 			if(action_sidecar)
 				action_sidecar += result["actions"] || list()
 			return result["path"] || list()
@@ -597,7 +676,7 @@
 	search.force_dm = TRUE
 	search.start = start_turf
 	search.allow_tick_yield = allow_tick_yield
-	search.setup_with_pass_info(requester, end_turf, max_distance, minimum_distance, pass_info, simulated_only, avoid, skip_first, diagonal_handling, null, allow_multiz, max_path_cost, allow_nav_links)
+	search.setup_with_pass_info(requester, end_turf, max_distance, minimum_distance, pass_info, simulated_only, avoid, skip_first, diagonal_handling, null, allow_multiz, max_path_cost, allow_nav_links, nav_cost_modifiers)
 	if(!search.start())
 		qdel(search)
 		return list()

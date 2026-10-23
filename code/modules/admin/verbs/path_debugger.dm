@@ -302,6 +302,29 @@ GLOBAL_DATUM_INIT(pathfind_dude, /obj/pathfind_guy, new())
 
 /datum/action/innate/path_debug/navmap/run_the_path(atom/movable/middle_man)
 	var/datum/can_pass_info/info = nav_debug_profile(profile, owner)
-	var/list/path = navmap_pathfinder_blocking(middle_man, source_turf, target_turf, info, max_distance, 0, TRUE, null, DIAGONAL_DO_NOTHING, FALSE, allow_multiz = source_turf.z != target_turf.z)
+	var/alist/nav_cost_modifiers
+	if(!NAV_IS_FLYING(info))
+		nav_cost_modifiers = alist(NAV_COST_LAVA = 99999)
+	var/use_native_pathfinder = navmap_pathfinder_available()
+	var/timer_id = "path_debug_[REF(src)]"
+	rustg_time_reset(timer_id)
+	var/list/path = navmap_pathfinder_blocking(
+		requester = middle_man,
+		start_turf = source_turf,
+		end_turf = target_turf,
+		pass_info = info,
+		max_distance = max_distance,
+		minimum_distance = 0,
+		simulated_only = TRUE,
+		avoid = null,
+		diagonal_handling = DIAGONAL_DO_NOTHING,
+		skip_first = FALSE,
+		allow_multiz = source_turf.z != target_turf.z,
+		allow_nav_links = TRUE,
+		nav_cost_modifiers = nav_cost_modifiers,
+	)
+	var/search_time_ms = round(rustg_time_microseconds(timer_id) / 1000, 0.001)
+	var/backend = use_native_pathfinder ? "native DLL v[__navmap_pathfinder_version]" : "DM fallback: [__navmap_pathfinder_error]"
+	to_chat(owner, span_notice("Navmap pathfinding used [backend] and took [search_time_ms] ms."))
 	display_turfs = islist(path) ? path : list()
 	update_visuals()

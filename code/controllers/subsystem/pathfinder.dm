@@ -77,19 +77,24 @@ SUBSYSTEM_DEF(pathfinder)
 
 /// Initiates a pathfind. Returns true if we're good, FALSE if something's failed.
 /// Uses the DLL if available, otherwise uses the DM navmap A* implementation.
-/datum/controller/subsystem/pathfinder/proc/pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish, allow_multiz = FALSE, max_path_cost = 0, allow_nav_links = FALSE)
+/datum/controller/subsystem/pathfinder/proc/pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish, allow_multiz = FALSE, max_path_cost = 0, allow_nav_links = FALSE, alist/nav_cost_modifiers)
 	var/turf/start = get_turf(requester)
 	var/turf/goal = get_turf(end)
 	if(!start || !goal)
 		return FALSE
 	var/datum/can_pass_info/pass_info = new(requester, access)
-	if(allow_multiz || allow_nav_links)
-		var/datum/pathfind/navmap/multiz_path = navmap_pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, on_finish, allow_multiz, max_path_cost, allow_nav_links)
+	var/list/native_cost_modifiers = nav_cost_modifiers_to_native(nav_cost_modifiers)
+	if(isnull(native_cost_modifiers))
+		for(var/datum/callback/finished as anything in on_finish)
+			finished.Invoke(list())
+		return TRUE
+	if(allow_multiz || allow_nav_links || length(nav_cost_modifiers))
+		var/datum/pathfind/navmap/multiz_path = navmap_pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, on_finish, allow_multiz, max_path_cost, allow_nav_links, nav_cost_modifiers)
 		return !!multiz_path
 	if(navmap_pathfinder_available())
 		var/list/path
 		try
-			var/list/result = navmap_pathfinder(start, goal, pass_info, NAV_IS_FLYING(pass_info), max_distance, mintargetdist || 0, simulated_only, exclude, diagonal_handling, skip_first, allow_multiz, max_path_cost, allow_nav_links)
+			var/list/result = navmap_pathfinder(start, goal, pass_info, NAV_IS_FLYING(pass_info), max_distance, mintargetdist || 0, simulated_only, exclude, diagonal_handling, skip_first, allow_multiz, max_path_cost, allow_nav_links, native_cost_modifiers)
 			path = result["path"] || list()
 			for(var/datum/callback/finished as anything in on_finish)
 				finished.Invoke(path)
@@ -99,17 +104,22 @@ SUBSYSTEM_DEF(pathfinder)
 				finished.Invoke(list())
 			return TRUE
 
-	var/datum/pathfind/navmap/astar_path = navmap_pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, on_finish, allow_multiz, max_path_cost, allow_nav_links)
+	var/datum/pathfind/navmap/astar_path = navmap_pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, on_finish, allow_multiz, max_path_cost, allow_nav_links, nav_cost_modifiers)
 	return !!astar_path
 
 /// Starts a async navmap pathfinding job and returns the queued job.
-/datum/controller/subsystem/pathfinder/proc/navmap_pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish, allow_multiz = FALSE, max_path_cost = 0, allow_nav_links = FALSE)
+/datum/controller/subsystem/pathfinder/proc/navmap_pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, diagonal_handling = DIAGONAL_REMOVE_CLUNKY, list/datum/callback/on_finish, allow_multiz = FALSE, max_path_cost = 0, allow_nav_links = FALSE, alist/nav_cost_modifiers)
+	var/list/native_cost_modifiers = nav_cost_modifiers_to_native(nav_cost_modifiers)
+	if(isnull(native_cost_modifiers))
+		for(var/datum/callback/finished as anything in on_finish)
+			finished.Invoke(list(), list())
+		return
 	if(allow_multiz && !SSnavmap.groups_reachable(get_turf(requester), get_turf(end)))
 		for(var/datum/callback/finished as anything in on_finish)
 			finished.Invoke(list(), list())
 		return
 	var/datum/pathfind/navmap/path = new()
-	path.setup(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, on_finish, allow_multiz, max_path_cost, allow_nav_links)
+	path.setup(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, diagonal_handling, on_finish, allow_multiz, max_path_cost, allow_nav_links, nav_cost_modifiers)
 	if(!path.start())
 		qdel(path)
 		return
@@ -118,7 +128,9 @@ SUBSYSTEM_DEF(pathfinder)
 
 /// Initiates a swarmed pathfind. Returns TRUE if we're good, FALSE if something's failed
 /// If a valid pathmap exists for the TARGET turf we'll use that, otherwise we have to build a new one
-/datum/controller/subsystem/pathfinder/proc/swarmed_pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist = 0, age = MAP_REUSE_INSTANT, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, list/datum/callback/on_finish)
+/datum/controller/subsystem/pathfinder/proc/swarmed_pathfind(atom/movable/requester, atom/end, max_distance = 30, mintargetdist = 0, age = MAP_REUSE_INSTANT, access = list(), simulated_only = TRUE, turf/exclude, skip_first = TRUE, list/datum/callback/on_finish, alist/nav_cost_modifiers)
+	if(length(nav_cost_modifiers))
+		return pathfind(requester, end, max_distance, mintargetdist, access, simulated_only, exclude, skip_first, DIAGONAL_REMOVE_CLUNKY, on_finish, FALSE, 0, FALSE, nav_cost_modifiers)
 	var/turf/target = get_turf(end)
 	var/datum/can_pass_info/pass_info = new(requester, access)
 	// If there's a map we can use already, use it

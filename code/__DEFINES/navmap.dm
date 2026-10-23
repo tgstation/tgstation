@@ -15,6 +15,9 @@
 /// set when this turf is simulated (atmos) (bit 19).
 #define NAV_SIMULATED    (1 << 19)
 
+/// Terrain cost modifier for lava turfs.
+#define NAV_COST_LAVA    (1 << 0)
+
 /// pass_flags bits that are NOT passability grants and must be stripped when we build a blocker mask
 #define NAV_NON_PASS_FLAGS (LETPASSTHROW | LETPASSCLICKS)
 

@@ -19,7 +19,8 @@
 	initial_path,
 	allow_multiz = FALSE,
 	max_path_cost = 0,
-	allow_nav_links = TRUE)
+	allow_nav_links = TRUE,
+	alist/nav_cost_modifiers)
 	return add_to_loop(moving,
 		subsystem,
 		/datum/move_loop/has_target/navmap_astar,
@@ -40,7 +41,8 @@
 		initial_path,
 		allow_multiz,
 		max_path_cost,
-		allow_nav_links)
+		allow_nav_links,
+		nav_cost_modifiers)
 
 /datum/move_loop/has_target/navmap_astar
 	///How often we're allowed to recalculate our path
@@ -57,6 +59,7 @@
 	var/allow_multiz = FALSE
 	var/max_path_cost = 0
 	var/allow_nav_links = TRUE
+	var/alist/nav_cost_modifiers
 	///The path we're currently following
 	var/list/movement_path
 	var/list/movement_actions
@@ -72,7 +75,7 @@
 	var/is_link_traversing = FALSE
 
 /// Stores pathing options and creates the mover's passability profile.
-/datum/move_loop/has_target/navmap_astar/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, list/initial_path, allow_multiz = FALSE, max_path_cost = 0, allow_nav_links = TRUE)
+/datum/move_loop/has_target/navmap_astar/setup(delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, list/initial_path, allow_multiz = FALSE, max_path_cost = 0, allow_nav_links = TRUE, alist/nav_cost_modifiers)
 	. = ..()
 	if(!.)
 		return
@@ -88,11 +91,12 @@
 	src.allow_multiz = allow_multiz
 	src.max_path_cost = max_path_cost
 	src.allow_nav_links = allow_nav_links
+	src.nav_cost_modifiers = nav_cost_modifiers?.Copy()
 	movement_path = initial_path?.Copy()
 
 /// Returns whether another request can reuse this loop.
-/datum/move_loop/has_target/navmap_astar/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, initial_path, allow_multiz = FALSE, max_path_cost = 0, allow_nav_links = TRUE)
-	if(..() && repath_delay == src.repath_delay && max_path_length == src.max_path_length && minimum_distance == src.minimum_distance && access ~= src.access && simulated_only == src.simulated_only && avoid == src.avoid && skip_first == src.skip_first && diagonal_handling == src.diagonal_handling && allow_multiz == src.allow_multiz && max_path_cost == src.max_path_cost && allow_nav_links == src.allow_nav_links)
+/datum/move_loop/has_target/navmap_astar/compare_loops(datum/move_loop/loop_type, priority, flags, extra_info, delay, timeout, atom/chasing, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, initial_path, allow_multiz = FALSE, max_path_cost = 0, allow_nav_links = TRUE, alist/nav_cost_modifiers)
+	if(..() && repath_delay == src.repath_delay && max_path_length == src.max_path_length && minimum_distance == src.minimum_distance && access ~= src.access && simulated_only == src.simulated_only && avoid == src.avoid && skip_first == src.skip_first && diagonal_handling == src.diagonal_handling && allow_multiz == src.allow_multiz && max_path_cost == src.max_path_cost && allow_nav_links == src.allow_nav_links && nav_cost_modifiers_equal(nav_cost_modifiers, src.nav_cost_modifiers))
 		return TRUE
 	return FALSE
 
@@ -142,7 +146,7 @@
 		return
 	COOLDOWN_START(src, repath_cooldown, repath_delay)
 	SEND_SIGNAL(src, COMSIG_MOVELOOP_NAVMAP_REPATH)
-	pathfinding = SSpathfinder.navmap_pathfind(moving, target, max_path_length, minimum_distance, access, simulated_only, avoid, skip_first, diagonal_handling, list(CALLBACK(src, PROC_REF(on_finish_pathing))), allow_multiz, max_path_cost, allow_nav_links)
+	pathfinding = SSpathfinder.navmap_pathfind(moving, target, max_path_length, minimum_distance, access, simulated_only, avoid, skip_first, diagonal_handling, list(CALLBACK(src, PROC_REF(on_finish_pathing))), allow_multiz, max_path_cost, allow_nav_links, nav_cost_modifiers)
 	is_pathing = !!pathfinding
 
 /// Accepts the completed path returned by SSpathfinder.
@@ -213,8 +217,8 @@
 	link_target = null
 	handle_move_attempt_failure()
 
-/datum/move_manager/proc/navmap_frustrations_move(moving, chasing, delay, timeout, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, subsystem, priority, flags, datum/extra_info, initial_path)
-	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/navmap_astar/frustrations, priority, flags, extra_info, delay, timeout, chasing, repath_delay, max_path_length, minimum_distance, access, simulated_only, avoid, skip_first, diagonal_handling, initial_path)
+/datum/move_manager/proc/navmap_frustrations_move(moving, chasing, delay, timeout, repath_delay, max_path_length, minimum_distance, list/access, simulated_only, turf/avoid, skip_first, diagonal_handling, subsystem, priority, flags, datum/extra_info, initial_path, alist/nav_cost_modifiers)
+	return add_to_loop(moving, subsystem, /datum/move_loop/has_target/navmap_astar/frustrations, priority, flags, extra_info, delay, timeout, chasing, repath_delay, max_path_length, minimum_distance, access, simulated_only, avoid, skip_first, diagonal_handling, initial_path, FALSE, 0, TRUE, nav_cost_modifiers)
 
 /datum/move_loop/has_target/navmap_astar/frustrations
 	var/maximum_frustrations = 10
