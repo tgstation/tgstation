@@ -19,6 +19,11 @@
 	test_sanity_simple(dummy)
 	test_sanity_complex(dummy)
 
+	// Compare pressure damage with ordinary brute damage for both resistance and weakness.
+	for(var/brute_modifier in list(0.5, 1.5))
+		for(var/oxygen_moles in list(0, 10000))
+			test_pressure_damage(brute_modifier, oxygen_moles)
+
 	// Testing if biotypes are working as intended
 	test_biotypes(dummy)
 
@@ -437,6 +442,36 @@
 		"[src] should have 0 burn damage, but has [dummy.get_fire_loss()] instead!")
 	TEST_ASSERT_EQUAL(dummy.get_tox_loss(), 0, \
 		"[src] should have 0 toxin damage, but has [dummy.get_tox_loss()] instead!")
+
+/// Compares pressure damage with the same amount of ordinary brute damage on an equally resistant human.
+/datum/unit_test/mob_damage/proc/test_pressure_damage(brute_modifier, oxygen_moles)
+	var/mob/living/carbon/human/control = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/pressure_dummy = allocate(/mob/living/carbon/human/consistent)
+	var/mob/living/carbon/human/damage_dummy = allocate(/mob/living/carbon/human/consistent)
+	MODIFY_PHYSIOLOGY(pressure_dummy, BRUTE, brute_modifier)
+	MODIFY_PHYSIOLOGY(damage_dummy, BRUTE, brute_modifier)
+	var/datum/gas_mixture/environment = allocate(/datum/gas_mixture)
+	environment.volume = 2500
+	environment.temperature = T20C
+	environment.set_gas(GAS_O2, oxygen_moles)
+
+	control.dna.species.handle_environment_pressure(control, environment, 5)
+	TEST_ASSERT(control.get_brute_loss() > 0, "The test atmosphere should inflict pressure damage.")
+	pressure_dummy.dna.species.handle_environment_pressure(pressure_dummy, environment, 5)
+	// Use the ordinary damage path as the reference so both humans get the same bodypart damage distribution.
+	damage_dummy.adjust_brute_loss(control.get_brute_loss(), required_bodytype = BODYTYPE_ORGANIC)
+	// Compare individual damage amounts; summing randomly selected limbs can round their total differently.
+	var/list/pressure_damage = list()
+	var/list/direct_damage = list()
+	for(var/obj/item/bodypart/bodypart as anything in pressure_dummy.get_bodyparts())
+		pressure_damage += bodypart.brute_dam
+	for(var/obj/item/bodypart/bodypart as anything in damage_dummy.get_bodyparts())
+		direct_damage += bodypart.brute_dam
+	sortTim(pressure_damage, GLOBAL_PROC_REF(cmp_numeric_asc))
+	sortTim(direct_damage, GLOBAL_PROC_REF(cmp_numeric_asc))
+	for(var/damage_index in 1 to pressure_damage.len)
+		TEST_ASSERT_EQUAL(pressure_damage[damage_index], direct_damage[damage_index], \
+			"Pressure damage with [oxygen_moles] oxygen moles and a [brute_modifier] brute modifier should apply resistance once.")
 
 /// Tests that mob damage procs are working as intended for basic and simple mobs
 /datum/unit_test/mob_damage/animal
