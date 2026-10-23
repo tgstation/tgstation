@@ -34,7 +34,7 @@
 	return COMPONENT_ALT_ACTION_DONE
 
 /datum/element/strip_accessible_storage/proc/can_access_storage(obj/item/source, atom/owner, mob/living/user)
-	if(QDELETED(source) || QDELETED(owner) || QDELETED(user))
+	if(QDELETED(source) || QDELETED(owner) || QDELETED(user) || !isliving(user))
 		return FALSE
 	if(source.atom_storage.locked)
 		return FALSE

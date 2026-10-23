@@ -95,6 +95,17 @@
 				/obj/item/storage/dice = 10,
 			),
 		),
+		list(
+			"name" = "pillow weapons",
+			"icon" = "bed",
+			"products" = list(
+				/obj/item/shield/mattress = 5,
+				/obj/item/spear/pillow = 4,
+				/obj/item/spear/pillow = 10,
+				/obj/item/pillow/clown = 2,
+				/obj/item/pillow/mime = 2,
+			)
+		)
 	)
 	contraband = list(
 		/obj/item/dice/fudge = 9,

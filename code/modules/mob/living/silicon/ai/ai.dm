@@ -158,9 +158,14 @@
 				return
 	return ..()
 
-/mob/living/silicon/ai/Destroy()
+/mob/living/silicon/ai/Destroy(force)
 	GLOB.ai_list -= src
 	GLOB.shuttle_caller_list -= src
+	// Release linked cyborgs before deleting the resources they access through us.
+	for(var/mob/living/silicon/robot/cyborg in connected_robots)
+		if(cyborg.connected_ai == src)
+			cyborg.set_connected_ai(null)
+	connected_robots.Cut()
 	SSshuttle.autoEvac()
 	QDEL_NULL(eyeobj) // No AI, no Eye
 	QDEL_NULL(spark_system)
@@ -434,7 +439,7 @@ GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "AI Comma
 		var/mob/living/silicon/robot/cyborg = locate(href_list["track_cyborg"]) in connected_robots
 		if(!cyborg)
 			return
-		ai_tracking_tool.set_tracked_mob(cyborg)
+		ai_tracking_tool.set_tracked_mob(cyborg, src)
 
 	if(href_list["emergencyAPC"]) //This check comes before incapacitated because the only time it would be useful is when we have no power.
 		if(!apc_override)

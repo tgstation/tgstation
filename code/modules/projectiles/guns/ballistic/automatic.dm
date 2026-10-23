@@ -359,6 +359,7 @@
 	mag_display = TRUE
 	projectile_damage_multiplier = 1.2
 	projectile_speed_multiplier = 1.2
+	pressure_threshold = AMMO_CASING_PRESSURE_LOW
 	fire_delay = 2 DECISECONDS
 	burst_size = 1
 	actions_types = list()
@@ -423,8 +424,6 @@
 		. += span_notice("[src] is in the process of system degradation. It is currently at stage [degradation_stage] of [degradation_stage_max]. Use a multitool on [src] to recalibrate. Alternatively, insert it into a weapon recharger.")
 	. += span_notice("You can [EXAMINE_HINT("look closer")] to learn a little more about [src].")
 
-
-
 /obj/item/gun/ballistic/automatic/battle_rifle/update_icon_state()
 	. = ..()
 	if(!shots_before_degradation)
@@ -445,7 +444,7 @@
 	if (!(. & EMP_PROTECT_SELF) && prob(50 / severity))
 		shots_before_degradation = 0
 		emp_malfunction = TRUE
-		attempt_degradation(TRUE)
+		attempt_degradation(2/severity)
 
 /obj/item/gun/ballistic/automatic/battle_rifle/emag_act(mob/user, obj/item/card/emag/emag_card)
 	. = ..()
@@ -453,11 +452,12 @@
 		return FALSE
 	obj_flags |= EMAGGED
 	projectile_damage_multiplier = emagged_projectile_damage_multiplier
+	pressure_threshold = AMMO_CASING_PRESSURE_MEDIUM
 	balloon_alert(user, "heat distribution systems deactivated")
 	return TRUE
 
 /obj/item/gun/ballistic/automatic/battle_rifle/multitool_act(mob/living/user, obj/item/tool)
-	if(!tool.use_tool(src, user, 20 SECONDS, volume = 50))
+	if(!tool.use_tool(src, user, 10 SECONDS * (clamp(degradation_stage, 1, degradation_stage_max)), volume = 50))
 		balloon_alert(user, "interrupted!")
 		return ITEM_INTERACT_BLOCKING
 
@@ -487,14 +487,24 @@
 		perform_extreme_malfunction(user)
 
 	else
-		attempt_degradation(FALSE)
+		attempt_degradation()
+
+// Rather than use standard misfire mechanics, we'll use our special degradation mechanics. Firing overpressurized ammo will ALWAYS increment.
+/obj/item/gun/ballistic/automatic/battle_rifle/handle_misfire_incrementation(mob/living/user)
+	if ((obj_flags & EMAGGED) && degradation_stage == degradation_stage_max && !explosion_timer)
+		perform_extreme_malfunction(user)
+	else
+		var/pressure_degradation = (round(chambered.misfire_increment, 10) / 10)
+		shots_before_degradation = 0
+		attempt_degradation(pressure_degradation)
 
 /// Proc to handle weapon degradation. Called when attempting to fire or immediately after an EMP takes place.
-/obj/item/gun/ballistic/automatic/battle_rifle/proc/attempt_degradation(force_increment = FALSE)
-	if(!prob(degradation_probability) && !force_increment || degradation_stage == degradation_stage_max)
+/obj/item/gun/ballistic/automatic/battle_rifle/proc/attempt_degradation(forced_degradation_value = 0)
+	if(!prob(degradation_probability) && !forced_degradation_value || degradation_stage == degradation_stage_max)
 		return //Only update if we actually increment our degradation stage
 
-	degradation_stage = clamp(degradation_stage + (obj_flags & EMAGGED ? 2 : 1), 0, degradation_stage_max)
+	var/degradation_stage_value = (forced_degradation_value ? forced_degradation_value : 1) * (obj_flags & EMAGGED ? 2 : 1)
+	degradation_stage = clamp(degradation_stage + degradation_stage_value, 0, degradation_stage_max)
 	projectile_speed_multiplier = clamp(initial(projectile_speed_multiplier) + degradation_stage * 0.1, initial(projectile_speed_multiplier), maximum_speed_malus)
 	fire_delay = initial(fire_delay) + (degradation_stage * 0.5)
 	do_sparks(1, TRUE, src)

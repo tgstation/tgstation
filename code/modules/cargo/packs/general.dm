@@ -269,3 +269,4 @@
 	cost = CARGO_CRATE_VALUE * 6
 	contains = list(/obj/structure/reagent_dispensers/water_cooler/jugless = 1, /obj/item/reagent_containers/cooler_jug/punch = 1)
 	crate_name = "punch cooler crate"
+

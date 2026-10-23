@@ -266,6 +266,8 @@
 	button.name = name
 	if(desc)
 		button.desc = desc
+	for(var/datum/hud/hud as anything in viewers)
+		button.update_tooltip(hud.mymob)
 
 /**
  * Creates the background underlay for the button
@@ -395,7 +397,7 @@
 		if(action == src) // This could be us, which is dumb
 			continue
 		var/atom/movable/screen/movable/action_button/button = LAZYACCESS(action.viewers, owner.hud_used)
-		if(action.name == name && button.id)
+		if(action.name == name && button?.id)
 			bitfield |= button.id
 
 	bitfield = ~bitfield // Flip our possible ids, so we can check if we've found a unique one

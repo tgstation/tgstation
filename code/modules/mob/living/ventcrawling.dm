@@ -45,7 +45,7 @@
 			to_chat(src, span_warning("You can't vent crawl while buckled!"))
 		return
 	if(iscarbon(src) && required_nudity)
-		if(length(get_equipped_items(INCLUDE_POCKETS|INCLUDE_HELD)))
+		if(length(get_equipped_items(INCLUDE_POCKETS|INCLUDE_HELD)) || has_status_effect(/datum/status_effect/cuffed_item))
 			if(provide_feedback)
 				to_chat(src, span_warning("You can't crawl around in the ventilation ducts with items!"))
 			return
