@@ -195,6 +195,9 @@
 	modifies_speech = TRUE
 
 /obj/item/organ/tongue/dullahan/handle_speech(datum/source, list/speech_args)
+	// Say modes (such as the changeling hivemind) are handled by /mob/living/say() from our own body, so leave the message alone
+	if(SSradio.get_available_say_mode(owner, speech_args[SPEECH_MODS][RADIO_KEY]))
+		return
 	if(ishuman(owner))
 		var/mob/living/carbon/human/human = owner
 		if(isdullahan(human))
