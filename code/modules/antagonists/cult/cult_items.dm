@@ -798,9 +798,9 @@ Striking a noncultist, however, will tear their flesh."}
 	new /obj/effect/temp_visual/dir_setting/cult/phase/out(mobloc, user_cultist.dir)
 	new /obj/effect/temp_visual/dir_setting/cult/phase(destination, user_cultist.dir)
 
-	playsound(mobloc, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(mobloc, /datum/sound_effect/portal_enter, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	playsound(destination, 'sound/effects/phasein.ogg', 25, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
-	playsound(destination, SFX_PORTAL_ENTER, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(destination, /datum/sound_effect/portal_enter, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/melee/cultblade/halberd
 	name = "bloody halberd"

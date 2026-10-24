@@ -48,7 +48,7 @@
 	/// The amount restored by the gun to the cell per self charge tick
 	var/self_charge_amount = STANDARD_ENERGY_GUN_SELF_CHARGE_RATE
 	/// sound played when fire mode select is done
-	var/fire_mode_switch_sound = SFX_FIRE_MODE_SWITCH
+	var/fire_mode_switch_sound = /datum/sound_effect/fire_mode_switch
 
 	// EMP related vars
 

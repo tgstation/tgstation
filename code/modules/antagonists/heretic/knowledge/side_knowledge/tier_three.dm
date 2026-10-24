@@ -153,7 +153,7 @@
 	name = "bone-shards"
 	desc = "What once appeared to be a normal human fist, now holds a mauled nest of sharp bone-shards."
 	color = "#001aff"
-	hitsound = SFX_SHATTER
+	hitsound = /datum/sound_effect/shatter
 	force = 16
 	wound_bonus = -30
 	exposed_wound_bonus = 15
