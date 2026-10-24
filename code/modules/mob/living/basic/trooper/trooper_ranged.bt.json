@@ -77,13 +77,6 @@
 													},
 													{
 														"type": "leaf",
-														"behavior": "/datum/bt_node/ai_behavior/attack_obstructions",
-														"vars": {
-															"target_key": "BB_CURRENT_TARGET"
-														}
-													},
-													{
-														"type": "leaf",
 														"behavior": "/datum/bt_node/ai_behavior/basic_ranged_attack",
 														"vars": {
 															"target_key": "BB_CURRENT_TARGET",
@@ -92,6 +85,13 @@
 															"time_between_perform": "$b4kar3zl",
 															"max_range": "$beslksyc",
 															"avoid_friendly_fire": "$bnr1aazo"
+														}
+													},
+													{
+														"type": "leaf",
+														"behavior": "/datum/bt_node/ai_behavior/attack_obstructions",
+														"vars": {
+															"target_key": "BB_CURRENT_TARGET"
 														}
 													},
 													{

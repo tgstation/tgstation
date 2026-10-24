@@ -22,7 +22,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged
 	r_hand = /obj/item/gun/energy/alien
 	/// Type of bullet we use
-	var/casingtype = /obj/item/ammo_casing/energy/lasergun
+	var/obj/item/ammo_casing/casingtype = /obj/item/ammo_casing/energy/lasergun
 	/// Sound to play when firing weapon
 	var/projectilesound = 'sound/items/weapons/laser2.ogg'
 	/// number of burst shots
@@ -39,3 +39,6 @@
 		cooldown_time = ranged_cooldown,\
 		burst_shots = burst_shots,\
 	)
+	ai_controller.set_blackboard_key(BB_RANGED_CAN_SHOOT_METHOD, CAN_SHOOT_METHOD_LOSCHECK)
+	var/obj/projectile/myproj = initial(casingtype.projectile_type)
+	ai_controller.set_blackboard_key(BB_RANGED_PROJECTILE_MOVE_FLAGS, initial(myproj.pass_flags))
