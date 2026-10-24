@@ -498,11 +498,27 @@
   - bugfix: plasmamen, ethereals and shadowpeople/any other nondimorphic gendered
       species no longer get the female cut on their underwear
 2026-10-24:
+  Melbert:
+  - bugfix: Wall mounted objects that layer above players will now layer beneath players
+      if a player is leaning against it.
+  - rscadd: Breathing, injecting, or drinking metalgen applies it to your lungs, liver,
+      or stomach
+  PapaMIchael:
+  - balance: Blood worms fake breathing when checked with a stethoscope
+  - bugfix: Blood worms restart their host's heart when they revive it
   PapaMichael:
   - bugfix: Changeling transformation stings properly wear off after 8 minutes
   - balance: Using a stethoscope now takes 2 seconds
+  Robwo:
+  - bugfix: Fixed ambient sound loops not playing in powered areas that have no apc.
   SmArtKar:
   - bugfix: Fixed particle weather not rendering
+  necromanceranne:
+  - balance: Slaughter demons no longer take damage while in blood crawl. They can
+      also eat more than just humans again.
   vinylspiders:
   - bugfix: you can put body bags into disposal bins while buckled to a chair or otherwise
       held in place
+  - qol: atmos techs now start with an Atmospherics skillchip that lets them know
+      air alarm and fire alarm wires
+  - qol: the Engineering skillchip now also lets you know fire alarm wires

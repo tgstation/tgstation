@@ -1,4 +1,0 @@
-author: "Robwo"
-delete-after: True
-changes:
-  - bugfix: "Fixed ambient sound loops not playing in powered areas that have no apc."

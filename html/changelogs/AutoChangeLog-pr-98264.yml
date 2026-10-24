@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Wall mounted objects that layer above players will now layer beneath players if a player is leaning against it."
