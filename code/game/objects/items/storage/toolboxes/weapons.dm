@@ -168,6 +168,16 @@
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/smartgun
 	extra_to_spawn = /obj/item/ammo_box/magazine/smartgun
 
+/obj/item/storage/toolbox/guncase/plastikov
+	name = "outdated smg case"
+	weapon_to_spawn = /obj/item/gun/ballistic/automatic/plastikov
+	extra_to_spawn = /obj/item/ammo_box/magazine/plastikov9mm
+
+/obj/item/storage/toolbox/guncase/syringe_gun
+	name = "syringe gun case"
+	weapon_to_spawn = /obj/item/gun/syringe
+	extra_to_spawn = /obj/item/clothing/glasses/hud/health/night
+
 /obj/item/storage/toolbox/guncase/clandestine
 	name = "clandestine gun case"
 	weapon_to_spawn = /obj/item/gun/ballistic/automatic/pistol/clandestine

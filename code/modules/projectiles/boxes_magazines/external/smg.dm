@@ -26,6 +26,17 @@
 	ammo_type = /obj/item/ammo_casing/c46x30mm/inc
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 3, /datum/material/silver = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
+/obj/item/ammo_box/magazine/plastikov9mm
+	name = "PP-95 magazine (9mm)"
+	icon_state = "9x19-50"
+	base_icon_state = "9x19"
+	ammo_type = /obj/item/ammo_casing/c9mm
+	caliber = CALIBER_9MM
+	max_ammo = 50
+
+/obj/item/ammo_box/magazine/plastikov9mm/update_icon_state()
+	. = ..()
+	icon_state = "[base_icon_state]-[ammo_count() ? 50 : 0]"
 
 /obj/item/ammo_box/magazine/smartgun
 	name = "Abielle magazine (.160 Smart)"
