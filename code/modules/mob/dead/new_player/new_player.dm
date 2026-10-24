@@ -170,7 +170,7 @@
 			display += "…"
 
 		var/static/alist/cached_base64_icons = alist()
-		cached_base64_icons[job.type] ||= icon2base64(get_job_hud_icon_base64(job, scale = 2))
+		cached_base64_icons[job.type] ||= icon2base64(get_job_hud_icon(job, scale = 2))
 		var/icon = "data:image/png;base64,[cached_base64_icons[job.type]]"
 		. += list(list("img", icon, job.title, display, "There will likely be between [lower_end] and [upper_end] [job.title]s."))
 
