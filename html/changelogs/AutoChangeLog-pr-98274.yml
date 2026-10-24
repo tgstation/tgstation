@@ -1,0 +1,5 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - qol: "atmos techs now start with an Atmospherics skillchip that lets them know air alarm and fire alarm wires"
+  - qol: "the Engineering skillchip now also lets you know fire alarm wires"
