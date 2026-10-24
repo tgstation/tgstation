@@ -17,5 +17,5 @@
 /datum/inventory_slot/guardian_storage
 	name = "internal storage"
 	icon_state = "suit_storage"
-	slot_id = ITEM_SLOT_DEX_STORAGE
+	slot_id = ITEM_SLOT_SUITSTORE
 	screen_loc = ui_back

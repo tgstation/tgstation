@@ -144,7 +144,7 @@
 	icon_state = "leatherjacket_biker"
 
 /obj/item/clothing/suit/jacket/leather/armored
-	desc = "Its leather is so thick, you can hardly tell there's padding beneath it. its also <b>really loud!</b>"
+	desc = "Its leather is so thick, you can hardly tell there's padding beneath it. It's also <b>really loud!</b>"
 	icon = /obj/item/clothing/suit/toggle/jacket/sweater::icon
 	icon_state = /obj/item/clothing/suit/toggle/jacket/sweater::icon_state
 	worn_icon = 'icons/mob/clothing/suits/jacket.dmi'

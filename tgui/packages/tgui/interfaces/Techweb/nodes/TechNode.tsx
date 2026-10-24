@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import {
   Box,
   Button,
@@ -10,7 +11,7 @@ import {
 import type { BooleanLike } from 'tgui-core/react';
 import { Experiment } from '../../ExperimentConfigure';
 import { MaterialCostSequence } from '../../Fabrication/MaterialCostSequence';
-import { useRemappedBackend } from '../helpers';
+import { type ResearchData, useRemappedBackend } from '../helpers';
 import { useTechWebRoute } from '../hooks';
 import { LockedExperiment } from '../LockedExperiment';
 import type { TechwebNode } from '../types';
@@ -32,7 +33,7 @@ export function TechNode(props: Props) {
     department_flags,
     experiments,
     points = [],
-    nodes,
+    node_tiers,
     point_types_abbreviations = [],
     queue_nodes = [],
   } = data;
@@ -75,7 +76,7 @@ export function TechNode(props: Props) {
   );
 
   const techcompl = prerequisite_nodes.filter(
-    (x) => nodes.find((y) => y.path === x)?.tier === 0,
+    (prerequisite) => node_tiers[prerequisite] === 0,
   ).length;
   const techProgress = (
     <ProgressBar
@@ -203,59 +204,13 @@ export function TechNode(props: Props) {
       <Box className="Techweb__NodeDescription" mb={2}>
         {description}
       </Box>
-      <Box className="Techweb__NodeUnlockedDesigns" mb={2}>
-        {unlocked_designs.map((k, i) => (
-          <ImageButton
-            key={k}
-            className={`$Techweb__DesignIcon`}
-            imageSize={32}
-            asset={['', design_cache[k].class]}
-            tooltip={
-              <Stack vertical>
-                <Stack.Item mt={0.3} ml={0.3} mb={0.3}>
-                  {design_cache[k].name}
-                </Stack.Item>
-                {design_cache[k].build_types !== null && (
-                  <>
-                    <Stack.Item mt={-2} mb={-2} ml={-3}>
-                      <ul>
-                        <li>
-                          {Object.keys(build_types)
-                            .filter((key) => design_cache[k].build_types & +key)
-                            .map((key) => build_types[key])
-                            .join(', ')}
-                        </li>
-                        {!!Object.keys(department_flags).find(
-                          (key) => !(+key & design_cache[k].department_flags),
-                        ) && (
-                          <li>
-                            {Object.keys(department_flags)
-                              .filter(
-                                (key) =>
-                                  design_cache[k].department_flags & +key,
-                              )
-                              .map((key) => department_flags[key])
-                              .join(', ')}
-                          </li>
-                        )}
-                      </ul>
-                    </Stack.Item>
-                    <Stack.Divider />
-                    <Stack.Item mt={-1}>
-                      <MaterialCostSequence
-                        design={design_cache[k]}
-                        amount={1}
-                        SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
-                      />
-                    </Stack.Item>
-                  </>
-                )}
-              </Stack>
-            }
-            tooltipPosition={i % 15 < 7 ? 'right' : 'left'}
-          />
-        ))}
-      </Box>
+      <NodeDesigns
+        designs={unlocked_designs}
+        design_cache={design_cache}
+        build_types={build_types}
+        department_flags={department_flags}
+        SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+      />
       {required_experiments.length > 0 && (
         <Collapsible
           className="Techweb__NodeExperimentsRequired"
@@ -294,3 +249,77 @@ export function TechNode(props: Props) {
     </Section>
   );
 }
+
+type DesignsProps = {
+  designs: string[];
+  design_cache: ResearchData['design_cache'];
+  build_types: ResearchData['build_types'];
+  department_flags: ResearchData['department_flags'];
+  SHEET_MATERIAL_AMOUNT: number;
+};
+
+/** The designs a node unlocks. These only change with the catalogue, so live updates skip them */
+const NodeDesigns = memo(function NodeDesigns(props: DesignsProps) {
+  const {
+    designs,
+    design_cache,
+    build_types,
+    department_flags,
+    SHEET_MATERIAL_AMOUNT,
+  } = props;
+
+  return (
+    <Box className="Techweb__NodeUnlockedDesigns" mb={2}>
+      {designs.map((id, index) => (
+        <ImageButton
+          key={id}
+          className={`$Techweb__DesignIcon`}
+          imageSize={32}
+          asset={['', design_cache[id].class]}
+          tooltip={
+            <Stack vertical>
+              <Stack.Item mt={0.3} ml={0.3} mb={0.3}>
+                {design_cache[id].name}
+              </Stack.Item>
+              {design_cache[id].build_types !== null && (
+                <>
+                  <Stack.Item mt={-2} mb={-2} ml={-3}>
+                    <ul>
+                      <li>
+                        {Object.keys(build_types)
+                          .filter((key) => design_cache[id].build_types & +key)
+                          .map((key) => build_types[key])
+                          .join(', ')}
+                      </li>
+                      {!!Object.keys(department_flags).find(
+                        (key) => !(+key & design_cache[id].department_flags),
+                      ) && (
+                        <li>
+                          {Object.keys(department_flags)
+                            .filter(
+                              (key) => design_cache[id].department_flags & +key,
+                            )
+                            .map((key) => department_flags[key])
+                            .join(', ')}
+                        </li>
+                      )}
+                    </ul>
+                  </Stack.Item>
+                  <Stack.Divider />
+                  <Stack.Item mt={-1}>
+                    <MaterialCostSequence
+                      design={design_cache[id]}
+                      amount={1}
+                      SHEET_MATERIAL_AMOUNT={SHEET_MATERIAL_AMOUNT}
+                    />
+                  </Stack.Item>
+                </>
+              )}
+            </Stack>
+          }
+          tooltipPosition={index % 15 < 7 ? 'right' : 'left'}
+        />
+      ))}
+    </Box>
+  );
+});

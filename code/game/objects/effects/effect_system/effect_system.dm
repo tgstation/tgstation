@@ -66,7 +66,7 @@
 	/// The length of the previous assigned moveloop in deciseconds
 	var/last_loop_length = 0
 	/// List of dirs avalible to pick, used to avoid accidential duplicates
-	var/list/pickable_dirs = list()
+	var/list/pickable_dirs
 
 /datum/effect_system/basic/New(turf/location, amount = null, cardinals_only = null)
 	. = ..()

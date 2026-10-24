@@ -201,24 +201,11 @@
 	account.adjust_money(-money_cost, "Church Donation: Rite")
 	. = ..()
 
-/datum/religion_rites/greed/vendatray
-	name = "Purchase Vend-A-Tray"
-	desc = "Summons a vend-a-tray. You can use it to sell items!"
-	invoke_msg = "I need a vend-a-tray to make some more money!"
-	money_cost = 300
-
-/datum/religion_rites/greed/vendatray/invoke_effect(mob/living/user, atom/movable/religious_tool)
-	..()
-	var/altar_turf = get_turf(religious_tool)
-	new /obj/structure/displaycase/forsale(altar_turf)
-	playsound(get_turf(religious_tool), 'sound/effects/cashregister.ogg', 60, TRUE)
-	return TRUE
-
 /datum/religion_rites/greed/custom_vending
 	name = "Purchase Personal Vending Machine"
 	desc = "Summons a custom vending machine. You can use it to sell MANY items!"
 	invoke_msg = "If I get a custom vending machine for my products, I can be RICH!"
-	money_cost = 1000 //quite a step up from vendatray
+	money_cost = 1000
 
 /datum/religion_rites/greed/custom_vending/invoke_effect(mob/living/user, atom/movable/religious_tool)
 	..()

@@ -12863,28 +12863,6 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark/smooth_large,
 /area/station/commons/lounge)
-"dqj" = (
-/obj/effect/turf_decal/trimline/purple/filled/line{
-	dir = 1
-	},
-/obj/structure/table/reinforced,
-/obj/structure/displaycase/forsale{
-	req_one_access = list(7)
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/light/directional/north,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 8;
-	id = "scistores";
-	name = "Science Store Shutters"
-	},
-/obj/machinery/door/window/left/directional/east{
-	name = "Research Lab Desk";
-	req_access = list("science")
-	},
-/obj/structure/extinguisher_cabinet/directional/north,
-/turf/open/floor/iron/dark,
-/area/station/science/lobby)
 "dqB" = (
 /obj/effect/turf_decal/stripes/line{
 	dir = 4
@@ -15288,27 +15266,6 @@
 "eap" = (
 /turf/closed/wall,
 /area/station/hallway/secondary/entry)
-"eaL" = (
-/obj/structure/table/reinforced,
-/obj/structure/displaycase/forsale{
-	req_one_access = list(7)
-	},
-/obj/item/paper_bin{
-	pixel_x = 1;
-	pixel_y = 9
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 8;
-	id = "scistores";
-	name = "Science Store Shutters"
-	},
-/obj/machinery/door/window/left/directional/east{
-	name = "Research Lab Desk";
-	req_access = list("science")
-	},
-/turf/open/floor/iron/dark,
-/area/station/science/lobby)
 "eaM" = (
 /obj/effect/spawner/structure/window/reinforced,
 /obj/machinery/door/poddoor/shutters{
@@ -20047,18 +20004,6 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/room)
-"fob" = (
-/obj/structure/table/reinforced,
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters/preopen{
-	id = "kitchen_counter";
-	name = "Kitchen Counter Shutters"
-	},
-/obj/structure/displaycase/forsale/kitchen{
-	pixel_y = 8
-	},
-/turf/open/floor/wood/large,
-/area/station/service/kitchen)
 "fod" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -29798,6 +29743,21 @@
 /obj/structure/cable,
 /turf/open/floor/iron/dark,
 /area/station/science/ordnance)
+"hTc" = (
+/obj/structure/table/reinforced,
+/obj/structure/tipjar,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "scistores";
+	name = "Science Store Shutters"
+	},
+/obj/machinery/door/window/left/directional/east{
+	name = "Research Lab Desk";
+	req_access = list("science")
+	},
+/turf/open/floor/iron/dark,
+/area/station/science/lobby)
 "hTn" = (
 /obj/structure/bed,
 /obj/effect/decal/cleanable/dirt,
@@ -32933,15 +32893,6 @@
 	},
 /turf/open/floor/wood,
 /area/station/maintenance/hallway/abandoned_recreation)
-"iIS" = (
-/obj/structure/table/wood/poker,
-/obj/effect/spawner/random/entertainment/deck,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet{
-	icon_state = "carpet-110"
-	},
-/area/station/service/abandoned_gambling_den)
 "iJa" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/structure/cable,
@@ -39619,6 +39570,12 @@
 /obj/effect/turf_decal/bot,
 /turf/open/floor/iron,
 /area/station/science/research)
+"kzN" = (
+/obj/machinery/door/firedoor,
+/obj/structure/table/reinforced,
+/obj/structure/tipjar/prefilled,
+/turf/open/floor/wood/large,
+/area/station/service/bar)
 "kzP" = (
 /obj/structure/sign/warning/docking/directional/south,
 /turf/open/space/basic,
@@ -48799,6 +48756,11 @@
 /obj/structure/sign/poster/official/random/directional/south,
 /turf/open/floor/iron,
 /area/station/commons/dorms)
+"mWy" = (
+/obj/structure/table/wood/poker,
+/obj/effect/spawner/random/entertainment/gambling,
+/turf/open/floor/carpet,
+/area/station/service/abandoned_gambling_den)
 "mWB" = (
 /obj/structure/table,
 /obj/item/storage/box/metalfoam{
@@ -55472,23 +55434,6 @@
 	},
 /turf/open/floor/glass/reinforced,
 /area/station/command/vault)
-"oJs" = (
-/obj/structure/table/reinforced,
-/obj/structure/displaycase/forsale{
-	req_one_access = list(7)
-	},
-/obj/machinery/door/firedoor,
-/obj/machinery/door/poddoor/shutters/preopen{
-	dir = 8;
-	id = "scistores";
-	name = "Science Store Shutters"
-	},
-/obj/machinery/door/window/left/directional/east{
-	name = "Research Lab Desk";
-	req_access = list("science")
-	},
-/turf/open/floor/iron/dark,
-/area/station/science/lobby)
 "oJt" = (
 /obj/machinery/camera/directional/north{
 	c_tag = "Dormitories - Lower Entrance"
@@ -58331,6 +58276,26 @@
 /obj/effect/landmark/generic_maintenance_landmark,
 /turf/open/floor/iron/large,
 /area/station/maintenance/starboard)
+"pyP" = (
+/obj/effect/turf_decal/trimline/purple/filled/line{
+	dir = 1
+	},
+/obj/structure/table/reinforced,
+/obj/structure/tipjar,
+/obj/machinery/door/firedoor,
+/obj/machinery/light/directional/north,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "scistores";
+	name = "Science Store Shutters"
+	},
+/obj/machinery/door/window/left/directional/east{
+	name = "Research Lab Desk";
+	req_access = list("science")
+	},
+/obj/structure/extinguisher_cabinet/directional/north,
+/turf/open/floor/iron/dark,
+/area/station/science/lobby)
 "pyY" = (
 /obj/machinery/portable_atmospherics/canister/air,
 /turf/open/floor/plating,
@@ -61934,14 +61899,6 @@
 /obj/structure/cable,
 /turf/open/floor/plating,
 /area/station/maintenance/department/crew_quarters/dorms)
-"qwJ" = (
-/obj/machinery/door/firedoor,
-/obj/structure/table/reinforced,
-/obj/structure/displaycase/forsale/kitchen{
-	pixel_y = 8
-	},
-/turf/open/floor/wood/large,
-/area/station/service/bar)
 "qwN" = (
 /obj/effect/turf_decal/trimline/dark_blue/filled/warning{
 	dir = 4
@@ -68156,13 +68113,6 @@
 /obj/machinery/atmospherics/components/unary/vent_scrubber/on/layer2,
 /turf/open/floor/iron/white/textured_large,
 /area/station/medical/medbay/central)
-"sgQ" = (
-/obj/structure/table/wood/poker,
-/obj/effect/spawner/random/entertainment/gambling,
-/turf/open/floor/carpet{
-	icon_state = "carpet-137"
-	},
-/area/station/service/abandoned_gambling_den)
 "sgT" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners{
 	dir = 1
@@ -71062,6 +71012,25 @@
 	},
 /turf/open/openspace,
 /area/station/maintenance/starboard/upper)
+"sVd" = (
+/obj/structure/table/reinforced,
+/obj/structure/tipjar,
+/obj/item/paper_bin{
+	pixel_x = 1;
+	pixel_y = 9
+	},
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	dir = 8;
+	id = "scistores";
+	name = "Science Store Shutters"
+	},
+/obj/machinery/door/window/left/directional/east{
+	name = "Research Lab Desk";
+	req_access = list("science")
+	},
+/turf/open/floor/iron/dark,
+/area/station/science/lobby)
 "sVj" = (
 /obj/machinery/vending/sustenance{
 	req_access = list("command")
@@ -71854,15 +71823,6 @@
 /obj/machinery/camera/autoname/directional/south,
 /turf/open/floor/carpet/stellar,
 /area/station/service/library)
-"tfT" = (
-/obj/structure/table/wood/poker,
-/obj/effect/spawner/random/entertainment/gambling,
-/obj/effect/decal/cleanable/cobweb,
-/obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/carpet{
-	icon_state = "carpet-38"
-	},
-/area/station/service/abandoned_gambling_den)
 "tgi" = (
 /obj/structure/cable,
 /obj/structure/disposalpipe/segment{
@@ -72836,6 +72796,13 @@
 /obj/effect/turf_decal/tile/dark_blue/fourcorners,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
+"tsT" = (
+/obj/structure/table/wood/poker,
+/obj/effect/spawner/random/entertainment/deck,
+/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet,
+/area/station/service/abandoned_gambling_den)
 "tsV" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
@@ -82282,6 +82249,16 @@
 /obj/effect/spawner/random/trash/cigbutt,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/aft/upper)
+"vRC" = (
+/obj/structure/table/reinforced,
+/obj/machinery/door/firedoor,
+/obj/machinery/door/poddoor/shutters/preopen{
+	id = "kitchen_counter";
+	name = "Kitchen Counter Shutters"
+	},
+/obj/structure/tipjar/prefilled,
+/turf/open/floor/wood/large,
+/area/station/service/kitchen)
 "vRD" = (
 /obj/structure/table,
 /obj/item/toy/cards/deck/wizoff{
@@ -85238,6 +85215,13 @@
 /obj/machinery/telecomms/processor/preset_four,
 /turf/open/floor/iron/dark/telecomms,
 /area/station/tcommsat/server)
+"wEf" = (
+/obj/structure/table/wood/poker,
+/obj/effect/spawner/random/entertainment/gambling,
+/obj/effect/decal/cleanable/cobweb,
+/obj/effect/decal/cleanable/dirt/dust,
+/turf/open/floor/carpet,
+/area/station/service/abandoned_gambling_den)
 "wEt" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/spawner/random/structure/crate_loot,
@@ -117674,7 +117658,7 @@ nHo
 vsf
 fXf
 hDk
-qwJ
+kzN
 mSd
 bNt
 tpj
@@ -118437,7 +118421,7 @@ hRX
 dEq
 vBU
 smc
-fob
+vRC
 wYP
 wny
 nyI
@@ -125925,11 +125909,11 @@ crk
 ucO
 fNB
 tDY
-dqj
-oJs
+pyP
+hTc
 edc
 kbr
-eaL
+sVd
 gZy
 jes
 vqY
@@ -177296,7 +177280,7 @@ nlm
 nlm
 nlm
 xut
-tfT
+wEf
 iiV
 nSx
 ihv
@@ -177553,7 +177537,7 @@ nlm
 nlm
 nlm
 xut
-iIS
+tsT
 cKE
 wSj
 hYc
@@ -177814,7 +177798,7 @@ kEi
 beH
 jtc
 jGK
-sgQ
+mWy
 xut
 rFA
 apK

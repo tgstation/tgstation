@@ -171,14 +171,21 @@
 	if(istype(volatiles) && volatiles.volume >= 25)
 		fuel_amt = volatiles.volume
 		reagents.del_reagent(/datum/reagent/fuel) // not actually used for the explosion
-	if(reagents.total_volume)
-		if(!fuel_amt)
-			visible_message(span_danger("\The [src] ruptures!"))
+	if(reagents.total_volume && !fuel_amt)
+		visible_message(span_danger("\The [src] ruptures!"))
+	// get deleted first so our spill can't hit or burn us again, moving out of the way instead knocks wall-mounted tanks off and booms them twice
+	var/atom/spill_location = loc
+	var/datum/reagents/spilled_reagents = reagents
+	reagents = null
+	spilled_reagents.my_atom = spill_location
+	qdel(src)
+	if(spilled_reagents.total_volume)
 		// Leave it up to future terrorists to figure out the best way to mix reagents with fuel for a useful boom here
-		chem_splash(loc, null, 2 + floor((reagents.total_volume + fuel_amt) / 1000), list(reagents), extra_heat=(fuel_amt / 50),adminlog=(fuel_amt<25))
+		chem_splash(spill_location, null, 2 + floor((spilled_reagents.total_volume + fuel_amt) / 1000), list(spilled_reagents), extra_heat=(fuel_amt / 50),adminlog=(fuel_amt<25))
+	qdel(spilled_reagents)
 
-	if(fuel_amt) // with that done, actually explode
-		visible_message(span_danger("\The [src] explodes!"))
+	if(fuel_amt && spill_location) // with that done, actually explode
+		spill_location.visible_message(span_danger("\The [src] explodes!"))
 		// old code for reference:
 		// standard fuel tank = 1000 units = heavy_impact_range = 1, light_impact_range = 5, flame_range = 5
 		// big fuel tank = 5000 units = devastation_range = 1, heavy_impact_range = 2, light_impact_range = 7, flame_range = 12
@@ -187,16 +194,15 @@
 		// As it stands this is a minor nerf in exchange for an easy bombing technique working that has been broken for a while.
 		switch(fuel_amt)
 			if(25 to 150)
-				explosion(src, light_impact_range = 1, flame_range = 2)
+				explosion(spill_location, light_impact_range = 1, flame_range = 2, explosion_cause = src)
 			if(150 to 300)
-				explosion(src, light_impact_range = 2, flame_range = 3)
+				explosion(spill_location, light_impact_range = 2, flame_range = 3, explosion_cause = src)
 			if(300 to 750)
-				explosion(src, heavy_impact_range = 1, light_impact_range = 3, flame_range = 5)
+				explosion(spill_location, heavy_impact_range = 1, light_impact_range = 3, flame_range = 5, explosion_cause = src)
 			if(750 to 1500)
-				explosion(src, heavy_impact_range = 1, light_impact_range = 4, flame_range = 6)
+				explosion(spill_location, heavy_impact_range = 1, light_impact_range = 4, flame_range = 6, explosion_cause = src)
 			if(1500 to INFINITY)
-				explosion(src, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 6, flame_range = 8)
-	qdel(src)
+				explosion(spill_location, devastation_range = 1, heavy_impact_range = 2, light_impact_range = 6, flame_range = 8, explosion_cause = src)
 
 /obj/structure/reagent_dispensers/atom_deconstruct(disassembled = TRUE)
 	if(!disassembled)
@@ -511,7 +517,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	if(!user.transferItemToLoc(new_jug, src))
 		return ITEM_INTERACT_BLOCKING
 
-	eject_jug(user, our_jug)
+	eject_jug(user)
 	our_jug = new_jug
 	our_jug.reagents.trans_to(reagents, tank_volume)
 	balloon_alert(user, "attached")
@@ -520,32 +526,50 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/reagent_dispensers/wall/peppertank, 3
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 
+/obj/structure/reagent_dispensers/water_cooler/atom_deconstruct(disassembled = TRUE)
+	if(disassembled)
+		return ..()
+	spill(destroyed = TRUE)
+
 /obj/structure/reagent_dispensers/water_cooler/boom()
 	if(QDELETED(src))
 		return
+	spill()
+	if(!QDELETED(src))
+		tip_over()
+
+/// Splashes our reagents and throws the jug out - destroyed moves us off the turf first so our own splash can't hit us
+/obj/structure/reagent_dispensers/water_cooler/proc/spill(destroyed = FALSE)
+	var/turf/spill_turf = get_turf(src)
+	var/atom/jug_drop = drop_location()
 	if(reagents.total_volume)
 		visible_message(span_danger("\The [src] flips on it's side and spills everywhere!"))
-		chem_splash(get_turf(src), null, 2 + floor((reagents.total_volume) / 1000), list(reagents))
-	eject_jug(throw_away = TRUE)
-	playsound(src, 'sound/effects/glass/glassbash.ogg', 100)
-	tip_over()
+	if(destroyed)
+		moveToNullspace()
+	if(reagents.total_volume)
+		chem_splash(spill_turf, null, 2 + floor((reagents.total_volume) / 1000), list(reagents))
+	if(QDELETED(src))
+		return
+	eject_jug(throw_away = TRUE, drop_at = jug_drop)
+	playsound(spill_turf, 'sound/effects/glass/glassbash.ogg', 100)
 
 ///Creates an empty jug inside of the cooler. Doesn't need to be filled bc it absorbs the cooler's reagent on eject.
 /obj/structure/reagent_dispensers/water_cooler/proc/create_jug()
 	our_jug = new /obj/item/reagent_containers/cooler_jug(src)
 
-///Eject the jug in a variety of ways. If there is a user, the jug goes into their hands. throw_away is passed on tip, to empty and throw the jug away. We delete the reagents since we create a splash before this is called.
-/obj/structure/reagent_dispensers/water_cooler/proc/eject_jug(mob/living/user, throw_away = FALSE)
+///Eject the jug in a variety of ways. If there is a user, the jug goes into their hands. throw_away is passed on tip, to empty and throw the jug away. We delete the reagents since we create a splash before this is called. drop_at is where it lands when we're already off the turf.
+/obj/structure/reagent_dispensers/water_cooler/proc/eject_jug(mob/living/user, throw_away = FALSE, atom/drop_at)
 	if(!our_jug)
 		return
+	drop_at ||= drop_location()
 
 	if(user)
 		user.put_in_hands(our_jug)
 	else
-		our_jug.forceMove(drop_location())
+		our_jug.forceMove(drop_at)
 
 	if(throw_away)
-		var/turf/turf_to_throw_at = get_ranged_target_turf(src, pick(GLOB.alldirs), 2)
+		var/turf/turf_to_throw_at = get_ranged_target_turf(drop_at, pick(GLOB.alldirs), 2)
 		our_jug.throw_at(turf_to_throw_at, 2, 3)
 		reagents.remove_all(tank_volume) //Gets spilled on floor during boom()
 	else
