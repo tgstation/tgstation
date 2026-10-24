@@ -1272,6 +1272,7 @@
 /area/station/hallway/secondary/service)
 "arv" = (
 /obj/structure/table,
+/obj/item/reagent_containers/spray/dinitrogen_plasmide,
 /obj/item/healthanalyzer{
 	pixel_x = -7;
 	pixel_y = 13
