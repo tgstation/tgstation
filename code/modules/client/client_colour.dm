@@ -55,7 +55,7 @@
 		if (existing_color.type == new_color.type && !force)
 			return existing_color
 		qdel(existing_color)
-	client_colours[new_color] = source
+	LAZYSET(client_colours, new_color, source)
 	animate_client_colour(new_color.fade_in)
 	return new_color
 
@@ -77,6 +77,8 @@
 			return color
 
 /mob/proc/get_client_colour_filters()
+	if(!client_colours)
+		return
 	. = list()
 	// sortTim sorts the passed list instead of making the copy, and so does reverse_range
 	var/list/used_colors = reverse_range(sortTim(client_colours.Copy(), GLOBAL_PROC_REF(cmp_client_colours)))
