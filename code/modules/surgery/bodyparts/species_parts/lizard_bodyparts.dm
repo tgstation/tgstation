@@ -53,36 +53,44 @@
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 	zombie_color = LIZARD_ZOMBIE_COLOR
+	///If this leg is digitigrade regardless of owner
+	var/always_digitigrade = FALSE
+
+/obj/item/bodypart/leg/left/lizard/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/digitigrade_limb, "[initial(limb_id)]_[BODYPART_ID_DIGITIGRADE]", limb_id, always_digitigrade)
+	RegisterSignal(src, SIGNAL_BODYPART_LEG_DIGITIGRADE_CHANGED, PROC_REF(on_digi_changed))
+
+/obj/item/bodypart/leg/left/lizard/proc/on_digi_changed(datum/source, is_digi)
+	SIGNAL_HANDLER
+	footprint_sprite = is_digi ? FOOTPRINT_SPRITE_CLAWS : initial(footprint_sprite)
+	footstep_type = is_digi ? FOOTSTEP_MOB_CLAW : initial(footstep_type)
+	butcher_replacement = is_digi ? /obj/item/bodypart/leg/left/skeleton/nonfunctional/digitigrade : initial(butcher_replacement)
 
 /obj/item/bodypart/leg/right/lizard
 	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
 	limb_id = SPECIES_LIZARD
 	zombie_color = LIZARD_ZOMBIE_COLOR
+	///If this leg is digitigrade regardless of owner
+	var/always_digitigrade = FALSE
 
-/obj/item/bodypart/leg/left/digitigrade
-	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
-	limb_id = BODYPART_ID_DIGITIGRADE
-	species_id = SPECIES_LIZARD
-	bodyshape = BODYSHAPE_HUMANOID
-	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
-	footstep_type = FOOTSTEP_MOB_CLAW
-	zombie_color = LIZARD_ZOMBIE_COLOR
-
-/obj/item/bodypart/leg/left/digitigrade/Initialize(mapload)
+/obj/item/bodypart/leg/right/lizard/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/digitigrade_limb, SPECIES_LIZARD, initial(limb_id))
+	AddComponent(/datum/component/digitigrade_limb, "[initial(limb_id)]_[BODYPART_ID_DIGITIGRADE]", limb_id, always_digitigrade)
+	RegisterSignal(src, SIGNAL_BODYPART_LEG_DIGITIGRADE_CHANGED, PROC_REF(on_digi_changed))
 
-/obj/item/bodypart/leg/right/digitigrade
-	icon_greyscale = 'icons/mob/human/species/lizard/bodyparts.dmi'
-	limb_id = BODYPART_ID_DIGITIGRADE
-	species_id = SPECIES_LIZARD
-	bodyshape = BODYSHAPE_HUMANOID
-	footprint_sprite = FOOTPRINT_SPRITE_CLAWS
-	footstep_type = FOOTSTEP_MOB_CLAW
-	zombie_color = LIZARD_ZOMBIE_COLOR
+/obj/item/bodypart/leg/right/lizard/proc/on_digi_changed(datum/source, is_digi)
+	SIGNAL_HANDLER
+	footprint_sprite = is_digi ? FOOTPRINT_SPRITE_CLAWS : initial(footprint_sprite)
+	footstep_type = is_digi ? FOOTSTEP_MOB_CLAW : initial(footstep_type)
+	butcher_replacement = is_digi ? /obj/item/bodypart/leg/right/skeleton/nonfunctional/digitigrade : initial(butcher_replacement)
 
-/obj/item/bodypart/leg/right/digitigrade/Initialize(mapload)
-	. = ..()
-	AddComponent(/datum/component/digitigrade_limb, SPECIES_LIZARD, initial(limb_id))
+///Printable from limb growers and forced on ashwalkers: the digitigrade version of lizard left legs that cannot be converted back to plantigrade on species change or dna manipulation.
+/obj/item/bodypart/leg/left/lizard/digitigrade
+	always_digitigrade = TRUE
+
+///Printable from limb growers and forced on ashwalkers: the digitigrade version of lizard right legs that cannot be converted back to plantigrade on species change or dna manipulation.
+/obj/item/bodypart/leg/right/lizard/digitigrade
+	always_digitigrade = TRUE
 
 #undef LIZARD_ZOMBIE_COLOR
