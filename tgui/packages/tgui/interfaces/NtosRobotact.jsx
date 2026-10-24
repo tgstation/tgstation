@@ -45,6 +45,7 @@ export const NtosRobotactContent = (props) => {
     wireAI,
     wireLaw,
     sensors,
+    eyeLights,
     printerPictures,
     printerToner,
     printerTonerMax,
@@ -202,6 +203,14 @@ export const NtosRobotactContent = (props) => {
                         onClick={() => act('toggleSensors')}
                       />
                     </LabeledList.Item>
+
+                    <LabeledList.Item label="Eye Lights">
+                      <Button
+                        content={eyeLights}
+                        onClick={() => act('toggleEyeLights')}
+                      />
+                    </LabeledList.Item>
+
                     <LabeledList.Item
                       label={`Stored Photos (${printerPictures})`}
                     >
