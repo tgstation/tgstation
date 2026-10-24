@@ -460,7 +460,7 @@
 	TEST_ASSERT_EQUAL(dummy.get_tox_loss(), 0, \
 		"[src] should have 0 toxin damage, but has [dummy.get_tox_loss()] instead!")
 
-/// Compares pressure damage with the same amount of ordinary brute damage on an equally resistant human.
+/// Compares pressure damage with the same amount of ordinary brute damage on an equally resistant human, and checks the resistance applies in full.
 /datum/unit_test/mob_damage/proc/test_pressure_damage(brute_modifier, oxygen_moles)
 	var/mob/living/carbon/human/control = allocate(/mob/living/carbon/human/consistent)
 	var/mob/living/carbon/human/pressure_dummy = allocate(/mob/living/carbon/human/consistent)
@@ -489,6 +489,10 @@
 	for(var/damage_index in 1 to pressure_damage.len)
 		TEST_ASSERT_EQUAL(pressure_damage[damage_index], direct_damage[damage_index], \
 			"Pressure damage with [oxygen_moles] oxygen moles and a [brute_modifier] brute modifier should apply resistance once.")
+	// Spreading the damage across bodyparts shouldn't cancel out part of the modifier.
+	var/expected_damage = control.get_brute_loss() * brute_modifier
+	TEST_ASSERT(abs(pressure_dummy.get_brute_loss() - expected_damage) < DAMAGE_PRECISION, \
+		"Pressure damage with [oxygen_moles] oxygen moles and a [brute_modifier] brute modifier should total [expected_damage], but totals [pressure_dummy.get_brute_loss()].")
 
 /// Tests that mob damage procs are working as intended for basic and simple mobs
 /datum/unit_test/mob_damage/animal
