@@ -497,3 +497,12 @@
       now does
   - bugfix: plasmamen, ethereals and shadowpeople/any other nondimorphic gendered
       species no longer get the female cut on their underwear
+2026-10-24:
+  PapaMichael:
+  - bugfix: Changeling transformation stings properly wear off after 8 minutes
+  - balance: Using a stethoscope now takes 2 seconds
+  SmArtKar:
+  - bugfix: Fixed particle weather not rendering
+  vinylspiders:
+  - bugfix: you can put body bags into disposal bins while buckled to a chair or otherwise
+      held in place
