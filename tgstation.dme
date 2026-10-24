@@ -4797,6 +4797,7 @@
 #include "code\modules\hallucination\bolted_airlocks.dm"
 #include "code\modules\hallucination\bubblegum_attack.dm"
 #include "code\modules\hallucination\delusions.dm"
+#include "code\modules\hallucination\everything_on_fire.dm"
 #include "code\modules\hallucination\eyes_in_dark.dm"
 #include "code\modules\hallucination\fake_alert.dm"
 #include "code\modules\hallucination\fake_chat.dm"
