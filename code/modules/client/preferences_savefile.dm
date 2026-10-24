@@ -13,7 +13,7 @@
 /// You do not need to raise this if you are adding new values that have sane defaults.
 /// Only raise this value when changing the meaning/format/name/layout of an existing value
 /// where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 53
+#define SAVEFILE_VERSION_MAX 54
 
 #define IS_DATA_OBSOLETE(version) (version == SAVE_DATA_OBSOLETE)
 #define SHOULD_UPDATE_DATA(version) (version >= SAVE_DATA_NO_ERROR && version < SAVEFILE_VERSION_MAX)
@@ -368,6 +368,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		default_slot = original_default_slot
 		savefile.set_entry("default_slot", original_default_slot)
 		return FALSE
+
+	if(SHOULD_UPDATE_DATA(data_validity_integer) && data_validity_integer < 54)
+		migrate_legacy_loadout_items(save_data)
 
 	// Read everything into cache
 	// Uses priority order as some values may rely on others for creating default values
