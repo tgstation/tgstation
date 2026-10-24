@@ -75,6 +75,7 @@
 	icon_state = "ai_foyer"
 
 /area/station/ai/satellite/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper AI Satellite Hallway"
 
 /area/station/ai/satellite/uppernorth

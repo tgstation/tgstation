@@ -42,7 +42,7 @@
 #define NAVMAP_PATH_ERROR "error"
 #define NAVMAP_PATH_STALE_TOPOLOGY "stale_topology"
 #define NAVMAP_PATH_STALE_COSTS "stale_costs"
-#define NAVMAP_PATHFINDER_VERSION "1.0.6"
+#define NAVMAP_PATHFINDER_VERSION "1.0.7"
 
 /proc/nav_cost_modifiers_equal(alist/first, alist/second)
 	if(length(first) != length(second))

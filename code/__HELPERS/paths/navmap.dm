@@ -7,11 +7,23 @@
 		return flat_modifiers
 	for(var/flag in nav_cost_modifiers)
 		var/multiplier = nav_cost_modifiers[flag]
-		if(!isnum(flag) || flag <= 0 || flag != round(flag) || (flag & (flag - 1)) || !IS_FINITE(multiplier) || multiplier < 1)
+		if(!isnum(flag) || flag <= 0 || flag != round(flag) || (flag & (flag - 1)) || !IS_FINITE(multiplier) || multiplier <= 0)
 			stack_trace("Invalid nav cost modifier: flag [flag], multiplier [multiplier]")
 			return null
 		flat_modifiers += list(flag, multiplier)
 	return flat_modifiers
+
+/// Returns a downward-rounded lower bound for any terrain multiplier used by this request.
+/proc/nav_cost_modifiers_heuristic_scale(alist/nav_cost_modifiers)
+	var/scale = 1
+	if(!length(nav_cost_modifiers))
+		return scale
+	for(var/flag in nav_cost_modifiers)
+		var/multiplier = nav_cost_modifiers[flag]
+		if(multiplier < 1)
+			scale *= multiplier
+	// Quantize down so the scaled geometric estimate stays admissible despite floating-point noise.
+	return min(floor(scale * 1000000) / 1000000, 1)
 
 /// Native-compatible asynchronous navmap A* fallback.
 /datum/pathfind/navmap
@@ -33,6 +45,8 @@
 	var/alist/nav_cost_modifiers
 	/// Flat flag/multiplier values passed through the DLL
 	var/list/nav_cost_modifiers_native
+	/// Conservative heuristic scale for discounted terrain modifiers.
+	var/nav_cost_heuristic_scale = 1
 	/// Snapshot of turf cost data when this search began.
 	var/nav_cost_generation
 	/// The maximum total path cost.
@@ -101,6 +115,10 @@
 	src.allow_nav_links = allow_nav_links
 	src.nav_cost_modifiers = nav_cost_modifiers?.Copy()
 	src.nav_cost_modifiers_native = nav_cost_modifiers_to_native(src.nav_cost_modifiers)
+	if(isnull(src.nav_cost_modifiers_native))
+		src.nav_cost_heuristic_scale = 1
+	else
+		src.nav_cost_heuristic_scale = nav_cost_modifiers_heuristic_scale(src.nav_cost_modifiers)
 	src.max_path_cost = max_path_cost
 	src.on_finish = on_finish
 
@@ -228,6 +246,7 @@
 			if(!has_estimate || navmap_astar_min_link_cost < estimate)
 				estimate = navmap_astar_min_link_cost
 			has_estimate = TRUE
+	estimate = floor(estimate * nav_cost_heuristic_scale)
 	navmap_astar_heuristic_cache[tile] = estimate
 	return estimate
 
@@ -457,7 +476,7 @@
 				multiplier *= modifiers[modifier_index + 1]
 			modifier_index += 2
 		navmap_astar_cost_multiplier_cache[flags] = multiplier
-	return CEILING(base_cost * multiplier, 1)
+	return base_cost ? max(1, CEILING(base_cost * multiplier, 1)) : 0
 
 /// Removes the best node from the A* heap.
 /datum/pathfind/navmap/proc/navmap_astar_heap_pop()

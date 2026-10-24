@@ -19,6 +19,8 @@
 #define NAV_COST_LAVA    (1 << 0)
 /// Area-derived terrain cost modifier for maintenance turfs.
 #define NAV_COST_MAINTENANCE (1 << 1)
+/// Area-derived terrain cost modifier for hallway turfs.
+#define NAV_COST_HALLWAY (1 << 2)
 
 /// pass_flags bits that are NOT passability grants and must be stripped when we build a blocker mask
 #define NAV_NON_PASS_FLAGS (LETPASSTHROW | LETPASSCLICKS)
