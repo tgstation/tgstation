@@ -1,10 +1,18 @@
+/// Brute modifier the pressure test uses for a resistant human
 #define PRESSURE_TEST_BRUTE_RESISTANCE 0.5
+/// Brute modifier the pressure test uses for a weak human
 #define PRESSURE_TEST_BRUTE_WEAKNESS 1.5
+/// Oxygen moles for the pressure test's vacuum, below HAZARD_LOW_PRESSURE
 #define PRESSURE_TEST_VACUUM_MOLES 0
+/// Oxygen moles for the pressure test's high pressure, well above HAZARD_HIGH_PRESSURE in a CELL_VOLUME mix
 #define PRESSURE_TEST_HIGH_PRESSURE_MOLES 10000
+/// How many seconds of pressure the pressure test applies in one go
 #define PRESSURE_TEST_EXPOSURE_SECONDS 5
+/// Brute damage each animal starts every healing check with
 #define ANIMAL_TEST_STARTING_DAMAGE 20
+/// How much damage the first heal in each healing check removes
 #define ANIMAL_TEST_HEALING_AMOUNT 5
+/// Damage left after the first heal, which the overheal should remove exactly
 #define ANIMAL_TEST_REMAINING_DAMAGE (ANIMAL_TEST_STARTING_DAMAGE - ANIMAL_TEST_HEALING_AMOUNT)
 
 /// Tests to make sure mob damage procs are working correctly
