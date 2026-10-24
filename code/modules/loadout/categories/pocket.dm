@@ -334,3 +334,7 @@
 /datum/loadout_item/pocket_items/candles
 	name = "Box of Candles"
 	item_path = /obj/item/storage/fancy/candle_box
+
+/datum/loadout_item/pocket_items/plaque
+	name = "Plaque"
+	item_path = /obj/item/plaque
