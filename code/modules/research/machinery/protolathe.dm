@@ -6,6 +6,7 @@
 	circuit = /obj/item/circuitboard/machine/protolathe
 	production_animation = "protolathe_n"
 	allowed_buildtypes = PROTOLATHE
+	stripe_color = "#3f3f3f"
 
 /obj/machinery/rnd/production/protolathe/on_deconstruction(disassembled)
 	log_game("Protolathe of type [type] [disassembled ? "disassembled" : "deconstructed"] by [key_name(usr)] at [get_area_name(src, TRUE)]")
