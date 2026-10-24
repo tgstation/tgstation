@@ -172,6 +172,17 @@
 	if(!made_with_food)
 		return
 	final_foodtypes &= ~food_recipe.removed_foodtypes
+	if(crafting_complexity >= FOOD_COMPLEXITY_4)
+		for(var/mob/living/carbon/human/subject in oviewers(5, crafter.loc))
+			if(subject.is_blind() || subject == crafter)
+				continue
+			subject.emote("drool")
+			subject.add_mood_event("saw good food", /datum/mood_event/hungry)
+			if(prob(10))
+				subject.nutrition -= 10 * crafting_complexity
+			if(prob(15))
+				playsound(subject, 'sound/effects/stomach_growl.ogg', 50, TRUE)
+
 	///Update the foodtypes
 	AddComponentFrom(SOURCE_EDIBLE_INNATE, /datum/component/edible, foodtypes = final_foodtypes)
 
