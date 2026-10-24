@@ -1,6 +1,3 @@
-/// Key in attack_modifiers used to remember which casing was selected for this attack.
-#define DETONATABLE_BY_HAMMER_SELECTED_CASING "detonatable_by_hammer_selected_casing"
-
 /datum/component/detonatable_by_hammer
 	/// The mob currently holding this casing in a hand.
 	var/mob/living/registered_holder
@@ -20,23 +17,33 @@
 	src.discharge_sound = discharge_sound
 
 /datum/component/detonatable_by_hammer/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_ATTACKBY, PROC_REF(on_casing_attackby))
+	RegisterSignal(parent, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_casing_item_interaction))
+	RegisterSignal(parent, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_casing_requesting_context))
 	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_parent_equipped))
 	RegisterSignal(parent, COMSIG_ITEM_DROPPED, PROC_REF(on_parent_dropped))
 
 	// Components can be added after an item has already been equipped.
 	var/obj/item/ammo_casing/casing = parent
+	casing.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 	var/mob/living/holder = casing.loc
 	if(istype(holder) && casing in holder.get_held_items())
 		register_holder(holder)
 
 /datum/component/detonatable_by_hammer/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ATOM_ATTACKBY, COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
+	UnregisterSignal(parent, list(
+		COMSIG_ATOM_ITEM_INTERACTION,
+		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
+		COMSIG_ITEM_EQUIPPED,
+		COMSIG_ITEM_DROPPED,
+	))
 	if(registered_holder)
-		UnregisterSignal(registered_holder, COMSIG_ATOM_ATTACKBY)
+		UnregisterSignal(registered_holder, list(
+			COMSIG_ATOM_ITEM_INTERACTION,
+			COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
+		))
 		registered_holder = null
 
-/// Register for attacks against the mob while this casing is held in a hand.
+/// Register for interactions with the mob while this casing is held in a hand.
 /datum/component/detonatable_by_hammer/proc/on_parent_equipped(obj/item/source, mob/living/equipper, slot)
 	SIGNAL_HANDLER
 	if(!(slot & ITEM_SLOT_HANDS))
@@ -48,49 +55,71 @@
 	SIGNAL_HANDLER
 	if(registered_holder != dropper)
 		return
-	UnregisterSignal(dropper, COMSIG_ATOM_ATTACKBY)
+	UnregisterSignal(dropper, list(
+		COMSIG_ATOM_ITEM_INTERACTION,
+		COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
+	))
 	registered_holder = null
 
 /datum/component/detonatable_by_hammer/proc/register_holder(mob/living/holder)
 	if(registered_holder == holder)
 		return
 	if(registered_holder)
-		UnregisterSignal(registered_holder, COMSIG_ATOM_ATTACKBY)
+		UnregisterSignal(registered_holder, list(
+			COMSIG_ATOM_ITEM_INTERACTION,
+			COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM,
+		))
 	registered_holder = holder
-	RegisterSignal(holder, COMSIG_ATOM_ATTACKBY, PROC_REF(on_holder_attackby))
+	holder.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
+	RegisterSignal(holder, COMSIG_ATOM_ITEM_INTERACTION, PROC_REF(on_holder_item_interaction))
+	RegisterSignal(holder, COMSIG_ATOM_REQUESTING_CONTEXT_FROM_ITEM, PROC_REF(on_holder_requesting_context))
 
-/// Handle a claw hammer striking the casing directly.
-/datum/component/detonatable_by_hammer/proc/on_casing_attackby(obj/item/ammo_casing/casing, obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
+/// Handle non-combat use of a claw hammer on the casing directly.
+/datum/component/detonatable_by_hammer/proc/on_casing_item_interaction(obj/item/ammo_casing/casing, mob/living/user, obj/item/tool, list/modifiers)
 	SIGNAL_HANDLER
-	if(!istype(attacking_item, /obj/item/crowbar/hammer))
+	if(!istype(tool, /obj/item/crowbar/hammer) || user.combat_mode)
 		return
 	if(!casing.loaded_projectile || activated)
 		return
 	if(activate_casing(casing, user))
-		return COMPONENT_NO_AFTERATTACK
+		return ITEM_INTERACT_SUCCESS
 
-/// Intercept the holder's attack-by signal before the claw hammer's normal attack runs.
-/datum/component/detonatable_by_hammer/proc/on_holder_attackby(mob/living/holder, obj/item/attacking_item, mob/living/attacker, list/modifiers, list/attack_modifiers)
+/// Handle non-combat use of a claw hammer on someone holding a live casing.
+/datum/component/detonatable_by_hammer/proc/on_holder_item_interaction(mob/living/holder, mob/living/user, obj/item/tool, list/modifiers)
 	SIGNAL_HANDLER
-	if(holder != registered_holder || !istype(attacking_item, /obj/item/crowbar/hammer))
+	if(holder != registered_holder || !istype(tool, /obj/item/crowbar/hammer) || user.combat_mode)
 		return
-	if(!istype(attacker) || attacker.combat_mode || attacker.zone_selected != BODY_ZONE_PRECISE_MOUTH)
-		return
-	if(!islist(attack_modifiers))
-		return
-	var/obj/item/ammo_casing/selected_casing = attack_modifiers[DETONATABLE_BY_HAMMER_SELECTED_CASING]
+	var/obj/item/ammo_casing/selected_casing = get_selected_live_casing(holder)
 	if(!selected_casing)
-		selected_casing = get_selected_live_casing(holder)
-		if(!selected_casing)
-			return
-		// This list is shared through the attack chain. Cache the choice so another casing listener cannot select a second casing after this one discharges.
-		attack_modifiers[DETONATABLE_BY_HAMMER_SELECTED_CASING] = selected_casing
+		return
 	if(parent != selected_casing)
 		return
 	var/obj/item/ammo_casing/casing = parent
-	if(!activate_casing(casing, attacker, holder))
+	if(!activate_casing(casing, user, holder))
 		return
-	return COMPONENT_NO_AFTERATTACK
+	return ITEM_INTERACT_SUCCESS
+
+/// Add a contextual hint when hovering over a live shell with a claw hammer.
+/datum/component/detonatable_by_hammer/proc/on_casing_requesting_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	SIGNAL_HANDLER
+	if(!istype(held_item, /obj/item/crowbar/hammer) || user.combat_mode)
+		return NONE
+	var/obj/item/ammo_casing/casing = parent
+	if(!casing.loaded_projectile || activated)
+		return NONE
+	context[SCREENTIP_CONTEXT_LMB] = "Strike shell"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/// Add a contextual hint when hovering over someone holding a live shell with a claw hammer.
+/datum/component/detonatable_by_hammer/proc/on_holder_requesting_context(atom/source, list/context, obj/item/held_item, mob/living/user)
+	SIGNAL_HANDLER
+	if(!istype(held_item, /obj/item/crowbar/hammer) || user.combat_mode)
+		return NONE
+	var/mob/living/holder = source
+	if(holder != registered_holder || !get_selected_live_casing(holder))
+		return NONE
+	context[SCREENTIP_CONTEXT_LMB] = "Strike held shell"
+	return CONTEXTUAL_SCREENTIP_SET
 
 /// Pick the active-hand casing first, then the other hand, considering only casings with this component.
 /datum/component/detonatable_by_hammer/proc/get_selected_live_casing(mob/living/holder)
@@ -108,7 +137,8 @@
 	if(!istype(held_item, /obj/item/ammo_casing))
 		return null
 	var/obj/item/ammo_casing/casing = held_item
-	if(!casing.loaded_projectile || !casing.GetComponent(/datum/component/detonatable_by_hammer))
+	var/datum/component/detonatable_by_hammer/casing_component = casing.GetComponent(/datum/component/detonatable_by_hammer)
+	if(!casing.loaded_projectile || !casing_component || casing_component.activated)
 		return null
 	return casing
 
@@ -129,11 +159,11 @@
 	activated = TRUE
 	if(holder)
 		holder.visible_message(
-			span_danger("[hitter] swings over [holder]'s shoulder, hitting [casing]!"),
-			span_userdanger("[hitter] swings over your shoulder, hitting [casing]!"),
+			span_danger("[hitter] strikes [casing] in [holder]'s hand, setting it off!"),
+			span_userdanger("[hitter] strikes the [casing] in your hand, setting it off!"),
 		)
 	else
-		hitter.visible_message(span_danger("[hitter] strikes [casing], setting it off!"))
+		hitter.visible_message(span_danger("[hitter] strikes [casing] with a claw hammer, setting it off!"))
 
 	playsound(launch_turf, discharge_sound, 80, TRUE)
 	if(!casing.fire_casing(target_turf, hitter, null, 0, FALSE, BODY_ZONE_CHEST, 0, launch_turf))
@@ -152,10 +182,8 @@
 	)
 
 	if(holder)
-		holder.apply_damage(15, BRUTE, BODY_ZONE_CHEST, forced = TRUE, attacking_item = casing)
-		holder.apply_damage(15, BURN, BODY_ZONE_CHEST, forced = TRUE, attacking_item = casing)
-	hitter.apply_damage(25, BRUTE, BODY_ZONE_CHEST, forced = TRUE, attacking_item = casing)
-	hitter.apply_damage(25, BURN, BODY_ZONE_CHEST, forced = TRUE, attacking_item = casing)
+		holder.apply_damage(15, BRUTE, BODY_ZONE_CHEST, attacking_item = casing)
+		holder.apply_damage(15, BURN, BODY_ZONE_CHEST, attacking_item = casing)
+	hitter.apply_damage(25, BRUTE, BODY_ZONE_CHEST, attacking_item = casing)
+	hitter.apply_damage(25, BURN, BODY_ZONE_CHEST, attacking_item = casing)
 	return TRUE
-
-#undef DETONATABLE_BY_HAMMER_SELECTED_CASING
