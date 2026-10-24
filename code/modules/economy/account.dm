@@ -44,6 +44,12 @@
 	/// How many paychecks to skip when payday is called.
 	var/paydays_to_skip = 0
 
+	/// Modifier to private cargo orders made with this account. Does not apply to goodies.
+	var/private_order_cost_modifier = 1.0
+	var/goody_order_cost_modifier = 1.0
+	var/black_market_cost_modifier = 1.0
+	var/crab_17_drain_rate_modifier = 1.0
+
 /datum/bank_account/New(newname, job, modifier = 1, player_account = TRUE)
 	account_holder = newname
 	account_job = job
@@ -52,6 +58,9 @@
 	setup_unique_account_id()
 	update_account_job_lists(job)
 	pay_token = uppertext("[copytext(newname, 1, 2)][copytext(newname, -1)]-[random_capital_letter()]-[rand(1111,9999)]")
+
+	if(player_account)
+		private_order_cost_modifier *= 1.1
 
 /datum/bank_account/Destroy()
 	if(add_to_accounts)

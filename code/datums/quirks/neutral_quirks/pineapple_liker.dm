@@ -6,6 +6,7 @@
 	gain_text = span_notice("You feel an intense craving for pineapple.")
 	lose_text = span_notice("Your feelings towards pineapples seem to return to a lukewarm state.")
 	medical_record_text = "Patient demonstrates a pathological love of pineapple."
+	mail_weight = 1
 	mail_goodies = list(/obj/item/food/pizzaslice/pineapple)
 
 /datum/quirk/pineapple_liker/add(client/client_source)

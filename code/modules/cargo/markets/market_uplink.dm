@@ -26,6 +26,10 @@
 
 	update_viewing_category()
 
+/obj/item/market_uplink/Destroy()
+	current_user = null
+	return ..()
+
 /// Simple internal proc for updating the viewing_category variable.
 /obj/item/market_uplink/proc/update_viewing_category()
 	if(accessible_markets.len)
@@ -43,23 +47,19 @@
 		ui = new(user, src, "BlackMarketUplink", name)
 		ui.open()
 
+/obj/item/market_uplink/ui_close(mob/user)
+	. = ..()
+	current_user = null
+
 /obj/item/market_uplink/ui_data(mob/user)
 	var/list/data = list()
 	var/datum/market/market = viewing_market ? SSmarket.markets[viewing_market] : null
-	var/obj/item/card/id/id_card
-	if(isliving(user))
-		var/mob/living/livin = user
-		id_card = livin.get_idcard()
-	if(id_card?.registered_account)
-		current_user = id_card.registered_account
-	else
-		current_user = null
-	data["categories"] = market ? market.categories : null
-	data["delivery_methods"] = list()
-	data["money"] = "N/A [MONEY_SYMBOL]"
-	if(current_user)
-		data["money"] = current_user.account_balance
+	current_user = astype(user, /mob/living)?.get_bank_account()
+	data["categories"] = market?.categories
+	data["money"] = current_user?.account_balance || 0
+	data["price_modifier"] = current_user?.black_market_cost_modifier || 1
 	data["buying"] = buying
+	data["delivery_methods"] = list()
 	if(buying && market)
 		var/datum/market_item/target_item = market.available_items[viewing_category][selected_item]
 		var/list/shipping_list = market.shipping
@@ -68,7 +68,7 @@
 		for(var/delivery in shipping_list)
 			UNTYPED_LIST_ADD(data["delivery_methods"], list("name" = delivery, "price" = shipping_list[delivery]))
 	data["items"] = list()
-	data["viewing_category"] = market.categories[viewing_category] ? viewing_category : null
+	data["viewing_category"] = market?.categories[viewing_category] ? viewing_category : null
 	data["viewing_market"] = viewing_market
 	if(viewing_category && market)
 		if(market.available_items[viewing_category])

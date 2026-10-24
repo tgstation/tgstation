@@ -6,6 +6,7 @@
 	gain_text = span_notice("You suddenly feels chipped.")
 	lose_text = span_danger("You don't feel so chipped anymore.")
 	medical_record_text = "Patient explained how they got caught up in 'the skillchip chase' recently, and now they have some useless chip in their head. Dumbass."
+	mail_weight = 2
 	mail_goodies = list(
 		/obj/item/skillchip/matrix_taunt,
 		/obj/item/skillchip/big_pointer,

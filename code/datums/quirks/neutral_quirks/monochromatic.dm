@@ -4,6 +4,7 @@
 	icon = FA_ICON_ADJUST
 	value = 0
 	medical_record_text = "Patient is afflicted with almost complete color blindness."
+	mail_weight = 1
 	mail_goodies = list( // Noir detective wannabe
 		/obj/item/clothing/suit/toggle/jacket/det_trench/noir,
 		/obj/item/clothing/suit/jacket/det_suit/noir,

@@ -14,10 +14,11 @@ import { useBackend } from '../backend';
 import { Window } from '../layouts';
 
 type Data = {
-  categories: string[];
+  categories: string[] | null;
   markets: Market[];
   items: Item[];
   money: number;
+  price_modifier: number;
   viewing_market: string;
   viewing_category: string;
   buying: boolean;
@@ -54,6 +55,7 @@ export const BlackMarketUplink = (props) => {
     money,
     viewing_market,
     viewing_category,
+    price_modifier,
   } = data;
   return (
     <Window width={670} height={480} theme="hackerman">
@@ -88,7 +90,7 @@ export const BlackMarketUplink = (props) => {
         <Stack>
           <Stack.Item>
             <Tabs vertical>
-              {categories.map((category) => (
+              {categories?.map((category) => (
                 <Tabs.Tab
                   key={category}
                   mt={0.5}
@@ -128,11 +130,13 @@ export const BlackMarketUplink = (props) => {
                   <Stack.Item color="label">
                     {item.amount ? `${item.amount} in stock` : 'Out of stock'}
                   </Stack.Item>
-                  <Stack.Item>{`${formatMoney(item.cost)} cr`}</Stack.Item>
+                  <Stack.Item>{`${formatMoney(item.cost * price_modifier)} cr`}</Stack.Item>
                   <Stack.Item>
                     <Button
                       content="Buy"
-                      disabled={!item.amount || item.cost > money}
+                      disabled={
+                        !item.amount || item.cost * price_modifier > money
+                      }
                       onClick={() =>
                         act('select', {
                           item: item.id,

@@ -21,6 +21,8 @@ export type CargoData = {
   requests: Request[];
   requestonly: BooleanLike;
   self_paid: BooleanLike;
+  goody_order_cost_modifier: number;
+  private_order_cost_modifier: number;
 };
 
 /** The catalogue data a UI gets - the file's url and version, and each group's packs as index/price pairs */

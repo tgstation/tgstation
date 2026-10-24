@@ -392,21 +392,26 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
  *
  * * shocking - who are we zapping
  * * chance - probability the shock succeeds
- * defaults to 100 (guaranteed to shock)
+ * can be modified by traits/quirks, so passing > 100 is allowed
+ * defaults to 1000 (guaranteed to shock, likely even with modifiers)
  * * shock_source - used for determining where to get the power to zap them.
  * can be an apc, a cable, an area, a cell, or even a powernet datum
  * subtypes may override this proc to pass this up to the parent
  * defaults to our cell or our current area/apc
  * * siemens_coeff - multiplier to how much shock is delivered
  * default to a 1x modifier
+ * * allow_modifiers - whether to apply modifiers to shock chance
+ * default to TRUE
  *
  * Returns TRUE if the shock was successfully delivered
  * Returns FALSE if the shock failed for any reason
  */
-/obj/proc/shock(mob/living/shocking, chance = 100, shock_source, siemens_coeff = 1)
+/obj/proc/shock(mob/living/shocking, chance = 1000, shock_source, siemens_coeff = 1, allow_modifiers = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!isliving(shocking))
 		return FALSE
+	if(allow_modifiers && shocking.has_quirk(/datum/quirk/shock_reflex))
+		chance *= 0.66
 	if(!prob(chance))
 		return FALSE // you lucked out, no shock for you
 

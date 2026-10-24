@@ -223,7 +223,7 @@
 		if(!(sucker?.being_dumped))
 			accounts_to_rob -= sucker
 			continue
-		var/amount = round(sucker.account_balance * percentage_lost) // We don't want fractions of a credit stolen. That's just agony for everyone.
+		var/amount = round(sucker.account_balance * percentage_lost * sucker.crab_17_drain_rate_modifier) // We don't want fractions of a credit stolen. That's just agony for everyone.
 		sucker.adjust_money(-amount, "?VIVA¿: !LA CRABBE¡")
 		sucker.money_crabbed += amount
 		total_siphoned += amount
