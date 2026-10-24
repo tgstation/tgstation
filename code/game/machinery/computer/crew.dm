@@ -91,6 +91,8 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	var/list/data_by_z = list()
 	/// Cache of last update time for each z-level
 	var/list/last_update = list()
+	/// Cache of area grids by z-level
+	var/list/area_grid_cache = list()
 	/// Map of job to ID for sorting purposes
 	var/list/jobs = list(
 		// Note that jobs divisible by 10 are considered heads of staff, and bolded
@@ -175,19 +177,91 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	var/datum/weakref/host_ref = ui_sources[WEAKREF(user)]
 	return host_ref?.resolve()
 
+/datum/crewmonitor/proc/get_area_grid(z_level)
+	if(area_grid_cache["[z_level]"])
+		return area_grid_cache["[z_level]"]
+
+	var/datum/minimap/minimap = get_minimap_for_z(z_level)
+	var/min_x = minimap ? minimap.min_x : 1
+	var/min_y = minimap ? minimap.min_y : 1
+
+	var/map_w = world.maxx
+	var/map_h = world.maxy
+	if(minimap?.base_map)
+		map_w = max(1, minimap.base_map.Width() / MINIMAP_PIXEL_MULTIPLIER)
+		map_h = max(1, minimap.base_map.Height() / MINIMAP_PIXEL_MULTIPLIER)
+
+	var/max_x = min_x + map_w - 1
+	var/max_y = min_y + map_h - 1
+
+	var/list/grid = list()
+	for(var/x_coord in min_x to max_x)
+		var/list/column = list()
+		for(var/y_coord in min_y to max_y)
+			var/turf/target_turf = locate(x_coord, y_coord, z_level)
+			if(target_turf)
+				var/area/target_area = target_turf.loc
+				if(target_area && target_area.name && target_area.type != /area/space)
+					column += target_area.name
+				else
+					column += ""
+			else
+				column += ""
+		grid += list(column)
+
+	area_grid_cache["[z_level]"] = grid
+	return grid
+
+/datum/crewmonitor/ui_static_data(mob/user)
+	var/z = user.z
+	if(!z)
+		var/turf/T = get_turf(user)
+		z = T.z
+
+	var/datum/minimap/minimap = get_minimap_for_z(z)
+	var/map_image = null
+	if(minimap?.base_map)
+		map_image = "data:image/png;base64,[icon2base64(icon(minimap.base_map))]"
+
+	var/grid_w = world.maxx
+	var/grid_h = world.maxy
+	if(minimap?.base_map)
+		grid_w = max(1, minimap.base_map.Width() / MINIMAP_PIXEL_MULTIPLIER)
+		grid_h = max(1, minimap.base_map.Height() / MINIMAP_PIXEL_MULTIPLIER)
+
+	. = list(
+		"map_image" = map_image,
+		"min_x" = minimap ? minimap.min_x : 1,
+		"min_y" = minimap ? minimap.min_y : 1,
+		"grid_w" = grid_w,
+		"grid_h" = grid_h,
+		"area_grid" = get_area_grid(z),
+	)
+
 /datum/crewmonitor/ui_data(mob/user)
 	var/z = user.z
 	if(!z)
 		var/turf/T = get_turf(user)
 		z = T.z
+
 	. = list(
 		"sensors" = update_data(z),
-		"link_allowed" = HAS_AI_ACCESS(user),
+		"link_allowed" = TRUE,
 	)
 
 /datum/crewmonitor/proc/update_data(z)
 	if(data_by_z["[z]"] && last_update["[z]"] && world.time <= last_update["[z]"] + SENSORS_UPDATE_PERIOD)
 		return data_by_z["[z]"]
+
+	var/datum/minimap/minimap = get_minimap_for_z(z)
+	var/min_x = minimap ? minimap.min_x : 1
+	var/min_y = minimap ? minimap.min_y : 1
+
+	var/map_w = world.maxx
+	var/map_h = world.maxy
+	if(minimap?.base_map)
+		map_w = max(1, minimap.base_map.Width() / MINIMAP_PIXEL_MULTIPLIER)
+		map_h = max(1, minimap.base_map.Height() / MINIMAP_PIXEL_MULTIPLIER)
 
 	var/list/results = list()
 	for(var/tracked_mob in GLOB.suit_sensors_list)
@@ -238,12 +312,20 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 		// ID and id-related data
 		var/obj/item/card/id/id_card = tracked_living_mob.get_idcard(hand_first = FALSE)
+		var/sechud_icon_state
+
 		if (id_card)
 			entry["name"] = id_card.registered_name
 			entry["assignment"] = id_card.assignment
 			var/trim_assignment = id_card.get_trim_assignment()
 			if (jobs[trim_assignment] != null)
 				entry["ijob"] = jobs[trim_assignment]
+			sechud_icon_state = id_card.get_sechud_job_icon_state()
+
+		if (!sechud_icon_state || HAS_TRAIT(tracked_living_mob, TRAIT_UNKNOWN_APPEARANCE))
+			sechud_icon_state = "hudno_id"
+
+		entry["sechud_icon"] = icon2base64(icon('icons/mob/huds/mini_hud.dmi', sechud_icon_state))
 
 		// Broken sensors show garbage data
 		if (uniform.has_sensor == BROKEN_SENSORS)
@@ -277,6 +359,8 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		// Location
 		if (sensor_mode >= SENSOR_COORDS)
 			entry["area"] = get_area_name(tracked_living_mob, format_text = TRUE)
+			entry["x_pos"] = clamp(round(((pos.x - min_x) / map_w) * 100, 0.1), 0, 100)
+			entry["y_pos"] = clamp(round(((pos.y - min_y) / map_h) * 100, 0.1), 0, 100)
 
 		results[++results.len] = entry
 
@@ -285,21 +369,6 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	last_update["[z]"] = world.time
 
 	return results
-
-/datum/crewmonitor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
-	. = ..()
-	if(.)
-		return
-	switch (action)
-		if ("select_person")
-			var/mob/living/silicon/ai/AI = usr
-			if(!istype(AI))
-				return
-			// We need to do this because the ID might add an honorific and otherwise break tracking
-			var/mob/living/target = locate(params["ref"]) in GLOB.mob_living_list
-			if(isnull(target))
-				return
-			AI.ai_tracking_tool.track_mob(AI, target)
 
 #undef SENSORS_UPDATE_PERIOD
 #undef UNKNOWN_JOB_ID
