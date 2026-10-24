@@ -148,45 +148,26 @@
 
 /// Actually does the shapeshift, for the caster.
 /datum/action/cooldown/spell/shapeshift/proc/do_shapeshift(mob/living/caster)
-	var/mob/living/new_shape = create_shapeshift_mob(caster.loc)
-	var/datum/status_effect/shapechange_mob/shapechange = new_shape.apply_status_effect(shapechange_type, caster, src)
-	if(!shapechange)
-		// We failed to shift, maybe because we were already shapeshifted?
-		// Whatver the case, this shouldn't happen, so throw a stack trace.
-		to_chat(caster, span_warning("You can't shapeshift in this form!"))
-		stack_trace("[type] do_shapeshift was called when the mob was already shapeshifted (from a spell).")
+	var/mob/living/new_shape = caster.do_shapeshift(create_shapeshift_mob(caster.loc), shapechange_type, src)
+	if(!new_shape)
 		return
 
 	// Make sure it's castable even in their new form.
 	pre_shift_requirements = spell_requirements
 	spell_requirements &= ~(SPELL_REQUIRES_HUMAN|SPELL_REQUIRES_WIZARD_GARB)
 
-	// If you shapeshift into a pet subtype we don't want to update Poly's deathcount or something when you die
-	new_shape.add_traits(list(TRAIT_DONT_WRITE_MEMORY, TRAIT_SHAPESHIFTED), SHAPESHIFT_TRAIT)
-
-	// Make sure that if you shapechanged into a bot, the AI can't just turn you off.
-	var/mob/living/basic/bot/polymorph_bot = new_shape
-	if (istype(polymorph_bot))
-		polymorph_bot.bot_access_flags |= BOT_COVER_EMAGGED
-		polymorph_bot.bot_mode_flags &= ~BOT_MODE_REMOTE_ENABLED
-
 	return new_shape
 
 /// Actually does the un-shapeshift, from the caster. (Caster is a shapeshifted mob.)
 /datum/action/cooldown/spell/shapeshift/proc/do_unshapeshift(mob/living/caster)
-	var/datum/status_effect/shapechange_mob/shapechange = caster.has_status_effect(shapechange_type)
-	if(!shapechange)
-		// We made it to do_unshapeshift without having a shapeshift status effect, this shouldn't happen.
-		to_chat(caster, span_warning("You can't un-shapeshift from this form!"))
-		stack_trace("[type] do_unshapeshift was called when the mob wasn't even shapeshifted (from a spell).")
+	var/mob/living/unshapeshifted_mob = caster.do_unshapeshift(shapechange_type)
+	if(!unshapeshifted_mob)
 		return
 
 	// Restore the requirements.
 	spell_requirements = pre_shift_requirements
 	pre_shift_requirements = null
 
-	var/mob/living/unshapeshifted_mob = shapechange.caster_mob
-	caster.remove_status_effect(shapechange_type)
 	return unshapeshifted_mob
 
 /// Helper proc that instantiates the mob we shapeshift into.
