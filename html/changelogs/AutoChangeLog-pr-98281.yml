@@ -1,0 +1,5 @@
+author: "PapaMIchael"
+delete-after: True
+changes:
+  - balance: "Blood worms fake breathing when checked with a stethoscope"
+  - bugfix: "Blood worms restart their host's heart when they revive it"
