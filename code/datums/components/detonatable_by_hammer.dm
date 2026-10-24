@@ -25,9 +25,10 @@
 	// Components can be added after an item has already been equipped.
 	var/obj/item/ammo_casing/casing = parent
 	casing.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
-	var/mob/living/holder = casing.loc
-	if(istype(holder) && casing in holder.get_held_items())
-		register_holder(holder)
+	if(istype(casing.loc, /mob/living))
+		var/mob/living/holder = casing.loc
+		if(casing in holder.get_held_items())
+			register_holder(holder)
 
 /datum/component/detonatable_by_hammer/UnregisterFromParent()
 	UnregisterSignal(parent, list(
