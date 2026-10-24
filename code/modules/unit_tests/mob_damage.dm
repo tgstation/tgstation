@@ -1,3 +1,12 @@
+#define PRESSURE_TEST_BRUTE_RESISTANCE 0.5
+#define PRESSURE_TEST_BRUTE_WEAKNESS 1.5
+#define PRESSURE_TEST_VACUUM_MOLES 0
+#define PRESSURE_TEST_HIGH_PRESSURE_MOLES 10000
+#define PRESSURE_TEST_EXPOSURE_SECONDS 5
+#define ANIMAL_TEST_STARTING_DAMAGE 20
+#define ANIMAL_TEST_HEALING_AMOUNT 5
+#define ANIMAL_TEST_REMAINING_DAMAGE (ANIMAL_TEST_STARTING_DAMAGE - ANIMAL_TEST_HEALING_AMOUNT)
+
 /// Tests to make sure mob damage procs are working correctly
 /datum/unit_test/mob_damage
 	priority = TEST_LONGER
@@ -20,8 +29,8 @@
 	test_sanity_complex(dummy)
 
 	// Compare pressure damage with ordinary brute damage for both resistance and weakness.
-	for(var/brute_modifier in list(0.5, 1.5))
-		for(var/oxygen_moles in list(0, 10000))
+	for(var/brute_modifier in list(PRESSURE_TEST_BRUTE_RESISTANCE, PRESSURE_TEST_BRUTE_WEAKNESS))
+		for(var/oxygen_moles in list(PRESSURE_TEST_VACUUM_MOLES, PRESSURE_TEST_HIGH_PRESSURE_MOLES))
 			test_pressure_damage(brute_modifier, oxygen_moles)
 
 	// Testing if biotypes are working as intended
@@ -451,13 +460,13 @@
 	MODIFY_PHYSIOLOGY(pressure_dummy, BRUTE, brute_modifier)
 	MODIFY_PHYSIOLOGY(damage_dummy, BRUTE, brute_modifier)
 	var/datum/gas_mixture/environment = allocate(/datum/gas_mixture)
-	environment.volume = 2500
+	environment.volume = CELL_VOLUME
 	environment.temperature = T20C
 	environment.set_gas(GAS_O2, oxygen_moles)
 
-	control.dna.species.handle_environment_pressure(control, environment, 5)
+	control.dna.species.handle_environment_pressure(control, environment, PRESSURE_TEST_EXPOSURE_SECONDS)
 	TEST_ASSERT(control.get_brute_loss() > 0, "The test atmosphere should inflict pressure damage.")
-	pressure_dummy.dna.species.handle_environment_pressure(pressure_dummy, environment, 5)
+	pressure_dummy.dna.species.handle_environment_pressure(pressure_dummy, environment, PRESSURE_TEST_EXPOSURE_SECONDS)
 	// Use the ordinary damage path as the reference so both humans get the same bodypart damage distribution.
 	damage_dummy.adjust_brute_loss(control.get_brute_loss(), required_bodytype = BODYTYPE_ORGANIC)
 	// Compare individual damage amounts; summing randomly selected limbs can round their total differently.
@@ -531,15 +540,19 @@
 /// Tests that healing each damage type updates both the shared damage pool and the animal's health.
 /datum/unit_test/mob_damage/animal/proc/test_health_updates(mob/living/test_mob)
 	for(var/damage_type in list(BRUTE, BURN, TOX, OXY))
-		test_mob.set_brute_loss(20)
-		TEST_ASSERT_EQUAL(test_mob.health, test_mob.maxHealth - 20, "The animal should start with 20 damage.")
-		TEST_ASSERT_EQUAL(test_mob.heal_damage_type(5, damage_type), 5, \
+		test_mob.set_brute_loss(ANIMAL_TEST_STARTING_DAMAGE)
+		TEST_ASSERT_EQUAL(test_mob.health, test_mob.maxHealth - ANIMAL_TEST_STARTING_DAMAGE, \
+			"The animal should start with [ANIMAL_TEST_STARTING_DAMAGE] damage.")
+		TEST_ASSERT_EQUAL(test_mob.heal_damage_type(ANIMAL_TEST_HEALING_AMOUNT, damage_type), ANIMAL_TEST_HEALING_AMOUNT, \
 			"Healing [damage_type] damage should return the amount healed on [test_mob.type].")
-		TEST_ASSERT_EQUAL(test_mob.get_brute_loss(), 15, "Healing [damage_type] damage should reduce the shared damage pool.")
-		TEST_ASSERT_EQUAL(test_mob.health, test_mob.maxHealth - 15, "Healing [damage_type] damage should immediately update health.")
-		TEST_ASSERT_EQUAL(test_mob.heal_damage_type(20, damage_type), 15, "Healing should not exceed the remaining damage.")
+		TEST_ASSERT_EQUAL(test_mob.get_brute_loss(), ANIMAL_TEST_REMAINING_DAMAGE, \
+			"Healing [damage_type] damage should reduce the shared damage pool.")
+		TEST_ASSERT_EQUAL(test_mob.health, test_mob.maxHealth - ANIMAL_TEST_REMAINING_DAMAGE, \
+			"Healing [damage_type] damage should immediately update health.")
+		TEST_ASSERT_EQUAL(test_mob.heal_damage_type(ANIMAL_TEST_STARTING_DAMAGE, damage_type), ANIMAL_TEST_REMAINING_DAMAGE, \
+			"Healing should not exceed the remaining damage.")
 		TEST_ASSERT_EQUAL(test_mob.health, test_mob.maxHealth, "Overhealing should restore the animal to full health.")
-		TEST_ASSERT_EQUAL(test_mob.heal_damage_type(5, damage_type), 0, "Healing a healthy animal should return zero.")
+		TEST_ASSERT_EQUAL(test_mob.heal_damage_type(ANIMAL_TEST_HEALING_AMOUNT, damage_type), 0, "Healing a healthy animal should return zero.")
 
 /datum/unit_test/mob_damage/animal/test_sanity_simple(mob/living/carbon/test_mob)
 	// check to see if basic mob damage works
@@ -665,3 +678,12 @@
 	dummy_two.adjust_tox_loss(75)
 	var/datum/status_effect/tox_effect_two = dummy_two.has_status_effect(/datum/status_effect/tox_vomit)
 	TEST_ASSERT_NOTNULL(tox_effect_two, "Dummy didn't get tox_vomit status effect at [dummy_two.get_tox_loss()] toxin damage (METHOD: ADJUST)!")
+
+#undef PRESSURE_TEST_BRUTE_RESISTANCE
+#undef PRESSURE_TEST_BRUTE_WEAKNESS
+#undef PRESSURE_TEST_VACUUM_MOLES
+#undef PRESSURE_TEST_HIGH_PRESSURE_MOLES
+#undef PRESSURE_TEST_EXPOSURE_SECONDS
+#undef ANIMAL_TEST_STARTING_DAMAGE
+#undef ANIMAL_TEST_HEALING_AMOUNT
+#undef ANIMAL_TEST_REMAINING_DAMAGE
