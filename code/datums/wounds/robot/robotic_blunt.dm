@@ -12,7 +12,7 @@
 	/// How long do we wait +/- 20% for the next trauma?
 	var/trauma_cycle_cooldown
 	/// The ratio damage taken to our chest will be multiplied against for determining our stagger and confusion duration.
-	var/stagger_multiplier = 1
+	var/stagger_multiplier
 
 /datum/wound_pregen_data/blunt_metal
 	abstract = TRUE
@@ -102,7 +102,7 @@
 	limp_chance = 30
 	series_threshold_penalty = 15
 	a_or_from = "from"
-	stagger_multiplier = 1
+	stagger_multiplier = 1.5
 	/// % chance for hitting our limb to fix something.
 	var/percussive_repair_chance = 20
 	/// Damage must be over this to proc percussive maintenance.
@@ -180,7 +180,7 @@
 	brain_trauma_group = BRAIN_TRAUMA_MILD
 	trauma_cycle_cooldown = 1.5 MINUTES
 	threshold_penalty = 5
-	stagger_multiplier = 1.5
+	stagger_multiplier = 2
 	/// If our external plating has been torn open and we can access our internals without a tool
 	var/crowbarred_open = FALSE
 	/// If internals are secured, and we are ready to restart electronics in the limb and end the wound
@@ -425,7 +425,7 @@
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/critical
 	treatable_tools = list(TOOL_CROWBAR)
 	a_or_from = "a"
-	stagger_multiplier = 1.75
+	stagger_multiplier = 2.5
 
 /datum/wound_pregen_data/blunt_metal/superstructure
 	abstract = FALSE
