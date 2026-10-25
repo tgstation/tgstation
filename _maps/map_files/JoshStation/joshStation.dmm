@@ -794,7 +794,7 @@
 "cu" = (
 /obj/machinery/button/door/directional/west{
 	id = "Disposal Exit";
-	name = ""Lavaland" Vent Control";
+	name = "\"Lavaland\" Vent Control";
 	req_access = list("maint_tunnels");
 	pixel_x = 24
 	},
