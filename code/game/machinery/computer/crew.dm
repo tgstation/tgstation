@@ -95,6 +95,10 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	var/list/last_update = list()
 	/// Cache of area grids by z-level
 	var/list/area_grid_cache = list()
+	/// Cache of generated minimap metadata by z-level
+	var/list/minimap_cache = list()
+	/// Z-levels currently generating minimap images
+	var/list/minimap_loading = list()
 	/// Map of job to ID for sorting purposes
 	var/list/jobs = list(
 		// Note that jobs divisible by 10 are considered heads of staff, and bolded
@@ -180,19 +184,14 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	var/datum/weakref/host_ref = ui_sources[WEAKREF(user)]
 	return host_ref?.resolve()
 
-/datum/crewmonitor/proc/get_area_grid(z_level)
+/datum/crewmonitor/proc/get_area_grid(z_level, list/map_info)
 	if(area_grid_cache["[z_level]"])
 		return area_grid_cache["[z_level]"]
 
-	var/datum/minimap/minimap = get_minimap_for_z(z_level)
-	var/min_x = minimap ? minimap.min_x : 1
-	var/min_y = minimap ? minimap.min_y : 1
-
-	var/map_w = world.maxx
-	var/map_h = world.maxy
-	if(minimap?.base_map)
-		map_w = max(1, minimap.base_map.Width() / MINIMAP_PIXEL_MULTIPLIER)
-		map_h = max(1, minimap.base_map.Height() / MINIMAP_PIXEL_MULTIPLIER)
+	var/min_x = map_info ? map_info["min_x"] : 1
+	var/min_y = map_info ? map_info["min_y"] : 1
+	var/map_w = map_info ? map_info["map_w"] : world.maxx
+	var/map_h = map_info ? map_info["map_h"] : world.maxy
 
 	var/max_x = min_x + map_w - 1
 	var/max_y = min_y + map_h - 1
@@ -215,6 +214,47 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	area_grid_cache["[z_level]"] = grid
 	return grid
 
+/// Returns cached minimap data if available or starts async generation
+/datum/crewmonitor/proc/ensure_minimap(z)
+	var/z_key = "[z]"
+	if(minimap_cache[z_key])
+		return minimap_cache[z_key]
+
+	if(!minimap_loading[z_key])
+		minimap_loading[z_key] = TRUE
+		INVOKE_ASYNC(src, PROC_REF(generate_minimap), z)
+
+	return null
+
+/datum/crewmonitor/proc/generate_minimap(z)
+	var/datum/minimap/minimap = get_minimap_for_z(z)
+	var/z_key = "[z]"
+
+	var/min_x = minimap ? minimap.min_x : 1
+	var/min_y = minimap ? minimap.min_y : 1
+
+	var/map_w = world.maxx
+	var/map_h = world.maxy
+	if(minimap?.base_map)
+		map_w = max(1, minimap.base_map.Width() / MINIMAP_PIXEL_MULTIPLIER)
+		map_h = max(1, minimap.base_map.Height() / MINIMAP_PIXEL_MULTIPLIER)
+
+	var/map_image = null
+	if(minimap?.base_map)
+		map_image = "data:image/png;base64,[icon2base64(icon(minimap.base_map))]"
+
+	minimap_cache[z_key] = list(
+		"min_x" = min_x,
+		"min_y" = min_y,
+		"map_w" = map_w,
+		"map_h" = map_h,
+		"map_image" = map_image,
+	)
+	minimap_loading[z_key] = FALSE
+	data_by_z[z_key] = null
+	SStgui.update_uis(src)
+
+
 /datum/crewmonitor/ui_static_data(mob/user)
 	var/datum/weakref/user_ref = WEAKREF(user)
 	var/has_map = ui_has_map[user_ref]
@@ -231,25 +271,22 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 		var/turf/T = get_turf(user)
 		z = T.z
 
-	var/datum/minimap/minimap = get_minimap_for_z(z)
-	var/map_image = null
-	if(minimap?.base_map)
-		map_image = "data:image/png;base64,[icon2base64(icon(minimap.base_map))]"
+	var/list/map_info = ensure_minimap(z)
 
-	var/grid_w = world.maxx
-	var/grid_h = world.maxy
-	if(minimap?.base_map)
-		grid_w = max(1, minimap.base_map.Width() / MINIMAP_PIXEL_MULTIPLIER)
-		grid_h = max(1, minimap.base_map.Height() / MINIMAP_PIXEL_MULTIPLIER)
+	var/map_image = map_info ? map_info["map_image"] : null
+	var/min_x = map_info ? map_info["min_x"] : 1
+	var/min_y = map_info ? map_info["min_y"] : 1
+	var/grid_w = map_info ? map_info["map_w"] : world.maxx
+	var/grid_h = map_info ? map_info["map_h"] : world.maxy
 
 	. = list(
 		"has_map" = TRUE,
 		"map_image" = map_image,
-		"min_x" = minimap ? minimap.min_x : 1,
-		"min_y" = minimap ? minimap.min_y : 1,
+		"min_x" = min_x,
+		"min_y" = min_y,
 		"grid_w" = grid_w,
 		"grid_h" = grid_h,
-		"area_grid" = get_area_grid(z),
+		"area_grid" = get_area_grid(z, map_info),
 	)
 
 /datum/crewmonitor/ui_data(mob/user)
@@ -267,15 +304,11 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	if(data_by_z["[z]"] && last_update["[z]"] && world.time <= last_update["[z]"] + SENSORS_UPDATE_PERIOD)
 		return data_by_z["[z]"]
 
-	var/datum/minimap/minimap = get_minimap_for_z(z)
-	var/min_x = minimap ? minimap.min_x : 1
-	var/min_y = minimap ? minimap.min_y : 1
-
-	var/map_w = world.maxx
-	var/map_h = world.maxy
-	if(minimap?.base_map)
-		map_w = max(1, minimap.base_map.Width() / MINIMAP_PIXEL_MULTIPLIER)
-		map_h = max(1, minimap.base_map.Height() / MINIMAP_PIXEL_MULTIPLIER)
+	var/list/map_info = ensure_minimap(z)
+	var/min_x = map_info ? map_info["min_x"] : 1
+	var/min_y = map_info ? map_info["min_y"] : 1
+	var/map_w = map_info ? map_info["map_w"] : world.maxx
+	var/map_h = map_info ? map_info["map_h"] : world.maxy
 
 	var/list/results = list()
 	for(var/tracked_mob in GLOB.suit_sensors_list)
