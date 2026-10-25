@@ -67,7 +67,7 @@
 	var/obj/item/circuitboard/computer/cargo/board = circuit
 	board.contraband = TRUE
 	board.obj_flags |= EMAGGED
-	update_static_data(user)
+	update_static_data_for_all_viewers()
 	return TRUE
 
 /obj/machinery/computer/cargo/on_construction(mob/user)
@@ -148,30 +148,32 @@
 /obj/machinery/computer/cargo/ui_static_data(mob/user)
 	var/list/data = list()
 	data["max_order"] = CARGO_MAX_ORDER
-	data["supplies"] = list()
+	var/datum/asset/json/cargo_catalogue/catalogue = get_asset_datum(/datum/asset/json/cargo_catalogue)
+	var/list/groups
 
-	var/list/packs_by_group = get_packs_data_by_group()
+	var/list/packs_by_group = get_packs_data_by_group(catalogue)
+	if(catalogue.needs_build)
+		packs_by_group = get_packs_data_by_group(catalogue.ensure_ready())
 	for(var/group in packs_by_group)
 		var/list/available_packs = packs_by_group[group]
 		if(!length(available_packs)) // Somehow????
 			continue
-		data["supplies"][group] = list(
-			"name" = group,
-			"packs" = available_packs,
-		)
+		LAZYSET(groups, group, available_packs)
 
+	data["catalogue"] = catalogue.get_window_data(user, groups, show_contraband = TRUE)
 	data["displayed_currency_full_name"] = " [MONEY_NAME]"
 	data["displayed_currency_name"] = " [MONEY_SYMBOL]"
 
 	return data
 
-/**
- * returns a list of supply pack ui data by group
- */
-/obj/machinery/computer/cargo/proc/get_packs_data_by_group()
+/obj/machinery/computer/cargo/ui_assets(mob/user)
+	return list(get_asset_datum(/datum/asset/json/cargo_catalogue))
+
+/// Returns the packs this console shows by group, as index/price pairs into the catalogue - packs it's missing get skipped and mark it for a rebuild
+/obj/machinery/computer/cargo/proc/get_packs_data_by_group(datum/asset/json/cargo_catalogue/catalogue)
 	var/list/packs_by_group = list()
-	for(var/pack_id in SSshuttle.supply_packs)
-		var/datum/supply_pack/pack = SSshuttle.supply_packs[pack_id]
+	for(var/pack_id, pack_data in SSshuttle.supply_packs)
+		var/datum/supply_pack/pack = pack_data
 
 		if(pack.order_flags & ORDER_INVISIBLE)
 			continue
@@ -187,24 +189,17 @@
 		if(!is_express && (pack.order_flags & ORDER_POD_ONLY))
 			continue
 
-		var/obj/item/first_item = length(pack.contains) > 0 ? pack.contains[1] : null
+		var/index = catalogue.pack_indices[pack]
+		if(isnull(index))
+			catalogue.needs_build = TRUE
+			continue
+
 		var/list/packs = packs_by_group[pack.group]
 		if(isnull(packs))
 			packs = list()
 			packs_by_group[pack.group] = packs
 
-		packs += list(list(
-			"name" = pack.name,
-			"cost" = pack.get_cost() * get_discount(),
-			"id" = pack_id,
-			"desc" = pack.desc || pack.name, // If there is a description, use it. Otherwise use the pack's name.
-			"first_item_icon" = first_item?.icon,
-			"first_item_icon_state" = first_item?.icon_state,
-			"goody" = (pack.order_flags & ORDER_GOODY),
-			"access" = pack.access,
-			"contraband" = (pack.order_flags & ORDER_CONTRABAND),
-			"contains" = pack.get_contents_ui_data(),
-		))
+		packs += list(index, pack.get_cost() * get_discount())
 
 	return packs_by_group
 
@@ -392,9 +387,9 @@
 				return
 
 			if(SSshuttle.supply.getDockedId() == docking_home)
+				ui.user.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 				SSshuttle.moveShuttle(cargo_shuttle, docking_away, TRUE)
 				say("The supply shuttle is departing.")
-				ui.user.investigate_log("sent the supply shuttle away.", INVESTIGATE_CARGO)
 			else
 				//create the paper from the SSshuttle.shopping_list
 				if(length(SSshuttle.shopping_list))

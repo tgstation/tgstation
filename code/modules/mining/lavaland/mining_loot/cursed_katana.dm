@@ -6,12 +6,12 @@
 #define ATTACK_SHATTER "Shatter"
 
 /obj/item/organ/cyberimp/arm/toolkit/shard
-	name = "dark spoon shard"
-	desc = "An eerie metal shard surrounded by dark energies...of soup drinking. You probably don't think you should have been able to find this."
+	abstract_type = /obj/item/organ/cyberimp/arm/toolkit/shard
+	name = "incoherent shard organ"
+	desc = "You feel like you shouldn't be seeing this."
 	icon = 'icons/obj/mining_zones/artefacts.dmi'
 	icon_state = "cursed_katana_organ"
 	organ_flags = ORGAN_ORGANIC | ORGAN_FROZEN | ORGAN_UNREMOVABLE
-	items_to_create = list(/obj/item/kitchen/spoon)
 	extend_sound = 'sound/items/unsheath.ogg'
 	retract_sound = 'sound/items/sheath.ogg'
 
@@ -30,7 +30,9 @@
 /obj/item/organ/cyberimp/arm/toolkit/shard/katana
 	name = "dark shard"
 	desc = "An eerie metal shard surrounded by dark energies."
-	items_to_create = list(/obj/item/cursed_katana)
+
+/obj/item/organ/cyberimp/arm/toolkit/shard/katana/get_init_items()
+	return list(/obj/item/cursed_katana)
 
 /obj/item/organ/cyberimp/arm/toolkit/shard/katana/Retract()
 	var/obj/item/cursed_katana/katana = active_item
@@ -39,7 +41,7 @@
 	if(!katana.drew_blood)
 		to_chat(owner, span_userdanger("[katana] lashes out at you in hunger!"))
 		playsound(owner, 'sound/effects/magic/demon_attack1.ogg', 50, TRUE)
-		owner.apply_damage(25, BRUTE, hand, wound_bonus = 10, sharpness = SHARP_EDGED)
+		owner.apply_damage(25, BRUTE, bodypart_owner, wound_bonus = 10, sharpness = SHARP_EDGED)
 	katana.drew_blood = FALSE
 	katana.wash(CLEAN_TYPE_BLOOD)
 	return ..()

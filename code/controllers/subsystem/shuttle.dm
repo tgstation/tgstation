@@ -472,7 +472,7 @@ SUBSYSTEM_DEF(shuttle)
 	if(isnull(emergency) || emergency.mode != SHUTTLE_CALL)
 		return FALSE
 
-	var/is_admin = !!user.client?.holder
+	var/is_admin = !!user?.client?.holder
 	if(is_admin)
 		return admin_recall(user)
 
