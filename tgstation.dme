@@ -3918,6 +3918,7 @@
 #include "code\modules\asset_cache\assets\slot_machines.dm"
 #include "code\modules\asset_cache\assets\supplypods.dm"
 #include "code\modules\asset_cache\assets\tcomms.dm"
+#include "code\modules\asset_cache\assets\techweb_catalogue.dm"
 #include "code\modules\asset_cache\assets\tgfont.dm"
 #include "code\modules\asset_cache\assets\tgui.dm"
 #include "code\modules\asset_cache\assets\uplink.dm"

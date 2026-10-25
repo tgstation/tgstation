@@ -94,3 +94,14 @@
 			channels_to_use = list(RADIO_CHANNEL_COMMON)
 	if(length(channels_to_use) && !(node_flags & TECHWEB_NODE_STARTER))
 		aas_config_announce(/datum/aas_config_entry/researched_node, list("NODE" = display_name), null, channels_to_use)
+
+/datum/techweb_node/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(.)
+		catalogue_changed()
+
+/// Marks the techweb catalogue for a rebuild if we're the registered node for our type
+/datum/techweb_node/proc/catalogue_changed()
+	if(SSresearch.techweb_nodes[type] == src)
+		var/datum/asset/json/techweb_catalogue/catalogue = load_asset_datum(/datum/asset/json/techweb_catalogue)
+		catalogue.needs_build = TRUE
