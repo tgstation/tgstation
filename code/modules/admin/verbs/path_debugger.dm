@@ -324,7 +324,7 @@ GLOBAL_DATUM_INIT(pathfind_dude, /obj/pathfind_guy, new())
 		nav_cost_modifiers = nav_cost_modifiers,
 	)
 	var/search_time_ms = round(rustg_time_microseconds(timer_id) / 1000, 0.001)
-	var/backend = use_native_pathfinder ? "native DLL v[__navmap_pathfinder_version]" : "DM fallback: [__navmap_pathfinder_error]"
+	var/backend = use_native_pathfinder ? "native DLL v[GLOB.navmap_pathfinder_version]" : "DM fallback: [GLOB.navmap_pathfinder_error]"
 	to_chat(owner, span_notice("Navmap pathfinding used [backend] and took [search_time_ms] ms."))
 	display_turfs = islist(path) ? path : list()
 	update_visuals()

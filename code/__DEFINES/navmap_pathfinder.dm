@@ -1,7 +1,7 @@
 // DM API for the navmap_pathfinder DLL.
 
 #ifndef NAVMAP_PATHFINDER
-/var/__navmap_pathfinder
+GLOBAL_VAR_INIT(navmap_pathfinder_library, null)
 
 /proc/__detect_navmap_pathfinder()
 	var/arch_suffix = null
@@ -10,15 +10,15 @@
 	#endif
 	if (world.system_type == UNIX)
 		if (fexists("./libnavmap_pathfinder[arch_suffix].so"))
-			return __navmap_pathfinder = "./libnavmap_pathfinder[arch_suffix].so"
+			return GLOB.navmap_pathfinder_library = "./libnavmap_pathfinder[arch_suffix].so"
 		else if (fexists("./navmap_pathfinder[arch_suffix]"))
-			return __navmap_pathfinder = "./navmap_pathfinder[arch_suffix]"
+			return GLOB.navmap_pathfinder_library = "./navmap_pathfinder[arch_suffix]"
 		else
-			return __navmap_pathfinder = "libnavmap_pathfinder[arch_suffix].so"
+			return GLOB.navmap_pathfinder_library = "libnavmap_pathfinder[arch_suffix].so"
 	else
-		return __navmap_pathfinder = "navmap_pathfinder[arch_suffix]"
+		return GLOB.navmap_pathfinder_library = "navmap_pathfinder[arch_suffix]"
 
-#define NAVMAP_PATHFINDER (__navmap_pathfinder || __detect_navmap_pathfinder())
+#define NAVMAP_PATHFINDER (GLOB.navmap_pathfinder_library || __detect_navmap_pathfinder())
 #endif
 
 #if DM_VERSION >= 515
@@ -81,25 +81,25 @@
 
 // Cache the extension probe so a missing or unloadable library does not produce
 // repeated call_ext errors from the game.
-/var/__navmap_pathfinder_available = null
-/var/__navmap_pathfinder_version = null
-/var/__navmap_pathfinder_error = null
+GLOBAL_VAR_INIT(navmap_pathfinder_available, null)
+GLOBAL_VAR_INIT(navmap_pathfinder_version, null)
+GLOBAL_VAR_INIT(navmap_pathfinder_error, null)
 
 /proc/navmap_pathfinder_available()
-	if(!isnull(__navmap_pathfinder_available))
-		return __navmap_pathfinder_available
+	if(!isnull(GLOB.navmap_pathfinder_available))
+		return GLOB.navmap_pathfinder_available
 	var/version
 	try
 		version = navmap_pathfinder_get_version()
 	catch(var/exception/error)
-		__navmap_pathfinder_available = FALSE
-		__navmap_pathfinder_error = "Could not load [NAVMAP_PATHFINDER]: [error.name]: [copytext(error.desc, 1, 201)]"
+		GLOB.navmap_pathfinder_available = FALSE
+		GLOB.navmap_pathfinder_error = "Could not load [NAVMAP_PATHFINDER]: [error.name]: [copytext(error.desc, 1, 201)]"
 		return FALSE
-	__navmap_pathfinder_version = version
-	__navmap_pathfinder_available = version == NAVMAP_PATHFINDER_VERSION
-	if(!__navmap_pathfinder_available)
-		__navmap_pathfinder_error = "Version mismatch: loaded [version], expected [NAVMAP_PATHFINDER_VERSION]"
-	return __navmap_pathfinder_available
+	GLOB.navmap_pathfinder_version = version
+	GLOB.navmap_pathfinder_available = version == NAVMAP_PATHFINDER_VERSION
+	if(!GLOB.navmap_pathfinder_available)
+		GLOB.navmap_pathfinder_error = "Version mismatch: loaded [version], expected [NAVMAP_PATHFINDER_VERSION]"
+	return GLOB.navmap_pathfinder_available
 
 /proc/navmap_pathfinder_update(x, y, z, nav_pass, nav_cost_flags)
 	if(!navmap_pathfinder_available())
