@@ -439,7 +439,7 @@ GAME_VERB(/mob/living/silicon/ai, toggle_anchor, "Toggle Floor Bolts", "AI Comma
 		var/mob/living/silicon/robot/cyborg = locate(href_list["track_cyborg"]) in connected_robots
 		if(!cyborg)
 			return
-		ai_tracking_tool.set_tracked_mob(cyborg)
+		ai_tracking_tool.set_tracked_mob(cyborg, src)
 
 	if(href_list["emergencyAPC"]) //This check comes before incapacitated because the only time it would be useful is when we have no power.
 		if(!apc_override)
