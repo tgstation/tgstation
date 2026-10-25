@@ -10,7 +10,7 @@
 	link_visual.add_overlay(mod_link.visual_overlays)
 	mod_link.visual = link_visual
 	mod_link.holder.become_hearing_sensitive(REF(mod_link))
-	mod_link.holder.RegisterSignals(user, list(COMSIG_CARBON_APPLY_OVERLAY, COMSIG_CARBON_REMOVE_OVERLAY, COMSIG_LIVING_TYPING_INDICATOR_UPDATED), proc_path)
+	mod_link.holder.RegisterSignals(user, list(COMSIG_CARBON_APPLY_OVERLAY, COMSIG_CARBON_REMOVE_OVERLAY, COMSIG_LIVING_CHAT_INDICATOR_UPDATED), proc_path)
 	return link_visual
 
 /proc/get_link_visual_generic(datum/mod_link/mod_link, atom/movable/visuals, proc_path)
@@ -32,7 +32,7 @@
 	playsound(mod_link.get_other().holder, 'sound/machines/terminal/terminal_processing.ogg', 50, vary = TRUE, frequency = -1)
 	LAZYREMOVE(mod_link.holder.update_on_z, mod_link.visual)
 	mod_link.holder.lose_hearing_sensitivity(REF(mod_link))
-	mod_link.holder.UnregisterSignal(old_user, list(COMSIG_CARBON_APPLY_OVERLAY, COMSIG_CARBON_REMOVE_OVERLAY, COMSIG_LIVING_TYPING_INDICATOR_UPDATED, COMSIG_ATOM_DIR_CHANGE))
+	mod_link.holder.UnregisterSignal(old_user, list(COMSIG_CARBON_APPLY_OVERLAY, COMSIG_CARBON_REMOVE_OVERLAY, COMSIG_LIVING_CHAT_INDICATOR_UPDATED, COMSIG_ATOM_DIR_CHANGE))
 	QDEL_NULL(mod_link.visual)
 
 /proc/on_user_set_dir_generic(datum/mod_link/mod_link, newdir)
