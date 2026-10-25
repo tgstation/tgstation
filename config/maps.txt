@@ -17,19 +17,27 @@ endmap
 
 # Production-level maps.
 
+map joshStation
+    maxplayers 10
+	votable
+    feedbacklink https://www.youtube.com/watch?v=0lK_oNmQIYw
+
+endmap
+
 map deltastation
 	minplayers 50
 	votable
+    disabled
 endmap
 
 map icebox
-	minplayers 25
 	votable
 endmap
 
 map catwalkstation
 	minplayers 25
 	votable
+
 endmap
 
 map metastation
@@ -41,12 +49,13 @@ map metastation
 endmap
 
 map tramstation
-	minplayers 35
+
 	votable
 endmap
 
 map nebulastation
 	minplayers 35
+    disabled
 	votable
 endmap
 
