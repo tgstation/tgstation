@@ -217,6 +217,7 @@ SUBSYSTEM_DEF(job)
 
 
 /datum/controller/subsystem/job/proc/get_job(rank)
+	RETURN_TYPE(/datum/job)
 	if(!length(all_occupations))
 		setup_occupations()
 	return name_occupations[rank]
