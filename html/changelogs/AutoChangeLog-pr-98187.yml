@@ -1,8 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Prosthetic Limb quirk cannot replace limbs that you don't have"
-  - bugfix: "Transhumanist cannot replace limbs nor organs that you don't have"
-  - bugfix: "Prosthetic organ cannot replace organs that you don't have"
-  - bugfix: "Prosthetic organ will not give lungs to species that don't breathe oxygen"
-  - bugfix: "Quadruple Amputee won't give you limbs that you don't have"

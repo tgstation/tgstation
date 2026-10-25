@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "papers no longer pop open on their own when you pick up a pen or stamp after an earlier attempt to read them failed, or after you ghosted while reading"

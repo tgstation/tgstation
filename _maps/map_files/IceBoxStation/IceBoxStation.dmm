@@ -12918,14 +12918,6 @@
 /obj/effect/landmark/start/hangover,
 /turf/open/floor/glass/reinforced,
 /area/station/hallway/primary/starboard)
-"dyK" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle{
-	dir = 4
-	},
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/station/security/prison/rec)
 "dyL" = (
 /obj/effect/turf_decal/tile/red/half/contrasted{
 	dir = 8
@@ -20354,7 +20346,6 @@
 	name = "Privacy Door"
 	},
 /obj/effect/spawner/structure/window/reinforced,
-/obj/machinery/door/firedoor,
 /turf/open/floor/plating,
 /area/station/security/prison/rec)
 "fJl" = (
@@ -38287,12 +38278,6 @@
 	},
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
-"kMW" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/station/security/prison/rec)
 "kMX" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /obj/structure/cable,
@@ -45333,6 +45318,13 @@
 /obj/effect/spawner/structure/window/reinforced,
 /turf/open/floor/plating,
 /area/station/maintenance/starboard/fore)
+"mMe" = (
+/obj/structure/cable,
+/obj/effect/spawner/structure/window/hollow/reinforced/middle{
+	dir = 4
+	},
+/turf/open/floor/plating,
+/area/station/security/prison/rec)
 "mMk" = (
 /obj/machinery/telecomms/message_server/preset,
 /turf/open/floor/iron/dark/telecomms,
@@ -59463,12 +59455,6 @@
 "qCu" = (
 /turf/open/floor/engine/xenobio,
 /area/station/science/xenobiology)
-"qCw" = (
-/obj/structure/cable,
-/obj/effect/spawner/structure/window/hollow/reinforced/middle,
-/obj/machinery/door/firedoor,
-/turf/open/floor/plating,
-/area/station/security/prison/mess)
 "qCA" = (
 /obj/structure/table/wood,
 /turf/open/floor/wood,
@@ -110975,9 +110961,9 @@ tZk
 rfu
 rfu
 rfu
-dyK
-dyK
-dyK
+mMe
+mMe
+mMe
 rfu
 jrv
 oBz
@@ -111235,7 +111221,7 @@ dWq
 fGm
 nYN
 kXY
-kMW
+mJX
 pjj
 daf
 rEI
@@ -111492,7 +111478,7 @@ pLG
 bFS
 jfV
 mkg
-kMW
+mJX
 pjj
 daf
 daf
@@ -111749,7 +111735,7 @@ foO
 xtq
 mAO
 foO
-kMW
+mJX
 bPV
 dFF
 dFF
@@ -113809,7 +113795,7 @@ uTT
 eAn
 cWC
 xhH
-qCw
+ots
 ghx
 ghx
 ghx
@@ -114066,7 +114052,7 @@ vrG
 cgb
 nwF
 kFN
-qCw
+ots
 ghx
 ghx
 ghx
@@ -114323,7 +114309,7 @@ vrG
 iKw
 xWA
 rCE
-qCw
+ots
 ghx
 ghx
 ghx
@@ -114580,7 +114566,7 @@ vrG
 bta
 lpY
 kse
-qCw
+ots
 ghx
 ghx
 ghx
@@ -114837,7 +114823,7 @@ mhG
 tMC
 mhG
 hlN
-qCw
+ots
 ghx
 ghx
 ghx
@@ -115094,7 +115080,7 @@ vrG
 cgb
 nwF
 kFN
-qCw
+ots
 ghx
 ghx
 ghx
@@ -115351,7 +115337,7 @@ bfg
 eVA
 uRJ
 nRL
-qCw
+ots
 ghx
 ghx
 ghx
