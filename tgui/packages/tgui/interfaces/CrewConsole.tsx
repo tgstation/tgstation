@@ -156,6 +156,7 @@ type CrewSensor = {
 type CrewConsoleData = {
   sensors: CrewSensor[];
   link_allowed: BooleanLike;
+  has_map?: BooleanLike;
   map_image?: string;
   grid_w?: number;
   grid_h?: number;
@@ -164,17 +165,28 @@ type CrewConsoleData = {
 
 export const CrewConsole = () => {
   const { act, data } = useBackend<CrewConsoleData>();
-  const { sensors = [], map_image, grid_w, grid_h, area_grid } = data;
+  const {
+    sensors = [],
+    has_map = false,
+    map_image,
+    grid_w,
+    grid_h,
+    area_grid,
+  } = data;
 
+  const hasMapBool = Boolean(has_map);
   const [hoveredRef, setHoveredRef] = useState<string | null>(null);
   const [trackedTarget, setTrackedTarget] = useState<CrewSensor | null>(null);
+  const [showMap, setShowMap] = useState(hasMapBool);
+  const mapVisible = hasMapBool && showMap;
 
   return (
-    <Window title="Crew Monitor" width={1100} height={720}>
+    <Window title="Crew Monitor" width={mapVisible ? 1100 : 720} height={720}>
       <Window.Content>
         <Flex height="100%" gap={2}>
           <Flex.Item
-            width="500px"
+            width={mapVisible ? '500px' : '100%'}
+            grow={mapVisible ? 0 : 1}
             shrink={0}
             height="100%"
             style={{ overflowY: 'auto' }}
@@ -182,69 +194,80 @@ export const CrewConsole = () => {
             <CrewTable
               hoveredRef={hoveredRef}
               setHoveredRef={setHoveredRef}
-              onTrack={setTrackedTarget}
+              onTrack={(sensor) => {
+                setTrackedTarget(sensor);
+                if (hasMapBool && !showMap) setShowMap(true);
+              }}
+              hasMap={hasMapBool}
+              showMap={showMap}
+              setShowMap={setShowMap}
             />
           </Flex.Item>
 
-          <Flex.Item grow={1} shrink={1} height="100%">
-            <StationMap
-              mapImage={map_image}
-              gridW={grid_w}
-              gridH={grid_h}
-              areaGrid={area_grid}
-              targetX={trackedTarget?.x_pos}
-              targetY={trackedTarget?.y_pos}
-            >
-              {(zoom) =>
-                sensors
-                  .filter(
-                    (sensor) =>
-                      sensor.x_pos !== undefined && sensor.y_pos !== undefined,
-                  )
-                  .map((sensor) => {
-                    const isHovered = hoveredRef === sensor.ref;
-                    const iconScale = 1 / zoom;
+          {mapVisible ? (
+            <Flex.Item grow={1} shrink={1} height="100%">
+              <StationMap
+                mapImage={map_image}
+                gridW={grid_w}
+                gridH={grid_h}
+                areaGrid={area_grid}
+                targetX={trackedTarget?.x_pos}
+                targetY={trackedTarget?.y_pos}
+              >
+                {(zoom) =>
+                  sensors
+                    .filter(
+                      (sensor) =>
+                        sensor.x_pos !== undefined &&
+                        sensor.y_pos !== undefined,
+                    )
+                    .map((sensor) => {
+                      const isHovered = hoveredRef === sensor.ref;
+                      const iconScale = 1 / zoom;
 
-                    return (
-                      <div
-                        key={sensor.ref}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          act('select_person', { ref: sensor.ref });
-                          setTrackedTarget(sensor);
-                        }}
-                        onMouseEnter={() => setHoveredRef(sensor.ref)}
-                        onMouseLeave={() => setHoveredRef(null)}
-                        style={{
-                          position: 'absolute',
-                          left: `${sensor.x_pos}%`,
-                          bottom: `${sensor.y_pos}%`,
-                          transform: `translate(-50%, 50%) scale(${iconScale})`,
-                          transformOrigin: 'center center',
-                          cursor: 'pointer',
-                          zIndex: isHovered ? 20 : 2,
-                        }}
-                      >
-                        {!!sensor.sechud_icon && (
-                          <img
-                            src={`data:image/png;base64,${sensor.sechud_icon}`}
-                            style={{
-                              display: 'block',
-                              width: '16px',
-                              height: '16px',
-                              imageRendering: 'pixelated',
-                              opacity: isHovered ? 1 : 0.85,
-                              transform: isHovered ? 'scale(1.25)' : 'scale(1)',
-                              transition: 'transform 0.1s ease-in-out',
-                            }}
-                          />
-                        )}
-                      </div>
-                    );
-                  })
-              }
-            </StationMap>
-          </Flex.Item>
+                      return (
+                        <div
+                          key={sensor.ref}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            act('select_person', { ref: sensor.ref });
+                            setTrackedTarget(sensor);
+                          }}
+                          onMouseEnter={() => setHoveredRef(sensor.ref)}
+                          onMouseLeave={() => setHoveredRef(null)}
+                          style={{
+                            position: 'absolute',
+                            left: `${sensor.x_pos}%`,
+                            bottom: `${sensor.y_pos}%`,
+                            transform: `translate(-50%, 50%) scale(${iconScale})`,
+                            transformOrigin: 'center center',
+                            cursor: 'pointer',
+                            zIndex: isHovered ? 20 : 2,
+                          }}
+                        >
+                          {!!sensor.sechud_icon && (
+                            <img
+                              src={`data:image/png;base64,${sensor.sechud_icon}`}
+                              style={{
+                                display: 'block',
+                                width: '16px',
+                                height: '16px',
+                                imageRendering: 'pixelated',
+                                opacity: isHovered ? 1 : 0.85,
+                                transform: isHovered
+                                  ? 'scale(1.25)'
+                                  : 'scale(1)',
+                                transition: 'transform 0.1s ease-in-out',
+                              }}
+                            />
+                          )}
+                        </div>
+                      );
+                    })
+                }
+              </StationMap>
+            </Flex.Item>
+          ) : null}
         </Flex>
       </Window.Content>
     </Window>
@@ -255,12 +278,16 @@ type CrewTableProps = {
   hoveredRef: string | null;
   setHoveredRef: (ref: string | null) => void;
   onTrack: (sensor: CrewSensor) => void;
+  hasMap: boolean;
+  showMap: boolean;
+  setShowMap: (show: boolean) => void;
 };
 
 const CrewTable = (props: CrewTableProps) => {
   const { data } = useBackend<CrewConsoleData>();
   const { sensors = [], link_allowed } = data;
-  const { hoveredRef, setHoveredRef, onTrack } = props;
+  const { hoveredRef, setHoveredRef, onTrack, hasMap, showMap, setShowMap } =
+    props;
 
   const [sortAsc, setSortAsc] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -280,6 +307,8 @@ const CrewTable = (props: CrewTableProps) => {
         : SORT_OPTIONS[indexOfSortingOption].sort(b, a),
     );
 
+  const trackingEnabled = Boolean(link_allowed && hasMap);
+
   return (
     <Section
       title={
@@ -298,6 +327,15 @@ const CrewTable = (props: CrewTableProps) => {
             onChange={setSearchQuery}
             value={searchQuery}
           />
+          {hasMap ? (
+            <Button
+              style={{ marginLeft: '4px' }}
+              icon={showMap ? 'chevron-right' : 'chevron-left'}
+              tooltip={showMap ? 'Hide Map' : 'Show Map'}
+              selected={showMap}
+              onClick={() => setShowMap(!showMap)}
+            />
+          ) : null}
         </>
       }
     >
@@ -311,11 +349,11 @@ const CrewTable = (props: CrewTableProps) => {
           <Table.Cell bold textAlign="center">
             Position
           </Table.Cell>
-          {!!link_allowed && (
+          {trackingEnabled ? (
             <Table.Cell bold collapsing textAlign="center">
               Tracking
             </Table.Cell>
-          )}
+          ) : null}
         </Table.Row>
         {sorted.map((sensor) => (
           <CrewTableEntry
@@ -325,6 +363,7 @@ const CrewTable = (props: CrewTableProps) => {
             onMouseEnter={() => setHoveredRef(sensor.ref)}
             onMouseLeave={() => setHoveredRef(null)}
             onTrack={onTrack}
+            hasMap={hasMap}
           />
         ))}
       </Table>
@@ -338,12 +377,13 @@ type CrewTableEntryProps = {
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   onTrack: (sensor: CrewSensor) => void;
+  hasMap: boolean;
 };
 
 const CrewTableEntry = (props: CrewTableEntryProps) => {
   const { act, data } = useBackend<CrewConsoleData>();
   const { link_allowed } = data;
-  const { sensor_data, onMouseEnter, onMouseLeave, onTrack } = props;
+  const { sensor_data, onMouseEnter, onMouseLeave, onTrack, hasMap } = props;
   const {
     name,
     assignment,
@@ -361,6 +401,7 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
   } = sensor_data;
 
   const canTrack = x_pos !== undefined && y_pos !== undefined;
+  const trackingEnabled = Boolean(link_allowed && hasMap);
 
   return (
     <Table.Row
@@ -431,7 +472,7 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
           <Icon name="question" color="#ffffff" size={1} />
         )}
       </Table.Cell>
-      {!!link_allowed && (
+      {trackingEnabled ? (
         <Table.Cell collapsing>
           <Button
             disabled={!canTrack}
@@ -444,7 +485,7 @@ const CrewTableEntry = (props: CrewTableEntryProps) => {
             Track
           </Button>
         </Table.Cell>
-      )}
+      ) : null}
     </Table.Row>
   );
 };

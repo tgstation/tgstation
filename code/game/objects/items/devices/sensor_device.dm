@@ -16,7 +16,7 @@
 	drop_sound = SFX_GENERIC_DEVICE_DROP
 
 /obj/item/sensor_device/attack_self(mob/user)
-	GLOB.crewmonitor.show(user,src) //Proc already exists, just had to call it
+	GLOB.crewmonitor.show(user,src,has_map = FALSE) //Proc already exists, just had to call it
 
 /obj/item/sensor_device/Initialize(mapload)
 	. = ..()
