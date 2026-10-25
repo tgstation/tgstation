@@ -952,6 +952,9 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 /mob/proc/swap_hand(held_index, silent = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE) // Override perform_hand_swap instead
 
+	if (!HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS))
+		return FALSE
+
 	if(!isnum(held_index))
 		stack_trace("You passed [held_index] into swap_hand instead of a number. WTF man")
 		return FALSE
@@ -968,11 +971,10 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 	if(.)
 		SEND_SIGNAL(src, COMSIG_MOB_SWAP_HANDS, get_active_held_item(), old_active_held_item)
 
-/// Performs the actual ritual of swapping hands, such as setting the held index variables
+/// Performs the actual ritual of swapping hands.<br>
+/// You're likely meaning to use [/mob/proc/swap_hand] or [/mob/proc/cycle_hand].
 /mob/proc/perform_hand_swap(held_index)
 	PROTECTED_PROC(TRUE)
-	if (!HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS))
-		return FALSE
 
 	var/previous_index = active_hand_index
 	active_hand_index = held_index
