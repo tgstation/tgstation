@@ -1,0 +1,35 @@
+@use '../base';
+
+.IconResourceNotice {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.IconResourceNotice__status {
+  flex: none;
+}
+
+.IconResourceNotice__content {
+  position: relative;
+  flex: 1 1 0;
+  min-height: 0;
+}
+
+.IconResourceNotice__box {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-sm) var(--space-m);
+  margin: var(--space-m);
+}
+
+.IconResourceNotice--shown .Layout__content:not(.Layout__content--scrollable) {
+  overflow-y: auto;
+}
+
+.IconResourceNotice__box :where(.Button):focus-visible {
+  outline: base.rem(2px) solid var(--notice-box-color);
+  outline-offset: base.rem(2px);
+}

@@ -7,6 +7,7 @@
 import { useAtomValue } from 'jotai';
 import { KitchenSink } from './debug/KitchenSink';
 import { backendStateAtom } from './events/store';
+import { iconMapStateAtom } from './iconMap';
 import { LoadingScreen } from './interfaces/common/LoadingScreen';
 import { Window } from './layouts';
 
@@ -99,6 +100,8 @@ export function getRoutedComponent(name: string) {
 
 export function RoutedComponent() {
   const { suspended, config, debug } = useAtomValue(backendStateAtom);
+  // DmIcon reads the map from a global, so we redraw the interface when it's ready
+  useAtomValue(iconMapStateAtom);
 
   if (suspended) {
     return <SuspendedWindow />;
