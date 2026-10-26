@@ -522,3 +522,6 @@
   - qol: atmos techs now start with an Atmospherics skillchip that lets them know
       air alarm and fire alarm wires
   - qol: the Engineering skillchip now also lets you know fire alarm wires
+2026-10-25:
+  vinylspiders:
+  - bugfix: fixed a runtime when a cyborg or AI joined the round
