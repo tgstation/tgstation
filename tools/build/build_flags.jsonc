@@ -47,6 +47,7 @@
 				{ "value": "gateway_test", "label": "Gateway Test (test)" },
 				{ "value": "multiz_debug", "label": "MultiZ Debug (test)" },
 				{ "value": "runtimestation", "label": "Runtime Station (low memory)" },
+				{ "value": "danruntimestation", "label": "Dan Runtime Station (Runtime + Meta engineering)" },
 				{
 					"value": "runtimestation_minimal",
 					"label": "Minimal Runtime Station. Only works with minimal CentCom.",
