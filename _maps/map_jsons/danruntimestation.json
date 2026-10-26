@@ -11,7 +11,7 @@
 		"/datum/unit_test/spy_bounty"
 	],
 	"shuttles": {
-		"cargo": "cargo_delta"
+		"cargo": "cargo_kilo"
 	},
 	"bonus_weakpoints": -3
 }
