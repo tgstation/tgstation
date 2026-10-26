@@ -187,7 +187,7 @@
 
 	if(flash_result != FLASH_COMPLETED) //If the behavior was overwritten, we just skip the flashy stunny part and go with the override behavior instead
 		if(issilicon(flashed))
-			if(flashed.is_blind())
+			if(!istype(flashed, /mob/living/silicon/robot/model/syndicate) || flashed.is_blind())
 				var/flash_duration = rand(8,12) SECONDS
 				flashed.Paralyze(flash_duration)
 				flashed.set_temp_blindness_if_lower(flash_duration)

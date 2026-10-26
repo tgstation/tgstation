@@ -467,3 +467,61 @@
   - rscadd: Headslugs and alien larvae can doorcrawl.
   TealSeer:
   - bugfix: fixed wizard's heart eater perk not actually increasing damage resistance
+2026-10-21:
+  SmArtKar:
+  - bugfix: Ceruleans no longer flop in zero-g
+  vinylspiders:
+  - bugfix: fixed mood sometimes sticking to the room you just fell or got teleported
+      out of.
+  - admin: jumping somewhere in your own body, or with Jump To Ghost, no longer leaves
+      your mood stuck on the area you jumped out of.
+2026-10-22:
+  SmArtKar:
+  - bugfix: Fixed some MODsuit modules having broken names in action bar
+  uaioy:
+  - balance: silicons take 1 flash to be stunned again (syndie borgs unchanged)
+  vinylspiders:
+  - bugfix: Eigenstasium spirits no longer vanish the moment someone walks through
+      them
+  - bugfix: walking through an Eigenstasium spirit no longer curses the area to look
+      pixel shifted and weird for five minutes
+2026-10-23:
+  13spacemen:
+  - bugfix: The follow link in ghost poll "was selected" announcements now follows
+      the chosen player instead of doing nothing.
+  vinylspiders:
+  - refactor: (performance) the R&D console no longer resends the whole techweb every
+      second while connected to it
+  - bugfix: wearing a space suit or bio suit without a helmet no longer hides your
+      gender, and being fully covered (like a bomb suit and hood or a sealed modsuit)
+      now does
+  - bugfix: plasmamen, ethereals and shadowpeople/any other nondimorphic gendered
+      species no longer get the female cut on their underwear
+2026-10-24:
+  Melbert:
+  - bugfix: Wall mounted objects that layer above players will now layer beneath players
+      if a player is leaning against it.
+  - rscadd: Breathing, injecting, or drinking metalgen applies it to your lungs, liver,
+      or stomach
+  PapaMIchael:
+  - balance: Blood worms fake breathing when checked with a stethoscope
+  - bugfix: Blood worms restart their host's heart when they revive it
+  PapaMichael:
+  - bugfix: Changeling transformation stings properly wear off after 8 minutes
+  - balance: Using a stethoscope now takes 2 seconds
+  Robwo:
+  - bugfix: Fixed ambient sound loops not playing in powered areas that have no apc.
+  SmArtKar:
+  - bugfix: Fixed particle weather not rendering
+  necromanceranne:
+  - balance: Slaughter demons no longer take damage while in blood crawl. They can
+      also eat more than just humans again.
+  vinylspiders:
+  - bugfix: you can put body bags into disposal bins while buckled to a chair or otherwise
+      held in place
+  - qol: atmos techs now start with an Atmospherics skillchip that lets them know
+      air alarm and fire alarm wires
+  - qol: the Engineering skillchip now also lets you know fire alarm wires
+2026-10-25:
+  vinylspiders:
+  - bugfix: fixed a runtime when a cyborg or AI joined the round

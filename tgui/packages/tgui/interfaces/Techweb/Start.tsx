@@ -3,6 +3,7 @@ import { Button, Modal } from 'tgui-core/components';
 
 import { useBackend } from '../../backend';
 import { TechwebContent } from './Content';
+import { TechwebDataProvider } from './Data';
 import { TechWebRoute } from './hooks';
 import type { TechWebData } from './types';
 
@@ -38,7 +39,9 @@ export function TechwebStart(props) {
 
   return (
     <TechWebRoute.Provider value={techwebState}>
-      <TechwebContent />
+      <TechwebDataProvider>
+        <TechwebContent />
+      </TechwebDataProvider>
     </TechWebRoute.Provider>
   );
 }
