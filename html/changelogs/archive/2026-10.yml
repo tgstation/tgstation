@@ -525,3 +525,7 @@
 2026-10-25:
   vinylspiders:
   - bugfix: fixed a runtime when a cyborg or AI joined the round
+2026-10-26:
+  Swan:
+  - bugfix: fixes crew manifest not showing the command chevron
+  - bugfix: fixes security records console not displaying job icons
