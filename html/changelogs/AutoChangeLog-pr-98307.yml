@@ -1,5 +1,0 @@
-author: "Swan"
-delete-after: True
-changes:
-  - bugfix: "fixes crew manifest not showing the command chevron"
-  - bugfix: "fixes security records console not displaying job icons"
