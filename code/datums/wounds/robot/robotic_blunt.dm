@@ -162,8 +162,7 @@
 	examine_desc = "jostles with every move, wires visible through cracks in the metal"
 	occur_text = "visibly cracks open, metal pieces flying everywhere"
 	severity = WOUND_SEVERITY_SEVERE
-	simple_treat_text = "If on the chest, splint or buckle yourself to something to reduce oscillation. \
-	Afterwards, screwdriver it, and then reboot the electronics inside!"
+	simple_treat_text = "If on the chest, screwdriver it and then use a multitool to reboot the electronics inside."
 	homemade_treat_text = "If unable to screw, bone gel can secure inner components. \
 	Alternatively, crowbar the limb open to expose the internals - this will make it easier to re-secure them, but has a high risk of shocking you, \
 	so use insulated gloves. This will also disable the limb, so use it only as a last resort!"
@@ -401,15 +400,14 @@
 		. += "\n\n<b>Current step</b>: [span_notice(wound_step)]"
 /datum/wound/blunt/robotic/critical
 	name = "Collapsed Superstructure"
-	desc = "The superstructure has totally collapsed in one or more locations, causing extreme internal oscillation with every move and massive limb dysfunction"
+	desc = "The superstructure has totally collapsed in one or more locations, causing massive limb dysfunction."
 	treat_text = "Bind the affected limb with gauze or a splint. Repair surgically."
 	occur_text = "caves in on itself, damaged solder and shrapnel flying out in a miniature explosion"
 	examine_desc = "has caved in, with internal components visible through gaps in the metal"
 	severity = WOUND_SEVERITY_CRITICAL
-	treat_text_short = "Repair surgically."
+	treat_text_short = "Repair surgically or burn the limb and use a crowbar to reduce severity."
 	disabling = TRUE
-	simple_treat_text = "If on the chest, splint or buckle yourself to something to reduce oscillation. \
-	Afterwards, repair with surgery."
+	simple_treat_text = "Repair with surgery."
 	homemade_treat_text = "The metal can be made malleable by repeated harmful application of any heated instrument until it carries a moderate burn. \
 	Afterwards, a crowbar can reset the metal, reducing the severity of the wound."
 
