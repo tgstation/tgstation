@@ -172,7 +172,10 @@
 			controller.cancel_current_plan()
 
 	if(condition_result && (observer_abort & BT_ABORT_LOWER_PRIORITY))
-		var/active = controller.active_execution_index
+		// A signal can fire inside a different leaf than the last one that returned RUNNING. Prefer the leaf currently being ticked, falling back to the last running leaf for between-tick changes.
+		var/active = controller.ticking_execution_index
+		if(!active)
+			active = controller.active_execution_index
 		if(!execution_index || !active || active > last_execution_index)
 			EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_DECISIONMAKING, "[controller.pawn] [type]: ABORT_LOWER on key=[key]  condition gained, replanning")
 			controller.cancel_current_plan()
