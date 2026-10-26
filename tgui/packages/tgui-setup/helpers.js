@@ -212,10 +212,12 @@
     };
     window.update.flushQueue(_listener);
     window.update.listeners.push(_listener);
+    // Hands back an unsubscribe so a component can drop its listener when it unmounts
     return function () {
       if (!active) {
         return;
       }
+      // A dispatch that's already running still has the old list, so active keeps this listener quiet in it
       active = false;
       window.update.listeners = window.update.listeners.filter(function (entry) {
         return entry !== _listener;

@@ -161,6 +161,8 @@ type ByondType = {
   /**
    * Subscribe to incoming messages *of some specific type*
    * that were sent from `/datum/tgui_window`.
+   *
+   * Returns a function that unsubscribes the listener.
    */
   subscribeTo(type: string, listener: (payload: any) => void): () => void;
 
