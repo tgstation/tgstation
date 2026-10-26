@@ -162,7 +162,7 @@ type ByondType = {
    * Subscribe to incoming messages *of some specific type*
    * that were sent from `/datum/tgui_window`.
    */
-  subscribeTo(type: string, listener: (payload: any) => void): void;
+  subscribeTo(type: string, listener: (payload: any) => void): () => void;
 
   /**
    * Loads a stylesheet into the document.

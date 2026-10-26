@@ -204,13 +204,23 @@
   };
 
   Byond.subscribeTo = function (type, listener) {
+    var active = true;
     var _listener = function (_type, payload) {
-      if (_type === type) {
+      if (_type === type && active) {
         listener(payload);
       }
     };
     window.update.flushQueue(_listener);
     window.update.listeners.push(_listener);
+    return function () {
+      if (!active) {
+        return;
+      }
+      active = false;
+      window.update.listeners = window.update.listeners.filter(function (entry) {
+        return entry !== _listener;
+      });
+    };
   };
 
   // Asset loaders
