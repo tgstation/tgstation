@@ -386,7 +386,8 @@
 		LAZYINITLIST(result)
 
 		if (!isnull(item))
-			result["icon"] = icon2base64(icon(item.icon, item.icon_state, frame = 1))
+			result["icon"] = item.icon
+			result["icon_state"] = item.icon_state
 			result["name"] = item.name
 		result["alternate"] = item_data.get_alternate_actions(owner, user, item)
 		list_clear_nulls(result["alternate"])
