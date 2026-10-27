@@ -101,7 +101,7 @@
 			stack_trace("A stack of sheet material was attempted to be shattered into shards while having less than 1 sheets remaining.")
 		return FALSE
 	user.do_attack_animation(target, ATTACK_EFFECT_BOOP)
-	playsound(target, SFX_SHATTER, 70, TRUE)
+	playsound(target, /datum/sound_effect/shatter, 70, TRUE)
 	var/list/shards_created = list()
 	for(var/shard_to_create in shards)
 		var/obj/item/new_shard = new shard_to_create(target)

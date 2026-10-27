@@ -383,7 +383,7 @@
 	icon_state = "small"
 	material = /datum/material/glass
 	replace_floors = list(/turf/open/floor/glass = 1)
-	sound = SFX_SHATTER
+	sound = /datum/sound_effect/shatter
 
 /datum/dimension_theme/fancy
 	name = "Fancy"
@@ -451,7 +451,7 @@
 	name = "Jungle"
 	icon = 'icons/obj/tiles.dmi'
 	icon_state = "tile_grass"
-	sound = SFX_CRUNCHY_BUSH_WHACK
+	sound = /datum/sound_effect/crunchy_bush_whack
 	replace_floors = list(/turf/open/floor/grass = 1)
 	replace_walls = /turf/closed/wall/mineral/wood
 	replace_objs = list(

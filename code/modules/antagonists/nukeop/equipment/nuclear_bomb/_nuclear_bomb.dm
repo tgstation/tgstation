@@ -443,7 +443,7 @@ GLOBAL_VAR(station_nuke_source)
 	. = ..()
 	if(.)
 		return
-	playsound(src, SFX_TERMINAL_TYPE, 20, FALSE)
+	playsound(src, /datum/sound_effect/terminal_type, 20, FALSE)
 	switch(action)
 		if("eject_disk")
 			if(auth && auth.loc == src)

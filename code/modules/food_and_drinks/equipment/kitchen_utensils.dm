@@ -41,8 +41,8 @@
 	var/datum/reagent/forkload //used to eat omelette
 	custom_price = PAYCHECK_LOWER
 	sound_vary = TRUE
-	pickup_sound = SFX_CUTLERY_PICKUP
-	drop_sound = SFX_CUTLERY_DROP
+	pickup_sound = /datum/sound_effect/cutlery_pickup
+	drop_sound = /datum/sound_effect/cutlery_drop
 
 /datum/armor/kitchen_fork
 	fire = 50
@@ -146,7 +146,7 @@
 		icon_state = "sili_rolling_pin"
 		force = 8
 		sharpness = NONE
-		hitsound = SFX_SWING_HIT
+		hitsound = /datum/sound_effect/swing_hit
 		attack_verb_continuous = list("bashes", "batters", "bludgeons", "thrashes", "whacks")
 		attack_verb_simple = list("bash", "batter", "bludgeon", "thrash", "whack")
 
@@ -180,8 +180,8 @@
 	custom_price = PAYCHECK_CREW * 1.5
 	tool_behaviour = TOOL_ROLLINGPIN
 	sound_vary = TRUE
-	pickup_sound = SFX_ROLLING_PIN_PICKUP
-	drop_sound = SFX_ROLLING_PIN_DROP
+	pickup_sound = /datum/sound_effect/rolling_pin_pickup
+	drop_sound = /datum/sound_effect/rolling_pin_drop
 
 /obj/item/kitchen/rollingpin/illegal
 	name = "metal rolling pin"
@@ -219,8 +219,8 @@
 	tool_behaviour = TOOL_MINING
 	toolspeed = 25 // Literally 25 times worse than the base pickaxe
 	sound_vary = TRUE
-	pickup_sound = SFX_CUTLERY_PICKUP
-	drop_sound = SFX_CUTLERY_DROP
+	pickup_sound = /datum/sound_effect/cutlery_pickup
+	drop_sound = /datum/sound_effect/cutlery_drop
 
 	var/spoon_sip_size = 5
 
