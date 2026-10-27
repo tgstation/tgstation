@@ -77,6 +77,17 @@
 /**
  * public
  *
+ * Forces an update on static data for the specified viewing mob
+ */
+/datum/proc/update_static_data_for_viewer(mob/source)
+	for (var/datum/tgui/window as anything in open_uis)
+		if(window.user == source)
+			window.send_full_update()
+			return
+
+/**
+ * public
+ *
  * Will force an update on non-static data for all viewers.
  * Use when you are manually controlling UI data updates,
  * such as when you are not using the auto-update system.
