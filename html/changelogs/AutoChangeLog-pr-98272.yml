@@ -1,0 +1,6 @@
+author: "EnterTheJake"
+delete-after: True
+changes:
+  - balance: "Burning lantern has been reworked into the Lumen Mendax"
+  - balance: " Lumen Mendax consumes firestacks on the Heretic to gain power, at max charges it can unleash a blast that blinds heathens and makes them hallucinate, while triggering the Ash recharge mechanic."
+  - image: "New sprite for the Lumen Mendax"
