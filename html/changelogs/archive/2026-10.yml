@@ -529,3 +529,7 @@
   Swan:
   - bugfix: fixes crew manifest not showing the command chevron
   - bugfix: fixes security records console not displaying job icons
+2026-10-27:
+  ArcaneMusic:
+  - rscadd: Chefs may now craft a new soup, Rich Cargo Stock! Remember to wait for
+      the stock block to turn liquid.
