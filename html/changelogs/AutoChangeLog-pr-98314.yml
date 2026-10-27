@@ -1,0 +1,4 @@
+author: "Timberpoes"
+delete-after: True
+changes:
+  - bugfix: "Blood-Drunk status effect no longer adds increasing stacks of stamina damage resistant to the point of immunity, and increasing stacks of pressure damage vulnerability to the point that you get insta-killed with 600 brute damage in one game tick for daring to open an airlock."
