@@ -1,0 +1,4 @@
+author: "sohpeach"
+delete-after: True
+changes:
+  - bugfix: "Being deafened while a TTS line is about to play no longer mutes all game sounds until you reopen the game."
