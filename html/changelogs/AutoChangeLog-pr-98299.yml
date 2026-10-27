@@ -1,0 +1,4 @@
+author: "sohpeach"
+delete-after: True
+changes:
+  - bugfix: "Mob charges and transit tubes no longer become instant when a round has been going for a few hours."
