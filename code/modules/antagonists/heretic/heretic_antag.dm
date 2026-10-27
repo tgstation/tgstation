@@ -66,8 +66,6 @@
 	var/drawing_rune = FALSE
 	/// The path our heretic has chosen.
 	var/datum/heretic_knowledge_tree_column/heretic_path
-	/// Reference to the overlay heretics get when they get strong enough
-	var/static/mutable_appearance/eldritch_overlay = mutable_appearance('icons/mob/effects/heretic_aura.dmi', "heretic_aura")
 	/// A sum of how many knowledge points this heretic CURRENTLY has. Used to research.
 	var/knowledge_points = 1
 	/// The time between gaining influence passively. The heretic gain +1 knowledge points every this duration of time.
@@ -365,16 +363,17 @@
 	return ..()
 
 /datum/antagonist/heretic/on_removal()
-	if(owner.current)
+	if(!isnull(owner.current))
 		for(var/knowledge_path in researched_knowledge)
 			var/datum/heretic_knowledge/knowledge = researched_knowledge[knowledge_path][HKT_INSTANCE]
 			knowledge.on_lose(owner.current, src)
 			QDEL_NULL(researched_knowledge[knowledge_path][HKT_INSTANCE])
 
+		owner.current.RemoveElement(/datum/element/rust_healing, FALSE, 1.5, 5)
+		owner.current.update_appearance(UPDATE_OVERLAYS)
+
 	REMOVE_TRAIT(owner, TRAIT_SEE_BLESSED_TILES, REF(src))
-	owner.current.RemoveElement(/datum/element/rust_healing, FALSE, 1.5, 5)
 	QDEL_NULL(heretic_path)
-	owner.current.cut_overlay(eldritch_overlay)
 	return ..()
 
 /datum/antagonist/heretic/apply_innate_effects(mob/living/mob_override)
@@ -429,12 +428,16 @@
 
 /datum/antagonist/heretic/proc/add_aura_overlay(mob/living/source, list/overlays)
 	SIGNAL_HANDLER
-	if(!should_show_aura())
+	if(!should_show_aura(source))
 		return
-	overlays += eldritch_overlay
+	overlays += mutable_appearance(
+		icon = 'icons/mob/effects/heretic_aura.dmi',
+		icon_state = "heretic_aura",
+		alpha = 255 * (istype(source.get_item_by_slot(ITEM_SLOT_OCLOTHING), /obj/item/clothing/suit/hooded/cultrobes/eldritch) ? 0.66 : 1),
+	)
 	overlays += emissive_appearance(
-		icon = eldritch_overlay.icon,
-		icon_state = eldritch_overlay.icon_state,
+		icon = 'icons/mob/effects/heretic_aura.dmi',
+		icon_state = "heretic_aura"
 		offset_spokesman = source,
 		alpha = 200 * (heretic_path?.route == PATH_LOCK ? 0.25 : 1),
 		effect_type = (heretic_path?.route == PATH_LOCK ? EMISSIVE_SPECULAR : EMISSIVE_BLOOM),
@@ -446,26 +449,26 @@
 	if(!QDELETED(owner?.current))
 		owner.current.update_appearance(UPDATE_OVERLAYS)
 
-/datum/antagonist/heretic/proc/should_show_aura()
+/datum/antagonist/heretic/proc/should_show_aura(mob/living/source)
 	if(!can_assign_self_objectives)
 		return FALSE // We spurned the offer of the Mansus :(
 	if(!unlimited_blades)
 		return FALSE // Not at the aura stage
 	if(feast_of_owls)
 		return FALSE // No use in giving the aura to a heretic that can't ascend
-	if(heretic_path?.route == PATH_LOCK && !istype(owner.current?.get_item_by_slot(ITEM_SLOT_OCLOTHING), /obj/item/clothing/suit/hooded/cultrobes/eldritch))
+	if(heretic_path?.route == PATH_LOCK && !istype(source.get_item_by_slot(ITEM_SLOT_OCLOTHING), /obj/item/clothing/suit/hooded/cultrobes/eldritch))
 		return FALSE // Lock heretics don't get aura unless they're wearing the guise
 	return TRUE
 
-/datum/antagonist/heretic/proc/on_heretic_examine(datum/source, mob/user, text)
+/datum/antagonist/heretic/proc/on_heretic_examine(datum/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
-	if(!should_show_aura())
-		return
 	var/mob/heretic_mob = owner.current
+	if(!should_show_aura(heretic_mob))
+		return
 	var/potential_string = "[heretic_mob.p_They()] [heretic_mob.p_are()] crackling with a swirling green vortex of energy."
 	if(can_ascend() == HERETIC_CAN_ASCEND)
 		potential_string += " [heretic_mob.p_They()] [heretic_mob.p_are()] shedding [heretic_mob.p_their()] mortal shell!"
-	text += span_green(potential_string)
+	examine_list += span_green(potential_string)
 
 /datum/antagonist/heretic/on_body_transfer(mob/living/old_body, mob/living/new_body)
 	. = ..()
