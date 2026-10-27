@@ -126,7 +126,7 @@
 	if(isnull(infection))
 		infection = new()
 		infection.Insert(new_zombie)
-		RegisterSignal(infection, COMSIG_ORGAN_REMOVED, PROC_REF(organ_removed))
+	RegisterSignal(infection, COMSIG_ORGAN_REMOVED, PROC_REF(organ_removed))
 
 	var/obj/item/bodypart/head/head = new_zombie.get_bodypart(BODY_ZONE_HEAD)
 	if(!QDELETED(head))
