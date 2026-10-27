@@ -326,6 +326,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IGNORE_SLOWDOWNS (1<<4)
 /// Cancel the action if the user does another action (mainly via clicking)
 #define DO_AFTER_CHECK_NEXT_MOVE (1<<5)
+/// interaction is stealthy/hidden (hide stuff like the cog icon)
+#define HIDE_INTERACTION (1<<6)
 
 // Flags for flora structures
 #define FLORA_HERBAL (1 << 0)

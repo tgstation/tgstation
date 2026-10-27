@@ -1623,7 +1623,7 @@
 	if(ishuman(interacting_with))
 		interacting_with.balloon_alert(user, "scanning ID card...")
 
-		if(!do_after(user, 2 SECONDS, interacting_with, cog_icon = null))
+		if(!do_after(user, 2 SECONDS, interacting_with, timed_action_flags = HIDE_INTERACTION))
 			interacting_with.balloon_alert(user, "interrupted!")
 			return ITEM_INTERACT_BLOCKING
 
