@@ -85,9 +85,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/New(mob/owner)
 	mymob = owner
 
-	if (!ui_style)
-		// will fall back to the default if any of these are null
-		ui_style = ui_style2icon(owner.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
+	// will fall back to the default if any of these are null
+	ui_style ||= ui_style2icon(owner.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 
 	add_screen_object(/atom/movable/screen/button_palette, HUD_MOB_TOGGLE_PALETTE)
 	add_screen_object(/atom/movable/screen/palette_scroll/down, HUD_MOB_PALETTE_DOWN)
@@ -97,9 +96,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	main_group.attach_to(src)
 
 	var/datum/preferences/preferences = owner?.client?.prefs
-	screentip_color = preferences?.read_preference(/datum/preference/color/screentip_color)
-	screentips_enabled = preferences?.read_preference(/datum/preference/choiced/enable_screentips)
-	screentip_images = preferences?.read_preference(/datum/preference/toggle/screentip_images)
+	if(preferences)
+		screentip_color = preferences.read_preference(/datum/preference/color/screentip_color)
+		screentips_enabled = preferences.read_preference(/datum/preference/choiced/enable_screentips)
+		screentip_images = preferences.read_preference(/datum/preference/toggle/screentip_images)
 	screentip_text = add_screen_object(/atom/movable/screen/screentip, HUD_MOB_SCREENTIP)
 
 	for(var/mytype in subtypesof(/atom/movable/plane_master_controller))
