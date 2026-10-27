@@ -44,7 +44,9 @@ async function fetchMap(url: string, signal: AbortSignal, retry: boolean) {
   const controller = new AbortController();
   const abort = () => controller.abort();
   signal.addEventListener('abort', abort, { once: true });
-  if (signal.aborted) controller.abort();
+  if (signal.aborted) {
+    controller.abort();
+  }
   const timeout = setTimeout(abort, ATTEMPT_TIMEOUT);
   try {
     const response = await fetch(url, {
@@ -71,7 +73,9 @@ function waitForRetry(delay: number, signal: AbortSignal): Promise<void> {
     };
     const timer = setTimeout(finish, delay);
     signal.addEventListener('abort', finish, { once: true });
-    if (signal.aborted) finish();
+    if (signal.aborted) {
+      finish();
+    }
   });
 }
 
@@ -81,16 +85,22 @@ function waitForRetry(delay: number, signal: AbortSignal): Promise<void> {
  */
 async function runLoad(url: string, signal: AbortSignal) {
   for (let attempt = 0; attempt <= RETRY_DELAYS.length; attempt++) {
-    if (signal.aborted) return;
+    if (signal.aborted) {
+      return;
+    }
     try {
       const map = await fetchMap(url, signal, attempt > 0);
       // An older request must never overwrite a map from a newer asset message.
-      if (signal.aborted) return;
+      if (signal.aborted) {
+        return;
+      }
       Byond.iconRefMap = map;
       store.set(iconMapStateAtom, { url, status: 'ready' });
       return;
     } catch {
-      if (signal.aborted) return;
+      if (signal.aborted) {
+        return;
+      }
       if (attempt === RETRY_DELAYS.length) {
         store.set(iconMapStateAtom, { url, status: 'error' });
         return;
@@ -107,15 +117,21 @@ async function runLoad(url: string, signal: AbortSignal) {
  * over a newer one. The promise resolves once the load is done, worked or not.
  */
 export function loadIconMap(url: string): Promise<void> {
-  if (active?.url === url) return active.promise;
+  if (active?.url === url) {
+    return active.promise;
+  }
   const state = store.get(iconMapStateAtom);
-  if (state.url === url && state.status === 'ready') return Promise.resolve();
+  if (state.url === url && state.status === 'ready') {
+    return Promise.resolve();
+  }
 
   active?.controller.abort();
   const controller = new AbortController();
   store.set(iconMapStateAtom, { url, status: 'loading' });
   const promise = runLoad(url, controller.signal).finally(() => {
-    if (active?.controller === controller) active = undefined;
+    if (active?.controller === controller) {
+      active = undefined;
+    }
   });
   active = { url, controller, promise };
   return promise;
@@ -129,5 +145,7 @@ export function loadIconMap(url: string): Promise<void> {
  */
 export function retryIconMap(): void {
   const state = store.get(iconMapStateAtom);
-  if (state.url && state.status === 'error') void loadIconMap(state.url);
+  if (state.url && state.status === 'error') {
+    void loadIconMap(state.url);
+  }
 }
