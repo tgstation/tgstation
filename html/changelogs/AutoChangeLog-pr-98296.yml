@@ -1,0 +1,4 @@
+author: "AitorLogedo"
+delete-after: True
+changes:
+  - bugfix: "Boomboxes, chainsaws and other looping sounds follow whoever is carrying them, and long sounds pick up where they should when you walk back into range instead of going silent."
