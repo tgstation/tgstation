@@ -844,6 +844,52 @@
 /datum/emote/living/custom/replace_pronoun(mob/user, message)
 	return message
 
+/// Forces you to stutter, with no seen chat messages.
+/// Accepts a parameter to dictate duration (*stutter 30 for 30 seconds)
+/datum/emote/living/stutter
+	key = "stutter"
+	key_third_person = "stutters"
+	emote_type = NONE
+	can_use_flags = EMOTE_CANUSE_SOFTCRIT | EMOTE_CANUSE_HARDCRIT | EMOTE_CANUSE_UNCONSCIOUS
+	cooldown = 4 SECONDS
+	message_param = "duration of stutter (in seconds)"
+
+/datum/emote/living/stutter/run_emote(mob/living/user, params, type_override, intentional)
+	user.set_stutter_if_lower(clamp(text2num(params), 10, 240) * 1 SECONDS)
+	to_chat(user, span_tinynoticeital("Your next few instances of speech will be stuttered."))
+
+/datum/emote/living/stutter/stammer
+	key = "stammer"
+	key_third_person = "stammers"
+
+/// Forces you to do generic slurring, with no seen chat messages.
+/// Accepts a parameter to dictate duration (*slur 30 for 30 seconds)
+/datum/emote/living/slur
+	key = "slur"
+	key_third_person = "slurs"
+	emote_type = NONE
+	can_use_flags = EMOTE_CANUSE_SOFTCRIT | EMOTE_CANUSE_HARDCRIT | EMOTE_CANUSE_UNCONSCIOUS
+	cooldown = 4 SECONDS
+	message_param = "duration of slur (in seconds)"
+
+/datum/emote/living/slur/run_emote(mob/living/user, params, type_override, intentional)
+	user.set_slurring_if_lower(clamp(text2num(params), 10, 120) * 1 SECONDS)
+	to_chat(user, span_tinynoticeital("Your next few instances of speech will be slurred."))
+
+/// Forces you to jitter, with no seen chat messages.
+/// Accepts a parameter to dictate duration (*jitter 10 for 10 seconds)
+/datum/emote/living/jitter
+	key = "jitter"
+	key_third_person = "jitters"
+	can_use_flags = EMOTE_CANUSE_SOFTCRIT
+	cooldown = 2 SECONDS
+	message_param = "duration of jitter (in seconds)"
+
+/datum/emote/living/jitter/run_emote(mob/living/user, params, type_override, intentional)
+	if(!user.has_status_effect(/datum/status_effect/jitter))
+		to_chat(user, span_tinynoticeital("You start jittering."))
+	user.set_jitter_if_lower(clamp(text2num(params), 5, 30) * 1 SECONDS)
+
 ///Emotes only for le epic chimps
 /datum/emote/living/monkey
 	abstract_type = /datum/emote/living/monkey
