@@ -36,7 +36,8 @@ The console is located at computer/gulag_teleporter.dm
 		/obj/item/clothing/mask/gas,
 	))
 
-/obj/machinery/gulag_teleporter/LateInitialize()
+/obj/machinery/gulag_teleporter/post_machine_initialize()
+	. = ..()
 	// One reclaimer is expected to exist
 	var/list/all_reclaimers = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/gulag_item_reclaimer)
 	if(length(all_reclaimers))
