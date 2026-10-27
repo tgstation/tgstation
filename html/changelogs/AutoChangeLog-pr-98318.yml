@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "tgui windows that take more than 4 seconds to load the first time no longer close themselves"

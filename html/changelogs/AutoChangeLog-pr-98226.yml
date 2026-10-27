@@ -1,5 +1,0 @@
-author: "Co0kie-GG"
-delete-after: True
-changes:
-  - rscadd: "Added the glow of Borg eyes and the ability to turn them off"
-  - bugfix: "Borg eyes are displayed correctly when switching between z-levels."
