@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - balance: "Feast of Owls heretics don't lose blade break, nor gain unlimited blades, after a certain knowledge threshold"
+  - balance: "Heretic armor no longer hides aura."
+  - balance: "Lock Heretics have changed slightly - you do gain an aura now, but it ONLY reveals itself while wearing your robes, and doesn't glow in the dark."
+  - bugfix: "Losing blade break no longer removes cloak of shadow (since it's no longer an innate spell)"
