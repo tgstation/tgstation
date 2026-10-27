@@ -253,7 +253,7 @@ Consuming extracts:
 		fail_effect(eater)
 		return
 	new /obj/effect/particle_effect/sparks(target)
-	playsound(target, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(target, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/slime_cookie/bluespace/proc/fail_effect(mob/living/eater)
 	eater.visible_message(
