@@ -223,13 +223,22 @@
 	if(!do_after(user, 4 SECONDS, target = src)) //This spits out a visible message that somebody is engraving a plaque, then has a delay.
 		return ITEM_INTERACT_BLOCKING
 
-	name = "\improper [namechoice]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
-	desc = "The plaque reads: '[descriptionchoice]'"
-	engraved = TRUE //The plaque now has a name, description, and can't be altered again.
+	update_text(namechoice, descriptionchoice)
 	user.visible_message(span_notice("[user] engraves [src]."), \
 						span_notice("You engrave [src]."))
-	update_appearance(UPDATE_ICON)
 	return ITEM_INTERACT_SUCCESS
+
+/obj/item/plaque/proc/update_text(new_name, new_desc)
+	var/newly_engraved
+	if(new_name)
+		name = "\improper [new_name]" //We want improper here so examine doesn't get weird if somebody capitalizes the plaque title.
+		newly_engraved = TRUE
+	if(new_desc)
+		desc = "The plaque reads: '[new_desc]'"
+		newly_engraved = TRUE
+	if(newly_engraved && !engraved)
+		engraved = TRUE //The plaque now has a name, description, and can't be altered again.
+		update_appearance(UPDATE_ICON)
 
 /obj/item/plaque/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(!iswallturf(interacting_with))

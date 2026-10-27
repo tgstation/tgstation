@@ -338,3 +338,39 @@
 /datum/loadout_item/pocket_items/plaque
 	name = "Plaque"
 	item_path = /obj/item/plaque
+	loadout_flags = LOADOUT_FLAG_ALLOW_NAMING
+
+/datum/loadout_item/pocket_items/plaque/get_ui_buttons()
+	. = ..()
+	UNTYPED_LIST_ADD(., list(
+		"label" = "Description",
+		"act_key" = "select_description",
+		"button_icon" = FA_ICON_PENCIL,
+		"active_key" = INFO_DESCRIPTION,
+	))
+	return .
+
+/datum/loadout_item/pocket_items/plaque/handle_loadout_action(datum/preference_middleware/loadout/manager, mob/user, action, params)
+	if(action != "select_description")
+		return ..()
+	var/list/their_loadout = manager.preferences.read_preference(/datum/preference/loadout)
+	var/desc_input = tgui_input_text(
+		user = user,
+		message = "What description do you want to give [name]? Leave blank to clear.",
+		title = "[name] description",
+		default = their_loadout?[item_path]?[INFO_DESCRIPTION],
+		max_length = MAX_NAME_LEN,
+	)
+	their_loadout = manager.preferences.read_preference(/datum/preference/loadout)
+	if(their_loadout?[item_path])
+		their_loadout[item_path][INFO_DESCRIPTION] = desc_input
+		manager.preferences.update_preference(GLOB.preference_entries[/datum/preference/loadout], their_loadout)
+	return TRUE
+
+/datum/loadout_item/pocket_items/plaque/on_equip_item(obj/item/equipped_item, list/item_details, mob/living/carbon/human/equipper, datum/outfit/job/outfit, visuals_only = FALSE)
+	. = ..()
+	if(isnull(equipped_item))
+		return .
+	var/obj/item/plaque/plaque_item = equipped_item
+	plaque_item.update_text(new_name = plaque_item.name, new_desc = item_details[INFO_DESCRIPTION])
+	return .
