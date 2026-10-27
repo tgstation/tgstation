@@ -80,3 +80,6 @@ endmap
 
 map danruntimestation
 endmap
+
+map ministation
+endmap

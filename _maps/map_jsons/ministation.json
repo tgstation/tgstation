@@ -1,0 +1,16 @@
+{
+	"version": 1,
+	"map_name": "MiniStation",
+	"map_path": "map_files/MiniStation",
+	"map_file": "MiniStation.dmm",
+	"ignored_unit_tests": [
+		"/datum/unit_test/cargo_dep_order_locations",
+		"/datum/unit_test/maptest_job_roundstart_spawnpoints",
+		"/datum/unit_test/maptest_required_map_items",
+		"/datum/unit_test/spy_bounty"
+	],
+	"shuttles": {
+		"cargo": "cargo_mini",
+		"emergency": "emergency_mini"
+	}
+}

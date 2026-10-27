@@ -8,6 +8,7 @@
 	#include "map_files\debug\multiz.dmm"
 	#include "map_files\debug\runtimestation.dmm"
 	#include "map_files\debug\danruntimestation.dmm"
+	#include "map_files\MiniStation\MiniStation.dmm"
 	#include "map_files\Deltastation\DeltaStation2.dmm"
 	#include "map_files\IceBoxStation\IceBoxStation.dmm"
 	#include "map_files\MetaStation\MetaStation.dmm"
