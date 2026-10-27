@@ -18,7 +18,7 @@
 	tool_behaviour = null
 	toolspeed = 1.25 // 25% worse than default tools
 	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT)
-	hitsound = SFX_SWING_HIT
+	hitsound = /datum/sound_effect/swing_hit
 	///Radial menu tool options
 	var/list/options = list()
 	///Chance to select wrong tool

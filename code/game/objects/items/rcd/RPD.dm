@@ -127,7 +127,7 @@
 
 /obj/item/pipe_dispenser/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] points the end of the RPD down [user.p_their()] throat and presses a button! It looks like [user.p_theyre()] trying to commit suicide..."))
-	playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
+	playsound(get_turf(user), /datum/sound_effect/tool_switch, 20, TRUE)
 	playsound(get_turf(user), RPD_USE_SOUND, 50, TRUE)
 	return BRUTELOSS
 
@@ -209,7 +209,7 @@
 	if(.)
 		return
 
-	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
+	playsound(src, /datum/sound_effect/tool_switch, 20, TRUE)
 
 	switch(action)
 		if("color")
@@ -336,7 +336,7 @@
 		can_destroy = is_type_in_list(attack_target, destroyables)
 	if(can_destroy)
 		var/turf/ground = get_turf(src)
-		playsound(ground, SFX_TOOL_SWITCH, 20, TRUE)
+		playsound(ground, /datum/sound_effect/tool_switch, 20, TRUE)
 		playsound(ground, RPD_USE_SOUND, 50, TRUE)
 		qdel(attack_target)
 		return ITEM_INTERACT_SUCCESS
@@ -358,7 +358,7 @@
 				balloon_alert(user, "already configured for its directions!")
 				return ITEM_INTERACT_FAILURE
 
-			playsound(get_turf(src), SFX_TOOL_SWITCH, 20, TRUE)
+			playsound(get_turf(src), /datum/sound_effect/tool_switch, 20, TRUE)
 
 			// Something else could have changed the target's state while we were waiting in do_after
 			// Most of the edge cases don't matter, but atmos components being able to have live connections not described by initializable directions sounds like a headache at best and an exploit at worst
@@ -423,7 +423,7 @@
 				if(isclosedturf(attack_target))
 					balloon_alert(user, "target is blocked!")
 					return ITEM_INTERACT_FAILURE
-				playsound(get_turf(src), SFX_TOOL_SWITCH, 20, TRUE)
+				playsound(get_turf(src), /datum/sound_effect/tool_switch, 20, TRUE)
 
 				if(!do_after(user, disposal_build_speed, target = attack_target))
 					return ITEM_INTERACT_FAILURE
@@ -456,7 +456,7 @@
 					balloon_alert(user, "something in the way!")
 					return ITEM_INTERACT_FAILURE
 
-				playsound(get_turf(src), SFX_TOOL_SWITCH, 20, TRUE)
+				playsound(get_turf(src), /datum/sound_effect/tool_switch, 20, TRUE)
 				if(!do_after(user, transit_build_speed, target = attack_target))
 					return ITEM_INTERACT_FAILURE
 
@@ -537,7 +537,7 @@
 
 	var/list/pipe_layer_numbers = get_active_pipe_layers()
 	for(var/layer_to_build in pipe_layer_numbers)
-		playsound(get_turf(src), SFX_TOOL_SWITCH, 20, vary = TRUE)
+		playsound(get_turf(src), /datum/sound_effect/tool_switch, 20, vary = TRUE)
 		if(!do_after(user, atmos_build_speed, target = atom_to_target))
 			return FALSE
 		if(!recipe.all_layers && (layer_to_build == 1 || layer_to_build == MAX_PIPE_LAYERS))

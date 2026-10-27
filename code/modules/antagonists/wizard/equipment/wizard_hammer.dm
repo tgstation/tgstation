@@ -93,7 +93,7 @@
 	AddComponent(/datum/component/two_handed, \
 		force_multiplier = 5, \
 		update_icon_state = TRUE, \
-		attacksound = SFX_SPARKS, \
+		attacksound = /datum/sound_effect/sparks, \
 	)
 
 /obj/item/mjollnir/proc/yeet_shock(mob/living/target)

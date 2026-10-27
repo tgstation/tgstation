@@ -253,7 +253,7 @@
 	else
 		if(prob(33))
 			new /obj/item/shard(to_mimic.drop_location())
-		playsound(src, SFX_SHATTER, 70, TRUE)
+		playsound(src, /datum/sound_effect/shatter, 70, TRUE)
 	name = "broken [to_mimic.name]"
 	to_mimic.transfer_fingerprints_to(src)
 

@@ -10,7 +10,6 @@
 	pref_flag = ROLE_CHANGELING
 	antag_moodlet = /datum/mood_event/ling
 	antag_hud_name = "changeling"
-	hijack_speed = 0.5
 	ui_name = "AntagInfoChangeling"
 	suicide_cry = "FOR THE HIVE!!"
 	can_assign_self_objectives = TRUE
@@ -665,7 +664,7 @@
 	add_new_profile(owner.current)
 
 /datum/antagonist/changeling/forge_objectives()
-	var/escape_objective_possible = TRUE
+	var/escape_objective_possible = !(locate(/datum/objective/escape) in objectives)
 
 	switch(competitive_objectives ? rand(1,3) : 1)
 		if(1)
@@ -688,38 +687,45 @@
 		steal_objective.find_target()
 		objectives += steal_objective
 
+	var/datum/objective/hijack/absorb_shuttle
+	if(prob(HIJACK_PROB * 0.25) && !(locate(/datum/objective/hijack) in objectives))
+		absorb_shuttle = new
+		absorb_shuttle.owner = owner
+		escape_objective_possible = FALSE
+
 	var/list/active_ais = active_ais()
-	if(active_ais.len && prob(100/GLOB.joined_player_list.len))
+	if(active_ais.len && prob(100 / GLOB.joined_player_list.len))
 		var/datum/objective/destroy/destroy_objective = new
 		destroy_objective.owner = owner
 		destroy_objective.find_target()
 		objectives += destroy_objective
+
+	else if(prob(70))
+		var/datum/objective/assassinate/kill_objective = new
+		kill_objective.owner = owner
+		kill_objective.find_target()
+		objectives += kill_objective
+
 	else
-		if(prob(70))
-			var/datum/objective/assassinate/kill_objective = new
-			kill_objective.owner = owner
-			kill_objective.find_target()
-			objectives += kill_objective
+		var/datum/objective/maroon/maroon_objective = new
+		maroon_objective.owner = owner
+
+		if (escape_objective_possible)
+			var/datum/objective/escape/escape_with_identity/identity_theft = new
+			identity_theft.owner = owner
+			identity_theft.find_target()
+			identity_theft.update_explanation_text()
+			maroon_objective.target = identity_theft.target || maroon_objective.find_target()
+			maroon_objective.update_explanation_text()
+			objectives += maroon_objective
+			objectives += identity_theft
+			escape_objective_possible = FALSE
+
 		else
-			var/datum/objective/maroon/maroon_objective = new
-			maroon_objective.owner = owner
+			maroon_objective.find_target()
+			objectives += maroon_objective
 
-			if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
-				var/datum/objective/escape/escape_with_identity/identity_theft = new
-				identity_theft.owner = owner
-				identity_theft.find_target()
-				identity_theft.update_explanation_text()
-				escape_objective_possible = FALSE
-				maroon_objective.target = identity_theft.target || maroon_objective.find_target()
-				maroon_objective.update_explanation_text()
-				objectives += maroon_objective
-				objectives += identity_theft
-			else
-				maroon_objective.find_target()
-				objectives += maroon_objective
-
-
-	if (!(locate(/datum/objective/escape) in objectives) && escape_objective_possible)
+	if (escape_objective_possible)
 		if(prob(50))
 			var/datum/objective/escape/escape_objective = new
 			escape_objective.owner = owner
@@ -730,6 +736,9 @@
 			identity_theft.find_target()
 			objectives += identity_theft
 		escape_objective_possible = FALSE
+
+	if(absorb_shuttle)
+		objectives += absorb_shuttle
 
 /datum/antagonist/changeling/get_admin_commands()
 	. = ..()

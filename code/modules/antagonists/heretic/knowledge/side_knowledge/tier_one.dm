@@ -237,7 +237,7 @@
 		light.set_light(1.75, 1.5, COLOR_PUCE)
 		QDEL_IN(light, 1 SECONDS)
 		playsound(door, 'sound/effects/magic.ogg', 20, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, ignore_walls = FALSE)
-		playsound(door, SFX_SPARKS, 33, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, ignore_walls = FALSE)
+		playsound(door, /datum/sound_effect/sparks, 33, vary = TRUE, extrarange = SILENCED_SOUND_EXTRARANGE, ignore_walls = FALSE)
 
 	return TRUE
 

@@ -261,7 +261,7 @@ GLOBAL_LIST_INIT(rdd_designs, list(
 					selected_decoration = design["path"]
 					selected_category = category
 					selected_design_name = design_name
-					playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
+					playsound(src, /datum/sound_effect/tool_switch, 20, TRUE)
 					return TRUE
 
 	return TRUE
