@@ -437,7 +437,7 @@
 	)
 	overlays += emissive_appearance(
 		icon = 'icons/mob/effects/heretic_aura.dmi',
-		icon_state = "heretic_aura"
+		icon_state = "heretic_aura",
 		offset_spokesman = source,
 		alpha = 200 * (heretic_path?.route == PATH_LOCK ? 0.25 : 1),
 		effect_type = (heretic_path?.route == PATH_LOCK ? EMISSIVE_SPECULAR : EMISSIVE_BLOOM),
