@@ -27,7 +27,7 @@
 	for(var/input_key in input_planes)
 		var/list/keys_to_walk = list()
 		var/atom/movable/screen/plane_master/input_plane = our_group.plane_masters[input_key]
-		keys_to_walk[input_key] = "[input_plane.type]"
+		keys_to_walk["[input_key]"] = "[input_plane.type]"
 		var/key_index = 0
 		while(key_index < length(keys_to_walk))
 			key_index += 1
