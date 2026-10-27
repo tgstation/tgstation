@@ -71,6 +71,7 @@
 
 /datum/timed_action/proc/register_signals()
 	RegisterSignal(user, COMSIG_QDELETING, PROC_REF(on_user_deleted))
+	RegisterSignal(user, COMSIG_KB_LIVING_STOP_INTERACTIONS_DOWN, PROC_REF(on_cancelled_manually))
 
 	if (!(timed_action_flags & IGNORE_USER_LOC_CHANGE))
 		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_user_moved))
@@ -145,6 +146,11 @@
 /datum/timed_action/proc/on_user_incapacitated(datum/source)
 	SIGNAL_HANDLER
 	cancel()
+
+/datum/timed_action/proc/on_cancelled_manually(datum/source)
+	SIGNAL_HANDLER
+	cancel()
+	return COMSIG_KB_ACTIVATED
 
 /datum/timed_action/proc/on_changenext_move(datum/source, next_move, delay)
 	SIGNAL_HANDLER
