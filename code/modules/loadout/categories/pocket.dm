@@ -336,7 +336,7 @@
 	item_path = /obj/item/storage/fancy/candle_box
 
 /datum/loadout_item/pocket_items/plaque
-	name = "Plaque"
+	name = "Diploma"
 	item_path = /obj/item/plaque
 	loadout_flags = LOADOUT_FLAG_ALLOW_NAMING
 
