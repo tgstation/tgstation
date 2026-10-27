@@ -112,8 +112,10 @@ The console is located at computer/gulag_teleporter.dm
 		open_machine()
 
 /obj/machinery/gulag_teleporter/proc/locate_reclaimer()
-	linked_reclaimer = locate(/obj/machinery/gulag_item_reclaimer)
-	if(linked_reclaimer)
+	// One reclaimer is expected to exist
+	var/list/all_reclaimers = SSmachines.get_machines_by_type(/obj/machinery/gulag_item_reclaimer)
+	if(length(all_reclaimers))
+		linked_reclaimer = all_reclaimers[1]
 		linked_reclaimer.linked_teleporter = src
 
 /obj/machinery/gulag_teleporter/proc/toggle_open()
