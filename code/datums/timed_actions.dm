@@ -209,7 +209,7 @@
  * - cog_iconstate - The icon state of the cog. Default: "Cog"
  * - bar_override - Mob which should see the bar instead of the user
  */
-/proc/do_after(atom/movable/user, delay, atom/target, timed_action_flags = NONE, show_progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, cog_icon = 'icons/effects/progressbar.dmi', cog_iconstate = "cog", mob/bar_override = null, hidden = FALSE)
+/proc/do_after(atom/movable/user, delay, atom/target, timed_action_flags = NONE, show_progress = TRUE, datum/callback/extra_checks, interaction_key, max_interact_count = 1, cog_icon = 'icons/effects/progressbar.dmi', cog_iconstate = "cog", mob/bar_override = null)
 	if (!user)
 		return FALSE
 
