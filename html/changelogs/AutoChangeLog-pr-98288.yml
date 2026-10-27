@@ -1,0 +1,10 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "blood-drunk no longer leaves permanent stamina resistance and increased pressure damage after wearing off"
+  - bugfix: "zombie stun resistance works again"
+  - bugfix: "brute resistance and weakness are no longer applied twice to pressure damage"
+  - bugfix: "interrupting a garden gnome's burrowing no longer permanently increases the damage it takes"
+  - bugfix: "removing a roach heart from a nonhuman no longer grants free knockdown resistance"
+  - bugfix: "healing animals now updates their health immediately"
+  - bugfix: "brute and burn resistances and weaknesses now apply in full to damage spread across the whole body, such as pressure damage"
