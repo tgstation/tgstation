@@ -36,7 +36,7 @@
 
 			for(var/target_plane in next_plane.render_relay_planes)
 				var/target_key = "[target_plane]"
-				var/atom/movable/screen/plane_master/target = our_group.plane_masters["[target_key]"]
+				var/atom/movable/screen/plane_master/target = our_group.plane_masters[target_plane]
 				keys_to_walk[target_key] ||= "[keys_to_walk[next_plane_key]]-[target.type]"
 				if(target.multiz_scaled)
 					TEST_FAIL("[input_plane.type] is eventually drawn (via render relays) onto [target.type] {[keys_to_walk[target_key]]}. Both are scaled by multiz, so this will cause strange transforms.\n\
