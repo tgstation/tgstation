@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "parrying someone else's projectile now uses the parry multipliers instead of the self-boost ones, so parried shots hit a bit softer than before"
