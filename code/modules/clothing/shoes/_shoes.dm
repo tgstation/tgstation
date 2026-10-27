@@ -106,8 +106,23 @@
 	. = ..()
 	if(fastening_type != SHOES_SLIPON && tied == SHOES_UNTIED)
 		our_alert_ref = WEAKREF(user.throw_alert(ALERT_SHOES_KNOT, /atom/movable/screen/alert/shoes/untied))
-		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(check_trip), override=TRUE)
-	oh_what_a_neat_hat(user, TRUE)
+		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(check_trip), override = TRUE)
+	if(astype(user, /mob/living/carbon)?.bodyshape & BODYSHAPE_CERULEAN)
+		slot_flags |= ITEM_SLOT_HEAD
+
+/obj/item/clothing/shoes/give_clothing_traits(mob/living/wearer, slot)
+	if((astype(wearer, /mob/living/carbon)?.bodyshape & BODYSHAPE_CERULEAN) && (slot & ITEM_SLOT_HEAD))
+		return
+
+	return ..()
+
+/obj/item/clothing/shoes/get_worn_offsets(hand_index, bodyshape)
+	var/vector/offsets = ..()
+	if(!hand_index && (bodyshape & BODYSHAPE_CERULEAN))
+		// offsets up to head
+		offsets.y = 28
+
+	return offsets
 
 /obj/item/clothing/shoes/proc/restore_offsets(mob/user)
 	equipped_before_drop = FALSE
@@ -123,7 +138,8 @@
 	if(offset && equipped_before_drop)
 		restore_offsets(user)
 	. = ..()
-	oh_what_a_neat_hat(user, FALSE)
+	if(astype(user, /mob/living/carbon)?.bodyshape & BODYSHAPE_CERULEAN)
+		slot_flags &= ~ITEM_SLOT_HEAD
 
 /obj/item/clothing/shoes/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
@@ -161,7 +177,7 @@
 	else
 		if(tied == SHOES_UNTIED && our_guy && user == our_guy)
 			our_alert_ref = WEAKREF(our_guy.throw_alert(ALERT_SHOES_KNOT, /atom/movable/screen/alert/shoes/untied)) // if we're the ones unknotting our own laces, of course we know they're untied
-		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(check_trip), override=TRUE)
+		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(check_trip), override = TRUE)
 
 /**
  * handle_tying deals with all the actual tying/untying/knotting, inferring your intent from who you are in relation to the state of the laces
@@ -362,15 +378,3 @@
 	var/mutable_appearance/standing_overlay = current_overlays[1]
 	standing_overlay.icon = icon_to_use
 	standing.icon = icon_to_use
-	worn_y_offset = 28 //about how many px up to draw on the head
-
-/// ceruleans wear shoes as a hat. are they doing a bit or are they dumb? i guess we will never know
-/obj/item/clothing/shoes/proc/oh_what_a_neat_hat(mob/living/carbon/user, up_or_down)
-	if(user && !(user?.bodyshape & BODYSHAPE_CERULEAN))
-		return
-	if(up_or_down)
-		slot_flags |= ITEM_SLOT_HEAD
-		detach_clothing_traits(clothing_traits)
-	else
-		slot_flags = initial(slot_flags)
-		worn_y_offset = initial(worn_y_offset)
