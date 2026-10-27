@@ -816,6 +816,7 @@
 
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	heretic_datum.ascended = TRUE
+	heretic_datum.hijack_speed = max(heretic_datum.hijack_speed, 1)
 	// In case we skipped ritual of knowledge
 	SEND_SIGNAL(heretic_datum, COMSIG_HERETIC_PASSIVE_UPGRADE_FINAL)
 

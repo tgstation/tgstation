@@ -66,6 +66,8 @@
 	//number of ingredients who's requested amounts has been satisfied
 	var/completed_ingredients = 0
 	for(var/obj/item/ingredient as anything in pot.added_ingredients)
+		if(!snowflake_ingredient_check(ingredient)) //Check for recipe-unique reaction blockers.
+			return FALSE
 		var/datum/ingredient_type = ingredient.type
 		do
 		{
@@ -296,6 +298,13 @@
 /// Return a list of strings, each string will be a new line in the results list
 /datum/chemical_reaction/food/soup/proc/describe_result()
 	return
+
+/**
+ * A snowflake check for if an ingredient is prepared properly.
+ * Override as needed for specific ingredients that need specific handling.
+ */
+/datum/chemical_reaction/food/soup/proc/snowflake_ingredient_check(atom/ingredient)
+	return TRUE
 
 #ifdef TESTING
 
@@ -2413,3 +2422,66 @@
 	desc = "A stimulant of appetites; Those oldest, deepest, reddest, most regretable appetites."
 	icon = 'icons/obj/drinks/mixed_drinks.dmi' //Drinking a cocktail out a bowl...?
 	icon_state = "rubywise_ruin"
+
+/datum/reagent/consumable/nutriment/soup/rich_stock
+	name = "Rich Cargo Stock"
+	data = list("profit" = 1, "hard work" = 1, "spread sheets" = 1, "big profits" = 1, "payday" = 1)
+	color = "#d814be"
+
+/datum/glass_style/has_foodtype/soup/rich_stock
+	required_drink_type = /datum/reagent/consumable/nutriment/soup/rich_stock
+	name = "rich cargo stock"
+	desc = "It tastes like a million credits. Or, ironically, like losing a million credits."
+	icon_state = "rich_stock"
+	drink_type = MEAT | DAIRY
+
+/datum/chemical_reaction/food/soup/rich_stock
+	required_reagents = list(
+		/datum/reagent/water = 50,
+		/datum/reagent/consumable/milk = 10,
+		/datum/reagent/water/salt = 5,
+		/datum/reagent/consumable/blackpepper = 5,
+	)
+	required_ingredients = list(
+		/obj/item/stock_block = 1,
+		/obj/item/food/meat/steak = 1,
+	)
+	results = list(
+		/datum/reagent/consumable/nutriment/soup/rich_stock = 30,
+		/datum/reagent/consumable/nutriment/protein = 6,
+	)
+
+/datum/chemical_reaction/food/soup/rich_stock/snowflake_ingredient_check(ingredient)
+	if(!istype(ingredient, /obj/item/stock_block))
+		return TRUE
+	var/obj/item/stock_block/block = ingredient
+	if(!block.fluid)
+		return FALSE
+	return TRUE
+
+/datum/chemical_reaction/food/soup/rich_stock/reaction_finish(datum/reagents/holder, datum/equilibrium/reaction, react_vol)
+	. = ..()
+	var/list/ingredients = reaction.data["ingredients"]
+	if(!ingredients)
+		return
+	var/obj/item/stock_block/food_block
+	for(var/datum/weakref/ingreident_ref as anything in ingredients)
+		var/obj/real_ingred = ingreident_ref.resolve()
+		if(istype(real_ingred, /obj/item/stock_block))
+			food_block = real_ingred
+			break
+	if(!food_block)
+		return FALSE
+	var/stock_boost = 2
+	switch(food_block.export_value)
+		if(0 to 100)
+			stock_boost = 2
+		if(101 to 1000)
+			stock_boost = 4
+		if(1001 to 5000)
+			stock_boost = 7.5
+		if(5001 to INFINITY)
+			stock_boost = 12.5
+
+	holder.add_reagent(/datum/reagent/consumable/nutriment/vitamin, stock_boost)
+	holder.add_reagent(/datum/reagent/consumable/nutriment/soup/rich_stock, stock_boost)

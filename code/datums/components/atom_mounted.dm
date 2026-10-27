@@ -2,16 +2,19 @@
 /datum/component/atom_mounted
 	/// The closed turf our object is currently linked to.
 	var/atom/hanging_support_atom
+	/// The original layer of the hanging parent
+	VAR_FINAL/original_layer
 
 /datum/component/atom_mounted/Initialize(target_structure)
 	if(!isobj(parent) || !isatom(target_structure))
 		return COMPONENT_INCOMPATIBLE
-	. = ..()
 
 	hanging_support_atom = target_structure
 	RegisterSignal(hanging_support_atom, COMSIG_ATOM_EXAMINE, PROC_REF(on_examine))
 	if(isturf(hanging_support_atom))
 		RegisterSignal(hanging_support_atom, COMSIG_TURF_CHANGE, PROC_REF(on_turf_changing))
+		RegisterSignal(hanging_support_atom, COMSIG_ATOM_LEANED_UPON, PROC_REF(on_leaned_upon))
+		RegisterSignal(hanging_support_atom, COMSIG_ATOM_NO_LONGER_LEANED_UPON, PROC_REF(on_no_longer_leaned_upon))
 	else
 		RegisterSignal(hanging_support_atom, COMSIG_QDELETING, PROC_REF(on_structure_delete))
 
@@ -23,10 +26,11 @@
 
 /datum/component/atom_mounted/UnregisterFromParent()
 	REMOVE_TRAIT(parent, TRAIT_WALLMOUNTED, INNATE_TRAIT)
-	var/list/signals = list(COMSIG_MOVABLE_MOVED)
-	if(is_area_shuttle(get_area(parent)))
-		signals += COMSIG_ATOM_BEFORE_SHUTTLE_MOVE
-	UnregisterSignal(parent, signals)
+	UnregisterSignal(parent, list(COMSIG_MOVABLE_MOVED, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE))
+
+	if(original_layer)
+		var/obj/hanging_parent = parent
+		hanging_parent.layer = original_layer
 
 /datum/component/atom_mounted/Destroy(force)
 	UnregisterSignal(hanging_support_atom, COMSIG_ATOM_EXAMINE)
@@ -108,6 +112,25 @@
 	var/obj/hanging_parent = parent
 	hanging_parent.visible_message(message = span_warning("\The [hanging_parent] falls apart!"), vision_distance = 5)
 	hanging_parent.deconstruct(FALSE)
+
+/datum/component/atom_mounted/proc/on_leaned_upon(datum/source, mob/leaner)
+	SIGNAL_HANDLER
+
+	var/obj/hanging_parent = parent
+	if(hanging_parent.loc == leaner.loc)
+		original_layer = hanging_parent.layer
+		hanging_parent.layer = min(hanging_parent.layer, MOB_LAYER - 0.01)
+
+/datum/component/atom_mounted/proc/on_no_longer_leaned_upon(datum/source, mob/leaner, list/mob/remaining_leaners)
+	SIGNAL_HANDLER
+
+	var/obj/hanging_parent = parent
+	for(var/mob/remaining_leaner as anything in remaining_leaners)
+		if(hanging_parent.loc == remaining_leaner.loc)
+			return
+
+	hanging_parent.layer = original_layer
+	original_layer = null
 
 /// Returns a list of potential turfs to mount on. This should not check if those turfs are valid but only locate them
 /obj/proc/get_turfs_to_mount_on()

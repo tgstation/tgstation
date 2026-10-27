@@ -37,7 +37,7 @@
 			if(blood_spell.positioned)
 				position_list.Remove(blood_spell.positioned)
 				continue
-			var/atom/movable/screen/movable/action_button/moving_button = blood_spell.viewers[hud]
+			var/atom/movable/screen/movable/action_button/moving_button = LAZYACCESS(blood_spell.viewers, hud)
 			if(!moving_button)
 				continue
 			var/first_available_slot = position_list[1]

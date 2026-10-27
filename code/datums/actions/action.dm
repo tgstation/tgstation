@@ -22,8 +22,8 @@
 	var/check_flags = NONE
 	/// Whether the button becomes transparent when it can't be used, or just reddened
 	var/transparent_when_unavailable = TRUE
-	///List of all mobs that are viewing our action button -> A unique movable for them to view.
-	var/list/viewers = list()
+	/// Viewing HUDs mapped to their action buttons. Allocated on first display.
+	var/list/viewers
 	/// If TRUE, this action button will be shown to observers / other mobs who view from this action's owner's eyes.
 	/// Used in [/mob/proc/show_other_mob_action_buttons]
 	var/show_to_observers = TRUE
@@ -75,7 +75,9 @@
 	if(owner)
 		Remove(owner)
 	target = null
-	QDEL_LIST_ASSOC_VAL(viewers) // Qdel the buttons in the viewers list **NOT THE HUDS**
+	for(var/datum/hud/hud as anything in viewers) // Qdel the buttons in the viewers list **NOT THE HUDS**
+		qdel(LAZYACCESS(viewers, hud))
+	LAZYNULL(viewers)
 	return ..()
 
 /// Signal proc that clears any references based on the owner or target deleting
@@ -131,7 +133,7 @@
 			continue
 		HideFrom(hud.mymob)
 	LAZYREMOVE(remove_from?.actions, src) // We aren't always properly inserted into the viewers list, gotta make sure that action's cleared
-	viewers = list()
+	LAZYNULL(viewers)
 	UnregisterSignal(remove_from, COMSIG_MOB_KEYDOWN)
 
 	if(isnull(remove_from))
@@ -349,7 +351,7 @@
 /// Puts our action in their actions list and shows them the button.
 /datum/action/proc/GiveAction(mob/viewer)
 	var/datum/hud/our_hud = viewer.hud_used
-	if(viewers[our_hud]) // Already have a copy of us? go away
+	if(LAZYACCESS(viewers, our_hud)) // Already have a copy of us? go away
 		return
 
 	LAZYOR(viewer.actions, src) // Move this in
@@ -358,14 +360,14 @@
 /// Adds our action button to the screen of the passed viewer.
 /datum/action/proc/ShowTo(mob/viewer)
 	var/datum/hud/our_hud = viewer.hud_used
-	if(!our_hud || viewers[our_hud]) // There's no point in this if you have no hud in the first place
+	if(!our_hud || LAZYACCESS(viewers, our_hud)) // There's no point in this if you have no hud in the first place
 		return
 
 	var/atom/movable/screen/movable/action_button/button = create_button(viewer)
 	SetId(button, viewer)
 
 	button.our_hud = our_hud
-	viewers[our_hud] = button
+	LAZYSET(viewers, our_hud, button)
 	if(viewer.client)
 		viewer.client.screen += button
 
@@ -375,7 +377,7 @@
 /// Removes our action from the passed viewer.
 /datum/action/proc/HideFrom(mob/viewer)
 	var/datum/hud/our_hud = viewer.hud_used
-	var/atom/movable/screen/movable/action_button/button = viewers[our_hud]
+	var/atom/movable/screen/movable/action_button/button = LAZYACCESS(viewers, our_hud)
 	LAZYREMOVE(viewer.actions, src)
 	if(button)
 		qdel(button)
@@ -394,7 +396,7 @@
 	for(var/datum/action/action in owner.actions)
 		if(action == src) // This could be us, which is dumb
 			continue
-		var/atom/movable/screen/movable/action_button/button = action.viewers[owner.hud_used]
+		var/atom/movable/screen/movable/action_button/button = LAZYACCESS(action.viewers, owner.hud_used)
 		if(action.name == name && button?.id)
 			bitfield |= button.id
 

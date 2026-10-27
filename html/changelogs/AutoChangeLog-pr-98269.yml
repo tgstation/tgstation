@@ -1,0 +1,4 @@
+author: "MysteryMan21333"
+delete-after: True
+changes:
+  - bugfix: "Fixs the Heterochromia Quirk, allows adjustment of color and now spawns in properly."
