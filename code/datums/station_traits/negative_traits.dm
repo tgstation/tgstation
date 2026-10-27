@@ -150,15 +150,7 @@
 	show_in_report = TRUE
 	report_message = "Due to distance to our supply station, the cargo shuttle will have a slower flight time to your cargo department."
 	blacklist = list(/datum/station_trait/quick_shuttle)
-
-/datum/station_trait/slow_shuttle/New()
-	. = ..()
-	RegisterSignal(SSshuttle, COMSIG_SUBSYSTEM_POST_INITIALIZE, PROC_REF(slow_the_shuttle))
-
-/datum/station_trait/slow_shuttle/proc/slow_the_shuttle(datum/source)
-	SIGNAL_HANDLER
-	SSshuttle.supply.callTime *= 1.5
-	UnregisterSignal(SSshuttle, COMSIG_SUBSYSTEM_POST_INITIALIZE)
+	trait_to_give = STATION_TRAIT_SLOW_SHUTTLE
 
 /datum/station_trait/bot_languages
 	name = "Bot Language Matrix Malfunction"
@@ -505,7 +497,7 @@
 /datum/station_trait/nebula/hostile/process(seconds_per_tick)
 	calculate_nebula_strength()
 
-	apply_nebula_effect(nebula_intensity - get_shielding_level())
+	apply_nebula_effect(nebula_intensity - get_shielding_level(seconds_per_tick))
 
 /datum/station_trait/nebula/hostile/on_round_start()
 	. = ..()
@@ -521,13 +513,13 @@
 	nebula_intensity = min(STATION_TIME_PASSED(), maximum_nebula_intensity) / intensity_increment_time
 
 ///Check how strong the stations shielding is
-/datum/station_trait/nebula/hostile/proc/get_shielding_level()
+/datum/station_trait/nebula/hostile/proc/get_shielding_level(seconds_per_tick)
 	var/shield_strength = 0
 	for(var/atom/movable/shielder as anything in shielding)
 		if(!is_station_level(shielder.z))
 			continue
 		var/datum/callback/callback = shielding[shielder]
-		shield_strength += callback.Invoke()
+		shield_strength += callback.Invoke(seconds_per_tick)
 
 	return shield_strength
 
@@ -667,11 +659,9 @@
 		//Send a care package to temporarily lift the storm!
 		if(COOLDOWN_FINISHED(src, send_care_package_at))
 			COOLDOWN_START(src, send_care_package_at, send_care_package_time)
-			var/obj/machinery/nebula_shielding/emergency/rad_shield = /obj/machinery/nebula_shielding/emergency/radiation
-
 			priority_announce(
 				{"Is everything okay there? We're getting high radiation readings from inside the station. \
-				We're sending an emergency shielding unit for now, it will last [initial(rad_shield.detonate_in) / (1 MINUTES)] minutes. \n\n\
+				We're sending an emergency shielding unit for now, it will last [DisplayTimeText(/obj/machinery/nebula_shielding/radiation/emergency::detonate_in)]. \n\n\
 				Set up the nebula shielding. You can order construction kits at cargo if yours have been lost.
 				"}
 			)
@@ -686,7 +676,7 @@
 
 ///Send a care package because it is not going well
 /datum/station_trait/nebula/hostile/radiation/proc/send_care_package()
-	new /obj/effect/pod_landingzone (get_safe_random_station_turf_equal_weight(), new /obj/structure/closet/supplypod/centcompod (), new /obj/machinery/nebula_shielding/emergency/radiation ())
+	new /obj/effect/pod_landingzone (get_safe_random_station_turf_equal_weight(), new /obj/structure/closet/supplypod/centcompod (), new /obj/machinery/nebula_shielding/radiation/emergency ())
 
 /datum/station_trait/nebula/hostile/radiation/send_instructions()
 	var/obj/machinery/nebula_shielding/shielder = /obj/machinery/nebula_shielding/radiation

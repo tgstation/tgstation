@@ -678,13 +678,13 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			if(!is_funmin)
 				return
 			message_admins("[key_name_admin(holder)] started a resonance cascade! You're supposed to be a scientist! Use your common sense!")
-			for(var/obj/machinery/power/supermatter_crystal/S in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/supermatter_crystal))
-				if(!S.is_main_engine)
+			for(var/obj/machinery/power/supermatter_crystal/supermatter in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/power/supermatter_crystal))
+				if(!supermatter.is_main_engine)
 					continue
-				S.explosion_point = 0
-				S.set_delam(SM_DELAM_PRIO_IN_GAME, /datum/sm_delam/cascade)
-				S.external_damage_immediate += 200
-				S.count_down()
+				if(!supermatter.set_delam(SM_DELAM_PRIO_ADMIN, /datum/sm_delam/cascade))
+					return
+				supermatter.external_damage_immediate += 200
+				supermatter.count_down(force = TRUE)
 				return
 			return
 
@@ -812,8 +812,6 @@ ADMIN_VERB(secrets, R_NONE, "Secrets", "Abuse harder than you ever have before w
 			if(ROLE_TRAITOR)
 				var/datum/antagonist/traitor/antag_datum = new(give_objectives = keep_generic_objecives)
 				assign_admin_objective_and_antag(player, antag_datum)
-				var/datum/uplink_handler/uplink = antag_datum.uplink_handler
-				uplink.has_progression = FALSE
 			if(ROLE_CHANGELING)
 				var/datum/antagonist/changeling/antag_datum = new
 				antag_datum.give_objectives = keep_generic_objecives

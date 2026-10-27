@@ -107,8 +107,8 @@
 		GLOB.cooking_recipes,
 	)
 	var/list/atom_lists = list(
-		GLOB.crafting_recipes_atoms,
-		GLOB.cooking_recipes_atoms,
+		GLOB.crafting_recipes_datums,
+		GLOB.cooking_recipes_datums,
 	)
 
 	for(var/list_index in 1 to length(recipe_lists))
@@ -118,25 +118,20 @@
 			// Result
 			atom_list |= recipe.result
 			// Ingredients
-			for(var/atom/req_atom as anything in recipe.reqs)
-				atom_list |= req_atom
+			atom_list |= SANITIZE_LIST(recipe.reqs)
 			// Catalysts
-			for(var/atom/req_atom as anything in recipe.chem_catalysts)
-				atom_list |= req_atom
+			atom_list |= SANITIZE_LIST(recipe.chem_catalysts)
 			// Reaction data - required container
 			if(recipe.reaction)
 				var/required_container = initial(recipe.reaction.required_container)
 				if(required_container)
 					atom_list |= required_container
 			// Tools
-			for(var/atom/req_atom as anything in recipe.tool_paths)
-				atom_list |= req_atom
+			atom_list |= SANITIZE_LIST(recipe.tool_paths)
 			// Machinery
-			for(var/atom/req_atom as anything in recipe.machinery)
-				atom_list |= req_atom
+			atom_list |= SANITIZE_LIST(recipe.machinery)
 			// Structures
-			for(var/atom/req_atom as anything in recipe.structures)
-				atom_list |= req_atom
+			atom_list |= SANITIZE_LIST(recipe.structures)
 
 /// Creates every subtype of prototype (excluding prototype and abstract types) and adds it to list L.
 /// If no list/L is provided, one is created.

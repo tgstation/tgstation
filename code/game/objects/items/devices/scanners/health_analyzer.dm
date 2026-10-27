@@ -23,8 +23,8 @@
 	interaction_flags_click = NEED_LITERACY|NEED_LIGHT|ALLOW_RESTING
 	custom_price = PAYCHECK_COMMAND
 	sound_vary = TRUE
-	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
-	drop_sound = SFX_GENERIC_DEVICE_DROP
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
 	/// Verbose/condensed
 	var/mode = SCANNER_VERBOSE
 	/// HEALTH/WOUND
@@ -205,7 +205,7 @@
 		has_brain = TRUE
 	else if(iscyborg(target))
 		var/mob/living/silicon/robot/cyborg_target = target
-		if(cyborg_target.mmi?.brain)
+		if(astype(cyborg_target.mmi, /obj/item/brain_processor/organic)?.brain)
 			has_brain = TRUE
 
 	if(!has_brain) // kept exclusively for soul purposes
@@ -353,7 +353,7 @@
 
 		//body temperature
 		var/datum/species/targetspecies = humantarget.dna.species
-		var/disguised = !ishumanbasic(humantarget) && istype(humantarget.head, /obj/item/clothing/head/hooded/human_head) && istype(humantarget.wear_suit, /obj/item/clothing/suit/hooded/bloated_human)
+		var/disguised = !ishumanbasic(humantarget) && HAS_TRAIT(humantarget, TRAIT_HUMAN_DISGUISE)
 		var/species_name = "[disguised ? "\"[/datum/species/human::name]\"" : targetspecies.name][mutant ? "-derived mutant" : ""]"
 
 		render_list += "<span class='info ml-1'>Species: [species_name]</span><br>"
@@ -526,7 +526,7 @@
 
 	report_paper.last_healthy_scanned_mob = last_healthy_scanned
 	ADD_TRAIT(patient, TRAIT_RECENTLY_TREATED, ANALYZER_TRAIT)
-	addtimer(TRAIT_CALLBACK_REMOVE(patient, RECENTLY_HEALED_COOLDOWN, ANALYZER_TRAIT), RECENTLY_HEALED_COOLDOWN)
+	addtimer(TRAIT_CALLBACK_REMOVE(patient, TRAIT_RECENTLY_TREATED, ANALYZER_TRAIT), RECENTLY_HEALED_COOLDOWN)
 	return TRUE
 
 /obj/item/healthanalyzer/proc/clear_treatment(mob/living/target)

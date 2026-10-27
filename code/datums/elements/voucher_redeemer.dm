@@ -68,6 +68,7 @@
 	chosen_set.spawn_set(source.drop_location())
 	if(chosen_set.blackbox_key)
 		SSblackbox.record_feedback("tally", chosen_set.blackbox_key, 1, selection)
+	playsound(source, 'sound/machines/card_slide.ogg', 33, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	source.balloon_alert(redeemer, "redeemed [LOWER_TEXT(selection)]")
 	qdel(voucher)
 

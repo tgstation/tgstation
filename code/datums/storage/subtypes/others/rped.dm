@@ -7,8 +7,8 @@
 
 /datum/storage/rped
 	allow_quick_gather = TRUE
-	max_slots = 50
-	max_total_storage = 100
+	max_slots = 400
+	max_total_storage = 800
 	max_specific_storage = WEIGHT_CLASS_NORMAL
 	numerical_stacking = TRUE
 
@@ -114,8 +114,12 @@
 
 ///bluespace variant
 /datum/storage/rped/bluespace
-	max_slots = 400
-	max_total_storage = 800
 	max_specific_storage = WEIGHT_CLASS_GIGANTIC
+
+///Smaller cyborg variant
+
+/datum/storage/rped/compact
+	max_slots = 50
+	max_total_storage = 100
 
 #undef MAX_STACK_PICKUP

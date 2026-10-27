@@ -5,7 +5,7 @@
 	invisibility = INVISIBILITY_ABSTRACT
 	density = FALSE
 	stat = DEAD
-	hud_type = /datum/hud/new_player
+	hud_type = /datum/hud
 
 	/// String Values tied to Defines that state whether the new_player is ready to play or not.
 	/// Do try your best to compare this value directly against the defines for certainty but helper procs do exist in bulkier situations.
@@ -18,8 +18,6 @@
 	var/ineligible_for_roles = FALSE
 	/// Used to track if the player's jobs menu sent a message saying it successfully mounted.
 	var/jobs_menu_mounted = FALSE
-	///Cooldown for the Reset Lobby Menu HUD verb
-	COOLDOWN_DECLARE(reset_hud_cooldown)
 
 /mob/dead/new_player/Initialize(mapload)
 	if(client && SSticker.state == GAME_STATE_STARTUP)
@@ -34,7 +32,6 @@
 	. = ..()
 
 	GLOB.new_player_list += src
-	ASSIGN_GAME_VERB(src, /mob/dead/new_player, reset_menu_hud)
 
 /mob/dead/new_player/Destroy()
 	GLOB.new_player_list -= src
@@ -74,7 +71,7 @@
 //When you cop out of the round (NB: this HAS A SLEEP FOR PLAYER INPUT IN IT)
 /mob/dead/new_player/proc/make_me_an_observer()
 	if(QDELETED(src) || !src.client)
-		ready = PLAYER_NOT_READY
+		unready()
 		return FALSE
 
 	var/less_input_message
@@ -83,7 +80,7 @@
 	// Don't convert this to tgui please, it's way too important
 	var/this_is_like_playing_right = alert(usr, "Are you sure you wish to observe? You will not be able to play this round![less_input_message]", "Observe", "Yes", "No")
 	if(QDELETED(src) || !src.client || this_is_like_playing_right != "Yes")
-		ready = PLAYER_NOT_READY
+		unready()
 		return FALSE
 
 	var/mob/dead/observer/observer = new()
@@ -113,6 +110,69 @@
 	QDEL_NULL(mind)
 	qdel(src)
 	return TRUE
+
+/// Readies up for the round
+/mob/dead/new_player/proc/ready()
+	if(ready == PLAYER_READY_TO_PLAY)
+		return
+	ready = PLAYER_READY_TO_PLAY
+	update_ready_report()
+
+/// Unreadies for the round
+/mob/dead/new_player/proc/unready()
+	if(ready == PLAYER_NOT_READY)
+		return
+	ready = PLAYER_NOT_READY
+	update_ready_report()
+
+/// Updates the ready report for this player
+/mob/dead/new_player/proc/update_ready_report()
+	if(ready != PLAYER_READY_TO_PLAY)
+		SSticker.ready_jobs -= ckey
+		return
+	if(SSticker.HasRoundStarted())
+		return
+
+	SSticker.ready_jobs[ckey] = list()
+	for(var/job, priority in client?.prefs?.job_preferences)
+		SSticker.ready_jobs[ckey][job] = priority
+
+	if(client?.prefs?.read_preference(/datum/preference/choiced/jobless_role) == BEOVERFLOW)
+		var/datum/job/overflow = SSjob.get_job_type(SSjob.overflow_role)
+		SSticker.ready_jobs[ckey][overflow.title] ||= JP_LOW
+
+	SSticker.update_aggregate_ready_report()
+
+/mob/dead/new_player/get_status_tab_items()
+	. = ..()
+	if(SSticker.HasRoundStarted())
+		return
+
+	. += "Potential manifest:"
+	if(!length(SSticker?.reported_jobs))
+		. += "- No one!"
+		return
+
+	for(var/datum/job/job as anything in SSticker.reported_jobs)
+		var/vector/score_vector = SSticker.reported_jobs[job]
+		var/is_infinite_overflow = job.spawn_positions == -1
+		var/job_slot_count = is_infinite_overflow ? ceil(length(GLOB.player_list) * 0.15) : job.spawn_positions
+		if(score_vector.y == 0 || job_slot_count <= 0)
+			continue
+
+		var/lower_end = clamp(score_vector.x, 0, job_slot_count - 1)
+		var/upper_end = clamp(score_vector.y, 0, job_slot_count)
+
+		var/display = " [lower_end] to [upper_end] "
+		for(var/i in 1 to job_slot_count)
+			display += i <= lower_end ? "◼" : i <= upper_end ? "◩" : is_infinite_overflow ? "" : "◻"
+		if(is_infinite_overflow)
+			display += "…"
+
+		var/static/alist/cached_base64_icons = alist()
+		cached_base64_icons[job.type] ||= icon2base64(get_job_hud_icon(job, scale = 2))
+		var/icon = "data:image/png;base64,[cached_base64_icons[job.type]]"
+		. += list(list("img", icon, job.title, display, "There will likely be between [lower_end] and [upper_end] [job.title]s."))
 
 /proc/get_job_unavailable_error_message(retval, jobtitle)
 	switch(retval)
@@ -160,7 +220,10 @@
 /mob/dead/new_player/proc/AttemptLateSpawn(rank)
 	// Check that they're picking someone new for new character respawning
 	if(CONFIG_GET(flag/allow_respawn) == RESPAWN_FLAG_NEW_CHARACTER)
-		if("[client.prefs.default_slot]" in persistent_client.joined_as_slots)
+		if(client?.is_localhost())
+			to_chat(client.mob, span_notice("This character already played in this round, however this is bypassed as localhost."))
+			log_admin("[key_name_and_tag(client)] is bypassing rejoining the round as the same character.")
+		else if("[client.prefs.default_slot]" in persistent_client.joined_as_slots)
 			tgui_alert(usr, "You already have played this character in this round!")
 			return FALSE
 
@@ -373,20 +436,6 @@
 	// Add verb for re-opening the interview panel, fixing chat and re-init the verbs for the stat panel
 	ASSIGN_GAME_VERB(src, /mob/dead/new_player, open_interview)
 	add_verb(client, /client/verb/fix_tgui_panel)
-
-///Resets the Lobby Menu HUD, recreating and reassigning it to the new player
-GAME_VERB_PROC(/mob/dead/new_player, reset_menu_hud, "Reset Lobby Menu HUD", "OOC")
-	var/mob/dead/new_player/new_player = usr
-	if(!COOLDOWN_FINISHED(new_player, reset_hud_cooldown))
-		to_chat(new_player, span_warning("You must wait <b>[DisplayTimeText(COOLDOWN_TIMELEFT(new_player, reset_hud_cooldown))]</b> before resetting the Lobby Menu HUD again!"))
-		return
-	if(!new_player?.client)
-		return
-	COOLDOWN_START(new_player, reset_hud_cooldown, RESET_HUD_INTERVAL)
-	qdel(new_player.hud_used)
-	create_mob_hud()
-	to_chat(new_player, span_info("Lobby Menu HUD reset. You may reset the HUD again in <b>[DisplayTimeText(RESET_HUD_INTERVAL)]</b>."))
-	hud_used.show_hud(hud_used.hud_version)
 
 ///Auto deadmins an admin when they click to toggle the ready button or join game button in the menu
 /mob/dead/new_player/proc/auto_deadmin_on_ready_or_latejoin()

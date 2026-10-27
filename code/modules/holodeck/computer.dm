@@ -224,8 +224,12 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	template.load(bottom_left) //this is what actually loads the holodeck simulation into the map
 
 	if(template.restricted)
-		usr.log_message("loaded a restricted Holodeck program: [program].", LOG_GAME)
-		message_admins("[ADMIN_LOOKUPFLW(usr)] loaded a restricted Holodeck program: [program].")
+		if(usr)
+			usr.log_message("loaded a restricted Holodeck program: [program].", LOG_GAME)
+			message_admins("[ADMIN_LOOKUPFLW(usr)] loaded a restricted Holodeck program: [program].")
+		else
+			log_game("loaded a restricted Holodeck program: [program].")
+			message_admins("loaded a restricted Holodeck program: [program].")
 
 	spawned = template.created_atoms //populate the spawned list with the atoms belonging to the holodeck
 
@@ -438,7 +442,7 @@ GLOBAL_LIST_INIT(typecache_holodeck_linked_floorcheck_ok, typecacheof(list(/turf
 	if(!LAZYLEN(emag_programs))
 		balloon_alert(user, "no card swipe port!")
 		return FALSE
-	playsound(src, SFX_SPARKS, 75, TRUE)
+	playsound(src, /datum/sound_effect/sparks, 75, TRUE)
 	obj_flags |= EMAGGED
 	if (user)
 		balloon_alert(user, "safety protocols destroyed") // im gonna keep this once since this perfectly describes it

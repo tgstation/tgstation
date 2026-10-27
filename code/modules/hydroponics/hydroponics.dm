@@ -56,8 +56,6 @@
 	var/self_sustaining_overlay_icon_state = "gaia_blessing"
 	///Whether the plant is currently being pollinated or polinating the nearby plants
 	var/being_pollinated = FALSE
-	///The light level on the tray tile
-	var/light_level = 0
 	///our snail overlay, if any
 	var/obj/effect/overlay/vis_effect/snail/our_snail
 	///Flags to indicate special tray type behaviours.
@@ -1059,7 +1057,7 @@
 	if(istype(tool, /obj/item/storage/bag/plants))
 		if(plant_status == HYDROTRAY_PLANT_HARVESTABLE)
 			var/list/harvest = myseed.harvest(user)
-			for(var/obj/item/food/grown/bounty in harvest)
+			for(var/obj/item/bounty in harvest)
 				tool.atom_storage?.attempt_insert(bounty, user, TRUE)
 			return ITEM_INTERACT_SUCCESS
 

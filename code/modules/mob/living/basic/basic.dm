@@ -40,7 +40,7 @@
 	/// Override for the visual attack effect shown on 'do_attack_animation()'.
 	var/attack_vis_effect
 	///Played when someone punches the creature.
-	var/attacked_sound = SFX_PUNCH //This should be an element
+	var/attacked_sound = /datum/sound_effect/punch //This should be an element
 	/// How often can you melee attack?
 	var/melee_attack_cooldown = 2 SECONDS
 
@@ -219,10 +219,6 @@
 	if(!(basic_mob_flags & REMAIN_DENSE_WHILE_DEAD))
 		REMOVE_TRAIT(src, TRAIT_UNDENSE, BASIC_MOB_DEATH_TRAIT)
 	SEND_SIGNAL(src, COMSIG_BASICMOB_LOOK_ALIVE)
-
-/mob/living/basic/update_sight()
-	lighting_color_cutoffs = list(lighting_cutoff_red, lighting_cutoff_green, lighting_cutoff_blue)
-	return ..()
 
 /mob/living/basic/examine(mob/user)
 	. = ..()

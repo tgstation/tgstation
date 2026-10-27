@@ -62,6 +62,9 @@
 	mark_type = /datum/status_effect/eldritch/void
 	eldritch_passive = /datum/status_effect/heretic_passive/void
 
+/datum/heretic_knowledge/limited_amount/starting/get_extra_requirements()
+	return "a sub-zero environment"
+
 /datum/heretic_knowledge/limited_amount/starting/base_void/recipe_snowflake_check(mob/living/user, list/atoms, list/selected_atoms, turf/loc)
 	if(!isopenturf(loc))
 		loc.balloon_alert(user, "ritual failed, invalid location!")
@@ -288,7 +291,7 @@
 	new /obj/structure/void_conduit(affected_turf)
 	source.dropItemToGround(sword)
 	qdel(sword)
-	playsound(source, SFX_SHATTER, 50, FALSE)
+	playsound(source, /datum/sound_effect/shatter, 50, FALSE)
 
 /datum/heretic_knowledge/ultimate/void_final
 	name = "Waltz at the End of Time"
@@ -420,7 +423,7 @@
 		span_danger("The void storm surrounding [ascended_heretic] deflects [hitting_projectile]!"),
 		span_userdanger("The void storm protects you from [hitting_projectile]!"),
 	)
-	playsound(ascended_heretic, SFX_VOID_DEFLECT, 75, TRUE)
+	playsound(ascended_heretic, /datum/sound_effect/void_deflect, 75, TRUE)
 	hitting_projectile.firer = ascended_heretic
 	if(prob(75))
 		hitting_projectile.set_angle(get_angle(hitting_projectile.firer, hitting_projectile.fired_from))

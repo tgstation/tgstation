@@ -17,7 +17,6 @@
 	dmg_overlay_type = null
 	brute_modifier = 1.25 //ethereal are weak to brute damages
 	wing_types = null
-	bodypart_traits = list(TRAIT_NO_UNDERWEAR)
 	bodypart_effects = list(/datum/status_effect/grouped/bodypart_effect/ethereal_glow)
 
 /obj/item/bodypart/arm/left/ethereal

@@ -30,11 +30,12 @@
 	icon_state = "headphones"
 	inhand_icon_state = "headphones"
 	slot_flags = ITEM_SLOT_EARS | ITEM_SLOT_HEAD
+	playable_while_worn = TRUE
 	force = 0
 	w_class = WEIGHT_CLASS_SMALL
 	custom_price = PAYCHECK_CREW * 2.5
-	equip_sound = SFX_HEADSET_EQUIP
-	pickup_sound = SFX_HEADSET_PICKUP
+	equip_sound = /datum/sound_effect/headset_equip
+	pickup_sound = /datum/sound_effect/headset_pickup
 	drop_sound = 'sound/items/handling/headset/headset_drop1.ogg'
 	instrument_range = 1
 	circuit_type = /obj/item/circuit_component/synth/headphones

@@ -5,6 +5,8 @@
 	desc = "A haphazardly-constructed yet still deadly weapon of ancient design."
 	icon = 'icons/obj/weapons/spear.dmi'
 	icon_state = "spearglass0"
+	inhand_icon_state = "spearglass0"
+	base_icon_state = "spearglass"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	icon_angle = -45
@@ -28,8 +30,6 @@
 	wound_bonus = -15
 	exposed_wound_bonus = 15
 	material_flags = MATERIAL_EFFECTS | MATERIAL_AFFECT_STATISTICS
-	/// The icon prefix for this flavor of spear
-	var/icon_prefix = "spearglass"
 	/// How much damage to do unwielded
 	var/force_unwielded = 10
 	/// How much damage to do wielded
@@ -62,7 +62,7 @@
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = force_unwielded, \
 		force_wielded = force_wielded, \
-		icon_wielded = "[icon_prefix]1", \
+		update_icon_state = TRUE, \
 		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
@@ -78,14 +78,6 @@
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
-
-/obj/item/spear/update_icon_state()
-	icon_state = "[icon_prefix]0"
-	if (icon_prefix == SPEAR_CUSTOM_TIP_PREFIX)
-		worn_icon_state = "spearglass0"
-	else
-		worn_icon_state = null
-	return ..()
 
 /obj/item/spear/suicide_act(mob/living/user)
 	user.visible_message(span_suicide("[user] begins to sword-swallow \the [src]! It looks like [user.p_theyre()] trying to commit suicide!"))
@@ -128,16 +120,17 @@
 
 	switch (new_material)
 		if (/datum/material/alloy/plasmaglass)
-			icon_prefix = "spearplasma"
+			base_icon_state = "spearplasma"
 		if (/datum/material/alloy/titaniumglass)
-			icon_prefix = "speartitanium"
+			base_icon_state = "speartitanium"
 		if (/datum/material/alloy/plastitaniumglass)
-			icon_prefix = "spearplastitanium"
+			base_icon_state = "spearplastitanium"
 		else
-			icon_prefix = SPEAR_CUSTOM_TIP_PREFIX
+			base_icon_state = SPEAR_CUSTOM_TIP_PREFIX
+	worn_icon_state = (base_icon_state == SPEAR_CUSTOM_TIP_PREFIX) ? "spearglass0" : null
 
 	AddComponent(/datum/component/two_handed, \
-		icon_wielded = "[icon_prefix]1", \
+		update_icon_state = TRUE, \
 		wield_callback = CALLBACK(src, PROC_REF(on_wield)), \
 		unwield_callback = CALLBACK(src, PROC_REF(on_unwield)), \
 	)
@@ -149,7 +142,7 @@
 
 /obj/item/spear/update_overlays()
 	. = ..()
-	if (icon_prefix != SPEAR_CUSTOM_TIP_PREFIX)
+	if (base_icon_state != SPEAR_CUSTOM_TIP_PREFIX)
 		return
 	var/datum/material/tip_material = get_master_material()
 	var/mutable_appearance/tip_overlay = mutable_appearance(icon, "speartip", appearance_flags = KEEP_APART | RESET_COLOR)
@@ -158,7 +151,7 @@
 
 /obj/item/spear/separate_worn_overlays(mutable_appearance/standing, mutable_appearance/draw_target, isinhands, icon_file, bodyshape = NONE)
 	. = ..()
-	if (icon_prefix != SPEAR_CUSTOM_TIP_PREFIX || !isinhands)
+	if (base_icon_state != SPEAR_CUSTOM_TIP_PREFIX || !isinhands)
 		return
 	var/datum/material/tip_material = get_master_material()
 	var/mutable_appearance/tip_overlay = mutable_appearance(icon_file, "speartip[HAS_TRAIT(src, TRAIT_WIELDED)]", appearance_flags = RESET_COLOR)
@@ -291,8 +284,8 @@
 /obj/item/spear/explosive
 	name = "explosive lance"
 	icon_state = "spearbomb0"
+	inhand_icon_state = "spearbomb0"
 	base_icon_state = "spearbomb"
-	icon_prefix = "spearbomb"
 	var/obj/item/grenade/explosive = null
 	/// What we cry out when we use this to bap someone
 	var/war_cry = "AAAAARGH!!!"
@@ -313,7 +306,8 @@
 	if(nade)
 		var/obj/item/spear/lancePart = locate() in components
 		throwforce = lancePart.throwforce
-		icon_prefix = lancePart.icon_prefix
+		base_icon_state = lancePart.base_icon_state
+		worn_icon_state = lancePart.worn_icon_state
 		set_explosive(nade)
 	return ..()
 
@@ -380,8 +374,8 @@
 //MILITARY
 /obj/item/spear/military
 	icon_state = "military_spear0"
-	base_icon_state = "military_spear0"
-	icon_prefix = "military_spear"
+	inhand_icon_state = "military_spear0"
+	base_icon_state = "military_spear"
 	name = "military javelin"
 	desc = "A stick with a seemingly blunt spearhead on its end. Looks like it might break bones easily."
 	attack_verb_continuous = list("attacks", "pokes", "jabs")
@@ -412,8 +406,9 @@
 	desc = "An oversized multi-bladed spear designed to kill large hostile xenoforms such as space dragons or the creatures of Indecipheres. Capable of being launched from a ballista."
 	icon = 'icons/obj/weapons/48x.dmi'
 	icon_state = "speardragon0"
-	icon_prefix = "speardragon"
+	inhand_icon_state = "speardragon0"
 	base_icon_state = "speardragon"
+	worn_icon_state = "speardragon0"
 	lefthand_file = 'icons/mob/inhands/weapons/polearms_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/polearms_righthand.dmi'
 	demolition_mod = 0.5
@@ -447,8 +442,9 @@
 	desc = "A half-finished giantslayer spear, needs to be thrown in lava to forge the metals to a killing edge."
 	icon = 'icons/obj/weapons/48x.dmi'
 	icon_state = "speardragonraw0"
-	icon_prefix = "speardragonraw"
+	inhand_icon_state = "speardragonraw0"
 	base_icon_state = "speardragonraw"
+	worn_icon_state = "speardragonraw0"
 	material_flags = MATERIAL_EFFECTS
 	demolition_mod = 0.5
 	wound_bonus = 0
@@ -477,8 +473,8 @@
 	name = "bone spear"
 	desc = "A haphazardly-constructed yet still deadly weapon. The pinnacle of modern technology."
 	icon_state = "bone_spear0"
-	base_icon_state = "bone_spear0"
-	icon_prefix = "bone_spear"
+	inhand_icon_state = "bone_spear0"
+	base_icon_state = "bone_spear"
 	throwforce = 22
 	armour_penetration = 20 //Enhanced armor piercing
 	custom_materials = list(/datum/material/bone = SHEET_MATERIAL_AMOUNT * 4)
@@ -500,8 +496,8 @@
  */
 /obj/item/spear/bamboospear //Blatant imitation of spear, but all natural.
 	icon_state = "bamboo_spear0"
-	base_icon_state = "bamboo_spear0"
-	icon_prefix = "bamboo_spear"
+	inhand_icon_state = "bamboo_spear0"
+	base_icon_state = "bamboo_spear"
 	name = "bamboo spear"
 	desc = "A haphazardly-constructed bamboo stick with a sharpened tip, ready to poke holes into unsuspecting people."
 
@@ -528,7 +524,8 @@
 	name = "\improper Sky Bulge"
 	desc = "A legendary stick with a very pointy tip. Takes you to the skies!"
 	icon_state = "dragoonpole0"
-	icon_prefix = "dragoonpole"
+	inhand_icon_state = "dragoonpole0"
+	base_icon_state = "dragoonpole"
 	attack_verb_continuous = list("attacks", "pokes", "jabs", "tears", "gores", "lances")
 	attack_verb_simple = list("attack", "poke", "jab", "tear", "gore", "lance")
 	throwforce = 24

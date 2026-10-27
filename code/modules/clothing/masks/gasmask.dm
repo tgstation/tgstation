@@ -20,9 +20,9 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	resistance_flags = NONE
 	voice_filter = "lowpass=f=750,volume=2"
 	sound_vary = TRUE
-	pickup_sound = SFX_GAS_MASK_PICKUP
-	drop_sound = SFX_GAS_MASK_DROP
-	equip_sound = SFX_GAS_MASK_EQUIP
+	pickup_sound = /datum/sound_effect/gas_mask_pickup
+	drop_sound = /datum/sound_effect/gas_mask_drop
+	equip_sound = /datum/sound_effect/gas_mask_equip
 	///Max numbers of installable filters
 	var/max_filters = 1
 	///List to keep track of each filter
@@ -248,7 +248,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 /obj/item/clothing/mask/gas/welding/adjust_visor(mob/living/user)
 	. = ..()
 	if(.)
-		playsound(src, up ? SFX_VISOR_UP : SFX_VISOR_DOWN, 50, TRUE)
+		playsound(src, up ? /datum/sound_effect/visor_up : /datum/sound_effect/visor_down, 50, TRUE)
 	if(!fishing_modifier)
 		return
 	if(up)
@@ -349,6 +349,13 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 		to_chat(user, span_notice("Your Clown Mask has now morphed into [choice], all praise the Honkmother!"))
 		return TRUE
 
+/obj/item/clothing/mask/gas/clown_hat/clownops
+	name = "tactical clown wig and mask"
+	desc = "A tactical twist on a troubadour's tradition."
+	flash_protect = FLASH_PROTECTION_FLASH
+	resistance_flags = FIRE_PROOF
+	flags_cover = MASKCOVERSEYES | PEPPERPROOF
+
 /obj/item/clothing/mask/gas/sexyclown
 	name = "sexy-clown wig and mask"
 	desc = "A feminine clown mask for the dabbling crossdressers or female entertainers."
@@ -427,7 +434,7 @@ GLOBAL_LIST_INIT(clown_mask_options, list(
 	resistance_flags = FLAMMABLE
 	fishing_modifier = 0
 	emote_sounds = list(
-		/datum/emote/living/scream::key = SFX_SCREECH,
+		/datum/emote/living/scream::key = /datum/sound_effect/screech,
 	)
 
 /obj/item/clothing/mask/gas/sexymime

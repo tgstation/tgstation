@@ -235,7 +235,7 @@
 		leaving.Bump(src)
 		return COMPONENT_ATOM_BLOCK_EXIT
 
-/obj/machinery/door/window/open(forced = DEFAULT_DOOR_CHECKS)
+/obj/machinery/door/window/open(forced = DEFAULT_DOOR_CHECKS, mob/living/opener)
 	if(!density)
 		return TRUE
 
@@ -336,7 +336,7 @@
 	if(disassembled)
 		return
 
-	playsound(src, SFX_SHATTER, 70, TRUE)
+	playsound(src, /datum/sound_effect/shatter, 70, TRUE)
 
 	for(var/i in 1 to shards)
 		drop_debris(new /obj/item/shard(src))
@@ -374,7 +374,7 @@
 		obj_flags |= EMAGGED
 		operating = TRUE
 		flick("[base_state]spark", src)
-		playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, /datum/sound_effect/sparks, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		addtimer(CALLBACK(src, PROC_REF(finish_emag_act)), 0.6 SECONDS)
 		return TRUE
 	return FALSE
@@ -556,7 +556,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/door/window/brigdoor/security/holodec
 */
 /obj/machinery/door/window/instant
 
-/obj/machinery/door/window/instant/open(forced = DEFAULT_DOOR_CHECKS)
+/obj/machinery/door/window/instant/open(forced = DEFAULT_DOOR_CHECKS, mob/living/opener)
 	if(!density || operating || !try_to_force_door_open(forced))
 		return FALSE
 

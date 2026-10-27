@@ -28,7 +28,7 @@
 	if(!id_tag)
 		id_tag = assign_random_name()
 
-/obj/machinery/door/airlock/tram/open(forced = DEFAULT_DOOR_CHECKS)
+/obj/machinery/door/airlock/tram/open(forced = DEFAULT_DOOR_CHECKS, mob/living/opener)
 	if(welded || locked || seal)
 		return FALSE
 
@@ -39,6 +39,8 @@
 		return FALSE
 
 	SEND_SIGNAL(src, COMSIG_AIRLOCK_OPEN, FALSE)
+	if (opener)
+		SEND_SIGNAL(opener, COMSIG_MOB_OPENED_AIRLOCK, forced)
 	var/animate_open = forced == BYPASS_DOOR_CHECKS ? FALSE : TRUE
 	set_airlock_state(AIRLOCK_OPENING, animate_open, force_type = forced)
 
@@ -86,7 +88,7 @@
 	var/hungry_door = (forced == BYPASS_DOOR_CHECKS || !safe)
 	if((obj_flags & EMAGGED) || !safe)
 		do_sparks(3, TRUE, src)
-		playsound(src, SFX_SPARKS, vol = 75, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, /datum/sound_effect/sparks, vol = 75, vary = FALSE, extrarange = SHORT_RANGE_SOUND_EXTRARANGE)
 	use_energy(50 JOULES)
 	layer = CLOSED_DOOR_LAYER
 	set_airlock_state(AIRLOCK_CLOSING, animated = TRUE, force_type = forced)

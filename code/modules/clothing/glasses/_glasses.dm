@@ -13,10 +13,9 @@
 	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*2.5)
 	gender = PLURAL
 	sound_vary = TRUE
-	pickup_sound = SFX_GLASSES_PICKUP
-	drop_sound = SFX_GLASSES_DROP
-	equip_sound = SFX_GLASSES_EQUIP
-	var/vision_flags = 0
+	pickup_sound = /datum/sound_effect/glasses_pickup
+	drop_sound = /datum/sound_effect/glasses_drop
+	equip_sound = /datum/sound_effect/glasses_equip
 	var/invis_view = SEE_INVISIBLE_LIVING // Admin only for now
 	/// Override to allow glasses to set higher than normal see_invis
 	var/invis_override = 0
@@ -44,42 +43,27 @@
 /obj/item/clothing/glasses/visor_toggling()
 	. = ..()
 	alternate_worn_layer = up ? ABOVE_BODY_FRONT_HEAD_LAYER : null
-	if(visor_vars_to_toggle & VISOR_VISIONFLAGS)
-		vision_flags ^= initial(vision_flags)
 	if(visor_vars_to_toggle & VISOR_INVISVIEW)
 		invis_view ^= initial(invis_view)
 
 /obj/item/clothing/glasses/adjust_visor(mob/living/user)
 	. = ..()
-	if(. && !user.is_holding(src) && (visor_vars_to_toggle & (VISOR_VISIONFLAGS|VISOR_INVISVIEW)))
+	if(. && !user.is_holding(src) && (visor_vars_to_toggle & (VISOR_INVISVIEW)))
 		user.update_sight()
 
 /obj/item/clothing/glasses/equipped(mob/living/user, slot)
 	. = ..()
 	if (!(slot & ITEM_SLOT_EYES))
 		return
-	RegisterSignal(user, COMSIG_CARBON_UPDATE_SIGHT_CUTOFFS, PROC_REF(update_wearer_sight))
-	if (vision_flags || invis_override || invis_view || !isnull(lighting_cutoff))
+	if (invis_override || invis_view || !isnull(lighting_cutoff))
+		//This call becomes redundant if thermal/meson/material (etc.) vision flags are present in clothing_traits, but, as of the time of this comment, it isn't really a problem.
 		user.update_sight()
 
 /obj/item/clothing/glasses/dropped(mob/living/user)
 	. = ..()
-	UnregisterSignal(user, COMSIG_CARBON_UPDATE_SIGHT_CUTOFFS)
-	if (vision_flags || invis_override || invis_view || !isnull(lighting_cutoff))
+	if (invis_override || invis_view || !isnull(lighting_cutoff))
+		//This call becomes redundant if thermal/meson/material (etc.) vision flags are present in clothing_traits, but, as of the time of this comment, it isn't really a problem.
 		user.update_sight()
-
-/obj/item/clothing/glasses/proc/update_wearer_sight(mob/living/carbon/source, list/new_sight_flags)
-	SIGNAL_HANDLER
-
-	new_sight_flags[1] |= vision_flags
-	if(invis_override)
-		source.set_invis_see(invis_override)
-	else
-		source.set_invis_see(min(invis_view, source.see_invisible))
-	if(!isnull(lighting_cutoff))
-		source.lighting_cutoff = max(source.lighting_cutoff, lighting_cutoff)
-	if(length(color_cutoffs))
-		source.lighting_color_cutoffs = blend_cutoff_colors(source.lighting_color_cutoffs, color_cutoffs)
 
 //called when thermal glasses are emped.
 /obj/item/clothing/glasses/proc/thermal_overload()
@@ -106,15 +90,14 @@
 	desc = "Used by engineering and mining staff to see basic structural and terrain layouts through walls, regardless of lighting conditions."
 	icon_state = "meson"
 	inhand_icon_state = "meson"
-	clothing_traits = list(TRAIT_MADNESS_IMMUNE)
+	clothing_traits = list(TRAIT_MADNESS_IMMUNE, TRAIT_MESON_VISION)
 	flags_cover = GLASSESCOVERSEYES
-	vision_flags = SEE_TURFS
 	// Mesons get to be lightly green
 	color_cutoffs = list(5, 15, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/glasses/meson/suicide_act(mob/living/user)
@@ -161,9 +144,9 @@
 	resistance_flags = ACID_PROOF
 	armor_type = /datum/armor/glasses_science
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_RESEARCH_SCANNER)
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /datum/armor/glasses_science
@@ -200,9 +183,9 @@
 	color_cutoffs = list(10, 25, 10)
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 	actions_types = list(/datum/action/item_action/toggle_nv)
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 3.5)
 
 /obj/item/clothing/glasses/night/update_icon_state()
@@ -309,11 +292,11 @@
 	icon_state = "material"
 	inhand_icon_state = "glasses"
 	flags_cover = GLASSESCOVERSEYES
-	vision_flags = SEE_OBJS
+	clothing_traits = list(TRAIT_MATERIAL_VISON)
 	glass_colour_type = /datum/client_colour/glass_colour/lightblue
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 
 /obj/item/clothing/glasses/material/mining
 	name = "optical material scanner"
@@ -531,9 +514,9 @@
 	tint = 2
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	glass_colour_type = /datum/client_colour/glass_colour/gray
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 
 /obj/item/clothing/glasses/welding/Initialize(mapload)
 	. = ..()
@@ -604,15 +587,15 @@
 	desc = "Thermals in the shape of glasses."
 	icon_state = "thermal"
 	inhand_icon_state = "glasses"
-	vision_flags = SEE_MOBS
+	clothing_traits = list(TRAIT_THERMAL_VISION)
 	// Going for an orange color here
 	color_cutoffs = list(25, 8, 5)
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	flags_cover = GLASSESCOVERSEYES
 	glass_colour_type = /datum/client_colour/glass_colour/red
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	. = ..()
@@ -625,7 +608,7 @@
 	desc = "A pair of xray goggles manufactured by the Syndicate."
 	icon_state = "material"
 	color_cutoffs = null
-	vision_flags = SEE_TURFS|SEE_MOBS|SEE_OBJS
+	clothing_traits = list(TRAIT_XRAY_VISION)
 	glass_colour_type = /datum/client_colour/glass_colour/lightblue
 	clothing_traits = list(TRAIT_XRAY_VISION)
 
@@ -667,9 +650,9 @@
 	icon_state = "cold"
 	inhand_icon_state = null
 	flags_cover = GLASSESCOVERSEYES
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 
 /obj/item/clothing/glasses/heat
 	name = "heat goggles"
@@ -677,9 +660,9 @@
 	icon_state = "heat"
 	inhand_icon_state = null
 	flags_cover = GLASSESCOVERSEYES
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 
 /obj/item/clothing/glasses/orange
 	name = "orange glasses"
@@ -703,9 +686,9 @@
 	worn_icon_state = "geist_gazers"
 	glass_colour_type = /datum/client_colour/glass_colour/green
 	flags_cover = GLASSESCOVERSEYES
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 
 /obj/item/clothing/glasses/psych
 	name = "psych glasses"
@@ -724,7 +707,6 @@
 	flash_protect = FLASH_PROTECTION_WELDER
 	lighting_cutoff = LIGHTING_CUTOFF_HIGH
 	glass_colour_type = FALSE
-	vision_flags = SEE_TURFS
 	clothing_traits = list(
 		TRAIT_REAGENT_SCANNER,
 		TRAIT_MADNESS_IMMUNE,
@@ -732,28 +714,23 @@
 		TRAIT_SECURITY_HUD,
 		TRAIT_DIAGNOSTIC_HUD,
 		TRAIT_BOT_PATH_HUD,
+		TRAIT_MESON_VISION,
 	)
 	var/xray = FALSE
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 
 /obj/item/clothing/glasses/debug/Initialize(mapload)
 	. = ..()
 	AddElement(/datum/element/adjust_fishing_difficulty, -15)
 
 /obj/item/clothing/glasses/debug/click_alt(mob/user)
-	if(!ishuman(user))
-		return CLICK_ACTION_BLOCKING
 	if(xray)
-		vision_flags &= ~SEE_MOBS|SEE_OBJS
 		detach_clothing_traits(TRAIT_XRAY_VISION)
 	else
-		vision_flags |= SEE_MOBS|SEE_OBJS
 		attach_clothing_traits(TRAIT_XRAY_VISION)
 	xray = !xray
-	var/mob/living/carbon/human/human_user = user
-	human_user.update_sight()
 	return CLICK_ACTION_SUCCESS
 
 /obj/item/clothing/glasses/regular/kim
@@ -780,7 +757,8 @@
 
 /obj/item/clothing/glasses/salesman/dropped(mob/living/carbon/human/user)
 	..()
-	UnregisterSignal(bigshot, COMSIG_CARBON_SANITY_UPDATE)
+	if(bigshot)
+		UnregisterSignal(bigshot, COMSIG_CARBON_SANITY_UPDATE)
 	bigshot = initial(bigshot)
 	icon_state = initial(icon_state)
 	desc = initial(desc)
@@ -807,9 +785,9 @@
 	flags_cover = GLASSESCOVERSEYES
 	/// Hallucination datum currently being used for seeing mares
 	var/datum/hallucination/stored_hallucination
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 
 /obj/item/clothing/glasses/nightmare_vision/Initialize(mapload)
 	. = ..()

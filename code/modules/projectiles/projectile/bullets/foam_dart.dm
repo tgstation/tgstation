@@ -30,6 +30,8 @@
 	newcasing.modified = modified
 	newcasing.update_appearance()
 	var/obj/projectile/bullet/foam_dart/newdart = newcasing.loaded_projectile
+	if(!istype(newdart))
+		return
 	newdart.modified = modified
 	newdart.damage_type = damage_type
 	newdart.update_appearance()

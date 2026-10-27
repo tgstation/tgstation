@@ -168,3 +168,17 @@ other types of metals and chemistry for reagents).
 		stack.update_custom_materials()
 	else
 		target_object.set_custom_materials(custom_materials, multiplier)
+
+/// Called when the design is researched by the station's techweb
+/datum/design/proc/on_station_research()
+	return
+
+/// Called when the design is un-researched by the station's techweb
+/datum/design/proc/on_station_unresearch()
+	return
+
+/datum/design/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(. && SSresearch.techweb_designs[type] == src) // only the registered design should rebuild the catalogue
+		var/datum/asset/json/techweb_catalogue/catalogue = load_asset_datum(/datum/asset/json/techweb_catalogue)
+		catalogue.needs_build = TRUE

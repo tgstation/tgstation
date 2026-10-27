@@ -5,6 +5,7 @@
 	color = "#999999"
 	clothing_traits = list(TRAIT_CAT_EMOTES_ALLOWED)
 	dog_fashion = /datum/dog_fashion/head/kitty
+	item_flags = CAN_BE_OVERSLOT
 
 /obj/item/clothing/head/costume/kitty/visual_equipped(mob/living/carbon/human/user, slot)
 	if(ishuman(user) && (slot & ITEM_SLOT_HEAD))
@@ -24,5 +25,6 @@
 	name = "rabbit ears"
 	desc = "Wearing these makes you look useless, and only good for your sex appeal."
 	icon_state = "bunny"
+	item_flags = CAN_BE_OVERSLOT
 
 	dog_fashion = /datum/dog_fashion/head/rabbit

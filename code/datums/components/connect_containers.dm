@@ -23,8 +23,8 @@
 	return ..()
 
 /datum/component/connect_containers/CheckDupeComponent(datum/component/connect_containers/new_component, atom/movable/tracked, list/connections)
-	// Not equivalent. Checks if they are not the same list via shallow comparison.
-	if(!compare_list(src.connections, connections))
+	// Both the signal names and their handlers must match.
+	if(!deep_compare_list(src.connections, connections))
 		return FALSE // Different set of connections.
 	if(src.tracked != tracked)
 		set_tracked(tracked) // Different target for the same set of connections, track the new target.
@@ -64,5 +64,7 @@
 
 /datum/component/connect_containers/proc/on_moved(atom/movable/listener, atom/old_loc)
 	SIGNAL_HANDLER
+	if(QDELETED(src))
+		return
 	unregister_signals(old_loc)
 	update_signals(listener)

@@ -127,7 +127,7 @@
 ///Adds a tray to the oven, making sure the shit can get baked.
 /obj/machinery/oven/proc/add_tray_to_oven(obj/item/plate/oven_tray, mob/baker)
 	used_tray = oven_tray
-	playsound(src, SFX_TRAY_INSERT, 50, TRUE)
+	playsound(src, /datum/sound_effect/tray_insert, 50, TRUE)
 
 	if(!open)
 		oven_tray.vis_flags |= VIS_HIDE
@@ -267,8 +267,8 @@
 	max_items = 6
 	biggest_w_class = WEIGHT_CLASS_BULKY
 	sound_vary = TRUE
-	pickup_sound = SFX_TRAY_PICKUP
-	drop_sound = SFX_TRAY_DROP
+	pickup_sound = /datum/sound_effect/tray_pickup
+	drop_sound = /datum/sound_effect/tray_drop
 	fragile = FALSE //oven trays are metallic
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT)
 

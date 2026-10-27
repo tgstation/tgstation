@@ -237,6 +237,7 @@
 			t_amount++
 			if(t_prod.seed)
 				t_prod.seed.set_instability(round(instability * 0.5))
+			result.Add(t_prod)
 			continue
 		else
 			// Create a descendent seed so we can modify our offspring before creating a grown from it.

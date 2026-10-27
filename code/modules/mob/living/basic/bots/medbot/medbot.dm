@@ -169,6 +169,13 @@
 
 	return INITIALIZE_HINT_LATELOAD
 
+/mob/living/basic/bot/medbot/Destroy()
+	if(!ispath(health_analyzer))
+		QDEL_NULL(health_analyzer)
+	if(!ispath(medkit_type))
+		QDEL_NULL(medkit_type)
+	return ..()
+
 /mob/living/basic/bot/medbot/LateInitialize()
 	if(!CONFIG_GET(flag/no_default_techweb_link) && !linked_techweb)
 		CONNECT_TO_RND_SERVER_ROUNDSTART(linked_techweb, src)
@@ -272,7 +279,7 @@
 	balloon_alert(user, "reagent synthesis circuits shorted")
 	audible_message(span_danger("[src] buzzes oddly!"))
 	flick_overlay_view(mutable_appearance(icon, "[base_icon_state]_spark"), 1 SECONDS)
-	playsound(src, SFX_SPARKS, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 75, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
 /mob/living/basic/bot/medbot/examine()

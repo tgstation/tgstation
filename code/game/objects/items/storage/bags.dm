@@ -107,6 +107,8 @@
 	var/spam_protection = FALSE
 	/// Mob we're currently tracking
 	var/mob/listening_to = null
+	/// Turf whose ore entry and initialization signals we are currently listening to
+	var/turf/listening_turf = null
 	/// Are we currently dropping off ores? Used to prevent the bag from instantly picking up ores after dropping them
 	var/dropping_ores = FALSE
 	/// Cooldown on balloon alerts when picking ore
@@ -114,6 +116,7 @@
 
 /obj/item/storage/bag/ore/Destroy(force)
 	listening_to = null
+	listening_turf = null
 	return ..()
 
 /obj/item/storage/bag/ore/equipped(mob/user)
@@ -124,6 +127,7 @@
 	if (isturf(user.loc))
 		RegisterSignal(user.loc, COMSIG_ATOM_ENTERED, PROC_REF(on_obj_entered))
 		RegisterSignal(user.loc, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_initialized_on))
+		listening_turf = user.loc
 	listening_to = user
 
 /obj/item/storage/bag/ore/dropped()
@@ -131,9 +135,10 @@
 	if(!listening_to)
 		return
 	UnregisterSignal(listening_to, COMSIG_MOVABLE_MOVED)
-	if (listening_to.loc)
-		UnregisterSignal(listening_to.loc, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
+	if (listening_turf)
+		UnregisterSignal(listening_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
 	listening_to = null
+	listening_turf = null
 
 // Ensure we don't suck up ores that we've just dropped off
 /obj/item/storage/bag/ore/attack_self(mob/user, modifiers)
@@ -151,8 +156,9 @@
 /obj/item/storage/bag/ore/proc/on_user_moved(mob/living/user, atom/old_loc, dir, forced)
 	SIGNAL_HANDLER
 
-	if(old_loc)
-		UnregisterSignal(old_loc, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
+	if(listening_turf)
+		UnregisterSignal(listening_turf, list(COMSIG_ATOM_ENTERED, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON))
+	listening_turf = null
 
 	var/turf/tile = get_turf(user)
 	if(!isturf(tile))
@@ -160,6 +166,7 @@
 
 	RegisterSignal(tile, COMSIG_ATOM_ENTERED, PROC_REF(on_obj_entered))
 	RegisterSignal(tile, COMSIG_ATOM_AFTER_SUCCESSFUL_INITIALIZED_ON, PROC_REF(on_atom_initialized_on))
+	listening_turf = tile
 	INVOKE_ASYNC(src, PROC_REF(handle_move), user)
 
 /obj/item/storage/bag/ore/proc/handle_move(mob/living/user)
@@ -181,7 +188,7 @@
 		spam_protection = FALSE
 		return
 
-	playsound(user, SFX_RUSTLE, 50, TRUE)
+	playsound(user, /datum/sound_effect/rustle, 50, TRUE)
 	if(!COOLDOWN_FINISHED(src, ore_bag_balloon_cooldown))
 		return
 
@@ -365,8 +372,8 @@
 	custom_price = PAYCHECK_CREW * 0.6
 	storage_type = /datum/storage/bag/tray
 	sound_vary = TRUE
-	pickup_sound = SFX_TRAY_PICKUP
-	drop_sound = SFX_TRAY_DROP
+	pickup_sound = /datum/sound_effect/tray_pickup
+	drop_sound = /datum/sound_effect/tray_drop
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()

@@ -95,6 +95,17 @@
 				/obj/item/storage/dice = 10,
 			),
 		),
+		list(
+			"name" = "pillow weapons",
+			"icon" = "bed",
+			"products" = list(
+				/obj/item/shield/mattress = 5,
+				/obj/item/spear/pillow = 4,
+				/obj/item/spear/pillow = 10,
+				/obj/item/pillow/clown = 2,
+				/obj/item/pillow/mime = 2,
+			)
+		)
 	)
 	contraband = list(
 		/obj/item/dice/fudge = 9,
@@ -110,6 +121,7 @@
 		/obj/item/clothing/shoes/wheelys/rollerskates= 3,
 		/obj/item/melee/skateboard/pro = 3,
 		/obj/item/melee/skateboard/hoverboard = 1,
+		/obj/item/music_tape/robocop = 1,
 	)
 	refill_canister = /obj/item/vending_refill/games
 	default_price = PAYCHECK_CREW

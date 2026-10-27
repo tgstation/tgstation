@@ -69,6 +69,7 @@
 	)
 	AddComponent(/datum/component/seethrough_mob)
 	AddElement(/datum/element/simple_flying)
+	AddElement(/datum/element/block_mining_mob_respawns, 10)
 	if (achievement_type || score_achievement_type)
 		var/list/achievements = list(/datum/award/achievement/boss/boss_killer, /datum/award/score/boss_score)
 		if (achievement_type)
@@ -128,7 +129,7 @@
 	if(!isliving(target))
 		return
 	var/mob/living/living_target = target
-	if(living_target.stat == DEAD || (living_target.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(living_target, TRAIT_NODEATH)))
+	if(living_target.stat == DEAD || (living_target.health <= dead_threshold && HAS_TRAIT(living_target, TRAIT_NODEATH)))
 		devour(living_target)
 		return
 	if(isnull(client) && ranged && ranged_cooldown <= world.time)

@@ -72,10 +72,16 @@
 /obj/item/organ/fangs/cat/proc/nommies(mob/living/source, mob/living/target, damage, attack_type, atk_effect, obj/item/bodypart/affecting, final_armor_block, limb_sharpness)
 	SIGNAL_HANDLER
 
-	if(source != target && atk_effect == ATTACK_EFFECT_BITE && (target.mob_biotypes & MOB_ORGANIC)) //Good for you. You probably just ate someone alive.
-		var/datum/reagents/tasty_meal = new()
-		tasty_meal.add_reagent(/datum/reagent/consumable/nutriment/protein, round(damage/3, 1))
-		tasty_meal.trans_to(source, tasty_meal.total_volume, transferred_by = source, methods = INGEST)
+	if(!ishuman(source))
+		return
+
+	var/mob/living/carbon/human/wittle_kitty_cat_that_bities_real_hard_nya = source
+
+	if(wittle_kitty_cat_that_bities_real_hard_nya.nutrition > NUTRITION_LEVEL_WELL_FED)
+		return
+
+	if(wittle_kitty_cat_that_bities_real_hard_nya != target && atk_effect == ATTACK_EFFECT_BITE && (target.mob_biotypes & MOB_ORGANIC)) //Good for you. You probably just ate someone alive.
+		wittle_kitty_cat_that_bities_real_hard_nya.adjust_nutrition(damage*0.1)
 
 /obj/item/organ/fangs/lizard
 	name = "lizard fangs"
@@ -89,6 +95,7 @@
 /obj/item/organ/fangs/cybernetic
 	name = "cybernetic fangs"
 	desc = "A set of fangs made from plastitanium. Extremely lethal."
+	icon_state = "fangs_cyber"
 	organ_flags = ORGAN_ROBOTIC
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.5)
 	bite_low = 9
@@ -99,6 +106,7 @@
 /obj/item/organ/fangs/cat/cybernetic
 	name = "cybernetic cat fangs"
 	desc = "A set of fangs made from plastitanium. Extremely lethal. These ones look suited to a felinid. Might leave you feeling a little... feral."
+	icon_state = "fangs_cyber_cat"
 	organ_flags = ORGAN_ROBOTIC
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.25, /datum/material/plasma = SHEET_MATERIAL_AMOUNT * 0.5, /datum/material/titanium = SHEET_MATERIAL_AMOUNT * 0.5)
 	bite_low = /obj/item/organ/fangs/cybernetic::bite_low

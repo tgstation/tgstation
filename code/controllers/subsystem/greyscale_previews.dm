@@ -7,7 +7,7 @@ SUBSYSTEM_DEF(greyscale_previews)
 	)
 
 /datum/controller/subsystem/greyscale_previews/Initialize()
-#ifndef UNIT_TESTS // We want this to run during unit tests regardless of the config
+#ifndef FORCE_GENERATE_INIT_ASSETS
 	if(!CONFIG_GET(flag/generate_assets_in_init))
 		return SS_INIT_SUCCESS
 #endif

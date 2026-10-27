@@ -8,7 +8,6 @@ export enum MODE {
 export enum TABS {
   category,
   material,
-  foodtype,
 }
 
 export type AtomData = {

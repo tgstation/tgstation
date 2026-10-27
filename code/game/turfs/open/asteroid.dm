@@ -31,6 +31,41 @@
 	/// Percentage chance of receiving a bonus worm
 	var/worm_chance = 30
 
+// This is a visual depression, not an already-dug /asteroid/dug turf.
+/turf/open/misc/asteroid/crater
+	icon_state = "asteroid_dug"
+	floor_variance = 0
+
+/turf/open/misc/asteroid/variant_0
+	icon_state = "asteroid0"
+
+/turf/open/misc/asteroid/variant_2
+	icon_state = "asteroid2"
+
+/turf/open/misc/asteroid/variant_3
+	icon_state = "asteroid3"
+
+/turf/open/misc/asteroid/variant_5
+	icon_state = "asteroid5"
+
+/turf/open/misc/asteroid/variant_6
+	icon_state = "asteroid6"
+
+/turf/open/misc/asteroid/variant_7
+	icon_state = "asteroid7"
+
+/turf/open/misc/asteroid/variant_8
+	icon_state = "asteroid8"
+
+/turf/open/misc/asteroid/variant_9
+	icon_state = "asteroid9"
+
+/turf/open/misc/asteroid/variant_10
+	icon_state = "asteroid10"
+
+/turf/open/misc/asteroid/variant_11
+	icon_state = "asteroid11"
+
 /turf/open/misc/asteroid/broken_states()
 	if(initial(dug))
 		return list(icon_state)
@@ -149,6 +184,15 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	dig_result = /obj/item/stack/ore/glass/basalt
 	smoothing_groups = SMOOTH_GROUP_FLOOR_BASALT
 
+/turf/open/misc/asteroid/basalt/variant_1
+	icon_state = "basalt1"
+
+/turf/open/misc/asteroid/basalt/variant_6
+	icon_state = "basalt6"
+
+/turf/open/misc/asteroid/basalt/variant_8
+	icon_state = "basalt8"
+
 /turf/open/misc/asteroid/basalt/getDug()
 	. = ..()
 	if(!.)
@@ -190,6 +234,10 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	planetary_atmos = TRUE
 	baseturfs = /turf/open/lava/smooth/lava_land_surface
 	skip_minimap_rendering = TRUE
+
+/turf/open/misc/asteroid/basalt/lava_land_surface/crater
+	icon_state = "basalt_dug"
+	floor_variance = 0
 
 /// Used for the lavaland icemoon ruin.
 /turf/open/misc/asteroid/basalt/lava_land_surface/no_ruins
@@ -238,6 +286,45 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 	baseturfs = /turf/open/misc/asteroid/airless
 	turf_type = /turf/open/misc/asteroid/airless
 	worm_chance = 0
+
+/turf/open/misc/asteroid/airless/variant_0
+	icon_state = "asteroid0"
+
+/turf/open/misc/asteroid/airless/variant_1
+	icon_state = "asteroid1"
+
+/turf/open/misc/asteroid/airless/variant_2
+	icon_state = "asteroid2"
+
+/turf/open/misc/asteroid/airless/variant_3
+	icon_state = "asteroid3"
+
+/turf/open/misc/asteroid/airless/variant_4
+	icon_state = "asteroid4"
+
+/turf/open/misc/asteroid/airless/variant_5
+	icon_state = "asteroid5"
+
+/turf/open/misc/asteroid/airless/variant_6
+	icon_state = "asteroid6"
+
+/turf/open/misc/asteroid/airless/variant_7
+	icon_state = "asteroid7"
+
+/turf/open/misc/asteroid/airless/variant_8
+	icon_state = "asteroid8"
+
+/turf/open/misc/asteroid/airless/variant_9
+	icon_state = "asteroid9"
+
+/turf/open/misc/asteroid/airless/variant_10
+	icon_state = "asteroid10"
+
+/turf/open/misc/asteroid/airless/variant_11
+	icon_state = "asteroid11"
+
+/turf/open/misc/asteroid/airless/variant_12
+	icon_state = "asteroid12"
 
 /turf/open/misc/asteroid/basalt/smooth
 	smoothing_flags = SMOOTH_BITMASK
@@ -473,6 +560,10 @@ GLOBAL_LIST_EMPTY(dug_up_basalt)
 //Used in SnowCabin.dm
 /turf/open/misc/asteroid/snow/snow_cabin
 	temperature = ICEBOX_MIN_TEMPERATURE
+
+/turf/open/misc/asteroid/snow/snow_cabin/trampled
+	icon_state = "snow_dug"
+	floor_variance = 0
 
 /turf/open/misc/asteroid/snow/atmosphere
 	initial_gas_mix = FROZEN_ATMOS

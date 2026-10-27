@@ -359,7 +359,7 @@
 
 // sliceable into 4xtempehslices
 /obj/item/food/tempeh/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/tempehslice, 4, 5 SECONDS, table_required = TRUE, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/tempehslice, 4, 5 SECONDS, table_required = TRUE, screentip_verb = "Slice", sound_to_play = /datum/sound_effect/knife_slice)
 
 //add an icon for slices
 /obj/item/food/tempehslice
@@ -449,6 +449,25 @@
 	crafting_complexity = FOOD_COMPLEXITY_2
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
+/obj/item/food/polar_bear_steak
+	name = "fillet polar migrawr"
+	desc = "Because eating bear on fire wasn't slavic enough."
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "bearsteakfrost"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment = 4,
+		/datum/reagent/consumable/nutriment/vitamin = 9,
+		/datum/reagent/consumable/ethanol/frosty_dorf = 3,
+		/datum/reagent/consumable/ethanol/blue_blazer = 3,
+		/datum/reagent/toxin/berserker = 3
+	)
+	tastes = list("meat" = 1, "cold" = 1)
+	foodtypes = MEAT | ALCOHOL
+	w_class = WEIGHT_CLASS_SMALL
+	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_3
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
+
 /obj/item/food/raw_meatball
 	name = "raw meatball"
 	desc = "A great meal all round. Not a cord of wood. Kinda raw"
@@ -466,7 +485,7 @@
 	AddComponent(/datum/component/grillable, meatball_type, rand(30 SECONDS, 40 SECONDS), TRUE)
 
 /obj/item/food/raw_meatball/make_processable()
-	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, patty_type, 1, table_required = TRUE, screentip_verb = "Flatten", sound_to_play = SFX_ROLLING_PIN_ROLLING)
+	AddElement(/datum/element/processable, TOOL_ROLLINGPIN, patty_type, 1, table_required = TRUE, screentip_verb = "Flatten", sound_to_play = /datum/sound_effect/rolling_pin_rolling)
 
 /obj/item/food/raw_meatball/human
 	name = "strange raw meatball"
@@ -639,8 +658,8 @@
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT)
 
 /obj/item/food/sausage/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/salami, 6, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/sausage/american, 1, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/salami, 6, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice", sound_to_play = /datum/sound_effect/knife_slice)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/sausage/american, 1, 3 SECONDS, table_required = TRUE,  screentip_verb = "Slice", sound_to_play = /datum/sound_effect/knife_slice)
 
 /obj/item/food/sausage/american
 	name = "american sausage"
@@ -849,6 +868,24 @@
 	tastes = list("meat" = 3, "smokey sauce" = 1)
 	foodtypes = MEAT | SUGAR
 	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 2)
+
+/obj/item/food/drake_ribs
+	name = "drake ribs"
+	desc = "Ribs from bear meat and scrapes of drake hide, slathered in BBQ sauce and Cold sauce. If it'd be any more meaty it'd inflict mental anguish upon vegans."
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "drake_ribs"
+	w_class = WEIGHT_CLASS_NORMAL
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 15,
+		/datum/reagent/consumable/nutriment/vitamin = 2,
+		/datum/reagent/consumable/guidoferrun = 10,
+		/datum/reagent/consumable/frostoil = 5,
+		/datum/reagent/consumable/bbqsauce = 5,
+	)
+	tastes = list("meat" = 3, "cold sauce" = 1)
+	foodtypes = MEAT | SUGAR
+	crafting_complexity = FOOD_COMPLEXITY_3
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 2)
 
 /obj/item/food/meatclown
@@ -1258,6 +1295,28 @@
 	w_class = WEIGHT_CLASS_SMALL
 	crafting_complexity = FOOD_COMPLEXITY_4
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 2)
+
+/obj/item/food/wendigo_feast
+	trash_type = /obj/item/wendigo_skull
+	name = "wendigo feast"
+	desc = "A full load of meat, cold sauce and BBQ sauce. All topped by a Skull of a Wendigo stuffed with plants native to Freyja."
+	icon = 'icons/obj/food/meat.dmi'
+	icon_state = "wendigofeast"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 50,
+		/datum/reagent/consumable/nutriment = 40,
+		/datum/reagent/consumable/nutriment/vitamin = 10,
+		/datum/reagent/consumable/guidoferrun = 10,
+		/datum/reagent/consumable/frostoil = 10,
+		/datum/reagent/consumable/bbqsauce = 5,
+		/datum/reagent/toxin/berserker = 5,
+	)
+	tastes = list("chicken" = 3, "vegetables" = 1, "gravy" = 1)
+	foodtypes = MEAT | VEGETABLES | FRUIT | SUGAR
+	w_class = WEIGHT_CLASS_NORMAL
+	venue_value = FOOD_PRICE_EXOTIC
+	crafting_complexity = FOOD_COMPLEXITY_5
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 3)
 
 /obj/item/food/sweet_and_sour_meatballs
 	name = "sweet and sour meatballs"

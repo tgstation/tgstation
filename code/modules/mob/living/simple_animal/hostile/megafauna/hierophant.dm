@@ -442,7 +442,7 @@ Difficulty: Hard
 	blinking = TRUE //we do a fancy animation, release a huge burst(), and leave our staff.
 	visible_message(span_hierophant("\"Mrmxmexmrk wipj-hiwxvygx wiuyirgi...\""))
 	visible_message(span_hierophant_warning("[src] shrinks, releasing a massive burst of energy!"))
-	INVOKE_ASYNC(src, PROC_REF(hierophant_burst), null, get_turf(src), 10)
+	INVOKE_ASYNC(GLOBAL_PROC, GLOBAL_PROC_REF(hierophant_burst), null, get_turf(src), 10)
 	set_stat(STABLE) // deathgasp won't run if dead, stupid
 	..()
 
@@ -483,7 +483,7 @@ Difficulty: Hard
 					burst_range = 3
 					INVOKE_ASYNC(src, PROC_REF(burst), get_turf(src), 0.25) //melee attacks on living mobs cause it to release a fast burst if on cooldown
 				OpenFire()
-				if(L.health <= HEALTH_THRESHOLD_DEAD && HAS_TRAIT(L, TRAIT_NODEATH)) //Nope, it still kills yall
+				if(L.health <= L.dead_threshold && HAS_TRAIT(L, TRAIT_NODEATH)) //Nope, it still kills yall
 					devour(L)
 			else
 				devour(L)

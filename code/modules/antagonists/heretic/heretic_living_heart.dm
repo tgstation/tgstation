@@ -118,6 +118,8 @@
 	var/list/choosable_targets = list()
 	// Holds a list of 'name = atom/thing` used to check if our thing still exists after we've made our selection
 	var/list/possible_tracked_atoms = list()
+	// Tracks names to how many times they show up, so we can append a number to them if multiple of the same name exist
+	var/list/existing_name_counts = list()
 
 	// Checks if our heretic has a blade research, and then checks if they have made blades
 	// adds them to our list of target when pulsing the living heart so that you can locate them
@@ -126,22 +128,32 @@
 		blade_knowledge = heretic_datum.get_knowledge(potential_knowledge)
 		if(blade_knowledge)
 			break
-	for(var/datum/weakref/blade_ref as anything in blade_knowledge?.created_items)
-		var/obj/item/melee/sickly_blade/blade = blade_ref.resolve()
-		if(QDELETED(blade))
-			blade_knowledge.created_items -= blade_ref
+	for(var/datum/weakref/item_ref as anything in heretic_datum.tracked_items)
+		var/obj/item/item = item_ref?.resolve()
+		if(QDELETED(item))
+			LAZYREMOVE(heretic_datum.tracked_items, item_ref)
 			continue
-		if(!istype(blade, /obj/item/melee/sickly_blade))
-			continue // Just in case someone makes a /datum/heretic_knowledge/limited_amount/starting that doesn't create blades
-		if(get(blade, /mob/living) == owner)
+		if(get(item, /mob/living) == owner)
 			continue
 		// Means our blade is somewhere, but not on our person, so let's make it trackable
-		choosable_targets[blade.name] = image(icon = blade.icon, icon_state = blade.icon_state)
-		possible_tracked_atoms[blade.name] = blade
+		var/item_name = item.name
+		if(existing_name_counts[item_name])
+			existing_name_counts[item_name] += 1
+			item_name += " ([existing_name_counts[item_name]])"
+
+		choosable_targets[item_name] = image(item.type)
+		possible_tracked_atoms[item_name] = item
+		existing_name_counts[item_name] = 1
 
 	for(var/mob/living/carbon/human/sac_target as anything in heretic_datum.sac_targets)
-		choosable_targets[sac_target.real_name] = heretic_datum.sac_targets[sac_target]
-		possible_tracked_atoms[sac_target.real_name] = sac_target
+		var/target_name = sac_target.real_name
+		if(existing_name_counts[target_name])
+			existing_name_counts[target_name] += 1
+			target_name += " ([existing_name_counts[target_name]])"
+
+		choosable_targets[target_name] = heretic_datum.sac_targets[sac_target]
+		possible_tracked_atoms[target_name] = sac_target
+		existing_name_counts[target_name] = 1
 
 	// If we don't have a last tracked name, open a radial to set one.
 	// If we DO have a last tracked name, we skip the radial if they right click the action.

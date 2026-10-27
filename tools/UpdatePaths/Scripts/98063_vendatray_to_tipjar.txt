@@ -1,0 +1,2 @@
+/obj/structure/displaycase/forsale : /obj/structure/tipjar
+/obj/structure/displaycase/forsale/kitchen : /obj/structure/tipjar/prefilled
