@@ -25,7 +25,7 @@
 
 	// We need to walk all our input planes and see if they feed into any plane masters that are also multiz scaled
 	for(var/input_key in input_planes)
-		var/alist/keys_to_walk = alist()
+		var/list/keys_to_walk = list()
 		var/atom/movable/screen/plane_master/input_plane = our_group.plane_masters[input_key]
 		keys_to_walk[input_key] = "[input_plane.type]"
 		var/key_index = 0
@@ -35,10 +35,11 @@
 			var/atom/movable/screen/plane_master/next_plane = our_group.plane_masters[next_plane_key]
 
 			for(var/target_plane in next_plane.render_relay_planes)
-				var/atom/movable/screen/plane_master/target = our_group.plane_masters[target_plane]
-				keys_to_walk[target_plane] ||= "[keys_to_walk[next_plane_key]]-[target.type]"
+				var/target_key = "[target_plane]"
+				var/atom/movable/screen/plane_master/target = our_group.plane_masters["[target_key]"]
+				keys_to_walk[target_key] ||= "[keys_to_walk[next_plane_key]]-[target.type]"
 				if(target.multiz_scaled)
-					TEST_FAIL("[input_plane.type] is eventually drawn (via render relays) onto [target.type] {[keys_to_walk[target_plane]]}. Both are scaled by multiz, so this will cause strange transforms.\n\
+					TEST_FAIL("[input_plane.type] is eventually drawn (via render relays) onto [target.type] {[keys_to_walk[target_key]]}. Both are scaled by multiz, so this will cause strange transforms.\n\
 					consider making a new render plate that they can both draw to instead, or something of that nature.")
 
 			// Now we walk for filters that take from us
@@ -46,7 +47,8 @@
 				if(!filter["render_source"])
 					continue
 				var/atom/movable/screen/plane_master/target = render_target_to_plane[filter["render_source"]]
-				keys_to_walk[target.plane] ||= "[keys_to_walk[next_plane_key]]-[target.type]"
+				var/target_key = "[target.plane]"
+				keys_to_walk[target_key] ||= "[keys_to_walk[next_plane_key]]-[target.type]"
 				if(target.multiz_scaled)
-					TEST_FAIL("[input_plane.type] is eventually drawn (via render relays) onto [target.type] {[keys_to_walk[target.plane]]}. Both are scaled by multiz, so this will cause strange transforms.\n\
+					TEST_FAIL("[input_plane.type] is eventually drawn (via render relays) onto [target.type] {[keys_to_walk[target_key]]}. Both are scaled by multiz, so this will cause strange transforms.\n\
 					consider making a new render plate that they can both draw to instead, or something of that nature.")
