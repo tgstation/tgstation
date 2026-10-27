@@ -32,7 +32,7 @@
 		while(key_index < length(keys_to_walk))
 			key_index += 1
 			var/next_plane_key = keys_to_walk[key_index]
-			var/atom/movable/screen/plane_master/next_plane = our_group.plane_masters[next_plane_key]
+			var/atom/movable/screen/plane_master/next_plane = our_group.plane_masters[text2num(next_plane_key)]
 
 			for(var/target_plane in next_plane.render_relay_planes)
 				var/target_key = "[target_plane]"
