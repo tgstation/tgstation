@@ -125,7 +125,7 @@
 
 	var/list/plane_info = list()
 
-	var/list/our_planes = our_hud?.get_planes_from(current_group)
+	var/alist/our_planes = our_hud?.get_planes_from(current_group)
 	for (var/plane_key, _plane in our_planes)
 		var/atom/movable/screen/plane_master/plane = _plane
 		var/list/this_plane = list()
