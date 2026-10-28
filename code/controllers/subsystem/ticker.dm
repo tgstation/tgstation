@@ -37,8 +37,8 @@ SUBSYSTEM_DEF(ticker)
 
 	/// Time left until the round starts after all subsystems initialize
 	var/timeLeft = 120 SECONDS
-	/// value used to initialize `timeLeft` when the master subsystem finishes initializing. 
-	/// We do this to allow for the timer to be set manually before all subsystems initialize, 
+	/// value used to initialize `timeLeft` when the master subsystem finishes initializing.
+	/// We do this to allow for the timer to be set manually before all subsystems initialize,
 	/// while also making sure that when the timer does start, it does so at the value we have set.
 	/// This is set to the config value when SSticker initializes, so setting this only makes sense after that point.
 	var/start_at = 120 SECONDS
@@ -75,6 +75,10 @@ SUBSYSTEM_DEF(ticker)
 	var/atom/movable/screen/reboot_timer/reboot_hud
 	/// ID of round reboot timer, if it exists
 	var/reboot_timer = null
+	/// Assoc list of ckey to list of jobs to what priority they are ready for
+	var/list/ready_jobs = list()
+	/// Formatted version of the ready jobs for display to the players
+	var/list/reported_jobs = list()
 
 /datum/controller/subsystem/ticker/Initialize()
 	var/list/provisional_title_music = flist("[global.config.directory]/title_music/sounds/")
@@ -475,11 +479,6 @@ SUBSYSTEM_DEF(ticker)
 
 
 /datum/controller/subsystem/ticker/proc/equip_characters()
-	GLOB.security_officer_distribution = decide_security_officer_departments(
-		shuffle(GLOB.new_player_list),
-		shuffle(GLOB.available_depts),
-	)
-
 	var/captainless = TRUE
 
 	var/highest_rank = length(SSjob.chain_of_command) + 1
@@ -548,32 +547,6 @@ SUBSYSTEM_DEF(ticker)
 			if(new_player_human)
 				to_chat(new_player_mob, span_notice("Captainship not forced on anyone."))
 			CHECK_TICK
-
-
-/datum/controller/subsystem/ticker/proc/decide_security_officer_departments(
-	list/new_players,
-	list/departments,
-)
-	var/list/officer_mobs = list()
-	var/list/officer_preferences = list()
-
-	for (var/mob/dead/new_player/new_player_mob as anything in new_players)
-		var/mob/living/carbon/human/character = new_player_mob.new_character
-		if (istype(character) && is_security_officer_job(character.mind?.assigned_role))
-			officer_mobs += character
-
-			var/datum/client_interface/client = GET_CLIENT(new_player_mob)
-			var/preference = client?.prefs?.read_preference(/datum/preference/choiced/security_department)
-			officer_preferences += preference
-
-	var/distribution = get_officer_departments(officer_preferences, departments)
-
-	var/list/output = list()
-
-	for (var/index in 1 to officer_mobs.len)
-		output[REF(officer_mobs[index])] = distribution[index]
-
-	return output
 
 /datum/controller/subsystem/ticker/proc/transfer_characters()
 	var/list/livings = list()
@@ -877,6 +850,28 @@ SUBSYSTEM_DEF(ticker)
 	if(override)
 		for(var/mob/dead/new_player/new_player as anything in GLOB.new_player_list)
 			new_player?.client.playtitlemusic()
+
+/datum/controller/subsystem/ticker/proc/update_aggregate_ready_report()
+	var/list/job_to_score = list()
+	for(var/ckey, job_info in SSticker.ready_jobs)
+		for(var/job_title, priority in job_info)
+			job_to_score[job_title] += (priority == JP_HIGH ? 1 : priority == JP_MEDIUM ? 0.5 : 0.125)
+
+	reported_jobs.Cut()
+	for(var/job_title, score in job_to_score)
+		// only one or two people have the job on "low", so the chance of it showing up is, well, low.
+		// low enough that we'll just skip reporting it entirely, to avoid useless spam.
+		if(score < 0.5)
+			continue
+
+		var/datum/job/job_datum = SSjob.get_job(job_title)
+		// can happen from removed jobs
+		if(isnull(job_datum))
+			continue
+
+		reported_jobs[job_datum] = vector(floor(score * 0.5), ceil(score))
+
+	sortTim(reported_jobs, GLOBAL_PROC_REF(cmp_job_display_with_departments_asc))
 
 #undef ROUND_START_MUSIC_LIST
 #undef SS_TICKER_TRAIT

@@ -63,7 +63,7 @@
 	name = "Firefighting Tank Backpack"
 	desc = "Mow down fires with this high-capacity fire fighting tank backpack."
 	cost = CARGO_CRATE_VALUE * 1.8
-	access = ACCESS_ATMOSPHERICS
+	access = ACCESS_ATMOS_EQUIP
 	contains = list(/obj/item/watertank/atmos)
 	crate_name = "firefighting backpack crate"
 	crate_type = /obj/structure/closet/crate/secure/engineering/atmos

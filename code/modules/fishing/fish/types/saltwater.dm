@@ -268,7 +268,7 @@
 		memory_type = /datum/memory/witnessed_inking, \
 		mood_event_type = /datum/mood_event/inked, \
 	)
-	playsound(user, SFX_DESECRATION, 50, TRUE)
+	playsound(user, /datum/sound_effect/desecration, 50, TRUE)
 
 	if(!HAS_TRAIT(user, TRAIT_STRENGTH) && !HAS_TRAIT(user, TRAIT_HULK))
 		return OXYLOSS

@@ -65,7 +65,7 @@
 		span_danger("[source] dances in the shadows, evading [hitting_projectile]!"),
 		span_danger("You evade [hitting_projectile] with the cover of darkness!"),
 	)
-	playsound(source, SFX_BULLET_MISS, 75, TRUE)
+	playsound(source, /datum/sound_effect/bullet_miss, 75, TRUE)
 	return COMPONENT_BULLET_PIERCED
 
 /atom/movable/screen/alert/status_effect/shadow_regeneration/nightmare

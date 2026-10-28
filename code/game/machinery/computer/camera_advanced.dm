@@ -239,7 +239,7 @@
 	if(isnull(camera))
 		return
 
-	playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
+	playsound(src, /datum/sound_effect/terminal_type, 25, FALSE)
 
 	var/obj/machinery/camera/chosen_camera = cameras_by_tag[camera]
 	if(isnull(chosen_camera))

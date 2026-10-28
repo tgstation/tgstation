@@ -54,8 +54,7 @@
 	passive_level = HERETIC_LEVEL_UPGRADE
 	heretic_datum.passive_level = HERETIC_LEVEL_UPGRADE
 	heretic_datum.update_data_for_all_viewers()
-	if(!heretic_datum.unlimited_blades)
-		heretic_datum.disable_blade_breaking()
+	heretic_datum.disable_blade_breaking()
 
 /// Gives our final upgrade
 /datum/status_effect/heretic_passive/proc/heretic_level_final()

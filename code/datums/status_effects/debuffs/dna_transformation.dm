@@ -107,6 +107,7 @@
 	else if(time_before_pause != -1)
 		duration = time_before_pause
 		time_before_pause = -1
+		start_processing()
 
 /datum/status_effect/temporary_transformation/dna_injector
 	id = "temp_dna_injector_transformation"

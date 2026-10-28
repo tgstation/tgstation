@@ -23,6 +23,10 @@
 
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/update_button_status(atom/movable/screen/movable/action_button/button, force = FALSE)
 	. = ..()
+	if(total_blood_required <= 0)
+		button.maptext = ""
+		return
+
 	var/mob/living/basic/blood_worm/worm = owner
 	var/percentage_shown = "[round((worm.get_consumed_blood() / total_blood_required) * 100, 0.1)]"
 	button.maptext_x = (length(percentage_shown) >= 3) ? 0 : 1
@@ -210,6 +214,9 @@
 
 /// Checks if the blood worm has consumed enough blood to use this action.
 /datum/action/cooldown/mob_cooldown/blood_worm/cocoon/proc/check_consumed_blood(feedback = FALSE)
+	if(total_blood_required <= 0)
+		return TRUE
+
 	var/mob/living/basic/blood_worm/worm = owner
 	var/total_consumed_blood = worm.get_consumed_blood()
 

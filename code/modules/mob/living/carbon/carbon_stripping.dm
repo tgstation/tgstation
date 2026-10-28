@@ -127,6 +127,9 @@
 
 	return finish_unequip_mob(item, source, user)
 
+/datum/strippable_item/hand/should_show(mob/source, mob/user)
+	return astype(source)?.get_num_hand_slots() >= hand_index
+
 /datum/strippable_item/hand/get_alternate_actions(atom/source, mob/user, obj/item/item)
 	. = ..()
 	if (!isnull(get_cuffed_item_effect(source)))
@@ -171,3 +174,11 @@
 /datum/strippable_item/hand/right
 	key = STRIPPABLE_ITEM_RHAND
 	hand_index = RIGHT_HANDS
+
+/datum/strippable_item/hand/upper_left
+	key = STRIPPABLE_ITEM_UPPER_LHAND
+	hand_index = LEFT_HANDS + 2
+
+/datum/strippable_item/hand/upper_right
+	key = STRIPPABLE_ITEM_UPPER_RHAND
+	hand_index = RIGHT_HANDS + 2

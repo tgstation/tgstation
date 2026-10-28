@@ -4,8 +4,9 @@
 	name = "improvised junk round"
 	desc = "What is in the shell? Shoot it to find out."
 	icon_state = "improvshell"
-	caliber = CALIBER_JUNK
+	caliber = CALIBER_SHOTGUN
 	projectile_type = /obj/projectile/bullet/junk
+	casing_pressure = AMMO_CASING_PRESSURE_EXTREME
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 2, /datum/material/glass = SMALL_MATERIAL_AMOUNT)
 
 // Junk Shell Spawner; used to spawn in our random shells upon crafting

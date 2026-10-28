@@ -100,7 +100,7 @@
 /datum/uplink_item/dangerous/revolver
 	name = "Syndicate Revolver"
 	desc = "A brutally simple Syndicate revolver that fires .357 Magnum rounds and has 7 chambers."
-	item = /obj/item/gun/ballistic/revolver
+	item = /obj/item/gun/ballistic/revolver/syndicate
 	cost = 13
 	surplus = 50
 	purchasable_from = ~UPLINK_ALL_SYNDIE_OPS //only traitors get the original revolver
