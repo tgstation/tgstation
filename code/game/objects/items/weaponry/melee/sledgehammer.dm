@@ -64,7 +64,7 @@
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = force, \
 		force_wielded = force_wielded, \
-		icon_wielded = "[base_icon_state]1", \
+		update_icon_state = TRUE, \
 	)
 	RegisterSignal(src, COMSIG_SEND_ITEM_ATTACK_MESSAGE_OBJECT, PROC_REF(on_attack_message))
 	add_deep_lore()
@@ -84,10 +84,6 @@
 		<br>\
 		Why 2484 will not be like \"1984\" is still pending review by the Nanotrasen ethics board." \
 	) // for those who still don't get it https://youtu.be/ErwS24cBZPc
-
-/obj/item/sledgehammer/update_icon_state()
-	icon_state = "[base_icon_state]0"
-	return ..()
 
 /obj/item/sledgehammer/pre_attack(atom/target, mob/living/user, list/modifiers, list/attack_modifiers)
 	. = ..()
