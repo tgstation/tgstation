@@ -130,7 +130,9 @@
 	if(ready != PLAYER_READY_TO_PLAY)
 		if(SSticker.ready_jobs[ckey])
 			SSticker.ready_jobs -= ckey
-			SSticker.update_aggregate_ready_report()
+			// Everyone unreadies on Logout() as they spawn in, so we stop redoing it once the round is setting up
+			if(SSticker.current_state <= GAME_STATE_PREGAME)
+				SSticker.update_aggregate_ready_report()
 		return
 	if(SSticker.HasRoundStarted())
 		return
