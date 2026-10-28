@@ -6,8 +6,10 @@
 	argument_hash_start_idx = 2
 	/// Incoming attacks beneath this threshold, inclusive, will be blocked entirely
 	var/force_threshold = -1
+	/// An attack type that we block. If defined, we only check for this type.
+	var/attack_type_blocked
 
-/datum/element/damage_threshold/Attach(datum/target, threshold)
+/datum/element/damage_threshold/Attach(datum/target, threshold, attack_type_blocked)
 	. = ..()
 	if(!isliving(target))
 		return ELEMENT_INCOMPATIBLE
@@ -16,6 +18,7 @@
 
 	RegisterSignal(target, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(check_block))
 	force_threshold = threshold
+	attack_type_blocked = attack_type_blocked
 
 /datum/element/damage_threshold/Detach(datum/source, ...)
 	. = ..()
@@ -34,6 +37,9 @@
 	SIGNAL_HANDLER
 
 	if(damage <= 0) // Already handled
+		return NONE
+
+	if(attack_type_blocked && attack_type != attack_type_blocked)
 		return NONE
 
 	if(damage <= force_threshold)
