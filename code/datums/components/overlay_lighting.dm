@@ -94,8 +94,9 @@
 	registered_cells = null
 	luminosity_turf = null
 
-/// Registers ourselves in the spatial grid cells our holder's light reaches
+/// Registers ourselves in the spatial grid cells our holder's light reaches, replacing our previous registration
 /datum/component/overlay_lighting/proc/register_new_cells()
+	clean_old_cells()
 	var/atom/movable/current_holder = light.current_holder
 	if(!current_holder || !isturf(current_holder.loc) || !(light.overlay_lighting_flags & LIGHTING_ON))
 		return
@@ -108,7 +109,6 @@
 /datum/component/overlay_lighting/proc/update_luminosity_cells()
 	if(registered_cells && light.current_holder?.loc == luminosity_turf)
 		return
-	clean_old_cells()
 	register_new_cells()
 
 /// Adds the luminosity and source for the affected movable atoms to keep track of their visibility.
@@ -158,7 +158,7 @@
 	var/old_lumcount_range = lumcount_range
 	lumcount_range = ceil(light.range)
 	if(lumcount_range != old_lumcount_range)
-		clean_old_cells()
+		add_dynamic_lumi(light.current_holder)
 		register_new_cells()
 
 /// Changes the intensity/brightness of the light by altering the visual object's alpha.
