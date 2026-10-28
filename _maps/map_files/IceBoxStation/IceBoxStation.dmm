@@ -51910,9 +51910,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/medbay/aft)
 "oyz" = (
-/obj/structure/cable{
-	dir = 8
-	},
+/obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/orange/visible,
 /turf/open/floor/engine{
 	dir = 8
