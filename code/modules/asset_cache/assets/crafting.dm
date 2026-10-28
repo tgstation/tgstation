@@ -136,7 +136,7 @@
 	data["ref"] = REF(recipe)
 	var/atom/atom = recipe.result
 
-	data["id"] = datums.Find(atom)
+	data["id"] = CRAFTING_COMPONENT_ID(datums, atom)
 
 	var/recipe_data = recipe.crafting_ui_data()
 	for(var/new_data in recipe_data)
