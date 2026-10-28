@@ -2,19 +2,21 @@ import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Box, Button, Floating, Stack } from 'tgui-core/components';
 import { findIcon } from '../helpers';
-import type { AtomData, CraftingData } from '../types';
+import type { AtomData, CraftingData, Recipe } from '../types';
 import { RecipeContent } from './RecipeContent';
 
 type Props = {
   amount: number;
   atom_id: string;
   setParentForceFloating?: (state: boolean) => void;
+  allRecipes: Recipe[];
 };
 
 export function AtomContent(props: Props) {
   const { amount, atom_id, setParentForceFloating } = props;
   const { data } = useBackend<CraftingData>();
-  const { atom_data, recipes } = data;
+  const { atom_data } = data;
+  const { allRecipes: recipes } = props;
 
   const atom_id_int = Number(atom_id);
   const atom = atom_data[atom_id_int - 1];
@@ -107,6 +109,7 @@ export function AtomContent(props: Props) {
             </Stack>
           )}
           <RecipeContent
+            allRecipes={recipes}
             item={shownRecipe}
             nodesc={true}
             setParentForceFloating={setForceFloating}

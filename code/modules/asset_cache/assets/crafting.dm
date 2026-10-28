@@ -76,3 +76,134 @@
 
 	for(var/tool in tool_icons)
 		insert_icon(replacetext(tool, " ", ""), tool_icons[tool])
+
+/datum/asset/json/crafting_recipes
+	name = "crafting_list"
+
+/datum/asset/json/crafting_recipes/generate()
+	var/list/data = list()
+	var/list/components = get_component_list()
+	data["categories"] = list()
+	data["recipes"] = list()
+	for(var/datum/crafting_recipe/recipe as anything in get_recipe_list())
+		if(recipe.category)
+			data["categories"] |= recipe.category
+		data["recipes"] += list(build_crafting_data(recipe, components))
+	return data
+
+/datum/asset/json/crafting_recipes/proc/get_recipe_list()
+	return GLOB.crafting_recipes
+
+/datum/asset/json/crafting_recipes/proc/get_component_list()
+	return GLOB.crafting_recipes_datums
+
+/datum/asset/json/crafting_recipes/proc/build_crafting_data(datum/crafting_recipe/recipe, list/datums)
+	var/list/data = list()
+
+	data["ref"] = REF(recipe)
+	var/atom/atom = recipe.result
+
+	data["id"] = datums.Find(atom)
+
+	var/recipe_data = recipe.crafting_ui_data()
+	for(var/new_data in recipe_data)
+		data[new_data] = recipe_data[new_data]
+
+	// Category
+	data["category"] = recipe.category
+
+	// Name, Description
+	data["name"] = recipe.name
+
+	if(ispath(recipe.result, /datum/reagent))
+		var/datum/reagent/reagent = recipe.result
+		if(recipe.result_amount > 1)
+			data["name"] = "[data["name"]] [recipe.result_amount]u"
+		data["desc"] = recipe.desc || initial(reagent.description)
+
+	else if(ispath(recipe.result, /obj/item/pipe))
+		var/obj/item/pipe/pipe_obj = recipe.result
+		var/obj/pipe_real = initial(pipe_obj.pipe_type)
+		data["desc"] = recipe.desc || initial(pipe_real.desc)
+
+	else
+		if(ispath(recipe.result, /obj/item/stack) && recipe.result_amount > 1)
+			data["name"] = "[data["name"]] [recipe.result_amount]x"
+		data["desc"] = recipe.desc || initial(atom.desc)
+
+	if(ispath(recipe.result, /obj/item/food))
+		var/obj/item/food/food = recipe.result
+		data["has_food_effect"] = !!food.crafted_food_buff
+
+	// Crafting
+	if(recipe.non_craftable)
+		data["non_craftable"] = recipe.non_craftable
+	data["mass_craftable"] = recipe.mass_craftable
+	if(recipe.steps)
+		data["steps"] = recipe.steps
+
+	// Tools
+	if(recipe.tool_behaviors)
+		data["tool_behaviors"] = recipe.tool_behaviors
+	if(recipe.tool_paths)
+		data["tool_paths"] = list()
+		for(var/req_atom in recipe.tool_paths)
+			data["tool_paths"] += datums.Find(req_atom)
+
+	// Machinery
+	if(recipe.machinery)
+		data["machinery"] = list()
+		for(var/req_atom in recipe.machinery)
+			data["machinery"] += datums.Find(req_atom)
+
+	// Structures
+	if(recipe.structures)
+		data["structures"] = list()
+		for(var/req_atom in recipe.structures)
+			data["structures"] += datums.Find(req_atom)
+
+	// Ingredients / Materials
+	data["reqs"] = list()
+	if(recipe.reqs.len)
+		for(var/req_atom in recipe.reqs)
+			var/id = datums.Find(req_atom)
+			data["reqs"]["[id]"] = recipe.reqs[req_atom]
+
+	// Catalysts
+	if(LAZYLEN(recipe.chem_catalysts))
+		data["chem_catalysts"] = list()
+		for(var/req_atom, chem_amount in recipe.chem_catalysts)
+			var/id = datums.Find(req_atom)
+			data["chem_catalysts"]["[id]"] = chem_amount
+
+	// Reaction data
+	if(ispath(recipe.reaction))
+		data["is_reaction"] = TRUE
+		// May be called before chemical reactions list is setup
+		var/datum/chemical_reaction/reaction = GLOB.chemical_reactions_list[recipe.reaction] || new recipe.reaction()
+		if(istype(reaction))
+			if(!data["steps"])
+				data["steps"] = list()
+			if(reaction.required_container)
+				var/id = datums.Find(reaction.required_container)
+				data["reqs"]["[id]"] = 1
+				data["steps"] += "Add all ingredients into \a [initial(reaction.required_container.name)]"
+			else if(length(recipe.reqs) > 1 || length(reaction.required_catalysts))
+				data["steps"] += "Mix all ingredients together"
+			if(reaction.required_temp > T20C)
+				data["steps"] += "Heat up to [reaction.required_temp]K"
+		else
+			stack_trace("Invalid reaction found in recipe code! ([recipe.reaction])")
+	else if(!isnull(recipe.reaction))
+		stack_trace("Invalid reaction found in recipe code! ([recipe.reaction])")
+
+	return data
+
+/datum/asset/json/crafting_recipes/cooking
+	name = "cooking_list"
+
+/datum/asset/json/crafting_recipes/cooking/get_recipe_list()
+	return GLOB.cooking_recipes
+
+/datum/asset/json/crafting_recipes/cooking/get_component_list()
+	return GLOB.cooking_recipes_datums

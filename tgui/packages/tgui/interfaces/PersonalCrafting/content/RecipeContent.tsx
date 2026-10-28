@@ -18,6 +18,7 @@ import { ToolContent } from './ToolContent';
 
 type Props = {
   item: Recipe;
+  allRecipes: Recipe[];
 };
 
 export function RecipeContentCompact(props: Props) {
@@ -124,6 +125,7 @@ type FullProps = Props & {
   nodesc?: boolean;
   setParentForceFloating?: (state: boolean) => void;
   showIcon?: boolean;
+  allRecipes: Recipe[];
 };
 
 export function RecipeContent(props: FullProps) {
@@ -183,6 +185,7 @@ export function RecipeContent(props: FullProps) {
                         atom_id={atom_id}
                         amount={item.reqs[atom_id]}
                         setParentForceFloating={setParentForceFloating}
+                        allRecipes={props.allRecipes}
                       />
                     ))}
                   </Box>
@@ -196,6 +199,7 @@ export function RecipeContent(props: FullProps) {
                         atom_id={atom_id}
                         amount={item.chem_catalysts[atom_id]}
                         setParentForceFloating={setParentForceFloating}
+                        allRecipes={props.allRecipes}
                       />
                     ))}
                   </Box>
@@ -209,6 +213,7 @@ export function RecipeContent(props: FullProps) {
                         atom_id={tool}
                         amount={1}
                         setParentForceFloating={setParentForceFloating}
+                        allRecipes={props.allRecipes}
                       />
                     ))}
                     {item.tool_behaviors?.map((tool) => (
@@ -225,6 +230,7 @@ export function RecipeContent(props: FullProps) {
                         atom_id={atom_id}
                         amount={1}
                         setParentForceFloating={setParentForceFloating}
+                        allRecipes={props.allRecipes}
                       />
                     ))}
                   </Box>
@@ -238,6 +244,7 @@ export function RecipeContent(props: FullProps) {
                         atom_id={atom_id}
                         amount={1}
                         setParentForceFloating={setParentForceFloating}
+                        allRecipes={props.allRecipes}
                       />
                     ))}
                   </Box>
