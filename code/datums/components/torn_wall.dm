@@ -12,12 +12,15 @@
 /datum/component/torn_wall
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
 	var/current_stage = TORN_WALL_INITIAL
+	/// Should it skip the girder, only the last tear counts
+	var/devastated = TRUE
 
-/datum/component/torn_wall/Initialize(current_stage)
+/datum/component/torn_wall/Initialize(current_stage, devastated = TRUE)
 	. = ..()
 	if (!isclosedturf(parent) || isindestructiblewall(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.current_stage = current_stage || src.current_stage
+	src.devastated = devastated
 
 /datum/component/torn_wall/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
@@ -36,7 +39,8 @@
 	))
 	atom_parent.update_appearance(UPDATE_ICON)
 
-/datum/component/torn_wall/InheritComponent(datum/component/C, i_am_original)
+/datum/component/torn_wall/InheritComponent(datum/component/C, i_am_original, current_stage, devastated = TRUE)
+	src.devastated = devastated
 	increase_stage()
 
 /// Play a fun animation and make our wall look damaged
@@ -60,7 +64,7 @@
 		mineral_turf.gets_drilled()
 		return
 
-	attached_wall.dismantle_wall(devastated = TRUE)
+	attached_wall.dismantle_wall(devastated = devastated)
 
 /// Fix it up on weld
 /datum/component/torn_wall/proc/on_welded(atom/source, mob/user, obj/item/tool)

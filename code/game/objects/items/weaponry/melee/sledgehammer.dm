@@ -165,7 +165,7 @@
 		return
 
 	var/wall_name = wall.name
-	wall.AddComponent(/datum/component/torn_wall)
+	wall.AddComponent(/datum/component/torn_wall, devastated = FALSE) // leaves a girder
 	if(iswallturf(wall))
 		user.visible_message(
 			span_danger("[user] [pick(slam_verbs)] [src] against [wall]!"),
