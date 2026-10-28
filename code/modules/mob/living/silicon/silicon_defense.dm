@@ -119,15 +119,15 @@
 
 		if(check_block(user, damage, "[user]'s [atk_verb]", UNARMED_ATTACK, 0, BRUTE))
 			user.do_attack_animation(src, atk_effect)
-			playsound(loc, 'sound/effects/bang.ogg', 10, TRUE)
+			playsound(src, 'sound/effects/bang.ogg', 10, TRUE)
 			return
 
 		user.do_attack_animation(src, atk_effect)
 		visible_message(span_danger("[user] [atk_verb_continuous] [src]!"), \
 					span_userdanger("[user] [atk_verb_continuous] you!"), span_hear("You hear something impacting metal!"), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You [atk_verb] [src]!"))
-		playsound(loc, 'sound/effects/bang.ogg', 10, TRUE)
-		apply_damage(damage, attacking_bodypart.attack_type)
+		playsound(src, 'sound/effects/bang.ogg', 10, TRUE)
+		apply_damage(damage, attacking_bodypart.attack_type, attack_direction = get_dir(user, src))
 		log_combat(user, src, "punched")
 		updatehealth()
 	else
