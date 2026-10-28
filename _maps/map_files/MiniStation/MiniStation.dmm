@@ -314,6 +314,13 @@
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/plating,
 /area/station/cargo)
+"aJ" = (
+/obj/machinery/light/small/directional/south,
+/obj/machinery/atmospherics/components/unary/thermomachine/freezer{
+	dir = 8
+	},
+/turf/open/floor/iron/dark,
+/area/station/engineering/main)
 "aK" = (
 /obj/machinery/computer/monitor{
 	name = "Bridge Power Monitoring Console"
@@ -812,13 +819,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "bY" = (
-/obj/effect/turf_decal/stripes/line{
-	dir = 4
-	},
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1
-	},
-/turf/open/floor/engine,
+/turf/open/floor/iron/dark,
 /area/station/engineering/main)
 "bZ" = (
 /obj/effect/landmark/start/cargo_technician,
@@ -1040,6 +1041,13 @@
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
+"cF" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 4
+	},
+/obj/machinery/atmospherics/components/binary/valve/digital/on,
+/turf/open/floor/engine,
+/area/station/engineering/main)
 "cG" = (
 /obj/effect/mapping_helpers/iannewyear,
 /obj/machinery/door/window/left/directional/north{
@@ -1584,6 +1592,10 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
 /turf/open/floor/iron,
 /area/station/security/brig)
+"dT" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/engine)
 "dU" = (
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/general/visible,
@@ -1601,6 +1613,10 @@
 	},
 /turf/open/floor/plating,
 /area/station/science/xenobiology)
+"dX" = (
+/obj/machinery/atmospherics/pipe/smart/manifold4w/cyan/visible,
+/turf/open/floor/engine,
+/area/station/engineering/supermatter/engine)
 "dY" = (
 /obj/effect/turf_decal/trimline/purple/filled/line{
 	dir = 4
@@ -1611,6 +1627,15 @@
 /obj/structure/cable,
 /turf/open/floor/iron/white,
 /area/station/science/xenobiology)
+"dZ" = (
+/obj/effect/turf_decal/stripes/line{
+	dir = 8
+	},
+/obj/machinery/atmospherics/components/binary/valve/digital{
+	dir = 8
+	},
+/turf/open/floor/engine,
+/area/station/engineering/main)
 "ea" = (
 /obj/effect/turf_decal/tile/yellow{
 	dir = 1
@@ -1650,6 +1675,11 @@
 /obj/effect/turf_decal/bot_white,
 /turf/open/floor/iron,
 /area/station/hallway/primary/central/fore)
+"ef" = (
+/obj/effect/turf_decal/stripes/line,
+/obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
+/turf/open/floor/engine,
+/area/station/engineering/main)
 "eg" = (
 /obj/machinery/status_display/door_timer{
 	dir = 4;
@@ -2203,9 +2233,6 @@
 	},
 /turf/open/floor/iron/dark,
 /area/station/command/gateway)
-"fx" = (
-/turf/open/floor/iron/dark,
-/area/station/engineering/main)
 "fy" = (
 /obj/effect/landmark/event_spawn,
 /turf/open/floor/engine,
@@ -8109,13 +8136,6 @@
 /obj/structure/cable/layer1,
 /turf/open/floor/engine,
 /area/station/engineering/main)
-"tA" = (
-/obj/machinery/atmospherics/components/trinary/filter/flipped/critical{
-	dir = 4
-	},
-/obj/effect/turf_decal/stripes/line,
-/turf/open/floor/engine,
-/area/station/engineering/main)
 "tB" = (
 /obj/machinery/atmospherics/pipe/smart/manifold4w/green/visible,
 /obj/effect/turf_decal/stripes/line,
@@ -8178,16 +8198,6 @@
 	},
 /obj/effect/spawner/structure/window/reinforced/plasma,
 /turf/open/floor/plating,
-/area/station/engineering/main)
-"tM" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 8;
-	name = "SM to Cold Loop"
-	},
-/obj/effect/turf_decal/stripes/line{
-	dir = 8
-	},
-/turf/open/floor/engine,
 /area/station/engineering/main)
 "tN" = (
 /obj/structure/cable,
@@ -8279,19 +8289,7 @@
 	},
 /turf/open/floor/engine,
 /area/station/engineering/main)
-"ua" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	dir = 1
-	},
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/engine)
 "ub" = (
-/turf/open/floor/engine,
-/area/station/engineering/supermatter/engine)
-"uc" = (
-/obj/machinery/atmospherics/components/binary/pump{
-	name = "Gas to Chamber"
-	},
 /turf/open/floor/engine,
 /area/station/engineering/supermatter/engine)
 "ud" = (
@@ -16757,10 +16755,6 @@
 /obj/structure/window/reinforced/spawner/directional/south,
 /turf/open/floor/iron/dark,
 /area/station/science/research)
-"QU" = (
-/obj/machinery/light/small/directional/south,
-/turf/open/floor/iron/dark,
-/area/station/engineering/main)
 "QV" = (
 /obj/machinery/shieldgen,
 /turf/open/floor/iron,
@@ -50986,7 +50980,7 @@ VU
 qB
 tq
 ty
-tM
+dZ
 ty
 uf
 ul
@@ -51499,7 +51493,7 @@ sT
 ZI
 tj
 ZU
-tA
+ef
 tO
 tZ
 tP
@@ -52015,7 +52009,7 @@ LI
 aA
 TF
 tQ
-ua
+dT
 bp
 up
 up
@@ -52529,7 +52523,7 @@ LI
 tr
 tE
 tS
-uc
+dX
 ui
 bR
 bR
@@ -53562,7 +53556,7 @@ tH
 Hi
 tH
 tH
-bY
+cF
 tH
 tH
 bD
@@ -54076,7 +54070,7 @@ KX
 GU
 tk
 ap
-fx
+Lx
 Lx
 Lx
 xt
@@ -54589,11 +54583,11 @@ IR
 tI
 tI
 EY
-fx
+bY
 Zz
 Zz
 Zz
-QU
+aJ
 qB
 cp
 cp
