@@ -1476,9 +1476,9 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
  * * offered - The living mob being offered the item.
  */
 /obj/item/proc/on_offered(mob/living/offerer, mob/living/offered)
-	if(!offerer.can_hold_items())
+	if(!offerer.can_hold_items(src))
 		return TRUE
-	if(offered && !offered.can_hold_items())
+	if(offered && !offered.can_hold_items(src))
 		return TRUE
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFERING, offerer) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
