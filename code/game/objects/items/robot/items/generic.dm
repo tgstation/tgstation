@@ -19,7 +19,6 @@
 /obj/item/borg/stun
 	name = "electrically-charged arm"
 	icon_state = "elecarm"
-	var/stamina_damage = 60 //Same as normal batong
 	var/cooldown_check = 0
 	/// cooldown between attacks
 	var/cooldown = 4 SECONDS // same as baton
@@ -39,21 +38,9 @@
 			return
 
 	user.do_attack_animation(attacked_mob)
-	attacked_mob.adjust_stamina_loss(stamina_damage)
-	attacked_mob.set_confusion_if_lower(5 SECONDS)
-	attacked_mob.adjust_stutter(20 SECONDS)
-	attacked_mob.set_jitter_if_lower(5 SECONDS)
-	if(issilicon(attacked_mob))
-		attacked_mob.emp_act(EMP_HEAVY)
-		attacked_mob.visible_message(
-			span_danger("[user] shocks [attacked_mob] with [src]!"),
-			span_userdanger("[user] shocks you with [src]!"),
-		)
-	else
-		attacked_mob.visible_message(
-			span_danger("[user] prods [attacked_mob] with [src]!"),
-			span_userdanger("[user] prods you with [src]!"),
-		)
+	attacked_mob.Paralyze(100)
+	attacked_mob.adjust_stutter(10 SECONDS)
+			span_userdanger("[user] prods you with [src]!"))
 
 	playsound(loc, 'sound/items/weapons/egloves.ogg', 50, TRUE, -1)
 	cooldown_check = world.time + cooldown
