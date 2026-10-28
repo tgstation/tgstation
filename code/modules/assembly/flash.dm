@@ -197,7 +197,7 @@
 					to_chat(flashed, "[src] overloads your sensors and computing!")
 			else
 				flashed.set_temp_blindness_if_lower( (rand(5,15) SECONDS))
-				apply_status_effect(/datum/status_effect/borg_slow, 0.5)
+				flashed.apply_status_effect(/datum/status_effect/borg_slow, 0.5)
 				if(user)
 					user.visible_message(span_warning("[user] blinds [flashed] with the flash!"), span_danger("You blind [flashed] with the flash!"))
 				else
