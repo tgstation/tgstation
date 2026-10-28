@@ -143,7 +143,7 @@
 	human_parent.apply_damage(RADIATION_BURN_SPLOTCH_DAMAGE, BURN, affected_limb, wound_clothing = FALSE)
 	playsound(
 		human_parent,
-		SFX_SIZZLE,
+		/datum/sound_effect/sizzle,
 		50,
 		vary = TRUE,
 	)

@@ -340,6 +340,12 @@
       their names without requiring you to unhover/rehover your mouse over it.
   Melbert:
   - bugfix: Build mode copy on humans no longer mangles the source terribly
+  - rscdel: Removed the ability for id cards to project a pay stand
+  - rscdel: Removed the vend-a-tray entirely
+  - rscadd: You can construct tip jars with glass or plasmaglass (though not with
+      their reinforced variants). Tip jars accept many tiny methods of gratuity, such
+      as coins, cash, holochips, IOUs, or... a cigarette, sure.
+  - rscadd: Adds tip jars to the kitchen in the bar, where the vend-a-trays once sat.
   Neocloudy:
   - spellcheck: Fixed or tweaked spelling/grammar in new Cerulean content, including
       the hydro vaporizer, the deadbeat musician, the armored leather jacket, the
@@ -368,3 +374,231 @@
       slots.
   - bugfix: stacks printed by autolathes and protolathes keep the correct material
       contents when printed in batches or merged with existing stacks.
+2026-10-17:
+  Fghj240:
+  - bugfix: right clicking a powered door with powered crowbars no longer fails to
+      open it
+  Melbert:
+  - rscdel: Most gun crafting kits have been removed. The Horizon and SKS still require
+      one to build.
+  - rscadd: Weapon research tech nodes now allows the station to requisition unlocked
+      weapons from Cargo (Advanced Energy Gun, X-ray gun, ion carbine, etc.). Security
+      can departmental order them in bulk. Requisitions come without firing pins.
+  - rscadd: You can now purchase a hellfire laser gun directly from Cargo, though
+      it requires the contraband wire be cut.
+  PapaMichael:
+  - balance: Departmental security officers are now spread evenly across departments.
+  headband0536:
+  - qol: runechat for broadcasters
+  tontyGH:
+  - rscadd: Mothpeople now have 2 extra arms in their chest, giving them 4 total arms
+  - balance: Mothpeople are now generally a bit more fragile
+  - bugfix: Akimbo used the wrong gun when determining spread penalty
+  - bugfix: Akimbo penalty did not include the gun that was firing
+  - balance: Akimbo penalty now has multiplicative scaling (double PKA was adjusted
+      to consider this)
+  - bugfix: Catching items now considers all empty hands and not just your active
+      offhand
+  - balance: Blocking now only works if the blocking item is in your active set of
+      hands
+  - rscdel: Wizard's 4-arms perk and the deathmatch modifier had to be removed for
+      technical reasons. Sorry.
+  - refactor: Cybernetic arm implants got refactored. Report weird behaviour on the
+      GitHub.
+  vinylspiders:
+  - bugfix: ore vents loaded in after roundstart, or on a level without a mining epicenter,
+      now actually have ores and show up on ventpointers
+  - refactor: NT Shopping Network  no longer resends the whole cargo catalogue every
+      second while it's open
+  - bugfix: fuel tanks with other reagents mixed in no longer sometimes fail to explode
+      around plasma
+  - bugfix: swapping a water cooler's jug now hands you the old jug with whatever
+      was left in the cooler
+2026-10-18:
+  Absolucy:
+  - bugfix: Pun Pun should now properly get roundstart masks sometime
+  PapaMichael:
+  - rscadd: Added new AI VOX lines, including "jellyperson", "cerulean", "worm", and
+      some station areas and jobs
+  TheBoondock:
+  - rscadd: Added a pillow supplies crate and category to the games vendor
+  necromanceranne:
+  - balance: Misfiring has been completely reworked.
+  - balance: .38 and .357 are interchangeable in all compatible guns without needing
+      to wrench the gun. Just load it in! Nothing bad could possibly happen.
+  - balance: Junk rounds are once again shotgun rounds, and pipeguns/pipe pistols
+      now fit shotgun shells again.
+  - balance: Guns now have pressure mechanics to handle misfiring. Check you gun carefully
+      to determine its pressure rating.
+  vinylspiders:
+  - bugfix: crafted spears and explosive lances no longer turn invisible when worn
+      on your back
+2026-10-19:
+  Melbert:
+  - bugfix: Prosthetic Limb quirk cannot replace limbs that you don't have
+  - bugfix: Transhumanist cannot replace limbs nor organs that you don't have
+  - bugfix: Prosthetic organ cannot replace organs that you don't have
+  - bugfix: Prosthetic organ will not give lungs to species that don't breathe oxygen
+  - bugfix: Quadruple Amputee won't give you limbs that you don't have
+  tontyGH:
+  - bugfix: Cyborgs are now properly severed from the paranormal plane when revived
+  - bugfix: Changing your bible to insuls should make the received insuls no longer
+      disappear sometimes
+  vinylspiders:
+  - bugfix: losing a moth's chest arms no longer drops what's in your right hand,
+      and your active hand moves to a hand you still have
+  - bugfix: moth chest-arms are named what you'd expect now instead of just "moth"
+  - bugfix: papers no longer pop open on their own when you pick up a pen or stamp
+      after an earlier attempt to read them failed, or after you ghosted while reading
+2026-10-20:
+  Aeri:
+  - bugfix: The Icebox prison rec room and mess hall no longer trigger a fire alarm
+      when there's no atmospheric problem
+  Melbert:
+  - qol: Rat spit no longer causes vomitting directly, instead now causing more direct
+      disgust.
+  - qol: Using Sitalesse or Sumalism as your chaplain religion now gives your bible
+      a unique description
+  - bugfix: Fixes default bible name producing "The holy book of default bible name"
+      instead of "The holy book of [my diety]"
+  - map: 'Tram: Remapped Atmospherics entirely, a bit of Engineering, and a bit of
+      the hallway outside'
+  NoHaxJustPi:
+  - rscadd: Headslugs and alien larvae can doorcrawl.
+  TealSeer:
+  - bugfix: fixed wizard's heart eater perk not actually increasing damage resistance
+2026-10-21:
+  SmArtKar:
+  - bugfix: Ceruleans no longer flop in zero-g
+  vinylspiders:
+  - bugfix: fixed mood sometimes sticking to the room you just fell or got teleported
+      out of.
+  - admin: jumping somewhere in your own body, or with Jump To Ghost, no longer leaves
+      your mood stuck on the area you jumped out of.
+2026-10-22:
+  SmArtKar:
+  - bugfix: Fixed some MODsuit modules having broken names in action bar
+  uaioy:
+  - balance: silicons take 1 flash to be stunned again (syndie borgs unchanged)
+  vinylspiders:
+  - bugfix: Eigenstasium spirits no longer vanish the moment someone walks through
+      them
+  - bugfix: walking through an Eigenstasium spirit no longer curses the area to look
+      pixel shifted and weird for five minutes
+2026-10-23:
+  13spacemen:
+  - bugfix: The follow link in ghost poll "was selected" announcements now follows
+      the chosen player instead of doing nothing.
+  vinylspiders:
+  - refactor: (performance) the R&D console no longer resends the whole techweb every
+      second while connected to it
+  - bugfix: wearing a space suit or bio suit without a helmet no longer hides your
+      gender, and being fully covered (like a bomb suit and hood or a sealed modsuit)
+      now does
+  - bugfix: plasmamen, ethereals and shadowpeople/any other nondimorphic gendered
+      species no longer get the female cut on their underwear
+2026-10-24:
+  Melbert:
+  - bugfix: Wall mounted objects that layer above players will now layer beneath players
+      if a player is leaning against it.
+  - rscadd: Breathing, injecting, or drinking metalgen applies it to your lungs, liver,
+      or stomach
+  PapaMIchael:
+  - balance: Blood worms fake breathing when checked with a stethoscope
+  - bugfix: Blood worms restart their host's heart when they revive it
+  PapaMichael:
+  - bugfix: Changeling transformation stings properly wear off after 8 minutes
+  - balance: Using a stethoscope now takes 2 seconds
+  Robwo:
+  - bugfix: Fixed ambient sound loops not playing in powered areas that have no apc.
+  SmArtKar:
+  - bugfix: Fixed particle weather not rendering
+  necromanceranne:
+  - balance: Slaughter demons no longer take damage while in blood crawl. They can
+      also eat more than just humans again.
+  vinylspiders:
+  - bugfix: you can put body bags into disposal bins while buckled to a chair or otherwise
+      held in place
+  - qol: atmos techs now start with an Atmospherics skillchip that lets them know
+      air alarm and fire alarm wires
+  - qol: the Engineering skillchip now also lets you know fire alarm wires
+2026-10-25:
+  vinylspiders:
+  - bugfix: fixed a runtime when a cyborg or AI joined the round
+2026-10-26:
+  Swan:
+  - bugfix: fixes crew manifest not showing the command chevron
+  - bugfix: fixes security records console not displaying job icons
+2026-10-27:
+  Absolucy:
+  - bugfix: Fixed big manipulators trying to interact with underfloor pipes.
+  AitorLogedo:
+  - bugfix: Boomboxes, chainsaws and other looping sounds follow whoever is carrying
+      them, and long sounds pick up where they should when you walk back into range
+      instead of going silent.
+  ArcaneMusic:
+  - rscadd: Chefs may now craft a new soup, Rich Cargo Stock! Remember to wait for
+      the stock block to turn liquid.
+  Melbert:
+  - rscadd: Pre-game lobby shows a rough estimate of what the crew manifest may look
+      like
+  - qol: Adds *stammer / *stutter and *slur emotes, which causes your next few messages
+      to be stuttered (as if hurt) or slurred (as if drunk). You can optionally type
+      *[emote] [number] to determine how long you want the effect to last in seconds
+      (it's capped, don't try it).
+  - qol: Adds *jitter, which causes you to start jittering (where your sprite starts
+      to twitch back and forth). You can optionally type *jitter [number] to determine
+      how long you want the jitter to last in seconds (it's capped, don't try it).
+  - balance: Feast of Owls heretics don't lose blade break, nor gain unlimited blades,
+      after a certain knowledge threshold
+  - balance: Heretic armor no longer hides aura.
+  - balance: Lock Heretics have changed slightly - you do gain an aura now, but it
+      ONLY reveals itself while wearing your robes, and doesn't glow in the dark.
+  - bugfix: Losing blade break no longer removes cloak of shadow (since it's no longer
+      an innate spell)
+  - rscdel: Traitor, Blood Brother, Spy, and Changeling can no longer hijack the emergency
+      shuttle unless they either have an objective to hijack, or they set custom objective.
+  - rscdel: Heretic can no longer hijack unless they ascend, or set a custom objective.
+  - balance: The chance of rolling hijack for Traitor, Blood Brother, and Spy have
+      gone up slightly.
+  - balance: Changelings can now rarely roll hijack.
+  - qol: Spies objectives have been touched up in general, making less nonsensical
+      combinations.
+  - qol: Radiation shields store collected tritium internally, which can be removed
+      via an attached pipe. Note the internal storage is not infinite, and has a pressure
+      limit - surpassing it will cause the tritium to leak into the air.
+  - qol: Emergency radiation shields now also generate tritium over time (which is
+      also stored internally)
+  MysteryMan21333:
+  - bugfix: Fixs the Heterochromia Quirk, allows adjustment of color and now spawns
+      in properly.
+  PapaMichael:
+  - bugfix: You can no longer pawn off your hot potato on a monkey or a crit person
+  Thunder12345:
+  - map: 'Metastation: Some floor lights that were hidden behind chairs have been
+      moved to the wall.'
+  headband0536:
+  - bugfix: fixed virtual typing indicator
+  sohpeach:
+  - bugfix: Being deafened while a TTS line is about to play no longer mutes all game
+      sounds until you reopen the game.
+  - bugfix: Mob charges and transit tubes no longer become instant when a round has
+      been going for a few hours.
+  vinylspiders:
+  - bugfix: blood-drunk no longer leaves permanent stamina resistance and increased
+      pressure damage after wearing off
+  - bugfix: zombie stun resistance works again
+  - bugfix: brute resistance and weakness are no longer applied twice to pressure
+      damage
+  - bugfix: interrupting a garden gnome's burrowing no longer permanently increases
+      the damage it takes
+  - bugfix: removing a roach heart from a nonhuman no longer grants free knockdown
+      resistance
+  - bugfix: healing animals now updates their health immediately
+  - bugfix: brute and burn resistances and weaknesses now apply in full to damage
+      spread across the whole body, such as pressure damage
+  - bugfix: fixes an issue where tgui inputs that open another of the same interface
+      (such as Jump To Coordinate) tgui input would just cancel and close if you select
+      an option too quickly.
+  - bugfix: fixed loadout styles that change an item's name failing to apply when
+      you spawn.

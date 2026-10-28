@@ -153,7 +153,7 @@
 	return data
 
 /obj/item/construction/plumbing/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
-	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
+	playsound(src, /datum/sound_effect/tool_switch, 20, TRUE)
 
 	switch(action)
 		if("color")

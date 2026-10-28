@@ -124,7 +124,7 @@
 
 	to_chat(user, "You pull back the tab of [src] with a satisfying pop.") //Ahhhhhhhh
 	add_container_flags(OPENCONTAINER)
-	playsound(src, SFX_CAN_OPEN, 50, TRUE)
+	playsound(src, /datum/sound_effect/can_open, 50, TRUE)
 	throwforce = 0
 
 /**

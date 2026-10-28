@@ -1,5 +1,11 @@
 import { sortBy } from 'es-toolkit';
-import { type Dispatch, type SetStateAction, useMemo, useState } from 'react';
+import {
+  type Dispatch,
+  type SetStateAction,
+  Suspense,
+  useMemo,
+  useState,
+} from 'react';
 import {
   BlockQuote,
   Button,
@@ -14,9 +20,10 @@ import {
 import { formatMoney } from 'tgui-core/format';
 
 import { useSharedState } from '../../backend';
+import { LoadingScreen } from '../common/LoadingScreen';
 import { SearchBar } from '../common/SearchBar';
-import { searchForSupplies } from './helpers';
-import type { CargoData, Supply, SupplyCategory } from './types';
+import { searchForSupplies, useCatalogue, useShownCatalogue } from './helpers';
+import type { CargoData, Catalogue, Supply, SupplyCategory } from './types';
 
 type CargoCatalogProps = {
   act: any;
@@ -26,8 +33,8 @@ type CargoCatalogProps = {
 
 type CargoCatalogData = Pick<
   CargoData,
+  | 'catalogue'
   | 'self_paid'
-  | 'supplies'
   | 'cart'
   | 'max_order'
   | 'self_paid'
@@ -35,10 +42,32 @@ type CargoCatalogData = Pick<
   | 'displayed_currency_name'
 >;
 
+/** The cargo catalogue - when a new build comes in, the old one stays on screen until it's loaded */
 export function CargoCatalog(props: CargoCatalogProps) {
-  const { act, data, express } = props;
+  const { data } = props;
+  // NtOS can send the app's data before its static data the first time it's opened (while assets are still sending)
+  if (!data.catalogue) {
+    return <LoadingScreen />;
+  }
 
-  const supplies = Object.values(data.supplies);
+  return <ShownCatalog {...props} catalogue={data.catalogue} />;
+}
+
+function ShownCatalog(props: CargoCatalogProps & { catalogue: Catalogue }) {
+  const catalogue = useShownCatalogue(props.catalogue);
+
+  return (
+    <Suspense fallback={<LoadingScreen />}>
+      <CatalogContents {...props} catalogue={catalogue} />
+    </Suspense>
+  );
+}
+
+function CatalogContents(props: CargoCatalogProps & { catalogue: Catalogue }) {
+  const { data, act } = props;
+  const { express, catalogue } = props;
+
+  const supplies = useCatalogue(catalogue);
   const [showContents, setShowContents] = useState('');
   const [searchText, setSearchText] = useSharedState('search_text', '');
   const [activeSupplyName, setActiveSupplyName] = useSharedState(

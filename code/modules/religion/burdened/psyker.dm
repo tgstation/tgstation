@@ -217,13 +217,13 @@
 /obj/item/ammo_box/magazine/internal/cylinder/revchap
 	name = "chaplain revolver cylinder"
 	ammo_type = /obj/item/ammo_casing/c38/holy
-	caliber = CALIBER_38
+	caliber = CALIBER_357_38
 	max_ammo = 5
 
 /obj/item/ammo_casing/c38/holy
 	name = "lucky .38 bullet casing"
 	desc = "A lucky .38 bullet casing. You feel lucky just holding it."
-	caliber = CALIBER_38
+	caliber = CALIBER_357_38
 	projectile_type = /obj/projectile/bullet/c38/holy
 	custom_materials = null
 

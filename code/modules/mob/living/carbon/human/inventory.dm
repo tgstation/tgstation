@@ -117,77 +117,47 @@
 		visible_items += under.attached_accessories
 	return visible_items
 
-//This is an UNSAFE proc. Use mob_can_equip() before calling this one! Or rather use equip_to_slot_if_possible() or advanced_equip_to_slot_if_possible()
-// Initial is used to indicate whether or not this is the initial equipment (job datums etc) or just a player doing it
-/mob/living/carbon/human/equip_to_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
-	if(!..()) //a check failed or the item has already found its slot
+/mob/living/carbon/human/handle_set_item_in_slot(obj/item/equipping, slot)
+	. = ..()
+	if(.)
 		return
 
-	var/not_handled = FALSE //Added in case we make this type path deeper one day
 	switch(slot)
 		if(ITEM_SLOT_BACK)
-			if(back)
-				return
 			back = equipping
 			update_worn_back()
 		if(ITEM_SLOT_BELT)
-			if(belt)
-				return
 			belt = equipping
 			update_worn_belt()
 		if(ITEM_SLOT_ID)
-			if(wear_id)
-				return
 			wear_id = equipping
 			update_ID_card()
 			update_worn_id()
 		if(ITEM_SLOT_EARS)
-			if(ears)
-				return
 			ears = equipping
 			update_worn_ears()
 		if(ITEM_SLOT_EYES)
-			if(glasses)
-				return
 			glasses = equipping
 			update_worn_glasses()
 		if(ITEM_SLOT_GLOVES)
-			if(gloves)
-				return
 			gloves = equipping
 			update_worn_gloves()
 		if(ITEM_SLOT_FEET)
-			if(shoes)
-				return
 			shoes = equipping
 			update_worn_shoes()
 		if(ITEM_SLOT_OCLOTHING)
-			if(wear_suit)
-				return
 			wear_suit = equipping
-			if(wear_suit.breakouttime) //when equipping a straightjacket
-				ADD_TRAIT(src, TRAIT_RESTRAINED, SUIT_TRAIT)
-				stop_pulling() //can't pull if restrained
-				update_mob_action_buttons() //certain action buttons will no longer be usable.
 			update_worn_oversuit()
 		if(ITEM_SLOT_MASK)
-			if(wear_mask)
-				return
 			wear_mask = equipping
 			update_worn_mask()
 		if(ITEM_SLOT_HEAD)
-			if(head)
-				return
 			head = equipping
 			update_worn_head()
 		if(ITEM_SLOT_NECK)
-			if(wear_neck)
-				return
 			wear_neck = equipping
 			update_worn_neck(equipping)
 		if(ITEM_SLOT_ICLOTHING)
-			if(w_uniform)
-				return
 			w_uniform = equipping
 			update_worn_undersuit()
 		if(ITEM_SLOT_LPOCKET)
@@ -197,19 +167,13 @@
 			r_store = equipping
 			update_pockets()
 		if(ITEM_SLOT_SUITSTORE)
-			if(s_store)
-				return
 			s_store = equipping
 			update_suit_storage()
 		else
 			to_chat(src, span_danger("You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"))
-			not_handled = TRUE
+			return FALSE
 
-	//Item is handled and in slot, valid to call callback, for this proc should always be true
-	if(!not_handled)
-		has_equipped(equipping, slot, initial)
-
-	return not_handled //For future deeper overrides
+	return TRUE
 
 /mob/living/carbon/human/doUnEquip(obj/item/item_dropping, force, newloc, no_move, invdrop = TRUE, silent = FALSE)
 	. = ..() //See mob.dm for an explanation on this and some rage about people copypasting instead of calling ..() like they should.
@@ -423,30 +387,6 @@
 		return
 	stored.attack_hand(src) // take out thing from item in storage slot
 	return
-
-/mob/living/carbon/human/change_number_of_hands(amt)
-	var/old_limbs = get_num_hand_slots()
-	if(amt < old_limbs)
-		for(var/i in hand_bodyparts.len to amt step -1)
-			var/obj/item/bodypart/BP = hand_bodyparts[i]
-			BP.dismember()
-			hand_bodyparts[i] = null
-		hand_bodyparts.len = amt
-	else if(amt > old_limbs)
-		hand_bodyparts.len = amt
-		for(var/i in old_limbs + 1 to amt)
-			var/obj/item/bodypart/new_bodypart
-			if(IS_RIGHT_INDEX(i))
-				new_bodypart = newBodyPart(BODY_ZONE_R_ARM)
-			else
-				new_bodypart = newBodyPart(BODY_ZONE_L_ARM)
-
-			new_bodypart.held_index = i
-			if(i >= 3) // start indexing them as right_arm2 and so on
-				new_bodypart.body_zone = "[new_bodypart.body_zone]_[ceil(i / 2)]"
-			new_bodypart.try_attach_limb(src, TRUE)
-			hand_bodyparts[i] = new_bodypart
-	..() //Don't redraw hands until we have organs for them
 
 /// Returns the helmet if an air tank compatible helmet is equipped.
 /mob/living/carbon/human/proc/can_breathe_helmet()
