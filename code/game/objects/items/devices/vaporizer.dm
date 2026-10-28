@@ -13,8 +13,8 @@
 	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "vaporizer"
 	slot_flags = ITEM_SLOT_BELT
-	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
-	drop_sound = SFX_GENERIC_DEVICE_DROP
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*4.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/diamond = SMALL_MATERIAL_AMOUNT*1.8)

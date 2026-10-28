@@ -533,8 +533,8 @@ structure_check() searches for nearby cultist structures required for the invoca
 				movesuccess = TRUE
 	if(movedsomething)
 		..()
-		playsound(src, SFX_PORTAL_ENTER, 50, TRUE)
-		playsound(target, SFX_PORTAL_ENTER, 50, TRUE)
+		playsound(src, /datum/sound_effect/portal_enter, 50, TRUE)
+		playsound(target, /datum/sound_effect/portal_enter, 50, TRUE)
 		if(moveuserlater)
 			if(do_teleport(user, target, channel = TELEPORT_CHANNEL_CULT))
 				movesuccess = TRUE
@@ -557,7 +557,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 /obj/effect/rune/teleport/proc/handle_portal(portal_type, turf/origin)
 	var/turf/T = get_turf(src)
 	close_portal() // To avoid stacking descriptions/animations
-	playsound(T, SFX_PORTAL_CREATED, 100, TRUE, 14)
+	playsound(T, /datum/sound_effect/portal_created, 100, TRUE, 14)
 	inner_portal = new /obj/effect/temp_visual/cult/portal(T)
 	if(portal_type == "space")
 		set_light_color(color)
@@ -880,8 +880,8 @@ GLOBAL_VAR_INIT(narsie_summon_count, 0)
 		log_game(fail_logmsg)
 		fail_invoke()
 		return
-	playsound(src, SFX_PORTAL_ENTER, 100, TRUE, SILENCED_SOUND_EXTRARANGE)
-	playsound(old_turf, SFX_PORTAL_ENTER, 100, TRUE, SILENCED_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/portal_enter, 100, TRUE, SILENCED_SOUND_EXTRARANGE)
+	playsound(old_turf, /datum/sound_effect/portal_enter, 100, TRUE, SILENCED_SOUND_EXTRARANGE)
 	qdel(src)
 
 //Rite of Boiling Blood: Deals extremely high amounts of damage to non-cultists nearby

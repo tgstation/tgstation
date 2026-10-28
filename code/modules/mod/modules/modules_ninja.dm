@@ -279,7 +279,7 @@
 			maxcapacity = TRUE//Reached maximum battery capacity.
 		if (do_after(ninja, 1 SECONDS, target = src, cog_icon = null))
 			spark_system.start()
-			playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(loc, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			cell.use(drain)
 			hacking_module.mod.add_charge(drain)
 			drain_total += drain
@@ -287,7 +287,7 @@
 			break
 	if(!(obj_flags & EMAGGED))
 		flick("apc-spark", hacking_module)
-		playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(loc, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		obj_flags |= EMAGGED
 		locked = FALSE
 		update_appearance()
@@ -314,7 +314,7 @@
 			maxcapacity = TRUE
 		if (do_after(ninja, 1 SECONDS, target = src, cog_icon = null))
 			spark_system.start()
-			playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(loc, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			charge -= drain
 			hacking_module.mod.add_charge(drain)
 			drain_total += drain
@@ -482,7 +482,7 @@
 				maxcapacity = TRUE
 			if (do_after(ninja, 1 SECONDS, target = src, cog_icon = null))
 				spark_system.start()
-				playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+				playsound(loc, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				cell.use(drain)
 				hacking_module.mod.add_charge(drain)
 				drain_total += drain
@@ -503,7 +503,7 @@
 	if(!do_after(ninja, 6 SECONDS, target = src, cog_icon = null))
 		return
 	spark_system.start()
-	playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(loc, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(src, span_danger("UPLOAD COMPLETE. NEW CYBORG MODEL DETECTED.  INSTALLING..."))
 	faction = list(ROLE_NINJA)
 	bubble_icon = "syndibot"
