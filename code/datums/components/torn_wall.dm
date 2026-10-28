@@ -64,7 +64,7 @@
 		mineral_turf.gets_drilled()
 		return
 
-	attached_wall.dismantle_wall(devastated = devastated)
+	attached_wall.dismantle_wall(devastated = devastated, silent = TRUE) // has its own crash sound
 
 /// Fix it up on weld
 /datum/component/torn_wall/proc/on_welded(atom/source, mob/user, obj/item/tool)
