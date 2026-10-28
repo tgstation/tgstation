@@ -110,7 +110,7 @@
 
 /datum/bt_node/ai_behavior/random_speech/cats
 	speech_chance = 10
-	sound = list(SFX_CAT_MEOW)
+	sound = list(/datum/sound_effect/assoc/cat_meow)
 	emote_hear = list("meows.")
 	emote_see = list("meows.")
 

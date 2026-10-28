@@ -13,11 +13,11 @@
 		return
 
 	apply_heterochromatic_eyes(color)
+	RegisterSignal(quirk_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(check_eye_removal))
 
 /// Applies the passed color to this mob's eyes
 /datum/quirk/heterochromatic/proc/apply_heterochromatic_eyes(color)
 	var/mob/living/carbon/human/human_holder = quirk_holder
-	var/was_not_hetero = !human_holder.eye_color_heterochromatic
 	human_holder.eye_color_heterochromatic = TRUE
 	human_holder.eye_color_right = color
 	human_holder.dna.update_ui_block(/datum/dna_block/identity/eye_colors)
@@ -28,9 +28,6 @@
 
 	eyes_of_the_holder.eye_color_right = color
 	eyes_of_the_holder.refresh()
-
-	if(was_not_hetero)
-		RegisterSignal(human_holder, COMSIG_CARBON_LOSE_ORGAN, PROC_REF(check_eye_removal))
 
 /datum/quirk/heterochromatic/remove()
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -49,3 +46,7 @@
 	human_holder.eye_color_heterochromatic = FALSE
 	human_holder.eye_color_right = human_holder.eye_color_left
 	UnregisterSignal(human_holder, COMSIG_CARBON_LOSE_ORGAN)
+
+/datum/quirk_constant_data/heterochromatic
+	associated_typepath = /datum/quirk/heterochromatic
+	customization_options = list(/datum/preference/color/heterochromatic)

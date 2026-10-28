@@ -182,6 +182,9 @@
 #define MIDDLE_LIP "Middle"
 #define LOWER_LIP "Lower"
 
+// Plaque description
+#define INFO_DESCRIPTION "description"
+
 // Job greyscale colors for loadout items
 #define COLOR_JOB_ASSISTANT /obj/item/clothing/under/color/grey::greyscale_colors
 #define COLOR_JOB_BOTANIST "#33cc33"
