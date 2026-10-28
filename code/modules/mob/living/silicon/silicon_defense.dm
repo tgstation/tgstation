@@ -128,7 +128,7 @@
 		to_chat(user, span_danger("You [atk_verb] [src]!"))
 		playsound(src, 'sound/effects/bang.ogg', 10, TRUE)
 		apply_damage(damage, attacking_bodypart.attack_type, attack_direction = get_dir(user, src))
-		apply_status_effect(/datum/status_effect/borg_slow, damage_dealt / 60)
+		apply_status_effect(/datum/status_effect/borg_slow, damage/60)
 		log_combat(user, src, "punched")
 	else
 		visible_message(span_notice("[user] pets [src]."), span_notice("[user] pets you."), null, null, user)
