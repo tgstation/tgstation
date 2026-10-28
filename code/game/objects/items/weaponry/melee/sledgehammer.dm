@@ -17,7 +17,7 @@
 	obj_flags = CONDUCTS_ELECTRICITY
 	resistance_flags = FIRE_PROOF
 	armor_type = /datum/armor/item_fireaxe
-	hitsound = SFX_SWING_HIT
+	hitsound = /datum/sound_effect/swing_hit
 	attack_verb_continuous = list("smashes", "slams", "bashes", "pounds")
 	attack_verb_simple = list("smash", "slam", "bash", "pound")
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5)
