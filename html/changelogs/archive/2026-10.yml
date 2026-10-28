@@ -621,5 +621,8 @@
   - bugfix: parrying someone else's projectile now uses the parry multipliers instead
       of the self-boost ones, so parried shots hit a bit softer than before
 2026-10-28:
+  ATHATH:
+  - balance: Added a flash to the captain's locker for consistency with the other
+      heads of staff.
   JohnFulpWillard:
   - rscadd: Plaques are now more customizable, and in the loadout menu.
