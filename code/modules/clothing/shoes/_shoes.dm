@@ -59,7 +59,7 @@
 			left.dismember()
 		if(right)
 			right.dismember()
-		playsound(user, SFX_DESECRATION, 50, TRUE, -1)
+		playsound(user, /datum/sound_effect/desecration, 50, TRUE, -1)
 		return BRUTELOSS
 	else//didnt realize this suicide act existed (was in miscellaneous.dm) and didnt want to remove it, so made it a 50/50 chance. Why not!
 		user.visible_message(span_suicide("[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?"))

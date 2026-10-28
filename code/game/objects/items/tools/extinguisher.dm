@@ -51,7 +51,7 @@
 	/// Icon state when inside a tank holder.
 	var/tank_holder_icon_state = "holder_extinguisher"
 	///The sound a fire extinguisher makes when picked up, dropped if there is liquid inside.
-	var/fire_extinguisher_reagent_sloshing_sound = SFX_DEFAULT_LIQUID_SLOSH
+	var/fire_extinguisher_reagent_sloshing_sound = /datum/sound_effect/default_liquid_slosh
 
 
 /obj/item/extinguisher/Initialize(mapload)

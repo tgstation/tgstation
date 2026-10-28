@@ -553,8 +553,8 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/cloth
 	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
 	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
-	pickup_sound = SFX_CLOTH_PICKUP
-	drop_sound = SFX_CLOTH_DROP
+	pickup_sound = /datum/sound_effect/cloth_pickup
+	drop_sound = /datum/sound_effect/cloth_drop
 
 /obj/item/stack/sheet/cloth/grind_results()
 	return list(/datum/reagent/cellulose = 20)

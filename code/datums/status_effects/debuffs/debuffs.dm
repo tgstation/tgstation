@@ -537,7 +537,7 @@ GLOBAL_LIST_EMPTY(unconscious_appearances)
 
 /datum/status_effect/stacking/saw_bleed/threshold_cross_effect()
 	new /obj/effect/temp_visual/bleed/explode(get_turf(owner))
-	playsound(owner, SFX_DESECRATION, 100, TRUE, -1)
+	playsound(owner, /datum/sound_effect/desecration, 100, TRUE, -1)
 	for(var/splatter_dir in GLOB.alldirs)
 		owner.create_splatter(splatter_dir)
 	owner.adjust_brute_loss(bleed_damage)

@@ -325,9 +325,9 @@
 	PROTECTED_PROC(TRUE)
 
 	if(silent)
-		user.playsound_local(get_turf(src), SFX_POLAROID, 35, TRUE)
+		user.playsound_local(get_turf(src), /datum/sound_effect/polaroid, 35, TRUE)
 	else
-		playsound(loc, SFX_POLAROID, 75, TRUE, -3)
+		playsound(loc, /datum/sound_effect/polaroid, 75, TRUE, -3)
 
 	if(print_picture_on_snap)
 		printpicture(user, picture)

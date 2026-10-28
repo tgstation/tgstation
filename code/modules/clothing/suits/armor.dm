@@ -149,7 +149,7 @@
 
 /obj/item/clothing/suit/armor/vest/cuirass/Initialize(mapload)
 	. = ..()
-	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
+	AddComponent(/datum/component/item_equipped_movement_rustle, /datum/sound_effect/assoc/plate_armor_rustle, 8)
 
 /obj/item/clothing/suit/armor/hos
 	name = "armored greatcoat"
@@ -555,7 +555,7 @@
 	)
 
 /obj/item/clothing/suit/armor/riot/knight/init_rustle_component()
-	AddComponent(/datum/component/item_equipped_movement_rustle, SFX_PLATE_ARMOR_RUSTLE, 8)
+	AddComponent(/datum/component/item_equipped_movement_rustle, /datum/sound_effect/assoc/plate_armor_rustle, 8)
 
 /obj/item/clothing/suit/armor/riot/knight/yellow
 	icon_state = "knight_yellow"

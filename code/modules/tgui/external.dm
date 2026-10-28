@@ -150,7 +150,7 @@
  *
  * Tracks open UIs for a user.
  */
-/mob/var/list/tgui_open_uis = list()
+/mob/var/list/tgui_open_uis
 
 /**
  * global
