@@ -181,33 +181,31 @@
 	if(recipe.tool_paths)
 		data["tool_paths"] = list()
 		for(var/req_atom in recipe.tool_paths)
-			data["tool_paths"] += datums.Find(req_atom)
+			data["tool_paths"] += CRAFTING_COMPONENT_ID(datums, req_atom)
 
 	// Machinery
 	if(recipe.machinery)
 		data["machinery"] = list()
 		for(var/req_atom in recipe.machinery)
-			data["machinery"] += datums.Find(req_atom)
+			data["machinery"] += CRAFTING_COMPONENT_ID(datums, req_atom)
 
 	// Structures
 	if(recipe.structures)
 		data["structures"] = list()
 		for(var/req_atom in recipe.structures)
-			data["structures"] += datums.Find(req_atom)
+			data["structures"] += CRAFTING_COMPONENT_ID(datums, req_atom)
 
 	// Ingredients / Materials
 	data["reqs"] = list()
 	if(recipe.reqs.len)
 		for(var/req_atom in recipe.reqs)
-			var/id = datums.Find(req_atom)
-			data["reqs"]["[id]"] = recipe.reqs[req_atom]
+			data["reqs"][CRAFTING_COMPONENT_ID(datums, req_atom)] = recipe.reqs[req_atom]
 
 	// Catalysts
 	if(LAZYLEN(recipe.chem_catalysts))
 		data["chem_catalysts"] = list()
 		for(var/req_atom, chem_amount in recipe.chem_catalysts)
-			var/id = datums.Find(req_atom)
-			data["chem_catalysts"]["[id]"] = chem_amount
+			data["chem_catalysts"][CRAFTING_COMPONENT_ID(datums, req_atom)] = chem_amount
 
 	// Reaction data
 	if(ispath(recipe.reaction))
@@ -218,8 +216,7 @@
 			if(!data["steps"])
 				data["steps"] = list()
 			if(reaction.required_container)
-				var/id = datums.Find(reaction.required_container)
-				data["reqs"]["[id]"] = 1
+				data["reqs"][CRAFTING_COMPONENT_ID(datums, reaction.required_container)] = 1
 				data["steps"] += "Add all ingredients into \a [initial(reaction.required_container.name)]"
 			else if(length(recipe.reqs) > 1 || length(reaction.required_catalysts))
 				data["steps"] += "Mix all ingredients together"
