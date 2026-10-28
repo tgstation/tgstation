@@ -26,7 +26,7 @@
 
 /datum/hotkeys_help/proc/update_hotkey_ui(mob/source)
 	SIGNAL_HANDLER
-	update_static_data_for_viewer(source)
+	update_static_data(source)
 
 /datum/hotkeys_help/ui_static_data(mob/user)
 	// List every keybind to chat.
