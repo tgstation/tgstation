@@ -127,7 +127,7 @@
 					span_userdanger("[user] [atk_verb_continuous] you!"), span_hear("You hear something impacting metal!"), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You [atk_verb] [src]!"))
 		playsound(loc, 'sound/effects/bang.ogg', 10, TRUE)
-		apply_damage(damage)
+		apply_damage(damage, attacking_bodypart.attack_type)
 		log_combat(user, src, "punched")
 		updatehealth()
 	else
