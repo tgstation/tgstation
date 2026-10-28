@@ -11,25 +11,32 @@ import {
 
 import { GroupTitle } from '../GroupTitle';
 import { findIcon } from '../helpers';
-import { type CraftingData, MODE, type Recipe } from '../types';
+import {
+  type AtomData,
+  type CraftingData,
+  type IconData,
+  MODE,
+  type Recipe,
+} from '../types';
 import { AtomContent } from './AtomContent';
 import { FoodtypeContent } from './FoodtypeContent';
 import { ToolContent } from './ToolContent';
 
 type Props = {
   item: Recipe;
-  allRecipes: Recipe[];
+  iconData: IconData;
+  atomData: AtomData[];
 };
 
 export function RecipeContentCompact(props: Props) {
-  const { item } = props;
+  const { item, iconData, atomData } = props;
   const { data } = useBackend<CraftingData>();
 
   return (
     <Section>
       <Stack my={-0.75}>
         <Stack.Item>
-          <Box className={findIcon(item.id, data)} />
+          <Box className={findIcon(item.id, data, iconData)} />
         </Stack.Item>
         <Stack.Item grow>
           <Stack>
@@ -42,8 +49,8 @@ export function RecipeContentCompact(props: Props) {
                   Object.keys(item.reqs).map((id) => {
                     const atom_id = Number(id);
 
-                    const name = data.atom_data[atom_id - 1]?.name;
-                    const is_reagent = data.atom_data[atom_id - 1]?.is_reagent;
+                    const name = atomData[atom_id - 1]?.name;
+                    const is_reagent = atomData[atom_id - 1]?.is_reagent;
                     const amount = item.reqs[atom_id];
                     return is_reagent
                       ? `${name}\xa0${amount}u`
@@ -59,9 +66,8 @@ export function RecipeContentCompact(props: Props) {
                       .map((id) => {
                         const atom_id = Number(id);
 
-                        const name = data.atom_data[atom_id - 1]?.name;
-                        const is_reagent =
-                          data.atom_data[atom_id - 1]?.is_reagent;
+                        const name = atomData[atom_id - 1]?.name;
+                        const is_reagent = atomData[atom_id - 1]?.is_reagent;
                         const amount = item.chem_catalysts[atom_id];
                         return is_reagent
                           ? `${name}\xa0${amount}u`
@@ -74,17 +80,17 @@ export function RecipeContentCompact(props: Props) {
                 {item.tool_paths &&
                   ', ' +
                     item.tool_paths
-                      .map((item) => data.atom_data[Number(item) - 1]?.name)
+                      .map((item) => atomData[Number(item) - 1]?.name)
                       .join(', ')}
                 {item.machinery &&
                   ', ' +
                     item.machinery
-                      .map((item) => data.atom_data[Number(item) - 1]?.name)
+                      .map((item) => atomData[Number(item) - 1]?.name)
                       .join(', ')}
                 {item.structures &&
                   ', ' +
                     item.structures
-                      .map((item) => data.atom_data[Number(item) - 1]?.name)
+                      .map((item) => atomData[Number(item) - 1]?.name)
                       .join(', ')}
               </Box>
             </Stack.Item>
@@ -126,6 +132,7 @@ type FullProps = Props & {
   setParentForceFloating?: (state: boolean) => void;
   showIcon?: boolean;
   allRecipes: Recipe[];
+  iconData: Record<number, string>;
 };
 
 export function RecipeContent(props: FullProps) {
@@ -134,6 +141,9 @@ export function RecipeContent(props: FullProps) {
     nodesc = false,
     setParentForceFloating,
     showIcon = true,
+    allRecipes,
+    atomData,
+    iconData,
   } = props;
   const { data } = useBackend<CraftingData>();
   const { mode, diet } = data;
@@ -149,7 +159,7 @@ export function RecipeContent(props: FullProps) {
                   transform: 'scale(1.5)',
                 }}
                 m="16px"
-                className={findIcon(item.id, data)}
+                className={findIcon(item.id, data, iconData)}
               />
             </Box>
           </Stack.Item>
@@ -185,7 +195,9 @@ export function RecipeContent(props: FullProps) {
                         atom_id={atom_id}
                         amount={item.reqs[atom_id]}
                         setParentForceFloating={setParentForceFloating}
-                        allRecipes={props.allRecipes}
+                        allRecipes={allRecipes}
+                        iconData={iconData}
+                        atomData={atomData}
                       />
                     ))}
                   </Box>
@@ -199,7 +211,9 @@ export function RecipeContent(props: FullProps) {
                         atom_id={atom_id}
                         amount={item.chem_catalysts[atom_id]}
                         setParentForceFloating={setParentForceFloating}
-                        allRecipes={props.allRecipes}
+                        allRecipes={allRecipes}
+                        iconData={iconData}
+                        atomData={atomData}
                       />
                     ))}
                   </Box>
@@ -213,7 +227,9 @@ export function RecipeContent(props: FullProps) {
                         atom_id={tool}
                         amount={1}
                         setParentForceFloating={setParentForceFloating}
-                        allRecipes={props.allRecipes}
+                        allRecipes={allRecipes}
+                        iconData={iconData}
+                        atomData={atomData}
                       />
                     ))}
                     {item.tool_behaviors?.map((tool) => (
@@ -230,7 +246,9 @@ export function RecipeContent(props: FullProps) {
                         atom_id={atom_id}
                         amount={1}
                         setParentForceFloating={setParentForceFloating}
-                        allRecipes={props.allRecipes}
+                        allRecipes={allRecipes}
+                        iconData={iconData}
+                        atomData={atomData}
                       />
                     ))}
                   </Box>
@@ -244,7 +262,9 @@ export function RecipeContent(props: FullProps) {
                         atom_id={atom_id}
                         amount={1}
                         setParentForceFloating={setParentForceFloating}
-                        allRecipes={props.allRecipes}
+                        allRecipes={allRecipes}
+                        iconData={iconData}
+                        atomData={atomData}
                       />
                     ))}
                   </Box>

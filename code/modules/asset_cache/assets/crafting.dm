@@ -83,12 +83,42 @@
 /datum/asset/json/crafting_recipes/generate()
 	var/list/data = list()
 	var/list/components = get_component_list()
+	var/list/recipes = get_recipe_list()
+	var/datum/asset/spritesheet_batched/crafting/sheet = get_corresponding_icon_sheet()
+
 	data["categories"] = list()
 	data["recipes"] = list()
-	for(var/datum/crafting_recipe/recipe as anything in get_recipe_list())
+	data["icon_data"] = list()
+	data["atom_data"] = list()
+
+	for(var/datum/crafting_recipe/recipe as anything in recipes)
 		if(recipe.category)
 			data["categories"] |= recipe.category
 		data["recipes"] += list(build_crafting_data(recipe, components))
+
+	for(var/datum/atom as anything in components)
+		var/atom_name = ""
+		if(ispath(atom, /atom))
+			// future todo: some atoms have intentionally misleading names,
+			// and while their crafting recipe reveals their true nature,
+			// the displayed name here does not
+			var/atom/atom_path = atom
+			atom_name = atom_path::name
+
+		else if(ispath(atom, /datum/reagent))
+			var/datum/reagent/reagent_path = atom
+			atom_name = reagent_path::name
+
+		data["atom_data"] += list(list(
+			"name" = atom_name,
+			"is_reagent" = ispath(atom, /datum/reagent),
+		))
+
+		var/craft_id = CRAFTING_COMPONENT_ID(components, atom)
+		var/icon_size = sheet.icon_size_id("a[craft_id]")
+		if(!endswith(icon_size, "32x32"))
+			data["icon_data"][craft_id] = "[icon_size] a[craft_id]"
+
 	return data
 
 /datum/asset/json/crafting_recipes/proc/get_recipe_list()
@@ -96,6 +126,9 @@
 
 /datum/asset/json/crafting_recipes/proc/get_component_list()
 	return GLOB.crafting_recipes_datums
+
+/datum/asset/json/crafting_recipes/proc/get_corresponding_icon_sheet()
+	return get_asset_datum(/datum/asset/spritesheet_batched/crafting)
 
 /datum/asset/json/crafting_recipes/proc/build_crafting_data(datum/crafting_recipe/recipe, list/datums)
 	var/list/data = list()
@@ -207,3 +240,6 @@
 
 /datum/asset/json/crafting_recipes/cooking/get_component_list()
 	return GLOB.cooking_recipes_datums
+
+/datum/asset/json/crafting_recipes/cooking/get_corresponding_icon_sheet()
+	return get_asset_datum(/datum/asset/spritesheet_batched/crafting)

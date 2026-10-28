@@ -38,13 +38,11 @@ export function PersonalCrafting(props: any) {
   const { act, data } = useBackend<CraftingData>();
   const {
     mode,
-    busy,
     forced_mode,
     display_compact,
     display_craftable_only,
     craftability,
     diet,
-    atom_data,
     json_to_use,
     material_occurences,
     visible_recipes,
@@ -56,6 +54,8 @@ export function PersonalCrafting(props: any) {
   const [recipeData, setRecipeData] = useState<RecipeServerData>({
     categories: ['Loading...'],
     recipes: [],
+    icon_data: {},
+    atom_data: [],
   });
 
   useEffect(() => {
@@ -143,7 +143,7 @@ export function PersonalCrafting(props: any) {
 
   const getMaterialName = (atomId: string): string => {
     const idNum = Number(atomId);
-    const atom = atom_data[idNum - 1];
+    const atom = recipeData.atom_data[idNum - 1];
     return atom?.name || atomId;
   };
 
@@ -316,6 +316,8 @@ export function PersonalCrafting(props: any) {
                             <MaterialContent
                               atom_id={material.atom_id}
                               occurences={(material as Material).occurences}
+                              iconData={recipeData.icon_data}
+                              atomData={recipeData.atom_data}
                             />
                           </Tabs.Tab>
                         ))}
@@ -605,13 +607,16 @@ export function PersonalCrafting(props: any) {
                         <RecipeContentCompact
                           key={item.ref}
                           item={item}
-                          allRecipes={recipes}
+                          iconData={recipeData.icon_data}
+                          atomData={recipeData.atom_data}
                         />
                       ) : (
                         <RecipeContent
                           key={item.ref}
                           item={item}
                           allRecipes={recipes}
+                          iconData={recipeData.icon_data}
+                          atomData={recipeData.atom_data}
                         />
                       ),
                     )}

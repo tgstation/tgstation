@@ -527,10 +527,11 @@
 	data["forced_mode"] = forced_mode
 	data["foodtypes"] = FOOD_FLAGS
 	data["diet"] = astype(user, /mob/living/carbon)?.dna?.species?.get_species_diet()
+	data["json_to_use"] = SSassets.transport.get_asset_url("[mode ? /datum/asset/json/crafting_recipes/cooking::name : /datum/asset/json/crafting_recipes::name].json")
 
 	data["visible_recipes"] = list()
 	for(var/datum/crafting_recipe/recipe as anything in get_visible_recipes(user))
-		data["visible_recipes"] |= REF(recipe)
+		data["visible_recipes"] += REF(recipe)
 
 		// Materials
 		for(var/req in recipe.reqs)
@@ -538,52 +539,16 @@
 		for(var/req in recipe.chem_catalysts)
 			material_occurences[req] += 1
 
-	var/list/datums = mode ? GLOB.cooking_recipes_datums : GLOB.crafting_recipes_datums
-
-	// Prepare atom data
-
-	//load sprite sheets and select the correct one based on the mode
-	var/static/list/assets
-	if(isnull(assets))
-		assets = ui_assets()
-
-	// this is bad
-	var/datum/asset/spritesheet_batched/sheet = assets[mode ? 2 : 1]
-	var/datum/asset/json/json = assets[mode ? 4 : 3]
-
-	data["json_to_use"] = SSassets.transport.get_asset_url("[json.name].json")
-	data["icon_data"] = list()
-	for(var/datum/atom as anything in datums)
-		var/atom_id = datums.Find(atom)
-		var/atom_name = ""
-		if(ispath(atom, /atom))
-			// future todo: some atoms have intentionally misleading names,
-			// and while their crafting recipe reveals their true nature,
-			// the displayed name here does not
-			var/atom/atom_path = atom
-			atom_name = atom_path::name
-		else if(ispath(atom, /datum/reagent))
-			var/datum/reagent/reagent_path = atom
-			atom_name = reagent_path::name
-
-		data["atom_data"] += list(list(
-			"name" = atom_name,
-			"is_reagent" = ispath(atom, /datum/reagent),
-		))
-
-		var/icon_size = sheet.icon_size_id("a[atom_id]")
-		if(!endswith(icon_size, "32x32"))
-			data["icon_data"]["[atom_id]"] = "[icon_size] a[atom_id]"
-
 	// Prepare materials data
+	var/list/datums = mode ? GLOB.cooking_recipes_datums : GLOB.crafting_recipes_datums
 	for(var/atom/atom as anything in material_occurences)
 		if(material_occurences[atom] == 1)
 			continue // Don't include materials that appear only once
-		var/id = datums.Find(atom)
+
 		data["material_occurences"] += list(list(
-				"atom_id" = "[id]",
-				"occurences" = material_occurences[atom]
-			))
+			"atom_id" = CRAFTING_COMPONENT_ID(datums, atom),
+			"occurences" = material_occurences[atom]
+		))
 
 	return data
 
