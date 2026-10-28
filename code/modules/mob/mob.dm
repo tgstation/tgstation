@@ -777,10 +777,7 @@ GAME_VERB_CONTEXT(/mob, examinate, "Examine", "", null, /atom)
  * Calls attack self on the item and updates the inventory hud for hands
  */
 /mob/proc/mode()
-	if(client)
-		DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_mode)))
-	else
-		execute_mode()
+	DEFAULT_QUEUE_OR_CALL_VERB(VERB_CALLBACK(src, PROC_REF(execute_mode)))
 
 ///proc version to finish /mob/verb/mode() execution. used in case the proc needs to be queued for the tick after its first called
 /mob/proc/execute_mode()
