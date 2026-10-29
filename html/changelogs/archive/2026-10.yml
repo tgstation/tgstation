@@ -629,6 +629,8 @@
 2026-10-29:
   FeudeyTF:
   - bugfix: 'fixed ''Input: Enable TGUI'' option for text inputs'
+  Melbert:
+  - bugfix: Fix chat message when removing embedded objects from yourself
   vinylspiders:
   - admin: overflayer once again shows the base plane and offset for unregistered
       planes it can decode.
