@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fixes airborne disease spread. Sneezing, coughing, and breathing will now spread diseases if you are UNMASKED, rather than if you are masked."
