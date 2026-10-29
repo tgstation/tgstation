@@ -629,6 +629,9 @@
 2026-10-29:
   FeudeyTF:
   - bugfix: 'fixed ''Input: Enable TGUI'' option for text inputs'
+  MacaroniCritter:
+  - qol: The loadout menu now relies on skins to select different colors of the fedora,
+      cowboy boots, and soft cap
   Melbert:
   - bugfix: Fix chat message when removing embedded objects from yourself
   vinylspiders:
