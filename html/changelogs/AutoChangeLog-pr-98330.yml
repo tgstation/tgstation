@@ -1,4 +1,0 @@
-author: "FeudeyTF"
-delete-after: True
-changes:
-  - bugfix: "fixed 'Input: Enable TGUI' option for text inputs"
