@@ -406,7 +406,7 @@ GLOBAL_LIST_EMPTY(objects_by_id_tag)
  * Returns TRUE if the shock was successfully delivered
  * Returns FALSE if the shock failed for any reason
  */
-/obj/proc/shock(mob/living/shocking, chance = 1000, shock_source, siemens_coeff = 1, allow_modifiers = TRUE)
+/obj/proc/shock(mob/living/shocking, chance = 100, shock_source, siemens_coeff = 1, allow_modifiers = TRUE)
 	SHOULD_CALL_PARENT(TRUE)
 	if(!isliving(shocking))
 		return FALSE

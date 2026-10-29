@@ -287,7 +287,9 @@ function CatalogList(props: CatalogListProps) {
                   <Stack.Item
                     opacity={priceVariation && 0.75}
                     style={{
-                      textDecoration: priceVariation && 'red line-through',
+                      textDecoration: priceVariation
+                        ? 'red line-through'
+                        : undefined,
                     }}
                   >
                     {formatMoney(pack.cost)}

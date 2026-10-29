@@ -5,3 +5,4 @@
 	value = 6
 	gain_text = span_notice("You tense up at the sound of a spark.")
 	lose_text = span_danger("Your reflexes feel sluggish.")
+	medical_record_text = "Patient is on record for having faster than average reflexes."

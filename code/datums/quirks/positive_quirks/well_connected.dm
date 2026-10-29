@@ -6,6 +6,7 @@
 	value = 6
 	gain_text = span_notice("You know a guy.")
 	lose_text = span_danger("You had a falling out with your contacts.")
+	medical_record_text = "Patient has individual health insurance."
 	mail_goodies = list(
 		/obj/item/reagent_containers/cup/glass/bottle/vodka,
 		/obj/item/reagent_containers/cup/glass/bottle/whiskey,
