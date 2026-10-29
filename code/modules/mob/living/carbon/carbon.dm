@@ -649,7 +649,9 @@
 
 			target_organ.apply_organ_damage(excess_healing * -1, required_organ_flag = ORGAN_ORGANIC) //1 excess = 5 organ damage healed
 
-	return ..()
+	. = ..()
+	if(.)
+		set_heartattack(FALSE)
 
 /mob/living/carbon/heal_and_revive(heal_to = 75, revive_message)
 	// We can't heal them if they're missing a heart
@@ -664,11 +666,7 @@
 	if(!HAS_TRAIT(src, TRAIT_LIVERLESS_METABOLISM) && !isnull(dna?.species.mutantliver) && !get_organ_slot(ORGAN_SLOT_LIVER))
 		return FALSE
 
-	. = ..()
-	if(.) // if revived successfully
-		set_heartattack(FALSE)
-
-	return .
+	return ..()
 
 /mob/living/carbon/fully_heal(heal_flags = HEAL_ALL)
 
@@ -707,10 +705,6 @@
 		for(var/obj/item/organ/organ as anything in organs)
 			organ.clear_radiation()
 
-	return ..()
-
-/mob/living/carbon/do_strange_reagent_revival(healing_amount)
-	set_heartattack(FALSE)
 	return ..()
 
 /mob/living/carbon/can_be_revived()
@@ -817,7 +811,7 @@
 
 	new_bodypart.on_adding(src)
 	bodyparts += new_bodypart
-	if(!IS_STUMP(new_bodypart))
+	if(!IS_STUMP(new_bodypart) && !isnull(new_bodypart.body_zone))
 		real_bodypart_cache[new_bodypart.body_zone] = new_bodypart
 	new_bodypart.update_owner(src)
 

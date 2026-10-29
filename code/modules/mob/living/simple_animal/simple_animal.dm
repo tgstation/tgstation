@@ -127,7 +127,7 @@
 	var/allow_movement_on_non_turfs = FALSE
 
 	///Played when someone punches the creature.
-	var/attacked_sound = SFX_PUNCH
+	var/attacked_sound = /datum/sound_effect/punch
 
 	///The Status of our AI, can be set to AI_ON (On, usual processing), AI_IDLE (Will not process, but will return to AI_ON if an enemy comes near), AI_OFF (Off, Not processing ever).
 	var/AIStatus = AI_ON

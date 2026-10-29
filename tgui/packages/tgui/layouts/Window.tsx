@@ -174,10 +174,12 @@ function WindowContent(props: ContentProps) {
     }
   }
 
-  Byond.subscribeTo('resetposition', (payload) => {
-    setWindowPosition([0, 0]);
-    storeWindowGeometry();
-  });
+  useLayoutEffect(() => {
+    return Byond.subscribeTo('resetposition', () => {
+      setWindowPosition([0, 0]);
+      storeWindowGeometry();
+    });
+  }, []);
 
   return (
     <Layout.Content

@@ -29,9 +29,9 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 	throw_range = 8
 	attack_verb_continuous = list("slaps", "whacks")
 	attack_verb_simple = list("slap", "whack")
-	hitsound = SFX_DEFAULT_FISH_SLAP
+	hitsound = /datum/sound_effect/default_fish_slap
 	drop_sound = 'sound/mobs/non-humanoids/fish/fish_drop1.ogg'
-	pickup_sound = SFX_FISH_PICKUP
+	pickup_sound = /datum/sound_effect/fish_pickup
 	sound_vary = TRUE
 	obj_flags = UNIQUE_RENAME
 	item_flags = SLOWS_WHILE_IN_HAND
@@ -736,8 +736,8 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 
 ///Reset weapon-related variables of this items and recalculates those values based on the fish weight and size.
 /obj/item/fish/proc/update_fish_force()
-	if(force >= 15 && hitsound == SFX_ALT_FISH_SLAP)
-		hitsound = SFX_DEFAULT_FISH_SLAP
+	if(force >= 15 && hitsound == /datum/sound_effect/alt_fish_slap)
+		hitsound = /datum/sound_effect/default_fish_slap
 	force = initial(force)
 	throwforce = initial(throwforce)
 	throw_range = initial(throw_range)
@@ -782,8 +782,8 @@ GLOBAL_LIST_INIT(fish_compatible_fluid_types, list(
 			drop_sound = master.item_sound_override
 
 	SEND_SIGNAL(src, COMSIG_FISH_FORCE_UPDATED, weight_rank, bonus_malus)
-	if(force >= 15 && hitsound == SFX_DEFAULT_FISH_SLAP) // don't override special attack sounds
-		hitsound = SFX_ALT_FISH_SLAP // do more damage - do heavier slap sound
+	if(force >= 15 && hitsound == /datum/sound_effect/default_fish_slap) // don't override special attack sounds
+		hitsound = /datum/sound_effect/alt_fish_slap // do more damage - do heavier slap sound
 
 ///A proc that makes the fish slightly stronger or weaker if there's a noticeable discrepancy between size and weight.
 /obj/item/fish/proc/calculate_fish_force_bonus(bonus_malus)

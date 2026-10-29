@@ -85,9 +85,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/New(mob/owner)
 	mymob = owner
 
-	if (!ui_style)
-		// will fall back to the default if any of these are null
-		ui_style = ui_style2icon(owner.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
+	// will fall back to the default if any of these are null
+	ui_style ||= ui_style2icon(owner.client?.prefs?.read_preference(/datum/preference/choiced/ui_style))
 
 	add_screen_object(/atom/movable/screen/button_palette, HUD_MOB_TOGGLE_PALETTE)
 	add_screen_object(/atom/movable/screen/palette_scroll/down, HUD_MOB_PALETTE_DOWN)
@@ -97,9 +96,10 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	main_group.attach_to(src)
 
 	var/datum/preferences/preferences = owner?.client?.prefs
-	screentip_color = preferences?.read_preference(/datum/preference/color/screentip_color)
-	screentips_enabled = preferences?.read_preference(/datum/preference/choiced/enable_screentips)
-	screentip_images = preferences?.read_preference(/datum/preference/toggle/screentip_images)
+	if(preferences)
+		screentip_color = preferences.read_preference(/datum/preference/color/screentip_color)
+		screentips_enabled = preferences.read_preference(/datum/preference/choiced/enable_screentips)
+		screentip_images = preferences.read_preference(/datum/preference/toggle/screentip_images)
 	screentip_text = add_screen_object(/atom/movable/screen/screentip, HUD_MOB_SCREENTIP)
 
 	for(var/mytype in subtypesof(/atom/movable/plane_master_controller))
@@ -220,8 +220,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if(should_sight_scale(new_sight) == should_sight_scale(old_sight))
 		return
 
-	for(var/group_key in master_groups)
-		var/datum/plane_master_group/group = master_groups[group_key]
+	for(var/group_key, _group in master_groups)
+		var/datum/plane_master_group/group = _group
 		group.refresh_planes_offset()
 
 /datum/hud/proc/should_use_scale()
@@ -245,30 +245,29 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 
 /// Creates the required plane masters to fill out new z layers (because each "level" of multiz gets its own plane master set)
 /datum/hud/proc/build_plane_groups(starting_offset, ending_offset)
-	for(var/group_key in master_groups)
-		var/datum/plane_master_group/group = master_groups[group_key]
+	for(var/group_key, _group in master_groups)
+		var/datum/plane_master_group/group = _group
 		group.build_plane_masters(starting_offset, ending_offset)
 
 /// Returns the plane master that matches the input plane from the passed in group
-/datum/hud/proc/get_plane_master(plane, group_key = PLANE_GROUP_MAIN)
-	var/plane_key = "[plane]"
+/datum/hud/proc/get_plane_master(plane, group_key = PLANE_GROUP_MAIN) as /atom/movable/screen/plane_master
 	var/datum/plane_master_group/group = master_groups[group_key]
-	return group.plane_masters[plane_key]
+	return group.plane_masters[plane]
 
 /// Returns a list of all plane masters that match the input true plane, drawn from the passed in group (ignores z layer offsets)
-/datum/hud/proc/get_true_plane_masters(true_plane, group_key = PLANE_GROUP_MAIN)
+/datum/hud/proc/get_true_plane_masters(true_plane, group_key = PLANE_GROUP_MAIN) as /list
 	var/list/atom/movable/screen/plane_master/masters = list()
 	for(var/plane in TRUE_PLANE_TO_OFFSETS(true_plane))
 		masters += get_plane_master(plane, group_key)
 	return masters
 
 /// Returns all the planes belonging to the passed in group key
-/datum/hud/proc/get_planes_from(group_key)
+/datum/hud/proc/get_planes_from(group_key) as /alist
 	var/datum/plane_master_group/group = master_groups[group_key]
 	return group.plane_masters
 
 /// Returns the corresponding plane group datum if one exists
-/datum/hud/proc/get_plane_group(key)
+/datum/hud/proc/get_plane_group(key) as /datum/plane_master_group
 	return master_groups[key]
 
 ///Creates the mob's visible HUD, returns FALSE if it can't, TRUE if it did.
@@ -283,7 +282,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /mob/proc/set_hud_used(datum/hud/new_hud)
 	hud_used = new_hud
 	new_hud.build_action_groups()
-
 
 /**
  * Shows this hud's hud to some mob
@@ -393,8 +391,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	return TRUE
 
 /datum/hud/proc/plane_masters_update()
-	for(var/group_key in master_groups)
-		var/datum/plane_master_group/group = master_groups[group_key]
+	for(var/group_key, _group in master_groups)
+		var/datum/plane_master_group/group = _group
 		// Plane masters are always shown to OUR mob, never to observers
 		group.refresh_hud()
 
@@ -409,8 +407,8 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if (isnull(mymob))
 		return
 
-	for (var/slot_id in inventory_slots)
-		var/datum/inventory_slot/slot = inventory_slots[slot_id]
+	for (var/slot_id, _slot in inventory_slots)
+		var/datum/inventory_slot/slot = _slot
 		if (!isnull(slot))
 			slot.update_inventory_slot(src, mymob)
 
@@ -630,7 +628,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	palette_actions = new(src)
 	floating_actions = list()
 	for(var/datum/action/action as anything in mymob.actions)
-		var/atom/movable/screen/movable/action_button/button = action.viewers[src]
+		var/atom/movable/screen/movable/action_button/button = LAZYACCESS(action.viewers, src)
 		if(!button)
 			action.ShowTo(mymob)
 		else

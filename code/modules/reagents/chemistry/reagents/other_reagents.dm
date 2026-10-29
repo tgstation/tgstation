@@ -3071,6 +3071,23 @@
 	if (isclosedturf(exposed_turf) || isopenturf(exposed_turf))
 		metal_morph(exposed_turf)
 
+/datum/reagent/metalgen/expose_mob(mob/living/exposed_mob, methods, reac_volume, show_message, touch_protection)
+	. = ..()
+	if(methods & (VAPOR|INHALE))
+		var/obj/item/organ/lungs = exposed_mob.get_organ_slot(ORGAN_SLOT_LUNGS)
+		if(!isnull(lungs))
+			metal_morph(lungs)
+
+	if(methods & (INGEST))
+		var/obj/item/organ/stomach = exposed_mob.get_organ_slot(ORGAN_SLOT_STOMACH)
+		if(!isnull(stomach))
+			metal_morph(stomach)
+
+	if(methods & (INJECT|PATCH))
+		var/obj/item/organ/liver = exposed_mob.get_organ_slot(ORGAN_SLOT_LIVER)
+		if(!isnull(liver))
+			metal_morph(liver)
+
 ///turn an object into a special material
 /datum/reagent/metalgen/proc/metal_morph(atom/target)
 	var/metal_ref = data["material"]

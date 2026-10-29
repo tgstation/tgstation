@@ -788,6 +788,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LIGHTBULB_REMOVER "lightbulb_remover"
 #define TRAIT_KNOW_ROBO_WIRES "know_robo_wires"
 #define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
+#define TRAIT_KNOW_ATMOS_WIRES "know_atmos_wires"
 #define TRAIT_ENTRAILS_READER "entrails_reader"
 #define TRAIT_SABRAGE_PRO "sabrage_pro"
 /// this skillchip trait lets you wash brains in washing machines to heal them
@@ -1018,8 +1019,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BORG_GIVE "give_borg_item"
 
 //---- Heretic Traits
-/// Hides the heretic overlay that outs them as the heretic
-#define TRAIT_HERETIC_AURA_HIDDEN "heretic_aura_hidden"
 /// This rod was infused by a heretic, making it awesome and improving influence gain
 #define TRAIT_ROD_MANSUS_INFUSED "rod_infused"
 /// Designates a heart as a living heart for a heretic.

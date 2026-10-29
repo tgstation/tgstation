@@ -116,7 +116,7 @@
 	)
 
 	owner.apply_damage(12, BURN, affected_limb, wound_clothing = FALSE)
-	playsound(owner, SFX_SIZZLE, 50, vary = TRUE)
+	playsound(owner, /datum/sound_effect/sizzle, 50, vary = TRUE)
 
 /datum/status_effect/irradiated/proc/random_effects(time_since_irradiated, seconds_per_tick)
 	if(time_since_irradiated > 2 MINUTES && SPT_PROB(0.5, seconds_per_tick))

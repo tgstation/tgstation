@@ -24,8 +24,8 @@
 	armor_flag = BIO
 	impact_effect_type = /obj/effect/temp_visual/impact_effect/ink_spit
 	armour_penetration = 50
-	hitsound = SFX_DESECRATION
-	hitsound_wall = SFX_DESECRATION
+	hitsound = /datum/sound_effect/desecration
+	hitsound_wall = /datum/sound_effect/desecration
 
 /obj/projectile/ink_spit/Initialize(mapload)
 	. = ..()

@@ -78,7 +78,7 @@
 
 /obj/item/organ/heart/roach/on_mob_remove(mob/living/carbon/organ_owner, special, movement_flags)
 	. = ..()
-	if(QDELETED(organ_owner))
+	if(QDELETED(organ_owner) || !ishuman(organ_owner))
 		return
 
 	UnregisterSignal(organ_owner, list(COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, COMSIG_MOB_AFTER_APPLY_DAMAGE))

@@ -2,6 +2,31 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
+"aab" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral{
+	dir = 8
+	},
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/command)
+"aac" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/neutral,
+/obj/machinery/light/directional/south,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/command)
+"aad" = (
+/obj/structure/chair{
+	dir = 1
+	},
+/obj/effect/landmark/start/hangover,
+/turf/open/floor/iron,
+/area/station/hallway/secondary/command)
 "aag" = (
 /turf/closed/wall,
 /area/station/commons/fitness)
@@ -1377,7 +1402,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "aAI" = (
-/obj/structure/sign/plaques/kiddie/perfect_man{
+/obj/structure/plaque/kiddie/perfect_man{
 	pixel_y = 32
 	},
 /obj/effect/spawner/random/decoration/showcase,
@@ -11340,7 +11365,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "dWf" = (
-/obj/structure/sign/plaques/kiddie{
+/obj/structure/plaque/kiddie/developer{
 	pixel_y = 32
 	},
 /obj/machinery/camera/directional/north{
@@ -37033,13 +37058,6 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on/layer4,
 /turf/open/floor/carpet,
 /area/station/command/heads_quarters/hop)
-"mIu" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/machinery/light/floor,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/command)
 "mID" = (
 /obj/machinery/light/small/directional/west,
 /turf/open/floor/engine,
@@ -46777,7 +46795,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/circuit_workshop)
 "pYn" = (
-/obj/structure/sign/plaques/kiddie/library{
+/obj/structure/plaque/kiddie/library{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -52806,7 +52824,7 @@
 	dir = 4;
 	id = "abandoned_kitchen"
 	},
-/obj/structure/displaycase/forsale/kitchen{
+/obj/structure/tipjar{
 	pixel_y = 8
 	},
 /turf/open/floor/plating,
@@ -55717,7 +55735,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "sYh" = (
-/obj/structure/sign/plaques/kiddie/perfect_drone{
+/obj/structure/plaque/kiddie/perfect_drone{
 	pixel_y = 32
 	},
 /obj/structure/table/wood,
@@ -58941,7 +58959,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "ucA" = (
-/obj/structure/sign/plaques/kiddie/badger{
+/obj/structure/plaque/kiddie/badger{
 	pixel_y = 32
 	},
 /obj/item/food/grown/flower/poppy{
@@ -61545,9 +61563,7 @@
 /area/station/engineering/storage/tech)
 "uWU" = (
 /obj/structure/table/reinforced,
-/obj/structure/displaycase/forsale/kitchen{
-	pixel_y = 8
-	},
+/obj/structure/tipjar/prefilled,
 /obj/machinery/computer/security/telescreen/entertainment/directional/west,
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/effect/turf_decal/siding/wood{
@@ -68821,9 +68837,7 @@
 	},
 /obj/effect/turf_decal/tile/bar/opposingcorners,
 /obj/structure/table/reinforced,
-/obj/structure/displaycase/forsale/kitchen{
-	pixel_y = 8
-	},
+/obj/structure/tipjar/prefilled,
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
@@ -71021,14 +71035,6 @@
 /obj/machinery/atmospherics/pipe/smart/manifold4w/scrubbers/hidden/layer2,
 /turf/open/floor/iron,
 /area/station/security/execution/transfer)
-"yeA" = (
-/obj/structure/chair{
-	dir = 1
-	},
-/obj/effect/landmark/start/hangover,
-/obj/machinery/light/floor,
-/turf/open/floor/iron,
-/area/station/hallway/secondary/command)
 "yeI" = (
 /obj/structure/mop_bucket,
 /obj/item/mop,
@@ -98240,8 +98246,8 @@ lPZ
 lyN
 cem
 fix
-yeA
-tnm
+aad
+aab
 jzN
 sUy
 dkL
@@ -99268,8 +99274,8 @@ lPZ
 lyN
 cem
 fix
-mIu
-haP
+fix
+aac
 jzN
 tNC
 nvc

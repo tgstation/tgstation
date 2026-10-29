@@ -23,8 +23,8 @@
 	interaction_flags_click = NEED_LITERACY|NEED_LIGHT|ALLOW_RESTING
 	custom_price = PAYCHECK_COMMAND
 	sound_vary = TRUE
-	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
-	drop_sound = SFX_GENERIC_DEVICE_DROP
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
 	/// Verbose/condensed
 	var/mode = SCANNER_VERBOSE
 	/// HEALTH/WOUND

@@ -97,9 +97,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Store body marking defines. See mobs.dm for bitflags
 	var/list/body_markings = list()
 
-	/// Flat modifier on all damage taken via [apply_damage][/mob/living/proc/apply_damage] (so being punched, shot, etc.)
-	/// IE: 10 = 10% less damage taken.
-	var/damage_modifier = 0
 	///multiplier for damage from cold temperature
 	var/coldmod = 1
 	///multiplier for damage from hot temperature
@@ -1254,51 +1251,51 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	humi.apply_damage(burn_damage * seconds_per_tick, BURN, bodypart, wound_clothing = FALSE)
 
 /// Handle the air pressure of the environment
-/datum/species/proc/handle_environment_pressure(mob/living/carbon/human/H, datum/gas_mixture/environment, seconds_per_tick)
+/datum/species/proc/handle_environment_pressure(mob/living/carbon/human/human, datum/gas_mixture/environment, seconds_per_tick)
 	var/pressure = environment.return_pressure()
-	var/adjusted_pressure = H.calculate_affecting_pressure(pressure)
+	var/adjusted_pressure = human.calculate_affecting_pressure(pressure)
 
 	// Set alerts and apply damage based on the amount of pressure
 	switch(adjusted_pressure)
 		// Very high pressure, show an alert and take damage
 		if(HAZARD_HIGH_PRESSURE to INFINITY)
-			if(HAS_TRAIT(H, TRAIT_RESISTHIGHPRESSURE))
-				H.clear_alert(ALERT_PRESSURE)
+			if(HAS_TRAIT(human, TRAIT_RESISTHIGHPRESSURE))
+				human.clear_alert(ALERT_PRESSURE)
 			else
 				var/pressure_damage = min(((adjusted_pressure / HAZARD_HIGH_PRESSURE) - 1) * PRESSURE_DAMAGE_COEFFICIENT, MAX_HIGH_PRESSURE_DAMAGE) * seconds_per_tick
-				pressure_damage *= GET_PHYSIOLOGY(H, BRUTE) * GET_PHYSIOLOGY(H, PHYS_COEFF_PRESSURE)
-				H.adjust_brute_loss(pressure_damage, required_bodytype = BODYTYPE_ORGANIC)
-				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/highpressure, 2)
+				pressure_damage *= GET_PHYSIOLOGY(human, PHYS_COEFF_PRESSURE)
+				human.adjust_brute_loss(pressure_damage, required_bodytype = BODYTYPE_ORGANIC)
+				human.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/highpressure, 2)
 
 		// High pressure, show an alert
 		if(WARNING_HIGH_PRESSURE to HAZARD_HIGH_PRESSURE)
-			H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/highpressure, 1)
+			human.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/highpressure, 1)
 
 		// No pressure issues here clear pressure alerts
 		if(WARNING_LOW_PRESSURE to WARNING_HIGH_PRESSURE)
-			H.clear_alert(ALERT_PRESSURE)
-			H.seconds_in_low_pressure = 0
+			human.clear_alert(ALERT_PRESSURE)
+			human.seconds_in_low_pressure = 0
 
 		// Low pressure here, show an alert
 		if(HAZARD_LOW_PRESSURE to WARNING_LOW_PRESSURE)
 			// We have low pressure resit trait, clear alerts
-			if(HAS_TRAIT(H, TRAIT_RESISTLOWPRESSURE))
-				H.clear_alert(ALERT_PRESSURE)
+			if(HAS_TRAIT(human, TRAIT_RESISTLOWPRESSURE))
+				human.clear_alert(ALERT_PRESSURE)
 			else
-				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 1)
-			H.seconds_in_low_pressure = 0
+				human.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 1)
+			human.seconds_in_low_pressure = 0
 
 		// Very low pressure, show an alert and take damage
 		else
 			// We have low pressure resit trait, clear alerts
-			if(HAS_TRAIT(H, TRAIT_RESISTLOWPRESSURE))
-				H.clear_alert(ALERT_PRESSURE)
+			if(HAS_TRAIT(human, TRAIT_RESISTLOWPRESSURE))
+				human.clear_alert(ALERT_PRESSURE)
 			else
-				var/pressure_damage = min(round(1 + (H.seconds_in_low_pressure / 80 SECONDS), 0.05) * BASE_LOW_PRESSURE_DAMAGE, MAX_LOW_PRESSURE_DAMAGE) * seconds_per_tick
-				pressure_damage *= GET_PHYSIOLOGY(H, BRUTE) * GET_PHYSIOLOGY(H, PHYS_COEFF_PRESSURE)
-				H.adjust_brute_loss(pressure_damage, required_bodytype = BODYTYPE_ORGANIC)
-				H.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 2)
-			H.seconds_in_low_pressure += seconds_per_tick
+				var/pressure_damage = min(round(1 + (human.seconds_in_low_pressure / 80 SECONDS), 0.05) * BASE_LOW_PRESSURE_DAMAGE, MAX_LOW_PRESSURE_DAMAGE) * seconds_per_tick
+				pressure_damage *= GET_PHYSIOLOGY(human, PHYS_COEFF_PRESSURE)
+				human.adjust_brute_loss(pressure_damage, required_bodytype = BODYTYPE_ORGANIC)
+				human.throw_alert(ALERT_PRESSURE, /atom/movable/screen/alert/lowpressure, 2)
+			human.seconds_in_low_pressure += seconds_per_tick
 
 /**
  *	Handles exposure to the skin of various gases.
