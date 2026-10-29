@@ -2,9 +2,7 @@
 
 ///what clients use to speak. when you type a message into the chat bar in say mode, this is the first thing that goes off serverside.
 GAME_VERB(/mob, say_verb, VERB_SAY, null)
-	client.start_thinking()
-	var/message = tgui_input_text(src, "Enter the message", "Say")
-	client?.stop_thinking()
+	VERB_ARG(message, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
@@ -17,9 +15,7 @@ GAME_VERB(/mob, say_verb, VERB_SAY, null)
 
 ///Whisper verb
 GAME_VERB(/mob, whisper_verb, VERB_WHISPER, null)
-	client.start_thinking()
-	var/message = tgui_input_text(src, "Enter the message", "Whisper")
-	client?.stop_thinking()
+	VERB_ARG(message, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
@@ -40,9 +36,7 @@ GAME_VERB(/mob, whisper_verb, VERB_WHISPER, null)
 
 ///The me emote verb
 GAME_VERB(/mob, me_verb, VERB_ME, null)
-	client.start_thinking()
-	var/message = tgui_input_text(src, "Enter the action", "Me")
-	client?.stop_thinking()
+	VERB_ARG(message, VERB_ARG_TYPE_TEXT, VERB_ARG_SOURCE_INPUT)
 
 	if(GLOB.say_disabled) //This is here to try to identify lag problems
 		to_chat(usr, span_danger("Speech is currently admin-disabled."))
