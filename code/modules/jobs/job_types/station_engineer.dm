@@ -69,6 +69,7 @@
 
 	backpack_contents = list(
 		/obj/item/construction/rcd/loaded,
+		/obj/item/analyzer, // Lowpop: from Atmospheric Technician.
 	)
 
 	box = /obj/item/storage/box/survival/engineer

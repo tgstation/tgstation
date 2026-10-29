@@ -44,15 +44,33 @@
 	name = "Cargo Technician"
 	jobtype = /datum/job/cargo_technician
 
+	// Lowpop: mining gear from Shaft Miner.
 	backpack_contents = list(
 		/obj/item/boxcutter = 1,
+		/obj/item/universal_scanner = 1,
+		/obj/item/flashlight/seclite = 1,
+		/obj/item/knife/combat/survival = 1,
+		/obj/item/mining_voucher = 1,
+		/obj/item/stack/candela_beacon/thirty = 1,
+		/obj/item/t_scanner/adv_mining_scanner/lesser = 1,
 	)
 	id_trim = /datum/id_trim/job/cargo_technician
 	uniform = /obj/item/clothing/under/rank/cargo/tech
 	belt = /obj/item/modular_computer/pda/crew/cargo
 	suit = /obj/item/clothing/suit/toggle/cargo_tech
-	ears = /obj/item/radio/headset/headset_cargo
-	l_hand = /obj/item/universal_scanner
+	ears = /obj/item/radio/headset/headset_cargo/mining
+	gloves = /obj/item/clothing/gloves/color/black
+	shoes = /obj/item/clothing/shoes/workboots/mining
+	l_pocket = /obj/item/reagent_containers/hypospray/medipen/survival
+	r_pocket = /obj/item/storage/bag/ore //causes issues if spawned in backpack
+
+	backpack = /obj/item/storage/backpack/explorer
+	satchel = /obj/item/storage/backpack/satchel/explorer
+	duffelbag = /obj/item/storage/backpack/duffelbag/explorer
+	messenger = /obj/item/storage/backpack/messenger/explorer
+
+	box = /obj/item/storage/box/survival/mining
+	skillchips = list(/obj/item/skillchip/job/miner)
 
 	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/cargo
 

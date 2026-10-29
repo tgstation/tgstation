@@ -49,10 +49,21 @@
 	uniform = /obj/item/clothing/under/rank/medical/doctor
 	suit = /obj/item/clothing/suit/toggle/labcoat
 	suit_store = /obj/item/flashlight/pen
-	belt = /obj/item/modular_computer/pda/crew/medical
+	belt = /obj/item/storage/belt/medical/paramedic // Lowpop: gear from Paramedic, Chemist and Coroner.
 	ears = /obj/item/radio/headset/headset_med
+	gloves = /obj/item/clothing/gloves/latex/nitrile
 	shoes = /obj/item/clothing/shoes/sneakers/white
-	l_hand = /obj/item/storage/medkit/surgery
+	l_pocket = /obj/item/modular_computer/pda/crew/medical
+	r_pocket = /obj/item/storage/box/bandages
+	backpack_contents = list(
+		/obj/item/storage/medkit/surgery = 1,
+		/obj/item/emergency_bed = 1,
+		/obj/item/autopsy_scanner = 1,
+		/obj/item/storage/box/bodybags = 1,
+		/obj/item/reagent_containers/dropper = 1,
+		/obj/item/clothing/glasses/science = 1,
+	)
+	pda_slot = ITEM_SLOT_LPOCKET
 
 	backpack = /obj/item/storage/backpack/medic
 	satchel = /obj/item/storage/backpack/satchel/med

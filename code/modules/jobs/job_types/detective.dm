@@ -56,20 +56,32 @@
 	id_trim = /datum/id_trim/job/detective
 	uniform = /obj/item/clothing/under/rank/security/detective
 	suit = /obj/item/clothing/suit/toggle/jacket/det_trench
+	// Lowpop: patrol gear from Security Officer, Warden and Head of Security.
+	suit_store = /obj/item/gun/energy/disabler
 	backpack_contents = list(
 		/obj/item/detective_scanner = 1,
-		/obj/item/melee/baton = 1,
+		/obj/item/melee/baton/security/loaded = 1,
 		/obj/item/storage/box/evidence = 1,
+		/obj/item/lighter = 1,
+		/obj/item/toy/crayon/white = 1,
 		)
 	belt = /obj/item/modular_computer/pda/crew/detective
 	ears = /obj/item/radio/headset/headset_sec/alt
-	gloves = /obj/item/clothing/gloves/color/black
+	glasses = /obj/item/clothing/glasses/hud/security/sunglasses
+	gloves = /obj/item/clothing/gloves/color/black/security
 	head = /obj/item/clothing/head/fedora/det_hat
 	mask = /obj/item/cigarette
 	neck = /obj/item/clothing/neck/tie/detective
-	shoes = /obj/item/clothing/shoes/sneakers/brown
-	l_pocket = /obj/item/toy/crayon/white
-	r_pocket = /obj/item/lighter
+	shoes = /obj/item/clothing/shoes/jackboots/sec
+	l_pocket = /obj/item/restraints/handcuffs
+	r_pocket = /obj/item/assembly/flash/handheld
+
+	backpack = /obj/item/storage/backpack/security
+	satchel = /obj/item/storage/backpack/satchel/sec
+	duffelbag = /obj/item/storage/backpack/duffelbag/sec
+	messenger = /obj/item/storage/backpack/messenger/sec
+
+	box = /obj/item/storage/box/survival/security
 
 	chameleon_extras = list(
 		/obj/item/clothing/glasses/sunglasses,

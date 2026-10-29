@@ -46,14 +46,19 @@
 	id_trim = /datum/id_trim/job/scientist
 	uniform = /obj/item/clothing/under/rank/rnd/scientist
 	suit = /obj/item/clothing/suit/toggle/labcoat/science
-	belt = /obj/item/modular_computer/pda/crew/science
+	belt = /obj/item/storage/belt/utility/full // Lowpop: toolbelt and cyborg skillchip from Roboticist, sequence scanner from Geneticist.
 	ears = /obj/item/radio/headset/headset_sci
 	shoes = /obj/item/clothing/shoes/sneakers/white
+	l_pocket = /obj/item/modular_computer/pda/crew/science
+	r_pocket = /obj/item/sequence_scanner
 
 	backpack = /obj/item/storage/backpack/science
 	satchel = /obj/item/storage/backpack/satchel/science
 	duffelbag = /obj/item/storage/backpack/duffelbag/science
 	messenger = /obj/item/storage/backpack/messenger/science
+
+	pda_slot = ITEM_SLOT_LPOCKET
+	skillchips = list(/obj/item/skillchip/job/roboticist)
 
 	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/science
 
