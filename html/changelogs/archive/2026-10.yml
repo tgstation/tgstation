@@ -629,3 +629,6 @@
 2026-10-29:
   FeudeyTF:
   - bugfix: 'fixed ''Input: Enable TGUI'' option for text inputs'
+  vinylspiders:
+  - admin: overflayer once again shows the base plane and offset for unregistered
+      planes it can decode.
