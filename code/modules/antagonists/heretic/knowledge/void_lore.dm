@@ -424,7 +424,7 @@
 		span_userdanger("The void storm protects you from [hitting_projectile]!"),
 	)
 	playsound(ascended_heretic, /datum/sound_effect/void_deflect, 75, TRUE)
-	hitting_projectile.firer = ascended_heretic
+	hitting_projectile.set_firer(ascended_heretic)
 	if(prob(75))
 		hitting_projectile.set_angle(get_angle(hitting_projectile.firer, hitting_projectile.fired_from))
 	else
