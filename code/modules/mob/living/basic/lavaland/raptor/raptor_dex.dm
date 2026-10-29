@@ -29,7 +29,8 @@
 
 	scan_data = list()
 	scan_data["raptor_scan"] = TRUE
-	scan_data["raptor_image"] = icon2base64(icon(icon = my_raptor.icon, icon_state = my_raptor.icon_state, dir = SOUTH, frame = 1))
+	scan_data["raptor_icon"] = my_raptor.icon
+	scan_data["raptor_icon_state"] = my_raptor.icon_state
 	scan_data["raptor_attack"] = my_raptor.melee_damage_lower
 	scan_data["raptor_health"] = my_raptor.health
 	scan_data["raptor_max_health"] = my_raptor.maxHealth
