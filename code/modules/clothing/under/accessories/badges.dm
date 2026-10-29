@@ -182,38 +182,47 @@
 /datum/atom_skin/pride_pin/gay
 	preview_name = "Rainbow Pride"
 	new_icon_state = "pride"
+	new_name = "Rainbow Pride pin"
 
 /datum/atom_skin/pride_pin/bi
 	preview_name = "Bisexual Pride"
 	new_icon_state = "pride_bi"
+	new_name = "Bisexual Pride pin"
 
 /datum/atom_skin/pride_pin/pan
 	preview_name = "Pansexual Pride"
 	new_icon_state = "pride_pan"
+	new_name = "Pansexual Pride pin"
 
 /datum/atom_skin/pride_pin/ace
 	preview_name = "Asexual Pride"
 	new_icon_state = "pride_ace"
+	new_name = "Asexual Pride pin"
 
 /datum/atom_skin/pride_pin/enby
 	preview_name = "Non-binary Pride"
 	new_icon_state = "pride_enby"
+	new_name = "Non-binary Pride pin"
 
 /datum/atom_skin/pride_pin/trans
 	preview_name = "Transgender Pride"
 	new_icon_state = "pride_trans"
+	new_name = "Transgender Pride pin"
 
 /datum/atom_skin/pride_pin/intersex
 	preview_name = "Intersex Pride"
 	new_icon_state = "pride_intersex"
+	new_name = "Intersex Pride pin"
 
 /datum/atom_skin/pride_pin/lesbian
 	preview_name = "Lesbian Pride"
 	new_icon_state = "pride_lesbian"
+	new_name = "Lesbian Pride pin"
 
 /datum/atom_skin/pride_pin/mlm
 	preview_name = "Gay Pride"
 	new_icon_state = "pride_gay"
+	new_name = "Gay Pride pin"
 
 /obj/item/clothing/accessory/pride
 	name = "pride pin"
