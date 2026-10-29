@@ -1,0 +1,4 @@
+author: "MacaroniCritter"
+delete-after: True
+changes:
+  - qol: "The loadout menu now relies on skins to select different colors of the fedora, cowboy boots, and soft cap"
