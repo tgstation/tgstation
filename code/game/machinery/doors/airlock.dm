@@ -122,7 +122,6 @@
 	var/obj/item/seal
 	/// Controls if the door closes quickly or not. FALSE = the door autocloses in 1.5 seconds, TRUE = 8 seconds - see autoclose_in()
 	var/normalspeed = TRUE
-	var/cutAiWire = FALSE
 	var/autoname = FALSE
 	var/doorOpen = 'sound/machines/airlock/airlock.ogg'
 	var/doorClose = 'sound/machines/airlock/airlockclose.ogg'

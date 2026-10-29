@@ -166,8 +166,6 @@
 			airlock.cyclelinkairlock()
 		if(airlock.closeOtherId)
 			airlock.update_other_id()
-		if(airlock.cutAiWire)
-			airlock.wires.cut(WIRE_AI)
 		if(airlock.autoname)
 			airlock.name = get_area_name(src, TRUE)
 		airlock.update_appearance()
@@ -325,11 +323,11 @@
 	name = "airlock cut ai wire helper"
 	icon_state = "airlock_cutaiwire"
 
-/obj/effect/mapping_helpers/airlock/cutaiwire/payload(obj/machinery/door/airlock/airlock)
-	if(airlock.cutAiWire)
+/obj/effect/mapping_helpers/airlock/cutaiwire/late_payload(obj/machinery/door/airlock/airlock)
+	if(airlock.wires.is_cut(WIRE_AI))
 		log_mapping("[src] at [AREACOORD(src)] tried to cut the ai wire on [airlock] but it's already cut!")
 	else
-		airlock.cutAiWire = TRUE
+		airlock.wires.cut(WIRE_AI)
 
 /obj/effect/mapping_helpers/airlock/autoname
 	name = "airlock autoname helper"
