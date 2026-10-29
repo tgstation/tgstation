@@ -34,6 +34,7 @@
 			visible_message(span_notice("[src] compresses under stress, resisting further impacts!"))
 		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
 
+	var/penetrate = FALSE
 	if(istype(projectile, /obj/projectile/beam/emitter/hitscan))
 		var/obj/projectile/beam/emitter/hitscan/mahlaser = projectile
 		var/damage_change = mahlaser.integrity_heal
@@ -52,9 +53,9 @@
 						visible_message(span_smallnotice("[mahlaser] entirely refracts through [src], failing to be absorbed entirely!"))
 					var/refract_angle = dir2angle(mahlaser.dir)
 					mahlaser.set_angle_centered(loc, round(rand(refract_angle - 45, refract_angle + 45), 5))
-					return COMPONENT_BULLET_PIERCED
+					penetrate = TRUE
 
-				if(prob(33))
+				else if(prob(33))
 					visible_message(span_smallnotice("Parts of [mahlaser] scatter through [src], rather than being fully absorbed!"))
 
 			healing_emitter_hits += 1
@@ -67,6 +68,9 @@
 	external_power_immediate += projectile.damage * bullet_energy + kiss_power
 	if(istype(projectile, /obj/projectile/beam/emitter/hitscan/magnetic))
 		absorption_ratio = clamp(absorption_ratio + 0.05, 0.15, 1)
+
+	if(penetrate)
+		return COMPONENT_BULLET_PIERCED
 
 	qdel(projectile)
 	return COMPONENT_BULLET_BLOCKED
