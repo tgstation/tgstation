@@ -278,9 +278,7 @@ GLOBAL_LIST_INIT(all_loadout_categories, init_loadout_categories())
 		var/skin_chosen = item_details[INFO_RESKIN]
 		var/list/atom_skins = get_atom_skins()
 		for(var/datum/atom_skin/skin_path as anything in valid_subtypesof(reskin_datum))
-			if(skin_path::preview_name != skin_chosen)
-				continue
-			if(skin_path::preview_name != skin_chosen)
+			if(skin_path::preview_name != skin_chosen && skin_path::new_name != skin_chosen)
 				continue
 			var/datum/atom_skin/skin_instance = atom_skins[skin_path]
 			skin_instance.apply(equipped_item)

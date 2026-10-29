@@ -7,8 +7,9 @@
 	var/key
 	/// Our parent hud
 	var/datum/hud/our_hud
-	/// List in the form "[plane]" = object, the plane masters we own
-	var/list/atom/movable/screen/plane_master/plane_masters = list()
+	/// An alist of the plane masters we own.
+	/// e.g: [HUD_PLANE --> /atom/movable/screen/plane_master/hud (instance)]
+	var/alist/plane_masters = alist()
 
 	/// The atom whose "perspective" we are viewing the world from
 	var/atom/perspective
@@ -81,13 +82,12 @@
 	build_plane_masters(0, SSmapping.max_plane_offset)
 
 /datum/plane_master_group/proc/hide_hud()
-	for(var/thing in plane_masters)
-		var/atom/movable/screen/plane_master/plane = plane_masters[thing]
+	for(var/thing, _plane in plane_masters)
+		var/atom/movable/screen/plane_master/plane = _plane
 		plane.hide_from(our_hud.mymob)
 
 /datum/plane_master_group/proc/show_hud()
-	for(var/thing in plane_masters)
-		var/atom/movable/screen/plane_master/plane = plane_masters[thing]
+	for(var/thing, plane in plane_masters)
 		show_plane(plane)
 
 /datum/plane_master_group/proc/set_perspective(atom/new_perspective)
@@ -126,10 +126,6 @@
 /datum/plane_master_group/proc/show_plane(atom/movable/screen/plane_master/plane)
 	plane.show_to(our_hud.mymob)
 
-/// Nice wrapper for the "[]"ing
-/datum/plane_master_group/proc/get_plane(plane)
-	return plane_masters["[plane]"]
-
 /// Returns a list of all the plane master types we want to create
 /datum/plane_master_group/proc/get_plane_types()
 	return subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/rendering_plate
@@ -138,10 +134,10 @@
 /datum/plane_master_group/proc/build_plane_masters(starting_offset, ending_offset)
 	for(var/atom/movable/screen/plane_master/mytype as anything in get_plane_types())
 		for(var/plane_offset in starting_offset to ending_offset)
-			if(plane_offset != 0 && (initial(mytype.offsetting_flags) & BLOCKS_PLANE_OFFSETTING))
+			if(plane_offset != 0 && (mytype::offsetting_flags & BLOCKS_PLANE_OFFSETTING))
 				continue
 			var/atom/movable/screen/plane_master/instance = new mytype(null, null, src, plane_offset)
-			plane_masters["[instance.plane]"] = instance
+			plane_masters[instance.plane] = instance
 			prep_plane_instance(instance)
 
 /// Similarly, exists so subtypes can do unique behavior to planes on creation
@@ -210,8 +206,8 @@
 	// So we can talk in 1 -> max_offset * 2 + 1, rather then -max_offset -> max_offset
 	var/offset_offset = SSmapping.max_plane_offset + 1
 
-	for(var/plane_key in plane_masters)
-		var/atom/movable/screen/plane_master/plane = plane_masters[plane_key]
+	for(var/plane_key, _plane in plane_masters)
+		var/atom/movable/screen/plane_master/plane = _plane
 		if(plane.offsetting_flags & BLOCKS_PLANE_OFFSETTING)
 			if(plane.offsetting_flags & OFFSET_RELAYS_MATCH_HIGHEST)
 				// Don't offset the plane, do offset where the relays point
@@ -276,8 +272,8 @@
 	return our_mob
 
 /datum/plane_master_group/hudless/hide_hud()
-	for(var/thing in plane_masters)
-		var/atom/movable/screen/plane_master/plane = plane_masters[thing]
+	for(var/plane_key, _plane in plane_masters)
+		var/atom/movable/screen/plane_master/plane = _plane
 		plane.hide_from(our_mob)
 
 /datum/plane_master_group/hudless/show_plane(atom/movable/screen/plane_master/plane)

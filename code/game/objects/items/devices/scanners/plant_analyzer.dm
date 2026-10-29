@@ -14,8 +14,8 @@
 	slot_flags = ITEM_SLOT_BELT
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*0.3, /datum/material/glass =SMALL_MATERIAL_AMOUNT*0.2)
 	sound_vary = TRUE
-	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
-	drop_sound = SFX_GENERIC_DEVICE_DROP
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
 	/// Cached data from ui_interact
 	var/list/last_scan_data
 	/// Weakref to the last thing we scanned
@@ -70,7 +70,7 @@
 /// When we attack something, try to scan something we hit with left click. Left-clicking uses scans for stats
 /obj/item/plant_analyzer/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(isliving(interacting_with))
-		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+		playsound(src, /datum/sound_effect/industrial_scan, 20, TRUE, -2, TRUE, FALSE)
 		var/mob/living/living_target = interacting_with
 		if(living_target.mob_biotypes & MOB_PLANT)
 			plant_biotype_health_scan(living_target, user)
@@ -185,7 +185,7 @@
 	var/obj/machinery/hydroponics/tray
 
 	if(user)
-		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+		playsound(src, /datum/sound_effect/industrial_scan, 20, TRUE, -2, TRUE, FALSE)
 
 	if (istype(target, /obj/machinery/hydroponics))
 		tray = target

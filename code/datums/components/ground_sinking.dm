@@ -109,12 +109,15 @@
 	var/mob/living/basic/living_target = parent
 	if(QDELETED(parent))
 		return
-	if(sinked && heal_when_sinked)
-		stop_regenerating()
+	if(sinked)
+		if(heal_when_sinked)
+			stop_regenerating()
+		sink_callback?.Invoke(FALSE)
 	living_target.icon_state = target_icon_state
 	living_target.set_density(TRUE)
 	sinked = FALSE
-	sink_callback?.Invoke(sinked)
+	is_sinking = FALSE
+	sink_count = 0
 
 /// The mop starts regaining health
 /datum/component/ground_sinking/proc/start_regenerating()

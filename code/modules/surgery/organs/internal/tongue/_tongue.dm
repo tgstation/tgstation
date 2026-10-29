@@ -528,7 +528,7 @@
 	voice_filter = @{"[0:a] asplit [out0][out2]; [out0] asetrate=%SAMPLE_RATE%*0.8,aresample=%SAMPLE_RATE%,atempo=1/0.8,aformat=channel_layouts=mono [p0]; [out2] asetrate=%SAMPLE_RATE%*1.2,aresample=%SAMPLE_RATE%,atempo=1/1.2,aformat=channel_layouts=mono[p2]; [p0][0][p2] amix=inputs=3"}
 	emote_sounds = list(
 		/datum/emote/living/deathgasp::key = 'sound/mobs/non-humanoids/hiss/hiss6.ogg',
-		/datum/emote/living/carbon/hiss::key = SFX_HISS,
+		/datum/emote/living/carbon/hiss::key = /datum/sound_effect/hiss,
 		/datum/emote/living/scream::key = 'sound/mobs/non-humanoids/hiss/hiss5.ogg',
 	)
 
@@ -547,7 +547,7 @@
 	if(hivemind)
 		return
 
-	playsound(owner, SFX_HISS, 25, TRUE, TRUE)
+	playsound(owner, /datum/sound_effect/hiss, 25, TRUE, TRUE)
 
 /obj/item/organ/tongue/bone
 	name = "bone \"tongue\""
@@ -719,7 +719,7 @@
 	disliked_foodtypes = CLOTH
 	languages_native = list(/datum/language/monkey)
 	emote_sounds = list(
-		/datum/emote/living/scream::key = SFX_SCREECH,
+		/datum/emote/living/scream::key = /datum/sound_effect/screech,
 	)
 
 /obj/item/organ/tongue/moth
