@@ -601,14 +601,12 @@ GAME_VERB_PROC(/mob/living/silicon/ai, ai_network_change, "Jump To Network", "AI
 		view_core()
 		return
 
-	var/found_camera = FALSE
 	for(var/obj/machinery/camera/jumpable as anything in SScameras.cameras)
 		if(!(new_network in jumpable.network))
 			continue
 		if(!jumpable.can_use())
 			continue
 		eyeobj.setLoc(get_turf(jumpable))
-		found_camera = TRUE
 		network = new_network
 		to_chat(src, span_notice("Switched to the \"[uppertext(network)]\" camera network."))
 		break
