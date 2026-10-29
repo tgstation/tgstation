@@ -576,48 +576,42 @@ GAME_VERB_PROC_DESC(/mob/living/silicon/ai, botcall, "Access Robot Control", "Wi
 	SIGNAL_HANDLER
 	queueAlarm("--- [alarm_type] alarm in [source_area.name] has been cleared.", alarm_type, 0)
 
-//Replaces /mob/living/silicon/ai/verb/change_network() in ai.dm & camera.dm
-//Adds in /mob/living/silicon/ai/proc/ai_network_change() instead
-//Addition by Mord_Sith to define AI's network change ability
 GAME_VERB_PROC(/mob/living/silicon/ai, ai_network_change, "Jump To Network", "AI Commands")
-	ai_tracking_tool.reset_tracking()
-	var/cameralist[0]
-
 	if(incapacitated)
 		return
 
-	var/mob/living/silicon/ai/U = usr
-
-	for (var/obj/machinery/camera/C in SScameras.cameras)
-		var/turf/camera_turf = get_turf(C) //get camera's turf in case it's built into something so we don't get z=0
-
-		var/list/tempnetwork = C.network
-		if(!camera_turf || !(is_station_level(camera_turf.z) || is_mining_level(camera_turf.z) || (CAMERANET_NETWORK_SS13 in tempnetwork)))
+	ai_tracking_tool.reset_tracking()
+	var/list/network_options = list()
+	var/turf/aiturf = get_turf(src)
+	for (var/obj/machinery/camera/jumpable as anything in SScameras.cameras)
+		var/turf/cameraturf = get_turf(jumpable)
+		// Station and mining are always valid, with an added check for the AI being on the same z-level
+		if(!is_station_level(cameraturf.z) && !is_mining_level(cameraturf.z) && !is_valid_z_level(aiturf, cameraturf))
 			continue
-		if(!C.can_use())
+		if(!length(jumpable.network) || (network in jumpable.network))
 			continue
-		tempnetwork.Remove(CAMERANET_NETWORK_RD, CAMERANET_NETWORK_ORDNANCE, CAMERANET_NETWORK_PRISON)
-		if(length(tempnetwork))
-			for(var/i in C.network)
-				cameralist[i] = i
-	var/old_network = network
-	network = tgui_input_list(U, "Which network would you like to view?", "Camera Network", sort_list(cameralist))
+		if(!jumpable.can_use())
+			continue
+		network_options |= jumpable.network
 
-	if(!U.eyeobj)
-		U.view_core()
+	var/new_network = tgui_input_list(src, "Which network would you like to view?", "Camera Network", sort_list(network_options))
+	if(!new_network)
+		return
+	if(!eyeobj)
+		view_core()
 		return
 
-	if(isnull(network))
-		network = old_network // If nothing is selected
-	else
-		for(var/obj/machinery/camera/C in SScameras.cameras)
-			if(!C.can_use())
-				continue
-			if(network in C.network)
-				U.eyeobj.setLoc(get_turf(C))
-				break
-	to_chat(src, span_notice("Switched to the \"[uppertext(network)]\" camera network."))
-//End of code by Mord_Sith
+	var/found_camera = FALSE
+	for(var/obj/machinery/camera/jumpable as anything in SScameras.cameras)
+		if(!(new_network in jumpable.network))
+			continue
+		if(!jumpable.can_use())
+			continue
+		eyeobj.setLoc(get_turf(jumpable))
+		found_camera = TRUE
+		network = new_network
+		to_chat(src, span_notice("Switched to the \"[uppertext(network)]\" camera network."))
+		break
 
 //I am the icon meister. Bow fefore me. //>fefore
 GAME_VERB_PROC_DESC(/mob/living/silicon/ai, ai_hologram_change, "Change Hologram", "Change the default hologram available to AI to something else.", "AI Commands")
@@ -1100,8 +1094,8 @@ GAME_VERB_DESC(/mob/living/silicon/ai, deploy_to_shell, "Deploy to Shell", "Tran
 		REMOVE_TRAIT(src, TRAIT_INCAPACITATED, POWER_LACK_TRAIT)
 
 /mob/living/silicon/ai/proc/show_camera_list()
-	var/list/cameras = SScameras.get_available_camera_by_tag_list(network)
-	var/camera_tag = tgui_input_list(src, "Choose which camera you want to view", "Cameras", cameras)
+	var/list/cameras = SScameras.get_available_camera_by_tag_list(list(network))
+	var/camera_tag = tgui_input_list(src, "Choose which camera you want to view", "Cameras: \"[uppertext(network)]\"", cameras)
 	if(isnull(camera_tag))
 		return
 
