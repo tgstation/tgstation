@@ -58,6 +58,8 @@
 		migrated_loadout[target_path] = data_to_migrate
 
 	save_data[loadout_preference.savefile_key] = migrated_loadout
+	if(!write_preference(loadout_preference, migrated_loadout))
+		CRASH("Failed to migrate legacy loadout items for [parent]")
 
 /// Helper for slotting in a new loadout item
 /datum/preferences/proc/add_loadout_item(typepath, list/data = list())

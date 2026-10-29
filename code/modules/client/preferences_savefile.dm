@@ -114,6 +114,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			key_bindings["swap_hands_row"] = keys
 
 /datum/preferences/proc/update_character(current_version, list/save_data)
+	if(current_version < 54)
+		migrate_legacy_loadout_items(save_data)
+
 	if (current_version < 41)
 		migrate_character_to_tgui_prefs_menu()
 
@@ -368,9 +371,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		default_slot = original_default_slot
 		savefile.set_entry("default_slot", original_default_slot)
 		return FALSE
-
-	if(SHOULD_UPDATE_DATA(data_validity_integer) && data_validity_integer < 54)
-		migrate_legacy_loadout_items(save_data)
 
 	// Read everything into cache
 	// Uses priority order as some values may rely on others for creating default values
