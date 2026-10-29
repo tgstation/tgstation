@@ -634,6 +634,17 @@
       cowboy boots, and soft cap
   Melbert:
   - bugfix: Fix chat message when removing embedded objects from yourself
+  - bugfix: Fixes head revolutionary not getting codewords
+  - bugfix: Fix Crimson Cleaver Curse being droppable in late stages
+  - bugfix: Ceruleans picking up special shoes (like noslips) no longer permanently
+      breaks the shoes
+  - code_imp: Cleaned up clothing rendering very slightly, particularly relating to
+      inhand sprites, report anything weird with it
+  - code_imp: Cleaned up Cerulean shoe code, report anything weird with it
+  - bugfix: Fix some forms of zombification being uncurable
+  - bugfix: Fixes airborne disease spread. Sneezing, coughing, and breathing will
+      now spread diseases if you are UNMASKED, rather than if you are masked.
   vinylspiders:
   - admin: overflayer once again shows the base plane and offset for unregistered
       planes it can decode.
+  - bugfix: the potential manifest in the pre-game lobby updates when someone unreadies.

@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Ceruleans picking up special shoes (like noslips) no longer permanently breaks the shoes"
-  - code_imp: "Cleaned up clothing rendering very slightly, particularly relating to inhand sprites, report anything weird with it"
-  - code_imp: "Cleaned up Cerulean shoe code, report anything weird with it"
