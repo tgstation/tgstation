@@ -363,11 +363,6 @@
 
 	return "doing something mysterious to"
 
-/obj/item/clothing/shoes/attach_clothing_traits(traits)
-	if(!(astype(loc, /mob)?.get_slot_by_item(src) & ITEM_SLOT_FEET))
-		return
-	return ..()
-
 /// when the shoes are worn on the headslot we have to override the overlay's icon to look for the correct file
 /obj/item/clothing/shoes/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
