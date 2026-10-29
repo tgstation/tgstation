@@ -1538,6 +1538,8 @@
 /// An ID that you can flip with attack_self_secondary, overriding the appearance of the ID (useful for plainclothes detectives for example).
 /obj/item/card/id/advanced/plainclothes
 	name = "Plainclothes ID"
+	// Lowpop: the Detective trim carries the HoS office wildcard, which a grey card can't hold.
+	wildcard_slots = WILDCARD_LIMIT_SILVER
 	///The trim that we use as plainclothes identity
 	var/alt_trim = /datum/id_trim/job/assistant
 

@@ -5,8 +5,8 @@
 	auto_deadmin_role_flags = DEADMIN_POSITION_HEAD|DEADMIN_POSITION_SECURITY
 	head_announce = RADIO_CHANNEL_SECURITY
 	faction = FACTION_STATION
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = SUPERVISOR_CAPTAIN
 	req_admin_notify = 1
 	minimal_player_age = 14
@@ -35,7 +35,8 @@
 
 	family_heirlooms = list(/obj/item/book/manual/wiki/security_space_law)
 	rpg_title = "Guard Leader"
-	job_flags = STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS | JOB_ANTAG_PROTECTED
+	// Lowpop: merged into Detective, hidden from the job menu.
+	job_flags = (STATION_JOB_FLAGS | HEAD_OF_STAFF_JOB_FLAGS | JOB_ANTAG_PROTECTED) & ~JOB_NEW_PLAYER_JOINABLE
 
 	human_authority = JOB_AUTHORITY_HUMANS_ONLY
 

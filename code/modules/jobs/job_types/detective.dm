@@ -1,12 +1,13 @@
 /datum/job/detective
 	title = JOB_DETECTIVE
 	description = "Investigate crimes, gather evidence, perform interrogations, \
-		look badass, smoke cigarettes."
+		run the brig and armory, look badass, smoke cigarettes."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	faction = FACTION_STATION
-	total_positions = 1
-	spawn_positions = 1
-	supervisors = SUPERVISOR_HOS
+	// Lowpop: absorbs Warden, Security Officer and Head of Security.
+	total_positions = 8
+	spawn_positions = 8
+	supervisors = SUPERVISOR_CAPTAIN
 	minimal_player_age = 7
 	exp_requirements = 300
 	exp_required_type = EXP_TYPE_CREW

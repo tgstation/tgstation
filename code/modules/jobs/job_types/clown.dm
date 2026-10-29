@@ -2,8 +2,8 @@
 	title = JOB_CLOWN
 	description = "Entertain the crew, make bad jokes, go on a holy quest to find bananium, HONK!"
 	faction = FACTION_STATION
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = SUPERVISOR_HOP
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "CLOWN"
@@ -33,7 +33,8 @@
 
 	family_heirlooms = list(/obj/item/bikehorn/golden)
 	rpg_title = "Jester"
-	job_flags = STATION_JOB_FLAGS
+	// Lowpop: removed, hidden from the job menu.
+	job_flags = STATION_JOB_FLAGS & ~JOB_NEW_PLAYER_JOINABLE
 
 	job_tone = "honk"
 	tgui_icon = FA_ICON_FACE_GRIN_TEARS

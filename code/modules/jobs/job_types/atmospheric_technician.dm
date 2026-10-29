@@ -2,8 +2,8 @@
 	title = JOB_ATMOSPHERIC_TECHNICIAN
 	description = "Ensure the air is breathable on the station, fill oxygen tanks, fight fires, purify the air."
 	faction = FACTION_STATION
-	total_positions = 3
-	spawn_positions = 2
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = SUPERVISOR_CE
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW
@@ -34,7 +34,8 @@
 		/obj/item/grenade/gas_crystal/nitrous_oxide_crystal = 5,
 	)
 
-	job_flags = STATION_JOB_FLAGS
+	// Lowpop: merged into Engineer, hidden from the job menu.
+	job_flags = STATION_JOB_FLAGS & ~JOB_NEW_PLAYER_JOINABLE
 	rpg_title = "Aeromancer"
 	tgui_icon = FA_ICON_FAN
 

@@ -1,10 +1,11 @@
 /datum/job/station_engineer
 	title = JOB_STATION_ENGINEER
 	description = "Start the Supermatter, wire the solars, repair station hull \
-		and wiring damage."
+		and wiring damage, keep the air breathable and fight fires."
 	faction = FACTION_STATION
-	total_positions = 5
-	spawn_positions = 5
+	// Lowpop: absorbs Atmospheric Technician.
+	total_positions = 8
+	spawn_positions = 7
 	supervisors = SUPERVISOR_CE
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW

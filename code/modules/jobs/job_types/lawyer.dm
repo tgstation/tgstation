@@ -3,8 +3,8 @@
 	description = "Advocate for prisoners, create law-binding contracts, \
 		ensure Security is following protocol and Space Law."
 	faction = FACTION_STATION
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = SUPERVISOR_HOP
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "LAWYER"
@@ -24,7 +24,8 @@
 	rpg_title = "Magistrate"
 	family_heirlooms = list(/obj/item/gavelhammer, /obj/item/book/manual/wiki/security_space_law)
 
-	job_flags = STATION_JOB_FLAGS
+	// Lowpop: removed, hidden from the job menu.
+	job_flags = STATION_JOB_FLAGS & ~JOB_NEW_PLAYER_JOINABLE
 
 	job_tone = "objection"
 	tgui_icon = FA_ICON_GAVEL

@@ -2,8 +2,8 @@
 	title = JOB_GENETICIST
 	description = "Alter genomes, turn monkeys into humans (and vice-versa), and make DNA backups."
 	faction = FACTION_STATION
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = SUPERVISOR_RD
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW
@@ -28,7 +28,8 @@
 
 	family_heirlooms = list(/obj/item/clothing/under/shorts/purple)
 	rpg_title = "Genemancer"
-	job_flags = STATION_JOB_FLAGS
+	// Lowpop: merged into Scientist, hidden from the job menu.
+	job_flags = STATION_JOB_FLAGS & ~JOB_NEW_PLAYER_JOINABLE
 	tgui_icon = FA_ICON_DNA
 
 

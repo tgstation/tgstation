@@ -5,8 +5,8 @@
 		they all eventually die."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	faction = FACTION_STATION
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = SUPERVISOR_HOS
 	minimal_player_age = 7
 	exp_requirements = 300
@@ -40,7 +40,8 @@
 		/obj/item/storage/box/lethalshot = 5
 	)
 	rpg_title = "Jailor"
-	job_flags = STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_ANTAG_PROTECTED
+	// Lowpop: merged into Detective, hidden from the job menu.
+	job_flags = (STATION_JOB_FLAGS | JOB_BOLD_SELECT_TEXT | JOB_ANTAG_PROTECTED) & ~JOB_NEW_PLAYER_JOINABLE
 	tgui_icon = FA_ICON_HANDCUFFS
 
 /datum/job/warden/after_spawn(mob/living/spawned, client/player_client)

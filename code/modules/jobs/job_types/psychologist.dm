@@ -3,8 +3,8 @@
 	description = "Advocate sanity, self-esteem, and teamwork in a station \
 		staffed with headcases."
 	faction = FACTION_STATION
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the Head of Personnel and the Chief Medical Officer"
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "PSYCHOLOGIST"
@@ -30,7 +30,8 @@
 		/obj/item/gun/syringe = 1
 	)
 	rpg_title = "Snake Oil Salesman"
-	job_flags = STATION_JOB_FLAGS
+	// Lowpop: removed, hidden from the job menu.
+	job_flags = STATION_JOB_FLAGS & ~JOB_NEW_PLAYER_JOINABLE
 	tgui_icon = FA_ICON_BRAIN
 
 

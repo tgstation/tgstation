@@ -3,8 +3,8 @@
 	description = "Travel to strange lands, mine ores, \
 		meet strange creatures, kill them for their gold."
 	faction = FACTION_STATION
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = SUPERVISOR_QM
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "SHAFT_MINER"
@@ -25,7 +25,8 @@
 
 	family_heirlooms = list(/obj/item/pickaxe/mini, /obj/item/shovel)
 	rpg_title = "Adventurer"
-	job_flags = STATION_JOB_FLAGS
+	// Lowpop: merged into Cargo Technician, hidden from the job menu.
+	job_flags = STATION_JOB_FLAGS & ~JOB_NEW_PLAYER_JOINABLE
 	tgui_icon = FA_ICON_DIGGING
 
 

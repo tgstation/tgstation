@@ -3,8 +3,8 @@
 	description = "Perform autopsies whenever needed, \
 		update medical records accordingly, apply formaldehyde."
 	faction = FACTION_STATION
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the Head of Personnel and the Chief Medical Officer"
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "CORONER"
@@ -40,7 +40,8 @@
 
 	family_heirlooms = list(/obj/item/clothing/head/helmet/skull, /obj/item/table_clock, /obj/item/shovel, /obj/item/storage/fancy/pickles_jar)
 
-	job_flags = STATION_JOB_FLAGS
+	// Lowpop: merged into Medical Doctor, hidden from the job menu.
+	job_flags = STATION_JOB_FLAGS & ~JOB_NEW_PLAYER_JOINABLE
 
 	rpg_title = "Undertaker"
 	tgui_icon = FA_ICON_SKULL

@@ -4,8 +4,8 @@
 		Procedure, eat donuts."
 	auto_deadmin_role_flags = DEADMIN_POSITION_SECURITY
 	faction = FACTION_STATION
-	total_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
-	spawn_positions = 5 //Handled in /datum/controller/occupations/proc/setup_officer_positions()
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = "the Head of Security, and the head of your assigned department (if applicable)"
 	minimal_player_age = 7
 	exp_requirements = 300
@@ -44,7 +44,8 @@
 		JOB_SECURITY_OFFICER_SUPPLY,
 		JOB_SECURITY_OFFICER_SCIENCE,
 	)
-	job_flags = STATION_JOB_FLAGS | JOB_ANTAG_PROTECTED
+	// Lowpop: merged into Detective, hidden from the job menu.
+	job_flags = (STATION_JOB_FLAGS | JOB_ANTAG_PROTECTED) & ~JOB_NEW_PLAYER_JOINABLE
 	tgui_icon = FA_ICON_SHIELD_HALVED
 
 

@@ -2,8 +2,8 @@
 	title = JOB_BITRUNNER
 	description = "Surf the virtual domain for gear and loot, decrypt your rewards on station."
 	faction = FACTION_STATION
-	total_positions = 3
-	spawn_positions = 3
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = SUPERVISOR_QM
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "BITRUNNER"
@@ -28,7 +28,8 @@
 		/obj/item/food/cornchips/blue = 1,
 	)
 	rpg_title = "Recluse"
-	job_flags = STATION_JOB_FLAGS
+	// Lowpop: merged into Cargo Technician, hidden from the job menu.
+	job_flags = STATION_JOB_FLAGS & ~JOB_NEW_PLAYER_JOINABLE
 	tgui_icon = FA_ICON_GAMEPAD
 
 /datum/outfit/job/bitrunner

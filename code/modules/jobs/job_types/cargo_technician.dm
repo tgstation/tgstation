@@ -2,10 +2,11 @@
 	title = JOB_CARGO_TECHNICIAN
 	description = "Distribute supplies to the departments that ordered them, \
 		collect empty crates, load and unload the supply shuttle, \
-		ship bounty cubes."
+		ship bounty cubes, mine ores, run bitrunning domains."
 	faction = FACTION_STATION
-	total_positions = 5
-	spawn_positions = 3
+	// Lowpop: absorbs Shaft Miner and Bitrunner.
+	total_positions = 11
+	spawn_positions = 9
 	supervisors = SUPERVISOR_QM
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "CARGO_TECHNICIAN"
@@ -15,6 +16,9 @@
 
 	paycheck = PAYCHECK_CREW
 	paycheck_department = ACCOUNT_CAR
+
+	mind_traits = list(TRAIT_DETECT_STORM)
+
 	display_order = JOB_DISPLAY_ORDER_CARGO_TECHNICIAN
 	bounty_types = CIV_JOB_RANDOM
 	departments_list = list(

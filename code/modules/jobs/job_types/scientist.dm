@@ -1,9 +1,11 @@
 /datum/job/scientist
 	title = JOB_SCIENTIST
-	description = "Do experiments, perform research, feed the slimes, make bombs."
+	description = "Do experiments, perform research, feed the slimes, make bombs, \
+		build cyborgs and mechs, alter genomes."
 	faction = FACTION_STATION
-	total_positions = 5
-	spawn_positions = 3
+	// Lowpop: absorbs Roboticist and Geneticist.
+	total_positions = 9
+	spawn_positions = 7
 	supervisors = SUPERVISOR_RD
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW

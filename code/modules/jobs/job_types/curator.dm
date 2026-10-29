@@ -3,8 +3,8 @@
 	description = "Read and write books and hand them to people, stock \
 		bookshelves, report on station news."
 	faction = FACTION_STATION
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = SUPERVISOR_HOP
 	config_tag = "CURATOR"
 	exp_granted_type = EXP_TYPE_CREW
@@ -30,7 +30,8 @@
 
 	family_heirlooms = list(/obj/item/pen/fountain, /obj/item/storage/dice)
 
-	job_flags = STATION_JOB_FLAGS
+	// Lowpop: removed, hidden from the job menu.
+	job_flags = STATION_JOB_FLAGS & ~JOB_NEW_PLAYER_JOINABLE
 
 	voice_of_god_silence_power = 3
 	rpg_title = "Veteran Adventurer"

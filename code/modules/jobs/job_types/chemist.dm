@@ -3,8 +3,8 @@
 	description = "Supply the doctors with chemicals, make medicine, cook up \
 		sketchy substances in the comfort of a fully reinforced room."
 	faction = FACTION_STATION
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = SUPERVISOR_CMO
 	exp_requirements = 60
 	exp_required_type = EXP_TYPE_CREW
@@ -34,7 +34,8 @@
 		/obj/item/paper/secretrecipe = 1
 	)
 	rpg_title = "Alchemist"
-	job_flags = STATION_JOB_FLAGS
+	// Lowpop: merged into Medical Doctor, hidden from the job menu.
+	job_flags = STATION_JOB_FLAGS & ~JOB_NEW_PLAYER_JOINABLE
 	tgui_icon = FA_ICON_PRESCRIPTION_BOTTLE
 
 

@@ -1,10 +1,11 @@
 /datum/job/doctor
 	title = JOB_MEDICAL_DOCTOR
 	description = "Save lives, run around the station looking for victims, \
-		scan everyone in sight."
+		scan everyone in sight, brew medicine, perform autopsies."
 	faction = FACTION_STATION
-	total_positions = 6
-	spawn_positions = 4
+	// Lowpop: absorbs Paramedic, Chemist and Coroner.
+	total_positions = 11
+	spawn_positions = 9
 	supervisors = SUPERVISOR_CMO
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "MEDICAL_DOCTOR"

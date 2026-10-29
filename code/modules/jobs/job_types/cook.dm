@@ -2,8 +2,8 @@
 	title = JOB_COOK
 	description = "Serve food, cook meat, keep the crew fed."
 	faction = FACTION_STATION
-	total_positions = 2
-	spawn_positions = 2
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = SUPERVISOR_HOP
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "COOK"
@@ -50,7 +50,8 @@
 	alternate_titles = list(
 		JOB_CHEF,
 	)
-	job_flags = STATION_JOB_FLAGS
+	// Lowpop: removed, hidden from the job menu.
+	job_flags = STATION_JOB_FLAGS & ~JOB_NEW_PLAYER_JOINABLE
 	tgui_icon = FA_ICON_UTENSILS
 
 /datum/job/cook/award_service(client/winner, award)

@@ -294,19 +294,20 @@
 	department_color = COLOR_CARGO_BROWN
 	subdepartment_color = COLOR_CARGO_BROWN
 	sechud_icon_state = SECHUD_CARGO_TECHNICIAN
+	// Lowpop: union of Cargo Technician, Shaft Miner and Bitrunner access.
 	minimal_access = list(
+		ACCESS_AUX_BASE,
+		ACCESS_BIT_DEN,
 		ACCESS_BUDGET,
 		ACCESS_CARGO,
 		ACCESS_MAINT_TUNNELS,
 		ACCESS_MECH_MINING,
 		ACCESS_MINERAL_STOREROOM,
-		ACCESS_SHIPPING,
-		)
-	extra_access = list(
-		ACCESS_BIT_DEN,
 		ACCESS_MINING,
 		ACCESS_MINING_STATION,
+		ACCESS_SHIPPING,
 		)
+	extra_access = list()
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
@@ -566,25 +567,49 @@
 	department_color = COLOR_SECURITY_RED
 	subdepartment_color = COLOR_SECURITY_RED
 	sechud_icon_state = SECHUD_DETECTIVE
+	// Lowpop: union of Detective, Warden, Security Officer and Head of Security access.
 	minimal_access = list(
+		ACCESS_ALL_PERSONAL_LOCKERS,
+		ACCESS_ARMORY,
+		ACCESS_AUX_BASE,
+		ACCESS_BIT_DEN,
+		ACCESS_BRIG,
 		ACCESS_BRIG_ENTRANCE,
+		ACCESS_BUDGET,
+		ACCESS_CARGO,
+		ACCESS_COMMAND,
+		ACCESS_CONSTRUCTION,
 		ACCESS_COURT,
 		ACCESS_DETECTIVE,
+		ACCESS_ENGINEERING,
+		ACCESS_EVA,
+		ACCESS_GATEWAY,
+		ACCESS_KEYCARD_AUTH,
 		ACCESS_MAINT_TUNNELS,
 		ACCESS_MECH_SECURITY,
+		ACCESS_MEDICAL,
 		ACCESS_MINERAL_STOREROOM,
+		ACCESS_MINING,
 		ACCESS_MORGUE,
 		ACCESS_MORGUE_SECURE,
+		ACCESS_RC_ANNOUNCE,
+		ACCESS_SCIENCE,
 		ACCESS_SECURITY,
+		ACCESS_SERVICE,
+		ACCESS_SHIPPING,
 		ACCESS_WEAPONS,
 	)
 	extra_access = list(
-		ACCESS_BRIG,
+		ACCESS_TELEPORTER,
 	)
+	// HoS office access is a private command wildcard, so the ID needs silver-tier wildcard slots (see the plainclothes ID).
+	minimal_wildcard_access = list(
+		ACCESS_HOS,
+	)
+	// HoS access makes this a head-level trim, so only the Captain or an ID console can hand it out, like the HoS trim.
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,
-		ACCESS_HOS,
 	)
 	job = /datum/job/detective
 	honorifics = list("Detective", "Investigator")
@@ -799,18 +824,31 @@
 	department_color = COLOR_MEDICAL_BLUE
 	subdepartment_color = COLOR_MEDICAL_BLUE
 	sechud_icon_state = SECHUD_MEDICAL_DOCTOR
+	// Lowpop: union of Medical Doctor, Paramedic, Chemist and Coroner access.
 	extra_access = list(
-		ACCESS_PLUMBING,
+		ACCESS_BIT_DEN,
+		ACCESS_CARGO,
+		ACCESS_CONSTRUCTION,
+		ACCESS_HYDROPONICS,
+		ACCESS_MINING,
+		ACCESS_MINING_STATION,
+		ACCESS_PSYCHOLOGY,
+		ACCESS_SCIENCE,
 		)
 	minimal_access = list(
+		ACCESS_EXTERNAL_AIRLOCKS,
+		ACCESS_MAINT_TUNNELS,
 		ACCESS_MECH_MEDICAL,
 		ACCESS_MEDICAL,
 		ACCESS_MINERAL_STOREROOM,
 		ACCESS_MORGUE,
+		ACCESS_MORGUE_SECURE,
+		ACCESS_PARAMEDIC,
 		ACCESS_PHARMACY,
+		ACCESS_PLUMBING,
+		ACCESS_SERVICE,
 		ACCESS_SURGERY,
 		ACCESS_VIROLOGY,
-		ACCESS_PARAMEDIC,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -1082,19 +1120,23 @@
 	department_color = COLOR_SCIENCE_PINK
 	subdepartment_color = COLOR_SCIENCE_PINK
 	sechud_icon_state = SECHUD_SCIENTIST
+	// Lowpop: union of Scientist, Roboticist and Geneticist access.
 	minimal_access = list(
 		ACCESS_AUX_BASE,
+		ACCESS_GENETICS,
 		ACCESS_MECH_SCIENCE,
 		ACCESS_MINERAL_STOREROOM,
+		ACCESS_MORGUE,
 		ACCESS_ORDNANCE,
 		ACCESS_ORDNANCE_STORAGE,
 		ACCESS_RESEARCH,
+		ACCESS_ROBOTICS,
 		ACCESS_SCIENCE,
+		ACCESS_TECH_STORAGE,
 		ACCESS_XENOBIOLOGY,
 		)
 	extra_access = list(
-		ACCESS_GENETICS,
-		ACCESS_ROBOTICS,
+		ACCESS_MORGUE_SECURE,
 		)
 	template_access = list(
 		ACCESS_CAPTAIN,
@@ -1287,8 +1329,10 @@
 	department_color = COLOR_ENGINEERING_ORANGE
 	subdepartment_color = COLOR_ENGINEERING_ORANGE
 	sechud_icon_state = SECHUD_STATION_ENGINEER
+	// Lowpop: union of Station Engineer and Atmospheric Technician access.
 	minimal_access = list(
 		ACCESS_AUX_BASE,
+		ACCESS_ATMOSPHERICS,
 		ACCESS_ATMOS_EQUIP,
 		ACCESS_CONSTRUCTION,
 		ACCESS_ENGINEERING,
@@ -1301,9 +1345,7 @@
 		ACCESS_TCOMMS,
 		ACCESS_TECH_STORAGE,
 		)
-	extra_access = list(
-		ACCESS_ATMOSPHERICS,
-		)
+	extra_access = list()
 	template_access = list(
 		ACCESS_CAPTAIN,
 		ACCESS_CHANGE_IDS,

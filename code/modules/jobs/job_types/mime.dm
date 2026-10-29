@@ -2,8 +2,8 @@
 	title = JOB_MIME
 	description = "..."
 	faction = FACTION_STATION
-	total_positions = 1
-	spawn_positions = 1
+	total_positions = 0
+	spawn_positions = 0
 	supervisors = SUPERVISOR_HOP
 	exp_granted_type = EXP_TYPE_CREW
 	config_tag = "MIME"
@@ -28,7 +28,8 @@
 		/obj/item/book/granter/action/spell/mime/mimery = 1,
 	)
 	rpg_title = "Fool"
-	job_flags = STATION_JOB_FLAGS
+	// Lowpop: removed, hidden from the job menu.
+	job_flags = STATION_JOB_FLAGS & ~JOB_NEW_PLAYER_JOINABLE
 
 	voice_of_god_power = 0.5 //Why are you speaking
 	voice_of_god_silence_power = 3

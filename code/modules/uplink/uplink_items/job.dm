@@ -132,7 +132,7 @@
 	desc = "A syringe gun that fires DNA injectors instead of normal syringes."
 	item = /obj/item/gun/syringe/dna
 	cost = 14
-	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
+	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
 
 /datum/uplink_item/role_restricted/meathook
 	name = "Butcher's Meat Hook"
@@ -170,7 +170,7 @@
 			Now also contains regenerative chemicals to keep users healthy as they exercise their newfound muscles."
 	item = /obj/item/reagent_containers/hypospray/medipen/magillitis
 	cost = 15
-	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
+	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
 
 /datum/uplink_item/role_restricted/gorillacube
 	name = "Gorilla Cube"
@@ -178,14 +178,14 @@
 			Caution: Product may rehydrate when exposed to water."
 	item = /obj/item/food/monkeycube/gorilla
 	cost = 6
-	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR)
+	restricted_roles = list(JOB_GENETICIST, JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
 
 /datum/uplink_item/role_restricted/brainwash_disk
 	name = "Brainwashing Surgery Program"
 	desc = "A disk containing the procedure to perform a brainwashing surgery, allowing you to implant an objective onto a target. \
 	Insert into an Operating Console to enable the procedure."
 	item = /obj/item/disk/surgery/brainwashing
-	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_CORONER, JOB_ROBOTICIST)
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_CORONER, JOB_ROBOTICIST, JOB_SCIENTIST)
 	cost = 5
 	surplus = 50
 
@@ -195,7 +195,7 @@
 	All changes are superficial and does not change ones genetic makeup. \
 	Insert into an Operating Console to enable the procedure."
 	item = /obj/item/disk/surgery/advanced_plastic_surgery
-	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_ROBOTICIST)
+	restricted_roles = list(JOB_MEDICAL_DOCTOR, JOB_CHIEF_MEDICAL_OFFICER, JOB_ROBOTICIST, JOB_SCIENTIST)
 	cost = 1
 	surplus = 50
 
@@ -208,7 +208,7 @@
 		This version of the module has been modified to allow for near instant activation of the MODsuit. \
 		Useful for quickly getting your MODsuit on/off, or for taking care of a target via a tragic accident."
 	item = /obj/item/mod/module/springlock/bite_of_87
-	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
+	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
 	cost = 2
 	surplus = 15
 
@@ -227,7 +227,7 @@
 	item = /obj/item/borg/upgrade/modkit/indoors
 	cost = 5 //you need two for full damage, so total of 10 for maximum damage
 	limited_stock = 2 //you can't use more than two!
-	restricted_roles = list("Shaft Miner")
+	restricted_roles = list(JOB_SHAFT_MINER, JOB_CARGO_TECHNICIAN)
 	surplus = 20
 
 /datum/uplink_item/role_restricted/mimery
@@ -244,7 +244,7 @@
 	desc = "An implant that grants you a recharging laser gun inside your arm. Weak to EMPs. Comes with a syndicate autosurgeon for immediate self-application."
 	cost = 10
 	item = /obj/item/autosurgeon/syndicate/laser_arm
-	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
+	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
 	surplus = 20
 
 /datum/uplink_item/role_restricted/chemical_gun
@@ -319,7 +319,7 @@
 			attached, an exosuit weapon can be fitted inside."
 	item = /obj/item/mecha_parts/mecha_equipment/concealed_weapon_bay
 	cost = 3
-	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR)
+	restricted_roles = list(JOB_ROBOTICIST, JOB_RESEARCH_DIRECTOR, JOB_SCIENTIST)
 	surplus = 15
 
 /datum/uplink_item/role_restricted/spider_injector
