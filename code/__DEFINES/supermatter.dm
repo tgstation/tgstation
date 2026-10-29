@@ -198,3 +198,12 @@
 #define SUPERMATTER_TESLA_COLOUR "#00ffff"
 #define SUPERMATTER_SINGULARITY_RAYS_COLOUR "#750000"
 #define SUPERMATTER_SINGULARITY_LIGHT_COLOUR "#400060"
+
+/// After this many sequential healing emitter hits, diminishing returns starts to apply.
+#define HEALING_EMITTER_SOFTCAP 18
+/// Every following emitter beam reduces in effectiveness by this factor.
+/// I.e. the first beam is 0.92x effective, the second is 0.84x effective, and so on, down to 0.02x effective at 30 beams.
+#define HEALING_EMITTER_DIMINISHING_FACTOR 0.08
+/// The SM must not be hit with a healing beam for this long before the diminishing returns reset.
+/// By default the SM has three emitters that fire every 10 seconds, so 18 beams per minute.
+#define HEALING_EMITTER_COOLDOWN (4 MINUTES)

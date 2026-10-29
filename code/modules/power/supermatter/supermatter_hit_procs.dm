@@ -33,14 +33,37 @@
 		if(damage_to_be > danger_point)
 			visible_message(span_notice("[src] compresses under stress, resisting further impacts!"))
 		playsound(src, 'sound/effects/supermatter.ogg', 50, TRUE)
+
 	if(istype(projectile, /obj/projectile/beam/emitter/hitscan))
 		var/obj/projectile/beam/emitter/hitscan/mahlaser = projectile
-		if(mahlaser?.integrity_heal)
-			damage = max(0, damage - mahlaser?.integrity_heal)
-		if(mahlaser?.energy_reduction)
-			internal_energy = max(0, internal_energy - mahlaser?.energy_reduction)
-		if(mahlaser?.psi_change)
-			psy_coeff = clamp(psy_coeff + mahlaser?.psi_change, 0, 1)
+		var/damage_change = mahlaser.integrity_heal
+		var/energy_change = mahlaser.energy_reduction
+		var/psi_change = mahlaser.psi_change
+
+		if(damage_change > 0)
+			if(healing_emitter_hits >= HEALING_EMITTER_SOFTCAP)
+				damage_change = round(damage_change * max(0, 1 - HEALING_EMITTER_DIMINISHING_FACTOR * (healing_emitter_hits - HEALING_EMITTER_SOFTCAP)), 0.01)
+				if(prob(4 * (healing_emitter_hits - HEALING_EMITTER_SOFTCAP)))
+					for(var/mob/living/nearby in viewers(src, 5)) // light scatter
+						nearby.flash_act(1, visual = TRUE, length = 1 SECONDS)
+
+				if(damage_change <= 0) // BEAM scatter
+					if(prob(33))
+						visible_message(span_smallnotice("[mahlaser] entirely refracts through [src], failing to be absorbed entirely!"))
+					var/refract_angle = dir2angle(mahlaser.dir)
+					mahlaser.set_angle_centered(loc, round(rand(refract_angle - 45, refract_angle + 45), 5))
+					return COMPONENT_BULLET_PIERCED
+
+				if(prob(33))
+					visible_message(span_smallnotice("Parts of [mahlaser] scatter through [src], rather than being fully absorbed!"))
+
+			healing_emitter_hits += 1
+			addtimer(VARSET_CALLBACK(src, healing_emitter_hits, 0), HEALING_EMITTER_COOLDOWN, TIMER_UNIQUE|TIMER_OVERRIDE)
+
+		damage = max(0, damage - damage_change)
+		internal_energy = max(0, internal_energy - energy_change)
+		psy_coeff = clamp(psy_coeff + psi_change, 0, 1)
+
 	external_power_immediate += projectile.damage * bullet_energy + kiss_power
 	if(istype(projectile, /obj/projectile/beam/emitter/hitscan/magnetic))
 		absorption_ratio = clamp(absorption_ratio + 0.05, 0.15, 1)
