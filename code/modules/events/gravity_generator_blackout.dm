@@ -6,6 +6,7 @@
 	description = "Turns off the gravity generator."
 	min_wizard_trigger_potency = 0
 	max_wizard_trigger_potency = 4
+	max_occurrences = 1
 
 /datum/round_event_control/gravity_generator_blackout/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
