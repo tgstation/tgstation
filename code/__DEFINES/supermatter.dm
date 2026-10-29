@@ -205,5 +205,5 @@
 /// I.e. the first beam is 0.92x effective, the second is 0.84x effective, and so on, down to 0.02x effective at 30 beams.
 #define HEALING_EMITTER_DIMINISHING_FACTOR 0.08
 /// The SM must not be hit with a healing beam for this long before the diminishing returns reset.
-/// By default the SM has three emitters that fire every 10 seconds, so 18 beams per minute.
+/// By default the SM has three emitters that fire 2-10 seconds, so between 18 and 90! beams per minute.
 #define HEALING_EMITTER_COOLDOWN (4 MINUTES)
