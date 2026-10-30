@@ -1,0 +1,7 @@
+author: "necromanceranne"
+delete-after: True
+changes:
+  - balance: "Pulse projectiles now have high armor penetration. They also move extremely quickly."
+  - balance: "Pulse slugs do 40 damage and have an AP of 30."
+  - balance: "X-ray lasers now do 20 damage instead of 15."
+  - balance: "Smoothbore disablers no longer are inaccurate, and do 45 damage and move twice as fast. They still struggle to harm anything with armor."
