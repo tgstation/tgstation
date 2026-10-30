@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Adds *stammer / *stutter and *slur emotes, which causes your next few messages to be stuttered (as if hurt) or slurred (as if drunk). You can optionally type *[emote] [number] to determine how long you want the effect to last in seconds (it's capped, don't try it)."
-  - qol: "Adds *jitter, which causes you to start jittering (where your sprite starts to twitch back and forth). You can optionally type *jitter [number] to determine how long you want the jitter to last in seconds (it's capped, don't try it)."

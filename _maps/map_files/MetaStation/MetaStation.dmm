@@ -1402,7 +1402,7 @@
 /turf/open/floor/iron/white,
 /area/station/medical/storage)
 "aAI" = (
-/obj/structure/sign/plaques/kiddie/perfect_man{
+/obj/structure/plaque/kiddie/perfect_man{
 	pixel_y = 32
 	},
 /obj/effect/spawner/random/decoration/showcase,
@@ -11365,7 +11365,7 @@
 /turf/open/floor/iron,
 /area/station/hallway/secondary/exit/departure_lounge)
 "dWf" = (
-/obj/structure/sign/plaques/kiddie{
+/obj/structure/plaque/kiddie/developer{
 	pixel_y = 32
 	},
 /obj/machinery/camera/directional/north{
@@ -46795,7 +46795,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/circuit_workshop)
 "pYn" = (
-/obj/structure/sign/plaques/kiddie/library{
+/obj/structure/plaque/kiddie/library{
 	pixel_y = -32
 	},
 /obj/effect/turf_decal/tile/neutral{
@@ -55735,7 +55735,7 @@
 /turf/open/floor/plating,
 /area/station/maintenance/port/aft)
 "sYh" = (
-/obj/structure/sign/plaques/kiddie/perfect_drone{
+/obj/structure/plaque/kiddie/perfect_drone{
 	pixel_y = 32
 	},
 /obj/structure/table/wood,
@@ -58959,7 +58959,7 @@
 /turf/open/floor/iron/dark,
 /area/station/engineering/atmospherics_engine)
 "ucA" = (
-/obj/structure/sign/plaques/kiddie/badger{
+/obj/structure/plaque/kiddie/badger{
 	pixel_y = 32
 	},
 /obj/item/food/grown/flower/poppy{

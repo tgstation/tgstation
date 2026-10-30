@@ -143,7 +143,7 @@
 		playsound(src, 'sound/items/deconstruct.ogg', 50, TRUE)
 	else
 		drop_material_shards()
-		playsound(src, SFX_SHATTER, 50, TRUE)
+		playsound(src, /datum/sound_effect/shatter, 50, TRUE)
 
 /obj/structure/tipjar/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	playsound(src, 'sound/effects/hit_on_shattered_glass.ogg', 70, TRUE)

@@ -77,7 +77,7 @@
 	if(gain_text)
 		to_chat(user, span_warning("[gain_text]"))
 	on_gain(user, our_heretic)
-	if(is_final_knowledge && !our_heretic.unlimited_blades)
+	if(is_final_knowledge)
 		our_heretic.disable_blade_breaking()
 	SEND_SIGNAL(our_heretic, COMSIG_HERETIC_RESEARCHED_KNOWLEDGE, src)
 

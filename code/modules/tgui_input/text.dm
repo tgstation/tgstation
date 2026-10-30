@@ -30,6 +30,10 @@
 
 	// Client does NOT have tgui_input on: Returns regular input
 	if(!user.client.prefs.read_preference(/datum/preference/toggle/tgui_input))
+		// For regular input default value is MAX_MESSAGE_LEN
+		if(!max_length)
+			max_length = MAX_MESSAGE_LEN
+
 		if(encode)
 			if(multiline)
 				return stripped_multiline_input(user, message, title, default, PREVENT_CHARACTER_TRIM_LOSS(max_length))

@@ -1729,7 +1729,7 @@
 /turf/open/floor/iron,
 /area/virtual_domain)
 "oH" = (
-/obj/structure/sign/plaques/kiddie/perfect_man{
+/obj/structure/plaque/kiddie/perfect_man{
 	pixel_y = 32
 	},
 /obj/effect/spawner/random/decoration/showcase,
@@ -5966,7 +5966,7 @@
 /turf/open/floor/iron/dark,
 /area/virtual_domain)
 "Yo" = (
-/obj/structure/sign/plaques/kiddie/perfect_drone{
+/obj/structure/plaque/kiddie/perfect_drone{
 	pixel_y = 32
 	},
 /obj/structure/table/wood,

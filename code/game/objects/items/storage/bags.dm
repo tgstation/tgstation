@@ -188,7 +188,7 @@
 		spam_protection = FALSE
 		return
 
-	playsound(user, SFX_RUSTLE, 50, TRUE)
+	playsound(user, /datum/sound_effect/rustle, 50, TRUE)
 	if(!COOLDOWN_FINISHED(src, ore_bag_balloon_cooldown))
 		return
 
@@ -372,8 +372,8 @@
 	custom_price = PAYCHECK_CREW * 0.6
 	storage_type = /datum/storage/bag/tray
 	sound_vary = TRUE
-	pickup_sound = SFX_TRAY_PICKUP
-	drop_sound = SFX_TRAY_DROP
+	pickup_sound = /datum/sound_effect/tray_pickup
+	drop_sound = /datum/sound_effect/tray_drop
 
 /obj/item/storage/bag/tray/attack(mob/living/M, mob/living/user)
 	. = ..()

@@ -24,7 +24,7 @@
 	var/cannonmode = CLOWN_CANNON_INACTIVE
 	///Does the driver require the clown role to drive it
 	var/enforce_clown_role = TRUE
-	forced_enter_sound = SFX_CLOWN_CAR_LOAD
+	forced_enter_sound = /datum/sound_effect/clown_car_load
 	enter_sound = 'sound/vehicles/clown_car/door_close.ogg'
 	exit_sound = 'sound/vehicles/clown_car/door_open.ogg'
 

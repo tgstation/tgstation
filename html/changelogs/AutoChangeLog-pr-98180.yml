@@ -1,5 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - qol: "Radiation shields store collected tritium internally, which can be removed via an attached pipe. Note the internal storage is not infinite, and has a pressure limit - surpassing it will cause the tritium to leak into the air."
-  - qol: "Emergency radiation shields now also generate tritium over time (which is also stored internally)"
