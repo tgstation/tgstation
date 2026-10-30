@@ -648,3 +648,26 @@
   - admin: overflayer once again shows the base plane and offset for unregistered
       planes it can decode.
   - bugfix: the potential manifest in the pre-game lobby updates when someone unreadies.
+2026-10-30:
+  CabinetOnFire:
+  - bugfix: Fixes edge-case where AI could get stuck in behaviors (due to decorators
+      not aborting correctly)
+  Melbert:
+  - bugfix: Fix changeling void adaptation and darkness adaptation speeding up chemical
+      regen, rather than slowing it down
+  - bugfix: Fix latejoin revolution never gaining new headrevs
+  - bugfix: Stealthy actions (like spy stealing's cog icon) are hidden again
+  - bugfix: (Should) fix issues where progress bars flash red or flash complete at
+      inappropriate times
+  - bugfix: Fixes ninja draining power directly from a cell only working if they fail
+      to drain power
+  - code_imp: Cleaned up cancel interactions hotkey to be less jank, report anything
+      weird
+  - bugfix: Traitors can actually get hijack objectives
+  PapaMichael:
+  - bugfix: Basic night vision (like from the genetics mutation) works again
+  vinylspiders:
+  - qol: examining an unsecured welder now tells you its fuel tank is open and can
+      be screwed shut, and trying to light one tells you to screw the tank shut first.
+  - bugfix: camera coverage no longer breaks when looking down through glass at the
+      bottom of a multilevel area
