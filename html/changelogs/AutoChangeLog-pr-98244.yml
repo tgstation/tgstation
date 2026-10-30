@@ -1,8 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - rscdel: "Traitor, Blood Brother, Spy, and Changeling can no longer hijack the emergency shuttle unless they either have an objective to hijack, or they set custom objective."
-  - rscdel: "Heretic can no longer hijack unless they ascend, or set a custom objective."
-  - balance: "The chance of rolling hijack for Traitor, Blood Brother, and Spy have gone up slightly."
-  - balance: "Changelings can now rarely roll hijack."
-  - qol: "Spies objectives have been touched up in general, making less nonsensical combinations."

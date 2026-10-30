@@ -1,4 +1,0 @@
-author: "vinylspiders"
-delete-after: True
-changes:
-  - bugfix: "fixes an issue where tgui inputs that open another of the same interface (such as Jump To Coordinate) tgui input would just cancel and close if you select an option too quickly."

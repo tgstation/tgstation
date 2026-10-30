@@ -40,7 +40,7 @@
 
 	owner.AddComponent(/datum/component/debris_bleeder, \
 		list(/obj/effect/spawner/random/glass_shards = 20, /obj/effect/spawner/random/glass_debris = 0), \
-		BRUTE, SFX_SHATTER, sound_threshold = 20)
+		BRUTE, /datum/sound_effect/shatter, sound_threshold = 20)
 
 	RegisterSignal(owner, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(texture_limb)) //also catch new limbs being attached
 	RegisterSignal(owner, COMSIG_CARBON_REMOVE_LIMB, PROC_REF(untexture_limb)) //and remove it from limbs if they go away

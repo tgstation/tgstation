@@ -205,7 +205,7 @@
 
 	name = newtitle
 	book_data.set_title(html_decode(newtitle)) //Don't want to double encode here
-	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	playsound(src, /datum/sound_effect/writing_pen, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/book/proc/vandalize_contents(mob/living/user, obj/item/tool)
@@ -217,7 +217,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	book_data.set_content(html_decode(content))
-	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	playsound(src, /datum/sound_effect/writing_pen, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/book/proc/vandalize_author(mob/living/user, obj/item/tool)
@@ -229,7 +229,7 @@
 		return ITEM_INTERACT_BLOCKING
 
 	book_data.set_author(html_decode(author)) //Setting this encodes, don't want to double up
-	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	playsound(src, /datum/sound_effect/writing_pen, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	return ITEM_INTERACT_SUCCESS
 
 /// Called when user clicks on the book with a carving utensil. Attempts to carve the book.
@@ -282,14 +282,14 @@
 	if(!ui)
 		ui = new(user, src, ui_name)
 		ui.open()
-		playsound(src, SFX_PAGE_TURN, 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, /datum/sound_effect/page_turn, 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/tgui_book/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
 	if(.)
 		return
 	if(action == "play_flip_sound")
-		playsound(src, SFX_PAGE_TURN, 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(src, /datum/sound_effect/page_turn, 30, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/tgui_book/manual/ui_state(mob/user)
 	return GLOB.book_state

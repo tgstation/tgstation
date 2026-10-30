@@ -1,0 +1,3 @@
+/obj/structure/sign/plaques/@SUBTYPES : /obj/structure/plaque/@SUBTYPES{@OLD}
+/obj/structure/sign/plaques/kiddie : /obj/structure/plaque/kiddie/developer{@OLD}
+/obj/structure/plaque/kiddie : /obj/structure/plaque/kiddie/developer{@OLD}

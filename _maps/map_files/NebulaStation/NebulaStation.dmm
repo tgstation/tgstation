@@ -37999,7 +37999,7 @@
 	dir = 1
 	},
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/sign/plaques/kiddie/library{
+/obj/structure/plaque/kiddie/library{
 	pixel_y = -32
 	},
 /turf/open/floor/wood/large,
@@ -43172,7 +43172,7 @@
 "grJ" = (
 /obj/structure/table/wood/fancy/green,
 /obj/effect/spawner/random/aimodule/harmless,
-/obj/structure/sign/plaques/kiddie{
+/obj/structure/plaque/kiddie/developer{
 	pixel_y = 32
 	},
 /obj/machinery/light/directional/north,
@@ -117987,7 +117987,7 @@
 /obj/effect/turf_decal/siding/wood{
 	dir = 1
 	},
-/obj/structure/sign/plaques/kiddie/library{
+/obj/structure/plaque/kiddie/library{
 	pixel_y = 32;
 	dir = 1
 	},
@@ -125339,7 +125339,7 @@
 /turf/open/floor/wood/large,
 /area/station/command/heads_quarters/ce)
 "sBd" = (
-/obj/structure/sign/plaques/kiddie/badger{
+/obj/structure/plaque/kiddie/badger{
 	pixel_y = 32
 	},
 /obj/item/food/grown/flower/poppy{
@@ -151258,7 +151258,7 @@
 	dir = 4
 	},
 /obj/effect/turf_decal/siding/wood,
-/obj/structure/sign/plaques/kiddie/library{
+/obj/structure/plaque/kiddie/library{
 	pixel_y = -32
 	},
 /turf/open/floor/wood/large,
