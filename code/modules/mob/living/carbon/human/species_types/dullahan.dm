@@ -31,6 +31,8 @@
 
 	/// The dullahan relay that's associated with the owner, used to handle many things such as talking and hearing.
 	var/obj/item/dullahan_relay/my_head
+	/// Do we try to prevent reset_perspective() from working? Useful to stop perspective changes when they're looking through their head.
+	var/prevent_perspective_change = FALSE
 	/// Did our owner's first client connection get handled yet? Useful for when some proc needs to be called once we're sure that a client has moved into our owner, like for Dullahans.
 	var/owner_first_client_connection_handled = FALSE
 
@@ -44,6 +46,7 @@
 	human.lose_hearing_sensitivity(TRAIT_GENERIC)
 	RegisterSignal(human, COMSIG_CARBON_ATTACH_LIMB, PROC_REF(on_gained_part))
 	RegisterSignal(human, COMSIG_CARBON_DEFIB_BRAIN_CHECK, PROC_REF(defib_check))
+	RegisterSignal(human, COMSIG_HUMAN_FORCED_PERSPECTIVE_MANAGEMENT, PROC_REF(perspective_manager))
 
 	var/obj/item/bodypart/head/head = human.get_bodypart(BODY_ZONE_HEAD)
 	head.speech_span = null
@@ -94,6 +97,21 @@
 	my_head.owner.gib(DROP_ALL_REMAINS)
 	QDEL_NULL(my_head)
 
+/// Handles perspective management for the dullahan's detached head and vision perspective. Will set the index of the potential_perspective_list if we need to hand that back for update_perspective arg
+/datum/species/dullahan/proc/perspective_manager(datum/source, list/potential_perspective_list, atom/new_eye, force_reset)
+	SIGNAL_HANDLER
+	if(prevent_perspective_change || (new_eye != source) || (new_eye != my_head))
+		return NONE
+
+	var/mob/living/carbon/human/dullahan = source
+	var/dullahan_eye = dullahan.client?.eye
+	if(dullahan_eye && new_eye != dullahan_eye)
+		potential_perspective_list += dullahan_eye
+		return COMSIG_UPDATE_NEW_PERSPECTIVE
+
+	dullahan.update_fullscreen()
+	return NONE
+
 /datum/species/dullahan/proc/defib_check(mob/living/carbon/human/human)
 	SIGNAL_HANDLER
 	return human.can_defib_brain(locate(/obj/item/organ/brain) in my_head.loc) || DEFIB_POSSIBLE
@@ -125,9 +143,6 @@
 		else
 			human.reset_perspective(my_head, TRUE)
 			prevent_perspective_change = TRUE
-
-/datum/species/dullahan/get_locked_perspective(mob/living/carbon/human/owner)
-	return my_head
 
 /datum/species/dullahan/on_owner_login(mob/living/carbon/human/owner)
 	var/obj/item/organ/eyes/eyes = owner.get_organ_slot(ORGAN_SLOT_EYES)

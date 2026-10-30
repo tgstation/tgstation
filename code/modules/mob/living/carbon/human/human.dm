@@ -84,14 +84,14 @@
 	add_to_all_human_data_huds()
 
 /mob/living/carbon/human/reset_perspective(atom/new_eye, force_reset = FALSE)
-	if(dna?.species?.prevent_perspective_change && !force_reset) // This is in case a species needs to prevent perspective changes in certain cases, like Dullahans preventing perspective changes when they're looking through their head.
-		var/atom/locked_perspective = dna.species.get_locked_perspective(src)
-		if(new_eye && new_eye != src && new_eye != locked_perspective) // Something is explicitly taking our view elsewhere (a camera console, say): let it
-			return ..()
-		if(locked_perspective && client && client.eye != locked_perspective) // The default reset after that view ends: go back to where we were looking from
-			return ..(locked_perspective)
-		update_fullscreen()
-		return
+	if(!force_reset)
+		return ..()
+
+	var/potential_perspective_list = list()
+	var/result = SEND_SIGNAL(src, COMSIG_HUMAN_FORCED_PERSPECTIVE_MANAGEMENT, potential_perspective_list, new_eye, force_reset)
+	if(result == COMSIG_UPDATE_NEW_PERSPECTIVE)
+		return ..(potential_perspective_list[1])
+
 	return ..()
 
 /mob/living/carbon/human/Topic(href, href_list)

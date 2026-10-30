@@ -156,9 +156,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Should the character preview dummy load all organs? Required for i.e organ_set_bonus visual effects
 	var/character_preview_load_all_organs = FALSE
 
-	/// Do we try to prevent reset_perspective() from working? Useful for Dullahans to stop perspective changes when they're looking through their head.
-	var/prevent_perspective_change = FALSE
-
 	///Was the species changed from its original type at the start of the round?
 	var/roundstart_changed = FALSE
 
@@ -1440,16 +1437,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
  */
 /datum/species/proc/on_owner_login(mob/living/carbon/human/owner)
 	return
-
-/**
- * While prevent_perspective_change is set, returns the atom the owner's view is locked to (null for none).
- * Used to put the view back there after something (like a camera console) temporarily moved it.
- *
- * Arguments:
- * * owner - The owner of our species.
- */
-/datum/species/proc/get_locked_perspective(mob/living/carbon/human/owner)
-	return null
 
 /**
  * Gets a description of the species' *physical* attributes. What makes playing as one different. Used in magic mirrors.
