@@ -157,7 +157,7 @@
 	light.set_range(source.light_range)
 	var/old_lumcount_range = lumcount_range
 	lumcount_range = ceil(light.range)
-	if(lumcount_range != old_lumcount_range)
+	if(lumcount_range != old_lumcount_range && (light.overlay_lighting_flags & LIGHTING_ON))
 		add_dynamic_lumi(light.current_holder)
 		register_new_cells()
 
