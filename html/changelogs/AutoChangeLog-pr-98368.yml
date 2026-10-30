@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Smoke from things like smoke grenades or the chaplain's smoke spell once again have a negative effect when exposed to it (coughing, minor oxygen damage, dropping items)"
