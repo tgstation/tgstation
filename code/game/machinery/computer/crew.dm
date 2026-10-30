@@ -359,7 +359,6 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 
 		// ID and id-related data
 		var/obj/item/card/id/id_card = tracked_living_mob.get_idcard(hand_first = FALSE)
-		var/sechud_icon_state
 
 		if (id_card)
 			entry["name"] = id_card.registered_name
@@ -367,12 +366,11 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 			var/trim_assignment = id_card.get_trim_assignment()
 			if (jobs[trim_assignment] != null)
 				entry["ijob"] = jobs[trim_assignment]
-			sechud_icon_state = id_card.get_sechud_job_icon_state()
 
-		if (!sechud_icon_state || HAS_TRAIT(tracked_living_mob, TRAIT_UNKNOWN_APPEARANCE))
-			sechud_icon_state = "hudno_id"
-
-		entry["sechud_icon"] = icon2base64(icon('icons/mob/huds/mini_hud.dmi', sechud_icon_state))
+			if (!HAS_TRAIT(tracked_living_mob, TRAIT_UNKNOWN_APPEARANCE))
+				var/icon/job_hud = get_job_hud_icon(id_card.assignment)
+				if (job_hud)
+					entry["sechud_icon"] = icon2base64(job_hud)
 
 		// Broken sensors show garbage data
 		if (uniform.has_sensor == BROKEN_SENSORS)

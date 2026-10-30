@@ -36,6 +36,7 @@ export const StationMap = (props: StationMapProps) => {
   const [panStart, setPanStart] = useState({ x: 0, y: 0 });
 
   const viewportRef = useRef<HTMLDivElement>(null);
+  const mapRef = useRef<HTMLDivElement>(null);
 
   const focusOnCoordinates = useCallback((xPct: number, yPct: number) => {
     if (!viewportRef.current) return;
@@ -84,24 +85,31 @@ export const StationMap = (props: StationMapProps) => {
       });
     }
 
-    if (areaGrid && gridW && gridH) {
-      const W = rect.width;
-      const H = rect.height;
+    if (areaGrid && gridW && gridH && mapRef.current) {
+      const mapRect = mapRef.current.getBoundingClientRect();
 
-      const px = (xInViewport - W / 2 - pan.x) / zoom + W / 2;
-      const py = (yInViewport - H / 2 - pan.y) / zoom + H / 2;
+      const px = e.clientX - mapRect.left;
+      const py = e.clientY - mapRect.top;
 
-      const xPct = px / W;
-      const yPct = 1 - py / H;
+      const xPct = px / mapRect.width;
+      const yPct = 1 - py / mapRect.height;
 
-      const gridX = Math.min(gridW - 1, Math.max(0, Math.floor(xPct * gridW)));
-      const gridY = Math.min(gridH - 1, Math.max(0, Math.floor(yPct * gridH)));
+      if (xPct >= 0 && xPct <= 1 && yPct >= 0 && yPct <= 1) {
+        const gridX = Math.min(
+          gridW - 1,
+          Math.max(0, Math.floor(xPct * gridW)),
+        );
+        const gridY = Math.min(
+          gridH - 1,
+          Math.max(0, Math.floor(yPct * gridH)),
+        );
 
-      const areaName = areaGrid?.[gridX]?.[gridY];
+        const areaName = areaGrid?.[gridX]?.[gridY];
 
-      if (areaName) {
-        setHoverArea(areaName);
-        return;
+        if (areaName) {
+          setHoverArea(areaName);
+          return;
+        }
       }
     }
 
@@ -172,6 +180,7 @@ export const StationMap = (props: StationMapProps) => {
           }}
         >
           <div
+            ref={mapRef}
             style={{
               position: 'absolute',
               top: 0,
