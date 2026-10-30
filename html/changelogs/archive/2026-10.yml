@@ -672,6 +672,7 @@
       preventing the AI and Cyborgs for messing with them unless mended.
   PapaMichael:
   - bugfix: Basic night vision (like from the genetics mutation) works again
+  - bugfix: You can once again give items with the keybind
   necromanceranne:
   - balance: Pulse projectiles now have high armor penetration. They also move extremely
       quickly.
