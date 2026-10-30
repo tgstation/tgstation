@@ -89,7 +89,7 @@
 
 	var/potential_perspective_list = list()
 	var/result = SEND_SIGNAL(src, COMSIG_HUMAN_FORCED_PERSPECTIVE_MANAGEMENT, potential_perspective_list, new_eye, force_reset)
-	if(result == COMSIG_UPDATE_NEW_PERSPECTIVE)
+	if(result & COMSIG_UPDATE_NEW_PERSPECTIVE)
 		return ..(potential_perspective_list[1])
 
 	return ..()
