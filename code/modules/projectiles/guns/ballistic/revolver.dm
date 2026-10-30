@@ -70,7 +70,7 @@ GAME_VERB(/obj/item/gun/ballistic/revolver, spin, "Spin Chamber", null)
 	recent_spin = world.time + spin_delay
 
 	if(do_spin())
-		playsound(usr, SFX_REVOLVER_SPIN, 30, FALSE)
+		playsound(usr, /datum/sound_effect/revolver_spin, 30, FALSE)
 		visible_message(span_notice("[user] spins [src]'s chamber."), span_notice("You spin [src]'s chamber."))
 		balloon_alert(user, "chamber spun")
 	else

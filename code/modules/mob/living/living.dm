@@ -720,7 +720,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 	if(istype(potential_spine))
 		get_up_time *= potential_spine.athletics_boost_multiplier
 
-	if(!instant && !do_after(src, get_up_time, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP, cog_icon = null))
+	if(!instant && !do_after(src, get_up_time, src, timed_action_flags = (IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE|IGNORE_HELD_ITEM|HIDE_INTERACTION), extra_checks = CALLBACK(src, TYPE_PROC_REF(/mob/living, rest_checks_callback)), interaction_key = DOAFTER_SOURCE_GETTING_UP))
 		return
 	if(resting || body_position == STANDING_UP || HAS_TRAIT(src, TRAIT_FLOORED))
 		return
@@ -1355,7 +1355,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 	return
 
 /mob/living/can_hold_items(obj/item/I)
-	return ..() && HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS) && usable_hands
+	return (mobility_flags & MOBILITY_PICKUP) && ..() && usable_hands
 
 /mob/living/can_perform_action(atom/target, action_bitflags)
 	if(!istype(target))
@@ -2087,6 +2087,9 @@ GLOBAL_LIST_EMPTY(fire_appearances)
 	if(HAS_TRAIT(src, TRAIT_TRUE_NIGHT_VISION))
 		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_HIGH)
 
+	if(HAS_TRAIT(src, TRAIT_NIGHT_VISION))
+		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_LOW)
+
 	if(HAS_TRAIT(src, TRAIT_ECHOLOCATOR))
 		new_sight |= SEE_MOBS|SEE_TURFS
 		lighting_cutoff = max(lighting_cutoff, LIGHTING_CUTOFF_FULLBRIGHT)
@@ -2336,7 +2339,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  * * amount (int) The amount of change from the base body temperature
  */
 /mob/living/proc/add_body_temperature_change(key_name, amount)
-	body_temp_changes["[key_name]"] = amount
+	LAZYSET(body_temp_changes, "[key_name]", amount)
 
 /**
  * remove_body_temperature_change Removes the modifications to the body temperature
@@ -2347,7 +2350,7 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  * * key_name (str) The unique key for this change that will be removed
  */
 /mob/living/proc/remove_body_temperature_change(key_name)
-	body_temp_changes -= key_name
+	LAZYREMOVE(body_temp_changes, key_name)
 
 /**
  * get_body_temp_normal_change Returns the aggregate change to body temperature
@@ -2355,10 +2358,11 @@ GLOBAL_LIST_EMPTY(fire_appearances)
  * This aggregates all the changes in the body_temp_changes list and returns the result
  */
 /mob/living/proc/get_body_temp_normal_change()
+	if(!body_temp_changes)
+		return 0
 	var/total_change = 0
-	if(body_temp_changes.len)
-		for(var/change in body_temp_changes)
-			total_change += body_temp_changes["[change]"]
+	for(var/change in body_temp_changes)
+		total_change += body_temp_changes["[change]"]
 	return total_change
 
 /**

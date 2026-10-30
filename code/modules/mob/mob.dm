@@ -952,6 +952,9 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 /mob/proc/swap_hand(held_index, silent = FALSE)
 	SHOULD_NOT_OVERRIDE(TRUE) // Override perform_hand_swap instead
 
+	if(!held_items.len)
+		return FALSE
+
 	if(!isnum(held_index))
 		stack_trace("You passed [held_index] into swap_hand instead of a number. WTF man")
 		return FALSE
@@ -971,8 +974,6 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 /// Performs the actual ritual of swapping hands, such as setting the held index variables
 /mob/proc/perform_hand_swap(held_index)
 	PROTECTED_PROC(TRUE)
-	if (!HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS))
-		return FALSE
 
 	var/previous_index = active_hand_index
 	active_hand_index = held_index
@@ -984,25 +985,6 @@ GAME_VERB_NATIVE(/mob, DisDblClick, ".dblclick", null, argu = null as anything, 
 	hud_used?.update_inventory_slot(ITEM_SLOT_HANDS, held_index)
 	hud_used?.update_inventory_slot(ITEM_SLOT_HANDS, get_offhand_index(held_index))
 	return TRUE
-
-/mob/proc/activate_hand(selected_hand)
-	if (!HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS))
-		return
-
-	if(!selected_hand)
-		selected_hand = active_hand_index
-	else if(istext(selected_hand))
-		selected_hand = LOWER_TEXT(selected_hand)
-		if(selected_hand == "right" || selected_hand == "r")
-			selected_hand = 2
-		if(selected_hand == "left" || selected_hand == "l")
-			selected_hand = 1
-
-	if(selected_hand != active_hand_index)
-		swap_hand(selected_hand)
-
-	// _queue_verb requires a client, so when we don't have it (AI controlled mob) we don't use it
-	client ? mode() : execute_mode()
 
 /mob/proc/assess_threat(judgement_criteria, lasercolor = "", datum/callback/weaponcheck=null) //For sec bot threat assessment
 	return 0

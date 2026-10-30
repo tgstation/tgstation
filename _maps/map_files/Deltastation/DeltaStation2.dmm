@@ -7617,7 +7617,7 @@
 /turf/open/floor/iron/cafeteria,
 /area/station/security/prison/mess)
 "bPH" = (
-/obj/structure/sign/plaques/kiddie,
+/obj/structure/plaque/kiddie/developer,
 /turf/closed/wall/r_wall,
 /area/station/ai/satellite/interior)
 "bPY" = (
@@ -7975,7 +7975,7 @@
 /turf/open/space/basic,
 /area/space/nearstation)
 "bTK" = (
-/obj/structure/sign/plaques/kiddie/badger{
+/obj/structure/plaque/kiddie/badger{
 	pixel_y = 32
 	},
 /obj/structure/table/wood,
@@ -22521,12 +22521,14 @@
 /obj/structure/table/wood,
 /obj/item/storage/dice,
 /obj/structure/window/reinforced/spawner/directional/west,
-/obj/machinery/firealarm/directional/north,
 /obj/item/laser_pointer{
 	pixel_x = 3
 	},
 /obj/effect/turf_decal/siding/wood{
 	dir = 8
+	},
+/obj/structure/plaque/kiddie/library{
+	pixel_y = 32
 	},
 /turf/open/floor/wood/large,
 /area/station/service/library)
@@ -41416,6 +41418,7 @@
 /obj/machinery/disposal/bin,
 /obj/effect/turf_decal/bot,
 /obj/structure/disposalpipe/trunk,
+/obj/machinery/firealarm/directional/north,
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "kfI" = (
@@ -68116,6 +68119,9 @@
 /obj/structure/table/wood,
 /obj/item/folder,
 /obj/item/pen,
+/obj/structure/plaque/kiddie/library{
+	pixel_x = 32
+	},
 /turf/open/floor/iron/dark,
 /area/station/service/library)
 "qMf" = (
@@ -82499,11 +82505,6 @@
 	},
 /turf/open/floor/iron,
 /area/station/hallway/secondary/entry)
-"uow" = (
-/obj/effect/spawner/structure/window,
-/obj/structure/sign/plaques/kiddie/library,
-/turf/open/floor/plating,
-/area/station/service/library)
 "uoz" = (
 /obj/structure/cable,
 /obj/machinery/atmospherics/pipe/smart/manifold4w/supply/hidden/layer4,
@@ -91014,7 +91015,7 @@
 /area/station/science/research)
 "wtU" = (
 /obj/structure/cable,
-/obj/structure/sign/plaques/kiddie/library{
+/obj/structure/plaque/kiddie/library{
 	dir = 1;
 	pixel_y = 32
 	},
@@ -98224,7 +98225,7 @@
 /turf/open/floor/plating,
 /area/station/engineering/supermatter/room)
 "ykl" = (
-/obj/structure/sign/plaques/kiddie/library{
+/obj/structure/plaque/kiddie/library{
 	dir = 1;
 	pixel_y = 32
 	},
@@ -142461,7 +142462,7 @@ cao
 cao
 hvm
 idj
-uow
+hvm
 nyC
 hvm
 cao
@@ -147344,7 +147345,7 @@ cao
 cao
 hvm
 vmL
-uow
+hvm
 hCe
 hvm
 cao

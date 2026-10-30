@@ -43,18 +43,18 @@ SUBSYSTEM_DEF(mapping)
 	var/list/z_level_to_lowest_plane_offset = list()
 	// This pair allows for easy conversion between an offset plane, and its true representation
 	// Both are in the form "input plane" -> output plane(s)
-	/// Assoc list of string plane values to their true, non offset representation
-	var/list/plane_offset_to_true
-	/// Assoc list of true string plane values to a list of all potential offset planess
-	var/list/true_to_offset_planes
-	/// Assoc list of string plane to the plane's offset value
-	var/list/plane_to_offset
-	/// List of planes that do not allow for offsetting
-	var/list/plane_offset_blacklist
-	/// List of render targets that do not allow for offsetting
-	var/list/render_offset_blacklist
-	/// List of plane masters that are of critical priority
-	var/list/critical_planes
+	/// Alist of plane values to their true, non offset representation
+	var/alist/plane_offset_to_true
+	/// Alist of true plane values to a list of all potential offset planess
+	var/alist/true_to_offset_planes
+	/// Alist of planes to their offset value
+	var/alist/plane_to_offset
+	/// Alist of planes that do not allow for offsetting
+	var/alist/plane_offset_blacklist
+	/// Alist of render targets that do not allow for offsetting
+	var/alist/render_offset_blacklist
+	/// Alist of plane masters that are of critical priority
+	var/alist/critical_planes
 	/// The largest plane offset we've generated so far
 	var/max_plane_offset = 0
 
@@ -67,8 +67,8 @@ SUBSYSTEM_DEF(mapping)
 	var/list/reservation_ready = list()
 	var/clearing_reserved_turfs = FALSE
 
-	///All possible biomes in assoc list as type || instance
-	var/list/biomes = list()
+	/// An associative list of biome types to their instance
+	var/list/biomes
 
 	// Z-manager stuff
 	var/station_start  // should only be used for maploading-related tasks
@@ -111,21 +111,24 @@ SUBSYSTEM_DEF(mapping)
 		if(!current_map || current_map.defaulted)
 			to_chat(world, span_boldannounce("Unable to load next or default map config, defaulting to [old_config.map_name]."))
 			current_map = old_config
-	plane_offset_to_true = list()
-	true_to_offset_planes = list()
-	plane_to_offset = list()
+
+	// stupid planecube bs
+	plane_offset_to_true = alist()
+	true_to_offset_planes = alist()
+	plane_to_offset = alist()
+	plane_offset_blacklist = alist()
+	render_offset_blacklist = alist()
+	critical_planes = alist()
 	// VERY special cases for FLOAT_PLANE, so it will be treated as expected by plane management logic
 	// Sorry :(
-	plane_offset_to_true["[FLOAT_PLANE]"] = FLOAT_PLANE
-	true_to_offset_planes["[FLOAT_PLANE]"] = list(FLOAT_PLANE)
-	plane_to_offset["[FLOAT_PLANE]"] = 0
-	plane_offset_blacklist = list()
+	plane_offset_to_true[FLOAT_PLANE] = FLOAT_PLANE
+	true_to_offset_planes[FLOAT_PLANE] = list(FLOAT_PLANE)
+	plane_to_offset[FLOAT_PLANE] = 0
 	// You aren't allowed to offset a floatplane that'll just fuck it all up
-	plane_offset_blacklist["[FLOAT_PLANE]"] = TRUE
-	render_offset_blacklist = list()
-	critical_planes = list()
+	plane_offset_blacklist[FLOAT_PLANE] = TRUE
 	create_plane_offsets(0, 0)
-	initialize_biomes()
+
+	biomes = init_subtypes_w_path_keys(/datum/biome)
 	loadWorld()
 	determine_fake_sale()
 	require_area_resort()
@@ -321,11 +324,8 @@ SUBSYSTEM_DEF(mapping)
 	SSshuttle.transit_requesters.Cut()
 	message_admins("Clearing dynamic reservation space.")
 	var/list/obj/docking_port/mobile/in_transit = list()
-	for(var/i in SSshuttle.transit_docking_ports)
-		var/obj/docking_port/stationary/transit/T = i
-		if(!istype(T))
-			continue
-		in_transit[T] = T.get_docked()
+	for(var/obj/docking_port/stationary/transit/transit_port in SSshuttle.transit_docking_ports)
+		in_transit[transit_port] = transit_port.get_docked()
 	var/go_ahead = world.time + wipe_safety_delay
 	if(in_transit.len)
 		message_admins("Shuttles in transit detected. Attempting to fast travel. Timeout is [wipe_safety_delay/10] seconds.")
@@ -361,7 +361,7 @@ Used by the AI doomsday and the self-destruct nuke.
 
 /datum/controller/subsystem/mapping/proc/check_nuke_threats()
 	for(var/datum/d in nuke_threats)
-		if(!istype(d) || QDELETED(d))
+		if(QDELETED(d))
 			nuke_threats -= d
 
 	for(var/N in nuke_tiles)
@@ -710,29 +710,21 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 /datum/controller/subsystem/mapping/proc/do_wipe_turf_reservations()
 	PRIVATE_PROC(TRUE)
 	UNTIL(initialized) //This proc is for AFTER init, before init turf reservations won't even exist and using this will likely break things.
-	for(var/i in turf_reservations)
-		var/datum/turf_reservation/TR = i
-		if(!QDELETED(TR))
-			qdel(TR, TRUE)
+	for(var/datum/turf_reservation/reservation as anything in turf_reservations)
+		if(!QDELETED(reservation))
+			qdel(reservation, TRUE)
 	UNSETEMPTY(turf_reservations)
 	var/list/clearing = list()
-	for(var/l in unused_turfs) //unused_turfs is an assoc list by z = list(turfs)
-		if(islist(unused_turfs[l]))
-			clearing |= unused_turfs[l]
+	for(var/z_level, turf_list in unused_turfs) //unused_turfs is an assoc list by z = list(turfs)
+		if(islist(turf_list))
+			clearing |= turf_list
 	clearing |= used_turfs //used turfs is an associative list, BUT, reserve_turfs() can still handle it. If the code above works properly, this won't even be needed as the turfs would be freed already.
 	unused_turfs.Cut()
 	used_turfs.Cut()
 	reserve_turfs(clearing, await = TRUE)
 
-///Initialize all biomes, assoc as type || instance
-/datum/controller/subsystem/mapping/proc/initialize_biomes()
-	for(var/biome_path in subtypesof(/datum/biome))
-		var/datum/biome/biome_instance = new biome_path()
-		biomes[biome_path] += biome_instance
-
 /datum/controller/subsystem/mapping/proc/reg_in_areas_in_z(list/areas)
-	for(var/B in areas)
-		var/area/A = B
+	for(var/area/A as anything in areas)
 		A.reg_in_areas_in_z()
 
 /datum/controller/subsystem/mapping/proc/get_isolated_ruin_z()
@@ -828,37 +820,28 @@ ADMIN_VERB(load_away_mission, R_FUN, "Load Away Mission", "Load a specific away 
 		GLOB.starlight_overlays += starlight_overlay(offset)
 
 	for(var/datum/gas/gas_type as anything in GLOB.meta_gas_info[META_GAS_ID])
-		if(initial(gas_type.moles_visible) != null)
+		if(!isnull(initial(gas_type.moles_visible)))
 			GLOB.meta_gas_info[META_GAS_OVERLAY][gas_type] += generate_gas_overlays(gen_from, new_offset, gas_type)
 
 /datum/controller/subsystem/mapping/proc/create_plane_offsets(gen_from, new_offset)
 	for(var/plane_offset in gen_from to new_offset)
 		for(var/atom/movable/screen/plane_master/master_type as anything in subtypesof(/atom/movable/screen/plane_master) - /atom/movable/screen/plane_master/rendering_plate)
-			var/plane_to_use = initial(master_type.plane)
-			var/string_real = "[plane_to_use]"
-
+			var/plane_to_use = master_type::plane
 			var/offset_plane = GET_NEW_PLANE(plane_to_use, plane_offset)
-			var/string_plane = "[offset_plane]"
 
-			if(initial(master_type.offsetting_flags) & BLOCKS_PLANE_OFFSETTING)
-				plane_offset_blacklist[string_plane] = TRUE
-				var/render_target = initial(master_type.render_target)
-				if(!render_target)
-					render_target = get_plane_master_render_base(initial(master_type.name))
+			if(master_type::offsetting_flags & BLOCKS_PLANE_OFFSETTING)
+				plane_offset_blacklist[offset_plane] = TRUE
+				var/render_target = master_type::render_target || get_plane_master_render_base(master_type::name)
 				render_offset_blacklist[render_target] = TRUE
 				if(plane_offset != 0)
 					continue
 
-			if(initial(master_type.critical) & PLANE_CRITICAL_DISPLAY)
-				critical_planes[string_plane] = TRUE
+			if(master_type::critical & PLANE_CRITICAL_DISPLAY)
+				critical_planes[offset_plane] = TRUE
 
-			plane_offset_to_true[string_plane] = plane_to_use
-			plane_to_offset[string_plane] = plane_offset
-
-			if(!true_to_offset_planes[string_real])
-				true_to_offset_planes[string_real] = list()
-
-			true_to_offset_planes[string_real] |= offset_plane
+			plane_offset_to_true[offset_plane] = plane_to_use
+			plane_to_offset[offset_plane] = plane_offset
+			LAZYADDASSOCLIST(true_to_offset_planes, plane_to_use, offset_plane)
 
 /// Takes a turf or a z level, and returns a list of all the z levels that are connected to it
 /datum/controller/subsystem/mapping/proc/get_connected_levels(turf/connected)

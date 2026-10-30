@@ -310,7 +310,7 @@
 
 /// A utility function for `/datum/strippable_item`s to start unequipping an item from a mob.
 /proc/start_unequip_mob(obj/item/item, mob/source, mob/user, strip_delay, hidden = FALSE)
-	if (!do_after(user, strip_delay || item.strip_delay, source, interaction_key = REF(item), cog_icon = hidden ? null : 'icons/effects/progressbar.dmi'))
+	if (!do_after(user, strip_delay || item.strip_delay, source, interaction_key = REF(item), timed_action_flags = (hidden ? HIDE_INTERACTION : NONE)))
 		return FALSE
 
 	return TRUE
@@ -386,7 +386,8 @@
 		LAZYINITLIST(result)
 
 		if (!isnull(item))
-			result["icon"] = icon2base64(icon(item.icon, item.icon_state, frame = 1))
+			result["icon"] = item.icon
+			result["icon_state"] = item.icon_state
 			result["name"] = item.name
 		result["alternate"] = item_data.get_alternate_actions(owner, user, item)
 		list_clear_nulls(result["alternate"])

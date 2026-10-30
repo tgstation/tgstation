@@ -1,4 +1,0 @@
-author: "13spacemen"
-delete-after: True
-changes:
-  - bugfix: "The follow link in ghost poll \"was selected\" announcements now follows the chosen player instead of doing nothing."

@@ -36,13 +36,16 @@ The console is located at computer/gulag_teleporter.dm
 		/obj/item/clothing/mask/gas,
 	))
 
-/obj/machinery/gulag_teleporter/Initialize(mapload)
+/obj/machinery/gulag_teleporter/post_machine_initialize()
 	. = ..()
-	locate_reclaimer()
+	// One reclaimer is expected to exist
+	var/list/all_reclaimers = SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/gulag_item_reclaimer)
+	if(length(all_reclaimers))
+		linked_reclaimer = all_reclaimers[1]
+		linked_reclaimer.linked_teleporter = src
 
 /obj/machinery/gulag_teleporter/Destroy()
-	if(linked_reclaimer)
-		linked_reclaimer.linked_teleporter = null
+	linked_reclaimer?.linked_teleporter = null
 	linked_reclaimer = null
 	return ..()
 
@@ -110,11 +113,6 @@ The console is located at computer/gulag_teleporter.dm
 		user.visible_message(span_warning("[user] successfully broke out of [src]!"), \
 			span_notice("You successfully break out of [src]!"))
 		open_machine()
-
-/obj/machinery/gulag_teleporter/proc/locate_reclaimer()
-	linked_reclaimer = locate(/obj/machinery/gulag_item_reclaimer)
-	if(linked_reclaimer)
-		linked_reclaimer.linked_teleporter = src
 
 /obj/machinery/gulag_teleporter/proc/toggle_open()
 	if(panel_open)

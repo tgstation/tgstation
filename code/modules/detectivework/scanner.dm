@@ -99,7 +99,7 @@
 		// Can remotely scan objects and mobs.
 		if((get_dist(scanned_atom, user) > range) || (!(scanned_atom in view(range, user)) && view_check))
 			return TRUE
-	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+	playsound(src, /datum/sound_effect/industrial_scan, 20, TRUE, -2, TRUE, FALSE)
 	scanner_busy = TRUE
 
 

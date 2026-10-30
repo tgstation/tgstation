@@ -185,7 +185,8 @@
 		var/obj/display = initial(material.sheet_type)
 		data["materialIcons"] += list(list(
 			"id" = REF(material),
-			"icon" = icon2base64(icon(initial(display.icon), icon_state = initial(display.icon_state), frame = 1)),
+			"icon" = initial(display.icon),
+			"icon_state" = initial(display.icon_state),
 		))
 
 	data["alloyIcons"] = list()
@@ -194,7 +195,8 @@
 		var/obj/display = design.build_path
 		data["alloyIcons"] += list(list(
 			"id" = "[design_path]",
-			"icon" = icon2base64(icon(display::icon, display::icon_state, frame = 1)),
+			"icon" = initial(display.icon),
+			"icon_state" = initial(display.icon_state),
 		))
 
 	data += materials.ui_static_data()

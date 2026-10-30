@@ -470,7 +470,7 @@
 		return
 	if(QDELETED(src) || QDELETED(owner) || !isliving(owner))
 		return
-	playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
+	playsound(src, /datum/sound_effect/terminal_type, 25, FALSE)
 	var/turf/T = get_turf(L[selected])
 	if(isnull(T))
 		return

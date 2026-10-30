@@ -32,8 +32,8 @@
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
-	visor_toggle_up_sound = SFX_VISOR_UP
-	visor_toggle_down_sound = SFX_VISOR_DOWN
+	visor_toggle_up_sound = /datum/sound_effect/visor_up
+	visor_toggle_down_sound = /datum/sound_effect/visor_down
 	actions_types = list(/datum/action/item_action/adjust_visor)
 	toggle_message = "You pull your helmet's visor down."
 	alt_toggle_message = "You pull your helmet's visor up."
@@ -335,7 +335,7 @@
 	if (user)
 		balloon_alert(user, "thermal regulator restrictions overridden")
 		user.log_message("emagged [src], overwriting thermal regulator restrictions.", LOG_GAME)
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE
 
 // update the HUD icon

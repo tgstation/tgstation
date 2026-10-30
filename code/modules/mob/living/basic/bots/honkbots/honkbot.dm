@@ -66,7 +66,7 @@
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 0.2 SECONDS)
 
 /mob/living/basic/bot/secbot/honkbot/post_arrest(mob/living/carbon/current_target)
-	playsound(src, (bot_access_flags & BOT_COVER_EMAGGED ? SFX_HONKBOT_E : 'sound/items/bikehorn.ogg'), 50, FALSE)
+	playsound(src, (bot_access_flags & BOT_COVER_EMAGGED ? /datum/sound_effect/honkbot_e : 'sound/items/bikehorn.ogg'), 50, FALSE)
 	icon_state = bot_access_flags & BOT_COVER_EMAGGED ? "[base_icon_state]-e" : "[base_icon_state]-c"
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/atom, update_appearance)), 3 SECONDS, TIMER_OVERRIDE|TIMER_UNIQUE)
 

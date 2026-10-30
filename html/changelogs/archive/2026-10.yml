@@ -485,3 +485,202 @@
       them
   - bugfix: walking through an Eigenstasium spirit no longer curses the area to look
       pixel shifted and weird for five minutes
+2026-10-23:
+  13spacemen:
+  - bugfix: The follow link in ghost poll "was selected" announcements now follows
+      the chosen player instead of doing nothing.
+  vinylspiders:
+  - refactor: (performance) the R&D console no longer resends the whole techweb every
+      second while connected to it
+  - bugfix: wearing a space suit or bio suit without a helmet no longer hides your
+      gender, and being fully covered (like a bomb suit and hood or a sealed modsuit)
+      now does
+  - bugfix: plasmamen, ethereals and shadowpeople/any other nondimorphic gendered
+      species no longer get the female cut on their underwear
+2026-10-24:
+  Melbert:
+  - bugfix: Wall mounted objects that layer above players will now layer beneath players
+      if a player is leaning against it.
+  - rscadd: Breathing, injecting, or drinking metalgen applies it to your lungs, liver,
+      or stomach
+  PapaMIchael:
+  - balance: Blood worms fake breathing when checked with a stethoscope
+  - bugfix: Blood worms restart their host's heart when they revive it
+  PapaMichael:
+  - bugfix: Changeling transformation stings properly wear off after 8 minutes
+  - balance: Using a stethoscope now takes 2 seconds
+  Robwo:
+  - bugfix: Fixed ambient sound loops not playing in powered areas that have no apc.
+  SmArtKar:
+  - bugfix: Fixed particle weather not rendering
+  necromanceranne:
+  - balance: Slaughter demons no longer take damage while in blood crawl. They can
+      also eat more than just humans again.
+  vinylspiders:
+  - bugfix: you can put body bags into disposal bins while buckled to a chair or otherwise
+      held in place
+  - qol: atmos techs now start with an Atmospherics skillchip that lets them know
+      air alarm and fire alarm wires
+  - qol: the Engineering skillchip now also lets you know fire alarm wires
+2026-10-25:
+  vinylspiders:
+  - bugfix: fixed a runtime when a cyborg or AI joined the round
+2026-10-26:
+  Swan:
+  - bugfix: fixes crew manifest not showing the command chevron
+  - bugfix: fixes security records console not displaying job icons
+2026-10-27:
+  Absolucy:
+  - bugfix: Fixed big manipulators trying to interact with underfloor pipes.
+  AitorLogedo:
+  - bugfix: Boomboxes, chainsaws and other looping sounds follow whoever is carrying
+      them, and long sounds pick up where they should when you walk back into range
+      instead of going silent.
+  ArcaneMusic:
+  - rscadd: Chefs may now craft a new soup, Rich Cargo Stock! Remember to wait for
+      the stock block to turn liquid.
+  Co0kie-GG:
+  - rscadd: Added the glow of Borg eyes and the ability to turn them off
+  - bugfix: Borg eyes are displayed correctly when switching between z-levels.
+  EnterTheJake:
+  - balance: Burning lantern has been reworked into the Lumen Mendax
+  - balance: ' Lumen Mendax consumes firestacks on the Heretic to gain power, at max
+      charges it can unleash a blast that blinds heathens and makes them hallucinate,
+      while triggering the Ash recharge mechanic.'
+  - image: New sprite for the Lumen Mendax
+  Melbert:
+  - rscadd: Pre-game lobby shows a rough estimate of what the crew manifest may look
+      like
+  - qol: Adds *stammer / *stutter and *slur emotes, which causes your next few messages
+      to be stuttered (as if hurt) or slurred (as if drunk). You can optionally type
+      *[emote] [number] to determine how long you want the effect to last in seconds
+      (it's capped, don't try it).
+  - qol: Adds *jitter, which causes you to start jittering (where your sprite starts
+      to twitch back and forth). You can optionally type *jitter [number] to determine
+      how long you want the jitter to last in seconds (it's capped, don't try it).
+  - balance: Feast of Owls heretics don't lose blade break, nor gain unlimited blades,
+      after a certain knowledge threshold
+  - balance: Heretic armor no longer hides aura.
+  - balance: Lock Heretics have changed slightly - you do gain an aura now, but it
+      ONLY reveals itself while wearing your robes, and doesn't glow in the dark.
+  - bugfix: Losing blade break no longer removes cloak of shadow (since it's no longer
+      an innate spell)
+  - rscdel: Traitor, Blood Brother, Spy, and Changeling can no longer hijack the emergency
+      shuttle unless they either have an objective to hijack, or they set custom objective.
+  - rscdel: Heretic can no longer hijack unless they ascend, or set a custom objective.
+  - balance: The chance of rolling hijack for Traitor, Blood Brother, and Spy have
+      gone up slightly.
+  - balance: Changelings can now rarely roll hijack.
+  - qol: Spies objectives have been touched up in general, making less nonsensical
+      combinations.
+  - qol: Radiation shields store collected tritium internally, which can be removed
+      via an attached pipe. Note the internal storage is not infinite, and has a pressure
+      limit - surpassing it will cause the tritium to leak into the air.
+  - qol: Emergency radiation shields now also generate tritium over time (which is
+      also stored internally)
+  MysteryMan21333:
+  - bugfix: Fixs the Heterochromia Quirk, allows adjustment of color and now spawns
+      in properly.
+  PapaMichael:
+  - bugfix: You can no longer pawn off your hot potato on a monkey or a crit person
+  Thunder12345:
+  - map: 'Metastation: Some floor lights that were hidden behind chairs have been
+      moved to the wall.'
+  Timberpoes:
+  - bugfix: Blood-Drunk status effect no longer adds increasing stacks of stamina
+      damage resistant to the point of immunity, and increasing stacks of pressure
+      damage vulnerability to the point that you get insta-killed with 600 brute damage
+      in one game tick for daring to open an airlock.
+  headband0536:
+  - bugfix: fixed virtual typing indicator
+  sohpeach:
+  - bugfix: Being deafened while a TTS line is about to play no longer mutes all game
+      sounds until you reopen the game.
+  - bugfix: Mob charges and transit tubes no longer become instant when a round has
+      been going for a few hours.
+  vinylspiders:
+  - bugfix: blood-drunk no longer leaves permanent stamina resistance and increased
+      pressure damage after wearing off
+  - bugfix: zombie stun resistance works again
+  - bugfix: brute resistance and weakness are no longer applied twice to pressure
+      damage
+  - bugfix: interrupting a garden gnome's burrowing no longer permanently increases
+      the damage it takes
+  - bugfix: removing a roach heart from a nonhuman no longer grants free knockdown
+      resistance
+  - bugfix: healing animals now updates their health immediately
+  - bugfix: brute and burn resistances and weaknesses now apply in full to damage
+      spread across the whole body, such as pressure damage
+  - bugfix: fixes an issue where tgui inputs that open another of the same interface
+      (such as Jump To Coordinate) tgui input would just cancel and close if you select
+      an option too quickly.
+  - bugfix: fixed loadout styles that change an item's name failing to apply when
+      you spawn.
+  - bugfix: tgui windows that take more than 4 seconds to load the first time no longer
+      close themselves
+  - bugfix: parrying someone else's projectile now uses the parry multipliers instead
+      of the self-boost ones, so parried shots hit a bit softer than before
+2026-10-28:
+  ATHATH:
+  - balance: Added a flash to the captain's locker for consistency with the other
+      heads of staff.
+  JohnFulpWillard:
+  - rscadd: Plaques are now more customizable, and in the loadout menu.
+2026-10-29:
+  FeudeyTF:
+  - bugfix: 'fixed ''Input: Enable TGUI'' option for text inputs'
+  MacaroniCritter:
+  - qol: The loadout menu now relies on skins to select different colors of the fedora,
+      cowboy boots, and soft cap
+  Melbert:
+  - bugfix: Fix chat message when removing embedded objects from yourself
+  - bugfix: Fixes head revolutionary not getting codewords
+  - bugfix: Fix Crimson Cleaver Curse being droppable in late stages
+  - bugfix: Ceruleans picking up special shoes (like noslips) no longer permanently
+      breaks the shoes
+  - code_imp: Cleaned up clothing rendering very slightly, particularly relating to
+      inhand sprites, report anything weird with it
+  - code_imp: Cleaned up Cerulean shoe code, report anything weird with it
+  - bugfix: Fix some forms of zombification being uncurable
+  - bugfix: Fixes airborne disease spread. Sneezing, coughing, and breathing will
+      now spread diseases if you are UNMASKED, rather than if you are masked.
+  vinylspiders:
+  - admin: overflayer once again shows the base plane and offset for unregistered
+      planes it can decode.
+  - bugfix: the potential manifest in the pre-game lobby updates when someone unreadies.
+2026-10-30:
+  ArcaneMusic:
+  - admin: Admins may now use the "create black market item" verb to sell a marked
+      object on the black market.
+  CabinetOnFire:
+  - bugfix: Fixes edge-case where AI could get stuck in behaviors (due to decorators
+      not aborting correctly)
+  Melbert:
+  - bugfix: Fix changeling void adaptation and darkness adaptation speeding up chemical
+      regen, rather than slowing it down
+  - bugfix: Fix latejoin revolution never gaining new headrevs
+  - bugfix: Stealthy actions (like spy stealing's cog icon) are hidden again
+  - bugfix: (Should) fix issues where progress bars flash red or flash complete at
+      inappropriate times
+  - bugfix: Fixes ninja draining power directly from a cell only working if they fail
+      to drain power
+  - code_imp: Cleaned up cancel interactions hotkey to be less jank, report anything
+      weird
+  - bugfix: Traitors can actually get hijack objectives
+  - bugfix: Pirate, syndicate, and whiteship shuttles - among some other places -
+      now properly spawn with their AI interaction wires cut on their APCs and Airlocks,
+      preventing the AI and Cyborgs for messing with them unless mended.
+  PapaMichael:
+  - bugfix: Basic night vision (like from the genetics mutation) works again
+  necromanceranne:
+  - balance: Pulse projectiles now have high armor penetration. They also move extremely
+      quickly.
+  - balance: Pulse slugs do 40 damage and have an AP of 30.
+  - balance: X-ray lasers now do 20 damage instead of 15.
+  - balance: Smoothbore disablers no longer are inaccurate, and do 45 damage and move
+      twice as fast. They still struggle to harm anything with armor.
+  vinylspiders:
+  - qol: examining an unsecured welder now tells you its fuel tank is open and can
+      be screwed shut, and trying to light one tells you to screw the tank shut first.
+  - bugfix: camera coverage no longer breaks when looking down through glass at the
+      bottom of a multilevel area
