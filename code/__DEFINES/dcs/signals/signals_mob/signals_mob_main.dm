@@ -63,7 +63,7 @@
 #define COMSIG_VIEWDATA_UPDATE "viewdata_update"
 /// From mob/living/carbon/human/reset_perspective() : potential_perspective_list (should be only 1), atom/new_eye, force_reset (bool)
 #define COMSIG_HUMAN_FORCED_PERSPECTIVE_MANAGEMENT "human_forced_perspective_management"
-	#define COMSIG_UPDATE_NEW_PERSPECTIVE "should_update_new_human_perspective"
+	#define COMSIG_UPDATE_NEW_PERSPECTIVE (1<<0)
 
 /// Sent from /proc/do_after if someone starts a do_after action bar.
 #define COMSIG_DO_AFTER_BEGAN "mob_do_after_began"
