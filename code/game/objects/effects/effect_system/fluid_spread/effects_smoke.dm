@@ -167,9 +167,10 @@
  * - effect_type: The smoke typepath to spawn.
  * - log: Should the system log the smoke spawned?
  */
-/proc/do_smoke(range = 0, atom/holder = null, location = null, amount = null, smoke_type = /datum/effect_system/fluid_spread/smoke, effect_type = /obj/effect/particle_effect/fluid/smoke, log = FALSE)
+/proc/do_smoke(range = 0, atom/holder = null, location = null, amount = null, smoke_type = /datum/effect_system/fluid_spread/smoke, effect_type, log = FALSE)
 	var/datum/effect_system/fluid_spread/smoke/smoke = new smoke_type(location, range, amount, holder)
-	smoke.effect_type = effect_type
+	if(effect_type)
+		smoke.effect_type = effect_type
 	smoke.start(log = log)
 
 /////////////////////////////////////////////
