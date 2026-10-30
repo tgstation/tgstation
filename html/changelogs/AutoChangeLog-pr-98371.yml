@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Pirate, syndicate, and whiteship shuttles - among some other places - now properly spawn with their AI interaction wires cut on their APCs and Airlocks, preventing the AI and Cyborgs for messing with them unless mended."
