@@ -164,7 +164,7 @@
 				span_notice("You attempt to unbuckle yourself... \
 				(This will take around [DisplayTimeText(buckle_cd)] and you must stay still.)"))
 
-	if(!do_after(src, buckle_cd, target = src, timed_action_flags = IGNORE_HELD_ITEM, cog_icon = null))
+	if(!do_after(src, buckle_cd, target = src, timed_action_flags = IGNORE_HELD_ITEM|HIDE_INTERACTION))
 		if(buckled)
 			to_chat(src, span_warning("You fail to unbuckle yourself!"))
 		return
@@ -216,7 +216,7 @@
 	if(!cuff_break)
 		visible_message(span_warning("[src] attempts to remove [cuffs]!"))
 		to_chat(src, span_notice("You attempt to remove [cuffs]... (This will take around [DisplayTimeText(breakouttime)] and you need to stand still.)"))
-		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM, cog_icon = null, interaction_key = REF(cuffs) ))
+		if(do_after(src, breakouttime, target = src, timed_action_flags = IGNORE_HELD_ITEM|HIDE_INTERACTION, interaction_key = REF(cuffs) ))
 			. = clear_cuffs(cuffs, cuff_break)
 		else
 			to_chat(src, span_warning("You fail to remove [cuffs]!"))
