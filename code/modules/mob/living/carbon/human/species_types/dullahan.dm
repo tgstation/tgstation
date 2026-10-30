@@ -110,11 +110,7 @@
 
 	UnregisterSignal(human, COMSIG_CARBON_ATTACH_LIMB)
 	UnregisterSignal(human, COMSIG_CARBON_DEFIB_BRAIN_CHECK)
-	// Our abstract organs are unremovable, which would stop the new species from replacing them (a dullahan tongue would mute its owner)
-	for(var/obj/item/organ/organ as anything in human.organs)
-		if(istype(organ, /obj/item/organ/tongue/dullahan) || istype(organ, /obj/item/organ/ears/dullahan) || istype(organ, /obj/item/organ/eyes/dullahan))
-			organ.organ_flags &= ~ORGAN_UNREMOVABLE
-	human.regenerate_limb(BODY_ZONE_HEAD, FALSE)
+	human.regenerate_limb(BODY_ZONE_HEAD)
 	human.become_hearing_sensitive()
 	prevent_perspective_change = FALSE
 	human.reset_perspective(human)
