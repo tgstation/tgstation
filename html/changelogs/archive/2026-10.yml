@@ -649,6 +649,9 @@
       planes it can decode.
   - bugfix: the potential manifest in the pre-game lobby updates when someone unreadies.
 2026-10-30:
+  ArcaneMusic:
+  - admin: Admins may now use the "create black market item" verb to sell a marked
+      object on the black market.
   CabinetOnFire:
   - bugfix: Fixes edge-case where AI could get stuck in behaviors (due to decorators
       not aborting correctly)
@@ -664,6 +667,9 @@
   - code_imp: Cleaned up cancel interactions hotkey to be less jank, report anything
       weird
   - bugfix: Traitors can actually get hijack objectives
+  - bugfix: Pirate, syndicate, and whiteship shuttles - among some other places -
+      now properly spawn with their AI interaction wires cut on their APCs and Airlocks,
+      preventing the AI and Cyborgs for messing with them unless mended.
   PapaMichael:
   - bugfix: Basic night vision (like from the genetics mutation) works again
   necromanceranne:

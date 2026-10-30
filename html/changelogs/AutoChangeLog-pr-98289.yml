@@ -1,4 +1,0 @@
-author: "ArcaneMusic"
-delete-after: True
-changes:
-  - admin: "Admins may now use the \"create black market item\" verb to sell a marked object on the black market."
