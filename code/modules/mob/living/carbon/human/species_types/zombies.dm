@@ -126,7 +126,7 @@
 	if(isnull(infection))
 		infection = new()
 		infection.Insert(new_zombie)
-		RegisterSignal(infection, COMSIG_ORGAN_REMOVED, PROC_REF(organ_removed))
+	RegisterSignal(infection, COMSIG_ORGAN_REMOVED, PROC_REF(organ_removed))
 
 	var/obj/item/bodypart/head/head = new_zombie.get_bodypart(BODY_ZONE_HEAD)
 	if(!QDELETED(head))
@@ -216,7 +216,8 @@
 		owner.mob_biotypes &= ~MOB_ORGANIC
 		removed_biotypes = MOB_ORGANIC
 
-/datum/status_effect/zombie/proc/on_spec_stun(list/amount)
+/// Caps the stun duration supplied by COMSIG_HUMAN_SPEC_STUN.
+/datum/status_effect/zombie/proc/on_spec_stun(datum/source, list/amount)
 	SIGNAL_HANDLER
 	amount[1] = min(amount[1], max_stun_length)
 

@@ -99,7 +99,7 @@
 	target.visible_message(span_notice("[target]'s delivery lock self destructs, spewing sparks from the mechanism!"))
 	var/datum/effect_system/basic/spark_spread/spark_system = new(target.loc, 4, 0)
 	spark_system.start()
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	target.RemoveElement(/datum/element/deliver_first, goal_area_type, payment)
 
 #undef DENY_SOUND_COOLDOWN

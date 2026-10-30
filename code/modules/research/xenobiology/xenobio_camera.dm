@@ -626,7 +626,7 @@
 
 ///The sound that plays when a potion shatters. Easier to call w/ addtimer()
 /obj/machinery/computer/camera_advanced/xenobio/proc/handle_shatter_sound(turf/open/target_turf)
-	playsound(target_turf, SFX_SHATTER, 35, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
+	playsound(target_turf, /datum/sound_effect/shatter, 35, TRUE, MEDIUM_RANGE_SOUND_EXTRARANGE)
 
 /// An abstract effect to simulate sucking the atom up or spitting it out
 /obj/effect/abstract/sucked_atom
