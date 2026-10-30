@@ -110,7 +110,7 @@
 
 	UnregisterSignal(human, COMSIG_CARBON_ATTACH_LIMB)
 	UnregisterSignal(human, COMSIG_CARBON_DEFIB_BRAIN_CHECK)
-	human.regenerate_limb(BODY_ZONE_HEAD)
+	human.regenerate_limb(BODY_ZONE_HEAD, null)
 	human.become_hearing_sensitive()
 	prevent_perspective_change = FALSE
 	human.reset_perspective(human)
