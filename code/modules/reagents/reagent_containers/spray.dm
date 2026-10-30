@@ -26,7 +26,7 @@
 	volume = 250
 	possible_transfer_amounts = list(5,10)
 	var/spray_sound = 'sound/effects/spray2.ogg'
-	reagent_container_liquid_sound = SFX_DEFAULT_LIQUID_SLOSH
+	reagent_container_liquid_sound = /datum/sound_effect/default_liquid_slosh
 
 /obj/item/reagent_containers/spray/Initialize(mapload, vol)
 	. = ..()

@@ -138,3 +138,15 @@
 	var/mob/living/carbon/human/anime_dummy = allocate(/mob/living/carbon/human/consistent)
 	anime_dummy.set_species(/datum/species/human/felinid, pref_load = TRUE)
 	TEST_ASSERT(istype(anime_dummy.get_organ_slot(ORGAN_SLOT_EARS), /obj/item/organ/ears/cat), "Felinid with default ears set did not have cat ears on species gain.")
+
+/datum/unit_test/zombie_cure
+
+/datum/unit_test/zombie_cure/Run()
+	var/mob/living/carbon/human/dummy = allocate(/mob/living/carbon/human/consistent)
+	var/obj/item/organ/zombie_infection/infection = allocate(/obj/item/organ/zombie_infection)
+	infection.Insert(dummy)
+	TEST_ASSERT(infection in dummy.organs, "Infection organ was not successfully inserted into the dummy's organs.")
+	dummy.apply_status_effect(/datum/status_effect/zombie)
+	TEST_ASSERT(dummy.has_status_effect(/datum/status_effect/zombie), "Zombie status effect was not applied successfully.")
+	infection.Remove(dummy)
+	TEST_ASSERT(!dummy.has_status_effect(/datum/status_effect/zombie), "Zombie status effect was not removed successfully upon losing the infection.")

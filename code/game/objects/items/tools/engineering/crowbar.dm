@@ -123,7 +123,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/tools_righthand.dmi'
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT*2.25, /datum/material/silver = SHEET_MATERIAL_AMOUNT*1.25, /datum/material/titanium = SHEET_MATERIAL_AMOUNT*1.75)
 	usesound = 'sound/items/tools/jaws_pry.ogg'
-	hitsound = SFX_SWING_HIT
+	hitsound = /datum/sound_effect/swing_hit
 	force = 15
 	w_class = WEIGHT_CLASS_NORMAL
 	toolspeed = 0.7
@@ -260,7 +260,7 @@
 			var/obj/item/bodypart/target_bodypart = suicide_victim.get_bodypart(BODY_ZONE_HEAD)
 			if(target_bodypart)
 				target_bodypart.drop_limb()
-				playsound(loc, SFX_DESECRATION, 50, TRUE, -1)
+				playsound(loc, /datum/sound_effect/desecration, 50, TRUE, -1)
 	return BRUTELOSS
 
 /obj/item/crowbar/power/syndicate

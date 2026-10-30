@@ -1,4 +1,5 @@
 import {
+  DmIcon,
   Image,
   LabeledList,
   Modal,
@@ -19,7 +20,8 @@ type Data = {
   can_grow: boolean;
   raptor_growth: number;
   raptor_color: string;
-  raptor_image: string;
+  raptor_icon: string;
+  raptor_icon_state: string;
   raptor_gender: string;
   raptor_happiness: string;
   raptor_description: string;
@@ -54,7 +56,8 @@ export const RaptorDexContent = (props) => {
     raptor_health,
     raptor_max_health,
     raptor_speed,
-    raptor_image,
+    raptor_icon,
+    raptor_icon_state,
     raptor_gender,
     can_grow,
     raptor_growth,
@@ -83,8 +86,9 @@ export const RaptorDexContent = (props) => {
       {' '}
       <Stack.Item width="33%">
         <Section textAlign="center" title={capitalizeAll(raptor_color)}>
-          <Image
-            src={`data:image/jpeg;base64,${raptor_image}`}
+          <DmIcon
+            icon={raptor_icon}
+            icon_state={raptor_icon_state}
             height="128px"
             width="224px"
             style={{

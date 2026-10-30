@@ -93,7 +93,7 @@
 		data["plane_unregistered"] = TRUE
 		data["plane_max_offset"] = SSmapping.max_plane_offset
 		for (var/extra_offset in 1 to 50)
-			var/candidate = "[target.plane + PLANE_RANGE * extra_offset]"
+			var/candidate = target.plane + PLANE_RANGE * extra_offset
 			var/candidate_true = SSmapping.plane_offset_to_true[candidate]
 			if (!isnull(candidate_true))
 				data["plane_decoded_true"] = candidate_true

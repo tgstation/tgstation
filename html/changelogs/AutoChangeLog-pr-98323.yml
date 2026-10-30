@@ -1,0 +1,4 @@
+author: "CabinetOnFire"
+delete-after: True
+changes:
+  - bugfix: "Fixes edge-case where AI could get stuck in behaviors (due to decorators not aborting correctly)"

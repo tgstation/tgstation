@@ -424,11 +424,12 @@
 /obj/projectile/proc/firer_deleted(datum/source)
 	SIGNAL_HANDLER
 	// Shooting yourself point-blank
-	if (firer == original)
+	if (source == original)
 		original = null
-	if (firer == fired_from)
+	if (source == fired_from)
 		fired_from = null
-	firer = null
+	if (source == firer)
+		firer = null
 
 /obj/projectile/proc/original_deleted(datum/source)
 	SIGNAL_HANDLER
@@ -437,6 +438,16 @@
 /obj/projectile/proc/fired_from_deleted(datum/source)
 	SIGNAL_HANDLER
 	fired_from = null
+
+/// Changes who fired us after we've been fired, moving the qdel listener over to the new firer
+/obj/projectile/proc/set_firer(atom/movable/new_firer)
+	if (firer == new_firer)
+		return
+	if (firer && firer != fired_from && firer != original)
+		UnregisterSignal(firer, COMSIG_QDELETING)
+	firer = new_firer
+	if (firer)
+		RegisterSignal(firer, COMSIG_QDELETING, PROC_REF(firer_deleted), override = TRUE)
 
 /obj/projectile/proc/on_ricochet(atom/target)
 	ricochets++
@@ -1378,7 +1389,7 @@
 	// redirect the projectile
 	original = locate(new_x, new_y, z)
 	starting = current_tile
-	firer = hit_atom
+	set_firer(hit_atom)
 	yo = new_y - current_tile.y
 	xo = new_x - current_tile.x
 	var/new_angle_s = angle + rand(120, 240)

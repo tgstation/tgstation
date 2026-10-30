@@ -42,7 +42,7 @@
 	parry_effect.pixel_y = rand(-10, 10)
 	owner.vis_contents += parry_effect
 
-	projectile.firer = swinger
+	projectile.set_firer(swinger)
 	projectile.set_angle(-projectile.angle)
 	return COMPONENT_BULLET_PIERCED
 

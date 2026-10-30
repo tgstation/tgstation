@@ -17,7 +17,7 @@
 	if (mob_parent.hud_used)
 		mob_parent.set_hud_used(new hud_type(target))
 		mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
-	ADD_TRAIT(target, TRAIT_CAN_HOLD_ITEMS, REF(src))
+	mob_parent.mobility_flags |= MOBILITY_PICKUP
 	RegisterSignal(target, COMSIG_LIVING_DEATH, PROC_REF(on_death))
 	RegisterSignal(target, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(on_hand_clicked))
 	RegisterSignal(target, COMSIG_ATOM_EXAMINE, PROC_REF(on_examined))
@@ -31,7 +31,7 @@
 	if (mob_parent.hud_used)
 		mob_parent.set_hud_used(new initial_hud(source))
 		mob_parent.hud_used.show_hud(mob_parent.hud_used.hud_version)
-	REMOVE_TRAIT(source, TRAIT_CAN_HOLD_ITEMS, REF(src))
+	mob_parent.mobility_flags &= ~(MOBILITY_PICKUP)
 	UnregisterSignal(source, list(
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_LIVING_DEATH,

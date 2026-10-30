@@ -103,7 +103,7 @@
 
 	AddComponent(/datum/component/debris_bleeder, \
 		list(/obj/effect/spawner/random/glass_shards = 20, /obj/effect/spawner/random/glass_debris = 0), \
-		BRUTE, SFX_SHATTER, sound_threshold = 20)
+		BRUTE, /datum/sound_effect/shatter, sound_threshold = 20)
 
 	charge = new charge(src)
 	charge.Grant(src)
@@ -205,7 +205,7 @@
 	var/turf/spawn_loc = get_turf(src)
 	new /obj/effect/spawner/random/glass_shards(spawn_loc)
 	new /obj/item/clothing/head/helmet/skull/cosmic(spawn_loc)
-	playsound(get_turf(src), SFX_SHATTER, 100)
+	playsound(get_turf(src), /datum/sound_effect/shatter, 100)
 
 	return ..()
 
@@ -320,7 +320,7 @@
 	var/obj/particles = new /obj/effect/abstract/particle_holder (our_wall, /particles/void_wall)
 
 	balloon_alert(src, "opening window...")
-	if(!do_after(src, 8 SECONDS, our_wall, cog_icon = null))
+	if(!do_after(src, 8 SECONDS, our_wall, timed_action_flags = HIDE_INTERACTION))
 		qdel(particles)
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	if(!conversions_remaining)

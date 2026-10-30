@@ -213,16 +213,13 @@
 	. = ..()
 	if (!.)
 		return FALSE
-	if(!user.mob)
+	var/mob/living/living_user = astype(user, /mob/living)
+	if(!living_user)
 		return FALSE
-	var/obj/item/object = user.mob.get_active_held_item()
+	var/obj/item/object = living_user.get_active_held_item()
 	if(isnull(object))
 		return FALSE
-	if(HAS_TRAIT(object, TRAIT_BORG_GIVE))
-		return TRUE
-	if(!HAS_TRAIT(user.mob, TRAIT_CAN_HOLD_ITEMS))
-		return FALSE
-	return TRUE
+	return living_user.can_hold_items(object) || HAS_TRAIT(object, TRAIT_BORG_GIVE)
 
 /datum/keybinding/living/give/down(client/user, turf/target, mousepos_x, mousepos_y)
 	. = ..()
@@ -232,7 +229,7 @@
 	var/obj/item/held_item = living_user.get_active_held_item()
 	if(isnull(held_item))
 		return
-	if(!HAS_TRAIT(living_user, TRAIT_CAN_HOLD_ITEMS) && !HAS_TRAIT(held_item, TRAIT_BORG_GIVE))
+	if(!living_user.can_hold_items(held_item) && !HAS_TRAIT(held_item, TRAIT_BORG_GIVE))
 		return
 	living_user.give()
 
@@ -249,13 +246,3 @@
 	description = "Cancels any ongoing interactions (such as using a tool, performing surgery, or climbing). \
 		Note that some interactions cannot be interrupted, and you can't cancel other player's interaction with this hotkey."
 	keybind_signal = COMSIG_KB_LIVING_STOP_INTERACTIONS_DOWN
-
-/datum/keybinding/living/cancel_interactions/down(client/user, turf/target, mousepos_x, mousepos_y)
-	. = ..()
-	if(.)
-		return
-	var/mob/living/mob_user = user.mob
-	if(!LAZYLEN(mob_user.do_afters) || HAS_TRAIT(mob_user, TRAIT_INCAPACITATED))
-		return
-	// this is currently the best way to stop all ongoing doafters
-	mob_user.incapacitate(0.1 SECONDS, ignore_canstun = TRUE)

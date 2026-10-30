@@ -70,7 +70,7 @@
 	if(QDELING(src) || !hit_atom)	//Invalid loc
 		return
 	var/obj/item/shard/ampoule_shard = new(drop_location())
-	playsound(src, SFX_SHATTER, 40, TRUE)
+	playsound(src, /datum/sound_effect/shatter, 40, TRUE)
 	transfer_fingerprints_to(ampoule_shard)
 	splash_reagents(hit_atom, throwingdatum?.get_thrower(), was_thrown = TRUE, allow_closed_splash = FALSE)
 	qdel(src)
