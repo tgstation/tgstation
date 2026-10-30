@@ -36,8 +36,10 @@ multiple modular subtrees with behaviors
 	var/behavior_tree_json = null
 	///The root of our tree, which will contain
 	var/list/behavior_nodes
-	/// Execution index of the leaf node currently returning BT_RUNNING. 0 = nothing active.
+	/// Execution index of the last leaf node to return BT_RUNNING. This is a between-ticks hint, not the node currently on the tick call stack.
 	var/active_execution_index = 0
+	/// Execution index of the AI behavior leaf whose tick() is currently being called. Restored after the leaf returns.
+	var/ticking_execution_index = 0
 	/// Set to TRUE by cancel_current_plan() when it fires mid-tick. Checked by composites to abort the current tick loop early, preventing running_child_index from being re-established after a reset. Cleared at the start of SelectBehaviors().
 	var/cancelled_during_tick = FALSE
 	/// Draining log of all leaf execution indices that fired since the last bt_viewer poll. Null when no viewer is attached.
