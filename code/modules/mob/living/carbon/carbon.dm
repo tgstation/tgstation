@@ -7,8 +7,7 @@
 	register_context()
 
 	GLOB.carbon_list += src
-	ADD_TRAIT(src, TRAIT_CAN_HOLD_ITEMS, INNATE_TRAIT) // Carbons are assumed to be innately capable of having arms, we check their arms count instead
-	ADD_TRAIT(src, TRAIT_CAN_THROW_ITEMS, INNATE_TRAIT) // same here
+	add_traits(list(TRAIT_FENCE_CLIMBER, TRAIT_CAN_THROW_ITEMS), INNATE_TRAIT)
 	breathing_loop = new(src, _direct = TRUE)
 
 /mob/living/carbon/Destroy()

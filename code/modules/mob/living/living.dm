@@ -1355,7 +1355,7 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 	return
 
 /mob/living/can_hold_items(obj/item/I)
-	return ..() && HAS_TRAIT(src, TRAIT_CAN_HOLD_ITEMS) && usable_hands
+	return (mobility_flags & MOBILITY_PICKUP) && ..() && usable_hands
 
 /mob/living/can_perform_action(atom/target, action_bitflags)
 	if(!istype(target))
