@@ -9,6 +9,7 @@
 	worn_icon = 'icons/mob/clothing/back/sledgehammer.dmi'
 	worn_icon_state = "sledgehammer"
 	force = 8
+	wound_bonus = 15 // cracks limbs
 	throwforce = 10
 	demolition_mod = 1.5
 	attack_speed = 1.2 SECONDS
