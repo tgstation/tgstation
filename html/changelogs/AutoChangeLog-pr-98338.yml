@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Fix changeling void adaptation and darkness adaptation speeding up chemical regen, rather than slowing it down"
