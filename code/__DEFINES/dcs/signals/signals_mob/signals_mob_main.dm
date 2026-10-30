@@ -316,3 +316,6 @@
 
 ///from base of [/datum/component/multiple_lives/proc/respawn]: (mob/respawned_mob, gibbed, lives_left)
 #define COMSIG_ON_MULTIPLE_LIVES_RESPAWN "on_multiple_lives_respawn"
+
+///from /client/proc/update_special_keybinds()
+#define COMSIG_MOB_HOTKEYS_UPDATED "mob_hotkeys_updated"

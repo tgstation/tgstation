@@ -7,8 +7,13 @@
 /datum/hotkeys_help/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)
 	if (!ui)
+		RegisterSignal(user, COMSIG_MOB_HOTKEYS_UPDATED, PROC_REF(update_hotkey_ui), override = TRUE)
 		ui = new(user, src, "HotkeysHelp")
 		ui.open()
+
+/datum/hotkeys_help/ui_close(mob/user)
+	. = ..()
+	UnregisterSignal(user, COMSIG_MOB_HOTKEYS_UPDATED)
 
 /datum/hotkeys_help/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -19,8 +24,11 @@
 		user.client.uiclose(ui.window.id)
 		return TRUE
 
-// Not static data since user could rebind keys.
-/datum/hotkeys_help/ui_data(mob/user)
+/datum/hotkeys_help/proc/update_hotkey_ui(mob/source)
+	SIGNAL_HANDLER
+	update_static_data(source)
+
+/datum/hotkeys_help/ui_static_data(mob/user)
 	// List every keybind to chat.
 	var/list/keys_list = list()
 
