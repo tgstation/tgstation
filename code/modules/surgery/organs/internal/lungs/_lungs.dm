@@ -588,7 +588,7 @@
 		var/lerp_scale = min(tritium_irradiation_moles_max, trit_pp - tritium_irradiation_moles_min) / (tritium_irradiation_moles_max - tritium_irradiation_moles_min)
 		var/chance = LERP(tritium_irradiation_probability_min, tritium_irradiation_probability_max, lerp_scale)
 		if (prob(chance))
-			breather.AddComponent(/datum/component/irradiated)
+			make_irradiated()
 	breather.adjust_organ_loss(ORGAN_SLOT_LUNGS, clamp(trit_pp * 1, MIN_TOXIC_GAS_LUNG_DAMAGE, MAX_TOXIC_GAS_LUNG_DAMAGE))
 	if(prob(trit_pp))
 		to_chat(breather, span_alert("You feel a burning sensation in your chest"))
@@ -606,7 +606,7 @@
 		var/lerp_scale = min(antinoblium_irradiation_moles_max, antinoblium_pp - antinoblium_irradiation_moles_min) / (antinoblium_irradiation_moles_max - antinoblium_irradiation_moles_min)
 		var/chance = LERP(antinoblium_irradiation_probability_min, antinoblium_irradiation_probability_max, lerp_scale)
 		if(prob(chance))
-			breather.AddComponent(/datum/component/irradiated)
+			make_irradiated()
 
 	breather.adjust_organ_loss(ORGAN_SLOT_LUNGS, clamp(antinoblium_pp * 1, MIN_TOXIC_GAS_LUNG_DAMAGE, MAX_TOXIC_GAS_LUNG_DAMAGE))
 	if(prob(antinoblium_pp))
