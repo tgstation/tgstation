@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "Fix riot armor using brown mesh (now black, matching the armor)"
