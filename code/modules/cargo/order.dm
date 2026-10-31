@@ -98,8 +98,10 @@
 	var/cost = pack.get_cost()
 	if(applied_coupon) //apply discount price
 		cost *= (1 - applied_coupon.discount_pct_off)
-	if(paying_account?.add_to_accounts && !(pack.order_flags & ORDER_GOODY)) //privately purchased and not a goody means 1.1x the cost
-		cost *= 1.1
+	if(pack.order_flags & ORDER_GOODY)
+		cost *= (paying_account?.goody_order_cost_modifier || 1.0)
+	else
+		cost *= (paying_account?.private_order_cost_modifier || 1.0)
 	return round(cost)
 
 /datum/supply_order/proc/generateRequisition(turf/T)

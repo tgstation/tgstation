@@ -24,15 +24,17 @@
 	var/mob/living/carbon/human/patient = allocate(/mob/living/carbon/human/consistent)
 
 	for(var/datum/quirk/quirk_type as anything in valid_subtypesof(/datum/quirk))
-		if(!isnull(quirk_type.medical_record_text))
+		if(quirk_type::medical_record_text)
 			continue
 
 		//Add quirk to a patient - so we can pass quirks that add a medical record after being assigned someone
 		patient.add_quirk(quirk_type)
 
 		var/datum/quirk/quirk = patient.get_quirk(quirk_type)
+		if(quirk.medical_record_text)
+			continue
 
-		TEST_ASSERT_NOTNULL(quirk.medical_record_text,"[quirk_type] has no medical record description!")
+		TEST_FAIL("[quirk_type] has no medical record description!")
 
 		patient.remove_quirk(quirk_type)
 

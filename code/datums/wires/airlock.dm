@@ -65,7 +65,7 @@
 
 /datum/wires/airlock/interact(mob/user)
 	var/obj/machinery/door/airlock/airlock_holder = holder
-	if (!HAS_SILICON_ACCESS(user) && airlock_holder.isElectrified() && airlock_holder.shock(user, 100))
+	if (!HAS_SILICON_ACCESS(user) && airlock_holder.isElectrified() && airlock_holder.shock(user, 125))
 		return
 
 	return ..()
@@ -139,7 +139,7 @@
 		if(WIRE_SHOCK) // Pulse to shock the door for 10 ticks.
 			if(!A.secondsElectrified)
 				A.set_electrified(MACHINE_DEFAULT_ELECTRIFY_TIME, usr)
-			A.shock(usr, 100)
+			A.shock(usr, 125)
 		if(WIRE_SAFETY)
 			A.safe = !A.safe
 			if(!A.density)
@@ -199,7 +199,7 @@
 			else
 				if(A.secondsElectrified != MACHINE_ELECTRIFIED_PERMANENT)
 					A.set_electrified(MACHINE_ELECTRIFIED_PERMANENT, usr)
-				A.shock(usr, 100)
+				A.shock(usr, 150)
 		if(WIRE_SAFETY) // Cut to disable safeties, mend to re-enable.
 			A.safe = mend
 			if (!isnull(source))

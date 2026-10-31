@@ -330,7 +330,7 @@
 	if(issilicon(user) || !iscarbon(user))
 		return ..()
 
-	if(isElectrified() && shock(user, 100))
+	if(isElectrified() && shock(user, allow_modifiers = FALSE))
 		return
 
 	if(SEND_SIGNAL(user, COMSIG_CARBON_BUMPED_AIRLOCK_OPEN, src) & STOP_BUMP)
@@ -479,7 +479,7 @@
 /obj/machinery/door/airlock/proc/regainBackupPower()
 	set_backup_outage(0 SECONDS)
 
-/obj/machinery/door/airlock/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+/obj/machinery/door/airlock/shock(mob/living/shocking, chance, shock_source, siemens_coeff, allow_modifiers)
 	if(!hasPower()) // unpowered, no shock
 		return FALSE
 	if(!isliving(shocking))
@@ -873,7 +873,7 @@
 			attack_ai(user) //bring up airlock dialog
 
 /obj/machinery/door/airlock/attack_animal(mob/user, list/modifiers)
-	if(isElectrified() && shock(user, 100))
+	if(isElectrified() && shock(user, allow_modifiers = FALSE))
 		return
 	return ..()
 
@@ -885,7 +885,7 @@
 	if(.)
 		return
 	if(!HAS_SILICON_ACCESS(user))
-		if(isElectrified() && shock(user, 100))
+		if(isElectrified() && shock(user, allow_modifiers = FALSE))
 			return
 
 	if(ishuman(user) && prob(40) && density)
@@ -1085,7 +1085,7 @@
 	return ITEM_INTERACT_SUCCESS
 
 /obj/machinery/door/airlock/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
-	if(!HAS_SILICON_ACCESS(user) && isElectrified() && (attacking_item.obj_flags & CONDUCTS_ELECTRICITY) && shock(user, 75))
+	if(!HAS_SILICON_ACCESS(user) && isElectrified() && (attacking_item.obj_flags & CONDUCTS_ELECTRICITY) && shock(user, 75, allow_modifiers = FALSE))
 		return ATTACK_FAILED
 	return ..()
 
@@ -1289,7 +1289,7 @@
 		return
 
 	var/check_electrified = isElectrified() //setting this so we can check if the mob got shocked during the do_after below
-	if(check_electrified && shock(user,100))
+	if(check_electrified && shock(user, allow_modifiers = FALSE))
 		return //it's like sticking a fork in a power socket
 
 	if(!density)//already open
@@ -1313,7 +1313,7 @@
 
 	prying_so_hard = FALSE
 
-	if(check_electrified && shock(user, 100))
+	if(check_electrified && shock(user, allow_modifiers = FALSE))
 		return
 
 	open(BYPASS_DOOR_CHECKS, user)
@@ -1551,7 +1551,7 @@
 	loseBackupPower()
 
 /obj/machinery/door/airlock/attack_alien(mob/living/carbon/alien/adult/user, list/modifiers)
-	if(isElectrified() && shock(user, 100)) //Mmm, fried xeno!
+	if(isElectrified() && shock(user, allow_modifiers = FALSE)) //Mmm, fried xeno!
 		add_fingerprint(user)
 		return
 	if(!density) //Already open

@@ -544,7 +544,7 @@
 			if(!wires.is_cut(wire))
 				disabled = FALSE
 
-/obj/machinery/autolathe/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+/obj/machinery/autolathe/shock(mob/living/shocking, chance, shock_source, siemens_coeff, allow_modifiers)
 	if(machine_stat & (BROKEN|NOPOWER)) // unpowered, no shock
 		return FALSE
 	if(isnull(siemens_coeff))
