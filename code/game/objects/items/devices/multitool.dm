@@ -39,6 +39,11 @@
 	var/apc_scanner = TRUE
 	COOLDOWN_DECLARE(next_apc_scan)
 
+/obj/item/multitool/Initialize(mapload)
+	. = ..()
+
+	register_context()
+
 /obj/item/multitool/Destroy()
 	if(buffer)
 		remove_buffer(buffer)
@@ -63,6 +68,13 @@
 		return
 
 	scan_apc(user)
+
+/obj/item/multitool/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(held_item == src)
+		context[SCREENTIP_CONTEXT_LMB] = "Scan for APC"
+		return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/multitool/proc/scan_apc(mob/user)
 	if(!COOLDOWN_FINISHED(src, next_apc_scan))

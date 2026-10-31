@@ -31,6 +31,7 @@
 	var/datum/weakref/last_scanned
 	/// Max scan distance
 	var/ranged_scan_distance = 1
+	COOLDOWN_DECLARE(next_air_alarm_scan)
 
 /obj/item/analyzer/Initialize(mapload)
 	. = ..()
@@ -44,6 +45,78 @@
 		/datum/element/slapcrafting,\
 		slapcraft_recipes = slapcraft_recipe_list,\
 	)
+
+	register_context()
+
+/obj/item/analyzer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+
+	if(held_item == src)
+		context[SCREENTIP_CONTEXT_ALT_RMB] = "Scan for air alarm"
+		context[SCREENTIP_CONTEXT_RMB] = "Open the gas reference"
+
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Activate the barometer function"
+
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/item/analyzer/click_alt_secondary(mob/user)
+	. = ..()
+
+	if(.)
+		return
+
+	scan_air_alarm(user)
+
+/obj/item/analyzer/proc/scan_air_alarm(mob/user)
+	if(!COOLDOWN_FINISHED(src, next_air_alarm_scan))
+		return
+
+	COOLDOWN_START(src, next_air_alarm_scan, 2 SECONDS)
+
+	var/target
+	var/area/local_area = get_area(src)
+	for(var/obj/machinery/airalarm/air_alarm in GLOB.air_alarms)
+		if(air_alarm.my_area != local_area)
+			continue
+		if(!target)
+			target = air_alarm
+			continue
+		if(get_dist_euclidean(air_alarm, user) > get_dist_euclidean(target, user))
+			continue
+		target = air_alarm
+
+	if(!target)
+		user.balloon_alert(user, "couldn't find air alarm!")
+		return
+
+	var/dist = get_dist(src, target)
+	var/dir = get_dir(user, target)
+	var/balloon_message
+	var/arrow_color
+
+	switch(dist)
+		if (0)
+			user.balloon_alert(user, "found air alarm!")
+			return
+		if(1 to 5)
+			arrow_color = COLOR_GREEN
+		if(6 to 10)
+			arrow_color = COLOR_YELLOW
+		if(11 to 15)
+			arrow_color = COLOR_ORANGE
+		else
+			arrow_color = COLOR_RED
+
+	user.balloon_alert(user, balloon_message)
+
+	var/datum/hud/user_hud = user.hud_used
+	if(!user_hud)
+		return
+
+	var/atom/movable/screen/multitool_arrow/arrow = user_hud.add_screen_object(/atom/movable/screen/multitool_arrow, HUD_MULTITOOL_ARROW, HUD_GROUP_INFO, update_screen = TRUE)
+	arrow.color = arrow_color
+	arrow.transform = matrix(dir2angle(dir), MATRIX_ROTATE)
+	QDEL_IN(arrow, 1.5 SECONDS)
 
 /obj/item/analyzer/grind_results()
 	return list(/datum/reagent/mercury = 5, /datum/reagent/iron = 5, /datum/reagent/silicon = 5)
