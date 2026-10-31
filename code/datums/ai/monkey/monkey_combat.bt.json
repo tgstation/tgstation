@@ -83,7 +83,7 @@
 												"target_key": "BB_CURRENT_TARGET",
 												"required_dist": 1,
 												"finish_on_arrival": true,
-												"movement_type": "/datum/ai_movement/jps"
+											"movement_type": "/datum/ai_movement/navmap_astar/monkey"
 											}
 										},
 										{
@@ -100,7 +100,7 @@
 												"target_key": "BB_monkey_target_disposal",
 												"required_dist": 1,
 												"finish_on_arrival": true,
-												"movement_type": "/datum/ai_movement/jps"
+											"movement_type": "/datum/ai_movement/navmap_astar/monkey"
 											}
 										},
 										{
@@ -175,7 +175,8 @@
 								"behavior": "/datum/bt_node/ai_behavior/agile_melee_movement",
 								"vars": {
 									"target_key": "BB_CURRENT_TARGET",
-									"standoff_max": 4
+									"standoff_max": 4,
+									"update_movement_for_moving_target": true
 								}
 							}
 						]

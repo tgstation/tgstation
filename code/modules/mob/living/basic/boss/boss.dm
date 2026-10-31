@@ -18,7 +18,7 @@
 	pull_force = MOVE_FORCE_OVERPOWERING
 	mob_size = MOB_SIZE_HUGE
 	layer = LARGE_MOB_LAYER
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	flags_1 = parent_type::flags_1 | PREVENT_CONTENTS_EXPLOSION_1
 	/// Name for the GPS signal of the megafauna
 	var/gps_name = null
 	/// What crusher trophy/trophies this mob drops, if any

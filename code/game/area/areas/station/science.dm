@@ -26,6 +26,7 @@
 	icon_state = "xenobio"
 
 /area/station/science/xenobiology/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "\improper Xenobiology Hallway"
 	icon_state = "xenobio_hall"
 
