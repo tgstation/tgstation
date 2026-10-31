@@ -76,6 +76,8 @@
 		return
 
 	if(EMERGENCY_AT_LEAST_DOCKED)
+		if(overmind.shuttle_delay_counter < BLOB_SHUTTLE_DELAY_PENALTY_THRESHOLD && overmind.shuttle_delay_counter + (seconds_per_tick * 1 SECONDS) > BLOB_SHUTTLE_DELAY_PENALTY_THRESHOLD)
+			to_chat(overmind, span_userdanger("The emergency shuttle has been delayed for too long! Resource gain will be reduced over time."))
 		overmind.shuttle_delay_counter += (seconds_per_tick * 1 SECONDS)
 	overmind.blobstrain.core_process()
 	overmind.update_health_hud()
