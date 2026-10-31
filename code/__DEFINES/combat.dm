@@ -448,5 +448,5 @@ GLOBAL_LIST_INIT(all_precise_body_zones, list(BODY_ZONE_PRECISE_EYES, BODY_ZONE_
 /// A negative number is used here to people can easily check "attacks that failed or did 0 damage" with <= 0
 #define ATTACK_FAILED -1
 
-///Do we block carbon-level flash_act() from performing its default stamina damage/knockdown?
+///Do we block carbon-level flash_act() from performing its default stamina damage/knockdown/confusion?
 #define FLASH_COMPLETED "flash_completed"
