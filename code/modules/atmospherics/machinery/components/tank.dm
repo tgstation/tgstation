@@ -281,15 +281,19 @@
 		leaver.air_contents = gas_share
 		leaver.update_appearance(UPDATE_ICON)
 
+	var/list/joining_shares = list()
 	for(var/obj/machinery/atmospherics/components/tank/joiner as anything in joining_members)
 		if(joiner == src)
 			continue
 		var/datum/gas_mixture/joiner_share = joiner.air_contents
 		if(joiner_share)
-			air_contents.merge(joiner_share)
+			joining_shares |= joiner_share
 		joiner.air_contents = air_contents
 		air_contents.volume += joiner.volume
 		joiner.update_appearance(UPDATE_ICON)
+	joining_shares -= air_contents
+	for(var/datum/gas_mixture/joining_share as anything in joining_shares)
+		air_contents.merge(joining_share)
 
 	for(var/dir in GLOB.cardinals)
 		if(dir & initialize_directions & merger.members[src])
@@ -423,7 +427,8 @@
 /obj/machinery/atmospherics/components/tank/on_deconstruction(disassembled)
 	var/turf/location = drop_location()
 	. = ..()
-	location.assume_air(air_contents)
+	location.assume_air(air_contents.remove_ratio(volume / air_contents.volume))
+	air_contents.volume -= volume
 	if(!disassembled)
 		return
 	var/obj/structure/tank_frame/frame = new(location)
