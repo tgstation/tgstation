@@ -156,9 +156,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Should the character preview dummy load all organs? Required for i.e organ_set_bonus visual effects
 	var/character_preview_load_all_organs = FALSE
 
-	/// Do we try to prevent reset_perspective() from working? Useful for Dullahans to stop perspective changes when they're looking through their head.
-	var/prevent_perspective_change = FALSE
-
 	///Was the species changed from its original type at the start of the round?
 	var/roundstart_changed = FALSE
 
