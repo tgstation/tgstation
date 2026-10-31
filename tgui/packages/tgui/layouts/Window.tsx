@@ -29,6 +29,7 @@ import {
 } from '../drag';
 import { suspendStart } from '../events/handlers/suspense';
 import { createLogger } from '../logging';
+import { IconResourceNotice } from './IconResourceNotice';
 import { Layout } from './Layout';
 import { TitleBar } from './TitleBar';
 
@@ -136,7 +137,7 @@ export function Window(props: Props) {
           debug.debugLayout && 'debug-layout',
         ])}
       >
-        {!suspended && children}
+        <IconResourceNotice>{!suspended && children}</IconResourceNotice>
         {showDimmer && <div className="Window__dimmer" />}
       </div>
       <div
