@@ -51,12 +51,12 @@
 /obj/item/analyzer/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
 
-	if(held_item == src)
-		context[SCREENTIP_CONTEXT_ALT_RMB] = "Scan for air alarm"
-		context[SCREENTIP_CONTEXT_RMB] = "Open the gas reference"
+	if(held_item != src)
+		return NONE
 
+	context[SCREENTIP_CONTEXT_ALT_RMB] = "Scan for nearest air alarm in area"
+	context[SCREENTIP_CONTEXT_RMB] = "Open the gas reference"
 	context[SCREENTIP_CONTEXT_ALT_LMB] = "Activate the barometer function"
-
 	return CONTEXTUAL_SCREENTIP_SET
 
 /obj/item/analyzer/click_alt_secondary(mob/user)
@@ -65,7 +65,8 @@
 	if(.)
 		return
 
-	scan_air_alarm(user)
+	if(user.get_active_held_item() == src)
+		scan_air_alarm(user)
 
 /obj/item/analyzer/proc/scan_air_alarm(mob/user)
 	if(!COOLDOWN_FINISHED(src, next_air_alarm_scan))
@@ -86,7 +87,7 @@
 		target = air_alarm
 
 	if(!target)
-		user.balloon_alert(user, "couldn't find air alarm!")
+		user.balloon_alert(user, "no air alarm in this area!")
 		return
 
 	var/dist = get_dist(src, target)
@@ -139,6 +140,9 @@
 	return BRUTELOSS
 
 /obj/item/analyzer/click_alt(mob/user) //Barometer output for measuring when the next storm happens
+	if(user.get_active_held_item() != src)
+		return
+
 	if(cooldown)
 		to_chat(user, span_warning("[src]'s barometer function is preparing itself."))
 		return CLICK_ACTION_BLOCKING
