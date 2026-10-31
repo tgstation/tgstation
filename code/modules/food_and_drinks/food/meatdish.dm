@@ -1296,6 +1296,41 @@
 	crafting_complexity = FOOD_COMPLEXITY_4
 	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT / 2)
 
+/obj/item/food/raw_turkey
+	name = "raw turkey"
+	desc = "A whole plucked turkey, ready for the oven!"
+	icon = 'icons/mob/simple/turkey.dmi'
+	icon_state = "turkey_butchered"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 30,
+		/datum/reagent/consumable/nutriment/fat = 10,
+	)
+	tastes = list("raw turkey" = 1)
+	foodtypes = MEAT | RAW
+	w_class = WEIGHT_CLASS_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_1
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 4)
+	starting_reagent_purity = 1
+
+/obj/item/food/raw_turkey/make_bakeable()
+	AddComponent(/datum/component/bakeable, /obj/item/food/roast_turkey, rand(40 SECONDS, 50 SECONDS), TRUE, TRUE)
+
+/obj/item/food/roast_turkey
+	name = "roast turkey"
+	desc = "A perfectly cooked turkey, looking juicy and ready to eat."
+	icon = 'icons/mob/simple/turkey.dmi'
+	icon_state = "turkey_roasted"
+	food_reagents = list(
+		/datum/reagent/consumable/nutriment/protein = 30,
+		/datum/reagent/consumable/nutriment/fat = 10,
+		/datum/reagent/consumable/nutriment/vitamin = 5,
+	)
+	tastes = list("roast turkey" = 3, "crispy skin" = 1)
+	foodtypes = MEAT
+	w_class = WEIGHT_CLASS_NORMAL
+	crafting_complexity = FOOD_COMPLEXITY_2
+	custom_materials = list(/datum/material/meat = MEATSLAB_MATERIAL_AMOUNT * 4)
+
 /obj/item/food/wendigo_feast
 	trash_type = /obj/item/wendigo_skull
 	name = "wendigo feast"
