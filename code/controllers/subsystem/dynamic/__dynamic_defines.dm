@@ -46,6 +46,8 @@
 /// Applied to rulesets which intentionally share a pref_flag with another rulesets
 /// Denotes multiple rulesets which abide by the same preference, but are each a variation of some base ruleset
 #define RULESET_VARIATION (1<<3)
+/// Ruleset doesn't work to its maximum potential without a few ghosts being present
+#define RULESET_NEEDS_GHOSTS (1<<4)
 
 /// Href for cancelling midround rulesets before execution
 #define MIDROUND_CANCEL_HREF(...) "(<a href='byond://?src=[REF(src)];admin_cancel_midround=[REF(picked_ruleset)]'>CANCEL</a>)"
@@ -59,3 +61,5 @@
 
 /// Used to easily get a config entry for a dynamic ruleset or tier
 #define GET_DYNAMIC_CONFIG(some_typepath, var_name) SSdynamic.get_config_value(some_typepath, NAMEOF(some_typepath, ##var_name), some_typepath::##var_name)
+
+#define PREPARATION_SUCCESS "Success"
