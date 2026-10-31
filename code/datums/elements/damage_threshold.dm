@@ -17,8 +17,8 @@
 		return ELEMENT_INCOMPATIBLE
 
 	RegisterSignal(target, COMSIG_LIVING_CHECK_BLOCK, PROC_REF(check_block))
-	force_threshold = threshold
-	attack_type_blocked = attack_type_blocked
+	src.force_threshold = threshold
+	src.attack_type_blocked = attack_type_blocked
 
 /datum/element/damage_threshold/Detach(datum/source, ...)
 	. = ..()

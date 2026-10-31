@@ -204,6 +204,7 @@
 					to_chat(flashed, "You're blinded by [src]!")
 		else
 			flashed.adjust_confusion_up_to(confusion_duration, confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
+
 			if(!targeted)
 				return TRUE
 

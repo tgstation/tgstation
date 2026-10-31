@@ -32,7 +32,12 @@
 	var/mob/living/carbon/human/consistent/attacker = EASY_ALLOCATE()
 	var/mob/living/silicon/robot/borgo = EASY_ALLOCATE()
 	borgo.forceMove(locate(attacker.x + 1, attacker.y, attacker.z))
+
+	var/obj/item/bodypart/attacking_bodypart = attacker.get_active_hand()
+	attacking_bodypart.unarmed_damage_low = 1
+	attacking_bodypart.unarmed_damage_high = 1
+
 	attacker.set_combat_mode(TRUE)
 	click_wrapper(attacker, borgo)
-	TEST_ASSERT_EQUAL(borgo.get_brute_loss(), 0, "Cyborg took damage from an unarmed punched - \
+	TEST_ASSERT_EQUAL(borgo.get_brute_loss(), 0, "Cyborg took damage from an unarmed punched with a damage of 1 - \
 		their unarmed damage threshold should be too high for this to happen.")
