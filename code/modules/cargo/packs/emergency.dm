@@ -162,3 +162,11 @@
 	contains = list(/obj/item/storage/box/mothic_rations = 3)
 	crate_name = "surplus rations box"
 	crate_type = /obj/structure/closet/crate/cardboard/mothic
+
+/datum/supply_pack/emergency/sledgehammer
+	name = "Licensed Sledgehammer Crate"
+	desc = "Two licensed replicas of the hammer from that one commercial, cleared for demolition and deconstruction work. \
+		Telescreen damage is not covered by the warranty."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/obj/item/sledgehammer = 2)
+	crate_name = "licensed sledgehammer crate"

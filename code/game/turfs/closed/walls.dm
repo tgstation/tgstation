@@ -95,11 +95,12 @@
 /turf/closed/wall/attack_tk()
 	return
 
-/turf/closed/wall/proc/dismantle_wall(devastated = FALSE, explode = FALSE)
+/turf/closed/wall/proc/dismantle_wall(devastated = FALSE, explode = FALSE, silent = FALSE)
 	if(devastated)
 		devastate_wall()
 	else
-		playsound(src, break_sound, 100, TRUE)
+		if(!silent)
+			playsound(src, break_sound, 100, TRUE)
 		var/newgirder = break_wall()
 		if(newgirder) //maybe we don't /want/ a girder!
 			transfer_fingerprints_to(newgirder)
