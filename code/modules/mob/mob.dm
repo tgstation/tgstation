@@ -46,6 +46,7 @@
 			observe.reset_perspective(null)
 
 	qdel(hud_used)
+	inventory_slots?.Cut()
 	QDEL_LIST(client_colours)
 	ghostize(can_reenter_corpse = FALSE) //False, since we're deleting it currently
 	if(mind?.current == src) //Let's just be safe yeah? This will occasionally be cleared, but not always. Can't do it with ghostize without changing behavior
@@ -91,6 +92,7 @@
 	for(var/datum/atom_hud/alternate_appearance/alt_hud as anything in GLOB.active_alternate_appearances)
 		alt_hud.apply_to_new_mob(src)
 
+	create_inventory_slots()
 	set_nutrition(rand(NUTRITION_LEVEL_START_MIN, NUTRITION_LEVEL_START_MAX))
 	. = ..()
 	setup_hud_traits()

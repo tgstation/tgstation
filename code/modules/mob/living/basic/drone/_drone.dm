@@ -41,7 +41,8 @@
 	hud_possible = list(DIAG_STAT_HUD, DIAG_HUD, ANTAG_HUD)
 	unique_name = TRUE
 	faction = list(FACTION_NEUTRAL,FACTION_SILICON,FACTION_TURRET)
-	hud_type = /datum/hud/dextrous/drone
+	hud_type = /datum/hud/dextrous
+	default_inventory_slots = /datum/inventory_slot/drone
 	// Going for a sort of pale green here
 	lighting_cutoff_red = 30
 	lighting_cutoff_green = 35
