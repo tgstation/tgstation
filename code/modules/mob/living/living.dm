@@ -1767,6 +1767,49 @@ GAME_VERB_PROC(/mob/living, mob_sleep, "Sleep", null)
 	else if(key)
 		new_mob.PossessByPlayer(key)
 
+/// Shapeshifts us into new_shape (mob typepath)
+/// Returns the new mob, or null on failure.
+/mob/living/proc/do_shapeshift(mob/living/new_shape, shapechange_type = /datum/status_effect/shapechange_mob, ...)
+	if(ispath(new_shape, /mob/living))
+		new_shape = new new_shape(loc)
+	if(!istype(new_shape))
+		CRASH("[type] do_shapeshift was called with an invalid shape ([new_shape]).")
+
+	var/list/effect_args = list(shapechange_type, src) + args.Copy(3)
+	var/datum/status_effect/shapechange_mob/shapechange = new_shape.apply_status_effect(arglist(effect_args))
+	if(!shapechange)
+		// We failed to shift, maybe because we were already shapeshifted?
+		// Whatver the case, this shouldn't happen, so throw a stack trace.
+		to_chat(src, span_warning("You can't shapeshift in this form!"))
+		stack_trace("[type] do_shapeshift was called when the mob was already shapeshifted.")
+		qdel(new_shape)
+		return
+
+	// If you shapeshift into a pet subtype we don't want to update Poly's deathcount or something when you die
+	new_shape.add_traits(list(TRAIT_DONT_WRITE_MEMORY, TRAIT_SHAPESHIFTED), SHAPESHIFT_TRAIT)
+
+	// Make sure that if you shapechanged into a bot, the AI can't just turn you off.
+	var/mob/living/basic/bot/polymorph_bot = new_shape
+	if (istype(polymorph_bot))
+		polymorph_bot.bot_access_flags |= BOT_COVER_EMAGGED
+		polymorph_bot.bot_mode_flags &= ~BOT_MODE_REMOTE_ENABLED
+
+	return new_shape
+
+/// Reverts us back to whoever shifted. shapechange_type must match arg passed to do_shapeshift()
+/// Returns the original mob, or null on failure.
+/mob/living/proc/do_unshapeshift(shapechange_type = /datum/status_effect/shapechange_mob)
+	var/datum/status_effect/shapechange_mob/shapechange = has_status_effect(shapechange_type)
+	if(!shapechange)
+		// We made it to do_unshapeshift without having a shapeshift status effect, this shouldn't happen.
+		to_chat(src, span_warning("You can't un-shapeshift from this form!"))
+		stack_trace("[type] do_unshapeshift was called when the mob wasn't even shapeshifted.")
+		return
+
+	var/mob/living/unshapeshifted_mob = shapechange.caster_mob
+	remove_status_effect(shapechange_type)
+	return unshapeshifted_mob
+
 /mob/living/proc/unfry_mob() //Callback proc to tone down spam from multiple sizzling frying oil dipping.
 	REMOVE_TRAIT(src, TRAIT_OIL_FRIED, "cooking_oil_react")
 
