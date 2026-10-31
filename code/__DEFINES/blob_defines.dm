@@ -115,3 +115,7 @@
 
 /// How much reagents we put into the spore death clouds in units.
 #define BLOBMOB_CLOUD_REAGENT_VOLUME 40
+
+/// If a blob has delayed the emergency shuttle from leaving for longer than this threshold,
+/// (most) forms of point gain will begin to be reduced by how long the shuttle has been delayed, to prevent stalemate.
+#define BLOB_SHUTTLE_DELAY_PENALTY_THRESHOLD (4 MINUTES)
