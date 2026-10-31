@@ -20,8 +20,8 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	var/message = "The blob strikes you"
 	/// Gets added onto 'message' if the mob stuck is of type living
 	var/message_living = null
-	/// Stores world.time to figure out when to next give resources
-	var/resource_delay = 0
+	/// Delay between passive research ticks
+	COOLDOWN_DECLARE(resource_delay)
 	///The blob overmind eye mob used to control the spread
 	var/mob/eye/blob/overmind
 	/// The amount of health regenned on core_process
@@ -135,10 +135,10 @@ GLOBAL_LIST_INIT(valid_blobstrains, subtypesof(/datum/blobstrain) - list(/datum/
 	totalmessage += "!"
 	to_chat(M, span_userdanger("[totalmessage]"))
 
-/datum/blobstrain/proc/core_process()
-	if(resource_delay <= world.time)
-		resource_delay = world.time + 10 // 1 second
-		overmind.add_points(point_rate+point_rate_bonus)
+/datum/blobstrain/proc/core_process(seconds_per_tick)
+	if(COOLDOWN_FINISHED(src, resource_delay))
+		COOLDOWN_START(src, resource_delay, 1 SECONDS)
+		overmind.add_points(point_rate + point_rate_bonus, apply_shuttle_penalty = TRUE)
 	overmind.blob_core.repair_damage(base_core_regen + core_regen_bonus)
 
 /datum/blobstrain/proc/attack_living(mob/living/L, list/nearby_blobs) // When the blob attacks people

@@ -71,14 +71,18 @@
 /obj/structure/blob/special/core/process(seconds_per_tick)
 	if(QDELETED(src))
 		return
-	if(!overmind)
+	if(QDELETED(overmind))
 		qdel(src)
-	if(overmind)
-		overmind.blobstrain.core_process()
-		overmind.update_health_hud()
+		return
+
+	if(EMERGENCY_AT_LEAST_DOCKED)
+		if(overmind.shuttle_delay_counter < BLOB_SHUTTLE_DELAY_PENALTY_THRESHOLD && overmind.shuttle_delay_counter + (seconds_per_tick * 1 SECONDS) >= BLOB_SHUTTLE_DELAY_PENALTY_THRESHOLD)
+			to_chat(overmind, span_userdanger("The emergency shuttle has been delayed for too long! Resource gain will be reduced over time."))
+		overmind.shuttle_delay_counter += (seconds_per_tick * 1 SECONDS)
+	overmind.blobstrain.core_process()
+	overmind.update_health_hud()
 	pulse_area(overmind, claim_range, pulse_range, expand_range)
 	reinforce_area(seconds_per_tick)
-	..()
 
 /obj/structure/blob/special/core/on_changed_z_level(turf/old_turf, turf/new_turf)
 	if(overmind && is_station_level(new_turf?.z))
