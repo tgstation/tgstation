@@ -180,14 +180,14 @@
 				to_chat(flashed, span_danger("[src] fails to blind you!"))
 		return FALSE
 
-	flashed.adjust_confusion_up_to(confusion_duration, confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
-
-	if(!targeted)
-		return TRUE
-
 	if(flash_result != FLASH_COMPLETED) //If the behavior was overwritten, we just skip the flashy stunny part and go with the override behavior instead
 		if(issilicon(flashed))
-			if(flashed.is_blind())
+
+			if(!targeted) //we only apply confusion to borgs if the effect was a non-targeted flash, as we are applying a slow instead for targeted flashes
+				flashed.adjust_confusion_up_to(confusion_duration, confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
+				return TRUE
+
+			else if(flashed.is_blind())
 				var/flash_duration = rand(8,12) SECONDS
 				flashed.Paralyze(flash_duration)
 				flashed.set_temp_blindness_if_lower(flash_duration)
@@ -203,6 +203,10 @@
 				else
 					to_chat(flashed, "You're blinded by [src]!")
 		else
+			flashed.adjust_confusion_up_to(confusion_duration, confusion_duration * CONFUSION_STACK_MAX_MULTIPLIER)
+			if(!targeted)
+				return TRUE
+
 			//easy way to make sure that you can only long stun someone who is facing in your direction
 			flashed.adjust_stamina_loss(rand(80, 120) * (1 - (deviation * 0.5)))
 			flashed.Knockdown(rand(25, 50) * (1 - (deviation * 0.5)))
