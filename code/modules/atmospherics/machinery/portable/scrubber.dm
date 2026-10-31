@@ -32,6 +32,29 @@
 		/datum/gas/halon,
 	)
 
+/obj/machinery/portable_atmospherics/scrubber/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_ALT_LMB] = "Turn [on ? "off" : "on"]"
+	if(holding)
+		context[SCREENTIP_CONTEXT_ALT_RMB] = "Eject holding tank"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/obj/machinery/portable_atmospherics/scrubber/click_alt(mob/user)
+	if(is_operational)
+		on = !on
+		if(on)
+			SSair.start_processing_machine(src)
+		update_appearance()
+		balloon_alert(user, "turned [on ? "on" : "off"]")
+		investigate_log("was turned [on ? "on" : "off"] by [key_name(user)]", INVESTIGATE_ATMOS)
+		return CLICK_ACTION_SUCCESS
+	return CLICK_ACTION_BLOCKING
+
+/obj/machinery/portable_atmospherics/scrubber/click_alt_secondary(mob/user)
+	if(holding)
+		replace_tank(usr, FALSE)
+		. = TRUE
+
 /obj/machinery/portable_atmospherics/scrubber/on_deconstruction(disassembled)
 	var/turf/local_turf = get_turf(src)
 	local_turf.assume_air(air_contents)
