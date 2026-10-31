@@ -40,7 +40,7 @@
 		scan()
 	START_PROCESSING(SSfastprocess, src)
 
-/datum/computer_file/program/radar/kill_program(mob/user)
+/datum/computer_file/program/radar/on_kill(mob/user)
 	objects = list()
 	selected = null
 	STOP_PROCESSING(SSfastprocess, src)
@@ -192,7 +192,7 @@
 
 //We use SSfastprocess for the program icon state because it runs faster than process_tick() does.
 /datum/computer_file/program/radar/process()
-	if(computer.active_program != src)
+	if(!(src in os.active_threads))
 		//We're not the active program, it's time to stop.
 		return PROCESS_KILL
 	if(!selected)
@@ -226,7 +226,7 @@
 
 //We can use process_tick to restart fast processing, since the computer will be running this constantly either way.
 /datum/computer_file/program/radar/process_tick(seconds_per_tick)
-	if(computer.active_program == src)
+	if(!(src in os.active_threads))
 		START_PROCESSING(SSfastprocess, src)
 
 ///////////////////
@@ -340,7 +340,7 @@
 
 	RegisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED, PROC_REF(on_nuke_armed))
 
-/datum/computer_file/program/radar/fission360/kill_program(mob/user)
+/datum/computer_file/program/radar/fission360/on_kill(mob/user)
 	UnregisterSignal(SSdcs, COMSIG_GLOB_NUKE_DEVICE_ARMED)
 	return ..()
 

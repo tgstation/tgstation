@@ -1,0 +1,54 @@
+@use '../base';
+
+.NtosDesktop__resize {
+  position: absolute;
+  z-index: 10;
+
+  &.resize-bottom {
+    left: 4px;
+    right: 4px;
+    height: 4px;
+    bottom: -2px;
+    cursor: ns-resize;
+  }
+
+  &.resize-right {
+    top: 4px;
+    bottom: 4px;
+    width: 4px;
+    right: -2px;
+    cursor: ew-resize;
+  }
+
+  &.resize-bottom-right {
+    width: 8px;
+    height: 8px;
+    bottom: -2px;
+    right: -2px;
+    cursor: se-resize;
+  }
+}
+
+.NtosDesktop__footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3em;
+  line-height: 2.928em;
+  background-color: hsla(0, 0%, 0%, 0.5);
+  font-family: var(--font-family-mono);
+  font-size: base.em(14px);
+  user-select: none;
+  -ms-user-select: none;
+}
+
+.NtosDesktop__footer__left {
+  position: absolute;
+  left: 1em;
+}
+
+.NtosDesktop__footer__right {
+  position: absolute;
+  right: 1em;
+}
