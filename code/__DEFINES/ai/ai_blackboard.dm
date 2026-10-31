@@ -152,6 +152,17 @@
 /// Maximum range to keep target within
 #define BB_RANGED_SKIRMISH_MAX_DISTANCE "BB_ranged_skirmish_max_distance"
 
+/// When shooting enemies, what method do I use to determine if I can shoot them right now?
+#define BB_RANGED_CAN_SHOOT_METHOD "BB_ranged_can_shoot_method"
+/// Always try to shoot
+#define CAN_SHOOT_METHOD_ALWAYSSHOOT "can_shoot_method_alwaysshoot"
+/// Use can_see to determine if enemy is currently shootable
+#define CAN_SHOOT_METHOD_CANSEE "can_shoot_method_cansee"
+/// Use los_check to determine if enemy is currently shootable
+#define CAN_SHOOT_METHOD_LOSCHECK "can_shoot_method_loscheck"
+/// Moveflags to use when determining when to shoot via can_shoot_method = CAN_SHOOT_METHOD_LOSCHECK
+#define BB_RANGED_PROJECTILE_MOVE_FLAGS "BB_ranged_projectile_move_flags"
+
 /// Blackboard key storing how long your targeting strategy has held a particular target
 #define BB_BASIC_MOB_HAS_TARGET_TIME "BB_basic_mob_has_target_time"
 

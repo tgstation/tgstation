@@ -56,7 +56,7 @@
 	r_hand = /obj/item/gun/energy/laser/soul
 	ai_controller = /datum/ai_controller/basic_controller/trooper/ranged
 	/// Type of bullet we use
-	var/projectiletype = /obj/projectile/beam/laser
+	var/obj/projectile/projectiletype = /obj/projectile/beam/laser
 	/// Sound to play when firing weapon
 	var/projectilesound = 'sound/items/weapons/laser.ogg'
 	/// number of burst shots
@@ -73,6 +73,8 @@
 		cooldown_time = ranged_cooldown,\
 		burst_shots = burst_shots,\
 	)
+	ai_controller.set_blackboard_key(BB_RANGED_CAN_SHOOT_METHOD, CAN_SHOOT_METHOD_LOSCHECK)
+	ai_controller.set_blackboard_key(BB_RANGED_PROJECTILE_MOVE_FLAGS, initial(projectiletype.pass_flags))
 
 /mob/living/basic/trooper/pirate/ranged/space
 	name = "Space Pirate Gunner"
