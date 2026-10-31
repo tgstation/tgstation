@@ -197,6 +197,9 @@ GLOBAL_DATUM(main_supermatter_engine, /obj/machinery/power/supermatter_crystal)
 	/// Cooldown for sending emergency alerts to the common radio channel
 	COOLDOWN_DECLARE(common_radio_cooldown)
 
+	/// Tracks the number of times a healing emitter has hit the SM, is reset after not being hit for a certain duration.
+	VAR_FINAL/healing_emitter_hits = 0
+
 /obj/machinery/power/supermatter_crystal/Initialize(mapload)
 	. = ..()
 	current_gas_behavior = init_sm_gas()
