@@ -7,15 +7,8 @@
 
 ///Dextrous subtype for only dextrous holoparasites. Can hold things hence the inventory slot.
 /datum/hud/dextrous/guardian
-	default_inventory_slots = list(/datum/inventory_slot/guardian_storage)
 	give_health_doll = FALSE
 
 /datum/hud/dextrous/guardian/initialize_screen_objects()
 	. = ..()
 	add_screen_object(/atom/movable/screen/healths/guardian, HUD_MOB_HEALTH, HUD_GROUP_INFO)
-
-/datum/inventory_slot/guardian_storage
-	name = "internal storage"
-	icon_state = "suit_storage"
-	slot_id = ITEM_SLOT_SUITSTORE
-	screen_loc = ui_back

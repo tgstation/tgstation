@@ -69,14 +69,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	/// List of screen objects by their screen group
 	var/list/screen_groups[SCREEN_GROUP_AMT]
 
-	/// List of typepaths of /datum/inventory_slot which will be used to automatically create inventory slot UI elements
-	/// If assigned a typepath instead of a list, it will instead use all valid subtypes of said typepath
-	/// Can be changed in initialize_screen_objects() to add/remove slots
-	var/list/datum/inventory_slot/default_inventory_slots = null
-	/// Alist of slot_id -> inventory_slot datum of our slots
-	/// These are singletons, do not modify individual slots!
-	var/list/datum/inventory_slot/inventory_slots = alist()
-
 	/// List of weakrefs to objects that we add to our screen that we don't expect to DO anything
 	/// They typically use * in their render target. They exist solely so we can reuse them,
 	/// and avoid needing to make changes to all idk 300 consumers if we want to change the appearance
@@ -134,7 +126,6 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	QDEL_LIST(floating_actions)
 	screentip_text = null
 	screen_groups = null
-	inventory_slots.Cut()
 	QDEL_LIST_ASSOC_VAL(screen_objects)
 	QDEL_LIST_ASSOC_VAL(master_groups)
 	QDEL_LIST_ASSOC_VAL(plane_master_controllers)
@@ -407,15 +398,15 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	if (isnull(mymob))
 		return
 
-	for (var/slot_id, _slot in inventory_slots)
+	for (var/slot_id, _slot in mymob.get_inventory_slots())
 		var/datum/inventory_slot/slot = _slot
 		if (!isnull(slot))
 			slot.update_inventory_slot(src, mymob)
 
 /datum/hud/proc/update_inventory_slot(slot_id, ...)
-	if(isnull(mymob))
+	if (isnull(mymob))
 		return
-	var/datum/inventory_slot/slot = inventory_slots[slot_id]
+	var/datum/inventory_slot/slot = mymob.get_inventory_slot(slot_id)
 	if (!isnull(slot))
 		var/list/slot_args = list(src, mymob) + args.Copy(2)
 		slot.update_inventory_slot(arglist(slot_args))
@@ -490,22 +481,12 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 /datum/hud/proc/update_locked_slots()
 	return
 
-/// Creates inventory slot screen elements based on our assigned default_inventory_slots
+/// Creates inventory slot screen elements based on our mob's inventory_slots
 /datum/hud/proc/create_inventory_slots()
-	var/list/created_paths = default_inventory_slots
-	if (ispath(created_paths))
-		created_paths = valid_subtypesof(created_paths)
-
-	for (var/datum/inventory_slot/slot_type as anything in created_paths)
-		var/datum/inventory_slot/inv_slot = GLOB.inventory_slot_datums[slot_type]
-		if (!inv_slot)
-			stack_trace("[src] attempted to use an invalid inventory slot: [slot_type]")
-			continue
-		inv_slot.create_element(src)
-		inventory_slots[inv_slot.slot_id] = inv_slot
-
-	// Lets add an abstract "hands" slot to ourselves for native handling
-	inventory_slots[ITEM_SLOT_HANDS] = GLOB.inventory_slot_datums[/datum/inventory_slot/hands]
+	for (var/slot_id, _slot in mymob.get_inventory_slots())
+		var/datum/inventory_slot/inv_slot = _slot
+		if (!isnull(inv_slot))
+			inv_slot.create_element(src)
 	inventory_update()
 
 /datum/hud/proc/position_action(atom/movable/screen/movable/action_button/button, position)
