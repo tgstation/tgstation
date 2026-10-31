@@ -65,7 +65,7 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	var/end_round_on_victory = TRUE
 
 	/// How long in deciseconds our existence has delayed the emergency shuttle from leaving
-	VAR_PRIVATE/shuttle_delay_counter = 0
+	VAR_FINAL/shuttle_delay_counter = 0
 
 /mob/eye/blob/Initialize(mapload, starting_points = OVERMIND_STARTING_POINTS)
 	ADD_TRAIT(src, TRAIT_BLOB_ALLY, INNATE_TRAIT)
