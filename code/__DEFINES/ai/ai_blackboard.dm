@@ -164,6 +164,9 @@
 /// Computed flee destination turf set by find_flee_location and consumed by move_to_target
 #define BB_FLEE_LOCATION "BB_flee_location"
 
+/// Set when a node drone has latched onto the ore vent it is defending.
+#define BB_NODE_DRONE_ATTACHED "BB_node_drone_attached"
+
 /// Generic key for a non-specific targeted action
 #define BB_TARGETED_ACTION "BB_TARGETED_action"
 /// Generic key for a non-specific action
