@@ -691,6 +691,7 @@
   - bugfix: Smoke from things like smoke grenades or the chaplain's smoke spell once
       again have a negative effect when exposed to it (coughing, minor oxygen damage,
       dropping items)
+  - bugfix: Fix modsuit deploy canceling from movement
   san7890:
   - bugfix: Halloweeners rejoice, some ancient Dullahan bugs have been patched. This
       includes their speech, how they interact as a changeling, and how they percieve
