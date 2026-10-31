@@ -998,7 +998,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	for(var/obj/border in src)
 		if(!SSnavmap.border_blocker_cache[border.type])
 			continue
-		if(!border.density && border.can_astar_pass == CANASTARPASS_DENSITY)
+		if(!NAV_RELEVANT(border))
 			continue
 		if(nav_classify_atom(border, edge_blockers))
 			has_cond = TRUE
@@ -1011,10 +1011,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 	// destination contents (reverse dir)
 	var/reverse = REVERSE_DIR(dir)
 	for(var/atom/movable/iter_object in dest)
-		if(ismob(iter_object))
-			continue // mobs are never baked; resolved live at execution time
-		if(!iter_object.density && iter_object.can_astar_pass == CANASTARPASS_DENSITY)
-			continue
+		if(!NAV_RELEVANT(iter_object))
+			continue // dont care if its not relevant for pathfinding
 		if(nav_classify_atom(iter_object, edge_blockers))
 			has_cond = TRUE
 		else
