@@ -89,8 +89,7 @@
 		return
 
 	var/dist = get_dist(src, power_controller)
-	var/dir = get_dir(user, power_controller)
-	var/balloon_message
+	var/angle = get_angle(user, power_controller)
 	var/arrow_color
 
 	switch(dist)
@@ -106,15 +105,13 @@
 		else
 			arrow_color = COLOR_RED
 
-	user.balloon_alert(user, balloon_message)
-
 	var/datum/hud/user_hud = user.hud_used
 	if(!user_hud)
 		return
 
 	var/atom/movable/screen/multitool_arrow/arrow = user_hud.add_screen_object(/atom/movable/screen/multitool_arrow, HUD_MULTITOOL_ARROW, HUD_GROUP_INFO, update_screen = TRUE)
 	arrow.color = arrow_color
-	arrow.transform = matrix(dir2angle(dir), MATRIX_ROTATE)
+	arrow.transform = matrix(angle, MATRIX_ROTATE)
 	QDEL_IN(arrow, 1.5 SECONDS)
 
 /atom/movable/screen/multitool_arrow
