@@ -1916,30 +1916,29 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	//Note for future: Potentionally add a new C.dna.species() to build a template species for more accurate limb replacement
 
 	var/list/new_bodypart_overrides = new_species.bodypart_overrides.Copy()
-	if((new_species.digitigrade_customization == DIGITIGRADE_OPTIONAL && target.dna.features[FEATURE_LEGS] == DIGITIGRADE_LEGS) || new_species.digitigrade_customization == DIGITIGRADE_FORCED)
-		new_bodypart_overrides[BODY_ZONE_R_LEG] = /obj/item/bodypart/leg/right/digitigrade
-		new_bodypart_overrides[BODY_ZONE_L_LEG] = /obj/item/bodypart/leg/left/digitigrade
-
 	for(var/obj/item/bodypart/old_part as anything in target.get_bodyparts())
 		if((old_part.change_exempt_flags & BP_BLOCK_CHANGE_SPECIES) || (old_part.bodypart_flags & BODYPART_IMPLANTED))
 			continue
-		// update all our existing limbs
-		var/path = new_bodypart_overrides?[old_part.body_zone]
-		var/obj/item/bodypart/new_part
+
+		var/path = new_bodypart_overrides[old_part.body_zone]
+		if(path == old_part.type) //Some species have the same bodyparts. (e.g. human and felinids, lizards and their subspecies), so just update the limb.
+			old_part.update_limb(is_creating = TRUE)
+			continue
+
 		if(path)
-			new_part = new path()
+			var/obj/item/bodypart/new_part = new path()
 			new_part.replace_limb(target)
 			new_part.update_limb(is_creating = TRUE)
 			new_part.set_initial_damage(old_part.brute_dam, old_part.burn_dam)
 		qdel(old_part)
 
-	var/list/old_bodypart_overrides = old_species.bodypart_overrides.Copy()
+	var/list/old_bodypart_overrides = old_species?.bodypart_overrides.Copy()
 	if(length(new_bodypart_overrides) <= length(old_bodypart_overrides))
 		return // we updated all the limbs the character deserves
 	// but there are cases where the old species naturally lacked limbs
 	for(var/zone in new_bodypart_overrides)
 		// find a limb that the character doesn't have because of their old species
-		if(new_bodypart_overrides.Find(zone) && old_bodypart_overrides.Find(zone))
+		if(new_bodypart_overrides.Find(zone) && old_bodypart_overrides?.Find(zone))
 			continue
 		var/path = new_bodypart_overrides[zone]
 		if(!path)
