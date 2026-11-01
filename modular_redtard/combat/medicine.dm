@@ -1,7 +1,16 @@
 /// Ratwood's field medicine on medieval maps: a needle sews wounds stitch by stitch (rogueitems/needle.dm sew(), with the
 /// Medicine skill), cloth and bandages bind a limb (natural/clothfibersthorn.dm bandage(), bodypart_wounds.dm
-/// get_bleed_rate(), process_bandage()). The stitches and the bandage act on the bleeding as Ratwood counts it
-/// (combat/blood.dm rogue_bleed_rate()).
+/// get_bleed_rate(), process_bandage()), and the bandage shows on the body (human/update_icons.dm). The stitches and the
+/// bandage act on the bleeding as Ratwood counts it (combat/blood.dm rogue_bleed_rate()). A sewn cut or stab of TG stays as
+/// its sewn tail (Ratwood sew_wound()), a dynamic wound sewn shut is gone (combat/wounds.dm).
+
+/// The sheets of Ratwood's body damage, with the bandage of each limb ("<zone>_b", Ratwood icons/roguetown/mob/bodies/dam/).
+#define ROGUE_BANDAGE_SHEET_MALE 'modular_redtard/icons/mob/dam_male.dmi'
+#define ROGUE_BANDAGE_SHEET_FEMALE 'modular_redtard/icons/mob/dam_female.dmi'
+/// The series of the sewn tails: a limb may carry any number of them.
+#define ROGUE_WOUND_SERIES_SEWN "rogue_wound_series_sewn"
+/// Ratwood's aqua vitae, which comes with its drinks (block 1, alcohol): the cloth soaks it once the reagent exists.
+#define ROGUE_AQUA_VITAE_PATH "/datum/reagent/consumable/ethanol/aqua_vitae"
 
 /datum/wound
 	/// Ratwood sew_progress: how far the stitches have got.
@@ -25,13 +34,58 @@
 		return ROGUE_SEW_THRESHOLD_ARTERY
 	return severity >= WOUND_SEVERITY_SEVERE ? ROGUE_SEW_THRESHOLD_SEVERE : ROGUE_SEW_THRESHOLD_MODERATE
 
-/// The wound is sewn shut: a cut or a stab of TG closes (and scars, as TG's do).
+/// The wound is sewn shut (Ratwood sew_wound()): a cut or a stab of TG becomes its sewn tail, which still bleeds and hurts a
+/// little until it has healed (sewn_bleed_rate, sewn_woundpain, sewn_whp), and leaves the cut's scar then.
 /datum/wound/proc/rogue_sew_done()
-	qdel(src)
+	var/datum/wound/rogue/sewn/sewn = new
+	sewn.rogue_sew_from(src)
+	replace_wound(sewn)
+	if(!QDELETED(sewn) && sewn.limb)
+		sewn.rogue_set_bleed(sewn.rogue_fresh_bleed)
+
+/// A stitch holds blood back (Ratwood: each stitch lowers bleed_rate by half the doctor's Medicine, hold a second's).
+/datum/wound/proc/rogue_stitch(hold)
+	rogue_stitched += hold
 
 /// Blood per second this wound still loses, stitches counted.
 /datum/wound/proc/rogue_bleeding_left()
 	return blood_flow + rogue_bleed_delta()
+
+/// Ratwood on_bodypart_gain(): a new wound that bleeds soaks through the bandage on its limb (bandage_expire()). TG's cuts and
+/// stabs count only from critical up, an opened artery: a lesser one is a crit's wound made milder, or one stemmed.
+/datum/wound/proc/rogue_soaks_bandage()
+	return FALSE
+
+/datum/wound/slash/flesh/rogue_soaks_bandage()
+	return severity >= WOUND_SEVERITY_CRITICAL
+
+/datum/wound/pierce/bleed/rogue_soaks_bandage()
+	return severity >= WOUND_SEVERITY_CRITICAL
+
+/datum/wound/rogue_stump/rogue_soaks_bandage()
+	return TRUE
+
+/// What the wound mends a Life tick of sleep, times the quality of the bed (Ratwood sleep_healing: 1 for most wounds).
+/datum/wound/proc/rogue_sleep_healing()
+	return rogue_value("wound_sleep_healing")
+
+/// An opened artery mends slowly in sleep (Ratwood artery sleep_healing 0.5).
+/datum/wound/slash/flesh/rogue_sleep_healing()
+	return severity >= WOUND_SEVERITY_CRITICAL ? rogue_value("artery_sleep_healing") : ..()
+
+/datum/wound/pierce/bleed/rogue_sleep_healing()
+	return severity >= WOUND_SEVERITY_CRITICAL ? rogue_value("artery_sleep_healing") : ..()
+
+/// A broken bone does not mend in sleep until it is set (Ratwood fracture sleep_healing 0); a dislocation does.
+/datum/wound/blunt/bone/rogue_sleep_healing()
+	return severity >= WOUND_SEVERITY_SEVERE ? rogue_value("fracture_sleep_healing") : ..()
+
+/datum/wound/cranial_fissure/rogue_sleep_healing()
+	return rogue_value("fracture_sleep_healing")
+
+/// A stump is only seared shut (Ratwood dismemberment sleep_healing 0).
+/datum/wound/rogue_stump/rogue_sleep_healing()
+	return rogue_value("stump_sleep_healing")
 
 /datum/wound/rogue_stump/rogue_sew_threshold()
 	return sewn < stumps ? ROGUE_SEW_THRESHOLD_STUMP : 0
@@ -42,6 +96,67 @@
 	rogue_sew_progress = 0
 	rogue_stitched = 0
 	adjust_blood_flow(ROGUE_STUMP_SEWN_BLEED - ROGUE_STUMP_BLEED)
+
+/// The sewn tail of a cut or a stab of TG (Ratwood sew_wound()): the wound stays, sewn, with the little bleeding and pain of
+/// its sewn state and no more than its sewn health to mend (sewn_bleed_rate, sewn_woundpain, sewn_whp), and mends a little each
+/// Life tick by itself (passive_healing 1), in sleep and under medicine (combat/wounds.dm). Healed, it leaves the scar the
+/// cut would have left. It does not clot: Ratwood's sewn bleeding is at or below the floor it would clot to.
+/datum/wound/rogue/sewn
+	name = "sewn wound"
+	desc = "A sewn wound, still tender, slowly knitting."
+	treat_text = "Let it heal; rest and medicine speed it."
+	treat_text_short = "Let it heal"
+	examine_desc = "has a sewn wound"
+
+/// Takes over from the wound being sewn: its name, size and scar, and the sewn state of its kind (Ratwood's slashes,
+/// punctures and arteries).
+/datum/wound/rogue/sewn/proc/rogue_sew_from(datum/wound/old)
+	name = "sewn [LOWER_TEXT(old.name)]"
+	severity = old.severity
+	can_scar = old.can_scar
+	scar_keyword = old.scar_keyword
+	default_scar_file = old.default_scar_file
+	var/stab = istype(old, /datum/wound/pierce)
+	var/most
+	if(old.severity >= WOUND_SEVERITY_CRITICAL)
+		switch(old.rogue_artery)
+			if(ROGUE_ARTERY_THROAT)
+				most = rogue_value("sewn_throat_health")
+				rogue_fresh_bleed = rogue_value("sewn_throat_bleed")
+				rogue_woundpain = rogue_value("sewn_throat_pain")
+			if(ROGUE_ARTERY_HEART)
+				most = rogue_value("sewn_heart_health")
+				rogue_fresh_bleed = rogue_value("sewn_heart_bleed")
+				rogue_woundpain = rogue_value("sewn_heart_pain")
+			else
+				most = rogue_value("sewn_artery_health")
+				rogue_fresh_bleed = rogue_value("sewn_artery_bleed")
+				rogue_woundpain = rogue_value("sewn_artery_pain")
+	else if(old.severity >= WOUND_SEVERITY_SEVERE)
+		most = stab ? rogue_value("sewn_stab_severe_health") : rogue_value("sewn_cut_severe_health")
+		rogue_fresh_bleed = stab ? rogue_value("sewn_stab_severe_bleed") : rogue_value("sewn_cut_severe_bleed")
+		rogue_woundpain = rogue_value("sewn_cut_pain")
+	else
+		most = stab ? rogue_value("sewn_stab_moderate_health") : rogue_value("sewn_cut_moderate_health")
+		rogue_fresh_bleed = stab ? rogue_value("sewn_stab_moderate_bleed") : rogue_value("sewn_cut_moderate_bleed")
+		rogue_woundpain = rogue_value("sewn_cut_pain")
+	var/left = isnull(old.rogue_health) ? old.rogue_health_max() : old.rogue_health
+	rogue_health = left > 0 ? min(left, most) : most
+	rogue_passive_healing = rogue_value("sewn_passive_healing")
+
+/// Any number of sewn tails on a limb, beside the wounds of every series (the cut that is sewn is already gone).
+/datum/wound_pregen_data/rogue_sewn
+	abstract = FALSE
+	wound_path_to_generate = /datum/wound/rogue/sewn
+	can_be_randomly_generated = FALSE
+	compete_for_wounding = FALSE
+	duplicates_allowed = TRUE
+	required_limb_biostate = BIO_FLESH
+	required_wounding_type = WOUND_ALL
+	wound_series = ROGUE_WOUND_SERIES_SEWN
+
+/datum/wound_pregen_data/rogue_sewn/can_be_applied_to(obj/item/bodypart/limb, suggested_wounding_type = required_wounding_type, datum/wound/old_wound, random_roll = FALSE, duplicates_allowed = src.duplicates_allowed, care_about_existing_wounds = TRUE)
+	return ..(limb, suggested_wounding_type, old_wound, random_roll, TRUE, FALSE)
 
 /datum/wound
 	/// Ratwood whp: what is left to mend before the wound closes (potions, soaked bandages); null until it is first mended.
@@ -74,8 +189,9 @@
 		return ROGUE_WOUND_HEALTH_BURN_CRITICAL
 	return severity >= WOUND_SEVERITY_SEVERE ? ROGUE_WOUND_HEALTH_BURN_SEVERE : ROGUE_WOUND_HEALTH_BURN_MODERATE
 
-/// Ratwood heal_wound(): mends the wound by the amount; with nothing left to mend it closes (a cut, a stab, a burn or a broken
-/// bone of TG is gone, and scars as TG's do). Returns what it took of the amount.
+/// Ratwood heal_wound(): mends the wound by the amount and eases its pain by half of it (combat/pain.dm); with nothing left to
+/// mend it closes (a cut, a stab, a burn or a broken bone of TG is gone, and scars as TG's do). Returns what it took of the
+/// amount.
 /datum/wound/proc/rogue_heal_wound(amount)
 	var/most = rogue_health_max()
 	if(!most || amount <= 0)
@@ -84,16 +200,20 @@
 		rogue_health = most
 	var/healed = min(rogue_health, amount)
 	rogue_health -= healed
+	rogue_ease_pain(amount)
 	if(rogue_health <= 0)
 		qdel(src)
 	return healed
 
-/// A stump mends by the searing it still needs (integrity): Ratwood's potions heal a stump's whp as the searing does.
+/// A stump mends by the searing it still needs (integrity): Ratwood's potions heal a stump's whp as the searing does, and its
+/// pain eases with it (combat/pain.dm).
 /datum/wound/rogue_stump/rogue_heal_wound(amount)
 	if(amount <= 0 || integrity <= 0)
 		return 0
 	var/healed = min(integrity, amount)
 	integrity -= healed
+	if(victim)
+		victim.rogue_pain_hud_dirty = TRUE
 	if(integrity <= 0)
 		to_chat(victim, span_green("My [stumps > 1 ? "stumps close" : "stump closes"]."))
 		qdel(src)
@@ -162,7 +282,7 @@
 		user.rogue_craft_experience(/datum/attribute/skill/misc/medicine, user.rogue_stat(ROGUE_STAT_INTELLIGENCE) * ROGUE_SEW_XP_STEP)
 		playsound(patient, 'modular_redtard/rockhill/sound/foley/sewflesh.ogg', 100, TRUE, -2)
 		target.rogue_sew_progress = min(target.rogue_sew_progress + step, threshold)
-		target.rogue_stitched += hold
+		target.rogue_stitch(hold)
 		if(!informed && target.rogue_bleeding_left() <= 0)
 			informed = TRUE
 			patient.visible_message(span_green("One last drop of blood trickles from the [target.name] on [patient]'s [limb.plaintext_zone] before it closes."), span_green("The throbbing warmth coming out of the [target.name] soothes and stops. It no longer bleeds."))
@@ -216,21 +336,26 @@
 	rogue_bandage_left = rogue_bandage_capacity
 	rogue_clear_medicine()
 
-/// Ratwood's soakings (clothfibersthorn.dm attackby()): what a cloth soaked in each heals a Ratwood tick under a bandage, how
-/// long it lasts and Ratwood's word for it. A health potion heals quickly, blessed water slowly and only on a bandage. Ratwood's
-/// aqua vitae comes with its drinks.
-GLOBAL_LIST_INIT(rogue_soak_medicines, list(
-	/datum/reagent/medicine/healthpot = list(1, 10, "lyfeblood"),
-	/datum/reagent/medicine/stronghealth = list(2, 10, "strong lyfeblood"),
-	/datum/reagent/water/blessed = list(0.2, 20, "blessed water"),
-))
+/// Ratwood's soakings (clothfibersthorn.dm attackby()), in its order: reagent type -> list(what a cloth soaked in it heals a
+/// Ratwood tick under a bandage, how long it lasts, Ratwood's word for it). A health potion heals quickly, aqua vitae slowly but
+/// long, blessed water slowly and only on a bandage. Aqua vitae is Ratwood's drink (ROGUE_AQUA_VITAE_PATH): its soaking turns on
+/// by itself once the reagent exists. Made anew on each use, so the numbers follow the values the admins change.
+/proc/rogue_soak_medicines()
+	. = list(
+		/datum/reagent/medicine/healthpot = list(rogue_value("soak_lyfeblood_quality"), rogue_value("soak_lyfeblood_amount"), "lyfeblood"),
+		/datum/reagent/medicine/stronghealth = list(rogue_value("soak_strong_lyfeblood_quality"), rogue_value("soak_strong_lyfeblood_amount"), "strong lyfeblood"),
+	)
+	var/aqua_vitae = text2path(ROGUE_AQUA_VITAE_PATH)
+	if(aqua_vitae)
+		.[aqua_vitae] = list(rogue_value("soak_aqua_vitae_quality"), rogue_value("soak_aqua_vitae_amount"), "aqua vitae")
+	.[/datum/reagent/water/blessed] = list(rogue_value("soak_blessed_water_quality"), rogue_value("soak_blessed_water_amount"), "blessed water")
 
 /// A vessel used on the cloth soaks it in a medicine it holds soak_units of, if the cloth is not soaked yet.
 /obj/item/natural/cloth/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!tool.reagents || !rogue_combat_enabled())
 		return ..()
 	var/datum/reagent/medicine
-	for(var/datum/reagent/kind as anything in GLOB.rogue_soak_medicines)
+	for(var/datum/reagent/kind as anything in rogue_soak_medicines())
 		if(tool.reagents.has_reagent(kind, ROGUE_SOAK_UNITS))
 			medicine = kind
 			break
@@ -243,7 +368,8 @@ GLOBAL_LIST_INIT(rogue_soak_medicines, list(
 	return ITEM_INTERACT_SUCCESS
 
 /obj/item/natural/cloth/proc/rogue_soak_in(obj/item/vessel, datum/reagent/medicine, mob/living/user)
-	var/list/data = GLOB.rogue_soak_medicines[medicine]
+	var/list/soakings = rogue_soak_medicines()
+	var/list/data = soakings[medicine]
 	to_chat(user, span_notice("Soaking [src] in [data[3]]..."))
 	if(!do_after(user, ROGUE_SOAK_TIME, target = src) || rogue_medicine_left > 0 || !vessel.reagents?.has_reagent(medicine, ROGUE_SOAK_UNITS))
 		return
@@ -284,8 +410,12 @@ GLOBAL_LIST_INIT(rogue_soak_medicines, list(
 
 /obj/item/natural/cloth/examine(mob/user)
 	. = ..()
-	if(rogue_medicine)
-		. += span_notice("It has been soaked in [GLOB.rogue_soak_medicines[rogue_medicine][3]].")
+	if(!rogue_medicine)
+		return
+	var/list/soakings = rogue_soak_medicines()
+	var/list/data = soakings[rogue_medicine]
+	if(data)
+		. += span_notice("It has been soaked in [data[3]].")
 
 /// Ratwood's bandage(): on the limb aimed at, through what does not cover it thickly; the Medicine skill makes it 15% faster
 /// a rank, and one who bandages oneself may walk meanwhile.
@@ -305,20 +435,28 @@ GLOBAL_LIST_INIT(rogue_soak_medicines, list(
 	if(QDELETED(limb) || limb.owner != patient || limb.rogue_bandage || !user.transferItemToLoc(src, limb))
 		return
 	limb.rogue_bandage = src
+	patient.update_damage_overlays()
 	playsound(patient, 'modular_redtard/rockhill/sound/foley/bandage.ogg', 100, FALSE)
 	if(patient == user)
 		user.visible_message(span_notice("[user] bandages [user.p_their()] [limb.plaintext_zone]."), span_notice("I bandage my [limb.plaintext_zone]."))
 	else
 		user.visible_message(span_notice("[user] bandages [patient]'s [limb.plaintext_zone]."), span_notice("I bandage [patient]'s [limb.plaintext_zone]."))
 
-/// The cloth soaks up blood; when it can take no more, the blood soaks through (Ratwood bandage_expire()).
+/// The cloth soaks up blood; when it can take no more, the blood soaks through.
 /obj/item/natural/cloth/proc/rogue_soak(amount, obj/item/bodypart/limb)
 	if(isnull(rogue_bandage_left))
 		rogue_bandage_left = rogue_bandage_capacity
 	rogue_bandage_left -= amount
-	if(rogue_bandage_left > 0 || rogue_soaked)
+	if(rogue_bandage_left <= 0)
+		rogue_soak_through(limb)
+
+/// Ratwood bandage_expire(): the blood soaks through the bandage, which helps no more until it is washed. A full bandage, or
+/// a new wound that bleeds under it (the blood element, combat/blood.dm), does it.
+/obj/item/natural/cloth/proc/rogue_soak_through(obj/item/bodypart/limb)
+	if(rogue_soaked)
 		return
 	rogue_soaked = TRUE
+	rogue_bandage_left = 0
 	var/mob/living/carbon/owner = limb.owner
 	if(!owner)
 		return
@@ -330,6 +468,28 @@ GLOBAL_LIST_INIT(rogue_soak_medicines, list(
 	/// The cloth binding this limb (Ratwood bodypart bandage).
 	var/obj/item/natural/cloth/rogue_bandage
 
+/// Ratwood's bandage on the body (human/update_icons.dm): "<zone>_b" of its sheet of body damage in the colour of the cloth,
+/// with the bandage of the breast on a woman's chest, drawn where TG draws its gauze (over the limb, under the clothes). Limbs
+/// without TG's damage overlays (a goblin's) and parts without a bandage sprite (the head, Ratwood has none) show none.
+/obj/item/bodypart/get_bodypart_damage_state()
+	. = ..()
+	if(!rogue_bandage || !dmg_overlay_type)
+		return
+	var/mob/living/carbon/human/person = owner
+	var/female = istype(person) && person.physique == FEMALE
+	var/sheet = female ? ROGUE_BANDAGE_SHEET_FEMALE : ROGUE_BANDAGE_SHEET_MALE
+	var/list/states = list("[body_zone]_b")
+	if(female && body_zone == BODY_ZONE_CHEST)
+		states += "boob_b"
+	for(var/state in states)
+		if(!icon_exists(sheet, state))
+			continue
+		var/mutable_appearance/bandage = mutable_appearance(sheet, state, layer = -GAUZE_LAYER)
+		bandage.color = rogue_bandage.color
+		if(!.)
+			. = list()
+		. += bandage
+
 /// Ratwood's get_bleed_rate() under a bandage: the bleeding soaks into a clean bandage, which holds back its share, and
 /// what little is left (no more than 1 a Life tick) stops. A soaked bandage helps no more.
 /obj/item/bodypart/proc/rogue_bandaged_rate(rate, ticks)
@@ -340,12 +500,18 @@ GLOBAL_LIST_INIT(rogue_soak_medicines, list(
 	rate *= rogue_bandage.rogue_bandage_effectiveness
 	return rate * ROGUE_LIFE_TICK <= ROGUE_BANDAGE_STOP ? 0 : rate
 
+/// A bandage or a leech that leaves the limb (taken off, fallen off) is no longer on it; the bandage no longer shows.
 /obj/item/bodypart/Exited(atom/movable/gone, direction)
 	. = ..()
 	if(gone == rogue_bandage)
 		rogue_bandage = null
+		owner?.update_damage_overlays()
+	if(LAZYFIND(rogue_leeches, gone))
+		LAZYREMOVE(rogue_leeches, gone)
+		var/obj/item/natural/worms/leech/leech = gone
+		leech.rogue_limb = null
 
-/// Bandaged limbs, as Ratwood's examine shows them, with a link to take the bandage off.
+/// Bandaged limbs and leeches on them, as Ratwood's examine shows them, with a link to take each off.
 /mob/living/carbon/human/examine(mob/user)
 	. = ..()
 	if(!rogue_combat_enabled())
@@ -354,12 +520,19 @@ GLOBAL_LIST_INIT(rogue_soak_medicines, list(
 		var/obj/item/natural/cloth/cloth = limb.rogue_bandage
 		if(cloth)
 			. += span_notice("[p_Their()] [limb.plaintext_zone] is bandaged with [cloth.rogue_soaked ? "a blood-soaked [cloth.name]" : "\a [cloth]"]. <a href='byond://?src=[REF(src)];rogue_unbandage=[REF(limb)]'>Remove</a>")
+		for(var/obj/item/natural/worms/leech/leech as anything in limb.rogue_leeches)
+			. += span_notice("\A [leech] is latched onto [p_their()] [limb.plaintext_zone]. <a href='byond://?src=[REF(src)];rogue_unleech=[REF(leech)]'>Remove</a>")
 
 /mob/living/carbon/human/Topic(href, href_list)
 	if(href_list["rogue_unbandage"])
 		var/obj/item/bodypart/limb = locate(href_list["rogue_unbandage"]) in bodyparts
 		if(limb?.rogue_bandage && isliving(usr))
 			INVOKE_ASYNC(src, PROC_REF(rogue_unbandage), usr, limb)
+		return
+	if(href_list["rogue_unleech"])
+		var/obj/item/natural/worms/leech/leech = locate(href_list["rogue_unleech"])
+		if(istype(leech) && leech.rogue_limb?.owner == src && isliving(usr))
+			INVOKE_ASYNC(leech, TYPE_PROC_REF(/obj/item/natural/worms/leech, rogue_rip_off), usr)
 		return
 	return ..()
 
@@ -379,3 +552,8 @@ GLOBAL_LIST_INIT(rogue_soak_medicines, list(
 		return
 	cloth.forceMove(drop_location())
 	user.put_in_hands(cloth)
+
+#undef ROGUE_BANDAGE_SHEET_MALE
+#undef ROGUE_BANDAGE_SHEET_FEMALE
+#undef ROGUE_WOUND_SERIES_SEWN
+#undef ROGUE_AQUA_VITAE_PATH

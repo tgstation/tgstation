@@ -99,3 +99,79 @@ sniff_med_keen = 10
 
 # The same for what it leans toward slightly (Ratwood 16).
 sniff_minor_keen = 16
+
+# --- Block 1, B2: Ratwood's alcohol and drunkenness (alchemy/alcohol.dm; Ratwood alcohol_reagents.dm, carbon/life.dm handle_alcohol()). Drunkenness is TG's drunk value.
+
+# Drunkenness from which a Ratwood brew leaves one Drunk: intelligence -2, willpower +1 (Ratwood 3).
+drunk_buff_threshold = 3
+
+# Deciseconds Drunk lingers once one is sober below drunk_buff_threshold (Ratwood 5 minutes).
+drunk_buff_time = 3000
+
+# Percent chance every two seconds that someone drunk past 91 on a medieval map naps, in place of TG's blackout (Ratwood 20).
+drunk_nap_chance = 20
+
+# Deciseconds of that nap (Ratwood Sleeping(900)).
+drunk_nap_time = 900
+
+# --- Block 1, B2: Ratwood's drugs and their powders (alchemy/drugs.dm; Ratwood powderspice.dm).
+
+# Deciseconds it takes to force a powder up someone else's nose (Ratwood 5 seconds).
+powder_force_time = 50
+
+# --- Block 1, B2: reading a vessel by Alchemy and sniffing it (alchemy/reagent_sight.dm; Ratwood atoms.dm examine()).
+
+# Least learned rank of Alchemy that reads a see-through vessel reagent by reagent (Ratwood 2, Apprentice; TRAIT_CICERONE reads it too).
+reagent_sight_rank = 2
+
+# Least share in percent of a smell in a vessel that a sniff picks out (Ratwood generate_scent_message() 15).
+reagent_sniff_threshold = 15
+
+# --- Block 1, B2: the concentrated rot of the cauldron (alchemy/poisons.dm; Ratwood reagents.dm deaditerot, zombie_disease.dm).
+
+# Deciseconds the rot of the cauldron takes to turn the living (Ratwood 3 minutes).
+deadite_rot_time = 1800
+
+# How many times longer it takes in one with Deadite Resistance (Ratwood 2).
+deadite_rot_resistance = 2
+
+# --- Block 1, B2: the fermentation keg and the copper distiller (survival/brewing.dm; Ratwood fermentation_keg.dm).
+
+# Least learned rank of Cooking that picks a recipe for a keg (Ratwood 2, Apprentice).
+keg_brew_cooking_rank = 2
+
+# Deciseconds it takes to empty a keg of a recipe not yet brewed (Ratwood 5 seconds).
+keg_empty_time = 50
+
+# Deciseconds it takes to tap a finished keg (Ratwood 4 seconds).
+keg_tap_time = 40
+
+# Deciseconds it takes to fill a vessel from a tapped keg (Ratwood 1 second).
+keg_pour_time = 10
+
+# Deciseconds it takes to pour one keg dragged onto another (Ratwood 5 seconds).
+keg_drag_pour_time = 50
+
+# Deciseconds it takes to put fuel into a distiller (Ratwood 1.5 seconds).
+keg_refuel_time = 15
+
+# Deciseconds a log burns in a distiller before it cools (Ratwood 4 minutes).
+keg_burn_time = 2400
+
+# Kelvin a log adds to the heat of a distiller (Ratwood 300).
+keg_fuel_heat = 300
+
+# How many times longer and hotter coal burns than a log (Ratwood 1.5).
+keg_coal_multiplier = 1.5
+
+# Hottest a distiller gets, in kelvin (Ratwood 1000).
+keg_max_heat = 1000
+
+# Heat of a cold keg, in kelvin, to which a distiller cools (Ratwood 300).
+keg_room_heat = 300
+
+# Kelvin a distiller cools each Ratwood tick of two seconds once its fuel is spent (Ratwood 5).
+keg_heat_decay = 5
+
+# Share of a recipe's time a distiller takes to brew what needs no heat (Ratwood 0.5).
+keg_distiller_speed = 0.5

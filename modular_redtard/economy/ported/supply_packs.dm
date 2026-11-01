@@ -826,11 +826,23 @@
 	cost = 15
 	contains = list(/obj/item/reagent_containers/food/snacks/grown/nut, /obj/item/reagent_containers/food/snacks/grown/nut, /obj/item/reagent_containers/food/snacks/grown/nut)
 
+/datum/rogue_supply_pack/food/rare_veggies
+	name = "Sorted Imported Vegetables"
+	group = "Food"
+	cost = 40
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/garlick/rogue, /obj/item/reagent_containers/food/snacks/grown/vegetable/turnip, /obj/item/reagent_containers/food/snacks/grown/vegetable/turnip, /obj/item/reagent_containers/food/snacks/grown/cucumber, /obj/item/reagent_containers/food/snacks/grown/cucumber, /obj/item/reagent_containers/food/snacks/grown/eggplant, /obj/item/reagent_containers/food/snacks/grown/eggplant, /obj/item/reagent_containers/food/snacks/grown/carrot, /obj/item/reagent_containers/food/snacks/grown/carrot, /obj/item/reagent_containers/food/snacks/grown/carrot)
+
 /datum/rogue_supply_pack/food/rare_grain
 	name = "Sorted Imported Grains"
 	group = "Food"
 	cost = 25
 	contains = list(/obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/rice, /obj/item/reagent_containers/food/snacks/grown/rice, /obj/item/reagent_containers/food/snacks/grown/rice)
+
+/datum/rogue_supply_pack/food/rare_fruit
+	name = "Sorted Imported Fruits"
+	group = "Food"
+	cost = 45
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/fruit/pear, /obj/item/reagent_containers/food/snacks/grown/fruit/pear, /obj/item/reagent_containers/food/snacks/grown/fruit/lemon, /obj/item/reagent_containers/food/snacks/grown/fruit/lemon, /obj/item/reagent_containers/food/snacks/grown/fruit/lime, /obj/item/reagent_containers/food/snacks/grown/fruit/tangerine, /obj/item/reagent_containers/food/snacks/grown/fruit/tangerine, /obj/item/reagent_containers/food/snacks/grown/fruit/plum, /obj/item/reagent_containers/food/snacks/grown/fruit/plum, /obj/item/reagent_containers/food/snacks/grown/fruit/tomato, /obj/item/reagent_containers/food/snacks/grown/fruit/tomato, /obj/item/natural/shellplant/pumpkin)
 
 /datum/rogue_supply_pack/food/rare_berry
 	name = "Sorted Imported Berries"
@@ -1110,6 +1122,12 @@
 	group = "Luxury"
 	cost = 220
 	contains = list(/obj/item/clothing/ring/signet)
+
+/datum/rogue_supply_pack/luxury/merctoken
+	name = "Writ of Commendation"
+	group = "Luxury"
+	cost = 80
+	contains = list(/obj/item/merctoken)
 
 /datum/rogue_supply_pack/luxury/canvas
 	name = "Canvas"
@@ -1555,6 +1573,12 @@
 	cost = 3
 	contains = list(/obj/item/seeds/tomato, /obj/item/seeds/tomato)
 
+/datum/rogue_supply_pack/seeds/turnip
+	name = "Turnip"
+	group = "Seeds"
+	cost = 3
+	contains = list(/obj/item/seeds/turnip, /obj/item/seeds/turnip)
+
 /datum/rogue_supply_pack/seeds/sunflower
 	name = "Sunflower"
 	group = "Seeds"
@@ -1590,6 +1614,12 @@
 	group = "Seeds"
 	cost = 3
 	contains = list(/obj/item/seeds/cucumber, /obj/item/seeds/cucumber)
+
+/datum/rogue_supply_pack/seeds/rare_veggies
+	name = "Imported Vegetable Seeds"
+	group = "Seeds"
+	cost = 15
+	contains = list(/obj/item/seeds/garlick, /obj/item/seeds/turnip, /obj/item/seeds/cucumber, /obj/item/seeds/eggplant, /obj/item/seeds/carrot, /obj/item/seeds/sugarcane, /obj/item/seeds/nut)
 
 /datum/rogue_supply_pack/seeds/rare_fruit
 	name = "Imported Fruit Seeds"

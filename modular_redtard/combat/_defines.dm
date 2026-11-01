@@ -459,6 +459,8 @@
 #define ROGUE_ALT_GRIP_KNOW_RANK rogue_value("alt_grip_know_rank")
 /// Pain and blood (combat/pain.dm, combat/blood.dm): Ratwood's numbers per Life tick, which is TG's SSMOBS_DT as well.
 #define ROGUE_LIFE_TICK 2
+/// A body that takes Ratwood's dynamic wounds instead of TG's rolled ones (combat/wounds.dm); the blood element gives it.
+#define TRAIT_ROGUE_WOUNDS "rogue_wounds"
 #define ROGUE_WOUND_SERIES_STUMP "rogue_wound_series_stump"
 #define ROGUE_ARTERY_THROAT "throat"
 #define ROGUE_ARTERY_HEART "heart"

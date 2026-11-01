@@ -184,10 +184,17 @@
 /obj/machinery/anvil/ui_assets(mob/user)
 	return list(get_asset_datum(/datum/asset/spritesheet_batched/rogue_anvil))
 
+/// Ratwood's guarded recipes (anvil ui_static_data(), ui_act()): a recipe with req_trait shows to and is forged only by a
+/// smith who has the trait (Dwarvish Knowledge for the dwarven armor and mauls).
+/datum/anvil_recipe/proc/known_to(mob/user)
+	return !req_trait || HAS_TRAIT(user, req_trait)
+
 /obj/machinery/anvil/ui_static_data(mob/user)
 	var/list/recipes = list()
 	for(var/datum/anvil_recipe/recipe as anything in GLOB.rogue_anvil_recipes)
 		if(workpiece && !recipe.accepts(workpiece))
+			continue
+		if(!recipe.known_to(user))
 			continue
 		recipes += list(recipe.get_ui_entry())
 	return list("recipes" = recipes)
@@ -204,7 +211,7 @@
 	if(. || action != "choose_recipe")
 		return
 	var/datum/anvil_recipe/recipe = locate(params["ref"])
-	if(!(recipe in GLOB.rogue_anvil_recipes) || !recipe.accepts(workpiece))
+	if(!(recipe in GLOB.rogue_anvil_recipes) || !recipe.accepts(workpiece) || !recipe.known_to(ui.user))
 		return TRUE
 	INVOKE_ASYNC(src, PROC_REF(choose_recipe), ui.user, recipe)
 	ui.close()

@@ -378,6 +378,8 @@
 	name = "Czwarteki Heir"
 	greet_text = "You are the Czwarteki Lords Heir. Or perhaps one of many. Brought with you by your Parent to march forth on this venture. And to gain experience in the realms beyond your home."
 	grant_lit_torch = TRUE
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/lupian", "/datum/species/demihuman")
+	rogue_wanderer_examine = FALSE
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/czwarteki/heir,
 		)
@@ -391,6 +393,8 @@
 	name = "Czwarteki Hussar"
 	greet_text = "You are a Hussar of Czwarteki, under the oath of your lord. You have raised your Retainers to come with you to cross the lands. "
 	grant_lit_torch = TRUE
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/lupian", "/datum/species/demihuman", "/datum/species/tieberian", "/datum/species/lizardfolk", "/datum/species/anthromorph", "/datum/species/dracon", "/datum/species/tabaxi")
+	rogue_wanderer_examine = FALSE
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/czwarteki/hussar,
 		)
@@ -400,6 +404,8 @@
 	name = "Czwarteki Lord"
 	greet_text = "You are one of many Lords within the Czwarteki Commonwealth, be it to have come for Diplomacy, War, or simple passing through to assist in old alliances. You are to lead your Retinue and bring honor to the Commonwealth. "
 	grant_lit_torch = TRUE
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/lupian", "/datum/species/demihuman")
+	rogue_wanderer_examine = FALSE
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/czwarteki/lord,
 		)
@@ -413,6 +419,8 @@
 	name = "Czwarteki Retainer"
 	greet_text = "You are a Retainers of your Hussars. Called forth into action. You know well how to ride. And tend to your Hussars needs."
 	grant_lit_torch = TRUE
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_wanderer_examine = FALSE
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/czwarteki/retainer,
 		)
@@ -422,6 +430,8 @@
 	name = "Czwarteki Servant"
 	greet_text = "You are Servants of your Lord. Taken along upon the Journey through the realm with the Retinue. Your only goals are but to ensure your Lord and his Heir's well being upon the trip."
 	grant_lit_torch = TRUE
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_wanderer_examine = FALSE
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/czwarteki/servant,
 		)
@@ -430,6 +440,7 @@
 	name = "EA Hasir-ian Guard"
 	greet_text = "The esteemed EA Hasir owns your gold company, Promising only the finest quality gold in grimoria You've been sent to guard his caravans and earn a tidy profit as you do."
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/guard,
 		)
@@ -438,6 +449,7 @@
 	name = "EA Hasir-ian Gold Merchant"
 	greet_text = "The esteemed EA-Hasir owns your gold company, Promising only the finest quality gold in grimoria You've been sent with your caravan to sell golden riches and wonders- at a high price."
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/merchantEA,
 		)
@@ -506,6 +518,7 @@
 /datum/rogue_migrant_role/grenzel_bodyguard
 	name = "Leibwächter"
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/grenzel_guard,
 		)
@@ -514,6 +527,7 @@
 	name = "Envoy"
 	greet_text = "You are a Grenzelhoftian envoy, traveling with bodyguards and a priest to represent your homeland. What exactly you have been sent here to speak about- only you know."
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/grenzel_envoy,
 		)
@@ -522,6 +536,7 @@
 	name = "Envoy Priest"
 	greet_text = "Nominally the envoy's spiritual advisor, your real power extends beyond religious matters. Protect interests of the Holy See of the Ten."
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/grenzel_priest,
 		)
@@ -553,6 +568,8 @@
 	name = "Gronn Chieftain"
 	greet_text = "You are the leader of your tribe. Guide them to glory or try to survive."
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/tieberian", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/dwarf/mountain", "/datum/species/dracon", "/datum/species/tabaxi")
+	rogue_wanderer_examine = FALSE
 	outfit = /datum/outfit/job/roguetown/rockhill_migrant/gronn_chieftain
 
 /datum/outfit/job/roguetown/rockhill_migrant/gronn_shaman
@@ -572,7 +589,7 @@
 	r_pocket = /obj/item/storage/belt/rogue/surgery_bag/full/improv
 	backpack_contents = list(
 		/obj/item/reagent_containers/glass/mortar = 1,
-		/obj/item/pestle = 1,
+		/obj/item/pestle/rogue = 1,
 		/obj/item/rogueweapon/handclaw/gronn = 1,
 		/obj/item/rogueweapon/scabbard/sheath = 1,
 		)
@@ -581,6 +598,8 @@
 	name = "Gronn Shaman"
 	greet_text = "The wisest and likely oldest of the tribe. You commune with Graggah and unleash powers of the divine. Tending as well to the wounded of the tribe."
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/tieberian", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/dwarf/mountain", "/datum/species/dracon", "/datum/species/tabaxi")
+	rogue_wanderer_examine = FALSE
 	outfit = /datum/outfit/job/roguetown/rockhill_migrant/gronn_shaman
 
 /datum/outfit/job/roguetown/rockhill_migrant/gronn_slave
@@ -599,6 +618,7 @@
 	name = "Gronn Slave"
 	greet_text = "An unlucky soul. Perhaps caught in a pillaging raid, or alone in the wilderness. You have been enslaved by the tribe. Work hard to appease your new masters."
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_wanderer_examine = FALSE
 	outfit = /datum/outfit/job/roguetown/rockhill_migrant/gronn_slave
 
 /datum/outfit/job/roguetown/rockhill_migrant/gronn_tribal
@@ -623,6 +643,8 @@
 	name = "Gronn Tribal"
 	greet_text = "You are the bulk of the tribe. Skilled with either bow and axe. Or Spear. Well adapted to surviving off the land."
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/tieberian", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/dwarf/mountain", "/datum/species/dracon", "/datum/species/tabaxi")
+	rogue_wanderer_examine = FALSE
 	outfit = /datum/outfit/job/roguetown/rockhill_migrant/gronn_tribal
 
 /datum/outfit/job/roguetown/rockhill_migrant/gronn_warrior
@@ -648,6 +670,8 @@
 	name = "Gronn Warrior"
 	greet_text = "You are the elite, the best fighters of your tribe. You fight side by side with the Chieftain and ensure his survival."
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/tieberian", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/dwarf/mountain", "/datum/species/dracon", "/datum/species/tabaxi")
+	rogue_wanderer_examine = FALSE
 	outfit = /datum/outfit/job/roguetown/rockhill_migrant/gronn_warrior
 
 /datum/outfit/job/roguetown/rockhill_migrant/hammerhold_huscarl
@@ -674,6 +698,8 @@
 	name = "Hammerholdian Huscarl"
 	greet_text = "You are a loyal and skilled bodyguard to your jarl, specialising in pillaging, kidnapping and fighting with an axe and shield."
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/tieberian", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/dwarf/mountain", "/datum/species/dracon", "/datum/species/tabaxi", "/datum/species/akula")
+	rogue_wanderer_examine = FALSE
 	outfit = /datum/outfit/job/roguetown/rockhill_migrant/hammerhold_huscarl
 
 /datum/outfit/job/roguetown/rockhill_migrant/hammerhold_jarl
@@ -703,6 +729,8 @@
 	name = "Hammerholdian Jarl"
 	greet_text = "You are a warrior-lord from Hammerhold and the leader of your warband. Guide them to glory and wealth or try to survive."
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/tieberian", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/dwarf/mountain", "/datum/species/dracon", "/datum/species/tabaxi", "/datum/species/akula")
+	rogue_wanderer_examine = FALSE
 	outfit = /datum/outfit/job/roguetown/rockhill_migrant/hammerhold_jarl
 
 /datum/outfit/job/roguetown/rockhill_migrant/hammerhold_thrall
@@ -726,6 +754,7 @@
 	name = "Hammerholdian Thrall"
 	greet_text = "An unlucky soul. Perhaps caught in a pillaging raid, or alone in the wilderness, you have been enslaved by the warband. Work hard to appease your new masters."
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_wanderer_examine = FALSE
 	outfit = /datum/outfit/job/roguetown/rockhill_migrant/hammerhold_thrall
 
 /datum/outfit/job/roguetown/rockhill_migrant/hammerhold_tideweaver
@@ -748,7 +777,7 @@
 	r_hand = /obj/item/rogueweapon/spear/trident
 	backpack_contents = list(
 		/obj/item/reagent_containers/glass/mortar = 1,
-		/obj/item/pestle = 1,
+		/obj/item/pestle/rogue = 1,
 		/obj/item/flashlight/flare/torch = 1,
 		)
 
@@ -756,6 +785,8 @@
 	name = "Hammerholdian Tideweaver"
 	greet_text = "You are a cleric of the Lord of Abyss, devoted to him in prayer and arcyne. You have minor magical spells and medical knowledge in addition to your miracles, and can convert those shunned by the Holy See."
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/tieberian", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/dwarf/mountain", "/datum/species/dracon", "/datum/species/tabaxi", "/datum/species/akula")
+	rogue_wanderer_examine = FALSE
 	outfit = /datum/outfit/job/roguetown/rockhill_migrant/hammerhold_tideweaver
 
 /datum/outfit/job/roguetown/rockhill_migrant/hammerhold_volfskin
@@ -783,11 +814,15 @@
 	name = "Hammerholdian Volfskin"
 	greet_text = "You are a volfskin, one of the legendary Hammerholdian warriors who are said to be possessed by raging volf spirits in battles. Distrusted due to your less than savoury religious practices, but well-respected for your combat prowess."
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/tieberian", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/dwarf/mountain", "/datum/species/dracon", "/datum/species/tabaxi", "/datum/species/akula")
+	rogue_wanderer_examine = FALSE
 	outfit = /datum/outfit/job/roguetown/rockhill_migrant/hammerhold_volfskin
 
 /datum/rogue_migrant_role/heartfelt_hand
 	name = "Hand of Heartfelt"
 	grant_lit_torch = TRUE
+	rogue_wanderer_examine = FALSE
+	rogue_advjob_examine = FALSE
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/heartfelt/hand/advisor,
 		/datum/rockhill_advclass/heartfelt/hand/marshal,
@@ -801,6 +836,9 @@
 
 /datum/rogue_migrant_role/heartfelt_knight
 	name = "Knight of Heartfelt"
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_wanderer_examine = FALSE
+	rogue_advjob_examine = FALSE
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/heartfelt/knight,
 		)
@@ -808,6 +846,9 @@
 
 /datum/rogue_migrant_role/heartfelt_lord
 	name = "Lord of Heartfelt"
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_wanderer_examine = FALSE
+	rogue_advjob_examine = FALSE
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/heartfelt/lord/archmage,
 		/datum/rockhill_advclass/heartfelt/lord/chief,
@@ -816,6 +857,7 @@
 
 /datum/rogue_migrant_role/heartfelt_retinue
 	name = "Heartfeltian Retinue"
+	rogue_wanderer_examine = FALSE
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/heartfelt/retinue/armorer,
 		/datum/rockhill_advclass/heartfelt/retinue/courtier,
@@ -840,6 +882,7 @@
 /datum/rogue_migrant_role/kj_follower
 	name = "Sworn Follower"
 	greet_text = "You serve a knight errant on the road. They handle the fighting, and you handle everything else that keeps them going."
+	rogue_wanderer_examine = FALSE
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/kj_follower/campwright,
 		/datum/rockhill_advclass/kj_follower/chirurgeon,
@@ -868,6 +911,7 @@
 	name = "Émissaire"
 	greet_text = "You are an Otavan Emissary, traveling with a small retinue and a Psydonite preacher to represent your homeland. What exactly you have been sent here to speak about- only you know."
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/otavan_envoy,
 		)
@@ -883,6 +927,7 @@
 /datum/rogue_migrant_role/otavan_knight
 	name = "Gendarme"
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/human/halfelf", "/datum/species/elf/dark", "/datum/species/elf/wood", "/datum/species/tieberian", "/datum/species/aasimar", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/tabaxi", "/datum/species/vulpkanin", "/datum/species/akula", "/datum/species/moth", "/datum/species/dracon", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/halforc", "/datum/species/harpy", "/datum/species/construct/metal", "/datum/species/construct/metal/porcelain", "/datum/species/dullahan", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/ooze")
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/otavan_knight,
 		)
@@ -891,6 +936,7 @@
 	name = "Psydonite Preacher"
 	greet_text = "A loyal member of the Psydonite Inquisition, you have mingled with politics long enough to become an active volunteer in assisting diplomatic missions and providing His sermon to wherever the Émissaire goes. Aid him, and make sure that he does not ignore His gospel."
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/otavan_preacher,
 		)
@@ -965,6 +1011,7 @@
 	greet_text = "An unlucky slave, captured from their home, moved to the Zybantines and trained for slave labor and obediency, for long enough to where you can only faintly remember who you were before... You are now being transported from the deserts to harsher lands to be sold."
 	allowed_sexes = list(MALE, FEMALE)
 	grant_lit_torch = TRUE
+	rogue_wanderer_examine = FALSE
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/slaver/slave/arcyne,
 		/datum/rockhill_advclass/slaver/slave/battle,
@@ -976,6 +1023,7 @@
 	name = "Advisor"
 	greet_text = "You are the Emir's advisor and loyal protector."
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/zybantine_advisor,
 		)
@@ -983,6 +1031,7 @@
 /datum/rogue_migrant_role/zybantine_amirah
 	name = "Amirah"
 	allowed_sexes = list(FEMALE)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/zybantine_amirah,
 		)
@@ -991,6 +1040,7 @@
 	name = "Emir"
 	greet_text = "You are an envoy from the zybantine Empire, traveling with bodyguards and your personal advisor to represent your homeland. What exactly you have been sent here to speak about- only you know."
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/zybantine_emir,
 		)
@@ -999,6 +1049,7 @@
 	name = "Janissary Bodyguard"
 	greet_text = "You are a dilligent soldier in employ of the Emir for protection and to assure that their mission goes as planned."
 	allowed_sexes = list(MALE, FEMALE)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 	rockhill_advclasses = list(
 		/datum/rockhill_advclass/zybantine_janissary,
 		)

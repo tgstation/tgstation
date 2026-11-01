@@ -985,6 +985,14 @@ def main():
     declared = declared_paths(DECLARATION_ROOTS, [OUT_DIR])
     tg_declared = declared_paths(['code'], [])
     tg_names = tg_defines('code')
+    # A replacement "when_declared" waits for the module type it points at (another part of the module writes it, as the
+    # medieval pestle of alchemy/): until then Ratwood's path stays as it is. One with "loadouts" also swaps the item in the
+    # roles' outfits, which keep Ratwood's paths otherwise.
+    waiting = [rule for rule in rules if rule.get('when_declared') and (rule.get('to') or rule.get('rebase')) not in declared]
+    for rule in waiting:
+        print(f"replacement {rule['prefix']} -> {rule.get('to') or rule.get('rebase')} waits: the module does not declare it yet")
+    rules = [rule for rule in rules if rule not in waiting]
+    LOADOUT_RULES[:] = [rule for rule in rules if rule.get('loadouts')]
     maps = source_maps(cfg, rw)
     usage, per_level = map_usage(os.path.join(CHECKOUT, maps[0]))
     station_usage = collections.Counter(usage)
@@ -1030,6 +1038,13 @@ def main():
     for dressed in list(role_outfits.values()) + list(class_outfits.values()) + migrant_outfits:
         outfit_items |= set(dressed['slots'].values())
         outfit_items |= {item for item, _ in dressed['contents'] or []}
+    # What a subclass keeps in its stash and the mount it rides in on come along with its data (generate_advclasses()).
+    class_mounts = set()
+    for advclass in class_jobs:
+        outfit_items |= set(re.findall(r'"\s*=\s*(/obj/item/[A-Za-z0-9_/]*[A-Za-z0-9_])', rw.resolve(advclass, 'subclass_stashed_items') or ''))
+        horse = (rw.resolve(advclass, 'horse') or '').strip().rstrip('/')
+        if horse.startswith('/mob/') and horse in rw.types:
+            class_mounts.add(horse)
     mapgen = mapgen_spec(rw, usage)
     mapgen_types = {path for gen in mapgen.values() for module in gen['modules'] for key in ('spawnableAtoms', 'spawnableTurfs') for path, _ in module[key]}
     fill_items = set(cfg['port'].get('extra_types', []))
@@ -1050,7 +1065,13 @@ def main():
     fill_items |= artificer_recipe_items(cfg, rw, rules)
     fill_items |= pottery_recipe_items(cfg, rw, rules)
     fill_items |= food_chain_items(cfg, rw, set(usage) | outfit_items | mapgen_types | fill_items | npc_items)
+    fill_items |= class_mounts
     fill_items |= husbandry_types(cfg, rw, set(usage) | fill_items)
+    # What the ported beasts are butchered into (Ratwood butcher_results, botched_ and perfect_: meat, hides, bones, heads)
+    # comes along for the butchering of the module, the cooking of the meats with it.
+    butchered = butcher_items(cfg, rw, {p for p in set(usage) | mapgen_types | fill_items if p.startswith('/mob/living')})
+    fill_items |= butchered
+    fill_items |= food_chain_items(cfg, rw, set(usage) | outfit_items | mapgen_types | fill_items | npc_items)
     fill_items |= alchemy_types(cfg, rw)
     generated = generate(cfg, port, rules, rw, declared, tg_declared, tg_names, usage, outfit_items | mapgen_types | fill_items | npc_items, set(jobs))
     generate_mapgen(mapgen, rules, declared | generated, tg_names)
@@ -1071,12 +1092,16 @@ def main():
         role_traits |= set(role_attributes(rw, job, dressed.get('advclass'), dressed.get('source'), cfg['attributes'])['traits'])
     for advclass, owners in class_jobs.items():
         role_traits |= set(role_attributes(rw, owners[0], advclass, class_outfits[advclass]['source'], cfg['attributes'])['traits'])
+    # The traits the anvil's guarded recipes ask for are defined with the rest (req_trait, generate_anvil_recipes()).
+    role_traits |= set(cfg['port'].get('anvil_recipes', {}).get('req_traits', []))
     known_traits = generate_traits(cfg, tg_names, role_traits)
     generate_skills(cfg, rw)
     role_attrs = generate_attribute_sheets(cfg, rw, jobs, role_outfits, known_traits)
     role_outfit_paths = generate_jobs(cfg, rw, usage, role_outfits, declared | generated, station_usage, role_attrs)
     generate_advclasses(cfg, rw, class_jobs, class_outfits, declared | generated, known_traits)
     generate_migrants(cfg, rw, migrants, declared | generated)
+    if ROLE_DATA_DROPPED:
+        print('  role data left out (not in the port):', ', '.join(f'{what} ({n})' for what, n in ROLE_DATA_DROPPED.most_common()))
     hair_names = generate_bodies(cfg, rw, declared | generated, npcs, known_traits)
     generate_races(cfg, rw)
     generate_npcs(cfg, rw, rules, npcs, declared | generated, known_traits, role_outfit_paths, hair_names)
@@ -1756,6 +1781,15 @@ def generate(cfg, port, rules, rw, declared, tg_declared, tg_names, usage, extra
         if raw is None:
             return None
         raw = raw.strip()
+        if name in cat.get('expression_vars', {}):
+            # A number Ratwood may write as an expression of its defines (ARMOR_INT_HELMET_STEEL + 50, 2.5 SECONDS). A value
+            # at or below "above" is none (TG's take_damage() crashes on an atom of no integrity), one at or below
+            # "zero_at_most" is 0 (Ratwood's equip delays of a second or less, gone with the wearer's speed).
+            rule = cat['expression_vars'][name]
+            number = food_number(raw)
+            if number is None or ('above' in rule and number <= rule['above']):
+                return None
+            return 0 if 'zero_at_most' in rule and number <= rule['zero_at_most'] else number
         if name in cat.get('coverage_vars', []):
             return exact_coverage_value(raw)
         if name in cat.get('mapped_vars', {}):
@@ -1939,6 +1973,10 @@ def generate(cfg, port, rules, rw, declared, tg_declared, tg_names, usage, extra
                     entries = [f'{p} = {count or 1}' for p, count in entries if p in valid]
                     if entries:
                         block.append(f'\t{name} = list(' + ', '.join(entries) + ')')
+                    # Ratwood empties what the parent lists (an elemental yields nothing to the butcher): left out, the port
+                    # would inherit the parent's list.
+                    elif name in cat.get('nullable', []) and list_paths(rw.resolve(rw.parent(path), source_name)):
+                        block.append(f'\t{name} = null')
                     continue
                 if name in cat.get('path_lists', []):
                     entries = [runtime_path(p, rules) for p, _ in list_paths(value)]
@@ -2470,8 +2508,18 @@ def map_adjustment(path):
             return ''
         depth = 1
         i = m.end()
+        quoted = False
         while i < len(text) and depth:
-            depth += {'(': 1, ')': -1}.get(text[i], 0)
+            c = text[i]
+            if quoted:
+                if c == '\\':
+                    i += 1
+                elif c == '"':
+                    quoted = False
+            elif c == '"':
+                quoted = True
+            else:
+                depth += {'(': 1, ')': -1}.get(c, 0)
             i += 1
         return text[m.end():i - 1]
     blacklist = set(re.findall(r'(/datum/job/roguetown/[\w/]+)', block('blacklist')))
@@ -2479,7 +2527,12 @@ def map_adjustment(path):
     titles = {}
     for p, body in re.findall(r'(/datum/job/roguetown/[\w/]+)\s*=\s*list\(([^)]*)\)', block('title_adjust')):
         titles[p] = re.findall(r'"([^"]+)"', body)
-    return blacklist, slots, titles
+    # The map's own descriptions of roles (tutorial_adjust replaces the job's tutorial on this map). A string continued on the
+    # next line ends with a backslash: DM drops it with the line break and the next line's indent.
+    tutorials = {}
+    for p, body in re.findall(r'(/datum/job/roguetown/[\w/]+)\s*=\s*("(?:[^"\\]|\\.)*")', block('tutorial_adjust'), re.S):
+        tutorials[p] = re.sub(r'\\\r?\n[ \t]*', '', body)
+    return blacklist, slots, titles, tutorials
 
 
 def expand_define(raw):
@@ -2942,9 +2995,163 @@ def outfit_slots(rw, source):
     return {'source': source, 'slots': tg, 'contents': contents}
 
 
+# Ratwood's SOCIAL_RANK_DIRT, the social rank of a role that names none (/datum/job).
+SOCIAL_RANK_DEFAULT = 1
+# Ratwood's min_pq of a subclass that names none (/datum/advclass): anyone may take it.
+ADVCLASS_MIN_PQ_DEFAULT = -100
+ADVCLASS_PICKPROB_DEFAULT = 100
+# The outfits' items of Ratwood that the port swaps for its own everywhere (replacements with "loadouts", set by main()).
+LOADOUT_RULES = []
+
+
+def loadout_path(path):
+    """An item of an outfit as the port dresses it: a Ratwood path a replacement with "loadouts" swaps (the pestle) becomes
+    its target; every other item stays as Ratwood names it."""
+    if path and replacement_for(path, LOADOUT_RULES):
+        return runtime_path(path, LOADOUT_RULES)
+    return path
+
+
+def expanded(raw):
+    """A Ratwood expression with its defines expanded all the way down (RACES_ALL_KINDS holds RACES_DESPISED and the rest)."""
+    text = raw or ''
+    for _ in range(12):
+        grown = re.sub(r'\b[A-Z_][A-Z0-9_]*\b', lambda m: f' {DEFINE_VALUES[m.group(0)].strip()} ' if m.group(0) in DEFINE_VALUES else m.group(0), text)
+        if grown == text:
+            break
+        text = grown
+    return text
+
+
+def listed_paths(raw, prefix):
+    """The paths under prefix a Ratwood list holds, through its defines, in order and once each."""
+    found = []
+    for path in re.findall(re.escape(prefix) + r'(?:/[A-Za-z0-9_]+)+', expanded(raw)):
+        if path not in found:
+            found.append(path)
+    return found
+
+
+def listed_strings(raw):
+    """The text literals a Ratwood list holds, through its defines (AGE_ADULT is "Adult"), in order and once each."""
+    found = []
+    for text in re.findall(r'"(?:[^"\\]|\\.)*"', expanded(raw)):
+        if text not in found:
+            found.append(text)
+    return found
+
+
+def role_limit_lines(cfg, rw, path, root, valid):
+    """Who Ratwood lets take a role or a subclass, as data for the roles of the module: the races (the text of Ratwood's
+    species paths: the module's races are other types), the races barred, the ages, the sexes and the patrons. A list is
+    written where it narrows what the root grants (/datum/job: every race of RACES_ALL_KINDS, ALL_AGES_LIST, both sexes)."""
+    lines = []
+    races = listed_paths(rw.resolve(path, 'allowed_races'), '/datum/species')
+    if races and set(races) != set(listed_paths(rw.resolve(root, 'allowed_races'), '/datum/species')):
+        lines.append('\trogue_allowed_races = list(' + ', '.join(f'"{race}"' for race in races) + ')')
+    barred = listed_paths(rw.resolve(path, 'disallowed_races'), '/datum/species')
+    if barred:
+        lines.append('\trogue_disallowed_races = list(' + ', '.join(f'"{race}"' for race in barred) + ')')
+    ages = listed_strings(rw.resolve(path, 'allowed_ages'))
+    if ages and set(ages) != set(listed_strings(rw.resolve(root, 'allowed_ages'))):
+        lines.append('\trogue_allowed_ages = list(' + ', '.join(ages) + ')')
+    # MALE and FEMALE are TG's defines too; Ratwood writes them out.
+    sexes = list(dict.fromkeys(re.findall(r'\b(MALE|FEMALE)\b', rw.resolve(path, 'allowed_sexes') or '')))
+    if sexes and set(sexes) != {'MALE', 'FEMALE'}:
+        lines.append('\trogue_allowed_sexes = list(' + ', '.join(sexes) + ')')
+    patron_map = cfg['jobs'].get('patron_map', {})
+    patrons = []
+    for patron in listed_paths(rw.resolve(path, 'allowed_patrons'), '/datum/patron'):
+        patron = patron_map.get(patron, patron)
+        if patron in valid and patron not in patrons:
+            patrons.append(patron)
+        elif patron not in valid:
+            ROLE_DATA_DROPPED[f'patron {patron}'] += 1
+    if patrons:
+        lines.append('\trogue_allowed_patrons = list(' + ', '.join(patrons) + ')')
+    return lines
+
+
+ROLE_DATA_DROPPED = collections.Counter()
+
+
+def advclass_data_lines(cfg, rw, advclass, valid, known_traits):
+    """What a Ratwood subclass gives beyond its outfit, sheet and traits (_advclass.dm equipme()), as data for the roles of the
+    module: the chance it is offered, the PQ it wants, its languages (the text of Ratwood's paths: the module lacks most of
+    them), social rank, stash, mount, estate income, stat ceilings and what it gains at one age (/datum/class_age_mod)."""
+    spec = cfg['attributes']
+    lines = []
+    chance = define_value_number(rw.resolve(advclass, 'pickprob'))
+    if chance is not None and chance != ADVCLASS_PICKPROB_DEFAULT:
+        lines.append(f'\trogue_pickprob = {chance}')
+    min_pq = define_value_number(rw.resolve(advclass, 'min_pq'))
+    if min_pq is not None and min_pq != ADVCLASS_MIN_PQ_DEFAULT:
+        lines.append(f'\trogue_min_pq = {min_pq}')
+    languages = listed_paths(rw.resolve(advclass, 'subclass_languages'), '/datum/language')
+    if languages:
+        lines.append('\trogue_subclass_languages = list(' + ', '.join(f'"{language}"' for language in languages) + ')')
+    rank = define_value_number(rw.resolve(advclass, 'subclass_social_rank'))
+    if rank is not None:
+        lines.append(f'\trogue_social_rank = {rank}')
+    stash = []
+    for name, item in re.findall(r'("(?:[^"\\]|\\.)*")\s*=\s*(/obj/item/[A-Za-z0-9_/]*[A-Za-z0-9_])', rw.resolve(advclass, 'subclass_stashed_items') or ''):
+        item = loadout_path(item)
+        if item in valid and STRING_LITERAL.match(name):
+            stash.append((name, item))
+        else:
+            ROLE_DATA_DROPPED[f'stashed {item}'] += 1
+    if stash:
+        lines += ['\trogue_stashed_items = list('] + [f'\t\t{name} = {item},' for name, item in stash] + ['\t\t)']
+    horse = (rw.resolve(advclass, 'horse') or '').strip().rstrip('/')
+    if horse.startswith('/mob/'):
+        if horse in valid:
+            lines.append(f'\trogue_horse = {horse}')
+        else:
+            ROLE_DATA_DROPPED[f'horse {horse}'] += 1
+    income = define_value_number(rw.resolve(advclass, 'noble_income'))
+    if income:
+        lines.append(f'\trogue_estate_income = {income}')
+
+    def stat_entries(raw):
+        entries = []
+        for token, amount in re.findall(r'\b(STAT_[A-Z]+|STATKEY_[A-Z]+)\s*=\s*(-?\d+)', raw or ''):
+            stat = spec['stats'].get(expand_define(token).strip('"'))
+            if stat:
+                entries.append(f'{stat} = {int(amount)}')
+        return entries
+
+    ceilings = stat_entries(rw.resolve(advclass, 'adv_stat_ceiling'))
+    if ceilings:
+        lines.append('\trogue_stat_ceilings = list(' + ', '.join(ceilings) + ')')
+    mod = (rw.resolve(advclass, 'age_mod') or '').strip().rstrip('/')
+    age = expand_define(rw.resolve(mod, 'target_age') or '') if mod in rw.types else ''
+    if STRING_LITERAL.match(age):
+        entries = [f'\t\t"age" = {age},']
+        stats = stat_entries(rw.resolve(mod, 'stat_mods'))
+        if stats:
+            entries.append('\t\t"stats" = list(' + ', '.join(stats) + '),')
+        skills = []
+        for skill, token in re.findall(r'(/datum/skill/[A-Za-z0-9_/]*[A-Za-z0-9_])\s*=\s*([A-Z_0-9]+)', rw.resolve(mod, 'skill_mods') or ''):
+            level = define_value_number(token)
+            if skill in spec['meta'] and level is not None:
+                skills.append(f"{spec['skill_target'] + skill[len(spec['skill_root']):]} = {min(int(level * spec['level_scale']), 60)}")
+        if skills:
+            entries.append('\t\t"skills" = list(' + ', '.join(skills) + '),')
+        traits = [trait for trait in re.findall(r'(TRAIT_[A-Z0-9_]+)', rw.resolve(mod, 'traits_added') or '') if trait in known_traits]
+        if traits:
+            entries.append('\t\t"traits" = list(' + ', '.join(traits) + '),')
+        for var, key in (('minor_mod', 'minor'), ('utility_mod', 'utility')):
+            number = define_value_number(rw.resolve(mod, var))
+            if number:
+                entries.append(f'\t\t"{key}" = {number},')
+        lines += ['\trogue_age_mod = list('] + entries + ['\t\t)']
+    return lines
+
+
 def generate_advclasses(cfg, rw, class_jobs, class_outfits, valid, known_traits):
     spec = cfg['attributes']
     blocks = []
+    with_data = 0
     for advclass in sorted(class_jobs):
         suffix = advclass[len(ADVCLASS_ROOT):]
         owners = class_jobs[advclass]
@@ -2953,11 +3160,12 @@ def generate_advclasses(cfg, rw, class_jobs, class_outfits, valid, known_traits)
         outfit = ADVCLASS_OUTFIT + suffix
         block = [outfit, f'\tname = {name}', f'\tjobtype = {owners[0]}']
         for var in ('uniform', 'shirt', 'suit', 'cloak', 'head', 'mask', 'mouth', 'neck', 'gloves', 'wrists', 'ring', 'shoes', 'belt', 'back', 'backr', 'l_pocket', 'r_pocket', 'l_hand', 'r_hand'):
-            item = dressed['slots'].get(var)
+            item = loadout_path(dressed['slots'].get(var))
             if item and item in valid:
                 block.append(f'\t{var} = {item}')
-        contents = [(item, count) for item, count in (dressed['contents'] or []) if item in valid]
-        if contents and dressed['slots'].get('back') in valid:
+        contents = [(loadout_path(item), count) for item, count in (dressed['contents'] or [])]
+        contents = [(item, count) for item, count in contents if item in valid]
+        if contents and loadout_path(dressed['slots'].get('back')) in valid:
             block += ['\tbackpack_contents = list('] + [f'\t\t{item} = {count},' for item, count in contents] + ['\t\t)']
         blocks.append(block)
         data = role_attributes(rw, owners[0], advclass, dressed['source'], spec)
@@ -2981,15 +3189,19 @@ def generate_advclasses(cfg, rw, class_jobs, class_outfits, valid, known_traits)
         slots = number_value(rw.resolve(advclass, 'maximum_possible_slots'))
         if slots is not None and slots >= 0:
             block.append(f'\tmaximum_slots = {slots}')
+        data = role_limit_lines(cfg, rw, advclass, ADVCLASS_ROOT, valid) + advclass_data_lines(cfg, rw, advclass, valid, known_traits)
+        if data:
+            with_data += 1
+        block += data
         blocks.append(block)
     open(f'{OUT_DIR}/{ADVCLASS_FILE}', 'w', encoding='utf-8', newline='\n').write('\n\n'.join('\n'.join(b) for b in blocks) + '\n')
-    print(f'{ADVCLASS_FILE}: {len(class_jobs)} subclasses for {len({job for owners in class_jobs.values() for job in owners})} roles')
+    print(f'{ADVCLASS_FILE}: {len(class_jobs)} subclasses for {len({job for owners in class_jobs.values() for job in owners})} roles, {with_data} with limits or data of their own')
 
 
 def select_jobs(cfg, rw):
     jobs_cfg = cfg['jobs']
     departments = jobs_cfg['departments']
-    blacklist, _, _ = map_adjustment(os.path.join(CHECKOUT, cfg['source']['map_adjustment']))
+    blacklist, _, _, _ = map_adjustment(os.path.join(CHECKOUT, cfg['source']['map_adjustment']))
     taken = tg_job_titles()
     retitle = {p: f'"{t}"' for p, t in jobs_cfg.get('retitle', {}).items()}
     ported = []
@@ -3015,7 +3227,7 @@ def select_jobs(cfg, rw):
 def generate_jobs(cfg, rw, usage, role_outfits, valid, station_usage, role_attrs=None):
     jobs_cfg = cfg['jobs']
     departments = jobs_cfg['departments']
-    blacklist, slots, retitles = map_adjustment(os.path.join(CHECKOUT, cfg['source']['map_adjustment']))
+    blacklist, slots, retitles, tutorials = map_adjustment(os.path.join(CHECKOUT, cfg['source']['map_adjustment']))
     retitle = {p: f'"{t}"' for p, t in jobs_cfg.get('retitle', {}).items()}
     taken = tg_job_titles()
     ported = select_jobs(cfg, rw)
@@ -3049,6 +3261,8 @@ def generate_jobs(cfg, rw, usage, role_outfits, valid, station_usage, role_attrs
     for parent in sorted(abstract):
         blocks.append([parent, f'\tabstract_type = {parent}'])
     outfits = {}
+    adjusted = []
+    with_data = 0
     for p in ported:
         dept = rw.resolve(p, 'department_flag').strip()
         raw_outfit = (rw.resolve(p, 'outfit') or '').strip()
@@ -3059,9 +3273,12 @@ def generate_jobs(cfg, rw, usage, role_outfits, valid, station_usage, role_attrs
         spawn = number_value(rw.resolve(p, 'spawn_positions'))
         spawn = total if spawn is None else spawn
         block = [p, f'\ttitle = {defines[p]}']
-        desc = string_value(rw.resolve(p, 'tutorial'))
+        # Rockhill's own description of the role (tutorial_adjust of the map) before the job's own tutorial.
+        desc = string_value(tutorials.get(p)) or string_value(rw.resolve(p, 'tutorial'))
         if desc:
             block.append(f'\tdescription = {desc}')
+            if string_value(tutorials.get(p)):
+                adjusted.append(p)
         block += [f'\ttotal_positions = {total}', f'\tspawn_positions = {spawn}', f'\tconfig_tag = "{tag}"', f'\toutfit = {outfit}']
         order = number_value(rw.resolve(p, 'display_order'))
         if order is not None:
@@ -3090,16 +3307,29 @@ def generate_jobs(cfg, rw, usage, role_outfits, valid, station_usage, role_attrs
                 alternates.append(quoted)
         if alternates:
             block += ['\talternate_titles = list('] + [f'\t\t{a},' for a in alternates] + ['\t\t)']
+        # Who may take the role and where it stands (Ratwood's limits, social rank and examine flags) for the roles of the
+        # module (rockhill/port_data.dm).
+        data = role_limit_lines(cfg, rw, p, '/datum/job', valid)
+        rank = define_value_number(rw.resolve(p, 'social_rank'))
+        if rank is not None and rank != SOCIAL_RANK_DEFAULT:
+            data.append(f'\trogue_social_rank = {rank}')
+        for var in ('wanderer_examine', 'advjob_examine', 'lowlife_examine'):
+            if (rw.resolve(p, var) or 'FALSE').strip() in ('TRUE', '1'):
+                data.append(f'\trogue_{var} = TRUE')
+        if data:
+            with_data += 1
+        block += data
         blocks.append(block)
     for p in ported:
         block = [outfits[p], f'\tname = {defines[p]}', f'\tjobtype = {p}']
         dressed = role_outfits.get(p, {'slots': {}, 'contents': []})
         for var in ('uniform', 'shirt', 'suit', 'cloak', 'head', 'mask', 'mouth', 'neck', 'gloves', 'wrists', 'ring', 'shoes', 'belt', 'back', 'backr', 'l_pocket', 'r_pocket', 'l_hand', 'r_hand'):
-            item = dressed['slots'].get(var)
+            item = loadout_path(dressed['slots'].get(var))
             if item and item in valid:
                 block.append(f'\t{var} = {item}')
-        contents = [(item, count) for item, count in (dressed['contents'] or []) if item in valid]
-        if contents and dressed['slots'].get('back') in valid:
+        contents = [(loadout_path(item), count) for item, count in (dressed['contents'] or [])]
+        contents = [(item, count) for item, count in contents if item in valid]
+        if contents and loadout_path(dressed['slots'].get('back')) in valid:
             block += ['\tbackpack_contents = list('] + [f'\t\t{item} = {count},' for item, count in contents] + ['\t\t)']
         blocks.append(block)
     open(f'{OUT_DIR}/jobs.dm', 'w', encoding='utf-8', newline='\n').write('\n\n'.join('\n'.join(b) for b in blocks) + '\n')
@@ -3153,7 +3383,8 @@ def generate_jobs(cfg, rw, usage, role_outfits, valid, station_usage, role_attrs
         out.write(f'\n## Jobs ({len(ported)} roles, {matched} of {len(marks)} start landmarks bound to a role)\n\n| Role | Title | Department |\n|---|---|---|\n')
         for p in ported:
             out.write(f"| `{p}` | {titles[p].strip(chr(34))} | {departments[rw.resolve(p, 'department_flag').strip()]} |\n")
-    print(f'jobs: {len(ported)} roles, {len(abstract)} abstract parents, landmarks {matched}/{len(marks)} bound, job_changes {len(changes)}')
+    print(f'jobs: {len(ported)} roles, {len(abstract)} abstract parents, landmarks {matched}/{len(marks)} bound, job_changes {len(changes)}, '
+          f'{len(adjusted)} descriptions of the map ({", ".join(p.rsplit("/", 1)[1] for p in adjusted)}), {with_data} with limits or data of their own')
     return set(outfits.values())
 
 
@@ -4155,6 +4386,12 @@ def generate_migrants(cfg, rw, migrants, valid):
             block.append(f'\tallowed_sexes = {sexes.strip()}')
         if flag(rw.resolve(role, 'grant_lit_torch')) == 'TRUE':
             block.append('\tgrant_lit_torch = TRUE')
+        # Who may arrive in the role (Ratwood's allowed_races; the sexes are above) and how examining shows the arrival
+        # (show_wanderer_examine, advjob_examine: both on unless the role turns them off), for the roles of the module.
+        block += [line for line in role_limit_lines(cfg, rw, role, '/datum/job', valid) if line.startswith(('\trogue_allowed_races', '\trogue_disallowed_races'))]
+        for var, target in (('show_wanderer_examine', 'rogue_wanderer_examine'), ('advjob_examine', 'rogue_advjob_examine')):
+            if flag(rw.resolve(role, var)) == 'FALSE':
+                block.append(f'\t{target} = FALSE')
         if info['classes']:
             block += ['\trockhill_advclasses = list('] + [f'\t\t{ADVCLASS_TARGET}{advclass[len(ADVCLASS_ROOT):]},' for advclass in info['classes']] + ['\t\t)']
         dressed = info['outfit']
@@ -4164,11 +4401,12 @@ def generate_migrants(cfg, rw, migrants, valid):
             name = string_value(rw.resolve(role, 'name')) or '"Migrant"'
             worn = [outfit, f'\tname = {name}', f"\tjobtype = {spec['job']}"]
             for var in ('uniform', 'shirt', 'suit', 'cloak', 'head', 'mask', 'mouth', 'neck', 'gloves', 'wrists', 'ring', 'shoes', 'belt', 'back', 'backr', 'l_pocket', 'r_pocket', 'l_hand', 'r_hand'):
-                item = dressed['slots'].get(var)
+                item = loadout_path(dressed['slots'].get(var))
                 if item and item in valid:
                     worn.append(f'\t{var} = {item}')
-            contents = [(item, count) for item, count in (dressed['contents'] or []) if item in valid]
-            if contents and dressed['slots'].get('back') in valid:
+            contents = [(loadout_path(item), count) for item, count in (dressed['contents'] or [])]
+            contents = [(item, count) for item, count in contents if item in valid]
+            if contents and loadout_path(dressed['slots'].get('back')) in valid:
                 worn += ['\tbackpack_contents = list('] + [f'\t\t{item} = {count},' for item, count in contents] + ['\t\t)']
             blocks.append(worn)
         blocks.append(block)
@@ -4280,9 +4518,12 @@ def generate_npcs(cfg, rw, rules, npcs, valid, known_traits, taken_outfits, hair
 
 def anvil_recipe_specs(cfg, rw, rules):
     # Ratwood anvil recipes (code/modules/roguetown/roguejobs/*/anvil_recipes): a recipe exists when it has a name and an i_type
-    # (init_anvil_recipes()); trait-locked ones (req_trait) stay in Ratwood. A recipe that also starts from a cast blade
-    # (req_blade: the plain iron and steel swords, knives, axes, maces, plates) keeps it: the module has the blades
-    # (crafting/casting.dm, /obj/item/blade/*), so they are not ported with the items.
+    # (init_anvil_recipes()). A trait-locked one (req_trait) comes along only for a trait of req_traits in the config (the
+    # dwarven armor and mauls of Dwarvish Knowledge): the anvil shows it only to a smith with the trait (crafting/anvil.dm);
+    # the others (Kazengunite Knowledge, hidden from Ratwood's books and learnt from a manual the port lacks) stay in
+    # Ratwood. A recipe that also starts from a cast blade (req_blade: the plain iron and steel swords, knives, axes, maces,
+    # plates) keeps it: the module has the blades (crafting/casting.dm, /obj/item/blade/*), so they are not ported with the
+    # items.
     spec = cfg['port'].get('anvil_recipes')
     if not spec:
         return []
@@ -4294,7 +4535,10 @@ def anvil_recipe_specs(cfg, rw, rules):
         category = string_value(rw.resolve(path, 'i_type'))
         if not name or name == '""' or not category or category == '""':
             continue
-        if (rw.resolve(path, 'req_trait') or 'null').strip() != 'null':
+        trait = (rw.resolve(path, 'req_trait') or 'null').strip()
+        if trait == 'null':
+            trait = None
+        elif trait not in spec.get('req_traits', []) or not STRING_LITERAL.match(expand_define(trait)):
             continue
         blade = (rw.resolve(path, 'req_blade') or 'null').strip().rstrip('/')
         blade = runtime_path(blade, rules) if blade.startswith('/') else None
@@ -4319,6 +4563,7 @@ def anvil_recipe_specs(cfg, rw, rules):
             'skill': skill_target(cfg, rw.resolve(path, 'appro_skill')) or spec['default_skill'],
             'blade': blade,
             'skip_quality': (rw.resolve(path, 'skip_quality') or 'FALSE').strip() in ('TRUE', '1'),
+            'trait': trait,
         })
     return recipes
 
@@ -4338,6 +4583,7 @@ def generate_anvil_recipes(cfg, rw, rules, valid):
     blocks = []
     dropped = 0
     blades = 0
+    guarded = 0
     for recipe in anvil_recipe_specs(cfg, rw, rules):
         if any(p not in valid for p in [recipe['made'], recipe['bar']] + recipe['extras'] + ([recipe['blade']] if recipe['blade'] else [])):
             dropped += 1
@@ -4349,6 +4595,9 @@ def generate_anvil_recipes(cfg, rw, rules, valid):
         if recipe['blade']:
             block.append(f"\treq_blade = {recipe['blade']}")
             blades += 1
+        if recipe['trait']:
+            block.append(f"\treq_trait = {recipe['trait']}")
+            guarded += 1
         if recipe['skip_quality']:
             block.append('\tskip_quality = TRUE')
         if recipe['count'] != 1:
@@ -4362,7 +4611,7 @@ def generate_anvil_recipes(cfg, rw, rules, valid):
         blocks.append(block)
     os.makedirs(os.path.dirname(spec['file']), exist_ok=True)
     open(spec['file'], 'w', encoding='utf-8', newline='\n').write('\n\n'.join('\n'.join(b) for b in blocks) + '\n')
-    print(f"{spec['file']}: {len(blocks)} anvil recipes ({blades} also from a cast blade), {dropped} dropped for unported items")
+    print(f"{spec['file']}: {len(blocks)} anvil recipes ({blades} also from a cast blade, {guarded} behind a trait), {dropped} dropped for unported items")
 
 
 def hand_declared_types(prefix):
@@ -5121,6 +5370,20 @@ def husbandry_types(cfg, rw, seeds):
                     reach.add(target)
                     todo.append(target)
     return reach
+
+
+def butcher_items(cfg, rw, mobs):
+    # The items Ratwood's butchering of the beasts yields: the lists the beasts' category ports as path_counts (butcher_results
+    # and its botched and perfect variants, simple_animal.dm butcher()), so that they are ported with the beasts.
+    names = set()
+    for cat in cfg['port']['categories']:
+        if any(prefix.startswith('/mob/') for prefix in cat['prefixes']):
+            names |= {cat.get('rename', {}).get(name, name) for name in cat.get('path_counts', [])}
+    items = set()
+    for mob in mobs:
+        for name in names:
+            items |= {p.rstrip('/') for p, _ in list_paths(rw.resolve(mob, name)) if p.startswith('/obj/item/') and p.rstrip('/') in rw.types}
+    return items
 
 
 def generate_husbandry(cfg, rw, generated, tg_declared):

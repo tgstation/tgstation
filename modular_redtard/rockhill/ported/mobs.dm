@@ -38,6 +38,7 @@
 	health = 3
 	maxHealth = 3
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/fat = 1)
 
 /mob/living/simple_animal/chicken
 	parent_type = /mob/living/basic/rockhill
@@ -50,6 +51,7 @@
 	health = 15
 	maxHealth = 15
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat = 1)
 
 /mob/living/simple_animal/hostile/retaliate/bat
 	name = "bat"
@@ -63,6 +65,7 @@
 	melee_damage_lower = 6
 	melee_damage_upper = 5
 	rogue_mob_intents = list(/datum/intent/bite)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1)
 
 /mob/living/simple_animal/hostile/retaliate/frog
 	name = "frog"
@@ -87,6 +90,7 @@
 	maxHealth = 25
 	melee_damage_lower = 5
 	melee_damage_upper = 5
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/beetle
 	name = "giant woolly chafer beetle"
@@ -105,6 +109,7 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 14, ROGUE_STAT_CONSTITUTION = 15)
 	rogue_mob_intents = list(/datum/intent/simple/headbutt)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/apple, /obj/item/reagent_containers/food/snacks/grown/berries)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/beetle = 4, /obj/item/natural/hide = 3, /obj/item/natural/fur = 2, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 2, /obj/item/alch/viscera = 2, /obj/item/roguegem/chitin = 3)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/beetle/tame/saddled
 	name = "giant woolly chafer beetle"
@@ -123,6 +128,7 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 14, ROGUE_STAT_CONSTITUTION = 15)
 	rogue_mob_intents = list(/datum/intent/simple/headbutt)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/apple, /obj/item/reagent_containers/food/snacks/grown/berries)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/beetle = 4, /obj/item/natural/hide = 3, /obj/item/natural/fur = 2, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 2, /obj/item/alch/viscera = 2, /obj/item/roguegem/chitin = 3)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/bigrat
 	name = "rous"
@@ -144,6 +150,9 @@
 	rogue_aggressive = 1
 	rogue_retreat_health = 0.3
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks, /obj/item/natural/bone, /obj/item/natural/hide)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/rat = 1, /obj/item/natural/hide = 1, /obj/item/natural/bone = 2, /obj/item/alch/sinew = 1, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 1, /obj/item/natural/head/rous = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/rat = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/rat = 1, /obj/item/natural/hide = 1, /obj/item/natural/bone = 2, /obj/item/alch/sinew = 1, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 1, /obj/item/natural/fur/rat = 1, /obj/item/natural/head/rous = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/bull
 	name = "cow"
@@ -159,6 +168,9 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 12, ROGUE_STAT_CONSTITUTION = 20, ROGUE_STAT_SPEED = 2)
 	rogue_mob_intents = list(/datum/intent/simple/headbutt)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4, /obj/item/natural/hide = 1, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2, /obj/item/alch/sinew = 2, /obj/item/natural/bone = 4, /obj/item/alch/viscera = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 6, /obj/item/natural/hide = 2, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 4, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/chicken
 	name = "\improper chicken"
@@ -175,6 +187,9 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 6, ROGUE_STAT_CONSTITUTION = 6, ROGUE_STAT_SPEED = 1)
 	rogue_mob_intents = list(/datum/intent/simple/claw)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/berries/rogue, /obj/item/natural/worms, /obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/fat = 1, /obj/item/reagent_containers/food/snacks/rogue/meat/poultry = 1, /obj/item/natural/feather = 1, /obj/item/natural/bone = 2, /obj/item/alch/sinew = 1, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/poultry = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/reagent_containers/food/snacks/rogue/meat/poultry = 2, /obj/item/natural/feather = 2, /obj/item/natural/bone = 2, /obj/item/alch/sinew = 1, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/cow
 	name = "cow"
@@ -191,6 +206,9 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 12, ROGUE_STAT_CONSTITUTION = 20, ROGUE_STAT_SPEED = 2)
 	rogue_mob_intents = list(/datum/intent/simple/headbutt)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4, /obj/item/natural/hide = 1, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2, /obj/item/alch/sinew = 2, /obj/item/natural/bone = 4, /obj/item/alch/viscera = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 6, /obj/item/natural/hide = 2, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 4, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/cow/bullet
 	name = "calf"
@@ -207,6 +225,9 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 5, ROGUE_STAT_CONSTITUTION = 5, ROGUE_STAT_SPEED = 5)
 	rogue_mob_intents = list(/datum/intent/simple/headbutt)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4, /obj/item/natural/hide = 1, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2, /obj/item/alch/sinew = 2, /obj/item/natural/bone = 4, /obj/item/alch/viscera = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 6, /obj/item/natural/hide = 2, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 4, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/cow/cowlet
 	name = "calf"
@@ -223,6 +244,9 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 5, ROGUE_STAT_CONSTITUTION = 5, ROGUE_STAT_SPEED = 5)
 	rogue_mob_intents = list(/datum/intent/simple/headbutt)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4, /obj/item/natural/hide = 1, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2, /obj/item/alch/sinew = 2, /obj/item/natural/bone = 4, /obj/item/alch/viscera = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 6, /obj/item/natural/hide = 2, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 4, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/direbear
 	name = "direbear"
@@ -239,6 +263,9 @@
 	rogue_mob_intents = list(/datum/intent/simple/bite/bear)
 	rogue_aggressive = 1
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks, /obj/item/bodypart, /obj/item/organ, /obj/effect/decal/remains)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/bear = 2, /obj/item/reagent_containers/food/snacks/fat = 1, /obj/item/natural/hide = 2, /obj/item/natural/fur/direbear = 1, /obj/item/alch/sinew = 2, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2, /obj/item/natural/bone = 4)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/bear = 1, /obj/item/natural/hide = 1, /obj/item/natural/fur/direbear = 1, /obj/item/natural/bone = 3)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/bear = 3, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 3, /obj/item/natural/fur/direbear = 2, /obj/item/alch/sinew = 2, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2, /obj/item/natural/bone = 4, /obj/item/natural/head/direbear = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/elemental/behemoth
 	name = "earthen behemoth"
@@ -357,6 +384,9 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 12, ROGUE_STAT_CONSTITUTION = 8)
 	rogue_mob_intents = list(/datum/intent/simple/headbutt)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/apple, /obj/item/reagent_containers/food/snacks/grown/berries/rogue)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 3, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 1, /obj/item/natural/fur/goat = 1, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 4, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2, /obj/item/reagent_containers/food/snacks/fat = 1, /obj/item/alch/viscera = 1, /obj/item/alch/sinew = 2)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 2, /obj/item/natural/fur/goat = 1, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 4, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2, /obj/item/natural/head/goat = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/goat/goatlet
 	name = "goatlet"
@@ -373,6 +403,9 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 5, ROGUE_STAT_CONSTITUTION = 5, ROGUE_STAT_SPEED = 5)
 	rogue_mob_intents = list(/datum/intent/simple/headbutt)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/apple, /obj/item/reagent_containers/food/snacks/grown/berries/rogue)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 3, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 1, /obj/item/natural/fur/goat = 1, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 4, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2, /obj/item/reagent_containers/food/snacks/fat = 1, /obj/item/alch/viscera = 1, /obj/item/alch/sinew = 2)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 2, /obj/item/natural/fur/goat = 1, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 4, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2, /obj/item/natural/head/goat = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/goat/goatletboy
 	name = "goatlet"
@@ -389,6 +422,9 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 5, ROGUE_STAT_CONSTITUTION = 5, ROGUE_STAT_SPEED = 5)
 	rogue_mob_intents = list(/datum/intent/simple/headbutt)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/apple, /obj/item/reagent_containers/food/snacks/grown/berries/rogue)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 3, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 1, /obj/item/natural/fur/goat = 1, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 4, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2, /obj/item/reagent_containers/food/snacks/fat = 1, /obj/item/alch/viscera = 1, /obj/item/alch/sinew = 2)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 2, /obj/item/natural/fur/goat = 1, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 4, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2, /obj/item/natural/head/goat = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/goatmale
 	name = "goat"
@@ -404,6 +440,9 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 12, ROGUE_STAT_CONSTITUTION = 7, ROGUE_STAT_SPEED = 14)
 	rogue_mob_intents = list(/datum/intent/simple/headbutt)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/apple, /obj/item/reagent_containers/food/snacks/grown/berries/rogue)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 3, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 1, /obj/item/natural/fur/goat = 1, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 4, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2, /obj/item/reagent_containers/food/snacks/fat = 1, /obj/item/alch/viscera = 1, /obj/item/alch/sinew = 2)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 2, /obj/item/natural/fur/goat = 1, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 4, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2, /obj/item/natural/head/goat = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/headless
 	name = "headless"
@@ -422,6 +461,9 @@
 	rogue_mob_intents = list(/datum/intent/simple/bite, /datum/intent/simple/claw)
 	rogue_aggressive = 1
 	rogue_retreat_health = 0.1
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/alch/sinew = 2, /obj/item/alch/bone = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1, /obj/item/reagent_containers/food/snacks/fat = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/alch/sinew = 2, /obj/item/alch/bone = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend
 	name = "fiend"
@@ -502,6 +544,7 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 15, ROGUE_STAT_CONSTITUTION = 15, ROGUE_STAT_SPEED = 5)
 	rogue_mob_intents = list(/datum/intent/simple/bite)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/rogue/meat, /obj/item/bodypart, /obj/item/organ)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2, /obj/effect/spawner/lootdrop/valuable_jewelry_spawner = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/minotaur
 	name = "Minotaur"
@@ -518,6 +561,9 @@
 	rogue_mob_intents = list(/datum/intent/simple/minotaur_unarmed)
 	rogue_aggressive = 1
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/rogue/meat)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2, /obj/item/natural/hide = 2, /obj/item/natural/bundle/bone/full = 2, /obj/item/natural/head/minotaur = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1, /obj/item/natural/hide = 1, /obj/item/natural/bundle/bone/full = 2)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4, /obj/item/natural/hide = 4, /obj/item/natural/bundle/bone/full = 2, /obj/item/natural/head/minotaur = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/minotaur/axe
 	name = "Minotaur"
@@ -534,6 +580,9 @@
 	rogue_mob_intents = list(/datum/intent/simple/minotaur_axe)
 	rogue_aggressive = 1
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/rogue/meat)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2, /obj/item/natural/hide = 2, /obj/item/natural/bundle/bone/full = 2, /obj/item/natural/head/minotaur = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1, /obj/item/natural/hide = 1, /obj/item/natural/bundle/bone/full = 2)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4, /obj/item/natural/hide = 4, /obj/item/natural/bundle/bone/full = 2, /obj/item/natural/head/minotaur = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/minotaur/axe/female
 	name = "Minotaur"
@@ -550,6 +599,9 @@
 	rogue_mob_intents = list(/datum/intent/simple/minotaur_axe)
 	rogue_aggressive = 1
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/rogue/meat)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2, /obj/item/natural/hide = 2, /obj/item/natural/bundle/bone/full = 2, /obj/item/natural/head/minotaur = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1, /obj/item/natural/hide = 1, /obj/item/natural/bundle/bone/full = 2)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4, /obj/item/natural/hide = 4, /obj/item/natural/bundle/bone/full = 2, /obj/item/natural/head/minotaur = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/mirespider
 	name = "mire crawler"
@@ -564,6 +616,9 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 7, ROGUE_STAT_CONSTITUTION = 7, ROGUE_STAT_SPEED = 13)
 	rogue_mob_intents = list(/datum/intent/simple/bite/mirespider)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 1, /obj/item/natural/hide = 1, /obj/item/natural/silk = 1, /obj/item/alch/viscera = 1, /obj/item/natural/head/mirespider = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 1, /obj/item/natural/hide = 1, /obj/item/natural/silk = 2, /obj/item/alch/viscera = 1, /obj/item/natural/head/mirespider = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/mirespider/angry
 	name = "mire crawler"
@@ -578,6 +633,9 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 7, ROGUE_STAT_CONSTITUTION = 7, ROGUE_STAT_SPEED = 13)
 	rogue_mob_intents = list(/datum/intent/simple/bite/mirespider)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 1, /obj/item/natural/hide = 1, /obj/item/natural/silk = 1, /obj/item/alch/viscera = 1, /obj/item/natural/head/mirespider = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 1, /obj/item/natural/hide = 1, /obj/item/natural/silk = 2, /obj/item/alch/viscera = 1, /obj/item/natural/head/mirespider = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/mole
 	name = "mole"
@@ -594,6 +652,9 @@
 	rogue_aggressive = 1
 	rogue_retreat_health = 0.3
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/rogue/meat)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 3, /obj/item/natural/hide = 2, /obj/item/natural/fur = 1, /obj/item/natural/bone = 3, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 1, /obj/item/natural/head/mole = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2, /obj/item/alch/viscera = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 5, /obj/item/natural/hide = 3, /obj/item/natural/fur = 2, /obj/item/natural/bone = 3, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 1, /obj/item/natural/head/mole = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab
 	name = "mudcrab"
@@ -604,6 +665,9 @@
 	icon_dead = "mudcrab_dead"
 	rogue_can_dodge = TRUE
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/crab = 2, /obj/item/alch/viscera = 2)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/crab = 1, /obj/item/alch/viscera = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/crab = 3, /obj/item/alch/viscera = 2)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/mudcrab/cabbit
 	name = "cabbit"
@@ -614,6 +678,9 @@
 	icon_dead = "cabbit_dead"
 	rogue_can_dodge = TRUE
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit = 3, /obj/item/alch/sinew = 1, /obj/item/alch/bone = 1, /obj/item/natural/fur/rabbit = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit = 2)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit = 4, /obj/item/alch/sinew = 1, /obj/item/alch/bone = 1, /obj/item/natural/fur/rabbit = 1, /obj/item/natural/rabbitsfoot = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga
 	name = "saiga doe"
@@ -632,6 +699,9 @@
 	rogue_mob_intents = list(/datum/intent/simple/headbutt/saiga)
 	rogue_aggressive = 1
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/apple)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga = 2, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs = 2, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins = 2, /obj/item/reagent_containers/food/snacks/fat = 1, /obj/item/natural/hide = 2, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga = 1, /obj/item/natural/bone = 4, /obj/item/alch/sinew = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime = 3, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs = 3, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins = 3, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 4, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2, /obj/item/natural/head/saiga = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigaboy
 	name = "saiga"
@@ -650,6 +720,9 @@
 	rogue_mob_intents = list(/datum/intent/simple/headbutt/saiga)
 	rogue_aggressive = 1
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/apple)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1, /obj/item/natural/bone = 3)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga = 1, /obj/item/natural/bone = 4, /obj/item/alch/sinew = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime = 3, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs = 3, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins = 3, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 4, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2, /obj/item/natural/head/saiga = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck
 	name = "saiga buck"
@@ -669,6 +742,9 @@
 	rogue_aggressive = 1
 	rogue_retreat_health = 0.3
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/apple)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga = 2, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs = 2, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins = 2, /obj/item/reagent_containers/food/snacks/fat = 1, /obj/item/natural/hide = 2, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga = 1, /obj/item/natural/bone = 4, /obj/item/alch/sinew = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime = 3, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs = 3, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins = 3, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 4, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2, /obj/item/natural/head/saiga = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame
 	name = "saiga buck"
@@ -688,6 +764,9 @@
 	rogue_aggressive = 1
 	rogue_retreat_health = 0.3
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/apple)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga = 2, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs = 2, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins = 2, /obj/item/reagent_containers/food/snacks/fat = 1, /obj/item/natural/hide = 2, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga = 1, /obj/item/natural/bone = 4, /obj/item/alch/sinew = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime = 3, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs = 3, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins = 3, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 4, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2, /obj/item/natural/head/saiga = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigabuck/tame/saddled
 	name = "saiga buck"
@@ -707,6 +786,9 @@
 	rogue_aggressive = 1
 	rogue_retreat_health = 0.3
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/apple)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga = 2, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs = 2, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins = 2, /obj/item/reagent_containers/food/snacks/fat = 1, /obj/item/natural/hide = 2, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga = 1, /obj/item/natural/bone = 4, /obj/item/alch/sinew = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime = 3, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs = 3, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins = 3, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 4, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2, /obj/item/natural/head/saiga = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/saigakid
 	name = "saiga calf"
@@ -725,6 +807,9 @@
 	rogue_mob_intents = list(/datum/intent/simple/headbutt/saiga)
 	rogue_aggressive = 1
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/apple)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1, /obj/item/natural/bone = 3)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga = 1, /obj/item/natural/bone = 4, /obj/item/alch/sinew = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime = 3, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs = 3, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins = 3, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 4, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2, /obj/item/natural/head/saiga = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga/undead
 	name = "deadite saiga"
@@ -741,6 +826,9 @@
 	rogue_mob_intents = list(/datum/intent/simple/headbutt/saiga)
 	rogue_aggressive = 1
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/apple)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_z = 2, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs_z = 1, /obj/item/natural/bone = 6, /obj/item/alch/sinew = 1, /obj/item/alch/bone = 2, /obj/item/alch/viscera = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_z = 1, /obj/item/natural/bone = 4, /obj/item/alch/sinew = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_z = 1, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs_z = 1, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins_z = 2, /obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime_z = 1, /obj/item/reagent_containers/food/snacks/fat = 1, /obj/item/natural/bone = 6, /obj/item/alch/sinew = 1, /obj/item/alch/bone = 2, /obj/item/alch/viscera = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/spider
 	name = "beespider"
@@ -757,6 +845,9 @@
 	rogue_aggressive = 1
 	rogue_retreat_health = 0.3
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/rogue/meat, /obj/item/organ)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1, /obj/item/natural/silk = 2, /obj/item/alch/viscera = 1, /obj/item/natural/head/honeyspider = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/spider/mutated
 	name = "skallax spider"
@@ -775,6 +866,9 @@
 	rogue_aggressive = 1
 	rogue_retreat_health = 0.3
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/rogue/meat, /obj/item/organ)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2, /obj/item/natural/hide = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/spider/rock
 	name = "rockspider"
@@ -792,6 +886,9 @@
 	rogue_aggressive = 1
 	rogue_retreat_health = 0.3
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/rogue/meat, /obj/item/organ)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 1, /obj/item/natural/silk = 2, /obj/item/reagent_containers/food/snacks/rogue/honey/spider = 1, /obj/item/alch/viscera = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 2)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/swine
 	name = "swine sow"
@@ -808,6 +905,9 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 12, ROGUE_STAT_CONSTITUTION = 15, ROGUE_STAT_SPEED = 8)
 	rogue_mob_intents = list(/datum/intent/simple/headbutt/saiga)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/potato/rogue, /obj/item/reagent_containers/food/snacks/rogue/meat)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 4, /obj/item/reagent_containers/food/snacks/rogue/meat/pork_belly = 1, /obj/item/reagent_containers/food/snacks/rogue/meat/ham/boar = 2, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 2, /obj/item/alch/sinew = 2, /obj/item/natural/bone = 4, /obj/item/alch/viscera = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 6, /obj/item/reagent_containers/food/snacks/rogue/meat/pork_belly = 2, /obj/item/reagent_containers/food/snacks/rogue/meat/ham/boar = 2, /obj/item/reagent_containers/food/snacks/fat = 4, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 4, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/swine/hog
 	name = "swine hog"
@@ -824,6 +924,9 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 12, ROGUE_STAT_CONSTITUTION = 15, ROGUE_STAT_SPEED = 6)
 	rogue_mob_intents = list(/datum/intent/simple/headbutt/saiga)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/potato/rogue, /obj/item/reagent_containers/food/snacks/rogue/meat)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 4, /obj/item/reagent_containers/food/snacks/rogue/meat/pork_belly = 1, /obj/item/reagent_containers/food/snacks/rogue/meat/ham/boar = 2, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 2, /obj/item/alch/sinew = 2, /obj/item/natural/bone = 4, /obj/item/alch/viscera = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 6, /obj/item/reagent_containers/food/snacks/rogue/meat/pork_belly = 2, /obj/item/reagent_containers/food/snacks/rogue/meat/ham/boar = 2, /obj/item/reagent_containers/food/snacks/fat = 4, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 4, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/swine/hog/piglet
 	name = "piglet"
@@ -840,6 +943,9 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 5, ROGUE_STAT_CONSTITUTION = 5, ROGUE_STAT_SPEED = 2)
 	rogue_mob_intents = list(/datum/intent/simple/headbutt)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/potato/rogue, /obj/item/reagent_containers/food/snacks/rogue/meat)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 4, /obj/item/reagent_containers/food/snacks/rogue/meat/pork_belly = 1, /obj/item/reagent_containers/food/snacks/rogue/meat/ham/boar = 2, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 2, /obj/item/alch/sinew = 2, /obj/item/natural/bone = 4, /obj/item/alch/viscera = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 6, /obj/item/reagent_containers/food/snacks/rogue/meat/pork_belly = 2, /obj/item/reagent_containers/food/snacks/rogue/meat/ham/boar = 2, /obj/item/reagent_containers/food/snacks/fat = 4, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 4, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/swine/piglet
 	name = "piglet"
@@ -856,6 +962,9 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 5, ROGUE_STAT_CONSTITUTION = 5, ROGUE_STAT_SPEED = 2)
 	rogue_mob_intents = list(/datum/intent/simple/headbutt)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/potato/rogue, /obj/item/reagent_containers/food/snacks/rogue/meat)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 4, /obj/item/reagent_containers/food/snacks/rogue/meat/pork_belly = 1, /obj/item/reagent_containers/food/snacks/rogue/meat/ham/boar = 2, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 3, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 2, /obj/item/alch/sinew = 2, /obj/item/natural/bone = 4, /obj/item/alch/viscera = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 6, /obj/item/reagent_containers/food/snacks/rogue/meat/pork_belly = 2, /obj/item/reagent_containers/food/snacks/rogue/meat/ham/boar = 2, /obj/item/reagent_containers/food/snacks/fat = 4, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 4, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 2)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/troll
 	name = "troll"
@@ -872,6 +981,8 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 16, ROGUE_STAT_CONSTITUTION = 16, ROGUE_STAT_SPEED = 2)
 	rogue_mob_intents = list(/datum/intent/unarmed/claw, /datum/intent/simple/bite)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/rogue/meat, /obj/item/bodypart, /obj/item/organ)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/troll = 3, /obj/item/natural/hide = 3, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 5, /obj/item/alch/horn = 2, /obj/item/alch/viscera = 3, /obj/item/natural/head/troll = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/troll = 5, /obj/item/natural/hide = 5, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 7, /obj/item/alch/horn = 2, /obj/item/alch/viscera = 3, /obj/item/natural/head/troll = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/troll/axe
 	name = "troll skull-splitter"
@@ -888,6 +999,8 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 16, ROGUE_STAT_CONSTITUTION = 16, ROGUE_STAT_SPEED = 2)
 	rogue_mob_intents = list(/datum/intent/simple/troll_axe)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/rogue/meat, /obj/item/bodypart, /obj/item/organ)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/troll = 3, /obj/item/natural/hide = 3, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 5, /obj/item/alch/horn = 2, /obj/item/alch/viscera = 3, /obj/item/natural/head/troll = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/troll = 5, /obj/item/natural/hide = 5, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 7, /obj/item/alch/horn = 2, /obj/item/alch/viscera = 3, /obj/item/natural/head/troll/axe = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/troll/bog
 	name = "bog troll"
@@ -904,6 +1017,8 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 16, ROGUE_STAT_CONSTITUTION = 16, ROGUE_STAT_SPEED = 3)
 	rogue_mob_intents = list(/datum/intent/unarmed/claw, /datum/intent/simple/bite)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/rogue/meat, /obj/item/bodypart, /obj/item/organ)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/troll = 3, /obj/item/natural/hide = 3, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 5, /obj/item/alch/horn = 2, /obj/item/alch/viscera = 3, /obj/item/natural/head/troll = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/troll = 5, /obj/item/natural/hide = 5, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 7, /obj/item/alch/horn = 2, /obj/item/alch/viscera = 3, /obj/item/natural/head/troll = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/troll/cave
 	name = "cave troll"
@@ -920,6 +1035,8 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 16, ROGUE_STAT_CONSTITUTION = 16, ROGUE_STAT_SPEED = 2)
 	rogue_mob_intents = list(/datum/intent/unarmed/claw, /datum/intent/simple/bite)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/rogue/meat, /obj/item/bodypart, /obj/item/organ)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/troll = 3, /obj/item/natural/hide = 3, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 5, /obj/item/alch/horn = 2, /obj/item/alch/viscera = 3, /obj/item/natural/head/troll = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/troll = 5, /obj/item/natural/hide = 5, /obj/item/natural/bundle/bone/full = 1, /obj/item/alch/sinew = 7, /obj/item/alch/horn = 2, /obj/item/alch/viscera = 3, /obj/item/natural/head/troll = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/trufflepig
 	name = "truffle pig"
@@ -936,6 +1053,9 @@
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 12, ROGUE_STAT_CONSTITUTION = 8, ROGUE_STAT_SPEED = 2)
 	rogue_mob_intents = list(/datum/intent/simple/headbutt)
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/rogue/truffles)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 2, /obj/item/reagent_containers/food/snacks/rogue/meat/pork_belly = 2, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 1, /obj/item/reagent_containers/food/snacks/rogue/meat/pork_belly = 1, /obj/item/reagent_containers/food/snacks/fat = 1, /obj/item/natural/hide = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/fatty = 4, /obj/item/reagent_containers/food/snacks/rogue/meat/pork_belly = 3, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 2)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf
 	name = "volf"
@@ -953,6 +1073,9 @@
 	rogue_aggressive = 1
 	rogue_retreat_health = 0.3
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks, /obj/item/natural/bone, /obj/item/natural/hide)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf = 2, /obj/item/natural/hide = 2, /obj/item/alch/sinew = 2, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 1, /obj/item/natural/fur/wolf = 1, /obj/item/natural/bone = 3, /obj/item/natural/head/volf = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf = 1, /obj/item/alch/viscera = 1, /obj/item/alch/sinew = 1, /obj/item/natural/bone = 2)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf = 2, /obj/item/natural/hide = 2, /obj/item/alch/sinew = 2, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 1, /obj/item/natural/fur/wolf = 2, /obj/item/natural/bone = 4, /obj/item/natural/head/volf = 1)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/wolf_undead
 	name = "deadite volf"
@@ -969,6 +1092,9 @@
 	rogue_mob_intents = list(/datum/intent/simple/bite/volf)
 	rogue_aggressive = 1
 	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown)
+	rogue_butcher_results = list(/obj/item/natural/hide = 1, /obj/item/alch/sinew = 1, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 1, /obj/item/natural/bone = 3)
+	rogue_botched_butcher_results = list(/obj/item/alch/viscera = 1, /obj/item/alch/sinew = 1, /obj/item/natural/bone = 2)
+	rogue_perfect_butcher_results = list(/obj/item/natural/hide = 1, /obj/item/alch/sinew = 2, /obj/item/alch/bone = 1, /obj/item/alch/viscera = 1, /obj/item/natural/fur/wolf = 1, /obj/item/natural/bone = 4)
 
 /mob/living/simple_animal/hostile/rogue/deepone
 	name = "Deep One"
@@ -981,6 +1107,7 @@
 	melee_damage_upper = 25
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 13, ROGUE_STAT_CONSTITUTION = 11, ROGUE_STAT_SPEED = 9)
 	rogue_mob_intents = list(/datum/intent/simple/claw/deepone_unarmed)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/crab = 5, /obj/item/alch/viscera = 2)
 
 /mob/living/simple_animal/hostile/rogue/deepone/arm
 	name = "Deep One"
@@ -993,6 +1120,7 @@
 	melee_damage_upper = 30
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 13, ROGUE_STAT_CONSTITUTION = 11, ROGUE_STAT_SPEED = 9)
 	rogue_mob_intents = list(/datum/intent/simple/claw/deepone_unarmed)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/crab = 5, /obj/item/alch/viscera = 2)
 
 /mob/living/simple_animal/hostile/rogue/deepone/spit
 	name = "Deep One"
@@ -1005,6 +1133,7 @@
 	melee_damage_upper = 25
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 13, ROGUE_STAT_CONSTITUTION = 11, ROGUE_STAT_SPEED = 9)
 	rogue_mob_intents = list(/datum/intent/simple/claw/deepone_unarmed)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/crab = 5, /obj/item/alch/viscera = 2)
 
 /mob/living/simple_animal/hostile/rogue/deepone/wiz
 	name = "Deep One Devout"
@@ -1017,6 +1146,7 @@
 	melee_damage_upper = 25
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 13, ROGUE_STAT_CONSTITUTION = 11, ROGUE_STAT_SPEED = 9)
 	rogue_mob_intents = list(/datum/intent/simple/claw/deepone_unarmed)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/crab = 5, /obj/item/alch/viscera = 2)
 
 /mob/living/simple_animal/hostile/rogue/deepone/wiz/boss
 	name = "Deep One Devout"
@@ -1029,6 +1159,7 @@
 	melee_damage_upper = 25
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 13, ROGUE_STAT_CONSTITUTION = 11, ROGUE_STAT_SPEED = 9)
 	rogue_mob_intents = list(/datum/intent/simple/claw/deepone_unarmed)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/crab = 5, /obj/item/alch/viscera = 2)
 
 /mob/living/simple_animal/hostile/rogue/dreamfiend/ancient/unbound
 	name = "ancient dream fiend"
@@ -1077,6 +1208,9 @@
 	melee_damage_upper = 70
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 9, ROGUE_STAT_PERCEPTION = 15, ROGUE_STAT_CONSTITUTION = 9, ROGUE_STAT_SPEED = 14)
 	rogue_mob_intents = list(/datum/intent/simple/bite/mirespider_lurker)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 4, /obj/item/natural/hide = 3, /obj/item/natural/silk = 3, /obj/item/alch/viscera = 4, /obj/item/natural/head/mirelurker = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 2, /obj/item/natural/hide = 2, /obj/item/natural/silk = 1, /obj/item/alch/viscera = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 4, /obj/item/natural/hide = 4, /obj/item/natural/silk = 5, /obj/item/alch/viscera = 4, /obj/item/natural/head/mirelurker = 1)
 
 /mob/living/simple_animal/hostile/rogue/mirespider_lurker/angry
 	name = "mire lurker"
@@ -1089,6 +1223,9 @@
 	melee_damage_upper = 70
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 9, ROGUE_STAT_PERCEPTION = 15, ROGUE_STAT_CONSTITUTION = 9, ROGUE_STAT_SPEED = 14)
 	rogue_mob_intents = list(/datum/intent/simple/bite/mirespider_lurker)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 4, /obj/item/natural/hide = 3, /obj/item/natural/silk = 3, /obj/item/alch/viscera = 4, /obj/item/natural/head/mirelurker = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 2, /obj/item/natural/hide = 2, /obj/item/natural/silk = 1, /obj/item/alch/viscera = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 4, /obj/item/natural/hide = 4, /obj/item/natural/silk = 5, /obj/item/alch/viscera = 4, /obj/item/natural/head/mirelurker = 1)
 
 /mob/living/simple_animal/hostile/rogue/mirespider_paralytic
 	name = "aragn"
@@ -1100,6 +1237,9 @@
 	melee_damage_upper = 42
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 9, ROGUE_STAT_PERCEPTION = 7, ROGUE_STAT_CONSTITUTION = 9, ROGUE_STAT_SPEED = 12)
 	rogue_mob_intents = list(/datum/intent/simple/bite/mirespider_paralytic)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 2, /obj/item/natural/hide = 1, /obj/item/natural/silk = 1, /obj/item/alch/viscera = 1, /obj/item/reagent_containers/spidervenom_inert = 1, /obj/item/natural/head/mirespider_paralytic = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 1, /obj/item/natural/silk = 1, /obj/item/alch/viscera = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 2, /obj/item/natural/hide = 1, /obj/item/natural/silk = 1, /obj/item/alch/viscera = 1, /obj/item/reagent_containers/spidervenom_inert = 2, /obj/item/natural/head/mirespider_paralytic = 1)
 
 /mob/living/simple_animal/hostile/rogue/mirespider_paralytic/angry
 	name = "aragn"
@@ -1111,6 +1251,9 @@
 	melee_damage_upper = 42
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 9, ROGUE_STAT_PERCEPTION = 7, ROGUE_STAT_CONSTITUTION = 9, ROGUE_STAT_SPEED = 12)
 	rogue_mob_intents = list(/datum/intent/simple/bite/mirespider_paralytic)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 2, /obj/item/natural/hide = 1, /obj/item/natural/silk = 1, /obj/item/alch/viscera = 1, /obj/item/reagent_containers/spidervenom_inert = 1, /obj/item/natural/head/mirespider_paralytic = 1)
+	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 1, /obj/item/natural/silk = 1, /obj/item/alch/viscera = 1)
+	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/spider = 2, /obj/item/natural/hide = 1, /obj/item/natural/silk = 1, /obj/item/alch/viscera = 1, /obj/item/reagent_containers/spidervenom_inert = 2, /obj/item/natural/head/mirespider_paralytic = 1)
 
 /mob/living/simple_animal/hostile/rogue/skeleton/bow
 	name = "Skeleton"
@@ -1146,6 +1289,7 @@
 	health = 20
 	maxHealth = 20
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 3, ROGUE_STAT_CONSTITUTION = 3, ROGUE_STAT_SPEED = 3)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1)
 
 /mob/living/simple_animal/pet/cat/kitten
 	name = "kitten"
@@ -1157,6 +1301,7 @@
 	health = 20
 	maxHealth = 20
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 3, ROGUE_STAT_CONSTITUTION = 3, ROGUE_STAT_SPEED = 3)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1)
 
 /mob/living/simple_animal/pet/cat/rogue/black
 	name = "black cat"
@@ -1168,6 +1313,7 @@
 	health = 20
 	maxHealth = 20
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 3, ROGUE_STAT_CONSTITUTION = 3, ROGUE_STAT_SPEED = 3)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1)
 
 /mob/living/simple_animal/pet/cat/rogue/rat
 	name = "Boris"
@@ -1179,3 +1325,4 @@
 	health = 20
 	maxHealth = 20
 	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 3, ROGUE_STAT_CONSTITUTION = 3, ROGUE_STAT_SPEED = 3)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1, /obj/item/organ/ears/cat = 1, /obj/item/organ/tail/cat = 1)

@@ -56,6 +56,7 @@ GLOBAL_DATUM(rogue_mechanics, /datum/rogue_mechanics)
 		"combat.txt" = 'config/redtard/mechanics/values/combat.txt',
 		"crafting.txt" = 'config/redtard/mechanics/values/crafting.txt',
 		"faith.txt" = 'config/redtard/mechanics/values/faith.txt',
+		"farming.txt" = 'config/redtard/mechanics/values/farming.txt',
 		"flora.txt" = 'config/redtard/mechanics/values/flora.txt',
 		"husbandry.txt" = 'config/redtard/mechanics/values/husbandry.txt',
 		"library.txt" = 'config/redtard/mechanics/values/library.txt',

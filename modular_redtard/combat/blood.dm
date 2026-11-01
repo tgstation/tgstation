@@ -45,17 +45,31 @@
 	if(LAZYACCESS(applied_items, LIMB_ITEM_TOURNIQUET))
 		. *= 0.1
 
+/// Ratwood's blood, and with it Ratwood's wounds (TRAIT_ROGUE_WOUNDS: blows open its dynamic wounds instead of TG's rolled ones,
+/// combat/wounds.dm); a new bleeding wound soaks through the bandage on its limb, and the leeches on the limbs drink.
 /datum/element/rogue_blood
 
 /datum/element/rogue_blood/Attach(datum/target)
 	. = ..()
 	if(!ishuman(target))
 		return ELEMENT_INCOMPATIBLE
+	ADD_TRAIT(target, TRAIT_ROGUE_WOUNDS, ELEMENT_TRAIT(type))
 	RegisterSignal(target, COMSIG_HUMAN_ON_HANDLE_BLOOD, PROC_REF(on_handle_blood))
+	RegisterSignal(target, COMSIG_CARBON_GAIN_WOUND, PROC_REF(on_gain_wound))
+	RegisterSignal(target, COMSIG_LIVING_LIFE, PROC_REF(on_life))
 
 /datum/element/rogue_blood/Detach(datum/source, ...)
-	UnregisterSignal(source, COMSIG_HUMAN_ON_HANDLE_BLOOD)
+	REMOVE_TRAIT(source, TRAIT_ROGUE_WOUNDS, ELEMENT_TRAIT(type))
+	UnregisterSignal(source, list(COMSIG_HUMAN_ON_HANDLE_BLOOD, COMSIG_CARBON_GAIN_WOUND, COMSIG_LIVING_LIFE))
 	return ..()
+
+/// Ratwood handle_embedded_objects() -> on_embed_life(): each Life tick, living or dead, the leeches on the limbs drink, or a
+/// squeezed cheele gives (combat/leeches.dm).
+/datum/element/rogue_blood/proc/on_life(mob/living/carbon/human/source, seconds_per_tick)
+	SIGNAL_HANDLER
+	for(var/obj/item/bodypart/limb as anything in source.bodyparts)
+		for(var/obj/item/natural/worms/leech/leech as anything in limb.rogue_leeches)
+			leech.rogue_leech_tick(source, seconds_per_tick / ROGUE_LIFE_TICK)
 
 /datum/element/rogue_blood/proc/on_handle_blood(mob/living/carbon/human/source, seconds_per_tick)
 	SIGNAL_HANDLER
@@ -63,6 +77,12 @@
 		return NONE
 	source.rogue_handle_blood(seconds_per_tick)
 	return HANDLE_BLOOD_HANDLED
+
+/// Ratwood on_bodypart_gain(): "new bleeding wounds always expire bandages" (combat/medicine.dm rogue_soaks_bandage()).
+/datum/element/rogue_blood/proc/on_gain_wound(mob/living/carbon/human/source, datum/wound/wound, obj/item/bodypart/limb)
+	SIGNAL_HANDLER
+	if(limb?.rogue_bandage && wound.rogue_soaks_bandage())
+		limb.rogue_bandage.rogue_soak_through(limb)
 
 /// One Life tick of Ratwood's handle_blood(): the blood comes back, its loss weakens the body, then the body bleeds.
 /mob/living/carbon/human/proc/rogue_handle_blood(seconds_per_tick)
@@ -91,22 +111,29 @@
 	if(changed)
 		update_health_hud()
 
-/// Blood per second, limb by limb: TG's count of the limb (wounds, stumps, what is lodged in it), opened arteries at
-/// Ratwood's rate, less what the stitches hold back (combat/medicine.dm), and under a bandage its share. With ticks the
-/// bandages soak up this tick's blood (Ratwood process_bandage()); without, they are only looked at.
+/// Blood per second, limb by limb (rogue_limb_bleed_rate()). With ticks the bandages soak up this tick's blood (Ratwood
+/// process_bandage()); without, they are only looked at.
 /mob/living/carbon/human/proc/rogue_bleed_rate(ticks = 0)
 	. = 0
 	if(HAS_TRAIT(src, TRAIT_GODMODE) || !can_bleed())
 		return
 	for(var/obj/item/bodypart/limb as anything in bodyparts)
-		var/rate = limb.cached_bleed_rate
-		for(var/datum/wound/wound as anything in limb.wounds)
-			rate += wound.rogue_bleed_delta() * limb.rogue_bleed_factor()
-		rate = max(rate, 0)
-		if(rate && limb.rogue_bandage)
-			rate = limb.rogue_bandaged_rate(rate, ticks)
-		. += rate
+		. += limb.rogue_limb_bleed_rate(ticks)
 	. *= GET_PHYSIOLOGY(src, PHYS_COEFF_BLEED)
+
+/// Ratwood's get_bleed_rate() of a limb, a second's: TG's count of the limb (wounds, Ratwood's dynamic wounds, stumps, what is
+/// lodged in it), opened arteries at Ratwood's rate, less what the stitches hold back (combat/medicine.dm), and under a bandage
+/// its share.
+/obj/item/bodypart/proc/rogue_limb_bleed_rate(ticks = 0)
+	var/rate = cached_bleed_rate
+	if(LAZYLEN(wounds))
+		var/factor = rogue_bleed_factor()
+		for(var/datum/wound/wound as anything in wounds)
+			rate += wound.rogue_bleed_delta() * factor
+	rate = max(rate, 0)
+	if(rate && rogue_bandage)
+		rate = rogue_bandaged_rate(rate, ticks)
+	return rate
 
 /// What Ratwood's counting changes in TG's for this wound: an opened artery bleeds harder, stitches hold blood back.
 /datum/wound/proc/rogue_bleed_delta()

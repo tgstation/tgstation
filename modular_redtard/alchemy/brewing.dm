@@ -261,6 +261,16 @@ GLOBAL_LIST_INIT(alch_grind_recipes, rogue_alchemy_recipes(/datum/alch_grind_rec
 // The mortar (Ratwood /obj/item/reagent_containers/glass/mortar): a thing put in is ground with a pestle into ingredients by a
 // mortar recipe, or into reagents (a right click with the pestle: juiced first, else ground). Vessels still pour in and out.
 
+/// Ratwood's stone pestle (mortarpestle.dm): TG's pestle with Ratwood's look, so it grinds in this mortar and in TG's as TG's
+/// pestle does, while modern maps keep TG's. The porter hands out Ratwood's pestles as this one.
+/obj/item/pestle/rogue
+	desc = "A small, round-end stone tool oft used by physicians to crush and mix medicine."
+	icon = 'modular_redtard/rockhill/icons/roguetown/misc/alchemy.dmi'
+	icon_state = "pestle"
+	custom_materials = null
+	rogue_grid_width = 64
+	rogue_grid_height = 32
+
 /obj/item/reagent_containers/glass/mortar
 	/// What lies in it to be ground (Ratwood to_grind).
 	var/obj/item/rogue_to_grind

@@ -152,6 +152,8 @@
 	worn_y_dimension = 32
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/alch/airdust
@@ -945,6 +947,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 0.1
+	integrity_failure = 0
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/ammo_lefthand.dmi'
@@ -968,6 +972,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 0.1
+	integrity_failure = 0
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/ammo_lefthand.dmi'
@@ -992,6 +998,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust)
+	max_integrity = 10
+	integrity_failure = 0
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/ammo_lefthand.dmi'
@@ -1064,6 +1072,7 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust)
+	max_integrity = 8
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/ammo_lefthand.dmi'
@@ -1232,6 +1241,7 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust)
+	max_integrity = 5
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/ammo_lefthand.dmi'
@@ -1304,6 +1314,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust)
+	max_integrity = 10
+	integrity_failure = 0
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/ammo_lefthand.dmi'
@@ -1544,6 +1556,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust)
+	max_integrity = 10
+	integrity_failure = 0
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/ammo_lefthand.dmi'
@@ -1568,6 +1582,7 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/dagger/thrust)
+	max_integrity = 30
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/ammo_lefthand.dmi'
@@ -1596,6 +1611,8 @@
 	associated_skill = /datum/attribute/skill/combat/polearms
 	possible_item_intents = list(/datum/intent/sword/thrust, /datum/intent/spear/bash, /datum/intent/spear/cut)
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 50
+	integrity_failure = 0
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/ammo_lefthand.dmi'
@@ -1709,6 +1726,7 @@
 	associated_skill = /datum/attribute/skill/combat/polearms
 	possible_item_intents = list(/datum/intent/sword/thrust, /datum/intent/spear/bash, /datum/intent/spear/cut)
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 100
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/ammo_lefthand.dmi'
@@ -1764,6 +1782,7 @@
 	armour_penetration = 2
 	associated_skill = /datum/attribute/skill/combat/polearms
 	possible_item_intents = list(/datum/intent/sword/thrust, /datum/intent/spear/bash, /datum/intent/spear/cut)
+	max_integrity = 50
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/ammo_lefthand.dmi'
@@ -1788,6 +1807,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	possible_item_intents = list(/datum/intent/hit)
+	max_integrity = 20
+	integrity_failure = 0
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/ammo_lefthand.dmi'
@@ -2053,6 +2074,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -2074,6 +2097,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -2095,6 +2120,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/artefactsten_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/artefactsten_righthand.dmi'
 	inhand_icon_state = null
@@ -2113,6 +2140,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/artefactsten_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/artefactsten_righthand.dmi'
 	inhand_icon_state = null
@@ -2135,6 +2164,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	sellprice = 10
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/artefactsten_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/artefactsten_righthand.dmi'
 	inhand_icon_state = null
@@ -2153,6 +2184,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/artefactsten_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/artefactsten_righthand.dmi'
 	inhand_icon_state = null
@@ -2171,6 +2204,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/artefactsten_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/artefactsten_righthand.dmi'
 	inhand_icon_state = null
@@ -2189,6 +2224,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/artefactsten_lefthand.dmi'
@@ -2210,6 +2247,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/objects_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/objects_righthand.dmi'
 	inhand_icon_state = null
@@ -2228,6 +2267,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/cosmetics_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/cosmetics_righthand.dmi'
 	inhand_icon_state = null
@@ -2250,6 +2291,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -2334,6 +2377,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -2355,6 +2400,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -2374,6 +2421,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/beds_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/beds_righthand.dmi'
 	inhand_icon_state = null
@@ -2393,6 +2442,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/beds_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/beds_righthand.dmi'
 	inhand_icon_state = null
@@ -2412,6 +2463,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/beds_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/beds_righthand.dmi'
 	inhand_icon_state = null
@@ -2431,6 +2484,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/beds_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/beds_righthand.dmi'
 	inhand_icon_state = null
@@ -2450,6 +2505,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/beds_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/beds_righthand.dmi'
 	inhand_icon_state = null
@@ -2469,6 +2526,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/beds_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/beds_righthand.dmi'
 	inhand_icon_state = null
@@ -2488,6 +2547,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/mob/actions/pestramiracles_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/mob/actions/pestramiracles_righthand.dmi'
 	inhand_icon_state = null
@@ -2511,6 +2572,8 @@
 	worn_y_dimension = 32
 	sellprice = 35
 	sewrepair = TRUE
+	integrity_failure = 0
+	equip_delay_self = 50
 	worn_icon_state = "bombdolier1"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/bombdolier_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/bombdolier_righthand.dmi'
@@ -2558,6 +2621,8 @@
 	rogue_grid_height = 64
 	sellprice = 30
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 300
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -2581,6 +2646,8 @@
 	rogue_grid_height = 64
 	sellprice = 30
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 300
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -2603,6 +2670,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/mob/human_parts_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/mob/human_parts_righthand.dmi'
 	inhand_icon_state = null
@@ -2648,6 +2717,7 @@
 	sellprice = 30
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/engineering
+	max_integrity = 350
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -2671,6 +2741,7 @@
 	rogue_grid_height = 64
 	sellprice = 30
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 300
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -2694,6 +2765,8 @@
 	rogue_grid_height = 64
 	sellprice = 30
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 300
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -2717,6 +2790,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -2759,6 +2834,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	possible_item_intents = list(/datum/intent/hit)
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_righthand.dmi'
 	inhand_icon_state = null
@@ -2779,6 +2856,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	possible_item_intents = list(/datum/intent/hit)
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_righthand.dmi'
 	inhand_icon_state = null
@@ -2799,6 +2878,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	possible_item_intents = list(/datum/intent/hit)
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_righthand.dmi'
 	inhand_icon_state = null
@@ -2819,6 +2900,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	possible_item_intents = list(/datum/intent/hit)
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_righthand.dmi'
 	inhand_icon_state = null
@@ -2839,6 +2922,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	possible_item_intents = list(/datum/intent/hit)
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_righthand.dmi'
 	inhand_icon_state = null
@@ -2859,6 +2944,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	possible_item_intents = list(/datum/intent/hit)
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_righthand.dmi'
 	inhand_icon_state = null
@@ -2879,6 +2966,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/library_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/library_righthand.dmi'
 	inhand_icon_state = null
@@ -2902,6 +2991,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -2927,6 +3018,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -2952,6 +3045,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -2978,6 +3073,8 @@
 	associated_skill = /datum/attribute/skill/misc/reading
 	possible_item_intents = list(/datum/intent/use, /datum/intent/bless)
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3049,6 +3146,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3074,6 +3173,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3099,6 +3200,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3124,6 +3227,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3149,6 +3254,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3174,6 +3281,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3199,6 +3308,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3224,6 +3335,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3249,6 +3362,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3274,6 +3389,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3299,6 +3416,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3324,6 +3443,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3349,6 +3470,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3374,6 +3497,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3399,6 +3524,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3424,6 +3551,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3449,6 +3578,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3476,6 +3607,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	icon_state = null
 	inhand_icon_state = null
 	bookfile = "xylix.json"
@@ -3496,6 +3629,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3519,6 +3654,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3544,6 +3681,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3569,6 +3708,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3594,6 +3735,8 @@
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/reading
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -3614,6 +3757,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -3635,6 +3780,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/brewing_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/brewing_righthand.dmi'
 	inhand_icon_state = null
@@ -3656,6 +3803,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -3677,6 +3826,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -3698,6 +3849,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -3719,6 +3872,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -3743,6 +3898,8 @@
 	gripped_intents = list(/datum/intent/use, /datum/intent/mace/strike/wood)
 	firefuel = 10 MINUTES
 	smeltresult = /obj/item/ash
+	max_integrity = 200
+	integrity_failure = 0
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
@@ -3764,6 +3921,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/bodybag_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/bodybag_righthand.dmi'
 	inhand_icon_state = null
@@ -3787,6 +3946,8 @@
 	worn_y_dimension = 32
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/candle/candlestick/gold
@@ -4105,6 +4266,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_projectiles_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_projectiles_righthand.dmi'
 	inhand_icon_state = null
@@ -4123,6 +4286,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_projectiles_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_projectiles_righthand.dmi'
 	inhand_icon_state = null
@@ -4141,6 +4306,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_projectiles_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_projectiles_righthand.dmi'
 	inhand_icon_state = null
@@ -4159,6 +4326,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_projectiles_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_projectiles_righthand.dmi'
 	inhand_icon_state = null
@@ -4177,6 +4346,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_projectiles_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_projectiles_righthand.dmi'
 	inhand_icon_state = null
@@ -4196,6 +4367,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/paint_supplies/canvas_32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/paint_supplies/canvas_32_righthand.dmi'
 	inhand_icon_state = null
@@ -4215,6 +4388,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -4276,6 +4451,24 @@
 	inhand_y_dimension = 64
 	rogue_baked_inhand = TRUE
 
+/obj/item/caparison/heartfelt
+	name = "Heartfelt caparison"
+	desc = "A decorative piece of cloth meant to be used as a saddle decoration. It's adorned with the colours of Heartfelt. This one fits on a Saiga."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/misc.dmi'
+	icon_state = "caparison"
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
 /obj/item/caparison/psy
 	name = "psydonite caparison"
 	desc = "A decorative piece of cloth meant to be used as a saddle decoration. It's adorned with Psycrosses. This one fits on a Saiga."
@@ -4307,6 +4500,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_righthand.dmi'
 	inhand_icon_state = null
@@ -4327,6 +4522,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_righthand.dmi'
 	inhand_icon_state = null
@@ -4347,6 +4544,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_righthand.dmi'
 	inhand_icon_state = null
@@ -4367,6 +4566,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_righthand.dmi'
 	inhand_icon_state = null
@@ -4387,6 +4588,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_righthand.dmi'
 	inhand_icon_state = null
@@ -4407,6 +4610,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_righthand.dmi'
 	inhand_icon_state = null
@@ -4427,6 +4632,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_righthand.dmi'
 	inhand_icon_state = null
@@ -4447,6 +4654,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_righthand.dmi'
 	inhand_icon_state = null
@@ -4467,6 +4676,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_righthand.dmi'
 	inhand_icon_state = null
@@ -4487,6 +4698,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_righthand.dmi'
 	inhand_icon_state = null
@@ -4507,6 +4720,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_righthand.dmi'
 	inhand_icon_state = null
@@ -4527,6 +4742,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_righthand.dmi'
 	inhand_icon_state = null
@@ -4547,6 +4764,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_righthand.dmi'
 	inhand_icon_state = null
@@ -4567,6 +4786,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_amber_righthand.dmi'
 	inhand_icon_state = null
@@ -4588,6 +4809,8 @@
 	rogue_grid_width = 64
 	rogue_grid_height = 64
 	sellprice = 35
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -4609,6 +4832,8 @@
 	rogue_grid_width = 64
 	rogue_grid_height = 64
 	sellprice = 25
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -4630,6 +4855,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 15
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -4651,6 +4878,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 25
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -4672,6 +4901,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 25
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -4693,6 +4924,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	sellprice = 25
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -4714,6 +4947,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 20
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -4735,6 +4970,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 20
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -4756,6 +4993,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	sellprice = 30
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -4777,6 +5016,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 10
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -4798,6 +5039,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	sellprice = 30
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -4819,6 +5062,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 20
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -4840,6 +5085,8 @@
 	rogue_grid_width = 64
 	rogue_grid_height = 64
 	sellprice = 30
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -4861,6 +5108,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	sellprice = 20
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -4881,6 +5130,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_righthand.dmi'
 	inhand_icon_state = null
@@ -4901,6 +5152,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_righthand.dmi'
 	inhand_icon_state = null
@@ -4921,6 +5174,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_righthand.dmi'
 	inhand_icon_state = null
@@ -4941,6 +5196,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_righthand.dmi'
 	inhand_icon_state = null
@@ -4961,6 +5218,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_righthand.dmi'
 	inhand_icon_state = null
@@ -4981,6 +5240,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_righthand.dmi'
 	inhand_icon_state = null
@@ -5001,6 +5262,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_righthand.dmi'
 	inhand_icon_state = null
@@ -5021,6 +5284,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_righthand.dmi'
 	inhand_icon_state = null
@@ -5041,6 +5306,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_righthand.dmi'
 	inhand_icon_state = null
@@ -5061,6 +5328,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_righthand.dmi'
 	inhand_icon_state = null
@@ -5081,6 +5350,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_righthand.dmi'
 	inhand_icon_state = null
@@ -5101,6 +5372,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_righthand.dmi'
 	inhand_icon_state = null
@@ -5121,6 +5394,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_righthand.dmi'
 	inhand_icon_state = null
@@ -5141,6 +5416,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_coral_righthand.dmi'
 	inhand_icon_state = null
@@ -5161,6 +5438,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_righthand.dmi'
 	inhand_icon_state = null
@@ -5181,6 +5460,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_righthand.dmi'
 	inhand_icon_state = null
@@ -5201,6 +5482,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_righthand.dmi'
 	inhand_icon_state = null
@@ -5221,6 +5504,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_righthand.dmi'
 	inhand_icon_state = null
@@ -5241,6 +5526,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_righthand.dmi'
 	inhand_icon_state = null
@@ -5261,6 +5548,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_righthand.dmi'
 	inhand_icon_state = null
@@ -5281,6 +5570,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_righthand.dmi'
 	inhand_icon_state = null
@@ -5301,6 +5592,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_righthand.dmi'
 	inhand_icon_state = null
@@ -5321,6 +5614,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_righthand.dmi'
 	inhand_icon_state = null
@@ -5341,6 +5636,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_righthand.dmi'
 	inhand_icon_state = null
@@ -5361,6 +5658,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_righthand.dmi'
 	inhand_icon_state = null
@@ -5381,6 +5680,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_righthand.dmi'
 	inhand_icon_state = null
@@ -5401,6 +5702,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_righthand.dmi'
 	inhand_icon_state = null
@@ -5421,6 +5724,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_righthand.dmi'
 	inhand_icon_state = null
@@ -5441,6 +5746,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_righthand.dmi'
 	inhand_icon_state = null
@@ -5461,6 +5768,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_righthand.dmi'
 	inhand_icon_state = null
@@ -5481,6 +5790,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_righthand.dmi'
 	inhand_icon_state = null
@@ -5501,6 +5812,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_righthand.dmi'
 	inhand_icon_state = null
@@ -5521,6 +5834,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_righthand.dmi'
 	inhand_icon_state = null
@@ -5541,6 +5856,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_righthand.dmi'
 	inhand_icon_state = null
@@ -5561,6 +5878,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_righthand.dmi'
 	inhand_icon_state = null
@@ -5581,6 +5900,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_righthand.dmi'
 	inhand_icon_state = null
@@ -5601,6 +5922,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_righthand.dmi'
 	inhand_icon_state = null
@@ -5621,6 +5944,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_righthand.dmi'
 	inhand_icon_state = null
@@ -5641,6 +5966,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_righthand.dmi'
 	inhand_icon_state = null
@@ -5661,6 +5988,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_righthand.dmi'
 	inhand_icon_state = null
@@ -5681,6 +6010,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_onyxa_righthand.dmi'
 	inhand_icon_state = null
@@ -5701,6 +6032,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_opal_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_opal_righthand.dmi'
 	inhand_icon_state = null
@@ -5982,6 +6315,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 30
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_righthand.dmi'
 	inhand_icon_state = null
@@ -6003,6 +6338,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 40
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_righthand.dmi'
 	inhand_icon_state = null
@@ -6024,6 +6361,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 25
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_righthand.dmi'
 	inhand_icon_state = null
@@ -6045,6 +6384,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 40
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_righthand.dmi'
 	inhand_icon_state = null
@@ -6066,6 +6407,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 40
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_righthand.dmi'
 	inhand_icon_state = null
@@ -6087,6 +6430,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 40
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_righthand.dmi'
 	inhand_icon_state = null
@@ -6108,6 +6453,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 30
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_righthand.dmi'
 	inhand_icon_state = null
@@ -6129,6 +6476,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 30
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_righthand.dmi'
 	inhand_icon_state = null
@@ -6150,6 +6499,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 45
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_righthand.dmi'
 	inhand_icon_state = null
@@ -6171,6 +6522,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 45
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_righthand.dmi'
 	inhand_icon_state = null
@@ -6192,6 +6545,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 30
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_righthand.dmi'
 	inhand_icon_state = null
@@ -6213,6 +6568,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 55
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_righthand.dmi'
 	inhand_icon_state = null
@@ -6234,6 +6591,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 45
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_righthand.dmi'
 	inhand_icon_state = null
@@ -6255,6 +6614,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 30
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_righthand.dmi'
 	inhand_icon_state = null
@@ -6275,6 +6636,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_righthand.dmi'
 	inhand_icon_state = null
@@ -6295,6 +6658,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_righthand.dmi'
 	inhand_icon_state = null
@@ -6315,6 +6680,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_righthand.dmi'
 	inhand_icon_state = null
@@ -6335,6 +6702,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_righthand.dmi'
 	inhand_icon_state = null
@@ -6355,6 +6724,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_righthand.dmi'
 	inhand_icon_state = null
@@ -6375,6 +6746,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_righthand.dmi'
 	inhand_icon_state = null
@@ -6395,6 +6768,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_righthand.dmi'
 	inhand_icon_state = null
@@ -6415,6 +6790,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_righthand.dmi'
 	inhand_icon_state = null
@@ -6435,6 +6812,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_righthand.dmi'
 	inhand_icon_state = null
@@ -6455,6 +6834,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_righthand.dmi'
 	inhand_icon_state = null
@@ -6476,6 +6857,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 15
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_righthand.dmi'
 	inhand_icon_state = null
@@ -6496,6 +6879,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_righthand.dmi'
 	inhand_icon_state = null
@@ -6536,6 +6921,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_righthand.dmi'
 	inhand_icon_state = null
@@ -6556,6 +6943,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_righthand.dmi'
 	inhand_icon_state = null
@@ -6576,6 +6965,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_rose_righthand.dmi'
 	inhand_icon_state = null
@@ -6596,6 +6987,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -6616,6 +7009,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -6636,6 +7031,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -6656,6 +7053,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -6676,6 +7075,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -6696,6 +7097,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -6716,6 +7119,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -6736,6 +7141,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -6757,6 +7164,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 5
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -6777,6 +7186,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -6797,6 +7208,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -6817,6 +7230,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -6838,6 +7253,8 @@
 	rogue_grid_width = 64
 	rogue_grid_height = 64
 	sellprice = 30
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -6858,6 +7275,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -6878,6 +7297,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_righthand.dmi'
 	inhand_icon_state = null
@@ -6898,6 +7319,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_righthand.dmi'
 	inhand_icon_state = null
@@ -6918,6 +7341,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_righthand.dmi'
 	inhand_icon_state = null
@@ -6938,6 +7363,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_righthand.dmi'
 	inhand_icon_state = null
@@ -6958,6 +7385,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_righthand.dmi'
 	inhand_icon_state = null
@@ -6978,6 +7407,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_righthand.dmi'
 	inhand_icon_state = null
@@ -6998,6 +7429,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_righthand.dmi'
 	inhand_icon_state = null
@@ -7018,6 +7451,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_righthand.dmi'
 	inhand_icon_state = null
@@ -7038,6 +7473,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_righthand.dmi'
 	inhand_icon_state = null
@@ -7058,6 +7495,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_righthand.dmi'
 	inhand_icon_state = null
@@ -7078,6 +7517,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_righthand.dmi'
 	inhand_icon_state = null
@@ -7098,6 +7539,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_righthand.dmi'
 	inhand_icon_state = null
@@ -7118,6 +7561,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_righthand.dmi'
 	inhand_icon_state = null
@@ -7138,6 +7583,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_turq_righthand.dmi'
 	inhand_icon_state = null
@@ -7158,6 +7605,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/leashes_collars_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/leashes_collars_righthand.dmi'
 	inhand_icon_state = null
@@ -7202,6 +7651,8 @@
 	can_parry = TRUE
 	possible_item_intents = list(/datum/intent/mace/strike/wood, /datum/intent/mace/smash/wood)
 	gripped_intents = list(/datum/intent/mace/strike/wood, /datum/intent/mace/smash/wood)
+	max_integrity = 50
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/chairs_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/chairs_righthand.dmi'
 	inhand_icon_state = null
@@ -7302,6 +7753,8 @@
 	can_parry = TRUE
 	possible_item_intents = list(/datum/intent/mace/strike/wood, /datum/intent/mace/smash/wood)
 	gripped_intents = list(/datum/intent/mace/strike/wood, /datum/intent/mace/smash/wood)
+	max_integrity = 50
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/structure_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/structure_righthand.dmi'
 	inhand_icon_state = null
@@ -7347,6 +7800,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -7369,6 +7824,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/lewd/chastity_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/lewd/chastity_righthand.dmi'
 	inhand_icon_state = null
@@ -7705,6 +8162,8 @@
 	worn_y_dimension = 32
 	material_category = 2
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	worn_icon_state = "coat"
 	rogue_female_worn = TRUE
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_rmh/icons/clothing/vladegeg/sophisticated_lefthand.dmi'
@@ -7728,6 +8187,8 @@
 	worn_y_dimension = 32
 	material_category = 2
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	worn_icon_state = "jacket"
 	rogue_female_worn = TRUE
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_rmh/icons/clothing/vladegeg/sophisticated_lefthand.dmi'
@@ -7755,6 +8216,8 @@
 	detail_tag = "_detail"
 	detail_color = "#2b292e"
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	worn_icon_state = "butlercoat"
 	rogue_female_worn = TRUE
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/armor_lefthand.dmi'
@@ -7784,6 +8247,8 @@
 	detail_color = "#FFFFFF"
 	boobed = TRUE
 	sewrepair = TRUE
+	max_integrity = 300
+	integrity_failure = 0.1
 	worn_icon_state = "bwleathercoat"
 	rogue_female_worn = TRUE
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/armor_lefthand.dmi'
@@ -7807,6 +8272,8 @@
 	rogue_armor = /datum/rogue_armor/padded
 	material_category = 2
 	sewrepair = TRUE
+	max_integrity = 300
+	integrity_failure = 0.1
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
@@ -7910,6 +8377,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "absolutionistrobe"
 	rogue_female_worn = TRUE
@@ -7939,6 +8408,8 @@
 	boobed = TRUE
 	sewrepair = TRUE
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "abyssortabard"
 	rogue_female_worn = TRUE
@@ -7968,6 +8439,8 @@
 	boobed = TRUE
 	sewrepair = TRUE
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "apron"
 	rogue_female_worn = TRUE
@@ -8162,6 +8635,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "battlenun"
 	rogue_female_worn = TRUE
@@ -8190,6 +8665,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_sleeve_scrap = /obj/item/natural/fur
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "black_cloak"
 	rogue_female_worn = TRUE
@@ -8217,6 +8694,8 @@
 	boobed = TRUE
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "cape"
 	rogue_female_worn = TRUE
@@ -8453,6 +8932,8 @@
 	detail_color = "#39404d"
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "capcloak"
 	rogue_female_worn = TRUE
@@ -8480,6 +8961,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_coverage = CHEST | GROIN | ARMS
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "chasuble"
 
@@ -8500,6 +8983,8 @@
 	rogue_grid_height = 64
 	material_category = 2
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	icon_state = null
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
@@ -8530,6 +9015,8 @@
 	boobed = TRUE
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "sheriffcloak"
 	rogue_female_worn = TRUE
@@ -8560,6 +9047,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "tabard_ravox"
 	rogue_female_worn = TRUE
@@ -8592,6 +9081,8 @@
 	sewrepair = TRUE
 	sleevetype = "cotehardie"
 	rogue_coverage = CHEST | GROIN | ARMS
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "cotehardie"
 	rogue_female_worn = TRUE
@@ -8620,6 +9111,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_sleeve_scrap = /obj/item/natural/fur
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "dark_cloak"
 	rogue_female_worn = TRUE
@@ -8754,6 +9247,8 @@
 	boobed = TRUE
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "duelistcape"
 
@@ -8779,6 +9274,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "eastcloak1"
 	rogue_female_worn = TRUE
@@ -8805,6 +9302,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "forestcloak"
 	rogue_female_worn = TRUE
@@ -8858,6 +9357,8 @@
 	boobed = TRUE
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "halfcloak"
 	rogue_female_worn = TRUE
@@ -9047,6 +9548,8 @@
 	sellprice = 50
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "heartfelt_cloak"
 	rogue_female_worn = TRUE
@@ -9072,6 +9575,8 @@
 	material_category = 2
 	detail_tag = "_detail"
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "naledisash"
 	rogue_female_worn = TRUE
@@ -9103,6 +9608,8 @@
 	sewrepair = TRUE
 	sleevetype = "silvertabard"
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "silvertabard"
 	rogue_female_worn = TRUE
@@ -9128,6 +9635,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/fur
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "lepoardcape"
 	rogue_female_worn = TRUE
@@ -9157,6 +9666,8 @@
 	boobed = TRUE
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "lord_cloak"
 	rogue_female_worn = TRUE
@@ -9241,6 +9752,8 @@
 	sellprice = 100
 	sewrepair = TRUE
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "martyrcloak"
 	rogue_female_worn = TRUE
@@ -9267,6 +9780,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "matroncloak"
 	rogue_female_worn = TRUE
@@ -9292,6 +9807,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "ordinatorcape"
 	rogue_female_worn = TRUE
@@ -9320,6 +9837,8 @@
 	detail_tag = "_detail"
 	detail_color = "#ffffff"
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "poncho"
 	rogue_female_worn = TRUE
@@ -9344,6 +9863,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -9373,6 +9894,8 @@
 	boobed = TRUE
 	sewrepair = TRUE
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "psydontabard"
 	rogue_female_worn = TRUE
@@ -9430,6 +9953,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_sleeve_scrap = /obj/item/natural/hide/cured
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "rain_cloak"
 	rogue_female_worn = TRUE
@@ -9720,6 +10245,8 @@
 	boobed = TRUE
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "shadowcloak"
 	rogue_female_worn = TRUE
@@ -9776,6 +10303,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "stabard"
 	rogue_female_worn = TRUE
@@ -10092,6 +10621,8 @@
 	material_category = 2
 	flags_inv = NONE
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "stole_gold"
 	rogue_female_worn = TRUE
@@ -10171,6 +10702,8 @@
 	boobed = TRUE
 	sewrepair = TRUE
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "tabard"
 	rogue_female_worn = TRUE
@@ -10407,6 +10940,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "tabard_abyssor"
 	rogue_female_worn = TRUE
@@ -10437,6 +10972,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "tabard_astrata_alt"
 	rogue_female_worn = TRUE
@@ -10462,6 +10999,8 @@
 	rogue_grid_height = 64
 	material_category = 2
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "astratatabard"
 	rogue_female_worn = TRUE
@@ -10492,6 +11031,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "tabard_dendor"
 	rogue_female_worn = TRUE
@@ -10522,6 +11063,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "tabard_eora"
 	rogue_female_worn = TRUE
@@ -10548,6 +11091,8 @@
 	material_category = 2
 	boobed = TRUE
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "eoratabard"
 	rogue_female_worn = TRUE
@@ -10578,6 +11123,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "tabard_malum"
 	rogue_female_worn = TRUE
@@ -10603,6 +11150,8 @@
 	rogue_grid_height = 64
 	material_category = 2
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "malumtabard"
 	rogue_female_worn = TRUE
@@ -10633,6 +11182,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "tabard_necra"
 	rogue_female_worn = TRUE
@@ -10658,6 +11209,8 @@
 	rogue_grid_height = 64
 	material_category = 2
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "necratabard"
 	rogue_female_worn = TRUE
@@ -10688,6 +11241,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "tabard_noc"
 	rogue_female_worn = TRUE
@@ -10718,6 +11273,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "tabard_pestra"
 	rogue_female_worn = TRUE
@@ -10744,6 +11301,8 @@
 	material_category = 2
 	boobed = TRUE
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "pestratabard"
 	rogue_female_worn = TRUE
@@ -10774,6 +11333,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "tabard_weeping"
 	rogue_female_worn = TRUE
@@ -10803,6 +11364,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "justicetabard"
 	rogue_female_worn = TRUE
@@ -10829,6 +11392,8 @@
 	material_category = 2
 	boobed = TRUE
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "seetabard"
 	rogue_female_worn = TRUE
@@ -10859,6 +11424,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "tabard_xylix"
 	rogue_female_worn = TRUE
@@ -10886,6 +11453,8 @@
 	boobed = TRUE
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "xylixcloak"
 	rogue_female_worn = TRUE
@@ -10910,6 +11479,8 @@
 	rogue_grid_height = 64
 	material_category = 2
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "thiefcloak"
 	rogue_female_worn = TRUE
@@ -10934,6 +11505,8 @@
 	rogue_grid_height = 64
 	material_category = 2
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -10961,6 +11534,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_sleeve_scrap = /obj/item/natural/hide/cured
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "volfpelt"
 	rogue_female_worn = TRUE
@@ -10987,6 +11562,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "wardencloak"
 	rogue_female_worn = TRUE
@@ -11014,6 +11591,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_sleeve_scrap = /obj/item/natural/fibers
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "wicker_cloak"
 	rogue_female_worn = TRUE
@@ -11045,6 +11624,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_sleeve_scrap = /obj/item/natural/fur
+	max_integrity = 250
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "angle"
 	rogue_female_worn = TRUE
@@ -11161,6 +11742,7 @@
 	material_category = 2
 	sellprice = 12
 	sewrepair = TRUE
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "freigloves"
 	rogue_female_worn = TRUE
@@ -11248,6 +11830,8 @@
 	unarmed_bonus = 3
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "clothwraps"
 	rogue_female_worn = TRUE
@@ -11335,6 +11919,8 @@
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 400
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "bplategloves"
 	rogue_female_worn = TRUE
@@ -11365,6 +11951,8 @@
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 400
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "bkgloves"
 	rogue_female_worn = TRUE
@@ -11396,6 +11984,8 @@
 	smeltresult = /obj/item/alch/irondust
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 300
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "cgloves"
 	rogue_female_worn = TRUE
@@ -11457,6 +12047,7 @@
 	chunkcolor = "#532e25"
 	unarmed_bonus = 2
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 150
 	inhand_icon_state = null
 	worn_icon_state = "acgloves"
 	rogue_female_worn = TRUE
@@ -11487,6 +12078,7 @@
 	unarmed_bonus = 2
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	inhand_icon_state = null
 	worn_icon_state = "bcgloves"
 	rogue_female_worn = TRUE
@@ -11547,6 +12139,7 @@
 	unarmed_bonus = 2
 	smeltresult = /obj/item/alch/irondust
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 225
 	inhand_icon_state = null
 	worn_icon_state = "icgloves"
 	rogue_female_worn = TRUE
@@ -11604,6 +12197,8 @@
 	sellprice = 100
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "volticgauntlets"
 
@@ -11632,6 +12227,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "eastgloves1"
 	rogue_female_worn = TRUE
@@ -11661,6 +12258,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "eastgloves2"
 	rogue_female_worn = TRUE
@@ -11690,6 +12289,8 @@
 	smeltresult = /obj/item/rogueore/coal
 	anvilrepair = /datum/attribute/skill/craft/carpentry
 	sleevetype = "shirt"
+	max_integrity = 225
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "welfhand"
 	rogue_female_worn = TRUE
@@ -11717,6 +12318,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "fingerless_gloves"
 	rogue_female_worn = TRUE
@@ -11745,6 +12348,7 @@
 	rogue_blocksound = "soft"
 	material_category = 2
 	sewrepair = TRUE
+	max_integrity = 250
 	inhand_icon_state = null
 	worn_icon_state = "shadowgloves"
 	rogue_female_worn = TRUE
@@ -11773,6 +12377,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_sleeve_scrap = /obj/item/natural/hide/cured
+	max_integrity = 100
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "roguegloves"
 	rogue_female_worn = TRUE
@@ -11802,6 +12408,8 @@
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 100
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -11858,6 +12466,7 @@
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
 	sewrepair = TRUE
+	max_integrity = 200
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -11914,6 +12523,7 @@
 	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
 	sewrepair = TRUE
+	max_integrity = 50
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -11972,6 +12582,8 @@
 	unarmed_bonus = 1
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "leather_gloves"
 	rogue_female_worn = TRUE
@@ -12054,6 +12666,9 @@
 	material_category = 2
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 60
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -12083,6 +12698,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 250
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "fencergloves"
 	rogue_female_worn = TRUE
@@ -12172,6 +12789,8 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 300
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "gauntlets"
 	rogue_female_worn = TRUE
@@ -12233,6 +12852,7 @@
 	chunkcolor = "#532e25"
 	unarmed_bonus = 3
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 150
 	inhand_icon_state = null
 	worn_icon_state = "agauntlets"
 	rogue_female_worn = TRUE
@@ -12322,6 +12942,7 @@
 	unarmed_bonus = 3
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 500
 	inhand_icon_state = null
 	worn_icon_state = "graggarplategloves"
 	rogue_female_worn = TRUE
@@ -12382,6 +13003,7 @@
 	unarmed_bonus = 3
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 225
 	inhand_icon_state = null
 	worn_icon_state = "igauntlets"
 	rogue_female_worn = TRUE
@@ -12442,6 +13064,7 @@
 	unarmed_bonus = 3
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 500
 	inhand_icon_state = null
 	worn_icon_state = "matthiosgloves"
 	rogue_female_worn = TRUE
@@ -12472,6 +13095,7 @@
 	unarmed_bonus = 3
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 275
 	inhand_icon_state = null
 	worn_icon_state = "bplategloves"
 	rogue_female_worn = TRUE
@@ -12532,6 +13156,7 @@
 	unarmed_bonus = 3
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 500
 	inhand_icon_state = null
 	worn_icon_state = "zizogauntlets"
 	rogue_female_worn = TRUE
@@ -12556,6 +13181,8 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	rogue_sleeve_scrap = /obj/item/natural/fur
+	max_integrity = 300
+	integrity_failure = 0.1
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/artefactsten_lefthand.dmi'
@@ -12587,6 +13214,9 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HEAD_PARTS
+	max_integrity = 10000
+	integrity_failure = 0.1
+	equip_delay_self = 3600
 	worn_icon_state = "blackbag"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -12620,6 +13250,8 @@
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/hide
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS | NECK
+	max_integrity = 80
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "antlerhood"
 
@@ -12645,6 +13277,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "archercap"
 
@@ -12671,6 +13305,8 @@
 	flags_inv = HIDEEARS
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "armingcap"
 
@@ -12696,6 +13332,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "articap"
 
@@ -12721,6 +13359,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "bardhat"
 
@@ -12748,6 +13388,8 @@
 	flags_inv = HIDEEARS | HIDEHAIR
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS | NECK
+	max_integrity = 100
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "beekeeper"
 
@@ -12773,6 +13415,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "brimmed"
 
@@ -12798,6 +13442,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "bucklehat"
 
@@ -12823,6 +13469,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "chaperon"
 
@@ -13004,6 +13652,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "chef"
 
@@ -13030,6 +13680,8 @@
 	sellprice = 50
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "circlet"
 
@@ -13289,6 +13941,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "chef"
 	worn_icon_state = "chef"
 
@@ -13314,6 +13968,8 @@
 	material_category = 2
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "serpcrown"
 
@@ -13340,6 +13996,8 @@
 	sellprice = 100
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "serpcrowno"
 
@@ -13366,6 +14024,8 @@
 	flags_inv = HIDEFACE | HIDEFACIALHAIR | HIDESNOUT
 	sewrepair = TRUE
 	rogue_coverage = ROGUE_COVER_MOUTH
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "dendormask"
 
@@ -13392,6 +14052,8 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "hood"
 
@@ -13416,6 +14078,8 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	icon_state = null
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
@@ -13445,6 +14109,8 @@
 	detail_color = "#C0C0C0"
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "duelhat"
 
@@ -13472,6 +14138,8 @@
 	detail_color = "#C0C0C0"
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "duelisthat"
 
@@ -13499,6 +14167,8 @@
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/silk
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "eoramask"
 
@@ -13527,6 +14197,8 @@
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/hide/cured
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "hat"
 
@@ -13552,6 +14224,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "fancy_hat"
 
@@ -13578,6 +14252,8 @@
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/hide/cured
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "curator"
 
@@ -13603,6 +14279,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "fisherhat"
 
@@ -13634,6 +14312,8 @@
 	altdetail_color = "#9c2525"
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "grenzelhat"
 
@@ -13659,6 +14339,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "hatblu"
 
@@ -13684,6 +14366,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "hatfur"
 
@@ -13709,6 +14393,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "headband"
 
@@ -13764,6 +14450,7 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "headband"
 
@@ -13791,6 +14478,7 @@
 	rogue_blocksound = "soft"
 	material_category = 2
 	sewrepair = TRUE
+	max_integrity = 200
 	inhand_icon_state = null
 	worn_icon_state = "headband"
 
@@ -13841,6 +14529,8 @@
 	sellprice = 10
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "headdress"
 
@@ -13892,6 +14582,8 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_NOSE
+	max_integrity = 300
+	integrity_failure = 0.1
 	worn_icon_state = "nasal"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -14158,6 +14850,7 @@
 	altdetail_color = "#FFFFFF"
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 310
 	worn_icon_state = "grenzelheavy"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/special/grenzelhats_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/special/grenzelhats_righthand.dmi'
@@ -14291,6 +14984,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDESNOUT
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 225
 	worn_icon_state = "iroundface"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -14391,6 +15085,7 @@
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = HEAD | ROGUE_COVER_HEAD_PARTS
+	max_integrity = 500
 	worn_icon_state = "bkhelm"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/special/blkknight_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/special/blkknight_righthand.dmi'
@@ -14425,6 +15120,7 @@
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = HEAD | ROGUE_COVER_HEAD_PARTS
+	max_integrity = 500
 	worn_icon_state = "bplatehelm"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/special/blkknight_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/special/blkknight_righthand.dmi'
@@ -14496,6 +15192,7 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = ROGUE_COVER_HAIR
+	max_integrity = 400
 	worn_icon_state = "psychains"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -14529,6 +15226,7 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 400
 	worn_icon_state = "psybarbs"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/wrists_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/wrists_righthand.dmi'
@@ -14561,6 +15259,7 @@
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS
+	max_integrity = 425
 	worn_icon_state = "bronzehelmet"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -14594,6 +15293,7 @@
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = HEAD | ROGUE_COVER_HEAD_PARTS
+	max_integrity = 350
 	worn_icon_state = "bronzemurmillo"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -14697,6 +15397,7 @@
 	chunkcolor = "#8c9599"
 	smeltresult = /obj/item/ingot/copper
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 200
 	worn_icon_state = "lamellar"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -14764,6 +15465,7 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = HEAD | ROGUE_COVER_HEAD_PARTS
+	max_integrity = 400
 	worn_icon_state = "barbute"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -14798,6 +15500,7 @@
 	smeltresult = /obj/item/ingot/silver
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = HEAD | ROGUE_COVER_HEAD_PARTS | NECK
+	max_integrity = 450
 	worn_icon_state = "absolutionisthelm"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -14899,6 +15602,7 @@
 	block2add = ROGUE_FOV_BEHIND
 	flags_inv = HIDEEARS | HIDEFACE | HIDESNOUT
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 200
 	worn_icon_state = "ancientbarbute"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -15035,6 +15739,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDESNOUT
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 450
 	worn_icon_state = "bronzebarbute"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -15137,6 +15842,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDESNOUT
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 300
 	worn_icon_state = "ironplate"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -15171,6 +15877,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDESNOUT
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	worn_icon_state = "capbarbute"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/special/captain_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/special/captain_righthand.dmi'
@@ -15346,6 +16053,7 @@
 	smeltresult = /obj/item/rogueore/coal
 	anvilrepair = /datum/attribute/skill/craft/carpentry
 	rogue_coverage = HEAD | ROGUE_COVER_HEAD_PARTS | NECK
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "welfhead"
 
@@ -15378,6 +16086,7 @@
 	smeltresult = /obj/item/rogueore/coal
 	anvilrepair = /datum/attribute/skill/craft/carpentry
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS | ROGUE_COVER_NOSE | NECK
+	max_integrity = 225
 	inhand_icon_state = null
 	worn_icon_state = "welfheadalt"
 
@@ -15441,6 +16150,7 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = HEAD | ROGUE_COVER_HEAD_PARTS | NECK
+	max_integrity = 450
 	worn_icon_state = "frogmouth"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -15475,6 +16185,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDESNOUT | HIDEHAIR | HIDEFACIALHAIR
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 600
 	worn_icon_state = "graggarplatehelm"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -15576,6 +16287,7 @@
 	block2add = ROGUE_FOV_BEHIND
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDESNOUT
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 200
 	worn_icon_state = "ancientsavoyard"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -15677,6 +16389,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDESNOUT | HIDEHAIR | HIDEFACIALHAIR
 	smeltresult = /obj/item/natural/brick
 	anvilrepair = /datum/attribute/skill/craft/ceramics
+	max_integrity = 100
 	worn_icon_state = "jar"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/special/jar_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/special/jar_righthand.dmi'
@@ -15711,6 +16424,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDESNOUT
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	worn_icon_state = "knight"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -15778,6 +16492,7 @@
 	block2add = ROGUE_FOV_BEHIND
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDESNOUT
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 200
 	worn_icon_state = "ancientknight"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -15846,6 +16561,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDESNOUT
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 300
 	worn_icon_state = "iarmet"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -15947,6 +16663,7 @@
 	block2add = ROGUE_FOV_BEHIND
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDESNOUT
 	smeltresult = /obj/item/ingot/gold
+	max_integrity = 5
 	worn_icon_state = "goldknight"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -15980,6 +16697,7 @@
 	block2add = ROGUE_FOV_BEHIND
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDESNOUT
 	smeltresult = /obj/item/ingot/gold
+	max_integrity = 10
 	worn_icon_state = "goldknight_crown"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -16014,6 +16732,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDESNOUT
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 300
 	worn_icon_state = "iknight"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -16082,6 +16801,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDESNOUT
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 400
 	worn_icon_state = "skettle"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -16154,6 +16874,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDESNOUT | HIDEHAIR | HIDEFACIALHAIR
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 600
 	inhand_icon_state = null
 	worn_icon_state = "matthioshelm"
 
@@ -16320,6 +17041,7 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS
+	max_integrity = 350
 	worn_icon_state = "bplatehelm_nv"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/special/blkknight_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/special/blkknight_righthand.dmi'
@@ -16354,6 +17076,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDESNOUT
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	worn_icon_state = "ordinatorhelm"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -16490,6 +17213,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDESNOUT
 	smeltresult = /obj/item/ingot/silver
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	worn_icon_state = "psydonarmet"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -16625,6 +17349,7 @@
 	block2add = ROGUE_FOV_BEHIND
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDESNOUT
 	smeltresult = /obj/item/ingot/gold
+	max_integrity = 5
 	worn_icon_state = "goldbarbute"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -16658,6 +17383,7 @@
 	block2add = ROGUE_FOV_BEHIND
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDESNOUT
 	smeltresult = /obj/item/ingot/gold
+	max_integrity = 10
 	worn_icon_state = "goldbarbute_crown"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -16691,6 +17417,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDESNOUT
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	worn_icon_state = "volfplate"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -16758,6 +17485,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDESNOUT
 	smeltresult = /obj/item/ingot/silver
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 400
 	worn_icon_state = "psyhelm_s"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -16826,6 +17554,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDESNOUT
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 600
 	worn_icon_state = "zizobarbute"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -16858,6 +17587,7 @@
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 225
 	worn_icon_state = "hornedcap"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -16982,6 +17712,7 @@
 	material_category = 1
 	chunkcolor = "#532e25"
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 100
 	worn_icon_state = "ancientkettle"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -17013,6 +17744,7 @@
 	chunkcolor = "#8c9599"
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 225
 	worn_icon_state = "ikettle"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -17044,6 +17776,7 @@
 	chunkcolor = "#8c9599"
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 250
 	worn_icon_state = "minerslamp"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -17108,6 +17841,7 @@
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/hide/cured
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS | ROGUE_COVER_NOSE
+	max_integrity = 200
 	worn_icon_state = "leatherhelm"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -17139,6 +17873,7 @@
 	chunkcolor = "#8c9599"
 	sellprice = 15
 	sewrepair = TRUE
+	max_integrity = 250
 	worn_icon_state = "leatherhelm"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -17206,6 +17941,7 @@
 	flags_inv = HIDEHAIR | HIDEEARS | HIDEFACE
 	sellprice = 10
 	sewrepair = TRUE
+	max_integrity = 280
 	worn_icon_state = "studhood"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_stonehedge/icons/clothing/armor/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_stonehedge/icons/clothing/armor/head_righthand.dmi'
@@ -17332,6 +18068,7 @@
 	flags_inv = HIDEEARS | HIDEFACE
 	sellprice = 10
 	sewrepair = TRUE
+	max_integrity = 250
 	worn_icon_state = "gronnfurhood"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/special/gronn_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/special/gronn_righthand.dmi'
@@ -17397,6 +18134,7 @@
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS | ROGUE_COVER_NOSE | NECK
+	max_integrity = 250
 	worn_icon_state = "nomadhelmet"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -17496,6 +18234,7 @@
 	chunkcolor = "#8c9599"
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	worn_icon_state = "marauder_head"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -17562,6 +18301,7 @@
 	altdetail_color = "#FFFFFF"
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 315
 	worn_icon_state = "grenzelmid"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/special/grenzelhats_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/special/grenzelhats_righthand.dmi'
@@ -17594,6 +18334,7 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS | NECK
+	max_integrity = 350
 	worn_icon_state = "hussarhelm"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -17625,6 +18366,7 @@
 	chunkcolor = "#8c9599"
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 225
 	worn_icon_state = "isallet"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -17657,6 +18399,7 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS | NECK
+	max_integrity = 350
 	worn_icon_state = "shishak"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -17724,6 +18467,7 @@
 	flags_inv = HIDEFACE | HIDEHAIR
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 225
 	worn_icon_state = "isallet_visor"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -17887,6 +18631,7 @@
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 225
 	worn_icon_state = "skullcap"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -17917,6 +18662,7 @@
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/hide/cured
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS | ROGUE_COVER_NOSE
+	max_integrity = 100
 	worn_icon_state = "tricorn"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/head_righthand.dmi'
@@ -17981,6 +18727,8 @@
 	sellprice = 19
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "hennin"
 
@@ -18006,6 +18754,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_FACE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "hbit"
 
@@ -18033,6 +18783,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS
+	max_integrity = 250
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "inqhat"
 
@@ -18063,6 +18815,8 @@
 	altdetail_color = "#ffffff"
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "jester"
 
@@ -18088,6 +18842,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "knitcap"
 
@@ -18112,6 +18868,8 @@
 	rogue_grid_height = 32
 	material_category = 2
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "maidband"
 
@@ -18138,6 +18896,8 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR | HIDESNOUT
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "menacing"
 
@@ -18192,6 +18952,8 @@
 	flags_inv = HIDEEARS
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS | ROGUE_COVER_EYES | ROGUE_COVER_NOSE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "easthat"
 
@@ -18218,6 +18980,7 @@
 	material_category = 2
 	flags_inv = HIDEEARS
 	sewrepair = TRUE
+	max_integrity = 100
 	inhand_icon_state = null
 	worn_icon_state = "easthat"
 
@@ -18244,6 +19007,8 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR | HIDESNOUT
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "necrahood"
 
@@ -18270,6 +19035,8 @@
 	flags_inv = HIDEEARS | HIDESNOUT | HIDEHAIR | HIDEFACIALHAIR
 	sewrepair = TRUE
 	rogue_coverage = ROGUE_COVER_MOUTH | NECK
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "deathface"
 
@@ -18295,6 +19062,8 @@
 	material_category = 2
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR | HIDESNOUT
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "necromhood"
 
@@ -18320,6 +19089,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "tophat"
 
@@ -18346,6 +19117,8 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR | HIDESNOUT
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "nochood"
 
@@ -18372,6 +19145,8 @@
 	sellprice = 5
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "nun"
 
@@ -18397,6 +19172,8 @@
 	material_category = 2
 	sellprice = 100
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "nile"
 
@@ -18449,6 +19226,8 @@
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/fibers
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS
+	max_integrity = 100
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "armingcap"
 
@@ -18476,6 +19255,8 @@
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/fur
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "papakha"
 
@@ -18527,6 +19308,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "physhat"
 
@@ -18553,6 +19336,8 @@
 	sellprice = 77
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "priest"
 
@@ -18579,6 +19364,8 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR | HIDESNOUT
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "priesthead"
 
@@ -18604,6 +19391,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "puritan_hat"
 
@@ -18632,6 +19421,7 @@
 	material_category = 2
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 300
 	inhand_icon_state = "that"
 	worn_icon_state = "puritan_hat"
 
@@ -18661,6 +19451,8 @@
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/hide/cured
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS | NECK
+	max_integrity = 100
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "basichood"
 
@@ -18922,6 +19714,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR | HIDESNOUT
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | NECK
+	max_integrity = 200
 	inhand_icon_state = null
 	worn_icon_state = "psydonhood"
 
@@ -19066,6 +19859,7 @@
 	block2add = ROGUE_FOV_BEHIND
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR
 	sewrepair = TRUE
+	max_integrity = 120
 	inhand_icon_state = null
 	worn_icon_state = "basichood"
 
@@ -19411,6 +20205,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "surghood"
 
@@ -19439,6 +20234,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR
 	sewrepair = TRUE
 	rogue_coverage = null
+	max_integrity = 200
 	inhand_icon_state = null
 	worn_icon_state = "wardenhood"
 
@@ -19469,6 +20265,8 @@
 	flags_inv = NONE
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 100
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "deserthood_t"
 
@@ -19494,6 +20292,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "shawl"
 
@@ -19521,6 +20321,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "spellcasterhat"
 
@@ -19547,6 +20349,8 @@
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/fibers
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "strawhat"
 
@@ -19570,6 +20374,8 @@
 	flags_inv = HIDEHAIR | HIDEEARS
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS | NECK
+	max_integrity = 200
+	integrity_failure = 0.1
 	icon_state = null
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
@@ -19625,6 +20431,8 @@
 	detail_color = "#ffffff"
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HEAD_PARTS | NECK
+	max_integrity = 100
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "veil"
 
@@ -19680,6 +20488,8 @@
 	detail_color = "#61462c"
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "witch"
 
@@ -19731,6 +20541,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "that"
 	worn_icon_state = "wizardhat"
 
@@ -19897,6 +20709,8 @@
 	spitoutmouth = FALSE
 	sewrepair = TRUE
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	worn_icon_state = "pipeoff"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_righthand.dmi'
@@ -19992,6 +20806,8 @@
 	spitoutmouth = FALSE
 	sewrepair = TRUE
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	worn_icon_state = "spliffoff"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_righthand.dmi'
@@ -20677,6 +21493,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = ROGUE_COVER_EYES
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = "blindfold"
 	worn_icon_state = "blindfold"
 
@@ -20705,6 +21523,8 @@
 	detail_color = "#C0C0C0"
 	sewrepair = TRUE
 	rogue_coverage = ROGUE_COVER_EYES
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "duelmask"
 
@@ -20731,6 +21551,8 @@
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/silk
 	rogue_coverage = ROGUE_COVER_FACE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "exoticsilkmask"
 
@@ -20803,6 +21625,8 @@
 	block2add = ROGUE_FOV_RIGHT
 	sewrepair = TRUE
 	rogue_coverage = ROGUE_COVER_EYES
+	max_integrity = 20
+	integrity_failure = 0.5
 	inhand_icon_state = null
 	worn_icon_state = "eyepatch"
 
@@ -20858,6 +21682,8 @@
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = ROGUE_COVER_FACE
+	max_integrity = 100
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "imask"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/masks_onmob.dmi'
@@ -20920,6 +21746,7 @@
 	flags_inv = HIDEFACE | HIDESNOUT
 	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 200
 	inhand_icon_state = null
 	worn_icon_state = "ancientmask"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/masks_onmob.dmi'
@@ -20951,6 +21778,7 @@
 	block2add = ROGUE_FOV_BEHIND
 	flags_inv = HIDEFACE | HIDESNOUT
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 75
 	inhand_icon_state = null
 	worn_icon_state = "ancientmask"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/masks_onmob.dmi'
@@ -21015,6 +21843,7 @@
 	flags_inv = HIDEFACE | HIDESNOUT
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 150
 	inhand_icon_state = null
 	worn_icon_state = "bronzemask"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/masks_onmob.dmi'
@@ -21079,6 +21908,7 @@
 	sellprice = 70
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_sleeve_scrap = null
+	max_integrity = 50
 	inhand_icon_state = null
 	worn_icon_state = "mask_amber"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/masks_onmob.dmi'
@@ -21111,6 +21941,7 @@
 	sellprice = 80
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_sleeve_scrap = null
+	max_integrity = 50
 	inhand_icon_state = null
 	worn_icon_state = "mask_coral"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/masks_onmob.dmi'
@@ -21143,6 +21974,7 @@
 	sellprice = 70
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_sleeve_scrap = null
+	max_integrity = 50
 	inhand_icon_state = null
 	worn_icon_state = "mask_jade"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/masks_onmob.dmi'
@@ -21175,6 +22007,7 @@
 	sellprice = 50
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_sleeve_scrap = null
+	max_integrity = 50
 	inhand_icon_state = null
 	worn_icon_state = "mask_onyxa"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/masks_onmob.dmi'
@@ -21207,6 +22040,7 @@
 	sellprice = 100
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_sleeve_scrap = null
+	max_integrity = 50
 	inhand_icon_state = null
 	worn_icon_state = "mask_opal"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/masks_onmob.dmi'
@@ -21238,6 +22072,7 @@
 	sellprice = 45
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_sleeve_scrap = null
+	max_integrity = 50
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -21271,6 +22106,7 @@
 	sellprice = 35
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_sleeve_scrap = null
+	max_integrity = 50
 	inhand_icon_state = null
 	worn_icon_state = "mask_rose"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/masks_onmob.dmi'
@@ -21303,6 +22139,7 @@
 	sellprice = 30
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_sleeve_scrap = null
+	max_integrity = 50
 	inhand_icon_state = null
 	worn_icon_state = "mask_shell"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/masks_onmob.dmi'
@@ -21335,6 +22172,7 @@
 	sellprice = 95
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_sleeve_scrap = null
+	max_integrity = 50
 	inhand_icon_state = null
 	worn_icon_state = "mask_turq"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/masks_onmob.dmi'
@@ -21397,6 +22235,7 @@
 	sellprice = 100
 	smeltresult = /obj/item/ingot/gold
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 150
 	inhand_icon_state = null
 	worn_icon_state = "goldmask"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/masks_onmob.dmi'
@@ -21519,6 +22358,7 @@
 	flags_inv = HIDEFACE | HIDESNOUT
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 200
 	inhand_icon_state = null
 	worn_icon_state = "smask"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/masks_onmob.dmi'
@@ -21670,6 +22510,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HEAD_PARTS
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "goblin"
 
@@ -21695,6 +22537,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_coverage = HEAD
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "hblinders"
 
@@ -21721,6 +22565,8 @@
 	sellprice = 50
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = ROGUE_COVER_FACE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "lmask"
 
@@ -21748,6 +22594,7 @@
 	material_category = 2
 	flags_inv = HIDEFACE | HIDESNOUT
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 100
 	inhand_icon_state = null
 	worn_icon_state = "naledimask"
 
@@ -21775,6 +22622,7 @@
 	material_category = 2
 	flags_inv = HIDEFACE | HIDESNOUT
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 150
 	inhand_icon_state = null
 	worn_icon_state = "naledimask"
 
@@ -21802,6 +22650,7 @@
 	material_category = 2
 	flags_inv = HIDEFACE | HIDESNOUT
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 150
 	inhand_icon_state = null
 	worn_icon_state = "zizomask"
 
@@ -21829,6 +22678,8 @@
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/hide/cured
 	rogue_coverage = ROGUE_COVER_FACE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "physmask"
 
@@ -21854,6 +22705,8 @@
 	flags_inv = HIDEFACE | HIDEFACIALHAIR | HIDESNOUT
 	sewrepair = TRUE
 	rogue_coverage = ROGUE_COVER_FACE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "ragmask"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/masks_onmob.dmi'
@@ -21960,6 +22813,8 @@
 	flags_inv = HIDEFACE | HIDESNOUT | HIDEHAIR | HIDEEARS
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_FACE
+	max_integrity = 150
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "sackmask"
 
@@ -22045,6 +22900,8 @@
 	flags_inv = HIDEFACE | HIDEFACIALHAIR | HIDESNOUT
 	sewrepair = TRUE
 	rogue_coverage = ROGUE_COVER_FACE
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "shepherd"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/masks_onmob.dmi'
@@ -22103,6 +22960,8 @@
 	smeltresult = /obj/item/natural/bone
 	rogue_sleeve_scrap = /obj/item/natural/bone
 	rogue_coverage = ROGUE_COVER_FACE
+	max_integrity = 100
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "skullmask"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/masks_onmob.dmi'
@@ -22128,6 +22987,8 @@
 	material_category = 2
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = ROGUE_COVER_EYES
+	max_integrity = 20
+	integrity_failure = 0.5
 	inhand_icon_state = null
 	worn_icon_state = "glasses"
 
@@ -22156,6 +23017,7 @@
 	material_category = 2
 	smeltresult = /obj/item/ash
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 150
 	inhand_icon_state = null
 	worn_icon_state = "iduelist"
 
@@ -22184,6 +23046,7 @@
 	material_category = 2
 	smeltresult = /obj/item/ash
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 200
 	inhand_icon_state = null
 	worn_icon_state = "bduelist"
 
@@ -22212,6 +23075,7 @@
 	material_category = 2
 	smeltresult = /obj/item/ash
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 250
 	inhand_icon_state = null
 	worn_icon_state = "sduelist"
 
@@ -22235,6 +23099,7 @@
 	rogue_grid_height = 32
 	material_category = 2
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 35
 	inhand_icon_state = null
 	worn_icon_state = "goggles"
 
@@ -22259,6 +23124,7 @@
 	rogue_grid_height = 32
 	material_category = 2
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "bglasses"
 
@@ -22290,6 +23156,8 @@
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = ROGUE_COVER_FACE
+	max_integrity = 100
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "wildguard"
 
@@ -22317,6 +23185,8 @@
 	flags_inv = HIDEFACE | HIDESNOUT
 	anvilrepair = /datum/attribute/skill/craft/ceramics
 	rogue_coverage = ROGUE_COVER_FACE
+	max_integrity = 50
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "xylixmask"
 
@@ -22347,6 +23217,8 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = ROGUE_COVER_NOSE | ROGUE_COVER_MOUTH | NECK
+	max_integrity = 300
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "bevor"
 
@@ -22376,6 +23248,7 @@
 	material_category = 2
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 375
 	inhand_icon_state = null
 	worn_icon_state = "bbevor"
 
@@ -22405,6 +23278,7 @@
 	material_category = 2
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 225
 	inhand_icon_state = null
 	worn_icon_state = "ibevor"
 
@@ -22435,6 +23309,7 @@
 	chunkcolor = "#363030"
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 500
 	inhand_icon_state = null
 	worn_icon_state = "zizobevor"
 
@@ -22461,6 +23336,8 @@
 	material_category = 2
 	sellprice = 60
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "amulet_amber"
 
@@ -22487,6 +23364,8 @@
 	material_category = 2
 	sellprice = 20
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "amulet_shell"
 
@@ -22513,6 +23392,8 @@
 	material_category = 2
 	sellprice = 70
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "amulet_coral"
 
@@ -22539,6 +23420,8 @@
 	material_category = 2
 	sellprice = 60
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "amulet_jade"
 
@@ -22565,6 +23448,8 @@
 	material_category = 2
 	sellprice = 40
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "amulet_onyxa"
 
@@ -22591,6 +23476,8 @@
 	material_category = 2
 	sellprice = 90
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "amulet_opal"
 
@@ -22617,6 +23504,8 @@
 	material_category = 2
 	sellprice = 25
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "amulet_rose"
 
@@ -22643,6 +23532,8 @@
 	material_category = 2
 	sellprice = 25
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "amulet_shell"
 
@@ -22669,6 +23560,8 @@
 	material_category = 2
 	sellprice = 85
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "amulet_turq"
 
@@ -22700,6 +23593,8 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS | NECK
+	max_integrity = 300
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "chaincoif"
 
@@ -22791,6 +23686,7 @@
 	chunkcolor = "#532e25"
 	flags_inv = HIDEHAIR
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 150
 	inhand_icon_state = null
 	worn_icon_state = "achaincoif"
 
@@ -22821,6 +23717,7 @@
 	flags_inv = HIDEHAIR
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	inhand_icon_state = null
 	worn_icon_state = "bchaincoif"
 
@@ -22943,6 +23840,7 @@
 	flags_inv = HIDEHAIR
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 225
 	inhand_icon_state = null
 	worn_icon_state = "ichaincoif"
 
@@ -22973,6 +23871,8 @@
 	flags_inv = HIDEHAIR
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS | NECK
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "coif"
 
@@ -23003,6 +23903,7 @@
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR | HIDESNOUT
 	sewrepair = TRUE
 	rogue_coverage = HEAD | ROGUE_COVER_HAIR | ROGUE_COVER_EARS | ROGUE_COVER_MOUTH | NECK
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "fullpadded"
 
@@ -23032,6 +23933,7 @@
 	material_category = 2
 	flags_inv = HIDEHAIR
 	sewrepair = TRUE
+	max_integrity = 250
 	inhand_icon_state = null
 	worn_icon_state = "ccoif"
 
@@ -23086,6 +23988,8 @@
 	rogue_grid_height = 32
 	material_category = 2
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "collar_rope"
 
@@ -23285,6 +24189,8 @@
 	rogue_grid_width = 64
 	rogue_grid_height = 32
 	material_category = 2
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "cursed_collar"
 
@@ -23316,6 +24222,8 @@
 	detail_color = "#e98738"
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 300
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "fencercollar"
 
@@ -23376,6 +24284,8 @@
 	material_category = 2
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 225
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "gorget"
 
@@ -23405,6 +24315,7 @@
 	material_category = 2
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	inhand_icon_state = null
 	worn_icon_state = "bronzegorget"
 
@@ -23461,6 +24372,7 @@
 	material_category = 2
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 150
 	inhand_icon_state = null
 	worn_icon_state = "cursed_collar"
 
@@ -23519,6 +24431,7 @@
 	rogue_blocksound = "plate"
 	material_category = 2
 	smeltresult = /obj/item/ingot/gold
+	max_integrity = 5
 	inhand_icon_state = null
 	worn_icon_state = "goldgorget"
 
@@ -23548,6 +24461,7 @@
 	material_category = 2
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "sgorget"
 
@@ -23607,6 +24521,7 @@
 	material_category = 3
 	chunkcolor = "#532e25"
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 150
 	inhand_icon_state = null
 	worn_icon_state = "ancientgorget"
 
@@ -23662,6 +24577,8 @@
 	material_category = 2
 	sellprice = 80
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "horus"
 
@@ -23692,6 +24609,8 @@
 	sellprice = 10
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/hide/cured
+	max_integrity = 250
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "lgorget"
 
@@ -23719,6 +24638,8 @@
 	material_category = 2
 	sellprice = 15
 	rogue_sleeve_scrap = /obj/item/natural/fibers
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "luckcharm"
 
@@ -23745,6 +24666,8 @@
 	material_category = 2
 	sellprice = 100
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "ornateamulet"
 
@@ -23772,6 +24695,8 @@
 	material_category = 2
 	sellprice = 10
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "psycross"
 
@@ -24101,6 +25026,7 @@
 	sellprice = 333
 	smeltresult = /obj/item/riddleofsteel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	equip_delay_self = 33
 	inhand_icon_state = null
 	worn_icon_state = "malum"
 
@@ -24508,6 +25434,8 @@
 	sellprice = 666
 	smeltresult = /obj/item/ingot/weeping
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 666
+	equip_delay_self = 66
 	inhand_icon_state = null
 	worn_icon_state = "psicrossblood"
 
@@ -24561,6 +25489,8 @@
 	material_category = 2
 	sellprice = 100
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "skullamulet"
 
@@ -24614,6 +25544,8 @@
 	material_category = 2
 	sellprice = 70
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "talkstone"
 
@@ -24637,6 +25569,8 @@
 	sellprice = 100
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "ruby"
 
@@ -24658,6 +25592,8 @@
 	material_category = 2
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -24682,6 +25618,8 @@
 	sellprice = 20
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "ring_amber"
 
@@ -24704,6 +25642,8 @@
 	sellprice = 70
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -24728,6 +25668,8 @@
 	sellprice = 20
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "ring_shell"
 
@@ -24751,6 +25693,8 @@
 	sellprice = 70
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "ring_coral"
 
@@ -24773,6 +25717,8 @@
 	sellprice = 11
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -24797,6 +25743,8 @@
 	smeltresult = /obj/item/roguegem/diamond
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -24820,6 +25768,8 @@
 	sellprice = 370
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -24844,6 +25794,8 @@
 	smeltresult = /obj/item/roguegem/diamond
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -24868,6 +25820,8 @@
 	smeltresult = /obj/item/ingot/draconic
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -24891,6 +25845,8 @@
 	sellprice = 10
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -24915,6 +25871,8 @@
 	smeltresult = /obj/item/roguegem/green
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -24938,6 +25896,8 @@
 	sellprice = 295
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -24962,6 +25922,8 @@
 	smeltresult = /obj/item/roguegem/green
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -24986,6 +25948,8 @@
 	sellprice = 45
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "ring_g"
 
@@ -25009,6 +25973,8 @@
 	sellprice = 60
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "ring_jade"
 
@@ -25032,6 +25998,8 @@
 	sellprice = 40
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "ring_onyxa"
 
@@ -25055,6 +26023,8 @@
 	sellprice = 90
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "ring_opal"
 
@@ -25078,6 +26048,8 @@
 	smeltresult = /obj/item/roguegem/blue
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -25101,6 +26073,8 @@
 	sellprice = 345
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -25125,6 +26099,8 @@
 	smeltresult = /obj/item/roguegem/blue
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -25149,6 +26125,8 @@
 	sellprice = 25
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "ring_rose"
 
@@ -25172,6 +26150,8 @@
 	smeltresult = /obj/item/roguegem/ruby
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -25195,6 +26175,8 @@
 	sellprice = 355
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -25219,6 +26201,8 @@
 	smeltresult = /obj/item/roguegem/ruby
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -25243,6 +26227,8 @@
 	smeltresult = /obj/item/roguegem/violet
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -25266,6 +26252,8 @@
 	sellprice = 300
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -25290,6 +26278,8 @@
 	smeltresult = /obj/item/roguegem/violet
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -25314,6 +26304,8 @@
 	sellprice = 20
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "ring_shell"
 
@@ -25336,6 +26328,8 @@
 	sellprice = 135
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -25404,6 +26398,8 @@
 	sellprice = 33
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "ring_s"
 
@@ -25426,6 +26422,8 @@
 	sellprice = 222
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -25450,6 +26448,8 @@
 	smeltresult = /obj/item/riddleofsteel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -25473,6 +26473,8 @@
 	sellprice = 222
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -25496,6 +26498,8 @@
 	sellprice = 222
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -25519,6 +26523,8 @@
 	sellprice = 222
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -25543,6 +26549,8 @@
 	smeltresult = /obj/item/roguegem/yellow
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -25566,6 +26574,8 @@
 	sellprice = 380
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -25590,6 +26600,8 @@
 	smeltresult = /obj/item/roguegem/yellow
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -25614,6 +26626,8 @@
 	sellprice = 85
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "ring_turq"
 
@@ -25640,6 +26654,9 @@
 	sleeved_detail = null
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "anklets"
 	rogue_female_worn = TRUE
@@ -25669,6 +26686,9 @@
 	sleeved_detail = null
 	sewrepair = TRUE
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "eastsandals"
 	rogue_female_worn = TRUE
@@ -25696,6 +26716,9 @@
 	sleeved_detail = null
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/hide/cured
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "blackboots"
 	rogue_female_worn = TRUE
@@ -25726,6 +26749,7 @@
 	sleeved_detail = null
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "armorboots"
 	rogue_female_worn = TRUE
@@ -25785,6 +26809,7 @@
 	material_category = 2
 	sleeved_detail = null
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 150
 	inhand_icon_state = null
 	worn_icon_state = "ancientboots"
 	rogue_female_worn = TRUE
@@ -25815,6 +26840,7 @@
 	sleeved_detail = null
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	inhand_icon_state = null
 	worn_icon_state = "bronzegreaves"
 	rogue_female_worn = TRUE
@@ -25874,6 +26900,7 @@
 	material_category = 2
 	sleeved_detail = null
 	smeltresult = /obj/item/ingot/gold
+	max_integrity = 5
 	inhand_icon_state = null
 	worn_icon_state = "goldgreaves"
 	rogue_female_worn = TRUE
@@ -25904,6 +26931,7 @@
 	sleeved_detail = null
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 500
 	inhand_icon_state = null
 	worn_icon_state = "graggarplateboots"
 	rogue_female_worn = TRUE
@@ -25964,6 +26992,7 @@
 	sleeved_detail = null
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 225
 	inhand_icon_state = null
 	worn_icon_state = "soldierboots"
 	rogue_female_worn = TRUE
@@ -26024,6 +27053,7 @@
 	sleeved_detail = null
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 500
 	inhand_icon_state = null
 	worn_icon_state = "matthiosboots"
 	rogue_female_worn = TRUE
@@ -26085,6 +27115,7 @@
 	sleeved_detail = null
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 500
 	inhand_icon_state = null
 	worn_icon_state = "zizoboots"
 	rogue_female_worn = TRUE
@@ -26117,6 +27148,7 @@
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sewrepair = TRUE
+	max_integrity = 400
 	inhand_icon_state = null
 	worn_icon_state = "bplateboots"
 	rogue_female_worn = TRUE
@@ -26148,6 +27180,7 @@
 	sleeved_detail = null
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 400
 	inhand_icon_state = null
 	worn_icon_state = "bkboots"
 	rogue_female_worn = TRUE
@@ -26204,6 +27237,7 @@
 	smeltresult = /obj/item/rogueore/coal
 	anvilrepair = /datum/attribute/skill/craft/carpentry
 	sewrepair = TRUE
+	max_integrity = 225
 	inhand_icon_state = null
 	worn_icon_state = "welfshoes"
 	rogue_female_worn = TRUE
@@ -26232,6 +27266,7 @@
 	material_category = 2
 	sleeved_detail = null
 	sewrepair = TRUE
+	max_integrity = 250
 	inhand_icon_state = null
 	worn_icon_state = "footwraps_hleather"
 	rogue_female_worn = TRUE
@@ -26261,6 +27296,7 @@
 	sleeved_detail = null
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/cloth
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "footwraps"
 	rogue_female_worn = TRUE
@@ -26288,6 +27324,7 @@
 	sleeved_detail = null
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/fur
+	max_integrity = 250
 	inhand_icon_state = null
 	worn_icon_state = "furlinedboots"
 	rogue_female_worn = TRUE
@@ -26344,6 +27381,7 @@
 	material_category = 2
 	sleeved_detail = null
 	sewrepair = TRUE
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "freiboots"
 	rogue_female_worn = TRUE
@@ -26476,6 +27514,7 @@
 	material_category = 2
 	sleeved_detail = null
 	sewrepair = TRUE
+	max_integrity = 250
 	inhand_icon_state = null
 	worn_icon_state = "alboots"
 	rogue_female_worn = TRUE
@@ -26534,6 +27573,7 @@
 	sleeved_detail = null
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "shalfplateboots"
 	rogue_female_worn = TRUE
@@ -26564,6 +27604,7 @@
 	sleeved_detail = null
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	inhand_icon_state = null
 	worn_icon_state = "bsoldierboots"
 	rogue_female_worn = TRUE
@@ -26594,6 +27635,7 @@
 	sleeved_detail = null
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 225
 	inhand_icon_state = null
 	worn_icon_state = "soldierboots"
 	rogue_female_worn = TRUE
@@ -26648,6 +27690,7 @@
 	material_category = 2
 	sleeved_detail = null
 	sewrepair = TRUE
+	max_integrity = 250
 	inhand_icon_state = null
 	worn_icon_state = "nobleboots"
 	rogue_female_worn = TRUE
@@ -26677,6 +27720,7 @@
 	material_category = 2
 	sleeved_detail = null
 	sewrepair = TRUE
+	max_integrity = 250
 	inhand_icon_state = null
 	worn_icon_state = "fencerboots"
 	rogue_female_worn = TRUE
@@ -26734,6 +27778,7 @@
 	material_category = 2
 	sleeved_detail = null
 	sewrepair = TRUE
+	max_integrity = 250
 	inhand_icon_state = null
 	worn_icon_state = "psydonboots"
 	rogue_female_worn = TRUE
@@ -26761,6 +27806,9 @@
 	sleeved_detail = null
 	sewrepair = TRUE
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "gladiator"
 	rogue_female_worn = TRUE
@@ -26788,6 +27836,9 @@
 	sleeved_detail = null
 	sewrepair = TRUE
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "heels"
 	rogue_female_worn = TRUE
@@ -26843,6 +27894,9 @@
 	sleeved_detail = null
 	sewrepair = TRUE
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "jestershoes"
 	rogue_female_worn = TRUE
@@ -26870,6 +27924,9 @@
 	sleeved_detail = null
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/hide/cured
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "ridingboots"
 	rogue_female_worn = TRUE
@@ -26897,6 +27954,9 @@
 	sleeved_detail = null
 	sewrepair = TRUE
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "sandals"
 	rogue_female_worn = TRUE
@@ -26954,6 +28014,7 @@
 	material_category = 2
 	sleeved_detail = null
 	sewrepair = TRUE
+	max_integrity = 50
 	inhand_icon_state = null
 	worn_icon_state = "ancientsandals"
 	rogue_female_worn = TRUE
@@ -27009,6 +28070,9 @@
 	sleeved_detail = null
 	sewrepair = TRUE
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "shalal"
 	rogue_female_worn = TRUE
@@ -27036,6 +28100,9 @@
 	sleeved_detail = null
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/hide/cured
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "shortboots"
 	rogue_female_worn = TRUE
@@ -27063,6 +28130,9 @@
 	sleeved_detail = null
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/hide/cured
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "simpleshoe"
 	rogue_female_worn = TRUE
@@ -27124,6 +28194,9 @@
 	r_sleeve_status = ROGUE_SLEEVE_NORMAL
 	l_sleeve_status = ROGUE_SLEEVE_NORMAL
 	rogue_sleeve_scrap = /obj/item/natural/hide/cured
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -27194,6 +28267,9 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	nodismemsleeves = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "eastsuit3"
 	rogue_female_worn = TRUE
@@ -27225,6 +28301,7 @@
 	boobed = TRUE
 	sellprice = 25
 	sewrepair = TRUE
+	max_integrity = 325
 	inhand_icon_state = null
 	worn_icon_state = "eastsuit4"
 	rogue_female_worn = TRUE
@@ -27258,6 +28335,7 @@
 	boobed = TRUE
 	sellprice = 20
 	sewrepair = TRUE
+	max_integrity = 250
 	inhand_icon_state = null
 	worn_icon_state = "eastsuit2"
 	rogue_female_worn = TRUE
@@ -27291,6 +28369,7 @@
 	boobed = TRUE
 	sellprice = 20
 	sewrepair = TRUE
+	max_integrity = 250
 	inhand_icon_state = null
 	worn_icon_state = "eastsuit1"
 	rogue_female_worn = TRUE
@@ -27360,6 +28439,9 @@
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
 	nodismemsleeves = TRUE
+	max_integrity = 400
+	integrity_failure = 0.1
+	equip_delay_self = 40
 	inhand_icon_state = null
 	worn_icon_state = "brigandine"
 	rogue_female_worn = TRUE
@@ -27399,6 +28481,7 @@
 	sellprice = 363
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 500
 	inhand_icon_state = null
 	worn_icon_state = "capplate"
 	rogue_female_worn = TRUE
@@ -27435,6 +28518,7 @@
 	sleeved_detail = FALSE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 460
 	inhand_icon_state = null
 	worn_icon_state = "coat_of_plates"
 	rogue_female_worn = TRUE
@@ -27543,6 +28627,7 @@
 	sleeved_detail = FALSE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 340
 	inhand_icon_state = null
 	worn_icon_state = "light_brigandine"
 	rogue_female_worn = TRUE
@@ -27649,6 +28734,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 460
 	inhand_icon_state = null
 	worn_icon_state = "leathercoat"
 	rogue_female_worn = TRUE
@@ -27684,6 +28770,9 @@
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
 	nodismemsleeves = TRUE
+	max_integrity = 300
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "haubergeon"
 	rogue_female_worn = TRUE
@@ -27751,6 +28840,7 @@
 	flags_inv = NONE
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 150
 	inhand_icon_state = null
 	worn_icon_state = "ancientchain"
 	rogue_female_worn = TRUE
@@ -27818,6 +28908,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	inhand_icon_state = null
 	worn_icon_state = "bhaubergeon"
 	rogue_female_worn = TRUE
@@ -27918,6 +29009,7 @@
 	flags_inv = NONE
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 150
 	inhand_icon_state = null
 	worn_icon_state = "ancienthauberk"
 	rogue_female_worn = TRUE
@@ -27951,6 +29043,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 400
 	inhand_icon_state = null
 	worn_icon_state = "atgervi_raider_mail"
 	rogue_female_worn = TRUE
@@ -27984,6 +29077,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	inhand_icon_state = null
 	worn_icon_state = "bhauberk"
 	rogue_female_worn = TRUE
@@ -28017,6 +29111,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 225
 	inhand_icon_state = null
 	worn_icon_state = "ihauberk"
 	rogue_female_worn = TRUE
@@ -28050,6 +29145,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 400
 	inhand_icon_state = null
 	worn_icon_state = "ornatehauberk"
 	rogue_female_worn = TRUE
@@ -28084,6 +29180,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	inhand_icon_state = null
 	worn_icon_state = "zizohauberk"
 	rogue_female_worn = TRUE
@@ -28117,6 +29214,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 225
 	inhand_icon_state = null
 	worn_icon_state = "ihaubergeon"
 	rogue_female_worn = TRUE
@@ -28150,6 +29248,9 @@
 	nodismemsleeves = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/hide/cured
 	rogue_coverage = CHEST
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "corset"
 	rogue_female_worn = TRUE
@@ -28215,6 +29316,9 @@
 	sleevetype = "shirt"
 	r_sleeve_status = ROGUE_SLEEVE_NORMAL
 	l_sleeve_status = ROGUE_SLEEVE_NORMAL
+	max_integrity = 250
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "gambeson"
 	rogue_female_worn = TRUE
@@ -28314,6 +29418,7 @@
 	flags_inv = NONE
 	boobed = TRUE
 	sewrepair = TRUE
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "gambesonp"
 	rogue_female_worn = TRUE
@@ -28414,6 +29519,7 @@
 	detail_tag = "_detail"
 	detail_color = "#FFFFFF"
 	sewrepair = TRUE
+	max_integrity = 250
 	inhand_icon_state = null
 	worn_icon_state = "grenzelshirt"
 	rogue_female_worn = TRUE
@@ -28684,6 +29790,7 @@
 	boobed_detail = FALSE
 	sewrepair = TRUE
 	nodismemsleeves = TRUE
+	max_integrity = 250
 	inhand_icon_state = null
 	worn_icon_state = "royalgamb"
 	rogue_female_worn = TRUE
@@ -28717,6 +29824,7 @@
 	flags_inv = NONE
 	boobed = TRUE
 	sewrepair = TRUE
+	max_integrity = 280
 	inhand_icon_state = null
 	worn_icon_state = "shadowrobe"
 	rogue_female_worn = TRUE
@@ -28782,6 +29890,7 @@
 	flags_inv = NONE
 	boobed = TRUE
 	sewrepair = TRUE
+	max_integrity = 200
 	inhand_icon_state = null
 	worn_icon_state = "gambeson"
 	rogue_female_worn = TRUE
@@ -28917,6 +30026,9 @@
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
 	nodismemsleeves = TRUE
+	max_integrity = 500
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "heartfelt"
 	rogue_female_worn = TRUE
@@ -28985,6 +30097,9 @@
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
 	nodismemsleeves = TRUE
+	max_integrity = 325
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "kurche"
 	rogue_female_worn = TRUE
@@ -29021,6 +30136,9 @@
 	sleevetype = "shirt"
 	nodismemsleeves = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/hide/cured
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "roguearmor"
 	rogue_female_worn = TRUE
@@ -29121,6 +30239,7 @@
 	flags_inv = NONE
 	boobed = TRUE
 	sewrepair = TRUE
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "leather"
 	rogue_female_worn = TRUE
@@ -29219,6 +30338,7 @@
 	flags_inv = NONE
 	boobed = TRUE
 	sewrepair = TRUE
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "roguearmor_belt"
 	rogue_female_worn = TRUE
@@ -29485,6 +30605,7 @@
 	detail_color = "#c08955"
 	boobed = TRUE
 	sewrepair = TRUE
+	max_integrity = 335
 	inhand_icon_state = null
 	worn_icon_state = "freijacket"
 	rogue_female_worn = TRUE
@@ -29584,6 +30705,7 @@
 	flags_inv = NONE
 	boobed = TRUE
 	sewrepair = TRUE
+	max_integrity = 250
 	inhand_icon_state = null
 	worn_icon_state = "freijacket"
 	rogue_female_worn = TRUE
@@ -29617,6 +30739,7 @@
 	flags_inv = NONE
 	boobed = TRUE
 	sewrepair = TRUE
+	max_integrity = 250
 	inhand_icon_state = null
 	worn_icon_state = "hidearmor"
 	rogue_female_worn = TRUE
@@ -29970,6 +31093,7 @@
 	flags_inv = NONE
 	boobed = TRUE
 	sewrepair = TRUE
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "newmoon_jacket"
 	rogue_female_worn = TRUE
@@ -30004,6 +31128,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/iron
 	sewrepair = TRUE
+	max_integrity = 350
 	inhand_icon_state = null
 	worn_icon_state = "studleather"
 	rogue_female_worn = TRUE
@@ -30107,6 +31232,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/iron
 	sewrepair = TRUE
+	max_integrity = 275
 	inhand_icon_state = null
 	worn_icon_state = "cuirbouilli"
 	rogue_female_worn = TRUE
@@ -30141,6 +31267,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/iron
 	sewrepair = TRUE
+	max_integrity = 325
 	inhand_icon_state = null
 	worn_icon_state = "cuirbouilli"
 	rogue_female_worn = TRUE
@@ -30209,6 +31336,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/iron
 	sewrepair = TRUE
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "forestleather"
 	rogue_female_worn = TRUE
@@ -30243,6 +31371,8 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/steel
 	sewrepair = TRUE
+	max_integrity = 350
+	equip_delay_self = 40
 	inhand_icon_state = null
 	worn_icon_state = "forestbrig"
 	rogue_female_worn = TRUE
@@ -30277,6 +31407,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/iron
 	sewrepair = TRUE
+	equip_delay_self = 40
 	inhand_icon_state = null
 	worn_icon_state = "forestbrig"
 	rogue_female_worn = TRUE
@@ -30545,6 +31676,9 @@
 	r_sleeve_status = ROGUE_SLEEVE_NORMAL
 	l_sleeve_status = ROGUE_SLEEVE_NORMAL
 	rogue_coverage = CHEST
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "longcoat"
 	rogue_female_worn = TRUE
@@ -30610,6 +31744,9 @@
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
 	nodismemsleeves = TRUE
+	max_integrity = 500
+	integrity_failure = 0.1
+	equip_delay_self = 40
 	inhand_icon_state = null
 	worn_icon_state = "halfplate"
 	rogue_female_worn = TRUE
@@ -30745,6 +31882,7 @@
 	flags_inv = NONE
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 250
 	inhand_icon_state = null
 	worn_icon_state = "ancientplate"
 	rogue_female_worn = TRUE
@@ -30780,6 +31918,7 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = CHEST | GROIN
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "halfplatekini"
 	rogue_female_worn = TRUE
@@ -30814,6 +31953,8 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 600
+	equip_delay_self = 120
 	inhand_icon_state = null
 	worn_icon_state = "bkarmor"
 	rogue_female_worn = TRUE
@@ -30848,6 +31989,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 600
 	inhand_icon_state = null
 	worn_icon_state = "grenzelcuirass"
 	rogue_female_worn = TRUE
@@ -30882,6 +32024,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 600
 	inhand_icon_state = null
 	worn_icon_state = "bhalfplate"
 	rogue_female_worn = TRUE
@@ -30949,6 +32092,7 @@
 	flags_inv = NONE
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	inhand_icon_state = null
 	worn_icon_state = "bronzecuirass"
 	rogue_female_worn = TRUE
@@ -31017,6 +32161,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 400
 	inhand_icon_state = null
 	worn_icon_state = "citywatch"
 	rogue_female_worn = TRUE
@@ -31120,6 +32265,7 @@
 	flags_inv = NONE
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/gold
+	max_integrity = 5
 	inhand_icon_state = null
 	worn_icon_state = "goldcuirass"
 	rogue_female_worn = TRUE
@@ -31220,6 +32366,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	equip_delay_self = 60
 	inhand_icon_state = null
 	worn_icon_state = "ornatehalfplate"
 	rogue_female_worn = TRUE
@@ -31288,6 +32435,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/silverblessed
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 400
 	inhand_icon_state = null
 	worn_icon_state = "ornatehalfplate"
 	rogue_female_worn = TRUE
@@ -31355,6 +32503,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	equip_delay_self = 120
 	inhand_icon_state = null
 	worn_icon_state = "plate"
 	rogue_female_worn = TRUE
@@ -31390,6 +32539,7 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = CHEST | GROIN | ARMS | LEGS
+	equip_delay_self = 80
 	inhand_icon_state = null
 	worn_icon_state = "platekini"
 	rogue_female_worn = TRUE
@@ -31458,6 +32608,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 450
 	inhand_icon_state = null
 	worn_icon_state = "bronzeplatealt"
 	rogue_female_worn = TRUE
@@ -31524,6 +32675,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -31695,6 +32847,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 375
 	inhand_icon_state = null
 	worn_icon_state = "ironplate"
 	rogue_female_worn = TRUE
@@ -31729,6 +32882,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 700
 	inhand_icon_state = null
 	worn_icon_state = "matthiosarmor"
 	rogue_female_worn = TRUE
@@ -31763,6 +32917,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 425
 	inhand_icon_state = null
 	worn_icon_state = "bplate"
 	rogue_female_worn = TRUE
@@ -31797,6 +32952,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 700
 	inhand_icon_state = null
 	worn_icon_state = "zizoplate"
 	rogue_female_worn = TRUE
@@ -31831,6 +32987,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "cuirass"
 	rogue_female_worn = TRUE
@@ -31898,6 +33055,7 @@
 	flags_inv = NONE
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 150
 	inhand_icon_state = null
 	worn_icon_state = "ancientcuirass"
 	rogue_female_worn = TRUE
@@ -31933,6 +33091,7 @@
 	smeltresult = /obj/item/ingot/copper
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	rogue_coverage = CHEST
+	max_integrity = 150
 	inhand_icon_state = null
 	worn_icon_state = "copperchest"
 	rogue_female_worn = TRUE
@@ -31967,6 +33126,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 180
 	inhand_icon_state = null
 	worn_icon_state = "fencercuirass"
 	rogue_female_worn = TRUE
@@ -32102,6 +33262,7 @@
 	flags_inv = NONE
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 225
 	inhand_icon_state = null
 	worn_icon_state = "ibreastplate"
 	rogue_female_worn = TRUE
@@ -32167,6 +33328,7 @@
 	flags_inv = NONE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	equip_delay_self = 80
 	inhand_icon_state = null
 	worn_icon_state = "hussar"
 	rogue_female_worn = TRUE
@@ -32200,6 +33362,7 @@
 	flags_inv = NONE
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 375
 	inhand_icon_state = null
 	worn_icon_state = "ihalfplate"
 	rogue_female_worn = TRUE
@@ -32233,6 +33396,7 @@
 	flags_inv = NONE
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 500
 	inhand_icon_state = null
 	worn_icon_state = "gronnplate"
 	rogue_female_worn = TRUE
@@ -32267,6 +33431,8 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 600
+	equip_delay_self = 120
 	inhand_icon_state = null
 	worn_icon_state = "bplate"
 	rogue_female_worn = TRUE
@@ -32337,6 +33503,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "lamellar"
 	rogue_female_worn = TRUE
@@ -32371,6 +33538,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	inhand_icon_state = null
 	worn_icon_state = "blamellar"
 	rogue_female_worn = TRUE
@@ -32440,6 +33608,7 @@
 	boobed = TRUE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	inhand_icon_state = null
 	worn_icon_state = "hudesutu"
 	rogue_female_worn = TRUE
@@ -32474,6 +33643,9 @@
 	nodismemsleeves = TRUE
 	r_sleeve_status = ROGUE_SLEEVE_NORMAL
 	l_sleeve_status = ROGUE_SLEEVE_NORMAL
+	max_integrity = 350
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -32506,6 +33678,9 @@
 	sewrepair = TRUE
 	sleevetype = "shirt"
 	nodismemsleeves = TRUE
+	max_integrity = 100
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -32537,6 +33712,9 @@
 	boobed = TRUE
 	sewrepair = TRUE
 	nodismemsleeves = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "workervest"
 	rogue_female_worn = TRUE
@@ -32568,6 +33746,9 @@
 	sleevetype = "shirt"
 	r_sleeve_status = ROGUE_SLEEVE_NORMAL
 	l_sleeve_status = ROGUE_SLEEVE_NORMAL
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "apothshirt"
 	rogue_female_worn = TRUE
@@ -32598,6 +33779,9 @@
 	boobed = TRUE
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "handcoat"
 	rogue_female_worn = TRUE
@@ -32626,6 +33810,9 @@
 	boobed = TRUE
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "stewardtailcoat"
 	rogue_female_worn = TRUE
@@ -32654,6 +33841,9 @@
 	boobed = TRUE
 	sewrepair = TRUE
 	nodismemsleeves = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "top"
 	rogue_female_worn = TRUE
@@ -32684,6 +33874,9 @@
 	sleevetype = "shirt"
 	r_sleeve_status = ROGUE_SLEEVE_NORMAL
 	l_sleeve_status = ROGUE_SLEEVE_NORMAL
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "dress"
 	rogue_female_worn = TRUE
@@ -33887,6 +35080,9 @@
 	sleevetype = "shirt"
 	rogue_sleeve_scrap = /obj/item/natural/silk
 	rogue_coverage = CHEST
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "exoticsilkbra"
 	rogue_female_worn = TRUE
@@ -33965,6 +35161,9 @@
 	boobed = TRUE
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "shirt"
 
@@ -34000,6 +35199,9 @@
 	sellprice = 25
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 335
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "fencingshirt"
 	rogue_female_worn = TRUE
@@ -34035,6 +35237,7 @@
 	boobed = TRUE
 	sellprice = 25
 	sewrepair = TRUE
+	max_integrity = 265
 	inhand_icon_state = null
 	worn_icon_state = "fencingshirt"
 	rogue_female_worn = TRUE
@@ -34068,6 +35271,9 @@
 	sleevetype = "shirt"
 	r_sleeve_status = ROGUE_SLEEVE_NORMAL
 	l_sleeve_status = ROGUE_SLEEVE_NORMAL
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "jestershirt"
 	rogue_female_worn = TRUE
@@ -34097,6 +35303,9 @@
 	sewrepair = TRUE
 	sleevetype = "armor"
 	nodismemsleeves = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "tig"
 	rogue_female_worn = TRUE
@@ -34125,6 +35334,9 @@
 	boobed = TRUE
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "fancyshirt"
 	rogue_female_worn = TRUE
@@ -34155,6 +35367,9 @@
 	sleevetype = "shirt"
 	r_sleeve_status = ROGUE_SLEEVE_NORMAL
 	l_sleeve_status = ROGUE_SLEEVE_NORMAL
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "rags"
 	rogue_female_worn = TRUE
@@ -34185,6 +35400,9 @@
 	sleevetype = "shirt"
 	r_sleeve_status = ROGUE_SLEEVE_NORMAL
 	l_sleeve_status = ROGUE_SLEEVE_NORMAL
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "white_robe"
 	rogue_female_worn = TRUE
@@ -34511,6 +35729,7 @@
 	boobed = TRUE
 	boobed_detail = FALSE
 	sewrepair = TRUE
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "desertgown"
 	rogue_female_worn = TRUE
@@ -34704,6 +35923,7 @@
 	flags_inv = NONE
 	boobed = TRUE
 	sewrepair = TRUE
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "priestunder"
 	rogue_female_worn = TRUE
@@ -35158,6 +36378,9 @@
 	sleevetype = "shirt"
 	r_sleeve_status = ROGUE_SLEEVE_TORN
 	l_sleeve_status = ROGUE_SLEEVE_TORN
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -35188,6 +36411,9 @@
 	sleevetype = "shirt"
 	r_sleeve_status = ROGUE_SLEEVE_NORMAL
 	l_sleeve_status = ROGUE_SLEEVE_NORMAL
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "shortshirt"
 	rogue_female_worn = TRUE
@@ -35246,6 +36472,9 @@
 	r_sleeve_status = ROGUE_SLEEVE_NORMAL
 	l_sleeve_status = ROGUE_SLEEVE_NORMAL
 	rogue_sleeve_scrap = /obj/item/natural/hide
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "tribalrag"
 	rogue_female_worn = TRUE
@@ -35275,6 +36504,9 @@
 	sleevetype = "shirt"
 	r_sleeve_status = ROGUE_SLEEVE_NORMAL
 	l_sleeve_status = ROGUE_SLEEVE_NORMAL
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "tunic"
 	rogue_female_worn = TRUE
@@ -35569,6 +36801,9 @@
 	sleevetype = "shirt"
 	r_sleeve_status = ROGUE_SLEEVE_NORMAL
 	l_sleeve_status = ROGUE_SLEEVE_NORMAL
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "undershirt"
 	rogue_female_worn = TRUE
@@ -35758,6 +36993,7 @@
 	material_category = 2
 	flags_inv = NONE
 	boobed = TRUE
+	max_integrity = 250
 	icon_state = null
 	inhand_icon_state = null
 	worn_icon_state = "easttats"
@@ -36173,6 +37409,9 @@
 	boobed = TRUE
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 25
 	inhand_icon_state = null
 	worn_icon_state = "vrobe"
 	rogue_female_worn = TRUE
@@ -36205,6 +37444,9 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "leg"
+	max_integrity = 300
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "chain_legs"
 	rogue_female_worn = TRUE
@@ -36236,6 +37478,7 @@
 	flags_inv = NONE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 400
 	inhand_icon_state = null
 	worn_icon_state = "capplateleg"
 	rogue_female_worn = TRUE
@@ -36267,6 +37510,7 @@
 	flags_inv = NONE
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 225
 	inhand_icon_state = null
 	worn_icon_state = "ichain_legs"
 	rogue_female_worn = TRUE
@@ -36399,6 +37643,7 @@
 	chunkcolor = "#532e25"
 	flags_inv = NONE
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 150
 	inhand_icon_state = null
 	worn_icon_state = "achainkilt"
 	rogue_female_worn = TRUE
@@ -36432,6 +37677,7 @@
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "bchainkilt"
+	max_integrity = 275
 	inhand_icon_state = null
 	worn_icon_state = "bchainkilt"
 	rogue_female_worn = TRUE
@@ -36494,6 +37740,7 @@
 	flags_inv = NONE
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 250
 	inhand_icon_state = null
 	worn_icon_state = "chain_skirt"
 	rogue_female_worn = TRUE
@@ -36527,6 +37774,9 @@
 	sewrepair = TRUE
 	sleevetype = "leg"
 	rogue_sleeve_scrap = /obj/item/natural/hide/cured
+	max_integrity = 250
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "roguepants"
 	rogue_female_worn = TRUE
@@ -36841,6 +38091,7 @@
 	flags_inv = NONE
 	sellprice = 18
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 275
 	inhand_icon_state = null
 	worn_icon_state = "shadowpants"
 	rogue_female_worn = TRUE
@@ -36899,6 +38150,9 @@
 	flags_inv = NONE
 	sewrepair = TRUE
 	sleevetype = "leg"
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "loincloth"
 	rogue_female_worn = TRUE
@@ -36985,6 +38239,9 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "leg"
+	max_integrity = 400
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "plate_legs"
 	rogue_female_worn = TRUE
@@ -37048,6 +38305,7 @@
 	chunkcolor = "#532e25"
 	flags_inv = NONE
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 200
 	inhand_icon_state = null
 	worn_icon_state = "plate_legs"
 	rogue_female_worn = TRUE
@@ -37079,6 +38337,7 @@
 	flags_inv = NONE
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 500
 	inhand_icon_state = null
 	worn_icon_state = "bklegs"
 	rogue_female_worn = TRUE
@@ -37141,6 +38400,7 @@
 	flags_inv = NONE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 600
 	inhand_icon_state = null
 	worn_icon_state = "graggarplatelegs"
 	rogue_female_worn = TRUE
@@ -37204,6 +38464,7 @@
 	flags_inv = NONE
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 300
 	inhand_icon_state = null
 	worn_icon_state = "iplate_legs"
 	rogue_female_worn = TRUE
@@ -37266,6 +38527,7 @@
 	flags_inv = NONE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 600
 	inhand_icon_state = null
 	worn_icon_state = "matthioslegs"
 	rogue_female_worn = TRUE
@@ -37297,6 +38559,7 @@
 	flags_inv = NONE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	inhand_icon_state = null
 	worn_icon_state = "bplatelegs"
 	rogue_female_worn = TRUE
@@ -37360,6 +38623,7 @@
 	flags_inv = NONE
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 600
 	inhand_icon_state = null
 	worn_icon_state = "zizocloth"
 	rogue_female_worn = TRUE
@@ -37386,6 +38650,9 @@
 	sleevetype = "leg"
 	r_sleeve_status = ROGUE_SLEEVE_NORMAL
 	l_sleeve_status = ROGUE_SLEEVE_NORMAL
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	icon_state = null
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
@@ -37417,6 +38684,9 @@
 	sleevetype = "skirt"
 	r_sleeve_status = ROGUE_SLEEVE_NORMAL
 	l_sleeve_status = ROGUE_SLEEVE_NORMAL
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "skirt"
 	rogue_female_worn = TRUE
@@ -37613,6 +38883,9 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "leg"
+	max_integrity = 250
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "splintlegs"
 	rogue_female_worn = TRUE
@@ -37644,6 +38917,7 @@
 	flags_inv = NONE
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 225
 	inhand_icon_state = null
 	worn_icon_state = "ironsplintlegs"
 	rogue_female_worn = TRUE
@@ -37701,6 +38975,9 @@
 	sleevetype = "leg"
 	r_sleeve_status = ROGUE_SLEEVE_NORMAL
 	l_sleeve_status = ROGUE_SLEEVE_NORMAL
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	icon_state = null
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
@@ -37731,6 +39008,9 @@
 	sleevetype = "leg"
 	r_sleeve_status = ROGUE_SLEEVE_NORMAL
 	l_sleeve_status = ROGUE_SLEEVE_NORMAL
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "tights"
 	rogue_female_worn = TRUE
@@ -37999,6 +39279,9 @@
 	sleevetype = "leg"
 	r_sleeve_status = ROGUE_SLEEVE_NORMAL
 	l_sleeve_status = ROGUE_SLEEVE_NORMAL
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "trou"
 	rogue_female_worn = TRUE
@@ -38269,6 +39552,7 @@
 	material_category = 2
 	flags_inv = NONE
 	sewrepair = TRUE
+	max_integrity = 250
 	inhand_icon_state = null
 	worn_icon_state = "gronnleatherpants"
 	rogue_female_worn = TRUE
@@ -38446,6 +39730,9 @@
 	sewrepair = TRUE
 	sleevetype = "leg"
 	rogue_sleeve_scrap = /obj/item/natural/silk
+	max_integrity = 200
+	integrity_failure = 0.1
+	equip_delay_self = 30
 	inhand_icon_state = null
 	worn_icon_state = "webs"
 	rogue_female_worn = TRUE
@@ -38471,6 +39758,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "nocwrappings"
 	rogue_female_worn = TRUE
@@ -38501,6 +39790,8 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 300
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "bracers"
 	rogue_female_worn = TRUE
@@ -38560,6 +39851,7 @@
 	material_category = 1
 	chunkcolor = "#532e25"
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 150
 	inhand_icon_state = null
 	worn_icon_state = "ancientbracers"
 	rogue_female_worn = TRUE
@@ -38618,6 +39910,7 @@
 	material_category = 2
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	inhand_icon_state = null
 	worn_icon_state = "bronzebracers"
 	rogue_female_worn = TRUE
@@ -38705,6 +39998,7 @@
 	material_category = 2
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 150
 	inhand_icon_state = null
 	worn_icon_state = "ancientchainsleevesalt"
 	rogue_female_worn = TRUE
@@ -38819,6 +40113,7 @@
 	material_category = 2
 	smeltresult = /obj/item/ingot/copper
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 350
 	inhand_icon_state = null
 	worn_icon_state = "copperarm"
 	rogue_female_worn = TRUE
@@ -38848,6 +40143,7 @@
 	rogue_blocksound = "plate"
 	material_category = 2
 	smeltresult = /obj/item/ingot/gold
+	max_integrity = 5
 	inhand_icon_state = null
 	worn_icon_state = "goldbracers"
 	rogue_female_worn = TRUE
@@ -38877,6 +40173,7 @@
 	material_category = 2
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 225
 	inhand_icon_state = null
 	worn_icon_state = "ibracers"
 	rogue_female_worn = TRUE
@@ -38905,6 +40202,7 @@
 	rogue_blocksound = "plate"
 	material_category = 2
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 225
 	inhand_icon_state = null
 	worn_icon_state = "jackchain"
 	rogue_female_worn = TRUE
@@ -38934,6 +40232,7 @@
 	material_category = 2
 	sewrepair = TRUE
 	rogue_sleeve_scrap = /obj/item/natural/hide/cured
+	max_integrity = 200
 	inhand_icon_state = null
 	worn_icon_state = "lbracers"
 	rogue_female_worn = TRUE
@@ -38963,6 +40262,7 @@
 	material_category = 2
 	sellprice = 10
 	sewrepair = TRUE
+	max_integrity = 250
 	inhand_icon_state = null
 	worn_icon_state = "albracers"
 	rogue_female_worn = TRUE
@@ -38993,6 +40293,7 @@
 	material_category = 2
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 400
 	inhand_icon_state = null
 	worn_icon_state = "psybarbs"
 	rogue_female_worn = TRUE
@@ -39023,6 +40324,7 @@
 	chunkcolor = "#532e25"
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 500
 	inhand_icon_state = null
 	worn_icon_state = "zizobracers"
 	rogue_female_worn = TRUE
@@ -39049,6 +40351,8 @@
 	sellprice = 65
 	sleevetype = "shirt"
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "br_amber"
 	rogue_female_worn = TRUE
@@ -39075,6 +40379,8 @@
 	sellprice = 25
 	sleevetype = "shirt"
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "br_shell"
 	rogue_female_worn = TRUE
@@ -39101,6 +40407,8 @@
 	sellprice = 75
 	sleevetype = "shirt"
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "br_coral"
 	rogue_female_worn = TRUE
@@ -39127,6 +40435,8 @@
 	sellprice = 65
 	sleevetype = "shirt"
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "br_jade"
 	rogue_female_worn = TRUE
@@ -39153,6 +40463,8 @@
 	sellprice = 45
 	sleevetype = "shirt"
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "br_onyxa"
 	rogue_female_worn = TRUE
@@ -39179,6 +40491,8 @@
 	sellprice = 95
 	sleevetype = "shirt"
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "br_opal"
 	rogue_female_worn = TRUE
@@ -39205,6 +40519,8 @@
 	sellprice = 30
 	sleevetype = "shirt"
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "br_rose"
 	rogue_female_worn = TRUE
@@ -39231,6 +40547,8 @@
 	sellprice = 25
 	sleevetype = "shirt"
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "br_shell"
 	rogue_female_worn = TRUE
@@ -39257,6 +40575,8 @@
 	sellprice = 90
 	sleevetype = "shirt"
 	rogue_sleeve_scrap = null
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "br_turq"
 	rogue_female_worn = TRUE
@@ -39281,6 +40601,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "nocwrappings"
 	rogue_female_worn = TRUE
@@ -39308,6 +40630,8 @@
 	detail_color = "#2b292e"
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "royalsleeves"
 	rogue_female_worn = TRUE
@@ -39338,6 +40662,8 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
 	sleevetype = "shirt"
+	max_integrity = 300
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "splintarms"
 	rogue_female_worn = TRUE
@@ -39367,6 +40693,7 @@
 	material_category = 2
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/armorsmithing
+	max_integrity = 225
 	inhand_icon_state = null
 	worn_icon_state = "ironsplintarms"
 	rogue_female_worn = TRUE
@@ -39391,6 +40718,8 @@
 	material_category = 2
 	sewrepair = TRUE
 	sleevetype = "shirt"
+	max_integrity = 200
+	integrity_failure = 0.1
 	inhand_icon_state = null
 	worn_icon_state = "wrappings"
 	rogue_female_worn = TRUE
@@ -39409,6 +40738,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/objects_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/objects_righthand.dmi'
 	inhand_icon_state = null
@@ -39429,6 +40760,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	smeltresult = /obj/item/ingot/bronze
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -39452,6 +40785,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 20
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_righthand.dmi'
 	inhand_icon_state = null
@@ -39473,6 +40808,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 20
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_righthand.dmi'
 	inhand_icon_state = null
@@ -39497,6 +40834,8 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	smeltresult = /obj/item/ingot/bronze
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/contraption/folding_table_stored
@@ -39518,6 +40857,8 @@
 	rogue_grid_width = 64
 	rogue_grid_height = 32
 	smeltresult = /obj/item/ingot/bronze
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/contraption/goldprosthetic
@@ -39537,6 +40878,8 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	smeltresult = /obj/item/ingot/gold
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/contraption/ironprosthetic
@@ -39556,6 +40899,8 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	smeltresult = /obj/item/ingot/iron
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/contraption/linker
@@ -39577,6 +40922,8 @@
 	rogue_grid_width = 64
 	rogue_grid_height = 32
 	smeltresult = /obj/item/ingot/bronze
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/contraption/linker/master
@@ -39617,6 +40964,8 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	smeltresult = /obj/item/ingot/bronze
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/contraption/shears
@@ -39636,6 +40985,8 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	smeltresult = /obj/item/ingot/bronze
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/contraption/smelter
@@ -39655,6 +41006,8 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	smeltresult = /obj/item/ingot/bronze
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/contraption/steelprosthetic
@@ -39674,6 +41027,8 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	smeltresult = /obj/item/ingot/steel
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/contraption/wood_metalizer
@@ -39693,6 +41048,8 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	smeltresult = /obj/item/ingot/bronze
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/cooking/pan
@@ -39716,6 +41073,8 @@
 	associated_skill = /datum/attribute/skill/craft/cooking
 	possible_item_intents = list(/datum/intent/mace/strike/pan)
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/pan_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/pan_righthand.dmi'
 	inhand_icon_state = null
@@ -39800,6 +41159,8 @@
 	inhand_y_dimension = 64
 	rogue_grid_width = 64
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/cooking/platter/bronze
@@ -40131,6 +41492,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	possible_item_intents = list(/datum/intent/hit)
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_righthand.dmi'
 	inhand_icon_state = null
@@ -40152,6 +41515,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 100
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -40169,6 +41534,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_deserttown/icons/cushions_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_deserttown/icons/cushions_righthand.dmi'
 	inhand_icon_state = null
@@ -40186,6 +41553,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_deserttown/icons/cushions_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_deserttown/icons/cushions_righthand.dmi'
 	inhand_icon_state = null
@@ -40203,6 +41572,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_deserttown/icons/cushions_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_deserttown/icons/cushions_righthand.dmi'
 	inhand_icon_state = null
@@ -40222,6 +41593,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/keys_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/keys_righthand.dmi'
 	inhand_icon_state = null
@@ -40241,6 +41614,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/keys_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/keys_righthand.dmi'
 	inhand_icon_state = null
@@ -40261,6 +41636,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 150
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/lewd/dildo_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/lewd/dildo_righthand.dmi'
 	inhand_icon_state = null
@@ -40281,6 +41658,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 12
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/lewd/dildo_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/lewd/dildo_righthand.dmi'
 	inhand_icon_state = null
@@ -40301,6 +41680,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 5
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/lewd/dildo_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/lewd/dildo_righthand.dmi'
 	inhand_icon_state = null
@@ -40321,6 +41702,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 50
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/lewd/dildo_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/lewd/dildo_righthand.dmi'
 	inhand_icon_state = null
@@ -40341,6 +41724,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 5
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/lewd/dildo_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/lewd/dildo_righthand.dmi'
 	inhand_icon_state = null
@@ -40361,6 +41746,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 30
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/lewd/dildo_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/lewd/dildo_righthand.dmi'
 	inhand_icon_state = null
@@ -40381,6 +41768,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 10
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/lewd/dildo_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/lewd/dildo_righthand.dmi'
 	inhand_icon_state = null
@@ -40401,6 +41790,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 1
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/lewd/dildo_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/lewd/dildo_righthand.dmi'
 	inhand_icon_state = null
@@ -40423,6 +41814,8 @@
 	worn_y_dimension = 32
 	gripped_intents = list(/datum/intent/hit)
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/machines_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/machines_righthand.dmi'
 	inhand_icon_state = null
@@ -40441,6 +41834,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/valuable_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/valuable_righthand.dmi'
 	inhand_icon_state = null
@@ -40462,6 +41857,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -40483,6 +41880,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -40503,6 +41902,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
@@ -40528,6 +41929,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 96
 	possible_item_intents = list(/datum/intent/cast, /datum/intent/spear/bash)
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -40572,6 +41975,7 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 96
 	possible_item_intents = list(/datum/intent/cast, /datum/intent/spear/bash)
+	max_integrity = 333
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -40641,6 +42045,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	possible_item_intents = list(/datum/intent/use, /datum/intent/hit)
+	max_integrity = 50
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_righthand.dmi'
 	inhand_icon_state = null
@@ -40736,6 +42142,174 @@
 	inhand_y_dimension = 64
 	rogue_baked_inhand = TRUE
 
+/obj/item/flashlight/flare/torch/lantern/pumpkin
+	name = "pumpkin lamptern"
+	desc = "A decorated pumpkin shell. Usually seasonal, a frightful beacon in the night."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/lighting.dmi'
+	icon_state = "pumpkinlamp"
+	w_class = WEIGHT_CLASS_SMALL
+	force = 1
+	worn_icon_state = "torch"
+	slot_flags = ITEM_SLOT_POCKETS
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 64
+	wdefense = 1
+	possible_item_intents = list(/datum/intent/use, /datum/intent/hit)
+	sellprice = 8
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/flashlight/flare/torch/lantern/pumpkin/frown
+	name = "angry pumpkin lamptern"
+	desc = "A large and decorated pumpkin shell. It seems quite angry at something, hopefully not you."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/lighting.dmi'
+	icon_state = "pumpkinlamp1"
+	w_class = WEIGHT_CLASS_SMALL
+	force = 1
+	worn_icon_state = "torch"
+	slot_flags = ITEM_SLOT_POCKETS
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 64
+	wdefense = 1
+	possible_item_intents = list(/datum/intent/use, /datum/intent/hit)
+	sellprice = 8
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/flashlight/flare/torch/lantern/pumpkin/grin
+	name = "smiling pumpkin lamptern"
+	desc = "A large and decorated pumpkin shell. Its smile is not reassuring."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/lighting.dmi'
+	icon_state = "pumpkinlamp0"
+	w_class = WEIGHT_CLASS_SMALL
+	force = 1
+	worn_icon_state = "torch"
+	slot_flags = ITEM_SLOT_POCKETS
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 64
+	wdefense = 1
+	possible_item_intents = list(/datum/intent/use, /datum/intent/hit)
+	sellprice = 8
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/flashlight/flare/torch/lantern/pumpkin/psy
+	name = "psy-do-lamptern"
+	desc = "A large and decorated pumpkin shell. Usually seasonal, yet it ENDURES."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/lighting.dmi'
+	icon_state = "pumpkinlamppsy"
+	w_class = WEIGHT_CLASS_SMALL
+	force = 1
+	worn_icon_state = "torch"
+	slot_flags = ITEM_SLOT_POCKETS
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 64
+	wdefense = 1
+	possible_item_intents = list(/datum/intent/use, /datum/intent/hit)
+	sellprice = 8
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/flashlight/flare/torch/lantern/pumpkin/surprise
+	name = "surprised pumpkin lamptern"
+	desc = "A large and decorated pumpkin shell. It is quite surprised to see you."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/lighting.dmi'
+	icon_state = "pumpkinlamp2"
+	w_class = WEIGHT_CLASS_SMALL
+	force = 1
+	worn_icon_state = "torch"
+	slot_flags = ITEM_SLOT_POCKETS
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 64
+	wdefense = 1
+	possible_item_intents = list(/datum/intent/use, /datum/intent/hit)
+	sellprice = 8
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/flashlight/flare/torch/lantern/pumpkin/ten
+	name = "tennite pumpkin lamptern"
+	desc = "A large and decorated pumpkin shell. It looks like a lot of work to make it stay in one piece."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/lighting.dmi'
+	icon_state = "pumpkinlampten"
+	w_class = WEIGHT_CLASS_SMALL
+	force = 1
+	worn_icon_state = "torch"
+	slot_flags = ITEM_SLOT_POCKETS
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 64
+	wdefense = 1
+	possible_item_intents = list(/datum/intent/use, /datum/intent/hit)
+	sellprice = 8
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/flashlight/flare/torch/lantern/pumpkin/woozy
+	name = "woozy pumpking lamptern"
+	desc = "A large and decorated pumpkin shell... It seems drunk?!"
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/lighting.dmi'
+	icon_state = "pumpkinlamp3"
+	w_class = WEIGHT_CLASS_SMALL
+	force = 1
+	worn_icon_state = "torch"
+	slot_flags = ITEM_SLOT_POCKETS
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 64
+	wdefense = 1
+	possible_item_intents = list(/datum/intent/use, /datum/intent/hit)
+	sellprice = 8
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
 /obj/item/flashlight/flare/torch/lantern/pumpkin/zizo
 	name = "zumpkin lamptern"
 	desc = "A large and decorated pumpkin shell. Its strangely gloomy."
@@ -40800,6 +42374,8 @@
 	wdefense = 1
 	possible_item_intents = list(/datum/intent/use, /datum/intent/mace/strike)
 	smeltresult = /obj/item/rogueore/coal
+	max_integrity = 100
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_righthand.dmi'
 	inhand_icon_state = null
@@ -40819,6 +42395,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/structures/heart_items_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/structures/heart_items_righthand.dmi'
 	inhand_icon_state = null
@@ -40838,6 +42416,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/structures/heart_items_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/structures/heart_items_righthand.dmi'
 	inhand_icon_state = null
@@ -40862,6 +42442,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/lighting_righthand.dmi'
 	inhand_icon_state = null
@@ -40888,6 +42470,8 @@
 	inhand_y_dimension = 64
 	rogue_grid_width = 64
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 	worn_icon_state = "calendula_crown"
 
@@ -40910,6 +42494,8 @@
 	inhand_y_dimension = 64
 	rogue_grid_width = 64
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 	worn_icon_state = "manabloom_crown"
 
@@ -40932,6 +42518,8 @@
 	inhand_y_dimension = 64
 	rogue_grid_width = 64
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 	worn_icon_state = "matricaria_crown"
 
@@ -40954,6 +42542,8 @@
 	inhand_y_dimension = 64
 	rogue_grid_width = 64
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 	worn_icon_state = "rosa_crown"
 
@@ -41020,6 +42610,8 @@
 	inhand_y_dimension = 64
 	rogue_grid_width = 64
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 	worn_icon_state = "salvia_crown"
 
@@ -41037,6 +42629,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/gadgets_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/gadgets_righthand.dmi'
 	inhand_icon_state = "foldingTableStored~2"
@@ -41103,6 +42697,8 @@
 	rogue_grid_width = 64
 	rogue_grid_height = 32
 	possible_item_intents = list(/datum/intent/grapple, /datum/intent/attach, /datum/intent/reel)
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = "grappler"
 
 /obj/item/grown/log/tree/bowpartial
@@ -41120,6 +42716,8 @@
 	possible_item_intents = list(/datum/intent/hit)
 	firefuel = 10 MINUTES
 	smeltresult = /obj/item/rogueore/coal
+	max_integrity = 30
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
 	inhand_icon_state = null
@@ -41186,6 +42784,8 @@
 	possible_item_intents = list(/datum/intent/hit)
 	firefuel = 20 MINUTES
 	smeltresult = /obj/item/rogueore/coal/charcoal
+	max_integrity = 30
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
 	inhand_icon_state = null
@@ -41234,6 +42834,8 @@
 	rogue_grid_height = 64
 	possible_item_intents = list(/datum/intent/stab, /datum/intent/pick)
 	firefuel = 1 MINUTES
+	max_integrity = 20
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
 	inhand_icon_state = null
@@ -41258,6 +42860,8 @@
 	rogue_grid_height = 32
 	possible_item_intents = list(/datum/intent/hit)
 	firefuel = 5 MINUTES
+	max_integrity = 20
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
 	inhand_icon_state = null
@@ -41289,6 +42893,8 @@
 	gripped_intents = list(/datum/intent/shoot/firearm, /datum/intent/arc/firearm, /datum/intent/hit)
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/engineering
+	max_integrity = 200
+	integrity_failure = 0
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_helmsguard/icons/weapons/arquebus_lefthand.dmi'
@@ -41323,6 +42929,8 @@
 	possible_item_intents = list(/datum/intent/shoot/firearm, /datum/intent/arc/firearm, /datum/intent/mace/strike/wood)
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/engineering
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/guns32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/guns32_righthand.dmi'
 	inhand_icon_state = null
@@ -41348,6 +42956,8 @@
 	can_parry = TRUE
 	possible_item_intents = list(/datum/intent/shoot/bow/short, /datum/intent/arc/bow/short, /datum/intent/hit)
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/rogue_launcher/arrow
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/32_righthand.dmi'
 	inhand_icon_state = null
@@ -41581,6 +43191,8 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/rogue_launcher/bolt
+	max_integrity = 200
+	integrity_failure = 0
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/misc32_lefthand.dmi'
@@ -41655,6 +43267,8 @@
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/rogue_launcher/heavy_bolt
+	max_integrity = 150
+	equip_delay_self = 30
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/misc32_lefthand.dmi'
@@ -41798,6 +43412,8 @@
 	can_parry = TRUE
 	possible_item_intents = list(/datum/intent/swing/sling, /datum/intent/arc/sling, /datum/intent/hit)
 	accepted_magazine_type = /obj/item/ammo_box/magazine/internal/rogue_launcher/sling
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/misc32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/misc32_righthand.dmi'
 	inhand_icon_state = null
@@ -41826,6 +43442,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -41848,6 +43466,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -41869,6 +43489,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -41888,6 +43510,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/structures/heart_items_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/structures/heart_items_righthand.dmi'
 	inhand_icon_state = null
@@ -41925,6 +43549,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/structures/heart_items_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/structures/heart_items_righthand.dmi'
 	inhand_icon_state = null
@@ -41962,6 +43588,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/structures/heart_items_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/structures/heart_items_righthand.dmi'
 	inhand_icon_state = null
@@ -41980,6 +43608,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
 	inhand_icon_state = null
@@ -42271,6 +43901,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/hourglass_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/hourglass_righthand.dmi'
 	inhand_icon_state = null
@@ -42289,6 +43921,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -42307,6 +43941,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -42331,6 +43967,8 @@
 	worn_y_dimension = 32
 	sellprice = 15
 	sewrepair = TRUE
+	integrity_failure = 0
+	equip_delay_self = 50
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/Hurlstrap_lefthand.dmi'
@@ -42354,6 +43992,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -42375,6 +44015,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -42502,6 +44144,8 @@
 	rogue_grid_height = 32
 	sellprice = 1
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_righthand.dmi'
 	inhand_icon_state = null
@@ -42524,6 +44168,8 @@
 	rogue_grid_height = 32
 	sellprice = 100
 	smeltresult = /obj/item/ingot/blacksteel
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_righthand.dmi'
 	inhand_icon_state = null
@@ -42546,6 +44192,8 @@
 	rogue_grid_height = 32
 	sellprice = 25
 	smeltresult = /obj/item/ingot/bronze
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_righthand.dmi'
 	inhand_icon_state = null
@@ -42568,6 +44216,8 @@
 	rogue_grid_height = 32
 	sellprice = 1
 	smeltresult = /obj/item/ingot/iron
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_righthand.dmi'
 	inhand_icon_state = null
@@ -42590,6 +44240,8 @@
 	rogue_grid_height = 32
 	sellprice = 1
 	smeltresult = /obj/item/ingot/iron
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_righthand.dmi'
 	inhand_icon_state = null
@@ -42612,6 +44264,8 @@
 	rogue_grid_height = 32
 	sellprice = 33
 	smeltresult = /obj/item/roguegem/blood_diamond
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_righthand.dmi'
 	inhand_icon_state = null
@@ -42634,6 +44288,8 @@
 	rogue_grid_height = 32
 	sellprice = 1
 	smeltresult = /obj/item/rogueore/iron
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_righthand.dmi'
 	inhand_icon_state = null
@@ -42656,6 +44312,8 @@
 	rogue_grid_height = 32
 	sellprice = 10
 	smeltresult = /obj/item/ingot/copper
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_righthand.dmi'
 	inhand_icon_state = null
@@ -42678,6 +44336,8 @@
 	rogue_grid_height = 32
 	sellprice = 33
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_righthand.dmi'
 	inhand_icon_state = null
@@ -42700,6 +44360,8 @@
 	rogue_grid_height = 32
 	sellprice = 333
 	smeltresult = /obj/item/ingot/draconic
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_righthand.dmi'
 	inhand_icon_state = null
@@ -42722,6 +44384,8 @@
 	rogue_grid_height = 32
 	sellprice = 111
 	smeltresult = /obj/item/ingot/gilbranze
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_righthand.dmi'
 	inhand_icon_state = null
@@ -42744,6 +44408,8 @@
 	rogue_grid_height = 32
 	sellprice = 100
 	smeltresult = /obj/item/ingot/gold
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_righthand.dmi'
 	inhand_icon_state = null
@@ -42766,6 +44432,8 @@
 	rogue_grid_height = 32
 	sellprice = 15
 	smeltresult = /obj/item/ingot/iron
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_righthand.dmi'
 	inhand_icon_state = null
@@ -42788,6 +44456,8 @@
 	rogue_grid_height = 32
 	sellprice = 80
 	smeltresult = /obj/item/ingot/silver
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_righthand.dmi'
 	inhand_icon_state = null
@@ -42810,6 +44480,8 @@
 	rogue_grid_height = 32
 	sellprice = 100
 	smeltresult = /obj/item/ingot/silverblessed
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_righthand.dmi'
 	inhand_icon_state = null
@@ -42854,6 +44526,8 @@
 	rogue_grid_height = 32
 	sellprice = 20
 	smeltresult = /obj/item/ingot/steel
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_righthand.dmi'
 	inhand_icon_state = null
@@ -42876,6 +44550,8 @@
 	rogue_grid_height = 32
 	sellprice = 20
 	smeltresult = /obj/item/ingot/steel
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_righthand.dmi'
 	inhand_icon_state = null
@@ -42898,6 +44574,8 @@
 	rogue_grid_height = 32
 	sellprice = 15
 	smeltresult = /obj/item/ingot/tin
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_righthand.dmi'
 	inhand_icon_state = null
@@ -42920,6 +44598,8 @@
 	rogue_grid_height = 32
 	sellprice = 222
 	smeltresult = /obj/item/ingot/weeping
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/ore_righthand.dmi'
 	inhand_icon_state = null
@@ -42943,6 +44623,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	gripped_intents = list(/datum/intent/garrote/grab, /datum/intent/garrote/choke)
+	max_integrity = 200
+	integrity_failure = 0.01
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -42965,6 +44647,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -42986,6 +44670,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -43008,6 +44694,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -43031,6 +44719,8 @@
 	possible_item_intents = list(/datum/intent/use, /datum/intent/dagger/thrust/fork)
 	sellprice = 10
 	max_blade_int = 40
+	max_integrity = 40
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_righthand.dmi'
 	inhand_icon_state = null
@@ -43053,6 +44743,8 @@
 	possible_item_intents = list(/datum/intent/use, /datum/intent/dagger/thrust/fork)
 	sellprice = 55
 	max_blade_int = 40
+	max_integrity = 40
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_righthand.dmi'
 	inhand_icon_state = null
@@ -43075,6 +44767,8 @@
 	possible_item_intents = list(/datum/intent/use, /datum/intent/dagger/thrust/fork)
 	sellprice = 65
 	max_blade_int = 40
+	max_integrity = 40
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_righthand.dmi'
 	inhand_icon_state = null
@@ -43097,6 +44791,8 @@
 	possible_item_intents = list(/datum/intent/use, /datum/intent/dagger/thrust/fork)
 	sellprice = 55
 	max_blade_int = 40
+	max_integrity = 40
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_righthand.dmi'
 	inhand_icon_state = null
@@ -43119,6 +44815,8 @@
 	possible_item_intents = list(/datum/intent/use, /datum/intent/dagger/thrust/fork)
 	sellprice = 35
 	max_blade_int = 40
+	max_integrity = 40
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_righthand.dmi'
 	inhand_icon_state = null
@@ -43141,6 +44839,8 @@
 	possible_item_intents = list(/datum/intent/use, /datum/intent/dagger/thrust/fork)
 	sellprice = 85
 	max_blade_int = 40
+	max_integrity = 40
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_righthand.dmi'
 	inhand_icon_state = null
@@ -43163,6 +44863,8 @@
 	possible_item_intents = list(/datum/intent/use, /datum/intent/dagger/thrust/fork)
 	sellprice = 25
 	max_blade_int = 40
+	max_integrity = 40
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_righthand.dmi'
 	inhand_icon_state = null
@@ -43185,6 +44887,8 @@
 	possible_item_intents = list(/datum/intent/use, /datum/intent/dagger/thrust/fork)
 	sellprice = 20
 	max_blade_int = 40
+	max_integrity = 40
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_righthand.dmi'
 	inhand_icon_state = null
@@ -43207,6 +44911,8 @@
 	possible_item_intents = list(/datum/intent/use, /datum/intent/dagger/thrust/fork)
 	sellprice = 15
 	max_blade_int = 40
+	max_integrity = 40
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_righthand.dmi'
 	inhand_icon_state = null
@@ -43229,6 +44935,8 @@
 	possible_item_intents = list(/datum/intent/use, /datum/intent/dagger/thrust/fork)
 	sellprice = 80
 	max_blade_int = 40
+	max_integrity = 40
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_righthand.dmi'
 	inhand_icon_state = null
@@ -43251,6 +44959,8 @@
 	wbalance = 1
 	possible_item_intents = list(/datum/intent/use, /datum/intent/dagger/thrust/fork)
 	max_blade_int = 40
+	max_integrity = 40
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_righthand.dmi'
 	inhand_icon_state = null
@@ -43274,6 +44984,8 @@
 	possible_item_intents = list(/datum/intent/use, /datum/intent/dagger/thrust/fork)
 	sellprice = 30
 	max_blade_int = 40
+	max_integrity = 40
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_righthand.dmi'
 	inhand_icon_state = null
@@ -43297,6 +45009,8 @@
 	possible_item_intents = list(/datum/intent/use, /datum/intent/dagger/thrust/fork)
 	sellprice = 6
 	max_blade_int = 40
+	max_integrity = 40
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_righthand.dmi'
 	inhand_icon_state = null
@@ -43320,6 +45034,8 @@
 	possible_item_intents = list(/datum/intent/use, /datum/intent/dagger/thrust/fork)
 	sellprice = 24
 	max_blade_int = 40
+	max_integrity = 40
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_righthand.dmi'
 	inhand_icon_state = null
@@ -43343,6 +45059,8 @@
 	possible_item_intents = list(/datum/intent/use, /datum/intent/dagger/thrust/fork)
 	sellprice = 6
 	max_blade_int = 40
+	max_integrity = 40
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/fork_righthand.dmi'
 	inhand_icon_state = null
@@ -43363,6 +45081,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 10
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_righthand.dmi'
 	inhand_icon_state = null
@@ -43382,6 +45102,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 55
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_righthand.dmi'
 	inhand_icon_state = null
@@ -43401,6 +45123,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 65
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_righthand.dmi'
 	inhand_icon_state = null
@@ -43420,6 +45144,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 55
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_righthand.dmi'
 	inhand_icon_state = null
@@ -43439,6 +45165,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 35
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_righthand.dmi'
 	inhand_icon_state = null
@@ -43458,6 +45186,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 85
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_righthand.dmi'
 	inhand_icon_state = null
@@ -43477,6 +45207,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 25
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_righthand.dmi'
 	inhand_icon_state = null
@@ -43496,6 +45228,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 20
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_righthand.dmi'
 	inhand_icon_state = null
@@ -43515,6 +45249,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 15
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_righthand.dmi'
 	inhand_icon_state = null
@@ -43534,6 +45270,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 80
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_righthand.dmi'
 	inhand_icon_state = null
@@ -43554,6 +45292,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 5
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_righthand.dmi'
 	inhand_icon_state = null
@@ -43574,6 +45314,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 30
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_righthand.dmi'
 	inhand_icon_state = null
@@ -43594,6 +45336,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 6
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_righthand.dmi'
 	inhand_icon_state = null
@@ -43614,6 +45358,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 24
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_righthand.dmi'
 	inhand_icon_state = null
@@ -43634,6 +45380,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 6
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/spoon_righthand.dmi'
 	inhand_icon_state = null
@@ -43657,6 +45405,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/leashes_collars_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/icons/obj/leashes_collars_righthand.dmi'
 	inhand_icon_state = null
@@ -43721,6 +45471,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 40
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/structures/heart_items_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/structures/heart_items_righthand.dmi'
 	inhand_icon_state = null
@@ -43741,6 +45493,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_hearthstone/icons/obj/items/clothes/stockings_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_hearthstone/icons/obj/items/clothes/stockings_righthand.dmi'
 	inhand_icon_state = null
@@ -43761,6 +45515,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_hearthstone/icons/obj/items/clothes/stockings_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_hearthstone/icons/obj/items/clothes/stockings_righthand.dmi'
 	inhand_icon_state = null
@@ -43781,6 +45537,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_hearthstone/icons/obj/items/clothes/stockings_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_hearthstone/icons/obj/items/clothes/stockings_righthand.dmi'
 	inhand_icon_state = null
@@ -43801,6 +45559,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_hearthstone/icons/obj/items/clothes/stockings_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_hearthstone/icons/obj/items/clothes/stockings_righthand.dmi'
 	inhand_icon_state = null
@@ -43821,6 +45581,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_hearthstone/icons/obj/items/clothes/stockings_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_hearthstone/icons/obj/items/clothes/stockings_righthand.dmi'
 	inhand_icon_state = null
@@ -43881,6 +45643,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_hearthstone/icons/obj/items/clothes/stockings_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_hearthstone/icons/obj/items/clothes/stockings_righthand.dmi'
 	inhand_icon_state = null
@@ -43901,6 +45665,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_hearthstone/icons/obj/items/clothes/stockings_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_hearthstone/icons/obj/items/clothes/stockings_righthand.dmi'
 	inhand_icon_state = null
@@ -43928,6 +45694,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	possible_item_intents = list(/datum/intent/hit)
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/listenstone
@@ -43951,6 +45719,8 @@
 	rogue_grid_height = 32
 	possible_item_intents = list(/datum/intent/hit)
 	sellprice = 200
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 	worn_icon_state = "listenstone"
 
@@ -43971,6 +45741,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	associated_skill = /datum/attribute/skill/misc/lockpicking
+	max_integrity = 10
+	integrity_failure = 0
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/keys_lefthand.dmi'
@@ -44051,6 +45823,8 @@
 	worn_y_dimension = 32
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -44088,6 +45862,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44109,6 +45885,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 50
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44130,6 +45908,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 2
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44151,6 +45931,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 250
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44172,6 +45954,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 15
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44193,6 +45977,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 50
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44214,6 +46000,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 2
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44235,6 +46023,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 250
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44256,6 +46046,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 15
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44277,6 +46069,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 2
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44298,6 +46092,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 50
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44319,6 +46115,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 15
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44340,6 +46138,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 250
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44360,6 +46160,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44380,6 +46182,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44401,6 +46205,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 2
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44422,6 +46228,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 15
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44443,6 +46251,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 50
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44464,6 +46274,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 250
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44484,6 +46296,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44504,6 +46318,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/shards_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/shards_righthand.dmi'
 	inhand_icon_state = null
@@ -44524,6 +46340,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/magic_resources_righthand.dmi'
 	inhand_icon_state = null
@@ -44551,9 +46369,36 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	possible_item_intents = list(/datum/intent/hit)
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
+
+/obj/item/merctoken
+	parent_type = /obj/item/rockhill
+	name = "writ of commendation"
+	desc = "A small, palm-fitting bound scroll - a writ of commendation for a mercenary of the Realm."
+	icon = 'modular_redtard/rockhill/icons/modular_azurepeak/icons/clothing/mercmedals.dmi'
+	icon_state = "merctoken"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	throwforce = 0
+	worn_icon_state = null
+	slot_flags = ITEM_SLOT_POCKETS|ITEM_SLOT_ROGUE_MOUTH
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	firefuel = 30 SECONDS
+	sellprice = 2
+	max_integrity = 200
+	integrity_failure = 0
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/clothing/mercmedals_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/clothing/mercmedals_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
 
 /obj/item/millstone
 	parent_type = /obj/item/rockhill
@@ -44567,6 +46412,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 400
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/structure_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/structure_righthand.dmi'
 	inhand_icon_state = null
@@ -44586,6 +46433,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -44605,6 +46454,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/flagpole_mini_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/flagpole_mini_righthand.dmi'
 	inhand_icon_state = null
@@ -44846,6 +46697,8 @@
 	inhand_y_dimension = 64
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	icon_state = null
 	inhand_icon_state = null
 
@@ -44860,6 +46713,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/anvil_casting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/anvil_casting_righthand.dmi'
 	inhand_icon_state = null
@@ -44878,6 +46733,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/anvil_casting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/anvil_casting_righthand.dmi'
 	inhand_icon_state = null
@@ -44896,6 +46753,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/anvil_casting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/anvil_casting_righthand.dmi'
 	inhand_icon_state = null
@@ -44914,6 +46773,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/anvil_casting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/anvil_casting_righthand.dmi'
 	inhand_icon_state = null
@@ -44932,6 +46793,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/anvil_casting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/anvil_casting_righthand.dmi'
 	inhand_icon_state = null
@@ -44950,6 +46813,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/anvil_casting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/anvil_casting_righthand.dmi'
 	inhand_icon_state = null
@@ -44971,6 +46836,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 5
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/mundanities_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/mundanities_righthand.dmi'
 	inhand_icon_state = null
@@ -44991,6 +46858,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 150
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/mundanities_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/mundanities_righthand.dmi'
 	inhand_icon_state = null
@@ -45011,6 +46880,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 15
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/mundanities_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/mundanities_righthand.dmi'
 	inhand_icon_state = null
@@ -45032,6 +46903,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 20
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
 	inhand_icon_state = null
@@ -45060,6 +46933,8 @@
 	rogue_grid_height = 32
 	spitoutmouth = FALSE
 	firefuel = 5 MINUTES
+	max_integrity = 20
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/natural/brick
@@ -45083,6 +46958,8 @@
 	rogue_grid_height = 32
 	possible_item_intents = list(/datum/intent/hit)
 	sellprice = 3
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/natural/bundle/bone/full
@@ -45105,6 +46982,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	spitoutmouth = FALSE
+	max_integrity = 20
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/natural/bundle/cloth
@@ -45127,6 +47006,8 @@
 	rogue_grid_height = 32
 	spitoutmouth = FALSE
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/natural/bundle/cloth/bandage
@@ -45211,6 +47092,8 @@
 	rogue_grid_height = 32
 	spitoutmouth = FALSE
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
 	inhand_icon_state = null
@@ -45239,6 +47122,8 @@
 	rogue_grid_height = 32
 	spitoutmouth = FALSE
 	firefuel = 5 MINUTES
+	max_integrity = 20
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/natural/bundle/fibers/full
@@ -45280,6 +47165,8 @@
 	rogue_grid_height = 224
 	firefuel = 10 MINUTES
 	smeltresult = /obj/item/ash
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_righthand.dmi'
 	inhand_icon_state = null
@@ -45304,6 +47191,8 @@
 	rogue_grid_height = 32
 	spitoutmouth = FALSE
 	firefuel = 5 MINUTES
+	max_integrity = 20
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
 	inhand_icon_state = null
@@ -45331,6 +47220,8 @@
 	rogue_grid_height = 32
 	spitoutmouth = FALSE
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/natural/bundle/stoneblock
@@ -45352,6 +47243,8 @@
 	rogue_grid_width = 64
 	rogue_grid_height = 64
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/natural/bundle/worms
@@ -45369,6 +47262,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
 	inhand_icon_state = null
@@ -45389,6 +47284,30 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/natural/chaff/rice
+	name = "rice stalks"
+	desc = "A farmer's chaff."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/produce.dmi'
+	icon_state = "ricechaff"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
 	inhand_icon_state = null
@@ -45409,6 +47328,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
 	inhand_icon_state = null
@@ -45431,6 +47352,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	possible_item_intents = list(/datum/intent/hit)
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
 	inhand_icon_state = null
@@ -46521,6 +48444,8 @@
 	spitoutmouth = FALSE
 	firefuel = 5 MINUTES
 	sellprice = 4
+	max_integrity = 20
+	integrity_failure = 0
 	inhand_icon_state = null
 	worn_icon_state = "cloth"
 
@@ -46562,6 +48487,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 20
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
 	inhand_icon_state = null
@@ -46583,6 +48510,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
 	inhand_icon_state = null
@@ -46627,6 +48556,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	spitoutmouth = FALSE
+	max_integrity = 20
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
 	inhand_icon_state = null
@@ -46681,6 +48612,8 @@
 	spitoutmouth = FALSE
 	firefuel = 5 MINUTES
 	sellprice = 2
+	max_integrity = 20
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/natural/fur
@@ -46697,6 +48630,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
 	inhand_icon_state = null
@@ -46752,6 +48687,48 @@
 	desc = "from a venard."
 	icon = 'modular_redtard/rockhill/icons/roguetown/items/natural.dmi'
 	icon_state = "pelt_fox"
+	w_class = WEIGHT_CLASS_SMALL
+	force = 0
+	throwforce = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/natural/fur/goat
+	name = "fur"
+	desc = "from a gote."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/natural.dmi'
+	icon_state = "pelt_gote"
+	w_class = WEIGHT_CLASS_SMALL
+	force = 0
+	throwforce = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/natural/fur/rabbit
+	name = "fur"
+	desc = "from a cabbit."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/natural.dmi'
+	icon_state = "wool2"
 	w_class = WEIGHT_CLASS_SMALL
 	force = 0
 	throwforce = 0
@@ -46825,6 +48802,8 @@
 	rogue_grid_width = 64
 	rogue_grid_height = 64
 	sellprice = 6
+	max_integrity = 20
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_righthand.dmi'
 	inhand_icon_state = null
@@ -46874,6 +48853,8 @@
 	rogue_grid_height = 32
 	possible_item_intents = list(/datum/intent/dagger/cut, /datum/intent/stab)
 	smeltresult = /obj/item/natural/glass/heated
+	max_integrity = 40
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/natural/head/direbear
@@ -46890,6 +48871,8 @@
 	rogue_grid_width = 64
 	rogue_grid_height = 64
 	sellprice = 20
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_righthand.dmi'
 	inhand_icon_state = null
@@ -46911,6 +48894,54 @@
 	rogue_grid_width = 64
 	rogue_grid_height = 32
 	sellprice = 6
+	max_integrity = 200
+	integrity_failure = 0
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/natural/head/goat
+	name = "goat head"
+	desc = "The head of a simple goat."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/bounty_heads.dmi'
+	icon_state = "goathead"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 64
+	rogue_grid_height = 32
+	sellprice = 5
+	max_integrity = 200
+	integrity_failure = 0
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/natural/head/honeyspider
+	name = "honeyspider head"
+	desc = "The head of a venomous honeyspider."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/bounty_heads.dmi'
+	icon_state = "spiderhead"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	sellprice = 10
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_righthand.dmi'
 	inhand_icon_state = null
@@ -46932,6 +48963,123 @@
 	rogue_grid_width = 96
 	rogue_grid_height = 96
 	sellprice = 50
+	max_integrity = 200
+	integrity_failure = 0
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/natural/head/mirelurker
+	name = "mire lurker head"
+	desc = "The head of a terrifyingly large mire lurker."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/bounty_heads.dmi'
+	icon_state = "mirelurkerhead"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 64
+	rogue_grid_height = 32
+	sellprice = 20
+	max_integrity = 200
+	integrity_failure = 0
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/natural/head/mirespider
+	name = "mire spider head"
+	desc = "The head of a disgusting 'little' mire spider."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/bounty_heads.dmi'
+	icon_state = "mirespiderhead"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	sellprice = 10
+	max_integrity = 200
+	integrity_failure = 0
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/natural/head/mirespider_paralytic
+	name = "aragn head"
+	desc = "The head of the wretched aragn."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/bounty_heads.dmi'
+	icon_state = "mirespider_paralytichead"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	sellprice = 10
+	max_integrity = 200
+	integrity_failure = 0
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/natural/head/mole
+	name = "mole head"
+	desc = "The head of a lesser mole."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/bounty_heads.dmi'
+	icon_state = "molehead"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 64
+	rogue_grid_height = 64
+	sellprice = 20
+	max_integrity = 200
+	integrity_failure = 0
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/natural/head/rous
+	name = "rous head"
+	desc = "The head of an unusually large rat."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/bounty_heads.dmi'
+	icon_state = "roushead"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	sellprice = 10
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_righthand.dmi'
 	inhand_icon_state = null
@@ -46953,6 +49101,52 @@
 	rogue_grid_width = 64
 	rogue_grid_height = 32
 	sellprice = 12
+	max_integrity = 200
+	integrity_failure = 0
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/natural/head/troll
+	name = "troll head"
+	desc = "The head of a giant troll."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/bounty_heads.dmi'
+	icon_state = "trollhead"
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 96
+	rogue_grid_height = 96
+	sellprice = 30
+	max_integrity = 200
+	integrity_failure = 0
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/natural/head/troll/axe
+	name = "troll head"
+	desc = "The head of a once mighty warrior troll."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/bounty_heads.dmi'
+	icon_state = "trollhead_axe"
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 96
+	rogue_grid_height = 96
+	sellprice = 50
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_righthand.dmi'
 	inhand_icon_state = null
@@ -46974,6 +49168,8 @@
 	rogue_grid_width = 64
 	rogue_grid_height = 32
 	sellprice = 10
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/bounty_heads_righthand.dmi'
 	inhand_icon_state = null
@@ -46996,6 +49192,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 8
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
 	inhand_icon_state = null
@@ -47039,6 +49237,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
 	inhand_icon_state = null
@@ -47102,6 +49302,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 10
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
 	inhand_icon_state = null
@@ -47127,6 +49329,8 @@
 	minstr = 11
 	associated_skill = /datum/attribute/skill/combat/unarmed
 	gripped_intents = list(/datum/intent/hit)
+	max_integrity = 100
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
 	inhand_icon_state = null
@@ -47323,6 +49527,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	associated_skill = /datum/attribute/skill/misc/riding
+	max_integrity = 200
+	integrity_failure = 0
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
@@ -47331,6 +49537,32 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	rogue_baked_inhand = TRUE
+
+/obj/item/natural/shellplant/pumpkin
+	name = "pumpkin"
+	desc = "The thick pumpkin rind shields a surprisingly dense fleshy interior."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/produce.dmi'
+	icon_state = "pumpkin"
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+	foodamt = 6
+	foodextracted = /obj/item/reagent_containers/food/snacks/rogue/fruit/pumpkin_sliced
+	seed = /obj/item/seeds/pumpkin
+	shell = /obj/item/pumpkinshell
 
 /obj/item/natural/silk
 	name = "silk"
@@ -47353,6 +49585,8 @@
 	rogue_grid_height = 32
 	spitoutmouth = FALSE
 	firefuel = 5 MINUTES
+	max_integrity = 20
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/natural/stone
@@ -47378,6 +49612,8 @@
 	possible_item_intents = list(/datum/intent/hit)
 	sharpening_factor = 12
 	spark_chance = 35
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/natural/stoneblock
@@ -47396,6 +49632,8 @@
 	rogue_grid_height = 32
 	possible_item_intents = list(/datum/intent/hit)
 	sellprice = 2
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_righthand.dmi'
 	inhand_icon_state = null
@@ -47419,6 +49657,8 @@
 	rogue_grid_height = 32
 	possible_item_intents = list(/datum/intent/stab)
 	firefuel = 5 MINUTES
+	max_integrity = 20
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
 	inhand_icon_state = null
@@ -47448,6 +49688,8 @@
 	possible_item_intents = list(/datum/intent/hit, /datum/intent/dagger/cut)
 	sharpening_factor = 21
 	spark_chance = 80
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/natural/wood/plank
@@ -47467,6 +49709,8 @@
 	firefuel = 5 MINUTES
 	sellprice = 4
 	smeltresult = /obj/item/ash
+	max_integrity = 20
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_righthand.dmi'
 	inhand_icon_state = null
@@ -47488,6 +49732,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
 	inhand_icon_state = null
@@ -47574,6 +49820,8 @@
 	rogue_grid_width = 64
 	rogue_grid_height = 32
 	sellprice = 10
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -47594,6 +49842,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/gems_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/gems_righthand.dmi'
 	inhand_icon_state = null
@@ -47622,6 +49872,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 20
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/needle/decrepit
@@ -47702,6 +49954,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -47724,6 +49978,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/surgery_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/surgery_righthand.dmi'
 	inhand_icon_state = null
@@ -47746,6 +50002,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/surgery_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/surgery_righthand.dmi'
 	inhand_icon_state = null
@@ -47768,6 +50026,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 3
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_fish_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_fish_righthand.dmi'
 	inhand_icon_state = null
@@ -47789,6 +50049,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/paint_supplies/paint_items_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/paint_supplies/paint_items_righthand.dmi'
 	inhand_icon_state = null
@@ -47810,6 +50072,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/paint_supplies/paint_items_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/paint_supplies/paint_items_righthand.dmi'
 	inhand_icon_state = null
@@ -47832,6 +50096,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	rogue_coverage = HEAD
+	max_integrity = 30
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -47854,6 +50120,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	rogue_coverage = HEAD
+	max_integrity = 30
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -47876,6 +50144,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	rogue_coverage = HEAD
+	max_integrity = 30
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -47898,6 +50168,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	rogue_coverage = HEAD
+	max_integrity = 30
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -47920,6 +50192,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	rogue_coverage = HEAD
+	max_integrity = 30
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -47942,6 +50216,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	rogue_coverage = HEAD
+	max_integrity = 30
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -47965,6 +50241,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	rogue_coverage = HEAD
+	max_integrity = 30
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -47990,6 +50268,8 @@
 	firefuel = 30 SECONDS
 	sellprice = 2
 	rogue_coverage = HEAD
+	max_integrity = 30
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -48102,6 +50382,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 20
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/gems_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/gems_righthand.dmi'
 	inhand_icon_state = null
@@ -48140,6 +50422,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/perfume_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/perfume_righthand.dmi'
 	inhand_icon_state = null
@@ -48159,6 +50443,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/wizard_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/wizard_righthand.dmi'
 	inhand_icon_state = null
@@ -48180,6 +50466,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -48203,6 +50491,8 @@
 	rogue_grid_width = 64
 	rogue_grid_height = 64
 	possible_item_intents = list(/datum/intent/smoke, /datum/intent/hit)
+	max_integrity = 100
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -48224,10 +50514,33 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_helmsguard/icons/obj/items/arquebus_items_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_helmsguard/icons/obj/items/arquebus_items_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/pumpkinshell
+	parent_type = /obj/item/rockhill
+	name = "pumpkin shell"
+	desc = "The emptied shell of a pumpkin, without its flesh and seeds."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/produce.dmi'
+	icon_state = "pumpkinshell"
+	w_class = WEIGHT_CLASS_SMALL
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
 	inhand_icon_state = null
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
@@ -48245,6 +50558,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/quicksilver_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/quicksilver_righthand.dmi'
 	inhand_icon_state = null
@@ -48285,6 +50600,7 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sewrepair = TRUE
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/ammo_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/ammo_righthand.dmi'
 	inhand_icon_state = null
@@ -48728,6 +51044,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/ration_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/ration_righthand.dmi'
 	inhand_icon_state = null
@@ -48754,6 +51072,8 @@
 	rogue_grid_height = 32
 	possible_item_intents = list(/datum/intent/food)
 	smeltresult = /obj/item/ash
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/reagent_containers/food/snacks/allspice
@@ -48948,6 +51268,7 @@
 	rogue_grid_height = 32
 	possible_item_intents = list(/datum/intent/food)
 	smeltresult = /obj/item/ash
+	max_integrity = 10
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/mob/monster/crow_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/mob/monster/crow_righthand.dmi'
 	inhand_icon_state = null
@@ -49105,6 +51426,7 @@
 	possible_item_intents = list(/datum/intent/food, /datum/intent/mace/slap)
 	sellprice = 10
 	smeltresult = /obj/item/ash
+	max_integrity = 50
 	icon_state = null
 	inhand_icon_state = null
 
@@ -49503,6 +51825,50 @@
 	smeltresult = /obj/item/ash
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/drinks_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/drinks_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/grown/cucumber
+	name = "cucumber"
+	desc = "A long, green vegetable that is crunchy and refreshing. Can be sliced for easier consumption."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/produce.dmi'
+	icon_state = "cucumber"
+	w_class = WEIGHT_CLASS_SMALL
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/grown/eggplant
+	name = "eggplant"
+	desc = "A large, purple vegetable with a mild taste. Can be carved to be filled up."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/produce.dmi'
+	icon_state = "eggplant"
+	w_class = WEIGHT_CLASS_SMALL
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
 	inhand_icon_state = null
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
@@ -50772,6 +53138,28 @@
 	inhand_y_dimension = 64
 	rogue_baked_inhand = TRUE
 
+/obj/item/reagent_containers/food/snacks/grown/vegetable/turnip
+	name = "turnip"
+	desc = "A shield against hunger, naught else."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/produce.dmi'
+	icon_state = "turnip"
+	w_class = WEIGHT_CLASS_SMALL
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
 /obj/item/reagent_containers/food/snacks/grown/wheat
 	name = "wheat grain"
 	desc = "Wheat grains, ready to be milled into powder."
@@ -51520,6 +53908,72 @@
 	inhand_y_dimension = 64
 	rogue_baked_inhand = TRUE
 
+/obj/item/reagent_containers/food/snacks/rogue/eggplantcarved
+	name = "carved aubergine"
+	desc = "An eggplant with its insides hollowed out, ready to be stuffed with meat."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_veggies.dmi'
+	icon_state = "eggplant_carved"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_veggies_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_veggies_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/eggplantmeat
+	name = "unfinished stuffed aubergine"
+	desc = "An eggplant stuffed with raw meat, ready to be topped with tomato."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_veggies.dmi'
+	icon_state = "eggplantraw"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_veggies_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_veggies_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/eggplantstuffedraw
+	name = "raw stuffed aubergine"
+	desc = "A stuffed aubergine with raw meat and tomato, ready to be cooked."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_veggies.dmi'
+	icon_state = "eggplantrawtom"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_veggies_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_veggies_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
 /obj/item/reagent_containers/food/snacks/rogue/flatdough
 	name = "flatdough"
 	desc = "Flattened dough, bare for all to see. A sharp edge can prepare the lines for a sheet of crackerdough, while a smearing of tomatoes can set the stage for a peasant's feast."
@@ -51537,6 +53991,28 @@
 	smeltresult = /obj/item/ash
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_dough_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_dough_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/foodbase/cheesewheel
+	name = "unfinished cheese wheel"
+	desc = "Clotted and salted milk, eager to be cocooned in cloth so that it may realize its fullest potential. You'll need three more servings of fresh cheese to finish it."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/others/dairy.dmi'
+	icon_state = "cheesewheel_1"
+	w_class = WEIGHT_CLASS_BULKY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/others/dairy_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/others/dairy_righthand.dmi'
 	inhand_icon_state = null
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
@@ -51674,6 +54150,94 @@
 	inhand_y_dimension = 64
 	rogue_baked_inhand = TRUE
 
+/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/apple
+	name = "raw apple handpie"
+	desc = "To the oven with you!"
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
+	icon_state = "handpie_raw"
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/berry
+	name = "raw berry handpie"
+	desc = "To the oven with you!"
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
+	icon_state = "handpie_raw"
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/cabbage
+	name = "raw cabbage handpie"
+	desc = "To the oven with you!"
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
+	icon_state = "handpie_raw"
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/crab
+	name = "raw crab handpie"
+	desc = "To the oven with you!"
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
+	icon_state = "handpie_raw"
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/fish
 	name = "raw fish handpie"
 	desc = "To the oven with you!"
@@ -51698,6 +54262,50 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/meat
 	name = "raw meat handpie"
+	desc = "To the oven with you!"
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
+	icon_state = "handpie_raw"
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/mushroom
+	name = "raw mushroom handpie"
+	desc = "To the oven with you!"
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
+	icon_state = "handpie_raw"
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/potato
+	name = "raw potato handpie"
 	desc = "To the oven with you!"
 	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
 	icon_state = "handpie_raw"
@@ -52334,6 +54942,94 @@
 	inhand_y_dimension = 64
 	rogue_baked_inhand = TRUE
 
+/obj/item/reagent_containers/food/snacks/rogue/handpie/apple
+	name = "apple handpie"
+	desc = "The dwarves call this 'pierogi' in their dialect. It'll stay fresh for a good long while until the crust is bitten."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
+	icon_state = "handpie"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/handpie/berry
+	name = "berry handpie"
+	desc = "The dwarves call this 'pierogi' in their dialect. It'll stay fresh for a good long while until the crust is bitten."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
+	icon_state = "handpie"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/handpie/cabbage
+	name = "cabbage handpie"
+	desc = "The dwarves call this 'pierogi' in their dialect. It'll stay fresh for a good long while until the crust is bitten."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
+	icon_state = "handpie"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/handpie/crab
+	name = "crab handpie"
+	desc = "The dwarves call this 'pierogi' in their dialect. It'll stay fresh for a good long while until the crust is bitten."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
+	icon_state = "handpie"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
 /obj/item/reagent_containers/food/snacks/rogue/handpie/fish
 	name = "fish handpie"
 	desc = "The dwarves call this 'pierogi' in their dialect. It'll stay fresh for a good long while until the crust is bitten."
@@ -52358,6 +55054,28 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/handpie/meat
 	name = "meat handpie"
+	desc = "The dwarves call this 'pierogi' in their dialect. It'll stay fresh for a good long while until the crust is bitten."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
+	icon_state = "handpie"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pastry_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/handpie/potato
+	name = "potato handpie"
 	desc = "The dwarves call this 'pierogi' in their dialect. It'll stay fresh for a good long while until the crust is bitten."
 	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_pastry.dmi'
 	icon_state = "handpie"
@@ -52751,6 +55469,72 @@
 	inhand_y_dimension = 64
 	rogue_baked_inhand = TRUE
 
+/obj/item/reagent_containers/food/snacks/rogue/meat/ham/boar
+	name = "raw boar ham"
+	desc = "A bramblesnout that is no longer trying to end you. Raw and ready to be steamed."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat.dmi'
+	icon_state = "ham_boar"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/ham/sliced
+	name = "sliced ham"
+	desc = "Perfect cut of swine flesh, raw and ready to be steamed."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat.dmi'
+	icon_state = "ham_slice"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/ham/steamed
+	name = "steamed ham"
+	desc = "Salted cut of meat ready to be torn into further with a knife. You would be hard pressed to find this lacking in a pantry of anyone with modicum of wealth."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat.dmi'
+	icon_state = "ham5"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
 /obj/item/reagent_containers/food/snacks/rogue/meat/mince
 	name = "mince"
 	desc = "Meat sliced many times both with and against the grain, producing a fine mince."
@@ -52819,6 +55603,28 @@
 
 /obj/item/reagent_containers/food/snacks/rogue/meat/mince/poultry
 	name = "minced poultry"
+	desc = "Meat sliced many times both with and against the grain, producing a fine mince."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat.dmi'
+	icon_state = "meatmince"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/mince/rabbit
+	name = "minced cabbit"
 	desc = "Meat sliced many times both with and against the grain, producing a fine mince."
 	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat.dmi'
 	icon_state = "meatmince"
@@ -52922,6 +55728,28 @@
 	smeltresult = /obj/item/ash
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_deep_fried_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_deep_fried_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/pork_belly
+	name = "pork belly"
+	desc = ""
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat.dmi'
+	icon_state = "pork_belly"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_righthand.dmi'
 	inhand_icon_state = null
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
@@ -53098,6 +55926,644 @@
 	smeltresult = /obj/item/ash
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit
+	name = "raw cabbit meat"
+	desc = ""
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat.dmi'
+	icon_state = "cabbitcutlet"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried
+	name = "fried cabbit"
+	desc = "A slab of cabbit, fried to a perfect crispy texture."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat.dmi'
+	icon_state = "frycabbit"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried/garlick
+	name = "garlick cabbit"
+	desc = "A slab of cabbit, fried to a perfect crispy texture - coated over in glove of garlick."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "frycabbit_garlick"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried/garlick/cucumber
+	name = "elven cabbit roast"
+	desc = "A slab of cabbit, fried to a perfect crispy texture - coated over in glove of garlick and served with side of cucumber. Thought to bring good luck by rangers!"
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "frycabbit_garlick_cucumber"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga
+	name = "venison"
+	desc = "A standard cut of raw venison, freshly severed from a beast. Only the strongest saiga that wisely avoid humen bear true venison."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat_saiga.dmi'
+	icon_state = "steak"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_saiga_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_saiga_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga/cooked
+	name = "venison steak"
+	desc = "A fine cut of the forest. The Purview of skilled hunters, not farmers."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_saiga.dmi'
+	icon_state = "steak"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_saiga_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_saiga_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins
+	name = "venison loins"
+	desc = "The loin cut of a cervine, the most tender cut of venison, often desired by the upper class. Only skilled butchers have a chance at cutting this free without ruining the meat."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat_saiga.dmi'
+	icon_state = "loin"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_saiga_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_saiga_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins/cooked
+	name = "tender venison loins"
+	desc = "Tender, the meat oozes delectable juices when squeezed. One of the best cuts of venison, cherised by nobility. The skilled butcher reaps their reward."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_saiga.dmi'
+	icon_state = "loin"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_saiga_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_saiga_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins/cooked/sauced
+	name = "forest bounty"
+	desc = "Venison tenderloin cut into fine slices, covered in a mixture of berry paste and wine-glazing. The liqour seems to have caramelized into a tasty layer of glaze."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "loins_sauced"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins_z
+	name = "deadite venison loins"
+	desc = "Rotten flesh is considered a delicacy in some circles. Have a bite, undeath has only made the tender flesh juicier, like overripe fruit."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat_saiga.dmi'
+	icon_state = "loin_z"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_saiga_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_saiga_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins_z/cooked
+	name = "decomposing venison loins"
+	desc = "It has firmed up slightly after being cooked. Tender at the surface, tough at the core. Mortals can stomach the idea of eating this, just barely."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_saiga.dmi'
+	icon_state = "loin_z"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_saiga_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_saiga_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins_z/cooked/cubed
+	name = "carrion coulis"
+	desc = "A gelatinous, ghoulish delight fashioned from wyrd loins. Poke it to see it shudder and wobble."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "saiga_d_jelly"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime
+	name = "venison prime cut"
+	desc = "A prime cut of venison prepared by a skilled butcher. Not only tender, but incredibly filling too. A meal fit for a duke, often regarded by others with jealousy."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat_saiga.dmi'
+	icon_state = "ossobuco"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_saiga_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_saiga_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime/cooked
+	name = "venison prime steak"
+	desc = "A cut worked free from a beast like it is art. A meal fit for royalty, with a bite sufficient to feel like one is back in those woods, staring down that saiga. Often nomikered as 'poacher's demise'."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_saiga.dmi'
+	icon_state = "ossobuco"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_saiga_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_saiga_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime/cooked/choice
+	name = "forest trove"
+	desc = "A choice cut of venison seared to perfection with a hint of pink flesh still visible."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "choice_cut"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime/cooked/choice/butter
+	name = "mellow forest trove"
+	desc = "A choice cut of venison seared to perfection with a hint of pink flesh still visible. Drowned in a good slice of butter, as if it weren't soft enough before."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "choice_cut_b"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime_z
+	name = "deadite venison prime cut"
+	desc = "Not even death could stop the creature from yielding its most prime cut. Lyckers might even consider flesh over blood at the sight."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat_saiga.dmi'
+	icon_state = "ossobuco_z"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_saiga_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_saiga_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime_z/cooked
+	name = "odorous venison prime steak"
+	desc = "Seeing a cut so fine tainted by undeath is an... Unfortunate sight. But maybe... What if it does taste as good as the real thing? Surely no noble will have you beheaded for trying lifeless vert."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_saiga.dmi'
+	icon_state = "ossobuco_z"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_saiga_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_saiga_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime_z/cooked/roses
+	name = "bouquet des trépassés"
+	desc = "A strange dish of prime wyrd meat, sliced thin and assembled to look like roses. These are typically left on graves to commemorate someone. Otavan vampires make a habit out of trying to steal these off graves, for they desire the strange flesh."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "saiga_d_roses"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs
+	name = "venison ribs"
+	desc = "The ribs of some cervine. It is a meaty, filling cut often cherised by commonfolk as a true feast, albeit the vert of the woods isn't meant to be touched by peasants."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat_saiga.dmi'
+	icon_state = "ribs"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_saiga_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_saiga_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs/cooked
+	name = "succulent venison ribs"
+	desc = "The flesh forbidden to commonfolk by nobility. It oozes with delectable grease, promising a lasting relief to ward off the pangs of hunger."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_saiga.dmi'
+	icon_state = "ribs"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_saiga_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_saiga_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs/cooked/glazed
+	name = "forest glaze"
+	desc = "A helping of venison ribs glazed to perfection in honey. The golden brown flesh is almost shiny enough for you to see your own reflection."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "ribs_glazed"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs_z
+	name = "deadite venison ribs"
+	desc = "The heavier chunk of undead flesh. Filling, but hard to stomach, a feast for the desperate nonetheless."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat_saiga.dmi'
+	icon_state = "ribs_z"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_saiga_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_saiga_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs_z/cooked
+	name = "putrid venison ribs"
+	desc = "Brittle bones, good flesh. A pestran monk is never opposed to indulging in the flesh blessed by Pestra."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_saiga.dmi'
+	icon_state = "ribs_z"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_saiga_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_saiga_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs_z/cooked/crown
+	name = "couronne de baies-noires"
+	desc = "A crown fashioned from wyrd meat rib-bones, cooked to the point most of the juicy meat has sagged to the bottom. The meat-mash is dotted with countless jackberries down below."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "saiga_d_ribs"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_z
+	name = "deadite venison"
+	desc = "The undead still carry flesh, tough, chewy. It is an aquired taste."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat_saiga.dmi'
+	icon_state = "steak_z"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_saiga_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_saiga_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_z/cooked
+	name = "vile venison steak"
+	desc = "Cooking it has only been a marginal improvement to the scent, which seems to pierce the air further. Better not beckon any ghouls."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_saiga.dmi'
+	icon_state = "steak_z"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_saiga_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_saiga_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_z/cooked/meatloaf
+	name = "grave galette"
+	desc = "A patchwork amalgamation of various meats, but primarily that of wyrd meat. It is a meatloaf, but you'd rather it didn't exist at all."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "d_bread6"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_z/cooked/meatloaf_slice
+	name = "galette slice"
+	desc = "A singular slice of a truly vile meatloaf fashioned out of deadite saiga flesh."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "d_bread_slice"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_righthand.dmi'
 	inhand_icon_state = null
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
@@ -53301,6 +56767,94 @@
 	inhand_y_dimension = 64
 	rogue_baked_inhand = TRUE
 
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/bear
+	name = "raw bear meat"
+	desc = "Grow some hair on yer chest lad!"
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat.dmi'
+	icon_state = "bear"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/bear/fried
+	name = "T-bone bear steak"
+	desc = "Real meat, for real men."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat.dmi'
+	icon_state = "bear"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/beetle
+	name = "beetle meat"
+	desc = "Rich, protein-dense meat from a giant beetle. Considered a delicacy in some underground settlements."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat.dmi'
+	icon_state = "spidermeat"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/beetle/cooked
+	name = "cooked beetle meat"
+	desc = "Cooked beetle meat has a nutty, earthy flavor."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat.dmi'
+	icon_state = "spidermeat"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
 /obj/item/reagent_containers/food/snacks/rogue/meat/steak/fried
 	name = "frysteak"
 	desc = "A slab of beastflesh, fried to a perfect medium-rare"
@@ -53361,6 +56915,94 @@
 	rogue_grid_height = 32
 	possible_item_intents = list(/datum/intent/food)
 	sellprice = 118
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/rat
+	name = "raw rous meat"
+	desc = "A delicacy for some races, whilst others will turn up their nose at such... Sewer meat."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat.dmi'
+	icon_state = "rat"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/rat/fried
+	name = "fried rous"
+	desc = "A small, chewy chunk of rous meat. Certain races loves this, others... Not so much."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat.dmi'
+	icon_state = "rat"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/troll
+	name = "troll blubber"
+	desc = "A rancid reddish blubber. It squelches under the merest touch, wobbling back into shape. It doesn't seem... Quite dead, as it continues to shift even after being sliced free."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat.dmi'
+	icon_state = "troll"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_meat_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/troll/fried
+	name = "chewy troll blubber"
+	desc = "Cooking it seems to have only caused the meat to toughen up. It is vile, disgusting, like partially hardened jello with greasy chunks hidden within. Perhaps it can be cooked further to stubbornly quell its spirit."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat.dmi'
+	icon_state = "troll"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
 	smeltresult = /obj/item/ash
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_righthand.dmi'
@@ -53441,6 +57083,28 @@
 	desc = "A slab of volf, fried to a perfect medium rare. A bit gamey and chewy, but tasty. This piece has been coated over in glove of garlick."
 	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
 	icon_state = "fryvolf_garlick"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_meat_meal_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/garlick/cucumber
+	name = "hunter's feast"
+	desc = "A slab of volf, fried to a perfect medium rare. A bit gamey and chewy, but tasty. This piece has been coated over in glove of garlick and served with side of cucumber."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi'
+	icon_state = "fryvolf_garlick_cucumber"
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
 	worn_icon_state = null
@@ -53744,6 +57408,28 @@
 	inhand_y_dimension = 64
 	rogue_baked_inhand = TRUE
 
+/obj/item/reagent_containers/food/snacks/rogue/pie/cooked/meat/spider
+	name = "de-scallax pie"
+	desc = "A delicious, homemade pie made with the inside of a spider. It was often used as a gesture of reconciliation between drow clans. Still needs to be sliced."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_pies.dmi'
+	icon_state = "spiderpie"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pies_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pies_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
 /obj/item/reagent_containers/food/snacks/rogue/pie/cooked/poison
 	name = "berry pie"
 	desc = "A delicious, homemade pie made with wild berries. Still needs to be sliced."
@@ -53771,6 +57457,28 @@
 	desc = "A delicious, homemade pie. Still needs to be sliced."
 	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_pies.dmi'
 	icon_state = "pie"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pies_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pies_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/pie/cooked/pumpkin
+	name = "pumpkin pie"
+	desc = "A delicious, homemade pie made with pumpkin and cheese. Still needs to be sliced."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_pies.dmi'
+	icon_state = "pumpkinpie"
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
 	worn_icon_state = null
@@ -53832,6 +57540,28 @@
 	inhand_y_dimension = 64
 	rogue_baked_inhand = TRUE
 
+/obj/item/reagent_containers/food/snacks/rogue/pieslice/pumpkin
+	name = "pumpkin pie slice"
+	desc = "A delicious slice of homemade pie, made with pumpkin and cheese."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_pies.dmi'
+	icon_state = "pumpkinslice"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pies_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_pies_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
 /obj/item/reagent_containers/food/snacks/rogue/preserved/cabbage_fried
 	name = "cooked cabbage"
 	desc = "A peasant's delight."
@@ -53859,6 +57589,50 @@
 	desc = "A carrot baked to a golden brown, with a soft and sweet interior."
 	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_veggies.dmi'
 	icon_state = "carrot_cooked"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_veggies_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_veggies_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/preserved/eggplantstuffed
+	name = "stuffed aubergine"
+	desc = "Eggplant stuffed with meat and tomato. Delicious!"
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_veggies.dmi'
+	icon_state = "stuffedeggplant"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_veggies_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_veggies_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/preserved/eggplantstuffedcheese
+	name = "stuffed aubergine with cheese"
+	desc = "Stuffed aubergine with cheese on top. Fit for a king!"
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_veggies.dmi'
+	icon_state = "stuffedeggplantcheese"
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
 	worn_icon_state = null
@@ -53959,6 +57733,28 @@
 	smeltresult = /obj/item/ash
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_fruits_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_fruits_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/preserved/rice_cooked
+	name = "cooked rice"
+	desc = "Plain cooked rice, a staple food in many cultures."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_rice.dmi'
+	icon_state = "rice"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_righthand.dmi'
 	inhand_icon_state = null
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
@@ -54228,6 +58024,270 @@
 	inhand_y_dimension = 64
 	rogue_baked_inhand = TRUE
 
+/obj/item/reagent_containers/food/snacks/rogue/ricebeef
+	name = "rice and beef"
+	desc = "Rice mixed with beef steak."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_rice.dmi'
+	icon_state = "ricebeef"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/ricebeefcar
+	name = "rice and beef meal"
+	desc = "Rice mixed with beef steak and carrots."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_rice.dmi'
+	icon_state = "ricebeefmeal"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/ricebird
+	name = "rice and frybird"
+	desc = "Rice mixed with frybird."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_rice.dmi'
+	icon_state = "ricebird"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/ricebirdcar
+	name = "rice and frybird meal"
+	desc = "Rice mixed with frybird and carrots."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_rice.dmi'
+	icon_state = "ricebirdmeal"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/ricecheese
+	name = "rice and cheese"
+	desc = "Rice with a layer of melted cheese."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_rice.dmi'
+	icon_state = "ricecheese"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/riceegg
+	name = "rice and egg"
+	desc = "Rice mixed with an egg."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_rice.dmi'
+	icon_state = "riceegg"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/riceeggcheese
+	name = "rice with egg and cheese"
+	desc = "Rice mixed with an egg and layered with melted cheese."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_rice.dmi'
+	icon_state = "riceeggcheese"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/ricepork
+	name = "rice and pork"
+	desc = "Rice mixed with fatty pork."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_rice.dmi'
+	icon_state = "ricepork"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/riceporkcuc
+	name = "rice and pork meal"
+	desc = "Rice mixed with fatty pork and fresh cucumbers."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_rice.dmi'
+	icon_state = "riceporkmeal"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/riceshrimp
+	name = "rice and shrimp"
+	desc = "Rice mixed with shrimp."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_rice.dmi'
+	icon_state = "riceshrimp"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/riceshrimpcar
+	name = "rice and shrimp meal"
+	desc = "Rice mixed with shrimp and carrots."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_rice.dmi'
+	icon_state = "riceshrimpmeal"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_rice_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/ricewet
+	name = "washed rice"
+	desc = ""
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/produce.dmi'
+	icon_state = "rice"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
 /obj/item/reagent_containers/food/snacks/rogue/sandwich/bacon
 	name = "bacon bread"
 	desc = "A slice of bread with crispy bacon on top for the perfect breakfast."
@@ -54277,6 +58337,28 @@
 	desc = "A piece of toast with a fried egg on top that jiggles gently when prodded."
 	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_baked.dmi'
 	icon_state = "bread_egg"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_baked_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cooked/cooked_baked_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/reagent_containers/food/snacks/rogue/sandwich/ham
+	name = "ham bread"
+	desc = "A piece of toast with a thick slice of ham on top. A delight enjoyed by many burghers."
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_baked.dmi'
+	icon_state = "toast_ham"
 	w_class = WEIGHT_CLASS_TINY
 	force = 0
 	worn_icon_state = null
@@ -54472,6 +58554,28 @@
 	inhand_y_dimension = 64
 	rogue_baked_inhand = TRUE
 
+/obj/item/reagent_containers/food/snacks/rogue/veg/cucumber_sliced
+	name = "cucumber slice"
+	desc = ""
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_veggies.dmi'
+	icon_state = "cucumber_slices"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_veggies_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_veggies_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
 /obj/item/reagent_containers/food/snacks/rogue/veg/garlick_clove
 	name = "garlick clove"
 	desc = "A clove of garlick, fit for stewage. Don't eat this."
@@ -54641,6 +58745,7 @@
 	rogue_grid_height = 32
 	possible_item_intents = list(/datum/intent/food)
 	smeltresult = /obj/item/ash
+	max_integrity = 10
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/mob/monster/rat_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/mob/monster/rat_righthand.dmi'
 	inhand_icon_state = null
@@ -55194,6 +59299,28 @@
 	inhand_y_dimension = 64
 	rogue_baked_inhand = TRUE
 
+/obj/item/reagent_containers/food/snacks/veg/turnip_sliced
+	name = "cleaned turnip"
+	desc = ""
+	icon = 'modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_veggies.dmi'
+	icon_state = "turnip_sliced"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 32
+	rogue_grid_height = 32
+	possible_item_intents = list(/datum/intent/food)
+	smeltresult = /obj/item/ash
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_veggies_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/raw/raw_veggies_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
 /obj/item/reagent_containers/food/snacks/zizo_bane
 	name = "Zizo's bane"
 	desc = "A small purple mushroom that has been growing in areas of rot."
@@ -55231,6 +59358,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	possible_item_intents = list(/datum/intent/pour, /datum/intent/fill, /datum/intent/splash, /datum/intent/hit)
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/cooking_righthand.dmi'
 	inhand_icon_state = null
@@ -55635,7 +59764,7 @@
 	volume = 75
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/nred = 75)
 
 /obj/item/reagent_containers/glass/bottle/claybottle/whitewine
 	name = "clay bottle"
@@ -55663,7 +59792,7 @@
 	volume = 75
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/whitewine = 75)
 
 /obj/item/reagent_containers/glass/bottle/claybottle/wine
 	name = "clay bottle"
@@ -56020,7 +60149,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/apfelweinheim = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/aurorian
 	name = "Bottle of Aurorian Herbal Beer"
@@ -56047,7 +60176,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/aurorian = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/avarmead
 	name = "Bottle of Golden Mead"
@@ -56074,7 +60203,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/avarmead = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/avarrice
 	name = "Bottle of Aavnic White"
@@ -56101,7 +60230,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/avarrice = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/blackgoat
 	name = "Bottle of Blackgoat"
@@ -56128,7 +60257,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/blackgoat = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/butterhairs
 	name = "Bottle of Butterhairs"
@@ -56155,7 +60284,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/butterhairs = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/fireleaf
 	name = "Bottle of Fireleaf"
@@ -56182,7 +60311,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/fireleaf = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/gronnmead
 	name = "Bottle of Shieldmaiden Mead"
@@ -56209,7 +60338,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/gronnmead = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/hagwoodbitter
 	name = "Bottle of Hagwood Bitters"
@@ -56236,7 +60365,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/hagwoodbitter = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/jagdtrunk
 	name = "Bottle of Schnapps"
@@ -56263,7 +60392,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/jagdtrunk = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/kgunlager
 	name = "Bottle of Yamaguchi Tea Lager"
@@ -56290,7 +60419,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/kgunlager = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/kgunplum
 	name = "Bottle of Plum Wine"
@@ -56317,7 +60446,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/kgunplum = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/kgunsake
 	name = "Bottle of Aavnic White"
@@ -56344,7 +60473,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/kgunsake = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/murkwine
 	name = "Bottle of beer"
@@ -56371,7 +60500,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/murkwine = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/nred
 	name = "Bottle of Norwandine Ale"
@@ -56398,7 +60527,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/nred = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/rtoper
 	name = "Bottle Rockhill Cider"
@@ -56425,7 +60554,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/rtoper = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/saigamilk
 	name = "Bottle of brewed Saiga Milk"
@@ -56452,7 +60581,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/saigamilk = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/stonebeardreserve
 	name = "Bottle of Stonebeards Reserve"
@@ -56479,7 +60608,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/stonebeards = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/beer/voddena
 	name = "Bottle of beer"
@@ -56506,7 +60635,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/voddena = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/berrypoison
 	name = "bottle"
@@ -56560,7 +60689,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/elfblue = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/elfred
 	name = "Bottle of Elven Red"
@@ -56587,7 +60716,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/elfred = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/emberwine
 	name = "bottle"
@@ -56614,7 +60743,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/beer/emberwine = 24)
 
 /obj/item/reagent_containers/glass/bottle/rogue/healthpot
 	name = "bottle"
@@ -56695,7 +60824,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/luxwine = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/manapot
 	name = "bottle"
@@ -56776,7 +60905,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/redwine = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/stampoison
 	name = "bottle"
@@ -56992,7 +61121,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/whitewine = 50)
 
 /obj/item/reagent_containers/glass/bottle/rogue/wine
 	name = "Bottle of wine"
@@ -57046,7 +61175,7 @@
 	volume = 50
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = list(10)
-	list_reagents = null
+	list_reagents = list(/datum/reagent/consumable/ethanol/sourwine = 50)
 
 /obj/item/reagent_containers/glass/bottle/waterskin
 	name = "waterskin"
@@ -57124,6 +61253,8 @@
 	rogue_grid_height = 64
 	possible_item_intents = list(/datum/intent/pour, /datum/intent/fill, /datum/intent/splash, /datum/intent/hit)
 	sellprice = 1
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/bowl_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/bowl_righthand.dmi'
 	inhand_icon_state = null
@@ -57558,6 +61689,8 @@
 	possible_item_intents = list(/datum/intent/pour, /datum/intent/fill, /datum/intent/splash, /datum/intent/hit)
 	gripped_intents = list(/datum/intent/pour)
 	flags_inv = HIDEHAIR
+	max_integrity = 300
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -58176,6 +62309,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	possible_item_intents = list(/datum/intent/pour, /datum/intent/fill, /datum/intent/splash, /datum/intent/hit)
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/anvil_casting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/anvil_casting_righthand.dmi'
 	inhand_icon_state = null
@@ -58204,6 +62339,8 @@
 	possible_item_intents = list(/datum/intent/pour, /datum/intent/fill, /datum/intent/splash, /datum/intent/hit)
 	sellprice = 7
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/cup_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/cup_righthand.dmi'
 	inhand_icon_state = null
@@ -58941,7 +63078,7 @@
 	volume = 25
 	amount_per_transfer_from_this = 6
 	possible_transfer_amounts = list(6)
-	list_reagents = list(/datum/reagent/toxin/killersice = 1)
+	list_reagents = list(/datum/reagent/toxin/killersice = 1, /datum/reagent/consumable/ethanol/elfred = 20)
 
 /obj/item/reagent_containers/glass/cup/golden/psydon
 	name = "Psydon's Chalice"
@@ -59294,6 +63431,8 @@
 	rogue_grid_width = 64
 	rogue_grid_height = 32
 	possible_item_intents = list(/datum/intent/pour, /datum/intent/fill, /datum/intent/splash, /datum/intent/hit)
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 	volume = 100
 	amount_per_transfer_from_this = 9
@@ -59314,6 +63453,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	sellprice = 100
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
 	inhand_icon_state = null
@@ -59335,6 +63476,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	sellprice = 15
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
 	inhand_icon_state = null
@@ -59355,6 +63498,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/peppermill_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/peppermill_righthand.dmi'
 	inhand_icon_state = null
@@ -59375,6 +63520,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
 	inhand_icon_state = null
@@ -59400,6 +63547,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 30
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
 	inhand_icon_state = null
@@ -59408,7 +63557,7 @@
 	rogue_baked_inhand = TRUE
 	volume = 15
 	amount_per_transfer_from_this = 5
-	list_reagents = null
+	list_reagents = list(/datum/reagent/herozium = 15)
 	possible_transfer_amounts = list(5)
 
 /obj/item/reagent_containers/powder/mineral
@@ -59424,6 +63573,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
 	inhand_icon_state = null
@@ -59449,6 +63600,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 5
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
 	inhand_icon_state = null
@@ -59457,7 +63610,7 @@
 	rogue_baked_inhand = TRUE
 	volume = 15
 	amount_per_transfer_from_this = 5
-	list_reagents = null
+	list_reagents = list(/datum/reagent/moondust = 15)
 	possible_transfer_amounts = list(5)
 
 /obj/item/reagent_containers/powder/moondust_purest
@@ -59474,6 +63627,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 30
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
 	inhand_icon_state = null
@@ -59482,7 +63637,7 @@
 	rogue_baked_inhand = TRUE
 	volume = 18
 	amount_per_transfer_from_this = 5
-	list_reagents = null
+	list_reagents = list(/datum/reagent/moondust_purest = 18)
 	possible_transfer_amounts = list(5)
 
 /obj/item/reagent_containers/powder/ozium
@@ -59499,6 +63654,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 5
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
 	inhand_icon_state = null
@@ -59507,7 +63664,7 @@
 	rogue_baked_inhand = TRUE
 	volume = 15
 	amount_per_transfer_from_this = 5
-	list_reagents = null
+	list_reagents = list(/datum/reagent/ozium = 15)
 	possible_transfer_amounts = list(5)
 
 /obj/item/reagent_containers/powder/rocknut
@@ -59523,6 +63680,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
 	inhand_icon_state = null
@@ -59547,6 +63706,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
 	inhand_icon_state = null
@@ -59572,6 +63733,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 10
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
 	inhand_icon_state = "flour~2"
@@ -59597,6 +63760,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 10
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
 	inhand_icon_state = null
@@ -59605,7 +63770,7 @@
 	rogue_baked_inhand = TRUE
 	volume = 15
 	amount_per_transfer_from_this = 5
-	list_reagents = null
+	list_reagents = list(/datum/reagent/druqks = 15)
 	possible_transfer_amounts = list(5)
 
 /obj/item/reagent_containers/powder/starsugar
@@ -59622,6 +63787,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sellprice = 25
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
 	inhand_icon_state = null
@@ -59630,7 +63797,7 @@
 	rogue_baked_inhand = TRUE
 	volume = 15
 	amount_per_transfer_from_this = 5
-	list_reagents = null
+	list_reagents = list(/datum/reagent/starsugar = 15)
 	possible_transfer_amounts = list(5)
 
 /obj/item/reagent_containers/powder/starsugar/skysugar
@@ -59655,7 +63822,7 @@
 	rogue_baked_inhand = TRUE
 	volume = 38
 	amount_per_transfer_from_this = 5
-	list_reagents = null
+	list_reagents = list(/datum/reagent/starsugar = 38)
 	possible_transfer_amounts = list(5)
 
 /obj/item/reagent_containers/spidervenom_inert
@@ -59671,6 +63838,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Mapping/icons/webbing_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Mapping/icons/webbing_righthand.dmi'
 	inhand_icon_state = null
@@ -59691,6 +63860,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -59711,6 +63882,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -59731,6 +63904,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -59751,6 +63926,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -59771,6 +63948,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -59791,6 +63970,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -59811,6 +63992,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -59831,6 +64014,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -59852,6 +64037,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	firefuel = 5 MINUTES
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -59879,6 +64066,8 @@
 	inhand_y_dimension = 64
 	rogue_grid_width = 64
 	rogue_grid_height = 32
+	max_integrity = 700
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/repair_kit/bad
@@ -59900,6 +64089,7 @@
 	inhand_y_dimension = 64
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 300
 	inhand_icon_state = null
 
 /obj/item/repair_kit/metal
@@ -59921,6 +64111,7 @@
 	inhand_y_dimension = 64
 	rogue_grid_width = 64
 	rogue_grid_height = 32
+	max_integrity = 600
 	inhand_icon_state = null
 
 /obj/item/repair_kit/metal/bad
@@ -59942,6 +64133,7 @@
 	inhand_y_dimension = 64
 	rogue_grid_width = 64
 	rogue_grid_height = 32
+	max_integrity = 300
 	inhand_icon_state = null
 
 /obj/item/restraints/legcuffs/beartrap/armed
@@ -59958,6 +64150,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 256
 	rogue_grid_height = 256
+	max_integrity = 100
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -60007,6 +64201,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 400
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/gems_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/gems_righthand.dmi'
 	inhand_icon_state = null
@@ -60030,6 +64226,8 @@
 	worn_y_dimension = 32
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/rogue/instrument/accord
@@ -60048,6 +64246,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	can_parry = TRUE
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_righthand.dmi'
 	inhand_icon_state = null
@@ -60071,6 +64271,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	can_parry = TRUE
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_righthand.dmi'
 	inhand_icon_state = null
@@ -60094,6 +64296,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	can_parry = TRUE
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_righthand.dmi'
 	inhand_icon_state = null
@@ -60117,6 +64321,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	can_parry = TRUE
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_righthand.dmi'
 	inhand_icon_state = null
@@ -60140,6 +64346,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	can_parry = TRUE
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_righthand.dmi'
 	inhand_icon_state = null
@@ -60163,6 +64371,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	can_parry = TRUE
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_righthand.dmi'
 	inhand_icon_state = null
@@ -60186,6 +64396,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	can_parry = TRUE
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_righthand.dmi'
 	inhand_icon_state = null
@@ -60209,6 +64421,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	can_parry = TRUE
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_righthand.dmi'
 	inhand_icon_state = null
@@ -60232,6 +64446,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	can_parry = TRUE
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_righthand.dmi'
 	inhand_icon_state = null
@@ -60255,6 +64471,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	can_parry = TRUE
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_righthand.dmi'
 	inhand_icon_state = null
@@ -60278,6 +64496,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	can_parry = TRUE
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_righthand.dmi'
 	inhand_icon_state = null
@@ -60301,6 +64521,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	can_parry = TRUE
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_righthand.dmi'
 	inhand_icon_state = null
@@ -60333,6 +64555,8 @@
 	gripped_intents = list(/datum/intent/axe/cut/long, /datum/intent/axe/chop/long, /datum/intent/spear/bash)
 	max_blade_int = 300
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 200
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/music_righthand.dmi'
 	inhand_icon_state = null
@@ -60353,6 +64577,8 @@
 	worn_y_dimension = 32
 	sellprice = 200
 	static_price = TRUE
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -60373,6 +64599,8 @@
 	worn_y_dimension = 32
 	sellprice = 200
 	static_price = TRUE
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -60392,6 +64620,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 300
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/structure_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/structure_righthand.dmi'
 	inhand_icon_state = null
@@ -60494,6 +64724,8 @@
 	inhand_y_dimension = 64
 	sellprice = 1
 	static_price = TRUE
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/roguecoin/copper/pile
@@ -60534,6 +64766,8 @@
 	inhand_y_dimension = 64
 	sellprice = 3
 	static_price = TRUE
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/roguecoin/gilbranze/pile
@@ -60574,6 +64808,8 @@
 	inhand_y_dimension = 64
 	sellprice = 10
 	static_price = TRUE
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/roguecoin/gold/pile
@@ -60614,9 +64850,31 @@
 	inhand_y_dimension = 64
 	sellprice = 5
 	static_price = TRUE
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/roguecoin/silver/pile
+	name = "ziliqua"
+	desc = "An ancient silver coin still in use due to their remarkable ability to last the ages."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/valuable.dmi'
+	icon_state = "s1"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	lefthand_file = 'modular_redtard/rockhill/icons/mob/inhands/misc/food_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/mob/inhands/misc/food_righthand.dmi'
+	worn_icon_state = null
+	slot_flags = ITEM_SLOT_ROGUE_MOUTH
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	sellprice = 5
+	static_price = TRUE
+	inhand_icon_state = null
+
+/obj/item/roguecoin/silver/pile/wretchpile
 	name = "ziliqua"
 	desc = "An ancient silver coin still in use due to their remarkable ability to last the ages."
 	icon = 'modular_redtard/rockhill/icons/roguetown/items/valuable.dmi'
@@ -60650,6 +64908,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -60750,6 +65010,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/gems_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/gems_righthand.dmi'
 	inhand_icon_state = null
@@ -60852,6 +65114,26 @@
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/gems_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/gems_righthand.dmi'
 	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/roguegem/chitin
+	name = "beetle chitin plate"
+	desc = "A thick, iridescent plate of chitin shaved from a giant woolly chafer beetle. Prized by underdeep artisans for its durability and natural luster."
+	icon = 'modular_redtard/rockhill/icons/roguetown/gems/gem_shell.dmi'
+	icon_state = "raw_shell"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	slot_flags = ITEM_SLOT_ROGUE_MOUTH
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	sellprice = 15
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
+	inhand_icon_state = "raw_shell~2"
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	rogue_baked_inhand = TRUE
@@ -61113,6 +65395,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 200
+	integrity_failure = 0
 	icon_state = null
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
@@ -63025,6 +67309,7 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/machines_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/machines_righthand.dmi'
 	inhand_icon_state = null
@@ -63043,6 +67328,7 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/machines_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/machines_righthand.dmi'
 	inhand_icon_state = null
@@ -63097,6 +67383,7 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/zadcote_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/zadcote_righthand.dmi'
 	inhand_icon_state = null
@@ -63115,6 +67402,7 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/zadcote_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/zadcote_righthand.dmi'
 	inhand_icon_state = null
@@ -63133,6 +67421,7 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/zadcote_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/zadcote_righthand.dmi'
 	inhand_icon_state = null
@@ -63158,6 +67447,8 @@
 	rogue_grid_width = 64
 	rogue_grid_height = 32
 	sellprice = 5
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/rogueore/coal
@@ -63180,6 +67471,8 @@
 	firefuel = 30 MINUTES
 	sellprice = 1
 	smeltresult = /obj/item/rogueore/coal
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/rogueore/coal/charcoal
@@ -63223,6 +67516,8 @@
 	rogue_grid_height = 32
 	sellprice = 3
 	smeltresult = /obj/item/ingot/copper
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/rogueore/gold
@@ -63244,6 +67539,8 @@
 	rogue_grid_height = 32
 	sellprice = 10
 	smeltresult = /obj/item/ingot/gold
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/rogueore/iron
@@ -63265,6 +67562,8 @@
 	rogue_grid_height = 32
 	sellprice = 5
 	smeltresult = /obj/item/ingot/iron
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/rogueore/silver
@@ -63286,6 +67585,8 @@
 	rogue_grid_height = 32
 	sellprice = 8
 	smeltresult = /obj/item/ingot/silver
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/rogueore/tin
@@ -63307,6 +67608,8 @@
 	rogue_grid_height = 32
 	sellprice = 4
 	smeltresult = /obj/item/ingot/tin
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/roguestatue/blacksteel
@@ -63328,6 +67631,8 @@
 	rogue_grid_height = 64
 	sellprice = 160
 	smeltresult = /obj/item/ingot/blacksteel
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/roguestatue/clay
@@ -63348,6 +67653,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	sellprice = 25
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/roguestatue/clay/design1
@@ -63469,6 +67776,8 @@
 	rogue_grid_height = 64
 	sellprice = 77
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/roguestatue/glass
@@ -63489,6 +67798,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	sellprice = 55
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/roguestatue/gold
@@ -63510,6 +67821,8 @@
 	rogue_grid_height = 64
 	sellprice = 120
 	smeltresult = /obj/item/ingot/gold
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/roguestatue/gold/loot
@@ -63552,6 +67865,8 @@
 	rogue_grid_height = 64
 	sellprice = 20
 	smeltresult = /obj/item/ingot/iron
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/roguestatue/silver
@@ -63573,6 +67888,8 @@
 	rogue_grid_height = 64
 	sellprice = 90
 	smeltresult = /obj/item/ingot/silver
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/roguestatue/steel
@@ -63594,6 +67911,8 @@
 	rogue_grid_height = 64
 	sellprice = 40
 	smeltresult = /obj/item/ingot/steel
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/rogueweapon/blowrod
@@ -63618,6 +67937,8 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -63650,6 +67971,8 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	max_blade_int = 300
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 140
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_righthand.dmi'
 	inhand_icon_state = null
@@ -63683,6 +68006,7 @@
 	max_blade_int = 500
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 300
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_righthand.dmi'
 	inhand_icon_state = null
@@ -63719,6 +68043,8 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -63755,6 +68081,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 350
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/polearms64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/polearms64_righthand.dmi'
 	inhand_icon_state = null
@@ -63866,6 +68193,8 @@
 	max_blade_int = 400
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 300
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -63900,6 +68229,8 @@
 	max_blade_int = 200
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -63933,6 +68264,8 @@
 	special = /datum/special_intent/flail_sweep
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_righthand.dmi'
 	inhand_icon_state = null
@@ -63999,6 +68332,7 @@
 	special = /datum/special_intent/flail_sweep
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 125
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_righthand.dmi'
 	inhand_icon_state = null
@@ -64112,6 +68446,7 @@
 	special = /datum/special_intent/greatflail_swing
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 500
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt64_righthand.dmi'
 	inhand_icon_state = null
@@ -64152,6 +68487,7 @@
 	special = /datum/special_intent/greatflail_swing
 	smeltresult = /obj/item/ingot/gold
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 350
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt64_lefthand.dmi'
@@ -64193,6 +68529,7 @@
 	special = /datum/special_intent/flail_sweep
 	smeltresult = /obj/item/ingot/silver
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 300
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt64_righthand.dmi'
 	inhand_icon_state = null
@@ -64232,6 +68569,7 @@
 	special = /datum/special_intent/flail_sweep
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 300
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt64_righthand.dmi'
 	inhand_icon_state = null
@@ -64330,6 +68668,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	special = /datum/special_intent/flail_sweep
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 175
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_righthand.dmi'
 	inhand_icon_state = null
@@ -64400,6 +68739,8 @@
 	special = /datum/special_intent/axe_swing
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -64587,6 +68928,7 @@
 	special = /datum/special_intent/polearm_backstep
 	smeltresult = /obj/item/ingot/silverblessed
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 150
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -64624,6 +68966,7 @@
 	special = /datum/special_intent/axe_swing
 	smeltresult = /obj/item/ingot/silver
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 150
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -64810,6 +69153,8 @@
 	special = /datum/special_intent/greatsword_swing
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -64885,6 +69230,7 @@
 	max_blade_int = 300
 	special = /datum/special_intent/greatsword_swing
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 150
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -64923,6 +69269,7 @@
 	special = /datum/special_intent/greatsword_swing
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 500
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -64999,6 +69346,7 @@
 	special = /datum/special_intent/greatsword_swing
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 130
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -65075,6 +69423,7 @@
 	special = /datum/special_intent/greatsword_swing
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 200
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords64_righthand.dmi'
 	inhand_icon_state = null
@@ -65188,6 +69537,8 @@
 	special = /datum/special_intent/polearm_backstep
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -65298,6 +69649,7 @@
 	max_blade_int = 200
 	special = /datum/special_intent/polearm_backstep
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 180
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -65445,6 +69797,8 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ash
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	icon_state = null
 	inhand_icon_state = "sabre"
 
@@ -65473,6 +69827,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 10
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -65539,6 +69894,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 450
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -65572,6 +69928,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ash
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 100
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -65671,6 +70028,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ash
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 15
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -65737,6 +70095,8 @@
 	max_blade_int = 300
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 200
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/unarmed32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/unarmed32_righthand.dmi'
 	inhand_icon_state = null
@@ -65872,6 +70232,8 @@
 	max_blade_int = 300
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_righthand.dmi'
 	inhand_icon_state = null
@@ -65905,6 +70267,7 @@
 	max_blade_int = 400
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 300
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/crafting_righthand.dmi'
 	inhand_icon_state = null
@@ -65939,6 +70302,8 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -65970,6 +70335,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 500
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -66062,6 +70428,7 @@
 	possible_item_intents = list(/datum/intent/till, /datum/intent/pick)
 	gripped_intents = list(/datum/intent/till, /datum/intent/pick, /datum/intent/spear/bash)
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
+	max_integrity = 100
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -66095,6 +70462,8 @@
 	max_blade_int = 200
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 175
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -66275,6 +70644,7 @@
 	max_blade_int = 250
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 130
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -66313,6 +70683,7 @@
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 150
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -66348,6 +70719,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (1).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (2).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (3).ogg')
 	max_blade_int = 200
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 75
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -66385,6 +70757,7 @@
 	special = /datum/special_intent/dagger_dash
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 100
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -66422,6 +70795,7 @@
 	special = /datum/special_intent/dagger_dash
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 180
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -66496,6 +70870,7 @@
 	special = /datum/special_intent/dagger_dash
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 200
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -66792,6 +71167,7 @@
 	special = /datum/special_intent/dagger_dash
 	smeltresult = /obj/item/rogueore/coal
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 50
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -66829,6 +71205,7 @@
 	special = /datum/special_intent/dagger_dash
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 150
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -66902,6 +71279,7 @@
 	max_blade_int = 200
 	special = /datum/special_intent/dagger_dash
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 75
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -67013,6 +71391,7 @@
 	special = /datum/special_intent/dagger_dash
 	smeltresult = /obj/item/ingot/silver
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 222
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -67161,6 +71540,7 @@
 	special = /datum/special_intent/dagger_dash
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 175
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -67198,6 +71578,7 @@
 	special = /datum/special_intent/dagger_dash
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 200
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -67235,6 +71616,7 @@
 	special = /datum/special_intent/dagger_dash
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 200
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -67346,6 +71728,7 @@
 	special = /datum/special_intent/dagger_dash
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 130
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -67383,6 +71766,7 @@
 	special = /datum/special_intent/dagger_dash
 	smeltresult = /obj/item/ash
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 90
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -67419,6 +71803,7 @@
 	max_blade_int = 200
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 100
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/misc32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/misc32_righthand.dmi'
 	inhand_icon_state = null
@@ -67455,6 +71840,7 @@
 	max_blade_int = 200
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 150
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/misc32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/misc32_righthand.dmi'
 	inhand_icon_state = null
@@ -67490,6 +71876,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (1).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (2).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (3).ogg')
 	max_blade_int = 100
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 50
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -67525,6 +71912,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (1).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (2).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (3).ogg')
 	max_blade_int = 50
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 75
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_jade_righthand.dmi'
 	inhand_icon_state = null
@@ -67560,6 +71948,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (1).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (2).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (3).ogg')
 	max_blade_int = 50
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 75
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_opal_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_opal_righthand.dmi'
 	inhand_icon_state = null
@@ -67596,6 +71985,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (1).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (2).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (3).ogg')
 	max_blade_int = 200
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 50
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -67668,6 +72058,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (1).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (2).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (3).ogg')
 	max_blade_int = 200
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 150
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -67704,6 +72095,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (1).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (2).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (3).ogg')
 	max_blade_int = 200
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 100
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/daggers32_righthand.dmi'
 	inhand_icon_state = null
@@ -67809,6 +72201,8 @@
 	max_blade_int = 200
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 80
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/unarmed32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/unarmed32_righthand.dmi'
 	inhand_icon_state = null
@@ -67876,6 +72270,7 @@
 	max_blade_int = 150
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 150
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/unarmed32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/unarmed32_righthand.dmi'
 	inhand_icon_state = null
@@ -67943,6 +72338,7 @@
 	max_blade_int = 200
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 120
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/unarmed32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/unarmed32_righthand.dmi'
 	inhand_icon_state = null
@@ -67978,6 +72374,8 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/misc32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/misc32_righthand.dmi'
 	inhand_icon_state = null
@@ -68013,6 +72411,8 @@
 	special = /datum/special_intent/ground_smash
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_righthand.dmi'
 	inhand_icon_state = null
@@ -68048,6 +72448,7 @@
 	special = /datum/special_intent/ground_smash
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 300
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_righthand.dmi'
 	inhand_icon_state = null
@@ -68348,6 +72749,7 @@
 	special = /datum/special_intent/ground_smash
 	smeltresult = /obj/item/ash
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 75
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/gems/gem_shell_righthand.dmi'
 	inhand_icon_state = null
@@ -68532,6 +72934,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	special = /datum/special_intent/ground_smash
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 180
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -68566,6 +72969,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	special = /datum/special_intent/ground_smash
 	smeltresult = /obj/item/ingot/gold
+	max_integrity = 50
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_righthand.dmi'
 	inhand_icon_state = null
@@ -68601,6 +73005,7 @@
 	sellprice = 300
 	special = /datum/special_intent/ground_smash
 	smeltresult = /obj/item/ingot/gold
+	max_integrity = 75
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_righthand.dmi'
 	inhand_icon_state = null
@@ -68638,6 +73043,7 @@
 	special = /datum/special_intent/ground_smash
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 300
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt64_righthand.dmi'
 	inhand_icon_state = null
@@ -68675,6 +73081,83 @@
 	special = /datum/special_intent/ground_smash
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 350
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt64_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt64_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt64_onmob.dmi'
+
+/obj/item/rogueweapon/mace/maul/spiked
+	name = "spiked maul"
+	desc = "Covered in spikes, such is the weapon of a Dwarvish smith. This one has been well balanced, allowing for a weaker wielder to make use of it."
+	icon = 'modular_redtard/rockhill/icons/roguetown/weapons/blunt64.dmi'
+	icon_state = "spiky"
+	w_class = WEIGHT_CLASS_BULKY
+	force = 12
+	throwforce = 10
+	worn_icon_state = "mace_greyscale"
+	pixel_x = -16
+	pixel_y = -16
+	rogue_sleeved = null
+	sheathe_icon = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_force_wielded = 32
+	wdefense = 4
+	wdefense_wbonus = 3
+	wlength = 3
+	wbalance = -1
+	minstr = 10
+	can_parry = TRUE
+	associated_skill = /datum/attribute/skill/combat/maces
+	possible_item_intents = list(/datum/intent/mace/strike)
+	gripped_intents = list(/datum/intent/maul/spiked, /datum/intent/maul/crush, /datum/intent/mace/sweep, /datum/intent/effect/hobble)
+	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
+	special = /datum/special_intent/ground_smash
+	smeltresult = /obj/item/ingot/iron
+	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 320
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt64_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt64_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt64_onmob.dmi'
+
+/obj/item/rogueweapon/mace/maul/steel
+	name = "dwarvish maul"
+	desc = "An incredibly heavy, oversized hammer. The owner is not compensating, for this maul will do the speaking. This one has been well balanced, allowing for a weaker wielder to make use of it."
+	icon = 'modular_redtard/rockhill/icons/roguetown/weapons/blunt64.dmi'
+	icon_state = "dwarfhammer"
+	w_class = WEIGHT_CLASS_BULKY
+	force = 12
+	throwforce = 10
+	worn_icon_state = "mace_greyscale"
+	pixel_x = -16
+	pixel_y = -16
+	rogue_sleeved = null
+	sheathe_icon = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_force_wielded = 32
+	wdefense = 4
+	wdefense_wbonus = 3
+	wlength = 3
+	wbalance = -1
+	minstr = 11
+	can_parry = TRUE
+	associated_skill = /datum/attribute/skill/combat/maces
+	possible_item_intents = list(/datum/intent/mace/strike)
+	gripped_intents = list(/datum/intent/maul, /datum/intent/maul/crush, /datum/intent/mace/sweep, /datum/intent/effect/hobble)
+	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
+	special = /datum/special_intent/ground_smash
+	smeltresult = /obj/item/ingot/steel
+	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 340
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt64_righthand.dmi'
 	inhand_icon_state = null
@@ -68744,6 +73227,7 @@
 	special = /datum/special_intent/ground_smash
 	smeltresult = /obj/item/ash
 	anvilrepair = /datum/attribute/skill/craft/sewing
+	max_integrity = 150
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/parasols32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/parasols32_righthand.dmi'
 	inhand_icon_state = null
@@ -68782,6 +73266,7 @@
 	special = /datum/special_intent/ground_smash
 	smeltresult = /obj/item/ash
 	anvilrepair = /datum/attribute/skill/craft/sewing
+	max_integrity = 75
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/parasols64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/parasols64_righthand.dmi'
 	inhand_icon_state = null
@@ -68921,6 +73406,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	special = /datum/special_intent/ground_smash
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 180
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_righthand.dmi'
 	inhand_icon_state = null
@@ -69126,6 +73612,7 @@
 	special = /datum/special_intent/ground_smash
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 350
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_righthand.dmi'
 	inhand_icon_state = null
@@ -69160,6 +73647,7 @@
 	special = /datum/special_intent/ground_smash
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 180
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_righthand.dmi'
 	inhand_icon_state = null
@@ -69194,6 +73682,7 @@
 	special = /datum/special_intent/ground_smash
 	smeltresult = /obj/item/ingot/gold
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_righthand.dmi'
 	inhand_icon_state = null
@@ -69295,6 +73784,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	special = /datum/special_intent/ground_smash
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 180
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/blunt32_righthand.dmi'
 	inhand_icon_state = null
@@ -69459,6 +73949,8 @@
 	possible_item_intents = list(/datum/intent/hit)
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard_lefthand.dmi'
@@ -69495,6 +73987,8 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 400
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -69529,6 +74023,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 800
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -69564,6 +74059,7 @@
 	max_blade_int = 225
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 500
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -69598,6 +74094,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/copper
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 325
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -69633,6 +74130,7 @@
 	sellprice = 15
 	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 150
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -69706,6 +74204,7 @@
 	max_blade_int = 180
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 600
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/misc32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/misc32_righthand.dmi'
 	inhand_icon_state = null
@@ -69740,6 +74239,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 600
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -69773,6 +74273,7 @@
 	gripped_intents = list(/datum/intent/pick)
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -69805,6 +74306,8 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
@@ -69839,6 +74342,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 500
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
@@ -69940,6 +74444,8 @@
 	wlength = 1
 	possible_item_intents = list(/datum/intent/shield/bash)
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/scabbard_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/scabbard_righthand.dmi'
 	inhand_icon_state = null
@@ -69969,6 +74475,7 @@
 	wlength = 1
 	possible_item_intents = list(/datum/intent/shield/bash)
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	equip_delay_self = 50
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/gwstrap_lefthand.dmi'
@@ -70004,6 +74511,7 @@
 	possible_item_intents = list(/datum/intent/shield/bash)
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
 	sewrepair = TRUE
+	max_integrity = 500
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/scabbard_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/scabbard_righthand.dmi'
 	inhand_icon_state = null
@@ -70173,6 +74681,7 @@
 	associated_skill = /datum/attribute/skill/combat/knives
 	possible_item_intents = list(/datum/intent/shield/bash, /datum/intent/shield/block)
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 50
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/scabbard_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/scabbard_righthand.dmi'
 	inhand_icon_state = null
@@ -70207,6 +74716,7 @@
 	associated_skill = /datum/attribute/skill/combat/knives
 	possible_item_intents = list(/datum/intent/shield/bash, /datum/intent/shield/block)
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 100
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/scabbard_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/scabbard_righthand.dmi'
 	inhand_icon_state = null
@@ -70238,6 +74748,7 @@
 	possible_item_intents = list(/datum/intent/shield/bash)
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
 	sewrepair = TRUE
+	max_integrity = 750
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/scabbard_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/scabbard_righthand.dmi'
 	inhand_icon_state = null
@@ -70271,6 +74782,7 @@
 	possible_item_intents = list(/datum/intent/shield/bash, /datum/intent/shield/block, /datum/intent/mace/smash/shield)
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
 	sewrepair = TRUE
+	max_integrity = 220
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/scabbard_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/scabbard_righthand.dmi'
 	inhand_icon_state = null
@@ -70305,6 +74817,7 @@
 	possible_item_intents = list(/datum/intent/shield/bash, /datum/intent/shield/block, /datum/intent/mace/smash/shield)
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
 	sewrepair = TRUE
+	max_integrity = 220
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/scabbard_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/scabbard_righthand.dmi'
 	inhand_icon_state = null
@@ -70337,6 +74850,7 @@
 	associated_skill = /datum/attribute/skill/combat/swords
 	possible_item_intents = list(/datum/intent/shield/bash, /datum/intent/shield/block, /datum/intent/mace/smash/shield)
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 75
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/scabbard_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/scabbard_righthand.dmi'
 	inhand_icon_state = null
@@ -70369,6 +74883,7 @@
 	associated_skill = /datum/attribute/skill/combat/swords
 	possible_item_intents = list(/datum/intent/shield/bash, /datum/intent/shield/block, /datum/intent/mace/smash/shield)
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 150
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/scabbard_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/scabbard_righthand.dmi'
 	inhand_icon_state = null
@@ -70405,6 +74920,8 @@
 	max_blade_int = 120
 	smeltresult = /obj/item/rogueore/coal
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 250
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -70440,6 +74957,8 @@
 	special = /datum/special_intent/limbguard
 	coverage = 80
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 300
+	integrity_failure = 0.2
 	inhand_icon_state = "atgervi_shield"
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -70469,6 +74988,8 @@
 	special = /datum/special_intent/limbguard
 	coverage = 60
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 260
+	integrity_failure = 0.2
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
@@ -70503,6 +75024,7 @@
 	special = /datum/special_intent/limbguard
 	coverage = 75
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 360
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
@@ -70540,6 +75062,8 @@
 	coverage = 10
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 130
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_righthand.dmi'
 	inhand_icon_state = null
@@ -70610,6 +75134,7 @@
 	coverage = 10
 	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 40
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_righthand.dmi'
 	inhand_icon_state = null
@@ -70646,6 +75171,8 @@
 	coverage = 10
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 215
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/special/captain_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/special/captain_righthand.dmi'
 	inhand_icon_state = null
@@ -70678,6 +75205,8 @@
 	coverage = 75
 	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 400
+	integrity_failure = 0.2
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
@@ -70711,6 +75240,7 @@
 	special = /datum/special_intent/limbguard
 	coverage = 75
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 180
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
@@ -70745,6 +75275,8 @@
 	coverage = 50
 	smeltresult = /obj/item/ash
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 220
+	integrity_failure = 0.2
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
@@ -70814,6 +75346,8 @@
 	coverage = 50
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 220
+	integrity_failure = 0.2
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
@@ -70848,6 +75382,7 @@
 	coverage = 40
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 200
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
@@ -70882,6 +75417,7 @@
 	coverage = 50
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
@@ -70915,6 +75451,8 @@
 	special = /datum/special_intent/limbguard
 	coverage = 60
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 200
+	integrity_failure = 0.2
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
@@ -70948,6 +75486,8 @@
 	coverage = 70
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 280
+	integrity_failure = 0.2
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
@@ -70981,6 +75521,7 @@
 	coverage = 70
 	smeltresult = /obj/item/ingot/steelholy
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 300
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
@@ -71014,6 +75555,7 @@
 	coverage = 70
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 300
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
@@ -71079,6 +75621,7 @@
 	special = /datum/special_intent/limbguard
 	coverage = 70
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 120
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
@@ -71113,6 +75656,7 @@
 	coverage = 85
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 400
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
@@ -71146,6 +75690,7 @@
 	coverage = 90
 	smeltresult = /obj/item/ingot/gold
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 50
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
@@ -71180,6 +75725,7 @@
 	coverage = 90
 	smeltresult = /obj/item/ingot/gold
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 75
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
@@ -71246,6 +75792,7 @@
 	coverage = 70
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 220
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
@@ -71280,6 +75827,8 @@
 	coverage = 60
 	smeltresult = /obj/item/ash
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 120
+	integrity_failure = 0.2
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/shields32_lefthand.dmi'
@@ -71356,6 +75905,8 @@
 	max_blade_int = 300
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	inhand_icon_state = "sabre"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_onmob.dmi'
 
@@ -71390,6 +75941,7 @@
 	max_blade_int = 450
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 450
 	inhand_icon_state = "sabre"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_onmob.dmi'
 
@@ -71518,6 +76070,8 @@
 	max_blade_int = 300
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -71551,6 +76105,7 @@
 	max_blade_int = 450
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 450
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -71655,6 +76210,8 @@
 	special = /datum/special_intent/polearm_backstep
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -71728,6 +76285,7 @@
 	max_blade_int = 180
 	special = /datum/special_intent/polearm_backstep
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 120
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -71912,6 +76470,7 @@
 	special = /datum/special_intent/polearm_backstep
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 235
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/special/freifechter_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/special/freifechter_righthand.dmi'
 	inhand_icon_state = null
@@ -71947,6 +76506,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	max_blade_int = 80
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 60
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -71985,6 +76545,7 @@
 	special = /datum/special_intent/polearm_backstep
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 155
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/polearms64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/polearms64_righthand.dmi'
 	inhand_icon_state = null
@@ -72134,6 +76695,7 @@
 	special = /datum/special_intent/polearm_backstep
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 300
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/polearms64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/polearms64_righthand.dmi'
 	inhand_icon_state = null
@@ -72171,6 +76733,7 @@
 	special = /datum/special_intent/polearm_backstep
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 200
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/polearms64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/polearms64_righthand.dmi'
 	inhand_icon_state = null
@@ -72208,6 +76771,7 @@
 	special = /datum/special_intent/polearm_backstep
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 300
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/polearms64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/polearms64_righthand.dmi'
 	inhand_icon_state = null
@@ -72245,6 +76809,7 @@
 	special = /datum/special_intent/polearm_backstep
 	smeltresult = /obj/item/rogueore/coal
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 200
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -72393,6 +76958,7 @@
 	special = /datum/special_intent/polearm_backstep
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 280
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/polearms64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/polearms64_righthand.dmi'
 	inhand_icon_state = null
@@ -72541,6 +77107,7 @@
 	max_blade_int = 70
 	special = /datum/special_intent/polearm_backstep
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 50
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -72577,6 +77144,7 @@
 	max_blade_int = 70
 	special = /datum/special_intent/polearm_backstep
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 100
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/misc32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/misc32_righthand.dmi'
 	inhand_icon_state = null
@@ -72614,6 +77182,7 @@
 	special = /datum/special_intent/polearm_backstep
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 225
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -72648,6 +77217,8 @@
 	sellprice = 34
 	special = /datum/special_intent/arcyne_descent
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.3
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -72682,6 +77253,7 @@
 	sellprice = 121
 	special = /datum/special_intent/arcyne_descent
 	sewrepair = TRUE
+	max_integrity = 120
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -72716,6 +77288,7 @@
 	sellprice = 42
 	special = /datum/special_intent/arcyne_descent
 	sewrepair = TRUE
+	max_integrity = 100
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/books_righthand.dmi'
 	inhand_icon_state = null
@@ -72751,6 +77324,8 @@
 	max_blade_int = 100
 	special = /datum/special_intent/axe_swing
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/axes32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/axes32_righthand.dmi'
 	inhand_icon_state = null
@@ -73006,6 +77581,7 @@
 	special = /datum/special_intent/axe_swing
 	smeltresult = /obj/item/ingot/copper
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 100
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/axes32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/axes32_righthand.dmi'
 	inhand_icon_state = null
@@ -73045,6 +77621,7 @@
 	special = /datum/special_intent/axe_swing
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 50
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/axes32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/axes32_righthand.dmi'
 	inhand_icon_state = null
@@ -73084,6 +77661,7 @@
 	special = /datum/special_intent/axe_swing
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 80
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/axes32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/axes32_righthand.dmi'
 	inhand_icon_state = null
@@ -73340,6 +77918,7 @@
 	special = /datum/special_intent/axe_swing
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 300
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/axes32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/axes32_righthand.dmi'
 	inhand_icon_state = null
@@ -73482,6 +78061,7 @@
 	max_blade_int = 500
 	special = /datum/special_intent/axe_swing
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 180
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/axes32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/axes32_righthand.dmi'
 	inhand_icon_state = null
@@ -73554,6 +78134,7 @@
 	special = /datum/special_intent/axe_swing
 	smeltresult = /obj/item/ingot/gold
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 300
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/axes32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/axes32_righthand.dmi'
 	inhand_icon_state = null
@@ -73589,6 +78170,7 @@
 	special = /datum/special_intent/axe_swing
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 300
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
@@ -73659,6 +78241,8 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (1).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (2).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (3).ogg')
 	max_blade_int = 200
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 175
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/surgery_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/surgery_righthand.dmi'
 	inhand_icon_state = null
@@ -73693,6 +78277,8 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	max_blade_int = 200
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 175
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/surgery_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/surgery_righthand.dmi'
 	inhand_icon_state = null
@@ -73793,6 +78379,8 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	max_blade_int = 200
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 175
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/surgery_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/surgery_righthand.dmi'
 	inhand_icon_state = null
@@ -73826,6 +78414,8 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (1).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (2).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (3).ogg')
 	max_blade_int = 200
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 175
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/surgery_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/surgery_righthand.dmi'
 	inhand_icon_state = null
@@ -73892,6 +78482,8 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	max_blade_int = 100
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 200
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/artefactsten_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/artefactsten_righthand.dmi'
 	inhand_icon_state = null
@@ -73925,6 +78517,8 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (1).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (2).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (3).ogg')
 	max_blade_int = 200
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 175
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/surgery_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/surgery_righthand.dmi'
 	inhand_icon_state = null
@@ -73992,6 +78586,8 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/bladed/bladedmedium (1).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedmedium (2).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedmedium (3).ogg')
 	max_blade_int = 200
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 175
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/surgery_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/surgery_righthand.dmi'
 	inhand_icon_state = null
@@ -74060,6 +78656,8 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (1).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (2).ogg', 'modular_redtard/rockhill/sound/combat/parry/bladed/bladedsmall (3).ogg')
 	max_blade_int = 200
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 175
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/surgery_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/surgery_righthand.dmi'
 	inhand_icon_state = null
@@ -74131,6 +78729,9 @@
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 150
+	integrity_failure = 0.2
+	equip_delay_self = 15
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -74169,6 +78770,7 @@
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 350
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -74206,6 +78808,7 @@
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 125
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -74244,6 +78847,7 @@
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 200
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/special/captain_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/special/captain_righthand.dmi'
 	inhand_icon_state = null
@@ -74469,6 +79073,7 @@
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 175
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -74505,6 +79110,7 @@
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 125
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -74579,6 +79185,7 @@
 	max_blade_int = 50
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/gold
+	max_integrity = 50
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -74617,6 +79224,7 @@
 	max_blade_int = 75
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/gold
+	max_integrity = 75
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -74654,6 +79262,7 @@
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 100
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -74732,6 +79341,7 @@
 	special = /datum/special_intent/side_sweep
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 180
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -74773,6 +79383,7 @@
 	special = /datum/special_intent/axe_swing
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 180
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords64_righthand.dmi'
 	inhand_icon_state = null
@@ -74814,6 +79425,7 @@
 	special = /datum/special_intent/axe_swing
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 125
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords64_righthand.dmi'
 	inhand_icon_state = null
@@ -74855,6 +79467,7 @@
 	special = /datum/special_intent/axe_swing
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 160
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords64_righthand.dmi'
 	inhand_icon_state = null
@@ -74894,6 +79507,7 @@
 	special = /datum/special_intent/side_sweep
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 180
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -75012,6 +79626,7 @@
 	special = /datum/special_intent/side_sweep
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 225
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/special/freifechter_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/special/freifechter_righthand.dmi'
 	inhand_icon_state = null
@@ -75137,6 +79752,7 @@
 	coverage = 65
 	smeltresult = /obj/item/rogueweapon/sword/long/exe/berserk
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 555
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords64_lefthand.dmi'
@@ -75589,6 +80205,7 @@
 	special = /datum/special_intent/martyr_blazing_sweep_sword
 	smeltresult = /obj/item/ingot/gold
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 300
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords64_righthand.dmi'
 	inhand_icon_state = null
@@ -75748,6 +80365,7 @@
 	special = /datum/special_intent/side_sweep
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 125
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -75789,6 +80407,7 @@
 	special = /datum/special_intent/side_sweep
 	smeltresult = /obj/item/ingot/copper
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 100
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -75869,6 +80488,7 @@
 	special = /datum/special_intent/side_sweep
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 100
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords64_righthand.dmi'
 	inhand_icon_state = null
@@ -76028,6 +80648,8 @@
 	special = /datum/special_intent/side_sweep
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 500
+	equip_delay_self = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -76261,6 +80883,7 @@
 	special = /datum/special_intent/piercing_lunge
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 300
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -76300,6 +80923,7 @@
 	special = /datum/special_intent/piercing_lunge
 	smeltresult = /obj/item/ingot/silver
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 225
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_righthand.dmi'
 	inhand_icon_state = null
@@ -76449,6 +81073,7 @@
 	max_blade_int = 200
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 115
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -76486,6 +81111,7 @@
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 175
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -76597,6 +81223,7 @@
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 215
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/special/freifechter_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/special/freifechter_righthand.dmi'
 	inhand_icon_state = null
@@ -76634,6 +81261,7 @@
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 100
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -76672,6 +81300,7 @@
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 200
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -76709,6 +81338,7 @@
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 200
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/32_righthand.dmi'
 	inhand_icon_state = null
@@ -76935,6 +81565,7 @@
 	max_blade_int = 200
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 75
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -77011,6 +81642,7 @@
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -77086,6 +81718,7 @@
 	max_blade_int = 300
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/aaslag
+	max_integrity = 150
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -77124,6 +81757,7 @@
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/gold
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 300
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -77162,6 +81796,7 @@
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 100
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -77200,6 +81835,7 @@
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 75
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -77388,6 +82024,7 @@
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 100
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -77538,6 +82175,7 @@
 	special = /datum/special_intent/shin_swipe
 	smeltresult = /obj/item/ingot/silver
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 200
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -77609,6 +82247,7 @@
 	max_blade_int = 100
 	special = /datum/special_intent/shin_swipe
 	anvilrepair = /datum/attribute/skill/craft/crafting
+	max_integrity = 70
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/swords32_righthand.dmi'
 	inhand_icon_state = null
@@ -77639,6 +82278,8 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
@@ -77671,6 +82312,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 500
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
@@ -77738,6 +82380,8 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 250
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -77770,6 +82414,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/aaslag
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 10
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -77802,6 +82447,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 450
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -77833,6 +82479,7 @@
 	possible_item_intents = list(/datum/intent/mace/strike)
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 15
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/tools_righthand.dmi'
 	inhand_icon_state = null
@@ -77868,6 +82515,8 @@
 	special = /datum/special_intent/whip_coil
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
 	sewrepair = TRUE
+	max_integrity = 250
+	integrity_failure = 0.2
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/whips32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/whips32_righthand.dmi'
 	inhand_icon_state = null
@@ -78155,6 +82804,7 @@
 	special = /datum/special_intent/whip_coil
 	smeltresult = /obj/item/ingot/steel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 100
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/whips32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/whips32_righthand.dmi'
 	inhand_icon_state = null
@@ -78191,6 +82841,7 @@
 	special = /datum/special_intent/whip_coil
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 280
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/whips32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/whips32_righthand.dmi'
 	inhand_icon_state = null
@@ -78263,6 +82914,7 @@
 	special = /datum/special_intent/whip_coil
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 200
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/whips32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/whips32_righthand.dmi'
 	inhand_icon_state = null
@@ -78299,6 +82951,7 @@
 	special = /datum/special_intent/whip_coil
 	smeltresult = /obj/item/ingot/silver
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 150
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/whips32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/whips32_righthand.dmi'
 	inhand_icon_state = null
@@ -78335,6 +82988,7 @@
 	special = /datum/special_intent/greatsword_swing
 	smeltresult = /obj/item/ingot/silverblessed
 	anvilrepair = /datum/attribute/skill/craft/weaponsmithing
+	max_integrity = 125
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/whips32_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/whips32_righthand.dmi'
 	inhand_icon_state = null
@@ -78368,6 +83022,8 @@
 	gripped_intents = list(/datum/intent/spear/bash, /datum/intent/mace/smash/wood)
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 250
+	integrity_failure = 0.2
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
@@ -78474,6 +83130,7 @@
 	sellprice = 34
 	special = /datum/special_intent/quarterstaff_sweep
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 200
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/items/staffs_lefthand.dmi'
@@ -78548,6 +83205,7 @@
 	sellprice = 121
 	special = /datum/special_intent/quarterstaff_sweep
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 280
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/items/staffs_lefthand.dmi'
@@ -78733,6 +83391,7 @@
 	sellprice = 42
 	special = /datum/special_intent/quarterstaff_sweep
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 250
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/items/staffs_lefthand.dmi'
@@ -78960,6 +83619,7 @@
 	special = /datum/special_intent/quarterstaff_sweep
 	smeltresult = /obj/item/ingot/silverblessed
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 150
 	icon_state = null
 	inhand_icon_state = "sabre"
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
@@ -79027,6 +83687,7 @@
 	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 150
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
@@ -79063,6 +83724,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/blacksteel
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 350
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/polearms64_lefthand.dmi'
@@ -79098,6 +83760,7 @@
 	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 25
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/stationary/bombard64_lefthand.dmi'
@@ -79133,6 +83796,7 @@
 	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 200
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
@@ -79169,6 +83833,7 @@
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	smeltresult = /obj/item/ingot/silverblessed
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 250
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
@@ -79204,6 +83869,7 @@
 	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 250
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
@@ -79239,6 +83905,7 @@
 	gripped_intents = list(/datum/intent/spear/bash/ranged/quarterstaff, /datum/intent/spear/thrust/quarterstaff)
 	parrysound = list('modular_redtard/rockhill/sound/combat/parry/parrygen.ogg')
 	anvilrepair = /datum/attribute/skill/craft/carpentry
+	max_integrity = 200
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/weapons/64_lefthand.dmi'
@@ -79268,6 +83935,8 @@
 	possible_item_intents = list(/datum/intent/tie)
 	firefuel = 5 MINUTES
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -79466,6 +84135,8 @@
 	inhand_y_dimension = 64
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/rotation_contraption/horizontal
@@ -79484,6 +84155,8 @@
 	inhand_y_dimension = 64
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/rotation_contraption/large_cog
@@ -79502,6 +84175,8 @@
 	inhand_y_dimension = 64
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/rotation_contraption/minecart_rail
@@ -79520,6 +84195,8 @@
 	inhand_y_dimension = 64
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/rotation_contraption/minecart_rail/railbreak
@@ -79556,6 +84233,8 @@
 	inhand_y_dimension = 64
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/rotation_contraption/vertical
@@ -79574,6 +84253,8 @@
 	inhand_y_dimension = 64
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/rotation_contraption/waterwheel
@@ -79592,6 +84273,8 @@
 	inhand_y_dimension = 64
 	rogue_grid_width = 96
 	rogue_grid_height = 96
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/satchel_bomb
@@ -79608,6 +84291,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -79636,6 +84321,8 @@
 	rogue_grid_height = 32
 	possible_item_intents = list(/datum/intent/hit)
 	sellprice = 100
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -79703,6 +84390,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -79721,6 +84410,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_righthand.dmi'
 	inhand_icon_state = null
@@ -79739,6 +84430,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_righthand.dmi'
 	inhand_icon_state = null
@@ -79757,6 +84450,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_righthand.dmi'
 	inhand_icon_state = null
@@ -79775,6 +84470,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_righthand.dmi'
 	inhand_icon_state = null
@@ -79793,6 +84490,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_righthand.dmi'
 	inhand_icon_state = null
@@ -79811,6 +84510,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_righthand.dmi'
 	inhand_icon_state = null
@@ -79829,6 +84530,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_righthand.dmi'
 	inhand_icon_state = null
@@ -79847,6 +84550,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_righthand.dmi'
 	inhand_icon_state = null
@@ -79865,6 +84570,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_righthand.dmi'
 	inhand_icon_state = null
@@ -79883,6 +84590,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_righthand.dmi'
 	inhand_icon_state = null
@@ -79901,6 +84610,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_righthand.dmi'
 	inhand_icon_state = null
@@ -79919,6 +84630,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/stamps_righthand.dmi'
 	inhand_icon_state = null
@@ -79937,6 +84650,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_righthand.dmi'
 	inhand_icon_state = null
@@ -79972,6 +84687,28 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/seeds/fyritius
+	parent_type = /obj/item/rockhill
+	name = "seeds"
+	icon = 'modular_redtard/rockhill/icons/obj/hydroponics/seeds.dmi'
+	icon_state = "seed"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_righthand.dmi'
 	inhand_icon_state = null
@@ -79990,6 +84727,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_righthand.dmi'
 	inhand_icon_state = null
@@ -80008,6 +84747,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_righthand.dmi'
 	inhand_icon_state = null
@@ -80026,6 +84767,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_righthand.dmi'
 	inhand_icon_state = null
@@ -80044,6 +84787,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_righthand.dmi'
 	inhand_icon_state = null
@@ -80062,6 +84807,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_righthand.dmi'
 	inhand_icon_state = null
@@ -80080,6 +84827,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_righthand.dmi'
 	inhand_icon_state = null
@@ -80098,6 +84847,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_righthand.dmi'
 	inhand_icon_state = null
@@ -80116,6 +84867,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_righthand.dmi'
 	inhand_icon_state = null
@@ -80134,6 +84887,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_righthand.dmi'
 	inhand_icon_state = null
@@ -80153,8 +84908,30 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/flora/ausflora_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/flora/ausflora_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/seeds/turnip
+	parent_type = /obj/item/rockhill
+	name = "seeds"
+	icon = 'modular_redtard/rockhill/icons/obj/hydroponics/seeds.dmi'
+	icon_state = "seed"
+	w_class = WEIGHT_CLASS_TINY
+	force = 0
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/hydroponics/seeds_righthand.dmi'
 	inhand_icon_state = null
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
@@ -80175,6 +84952,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/flaregun_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/flaregun_righthand.dmi'
 	inhand_icon_state = null
@@ -80202,6 +84981,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	possible_item_intents = list(/datum/intent/use/flaregun)
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = "flaregun"
 	rogue_onmob_sheet = 'modular_redtard/rockhill/icons/baked/roguetown/items/flaregun_onmob.dmi'
 
@@ -80219,6 +85000,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_hearthstone/icons/obj/items/signalhorn_lefthand.dmi'
@@ -80241,6 +85024,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -80260,6 +85045,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_hearthstone/icons/mob/skeletons_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_hearthstone/icons/mob/skeletons_righthand.dmi'
 	inhand_icon_state = null
@@ -80282,6 +85069,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -80302,6 +85091,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/items_and_weapons_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/items_and_weapons_righthand.dmi'
 	inhand_icon_state = null
@@ -80331,6 +85122,8 @@
 	rogue_grid_height = 32
 	possible_item_intents = list(/datum/intent/hit)
 	sellprice = 20
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 
 /obj/item/sprue_funnel
@@ -80345,6 +85138,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/anvil_casting_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/anvil_casting_righthand.dmi'
 	inhand_icon_state = null
@@ -80364,6 +85159,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 300
+	integrity_failure = 0
 	worn_icon_state = "artibackpack"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/storage_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/storage_righthand.dmi'
@@ -80386,6 +85183,8 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 15
+	max_integrity = 300
+	integrity_failure = 0
 	worn_icon_state = "backpack"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/storage_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/storage_righthand.dmi'
@@ -80408,6 +85207,7 @@
 	worn_x_dimension = 32
 	worn_y_dimension = 32
 	sellprice = 15
+	max_integrity = 100
 	worn_icon_state = "rucksack_untied"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/storage_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/storage_righthand.dmi'
@@ -80432,6 +85232,8 @@
 	worn_y_dimension = 32
 	sellprice = 10
 	sewrepair = TRUE
+	max_integrity = 300
+	integrity_failure = 0
 	worn_icon_backr = 'modular_redtard/rockhill/icons/roguetown/clothing/onmob/back_r.dmi'
 	worn_icon_state = "satchel"
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/storage_lefthand.dmi'
@@ -80565,6 +85367,8 @@
 	possible_item_intents = list(/datum/intent/whip/belt/tip, /datum/intent/whip/belt/buckle)
 	sellprice = 10
 	sewrepair = TRUE
+	max_integrity = 300
+	integrity_failure = 0
 	inhand_icon_state = null
 	worn_icon_state = "leather"
 	rogue_female_worn = TRUE
@@ -81580,6 +86384,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	sewrepair = TRUE
+	max_integrity = 300
+	integrity_failure = 0
 	worn_icon_hipl = 'modular_redtard/rockhill/icons/roguetown/clothing/onmob/belt_l.dmi'
 	worn_icon_hipr = 'modular_redtard/rockhill/icons/roguetown/clothing/onmob/belt_r.dmi'
 	inhand_icon_state = null
@@ -81829,6 +86635,8 @@
 	rogue_grid_width = 64
 	rogue_grid_height = 64
 	sewrepair = TRUE
+	max_integrity = 300
+	integrity_failure = 0
 	worn_icon_hipl = 'modular_redtard/rockhill/icons/roguetown/clothing/onmob/belt_l.dmi'
 	worn_icon_hipr = 'modular_redtard/rockhill/icons/roguetown/clothing/onmob/belt_r.dmi'
 	inhand_icon_state = null
@@ -81946,6 +86754,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 300
+	integrity_failure = 0
 	worn_icon_hipl = 'modular_redtard/rockhill/icons/roguetown/clothing/onmob/belt_l.dmi'
 	worn_icon_hipr = 'modular_redtard/rockhill/icons/roguetown/clothing/onmob/belt_r.dmi'
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/storage_lefthand.dmi'
@@ -81970,6 +86780,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 64
 	rogue_grid_height = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/gadgets_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/gadgets_righthand.dmi'
 	inhand_icon_state = null
@@ -81992,6 +86804,8 @@
 	worn_y_dimension = 32
 	smeltresult = /obj/item/ingot/iron
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 300
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/belts_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/belts_righthand.dmi'
 	inhand_icon_state = null
@@ -82014,6 +86828,7 @@
 	worn_y_dimension = 32
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 400
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/belts_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/belts_righthand.dmi'
 	inhand_icon_state = null
@@ -82036,6 +86851,8 @@
 	worn_y_dimension = 32
 	smeltresult = /obj/item/ingot/bronze
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 400
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -82061,6 +86878,8 @@
 	inhand_x_dimension = 64
 	inhand_y_dimension = 64
 	anvilrepair = /datum/attribute/skill/craft/blacksmithing
+	max_integrity = 200
+	integrity_failure = 0
 	inhand_icon_state = null
 	worn_icon = 'modular_redtard/rockhill/icons/blank_worn.dmi'
 	worn_icon_state = null
@@ -83021,6 +87840,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 300
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/storage_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/storage_righthand.dmi'
 	inhand_icon_state = null
@@ -83101,6 +87922,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 300
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/storage_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/clothing/storage_righthand.dmi'
 	inhand_icon_state = "gamesatchel~2"
@@ -83122,6 +87945,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 64
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/dice_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/dice_righthand.dmi'
 	inhand_icon_state = null
@@ -83317,11 +88142,59 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR
+	max_integrity = 300
+	integrity_failure = 0
 	inhand_icon_state = null
 	worn_icon_state = "cbag"
 	storage_type = /datum/storage/rogue_grid/roguetown/sack
 
 /obj/item/storage/roguebag/food
+	name = "sack"
+	desc = "A sack of rough cloth meant for peasantry."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/misc.dmi'
+	icon_state = "cbag"
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 0
+	lefthand_file = 'modular_redtard/rockhill/icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/mob/inhands/items_righthand.dmi'
+	worn_icon = 'modular_redtard/rockhill/icons/roguetown/clothing/onmob/head_items.dmi'
+	slot_flags = ITEM_SLOT_HEAD
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_grid_width = 32
+	rogue_grid_height = 64
+	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR
+	inhand_icon_state = null
+	worn_icon_state = "cbag"
+	storage_type = /datum/storage/rogue_grid/roguetown/sack
+
+/obj/item/storage/roguebag/heartfelt/armorer
+	name = "sack"
+	desc = "A sack of rough cloth meant for peasantry."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/misc.dmi'
+	icon_state = "cbag"
+	w_class = WEIGHT_CLASS_NORMAL
+	force = 0
+	lefthand_file = 'modular_redtard/rockhill/icons/mob/inhands/items_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/mob/inhands/items_righthand.dmi'
+	worn_icon = 'modular_redtard/rockhill/icons/roguetown/clothing/onmob/head_items.dmi'
+	slot_flags = ITEM_SLOT_HEAD
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_grid_width = 32
+	rogue_grid_height = 64
+	flags_inv = HIDEEARS | HIDEFACE | HIDEHAIR | HIDEFACIALHAIR
+	inhand_icon_state = null
+	worn_icon_state = "cbag"
+	storage_type = /datum/storage/rogue_grid/roguetown/sack
+
+/obj/item/storage/roguebag/slaver/master
 	name = "sack"
 	desc = "A sack of rough cloth meant for peasantry."
 	icon = 'modular_redtard/rockhill/icons/roguetown/items/misc.dmi'
@@ -83358,6 +88231,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 64
 	sellprice = 40
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular/Neu_Food/icons/cookware/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -83379,6 +88254,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 96
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/structure_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/misc/structure_righthand.dmi'
 	inhand_icon_state = null
@@ -83440,6 +88317,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null
@@ -83462,6 +88341,8 @@
 	worn_y_dimension = 32
 	rogue_grid_width = 32
 	rogue_grid_height = 32
+	max_integrity = 50
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/obj/toy_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/obj/toy_righthand.dmi'
 	inhand_icon_state = null
@@ -83481,6 +88362,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/produce_righthand.dmi'
 	inhand_icon_state = null
@@ -83506,6 +88389,8 @@
 	worn_y_dimension = 32
 	sellprice = 15
 	sewrepair = TRUE
+	integrity_failure = 0
+	equip_delay_self = 50
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/twstrap_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/modular_azurepeak/icons/obj/items/twstrap_righthand.dmi'
 	inhand_icon_state = null
@@ -83524,6 +88409,8 @@
 	rogue_sleeved = null
 	worn_x_dimension = 32
 	worn_y_dimension = 32
+	max_integrity = 200
+	integrity_failure = 0
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/underworld/enigma_husks_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/underworld/enigma_husks_righthand.dmi'
 	inhand_icon_state = null
@@ -83547,6 +88434,8 @@
 	rogue_grid_width = 32
 	rogue_grid_height = 32
 	sewrepair = TRUE
+	max_integrity = 200
+	integrity_failure = 0.1
 	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_lefthand.dmi'
 	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/misc_righthand.dmi'
 	inhand_icon_state = null

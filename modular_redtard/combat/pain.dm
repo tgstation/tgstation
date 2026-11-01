@@ -7,6 +7,15 @@
 	/// When the pain is next weighed (Ratwood mob_timers["painstun"]).
 	var/rogue_pain_next = 0
 
+/mob/living/carbon
+	/// A wound's pain changed without damage that would refresh the HUD (Ratwood mark_pain_hud_dirty()): the heart is redrawn
+	/// on the next Life tick.
+	var/rogue_pain_hud_dirty = FALSE
+
+/datum/wound
+	/// The pain healing has eased (Ratwood heal_wound(): woundpain falls by half of what is healed).
+	var/rogue_pain_eased = 0
+
 /datum/element/rogue_pain
 
 /datum/element/rogue_pain/Attach(datum/target)
@@ -28,6 +37,9 @@
 
 /datum/element/rogue_pain/proc/on_life(mob/living/carbon/human/source, seconds_per_tick)
 	SIGNAL_HANDLER
+	if(source.rogue_pain_hud_dirty)
+		source.rogue_pain_hud_dirty = FALSE
+		source.update_health_hud()
 	if(world.time >= source.rogue_pain_next && !source.stat && !HAS_TRAIT(source, TRAIT_NOPAIN))
 		INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living/carbon/human, rogue_pain_check))
 
@@ -36,14 +48,28 @@
 	if(damage > 0)
 		INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living/carbon/human, rogue_pain_react), damage, damagetype)
 
-/// Ratwood's woundpain for a TG wound: what a wound of the same kind hurts in Ratwood.
+/// Ratwood's woundpain for a TG wound: what a wound of the same kind hurts in Ratwood, less what healing has eased of it.
+/// Ratwood's own wounds count theirs (combat/wounds.dm).
 /datum/wound/proc/rogue_pain()
+	return max(rogue_base_pain() - rogue_pain_eased, 0)
+
+/// What a fresh wound of this kind and size hurts in Ratwood.
+/datum/wound/proc/rogue_base_pain()
 	return 0
 
-/datum/wound/slash/flesh/rogue_pain()
+/// Ratwood heal_wound(): healing eases the pain of the wound by half of what it heals, never below none.
+/datum/wound/proc/rogue_ease_pain(amount)
+	var/eased = min(rogue_pain(), round(amount / 2, DAMAGE_PRECISION))
+	if(eased <= 0)
+		return
+	rogue_pain_eased += eased
+	if(victim)
+		victim.rogue_pain_hud_dirty = TRUE
+
+/datum/wound/slash/flesh/rogue_base_pain()
 	return rogue_cut_pain()
 
-/datum/wound/pierce/bleed/rogue_pain()
+/datum/wound/pierce/bleed/rogue_base_pain()
 	return rogue_cut_pain()
 
 /// A cut or a stab: a critical one is an opened artery (combat/blood.dm).
@@ -58,13 +84,13 @@
 	return severity >= WOUND_SEVERITY_SEVERE ? ROGUE_PAIN_CUT_SEVERE : ROGUE_PAIN_CUT_MODERATE
 
 /// A dislocation, or a fracture from severe up.
-/datum/wound/blunt/bone/rogue_pain()
+/datum/wound/blunt/bone/rogue_base_pain()
 	return severity >= WOUND_SEVERITY_SEVERE ? ROGUE_PAIN_FRACTURE : ROGUE_PAIN_DISLOCATION
 
-/datum/wound/cranial_fissure/rogue_pain()
+/datum/wound/cranial_fissure/rogue_base_pain()
 	return ROGUE_PAIN_FRACTURE
 
-/datum/wound/burn/flesh/rogue_pain()
+/datum/wound/burn/flesh/rogue_base_pain()
 	switch(severity)
 		if(WOUND_SEVERITY_CRITICAL)
 			return ROGUE_PAIN_BURN_CRITICAL
@@ -72,8 +98,13 @@
 			return ROGUE_PAIN_BURN_SEVERE
 	return ROGUE_PAIN_BURN_MODERATE
 
-/datum/wound/rogue_stump/rogue_pain()
+/datum/wound/rogue_stump/rogue_base_pain()
 	return ROGUE_STUMP_PAIN * (stumps - sewn) + ROGUE_STUMP_SEWN_PAIN * sewn
+
+/// A stump eases by half of what searing and medicine have closed of it (its integrity, combat/dismember.dm), as Ratwood's
+/// cauterize_wound() and heal_wound() ease its woundpain.
+/datum/wound/rogue_stump/rogue_pain()
+	return max(rogue_base_pain() - max(ROGUE_STUMP_INTEGRITY * stumps - integrity, 0) / 2, 0)
 
 /// The most a limb can hurt, wounds included (Ratwood max_pain_damage).
 /obj/item/bodypart/proc/rogue_max_pain()

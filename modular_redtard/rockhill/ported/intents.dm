@@ -2446,6 +2446,30 @@
 	tshield = FALSE
 	hitsound = list('modular_redtard/rockhill/sound/combat/hits/blunt/metalblunt (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/blunt/metalblunt (2).ogg', 'modular_redtard/rockhill/sound/combat/hits/blunt/metalblunt (3).ogg')
 
+/datum/intent/maul/spiked
+	name = "perforating strike"
+	desc = ""
+	icon_state = "intear"
+	blade_class = "pierce"
+	item_d_type = "blunt"
+	attack_verb = list("rends", "hammers", "wallops")
+	damfactor = 1
+	penfactor = 0
+	clickcd = 16
+	releasedrain = 1
+	misscost = 1
+	reach = 1
+	chargetime = 0
+	swingdelay = 0
+	intent_intdamage_factor = 1.4
+	canparry = TRUE
+	candodge = TRUE
+	no_attack = FALSE
+	unarmed = FALSE
+	tranged = FALSE
+	tshield = FALSE
+	hitsound = list('modular_redtard/rockhill/sound/combat/hits/bladed/genthrust (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/bladed/genthrust (2).ogg')
+
 /datum/intent/pforkdump
 	name = "scoop"
 	desc = ""

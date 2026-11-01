@@ -781,6 +781,17 @@
 	rogue_sound = 'modular_redtard/rockhill/sound/foley/bandage.ogg'
 	rogue_xp = 0
 
+/datum/crafting_recipe/roguetown/arcana/ritechalk_unholy
+	name = "ritual chalk (unholy)"
+	result = /obj/item/ritechalk
+	reqs = list(/obj/item/rogueore/cinnabar = 1, /datum/reagent/water/cursed = 15)
+	category = "Miracles"
+	rogue_skill = /datum/attribute/skill/magic/holy
+	rogue_difficulty = 2
+	rogue_on_table = TRUE
+	rogue_sound = 'modular_redtard/rockhill/sound/foley/bandage.ogg'
+	rogue_xp = 0
+
 /datum/crafting_recipe/roguetown/arcana/shimmeringlens
 	name = "shimmering lens"
 	result = /obj/item/clothing/ring/active/shimmeringlens
@@ -970,7 +981,7 @@
 	result = /obj/item/natural/fibers
 	reqs = list(/obj/item/flashlight/flare/torch = 1)
 	rogue_results = list(/obj/item/grown/log/tree/stick)
-	blacklist = list(/obj/item/flashlight/flare/torch/everburning, /obj/item/flashlight/flare/torch/lantern, /obj/item/flashlight/flare/torch/lantern/bronzelamptern, /obj/item/flashlight/flare/torch/lantern/copper, /obj/item/flashlight/flare/torch/lantern/prelit, /obj/item/flashlight/flare/torch/lantern/psycenser, /obj/item/flashlight/flare/torch/lantern/pumpkin/zizo, /obj/item/flashlight/flare/torch/lantern/voidlamptern, /obj/item/flashlight/flare/torch/metal, /obj/item/flashlight/flare/torch/on, /obj/item/flashlight/flare/torch/red, /obj/item/flashlight/flare/torch/red/on)
+	blacklist = list(/obj/item/flashlight/flare/torch/everburning, /obj/item/flashlight/flare/torch/lantern, /obj/item/flashlight/flare/torch/lantern/bronzelamptern, /obj/item/flashlight/flare/torch/lantern/copper, /obj/item/flashlight/flare/torch/lantern/prelit, /obj/item/flashlight/flare/torch/lantern/psycenser, /obj/item/flashlight/flare/torch/lantern/pumpkin, /obj/item/flashlight/flare/torch/lantern/pumpkin/frown, /obj/item/flashlight/flare/torch/lantern/pumpkin/grin, /obj/item/flashlight/flare/torch/lantern/pumpkin/psy, /obj/item/flashlight/flare/torch/lantern/pumpkin/surprise, /obj/item/flashlight/flare/torch/lantern/pumpkin/ten, /obj/item/flashlight/flare/torch/lantern/pumpkin/woozy, /obj/item/flashlight/flare/torch/lantern/pumpkin/zizo, /obj/item/flashlight/flare/torch/lantern/voidlamptern, /obj/item/flashlight/flare/torch/metal, /obj/item/flashlight/flare/torch/on, /obj/item/flashlight/flare/torch/red, /obj/item/flashlight/flare/torch/red/on)
 	category = "Other"
 	rogue_skill = null
 	rogue_difficulty = 0
@@ -1059,7 +1070,7 @@
 	name = "coppiette"
 	result = /obj/item/reagent_containers/food/snacks/rogue/meat/coppiette
 	reqs = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1, /obj/item/reagent_containers/powder/salt = 1)
-	blacklist = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/fried, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/gnoll, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/gnoll/seared, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/vilespawn, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/garlick)
+	blacklist = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak/bear, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/bear/fried, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/beetle, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/beetle/cooked, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/fried, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/gnoll, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/gnoll/seared, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/rat, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/rat/fried, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/troll, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/troll/fried, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/vilespawn, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/garlick, /obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/garlick/cucumber)
 	category = "Cooking"
 	rogue_skill = /datum/attribute/skill/craft/cooking
 	rogue_structure = /obj/machinery/tanningrack
@@ -1772,7 +1783,7 @@
 	name = "blessed seed powder"
 	result = /obj/item/alch/blessedseedpowder
 	reqs = list(/obj/item/seeds/treesap = 1, /datum/reagent/water/blessed = 10)
-	tool_paths = list(/obj/item/pestle)
+	tool_paths = list(/obj/item/pestle/rogue)
 	category = "Druidic Trickery"
 	rogue_skill = /datum/attribute/skill/magic/druidic
 	rogue_verb = "prepares"
@@ -12340,7 +12351,7 @@
 	name = "dye brush"
 	result = /obj/item/dye_brush
 	reqs = list(/obj/item/grown/log/tree/stick = 2, /obj/item/natural/fur = 1)
-	blacklist = list(/obj/item/natural/fur/bobcat, /obj/item/natural/fur/direbear, /obj/item/natural/fur/fox, /obj/item/natural/fur/rat, /obj/item/natural/fur/wolf)
+	blacklist = list(/obj/item/natural/fur/bobcat, /obj/item/natural/fur/direbear, /obj/item/natural/fur/fox, /obj/item/natural/fur/goat, /obj/item/natural/fur/rabbit, /obj/item/natural/fur/rat, /obj/item/natural/fur/wolf)
 	category = "Crafting"
 	rogue_skill = /datum/attribute/skill/craft/crafting
 	rogue_sound = 'modular_redtard/rockhill/sound/foley/bandage.ogg'
@@ -12734,7 +12745,7 @@
 
 /datum/crafting_recipe/roguetown/survival/pestle
 	name = "stone pestle"
-	result = /obj/item/pestle
+	result = /obj/item/pestle/rogue
 	reqs = list(/obj/item/natural/stone = 1)
 	category = "Crafting"
 	rogue_skill = /datum/attribute/skill/craft/crafting
@@ -13091,7 +13102,7 @@
 	name = "rucksack"
 	result = /obj/item/storage/backpack/rogue/backpack/bagpack
 	reqs = list(/obj/item/storage/roguebag = 1, /obj/item/rope = 1)
-	blacklist = list(/obj/item/rope/chain, /obj/item/rope/chain/bindingshackles, /obj/item/rope/chain/bindingshackles/t2, /obj/item/rope/chain/bindingshackles/t3, /obj/item/rope/chain/bindingshackles/t4, /obj/item/rope/chain/bindingshackles/t5, /obj/item/rope/inqarticles/inquirycord, /obj/item/storage/roguebag/food)
+	blacklist = list(/obj/item/rope/chain, /obj/item/rope/chain/bindingshackles, /obj/item/rope/chain/bindingshackles/t2, /obj/item/rope/chain/bindingshackles/t3, /obj/item/rope/chain/bindingshackles/t4, /obj/item/rope/chain/bindingshackles/t5, /obj/item/rope/inqarticles/inquirycord, /obj/item/storage/roguebag/food, /obj/item/storage/roguebag/heartfelt/armorer, /obj/item/storage/roguebag/slaver/master)
 	category = "Crafting"
 	rogue_skill = /datum/attribute/skill/craft/crafting
 	rogue_difficulty = 0
@@ -13104,7 +13115,7 @@
 	rogue_results = null
 	tool_paths = null
 	parts = null
-	blacklist = list(/obj/item/rope/chain, /obj/item/rope/chain/bindingshackles, /obj/item/rope/chain/bindingshackles/t2, /obj/item/rope/chain/bindingshackles/t3, /obj/item/rope/chain/bindingshackles/t4, /obj/item/rope/chain/bindingshackles/t5, /obj/item/rope/inqarticles/inquirycord, /obj/item/storage/roguebag/food)
+	blacklist = list(/obj/item/rope/chain, /obj/item/rope/chain/bindingshackles, /obj/item/rope/chain/bindingshackles/t2, /obj/item/rope/chain/bindingshackles/t3, /obj/item/rope/chain/bindingshackles/t4, /obj/item/rope/chain/bindingshackles/t5, /obj/item/rope/inqarticles/inquirycord, /obj/item/storage/roguebag/food, /obj/item/storage/roguebag/heartfelt/armorer, /obj/item/storage/roguebag/slaver/master)
 	category = "Crafting"
 	rogue_skill = /datum/attribute/skill/craft/crafting
 	rogue_difficulty = 0
@@ -13960,7 +13971,7 @@
 	rogue_results = null
 	tool_paths = null
 	parts = null
-	blacklist = list(/obj/item/flashlight/flare/torch/lantern/bronzelamptern, /obj/item/flashlight/flare/torch/lantern/copper, /obj/item/flashlight/flare/torch/lantern/prelit, /obj/item/flashlight/flare/torch/lantern/psycenser, /obj/item/flashlight/flare/torch/lantern/pumpkin/zizo, /obj/item/flashlight/flare/torch/lantern/voidlamptern)
+	blacklist = list(/obj/item/flashlight/flare/torch/lantern/bronzelamptern, /obj/item/flashlight/flare/torch/lantern/copper, /obj/item/flashlight/flare/torch/lantern/prelit, /obj/item/flashlight/flare/torch/lantern/psycenser, /obj/item/flashlight/flare/torch/lantern/pumpkin, /obj/item/flashlight/flare/torch/lantern/pumpkin/frown, /obj/item/flashlight/flare/torch/lantern/pumpkin/grin, /obj/item/flashlight/flare/torch/lantern/pumpkin/psy, /obj/item/flashlight/flare/torch/lantern/pumpkin/surprise, /obj/item/flashlight/flare/torch/lantern/pumpkin/ten, /obj/item/flashlight/flare/torch/lantern/pumpkin/woozy, /obj/item/flashlight/flare/torch/lantern/pumpkin/zizo, /obj/item/flashlight/flare/torch/lantern/voidlamptern)
 	category = "Masonry"
 	rogue_skill = /datum/attribute/skill/craft/masonry
 	rogue_difficulty = 3

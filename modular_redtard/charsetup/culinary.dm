@@ -95,9 +95,9 @@ GLOBAL_LIST_INIT(rogue_culinary_food_blacklist, list(
 	"/obj/item/reagent_containers/food/snacks/fat",
 ))
 
-/// Ratwood's drinks (init_drinks_with_qualities(): every consumable reagent but soups and its blacklist). Most are its
-/// brews, which this world does not have yet; those that it has (TG's ale, beer, gin, mead, rum and wine, the module's
-/// coffee, tea and chocolate) are listed.
+/// Ratwood's drinks (init_drinks_with_qualities(): every consumable reagent but soups and its blacklist): its brews
+/// (alchemy/alcohol.dm), TG's ale, beer, gin, mead, rum and wine, and the module's coffee, tea and chocolate. A path this
+/// world lacks is skipped.
 GLOBAL_LIST_INIT(rogue_culinary_drink_paths, list(
 	"/datum/reagent/consumable/Acoffee",
 	"/datum/reagent/consumable/acorn_powder",

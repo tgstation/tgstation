@@ -1013,7 +1013,7 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/effect/lily_petal` | 1 |
 | `/obj/effect/lily_petal/three` | 1 |
 
-## items.dm (3137 types)
+## items.dm (3250 types)
 
 | Type | Tiles |
 |---|---|
@@ -2374,6 +2374,7 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/caparison/astrata` | 0 |
 | `/obj/item/caparison/eora` | 0 |
 | `/obj/item/caparison/fogbeast` | 0 |
+| `/obj/item/caparison/heartfelt` | 0 |
 | `/obj/item/caparison/psy` | 0 |
 | `/obj/item/carvedgem/amber/beaver` | 0 |
 | `/obj/item/carvedgem/amber/bust` | 0 |
@@ -3210,6 +3211,13 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/fishingrod/crafted` | 0 |
 | `/obj/item/flashlight/flare/torch/lantern/prelit` | 0 |
 | `/obj/item/flashlight/flare/torch/lantern/psycenser` | 0 |
+| `/obj/item/flashlight/flare/torch/lantern/pumpkin` | 0 |
+| `/obj/item/flashlight/flare/torch/lantern/pumpkin/frown` | 0 |
+| `/obj/item/flashlight/flare/torch/lantern/pumpkin/grin` | 0 |
+| `/obj/item/flashlight/flare/torch/lantern/pumpkin/psy` | 0 |
+| `/obj/item/flashlight/flare/torch/lantern/pumpkin/surprise` | 0 |
+| `/obj/item/flashlight/flare/torch/lantern/pumpkin/ten` | 0 |
+| `/obj/item/flashlight/flare/torch/lantern/pumpkin/woozy` | 0 |
 | `/obj/item/flashlight/flare/torch/lantern/pumpkin/zizo` | 0 |
 | `/obj/item/flashlight/flare/torch/lantern/voidlamptern` | 0 |
 | `/obj/item/flesh_decoy` | 0 |
@@ -3320,6 +3328,7 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/magic/melded/t5` | 0 |
 | `/obj/item/magic/obsidian` | 0 |
 | `/obj/item/magic/voidstone` | 0 |
+| `/obj/item/merctoken` | 0 |
 | `/obj/item/mimictrinket` | 0 |
 | `/obj/item/mini_flagpole/apothecary` | 0 |
 | `/obj/item/mini_flagpole/artificer` | 0 |
@@ -3338,6 +3347,7 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/mundane/puzzlebox/medium` | 0 |
 | `/obj/item/natural/bowstring` | 0 |
 | `/obj/item/natural/brick` | 0 |
+| `/obj/item/natural/chaff/rice` | 0 |
 | `/obj/item/natural/clay/claybottleclassic` | 0 |
 | `/obj/item/natural/clay/claybrick` | 0 |
 | `/obj/item/natural/clay/claycup` | 0 |
@@ -3385,14 +3395,26 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/natural/cured/essence` | 0 |
 | `/obj/item/natural/dirtclod/sand` | 0 |
 | `/obj/item/natural/fur/bobcat` | 0 |
+| `/obj/item/natural/fur/goat` | 0 |
+| `/obj/item/natural/fur/rabbit` | 0 |
 | `/obj/item/natural/fur/wolf` | 0 |
 | `/obj/item/natural/glass` | 0 |
 | `/obj/item/natural/glass/heated` | 0 |
 | `/obj/item/natural/head/direbear` | 0 |
 | `/obj/item/natural/head/fox` | 0 |
+| `/obj/item/natural/head/goat` | 0 |
+| `/obj/item/natural/head/honeyspider` | 0 |
+| `/obj/item/natural/head/mirelurker` | 0 |
+| `/obj/item/natural/head/mirespider` | 0 |
+| `/obj/item/natural/head/mirespider_paralytic` | 0 |
+| `/obj/item/natural/head/mole` | 0 |
+| `/obj/item/natural/head/rous` | 0 |
+| `/obj/item/natural/head/troll` | 0 |
+| `/obj/item/natural/head/troll/axe` | 0 |
 | `/obj/item/natural/head/volf` | 0 |
 | `/obj/item/natural/hide/cured` | 0 |
 | `/obj/item/natural/rabbitsfoot` | 0 |
+| `/obj/item/natural/shellplant/pumpkin` | 0 |
 | `/obj/item/natural/silk` | 0 |
 | `/obj/item/natural/thorn` | 0 |
 | `/obj/item/necro_relics/necro_crystal` | 0 |
@@ -3411,6 +3433,7 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/phylactery` | 0 |
 | `/obj/item/portable_hookah` | 0 |
 | `/obj/item/powderflask` | 0 |
+| `/obj/item/pumpkinshell` | 0 |
 | `/obj/item/quicksilver/luxinfused` | 0 |
 | `/obj/item/quiver` | 0 |
 | `/obj/item/quiver/Warrows` | 0 |
@@ -3440,6 +3463,8 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/reagent_containers/food/snacks/grown/coffeebeans` | 0 |
 | `/obj/item/reagent_containers/food/snacks/grown/coffeebeans_spiced` | 0 |
 | `/obj/item/reagent_containers/food/snacks/grown/coffeebeansroasted` | 0 |
+| `/obj/item/reagent_containers/food/snacks/grown/cucumber` | 0 |
+| `/obj/item/reagent_containers/food/snacks/grown/eggplant` | 0 |
 | `/obj/item/reagent_containers/food/snacks/grown/fruit/blackberry` | 0 |
 | `/obj/item/reagent_containers/food/snacks/grown/fruit/blackberry/skysugarbase` | 0 |
 | `/obj/item/reagent_containers/food/snacks/grown/fruit/blackberry_sugared` | 0 |
@@ -3484,6 +3509,7 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/reagent_containers/food/snacks/grown/sugarshape/tree` | 0 |
 | `/obj/item/reagent_containers/food/snacks/grown/sugarshape/zmark` | 0 |
 | `/obj/item/reagent_containers/food/snacks/grown/tea` | 0 |
+| `/obj/item/reagent_containers/food/snacks/grown/vegetable/turnip` | 0 |
 | `/obj/item/reagent_containers/food/snacks/pepper` | 0 |
 | `/obj/item/reagent_containers/food/snacks/pumpkinspice` | 0 |
 | `/obj/item/reagent_containers/food/snacks/roastseeds` | 0 |
@@ -3506,15 +3532,25 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/reagent_containers/food/snacks/rogue/cookieslicer` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/dough_base` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/doughslice` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/eggplantcarved` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/eggplantmeat` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/eggplantstuffedraw` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/flatdough` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/foodbase/cheesewheel` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/foodbase/chickentender` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/foodbase/cookie_raw` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/foodbase/cookier_raw` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/foodbase/halfcookie_raw` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/foodbase/halfcookier_raw` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/apple` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/berry` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/cabbage` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/crab` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/fish` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/meat` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/mushroom` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/potato` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/foodbase/nitzel` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/foodbase/piebottom` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/foodbase/schnitzel` | 0 |
@@ -3539,8 +3575,13 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/reagent_containers/food/snacks/rogue/fryfish/sole` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/fryfish/sunny` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/handpie` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/handpie/apple` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/handpie/berry` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/handpie/cabbage` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/handpie/crab` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/handpie/fish` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/handpie/meat` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/handpie/potato` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/honey/spider` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/lemoncoppiette` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat` | 0 |
@@ -3554,26 +3595,69 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/fatty/roast` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/fish` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/fish/fried` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/ham/boar` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/ham/sliced` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/ham/steamed` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/mince/poultry` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/mince/rabbit` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/mince/spider` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/nitzel` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/nitzel/schnitzel` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/nitzel/wiener` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/pork_belly` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/butter` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/doublestacked` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/spiced` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/spiced/ducal` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/poultry/cutlet` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/poultry/cutlet/fried` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried/garlick` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/rabbit/fried/garlick/cucumber` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga/cooked` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins/cooked` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins/cooked/sauced` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins_z` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins_z/cooked` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_loins_z/cooked/cubed` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime/cooked` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime/cooked/choice` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime/cooked/choice/butter` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime_z` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime_z/cooked` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_prime_z/cooked/roses` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs/cooked` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs/cooked/glazed` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs_z` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs_z/cooked` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs_z/cooked/crown` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_z` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_z/cooked` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_z/cooked/meatloaf` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_z/cooked/meatloaf_slice` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/shellfish` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/shellfish/fried` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/spider/fried` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/steak/bear` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/steak/bear/fried` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/steak/beetle` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/steak/beetle/cooked` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/steak/fried` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/steak/gnoll` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/steak/gnoll/seared` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/steak/rat` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/steak/rat/fried` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/steak/troll` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/steak/troll/fried` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/steak/vilespawn` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/garlick` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/meat/steak/wolf/fried/garlick/cucumber` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/onionplaice` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/onionsteak` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/pastry` | 0 |
@@ -3585,15 +3669,21 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/reagent_containers/food/snacks/rogue/pie/cooked/crab` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/pie/cooked/meat` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/pie/cooked/meat/fish` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/pie/cooked/meat/spider` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/pie/cooked/pot` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/pie/cooked/pumpkin` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/piedough` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/pieslice` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/pieslice/pumpkin` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/preserved/cabbage_fried` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/preserved/carrot_baked` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/preserved/eggplantstuffed` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/preserved/eggplantstuffedcheese` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/preserved/onion_fried` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/preserved/potato_baked` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/preserved/potato_fried` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/preserved/pumpkin_mashed` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/preserved/rice_cooked` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/raisins/blackberry` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/raisins/lemon` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/raisins/lime` | 0 |
@@ -3602,9 +3692,22 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/reagent_containers/food/snacks/rogue/raisins/raspberry` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/raisins/strawberry` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/raisins/tangerine` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/ricebeef` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/ricebeefcar` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/ricebird` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/ricebirdcar` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/ricecheese` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/riceegg` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/riceeggcheese` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/ricepork` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/riceporkcuc` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/riceshrimp` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/riceshrimpcar` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/ricewet` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/sandwich/bacon` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/sandwich/cheese` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/sandwich/egg` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/sandwich/ham` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/sandwich/salami` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/sandwich/salo` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/steakcarrotonion` | 0 |
@@ -3612,6 +3715,7 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/reagent_containers/food/snacks/rogue/trailmix` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/truffles/cooked` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/veg/cabbage_sliced` | 0 |
+| `/obj/item/reagent_containers/food/snacks/rogue/veg/cucumber_sliced` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/veg/garlick_clove` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/veg/potato_sliced` | 0 |
 | `/obj/item/reagent_containers/food/snacks/rogue/wienercabbage` | 0 |
@@ -3638,6 +3742,7 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/reagent_containers/food/snacks/sugarstatue/tree` | 0 |
 | `/obj/item/reagent_containers/food/snacks/sugarstatue/zmark` | 0 |
 | `/obj/item/reagent_containers/food/snacks/tallow/soft` | 0 |
+| `/obj/item/reagent_containers/food/snacks/veg/turnip_sliced` | 0 |
 | `/obj/item/reagent_containers/glass/bottle/alchemical/conpot` | 0 |
 | `/obj/item/reagent_containers/glass/bottle/alchemical/endpot` | 0 |
 | `/obj/item/reagent_containers/glass/bottle/alchemical/intpot` | 0 |
@@ -3717,6 +3822,7 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/repair_kit/metal` | 0 |
 | `/obj/item/repair_kit/metal/bad` | 0 |
 | `/obj/item/rogue/instrument/ztratocaster` | 0 |
+| `/obj/item/roguecoin/silver/pile/wretchpile` | 0 |
 | `/obj/item/roguegear` | 0 |
 | `/obj/item/roguegear/wood/reliable` | 0 |
 | `/obj/item/roguegear/wood/unstable` | 0 |
@@ -3724,6 +3830,7 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/roguegem/amber` | 0 |
 | `/obj/item/roguegem/amethyst/naledi` | 0 |
 | `/obj/item/roguegem/blood_diamond` | 0 |
+| `/obj/item/roguegem/chitin` | 0 |
 | `/obj/item/roguegem/coral` | 0 |
 | `/obj/item/roguegem/houndgem` | 0 |
 | `/obj/item/roguegem/jade` | 0 |
@@ -3857,6 +3964,8 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/rogueweapon/mace/gold/king` | 0 |
 | `/obj/item/rogueweapon/mace/maul` | 0 |
 | `/obj/item/rogueweapon/mace/maul/grand` | 0 |
+| `/obj/item/rogueweapon/mace/maul/spiked` | 0 |
+| `/obj/item/rogueweapon/mace/maul/steel` | 0 |
 | `/obj/item/rogueweapon/mace/oar` | 0 |
 | `/obj/item/rogueweapon/mace/steel/ancient/decrepit` | 0 |
 | `/obj/item/rogueweapon/mace/steel/silver` | 0 |
@@ -4065,7 +4174,9 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/seal/prelate` | 0 |
 | `/obj/item/seal/steward` | 0 |
 | `/obj/item/seal/watchcaptain` | 0 |
+| `/obj/item/seeds/fyritius` | 0 |
 | `/obj/item/seeds/treesap` | 0 |
+| `/obj/item/seeds/turnip` | 0 |
 | `/obj/item/smokeshell` | 0 |
 | `/obj/item/sprue_funnel` | 0 |
 | `/obj/item/storage/backpack/rogue/artibackpack` | 0 |
@@ -4142,6 +4253,8 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/storage/magebag/starter` | 0 |
 | `/obj/item/storage/magebag/witch` | 0 |
 | `/obj/item/storage/meatbag` | 0 |
+| `/obj/item/storage/roguebag/heartfelt/armorer` | 0 |
+| `/obj/item/storage/roguebag/slaver/master` | 0 |
 | `/obj/item/tent_kit` | 0 |
 | `/obj/item/tent_kit/ger` | 0 |
 | `/obj/item/tent_kit/yurt` | 0 |
@@ -4490,8 +4603,10 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 - `modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_fruits.dmi` from Ratwood `modular/Neu_Food/icons/cooked/cooked_fruits.dmi`
 - `modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat.dmi` from Ratwood `modular/Neu_Food/icons/cooked/cooked_meat.dmi`
 - `modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi` from Ratwood `modular/Neu_Food/icons/cooked/cooked_meat_meal.dmi`
+- `modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_meat_saiga.dmi` from Ratwood `modular/Neu_Food/icons/cooked/cooked_meat_saiga.dmi`
 - `modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_pastry.dmi` from Ratwood `modular/Neu_Food/icons/cooked/cooked_pastry.dmi`
 - `modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_pies.dmi` from Ratwood `modular/Neu_Food/icons/cooked/cooked_pies.dmi`
+- `modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_rice.dmi` from Ratwood `modular/Neu_Food/icons/cooked/cooked_rice.dmi`
 - `modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_seafood.dmi` from Ratwood `modular/Neu_Food/icons/cooked/cooked_seafood.dmi`
 - `modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_seafood_meal.dmi` from Ratwood `modular/Neu_Food/icons/cooked/cooked_seafood_meal.dmi`
 - `modular_redtard/rockhill/icons/modular/Neu_Food/icons/cooked/cooked_veggies.dmi` from Ratwood `modular/Neu_Food/icons/cooked/cooked_veggies.dmi`
@@ -4519,6 +4634,7 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 - `modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_fish.dmi` from Ratwood `modular/Neu_Food/icons/raw/raw_fish.dmi`
 - `modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_fruit.dmi` from Ratwood `modular/Neu_Food/icons/raw/raw_fruit.dmi`
 - `modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat.dmi` from Ratwood `modular/Neu_Food/icons/raw/raw_meat.dmi`
+- `modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_meat_saiga.dmi` from Ratwood `modular/Neu_Food/icons/raw/raw_meat_saiga.dmi`
 - `modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_pies.dmi` from Ratwood `modular/Neu_Food/icons/raw/raw_pies.dmi`
 - `modular_redtard/rockhill/icons/modular/Neu_Food/icons/raw/raw_veggies.dmi` from Ratwood `modular/Neu_Food/icons/raw/raw_veggies.dmi`
 - `modular_redtard/rockhill/icons/modular/icons/mob/collars_leashes.dmi` from Ratwood `modular/icons/mob/collars_leashes.dmi`
@@ -4529,6 +4645,7 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 - `modular_redtard/rockhill/icons/modular/icons/obj/lewd/chastity.dmi` from Ratwood `modular/icons/obj/lewd/chastity.dmi`
 - `modular_redtard/rockhill/icons/modular/icons/obj/lewd/dildo.dmi` from Ratwood `modular/icons/obj/lewd/dildo.dmi`
 - `modular_redtard/rockhill/icons/modular/icons/obj/pillory.dmi` from Ratwood `modular/icons/obj/pillory.dmi`
+- `modular_redtard/rockhill/icons/modular_azurepeak/icons/clothing/mercmedals.dmi` from Ratwood `modular_azurepeak/icons/clothing/mercmedals.dmi`
 - `modular_redtard/rockhill/icons/modular_azurepeak/icons/obj/items/Hurlstrap.dmi` from Ratwood `modular_azurepeak/icons/obj/items/Hurlstrap.dmi`
 - `modular_redtard/rockhill/icons/modular_azurepeak/icons/obj/items/bombdolier.dmi` from Ratwood `modular_azurepeak/icons/obj/items/bombdolier.dmi`
 - `modular_redtard/rockhill/icons/modular_azurepeak/icons/obj/items/cosmetics.dmi` from Ratwood `modular_azurepeak/icons/obj/items/cosmetics.dmi`
@@ -5479,6 +5596,8 @@ Area music and ambience are kept in the repository, as Ratwood keeps them, and r
 - `modular_redtard/rockhill/sound/combat/hits/bladed/genstab (1).ogg` from Ratwood `sound/combat/hits/bladed/genstab (1).ogg`
 - `modular_redtard/rockhill/sound/combat/hits/bladed/genstab (2).ogg` from Ratwood `sound/combat/hits/bladed/genstab (2).ogg`
 - `modular_redtard/rockhill/sound/combat/hits/bladed/genstab (3).ogg` from Ratwood `sound/combat/hits/bladed/genstab (3).ogg`
+- `modular_redtard/rockhill/sound/combat/hits/bladed/genthrust (1).ogg` from Ratwood `sound/combat/hits/bladed/genthrust (1).ogg`
+- `modular_redtard/rockhill/sound/combat/hits/bladed/genthrust (2).ogg` from Ratwood `sound/combat/hits/bladed/genthrust (2).ogg`
 - `modular_redtard/rockhill/sound/combat/hits/bladed/smallslash (1).ogg` from Ratwood `sound/combat/hits/bladed/smallslash (1).ogg`
 - `modular_redtard/rockhill/sound/combat/hits/bladed/smallslash (2).ogg` from Ratwood `sound/combat/hits/bladed/smallslash (2).ogg`
 - `modular_redtard/rockhill/sound/combat/hits/bladed/smallslash (3).ogg` from Ratwood `sound/combat/hits/bladed/smallslash (3).ogg`

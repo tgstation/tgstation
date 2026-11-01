@@ -26,6 +26,9 @@
 		TRAIT_RITUALIST,
 		TRAIT_SELF_AWARE,
 		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_allowed_patrons = list(/datum/patron/psydon)
+	rogue_social_rank = 3
 
 /datum/job/roguetown/adventurer
 	title = JOB_ROCKHILL_ADVENTURER
@@ -84,6 +87,8 @@
 		TRAIT_CIVILIZEDBARBARIAN,
 		TRAIT_OUTLANDER,
 		)
+	rogue_wanderer_examine = TRUE
+	rogue_advjob_examine = TRUE
 
 /datum/job/roguetown/adventurer/courtagent
 	title = JOB_ROCKHILL_COURT_AGENT
@@ -142,6 +147,8 @@
 		TRAIT_CIVILIZEDBARBARIAN,
 		TRAIT_OUTLANDER,
 		)
+	rogue_wanderer_examine = TRUE
+	rogue_advjob_examine = TRUE
 
 /datum/job/roguetown/adventurer/courtslave
 	title = JOB_ROCKHILL_ENSLAVED_ADVENTURER
@@ -200,6 +207,8 @@
 		TRAIT_CIVILIZEDBARBARIAN,
 		TRAIT_OUTLANDER,
 		)
+	rogue_wanderer_examine = TRUE
+	rogue_advjob_examine = TRUE
 
 /datum/job/roguetown/apothecary
 	title = JOB_ROCKHILL_APOTHECARY
@@ -219,6 +228,7 @@
 		TRAIT_NOSTINK,
 		TRAIT_EMPATH,
 		)
+	rogue_social_rank = 3
 
 /datum/job/roguetown/archivist
 	title = JOB_ROCKHILL_ARCHIVIST
@@ -243,6 +253,7 @@
 		TRAIT_SURVIVAL_EXPERT,
 		TRAIT_HOMESTEAD_EXPERT,
 		)
+	rogue_social_rank = 3
 
 /datum/job/roguetown/barkeep
 	title = JOB_ROCKHILL_INNKEEPER
@@ -264,6 +275,7 @@
 		TRAIT_CICERONE,
 		TRAIT_HOMESTEAD_EXPERT,
 		)
+	rogue_social_rank = 3
 
 /datum/job/roguetown/baron
 	title = JOB_ROCKHILL_BARON
@@ -288,6 +300,7 @@
 	alternate_titles = list(
 		"Baroness",
 		)
+	rogue_social_rank = 5
 
 /datum/job/roguetown/baron_retainer
 	title = JOB_ROCKHILL_RETAINER
@@ -310,6 +323,7 @@
 		TRAIT_HEAVYARMOR,
 		TRAIT_STEELHEARTED,
 		)
+	rogue_social_rank = 3
 
 /datum/job/roguetown/butler
 	title = JOB_ROCKHILL_SENESCHAL
@@ -337,10 +351,11 @@
 		TRAIT_ROYALSERVANT,
 		TRAIT_ROYAL_SUBSIDY,
 		)
+	rogue_social_rank = 3
 
 /datum/job/roguetown/captain
 	title = JOB_ROCKHILL_KNIGHT_CAPTAIN
-	description = "Your lineage is noble, and generations of strong, loyal knights have come before you. You served your time gracefully as knight of his royal majesty, and now you've grown into a role which many men can only dream of becoming. Veteran among knights, you lead the crown's knights to battle and organize the training squires. Obey the Marshal and the Crown. Lead your men to victory--and keep them in line--and you will see this realm prosper under a thousand suns."
+	description = "Your lineage is noble, and generations of strong, loyal knights and men-at-arms have come before you. You served your time gracefully as knight of his royal majesty, and now you've grown into a role which many men can only dream of becoming. Veteran among knights, you lead the crown's knights and loyal men at arms into battle and organize the training squires. Obey only the Marshal and Crown. Lead your men to victory--and keep them in line--and you will see this realm prosper under a thousand suns."
 	total_positions = 1
 	spawn_positions = 1
 	config_tag = "ROCKHILL_CAPTAIN"
@@ -356,6 +371,8 @@
 		TRAIT_NOBLE,
 		TRAIT_GUARDSMAN,
 		)
+	rogue_allowed_races = list("/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/harpy", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/ooze", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_social_rank = 5
 
 /datum/job/roguetown/chaplain
 	title = JOB_ROCKHILL_COURT_CHAPLAIN
@@ -372,6 +389,8 @@
 	rockhill_traits = list(
 		TRAIT_EMPATH,
 		)
+	rogue_allowed_patrons = list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/ravox, /datum/patron/divine/necra, /datum/patron/divine/malum, /datum/patron/divine/eora)
+	rogue_social_rank = 4
 
 /datum/job/roguetown/churchling
 	title = JOB_ROCKHILL_CHURCHLING
@@ -392,6 +411,9 @@
 	rockhill_traits = list(
 		TRAIT_HOMESTEAD_EXPERT,
 		)
+	rogue_allowed_ages = list("Adult")
+	rogue_social_rank = 2
+	rogue_advjob_examine = TRUE
 
 /datum/job/roguetown/clerk
 	title = JOB_ROCKHILL_CLERK
@@ -409,6 +431,8 @@
 		TRAIT_SEEPRICES,
 		TRAIT_ROYAL_SUBSIDY,
 		)
+	rogue_allowed_ages = list("Adult")
+	rogue_social_rank = 3
 
 /datum/job/roguetown/cook
 	title = JOB_ROCKHILL_MANOR_COOK
@@ -426,6 +450,7 @@
 		TRAIT_CICERONE,
 		TRAIT_HOMESTEAD_EXPERT,
 		)
+	rogue_social_rank = 2
 
 /datum/job/roguetown/councillor
 	title = JOB_ROCKHILL_COUNCILLOR
@@ -447,6 +472,8 @@
 		TRAIT_NOBLE,
 		TRAIT_SEEPRICES_SHITTY,
 		)
+	rogue_allowed_races = list("/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/harpy", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/ooze", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_social_rank = 5
 
 /datum/job/roguetown/crier
 	title = JOB_ROCKHILL_TOWN_CRIER
@@ -465,6 +492,8 @@
 		TRAIT_SEEPRICES_SHITTY,
 		TRAIT_HOMESTEAD_EXPERT,
 		)
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/human/halfelf", "/datum/species/elf/dark", "/datum/species/elf/wood", "/datum/species/dwarf/mountain", "/datum/species/tieberian", "/datum/species/aasimar", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/tabaxi", "/datum/species/vulpkanin", "/datum/species/akula", "/datum/species/moth", "/datum/species/dracon", "/datum/species/anthromorph", "/datum/species/anthromorphsmall", "/datum/species/demihuman", "/datum/species/halforc", "/datum/species/kobold", "/datum/species/goblinp", "/datum/species/dullahan", "/datum/species/lamia", "/datum/species/dwarf/gnome", "/datum/species/harpy", "/datum/species/arachnid", "/datum/species/ooze")
+	rogue_social_rank = 3
 
 /datum/job/roguetown/druid
 	title = JOB_ROCKHILL_DRUID
@@ -490,6 +519,8 @@
 	alternate_titles = list(
 		"Druidess",
 		)
+	rogue_allowed_patrons = list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/ravox, /datum/patron/divine/necra, /datum/patron/divine/xylix, /datum/patron/divine/pestra, /datum/patron/divine/malum, /datum/patron/divine/eora)
+	rogue_social_rank = 3
 
 /datum/job/roguetown/dungeoneer
 	title = JOB_ROCKHILL_DUNGEONEER
@@ -514,6 +545,7 @@
 		TRAIT_PURITAN_ADVENTURER,
 		TRAIT_DUNGEONMASTER_LABOR_CAMP,
 		)
+	rogue_social_rank = 3
 
 /datum/job/roguetown/farmer
 	title = JOB_ROCKHILL_SOILSON
@@ -537,6 +569,7 @@
 	alternate_titles = list(
 		"Soilbride",
 		)
+	rogue_social_rank = 2
 
 /datum/job/roguetown/gapprentice
 	title = JOB_ROCKHILL_GUILD_APPRENTICE
@@ -554,6 +587,8 @@
 		TRAIT_TRAINED_SMITH,
 		TRAIT_SMITHING_EXPERT,
 		)
+	rogue_allowed_ages = list("Adult")
+	rogue_social_rank = 2
 
 /datum/job/roguetown/guardsman
 	title = JOB_ROCKHILL_CITY_GUARD
@@ -572,6 +607,7 @@
 		TRAIT_GUARDSMAN,
 		TRAIT_STEELHEARTED,
 		)
+	rogue_social_rank = 3
 
 /datum/job/roguetown/guildmaster
 	title = JOB_ROCKHILL_GUILDMASTER
@@ -595,6 +631,7 @@
 		TRAIT_MASTER_CARPENTER,
 		TRAIT_MASTER_MASON,
 		)
+	rogue_social_rank = 3
 
 /datum/job/roguetown/guildsman
 	title = JOB_ROCKHILL_GUILDSMAN
@@ -619,6 +656,8 @@
 		TRAIT_TRAINED_SMITH,
 		TRAIT_SMITHING_EXPERT,
 		)
+	rogue_social_rank = 3
+	rogue_advjob_examine = TRUE
 
 /datum/job/roguetown/hand
 	title = JOB_ROCKHILL_HAND
@@ -643,6 +682,8 @@
 		TRAIT_NOBLE,
 		TRAIT_EXPERT_HUNTER,
 		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_social_rank = 5
 
 /datum/job/roguetown/heartfelt/hand
 	title = JOB_ROCKHILL_HAND_OF_HEARTFELT
@@ -667,6 +708,7 @@
 		TRAIT_HEARTFELT,
 		TRAIT_STEELHEARTED,
 		)
+	rogue_social_rank = 5
 
 /datum/job/roguetown/heartfelt/knight
 	title = JOB_ROCKHILL_KNIGHT_OF_HEARTFELT
@@ -687,6 +729,8 @@
 		TRAIT_HEARTFELT,
 		TRAIT_GOODTRAINER,
 		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_social_rank = 5
 
 /datum/job/roguetown/heartfelt/lord
 	title = JOB_ROCKHILL_LORD_OF_HEARTFELT
@@ -710,6 +754,8 @@
 		TRAIT_HEAVYARMOR,
 		TRAIT_HEARTFELT,
 		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_social_rank = 5
 
 /datum/job/roguetown/jester
 	title = JOB_ROCKHILL_JESTER
@@ -729,6 +775,7 @@
 		TRAIT_NUTCRACKER,
 		TRAIT_TEMPO,
 		)
+	rogue_social_rank = 4
 
 /datum/job/roguetown/keeper
 	title = JOB_ROCKHILL_KEEPER
@@ -753,6 +800,7 @@
 		TRAIT_RITUALIST,
 		TRAIT_NUMBED_LIMBS,
 		)
+	rogue_allowed_patrons = list(/datum/patron/divine/pestra)
 
 /datum/job/roguetown/knavewench
 	title = JOB_ROCKHILL_TAPSTER
@@ -770,6 +818,7 @@
 		TRAIT_CICERONE,
 		TRAIT_HOMESTEAD_EXPERT,
 		)
+	rogue_social_rank = 2
 
 /datum/job/roguetown/knight
 	title = JOB_ROCKHILL_KNIGHT
@@ -796,6 +845,8 @@
 		TRAIT_GUARDSMAN,
 		TRAIT_EXPERT_HUNTER,
 		)
+	rogue_allowed_races = list("/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/harpy", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/ooze", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_social_rank = 4
 
 /datum/job/roguetown/lord
 	title = JOB_ROCKHILL_GRAND_DUKE
@@ -825,6 +876,8 @@
 		"Duke",
 		"Duchess",
 		)
+	rogue_allowed_races = list("/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/harpy", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/ooze", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_social_rank = 6
 
 /datum/job/roguetown/lunatic
 	title = JOB_ROCKHILL_LUNATIC
@@ -841,6 +894,7 @@
 	rockhill_traits = list(
 		TRAIT_JESTERPHOBIA,
 		)
+	rogue_social_rank = 2
 
 /datum/job/roguetown/magician
 	title = JOB_ROCKHILL_COURT_MAGICIAN
@@ -863,10 +917,12 @@
 		TRAIT_NOBLE,
 		TRAIT_MAGEDEXTERITY,
 		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_social_rank = 5
 
 /datum/job/roguetown/manorguard
 	title = JOB_ROCKHILL_MAN_AT_ARMS
-	description = "Having proven yourself loyal and capable, you are entrusted to defend the town and enforce its laws. Trained regularly in combat and siege warfare, you deal with threats - both within and without. Obey your Sergeant-at-Arms, the Marshal, and the Crown. Show the nobles and knights your respect, so that you may earn it in turn. Not as a commoner, but as a soldier.."
+	description = "Having proven yourself loyal and capable, you are entrusted to defend the keep and enforce its will throughout the city and duchy. Trained regularly in combat and siege warfare, you deal with threats - both within and without. Obey your Marshal, Knight-captain and the Crown. Show the nobles and knights your respect, so that you may earn it in turn. Not as a commoner, but as a soldier.."
 	total_positions = 8
 	spawn_positions = 8
 	config_tag = "ROCKHILL_MANORGUARD"
@@ -889,10 +945,11 @@
 		TRAIT_GUARDSMAN,
 		TRAIT_STEELHEARTED,
 		)
+	rogue_social_rank = 3
 
 /datum/job/roguetown/marshal
 	title = JOB_ROCKHILL_MARSHAL
-	description = "You are an agent of the crown in matters of law and military, making sure that laws are pushed, verified and carried out by the retinue upon the citizenry of the realm. While you preside over the knights and men-at-arms, much of your work happens behind a desk, deferring to the Sergeant-at-Arms or the Knight Captain to make sure your will is carried out in the field."
+	description = "You are an agent of the crown in matters of law and military, making sure that laws are pushed, verified and carried out by the retinue upon the citizenry of the realm. As the ultimate authority on all things military, much of your work happens behind a desk, deferring duties between the Knight Captain, Watch Captain and Master Warden and acting as the primary go-between to ensure the will of the duke, through you, is carried out in the field."
 	total_positions = 1
 	spawn_positions = 1
 	config_tag = "ROCKHILL_MARSHAL"
@@ -911,6 +968,8 @@
 		TRAIT_HEAVYARMOR,
 		TRAIT_PERFECT_TRACKER,
 		)
+	rogue_allowed_races = list("/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/harpy", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/ooze", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_social_rank = 5
 
 /datum/job/roguetown/martyr
 	title = JOB_ROCKHILL_MARTYR
@@ -935,6 +994,9 @@
 		TRAIT_CONVICTION,
 		TRAIT_TEMPO,
 		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_allowed_patrons = list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/ravox, /datum/patron/divine/necra, /datum/patron/divine/xylix, /datum/patron/divine/pestra, /datum/patron/divine/malum, /datum/patron/divine/eora)
+	rogue_social_rank = 5
 
 /datum/job/roguetown/mercenary
 	title = JOB_ROCKHILL_MERCENARY
@@ -993,6 +1055,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_social_rank = 2
 
 /datum/job/roguetown/merchant
 	title = JOB_ROCKHILL_MERCHANT
@@ -1010,6 +1073,7 @@
 		TRAIT_SEEPRICES,
 		TRAIT_CICERONE,
 		)
+	rogue_social_rank = 3
 
 /datum/job/roguetown/monk
 	title = JOB_ROCKHILL_ACOLYTE
@@ -1027,6 +1091,8 @@
 		TRAIT_RITUALIST,
 		TRAIT_HOMESTEAD_EXPERT,
 		)
+	rogue_allowed_patrons = list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/ravox, /datum/patron/divine/necra, /datum/patron/divine/xylix, /datum/patron/divine/pestra, /datum/patron/divine/malum, /datum/patron/divine/eora)
+	rogue_social_rank = 4
 
 /datum/job/roguetown/nightmaiden
 	title = JOB_ROCKHILL_BATHHOUSE_ATTENDANT
@@ -1057,6 +1123,9 @@
 		"Nightswain",
 		"Nightmaiden",
 		)
+	rogue_allowed_ages = list("Adult", "Middle-Aged")
+	rogue_social_rank = 2
+	rogue_advjob_examine = TRUE
 
 /datum/job/roguetown/niteman
 	title = JOB_ROCKHILL_BATHMASTER
@@ -1082,6 +1151,7 @@
 		"Nightmaster",
 		"Nightmistress",
 		)
+	rogue_social_rank = 3
 
 /datum/job/roguetown/orphan
 	title = JOB_ROCKHILL_VAGABOND
@@ -1109,6 +1179,8 @@
 		/datum/rockhill_advclass/vagabond_busker,
 		)
 	attribute_sheet = /datum/attribute_holder/sheet/job/rockhill/orphan
+	rogue_advjob_examine = TRUE
+	rogue_lowlife_examine = TRUE
 
 /datum/job/roguetown/orthodoxist
 	title = JOB_ROCKHILL_ORTHODOXIST
@@ -1136,10 +1208,13 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_INQUISITION,
 		)
+	rogue_allowed_patrons = list(/datum/patron/psydon)
+	rogue_social_rank = 2
+	rogue_advjob_examine = TRUE
 
 /datum/job/roguetown/physician
 	title = JOB_ROCKHILL_HEAD_PHYSICIAN
-	description = "You are a master physician and the current head of the clinic. Oversee your clinic and the apothecaries under you. As a member of the upper class, expect to treat nobility. You have access to accommodate this."
+	description = "You are a master physician, trusted by the Duke themself to administer expert care to the Royal family, the court, its protectors and its subjects. While primarily a resident of the keep in the manors medical wing, you also have access to the local hightown clinic, where lesser licensed apothecaries ply their trade under your occasional passing tutelage."
 	total_positions = 1
 	spawn_positions = 1
 	config_tag = "ROCKHILL_PHYSICIAN"
@@ -1159,6 +1234,7 @@
 	alternate_titles = list(
 		"Court Physician",
 		)
+	rogue_social_rank = 5
 
 /datum/job/roguetown/pilgrim
 	title = JOB_ROCKHILL_REFUGEE
@@ -1203,6 +1279,8 @@
 		TRAIT_TRAINED_SMITH,
 		TRAIT_SMITHING_EXPERT,
 		)
+	rogue_wanderer_examine = TRUE
+	rogue_advjob_examine = TRUE
 
 /datum/job/roguetown/priest
 	title = JOB_ROCKHILL_BISHOP
@@ -1225,6 +1303,9 @@
 		TRAIT_HOMESTEAD_EXPERT,
 		TRAIT_HOLYWARRIOR,
 		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_allowed_patrons = list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/ravox, /datum/patron/divine/necra, /datum/patron/divine/xylix, /datum/patron/divine/pestra, /datum/patron/divine/malum, /datum/patron/divine/eora)
+	rogue_social_rank = 6
 
 /datum/job/roguetown/prince
 	title = JOB_ROCKHILL_PRINCE
@@ -1252,6 +1333,9 @@
 	alternate_titles = list(
 		"Princess",
 		)
+	rogue_allowed_races = list("/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/harpy", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/ooze", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_allowed_ages = list("Adult")
+	rogue_social_rank = 6
 
 /datum/job/roguetown/prisonerr
 	title = JOB_ROCKHILL_PRISONER_TOWN
@@ -1316,6 +1400,9 @@
 		TRAIT_OUTLANDER,
 		TRAIT_NOBLE,
 		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_allowed_patrons = list(/datum/patron/psydon)
+	rogue_social_rank = 5
 
 /datum/job/roguetown/rockhillslave
 	title = JOB_ROCKHILL_SLAVE
@@ -1338,10 +1425,11 @@
 		TRAIT_HOMESTEAD_EXPERT,
 		TRAIT_OWNED_SLAVE,
 		)
+	rogue_social_rank = 2
 
 /datum/job/roguetown/rookie
 	title = JOB_ROCKHILL_ROOKIE
-	description = "Odd-jobs, running messages, fixing dents and talking to locals; the Guard can always use a spare pair of hands, eyes and ears. Assist your fellow guards in dealing with threats - both within and without. Given a brief introduction in weapons and guardwork, the rest of your training is to be picked up on the job. Obey your superiors (everyone who isn't you) and show the nobles your respect. Keep an eye out, try to learn a thing or two, then one day you might live to make an adequate soldier."
+	description = "Odd-jobs, running messages, fixing dents and talking to locals; the City Watch can always use a spare pair of hands, eyes and ears. Assist your fellow city watchmen in dealing with threats - both within and without. Given a brief introduction in weapons and guardwork, the rest of your training is to be picked up on the job. Obey your superiors (everyone who isn't you) and show the nobles your respect. Keep an eye out, try to learn a thing or two, then one day you might live to make an adequate soldier."
 	total_positions = 1
 	spawn_positions = 1
 	config_tag = "ROCKHILL_ROOKIE"
@@ -1360,6 +1448,8 @@
 		TRAIT_SQUIRE_REPAIR,
 		TRAIT_GUARDSMAN,
 		)
+	rogue_allowed_ages = list("Adult")
+	rogue_social_rank = 2
 
 /datum/job/roguetown/sergeant
 	title = JOB_ROCKHILL_SERGEANT
@@ -1378,6 +1468,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_MEDIUMARMOR,
 		)
+	rogue_social_rank = 3
 
 /datum/job/roguetown/servant
 	title = JOB_ROCKHILL_SERVANT
@@ -1404,6 +1495,8 @@
 		TRAIT_ROYAL_SUBSIDY,
 		TRAIT_HOMESTEAD_EXPERT,
 		)
+	rogue_social_rank = 2
+	rogue_advjob_examine = TRUE
 
 /datum/job/roguetown/shophand
 	title = JOB_ROCKHILL_SHOPHAND
@@ -1420,6 +1513,8 @@
 	rockhill_traits = list(
 		TRAIT_SEEPRICES,
 		)
+	rogue_allowed_ages = list("Adult")
+	rogue_social_rank = 2
 
 /datum/job/roguetown/slaver
 	title = JOB_ROCKHILL_SLAVER
@@ -1436,6 +1531,7 @@
 	rockhill_traits = list(
 		TRAIT_SLEUTH,
 		)
+	rogue_social_rank = 3
 
 /datum/job/roguetown/squire
 	title = JOB_ROCKHILL_SQUIRE
@@ -1459,6 +1555,8 @@
 		TRAIT_SQUIRE_REPAIR,
 		TRAIT_EXPERT_HUNTER,
 		)
+	rogue_allowed_ages = list("Adult")
+	rogue_social_rank = 2
 
 /datum/job/roguetown/steward
 	title = JOB_ROCKHILL_STEWARD
@@ -1477,6 +1575,8 @@
 		TRAIT_SEEPRICES,
 		TRAIT_ROYAL_SUBSIDY,
 		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_social_rank = 5
 
 /datum/job/roguetown/tailor
 	title = JOB_ROCKHILL_TAILOR
@@ -1494,6 +1594,7 @@
 		TRAIT_SEWING_EXPERT,
 		TRAIT_EFFICIENT_WEAVER,
 		)
+	rogue_social_rank = 3
 
 /datum/job/roguetown/templar
 	title = JOB_ROCKHILL_TEMPLAR
@@ -1512,6 +1613,8 @@
 		TRAIT_RITUALIST,
 		TRAIT_STEELHEARTED,
 		)
+	rogue_allowed_patrons = list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/ravox, /datum/patron/divine/necra, /datum/patron/divine/xylix, /datum/patron/divine/pestra, /datum/patron/divine/malum, /datum/patron/divine/eora)
+	rogue_social_rank = 4
 
 /datum/job/roguetown/vanguard
 	title = JOB_ROCKHILL_VANGUARD
@@ -1533,6 +1636,7 @@
 		TRAIT_MEDIUMARMOR,
 		TRAIT_SURVIVAL_EXPERT,
 		)
+	rogue_social_rank = 2
 
 /datum/job/roguetown/veteran
 	title = JOB_ROCKHILL_VETERAN
@@ -1559,6 +1663,9 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_COMBAT_AWARE,
 		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_allowed_ages = list("Old")
+	rogue_social_rank = 4
 
 /datum/job/roguetown/villager
 	title = JOB_ROCKHILL_TOWNER
@@ -1595,6 +1702,8 @@
 		TRAIT_MEDICINE_EXPERT,
 		TRAIT_ALCHEMY_EXPERT,
 		)
+	rogue_social_rank = 2
+	rogue_advjob_examine = TRUE
 
 /datum/job/roguetown/wapprentice
 	title = JOB_ROCKHILL_MAGICIANS_ASSOCIATE
@@ -1617,6 +1726,8 @@
 		TRAIT_ALCHEMY_EXPERT,
 		TRAIT_MAGEDEXTERITY,
 		)
+	rogue_social_rank = 3
+	rogue_advjob_examine = TRUE
 
 /datum/job/roguetown/warden
 	title = JOB_ROCKHILL_FOREST_WARDEN
@@ -1641,6 +1752,7 @@
 		TRAIT_SURVIVAL_EXPERT,
 		TRAIT_EXPERT_HUNTER,
 		)
+	rogue_social_rank = 2
 
 /datum/job/roguetown/wardenmaster
 	title = JOB_ROCKHILL_MASTER_WARDEN
@@ -1665,6 +1777,7 @@
 		TRAIT_PERFECT_TRACKER,
 		TRAIT_SLEUTH,
 		)
+	rogue_social_rank = 3
 
 /datum/job/roguetown/watchcaptain
 	title = JOB_ROCKHILL_WATCH_CAPTAIN
@@ -1685,6 +1798,7 @@
 		TRAIT_PERFECT_TRACKER,
 		TRAIT_SLEUTH,
 		)
+	rogue_social_rank = 3
 
 /datum/job/roguetown/wretch
 	title = JOB_ROCKHILL_WRETCH
@@ -1735,6 +1849,8 @@
 		TRAIT_SELF_SUSTENANCE,
 		TRAIT_ZURCH,
 		)
+	rogue_wanderer_examine = TRUE
+	rogue_advjob_examine = TRUE
 
 /datum/outfit/job/roguetown/absolver
 	name = JOB_ROCKHILL_ABSOLVER

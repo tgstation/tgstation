@@ -956,6 +956,72 @@
 	appro_skill = /datum/attribute/skill/craft/armorsmithing
 	additional_items = list(/obj/item/ingot/decrepit)
 
+/datum/anvil_recipe/armor/dwarven/apron
+	name = "Grudgebearer Splint Apron (+3 Steel, +1 Bronze)"
+	category = "Armor"
+	display_category = "Armor (Chestpieces)"
+	req_bar = /obj/item/ingot/steel
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/full/dwarven/smith
+	req_trait = TRAIT_DWARF_REPAIR
+	craftdiff = 3
+	appro_skill = /datum/attribute/skill/craft/armorsmithing
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/bronze)
+
+/datum/anvil_recipe/armor/dwarven/boots
+	name = "Dwarven Boots (+1 Steel, +1 Bronze, +1 Cured Leather)"
+	category = "Armor"
+	display_category = "Armor (Boots)"
+	req_bar = /obj/item/ingot/steel
+	created_item = /obj/item/clothing/shoes/roguetown/boots/armor/dwarven
+	req_trait = TRAIT_DWARF_REPAIR
+	craftdiff = 3
+	appro_skill = /datum/attribute/skill/craft/armorsmithing
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/bronze, /obj/item/natural/hide/cured)
+
+/datum/anvil_recipe/armor/dwarven/gauntlets
+	name = "Dwarven Gauntlets (+1 Steel, +1 Bronze, +1 Cured Leather)"
+	category = "Armor"
+	display_category = "Armor (Gloves)"
+	req_bar = /obj/item/ingot/steel
+	created_item = /obj/item/clothing/gloves/roguetown/plate/dwarven
+	req_trait = TRAIT_DWARF_REPAIR
+	craftdiff = 3
+	appro_skill = /datum/attribute/skill/craft/armorsmithing
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/bronze, /obj/item/natural/hide/cured)
+
+/datum/anvil_recipe/armor/dwarven/helm
+	name = "Dwarven Helm (+2 Steel, +1 Bronze)"
+	category = "Armor"
+	display_category = "Armor (Helmets)"
+	req_bar = /obj/item/ingot/steel
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/dwarven
+	req_trait = TRAIT_DWARF_REPAIR
+	craftdiff = 3
+	appro_skill = /datum/attribute/skill/craft/armorsmithing
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/bronze)
+
+/datum/anvil_recipe/armor/dwarven/helm/smith
+	name = "Dwarven Smith Helm (+1 Steel, +1 Bronze)"
+	category = "Armor"
+	display_category = "Armor (Helmets)"
+	req_bar = /obj/item/ingot/steel
+	created_item = /obj/item/clothing/head/roguetown/helmet/heavy/dwarven/smith
+	req_trait = TRAIT_DWARF_REPAIR
+	craftdiff = 3
+	appro_skill = /datum/attribute/skill/craft/armorsmithing
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/bronze)
+
+/datum/anvil_recipe/armor/dwarven/plate
+	name = "Grudgebearer Dwarven Plate (+3 Steel, +1 Bronze, +1 Cured Leather)"
+	category = "Armor"
+	display_category = "Armor (Chestpieces)"
+	req_bar = /obj/item/ingot/steel
+	created_item = /obj/item/clothing/suit/roguetown/armor/plate/full/dwarven
+	req_trait = TRAIT_DWARF_REPAIR
+	craftdiff = 3
+	appro_skill = /datum/attribute/skill/craft/armorsmithing
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/bronze, /obj/item/natural/hide/cured)
+
 /datum/anvil_recipe/armor/gold/armet
 	name = "Golden Knight's Armet (+1 Gold, +2 Silk)"
 	category = "Armor"
@@ -4950,6 +5016,28 @@
 	created_item = /obj/item/rogueweapon/mace/warhammer/steel/ancient/decrepit
 	craftdiff = 1
 	appro_skill = /datum/attribute/skill/craft/weaponsmithing
+
+/datum/anvil_recipe/weapons/dwarven/maul
+	name = "Dwarvish Maul (+4 Steel, +1 Bronze)"
+	category = "Weapons"
+	display_category = "Weapons (Maces & Hammers)"
+	req_bar = /obj/item/ingot/steel
+	created_item = /obj/item/rogueweapon/mace/maul/steel
+	req_trait = TRAIT_DWARF_REPAIR
+	craftdiff = 5
+	appro_skill = /datum/attribute/skill/craft/weaponsmithing
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/bronze)
+
+/datum/anvil_recipe/weapons/dwarven/spikedmaul
+	name = "Spiked Maul (+3 Steel, +1 Bronze)"
+	category = "Weapons"
+	display_category = "Weapons (Maces & Hammers)"
+	req_bar = /obj/item/ingot/steel
+	created_item = /obj/item/rogueweapon/mace/maul/spiked
+	req_trait = TRAIT_DWARF_REPAIR
+	craftdiff = 5
+	appro_skill = /datum/attribute/skill/craft/weaponsmithing
+	additional_items = list(/obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/steel, /obj/item/ingot/bronze)
 
 /datum/anvil_recipe/weapons/gold/arming
 	name = "Golden Arming Sword (+2 Gold, +2 Silk)"

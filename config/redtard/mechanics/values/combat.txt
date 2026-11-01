@@ -1501,3 +1501,428 @@ wound_health_artery = 50
 
 # What an opened artery of the neck or the heart takes to mend (Ratwood artery/neck and artery/chest whp 100).
 wound_health_artery_vital = 100
+
+# --- Wounds and healing (block 1, task B1: combat/wounds.dm, combat/medicine.dm, combat/leeches.dm, survival/sleep.dm; Ratwood datums/wounds/, bodypart_wounds.dm manage_dynamic_wound(), needle.dm sew(), carbon/life.dm handle_sleep(), roguejobs/fisher/leeches.dm). Ratwood's dynamic wounds count a Life tick of 2 seconds: bleeding is blood a Life tick, health is what mending takes before the wound closes (whp), pain is woundpain, sewing is how far the stitches must get.
+
+# Clotting a dynamic wound gains with every blow of its kind, a Life tick's (Ratwood CLOT_RATE_INCREASE_PER_HIT).
+dynamic_clot_per_hit = 0.005
+
+# Bleeding a Life tick a dynamic wound clots down to, added with every blow of its kind (Ratwood CLOT_THRESHOLD_INCREASE_PER_HIT).
+dynamic_clot_floor_per_hit = 0.1
+
+# Least clotting of a dynamic wound that is not an artery's, a Life tick's (Ratwood max(0.01, clotting_rate)).
+dynamic_clot_min = 0.01
+
+# Clotting a Life tick of a bite from its first blow on (Ratwood /datum/wound/dynamic clotting_rate 0.4).
+dynamic_clot_base = 0.4
+
+# Bleeding a Life tick a dynamic wound clots down to once it bleeds like an artery and stops clotting further (Ratwood CLOT_THRESHOLD_ARTERY); it bleeds at most the artery_bleed of the pain and blood section.
+dynamic_artery_clot_floor = 2
+
+# What a keen edge, above blade_dull_start of its sharpness, adds to how far a weapon's blow got through armor (Ratwood get_pen_info() sharpness_bonus).
+dynamic_pen_edge_bonus = 1
+
+# What a heavy weapon adds to the wielder's strength over 10 for how far its blow got through armor (Ratwood get_pen_info(): WBALANCE_HEAVY + 2).
+dynamic_pen_heavy_bonus = 2
+
+# The most the wielder's balance adds to how far a weapon's blow got through armor, but for heavy weapons (Ratwood min(balance_bonus, 4)).
+dynamic_pen_balance_cap = 4
+
+# Health of a fresh hematoma, the wound of blunt blows (Ratwood dynamic/bruise whp 5).
+dynamic_bruise_health = 5
+
+# Pain of a fresh hematoma (Ratwood woundpain 5).
+dynamic_bruise_pain = 5
+
+# What a hematoma mends by itself each Life tick (Ratwood passive_healing 0.5).
+dynamic_bruise_passive = 0.5
+
+# Health a hematoma gains per point of damage of a blunt blow (Ratwood BRUISE_UPG_WHPRATE).
+dynamic_bruise_health_per_damage = 1
+
+# Pain a hematoma gains per point of damage (Ratwood BRUISE_UPG_PAINRATE).
+dynamic_bruise_pain_per_damage = 1
+
+# What a hematoma mends by itself each Life tick more with every blow (Ratwood BRUISE_UPG_SELFHEAL).
+dynamic_bruise_selfheal = 1
+
+# Health of a fresh slash, the wound of cuts and chops (Ratwood dynamic/slash whp 15).
+dynamic_slash_health = 15
+
+# Bleeding a Life tick of a fresh slash (Ratwood bleed_rate 1).
+dynamic_slash_bleed = 1
+
+# How far the stitches must get to sew a fresh slash (Ratwood sew_threshold 25).
+dynamic_slash_sew = 25
+
+# Pain of a fresh slash (Ratwood woundpain 5).
+dynamic_slash_pain = 5
+
+# Clotting a Life tick of a fresh slash (Ratwood clotting_rate 0.05).
+dynamic_slash_clot = 0.05
+
+# Bleeding a Life tick a fresh slash clots down to (Ratwood clotting_threshold 0.25).
+dynamic_slash_clot_floor = 0.25
+
+# Health a slash gains per point of damage of a cut (Ratwood SLASH_UPG_WHPRATE).
+dynamic_slash_health_per_damage = 1
+
+# Bleeding a Life tick a cut adds to a slash on bare skin or an exposed body (Ratwood SLASH_UPG_CLAMP_RAW).
+dynamic_slash_bleed_bare = 2.2
+
+# Bleeding a Life tick a weapon's cut adds over armor it barely got through (Ratwood pen_info 1-2).
+dynamic_slash_bleed_pen_low = 0.5
+
+# Bleeding a Life tick a weapon's cut adds over armor it got through fairly (pen_info 3-4).
+dynamic_slash_bleed_pen_fair = 0.6
+
+# Bleeding a Life tick a weapon's cut adds over armor it got through well (pen_info 5-6).
+dynamic_slash_bleed_pen_good = 0.7
+
+# Bleeding a Life tick a weapon's cut adds over armor it went clean through (pen_info 7-8, Ratwood SLASH_UPG_CLAMP_ARMORED).
+dynamic_slash_bleed_pen_full = 1.1
+
+# How much farther the stitches must get per point of damage of a cut (Ratwood SLASH_UPG_SEWRATE).
+dynamic_slash_sew_per_damage = 2.5
+
+# Pain a slash gains per point of damage (Ratwood SLASH_UPG_PAINRATE).
+dynamic_slash_pain_per_damage = 0.3
+
+# Most bleeding a Life tick of a slash under armor (Ratwood SLASH_ARMORED_BLEED_CLAMP).
+dynamic_slash_armor_cap = 9
+
+# Health of a fresh puncture, the wound of stabs (Ratwood dynamic/puncture whp 1).
+dynamic_puncture_health = 1
+
+# Bleeding a Life tick of a fresh puncture (Ratwood bleed_rate 1).
+dynamic_puncture_bleed = 1
+
+# How far the stitches must get to sew a fresh puncture (Ratwood sew_threshold 20).
+dynamic_puncture_sew = 20
+
+# Pain of a fresh puncture (Ratwood woundpain 0).
+dynamic_puncture_pain = 0
+
+# Clotting a Life tick of a fresh puncture (Ratwood clotting_rate 0.01).
+dynamic_puncture_clot = 0.01
+
+# Bleeding a Life tick a fresh puncture clots down to (Ratwood clotting_threshold 0.2).
+dynamic_puncture_clot_floor = 0.2
+
+# Health a puncture gains per point of damage of a stab (Ratwood PUNC_UPG_WHPRATE).
+dynamic_puncture_health_per_damage = 0.5
+
+# Bleeding a Life tick a stab adds to a puncture on bare skin or an exposed body (Ratwood PUNC_UPG_CLAMP_RAW).
+dynamic_puncture_bleed_bare = 1.3
+
+# Bleeding a Life tick a weapon's stab adds over armor it barely got through (Ratwood pen_info 1-2).
+dynamic_puncture_bleed_pen_low = 0.3
+
+# Bleeding a Life tick a weapon's stab adds over armor it got through fairly (pen_info 3-4).
+dynamic_puncture_bleed_pen_fair = 0.4
+
+# Bleeding a Life tick a weapon's stab adds over armor it got through well (pen_info 5-6).
+dynamic_puncture_bleed_pen_good = 0.5
+
+# Bleeding a Life tick a weapon's stab adds over armor it went clean through (pen_info 7-8).
+dynamic_puncture_bleed_pen_full = 0.75
+
+# How much farther the stitches must get per point of damage of a stab (Ratwood PUNC_UPG_SEWRATE).
+dynamic_puncture_sew_per_damage = 0.65
+
+# Pain a puncture gains per point of damage (Ratwood PUNC_UPG_PAINRATE).
+dynamic_puncture_pain_per_damage = 0.1
+
+# Most bleeding a Life tick of a puncture under armor (Ratwood PUNC_ARMORED_BLEED_CLAMP).
+dynamic_puncture_armor_cap = 7
+
+# Health of a fresh gouge, the wound of picks and piercing shots (Ratwood dynamic/gouge whp 1).
+dynamic_gouge_health = 1
+
+# Bleeding a Life tick of a fresh gouge (Ratwood bleed_rate 1).
+dynamic_gouge_bleed = 1
+
+# How far the stitches must get to sew a fresh gouge (Ratwood sew_threshold 20).
+dynamic_gouge_sew = 20
+
+# Pain of a fresh gouge (Ratwood woundpain 0).
+dynamic_gouge_pain = 0
+
+# Clotting a Life tick of a fresh gouge (Ratwood clotting_rate 0.01).
+dynamic_gouge_clot = 0.01
+
+# Bleeding a Life tick a fresh gouge clots down to (Ratwood clotting_threshold 0.2).
+dynamic_gouge_clot_floor = 0.2
+
+# Health a gouge gains per point of damage (Ratwood GOUGE_UPG_WHPRATE).
+dynamic_gouge_health_per_damage = 1
+
+# Bleeding a Life tick a gouge gains per point of damage (Ratwood GOUGE_UPG_BLEEDRATE).
+dynamic_gouge_bleed_per_damage = 0.01
+
+# Least bleeding a Life tick a blow adds to a gouge (Ratwood clamp(..., 0.1, ...)).
+dynamic_gouge_bleed_least = 0.1
+
+# Most bleeding a Life tick a blow adds to a gouge under armor (Ratwood GOUGE_UPG_CLAMP_ARMORED).
+dynamic_gouge_bleed_armored = 0.5
+
+# Most bleeding a Life tick a blow adds to a gouge on bare skin (Ratwood GOUGE_UPG_CLAMP_RAW).
+dynamic_gouge_bleed_bare = 0.5
+
+# How much farther the stitches must get per point of damage (Ratwood GOUGE_UPG_SEWRATE).
+dynamic_gouge_sew_per_damage = 0.3
+
+# Pain a gouge gains per point of damage (Ratwood GOUGE_UPG_PAINRATE).
+dynamic_gouge_pain_per_damage = 0.01
+
+# Most bleeding a Life tick of a gouge under armor (Ratwood GOUGE_ARMORED_BLEED_CLAMP).
+dynamic_gouge_armor_cap = 4
+
+# Health of a fresh bite (Ratwood dynamic/bite whp 30).
+dynamic_bite_health = 30
+
+# Bleeding a Life tick of a fresh bite (Ratwood bleed_rate 0.5).
+dynamic_bite_bleed = 0.5
+
+# How far the stitches must get to sew a fresh bite (Ratwood sew_threshold 50).
+dynamic_bite_sew = 50
+
+# Pain of a fresh bite (Ratwood woundpain 10).
+dynamic_bite_pain = 10
+
+# What a bite mends by itself each Life tick (Ratwood passive_healing 0.5).
+dynamic_bite_passive = 0.5
+
+# Health a bite gains per point of damage (Ratwood BITE_UPG_WHPRATE).
+dynamic_bite_health_per_damage = 0.1
+
+# Bleeding a Life tick a bite gains per point of damage (Ratwood BITE_UPG_BLEEDRATE).
+dynamic_bite_bleed_per_damage = 0.2
+
+# Least bleeding a Life tick a bite adds (Ratwood clamp(..., 0.1, ...)).
+dynamic_bite_bleed_least = 0.1
+
+# Most bleeding a Life tick a bite adds under armor (Ratwood BITE_UPG_CLAMP_ARMORED).
+dynamic_bite_bleed_armored = 1
+
+# Most bleeding a Life tick a bite adds on bare skin or an exposed body (Ratwood BITE_UPG_CLAMP_RAW).
+dynamic_bite_bleed_bare = 3
+
+# How much farther the stitches must get per point of damage of a bite (Ratwood BITE_UPG_SEWRATE).
+dynamic_bite_sew_per_damage = 1
+
+# Pain a bite gains per point of damage (Ratwood BITE_UPG_PAINRATE).
+dynamic_bite_pain_per_damage = 1
+
+# Most bleeding a Life tick of a bite under armor (Ratwood BITE_ARMORED_BLEED_CLAMP).
+dynamic_bite_armor_cap = 5
+
+# Health of a fresh lashing, the wound of a whip (Ratwood dynamic/lashing whp 30).
+dynamic_lashing_health = 30
+
+# How far the stitches must get to sew a fresh lashing (Ratwood sew_threshold, the default 100).
+dynamic_lashing_sew = 100
+
+# Pain of a fresh lashing (Ratwood woundpain 10).
+dynamic_lashing_pain = 10
+
+# Clotting a Life tick of a fresh lashing (Ratwood clotting_rate 0.02).
+dynamic_lashing_clot = 0.02
+
+# Bleeding a Life tick a fresh lashing clots down to (Ratwood clotting_threshold 0.2).
+dynamic_lashing_clot_floor = 0.2
+
+# Health a lashing gains per point of damage (Ratwood LASHING_UPG_WHPRATE).
+dynamic_lashing_health_per_damage = 1
+
+# Bleeding a Life tick a lashing gains per point of damage (Ratwood LASHING_UPG_BLEEDRATE).
+dynamic_lashing_bleed_per_damage = 0.1
+
+# Least bleeding a Life tick a lash adds (Ratwood clamp(..., 0.1, ...)).
+dynamic_lashing_bleed_least = 0.1
+
+# Most bleeding a Life tick a lash adds under armor (Ratwood LASHING_UPG_CLAMP_ARMORED).
+dynamic_lashing_bleed_armored = 0.2
+
+# Most bleeding a Life tick a lash adds on bare skin or an exposed body (Ratwood LASHING_UPG_CLAMP_RAW).
+dynamic_lashing_bleed_bare = 3.5
+
+# How much farther the stitches must get per point of damage of a lash (Ratwood LASHING_UPG_SEWRATE).
+dynamic_lashing_sew_per_damage = 1.8
+
+# Pain a lashing gains per point of damage (Ratwood LASHING_UPG_PAINRATE).
+dynamic_lashing_pain_per_damage = 0.5
+
+# Most bleeding a Life tick of a lashing under armor (Ratwood LASHING_ARMORED_BLEED_CLAMP).
+dynamic_lashing_armor_cap = 2
+
+# Health of a fresh flogging, the wound of the whip's punishing intent (Ratwood dynamic/punish whp 30).
+dynamic_flogging_health = 30
+
+# How far the stitches must get to sew a fresh flogging (Ratwood sew_threshold, the default 100).
+dynamic_flogging_sew = 100
+
+# Pain of a fresh flogging (Ratwood woundpain 10).
+dynamic_flogging_pain = 10
+
+# Clotting a Life tick of a fresh flogging (Ratwood clotting_rate 0.02).
+dynamic_flogging_clot = 0.02
+
+# Bleeding a Life tick a fresh flogging clots down to (Ratwood clotting_threshold 0.2).
+dynamic_flogging_clot_floor = 0.2
+
+# Health a flogging gains per point of damage (Ratwood PUNISH_UPG_WHPRATE).
+dynamic_flogging_health_per_damage = 2
+
+# Bleeding a Life tick a flogging gains per point of damage (Ratwood PUNISH_UPG_BLEEDRATE).
+dynamic_flogging_bleed_per_damage = 0.01
+
+# Least bleeding a Life tick a stroke adds (Ratwood clamp(..., 0.1, ...)).
+dynamic_flogging_bleed_least = 0.1
+
+# Most bleeding a Life tick a stroke adds under armor (Ratwood PUNISH_UPG_CLAMP_ARMORED).
+dynamic_flogging_bleed_armored = 0.1
+
+# Most bleeding a Life tick a stroke adds on bare skin (Ratwood PUNISH_UPG_CLAMP_RAW).
+dynamic_flogging_bleed_bare = 0.5
+
+# How much farther the stitches must get per point of damage of a stroke (Ratwood PUNISH_UPG_SEWRATE).
+dynamic_flogging_sew_per_damage = 2
+
+# Pain a flogging gains per point of damage (Ratwood PUNISH_UPG_PAINRATE).
+dynamic_flogging_pain_per_damage = 2
+
+# What a flogging mends by itself each Life tick more with every stroke (Ratwood PUNISH_UPG_SELFHEAL).
+dynamic_flogging_selfheal = 0.25
+
+# Most bleeding a Life tick of a flogging under armor (Ratwood PUNISH_ARMORED_BLEED_CLAMP).
+dynamic_flogging_armor_cap = 0.1
+
+# What a wound mends a Life tick of sleep, times the quality of the bed and the sleep heal multiplier of the config (Ratwood sleep_healing 1, the default: dislocations, burns, dynamic and sewn wounds).
+wound_sleep_healing = 1
+
+# What an opened artery, a critical cut or stab of TG, mends a Life tick of sleep (Ratwood artery sleep_healing 0.5).
+artery_sleep_healing = 0.5
+
+# What a broken bone or a split skull mends a Life tick of sleep: none until it is set (Ratwood fracture sleep_healing 0).
+fracture_sleep_healing = 0
+
+# What a stump mends a Life tick of sleep: none, it is seared shut (Ratwood dismemberment sleep_healing 0).
+stump_sleep_healing = 0
+
+# What a sewn wound mends by itself each Life tick (Ratwood sew_wound(): passive_healing at least 1).
+sewn_passive_healing = 1
+
+# Pain of a sewn cut or stab of TG below critical (Ratwood sewn_woundpain of its slashes and punctures, 0).
+sewn_cut_pain = 0
+
+# Health left to mend of a sewn moderate cut, at most (Ratwood slash/small sewn_whp 5).
+sewn_cut_moderate_health = 5
+
+# Bleeding a Life tick of a sewn moderate cut (Ratwood slash/small sewn_bleed_rate 0.01).
+sewn_cut_moderate_bleed = 0.01
+
+# Health left to mend of a sewn severe cut, at most (Ratwood slash sewn_whp 10).
+sewn_cut_severe_health = 10
+
+# Bleeding a Life tick of a sewn severe cut (Ratwood slash sewn_bleed_rate 0.02).
+sewn_cut_severe_bleed = 0.02
+
+# Health left to mend of a sewn moderate stab, at most (Ratwood puncture/small sewn_whp 10).
+sewn_stab_moderate_health = 10
+
+# Bleeding a Life tick of a sewn moderate stab (Ratwood puncture/small sewn_bleed_rate 0.02).
+sewn_stab_moderate_bleed = 0.02
+
+# Health left to mend of a sewn severe stab, at most (Ratwood puncture sewn_whp 20).
+sewn_stab_severe_health = 20
+
+# Bleeding a Life tick of a sewn severe stab (Ratwood puncture sewn_bleed_rate 0.04).
+sewn_stab_severe_bleed = 0.04
+
+# Health left to mend of a sewn artery of a limb, at most (Ratwood artery sewn_whp 20).
+sewn_artery_health = 20
+
+# Bleeding a Life tick of a sewn artery of a limb (Ratwood artery sewn_bleed_rate 0.2).
+sewn_artery_bleed = 0.2
+
+# Pain of a sewn artery of a limb (Ratwood artery sewn_woundpain 20).
+sewn_artery_pain = 20
+
+# Health left to mend of a sewn torn carotid, at most (Ratwood artery/neck sewn_whp 25).
+sewn_throat_health = 25
+
+# Bleeding a Life tick of a sewn torn carotid (Ratwood artery/neck sewn_bleed_rate 0.5).
+sewn_throat_bleed = 0.5
+
+# Pain of a sewn torn carotid (Ratwood artery/neck sewn_woundpain 30).
+sewn_throat_pain = 30
+
+# Health left to mend of a sewn aortic dissection, at most (Ratwood artery/chest sewn_whp 35).
+sewn_heart_health = 35
+
+# Bleeding a Life tick of a sewn aortic dissection (Ratwood artery/chest sewn_bleed_rate 0.8).
+sewn_heart_bleed = 0.8
+
+# Pain of a sewn aortic dissection (Ratwood artery/chest sewn_woundpain 50).
+sewn_heart_pain = 50
+
+# What a cloth soaked in a health potion heals a Ratwood tick under a bandage, wounds and damage (Ratwood medicine_quality 1).
+soak_lyfeblood_quality = 1
+
+# How long a cloth soaked in a health potion keeps it, spent soak_spend a tick (Ratwood medicine_amount 10).
+soak_lyfeblood_amount = 10
+
+# What a cloth soaked in a strong health potion heals a Ratwood tick under a bandage (Ratwood medicine_quality 2).
+soak_strong_lyfeblood_quality = 2
+
+# How long a cloth soaked in a strong health potion keeps it (Ratwood medicine_amount 10).
+soak_strong_lyfeblood_amount = 10
+
+# What a cloth soaked in aqua vitae heals a Ratwood tick under a bandage: slower than a potion, more in all (Ratwood medicine_quality 0.5); on once the drink exists.
+soak_aqua_vitae_quality = 0.5
+
+# How long a cloth soaked in aqua vitae keeps it (Ratwood medicine_amount 60).
+soak_aqua_vitae_amount = 60
+
+# What a cloth soaked in blessed water heals a Ratwood tick under a bandage (Ratwood medicine_quality 0.2).
+soak_blessed_water_quality = 0.2
+
+# How long a cloth soaked in blessed water keeps it (Ratwood medicine_amount 20).
+soak_blessed_water_amount = 20
+
+# Blood a leech drinks each Life tick, before its nature (Ratwood blood_sucking 2; an evil leech drinks up to twice it, at least 1).
+leech_suck = 2
+
+# Toxins a leech draws out each Life tick, before its nature (Ratwood toxin_healing -2; a gentle leech up to twice it, at least 1).
+leech_cleanse = 2
+
+# Blood a leech holds before it drops off full (Ratwood blood_maximum, BLOOD_VOLUME_SURVIVE 122).
+leech_blood_max = 122
+
+# Blood a leech digests of what it holds each Life tick, on a body or off it (Ratwood drainage 1).
+leech_digest = 1
+
+# Damage to the limb when a leech is ripped off (Ratwood embedded_unsafe_removal_pain_multiplier 8 times its size 1).
+leech_rip_damage = 8
+
+# Deciseconds setting a leech on someone takes, before the Medicine skill (Ratwood (70 - Medicine * 10) / 2).
+leech_place_time = 35
+
+# Deciseconds each rank of Medicine takes off setting a leech.
+leech_place_per_rank = 5
+
+# Blood a cheele drinks, or gives, each Life tick (Ratwood cheele blood_sucking 5).
+cheele_suck = 5
+
+# What a cheele keeps of the blood it drinks, as a multiple (Ratwood blood_multiplier 3).
+cheele_blood_factor = 3
+
+# Blood a cheele holds when it is made (Ratwood blood_storage, BLOOD_VOLUME_OKAY 336).
+cheele_blood = 336
+
+# Blood a cheele holds before it drops off full (Ratwood blood_maximum, BLOOD_VOLUME_MAXIMUM 1120).
+cheele_blood_max = 1120
+
+# Blood a squeezed cheele fills a body up to before it drops off (Ratwood BLOOD_VOLUME_MAXIMUM 1120).
+cheele_blood_cap = 1120

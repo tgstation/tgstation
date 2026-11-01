@@ -96,6 +96,13 @@
 			}
 		},
 		{
+			"prefix": "/obj/item/pestle",
+			"exact": true,
+			"to": "/obj/item/pestle/rogue",
+			"when_declared": true,
+			"loadouts": true
+		},
+		{
 			"prefix": "/obj/structure/curtain",
 			"rebase": "/obj/structure/rockhill/curtain",
 			"port": {
@@ -628,7 +635,8 @@
 					"rockhill_break_sounds",
 					"rockhill_debris",
 					"rockhill_static_debris",
-					"rockhill_stump"
+					"rockhill_stump",
+					"herbtype"
 				],
 				"limit_vars": {
 					"/obj/structure/flora": [
@@ -639,6 +647,9 @@
 						"rockhill_debris",
 						"rockhill_static_debris",
 						"rockhill_stump"
+					],
+					"/obj/structure/flora/roguegrass/herb": [
+						"herbtype"
 					]
 				},
 				"rename": {
@@ -672,7 +683,8 @@
 					"rockhill_static_debris"
 				],
 				"paths": [
-					"rockhill_stump"
+					"rockhill_stump",
+					"herbtype"
 				],
 				"nullable": [
 					"rockhill_stump"
@@ -862,6 +874,12 @@
 					"/obj/item/restraints/legcuffs/beartrap"
 				],
 				"type_vars": {
+					"/obj/item/natural/shellplant": [
+						"foodamt",
+						"foodextracted",
+						"seed",
+						"shell"
+					],
 					"/obj/item/restraints/legcuffs/beartrap": [
 						"armed",
 						"trap_damage",
@@ -924,7 +942,19 @@
 					"r_sleeve_status": "ROGUE_SLEEVE_NOMOD",
 					"l_sleeve_status": "ROGUE_SLEEVE_NOMOD",
 					"rogue_sleeve_scrap": "/obj/item/natural/cloth",
-					"rogue_coverage": "null"
+					"rogue_coverage": "null",
+					"max_integrity": null,
+					"integrity_failure": null,
+					"equip_delay_self": 0
+				},
+				"expression_vars": {
+					"max_integrity": {
+						"above": 0
+					},
+					"integrity_failure": {},
+					"equip_delay_self": {
+						"zero_at_most": 10
+					}
 				},
 				"coverage_vars": [
 					"rogue_coverage"
@@ -1304,7 +1334,10 @@
 					"rogue_mob_intents",
 					"rogue_aggressive",
 					"rogue_retreat_health",
-					"rogue_food_types"
+					"rogue_food_types",
+					"rogue_butcher_results",
+					"rogue_botched_butcher_results",
+					"rogue_perfect_butcher_results"
 				],
 				"rename": {
 					"rogue_defprob": "defprob",
@@ -1312,10 +1345,23 @@
 					"rogue_mob_intents": "base_intents",
 					"rogue_aggressive": "aggressive",
 					"rogue_retreat_health": "retreat_health",
-					"rogue_food_types": "food_type"
+					"rogue_food_types": "food_type",
+					"rogue_butcher_results": "butcher_results",
+					"rogue_botched_butcher_results": "botched_butcher_results",
+					"rogue_perfect_butcher_results": "perfect_butcher_results"
 				},
 				"path_lists": [
 					"rogue_food_types"
+				],
+				"path_counts": [
+					"rogue_butcher_results",
+					"rogue_botched_butcher_results",
+					"rogue_perfect_butcher_results"
+				],
+				"nullable": [
+					"rogue_butcher_results",
+					"rogue_botched_butcher_results",
+					"rogue_perfect_butcher_results"
 				],
 				"numeric_vars": [
 					"melee_damage_lower",
@@ -1621,7 +1667,10 @@
 		"anvil_recipes": {
 			"root": "/datum/anvil_recipe",
 			"file": "modular_redtard/crafting/ported/anvil_recipes.dm",
-			"default_skill": "/datum/attribute/skill/craft/blacksmithing"
+			"default_skill": "/datum/attribute/skill/craft/blacksmithing",
+			"req_traits": [
+				"TRAIT_DWARF_REPAIR"
+			]
 		},
 		"artificer_recipes": {
 			"root": "/datum/artificer_recipe",
@@ -1732,7 +1781,18 @@
 				"/obj/item/reagent_containers/food/snacks/rogue/pie/cooked/meat/fish",
 				"/obj/item/reagent_containers/food/snacks/rogue/pie/cooked/berry",
 				"/obj/item/reagent_containers/food/snacks/rogue/pie/cooked/pot",
-				"/obj/item/reagent_containers/food/snacks/rogue/pie/cooked/crab"
+				"/obj/item/reagent_containers/food/snacks/rogue/pie/cooked/crab",
+				"/obj/item/reagent_containers/food/snacks/rogue/foodbase/cheesewheel",
+				"/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/apple",
+				"/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/berry",
+				"/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/cabbage",
+				"/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/mushroom",
+				"/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/crab",
+				"/obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/potato",
+				"/obj/item/reagent_containers/food/snacks/rogue/pie/cooked/pumpkin",
+				"/obj/item/reagent_containers/food/snacks/rogue/pie/cooked/meat/spider",
+				"/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs/cooked/glazed",
+				"/obj/item/reagent_containers/food/snacks/rogue/ricewet"
 			],
 			"defaults": {
 				"cooktime": 0,
@@ -1804,6 +1864,21 @@
 			]
 		},
 		"extra_types": [
+			"/obj/item/natural/chaff/rice",
+			"/obj/item/natural/shellplant/pumpkin",
+			"/obj/item/pumpkinshell",
+			"/obj/item/flashlight/flare/torch/lantern/pumpkin",
+			"/obj/item/flashlight/flare/torch/lantern/pumpkin/psy",
+			"/obj/item/flashlight/flare/torch/lantern/pumpkin/ten",
+			"/obj/item/flashlight/flare/torch/lantern/pumpkin/grin",
+			"/obj/item/flashlight/flare/torch/lantern/pumpkin/frown",
+			"/obj/item/flashlight/flare/torch/lantern/pumpkin/surprise",
+			"/obj/item/flashlight/flare/torch/lantern/pumpkin/woozy",
+			"/obj/item/reagent_containers/food/snacks/grown/vegetable/turnip",
+			"/obj/item/reagent_containers/food/snacks/grown/cucumber",
+			"/obj/item/reagent_containers/food/snacks/grown/eggplant",
+			"/obj/item/seeds/turnip",
+			"/obj/item/seeds/fyritius",
 			"/obj/structure/trap/curse",
 			"/obj/structure/trap/curse/hidden",
 			"/obj/structure/trap/flame",
@@ -2149,6 +2224,9 @@
 		},
 		"access_traits": {
 			"/obj/structure/fluff/traveltile": "required_trait"
+		},
+		"patron_map": {
+			"/datum/patron/old_god": "/datum/patron/psydon"
 		}
 	},
 	"title": {

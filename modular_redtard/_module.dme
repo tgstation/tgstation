@@ -78,7 +78,9 @@
 #include "combat\dismember.dm"
 #include "combat\blood.dm"
 #include "combat\pain.dm"
+#include "combat\wounds.dm"
 #include "combat\medicine.dm"
+#include "combat\leeches.dm"
 #include "combat\beasts.dm"
 #include "combat\ranged.dm"
 #include "combat\launchers.dm"
@@ -232,6 +234,10 @@
 // Alchemy brewing (alchemy/): the cauldron, the mortar and Ratwood's recipes, after crafting/_defines.dm for the skill ranks
 #include "alchemy\brewing.dm"
 #include "alchemy\ported\alchemy.dm"
+#include "alchemy\alcohol.dm"
+#include "alchemy\drugs.dm"
+#include "alchemy\reagent_sight.dm"
+#include "survival\brewing.dm"
 // Stage 1b: trade (economy/, block 7b), after crafting/_defines.dm for the item quality tiers
 #include "economy\_trade_defines.dm"
 #include "economy\quality.dm"
@@ -258,6 +264,18 @@
 #include "husbandry\manure.dm"
 #include "husbandry\beasts.dm"
 #include "husbandry\ported\husbandry.dm"
+// Farming (farming/, block 1): Ratwood's soil, crops, saplings, composter and threshing
+#include "farming\_defines.dm"
+#include "farming\config.dm"
+#include "farming\plants.dm"
+#include "farming\soil.dm"
+#include "farming\seeds.dm"
+#include "farming\saplings.dm"
+#include "farming\tools.dm"
+#include "farming\threshing.dm"
+#include "farming\composter.dm"
+#include "farming\wild_plants.dm"
+#include "farming\pumpkins.dm"
 // Stage 6: PvE depth (pve/)
 #include "pve\_defines.dm"
 #include "pve\mind.dm"
@@ -310,6 +328,9 @@
 #ifdef UNIT_TESTS
 #include "tests\combat_rogue.dm"
 #include "tests\huds_rogue.dm"
+#include "tests\wounds_rogue.dm"
+#include "tests\drinks_rogue.dm"
+#include "tests\farming_rogue.dm"
 #endif
 
 #ifdef REDTARD_TEST_FOCUS

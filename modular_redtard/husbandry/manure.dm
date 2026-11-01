@@ -1,5 +1,5 @@
 /// Manure (Ratwood simple_animal.dm Life() and poop(), pooptype; rogueitems/natural/poo.dm): a beast that has food in it drops
-/// its droppings where it stands every so often. There is no farming in the port to spread them on yet; they go into crafting.
+/// its droppings where it stands every so often. They fertilize the soil beds of farming/ and go into crafting.
 /// Unlike Ratwood a tile holds only so many droppings (manure_tile_cap), so a herd does not bury its pasture.
 /mob/living/basic/rockhill
 	/// Ratwood pooptype: what this kind drops; null - nothing.

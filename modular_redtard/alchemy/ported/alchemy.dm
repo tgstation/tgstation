@@ -3,6 +3,11 @@
 	smells_like = "wet moss"
 	output_reagents = list(/datum/reagent/medicine/antidote = 100)
 
+/datum/alch_cauldron_recipe/aphrodisiac
+	name = "Aphrodisiac Wine"
+	smells_like = "ardent sweetness"
+	output_reagents = list(/datum/reagent/consumable/ethanol/beer/emberwine = 60)
+
 /datum/alch_cauldron_recipe/berrypoison
 	name = "Poison (Berry)"
 	smells_like = "death"
@@ -38,6 +43,12 @@
 	smells_like = "earth"
 	skill_required = 4
 	output_reagents = list(/datum/reagent/buff/constitution = 30)
+
+/datum/alch_cauldron_recipe/deadite_rot
+	name = "Concentrated rot"
+	smells_like = "rotten flesh"
+	skill_required = 5
+	output_reagents = list(/datum/reagent/deaditerot = 30)
 
 /datum/alch_cauldron_recipe/doompoison
 	name = "Poison (Doom)"
@@ -412,10 +423,12 @@
 /obj/item/alch/artemisia
 	major_pot = /datum/alch_cauldron_recipe/lck_potion
 	med_pot = /datum/alch_cauldron_recipe/spd_potion
+	minor_pot = /datum/alch_cauldron_recipe/aphrodisiac
 
 /obj/item/alch/atropa
 	major_pot = /datum/alch_cauldron_recipe/doompoison
 	med_pot = /datum/alch_cauldron_recipe/berrypoison
+	minor_pot = /datum/alch_cauldron_recipe/deadite_rot
 
 /obj/item/alch/benedictus
 	major_pot = /datum/alch_cauldron_recipe/big_stamina_potion
@@ -444,6 +457,7 @@
 
 /obj/item/alch/coaldust
 	major_pot = /datum/alch_cauldron_recipe/antidote
+	med_pot = /datum/alch_cauldron_recipe/deadite_rot
 	minor_pot = /datum/alch_cauldron_recipe/str_potion
 
 /obj/item/alch/earthdust
@@ -453,6 +467,7 @@
 
 /obj/item/alch/euphrasia
 	major_pot = /datum/alch_cauldron_recipe/spd_potion
+	med_pot = /datum/alch_cauldron_recipe/aphrodisiac
 	minor_pot = /datum/alch_cauldron_recipe/int_potion
 
 /obj/item/alch/feaudust
@@ -532,6 +547,7 @@
 
 /obj/item/alch/rosa
 	major_pot = /datum/alch_cauldron_recipe/temp_potion
+	med_pot = /datum/alch_cauldron_recipe/aphrodisiac
 	minor_pot = /datum/alch_cauldron_recipe/stamina_potion
 
 /obj/item/alch/runedust
@@ -555,6 +571,7 @@
 	minor_pot = /datum/alch_cauldron_recipe/big_health_potion
 
 /obj/item/alch/sinew
+	major_pot = /datum/alch_cauldron_recipe/aphrodisiac
 	med_pot = /datum/alch_cauldron_recipe/end_potion
 	minor_pot = /datum/alch_cauldron_recipe/health_potion
 
@@ -570,6 +587,7 @@
 
 /obj/item/alch/swampdust
 	major_pot = /datum/alch_cauldron_recipe/temp_potion
+	med_pot = /datum/alch_cauldron_recipe/aphrodisiac
 	minor_pot = /datum/alch_cauldron_recipe/end_potion
 
 /obj/item/alch/symphitum
@@ -590,6 +608,7 @@
 /obj/item/alch/urtica
 	major_pot = /datum/alch_cauldron_recipe/health_potion
 	med_pot = /datum/alch_cauldron_recipe/spd_potion
+	minor_pot = /datum/alch_cauldron_recipe/aphrodisiac
 
 /obj/item/alch/valeriana
 	major_pot = /datum/alch_cauldron_recipe/health_potion
@@ -598,6 +617,7 @@
 
 /obj/item/alch/viscera
 	major_pot = /datum/alch_cauldron_recipe/big_health_potion
+	med_pot = /datum/alch_cauldron_recipe/deadite_rot
 	minor_pot = /datum/alch_cauldron_recipe/health_potion
 
 /obj/item/alch/waterdust

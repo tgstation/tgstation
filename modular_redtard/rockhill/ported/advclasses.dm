@@ -55,6 +55,10 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_INQUISITION,
 		)
+	rogue_subclass_languages = list("/datum/language/otavan")
+	rogue_stashed_items = list(
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/artificer
 	name = "Tinkerer"
@@ -115,6 +119,7 @@
 		TRAIT_SMITHING_EXPERT,
 		)
 	maximum_slots = 5
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/barbersurgeon
 	name = "Barber Surgeon"
@@ -170,6 +175,7 @@
 		TRAIT_ALCHEMY_EXPERT,
 		)
 	maximum_slots = 20
+	rogue_social_rank = 3
 
 /datum/outfit/job/roguetown/rockhill_class/baron/landed_knight
 	name = "Landed Knight"
@@ -493,6 +499,7 @@
 		TRAIT_SMITHING_EXPERT,
 		)
 	maximum_slots = 20
+	rogue_social_rank = 3
 
 /datum/outfit/job/roguetown/rockhill_class/builder
 	name = "Architect"
@@ -563,6 +570,7 @@
 		TRAIT_LEGENDARY_MINER,
 		)
 	maximum_slots = 20
+	rogue_social_rank = 3
 
 /datum/outfit/job/roguetown/rockhill_class/cheesemaker
 	name = "Cheesemaker"
@@ -621,6 +629,8 @@
 		TRAIT_HOMESTEAD_EXPERT,
 		)
 	maximum_slots = 20
+	rogue_social_rank = 3
+	rogue_horse = /mob/living/simple_animal/hostile/retaliate/rogue/cow
 
 /datum/outfit/job/roguetown/rockhill_class/churchling
 	name = "Churchling"
@@ -702,6 +712,7 @@
 		TRAIT_MEDIUMARMOR,
 		TRAIT_SQUIRE_REPAIR,
 		)
+	rogue_allowed_patrons = list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/abyssor, /datum/patron/divine/dendor, /datum/patron/divine/necra, /datum/patron/divine/malum, /datum/patron/divine/eora, /datum/patron/divine/ravox, /datum/patron/divine/xylix, /datum/patron/divine/pestra)
 
 /datum/outfit/job/roguetown/rockhill_class/cleric
 	name = "Monk"
@@ -748,6 +759,11 @@
 	rockhill_traits = list(
 		TRAIT_CIVILIZEDBARBARIAN,
 		TRAIT_OUTLANDER,
+		)
+	rogue_social_rank = 3
+	rogue_stashed_items = list(
+		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/cleric/cantor
@@ -797,6 +813,11 @@
 		TRAIT_DODGEEXPERT,
 		TRAIT_EMPATH,
 		TRAIT_OUTLANDER,
+		)
+	rogue_social_rank = 3
+	rogue_stashed_items = list(
+		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/cleric/missionary
@@ -848,6 +869,11 @@
 		TRAIT_EMPATH,
 		TRAIT_OUTLANDER,
 		)
+	rogue_social_rank = 3
+	rogue_stashed_items = list(
+		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/cleric/paladin
 	name = "Paladin"
@@ -898,6 +924,11 @@
 	rockhill_traits = list(
 		TRAIT_MEDIUMARMOR,
 		TRAIT_OUTLANDER,
+		)
+	rogue_social_rank = 3
+	rogue_stashed_items = list(
+		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/cleric/stigmata
@@ -951,6 +982,11 @@
 		TRAIT_LUX_FREAK,
 		TRAIT_RITUALIST,
 		TRAIT_OUTLANDER,
+		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_social_rank = 3
+	rogue_stashed_items = list(
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/confessor
@@ -1017,6 +1053,10 @@
 		TRAIT_OUTLANDER,
 		TRAIT_STEELHEARTED,
 		TRAIT_INQUISITION,
+		)
+	rogue_subclass_languages = list("/datum/language/otavan")
+	rogue_stashed_items = list(
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/councillor
@@ -1174,6 +1214,8 @@
 		TRAIT_OUTLANDER,
 		)
 	maximum_slots = 1
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_subclass_languages = list("/datum/language/grenzelhoftian", "/datum/language/otavan")
 
 /datum/outfit/job/roguetown/rockhill_class/crusader_cleric
 	name = "Crusader Cleric"
@@ -1239,6 +1281,7 @@
 		TRAIT_OUTLANDER,
 		)
 	maximum_slots = 2
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 
 /datum/outfit/job/roguetown/rockhill_class/crusader_footman
 	name = "Crusader Footman"
@@ -1294,6 +1337,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 
 /datum/outfit/job/roguetown/rockhill_class/crusader_marksman
 	name = "Crusader Marksman"
@@ -1351,6 +1395,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 
 /datum/outfit/job/roguetown/rockhill_class/crusader_paladin
 	name = "Crusader Paladin"
@@ -1409,6 +1454,8 @@
 		TRAIT_OUTLANDER,
 		)
 	maximum_slots = 2
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_subclass_languages = list("/datum/language/grenzelhoftian", "/datum/language/otavan")
 
 /datum/outfit/job/roguetown/rockhill_class/czwarteki/heir
 	name = "Czwarteki Heir"
@@ -1464,6 +1511,7 @@
 		TRAIT_MEDIUMARMOR,
 		TRAIT_STEELHEARTED,
 		)
+	rogue_subclass_languages = list("/datum/language/aavnic")
 
 /datum/outfit/job/roguetown/rockhill_class/czwarteki/hussar
 	name = "Czwarteki Hussar"
@@ -1524,6 +1572,7 @@
 		TRAIT_HEAVYARMOR,
 		TRAIT_STEELHEARTED,
 		)
+	rogue_subclass_languages = list("/datum/language/aavnic")
 
 /datum/outfit/job/roguetown/rockhill_class/czwarteki/lord
 	name = "Czwarteki Lord"
@@ -1586,6 +1635,7 @@
 		TRAIT_HEAVYARMOR,
 		TRAIT_STEELHEARTED,
 		)
+	rogue_subclass_languages = list("/datum/language/aavnic")
 
 /datum/outfit/job/roguetown/rockhill_class/czwarteki/retainer
 	name = "Czwarteki Retainer"
@@ -1644,6 +1694,7 @@
 		TRAIT_MEDIUMARMOR,
 		TRAIT_STEELHEARTED,
 		)
+	rogue_subclass_languages = list("/datum/language/aavnic")
 
 /datum/outfit/job/roguetown/rockhill_class/czwarteki/servant
 	name = "Czwarteki Servant"
@@ -1699,6 +1750,7 @@
 		TRAIT_CICERONE,
 		TRAIT_HOMESTEAD_EXPERT,
 		)
+	rogue_subclass_languages = list("/datum/language/aavnic")
 
 /datum/outfit/job/roguetown/rockhill_class/disciple
 	name = "Disciple"
@@ -1749,6 +1801,11 @@
 		TRAIT_OUTLANDER,
 		TRAIT_STEELHEARTED,
 		TRAIT_INQUISITION,
+		)
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/human/halfelf", "/datum/species/elf/dark", "/datum/species/elf/wood", "/datum/species/dwarf/mountain", "/datum/species/tieberian", "/datum/species/aasimar", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/tabaxi", "/datum/species/vulpkanin", "/datum/species/akula", "/datum/species/moth", "/datum/species/dracon", "/datum/species/anthromorph", "/datum/species/anthromorphsmall", "/datum/species/demihuman", "/datum/species/halforc", "/datum/species/kobold", "/datum/species/goblinp", "/datum/species/dullahan", "/datum/species/lamia", "/datum/species/dwarf/gnome", "/datum/species/harpy", "/datum/species/arachnid")
+	rogue_subclass_languages = list("/datum/language/otavan")
+	rogue_stashed_items = list(
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/drunkard
@@ -1839,6 +1896,7 @@
 		TRAIT_HOMESTEAD_EXPERT,
 		)
 	maximum_slots = 20
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/foreigner
 	name = "Eastern Warrior"
@@ -1882,6 +1940,8 @@
 		TRAIT_NOPAINSTUN,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/human/halfelf", "/datum/species/elf/dark", "/datum/species/elf/wood", "/datum/species/tieberian", "/datum/species/aasimar", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/tabaxi", "/datum/species/vulpkanin", "/datum/species/akula", "/datum/species/moth", "/datum/species/dracon", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/halforc", "/datum/species/harpy", "/datum/species/construct/metal", "/datum/species/construct/metal/porcelain", "/datum/species/dullahan", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/ooze")
+	rogue_subclass_languages = list("/datum/language/kazengunese")
 
 /datum/outfit/job/roguetown/rockhill_class/foreigner/aavnik
 	name = "Aavnik Nitkov"
@@ -1936,6 +1996,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/aavnic")
 
 /datum/outfit/job/roguetown/rockhill_class/foreigner/bluthund
 	name = "Grenzelhoft Bluthund"
@@ -1983,6 +2044,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/grenzelhoftian")
 
 /datum/outfit/job/roguetown/rockhill_class/foreigner/bronzeclad
 	name = "Thespian-Errant"
@@ -2031,6 +2093,7 @@
 		TRAIT_OUTLANDER,
 		)
 	maximum_slots = 3
+	rogue_subclass_languages = list("/datum/language/etruscan")
 
 /datum/outfit/job/roguetown/rockhill_class/foreigner/drow
 	name = "Crocs de l'araignée Débroussaillage"
@@ -2084,6 +2147,8 @@
 		TRAIT_DARKVISION,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/elf/dark", "/datum/species/human/halfelf")
+	rogue_subclass_languages = list("/datum/language/otavan")
 
 /datum/outfit/job/roguetown/rockhill_class/foreigner/dunewell
 	name = "Dunewell Nomad"
@@ -2132,6 +2197,11 @@
 		TRAIT_DECEIVING_MEEKNESS,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/celestial")
+	rogue_stashed_items = list(
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
+		"Token of Home" = /obj/item/clothing/neck/roguetown/psicross,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/foreigner/fencerguy
 	name = "Foreign Fencer"
@@ -2179,6 +2249,7 @@
 		TRAIT_FENCERDEXTERITY,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/grenzelhoftian")
 
 /datum/outfit/job/roguetown/rockhill_class/foreigner/gronn
 	name = "Gronnic Itinerant"
@@ -2221,6 +2292,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/gronnic")
 
 /datum/outfit/job/roguetown/rockhill_class/foreigner/nostromo
 	name = "Etruscan Nostromo"
@@ -2268,6 +2340,7 @@
 		TRAIT_INTELLECTUAL,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/etruscan")
 
 /datum/outfit/job/roguetown/rockhill_class/foreigner/refugee
 	name = "Naledi Refugee"
@@ -2311,6 +2384,7 @@
 		TRAIT_NALEDI,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/celestial")
 
 /datum/outfit/job/roguetown/rockhill_class/foreigner/repentant
 	name = "Otavan Repentant"
@@ -2356,6 +2430,7 @@
 		TRAIT_NOPAINSTUN,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/otavan")
 
 /datum/outfit/job/roguetown/rockhill_class/foreigner/shepherd
 	name = "Szöréndnížine Shepherd"
@@ -2403,6 +2478,7 @@
 	rockhill_traits = list(
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/aavnic")
 
 /datum/outfit/job/roguetown/rockhill_class/foreigner/slaver
 	name = "Zybantine Slaver"
@@ -2454,6 +2530,7 @@
 		TRAIT_MEDIUMARMOR,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/celestial")
 
 /datum/outfit/job/roguetown/rockhill_class/foreigner/underdweller
 	name = "Underdweller"
@@ -2515,6 +2592,8 @@
 		TRAIT_LEGENDARY_MINER,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/dwarf/mountain", "/datum/species/dwarf/gnome", "/datum/species/elf/dark", "/datum/species/kobold", "/datum/species/goblinp", "/datum/species/anthromorphsmall", "/datum/species/moth")
+	rogue_subclass_languages = list("/datum/language/kazengunese")
 
 /datum/outfit/job/roguetown/rockhill_class/foreigner/yoruku
 	name = "Eastern Assassin"
@@ -2560,6 +2639,8 @@
 		TRAIT_DODGEEXPERT,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/human/halfelf", "/datum/species/elf/dark", "/datum/species/elf/wood", "/datum/species/tieberian", "/datum/species/aasimar", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/tabaxi", "/datum/species/vulpkanin", "/datum/species/akula", "/datum/species/moth", "/datum/species/dracon", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/halforc", "/datum/species/harpy", "/datum/species/construct/metal", "/datum/species/construct/metal/porcelain", "/datum/species/dullahan", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/ooze")
+	rogue_subclass_languages = list("/datum/language/kazengunese")
 
 /datum/outfit/job/roguetown/rockhill_class/grenzel_envoy
 	name = "Envoy"
@@ -2621,6 +2702,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/grenzelhoftian")
 
 /datum/outfit/job/roguetown/rockhill_class/grenzel_guard
 	name = "Leibwächter"
@@ -2678,6 +2760,7 @@
 		TRAIT_HEAVYARMOR,
 		TRAIT_STEELHEARTED,
 		)
+	rogue_subclass_languages = list("/datum/language/grenzelhoftian")
 
 /datum/outfit/job/roguetown/rockhill_class/grenzel_priest
 	name = "Envoy Priest"
@@ -2729,6 +2812,7 @@
 		TRAIT_HOMESTEAD_EXPERT,
 		TRAIT_MEDICINE_EXPERT,
 		)
+	rogue_subclass_languages = list("/datum/language/grenzelhoftian")
 
 /datum/outfit/job/roguetown/rockhill_class/guard
 	name = "EA Hasir-ian Guard"
@@ -3033,6 +3117,11 @@
 		TRAIT_NOBLE,
 		TRAIT_EXPERT_HUNTER,
 		)
+	rogue_age_mod = list(
+		"age" = "Old",
+		"stats" = list(ROGUE_STAT_PERCEPTION = 1, ROGUE_STAT_INTELLIGENCE = 1, ROGUE_STAT_STRENGTH = -1, ROGUE_STAT_SPEED = -1),
+		"utility" = 3,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/hand/blademaster
 	name = "Blademaster"
@@ -3135,6 +3224,7 @@
 		TRAIT_NOBLE,
 		TRAIT_EXPERT_HUNTER,
 		)
+	rogue_subclass_languages = list("/datum/language/thievescant")
 
 /datum/outfit/job/roguetown/rockhill_class/heartfelt/hand/advisor
 	name = "Advisor of Heartfelt"
@@ -3194,6 +3284,9 @@
 		TRAIT_ALCHEMY_EXPERT,
 		TRAIT_NOBLE,
 		)
+	rogue_stashed_items = list(
+		"Heartfelt Caparison" = /obj/item/caparison/heartfelt,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/heartfelt/hand/marshal
 	name = "Marshal of Heartfelt"
@@ -3252,6 +3345,10 @@
 		TRAIT_HEARTFELT,
 		TRAIT_STEELHEARTED,
 		)
+	rogue_social_rank = 5
+	rogue_stashed_items = list(
+		"Caparison (Heartfelt)" = /obj/item/caparison/heartfelt,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/heartfelt/hand/steward
 	name = "Steward of Heartfelt"
@@ -3308,6 +3405,10 @@
 		TRAIT_NOBLE,
 		TRAIT_SEEPRICES,
 		TRAIT_HEARTFELT,
+		)
+	rogue_social_rank = 5
+	rogue_stashed_items = list(
+		"Caparison (Heartfelt)" = /obj/item/caparison/heartfelt,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/heartfelt/knight
@@ -3372,6 +3473,11 @@
 		TRAIT_HEARTFELT,
 		)
 	maximum_slots = 1
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_social_rank = 5
+	rogue_stashed_items = list(
+		"Caparison (Heartfelt)" = /obj/item/caparison/heartfelt,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/heartfelt/lord/archmage
 	name = "Archmagos of Heartfelt"
@@ -3436,6 +3542,10 @@
 		TRAIT_HEAVYARMOR,
 		)
 	maximum_slots = 1
+	rogue_social_rank = 5
+	rogue_stashed_items = list(
+		"Caparison (Heartfelt)" = /obj/item/caparison/heartfelt,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/heartfelt/lord/chief
 	name = "Chief of Heartfelt"
@@ -3501,6 +3611,10 @@
 		TRAIT_HEARTFELT,
 		)
 	maximum_slots = 1
+	rogue_social_rank = 5
+	rogue_stashed_items = list(
+		"Caparison (Heartfelt)" = /obj/item/caparison/heartfelt,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/heartfelt/lord/lord
 	name = "Lord of Heartfelt"
@@ -3562,6 +3676,10 @@
 		TRAIT_HEARTFELT,
 		)
 	maximum_slots = 1
+	rogue_social_rank = 5
+	rogue_stashed_items = list(
+		"Caparison (Heartfelt)" = /obj/item/caparison/heartfelt,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/heartfelt/retinue/armorer
 	name = "Heartfeltian Armorer"
@@ -3624,6 +3742,10 @@
 		TRAIT_HEARTFELT,
 		)
 	maximum_slots = 1
+	rogue_social_rank = 3
+	rogue_stashed_items = list(
+		"Blacksteel and Steel Stash" = /obj/item/storage/roguebag/heartfelt/armorer,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/heartfelt/retinue/courtier
 	name = "Heartfeltian Courtier"
@@ -3676,6 +3798,9 @@
 		TRAIT_HEARTFELT,
 		)
 	maximum_slots = 1
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_allowed_sexes = list(FEMALE)
+	rogue_social_rank = 5
 
 /datum/outfit/job/roguetown/rockhill_class/heartfelt/retinue/housearb
 	name = "Heartfeltian Missilite"
@@ -3737,6 +3862,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_HEARTFELT,
 		)
+	rogue_social_rank = 3
 
 /datum/outfit/job/roguetown/rockhill_class/heartfelt/retinue/houseguard
 	name = "Heartfeltian House Guard"
@@ -3801,6 +3927,7 @@
 		TRAIT_HEARTFELT,
 		)
 	maximum_slots = 4
+	rogue_social_rank = 3
 
 /datum/outfit/job/roguetown/rockhill_class/heartfelt/retinue/jester
 	name = "Heartfeltian Jester"
@@ -3825,6 +3952,8 @@
 		TRAIT_HEARTFELT,
 		)
 	maximum_slots = 1
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_social_rank = 5
 
 /datum/outfit/job/roguetown/rockhill_class/heartfelt/retinue/magos
 	name = "Heartfelt Magos"
@@ -3883,6 +4012,7 @@
 		TRAIT_HEARTFELT,
 		)
 	maximum_slots = 1
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 
 /datum/outfit/job/roguetown/rockhill_class/heartfelt/retinue/physician
 	name = "Heartfeltian Physician"
@@ -3937,6 +4067,8 @@
 		TRAIT_EMPATH,
 		)
 	maximum_slots = 1
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_social_rank = 5
 
 /datum/outfit/job/roguetown/rockhill_class/heartfelt/retinue/prior
 	name = "Heartfeltian Prior"
@@ -3992,6 +4124,8 @@
 		TRAIT_HOMESTEAD_EXPERT,
 		)
 	maximum_slots = 1
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_social_rank = 5
 
 /datum/outfit/job/roguetown/rockhill_class/heartfelt/retinue/servant
 	name = "Heartfeltian Servant"
@@ -4055,6 +4189,7 @@
 		TRAIT_SEWING_EXPERT,
 		)
 	maximum_slots = 4
+	rogue_social_rank = 3
 
 /datum/outfit/job/roguetown/rockhill_class/heartfelt/retinue/squire
 	name = "Heartfeltian Squire"
@@ -4123,6 +4258,7 @@
 		TRAIT_HEARTFELT,
 		)
 	maximum_slots = 2
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 
 /datum/outfit/job/roguetown/rockhill_class/heir/aristocrat
 	name = "Sheltered Aristocrat"
@@ -4291,7 +4427,7 @@
 		/obj/item/reagent_containers/glass/bottle/rogue/berrypoison = 1,
 		/obj/item/reagent_containers/glass/bottle/rogue/strongstampoison = 1,
 		/obj/item/reagent_containers/glass/mortar = 1,
-		/obj/item/pestle = 1,
+		/obj/item/pestle/rogue = 1,
 		)
 
 /datum/attribute_holder/sheet/job/rockhill_class/heir/inbred
@@ -4377,6 +4513,7 @@
 		TRAIT_SEEPRICES_SHITTY,
 		TRAIT_NOBLE,
 		)
+	rogue_stat_ceilings = list(ROGUE_STAT_STRENGTH = 8, ROGUE_STAT_CONSTITUTION = 8, ROGUE_STAT_SPEED = 15)
 
 /datum/outfit/job/roguetown/rockhill_class/homesteader
 	name = "Commoner"
@@ -4488,6 +4625,7 @@
 		TRAIT_MASTERFUL_HUNTER,
 		)
 	maximum_slots = 20
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/hunter/spear
 	name = "Spear-Hunter"
@@ -4552,6 +4690,7 @@
 		TRAIT_MASTERFUL_HUNTER,
 		)
 	maximum_slots = 20
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/kj_chaplain
 	name = "Sworn Missionary"
@@ -4603,6 +4742,11 @@
 		TRAIT_EMPATH,
 		TRAIT_RITUALIST,
 		TRAIT_OUTLANDER,
+		)
+	rogue_social_rank = 3
+	rogue_stashed_items = list(
+		"The Verses and Acts of the Ten" = /obj/item/book/rogue/bibble,
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/kj_chaplain_stigmata
@@ -4658,6 +4802,11 @@
 		TRAIT_RITUALIST,
 		TRAIT_LUX_FREAK,
 		TRAIT_OUTLANDER,
+		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_social_rank = 3
+	rogue_stashed_items = list(
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/kj_follower/campwright
@@ -4727,6 +4876,7 @@
 		TRAIT_OUTLANDER,
 		)
 	maximum_slots = 1
+	rogue_social_rank = 3
 
 /datum/outfit/job/roguetown/rockhill_class/kj_follower/chirurgeon
 	name = "Chirurgeon"
@@ -4786,6 +4936,7 @@
 		TRAIT_OUTLANDER,
 		)
 	maximum_slots = 1
+	rogue_social_rank = 3
 
 /datum/outfit/job/roguetown/rockhill_class/kj_follower/jongleur
 	name = "Jongleur"
@@ -4840,6 +4991,7 @@
 		TRAIT_OUTLANDER,
 		)
 	maximum_slots = 1
+	rogue_social_rank = 3
 
 /datum/outfit/job/roguetown/rockhill_class/kj_follower/servitor
 	name = "Servitor"
@@ -4906,6 +5058,7 @@
 		TRAIT_OUTLANDER,
 		)
 	maximum_slots = 1
+	rogue_social_rank = 3
 
 /datum/outfit/job/roguetown/rockhill_class/kj_knight
 	name = "Knight Banneret"
@@ -4960,6 +5113,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 
 /datum/outfit/job/roguetown/rockhill_class/kj_knight_outrider
 	name = "Knight Outrider"
@@ -5015,6 +5169,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 
 /datum/outfit/job/roguetown/rockhill_class/kj_squire
 	name = "Squire-at-Arms"
@@ -5077,6 +5232,7 @@
 		TRAIT_MEDIUMARMOR,
 		TRAIT_OUTLANDER,
 		)
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/kj_squire_bidower
 	name = "Bidower"
@@ -5139,6 +5295,7 @@
 		TRAIT_DODGEEXPERT,
 		TRAIT_OUTLANDER,
 		)
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/kj_squire_hobelar
 	name = "Hobelar"
@@ -5201,6 +5358,7 @@
 		TRAIT_MEDIUMARMOR,
 		TRAIT_OUTLANDER,
 		)
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/knight/footknight
 	name = "Foot Knight"
@@ -5370,6 +5528,10 @@
 		TRAIT_GUARDSMAN,
 		TRAIT_EXPERT_HUNTER,
 		)
+	rogue_stashed_items = list(
+		"Caparison (Saiga)" = /obj/item/caparison,
+		"Caparison (Fogbeast)" = /obj/item/caparison/fogbeast,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/knight/mountedknight
 	name = "Mounted Knight"
@@ -5428,6 +5590,10 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_GUARDSMAN,
 		TRAIT_EXPERT_HUNTER,
+		)
+	rogue_stashed_items = list(
+		"Caparison (Saiga)" = /obj/item/caparison,
+		"Caparison (Fogbeast)" = /obj/item/caparison/fogbeast,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/lord/inbred
@@ -5534,6 +5700,7 @@
 		TRAIT_DNR,
 		TRAIT_MEDIUMARMOR,
 		)
+	rogue_estate_income = 400
 
 /datum/outfit/job/roguetown/rockhill_class/lord/warrior
 	name = "Valiant Warrior"
@@ -5678,6 +5845,12 @@
 		TRAIT_MAGEDEXTERITY,
 		TRAIT_OUTLANDER,
 		)
+	rogue_age_mod = list(
+		"age" = "Old",
+		"skills" = list(/datum/attribute/skill/magic/arcane = 40),
+		"minor" = 1,
+		"utility" = 3,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/mage/spellblade
 	name = "Spellblade"
@@ -5726,6 +5899,12 @@
 	rockhill_traits = list(
 		TRAIT_ARCYNE,
 		TRAIT_OUTLANDER,
+		)
+	rogue_age_mod = list(
+		"age" = "Old",
+		"skills" = list(/datum/attribute/skill/magic/arcane = 40),
+		"minor" = 1,
+		"utility" = 3,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/mage/spellsinger
@@ -5776,6 +5955,12 @@
 		TRAIT_GOODLOVER,
 		TRAIT_OUTLANDER,
 		)
+	rogue_age_mod = list(
+		"age" = "Old",
+		"skills" = list(/datum/attribute/skill/magic/arcane = 40),
+		"minor" = 1,
+		"utility" = 3,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/mage/spellthief
 	name = "Arcyne Trickster"
@@ -5820,6 +6005,13 @@
 	attribute_sheet = /datum/attribute_holder/sheet/job/rockhill_class/mage/spellthief
 	rockhill_traits = list(
 		TRAIT_ARCYNE,
+		)
+	rogue_subclass_languages = list("/datum/language/thievescant")
+	rogue_age_mod = list(
+		"age" = "Old",
+		"skills" = list(/datum/attribute/skill/magic/arcane = 40),
+		"minor" = 1,
+		"utility" = 3,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/manorguard/cavalry
@@ -5878,6 +6070,10 @@
 		TRAIT_EQUESTRIAN,
 		TRAIT_GUARDSMAN,
 		TRAIT_STEELHEARTED,
+		)
+	rogue_stashed_items = list(
+		"Caparison (Saiga)" = /obj/item/caparison,
+		"Caparison (Fogbeast)" = /obj/item/caparison/fogbeast,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/manorguard/footsman
@@ -6051,6 +6247,7 @@
 		TRAIT_GUARDSMAN,
 		TRAIT_STEELHEARTED,
 		)
+	rogue_allowed_ages = list("Old")
 
 /datum/outfit/job/roguetown/rockhill_class/manorguard/skirmisher
 	name = "Skirmisher"
@@ -6322,6 +6519,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/gronnic")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/atgervi/shaman
 	name = "Zayran Shaman"
@@ -6376,6 +6574,8 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/human/halfelf", "/datum/species/elf/dark", "/datum/species/elf/wood", "/datum/species/dwarf/mountain", "/datum/species/tieberian", "/datum/species/aasimar", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/tabaxi", "/datum/species/vulpkanin", "/datum/species/akula", "/datum/species/moth", "/datum/species/dracon", "/datum/species/anthromorph", "/datum/species/anthromorphsmall", "/datum/species/demihuman", "/datum/species/halforc", "/datum/species/kobold", "/datum/species/goblinp", "/datum/species/dullahan", "/datum/species/lamia", "/datum/species/dwarf/gnome", "/datum/species/harpy", "/datum/species/arachnid")
+	rogue_subclass_languages = list("/datum/language/gronnic")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/blackoak
 	name = "Black Oak's Guardian"
@@ -6442,6 +6642,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/human/halfelf", "/datum/species/elf/wood", "/datum/species/elf/dark")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/blackoak/ranger
 	name = "Black Oak's Ranger"
@@ -6504,6 +6705,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/human/halfelf", "/datum/species/elf/wood", "/datum/species/elf/dark")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/condottiero
 	name = "Condottiero Guildsman"
@@ -6561,6 +6763,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/etruscan", "/datum/language/thievescant")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/crocs
 	name = "Crocs de l'araignée Cavalier"
@@ -6622,6 +6825,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/elf/dark", "/datum/species/human/halfelf")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/crocsass
 	name = "Crocs de l'araignée Assassin"
@@ -6690,6 +6894,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/elf/dark", "/datum/species/human/halfelf")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/desert_rider
 	name = "Desert Rider Janissary"
@@ -6747,6 +6952,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/celestial")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/desert_rider/almah
 	name = "Desert Rider Almah"
@@ -6804,6 +7010,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/celestial")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/desert_rider/zeybek
 	name = "Desert Rider Zeybek"
@@ -6865,6 +7072,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/celestial")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/ferentia
 	name = "Sellknight"
@@ -7087,6 +7295,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/thievescant")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/ferentia/sellspear
 	name = "Sellspear"
@@ -7194,6 +7403,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/thievescant")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/forlorn
 	name = "Forlorn Hope Mercenary"
@@ -7249,6 +7459,9 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/lupian", "/datum/species/anthromorph", "/datum/species/vulpkanin")
+	rogue_min_pq = 2
+	rogue_subclass_languages = list("/datum/language/celestial")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/freelancer
 	name = "Freifechter Fencer"
@@ -7300,6 +7513,9 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_patrons = list(/datum/patron/psydon)
+	rogue_subclass_languages = list("/datum/language/aavnic")
+	rogue_stat_ceilings = list(ROGUE_STAT_STRENGTH = 12, ROGUE_STAT_SPEED = 12, ROGUE_STAT_CONSTITUTION = 12)
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/freelancer_lancer
 	name = "Freifechter Lancer"
@@ -7349,6 +7565,9 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_patrons = list(/datum/patron/psydon)
+	rogue_subclass_languages = list("/datum/language/aavnic")
+	rogue_stat_ceilings = list(ROGUE_STAT_STRENGTH = 12, ROGUE_STAT_SPEED = 12, ROGUE_STAT_WILLPOWER = 14, ROGUE_STAT_CONSTITUTION = 12)
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/freelancer_sabrist
 	name = "Freifechter Sabrist"
@@ -7401,6 +7620,9 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_patrons = list(/datum/patron/psydon)
+	rogue_subclass_languages = list("/datum/language/aavnic")
+	rogue_stat_ceilings = list(ROGUE_STAT_STRENGTH = 12, ROGUE_STAT_CONSTITUTION = 12, ROGUE_STAT_WILLPOWER = 12, ROGUE_STAT_SPEED = 12)
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/grenzelhoft
 	name = "Doppelsoldner"
@@ -7458,6 +7680,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/grenzelhoftian")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/grenzelhoft/crossbowman
 	name = "Armbrustschütze"
@@ -7519,6 +7742,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/grenzelhoftian")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/grenzelhoft/halberdier
 	name = "Hellebardier"
@@ -7575,6 +7799,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/grenzelhoftian")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/grenzelhoft/mage
 	name = "Gefechtsgelehrter"
@@ -7638,6 +7863,14 @@
 		TRAIT_OUTLANDER,
 		TRAIT_ARCYNE,
 		)
+	rogue_subclass_languages = list("/datum/language/grenzelhoftian")
+	rogue_age_mod = list(
+		"age" = "Old",
+		"stats" = list(ROGUE_STAT_PERCEPTION = 2, ROGUE_STAT_INTELLIGENCE = 2, ROGUE_STAT_SPEED = -1, ROGUE_STAT_STRENGTH = -1, ROGUE_STAT_CONSTITUTION = -2),
+		"skills" = list(/datum/attribute/skill/magic/arcane = 50),
+		"minor" = 1,
+		"utility" = 3,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/gronnheavy
 	name = "Khuyagtan"
@@ -7696,6 +7929,7 @@
 		TRAIT_OUTLANDER,
 		)
 	maximum_slots = 2
+	rogue_subclass_languages = list("/datum/language/gronnic")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/grudgebearer
 	name = "Grudgebearer Smith"
@@ -7753,6 +7987,7 @@
 		TRAIT_SMITHING_EXPERT,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/dwarf", "/datum/species/dwarf/mountain")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/grudgebearer/soldier
 	name = "Grudgebearer Soldier"
@@ -7804,6 +8039,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/dwarf", "/datum/species/dwarf/mountain")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/newmoon
 	name = "New Moon Spellblade"
@@ -7861,6 +8097,8 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/tabaxi", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/elf/wood", "/datum/species/tieberian")
+	rogue_subclass_languages = list("/datum/language/celestial")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/oathmarked
 	name = "Oathmarked Sentinel"
@@ -7918,6 +8156,11 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/dracon")
+	rogue_social_rank = 4
+	rogue_stashed_items = list(
+		"Writ of Service" = /obj/item/merctoken,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/oathmarked/executor
 	name = "Oathmarked Executor"
@@ -7973,6 +8216,11 @@
 		TRAIT_SCALEARMOR,
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
+		)
+	rogue_allowed_races = list("/datum/species/dracon")
+	rogue_social_rank = 4
+	rogue_stashed_items = list(
+		"Writ of Service" = /obj/item/merctoken,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/routier
@@ -8034,6 +8282,8 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/human/halfelf", "/datum/species/elf/dark", "/datum/species/elf/wood", "/datum/species/tieberian", "/datum/species/aasimar", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/tabaxi", "/datum/species/vulpkanin", "/datum/species/akula", "/datum/species/moth", "/datum/species/dracon", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/halforc", "/datum/species/harpy", "/datum/species/construct/metal", "/datum/species/construct/metal/porcelain", "/datum/species/dullahan", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/ooze")
+	rogue_subclass_languages = list("/datum/language/otavan")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/rumaclan
 	name = "Ruma Clan Gun-in"
@@ -8086,6 +8336,8 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/human/halfelf", "/datum/species/elf/dark", "/datum/species/elf/wood", "/datum/species/tieberian", "/datum/species/aasimar", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/tabaxi", "/datum/species/vulpkanin", "/datum/species/akula", "/datum/species/moth", "/datum/species/dracon", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/halforc", "/datum/species/harpy", "/datum/species/construct/metal", "/datum/species/construct/metal/porcelain", "/datum/species/dullahan", "/datum/species/lamia", "/datum/species/arachnid")
+	rogue_subclass_languages = list("/datum/language/kazengunese")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/rumaclan/sasu
 	name = "Ruma Clan Sasu"
@@ -8140,6 +8392,8 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/human/halfelf", "/datum/species/elf/dark", "/datum/species/elf/wood", "/datum/species/tieberian", "/datum/species/aasimar", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/tabaxi", "/datum/species/vulpkanin", "/datum/species/akula", "/datum/species/moth", "/datum/species/dracon", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/halforc", "/datum/species/harpy", "/datum/species/construct/metal", "/datum/species/construct/metal/porcelain", "/datum/species/dullahan", "/datum/species/lamia", "/datum/species/arachnid")
+	rogue_subclass_languages = list("/datum/language/kazengunese")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/steppesman
 	name = "Liga Aavnik"
@@ -8189,6 +8443,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/aavnic")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/vaquero
 	name = "Vaquero"
@@ -8254,6 +8509,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/etruscan")
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/warscholar
 	name = "Naledi Hierophant"
@@ -8314,6 +8570,14 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/celestial")
+	rogue_age_mod = list(
+		"age" = "Old",
+		"stats" = list(ROGUE_STAT_PERCEPTION = 1, ROGUE_STAT_INTELLIGENCE = 1, ROGUE_STAT_SPEED = -1),
+		"skills" = list(/datum/attribute/skill/magic/arcane = 50),
+		"minor" = 1,
+		"utility" = 3,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/warscholar/pontifex
 	name = "Naledi Pontifex"
@@ -8369,6 +8633,11 @@
 		TRAIT_NALEDI,
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
+		)
+	rogue_subclass_languages = list("/datum/language/celestial", "/datum/language/thievescant")
+	rogue_age_mod = list(
+		"age" = "Old",
+		"utility" = 6,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/mercenary/warscholar/vizier
@@ -8427,6 +8696,14 @@
 		TRAIT_ARCYNE,
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
+		)
+	rogue_subclass_languages = list("/datum/language/celestial")
+	rogue_age_mod = list(
+		"age" = "Old",
+		"stats" = list(ROGUE_STAT_PERCEPTION = 1, ROGUE_STAT_INTELLIGENCE = 1, ROGUE_STAT_SPEED = -1),
+		"skills" = list(/datum/attribute/skill/magic/arcane = 50),
+		"minor" = 1,
+		"utility" = 3,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/merchantEA
@@ -8531,6 +8808,7 @@
 		TRAIT_LEGENDARY_MINER,
 		)
 	maximum_slots = 20
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/minstrel
 	name = "Minstrel"
@@ -8584,6 +8862,7 @@
 		TRAIT_HOMESTEAD_EXPERT,
 		)
 	maximum_slots = 20
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/nightmaiden
 	name = "Bath Attendant"
@@ -8784,6 +9063,8 @@
 		TRAIT_EXPERT_HUNTER,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_social_rank = 5
 
 /datum/outfit/job/roguetown/rockhill_class/noble/knighte
 	name = "Knight Errant"
@@ -8837,6 +9118,12 @@
 		TRAIT_HEAVYARMOR,
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
+		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_social_rank = 4
+	rogue_stashed_items = list(
+		"Caparison (Saiga)" = /obj/item/caparison,
+		"Caparison (Fogbeast)" = /obj/item/caparison/fogbeast,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/noble/squire
@@ -8903,6 +9190,8 @@
 		TRAIT_SQUIRE_REPAIR,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/nudist
 	name = "Nudist"
@@ -8936,6 +9225,7 @@
 	outfit = /datum/outfit/job/roguetown/rockhill_class/nudist
 	desc = "They say that the most devout of Dendor forgo clothing in order to weather their body to the natural elements. You happen to be one of them!"
 	attribute_sheet = /datum/attribute_holder/sheet/job/rockhill_class/nudist
+	rogue_allowed_patrons = list(/datum/patron/divine/dendor)
 
 /datum/outfit/job/roguetown/rockhill_class/otavan_envoy
 	name = "Émissaire"
@@ -8998,6 +9288,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/otavan")
 
 /datum/outfit/job/roguetown/rockhill_class/otavan_guard
 	name = "Otavan Arbalétrier"
@@ -9056,6 +9347,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/otavan")
 
 /datum/outfit/job/roguetown/rockhill_class/otavan_knight
 	name = "Gendarme"
@@ -9114,6 +9406,7 @@
 		TRAIT_NOBLE,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/otavan")
 
 /datum/outfit/job/roguetown/rockhill_class/otavan_preacher
 	name = "Psydonite Preacher"
@@ -9168,6 +9461,7 @@
 		TRAIT_SILVER_BLESSED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/otavan")
 
 /datum/outfit/job/roguetown/rockhill_class/otavan_scribe
 	name = "Otavan Scribe"
@@ -9222,6 +9516,7 @@
 		TRAIT_INTELLECTUAL,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/otavan")
 
 /datum/outfit/job/roguetown/rockhill_class/peasant
 	name = "Farmer"
@@ -9282,6 +9577,7 @@
 		TRAIT_HOMESTEAD_EXPERT,
 		)
 	maximum_slots = 20
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/potter
 	name = "Potter"
@@ -9333,6 +9629,7 @@
 		TRAIT_HOMESTEAD_EXPERT,
 		)
 	maximum_slots = 20
+	rogue_social_rank = 3
 
 /datum/outfit/job/roguetown/rockhill_class/prisoner_blacksmith
 	name = "Prisoner Blacksmith"
@@ -9874,6 +10171,11 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_INQUISITION,
 		)
+	rogue_subclass_languages = list("/datum/language/otavan")
+	rogue_social_rank = 2
+	rogue_stashed_items = list(
+		"Of Psydon" = /obj/item/book/rogue/bibble/psy,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/psydoniantemplar
 	name = "Adjudicator"
@@ -9923,6 +10225,11 @@
 		TRAIT_OUTLANDER,
 		TRAIT_STEELHEARTED,
 		TRAIT_INQUISITION,
+		)
+	rogue_subclass_languages = list("/datum/language/otavan")
+	rogue_social_rank = 4
+	rogue_stashed_items = list(
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/puritan/arbiter
@@ -9980,6 +10287,10 @@
 		TRAIT_PURITAN,
 		TRAIT_OUTLANDER,
 		TRAIT_NOBLE,
+		)
+	rogue_subclass_languages = list("/datum/language/otavan")
+	rogue_stashed_items = list(
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/puritan/inspector
@@ -10050,6 +10361,10 @@
 		TRAIT_OUTLANDER,
 		TRAIT_NOBLE,
 		)
+	rogue_subclass_languages = list("/datum/language/otavan")
+	rogue_stashed_items = list(
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/puritan/ordinator
 	name = "Ordinator"
@@ -10103,6 +10418,10 @@
 		TRAIT_PURITAN,
 		TRAIT_OUTLANDER,
 		TRAIT_NOBLE,
+		)
+	rogue_subclass_languages = list("/datum/language/otavan")
+	rogue_stashed_items = list(
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/ranger
@@ -10162,6 +10481,7 @@
 		TRAIT_EXPERT_HUNTER,
 		TRAIT_OUTLANDER,
 		)
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/ranger/bombadier
 	name = "Bombardier"
@@ -10212,6 +10532,7 @@
 		TRAIT_BOMBER_EXPERT,
 		TRAIT_OUTLANDER,
 		)
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/ranger/bwanderer
 	name = "Biome Wanderer"
@@ -10267,6 +10588,7 @@
 		TRAIT_OUTDOORSMAN,
 		TRAIT_OUTLANDER,
 		)
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/ranger/wayfarer
 	name = "Wayfarer"
@@ -10318,6 +10640,8 @@
 		TRAIT_DODGEEXPERT,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/thievescant")
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/rogue
 	name = "Treasure Hunter"
@@ -10375,6 +10699,7 @@
 		TRAIT_GRAVEROBBER,
 		TRAIT_OUTLANDER,
 		)
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/rogue/bard
 	name = "Bard"
@@ -10428,6 +10753,7 @@
 		TRAIT_EMPATH,
 		TRAIT_OUTLANDER,
 		)
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/rogue/swashbuckler
 	name = "Swashbuckler"
@@ -10481,6 +10807,7 @@
 		TRAIT_DECEIVING_MEEKNESS,
 		TRAIT_OUTLANDER,
 		)
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/rogue/thief
 	name = "Thief"
@@ -10538,6 +10865,8 @@
 		TRAIT_DODGEEXPERT,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/thievescant")
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/rookie/backline
 	name = "Backline Recruit"
@@ -10962,6 +11291,7 @@
 		TRAIT_DYES,
 		)
 	maximum_slots = 20
+	rogue_social_rank = 3
 
 /datum/outfit/job/roguetown/rockhill_class/seneschal/chiefbutler
 	name = "Chief Butler"
@@ -11278,6 +11608,7 @@
 		TRAIT_MEDIUMARMOR,
 		TRAIT_OUTLANDER,
 		)
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/sfighter/amazon
 	name = "Amazon"
@@ -11321,6 +11652,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_DEATHBYSNUSNU,
 		)
+	rogue_social_rank = 1
 
 /datum/outfit/job/roguetown/rockhill_class/sfighter/barbarian
 	name = "Barbarian"
@@ -11375,6 +11707,8 @@
 		TRAIT_NOPAINSTUN,
 		TRAIT_OUTLANDER,
 		)
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/human/halfelf", "/datum/species/elf/dark", "/datum/species/elf/wood", "/datum/species/dwarf/mountain", "/datum/species/tieberian", "/datum/species/aasimar", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/tabaxi", "/datum/species/vulpkanin", "/datum/species/akula", "/datum/species/moth", "/datum/species/dracon", "/datum/species/anthromorph", "/datum/species/anthromorphsmall", "/datum/species/demihuman", "/datum/species/halforc", "/datum/species/kobold", "/datum/species/goblinp", "/datum/species/dullahan", "/datum/species/lamia", "/datum/species/dwarf/gnome", "/datum/species/harpy", "/datum/species/arachnid")
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/sfighter/duelist
 	name = "Duelist"
@@ -11431,6 +11765,7 @@
 		TRAIT_DECEIVING_MEEKNESS,
 		TRAIT_OUTLANDER,
 		)
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/sfighter/ironclad
 	name = "Ironclad"
@@ -11480,6 +11815,7 @@
 		TRAIT_HEAVYARMOR,
 		TRAIT_OUTLANDER,
 		)
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/sfighter/mhunter
 	name = "Exorcist"
@@ -11534,6 +11870,7 @@
 		TRAIT_OUTLANDER,
 		)
 	maximum_slots = 5
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/slave/house_slave
 	name = "House Slave"
@@ -11574,6 +11911,7 @@
 		TRAIT_HOMESTEAD_EXPERT,
 		TRAIT_OWNED_SLAVE,
 		)
+	rogue_subclass_languages = list("/datum/language/celestial")
 
 /datum/outfit/job/roguetown/rockhill_class/slave/labor_slave
 	name = "Labor Slave"
@@ -11618,6 +11956,7 @@
 		TRAIT_LEGENDARY_MINER,
 		TRAIT_OWNED_SLAVE,
 		)
+	rogue_subclass_languages = list("/datum/language/celestial")
 
 /datum/outfit/job/roguetown/rockhill_class/slave/slave_sentry
 	name = "Slave Sentry"
@@ -11662,6 +12001,7 @@
 		TRAIT_OWNED_SLAVE,
 		)
 	maximum_slots = 2
+	rogue_subclass_languages = list("/datum/language/celestial")
 
 /datum/outfit/job/roguetown/rockhill_class/slaver/master
 	name = "Zybantynian Master"
@@ -11730,6 +12070,12 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/celestial")
+	rogue_stashed_items = list(
+		"Slavekeeping Supplies" = /obj/item/storage/roguebag/slaver/master,
+		"Bedroll" = /obj/item/bedroll,
+		"Fullpie (Meat)" = /obj/item/reagent_containers/food/snacks/rogue/pie/cooked/meat,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/slaver/mercenary/blade
 	name = "Zybantynian Blade Mercenary"
@@ -11796,6 +12142,12 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/celestial")
+	rogue_stashed_items = list(
+		"Spare Chain" = /obj/item/rope/chain,
+		"Bedroll" = /obj/item/bedroll,
+		"Handpie (Meat)" = /obj/item/reagent_containers/food/snacks/rogue/handpie/meat,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/slaver/mercenary/crossbow
 	name = "Zybantynian Light Crossbow Mercenary"
@@ -11859,6 +12211,12 @@
 		TRAIT_DODGEEXPERT,
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
+		)
+	rogue_subclass_languages = list("/datum/language/celestial")
+	rogue_stashed_items = list(
+		"Spare Chain" = /obj/item/rope/chain,
+		"Bedroll" = /obj/item/bedroll,
+		"Handpie (Meat)" = /obj/item/reagent_containers/food/snacks/rogue/handpie/meat,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/slaver/mercenary/whip
@@ -11926,6 +12284,12 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/celestial")
+	rogue_stashed_items = list(
+		"Spare Chain" = /obj/item/rope/chain,
+		"Bedroll" = /obj/item/bedroll,
+		"Handpie (Meat)" = /obj/item/reagent_containers/food/snacks/rogue/handpie/meat,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/slaver/slave/arcyne
 	name = "Arcyne Slave"
@@ -11975,6 +12339,7 @@
 		TRAIT_GOODLOVER,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/celestial")
 
 /datum/outfit/job/roguetown/rockhill_class/slaver/slave/battle
 	name = "Battle Slave"
@@ -12028,6 +12393,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/celestial")
 
 /datum/outfit/job/roguetown/rockhill_class/slaver/slave/craftsman
 	name = "Craftsman Slave"
@@ -12081,6 +12447,7 @@
 		TRAIT_SMITHING_EXPERT,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/celestial")
 
 /datum/outfit/job/roguetown/rockhill_class/slaver/slave/service
 	name = "Service Slave"
@@ -12131,6 +12498,7 @@
 		TRAIT_BEAUTIFUL,
 		TRAIT_OUTLANDER,
 		)
+	rogue_subclass_languages = list("/datum/language/celestial")
 
 /datum/outfit/job/roguetown/rockhill_class/sojourner
 	name = "Sojourner"
@@ -12185,6 +12553,11 @@
 		TRAIT_OUTLANDER,
 		TRAIT_STEELHEARTED,
 		TRAIT_INQUISITION,
+		)
+	rogue_subclass_languages = list("/datum/language/otavan", "/datum/language/celestial")
+	rogue_social_rank = 4
+	rogue_stashed_items = list(
+		"Tome of Psydon" = /obj/item/book/rogue/bibble/psy,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/squire/footman
@@ -12434,6 +12807,8 @@
 		TRAIT_STEELHEARTED,
 		)
 	maximum_slots = 8
+	rogue_subclass_languages = list("/datum/language/thievescant")
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/trader/brewer
 	name = "Brewer"
@@ -12490,6 +12865,7 @@
 		TRAIT_CICERONE,
 		TRAIT_HOMESTEAD_EXPERT,
 		)
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/trader/cuisiner
 	name = "Cuisiner"
@@ -12543,6 +12919,7 @@
 		TRAIT_GOODLOVER,
 		TRAIT_HOMESTEAD_EXPERT,
 		)
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/trader/doomsayer
 	name = "Doomsayer"
@@ -12595,6 +12972,7 @@
 		TRAIT_PSYCHOSIS,
 		TRAIT_HOMESTEAD_EXPERT,
 		)
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/trader/harlequin
 	name = "Harlequin"
@@ -12642,6 +13020,7 @@
 		TRAIT_NUTCRACKER,
 		TRAIT_HOMESTEAD_EXPERT,
 		)
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/trader/jeweler
 	name = "Jeweler"
@@ -12704,6 +13083,7 @@
 		TRAIT_SMITHING_EXPERT,
 		TRAIT_LEGENDARY_MINER,
 		)
+	rogue_social_rank = 3
 
 /datum/outfit/job/roguetown/rockhill_class/trader/peddler
 	name = "Peddler"
@@ -12755,6 +13135,7 @@
 		TRAIT_MEDICINE_EXPERT,
 		TRAIT_ALCHEMY_EXPERT,
 		)
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/trader/scholar
 	name = "Traveling Scholar"
@@ -12811,6 +13192,8 @@
 		TRAIT_SURVIVAL_EXPERT,
 		TRAIT_HOMESTEAD_EXPERT,
 		)
+	rogue_subclass_languages = list("/datum/language/elvish", "/datum/language/dwarvish", "/datum/language/celestial", "/datum/language/hellspeak", "/datum/language/orcish", "/datum/language/grenzelhoftian", "/datum/language/otavan", "/datum/language/etruscan", "/datum/language/gronnic", "/datum/language/hammerholdian", "/datum/language/kazengunese", "/datum/language/draconic", "/datum/language/aavnic")
+	rogue_social_rank = 3
 
 /datum/outfit/job/roguetown/rockhill_class/vagabond_beggar
 	name = "Beggar"
@@ -12842,6 +13225,7 @@
 		TRAIT_NOSTINK,
 		TRAIT_NASTY_EATER,
 		)
+	rogue_subclass_languages = list("/datum/language/thievescant")
 
 /datum/outfit/job/roguetown/rockhill_class/vagabond_busker
 	name = "Busker"
@@ -12899,6 +13283,7 @@
 	outfit = /datum/outfit/job/roguetown/rockhill_class/vagabond_courier
 	desc = "Entrusted with a message of great import, your fortunes fell by the roadside at the behest of a group of Matthiosian scum. Bereft of mount and master, you now wander the realm for purpose and sustenance."
 	attribute_sheet = /datum/attribute_holder/sheet/job/rockhill_class/vagabond_courier
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/vagabond_deprived
 	name = "Deprived"
@@ -12977,6 +13362,7 @@
 	rockhill_traits = list(
 		TRAIT_HOMESTEAD_EXPERT,
 		)
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/vagabond_mage
 	name = "Exiled Apprentice"
@@ -13062,6 +13448,7 @@
 	outfit = /datum/outfit/job/roguetown/rockhill_class/vagabond_runner
 	desc = "Ferrying messages in the dark is a dangerous profession at the best of times. You're lucky to have made it out of your last predicament alive, but all you have now is some rags and your trusty feet."
 	attribute_sheet = /datum/attribute_holder/sheet/job/rockhill_class/vagabond_runner
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/vagabond_scholar
 	name = "Destitute Scholar"
@@ -13095,6 +13482,7 @@
 		TRAIT_CICERONE,
 		TRAIT_SEEDKNOW,
 		)
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/vagabond_unraveled
 	name = "The Unraveled"
@@ -13122,6 +13510,7 @@
 		TRAIT_PSYCHOSIS,
 		TRAIT_NOSTINK,
 		)
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 
 /datum/outfit/job/roguetown/rockhill_class/vagabond_wanted
 	name = "Wanted"
@@ -13389,6 +13778,10 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_COMBAT_AWARE,
 		)
+	rogue_stashed_items = list(
+		"Caparison (Saiga)" = /obj/item/caparison,
+		"Caparison (Fogbeast)" = /obj/item/caparison/fogbeast,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/veteran/footman
 	name = "Retired Footman"
@@ -13503,6 +13896,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_COMBAT_AWARE,
 		)
+	rogue_subclass_languages = list("/datum/language/grenzelhoftian")
 
 /datum/outfit/job/roguetown/rockhill_class/veteran/scout
 	name = "Former Scout"
@@ -13637,6 +14031,7 @@
 		TRAIT_STEELHEARTED,
 		TRAIT_COMBAT_AWARE,
 		)
+	rogue_subclass_languages = list("/datum/language/thievescant")
 
 /datum/outfit/job/roguetown/rockhill_class/wapprentice/apprentice
 	name = "Magician Apprentice"
@@ -13735,6 +14130,13 @@
 		TRAIT_ARCYNE,
 		TRAIT_ALCHEMY_EXPERT,
 		TRAIT_MAGEDEXTERITY,
+		)
+	rogue_age_mod = list(
+		"age" = "Old",
+		"stats" = list(ROGUE_STAT_INTELLIGENCE = 1, ROGUE_STAT_SPEED = -1),
+		"skills" = list(/datum/attribute/skill/magic/arcane = 40),
+		"minor" = 1,
+		"utility" = 3,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/warden/forester
@@ -13886,7 +14288,7 @@
 	backpack_contents = list(
 		/obj/item/rogueweapon/spellbook = 1,
 		/obj/item/reagent_containers/glass/mortar = 1,
-		/obj/item/pestle = 1,
+		/obj/item/pestle/rogue = 1,
 		/obj/item/candle/yellow = 2,
 		/obj/item/chalk = 1,
 		)
@@ -13914,6 +14316,11 @@
 		TRAIT_ALCHEMY_EXPERT,
 		)
 	maximum_slots = 20
+	rogue_age_mod = list(
+		"age" = "Old",
+		"stats" = list(ROGUE_STAT_FORTUNE = 1, ROGUE_STAT_INTELLIGENCE = 1, ROGUE_STAT_SPEED = -1),
+		"minor" = 1,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/woodworker
 	name = "Woodcutter"
@@ -13969,6 +14376,7 @@
 		TRAIT_HOMESTEAD_EXPERT,
 		)
 	maximum_slots = 20
+	rogue_social_rank = 2
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/ancientchampion
 	name = "Ancient Champion"
@@ -14033,6 +14441,10 @@
 		TRAIT_ARCYNE,
 		)
 	maximum_slots = 1
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_stashed_items = list(
+		"Armor Plates" = /obj/item/repair_kit/metal,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/antipope
 	name = "Heresiarch"
@@ -14092,6 +14504,9 @@
 		TRAIT_ZURCH,
 		)
 	maximum_slots = 1
+	rogue_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/berserker
 	name = "Berserker"
@@ -14154,6 +14569,10 @@
 		TRAIT_HERESIARCH,
 		TRAIT_SELF_SUSTENANCE,
 		TRAIT_ZURCH,
+		)
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/human/halfelf", "/datum/species/elf/dark", "/datum/species/elf/wood", "/datum/species/dwarf/mountain", "/datum/species/tieberian", "/datum/species/aasimar", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/tabaxi", "/datum/species/vulpkanin", "/datum/species/akula", "/datum/species/moth", "/datum/species/dracon", "/datum/species/anthromorph", "/datum/species/anthromorphsmall", "/datum/species/demihuman", "/datum/species/halforc", "/datum/species/kobold", "/datum/species/goblinp", "/datum/species/dullahan", "/datum/species/lamia", "/datum/species/dwarf/gnome", "/datum/species/harpy", "/datum/species/arachnid")
+	rogue_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/blackoakwyrm
@@ -14230,6 +14649,11 @@
 		TRAIT_ZURCH,
 		)
 	maximum_slots = 1
+	rogue_allowed_races = list("/datum/species/human/halfelf", "/datum/species/elf/wood", "/datum/species/elf/dark")
+	rogue_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+		"Stashed Funds" = /obj/item/roguecoin/silver/pile/wretchpile,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/deserter
 	name = "Disgraced Knight"
@@ -14291,6 +14715,9 @@
 		TRAIT_ZURCH,
 		)
 	maximum_slots = 2
+	rogue_stashed_items = list(
+		"Armor Plates" = /obj/item/repair_kit/metal,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/deserter/maa
 	name = "Fighter"
@@ -14356,6 +14783,9 @@
 		TRAIT_ZURCH,
 		)
 	maximum_slots = 2
+	rogue_stashed_items = list(
+		"Armor Plates" = /obj/item/repair_kit/metal,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/herald_of_progress
 	name = "Herald of Progress"
@@ -14423,6 +14853,9 @@
 		TRAIT_ZURCH,
 		)
 	maximum_slots = 1
+	rogue_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/heretic
 	name = "Heretic"
@@ -14475,6 +14908,9 @@
 		TRAIT_ZURCH,
 		)
 	maximum_slots = 2
+	rogue_stashed_items = list(
+		"Armor Plates" = /obj/item/repair_kit/metal,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/heretic/monk
 	name = "Heretic Monk"
@@ -14531,6 +14967,10 @@
 		TRAIT_ZURCH,
 		)
 	maximum_slots = 1
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/human/halfelf", "/datum/species/elf/dark", "/datum/species/elf/wood", "/datum/species/dwarf/mountain", "/datum/species/tieberian", "/datum/species/aasimar", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/tabaxi", "/datum/species/vulpkanin", "/datum/species/akula", "/datum/species/moth", "/datum/species/dracon", "/datum/species/anthromorph", "/datum/species/anthromorphsmall", "/datum/species/demihuman", "/datum/species/halforc", "/datum/species/kobold", "/datum/species/goblinp", "/datum/species/dullahan", "/datum/species/lamia", "/datum/species/dwarf/gnome", "/datum/species/harpy", "/datum/species/arachnid")
+	rogue_stashed_items = list(
+		"Armor Plates" = /obj/item/repair_kit/metal,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/heretic/spy
 	name = "Heretic Spy"
@@ -14576,6 +15016,9 @@
 		TRAIT_ZURCH,
 		)
 	maximum_slots = 2
+	rogue_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/licker
 	name = "Licker"
@@ -14600,6 +15043,7 @@
 		TRAIT_ZURCH,
 		)
 	maximum_slots = 2
+	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/lunacyembracer
 	name = "Lunacy Embracer"
@@ -14658,6 +15102,8 @@
 		TRAIT_ZURCH,
 		)
 	maximum_slots = 2
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/human/halfelf", "/datum/species/elf/dark", "/datum/species/elf/wood", "/datum/species/dwarf/mountain", "/datum/species/tieberian", "/datum/species/aasimar", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/tabaxi", "/datum/species/vulpkanin", "/datum/species/akula", "/datum/species/moth", "/datum/species/dracon", "/datum/species/anthromorph", "/datum/species/anthromorphsmall", "/datum/species/demihuman", "/datum/species/halforc", "/datum/species/kobold", "/datum/species/goblinp", "/datum/species/dullahan", "/datum/species/lamia", "/datum/species/dwarf/gnome", "/datum/species/harpy", "/datum/species/arachnid")
+	rogue_disallowed_races = list("/datum/species/harpy")
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/mistwalker
 	name = "Mistwalker"
@@ -14721,6 +15167,13 @@
 		TRAIT_ZURCH,
 		)
 	maximum_slots = 2
+	rogue_allowed_races = list("/datum/species/human/northern", "/datum/species/human/halfelf", "/datum/species/elf/dark", "/datum/species/elf/wood", "/datum/species/dwarf/mountain", "/datum/species/tieberian", "/datum/species/aasimar", "/datum/species/lizardfolk", "/datum/species/lupian", "/datum/species/tabaxi", "/datum/species/vulpkanin", "/datum/species/akula", "/datum/species/moth", "/datum/species/dracon", "/datum/species/anthromorph", "/datum/species/anthromorphsmall", "/datum/species/demihuman", "/datum/species/halforc", "/datum/species/kobold", "/datum/species/goblinp", "/datum/species/dullahan", "/datum/species/lamia", "/datum/species/dwarf/gnome", "/datum/species/harpy", "/datum/species/arachnid")
+	rogue_allowed_patrons = list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/ravox, /datum/patron/divine/necra, /datum/patron/divine/xylix, /datum/patron/divine/pestra, /datum/patron/divine/malum, /datum/patron/divine/eora, /datum/patron/psydon, /datum/patron/inhumen/zizo, /datum/patron/inhumen/graggar, /datum/patron/inhumen/matthios, /datum/patron/inhumen/baotha)
+	rogue_subclass_languages = list("/datum/language/kazengunese")
+	rogue_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+		)
+	rogue_stat_ceilings = list(ROGUE_STAT_STRENGTH = 14, ROGUE_STAT_INTELLIGENCE = 14)
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/necromancer
 	name = "Necromancer"
@@ -14785,6 +15238,9 @@
 		TRAIT_ZURCH,
 		)
 	maximum_slots = 1
+	rogue_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/outlaw
 	name = "Outlaw"
@@ -14852,6 +15308,10 @@
 		TRAIT_SELF_SUSTENANCE,
 		TRAIT_ZURCH,
 		)
+	rogue_subclass_languages = list("/datum/language/thievescant")
+	rogue_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/outlaw/marauder
 	name = "Marauder"
@@ -14915,6 +15375,10 @@
 		TRAIT_HERESIARCH,
 		TRAIT_SELF_SUSTENANCE,
 		TRAIT_ZURCH,
+		)
+	rogue_subclass_languages = list("/datum/language/thievescant")
+	rogue_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/plaguebearer
@@ -14982,6 +15446,9 @@
 		TRAIT_ZURCH,
 		)
 	maximum_slots = 1
+	rogue_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/poacher
 	name = "Poacher"
@@ -15057,6 +15524,9 @@
 		TRAIT_SELF_SUSTENANCE,
 		TRAIT_ZURCH,
 		)
+	rogue_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/pyromaniac
 	name = "Pyromaniac"
@@ -15118,6 +15588,9 @@
 		TRAIT_HERESIARCH,
 		TRAIT_SELF_SUSTENANCE,
 		TRAIT_ZURCH,
+		)
+	rogue_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
 		)
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/roguemage
@@ -15185,6 +15658,16 @@
 		TRAIT_SELF_SUSTENANCE,
 		TRAIT_ZURCH,
 		)
+	rogue_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+		"Stashed Funds" = /obj/item/roguecoin/silver/pile/wretchpile,
+		)
+	rogue_age_mod = list(
+		"age" = "Old",
+		"skills" = list(/datum/attribute/skill/magic/arcane = 50),
+		"minor" = 1,
+		"utility" = 3,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/vigilante
 	name = "Masked Lunatic"
@@ -15232,6 +15715,9 @@
 		TRAIT_ZURCH,
 		)
 	maximum_slots = 1
+	rogue_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/wretch/wretchedtoiler
 	name = "Wretched Toiler"
@@ -15311,6 +15797,9 @@
 		TRAIT_ZURCH,
 		)
 	maximum_slots = 1
+	rogue_stashed_items = list(
+		"Sewing Kit" = /obj/item/repair_kit,
+		)
 
 /datum/outfit/job/roguetown/rockhill_class/zybantine_advisor
 	name = "Advisor"

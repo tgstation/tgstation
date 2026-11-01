@@ -3,6 +3,8 @@
 #define ROGUE_FALL_ASLEEP_GROUND 25
 /// Mattress wear per point of brute damage to the bed: it snaps at half the damage that breaks the frame.
 #define ROGUE_MATTRESS_WEAR_PER_DAMAGE 2
+/// Ratwood handle_sleep(): a bodypart that bleeds this much a Life tick or more does not mend in sleep (get_bleed_rate() >= 1).
+#define ROGUE_SLEEP_BLEED_LIMIT 1
 
 /// Medieval maps: a player human falls asleep with closed eyes, heals in sleep by the bed's quality and is warmed by fires.
 /mob/living/carbon/human/Initialize(mapload)
@@ -15,8 +17,8 @@
 /// Ratwood sleep (code/modules/mob/living/carbon/life.dm handle_sleep()): lying down or in a bed or chair with the eyes closed, a
 /// player falls asleep after a while - soon on a bed, slowly on the ground, never in medium or heavy armour or a heavy helmet -
 /// and keeps sleeping while the eyes stay closed. Asleep, a fed body heals by the quality of what it sleeps on (sleepy of the
-/// bed, 0.5 on the ground, rogue_sleep_quality()): every bodypart that does not bleed, toxins, blood; a good bed warms a cold
-/// sleeper. Energy in sleep is the energy element's (hud/rogue_hud_mechanics.dm).
+/// bed, 0.5 on the ground, rogue_sleep_quality()): every bodypart that does not bleed and its wounds, toxins, blood; a good bed
+/// warms a cold sleeper. Energy in sleep is the energy element's (hud/rogue_hud_mechanics.dm).
 /datum/component/rogue_sleeper
 	/// How far along falling asleep is (Ratwood fallingas).
 	var/falling = 0
@@ -74,8 +76,10 @@
 		return TRUE
 	return FALSE
 
-/// Ratwood healing in sleep, per two seconds: brute and burn of every bodypart that does not bleed, toxins, blood, by the
-/// quality of the bed (0.5 on the ground). A bedroll or better warms a cold sleeper.
+/// Ratwood healing in sleep, per two seconds: brute and burn of every bodypart that bleeds less than a unit a Life tick (bandage
+/// counted, combat/blood.dm), and each of its wounds by the wound's sleep_healing (combat/medicine.dm rogue_sleep_healing(),
+/// heal_wound(sleep_healing * sleepy_mod)), toxins, blood, by the quality of the bed (0.5 on the ground). A bedroll or better
+/// warms a cold sleeper.
 /datum/component/rogue_sleeper/proc/sleep_heal(mob/living/carbon/human/source, seconds_per_tick)
 	var/quality = source.rogue_sleep_quality() || ROGUE_ENERGY_GROUND_FACTOR
 	if(quality >= 2 && source.bodytemperature < BODYTEMP_NORMAL - ROGUE_FIRE_REST_COLD)
@@ -87,10 +91,14 @@
 		return
 	var/need_update = FALSE
 	for(var/obj/item/bodypart/part as anything in source.bodyparts)
-		if(part.cached_bleed_rate >= 1)
+		if(part.rogue_limb_bleed_rate() * ROGUE_LIFE_TICK >= ROGUE_SLEEP_BLEED_LIMIT)
 			continue
 		if(part.heal_damage(amount, amount, updating_health = FALSE, required_bodytype = BODYTYPE_ORGANIC))
 			need_update = TRUE
+		for(var/datum/wound/wound as anything in LAZYCOPY(part.wounds))
+			var/sleep_healing = wound.rogue_sleep_healing()
+			if(sleep_healing > 0)
+				wound.rogue_heal_wound(sleep_healing * amount)
 	if(!source.is_bleeding())
 		source.adjust_blood_volume(4 * amount, maximum = BLOOD_VOLUME_NORMAL)
 	need_update += source.adjust_tox_loss(-amount, updating_health = FALSE, required_biotype = MOB_ORGANIC)
@@ -193,3 +201,4 @@
 #undef ROGUE_FALL_ASLEEP_BED
 #undef ROGUE_FALL_ASLEEP_GROUND
 #undef ROGUE_MATTRESS_WEAR_PER_DAMAGE
+#undef ROGUE_SLEEP_BLEED_LIMIT

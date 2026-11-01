@@ -1,0 +1,356 @@
+# Farming (farming/, block 1): soil, crops, weeds, saplings, the composter, threshing, wild plants and pumpkins (Ratwood code/modules/farming).
+# Mechanics numbers: name = value, described by the # lines right above it; times are in deciseconds, rates are per minute of game time against a soil of 100 crop health, 300 water, 300 nutrition and 100 weeds. The build compiles this file in, so its numbers are the defaults; a file of the same name in config/redtard_private/mechanics/values/ is read instead when present.
+
+# --- Soil
+
+# Deciseconds soil with no water, no nutrition and no living crop lasts before it flattens back into dirt (Ratwood SOIL_DECAY_TIME 10 MINUTES).
+farm_soil_decay_time = 6000
+
+# Water soil loses a minute (Ratwood SOIL_WATER_DECAY_RATE 0.5 / (1 MINUTES)).
+farm_soil_water_decay = 0.5
+
+# Nutrition soil loses a minute (Ratwood SOIL_NUTRIMENT_DECAY_RATE 0.5 / (1 MINUTES)).
+farm_soil_nutrition_decay = 0.5
+
+# Share of that nutrition blessed soil still loses (Ratwood 0.5).
+farm_blessed_nutrition_decay = 0.5
+
+# Water one unit of water, holy water, blessed water or dirty water gives soil (Ratwood: what the soil lacks / 6 units).
+farm_water_per_unit = 6
+
+# Water rain pours into soil under the open sky a second (Ratwood process(): min(5, 30 / 4)).
+farm_rain_water = 5
+
+# Share of the most nutrition at or above which soil takes no more ash, manure or compost (Ratwood MAX_PLANT_NUTRITION * 0.8).
+farm_full_nutrition_share = 0.8
+
+# Nutrition a heap of ash gives soil (Ratwood 80).
+farm_ash_nutrition = 80
+
+# Nutrition manure gives soil (Ratwood /obj/item/natural/poo 150).
+farm_manure_nutrition = 150
+
+# Nutrition compost gives soil (Ratwood 150).
+farm_compost_nutrition = 150
+
+# Deciseconds fertilizer keeps working in soil (Ratwood fertilize_soil(): 60 MINUTES; Ratwood never counts it down, here it runs out).
+farm_fertilizer_time = 36000
+
+# Nutrition fertilized soil never falls below (Ratwood process_soil(): nutrition = 100).
+farm_fertilizer_nutrition = 100
+
+# Deciseconds soil stays tilled for an unskilled farmer, longer by the farmer's effort (Ratwood till_soil(15 MINUTES * effort)).
+farm_till_time = 9000
+
+# Crop health tilling costs the crop growing in the soil (Ratwood till_soil(): -20).
+farm_till_crop_damage = 20
+
+# Weeds tilling roots out (Ratwood till_soil(): -30).
+farm_till_weeds = 30
+
+# Deciseconds a blessing lasts on soil (Ratwood bless_soil(): 12 MINUTES).
+farm_bless_time = 7200
+
+# Crop health a blessing brings a dead crop back with (Ratwood 10).
+farm_bless_revive_health = 10
+
+# Water and nutrition a blessing tops soil up to when it has less (Ratwood 30).
+farm_bless_least_stock = 30
+
+# Deciseconds of growth a blessing gives the crop at once (Ratwood add_growth(2 MINUTES)).
+farm_bless_growth = 1200
+
+# Deciseconds pollination by bees helps soil (Ratwood apiary: pollination_time = 5 MINUTES).
+farm_pollination_time = 3000
+
+# --- Weeds
+
+# Weeds that grow a minute in soil with water and nutrition (Ratwood WEED_GROWTH_RATE 3 / (1 MINUTES)).
+farm_weed_growth = 3
+
+# Weeds that die a minute in dry soil (Ratwood WEED_DECAY_RATE 5 / (1 MINUTES)).
+farm_weed_decay = 5
+
+# Weeds that die a minute in blessed or fertilized soil (Ratwood BLESSING_WEED_DECAY_RATE 10 / (1 MINUTES)).
+farm_weed_bless_decay = 10
+
+# Weeds that die a minute around a crop that chokes them (Ratwood WEED_RESISTANCE_DECAY_RATE 20 / (1 MINUTES)).
+farm_weed_immune_decay = 20
+
+# Water full weeds drink a minute, less for fewer weeds (Ratwood WEED_WATER_CONSUMPTION_RATE 5 / (1 MINUTES)).
+farm_weed_water_use = 5
+
+# Nutrition full weeds eat a minute, less for fewer weeds (Ratwood WEED_NUTRITION_CONSUMPTION_RATE 5 / (1 MINUTES)).
+farm_weed_nutrition_use = 5
+
+# Share of the most weeds at which they show, slow the crop and can be pulled (Ratwood MAX_PLANT_WEEDS * 0.3).
+farm_weeds_some = 0.3
+
+# Share of the most weeds at which they overrun the soil, slow the crop more and hurt it (Ratwood MAX_PLANT_WEEDS * 0.6).
+farm_weeds_overgrown = 0.6
+
+# --- Crops
+
+# Crop health a crop with water (or one that needs none) regains a minute (Ratwood PLANT_REGENERATION_RATE 10 / (1 MINUTES)).
+farm_crop_regrowth = 10
+
+# Crop health a thirsty crop in dry soil loses a minute (Ratwood PLANT_DECAY_RATE 10 / (1 MINUTES)).
+farm_crop_wilt = 10
+
+# Crop health a blessed crop regains a minute (Ratwood PLANT_BLESS_HEAL_RATE 20 / (1 MINUTES)).
+farm_crop_bless_heal = 20
+
+# Crop health a crop overrun by weeds loses a minute (Ratwood PLANT_WEEDS_HARM_RATE 10 / (1 MINUTES)).
+farm_crop_weed_harm = 10
+
+# Share of the most crop health at or below which a crop is brown, unhealthy and grows slower (Ratwood MAX_PLANT_HEALTH * 0.6).
+farm_crop_sick = 0.6
+
+# Share of the most crop health at or below which a crop is dying and grows slower still (Ratwood MAX_PLANT_HEALTH * 0.3).
+farm_crop_dying = 0.3
+
+# Growth multiplier for each weed and crop health threshold reached (Ratwood 0.75).
+farm_growth_slowdown = 0.75
+
+# Growth multiplier of tilled soil (Ratwood 1.6).
+farm_tilled_growth = 1.6
+
+# Growth multiplier of fertilized soil (Ratwood 2.0).
+farm_fertilized_growth = 2
+
+# Growth multiplier of pollinated soil (Ratwood 1.75).
+farm_pollinated_growth = 1.75
+
+# Share of growth blessed soil adds (Ratwood get_natural_growth_bonuses(): blessed soil 20%).
+farm_blessed_growth_bonus = 0.2
+
+# Most share of growth the natural bonuses add together (Ratwood: capped at 35%).
+farm_growth_bonus_cap = 0.35
+
+# Crop health someone walking across a crop tramples off it; sneaking spares it (Ratwood on_stepped(): MOVE_INTENT_WALK -5).
+farm_trample_walk = 5
+
+# Crop health someone running across a crop tramples off it (Ratwood on_stepped(): MOVE_INTENT_RUN -10).
+farm_trample_run = 10
+
+# --- Farm work
+
+# Effort a farming rank adds to a farmer's work, from 1 unskilled: stamina spent divides by it, tilled soil lasts it times longer (Ratwood get_farming_effort_multiplier(): (10 + rank * 2) * 0.1).
+farm_effort_rank = 0.2
+
+# Speed a farming rank adds to farm tasks, from 1 unskilled (Ratwood get_farming_do_time(): time / ((10 + rank * 3) * 0.1)).
+farm_speed_rank = 0.3
+
+# Farming rank from which a farmer tells seeds apart, and an alchemist herb seeds (Ratwood examine(): skill 2).
+farm_seed_know_rank = 2
+
+# Farming rank from which a farmer heaps soil for crop seeds by hand and plants tree and bush seeds (Ratwood SKILL_LEVEL_JOURNEYMAN).
+farm_skilled_rank = 3
+
+# Deciseconds of picking a ripe crop by hand (Ratwood attack_hand(): 4 SECONDS).
+farm_harvest_time = 40
+
+# Stamina a harvest costs (Ratwood apply_farming_fatigue(user, 5)).
+farm_harvest_fatigue = 5
+
+# Farming experience of a harvest, times intelligence (Ratwood STAINT * 2).
+farm_harvest_xp = 2
+
+# Druidic experience a follower of Dendor gains from a harvest (Ratwood add_sleep_experience(druidic, 2)).
+farm_dendor_harvest_xp = 2
+
+# Chance in percent an unskilled farmer ruins the whole harvest (Ratwood 50 - rank * 25).
+farm_ruin_chance = 50
+
+# Chance in percent an unskilled farmer ruins a piece of the harvest (Ratwood 75 - rank * 25).
+farm_ruin_some_chance = 75
+
+# Chance in percent an unskilled farmer gets a piece more, a negative number (Ratwood -75 + rank * 25).
+farm_extra_produce_chance = -75
+
+# Percent each farming rank moves the three harvest chances above, in the farmer's favour (Ratwood 25).
+farm_harvest_rank_chance = 25
+
+# Deciseconds of pulling out a dead crop by hand (Ratwood attack_hand(): 6 SECONDS).
+farm_remove_dead_time = 60
+
+# Stamina pulling out a dead crop, flattening soil, tilling or making a plot costs (Ratwood apply_farming_fatigue(user, 10)).
+farm_work_fatigue = 10
+
+# Deciseconds of uprooting a crop with a shovel (Ratwood try_handle_uprooting(): 4 SECONDS).
+farm_uproot_time = 40
+
+# Deciseconds of tilling soil with a hoe (Ratwood try_handle_tilling(): 4 SECONDS).
+farm_soil_till_time = 40
+
+# Deciseconds of tilling soil with a hoe for a legendary farmer (Ratwood 1.5 SECONDS).
+farm_soil_till_legendary_time = 15
+
+# Deciseconds of ripping weeds out by hand (Ratwood try_handle_deweed(): 3 SECONDS).
+farm_deweed_time = 30
+
+# Stamina ripping weeds out by hand costs (Ratwood apply_farming_fatigue(user, 20)).
+farm_deweed_hand_fatigue = 20
+
+# Deciseconds of flattening empty soil with a shovel (Ratwood try_handle_flatten(): 3 SECONDS).
+farm_flatten_time = 30
+
+# Deciseconds of heaping a mound of dirt for seeds by hand (Ratwood seeds attack_turf(): 10 SECONDS).
+farm_mound_time = 100
+
+# Stamina heaping a mound for seeds costs (Ratwood apply_farming_fatigue(user, 30)).
+farm_mound_fatigue = 30
+
+# Deciseconds a hoe takes to till a tile (Ratwood rogueweapon work_time 3 SECONDS).
+farm_hoe_time = 30
+
+# Deciseconds a hoe takes a legendary farmer (Ratwood 0.5 SECONDS).
+farm_hoe_legendary_time = 5
+
+# Deciseconds a stone hoe takes to till a tile (Ratwood stone hoe work_time 15 SECONDS).
+farm_stone_hoe_time = 150
+
+# Damage a stone hoe takes from each tilling (Ratwood hoe_damage 25).
+farm_stone_hoe_wear = 25
+
+# --- Seeds and seedlings
+
+# Chance in percent that knocking produce or a pumpkin about only ruins it (Ratwood prob(5)).
+farm_seed_extract_fail = 5
+
+# Chance in percent of a second seed from produce or a pumpkin (Ratwood prob(90)).
+farm_seed_extra_first = 90
+
+# Chance in percent of a third seed from produce (Ratwood prob(23)).
+farm_seed_extra_second = 23
+
+# Chance in percent of a fourth seed from produce (Ratwood prob(6)).
+farm_seed_extra_third = 6
+
+# Deciseconds of good soil a herb seedling needs to bloom (Ratwood herbseed configure_seedling(5 MINUTES)).
+farm_herb_grow_time = 3000
+
+# Water and nutrition a seedling takes from its soil a minute (Ratwood soil_seedling 1.0 / (1 MINUTES)).
+farm_seedling_use = 1
+
+# Growth a seedling in dry or hungry soil loses for every decisecond (Ratwood dt * 2).
+farm_seedling_wither = 2
+
+# --- Saplings
+
+# Deciseconds of planting a tree sapling in the ground (Ratwood treesap attack_turf(): 15 SECONDS).
+farm_tree_plant_time = 150
+
+# Stamina planting a tree sapling costs (Ratwood apply_farming_fatigue(user, 40)).
+farm_tree_plant_fatigue = 40
+
+# Deciseconds of good soil a tree sapling needs to become a shrub, and a shrub a young tree (Ratwood TREESAP_STAGE_TIME 10 MINUTES).
+farm_tree_stage_time = 6000
+
+# Deciseconds a young tree takes to become a tree (Ratwood TREESAP_YOUNG_TIME 5 MINUTES).
+farm_tree_young_time = 3000
+
+# Deciseconds of planting a bush seed in the ground (Ratwood bush seed attack_turf(): 10 SECONDS).
+farm_bush_plant_time = 100
+
+# Stamina planting a bush seed costs (Ratwood apply_farming_fatigue(user, 25)).
+farm_bush_plant_fatigue = 25
+
+# Deciseconds of good soil a bush sapling needs to sprout, and a sprout to become a bush (Ratwood BUSHSAP_STAGE_TIME 5 MINUTES).
+farm_bush_stage_time = 3000
+
+# Deciseconds an untrimmed bush takes to become a tall hedge (Ratwood BUSHSAP_HEDGE_TIME 5 MINUTES).
+farm_bush_hedge_time = 3000
+
+# Water a sapling takes from its soil a minute (Ratwood soil_water_drain 3.0 / (1 MINUTES)).
+farm_sapling_water_use = 3
+
+# Nutrition a sapling takes from its soil a minute (Ratwood soil_nutrition_drain 2.0 / (1 MINUTES)).
+farm_sapling_nutrition_use = 2
+
+# Growth a watered sapling in dry or hungry soil loses for every decisecond (Ratwood dt * 2).
+farm_sapling_wither = 2
+
+# Growth below zero at which a dry sapling withers (Ratwood TREESAP_DEATH_TICKS and BUSHSAP_DEATH_TICKS 60).
+farm_sapling_death = 60
+
+# Deciseconds of digging out a sapling with a shovel (Ratwood 3 SECONDS).
+farm_sapling_dig_time = 30
+
+# Deciseconds of searching a grown bush (Ratwood do_after(user, 12)).
+farm_bush_search_time = 12
+
+# Chance in percent a search of a grown bush finds something (Ratwood prob(50)).
+farm_bush_find_chance = 50
+
+# Deciseconds a picked-clean grown bush takes to bear again (Ratwood res_replenish 8 MINUTES).
+farm_bush_regrow_time = 4800
+
+# Deciseconds of trimming a grown bush with scissors (Ratwood 3 SECONDS).
+farm_bush_trim_time = 30
+
+# --- Composter
+
+# Most compost a composter holds, raw, flipped and ready together (Ratwood MAXIMUM_TOTAL_COMPOST).
+farm_compost_max = 2000
+
+# Ready compost in one heap of compost taken out (Ratwood COMPOST_PER_PRODUCED_ITEM).
+farm_compost_per_item = 100
+
+# Flipped compost that rots a minute (Ratwood COMPOST_PROCESS_RATE 300 / (1 MINUTES)).
+farm_compost_rate = 300
+
+# Share of rotting compost that dries out and needs flipping again; the rest is ready (Ratwood 0.25).
+farm_compost_dry_share = 0.25
+
+# Compost from a piece of food or a bundle of stalks (Ratwood 150).
+farm_compost_food = 150
+
+# Compost from an apple core (Ratwood 50).
+farm_compost_core = 50
+
+# Deciseconds of flipping compost with a pitchfork or a shovel (Ratwood 4 SECONDS).
+farm_compost_flip_tool_time = 40
+
+# Deciseconds of flipping compost by hand (Ratwood 7 SECONDS).
+farm_compost_flip_hand_time = 70
+
+# Stamina flipping compost by hand costs; half that with a pitchfork or a shovel (Ratwood 20 and 10).
+farm_compost_flip_fatigue = 20
+
+# Stamina taking out compost costs (Ratwood apply_farming_fatigue(user, 5)).
+farm_compost_take_fatigue = 5
+
+# --- Threshing
+
+# Deciseconds of shucking a bundle of stalks by hand (Ratwood move_after(user, 40)).
+farm_shuck_time = 40
+
+# Chance in percent a club threshes each other bundle on the tile, per point of strength (Ratwood STASTR * 3).
+farm_club_strength_chance = 3
+
+# Chance in percent a club threshes each other bundle on the tile, per farming rank (Ratwood rank * 5).
+farm_club_rank_chance = 5
+
+# Least chance in percent a club threshes each other bundle on the tile (Ratwood clamp(..., 20, 100)).
+farm_club_least_chance = 20
+
+# Bundles of stalks a wielded pitchfork carries (Ratwood forked.len <= 19).
+farm_fork_capacity = 20
+
+# --- Wild plants and pumpkins
+
+# Deciseconds of picking a wild plant (Ratwood wild_plant attack_hand(): 4 SECONDS).
+farm_wild_harvest_time = 40
+
+# Stamina picking a wild plant costs (Ratwood apply_farming_fatigue(user, 4)).
+farm_wild_harvest_fatigue = 4
+
+# Chance in percent each generation of a spreading wild plant loses (Ratwood spread_chance - 20).
+farm_wild_spread_falloff = 20
+
+# Deciseconds of cutting a pumpkin open, chopping it or spooning out its flesh (Ratwood 0.5 SECONDS).
+farm_pumpkin_work_time = 5
+
+# Deciseconds of carving a pumpkin shell into a lantern (Ratwood 2 SECONDS).
+farm_pumpkin_carve_time = 20

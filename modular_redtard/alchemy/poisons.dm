@@ -1,8 +1,9 @@
 // Ratwood's poisons (roguecrafting/alchemy/reagents.dm, reagent_containers/powderspice.dm) and blessed water (Ratwood's Azure
-// Peak module, spells/orison.dm). A poison works slowly: a dose of 5 units makes one sick or kills over a minute, a poisoned round
-// carries 2. Ratwood's nausea is TG's disgust (rogue_reagent_sicken(), survival/soups.dm); an antidote purges them all
-// (rogue_harmful, alchemy/potions.dm). Dwarves shrug most of a poison off (Ratwood isdwarf()). The poisons of other systems
-// (the rot of the dead, the vampire's quietus, Pestra's humours) wait for them.
+// Peak module, spells/orison.dm), Azure Peak's cursed water and Ratwood's concentrated rot. A poison works slowly: a dose of 5
+// units makes one sick or kills over a minute, a poisoned round carries 2. Ratwood's nausea is TG's disgust
+// (rogue_reagent_sicken(), survival/soups.dm); an antidote purges them all (rogue_harmful, alchemy/potions.dm). Dwarves shrug
+// most of a poison off (Ratwood isdwarf()). The rot infects, but its turning waits for the deadite; the poisons of other
+// systems (the vampire's quietus, Pestra's humours) wait for them.
 
 /// Ratwood isdwarf(): of the dwarven kin, the races Vibelin's dwarves gave (heritage/).
 /proc/rogue_is_dwarf(mob/living/carbon/target)
@@ -208,3 +209,101 @@
 	required_reagents = list(/datum/reagent/water/blessed = 1)
 	required_temp = ROGUE_BOIL_TEMPERATURE
 	mob_react = FALSE
+
+/// Azure Peak's cursed water (its spells/orison.dm), the water a priest of a dark patron draws: it mends from within, as
+/// little as blessed water mends, the undead and the followers of the dark patrons (Ratwood's undead_hater off), and mends
+/// anyone else as little but wearies them.
+/datum/reagent/water/cursed
+	name = "cursed water"
+	description = "A gift of Devotion. Very slightly heals wounds of the dead and the enlightened."
+	metabolization_rate = ROGUE_REAGENT_RATE(1)
+	/// Per Azure tick: brute and burns healed, oxygen healed, wound health mended; the fatigue (TG stamina damage) of the rest.
+	var/rogue_heal = 0.1 * ROGUE_REAGENT_EFFECT
+	var/rogue_oxy_heal = 0.1
+	var/rogue_wound_heal = 1
+	var/rogue_fatigue = 0.5 * ROGUE_REAGENT_EFFECT
+
+/datum/reagent/water/cursed/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
+	. = ..()
+	var/ticks = seconds_per_tick / ROGUE_REAGENT_TICK
+	if(affected_mob.adjust_brute_loss(-rogue_heal * ticks, updating_health = FALSE))
+		. = UPDATE_MOB_HEALTH
+	if(affected_mob.adjust_fire_loss(-rogue_heal * ticks, updating_health = FALSE))
+		. = UPDATE_MOB_HEALTH
+	if(affected_mob.adjust_oxy_loss(-rogue_oxy_heal * ticks, updating_health = FALSE))
+		. = UPDATE_MOB_HEALTH
+	affected_mob.rogue_heal_wounds(rogue_wound_heal * ticks)
+	if(!rogue_cursed_kin(affected_mob) && affected_mob.adjust_stamina_loss(rogue_fatigue * ticks, updating_stamina = FALSE))
+		. = UPDATE_MOB_HEALTH
+
+/// The dead and the followers of the dark patrons, whom cursed water does not weary.
+/proc/rogue_cursed_kin(mob/living/drinker)
+	if(drinker.mob_biotypes & MOB_UNDEAD)
+		return TRUE
+	var/mob/living/carbon/human/follower = drinker
+	return istype(follower) && follower.rogue_patron && !follower.rogue_patron.rogue_faith_undead_hater
+
+/// How long the deadite rot of the cauldron takes to turn one, and how much longer for the resistant (Ratwood 3 minutes, x 2).
+#define ROGUE_DEADITE_ROT_TIME rogue_value("deadite_rot_time")
+#define ROGUE_DEADITE_RESISTANCE rogue_value("deadite_rot_resistance")
+
+/// Ratwood's concentrated rot (the cauldron's Concentrated rot, from Master alchemists): the deadite rot itself. Any of it
+/// infects the living who can turn (a mind, not immune) and is gone at once.
+/datum/reagent/deaditerot
+	name = "Concentrated Rot"
+	description = ""
+	color = "#000000"
+	taste_description = "sour meat"
+	metabolization_rate = ROGUE_REAGENT_RATE(1)
+	self_consuming = TRUE
+	rogue_harmful = TRUE
+
+/datum/reagent/deaditerot/on_mob_add(mob/living/affected_mob, amount)
+	. = ..()
+	var/mob/living/carbon/human/infected = affected_mob
+	if(istype(infected) && infected.mind && !HAS_TRAIT(infected, TRAIT_ZOMBIE_IMMUNE))
+		infected.apply_status_effect(/datum/status_effect/rogue_deadite_rot, ROGUE_DEADITE_ROT_TIME)
+	holder.del_reagent(type)
+
+/// Ratwood's deadite rot (antagonists/roguetown/villain/zombie/zombie_disease.dm): the infected feels the rot spread until it
+/// turns them. The deadite waits for stage 5 (antagonists); until then the rot runs its course and passes, as Ratwood's does in
+/// a body that cannot turn.
+/datum/status_effect/rogue_deadite_rot
+	id = "rogue_deadite_rot"
+	duration = 3 MINUTES
+	tick_interval = 20 SECONDS
+	alert_type = /atom/movable/screen/alert/status_effect/rogue_deadite_rot
+	/// Percent chance a word of the rot is a shout.
+	var/rogue_shout_chance = 10
+	var/static/list/rogue_rot_messages = list(
+		"I can feel rot creeping up in the back of my throat. An oily, coppery taste flooding my mouth.",
+		"My skin feels cold and clammy. I can feel my veins hardening up like cold steel.",
+		"A deep hunger gnaws at my stomach. Nothing sates it.",
+		"The color drains from the world as I view it, momentarily.",
+		"I keep hearing whispers. Is she calling for me?",
+		"My joints ache with a strange stiffness. It hurts to move.",
+		"My mind is fraying, who am I?",
+		"I can feel my pulse slowing. I've never felt this calm.",
+		"There's a strange numbness spreading through my limbs, I'm bleeding but I can't tell where.",
+		"I can smell my own flesh, it smells foul.",
+	)
+
+/datum/status_effect/rogue_deadite_rot/on_creation(mob/living/new_owner, time_to_turn)
+	if(time_to_turn)
+		duration = time_to_turn
+	if(HAS_TRAIT(new_owner, TRAIT_DEADITE_RESISTANCE))
+		duration *= ROGUE_DEADITE_RESISTANCE
+	return ..()
+
+/datum/status_effect/rogue_deadite_rot/tick(seconds_between_ticks)
+	var/message = pick(rogue_rot_messages)
+	to_chat(owner, prob(rogue_shout_chance) ? span_userdanger(message) : span_danger(message))
+
+/atom/movable/screen/alert/status_effect/rogue_deadite_rot
+	name = "Zombie Infection"
+	desc = "You feel a coldness spreading through your body. You're turning into one of -them-!"
+	icon = ROGUE_COMBAT_ALERTS_ICON
+	icon_state = "rot"
+
+#undef ROGUE_DEADITE_ROT_TIME
+#undef ROGUE_DEADITE_RESISTANCE
