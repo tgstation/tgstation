@@ -4395,15 +4395,10 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/turf/open/floor/carpet/purple` | 170 |
 | `/turf/open/floor/carpet/stellar` | 160 |
 
-## Not ported (5 types, dropped from the map)
+## Not ported (0 types, dropped from the map)
 
 | Type | Tiles |
 |---|---|
-| `/obj/effect/mapping_helpers/access/locker` | 83 |
-| `/obj/effect/waterfall` | 54 |
-| `/obj/effect/mapping_helpers/floor_clothing_equipper` | 36 |
-| `/obj/effect/waterfall/acid` | 17 |
-| `/obj/effect/mapping_helpers/secret_door_creator` | 15 |
 
 ## Icons
 

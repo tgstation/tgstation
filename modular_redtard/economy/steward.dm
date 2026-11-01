@@ -5,7 +5,7 @@
  * charters allow), the Crown's levies and the poll tax, grants and fines the subjects' accounts, holds back a subject's wages,
  * forgives the Crown's debtors and clears poll tax arrears, lists every loan and fund of the realm, opens the charters, and runs
  * the stockpile: prices, limits, what the Crown buys and sells, shipments abroad.
- * Ratwood's trade regions and crown imports are not ported.
+ * The trade regions live in trade.dm; Ratwood's crown imports are not ported.
  */
 /obj/structure/roguemachine/steward
 	var/locked = FALSE

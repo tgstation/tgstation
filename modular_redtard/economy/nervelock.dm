@@ -1,8 +1,8 @@
 /**
  * NERVELOCK (Ratwood code/modules/roguetown/roguemachine/ATM.dm and atm_tgui.dm): the realm's bank in the wall. The first touch
  * bites the finger and opens the subject's account; after that it takes coins into the account and pays the account out in the
- * coin the subject asks for, twenty coins at most. Outlaws are refused. Ratwood's loans, guild funds, poll tax and the
- * Covetous Crown drill are not ported.
+ * coin the subject asks for, twenty coins at most. Outlaws are refused. Loans, guild funds and the poll tax live in loans.dm,
+ * funds.dm and poll_tax.dm; Ratwood's Covetous Crown drill is not ported.
  */
 /obj/structure/roguemachine/atm
 	/// Where the machine stands, for the Crown's reports (map edit).

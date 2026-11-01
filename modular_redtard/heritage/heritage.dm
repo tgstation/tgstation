@@ -1,7 +1,7 @@
 /// Vibelin's faiths, patrons and cultures (Vanderlin's code/datums/gods and code/datums/culture), the data ported by
 /// tools/port_vibelin.py into heritage/ported/. A character on a medieval map believes in a faith, worships one of its
-/// patrons and comes from a culture; the patron's traits come with it. Prayers, devotion and miracles are Vanderlin's
-/// religion system and are not here. The Russian of every name and text is in localization/strings/chargen.txt.
+/// patrons and comes from a culture; the patron's traits come with it. Prayers, devotion and miracles live in faith/.
+/// The Russian of every name and text is in localization/strings/chargen.txt.
 
 #define ROGUE_PATRON_TRAIT "rogue_patron"
 
@@ -28,7 +28,7 @@
 	var/list/allowed_races
 	/// Traits worshippers have (Vibelin's added_traits this build has).
 	var/list/rogue_traits
-	/// What its worshippers cry under torture (kept for the confession of a later port).
+	/// What its worshippers cry under torture (faith/confession.dm reads it).
 	var/list/confess_lines
 	/// Exists but is never picked in the preferences (Vibelin's preference_accessible() returning FALSE).
 	var/rogue_hidden = FALSE

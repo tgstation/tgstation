@@ -1391,7 +1391,9 @@ def generate(cfg, port, rules, rw, declared, tg_declared, tg_names, usage, extra
             continue
         cat = category_for(path, categories)
         if cat is None:
-            skipped[path] = count
+            # A type the module writes by hand (rockhill/map_helpers.dm and the like) stays on the map without a port.
+            if path not in declared:
+                skipped[path] = count
             continue
         chosen[cat['file']].append(path)
 

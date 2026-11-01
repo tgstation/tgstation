@@ -3,7 +3,7 @@
  * of goods from afar come out at the buyer's feet; the Crown takes its import tariff on every pack into the Crown's Purse. The
  * merchant's key locks it; the merchant may stop paying the tariff, which the machine tallies. SILVERFACEs are public copies that
  * add the porters' margin and cannot be locked; the guild ones sell their trade's goods; the COPPERFACE sells contraband untaxed.
- * Ratwood's harbor, trade ships, catalogs and the merchant's favor are not ported.
+ * The harbor and the trade ships live in harbor.dm; Ratwood's catalogs and the merchant's favor are not ported.
  */
 /obj/structure/roguemachine/goldface
 	var/locked = FALSE

@@ -7,7 +7,8 @@
  * and the funds of the Church, the merchants, the bathhouse and the tavern; the NERVELOCK accounts of the subjects; the Crown's
  * levies and fines, the poll tax and the charters that bound them; loans and indentures; the dawn payouts (rural tax, estate
  * incomes, wages the Steward sets) and the Crown's solvency; and the stockpile, which the Crown fills from afar and ships abroad
- * every treasury tick. Ratwood's trade regions, Burgher Pledge, rumors and contract levies are not ported.
+ * every treasury tick. The trade regions live in trade.dm; Ratwood's Burgher Pledge, rumors and contract levies are not
+ * ported.
  */
 SUBSYSTEM_DEF(rogue_treasury)
 	name = "Treasury"
