@@ -19,8 +19,7 @@ export function IconResourceNotice(props: PropsWithChildren) {
         failed && 'IconResourceNotice--shown',
       ])}
     >
-      {/* The region stays mounted so screen readers announce the notice when it appears */}
-      <div className="IconResourceNotice__status" role="status">
+      <div className="IconResourceNotice__status">
         {failed && (
           <NoticeBox className="IconResourceNotice__box">
             <span>Some icons could not load.</span>
