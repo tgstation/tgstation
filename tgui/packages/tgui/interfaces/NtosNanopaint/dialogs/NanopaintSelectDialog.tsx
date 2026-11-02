@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { sendAct as act } from 'tgui/events/act';
 import {
   Button,
   Dimmer,
@@ -13,6 +12,7 @@ import type { BooleanLike } from 'tgui-core/react';
 import type { NanopaintData, NanopaintFileEntry } from '../types';
 
 type NanopaintSelectDialogProps = {
+  act: any;
   title: string;
   driveFiles: NanopaintFileEntry[];
   diskFiles: NanopaintFileEntry[];
@@ -24,6 +24,7 @@ type NanopaintSelectDialogProps = {
 
 export const NanopaintSelectDialog = (props: NanopaintSelectDialogProps) => {
   const {
+    act,
     title,
     driveFiles,
     diskFiles,
