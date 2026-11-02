@@ -1,4 +1,0 @@
-author: "sohpeach"
-delete-after: True
-changes:
-  - bugfix: "Pressure tanks now keep the correct amount of gas when deconstructed or merged into groups"
