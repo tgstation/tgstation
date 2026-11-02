@@ -62,6 +62,7 @@
 
 /obj/structure/ore_vent/boss/handle_wave_conclusion()
 	node = new /mob/living/basic/node_drone(loc) //We're spawning the vent after the boss dies, so the player can just focus on the boss.
+	node.ai_controller?.set_blackboard_key(BB_NODE_DRONE_ATTACHED, TRUE)
 	SSblackbox.record_feedback("tally", "ore_vent_mobs_killed", 1, summoned_boss)
 	COOLDOWN_RESET(src, wave_cooldown)
 	return ..()

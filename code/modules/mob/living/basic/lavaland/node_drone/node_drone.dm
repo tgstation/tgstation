@@ -82,6 +82,7 @@
 
 /mob/living/basic/node_drone/proc/arrive(obj/structure/ore_vent/parent_vent)
 	attached_vent = parent_vent
+	ai_controller.set_blackboard_key(BB_NODE_DRONE_ATTACHED, TRUE) // Tell the AI we've arrived so it stops hunting for other vents.
 	maxHealth = 300 + ((attached_vent.boulder_size/BOULDER_SIZE_SMALL) * 100)
 	health = maxHealth
 	flying_state = FLY_IN_STATE
@@ -113,8 +114,6 @@
 
 
 /mob/living/basic/node_drone/proc/pre_escape(success = TRUE)
-	if(buckled)
-		buckled.unbuckle_mob(src)
 	if(attached_vent)
 		attached_vent = null
 	if(!escaping)
@@ -131,6 +130,7 @@
 		BB_CURRENT_TARGET_HIDING_LOCATION = null,
 		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
 		BB_BASIC_MOB_FLEE_DISTANCE = 3,
+		BB_NODE_DRONE_ATTACHED = null,
 	)
 
 	ai_traits = PASSIVE_AI_FLAGS
