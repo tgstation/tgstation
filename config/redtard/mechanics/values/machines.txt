@@ -1,0 +1,182 @@
+# Machines (economy/, block 9b): the CASTIFICO, the bathhouse hoard and TREASURE SEEKER, PURITY, the POTION SELLER, the scrappers, the COMMISSIONER, the navigator, the ZADCOTE and the HERMES parcels.
+# Mechanics numbers: name = value, described by the # lines right above it; times are in deciseconds. The build compiles this file in, so its numbers are the defaults; a file of the same name in config/redtard_private/mechanics/values/ is read instead when present.
+
+# Time the one turning someone in at the CASTIFICO works the chair before it reads the skull (Ratwood do_after 5 SECONDS).
+machines_castifico_analysis_time = 50
+
+# Time the CASTIFICO assesses the subject before it crushes the skull (Ratwood sleep 10 SECONDS).
+machines_castifico_assessment_time = 100
+
+# Brute damage to the head of each of the CASTIFICO's two crushes (Ratwood 50).
+machines_castifico_crush_damage = 50
+
+# Share of the bounties the CASTIFICO pays for a corpse (Ratwood half).
+machines_castifico_corpse_share = 0.5
+
+# Time a subject has to submit to the collar or to perish at the CASTIFICO (Ratwood 10 seconds).
+machines_castifico_choice_time = 100
+
+# Time a subject who submitted sleeps after the CASTIFICO (Ratwood Unconscious 15 SECONDS).
+machines_castifico_sleep_time = 150
+
+# Brute damage to the hand of an outlaw who touches the CASTIFICO (Ratwood 10).
+machines_castifico_bite_damage = 10
+
+# Stun of an outlaw the CASTIFICO bites (Ratwood Stun 10).
+machines_castifico_bite_stun = 10
+
+# Base penance of the castifico collar before it falls off (Ratwood 5 MINUTES).
+machines_castifico_penance_base = 3000
+
+# Minutes of penance added per mammon of the bounty paid for the wearer (Ratwood a minute per 10 mammons).
+machines_castifico_penance_per_mammon = 0.1
+
+# Bounty below which the castifico collar adds no penance (Ratwood bounty_amount >= 10).
+machines_castifico_penance_threshold = 10
+
+# Share of a treasure's worth the bathhouse hoard pays into the Bathhouse Fund each time it pays (Ratwood SSBMtreasury interest_rate).
+machines_hoard_interest = 0.15
+
+# Each further treasure of a kind already counted is worth this share of the one before it (Ratwood multiple_item_penalty).
+machines_hoard_repeat_penalty = 0.7
+
+# Least time between payments of the hoard (Ratwood 5 MINUTES).
+machines_hoard_period_min = 3000
+
+# Most time between payments of the hoard (Ratwood 8 MINUTES).
+machines_hoard_period_max = 4800
+
+# Lines the hoard ledger keeps (Ratwood BM_HOARD_LOG_MAX).
+machines_hoard_log_size = 50
+
+# Share of the takings the PURITY's secret purse gets at first (Ratwood 10%).
+machines_purity_cut_base = 0.1
+
+# Share of the takings the secret purse gets once the first cut is bought (Ratwood DRUGRADE_MONEYA, 25%).
+machines_purity_cut_a = 0.25
+
+# Share of the takings the secret purse gets once the second cut is bought (Ratwood DRUGRADE_MONEYB, 50%).
+machines_purity_cut_b = 0.5
+
+# Mammons of the PURITY's budget the first cut costs (Ratwood PURITY_CUT_A_COST).
+machines_purity_cut_a_cost = 30
+
+# Mammons of the PURITY's budget the second cut costs (Ratwood PURITY_CUT_B_COST).
+machines_purity_cut_b_cost = 105
+
+# Least time between cuts of the PURITY's takings (Ratwood 6 MINUTES).
+machines_purity_cut_period_min = 3600
+
+# Most time between cuts of the PURITY's takings (Ratwood 8 MINUTES).
+machines_purity_cut_period_max = 4800
+
+# Price of an empty bottle at the POTION SELLER until its owner changes it (Ratwood bottle_price).
+machines_potion_bottle_price = 10
+
+# Empty bottles a POTION SELLER sells in a round (Ratwood bottle_sold_max).
+machines_potion_bottles = 10
+
+# Drams the POTION SELLER's vat holds (Ratwood 200*3).
+machines_potion_volume = 600
+
+# Mammons in a scrapper's coffer at round start (Ratwood seed_budget).
+machines_scrapper_seed = 50
+
+# Time between a scrapper's calls of a ware it buys (Ratwood SCRAPPER_BARK_INTERVAL).
+machines_scrapper_bark_interval = 600
+
+# Factor on a material's trade price for the COMMISSIONER (Ratwood PRICING_ENGINE_COMMISSIONER_MARKUP).
+machines_commission_markup = 1
+
+# Percent the guild adds to a work's materials at the COMMISSIONER until it changes it (Ratwood percent_margin).
+machines_commission_margin_percent = 70
+
+# Mammons the guild adds to every work at the COMMISSIONER until it changes it (Ratwood flat_margin).
+machines_commission_margin_flat = 5
+
+# Most works in one commission until the guild changes it (Ratwood item_cap_per_order).
+machines_commission_item_cap = 3
+
+# Dawns an unclaimed commission waits before it goes back to the customer's deposit (Ratwood ESCROW_OPEN_EXPIRY_DAYS).
+machines_commission_open_days = 3
+
+# Dawns a claim on a commission lasts before the order opens again (Ratwood ESCROW_CLAIM_EXPIRY_DAYS).
+machines_commission_claim_days = 1
+
+# Percent a guildsman loses settling a commission in part (Ratwood ESCROW_PARTIAL_HAIRCUT_PERCENT).
+machines_commission_partial_cut = 20
+
+# Share of its integrity a delivered work must keep (Ratwood ESCROW_DURABILITY_FLOOR).
+machines_commission_durability_floor = 0.8
+
+# Time between the navigator's trading balloons (Ratwood EXPORT_TIME).
+machines_navigator_period = 600
+
+# Share the smugglers' navigator keeps without a bathhouse facilitator near (Ratwood fixed_tax of navigator/blackmarket).
+machines_navigator_smuggler_fee = 0.5
+
+# Share of a navigator sale the merchant gains as the trading company's favor (Ratwood FAVOR_PASSIVE_TRADE_FRACTION).
+machines_navigator_favor_share = 0.125
+
+# Zadlinks of a zadcote (Ratwood ZADCOTE_SLOT_CAP).
+machines_zad_slots = 10
+
+# Flights a zadcote has in the air at once (Ratwood ZADCOTE_FLIGHT_CAP).
+machines_zad_flight_cap = 3
+
+# Zads in a zadcote's reserve at round start (Ratwood ZADCOTE_RESERVE_START).
+machines_zad_reserve_start = 10
+
+# Most zads a zadcote keeps (Ratwood ZADCOTE_RESERVE_CAP).
+machines_zad_reserve_cap = 20
+
+# Zads a pack of trained zads adds to the reserve (Ratwood ZADPACK_BUNDLE_SIZE).
+machines_zad_pack_size = 10
+
+# Percent chance each zad dies of exhaustion on the way home (Ratwood ZADCOTE_ATTRITION_PERCENT).
+machines_zad_attrition = 10
+
+# Bottle bombs a zadcote's crate holds (Ratwood ZADCOTE_BOMB_STOCK_CAP).
+machines_zad_bomb_stock_cap = 10
+
+# Time between bomb flights of a zadcote (Ratwood ZADCOTE_BOMB_COOLDOWN).
+machines_zad_bomb_cooldown = 3000
+
+# Flight time of zads between a cote and a cage (Ratwood ZAD_FLIGHT_OUTBOUND_TIME).
+machines_zad_outbound_time = 600
+
+# Time after which zads whose cage is gone turn back (Ratwood ZAD_FLIGHT_TURNBACK_CHECK).
+machines_zad_turnback_check = 300
+
+# Time zads take to land on a cage (Ratwood ZAD_FLIGHT_LANDING_TIME).
+machines_zad_landing_time = 50
+
+# Least time zads carrying bombs take to come down on a cage (Ratwood ZAD_FLIGHT_BOMB_LANDING_MIN).
+machines_zad_bomb_landing_min = 130
+
+# Most time zads carrying bombs take to come down on a cage (Ratwood ZAD_FLIGHT_BOMB_LANDING_MAX).
+machines_zad_bomb_landing_max = 180
+
+# Time a zad waits at a cage before it flies home empty (Ratwood ZAD_OCCUPANCY_DURATION).
+machines_zad_occupancy = 1800
+
+# The cage warns its holder when this much of the zad's wait is left (Ratwood ZAD_OCCUPANCY_WARNING_TAIL).
+machines_zad_warning_tail = 300
+
+# Time a holder takes to send a zad home or call zads to a cage (Ratwood ZAD_MANUAL_SEND_DOAFTER).
+machines_zad_send_time = 30
+
+# Time an operator takes to start scrying through a zad (Ratwood ZAD_VOYEUR_DOAFTER).
+machines_zad_voyeur_time = 50
+
+# Time a scrying through a zad lasts (Ratwood ZAD_VOYEUR_DURATION).
+machines_zad_voyeur_duration = 1800
+
+# Mammons of the scrying basin one scrying costs (Ratwood ZAD_VOYEUR_COST_MAMMON).
+machines_zad_voyeur_cost = 5
+
+# Percent chance the Guild's daily delivery at the HERMES is a rare powder (Ratwood prob(20)).
+machines_mail_rare_drug_chance = 20
+
+# Triumphs a mercenary gets for posting a signed writ of commendation (Ratwood adjust_triumphs(3)).
+machines_mail_writ_triumphs = 3

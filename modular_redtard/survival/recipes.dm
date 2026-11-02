@@ -29,6 +29,12 @@
 	var/ready_name
 	/// What the dish ready to cook will smell of once cooked (Ratwood pies set cooked_smell when roofed).
 	var/ready_smell
+	/// What a cook who may not prepare it is told (can_prepare()).
+	var/refusal = "I don't know how to prepare this."
+
+/// Whether this cook knows the dish (Ratwood's spider pie wants a dark elf or an Underdark Chef). Asked at every step.
+/datum/rogue_food_recipe/proc/can_prepare(mob/living/user)
+	return TRUE
 
 /// What to add at a step, for messages: the name alone, as Ratwood shows it ("Next step: Add water."); a reagent's amount
 /// goes into the message that needs it, so the name stays a plain noun the translation can decline.

@@ -1,12 +1,14 @@
 /**
  * The steward's export machine (Ratwood roguemachine/steward_export/steward_export.dm and the standing orders tab of the
- * nerve master): the ledger of the standing orders the regions of the realm post every dawn. The Crown's fiscal officers fill
- * them from the stockpile, for a premium into the Crown's Purse; anyone may read the ledger and what each region trades.
- * Ratwood's equipment and potion orders, petitions, urgent orders and blockades are not ported.
+ * nerve master): the ledger of the standing orders the regions of the realm post every dawn, the urgent ones shortages post and
+ * the ones the Steward petitioned for. The Crown's fiscal officers fill them, for a premium into the Crown's Purse: raw goods
+ * from the stockpile, finished items and potions left within a step of the machine, the warehouse dock (economy/petitions.dm);
+ * a region behind a held road waits. Anyone may read the ledger and what each region trades.
  */
 /obj/structure/roguemachine/steward_export/examine(mob/user)
 	. = ..()
 	. += span_info("[length(SSrogue_trade.orders)] standing order\s open. The Crown's officers fill them from the stockpile here.")
+	. += span_info("Finished arms, garments, jewelry and potions for an order are left on the floor beside the machine.")
 
 /obj/structure/roguemachine/steward_export/interact(mob/user)
 	if(!ishuman(user))

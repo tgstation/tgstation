@@ -8,6 +8,7 @@ import {
   Stack,
   Table,
   Tabs,
+  Tooltip,
 } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
@@ -22,6 +23,27 @@ type CargoLine = {
   price: number;
 };
 
+type ProvisionLine = {
+  name: string;
+  tag: string;
+  target: number;
+  done: number;
+  price: number;
+  by_bottle: BooleanLike;
+};
+
+type CulturalPack = {
+  pack: string;
+  name: string;
+  qty: number;
+  cost: number;
+};
+
+type Condition = {
+  name: string;
+  description: string;
+};
+
 type Ship = {
   id: number;
   name: string;
@@ -34,8 +56,14 @@ type Ship = {
   minutes_left: number;
   traded: number;
   expected: number;
+  kin: BooleanLike;
+  conditions: Condition[];
   demands: CargoLine[];
   supplies: CargoLine[];
+  provisions: ProvisionLine[];
+  cultural: CulturalPack[];
+  buy_percent?: number;
+  sell_percent?: number;
 };
 
 type Data = {
@@ -50,9 +78,17 @@ type Data = {
   duty_evaded: number;
   hails_left: number;
   dock_spots: number;
+  kinship: string | null;
+  favor: number;
   docked: Ship[];
   offshore: Ship[];
 };
+
+/** What the viewer pays for a unit the ship asks this much for, kinship counted. */
+const kinPrice = (price: number, percent?: number) =>
+  percent && percent < 100
+    ? Math.max(1, Math.round((price * percent) / 100))
+    : price;
 
 const Cargo = (props: {
   title: string;
@@ -74,13 +110,16 @@ const Cargo = (props: {
         {lines.map((line) => {
           const left = line.target - line.done;
           const amount = Math.min(amounts[line.good] || 1, Math.max(left, 1));
+          const price = buying
+            ? kinPrice(line.price, buying.ship.buy_percent)
+            : line.price;
           return (
             <Table.Row key={line.good} className="candystripe">
               <Table.Cell>{line.name}</Table.Cell>
               <Table.Cell collapsing>
                 {line.done}/{line.target}
               </Table.Cell>
-              <Table.Cell collapsing>{line.price}m each</Table.Cell>
+              <Table.Cell collapsing>{price}m each</Table.Cell>
               {!!buying && (
                 <>
                   <Table.Cell collapsing>
@@ -100,9 +139,7 @@ const Cargo = (props: {
                   </Table.Cell>
                   <Table.Cell collapsing>
                     <Button
-                      disabled={
-                        left <= 0 || line.price * amount > buying.budget
-                      }
+                      disabled={left <= 0 || price * amount > buying.budget}
                       onClick={() =>
                         act('buy', {
                           id: buying.ship.id,
@@ -124,12 +161,95 @@ const Cargo = (props: {
   );
 };
 
+/** Dishes and drinks the ship takes aboard (Ratwood victualling lines). */
+const Provisions = (props: { lines: ProvisionLine[] }) => {
+  const { lines } = props;
+  if (!lines?.length) {
+    return null;
+  }
+  return (
+    <Box mt={1}>
+      <Box bold color="label">
+        Provisions
+      </Box>
+      <Table>
+        {lines.map((line, index) => (
+          <Table.Row key={index} className="candystripe">
+            <Table.Cell>
+              {line.name}
+              <Box inline color="label">
+                &nbsp;(
+                {line.tag === 'drinks'
+                  ? line.by_bottle
+                    ? 'sealed bottles'
+                    : 'by the keg'
+                  : line.tag}
+                )
+              </Box>
+            </Table.Cell>
+            <Table.Cell collapsing>
+              {line.done}/{line.target}
+            </Table.Cell>
+            <Table.Cell collapsing>{line.price}m each</Table.Cell>
+          </Table.Row>
+        ))}
+      </Table>
+    </Box>
+  );
+};
+
+/** Packs of the realm's culture the ship sells at its discount (Ratwood cultural stock). */
+const CulturalStock = (props: { ship: Ship; data: Data }) => {
+  const { act } = useBackend<Data>();
+  const { ship, data } = props;
+  if (!ship.cultural?.length) {
+    return null;
+  }
+  const buying = !!data.manager && !!ship.docked;
+  return (
+    <Box mt={1}>
+      <Box bold color="label">
+        Cultural stock
+      </Box>
+      <Table>
+        {ship.cultural.map((entry) => {
+          const price = kinPrice(entry.cost, ship.buy_percent);
+          const tariff = data.duty_dodged
+            ? 0
+            : Math.round((price * data.tariff_rate) / 100);
+          return (
+            <Table.Row key={entry.pack} className="candystripe">
+              <Table.Cell>{entry.name}</Table.Cell>
+              <Table.Cell collapsing>{entry.qty} left</Table.Cell>
+              <Table.Cell collapsing>
+                {price}m{tariff > 0 && ` + ${tariff}m`}
+              </Table.Cell>
+              {buying && (
+                <Table.Cell collapsing>
+                  <Button
+                    disabled={entry.qty <= 0 || price + tariff > data.budget}
+                    onClick={() =>
+                      act('buy_cultural', { id: ship.id, pack: entry.pack })
+                    }
+                  >
+                    Buy
+                  </Button>
+                </Table.Cell>
+              )}
+            </Table.Row>
+          );
+        })}
+      </Table>
+    </Box>
+  );
+};
+
 const ShipSection = (props: { ship: Ship; data: Data }) => {
   const { act } = useBackend<Data>();
   const { ship, data } = props;
   return (
     <Section
-      title={`${ship.ship_type} ${ship.name}`}
+      title={`${ship.ship_type} ${ship.name}${ship.kin ? ' (kin)' : ''}`}
       buttons={
         !!data.manager &&
         (ship.docked ? (
@@ -159,7 +279,20 @@ const ShipSection = (props: { ship: Ship; data: Data }) => {
         {!!ship.docked &&
           ` At the pier for ${ship.minutes_left} more minutes. Traded ${ship.traded} of the ${ship.expected}m the captain hopes for.`}
       </Box>
+      {!!ship.kin && (
+        <Box color="good">
+          Kin of the company: pays more for what it buys, sells cheaper.
+        </Box>
+      )}
+      {(ship.conditions || []).map((condition) => (
+        <Tooltip key={condition.name} content={condition.description}>
+          <Box inline color="average" mr={1}>
+            [{condition.name}]
+          </Box>
+        </Tooltip>
+      ))}
       <Cargo title="Buys" lines={ship.demands} />
+      <Provisions lines={ship.provisions} />
       <Cargo
         title="Sells"
         lines={ship.supplies}
@@ -169,6 +302,7 @@ const ShipSection = (props: { ship: Ship; data: Data }) => {
             : undefined
         }
       />
+      <CulturalStock ship={ship} data={data} />
     </Section>
   );
 };
@@ -179,7 +313,7 @@ export const RogueHarbor = () => {
   const [tab, setTab] = useState('docked');
   const shown = tab === 'offshore' ? data.offshore : data.docked;
   return (
-    <Window width={620} height={640}>
+    <Window width={640} height={680}>
       <Window.Content>
         <Stack fill vertical>
           <Stack.Item>
@@ -196,10 +330,11 @@ export const RogueHarbor = () => {
               }
             >
               <Box color="label">
-                Use goods the ships buy on the crate; the payout goes to your
-                NERVELOCK account, less the Crown&apos;s export duty (
-                {data.duty_rate}%) and the merchant&apos;s cut (
-                {data.middleman_cut}%).
+                Use goods the ships buy on the crate, or drag a full keg, a
+                handcart or a bin onto it; the payout goes to your NERVELOCK
+                account, less the Crown&apos;s export duty ({data.duty_rate}%)
+                and the merchant&apos;s cut ({data.middleman_cut}%). Company
+                stock bears its seal and is not bought back.
               </Box>
               {!data.has_account && (
                 <NoticeBox mt={1}>
@@ -211,7 +346,8 @@ export const RogueHarbor = () => {
                   <Stack.Item grow>
                     Hails left today: {data.hails_left}. Piers:{' '}
                     {data.docked.length}/{data.dock_spots}. Import tariff:{' '}
-                    {data.tariff_rate}%.
+                    {data.tariff_rate}%. Favor: {data.favor}.
+                    {data.kinship && ` Kin: ${data.kinship}.`}
                   </Stack.Item>
                   <Stack.Item>
                     <Button icon="percent" onClick={() => act('set_cut')}>

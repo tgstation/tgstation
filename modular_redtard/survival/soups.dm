@@ -51,6 +51,8 @@
 	var/rogue_oxy_heal = 0
 	var/rogue_blood = 0
 	var/rogue_energy = 0
+	/// Per Ratwood tick: the wound health mended (Ratwood heal_wounds() of the chicken stews, "a lesser health potion").
+	var/rogue_wound_heal = 0
 	/// Per Ratwood tick: nausea and toxins dealt.
 	var/rogue_nausea = 0
 	var/rogue_toxin = 0
@@ -59,7 +61,7 @@
 	. = ..()
 	if(rogue_reagent_sicken(affected_mob, seconds_per_tick, rogue_nausea, rogue_toxin))
 		. = UPDATE_MOB_HEALTH
-	if(rogue_reagent_restore(affected_mob, seconds_per_tick, rogue_heal, rogue_oxy_heal, 0, ROGUE_SOUP_BLOOD + rogue_blood, rogue_energy))
+	if(rogue_reagent_restore(affected_mob, seconds_per_tick, rogue_heal, rogue_oxy_heal, 0, ROGUE_SOUP_BLOOD + rogue_blood, rogue_energy, rogue_wound_heal))
 		. = UPDATE_MOB_HEALTH
 
 // What the Ratwood hot drinks restore, per Ratwood tick (declared here, their data follows below).
@@ -79,6 +81,9 @@
 	var/rogue_heal = 0
 	var/rogue_oxy_heal = 0
 	var/rogue_wound_heal = 0
+	/// Units of it the drinker has taken in since it reached the blood (Ratwood metabolized_caffeine): coffee lifts the night
+	/// fatigue (survival/fatigue.dm) by how much of it went down.
+	var/rogue_taken = 0
 
 /datum/reagent/consumable/chocolate
 	var/rogue_heal = 0
@@ -425,6 +430,7 @@
 	rogue_oxy_heal = 0.1
 	rogue_blood = 1
 	rogue_energy = 1
+	rogue_wound_heal = 1
 
 /datum/reagent/consumable/soup/stew/thickchicken
 	name = "thick chicken stew"
@@ -435,6 +441,7 @@
 	rogue_oxy_heal = 0.15
 	rogue_blood = 2
 	rogue_energy = 1
+	rogue_wound_heal = 1
 
 /datum/reagent/consumable/soup/stew/bakedchicken
 	name = "frybird stew"
@@ -446,6 +453,7 @@
 	rogue_oxy_heal = 0.15
 	rogue_blood = 2
 	rogue_energy = 1
+	rogue_wound_heal = 1
 
 /datum/reagent/consumable/soup/stew/bakedthickchicken
 	name = "thick frybird stew"
@@ -458,6 +466,7 @@
 	rogue_oxy_heal = 0.15
 	rogue_blood = 3
 	rogue_energy = 1
+	rogue_wound_heal = 1
 
 /datum/reagent/consumable/soup/stew/veggiethickchicken
 	name = "frybird stew with vegetables"
@@ -470,6 +479,7 @@
 	rogue_oxy_heal = 0.15
 	rogue_blood = 3
 	rogue_energy = 1
+	rogue_wound_heal = 1
 
 /datum/reagent/consumable/soup/stew/pepperchicken
 	name = "pepper-spiced frybird stew"
@@ -482,6 +492,7 @@
 	rogue_oxy_heal = 0.15
 	rogue_blood = 4
 	rogue_energy = 1
+	rogue_wound_heal = 1
 
 /datum/reagent/consumable/soup/stew/lavishchicken
 	name = "lavish frybird stew"
@@ -494,6 +505,7 @@
 	rogue_oxy_heal = 0.15
 	rogue_blood = 5
 	rogue_energy = 1
+	rogue_wound_heal = 2
 
 /datum/reagent/consumable/soup/stew/meat
 	name = "meat stew"
@@ -979,12 +991,20 @@
 	if(rogue_reagent_restore(affected_mob, seconds_per_tick, rogue_heal, rogue_oxy_heal, rogue_toxin_heal, wounds = rogue_wound_heal))
 		. = UPDATE_MOB_HEALTH
 
-/// Ratwood caffeine: coffee and tea give energy, the spiced ones also heal a little; too much of it shakes the drinker and may
-/// stop the heart. Ratwood's vigour buff, addiction and lifting of sleep deprivation are not ported.
+/datum/reagent/consumable/caffeine/on_mob_add(mob/living/affected_mob, amount)
+	. = ..()
+	rogue_taken = 0
+
+/// Ratwood caffeine: coffee and tea give energy and the Vigorized buff (survival/fatigue.dm), the spiced ones also heal a little,
+/// and what went down lifts the night fatigue; too much of it shakes the drinker and may stop the heart. Ratwood's caffeine
+/// addiction (a vice of the character menu) is not ported.
 /datum/reagent/consumable/caffeine/on_mob_life(mob/living/carbon/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()
 	if(rogue_reagent_restore(affected_mob, seconds_per_tick, rogue_heal, rogue_oxy_heal, 0, 0, ROGUE_CAFFEINE_ENERGY, rogue_wound_heal))
 		. = UPDATE_MOB_HEALTH
+	affected_mob.apply_status_effect(/datum/status_effect/rogue_vigorized)
+	rogue_taken += metabolization_rate * seconds_per_tick
+	affected_mob.rogue_coffee_wakes(rogue_taken, metabolization_rate * ROGUE_REAGENT_TICK)
 
 /datum/reagent/consumable/caffeine/overdose_process(mob/living/affected_mob, seconds_per_tick, metabolization_ratio)
 	. = ..()

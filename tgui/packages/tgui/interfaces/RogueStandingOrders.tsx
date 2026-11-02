@@ -17,6 +17,7 @@ type OrderLine = {
   name: string;
   needed: number;
   stocked: number;
+  finished: BooleanLike;
 };
 
 type Order = {
@@ -24,8 +25,12 @@ type Order = {
   title: string;
   description: string;
   region: string;
+  blockaded: BooleanLike;
   payout: number;
   days_left: number;
+  urgent: BooleanLike;
+  petitioned: BooleanLike;
+  paired: BooleanLike;
   lines: OrderLine[];
 };
 
@@ -53,14 +58,20 @@ const Orders = () => {
     <>
       {orders.map((order) => {
         const ready = order.lines.every((line) => line.stocked >= line.needed);
+        const tags = [
+          order.urgent && 'URGENT',
+          order.petitioned && 'petitioned',
+          order.paired && 'paired',
+        ].filter(Boolean);
         return (
           <Section
             key={order.id}
-            title={order.title}
+            title={`${order.title}${tags.length ? ` [${tags.join(', ')}]` : ''}`}
             buttons={
               !!data.fiscal && (
                 <Button
                   icon="truck"
+                  disabled={!!order.blockaded}
                   color={ready ? 'good' : undefined}
                   onClick={() => act('fulfill', { id: order.id })}
                 >
@@ -72,6 +83,12 @@ const Orders = () => {
             <Box italic color="label">
               {order.description}
             </Box>
+            {!!order.blockaded && (
+              <NoticeBox mt={1} danger>
+                The road to {order.region} is held by raiders: the order waits
+                until it opens.
+              </NoticeBox>
+            )}
             <Table mt={1}>
               {order.lines.map((line) => (
                 <Table.Row key={line.name} className="candystripe">
@@ -80,7 +97,8 @@ const Orders = () => {
                     collapsing
                     color={line.stocked >= line.needed ? 'good' : 'average'}
                   >
-                    {line.stocked}/{line.needed} in stock
+                    {line.stocked}/{line.needed}{' '}
+                    {line.finished ? 'at the dock' : 'in stock'}
                   </Table.Cell>
                 </Table.Row>
               ))}
@@ -121,7 +139,7 @@ const Regions = () => {
   );
 };
 
-/** Standing orders of the realm's regions (Ratwood's steward trade window, orders and regions only). */
+/** Standing orders of the realm's regions (Ratwood's steward trade window, orders and regions); finished goods go at the dock. */
 export const RogueStandingOrders = () => {
   const { data } = useBackend<Data>();
   const [tab, setTab] = useState('orders');

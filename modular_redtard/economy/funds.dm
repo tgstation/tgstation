@@ -1,7 +1,9 @@
 // The coffers of the realm's institutions (Ratwood code/modules/roguetown/roguemachine/vaultbank.dm, the JAWBANK, and the
 // Institutional tab of atm_tgui.dm): the Crown's Purse, the Church, the merchants' company, the bathhouse and the tavern each keep
 // a fund behind a JAWBANK. Its officers draw coin from it, write loans and indentures on it and enrol agents with patronage
-// writs; anyone may feed it coins, and anyone may strike coins loose from it with a blunt weapon while it holds enough.
+// writs; anyone may feed it coins, and anyone may strike coins loose from it with a blunt weapon while it holds enough. The
+// tavern's and the bathhouse's stalls bank their takings in their funds, and at the JAWBANKs of the Church and the bathhouse
+// the Bishop or the Bathmaster sets the Ordinance of the Baths (economy/fund_income.dm; Ratwood does it at a NERVELOCK).
 
 /datum/controller/subsystem/rogue_treasury
 	/// The JAWBANK of each institution, by fund id.
@@ -337,6 +339,13 @@
 	data["withdraw_limit"] = treasury.fund_withdraw_limit(user, fund_id)
 	data["day"] = ROGUE_TREASURY_DAY
 	data["last_loan_day"] = ROGUE_LOAN_LAST_DAY
+	if(fund_id == ROGUE_FUND_CHURCH || fund_id == ROGUE_FUND_BATHHOUSE)
+		data["ordinance"] = list(
+			"active" = treasury.bathhouse_ordinance,
+			"can_set" = treasury.can_set_ordinance(user),
+			"cooldown" = round(max(0, treasury.ordinance_next_toggle - world.time) / (1 SECONDS)),
+			"tithe" = treasury.total_bathhouse_tithe,
+		)
 	if(!can_view)
 		return data
 	data["balance"] = fund.account_balance
@@ -417,6 +426,9 @@
 				SSrogue_treasury.revoke_patron(fund_id, "[params["ref"]]", user)
 		if("bath_limit", "bath_suspend")
 			set_bathhouse_terms(user, action, "[params["group"]]", text2num("[params["amount"]]"))
+		if("ordinance")
+			if(fund_id == ROGUE_FUND_CHURCH || fund_id == ROGUE_FUND_BATHHOUSE)
+				SSrogue_treasury.toggle_ordinance(user)
 	update_appearance()
 	return TRUE
 

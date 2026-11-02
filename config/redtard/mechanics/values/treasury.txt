@@ -150,3 +150,41 @@ treasury_ftc_loan_closed_day = 5
 
 # Interest of the trading company's emergency loan, added to the debt at once.
 treasury_ftc_loan_interest = 0.25
+
+# Burgher Pledge, contract levy, Ordinance of the Baths, Right of Customs in Excess (economy/burgher_pledge.dm, fund_income.dm, royal_custom.dm).
+
+# Percent of a contract reward the Crown levies at round start; the Steward changes it with the other levies (Ratwood TAX_CATEGORY_CONTRACT_LEVY).
+treasury_contract_levy = 20
+
+# Mammons of pledge the burghers renew at every dawn while the Golden Bull stands (Ratwood BURGHER_PLEDGE_BASE_REFILL).
+treasury_pledge_renewal = 500
+
+# More pledge renewed at every dawn per living player (Ratwood BURGHER_PLEDGE_PER_PLAYER).
+treasury_pledge_per_player = 4
+
+# The pledge holds at most this many dawns' renewal; the rest is clawed back before the renewal (Ratwood BURGHER_PLEDGE_CLAWBACK_MULTIPLIER).
+treasury_pledge_clawback = 2
+
+# The pledge stands at round start at this many dawns' base renewal (Ratwood BURGHER_PLEDGE_ROUNDSTART_MULTIPLIER).
+treasury_pledge_roundstart_mult = 2
+
+# Tribute the Guild of Arms adds to the pledge at every dawn while its charter stands (Ratwood GUILD_CHARTER_OF_ARMS_PLEDGE_BONUS).
+treasury_pledge_arms_tribute = 100
+
+# Deciseconds before the Ordinance of the Baths can be set anew (Ratwood BATHHOUSE_ORDINANCE_TOGGLE_COOLDOWN).
+treasury_ordinance_cooldown = 18000
+
+# Share of a sale at a bathhouse machine tithed to the Church under the Ordinance (Ratwood BATHHOUSE_BRASSFACE_TITHE_RATE).
+treasury_bath_sale_tithe = 0.1
+
+# Share of the bathhouse vault's hoard income tithed to the Church under the Ordinance (Ratwood BATHHOUSE_VAULT_TITHE_RATE).
+treasury_bath_vault_tithe = 0.2
+
+# Mammons of trade through the stockpile that invoke the Right of Customs in Excess (Ratwood ROYAL_CUSTOM_VOLUME_BASE).
+treasury_custom_volume = 2500
+
+# More mammons of trade needed per living player at round start (Ratwood ROYAL_CUSTOM_VOLUME_PER_POP).
+treasury_custom_volume_per_player = 50
+
+# Highest margin, percent, the Steward may lay on direct imports under the Royal Custom (Ratwood set_royal_custom_margin).
+treasury_custom_margin_max = 500

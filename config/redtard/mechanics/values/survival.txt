@@ -1,0 +1,62 @@
+# Survival and daily life (survival/, crafting/kiln_quality.dm; block 3, B20): night fatigue and coffee, dishes, fired pottery (Ratwood modular/Neu_Food, controllers/subsystem/nightshift.dm, roguejobs/ceramicist).
+# Mechanics numbers: name = value, described by the # lines right above it; times are in deciseconds. The build compiles this file in, so its numbers are the defaults; a file of the same name in config/redtard_private/mechanics/values/ is read instead when present.
+
+# --- Night fatigue and coffee (survival/fatigue.dm, survival/soups.dm caffeine)
+
+# Movement slowdown of the third step of night fatigue, Exhausted (Ratwood SLEEP_TIER3 multiplicative_slowdown).
+survival_exhausted_slowdown = 1.25
+
+# Units of caffeine taken in that lift the second step of night fatigue, and every step with it (Ratwood caffeine: 20).
+survival_coffee_fatigued = 20
+
+# Units of caffeine taken in that lift the third step of night fatigue, and every step with it (Ratwood caffeine: 40).
+survival_coffee_exhausted = 40
+
+# Dream points coffee gives when it lifts the first step of night fatigue (Ratwood sleep_adv_points += 2).
+survival_coffee_points_tired = 2
+
+# Dream points coffee gives when it lifts the second step (Ratwood sleep_adv_points += 4).
+survival_coffee_points_fatigued = 4
+
+# Dream points coffee gives when it lifts the third step (Ratwood sleep_adv_points += 6).
+survival_coffee_points_exhausted = 6
+
+# --- Dishes (survival/kneading.dm)
+
+# Deciseconds of packing fresh cheese into a cloth to begin a cheese wheel (Ratwood 3 SECONDS).
+survival_cheese_pack_time = 30
+
+# Deciseconds a closed cheese wheel matures before it is a wheel of cheese (Ratwood 5 MINUTES).
+survival_cheese_ageing = 3000
+
+# Units of water that wash rice (Ratwood wet(): 10).
+survival_rice_water = 10
+
+# Deciseconds of washing rice with water (Ratwood 2 SECONDS).
+survival_rice_wash_time = 20
+
+# Deciseconds of kneading wet rice into washed rice (Ratwood 3 SECONDS).
+survival_rice_knead_time = 30
+
+# --- Fired pottery (crafting/kiln_quality.dm; Ratwood clay.dm apply_pottery_quality(), ceramics.dm pottery_throw_shatter())
+
+# Price factor of crude fired pottery (pottery tier 0).
+survival_kiln_price_crude = 0.4
+
+# Price factor of poor fired pottery (pottery tier 1).
+survival_kiln_price_poor = 0.6
+
+# Price factor of plain fired pottery (pottery tier 2).
+survival_kiln_price_plain = 0.8
+
+# Price factor of fine fired pottery (pottery tier 3).
+survival_kiln_price_fine = 1.1
+
+# Price factor of flawless fired pottery (pottery tier 4).
+survival_kiln_price_flawless = 1.2
+
+# Price factor of masterwork fired pottery (pottery tier 5).
+survival_kiln_price_masterwork = 1.5
+
+# Percent chance that a fragile clay vessel shatters when thrown (Ratwood pottery_shatter_chance).
+survival_pottery_shatter_chance = 100

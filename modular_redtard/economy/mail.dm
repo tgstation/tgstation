@@ -1,8 +1,10 @@
 /**
  * HERMES (Ratwood code/modules/roguetown/roguemachine/mail.dm): the realm's hydropneumatic post. A coin buys parchment (a zenny)
  * or a quill (a ziliqua); a written page put in is sent, free, to another HERMES by its number (#N) or to a person by name. A
- * letter to a person waits in the MASTER OF MAILS until its addressee takes it from any HERMES with an empty hand. Ratwood's
- * inquisition marques, mercenary tokens, delivery boxes and daily contraband are not ported.
+ * letter to a person waits in the MASTER OF MAILS until its addressee takes it from any HERMES with an empty hand. An empty hand
+ * also takes a care package or the Guild's daily delivery (parcels.dm); a mercenary posts a signed writ of commendation here;
+ * an adherent of the Inquisition loads Otavan marques and opens the MARQUETTE (marquette.dm). Ratwood's inquisition slips,
+ * confessions and black mirrors that earn marques, and the daily bomb of the explosive supply, are not ported.
  */
 /obj/structure/roguemachine/mail
 	/// Number of the box in the directory (Ratwood ournum).
@@ -31,30 +33,49 @@ GLOBAL_DATUM(rogue_mail_master, /obj/item/roguemachine/mastermail)
 
 /obj/structure/roguemachine/mail/update_overlays()
 	. = ..()
+	if(marques > 0)
+		set_light(1, 1, "#ffffff")
+		. += mutable_appearance(icon, "mail-i")
+		return
 	set_light(1, 1, "#1b7bf1")
 	. += mutable_appearance(icon, "mail-f")
 
 /obj/structure/roguemachine/mail/examine(mob/user)
 	. = ..()
 	. += span_info("Insert a zenny for parchment or a ziliqua for a quill. Put a written page in to send it, free, to a person or to a box by its number (#[box_number] is this one).")
-	. += span_info("Touch it with an empty hand to take letters addressed to you, or to read the directory of boxes.")
+	. += span_info("Touch it with an empty hand to take letters and parcels addressed to you, or to read the directory of boxes.")
+	if(HAS_TRAIT(user, TRAIT_INQUISITION))
+		. += span_info("The MARQUETTE can be accessed via a secret compartment fitted within the HERMES. Load a Marque to access it.")
 
-/// An empty hand takes the next letter addressed to the subject, or reads the directory (Ratwood attack_hand(), view_directory()).
+/**
+ * An empty hand (Ratwood attack_hand()): a care package first, then the next letter addressed to the subject and the Guild's
+ * delivery; an adherent of the Inquisition with marques loaded opens the MARQUETTE; with nothing to take, the directory.
+ */
 /obj/structure/roguemachine/mail/interact(mob/user)
 	if(!ishuman(user))
 		return TRUE
+	var/mob/living/carbon/human/subject = user
+	if(retrieve_carebox(subject))
+		return TRUE
+	var/took = FALSE
 	var/obj/item/roguemachine/mastermail/master = GLOB.rogue_mail_master
-	var/list/letters = master?.letters_for(user.real_name)
+	var/list/letters = master?.letters_for(subject.real_name)
 	if(length(letters))
 		var/obj/item/letter = letters[1]
 		letter.forceMove(drop_location())
-		user.put_in_hands(letter)
+		subject.put_in_hands(letter)
 		master.update_appearance()
 		playsound(src, ROGUE_SOUND_HISS, 100, FALSE, -1)
 		if(length(letters) > 1)
 			say("You have additional mail available.")
+		took = TRUE
+	if(deliver_drugs(subject))
+		took = TRUE
+	if(HAS_TRAIT(subject, TRAIT_INQUISITION) && marques > 0)
+		ui_interact(subject)
 		return TRUE
-	show_directory(user)
+	if(!took)
+		show_directory(subject)
 	return TRUE
 
 /obj/structure/roguemachine/mail/proc/show_directory(mob/user)
@@ -68,6 +89,20 @@ GLOBAL_DATUM(rogue_mail_master, /obj/item/roguemachine/mastermail)
 /obj/structure/roguemachine/mail/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(user.combat_mode)
 		return NONE
+	if(istype(tool, /obj/item/merctoken))
+		if(ishuman(user))
+			post_writ(tool, user)
+		return ITEM_INTERACT_SUCCESS
+	if(tool.type == rogue_marque_type())
+		load_marques(tool, user)
+		return ITEM_INTERACT_SUCCESS
+	if((istype(tool, /obj/item/roguekey) || istype(tool, /obj/item/storage/keyring)) && HAS_TRAIT(user, TRAIT_INQUISITION))
+		if(!rockhill_key_fits(tool, "puritan"))
+			to_chat(user, span_warning("Wrong key."))
+			return ITEM_INTERACT_BLOCKING
+		playsound(src, ROGUE_SOUND_BEEP, 100, FALSE, -1)
+		rogue_toggle_puritan_lock(user)
+		return ITEM_INTERACT_SUCCESS
 	if(istype(tool, /obj/item/roguecoin))
 		sell_stationery(tool, user)
 		return ITEM_INTERACT_SUCCESS

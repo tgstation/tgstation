@@ -300,3 +300,158 @@ npc_special_opener = 1
 
 # Least intelligence for an NPC to use its weapon's special (Azure Peak HUMAN_NPC_MIN_INT_FOR_TACTICS).
 npc_special_min_int = 8
+
+# --- Block 3, B30: what human NPCs do besides the blow (ai/human_npc_tactics.dm; Vibelin datums/ai/subtrees use_bandage, use_healing_drink, bow_usage, use_throwing_weapon, call_for_help, flank, harass, loot, retrieve_arrow; Ratwood npc/_npc.dm).
+
+# Deciseconds an NPC waits before it looks again for a potion, a cloth or allies it did not find.
+npc_search_pause = 50
+
+# Brute or burn damage from which an NPC drinks a healing potion it carries (Vibelin use_healing_drink: 20).
+npc_potion_damage = 20
+
+# Deciseconds between two potions an NPC drinks (Vibelin consume_healing_drink action_cooldown).
+npc_potion_cooldown = 700
+
+# Deciseconds between two bandages an NPC puts on out of a fight (Vibelin apply_bandage action_cooldown).
+npc_bandage_cooldown = 300
+
+# Brute or burn damage from which an NPC calls its own kind to help (Vibelin call_for_help: 40).
+npc_help_damage = 40
+
+# Deciseconds between two calls for help of an NPC (Vibelin call_for_help action_cooldown).
+npc_help_cooldown = 450
+
+# Tiles within which an NPC's call for help is answered (Vibelin: max_target_distance - 1).
+npc_help_range = 13
+
+# Share of its health below which an NPC strikes and backs off (Vibelin HARASS_HEALTH_THRESHOLD).
+npc_harass_health = 0.65
+
+# Share of its stamina spent past which an NPC strikes and backs off, times its share of health (Vibelin HARASS_STAMINA_THRESHOLD of 100).
+npc_harass_fatigue = 0.55
+
+# Tiles an NPC backs off after its blow (Vibelin HARASS_RETREAT_DIST).
+npc_harass_retreat = 4
+
+# Deciseconds an NPC keeps back after its blow (Vibelin HARASS_BASE_COOLDOWN).
+npc_harass_pause = 40
+
+# Deciseconds more it keeps back for every point of stamina spent past the threshold (Vibelin HARASS_STAMINA_COOLDOWN_SCALE).
+npc_harass_pause_per_stamina = 0.5
+
+# How many times longer it keeps back at no health than at full (Vibelin lerp(1.5, 1, health)).
+npc_harass_hurt_factor = 1.5
+
+# Tiles within which an NPC sees the others of its kind fighting its foe when it flanks (Vibelin view(10)).
+npc_flank_range = 10
+
+# Tiles from the foe of an NPC's flanking spot (Vibelin FLANK_RADIUS).
+npc_flank_radius = 3
+
+# Degrees of the widest gap between the others around the foe from which an NPC flanks (Vibelin FLANK_MIN_SEPARATION).
+npc_flank_gap = 60
+
+# Tiles from its flanking spot at which an NPC is there (Vibelin FLANK_ENGAGE_DIST).
+npc_flank_engage = 2
+
+# Percent chance a tick that an NPC at its flanking spot commits to the fight (Vibelin FLANK_ATTACK_CHANCE).
+npc_flank_commit = 25
+
+# Deciseconds between two looks of an NPC for its flanking spot (Vibelin FLANK_RECHECK_INTERVAL).
+npc_flank_recheck = 30
+
+# Tiles closer than which an NPC with a bow, crossbow or sling fights in melee instead (Vibelin ARCHER_NPC_MIN_RANGE).
+npc_shot_min_range = 3
+
+# Tiles within which an NPC shoots a foe it sees, and keeps to while it can shoot (Vibelin ARCHER_NPC_MIN_RANGE + 4).
+npc_shot_range = 7
+
+# Most deciseconds an NPC draws a shot, whatever the intent's own draw (Vibelin min(chargetime, 1 SECONDS)).
+npc_shot_draw_max = 10
+
+# Deciseconds an NPC remembers its launcher and quiver, and does not try to shoot after a shot went wrong (Vibelin ARCHER_NPC_EQUIPMENT_CACHE_TIME).
+npc_kit_cache = 400
+
+# Tiles closer than which an NPC does not throw (Vibelin use_throwable min_throw_dist).
+npc_throw_min = 2
+
+# Tiles within which an NPC throws a throwing knife or javelin at a foe it sees (Vibelin use_throwable max_throw_dist).
+npc_throw_max = 7
+
+# Deciseconds between two throws of an NPC (Vibelin use_throwable action_cooldown).
+npc_throw_cooldown = 40
+
+# Tiles within which an NPC out of a fight looks for things to take (Vibelin loot scan_range).
+npc_loot_range = 7
+
+# Deciseconds between two looks of an NPC for things to take (Vibelin loot scan_interval).
+npc_loot_interval = 150
+
+# How many cloths, healing potions and throwing knives or javelins each an NPC gathers at most.
+npc_loot_carry = 2
+
+# Deciseconds an NPC leaves alone a thing it could not take (Vibelin: 5 minutes on the loot blacklist).
+npc_loot_ignore = 3000
+
+# Deciseconds an NPC walks to a thing before it gives up on it.
+npc_loot_patience = 150
+
+# Percent chance that an NPC leaps at a far foe when it rolls for it; its kind may have its own (Ratwood npc_jump_chance).
+npc_jump_chance = 5
+
+# Tiles farther than which a foe is leapt at; its kind may have its own (Ratwood npc_jump_distance).
+npc_jump_distance = 4
+
+# Stamina spent past which an NPC does not leap (Ratwood npc_max_jump_stamina).
+npc_jump_fatigue = 50
+
+# Deciseconds between two rolls of an NPC for a leap.
+npc_jump_cooldown = 20
+
+# Percent chance a tick that a rude NPC taunts a foe right above it (Ratwood should_try_taunt).
+npc_taunt_chance = 5
+
+# Percent chance that an NPC with a weapon grabs with its free hand instead of a blow (Ratwood make_grab_chance).
+npc_grab_armed = 5
+
+# Percent chance that an NPC without a weapon grabs instead of a blow (Ratwood make_grab_chance).
+npc_grab_unarmed = 20
+
+# Percent chance that an NPC uses the grip it holds on its foe instead of a blow (Ratwood use_grab_chance).
+npc_grab_use = 30
+
+# Percent chance that an NPC with a passive grip tightens it (Ratwood upgrade_grab_chance).
+npc_grab_upgrade = 20
+
+# Percent chance that an NPC grabs a clumsy-fingered foe (TRAIT_CHUNKYFINGERS) instead of a blow (Ratwood).
+npc_grab_clumsy = 30
+
+# Percent chance that an NPC uses its grip on a clumsy-fingered foe (Ratwood).
+npc_grab_clumsy_use = 50
+
+# Deciseconds between two glances of an NPC for sneakers (Ratwood next_seek).
+npc_sneak_seek = 30
+
+# Tiles within which an NPC glances for sneakers (Ratwood view(7)).
+npc_sneak_range = 7
+
+# Percent chance a point of an NPC's perception to spot a sneaker (Ratwood npc_detect_sneak: 4 * STAPER).
+npc_sneak_per_perception = 4
+
+# Percent less chance to spot a sneaker at a passing glance (Ratwood npc_detect_sneak(L, -20)).
+npc_sneak_passive = 20
+
+# Percent less chance to spot a sneaker for every rank of their Sneaking (Ratwood sneak_bonus).
+npc_sneak_skill = 5
+
+# Percent more chance to spot a sneaker whose armour is too heavy for them (Ratwood check_armor_skill(): armor is loud).
+npc_sneak_loud_armor = 85
+
+# Percent more or less chance to spot a sneaker for every point of their fortune below or above 10 (Ratwood badluck(5), goodluck(5)).
+npc_sneak_luck = 5
+
+# Percent more chance to spot a hidden attacker when the NPC is below half its health (Ratwood retaliate()).
+npc_sneak_hurt = 30
+
+# Percent chance that an NPC struck by a hidden attacker is seen searching around frantically (Ratwood retaliate()).
+npc_sneak_frantic = 5

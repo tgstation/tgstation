@@ -4,8 +4,10 @@
  * Purse and pays the Purse out in coin, borrows from the trading company, sets the wage of every role (no lower than the
  * charters allow), the Crown's levies and the poll tax, grants and fines the subjects' accounts, holds back a subject's wages,
  * forgives the Crown's debtors and clears poll tax arrears, lists every loan and fund of the realm, opens the charters, and runs
- * the stockpile: prices, limits, what the Crown buys and sells, shipments abroad.
- * The trade regions live in trade.dm; Ratwood's crown imports are not ported.
+ * the stockpile: prices, limits, what the Crown buys and sells, shipments abroad. Its trade pages (Ratwood StewardTrade) show
+ * the market's events and blockades, the Burgher Pledge and the Right of Customs in Excess, trade with each region by hand,
+ * order the Crown's imports and its standing imports, and petition the regions for orders.
+ * The trade regions live in trade.dm, the crown imports in crown_imports.dm, the petitions in petitions.dm.
  */
 /obj/structure/roguemachine/steward
 	var/locked = FALSE
@@ -75,6 +77,9 @@
 		"export" = treasury.total_export,
 		"import" = treasury.total_import,
 		"trade" = treasury.economic_output,
+		"contract_levy" = treasury.total_contract_levy,
+		"royal_custom" = treasury.total_royal_custom,
+		"banditry" = SSrogue_trade.total_banditry,
 	)
 	data["solvency"] = list(
 		"state" = rogue_treasury_state_label(treasury.treasury_state),
@@ -129,9 +134,65 @@
 	data["funds"] = funds
 	var/list/stocks = list()
 	for(var/datum/roguestock/stock as anything in treasury.stockpile_datums)
-		stocks += list(stock.ui_entry())
+		var/list/entry = stock.ui_entry()
+		entry["automatic"] = stock.automatic_price
+		stocks += list(entry)
 	data["stocks"] = stocks
+	trade_ui_data(data)
 	return data
+
+/// The trade pages (Ratwood steward_trade_tgui.dm): pledge, charters of trade, market, regions, imports, petitions.
+/obj/structure/roguemachine/steward/proc/trade_ui_data(list/data)
+	var/datum/controller/subsystem/rogue_treasury/treasury = SSrogue_treasury
+	var/datum/controller/subsystem/rogue_trade/trade = SSrogue_trade
+	data["pledge"] = list(
+		"balance" = treasury.burgher_pledge?.account_balance || 0,
+		"renewal" = treasury.pledge_renewal(),
+		"tribute" = treasury.pledge_arms_tribute(),
+		"bull" = treasury.decree_active(ROGUE_DECREE_GOLDEN_BULL),
+		"spent" = treasury.total_pledge_spent,
+	)
+	data["ordinance"] = treasury.bathhouse_ordinance
+	data["custom"] = list(
+		"unlocked" = treasury.royal_custom_unlocked,
+		"active" = treasury.royal_custom_in_force(),
+		"margin" = treasury.royal_custom_margin,
+		"threshold" = treasury.royal_custom_threshold,
+		"volume" = treasury.economic_output,
+	)
+	var/list/events = list()
+	for(var/datum/rogue_economic_event/event as anything in trade.events)
+		events += list(event.ui_entry())
+	var/list/blockades = list()
+	for(var/datum/rogue_blockade/blockade as anything in trade.blockades)
+		blockades += list(blockade.ui_entry())
+	data["market"] = list(
+		"events" = events,
+		"blockades" = blockades,
+		"banditry_debt" = treasury.banditry_debt,
+		"banditry_losses" = trade.banditry_losses(),
+		"blockade_days" = rogue_value("trade_blockade_days"),
+	)
+	var/list/regions = list()
+	for(var/region_id in trade.regions)
+		var/datum/rogue_trade_region/region = trade.regions[region_id]
+		regions += list(list(
+			"id" = region_id,
+			"name" = region.name,
+			"subtitle" = region.subtitle,
+			"blockaded" = region.blockaded,
+			"imports" = region.trade_lines(TRUE),
+			"exports" = region.trade_lines(FALSE),
+		))
+	data["regions"] = regions
+	data["region_trade_max"] = rogue_value("trade_region_trade_max")
+	var/list/crown_imports = list()
+	for(var/datum/rogue_crown_import/crown_import as anything in trade.crown_imports)
+		if(crown_import.available())
+			crown_imports += list(crown_import.ui_entry())
+	data["crown_imports"] = crown_imports
+	data["auto_imports"] = treasury.auto_import_ui_data()
+	data["petitions"] = trade.petition_ui_data()
 
 /obj/structure/roguemachine/steward/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()
@@ -187,6 +248,30 @@
 			var/datum/rogue_loan/loan = locate(params["ref"]) in treasury.loans
 			if(loan && tgui_alert(user, "Forgive [loan.debtor_name] the [loan.remaining_due()]m they owe the Crown?", name, list("Forgive", "Cancel")) == "Forgive" && still_usable(user))
 				treasury.forgive_loan(loan, user)
+		if("set_custom_margin")
+			if(!treasury.royal_custom_unlocked)
+				return TRUE
+			var/percent = tgui_input_number(user, "Royal Custom margin on direct imports, in percent:", name, treasury.royal_custom_margin, rogue_value("treasury_custom_margin_max"), 0)
+			if(!isnull(percent) && still_usable(user))
+				treasury.set_royal_custom_margin(percent, user)
+		if("crown_import")
+			var/datum/rogue_crown_import/crown_import = locate(params["ref"]) in SSrogue_trade.crown_imports
+			if(crown_import && SSrogue_trade.order_crown_import(crown_import, user, get_turf(src)))
+				say("Rockhill imports [crown_import.name]. It will be left at the warehouse.")
+				playsound(src, ROGUE_SOUND_COIN_INSERT, 100, FALSE, -1)
+		if("auto_import")
+			var/good_id = "[params["id"]]"
+			treasury.set_auto_import(good_id, !treasury.auto_import_active(good_id))
+		if("auto_import_stop")
+			treasury.stop_auto_imports()
+		if("auto_import_floor")
+			var/floor = tgui_input_number(user, "The standing imports buy nothing while the Purse holds less than:", name, treasury.auto_import_floor, ROGUE_TRANSFER_MAX, 0)
+			if(!isnull(floor) && still_usable(user))
+				treasury.auto_import_floor = round(floor)
+		if("region_trade")
+			trade_with_region(user, SSrogue_trade.regions["[params["region"]]"], SSrogue_trade.goods["[params["good"]]"], params["mode"] == "import")
+		if("petition")
+			SSrogue_trade.petition(user, SSrogue_trade.regions["[params["region"]]"], "[params["category"]]")
 	if(action in list("grant", "fine", "toggle_wages", "clear_arrears"))
 		var/datum/bank_account/rogue/account = locate(params["ref"]) in treasury.accounts
 		if(!account)
@@ -217,7 +302,7 @@
 				log_game("POLL TAX CLEARED: [key_name(user)] cleared [account.poll_owed]m poll tax arrears of [account.account_holder]")
 				treasury.clear_poll_arrears(account)
 				account.bank_card_talk("The Stewardry has cleared your poll tax arrears. The Crown's ledger on your head is wiped clean.")
-	if(action in list("stock_payout", "stock_withdraw", "stock_limit", "stock_accept", "stock_lock", "stock_autoexport", "stock_export"))
+	if(action in list("stock_payout", "stock_withdraw", "stock_auto", "stock_limit", "stock_accept", "stock_lock", "stock_autoexport", "stock_export"))
 		var/datum/roguestock/stock = locate(params["ref"]) in treasury.stockpile_datums
 		if(!stock)
 			return TRUE
@@ -226,10 +311,15 @@
 				var/price = tgui_input_number(user, "The Crown pays sellers of [stock.name]:", name, stock.payout_price, ROGUE_TRANSFER_MAX, 0)
 				if(!isnull(price) && still_usable(user))
 					stock.payout_price = price
+					stock.automatic_price = FALSE
 			if("stock_withdraw")
 				var/price = tgui_input_number(user, "The stockpile sells [stock.name] for:", name, stock.withdraw_price, ROGUE_TRANSFER_MAX, 1)
 				if(!isnull(price) && still_usable(user))
 					stock.withdraw_price = max(1, price)
+					stock.automatic_price = FALSE
+			if("stock_auto")
+				stock.automatic_price = TRUE
+				stock.reprice()
 			if("stock_limit")
 				var/limit = tgui_input_number(user, "The stockpile keeps at most this much [stock.name]:", name, stock.stockpile_limit, 500, 1)
 				if(!isnull(limit) && still_usable(user))
@@ -241,10 +331,47 @@
 			if("stock_autoexport")
 				stock.autoexport_disabled = !stock.autoexport_disabled
 			if("stock_export")
-				var/revenue = treasury.export_stock(stock, stock.importexport_amt)
+				var/revenue = 0
+				var/list/quote = stock.trade_good ? SSrogue_trade.export_quote(stock.trade_good) : null
+				if(quote)
+					var/datum/rogue_trade_region/region = quote["region"]
+					revenue = SSrogue_trade.region_export(region, stock.trade_good, min(stock.importexport_amt, stock.stockpile_amount), user)
+				else if(!stock.trade_good)
+					revenue = treasury.export_stock(stock, stock.importexport_amt)
 				if(revenue)
 					say("Exported [stock.name] for [revenue] mammons.")
 	return TRUE
+
+/**
+ * The Steward trades with a region by hand (Ratwood handle_trade_import(), handle_trade_export()): buys units of a good it
+ * produces into the stockpile, or ships units the stockpile holds to a region that wants them.
+ */
+/obj/structure/roguemachine/steward/proc/trade_with_region(mob/living/user, datum/rogue_trade_region/region, datum/rogue_trade_good/good, importing)
+	if(!region || !good?.stock)
+		return
+	var/list/trade = importing ? region.produces : region.demands
+	if(!trade[good.id])
+		to_chat(user, span_warning("[region.name] does not [importing ? "produce" : "demand"] [good.name]."))
+		return
+	var/most = round(rogue_value("trade_region_trade_max"))
+	if(!importing)
+		most = min(most, good.stock.stockpile_amount)
+	if(most < 1)
+		to_chat(user, span_warning("The stockpile holds no [good.name]."))
+		return
+	var/units = tgui_input_number(user, "How many [good.name] to [importing ? "import from" : "export to"] [region.name]? (next unit [importing ? region.import_unit_cost(good) : region.export_unit_price(good)]m)", name, 1, most, 1)
+	if(!units || !still_usable(user))
+		return
+	if(importing)
+		var/spent = SSrogue_trade.region_import(region, good, units, user)
+		if(spent)
+			say("Rockhill imports [units] [good.name] from [region.name] for [spent] mammon.")
+			playsound(src, ROGUE_SOUND_COIN_INSERT, 100, FALSE, -1)
+	else
+		var/gained = SSrogue_trade.region_export(region, good, units, user)
+		if(gained)
+			say("Rockhill exports [units] [good.name] to [region.name] for [gained] mammon.")
+			playsound(src, ROGUE_SOUND_COIN_DISPENSE, 60, FALSE, -1)
 
 /// The desk is still open and within reach after a prompt.
 /obj/structure/roguemachine/steward/proc/still_usable(mob/living/user)

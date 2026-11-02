@@ -6,9 +6,9 @@
  * The treasury of the realm on medieval maps (Ratwood code/controllers/subsystem/rogue/treasury.dm, SStreasury): the Crown's Purse
  * and the funds of the Church, the merchants, the bathhouse and the tavern; the NERVELOCK accounts of the subjects; the Crown's
  * levies and fines, the poll tax and the charters that bound them; loans and indentures; the dawn payouts (rural tax, estate
- * incomes, wages the Steward sets) and the Crown's solvency; and the stockpile, which the Crown fills from afar and ships abroad
- * every treasury tick. The trade regions live in trade.dm; Ratwood's Burgher Pledge, rumors and contract levies are not
- * ported.
+ * incomes, wages the Steward sets), the Burgher Pledge (burgher_pledge.dm) and the Crown's solvency; and the stockpile, which
+ * the Crown tops up from the regions and whose surplus it ships to them every treasury tick (crown_imports.dm). The trade
+ * regions live in trade.dm; Ratwood's rumors are not ported.
  */
 SUBSYSTEM_DEF(rogue_treasury)
 	name = "Treasury"
@@ -61,6 +61,8 @@ SUBSYSTEM_DEF(rogue_treasury)
 		return SS_INIT_NO_NEED
 	stockpile_purchase_floor = CONFIG_GET(number/rogue_stockpile_floor)
 	tax_rates[ROGUE_TAX_IMPORT] = CONFIG_GET(number/rogue_import_tariff) / 100
+	tax_rates[ROGUE_TAX_CONTRACT] = rogue_value("treasury_contract_levy") / 100
+	auto_import_floor = round(rogue_value("trade_auto_import_purse_floor"))
 	crown_purse = new("Crown's Purse")
 	funds[ROGUE_FUND_CROWN] = crown_purse
 	mint(crown_purse, CONFIG_GET(number/rogue_crown_purse) + rand(500, 1500), "Treasury of the realm")
@@ -73,6 +75,7 @@ SUBSYSTEM_DEF(rogue_treasury)
 			stockpile_datums += new stock_type
 	setup_poll_tax()
 	setup_funds()
+	setup_pledge()
 	init_decrees()
 	setup_default_payments()
 	enforce_wage_floors()
@@ -88,12 +91,14 @@ SUBSYSTEM_DEF(rogue_treasury)
 	if(!seeded_players)
 		seeded_players = TRUE
 		mint(crown_purse, length(GLOB.alive_player_list) * CONFIG_GET(number/rogue_crown_purse_per_player), "Treasury of the realm")
+		setup_royal_custom()
 	if(!initial_wages_paid)
 		initial_wages_paid = TRUE
 		evaluate_solvency()
 		pay_wages()
-	passive_import()
 	auto_export()
+	run_auto_imports()
+	check_royal_custom()
 	update_jawbanks()
 
 /// Ratwood's Rockhill wages (setup_default_payments() of the nerve master), mammons per dawn.
@@ -167,12 +172,13 @@ SUBSYSTEM_DEF(rogue_treasury)
 	return TRUE
 
 /**
- * Money came into an account. Income of the Crown's Purse first pays off the Crown's debt to the trading company (Ratwood
- * skim_for_treasury_debt()); income of a subject first pays the poll tax they are behind on.
+ * Money came into an account. Income of the Crown's Purse first pays what the raiders cost on the held roads, then the Crown's
+ * debt to the trading company (Ratwood skim_for_banditry_debt(), skim_for_treasury_debt()); income of a subject first pays the
+ * poll tax they are behind on.
  */
 /datum/controller/subsystem/rogue_treasury/proc/on_income(datum/bank_account/account, amount)
 	if(account == crown_purse)
-		skim_for_treasury_debt(amount)
+		skim_for_treasury_debt(skim_for_banditry_debt(amount))
 		return
 	var/datum/bank_account/rogue/subject = account
 	if(istype(subject) && !subject.fund_id && subject.poll_owed > 0)
@@ -280,7 +286,7 @@ SUBSYSTEM_DEF(rogue_treasury)
 
 /**
  * The Crown's business at dawn, in Ratwood's order (code/__HELPERS/time.dm settod()): the rural tax, the estates, the payroll
- * after the Crown checks it can meet it, the loans that fall due, then the poll tax.
+ * after the Crown checks it can meet it, the loans that fall due, the Burgher Pledge, then the poll tax.
  */
 /datum/controller/subsystem/rogue_treasury/proc/new_day()
 	fined_today.Cut()
@@ -293,6 +299,7 @@ SUBSYSTEM_DEF(rogue_treasury)
 	evaluate_solvency()
 	pay_wages()
 	tick_loans()
+	tick_burgher_pledge()
 	tick_poll_tax()
 
 /// Mammons the day's wages will cost the Purse (Ratwood get_expected_wage_outlay()).
@@ -329,27 +336,38 @@ SUBSYSTEM_DEF(rogue_treasury)
 			return stock
 	return null
 
-/// Ratwood's passive import: the Crown buys goods in from afar up to the stockpile's limit while the Purse can pay.
+/// The stockpile's imports of a treasury tick: the Crown's standing imports from the regions (Ratwood run_auto_import_tick(),
+/// which replaced the passive import of goods from afar; crown_imports.dm). Kept under its old name for the economic panel.
 /datum/controller/subsystem/rogue_treasury/proc/passive_import()
-	for(var/datum/roguestock/stock as anything in stockpile_datums)
-		var/units = min(stock.passive_generation, stock.stockpile_limit - stock.stockpile_amount)
-		if(units <= 0)
-			continue
-		var/cost = units * stock.generation_price
-		if(crown_purse.account_balance - cost < stockpile_purchase_floor)
-			continue
-		if(burn(crown_purse, cost, "Imported [units] [stock.name]"))
-			stock.stockpile_amount += units
-			total_import += cost
+	run_auto_imports()
 
-/// Ratwood auto_export(): a good kept above its share of the limit ships a load abroad; the Crown's Purse takes the price.
+/**
+ * Ratwood auto_export() and mass_export_surplus(): a good of the regions' trade kept above its share of the limit ships its
+ * surplus to the region that pays best today, as much as that region still wants; a good the Steward priced by hand stays.
+ * Other goods ship a load abroad at their export price. The Crown's Purse takes the price.
+ */
 /datum/controller/subsystem/rogue_treasury/proc/auto_export()
 	for(var/datum/roguestock/stock as anything in stockpile_datums)
 		if(stock.autoexport_disabled || stock.importexport_amt <= 0)
 			continue
-		if(stock.stockpile_amount <= autoexport_share * stock.stockpile_limit || stock.stockpile_amount < stock.importexport_amt)
+		var/datum/rogue_trade_good/good = stock.trade_good
+		if(!good)
+			if(stock.stockpile_amount > autoexport_share * stock.stockpile_limit && stock.stockpile_amount >= stock.importexport_amt)
+				export_stock(stock, stock.importexport_amt)
 			continue
-		export_stock(stock, stock.importexport_amt)
+		if(!stock.automatic_price)
+			continue
+		var/keep = round(autoexport_share * stock.stockpile_limit)
+		if(auto_import_active(good.id))
+			keep = max(keep, rogue_value("trade_auto_import_floor"))
+		var/surplus = stock.stockpile_amount - keep
+		var/list/quote = surplus > 0 ? SSrogue_trade.export_quote(good) : null
+		if(!quote)
+			continue
+		var/datum/rogue_trade_region/region = quote["region"]
+		var/wanted = region.demands_today[good.id] || 0
+		if(wanted > 0)
+			SSrogue_trade.region_export(region, good, min(surplus, wanted))
 
 /// Ships units of a good abroad at its export price into the Crown's Purse (Ratwood do_export()).
 /datum/controller/subsystem/rogue_treasury/proc/export_stock(datum/roguestock/stock, units)

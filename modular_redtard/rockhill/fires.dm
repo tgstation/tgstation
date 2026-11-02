@@ -335,3 +335,215 @@ GLOBAL_LIST_EMPTY(rockhill_lit_fires)
 		playsound(src, 'modular_redtard/rockhill/sound/items/firelight.ogg', 100, TRUE)
 		user.visible_message(span_info("[user] lights [src] with [tool]."))
 	return ITEM_INTERACT_SUCCESS
+
+// --- Candles
+
+/// Ratwood's candles (items/candle.dm): a lit candle gives a small fire's light and burns its wax down to a stub. A flame
+/// lights it - a torch, a fire, another candle, a spark - and using it in hand snuffs it; running over one on the floor
+/// tramples it out. Candlesticks and skull, silver and Eora's candles never burn down. Ratwood's open_flame() each tick is left
+/// out: on the medieval maps there is no gas for it to set alight.
+/obj/item/candle
+	heat = 1000
+	light_range = 3
+	light_power = 1
+	light_color = LIGHT_COLOR_FIRE
+	light_on = FALSE
+	/// Ratwood wax: what is left to burn, in Ratwood's two-second ticks; candle_wax when made.
+	var/wax = 0
+	var/lit = FALSE
+	/// Ratwood infinite: it never burns down.
+	var/infinite = FALSE
+	/// Ratwood start_lit: lit when made (the map's lit candles).
+	var/start_lit = FALSE
+	/// The icon state of a candle whose look does not melt (Ratwood's own update_icon() of the candlesticks and the skull, gold
+	/// and silver candles), "_lit" added while lit; a candle without it shows how far its wax has burned.
+	var/candle_state
+	/// Which of Ratwood's three looks of burning wax the candle has, 1 (whole) to 3 (nearly gone).
+	var/wax_look = 1
+
+/obj/item/candle/lit
+	start_lit = TRUE
+
+/obj/item/candle/yellow/lit
+	start_lit = TRUE
+
+/obj/item/candle/eora
+	infinite = TRUE
+	light_color = "#ff13d8"
+
+/obj/item/candle/eora/lit
+	start_lit = TRUE
+
+/obj/item/candle/infinite
+	infinite = TRUE
+	start_lit = TRUE
+
+/obj/item/candle/skull
+	infinite = TRUE
+	candle_state = "skullcandle"
+
+/obj/item/candle/skull/lit
+	start_lit = TRUE
+
+/obj/item/candle/candlestick
+	infinite = TRUE
+
+/obj/item/candle/candlestick/gold
+	candle_state = "gcandelabra"
+
+/obj/item/candle/candlestick/gold/lit
+	start_lit = TRUE
+
+/obj/item/candle/candlestick/gold/single
+	candle_state = "singlegcandelabra"
+
+/obj/item/candle/candlestick/gold/single/lit
+	start_lit = TRUE
+
+/obj/item/candle/candlestick/silver
+	candle_state = "scandelabra"
+
+/obj/item/candle/candlestick/silver/lit
+	start_lit = TRUE
+
+/obj/item/candle/candlestick/silver/single/lit
+	candle_state = "singlescandelabra"
+	start_lit = TRUE
+
+/obj/item/candle/gold/lit
+	candle_state = "gcandle"
+	start_lit = TRUE
+
+/obj/item/candle/silver/lit
+	infinite = TRUE
+	candle_state = "scandle"
+	start_lit = TRUE
+
+/obj/item/candle/Initialize(mapload)
+	. = ..()
+	wax = rogue_value("candle_wax")
+	var/static/list/loc_connections = list(COMSIG_ATOM_ENTERED = PROC_REF(on_trampled))
+	AddElement(/datum/element/connect_loc, loc_connections)
+	if(!start_lit || !light_candle())
+		update_appearance(UPDATE_ICON_STATE)
+
+/obj/item/candle/Destroy()
+	STOP_PROCESSING(SSobj, src)
+	return ..()
+
+/obj/item/candle/update_icon_state()
+	. = ..()
+	icon_state = candle_state ? "[candle_state][lit ? "_lit" : ""]" : "candle[wax_look][lit ? "_lit" : ""]"
+
+/obj/item/candle/get_temperature()
+	return lit ? ..() : 0
+
+/// Ratwood light(): the candle catches and glows; one that does not last forever starts burning its wax.
+/obj/item/candle/proc/light_candle()
+	if(lit || (!infinite && wax <= 0))
+		return FALSE
+	lit = TRUE
+	set_light_on(TRUE)
+	update_appearance(UPDATE_ICON_STATE)
+	if(!infinite)
+		START_PROCESSING(SSobj, src)
+	return TRUE
+
+/// Ratwood put_out_candle().
+/obj/item/candle/proc/put_out_candle()
+	if(!lit)
+		return FALSE
+	lit = FALSE
+	set_light_on(FALSE)
+	STOP_PROCESSING(SSobj, src)
+	update_appearance(UPDATE_ICON_STATE)
+	return TRUE
+
+/// Ratwood process(): the wax burns a tick at a time, the candle melting by thirds, and the last of it leaves a stub.
+/obj/item/candle/process(seconds_per_tick)
+	if(!lit || infinite)
+		return PROCESS_KILL
+	wax = max(wax - seconds_per_tick * rogue_value("candle_wax_per_second"), 0)
+	if(wax <= 0)
+		burn_down()
+		return PROCESS_KILL
+	update_wax_look()
+
+/// Ratwood update_icon(): whole above 750 wax, half burned above 400, nearly gone below.
+/obj/item/candle/proc/update_wax_look()
+	var/look = wax > rogue_value("candle_wax_full") ? 1 : (wax > rogue_value("candle_wax_half") ? 2 : 3)
+	if(look == wax_look)
+		return
+	wax_look = look
+	update_appearance(UPDATE_ICON_STATE)
+
+/// Ratwood process() at the end of the wax: a melted stub is left where the candle was, in the hand that held it.
+/obj/item/candle/proc/burn_down()
+	var/mob/holder = ismob(loc) ? loc : null
+	var/obj/item/trash/candle/stub = new(drop_location())
+	stub.icon = icon
+	qdel(src)
+	holder?.put_in_hands(stub)
+
+/// Ratwood attack_self(): using a lit candle in hand snuffs it; an unlit one needs a flame.
+/obj/item/candle/attack_self(mob/user, modifiers)
+	. = ..()
+	if(.)
+		return
+	if(put_out_candle())
+		playsound(src, ROCKHILL_FIRE_SNUFF_SOUND, 50, TRUE)
+		user.visible_message(span_notice("[user] snuffs [src]."), span_notice("I snuff [src]."))
+	else
+		to_chat(user, span_warning("I need a flame to light [src]."))
+	return TRUE
+
+/// A flame held to an unlit candle lights it: a torch, another candle, a burning pipe.
+/obj/item/candle/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(lit || !tool.get_temperature())
+		return ..()
+	if(light_candle())
+		user.visible_message(span_info("[user] lights [src] with [tool]."), span_info("I light [src] with [tool]."))
+	return ITEM_INTERACT_SUCCESS
+
+/// An unlit candle held to a flame catches from it: a lit fire, sconce or wall candle, or a burning thing.
+/obj/item/candle/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(lit)
+		return NONE
+	var/burning = FALSE
+	if(istype(interacting_with, /obj/machinery/light/rogue))
+		var/obj/machinery/light/rogue/fire = interacting_with
+		burning = fire.lit
+	else if(isitem(interacting_with))
+		var/obj/item/flame = interacting_with
+		burning = flame.get_temperature()
+	if(!burning)
+		return NONE
+	if(light_candle())
+		user.visible_message(span_info("[user] lights [src] from [interacting_with]."), span_info("I light [src] from [interacting_with]."))
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/candle/fire_act(exposed_temperature, exposed_volume)
+	if(!lit && light_candle())
+		return TRUE
+	return ..()
+
+/// Ratwood candle spark_act(): a spark lights a candle.
+/obj/item/candle/spark_act()
+	fire_act()
+
+/obj/item/candle/extinguish()
+	. = ..()
+	put_out_candle()
+
+/// Ratwood Crossed(): someone running over a candle on the floor tramples it out, its wax squashed nearly to the end.
+/obj/item/candle/proc/on_trampled(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+	if(!isturf(loc) || !ishuman(arrived))
+		return
+	var/mob/living/carbon/human/runner = arrived
+	if(runner.move_intent != MOVE_INTENT_RUN)
+		return
+	if(!infinite)
+		wax = min(wax, rogue_value("candle_trampled_wax"))
+		update_wax_look()
+	put_out_candle()

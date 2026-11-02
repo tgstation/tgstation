@@ -167,7 +167,7 @@ Yeven under the seal of the Crown, in witness of Psydon and the Ten."}
 /datum/rogue_decree/golden_bull
 	id = ROGUE_DECREE_GOLDEN_BULL
 	name = "The Golden Bull of Kingsfield"
-	mechanical_text = "Burghers and residents give up at most a quarter of their balance to one levy or fine, at most 50m in fines a day, and burghers at most 20m of poll tax a dawn. Wanderers and mercenaries are not covered."
+	mechanical_text = "Burghers and residents give up at most a quarter of their balance to one levy or fine, at most 50m in fines a day, and burghers at most 20m of poll tax a dawn. Wanderers and mercenaries are not covered. While it stands, the burghers renew the Burgher Pledge every dawn, which pays the Crown's commissions and petitions."
 	flavor_text = {"This Golden Bull of Kingsfield, sealed under Astrata's Sun and with Ravox as witness, witnesseth the ancient compact between the Crown of the Vale and the makers of her wealth.
 
 It is attested, by name of the Grand Duke of the Vale, and by the Councils of the Notables and Burghers of Rotwood Vale duly assembled to set this seal, that the said Councils do hereby assent, in this yil and in perpetuity, that the Crown shall levy upon the Burghers no greater portion than one quarter part of their nervelock account, and shall exact in fine no more than fifty mammon by the day, nor poll-tax beyond twenty mammon by the day; such being the limits deemed meet in time of peace, of war, and of necessite alike. Beyond these bounds no Burgher shall be taxed, nor deprived of their wealth, save by the law of the land.
@@ -243,7 +243,7 @@ Yeven under the seal of the Crown, in witness of Noc and Pestra."}
 	id = ROGUE_DECREE_ARMS_CHARTER
 	name = "The Guild Charter of Arms"
 	category = ROGUE_DECREE_NEW
-	mechanical_text = "Mercenaries of the Guild pay at most 15m of poll tax a dawn."
+	mechanical_text = "Mercenaries of the Guild pay at most 15m of poll tax a dawn, and the Guild adds its tribute to the Burgher Pledge every dawn."
 	flavor_text = {"This Guild Charter of Arms, drawn under Ravox's banner and entered unto between the Crown of the Vale and the Guild of Arms, witnesseth that the Crown recognizeth the Guild as a chartered foreign body, self-governing in its own affairs and answerable only to its own captains. Its sworn mercenaries shall bear no common levy save the lightest head-count upon them.
 
 The Crown commandeth no oath of service from the Guild, and oweth it no service in return. The Crown shall not intervene in the contracts the Guild undertaketh, and shall protect its adherents' right to bear arms and to intervene in private warfare as they see fit, so long as the peace of the Realm be not disturbed thereby, and so long as they undertake no contracts of piracy, brigandry, nor such as directly threaten the Crown's interests.

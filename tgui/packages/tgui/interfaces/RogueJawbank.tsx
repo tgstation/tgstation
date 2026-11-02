@@ -52,7 +52,15 @@ type Bathhouse = {
   remaining: number | null;
 };
 
+type Ordinance = {
+  active: BooleanLike;
+  can_set: BooleanLike;
+  cooldown: number;
+  tithe: number;
+};
+
 type Data = {
+  ordinance?: Ordinance;
   holder: string;
   label: string;
   authority: string;
@@ -80,12 +88,17 @@ export const RogueJawbank = () => {
   const [tab, setTab] = useState('coffers');
   if (!data.can_view) {
     return (
-      <Window title={data.holder} width={420} height={200}>
+      <Window
+        title={data.holder}
+        width={420}
+        height={data.ordinance?.can_set ? 330 : 200}
+      >
         <Window.Content>
           <NoticeBox>
             The coffers of {data.label} are sealed. Only {data.authority} may
             open them. Insert coins to feed it.
           </NoticeBox>
+          {!!data.ordinance?.can_set && <OrdinanceSection />}
         </Window.Content>
       </Window>
     );
@@ -129,12 +142,54 @@ export const RogueJawbank = () => {
   );
 };
 
+/** The Ordinance of the Baths: the Church's sanction over the stews, set by the Bishop or the Bathmaster (Ratwood atm_tgui.dm). */
+const OrdinanceSection = () => {
+  const { act, data } = useBackend<Data>();
+  const ordinance = data.ordinance;
+  if (!ordinance) {
+    return null;
+  }
+  return (
+    <Section
+      title="Ordinance of the Baths"
+      buttons={
+        !!ordinance.can_set && (
+          <Button
+            icon="stamp"
+            disabled={ordinance.cooldown > 0}
+            tooltip={
+              ordinance.cooldown > 0
+                ? `The seal is still warm: ${Math.ceil(ordinance.cooldown / 60)} more minutes.`
+                : undefined
+            }
+            onClick={() => act('ordinance')}
+          >
+            {ordinance.active ? 'Break the seal' : 'Set the seal'}
+          </Button>
+        )
+      }
+    >
+      <Box color={ordinance.active ? 'good' : 'average'}>
+        {ordinance.active
+          ? "In force: the bathhouse's tariffs and a tithe of its sales and hoard go to the Church."
+          : "Broken: the bathhouse's tariffs go to the Crown."}
+      </Box>
+      <Box color="label">Tithed to the Church so far: {ordinance.tithe}m.</Box>
+    </Section>
+  );
+};
+
 const Coffers = () => {
   const { act, data } = useBackend<Data>();
   const [amount, setAmount] = useState(10);
   const limit = data.withdraw_limit;
   return (
     <Stack fill vertical>
+      {!!data.ordinance && (
+        <Stack.Item>
+          <OrdinanceSection />
+        </Stack.Item>
+      )}
       <Stack.Item>
         <Section title={data.holder}>
           <LabeledList>

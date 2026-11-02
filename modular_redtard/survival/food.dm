@@ -221,6 +221,9 @@
 	if(!(locate(/obj/structure/table) in loc))
 		to_chat(user, span_warning("I need a table to prepare [src]."))
 		return ITEM_INTERACT_BLOCKING
+	if(!recipe.can_prepare(user))
+		to_chat(user, span_warning(recipe.refusal))
+		return ITEM_INTERACT_BLOCKING
 	active_recipe = recipe
 	if(!do_after(user, recipe.time_per_step / rogue_cook_divisor(user), target = src))
 		if(current_step == 1)
@@ -311,10 +314,15 @@
 	update_appearance()
 
 /// Ratwood become_rotten(): the food turns into its rotten form (not in someone's hands), or goes bad in place - flies,
-/// a bluish tint, the rotten bite, no slicing and no cooking but burning. FALSE when it has to wait.
+/// a bluish tint, the rotten bite, no slicing and no cooking but burning. Food left to rot on the floor of the town's sewers
+/// becomes a rat instead. FALSE when it has to wait.
 /obj/item/reagent_containers/food/proc/become_rotten()
 	if(QDELETED(src) || !loc)
 		return FALSE
+	if(isturf(loc) && istype(get_area(src), /area/rogue/under/town/sewer) && !istype(src, /obj/item/reagent_containers/food/snacks/smallrat))
+		new /obj/item/reagent_containers/food/snacks/smallrat(loc)
+		qdel(src)
+		return TRUE
 	if(become_rot_type)
 		if(ismob(loc))
 			return FALSE

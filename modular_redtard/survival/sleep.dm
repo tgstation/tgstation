@@ -60,12 +60,21 @@
 	if(!falling)
 		to_chat(source, span_warning((quality ? "I'll fall asleep soon..." : "I'll fall asleep soon, although a bed would be more comfortable...")))
 	falling += HAS_TRAIT(source, TRAIT_FASTSLEEP) ? 2 : 1
+	// Ratwood: the night fatigue (survival/fatigue.dm) brings sleep sooner - in bed from the second step, on the ground at the third.
+	var/fatigue = source.rogue_fatigue_stage()
+	if(quality)
+		falling += fatigue >= 3 ? 2 : (fatigue == 2 ? 1 : 0)
+	else if(fatigue >= 3)
+		falling++
 	if(falling > (quality ? ROGUE_FALL_ASLEEP_BED : ROGUE_FALL_ASLEEP_GROUND))
 		falling = 0
 		source.Sleeping(30 SECONDS)
 
-/// Ratwood: a heavy helmet (stab armour over 70) or medium or heavy body armour keeps one awake, unless it cannot come off.
+/// Ratwood: a heavy helmet (stab armour over 70) or medium or heavy body armour keeps one awake, unless it cannot come off; the
+/// exhausted (third step of night fatigue, survival/fatigue.dm) sleep in anything.
 /datum/component/rogue_sleeper/proc/armor_keeps_awake(mob/living/carbon/human/source)
+	if(source.rogue_fatigue_stage() >= 3)
+		return FALSE
 	var/obj/item/clothing/helmet = source.head
 	if(istype(helmet) && !HAS_TRAIT(helmet, TRAIT_NODROP))
 		var/datum/rogue_armor/armor = helmet.get_rogue_armor()

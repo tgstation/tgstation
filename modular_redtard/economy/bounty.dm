@@ -1,9 +1,9 @@
 /**
  * EXCIDIUM (Ratwood code/modules/roguetown/roguemachine/bounty.dm): Ravox's bounty board. A subject with a NERVELOCK account
- * puts a price on someone's head (paid from the account, gone for good, as in Ratwood: the patron pays the hunter in person),
- * the realm hears of it, anyone reads the list or prints it for a fee, and the patron may strike their own listing. Ratwood
- * offers only people the patron knows and describes the target's height, build and voice; the port lists every living
- * subject and describes their race.
+ * puts a price on someone's head (paid from the account), the realm hears of it, anyone reads the list or prints it for a fee,
+ * and the patron may strike their own listing (the mammons are not returned). Whoever brings the wanted person to the CASTIFICO
+ * chair collects every bounty on that name in coin (castifico.dm). Ratwood offers only people the patron knows and describes
+ * the target's height, build and voice; the port lists every living subject and describes their race.
  */
 /obj/structure/roguemachine/bounty/examine(mob/user)
 	. = ..()

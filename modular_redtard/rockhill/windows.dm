@@ -1,7 +1,27 @@
+/// Ratwood's structures have no armor: a door basher's blow goes through all of it (PENETRATE_ARMOUR() of 100).
+#define ROCKHILL_WINDOW_BASH_PENETRATION 100
+
 /obj/structure/roguewindow
 	max_integrity = 200
 	integrity_failure = 0.5
 	var/base_state
+	/// Ratwood repair_costs: the material that mends a damaged window and starts mending a broken one, and the one that
+	/// finishes a broken window.
+	var/repair_cost_first = /obj/item/grown/log/tree/small
+	var/repair_cost_second = /obj/item/natural/glass
+	/// Ratwood repair_skill: the craft whose rank speeds up the mending. One with no rank in it cannot mend a window.
+	var/repair_skill = /datum/attribute/skill/craft/carpentry
+	/// Ratwood repair_started: the first material of a broken window is in, the second finishes it.
+	var/repair_started = FALSE
+
+/obj/structure/roguewindow/stained
+	repair_cost_first = /obj/item/natural/glass
+
+/obj/structure/roguewindow/harem2
+	repair_cost_first = /obj/item/natural/glass
+
+/obj/structure/roguewindow/harem3
+	repair_cost_first = /obj/item/natural/glass
 
 /obj/structure/roguewindow/update_icon_state()
 	. = ..()
@@ -20,6 +40,87 @@
 	new /obj/effect/decal/cleanable/debris/glassy(drop_location())
 	update_appearance(UPDATE_ICON_STATE)
 
+/obj/structure/roguewindow/examine(mob/user)
+	. = ..()
+	if(!broken && atom_integrity >= max_integrity)
+		return
+	var/obj/item/first = repair_cost_first
+	var/obj/item/second = repair_cost_second
+	if(!repair_started)
+		. += span_notice("[initial(first.name)] can be used to repair it.")
+	if(broken)
+		. += span_notice("An additional [initial(second.name)] is needed to finish repairs.")
+
+/// Ratwood roguewindow attackby(): its repair materials mend a damaged or broken window.
+/obj/structure/roguewindow/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if((!istype(tool, repair_cost_first) && !istype(tool, repair_cost_second)) || (!broken && atom_integrity >= max_integrity))
+		return ..()
+	INVOKE_ASYNC(src, PROC_REF(repair), user, tool)
+	return ITEM_INTERACT_SUCCESS
+
+/// Ratwood roguewindow attack_hand(): a door basher's hand breaks a window in.
+/obj/structure/roguewindow/attack_hand(mob/living/user, list/modifiers)
+	. = ..()
+	if(. || broken || !HAS_TRAIT(user, TRAIT_BASHDOORS))
+		return
+	user.changeNext_move(CLICK_CD_MELEE)
+	user.do_attack_animation(src)
+	user.log_message("bashed the window [src] at [AREACOORD(src)].", LOG_ATTACK)
+	take_damage(rogue_value("window_bash_damage"), BRUTE, MELEE, TRUE, get_dir(src, user), ROCKHILL_WINDOW_BASH_PENETRATION)
+	return TRUE
+
+/// Ratwood repairwindow(): 30 seconds divided by the rank of carpentry; null for one with no rank in it.
+/obj/structure/roguewindow/proc/repair_time(mob/living/user)
+	var/rank = repair_skill ? user.rogue_skill_rank(repair_skill) : 0
+	return rank ? rogue_value("window_repair_time") / rank : null
+
+/// What mends the window next: its first material, or its second to finish a broken window half mended.
+/obj/structure/roguewindow/proc/repair_material()
+	return (broken && repair_started) ? repair_cost_second : repair_cost_first
+
+/// Ratwood repairwindow(): the first material mends half of a damaged window; a broken one takes the first material and
+/// then the second.
+/obj/structure/roguewindow/proc/repair(mob/living/user, obj/item/material)
+	var/needed = repair_material()
+	if(!istype(material, needed))
+		var/obj/item/wanted = needed
+		to_chat(user, span_warning("I need [initial(wanted.name)] for this."))
+		return
+	var/work_time = repair_time(user)
+	if(!work_time)
+		to_chat(user, span_warning("I don't know how to repair [src]."))
+		return
+	if(DOING_INTERACTION_WITH_TARGET(user, src))
+		return
+	user.visible_message(span_notice("[user] starts repairing [src]."), span_notice("I start repairing [src]."))
+	playsound(src, 'modular_redtard/rockhill/sound/doors/woodsaw.ogg', 100, TRUE)
+	if(!do_after(user, work_time, target = src) || QDELETED(material) || !user.is_holding(material) || !istype(material, repair_material()))
+		return
+	if(!broken && atom_integrity >= max_integrity)
+		return
+	qdel(material)
+	playsound(src, 'modular_redtard/rockhill/sound/doors/woodsaw.ogg', 100, TRUE)
+	if(!broken)
+		repair_damage(max_integrity / 2)
+		user.visible_message(span_notice("[user] repairs [src]."), span_notice("I repair [src]."))
+		return
+	if(!repair_started)
+		repair_started = TRUE
+		var/obj/item/second = repair_cost_second
+		to_chat(user, span_notice("An additional [initial(second.name)] is needed to finish the job."))
+		return
+	fix_window()
+	user.visible_message(span_notice("[user] repairs [src]."), span_notice("I repair [src]."))
+
+/// A broken window mended whole: glazed again, shut, no longer climbable, at full integrity.
+/obj/structure/roguewindow/proc/fix_window()
+	repair_started = FALSE
+	broken = FALSE
+	repair_damage(max_integrity)
+	RemoveElement(/datum/element/climbable)
+	set_opacity(initial(opacity))
+	update_appearance(UPDATE_ICON_STATE)
+
 /obj/structure/roguewindow/openclose
 	var/lockdir
 	var/window_lock_strength = ROCKHILL_WINDOW_LOCK
@@ -28,6 +129,7 @@
 	max_integrity = 800
 	integrity_failure = 0.1
 	window_lock_strength = ROCKHILL_WINDOW_LOCK_REINFORCED
+	repair_cost_first = /obj/item/ingot/iron
 
 /obj/structure/roguewindow/openclose/Initialize(mapload)
 	. = ..()
@@ -130,3 +232,5 @@
 	atom_break(BRUTE)
 	user.visible_message(span_warning("[user] fails! The window is broken!"), span_danger("I fail! The window breaks!"))
 	audible_message(span_warning("A loud crash of a window getting broken rings out."), hearing_distance = ROCKHILL_WINDOW_CRASH_RANGE)
+
+#undef ROCKHILL_WINDOW_BASH_PENETRATION

@@ -8,7 +8,9 @@
 ///
 /// The mind follows Ratwood's class of the NPC: an aggressive one hunts whoever is not of its faction, the others fight back
 /// when attacked; one that flees in pain runs once badly hurt. Like Ratwood's NPCs (cmode) they stay in combat mode while
-/// they have a target, so they parry and dodge.
+/// they have a target, so they parry and dodge. What they do besides the blow - bandages and potions, bows and throwing
+/// knives, calling for help, flanking, stepping back, gathering, leaping, taunting, grabbing, spotting sneakers - and the
+/// tree of the mind itself are in ai/human_npc_tactics.dm.
 
 #define BB_ROGUE_NPC_STANCE_LEFT "rogue_npc_stance_left"
 #define BB_ROGUE_NPC_ZONE_COUNT "rogue_npc_zone_count"
@@ -140,8 +142,9 @@
 		fully_replace_character_name(real_name, look["name"])
 	update_body(is_creating = TRUE)
 
-/// Hunts on sight. The trees tick their roots in order: breaking free first, then running when ai_flee_while_injured says so
-/// (only the fleeing kinds), then the fight.
+/// Hunts on sight. The trees tick their roots in order (rogue_npc_roots(), ai/human_npc_tactics.dm): breaking free first,
+/// then running when ai_flee_while_injured says so (only the fleeing kinds), then tending its wounds, then the fight or, with
+/// nobody to fight, its idle pastimes.
 /datum/ai_controller/basic_controller/simple/rogue_human
 	behavior_tree_json = null
 	behavior_nodes = list(
@@ -149,37 +152,35 @@
 		/datum/bt_node/subtree/simple_hostile_combat,
 	)
 	ai_traits = DEFAULT_AI_FLAGS | STOP_MOVING_WHEN_PULLED
+	/// Ratwood aggressive: hunts whoever is not of its faction; otherwise fights whoever attacked it.
+	var/rogue_hunts = TRUE
+	/// Ratwood flee_in_pain: runs from its foe once badly hurt.
+	var/rogue_flees = FALSE
+
+/datum/ai_controller/basic_controller/simple/rogue_human/New(atom/new_pawn)
+	behavior_nodes = rogue_npc_roots()
+	return ..()
 
 /datum/ai_controller/basic_controller/simple/rogue_human/fleeing
-	behavior_nodes = list(
-		/datum/bt_node/subtree/escape_captivity,
-		/datum/bt_node/subtree/run_away_from_target,
-		/datum/bt_node/subtree/simple_hostile_combat,
-	)
+	rogue_flees = TRUE
 
 /// Fights whoever attacked it.
 /datum/ai_controller/basic_controller/simple/rogue_human/retaliate
-	behavior_nodes = list(
-		/datum/bt_node/subtree/escape_captivity,
-		/datum/bt_node/subtree/simple_retaliate_combat,
-	)
+	rogue_hunts = FALSE
 
 /datum/ai_controller/basic_controller/simple/rogue_human/retaliate/fleeing
-	behavior_nodes = list(
-		/datum/bt_node/subtree/escape_captivity,
-		/datum/bt_node/subtree/run_away_from_target,
-		/datum/bt_node/subtree/simple_retaliate_combat,
-	)
+	rogue_flees = TRUE
 
 /datum/ai_controller/basic_controller/simple/rogue_human/TryPossessPawn(atom/new_pawn)
 	if(!ishuman(new_pawn))
 		return AI_CONTROLLER_INCOMPATIBLE
 	RegisterSignal(new_pawn, COMSIG_AI_BLACKBOARD_KEY_SET(BB_CURRENT_TARGET), PROC_REF(on_target_set))
 	RegisterSignal(new_pawn, COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_CURRENT_TARGET), PROC_REF(on_target_cleared))
+	RegisterSignal(new_pawn, COMSIG_ATOM_WAS_ATTACKED, PROC_REF(rogue_npc_on_attacked))
 	return ..()
 
 /datum/ai_controller/basic_controller/simple/rogue_human/UnpossessPawn(destroy)
-	UnregisterSignal(pawn, list(COMSIG_AI_BLACKBOARD_KEY_SET(BB_CURRENT_TARGET), COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_CURRENT_TARGET)))
+	UnregisterSignal(pawn, list(COMSIG_AI_BLACKBOARD_KEY_SET(BB_CURRENT_TARGET), COMSIG_AI_BLACKBOARD_KEY_CLEARED(BB_CURRENT_TARGET), COMSIG_ATOM_WAS_ATTACKED))
 	return ..()
 
 /datum/ai_controller/basic_controller/simple/rogue_human/proc/on_target_set(mob/living/carbon/human/source)
@@ -193,6 +194,7 @@
 	clear_blackboard_key(BB_ROGUE_NPC_STANCE_LEFT)
 	clear_blackboard_key(BB_ROGUE_NPC_BLOWS)
 	clear_blackboard_key(BB_ROGUE_NPC_BLOWS_AT)
+	rogue_npc_forget_fight()
 	if(source.combat_mode)
 		INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, set_combat_mode), FALSE)
 
@@ -210,6 +212,8 @@
 	fighter.face_atom(foe)
 	rogue_choose_zone(fighter, foe)
 	rogue_count_blow(foe)
+	if(rogue_try_grab(fighter, foe))
+		return TRUE
 	if(rogue_try_special(fighter, foe))
 		return TRUE
 	rogue_choose_stance(fighter, foe)
@@ -223,16 +227,20 @@
 		rogue_scan_weakpoint(fighter, foe)
 	rogue_try_backstep(fighter, foe)
 
+/// A weapon to strike with: a bow, crossbow or sling is not one (ai/human_npc_tactics.dm shoots it).
 /datum/ai_controller/basic_controller/simple/rogue_human/proc/rogue_is_weapon(obj/item/item)
-	return istype(item) && item.associated_skill && length(item.possible_item_intents) && item.force > 0
+	return istype(item) && !istype(item, /obj/item/gun) && item.associated_skill && length(item.possible_item_intents) && item.force > 0
 
 /// The stronger weapon goes to the active hand (Ratwood do_best_melee_attack); an empty hand draws one; a weapon that hits
-/// harder in both hands is wielded when the other hand is free.
+/// harder in both hands is wielded when the other hand is free. A bow still in hand when the foe is close is put away first
+/// (Vibelin's archers take up their stashed weapon).
 /datum/ai_controller/basic_controller/simple/rogue_human/proc/rogue_ready_weapon(mob/living/carbon/human/fighter)
+	for(var/obj/item/gun/launcher in fighter.held_items)
+		fighter.rogue_npc_put_away(launcher)
 	var/obj/item/main = fighter.get_active_held_item()
 	var/obj/item/off = fighter.get_inactive_held_item()
 	if(rogue_is_weapon(off) && (!rogue_is_weapon(main) || off.force > main.force))
-		fighter.swap_hand()
+		fighter.swap_hand(fighter.get_inactive_hand_index())
 		main = fighter.get_active_held_item()
 		off = fighter.get_inactive_held_item()
 	if(!main)
@@ -438,6 +446,9 @@
 /// Vibelin _try_backstep: 15% and 5% for every point of speed over 10).
 /datum/ai_controller/basic_controller/simple/rogue_human/proc/rogue_try_backstep(mob/living/carbon/human/fighter, mob/living/foe)
 	if(world.time < blackboard[BB_ROGUE_NPC_JUKE_AT] || fighter.body_position == LYING_DOWN || fighter.buckled || fighter.pulledby)
+		return
+	// Vibelin _try_backstep(): not while striking and backing off (rogue_npc_harassing()).
+	if(rogue_npc_harassing())
 		return
 	if(!isturf(fighter.loc) || !isturf(foe.loc) || HAS_TRAIT(fighter, TRAIT_IMMOBILIZED))
 		return

@@ -103,6 +103,332 @@ trade_supply_share = 0.5
 # Most units of a ship's cargo the merchant buys at once (Ratwood TRADE_MAX_BULK_UNITS).
 trade_bulk_buy_max = 50
 
+# Market (economy/market_events.dm, pricing_engine.dm, ship_trade.dm, merchant_favor.dm, crown_imports.dm, petitions.dm).
+
+# Dawns an economic event lasts (Ratwood ECON_EVENT_DURATION).
+trade_event_days = 2
+
+# Economic events the market keeps in force, rolled again at every dawn (Ratwood ECON_EVENT_TARGET_COUNT).
+trade_events_in_force = 5
+
+# Economic events in force at round start (Ratwood ECON_EVENT_ROUNDSTART_COUNT).
+trade_events_roundstart = 3
+
+# Dawns before an event that ended can break out again (Ratwood ECON_EVENT_REROLL_COOLDOWN_DAYS).
+trade_event_cooldown = 7
+
+# Share of what the regions would want of its goods while it lasts that the realm must ship to end a shortage early (Ratwood ECON_EVENT_SATURATION_MULT).
+trade_event_relief_share = 0.5
+
+# Fewest units of its goods that end a shortage early (Ratwood ECON_EVENT_SATURATION_MIN).
+trade_event_relief_min = 5
+
+# Most units of its goods needed to end a shortage early (Ratwood ECON_EVENT_SATURATION_MAX).
+trade_event_relief_max = 40
+
+# Price factor of a minor shortage (Ratwood ECON_SHORTAGE_MINOR).
+trade_event_shortage_minor = 2
+
+# Price factor of a shortage (Ratwood ECON_SHORTAGE_NORMAL).
+trade_event_shortage_normal = 2.25
+
+# Price factor of a major shortage (Ratwood ECON_SHORTAGE_MAJOR).
+trade_event_shortage_major = 2.5
+
+# Price factor of a severe shortage (Ratwood ECON_SHORTAGE_SEVERE).
+trade_event_shortage_severe = 2.75
+
+# Price factor of a shortage in crisis (Ratwood ECON_SHORTAGE_CRISIS).
+trade_event_shortage_crisis = 3
+
+# Price factor of a minor glut (Ratwood ECON_OVERSUPPLY_MINOR).
+trade_event_glut_minor = 0.7
+
+# Price factor of a glut (Ratwood ECON_OVERSUPPLY_NORMAL).
+trade_event_glut_normal = 0.65
+
+# Price factor of a major glut (Ratwood ECON_OVERSUPPLY_MAJOR).
+trade_event_glut_major = 0.6
+
+# Price factor of a severe glut (Ratwood ECON_OVERSUPPLY_SEVERE).
+trade_event_glut_severe = 0.55
+
+# Price factor of the worst glut (Ratwood ECON_OVERSUPPLY_GLUT).
+trade_event_glut_extreme = 0.5
+
+# Urgent orders of shortages open at once (Ratwood STANDING_ORDERS_MAX_URGENT).
+trade_urgent_orders_max = 2
+
+# Dawns an urgent order stays open (Ratwood URGENT_ORDER_DURATION).
+trade_urgent_order_days = 1
+
+# Factor on the price of imports from a region behind a held road (Ratwood BLOCKADE_IMPORT_MULT).
+trade_blockade_import_mult = 2
+
+# Factor on what a region behind a held road pays for exports (Ratwood BLOCKADE_EXPORT_MULT).
+trade_blockade_export_mult = 0.5
+
+# Fewest roads held by raiders at round start (Ratwood BLOCKADE_ROUNDSTART_COUNT_MIN).
+trade_blockades_roundstart_min = 2
+
+# Most roads held by raiders at round start (Ratwood BLOCKADE_ROUNDSTART_COUNT_MAX).
+trade_blockades_roundstart_max = 3
+
+# Dawns after a blockade is broken before raiders can cut that road again (Ratwood BLOCKADE_RECLEAR_COOLDOWN).
+trade_blockade_reclear_days = 1
+
+# Dawns a blockade holds before the raiders move on; Ratwood's defense contract that breaks it is not ported.
+trade_blockade_days = 2
+
+# First dawn a new blockade can fall after round start (Ratwood BLOCKADE_REPLENISH_FIRST_DAY).
+trade_blockade_replenish_first = 2
+
+# Last dawn a new blockade can fall after round start (Ratwood BLOCKADE_REPLENISH_LAST_DAY).
+trade_blockade_replenish_last = 5
+
+# A new blockade falls after round start only while fewer roads than this are held (Ratwood BLOCKADE_REPLENISH_FLOOR).
+trade_blockade_replenish_floor = 1
+
+# Blockades that can fall after round start (Ratwood BLOCKADE_REPLENISH_BUDGET_BASE).
+trade_blockade_replenish_budget = 1
+
+# More blockades that can fall after round start per living player (Ratwood BLOCKADE_REPLENISH_BUDGET_PER_PLAYER).
+trade_blockade_replenish_per_player = 0.02
+
+# Most blockades that can fall after round start (Ratwood BLOCKADE_REPLENISH_BUDGET_MAX).
+trade_blockade_replenish_budget_max = 2
+
+# Percent chance a new blockade falls at a dawn when it can (Ratwood BLOCKADE_REPLENISH_DAILY_CHANCE).
+trade_blockade_replenish_chance = 50
+
+# Mammons of caravans the Crown loses on every held road at a dawn (Ratwood BANDITRY_DRAIN_DANGEROUS_FLAT).
+trade_banditry_flat = 40
+
+# More mammons lost on every held road at a dawn per living player (Ratwood BANDITRY_DRAIN_DANGEROUS_PER_PLAYER).
+trade_banditry_per_player = 1
+
+# The banditry losses never take the Crown's Purse below this; the rest becomes a debt (Ratwood BANDITRY_DEBT_FLOOR).
+trade_banditry_floor = 1500
+
+# Percent chance a condition shared by several foreign realms befalls them this round (Ratwood roll_active_conditions()).
+trade_condition_shared_chance = 40
+
+# Percent chance a foreign realm suffers one condition of its own this round (Ratwood roll_active_conditions()).
+trade_condition_realm_chance = 50
+
+# Share of a good's trade price a region pays at least for it, however flooded (Ratwood trade_good low_price).
+trade_export_floor_share = 0.6
+
+# Most units the Steward imports from or exports to a region at once (Ratwood TRADE_MAX_BULK_UNITS).
+trade_region_trade_max = 50
+
+# Deepest chain of recipes the pricing engine follows to price a material (Ratwood PRICING_ENGINE_MAX_RECURSION_DEPTH).
+trade_price_recursion_max = 12
+
+# Markup of the pricing engine on the materials of a thing of an unlisted market category (Ratwood PRICING_ENGINE_DEFAULT_MARKUP).
+trade_markup_default = 1.2
+
+# Markup on the materials of armor, weapons, tools, valuables, decoration, pottery, components and engineering (Ratwood MARKUP_ARMOR_*, MARKUP_WEAPONS_*, MARKUP_TOOLS_* and the others at 1.5).
+trade_markup_crafted = 1.5
+
+# Markup on the materials of light and cloth armor (Ratwood MARKUP_ARMOR_LIGHT).
+trade_markup_light_armor = 2
+
+# Markup on the materials of common garments, their masks and odds (Ratwood MARKUP_GARMENT_COMMON).
+trade_markup_garment = 2.5
+
+# Markup on the materials of fine garments (Ratwood MARKUP_GARMENT_FINE).
+trade_markup_fine_garment = 3.5
+
+# Markup on the ingredients of fresh food (Ratwood MARKUP_FOODSTUFF_FRESH).
+trade_markup_fresh_food = 1.5
+
+# Markup on the ingredients of preserved food (Ratwood MARKUP_FOODSTUFF_PRESERVED).
+trade_markup_preserved_food = 1.7
+
+# Markup on the ingredients of potions (Ratwood MARKUP_POTION).
+trade_markup_potion = 1.8
+
+# Markup on the materials of books, writs and instruments (Ratwood MARKUP_BOOK_WRIT, MARKUP_INSTRUMENT).
+trade_markup_book = 1.7
+
+# Markup on trophies (Ratwood MARKUP_TROPHY).
+trade_markup_trophy = 2
+
+# Markup on raw materials, reagents, arcyne gear, salvage, livestock and odds (Ratwood MARKUP_RAW_MATERIAL_*, MARKUP_MISCELLANEOUS).
+trade_markup_raw = 1
+
+# Bronze is worth this many copper ingots (Ratwood INGOT_BRONZE_FROM_COPPER).
+trade_alloy_bronze_copper = 1
+
+# And this many tin ingots (Ratwood INGOT_BRONZE_FROM_TIN).
+trade_alloy_bronze_tin = 0.5
+
+# Blessed silver is worth this many silver ingots (Ratwood INGOT_SILVERBLESSED_MULT).
+trade_alloy_blessed_silver = 1.1
+
+# Holy steel is worth this many steel ingots (Ratwood INGOT_STEELHOLY_MULT).
+trade_alloy_holy_steel = 1.1
+
+# Blacksteel is worth this many steel ingots (Ratwood INGOT_BLACKSTEEL_FROM_STEEL).
+trade_alloy_blacksteel_steel = 3
+
+# And this many silver ingots (Ratwood INGOT_BLACKSTEEL_FROM_SILVER).
+trade_alloy_blacksteel_silver = 1
+
+# Gilbranze is worth this many steel ingots (Ratwood INGOT_PURIFIEDAALLOY_MULT).
+trade_alloy_gilbranze = 1
+
+# Ancient slag is worth this many iron ingots (Ratwood INGOT_AALLOY_MULT).
+trade_alloy_aaslag = 0.25
+
+# A plank is worth this many small logs (Ratwood MATERIAL_PLANK_FROM_WOOD).
+trade_plank_wood = 1.5
+
+# A gear is worth this many steel ingots (Ratwood MATERIAL_ROGUEGEAR_FROM_STEEL).
+trade_gear_steel = 1
+
+# Mammons a stick is worth to the pricing engine (Ratwood).
+trade_price_stick = 1
+
+# Mammons raw chitin is worth to the pricing engine (Ratwood).
+trade_price_chitin = 10
+
+# Factor on what a ship of the merchant's homeland asks for its cargo (Ratwood KINSHIP_BUY_MULT).
+trade_kinship_buy_mult = 0.9
+
+# Factor on what a ship of the merchant's homeland pays for goods (Ratwood KINSHIP_SELL_MULT).
+trade_kinship_sell_mult = 1.1
+
+# Fewest fresh dishes a ship wants among its provisions (Ratwood TRADE_VICTUALLING_FRESH_LINES_MIN).
+trade_provisions_fresh_min = 2
+
+# Most fresh dishes a ship wants among its provisions (Ratwood TRADE_VICTUALLING_FRESH_LINES_MAX).
+trade_provisions_fresh_max = 4
+
+# Fewest preserved dishes a ship wants among its provisions (Ratwood TRADE_VICTUALLING_PRESERVED_LINES_MIN).
+trade_provisions_preserved_min = 1
+
+# Most preserved dishes a ship wants among its provisions (Ratwood TRADE_VICTUALLING_PRESERVED_LINES_MAX).
+trade_provisions_preserved_max = 2
+
+# Fewest drinks a ship wants among its provisions (Ratwood TRADE_VICTUALLING_DRINKS_LINES_MIN).
+trade_provisions_drinks_min = 2
+
+# Most drinks a ship wants among its provisions (Ratwood TRADE_VICTUALLING_DRINKS_LINES_MAX).
+trade_provisions_drinks_max = 4
+
+# Fewest kegs of a drink a ship wants (Ratwood TRADE_DRINKS_KEGS_MIN).
+trade_provisions_kegs_min = 1
+
+# Most kegs of a drink a ship wants (Ratwood TRADE_DRINKS_KEGS_MAX).
+trade_provisions_kegs_max = 3
+
+# Fewest bottles of a spirit a ship wants (Ratwood TRADE_DRINKS_BOTTLES_MIN).
+trade_provisions_bottles_min = 4
+
+# Most bottles of a spirit a ship wants (Ratwood TRADE_DRINKS_BOTTLES_MAX).
+trade_provisions_bottles_max = 10
+
+# Factor on a brew's worth that a ship pays for a keg of it (Ratwood TRADE_DRINKS_EXPORT_MARKUP).
+trade_drinks_markup = 1.2
+
+# Factor on a distilled brew's worth per bottle that a ship pays for a bottle (Ratwood TRADE_SPIRITS_EXPORT_MARKUP).
+trade_spirits_markup = 1.2
+
+# Percent off the import price of the cultural stock a ship sells (Ratwood TRADE_CULTURAL_SHIP_DISCOUNT_PERCENT).
+trade_cultural_discount = 50
+
+# Share of the trade a captain hoped for that he must get to sail content rather than dishonored (Ratwood FAVOR_SEND_PARTIAL_THRESHOLD).
+trade_favor_partial_threshold = 0.5
+
+# Share of his trade a content captain gives the merchant in favor (Ratwood FAVOR_SEND_PARTIAL_MULT).
+trade_favor_partial_share = 0.5
+
+# Favor a dishonored captain costs the merchant, times the ship's size (Ratwood FAVOR_SEND_FAILURE_PENALTY).
+trade_favor_dishonor = 250
+
+# Share of a purchase at a GOLDFACE or SILVERFACE the merchant earns in favor (Ratwood FAVOR_PASSIVE_TRADE_FRACTION).
+trade_favor_purchase_share = 0.125
+
+# Favor the company asks for an extra pier (Ratwood ADDITIONAL_PIER_FAVOR).
+trade_favor_pier = 1250
+
+# Favor the company asks for a harbor crew that hails and sends off ships (Ratwood AUTO_HAILER_FAVOR).
+trade_favor_hailer = 500
+
+# Favor the company asks for gnomes that collect the SILVERFACEs' margin for the merchant fund (Ratwood GNOME_AUTOMATION_FAVOR).
+trade_favor_gnomes = 2500
+
+# Favor the company asks to open the Rosawood Arsenal catalog (Ratwood ROSAWOOD_ARSENAL_FAVOR).
+trade_favor_catalog_rosawood = 750
+
+# Favor the company asks to open the drow armory catalog (Ratwood UNDERDARK_CARAVAN_FAVOR).
+trade_favor_catalog_underdark = 500
+
+# Deciseconds between the harbor crew's rounds of the pier (Ratwood AUTO_HAILER_TICK_INTERVAL).
+trade_auto_hailer_interval = 3000
+
+# Deciseconds at the pier after which the harbor crew sends a ship off (Ratwood AUTO_HAILER_DOCK_TIMEOUT).
+trade_auto_hailer_timeout = 18000
+
+# Most piers of the harbor, with the rented one (Ratwood TRADE_SHIP_DOCK_SPOTS_MAX).
+trade_dock_spots_max = 4
+
+# Share of a crown import's price every order of it today adds to the next (Ratwood CROWN_IMPORT_ELASTICITY).
+trade_crown_import_elasticity = 0.25
+
+# Least mammons a crown import costs (Ratwood get_import_price()).
+trade_crown_import_min = 5
+
+# A crown import of at least this many mammons is cried on the SCOM (Ratwood).
+trade_crown_import_announce = 100
+
+# Deciseconds before a crown import arrives at the warehouse (Ratwood).
+trade_crown_import_delay = 100
+
+# Units of an essential good below which the Crown's standing imports top it up (Ratwood AUTO_IMPORT_FLOOR).
+trade_auto_import_floor = 10
+
+# Units the standing imports buy of a good at once (Ratwood AUTO_IMPORT_BATCH).
+trade_auto_import_batch = 5
+
+# The standing imports skip a good whose unit price has climbed past this factor of its trade price (Ratwood AUTO_IMPORT_MAX_PRICE_MULT).
+trade_auto_import_price_cap = 2
+
+# The standing imports buy nothing that would take the Crown's Purse below this at round start; the Steward sets it (Ratwood AUTO_IMPORT_PURSE_FLOOR_DEFAULT).
+trade_auto_import_purse_floor = 1000
+
+# Days of standing imports the nerve master keeps in its ledger (Ratwood AUTO_IMPORT_HISTORY_DAYS).
+trade_auto_import_history = 7
+
+# Petitions the trade halls hear in a day (Ratwood PETITIONS_PER_DAY).
+trade_petitions_per_day = 3
+
+# Share of the payout a petitioned order keeps (Ratwood PETITION_TAX_MULT).
+trade_petition_payout = 0.8
+
+# Dawns a region freed from a blockade hears no petition (Ratwood PETITION_BLOCKADE_RECOVERY_DAYS).
+trade_petition_recovery_days = 2
+
+# Burgher Pledge a petition for provisions costs (Ratwood PETITION_COST_PROVISIONS).
+trade_petition_cost_provisions = 200
+
+# Burgher Pledge a petition for materials costs (Ratwood PETITION_COST_MATERIALS).
+trade_petition_cost_materials = 250
+
+# Burgher Pledge a petition for arms and harness costs (Ratwood PETITION_COST_ARMS).
+trade_petition_cost_arms = 300
+
+# Burgher Pledge a petition for luxuries costs (Ratwood PETITION_COST_LUXURIES).
+trade_petition_cost_luxuries = 350
+
+# Burgher Pledge a petition for alchemy and care costs (Ratwood PETITION_COST_ALCHEMY).
+trade_petition_cost_alchemy = 350
+
+# Burgher Pledge a petition for masterwork costs (Ratwood PETITION_COST_MASTERWORK).
+trade_petition_cost_masterwork = 400
+
 # HEADEATER bounty on the head of a goblin NPC (Ratwood npc/goblin.dm).
 trade_head_bounty_goblin = 30
 

@@ -1,7 +1,16 @@
 // Ratwood dishes written by hand in attackby() (modular/Neu_Food/code/raw/raw_dough.dm, raw_pies.dm, raw_meat.dm,
-// raw_deep_fried.dm, others/dairy.dm, others/fat.dm, NeuFood.dm): kneading dough, pies, handpies, nitzels for the fryer, butter
-// and fresh cheese. One-step changes of a food are combos below; dishes built step by step are slapcraft recipes
-// (survival/recipes.dm) with Ratwood's step sprites.
+// raw_deep_fried.dm, others/dairy.dm, others/fat.dm, NeuFood.dm): kneading dough, pies, handpies, nitzels for the fryer, butter,
+// fresh cheese and cheese wheels, washed rice. One-step changes of a food are combos below; dishes built step by step are
+// slapcraft recipes (survival/recipes.dm) with Ratwood's step sprites.
+
+// Numbers of config/redtard/mechanics/values/survival.txt.
+#define CHEESE_PACK_TIME rogue_value("survival_cheese_pack_time")
+#define CHEESE_AGEING rogue_value("survival_cheese_ageing")
+#define RICE_WATER rogue_value("survival_rice_water")
+#define RICE_WASH_TIME rogue_value("survival_rice_wash_time")
+#define RICE_KNEAD_TIME rogue_value("survival_rice_knead_time")
+/// Share of the cook's intelligence washing and kneading rice teaches (Ratwood adjust_experience(STAINT * 0.8)).
+#define RICE_EXPERIENCE 0.8
 
 /// Ratwood attackby() of one food: on a table, a tool or an ingredient in the hand turns the food into another - dough and
 /// butter into butterdough, a rolling pin into flatdough, a knife into crackers. The most specific combo of a food wins.
@@ -276,6 +285,124 @@ GLOBAL_LIST_INIT(rogue_food_combos, init_rogue_food_combos())
 	new /obj/item/reagent_containers/food/snacks/rogue/cheese(drop_location())
 	return ITEM_INTERACT_SUCCESS
 
+// Cheese wheels (dairy.dm): fresh cheese packed into a cloth on a table begins an unfinished wheel, three more servings close it,
+// and after a while it has matured into a wheel of cheese, the cloth given back.
+
+/obj/item/natural/cloth/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	var/obj/item/reagent_containers/food/snacks/rogue/cheese/cheese = tool
+	if(!istype(cheese) || cheese.rotten)
+		return ..()
+	if(!isturf(loc) || !(locate(/obj/structure/table) in loc))
+		to_chat(user, span_warning("You need to put [src] on a table to work on it."))
+		return ITEM_INTERACT_BLOCKING
+	user.visible_message(span_info("[user] starts packing the cloth with fresh cheese..."))
+	playsound(src, 'modular_redtard/survival/sound/food_drop.ogg', 30, TRUE, -1)
+	if(!do_after(user, CHEESE_PACK_TIME, target = src) || QDELETED(cheese) || !isturf(loc))
+		return ITEM_INTERACT_BLOCKING
+	user.rogue_cooking_experience()
+	new /obj/item/reagent_containers/food/snacks/rogue/foodbase/cheesewheel(loc)
+	qdel(cheese)
+	qdel(src)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/reagent_containers/food/snacks/rogue/foodbase/cheesewheel
+	/// Servings of fresh cheese packed in (Ratwood process_step); the fourth closes the wheel.
+	var/rogue_servings = 1
+	/// Closed and maturing: it takes no more cheese.
+	var/rogue_maturing = FALSE
+
+/obj/item/reagent_containers/food/snacks/rogue/foodbase/cheesewheel/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	var/obj/item/reagent_containers/food/snacks/rogue/cheese/cheese = tool
+	if(!istype(cheese) || cheese.rotten)
+		return ..()
+	if(rogue_maturing)
+		return ITEM_INTERACT_BLOCKING
+	if(!isturf(loc) || !(locate(/obj/structure/table) in loc))
+		to_chat(user, span_warning("You need to put [src] on a table to work on it."))
+		return ITEM_INTERACT_BLOCKING
+	playsound(src, 'modular_redtard/survival/sound/food_drop.ogg', 30, TRUE, -1)
+	if(!do_after(user, ROGUE_COOK_SHORT / rogue_cook_divisor(user), target = src) || QDELETED(cheese) || rogue_maturing)
+		return ITEM_INTERACT_BLOCKING
+	user.rogue_cooking_experience()
+	qdel(cheese)
+	rogue_servings++
+	switch(rogue_servings)
+		if(2)
+			icon_state = "cheesewheel_2"
+			desc = "You'll need two more servings of fresh cheese to finish it."
+		if(3)
+			icon_state = "cheesewheel_3"
+			desc = "You'll need only one more serving of fresh cheese to finish it."
+		else
+			name = "maturing cheese wheel"
+			icon_state = "cheesewheel_end"
+			desc = "Slowly solidifying, best left alone a bit longer."
+			rogue_maturing = TRUE
+			addtimer(CALLBACK(src, PROC_REF(rogue_cheese_matured)), CHEESE_AGEING)
+	update_appearance()
+	return ITEM_INTERACT_SUCCESS
+
+/// Ratwood maturing_done(): a wheel of cheese, and the cloth back.
+/obj/item/reagent_containers/food/snacks/rogue/foodbase/cheesewheel/proc/rogue_cheese_matured()
+	var/atom/spot = drop_location()
+	playsound(spot, /datum/sound_effect/rustle, 100, TRUE, -1)
+	new /obj/item/reagent_containers/food/snacks/rogue/cheddar(spot)
+	new /obj/item/natural/cloth(spot)
+	qdel(src)
+
+/obj/item/reagent_containers/food/snacks/rogue/cheese/examine(mob/user)
+	. = ..()
+	. += span_smallnotice("Packed into a cloth on a table, four servings of it mature into a wheel of cheese.")
+
+// Washed rice (NeuFood.dm rice wet()): water from a vessel washes rice, in hand or on a table, and a hand kneads the wet rice
+// into washed rice, ready to be cooked.
+
+/obj/item/reagent_containers/food/snacks/grown/rice
+	/// Washed with water; a hand kneads it into washed rice (Ratwood water_added).
+	var/rogue_wet = FALSE
+
+/obj/item/reagent_containers/food/snacks/grown/rice/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(rogue_wet || !istype(tool, /obj/item/reagent_containers) || !tool.is_open_container() || !tool.reagents)
+		return ..()
+	if(isturf(loc) && !(locate(/obj/structure/table) in loc))
+		to_chat(user, span_notice("Need a table..."))
+		return ITEM_INTERACT_BLOCKING
+	if(!tool.reagents.has_reagent(/datum/reagent/water, RICE_WATER))
+		to_chat(user, span_notice("Needs more water to work it."))
+		return ITEM_INTERACT_BLOCKING
+	to_chat(user, span_notice("Adding water, now it's time to hand wash it..."))
+	playsound(src, 'modular_redtard/survival/sound/splishy.ogg', 100, TRUE, -1)
+	if(!do_after(user, RICE_WASH_TIME, target = src) || rogue_wet || !tool.reagents.has_reagent(/datum/reagent/water, RICE_WATER))
+		return ITEM_INTERACT_BLOCKING
+	tool.reagents.remove_reagent(/datum/reagent/water, RICE_WATER)
+	user.rogue_cooking_experience(RICE_EXPERIENCE)
+	rogue_wet = TRUE
+	name = "wet rice"
+	add_atom_colour("#d9d0cb", FIXED_COLOUR_PRIORITY)
+	return ITEM_INTERACT_SUCCESS
+
+/// Ratwood rice attack_hand(): wet rice is kneaded into washed rice instead of picked up.
+/obj/item/reagent_containers/food/snacks/grown/rice/attack_hand(mob/user, list/modifiers)
+	if(!rogue_wet || !isliving(user))
+		return ..()
+	INVOKE_ASYNC(src, PROC_REF(rogue_knead_rice), user)
+	return TRUE
+
+/obj/item/reagent_containers/food/snacks/grown/rice/proc/rogue_knead_rice(mob/living/user)
+	playsound(src, 'modular_redtard/survival/sound/kneading_alt.ogg', 90, TRUE, -1)
+	if(!do_after(user, RICE_KNEAD_TIME, target = src) || QDELETED(src))
+		return
+	user.rogue_cooking_experience(RICE_EXPERIENCE)
+	new /obj/item/reagent_containers/food/snacks/rogue/ricewet(drop_location())
+	qdel(src)
+
+/obj/item/reagent_containers/food/snacks/grown/rice/examine(mob/user)
+	. = ..()
+	if(rogue_wet)
+		. += span_smallnotice("Knead it by hand into washed rice.")
+	else
+		. += span_smallnotice("Wash it with [RICE_WATER] units of water from a vessel to cook it.")
+
 // Step-by-step dishes as slapcraft recipes (raw_pies.dm, raw_deep_fried.dm, piedough prepare_handpie()).
 
 /// Ratwood big pies: a pie bottom (piedough baked in the oven) takes three servings of one filling and a piedough roof, then
@@ -385,6 +512,80 @@ GLOBAL_LIST_INIT(rogue_food_combos, init_rogue_food_combos())
 		/obj/item/reagent_containers/food/snacks/rogue/meat/mince/spider,
 	))
 
+/// The other fillings of Ratwood's piedough attackby(): truffles, crab, berries (the poisoned ones too, in the same pie), an
+/// apple, sliced potato or a cabbage.
+/datum/rogue_food_recipe/handpie_mushroom
+	name = "Mushroom Handpie"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/piedough
+	ingredients = list(/obj/item/reagent_containers/food/snacks/rogue/truffles)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/mushroom
+
+/datum/rogue_food_recipe/handpie_crab
+	name = "Crab Handpie"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/piedough
+	ingredients = list(/obj/item/reagent_containers/food/snacks/rogue/meat/crab)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/crab
+
+/datum/rogue_food_recipe/handpie_berry
+	name = "Berry Handpie"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/piedough
+	ingredients = list(/obj/item/reagent_containers/food/snacks/grown/berries/rogue)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/berry
+
+/datum/rogue_food_recipe/handpie_apple
+	name = "Apple Handpie"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/piedough
+	ingredients = list(/obj/item/reagent_containers/food/snacks/grown/apple)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/apple
+
+/datum/rogue_food_recipe/handpie_potato
+	name = "Potato Handpie"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/piedough
+	ingredients = list(/obj/item/reagent_containers/food/snacks/rogue/veg/potato_sliced)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/potato
+
+/datum/rogue_food_recipe/handpie_cabbage
+	name = "Cabbage Handpie"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/piedough
+	ingredients = list(/obj/item/reagent_containers/food/snacks/grown/cabbage/rogue)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/foodbase/handpieraw/cabbage
+
+/// Ratwood spider pie: three servings of minced spidermeat and a roof, an underdark delicacy only a dark elf or an Underdark
+/// Chef knows how to make.
+/datum/rogue_food_recipe/pie/spider
+	name = "Spider Pie"
+	ingredients = list(/obj/item/reagent_containers/food/snacks/rogue/meat/mince/spider, /obj/item/reagent_containers/food/snacks/rogue/meat/mince/spider, /obj/item/reagent_containers/food/snacks/rogue/meat/mince/spider, /obj/item/reagent_containers/food/snacks/rogue/piedough)
+	step_overlays = list("fill_spider1", "fill_spider2", "fill_spider3", "spiderpie_raw")
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/pie/cooked/meat/spider
+	started_name = "unfinished spider pie"
+	ready_name = "uncooked spider pie"
+	ready_smell = "spider pie"
+	refusal = "You lack knowledge of underdark delicacies!"
+
+/datum/rogue_food_recipe/pie/spider/can_prepare(mob/living/user)
+	if(HAS_TRAIT(user, TRAIT_UNDERDARK_CHEF))
+		return TRUE
+	var/mob/living/carbon/human/cook = user
+	return istype(cook) && istype(cook.dna?.species, /datum/species/rogue_drow)
+
+/// Ratwood pumpkin pie: pumpkin, sliced or mashed, then fresh cheese, an egg and sugar; open, without a roof.
+/datum/rogue_food_recipe/pie/pumpkin
+	name = "Pumpkin Pie"
+	step_overlays = list("fill_pumpkin1", "fill_pumpkin2", "fill_pumpkin3", "pumpkinpie")
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/pie/cooked/pumpkin
+	started_name = "unfinished pumpkin pie"
+	ready_name = "uncooked pumpkin pie"
+	ready_smell = "pumpkin pie"
+
+/datum/rogue_food_recipe/pie/pumpkin/New()
+	. = ..()
+	ingredients = list(
+		list(/obj/item/reagent_containers/food/snacks/rogue/fruit/pumpkin_sliced, /obj/item/reagent_containers/food/snacks/rogue/preserved/pumpkin_mashed),
+		/obj/item/reagent_containers/food/snacks/rogue/cheese,
+		/obj/item/reagent_containers/food/snacks/egg,
+		/obj/item/reagent_containers/food/snacks/sugar,
+	)
+
 /// Ratwood nitzels (raw_deep_fried.dm): tenderized meat takes an egg, then toastcrumbs, and is deep fried in tallow.
 /datum/rogue_food_recipe/nitzel
 	name = "Nitzel"
@@ -429,3 +630,10 @@ GLOBAL_LIST_INIT(rogue_food_combos, init_rogue_food_combos())
 	result_type = /obj/item/reagent_containers/food/snacks/squiresdelight
 	started_name = null
 	ready_name = "squire's delight with toastcrumbs"
+
+#undef CHEESE_PACK_TIME
+#undef CHEESE_AGEING
+#undef RICE_WATER
+#undef RICE_WASH_TIME
+#undef RICE_KNEAD_TIME
+#undef RICE_EXPERIENCE
