@@ -168,6 +168,7 @@ export const CrewConsole = () => {
   const {
     sensors = [],
     has_map = false,
+    is_ai = false,
     map_image,
     grid_w,
     grid_h,
@@ -195,6 +196,7 @@ export const CrewConsole = () => {
               hoveredRef={hoveredRef}
               setHoveredRef={setHoveredRef}
               onTrack={(sensor) => {
+                if (is_ai) return;
                 setTrackedTarget(sensor);
                 if (hasMapBool && !showMap) setShowMap(true);
               }}
@@ -231,7 +233,9 @@ export const CrewConsole = () => {
                           onClick={(e) => {
                             e.stopPropagation();
                             act('select_person', { ref: sensor.ref });
-                            setTrackedTarget(sensor);
+                            if (!is_ai) {
+                              setTrackedTarget(sensor);
+                            }
                           }}
                           onMouseEnter={() => setHoveredRef(sensor.ref)}
                           onMouseLeave={() => setHoveredRef(null)}

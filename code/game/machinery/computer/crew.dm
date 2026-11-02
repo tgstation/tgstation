@@ -298,7 +298,23 @@ GLOBAL_DATUM_INIT(crewmonitor, /datum/crewmonitor, new)
 	. = list(
 		"sensors" = update_data(z),
 		"link_allowed" = TRUE,
+		"is_ai" = isAI(user),
 	)
+
+/datum/crewmonitor/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
+		return
+	switch(action)
+		if("select_person")
+			if(!isAI(usr))
+				return
+			var/mob/living/silicon/ai/AI = usr
+			var/mob/living/target = locate(params["ref"]) in GLOB.mob_living_list
+			if(isnull(target))
+				return TRUE
+			AI.ai_tracking_tool.track_mob(AI, target)
+			return TRUE
 
 /datum/crewmonitor/proc/update_data(z)
 	if(data_by_z["[z]"] && last_update["[z]"] && world.time <= last_update["[z]"] + SENSORS_UPDATE_PERIOD)
