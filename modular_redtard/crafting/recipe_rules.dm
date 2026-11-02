@@ -126,12 +126,12 @@
 	))
 	return is_type_in_typecache(target, grounds)
 
-/// Ratwood grave marker: on a covered grave (the porter's closed dirthole) that has none yet.
+/// Ratwood grave marker: on a covered grave (a closed grave of the map or one dug and filled in) that has none yet.
 /datum/crafting_recipe/roguetown/gravemarker/rogue_turf_check(mob/living/user, turf/target)
 	var/found = FALSE
 	for(var/obj/structure/closet/crate/wooden/rockhill/dirthole/hole in target)
 		found = TRUE
-		if(!istype(hole, /obj/structure/closet/crate/wooden/rockhill/dirthole/closed))
+		if(!hole.rogue_grave_covered())
 			to_chat(user, span_warning("The grave isn't covered."))
 			return FALSE
 	if(!found)

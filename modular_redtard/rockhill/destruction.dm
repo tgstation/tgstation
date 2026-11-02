@@ -1,9 +1,14 @@
-/// Ratwood's breaking of what grows (obj_defense.dm, get_complex_damage() of _onclick/item_attack.dm, rogueflora.dm): which
-/// blows hurt it, how much, the sounds of a hit and of the fall, and what it leaves behind. The porter fills the vars below for
-/// /obj/structure/flora (rockhill/config.json, limit_vars); a structure without rockhill_dulling keeps TG's damage.
+/// Ratwood's breaking of structures (obj_defense.dm, get_complex_damage() and /obj/attacked_by() of _onclick/item_attack.dm,
+/// rogueflora.dm): which blows hurt a structure, how much, the sounds of a hit and of its breaking, and what it leaves behind.
+/// The porter fills the vars below for every ported structure - the flora, the furniture, the doors, fences, rocks and the
+/// rest (rockhill/config.json, port.destruction); a structure without rockhill_dulling keeps TG's damage.
+
+/// Armor penetration of a Ratwood blow on a structure: all of it (PENETRATE_ARMOUR() of 100 leaves no armor).
+#define ROCKHILL_BLOW_PENETRATION 100
+
 /obj/structure
 	/// The blows that hurt it (Ratwood blade_dulling): "cut" - only cutting and chopping ones (trees, bushes, grass), "bash" -
-	/// only blunt and smashing ones (stone), "bashchop" - both (wood, Ratwood's default), "pick" - only a pick (rock).
+	/// only blunt and smashing ones (stone, iron bars), "bashchop" - both (wood, Ratwood's default), "pick" - only a pick (rock).
 	var/rockhill_dulling
 	/// Sounds of a hit (Ratwood attacked_sound) and of breaking (destroy_sound); one of them is picked each time.
 	var/list/rockhill_hit_sounds
@@ -14,24 +19,57 @@
 	var/list/rockhill_static_debris
 	/// Left where it falls, with a crash (Ratwood stump_type and treefall.ogg).
 	var/rockhill_stump
+	/// Whether the TG base still drops its own materials when Ratwood's breaking wrecks it: on the module's furniture and doors
+	/// Ratwood's debris take the place of TG's planks, sheets and rack parts.
+	var/rockhill_tg_wreckage = TRUE
+
+/// How well a Ratwood intent bites into a structure (Ratwood demolition_mod: an axe's chop 2.5); the porter writes it.
+/datum/intent
+	var/demolition_mod = 1
+
+/obj/structure/table/wood/rockhill
+	rockhill_tg_wreckage = FALSE
+
+/obj/structure/chair/wood/rockhill
+	rockhill_tg_wreckage = FALSE
+
+/obj/structure/bed/rockhill
+	rockhill_tg_wreckage = FALSE
+
+/obj/structure/rack/rockhill
+	rockhill_tg_wreckage = FALSE
+
+/obj/structure/mineral_door/rockhill
+	rockhill_tg_wreckage = FALSE
+
+/obj/structure/closet/crate/wooden/rockhill
+	rockhill_tg_wreckage = FALSE
 
 /// Ratwood /obj/attacked_by(): the blow's damage by its class against what the structure gives way to, no damage at all from
-/// the wrong kind of blow (a club bounces off a tree, a sword shears grass in one cut).
+/// the wrong kind of blow (a club bounces off a tree, a sword shears grass in one cut, a blade skids off iron bars).
 /obj/structure/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
 	if(!rockhill_dulling || !isliving(user))
 		return ..()
-	var/datum/intent/intent = user.rogue_hand_intent(user.get_held_index_of_item(attacking_item))
+	return rockhill_blow(attacking_item, user)
+
+/// One blow of Ratwood's /obj/attacked_by(): a blow under the structure's damage_deflection leaves no mark, a telling one costs
+/// stamina and wears the weapon a little. Ratwood structures have no armor: their resistance is the class of the blow, so TG's
+/// melee armor of the base (a crate's 20) does not soften it.
+/obj/structure/proc/rockhill_blow(obj/item/weapon, mob/living/user)
+	var/datum/intent/intent = user.rogue_hand_intent(user.get_held_index_of_item(weapon))
 	if(intent?.no_attack)
 		return 0
-	var/damage = rockhill_blow_damage(attacking_item, user, intent)
-	if(damage <= 0)
+	var/damage = rockhill_blow_damage(weapon, user, intent) * (intent ? intent.demolition_mod : 1)
+	if(damage <= 0 || damage < damage_deflection)
 		return 0
 	var/verb = length(intent?.attack_verb) ? pick(intent.attack_verb) : "hits"
-	user.visible_message(span_danger("[user] [verb] [src] with [attacking_item]!"))
-	log_combat(user, src, "attacked", attacking_item)
+	user.visible_message(span_danger("[user] [verb] [src] with [weapon]!"))
+	log_combat(user, src, "attacked", weapon)
 	if(damage > 1)
 		user.adjust_stamina_loss(rogue_value("object_hit_stamina"))
-	return take_damage(damage, attacking_item.damtype, MELEE, TRUE, get_dir(src, user), attacking_item.armour_penetration)
+		if(weapon.uses_integrity && weapon.get_integrity() > 0 && !(weapon.resistance_flags & INDESTRUCTIBLE))
+			weapon.take_damage(rogue_value("object_weapon_wear"), BRUTE, MELEE, FALSE)
+	return take_damage(damage, weapon.damtype, MELEE, TRUE, get_dir(src, user), ROCKHILL_BLOW_PENETRATION)
 
 /// The damage of one blow (Ratwood get_complex_damage()): the weapon's force by the intent, the wielder's strength and how
 /// well the blow's class bites into this; 0 when it does not bite at all.
@@ -94,31 +132,38 @@
 			return BCLASS_STAB
 	return BCLASS_BLUNT
 
-/// Ratwood's hit sound of its own (grass rustles, a trunk thuds) instead of TG's.
+/// Ratwood's hit sound of its own (grass rustles, a trunk thuds, iron rings) instead of TG's.
 /obj/structure/play_attack_sound(damage_amount, damage_type = BRUTE, damage_flag = 0)
 	if(!length(rockhill_hit_sounds) || damage_type != BRUTE || !damage_amount)
 		return ..()
 	playsound(src, pick(rockhill_hit_sounds), 100, FALSE, -1)
 
-/// Ratwood obj_destruction() and deconstruct(): the breaking sound, the debris, and a stump where a tree stood. Fire and acid
-/// leave nothing, as Ratwood's burn() and acid_melt().
+/// Ratwood obj_destruction() and deconstruct(): the breaking sound (not when it burns or melts away), the debris - also of what
+/// burns or melts, as Ratwood's burn() and acid_melt() deconstruct it too - and a stump where a tree stood. The module's
+/// furniture and doors then drop nothing of TG's own.
 /obj/structure/atom_destruction(damage_flag)
-	if(!rockhill_dulling || damage_flag == FIRE || damage_flag == ACID)
+	if(!rockhill_dulling)
 		return ..()
 	var/turf/here = get_turf(src)
 	if(here)
-		if(length(rockhill_break_sounds))
+		if(length(rockhill_break_sounds) && damage_flag != FIRE && damage_flag != ACID)
 			playsound(here, pick(rockhill_break_sounds), 100, TRUE)
-		for(var/thing in rockhill_debris)
-			for(var/count in 1 to rockhill_debris[thing] + rand(-1, 1))
-				new thing(here)
-		for(var/thing in rockhill_static_debris)
-			for(var/count in 1 to rockhill_static_debris[thing])
-				new thing(here)
+		rockhill_drop_debris(here)
 		if(rockhill_stump)
 			new rockhill_stump(here)
 			playsound(here, 'modular_redtard/rockhill/sound/misc/treefall.ogg', 100, FALSE)
+	if(!rockhill_tg_wreckage)
+		obj_flags |= NO_DEBRIS_AFTER_DECONSTRUCTION
 	return ..()
+
+/// Ratwood deconstruct(): each debris type its count give or take one, each static debris type exactly its count.
+/obj/structure/proc/rockhill_drop_debris(turf/here)
+	for(var/thing in rockhill_debris)
+		for(var/count in 1 to rockhill_debris[thing] + rand(-1, 1))
+			new thing(here)
+	for(var/thing in rockhill_static_debris)
+		for(var/count in 1 to rockhill_static_debris[thing])
+			new thing(here)
 
 /// Ratwood's stump: an axe's chopping blow splits it into firewood instead of hurting it, a shovel digs it out.
 /obj/structure/flora/roguetree/stump/attacked_by(obj/item/attacking_item, mob/living/user, list/modifiers, list/attack_modifiers)
@@ -174,3 +219,5 @@
 	if(length(rockhill_break_sounds))
 		playsound(here, pick(rockhill_break_sounds), 100, TRUE)
 	qdel(src)
+
+#undef ROCKHILL_BLOW_PENETRATION

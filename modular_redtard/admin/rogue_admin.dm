@@ -63,6 +63,7 @@
 		if(istype(human) && human.rockhill_advclass)
 			human.rockhill_advclass.taken = max(0, human.rockhill_advclass.taken - 1)
 		GLOB.manifest.remove(target.real_name)
+		target.mind.rogue_leave_acquaintances()
 	if(admin)
 		log_admin("[key_name(admin)] has sent [key_name(target)] back to the Lobby.")
 		message_admins("[key_name_admin(admin)] has sent [key_name_admin(target)] back to the Lobby.")

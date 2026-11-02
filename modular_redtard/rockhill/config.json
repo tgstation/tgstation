@@ -56,6 +56,7 @@
 			"rebase": "/obj/structure/rockhill/stairs",
 			"port": {
 				"file": "stairs.dm",
+				"destruction": true,
 				"vars": [
 					"name",
 					"desc",
@@ -69,6 +70,7 @@
 			"rebase": "/obj/structure/rockhill/toilet",
 			"port": {
 				"file": "furniture.dm",
+				"destruction": true,
 				"vars": [
 					"name",
 					"desc",
@@ -107,6 +109,7 @@
 			"rebase": "/obj/structure/rockhill/curtain",
 			"port": {
 				"file": "curtains.dm",
+				"destruction": true,
 				"vars": [
 					"name",
 					"desc",
@@ -125,6 +128,7 @@
 			"rebase": "/obj/structure/mineral_door/rockhill",
 			"port": {
 				"file": "doors.dm",
+				"destruction": true,
 				"vars": [
 					"name",
 					"desc",
@@ -146,7 +150,6 @@
 					"resident_key_amount",
 					"resident_key_type",
 					"resident_role",
-					"max_integrity",
 					"kickthresh",
 					"repairable",
 					"repair_cost_first",
@@ -169,6 +172,7 @@
 			"rebase": "/obj/structure/table/wood/rockhill",
 			"port": {
 				"file": "furniture.dm",
+				"destruction": true,
 				"vars": [
 					"name",
 					"desc",
@@ -191,6 +195,7 @@
 			"rebase": "/obj/structure/chair/wood/rockhill",
 			"port": {
 				"file": "furniture.dm",
+				"destruction": true,
 				"vars": [
 					"name",
 					"desc",
@@ -218,6 +223,7 @@
 			"rebase": "/obj/structure/bed/rockhill",
 			"port": {
 				"file": "furniture.dm",
+				"destruction": true,
 				"vars": [
 					"name",
 					"desc",
@@ -241,6 +247,7 @@
 			"rebase": "/obj/structure/rack/rockhill",
 			"port": {
 				"file": "furniture.dm",
+				"destruction": true,
 				"vars": [
 					"name",
 					"desc",
@@ -267,6 +274,7 @@
 			"rebase": "/obj/structure/closet/crate/wooden/rockhill",
 			"port": {
 				"file": "furniture.dm",
+				"destruction": true,
 				"vars": [
 					"name",
 					"desc",
@@ -351,6 +359,7 @@
 			"rebase": "/obj/structure/rockhill/flaps",
 			"port": {
 				"file": "flaps.dm",
+				"destruction": true,
 				"vars": [
 					"name",
 					"desc",
@@ -369,6 +378,7 @@
 			"rebase": "/obj/structure/rockhill/gate",
 			"port": {
 				"file": "gates.dm",
+				"destruction": true,
 				"vars": [
 					"name",
 					"desc",
@@ -376,8 +386,7 @@
 					"icon_state",
 					"base_state",
 					"density",
-					"opacity",
-					"max_integrity"
+					"opacity"
 				]
 			}
 		},
@@ -386,6 +395,7 @@
 			"rebase": "/obj/structure/rockhill/winch",
 			"port": {
 				"file": "gates.dm",
+				"destruction": true,
 				"vars": [
 					"name",
 					"desc",
@@ -400,6 +410,7 @@
 			"rebase": "/obj/structure/ladder/rockhill",
 			"port": {
 				"file": "ladders.dm",
+				"destruction": true,
 				"vars": [
 					"name",
 					"desc",
@@ -413,6 +424,7 @@
 			"rebase": "/obj/structure/rockhill/traveltile",
 			"port": {
 				"file": "traveltiles.dm",
+				"destruction": true,
 				"vars": [
 					"name",
 					"desc",
@@ -467,6 +479,7 @@
 			"rebase": "/obj/structure/rockhill/dungeon_entry",
 			"port": {
 				"file": "dungeon_links.dm",
+				"destruction": true,
 				"vars": [
 					"name",
 					"desc",
@@ -484,6 +497,7 @@
 			"rebase": "/obj/structure/rockhill/dungeon_exit",
 			"port": {
 				"file": "dungeon_links.dm",
+				"destruction": true,
 				"vars": [
 					"name",
 					"desc",
@@ -521,10 +535,12 @@
 					"max_ambience_cooldown",
 					"rockhill_area_text",
 					"rockhill_music_enabled",
-					"rockhill_loops_enabled"
+					"rockhill_loops_enabled",
+					"town_area"
 				],
 				"true_only": [
-					"outdoors"
+					"outdoors",
+					"town_area"
 				],
 				"sunlit": true,
 				"rename": {
@@ -629,23 +645,12 @@
 					"color",
 					"obj_flags",
 					"time_between_triggers",
-					"max_integrity",
-					"rockhill_dulling",
-					"rockhill_hit_sounds",
-					"rockhill_break_sounds",
-					"rockhill_debris",
-					"rockhill_static_debris",
 					"rockhill_stump",
 					"herbtype"
 				],
+				"destruction": true,
 				"limit_vars": {
 					"/obj/structure/flora": [
-						"max_integrity",
-						"rockhill_dulling",
-						"rockhill_hit_sounds",
-						"rockhill_break_sounds",
-						"rockhill_debris",
-						"rockhill_static_debris",
 						"rockhill_stump"
 					],
 					"/obj/structure/flora/roguegrass/herb": [
@@ -653,35 +658,8 @@
 					]
 				},
 				"rename": {
-					"rockhill_dulling": "blade_dulling",
-					"rockhill_hit_sounds": "attacked_sound",
-					"rockhill_break_sounds": "destroy_sound",
-					"rockhill_debris": "debris",
-					"rockhill_static_debris": "static_debris",
 					"rockhill_stump": "stump_type"
 				},
-				"numeric_vars": [
-					"max_integrity"
-				],
-				"numeric_defaults": {
-					"max_integrity": 300
-				},
-				"mapped_vars": {
-					"rockhill_dulling": {
-						"DULLING_CUT": "\"cut\"",
-						"DULLING_BASH": "\"bash\"",
-						"DULLING_BASHCHOP": "\"bashchop\"",
-						"DULLING_PICK": "\"pick\""
-					}
-				},
-				"sound_lists": [
-					"rockhill_hit_sounds",
-					"rockhill_break_sounds"
-				],
-				"path_counts": [
-					"rockhill_debris",
-					"rockhill_static_debris"
-				],
 				"paths": [
 					"rockhill_stump",
 					"herbtype"
@@ -1435,6 +1413,30 @@
 				]
 			}
 		],
+		"destruction": {
+			"rename": {
+				"rockhill_dulling": "blade_dulling",
+				"rockhill_hit_sounds": "attacked_sound",
+				"rockhill_break_sounds": "destroy_sound",
+				"rockhill_debris": "debris",
+				"rockhill_static_debris": "static_debris"
+			},
+			"dulling": {
+				"DULLING_CUT": "\"cut\"",
+				"DULLING_BASH": "\"bash\"",
+				"DULLING_BASHCHOP": "\"bashchop\"",
+				"DULLING_PICK": "\"pick\""
+			},
+			"resistance_flags": [
+				"FLAMMABLE",
+				"FIRE_PROOF",
+				"INDESTRUCTIBLE",
+				"LAVA_PROOF",
+				"ACID_PROOF",
+				"UNACIDABLE",
+				"FREEZE_PROOF"
+			]
+		},
 		"extra_icons": [
 			"icons/mob/overhead_effects.dmi",
 			"icons/turf/newwater.dmi",
@@ -1450,6 +1452,7 @@
 			"icons/effects/mousemice/swang/*.dmi"
 		],
 		"extra_sounds": [
+			"sound/items/flint.ogg",
 			"sound/combat/Ranged/bow-draw-01.ogg",
 			"sound/combat/Ranged/sling-draw-01.ogg",
 			"sound/combat/Ranged/crossbow_medium_reload-01.ogg",
@@ -1651,7 +1654,9 @@
 			"item_chair",
 			"spawned",
 			"smeltresult",
-			"salvage_result"
+			"salvage_result",
+			"debris",
+			"static_debris"
 		],
 		"linked_types_by_prefix": {
 			"/obj/item/ammo_casing": [
@@ -1864,6 +1869,11 @@
 			]
 		},
 		"extra_types": [
+			"/obj/item/natural/rock/copper",
+			"/obj/item/natural/rock/tin",
+			"/obj/item/natural/rock/gold",
+			"/obj/item/natural/rock/cinnabar",
+			"/obj/item/natural/rock/elementalmote",
 			"/obj/item/natural/chaff/rice",
 			"/obj/item/natural/shellplant/pumpkin",
 			"/obj/item/pumpkinshell",
@@ -1965,7 +1975,8 @@
 				"effective_range_type",
 				"sharpness_penalty",
 				"intent_intdamage_factor",
-				"basetime"
+				"basetime",
+				"demolition_mod"
 			],
 			"numeric_defaults": {
 				"swingdelay_type": 1,
@@ -1974,7 +1985,8 @@
 				"effective_range": 0,
 				"effective_range_type": 0,
 				"sharpness_penalty": 0,
-				"intent_intdamage_factor": 1
+				"intent_intdamage_factor": 1,
+				"demolition_mod": 1
 			},
 			"flags": [
 				"canparry",

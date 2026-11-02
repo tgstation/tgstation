@@ -382,6 +382,29 @@ def declared_paths(roots, exclude):
     return declared
 
 
+def hand_set_vars(names, root='modular_redtard', exclude=(OUT_DIR,)):
+    """The types the module's own code (outside the port) gives one of these vars by hand, as {type: {var, ...}}: a port
+    of the same var on the same type would override the hand-written value (the port is included later)."""
+    found = collections.defaultdict(set)
+    exclude = [os.path.normpath(e) for e in exclude]
+    for dp, dn, fn in os.walk(root):
+        if any(os.path.normpath(dp).startswith(e) for e in exclude):
+            continue
+        for f in fn:
+            if not f.endswith('.dm'):
+                continue
+            current = None
+            for line in open(os.path.join(dp, f), encoding='utf-8', errors='ignore'):
+                if not line.startswith(('\t', ' ')):
+                    m = TYPE_LINE.match(line.rstrip())
+                    current = m.group(1).rstrip('/') if m else None
+                    continue
+                m = VAR_LINE.match(line.strip()) if current and line.startswith('\t') and not line.startswith('\t\t') else None
+                if m and m.group(1) in names:
+                    found[current].add(m.group(1))
+    return found
+
+
 def tg_defines(root):
     names = set()
     for dp, dn, fn in os.walk(os.path.join(root, '__DEFINES')):
@@ -1829,6 +1852,57 @@ def generate(cfg, port, rules, rw, declared, tg_declared, tg_names, usage, extra
                 lines.append(f'\t{name} = {value}')
         return lines
 
+    destruction = port.get('destruction', {})
+    hand_destruction = hand_set_vars({'max_integrity', 'resistance_flags', 'damage_deflection'})
+
+    def destruction_lines(path):
+        """Ratwood's breaking of a structure (obj_defense.dm, get_complex_damage() and /obj/attacked_by() of
+        _onclick/item_attack.dm), written whole on every ported structure, the flora, the furniture, the doors and the rest
+        (rockhill/destruction.dm reads it): its integrity, the blows that bite into it (blade_dulling), the least blow that
+        marks it (damage_deflection), its resistances, the sounds of a hit and of its breaking, and its debris. An obj of no
+        integrity is never hurt in Ratwood (take_damage()), and TG's take_damage() crashes on one, so it is INDESTRUCTIBLE
+        here. A debris list or a deflection Ratwood clears below a parent that has one is written cleared, so the port does
+        not inherit the parent's. Debris without a count are Ratwood's null + rand(-1, 1): 0 here. The integrity,
+        resistances and deflection the module's own code gives a type of its own (a dungeon portal, the vault) stay its."""
+        rename = destruction['rename']
+        parent = rw.parent(path)
+        by_hand = hand_destruction.get(runtime_path(path, rules), set())
+
+        def raw(name, at=path):
+            return rw.resolve(at, rename.get(name, name)) if at else None
+
+        lines = []
+        integrity = define_value_number(raw('max_integrity'))
+        flags = [token for token in re.findall(r'[A-Z_][A-Z0-9_]*', raw('resistance_flags') or '') if token in destruction['resistance_flags'] and token in tg_names]
+        # Ratwood's dungeon exit says obj_flags = INDESTRUCTIBLE, meaning the resistance flag.
+        if 'INDESTRUCTIBLE' in re.findall(r'[A-Z_][A-Z0-9_]*', raw('obj_flags') or ''):
+            integrity = 0
+        if integrity is not None and integrity <= 0:
+            flags = [flag for flag in flags if flag != 'INDESTRUCTIBLE'] + ['INDESTRUCTIBLE']
+        elif integrity is not None and 'max_integrity' not in by_hand:
+            lines.append(f'\tmax_integrity = {integrity}')
+        if 'resistance_flags' not in by_hand:
+            lines.append('\tresistance_flags = ' + (' | '.join(dict.fromkeys(flags)) if flags else 'NONE'))
+        deflection = define_value_number(raw('damage_deflection')) or 0
+        if (deflection or define_value_number(raw('damage_deflection', parent))) and 'damage_deflection' not in by_hand:
+            lines.append(f'\tdamage_deflection = {deflection}')
+        dulling = destruction['dulling'].get((raw('rockhill_dulling') or '').strip())
+        if dulling:
+            lines.append(f'\trockhill_dulling = {dulling}')
+        for name in ('rockhill_hit_sounds', 'rockhill_break_sounds'):
+            files = sound_files(raw(name))
+            fetch_sources(files)
+            refs = [ref for ref in (sound_ref(f"'{f}'") for f in files) if ref]
+            lines.append(f'\t{name} = ' + (f"list({', '.join(refs)})" if refs else 'null'))
+        for name in ('rockhill_debris', 'rockhill_static_debris'):
+            entries = [(runtime_path(p.rstrip('/'), rules), count) for p, count in list_paths(raw(name))]
+            entries = [f'{p} = {count or 0}' for p, count in entries if p in valid]
+            if entries:
+                lines.append(f'\t{name} = list(' + ', '.join(entries) + ')')
+            elif list_paths(raw(name, parent)):
+                lines.append(f'\t{name} = null')
+        return lines
+
     if os.path.isdir(OUT_DIR):
         shutil.rmtree(OUT_DIR)
     os.makedirs(OUT_DIR)
@@ -2022,6 +2096,8 @@ def generate(cfg, port, rules, rw, declared, tg_declared, tg_names, usage, extra
                     continue
                 block.append(f'\t{name} = {value}')
             block += inherited_lines(cat, path)
+            if cat.get('destruction'):
+                block += destruction_lines(path)
             own_worn = rw.resolve(path, cat.get('rename', {}).get('worn_icon', 'worn_icon'))
             for name, slot_sheets in cat.get('slot_worn_icons', {}).items():
                 if name in cat['vars'] or (own_worn and own_worn.strip() != 'null'):
@@ -2224,6 +2300,8 @@ def generate(cfg, port, rules, rw, declared, tg_declared, tg_names, usage, extra
                 value = literal(value, tg_names)
             if value is not None:
                 block.append(f'\t{name} = {value}')
+        if spec.get('destruction'):
+            block += destruction_lines(path)
         if spec.get('runtime_look'):
             look = runtime_look(rw, path)
             kind, data = look.get('icon', (None, None))
@@ -2375,6 +2453,7 @@ def generate(cfg, port, rules, rw, declared, tg_declared, tg_names, usage, extra
 
 
 SOUND_LITERAL = re.compile(r"'(sound/[^']+?\.(?:ogg|wav|mp3))'")
+QUOTED_SOUND = re.compile(r'^sound/.+\.(?:ogg|wav|mp3)$')
 
 
 SFX_ENTRY = re.compile(r'if\s*\(\s*"([^"]+)"\s*\)\s*\n\s*soundin\s*=\s*pick\(([^)]*)\)')
@@ -2393,6 +2472,8 @@ def sfx_files(key):
 
 
 def sound_files(raw):
+    """The sound files a Ratwood sound value names: file literals, quoted file paths (a door's list("sound/...ogg")) and
+    sound keys of get_sfx() ("plantcross", "woodimpact"), alone or in a list."""
     text = raw or ''
     for _ in range(8):
         names = [name for name in set(re.findall(r'\b[A-Z_][A-Z0-9_]*\b', text)) if name in DEFINE_VALUES]
@@ -2401,9 +2482,10 @@ def sound_files(raw):
         for name in names:
             text = re.sub(rf'\b{name}\b', lambda _match, value=DEFINE_VALUES[name]: value, text)
     files = SOUND_LITERAL.findall(text)
-    key = text.strip()
-    if not files and len(key) > 1 and key[0] == key[-1] == '"':
-        files = sfx_files(key[1:-1])
+    if files:
+        return files
+    for quoted in re.findall(r'"([^"]+)"', text):
+        files += [quoted] if QUOTED_SOUND.match(quoted) else sfx_files(quoted)
     return files
 
 

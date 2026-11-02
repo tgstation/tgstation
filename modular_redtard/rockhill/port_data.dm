@@ -29,11 +29,6 @@
 	/// crafter's skill (Azure Peak's plumed helmets: the helmet stays as it was forged).
 	var/rogue_skip_quality = FALSE
 
-/obj/structure/flora/roguegrass/herb
-	/// Ratwood herbtype (alchemist/herb_flora.dm): what a hand picks from the herb, an /obj/item/alch ingredient (the manabloom
-	/// gives its flower); Ratwood's herb grows it back 5 minutes after it is picked.
-	var/herbtype
-
 /mob/living
 	/// Ratwood butcher_results (simple_animal.dm butcher()): item path = how many, what the carcass yields to a cut. Kept
 	/// apart from TG's butcher_results, which TG's gib() would drop as loot (Ratwood's gibbed beasts leave none).

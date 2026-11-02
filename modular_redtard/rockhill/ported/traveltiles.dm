@@ -10,6 +10,9 @@
 	travel_deny_message = "It is a dead end."
 	travel_access_hint = null
 	watchable = TRUE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.04
 
 /obj/structure/rockhill/traveltile/bandit
@@ -25,6 +28,10 @@
 	travel_deny_message = "It is a dead end."
 	travel_access_hint = null
 	watchable = TRUE
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.04
 
 /obj/structure/rockhill/traveltile/bathhouse_passage
@@ -41,6 +48,10 @@
 	travel_deny_message = "You're not supple enough to use this passage."
 	travel_access_hint = "A tight passage that leads between the bathhouse and the northern coast, with many twists and turns - only a bathhouse staff member can fit through it. It takes a while to travel through, and is a popular route for smuggling goods in and out of town."
 	watchable = FALSE
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.04
 
 /obj/structure/rockhill/traveltile/bathhouse_passage/cave
@@ -57,6 +68,10 @@
 	travel_deny_message = "You're not supple enough to use this passage."
 	travel_access_hint = "A tight passage that leads between the bathhouse and the northern coast, with many twists and turns - only a bathhouse staff member can fit through it. It takes a while to travel through, and is a popular route for smuggling goods in and out of town."
 	watchable = FALSE
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.04
 
 /obj/structure/rockhill/traveltile/dungeoneer
@@ -72,6 +87,10 @@
 	travel_deny_message = "It is a dead end."
 	travel_access_hint = null
 	watchable = TRUE
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.04
 
 /obj/structure/rockhill/traveltile/lich
@@ -88,6 +107,10 @@
 	travel_deny_message = "It is a dead end."
 	travel_access_hint = null
 	watchable = TRUE
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.04
 
 /obj/structure/rockhill/traveltile/magicportal
@@ -102,6 +125,10 @@
 	travel_deny_message = "It is a dead end."
 	travel_access_hint = null
 	watchable = TRUE
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.04
 
 /obj/structure/rockhill/traveltile/magicportal/unstable
@@ -117,6 +144,10 @@
 	travel_deny_message = "It is a dead end."
 	travel_access_hint = null
 	watchable = TRUE
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.04
 
 /obj/structure/rockhill/traveltile/rockhillentrance
@@ -131,6 +162,10 @@
 	travel_deny_message = "It is a dead end."
 	travel_access_hint = null
 	watchable = TRUE
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.04
 
 /obj/structure/rockhill/traveltile/vampire
@@ -146,6 +181,10 @@
 	travel_deny_message = "It is a dead end."
 	travel_access_hint = null
 	watchable = TRUE
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.04
 
 /obj/structure/rockhill/traveltile/wretch
@@ -161,4 +200,8 @@
 	travel_deny_message = "It is a dead end."
 	travel_access_hint = null
 	watchable = TRUE
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.04

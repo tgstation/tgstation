@@ -7,6 +7,10 @@
 	density = TRUE
 	opacity = TRUE
 	max_integrity = 5000
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/sheet (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/sheet (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 
 /obj/structure/rockhill/gate/bars
 	name = "gate"
@@ -17,6 +21,10 @@
 	density = TRUE
 	opacity = FALSE
 	max_integrity = 5000
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/sheet (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/sheet (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 
 /obj/structure/rockhill/gate/bars/preopen
 	name = "gate"
@@ -27,6 +35,10 @@
 	density = TRUE
 	opacity = FALSE
 	max_integrity = 5000
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/sheet (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/sheet (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 
 /obj/structure/rockhill/gate/preopen
 	name = "gate"
@@ -37,6 +49,10 @@
 	density = TRUE
 	opacity = TRUE
 	max_integrity = 5000
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/sheet (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/sheet (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 
 /obj/structure/rockhill/winch
 	name = "winch"
@@ -44,3 +60,7 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/structure.dmi'
 	icon_state = "winch"
 	density = TRUE
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')

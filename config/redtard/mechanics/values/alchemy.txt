@@ -121,8 +121,8 @@ powder_force_time = 50
 
 # --- Block 1, B2: reading a vessel by Alchemy and sniffing it (alchemy/reagent_sight.dm; Ratwood atoms.dm examine()).
 
-# Least learned rank of Alchemy that reads a see-through vessel reagent by reagent (Ratwood 2, Apprentice; TRAIT_CICERONE reads it too).
-reagent_sight_rank = 2
+# Least learned rank of Alchemy that reads a see-through vessel reagent by reagent (Journeyman by the owner's choice; Ratwood 2, Apprentice; TRAIT_CICERONE reads it too).
+reagent_sight_rank = 3
 
 # Least share in percent of a smell in a vessel that a sniff picks out (Ratwood generate_scent_message() 15).
 reagent_sniff_threshold = 15

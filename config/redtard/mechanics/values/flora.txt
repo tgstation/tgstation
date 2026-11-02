@@ -1,4 +1,4 @@
-# What grows breaks as Ratwood's (rockhill/destruction.dm, get_complex_damage()): trees, bushes, grass, stumps.
+# Ratwood's wilds and breaking (rockhill/): how structures break (destruction.dm, get_complex_damage()) - trees, bushes, grass, stumps, furniture, doors, fences, rocks -, the plants (flora.dm, herbs.dm), the flint (sparks.dm) and the ore veins (mining.dm).
 # Mechanics numbers: name = value, described by the # lines right above it; times are in deciseconds. The build compiles this file in, so its numbers are the defaults; a file of the same name in config/redtard_private/mechanics/values/ is read instead when present.
 
 # Share of a cutting blow's force a tree, bush or grass takes (Ratwood DULLING_CUT, BCLASS_CUT 0.45).
@@ -57,3 +57,141 @@ stump_essence_rank_chance = 1
 
 # Lumberjacking experience of splitting a stump, times intelligence (Ratwood STAINT × 0.5).
 stump_lumber_xp = 0.5
+
+# --- Breaking of structures (rockhill/destruction.dm, Ratwood /obj/attacked_by())
+
+# Integrity a weapon loses on each blow that tells on a structure (Ratwood I.take_damage(1)).
+object_weapon_wear = 1
+
+# --- Walking through plants (rockhill/flora.dm, Ratwood rogueflora.dm Crossed())
+
+# Deciseconds a bush holds whoever walks into it on their feet, before strength (Ratwood 18).
+bush_hold_time = 18
+
+# Deciseconds less a bush holds for each point of strength (Ratwood 0.6).
+bush_hold_per_strength = 0.6
+
+# Fewest deciseconds a bush holds anyone (Ratwood 1).
+bush_hold_min = 1
+
+# Chance in percent that a bush's thorn sinks into a person who runs or rides through it; else it only cuts (Ratwood 25).
+bush_impale_chance = 25
+
+# Deciseconds a thorn bush entangles whoever walks into it, before strength (Ratwood 36).
+thorn_bush_hold_time = 36
+
+# Deciseconds less a thorn bush entangles for each point of strength (Ratwood 2).
+thorn_bush_hold_per_strength = 2
+
+# Chance in percent that a thorn bush's thorn sinks into a person, less one for each point of fortune (Ratwood 25).
+thorn_impale_chance = 25
+
+# Damage of a thorn's cut or sinking thorn to a body part (Ratwood 10).
+thorn_damage = 10
+
+# Brute damage of thorns to a beast (Ratwood 5).
+thorn_beast_damage = 5
+
+# Chance in percent less, for each rank of riding, that a rider's mount goes mad with pain in a thorn bush (Ratwood 5).
+thorn_riding_rank_chance = 5
+
+# Ranks of riding a steppe rider counts on top of their own against a maddened mount (Ratwood 3).
+thorn_steppe_rider_ranks = 3
+
+# Deciseconds a rider is paralyzed when their mount goes mad with pain (Ratwood 10).
+thorn_mount_paralyze = 10
+
+# --- Searching plants (rockhill/flora.dm, Ratwood attack_hand() of bushes, fire flowers, swampweed and wild pumpkins)
+
+# Deciseconds one search of a plant takes (Ratwood SEARCHTIME 12).
+flora_search_time = 12
+
+# Chance in percent that one search of a bush, fire flowers or swampweed turns something up (Ratwood 50).
+flora_search_find_chance = 50
+
+# Deciseconds a plant picked clean takes to bear again (Ratwood 8 MINUTES).
+flora_regrow_time = 4800
+
+# Chance in percent that a bush away from towns, fire flowers or swampweed bear their fruit at all (Ratwood 88).
+flora_crop_chance = 88
+
+# Chance in percent that a bush bears a thorn when it bears again (Ratwood 66).
+bush_thorn_chance = 66
+
+# Chance in percent that fire flowers or swampweed bear a second of their fruit (Ratwood 66).
+flora_second_crop_chance = 66
+
+# Chance in percent that a westleach bush bears a second pipeweed leaf (Ratwood 50).
+westleach_pipeweed_chance = 50
+
+# Chance in percent that one search of wild pumpkins turns something up (Ratwood 75).
+wild_pumpkin_find_chance = 75
+
+# Chance in percent that wild pumpkins have a second pumpkin (Ratwood 78).
+wild_pumpkin_second = 78
+
+# Chance in percent that wild pumpkins have a third pumpkin (Ratwood 32).
+wild_pumpkin_third = 32
+
+# Chance in percent that wild pumpkins have more fibres (Ratwood 24).
+wild_pumpkin_fibers = 24
+
+# Chance in percent that wild pumpkins have a fourth pumpkin (Ratwood 7).
+wild_pumpkin_fourth = 7
+
+# Deciseconds between the swings of an axe that keeps chopping a tree (Ratwood 1.5 SECONDS).
+tree_chop_interval = 15
+
+# --- Herbs (rockhill/herbs.dm, Ratwood alchemist/herb_flora.dm)
+
+# Deciseconds a picked herb takes to grow its ingredient back (Ratwood 5 MINUTES).
+herb_regrow_time = 3000
+
+# --- Flint and sparks (rockhill/sparks.dm, Ratwood rogueitems/flintsparker.dm)
+
+# Chance in percent that a flint struck in hand throws sparks onto the tile in front (Ratwood 80).
+flint_spark_chance = 80
+
+# Chance in percent that a flint struck against something sets a spark on it (Ratwood 50).
+flint_strike_chance = 50
+
+# --- Ore veins (rockhill/mining.dm, Ratwood minerals.dm spreadChance)
+
+# Chance in percent that a vein of salt grows into each random rock beside it as the map loads (Ratwood 33).
+vein_spread_salt = 33
+
+# Chance in percent that a vein of iron grows into each random rock beside it as the map loads (Ratwood 23).
+vein_spread_iron = 23
+
+# Chance in percent that a vein of copper grows into each random rock beside it as the map loads (Ratwood 27).
+vein_spread_copper = 27
+
+# Chance in percent that a vein of tin grows into each random rock beside it as the map loads (Ratwood 15).
+vein_spread_tin = 15
+
+# Chance in percent that a vein of coal grows into each random rock beside it as the map loads (Ratwood 33).
+vein_spread_coal = 33
+
+# Chance in percent that a vein of gold grows into each random rock beside it as the map loads (Ratwood 5).
+vein_spread_gold = 5
+
+# Chance in percent that a vein of silver grows into each random rock beside it as the map loads (Ratwood 5).
+vein_spread_silver = 5
+
+# Chance in percent that a vein of cinnabar grows into each random rock beside it as the map loads (Ratwood 23).
+vein_spread_cinnabar = 23
+
+# Chance in percent that a vein of gems grows into each random rock beside it as the map loads (Ratwood 3).
+vein_spread_gem = 3
+
+# Chance in percent that a vein of elemental motes grows into each random rock beside it as the map loads (Ratwood 23).
+vein_spread_elementalmote = 23
+
+# Tiles a miner's Ore Sight sees into the rock, before mining ranks (Ratwood range 1, +1 for each rank of mining).
+ore_sight_range = 1
+
+# Tiles a miner's Ore Sight sees boulders worth breaking (Ratwood 7).
+ore_sight_boulder_range = 7
+
+# Deciseconds the glints of Ore Sight stay (Ratwood 30).
+ore_sight_duration = 30

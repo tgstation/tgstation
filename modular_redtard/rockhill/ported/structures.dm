@@ -57,6 +57,11 @@
 	icon_state = "anvil"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = NONE
+	damage_deflection = 25
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/machinery/anvil/crafted
@@ -66,6 +71,12 @@
 	icon_state = "caveanvil"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 500
+	resistance_flags = NONE
+	damage_deflection = 25
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/machinery/artificer_table
@@ -76,6 +87,12 @@
 	icon_state = "art_table"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	damage_deflection = 25
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/machinery/gear_painter
@@ -86,6 +103,11 @@
 	icon_state = "dyestation"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/machinery/loom
@@ -96,6 +118,10 @@
 	icon_state = "loom"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/machinery/printingpress
@@ -106,6 +132,11 @@
 	icon_state = "Ppress_Clean"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/machinery/tanningrack
@@ -116,6 +147,10 @@
 	icon_state = "dryrack"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/apiary
@@ -125,6 +160,11 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures/apiary.dmi'
 	icon_state = "beebox-empty"
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/apiary/starter
@@ -133,6 +173,11 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures/apiary.dmi'
 	icon_state = "beebox-empty"
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/arcyne_wall
@@ -144,6 +189,11 @@
 	density = TRUE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onstone/wallhit.ogg', 'modular_redtard/rockhill/sound/combat/hits/onstone/wallhit2.ogg', 'modular_redtard/rockhill/sound/combat/hits/onstone/wallhit3.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/ascendant_altar
@@ -151,6 +201,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/structure.dmi'
 	icon_state = "alch"
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/autogrinder
@@ -161,6 +216,12 @@
 	icon_state = "mill_off"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 400
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
+	rockhill_debris = list(/obj/item/roguegear = 2, /obj/item/natural/wood/plank = 2, /obj/item/natural/stone = 2)
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/autosmither
@@ -171,6 +232,12 @@
 	icon_state = "1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
+	rockhill_debris = list(/obj/item/roguegear = 2, /obj/item/natural/wood/plank = 2, /obj/item/ingot/steel = 1)
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/barricade/crude
@@ -181,6 +248,11 @@
 	icon_state = "woodenbarricade-old"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 50
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/barricade/crude/snow
@@ -190,6 +262,11 @@
 	icon_state = "woodenbarricade-snow-old"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 75
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/barricade/mineshaft
@@ -200,6 +277,11 @@
 	icon_state = "woodenbarricade_mineshaft"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 100
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/bars
@@ -211,6 +293,12 @@
 	density = TRUE
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	max_integrity = 700
+	resistance_flags = NONE
+	damage_deflection = 12
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = ABOVE_GAME_PLANE
 	layer = ABOVE_MOB_LAYER
 
@@ -222,6 +310,12 @@
 	density = TRUE
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	max_integrity = 700
+	resistance_flags = NONE
+	damage_deflection = 12
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/bars/grille
@@ -232,6 +326,12 @@
 	density = FALSE
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
+	max_integrity = 700
+	resistance_flags = NONE
+	damage_deflection = 5
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/grille (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/grille (2).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/grille (3).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	rockhill_random_dir = TRUE
 	plane = GAME_PLANE
 	layer = TABLE_LAYER
@@ -245,6 +345,12 @@
 	dir = SOUTH
 	color = "#d9c8c1"
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
+	max_integrity = 70
+	resistance_flags = NONE
+	damage_deflection = 5
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/grille (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/grille (2).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/grille (3).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	rockhill_random_dir = TRUE
 	layer = TABLE_LAYER
 
@@ -256,6 +362,12 @@
 	density = TRUE
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	max_integrity = 700
+	resistance_flags = NONE
+	damage_deflection = 12
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/bars/passage
@@ -266,6 +378,12 @@
 	density = TRUE
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	max_integrity = 1500
+	resistance_flags = NONE
+	damage_deflection = 12
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/bars/passage/preopen
@@ -276,6 +394,12 @@
 	density = FALSE
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	max_integrity = 1500
+	resistance_flags = NONE
+	damage_deflection = 12
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/bars/passage/shutter
@@ -287,6 +411,12 @@
 	opacity = TRUE
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	max_integrity = 1500
+	resistance_flags = NONE
+	damage_deflection = 12
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/bars/passage/shutter/open
@@ -298,6 +428,12 @@
 	opacity = FALSE
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	max_integrity = 1500
+	resistance_flags = NONE
+	damage_deflection = 12
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/bars/passage/steel
@@ -308,6 +444,12 @@
 	density = TRUE
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	max_integrity = 2000
+	resistance_flags = NONE
+	damage_deflection = 12
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/bars/pipe
@@ -318,6 +460,12 @@
 	density = FALSE
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
+	max_integrity = 700
+	resistance_flags = NONE
+	damage_deflection = 5
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/grille (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/grille (2).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/grille (3).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = GAME_PLANE
 	layer = TABLE_LAYER
 
@@ -330,6 +478,12 @@
 	dir = SOUTH
 	color = "#ffcd9f"
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	max_integrity = 200
+	resistance_flags = NONE
+	damage_deflection = 12
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/bars/shop
@@ -340,6 +494,12 @@
 	density = TRUE
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	max_integrity = 700
+	resistance_flags = NONE
+	damage_deflection = 12
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/bars/shop/bronze
@@ -351,6 +511,12 @@
 	dir = SOUTH
 	color = "#ff9c1a"
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	max_integrity = 700
+	resistance_flags = NONE
+	damage_deflection = 12
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/bars/steel
@@ -361,6 +527,12 @@
 	density = TRUE
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	max_integrity = 2000
+	resistance_flags = NONE
+	damage_deflection = 12
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/bars/tough
@@ -371,6 +543,12 @@
 	density = TRUE
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
+	max_integrity = 9000
+	resistance_flags = NONE
+	damage_deflection = 40
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/bearpelt
@@ -381,6 +559,11 @@
 	icon_state = "bear"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -392,6 +575,10 @@
 	icon_state = "bell_common"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/boatbell
@@ -402,6 +589,10 @@
 	icon_state = "bell"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/boatbell/fluff
@@ -411,6 +602,10 @@
 	icon_state = "bell"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/bobcatpelt
@@ -421,6 +616,11 @@
 	icon_state = "bobcat"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -432,6 +632,11 @@
 	icon_state = "smallmortar"
 	density = 1
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/bondage/chains
@@ -443,6 +648,11 @@
 	pixel_x = 0
 	pixel_y = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/bondage/gloryhole
@@ -453,6 +663,11 @@
 	density = TRUE
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/bondage/torture_table
@@ -464,6 +679,12 @@
 	pixel_x = -16
 	pixel_y = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/natural/wood/plank = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/bondage/torture_table/lever
@@ -475,6 +696,12 @@
 	pixel_x = -16
 	pixel_y = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/natural/wood/plank = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/bondage/x_pillory
@@ -484,6 +711,11 @@
 	icon_state = "x_pillory"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/bonepile
@@ -492,6 +724,11 @@
 	icon_state = "hauntpile"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 100
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/vo/mobs/ghost/skullpile_hit.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/bookcase/player_archive
@@ -502,6 +739,11 @@
 	density = TRUE
 	opacity = 1
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/bookcase/random/archive
@@ -512,6 +754,11 @@
 	density = TRUE
 	opacity = 1
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/bookcase/random/misc
@@ -522,6 +769,11 @@
 	density = TRUE
 	opacity = 1
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/bookcase/random_recipes
@@ -532,6 +784,11 @@
 	density = TRUE
 	opacity = 1
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/broadcast_horn/loudmouth
@@ -541,6 +798,10 @@
 	icon_state = "broadcaster"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/broadcast_horn/loudmouth/guest
@@ -550,6 +811,10 @@
 	icon_state = "broadcaster_crass"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/broadcast_horn/paid
@@ -559,6 +824,10 @@
 	icon_state = "broadcaster_crass"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/composter
@@ -569,6 +838,11 @@
 	icon_state = "composter"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/composter/full
@@ -578,6 +852,11 @@
 	icon_state = "composter"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/composter/halffull
@@ -587,6 +866,11 @@
 	icon_state = "composter"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/crabnest
@@ -596,6 +880,11 @@
 	icon_state = "crabnest"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/deadbody/adventurer_leather
@@ -605,6 +894,11 @@
 	icon_state = "base"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/deadbody/adventurer_steel
@@ -614,6 +908,11 @@
 	icon_state = "base"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/deadbody/bogman
@@ -623,6 +922,11 @@
 	icon_state = "base"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/deadbody/generic
@@ -632,6 +936,11 @@
 	icon_state = "base"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/deadbody/greater_skeleton
@@ -641,6 +950,11 @@
 	icon_state = "base"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/deadbody/maa
@@ -650,6 +964,11 @@
 	icon_state = "base"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/deadbody/necromancer
@@ -659,6 +978,11 @@
 	icon_state = "base"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/deadbody/old_knight
@@ -668,6 +992,11 @@
 	icon_state = "base"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/deadbody/peasant
@@ -677,6 +1006,11 @@
 	icon_state = "base"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/deadbody/rogue
@@ -686,6 +1020,11 @@
 	icon_state = "base"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/deadbody/skeleton
@@ -695,6 +1034,11 @@
 	icon_state = "base"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/deadbody/warden
@@ -704,6 +1048,11 @@
 	icon_state = "base"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/deadbody/wizard
@@ -713,6 +1062,11 @@
 	icon_state = "base"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/deadbodyrandom
@@ -722,6 +1076,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/rw_deadbodies.dmi'
 	icon_state = "base"
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/deadbodyrandom/all
@@ -730,6 +1089,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/rw_deadbodies.dmi'
 	icon_state = "base"
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	rockhill_random_pick = list(/obj/structure/deadbody/generic, /obj/structure/deadbody/adventurer_leather, /obj/structure/deadbody/adventurer_steel, /obj/structure/deadbody/maa, /obj/structure/deadbody/warden, /obj/structure/deadbody/wizard, /obj/structure/deadbody/necromancer, /obj/structure/deadbody/skeleton, /obj/structure/deadbody/greater_skeleton, /obj/structure/deadbody/rogue, /obj/structure/deadbody/peasant, /obj/structure/deadbody/bogman, /obj/structure/deadbody/old_knight)
 	layer = BELOW_OBJ_LAYER
 
@@ -739,6 +1103,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/rw_deadbodies.dmi'
 	icon_state = "base"
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	rockhill_random_pick = list(/obj/structure/deadbody/adventurer_steel, /obj/structure/deadbody/maa, /obj/structure/deadbody/warden, /obj/structure/deadbody/wizard, /obj/structure/deadbody/necromancer, /obj/structure/deadbody/greater_skeleton, /obj/structure/deadbody/rogue, /obj/structure/deadbody/old_knight)
 	layer = BELOW_OBJ_LAYER
 
@@ -748,6 +1117,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/rw_deadbodies.dmi'
 	icon_state = "base"
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	rockhill_random_pick = list(/obj/structure/deadbody/generic, /obj/structure/deadbody/generic, /obj/structure/deadbody/adventurer_leather, /obj/structure/deadbody/skeleton, /obj/structure/deadbody/skeleton, /obj/structure/deadbody/rogue, /obj/structure/deadbody/peasant, /obj/structure/deadbody/peasant, /obj/structure/deadbody/bogman)
 	layer = BELOW_OBJ_LAYER
 
@@ -757,6 +1131,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/rw_deadbodies.dmi'
 	icon_state = "base"
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	rockhill_random_pick = list(/obj/structure/deadbody/generic, /obj/structure/deadbody/generic, /obj/structure/deadbody/adventurer_leather, /obj/structure/deadbody/adventurer_steel, /obj/structure/deadbody/maa, /obj/structure/deadbody/warden, /obj/structure/deadbody/skeleton, /obj/structure/deadbody/skeleton, /obj/structure/deadbody/rogue, /obj/structure/deadbody/peasant, /obj/structure/deadbody/peasant, /obj/structure/deadbody/bogman)
 	layer = BELOW_OBJ_LAYER
 
@@ -767,6 +1146,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "dock_bell"
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/drape/desert
@@ -775,6 +1159,11 @@
 	icon = 'modular_redtard/rockhill/icons/modular_deserttown/icons/drapes.dmi'
 	icon_state = "desertdrape"
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = ABOVE_GAME_PLANE
 	layer = BELOW_OBJ_LAYER
 
@@ -785,6 +1174,11 @@
 	icon_state = "zybantinedrape1"
 	color = "#a3a3a3"
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	rockhill_variant = "zybantinedrape#"
 	rockhill_variant_min = 1
 	rockhill_variant_max = 2
@@ -799,6 +1193,11 @@
 	icon_state = "activator"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 45
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/eoran_pomegranate_tree
@@ -810,6 +1209,11 @@
 	density = TRUE
 	pixel_x = -8
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = FIRE_PROOF
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/far_travel
@@ -820,6 +1224,10 @@
 	icon_state = "fartravel"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/feedinghole
@@ -831,6 +1239,11 @@
 	density = FALSE
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fermentation_keg
@@ -841,6 +1254,11 @@
 	icon_state = "barrel_tapless"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fermentation_keg/beer
@@ -850,6 +1268,11 @@
 	icon_state = "barrel_tapless"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fermentation_keg/crafted
@@ -859,6 +1282,11 @@
 	icon_state = "barrel_tapless"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fermentation_keg/distiller
@@ -868,6 +1296,11 @@
 	icon_state = "distillery"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fermentation_keg/fancypot
@@ -877,6 +1310,11 @@
 	icon_state = "fancypot1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	rockhill_variant = "fancypot#"
 	rockhill_variant_min = 1
 	rockhill_variant_max = 2
@@ -889,6 +1327,11 @@
 	icon_state = "barrel_tapless"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fermentation_keg/random
@@ -898,6 +1341,11 @@
 	icon_state = "barrel_tapless"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fermentation_keg/random/beer
@@ -907,6 +1355,11 @@
 	icon_state = "barrel_tapless"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fermentation_keg/random/water
@@ -916,6 +1369,11 @@
 	icon_state = "barrel_tapless"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fermentation_keg/redwine
@@ -925,6 +1383,11 @@
 	icon_state = "barrel_tapless"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fermentation_keg/sandpot
@@ -934,6 +1397,11 @@
 	icon_state = "sandpot1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	rockhill_variant = "sandpot#"
 	rockhill_variant_min = 1
 	rockhill_variant_max = 2
@@ -946,6 +1414,11 @@
 	icon_state = "barrel_tapless"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fermentation_keg/water
@@ -955,6 +1428,11 @@
 	icon_state = "barrel_tapless"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fermentation_keg/whitewine
@@ -964,6 +1442,11 @@
 	icon_state = "barrel_tapless"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fireaxecabinet/south
@@ -976,6 +1459,11 @@
 	pixel_y = 32
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fireaxecabinet/unforgotten/south
@@ -987,6 +1475,11 @@
 	pixel_y = 32
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/flagpole
@@ -997,6 +1490,10 @@
 	icon_state = "flagpole"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/floordoor
@@ -1007,6 +1504,10 @@
 	icon_state = "floorhatch1"
 	density = FALSE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.04
 	togg = FALSE
 	base_state = "floorhatch"
@@ -1018,6 +1519,10 @@
 	icon_state = ""
 	density = FALSE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.04
 	togg = FALSE
 	base_state = ""
@@ -1031,6 +1536,10 @@
 	icon_state = ""
 	density = FALSE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN | BLOCK_Z_IN_UP
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.04
 	togg = FALSE
 	base_state = ""
@@ -1045,6 +1554,7 @@
 	icon_state = "firstbush_1"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 30
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1061,6 +1571,7 @@
 	icon_state = "brflowers_1"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 100
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -1077,6 +1588,7 @@
 	icon_state = "fernybush_1"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 30
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1092,6 +1604,7 @@
 	icon_state = "fullgrass_1"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 30
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1107,6 +1620,7 @@
 	icon_state = "grassybush_1"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 30
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1122,6 +1636,7 @@
 	icon_state = "lavendergrass_1"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 100
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -1138,6 +1653,7 @@
 	icon_state = "leafybush_1"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 30
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1153,6 +1669,7 @@
 	icon_state = "palebush_1"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 30
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1168,6 +1685,7 @@
 	icon_state = "pointybush_1"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 30
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1183,6 +1701,7 @@
 	icon_state = "ppflowers_1"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 100
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -1199,6 +1718,7 @@
 	icon_state = "sparsegrass_1"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 30
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1214,6 +1734,7 @@
 	icon_state = "stalkybush_1"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 30
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1229,6 +1750,7 @@
 	icon_state = "sunnybush_1"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 30
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1244,6 +1766,7 @@
 	icon_state = "ywflowers_1"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 100
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -1261,6 +1784,7 @@
 	density = TRUE
 	obj_flags = CAN_BE_HIT
 	max_integrity = 150
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1274,6 +1798,7 @@
 	density = TRUE
 	obj_flags = CAN_BE_HIT
 	max_integrity = 150
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1286,6 +1811,7 @@
 	density = FALSE
 	obj_flags = CAN_BE_HIT
 	max_integrity = 150
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1298,6 +1824,7 @@
 	density = FALSE
 	obj_flags = CAN_BE_HIT
 	max_integrity = 150
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1310,6 +1837,7 @@
 	density = FALSE
 	obj_flags = CAN_BE_HIT
 	max_integrity = 150
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1322,6 +1850,7 @@
 	density = FALSE
 	obj_flags = CAN_BE_HIT
 	max_integrity = 150
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1334,6 +1863,7 @@
 	icon_state = "maple2"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 150
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1347,6 +1877,7 @@
 	icon_state = "maple3"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 150
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1360,6 +1891,7 @@
 	icon_state = "maple4"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 150
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1375,6 +1907,7 @@
 	density = TRUE
 	obj_flags = CAN_BE_HIT
 	max_integrity = 60
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1389,6 +1922,7 @@
 	density = TRUE
 	obj_flags = CAN_BE_HIT
 	max_integrity = 60
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1403,6 +1937,7 @@
 	density = FALSE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 	max_integrity = 30
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1418,6 +1953,7 @@
 	density = FALSE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 	max_integrity = 30
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1432,6 +1968,7 @@
 	density = FALSE
 	obj_flags = CAN_BE_HIT | BLOCK_Z_OUT_DOWN
 	max_integrity = 30
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1446,6 +1983,7 @@
 	density = FALSE
 	obj_flags = CAN_BE_HIT
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1462,6 +2000,7 @@
 	density = FALSE
 	obj_flags = CAN_BE_HIT
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1480,6 +2019,7 @@
 	opacity = 1
 	obj_flags = CAN_BE_HIT | BLOCK_Z_IN_UP | BLOCK_Z_OUT_DOWN
 	max_integrity = 400
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
@@ -1496,6 +2036,7 @@
 	density = FALSE
 	obj_flags = CAN_BE_HIT
 	max_integrity = 150
+	resistance_flags = FIRE_PROOF
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -1513,6 +2054,7 @@
 	icon_state = "grass1"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 2
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -1528,6 +2070,7 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 100
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -1543,6 +2086,7 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 100
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -1560,6 +2104,7 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 100
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -1580,6 +2125,7 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 150
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -1600,9 +2146,11 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 150
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
+	rockhill_debris = null
 	rockhill_variant = "tallbush#"
 	rockhill_variant_min = 1
 	rockhill_variant_max = 2
@@ -1619,6 +2167,7 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 150
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -1636,6 +2185,7 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 100
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -1650,6 +2200,7 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 100
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -1667,6 +2218,7 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 100
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -1683,12 +2235,13 @@
 	icon_state = "artemisia"
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	herbtype = /obj/item/alch/artemisia
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_debris = list(/obj/item/natural/fibers = 1)
-	herbtype = /obj/item/alch/artemisia
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -1699,12 +2252,13 @@
 	icon_state = "atropa"
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	herbtype = /obj/item/alch/atropa
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_debris = list(/obj/item/natural/fibers = 1)
-	herbtype = /obj/item/alch/atropa
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -1715,12 +2269,13 @@
 	icon_state = "benedictus"
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	herbtype = /obj/item/alch/benedictus
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_debris = list(/obj/item/natural/fibers = 1)
-	herbtype = /obj/item/alch/benedictus
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -1731,12 +2286,13 @@
 	icon_state = "calendula"
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	herbtype = /obj/item/alch/calendula
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_debris = list(/obj/item/natural/fibers = 1)
-	herbtype = /obj/item/alch/calendula
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -1747,12 +2303,13 @@
 	icon_state = "euphrasia"
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	herbtype = /obj/item/alch/euphrasia
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_debris = list(/obj/item/natural/fibers = 1)
-	herbtype = /obj/item/alch/euphrasia
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -1763,12 +2320,13 @@
 	icon_state = "hypericum"
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	herbtype = /obj/item/alch/hypericum
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_debris = list(/obj/item/natural/fibers = 1)
-	herbtype = /obj/item/alch/hypericum
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -1779,12 +2337,13 @@
 	icon_state = "manabloom2"
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	herbtype = /obj/item/reagent_containers/food/snacks/grown/manabloom
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_debris = list(/obj/item/natural/fibers = 1)
-	herbtype = /obj/item/reagent_containers/food/snacks/grown/manabloom
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -1795,12 +2354,13 @@
 	icon_state = "matricaria"
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	herbtype = /obj/item/alch/matricaria
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_debris = list(/obj/item/natural/fibers = 1)
-	herbtype = /obj/item/alch/matricaria
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -1811,12 +2371,13 @@
 	icon_state = "mentha"
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	herbtype = /obj/item/alch/mentha
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_debris = list(/obj/item/natural/fibers = 1)
-	herbtype = /obj/item/alch/mentha
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -1827,12 +2388,13 @@
 	icon_state = "paris"
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	herbtype = /obj/item/alch/paris
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_debris = list(/obj/item/natural/fibers = 1)
-	herbtype = /obj/item/alch/paris
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -1844,6 +2406,7 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -1859,12 +2422,13 @@
 	icon_state = "rosa"
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	herbtype = /obj/item/alch/rosa
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_debris = list(/obj/item/natural/fibers = 1)
-	herbtype = /obj/item/alch/rosa
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -1875,12 +2439,13 @@
 	icon_state = "salvia"
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	herbtype = /obj/item/alch/salvia
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_debris = list(/obj/item/natural/fibers = 1)
-	herbtype = /obj/item/alch/salvia
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -1891,12 +2456,13 @@
 	icon_state = "symphitum"
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	herbtype = /obj/item/alch/symphitum
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_debris = list(/obj/item/natural/fibers = 1)
-	herbtype = /obj/item/alch/symphitum
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -1907,12 +2473,13 @@
 	icon_state = "taraxacum"
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	herbtype = /obj/item/alch/taraxacum
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_debris = list(/obj/item/natural/fibers = 1)
-	herbtype = /obj/item/alch/taraxacum
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -1923,12 +2490,13 @@
 	icon_state = "urtica"
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	herbtype = /obj/item/alch/urtica
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_debris = list(/obj/item/natural/fibers = 1)
-	herbtype = /obj/item/alch/urtica
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -1939,12 +2507,13 @@
 	icon_state = "valeriana"
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	herbtype = /obj/item/alch/valeriana
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_debris = list(/obj/item/natural/fibers = 1)
-	herbtype = /obj/item/alch/valeriana
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -1955,6 +2524,7 @@
 	icon_state = "grassa"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 2
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -1971,6 +2541,7 @@
 	icon_state = "grassb"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 2
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -1987,6 +2558,7 @@
 	icon_state = "maneater-hidden"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 5
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -2000,6 +2572,7 @@
 	icon_state = "maneater-hidden"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 100
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/vo/mobs/plant/pain (1).ogg', 'modular_redtard/rockhill/sound/vo/mobs/plant/pain (2).ogg', 'modular_redtard/rockhill/sound/vo/mobs/plant/pain (3).ogg', 'modular_redtard/rockhill/sound/vo/mobs/plant/pain (4).ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -2013,6 +2586,7 @@
 	icon_state = "maneater-hidden"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 50
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/vo/mobs/plant/pain (1).ogg', 'modular_redtard/rockhill/sound/vo/mobs/plant/pain (2).ogg', 'modular_redtard/rockhill/sound/vo/mobs/plant/pain (3).ogg', 'modular_redtard/rockhill/sound/vo/mobs/plant/pain (4).ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -2027,6 +2601,7 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 1
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -2044,6 +2619,7 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 9999
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -2057,6 +2633,7 @@
 	icon_state = "reedbush_1"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 1
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -2075,6 +2652,7 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 1
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -2092,6 +2670,7 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 35
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -2105,6 +2684,7 @@
 	icon_state = "swampgrass"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 5
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -2119,6 +2699,7 @@
 	opacity = 1
 	obj_flags = CAN_BE_HIT
 	max_integrity = 10
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/plantcross1.ogg', 'modular_redtard/rockhill/sound/foley/plantcross2.ogg', 'modular_redtard/rockhill/sound/foley/plantcross3.ogg', 'modular_redtard/rockhill/sound/foley/plantcross4.ogg')
@@ -2138,6 +2719,7 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 120
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/treefall.ogg')
@@ -2156,6 +2738,7 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 120
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/treefall.ogg')
@@ -2173,6 +2756,7 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 120
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/treefall.ogg')
@@ -2193,9 +2777,11 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 240
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/treefall.ogg')
+	rockhill_static_debris = null
 	plane = ABOVE_GAME_PLANE
 	layer = 4.5
 
@@ -2210,6 +2796,7 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 3250
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "pick"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/treefall.ogg')
@@ -2228,6 +2815,7 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 240
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/treefall.ogg')
@@ -2246,6 +2834,7 @@
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
 	max_integrity = 240
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/treefall.ogg')
@@ -2264,13 +2853,14 @@
 	pixel_x = -16
 	alpha = 200
 	obj_flags = CAN_BE_HIT
+	rockhill_stump = /obj/structure/flora/roguetree/stump
 	max_integrity = 200
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_debris = list(/obj/item/grown/log/tree/stick = 2)
 	rockhill_static_debris = list(/obj/item/grown/log/tree = 1)
-	rockhill_stump = /obj/structure/flora/roguetree/stump
 	rockhill_variant = "t#"
 	rockhill_variant_min = 1
 	rockhill_variant_max = 16
@@ -2287,13 +2877,14 @@
 	pixel_x = -32
 	alpha = 200
 	obj_flags = CAN_BE_HIT
+	rockhill_stump = /obj/structure/flora/roguetree/stump/burnt
 	max_integrity = 200
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_debris = list(/obj/item/grown/log/tree/stick = 2)
 	rockhill_static_debris = list(/obj/item/grown/log/tree = 1)
-	rockhill_stump = /obj/structure/flora/roguetree/stump/burnt
 	rockhill_variant = "t#"
 	rockhill_variant_min = 1
 	rockhill_variant_max = 4
@@ -2309,13 +2900,14 @@
 	pixel_x = -16
 	alpha = 200
 	obj_flags = CAN_BE_HIT
+	rockhill_stump = /obj/structure/flora/roguetree/stump
 	max_integrity = 200
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_debris = list(/obj/item/grown/log/tree/stick = 2)
 	rockhill_static_debris = list(/obj/item/grown/log/tree = 1)
-	rockhill_stump = /obj/structure/flora/roguetree/stump
 	rockhill_variant = "wv#"
 	rockhill_variant_min = 1
 	rockhill_variant_max = 2
@@ -2331,13 +2923,14 @@
 	pixel_x = -16
 	alpha = 200
 	obj_flags = CAN_BE_HIT
+	rockhill_stump = null
 	max_integrity = 200
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_debris = list(/obj/item/grown/log/tree/stick = 2)
 	rockhill_static_debris = list(/obj/item/grown/log/tree = 2)
-	rockhill_stump = null
 	rockhill_variant = "pine#"
 	rockhill_variant_min = 1
 	rockhill_variant_max = 4
@@ -2353,13 +2946,14 @@
 	pixel_x = -16
 	alpha = 200
 	obj_flags = CAN_BE_HIT
+	rockhill_stump = /obj/structure/flora/roguetree/stump/pine
 	max_integrity = 50
+	resistance_flags = FIRE_PROOF
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_debris = list(/obj/item/grown/log/tree/stick = 2)
 	rockhill_static_debris = list(/obj/item/rogueore/coal/charcoal = 1)
-	rockhill_stump = /obj/structure/flora/roguetree/stump/pine
 	rockhill_variant = "dead#"
 	rockhill_variant_min = 1
 	rockhill_variant_max = 3
@@ -2375,13 +2969,14 @@
 	pixel_x = -16
 	alpha = 255
 	obj_flags = CAN_BE_HIT
+	rockhill_stump = null
 	max_integrity = 100
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_debris = list(/obj/item/grown/log/tree/stick = 2)
 	rockhill_static_debris = list(/obj/item/grown/log/tree/small = 1)
-	rockhill_stump = null
 	rockhill_variant = "t#stump"
 	rockhill_variant_min = 1
 	rockhill_variant_max = 4
@@ -2399,6 +2994,7 @@
 	alpha = 255
 	obj_flags = CAN_BE_HIT
 	max_integrity = 100
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
@@ -2420,6 +3016,7 @@
 	alpha = 255
 	obj_flags = CAN_BE_HIT
 	max_integrity = 200
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
@@ -2441,6 +3038,7 @@
 	alpha = 255
 	obj_flags = CAN_BE_HIT
 	max_integrity = 100
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
@@ -2461,13 +3059,14 @@
 	pixel_x = -16
 	alpha = 200
 	obj_flags = CAN_BE_HIT
+	rockhill_stump = /obj/structure/flora/roguetree/stump
 	max_integrity = 200
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_debris = list(/obj/item/grown/log/tree/stick = 2)
 	rockhill_static_debris = list(/obj/item/grown/log/tree = 1)
-	rockhill_stump = /obj/structure/flora/roguetree/stump
 	rockhill_variant = "screaming#"
 	rockhill_variant_min = 1
 	rockhill_variant_max = 3
@@ -2482,13 +3081,14 @@
 	pixel_x = -16
 	alpha = 200
 	obj_flags = CAN_BE_HIT
+	rockhill_stump = /obj/structure/flora/roguetree/stump
 	max_integrity = 400
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_debris = list(/obj/item/grown/log/tree/stick = 2)
 	rockhill_static_debris = list(/obj/item/grown/log/tree = 1)
-	rockhill_stump = /obj/structure/flora/roguetree/stump
 	icon_state = "mystical"
 	layer = 4.81
 
@@ -2502,6 +3102,7 @@
 	pixel_y = -10
 	obj_flags = CAN_BE_HIT
 	max_integrity = 200
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "cut"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
@@ -2517,6 +3118,7 @@
 	icon_state = "tinymushrooms"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 30
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -2530,6 +3132,7 @@
 	icon_state = "tinymushroomsunhappy"
 	obj_flags = CAN_BE_HIT
 	max_integrity = 30
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -2544,6 +3147,7 @@
 	pixel_x = -16
 	obj_flags = CAN_BE_HIT
 	max_integrity = 150
+	resistance_flags = FLAMMABLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
@@ -2562,6 +3166,11 @@
 	density = TRUE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 450
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/buysign
@@ -2573,6 +3182,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/canopy
@@ -2585,6 +3199,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 20
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	plane = ABOVE_GAME_PLANE
 	layer = ABOVE_MOB_LAYER
 
@@ -2597,6 +3216,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 20
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/canopy/booth/booth02
@@ -2608,6 +3232,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 20
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/canopy/booth/booth_green
@@ -2619,6 +3248,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 20
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/canopy/booth/booth_green02
@@ -2630,6 +3264,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 20
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/canopy/green
@@ -2641,6 +3280,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 20
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/canopy/side
@@ -2652,6 +3296,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 20
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/canopy/side/end
@@ -2663,6 +3312,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 20
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/ceramicswheel
@@ -2674,6 +3328,10 @@
 	density = TRUE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/clock
@@ -2686,6 +3344,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 100
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onglass/glasshit.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	plane = ABOVE_GAME_PLANE
 	layer = ABOVE_MOB_LAYER
 
@@ -2698,6 +3361,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	rockhill_random_dir = TRUE
 	layer = BELOW_OBJ_LAYER
 
@@ -2711,6 +3379,11 @@
 	opacity = 0
 	pixel_y = 3
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/customsign/arrow
@@ -2722,6 +3395,11 @@
 	opacity = 0
 	pixel_y = 3
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/grindwheel
@@ -2733,6 +3411,10 @@
 	density = TRUE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/headstake
@@ -2745,6 +3427,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/iconsign/eaglesign
@@ -2755,6 +3442,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/iconsign/elksign
@@ -2765,6 +3457,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/iconsign/innsign
@@ -2775,6 +3472,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/iconsign/psycrosssign
@@ -2785,6 +3487,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/iconsign/skullsign
@@ -2795,6 +3502,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/iconsign/smithsign
@@ -2805,6 +3517,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/iconsign/spidersign
@@ -2815,6 +3532,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/iconsign/zizosign
@@ -2825,6 +3547,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/littlebanners
@@ -2837,6 +3564,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 20
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	plane = ABOVE_GAME_PLANE
 	layer = ABOVE_MOB_LAYER
 
@@ -2849,6 +3581,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 20
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/littlebanners/bluewhite
@@ -2860,6 +3597,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 20
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/littlebanners/greenblue
@@ -2871,6 +3613,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 20
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/littlebanners/greenred
@@ -2882,6 +3629,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 20
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/littlebanners/greenwhite
@@ -2893,6 +3645,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 20
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/nest
@@ -2904,6 +3661,12 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 40
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
+	rockhill_static_debris = list(/obj/item/natural/fibers = 1)
 	layer = 2.8
 
 /obj/structure/fluff/pillow
@@ -2915,6 +3678,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/pillow/black
@@ -2925,6 +3693,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/pillow/blue
@@ -2935,6 +3708,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/pillow/brown
@@ -2945,6 +3723,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/pillow/green
@@ -2955,6 +3738,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/pillow/magenta
@@ -2965,6 +3753,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/pillow/purple
@@ -2975,6 +3768,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/pillow/red
@@ -2985,6 +3783,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/psycross
@@ -2997,6 +3800,11 @@
 	opacity = 0
 	dir = NORTH
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
+	max_integrity = 100
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/psycross/baotha
@@ -3008,6 +3816,11 @@
 	opacity = 0
 	dir = NORTH
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/psycross/baotha/decorated
@@ -3019,6 +3832,11 @@
 	opacity = 0
 	dir = NORTH
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
+	max_integrity = 350
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/psycross/copper
@@ -3030,6 +3848,11 @@
 	opacity = 0
 	dir = NORTH
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
+	max_integrity = 100
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/psycross/crafted
@@ -3041,6 +3864,11 @@
 	opacity = 0
 	dir = NORTH
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
+	max_integrity = 80
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/psycross/crafted/necra
@@ -3052,6 +3880,11 @@
 	opacity = 0
 	dir = NORTH
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
+	max_integrity = 120
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/psycross/graggar
@@ -3063,6 +3896,11 @@
 	opacity = 0
 	dir = NORTH
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/psycross/graggar/decorated
@@ -3074,6 +3912,11 @@
 	opacity = 0
 	dir = NORTH
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
+	max_integrity = 350
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/psycross/matthios
@@ -3085,6 +3928,11 @@
 	opacity = 0
 	dir = NORTH
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/psycross/matthios/decorated
@@ -3096,6 +3944,11 @@
 	opacity = 0
 	dir = NORTH
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
+	max_integrity = 350
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/psycross/psycrucifix
@@ -3107,6 +3960,11 @@
 	opacity = 0
 	dir = NORTH
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
+	max_integrity = 80
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/psycross/psycrucifix/silver
@@ -3118,6 +3976,11 @@
 	opacity = 0
 	dir = NORTH
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
+	max_integrity = 450
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/psycross/psycrucifix/stone
@@ -3129,6 +3992,11 @@
 	opacity = 0
 	dir = NORTH
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
+	max_integrity = 120
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/psycross/zizocross
@@ -3140,6 +4008,11 @@
 	opacity = 0
 	dir = NORTH
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
+	max_integrity = 100
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/psycross/zizocross/golden
@@ -3151,6 +4024,11 @@
 	opacity = 0
 	dir = NORTH
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
+	max_integrity = 350
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/psycross/zizocross/stone
@@ -3162,6 +4040,11 @@
 	opacity = 0
 	dir = NORTH
 	obj_flags = UNIQUE_RENAME | CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/railing/border
@@ -3172,6 +4055,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/railing/border/east
@@ -3183,6 +4071,11 @@
 	opacity = 0
 	dir = 4
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/railing/border/north
@@ -3194,6 +4087,11 @@
 	opacity = 0
 	dir = 1
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/railing/border/west
@@ -3205,6 +4103,11 @@
 	opacity = 0
 	dir = 8
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/railing/corner
@@ -3216,6 +4119,11 @@
 	opacity = 0
 	dir = 9
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/railing/corner/north_east
@@ -3227,6 +4135,11 @@
 	opacity = 0
 	dir = 5
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/railing/corner/south_east
@@ -3238,6 +4151,11 @@
 	opacity = 0
 	dir = 6
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/railing/corner/south_west
@@ -3249,6 +4167,11 @@
 	opacity = 0
 	dir = 10
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/railing/fence
@@ -3259,6 +4182,11 @@
 	density = TRUE
 	opacity = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 400
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/treefall.ogg')
 	layer = 2.91
 
 /obj/structure/fluff/railing/fence/flimsy
@@ -3270,6 +4198,11 @@
 	opacity = TRUE
 	color = "#cccac5"
 	obj_flags = CAN_BE_HIT
+	max_integrity = 180
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/misc/woodhit.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/misc/treefall.ogg')
 	layer = 2.91
 
 /obj/structure/fluff/railing/wood
@@ -3280,6 +4213,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/railing/wood/east
@@ -3291,6 +4229,11 @@
 	opacity = 0
 	dir = 4
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/railing/wood/north
@@ -3302,6 +4245,11 @@
 	opacity = 0
 	dir = 1
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/railing/wood/west
@@ -3313,6 +4261,11 @@
 	opacity = 0
 	dir = 8
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/sellsign
@@ -3324,6 +4277,11 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/fluff/signage
@@ -3335,6 +4293,11 @@
 	density = TRUE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	plane = ABOVE_GAME_PLANE
 	layer = ABOVE_MOB_LAYER
 
@@ -3348,6 +4311,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = ABOVE_GAME_PLANE
 	layer = ABOVE_MOB_LAYER
 
@@ -3360,6 +4328,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/abyssor
@@ -3372,6 +4345,11 @@
 	pixel_x = -16
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/abyssor/dolomite
@@ -3384,6 +4362,11 @@
 	pixel_x = -16
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/astrata
@@ -3395,6 +4378,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/astrata/gold
@@ -3406,6 +4394,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/eora
@@ -3418,6 +4411,11 @@
 	pixel_x = -16
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/evil
@@ -3429,6 +4427,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/femalestatue
@@ -3442,6 +4445,11 @@
 	pixel_y = -16
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/femalestatue/zizo
@@ -3455,6 +4463,11 @@
 	pixel_y = -16
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/femalestatue1
@@ -3468,6 +4481,11 @@
 	pixel_y = -16
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/femalestatue2
@@ -3481,6 +4499,11 @@
 	pixel_y = -16
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/gargoyle
@@ -3492,6 +4515,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/gargoyle/candles
@@ -3503,6 +4531,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/gargoyle/moss
@@ -3514,6 +4547,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/gargoyle/moss/candles
@@ -3525,6 +4563,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/knight
@@ -3536,6 +4579,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/knight/interior
@@ -3547,6 +4595,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/knight/interior/r
@@ -3558,6 +4611,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/knight/r
@@ -3569,6 +4627,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/knightalt
@@ -3580,6 +4643,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/knightalt/r
@@ -3591,6 +4659,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/myth
@@ -3602,6 +4675,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/noc
@@ -3614,6 +4692,11 @@
 	pixel_x = -16
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/pillar
@@ -3625,6 +4708,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/psy
@@ -3637,6 +4725,11 @@
 	pixel_x = -32
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/scare
@@ -3648,6 +4741,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/small
@@ -3659,6 +4757,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/spider
@@ -3670,6 +4773,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/tdummy
@@ -3681,6 +4789,11 @@
 	opacity = 0
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/statue/valmora
@@ -3693,6 +4806,11 @@
 	pixel_x = -16
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/fluff/wallclock
@@ -3705,6 +4823,11 @@
 	opacity = 0
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	max_integrity = 100
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onglass/glasshit.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/wallclock/l
@@ -3717,6 +4840,11 @@
 	pixel_x = -32
 	pixel_y = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 100
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onglass/glasshit.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/wallclock/r
@@ -3729,6 +4857,11 @@
 	pixel_x = 32
 	pixel_y = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 100
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onglass/glasshit.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/wallclock/vampire
@@ -3740,6 +4873,11 @@
 	opacity = 0
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	max_integrity = 100
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onglass/glasshit.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/wallclock/vampire/l
@@ -3752,6 +4890,11 @@
 	pixel_x = -32
 	pixel_y = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 100
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onglass/glasshit.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/alarm
@@ -3763,6 +4906,10 @@
 	opacity = 0
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/artificerflag
@@ -3773,6 +4920,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/barbersignreverse
@@ -3783,6 +4934,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/bath
@@ -3795,6 +4950,10 @@
 	pixel_x = -32
 	alpha = 210
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/bath/five
@@ -3807,6 +4966,10 @@
 	pixel_x = -29
 	alpha = 210
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/bath/four
@@ -3820,6 +4983,10 @@
 	pixel_y = 32
 	alpha = 210
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/bath/ladies
@@ -3833,6 +5000,10 @@
 	pixel_y = 32
 	alpha = 210
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/bath/seven
@@ -3845,6 +5016,10 @@
 	pixel_x = 32
 	alpha = 210
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/bath/six
@@ -3857,6 +5032,10 @@
 	pixel_x = -29
 	alpha = 210
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/bath/wallrope
@@ -3871,6 +5050,10 @@
 	alpha = 210
 	color = "#d66262"
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/bigpainting
@@ -3883,6 +5066,10 @@
 	pixel_x = -16
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/bigpainting/lake
@@ -3895,6 +5082,10 @@
 	pixel_x = -16
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/bogbanner
@@ -3905,6 +5096,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/bogbanner/bogguard
@@ -3915,6 +5110,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/bogbanner/bogguard/animated
@@ -3925,6 +5124,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/bogbanner/zizo
@@ -3935,6 +5138,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/bsmith
@@ -3945,6 +5152,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/chains
@@ -3956,6 +5167,10 @@
 	opacity = 0
 	alpha = 180
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	rockhill_variant = "chains#"
 	rockhill_variant_min = 1
 	rockhill_variant_max = 8
@@ -3969,6 +5184,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -3980,6 +5199,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/customflag/barony
@@ -3990,6 +5213,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/fakewall
@@ -4000,6 +5227,11 @@
 	density = FALSE
 	opacity = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 100
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/flower
@@ -4010,6 +5242,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/goblet
@@ -4020,6 +5256,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/innsign
@@ -4030,6 +5270,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/mageguild
@@ -4040,6 +5284,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/mageguild2
@@ -4050,6 +5298,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/maidendrape
@@ -4062,6 +5314,10 @@
 	pixel_y = 32
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/maidensigil
@@ -4074,6 +5330,10 @@
 	pixel_y = 32
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/med
@@ -4084,6 +5344,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/med2
@@ -4094,6 +5358,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/med3
@@ -4104,6 +5372,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/med4
@@ -4114,6 +5386,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/med5
@@ -4124,6 +5400,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/med6
@@ -4134,6 +5414,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/mercenaryflag
@@ -4144,6 +5428,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/mona
@@ -4155,6 +5443,10 @@
 	opacity = 0
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/moon
@@ -4165,6 +5457,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/painting
@@ -4175,6 +5471,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/painting/queen
@@ -4185,6 +5485,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/painting/seraphina
@@ -4195,6 +5499,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/painting/skull
@@ -4205,6 +5513,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/psybanner
@@ -4215,6 +5527,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/psybanner/red
@@ -4225,6 +5541,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/rpainting
@@ -4235,6 +5555,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/rpainting/crown
@@ -4245,6 +5569,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/rpainting/forest
@@ -4255,6 +5583,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/serpflag
@@ -4265,6 +5597,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/sign/merchantsign
@@ -4276,6 +5612,10 @@
 	opacity = 0
 	pixel_y = 16
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = ABOVE_GAME_PLANE
 	layer = ABOVE_MOB_LAYER + 0.1
 
@@ -4289,6 +5629,10 @@
 	pixel_x = 3
 	pixel_y = 16
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = ABOVE_GAME_PLANE
 	layer = ABOVE_MOB_LAYER + 0.1
 
@@ -4301,6 +5645,10 @@
 	opacity = 0
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/steward
@@ -4311,6 +5659,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/stone
@@ -4321,6 +5673,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	rockhill_variant = "walldec#"
 	rockhill_variant_min = 1
 	rockhill_variant_max = 6
@@ -4335,6 +5691,10 @@
 	opacity = 0
 	color = "#ff9c1a"
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	rockhill_variant = "walldec#"
 	rockhill_variant_min = 1
 	rockhill_variant_max = 6
@@ -4348,6 +5708,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/vinez/blue
@@ -4358,6 +5722,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/vinez/l
@@ -4369,6 +5737,10 @@
 	opacity = 0
 	pixel_x = -32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/vinez/offset
@@ -4380,6 +5752,10 @@
 	opacity = 0
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/vinez/r
@@ -4391,6 +5767,10 @@
 	opacity = 0
 	pixel_x = 32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/vinez/red
@@ -4401,6 +5781,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/wallshield
@@ -4411,6 +5795,10 @@
 	density = FALSE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/fluff/walldeco/wantedposter
@@ -4422,6 +5810,10 @@
 	opacity = 0
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	rockhill_variant = "wanted#"
 	rockhill_variant_min = 1
 	rockhill_variant_max = 3
@@ -4438,6 +5830,10 @@
 	pixel_x = -32
 	pixel_y = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	rockhill_variant = "wanted#"
 	rockhill_variant_min = 1
 	rockhill_variant_max = 3
@@ -4453,6 +5849,11 @@
 	density = TRUE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 150
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onstone/wallhit.ogg', 'modular_redtard/rockhill/sound/combat/hits/onstone/wallhit2.ogg', 'modular_redtard/rockhill/sound/combat/hits/onstone/wallhit3.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/foxpelt
@@ -4463,6 +5864,11 @@
 	icon_state = "fox"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -4474,6 +5880,11 @@
 	icon_state = "fur"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -4484,6 +5895,11 @@
 	icon_state = "fur_alt"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/structure/globe
@@ -4494,6 +5910,11 @@
 	icon_state = "globe"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/gravemarker
@@ -4504,6 +5925,11 @@
 	icon_state = "gravemarker1"
 	density = FALSE
 	obj_flags = UNIQUE_RENAME
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
+	rockhill_static_debris = list(/obj/item/grown/log/tree/stick = 1)
 	layer = 2.91
 
 /obj/structure/handcart
@@ -4514,6 +5940,11 @@
 	icon_state = "cart-empty"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 600
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/hotspring
@@ -4522,6 +5953,10 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures/hotspring.dmi'
 	icon_state = "hotspring"
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -4530,6 +5965,10 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures/hotspring.dmi'
 	icon_state = "hotspring_border_1"
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/structure/hotspring/border/eight
@@ -4537,6 +5976,10 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures/hotspring.dmi'
 	icon_state = "hotspring_border_8"
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/structure/hotspring/border/eleven
@@ -4544,6 +5987,10 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures/hotspring.dmi'
 	icon_state = "hotspring_border_11"
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/structure/hotspring/border/five
@@ -4551,6 +5998,10 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures/hotspring.dmi'
 	icon_state = "hotspring_border_5"
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/structure/hotspring/border/four
@@ -4558,6 +6009,10 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures/hotspring.dmi'
 	icon_state = "hotspring_border_4"
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/structure/hotspring/border/nine
@@ -4565,6 +6020,10 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures/hotspring.dmi'
 	icon_state = "hotspring_border_9"
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/structure/hotspring/border/seven
@@ -4572,6 +6031,10 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures/hotspring.dmi'
 	icon_state = "hotspring_border_7"
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/structure/hotspring/border/six
@@ -4579,6 +6042,10 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures/hotspring.dmi'
 	icon_state = "hotspring_border_6"
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/structure/hotspring/border/ten
@@ -4586,6 +6053,10 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures/hotspring.dmi'
 	icon_state = "hotspring_border_10"
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/structure/hotspring/border/thirteen
@@ -4593,6 +6064,10 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures/hotspring.dmi'
 	icon_state = "hotspring_border_13"
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/structure/hotspring/border/three
@@ -4600,6 +6075,10 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures/hotspring.dmi'
 	icon_state = "hotspring_border_3"
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/structure/hotspring/border/twelve
@@ -4607,6 +6086,10 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures/hotspring.dmi'
 	icon_state = "hotspring_border_12"
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/structure/hotspring/border/two
@@ -4614,6 +6097,10 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures/hotspring.dmi'
 	icon_state = "hotspring_border_2"
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_OPEN_TURF_LAYER
 
 /obj/structure/ichor_stone
@@ -4623,6 +6110,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/items/natural.dmi'
 	icon_state = "stonebig2"
 	obj_flags = CAN_BE_HIT
+	max_integrity = 999999
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/infernalengine
@@ -4633,6 +6125,12 @@
 	icon_state = "infernal0"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
+	rockhill_debris = list(/obj/item/magic/infernal/core = 1)
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/kybraxor
@@ -4643,6 +6141,10 @@
 	icon_state = "kybraxor1"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.04
 	redstone_id = "gatelava"
 
@@ -4654,6 +6156,11 @@
 	icon_state = "leverfloor0"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 3000
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 	toggled = FALSE
 
@@ -4664,6 +6171,11 @@
 	icon_state = "leverfloor0"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 3000
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 	toggled = FALSE
 
@@ -4674,6 +6186,11 @@
 	icon_state = "leverwall0"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 3000
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 	toggled = FALSE
 
@@ -4685,6 +6202,11 @@
 	icon_state = "inactiveleyline"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/manaflower
@@ -4696,6 +6218,12 @@
 	density = FALSE
 	color = null
 	obj_flags = CAN_BE_HIT
+	max_integrity = 60
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
+	rockhill_debris = list(/obj/item/natural/fibers = 1, /obj/item/reagent_containers/food/snacks/grown/manabloom = 1)
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/mannequin/male
@@ -4706,6 +6234,11 @@
 	icon_state = "man"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 50
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/mannequin/male/female
@@ -4715,6 +6248,11 @@
 	icon_state = "woman"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 50
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/meathook
@@ -4725,6 +6263,11 @@
 	icon_state = "meathook"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/mirror/fancy
@@ -4736,6 +6279,11 @@
 	density = FALSE
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onglass/glasshit.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/noose
@@ -4747,6 +6295,12 @@
 	density = FALSE
 	pixel_y = 10
 	obj_flags = CAN_BE_HIT
+	max_integrity = 10
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
+	rockhill_static_debris = list(/obj/item/rope = 1)
 	plane = ABOVE_GAME_PLANE
 	layer = ABOVE_MOB_LAYER
 
@@ -4758,6 +6312,12 @@
 	density = FALSE
 	pixel_y = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 9999
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
+	rockhill_static_debris = list(/obj/item/rope = 1)
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/pillar/sand1
@@ -4770,6 +6330,12 @@
 	pixel_x = -16
 	alpha = 255
 	obj_flags = CAN_BE_HIT
+	max_integrity = 1000
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/hit_rock.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/smash_rock.ogg')
+	rockhill_static_debris = list(/obj/item/natural/stone = 10)
 	plane = ABOVE_GAME_PLANE
 	layer = 4.82
 
@@ -4781,6 +6347,11 @@
 	icon_state = "pillory_single"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = ABOVE_GAME_PLANE
 	layer = 4.5
 
@@ -4791,6 +6362,11 @@
 	icon_state = "pillory_double"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 4.5
 
 /obj/structure/pillory/reinforced
@@ -4800,6 +6376,11 @@
 	icon_state = "pillory_reinforced"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 4.5
 
 /obj/structure/plough
@@ -4810,6 +6391,11 @@
 	icon_state = "plough"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 600
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/pressure_plate
@@ -4820,6 +6406,11 @@
 	icon_state = "pressureplate"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 45
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/quicksand
@@ -4831,6 +6422,10 @@
 	density = FALSE
 	alpha = 175
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = FLOOR_PLANE
 	layer = ABOVE_OPEN_TURF_LAYER
 
@@ -4841,6 +6436,11 @@
 	icon_state = "abyssor_chalky"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/ritualcircle/abyssor_alt
@@ -4850,6 +6450,11 @@
 	icon_state = "abyssoralt_active"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/ritualcircle/baotha
@@ -4859,6 +6464,11 @@
 	icon_state = "baotha_chalky"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/ritualcircle/graggar
@@ -4868,6 +6478,11 @@
 	icon_state = "graggar_chalky"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/ritualcircle/matthios
@@ -4877,6 +6492,11 @@
 	icon_state = "matthios_chalky"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/ritualcircle/noc
@@ -4886,6 +6506,11 @@
 	icon_state = "noc_chalky"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/ritualcircle/zizo
@@ -4895,6 +6520,11 @@
 	icon_state = "zizo_chalky"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/rogue/trophy/deer
@@ -4905,6 +6535,11 @@
 	pixel_y = 32
 	dir = SOUTH
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/Hoardmaster
@@ -4915,6 +6550,10 @@
 	density = TRUE
 	pixel_x = -32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/roguemachine/atm
@@ -4925,6 +6564,10 @@
 	density = FALSE
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/bathvend
@@ -4934,6 +6577,10 @@
 	icon_state = "brassface"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/blackmarket
@@ -4943,6 +6590,10 @@
 	icon_state = "copperface"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/bounty
@@ -4952,6 +6603,11 @@
 	icon_state = "baldguy"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 999999
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/camera
@@ -4962,6 +6618,10 @@
 	density = FALSE
 	pixel_y = 10
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/roguemachine/chimeric_heart_beast
@@ -4969,6 +6629,10 @@
 	icon_state = "heart_beast"
 	pixel_x = -32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/contractledger
@@ -4978,6 +6642,10 @@
 	icon_state = "contractledger"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = -3
 
 /obj/structure/roguemachine/crier
@@ -4987,6 +6655,10 @@
 	icon_state = "crier_machine"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/drugmachine
@@ -4996,6 +6668,10 @@
 	icon_state = "purity"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/escrow
@@ -5005,6 +6681,10 @@
 	icon_state = "streetvendor1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/escrow/tailor
@@ -5014,6 +6694,10 @@
 	icon_state = "streetvendor1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/goldface
@@ -5023,6 +6707,10 @@
 	icon_state = "streetvendor1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/goldface/copperface
@@ -5032,6 +6720,10 @@
 	icon_state = "copperface"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/goldface/public
@@ -5041,6 +6733,10 @@
 	icon_state = "streetvendor1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/goldface/public/apothecary
@@ -5050,6 +6746,10 @@
 	icon_state = "streetvendor1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/goldface/public/smith
@@ -5059,6 +6759,10 @@
 	icon_state = "streetvendor1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/goldface/public/tailor
@@ -5068,6 +6772,10 @@
 	icon_state = "streetvendor1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/headeater
@@ -5078,6 +6786,10 @@
 	density = FALSE
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/headeater/treasureseeker
@@ -5088,6 +6800,10 @@
 	density = FALSE
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/lottery_roguetown
@@ -5098,6 +6814,10 @@
 	density = FALSE
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/mail
@@ -5108,6 +6828,10 @@
 	density = FALSE
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/mail/l
@@ -5119,6 +6843,10 @@
 	pixel_x = -32
 	pixel_y = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/mail/r
@@ -5130,6 +6858,10 @@
 	pixel_x = 32
 	pixel_y = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/ministry_bureau
@@ -5139,6 +6871,10 @@
 	icon_state = "closetlord"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/musicbox
@@ -5148,6 +6884,10 @@
 	icon_state = "music0"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/musicbox/tavern
@@ -5157,6 +6897,10 @@
 	icon_state = "music0"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/noticeboard
@@ -5166,6 +6910,10 @@
 	icon_state = "noticeboard0"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = ABOVE_GAME_PLANE
 	layer = ABOVE_MOB_LAYER
 
@@ -5177,6 +6925,10 @@
 	density = FALSE
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = ABOVE_MOB_LAYER
 
 /obj/structure/roguemachine/potionseller
@@ -5186,6 +6938,11 @@
 	icon_state = "streetvendor1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 0, /obj/item/roguegear = 0, /obj/item/natural/glass = 0)
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/potionseller/crafted
@@ -5195,6 +6952,12 @@
 	icon_state = "streetvendor1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 100
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 0, /obj/item/roguegear = 0, /obj/item/natural/glass = 0)
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/rosewall
@@ -5205,6 +6968,10 @@
 	density = FALSE
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/roguemachine/scomm
@@ -5215,6 +6982,10 @@
 	density = FALSE
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/scomm/l
@@ -5226,6 +6997,10 @@
 	pixel_x = -32
 	pixel_y = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/scomm/r
@@ -5237,6 +7012,10 @@
 	pixel_x = 32
 	pixel_y = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/scomm/receive_only
@@ -5247,6 +7026,10 @@
 	density = FALSE
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/scomm/receive_only/l
@@ -5258,6 +7041,10 @@
 	pixel_x = -32
 	pixel_y = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/scomm/receive_only/r
@@ -5269,6 +7056,10 @@
 	pixel_x = 32
 	pixel_y = 0
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/scrapper/smith
@@ -5278,6 +7069,10 @@
 	icon_state = "streetvendor1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/scrapper/tailor
@@ -5287,6 +7082,10 @@
 	icon_state = "streetvendor1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/ship_fulfillment
@@ -5296,6 +7095,10 @@
 	icon_state = "streetvendor1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/steward
@@ -5305,6 +7108,10 @@
 	icon_state = "steward_machine"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/steward_export
@@ -5314,6 +7121,10 @@
 	icon_state = "ballooner"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = FIRE_PROOF | LAVA_PROOF | UNACIDABLE | INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/stockpile
@@ -5324,6 +7135,10 @@
 	density = FALSE
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/talkstatue/mercenary
@@ -5333,6 +7148,10 @@
 	icon_state = "mercstatue"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/titan
@@ -5342,6 +7161,10 @@
 	icon_state = ""
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/vaultbank
@@ -5351,6 +7174,9 @@
 	icon_state = "jawbank"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/vaultbank/bathhouse
@@ -5360,6 +7186,10 @@
 	icon_state = "jawbank"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/vaultbank/church
@@ -5369,6 +7199,10 @@
 	icon_state = "jawbank"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/vaultbank/innkeeper
@@ -5378,6 +7212,10 @@
 	icon_state = "jawbank"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/vaultbank/merchant
@@ -5387,6 +7225,10 @@
 	icon_state = "jawbank"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/vendor
@@ -5396,6 +7238,10 @@
 	icon_state = "streetvendor1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/vendor/bathhouse
@@ -5405,6 +7251,10 @@
 	icon_state = "streetvendor1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/vendor/bathhouse/locker
@@ -5414,6 +7264,10 @@
 	icon_state = "streetvendor1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/vendor/innrockhill
@@ -5423,6 +7277,10 @@
 	icon_state = "streetvendor1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguemachine/withdraw
@@ -5433,6 +7291,10 @@
 	density = FALSE
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/roguerock
@@ -5445,6 +7307,12 @@
 	opacity = 0
 	alpha = 255
 	obj_flags = CAN_BE_HIT
+	max_integrity = 50
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/hit_rock.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/smash_rock.ogg')
+	rockhill_static_debris = list(/obj/item/natural/stone = 1)
 	rockhill_variant = "rock#"
 	rockhill_variant_min = 1
 	rockhill_variant_max = 4
@@ -5458,6 +7326,11 @@
 	density = TRUE
 	opacity = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 	smoothing_groups = SMOOTH_GROUP_ROCKHILL_STRUCTURE_ROGUETENT
 
@@ -5470,6 +7343,11 @@
 	density = FALSE
 	pixel_x = -32
 	obj_flags = NONE
+	max_integrity = 999999
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/sawblade_trap
@@ -5480,6 +7358,11 @@
 	icon_state = "trap_saw"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/shisha/hookah
@@ -5489,6 +7372,11 @@
 	icon_state = "hookah"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = ABOVE_GAME_PLANE
 	layer = ABOVE_MOB_LAYER
 
@@ -5500,6 +7388,9 @@
 	icon_state = "soil"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/spider/stickyweb/solo
@@ -5510,6 +7401,12 @@
 	opacity = TRUE
 	alpha = 109
 	obj_flags = CAN_BE_HIT
+	max_integrity = 30
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
+	rockhill_debris = list(/obj/item/natural/silk = 1)
 	rockhill_random_dir = TRUE
 	layer = BELOW_OBJ_LAYER
 
@@ -5521,6 +7418,10 @@
 	icon_state = "spike_pit"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.8
 
 /obj/structure/standingbell
@@ -5531,6 +7432,10 @@
 	icon_state = "standingbell"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/stationary_bell
@@ -5541,6 +7446,11 @@
 	icon_state = "churchbell"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = ABOVE_GAME_PLANE
 	layer = ABOVE_MOB_LAYER
 
@@ -5552,6 +7462,11 @@
 	icon_state = "rack"
 	pixel_y = 32
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/telescope
@@ -5562,6 +7477,11 @@
 	icon_state = "telescope"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/trap/bomb
@@ -5573,6 +7493,11 @@
 	alpha = 60
 	obj_flags = CAN_BE_HIT
 	time_between_triggers = 100
+	max_integrity = 500
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/trap/curse
@@ -5584,6 +7509,11 @@
 	alpha = 255
 	obj_flags = CAN_BE_HIT
 	time_between_triggers = 100
+	max_integrity = 500
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/trap/curse/hidden
@@ -5595,6 +7525,11 @@
 	alpha = 35
 	obj_flags = CAN_BE_HIT
 	time_between_triggers = 100
+	max_integrity = 500
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/trap/flame
@@ -5606,6 +7541,11 @@
 	alpha = 60
 	obj_flags = CAN_BE_HIT
 	time_between_triggers = 100
+	max_integrity = 500
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/trap/rock_fall
@@ -5617,6 +7557,11 @@
 	alpha = 60
 	obj_flags = CAN_BE_HIT
 	time_between_triggers = 100
+	max_integrity = 500
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/trap/saw_blades
@@ -5628,6 +7573,11 @@
 	alpha = 60
 	obj_flags = CAN_BE_HIT
 	time_between_triggers = 100
+	max_integrity = 500
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/trap/shock
@@ -5639,6 +7589,11 @@
 	alpha = 60
 	obj_flags = CAN_BE_HIT
 	time_between_triggers = 100
+	max_integrity = 500
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/trap/wall_projectile
@@ -5650,6 +7605,11 @@
 	alpha = 60
 	obj_flags = CAN_BE_HIT
 	time_between_triggers = 100
+	max_integrity = 500
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/trap/wall_projectile/acidsplash
@@ -5661,6 +7621,11 @@
 	alpha = 60
 	obj_flags = CAN_BE_HIT
 	time_between_triggers = 100
+	max_integrity = 500
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/trap/wall_projectile/frostbolt
@@ -5672,6 +7637,11 @@
 	alpha = 60
 	obj_flags = CAN_BE_HIT
 	time_between_triggers = 100
+	max_integrity = 500
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/trap/water
@@ -5683,6 +7653,11 @@
 	alpha = 60
 	obj_flags = CAN_BE_HIT
 	time_between_triggers = 100
+	max_integrity = 500
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/underworld/barrier
@@ -5692,6 +7667,11 @@
 	icon_state = "spiritpart"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/underworld/carriage
@@ -5701,6 +7681,11 @@
 	icon_state = "carriage_lit"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = ABOVE_GAME_PLANE
 	layer = ABOVE_MOB_LAYER
 
@@ -5711,6 +7696,11 @@
 	icon_state = "carriage_normal"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/underworld/carriageman
@@ -5720,6 +7710,11 @@
 	icon_state = "carriageman"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = ABOVE_GAME_PLANE
 	layer = ABOVE_MOB_LAYER
 
@@ -5729,6 +7724,11 @@
 	icon_state = "vat"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/vampire/necromanticbook
@@ -5738,6 +7738,11 @@
 	density = TRUE
 	pixel_x = -16
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/vampire/portalmaker
@@ -5746,6 +7751,11 @@
 	icon_state = "obelisk"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/vampire/scryingorb
@@ -5754,6 +7764,11 @@
 	icon_state = "scrying"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/vampthrone
@@ -5765,6 +7780,11 @@
 	density = FALSE
 	pixel_x = -32
 	obj_flags = NONE
+	max_integrity = 999999
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/vine
@@ -5775,6 +7795,12 @@
 	icon_state = "Light1"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 5
+	resistance_flags = FLAMMABLE
+	damage_deflection = 5
+	rockhill_dulling = "cut"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = null
 	rockhill_variant = "Light#"
 	rockhill_variant_min = 1
 	rockhill_variant_max = 2
@@ -5789,6 +7815,11 @@
 	icon_state = "dormantobelisk"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/wallladder
@@ -5798,6 +7829,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/structure.dmi'
 	icon_state = "ladderwall"
 	obj_flags = BLOCK_Z_OUT_DOWN
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/waterwheel
@@ -5806,6 +7842,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/waterwheel.dmi'
 	icon_state = "1"
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_MOB_LAYER
 
 /obj/structure/well
@@ -5817,6 +7858,12 @@
 	density = TRUE
 	opacity = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	damage_deflection = 30
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.91
 
 /obj/structure/well/fountain
@@ -5828,6 +7875,12 @@
 	opacity = 0
 	pixel_x = -15
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	damage_deflection = 30
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = ABOVE_GAME_PLANE
 	layer = 4.5
 
@@ -5840,6 +7893,11 @@
 	opacity = 0
 	pixel_x = -16
 	obj_flags = CAN_BE_HIT
+	resistance_flags = LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | FREEZE_PROOF | INDESTRUCTIBLE
+	damage_deflection = 30
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 4.5
 
 /obj/structure/well/fountainswamp
@@ -5852,6 +7910,12 @@
 	pixel_x = -15
 	color = "#a3c2a8"
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	damage_deflection = 30
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = ABOVE_GAME_PLANE
 	layer = 4.5
 
@@ -5864,6 +7928,12 @@
 	opacity = 0
 	color = "#59aa65"
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	damage_deflection = 30
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.91
 
 /obj/structure/wild_plant/nospread/manabloom
@@ -5872,6 +7942,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/crops.dmi'
 	icon_state = "manabloom2"
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/windmill
@@ -5882,6 +7957,11 @@
 	icon_state = "1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	plane = ABOVE_GAME_PLANE
 	layer = 4.5
 
@@ -5893,6 +7973,11 @@
 	icon_state = "creation1"
 	density = TRUE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/wooden_horse
@@ -5904,6 +7989,12 @@
 	density = TRUE
 	pixel_x = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/natural/wood/plank = 1)
 	layer = OBJ_LAYER
 
 /obj/structure/wooden_horse/iron
@@ -5914,6 +8005,12 @@
 	density = TRUE
 	pixel_x = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/natural/wood/plank = 1)
 	layer = OBJ_LAYER
 
 /obj/structure/wooden_horse/mobile
@@ -5924,6 +8021,12 @@
 	density = TRUE
 	pixel_x = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/natural/wood/plank = 1)
 	layer = OBJ_LAYER
 
 /obj/structure/wooden_horse/small
@@ -5934,6 +8037,12 @@
 	density = TRUE
 	pixel_x = 0
 	obj_flags = CAN_BE_HIT
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/natural/wood/plank = 1)
 	layer = OBJ_LAYER
 
 /obj/structure/zizo_bane
@@ -5944,4 +8053,9 @@
 	icon_state = "zizo_bane"
 	density = FALSE
 	obj_flags = CAN_BE_HIT
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER

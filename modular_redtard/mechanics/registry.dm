@@ -53,6 +53,7 @@ GLOBAL_DATUM(rogue_mechanics, /datum/rogue_mechanics)
 /proc/rogue_value_files()
 	return list(
 		"alchemy.txt" = 'config/redtard/mechanics/values/alchemy.txt',
+		"burial.txt" = 'config/redtard/mechanics/values/burial.txt',
 		"combat.txt" = 'config/redtard/mechanics/values/combat.txt',
 		"crafting.txt" = 'config/redtard/mechanics/values/crafting.txt',
 		"faith.txt" = 'config/redtard/mechanics/values/faith.txt',
@@ -63,6 +64,7 @@ GLOBAL_DATUM(rogue_mechanics, /datum/rogue_mechanics)
 		"pve.txt" = 'config/redtard/mechanics/values/pve.txt',
 		"races.txt" = 'config/redtard/mechanics/values/races.txt',
 		"specials.txt" = 'config/redtard/mechanics/values/specials.txt',
+		"structures.txt" = 'config/redtard/mechanics/values/structures.txt',
 		"trade.txt" = 'config/redtard/mechanics/values/trade.txt',
 		"treasury.txt" = 'config/redtard/mechanics/values/treasury.txt',
 		"triumphs.txt" = 'config/redtard/mechanics/values/triumphs.txt',

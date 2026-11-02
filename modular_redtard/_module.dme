@@ -109,6 +109,11 @@
 #include "lighting\host.dm"
 #include "rockhill\port_data.dm"
 #include "rockhill\_rockhill.dm"
+// Flora, herbs, sparks and the sky over built roofs (rockhill/, block 2)
+#include "rockhill\flora.dm"
+#include "rockhill\herbs.dm"
+#include "rockhill\sparks.dm"
+#include "rockhill\sky.dm"
 #include "migrants\migrants.dm"
 #include "lobby\rogue_join_rules.dm"
 #include "admin\player_quality.dm"
@@ -142,6 +147,7 @@
 #include "heritage\customizers.dm"
 #include "heritage\accents.dm"
 #include "heritage\race_mechanics.dm"
+#include "heritage\dwarf_smithing.dm"
 // Faith (faith/, block 11): devotion, prayer and the basket of miracles, after heritage/ for /datum/patron
 #include "faith\_defines.dm"
 #include "faith\faith.dm"
@@ -183,6 +189,10 @@
 #include "economy\ported\stockpile.dm"
 #include "economy\ported\supply_packs.dm"
 #include "economy\ported\job_accounts.dm"
+// Known people and the examine of rank (jobs/, block 2)
+#include "jobs\_defines.dm"
+#include "jobs\known_people.dm"
+#include "jobs\examine.dm"
 // Stage 2: survival and daily life (survival/)
 #include "survival\_defines.dm"
 #include "survival\config.dm"
@@ -276,6 +286,12 @@
 #include "farming\composter.dm"
 #include "farming\wild_plants.dm"
 #include "farming\pumpkins.dm"
+// Burial (burial/, block 2): corpse rot, digging, graves, mud, the dead bodies of the map
+#include "burial\_defines.dm"
+#include "burial\corpse_rot.dm"
+#include "burial\digging.dm"
+#include "burial\graves.dm"
+#include "burial\dead_bodies.dm"
 // Stage 6: PvE depth (pve/)
 #include "pve\_defines.dm"
 #include "pve\mind.dm"
@@ -331,6 +347,10 @@
 #include "tests\wounds_rogue.dm"
 #include "tests\drinks_rogue.dm"
 #include "tests\farming_rogue.dm"
+#include "tests\burial_rogue.dm"
+#include "tests\people_rogue.dm"
+#include "tests\flora_rogue.dm"
+#include "tests\structures_rogue.dm"
 #endif
 
 #ifdef REDTARD_TEST_FOCUS

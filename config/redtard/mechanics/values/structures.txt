@@ -1,0 +1,86 @@
+# Ratwood's town structures, furniture and dungeon devices (rockhill/: far travel, hand carts, bells, telescopes, hookahs, sword racks, arcyne walls, bone piles, pressure plates).
+# Mechanics numbers: name = value, described by the # lines right above it; times are in deciseconds. The build compiles this file in, so its numbers are the defaults; a file of the same name in config/redtard_private/mechanics/values/ is read instead when present.
+
+# Deciseconds before a far travel tile sends someone out of the round (Ratwood do_after 50).
+far_travel_time = 50
+
+# Tiles the one leaving and the one sending them may be from the far travel tile when they go (Ratwood get_dist 2).
+far_travel_range = 2
+
+# Weight a hand cart carries; an item weighs its size class (Ratwood maximum_capacity 60).
+handcart_capacity = 60
+
+# Weight of a creature in a hand cart (Ratwood arbitrary_living_creature_weight 10).
+handcart_creature_weight = 10
+
+# Deciseconds to load a creature into a hand cart, or to climb in lying down (Ratwood do_after 20).
+handcart_load_time = 20
+
+# Weight a hand cart carries with a wooden cog in its wheel (Ratwood cart_capacity 90).
+handcart_cog_capacity = 90
+
+# Weight a hand cart carries with a reliable wooden cog, the level 1 wheelbrace (Ratwood cart_capacity 120).
+handcart_reliable_cog_capacity = 120
+
+# Weight a hand cart carries with an unstable wooden cog, the level 2 wheelbrace (Ratwood cart_capacity 140).
+handcart_unstable_cog_capacity = 140
+
+# Deciseconds between two rings of a common bell (Ratwood last_ring + 15).
+bell_common_cooldown = 15
+
+# Deciseconds between two rings of a ship's bell (Ratwood last_ring + 50).
+boatbell_cooldown = 50
+
+# Deciseconds of ringing a service bell before its chime reaches those it calls (Ratwood do_after 10 SECONDS).
+service_bell_ring_time = 100
+
+# Deciseconds before a service bell can be rung again (Ratwood cooldown 10 MINUTES).
+service_bell_cooldown = 6000
+
+# Deciseconds before a church bell can be rung again (Ratwood cooldown 3 SECONDS).
+church_bell_cooldown = 30
+
+# Tiles a church bell is heard across (Ratwood ring_bell() and loud_message hearing_distance 150).
+church_bell_range = 150
+
+# Tiles within which a church bell is heard ringing up close rather than as a distant toll (Ratwood distance <= 7).
+church_bell_near_range = 7
+
+# Perception at or below which one far from a church bell hears only something somewhere (Ratwood loud_message STAPER <= 8).
+loud_message_perception = 8
+
+# Deciseconds of gazing through a telescope at Astrata or Noc (Ratwood do_after 25).
+telescope_gaze_time = 25
+
+# Burn to the head of one Astrata blinds through a telescope (Ratwood receive_damage(0, 5)).
+telescope_astrata_burn = 5
+
+# Deciseconds Noc's blessing from a telescope lasts (Ratwood nocblessing duration 30 MINUTES).
+noc_blessing_time = 18000
+
+# Intelligence Noc's blessing adds (Ratwood nocblessing effectedstats intelligence 1).
+noc_blessing_intelligence = 1
+
+# Units of smoking mix a hookah holds (Ratwood create_reagents(60)).
+hookah_volume = 60
+
+# Deciseconds of one puff from a hookah (Ratwood do_after_mob 2 SECONDS).
+hookah_puff_time = 20
+
+# Tiles a smoker may walk from the hookah before its mouthpiece flies out of the hand (Ratwood get_dist > 2).
+hookah_hose_range = 2
+
+# Deciseconds to lock or unlock a sword rack with an artificer's linker (Ratwood toggle_lock do_after 20).
+sword_rack_lock_time = 20
+
+# Deciseconds an arcyne wall stands before it fades (Ratwood forcefield_weak timeleft 20 SECONDS).
+arcyne_wall_time = 200
+
+# Deciseconds a bone pile takes to raise its haunt, at first and after each death (Ratwood addtimer 4 SECONDS).
+bonepile_haunt_delay = 40
+
+# Tiles a haunt may stray from its bone pile before it is pulled back to it (Ratwood offset > 8).
+haunt_leash_range = 8
+
+# Deciseconds to hide a pressure plate under dirt or to wipe the dirt away (Ratwood do_after 10).
+pressure_plate_conceal_time = 10

@@ -1,14 +1,67 @@
+/// Ratwood post_buckle_mob() of its beds: the one lying on a bed lies this far up on it.
+#define ROCKHILL_BED_BUCKLE_SHIFT 5
+#define ROCKHILL_BED_BUCKLE_SOURCE "rockhill_bed_buckle"
+/// Ratwood's table ongive(): a hand of cards laid out face up is fanned out, each card this far from the last.
+#define ROCKHILL_CARD_FAN_STEP 8
+/// ...starting this far left of the middle for each card after the first.
+#define ROCKHILL_CARD_FAN_START 2
+
 /obj/structure/table/wood/rockhill
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "tablewood"
 	smoothing_flags = NONE
 	smoothing_groups = null
 	canSmoothWith = null
+	/// What is left when the table is taken apart with tools (Ratwood buildstack): a small log for a wooden one, nothing for
+	/// stone and fine tables, whose Ratwood types have none.
+	var/rockhill_buildstack
+
+/obj/structure/table/wood/rockhill/wood
+	rockhill_buildstack = /obj/item/grown/log/tree/small
 
 /obj/structure/table/wood/rockhill/Initialize(mapload)
 	. = ..()
 	apply_rockhill_look()
 	AddComponent(/datum/component/rockhill_hiding_spot)
+
+/// Ratwood deconstruct(): taken apart with a screwdriver or a wrench, the table leaves its buildstack and no frame. Broken, it
+/// leaves what destruction leaves (rockhill/destruction.dm).
+/obj/structure/table/wood/rockhill/atom_deconstruct(disassembled = TRUE)
+	if(!disassembled)
+		return ..()
+	if(rockhill_buildstack)
+		new rockhill_buildstack(get_turf(src))
+
+/// Ratwood's table ongive(), on the right click: a hand of cards is laid out face up and fanned so the cards do not stack, a
+/// single card goes down face up.
+/obj/structure/table/wood/rockhill/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(user.combat_mode || is_flipped)
+		return ..()
+	if(istype(tool, /obj/item/toy/cards/cardhand))
+		lay_out_hand(user, tool)
+		return ITEM_INTERACT_SUCCESS
+	if(istype(tool, /obj/item/toy/singlecard))
+		var/obj/item/toy/singlecard/card = tool
+		if(!card.flipped)
+			card.Flip(CARD_FACEUP)
+		return table_place_act(user, card, modifiers)
+	return ..()
+
+/obj/structure/table/wood/rockhill/proc/lay_out_hand(mob/living/user, obj/item/toy/cards/cardhand/hand)
+	var/turf/table_turf = get_turf(src)
+	var/list/obj/item/toy/singlecard/cards = hand.fetch_card_atoms()
+	if(!table_turf || !length(cards))
+		return
+	user.visible_message(span_notice("[user] lays [user.p_their()] hand of cards face-up on the table."), span_notice("I lay my cards face-up on the table."))
+	var/offset = -(length(cards) - 1) * ROCKHILL_CARD_FAN_START
+	for(var/obj/item/toy/singlecard/card as anything in cards.Copy())
+		hand.card_atoms -= card
+		card.forceMove(table_turf)
+		card.Flip(CARD_FACEUP)
+		card.pixel_x = offset
+		card.pixel_y = 0
+		offset += ROCKHILL_CARD_FAN_STEP
+	qdel(hand)
 
 /obj/structure/chair/wood/rockhill
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/structure.dmi'
@@ -118,6 +171,15 @@
 	apply_rockhill_look()
 	AddComponent(/datum/component/rockhill_hiding_spot)
 
+/// Ratwood's beds (structures/beds_chairs/roguechair.dm): the one lying on one lies a little up on it.
+/obj/structure/bed/rockhill/rogue/post_buckle_mob(mob/living/buckled)
+	. = ..()
+	buckled.add_offsets(ROCKHILL_BED_BUCKLE_SOURCE, y_add = ROCKHILL_BED_BUCKLE_SHIFT)
+
+/obj/structure/bed/rockhill/rogue/post_unbuckle_mob(mob/living/buckled)
+	. = ..()
+	buckled.remove_offsets(ROCKHILL_BED_BUCKLE_SOURCE)
+
 /obj/structure/rack/rockhill
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/structure.dmi'
 	icon_state = "rack"
@@ -205,6 +267,32 @@
 	if(rockhill_pick_lock(user, lockpick, src, lockdifficulty, lock_strength))
 		toggle_key_lock(user)
 
+/// Ratwood CtrlShiftClick(): the skittish dive into a crate (TG's Skittish quirk). Running into one dives in as well, by TG's
+/// skittish element.
+/obj/structure/closet/crate/wooden/rockhill/click_ctrl_shift(mob/user)
+	if(!isliving(user) || !HAS_TRAIT(user, TRAIT_SKITTISH) || !divable || !isturf(user.loc))
+		return NONE
+	dive_into(user)
+	return CLICK_ACTION_SUCCESS
+
+/// Ratwood dive_into(): open the crate, step in, lie down and pull the lid shut over oneself. Ratwood unlocks a locked crate for
+/// the dive and locks it after; a key lock here stays as it is, so a locked crate does not let one in.
+/obj/structure/closet/crate/wooden/rockhill/proc/dive_into(mob/living/user)
+	var/turf/crate_turf = get_turf(src)
+	if(!opened && (locked || !open(user)))
+		to_chat(user, span_warning("It won't budge!"))
+		return
+	step_towards(user, crate_turf)
+	if(get_turf(user) != crate_turf)
+		return
+	user.set_resting(TRUE, silent = TRUE, instant = TRUE)
+	if(!close(user))
+		to_chat(user, span_warning("I can't get [src] to close!"))
+		user.set_resting(FALSE, silent = TRUE, instant = TRUE)
+		return
+	user.set_resting(FALSE, silent = TRUE, instant = TRUE)
+	crate_turf.visible_message(span_warning("[user] dives into [src]!"))
+
 /obj/structure/chair/wood/rockhill
 	var/sleepy = 0
 
@@ -263,3 +351,8 @@
 /obj/structure/rockhill/toilet/atom_deconstruct(disassembled = TRUE)
 	for(var/atom/movable/thing as anything in contents)
 		thing.forceMove(drop_location())
+
+#undef ROCKHILL_BED_BUCKLE_SHIFT
+#undef ROCKHILL_BED_BUCKLE_SOURCE
+#undef ROCKHILL_CARD_FAN_STEP
+#undef ROCKHILL_CARD_FAN_START

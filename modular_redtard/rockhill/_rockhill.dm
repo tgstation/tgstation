@@ -86,3 +86,13 @@
 #include "ported\species.dm"
 #include "ported\races.dm"
 #include "ported\landmarks.dm"
+// Structures and devices (block 2): after ported\_job_titles.dm for JOB_ROCKHILL_*
+#include "tents.dm"
+#include "far_travel.dm"
+#include "handcarts.dm"
+#include "town_fixtures.dm"
+#include "flagpoles.dm"
+#include "mannequins.dm"
+#include "hookahs.dm"
+#include "sword_racks.dm"
+#include "dungeon_devices.dm"

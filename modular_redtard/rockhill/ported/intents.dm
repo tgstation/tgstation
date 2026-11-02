@@ -274,6 +274,7 @@
 	reach = 1
 	chargetime = 0
 	swingdelay_type = 2
+	demolition_mod = 2.5
 	canparry = TRUE
 	candodge = TRUE
 	no_attack = FALSE
@@ -297,6 +298,7 @@
 	reach = 1
 	chargetime = 0
 	swingdelay_type = 2
+	demolition_mod = 2.5
 	canparry = TRUE
 	candodge = TRUE
 	no_attack = FALSE
@@ -320,6 +322,7 @@
 	reach = 1
 	chargetime = 0
 	swingdelay_type = 3
+	demolition_mod = 2.5
 	canparry = FALSE
 	candodge = FALSE
 	no_attack = FALSE
@@ -343,6 +346,7 @@
 	reach = 2
 	chargetime = 0
 	swingdelay_type = 2
+	demolition_mod = 1.5
 	canparry = TRUE
 	candodge = TRUE
 	no_attack = FALSE
@@ -366,6 +370,7 @@
 	reach = 2
 	chargetime = 0
 	swingdelay_type = 2
+	demolition_mod = 3
 	canparry = TRUE
 	candodge = TRUE
 	no_attack = FALSE
@@ -389,6 +394,7 @@
 	reach = 1
 	chargetime = 0
 	swingdelay_type = 2
+	demolition_mod = 2.5
 	canparry = TRUE
 	candodge = TRUE
 	no_attack = FALSE
@@ -412,6 +418,7 @@
 	reach = 1
 	chargetime = 0
 	swingdelay = 0
+	demolition_mod = 2.5
 	canparry = TRUE
 	candodge = TRUE
 	no_attack = FALSE
@@ -435,6 +442,7 @@
 	reach = 1
 	chargetime = 0
 	swingdelay = 0
+	demolition_mod = 2.5
 	canparry = TRUE
 	candodge = TRUE
 	no_attack = FALSE
@@ -484,6 +492,7 @@
 	effective_range = 2
 	effective_range_type = 1
 	sharpness_penalty = 2
+	demolition_mod = 2.5
 	canparry = TRUE
 	candodge = TRUE
 	no_attack = FALSE
@@ -624,6 +633,7 @@
 	reach = 1
 	chargetime = 0
 	swingdelay = 0
+	demolition_mod = 0.05
 	canparry = TRUE
 	candodge = TRUE
 	no_attack = FALSE
@@ -647,6 +657,7 @@
 	reach = 1
 	chargetime = 0
 	swingdelay = 8
+	demolition_mod = 0.05
 	canparry = TRUE
 	candodge = TRUE
 	no_attack = FALSE
@@ -670,6 +681,7 @@
 	reach = 1
 	chargetime = 0
 	swingdelay = 4
+	demolition_mod = 0.05
 	canparry = TRUE
 	candodge = TRUE
 	no_attack = FALSE
@@ -2673,6 +2685,7 @@
 	chargetime = 0
 	swingdelay_type = 2
 	intent_intdamage_factor = 0.05
+	demolition_mod = 0.05
 	canparry = TRUE
 	candodge = TRUE
 	no_attack = FALSE
@@ -2698,6 +2711,7 @@
 	chargetime = 0
 	swingdelay_type = 2
 	intent_intdamage_factor = 0.2
+	demolition_mod = 0.05
 	canparry = TRUE
 	candodge = TRUE
 	no_attack = FALSE
@@ -2723,6 +2737,7 @@
 	chargetime = 0
 	swingdelay_type = 2
 	intent_intdamage_factor = 0.2
+	demolition_mod = 0.05
 	canparry = TRUE
 	candodge = TRUE
 	no_attack = FALSE
@@ -2750,6 +2765,7 @@
 	effective_range = 2
 	effective_range_type = 1
 	intent_intdamage_factor = 0.05
+	demolition_mod = 0.05
 	canparry = TRUE
 	candodge = TRUE
 	no_attack = FALSE
@@ -2777,6 +2793,7 @@
 	effective_range = 2
 	effective_range_type = 1
 	intent_intdamage_factor = 0.1
+	demolition_mod = 0.05
 	canparry = TRUE
 	candodge = TRUE
 	no_attack = FALSE
@@ -4594,6 +4611,7 @@
 	reach = 1
 	chargetime = 0
 	swingdelay = 0
+	demolition_mod = 1.25
 	canparry = TRUE
 	candodge = TRUE
 	no_attack = FALSE
@@ -4710,6 +4728,7 @@
 	chargetime = 0
 	swingdelay = 15
 	intent_intdamage_factor = 0.05
+	demolition_mod = 0.05
 	canparry = TRUE
 	candodge = TRUE
 	no_attack = FALSE

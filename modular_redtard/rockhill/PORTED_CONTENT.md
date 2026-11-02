@@ -1013,7 +1013,7 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/effect/lily_petal` | 1 |
 | `/obj/effect/lily_petal/three` | 1 |
 
-## items.dm (3250 types)
+## items.dm (3255 types)
 
 | Type | Tiles |
 |---|---|
@@ -3414,6 +3414,11 @@ Ratwood revision: `9139abc2da265927eda1f31d04364f942dcb6f4a` (2026-10-26).
 | `/obj/item/natural/head/volf` | 0 |
 | `/obj/item/natural/hide/cured` | 0 |
 | `/obj/item/natural/rabbitsfoot` | 0 |
+| `/obj/item/natural/rock/cinnabar` | 0 |
+| `/obj/item/natural/rock/copper` | 0 |
+| `/obj/item/natural/rock/elementalmote` | 0 |
+| `/obj/item/natural/rock/gold` | 0 |
+| `/obj/item/natural/rock/tin` | 0 |
 | `/obj/item/natural/shellplant/pumpkin` | 0 |
 | `/obj/item/natural/silk` | 0 |
 | `/obj/item/natural/thorn` | 0 |
@@ -5621,7 +5626,20 @@ Area music and ambience are kept in the repository, as Ratwood keeps them, and r
 - `modular_redtard/rockhill/sound/combat/hits/hi_bolt (1).ogg` from Ratwood `sound/combat/hits/hi_bolt (1).ogg`
 - `modular_redtard/rockhill/sound/combat/hits/hi_bolt (2).ogg` from Ratwood `sound/combat/hits/hi_bolt (2).ogg`
 - `modular_redtard/rockhill/sound/combat/hits/kick/kick.ogg` from Ratwood `sound/combat/hits/kick/kick.ogg`
+- `modular_redtard/rockhill/sound/combat/hits/onglass/glasshit.ogg` from Ratwood `sound/combat/hits/onglass/glasshit.ogg`
+- `modular_redtard/rockhill/sound/combat/hits/onmetal/grille (1).ogg` from Ratwood `sound/combat/hits/onmetal/grille (1).ogg`
+- `modular_redtard/rockhill/sound/combat/hits/onmetal/grille (2).ogg` from Ratwood `sound/combat/hits/onmetal/grille (2).ogg`
+- `modular_redtard/rockhill/sound/combat/hits/onmetal/grille (3).ogg` from Ratwood `sound/combat/hits/onmetal/grille (3).ogg`
+- `modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (1).ogg` from Ratwood `sound/combat/hits/onmetal/metalimpact (1).ogg`
+- `modular_redtard/rockhill/sound/combat/hits/onmetal/metalimpact (2).ogg` from Ratwood `sound/combat/hits/onmetal/metalimpact (2).ogg`
+- `modular_redtard/rockhill/sound/combat/hits/onmetal/sheet (1).ogg` from Ratwood `sound/combat/hits/onmetal/sheet (1).ogg`
+- `modular_redtard/rockhill/sound/combat/hits/onmetal/sheet (2).ogg` from Ratwood `sound/combat/hits/onmetal/sheet (2).ogg`
+- `modular_redtard/rockhill/sound/combat/hits/onstone/wallhit.ogg` from Ratwood `sound/combat/hits/onstone/wallhit.ogg`
+- `modular_redtard/rockhill/sound/combat/hits/onstone/wallhit2.ogg` from Ratwood `sound/combat/hits/onstone/wallhit2.ogg`
+- `modular_redtard/rockhill/sound/combat/hits/onstone/wallhit3.ogg` from Ratwood `sound/combat/hits/onstone/wallhit3.ogg`
 - `modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg` from Ratwood `sound/combat/hits/onwood/destroyfurniture.ogg`
+- `modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg` from Ratwood `sound/combat/hits/onwood/woodimpact (1).ogg`
+- `modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg` from Ratwood `sound/combat/hits/onwood/woodimpact (2).ogg`
 - `modular_redtard/rockhill/sound/combat/hits/pick/genpick (1).ogg` from Ratwood `sound/combat/hits/pick/genpick (1).ogg`
 - `modular_redtard/rockhill/sound/combat/hits/pick/genpick (2).ogg` from Ratwood `sound/combat/hits/pick/genpick (2).ogg`
 - `modular_redtard/rockhill/sound/combat/hits/punch/punch (1).ogg` from Ratwood `sound/combat/hits/punch/punch (1).ogg`
@@ -5668,6 +5686,7 @@ Area music and ambience are kept in the repository, as Ratwood keeps them, and r
 - `modular_redtard/rockhill/sound/foley/doors/curtain.ogg` from Ratwood `sound/foley/doors/curtain.ogg`
 - `modular_redtard/rockhill/sound/foley/doors/lockmetal.ogg` from Ratwood `sound/foley/doors/lockmetal.ogg`
 - `modular_redtard/rockhill/sound/foley/grindblade.ogg` from Ratwood `sound/foley/grindblade.ogg`
+- `modular_redtard/rockhill/sound/foley/hit_rock.ogg` from Ratwood `sound/foley/hit_rock.ogg`
 - `modular_redtard/rockhill/sound/foley/ladder.ogg` from Ratwood `sound/foley/ladder.ogg`
 - `modular_redtard/rockhill/sound/foley/latch.ogg` from Ratwood `sound/foley/latch.ogg`
 - `modular_redtard/rockhill/sound/foley/nockarrow.ogg` from Ratwood `sound/foley/nockarrow.ogg`
@@ -5678,6 +5697,7 @@ Area music and ambience are kept in the repository, as Ratwood keeps them, and r
 - `modular_redtard/rockhill/sound/foley/sewflesh.ogg` from Ratwood `sound/foley/sewflesh.ogg`
 - `modular_redtard/rockhill/sound/foley/slap.ogg` from Ratwood `sound/foley/slap.ogg`
 - `modular_redtard/rockhill/sound/foley/slingload.ogg` from Ratwood `sound/foley/slingload.ogg`
+- `modular_redtard/rockhill/sound/foley/smash_rock.ogg` from Ratwood `sound/foley/smash_rock.ogg`
 - `modular_redtard/rockhill/sound/foley/torchfixtureput.ogg` from Ratwood `sound/foley/torchfixtureput.ogg`
 - `modular_redtard/rockhill/sound/foley/torchfixturetake.ogg` from Ratwood `sound/foley/torchfixturetake.ogg`
 - `modular_redtard/rockhill/sound/foley/woodclimb.ogg` from Ratwood `sound/foley/woodclimb.ogg`
@@ -5692,6 +5712,7 @@ Area music and ambience are kept in the repository, as Ratwood keeps them, and r
 - `modular_redtard/rockhill/sound/items/bsmithfail.ogg` from Ratwood `sound/items/bsmithfail.ogg`
 - `modular_redtard/rockhill/sound/items/firelight.ogg` from Ratwood `sound/items/firelight.ogg`
 - `modular_redtard/rockhill/sound/items/firesnuff.ogg` from Ratwood `sound/items/firesnuff.ogg`
+- `modular_redtard/rockhill/sound/items/flint.ogg` from Ratwood `sound/items/flint.ogg`
 - `modular_redtard/rockhill/sound/items/gem.ogg` from Ratwood `sound/items/gem.ogg`
 - `modular_redtard/rockhill/sound/items/quench_barrel1.ogg` from Ratwood `sound/items/quench_barrel1.ogg`
 - `modular_redtard/rockhill/sound/items/quench_barrel2.ogg` from Ratwood `sound/items/quench_barrel2.ogg`
@@ -5731,6 +5752,7 @@ Area music and ambience are kept in the repository, as Ratwood keeps them, and r
 - `modular_redtard/rockhill/sound/misc/surrender.ogg` from Ratwood `sound/misc/surrender.ogg`
 - `modular_redtard/rockhill/sound/misc/treefall.ogg` from Ratwood `sound/misc/treefall.ogg`
 - `modular_redtard/rockhill/sound/misc/woodhit.ogg` from Ratwood `sound/misc/woodhit.ogg`
+- `modular_redtard/rockhill/sound/vo/mobs/ghost/skullpile_hit.ogg` from Ratwood `sound/vo/mobs/ghost/skullpile_hit.ogg`
 - `modular_redtard/rockhill/sound/vo/mobs/plant/pain (1).ogg` from Ratwood `sound/vo/mobs/plant/pain (1).ogg`
 - `modular_redtard/rockhill/sound/vo/mobs/plant/pain (2).ogg` from Ratwood `sound/vo/mobs/plant/pain (2).ogg`
 - `modular_redtard/rockhill/sound/vo/mobs/plant/pain (3).ogg` from Ratwood `sound/vo/mobs/plant/pain (3).ogg`

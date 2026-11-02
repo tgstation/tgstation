@@ -267,7 +267,13 @@
 	if(!iscarbon(user) || user != get_mob())
 		return
 	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
-		rogue_hud_not_implemented(user)
+		// Ratwood healths/blood handle_click(): the people one knows (jobs/known_people.dm).
+		if(!user.mind)
+			return
+		if(length(user.mind.rogue_known_people))
+			user.mind.rogue_display_known_people(user)
+		else
+			to_chat(user, span_warning("I don't know anyone."))
 		return
 	user.check_self_for_injuries()
 

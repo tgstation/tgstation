@@ -49338,6 +49338,31 @@
 	inhand_y_dimension = 64
 	rogue_baked_inhand = TRUE
 
+/obj/item/natural/rock/cinnabar
+	name = "boulder"
+	desc = "A rock protudes from the ground."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/natural.dmi'
+	icon_state = "stonebig1"
+	w_class = WEIGHT_CLASS_HUGE
+	force = 20
+	throwforce = 25
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 96
+	rogue_grid_height = 96
+	rogue_force_wielded = 22
+	minstr = 11
+	associated_skill = /datum/attribute/skill/combat/unarmed
+	gripped_intents = list(/datum/intent/hit)
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
 /obj/item/natural/rock/coal
 	name = "boulder"
 	desc = "A rock protudes from the ground."
@@ -49363,7 +49388,82 @@
 	inhand_y_dimension = 64
 	rogue_baked_inhand = TRUE
 
+/obj/item/natural/rock/copper
+	name = "boulder"
+	desc = "A rock protudes from the ground."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/natural.dmi'
+	icon_state = "stonebig1"
+	w_class = WEIGHT_CLASS_HUGE
+	force = 20
+	throwforce = 25
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 96
+	rogue_grid_height = 96
+	rogue_force_wielded = 22
+	minstr = 11
+	associated_skill = /datum/attribute/skill/combat/unarmed
+	gripped_intents = list(/datum/intent/hit)
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/natural/rock/elementalmote
+	name = "boulder"
+	desc = "A rock protudes from the ground."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/natural.dmi'
+	icon_state = "stonebig1"
+	w_class = WEIGHT_CLASS_HUGE
+	force = 20
+	throwforce = 25
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 96
+	rogue_grid_height = 96
+	rogue_force_wielded = 22
+	minstr = 11
+	associated_skill = /datum/attribute/skill/combat/unarmed
+	gripped_intents = list(/datum/intent/hit)
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
 /obj/item/natural/rock/gem
+	name = "boulder"
+	desc = "A rock protudes from the ground."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/natural.dmi'
+	icon_state = "stonebig1"
+	w_class = WEIGHT_CLASS_HUGE
+	force = 20
+	throwforce = 25
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 96
+	rogue_grid_height = 96
+	rogue_force_wielded = 22
+	minstr = 11
+	associated_skill = /datum/attribute/skill/combat/unarmed
+	gripped_intents = list(/datum/intent/hit)
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/natural/rock/gold
 	name = "boulder"
 	desc = "A rock protudes from the ground."
 	icon = 'modular_redtard/rockhill/icons/roguetown/items/natural.dmi'
@@ -49488,6 +49588,31 @@
 	rogue_baked_inhand = TRUE
 
 /obj/item/natural/rock/silver
+	name = "boulder"
+	desc = "A rock protudes from the ground."
+	icon = 'modular_redtard/rockhill/icons/roguetown/items/natural.dmi'
+	icon_state = "stonebig1"
+	w_class = WEIGHT_CLASS_HUGE
+	force = 20
+	throwforce = 25
+	worn_icon_state = null
+	rogue_sleeved = null
+	worn_x_dimension = 32
+	worn_y_dimension = 32
+	rogue_grid_width = 96
+	rogue_grid_height = 96
+	rogue_force_wielded = 22
+	minstr = 11
+	associated_skill = /datum/attribute/skill/combat/unarmed
+	gripped_intents = list(/datum/intent/hit)
+	lefthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_lefthand.dmi'
+	righthand_file = 'modular_redtard/rockhill/icons/baked/roguetown/items/natural_righthand.dmi'
+	inhand_icon_state = null
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	rogue_baked_inhand = TRUE
+
+/obj/item/natural/rock/tin
 	name = "boulder"
 	desc = "A rock protudes from the ground."
 	icon = 'modular_redtard/rockhill/icons/roguetown/items/natural.dmi'

@@ -15205,7 +15205,7 @@
 	name = "engineer's launcher"
 	result = /obj/structure/englauncher
 	reqs = list(/obj/item/roguegear = 1, /obj/item/natural/wood/plank = 4, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow = 1)
-	blacklist = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/arbalest, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker/lesser, /obj/item/roguegear/bronze, /obj/item/roguegear/wood/basic, /obj/item/roguegear/wood/reliable, /obj/item/roguegear/wood/unstable)
+	blacklist = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/arbalest, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker, /obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker/lesser, /obj/item/roguegear/bronze, /obj/item/roguegear/wood, /obj/item/roguegear/wood/basic, /obj/item/roguegear/wood/reliable, /obj/item/roguegear/wood/unstable)
 	category = "Engineering"
 	rogue_skill = /datum/attribute/skill/craft/engineering
 	rogue_difficulty = 4
@@ -15236,7 +15236,7 @@
 	name = "bomb trap (engineered)"
 	result = /obj/structure/trap/bomb
 	reqs = list(/obj/item/roguegear = 1, /obj/item/natural/clay = 1, /obj/item/roguegem/amethyst = 1, /obj/item/impact_grenade/explosion = 1)
-	blacklist = list(/obj/item/roguegear/bronze, /obj/item/roguegear/wood/basic, /obj/item/roguegear/wood/reliable, /obj/item/roguegear/wood/unstable, /obj/item/roguegem/amethyst/naledi)
+	blacklist = list(/obj/item/roguegear/bronze, /obj/item/roguegear/wood, /obj/item/roguegear/wood/basic, /obj/item/roguegear/wood/reliable, /obj/item/roguegear/wood/unstable, /obj/item/roguegem/amethyst/naledi)
 	category = "Engineering"
 	rogue_skill = /datum/attribute/skill/craft/engineering
 	rogue_difficulty = 6
@@ -15246,7 +15246,7 @@
 	name = "floorgrille"
 	result = /obj/structure/bars/grille
 	reqs = list(/obj/item/ingot/iron = 1, /obj/item/roguegear = 1)
-	blacklist = list(/obj/item/roguegear/bronze, /obj/item/roguegear/wood/basic, /obj/item/roguegear/wood/reliable, /obj/item/roguegear/wood/unstable)
+	blacklist = list(/obj/item/roguegear/bronze, /obj/item/roguegear/wood, /obj/item/roguegear/wood/basic, /obj/item/roguegear/wood/reliable, /obj/item/roguegear/wood/unstable)
 	category = "Engineering"
 	rogue_skill = /datum/attribute/skill/craft/engineering
 	rogue_difficulty = 3
@@ -15258,7 +15258,7 @@
 	name = "gate"
 	result = /obj/structure/bars/passage
 	reqs = list(/obj/item/ingot/iron = 1, /obj/item/roguegear = 1)
-	blacklist = list(/obj/item/roguegear/bronze, /obj/item/roguegear/wood/basic, /obj/item/roguegear/wood/reliable, /obj/item/roguegear/wood/unstable)
+	blacklist = list(/obj/item/roguegear/bronze, /obj/item/roguegear/wood, /obj/item/roguegear/wood/basic, /obj/item/roguegear/wood/reliable, /obj/item/roguegear/wood/unstable)
 	category = "Engineering"
 	rogue_skill = /datum/attribute/skill/craft/engineering
 	rogue_difficulty = 2
@@ -15298,7 +15298,7 @@
 	name = "pressure plate"
 	result = /obj/structure/pressure_plate
 	reqs = list(/obj/item/roguegear = 1, /obj/item/natural/wood/plank = 2)
-	blacklist = list(/obj/item/roguegear/bronze, /obj/item/roguegear/wood/basic, /obj/item/roguegear/wood/reliable, /obj/item/roguegear/wood/unstable)
+	blacklist = list(/obj/item/roguegear/bronze, /obj/item/roguegear/wood, /obj/item/roguegear/wood/basic, /obj/item/roguegear/wood/reliable, /obj/item/roguegear/wood/unstable)
 	category = "Engineering"
 	rogue_skill = /datum/attribute/skill/craft/engineering
 	rogue_difficulty = 2
@@ -15310,7 +15310,7 @@
 	name = "rock trap (engineered)"
 	result = /obj/structure/trap/rock_fall
 	reqs = list(/obj/item/roguegear = 1, /obj/item/natural/clay = 1, /obj/item/roguegem/amethyst = 1, /obj/item/natural/rock = 1)
-	blacklist = list(/obj/item/natural/rock/coal, /obj/item/natural/rock/gem, /obj/item/natural/rock/iron, /obj/item/natural/rock/random, /obj/item/natural/rock/random_ore, /obj/item/natural/rock/salt, /obj/item/natural/rock/silver, /obj/item/roguegear/bronze, /obj/item/roguegear/wood/basic, /obj/item/roguegear/wood/reliable, /obj/item/roguegear/wood/unstable, /obj/item/roguegem/amethyst/naledi)
+	blacklist = list(/obj/item/natural/rock/cinnabar, /obj/item/natural/rock/coal, /obj/item/natural/rock/copper, /obj/item/natural/rock/elementalmote, /obj/item/natural/rock/gem, /obj/item/natural/rock/gold, /obj/item/natural/rock/iron, /obj/item/natural/rock/random, /obj/item/natural/rock/random_ore, /obj/item/natural/rock/salt, /obj/item/natural/rock/silver, /obj/item/natural/rock/tin, /obj/item/roguegear/bronze, /obj/item/roguegear/wood, /obj/item/roguegear/wood/basic, /obj/item/roguegear/wood/reliable, /obj/item/roguegear/wood/unstable, /obj/item/roguegem/amethyst/naledi)
 	category = "Engineering"
 	rogue_skill = /datum/attribute/skill/craft/engineering
 	rogue_difficulty = 4

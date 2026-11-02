@@ -27,9 +27,16 @@
 	dungeon_id = "center"
 	target_exit_id = "hamlet"
 	claim_free_exit = FALSE
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 
 /obj/structure/rockhill/dungeon_exit
 	name = "dungeon exit"
 	desc = ""
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/structure.dmi'
 	icon_state = "ladder10"
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')

@@ -3,6 +3,10 @@
 	desc = "A soft warm bed complete with sheets and pillows."
 	icon = 'modular_redtard/rockhill/icons/obj/objects.dmi'
 	icon_state = "bed"
+	max_integrity = 100
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/bed/rockhill/rogue
@@ -11,6 +15,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/beds.dmi'
 	icon_state = "bed"
 	sleepy = 3
+	max_integrity = 100
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/bed/rockhill/rogue/bedroll
@@ -19,6 +29,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/beds.dmi'
 	icon_state = "bedroll"
 	sleepy = 2
+	max_integrity = 100
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/foley/cloth_rip.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/bed/rockhill/rogue/inn
@@ -27,6 +43,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/beds.dmi'
 	icon_state = "inn_bed"
 	sleepy = 3
+	max_integrity = 100
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/bed/rockhill/rogue/inn/double
@@ -36,6 +58,12 @@
 	icon_state = "double"
 	pixel_y = 0
 	sleepy = 3
+	max_integrity = 100
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 2)
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/bed/rockhill/rogue/inn/hay
@@ -44,6 +72,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/beds.dmi'
 	icon_state = "haybed"
 	sleepy = 3
+	max_integrity = 100
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/bed/rockhill/rogue/inn/wool
@@ -52,6 +86,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/beds.dmi'
 	icon_state = "woolbed"
 	sleepy = 3
+	max_integrity = 100
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/bed/rockhill/rogue/inn/wooldouble
@@ -61,6 +101,12 @@
 	icon_state = "double_wool"
 	pixel_y = 0
 	sleepy = 3
+	max_integrity = 100
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 2)
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/bed/rockhill/rogue/shit
@@ -69,6 +115,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/beds.dmi'
 	icon_state = "shitbed"
 	sleepy = 1
+	max_integrity = 100
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/arrestchair
@@ -77,6 +129,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/machines.dmi'
 	icon_state = "evilchair"
 	item_chair = null
+	max_integrity = 999999
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/bench
@@ -86,6 +143,11 @@
 	icon_state = "bench"
 	item_chair = null
 	sleepy = 0.5
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/bench/church
@@ -95,6 +157,11 @@
 	icon_state = "church_benchleft"
 	item_chair = null
 	sleepy = 0.5
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/bench/church/mid
@@ -104,6 +171,11 @@
 	icon_state = "church_benchmid"
 	item_chair = null
 	sleepy = 0.5
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/bench/church/r
@@ -113,6 +185,11 @@
 	icon_state = "church_benchright"
 	item_chair = null
 	sleepy = 0.5
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/bench/church/smallbench
@@ -122,6 +199,11 @@
 	icon_state = "benchsmall"
 	item_chair = null
 	sleepy = 0.5
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/bench/couch
@@ -131,6 +213,11 @@
 	icon_state = "redcouch"
 	item_chair = null
 	sleepy = 0.5
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/bench/couch/r
@@ -140,6 +227,11 @@
 	icon_state = "redcouch2"
 	item_chair = null
 	sleepy = 0.5
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/bench/coucha
@@ -149,6 +241,11 @@
 	icon_state = "couchaleft"
 	item_chair = null
 	sleepy = 0.5
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/bench/coucha/r
@@ -158,6 +255,11 @@
 	icon_state = "coucharight"
 	item_chair = null
 	sleepy = 0.5
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/bench/couchablack
@@ -167,6 +269,11 @@
 	icon_state = "couchablackaleft"
 	item_chair = null
 	sleepy = 0.5
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/bench/couchablack/r
@@ -176,6 +283,11 @@
 	icon_state = "couchablackaright"
 	item_chair = null
 	sleepy = 0.5
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/bench/couchamagenta
@@ -185,6 +297,11 @@
 	icon_state = "couchamagentaleft"
 	item_chair = null
 	sleepy = 0.5
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/bench/couchamagenta/r
@@ -194,6 +311,11 @@
 	icon_state = "couchamagentaright"
 	item_chair = null
 	sleepy = 0.5
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/bench/ultimacouch
@@ -203,6 +325,11 @@
 	icon_state = "ultimacouchleft"
 	item_chair = null
 	sleepy = 0.5
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/bench/ultimacouch/r
@@ -212,6 +339,11 @@
 	icon_state = "ultimacouchright"
 	item_chair = null
 	sleepy = 0.5
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/frankenstein
@@ -222,6 +354,11 @@
 	density = FALSE
 	pixel_x = -8
 	item_chair = null
+	max_integrity = 10000
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/frankenstein/zizo
@@ -232,6 +369,11 @@
 	density = FALSE
 	pixel_x = -8
 	item_chair = null
+	max_integrity = 10000
+	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | ACID_PROOF
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/freedomchair
@@ -241,6 +383,11 @@
 	icon_state = "evilchair"
 	color = "#F75D59"
 	item_chair = null
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bash"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/hotspring_bench
@@ -249,6 +396,11 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures/hotspring.dmi'
 	icon_state = "parkbench_sofamiddle"
 	item_chair = null
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/hotspring_bench/left
@@ -257,6 +409,11 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures/hotspring.dmi'
 	icon_state = "parkbench_sofaend_left"
 	item_chair = null
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/hotspring_bench/right
@@ -265,6 +422,11 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures/hotspring.dmi'
 	icon_state = "parkbench_sofaend_right"
 	item_chair = null
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/office
@@ -273,6 +435,11 @@
 	icon = 'modular_redtard/rockhill/icons/obj/chairs.dmi'
 	icon_state = "officechair_dark"
 	item_chair = null
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/smallbench
@@ -283,6 +450,11 @@
 	density = FALSE
 	item_chair = null
 	sleepy = 0.5
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/stool/rogue
@@ -291,6 +463,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/structure.dmi'
 	icon_state = "barstool"
 	item_chair = /obj/item/chair/stool/bar/rogue
+	max_integrity = 100
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/wood
@@ -299,6 +476,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/structure.dmi'
 	icon_state = "chair1"
 	item_chair = null
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/wood/rogue
@@ -307,6 +489,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/structure.dmi'
 	icon_state = "chair2"
 	item_chair = /obj/item/chair/rogue
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/wood/rogue/chair3
@@ -315,6 +502,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/structure.dmi'
 	icon_state = "chair3"
 	item_chair = /obj/item/chair/rogue
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/wood/rogue/chair4
@@ -323,6 +515,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/structure.dmi'
 	icon_state = "chair4"
 	item_chair = /obj/item/chair/rogue
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/wood/rogue/chair5
@@ -331,6 +528,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/structure.dmi'
 	icon_state = "chair5"
 	item_chair = /obj/item/chair/rogue
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/wood/rogue/fancy
@@ -339,6 +541,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/structure.dmi'
 	icon_state = "chair1"
 	item_chair = /obj/item/chair/rogue/fancy
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/wood/rogue/throne
@@ -347,6 +554,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/structure.dmi'
 	icon_state = "thronechair"
 	item_chair = null
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/wood/rogue/throne/zybantine
@@ -356,6 +568,11 @@
 	icon_state = "zybantinethrone"
 	pixel_x = -16
 	item_chair = null
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = null
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/wood/zybantine
@@ -364,6 +581,11 @@
 	icon = 'modular_redtard/rockhill/icons/modular_deserttown/icons/chairs.dmi'
 	icon_state = "zybantinechair"
 	item_chair = null
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/zybantine_sofa/left
@@ -372,6 +594,11 @@
 	icon = 'modular_redtard/rockhill/icons/modular_deserttown/icons/chairs.dmi'
 	icon_state = "zybantinesofa_left"
 	item_chair = null
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/chair/wood/rockhill/zybantine_sofa/right
@@ -380,6 +607,11 @@
 	icon = 'modular_redtard/rockhill/icons/modular_deserttown/icons/chairs.dmi'
 	icon_state = "zybantinesofa_right"
 	item_chair = null
+	max_integrity = 250
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/burial_shroud
@@ -394,6 +626,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/blank.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/blank.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/chest
@@ -409,6 +646,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/chest/crafted
@@ -424,6 +666,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/chest/crate
@@ -439,6 +686,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/chest/gold
@@ -454,6 +706,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/chest/inqcrate
@@ -469,6 +726,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/chest/inqreliquary
@@ -484,6 +746,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/chest/loot_chest
@@ -499,6 +766,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/chest/lootbox
@@ -514,6 +786,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 	rockhill_loot = list(
 		/obj/item/cooking/pan = 33,
@@ -556,6 +833,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/chest/neu_fancy
@@ -571,6 +853,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/chest/neu_iron
@@ -586,6 +873,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/chest/old_crate
@@ -601,6 +893,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/chest/old_crate/apothseed
@@ -616,6 +913,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 	rockhill_contents = list(/obj/item/herbseed/matricaria, /obj/item/herbseed/symphitum, /obj/item/herbseed/taraxacum, /obj/item/herbseed/atropa, /obj/item/herbseed/euphrasia, /obj/item/herbseed/paris, /obj/item/herbseed/calendula, /obj/item/herbseed/mentha, /obj/item/herbseed/urtica, /obj/item/herbseed/salvia, /obj/item/herbseed/hypericum, /obj/item/herbseed/benedictus, /obj/item/herbseed/valeriana, /obj/item/herbseed/artemisia, /obj/item/herbseed/rosa, /obj/item/seeds/swampweed, /obj/item/seeds/pipeweed)
 
@@ -632,6 +934,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/items/book_close.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/items/book_close.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/coffin
@@ -646,6 +953,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/blank.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/blank.ogg'
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/coffin/royal
@@ -660,6 +972,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/blank.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/blank.ogg'
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/coffin/vampire
@@ -674,6 +991,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/blank.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/blank.ogg'
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/drawer
@@ -689,6 +1011,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 50
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/drawer/drawer1
@@ -704,6 +1031,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 50
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/drawer/drawer2
@@ -719,6 +1051,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 50
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/drawer/drawer3
@@ -734,6 +1071,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 50
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/drawer/drawer4
@@ -749,6 +1091,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 50
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/drawer/inn
@@ -766,6 +1113,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 50
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/drawer/random
@@ -782,6 +1134,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/chestopen.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/chestclose.ogg'
+	max_integrity = 50
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/miningcar
@@ -797,6 +1154,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/blank.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/blank.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/roguecloset
@@ -812,6 +1174,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/foley/doors/creak.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/foley/latch.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/roguecloset/crafted
@@ -827,6 +1194,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/foley/doors/creak.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/foley/latch.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/roguecloset/dark
@@ -842,6 +1214,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/foley/doors/creak.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/foley/latch.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/roguecloset/inn
@@ -857,6 +1234,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/foley/doors/creak.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/foley/latch.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/roguecloset/inn/chest
@@ -872,6 +1254,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/foley/doors/creak.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/foley/latch.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/roguecloset/inn/south
@@ -889,6 +1276,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/foley/doors/creak.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/foley/latch.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/crate/roguecloset/lord
@@ -904,6 +1296,11 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/foley/doors/creak.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/foley/latch.ogg'
+	max_integrity = 200
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = BELOW_OBJ_LAYER
 
 /obj/structure/closet/crate/wooden/rockhill/dirthole
@@ -918,6 +1315,10 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/cupboard_open.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/cupboard_close.ogg'
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.8
 
 /obj/structure/closet/crate/wooden/rockhill/dirthole/closed
@@ -932,6 +1333,10 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/cupboard_open.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/cupboard_close.ogg'
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.8
 
 /obj/structure/closet/crate/wooden/rockhill/dirthole/closed/loot
@@ -946,6 +1351,10 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/cupboard_open.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/cupboard_close.ogg'
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.8
 
 /obj/structure/closet/crate/wooden/rockhill/dirthole/grave
@@ -960,6 +1369,10 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/cupboard_open.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/cupboard_close.ogg'
+	resistance_flags = INDESTRUCTIBLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
 	layer = 2.8
 
 /obj/structure/rack/rockhill/rogue
@@ -968,6 +1381,11 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/structure.dmi'
 	icon_state = "rack"
 	density = TRUE
+	max_integrity = 40
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = TABLE_LAYER
 
 /obj/structure/rack/rockhill/rogue/shelf
@@ -978,6 +1396,11 @@
 	density = FALSE
 	pixel_y = 32
 	dir = SOUTH
+	max_integrity = 40
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = TABLE_LAYER
 
 /obj/structure/rack/rockhill/rogue/shelf/big
@@ -988,6 +1411,11 @@
 	density = FALSE
 	pixel_y = 16
 	dir = SOUTH
+	max_integrity = 40
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = TABLE_LAYER
 
 /obj/structure/rack/rockhill/rogue/shelf/biggest
@@ -998,6 +1426,11 @@
 	density = FALSE
 	pixel_y = 0
 	dir = SOUTH
+	max_integrity = 40
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = TABLE_LAYER
 
 /obj/structure/rack/rockhill/rogue/shelf/notdense
@@ -1008,6 +1441,11 @@
 	density = FALSE
 	pixel_y = 24
 	dir = SOUTH
+	max_integrity = 40
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/church
@@ -1016,6 +1454,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "churchtable"
 	density = TRUE
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/natural/stone = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/church/alt
@@ -1024,6 +1468,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "churchtable_alt"
 	density = TRUE
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/natural/stone = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/church/end
@@ -1032,6 +1482,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "churchtable_end"
 	density = TRUE
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/natural/stone = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/church/end/alt
@@ -1040,6 +1496,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "churchtable_end_alt"
 	density = TRUE
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/natural/stone = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/church/m
@@ -1048,6 +1510,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "churchtable_mid"
 	density = TRUE
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/natural/stone = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/church/m/alt
@@ -1056,6 +1524,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "churchtable_mid_alt"
 	density = TRUE
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/natural/stone = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/cooling
@@ -1064,6 +1538,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "tablewood_alt"
 	density = TRUE
+	max_integrity = 40
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 0, /obj/item/roguegear = 0)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/finer
@@ -1072,6 +1552,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "tablefine2"
 	density = TRUE
+	max_integrity = 100
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/finestone
@@ -1080,6 +1566,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "stonetable_small"
 	density = TRUE
+	max_integrity = 400
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/natural/stoneblock = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/optable
@@ -1088,6 +1580,12 @@
 	icon = 'modular_redtard/rockhill/icons/obj/surgery.dmi'
 	icon_state = "optable"
 	density = TRUE
+	max_integrity = 100
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/templestoneslab/slab2
@@ -1096,6 +1594,12 @@
 	icon = 'modular_redtard/rockhill/icons/modular_deserttown/icons/temple_objects.dmi'
 	icon_state = "slab_2"
 	density = TRUE
+	max_integrity = 400
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/natural/stoneblock = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/vtable
@@ -1104,6 +1608,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "vtable"
 	density = TRUE
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/vtable/v2
@@ -1112,6 +1622,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "vtable2"
 	density = TRUE
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood
@@ -1120,6 +1636,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "tablewood"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/crafted
@@ -1127,6 +1649,12 @@
 	desc = ""
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	icon_state = "tablewood1"
 	layer = TABLE_LAYER
 
@@ -1136,6 +1664,12 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures.dmi'
 	icon_state = "fancy_table"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/fancy/black
@@ -1144,6 +1678,12 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures.dmi'
 	icon_state = "fancy_table_black"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/fancy/blue
@@ -1152,6 +1692,12 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures.dmi'
 	icon_state = "fancy_table_blue"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/fancy/purple
@@ -1160,6 +1706,12 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures.dmi'
 	icon_state = "fancy_table_purple"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/fancy/red
@@ -1168,6 +1720,12 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures.dmi'
 	icon_state = "fancy_table_red"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/fancy/royalblack
@@ -1176,6 +1734,12 @@
 	icon = 'modular_redtard/rockhill/icons/obj/structures.dmi'
 	icon_state = "fancy_table_royalblack"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/folding
@@ -1184,6 +1748,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/gadgets.dmi'
 	icon_state = "foldingtableDeployed"
 	density = TRUE
+	max_integrity = 50
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/large_table
@@ -1192,6 +1762,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "largetable"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/large_table/middle_east
@@ -1201,6 +1777,12 @@
 	icon_state = "largetable"
 	density = TRUE
 	dir = 4
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/large_table/middle_west
@@ -1210,6 +1792,12 @@
 	icon_state = "largetable"
 	density = TRUE
 	dir = 8
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/large_table/north
@@ -1219,6 +1807,12 @@
 	icon_state = "largetable"
 	density = TRUE
 	dir = 1
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/large_table/north_east
@@ -1228,6 +1822,12 @@
 	icon_state = "largetable"
 	density = TRUE
 	dir = 5
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/large_table/north_west
@@ -1237,6 +1837,12 @@
 	icon_state = "largetable"
 	density = TRUE
 	dir = 9
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/large_table/south_east
@@ -1246,6 +1852,12 @@
 	icon_state = "largetable"
 	density = TRUE
 	dir = 6
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/large_table/south_west
@@ -1255,6 +1867,12 @@
 	icon_state = "largetable"
 	density = TRUE
 	dir = 10
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/long_table
@@ -1263,6 +1881,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "longtable"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/long_table/east
@@ -1272,6 +1896,12 @@
 	icon_state = "longtable"
 	density = TRUE
 	dir = 8
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/long_table/mid
@@ -1280,6 +1910,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "longtable_mid"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/long_table/mid/alt
@@ -1289,6 +1925,12 @@
 	icon_state = "longtable_mid"
 	density = TRUE
 	dir = 1
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/long_table/north_east
@@ -1298,6 +1940,12 @@
 	icon_state = "longtable"
 	density = TRUE
 	dir = 4
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/long_table/right
@@ -1307,6 +1955,12 @@
 	icon_state = "longtable"
 	density = TRUE
 	dir = 1
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/map
@@ -1315,6 +1969,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "map1"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/map/five
@@ -1323,6 +1983,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "map5"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/map/four
@@ -1331,6 +1997,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "map4"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/map/six
@@ -1339,6 +2011,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "map6"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/map/three
@@ -1347,6 +2025,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "map3"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/map/two
@@ -1355,6 +2039,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "map2"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/poker
@@ -1363,6 +2053,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "tablewood"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/poor
@@ -1371,6 +2067,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "tablewood1"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/poor/alt
@@ -1379,6 +2081,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "tablewood2"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/table/wood/rockhill/wood/poor/alt_alt
@@ -1387,6 +2095,12 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/tables.dmi'
 	icon_state = "tablewood3"
 	density = TRUE
+	max_integrity = 70
+	resistance_flags = FLAMMABLE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (2).ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/combat/hits/onwood/destroyfurniture.ogg')
+	rockhill_debris = list(/obj/item/grown/log/tree/small = 1)
 	layer = TABLE_LAYER
 
 /obj/structure/rockhill/toilet
@@ -1394,3 +2108,8 @@
 	desc = ""
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/structure.dmi'
 	icon_state = "toilet"
+	max_integrity = 300
+	resistance_flags = NONE
+	rockhill_dulling = "bashchop"
+	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
+	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')
