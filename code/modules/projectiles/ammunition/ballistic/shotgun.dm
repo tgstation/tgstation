@@ -76,7 +76,7 @@
 	energy blast. While the heat and power drain limit it to one use, it can still allow an operator to engage targets that ballistic ammunition \
 	would have difficulty with."
 	icon_state = "pshell"
-	projectile_type = /obj/projectile/beam/pulse/shotgun
+	projectile_type = /obj/projectile/beam/laser/pulse/shotgun
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.8, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.65, /datum/material/uranium = SMALL_MATERIAL_AMOUNT * 0.6)
 
 /obj/item/ammo_casing/shotgun/frag12

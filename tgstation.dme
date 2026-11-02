@@ -1431,6 +1431,7 @@
 #include "code\datums\components\phylactery.dm"
 #include "code\datums\components\pinata.dm"
 #include "code\datums\components\pinnable_accessory.dm"
+#include "code\datums\components\pinpointer.dm"
 #include "code\datums\components\plundering_attacks.dm"
 #include "code\datums\components\pricetag.dm"
 #include "code\datums\components\proficient_miner.dm"

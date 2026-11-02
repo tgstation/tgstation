@@ -1476,13 +1476,14 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
  * * offered - The living mob being offered the item.
  */
 /obj/item/proc/on_offered(mob/living/offerer, mob/living/offered)
-	if(!offered) // item has just been offered to anyone around
-		if(!(HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS)))
-			return TRUE
-	else if(!(HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS) && HAS_TRAIT(offered, TRAIT_CAN_HOLD_ITEMS)))
-		return TRUE // both must be able to hold items for this to make sense
+	if(!offerer.can_hold_items(src))
+		return TRUE
+	if(offered && !offered.can_hold_items(src))
+		return TRUE
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFERING, offerer) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
+		
+	return FALSE
 
 /**
  * * An interrupt for someone trying to accept an offered item, called mainly from [/mob/living/proc/take], in case you want to run your own take behavior instead.
@@ -1494,7 +1495,7 @@ GAME_VERB_SRC(/obj/item, verb_pickup, oview(1), "Pick up", null)
  * * taker - the living mob trying to accept the offer
  */
 /obj/item/proc/on_offer_taken(mob/living/offerer, mob/living/taker)
-	if(!HAS_TRAIT(offerer, TRAIT_CAN_HOLD_ITEMS) && !HAS_TRAIT(src, TRAIT_BORG_GIVE) && HAS_TRAIT(taker, TRAIT_CAN_HOLD_ITEMS))
+	if(!(offerer.mobility_flags & MOBILITY_PICKUP) && !HAS_TRAIT(src, TRAIT_BORG_GIVE) && !(taker.mobility_flags & MOBILITY_PICKUP))
 		return TRUE // both must be able to hold items for this to make sense
 	if(SEND_SIGNAL(src, COMSIG_ITEM_OFFER_TAKEN, offerer, taker) & COMPONENT_OFFER_INTERRUPT)
 		return TRUE
