@@ -2,8 +2,18 @@
 // adjust_merchant_favor(), the upgrades, and merchant/trade/merchant_catalog.dm): every ship that leaves weighs the trade it
 // got against what its captain hoped for, and the company's favor follows; every purchase at a GOLDFACE earns a little more.
 // Favor buys the company's services (an extra pier, a harbor crew that hails and dismisses ships, gnomes that collect the
-// SILVERFACEs' margin for the merchant fund) and opens its catalogs, whose stock refills every dawn.
-// Not ported: Ratwood's triumph bonus by the favor's high-water mark, and the navigator's share of favor (the navigator is Б9б's).
+// SILVERFACEs' margin for the merchant fund) and opens its catalogs, whose stock refills every dawn. The navigator's share of
+// favor is in economy/navigator.dm. Not ported: Ratwood's triumph bonus by the favor's high-water mark (no triumphs yet).
+
+/// How a captain takes the trade he got when he sails (Ratwood FAVOR_OUTCOME_*).
+#define ROGUE_FAVOR_HONORED "honored"
+#define ROGUE_FAVOR_PARTIAL "partial"
+#define ROGUE_FAVOR_DISHONORED "dishonored"
+/// The trading company's services the merchant buys with favor (Ratwood rent_extra_pier(), unlock_auto_hailer(),
+/// unlock_gnome_automation()); the GOLDFACE's window sends these ids.
+#define ROGUE_UPGRADE_PIER "pier"
+#define ROGUE_UPGRADE_HAILER "hailer"
+#define ROGUE_UPGRADE_GNOMES "gnomes"
 
 /datum/controller/subsystem/rogue_trade
 	/// The company's favor now and the most it ever was (Ratwood merchant_favor, merchant_favor_high).
@@ -258,3 +268,10 @@
 		return FALSE
 	counts[pack_type]--
 	return TRUE
+
+#undef ROGUE_FAVOR_HONORED
+#undef ROGUE_FAVOR_PARTIAL
+#undef ROGUE_FAVOR_DISHONORED
+#undef ROGUE_UPGRADE_PIER
+#undef ROGUE_UPGRADE_HAILER
+#undef ROGUE_UPGRADE_GNOMES

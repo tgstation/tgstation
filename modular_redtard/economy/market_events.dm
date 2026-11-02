@@ -11,6 +11,12 @@
 // trade_blockade_days dawns; clear_blockade() is the hook for that contract. Ratwood's banditry losses follow the danger of
 // threat regions, which are not ported either: here every held road counts as a dangerous region.
 
+/// An economic event that raises the price of its goods (Ratwood ECON_EVENT_SHORTAGE); a glut is "oversupply" in the data.
+#define ROGUE_EVENT_SHORTAGE "shortage"
+/// What a condition of a foreign realm does to a cargo line of its ships (Ratwood CONDITION_OP_*), as the data names it.
+#define ROGUE_CONDITION_MODIFY "modify"
+#define ROGUE_CONDITION_REMOVE "remove"
+#define ROGUE_CONDITION_ADD "add"
 /// Urgent order sizes by the trade price of a good (Ratwood spawn_urgent_for_event()): dear goods come in few units.
 #define URGENT_DEAR_PRICE 40
 #define URGENT_MIDDLING_PRICE 15
@@ -112,6 +118,10 @@ GLOBAL_LIST_INIT(rogue_raider_names, list(
 			return TRUE
 	return FALSE
 
+/// It raises its goods' prices; otherwise it is a glut.
+/datum/rogue_economic_event/proc/is_shortage()
+	return event_type == ROGUE_EVENT_SHORTAGE
+
 /// Ratwood on_apply(): the event moves its goods' prices.
 /datum/rogue_economic_event/proc/apply()
 	price_mod = rogue_event_price_mod(price_tier)
@@ -122,7 +132,7 @@ GLOBAL_LIST_INIT(rogue_raider_names, list(
 		if(good)
 			good.global_price_mod *= price_mod
 	SSrogue_trade.refresh_stock_prices(affected_goods)
-	if(event_type == ROGUE_EVENT_SHORTAGE)
+	if(is_shortage())
 		saturation_target = shortage_target()
 
 /// Ratwood on_expire(): the prices go back.
@@ -163,7 +173,7 @@ GLOBAL_LIST_INIT(rogue_raider_names, list(
 	return list(
 		"name" = name,
 		"description" = description,
-		"shortage" = event_type == ROGUE_EVENT_SHORTAGE,
+		"shortage" = is_shortage(),
 		"goods" = good_names,
 		"percent" = round(price_mod * 100),
 		"days_left" = max(0, dawn_expires - GLOB.rockhill_dawns),
@@ -347,7 +357,7 @@ GLOBAL_LIST_INIT(rogue_raider_names, list(
 	var/datum/rogue_economic_event/event = new event_path
 	events += event
 	event.apply()
-	if(event.event_type == ROGUE_EVENT_SHORTAGE)
+	if(event.is_shortage())
 		dawn_shortages += event.name
 		spawn_urgent_order(event)
 	else
@@ -380,7 +390,7 @@ GLOBAL_LIST_INIT(rogue_raider_names, list(
 	if(!good_id || units <= 0)
 		return
 	for(var/datum/rogue_economic_event/event as anything in events.Copy())
-		if(event.event_type != ROGUE_EVENT_SHORTAGE || !(good_id in event.affected_goods))
+		if(!event.is_shortage() || !(good_id in event.affected_goods))
 			continue
 		event.saturation_progress += units
 		if(event.saturation_progress < event.saturation_target)
@@ -617,6 +627,10 @@ GLOBAL_LIST_INIT(rogue_raider_names, list(
 	banditry_debt -= skim
 	return amount - skim
 
+#undef ROGUE_EVENT_SHORTAGE
+#undef ROGUE_CONDITION_MODIFY
+#undef ROGUE_CONDITION_REMOVE
+#undef ROGUE_CONDITION_ADD
 #undef URGENT_DEAR_PRICE
 #undef URGENT_MIDDLING_PRICE
 #undef CONDITION_DEFAULT_QTY_MIN

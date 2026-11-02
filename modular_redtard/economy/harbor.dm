@@ -179,7 +179,7 @@
 		return null
 	var/datum/rogue_trade_ship/ship = match[1]
 	var/list/line = match[2]
-	if(line[ROGUE_LINE_TAG] == ROGUE_PROVISION_DRINKS && !line[ROGUE_LINE_BY_BOTTLE])
+	if(rogue_provision_by_keg(line))
 		if(!tally)
 			to_chat(user, span_warning("Captains buy drinks by the barrel - drag a full keg onto [src], not loose bottles."))
 		return FALSE

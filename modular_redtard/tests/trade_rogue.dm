@@ -37,9 +37,10 @@
 	for(var/event_type in subtypesof(/datum/rogue_economic_event))
 		var/datum/rogue_economic_event/event = new event_type
 		var/mod = rogue_event_price_mod(event.price_tier)
-		if(event.event_type == ROGUE_EVENT_SHORTAGE)
+		if(event.is_shortage())
 			TEST_ASSERT(mod > 1, "[event_type] is a shortage that does not raise its price (tier [event.price_tier])")
 		else
+			TEST_ASSERT_EQUAL(event.event_type, "oversupply", "[event_type] is neither a shortage nor a glut")
 			TEST_ASSERT(mod < 1, "[event_type] is a glut that does not lower its price (tier [event.price_tier])")
 		TEST_ASSERT(length(event.affected_goods), "[event_type] moves no goods")
 		qdel(event)

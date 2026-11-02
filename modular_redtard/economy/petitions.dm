@@ -179,7 +179,7 @@ GLOBAL_LIST_EMPTY(rogue_export_docks)
 				var/list/entry = found[good]
 				if(entry["units"] >= required[good])
 					continue
-				var/units = good.behavior == ROGUE_GOOD_POTION ? good.potion_units(thing) : (good.accepts(thing) ? 1 : 0)
+				var/units = good.dock_units(thing)
 				if(units <= 0)
 					continue
 				entry["units"] += units

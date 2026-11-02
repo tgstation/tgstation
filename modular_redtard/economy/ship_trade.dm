@@ -8,6 +8,15 @@
 //   Company stock back.
 // Ratwood claims kinship nowhere (dead code there); Azure Peak claims it when the merchant arrives, as here.
 
+/// Kinds of provisions a ship takes aboard (Ratwood TRADE_VICTUALLING_TAG_*), as the provision pools of the data name them.
+#define ROGUE_PROVISION_FRESH "fresh"
+#define ROGUE_PROVISION_PRESERVED "preserved"
+#define ROGUE_PROVISION_DRINKS "drinks"
+/// Keys of a ship's provision line beside the ones the harbor reads (ROGUE_LINE_*): the dish or bottle the captain buys, and
+/// its kind.
+#define ROGUE_LINE_TYPE "type"
+#define ROGUE_LINE_TAG "tag"
+
 /// A character's homeland -> the foreign realm whose ships are their kin (Ratwood origin_name_to_realm_id(), by the homelands of
 /// homelands/homelands.dm).
 GLOBAL_LIST_INIT(rogue_homeland_realms, list(
@@ -104,6 +113,10 @@ GLOBAL_LIST_INIT(rogue_homeland_realms, list(
 				return list(ship, line)
 	return null
 
+/// A drink line of a ship's provisions that takes kegs rather than loose bottles (Ratwood's drinks by the barrel).
+/proc/rogue_provision_by_keg(list/line)
+	return line[ROGUE_LINE_TAG] == ROGUE_PROVISION_DRINKS && !line[ROGUE_LINE_BY_BOTTLE]
+
 /// Ratwood brew_recipe_for_reagent(): the brew that makes a reagent.
 /proc/rogue_brew_recipe_for(reagent)
 	var/static/list/by_reagent
@@ -133,9 +146,9 @@ GLOBAL_LIST_INIT(rogue_homeland_realms, list(
 	var/list/pools = GLOB.rogue_realm_provisions[realm.id]
 	if(!pools)
 		return
-	add_provisions(pools["fresh"], rand(rogue_value("trade_provisions_fresh_min"), rogue_value("trade_provisions_fresh_max")), ROGUE_PROVISION_FRESH)
-	add_provisions(pools["preserved"], rand(rogue_value("trade_provisions_preserved_min"), rogue_value("trade_provisions_preserved_max")), ROGUE_PROVISION_PRESERVED)
-	add_drinks(pools["drinks"], rand(rogue_value("trade_provisions_drinks_min"), rogue_value("trade_provisions_drinks_max")))
+	add_provisions(pools[ROGUE_PROVISION_FRESH], rand(rogue_value("trade_provisions_fresh_min"), rogue_value("trade_provisions_fresh_max")), ROGUE_PROVISION_FRESH)
+	add_provisions(pools[ROGUE_PROVISION_PRESERVED], rand(rogue_value("trade_provisions_preserved_min"), rogue_value("trade_provisions_preserved_max")), ROGUE_PROVISION_PRESERVED)
+	add_drinks(pools[ROGUE_PROVISION_DRINKS], rand(rogue_value("trade_provisions_drinks_min"), rogue_value("trade_provisions_drinks_max")))
 
 /// Ratwood build_victualling_lines(): dishes picked from the realm's pool, a few each by the ship's size, at their set price.
 /datum/rogue_trade_ship/proc/add_provisions(list/pool, lines, tag)
@@ -216,7 +229,7 @@ GLOBAL_LIST_INIT(rogue_homeland_realms, list(
 		return
 	for(var/list/entry as anything in pool)
 		var/pack_type = text2path(entry["pack"])
-		var/datum/rogue_supply_pack/pack = GLOB.rogue_supply_packs[pack_type]
+		var/datum/rogue_supply_pack/pack = pack_type ? GLOB.rogue_supply_packs[pack_type] : null
 		if(!pack || !prob(entry["chance"]))
 			continue
 		var/qty = rand(entry["min"], entry["max"])
@@ -240,3 +253,9 @@ GLOBAL_LIST_INIT(rogue_homeland_realms, list(
 		if(entry["pack"] == pack_type && entry["qty"] > 0)
 			return entry
 	return null
+
+#undef ROGUE_PROVISION_FRESH
+#undef ROGUE_PROVISION_PRESERVED
+#undef ROGUE_PROVISION_DRINKS
+#undef ROGUE_LINE_TYPE
+#undef ROGUE_LINE_TAG

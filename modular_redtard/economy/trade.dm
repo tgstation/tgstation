@@ -11,6 +11,12 @@
  * Economic events, blockades and the realms' conditions live in economy/market_events.dm, the merchant's favor and catalogs in
  * economy/merchant_favor.dm. Data is Ratwood's, generated into economy/trade_data.dm and economy/trade_extra_data.dm.
  */
+
+/// Goods the realm trades as finished items or as potions, delivered at the warehouse docks instead of the stockpile (Ratwood
+/// TRADE_BEHAVIOR_EQUIPMENT, TRADE_BEHAVIOR_POTION, as the data names them); other goods have no behavior.
+#define ROGUE_GOOD_EQUIPMENT "equipment"
+#define ROGUE_GOOD_POTION "potion"
+
 SUBSYSTEM_DEF(rogue_trade)
 	name = "Trade"
 	wait = 1 MINUTES
@@ -659,6 +665,12 @@ SUBSYSTEM_DEF(rogue_trade)
 		return TRUE
 	return LAZYLEN(alt_item_types) && (thing.type in alt_item_types)
 
+/// Units of a finished good a thing left at the warehouse docks counts for: a container by the potion in it, an item once.
+/datum/rogue_trade_good/proc/dock_units(obj/item/thing)
+	if(behavior == ROGUE_GOOD_POTION)
+		return potion_units(thing)
+	return accepts(thing) ? 1 : 0
+
 /// Units of the potion a container holds (Ratwood scan_potion_availability()).
 /datum/rogue_trade_good/proc/potion_units(obj/item/thing)
 	if(!reagent_type || required_volume <= 0 || !thing.reagents)
@@ -1072,3 +1084,6 @@ SUBSYSTEM_DEF(rogue_trade)
 		"provisions" = ui_provisions(),
 		"cultural" = ui_cultural_stock(),
 	)
+
+#undef ROGUE_GOOD_EQUIPMENT
+#undef ROGUE_GOOD_POTION
