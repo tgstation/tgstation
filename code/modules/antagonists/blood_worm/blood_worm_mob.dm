@@ -228,6 +228,11 @@
 	if (host && loc != host)
 		unregister_host()
 
+/mob/living/basic/blood_worm/restore_initial_sight()
+	. = ..()
+	if (HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics))
+		. |= SEE_MOBS
+
 /// Gets the current health of the worm, regardless of if its in a host or not.
 /mob/living/basic/blood_worm/proc/get_worm_health()
 	return host ? min(host.get_blood_volume() * BLOOD_WORM_BLOOD_TO_HEALTH, maxHealth) : health
