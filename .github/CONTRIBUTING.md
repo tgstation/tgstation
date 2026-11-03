@@ -196,6 +196,10 @@ Do not add any of the following in a Pull Request or risk getting the PR closed:
 
 Just because something isn't on this list doesn't mean that it's acceptable. Use common sense above all else.
 
+### Generative AI Use
+
+We do not accept ai generated pull requests, bug reports, code, comments or review.
+
 ## A word on Git
 
 This repository uses `LF` line endings for all code as specified in the **.gitattributes** and **.editorconfig** files.
