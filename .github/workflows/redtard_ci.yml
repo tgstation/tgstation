@@ -29,6 +29,9 @@ jobs:
       - name: Every combat value and formula is declared and in the public config
         run: python3 modular_redtard/tools/ci/check_mechanics.py
 
+      - name: No macro call is too long for the CI compiler (BYOND 516.1685)
+        run: python3 modular_redtard/tools/ci/check_macro_size.py
+
   build:
     name: Compile with the module
     runs-on: ubuntu-24.04
