@@ -412,3 +412,212 @@
 /obj/structure/well/fountainswamp
 	rogue_well_bucket_only = FALSE
 	rogue_well_reagents = list(/datum/reagent/water/gross = ROGUE_WELL_WATER)
+
+// Wood bins (Ratwood farming/bin.dm, big_liquid_containers.dm) on medieval maps: a washbin holds six hundred units of what is
+// poured into it (the water bins of the map come with water, clean or dirty) and things besides. A hand opens it; a right click
+// washes oneself, or what is in the hand, in its water, which takes some and leaves the rest dirty; a strong kick knocks it over,
+// spilling the water around and the things out, and a right click stands it up again. Rain fills a bin under the open sky.
+// Vessels draw from it and pour into it (rogue_pour() above); tongs quench in it (crafting/tongs.dm). Trash bins hold no water.
+
+#define BIN_WASH_SOUNDS list('modular_redtard/survival/sound/waterwash1.ogg', 'modular_redtard/survival/sound/waterwash2.ogg')
+#define BIN_KICK_SOUND 'modular_redtard/rockhill/sound/combat/hits/onwood/woodimpact (1).ogg'
+
+/// The bins that hold water, for the rain to fill.
+GLOBAL_LIST_EMPTY(rogue_water_bins)
+/// What fills them while it rains (/datum/rogue_rain_catcher).
+GLOBAL_DATUM(rogue_rain_catcher, /datum/rogue_rain_catcher)
+
+/obj/item/roguebin
+	/// Ratwood: a trash bin holds no water (only washbins get reagents).
+	var/rogue_holds_water = TRUE
+	/// Ratwood kover: knocked over by a kick; it is stood up again by a right click.
+	var/rogue_tipped = FALSE
+	/// Ratwood base_state: the bin's own sprite, under the filling and in its fall.
+	var/rogue_bin_state
+	/// What the bin comes with from the map (Ratwood /water and /water/gross bins).
+	var/datum/reagent/rogue_start_water
+
+/obj/item/roguebin/trash
+	rogue_holds_water = FALSE
+
+/obj/item/roguebin/water
+	rogue_start_water = /datum/reagent/water
+
+/obj/item/roguebin/water/gross
+	rogue_start_water = /datum/reagent/water/gross
+
+/obj/item/roguebin/Initialize(mapload)
+	. = ..()
+	rogue_bin_state = icon_state
+	if(rogue_holds_water)
+		// Ratwood draws a washbin as either of its two bins.
+		if(icon_state == "washbin1")
+			rogue_bin_state = "washbin[rand(1, 2)]"
+		create_reagents(rogue_value("bin_volume"), DRAINABLE | REFILLABLE | AMOUNT_VISIBLE)
+		RegisterSignal(reagents, COMSIG_REAGENTS_HOLDER_UPDATED, PROC_REF(rogue_bin_changed))
+		if(rogue_start_water)
+			reagents.add_reagent(rogue_start_water, rogue_value("bin_start_water"))
+		GLOB.rogue_water_bins += src
+		if(!GLOB.rogue_rain_catcher)
+			GLOB.rogue_rain_catcher = new
+	update_appearance()
+
+/obj/item/roguebin/Destroy()
+	GLOB.rogue_water_bins -= src
+	return ..()
+
+/obj/item/roguebin/proc/rogue_bin_changed(datum/reagents/holder)
+	SIGNAL_HANDLER
+	update_appearance()
+
+/obj/item/roguebin/update_icon_state()
+	if(rogue_bin_state)
+		icon_state = rogue_tipped ? "[rogue_bin_state]over" : rogue_bin_state
+	return ..()
+
+/// Ratwood update_icon(): the water shows in the colour of what is in it.
+/obj/item/roguebin/update_overlays()
+	. = ..()
+	if(rogue_tipped || !reagents?.total_volume)
+		return
+	var/mutable_appearance/filling = mutable_appearance(icon, "liquid2")
+	filling.color = mix_color_from_reagents(reagents.reagent_list)
+	. += filling
+
+/obj/item/roguebin/examine(mob/user)
+	. = ..()
+	if(rogue_tipped)
+		. += span_warning("It has been knocked over.")
+	else if(rogue_holds_water && rogue_survival_enabled())
+		. += span_notice("Right-click it to wash yourself, or what is in your hand, in its water.")
+
+/// Ratwood attack_hand(): a hand opens the bin standing on the floor; it is moved by pulling, never carried.
+/obj/item/roguebin/attack_hand(mob/user, list/modifiers)
+	if(!rogue_survival_enabled() || !isturf(loc) || !atom_storage)
+		return ..()
+	atom_storage.open_storage(user)
+	return TRUE
+
+/// Ratwood attack_right() with an empty hand: stand the bin up, or wash in it.
+/obj/item/roguebin/attack_hand_secondary(mob/user, list/modifiers)
+	if(!rogue_survival_enabled() || !isliving(user) || !isturf(loc) || (!rogue_tipped && !rogue_holds_water))
+		return ..()
+	var/mob/living/washer = user
+	if(washer.stat != STABLE)
+		return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+	if(rogue_tipped)
+		INVOKE_ASYNC(src, PROC_REF(rogue_stand_up), washer)
+	else
+		INVOKE_ASYNC(src, PROC_REF(rogue_bin_wash), washer)
+	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
+
+/// Ratwood attack_right() with something in the hand: wash it in the bin (or stand the fallen bin up).
+/obj/item/roguebin/item_interaction_secondary(mob/living/user, obj/item/tool, list/modifiers)
+	if(!rogue_survival_enabled() || !isturf(loc) || !rogue_holds_water || user.stat != STABLE)
+		return ..()
+	if(rogue_tipped)
+		INVOKE_ASYNC(src, PROC_REF(rogue_stand_up), user)
+	else
+		INVOKE_ASYNC(src, PROC_REF(rogue_bin_wash), user, tool)
+	return ITEM_INTERACT_SUCCESS
+
+/obj/item/roguebin/proc/rogue_stand_up(mob/living/user)
+	user.visible_message(span_notice("[user] starts to pick up [src]..."), span_notice("I start to pick up [src]..."))
+	if(!do_after(user, rogue_value("bin_upright_time"), src) || !rogue_tipped)
+		return
+	rogue_tipped = FALSE
+	update_appearance()
+
+/// Ratwood attack_right(): a wash takes a little clean water (dirty water when there is no clean), and whatever clean water is
+/// left goes dirty - even when the wash is cut short.
+/obj/item/roguebin/proc/rogue_bin_wash(mob/living/washer, obj/item/tool)
+	if(!rogue_take_wash_water())
+		to_chat(washer, span_warning("No water to wash these stains."))
+		return
+	playsound(washer, pick(BIN_WASH_SOUNDS), 100, FALSE)
+	if(tool)
+		washer.visible_message(span_info("[washer] starts to wash [tool] in [src]."))
+		if(do_after(washer, rogue_value("wash_time"), src) && !QDELETED(tool) && washer.is_holding(tool))
+			tool.wash(CLEAN_SCRUB)
+			washer.update_held_items()
+			playsound(washer, pick(BIN_WASH_SOUNDS), 100, FALSE)
+	else
+		washer.visible_message(span_info("[washer] starts to wash in [src]."))
+		if(do_after(washer, rogue_value("wash_time"), src))
+			rogue_bin_washed(washer)
+	rogue_dirty_water()
+
+/// The water one wash takes: clean if there is enough, else dirty. FALSE when there is not enough of either.
+/obj/item/roguebin/proc/rogue_take_wash_water()
+	var/needed = rogue_value("bin_wash_water")
+	if(reagents?.has_reagent(/datum/reagent/water, needed))
+		reagents.remove_reagent(/datum/reagent/water, needed)
+		return TRUE
+	if(reagents?.has_reagent(/datum/reagent/water/gross, needed))
+		reagents.remove_reagent(/datum/reagent/water/gross, needed)
+		return TRUE
+	return FALSE
+
+/// Ratwood: washing in a bin cleans, puts out fire and cools a hot body (less than open water does).
+/obj/item/roguebin/proc/rogue_bin_washed(mob/living/washer)
+	washer.rogue_wash_body()
+	washer.extinguish_mob()
+	washer.rogue_chill(rogue_value("bin_wash_cooling"), rogue_value("swim_cold_floor"))
+	playsound(washer, pick(BIN_WASH_SOUNDS), 100, FALSE)
+
+/// Ratwood: what was washed (or quenched) in the bin leaves all its clean water dirty.
+/obj/item/roguebin/proc/rogue_dirty_water()
+	var/datum/reagent/clean = reagents?.has_reagent(/datum/reagent/water)
+	if(!clean)
+		return
+	var/amount = clean.volume
+	reagents.remove_reagent(/datum/reagent/water, amount)
+	reagents.add_reagent(/datum/reagent/water/gross, amount)
+
+/// Ratwood onkick(): a kick knocks a standing bin over with a chance by the kicker's strength.
+/obj/item/roguebin/rogue_onkick(mob/living/carbon/human/kicker)
+	playsound(src, BIN_KICK_SOUND, 100)
+	if(rogue_tipped || !prob(kicker.rogue_stat(ROGUE_STAT_STRENGTH) * rogue_value("bin_kick_chance")))
+		kicker.visible_message(span_warning("[kicker] kicks [src]!"), span_warning("I kick [src]!"))
+		return
+	kicker.visible_message(span_warning("[kicker] kicks over [src]!"), span_warning("I kick over [src]!"))
+	rogue_tip_over()
+
+/// Ratwood kover: the bin falls, its water splashes all around and what is in it spills out.
+/obj/item/roguebin/proc/rogue_tip_over()
+	rogue_tipped = TRUE
+	if(reagents?.total_volume)
+		chem_splash(get_turf(src), null, rogue_value("bin_splash_range"), list(reagents), adminlog = FALSE)
+		reagents.clear_reagents()
+	atom_storage?.remove_all(drop_location())
+	update_appearance()
+
+/// Ratwood rain reaction_obj(): rain pours into a standing bin under the open sky.
+/obj/item/roguebin/proc/rogue_catch_rain(seconds)
+	if(rogue_tipped || !reagents || !isturf(loc))
+		return
+	reagents.add_reagent(/datum/reagent/water, rogue_value("bin_rain_water") * seconds)
+
+/// Fills the bins under the sky while it rains: wakes when a rain starts (TG's weather signals), sleeps when none falls.
+/datum/rogue_rain_catcher
+
+/datum/rogue_rain_catcher/New()
+	. = ..()
+	for(var/datum/weather/particle/rockhill/rain_type as anything in valid_subtypesof(/datum/weather/particle/rockhill))
+		if(initial(rain_type.rockhill_douses_fires))
+			RegisterSignal(SSdcs, COMSIG_WEATHER_START(rain_type), PROC_REF(on_rain))
+
+/datum/rogue_rain_catcher/proc/on_rain(datum/source, datum/weather/rain)
+	SIGNAL_HANDLER
+	START_PROCESSING(SSobj, src)
+
+/datum/rogue_rain_catcher/process(seconds_per_tick)
+	var/datum/weather/particle/rockhill/weather = SSrockhill_weather.active_weather()
+	if(!weather?.rockhill_douses_fires)
+		return PROCESS_KILL
+	for(var/obj/item/roguebin/bin as anything in GLOB.rogue_water_bins)
+		if(rogue_rain_falls_on(bin))
+			bin.rogue_catch_rain(seconds_per_tick)
+
+#undef BIN_WASH_SOUNDS
+#undef BIN_KICK_SOUND

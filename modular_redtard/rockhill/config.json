@@ -154,6 +154,7 @@
 					"repairable",
 					"repair_cost_first",
 					"repair_cost_second",
+					"repair_skill",
 					"resident_advclass"
 				],
 				"paths": [
@@ -164,6 +165,9 @@
 				],
 				"path_strings": [
 					"resident_advclass"
+				],
+				"skill_vars": [
+					"repair_skill"
 				]
 			}
 		},
@@ -301,6 +305,14 @@
 					"open_sound",
 					"close_sound"
 				],
+				"fallbacks": {
+					"base_icon_state": {
+						"from": "icon_state",
+						"prefixes": [
+							"/obj/structure/closet/crate"
+						]
+					}
+				},
 				"fill": true,
 				"placement": true
 			}
@@ -536,18 +548,26 @@
 					"rockhill_area_text",
 					"rockhill_music_enabled",
 					"rockhill_loops_enabled",
-					"town_area"
+					"town_area",
+					"rogue_ceiling_protected"
 				],
 				"true_only": [
 					"outdoors",
-					"town_area"
+					"town_area",
+					"rogue_ceiling_protected"
 				],
+				"limit_vars": {
+					"/area/rogue": [
+						"rogue_ceiling_protected"
+					]
+				},
 				"sunlit": true,
 				"rename": {
 					"sound_environment": "soundenv",
 					"rockhill_area_text": "first_time_text",
 					"rockhill_music_enabled": "we_droning_here",
-					"rockhill_loops_enabled": "we_looping_here"
+					"rockhill_loops_enabled": "we_looping_here",
+					"rogue_ceiling_protected": "ceiling_protected"
 				},
 				"sound_vars": {
 					"rockhill_music": "droning_sound",
@@ -646,7 +666,11 @@
 					"obj_flags",
 					"time_between_triggers",
 					"rockhill_stump",
-					"herbtype"
+					"herbtype",
+					"rockhill_loot",
+					"rockhill_loot_lucky",
+					"rockhill_poses",
+					"rockhill_forced_pose"
 				],
 				"destruction": true,
 				"limit_vars": {
@@ -655,11 +679,28 @@
 					],
 					"/obj/structure/flora/roguegrass/herb": [
 						"herbtype"
+					],
+					"/obj/structure/deadbody": [
+						"rockhill_loot",
+						"rockhill_loot_lucky",
+						"rockhill_poses",
+						"rockhill_forced_pose"
 					]
 				},
 				"rename": {
-					"rockhill_stump": "stump_type"
+					"rockhill_stump": "stump_type",
+					"rockhill_loot": "loot_table",
+					"rockhill_loot_lucky": "loot_table_lucky",
+					"rockhill_poses": "pose_states",
+					"rockhill_forced_pose": "forced_pose"
 				},
+				"path_counts": [
+					"rockhill_loot",
+					"rockhill_loot_lucky"
+				],
+				"string_lists": [
+					"rockhill_poses"
+				],
 				"paths": [
 					"rockhill_stump",
 					"herbtype"
@@ -718,7 +759,23 @@
 					"layer",
 					"dir",
 					"alpha",
-					"color"
+					"color",
+					"repair_cost_first",
+					"repair_cost_second",
+					"repair_skill"
+				],
+				"list_items": {
+					"repair_cost_first": {
+						"from": "repair_costs",
+						"index": 0
+					},
+					"repair_cost_second": {
+						"from": "repair_costs",
+						"index": 1
+					}
+				},
+				"skill_vars": [
+					"repair_skill"
 				],
 				"runtime_look": true,
 				"placement": true,
@@ -858,6 +915,16 @@
 						"seed",
 						"shell"
 					],
+					"/obj/item/natural/chaff": [
+						"foodextracted",
+						"canthresh"
+					],
+					"/obj/item/candle": [
+						"start_lit",
+						"infinite",
+						"light_color",
+						"color"
+					],
 					"/obj/item/restraints/legcuffs/beartrap": [
 						"armed",
 						"trap_damage",
@@ -923,7 +990,8 @@
 					"rogue_coverage": "null",
 					"max_integrity": null,
 					"integrity_failure": null,
-					"equip_delay_self": 0
+					"equip_delay_self": 0,
+					"rogue_salvage_amount": "0"
 				},
 				"expression_vars": {
 					"max_integrity": {
@@ -1031,7 +1099,8 @@
 					"rogue_force_wielded": "force_wielded",
 					"rogue_sleeve_scrap": "salvage_result",
 					"rogue_coverage": "body_parts_covered",
-					"accepted_magazine_type": "mag_type"
+					"accepted_magazine_type": "mag_type",
+					"rogue_salvage_amount": "salvage_amount"
 				},
 				"slot_worn_icons": {
 					"worn_icon": {
@@ -1193,7 +1262,8 @@
 					"rogue_blocksound",
 					"material_category",
 					"chunkcolor",
-					"rogue_sleeve_scrap"
+					"rogue_sleeve_scrap",
+					"rogue_salvage_amount"
 				]
 			},
 			{
@@ -1576,7 +1646,21 @@
 			"sound/combat/hits/armor/light_stabbed (3).ogg",
 			"sound/combat/hits/armor/light_blunt (1).ogg",
 			"sound/combat/hits/armor/light_blunt (2).ogg",
-			"sound/combat/hits/armor/light_blunt (3).ogg"
+			"sound/combat/hits/armor/light_blunt (3).ogg",
+			"sound/foley/equip/rummaging-02.ogg",
+			"sound/misc/clockloop.ogg",
+			"sound/misc/boatbell.ogg",
+			"sound/misc/bell_common.ogg",
+			"sound/misc/pressurepad_down.ogg",
+			"sound/misc/pressurepad_up.ogg",
+			"sound/foley/cartadd.ogg",
+			"sound/foley/cartdump.ogg",
+			"sound/combat/hits/onwood/fence_hit1.ogg",
+			"sound/combat/hits/onwood/fence_hit2.ogg",
+			"sound/combat/hits/onwood/fence_hit3.ogg",
+			"sound/vo/mobs/ghost/skullpile_loop.ogg",
+			"sound/foley/shisha_gurgle.ogg",
+			"sound/foley/dropsound/wooden_drop.ogg"
 		],
 		"extra_files": {
 			"strings/calendar_events.json": "modular_redtard/rockhill/strings/calendar_events.json",
@@ -1656,7 +1740,10 @@
 			"smeltresult",
 			"salvage_result",
 			"debris",
-			"static_debris"
+			"static_debris",
+			"loot_table",
+			"loot_table_lucky",
+			"repair_costs"
 		],
 		"linked_types_by_prefix": {
 			"/obj/item/ammo_casing": [
@@ -1722,7 +1809,11 @@
 					"Beverages",
 					"Consumable",
 					"Cosmetics",
+					"Cultural Stock",
 					"Diplomacy and Persuasion",
+					"Discreet Zads",
+					"Drugs",
+					"Exotic Apparel",
 					"Exotic Import",
 					"Food",
 					"Games",
@@ -1735,10 +1826,12 @@
 					"Magic",
 					"Perfumes",
 					"Potions",
+					"Roguery",
 					"Seeds",
 					"Self Defense",
 					"Substances",
 					"Tools",
+					"Toys",
 					"Wardrobe",
 					"Weapons (Bronze)",
 					"Weapons (Foreign)",
@@ -1746,6 +1839,26 @@
 					"Weapons (Ranged)",
 					"Weapons (Steel)",
 					"Zadpacks"
+				],
+				"pull_groups": [
+					"Cultural Stock",
+					"Discreet Zads",
+					"Drugs",
+					"Exotic Apparel",
+					"Perfumes",
+					"Roguery",
+					"Toys",
+					"Zadpacks"
+				],
+				"skip_items": [
+					"/obj/item/dildo",
+					"/obj/item/chastity",
+					"/obj/item/leash",
+					"/obj/item/clothing/neck/roguetown/cursed_collar",
+					"/obj/item/clothing/neck/roguetown/gorget/cursed_collar"
+				],
+				"skip_packs": [
+					"/datum/supply_pack/rogue/bath_toys/lube"
 				]
 			},
 			"stockpile": {
@@ -1797,7 +1910,9 @@
 				"/obj/item/reagent_containers/food/snacks/rogue/pie/cooked/pumpkin",
 				"/obj/item/reagent_containers/food/snacks/rogue/pie/cooked/meat/spider",
 				"/obj/item/reagent_containers/food/snacks/rogue/meat/saiga_ribs/cooked/glazed",
-				"/obj/item/reagent_containers/food/snacks/rogue/ricewet"
+				"/obj/item/reagent_containers/food/snacks/rogue/ricewet",
+				"/obj/item/reagent_containers/food/snacks/rogue/cake_base",
+				"/obj/item/reagent_containers/food/snacks/rogue/frosting"
 			],
 			"defaults": {
 				"cooktime": 0,
@@ -1914,7 +2029,78 @@
 			"/obj/item/book/rogue/naledi2",
 			"/obj/item/book/rogue/naledi3",
 			"/obj/item/book/rogue/naledi4",
-			"/obj/item/ammo_casing/caseless/rogue/sling_bullet"
+			"/obj/item/ammo_casing/caseless/rogue/sling_bullet",
+			"/obj/item/rogueweapon/sword/long/heirloom",
+			"/obj/item/rogueweapon/greatsword/bsword/psy/unforgotten",
+			"/obj/item/natural/dirtclod/snow",
+			"/obj/item/natural/bundle/bone/rdm",
+			"/mob/living/carbon/human/species/skeleton/npc",
+			"/obj/item/clothing/head/roguetown/helmet/sallet/warden",
+			"/obj/item/clothing/head/roguetown/helmet/sallet/warden/wolf",
+			"/obj/item/clothing/head/roguetown/helmet/sallet/warden/goat",
+			"/obj/item/clothing/head/roguetown/roguehood/warden/antler",
+			"/obj/item/candle/candlestick/silver/single",
+			"/obj/item/reagent_containers/food/snacks/rogue/fryfish/salmon",
+			"/obj/item/reagent_containers/food/snacks/rogue/fryfish/cod",
+			"/obj/item/reagent_containers/food/snacks/rogue/fryfish/carp",
+			"/obj/item/reagent_containers/food/snacks/rogue/alecod",
+			"/obj/item/reagent_containers/food/snacks/rogue/tomatoplate",
+			"/obj/item/reagent_containers/food/snacks/rogue/fishtomatoplate",
+			"/obj/item/reagent_containers/food/snacks/rogue/meattomatoplate",
+			"/obj/item/reagent_containers/food/snacks/rogue/garlickbass",
+			"/obj/item/reagent_containers/food/snacks/rogue/applebread",
+			"/obj/item/reagent_containers/food/snacks/rogue/bun_jamtallow",
+			"/obj/item/reagent_containers/food/snacks/rogue/cookieslicec",
+			"/obj/item/reagent_containers/food/snacks/rogue/applecake",
+			"/obj/item/reagent_containers/food/snacks/rogue/ccake",
+			"/obj/item/reagent_containers/food/snacks/rogue/hcake",
+			"/obj/item/reagent_containers/food/snacks/rogue/menthacake",
+			"/obj/item/bodypart/l_arm/prosthetic/bronzeleft",
+			"/obj/item/bodypart/l_leg/prosthetic/bronzeleft",
+			"/obj/item/bodypart/r_leg/prosthetic/bronzeright",
+			"/obj/item/restraints/legcuffs/beartrap/crafted",
+			"/obj/item/enchantmentscroll",
+			"/mob/living/simple_animal/hostile/retaliate/rogue/horse/male/white/tame/saddled",
+			"/mob/living/simple_animal/hostile/retaliate/rogue/horse/male/brown/tame/saddled",
+			"/mob/living/simple_animal/hostile/retaliate/rogue/horse/male/black/tame/saddled",
+			"/obj/item/reagent_containers/glass/bottle/rogue/beer/kgunshochu",
+			"/obj/item/roguecoin/inqcoin",
+			"/obj/item/clothing/neck/roguetown/collar/prisoner",
+			"/obj/item/zadcage",
+			"/obj/item/zadpack",
+			"/obj/item/clothing/neck/roguetown/luckcharm/mercmedal",
+			"/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/anthrax",
+			"/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/atgervi",
+			"/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/blackoak",
+			"/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/condottiero",
+			"/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/desertrider",
+			"/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/forlorn",
+			"/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/freifechter",
+			"/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/grenzelhoft",
+			"/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/grudgebearer",
+			"/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/kazengun",
+			"/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/oathmarked",
+			"/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/routier",
+			"/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/steppesman",
+			"/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/underdweller",
+			"/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/vaquero",
+			"/obj/item/clothing/neck/roguetown/luckcharm/mercmedal/warscholar",
+			"/obj/item/storage/fancy/shhig",
+			"/obj/item/azure_lipstick/jade",
+			"/obj/item/azure_lipstick/purple",
+			"/obj/item/reagent_containers/glass/bottle/alchemical/fermented_crab",
+			"/obj/item/quiver/holybolts",
+			"/obj/item/quiver/bluntbolts",
+			"/obj/item/ammo_casing/caseless/rogue/heavy_bolt/holy",
+			"/obj/item/reagent_containers/food/snacks/rogue/psycrossbun",
+			"/obj/item/reagent_containers/food/snacks/rogue/psycrossbun_jamtallowed",
+			"/obj/item/reagent_containers/glass/bottle/alchemical/blessedwater",
+			"/obj/item/inqarticles/bmirror",
+			"/obj/item/psydonmusicbox",
+			"/obj/item/clothing/neck/roguetown/fencerguard/inq",
+			"/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan/inq",
+			"/obj/item/roguekey/custom",
+			"/obj/item/customlock/finished"
 		],
 		"bake": {
 			"manifest": "modular_redtard/rockhill/onmob_bake.json",
@@ -2311,6 +2497,15 @@
 		],
 		"/obj/structure/kybraxor": [
 			"redstone_id"
+		],
+		"/obj/structure/pressure_plate": [
+			"redstone_id"
+		],
+		"/obj/structure/fluff/customsign": [
+			"wrotesign"
+		],
+		"/obj/structure/boatbell": [
+			"alpha"
 		],
 		"/obj/effect/mapping_helpers/secret_door_creator": [
 			"redstone_id",

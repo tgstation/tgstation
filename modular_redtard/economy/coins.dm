@@ -147,6 +147,12 @@
 	base_type = "a"
 	plural_name = "psila"
 
+/// The Otavan marque of the Inquisition (Ratwood inqcoin, CTYPE_ICOIN): worth nothing to the realm, it buys at the MARQUETTE.
+/obj/item/roguecoin/inqcoin
+	merge_type = /obj/item/roguecoin/inqcoin
+	base_type = "i"
+	plural_name = "otavan marques"
+
 /// Ratwood's piles: 4 to 19 coins unless a number is given.
 /obj/item/roguecoin/copper/pile/Initialize(mapload, new_amount = rand(4, 19), merge = TRUE, list/mat_override, mat_amt = 1)
 	return ..(mapload, new_amount, merge, mat_override, mat_amt)

@@ -1960,7 +1960,7 @@
 	result = /obj/item/impact_grenade/smoke/blind_gas
 	reqs = list(/obj/item/smokeshell = 3, /obj/item/alch/coaldust = 1, /obj/item/ash = 1, /obj/item/reagent_containers/food/snacks/rogue/veg/onion_sliced = 1, /obj/item/natural/dirtclod = 1, /datum/reagent/water = 48)
 	rogue_results = list(/obj/item/impact_grenade/smoke/blind_gas, /obj/item/impact_grenade/smoke/blind_gas)
-	blacklist = list(/obj/item/natural/dirtclod/sand)
+	blacklist = list(/obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/snow)
 	category = "Engineering"
 	rogue_skill = /datum/attribute/skill/craft/engineering
 	rogue_difficulty = 4
@@ -13534,7 +13534,7 @@
 	name = "wicker cloak"
 	result = /obj/item/clothing/cloak/wickercloak
 	reqs = list(/obj/item/natural/dirtclod = 1, /obj/item/grown/log/tree/stick = 5, /obj/item/natural/fibers = 3)
-	blacklist = list(/obj/item/natural/dirtclod/sand)
+	blacklist = list(/obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/snow)
 	category = "Crafting"
 	rogue_skill = /datum/attribute/skill/craft/crafting
 	rogue_difficulty = 0
@@ -13739,7 +13739,7 @@
 	name = "reinforced window (brick) (2 brick, 1 iron, 1 glass, 1 dirtclod)"
 	result = /obj/structure/roguewindow/openclose/reinforced/brick
 	reqs = list(/obj/item/natural/brick = 2, /obj/item/ingot/iron = 1, /obj/item/natural/glass = 1, /obj/item/natural/dirtclod = 1)
-	blacklist = list(/obj/item/natural/dirtclod/sand, /obj/item/natural/glass/heated)
+	blacklist = list(/obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/snow, /obj/item/natural/glass/heated)
 	category = "Blacksmithing"
 	rogue_skill = /datum/attribute/skill/craft/blacksmithing
 	rogue_difficulty = 2
@@ -13811,7 +13811,7 @@
 	name = "window (fancy) (2 small logs, 1 stone, 1 glass, 1 dirtclod)"
 	result = /obj/structure/roguewindow/openclose
 	reqs = list(/obj/item/grown/log/tree/small = 2, /obj/item/natural/stone = 1, /obj/item/natural/glass = 1, /obj/item/natural/dirtclod = 1)
-	blacklist = list(/obj/item/grown/log/tree/small/essence, /obj/item/natural/dirtclod/sand, /obj/item/natural/glass/heated)
+	blacklist = list(/obj/item/grown/log/tree/small/essence, /obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/snow, /obj/item/natural/glass/heated)
 	category = "Carpentry"
 	rogue_skill = /datum/attribute/skill/craft/carpentry
 	rogue_difficulty = 3
@@ -13834,7 +13834,7 @@
 	name = "window (reinforced) (2 small logs, 1 iron, 1 glass, 1 dirtclod)"
 	result = /obj/structure/roguewindow/openclose/reinforced
 	reqs = list(/obj/item/grown/log/tree/small = 2, /obj/item/ingot/iron = 1, /obj/item/natural/glass = 1, /obj/item/natural/dirtclod = 1)
-	blacklist = list(/obj/item/grown/log/tree/small/essence, /obj/item/natural/dirtclod/sand, /obj/item/natural/glass/heated)
+	blacklist = list(/obj/item/grown/log/tree/small/essence, /obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/snow, /obj/item/natural/glass/heated)
 	category = "Blacksmithing"
 	rogue_skill = /datum/attribute/skill/craft/blacksmithing
 	rogue_difficulty = 2
@@ -15217,7 +15217,7 @@
 	name = "bottle bomb (clod jury rig)"
 	result = /obj/item/bomb
 	reqs = list(/obj/item/natural/dirtclod = 3, /obj/item/ash = 2, /obj/item/natural/fibers = 2)
-	blacklist = list(/obj/item/natural/dirtclod/sand)
+	blacklist = list(/obj/item/natural/dirtclod/sand, /obj/item/natural/dirtclod/snow)
 	category = "Engineering"
 	rogue_skill = /datum/attribute/skill/craft/engineering
 	rogue_difficulty = 4

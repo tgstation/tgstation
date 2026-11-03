@@ -114,6 +114,12 @@
 #include "rockhill\herbs.dm"
 #include "rockhill\sparks.dm"
 #include "rockhill\sky.dm"
+// Weapons and gear (combat/, block 4): breakage and repair, special weapons, the keep standard, the training dummy, Azure specials
+#include "combat\integrity.dm"
+#include "combat\special_weapons.dm"
+#include "combat\keep_standard.dm"
+#include "combat\training_dummy.dm"
+#include "combat\azure_weapons.dm"
 #include "migrants\migrants.dm"
 #include "lobby\rogue_join_rules.dm"
 #include "admin\player_quality.dm"
@@ -205,11 +211,13 @@
 #include "survival\cooking.dm"
 #include "survival\soups.dm"
 #include "survival\vessels.dm"
+#include "survival\washing.dm"
 #include "survival\stews.dm"
 #include "survival\appetite.dm"
 #include "survival\kneading.dm"
 #include "survival\warmth.dm"
 #include "survival\sleep.dm"
+#include "survival\thirst.dm"
 #include "survival\ported\food.dm"
 // Alchemy (alchemy/): Ratwood's potions, poisons and blessed water, after survival/ for its reagent helpers
 #include "alchemy\_defines.dm"
@@ -300,6 +308,8 @@
 #include "husbandry\tack.dm"
 #include "husbandry\milking.dm"
 #include "husbandry\manure.dm"
+#include "husbandry\apiary.dm"
+#include "husbandry\butchering.dm"
 #include "husbandry\beasts.dm"
 #include "husbandry\ported\husbandry.dm"
 // Farming (farming/, block 1): Ratwood's soil, crops, saplings, composter and threshing
@@ -320,6 +330,13 @@
 #include "burial\digging.dm"
 #include "burial\graves.dm"
 #include "burial\dead_bodies.dm"
+// Surgery (combat/surgery/, block 4): Ratwood operations on TG surgery, prosthetics; after medicine, dismemberment and the crafting and survival defines
+#include "combat\surgery\_defines.dm"
+#include "combat\surgery\tools.dm"
+#include "combat\surgery\operation.dm"
+#include "combat\surgery\wounds.dm"
+#include "combat\surgery\steps.dm"
+#include "combat\surgery\prosthetics.dm"
 // Stage 6: PvE depth (pve/)
 #include "pve\_defines.dm"
 #include "pve\mind.dm"
@@ -385,6 +402,10 @@
 #include "tests\kitchen_rogue.dm"
 #include "tests\npc_rogue.dm"
 #include "tests\trade_rogue.dm"
+#include "tests\weapons_rogue.dm"
+#include "tests\husbandry_rogue.dm"
+#include "tests\water_rogue.dm"
+#include "tests\surgery_rogue.dm"
 #endif
 
 #ifdef REDTARD_TEST_FOCUS

@@ -66,6 +66,7 @@ GLOBAL_DATUM(rogue_mechanics, /datum/rogue_mechanics)
 		"races.txt" = 'config/redtard/mechanics/values/races.txt',
 		"specials.txt" = 'config/redtard/mechanics/values/specials.txt',
 		"structures.txt" = 'config/redtard/mechanics/values/structures.txt',
+		"surgery.txt" = 'config/redtard/mechanics/values/surgery.txt',
 		"survival.txt" = 'config/redtard/mechanics/values/survival.txt',
 		"trade.txt" = 'config/redtard/mechanics/values/trade.txt',
 		"treasury.txt" = 'config/redtard/mechanics/values/treasury.txt',

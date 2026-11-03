@@ -947,6 +947,7 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/structure.dmi'
 	icon_state = "casket"
 	density = TRUE
+	base_icon_state = "casket"
 	keylock = FALSE
 	locked = FALSE
 	lockid = null
@@ -966,6 +967,7 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/structure.dmi'
 	icon_state = "rcasket"
 	density = TRUE
+	base_icon_state = "rcasket"
 	keylock = FALSE
 	locked = FALSE
 	lockid = null
@@ -985,6 +987,7 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/structure.dmi'
 	icon_state = "vcasket"
 	density = TRUE
+	base_icon_state = "vcasket"
 	keylock = FALSE
 	locked = FALSE
 	lockid = null
@@ -1315,7 +1318,6 @@
 	lock_strength = 100
 	open_sound = 'modular_redtard/rockhill/sound/misc/cupboard_open.ogg'
 	close_sound = 'modular_redtard/rockhill/sound/misc/cupboard_close.ogg'
-	resistance_flags = INDESTRUCTIBLE
 	rockhill_dulling = "bashchop"
 	rockhill_hit_sounds = list('modular_redtard/rockhill/sound/blank.ogg')
 	rockhill_break_sounds = list('modular_redtard/rockhill/sound/foley/breaksound.ogg')

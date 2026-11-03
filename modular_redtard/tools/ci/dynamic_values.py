@@ -54,7 +54,7 @@ def resolve(path, name, types):
     return None
 
 
-SPECIAL_FILES = ("specials.dm", "specials_azure.dm")
+SPECIAL_FILES = ("specials.dm", "specials_azure.dm", "azure_weapons.dm")
 
 
 def special_values():

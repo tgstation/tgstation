@@ -13258,6 +13258,7 @@
 	rockhill_traits = list(
 		TRAIT_EMPATH,
 		)
+	rogue_examine_name = "Beggar"
 
 /datum/outfit/job/roguetown/rockhill_class/vagabond_courier
 	name = "Ambushed Courier"
@@ -13284,6 +13285,7 @@
 	desc = "Entrusted with a message of great import, your fortunes fell by the roadside at the behest of a group of Matthiosian scum. Bereft of mount and master, you now wander the realm for purpose and sustenance."
 	attribute_sheet = /datum/attribute_holder/sheet/job/rockhill_class/vagabond_courier
 	rogue_social_rank = 2
+	rogue_examine_name = "Beggar"
 
 /datum/outfit/job/roguetown/rockhill_class/vagabond_deprived
 	name = "Deprived"
@@ -13305,6 +13307,7 @@
 	outfit = /datum/outfit/job/roguetown/rockhill_class/vagabond_deprived
 	desc = "You have nothing left but your trusty shield and club - war took away everything you had but will you manage to reclaim what was yours or succumb to the horrors of Psydonia."
 	attribute_sheet = /datum/attribute_holder/sheet/job/rockhill_class/vagabond_deprived
+	rogue_examine_name = "Beggar"
 
 /datum/outfit/job/roguetown/rockhill_class/vagabond_excommunicated
 	name = "Excommunicated"
@@ -13363,6 +13366,7 @@
 		TRAIT_HOMESTEAD_EXPERT,
 		)
 	rogue_social_rank = 2
+	rogue_examine_name = "Beggar"
 
 /datum/outfit/job/roguetown/rockhill_class/vagabond_mage
 	name = "Exiled Apprentice"
@@ -13423,6 +13427,7 @@
 	outfit = /datum/outfit/job/roguetown/rockhill_class/vagabond_original
 	desc = "Fate's twists and turns lead many towards a wanderer's life. Find your fortunes in the shadows or in the pockets of another."
 	attribute_sheet = /datum/attribute_holder/sheet/job/rockhill_class/vagabond_original
+	rogue_examine_name = "Vagabond"
 
 /datum/outfit/job/roguetown/rockhill_class/vagabond_runner
 	name = "Rumbled Runner"
@@ -13449,6 +13454,7 @@
 	desc = "Ferrying messages in the dark is a dangerous profession at the best of times. You're lucky to have made it out of your last predicament alive, but all you have now is some rags and your trusty feet."
 	attribute_sheet = /datum/attribute_holder/sheet/job/rockhill_class/vagabond_runner
 	rogue_social_rank = 2
+	rogue_examine_name = "Beggar"
 
 /datum/outfit/job/roguetown/rockhill_class/vagabond_scholar
 	name = "Destitute Scholar"
@@ -13483,6 +13489,7 @@
 		TRAIT_SEEDKNOW,
 		)
 	rogue_social_rank = 2
+	rogue_examine_name = "Beggar"
 
 /datum/outfit/job/roguetown/rockhill_class/vagabond_unraveled
 	name = "The Unraveled"
@@ -13511,6 +13518,7 @@
 		TRAIT_NOSTINK,
 		)
 	rogue_allowed_races = list("/datum/species/dullahan", "/datum/species/halforc", "/datum/species/goblinp", "/datum/species/harpy", "/datum/species/ooze", "/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
+	rogue_examine_name = "Beggar"
 
 /datum/outfit/job/roguetown/rockhill_class/vagabond_wanted
 	name = "Wanted"
@@ -13535,6 +13543,7 @@
 	outfit = /datum/outfit/job/roguetown/rockhill_class/vagabond_wanted
 	desc = "The long arm of the law reaches out for you - are you slippery enough to evade its grip this time, or is your head destined to end up in an Excidium's maw?"
 	attribute_sheet = /datum/attribute_holder/sheet/job/rockhill_class/vagabond_wanted
+	rogue_examine_name = "Beggar"
 
 /datum/outfit/job/roguetown/rockhill_class/vanguard/archer
 	name = "Vanguard Archer"

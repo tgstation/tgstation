@@ -139,6 +139,7 @@
 	rockhill_area_text = "THE OTAVAN INQUISITION"
 	rockhill_music_enabled = TRUE
 	rockhill_loops_enabled = TRUE
+	rogue_ceiling_protected = TRUE
 	rockhill_music = list("modular_redtard/rockhill/sound/area/music/area/catacombs.ogg")
 	rockhill_music_dawn = null
 	rockhill_music_dusk = null
@@ -982,6 +983,7 @@
 	rockhill_area_text = null
 	rockhill_music_enabled = TRUE
 	rockhill_loops_enabled = TRUE
+	rogue_ceiling_protected = TRUE
 	rockhill_music = list("modular_redtard/rockhill/sound/area/music/area/bath.ogg")
 	rockhill_music_dawn = null
 	rockhill_music_dusk = list("modular_redtard/rockhill/sound/area/music/area/septimus.ogg")
@@ -1585,6 +1587,7 @@
 	rockhill_area_text = "GOBLIN FORTRESS"
 	rockhill_music_enabled = TRUE
 	rockhill_loops_enabled = TRUE
+	rogue_ceiling_protected = TRUE
 	rockhill_music = list("modular_redtard/rockhill/sound/area/music/area/dungeon2.ogg")
 	rockhill_music_dawn = null
 	rockhill_music_dusk = null
@@ -1651,6 +1654,7 @@
 	rockhill_area_text = null
 	rockhill_music_enabled = TRUE
 	rockhill_loops_enabled = TRUE
+	rogue_ceiling_protected = TRUE
 	rockhill_music = list("modular_redtard/rockhill/sound/area/music/area/catacombs.ogg")
 	rockhill_music_dawn = null
 	rockhill_music_dusk = null
@@ -1673,6 +1677,7 @@
 	rockhill_area_text = null
 	rockhill_music_enabled = TRUE
 	rockhill_loops_enabled = TRUE
+	rogue_ceiling_protected = TRUE
 	rockhill_music = list("modular_redtard/rockhill/sound/area/music/area/underdark.ogg")
 	rockhill_music_dawn = null
 	rockhill_music_dusk = null
@@ -1695,6 +1700,7 @@
 	rockhill_area_text = "Another Place"
 	rockhill_music_enabled = TRUE
 	rockhill_loops_enabled = TRUE
+	rogue_ceiling_protected = TRUE
 	rockhill_music = list("modular_redtard/rockhill/sound/area/music/area/inferno.ogg")
 	rockhill_music_dawn = null
 	rockhill_music_dusk = null
@@ -1717,6 +1723,7 @@
 	rockhill_area_text = "Lost Encampment"
 	rockhill_music_enabled = TRUE
 	rockhill_loops_enabled = TRUE
+	rogue_ceiling_protected = TRUE
 	rockhill_music = list("modular_redtard/rockhill/sound/area/music/area/gobcamp.ogg")
 	rockhill_music_dawn = null
 	rockhill_music_dusk = null
@@ -1739,6 +1746,7 @@
 	rockhill_area_text = null
 	rockhill_music_enabled = TRUE
 	rockhill_loops_enabled = TRUE
+	rogue_ceiling_protected = TRUE
 	rockhill_music = list("modular_redtard/rockhill/sound/area/music/area/scroll_of_nihilism.ogg")
 	rockhill_music_dawn = null
 	rockhill_music_dusk = null
@@ -1761,6 +1769,7 @@
 	rockhill_area_text = null
 	rockhill_music_enabled = TRUE
 	rockhill_loops_enabled = TRUE
+	rogue_ceiling_protected = TRUE
 	rockhill_music = list("modular_redtard/rockhill/sound/area/music/area/scroll_of_nihilism.ogg")
 	rockhill_music_dawn = null
 	rockhill_music_dusk = null
@@ -1783,6 +1792,7 @@
 	rockhill_area_text = "Crumbling Magician's Tower"
 	rockhill_music_enabled = TRUE
 	rockhill_loops_enabled = TRUE
+	rogue_ceiling_protected = TRUE
 	rockhill_music = list("modular_redtard/rockhill/sound/area/music/area/abandonedwizartorium.ogg")
 	rockhill_music_dawn = null
 	rockhill_music_dusk = null
@@ -2137,6 +2147,7 @@
 	rockhill_music_enabled = TRUE
 	rockhill_loops_enabled = TRUE
 	town_area = TRUE
+	rogue_ceiling_protected = TRUE
 	rockhill_music = list("modular_redtard/rockhill/sound/area/music/area/catacombs.ogg")
 	rockhill_music_dawn = null
 	rockhill_music_dusk = null
@@ -2160,6 +2171,7 @@
 	rockhill_music_enabled = TRUE
 	rockhill_loops_enabled = TRUE
 	town_area = TRUE
+	rogue_ceiling_protected = TRUE
 	rockhill_music = list("modular_redtard/rockhill/sound/area/music/area/catacombs.ogg")
 	rockhill_music_dawn = null
 	rockhill_music_dusk = null

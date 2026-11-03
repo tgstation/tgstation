@@ -257,6 +257,111 @@
 	foodtypes = GRAIN
 	tastes = list("wheat" = 1)
 
+/obj/item/reagent_containers/food/snacks/rogue/alecod
+	food_reagents = list(/datum/reagent/consumable/nutriment = 18)
+	foodtypes = GRAIN
+	tastes = list("flaky ale-soaked fish" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/meal
+	cooktime = 300
+	rotprocess = 18000
+	rogue_faretype = ROGUE_FARE_NEUTRAL
+	rogue_portable = FALSE
+
+/obj/item/reagent_containers/food/snacks/rogue/applebread
+	food_reagents = list(/datum/reagent/consumable/nutriment = 18)
+	foodtypes = GRAIN
+	tastes = list("crisp-laden doughiness" = 1, "deliciously soft apples" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 8
+	rotprocess = 54000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/applebreadslice
+	slices_num = 6
+	slice_batch = FALSE
+	rogue_faretype = ROGUE_FARE_FINE
+
+/obj/item/reagent_containers/food/snacks/rogue/applebreadslice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	foodtypes = GRAIN
+	tastes = list("crisp-laden doughiness" = 1, "deliciously soft apples" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 27000
+	rogue_faretype = ROGUE_FARE_FINE
+
+/obj/item/reagent_containers/food/snacks/rogue/applecake
+	food_reagents = list(/datum/reagent/consumable/nutriment = 48)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "apple" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 16
+	rotprocess = 27000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/applecakeslice
+	slices_num = 8
+	rogue_faretype = ROGUE_FARE_LAVISH
+
+/obj/item/reagent_containers/food/snacks/rogue/applecakeslice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "apple" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 27000
+	rogue_faretype = ROGUE_FARE_FINE
+
+/obj/item/reagent_containers/food/snacks/rogue/applenutcake
+	food_reagents = list(/datum/reagent/consumable/nutriment = 48, /datum/reagent/drug/nicotine = 1)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "apple" = 1, "nutty" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 16
+	rotprocess = 27000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/applenutcakeslice
+	slices_num = 8
+	rogue_faretype = ROGUE_FARE_LAVISH
+
+/obj/item/reagent_containers/food/snacks/rogue/applenutcakeslice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "apple" = 1, "nutty" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 27000
+	rogue_faretype = ROGUE_FARE_FINE
+
+/obj/item/reagent_containers/food/snacks/rogue/berrycake
+	food_reagents = list(/datum/reagent/consumable/nutriment = 48, /datum/reagent/water = 5)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "berry" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 16
+	rotprocess = 27000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/berrycakeslice
+	slices_num = 8
+	rogue_faretype = ROGUE_FARE_LAVISH
+
+/obj/item/reagent_containers/food/snacks/rogue/berrycakeslice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "berry" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 27000
+	rogue_faretype = ROGUE_FARE_FINE
+
+/obj/item/reagent_containers/food/snacks/rogue/berrysalmon
+	food_reagents = list(/datum/reagent/consumable/nutriment = 18)
+	foodtypes = GRAIN
+	tastes = list("peppered fish" = 1, "fruity lightness" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/meal
+	cooktime = 300
+	rotprocess = 18000
+	rogue_faretype = ROGUE_FARE_FINE
+	rogue_portable = FALSE
+
 /obj/item/reagent_containers/food/snacks/rogue/biscuit
 	food_reagents = list(/datum/reagent/consumable/nutriment = 11.5)
 	foodtypes = GRAIN | FRUIT | DAIRY
@@ -264,6 +369,27 @@
 	eat_effect = /datum/status_effect/rogue_food_buff/snack
 	cooktime = 300
 	rogue_faretype = ROGUE_FARE_NEUTRAL
+
+/obj/item/reagent_containers/food/snacks/rogue/blackberrycake
+	food_reagents = list(/datum/reagent/consumable/nutriment = 48)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "blackberry" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 16
+	rotprocess = 27000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/blackberrycakeslice
+	slices_num = 8
+	rogue_faretype = ROGUE_FARE_LAVISH
+
+/obj/item/reagent_containers/food/snacks/rogue/blackberrycakeslice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "blackberry" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 27000
+	rogue_faretype = ROGUE_FARE_FINE
 
 /obj/item/reagent_containers/food/snacks/rogue/bookbread
 	food_reagents = list(/datum/reagent/consumable/nutriment = 18)
@@ -325,6 +451,16 @@
 	rotprocess = 27000
 	rogue_faretype = ROGUE_FARE_NEUTRAL
 
+/obj/item/reagent_containers/food/snacks/rogue/bun_jamtallow
+	food_reagents = list(/datum/reagent/consumable/nutriment = 12)
+	foodtypes = GRAIN
+	tastes = list("sweetly-sour jamminess" = 1, "a lavish break from the dae's woes" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/great_snack
+	cooktime = 300
+	bitesize = 4
+	rotprocess = 54000
+	rogue_faretype = ROGUE_FARE_FINE
+
 /obj/item/reagent_containers/food/snacks/rogue/bun_raston
 	food_reagents = list(/datum/reagent/consumable/nutriment = 9)
 	foodtypes = GRAIN
@@ -361,6 +497,55 @@
 	rogue_faretype = ROGUE_FARE_POOR
 	rogue_portable = FALSE
 
+/obj/item/reagent_containers/food/snacks/rogue/cake
+	food_reagents = list(/datum/reagent/consumable/nutriment = 48)
+	foodtypes = GRAIN | DAIRY
+	tastes = list("cake" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 16
+	rotprocess = 27000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/cakeslice
+	slices_num = 8
+	rogue_faretype = ROGUE_FARE_NEUTRAL
+
+/obj/item/reagent_containers/food/snacks/rogue/cake_base
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	foodtypes = GRAIN | DAIRY
+	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/cake
+	cooktime = 300
+	rotprocess = 27000
+	rogue_cooked_smell = "fresh baked cake"
+
+/obj/item/reagent_containers/food/snacks/rogue/cakeslice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	foodtypes = GRAIN | DAIRY
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 27000
+	rogue_faretype = ROGUE_FARE_FINE
+
+/obj/item/reagent_containers/food/snacks/rogue/carrotcake
+	food_reagents = list(/datum/reagent/consumable/nutriment = 48)
+	foodtypes = GRAIN | DAIRY | SUGAR | VEGETABLES
+	tastes = list("cake" = 1, "sugary frosting" = 1, "carrot" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 16
+	rotprocess = 27000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/carrotcakeslice
+	slices_num = 8
+	rogue_faretype = ROGUE_FARE_LAVISH
+
+/obj/item/reagent_containers/food/snacks/rogue/carrotcakeslice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	foodtypes = GRAIN | DAIRY | SUGAR | VEGETABLES
+	tastes = list("cake" = 1, "sugary frosting" = 1, "carrot" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 27000
+	rogue_faretype = ROGUE_FARE_FINE
+
 /obj/item/reagent_containers/food/snacks/rogue/carrotsteak
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15)
 	foodtypes = MEAT
@@ -369,6 +554,36 @@
 	cooktime = 300
 	rotprocess = 18000
 	rogue_faretype = ROGUE_FARE_FINE
+
+/obj/item/reagent_containers/food/snacks/rogue/ccake
+	food_reagents = list(/datum/reagent/consumable/nutriment = 48)
+	foodtypes = GRAIN | DAIRY
+	tastes = list("cake" = 1, "creamy cheese" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 16
+	rotprocess = 27000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/ccakeslice
+	slices_num = 8
+	rogue_faretype = ROGUE_FARE_FINE
+
+/obj/item/reagent_containers/food/snacks/rogue/ccakeslice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	foodtypes = GRAIN | DAIRY
+	tastes = list("cake" = 1, "creamy cheese" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 2
+	rotprocess = 27000
+	rogue_faretype = ROGUE_FARE_FINE
+
+/obj/item/reagent_containers/food/snacks/rogue/ccakeuncooked
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	foodtypes = GRAIN | DAIRY
+	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/ccake
+	cooktime = 300
+	rotprocess = 18000
+	rogue_cooked_smell = "fresh baked cheese cake"
 
 /obj/item/reagent_containers/food/snacks/rogue/cheddar
 	food_reagents = list(/datum/reagent/consumable/nutriment = 24)
@@ -455,6 +670,15 @@
 	rotprocess = 27000
 	rogue_faretype = ROGUE_FARE_LAVISH
 
+/obj/item/reagent_containers/food/snacks/rogue/cookieslicec
+	food_reagents = list(/datum/reagent/consumable/nutriment = 15)
+	foodtypes = GRAIN | DAIRY
+	tastes = list("tooth-grippingly sweet caramel" = 1, "crispy dough with a hint of butteriness" = 1)
+	cooktime = 300
+	bitesize = 2
+	rotprocess = 27000
+	rogue_faretype = ROGUE_FARE_FINE
+
 /obj/item/reagent_containers/food/snacks/rogue/cookieslicer
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15)
 	foodtypes = GRAIN | DAIRY | FRUIT
@@ -471,6 +695,16 @@
 	cooktime = 300
 	bitesize = 6
 	rogue_faretype = ROGUE_FARE_POOR
+
+/obj/item/reagent_containers/food/snacks/rogue/dendorsalmon
+	food_reagents = list(/datum/reagent/consumable/nutriment = 18)
+	foodtypes = GRAIN
+	tastes = list("warm fish" = 1, "fatty herbaceousness" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/meal
+	cooktime = 300
+	rotprocess = 18000
+	rogue_faretype = ROGUE_FARE_FINE
+	rogue_portable = FALSE
 
 /obj/item/reagent_containers/food/snacks/rogue/dough
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1)
@@ -511,6 +745,27 @@
 	cooktime = 300
 	rotprocess = 27000
 
+/obj/item/reagent_containers/food/snacks/rogue/fishtomatoplate
+	food_reagents = list(/datum/reagent/consumable/nutriment = 36)
+	foodtypes = GRAIN | FRUIT | DAIRY | MEAT
+	tastes = list("richly smooth and salty tomatoes" = 1, "hot and gooey cheese" = 1, "oily fish" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 8
+	rotprocess = 54000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/fishtomatoplate_slice
+	slices_num = 6
+	rogue_faretype = ROGUE_FARE_NEUTRAL
+
+/obj/item/reagent_containers/food/snacks/rogue/fishtomatoplate_slice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 12)
+	foodtypes = GRAIN | FRUIT | DAIRY | MEAT
+	tastes = list("richly smooth and salty tomatoes" = 1, "hot and gooey cheese" = 1, "oily fish" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 54000
+	rogue_faretype = ROGUE_FARE_NEUTRAL
+
 /obj/item/reagent_containers/food/snacks/rogue/flatdough
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1)
 	foodtypes = GRAIN
@@ -532,6 +787,44 @@
 	cooktime = 300
 	bitesize = 2
 	rotprocess = 9000
+
+/obj/item/reagent_containers/food/snacks/rogue/frostedcake
+	food_reagents = list(/datum/reagent/consumable/nutriment = 48)
+	foodtypes = GRAIN | DAIRY | SUGAR
+	tastes = list("cake" = 1, "sugary frosting" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 16
+	rotprocess = 27000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/frostedcakeslice
+	slices_num = 8
+	rogue_faretype = ROGUE_FARE_FINE
+
+/obj/item/reagent_containers/food/snacks/rogue/frostedcakeslice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	foodtypes = GRAIN | DAIRY | SUGAR
+	tastes = list("cake" = 1, "sugary frosting" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 27000
+	rogue_faretype = ROGUE_FARE_FINE
+
+/obj/item/reagent_containers/food/snacks/rogue/frostedcakeuncooked
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	foodtypes = GRAIN | DAIRY | SUGAR
+	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/frostedcake
+	cooktime = 300
+	rotprocess = 27000
+	rogue_cooked_smell = "fresh baked frosted cake"
+
+/obj/item/reagent_containers/food/snacks/rogue/frosting
+	food_reagents = list(/datum/reagent/consumable/nutriment = 3)
+	foodtypes = DAIRY | SUGAR
+	tastes = list("sugary frosting" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/sweet
+	cooktime = 300
+	bitesize = 1
+	rogue_faretype = ROGUE_FARE_NEUTRAL
 
 /obj/item/reagent_containers/food/snacks/rogue/frybirdbucket
 	food_reagents = list(/datum/reagent/consumable/nutriment = 45)
@@ -564,6 +857,16 @@
 	bitesize = 4
 	rogue_faretype = ROGUE_FARE_FINE
 
+/obj/item/reagent_containers/food/snacks/rogue/garlickbass
+	food_reagents = list(/datum/reagent/consumable/nutriment = 18)
+	foodtypes = GRAIN
+	tastes = list("pungent aromatics" = 1, "flaky fish goodness" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/meal
+	cooktime = 300
+	rotprocess = 18000
+	rogue_faretype = ROGUE_FARE_NEUTRAL
+	rogue_portable = FALSE
+
 /obj/item/reagent_containers/food/snacks/rogue/handpie
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1)
 	bonus_reagents = list(/datum/reagent/consumable/nutriment = 13)
@@ -574,11 +877,61 @@
 	bitesize = 4
 	rogue_faretype = ROGUE_FARE_FINE
 
+/obj/item/reagent_containers/food/snacks/rogue/hcake
+	food_reagents = list(/datum/reagent/consumable/nutriment = 48)
+	foodtypes = GRAIN | DAIRY | SUGAR
+	tastes = list("cake" = 1, "delicious honeyfrosting" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 16
+	rotprocess = 27000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/hcakeslice
+	slices_num = 8
+	rogue_faretype = ROGUE_FARE_LAVISH
+
+/obj/item/reagent_containers/food/snacks/rogue/hcakeslice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	foodtypes = GRAIN | DAIRY | SUGAR
+	tastes = list("cake" = 1, "delicious honeyfrosting" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 27000
+	rogue_faretype = ROGUE_FARE_FINE
+
+/obj/item/reagent_containers/food/snacks/rogue/hcakeuncooked
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	foodtypes = GRAIN | DAIRY | SUGAR
+	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/hcake
+	cooktime = 300
+	rotprocess = 18000
+	rogue_cooked_smell = "fresh baked honey cake"
+
 /obj/item/reagent_containers/food/snacks/rogue/honey
 	food_reagents = list(/datum/reagent/consumable/honey = 5, /datum/reagent/consumable/nutriment = 6)
 	foodtypes = GRAIN
 	tastes = list("sweetness" = 1)
 	cooktime = 300
+	rogue_faretype = ROGUE_FARE_FINE
+
+/obj/item/reagent_containers/food/snacks/rogue/lemoncake
+	food_reagents = list(/datum/reagent/consumable/nutriment = 48)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "lemon" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 16
+	rotprocess = 27000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/lemoncakeslice
+	slices_num = 8
+	rogue_faretype = ROGUE_FARE_LAVISH
+
+/obj/item/reagent_containers/food/snacks/rogue/lemoncakeslice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "lemon" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 27000
 	rogue_faretype = ROGUE_FARE_FINE
 
 /obj/item/reagent_containers/food/snacks/rogue/lemoncoppiette
@@ -588,6 +941,27 @@
 	cooktime = 300
 	bitesize = 5
 	rogue_faretype = ROGUE_FARE_POOR
+
+/obj/item/reagent_containers/food/snacks/rogue/limecake
+	food_reagents = list(/datum/reagent/consumable/nutriment = 48)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "lime" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 16
+	rotprocess = 27000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/limecakeslice
+	slices_num = 8
+	rogue_faretype = ROGUE_FARE_LAVISH
+
+/obj/item/reagent_containers/food/snacks/rogue/limecakeslice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "lime" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 27000
+	rogue_faretype = ROGUE_FARE_FINE
 
 /obj/item/reagent_containers/food/snacks/rogue/meat
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
@@ -603,6 +977,48 @@
 	foodtypes = GRAIN
 	eat_effect = /datum/status_effect/rogue_food/rotten
 	cooktime = 300
+
+/obj/item/reagent_containers/food/snacks/rogue/meattomatoplate
+	food_reagents = list(/datum/reagent/consumable/nutriment = 36)
+	foodtypes = GRAIN | FRUIT | DAIRY | MEAT
+	tastes = list("richly smooth and salty tomatoes" = 1, "hot and gooey cheese" = 1, "crispy sausages" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 8
+	rotprocess = 54000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/meattomatoplate_slice
+	slices_num = 6
+	rogue_faretype = ROGUE_FARE_NEUTRAL
+
+/obj/item/reagent_containers/food/snacks/rogue/meattomatoplate_slice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 12)
+	foodtypes = GRAIN | FRUIT | DAIRY | MEAT
+	tastes = list("richly smooth and salty tomatoes" = 1, "hot and gooey cheese" = 1, "crispy sausages" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 54000
+	rogue_faretype = ROGUE_FARE_NEUTRAL
+
+/obj/item/reagent_containers/food/snacks/rogue/menthacake
+	food_reagents = list(/datum/reagent/consumable/nutriment = 48)
+	foodtypes = GRAIN | DAIRY | SUGAR
+	tastes = list("cake" = 1, "sugary frosting" = 1, "fresh herbaceousness" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 16
+	rotprocess = 27000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/menthacakeslice
+	slices_num = 8
+	rogue_faretype = ROGUE_FARE_LAVISH
+
+/obj/item/reagent_containers/food/snacks/rogue/menthacakeslice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	foodtypes = GRAIN | DAIRY | SUGAR
+	tastes = list("cake" = 1, "sugary frosting" = 1, "fresh herbaceousness" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 27000
+	rogue_faretype = ROGUE_FARE_FINE
 
 /obj/item/reagent_containers/food/snacks/rogue/onionplaice
 	food_reagents = list(/datum/reagent/consumable/nutriment = 18)
@@ -631,6 +1047,27 @@
 	eat_effect = /datum/status_effect/rogue_food_buff/snack
 	cooktime = 300
 	rotprocess = 54000
+	rogue_faretype = ROGUE_FARE_FINE
+
+/obj/item/reagent_containers/food/snacks/rogue/peacecake
+	food_reagents = list(/datum/reagent/consumable/nutriment = 48)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "peace" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 16
+	rotprocess = 27000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/peacecakeslice
+	slices_num = 8
+	rogue_faretype = ROGUE_FARE_LAVISH
+
+/obj/item/reagent_containers/food/snacks/rogue/peacecakeslice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "peace" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 27000
 	rogue_faretype = ROGUE_FARE_FINE
 
 /obj/item/reagent_containers/food/snacks/rogue/pepperfish
@@ -688,6 +1125,24 @@
 	cooktime = 300
 	rogue_faretype = ROGUE_FARE_FINE
 
+/obj/item/reagent_containers/food/snacks/rogue/psycrossbun
+	food_reagents = list(/datum/reagent/consumable/nutriment = 7.5)
+	foodtypes = GRAIN
+	tastes = list("bread" = 1)
+	cooktime = 300
+	rotprocess = 54000
+	rogue_faretype = ROGUE_FARE_NEUTRAL
+
+/obj/item/reagent_containers/food/snacks/rogue/psycrossbun_jamtallowed
+	food_reagents = list(/datum/reagent/consumable/nutriment = 1)
+	foodtypes = GRAIN | FRUIT
+	tastes = list("sweet-tarty jamminess" = 1, "a sense of enduring sorrow" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/great_snack
+	cooktime = 300
+	bitesize = 4
+	rotprocess = 54000
+	rogue_faretype = ROGUE_FARE_LAVISH
+
 /obj/item/reagent_containers/food/snacks/rogue/raisinbread
 	food_reagents = list(/datum/reagent/consumable/nutriment = 18)
 	foodtypes = GRAIN
@@ -717,6 +1172,27 @@
 	cooktime = 300
 	bitesize = 5
 	rogue_faretype = ROGUE_FARE_POOR
+
+/obj/item/reagent_containers/food/snacks/rogue/raspberrycake
+	food_reagents = list(/datum/reagent/consumable/nutriment = 48)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "raspberry" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 16
+	rotprocess = 27000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/raspberrycakeslice
+	slices_num = 8
+	rogue_faretype = ROGUE_FARE_LAVISH
+
+/obj/item/reagent_containers/food/snacks/rogue/raspberrycakeslice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "raspberry" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 27000
+	rogue_faretype = ROGUE_FARE_FINE
 
 /obj/item/reagent_containers/food/snacks/rogue/ricebeef
 	food_reagents = list(/datum/reagent/consumable/nutriment = 15)
@@ -822,6 +1298,27 @@
 	cooked_type = /obj/item/reagent_containers/food/snacks/rogue/preserved/rice_cooked
 	cooktime = 300
 
+/obj/item/reagent_containers/food/snacks/rogue/rocknutcake
+	food_reagents = list(/datum/reagent/consumable/nutriment = 48, /datum/reagent/drug/nicotine = 1)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "nutty" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 16
+	rotprocess = 27000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/rocknutcakeslice
+	slices_num = 8
+	rogue_faretype = ROGUE_FARE_LAVISH
+
+/obj/item/reagent_containers/food/snacks/rogue/rocknutcakeslice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "nutty" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 27000
+	rogue_faretype = ROGUE_FARE_FINE
+
 /obj/item/reagent_containers/food/snacks/rogue/steakcarrotonion
 	food_reagents = list(/datum/reagent/consumable/nutriment = 18)
 	foodtypes = VEGETABLES | MEAT
@@ -832,6 +1329,48 @@
 	warming = 1800
 	rogue_faretype = ROGUE_FARE_LAVISH
 
+/obj/item/reagent_containers/food/snacks/rogue/strawberrycake
+	food_reagents = list(/datum/reagent/consumable/nutriment = 48)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "strawberry" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 16
+	rotprocess = 27000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/strawberrycakeslice
+	slices_num = 8
+	rogue_faretype = ROGUE_FARE_LAVISH
+
+/obj/item/reagent_containers/food/snacks/rogue/strawberrycakeslice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "strawberry" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 27000
+	rogue_faretype = ROGUE_FARE_FINE
+
+/obj/item/reagent_containers/food/snacks/rogue/tangerinecake
+	food_reagents = list(/datum/reagent/consumable/nutriment = 48)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "tangerine" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 16
+	rotprocess = 27000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/tangerinecakeslice
+	slices_num = 8
+	rogue_faretype = ROGUE_FARE_LAVISH
+
+/obj/item/reagent_containers/food/snacks/rogue/tangerinecakeslice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "tangerine" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 27000
+	rogue_faretype = ROGUE_FARE_FINE
+
 /obj/item/reagent_containers/food/snacks/rogue/toastcrumbs
 	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
 	foodtypes = GRAIN
@@ -839,6 +1378,27 @@
 	cooktime = 300
 	bitesize = 1
 	rotprocess = 18000
+
+/obj/item/reagent_containers/food/snacks/rogue/tomatoplate
+	food_reagents = list(/datum/reagent/consumable/nutriment = 24)
+	foodtypes = GRAIN | FRUIT | DAIRY
+	tastes = list("richly smooth and salty tomatoes" = 1, "hot and gooey cheese" = 1, "a hint of herbiness" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	bitesize = 8
+	rotprocess = 54000
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/tomatoplate_slice
+	slices_num = 6
+	rogue_faretype = ROGUE_FARE_NEUTRAL
+
+/obj/item/reagent_containers/food/snacks/rogue/tomatoplate_slice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 6)
+	foodtypes = GRAIN | FRUIT | DAIRY
+	tastes = list("richly smooth and salty tomatoes" = 1, "hot and gooey cheese" = 1, "a hint of herbiness" = 1)
+	eat_effect = /datum/status_effect/rogue_food_buff/snack
+	cooktime = 300
+	rotprocess = 54000
+	rogue_faretype = ROGUE_FARE_NEUTRAL
 
 /obj/item/reagent_containers/food/snacks/rogue/trailmix
 	food_reagents = list(/datum/reagent/consumable/nutriment = 27)
@@ -1393,6 +1953,17 @@
 	slice_path = /obj/item/reagent_containers/food/snacks/veg/turnip_sliced
 	slices_num = 1
 
+/obj/item/reagent_containers/food/snacks/rogue/berrycake/poison
+	food_reagents = list(/datum/reagent/berrypoison = 5, /datum/reagent/consumable/nutriment = 48, /datum/reagent/water = 5)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "berry" = 1)
+	slice_path = /obj/item/reagent_containers/food/snacks/rogue/berrycakeslice/poison
+
+/obj/item/reagent_containers/food/snacks/rogue/berrycakeslice/poison
+	food_reagents = list(/datum/reagent/berrypoison = 1, /datum/reagent/consumable/nutriment = 6, /datum/reagent/water = 1)
+	foodtypes = GRAIN | DAIRY | SUGAR | FRUIT
+	tastes = list("cake" = 1, "sugary frosting" = 1, "berry" = 1)
+
 /obj/item/reagent_containers/food/snacks/rogue/breadslice/toast
 	food_reagents = list(/datum/reagent/consumable/nutriment = 1)
 	foodtypes = GRAIN
@@ -1602,6 +2173,19 @@
 	rotprocess = 27000
 	rogue_faretype = ROGUE_FARE_POOR
 
+/obj/item/reagent_containers/food/snacks/rogue/fryfish/carp
+	food_reagents = list(/datum/reagent/consumable/nutriment = 10)
+	foodtypes = MEAT
+	tastes = list("fish" = 1)
+	cooktime = 300
+
+/obj/item/reagent_containers/food/snacks/rogue/fryfish/cod
+	food_reagents = list(/datum/reagent/consumable/nutriment = 10)
+	foodtypes = MEAT
+	tastes = list("fish" = 1)
+	cooktime = 300
+	rogue_faretype = ROGUE_FARE_NEUTRAL
+
 /obj/item/reagent_containers/food/snacks/rogue/fryfish/crab
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10)
 	foodtypes = MEAT
@@ -1617,6 +2201,13 @@
 	rogue_faretype = ROGUE_FARE_POOR
 
 /obj/item/reagent_containers/food/snacks/rogue/fryfish/plaice
+	food_reagents = list(/datum/reagent/consumable/nutriment = 10)
+	foodtypes = MEAT
+	tastes = list("fish" = 1)
+	cooktime = 300
+	rogue_faretype = ROGUE_FARE_NEUTRAL
+
+/obj/item/reagent_containers/food/snacks/rogue/fryfish/salmon
 	food_reagents = list(/datum/reagent/consumable/nutriment = 10)
 	foodtypes = MEAT
 	tastes = list("fish" = 1)
@@ -2920,6 +3511,146 @@
 	ingredients = list(/obj/item/reagent_containers/food/snacks/butter)
 	result_type = /obj/item/reagent_containers/food/snacks/rogue/meat/poultry/baked/butter
 
+/datum/rogue_food_recipe/cake/apple_cake
+	name = "Apple Cake"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/frostedcake
+	ingredients = list(/obj/item/reagent_containers/food/snacks/grown/apple)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/applecake
+	time_per_step = 50
+
+/datum/rogue_food_recipe/cake/applenut_cake
+	name = "Applenut Cake"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/applecake
+	ingredients = list(/obj/item/reagent_containers/food/snacks/grown/nut)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/applenutcake
+	time_per_step = 30
+
+/datum/rogue_food_recipe/cake/applenut_cake_alt
+	name = "Applenut Cake (from Rocknut)"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/rocknutcake
+	ingredients = list(/obj/item/reagent_containers/food/snacks/grown/apple)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/applenutcake
+	time_per_step = 30
+
+/datum/rogue_food_recipe/cake/berry_cake
+	name = "Berry Cake"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/frostedcake
+	ingredients = list(/obj/item/reagent_containers/food/snacks/grown/berries/rogue)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/berrycake
+	time_per_step = 50
+
+/datum/rogue_food_recipe/cake/berry_cake_poison
+	name = "Poison Berry Cake"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/frostedcake
+	ingredients = list(/obj/item/reagent_containers/food/snacks/grown/berries/rogue/poison)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/berrycake/poison
+	time_per_step = 50
+
+/datum/rogue_food_recipe/cake/blackberry_cake
+	name = "Blackberry Cake"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/frostedcake
+	ingredients = list(/obj/item/reagent_containers/food/snacks/grown/fruit/blackberry)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/blackberrycake
+	time_per_step = 50
+
+/datum/rogue_food_recipe/cake/carrot_cake
+	name = "Carrot Cake"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/frostedcake
+	ingredients = list(/obj/item/reagent_containers/food/snacks/rogue/preserved/carrot_baked)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/carrotcake
+	time_per_step = 50
+
+/datum/rogue_food_recipe/cake/carrot_cake_alt
+	name = "Carrot Cake (Raw Carrot)"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/frostedcake
+	ingredients = list(/obj/item/reagent_containers/food/snacks/grown/carrot)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/carrotcake
+	time_per_step = 50
+
+/datum/rogue_food_recipe/cake/cheesecake_base
+	name = "Cheesecake Base"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/cake_base
+	ingredients = list(/obj/item/reagent_containers/food/snacks/rogue/cheese)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/ccakeuncooked
+	time_per_step = 50
+
+/datum/rogue_food_recipe/cake/frosted_cake_base
+	name = "Frosted Cake Base"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/cake_base
+	ingredients = list(/obj/item/reagent_containers/food/snacks/rogue/frosting)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/frostedcakeuncooked
+	time_per_step = 30
+
+/datum/rogue_food_recipe/cake/frosted_cake_postbake
+	name = "Frosted Cake (Post-Bake)"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/cake
+	ingredients = list(/obj/item/reagent_containers/food/snacks/rogue/frosting)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/frostedcake
+	time_per_step = 50
+
+/datum/rogue_food_recipe/cake/honeycake_base
+	name = "Honey Cake Base"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/cake_base
+	ingredients = list(/obj/item/reagent_containers/food/snacks/rogue/honey)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/hcakeuncooked
+	time_per_step = 50
+
+/datum/rogue_food_recipe/cake/lemon_cake
+	name = "Lemon Cake"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/frostedcake
+	ingredients = list(/obj/item/reagent_containers/food/snacks/grown/fruit/lemon)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/lemoncake
+	time_per_step = 50
+
+/datum/rogue_food_recipe/cake/lime_cake
+	name = "Lime Cake"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/frostedcake
+	ingredients = list(/obj/item/reagent_containers/food/snacks/grown/fruit/lime)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/limecake
+	time_per_step = 50
+
+/datum/rogue_food_recipe/cake/mentha_cake
+	name = "Mentha Cake"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/frostedcake
+	ingredients = list(/obj/item/alch/mentha)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/menthacake
+	time_per_step = 50
+
+/datum/rogue_food_recipe/cake/peace_cake
+	name = "Peace Cake"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/frostedcake
+	ingredients = list(/obj/item/clothing/head/peaceflower)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/peacecake
+	time_per_step = 50
+
+/datum/rogue_food_recipe/cake/raspberry_cake
+	name = "Raspberry Cake"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/frostedcake
+	ingredients = list(/obj/item/reagent_containers/food/snacks/grown/fruit/raspberry)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/raspberrycake
+	time_per_step = 50
+
+/datum/rogue_food_recipe/cake/rocknut_cake
+	name = "Rocknut Cake"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/frostedcake
+	ingredients = list(/obj/item/reagent_containers/food/snacks/grown/nut)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/rocknutcake
+	time_per_step = 50
+
+/datum/rogue_food_recipe/cake/strawberry_cake
+	name = "Strawberry Cake"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/frostedcake
+	ingredients = list(/obj/item/reagent_containers/food/snacks/grown/fruit/strawberry)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/strawberrycake
+	time_per_step = 50
+
+/datum/rogue_food_recipe/cake/tangerine_cake
+	name = "Tangerine Cake"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/frostedcake
+	ingredients = list(/obj/item/reagent_containers/food/snacks/grown/fruit/tangerine)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/tangerinecake
+	time_per_step = 50
+
 /datum/rogue_food_recipe/carrot_steak
 	name = "Carrot Steak"
 	base_item = /obj/item/reagent_containers/food/snacks/rogue/preserved/carrot_baked
@@ -3251,6 +3982,18 @@
 	ingredients = list(/obj/item/reagent_containers/food/snacks/fat/salo/slice)
 	result_type = /obj/item/reagent_containers/food/snacks/rogue/sandwich/salo
 
+/datum/rogue_food_recipe/seafood/ale_cod
+	name = "Ale Cod"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/fryfish/cod
+	ingredients = list(/datum/reagent/consumable/ethanol/beer = 1)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/alecod
+
+/datum/rogue_food_recipe/seafood/berry_salmon
+	name = "Berry Salmon"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/fryfish/salmon
+	ingredients = list(/obj/item/reagent_containers/food/snacks/grown/berries/rogue)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/berrysalmon
+
 /datum/rogue_food_recipe/seafood/buttered_lobster
 	name = "Buttered Lobster"
 	base_item = /obj/item/reagent_containers/food/snacks/rogue/fryfish/lobster
@@ -3262,6 +4005,12 @@
 	base_item = /obj/item/reagent_containers/food/snacks/rogue/fryfish/sole
 	ingredients = list(/obj/item/reagent_containers/food/snacks/butterslice)
 	result_type = /obj/item/reagent_containers/food/snacks/rogue/buttersole
+
+/datum/rogue_food_recipe/seafood/mentha_salmon
+	name = "Mentha Salmon"
+	base_item = /obj/item/reagent_containers/food/snacks/rogue/fryfish/salmon
+	ingredients = list(/obj/item/alch/mentha)
+	result_type = /obj/item/reagent_containers/food/snacks/rogue/dendorsalmon
 
 /datum/rogue_food_recipe/seafood/onion_plaice
 	name = "Onion Plaice"

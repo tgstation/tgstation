@@ -379,6 +379,30 @@
 	tshield = FALSE
 	hitsound = list('modular_redtard/rockhill/sound/combat/hits/bladed/genchop (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/bladed/genchop (2).ogg', 'modular_redtard/rockhill/sound/combat/hits/bladed/genchop (3).ogg')
 
+/datum/intent/axe/chop/scythe
+	name = "chop"
+	desc = ""
+	icon_state = "inchop"
+	blade_class = "chopping"
+	item_d_type = "slash"
+	attack_verb = list("chops", "hacks")
+	damfactor = 1.5
+	penfactor = 2
+	clickcd = 14
+	releasedrain = 1
+	misscost = 1
+	reach = 2
+	chargetime = 0
+	swingdelay_type = 2
+	demolition_mod = 2.5
+	canparry = TRUE
+	candodge = TRUE
+	no_attack = FALSE
+	unarmed = FALSE
+	tranged = FALSE
+	tshield = FALSE
+	hitsound = list('modular_redtard/rockhill/sound/combat/hits/bladed/genchop (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/bladed/genchop (2).ogg', 'modular_redtard/rockhill/sound/combat/hits/bladed/genchop (3).ogg')
+
 /datum/intent/axe/chop/stone
 	name = "chop"
 	desc = ""
@@ -1950,6 +1974,30 @@
 	tshield = FALSE
 	hitsound = list('modular_redtard/rockhill/sound/combat/hits/blunt/flailhit.ogg')
 
+/datum/intent/mace/smash/flailchop
+	name = "pendulous chop"
+	desc = "A powerful, charged up strike that deals normal damage but can throw a standing opponent back and slow them down, based on your strength. Ineffective below 10 strength. Slowdown & Knockback scales to your Strength up to 14 (1 - 4 tiles). Cannot be used consecutively more than every 5 seconds on the same target. Prone targets halve the knockback distance. Not fully charging the attack limits knockback to 1 tile."
+	icon_state = "inchop"
+	blade_class = "chopping"
+	item_d_type = "slash"
+	attack_verb = list("chops", "hacks")
+	damfactor = 1.3
+	penfactor = 35
+	clickcd = 12
+	releasedrain = 1
+	misscost = 1
+	reach = 2
+	swingdelay = 0
+	chargedrain = 1
+	intent_intdamage_factor = 1.4
+	canparry = TRUE
+	candodge = TRUE
+	no_attack = FALSE
+	unarmed = FALSE
+	tranged = FALSE
+	tshield = FALSE
+	hitsound = list('modular_redtard/rockhill/sound/combat/hits/bladed/genchop (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/bladed/genchop (2).ogg', 'modular_redtard/rockhill/sound/combat/hits/bladed/genchop (3).ogg')
+
 /datum/intent/mace/smash/flailrange
 	name = "ranged smash"
 	desc = "A powerful, charged up strike that deals normal damage but can throw a standing opponent back and slow them down, based on your strength. Ineffective below 10 strength. Slowdown & Knockback scales to your Strength up to 14 (1 - 4 tiles). Cannot be used consecutively more than every 5 seconds on the same target. Prone targets halve the knockback distance. Not fully charging the attack limits knockback to 1 tile."
@@ -3428,6 +3476,27 @@
 	tranged = FALSE
 	tshield = FALSE
 
+/datum/intent/simple/horse
+	name = "horse"
+	desc = ""
+	icon_state = "instrike"
+	blade_class = "blunt"
+	item_d_type = "blunt"
+	attack_verb = list("tramples", "rams", "kicks")
+	damfactor = 1
+	penfactor = 10
+	releasedrain = 1
+	misscost = 1
+	reach = 1
+	chargetime = 0
+	swingdelay = 0
+	canparry = TRUE
+	candodge = TRUE
+	no_attack = FALSE
+	unarmed = FALSE
+	tranged = FALSE
+	tshield = FALSE
+
 /datum/intent/simple/minotaur_axe
 	name = "minotaur axe"
 	desc = ""
@@ -3799,6 +3868,30 @@
 	tshield = FALSE
 	cleave = /datum/cleave_pattern/forward_cleave
 	hitsound = list('modular_redtard/rockhill/sound/combat/hits/bladed/genslash (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/bladed/genslash (2).ogg', 'modular_redtard/rockhill/sound/combat/hits/bladed/genslash (3).ogg')
+
+/datum/intent/spear/cut/bardiche/cleave/chop
+	name = "cleaving chop"
+	desc = "A cleave that cuts through a second target behind the first. Weakly penetrative."
+	icon_state = "incleave"
+	blade_class = "chopping"
+	item_d_type = "slash"
+	attack_verb = list("chops", "hacks")
+	damfactor = 1
+	penfactor = 35
+	clickcd = 18
+	releasedrain = 1
+	misscost = 1
+	reach = 2
+	chargetime = 0
+	swingdelay = 0
+	canparry = TRUE
+	candodge = TRUE
+	no_attack = FALSE
+	unarmed = FALSE
+	tranged = FALSE
+	tshield = FALSE
+	cleave = /datum/cleave_pattern/forward_cleave
+	hitsound = list('modular_redtard/rockhill/sound/combat/hits/bladed/genchop (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/bladed/genchop (2).ogg', 'modular_redtard/rockhill/sound/combat/hits/bladed/genchop (3).ogg')
 
 /datum/intent/spear/cut/glaive
 	name = "cut"
@@ -4807,6 +4900,29 @@
 	tshield = FALSE
 	hitsound = list('modular_redtard/rockhill/sound/combat/hits/bladed/genslash (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/bladed/genslash (2).ogg', 'modular_redtard/rockhill/sound/combat/hits/bladed/genslash (3).ogg')
 
+/datum/intent/sword/cut/sabre/slow
+	name = "cut"
+	desc = ""
+	icon_state = "incut"
+	blade_class = "slash"
+	item_d_type = "slash"
+	attack_verb = list("cuts", "slashes")
+	damfactor = 1.25
+	penfactor = 10
+	clickcd = 12
+	releasedrain = 1
+	misscost = 1
+	reach = 1
+	chargetime = 0
+	swingdelay = 0
+	canparry = TRUE
+	candodge = TRUE
+	no_attack = FALSE
+	unarmed = FALSE
+	tranged = FALSE
+	tshield = FALSE
+	hitsound = list('modular_redtard/rockhill/sound/combat/hits/bladed/genslash (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/bladed/genslash (2).ogg', 'modular_redtard/rockhill/sound/combat/hits/bladed/genslash (3).ogg')
+
 /datum/intent/sword/cut/short
 	name = "cut"
 	desc = ""
@@ -4913,6 +5029,28 @@
 	releasedrain = 1
 	misscost = 1
 	reach = 1
+	chargetime = 0
+	swingdelay = 2
+	canparry = TRUE
+	candodge = TRUE
+	no_attack = FALSE
+	unarmed = FALSE
+	tranged = FALSE
+	tshield = FALSE
+	hitsound = list('modular_redtard/rockhill/sound/combat/hits/blunt/metalblunt (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/blunt/metalblunt (2).ogg', 'modular_redtard/rockhill/sound/combat/hits/blunt/metalblunt (3).ogg')
+
+/datum/intent/sword/disarm/range
+	name = "reaching disarm"
+	desc = ""
+	icon_state = "intake"
+	item_d_type = "blunt"
+	attack_verb = list("hits", "strikes")
+	damfactor = 0.1
+	penfactor = 0
+	clickcd = 22
+	releasedrain = 1
+	misscost = 1
+	reach = 2
 	chargetime = 0
 	swingdelay = 2
 	canparry = TRUE
@@ -5315,6 +5453,29 @@
 	reach = 1
 	chargetime = 0
 	swingdelay_type = 2
+	canparry = TRUE
+	candodge = TRUE
+	no_attack = FALSE
+	unarmed = FALSE
+	tranged = FALSE
+	tshield = FALSE
+	hitsound = list('modular_redtard/rockhill/sound/combat/hits/bladed/genstab (1).ogg', 'modular_redtard/rockhill/sound/combat/hits/bladed/genstab (2).ogg', 'modular_redtard/rockhill/sound/combat/hits/bladed/genstab (3).ogg')
+
+/datum/intent/sword/thrust/hook
+	name = "stab"
+	desc = ""
+	icon_state = "instab"
+	blade_class = "stabbing"
+	item_d_type = "stab"
+	attack_verb = list("stabs")
+	damfactor = 0.9
+	penfactor = 1
+	clickcd = 12
+	releasedrain = 1
+	misscost = 1
+	reach = 1
+	chargetime = 0
+	swingdelay = 0
 	canparry = TRUE
 	candodge = TRUE
 	no_attack = FALSE

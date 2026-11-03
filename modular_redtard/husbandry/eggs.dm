@@ -80,6 +80,28 @@
 	if(. && !QDELETED(src))
 		qdel(GetComponent(/datum/component/fertile_egg))
 
+/obj/item/reagent_containers/food/snacks/egg/Initialize(mapload)
+	. = ..()
+	if(!rogue_husbandry_enabled())
+		return
+	var/static/list/loc_connections = list(COMSIG_ATOM_ENTERED = PROC_REF(rogue_on_stepped))
+	AddElement(/datum/element/connect_loc, loc_connections)
+
+/// Ratwood egg Crossed(): someone who walks onto an egg lying on the ground crushes it.
+/obj/item/reagent_containers/food/snacks/egg/proc/rogue_on_stepped(datum/source, atom/movable/arrived, atom/old_loc, list/atom/old_locs)
+	SIGNAL_HANDLER
+	if(!isturf(loc) || !ishuman(arrived) || (arrived.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
+		return
+	rogue_crush(arrived)
+
+/// The egg is crushed into a smudge on the floor.
+/obj/item/reagent_containers/food/snacks/egg/proc/rogue_crush(mob/living/stepper)
+	var/obj/effect/decal/cleanable/food/egg_smudge/smudge = new(loc)
+	smudge.pixel_x = rand(-8, 8)
+	smudge.pixel_y = rand(-8, 8)
+	visible_message(span_warning("[stepper] crushes [src] underfoot."))
+	qdel(src)
+
 /// Ratwood chick: skittish, grows into a hen (chick Life(): rand(1, 2) a Life to 100).
 /mob/living/simple_animal/chick
 	ai_controller = /datum/ai_controller/basic_controller/simple/simple_skittish

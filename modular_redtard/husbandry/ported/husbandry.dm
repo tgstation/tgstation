@@ -171,3 +171,21 @@
 /mob/living/simple_animal/hostile/retaliate/rogue/swine/hog/piglet
 	rogue_partner_type = null
 	rogue_adult_type = /mob/living/simple_animal/hostile/retaliate/rogue/swine/hog
+
+/mob/living/simple_animal/hostile/retaliate/rogue/horse/male/black/tame/saddled
+	gender = MALE
+	rogue_tame_chance = 15
+	rogue_tame_bonus = 15
+	rogue_start_tame = TRUE
+
+/mob/living/simple_animal/hostile/retaliate/rogue/horse/male/brown/tame/saddled
+	gender = MALE
+	rogue_tame_chance = 15
+	rogue_tame_bonus = 15
+	rogue_start_tame = TRUE
+
+/mob/living/simple_animal/hostile/retaliate/rogue/horse/male/white/tame/saddled
+	gender = MALE
+	rogue_tame_chance = 15
+	rogue_tame_bonus = 15
+	rogue_start_tame = TRUE

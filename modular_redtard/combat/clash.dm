@@ -1,4 +1,22 @@
+/// Ratwood's duelist's rings (rogueclothes/rings.dm, clashpurgepeelstuffs.dm, rmb_intents.dm): a bait between two duelists
+/// takes the balance for longer (values/combat.txt, "Weapons and gear").
+#define ROGUE_DUELIST_BAIT_OFFBALANCE rogue_value("duelist_bait_offbalance")
+#define ROGUE_DUELIST_BAIT_HOLD rogue_value("duelist_bait_hold")
+
 /mob/living/var/rogue_bait_stacks = 0
+
+/// Ratwood has_duelist_ring(): a duelist's ring on a finger (the porter lets it be worn on the gloves too).
+/mob/living/carbon/human/proc/rogue_has_duelist_ring()
+	if(istype(gloves, /obj/item/clothing/ring/duelist))
+		return TRUE
+	for(var/obj/item/ring as anything in wear_rings)
+		if(istype(ring, /obj/item/clothing/ring/duelist))
+			return TRUE
+	return FALSE
+
+/// Both wear a duelist's ring: an honourable duel.
+/mob/living/carbon/human/proc/rogue_dueling(mob/living/carbon/human/opponent)
+	return istype(opponent) && rogue_has_duelist_ring() && opponent.rogue_has_duelist_ring()
 
 /mob/living/carbon/human/proc/rogue_try_guard()
 	if(has_status_effect(/datum/status_effect/rogue/guard) || has_status_effect(/datum/status_effect/rogue/guard_cooldown))
@@ -99,6 +117,10 @@
 		else if(edge < 0)
 			their_chance += ROGUE_CLASH_STEP
 	our_chance += rand(ROGUE_CLASH_INITIATOR_MIN, ROGUE_CLASH_INITIATOR_MAX)
+	// Ratwood's duelist's rings: two duelists clash on even odds, each with the better of the two chances.
+	if(rogue_dueling(opponent))
+		our_chance = max(our_chance, their_chance)
+		their_chance = our_chance
 	visible_message(span_boldwarning("[src] and [opponent] clash!"))
 	do_sparks(1, TRUE, get_step(src, dir))
 	var/decided = FALSE
@@ -187,9 +209,11 @@
 		changeNext_move(1)
 		to_chat(src, span_notice("[target.p_They()] fell for my bait <b>perfectly</b>! One more!"))
 		to_chat(target, span_danger("I fall for [src]'s bait <b>perfectly</b>! I'm losing my footing! <b>I can't let this happen again!</b>"))
-	else
-		target.rogue_off_balance(ROGUE_BAIT_OFFBALANCE)
-		target.Immobilize(ROGUE_BAIT_HOLD)
+	// Ratwood: between two duelists with rings the first bait already takes the balance, and for longer.
+	var/duel = rogue_dueling(target)
+	if(duel || target.rogue_bait_stacks >= 2)
+		target.rogue_off_balance(duel ? ROGUE_DUELIST_BAIT_OFFBALANCE : ROGUE_BAIT_OFFBALANCE)
+		target.Immobilize(duel ? ROGUE_DUELIST_BAIT_HOLD : ROGUE_BAIT_HOLD)
 		to_chat(src, span_notice("[target.p_They()] fell for it again and is off-balanced! NOW!"))
 		to_chat(target, span_danger("I fall for [src]'s bait <b>perfectly</b>! My balance is GONE!"))
 		target.rogue_bait_stacks = 0
@@ -202,3 +226,6 @@
 		target.rogue_off_balance(ROGUE_BAIT_OFFBALANCE)
 		playsound(src, 'modular_redtard/rockhill/sound/combat/riposte.ogg', 100, TRUE)
 	return TRUE
+
+#undef ROGUE_DUELIST_BAIT_OFFBALANCE
+#undef ROGUE_DUELIST_BAIT_HOLD

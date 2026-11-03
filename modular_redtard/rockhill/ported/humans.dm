@@ -67,6 +67,9 @@
 /mob/living/carbon/human/species/orc/npc/warlord
 	name = "orc"
 
+/mob/living/carbon/human/species/skeleton/npc
+	name = "skeleton"
+
 /mob/living/carbon/human/species/skeleton/npc/bogguard
 	name = "skeleton"
 

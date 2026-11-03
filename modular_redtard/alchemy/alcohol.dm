@@ -7,8 +7,8 @@
 // TG's gain grows with the share spent, so a Ratwood brew scales TG's gain to TG's own pace (on_mob_life() below). Six of the
 // brews are TG's own reagents (ale, beer, gin, mead, rum, wine): on medieval maps they take Ratwood's data, on modern maps
 // they stay TG's. Names TG or Ratwood already use got another (TG wants every reagent name once): small beer, festive green
-// beer, Kazengun shochu, Kazengun umeshu, spider honey mead. Ratwood's hydration, glass names and its liver-free drinking
-// are not ported: the module has no thirst, TG names its glasses by style and TG's liver takes its share.
+// beer, Kazengun shochu, Kazengun umeshu, spider honey mead. Ratwood's glass names and its liver-free drinking are not
+// ported: TG names its glasses by style and TG's liver takes its share. What drinks quench is in survival/thirst.dm.
 
 /// Ratwood's brews are spent half a unit a Ratwood tick (Ratwood ethanol 0.5 x REAGENTS_METABOLISM).
 #define ROGUE_BREW_RATE ROGUE_REAGENT_RATE(0.5)

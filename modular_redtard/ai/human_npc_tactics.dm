@@ -103,6 +103,8 @@ GLOBAL_LIST_INIT(rogue_npc_healing_reagents, list(
 	/datum/reagent/medicine/stronghealth,
 ))
 
+/// The kinds that taunt and leap otherwise than the rest (Ratwood rude, npc_jump_chance, npc_jump_distance of goblin.dm, orc.dm,
+/// skeleton.dm, deadite.dm and the like) are the porter's (rockhill/ported/npcs.dm).
 /mob/living/carbon/human
 	/// Ratwood rude: laughs at and points to a foe out of its reach.
 	var/rogue_npc_rude = FALSE
@@ -110,36 +112,6 @@ GLOBAL_LIST_INIT(rogue_npc_healing_reagents, list(
 	/// and npc_jump_distance of pve.txt.
 	var/rogue_npc_jump_chance
 	var/rogue_npc_jump_distance
-
-// Ratwood's NPC kinds that taunt and leap differently (goblin.dm, orc.dm, orc_outfits.dm, skeleton.dm, deadite.dm, drow.dm,
-// bog_deserters.dm, bum.dm).
-
-/mob/living/carbon/human/species/goblin/npc
-	rogue_npc_rude = TRUE
-	rogue_npc_jump_chance = 60
-	rogue_npc_jump_distance = 3
-
-/mob/living/carbon/human/species/orc/npc
-	rogue_npc_rude = TRUE
-
-/mob/living/carbon/human/species/orc/npc/berserker
-	rogue_npc_jump_chance = 25
-
-/mob/living/carbon/human/species/skeleton/npc
-	rogue_npc_rude = TRUE
-	rogue_npc_jump_chance = 0
-
-/mob/living/carbon/human/species/npc/deadite
-	rogue_npc_jump_chance = 0
-
-/mob/living/carbon/human/species/elf/dark/drowraider
-	rogue_npc_rude = TRUE
-
-/mob/living/carbon/human/species/human/northern/bog_deserters
-	rogue_npc_rude = TRUE
-
-/mob/living/carbon/human/species/human/northern/bum
-	rogue_npc_rude = TRUE
 
 // The mind.
 

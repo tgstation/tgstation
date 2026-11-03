@@ -20,6 +20,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/ingot/iron
 	repair_cost_second = /obj/item/ingot/iron
+	repair_skill = /datum/attribute/skill/craft/blacksmithing
 	max_integrity = 2000
 	resistance_flags = NONE
 	damage_deflection = 15
@@ -49,6 +50,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/ingot/iron
 	repair_cost_second = /obj/item/ingot/iron
+	repair_skill = /datum/attribute/skill/craft/blacksmithing
 	max_integrity = 2500
 	resistance_flags = NONE
 	damage_deflection = 15
@@ -78,6 +80,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/grown/log/tree/small
 	repair_cost_second = /obj/item/grown/log/tree/small
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	max_integrity = 500
 	resistance_flags = FLAMMABLE
 	damage_deflection = 12
@@ -108,6 +111,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/grown/log/tree/small
 	repair_cost_second = /obj/item/grown/log/tree/small
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	max_integrity = 1000
 	resistance_flags = FLAMMABLE
 	damage_deflection = 12
@@ -140,6 +144,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/grown/log/tree/small
 	repair_cost_second = /obj/item/grown/log/tree/small
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	resident_advclass = list("/datum/advclass/nightmaiden/concubine", "/datum/advclass/nightmaiden/courtesan", "/datum/advclass/nightmaiden/dominatrix")
 	max_integrity = 1000
 	resistance_flags = FLAMMABLE
@@ -171,6 +176,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/grown/log/tree/small
 	repair_cost_second = /obj/item/grown/log/tree/small
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	max_integrity = 1000
 	resistance_flags = FLAMMABLE
 	damage_deflection = 12
@@ -201,6 +207,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/grown/log/tree/small
 	repair_cost_second = /obj/item/grown/log/tree/small
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	max_integrity = 250
 	resistance_flags = FLAMMABLE
 	damage_deflection = 12
@@ -231,6 +238,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/grown/log/tree/small
 	repair_cost_second = /obj/item/ingot/iron
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	max_integrity = 2000
 	resistance_flags = FLAMMABLE
 	damage_deflection = 12
@@ -261,6 +269,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/natural/stone
 	repair_cost_second = /obj/item/natural/stone
+	repair_skill = /datum/attribute/skill/craft/masonry
 	max_integrity = 1500
 	resistance_flags = FLAMMABLE
 	damage_deflection = 12
@@ -291,6 +300,7 @@
 	repairable = FALSE
 	repair_cost_first = /obj/item/natural/stone
 	repair_cost_second = /obj/item/natural/stone
+	repair_skill = /datum/attribute/skill/craft/masonry
 	max_integrity = 1500
 	resistance_flags = FLAMMABLE
 	damage_deflection = 12
@@ -321,6 +331,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/natural/stone
 	repair_cost_second = /obj/item/natural/stone
+	repair_skill = /datum/attribute/skill/craft/masonry
 	max_integrity = 2500
 	resistance_flags = FLAMMABLE
 	damage_deflection = 12
@@ -351,6 +362,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/grown/log/tree/small
 	repair_cost_second = /obj/item/ingot/iron
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	max_integrity = 2500
 	resistance_flags = FLAMMABLE
 	damage_deflection = 12
@@ -381,6 +393,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/grown/log/tree/small
 	repair_cost_second = /obj/item/grown/log/tree/small
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	max_integrity = 1000
 	resistance_flags = FLAMMABLE
 	damage_deflection = 12
@@ -411,6 +424,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/grown/log/tree/small
 	repair_cost_second = /obj/item/grown/log/tree/small
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	max_integrity = 1000
 	resistance_flags = FLAMMABLE
 	damage_deflection = 12
@@ -443,6 +457,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/grown/log/tree/small
 	repair_cost_second = /obj/item/grown/log/tree/small
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	max_integrity = 1000
 	resistance_flags = FLAMMABLE
 	damage_deflection = 12
@@ -475,6 +490,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/grown/log/tree/small
 	repair_cost_second = /obj/item/grown/log/tree/small
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	resident_advclass = list("/datum/advclass/blacksmith", "/datum/advclass/masterblacksmith")
 	max_integrity = 1000
 	resistance_flags = FLAMMABLE
@@ -508,6 +524,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/grown/log/tree/small
 	repair_cost_second = /obj/item/grown/log/tree/small
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	max_integrity = 1000
 	resistance_flags = FLAMMABLE
 	damage_deflection = 12
@@ -540,6 +557,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/grown/log/tree/small
 	repair_cost_second = /obj/item/grown/log/tree/small
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	max_integrity = 1000
 	resistance_flags = FLAMMABLE
 	damage_deflection = 12
@@ -572,6 +590,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/grown/log/tree/small
 	repair_cost_second = /obj/item/grown/log/tree/small
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	resident_advclass = list("/datum/advclass/miner", "/datum/advclass/minermaster")
 	max_integrity = 1000
 	resistance_flags = FLAMMABLE
@@ -605,6 +624,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/grown/log/tree/small
 	repair_cost_second = /obj/item/grown/log/tree/small
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	resident_advclass = list("/datum/advclass/witch")
 	max_integrity = 1000
 	resistance_flags = FLAMMABLE
@@ -636,6 +656,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/grown/log/tree/small
 	repair_cost_second = /obj/item/grown/log/tree/small
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	max_integrity = 1000
 	resistance_flags = FLAMMABLE
 	damage_deflection = 12
@@ -666,6 +687,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/grown/log/tree/small
 	repair_cost_second = /obj/item/grown/log/tree/small
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	max_integrity = 1000
 	resistance_flags = FLAMMABLE
 	damage_deflection = 12
@@ -697,6 +719,7 @@
 	repairable = TRUE
 	repair_cost_first = /obj/item/grown/log/tree/small
 	repair_cost_second = /obj/item/grown/log/tree/small
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	resident_advclass = list("/datum/advclass/witch", "/datum/advclass/wretch/licker", "/datum/advclass/wretch/deserter", "/datum/advclass/wretch/deserter/maa", "/datum/advclass/wretch/berserker", "/datum/advclass/wretch/roguemage", "/datum/advclass/wretch/necromancer", "/datum/advclass/wretch/heretic", "/datum/advclass/wretch/heretic/spy", "/datum/advclass/wretch/outlaw", "/datum/advclass/wretch/poacher", "/datum/advclass/wretch/plaguebearer", "/datum/advclass/wretch/pyromaniac", "/datum/advclass/wretch/vigilante", "/datum/advclass/wretch/blackoakwyrm", "/datum/advclass/wretch/antipope", "/datum/advclass/wretch/ancientchampion")
 	max_integrity = 1000
 	resistance_flags = FLAMMABLE

@@ -1,3 +1,10 @@
+/// Deciseconds it takes to look through the saddlebags from the saddle and from the ground (Ratwood MiddleClick(): 10 and 30).
+#define ROGUE_SADDLEBAG_RIDER_TIME rogue_value("mount_saddlebag_rider_time")
+#define ROGUE_SADDLEBAG_TIME rogue_value("mount_saddlebag_time")
+/// The choice Ratwood offers on a mount in both a caparison and a bard.
+#define ROGUE_ADJUST_CAPARISON "Adjust caparison"
+#define ROGUE_SADDLEBAGS "Look through the saddle bags"
+
 /// Riding (Ratwood simple_animal.dm can_saddle, ssaddle, user_buckle_mob(), user_unbuckle_mob(), relaymove(), violent_dismount();
 /// rogue/game/saiga.dm, farm/goat.dm, farm/hog.dm, creacher/beetle.dm tamed() and update_icon(); rogueitems/natural/animals.dm
 /// the saddle; datums/components/riding.dm) on TG's ridable element and creature riding component. A saddle fits a grown saiga,
@@ -8,7 +15,9 @@
 /// An apple from the hand heals a mount for a while and keeps it from holding a grudge.
 ///
 /// Saddle, caparison and bard go on by clicking the mount with them and come off, in that order back, by a right click with an
-/// empty hand out of combat mode. A rider gets on by dragging themself onto the mount and off by resisting.
+/// empty hand out of combat mode. A rider gets on by dragging themself onto the mount, or in combat mode by clicking it with an empty
+/// hand, and off by resisting. Alt+click on a saddled mount (Ratwood's middle click, the module's kick) looks through the
+/// saddlebags, or adjusts the caparison over or under the bard.
 /mob/living/basic/rockhill
 	/// Ratwood can_saddle and can_buckle: a grown beast of this kind takes a saddle, and saddled and tamed it carries riders.
 	var/rogue_can_saddle = FALSE
@@ -99,6 +108,7 @@
 	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(on_damage_modifiers))
 	RegisterSignal(parent, COMSIG_MOB_AFTER_APPLY_DAMAGE, PROC_REF(on_hurt))
 	RegisterSignal(parent, COMSIG_QDELETING, PROC_REF(on_mount_deleting))
+	RegisterSignal(parent, COMSIG_CLICK_ALT, PROC_REF(on_click_alt))
 	var/atom/mount = parent
 	mount.update_appearance(UPDATE_OVERLAYS)
 
@@ -121,6 +131,7 @@
 		COMSIG_MOB_APPLY_DAMAGE_MODIFIERS,
 		COMSIG_MOB_AFTER_APPLY_DAMAGE,
 		COMSIG_QDELETING,
+		COMSIG_CLICK_ALT,
 	))
 
 /datum/component/rogue_mount/Destroy(force)
@@ -148,6 +159,7 @@
 		caparison = null
 	else if(gone == barding)
 		barding = null
+		update_barding_pace()
 	else
 		return
 	source.update_appearance(UPDATE_OVERLAYS)
@@ -230,6 +242,46 @@
 	old_saddle.forceMove(mount.drop_location())
 	user.put_in_hands(old_saddle)
 	user.visible_message(span_notice("[user] removes the saddle from [mount]."), span_notice("I remove the saddle from [mount]."))
+
+/// Ratwood MiddleClick() on a living saddled mount, here Alt+click: its saddlebags, or the caparison to adjust when a bard is on too.
+/datum/component/rogue_mount/proc/on_click_alt(mob/living/basic/rockhill/source, mob/user)
+	SIGNAL_HANDLER
+	if(source.stat == DEAD || !saddle || !isliving(user) || !user.can_perform_action(source, SILENT_ADJACENCY))
+		return NONE
+	INVOKE_ASYNC(src, PROC_REF(alt_tack), user)
+	return CLICK_ACTION_SUCCESS
+
+/// Ratwood MiddleClick(): with both a caparison and a bard on, the choice of adjusting the caparison or the saddlebags (the bags if
+/// none is made); otherwise the saddlebags.
+/datum/component/rogue_mount/proc/alt_tack(mob/living/user)
+	var/mob/living/basic/rockhill/mount = parent
+	if(caparison && barding)
+		var/choice = tgui_alert(user, "What would you like to do?", mount.name, list(ROGUE_ADJUST_CAPARISON, ROGUE_SADDLEBAGS))
+		if(QDELETED(src) || QDELETED(mount) || !user.can_perform_action(mount))
+			return
+		if(choice == ROGUE_ADJUST_CAPARISON)
+			adjust_caparison(user)
+			return
+	open_saddlebags(user)
+
+/// Ratwood "Adjust caparison": the caparison goes over the bard, or back under it.
+/datum/component/rogue_mount/proc/adjust_caparison(mob/living/user)
+	if(!caparison || !barding)
+		return
+	caparison_over_barding = !caparison_over_barding
+	to_chat(user, span_info("I [caparison_over_barding ? "adjust [caparison] to cover [barding]" : "adjust [caparison] to be under [barding]"]."))
+	var/mob/living/basic/rockhill/mount = parent
+	mount.update_appearance(UPDATE_OVERLAYS)
+
+/// Ratwood "Look through the saddle bags": the saddle's storage opens on the mount, a moment from the saddle and longer from the ground.
+/datum/component/rogue_mount/proc/open_saddlebags(mob/living/user)
+	var/mob/living/basic/rockhill/mount = parent
+	if(!saddle?.atom_storage)
+		return
+	var/wait = user.buckled == mount ? ROGUE_SADDLEBAG_RIDER_TIME : ROGUE_SADDLEBAG_TIME
+	if(!do_after(user, wait, target = mount) || QDELETED(src) || !saddle?.atom_storage)
+		return
+	saddle.atom_storage.open_storage(user)
 
 /datum/component/rogue_mount/proc/on_examine(mob/living/basic/rockhill/source, mob/user, list/examine_list)
 	SIGNAL_HANDLER
@@ -521,3 +573,19 @@
 		unbuckled_mob.visible_message(span_notice("[unbuckled_mob] dismounts [src]."), span_notice("I dismount [src]."))
 	else
 		unbuckled_mob.visible_message(span_warning("[unbuckler] pulls [unbuckled_mob] off [src]."), span_warning("[unbuckler] pulls me off [src]."))
+
+/// Ratwood simple_animal attack_hand(): in combat mode a click with an empty hand on a saddled tamed mount gets on it, whatever the
+/// intent, instead of striking it.
+/mob/living/carbon/human/resolve_unarmed_attack(atom/attack_target, list/modifiers)
+	if(combat_mode && !buckled && istype(attack_target, /mob/living/basic/rockhill) && !LAZYACCESS(modifiers, RIGHT_CLICK))
+		var/mob/living/basic/rockhill/mount = attack_target
+		var/datum/component/rogue_mount/tack = mount.GetComponent(/datum/component/rogue_mount)
+		if(tack?.saddle && mount.can_buckle && mount.stat == STABLE && HAS_TRAIT(mount, TRAIT_TAMED))
+			INVOKE_ASYNC(mount, TYPE_PROC_REF(/atom/movable, user_buckle_mob), src, src, FALSE)
+			return TRUE
+	return ..()
+
+#undef ROGUE_SADDLEBAG_RIDER_TIME
+#undef ROGUE_SADDLEBAG_TIME
+#undef ROGUE_ADJUST_CAPARISON
+#undef ROGUE_SADDLEBAGS

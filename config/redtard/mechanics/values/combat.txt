@@ -1926,3 +1926,185 @@ cheele_blood_max = 1120
 
 # Blood a squeezed cheele fills a body up to before it drops off (Ratwood BLOOD_VOLUME_MAXIMUM 1120).
 cheele_blood_cap = 1120
+
+# --- Weapons and gear (block 4, task B13: combat/integrity.dm, special_weapons.dm, keep_standard.dm, training_dummy.dm, azure_weapons.dm, clash.dm; Ratwood obj_defense.dm, rogueweapon.dm, species.dm equip_delay_self_check(), melee/special.dm, standard_bearer.dm, fluff.dm tdummy, rmb_intents.dm; Azure Peak spells_status_effects.dm).
+
+# A broken weapon's force falls to this part of itself, in one hand and wielded (Ratwood obj_break(): force /= 5).
+broken_force_divisor = 5
+
+# A broken weapon's armour penetration falls to this part of itself (Ratwood obj_break(): armor_penetration /= 5).
+broken_penetration_divisor = 5
+
+# A broken weapon's defense falls to this part of itself (Ratwood obj_break(): wdefense /= 2).
+broken_defense_divisor = 2
+
+# The wielded defense bonus of a broken weapon that had one (Ratwood obj_break(): wdefense_wbonus = -3).
+broken_wielded_defense = -3
+
+# Deciseconds of equip_delay_self over which putting an item on oneself is told to those around (Ratwood: over 10).
+equip_message_delay = 10
+
+# Paces within which the master's rod and the staff of the shepherd strike (Ratwood get_dist() 7).
+rod_range = 7
+
+# Shock damage of the rod's electrocute and the staff's smite (Ratwood electrocute_act(5)).
+rod_shock_damage = 5
+
+# Deciseconds a rod's silence lasts (Ratwood set_silence(20 SECONDS)).
+rod_silence = 200
+
+# Deciseconds before the master's rod works again after electrocuting (Ratwood 20 SECONDS).
+scepter_shock_cooldown = 200
+
+# Deciseconds before the master's rod works again after silencing (Ratwood 10 SECONDS).
+scepter_silence_cooldown = 100
+
+# Deciseconds before the staff of the shepherd works again after smiting (Ratwood 10 SECONDS).
+aries_smite_cooldown = 100
+
+# Deciseconds before the staff of the shepherd works again after silencing (Ratwood 5 SECONDS).
+aries_silence_cooldown = 50
+
+# Fire stacks the staff's smite sets on its target (Ratwood adjust_fire_stacks(3) of blessed fire).
+aries_smite_fire_stacks = 3
+
+# Charge of a full stunmace (Ratwood charge 100).
+stunmace_charge = 100
+
+# The stunmace will not switch on at this charge or less (Ratwood "It's out of juice", 33).
+stunmace_low_charge = 33
+
+# Force of a switched-on stunmace, one-handed (Ratwood force 6).
+stunmace_on_force = 6
+
+# Charge a switched-on stunmace spends every second (Ratwood a unit every two-second tick).
+stunmace_drain = 0.5
+
+# Charge a switched-off stunmace regains every second (Ratwood a unit every two-second tick).
+stunmace_recharge = 0.5
+
+# Shock damage of the stunmace on a spent foe, and on its holder when water shorts it out (Ratwood electrocute_act(5)).
+stunmace_shock_damage = 5
+
+# Charge a shock of the stunmace costs (Ratwood 6).
+stunmace_shock_cost = 6
+
+# Charge the stunmace's sapping of a foe who is not spent costs (Ratwood 3).
+stunmace_sap_cost = 3
+
+# Energy a struck foe loses to the switched-on stunmace (Ratwood energy_add(-10)).
+stunmace_energy_drain = 10
+
+# Stamina a struck foe loses to the switched-on stunmace (Ratwood stamina_add(5)).
+stunmace_stamina = 5
+
+# Fire stacks the burning hay of a militia spear sets on whom it strikes (Ratwood adjust_fire_stacks(5)).
+militia_spear_fire_stacks = 5
+
+# Fortune of a man-at-arms whom the ducal standard's runes accept (Ratwood change_stat(STATKEY_LCK, 3)).
+standard_fortune = 3
+
+# Perception of a man-at-arms whom the ducal standard's runes accept (Ratwood change_stat(STATKEY_PER, 2)).
+standard_perception = 2
+
+# Mood of a man-at-arms while the standard's runes accept him (Ratwood stressevent keep_standard, stressadd -4).
+standard_mood = 8
+
+# Mood of a guard in sight when the standard is planted (Ratwood stressevent keep_standard_lesser, stressadd -3).
+standard_plant_mood = 6
+
+# Deciseconds that mood lasts (Ratwood 3 MINUTES).
+standard_plant_mood_time = 1800
+
+# Deciseconds a command of the standard keeps its bearer planting it (Ratwood do_after 8 SECONDS).
+standard_plant_time = 80
+
+# Least stamina a command of the standard costs its bearer (Ratwood stamina_add(rand(15, 35))).
+standard_stamina_min = 15
+
+# Most stamina a command of the standard costs its bearer.
+standard_stamina_max = 35
+
+# Energy the Recuperate command costs its bearer (Ratwood energy_add(-200)).
+standard_recuperate_cost = 200
+
+# Energy the Steady command costs its bearer (Ratwood energy_add(-300)).
+standard_steady_cost = 300
+
+# Paces within which guards in sight heed the Plant, Recuperate and Steady commands (Ratwood viewers(7)).
+standard_sight = 7
+
+# Paces within which every guard on the level hears the Rally command (Ratwood orange(75)).
+standard_rally_range = 75
+
+# Healing a second of the Recuperate command (Ratwood buff/healing 0.2, a bard's weakest song).
+standard_heal = 0.2
+
+# Energy the Recuperate command gives a guard below his most (Ratwood energy_add(100)).
+standard_energy_gift = 100
+
+# Deciseconds the Steady command lightens a guard's step (Ratwood buff/standard_steady, 2 MINUTES).
+standard_steady_duration = 1200
+
+# Fortune the Steady command gives a guard (Ratwood effectedstats STATKEY_LCK = 1).
+standard_steady_fortune = 1
+
+# Integrity the standard's runes mend at a time (Ratwood repair_amount 20).
+standard_mend_amount = 20
+
+# Deciseconds between the runes' mending (Ratwood repair_time 3 MINUTES).
+standard_mend_time = 1800
+
+# Deciseconds of a stroke on the practice dummy (Ratwood do_after 1 SECONDS).
+dummy_stroke_time = 10
+
+# Sharpness a stroke on the practice dummy wears off the blade (Ratwood remove_bintegrity(5)).
+dummy_blade_wear = 5
+
+# Least stamina a stroke on the practice dummy costs (Ratwood stamina_add(rand(4, 6))).
+dummy_stamina_min = 4
+
+# Most stamina a stroke on the practice dummy costs.
+dummy_stamina_max = 6
+
+# The practice dummy teaches a weapon skill below this learned rank (Ratwood can_train_combat_skill() with SKILL_LEVEL_APPRENTICE, 2; journeyman is 3).
+dummy_train_cap = 2
+
+# Percent a stroke teaches per point of fortune (Ratwood STALUC / 10 * 100).
+dummy_chance_per_fortune = 10
+
+# Most percent a stroke teaches; the rest the dummy ripostes (Ratwood min(probby, 99)).
+dummy_chance_max = 99
+
+# Below this intelligence nothing is learned from the dummy, it only ripostes (Ratwood STAINT < 3).
+dummy_min_intelligence = 3
+
+# Experience of the weapon's skill per point of intelligence of a teaching stroke (Ratwood STAINT * 0.35).
+dummy_xp_per_int = 0.35
+
+# Deciseconds the dummy's riposte knocks the trainee down, before throwing him back two paces (Ratwood AdjustKnockdown(1)).
+dummy_riposte_knockdown = 1
+
+# Deciseconds a bait between two wearers of duelist's rings takes the target's balance (Ratwood OffBalance(4 SECONDS)).
+duelist_bait_offbalance = 40
+
+# Deciseconds that bait holds the target in place (Ratwood Immobilize(4 SECONDS)).
+duelist_bait_hold = 40
+
+# Deciseconds the deathfrost axe's frostbite lasts (Azure Peak buff/frostbite 6 SECONDS).
+frostbite_duration = 60
+
+# Speed the frostbite takes (Azure Peak effectedstats speed -2).
+frostbite_speed = -2
+
+# Movement slowdown of the frostbite (Azure Peak multiplicative_slowdown 4).
+frostbite_slowdown = 4
+
+# Deciseconds the frostbite tints its victim blue (Azure Peak 20 SECONDS).
+frostbite_tint = 200
+
+# Stamina the frostbite takes at once (Azure Peak stamina_add(25)).
+frostbite_stamina = 25
+
+# Stamina the frostbite takes every second until the victim is spent, which thaws it (Azure Peak stamina_add(5)).
+frostbite_stamina_tick = 5

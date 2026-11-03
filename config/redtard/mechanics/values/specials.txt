@@ -525,3 +525,33 @@ special_warhammer_swing_daze_intelligence = -2
 
 # Dazing Swing: self_immob_dur. Times are in deciseconds.
 special_warhammer_swing_self_immob_dur = 9
+
+# Ignite Dagger: cooldown. Times are in deciseconds.
+special_ignite_dagger_cooldown = 1200
+
+# Ignite Dagger: stamcost. Times are in deciseconds.
+special_ignite_dagger_stamcost = 25
+
+# Ignite Dagger: active_dur. Times are in deciseconds.
+special_ignite_dagger_active_dur = 200
+
+# Coat Blade: cooldown. Times are in deciseconds.
+special_coat_blade_cooldown = 1200
+
+# Coat Blade: stamcost. Times are in deciseconds.
+special_coat_blade_stamcost = 25
+
+# Coat Blade: active_dur. Times are in deciseconds.
+special_coat_blade_active_dur = 200
+
+# Coat Blade: force_loss. Times are in deciseconds.
+special_coat_blade_force_loss = 15
+
+# Permafrost: cooldown. Times are in deciseconds.
+special_permafrost_cooldown = 1200
+
+# Permafrost: stamcost. Times are in deciseconds.
+special_permafrost_stamcost = 25
+
+# Permafrost: active_dur. Times are in deciseconds.
+special_permafrost_active_dur = 200

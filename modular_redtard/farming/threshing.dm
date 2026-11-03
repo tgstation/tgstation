@@ -1,22 +1,12 @@
 /// Ratwood's stalks (code/modules/farming/chaff.dm): a harvest of grain comes as bundles of stalks. A thresher beats the grain out
 /// of every bundle on a tile at once (farming/tools.dm), a club out of some, bare hands shuck one bundle slowly; each bundle gives
 /// its grain and a fiber. A wielded pitchfork carries the bundles about (farming/tools.dm).
+/// The stalks themselves - wheat, oat, rice - and the grain each gives are the porter's (rockhill/ported/items.dm, type_vars).
 /obj/item/natural/chaff
 	/// The grain beaten or shucked out of the stalks (Ratwood foodextracted).
 	var/foodextracted = null
 	/// Whether a thresher or a club beats the grain out (Ratwood canthresh).
 	var/canthresh = TRUE
-
-/obj/item/natural/chaff/wheat
-	foodextracted = /obj/item/reagent_containers/food/snacks/grown/wheat
-
-/obj/item/natural/chaff/oat
-	foodextracted = /obj/item/reagent_containers/food/snacks/grown/oat
-
-/// Rice stalks are Ratwood's but not yet in the port: declared here only for their grain, so rice is not sown before the porter
-/// brings their sprite (/datum/plant_def/can_grow()).
-/obj/item/natural/chaff/rice
-	foodextracted = /obj/item/reagent_containers/food/snacks/grown/rice
 
 /// Ratwood thresh(): the grain and a fiber fall out where the bundle lay.
 /obj/item/natural/chaff/proc/thresh()

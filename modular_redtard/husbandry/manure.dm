@@ -1,9 +1,10 @@
-/// Manure (Ratwood simple_animal.dm Life() and poop(), pooptype; rogueitems/natural/poo.dm): a beast that has food in it drops
-/// its droppings where it stands every so often. They fertilize the soil beds of farming/ and go into crafting.
+/// Manure (Ratwood simple_animal.dm Life() and poop(), pooptype; rogueitems/natural/poo.dm): any beast that has food in it drops
+/// its droppings where it stands every so often - horse droppings, as all of Ratwood's simple animals, unless its kind drops another
+/// sort or none (husbandry/beasts.dm). They fertilize the soil beds of farming/ and go into crafting.
 /// Unlike Ratwood a tile holds only so many droppings (manure_tile_cap), so a herd does not bury its pasture.
 /mob/living/basic/rockhill
 	/// Ratwood pooptype: what this kind drops; null - nothing.
-	var/rogue_manure_type
+	var/rogue_manure_type = /obj/item/natural/poo/horse
 
 /datum/component/rogue_livestock
 	/// Seconds the beast has had food in it since its last droppings (Ratwood pooprog).

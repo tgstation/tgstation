@@ -301,6 +301,7 @@
 		"Baroness",
 		)
 	rogue_social_rank = 5
+	rogue_f_title = "Baroness"
 
 /datum/job/roguetown/baron_retainer
 	title = JOB_ROCKHILL_RETAINER
@@ -521,6 +522,7 @@
 		)
 	rogue_allowed_patrons = list(/datum/patron/divine/astrata, /datum/patron/divine/noc, /datum/patron/divine/dendor, /datum/patron/divine/abyssor, /datum/patron/divine/ravox, /datum/patron/divine/necra, /datum/patron/divine/xylix, /datum/patron/divine/pestra, /datum/patron/divine/malum, /datum/patron/divine/eora)
 	rogue_social_rank = 3
+	rogue_f_title = "Druidess"
 
 /datum/job/roguetown/dungeoneer
 	title = JOB_ROCKHILL_DUNGEONEER
@@ -570,6 +572,7 @@
 		"Soilbride",
 		)
 	rogue_social_rank = 2
+	rogue_f_title = "Soilbride"
 
 /datum/job/roguetown/gapprentice
 	title = JOB_ROCKHILL_GUILD_APPRENTICE
@@ -878,6 +881,7 @@
 		)
 	rogue_allowed_races = list("/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/harpy", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/ooze", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 	rogue_social_rank = 6
+	rogue_f_title = "Grand Duchess"
 
 /datum/job/roguetown/lunatic
 	title = JOB_ROCKHILL_LUNATIC
@@ -1152,6 +1156,7 @@
 		"Nightmistress",
 		)
 	rogue_social_rank = 3
+	rogue_f_title = "Bathmatron"
 
 /datum/job/roguetown/orphan
 	title = JOB_ROCKHILL_VAGABOND
@@ -1336,6 +1341,7 @@
 	rogue_allowed_races = list("/datum/species/elf/dark", "/datum/species/lizardfolk", "/datum/species/tabaxi", "/datum/species/akula", "/datum/species/anthromorph", "/datum/species/demihuman", "/datum/species/harpy", "/datum/species/lamia", "/datum/species/arachnid", "/datum/species/anthromorphsmall", "/datum/species/kobold", "/datum/species/tieberian", "/datum/species/ooze", "/datum/species/human/northern", "/datum/species/elf/wood", "/datum/species/human/halfelf", "/datum/species/dwarf/mountain", "/datum/species/aasimar", "/datum/species/lupian", "/datum/species/vulpkanin", "/datum/species/moth", "/datum/species/dracon", "/datum/species/dwarf/gnome")
 	rogue_allowed_ages = list("Adult")
 	rogue_social_rank = 6
+	rogue_f_title = "Princess"
 
 /datum/job/roguetown/prisonerr
 	title = JOB_ROCKHILL_PRISONER_TOWN

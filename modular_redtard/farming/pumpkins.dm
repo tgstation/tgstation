@@ -3,11 +3,10 @@
 /// seeds. A short blade carves the shell into one of the pumpkin lanterns: Ratwood picks the design in a TGUI window, here a
 /// radial menu.
 ///
-/// The pumpkin, its shell and most lanterns are Ratwood's but not in the port yet (the zumpkin lantern is). The pumpkin path is
-/// left to the porter on purpose: economy/trade_data.dm trades it as soon as it exists, and a pumpkin declared here would be an
-/// item without a sprite. So the pumpkin's ways are on the shellplant root (Ratwood's only shellplant is the pumpkin), and its
-/// numbers - foodamt, foodextracted, seed, shell - come with it from the porter. Until then the pumpkin is not sown
-/// (/datum/plant_def/can_grow()) and no lantern without its sprite is offered.
+/// The pumpkin, its shell and the lanterns are the porter's (rockhill/ported/items.dm): the pumpkin's ways are on the shellplant
+/// root here (Ratwood's only shellplant is the pumpkin), its numbers - foodamt, foodextracted, seed, shell - come from the porter
+/// (type_vars). A crop whose harvest is not in the port is not sown (/datum/plant_def/can_grow()), and a lantern without its
+/// sprite is not offered.
 /obj/item/natural/shellplant
 	abstract_type = /obj/item/natural/shellplant
 	/// How many pieces of flesh it holds (Ratwood foodamt).
@@ -114,8 +113,7 @@
 	var/obj/item/held = user.get_active_held_item()
 	return held?.wlength == WLENGTH_SHORT
 
-/// Ratwood's pumpkin lanterns (typesof(/obj/item/flashlight/flare/torch/lantern/pumpkin)) that have their sprite: until the porter
-/// brings the others, the lantern line holds only the zumpkin lantern and a bare parent without a pumpkin sprite.
+/// Ratwood's pumpkin lanterns (typesof(/obj/item/flashlight/flare/torch/lantern/pumpkin)) that have their pumpkin sprite.
 /proc/rogue_pumpkin_lanterns()
 	var/static/list/lanterns
 	if(!lanterns)

@@ -465,6 +465,63 @@
 	rogue_botched_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 1, /obj/item/reagent_containers/food/snacks/fat = 1)
 	rogue_perfect_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 2, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/alch/sinew = 2, /obj/item/alch/bone = 1)
 
+/mob/living/simple_animal/hostile/retaliate/rogue/horse/male/black/tame/saddled
+	name = "horse"
+	desc = ""
+	icon = 'modular_redtard/rockhill/icons/modular_helmsguard/icons/mob/horse.dmi'
+	icon_state = "horseblack"
+	icon_living = "horseblack"
+	icon_dead = "horseblack_dead"
+	health = 180
+	maxHealth = 180
+	pixel_x = -8
+	melee_damage_lower = 10
+	melee_damage_upper = 25
+	rogue_can_dodge = TRUE
+	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 12, ROGUE_STAT_CONSTITUTION = 8, ROGUE_STAT_SPEED = 15)
+	rogue_mob_intents = list(/datum/intent/simple/horse)
+	rogue_aggressive = 1
+	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/apple)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 4, /obj/item/natural/bundle/bone/full = 1)
+
+/mob/living/simple_animal/hostile/retaliate/rogue/horse/male/brown/tame/saddled
+	name = "horse"
+	desc = ""
+	icon = 'modular_redtard/rockhill/icons/modular_helmsguard/icons/mob/horse.dmi'
+	icon_state = "horsebrown"
+	icon_living = "horsebrown"
+	icon_dead = "horsebrown_dead"
+	health = 180
+	maxHealth = 180
+	pixel_x = -8
+	melee_damage_lower = 10
+	melee_damage_upper = 25
+	rogue_can_dodge = TRUE
+	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 12, ROGUE_STAT_CONSTITUTION = 8, ROGUE_STAT_SPEED = 15)
+	rogue_mob_intents = list(/datum/intent/simple/horse)
+	rogue_aggressive = 1
+	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/apple)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 4, /obj/item/natural/bundle/bone/full = 1)
+
+/mob/living/simple_animal/hostile/retaliate/rogue/horse/male/white/tame/saddled
+	name = "horse"
+	desc = ""
+	icon = 'modular_redtard/rockhill/icons/modular_helmsguard/icons/mob/horse.dmi'
+	icon_state = "horsewhite"
+	icon_living = "horsewhite"
+	icon_dead = "horsewhite_dead"
+	health = 180
+	maxHealth = 180
+	pixel_x = -8
+	melee_damage_lower = 10
+	melee_damage_upper = 25
+	rogue_can_dodge = TRUE
+	rogue_mob_stats = list(ROGUE_STAT_STRENGTH = 12, ROGUE_STAT_CONSTITUTION = 8, ROGUE_STAT_SPEED = 15)
+	rogue_mob_intents = list(/datum/intent/simple/horse)
+	rogue_aggressive = 1
+	rogue_food_types = list(/obj/item/reagent_containers/food/snacks/grown/wheat, /obj/item/reagent_containers/food/snacks/grown/oat, /obj/item/reagent_containers/food/snacks/grown/apple)
+	rogue_butcher_results = list(/obj/item/reagent_containers/food/snacks/rogue/meat/steak = 4, /obj/item/reagent_containers/food/snacks/fat = 2, /obj/item/natural/hide = 4, /obj/item/natural/bundle/bone/full = 1)
+
 /mob/living/simple_animal/hostile/retaliate/rogue/infernal/fiend
 	name = "fiend"
 	icon = 'modular_redtard/rockhill/icons/mob/summonable/32x32.dmi'

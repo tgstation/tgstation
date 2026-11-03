@@ -6,6 +6,9 @@
 	icon_state = "window-solid"
 	density = TRUE
 	opacity = FALSE
+	repair_cost_first = /obj/item/grown/log/tree/small
+	repair_cost_second = /obj/item/natural/glass
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	layer = TABLE_LAYER
 	base_state = "window-solid"
 	smoothing_groups = SMOOTH_GROUP_ROCKHILL_STRUCTURE_ROGUEWINDOW
@@ -17,6 +20,9 @@
 	icon_state = "harem2-solid"
 	density = TRUE
 	opacity = TRUE
+	repair_cost_first = /obj/item/natural/glass
+	repair_cost_second = /obj/item/natural/glass
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	layer = TABLE_LAYER
 	base_state = "harem2-solid"
 	smoothing_groups = SMOOTH_GROUP_ROCKHILL_STRUCTURE_ROGUEWINDOW_HAREM2
@@ -28,6 +34,9 @@
 	icon_state = "harem3-solid"
 	density = TRUE
 	opacity = FALSE
+	repair_cost_first = /obj/item/natural/glass
+	repair_cost_second = /obj/item/natural/glass
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	layer = TABLE_LAYER
 	base_state = "harem3-solid"
 	smoothing_groups = SMOOTH_GROUP_ROCKHILL_STRUCTURE_ROGUEWINDOW_HAREM3
@@ -39,6 +48,9 @@
 	icon_state = "harem3-solid"
 	density = TRUE
 	opacity = TRUE
+	repair_cost_first = /obj/item/natural/glass
+	repair_cost_second = /obj/item/natural/glass
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	layer = TABLE_LAYER
 	base_state = "harem3-solid"
 	smoothing_groups = SMOOTH_GROUP_ROCKHILL_STRUCTURE_ROGUEWINDOW_HAREM3_FROSTED
@@ -49,6 +61,9 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/roguewindow.dmi'
 	density = TRUE
 	opacity = TRUE
+	repair_cost_first = /obj/item/grown/log/tree/small
+	repair_cost_second = /obj/item/natural/glass
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	icon_state = "woodwindow"
 	layer = TABLE_LAYER
 	base_state = "woodwindow"
@@ -60,6 +75,9 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/roguewindow.dmi'
 	density = TRUE
 	opacity = TRUE
+	repair_cost_first = /obj/item/ingot/iron
+	repair_cost_second = /obj/item/natural/glass
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	icon_state = "reinforcedwindow"
 	layer = TABLE_LAYER
 	base_state = "reinforcedwindow"
@@ -71,6 +89,9 @@
 	icon = 'modular_redtard/rockhill/icons/roguetown/misc/roguewindow.dmi'
 	density = TRUE
 	opacity = TRUE
+	repair_cost_first = /obj/item/ingot/iron
+	repair_cost_second = /obj/item/natural/glass
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	icon_state = "brickwindow"
 	layer = TABLE_LAYER
 	base_state = "brickwindow"
@@ -82,6 +103,9 @@
 	icon_state = "stained-silver"
 	density = TRUE
 	opacity = TRUE
+	repair_cost_first = /obj/item/natural/glass
+	repair_cost_second = /obj/item/natural/glass
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	layer = TABLE_LAYER
 	base_state = "stained-silver"
 	smoothing_groups = SMOOTH_GROUP_ROCKHILL_STRUCTURE_ROGUEWINDOW_STAINED_SILVER
@@ -93,6 +117,9 @@
 	icon_state = "stained-yellow"
 	density = TRUE
 	opacity = TRUE
+	repair_cost_first = /obj/item/natural/glass
+	repair_cost_second = /obj/item/natural/glass
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	layer = TABLE_LAYER
 	base_state = "stained-yellow"
 	smoothing_groups = SMOOTH_GROUP_ROCKHILL_STRUCTURE_ROGUEWINDOW_STAINED_YELLOW
@@ -104,6 +131,9 @@
 	icon_state = "stained-zizo"
 	density = TRUE
 	opacity = TRUE
+	repair_cost_first = /obj/item/natural/glass
+	repair_cost_second = /obj/item/natural/glass
+	repair_skill = /datum/attribute/skill/craft/carpentry
 	layer = TABLE_LAYER
 	base_state = "stained-zizo"
 	smoothing_groups = SMOOTH_GROUP_ROCKHILL_STRUCTURE_ROGUEWINDOW_STAINED_ZIZO

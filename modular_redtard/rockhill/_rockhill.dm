@@ -32,6 +32,8 @@
 #include "looking.dm"
 #include "weather.dm"
 #include "water.dm"
+#include "swimming.dm"
+#include "fishing.dm"
 #include "ladders.dm"
 #include "traveltiles.dm"
 #include "dungeon.dm"

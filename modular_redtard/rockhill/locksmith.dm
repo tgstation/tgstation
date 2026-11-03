@@ -142,9 +142,11 @@ GLOBAL_LIST_EMPTY(rockhill_lockhashes)
 // --- Keys and chests
 
 /obj/item/roguekey
-	/// A custom key finished from a blank (Ratwood /obj/item/roguekey/custom, which the porter has not brought): a hammer
-	/// renames it.
+	/// A custom key finished from a blank (Ratwood /obj/item/roguekey/custom, the porter's): a hammer renames it.
 	var/rockhill_custom = FALSE
+
+/obj/item/roguekey/custom
+	rockhill_custom = TRUE
 
 /// Ratwood roguekey Initialize(): a key of a lock id turns every lock of that id.
 /obj/item/roguekey/Initialize(mapload)
@@ -259,14 +261,9 @@ GLOBAL_LIST_EMPTY(rockhill_lockhashes)
 	finish_key(user)
 	return ITEM_INTERACT_SUCCESS
 
-/// The blank becomes a custom key of its teeth (Ratwood /obj/item/roguekey/custom: until the porter brings that type, a plain
-/// key with the custom key's name and look).
+/// The blank becomes a custom key of its teeth (Ratwood /obj/item/roguekey/custom).
 /obj/item/customblank/proc/finish_key(mob/living/user)
-	var/obj/item/roguekey/key = new(drop_location())
-	key.name = "custom key"
-	key.desc = "A custom key designed by a blacksmith."
-	key.icon_state = "brownkey"
-	key.rockhill_custom = TRUE
+	var/obj/item/roguekey/custom/key = new(drop_location())
 	key.rockhill_set_lock(lockid, lockhash)
 	var/held = user.is_holding(src)
 	to_chat(user, span_notice("I finish [key]."))
@@ -276,10 +273,13 @@ GLOBAL_LIST_EMPTY(rockhill_lockhashes)
 	return key
 
 /obj/item/customlock
-	/// Ratwood /obj/item/customlock/finished, which the porter has not brought: a finished lock fits a door or a chest.
+	/// A finished lock (Ratwood /obj/item/customlock/finished, the porter's): it fits a door or a chest.
 	var/rockhill_finished = FALSE
 	/// Ratwood holdname: the label a hammer marks a finished lock with, which the door or chest it is fitted to takes on.
 	var/rockhill_label
+
+/obj/item/customlock/finished
+	rockhill_finished = TRUE
 
 /// Ratwood customlock attackby(): a hammer sets the number of the lock's pins, or labels a finished lock; a key or a blank tried
 /// in it twists cleanly or jams.
@@ -315,10 +315,14 @@ GLOBAL_LIST_EMPTY(rockhill_lockhashes)
 	finish_lock(user)
 	return ITEM_INTERACT_SUCCESS
 
+/// The lock is finished: Ratwood swaps it for a new /obj/item/customlock/finished, here the lock takes on that type's name and
+/// look itself, so whoever holds it keeps it in hand.
 /obj/item/customlock/proc/finish_lock(mob/living/user)
+	var/obj/item/customlock/finished/finished = /obj/item/customlock/finished
 	rockhill_finished = TRUE
-	name = "lock"
-	desc = "A customized iron lock that is used by keys."
+	name = initial(finished.name)
+	desc = initial(finished.desc)
+	icon_state = initial(finished.icon_state)
 	to_chat(user, span_notice("I finish [src]."))
 
 /obj/item/customlock/proc/ask_label(mob/living/user, obj/item/hammer)

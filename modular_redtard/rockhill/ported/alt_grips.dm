@@ -22,6 +22,12 @@
 	grip_intents = list(/datum/intent/sword/strike/bash/mordhau, /datum/intent/sword/strike/bash/mordhau/smash, /datum/intent/effect/daze)
 	inhand_suffix = "_broadsword"
 
+/datum/alt_grip/mordhau/broadsword/forgotten_blade
+	name = "mordhau"
+	two_handed = TRUE
+	grip_intents = list(/datum/intent/sword/strike/bash/mordhau, /datum/intent/sword/strike/bash/mordhau/smash, /datum/intent/effect/daze)
+	inhand_suffix = "_forgotten_blade"
+
 /datum/alt_grip/mordhau/greatsword
 	name = "mordhau"
 	two_handed = TRUE

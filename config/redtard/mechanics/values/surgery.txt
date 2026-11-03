@@ -1,0 +1,551 @@
+# Surgery (combat/surgery/, block 4): Ratwood's steps of surgery on TG's operations, the wounds they leave, setting bones, searing, prosthetics and the bad humours of a failed step (Ratwood code/modules/surgery/, roguejobs/engineer/prosthetic.dm, roguecrafting/alchemy/reagents.dm).
+# Mechanics numbers: name = value, described by the # lines right above it; times are in deciseconds, chances in percent, ranks of Medicine 0 (none) to 6 (legendary), bleeding in blood per Ratwood Life tick of 2 seconds. The build compiles this file in, so its numbers are the defaults; a file of the same name in config/redtard_private/mechanics/values/ is read instead when present.
+
+# --- How a step goes (Ratwood _surgery_step.dm)
+
+# What one rank of Medicine above a step's median adds to its chance, as a share (Ratwood skill_bonuses 1).
+surgery_skill_bonus_1 = 0.5
+
+# What two ranks above the median add (Ratwood skill_bonuses 2).
+surgery_skill_bonus_2 = 1
+
+# What three ranks above the median add (Ratwood skill_bonuses 3).
+surgery_skill_bonus_3 = 1.5
+
+# What four ranks above the median add (Ratwood skill_bonuses 4).
+surgery_skill_bonus_4 = 2
+
+# What five ranks above the median add (Ratwood skill_bonuses 5).
+surgery_skill_bonus_5 = 2
+
+# What six ranks above the median add (Ratwood skill_bonuses 6).
+surgery_skill_bonus_6 = 3
+
+# What one rank of Medicine below a step's median adds to its chance, a negative share (Ratwood skill_maluses 1).
+surgery_skill_malus_1 = -0.2
+
+# What two ranks below the median add (Ratwood skill_maluses 2).
+surgery_skill_malus_2 = -0.4
+
+# What three ranks below the median add (Ratwood skill_maluses 3).
+surgery_skill_malus_3 = -0.6
+
+# What four ranks below the median add (Ratwood skill_maluses 4).
+surgery_skill_malus_4 = -0.8
+
+# What five ranks below the median add (Ratwood skill_maluses 5).
+surgery_skill_malus_5 = -1
+
+# What six ranks below the median add (Ratwood skill_maluses 6).
+surgery_skill_malus_6 = -2
+
+# The chance of a step on a patient standing, as a share (Ratwood get_location_modifier()).
+surgery_standing_success = 0.6
+
+# The chance of a step on a patient lying on a bed, as a share.
+surgery_bed_success = 1
+
+# The chance of a step on a patient lying on a table, as a share.
+surgery_table_success = 0.8
+
+# The chance of a step on a patient lying on the floor, as a share.
+surgery_floor_success = 0.7
+
+# The time of a step on a patient standing, as a share of its time (Ratwood get_speed_location_modifier()).
+surgery_standing_speed = 1.4
+
+# The time of a step on a patient lying on a bed, as a share of its time.
+surgery_bed_speed = 0.9
+
+# The time of a step on a patient lying on a table, as a share of its time.
+surgery_table_speed = 0.8
+
+# The time of a step on a patient lying on the floor, as a share of its time.
+surgery_floor_speed = 1.1
+
+# The share of a step's time an Expert of Medicine takes off (Ratwood get_speed_modifier()).
+surgery_expert_speed = 0.3
+
+# The share of a step's time a Master of Medicine takes off.
+surgery_master_speed = 0.4
+
+# The share of a step's time a Legendary physician takes off.
+surgery_legendary_speed = 0.6
+
+# Dream experience of Medicine a step done gives, times intelligence times the step's least rank (Ratwood STAINT * skill_min / 2).
+surgery_experience = 0.5
+
+# --- Bad humours of a failed step (Ratwood failure(), /datum/reagent/infection)
+
+# A step failed at a chance up to this many percent leaves the worst humours, Kingsfield's Bane.
+surgery_infection_major_to = 15
+
+# The least units of the worst humours a failure leaves.
+surgery_infection_major_least = 2
+
+# The most units of the worst humours a failure leaves.
+surgery_infection_major_most = 5
+
+# A step failed at a chance from this many percent leaves choleric humours...
+surgery_infection_from = 16
+
+# ...up to this many percent.
+surgery_infection_to = 50
+
+# The least units of choleric humours a failure leaves.
+surgery_infection_least = 1
+
+# The most units of choleric humours a failure leaves.
+surgery_infection_most = 3
+
+# A step failed at a chance from this many percent leaves disrupted humours...
+surgery_infection_minor_from = 51
+
+# ...up to this many percent; above it a failure leaves nothing.
+surgery_infection_minor_to = 70
+
+# The least units of disrupted humours a failure leaves.
+surgery_infection_minor_least = 1
+
+# The most units of disrupted humours a failure leaves.
+surgery_infection_minor_most = 6
+
+# Toxins choleric humours deal each Ratwood tick (Ratwood damage_tick).
+surgery_infection_toxin = 0.3
+
+# Toxins disrupted humours deal each Ratwood tick.
+surgery_infection_minor_toxin = 0.1
+
+# Toxins the worst humours deal each Ratwood tick.
+surgery_infection_major_toxin = 1
+
+# How much hotter the fever of the worst humours runs (Ratwood fever_multiplier).
+surgery_infection_major_fever = 3
+
+# The fever rises each Ratwood tick by the units in the body, at least this many...
+surgery_infection_fever_least = 3
+
+# ...and at most this many (on top of the body's warming).
+surgery_infection_fever_most = 15
+
+# Chance in percent each Ratwood tick that the sick one feels the fever.
+surgery_infection_warning_chance = 5
+
+# The least units of the worst humours one with bad luck catches more of each tick.
+surgery_infection_spread_least = 1
+
+# The most units of the worst humours one with bad luck catches more of each tick.
+surgery_infection_spread_most = 3
+
+# --- The cautery
+
+# Deciseconds a cautery iron held to a lit fire stays hot (Ratwood fire_act(20)).
+surgery_cautery_heat_time = 200
+
+# --- Incise (Ratwood /datum/surgery_step/incise)
+
+# Deciseconds to make an incision.
+surgery_incise_time = 16
+
+# The least rank of Medicine to make an incision.
+surgery_incise_skill_min = 1
+
+# The median rank of Medicine for an incision.
+surgery_incise_skill_median = 2
+
+# Chance of an incision with a scalpel.
+surgery_incise_scalpel = 80
+
+# Chance of an incision with anything sharp.
+surgery_incise_sharp = 60
+
+# --- Clamp bleeders (Ratwood /datum/surgery_step/clamp)
+
+# Deciseconds to clamp the bleeders.
+surgery_clamp_time = 24
+
+# The least rank of Medicine to clamp the bleeders.
+surgery_clamp_skill_min = 2
+
+# The median rank of Medicine for clamping.
+surgery_clamp_skill_median = 3
+
+# Chance of clamping with forceps.
+surgery_clamp_hemostat = 75
+
+# Chance of clamping with wirecutters.
+surgery_clamp_wirecutter = 60
+
+# Chance of clamping with an improvised clamp.
+surgery_clamp_improvised = 38
+
+# --- Retract the incision (Ratwood /datum/surgery_step/retract)
+
+# Deciseconds to retract an incision.
+surgery_retract_time = 24
+
+# The least rank of Medicine to retract an incision.
+surgery_retract_skill_min = 2
+
+# The median rank of Medicine for retracting.
+surgery_retract_skill_median = 3
+
+# Chance of retracting with a speculum.
+surgery_retract_retractor = 75
+
+# Chance of retracting with a screwdriver.
+surgery_retract_screwdriver = 50
+
+# Chance of retracting with wirecutters.
+surgery_retract_wirecutter = 35
+
+# Chance of retracting with an improvised retractor.
+surgery_retract_improvised = 38
+
+# --- Cauterize wounds (Ratwood /datum/surgery_step/cauterize, cauterize_wound())
+
+# Deciseconds to cauterize the wounds of a limb.
+surgery_cauterize_time = 24
+
+# The least rank of Medicine to cauterize.
+surgery_cauterize_skill_min = 1
+
+# The median rank of Medicine for cauterizing.
+surgery_cauterize_skill_median = 2
+
+# Chance of cauterizing with a hot cautery.
+surgery_cauterize_cautery = 100
+
+# Chance of cauterizing with a welder.
+surgery_cauterize_welder = 70
+
+# Chance of cauterizing with anything hot enough to burn.
+surgery_cauterize_hot = 35
+
+# What the searing mends of each wound that can be seared (Ratwood heal_wound(40)); a stump owes 75 of searing.
+surgery_cauterize_heal = 40
+
+# Burns the searing deals the limb.
+surgery_cauterize_burn = 25
+
+# --- Saw the bone (Ratwood /datum/surgery_step/saw)
+
+# Deciseconds to saw through a bone.
+surgery_saw_time = 50
+
+# The least rank of Medicine to saw a bone.
+surgery_saw_skill_min = 3
+
+# The median rank of Medicine for sawing.
+surgery_saw_skill_median = 4
+
+# Chance of sawing with a saw.
+surgery_saw_saw = 80
+
+# Chance of sawing with a shovel.
+surgery_saw_shovel = 50
+
+# Chance of sawing with anything sharp.
+surgery_saw_sharp = 25
+
+# --- Amputate (Ratwood /datum/surgery_step/amputate)
+
+# Deciseconds to sever a limb.
+surgery_amputate_time = 64
+
+# The least rank of Medicine to amputate.
+surgery_amputate_skill_min = 2
+
+# The median rank of Medicine for amputating.
+surgery_amputate_skill_median = 3
+
+# Chance of amputating with a scalpel.
+surgery_amputate_scalpel = 80
+
+# Chance of amputating with a saw.
+surgery_amputate_saw = 60
+
+# Chance of amputating with anything sharp.
+surgery_amputate_sharp = 40
+
+# --- Relocate bones (Ratwood /datum/surgery_step/relocate_bone)
+
+# Deciseconds to put a dislocated joint back in place.
+surgery_relocate_time = 64
+
+# The least rank of Medicine to relocate a joint.
+surgery_relocate_skill_min = 2
+
+# The median rank of Medicine for relocating.
+surgery_relocate_skill_median = 3
+
+# Chance of relocating with bone forceps.
+surgery_relocate_bonesetter = 90
+
+# Chance of relocating by hand.
+surgery_relocate_hand = 50
+
+# --- Set bones (Ratwood /datum/surgery_step/set_bone, set_bone())
+
+# Deciseconds to set the broken bones of a limb.
+surgery_set_bone_time = 64
+
+# The least rank of Medicine to set bones.
+surgery_set_bone_skill_min = 3
+
+# The median rank of Medicine for setting bones.
+surgery_set_bone_skill_median = 4
+
+# Chance of setting bones with bone forceps.
+surgery_set_bone_bonesetter = 80
+
+# Chance of setting bones by hand.
+surgery_set_bone_hand = 40
+
+# The share of a broken bone's health setting mends at once (Ratwood heal_wound(whp / 1.6)).
+surgery_set_bone_heal = 0.625
+
+# What a set bone mends by itself each Ratwood tick (Ratwood passive_healing 1).
+surgery_set_bone_passive = 1
+
+# What a set bone mends each tick of sleep, before the bed (Ratwood sleep_healing 1).
+surgery_set_bone_sleep = 1
+
+# --- Bloodletting (Ratwood /datum/surgery_step/cutvein, bloodlet)
+
+# Deciseconds to cut a vein.
+surgery_cut_vein_time = 50
+
+# The least rank of Medicine to cut a vein.
+surgery_cut_vein_skill_min = 3
+
+# The median rank of Medicine for cutting a vein.
+surgery_cut_vein_skill_median = 4
+
+# Chance of cutting a vein with a scalpel.
+surgery_cut_vein_scalpel = 75
+
+# Chance of cutting a vein with anything sharp.
+surgery_cut_vein_sharp = 30
+
+# Deciseconds to force the bad blood out.
+surgery_bloodlet_time = 64
+
+# The least rank of Medicine to let blood.
+surgery_bloodlet_skill_min = 3
+
+# The median rank of Medicine for bloodletting.
+surgery_bloodlet_skill_median = 4
+
+# Chance of forcing the bad blood out by hand.
+surgery_bloodlet_hand = 80
+
+# Toxins a bloodletting draws out.
+surgery_bloodlet_toxin = 25
+
+# Blood a bloodletting lets out.
+surgery_bloodlet_blood = 50
+
+# --- Remove embedded objects (Ratwood /datum/surgery_step/remove_object)
+
+# Deciseconds to take out what is lodged in a limb.
+surgery_remove_object_time = 32
+
+# The least rank of Medicine to take out what is lodged.
+surgery_remove_object_skill_min = 1
+
+# The median rank of Medicine for taking it out.
+surgery_remove_object_skill_median = 1
+
+# Chance of taking it out with forceps.
+surgery_remove_object_hemostat = 80
+
+# Chance of taking it out with an improvised clamp.
+surgery_remove_object_improvised = 65
+
+# Chance of taking it out by hand.
+surgery_remove_object_hand = 50
+
+# --- Manipulate organs (Ratwood /datum/surgery_step/manipulate_organs)
+
+# Deciseconds to take an organ out or put one in.
+surgery_organs_time = 64
+
+# The least rank of Medicine to manipulate organs.
+surgery_organs_skill_min = 3
+
+# The median rank of Medicine for manipulating organs.
+surgery_organs_skill_median = 4
+
+# Chance of taking an organ out with forceps.
+surgery_organs_hemostat = 80
+
+# Chance of taking an organ out with an improvised clamp.
+surgery_organs_improvised = 70
+
+# Chance of taking an organ out with a crowbar.
+surgery_organs_crowbar = 65
+
+# Chance of taking an organ out by hand.
+surgery_organs_hand = 60
+
+# Chance of putting an organ in.
+surgery_organs_organ = 80
+
+# --- Mouth to mouth (Ratwood /datum/surgery_step/mouth_to_mouth)
+
+# Deciseconds of one breath given.
+surgery_cpr_time = 30
+
+# The least rank of Medicine to breathe for someone (0: none).
+surgery_cpr_skill_min = 0
+
+# The median rank of Medicine for breathing for someone.
+surgery_cpr_skill_median = 2
+
+# Chance of a breath, by hand.
+surgery_cpr_hand = 100
+
+# Suffocation one breath takes away.
+surgery_cpr_oxygen = 15
+
+# --- Limbs and prosthetics (Ratwood add_prosthetic, replace_limb, remove_prosthetic)
+
+# Deciseconds to put a limb or a prosthetic on a stump.
+surgery_attach_time = 30
+
+# The least rank of Medicine to put a limb on by surgery (a prosthetic goes on without any).
+surgery_attach_skill_min = 3
+
+# The median rank of Medicine for putting a limb on.
+surgery_attach_skill_median = 4
+
+# Chance of putting a limb on.
+surgery_attach_limb = 80
+
+# Deciseconds to replace a broken limb with a prosthetic.
+surgery_replace_time = 32
+
+# The least rank of Medicine to replace a limb.
+surgery_replace_skill_min = 3
+
+# The median rank of Medicine for replacing a limb.
+surgery_replace_skill_median = 4
+
+# Chance of replacing a limb.
+surgery_replace_limb = 80
+
+# Deciseconds to saw a prosthetic off.
+surgery_remove_prosthetic_time = 100
+
+# The least rank of Medicine to saw a prosthetic off.
+surgery_remove_prosthetic_skill_min = 3
+
+# The median rank of Medicine for sawing a prosthetic off.
+surgery_remove_prosthetic_skill_median = 4
+
+# Chance of sawing a prosthetic off with a saw.
+surgery_remove_prosthetic_saw = 90
+
+# Toughness of a wooden prosthetic (Ratwood max_damage of the right arm and the legs).
+surgery_prosthetic_wood_damage = 40
+
+# Toughness of a wooden left arm (Ratwood max_damage 20).
+surgery_prosthetic_wood_left_arm_damage = 20
+
+# Toughness of a bronze prosthetic (Ratwood max_damage of the right arm and the legs).
+surgery_prosthetic_bronze_damage = 220
+
+# Toughness of a bronze left arm (Ratwood max_damage 110).
+surgery_prosthetic_bronze_left_arm_damage = 110
+
+# Toughness of an iron prosthetic.
+surgery_prosthetic_iron_damage = 150
+
+# Toughness of a steel prosthetic.
+surgery_prosthetic_steel_damage = 200
+
+# Toughness of a golden prosthetic.
+surgery_prosthetic_gold_damage = 150
+
+# Damage of each hit an iron prosthetic shrugs off, brute and burn (Ratwood brute_reduction, burn_reduction).
+surgery_prosthetic_iron_reduction = 5
+
+# Damage of each hit a steel prosthetic shrugs off, brute and burn.
+surgery_prosthetic_steel_reduction = 10
+
+# How much an iron leg slows its wearer (Ratwood organ_slowdown).
+surgery_prosthetic_iron_slowdown = 1.2
+
+# How much a steel leg slows its wearer.
+surgery_prosthetic_steel_slowdown = 1.1
+
+# --- Burn rot (Ratwood's hearth /datum/surgery_step/burn_rot)
+
+# Deciseconds to burn the rot out of a body.
+surgery_burn_rot_time = 80
+
+# The least rank of Medicine to burn rot.
+surgery_burn_rot_skill_min = 2
+
+# The median rank of Medicine for burning rot.
+surgery_burn_rot_skill_median = 3
+
+# Chance of burning rot with a hot cautery.
+surgery_burn_rot_cautery = 85
+
+# Chance of burning rot with a psicross.
+surgery_burn_rot_psicross = 85
+
+# Chance of burning rot with a welder.
+surgery_burn_rot_welder = 70
+
+# Chance of burning rot with anything hot enough to burn.
+surgery_burn_rot_hot = 35
+
+# --- The wounds of surgery
+
+# What an incision has to mend before it closes by medicine (Ratwood whp).
+surgery_incision_health = 40
+
+# How far the stitches must get to sew an incision shut (Ratwood sew_threshold).
+surgery_incision_sew = 75
+
+# Blood a cut vein loses each Ratwood tick (Ratwood bleed_rate).
+surgery_vein_bleed = 5
+
+# What a cut vein has to mend (Ratwood whp).
+surgery_vein_health = 40
+
+# How far the stitches must get to sew a cut vein.
+surgery_vein_sew = 75
+
+# Blood a sewn vein loses each Ratwood tick (Ratwood sewn_bleed_rate).
+surgery_vein_sewn_bleed = 0.15
+
+# The most a sewn vein has left to mend (Ratwood sewn_whp).
+surgery_vein_sewn_health = 12
+
+# Blood a limb put back on loses each Ratwood tick until it is sewn (Ratwood reattachment bleed_rate).
+surgery_replant_bleed = 50
+
+# What a limb put back on has to mend (Ratwood whp).
+surgery_replant_health = 100
+
+# How far the stitches must get to sew a limb on.
+surgery_replant_sew = 100
+
+# How much a limb put back on hurts (Ratwood woundpain).
+surgery_replant_pain = 60
+
+# Blood a limb sewn on loses each Ratwood tick (Ratwood sewn_bleed_rate).
+surgery_replant_sewn_bleed = 0.5
+
+# The most a limb sewn on has left to mend (Ratwood sewn_whp).
+surgery_replant_sewn_health = 25
+
+# How much a limb sewn on hurts (Ratwood sewn_woundpain).
+surgery_replant_sewn_pain = 30
+
+# What a sewn vein or limb mends by itself each Ratwood tick (Ratwood sew_wound(): passive_healing 1).
+surgery_sewn_passive = 1

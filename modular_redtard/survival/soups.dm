@@ -3,7 +3,7 @@
 // ingredients (survival/stews.dm), a bowl takes them out of the pot (survival/vessels.dm).
 // Ratwood counts a reagent once per Life tick of two seconds, TG every second: metabolization rates go through
 // ROGUE_REAGENT_RATE(), per-tick effects are scaled by the seconds of the TG tick, nutriment by ROGUE_REAGENT_NUTRITION.
-// Ratwood alpha is folded into the colour. The module has no thirst, so Ratwood hydration is not ported. Ratwood's hot drinks that
+// Ratwood alpha is folded into the colour. Ratwood hydration of soups and milk is in survival/thirst.dm. Ratwood's hot drinks that
 // mend wounds mend them by rogue_heal_wounds() (combat/medicine.dm). Names TG already uses got another (TG wants every reagent
 // name once): oat porridge, shellfish bisque, tomato broth, brewed coffee, brewed tea; the poisoned berry stew is "berry soup".
 

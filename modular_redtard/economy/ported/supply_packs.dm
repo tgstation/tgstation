@@ -1,3 +1,453 @@
+/datum/rogue_supply_pack/bath_clothes/exoticsilkbra
+	name = "Exotic Silk Bra"
+	group = "Exotic Apparel"
+	cost = 30
+	contains = list(/obj/item/clothing/suit/roguetown/shirt/exoticsilkbra)
+
+/datum/rogue_supply_pack/bath_clothes/anklets
+	name = "Exotic Silk Anklets"
+	group = "Exotic Apparel"
+	cost = 30
+	contains = list(/obj/item/clothing/shoes/roguetown/anklets)
+
+/datum/rogue_supply_pack/bath_clothes/exoticsilkbelt
+	name = "Exotic Silk Belt"
+	group = "Exotic Apparel"
+	cost = 30
+	contains = list(/obj/item/storage/belt/rogue/leather/exoticsilkbelt)
+
+/datum/rogue_supply_pack/bath_clothes/exoticsilkmask
+	name = "Exotic Silk Mask"
+	group = "Exotic Apparel"
+	cost = 30
+	contains = list(/obj/item/clothing/mask/rogue/exoticsilkmask)
+
+/datum/rogue_supply_pack/bath_clothes/silkstockings
+	name = "Stockings, Silk"
+	group = "Exotic Apparel"
+	cost = 20
+	contains = list(/obj/item/legwears/silk/white)
+
+/datum/rogue_supply_pack/bath_clothes/kneestockings
+	name = "Stockings, Knee"
+	group = "Exotic Apparel"
+	cost = 15
+	contains = list(/obj/item/legwears/knee_high/white)
+
+/datum/rogue_supply_pack/bath_clothes/thighstockings
+	name = "Stockings, Thigh"
+	group = "Exotic Apparel"
+	cost = 15
+	contains = list(/obj/item/legwears/thigh_high/white)
+
+/datum/rogue_supply_pack/bath_clothes/fishnetstockings
+	name = "Stockings, Fishnet"
+	group = "Exotic Apparel"
+	cost = 10
+	contains = list(/obj/item/legwears/fishnet/white)
+
+/datum/rogue_supply_pack/bath_clothes/stockings_normal
+	name = "Stockings"
+	group = "Exotic Apparel"
+	cost = 10
+	contains = list(/obj/item/legwears/white)
+
+/datum/rogue_supply_pack/bath_clothes/briefs
+	name = "Briefs"
+	group = "Exotic Apparel"
+	cost = 10
+	contains = list(/obj/item/undies)
+
+/datum/rogue_supply_pack/bath_clothes/bikini
+	name = "Bikini"
+	group = "Exotic Apparel"
+	cost = 10
+	contains = list(/obj/item/undies/bikini)
+
+/datum/rogue_supply_pack/bath_clothes/panties
+	name = "Panties"
+	group = "Exotic Apparel"
+	cost = 10
+	contains = list(/obj/item/undies/panties)
+
+/datum/rogue_supply_pack/bath_clothes/leotard
+	name = "Leotard"
+	group = "Exotic Apparel"
+	cost = 10
+	contains = list(/obj/item/undies/leotard)
+
+/datum/rogue_supply_pack/bath_clothes/athletic_leotard
+	name = "Athletic Leotard"
+	group = "Exotic Apparel"
+	cost = 10
+	contains = list(/obj/item/undies/athletic_leotard)
+
+/datum/rogue_supply_pack/bath_clothes/braies
+	name = "Braies"
+	group = "Exotic Apparel"
+	cost = 10
+	contains = list(/obj/item/undies/braies)
+
+/datum/rogue_supply_pack/bath_clothes/collar
+	name = "Collar"
+	group = "Exotic Apparel"
+	cost = 10
+	contains = list(/obj/item/clothing/neck/roguetown/collar/leather)
+
+/datum/rogue_supply_pack/bath_clothes/catbell_collar
+	name = "Catbell Collar"
+	group = "Exotic Apparel"
+	cost = 15
+	contains = list(/obj/item/clothing/neck/roguetown/collar/catbell)
+
+/datum/rogue_supply_pack/bath_clothes/cowbell_collar
+	name = "Cowbell Collar"
+	group = "Exotic Apparel"
+	cost = 15
+	contains = list(/obj/item/clothing/neck/roguetown/collar/cowbell)
+
+/datum/rogue_supply_pack/bath_clothes/spikedcollar
+	name = "Spiked Dog-Collar"
+	group = "Exotic Apparel"
+	cost = 40
+	contains = list(/obj/item/clothing/neck/roguetown/gorget/forlorncollar)
+
+/datum/rogue_supply_pack/bath_clothes/loincloth
+	name = "Loincloth"
+	group = "Exotic Apparel"
+	cost = 10
+	contains = list(/obj/item/clothing/under/roguetown/loincloth)
+
+/datum/rogue_supply_pack/bath_clothes/corset
+	name = "Corset"
+	group = "Exotic Apparel"
+	cost = 15
+	contains = list(/obj/item/clothing/suit/roguetown/armor/corset)
+
+/datum/rogue_supply_pack/bath_clothes/silkydress
+	name = "Silky Dress"
+	group = "Exotic Apparel"
+	cost = 25
+	contains = list(/obj/item/clothing/suit/roguetown/shirt/dress/silkydress)
+
+/datum/rogue_supply_pack/bath_clothes/belt
+	name = "Lady's Belt"
+	group = "Exotic Apparel"
+	cost = 10
+	contains = list(/obj/item/storage/belt/rogue/leather/cloth/lady)
+
+/datum/rogue_supply_pack/bath_clothes/corslet
+	name = "Corslet (Leather)"
+	group = "Exotic Apparel"
+	cost = 25
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/bikini)
+
+/datum/rogue_supply_pack/bath_clothes/corslet/studded
+	name = "Corslet, (Leather, studded)"
+	group = "Exotic Apparel"
+	cost = 35
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/studded/bikini)
+
+/datum/rogue_supply_pack/bath_clothes/corslet/hide
+	name = "Corslet (Leather, barbarian-fashion)"
+	group = "Exotic Apparel"
+	cost = 25
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/hide/bikini)
+
+/datum/rogue_supply_pack/bath_clothes/corslet/chain
+	name = "Corslet (Chain)"
+	group = "Exotic Apparel"
+	cost = 40
+	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/bikini)
+
+/datum/rogue_supply_pack/bath_clothes/corslet/platehalf
+	name = "Corslet (Half Plate)"
+	group = "Exotic Apparel"
+	cost = 60
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/bikini)
+
+/datum/rogue_supply_pack/bath_clothes/corslet/plate
+	name = "Corslet (Full Plate)"
+	group = "Exotic Apparel"
+	cost = 80
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/full/bikini)
+
+/datum/rogue_supply_pack/bath_perfume/lavender
+	name = "Lavender Perfume"
+	group = "Perfumes"
+	cost = 15
+	contains = list(/obj/item/perfume/lavender)
+
+/datum/rogue_supply_pack/bath_perfume/cherry
+	name = "Cherry Perfume"
+	group = "Perfumes"
+	cost = 15
+	contains = list(/obj/item/perfume/cherry)
+
+/datum/rogue_supply_pack/bath_perfume/rose
+	name = "Rose Perfume"
+	group = "Perfumes"
+	cost = 15
+	contains = list(/obj/item/perfume/rose)
+
+/datum/rogue_supply_pack/bath_perfume/jasmine
+	name = "Jasmine Perfume"
+	group = "Perfumes"
+	cost = 15
+	contains = list(/obj/item/perfume/jasmine)
+
+/datum/rogue_supply_pack/bath_perfume/mint
+	name = "Mint Perfume"
+	group = "Perfumes"
+	cost = 15
+	contains = list(/obj/item/perfume/mint)
+
+/datum/rogue_supply_pack/bath_perfume/vanilla
+	name = "Vanilla Perfume"
+	group = "Perfumes"
+	cost = 15
+	contains = list(/obj/item/perfume/vanilla)
+
+/datum/rogue_supply_pack/bath_perfume/pear
+	name = "Pear Perfume"
+	group = "Perfumes"
+	cost = 15
+	contains = list(/obj/item/perfume/pear)
+
+/datum/rogue_supply_pack/bath_perfume/strawberry
+	name = "Strawberry Perfume"
+	group = "Perfumes"
+	cost = 15
+	contains = list(/obj/item/perfume/strawberry)
+
+/datum/rogue_supply_pack/bath_perfume/cinnamon
+	name = "Cinnamon Perfume"
+	group = "Perfumes"
+	cost = 15
+	contains = list(/obj/item/perfume/cinnamon)
+
+/datum/rogue_supply_pack/bath_perfume/frankincense
+	name = "Frankincense Perfume"
+	group = "Perfumes"
+	cost = 30
+	contains = list(/obj/item/perfume/frankincense)
+
+/datum/rogue_supply_pack/bath_perfume/sandalwood
+	name = "Sandalwood Perfume"
+	group = "Perfumes"
+	cost = 30
+	contains = list(/obj/item/perfume/sandalwood)
+
+/datum/rogue_supply_pack/bath_perfume/myrrh
+	name = "Myrrh Perfume"
+	group = "Perfumes"
+	cost = 30
+	contains = list(/obj/item/perfume/myrrh)
+
+/datum/rogue_supply_pack/bath_rogue/chains
+	name = "Chains"
+	group = "Roguery"
+	cost = 15
+	contains = list(/obj/item/rope/chain, /obj/item/rope/chain, /obj/item/rope/chain)
+
+/datum/rogue_supply_pack/bath_rogue/goldpin
+	name = "Golden Hairpin"
+	group = "Roguery"
+	cost = 70
+	contains = list(/obj/item/lockpick/goldpin)
+
+/datum/rogue_supply_pack/bath_rogue/silverpin
+	name = "Silver Hairpin"
+	group = "Roguery"
+	cost = 140
+	contains = list(/obj/item/lockpick/goldpin/silver)
+
+/datum/rogue_supply_pack/bath_rogue/smokebomb
+	name = "Smoke Bomb"
+	group = "Roguery"
+	cost = 25
+	contains = list(/obj/item/bomb/smoke, /obj/item/bomb/smoke, /obj/item/bomb/smoke)
+
+/datum/rogue_supply_pack/bath_rogue/quiver
+	name = "Empty Quiver"
+	group = "Roguery"
+	cost = 5
+	contains = list(/obj/item/quiver)
+
+/datum/rogue_supply_pack/bath_rogue/net
+	name = "Net"
+	group = "Roguery"
+	cost = 20
+	contains = list(/obj/item/net)
+
+/datum/rogue_supply_pack/bath_rogue/grappler
+	name = "Grappler"
+	group = "Roguery"
+	cost = 200
+	contains = list(/obj/item/grapplinghook)
+
+/datum/rogue_supply_pack/bath_rogue/climbing_gear
+	name = "Climbing Gear"
+	group = "Roguery"
+	cost = 150
+	contains = list(/obj/item/clothing/climbing_gear)
+
+/datum/rogue_supply_pack/bath_rogue/whip
+	name = "Whip"
+	group = "Roguery"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/whip)
+
+/datum/rogue_supply_pack/bath_rogue/brandiron
+	name = "Branding Iron"
+	group = "Roguery"
+	cost = 20
+	contains = list(/obj/item/rogueweapon/surgery/cautery/branding)
+
+/datum/rogue_supply_pack/bath_toys/candle
+	name = "Candle"
+	group = "Toys"
+	cost = 5
+	contains = list(/obj/item/candle)
+
+/datum/rogue_supply_pack/bath_toys/eroancandle
+	name = "Candle (Eoran)"
+	group = "Toys"
+	cost = 15
+	contains = list(/obj/item/candle/eora)
+
+/datum/rogue_supply_pack/bath_toys/herbalsoap
+	name = "Soap (Herbal)"
+	group = "Toys"
+	cost = 10
+	contains = list(/obj/item/soap/bath)
+
+/datum/rogue_supply_pack/drugs/ozium
+	name = "Ozium"
+	group = "Drugs"
+	cost = 5
+	contains = list(/obj/item/reagent_containers/powder/ozium)
+
+/datum/rogue_supply_pack/drugs/herozium
+	name = "Herozium"
+	group = "Drugs"
+	cost = 50
+	contains = list(/obj/item/reagent_containers/powder/herozium)
+
+/datum/rogue_supply_pack/drugs/moondust
+	name = "Moon Dust"
+	group = "Drugs"
+	cost = 10
+	contains = list(/obj/item/reagent_containers/powder/moondust)
+
+/datum/rogue_supply_pack/drugs/pdust
+	name = "Purified Moondust"
+	group = "Drugs"
+	cost = 30
+	contains = list(/obj/item/reagent_containers/powder/moondust_purest)
+
+/datum/rogue_supply_pack/drugs/spice
+	name = "Spice"
+	group = "Drugs"
+	cost = 20
+	contains = list(/obj/item/reagent_containers/powder/spice)
+
+/datum/rogue_supply_pack/drugs/swampzig
+	name = "Swampweeed Zig"
+	group = "Drugs"
+	cost = 5
+	contains = list(/obj/item/clothing/mask/cigarette/rollie/cannabis)
+
+/datum/rogue_supply_pack/drugs/pipezig
+	name = "Pipeweed Zig"
+	group = "Drugs"
+	cost = 2
+	contains = list(/obj/item/clothing/mask/cigarette/rollie/nicotine)
+
+/datum/rogue_supply_pack/drugs/starsugar
+	name = "Starsugar"
+	group = "Drugs"
+	cost = 50
+	contains = list(/obj/item/reagent_containers/powder/starsugar)
+
+/datum/rogue_supply_pack/drugs/murkwine
+	name = "Murkwine"
+	group = "Drugs"
+	cost = 30
+	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/beer/murkwine)
+
+/datum/rogue_supply_pack/drugs/nocshine
+	name = "Nocshine"
+	group = "Drugs"
+	cost = 40
+	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/beer/nocshine)
+
+/datum/rogue_supply_pack/drugs/whipwine
+	name = "Magickal Whip-Wine"
+	group = "Drugs"
+	cost = 30
+	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/beer/whipwine)
+
+/datum/rogue_supply_pack/drugs/emberwine
+	name = "Emberwine"
+	group = "Drugs"
+	cost = 80
+	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/emberwine)
+
+/datum/rogue_supply_pack/drugs/zigbox
+	name = "Zigbox (Empty)"
+	group = "Drugs"
+	cost = 5
+	contains = list(/obj/item/quiver/zigs)
+
+/datum/rogue_supply_pack/drugs/zigbox_pipezig
+	name = "Zigbox (Pipeweed)"
+	group = "Drugs"
+	cost = 25
+	contains = list(/obj/item/quiver/zigs/nicotine)
+
+/datum/rogue_supply_pack/drugs/zigbox_swampzig
+	name = "Zigbox (Swampweed)"
+	group = "Drugs"
+	cost = 45
+	contains = list(/obj/item/quiver/zigs/cannabis)
+
+/datum/rogue_supply_pack/drugs/fermented_crab
+	name = "Fermented Crab"
+	group = "Drugs"
+	cost = 45
+	contains = list(/obj/item/reagent_containers/glass/bottle/alchemical/fermented_crab)
+
+/datum/rogue_supply_pack/drugs/shhig
+	name = "Shhig brand zigs (pack of 6)"
+	group = "Drugs"
+	cost = 35
+	contains = list(/obj/item/storage/fancy/shhig)
+
+/datum/rogue_supply_pack/drugs/suidust
+	name = "Dust of Disguise (Gender only)"
+	group = "Drugs"
+	cost = 60
+	contains = list(/obj/item/alch/transisdust)
+
+/datum/rogue_supply_pack/drugs/swampleaf
+	name = "Swampweeed leaf (dried)"
+	group = "Drugs"
+	cost = 5
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/rogue/swampweeddry)
+
+/datum/rogue_supply_pack/drugs/pipeleaf
+	name = "Pipeweed leaf (dried)"
+	group = "Drugs"
+	cost = 2
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/rogue/pipeweeddry)
+
+/datum/rogue_supply_pack/drugs/hookah
+	name = "Shisha Pipe (Handheld)"
+	group = "Drugs"
+	cost = 50
+	contains = list(/obj/item/portable_hookah)
+
 /datum/rogue_supply_pack/blackmarket_arms/dagger
 	name = "Dagger, Steel"
 	group = "Self Defense"
@@ -123,12 +573,6 @@
 	group = "Diplomacy and Persuasion"
 	cost = 50
 	contains = list(/obj/item/clothing/neck/roguetown/collar/leather)
-
-/datum/rogue_supply_pack/blackmarket_diplomacy/chainleash
-	name = "Chain Leash"
-	group = "Diplomacy and Persuasion"
-	cost = 50
-	contains = list(/obj/item/leash/chain)
 
 /datum/rogue_supply_pack/blackmarket_diplomacy/bomb
 	name = "Potion of Liquid Flame"
@@ -1657,6 +2101,12 @@
 	cost = 15
 	contains = list(/obj/item/clothing/mask/cigarette/rollie/cannabis)
 
+/datum/rogue_supply_pack/substances/shhig
+	name = "Shhig brand zigs (pack of 6)"
+	group = "Substances"
+	cost = 40
+	contains = list(/obj/item/storage/fancy/shhig)
+
 /datum/rogue_supply_pack/substances/ozium
 	name = "Ozium"
 	group = "Substances"
@@ -2084,12 +2534,38 @@
 	cost = 25
 	contains = list(/obj/item/caparison/fogbeast)
 
+/datum/rogue_supply_pack/zadpack/merchant
+	name = "Pack of Trained Zads"
+	group = "Zadpacks"
+	cost = 50
+	not_in_public = TRUE
+	contains = list(/obj/item/zadpack)
+
+/datum/rogue_supply_pack/zadpack/bathhouse
+	name = "Discreet Zad Pack"
+	group = "Discreet Zads"
+	cost = 50
+	contains = list(/obj/item/zadpack)
+
 /datum/rogue_supply_pack/zadpack/cheap_bombs
 	name = "Bottle Bomb (Bulk)"
 	group = "Zadpacks"
 	cost = 35
 	not_in_public = TRUE
 	contains = list(/obj/item/bomb, /obj/item/bomb, /obj/item/bomb, /obj/item/bomb, /obj/item/bomb)
+
+/datum/rogue_supply_pack/zadpack/new_cage
+	name = "Spare Zadcage"
+	group = "Zadpacks"
+	cost = 10
+	not_in_public = TRUE
+	contains = list(/obj/item/zadcage)
+
+/datum/rogue_supply_pack/zadpack/new_cage_bathhouse
+	name = "Discreet Zadcage"
+	group = "Discreet Zads"
+	cost = 10
+	contains = list(/obj/item/zadcage)
 
 /datum/rogue_supply_pack/armor_bronze/chainmail_bronze
 	name = "Haubergeon"
@@ -2790,6 +3266,1658 @@
 	cost = 50
 	contains = list(/obj/item/storage/belt/rogue/leather/steel/tasset)
 
+/datum/rogue_supply_pack/aavnr/shashka
+	name = "Aavnic Shashka"
+	group = "Cultural Stock"
+	cost = 90
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/sabre/steppesman)
+
+/datum/rogue_supply_pack/aavnr/recurve_bow
+	name = "Aavnic Riding Bow"
+	group = "Cultural Stock"
+	cost = 80
+	not_in_public = TRUE
+	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/steppesman)
+
+/datum/rogue_supply_pack/aavnr/steppe_axe
+	name = "Steppesman Battle Axe"
+	group = "Cultural Stock"
+	cost = 95
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/stoneaxe/battle/steppesman)
+
+/datum/rogue_supply_pack/aavnr/nagaika
+	name = "Kozak Nagaika"
+	group = "Cultural Stock"
+	cost = 45
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/whip/nagaika)
+
+/datum/rogue_supply_pack/aavnr/steppe_shield
+	name = "Steppesman Shield"
+	group = "Cultural Stock"
+	cost = 75
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/shield/iron/steppesman)
+
+/datum/rogue_supply_pack/aavnr/shishak
+	name = "Shishak Helmet"
+	group = "Cultural Stock"
+	cost = 70
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/head/roguetown/helmet/sallet/shishak)
+
+/datum/rogue_supply_pack/aavnr/papakha
+	name = "Kozak Papakha"
+	group = "Cultural Stock"
+	cost = 25
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/head/roguetown/papakha)
+
+/datum/rogue_supply_pack/aavnr/ironmask
+	name = "Ironmask Warmasks"
+	group = "Cultural Stock"
+	cost = 95
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/mask/rogue/facemask/steel/steppesman, /obj/item/clothing/mask/rogue/facemask/steel/steppesman/anthro)
+
+/datum/rogue_supply_pack/aavnr/chargah
+	name = "Chargah Padded Caftan"
+	group = "Cultural Stock"
+	cost = 60
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah)
+
+/datum/rogue_supply_pack/aavnr/hatanga
+	name = "Steppe Hatanga Coat"
+	group = "Cultural Stock"
+	cost = 85
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/steppe)
+
+/datum/rogue_supply_pack/aavnr/steppe_scale
+	name = "Steppe Scale Plate"
+	group = "Cultural Stock"
+	cost = 220
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/scale/steppe)
+
+/datum/rogue_supply_pack/aavnr/szabrista_kit
+	name = "Aavnic Szabrista Harness"
+	group = "Cultural Stock"
+	cost = 430
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah, /obj/item/clothing/suit/roguetown/armor/plate/scale/steppe, /obj/item/clothing/head/roguetown/helmet/sallet/shishak, /obj/item/clothing/mask/rogue/facemask/steel/steppesman, /obj/item/clothing/neck/roguetown/chaincoif, /obj/item/clothing/gloves/roguetown/chain, /obj/item/clothing/wrists/roguetown/bracers, /obj/item/clothing/under/roguetown/heavy_leather_pants, /obj/item/clothing/shoes/roguetown/boots/nobleboot/steppesman, /obj/item/clothing/cloak/raincloak/furcloak, /obj/item/rogueweapon/shield/iron/steppesman, /obj/item/rogueweapon/sword/sabre/steppesman)
+
+/datum/rogue_supply_pack/aavnr/druzhina_kit
+	name = "Aavnic Druzhina Hunter Kit"
+	group = "Cultural Stock"
+	cost = 260
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/chargah, /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/steppe, /obj/item/clothing/head/roguetown/helmet/sallet/shishak, /obj/item/clothing/neck/roguetown/leather, /obj/item/clothing/gloves/roguetown/fingerless_leather, /obj/item/clothing/wrists/roguetown/bracers/leather, /obj/item/clothing/under/roguetown/heavy_leather_pants, /obj/item/clothing/shoes/roguetown/boots/nobleboot/steppesman, /obj/item/clothing/cloak/raincloak/furcloak, /obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve/steppesman)
+
+/datum/rogue_supply_pack/aavnr/freifechter_jacket
+	name = "Freifechter Fencing Jacket"
+	group = "Cultural Stock"
+	cost = 95
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter)
+
+/datum/rogue_supply_pack/aavnr/freifechter_shirt
+	name = "Padded Fencing Shirt"
+	group = "Cultural Stock"
+	cost = 55
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/shirt/freifechter)
+
+/datum/rogue_supply_pack/aavnr/freifechter_breeches
+	name = "Fencing Breeches"
+	group = "Cultural Stock"
+	cost = 45
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic)
+
+/datum/rogue_supply_pack/aavnr/freifechter_boots
+	name = "Fencing Boots"
+	group = "Cultural Stock"
+	cost = 50
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/grenzelhoft/freifechter)
+
+/datum/rogue_supply_pack/aavnr/freifechter_gloves
+	name = "Fencing Gloves"
+	group = "Cultural Stock"
+	cost = 45
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/gloves/roguetown/angle/grenzelgloves/freifechter)
+
+/datum/rogue_supply_pack/aavnr/freifechter_kit
+	name = "Freifechter Sabrist Wares"
+	group = "Cultural Stock"
+	cost = 340
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/shirt/freifechter, /obj/item/clothing/suit/roguetown/armor/leather/heavy/freifechter, /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan/generic, /obj/item/clothing/shoes/roguetown/boots/grenzelhoft/freifechter, /obj/item/clothing/gloves/roguetown/angle/grenzelgloves/freifechter, /obj/item/clothing/wrists/roguetown/bracers/jackchain, /obj/item/clothing/neck/roguetown/psicross/reform, /obj/item/rogueweapon/sword/sabre/freifechter, /obj/item/rogueweapon/huntingknife/idagger/navaja/freifechter)
+
+/datum/rogue_supply_pack/aavnr/saiga_sausage
+	name = "Smoked Saiga Sausage"
+	group = "Cultural Stock"
+	cost = 35
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/rogue/meat/sausage/cooked, /obj/item/reagent_containers/food/snacks/rogue/meat/sausage/cooked, /obj/item/reagent_containers/food/snacks/rogue/meat/sausage/cooked)
+
+/datum/rogue_supply_pack/aavnr/coppiette
+	name = "Heartland Coppiette"
+	group = "Cultural Stock"
+	cost = 35
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/rogue/meat/coppiette, /obj/item/reagent_containers/food/snacks/rogue/meat/coppiette, /obj/item/reagent_containers/food/snacks/rogue/meat/coppiette)
+
+/datum/rogue_supply_pack/etrusca/falchion
+	name = "Falchion"
+	group = "Cultural Stock"
+	cost = 90
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/falchion)
+
+/datum/rogue_supply_pack/etrusca/crossbow
+	name = "Etruscan Crossbow"
+	group = "Cultural Stock"
+	cost = 50
+	not_in_public = TRUE
+	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow)
+
+/datum/rogue_supply_pack/etrusca/heavy_bolts
+	name = "Quiver of Bolts"
+	group = "Cultural Stock"
+	cost = 35
+	not_in_public = TRUE
+	contains = list(/obj/item/quiver/bolts)
+
+/datum/rogue_supply_pack/etrusca/pike
+	name = "Condottieri Boat Spear"
+	group = "Cultural Stock"
+	cost = 90
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/spear/boar)
+
+/datum/rogue_supply_pack/etrusca/etruscan_bascinet
+	name = "Etruscan Bascinet"
+	group = "Cultural Stock"
+	cost = 130
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/etruscan)
+
+/datum/rogue_supply_pack/etrusca/condottieri_kit
+	name = "Condottieri Pikeman Harness"
+	group = "Cultural Stock"
+	cost = 380
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy, /obj/item/clothing/suit/roguetown/armor/brigandine, /obj/item/clothing/head/roguetown/helmet/bascinet/etruscan, /obj/item/clothing/gloves/roguetown/plate, /obj/item/clothing/under/roguetown/heavy_leather_pants, /obj/item/clothing/shoes/roguetown/boots/armor/iron)
+
+/datum/rogue_supply_pack/etrusca/vaquero_kit
+	name = "Vaquero Outrider Kit"
+	group = "Cultural Stock"
+	cost = 220
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/studded, /obj/item/clothing/head/roguetown/helmet/skullcap, /obj/item/rogueweapon/huntingknife/idagger/navaja, /obj/item/rogueweapon/huntingknife/idagger/steel/parrying/vaquero, /obj/item/clothing/under/roguetown/heavy_leather_pants, /obj/item/clothing/shoes/roguetown/boots/leather)
+
+/datum/rogue_supply_pack/etrusca/jamon
+	name = "Cured Ham (Jamón)"
+	group = "Cultural Stock"
+	cost = 45
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/rogue/meat/salami, /obj/item/reagent_containers/food/snacks/rogue/meat/salami, /obj/item/reagent_containers/food/snacks/rogue/meat/salami)
+
+/datum/rogue_supply_pack/etrusca/coppiette
+	name = "Etruscan Coppiette"
+	group = "Cultural Stock"
+	cost = 35
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/rogue/meat/coppiette, /obj/item/reagent_containers/food/snacks/rogue/meat/coppiette, /obj/item/reagent_containers/food/snacks/rogue/meat/coppiette)
+
+/datum/rogue_supply_pack/etrusca/salami
+	name = "Velasca Salami"
+	group = "Cultural Stock"
+	cost = 35
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/rogue/meat/salami, /obj/item/reagent_containers/food/snacks/rogue/meat/salami, /obj/item/reagent_containers/food/snacks/rogue/meat/salami)
+
+/datum/rogue_supply_pack/etrusca/cheese
+	name = "Montecarina Cheese Wheel"
+	group = "Cultural Stock"
+	cost = 40
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/rogue/cheese, /obj/item/reagent_containers/food/snacks/rogue/cheese, /obj/item/reagent_containers/food/snacks/rogue/cheese)
+
+/datum/rogue_supply_pack/etrusca/vaquero_ring
+	name = "Vaquero's Ring"
+	group = "Cultural Stock"
+	cost = 150
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/neck/roguetown/luckcharm)
+
+/datum/rogue_supply_pack/grenzelhoft/zweihander
+	name = "Zweihander"
+	group = "Cultural Stock"
+	cost = 200
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/greatsword/grenz)
+
+/datum/rogue_supply_pack/grenzelhoft/kriegmesser
+	name = "Kriegmesser"
+	group = "Cultural Stock"
+	cost = 130
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/long/kriegmesser)
+
+/datum/rogue_supply_pack/grenzelhoft/halberd
+	name = "Halberd"
+	group = "Cultural Stock"
+	cost = 120
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/halberd)
+
+/datum/rogue_supply_pack/grenzelhoft/partizan
+	name = "Partizan"
+	group = "Cultural Stock"
+	cost = 150
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/spear/partizan)
+
+/datum/rogue_supply_pack/grenzelhoft/seax
+	name = "Grenzelhoftian Seax"
+	group = "Cultural Stock"
+	cost = 70
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/huntingknife/combat)
+
+/datum/rogue_supply_pack/grenzelhoft/kampfmesser
+	name = "Kampfmesser"
+	group = "Cultural Stock"
+	cost = 70
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/huntingknife/combat)
+
+/datum/rogue_supply_pack/grenzelhoft/blacksteel_cuirass
+	name = "Blacksteel Cuirass"
+	group = "Cultural Stock"
+	cost = 420
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/blacksteel_half_plate)
+
+/datum/rogue_supply_pack/grenzelhoft/heavy_gambeson
+	name = "Grenzelhoftian Heavy Gambeson"
+	group = "Cultural Stock"
+	cost = 100
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/grenzelhoft)
+
+/datum/rogue_supply_pack/grenzelhoft/plumed_hat
+	name = "Grenzelhoftian Plume Hat"
+	group = "Cultural Stock"
+	cost = 60
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/head/roguetown/grenzelhofthat)
+
+/datum/rogue_supply_pack/grenzelhoft/boots
+	name = "Grenzelhoft Boots"
+	group = "Cultural Stock"
+	cost = 45
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/grenzelhoft)
+
+/datum/rogue_supply_pack/grenzelhoft/gloves
+	name = "Grenzelhoft Gloves"
+	group = "Cultural Stock"
+	cost = 40
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/gloves/roguetown/angle/grenzelgloves)
+
+/datum/rogue_supply_pack/grenzelhoft/pants
+	name = "Grenzelhoftian Paumpers"
+	group = "Cultural Stock"
+	cost = 50
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/grenzelpants)
+
+/datum/rogue_supply_pack/grenzelhoft/merc_tabard
+	name = "Heiligsoldner Tabard"
+	group = "Cultural Stock"
+	cost = 70
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/cloak/stabard/grenzelhoft)
+
+/datum/rogue_supply_pack/grenzelhoft/crossbow
+	name = "crossbow"
+	group = "Cultural Stock"
+	cost = 220
+	not_in_public = TRUE
+	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow)
+
+/datum/rogue_supply_pack/grenzelhoft/fyrebolts
+	name = "Quiver of Pyroclastic Bolts"
+	group = "Cultural Stock"
+	cost = 60
+	not_in_public = TRUE
+	contains = list(/obj/item/quiver/pyrobolts)
+
+/datum/rogue_supply_pack/grenzelhoft/almain_rivet
+	name = "Almain Rivet Harness"
+	group = "Cultural Stock"
+	cost = 200
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson, /obj/item/clothing/suit/roguetown/armor/brigandine/light, /obj/item/clothing/head/roguetown/helmet/sallet, /obj/item/clothing/neck/roguetown/bevor, /obj/item/clothing/wrists/roguetown/splintarms, /obj/item/clothing/gloves/roguetown/plate/iron, /obj/item/clothing/under/roguetown/splintlegs, /obj/item/clothing/shoes/roguetown/boots/armor/iron)
+
+/datum/rogue_supply_pack/grenzelhoft/coppiette
+	name = "Coppiette"
+	group = "Cultural Stock"
+	cost = 35
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/rogue/meat/coppiette, /obj/item/reagent_containers/food/snacks/rogue/meat/coppiette, /obj/item/reagent_containers/food/snacks/rogue/meat/coppiette)
+
+/datum/rogue_supply_pack/grenzelhoft/salami
+	name = "Hartwald Salami"
+	group = "Cultural Stock"
+	cost = 35
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/rogue/meat/salami, /obj/item/reagent_containers/food/snacks/rogue/meat/salami, /obj/item/reagent_containers/food/snacks/rogue/meat/salami)
+
+/datum/rogue_supply_pack/grenzelhoft/hardybread
+	name = "Hardy Sea Biscuit"
+	group = "Cultural Stock"
+	cost = 25
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/rogue/crackerscooked, /obj/item/reagent_containers/food/snacks/rogue/crackerscooked, /obj/item/reagent_containers/food/snacks/rogue/crackerscooked, /obj/item/reagent_containers/food/snacks/rogue/crackerscooked)
+
+/datum/rogue_supply_pack/grenzelhoft/ring_vitality
+	name = "Ring of Vitality"
+	group = "Cultural Stock"
+	cost = 450
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/ring/statonyx)
+
+/datum/rogue_supply_pack/gronn/battleaxe
+	name = "Zayran Battleaxe"
+	group = "Cultural Stock"
+	cost = 130
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/steel/atgervi)
+
+/datum/rogue_supply_pack/gronn/gronnarmor
+	name = "Gronnic Hardened Leather Armor"
+	group = "Cultural Stock"
+	cost = 60
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/gronn)
+
+/datum/rogue_supply_pack/gronn/gronnpants
+	name = "Nomad Hardened Leather Pants"
+	group = "Cultural Stock"
+	cost = 50
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/nomadpants)
+
+/datum/rogue_supply_pack/gronn/gronnpantsalt
+	name = "Gronnic Leather Pants"
+	group = "Cultural Stock"
+	cost = 40
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/under/roguetown/trou/leather/gronn)
+
+/datum/rogue_supply_pack/gronn/gronnglovesleather
+	name = "Gronnic Fur-lined Heavy Leather Gloves"
+	group = "Cultural Stock"
+	cost = 40
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/gloves/roguetown/angle/gronn)
+
+/datum/rogue_supply_pack/gronn/owl_helmet
+	name = "Owl Helmet"
+	group = "Cultural Stock"
+	cost = 150
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/atgervi)
+
+/datum/rogue_supply_pack/gronn/moose_hood
+	name = "Moose Hood"
+	group = "Cultural Stock"
+	cost = 90
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/head/roguetown/helmet/leather/shaman_hood)
+
+/datum/rogue_supply_pack/gronn/varangian_hauberk
+	name = "Nöküd Hauberk"
+	group = "Cultural Stock"
+	cost = 180
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/atgervi)
+
+/datum/rogue_supply_pack/gronn/shamanic_coat
+	name = "Shamanic Coat"
+	group = "Cultural Stock"
+	cost = 110
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/atgervi)
+
+/datum/rogue_supply_pack/gronn/kite_shield
+	name = "Gronnic Kite Shield"
+	group = "Cultural Stock"
+	cost = 90
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/shield/atgervi)
+
+/datum/rogue_supply_pack/gronn/fur_gloves
+	name = "Fur-Lined Leather Gloves"
+	group = "Cultural Stock"
+	cost = 40
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/gloves/roguetown/angle/atgervi)
+
+/datum/rogue_supply_pack/gronn/bone_gloves
+	name = "Fur-Lined Bone Gloves"
+	group = "Cultural Stock"
+	cost = 50
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/gloves/roguetown/angle/gronnfur)
+
+/datum/rogue_supply_pack/gronn/beast_claws
+	name = "Beast Claws Gauntlets"
+	group = "Cultural Stock"
+	cost = 140
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/gloves/roguetown/plate/atgervi)
+
+/datum/rogue_supply_pack/gronn/fur_pants
+	name = "Gronnic Fur Pants"
+	group = "Cultural Stock"
+	cost = 50
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/under/roguetown/trou/leather/atgervi)
+
+/datum/rogue_supply_pack/gronn/leather_boots
+	name = "Ba'atur Leather Boots"
+	group = "Cultural Stock"
+	cost = 45
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/leather/atgervi)
+
+/datum/rogue_supply_pack/gronn/atgervi_kit
+	name = "Ba'atur Nöküd Harness"
+	group = "Cultural Stock"
+	cost = 540
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/atgervi, /obj/item/clothing/suit/roguetown/armor/brigandine/gronn, /obj/item/clothing/head/roguetown/helmet/bascinet/atgervi, /obj/item/clothing/gloves/roguetown/angle/atgervi, /obj/item/clothing/under/roguetown/trou/leather/atgervi, /obj/item/clothing/shoes/roguetown/boots/leather/atgervi, /obj/item/rogueweapon/shield/atgervi)
+
+/datum/rogue_supply_pack/gronn/iskarn_kit
+	name = "Zayran Shaman Kit"
+	group = "Cultural Stock"
+	cost = 380
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/atgervi, /obj/item/clothing/head/roguetown/helmet/leather/shaman_hood, /obj/item/clothing/gloves/roguetown/angle/gronnfur, /obj/item/clothing/under/roguetown/trou/leather/atgervi, /obj/item/clothing/shoes/roguetown/boots/leather/atgervi)
+
+/datum/rogue_supply_pack/gronn/spider_honey
+	name = "Dreamer's Honey"
+	group = "Cultural Stock"
+	cost = 60
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/rogue/honey/spider, /obj/item/reagent_containers/food/snacks/rogue/honey/spider, /obj/item/reagent_containers/food/snacks/rogue/honey/spider)
+
+/datum/rogue_supply_pack/gronn/cured_megafauna
+	name = "Cured Dusk Horn Meat"
+	group = "Cultural Stock"
+	cost = 50
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/rogue/meat/coppiette, /obj/item/reagent_containers/food/snacks/rogue/meat/coppiette, /obj/item/reagent_containers/food/snacks/rogue/meat/coppiette)
+
+/datum/rogue_supply_pack/gronn/gronnic_norsii_plate
+	name = "Gronn Kheshig Iron Plate"
+	group = "Cultural Stock"
+	cost = 360
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/iron/gronn)
+
+/datum/rogue_supply_pack/gronn/gronnic_norsii_helm
+	name = "Gronn Kheshig Horned Helm"
+	group = "Cultural Stock"
+	cost = 90
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/bucket/gronn)
+
+/datum/rogue_supply_pack/gronn/gronnic_brigandine
+	name = "Gronnic Brigandine"
+	group = "Cultural Stock"
+	cost = 200
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/brigandine/gronn)
+
+/datum/rogue_supply_pack/gronn/norsii_kit
+	name = "Kheshig Heavy Harness"
+	group = "Cultural Stock"
+	cost = 620
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/iron/gronn, /obj/item/clothing/head/roguetown/helmet/heavy/bucket/gronn, /obj/item/clothing/gloves/roguetown/plate/iron/gronn, /obj/item/clothing/under/roguetown/platelegs/iron/gronn, /obj/item/clothing/shoes/roguetown/boots/armor/iron/gronn)
+
+/datum/rogue_supply_pack/gronn/ring_courage
+	name = "Ring of Courage"
+	group = "Cultural Stock"
+	cost = 450
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/ring/statrontz)
+
+/datum/rogue_supply_pack/hammerhold/dwarven_maul
+	name = "Dwarvish Maul"
+	group = "Cultural Stock"
+	cost = 240
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/mace/maul/steel)
+
+/datum/rogue_supply_pack/hammerhold/spiked_maul
+	name = "Spiked Maul"
+	group = "Cultural Stock"
+	cost = 260
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/mace/maul/spiked)
+
+/datum/rogue_supply_pack/hammerhold/longbow
+	name = "Yew Longbow"
+	group = "Cultural Stock"
+	cost = 80
+	not_in_public = TRUE
+	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow)
+
+/datum/rogue_supply_pack/hammerhold/iron_fullplate
+	name = "Hammerhold Iron Plate"
+	group = "Cultural Stock"
+	cost = 380
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/full/iron)
+
+/datum/rogue_supply_pack/hammerhold/snow_cloak
+	name = "Norwardine Forester Cloak"
+	group = "Cultural Stock"
+	cost = 60
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/cloak/forrestercloak/snow)
+
+/datum/rogue_supply_pack/hammerhold/ironclad_kit
+	name = "Hammerhold Ironclad Harness"
+	group = "Cultural Stock"
+	cost = 410
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson, /obj/item/clothing/suit/roguetown/armor/plate/full/iron, /obj/item/clothing/head/roguetown/helmet/heavy/knight/iron, /obj/item/clothing/neck/roguetown/chaincoif/iron, /obj/item/clothing/gloves/roguetown/plate/iron, /obj/item/clothing/wrists/roguetown/bracers/iron, /obj/item/clothing/under/roguetown/platelegs/iron, /obj/item/clothing/shoes/roguetown/boots/armor/iron)
+
+/datum/rogue_supply_pack/hammerhold/smoked_sausage
+	name = "Smoked Highland Sausage"
+	group = "Cultural Stock"
+	cost = 40
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/rogue/meat/sausage/cooked, /obj/item/reagent_containers/food/snacks/rogue/meat/sausage/cooked, /obj/item/reagent_containers/food/snacks/rogue/meat/sausage/cooked)
+
+/datum/rogue_supply_pack/hammerhold/bacon
+	name = "Mountainhome Bacon"
+	group = "Cultural Stock"
+	cost = 35
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/rogue/meat/bacon, /obj/item/reagent_containers/food/snacks/rogue/meat/bacon, /obj/item/reagent_containers/food/snacks/rogue/meat/bacon)
+
+/datum/rogue_supply_pack/hammerhold/slayer_axe
+	name = "Slayer Axe"
+	group = "Cultural Stock"
+	cost = 600
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/stoneaxe/woodcut/steel)
+
+/datum/rogue_supply_pack/hammerhold/slayer_greataxe
+	name = "Slayer Greataxe"
+	group = "Cultural Stock"
+	cost = 750
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/stoneaxe/battle)
+
+/datum/rogue_supply_pack/hammerhold/slayer_belt
+	name = "Rugged Dwarven Belt"
+	group = "Cultural Stock"
+	cost = 80
+	not_in_public = TRUE
+	contains = list(/obj/item/storage/belt/rogue/leather)
+
+/datum/rogue_supply_pack/hammerhold/dwarven_warpick
+	name = "Dwarven Warpick"
+	group = "Cultural Stock"
+	cost = 120
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/pick/militia/steel)
+
+/datum/rogue_supply_pack/hammerhold/grudgebearer_smith_kit
+	name = "Grudgebearer Smith Harness"
+	group = "Cultural Stock"
+	cost = 720
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/full/dwarven/smith, /obj/item/clothing/head/roguetown/helmet/heavy/dwarven/smith, /obj/item/clothing/gloves/roguetown/plate/dwarven, /obj/item/clothing/shoes/roguetown/boots/armor/dwarven)
+
+/datum/rogue_supply_pack/hammerhold/grudgebearer_soldier_kit
+	name = "Grudgebearer Soldier Harness"
+	group = "Cultural Stock"
+	cost = 1000
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/full/dwarven, /obj/item/clothing/head/roguetown/helmet/heavy/dwarven, /obj/item/clothing/gloves/roguetown/plate/dwarven, /obj/item/clothing/shoes/roguetown/boots/armor/dwarven, /obj/item/rogueweapon/shield/tower/metal)
+
+/datum/rogue_supply_pack/kazengun/kanabo
+	name = "Kanabo"
+	group = "Cultural Stock"
+	cost = 220
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/mace/goden/steel)
+
+/datum/rogue_supply_pack/kazengun/ssangsudo
+	name = "Ssangsudo"
+	group = "Cultural Stock"
+	cost = 240
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/long/kriegmesser)
+
+/datum/rogue_supply_pack/kazengun/haraate
+	name = "Haraate Brigandine"
+	group = "Cultural Stock"
+	cost = 200
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast)
+
+/datum/rogue_supply_pack/kazengun/kazenpants
+	name = "Kazengunese Heavy Leather Trousers"
+	group = "Cultural Stock"
+	cost = 40
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/kazengun)
+
+/datum/rogue_supply_pack/kazengun/mentorhat
+	name = "Worn Bamboo Hat"
+	group = "Cultural Stock"
+	cost = 60
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/head/roguetown/mentorhat)
+
+/datum/rogue_supply_pack/kazengun/mask_full
+	name = "Steel Mengu"
+	group = "Cultural Stock"
+	cost = 120
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/mask/rogue/facemask/steel/kazengun/full)
+
+/datum/rogue_supply_pack/kazengun/mask_half
+	name = "Hanbo Half-Mask"
+	group = "Cultural Stock"
+	cost = 90
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/mask/rogue/facemask/steel/kazengun)
+
+/datum/rogue_supply_pack/kazengun/cloak
+	name = "Silk Cloak"
+	group = "Cultural Stock"
+	cost = 80
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/cloak/eastcloak1)
+
+/datum/rogue_supply_pack/kazengun/shirt_black
+	name = "Black Foreign Shirt"
+	group = "Cultural Stock"
+	cost = 35
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt1)
+
+/datum/rogue_supply_pack/kazengun/shirt_white
+	name = "White Foreign Shirt"
+	group = "Cultural Stock"
+	cost = 35
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/shirt/undershirt/eastshirt2)
+
+/datum/rogue_supply_pack/kazengun/captainrobe
+	name = "Foreign Robes"
+	group = "Cultural Stock"
+	cost = 90
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/basiceast/captainrobe)
+
+/datum/rogue_supply_pack/kazengun/kote
+	name = "Jjajeungna Kote"
+	group = "Cultural Stock"
+	cost = 90
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/gloves/roguetown/eastgloves2)
+
+/datum/rogue_supply_pack/kazengun/boots
+	name = "Reinforced Tabi"
+	group = "Cultural Stock"
+	cost = 35
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/shoes/roguetown/armor/rumaclan)
+
+/datum/rogue_supply_pack/kazengun/trousers
+	name = "Gambeson Hakama"
+	group = "Cultural Stock"
+	cost = 30
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants1)
+
+/datum/rogue_supply_pack/kazengun/chonin_kit
+	name = "Chonin Footman Kit"
+	group = "Cultural Stock"
+	cost = 380
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson, /obj/item/clothing/suit/roguetown/armor/basiceast/crafteast, /obj/item/clothing/head/roguetown/mentorhat, /obj/item/clothing/under/roguetown/heavy_leather_pants/eastpants1, /obj/item/clothing/shoes/roguetown/armor/rumaclan)
+
+/datum/rogue_supply_pack/kazengun/kouken_kit
+	name = "Kouken Heavy Harness"
+	group = "Cultural Stock"
+	cost = 800
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/basiceast/crafteast, /obj/item/clothing/head/roguetown/helmet/sallet/beastskull, /obj/item/clothing/mask/rogue/facemask/steel/kazengun/full, /obj/item/clothing/gloves/roguetown/eastgloves2, /obj/item/clothing/cloak/eastcloak1)
+
+/datum/rogue_supply_pack/kazengun/puzzlebox_easy
+	name = "Wooden Puzzle-Box"
+	group = "Cultural Stock"
+	cost = 20
+	not_in_public = TRUE
+	contains = list(/obj/item/mundane/puzzlebox/easy)
+
+/datum/rogue_supply_pack/kazengun/puzzlebox_medium
+	name = "Ebony Puzzle-Box"
+	group = "Cultural Stock"
+	cost = 40
+	not_in_public = TRUE
+	contains = list(/obj/item/mundane/puzzlebox/medium)
+
+/datum/rogue_supply_pack/kazengun/puzzlebox_royal
+	name = "Royal Puzzle-Box"
+	group = "Cultural Stock"
+	cost = 1800
+	not_in_public = TRUE
+	contains = list(/obj/item/mundane/puzzlebox/impossible)
+
+/datum/rogue_supply_pack/naledi/hierophant_kit
+	name = "Naledi Hierophant Vestments"
+	group = "Cultural Stock"
+	cost = 290
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant, /obj/item/clothing/suit/roguetown/shirt/robe/hierophant, /obj/item/clothing/head/roguetown/roguehood/hierophant, /obj/item/clothing/cloak/hierophant, /obj/item/clothing/mask/rogue/lordmask/naledi, /obj/item/clothing/neck/roguetown/psicross/naledi, /obj/item/clothing/shoes/roguetown/sandals, /obj/item/rogueweapon/woodstaff/implement/grand/naledi)
+
+/datum/rogue_supply_pack/naledi/pontifex_kit
+	name = "Naledi Pontifex Vestments"
+	group = "Cultural Stock"
+	cost = 200
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex, /obj/item/clothing/suit/roguetown/shirt/robe/pointfex, /obj/item/clothing/head/roguetown/roguehood/pontifex, /obj/item/clothing/under/roguetown/trou/leather/pontifex, /obj/item/clothing/mask/rogue/lordmask/naledi, /obj/item/clothing/neck/roguetown/psicross/naledi, /obj/item/clothing/shoes/roguetown/sandals, /obj/item/clothing/gloves/roguetown/angle/pontifex)
+
+/datum/rogue_supply_pack/naledi/psicross
+	name = "Naledi Psicross"
+	group = "Cultural Stock"
+	cost = 80
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/neck/roguetown/psicross/naledi)
+
+/datum/rogue_supply_pack/naledi/lordmask
+	name = "Naledi Lordmask"
+	group = "Cultural Stock"
+	cost = 70
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/mask/rogue/lordmask/naledi)
+
+/datum/rogue_supply_pack/naledi/pashmina
+	name = "Hierophant's Pashmina"
+	group = "Cultural Stock"
+	cost = 45
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/head/roguetown/roguehood/hierophant)
+
+/datum/rogue_supply_pack/naledi/hierophantshawl
+	name = "Hierophant Shawl"
+	group = "Cultural Stock"
+	cost = 60
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/hierophant)
+
+/datum/rogue_supply_pack/naledi/naleditrou
+	name = "Pontifex's Chaqchur"
+	group = "Cultural Stock"
+	cost = 40
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/under/roguetown/trou/leather/pontifex)
+
+/datum/rogue_supply_pack/naledi/naledigamba
+	name = "Pontifex's Kaftan"
+	group = "Cultural Stock"
+	cost = 60
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/pontifex)
+
+/datum/rogue_supply_pack/naledi/sandals
+	name = "Naledi Sandals"
+	group = "Cultural Stock"
+	cost = 25
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/shoes/roguetown/sandals, /obj/item/clothing/shoes/roguetown/sandals)
+
+/datum/rogue_supply_pack/naledi/treatise
+	name = "Path of the War Scholar Treatise"
+	group = "Cultural Stock"
+	cost = 60
+	not_in_public = TRUE
+	contains = list(/obj/item/book/rogue/naledi1, /obj/item/book/rogue/naledi2, /obj/item/book/rogue/naledi3, /obj/item/book/rogue/naledi4)
+
+/datum/rogue_supply_pack/naledi/glassen_decanters
+	name = "Glassen Decanter Set"
+	group = "Cultural Stock"
+	cost = 30
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/glass/bottle/rogue, /obj/item/reagent_containers/glass/bottle/rogue, /obj/item/reagent_containers/glass/bottle/rogue, /obj/item/reagent_containers/glass/bottle/rogue)
+
+/datum/rogue_supply_pack/naledi/glass_statue
+	name = "Glassen Masterwork Statue"
+	group = "Cultural Stock"
+	cost = 110
+	not_in_public = TRUE
+	contains = list(/obj/item/roguestatue/glass)
+
+/datum/rogue_supply_pack/naledi/gold_finery
+	name = "Veralun Gold Finery"
+	group = "Cultural Stock"
+	cost = 180
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/ring/gold, /obj/item/clothing/ring/gold)
+
+/datum/rogue_supply_pack/naledi/ring_swiftness
+	name = "Ring of Swiftness"
+	group = "Cultural Stock"
+	cost = 450
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/ring/statgemerald)
+
+/datum/rogue_supply_pack/otava/morningstar
+	name = "Steel Morningstar"
+	group = "Cultural Stock"
+	cost = 130
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/mace/steel/morningstar)
+
+/datum/rogue_supply_pack/otava/lance
+	name = "Foot Lance"
+	group = "Cultural Stock"
+	cost = 110
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/spear/lance)
+
+/datum/rogue_supply_pack/otava/falchion
+	name = "Falchion"
+	group = "Cultural Stock"
+	cost = 90
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/falchion)
+
+/datum/rogue_supply_pack/otava/lucerne
+	name = "Steel Warhammer"
+	group = "Cultural Stock"
+	cost = 150
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/mace/warhammer/steel)
+
+/datum/rogue_supply_pack/otava/half_plate
+	name = "Otavan Half-Plate"
+	group = "Cultural Stock"
+	cost = 320
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/otavan)
+
+/datum/rogue_supply_pack/otava/full_plate
+	name = "Otavan Full Plate"
+	group = "Cultural Stock"
+	cost = 520
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/full)
+
+/datum/rogue_supply_pack/otava/klappvisier
+	name = "Otavan Klappvisier"
+	group = "Cultural Stock"
+	cost = 110
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/head/roguetown/helmet/otavan)
+
+/datum/rogue_supply_pack/otava/heavy_gambeson
+	name = "Otavan Fencing Gambeson"
+	group = "Cultural Stock"
+	cost = 100
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan)
+
+/datum/rogue_supply_pack/otava/gloves
+	name = "Otavan Leather Gloves"
+	group = "Cultural Stock"
+	cost = 45
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/gloves/roguetown/otavan)
+
+/datum/rogue_supply_pack/otava/boots
+	name = "Otavan Leather Boots"
+	group = "Cultural Stock"
+	cost = 50
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/shoes/roguetown/boots/otavan)
+
+/datum/rogue_supply_pack/otava/trousers
+	name = "Otavan Leather Trousers"
+	group = "Cultural Stock"
+	cost = 55
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/otavan)
+
+/datum/rogue_supply_pack/otava/satchel
+	name = "Otavan Leather Satchel"
+	group = "Cultural Stock"
+	cost = 60
+	not_in_public = TRUE
+	contains = list(/obj/item/storage/backpack/rogue/satchel/otavan)
+
+/datum/rogue_supply_pack/otava/chevalier_kit
+	name = "Chevalier Harness"
+	group = "Cultural Stock"
+	cost = 900
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan, /obj/item/clothing/suit/roguetown/armor/plate/full, /obj/item/clothing/head/roguetown/helmet/otavan, /obj/item/clothing/gloves/roguetown/otavan, /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan, /obj/item/clothing/shoes/roguetown/boots/otavan)
+
+/datum/rogue_supply_pack/otava/sergent_kit
+	name = "Sergent-d'Armes Harness"
+	group = "Cultural Stock"
+	cost = 640
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy/otavan, /obj/item/clothing/suit/roguetown/armor/plate/otavan, /obj/item/clothing/head/roguetown/helmet/otavan, /obj/item/clothing/gloves/roguetown/otavan, /obj/item/clothing/under/roguetown/heavy_leather_pants/otavan, /obj/item/clothing/shoes/roguetown/boots/otavan)
+
+/datum/rogue_supply_pack/otava/cheese
+	name = "País Cheese Wheel"
+	group = "Cultural Stock"
+	cost = 40
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/rogue/cheese, /obj/item/reagent_containers/food/snacks/rogue/cheese, /obj/item/reagent_containers/food/snacks/rogue/cheese)
+
+/datum/rogue_supply_pack/otava/ring_wisdom
+	name = "Ring of Wisdom"
+	group = "Cultural Stock"
+	cost = 450
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/ring/statamythortz)
+
+/datum/rogue_supply_pack/rosawood/woad_helm
+	name = "Woad Elven Helm"
+	group = "Cultural Stock"
+	cost = 95
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/elven_helm)
+
+/datum/rogue_supply_pack/rosawood/woad_plate
+	name = "Woad Elven Plate"
+	group = "Cultural Stock"
+	cost = 160
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/elven_plate)
+
+/datum/rogue_supply_pack/rosawood/elven_gloves
+	name = "Woad Elven Gloves"
+	group = "Cultural Stock"
+	cost = 30
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/gloves/roguetown/elven_gloves)
+
+/datum/rogue_supply_pack/rosawood/forrester_cloak
+	name = "Forrester Cloak"
+	group = "Cultural Stock"
+	cost = 45
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/cloak/forrestercloak)
+
+/datum/rogue_supply_pack/rosawood/woad_furcloak
+	name = "Warden's Fur Cloak"
+	group = "Cultural Stock"
+	cost = 55
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/cloak/raincloak/furcloak/woad)
+
+/datum/rogue_supply_pack/rosawood/recurve_bow
+	name = "Recurve Bow"
+	group = "Cultural Stock"
+	cost = 50
+	not_in_public = TRUE
+	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve)
+
+/datum/rogue_supply_pack/rosawood/yew_longbow
+	name = "Yew Longbow"
+	group = "Cultural Stock"
+	cost = 75
+	not_in_public = TRUE
+	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow/longbow)
+
+/datum/rogue_supply_pack/rosawood/arrows
+	name = "Quiver of Arrows"
+	group = "Cultural Stock"
+	cost = 35
+	not_in_public = TRUE
+	contains = list(/obj/item/quiver/arrows)
+
+/datum/rogue_supply_pack/rosawood/bodkins
+	name = "Quiver of Bodkin Arrows"
+	group = "Cultural Stock"
+	cost = 60
+	not_in_public = TRUE
+	contains = list(/obj/item/quiver/bodkin)
+
+/datum/rogue_supply_pack/rosawood/honey
+	name = "Jars of Honey"
+	group = "Cultural Stock"
+	cost = 40
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/rogue/honey, /obj/item/reagent_containers/food/snacks/rogue/honey, /obj/item/reagent_containers/food/snacks/rogue/honey)
+
+/datum/rogue_supply_pack/rosawood/raisin_loaf
+	name = "Raisin Loaves"
+	group = "Cultural Stock"
+	cost = 40
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/rogue/raisinbread, /obj/item/reagent_containers/food/snacks/rogue/raisinbread, /obj/item/reagent_containers/food/snacks/rogue/raisinbread)
+
+/datum/rogue_supply_pack/rosawood/apples
+	name = "Rosawood Apples"
+	group = "Cultural Stock"
+	cost = 20
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/apple, /obj/item/reagent_containers/food/snacks/grown/apple, /obj/item/reagent_containers/food/snacks/grown/apple, /obj/item/reagent_containers/food/snacks/grown/apple, /obj/item/reagent_containers/food/snacks/grown/apple, /obj/item/reagent_containers/food/snacks/grown/apple)
+
+/datum/rogue_supply_pack/rosawood/pears
+	name = "Rosawood Pears"
+	group = "Cultural Stock"
+	cost = 20
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/fruit/pear, /obj/item/reagent_containers/food/snacks/grown/fruit/pear, /obj/item/reagent_containers/food/snacks/grown/fruit/pear, /obj/item/reagent_containers/food/snacks/grown/fruit/pear, /obj/item/reagent_containers/food/snacks/grown/fruit/pear)
+
+/datum/rogue_supply_pack/rosawood/berries
+	name = "Rosawood Jacksberries"
+	group = "Cultural Stock"
+	cost = 20
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/grown/berries/rogue, /obj/item/reagent_containers/food/snacks/grown/berries/rogue, /obj/item/reagent_containers/food/snacks/grown/berries/rogue, /obj/item/reagent_containers/food/snacks/grown/berries/rogue, /obj/item/reagent_containers/food/snacks/grown/berries/rogue)
+
+/datum/rogue_supply_pack/rosawood/butter
+	name = "Butter"
+	group = "Cultural Stock"
+	cost = 30
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/butter, /obj/item/reagent_containers/food/snacks/butter, /obj/item/reagent_containers/food/snacks/butter)
+
+/datum/rogue_supply_pack/rosawood/elfsword
+	name = "Elven Shortsword"
+	group = "Cultural Stock"
+	cost = 60
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/short/elf)
+
+/datum/rogue_supply_pack/rosawood/elflongsword
+	name = "Elven Longsword"
+	group = "Cultural Stock"
+	cost = 80
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/long/elf)
+
+/datum/rogue_supply_pack/rosawood/elfswordspear
+	name = "Elven Swordspear"
+	group = "Cultural Stock"
+	cost = 100
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/spear/naginata/elf)
+
+/datum/rogue_supply_pack/rosawood/elfcurveblade
+	name = "Elven Curveblade"
+	group = "Cultural Stock"
+	cost = 120
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/greatsword/elvish)
+
+/datum/rogue_supply_pack/underdark/saber
+	name = "Underdark saber"
+	group = "Cultural Stock"
+	cost = 130
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/sabre/stalker)
+
+/datum/rogue_supply_pack/underdark/dagger
+	name = "Underdark dagger"
+	group = "Cultural Stock"
+	cost = 130
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/huntingknife/idagger/silver/elvish/drow)
+
+/datum/rogue_supply_pack/underdark/slurbow
+	name = "Underdark Slurbow"
+	group = "Cultural Stock"
+	cost = 150
+	not_in_public = TRUE
+	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker/lesser)
+
+/datum/rogue_supply_pack/underdark/fangeddagger
+	name = "Underdark Croc dagger"
+	group = "Cultural Stock"
+	cost = 150
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/huntingknife/idagger/steel/dirk)
+
+/datum/rogue_supply_pack/underdark/poisondagger
+	name = "Underdark poison dagger"
+	group = "Cultural Stock"
+	cost = 250
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/huntingknife/idagger/steel/corroded)
+
+/datum/rogue_supply_pack/underdark/restrainpoison
+	name = "Underdark restraining poison"
+	group = "Cultural Stock"
+	cost = 50
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/stampoison)
+
+/datum/rogue_supply_pack/underdark/killerpoison
+	name = "Underdark killer poison"
+	group = "Cultural Stock"
+	cost = 35
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/berrypoison)
+
+/datum/rogue_supply_pack/underdark/antidote
+	name = "Underdark antidote"
+	group = "Cultural Stock"
+	cost = 15
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/glass/bottle/rogue/antidote)
+
+/datum/rogue_supply_pack/underdark/crocs
+	name = "Underdark Crocs de l'araignée Regalia"
+	group = "Cultural Stock"
+	cost = 350
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/fluted/shadowplate, /obj/item/clothing/suit/roguetown/armor/gambeson/heavy/shadowrobe, /obj/item/clothing/mask/rogue/facemask/shadowfacemask, /obj/item/clothing/under/roguetown/heavy_leather_pants/shadowpants, /obj/item/clothing/gloves/roguetown/plate/shadowgauntlets)
+
+/datum/rogue_supply_pack/underdark/stalker_sabre
+	name = "Stalker Sabre"
+	group = "Cultural Stock"
+	cost = 95
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/sabre/stalker)
+
+/datum/rogue_supply_pack/underdark/spiderwhip
+	name = "Lashkiss Whip"
+	group = "Cultural Stock"
+	cost = 80
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/whip/spiderwhip)
+
+/datum/rogue_supply_pack/underdark/spiderurumi
+	name = "Drow Urumi"
+	group = "Cultural Stock"
+	cost = 95
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/whip/urumi/spider)
+
+/datum/rogue_supply_pack/underdark/spider_falx
+	name = "Stalker Falx"
+	group = "Cultural Stock"
+	cost = 95
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/falx/stalker)
+
+/datum/rogue_supply_pack/underdark/spider_greatsabre
+	name = "Greatsabre"
+	group = "Cultural Stock"
+	cost = 190
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/long/elf/stalker)
+
+/datum/rogue_supply_pack/underdark/spider_longsword
+	name = "Thrusting Longsword"
+	group = "Cultural Stock"
+	cost = 190
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/long/stalker)
+
+/datum/rogue_supply_pack/underdark/spider_messer
+	name = "Drow Kriegmesser"
+	group = "Cultural Stock"
+	cost = 190
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/long/kriegmesser/stalker)
+
+/datum/rogue_supply_pack/underdark/spider_shotel
+	name = "Drow Shotel"
+	group = "Cultural Stock"
+	cost = 95
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/long/shotel/stalker)
+
+/datum/rogue_supply_pack/underdark/spider_hooksword
+	name = "Drow Hooksword"
+	group = "Cultural Stock"
+	cost = 95
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/sabre/hook/stalker)
+
+/datum/rogue_supply_pack/underdark/spider_aruval
+	name = "Drow Aruval"
+	group = "Cultural Stock"
+	cost = 190
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/long/rhomphaia/stalker)
+
+/datum/rogue_supply_pack/underdark/spider_bardiche
+	name = "Drow Bardiche"
+	group = "Cultural Stock"
+	cost = 190
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/halberd/bardiche/stalker)
+
+/datum/rogue_supply_pack/underdark/spider_spikedflail
+	name = "Drow Spined-Greatflail"
+	group = "Cultural Stock"
+	cost = 190
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/flail/peasantwarflail/stalker)
+
+/datum/rogue_supply_pack/underdark/spider_greatflail
+	name = "Drow Hefty Greatflail"
+	group = "Cultural Stock"
+	cost = 190
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/flail/peasantwarflail/stalker/alt)
+
+/datum/rogue_supply_pack/underdark/spidershield
+	name = "Spider Tower Shield"
+	group = "Cultural Stock"
+	cost = 110
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/shield/tower/spidershield)
+
+/datum/rogue_supply_pack/underdark/scourge_breastplate
+	name = "Scourge Breastplate"
+	group = "Cultural Stock"
+	cost = 130
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/plate/fluted/shadowplate)
+
+/datum/rogue_supply_pack/underdark/darkplate_gauntlets
+	name = "Darkplate Gauntlets"
+	group = "Cultural Stock"
+	cost = 65
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/gloves/roguetown/plate/shadowgauntlets)
+
+/datum/rogue_supply_pack/underdark/scourge_helm
+	name = "Crocs Cavallier's Helm"
+	group = "Cultural Stock"
+	cost = 130
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/knight/shadowplate)
+
+/datum/rogue_supply_pack/underdark/smiling_helm
+	name = "Smiling Helm"
+	group = "Cultural Stock"
+	cost = 90
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/head/roguetown/helmet/bascinet/pigface/shadowplate)
+
+/datum/rogue_supply_pack/underdark/shadowvest
+	name = "Drowcraft Vest"
+	group = "Cultural Stock"
+	cost = 130
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/shadowvest)
+
+/datum/rogue_supply_pack/underdark/skirmisher_gloves
+	name = "Skirmisher's Gloves"
+	group = "Cultural Stock"
+	cost = 25
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/gloves/roguetown/fingerless/shadowgloves)
+
+/datum/rogue_supply_pack/underdark/war_mask
+	name = "Crocs de l'araignée War Mask"
+	group = "Cultural Stock"
+	cost = 60
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/mask/rogue/facemask/shadowfacemask)
+
+/datum/rogue_supply_pack/underdark/glossweave_shirt
+	name = "Glossweave Shirt"
+	group = "Cultural Stock"
+	cost = 35
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/shirt/shadowshirt)
+
+/datum/rogue_supply_pack/underdark/glossweave_pants
+	name = "Glossweave Pants"
+	group = "Cultural Stock"
+	cost = 75
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/under/roguetown/heavy_leather_pants/shadowpants)
+
+/datum/rogue_supply_pack/underdark/spidersilk_webbing
+	name = "Spidersilk Webbing (Pants)"
+	group = "Cultural Stock"
+	cost = 40
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/under/roguetown/webs)
+
+/datum/rogue_supply_pack/underdark/spidersilk_shirt
+	name = "Spidersilk Webbing (Shirt)"
+	group = "Cultural Stock"
+	cost = 40
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/shirt/undershirt/webs)
+
+/datum/rogue_supply_pack/underdark/crossbow
+	name = "Stalker Slurbow"
+	group = "Cultural Stock"
+	cost = 190
+	not_in_public = TRUE
+	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/slurbow/stalker)
+
+/datum/rogue_supply_pack/underdark/recurve_bow
+	name = "Recurve Bow"
+	group = "Cultural Stock"
+	cost = 50
+	not_in_public = TRUE
+	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve)
+
+/datum/rogue_supply_pack/underdark/arrows
+	name = "Quiver of Arrows"
+	group = "Cultural Stock"
+	cost = 35
+	not_in_public = TRUE
+	contains = list(/obj/item/quiver/arrows)
+
+/datum/rogue_supply_pack/underdark/bolts
+	name = "Quiver of Bolts"
+	group = "Cultural Stock"
+	cost = 40
+	not_in_public = TRUE
+	contains = list(/obj/item/quiver/bolts)
+
+/datum/rogue_supply_pack/underdark/chain
+	name = "Iron Chain"
+	group = "Cultural Stock"
+	cost = 30
+	not_in_public = TRUE
+	contains = list(/obj/item/rope/chain)
+
+/datum/rogue_supply_pack/underdark/shackles
+	name = "Iron Shackles"
+	group = "Cultural Stock"
+	cost = 40
+	not_in_public = TRUE
+	contains = list(/obj/item/restraints/legcuffs)
+
+/datum/rogue_supply_pack/underdark/spider_honey
+	name = "Spider Honey"
+	group = "Cultural Stock"
+	cost = 40
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/food/snacks/rogue/honey/spider, /obj/item/reagent_containers/food/snacks/rogue/honey/spider, /obj/item/reagent_containers/food/snacks/rogue/honey/spider)
+
+/datum/rogue_supply_pack/underdark/repossessed_moondust
+	name = "Repossessed Moondust"
+	group = "Cultural Stock"
+	cost = 100
+	not_in_public = TRUE
+	contains = list(/obj/item/reagent_containers/powder/moondust, /obj/item/reagent_containers/powder/moondust, /obj/item/reagent_containers/powder/moondust)
+
+/datum/rogue_supply_pack/vakra/vreccale
+	name = "Vakran Vreccale"
+	group = "Cultural Stock"
+	cost = 50
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/neck/roguetown/gorget/forlorncollar)
+
+/datum/rogue_supply_pack/vakra/helmet
+	name = "Vakran Volf Helm"
+	group = "Cultural Stock"
+	cost = 70
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/head/roguetown/helmet/heavy/volfplate)
+
+/datum/rogue_supply_pack/vakra/warhammer
+	name = "Silvered Warhammer"
+	group = "Cultural Stock"
+	cost = 220
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/mace/warhammer/steel/silver)
+
+/datum/rogue_supply_pack/vakra/shield
+	name = "Vakran Shield"
+	group = "Cultural Stock"
+	cost = 50
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/shield/heater)
+
+/datum/rogue_supply_pack/vakra/siegebow
+	name = "Vakra Siegebow"
+	group = "Cultural Stock"
+	cost = 220
+	not_in_public = TRUE
+	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/heavy)
+
+/datum/rogue_supply_pack/vakra/siegebolts
+	name = "Quiver of Heavy Bolts"
+	group = "Cultural Stock"
+	cost = 60
+	not_in_public = TRUE
+	contains = list(/obj/item/quiver/heavybolts)
+
+/datum/rogue_supply_pack/vakra/forlorn_hope_regalia
+	name = "Vakran Forlorn Hope Regalia"
+	group = "Cultural Stock"
+	cost = 200
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/neck/roguetown/gorget/forlorncollar, /obj/item/clothing/wrists/roguetown/splintarms, /obj/item/clothing/head/roguetown/helmet/heavy/volfplate, /obj/item/clothing/under/roguetown/splintlegs, /obj/item/clothing/suit/roguetown/armor/brigandine/light)
+
+/datum/rogue_supply_pack/zybantine/janissary_kit
+	name = "Zybantine Janissary Harness"
+	group = "Cultural Stock"
+	cost = 440
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/zyb, /obj/item/clothing/suit/roguetown/armor/chainmail/hauberk/janissary, /obj/item/clothing/head/roguetown/helmet/janissaryhelm, /obj/item/clothing/neck/roguetown/chaincoif/chainmantle, /obj/item/clothing/mask/rogue/facemask/steel, /obj/item/clothing/gloves/roguetown/chain, /obj/item/clothing/wrists/roguetown/bracers, /obj/item/clothing/under/roguetown/chainlegs/kilt, /obj/item/clothing/shoes/roguetown/shalal/reinforced, /obj/item/storage/belt/rogue/leather/shalal, /obj/item/clothing/cloak/citywatch/janissary)
+
+/datum/rogue_supply_pack/zybantine/desert_rider_kit
+	name = "Desert Rider's Garb"
+	group = "Cultural Stock"
+	cost = 300
+	not_in_public = TRUE
+	no_name_quantity = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/heavy, /obj/item/clothing/suit/roguetown/armor/leather/heavy/coat, /obj/item/clothing/head/roguetown/roguehood/shalal/hijab, /obj/item/clothing/neck/roguetown/gorget/copper, /obj/item/clothing/mask/rogue/facemask/copper, /obj/item/clothing/wrists/roguetown/bracers/copper, /obj/item/clothing/gloves/roguetown/angle, /obj/item/clothing/under/roguetown/trou/leather/pontifex, /obj/item/clothing/shoes/roguetown/shalal, /obj/item/storage/belt/rogue/leather/shalal)
+
+/datum/rogue_supply_pack/zybantine/megarmach_coat
+	name = "Megarmach Scale Coat"
+	group = "Cultural Stock"
+	cost = 140
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb)
+
+/datum/rogue_supply_pack/zybantine/paddedgambeson
+	name = "Padded Desert Gambeson"
+	group = "Cultural Stock"
+	cost = 80
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/leather/heavy/coat/zyb)
+
+/datum/rogue_supply_pack/zybantine/gambeson
+	name = "Desert Gambeson"
+	group = "Cultural Stock"
+	cost = 45
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/suit/roguetown/armor/gambeson/zyb)
+
+/datum/rogue_supply_pack/zybantine/zybtrou
+	name = "Baggy Hardened Leather Desert Pants"
+	group = "Cultural Stock"
+	cost = 60
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/under/roguetown/trou/leather/pontifex/zyb)
+
+/datum/rogue_supply_pack/zybantine/tower_shield
+	name = "Shalal Tower Shield"
+	group = "Cultural Stock"
+	cost = 80
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/shield/tower)
+
+/datum/rogue_supply_pack/zybantine/shamshir
+	name = "Shamshir"
+	group = "Cultural Stock"
+	cost = 95
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/sabre/shamshir)
+
+/datum/rogue_supply_pack/zybantine/shalal_saber
+	name = "Shalal Saber"
+	group = "Cultural Stock"
+	cost = 130
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/long/marlin)
+
+/datum/rogue_supply_pack/zybantine/navaja
+	name = "Navaja"
+	group = "Cultural Stock"
+	cost = 35
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/huntingknife/idagger/navaja)
+
+/datum/rogue_supply_pack/zybantine/grand_mace
+	name = "Steel Grand Mace"
+	group = "Cultural Stock"
+	cost = 110
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/mace/goden/steel)
+
+/datum/rogue_supply_pack/zybantine/spear
+	name = "Janissary Bardiche"
+	group = "Cultural Stock"
+	cost = 60
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/halberd/bardiche)
+
+/datum/rogue_supply_pack/zybantine/whip
+	name = "Zeybek Whip"
+	group = "Cultural Stock"
+	cost = 70
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/whip)
+
+/datum/rogue_supply_pack/zybantine/recurve_bow
+	name = "Recurve Bow"
+	group = "Cultural Stock"
+	cost = 40
+	not_in_public = TRUE
+	contains = list(/obj/item/gun/ballistic/revolver/grenadelauncher/bow/recurve)
+
+/datum/rogue_supply_pack/zybantine/javelins
+	name = "Quiver of Javelins"
+	group = "Cultural Stock"
+	cost = 50
+	not_in_public = TRUE
+	contains = list(/obj/item/quiver/javelin/iron)
+
+/datum/rogue_supply_pack/zybantine/headscarf
+	name = "Padded Headscarf"
+	group = "Cultural Stock"
+	cost = 30
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/head/roguetown/roguehood/shalal/hijab)
+
+/datum/rogue_supply_pack/zybantine/shalal_hood
+	name = "Shalal Hood"
+	group = "Cultural Stock"
+	cost = 25
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/head/roguetown/roguehood/shalal)
+
+/datum/rogue_supply_pack/zybantine/shalal_scarf
+	name = "Shalal Scarf"
+	group = "Cultural Stock"
+	cost = 20
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/neck/roguetown/shalal)
+
+/datum/rogue_supply_pack/zybantine/copper_gorget
+	name = "Copper Gorget"
+	group = "Cultural Stock"
+	cost = 55
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/neck/roguetown/gorget/copper)
+
+/datum/rogue_supply_pack/zybantine/copper_facemask
+	name = "Copper Facemask"
+	group = "Cultural Stock"
+	cost = 45
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/mask/rogue/facemask/copper)
+
+/datum/rogue_supply_pack/zybantine/copper_bracers
+	name = "Copper Bracers"
+	group = "Cultural Stock"
+	cost = 50
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/wrists/roguetown/bracers/copper)
+
+/datum/rogue_supply_pack/zybantine/shalal_slippers
+	name = "Shalal Slippers"
+	group = "Cultural Stock"
+	cost = 25
+	not_in_public = TRUE
+	contains = list(/obj/item/clothing/shoes/roguetown/shalal)
+
+/datum/rogue_supply_pack/zybantine/shalal_belt
+	name = "Shalal Belt"
+	group = "Cultural Stock"
+	cost = 30
+	not_in_public = TRUE
+	contains = list(/obj/item/storage/belt/rogue/leather/shalal)
+
+/datum/rogue_supply_pack/zybantine/gladius
+	name = "Gladius"
+	group = "Cultural Stock"
+	cost = 70
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/short/gladius)
+
+/datum/rogue_supply_pack/zybantine/makhaira
+	name = "Makhaira"
+	group = "Cultural Stock"
+	cost = 75
+	not_in_public = TRUE
+	contains = list(/obj/item/rogueweapon/sword/short/messer/bronze)
+
 /datum/rogue_supply_pack/bronze_weapons/sword
 	name = "Bronze Arming Sword"
 	group = "Weapons (Bronze)"
@@ -3456,6 +5584,12 @@
 	cost = 35
 	contains = list(/obj/item/quiver/heavybluntbolts)
 
+/datum/rogue_supply_pack/ranged_weapons/quivers/pyrobolts
+	name = "Quiver of Pyroclastic Bolts"
+	group = "Weapons (Ranged)"
+	cost = 100
+	contains = list(/obj/item/quiver/pyrobolts)
+
 /datum/rogue_supply_pack/ranged_weapons/bottlebombs
 	name = "Bottle Bomb"
 	group = "Weapons (Ranged)"
@@ -3492,6 +5626,12 @@
 	group = "Wardrobe"
 	cost = 10
 	contains = list(/obj/item/legwears/thigh_high/white)
+
+/datum/rogue_supply_pack/wardrobe/suits/stockings_knee_white
+	name = "White Knee-High Stockings"
+	group = "Wardrobe"
+	cost = 10
+	contains = list(/obj/item/legwears/knee_high/white)
 
 /datum/rogue_supply_pack/wardrobe/suits/stockings_white_silk
 	name = "White Silk Stockings"

@@ -43,6 +43,11 @@ NPC_ROOT = '/mob/living/carbon/human'
 NPC_PROCS = ('Initialize', 'after_creation')
 NPC_OUTFIT_ROOT = '/datum/outfit/job/roguetown'
 NPC_SLOTS = {'id': 'ring'}
+# Ratwood NPC var -> the module's var (ai/human_npc_tactics.dm), and how it is read.
+NPC_TACTICS = (('rude', 'rogue_npc_rude', 'flag'), ('npc_jump_chance', 'rogue_npc_jump_chance', 'number'), ('npc_jump_distance', 'rogue_npc_jump_distance', 'number'))
+# The NPC lines a kind below a ported NPC sets back to the module's default when it has none of its own (ai/human_npc.dm,
+# combat/intents.dm).
+NPC_RESETS = {'rogue_npc': 'FALSE', 'rogue_aggressive': 'FALSE', 'rogue_flee_in_pain': 'FALSE', 'rogue_def_intent': 'ROGUE_INTENT_PARRY', 'rogue_npc_look': 'null', 'rogue_npc_outfits': 'null', 'rogue_npc_traits': 'null'}
 NPC_STATS = {'STR': 'strength', 'PER': 'perception', 'INT': 'intelligence', 'CON': 'constitution', 'WIL': 'willpower', 'END': 'endurance', 'SPD': 'speed', 'LUC': 'fortune'}
 STAT_ASSIGN = re.compile(r'\b(?:H|human|user)\.STA([A-Z]{3})\s*(=|\+=|-=)\s*(-?\d+)\b')
 ITEM_PATH = re.compile(r'/obj/item/[A-Za-z0-9_/]*[A-Za-z0-9_]')
@@ -1081,12 +1086,14 @@ def main():
         if (replacement_for(path, rules) or {}).get('port', {}).get('fill'):
             contents, loot, _ = closet_fill(rw, path)
             fill_items |= set(contents) | {item for item, _ in loot}
-    npcs = npc_candidates(rw, rules, usage)
+    # The NPC people of the map, and those the module's code makes (extra_types: the skeleton of an old grave).
+    npcs = npc_candidates(rw, rules, set(usage) | set(cfg['port'].get('extra_types', [])))
     npc_items = npc_outfit_items(rw, rules, npcs)
     fill_items |= anvil_recipe_items(cfg, rw, rules)
     fill_items |= craft_recipe_items(cfg, rw, rules)
     fill_items |= artificer_recipe_items(cfg, rw, rules)
     fill_items |= pottery_recipe_items(cfg, rw, rules)
+    fill_items |= trade_pack_items(cfg, rw)
     fill_items |= food_chain_items(cfg, rw, set(usage) | outfit_items | mapgen_types | fill_items | npc_items)
     fill_items |= class_mounts
     fill_items |= husbandry_types(cfg, rw, set(usage) | fill_items)
@@ -1960,6 +1967,15 @@ def generate(cfg, port, rules, rw, declared, tg_declared, tg_names, usage, extra
                     continue
                 source_name = cat.get('rename', {}).get(name, name)
                 value = rw.resolve(path, source_name)
+                if name in cat.get('list_items', {}):
+                    # One entry of a Ratwood list as a var of its own: a window's repair_costs are the material that mends it
+                    # and the one that finishes a broken one (repair_cost_first, repair_cost_second).
+                    rule = cat['list_items'][name]
+                    entries = [runtime_path(p.rstrip('/'), rules) for p, _ in list_paths(rw.resolve(path, rule['from']))]
+                    target = entries[rule['index']] if len(entries) > rule['index'] else None
+                    if target in valid:
+                        block.append(f'\t{name} = {target}')
+                    continue
                 if name in cat.get('skip_default', []) and (value or 'null').strip() in ('null', '0', 'FALSE', '""'):
                     continue
                 if name in cat.get('mapped_vars', {}):
@@ -2276,6 +2292,11 @@ def generate(cfg, port, rules, rw, declared, tg_declared, tg_names, usage, extra
             if name == 'layer' and spec.get('placement'):
                 continue
             value = rw.resolve(path, name)
+            # A var Ratwood leaves unset and fills in at runtime from another (a crate's base_icon_state is its initial
+            # icon_state): the other's value, so the port does not inherit the module base's (a coffin drawn as a chest).
+            fallback = spec.get('fallbacks', {}).get(name)
+            if fallback and (value or 'null').strip() == 'null' and any(boundary_match(path, prefix) for prefix in fallback.get('prefixes', [path])):
+                value = rw.resolve(path, fallback['from'])
             if name in spec.get('path_strings', []):
                 entries = [p for p, _ in list_paths(value)]
                 value = ('list(' + ', '.join(f'"{p}"' for p in entries) + ')') if entries else None
@@ -2294,6 +2315,9 @@ def generate(cfg, port, rules, rw, declared, tg_declared, tg_names, usage, extra
                 value = ('list(' + ', '.join(f'"{entry}"' for entry in entries) + ')') if entries else None
             elif name in spec.get('sounds', []) and value and ICON_LITERAL.match(value.strip()):
                 value = sound_ref(value)
+            elif name in spec.get('skill_vars', []):
+                # A Ratwood skill (a door's repair_skill) as the module's.
+                value = skill_target(cfg, value)
             elif value and ICON_LITERAL.match(value.strip()):
                 value = icon_ref(value)
             else:
@@ -3193,6 +3217,10 @@ def advclass_data_lines(cfg, rw, advclass, valid, known_traits):
     income = define_value_number(rw.resolve(advclass, 'noble_income'))
     if income:
         lines.append(f'\trogue_estate_income = {income}')
+    # Ratwood examine_name: what examine calls the holder in place of the subclass's name (a busker is a beggar to the eye).
+    examine_name = string_value(rw.resolve(advclass, 'examine_name'))
+    if examine_name and examine_name != string_value(rw.resolve(advclass, 'name')):
+        lines.append(f'\trogue_examine_name = {examine_name}')
 
     def stat_entries(raw):
         entries = []
@@ -3395,6 +3423,10 @@ def generate_jobs(cfg, rw, usage, role_outfits, valid, station_usage, role_attrs
         rank = define_value_number(rw.resolve(p, 'social_rank'))
         if rank is not None and rank != SOCIAL_RANK_DEFAULT:
             data.append(f'\trogue_social_rank = {rank}')
+        # Ratwood f_title, the title a woman holding the role goes by (jobs/examine.dm). The job's own, as the port keeps the
+        # job's title and not the map's display title (title_adjust of Rockhill pairs "Duke" with "Duchess").
+        if f_title and f_title != titles[p]:
+            data.append(f'\trogue_f_title = {f_title}')
         for var in ('wanderer_examine', 'advjob_examine', 'lowlife_examine'):
             if (rw.resolve(p, var) or 'FALSE').strip() in ('TRUE', '1'):
                 data.append(f'\trogue_{var} = TRUE')
@@ -4506,8 +4538,31 @@ def generate_npcs(cfg, rw, rules, npcs, valid, known_traits, taken_outfits, hair
     mobs = []
     worn_by = collections.defaultdict(list)
     rows = []
+
+    def tactic(path, source, kind):
+        raw = (rw.resolve(path, source) or '').strip()
+        if kind == 'flag':
+            return 'TRUE' if raw in ('1', 'TRUE') else 'FALSE'
+        return define_value_number(raw)
+
+    # Ratwood's taunts and leaps (rude, npc_jump_chance, npc_jump_distance of _npc.dm) for ai/human_npc_tactics.dm, written where
+    # the kind's value differs from what it inherits in the port: the nearest ported NPC above it, else Ratwood's own default
+    # of /mob/living/carbon/human (pve.txt holds the same).
+    tactics_default = {target: tactic(NPC_ROOT, source, kind) for source, target, kind in NPC_TACTICS}
+    tactics_of = {}
+    npc_lines_of = {}
     for path in npcs:
         block = [path]
+        parent = next((path.rsplit('/', k)[0] for k in range(1, path.count('/')) if path.rsplit('/', k)[0] in tactics_of), None)
+        inherited = tactics_of.get(parent, tactics_default)
+        tactics_of[path] = {}
+        for source, target, kind in NPC_TACTICS:
+            value = tactic(path, source, kind)
+            if value is None:
+                value = inherited[target]
+            tactics_of[path][target] = value
+            if value != inherited[target]:
+                block.append(f'\t{target} = {value}')
         mind = (rw.resolve(path, 'mode') or 'NPC_AI_OFF').strip() != 'NPC_AI_OFF'
         if mind:
             block.append('\trogue_npc = TRUE')
@@ -4538,6 +4593,15 @@ def generate_npcs(cfg, rw, rules, npcs, valid, known_traits, taken_outfits, hair
         traits = [t for t in dict.fromkeys(npc_traits(rw, path)) if t in known_traits]
         if traits:
             block.append(f"\trogue_npc_traits = list({', '.join(traits)})")
+        # A kind below a ported NPC inherits its lines in DM: what it lacks of them (the outfit of the skeleton without
+        # equipment) is set back to the module's default.
+        own = {line.split(' = ', 1)[0].strip(): line.split(' = ', 1)[1] for line in block[1:]}
+        above = npc_lines_of.get(parent, {})
+        for name, default in NPC_RESETS.items():
+            if name not in own and above.get(name, default) != default:
+                block.append(f'\t{name} = {default}')
+                own[name] = default
+        npc_lines_of[path] = dict(above, **own)
         if len(block) > 1:
             mobs.append(block)
         rows.append((path, 'hunts' if mind and aggressive else 'fights back' if mind else 'none', ', '.join(f.strip('"') for f in faction), ', '.join(f'`{o}`' for o in dict.fromkeys(worn))))
@@ -5080,6 +5144,29 @@ def generate_craft_recipes(cfg, rw, rules, valid):
           f"dropped for unported items: {', '.join(f'{n} {s}' for s, n in dropped.items()) or 'none'}")
 
 
+def pack_skipped(packs, rw, path):
+    """A Ratwood pack the port never takes: one listed in skip_packs, or one that hands out a thing of skip_items (the adult
+    wares of the bathhouse's Toys)."""
+    if any(boundary_match(path, prefix) for prefix in packs.get('skip_packs', [])):
+        return True
+    return any(boundary_match(item.rstrip('/'), prefix) for item, _ in list_paths(rw.resolve(path, 'contains')) for prefix in packs.get('skip_items', []))
+
+
+def trade_pack_items(cfg, rw):
+    """What the packs of the groups that come along whole (supply_packs.pull_groups: the Cultural Stock of the ships and the
+    merchant's catalogs, the bathhouse's wares) hand out, so that the port brings it and generate_trade() keeps the packs."""
+    packs = cfg['port'].get('trade', {}).get('supply_packs')
+    if not packs:
+        return set()
+    pull = set(packs.get('pull_groups', []))
+    items = set()
+    for path in [p for p in rw.types if p.startswith(packs['root'] + '/')]:
+        group = (string_value(rw.resolve(path, 'group')) or '').strip('"')
+        if group in pull and not pack_skipped(packs, rw, path):
+            items |= {item.rstrip('/') for item, _ in list_paths(rw.resolve(path, 'contains'))}
+    return items
+
+
 def generate_trade(cfg, rw, rules, valid):
     # Ratwood's trade data for the economy module (modular_redtard/economy): the merchant's import packs
     # (/datum/supply_pack/rogue, sold by the GOLDFACE) and the Crown's stockpile (/datum/roguestock/stockpile, priced from
@@ -5094,7 +5181,7 @@ def generate_trade(cfg, rw, rules, valid):
     for path in [p for p in rw.types if p.startswith(packs['root'] + '/')]:
         contains = [runtime_path(p.rstrip('/'), rules) for p, _ in list_paths(rw.resolve(path, 'contains'))]
         group = string_value(rw.resolve(path, 'group'))
-        if not contains or not group or group.strip('"') not in groups:
+        if not contains or not group or group.strip('"') not in groups or pack_skipped(packs, rw, path):
             continue
         if not all(p in valid for p in contains):
             dropped += 1

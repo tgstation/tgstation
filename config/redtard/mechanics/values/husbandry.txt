@@ -102,3 +102,252 @@ manure_time = 200
 
 # Droppings that may lie on one tile before beasts drop no more there (not in Ratwood; 0 - no limit).
 manure_tile_cap = 1
+
+# Saddlebags, cow tipping (husbandry/mounts.dm, husbandry/beasts.dm; block 4).
+
+# Deciseconds it takes a rider to look through the saddlebags of the mount under them (Ratwood MiddleClick(): 10).
+mount_saddlebag_rider_time = 10
+
+# Deciseconds it takes to look through a mount's saddlebags from the ground (Ratwood MiddleClick(): 30).
+mount_saddlebag_time = 30
+
+# Deciseconds a cow tipped over by a shove lies on its side (Ratwood cow attack_hand(): Paralyze 60).
+cow_tip_time = 60
+
+# Butchering and the meathook (husbandry/butchering.dm; block 4).
+
+# Deciseconds an unskilled butcher works a carcass open before the first cut (Ratwood MiddleClick(): 3 SECONDS).
+butcher_start_time = 30
+
+# Deciseconds each rank of Butchering takes off that (Ratwood: skill * 30).
+butcher_start_time_per_rank = 30
+
+# Deciseconds one cut takes an unskilled butcher (Ratwood butcher(): 30 - skill * 5).
+butcher_cut_time = 30
+
+# Deciseconds each rank of Butchering takes off a cut (Ratwood: skill * 5).
+butcher_cut_time_per_rank = 5
+
+# The shortest cut in deciseconds (Ratwood max(5, ...)).
+butcher_cut_time_min = 5
+
+# Share of the time a cut takes on a meathook or with shears, which also need no working open (Ratwood on_meathook: 0.75).
+butcher_meathook_factor = 0.75
+
+# Chance in percent an unskilled butcher botches a cut of a beast that has a botched yield (Ratwood: 70 - 20 * skill).
+butcher_botch_chance = 70
+
+# What each rank of Butchering takes off that chance (Ratwood: 20).
+butcher_botch_per_rank = 20
+
+# Butchering rank from which no cut is botched (Ratwood SKILL_LEVEL_JOURNEYMAN).
+butcher_botch_rank = 3
+
+# Chance in percent a Journeyman's cut of a beast that has a perfect yield is perfect (Ratwood: 10).
+butcher_perfect_journeyman = 10
+
+# Chance in percent an Expert's cut is perfect (Ratwood: 50).
+butcher_perfect_expert = 50
+
+# Chance in percent a Master's or a Legendary butcher's cut is perfect (Ratwood: 100).
+butcher_perfect_master = 100
+
+# Deciseconds a beast lies dead before its meat comes off rotten (Ratwood: rot amount over 10 MINUTES).
+butcher_rot_time = 6000
+
+# Butchering experience a cut gives per point of the butcher's intelligence (Ratwood add_sleep_experience(): STAINT * 0.5).
+butcher_xp_per_intelligence = 0.5
+
+# Deciseconds it takes to hang a beast on a meathook (Ratwood do_mob(): 60).
+meathook_hang_time = 60
+
+# Deciseconds it takes to pull a beast down from a meathook (Ratwood do_after(): 300).
+meathook_unhook_time = 300
+
+# Deciseconds a beast hung on a meathook struggles before it breaks free (Ratwood do_after(): 1200).
+meathook_struggle_time = 1200
+
+# Brute damage a living beast takes when hung on a meathook, when it struggles, and when it falls off (Ratwood adjustBruteLoss(30)).
+meathook_damage = 30
+
+# Deciseconds a beast that falls off a meathook lies stunned (Ratwood AdjustParalyzed(20)).
+meathook_fall_time = 20
+
+# Pieces more of every food a beast on a meathook yields to a usual cut (Ratwood butcher_results += 1).
+meathook_meat_bonus = 1
+
+# Beekeeping (husbandry/apiary.dm; block 4). The hive, its bees, swarms and queens tick every 2 seconds, as Ratwood's.
+
+# Bees a hive holds at most without a queen (Ratwood max_bees).
+apiary_max_bees = 30
+
+# Bees more a hive holds per point of its queen's efficiency (Ratwood insert_queen(): 30 + efficiency * 10).
+apiary_max_bees_per_efficiency = 10
+
+# Bees a stocked hive starts with, and a hive that takes in a queen has at least (Ratwood apiary/starter bee_count).
+apiary_starter_bees = 5
+
+# Honeycombs a hive stores at most (Ratwood stored_combs: 5).
+apiary_max_combs = 5
+
+# Pollen worked into comb for one honeycomb (Ratwood comb_progress over 100).
+apiary_comb_work = 100
+
+# Pollen each bee at home works into comb every 2 seconds, rounded up for the colony (Ratwood CEILING(bee_count * 0.5, 1)).
+apiary_work_per_bee = 0.5
+
+# Comb work a new bee costs (Ratwood try_create_bees(): comb_progress - 10).
+apiary_bee_cost = 10
+
+# Chance in percent every 2 seconds that a queen raises one more bee (Ratwood process(): prob(30)).
+apiary_queen_brood_chance = 30
+
+# Chance in percent every 2 seconds that a hive without a queen loses a bee (Ratwood process(): prob(5)).
+apiary_queenless_loss = 5
+
+# Deciseconds it takes to take the honeycombs out of a hive (Ratwood attack_hand(): 2.5 SECONDS).
+apiary_honey_time = 25
+
+# Deciseconds it takes a protected beekeeper to take the queen out (Ratwood attack_hand(): 5 SECONDS).
+apiary_queen_time = 50
+
+# Chance in percent bees swarm out angrily at whoever takes the queen, or the honey of an aggressive queen unprotected (Ratwood agitate_bees(80)).
+apiary_agitate_chance = 80
+
+# Most bees that swarm out angrily at once (Ratwood rand(1, min(5, bee_count))).
+apiary_agitate_max = 5
+
+# Two-second ticks bees that swarmed out stay angry (Ratwood agitate(user, 100)).
+apiary_agitate_ticks = 100
+
+# Aggression in percent of the angry bees of a hive without a queen (Ratwood: 50).
+apiary_queenless_aggression = 50
+
+# Chance in percent every 2 seconds that a healthy hive may fall sick at all (Ratwood check_for_disease(): 100 - 97).
+apiary_disease_roll = 3
+
+# Chance in percent it then does (Ratwood: 2).
+apiary_disease_chance = 2
+
+# The same chance with a sick hive in sight (Ratwood: 10).
+apiary_disease_nearby_chance = 10
+
+# Tiles within which a sick hive makes another likelier to fall sick (Ratwood view(5)).
+apiary_disease_range = 5
+
+# Percent a queen's disease resistance takes off that chance per point (Ratwood: resistance * 3).
+apiary_disease_resistance = 3
+
+# Severity out of 100 of a new disease (Ratwood: 10); at 100 the colony dies.
+apiary_disease_start = 10
+
+# Severity a disease gains every hundred two-second ticks (Ratwood process_disease(): 10).
+apiary_disease_step = 10
+
+# Share of the severity of varroa mites that is the chance in percent every 2 seconds to kill a bee (Ratwood: severity / 10).
+apiary_mite_share = 0.1
+
+# Share of the severity of foulbrood that is the chance in percent every 2 seconds to spoil a point of comb work (Ratwood: severity).
+apiary_foulbrood_share = 1
+
+# Share of the severity of wax moths that is the chance in percent every 2 seconds to eat a honeycomb (Ratwood: severity / 5).
+apiary_moth_share = 0.2
+
+# Share of its size a hive must hold at home to grow ready to swarm (Ratwood: max_bees * 0.8).
+apiary_swarm_share = 0.8
+
+# Deciseconds after the last swarm, or the round start, before a hive grows ready to swarm again (Ratwood: 5 MINUTES).
+apiary_swarm_cooldown = 3000
+
+# Readiness out of 100 a crowded hive gains every 2 seconds; at 100 a swarm leaves (Ratwood swarm_progress += 0.1).
+apiary_swarm_rate = 0.1
+
+# A bee going out joins a group on the wing of at most this many (Ratwood try_send_bees_out(): bee_count > 5).
+bee_group_join_max = 5
+
+# Tiles around its hive the bees look for crops and herbs to pollinate (Ratwood give_bee_target(): view(7)).
+bee_target_range = 7
+
+# Deciseconds bees take to pollinate a crop or a herb, divided by their efficiency (Ratwood: 30 SECONDS).
+bee_pollinate_time = 300
+
+# Least pollen a bee gathers from a flower, times its efficiency (Ratwood rand(1, 2)).
+bee_pollen_min = 1
+
+# Most pollen a bee gathers from a flower, times its efficiency (Ratwood rand(1, 2)).
+bee_pollen_max = 2
+
+# Pollen per bee a group carries before it flies home (Ratwood: stored_pollen > 5 * bee_count).
+bee_pollen_load = 5
+
+# Deciseconds bees back home rest before they count among the bees at home again (Ratwood on_bee_enter(): 30 SECONDS).
+bee_rest_time = 300
+
+# Blocked moves after which bees give up on a flower, or slip into their hive anyway (Azure Peak max_target_move_failures).
+bee_blocked_moves = 3
+
+# Deciseconds bees leave a flower they gave up on alone (Azure Peak: 1 MINUTES).
+bee_give_up_time = 600
+
+# Share of angry bees' aggression that is their chance in percent every 2 seconds to sting someone next to them (Ratwood attack_nearby_targets(): aggression / 100).
+bee_sting_share = 0.01
+
+# Toxin damage a sting does (Ratwood attack_mob(): adjustToxLoss(1)).
+bee_sting_toxin = 1
+
+# Units of venom a sting leaves (Ratwood attack_mob(): 2).
+bee_sting_venom = 2
+
+# Tiles around a sting within which other bees may grow angry too (Ratwood view(3)).
+bee_sting_spread_range = 3
+
+# Chance in percent each of those grows angry (Ratwood prob(50)).
+bee_sting_spread_chance = 50
+
+# Two-second ticks those bees stay angry (Ratwood agitate(H, 30)).
+bee_sting_spread_ticks = 30
+
+# Most a bee's efficiency strays from its queen's (Ratwood transfer_genetics(): rand(-10, 10) / 100).
+bee_trait_drift = 0.1
+
+# Most a bee's aggression strays from its queen's, in percent (Ratwood transfer_genetics(): rand(-5, 5)).
+bee_aggression_drift = 5
+
+# Fewest bees that leave a hive with a swarm (Ratwood create_swarm(): rand(5, 10)).
+swarm_size_min = 5
+
+# Most bees that leave a hive with a swarm (Ratwood create_swarm(): rand(5, 10)).
+swarm_size_max = 10
+
+# Deciseconds a swarm looks for a home before it disperses and its queen dies (Ratwood swarm_timeout(): 5 MINUTES).
+swarm_lifetime = 3000
+
+# Two-second ticks between a swarm's looks for a place to settle (Ratwood search_time 20).
+swarm_search_ticks = 20
+
+# Chance in percent a swarm settles on a free tile it looks at (Ratwood find_new_home(): prob(20)).
+swarm_settle_chance = 20
+
+# Chance in percent every 2 seconds that a swarm drifts a tile (Ratwood process(): prob(50)).
+swarm_wander_chance = 50
+
+# Most a swarm queen's efficiency and disease resistance stray from the old queen's (Ratwood create_swarm(): rand(-20, 20) / 100).
+swarm_trait_drift = 0.2
+
+# Most a swarm queen's aggression strays from the old queen's, in percent (Ratwood create_swarm(): rand(-10, 10)).
+swarm_aggression_drift = 10
+
+# Most a queen raised in a hive strays from an efficiency and a disease resistance of 1 (Ratwood create_new_queen(): rand(80, 120) / 100).
+queen_trait_spread = 0.2
+
+# Most aggression in percent of a queen raised in a hive (Ratwood create_new_queen(): rand(0, 30)).
+queen_aggression_max = 30
+
+# Days a queen ages every 2 seconds (Ratwood queen_bee process(): 0.01).
+queen_age_rate = 0.01
+
+# Days after which a queen weakens (Ratwood: max_queen_age 30 * 0.7).
+queen_old_age = 21
+
+# Health out of 100 an old queen loses every 2 seconds; at none she dies (Ratwood: 0.05).
+queen_decline = 0.05

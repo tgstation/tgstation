@@ -21,12 +21,19 @@
 		beast.rogue_calm_down()
 	return ..()
 
-/// Ratwood tamed(): the beast stops hunting, lets itself be led on a rope, and from now on minds the commands of its friends.
+/mob/living/basic/rockhill
+	/// Ratwood faction of the kind ("cows", "goats", "saiga", "pigs", "chickens", "beetles"): a shooed tamed beast calls its own kind
+	/// along. The beasts' TG faction stays the one they share, so that hunters do not start on the herds.
+	var/rogue_kin
+
+/// Ratwood tamed(): the beast stops hunting, lets itself be led on a rope, and from now on minds the commands of its friends; the
+/// tamer hears of it (Ratwood COMSIG_ANIMAL_TAMED, for the personal goal "Tame an Animal").
 /mob/living/basic/rockhill/tamed(mob/living/tamer, obj/item/food)
 	. = ..()
 	if(tamer)
 		rogue_owner = WEAKREF(tamer)
 		visible_message(span_notice("[src] lowers [p_their()] head to [tamer]."))
+		SEND_SIGNAL(tamer, COMSIG_ROGUE_ANIMAL_TAMED, src)
 	if(!ai_controller || GetComponent(/datum/component/obeys_commands))
 		return
 	rogue_aggressive = FALSE
@@ -75,12 +82,23 @@
 			if(rogue_taunt_angers && !has_ally(gesturer))
 				rogue_set_upon(gesturer)
 
-/// Ratwood Retaliate() of a shooed tamed beast: everyone in sight not of its kind and not its friend becomes its enemy.
+/// Ratwood Retaliate() of a shooed tamed beast: everyone in sight not of its kind and not its friend becomes its enemy, and the beasts
+/// of its own kind around take them on too, each sparing its own friends.
 /mob/living/basic/rockhill/proc/rogue_set_upon_everyone()
+	var/list/enemies = list()
 	for(var/mob/living/bystander in hearers(ROGUE_SHOO_RANGE, src))
 		if(bystander == src || bystander.stat == DEAD || faction_check_atom(bystander))
 			continue
+		enemies += bystander
 		rogue_set_upon(bystander)
+	if(!rogue_kin || !length(enemies))
+		return
+	for(var/mob/living/basic/rockhill/kin in hearers(ROGUE_SHOO_RANGE, src))
+		if(kin == src || kin.stat != STABLE || kin.rogue_kin != rogue_kin)
+			continue
+		for(var/mob/living/enemy as anything in enemies)
+			if(!kin.faction_check_atom(enemy))
+				kin.rogue_set_upon(enemy)
 
 /// A young beast grows up only on the ground and not in the middle of a fight (Ratwood rogue Life(): adult_growth, no enemies).
 /mob/living/basic/rockhill/proc/rogue_can_grow()

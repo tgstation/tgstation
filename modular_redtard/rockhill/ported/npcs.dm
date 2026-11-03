@@ -17,6 +17,7 @@
 	rogue_npc_traits = list(TRAIT_NOMOOD, TRAIT_NOHUNGER, TRAIT_EASYDISMEMBER, TRAIT_NOBREATH, TRAIT_BREADY, TRAIT_NOPAIN, TRAIT_TOXIMMUNE, TRAIT_LEECHIMMUNE, TRAIT_LIMBATTACHMENT, TRAIT_MEDIUMARMOR, TRAIT_HEAVYARMOR, TRAIT_CRITICAL_WEAKNESS, TRAIT_EXTREME_TEMPERATURE_IMMUNE)
 
 /mob/living/carbon/human/species/elf/dark/drowraider
+	rogue_npc_rude = TRUE
 	rogue_npc = TRUE
 	rogue_aggressive = TRUE
 	rogue_flee_in_pain = TRUE
@@ -48,6 +49,9 @@
 	rogue_npc_traits = list(TRAIT_NOMOOD, TRAIT_NOHUNGER, TRAIT_CRITICAL_WEAKNESS, TRAIT_BREADY, TRAIT_LEECHIMMUNE, TRAIT_TOXIMMUNE)
 
 /mob/living/carbon/human/species/goblin/npc
+	rogue_npc_rude = TRUE
+	rogue_npc_jump_chance = 60
+	rogue_npc_jump_distance = 3
 	rogue_npc = TRUE
 	rogue_aggressive = TRUE
 	rogue_flee_in_pain = TRUE
@@ -156,6 +160,7 @@
 	rogue_npc_traits = list(TRAIT_NOMOOD, TRAIT_NOHUNGER, TRAIT_CRITICAL_WEAKNESS, TRAIT_BREADY, TRAIT_LEECHIMMUNE, TRAIT_TOXIMMUNE)
 
 /mob/living/carbon/human/species/human/northern/bog_deserters
+	rogue_npc_rude = TRUE
 	rogue_npc = TRUE
 	rogue_aggressive = TRUE
 	rogue_flee_in_pain = TRUE
@@ -164,6 +169,7 @@
 	rogue_npc_traits = list(TRAIT_NOMOOD, TRAIT_NOHUNGER, TRAIT_LEECHIMMUNE, TRAIT_BREADY, TRAIT_MEDIUMARMOR, TRAIT_KNEESTINGER_IMMUNITY)
 
 /mob/living/carbon/human/species/human/northern/bum
+	rogue_npc_rude = TRUE
 	rogue_npc = TRUE
 	rogue_flee_in_pain = TRUE
 	rogue_def_intent = ROGUE_INTENT_DODGE
@@ -181,6 +187,7 @@
 	rogue_npc_traits = list(TRAIT_NOMOOD, TRAIT_NOHUNGER, TRAIT_LEECHIMMUNE, TRAIT_BREADY)
 
 /mob/living/carbon/human/species/human/northern/highwayman
+	rogue_npc_rude = TRUE
 	rogue_npc = TRUE
 	rogue_aggressive = TRUE
 	rogue_flee_in_pain = TRUE
@@ -189,6 +196,7 @@
 	rogue_npc_traits = list(TRAIT_NOMOOD, TRAIT_NOHUNGER, TRAIT_LEECHIMMUNE, TRAIT_BREADY, TRAIT_MEDIUMARMOR)
 
 /mob/living/carbon/human/species/npc/deadite
+	rogue_npc_jump_chance = 0
 	rogue_npc = TRUE
 	rogue_aggressive = TRUE
 	rogue_def_intent = ROGUE_INTENT_DODGE
@@ -197,6 +205,8 @@
 	rogue_npc_outfits = list(/datum/outfit/job/roguetown/deadite)
 
 /mob/living/carbon/human/species/orc/npc/berserker
+	rogue_npc_rude = TRUE
+	rogue_npc_jump_chance = 25
 	rogue_npc = TRUE
 	rogue_aggressive = TRUE
 	faction = list("orcs", "station")
@@ -207,6 +217,7 @@
 	rogue_npc_traits = list(TRAIT_LEECHIMMUNE, TRAIT_NOMOOD, TRAIT_NOHUNGER, TRAIT_BREADY)
 
 /mob/living/carbon/human/species/orc/npc/footsoldier
+	rogue_npc_rude = TRUE
 	rogue_npc = TRUE
 	rogue_aggressive = TRUE
 	faction = list("orcs", "station")
@@ -217,6 +228,7 @@
 	rogue_npc_traits = list(TRAIT_LEECHIMMUNE, TRAIT_NOMOOD, TRAIT_NOHUNGER, TRAIT_BREADY)
 
 /mob/living/carbon/human/species/orc/npc/marauder
+	rogue_npc_rude = TRUE
 	rogue_npc = TRUE
 	rogue_aggressive = TRUE
 	faction = list("orcs", "station")
@@ -227,6 +239,7 @@
 	rogue_npc_traits = list(TRAIT_LEECHIMMUNE, TRAIT_NOMOOD, TRAIT_NOHUNGER, TRAIT_BREADY)
 
 /mob/living/carbon/human/species/orc/npc/warlord
+	rogue_npc_rude = TRUE
 	rogue_npc = TRUE
 	rogue_aggressive = TRUE
 	faction = list("orcs", "station")
@@ -235,6 +248,17 @@
 	rogue_npc_look = list("random_sex" = TRUE, "skin" = "#50715C", "eyes" = "#FF0000", "hair_color" = "#31302E", "hair_m" = list("Ponytail (Witcher)", "Braid (Low) (Ratwood)"), "hair_f" = list("Braid (Low) (Ratwood)", "Ponytail (Country Alt)"), "beards" = list("Beard (Viking)", "Beard (Manly)", "Beard (Long) (Ratwood)"), "names_f" = "modular_redtard/rockhill/strings/names/halforcf.txt", "names_m" = "modular_redtard/rockhill/strings/names/halforcm.txt")
 	rogue_npc_outfits = list(/datum/outfit/job/roguetown/orc/npc/warlord)
 	rogue_npc_traits = list(TRAIT_LEECHIMMUNE, TRAIT_NOMOOD, TRAIT_NOHUNGER, TRAIT_BREADY)
+
+/mob/living/carbon/human/species/skeleton/npc
+	rogue_npc_rude = TRUE
+	rogue_npc_jump_chance = 0
+	rogue_npc = TRUE
+	rogue_aggressive = TRUE
+	faction = list("undead")
+	use_random_name = FALSE
+	rogue_npc_look = list("name" = "Skeleton")
+	rogue_npc_outfits = list(/datum/outfit/job/roguetown/npc/skeleton)
+	rogue_npc_traits = list(TRAIT_NOMOOD, TRAIT_BREADY, TRAIT_NO_VOICEPACK_OVERRIDE, TRAIT_NOHUNGER, TRAIT_EASYDISMEMBER, TRAIT_NOBREATH, TRAIT_NOPAIN, TRAIT_TOXIMMUNE, TRAIT_LEECHIMMUNE, TRAIT_LIMBATTACHMENT, TRAIT_HEAVYARMOR, TRAIT_SILVER_WEAK, TRAIT_EXTREME_TEMPERATURE_IMMUNE)
 
 /mob/living/carbon/human/species/skeleton/npc/bogguard
 	rogue_npc = TRUE
@@ -360,6 +384,7 @@
 	use_random_name = FALSE
 	rogue_npc_look = list("name" = "Skeleton")
 	rogue_npc_traits = list(TRAIT_NOMOOD, TRAIT_BREADY, TRAIT_NO_VOICEPACK_OVERRIDE, TRAIT_NOHUNGER, TRAIT_EASYDISMEMBER, TRAIT_NOBREATH, TRAIT_NOPAIN, TRAIT_TOXIMMUNE, TRAIT_LEECHIMMUNE, TRAIT_LIMBATTACHMENT, TRAIT_HEAVYARMOR, TRAIT_SILVER_WEAK, TRAIT_EXTREME_TEMPERATURE_IMMUNE)
+	rogue_npc_outfits = null
 
 /mob/living/carbon/human/species/skeleton/npc/pirate
 	rogue_npc = TRUE

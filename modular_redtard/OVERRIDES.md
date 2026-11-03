@@ -925,6 +925,41 @@
 | `/datum/ai_controller/basic_controller/simple/rogue_human/New()` | 2 | `ai/human_npc.dm` | `code/datums/ai/_ai_controller.dm` | Дерево ИИ с тактикой (`ai/human_npc_tactics.dm`) | Что `New()` ТГ зовёт `initialize_behavior_tree()` |
 | Внутри модуля: `rogue_dreams` (`grow_tired`, `dream_tick`, `UnregisterFromParent`), `SSrogue_dreams.on_time_of_day` (`crafting/experience.dm`); `clay/on_fired` (`crafting/pottery.dm`); `cloth/item_interaction` поверх `combat/medicine.dm`; `swap_hand(get_inactive_hand_index())` в `combat/dual_wield.dm`, `combat/grab.dm` (без номера руки ТГ ничего не делает) | 1 | `survival/fatigue.dm`, `crafting/kiln_quality.dm`, `survival/kneading.dm`, `combat/` | `code/modules/mob/mob.dm` (`swap_hand(held_index)`) | Ночная усталость, качество керамики, сырная голова; переключение руки в двуручном бою и при захвате заложника | Сигнатура `swap_hand(held_index, silent)` |
 
+## Блок 4 плана (2026-11-03): хирургия, вода, скотоводство, оружие
+
+### Хирургия и протезы (`combat/surgery/`, Б10)
+| Что (тип, процедура, файл) | Ступень | Файл модуля | Оригинал ТГ | Поведение | При мерже проверить |
+|---|---|---|---|---|---|
+| `/mob/living/carbon/human/Initialize(mapload)` с `..()`: элемент `rogue_surgery` (`free_operation`, `TRAIT_READY_TO_OPERATE`, подмена списка операций в `COMSIG_ATOM_BEING_OPERATED_ON`) | 5 | `combat/surgery/operation.dm` | `code/modules/mob/living/carbon/human/human.dm` | На medieval-теле только операции Ратвуда, без простыни и стола, вне боевого режима. Побочно: свидетели смерти без мудлетов, органы не съесть, гель и лента ТГ на кости не работают | Аргументы сигнала `COMSIG_ATOM_BEING_OPERATED_ON`; кто ещё читает `free_operation` и `TRAIT_READY_TO_OPERATE` |
+| `/datum/wound/blunt/bone/handle_process()`, `/datum/wound/cranial_fissure/handle_process()` с `..()` | 5 | `combat/surgery/wounds.dm` | `code/datums/wounds/bones.dm`, `code/datums/wounds/cranial_fissure.dm` | Вправленная кость срастается сама и во сне | Сигнатура `handle_process(seconds_per_tick)` |
+| Переменные и процедуры `rogue_*` на типах ТГ: `/datum/surgery_operation`, `/datum/wound` (прижигание, вправление), `/obj/item/bodypart` (протез, перелом) | 3 | `combat/surgery/operation.dm`, `wounds.dm`, `steps.dm`, `prosthetics.dm` | `code/modules/surgery/`, `code/datums/wounds/_wounds.dm`, `code/modules/surgery/bodyparts/_bodyparts.dm` | Шансы, время и инструменты операций Ратвуда | Имена не заняты ТГ |
+| 17 операций `/datum/surgery_operation/limb/rogue/...` (`get_tool_quality`, `state_check`, `snowflake_check_availability`, `get_time_modifiers`, `pre_preop`, `on_success`, `on_failure`); 8 конечностей-протезов на `ghetto` и `robot/surplus` (`receive_damage`) | 2 | `combat/surgery/operation.dm`, `steps.dm`, `prosthetics.dm` | `code/modules/surgery/operations/` | Надрез, зажим, разведение, прижигание, распил, ампутация, вывих и перелом, кровопускание, удаление застрявшего, органы, рот в рот, пришивание конечности и протеза, выжигание гнили | Сигнатуры процедур `/datum/surgery_operation` |
+| Портированные: `/obj/item/rogueweapon/surgery` `Initialize` (поведение инструментов ТГ), прижигатель, мультитул Пестры (`GLOB.rogue_multitool_modes`), contraption, протезы (`interact_with_atom`); цепочки `/mob/living/carbon/rogue_add_stump()` (`combat/dismember.dm`) и `rogue_sleep_healing()` (`combat/medicine.dm`) | 1–2 | `combat/surgery/tools.dm`, `prosthetics.dm` | — | Инструменты Ратвуда, культя после ампутации | Хук культи: только для плоти |
+
+### Вода, мытьё, жажда (`rockhill/`, `survival/`, Б11)
+| Что (тип, процедура, файл) | Ступень | Файл модуля | Оригинал ТГ | Поведение | При мерже проверить |
+|---|---|---|---|---|---|
+| `/obj/item/soap/should_clean()` | 5 | `survival/washing.dm` | `code/game/objects/items/clown_items.dm` | Мыло ТГ отмывает и человека в бане | Сигнатура `should_clean(cleaning_source, atom_to_clean, cleaner)` |
+| `/mob/living/carbon/human/Initialize(mapload)` с `..()` (второе звено после хирургии) | 5 | `survival/thirst.dm` | `code/modules/mob/living/carbon/human/human.dm` | Жажда на medieval-картах | Порядок звеньев не важен |
+| `TRAIT_EXTEROCEPTION`, `TRAIT_WATERLOVING` через `#ifndef` | 3 | `survival/thirst.dm`, `rockhill/swimming.dm` | — | Осмотр жажды, черта пловца | Если ТГ объявит такой трейт — снять дефайн |
+| Вода Рокхилла: `Entered`/`Exited` (с `..()`, поверх `rockhill/flora.dm`), `attack_hand_secondary`, `item_interaction_secondary`; `/obj/structure/hotspring` (`Initialize`/`Destroy`); `/obj/item/roguebin` `attack_hand` (на medieval ЛКМ — хранилище), `rogue_onkick`; удочка, садок, метла, `/obj/item/soap/bath`, `Initialize` рыбы, `/obj/effect/abstract/particle_holder/rogue_steam`; процедуры модуля `rogue_try_bite` (`combat/mmb.dm`), `rogue_sleeper/sleep_heal` (`survival/sleep.dm`) | 1–2 | `rockhill/swimming.dm`, `rockhill/fishing.dm`, `survival/washing.dm`, `survival/thirst.dm` | — | Плавание, рыбалка, мытьё, бочки, питьё укусом, сон без воды не лечит | Что `..()` вызывается во всех звеньях |
+
+### Пасеки, разделка, сума и попона (`husbandry/`, Б12а)
+| Что (тип, процедура, файл) | Ступень | Файл модуля | Оригинал ТГ | Поведение | При мерже проверить |
+|---|---|---|---|---|---|
+| `/obj/item/queen_bee`: `Initialize`, `Destroy`, новый `process`, процедуры `rogue_*` | 5 | `husbandry/apiary.dm` | `code/modules/mob/living/basic/farm_animals/bee/_bee.dm` | Матка Ратвуда в улье: стареет, наследует свойства | Сверить с `_bee.dm` (что делают `Initialize` и `Destroy` ТГ) |
+| `/mob/living/carbon/human/resolve_unarmed_attack()` через `..()` | 5 | `husbandry/mounts.dm` | `code/_onclick/other_mobs.dm` | Посадка на зверя кликом пустой рукой в боевом режиме | Подключение husbandry/ после `combat/unarmed.dm` (то же переопределение) |
+| `/mob/living/basic/rockhill/click_alt()` и `COMSIG_CLICK_ALT` (порядок: сигнал → `click_alt` → панель) | 2 | `husbandry/butchering.dm`, `husbandry/mounts.dm` | — | Alt+клик: разделка туши, сума, попона над бардом | Что ТГ шлёт `COMSIG_CLICK_ALT` до `click_alt()` |
+| Портированные `meathook` (`can_buckle`), `apiary`, `caparison/attack_self_secondary`, `egg/Initialize`; лошади (`rogue_can_saddle`, `rogue_kin = "horse"` и седло) | 1–2 | `husbandry/apiary.dm`, `butchering.dm`, `tack.dm`, `eggs.dm`, `beasts.dm` | — | Пасеки, крюк для мяса, узоры попоны, лошади из импорта — ездовые | — |
+
+### Оружие и снаряжение (`combat/`, Б13)
+| Что (тип, процедура, файл) | Ступень | Файл модуля | Оригинал ТГ | Поведение | При мерже проверить |
+|---|---|---|---|---|---|
+| `/obj/item/take_damage()` | 5 | `combat/integrity.dm` | `code/game/atom/atom_defense.dm` | На нуле прочности 0 вместо CRASH; кислота и огонь уничтожают через `atom_destruction` | Сигнатура и возвращаемое значение |
+| `/obj/item/atom_destruction()` (сохраняемые вещи без `..()`), `/obj/item/clothing/atom_destruction()` (с `..()`) | 5 | `combat/integrity.dm` | `code/game/objects/obj_defense.dm`, `code/modules/clothing/clothing.dm` | На medieval-картах одежда и вещи в руках на нуле прочности ломаются, а не исчезают | Что делает `..()` ТГ (удаление, выпадение содержимого) |
+| `/datum/species/equip_delay_self_check()` (на medieval-картах без `..()`) | 5 | `combat/integrity.dm` | `code/modules/mob/living/carbon/human/_species.dm` | Задержка надевания минус SPD; ходить можно, кроме одежды и брони (`/obj/item/var/edelay_type`) | Сигнатура; новые проверки ТГ внутри |
+| `/obj/item/rogueweapon` с `..()`: `atom_break`, `atom_fix`, `get_sharpness`, `examine`, `Initialize`, `update_overlays`, `item_interaction`, `attack_hand_secondary`; щиты `equipped`/`dropped`; stunmace, militia spear, dragonslayer, scepter, aries, `exe/cloth`, `keep_standard`, `tdummy`, ice axe; процедуры модуля `rogue_repair()`, `rogue_is_broken()` (`crafting/repair.dm`), глобальная `rogue_standard_whereabouts()` | 2 | `combat/integrity.dm`, `special_weapons.dm`, `keep_standard.dm`, `training_dummy.dm`, `azure_weapons.dm` | — | Поломка и починка, особое оружие, знамя крепости, чучело, кольцо дуэлянта, спецудары Азура | `tools/ci/dynamic_values.py` читает `azure_weapons.dm` (SPECIAL_FILES) |
+
 ## Тесты
 
 Тестовые файлы обёрнуты в собственные `#ifdef` (`UNIT_TESTS`, `REDTARD_TEST_FOCUS`, `REDTARD_LIGHT_BENCH`, `REDTARD_LIGHT_BENCH_CLIENT`), потому что Dream Maker дописывает их в блок `BEGIN_INCLUDE` модуля без условий.

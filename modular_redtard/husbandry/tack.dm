@@ -1,14 +1,25 @@
-/// Caparisons and bards (Ratwood rogueitems/caparison.dm, barding.dm; simple_animal.dm update_icon(), attack_right(), getarmor(),
-/// damage_clothes()): a saddled saiga takes a caparison for show and a bard for protection, each fitted over the saddle and taken
+/// The designs Ratwood offers besides its patterns (caparison attack_right()): none, or a symbol.
+#define ROGUE_CAPARISON_PLAIN "None"
+#define ROGUE_CAPARISON_SYMBOL "Symbol"
+
+/// Caparisons and bards (Ratwood rogueitems/caparison.dm, barding.dm; simple_animal.dm update_icon(), updatehealth(), attack_right(),
+/// getarmor(), damage_clothes()): a saddled saiga takes a caparison for show and a bard for protection, each fitted over the saddle and taken
 /// off before it. The bard is the mount's armour - one covering over the whole body, by the armour tiers of the module
-/// (combat/armor.dm) - wears out under the blows it stops and slows the mount down. Both are drawn over the mount from its own
-/// sheet, the caparison tinted with its colour.
+/// (combat/armor.dm) - wears out under the blows it stops and slows the mount down, ridden or not. Both are drawn over the mount
+/// from its own sheet, the caparison tinted with its colour and, if it bears a pattern or a symbol, that in a second colour; the
+/// caparison is drawn under the bard or, adjusted (Alt+click on the mount, husbandry/mounts.dm), over it.
 /obj/item/caparison
 	/// State of the caparison in the mount's sheet (Ratwood caparison_state, female_caparison_state); "-above" is its front part.
 	var/rogue_tack_state = "caparison"
 	var/rogue_tack_female_state = "caparison-f"
 	/// The mount it fits (Ratwood valid_animal_types); null - a mount that is not in the port.
 	var/rogue_tack_fits = /mob/living/simple_animal/hostile/retaliate/rogue/saiga
+	/// Ratwood detail_types and symbol_types: the patterns and the symbols it may bear, "name" = state suffix in the mount's sheet.
+	var/list/rogue_detail_types
+	var/list/rogue_symbol_types
+	/// Ratwood detail_state and detail_color: the pattern or symbol it bears and its colour.
+	var/rogue_detail_state
+	var/rogue_detail_color
 
 /obj/item/caparison/astrata
 	rogue_tack_state = "astra_caparison"
@@ -22,16 +33,65 @@
 	rogue_tack_state = "psy_caparison"
 	rogue_tack_female_state = "psy_caparison-f"
 
-/// Ratwood's fogbeast is not ported.
+/obj/item/caparison/heartfelt
+	rogue_tack_state = "heartfelt_caparison"
+	rogue_tack_female_state = "heartfelt_caparison-f"
+
+/// Ratwood's fogbeast is not ported. Its caparison is the one with patterns and symbols (in the fogbeast's sheet).
 /obj/item/caparison/fogbeast
 	rogue_tack_fits = null
+	rogue_detail_types = list("Quad" = "quad")
+	rogue_symbol_types = list("Psycross" = "psycross", "Astrata" = "astrata")
 
 /obj/item/caparison/proc/rogue_tack_overlays(mob/living/basic/rockhill/mount, cover_layer)
 	var/state = (mount.gender == FEMALE && rogue_tack_female_state) ? rogue_tack_female_state : rogue_tack_state
-	return list(
+	. = list(
 		rogue_tack_overlay(mount.icon, state, cover_layer, color),
 		rogue_tack_overlay(mount.icon, "[state]-above", cover_layer - ROGUE_TACK_FRONT_DROP, color),
 	)
+	if(rogue_detail_state)
+		. += rogue_tack_overlay(mount.icon, "[state]_[rogue_detail_state]", cover_layer, rogue_detail_color)
+		. += rogue_tack_overlay(mount.icon, "[state]_[rogue_detail_state]-above", cover_layer - ROGUE_TACK_FRONT_DROP, rogue_detail_color)
+
+/// Ratwood attack_right() and rmb_self(): a right click on a caparison in hand picks its pattern or symbol and its colours, if it can
+/// bear any.
+/obj/item/caparison/attack_self_secondary(mob/user, modifiers)
+	. = ..()
+	if(. || !length(rogue_detail_types) || !isliving(user))
+		return
+	INVOKE_ASYNC(src, PROC_REF(rogue_pick_design), user)
+	return TRUE
+
+/// Ratwood attack_right(): a design - none, a pattern, or a symbol - then the main colour and, for a pattern, the second one (a symbol
+/// is white), of Ratwood's dyes. Nothing changes unless every choice is made with the caparison still in hand.
+/obj/item/caparison/proc/rogue_pick_design(mob/living/user)
+	var/list/designs = list(ROGUE_CAPARISON_PLAIN) + rogue_detail_types
+	if(length(rogue_symbol_types))
+		designs += ROGUE_CAPARISON_SYMBOL
+	var/design = tgui_input_list(user, "Select a design.", "Caparison Design", designs)
+	if(!design || QDELETED(src) || !user.is_holding(src))
+		return
+	var/detail
+	if(design == ROGUE_CAPARISON_SYMBOL)
+		var/symbol = tgui_input_list(user, "Select a symbol.", "Caparison Design", rogue_symbol_types)
+		if(!symbol || QDELETED(src) || !user.is_holding(src))
+			return
+		detail = rogue_symbol_types[symbol]
+	else if(design != ROGUE_CAPARISON_PLAIN)
+		detail = rogue_detail_types[design]
+	var/primary = tgui_input_list(user, "Select a primary color.", "Caparison Design", GLOB.rogue_dye_colors)
+	if(!primary || QDELETED(src) || !user.is_holding(src))
+		return
+	var/detail_color = COLOR_WHITE
+	if(detail && design != ROGUE_CAPARISON_SYMBOL)
+		var/secondary = tgui_input_list(user, "Select a secondary color.", "Caparison Design", GLOB.rogue_dye_colors)
+		if(!secondary || QDELETED(src) || !user.is_holding(src))
+			return
+		detail_color = GLOB.rogue_dye_colors[secondary]
+	add_atom_colour(GLOB.rogue_dye_colors[primary], FIXED_COLOUR_PRIORITY)
+	rogue_detail_state = detail
+	rogue_detail_color = detail ? detail_color : null
+	to_chat(user, span_notice("I rework the design of [src]."))
 
 /obj/item/clothing/barding
 	/// State of the bard in the mount's sheet (Ratwood barding_state, female_barding_state); "-above" is its front part.
@@ -98,8 +158,21 @@
 	if(!user.transferItemToLoc(bard, mount))
 		return
 	barding = bard
+	update_barding_pace()
 	mount.update_appearance(UPDATE_OVERLAYS)
 	user.visible_message(span_notice("[user] fits a bard onto [mount]."), span_notice("I fit a bard onto [mount]."))
+
+/// Ratwood updatehealth(): a bard slows the mount's own pace too, not only its rider's (move_to_delay times barding_speed_mult) - its
+/// pace without the bard, times the bard's slowdown.
+/datum/component/rogue_mount/proc/update_barding_pace()
+	var/mob/living/basic/rockhill/mount = parent
+	mount.remove_movespeed_modifier(/datum/movespeed_modifier/rogue_barding)
+	if(!barding || barding.rogue_slowdown <= 1 || mount.cached_multiplicative_slowdown <= 0)
+		return
+	mount.add_or_update_variable_movespeed_modifier(/datum/movespeed_modifier/rogue_barding, multiplicative_slowdown = mount.cached_multiplicative_slowdown * (barding.rogue_slowdown - 1))
+
+/datum/movespeed_modifier/rogue_barding
+	variable = TRUE
 
 /// Ratwood attack_right(): the caparison comes off first, then the bard.
 /datum/component/rogue_mount/proc/take_off_cover(mob/living/user)
@@ -152,3 +225,6 @@
 	if(tack?.barding && (!strike.weapon || strike.weapon.damtype == BRUTE))
 		strike.damage *= tack.barding_share(strike.intent.item_d_type, strike.damage, strike.intent.penfactor, rogue_wear_factor(strike.weapon, strike.intent))
 	return ..()
+
+#undef ROGUE_CAPARISON_PLAIN
+#undef ROGUE_CAPARISON_SYMBOL

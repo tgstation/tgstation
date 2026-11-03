@@ -23,11 +23,11 @@ GLOBAL_LIST_EMPTY(rogue_lord_titles)
 	var/datum/rogue_migrant_role/rogue_migrant_role
 
 /datum/job/roguetown
-	/// Ratwood f_title: the title of the role's holder who is a woman; null - the role's title (the porter is to write it).
+	/// Ratwood f_title: the title of the role's holder who is a woman; null - the role's title (the porter writes it).
 	var/rogue_f_title
 
 /datum/rockhill_advclass
-	/// Ratwood examine_name: what examine calls the holder of the subclass in place of its name (the porter is to write it).
+	/// Ratwood examine_name: what examine calls the holder of the subclass in place of its name (the porter writes it).
 	var/rogue_examine_name
 
 /// Ratwood's Migrant job (wanderer_examine, advjob_examine): the arrivals of the waves are wanderers known by their class.

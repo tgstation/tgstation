@@ -63,6 +63,10 @@
 /// Source of the traits the husbandry module gives.
 #define ROGUE_HUSBANDRY_TRAIT "rogue_husbandry"
 
+/// From a tamer when a beast takes to them (Ratwood COMSIG_ANIMAL_TAMED, the hook of the personal goal "Tame an Animal"):
+/// (mob/living/basic/rockhill/beast)
+#define COMSIG_ROGUE_ANIMAL_TAMED "rogue_animal_tamed"
+
 /// Riding and tack (husbandry/mounts.dm, husbandry/tack.dm): numbers of the mechanics registry (config/redtard/mechanics/values/husbandry.txt).
 #define ROGUE_SADDLE_TIME rogue_value("mount_saddle_time")
 #define ROGUE_UNSADDLE_TIME rogue_value("mount_unsaddle_time")
