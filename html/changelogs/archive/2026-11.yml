@@ -8,3 +8,15 @@
   sohpeach:
   - bugfix: Pressure tanks now keep the correct amount of gas when deconstructed or
       merged into groups
+2026-11-03:
+  Melbert:
+  - bugfix: An EMP hitting a camera no longer permanently detaches it from all networks
+      (just temporarily)
+  - bugfix: AIs using "Jump to Network" no longer permanently detaches cameras from
+      some networks
+  - qol: Updated "Jump to Network" slightly, showing more networks that may be useful
+      to you.
+  - bugfix: Night lighting actually goes away when it ends
+  vinylspiders:
+  - bugfix: switched off lights no longer count as light for shadow walking and other
+      darkness checks, and lights that move around count where they actually are

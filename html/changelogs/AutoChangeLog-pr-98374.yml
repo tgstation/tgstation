@@ -1,6 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - bugfix: "An EMP hitting a camera no longer permanently detaches it from all networks (just temporarily)"
-  - bugfix: "AIs using \"Jump to Network\" no longer permanently detaches cameras from some networks"
-  - qol: "Updated \"Jump to Network\" slightly, showing more networks that may be useful to you."
