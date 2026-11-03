@@ -264,7 +264,7 @@
 /obj/structure/closet/crate/wooden/rockhill/proc/pick_lock(mob/living/user, obj/item/lockpick)
 	if(opened || !keylock)
 		return
-	if(rockhill_pick_lock(user, lockpick, src, lockdifficulty, lock_strength))
+	if(rockhill_try_pick(user, lockpick, src, lockdifficulty, lock_strength))
 		toggle_key_lock(user)
 
 /// Ratwood CtrlShiftClick(): the skittish dive into a crate (TG's Skittish quirk). Running into one dives in as well, by TG's

@@ -154,6 +154,6 @@ GLOBAL_LIST_EMPTY(rockhill_gates)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(span_warning("[user] cranks [src]."))
 	playsound(src, 'modular_redtard/rockhill/sound/foley/winch.ogg', 100, extrarange = 3)
-	if(do_after(user, ROCKHILL_WINCH_TIME, target = src) && gate && !gate.switching)
+	if(do_after(user, crank_time(user), target = src) && gate && !gate.switching)
 		gate.toggle()
 	return TRUE

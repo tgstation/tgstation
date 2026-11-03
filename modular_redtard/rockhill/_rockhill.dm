@@ -10,6 +10,7 @@
 #include "mapgen.dm"
 #include "locks.dm"
 #include "doors.dm"
+#include "locksmith.dm"
 #include "hiding.dm"
 #include "furniture.dm"
 #include "scabbards.dm"

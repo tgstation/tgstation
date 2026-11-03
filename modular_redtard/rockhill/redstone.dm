@@ -34,7 +34,8 @@ GLOBAL_LIST_EMPTY(rockhill_redstone)
 	user.changeNext_move(CLICK_CD_MELEE)
 	user.visible_message(span_warning("[user] pulls [src]."))
 	user.log_message("pulled the lever with redstone id \"[redstone_id]\"", LOG_GAME)
-	if(ROCKHILL_LEVER_TIME > 0 && !do_after(user, ROCKHILL_LEVER_TIME, target = user))
+	var/time = pull_time(user)
+	if(time > 0 && !do_after(user, time, target = user))
 		return TRUE
 	toggled = !toggled
 	icon_state = "[copytext(icon_state, 1, -1)][toggled]"

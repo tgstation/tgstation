@@ -893,6 +893,38 @@
 | Портированные типы: пологи шатров; far travel (`mouse_drop_receive`); тележка (и `/obj/proc/dump_contents()`); часы (`CanAllowThrough`, `CanAStarPass` с `CANASTARPASS_ALWAYS_PROC`, `atom_break`); колокола; телескопы и глобусы; таблички; флагштоки и мини-флажки; манекен (`Topic`, `mouse_drop_dragged`, `update_overlays`); кальян; оружейные стойки (компонент на сигналах); нажимные плиты; `forcefield_weak`; кучи костей; призрак `haunt` (`basic_mob_flags`, `Destroy()`, `Life()`) | 1–2 | `rockhill/tents.dm`, `far_travel.dm`, `handcarts.dm`, `town_fixtures.dm`, `flagpoles.dm`, `mannequins.dm`, `hookahs.dm`, `sword_racks.dm`, `dungeon_devices.dm`, `redstone.dm` | — | Постройки Рокхилла с механиками Ратвуда | Сигнатуры процедур ТГ на этих типах |
 | Внутри модуля: `/obj/item/rogue_worn_by_female()` из `clothing/worn_icons.dm`; `GLOB.rockhill_town_flags`, `rockhill_clock_reading()` | 1 | `rockhill/mannequins.dm`, `flagpoles.dm`, `town_fixtures.dm` | — | Женский манекен берёт женские спрайты; флаги и часы | — |
 
+## Блок 3 плана (2026-11-03): двери и замки, деньги, кухня, NPC
+
+### Двери, замки, свечи (`rockhill/`, Б8)
+| Что (тип, процедура, файл) | Ступень | Файл модуля | Оригинал ТГ | Поведение | При мерже проверить |
+|---|---|---|---|---|---|
+| `/obj/structure/mineral_door/rockhill`: `CanAStarPass()` после `..()`, `Bumped()` (таранщик до `..()`, ключ по хешу), `attack_hand()` (в скрытности проверяют молча) | 2 | `rockhill/doors.dm` | `code/game/objects/structures/mineral_doors.dm` | Пинок по СИЛ, ремонт по ремеслу, `TRAIT_BASHDOORS` | Сигнатура `CanAStarPass(to_dir, datum/can_pass_info/pass_info)`, поле `requester_ref` |
+| `/obj/structure/roguewindow`: `item_interaction()`, `attack_hand()`, `examine()` | 2 | `rockhill/windows.dm` | — | Ремонт окна бревном и стеклом по ремеслу плотника | Сигнатуры |
+| `/obj/item/candle`: `Initialize`, `Destroy`, `update_icon_state`, `get_temperature`, `process`, `attack_self`, `item_interaction`, `interact_with_atom`, `fire_act`, `extinguish`, `spark_act` | 2 | `rockhill/fires.dm` | `code/game/objects/items/candle.dm` | Свеча светит, тает до огарка, зажигается огнём и искрой | Что `/obj/item/trash/candle` на месте и `extinguish()` требует вызова родителя |
+| Ключи, заготовки, замки, импринтер: `/obj/item/roguekey` (`Initialize`, `item_interaction`), `customblank`, `customlock`, `lock_imprinter`; второе переопределение `/obj/structure/closet/crate/wooden/rockhill/Initialize()`; `/obj/var/lockhash`, `/obj/proc/rockhill_lockid()`, `rockhill_set_lock()`; `GLOB.rockhill_lockids`, `rockhill_lockhashes` | 2–3 | `rockhill/locksmith.dm` | — | Хеши замков Ратвуда, свои ключи и замки | Имена не заняты ТГ |
+| Компонент укрытия: аргумент `preposition`; лебёдка `crank_time()`, рычаг `pull_time()` по СИЛ; взлом сундука `rockhill_try_pick()`; дефайны `ROCKHILL_BASE_STRENGTH`, `ROCKHILL_WINCH_TIME`, `ROCKHILL_LEVER_TIME` сняты | 1 | `rockhill/hiding.dm`, `doors.dm`, `gates.dm`, `redstone.dm`, `furniture.dm` | — | Укрытие по навыку скрытности, механизмы по силе | — |
+
+### Казна и торговля (`economy/`, Б9а)
+| Что (тип, процедура, файл) | Ступень | Файл модуля | Оригинал ТГ | Поведение | При мерже проверить |
+|---|---|---|---|---|---|
+| `/obj/item/examine(mob/user)` с `..()`, `/obj/item/var/rogue_company_seal` | 5 | `economy/ship_trade.dm` | `code/game/objects/items.dm` | Печать торговой компании при осмотре | Сигнатура |
+| `/obj/item/get_real_price()` (второе определение после `economy/prices.dm`) | 1 | `economy/pricing_engine.dm` | — | Цены из рецептов по движку цен Ратвуда | Порядок подключения после `prices.dm` |
+| Подписка на `COMSIG_GLOB_JOB_AFTER_SPAWN`; `ship_fulfillment/mouse_drop_receive()`, `/datum/bank_account/rogue/pledge/bank_card_talk()`, `steward_export/Initialize()`, `Destroy()`; процедуры модуля `vendor/ui_act`, `vendor/examine`, `buy_stock`, `import_quote` | 1–2 | `economy/trade.dm`, `harbor.dm`, `burgher_pledge.dm`, `petitions.dm`, `fund_income.dm`, `royal_custom.dm` | `code/modules/economy/account.dm` | Доход фондов, Burgher Pledge, Ordinance, Royal Custom, события и блокады, favor и каталоги, королевский импорт и прошения | Аргументы `COMSIG_GLOB_JOB_AFTER_SPAWN` (job, spawned, player_client); сигнатура `bank_card_talk(message, force)` |
+
+### Машины и почта (`economy/`, Б9б)
+| Что (тип, процедура, файл) | Ступень | Файл модуля | Оригинал ТГ | Поведение | При мерже проверить |
+|---|---|---|---|---|---|
+| Переменные `/obj/item/clothing/var/rogue_salvage_amount`; `/datum/mind`: `rogue_carebox_ready`, `rogue_survived_cycles`, `rogue_drug_dawn`, `rogue_writ_posted`; подсистемы `SSrogue_hoard`, `SSrogue_post` | 3 | `economy/scrapper.dm`, `parcels.dm`, `hoard.dm` | — | Утильщики, посылки, клад бани | Имена не заняты ТГ; поле подсистем `ss_flags` |
+| Портированные машины: CASTIFICO, TREASURE SEEKER (`item_interaction` без `..()` — заменяет HEADEATER), BRASSFACE, PURITY, POTION SELLER, утильщики, COMMISSIONER, навигатор, ZADCOTE (`zad_faction` — `faction` занят ТГ на `/atom/movable`), HERMES (`ui_status` с `..()`), MARQUETTE, «Economic Panel» в Rogue Systems | 1–2 | `economy/castifico.dm` … `economic_panel.dm` | — | Машины экономики Ратвуда | — |
+
+### Кухня, быт, NPC (`survival/`, `crafting/`, `ai/`, Б20 и Б30)
+| Что (тип, процедура, файл) | Ступень | Файл модуля | Оригинал ТГ | Поведение | При мерже проверить |
+|---|---|---|---|---|---|
+| `/mob/living/carbon/human/examine()` с `..()` | 5 | `survival/appetite.dm` | `code/modules/mob/living/carbon/examine.dm` | Слуги видят вкусы двора | Что возвращается список строк |
+| `/obj/item/reagent_containers/glass/throw_impact()` | 5 | `crafting/kiln_quality.dm` | `code/modules/reagents/reagent_containers.dm` | Обожжённая керамика бьётся при броске | Сигнатура; `do_splash` |
+| `/datum/ai_controller/basic_controller/simple/rogue_human/New()` | 2 | `ai/human_npc.dm` | `code/datums/ai/_ai_controller.dm` | Дерево ИИ с тактикой (`ai/human_npc_tactics.dm`) | Что `New()` ТГ зовёт `initialize_behavior_tree()` |
+| Внутри модуля: `rogue_dreams` (`grow_tired`, `dream_tick`, `UnregisterFromParent`), `SSrogue_dreams.on_time_of_day` (`crafting/experience.dm`); `clay/on_fired` (`crafting/pottery.dm`); `cloth/item_interaction` поверх `combat/medicine.dm`; `swap_hand(get_inactive_hand_index())` в `combat/dual_wield.dm`, `combat/grab.dm` (без номера руки ТГ ничего не делает) | 1 | `survival/fatigue.dm`, `crafting/kiln_quality.dm`, `survival/kneading.dm`, `combat/` | `code/modules/mob/mob.dm` (`swap_hand(held_index)`) | Ночная усталость, качество керамики, сырная голова; переключение руки в двуручном бою и при захвате заложника | Сигнатура `swap_hand(held_index, silent)` |
+
 ## Тесты
 
 Тестовые файлы обёрнуты в собственные `#ifdef` (`UNIT_TESTS`, `REDTARD_TEST_FOCUS`, `REDTARD_LIGHT_BENCH`, `REDTARD_LIGHT_BENCH_CLIENT`), потому что Dream Maker дописывает их в блок `BEGIN_INCLUDE` модуля без условий.

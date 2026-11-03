@@ -515,7 +515,7 @@ GLOBAL_LIST_INIT(rogue_zone_names, list(
 		to_chat(src, span_warning("[target] is too prepared for combat to be taken hostage."))
 		return FALSE
 	grip.set_hostage(TRUE)
-	swap_hand()
+	swap_hand(get_inactive_hand_index())
 	to_chat(src, span_warning("I take [target] hostage."))
 	to_chat(target, span_danger("[src] takes me hostage!"))
 	log_combat(src, target, "took hostage")

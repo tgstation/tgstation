@@ -43,13 +43,13 @@
 	rogue_dual_reset_at = world.time + ROGUE_DUAL_WIELD_RESET
 	if(rogue_dual_finisher)
 		rogue_dual_finisher = FALSE
-		swap_hand()
+		swap_hand(get_inactive_hand_index())
 		return TRUE
 	if(++rogue_dual_count >= ROGUE_DUAL_WIELD_COMBO)
 		rogue_dual_count = 0
 		rogue_dual_finisher = TRUE
 	if(weapon)
-		swap_hand()
+		swap_hand(get_inactive_hand_index())
 	return FALSE
 
 /mob/living/carbon/human/proc/rogue_paired_strike(mob/living/target)

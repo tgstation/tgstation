@@ -82,7 +82,7 @@
  */
 SUBSYSTEM_DEF(rogue_post)
 	name = "Post"
-	flags = SS_NO_FIRE
+	ss_flags = SS_NO_FIRE
 	dependencies = list(
 		/datum/controller/subsystem/mapping,
 	)

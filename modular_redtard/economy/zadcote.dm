@@ -105,7 +105,7 @@
 /obj/item/roguemachine/zadcote
 	anchored = TRUE
 	w_class = WEIGHT_CLASS_GIGANTIC
-	var/faction = "merchant"
+	var/zad_faction = "merchant"
 	var/motto = "ZADCOTE"
 	var/list/operator_jobs = list()
 	var/operator_trait
@@ -549,19 +549,19 @@
 	return TRUE
 
 /obj/item/roguemachine/zadcote/steward
-	faction = "steward"
+	zad_faction = "steward"
 	motto = "STEWARDRY ZADCOTE"
 	operator_jobs = list(JOB_ROCKHILL_GRAND_DUKE, JOB_ROCKHILL_STEWARD, JOB_ROCKHILL_CLERK, JOB_ROCKHILL_COUNCILLOR, JOB_ROCKHILL_HAND)
 
 /obj/item/roguemachine/zadcote/merchant
-	faction = "merchant"
+	zad_faction = "merchant"
 	motto = "COMPANY ZADCOTE"
 	operator_jobs = list(JOB_ROCKHILL_MERCHANT, JOB_ROCKHILL_SHOPHAND)
 	operator_trait = TRAIT_AGENT_MERCHANT
 	allows_voyeur = TRUE
 
 /obj/item/roguemachine/zadcote/bathhouse
-	faction = "bathhouse"
+	zad_faction = "bathhouse"
 	motto = "BATHHOUSE ZADCOTE"
 	operator_jobs = list(JOB_ROCKHILL_BATHMASTER, JOB_ROCKHILL_BATHHOUSE_ATTENDANT)
 	operator_trait = TRAIT_AGENT_BATHHOUSE
