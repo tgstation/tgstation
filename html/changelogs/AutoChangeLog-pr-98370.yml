@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Night lighting actually goes away when it ends"
