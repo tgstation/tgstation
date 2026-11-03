@@ -12,7 +12,8 @@
 7. [Good Boy Points](#good-boy-points)
 8. [Porting features/sprites/sounds/tools from other codebases](#porting-featuresspritessoundstools-from-other-codebases)
 9. [Banned content](#banned-content)
-10. [A word on Git](#a-word-on-git)
+10. [Generative AI Use](#generative-ai-use)
+11. [A word on Git](#a-word-on-git)
 
 ## Reporting Issues
 
