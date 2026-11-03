@@ -361,10 +361,14 @@ def main():
     out += ['))', '']
 
     out.append('/// Crafting recipe -> the market category of what it makes (Ratwood display_category), for the pricing engine\'s markups.')
-    out.append('GLOBAL_LIST_INIT(rogue_recipe_categories, list(')
+    out.append('/// Built by a proc: as the argument of GLOBAL_LIST_INIT() the list (about 95 KB) does not compile on BYOND 516.1685 of CI.')
+    out.append('GLOBAL_LIST_INIT(rogue_recipe_categories, rogue_recipe_category_list())')
+    out.append('')
+    out.append('/proc/rogue_recipe_category_list()')
+    out.append('\treturn list(')
     for path in sorted(categories):
-        out.append(f'\t{dm_string(path)} = {dm_string(categories[path])},')
-    out += ['))']
+        out.append(f'\t\t{dm_string(path)} = {dm_string(categories[path])},')
+    out += ['\t)']
 
     open(OUTPUT, 'w', encoding='utf-8', newline='\n').write('\n'.join(out).rstrip('\n') + '\n')
     print(f'{os.path.relpath(OUTPUT, REPO)}: {len(goods)} finished goods, {len(events)} events, {len(conditions)} conditions, '

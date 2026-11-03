@@ -9,11 +9,6 @@
 // drinks from it a mouthful at a time; a wood bin or a well fills a vessel to drink from (survival/vessels.dm). Players who
 // begin the round get full hydration (Ratwood's ready-up bonus); others start a little thirsty.
 
-// Ratwood trait of Eora's faithful: they see others' hunger and thirst (the porter writes only the traits its roles use).
-#ifndef TRAIT_EXTEROCEPTION
-#define TRAIT_EXTEROCEPTION "Exteroception"
-#endif
-
 /// Ratwood HYDRATION_LEVEL_*: the most, glad of it from, a little thirsty below, thirsty below, parched below.
 #define THIRST_FULL 1000
 #define THIRST_QUENCHED 999

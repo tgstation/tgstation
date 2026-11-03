@@ -11,11 +11,6 @@
 /// Ratwood water this warm or warmer is a bath: washing in it warms the cold and cools the hot (temperature >= 300).
 #define WATER_WARM 300
 
-// Ratwood's trait of the Abyssor faithful and the sea peoples (homelands/_defines.dm has it for its origins; it may come later).
-#ifndef TRAIT_WATERLOVING
-#define TRAIT_WATERLOVING "Water loving"
-#endif
-
 /turf/open/water/rockhill
 	/// Ratwood temperature: the water's own temperature in kelvin, which chills (WATER_COLD) or soothes (WATER_WARM).
 	var/rogue_water_temperature = 210

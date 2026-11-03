@@ -153,3 +153,9 @@
 #define ROCKHILL_LIGHTNING_CLICK_DELAY (6 SECONDS)
 #define ROCKHILL_FIREFLIES_MOOD 5
 #define ROCKHILL_FIREFLIES_MOOD_TIME (10 MINUTES)
+
+// Ratwood's trait of the Abyssor faithful and the sea peoples: cold water does not chill them (rockhill/swimming.dm); the
+// origins of homelands/ give it too. The ported traits (rockhill/ported/_traits.dm) lack it.
+#ifndef TRAIT_WATERLOVING
+#define TRAIT_WATERLOVING "Water loving"
+#endif

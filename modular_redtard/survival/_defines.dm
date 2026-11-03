@@ -149,3 +149,6 @@
 #ifndef TRAIT_BETTER_SLEEP
 #define TRAIT_BETTER_SLEEP "Better Sleep"
 #endif
+#ifndef TRAIT_EXTEROCEPTION
+#define TRAIT_EXTEROCEPTION "Exteroception"
+#endif
