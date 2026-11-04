@@ -228,11 +228,6 @@
 	if (host && loc != host)
 		unregister_host()
 
-/mob/living/basic/blood_worm/restore_initial_sight()
-	. = ..()
-	if (HAS_TRAIT(src, TRAIT_MOVE_VENTCRAWLING) && istype(loc, /obj/machinery/atmospherics))
-		. |= SEE_MOBS
-
 /// Gets the current health of the worm, regardless of if its in a host or not.
 /mob/living/basic/blood_worm/proc/get_worm_health()
 	return host ? min(host.get_blood_volume() * BLOOD_WORM_BLOOD_TO_HEALTH, maxHealth) : health
@@ -340,6 +335,7 @@
 
 	AddComponent(/datum/component/slide_under_doors, slide_in_delay = 3 SECONDS)
 	AddElement(/datum/element/pressure_sensitive, min_pressure = 20, max_pressure = 0, low_pressure_damage = 0.5, high_pressure_damage = 0)
+	AddElement(/datum/element/see_mobs_while_ventcrawling)
 
 /mob/living/basic/blood_worm/juvenile
 	name = "juvenile blood worm"
