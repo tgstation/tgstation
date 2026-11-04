@@ -282,7 +282,7 @@
 				if(!fan_overclocked && (environment_pressure >= 50 * ONE_ATMOSPHERE))
 					return FALSE
 
-				var/transfer_moles = ((pressure_delta * environment.volume) / (air_contents.temperature * R_IDEAL_GAS_EQUATION))
+				var/transfer_moles = (pressure_delta * environment.volume) / (air_contents.temperature * R_IDEAL_GAS_EQUATION)
 				if(!fan_overclocked)
 					transfer_moles *= transfer_rate_modifier
 
@@ -305,7 +305,7 @@
 			if(!fan_overclocked && (air_contents.return_pressure() >= 50 * ONE_ATMOSPHERE))
 				return FALSE
 
-			var/transfer_moles = ((pressure_delta * air_contents.volume) / (environment.temperature * R_IDEAL_GAS_EQUATION))
+			var/transfer_moles = (pressure_delta * air_contents.volume) / (environment.temperature * R_IDEAL_GAS_EQUATION)
 			if(!fan_overclocked)
 				transfer_moles *= transfer_rate_modifier
 
