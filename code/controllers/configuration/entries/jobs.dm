@@ -216,7 +216,9 @@
 
 		sections += jointext(lines, "\n")
 
-	var/payload = jointext(list(config_documentation, jointext(sections, "\n\n")), "\n")
+	sections += "\n" // in case config is gittracked we should crlf
+	var/total_joined_sections = jointext(sections, "\n\n")
+	var/payload = jointext(list(config_documentation, total_joined_sections), "\n")
 	rustg_file_write(payload, file_location)
 	DIRECT_OUTPUT(user, ftp(file(file_location), "jobconfig.toml"))
 	return TRUE
