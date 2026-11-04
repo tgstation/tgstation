@@ -871,10 +871,10 @@
 /obj/item/petri_dish,
 /obj/item/petri_dish,
 /obj/item/petri_dish,
-/obj/item/organ/tongue/rat,
+/obj/item/organ/tongue/mouse,
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/decal/cleanable/glass,
-/obj/item/organ/stomach/rat,
+/obj/item/organ/stomach/mouse,
 /obj/item/fish/ratfish,
 /obj/structure/closet/crate/freezer,
 /obj/effect/spawner/random/medical/surgery_tool,
@@ -1223,7 +1223,7 @@
 /obj/effect/decal/cleanable/dirt/dust,
 /obj/item/food/deadmouse,
 /mob/living/basic/mouse/rat,
-/obj/item/organ/heart/rat,
+/obj/item/organ/heart/mouse,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 
