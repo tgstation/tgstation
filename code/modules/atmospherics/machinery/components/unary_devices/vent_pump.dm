@@ -282,7 +282,10 @@
 				if(!fan_overclocked && (environment_pressure >= 50 * ONE_ATMOSPHERE))
 					return FALSE
 
-				var/transfer_moles = ((pressure_delta * environment.volume) / (air_contents.temperature * R_IDEAL_GAS_EQUATION)) * (fan_overclocked ? 1 : transfer_rate_modifier)
+				var/transfer_moles = ((pressure_delta * environment.volume) / (air_contents.temperature * R_IDEAL_GAS_EQUATION))
+				if(!fans_overclocked)
+					transfer_moles *= transfer_rate_modifier
+
 				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
 				if(!removed || !removed.total_moles())
@@ -302,7 +305,10 @@
 			if(!fan_overclocked && (air_contents.return_pressure() >= 50 * ONE_ATMOSPHERE))
 				return FALSE
 
-			var/transfer_moles = ((pressure_delta * air_contents.volume) / (environment.temperature * R_IDEAL_GAS_EQUATION)) * (fan_overclocked ? 1 : transfer_rate_modifier)
+			var/transfer_moles = ((pressure_delta * air_contents.volume) / (environment.temperature * R_IDEAL_GAS_EQUATION))
+			if(!fan_overclocked)
+				transfer_moles *= transfer_rate_modifier
+
 			var/datum/gas_mixture/removed = loc.remove_air(transfer_moles)
 
 			if(!removed || !removed.total_moles()) //No venting from space 4head
