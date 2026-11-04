@@ -285,10 +285,14 @@
 /obj/machinery/airalarm/AIShiftClick(mob/living/silicon/ai/user)
 
     //relatively safe modes that progressively get more iffy
-	var/alist/shiftmodes/ = alist(/datum/air_alarm_mode/filtering, /datum/air_alarm_mode/contaminated, /datum/air_alarm_mode/refill, /datum/air_alarm_mode/draught)
+	var/list/shiftmodes/ = list(
+		/datum/air_alarm_mode/filtering,
+		/datum/air_alarm_mode/contaminated,
+		/datum/air_alarm_mode/refill,
+		/datum/air_alarm_mode/draught)
 
 	//gets the next mode, otherwise return null and set to filter
-	var/datum/next_mode = shiftmodes[shiftmodes.Find(selected_mode) +1]
+	var/next_mode = shiftmodes[shiftmodes.Find(selected_mode) +1]
 	if(next_mode)
 		select_mode(user, next_mode)
 		balloon_alert(user, "[selected_mode.name]")
@@ -301,12 +305,16 @@
 /obj/machinery/airalarm/AICtrlClick(mob/living/silicon/ai/user)
 
     //all of the modes that require more deliberation
-	var/alist/ctrlmodes/ = alist(/datum/air_alarm_mode/off, /datum/air_alarm_mode/cycle, /datum/air_alarm_mode/siphon, /datum/air_alarm_mode/panic_siphon)
+	var/list/ctrlmodes/ = list(
+		/datum/air_alarm_mode/off,
+		/datum/air_alarm_mode/cycle,
+		/datum/air_alarm_mode/siphon,
+		/datum/air_alarm_mode/panic_siphon)
 
 	//gets the next mode, otherwise return null and turn off
-	var/datum/next_mode = ctrlmodes[ctrlmodes.Find(selected_mode) +1]
+	var/next_mode = ctrlmodes[ctrlmodes.Find(selected_mode) +1]
 	if(next_mode)
-		select_mode(next_mode)
+		select_mode(user, next_mode)
 		balloon_alert(user, "[selected_mode.name]")
 		investigate_log("was cycled to [selected_mode.name] mode by [key_name(user)]", INVESTIGATE_ATMOS)
 		return
