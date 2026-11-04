@@ -13,7 +13,7 @@
 /// You do not need to raise this if you are adding new values that have sane defaults.
 /// Only raise this value when changing the meaning/format/name/layout of an existing value
 /// where you would want the updater procs below to run
-#define SAVEFILE_VERSION_MAX 53
+#define SAVEFILE_VERSION_MAX 54
 
 #define IS_DATA_OBSOLETE(version) (version == SAVE_DATA_OBSOLETE)
 #define SHOULD_UPDATE_DATA(version) (version >= SAVE_DATA_NO_ERROR && version < SAVEFILE_VERSION_MAX)
@@ -114,6 +114,9 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 			key_bindings["swap_hands_row"] = keys
 
 /datum/preferences/proc/update_character(current_version, list/save_data)
+	if(current_version < 54)
+		migrate_legacy_loadout_items(save_data)
+
 	if (current_version < 41)
 		migrate_character_to_tgui_prefs_menu()
 
@@ -404,6 +407,10 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	all_quirks = SSquirks.filter_invalid_quirks(SANITIZE_LIST(all_quirks))
 	validate_quirks()
+
+	if(isnewplayer(parent?.mob))
+		var/mob/dead/new_player/lobbyguy = parent?.mob
+		lobbyguy.update_ready_report()
 
 	return TRUE
 

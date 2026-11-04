@@ -223,7 +223,7 @@
 	if(user)
 		balloon_alert(user, "circuitry fried")
 		user.log_message("emagged [src].", LOG_ATTACK)
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	set_status()
 	return TRUE
 

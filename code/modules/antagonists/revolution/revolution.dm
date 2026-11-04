@@ -439,8 +439,8 @@
 	head_chose_phrase_raw = generate_code_phrase(return_list = TRUE)
 	head_code_phrases = new("([jointext(head_chose_phrase_raw, "|")])", "ig")
 
-	head_chose_phrase_raw = generate_code_phrase(return_list = TRUE)
-	head_code_responses = new("([jointext(head_chose_phrase_raw, "|")])", "ig")
+	head_code_responses_raw = generate_code_phrase(return_list = TRUE)
+	head_code_responses = new("([jointext(head_code_responses_raw, "|")])", "ig")
 
 /// Saves all current headrevs and revs
 /datum/team/revolution/proc/save_members()

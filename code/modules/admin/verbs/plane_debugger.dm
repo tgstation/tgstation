@@ -125,10 +125,10 @@
 
 	var/list/plane_info = list()
 
-	var/list/our_planes = our_hud?.get_planes_from(current_group)
-	for (var/plane_string in our_planes)
+	var/alist/our_planes = our_hud?.get_planes_from(current_group)
+	for (var/plane_key, _plane in our_planes)
+		var/atom/movable/screen/plane_master/plane = _plane
 		var/list/this_plane = list()
-		var/atom/movable/screen/plane_master/plane = our_planes[plane_string]
 		this_plane["name"] = plane.name
 		this_plane["documentation"] = plane.documentation
 		this_plane["plane"] = plane.plane
@@ -180,7 +180,7 @@
 	var/datum/plane_master_group/group = our_hud?.master_groups[current_group]
 	if(!group) // Nothing to act on
 		return
-	var/list/our_planes = group.plane_masters
+	var/alist/our_planes = group.plane_masters
 
 	switch(action)
 		if("rebuild")
@@ -202,7 +202,7 @@
 			var/source_plane = params["source"]
 			var/target_plane = params["target"]
 			var/blend_mode = text2num(params["mode"])
-			var/atom/movable/screen/plane_master/source = our_planes["[source_plane]"]
+			var/atom/movable/screen/plane_master/source = our_planes[source_plane]
 			if(source.get_relay_to(target_plane)) // Fuck off
 				return
 			source.add_relay_to(target_plane, blend_mode != BLEND_DEFAULT ? blend_mode : null)
@@ -211,40 +211,40 @@
 		if("disconnect_relay")
 			var/source_plane = params["source"]
 			var/target_plane = params["target"]
-			var/atom/movable/screen/plane_master/source = our_planes["[source_plane]"]
+			var/atom/movable/screen/plane_master/source = our_planes[source_plane]
 			source.remove_relay_from(text2num(target_plane))
 			return TRUE
 
 		if("disconnect_filter")
 			var/target_plane = params["target"]
-			var/atom/movable/screen/plane_master/filtered_plane = our_planes["[target_plane]"]
+			var/atom/movable/screen/plane_master/filtered_plane = our_planes[target_plane]
 			filtered_plane.remove_filter(params["name"])
 			return TRUE
 
 		if("vv_plane")
 			var/plane_edit = params["edit"]
-			var/atom/movable/screen/plane_master/edit = our_planes["[plane_edit]"]
+			var/atom/movable/screen/plane_master/edit = our_planes[plane_edit]
 			var/mob/user = ui.user
 			user?.client?.debug_variables(edit)
 			return TRUE
 
 		if("set_alpha")
 			var/plane_edit = params["edit"]
-			var/atom/movable/screen/plane_master/edit = our_planes["[plane_edit]"]
+			var/atom/movable/screen/plane_master/edit = our_planes[plane_edit]
 			var/newalpha = params["alpha"]
 			animate(edit, 0.4 SECONDS, alpha = newalpha)
 			return TRUE
 
 		if("edit_color_matrix")
 			var/plane_edit = params["edit"]
-			var/atom/movable/screen/plane_master/edit = our_planes["[plane_edit]"]
+			var/atom/movable/screen/plane_master/edit = our_planes[plane_edit]
 			var/mob/user = ui.user
 			user?.client?.open_color_matrix_editor(edit)
 			return TRUE
 
 		if("edit_filters")
 			var/plane_edit = params["edit"]
-			var/atom/movable/screen/plane_master/edit = our_planes["[plane_edit]"]
+			var/atom/movable/screen/plane_master/edit = our_planes[plane_edit]
 			var/mob/user = ui.user
 			user?.client?.open_filter_editor(edit)
 			return TRUE

@@ -82,7 +82,7 @@
 	user.dropItemToGround(src, TRUE)
 	user.Stun(100, ignore_canstun = TRUE)
 	sleep(2 SECONDS)
-	playsound(src, SFX_RUSTLE, 50, TRUE, -5)
+	playsound(src, /datum/sound_effect/rustle, 50, TRUE, -5)
 	user.suicide_log()
 	qdel(user)
 

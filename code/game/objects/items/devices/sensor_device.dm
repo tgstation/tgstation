@@ -12,8 +12,8 @@
 	custom_price = PAYCHECK_CREW * 5
 	custom_premium_price = PAYCHECK_CREW * 6
 	sound_vary = TRUE
-	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
-	drop_sound = SFX_GENERIC_DEVICE_DROP
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
 
 /obj/item/sensor_device/attack_self(mob/user)
 	GLOB.crewmonitor.show(user,src) //Proc already exists, just had to call it

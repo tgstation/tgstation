@@ -1,20 +1,40 @@
 Any time you make a change to the schema files, remember to increment the database schema version. Generally increment the minor number, major should be reserved for significant changes to the schema. Both values go up to 255.
 
-Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be found in `code/__DEFINES/subsystem.dm`.
+Make sure to also update `DB_MAJOR_VERSION` and `DB_MINOR_VERSION`, which can be found in `code/__DEFINES/subsystems.dm`.
 
-The latest database version is 5.34; The query to update the schema revision table is:
+The latest database version is 5.35; The query to update the schema revision table is:
 
 ```sql
-INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 34);
+INSERT INTO `schema_revision` (`major`, `minor`) VALUES (5, 35);
 ```
 
 or
 
 ```sql
-INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 34);
+INSERT INTO `SS13_schema_revision` (`major`, `minor`) VALUES (5, 35);
 ```
 
 In any query remember to add a prefix to the table names if you use one.
+
+---
+
+Version 5.35, 25 October 2026, by Absolucy
+Adds indexes to `ban`, `achievements` and `discord_links` so the connection ban check, score leaderboards and Discord link lookups stop reading the whole table.
+
+```sql
+ALTER TABLE `ban`
+	ADD INDEX `idx_ban_ip` (`ip`, `role`),
+	ADD INDEX `idx_ban_cid` (`computerid`, `role`),
+	ADD INDEX `idx_ban_admin` (`a_ckey`, `applies_to_admins`);
+
+ALTER TABLE `achievements`
+	ADD INDEX `idx_ach_key_value` (`achievement_key`, `value`);
+
+ALTER TABLE `discord_links`
+	ADD INDEX `idx_discord_ckey_time` (`ckey`, `timestamp`),
+	ADD INDEX `idx_discord_id_time` (`discord_id`, `timestamp`),
+	ADD INDEX `idx_discord_token` (`one_time_token`);
+```
 
 ---
 

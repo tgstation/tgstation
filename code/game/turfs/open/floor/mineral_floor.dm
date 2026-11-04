@@ -299,7 +299,7 @@
 
 /turf/open/floor/mineral/bananium/proc/squeak()
 	if(sound_cooldown < world.time)
-		playsound(src, SFX_CLOWN_STEP, 50, TRUE)
+		playsound(src, /datum/sound_effect/clown_step, 50, TRUE)
 		sound_cooldown = world.time + 10
 
 /turf/open/floor/mineral/bananium/airless

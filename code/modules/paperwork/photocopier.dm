@@ -398,7 +398,7 @@ GLOBAL_LIST_INIT(paper_blanks, init_paper_blanks())
 		return FALSE
 	obj_flags |= EMAGGED
 
-	playsound(src, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	visible_message(span_warning("Sparks fly out of [src]!"))
 	balloon_alert(user, "payment system shorted")
 	return TRUE

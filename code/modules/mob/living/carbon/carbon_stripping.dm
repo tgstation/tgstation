@@ -140,7 +140,11 @@
 	if (isnull(effect))
 		return null
 
-	return list(STRIPPABLE_ALT_ACTION_REMOVE_ITEM_CUFFS = icon2base64(icon(effect.cuffed.icon, effect.cuffed.icon_state, frame = 1)))
+	return list(
+		STRIPPABLE_ALT_ACTION_REMOVE_ITEM_CUFFS = list(
+			"icon" = effect.cuffed.icon, "icon_state" = effect.cuffed.icon_state
+		)
+	)
 
 /datum/strippable_item/hand/perform_alternate_action(atom/source, mob/user, action_key, obj/item/item)
 	if (!..())

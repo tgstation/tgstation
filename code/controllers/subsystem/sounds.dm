@@ -81,16 +81,14 @@ SUBSYSTEM_DEF(sounds)
 /datum/controller/subsystem/sounds/Initialize()
 	setup_available_channels()
 	find_all_available_sounds()
-	init_sound_keys()
 
-	if(!(RUST_G))
+	if(!RUST_G)
 		to_chat(world, span_boldnotice("Sounds subsystem: No rust_g detected."))
 		return ..()
 
 	// Precache ambience sounds
-	for(var/key in GLOB.ambience_assoc)
-		sounds_to_precache |= GLOB.ambience_assoc[key]
-
+	for(var/key, value in GLOB.ambience_assoc)
+		sounds_to_precache |= value
 	precache_sounds()
 
 	return SS_INIT_SUCCESS
@@ -214,23 +212,10 @@ SUBSYSTEM_DEF(sounds)
 	var/list/lengths = rustg_sound_length_list(sounds_to_precache)
 	precache_errors = lengths[RUSTG_SOUNDLEN_ERRORS]
 	sound_lengths = lengths[RUSTG_SOUNDLEN_SUCCESSES]
-	for(var/sound_path in sound_lengths)
-		sound_lengths[sound_path] = text2num(sound_lengths[sound_path])
+	for(var/sound_path, sound_length in sound_lengths)
+		sound_lengths[sound_path] = text2num(sound_length)
 
 	sounds_to_precache = null
-
-/// Cache a list of sound lengths.
-/datum/controller/subsystem/sounds/proc/cache_sounds(list/paths)
-	var/list/reconstructed = list()
-	reconstructed.len = length(paths)
-
-	for(var/i in 1 to length(paths))
-		reconstructed[i] = "[paths[i]]"
-
-	var/list/out = rustg_sound_length_list(paths)
-	var/list/successes = out[RUSTG_SOUNDLEN_SUCCESSES]
-	for(var/sound_path in successes)
-		sound_lengths[sound_path] = text2num(successes[sound_path])
 
 /// Cache and return a single sound.
 /datum/controller/subsystem/sounds/proc/get_sound_length(file_path)
@@ -256,13 +241,6 @@ SUBSYSTEM_DEF(sounds)
 
 	sound_lengths[file_path] = as_num
 	return as_num
-
-/datum/controller/subsystem/sounds/proc/init_sound_keys()
-	for(var/datum/sound_effect/sfx as anything in subtypesof(/datum/sound_effect))
-		// this is for the assoc subtype
-		if(!isnull(sfx.key))
-			GLOB.sfx_datum_by_key[sfx.key] = new sfx()
-
 
 ///Call to free all channels reserved by a datum.
 /datum/controller/subsystem/sounds/proc/stop_tracking_datum(datum/channel_owner)

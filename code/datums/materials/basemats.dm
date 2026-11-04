@@ -70,12 +70,12 @@
 /datum/material/glass/on_main_applied(atom/source, mat_amount, multiplier)
 	. = ..()
 	if(isobj(source) && !isstack(source) && (source.material_flags & MATERIAL_AFFECT_STATISTICS))
-		source.AddElement(/datum/element/can_shatter, shard_type, round(mat_amount / SHEET_MATERIAL_AMOUNT * multiplier), SFX_SHATTER)
+		source.AddElement(/datum/element/can_shatter, shard_type, round(mat_amount / SHEET_MATERIAL_AMOUNT * multiplier), /datum/sound_effect/shatter)
 
 /datum/material/glass/on_main_removed(atom/source, mat_amount, multiplier)
 	. = ..()
 	if(isobj(source) && !isstack(source) && (source.material_flags & MATERIAL_AFFECT_STATISTICS))
-		source.RemoveElement(/datum/element/can_shatter, shard_type, round(mat_amount / SHEET_MATERIAL_AMOUNT * multiplier), SFX_SHATTER)
+		source.RemoveElement(/datum/element/can_shatter, shard_type, round(mat_amount / SHEET_MATERIAL_AMOUNT * multiplier), /datum/sound_effect/shatter)
 
 /// Gives weapons an edge against vampires and possibly other mobs with the UNHOLY_BANEABLE trait.
 /datum/material/silver

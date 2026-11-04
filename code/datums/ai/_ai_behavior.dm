@@ -37,10 +37,14 @@
  * Returns BT_SUCCESS / BT_FAILURE on completion, BT_RUNNING while active.
  */
 /datum/bt_node/ai_behavior/tick(datum/ai_controller/controller, seconds_per_tick)
+	var/previous_ticking_execution_index = controller.ticking_execution_index
+	controller.ticking_execution_index = execution_index
 	if(next_perform_time > world.time)
 		if(!running && failed_last_perform)
+			controller.ticking_execution_index = previous_ticking_execution_index
 			return BT_FAILURE
 		controller.active_execution_index = execution_index
+		controller.ticking_execution_index = previous_ticking_execution_index
 		return BT_RUNNING
 
 	if(controller.bt_execution_log != null) // dont track if we're not  viewing
@@ -50,6 +54,7 @@
 	if(!running)
 		if(!setup(controller))
 			EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] [type]: setup() failed")
+			controller.ticking_execution_index = previous_ticking_execution_index
 			return BT_FAILURE
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] starting [type]")
 		running = TRUE
@@ -62,13 +67,17 @@
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] [type]: succeeded")
 		failed_last_perform = FALSE
 		finish_action(controller, TRUE)
+		controller.ticking_execution_index = previous_ticking_execution_index
 		return BT_SUCCESS
 	if(process_flags & AI_BEHAVIOR_FAILED)
 		EVLOG_TEXT(controller, EVLOG_CATEGORY_AI_BEHAVIORS, "[controller.pawn] [type]: failed")
 		failed_last_perform = TRUE
 		finish_action(controller, FALSE)
+		controller.ticking_execution_index = previous_ticking_execution_index
 		return BT_FAILURE
-	controller.active_execution_index = execution_index
+	if(!controller.cancelled_during_tick)
+		controller.active_execution_index = execution_index
+	controller.ticking_execution_index = previous_ticking_execution_index
 	return BT_RUNNING
 
 /// Returns the cooldown to apply after a AI_BEHAVIOR_DELAY perform(). Override for conditional delays.

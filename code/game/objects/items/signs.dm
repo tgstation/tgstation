@@ -22,7 +22,7 @@
 	actions_types = list(/datum/action/item_action/nano_picket_sign)
 
 /obj/item/picket_sign/nameformat(input, user)
-	playsound(src, SFX_WRITING_PEN, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
+	playsound(src, /datum/sound_effect/writing_pen, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE, SOUND_FALLOFF_EXPONENT + 3, ignore_walls = FALSE)
 	label = input
 	AddComponent(/datum/component/rename, name, "It reads: [input]")
 	return "[input] sign"

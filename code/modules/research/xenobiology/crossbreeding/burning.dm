@@ -148,7 +148,7 @@ Burning extracts:
 		if(L != user)
 			do_teleport(L, get_turf(L), 6, asoundin = 'sound/effects/phasein.ogg', channel = TELEPORT_CHANNEL_BLUESPACE) //Somewhere between the effectiveness of fake and real BS crystal
 			new /obj/effect/particle_effect/sparks(get_turf(L))
-			playsound(get_turf(L), SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(get_turf(L), /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	..()
 
 /obj/item/slimecross/burning/sepia

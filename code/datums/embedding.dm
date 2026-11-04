@@ -514,7 +514,7 @@
 		return
 
 	if (self_pluck)
-		to_chat(span_notice("You pluck [parent] from your [owner_limb.plaintext_zone][safe_pluck ? "." : span_danger(", but it hurts like hell")]"))
+		to_chat(user, span_notice("You pluck [parent] from your [owner_limb.plaintext_zone][safe_pluck ? "." : span_danger(", but it hurts like hell!")]"))
 
 	if(!safe_pluck)
 		damaging_removal_effect(min(self_pluck ? 1 : RIPPING_OUT_HELP_DAMAGE_MULTIPLIER, 0.4 * tool.w_class))

@@ -15,8 +15,8 @@
 	throw_range = 7
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 2.5)
 	sound_vary = TRUE
-	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
-	drop_sound = SFX_GENERIC_DEVICE_DROP
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
 	/// Is the pinpointer on?
 	var/active = FALSE
 	///The thing we're searching for

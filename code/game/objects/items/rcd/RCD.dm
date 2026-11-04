@@ -129,7 +129,7 @@
 		// There isn't an easy programmatical way to check if rcd_act will place a floor or a wall, so just repeat using it for free
 		if(success && isopenturf(T))
 			T.rcd_act(user, src, list("[RCD_DESIGN_MODE]" = RCD_TURF, "[RCD_DESIGN_PATH]" = /turf/open/floor/plating/rcd))
-		playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
+		playsound(get_turf(user), /datum/sound_effect/tool_switch, 20, TRUE)
 		user.gib(DROP_ALL_REMAINS)
 		return MANUAL_SUICIDE
 
@@ -170,7 +170,7 @@
 
 			//check if we can build our window on the grill
 			if(target_turf.is_blocked_turf(exclude_mobs = !is_full_tile, source_atom = null, ignore_atoms = structures_to_ignore, type_list = TRUE))
-				playsound(user, SFX_TOOL_SWITCH, 20, TRUE)
+				playsound(user, /datum/sound_effect/tool_switch, 20, TRUE)
 				balloon_alert(user, "tile is blocked!")
 				return FALSE
 
@@ -190,7 +190,7 @@
 				ignore_types += /obj/structure/girder
 
 			if(ignore_types && target_turf.is_blocked_turf(exclude_mobs = FALSE, source_atom = null, ignore_atoms = ignore_types, type_list = TRUE))
-				playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
+				playsound(get_turf(user), /datum/sound_effect/tool_switch, 20, TRUE)
 				balloon_alert(user, "something is on the girder!")
 				return FALSE
 
@@ -225,7 +225,7 @@
 
 			//check if the structure can fit on this turf
 			if(target_turf.is_blocked_turf(exclude_mobs = ignore_mobs, source_atom = null, ignore_atoms = ignored_types, type_list = TRUE))
-				playsound(get_turf(user), SFX_TOOL_SWITCH, 20, TRUE)
+				playsound(get_turf(user), /datum/sound_effect/tool_switch, 20, TRUE)
 				balloon_alert(user, "something is on the tile!")
 				return FALSE
 
@@ -392,7 +392,7 @@
 	return data
 
 /obj/item/construction/rcd/handle_ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
-	playsound(src, SFX_TOOL_SWITCH, 20, TRUE)
+	playsound(src, /datum/sound_effect/tool_switch, 20, TRUE)
 
 	switch(action)
 		if("root_category")

@@ -168,7 +168,7 @@
 
 			if(!new_name)
 				modified_id.registered_name = null
-				playsound(computer, SFX_TERMINAL_TYPE, 50, FALSE)
+				playsound(computer, /datum/sound_effect/terminal_type, 50, FALSE)
 				modified_id.update_label()
 				// We had a name before and now we have no name, so this will unassign the card and we update the icon.
 				if(old_name)
@@ -183,7 +183,7 @@
 				return TRUE
 
 			modified_id.registered_name = new_name
-			playsound(computer, SFX_TERMINAL_TYPE, 50, FALSE)
+			playsound(computer, /datum/sound_effect/terminal_type, 50, FALSE)
 			modified_id.update_label()
 			// Card wasn't assigned before and now it is, so update the icon accordingly.
 			if(!old_name)
@@ -200,7 +200,7 @@
 				return TRUE
 
 			modified_id.registered_age = new_age
-			playsound(computer, SFX_TERMINAL_TYPE, 50, FALSE)
+			playsound(computer, /datum/sound_effect/terminal_type, 50, FALSE)
 			return TRUE
 		// Change assignment
 		if("PRG_assign")
@@ -208,14 +208,14 @@
 				return TRUE
 			var/new_asignment = trim(sanitize(params["assignment"]), MAX_NAME_LEN)
 			modified_id.assignment = new_asignment
-			playsound(computer, SFX_TERMINAL_TYPE, 50, FALSE)
+			playsound(computer, /datum/sound_effect/terminal_type, 50, FALSE)
 			modified_id.update_label()
 			return TRUE
 		// Add/remove access.
 		if("PRG_access")
 			if(!computer || !authenticated_card || !modified_id)
 				return TRUE
-			playsound(computer, SFX_TERMINAL_TYPE, 50, FALSE)
+			playsound(computer, /datum/sound_effect/terminal_type, 50, FALSE)
 			var/access_type = params["access_target"]
 			var/try_wildcard = params["access_wildcard"]
 			if(!(access_type in valid_access))
@@ -241,7 +241,7 @@
 			if(!computer || !authenticated_card || !modified_id)
 				return TRUE
 
-			playsound(computer, SFX_TERMINAL_TYPE, 50, FALSE)
+			playsound(computer, /datum/sound_effect/terminal_type, 50, FALSE)
 			var/template_name = params["name"]
 
 			if(!template_name)

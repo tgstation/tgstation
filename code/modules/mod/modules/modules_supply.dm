@@ -288,7 +288,7 @@
 		INVOKE_ASYNC(src, PROC_REF(move_ore), ore)
 
 	if (ore_found)
-		playsound(mod.wearer, SFX_RUSTLE, 50, TRUE)
+		playsound(mod.wearer, /datum/sound_effect/rustle, 50, TRUE)
 
 /obj/item/mod/module/orebag/proc/move_ore(obj/item/stack/ore)
 	for(var/obj/item/stack/ore/stored_ore as anything in src)
@@ -310,13 +310,13 @@
 	SIGNAL_HANDLER
 	if(istype(arrived, /obj/item/stack/ore) && !dropping_ores && old_loc != mod.wearer)
 		INVOKE_ASYNC(src, PROC_REF(move_ore), arrived)
-		playsound(mod.wearer, SFX_RUSTLE, 50, TRUE)
+		playsound(mod.wearer, /datum/sound_effect/rustle, 50, TRUE)
 
 /obj/item/mod/module/orebag/proc/on_atom_initialized_on(atom/loc, atom/new_atom)
 	SIGNAL_HANDLER
 	if(is_type_in_list(new_atom, /obj/item/stack/ore))
 		INVOKE_ASYNC(src, PROC_REF(move_ore), new_atom)
-		playsound(mod.wearer, SFX_RUSTLE, 50, TRUE)
+		playsound(mod.wearer, /datum/sound_effect/rustle, 50, TRUE)
 
 /obj/item/mod/module/hydraulic
 	name = "\improper MOD loader hydraulic arms module"

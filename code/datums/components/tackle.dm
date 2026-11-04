@@ -639,7 +639,7 @@
 /datum/component/tackler/proc/delayedSmash(obj/structure/window/windscreen_casualty)
 	if(windscreen_casualty)
 		windscreen_casualty.atom_destruction()
-		playsound(windscreen_casualty, SFX_SHATTER, 70, TRUE)
+		playsound(windscreen_casualty, /datum/sound_effect/shatter, 70, TRUE)
 
 ///Check to see if we hit a table, and if so, make a big mess!
 /datum/component/tackler/proc/checkObstacle(mob/living/carbon/owner)

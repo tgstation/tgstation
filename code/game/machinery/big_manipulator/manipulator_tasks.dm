@@ -160,6 +160,9 @@
 			if(skip_anchored && thing.anchored)
 				continue
 
+			if(HAS_TRAIT(thing, TRAIT_UNDERFLOOR))
+				continue
+
 			if(isliving(thing))
 				var/mob/living/living_mob = thing
 				if(living_mob.stat == DEAD)

@@ -42,5 +42,5 @@
 	if(!(bot_access_flags & BOT_COVER_EMAGGED))
 		return
 	flick("[base_icon_state]-emagged", src)
-	playsound(src, SFX_SPARKS, 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 100, FALSE, SHORT_RANGE_SOUND_EXTRARANGE)
 	return TRUE

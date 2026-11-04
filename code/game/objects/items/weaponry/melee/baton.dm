@@ -642,7 +642,7 @@
 
 /obj/item/melee/baton/security/proc/turn_on(mob/user)
 	active = TRUE
-	playsound(src, SFX_SPARKS, 75, TRUE, -1)
+	playsound(src, /datum/sound_effect/sparks, 75, TRUE, -1)
 	update_appearance()
 	toggle_light()
 	do_sparks(1, TRUE, src)
@@ -653,7 +653,7 @@
 	active = FALSE
 	set_light_on(FALSE)
 	update_appearance()
-	playsound(src, SFX_SPARKS, 75, TRUE, -1)
+	playsound(src, /datum/sound_effect/sparks, 75, TRUE, -1)
 	drop_sound = inactive_drop_sound
 	pickup_sound = inactive_pickup_sound
 
@@ -746,7 +746,7 @@
 	active = !active
 	toggle_light()
 	do_sparks(1, TRUE, src)
-	playsound(src, SFX_SPARKS, 75, TRUE, -1)
+	playsound(src, /datum/sound_effect/sparks, 75, TRUE, -1)
 	update_appearance()
 
 /obj/item/melee/baton/security/loaded //this one starts with a cell pre-installed.

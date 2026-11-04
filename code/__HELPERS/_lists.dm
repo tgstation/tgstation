@@ -996,8 +996,8 @@
 	if(!islist(key_list))
 		return null
 	. = list()
-	for(var/key in key_list)
-		. |= LIST_VALUE_WRAP_LISTS(key_list[key])
+	for(var/key, value in key_list)
+		. |= LIST_VALUE_WRAP_LISTS(value)
 
 ///compare two lists, returns TRUE if they are the same
 /proc/compare_list(list/l,list/d)

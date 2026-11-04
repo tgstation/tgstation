@@ -140,7 +140,7 @@
 				new material_type.sheet_type(get_turf(src))
 	else
 		//When smashed to bits
-		playsound(src, SFX_SHATTER, 70, TRUE)
+		playsound(src, /datum/sound_effect/shatter, 70, TRUE)
 
 		new material_type.shard_type(get_turf(src))
 		new material_type.shard_type(get_turf(src))

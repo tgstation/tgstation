@@ -1,9 +1,13 @@
 import type { BooleanLike } from 'tgui-core/react';
 import { CATEGORY_ICONS_COOKING, CATEGORY_ICONS_CRAFTING } from './constants';
-import type { CraftingData } from './types';
+import type { CraftingData, IconData } from './types';
 
-export function findIcon(atom_id: number, data: CraftingData): string {
-  let icon: string = data.icon_data[atom_id];
+export function findIcon(
+  atom_id: number,
+  data: CraftingData,
+  iconData: IconData,
+): string {
+  let icon: string = iconData[atom_id];
   if (!icon) {
     icon = `${data.mode ? 'cooking32x32' : 'crafting32x32'} a${atom_id}`;
   }

@@ -292,7 +292,7 @@
 		qdel(p_blue)
 		p_blue = new_portal
 	crosslink()
-	playsound(new_portal, SFX_PORTAL_CREATED, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(new_portal, /datum/sound_effect/portal_created, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 
 /obj/item/gun/energy/wormhole_projector/core_inserted
 	spawn_with_core = TRUE

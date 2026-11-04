@@ -67,9 +67,9 @@
 		return
 	var/aggression = min(((damage / 800) * (internal_energy / 2500)), 1.0) * 100
 	if(damage >= 300)
-		playsound(src, SFX_SM_DELAM, max(50, aggression), FALSE, 40, 30, falloff_distance = 10)
+		playsound(src, /datum/sound_effect/sm_delam, max(50, aggression), FALSE, 40, 30, falloff_distance = 10)
 	else
-		playsound(src, SFX_SM_CALM, max(50, aggression), FALSE, 25, 25, falloff_distance = 10)
+		playsound(src, /datum/sound_effect/sm_calm, max(50, aggression), FALSE, 25, 25, falloff_distance = 10)
 	var/next_sound = round((100 - aggression) * 5)
 	last_accent_sound = world.time + max(SUPERMATTER_ACCENT_SOUND_MIN_COOLDOWN, next_sound)
 

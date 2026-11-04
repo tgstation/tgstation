@@ -40,7 +40,7 @@
 	/// Override for the visual attack effect shown on 'do_attack_animation()'.
 	var/attack_vis_effect
 	///Played when someone punches the creature.
-	var/attacked_sound = SFX_PUNCH //This should be an element
+	var/attacked_sound = /datum/sound_effect/punch //This should be an element
 	/// How often can you melee attack?
 	var/melee_attack_cooldown = 2 SECONDS
 

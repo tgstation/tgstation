@@ -324,9 +324,9 @@ ADMIN_VERB(toggle_lobby_transparency, R_ADMIN, "Toggle Lobby Transparency", "Tog
 		if("ready_toggle")
 			if(player.ready == PLAYER_NOT_READY)
 				player.auto_deadmin_on_ready_or_latejoin()
-				player.ready = PLAYER_READY_TO_PLAY
+				player.ready()
 			else
-				player.ready = PLAYER_NOT_READY
+				player.unready()
 			send_update(list("isReady" = player.ready == PLAYER_READY_TO_PLAY))
 		if("join")
 			if(!SSticker?.IsRoundInProgress())

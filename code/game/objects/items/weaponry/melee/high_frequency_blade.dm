@@ -47,7 +47,7 @@
 	if(attack_type == PROJECTILE_ATTACK)
 		if(HAS_TRAIT(src, TRAIT_WIELDED) || prob(final_block_chance))
 			owner.visible_message(span_danger("[owner] deflects [attack_text] with [src]!"))
-			playsound(src, SFX_BULLET_MISS, 75, TRUE)
+			playsound(src, /datum/sound_effect/bullet_miss, 75, TRUE)
 			return TRUE
 		return FALSE
 	var/stop_that_blade = (final_block_chance + (attack_type == OVERWHELMING_ATTACK ? 25 : 0)) * (HAS_TRAIT(src, TRAIT_WIELDED) ? 2 : 1)
