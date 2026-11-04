@@ -1,4 +1,0 @@
-author: "Melbert"
-delete-after: True
-changes:
-  - code_imp: "Cleaned up chip bag pop code - report anything weird with that extremely niche thing I guess"

@@ -1,6 +1,0 @@
-author: "desertmote"
-delete-after: True
-changes:
-  - rscadd: "Changes the rat infusion into a mouse infusion, updating its appearance flavor and adding two visual organs"
-  - image: "Adds mouse ears and a mouse tail sprite, the latter can wag"
-  - code_imp: "Inner-ear rendering for cat ears uses a list for layer rendering instead of one specific layer"
