@@ -283,7 +283,7 @@
 					return FALSE
 
 				var/transfer_moles = ((pressure_delta * environment.volume) / (air_contents.temperature * R_IDEAL_GAS_EQUATION))
-				if(!fans_overclocked)
+				if(!fan_overclocked)
 					transfer_moles *= transfer_rate_modifier
 
 				var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
