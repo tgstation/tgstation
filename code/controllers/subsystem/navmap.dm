@@ -22,6 +22,10 @@ SUBSYSTEM_DEF(navmap)
 	var/topology_generation = 0
 	/// Changes when turf terrain-cost flags or their passability dependencies are invalidated.
 	var/nav_cost_generation = 0
+	/// Last effective terrain-cost flags published, keyed by turf coordinates.
+	var/alist/published_nav_cost_flags = alist()
+	/// Weighted DM fallback searches that have consumed terrain costs.
+	var/list/datum/pathfind/navmap/active_cost_searches = list()
 	var/topology_rebuild_in_progress = FALSE
 	var/alist/nav_links = alist()
 	/// Navigation links indexed by their source turf for the DM fallback search.
@@ -83,6 +87,8 @@ SUBSYSTEM_DEF(navmap)
 	z_to_nav_layer = SSnavmap.z_to_nav_layer
 	topology_generation = SSnavmap.topology_generation
 	nav_cost_generation = SSnavmap.nav_cost_generation
+	published_nav_cost_flags = SSnavmap.published_nav_cost_flags
+	active_cost_searches = SSnavmap.active_cost_searches
 	nav_links = SSnavmap.nav_links
 	nav_links_by_source = SSnavmap.nav_links_by_source
 	next_nav_link_id = SSnavmap.next_nav_link_id
@@ -152,12 +158,13 @@ SUBSYSTEM_DEF(navmap)
 	if(native_state \
 		&& (topology_generation || !world.maxz) \
 		&& native_state["generation"] == topology_generation \
+		&& native_state["links_generation"] == topology_generation \
 		&& native_state["z_count"] == length(z_to_nav_layer) \
 		&& native_state["layer_count"] == length(z_to_nav_layer) \
 		&& native_state["nav_link_count"] == valid_nav_link_count)
 		return TRUE
 	var/topology_success = publish_topology()
-	var/nav_links_success = topology_success && sync_nav_links()
+	var/nav_links_success = topology_success && sync_nav_links(topology_generation)
 	if(!topology_success || !nav_links_success)
 		return FALSE
 	return TRUE
@@ -188,15 +195,26 @@ SUBSYSTEM_DEF(navmap)
 		sync_native_state()
 
 /// Publishes all currently valid navigation links.
-/datum/controller/subsystem/navmap/proc/sync_nav_links()
+/datum/controller/subsystem/navmap/proc/sync_nav_links(generation)
 	var/list/flat = list()
 	for(var/id in nav_links)
 		var/datum/nav_link/nav_link = nav_links[id]
 		if(QDELETED(nav_link) || !nav_link.source || !nav_link.destination)
 			continue
 		flat += list(nav_link.id, nav_link.source.x, nav_link.source.y, nav_link.source.z, nav_link.destination.x, nav_link.destination.y, nav_link.destination.z, nav_link.cost)
-	var/success = navmap_pathfinder_links_update(flat)
+	var/success = navmap_pathfinder_links_update(generation, flat)
 	return success
+
+/// Publishes effective turf cost flags and notifies fallback searches using changed groups.
+/datum/controller/subsystem/navmap/proc/publish_nav_cost_flags(turf/tile, effective_flags)
+	var/turf_key = "[tile.x],[tile.y],[tile.z]"
+	var/previous_flags = published_nav_cost_flags[turf_key]
+	if(!isnull(previous_flags) && previous_flags != effective_flags)
+		var/changed_flags = previous_flags ^ effective_flags
+		nav_cost_generation++
+		for(var/datum/pathfind/navmap/search as anything in active_cost_searches)
+			search.nav_cost_flags_changed(tile, changed_flags)
+	published_nav_cost_flags[turf_key] = effective_flags
 
 /// Native callback for side-effect-free, mover-specific link eligibility.
 /proc/navmap_pathfinder_link_can_plan(id, datum/can_pass_info/pass_info)

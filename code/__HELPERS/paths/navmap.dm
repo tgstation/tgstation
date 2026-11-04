@@ -49,6 +49,12 @@
 	var/nav_cost_heuristic_scale = 1
 	/// Snapshot of turf cost data when this search began.
 	var/nav_cost_generation
+	/// Topology generation captured for searches that may traverse links or z-levels.
+	var/navmap_topology_generation
+	/// Conditional pass flags captured when the search starts.
+	var/navmap_pass_flags
+	/// Set when a relevant changed cost turf has already contributed to this DM search.
+	var/nav_cost_stale = FALSE
 	/// The maximum total path cost.
 	var/max_path_cost = 0
 	/// Actions associated with each path tile (used for nav links).
@@ -87,6 +93,8 @@
 	var/list/navmap_astar_heuristic_cache
 	/// Cached combined multipliers indexed by the turf's numeric flag combination.
 	var/alist/navmap_astar_cost_multiplier_cache
+	/// Effective cost flags used by turfs already considered by this search.
+	var/alist/navmap_astar_cost_flags_used
 	/// Cardinal intermediate selected when an expanded diagonal was priced.
 	var/list/navmap_astar_diagonal_intermediate
 	/// Whether the mover uses flying navigation.
@@ -121,6 +129,7 @@
 		src.nav_cost_heuristic_scale = nav_cost_modifiers_heuristic_scale(src.nav_cost_modifiers)
 	src.max_path_cost = max_path_cost
 	src.on_finish = on_finish
+	src.navmap_pass_flags = pass_info.pass_flags
 
 /// Starts native or DM navmap pathfinding.
 /datum/pathfind/navmap/start()
@@ -131,9 +140,13 @@
 
 	if((allow_multiz || allow_nav_links) && !force_dm)
 		SSnavmap.sync_native_state()
+	navmap_topology_generation = (allow_multiz || allow_nav_links) ? SSnavmap.topology_generation : null
+	navmap_pass_flags = pass_info.pass_flags
 	use_native = !force_dm && navmap_pathfinder_available()
 	if(!use_native)
 		navmap_astar_initialize()
+		if(length(nav_cost_modifiers_native))
+			SSnavmap.active_cost_searches += src
 		return TRUE
 
 	// Result returned by the native search.
@@ -151,7 +164,7 @@
 	if(complete)
 		return TRUE
 	if(!use_native)
-		if(length(nav_cost_modifiers) && nav_cost_generation != SSnavmap.nav_cost_generation)
+		if(nav_cost_stale || navmap_pass_flags != pass_info.pass_flags || (!isnull(navmap_topology_generation) && navmap_topology_generation != SSnavmap.topology_generation))
 			path = list()
 			complete = TRUE
 			return TRUE
@@ -186,7 +199,12 @@
 			path = list()
 			complete = TRUE
 			return TRUE
+		if(NAVMAP_PATH_STALE_PASS_FLAGS)
+			path = list()
+			complete = TRUE
+			return TRUE
 		if(NAVMAP_PATH_ERROR)
+			GLOB.navmap_pathfinder_error = result["error"]
 			path = list()
 			complete = TRUE
 			return TRUE
@@ -205,8 +223,9 @@
 	navmap_astar_simulated_cache = list()
 	navmap_astar_heuristic_cache = list()
 	navmap_astar_cost_multiplier_cache = alist()
+	navmap_astar_cost_flags_used = alist()
 	navmap_astar_diagonal_intermediate = list()
-	nav_cost_generation = SSnavmap.nav_cost_generation
+	nav_cost_stale = FALSE
 	navmap_astar_min_link_cost = 0
 	for(var/link_id in SSnavmap.nav_links)
 		var/datum/nav_link/nav_link = SSnavmap.nav_links[link_id]
@@ -465,6 +484,7 @@
 	if(!length(nav_cost_modifiers_native))
 		return base_cost
 	var/flags = tile.get_nav_cost_flags()
+	navmap_astar_cost_flags_used[tile] = flags
 	var/multiplier = navmap_astar_cost_multiplier_cache[flags]
 	if(isnull(multiplier))
 		multiplier = 1
@@ -477,6 +497,16 @@
 			modifier_index += 2
 		navmap_astar_cost_multiplier_cache[flags] = multiplier
 	return base_cost ? max(1, CEILING(base_cost * multiplier, 1)) : 0
+
+/// Marks a fallback search stale when a modifier group changed on a turf it already used.
+/datum/pathfind/navmap/proc/nav_cost_flags_changed(turf/tile, changed_flags)
+	if(use_native || nav_cost_stale || !length(nav_cost_modifiers_native) || isnull(navmap_astar_cost_flags_used[tile]))
+		return
+	var/list/modifiers = nav_cost_modifiers_native
+	for(var/index in 1 to length(modifiers) step 2)
+		if(modifiers[index] & changed_flags)
+			nav_cost_stale = TRUE
+			return
 
 /// Removes the best node from the A* heap.
 /datum/pathfind/navmap/proc/navmap_astar_heap_pop()
@@ -555,7 +585,7 @@
 	// Directions considered from each expanded node.
 	var/static/list/directions = list(NORTH, SOUTH, EAST, WEST, NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST)
 	while(length(navmap_astar_open))
-		if(length(nav_cost_modifiers) && nav_cost_generation != SSnavmap.nav_cost_generation)
+		if(nav_cost_stale || navmap_pass_flags != pass_info.pass_flags || (!isnull(navmap_topology_generation) && navmap_topology_generation != SSnavmap.topology_generation))
 			path = list()
 			complete = TRUE
 			return TRUE
@@ -668,6 +698,7 @@
 	navmap_astar_simulated_cache = null
 	SSpathfinder.navmap_pathing -= src
 	SSpathfinder.current_navmap_run -= src
+	SSnavmap.active_cost_searches -= src
 	requester = null
 	end = null
 	return ..()
