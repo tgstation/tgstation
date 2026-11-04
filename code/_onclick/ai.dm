@@ -12,8 +12,10 @@
 
 	if(ismob(A))
 		ai_tracking_tool.track_mob(src, A)
-	else
-		A.move_camera_by_click()
+		return
+	if(istype(A, /obj/machinery))
+		return
+	A.move_camera_by_click()
 
 /mob/living/silicon/ai/ClickOn(atom/A, params)
 	if(world.time <= next_click)
@@ -285,42 +287,42 @@
 /obj/machinery/airalarm/AIShiftClick(mob/living/silicon/ai/user)
 
     //relatively safe modes that progressively get more iffy
-	var/list/shiftmodes/ = list(
+	var/list/shift_modes/ = list(
 		/datum/air_alarm_mode/filtering,
 		/datum/air_alarm_mode/contaminated,
 		/datum/air_alarm_mode/refill,
 		/datum/air_alarm_mode/draught)
 
-	//gets the next mode, otherwise return null and set to filter
-	var/next_mode = shiftmodes[shiftmodes.Find(selected_mode) +1]
-	if(next_mode)
-		select_mode(user, next_mode)
+	//checks if we are mid shift cycle or need to start at beginning
+	var/shift_index = shift_modes.Find(selected_mode.type)
+	if((shift_index)&&(shift_modes.len > shift_index))
+		select_mode(user, shift_modes[shift_index + 1])
 		balloon_alert(user, "[selected_mode.name]")
 		investigate_log("was cycled to [selected_mode.name] mode by [key_name(user)]", INVESTIGATE_ATMOS)
 		return
-	select_mode(/datum/air_alarm_mode/filtering)
+	select_mode(user, /datum/air_alarm_mode/filtering)
 	balloon_alert(user, "filtering")
 	investigate_log("was cycled to filtering mode by [key_name(user)]", INVESTIGATE_ATMOS)
 
 /obj/machinery/airalarm/AICtrlClick(mob/living/silicon/ai/user)
 
     //all of the modes that require more deliberation
-	var/list/ctrlmodes/ = list(
+	var/list/ctrl_modes/ = list(
 		/datum/air_alarm_mode/off,
 		/datum/air_alarm_mode/cycle,
 		/datum/air_alarm_mode/siphon,
 		/datum/air_alarm_mode/panic_siphon)
 
-	//gets the next mode, otherwise return null and turn off
-	var/next_mode = ctrlmodes[ctrlmodes.Find(selected_mode) +1]
-	if(next_mode)
-		select_mode(user, next_mode)
+	//checks if we are mid ctrl cycle or need to start at beginning
+	var/ctrl_index = ctrl_modes.Find(selected_mode.type)
+	if((ctrl_index)&&(ctrl_modes.len > ctrl_index))
+		select_mode(user, ctrl_modes[ctrl_index + 1])
 		balloon_alert(user, "[selected_mode.name]")
 		investigate_log("was cycled to [selected_mode.name] mode by [key_name(user)]", INVESTIGATE_ATMOS)
 		return
-	select_mode(/datum/air_alarm_mode/off)
+	select_mode(user, /datum/air_alarm_mode/off)
 	balloon_alert(user, "off")
-	investigate_log("was cycled to off mode by [key_name(user)]", INVESTIGATE_ATMOS)
+	investigate_log("was cycled off by [key_name(user)]", INVESTIGATE_ATMOS)
 
 /* AI Turrets */
 /obj/machinery/turretid/ai_click_alt(mob/living/silicon/ai/user) //toggles lethal on turrets
