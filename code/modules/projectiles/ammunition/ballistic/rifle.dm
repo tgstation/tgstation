@@ -53,6 +53,10 @@
 	projectile_type = /obj/projectile/bullet/a40mm
 	newtonian_force = 1.25
 
+/obj/item/ammo_casing/a40mm/Initialize(mapload)
+	. = ..()
+	AddComponent(/datum/component/detonatable_by_hammer, backblast_flame_range = 2)
+
 /obj/item/ammo_casing/a40mm/rubber
 	name = "40mm rubber shell"
 	desc = "A cased rubber puck. The big brother of the beanbag slug. Made for stopping someone dead in their tracks."
