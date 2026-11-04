@@ -36,7 +36,7 @@
 
 ///increases hunger, disgust recovers quicker, expands what is defined as "food"
 /obj/item/organ/stomach/mouse
-	name = "mutate mouse-stomach"
+	name = "mutated mouse-stomach"
 	desc = "Mouse DNA infused into what was once a normal stomach."
 	disgust_metabolism = 3
 
@@ -166,6 +166,7 @@
 
 	dna_block = null
 	bodypart_overlay = /datum/bodypart_overlay/mutant/tail/mouse
+	sprite_accessory_override = /datum/sprite_accessory/tails/mouse/default
 
 	wag_flags = WAG_ABLE
 	restyle_flags = EXTERNAL_RESTYLE_FLESH
@@ -174,15 +175,7 @@
 	color_source = NONE
 	feature_key = FEATURE_TAIL_MOUSE
 	draw_on_husks = HUSK_OVERLAY_GRAYSCALE
-	imprint_on_next_insertion = FALSE
 	offset_location = LOWER_BODY
-
-/datum/bodypart_overlay/mutant/tail/mouse/New()
-	. = ..()
-	set_appearance_from_name(/datum/sprite_accessory/tails/mouse/default::name) //only one mouse tail
-
-/datum/bodypart_overlay/mutant/tail/mouse/randomize_appearance()
-	set_appearance_from_name(/datum/sprite_accessory/tails/mouse/default::name)
 
 #undef MOUSE_ORGAN_COLOR
 #undef MOUSE_SCLERA_COLOR
