@@ -18,7 +18,7 @@
 /obj/item/organ/heart/gland/electric/activate()
 	owner.visible_message(span_danger("[owner]'s skin starts emitting electric arcs!"),\
 	span_warning("You feel electric energy building up inside you!"))
-	playsound(get_turf(owner), SFX_SPARKS, 100, TRUE, -1, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(get_turf(owner), /datum/sound_effect/sparks, 100, TRUE, -1, SHORT_RANGE_SOUND_EXTRARANGE)
 	addtimer(CALLBACK(src, PROC_REF(zap)), rand(3 SECONDS, 10 SECONDS))
 
 /obj/item/organ/heart/gland/electric/proc/zap()

@@ -84,9 +84,14 @@
 	add_to_all_human_data_huds()
 
 /mob/living/carbon/human/reset_perspective(atom/new_eye, force_reset = FALSE)
-	if(dna?.species?.prevent_perspective_change && !force_reset) // This is in case a species needs to prevent perspective changes in certain cases, like Dullahans preventing perspective changes when they're looking through their head.
-		update_fullscreen()
-		return
+	if(!force_reset)
+		return ..()
+
+	var/potential_perspective_list = list()
+	var/result = SEND_SIGNAL(src, COMSIG_HUMAN_FORCED_PERSPECTIVE_MANAGEMENT, potential_perspective_list, new_eye, force_reset)
+	if(result & COMSIG_UPDATE_NEW_PERSPECTIVE)
+		return ..(potential_perspective_list[1])
+
 	return ..()
 
 /mob/living/carbon/human/Topic(href, href_list)
@@ -442,8 +447,8 @@
 	//Check for weapons
 	if((judgement_criteria & JUDGE_WEAPONCHECK))
 		if(isnull(idcard) || !(ACCESS_WEAPONS in idcard.access))
-			for(var/obj/item/toy_gun in held_items) //if they're holding a gun
-				if(CHECK_PERMIT(toy_gun))
+			for(var/obj/item/potential_weapon as anything in get_held_items()) //if they're holding a weapon
+				if(CHECK_PERMIT(potential_weapon))
 					threatcount += 4
 			if(CHECK_PERMIT(belt) || CHECK_PERMIT(back)) //if a weapon is present in the belt or back slot
 				threatcount += 2 //not enough to trigger look_for_perp() on it's own unless they also have criminal status.
@@ -492,7 +497,7 @@
 /mob/living/carbon/human/singularity_pull(atom/singularity, current_size)
 	..()
 	if(current_size >= STAGE_THREE)
-		for(var/obj/item/hand in held_items)
+		for(var/obj/item/hand as anything in get_held_items())
 			if(prob(current_size * 5) && hand.w_class >= ((11-current_size)/2)  && dropItemToGround(hand))
 				step_towards(hand, src)
 				to_chat(src, span_warning("\The [singularity] pulls \the [hand] from your grip!"))

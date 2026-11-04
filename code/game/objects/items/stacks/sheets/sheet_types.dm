@@ -257,7 +257,7 @@ GLOBAL_LIST_INIT(metal_recipes, list ( \
 	var/frame_path = null
 	var/cost = 2 // Default girder cost
 	var/time = 4 SECONDS //Default girder build time
-	var/obj/item/circuitboard/held_board = locate() in user.held_items
+	var/obj/item/circuitboard/held_board = user.is_holding_item_of_type(__IMPLIED_TYPE__)
 	if(!isnull(held_board))
 		if(istype(held_board, /obj/item/circuitboard/machine))
 			frame_path = /obj/structure/frame/machine
@@ -553,8 +553,8 @@ GLOBAL_LIST_INIT(cloth_recipes, list ( \
 	merge_type = /obj/item/stack/sheet/cloth
 	drop_sound = 'sound/items/handling/cloth/cloth_drop1.ogg'
 	pickup_sound = 'sound/items/handling/cloth/cloth_pickup1.ogg'
-	pickup_sound = SFX_CLOTH_PICKUP
-	drop_sound = SFX_CLOTH_DROP
+	pickup_sound = /datum/sound_effect/cloth_pickup
+	drop_sound = /datum/sound_effect/cloth_drop
 
 /obj/item/stack/sheet/cloth/grind_results()
 	return list(/datum/reagent/cellulose = 20)

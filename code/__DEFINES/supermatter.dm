@@ -93,6 +93,9 @@
 /// In-game factors like the destabilizing crystal [/obj/item/destabilizing_crystal].
 /// Purged when SM heals to 100
 #define SM_DELAM_PRIO_IN_GAME 1
+/// Forced by admins.
+/// Not purged when SM heals to 100
+#define SM_DELAM_PRIO_ADMIN 2
 
 /// Purge the current forced delam and make it zero again (back to normal).
 /// Needs to be higher priority than current forced_delam though.

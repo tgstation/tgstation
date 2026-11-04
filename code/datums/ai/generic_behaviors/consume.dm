@@ -27,7 +27,7 @@
 	if(!QDELETED(target) && !DOING_INTERACTION_WITH_TARGET(living_pawn, target))
 		controller.clear_blackboard_key(target_key)
 		living_pawn.dropItemToGround(target) // drops empty drink glasses
-	for(var/obj/item/trash/trash in living_pawn.held_items)
+	for(var/obj/item/trash/trash as anything in living_pawn.get_held_items_of_type(/obj/item/trash))
 		living_pawn.dropItemToGround(trash) // drops spawned trash items
 
 /// Check if the target is fully consumed, or being actively consumed, or if we're just bored of eating it

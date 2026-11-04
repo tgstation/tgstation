@@ -77,7 +77,7 @@
 		active = FALSE
 		return
 	visible_message(span_warning("[src] goes off, outright decapitating [brian]!"), span_hear("You hear a fleshy boom!"))
-	playsound(src, SFX_EXPLOSION, 30, TRUE)
+	playsound(src, /datum/sound_effect/explosion, 30, TRUE)
 	brian.apply_damage(200, BRUTE, BODY_ZONE_HEAD)
 	var/obj/item/bodypart/head/myhead = brian.get_bodypart(BODY_ZONE_HEAD)
 	myhead?.dismember()

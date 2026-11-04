@@ -115,7 +115,7 @@
 
 	backpack_contents = list(
 		/obj/item/ammo_casing/shotgun/rubbershot = 4,
-		/obj/item/ammo_casing/shotgun/incendiary/no_trail = 4,
+		/obj/item/ammo_casing/shotgun/incendiary/milspec = 4,
 	)
 
 /datum/outfit/bountyarmor/post_equip(mob/living/carbon/human/H, visuals_only = FALSE)

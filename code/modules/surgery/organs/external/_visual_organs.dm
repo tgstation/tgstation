@@ -57,6 +57,9 @@ Unlike normal organs, we're actually inside a persons limbs at all times
 		stack_trace("passed a null path or mob to 'should_visual_organ_apply_to'")
 		return FALSE
 
+	if(initial(organpath.sprite_accessory_override))
+		return TRUE
+
 	var/datum/bodypart_overlay/mutant/bodypart_overlay = initial(organpath.bodypart_overlay)
 	var/feature_key = !isnull(bodypart_overlay) && initial(bodypart_overlay.feature_key)
 	if(isnull(feature_key))

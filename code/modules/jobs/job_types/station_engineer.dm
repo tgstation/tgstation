@@ -59,6 +59,7 @@
 	shoes = /obj/item/clothing/shoes/workboots
 	l_pocket = /obj/item/modular_computer/pda/crew/engineering
 	r_pocket = /obj/item/t_scanner
+	gloves = /obj/item/clothing/gloves/color/yellow
 
 	backpack = /obj/item/storage/backpack/industrial
 	satchel = /obj/item/storage/backpack/satchel/eng
@@ -74,11 +75,6 @@
 	skillchips = list(/obj/item/skillchip/job/engineer)
 
 	wintercoat = /obj/item/clothing/suit/hooded/wintercoat/engineering
-
-/datum/outfit/job/engineer/gloved
-	name = "Station Engineer (Gloves)"
-
-	gloves = /obj/item/clothing/gloves/color/yellow
 
 /datum/outfit/job/engineer/mod
 	name = "Station Engineer (MODsuit)"

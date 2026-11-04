@@ -37,7 +37,9 @@ runs:
       shell: bash
       run: |
         sudo dpkg --add-architecture i386
-        sudo dpkg -i ~/apt-cache/*.deb
+        sudo apt-get update -qq
+        sudo cp ~/apt-cache/*.deb /var/cache/apt/archives/
+        sudo apt-get install -y --no-install-recommends libcurl4t64:i386
 
     - name: Find fastest APT mirror
       if: env.BYOND_MAJOR >= 516 && env.BYOND_MINOR >= 1664 && !steps.restore_libcurl_cache.outputs.cache-hit

@@ -67,7 +67,7 @@
 		if(crate)
 			crate.close()  //make sure the crate is closed
 		object_to_load.forceMove(src)
-		playsound(src, SFX_HEAVY_DROP, 60, TRUE)
+		playsound(src, /datum/sound_effect/heavy_drop, 60, TRUE)
 
 	else if(isliving(atom_to_load))
 		if(!load_mob(atom_to_load)) //forceMove() is handled in buckling
@@ -118,7 +118,7 @@
 
 	if(dirn) //move the thing to the delivery point.
 		cached_load.Move(get_step(loc,dirn), dirn)
-	playsound(src, SFX_HEAVY_DROP, 50, TRUE)
+	playsound(src, /datum/sound_effect/heavy_drop, 50, TRUE)
 	update_appearance()
 
 /mob/living/basic/bot/mulebot/proc/do_loading_animation(atom/movable/animated_load, turf/old_loc)

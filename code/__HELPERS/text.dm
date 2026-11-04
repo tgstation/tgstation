@@ -364,23 +364,26 @@
 		return copytext_char(text, 1, max_length)
 	return text
 
-//Returns a string with reserved characters and spaces before the first word and after the last word removed.
+/// Returns a string with reserved characters and spaces before the first word and after the last word removed.
 /proc/trim(text, max_length)
 	if(max_length)
 		text = copytext_char(text, 1, max_length)
 	return trimtext(text) || "" //users expect atleast an empty string
 
-//Returns a string with the first element of the string capitalized.
-/proc/capitalize(t)
+/// Returns a string with the first word of the string capitalized.
+/proc/capitalize(input)
+	return replacetext(input, regex(@"[^A-z]*?([A-z]*)"), /proc/capitalize_word)
+
+/// Returns a string with the first letter of each word capitialized
+/proc/full_capitalize(input)
+	return replacetext(input, regex(@"[^A-z]*?([A-z]*)", "g"), /proc/capitalize_word)
+
+/// Capitalizes the first symbol in a passed string. Unsafe when used with BYOND string macros, use capitalize() instead!
+/proc/capitalize_word(t)
 	. = t
 	if(t)
 		. = t[1]
 		return uppertext(.) + copytext(t, 1 + length(.))
-
-///Returns a string with the first letter of each word capitialized
-/proc/full_capitalize(input)
-	var/regex/first_letter = new(@"[^A-z]*?([A-z]*)", "g")
-	return replacetext(input, first_letter, /proc/capitalize)
 
 /proc/stringmerge(text,compare,replace = "*")
 //This proc fills in all spaces with the "replace" var (* by default) with whatever

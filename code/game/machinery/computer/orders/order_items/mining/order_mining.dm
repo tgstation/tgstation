@@ -9,10 +9,6 @@
 	purchase_path = /obj/item/stack/candela_beacon/ten
 	cost_per_order = 80
 
-/datum/orderable_item/mining/skeleton_key
-	purchase_path = /obj/item/skeleton_key
-	cost_per_order = 675
-
 /datum/orderable_item/mining/mining_stabilizer
 	purchase_path = /obj/item/mining_stabilizer
 	cost_per_order = 320

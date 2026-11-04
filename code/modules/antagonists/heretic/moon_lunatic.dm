@@ -1,7 +1,6 @@
 // A type of antagonist created by the moon ascension
 /datum/antagonist/lunatic
 	name = "\improper Lunatic"
-	hijack_speed = 0
 	antagpanel_category = ANTAG_GROUP_HORRORS
 	show_in_antagpanel = FALSE
 	suicide_cry = "PRAISE THE RINGLEADER!!"

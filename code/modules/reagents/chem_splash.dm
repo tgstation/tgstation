@@ -106,6 +106,9 @@
 
 	// Remove anything we can't see
 	for(var/atom/thing as anything in (dview(spread_range, epicenter) & reactable))
+		// Earlier reactions may have deleted another target in this list.
+		if(QDELETED(thing))
+			continue
 		var/distance = max(1, get_dist(thing, epicenter))
 		var/fraction = 0.5 / (2 ** distance) //50/25/12/6... for a 200u splash, 25/12/6/3... for a 100u, 12/6/3/1 for a 50u
 		source.expose(thing, TOUCH, fraction)

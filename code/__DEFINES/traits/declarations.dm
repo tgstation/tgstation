@@ -120,8 +120,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BRAINLESS_CARBON "brainless_carbon"
 #define TRAIT_BADDNA "baddna"
 #define TRAIT_CLUMSY "clumsy"
-/// Trait that means you are capable of holding items in some form
-#define TRAIT_CAN_HOLD_ITEMS "can_hold_items"
 /// Trait that means you're capable of throwing things
 #define TRAIT_CAN_THROW_ITEMS "can_throw_items"
 /// Trait which lets you clamber over a barrier
@@ -788,6 +786,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_LIGHTBULB_REMOVER "lightbulb_remover"
 #define TRAIT_KNOW_ROBO_WIRES "know_robo_wires"
 #define TRAIT_KNOW_ENGI_WIRES "know_engi_wires"
+#define TRAIT_KNOW_ATMOS_WIRES "know_atmos_wires"
 #define TRAIT_ENTRAILS_READER "entrails_reader"
 #define TRAIT_SABRAGE_PRO "sabrage_pro"
 /// this skillchip trait lets you wash brains in washing machines to heal them
@@ -1018,8 +1017,6 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_BORG_GIVE "give_borg_item"
 
 //---- Heretic Traits
-/// Hides the heretic overlay that outs them as the heretic
-#define TRAIT_HERETIC_AURA_HIDDEN "heretic_aura_hidden"
 /// This rod was infused by a heretic, making it awesome and improving influence gain
 #define TRAIT_ROD_MANSUS_INFUSED "rod_infused"
 /// Designates a heart as a living heart for a heretic.
@@ -1248,8 +1245,17 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 /// Trait given to a dreaming carbon when they are currently doing dreaming stuff
 #define TRAIT_DREAMING "currently_dreaming"
 
+/// Trait for if you've recently had drink that helps you sleep
+#define TRAIT_HAD_SLEEPY_DRINK "had_sleepy_drink"
+
 /// Trait for if you've recently had a Last Word cocktail
 #define TRAIT_HAD_LAST_WORD "had_last_word"
+
+/// Trait for if you've recently had a Footsoldier's Razor cocktail
+#define TRAIT_HAD_FOOTSOLDIERS_RAZOR "had_footsoldiers_razor"
+
+/// Trait for if you've completed the farstar amarita's communion
+#define TRAIT_FARSTAR_SHARED "farstar_shared"
 
 /// Whether bots will salute this mob.
 #define TRAIT_COMMISSIONED "commissioned"
@@ -1443,6 +1449,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Trait used by the /obj/item/wallframe/painting/eldritch/desire status effect to change their preferences of what they eat
 #define TRAIT_FLESH_DESIRE "flesh_desire"
+
+///Softer version of the above trait which just adds the same preferences as flesh desire without also making everything else toxic
+#define TRAIT_FLESH_PECKISH "flesh_peckish"
 
 ///Trait granted by janitor skillchip, allows communication with cleanbots
 #define TRAIT_CLEANBOT_WHISPERER "cleanbot_whisperer"
@@ -1752,6 +1761,9 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 
 /// Objects with this trait may become a new prison for a revenant, in the event of its ectoplasm dispersing
 #define TRAIT_COZY_REVENANT_HOME "cozy_revenant_home"
+
+/// Objects that do not let overlay light holders shine through themselves
+#define TRAIT_BLOCKS_OVERLAY_LIGHT "blocks_overlay_light"
 
 /// Mobs with this trait will appear as human to medical scanners even if they are not human
 #define TRAIT_HUMAN_DISGUISE "human_disguise"

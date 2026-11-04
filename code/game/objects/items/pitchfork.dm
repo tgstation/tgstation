@@ -32,9 +32,5 @@
 /obj/item/pitchfork/Initialize(mapload)
 	. = ..()
 	AddComponent(/datum/component/jousting)
-	AddComponent(/datum/component/two_handed, force_unwielded=7, force_wielded=15, icon_wielded="[base_icon_state]1")
+	AddComponent(/datum/component/two_handed, force_unwielded=7, force_wielded=15, update_icon_state=TRUE)
 	AddComponent(/datum/component/walking_aid)
-
-/obj/item/pitchfork/update_icon_state()
-	icon_state = "[base_icon_state]0"
-	return ..()

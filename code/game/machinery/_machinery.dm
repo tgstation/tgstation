@@ -113,7 +113,7 @@
 	///the amount of static power load this machine adds to its area's power_usage list when use_power = ACTIVE_POWER_USE
 	var/active_power_usage = BASE_MACHINE_ACTIVE_CONSUMPTION
 	///the current amount of static power usage this machine is taking from its area
-	var/static_power_usage = 0
+	VAR_PRIVATE/static_power_usage = 0
 	//AREA_USAGE_EQUIP,AREA_USAGE_ENVIRON or AREA_USAGE_LIGHT
 	var/power_channel = AREA_USAGE_EQUIP
 	///A combination of factors such as having power, not being broken and so on. Boolean.

@@ -48,6 +48,10 @@
 
 /datum/candela_item_handler/proc/on_parent_dropped(obj/item/source, mob/living/user)
 	SIGNAL_HANDLER
+	// As moved() is called before dropped() signal fires, we need to check if we were put into valid storage on the same mob, in which case we don't break the link
+	var/atom/parent_loc = parent.loc
+	if (isitem(parent_loc) && parent_loc.loc == user && (user.get_slot_by_item(parent_loc) & storage_active_slots))
+		return
 	set_owner(null)
 
 /datum/candela_item_handler/proc/on_parent_moved(obj/item/source, atom/old_loc, movement_dir, forced, list/old_locs, momentum_change)

@@ -252,12 +252,6 @@
 	mood_change = -15
 	event_flags = MOOD_EVENT_PAIN
 
-/datum/mood_event/sacrifice_bad
-	description = "Those darn savages!"
-	mood_change = -5
-	timeout = 2 MINUTES
-	event_flags = MOOD_EVENT_SPIRITUAL
-
 /datum/mood_event/artbad
 	description = "I've produced better art than that from my ass."
 	mood_change = -2

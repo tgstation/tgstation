@@ -175,7 +175,7 @@
 /obj/item/storage/box/hug/attack_self(mob/user)
 	..()
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, SFX_RUSTLE, 50, vary=TRUE, extrarange=-5)
+	playsound(loc, /datum/sound_effect/rustle, 50, vary=TRUE, extrarange=-5)
 	user.visible_message(span_notice("[user] hugs [src]."),span_notice("You hug [src]."))
 
 /obj/item/storage/box/hug/black
@@ -199,7 +199,7 @@
 	qdel(tool)
 	loc.balloon_alert(user, "wheels added, honk!")
 	var/obj/item/bot_assembly/honkbot/assembly = new(drop_location())
-	var/held_index = user.is_holding(src)
+	var/held_index = user.get_held_index_of_item(src)
 	qdel(src)
 	if (held_index)
 		user.put_in_hand(assembly, held_index)
@@ -253,7 +253,7 @@
 /obj/item/storage/box/survival/hug/attack_self(mob/user)
 	..()
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, SFX_RUSTLE, 50, vary=TRUE, extrarange=-5)
+	playsound(loc, /datum/sound_effect/rustle, 50, vary=TRUE, extrarange=-5)
 	user.visible_message(span_notice("[user] hugs [src]."),span_notice("You hug [src]."))
 
 /obj/item/storage/box/hug/plushes

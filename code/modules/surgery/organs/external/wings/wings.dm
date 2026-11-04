@@ -190,7 +190,7 @@
 
 	playsound(human.loc, 'sound/misc/slip.ogg', 50, TRUE, -3)
 
-	for(var/obj/item/choking_hazard in human.held_items)
+	for(var/obj/item/choking_hazard as anything in human.get_held_items())
 		human.accident(choking_hazard)
 
 	var/olddir = human.dir
@@ -279,7 +279,7 @@
 	feature_key = FEATURE_WINGS
 	color_source = ORGAN_COLOR_OVERRIDE
 	offset_location = ENTIRE_BODY
-	overlay_flags = parent_type::overlay_flags | LIMB_OVERLAY_WIDE_ICON
+	overlay_flags = parent_type::overlay_flags | LIMB_OVERLAY_WIDE_ICON | LIMB_OVERLAY_TALL_ICON
 	/// Slot we check against
 	var/slot_blocker = HIDEJUMPSUIT
 

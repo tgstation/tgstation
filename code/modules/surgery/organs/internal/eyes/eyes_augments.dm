@@ -300,7 +300,7 @@
 /obj/item/organ/eyes/robotic/glow/proc/set_beam_range(new_range)
 	var/old_light_range = eye.light_range
 	if(old_light_range == 0 && new_range > 0 && eye.light_on) // turn bring back the light overlay if we were previously at 0 (aka emissive eyes only)
-		eye.light_on = FALSE // this is stupid, but this has to be FALSE for set_light_on() to work.
+		eye.set_light_on(FALSE) // Toggle them off and on
 		eye.set_light_on(TRUE)
 	eye.set_light_range(clamp(new_range, 0, max_light_beam_distance))
 
@@ -619,6 +619,7 @@
 			COMSIG_QDELETING,
 			COMSIG_ATOM_UPDATE_APPEARANCE,
 			COMSIG_LIVING_POST_UPDATE_TRANSFORM,
+			COMSIG_LIVING_CHAT_INDICATOR_UPDATED,
 			COMSIG_MOB_EQUIPPED_ITEM,
 			COMSIG_MOB_UNEQUIPPED_ITEM,
 			COMSIG_LIVING_UPDATE_OFFSETS,
@@ -674,6 +675,7 @@
 		// Lying down/being pushed
 		RegisterSignal(source, COMSIG_LIVING_POST_UPDATE_TRANSFORM, PROC_REF(refresh_overlay))
 		RegisterSignal(source, COMSIG_LIVING_UPDATE_OFFSETS, PROC_REF(refresh_overlay))
+		RegisterSignal(source, COMSIG_LIVING_CHAT_INDICATOR_UPDATED, PROC_REF(refresh_overlay))
 
 	mob_overlays[source] = make_overlay(source)
 	owner.client?.images |= mob_overlays[source]

@@ -13,7 +13,7 @@
 	use_energy_cost = DEFAULT_CHARGE_DRAIN * 10
 	incompatible_modules = list(/obj/item/mod/module/stealth)
 	cooldown_time = 5 SECONDS
-	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING, ITEM_SLOT_GLOVES, ITEM_SLOT_FEET)
+	required_slots = list(ITEM_SLOT_HEAD|ITEM_SLOT_MASK, ITEM_SLOT_OCLOTHING|ITEM_SLOT_ICLOTHING, ITEM_SLOT_GLOVES|ITEM_SLOT_FEET)
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 5, /datum/material/bluespace = SMALL_MATERIAL_AMOUNT * 5)
 	/// Whether or not the cloak turns off on bumping.
 	var/bumpoff = TRUE
@@ -230,7 +230,7 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/computer/records/security/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!do_after(ninja, 20 SECONDS, src, extra_checks = CALLBACK(src, PROC_REF(can_hack), ninja), cog_icon = null))
+	if(!do_after(ninja, 20 SECONDS, src, extra_checks = CALLBACK(src, PROC_REF(can_hack), ninja), timed_action_flags = HIDE_INTERACTION))
 		return
 	for(var/datum/record/crew/target in GLOB.manifest.general)
 		target.wanted_status = WANTED_ARREST
@@ -277,9 +277,9 @@
 		if(hacking_module.mod.get_charge() + drain > hacking_module.mod.get_max_charge())
 			drain = hacking_module.mod.get_max_charge() - hacking_module.mod.get_charge()
 			maxcapacity = TRUE//Reached maximum battery capacity.
-		if (do_after(ninja, 1 SECONDS, target = src, cog_icon = null))
+		if (do_after(ninja, 1 SECONDS, target = src, timed_action_flags = HIDE_INTERACTION))
 			spark_system.start()
-			playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(loc, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			cell.use(drain)
 			hacking_module.mod.add_charge(drain)
 			drain_total += drain
@@ -287,7 +287,7 @@
 			break
 	if(!(obj_flags & EMAGGED))
 		flick("apc-spark", hacking_module)
-		playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+		playsound(loc, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 		obj_flags |= EMAGGED
 		locked = FALSE
 		update_appearance()
@@ -312,9 +312,9 @@
 		if(hacking_module.mod.get_charge() + drain > hacking_module.mod.get_max_charge())
 			drain = hacking_module.mod.get_max_charge() - hacking_module.mod.get_charge()
 			maxcapacity = TRUE
-		if (do_after(ninja, 1 SECONDS, target = src, cog_icon = null))
+		if (do_after(ninja, 1 SECONDS, target = src, timed_action_flags = HIDE_INTERACTION))
 			spark_system.start()
-			playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+			playsound(loc, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 			charge -= drain
 			hacking_module.mod.add_charge(drain)
 			drain_total += drain
@@ -332,7 +332,7 @@
 
 /obj/item/stock_parts/power_store/cell/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	var/drain_total = 0
-	if(charge && !do_after(ninja, 3 SECONDS, target = src, cog_icon = null))
+	if(charge && do_after(ninja, 3 SECONDS, target = src, timed_action_flags = HIDE_INTERACTION))
 		drain_total = charge
 		if(hacking_module.mod.get_charge() + charge > hacking_module.mod.get_max_charge())
 			drain_total = hacking_module.mod.get_max_charge() - hacking_module.mod.get_charge()
@@ -340,7 +340,8 @@
 		use(drain_total)
 		corrupt()
 		update_appearance()
-	hacking_module.charge_message(src, drain_total)
+	if(drain_total > 0)
+		hacking_module.charge_message(src, drain_total)
 
 //RD SERVER, Ninja objective will download the RnD files and destroy source code hard drive.
 /obj/machinery/rnd/server/master/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
@@ -356,7 +357,7 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/rnd/server/master/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!do_after(ninja, 30 SECONDS, target = src, cog_icon = null))
+	if(!do_after(ninja, 30 SECONDS, target = src, timed_action_flags = HIDE_INTERACTION))
 		return
 	overload_source_code_hdd()
 	to_chat(ninja, span_notice("Sabotage complete. Storage device overloaded."))
@@ -375,7 +376,7 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /obj/machinery/rnd/server/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!do_after(ninja, 30 SECONDS, target = src, cog_icon = null))
+	if(!do_after(ninja, 30 SECONDS, target = src, timed_action_flags = HIDE_INTERACTION))
 		return
 	stored_research.adjust_all_points(-INFINITY)
 	to_chat(ninja, span_notice("Sabotage complete. Research notes corrupted."))
@@ -440,7 +441,7 @@
 	while(!maxcapacity && src)
 		drain = (round((rand(NINJA_MIN_DRAIN, NINJA_MAX_DRAIN))/2))
 		var/drained = 0
-		if(wire_powernet && do_after(ninja, 1 SECONDS, target = src, cog_icon = null))
+		if(wire_powernet && do_after(ninja, 1 SECONDS, target = src, timed_action_flags = HIDE_INTERACTION))
 			drained = min(drain, delayed_surplus())
 			add_delayedload(drained)
 			if(drained < drain)//if no power on net, drain apcs
@@ -480,9 +481,9 @@
 			if(hacking_module.mod.get_charge() + drain > hacking_module.mod.get_max_charge())
 				drain = hacking_module.mod.get_max_charge() - hacking_module.mod.get_charge()
 				maxcapacity = TRUE
-			if (do_after(ninja, 1 SECONDS, target = src, cog_icon = null))
+			if (do_after(ninja, 1 SECONDS, target = src, timed_action_flags = HIDE_INTERACTION))
 				spark_system.start()
-				playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+				playsound(loc, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 				cell.use(drain)
 				hacking_module.mod.add_charge(drain)
 				drain_total += drain
@@ -500,10 +501,10 @@
 	return COMPONENT_CANCEL_ATTACK_CHAIN
 
 /mob/living/silicon/robot/proc/ninjadrain_charge(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
-	if(!do_after(ninja, 6 SECONDS, target = src, cog_icon = null))
+	if(!do_after(ninja, 6 SECONDS, target = src, timed_action_flags = HIDE_INTERACTION))
 		return
 	spark_system.start()
-	playsound(loc, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(loc, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	to_chat(src, span_danger("UPLOAD COMPLETE. NEW CYBORG MODEL DETECTED.  INSTALLING..."))
 	faction = list(ROLE_NINJA)
 	bubble_icon = "syndibot"
@@ -550,7 +551,7 @@
 //BOTS, overloads them and causes a explosion
 /mob/living/basic/bot/ninjadrain_act(mob/living/carbon/human/ninja, obj/item/mod/module/hacker/hacking_module)
 	to_chat(src, span_boldwarning("Your circutry suddenly begins heating up!"))
-	if(!do_after(ninja, 1.5 SECONDS, target = src, cog_icon = null))
+	if(!do_after(ninja, 1.5 SECONDS, target = src, timed_action_flags = HIDE_INTERACTION))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(!hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 7))
@@ -576,7 +577,7 @@
 		balloon_alert(ninja, "no energy!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(!do_after(ninja, 1.5 SECONDS, target = src, cog_icon = null))
+	if(!do_after(ninja, 1.5 SECONDS, target = src, timed_action_flags = HIDE_INTERACTION))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	hacking_module.mod.add_charge(cell.charge)
@@ -593,7 +594,7 @@
 		balloon_alert(ninja, "already hacked!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(!do_after(ninja, 2 SECONDS, target = src, cog_icon = null))
+	if(!do_after(ninja, 2 SECONDS, target = src, timed_action_flags = HIDE_INTERACTION))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	if(!hacking_module.mod.subtract_charge(DEFAULT_CHARGE_DRAIN * 5))
@@ -611,7 +612,7 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	AI_notify_hack()
-	if(!do_after(ninja, 30 SECONDS, target = src, cog_icon = null))
+	if(!do_after(ninja, 30 SECONDS, target = src, timed_action_flags = HIDE_INTERACTION))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	do_sparks(3, cardinal_only = FALSE, source = src)
@@ -625,7 +626,7 @@
 		balloon_alert(ninja, "already hacked!")
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
-	if(!do_after(ninja, 2 SECONDS, target = src, cog_icon = null))
+	if(!do_after(ninja, 2 SECONDS, target = src, timed_action_flags = HIDE_INTERACTION))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	do_sparks(3, cardinal_only = FALSE, source = src)
@@ -646,7 +647,7 @@
 
 	AI_notify_hack()
 
-	if(!do_after(ninja, 20 SECONDS, target = src, cog_icon = null)) //Shorter due to how incredibly easy it is for someone to (even accidentally) interrupt.
+	if(!do_after(ninja, 20 SECONDS, target = src, timed_action_flags = HIDE_INTERACTION)) //Shorter due to how incredibly easy it is for someone to (even accidentally) interrupt.
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	force_event(/datum/round_event_control/tram_malfunction, "ninja interference")
@@ -848,7 +849,7 @@
 	if(!.)
 		return
 	if(IS_SPACE_NINJA(mod.wearer) && isliving(target))
-		mod.wearer.say("Get over here!", forced = type)
+		INVOKE_ASYNC(mod.wearer, TYPE_PROC_REF(/atom/movable, say), "Get over here!", forced = type)
 	var/obj/projectile/net = new /obj/projectile/energy_net(mod.wearer.loc, src)
 	net.aim_projectile(target, mod.wearer)
 	net.firer = mod.wearer
@@ -979,7 +980,7 @@
 
 /obj/item/mod/module/adrenaline_boost/on_use(mob/activator)
 	if(IS_SPACE_NINJA(mod.wearer))
-		mod.wearer.say(pick_list_replacements(NINJA_FILE, "lines"), forced = type)
+		INVOKE_ASYNC(mod.wearer, TYPE_PROC_REF(/atom/movable, say), pick_list_replacements(NINJA_FILE, "lines"), forced = type)
 	to_chat(mod.wearer, span_notice("You have used the adrenaline boost."))
 	mod.wearer.SetAllImmobility(0)
 	mod.wearer.adjust_stamina_loss(-200)

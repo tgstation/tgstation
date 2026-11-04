@@ -426,6 +426,10 @@ GLOBAL_LIST_EMPTY(preferences_datums)
 	else
 		job_preferences[job.title] = level
 
+	if(isnewplayer(parent?.mob))
+		var/mob/dead/new_player/lobbyguy = parent.mob
+		lobbyguy.update_ready_report()
+
 	return TRUE
 
 /datum/preferences/proc/GetQuirkBalance()

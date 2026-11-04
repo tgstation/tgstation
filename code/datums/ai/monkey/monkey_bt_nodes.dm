@@ -28,6 +28,11 @@
 	if(async_flags)
 		return async_flags
 
+	// Someone may have picked it up while we walked over, don't yank it out of their inventory.
+	var/obj/item/target = controller.blackboard[target_key]
+	if(QDELETED(target) || !isturf(target.loc))
+		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
+
 	return start_async()
 
 /datum/bt_node/ai_behavior/monkey_equip/ground/perform_async(datum/ai_controller/controller)
@@ -63,17 +68,14 @@
 
 	var/success = FALSE
 
-	if(do_after(living_pawn, MONKEY_ITEM_SNATCH_DELAY, victim) && target && victim.IsReachableBy(living_pawn))
-		for(var/obj/item/I in victim.held_items)
-			if(I == target)
-				victim.visible_message(span_danger("[living_pawn] snatches [target] from [victim]."), span_userdanger("[living_pawn] snatched [target]!"))
-				if(victim.temporarilyRemoveItemFromInventory(target))
-					if(!QDELETED(target) && !equip_item(controller))
-						target.forceMove(living_pawn.drop_location())
-						success = TRUE
-						break
-				else
-					victim.visible_message(span_danger("[living_pawn] tried to snatch [target] from [victim], but failed!"), span_userdanger("[living_pawn] tried to grab [target]!"))
+	if(do_after(living_pawn, MONKEY_ITEM_SNATCH_DELAY, victim) && !QDELETED(target) && victim.IsReachableBy(living_pawn) && victim.is_holding(target))
+		if(!victim.temporarilyRemoveItemFromInventory(target))
+			victim.visible_message(span_danger("[living_pawn] tried to snatch [target] from [victim], but failed!"), span_userdanger("[living_pawn] tried to grab your [target.name]!"))
+		else
+			victim.visible_message(span_danger("[living_pawn] snatches [target] from [victim]."), span_userdanger("[living_pawn] snatched [target]!"))
+			success = TRUE
+			if(!equip_item(controller))
+				target.forceMove(living_pawn.drop_location())
 
 	finish_action(controller, success)
 
@@ -107,7 +109,7 @@
 			return FALSE
 		return TRUE
 
-	if(living_pawn.get_empty_held_indexes()) // any free hand
+	if(length(living_pawn.get_empty_held_indexes())) // any free hand
 		living_pawn.put_in_hands(target)
 		return TRUE
 
@@ -121,7 +123,7 @@
 	for(var/obj/item/ground_item in oview(range, pawn))
 		candidates += ground_item
 	for(var/mob/living/carbon/human/nearby_human in oview(range, pawn))
-		candidates += nearby_human.held_items
+		candidates += nearby_human.get_held_items()
 	return candidates
 
 /// Weapon upgrade candidate: not two-handed, not blacklisted, and hits harder than our bite.
@@ -143,9 +145,9 @@
 
 /datum/bt_node/ai_behavior/acquire_target/update_interaction_target/monkey_find_weapon/can_search(datum/ai_controller/controller)
 	var/mob/living/living_pawn = controller.pawn
-	if(!(locate(/obj/item) in living_pawn.held_items))
+	if(!living_pawn.is_holding_items())
 		controller.set_blackboard_key(BB_MONKEY_BEST_FORCE_FOUND, 0)
-	if(controller.blackboard[BB_MONKEY_GUN_NEURONS_ACTIVATED] && (locate(/obj/item/gun) in living_pawn.held_items))
+	if(controller.blackboard[BB_MONKEY_GUN_NEURONS_ACTIVATED] && living_pawn.is_holding_item_of_type(/obj/item/gun))
 		return FALSE // already have a gun
 	return ..()
 
@@ -159,7 +161,7 @@
 				return candidate
 
 	var/top_force = 0
-	for(var/obj/item/held in living_pawn.held_items)
+	for(var/obj/item/held as anything in living_pawn.get_held_items())
 		if(HAS_TRAIT(held, TRAIT_NEEDS_TWO_HANDS) || controller.blackboard[BB_MONKEY_BLACKLISTITEMS][held])
 			continue
 		top_force = max(top_force, held.force)
@@ -237,7 +239,7 @@
 		return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED
 
 	var/obj/item/holding_weapon
-	for(var/obj/item/potential_weapon in target.held_items)
+	for(var/obj/item/potential_weapon as anything in target.get_held_items())
 		if(!(potential_weapon.item_flags & ABSTRACT))
 			holding_weapon = potential_weapon
 			break
@@ -286,7 +288,7 @@
 
 	living_pawn.face_atom(target)
 
-	var/obj/item/potential_weapon = locate(/obj/item) in living_pawn.held_items
+	var/obj/item/potential_weapon = living_pawn.is_holding_item_of_type(/obj/item)
 
 	if(target.IsReachableBy(living_pawn, potential_weapon?.reach))
 		if(isnull(potential_weapon))
@@ -308,7 +310,7 @@
 	if(prob(10)) // artificial miss
 		real_target = pick(oview(2, target))
 
-	var/obj/item/gun/gun = locate(/obj/item/gun) in living_pawn.held_items
+	var/obj/item/gun/gun = living_pawn.is_holding_item_of_type(/obj/item/gun)
 	var/can_shoot = gun?.can_shoot() || FALSE
 	if(gun && controller.blackboard[BB_MONKEY_GUN_WORKED] && prob(95))
 		if(gun != living_pawn.get_active_held_item())
@@ -354,7 +356,7 @@
 			return AI_BEHAVIOR_DELAY | AI_BEHAVIOR_FAILED // my boss is on duty!
 		if(IS_UNCONSCIOUS_OR_CRIT(human_mob) || HAS_TRAIT(human_mob, TRAIT_LESSER_HUMANOID))
 			continue
-		if(!human_mob.get_empty_held_indexes())
+		if(!length(human_mob.get_empty_held_indexes()))
 			continue
 		nearby_patrons += human_mob
 

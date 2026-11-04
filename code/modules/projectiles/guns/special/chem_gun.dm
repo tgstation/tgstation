@@ -40,7 +40,7 @@
 	STOP_PROCESSING(SSobj, src)
 
 /obj/item/gun/chem/can_shoot()
-	return syringes_left
+	return ..() && syringes_left > 0
 
 /obj/item/gun/chem/handle_chamber()
 	if(chambered && !chambered.loaded_projectile && syringes_left)

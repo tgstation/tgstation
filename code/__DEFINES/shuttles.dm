@@ -11,9 +11,13 @@
 #define SHUTTLE_RECHARGING "recharging"
 #define SHUTTLE_PREARRIVAL "landing"
 
+/// Emergency shuttle either not called, or was recalled and is on cooldown
 #define EMERGENCY_IDLE_OR_RECALLED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_IDLE) || (SSshuttle.emergency.mode == SHUTTLE_RECALL)))
+/// Emergency shuttle has left the station or has docked at central command
 #define EMERGENCY_ESCAPED_OR_ENDGAMED (SSshuttle.emergency && ((SSshuttle.emergency.mode == SHUTTLE_ESCAPE) || (SSshuttle.emergency.mode == SHUTTLE_ENDGAME)))
+/// Emergency shuttle is docked at the station, is travelling to central command, is at central command, or is SOMEWHERE in between
 #define EMERGENCY_AT_LEAST_DOCKED (SSshuttle.emergency && SSshuttle.emergency.mode != SHUTTLE_IDLE && SSshuttle.emergency.mode != SHUTTLE_RECALL && SSshuttle.emergency.mode != SHUTTLE_CALL)
+/// Emergency shuttle is called and can no longer be recalled
 #define EMERGENCY_PAST_POINT_OF_NO_RETURN ((SSshuttle.emergency && SSshuttle.emergency.mode == SHUTTLE_CALL && !SSshuttle.past_restriction_point()) || EMERGENCY_AT_LEAST_DOCKED)
 
 // Shuttle return values

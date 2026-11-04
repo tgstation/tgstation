@@ -279,6 +279,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 10, \
 		force_wielded = 18, \
+		update_icon_state = TRUE, \
 	)
 	AddComponent(
 		/datum/component/butchering, \
@@ -291,10 +292,6 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 		owner.visible_message(span_danger("[owner] parries [attack_text] with [src]!"))
 		return TRUE
 	return FALSE
-
-/obj/item/nullrod/vibro/update_icon_state()
-	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
-	return ..()
 
 // God Hand - Cannot be dropped. Does burn damage.
 
@@ -313,7 +310,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	hitsound = 'sound/items/weapons/sear.ogg'
 	damtype = BURN
 	attack_verb_continuous = list("punches", "cross counters", "pummels")
-	attack_verb_simple = list(SFX_PUNCH, "cross counter", "pummel")
+	attack_verb_simple = list(/datum/sound_effect/punch, "cross counter", "pummel")
 	menu_description = "An undroppable god hand dealing burn damage. Disappears if the arm holding it is cut off."
 
 /obj/item/nullrod/godhand/Initialize(mapload)
@@ -617,7 +614,7 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	block_sound = 'sound/items/weapons/genhit.ogg'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
-	hitsound = SFX_SWING_HIT
+	hitsound = /datum/sound_effect/swing_hit
 	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
 	icon = 'icons/obj/weapons/staff.dmi'
@@ -635,12 +632,9 @@ GLOBAL_LIST_INIT(nullrod_variants, init_nullrod_variants())
 	AddComponent(/datum/component/two_handed, \
 		force_unwielded = 14, \
 		force_wielded = 18, \
+		update_icon_state = TRUE, \
 	)
 	AddComponent(/datum/component/walking_aid)
-
-/obj/item/nullrod/bostaff/update_icon_state()
-	icon_state = inhand_icon_state = "[base_icon_state][HAS_TRAIT(src, TRAIT_WIELDED)]"
-	return ..()
 
 /obj/item/nullrod/bostaff/hit_reaction(mob/living/carbon/human/owner, atom/movable/hitby, attack_text = "the attack", final_block_chance = 0, damage = 0, attack_type = MELEE_ATTACK, damage_type = BRUTE)
 	if(attack_type == PROJECTILE_ATTACK || attack_type == LEAP_ATTACK || attack_type == OVERWHELMING_ATTACK)

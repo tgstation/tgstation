@@ -138,7 +138,7 @@
 
 	blessed.visible_message(span_notice("[chap] heals [blessed] with the power of [GLOB.deity]!"))
 	to_chat(blessed, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
-	playsound(chap, SFX_PUNCH, 25, TRUE, -1)
+	playsound(chap, /datum/sound_effect/punch, 25, TRUE, -1)
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return BLESSING_SUCCESS
 
@@ -270,7 +270,7 @@
 	tgui_icon = FA_ICON_DOLLAR_SIGN
 	altar_icon_state = "convertaltar-yellow"
 	alignment = ALIGNMENT_EVIL //greed is not good wtf
-	rites_list = list(/datum/religion_rites/greed/vendatray, /datum/religion_rites/greed/custom_vending)
+	rites_list = list(/datum/religion_rites/greed/custom_vending)
 
 /datum/religion_sect/greed/tool_examine(mob/living/holy_creature) //display money policy
 	return "In the eyes of [GLOB.deity], your wealth is your favor."
@@ -408,7 +408,7 @@
 
 	target.visible_message(span_notice("[chaplain] takes on [target]'s burden!"))
 	to_chat(target, span_boldnotice("May the power of [GLOB.deity] compel you to be healed!"))
-	playsound(chaplain, SFX_PUNCH, 25, vary = TRUE, extrarange = -1)
+	playsound(chaplain, /datum/sound_effect/punch, 25, vary = TRUE, extrarange = -1)
 	target.add_mood_event("blessing", /datum/mood_event/blessing)
 	return BLESSING_SUCCESS
 
@@ -461,7 +461,7 @@
 	blessed.reagents.add_reagent(/datum/reagent/drug/maint/sludge, 5)
 	blessed.visible_message(span_notice("[chap] empowers [blessed] with the power of [GLOB.deity]!"))
 	to_chat(blessed, span_boldnotice("The power of [GLOB.deity] has made you harder to wound for a while!"))
-	playsound(chap, SFX_PUNCH, 25, TRUE, -1)
+	playsound(chap, /datum/sound_effect/punch, 25, TRUE, -1)
 	blessed.add_mood_event("blessing", /datum/mood_event/blessing)
 	return BLESSING_SUCCESS //trust me, you'll be feeling the pain from the maint drugs all well enough
 

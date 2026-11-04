@@ -285,7 +285,7 @@
 		return
 
 	total_gas_mixture.volume = volume_sum
-	total_gas_mixture.temperature = total_heat_capacity ? (total_thermal_energy / total_heat_capacity) : 0
+	total_gas_mixture.temperature = total_heat_capacity ? (total_thermal_energy / total_heat_capacity) : TCMB
 	total_gas_mixture.garbage_collect()
 
 	//Update individual gas_mixtures by volume ratio

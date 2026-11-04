@@ -1,8 +1,8 @@
 /datum/component/heart_eater
 	/// Check if we fully ate whole heart and reset when we start eat new one.
 	var/bites_taken = 0
-	/// Remember the number of species damage_modifier.
-	var/remember_modifier = 0
+	/// % Modifier that all incoming damage is multiplied by
+	var/damage_resistance_mod = 1.0
 	/// Remember last heart we ate and reset bites_taken counter if we start eat new one
 	var/datum/weakref/last_heart_we_ate
 	/// List of all mutations allowed to get.
@@ -36,12 +36,21 @@
 	RegisterSignal(parent, COMSIG_SPECIES_GAIN, PROC_REF(on_species_change))
 	RegisterSignal(parent, COMSIG_LIVING_FINISH_EAT, PROC_REF(eat_eat_eat))
 	RegisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK, PROC_REF(try_rip_heart))
+	RegisterSignal(parent, COMSIG_MOB_APPLY_DAMAGE_MODIFIERS, PROC_REF(apply_damage_mod))
 
 /datum/component/heart_eater/UnregisterFromParent()
 	. = ..()
-	UnregisterSignal(parent, COMSIG_LIVING_FINISH_EAT)
-	UnregisterSignal(parent, COMSIG_SPECIES_GAIN)
-	UnregisterSignal(parent, COMSIG_LIVING_UNARMED_ATTACK)
+	UnregisterSignal(parent, list(
+		COMSIG_SPECIES_GAIN,
+		COMSIG_LIVING_FINISH_EAT,
+		COMSIG_LIVING_UNARMED_ATTACK,
+		COMSIG_MOB_APPLY_DAMAGE_MODIFIERS,
+	))
+
+/datum/component/heart_eater/proc/apply_damage_mod(datum/source, list/damage_mods, ...)
+	SIGNAL_HANDLER
+
+	damage_mods += damage_resistance_mod
 
 /datum/component/heart_eater/proc/prepare_species(mob/living/carbon/human/eater)
 	if(eater.get_liked_foodtypes() & GORE)
@@ -55,7 +64,6 @@
 /datum/component/heart_eater/proc/on_species_change(mob/living/carbon/human/eater, datum/species/new_species, datum/species/old_species, pref_load, regenerate_icons)
 	SIGNAL_HANDLER
 
-	eater.dna?.species?.damage_modifier += remember_modifier
 	prepare_species(eater)
 
 /// Proc called when we finish eat somthing.
@@ -84,14 +92,12 @@
 		return
 	not_perfect_heart(eater)
 
-///Perfect heart give our +10 damage modifier(Max. 80).
+///Perfect heart decreases incoming damage modifier (Min. 20%).
 /datum/component/heart_eater/proc/perfect_heart(mob/living/carbon/human/eater)
-	if(eater.dna?.species?.damage_modifier >= 80)
-		healing_heart(eater)
-		return
-	eater.dna?.species?.damage_modifier += 10
-	remember_modifier += 10
 	healing_heart(eater)
+	if(damage_resistance_mod <= 0.2)
+		return
+	damage_resistance_mod -= 0.1
 	to_chat(eater, span_warning("This heart is perfect. You feel a surge of vital energy."))
 
 ///Not Perfect heart give random mutation.

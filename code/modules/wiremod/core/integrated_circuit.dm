@@ -346,6 +346,12 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 /obj/item/integrated_circuit/ui_data(mob/user)
 	. = list()
+	var/obj/item/circuit_component/examined
+	if(examined_component)
+		examined = examined_component.resolve()
+	// before the components loop, since get_ui_notices() can update ui_alerts
+	var/list/examined_notices = examined?.get_ui_notices()
+
 	.["components"] = list()
 	for(var/obj/item/circuit_component/component as anything in attached_components)
 		if (component.circuit_flags & CIRCUIT_FLAG_HIDDEN)
@@ -403,13 +409,9 @@ GLOBAL_LIST_EMPTY_TYPED(integrated_circuits, /obj/item/integrated_circuit)
 
 	.["display_name"] = display_name
 
-	var/obj/item/circuit_component/examined
-	if(examined_component)
-		examined = examined_component.resolve()
-
 	.["examined_name"] = examined?.display_name
 	.["examined_desc"] = examined?.desc
-	.["examined_notices"] = examined?.get_ui_notices()
+	.["examined_notices"] = examined_notices
 	.["examined_rel_x"] = examined_rel_x
 	.["examined_rel_y"] = examined_rel_y
 	.["grid_mode"] = grid_mode

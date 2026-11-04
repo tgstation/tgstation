@@ -64,5 +64,7 @@
 
 /datum/component/connect_containers/proc/on_moved(atom/movable/listener, atom/old_loc)
 	SIGNAL_HANDLER
+	if(QDELETED(src))
+		return
 	unregister_signals(old_loc)
 	update_signals(listener)

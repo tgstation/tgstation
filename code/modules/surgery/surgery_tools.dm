@@ -336,8 +336,8 @@
 	w_class = WEIGHT_CLASS_TINY
 	attack_verb_continuous = list("slaps")
 	attack_verb_simple = list("slap")
-	drop_sound = SFX_CLOTH_DROP
-	pickup_sound = SFX_CLOTH_PICKUP
+	drop_sound = /datum/sound_effect/cloth_drop
+	pickup_sound = /datum/sound_effect/cloth_pickup
 	gender = PLURAL
 	custom_materials = list(/datum/material/plastic = SHEET_MATERIAL_AMOUNT)
 
@@ -650,8 +650,8 @@
 	tool_behaviour = TOOL_BLOODFILTER
 	toolspeed = 1
 	sound_vary = TRUE
-	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
-	drop_sound = SFX_GENERIC_DEVICE_DROP
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
 	/// Assoc list of chem ids to names, used for deciding which chems to filter when used for surgery
 	var/list/whitelist = list()
 	var/surgical_tray_overlay = "filter"

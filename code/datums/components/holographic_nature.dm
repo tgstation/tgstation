@@ -56,7 +56,12 @@
 		return
 	COOLDOWN_START(src, glitch_cooldown, GLITCH_DURATION + GLITCH_REMOVAL_DURATION)
 	apply_wibbly_filters(parent)
-	addtimer(CALLBACK(GLOBAL_PROC, GLOBAL_PROC_REF(remove_wibbly_filters), parent, GLITCH_REMOVAL_DURATION), GLITCH_DURATION)
+	addtimer(CALLBACK(src, PROC_REF(remove_effects), glitch_cooldown), GLITCH_DURATION)
+
+/// Fades the glitch out, unless a newer one has started since
+/datum/component/holographic_nature/proc/remove_effects(glitch_end)
+	if(glitch_end == glitch_cooldown)
+		remove_wibbly_filters(parent, GLITCH_REMOVAL_DURATION)
 
 #undef GLITCH_DURATION
 #undef GLITCH_REMOVAL_DURATION

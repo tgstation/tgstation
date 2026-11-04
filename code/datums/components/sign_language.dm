@@ -185,11 +185,9 @@
 
 	// Now let's see how many of our hands is holding something
 	var/busy_hands = 0
-	// Yes held_items can contain null values, which represents empty hands,
-	// I'm just saving myself a variable cast by using as anything
-	for(var/obj/item/held_item as anything in carbon_parent.held_items)
+	for(var/obj/item/held_item as anything in carbon_parent.get_held_items())
 		// items like slappers/zombie claws/etc. should be ignored
-		if(isnull(held_item) || held_item.item_flags & HAND_ITEM)
+		if(held_item.item_flags & HAND_ITEM)
 			continue
 
 		busy_hands++

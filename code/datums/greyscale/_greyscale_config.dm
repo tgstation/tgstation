@@ -133,7 +133,7 @@
 	if(!length(icon_states))
 		CRASH("The json configuration [DebugName()] doesn't have any icon states.")
 
-	icon_cache = list()
+	LAZYNULL(icon_cache)
 
 	ReadMetadata()
 
@@ -238,14 +238,13 @@
 
 /// Actually create the icon and color it in, handles caching
 /datum/greyscale_config/proc/Generate(color_string, icon/last_external_icon)
-	var/key = color_string
-	var/icon/new_icon = icon_cache[key]
+	var/icon/new_icon = icon_cache?[color_string]
 	if(new_icon)
 		return icon(new_icon)
 
 	var/icon/icon_bundle = GenerateBundle(color_string, last_external_icon=last_external_icon)
 	icon_bundle = fcopy_rsc(icon_bundle)
-	icon_cache[key] = icon_bundle
+	LAZYSET(icon_cache, color_string, icon_bundle)
 	var/icon/output = icon(icon_bundle)
 	return output
 

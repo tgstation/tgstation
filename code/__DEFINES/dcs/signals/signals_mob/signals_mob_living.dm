@@ -30,6 +30,13 @@
 ///from base of mob/update_transform()
 #define COMSIG_LIVING_POST_UPDATE_TRANSFORM "living_post_update_transform"
 
+/// called when a typing or thinking bubble appears or goes away
+#define COMSIG_LIVING_CHAT_INDICATOR_UPDATED "living_chat_indicator_updated"
+/// called when the typing bubble appears or goes away
+#define COMSIG_LIVING_TYPING_INDICATOR_UPDATED "living_typing_indicator_updated"
+/// called when the thinking bubble appears or goes away
+#define COMSIG_LIVING_THINKING_INDICATOR_UPDATED "living_thinking_indicator_updated"
+
 /// from /datum/status_effect/incapacitating/stamcrit/on_apply()
 #define COMSIG_LIVING_ENTER_STAMCRIT "living_enter_stamcrit"
 ///from /obj/structure/door/crush(): (mob/living/crushed, /obj/machinery/door/crushing_door)

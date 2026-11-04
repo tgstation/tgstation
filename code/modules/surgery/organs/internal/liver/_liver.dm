@@ -202,7 +202,7 @@
 		return
 
 	var/mob/living/carbon/human/humie_owner = owner
-	if(!humie_owner.get_organ_slot(ORGAN_SLOT_EYES) || humie_owner.is_eyes_covered())
+	if(!humie_owner.is_eyes_visible(requires_eyes = TRUE))
 		return
 	switch(failure_time)
 		if(0 to 3 * LIVER_FAILURE_STAGE_SECONDS - 1)
@@ -335,7 +335,7 @@
 	if((. & COMSIG_MOB_STOP_REAGENT_TICK) || (organ_flags & ORGAN_FAILING))
 		return
 	if(istype(chem, /datum/reagent/consumable/salt))
-		playsound(organ_owner, SFX_SEAR, 30, TRUE)
+		playsound(organ_owner, /datum/sound_effect/sear, 30, TRUE)
 		organ_owner.adjust_fire_loss(1 * seconds_per_tick)
 		organ_owner.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return COMSIG_MOB_STOP_REAGENT_TICK

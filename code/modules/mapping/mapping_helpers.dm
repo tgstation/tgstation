@@ -166,8 +166,6 @@
 			airlock.cyclelinkairlock()
 		if(airlock.closeOtherId)
 			airlock.update_other_id()
-		if(airlock.cutAiWire)
-			airlock.wires.cut(WIRE_AI)
 		if(airlock.autoname)
 			airlock.name = get_area_name(src, TRUE)
 		airlock.update_appearance()
@@ -325,11 +323,11 @@
 	name = "airlock cut ai wire helper"
 	icon_state = "airlock_cutaiwire"
 
-/obj/effect/mapping_helpers/airlock/cutaiwire/payload(obj/machinery/door/airlock/airlock)
-	if(airlock.cutAiWire)
+/obj/effect/mapping_helpers/airlock/cutaiwire/late_payload(obj/machinery/door/airlock/airlock)
+	if(airlock.wires.is_cut(WIRE_AI))
 		log_mapping("[src] at [AREACOORD(src)] tried to cut the ai wire on [airlock] but it's already cut!")
 	else
-		airlock.cutAiWire = TRUE
+		airlock.wires.cut(WIRE_AI)
 
 /obj/effect/mapping_helpers/airlock/autoname
 	name = "airlock autoname helper"
@@ -566,8 +564,7 @@
 	if(isnull(target))
 		qdel(src)
 		return
-	if(target.cut_AI_wire)
-		target.wires.cut(WIRE_AI)
+	late_payload(target)
 	if(target.cell_5k)
 		target.install_cell_5k()
 	if(target.cell_10k)
@@ -594,15 +591,19 @@
 /obj/effect/mapping_helpers/apc/proc/payload(obj/machinery/power/apc/target)
 	return
 
+/obj/effect/mapping_helpers/apc/proc/late_payload(obj/machinery/power/apc/target)
+	return
+
 /obj/effect/mapping_helpers/apc/cut_AI_wire
 	name = "apc AI wire mended helper"
 	icon_state = "apc_cut_AIwire_helper"
 
-/obj/effect/mapping_helpers/apc/cut_AI_wire/payload(obj/machinery/power/apc/target)
-	if(target.cut_AI_wire)
+/obj/effect/mapping_helpers/apc/cut_AI_wire/late_payload(obj/machinery/power/apc/target)
+	if(target.wires.is_cut(WIRE_AI))
 		var/area/apc_area = get_area(target)
 		log_mapping("[src] at [AREACOORD(src)] [(apc_area.type)] tried to mend the AI wire on the [target] but it's already cut!")
-	target.cut_AI_wire = TRUE
+	else
+		target.wires.cut(WIRE_AI)
 
 /obj/effect/mapping_helpers/apc/cell_5k
 	name = "apc 5k cell helper"
@@ -1648,3 +1649,18 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 
 /obj/effect/mapping_helpers/blessing/invisible
 	invisible = TRUE
+
+/// Cuts a cable at roundstart because the test would otherwise complain about an unlinked powernet
+/obj/effect/mapping_helpers/cable_snip
+	name = "snip cable"
+	icon = 'icons/hud/screen_gen.dmi'
+	icon_state = "x"
+	late = TRUE
+
+/obj/effect/mapping_helpers/cable_snip/LateInitialize()
+	var/obj/structure/cable/cable = locate() in loc
+	if(isnull(cable))
+		log_mapping("Cable not found for snip cable helper at [loc.x],[loc.y],[loc.z]")
+#ifndef UNIT_TESTS
+	cable.deconstruct(FALSE)
+#endif

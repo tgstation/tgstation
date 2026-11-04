@@ -89,7 +89,7 @@
 		else
 			inhand.rider = riding_target_override
 		inhand.parent = AM
-		for(var/obj/item/I in user.held_items) // delete any hand items like slappers that could still totally be used to grab on
+		for(var/obj/item/I as anything in user.get_held_items()) // delete any hand items like slappers that could still totally be used to grab on
 			if((I.item_flags & HAND_ITEM))
 				qdel(I)
 

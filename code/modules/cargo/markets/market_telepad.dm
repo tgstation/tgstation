@@ -242,6 +242,8 @@
 	. = ..()
 	if(.)
 		return
+	if(!isnum(params["value"]) || isnan(params["value"]))
+		return
 	switch(action)
 		if("change_name")
 			var/value = params["value"]

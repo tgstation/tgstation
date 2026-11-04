@@ -51,7 +51,7 @@
 	/// Icon state when inside a tank holder.
 	var/tank_holder_icon_state = "holder_extinguisher"
 	///The sound a fire extinguisher makes when picked up, dropped if there is liquid inside.
-	var/fire_extinguisher_reagent_sloshing_sound = SFX_DEFAULT_LIQUID_SLOSH
+	var/fire_extinguisher_reagent_sloshing_sound = /datum/sound_effect/default_liquid_slosh
 
 
 /obj/item/extinguisher/Initialize(mapload)
@@ -379,7 +379,7 @@
 	to_chat(user, span_notice("You add [tool] to [src]."))
 	qdel(tool)
 	var/obj/item/bot_assembly/firebot/assembly = new(drop_location())
-	var/held_index = user.is_holding(src)
+	var/held_index = user.get_held_index_of_item(src)
 	qdel(src)
 	if (held_index)
 		user.put_in_hand(assembly, held_index)

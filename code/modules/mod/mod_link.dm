@@ -6,11 +6,11 @@
 	LAZYADD(mod_link.holder.update_on_z, link_visual)
 	link_visual.appearance_flags |= KEEP_TOGETHER
 	link_visual.makeHologram(0.75)
-	mod_link.visual_overlays = user.overlays - user.active_thinking_indicator
+	mod_link.visual_overlays = user.overlays.Copy()
 	link_visual.add_overlay(mod_link.visual_overlays)
 	mod_link.visual = link_visual
 	mod_link.holder.become_hearing_sensitive(REF(mod_link))
-	mod_link.holder.RegisterSignals(user, list(COMSIG_CARBON_APPLY_OVERLAY, COMSIG_CARBON_REMOVE_OVERLAY), proc_path)
+	mod_link.holder.RegisterSignals(user, list(COMSIG_CARBON_APPLY_OVERLAY, COMSIG_CARBON_REMOVE_OVERLAY, COMSIG_LIVING_CHAT_INDICATOR_UPDATED), proc_path)
 	return link_visual
 
 /proc/get_link_visual_generic(datum/mod_link/mod_link, atom/movable/visuals, proc_path)
@@ -32,7 +32,7 @@
 	playsound(mod_link.get_other().holder, 'sound/machines/terminal/terminal_processing.ogg', 50, vary = TRUE, frequency = -1)
 	LAZYREMOVE(mod_link.holder.update_on_z, mod_link.visual)
 	mod_link.holder.lose_hearing_sensitivity(REF(mod_link))
-	mod_link.holder.UnregisterSignal(old_user, list(COMSIG_CARBON_APPLY_OVERLAY, COMSIG_CARBON_REMOVE_OVERLAY, COMSIG_ATOM_DIR_CHANGE))
+	mod_link.holder.UnregisterSignal(old_user, list(COMSIG_CARBON_APPLY_OVERLAY, COMSIG_CARBON_REMOVE_OVERLAY, COMSIG_LIVING_CHAT_INDICATOR_UPDATED, COMSIG_ATOM_DIR_CHANGE))
 	QDEL_NULL(mod_link.visual)
 
 /proc/on_user_set_dir_generic(datum/mod_link/mod_link, newdir)
@@ -131,7 +131,7 @@
 	if(QDELETED(mod_link.link_call))
 		return
 	mod_link.visual.cut_overlay(mod_link.visual_overlays)
-	mod_link.visual_overlays = wearer.overlays - wearer.active_thinking_indicator
+	mod_link.visual_overlays = wearer.overlays.Copy()
 	mod_link.visual.add_overlay(mod_link.visual_overlays)
 
 /obj/item/mod/control/proc/on_wearer_set_dir(atom/source, dir, newdir)
@@ -314,7 +314,7 @@
 		return
 	var/mob/living/user = loc
 	mod_link.visual.cut_overlay(mod_link.visual_overlays)
-	mod_link.visual_overlays = user.overlays - user.active_thinking_indicator
+	mod_link.visual_overlays = user.overlays.Copy()
 	mod_link.visual.add_overlay(mod_link.visual_overlays)
 
 /obj/item/clothing/neck/link_scryer/proc/on_user_set_dir(atom/source, dir, newdir)

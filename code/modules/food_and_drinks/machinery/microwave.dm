@@ -558,7 +558,6 @@
 	var/atom/drop_loc = drop_location()
 	for(var/obj/item/item_ingredient as anything in ingredients)
 		item_ingredient.forceMove(drop_loc)
-		item_ingredient.dropped() //Mob holders can be on the ground if we don't do this
 	open(autoclose = 1.4 SECONDS)
 
 /obj/machinery/microwave/proc/start_cycle(mob/user)

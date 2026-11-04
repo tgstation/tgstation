@@ -343,7 +343,7 @@
 "lL" = (
 /obj/effect/decal/cleanable/dirt,
 /obj/effect/turf_decal/sand/plating,
-/obj/item/gun/ballistic/revolver/badass{
+/obj/item/gun/ballistic/revolver/syndicate/badass{
 	pixel_x = 5;
 	pixel_y = 6
 	},

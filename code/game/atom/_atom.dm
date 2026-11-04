@@ -185,6 +185,9 @@
 		overlays.Cut()
 
 	LAZYNULL(managed_overlays)
+	// SSvis_overlays shares these between atoms and deletes them on its own, so don't hold them while we wait in the gc queue
+	if(managed_vis_overlays)
+		managed_vis_overlays = null
 	if(ai_controller)
 		QDEL_NULL(ai_controller)
 	if(light)

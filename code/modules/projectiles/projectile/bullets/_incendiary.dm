@@ -4,7 +4,9 @@
 	/// How many firestacks to apply to the target
 	var/fire_stacks = 4
 	/// If TRUE, leaves a trail of hotspots as it flies, very very chaotic
-	var/leaves_fire_trail = TRUE
+	var/leaves_fire_trail = FALSE
+	/// If defined, determines how big of a blast of fire is left by the incendiary slug
+	var/fireblast_radius = 1
 
 /obj/projectile/bullet/incendiary/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()
@@ -12,6 +14,10 @@
 		var/mob/living/carbon/M = target
 		M.adjust_fire_stacks(fire_stacks)
 		M.ignite_mob()
+
+	if(fireblast_radius)
+		for(var/turf/nearby_turf as anything in RANGE_TURFS(fireblast_radius, target))
+			new /obj/effect/hotspot(nearby_turf)
 
 /obj/projectile/bullet/incendiary/Move()
 	. = ..()
@@ -41,6 +47,8 @@
 	exposed_wound_bonus = 30
 	wound_falloff_tile = -4
 	fire_stacks = 3
+	leaves_fire_trail = TRUE
+	fireblast_radius = null
 
 /obj/projectile/bullet/incendiary/fire/on_hit(atom/target, blocked = 0, pierce_hit)
 	. = ..()

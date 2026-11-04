@@ -18,7 +18,7 @@
 	ai_controller = /datum/ai_controller/basic_controller/cat/cake
 	attacked_sound = 'sound/items/eatfood.ogg'
 	death_message = "loses her false life and collapses!"
-	death_sound = SFX_BODYFALL
+	death_sound = /datum/sound_effect/bodyfall
 	held_state = "cak"
 	can_interact_with_stove = TRUE
 	//just ensuring the mats contained by the cat when spawned are the same of when crafted

@@ -8,7 +8,7 @@
 	righthand_file = 'icons/mob/inhands/equipment/briefcase_righthand.dmi'
 	obj_flags = CONDUCTS_ELECTRICITY
 	force = 8
-	hitsound = SFX_SWING_HIT
+	hitsound = /datum/sound_effect/swing_hit
 	throw_speed = 2
 	throw_range = 4
 	w_class = WEIGHT_CLASS_BULKY

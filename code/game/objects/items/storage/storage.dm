@@ -14,9 +14,8 @@
 
 /obj/item/storage/Initialize(mapload)
 	. = ..()
-
 	create_storage(storage_type = storage_type)
-
+	ADD_TRAIT(src, TRAIT_BLOCKS_OVERLAY_LIGHT, INNATE_TRAIT)
 	PopulateContents()
 
 /obj/item/storage/create_storage(

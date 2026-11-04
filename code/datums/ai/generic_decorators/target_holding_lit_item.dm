@@ -13,9 +13,7 @@
 	var/list/item_types = controller.blackboard[item_types_key]
 	if(!length(item_types))
 		return FALSE
-	for(var/obj/item/held_item in target.held_items)
-		if(!is_type_in_list(held_item, item_types))
-			continue
+	for(var/obj/item/held_item as anything in target.get_held_items_of_typelist(item_types))
 		if(held_item.light_on)
 			return TRUE
 	return FALSE

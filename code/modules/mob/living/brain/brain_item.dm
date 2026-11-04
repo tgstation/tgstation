@@ -53,8 +53,9 @@
 	. = ..()
 	// Brain size logic
 	transform = transform.Scale(brain_size)
-	organ_traits.Remove(variant_traits_removed)
-	organ_traits |= variant_traits_added
+	LAZYREMOVE(organ_traits, variant_traits_removed)
+	if(!isnull(variant_traits_added))
+		LAZYOR(organ_traits, variant_traits_added)
 
 /obj/item/organ/brain/on_mob_insert(mob/living/carbon/brain_owner, special = FALSE, movement_flags)
 	. = ..()

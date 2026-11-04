@@ -49,15 +49,13 @@
 	id = change_id
 	to_chat(user, span_notice("You change the ID to [id]."))
 
-/obj/item/assembly/control/interact_with_atom(obj/item/assembly/control/interacting_with, mob/living/user, list/modifiers)
-	. = NONE
-	if(!copyable)
-		return
+/obj/item/assembly/control/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
+	if(!copyable || !istype(tool, /obj/item/assembly/control))
+		return ..()
 
-	if(istype(interacting_with))
-		id = interacting_with.id
-		balloon_alert(user, "id changed")
-		return ITEM_INTERACT_SUCCESS
+	astype(tool, /obj/item/assembly/control).id = id
+	balloon_alert(user, "id changed")
+	return ITEM_INTERACT_SUCCESS
 
 /obj/item/assembly/control/blast_door
 	name = "blast door controller"

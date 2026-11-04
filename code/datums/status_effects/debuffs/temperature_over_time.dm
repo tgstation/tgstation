@@ -36,9 +36,9 @@
 /datum/status_effect/temperature_over_time/on_apply()
 	. = ..()
 	if((HAS_TRAIT(owner, TRAIT_RESISTHEAT) && temperature_value > 1))
-		qdel(src) // git out
+		return FALSE
 	else if((HAS_TRAIT(owner, TRAIT_RESISTCOLD) && temperature_value < 1))
-		qdel(src) // git out
+		return FALSE
 
 /datum/status_effect/temperature_over_time/on_remove()
 	return ..()

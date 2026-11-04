@@ -7,7 +7,7 @@
 /datum/inventory_slot/drone/storage
 	name = "internal storage"
 	icon_state = "suit_storage"
-	slot_id = ITEM_SLOT_DEX_STORAGE
+	slot_id = ITEM_SLOT_SUITSTORE
 	screen_loc = ui_drone_storage
 
 /datum/inventory_slot/drone/head

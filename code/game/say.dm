@@ -405,6 +405,8 @@ GLOBAL_LIST_INIT(emphasis_types, list(
 	var/job
 	var/atom/movable/source
 	var/obj/item/radio/radio
+	/// hearer to the radio
+	var/list/runechat_anchors
 
 INITIALIZE_IMMEDIATE(/atom/movable/virtualspeaker)
 /atom/movable/virtualspeaker/Initialize(mapload, atom/movable/M, _radio)

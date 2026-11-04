@@ -414,7 +414,7 @@
 	if(HAS_TRAIT(src, TRAIT_UNKNOWN_APPEARANCE))
 		return PLURAL
 	// If both face and uniform are hidden, can't assess gender
-	if(obscured_slots & (HIDEFACE|HIDEJUMPSUIT) == (HIDEFACE|HIDEJUMPSUIT))
+	if((obscured_slots & (HIDEFACE|HIDEJUMPSUIT)) == (HIDEFACE|HIDEJUMPSUIT))
 		return PLURAL
 	return gender
 

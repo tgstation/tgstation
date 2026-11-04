@@ -130,7 +130,7 @@ GLOBAL_VAR(station_nuke_source)
 			if(istype(tool, /obj/item/nuke_core_container))
 				var/obj/item/nuke_core_container/core_box = tool
 				to_chat(user, span_notice("You start loading the plutonium core into [core_box]..."))
-				if(!do_after(user, 5 SECONDS, target = src, cog_icon = null))
+				if(!do_after(user, 5 SECONDS, target = src, timed_action_flags = HIDE_INTERACTION))
 					return ITEM_INTERACT_BLOCKING
 
 				if(!core_box.load(core, user))
@@ -443,7 +443,7 @@ GLOBAL_VAR(station_nuke_source)
 	. = ..()
 	if(.)
 		return
-	playsound(src, SFX_TERMINAL_TYPE, 20, FALSE)
+	playsound(src, /datum/sound_effect/terminal_type, 20, FALSE)
 	switch(action)
 		if("eject_disk")
 			if(auth && auth.loc == src)

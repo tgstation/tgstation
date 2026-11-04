@@ -7,14 +7,14 @@
 	desc = "An ingenious little device manufactured for supporting an alternative method for respiration. \
 			Relying on a removable cell, the coil mechanism synthesizes a hydrogen oxygen mixture, \
 			which can then be used to moisturize the wearer's gills. \n\
-			The rate at which liquid is applied seems to be intended for skin which excells at retaining moisture. \n\
+			The rate at which liquid is applied seems to be intended for skin which excels at retaining moisture. \n\
 			There is a picture of planet Marina stamped onto it. \n\n\
 			A label on its back warns about the potential dangers of electro-magnetic pulses."
 	icon = 'icons/obj/devices/tool.dmi'
 	icon_state = "vaporizer"
 	slot_flags = ITEM_SLOT_BELT
-	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
-	drop_sound = SFX_GENERIC_DEVICE_DROP
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
 	w_class = WEIGHT_CLASS_SMALL
 	resistance_flags = FIRE_PROOF | ACID_PROOF
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT*4.5, /datum/material/gold = SHEET_MATERIAL_AMOUNT*1.5, /datum/material/diamond = SMALL_MATERIAL_AMOUNT*1.8)
@@ -36,9 +36,9 @@
 	if(isnull(cell))
 		return
 	if(!in_range(src, user) && !isobserver(user))
-		. += span_notice("If you want any more information you'll need to get closer.")
+		. += span_notice("If you want any more information, you'll need to get closer.")
 		return
-	. += span_notice("The LED display reads its [cell.percent()]% charged.")
+	. += span_notice("The LED display reads it's [cell.percent()]% charged.")
 
 /obj/item/vaporizer/Initialize(mapload)
 	. = ..()

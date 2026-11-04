@@ -133,15 +133,28 @@
 	icon_state = "take_picture"
 	screen_loc = ui_ai_take_picture
 
-/atom/movable/screen/ai/image_take/Click()
+/atom/movable/screen/ai/image_take/Initialize(mapload)
+	. = ..()
+	register_context()
+
+/atom/movable/screen/ai/image_take/add_context(atom/source, list/context, obj/item/held_item, mob/user)
+	. = ..()
+	context[SCREENTIP_CONTEXT_LMB] = "Take image"
+	context[SCREENTIP_CONTEXT_RMB] = "Adjust zoom"
+	return CONTEXTUAL_SCREENTIP_SET
+
+/atom/movable/screen/ai/image_take/Click(location, control, params)
 	if(..())
 		return
-	if(isAI(usr))
-		var/mob/living/silicon/ai/AI = usr
-		AI.aicamera.toggle_camera_mode(usr)
-	else if(iscyborg(usr))
-		var/mob/living/silicon/robot/R = usr
-		R.aicamera.toggle_camera_mode(usr)
+	if(!issilicon(usr))
+		return
+	var/mob/living/silicon/silicon_user = usr
+	if(!silicon_user.aicamera)
+		return
+	if(LAZYACCESS(params2list(params), RIGHT_CLICK))
+		silicon_user.aicamera.adjust_zoom(user = silicon_user)
+		return
+	silicon_user.aicamera.toggle_camera_mode(silicon_user)
 
 /atom/movable/screen/ai/image_view
 	name = "View Images"

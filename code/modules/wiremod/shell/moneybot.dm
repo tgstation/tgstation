@@ -20,6 +20,8 @@
 		new /obj/item/holochip(drop_location(), stored_money)
 
 /obj/structure/money_bot/proc/add_money(to_add)
+	if(!isnum(to_add) || isnan(to_add))
+		return
 	stored_money += to_add
 	SEND_SIGNAL(src, COMSIG_MONEYBOT_ADD_MONEY, to_add)
 
@@ -92,7 +94,7 @@
 		return
 
 	var/to_dispense = clamp(dispense_amount.value, 0, attached_bot.stored_money)
-	if(!to_dispense)
+	if(!to_dispense || isnan(to_dispense))
 		on_fail.set_output(COMPONENT_SIGNAL)
 		return
 

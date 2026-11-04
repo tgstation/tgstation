@@ -60,6 +60,8 @@
 #define ACCESS_MAINT_TUNNELS "maint_tunnels"
 /// Access to get into APCs, engineering equipment lockers, typically mapped in for key power rooms across the station, engineering vending machines, emitters, and some other stuff.
 #define ACCESS_ENGINE_EQUIP "engine_equip"
+/// Access to get into air alarms, atmos equipment lockers, potentially atmos storage rooms (like the gas storage room).
+#define ACCESS_ATMOS_EQUIP "atmos_equip"
 /// Access to "construction" areas of the station. However, in mapping, it's used to get access to the front door and lathe room of the engineering department.
 #define ACCESS_CONSTRUCTION "construction"
 /// Access to the technical storage room (contains all the boards and other miscellaneous engineering gear).
@@ -295,6 +297,7 @@
 /// Departmental/general/common area accesses. Do not use direct, access via SSid_access.get_flag_access_list(ACCESS_FLAG_COMMON)
 #define COMMON_ACCESS list( \
 	ACCESS_ATMOSPHERICS, \
+	ACCESS_ATMOS_EQUIP, \
 	ACCESS_AUX_BASE, \
 	ACCESS_BAR, \
 	ACCESS_BIT_DEN, \
@@ -502,6 +505,7 @@
 /// Used to seed the accesses_by_region list in SSid_access. A list of all engineering regional accesses that are overseen by the CE.
 #define REGION_ACCESS_ENGINEERING list( \
 	ACCESS_ATMOSPHERICS, \
+	ACCESS_ATMOS_EQUIP, \
 	ACCESS_AUX_BASE, \
 	ACCESS_BUDGET, \
 	ACCESS_CE, \

@@ -49,29 +49,33 @@
 		leaner.stop_leaning()
 
 /datum/component/leanable/proc/mousedrop_receive(atom/source, atom/movable/dropped, mob/user, params)
+	SIGNAL_HANDLER
+
 	if (dropped != user)
-		return
+		return NONE
 	if (!iscarbon(dropped) && !iscyborg(dropped))
-		return
+		return NONE
 	var/mob/living/leaner = dropped
 	if (INCAPACITATED_IGNORING(leaner, INCAPABLE_RESTRAINTS) || IS_UNCONSCIOUS_OR_CRIT(leaner) || HAS_TRAIT(leaner, TRAIT_NO_TRANSFORM))
-		return
+		return NONE
 	if (HAS_TRAIT_FROM(leaner, TRAIT_UNDENSE, LEANING_TRAIT))
-		return
+		return NONE
 	var/turf/checked_turf = get_step(leaner, REVERSE_DIR(leaner.dir))
 	if (checked_turf != get_turf(source))
-		return
+		return NONE
 	if(!is_currently_leanable)
 		return COMPONENT_CANCEL_MOUSEDROPPED_ONTO
 	leaner.start_leaning(source, leaning_offset)
 	leaning_mobs += leaner
 	RegisterSignals(leaner, list(COMSIG_LIVING_STOPPED_LEANING, COMSIG_QDELETING), PROC_REF(stopped_leaning))
+	SEND_SIGNAL(parent, COMSIG_ATOM_LEANED_UPON, leaner)
 	return COMPONENT_CANCEL_MOUSEDROPPED_ONTO
 
 /datum/component/leanable/proc/stopped_leaning(datum/source)
 	SIGNAL_HANDLER
 	leaning_mobs -= source
 	UnregisterSignal(source, list(COMSIG_LIVING_STOPPED_LEANING, COMSIG_QDELETING))
+	SEND_SIGNAL(parent, COMSIG_ATOM_NO_LONGER_LEANED_UPON, source, leaning_mobs)
 
 /**
  * Makes the mob lean on an atom

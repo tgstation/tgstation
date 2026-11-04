@@ -155,6 +155,8 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 /datum/escape_menu/proc/build_admin_list()
 	var/list/result = list()
 	for(var/client/admin as anything in GLOB.admins)
+		if(admin.holder?.fakekey && !client?.holder)
+			continue
 		result += list(list(
 			"ckey" = admin.ckey,
 			"displayName" = admin.holder?.fakekey || admin.ckey,
@@ -168,12 +170,16 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 
 /datum/escape_menu/proc/build_player_list()
 	var/list/result = list()
-	for(var/client/player as anything in GLOB.clients - GLOB.admins)
+	for(var/client/player as anything in GLOB.clients)
+		var/fakekey = player.holder?.fakekey
+		if(player.holder && !(fakekey && !client?.holder))
+			continue
+		var/shown_key = fakekey || player.ckey
 		result += list(list(
-			"ckey" = player.ckey,
-			"displayName" = player.ckey,
+			"ckey" = shown_key,
+			"displayName" = shown_key,
 			"ping" = round(player.avgping, 1),
-			"ignored" = (player.ckey in client?.prefs?.ignoring),
+			"ignored" = (shown_key in client?.prefs?.ignoring),
 			"isSelf" = (player.ckey == client?.ckey),
 		))
 	return result

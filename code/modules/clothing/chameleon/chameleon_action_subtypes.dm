@@ -147,7 +147,7 @@
 /datum/action/item_action/chameleon/change/id/format_readable_name(datum/format_type)
 	if(ispath(format_type, /obj/item/card/id/advanced))
 		var/obj/item/card/id/advanced/format_card = format_type
-		var/list/basesplit_state = splittext(format_card::post_init_icon_state || format_card::icon_state, "_")
+		var/list/basesplit_state = splittext(INITIAL_ICON_STATE(format_card), "_")
 		if(basesplit_state[1] == "card") // kind of evil, but so is making icon state user visible
 			basesplit_state.Cut(1, 2)
 

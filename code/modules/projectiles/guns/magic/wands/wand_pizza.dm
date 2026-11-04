@@ -58,13 +58,13 @@
 
 	var/obj/item/the_piz = new special_slice()
 
-	if (!length(lunch_haver.held_items))
+	if (!lunch_haver.can_hold_items())
 		the_piz.forceMove(lunch_haver.drop_location())
 	else
 		if (!iscarbon(lunch_haver))
 			if (lunch_haver.put_in_hands(the_piz))
 				if (lunch_haver.get_active_held_item() != the_piz)
-					lunch_haver.swap_hand()
+					lunch_haver.swap_hand(lunch_haver.get_held_index_of_item(the_piz))
 		else if (!lunch_haver.put_in_active_hand(the_piz))
 			if (istype(lunch_haver.get_active_held_item(), /obj/item/food/pizzaslice))
 				the_piz.forceMove(lunch_haver.drop_location())

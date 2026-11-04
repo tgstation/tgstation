@@ -13,7 +13,7 @@
 
 /obj/item/ammo_box/magazine/internal/boltaction/pipegun
 	name = "pipegun internal magazine"
-	caliber = CALIBER_JUNK
+	caliber = CALIBER_SHOTGUN
 	ammo_type = /obj/item/ammo_casing/junk
 	max_ammo = 1
 

@@ -5,7 +5,6 @@
 	pref_flag = ROLE_BLOOD_WORM
 	antag_hud_name = "blood_worm"
 	antag_moodlet = /datum/mood_event/blood_worm
-	hijack_speed = 0.5
 	show_to_ghosts = TRUE // I mean let's be honest, even the roundstart versions will become painfully apparent soon enough.
 	stinger_sound = 'sound/effects/magic/exit_blood.ogg'
 	ui_name = "AntagInfoBloodWorm"

@@ -29,6 +29,7 @@
 			applum.ediblecomponent = IS_EDIBLE(applum)
 			if(applum.ediblecomponent)
 				applum.ediblecomponent.foodtypes |= (GROSS | MEAT | BUGS)
+	return result
 
 /obj/item/food/grown/apple
 	seed = /obj/item/seeds/apple
@@ -76,7 +77,7 @@
 	return /datum/reagent/consumable/applejuice
 
 /obj/item/food/grown/apple/make_processable()
-	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/appleslice, 5, 20, screentip_verb = "Slice", sound_to_play = SFX_KNIFE_SLICE)
+	AddElement(/datum/element/processable, TOOL_KNIFE, /obj/item/food/appleslice, 5, 20, screentip_verb = "Slice", sound_to_play = /datum/sound_effect/knife_slice)
 
 /obj/item/food/grown/apple/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
 	. = ..()

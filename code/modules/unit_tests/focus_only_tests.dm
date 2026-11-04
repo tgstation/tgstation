@@ -72,3 +72,6 @@
 
 ///Checks primarily that emissives aren't mistakenly not tagged with the meta flag
 /datum/unit_test/focus_only/bodypart_overlay_flags
+
+/// Ensures two handed components that use `update_icon_state` have the correct items in their files
+/datum/unit_test/focus_only/two_handed_icons

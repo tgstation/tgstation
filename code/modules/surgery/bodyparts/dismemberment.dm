@@ -130,6 +130,7 @@
 			return
 		forceMove(drop_loc)
 
+	SEND_SIGNAL(src, COMSIG_BODYPART_POST_REMOVED, owner, special, dismembered)
 	SEND_SIGNAL(phantom_owner, COMSIG_CARBON_POST_REMOVE_LIMB, src, special, dismembered)
 
 /**
@@ -257,12 +258,13 @@
 	if(!can_attach_limb(new_limb_owner, special))
 		return FALSE
 
-	var/obj/item/bodypart/existing_limb = new_limb_owner.get_bodypart(body_zone, include_stumps = TRUE)
-	if(existing_limb)
-		if(existing_limb.type != stump_typepath)
-			stack_trace("Attempted to attach a limb to [new_limb_owner] in zone [body_zone] where they already have a non-stump limb")
-		existing_limb.drop_limb(special = TRUE)
-		qdel(existing_limb)
+	if(body_zone)
+		var/obj/item/bodypart/existing_limb = new_limb_owner.get_bodypart(body_zone, include_stumps = TRUE)
+		if(existing_limb)
+			if(existing_limb.type != stump_typepath)
+				stack_trace("Attempted to attach a limb to [new_limb_owner] in zone [body_zone] where they already have a non-stump limb")
+			existing_limb.drop_limb(special = TRUE)
+			qdel(existing_limb)
 
 	SEND_SIGNAL(new_limb_owner, COMSIG_CARBON_ATTACH_LIMB, src, special, lazy)
 	SEND_SIGNAL(src, COMSIG_BODYPART_ATTACHED, new_limb_owner, special, lazy)

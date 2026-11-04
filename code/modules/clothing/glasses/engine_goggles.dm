@@ -20,6 +20,7 @@
 	actions_types = list(/datum/action/item_action/toggle_mode)
 	glass_colour_type = /datum/client_colour/glass_colour/gray
 	gender = PLURAL
+	clothing_traits = list(TRAIT_MADNESS_IMMUNE) // without the parent's TRAIT_MESON_VISION, which only the meson mode gives
 	color_cutoffs = null
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT)
 	/// List of selectable modes that can be used by the goggles

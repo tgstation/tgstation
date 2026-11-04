@@ -186,7 +186,7 @@
 	inhand_icon_state = "e_sword"
 	lefthand_file = 'icons/mob/inhands/weapons/swords_lefthand.dmi'
 	righthand_file = 'icons/mob/inhands/weapons/swords_righthand.dmi'
-	hitsound = SFX_SWING_HIT
+	hitsound = /datum/sound_effect/swing_hit
 	force = 3
 	throwforce = 5
 	throw_speed = 3
@@ -407,7 +407,7 @@
 	alt_simple = list("whack", "smack", "bash")
 	alt_sharpness = NONE
 	alt_force_mod = -12
-	alt_hitsound = SFX_SWING_HIT
+	alt_hitsound = /datum/sound_effect/swing_hit
 	worn_icon_state = "energysurplus"
 	slot_flags = ITEM_SLOT_BELT
 	light_color = LIGHT_COLOR_LIGHT_CYAN

@@ -135,3 +135,8 @@ export const feature_cerulean_frills: FeatureToggle = {
   name: 'Fish frills',
   component: CheckboxInput,
 };
+
+export const feature_cerulean_snout: FeatureToggle = {
+  name: 'Fish snout',
+  component: CheckboxInput,
+};

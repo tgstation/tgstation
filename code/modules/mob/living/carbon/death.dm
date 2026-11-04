@@ -59,7 +59,8 @@
 
 			organ.Remove(src)
 			organ.forceMove(Tsec)
-			organ.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
+			if(!QDELETED(organ))
+				organ.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
 			continue
 
 		if((drop_bitflags & DROP_ORGANS) && !istype(organ, /obj/item/organ/brain))
@@ -68,7 +69,8 @@
 
 			organ.Remove(src)
 			organ.forceMove(Tsec)
-			organ.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
+			if(!QDELETED(organ))
+				organ.throw_at(get_edge_target_turf(src, pick(GLOB.alldirs)), rand(1,3), 5)
 			continue
 
 		qdel(organ)

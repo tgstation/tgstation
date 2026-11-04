@@ -50,7 +50,7 @@ PROCESSING_SUBSYSTEM_DEF(personalities)
 	if(!length(incompatibilities_by_group))
 		stack_trace("Checking personality incompatibilities before the incompatibility list was initialized?")
 		return FALSE
-	if(length(personality_types))
+	if(!length(personality_types))
 		// No incompatibilities possible with no personalities
 		return FALSE
 	var/datum/personality/new_personality = personalities_by_type[new_personality_type]
@@ -75,9 +75,9 @@ PROCESSING_SUBSYSTEM_DEF(personalities)
 		if(!length(personality_pool))
 			break
 		var/picked_type = pick(personality_pool)
+		personality_pool -= picked_type
 		if(is_incompatible(selected_personalities, picked_type))
 			continue
 		selected_personalities += picked_type
-		personality_pool -= picked_type
 		i += 1
 	return selected_personalities

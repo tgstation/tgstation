@@ -60,7 +60,7 @@
 	departmental_flags = DEPARTMENT_BITFLAG_ENGINEERING | DEPARTMENT_BITFLAG_SCIENCE
 
 /datum/design/rwd
-	name = "Rapid Wiring Device"
+	name = "Rapid Wiring Device (RWD)"
 	build_type = AUTOLATHE | PROTOLATHE | AWAY_LATHE
 	materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 5, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 2.5)
 	//The cable coils don't count toward the total mats of the item to avoid a possible way to generate more iron and glass.

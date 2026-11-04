@@ -75,7 +75,7 @@
 			A.speaker_enabled = mend
 
 /datum/wires/airalarm/can_reveal_wires(mob/user)
-	if(HAS_TRAIT(user, TRAIT_KNOW_ENGI_WIRES))
+	if(HAS_TRAIT(user, TRAIT_KNOW_ENGI_WIRES) || HAS_TRAIT(user, TRAIT_KNOW_ATMOS_WIRES))
 		return TRUE
 
 	return ..()

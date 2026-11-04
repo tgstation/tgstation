@@ -17,7 +17,7 @@
 /datum/tutorial/switch_hands/New(mob/user)
 	. = ..()
 
-	hand_to_watch = (user.active_hand_index % user.held_items.len) + 1
+	hand_to_watch = user.get_inactive_hand_index()
 
 /datum/tutorial/switch_hands/Destroy(force)
 	user.client?.screen -= hand_preview
@@ -52,7 +52,7 @@
 		if (STAGE_SHOULD_SWAP_HAND)
 			var/hand_name = IS_RIGHT_INDEX(hand_to_watch) ? "right" : "left"
 			show_instruction(keybinding_message(
-				/datum/keybinding/mob/swap_hands,
+				/datum/keybinding/dextrous/swap_hands/row,
 				"Press '%KEY%' to use your [hand_name] hand",
 				"Click '<b>SWAP</b>' to use your [hand_name] hand",
 			))

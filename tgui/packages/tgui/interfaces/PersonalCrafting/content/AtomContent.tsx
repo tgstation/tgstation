@@ -2,25 +2,33 @@ import { useState } from 'react';
 import { useBackend } from 'tgui/backend';
 import { Box, Button, Floating, Stack } from 'tgui-core/components';
 import { findIcon } from '../helpers';
-import type { AtomData, CraftingData } from '../types';
+import type { AtomData, CraftingData, IconData, Recipe } from '../types';
 import { RecipeContent } from './RecipeContent';
 
 type Props = {
   amount: number;
   atom_id: string;
   setParentForceFloating?: (state: boolean) => void;
+  allRecipes: Recipe[];
+  iconData: IconData;
+  atomData: AtomData[];
 };
 
 export function AtomContent(props: Props) {
-  const { amount, atom_id, setParentForceFloating } = props;
-  const { data } = useBackend<CraftingData>();
-  const { atom_data, recipes } = data;
+  const {
+    amount,
+    atom_id,
+    setParentForceFloating,
+    iconData,
+    allRecipes,
+    atomData,
+  } = props;
 
   const atom_id_int = Number(atom_id);
-  const atom = atom_data[atom_id_int - 1];
+  const atom = atomData[atom_id_int - 1];
 
   // check if the atom itself has a recipe associated
-  const hasRecipe = recipes.filter((recipe) => recipe.id === atom_id_int);
+  const hasRecipe = allRecipes.filter((recipe) => recipe.id === atom_id_int);
   if (hasRecipe.length <= 0) {
     return (
       <AtomContentInner
@@ -28,6 +36,7 @@ export function AtomContent(props: Props) {
         atom_id={atom_id_int}
         amount={amount}
         underline={false}
+        iconData={iconData}
       />
     );
   }
@@ -107,10 +116,13 @@ export function AtomContent(props: Props) {
             </Stack>
           )}
           <RecipeContent
+            allRecipes={allRecipes}
             item={shownRecipe}
             nodesc={true}
             setParentForceFloating={setForceFloating}
             showIcon={false}
+            iconData={iconData}
+            atomData={atomData}
           />
         </Box>
       }
@@ -122,6 +134,7 @@ export function AtomContent(props: Props) {
           atom_id={atom_id_int}
           amount={amount}
           underline={true}
+          iconData={iconData}
         />
       </Box>
     </Floating>
@@ -133,10 +146,11 @@ type AtomContentInnerProps = {
   atom_id: number;
   amount: number;
   underline?: boolean;
+  iconData: IconData;
 };
 
 function AtomContentInner(props: AtomContentInnerProps) {
-  const { atom, atom_id, amount, underline = false } = props;
+  const { atom, atom_id, amount, underline = false, iconData } = props;
   const { data } = useBackend<CraftingData>();
 
   return (
@@ -146,7 +160,7 @@ function AtomContentInner(props: AtomContentInnerProps) {
         inline
         my={-1}
         mr={0.5}
-        className={findIcon(atom_id, data)}
+        className={findIcon(atom_id, data, iconData)}
       />
       <Box inline verticalAlign="middle">
         {underline ? (

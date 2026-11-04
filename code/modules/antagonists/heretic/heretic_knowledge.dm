@@ -77,7 +77,7 @@
 	if(gain_text)
 		to_chat(user, span_warning("[gain_text]"))
 	on_gain(user, our_heretic)
-	if(is_final_knowledge && !our_heretic.unlimited_blades)
+	if(is_final_knowledge)
 		our_heretic.disable_blade_breaking()
 	SEND_SIGNAL(our_heretic, COMSIG_HERETIC_RESEARCHED_KNOWLEDGE, src)
 
@@ -816,6 +816,7 @@
 
 	var/datum/antagonist/heretic/heretic_datum = GET_HERETIC(user)
 	heretic_datum.ascended = TRUE
+	heretic_datum.hijack_speed = max(heretic_datum.hijack_speed, 1)
 	// In case we skipped ritual of knowledge
 	SEND_SIGNAL(heretic_datum, COMSIG_HERETIC_PASSIVE_UPGRADE_FINAL)
 

@@ -95,7 +95,7 @@
 	image_icon_state = "stunbaton"
 
 /datum/hallucination/nearby_fake_item/baton/generate_fake_image(mob/living/carbon/human/holder, file)
-	hallucinator.playsound_local(get_turf(holder), SFX_SPARKS, 75, TRUE, -1)
+	hallucinator.playsound_local(get_turf(holder), /datum/sound_effect/sparks, 75, TRUE, -1)
 	return ..()
 
 /datum/hallucination/nearby_fake_item/flash

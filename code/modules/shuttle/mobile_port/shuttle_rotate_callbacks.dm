@@ -118,3 +118,8 @@ If ever any of these procs are useful for non-shuttles, rename it to proc/rotate
 	. = ..()
 	if(wall_turret_direction && (params & ROTATE_DIR))
 		wall_turret_direction = turn(wall_turret_direction,rotation)
+
+/obj/machinery/power/apc/shuttleRotate(rotation, params)
+	if(params & ROTATE_DIR) // APCs handle pixel offset rotation in setDir,
+		//rotate our direction
+		setDir(angle2dir(rotation+dir2angle(dir)))

@@ -112,8 +112,8 @@
 			return
 
 		if(!ignore_clothing)
-			for(var/obj/item/I in C.held_items + C.get_equipped_items())
-				if(!HAS_TRAIT(I, TRAIT_NODROP))
+			for(var/obj/item/item as anything in C.get_equipped_items(INCLUDE_HELD))
+				if(!HAS_TRAIT(item, TRAIT_NODROP))
 					to_chat(user, span_warning("Subject may not have abiotic items on!"))
 					return
 

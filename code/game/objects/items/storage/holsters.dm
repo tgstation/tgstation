@@ -104,5 +104,5 @@
 /obj/item/storage/belt/holster/nukie/cowboy/full/PopulateContents()
 	generate_items_inside(list(
 		/obj/item/ammo_box/speedloader/c357 = 2,
-		/obj/item/gun/ballistic/revolver/cowboy/nuclear = 1,
+		/obj/item/gun/ballistic/revolver/syndicate/cowboy/nuclear = 1,
 	), src)

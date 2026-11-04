@@ -9,6 +9,7 @@
 	strip_delay = 6 SECONDS
 	breakouttime = 5 MINUTES
 	bodyshapes_with_variations = BODYSHAPE_CERULEAN
+	clothing_traits = list(TRAIT_RESTRAINED)
 
 /obj/item/clothing/suit/jacket/straight_jacket/Initialize(mapload)
 	. = ..()

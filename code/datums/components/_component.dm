@@ -130,10 +130,10 @@
 	for(var/I in _GetInverseTypeList())
 		var/list/components_of_type = parents_components[I]
 
-		if(length(components_of_type)) //
+		if(length(components_of_type))
 			var/list/subtracted = components_of_type - src
 
-			if(subtracted.len == 1) //only 1 guy left
+			if(length(subtracted) == 1) //only 1 guy left
 				parents_components[I] = subtracted[1] //make him special
 			else
 				parents_components[I] = subtracted
@@ -141,7 +141,7 @@
 		else //just us
 			parents_components -= I
 
-	if(!parents_components.len)
+	if(!length(parents_components))
 		parent._datum_components = null
 
 	UnregisterFromParent()

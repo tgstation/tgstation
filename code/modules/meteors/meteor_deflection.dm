@@ -60,7 +60,7 @@
 
 	if(livinguser.combat_mode && livinguser.mind?.get_skill_level(/datum/skill/athletics) >= SKILL_LEVEL_LEGENDARY)
 		check_punch_award(livinguser)
-		playsound(parent, SFX_PUNCH, 50, TRUE)
+		playsound(parent, /datum/sound_effect/punch, 50, TRUE)
 		redirection_proc.Invoke(livinguser)
 		return TRUE
 

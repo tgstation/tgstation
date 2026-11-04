@@ -270,5 +270,5 @@
 	sound_vary = TRUE
 	block_sound = 'sound/items/weapons/parry.ogg'
 	hitsound = 'sound/items/weapons/bladeslice.ogg'
-	pickup_sound = SFX_KNIFE_PICKUP
-	drop_sound = SFX_KNIFE_DROP
+	pickup_sound = /datum/sound_effect/knife_pickup
+	drop_sound = /datum/sound_effect/knife_drop

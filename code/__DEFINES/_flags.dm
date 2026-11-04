@@ -223,6 +223,9 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 /// can't be destroyed by bombs
 #define BOMB_PROOF (1<<9)
 
+/// Combination flag for every resistance flag that provides... resistances
+#define EVERYTHING_PROOF (LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF | INDESTRUCTIBLE | FREEZE_PROOF | SHUTTLE_CRUSH_PROOF | BOMB_PROOF)
+
 //tesla_zap
 #define ZAP_MACHINE_EXPLOSIVE (1<<0)
 #define ZAP_ALLOW_DUPLICATES (1<<1)
@@ -323,6 +326,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IGNORE_SLOWDOWNS (1<<4)
 /// Cancel the action if the user does another action (mainly via clicking)
 #define DO_AFTER_CHECK_NEXT_MOVE (1<<5)
+/// interaction is stealthy/hidden (hide stuff like the cog icon)
+#define HIDE_INTERACTION (1<<6)
 
 // Flags for flora structures
 #define FLORA_HERBAL (1 << 0)

@@ -198,6 +198,9 @@
 	icon_state = "stairs"
 	tiled_turf = FALSE
 
+/turf/open/floor/holofloor/stairs/old
+	icon_state = "stairs-old"
+
 /turf/open/floor/holofloor/stairs/left
 	icon_state = "stairs-l"
 

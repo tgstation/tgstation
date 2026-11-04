@@ -144,3 +144,9 @@ do { \
 		source.lum_b = 1; \
 	}; \
 } while (FALSE)
+
+/// light_overlay flags
+/// For switchable lights, is it on and currently emitting light?
+#define LIGHTING_ON (1<<0)
+/// Is the parent attached to something else, its loc? Then we need to keep an eye of this.
+#define LIGHTING_ATTACHED (1<<1)

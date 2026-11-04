@@ -1,6 +1,7 @@
 import { sortBy } from 'es-toolkit';
 import { filter } from 'es-toolkit/compat';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { logger } from 'tgui/logging';
 import {
   Box,
   Button,
@@ -13,8 +14,9 @@ import {
   Tabs,
   VirtualList,
 } from 'tgui-core/components';
+import { fetchRetry } from 'tgui-core/http';
 import { createSearch } from 'tgui-core/string';
-
+import { resolveAsset } from 'tgui-panel/events/handlers/assets';
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
 import { CATEGORY_ICONS_COOKING, CATEGORY_ICONS_CRAFTING } from './constants';
@@ -28,6 +30,7 @@ import {
   type Material,
   MODE,
   type Recipe,
+  type RecipeServerData,
   TABS,
 } from './types';
 
@@ -35,17 +38,34 @@ export function PersonalCrafting(props: any) {
   const { act, data } = useBackend<CraftingData>();
   const {
     mode,
-    busy,
     forced_mode,
     display_compact,
     display_craftable_only,
     craftability,
     diet,
-    atom_data,
+    json_to_use,
+    material_occurences,
+    visible_recipes,
   } = data;
 
   const [searchText, setSearchText] = useState('');
   const [pages, setPages] = useState(1);
+
+  const [recipeData, setRecipeData] = useState<RecipeServerData>({
+    categories: ['Loading...'],
+    recipes: [],
+    icon_data: {},
+    atom_data: [],
+  });
+
+  useEffect(() => {
+    fetchRetry(resolveAsset(json_to_use))
+      .then((response) => response.json())
+      .then(setRecipeData)
+      .catch((error) => {
+        logger.log(`Failed to fetch ${json_to_use}`, JSON.stringify(error));
+      });
+  }, [json_to_use]);
 
   const DEFAULT_CAT_CRAFTING = Object.keys(CATEGORY_ICONS_CRAFTING)[1];
   const DEFAULT_CAT_COOKING = Object.keys(CATEGORY_ICONS_COOKING)[1];
@@ -58,7 +78,17 @@ export function PersonalCrafting(props: any) {
         : DEFAULT_CAT_CRAFTING,
   );
 
-  const allFoodCuisines = data.recipes
+  // filters recipes we can't see (due to lacking knowledge or whatever)
+  const visibleRecipes = recipeData.recipes.filter((recipe) =>
+    visible_recipes.includes(recipe.ref),
+  );
+
+  // filters out empty categories
+  const visibleCategories = recipeData.categories.filter((category) =>
+    visibleRecipes.some((recipe) => recipe.category === category),
+  );
+
+  const allFoodCuisines = visibleRecipes
     .reduce((acc: string[], recipe) => {
       if (recipe.cuisine_category && !acc.includes(recipe.cuisine_category)) {
         acc.push(recipe.cuisine_category);
@@ -67,7 +97,7 @@ export function PersonalCrafting(props: any) {
     }, [])
     .sort((a, b) => (a > b ? 1 : -1));
 
-  const allDishCategories = data.recipes
+  const allDishCategories = visibleRecipes
     .reduce((acc: string[], recipe) => {
       if (recipe.dish_category && !acc.includes(recipe.dish_category)) {
         acc.push(recipe.dish_category);
@@ -76,7 +106,7 @@ export function PersonalCrafting(props: any) {
     }, [])
     .sort((a, b) => (a > b ? 1 : -1));
 
-  const allMealCategories = data.recipes
+  const allMealCategories = visibleRecipes
     .reduce((acc: string[], recipe) => {
       if (recipe.meal_category && !acc.includes(recipe.meal_category)) {
         acc.push(recipe.meal_category);
@@ -85,7 +115,7 @@ export function PersonalCrafting(props: any) {
     }, [])
     .sort((a, b) => (a > b ? 1 : -1));
 
-  const allFoodtypes = data.recipes
+  const allFoodtypes = visibleRecipes
     .reduce((acc: string[], recipe) => {
       recipe.foodtypes?.forEach((foodtype) => {
         if (!acc.includes(foodtype)) {
@@ -101,11 +131,11 @@ export function PersonalCrafting(props: any) {
   const [activeMealCategory, setMealCategory] = useState<string[]>();
   const [activeFoodType, setFoodType] = useState<string[]>();
 
-  const material_occurences = sortBy(data.material_occurences, [
+  const sorted_material_occurences = sortBy(material_occurences, [
     (material) => -material.occurences,
   ]);
   const [activeMaterial, setMaterial] = useState(
-    material_occurences[0].atom_id,
+    sorted_material_occurences[0].atom_id,
   );
   const [tabMode, setTabMode] = useState(TABS.category);
 
@@ -113,7 +143,7 @@ export function PersonalCrafting(props: any) {
 
   const getMaterialName = (atomId: string): string => {
     const idNum = Number(atomId);
-    const atom = atom_data[idNum - 1];
+    const atom = recipeData.atom_data[idNum - 1];
     return atom?.name || atomId;
   };
 
@@ -123,8 +153,8 @@ export function PersonalCrafting(props: any) {
 
   const filteredMaterials =
     searchText.length > 0 && tabMode === TABS.material
-      ? filter(material_occurences, searchMaterial)
-      : material_occurences;
+      ? filter(sorted_material_occurences, searchMaterial)
+      : sorted_material_occurences;
 
   function categoryMatch(recipe: Recipe): boolean {
     if (tabMode === TABS.material) {
@@ -168,7 +198,7 @@ export function PersonalCrafting(props: any) {
   }
 
   let recipes = filter(
-    data.recipes,
+    visibleRecipes,
     (recipe) =>
       // If craftable only is selected, then filter by craftability
       (!display_craftable_only || Boolean(craftability[recipe.ref])) &&
@@ -189,7 +219,7 @@ export function PersonalCrafting(props: any) {
 
   const canMake = ['Can Make'];
   const categories = canMake
-    .concat(data.categories.sort())
+    .concat(visibleCategories.sort())
     .filter((i) => (i === 'Weaponry' ? true : i));
 
   const pageSize =
@@ -216,7 +246,7 @@ export function PersonalCrafting(props: any) {
                     expensive
                     placeholder={
                       'Search in ' +
-                      data.recipes.length +
+                      visibleRecipes.length +
                       (mode === MODE.cooking ? ' recipes...' : ' designs...')
                     }
                     value={searchText}
@@ -240,7 +270,7 @@ export function PersonalCrafting(props: any) {
                         setCategory(
                           Object.keys(craftability).length
                             ? 'Can Make'
-                            : data.categories[0],
+                            : visibleCategories[0],
                         );
                       }}
                     >
@@ -254,7 +284,7 @@ export function PersonalCrafting(props: any) {
                         }
                         setTabMode(TABS.material);
                         setPages(1);
-                        setMaterial(material_occurences[0].atom_id);
+                        setMaterial(sorted_material_occurences[0].atom_id);
                       }}
                     >
                       {mode === MODE.cooking ? 'Ingredient' : 'Material'}
@@ -286,6 +316,8 @@ export function PersonalCrafting(props: any) {
                             <MaterialContent
                               atom_id={material.atom_id}
                               occurences={(material as Material).occurences}
+                              iconData={recipeData.icon_data}
+                              atomData={recipeData.atom_data}
                             />
                           </Tabs.Tab>
                         ))}
@@ -572,9 +604,20 @@ export function PersonalCrafting(props: any) {
                     .slice(0, displayLimit)
                     .map((item) =>
                       display_compact ? (
-                        <RecipeContentCompact key={item.ref} item={item} />
+                        <RecipeContentCompact
+                          key={item.ref}
+                          item={item}
+                          iconData={recipeData.icon_data}
+                          atomData={recipeData.atom_data}
+                        />
                       ) : (
-                        <RecipeContent key={item.ref} item={item} />
+                        <RecipeContent
+                          key={item.ref}
+                          item={item}
+                          allRecipes={recipes}
+                          iconData={recipeData.icon_data}
+                          atomData={recipeData.atom_data}
+                        />
                       ),
                     )}
                 </VirtualList>
