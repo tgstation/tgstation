@@ -20,3 +20,6 @@
   vinylspiders:
   - bugfix: switched off lights no longer count as light for shadow walking and other
       darkness checks, and lights that move around count where they actually are
+2026-11-04:
+  Melbert:
+  - qol: Vendors accept returned items over their product cap again
