@@ -1,0 +1,4 @@
+author: "CabinetOnFire and Yobrocharlie"
+delete-after: True
+changes:
+  - rscadd: "You can now use a claw hammer to detonate 40mm and naval cannon shells. You can also do this to someone holding one by targeting their mouth on non-combat mode."
