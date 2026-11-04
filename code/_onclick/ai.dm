@@ -285,6 +285,8 @@
 
 /* Air Alarms */
 /obj/machinery/airalarm/AIShiftClick(mob/living/silicon/ai/user)
+	if(aidisabled)
+		return
 
     //relatively safe modes that progressively get more iffy
 	var/list/shift_modes/ = list(
@@ -306,6 +308,8 @@
 
 //sets air alarm to off on ctrl click
 /obj/machinery/airalarm/AICtrlClick(mob/living/silicon/ai/user)
+	if(aidisabled)
+		return
     //still want to give them a reaction
 	balloon_alert(user, "off")
 	if(selected_mode != /datum/air_alarm_mode/off)
@@ -314,6 +318,8 @@
 
 //cycles air alarm through more dangerous modes
 /obj/machinery/airalarm/ai_click_alt(mob/living/silicon/ai/user)
+	if(aidisabled)
+		return NONE
     //all of the modes that require more deliberation
 	var/list/alt_modes/ = list(
 		/datum/air_alarm_mode/cycle,
