@@ -71,7 +71,7 @@
 /obj/machinery/atmospherics/components/unary/vent_pump/on_update_integrity(old_value, new_value)
 	. = ..()
 	var/condition_string
-	switch(get_integrity_percentage())
+	switch(transfer_rate_modifier)
 		if(1)
 			condition_string = "perfect"
 		if(0.75 to 0.99)
