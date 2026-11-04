@@ -721,28 +721,28 @@
 "Fs" = (
 /obj/structure/closet/cardboard,
 /obj/item/restraints/handcuffs/cable/zipties/used,
-/obj/item/food/cornchips/blue,
-/obj/item/food/cornchips/blue,
-/obj/item/food/cornchips/green,
-/obj/item/food/cornchips/green,
-/obj/item/food/cornchips/purple,
-/obj/item/food/cornchips/purple,
-/obj/item/food/cornchips/red,
-/obj/item/food/cornchips/red,
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/blue{
+/obj/item/food/chips/corn/blue,
+/obj/item/food/chips/corn/blue,
+/obj/item/food/chips/corn/green,
+/obj/item/food/chips/corn/green,
+/obj/item/food/chips/corn/purple,
+/obj/item/food/chips/corn/purple,
+/obj/item/food/chips/corn/red,
+/obj/item/food/chips/corn/red,
+/obj/item/food/chips/corn/random,
+/obj/item/food/chips/corn/random,
+/obj/item/food/chips/corn/blue{
 	desc = "Limited edition flavour. Only for sale within the space commonwealth.";
 	name = "\improper Space Salt and Vinegar Boritos corn chips";
 	tastes = list("salt" = 1, "vinegar" = 3)
 	},
-/obj/item/food/cornchips/blue{
+/obj/item/food/chips/corn/blue{
 	desc = "Limited edition flavour. Only for sale within the space commonwealth.";
 	name = "\improper Space Salt and Vinegar Boritos corn chips";
 	tastes = list("salt" = 1, "vinegar" = 3)
 	},
-/obj/item/food/cornchips/random,
-/obj/item/food/cornchips/random,
+/obj/item/food/chips/corn/random,
+/obj/item/food/chips/corn/random,
 /turf/open/floor/plating/dumpsterair,
 /area/ruin/space/has_grav/garbagetruck/foodwaste)
 "Fz" = (
@@ -1092,7 +1092,7 @@
 /obj/structure/closet/crate/trashcart/filled,
 /obj/effect/decal/cleanable/insectguts,
 /obj/item/pinata,
-/obj/item/food/cornchips/green,
+/obj/item/food/chips/corn/green,
 /obj/effect/spawner/random/food_or_drink/condiment,
 /mob/living/basic/mouse,
 /turf/open/floor/plating/dumpsterair,
