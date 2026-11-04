@@ -288,7 +288,7 @@
 	if(aidisabled)
 		return
 
-    //relatively safe modes that progressively get more iffy
+	//relatively safe modes that progressively get more iffy
 	var/list/shift_modes/ = list(
 		/datum/air_alarm_mode/filtering,
 		/datum/air_alarm_mode/contaminated,
@@ -310,7 +310,7 @@
 /obj/machinery/airalarm/AICtrlClick(mob/living/silicon/ai/user)
 	if(aidisabled)
 		return
-    //still want to give them a reaction
+	//still want to give them a reaction so balloon is first
 	balloon_alert(user, "off")
 	if(selected_mode != /datum/air_alarm_mode/off)
 		select_mode(user, /datum/air_alarm_mode/off)
@@ -320,7 +320,7 @@
 /obj/machinery/airalarm/ai_click_alt(mob/living/silicon/ai/user)
 	if(aidisabled)
 		return NONE
-    //all of the modes that require more deliberation
+	//all of the modes that require more deliberation
 	var/list/alt_modes/ = list(
 		/datum/air_alarm_mode/cycle,
 		/datum/air_alarm_mode/siphon,
