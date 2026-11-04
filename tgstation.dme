@@ -1845,6 +1845,7 @@
 #include "code\datums\elements\rotation.dm"
 #include "code\datums\elements\rust.dm"
 #include "code\datums\elements\rust_healing.dm"
+#include "code\datums\elements\see_mobs_while_ventcrawling.dm"
 #include "code\datums\elements\selfknockback.dm"
 #include "code\datums\elements\series.dm"
 #include "code\datums\elements\shiny_bait.dm"
