@@ -1,0 +1,4 @@
+author: "cacogen"
+delete-after: True
+changes:
+  - qol: "Adds hotkeys to the portable air scrubber and portable air pump. These allow you to toggle them on/off, remove their holding tanks and in the case of the air pump maximise its output pressure."
