@@ -78,7 +78,7 @@
 		return
 	//Now we generate the tracer.
 	var/angle = get_angle(our_turf, target_turf)
-	our_turf.Beam(target_turf, 'icons/effects/beam.dmi', "blood_light", time = shot_delay)
+	our_turf.Beam(target_turf, icon_state = "blood_light", time = shot_delay)
 	playsound(src, 'sound/machines/airlock/airlockopen.ogg', 100, TRUE)
 	addtimer(CALLBACK(src, PROC_REF(fire_beam), angle), shot_delay)
 

@@ -718,6 +718,7 @@
 	//how many variants do we have in addition to the unnumbered state we use as a base icon state and terminal segment
 	var/icon_state_variants = 1
 
+/// Beam() passes these by position, so they have to stay in the same order as /datum/beam/New()'s, with icon_state_variants at the end
 /datum/beam/varied/New(
 	origin,
 	target,
@@ -728,6 +729,7 @@
 	beam_type = /obj/effect/ebeam,
 	beam_color = null,
 	emissive = TRUE,
+	emissive_alpha = 255,
 	animate = TRUE,
 	override_origin_pixel_x = null,
 	override_origin_pixel_y = null,
