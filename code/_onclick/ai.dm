@@ -304,25 +304,33 @@
 	balloon_alert(user, "filtering")
 	investigate_log("was cycled to filtering mode by [key_name(user)]", INVESTIGATE_ATMOS)
 
+//sets air alarm to off on ctrl click
 /obj/machinery/airalarm/AICtrlClick(mob/living/silicon/ai/user)
+    //still want to give them a reaction
+	balloon_alert(user, "off")
+	if(selected_mode != /datum/air_alarm_mode/off)
+		select_mode(user, /datum/air_alarm_mode/off)
+		investigate_log("was set to off mode by [key_name(user)]", INVESTIGATE_ATMOS)
 
+//cycles air alarm through more dangerous modes
+/obj/machinery/airalarm/ai_click_alt(mob/living/silicon/ai/user)
     //all of the modes that require more deliberation
-	var/list/ctrl_modes/ = list(
-		/datum/air_alarm_mode/off,
+	var/list/alt_modes/ = list(
 		/datum/air_alarm_mode/cycle,
 		/datum/air_alarm_mode/siphon,
 		/datum/air_alarm_mode/panic_siphon)
 
-	//checks if we are mid ctrl cycle or need to start at beginning
-	var/ctrl_index = ctrl_modes.Find(selected_mode.type)
-	if((ctrl_index)&&(ctrl_modes.len > ctrl_index))
-		select_mode(user, ctrl_modes[ctrl_index + 1])
+	//checks if we are mid alt cycle or need to start at beginning
+	var/alt_index = alt_modes.Find(selected_mode.type)
+	if((alt_index)&&(alt_modes.len > alt_index))
+		select_mode(user, alt_modes[alt_index + 1])
 		balloon_alert(user, "[selected_mode.name]")
 		investigate_log("was cycled to [selected_mode.name] mode by [key_name(user)]", INVESTIGATE_ATMOS)
-		return
+		return CLICK_ACTION_SUCCESS
 	select_mode(user, /datum/air_alarm_mode/off)
-	balloon_alert(user, "off")
-	investigate_log("was cycled off by [key_name(user)]", INVESTIGATE_ATMOS)
+	balloon_alert(user, "cycle")
+	investigate_log("was set to cycle mode by [key_name(user)]", INVESTIGATE_ATMOS)
+	return CLICK_ACTION_SUCCESS
 
 /* AI Turrets */
 /obj/machinery/turretid/ai_click_alt(mob/living/silicon/ai/user) //toggles lethal on turrets
