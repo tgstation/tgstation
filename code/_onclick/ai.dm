@@ -327,7 +327,7 @@
 		balloon_alert(user, "[selected_mode.name]")
 		investigate_log("was cycled to [selected_mode.name] mode by [key_name(user)]", INVESTIGATE_ATMOS)
 		return CLICK_ACTION_SUCCESS
-	select_mode(user, /datum/air_alarm_mode/off)
+	select_mode(user, /datum/air_alarm_mode/cycle)
 	balloon_alert(user, "cycle")
 	investigate_log("was set to cycle mode by [key_name(user)]", INVESTIGATE_ATMOS)
 	return CLICK_ACTION_SUCCESS
