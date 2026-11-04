@@ -3,13 +3,11 @@
 /// new_player_panel.dm, subsystem/lobby.dm, NewPlayerPanel.tsx): the welcome, the character one plays as, the classes
 /// the ready players took, keybindings, and Azure's wait before late joining. It runs its own bundle,
 /// tgui-rogue-lobby (modular_redtard/tgui/rogue_lobby), which draws TG's LobbyMenu unchanged and Azure's panel over it;
-/// the module build makes it. On other maps TG's lobby runs untouched.
+/// the module build makes it. The menu lies over the map, in TG's transparent lobby: the title screen turf plays the
+/// title as BYOND plays any icon, while a browser only gets its first frame. On other maps TG's lobby runs untouched.
 
 /// TG's LOBBY_TITLE_ASSET_NAME (code/modules/lobby_menu/lobby_menu.dm undefines it after itself): the title screen picture.
 #define ROGUE_LOBBY_TITLE_ASSET "lobby_title_screen.png"
-/// The title screen file itself: TG's asset holds only its first frame, while an animated DMI is a PNG of all its frames
-/// with their delays in the description, so the menu plays it as BYOND plays it on the map.
-#define ROGUE_LOBBY_TITLE_SHEET "rogue_lobby_title.png"
 
 /// Minutes after the round starts before anyone may join late (Azure timetojoin); 0 lets them join at once.
 /datum/config_entry/number/rogue_latejoin_delay
@@ -25,20 +23,20 @@
 	set waitfor = FALSE
 	if(!rogue_lobby_enabled())
 		return ..()
+	rogue_default_lobby_transparency()
 	register_lobby_title_asset()
-	rogue_register_lobby_title_sheet()
-	UNTIL(SSassets.transport.get_asset_url(ROGUE_LOBBY_TITLE_ASSET) && SSassets.transport.get_asset_url(ROGUE_LOBBY_TITLE_SHEET))
+	UNTIL(SSassets.transport.get_asset_url(ROGUE_LOBBY_TITLE_ASSET))
 	if(!src)
 		return
 	lobby_menu = new /datum/lobby_menu/rogue(src)
 
-/proc/rogue_register_lobby_title_sheet()
-	var/static/registered = FALSE
-	if(registered)
+/// The medieval lobby lies over the map. Set once a round, so that Toggle Lobby Transparency stays as an admin left it.
+/proc/rogue_default_lobby_transparency()
+	var/static/defaulted = FALSE
+	if(defaulted)
 		return
-	registered = TRUE
-	UNTIL(SStitle.file_path)
-	SSassets.transport.register_asset(ROGUE_LOBBY_TITLE_SHEET, file(SStitle.file_path))
+	defaulted = TRUE
+	GLOB.lobby_background_transparent = TRUE
 
 /// Azure's lobby fonts: MedievalSharp for the panel, Parisienne and its stroke data for the handwritten welcome (tegaki).
 /datum/asset/simple/namespaced/rogue_lobby_font
@@ -52,6 +50,19 @@
 	)
 
 /datum/lobby_menu/rogue
+	/// Whether the browser lies over the map: the "Disable Lobby-menu Transparency" preference keeps it in its own pane.
+	var/rogue_over_map = FALSE
+
+/datum/lobby_menu/rogue/create_browser(transparent = FALSE)
+	rogue_over_map = transparent
+	return ..()
+
+/// TG goes by the global setting alone and shows the map to a player whose menu stayed in its own pane, with the menu
+/// hidden behind it: that player could neither ready up nor join.
+/datum/lobby_menu/rogue/update_visibility()
+	. = ..()
+	if(GLOB.lobby_background_transparent && !rogue_over_map && istype(client?.mob, /mob/dead/new_player) && !client.interviewee)
+		winset(client, SKIN_MAP_LOBBY_SELECTOR, "left=[SKIN_LOBBY_SCREEN]")
 
 /// TG's assets (our bundle draws TG's menu) and Azure's font, with our bundle in place of tgui-lobby.
 /datum/lobby_menu/rogue/initialize_browser()
@@ -64,7 +75,7 @@
 	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/lobby_menu_sounds))
 	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/lobby_menu_icons))
 	window.send_asset(get_asset_datum(/datum/asset/simple/namespaced/rogue_lobby_font))
-	SSassets.transport.send_assets(client, list(ROGUE_LOBBY_TITLE_ASSET, ROGUE_LOBBY_TITLE_SHEET))
+	SSassets.transport.send_assets(client, ROGUE_LOBBY_TITLE_ASSET)
 
 /datum/lobby_menu/rogue/send_init()
 	. = ..()
@@ -83,7 +94,8 @@
 	)
 	if(full)
 		.["serverName"] = CONFIG_GET(string/servername) || world.name
-		.["titleSheetUrl"] = SSassets.transport.get_asset_url(ROGUE_LOBBY_TITLE_SHEET)
+		// TG's init sends the global setting, while this browser may lie in its own pane.
+		.["transparent"] = rogue_over_map
 
 /datum/lobby_menu/rogue/on_message(type, payload, href_list)
 	if(type != "action")
@@ -157,4 +169,3 @@
 	return built
 
 #undef ROGUE_LOBBY_TITLE_ASSET
-#undef ROGUE_LOBBY_TITLE_SHEET

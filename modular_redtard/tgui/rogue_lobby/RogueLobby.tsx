@@ -1,10 +1,9 @@
-import { useEffect, useReducer, useRef, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { createBundle, type TegakiBundle, TegakiRenderer } from 'tegaki/react';
 import { toTitleCase } from 'tgui-core/string';
 import { assetMap } from 'tgui-lobby/assets';
 import { playSelectSound } from 'tgui-lobby/audio';
 import { LobbyMenu, type ServerState } from 'tgui-lobby/LobbyMenu';
-import { readDmiAnimation } from './dmi';
 
 type ReadyJob = {
   name: string;
@@ -17,7 +16,6 @@ type RogueState = Partial<ServerState> & {
   serverName?: string;
   activeCharacter?: string | null;
   readyJobs?: ReadyJob[];
-  titleSheetUrl?: string;
   migrantQueued?: boolean;
 };
 
@@ -31,8 +29,8 @@ function sendAction(action: string) {
 }
 
 /**
- * TG's lobby menu as it is, over the title screen played frame by frame, and Azure Peak's lobby beside it. Both hear
- * the same init and state messages as TG's menu.
+ * TG's lobby menu as it is, over the map with the title screen, and Azure Peak's lobby beside it. Both hear the same
+ * init and state messages as TG's menu.
  */
 export function RogueLobby() {
   const [state, merge] = useReducer(mergeState, {});
@@ -44,127 +42,10 @@ export function RogueLobby() {
 
   return (
     <>
-      {!state.transparent && !!state.titleSheetUrl && (
-        <TitleAnimation url={state.titleSheetUrl} />
-      )}
       <LobbyMenu />
       {!!state.gamePhase && <AzurePanel state={state} />}
     </>
   );
-}
-
-/** Class on the root while the title plays, so TG's still first frame gives way to it. */
-const ANIMATED_CLASS = 'rogue-lobby-title-animated';
-/** How long the menu waits for the title sheet to arrive: a minute, once a second. */
-const TITLE_FETCH_ATTEMPTS = 60;
-const TITLE_FETCH_RETRY_MS = 1000;
-
-/**
- * The title screen as BYOND plays it on the map: TG's lobby shows a still picture of its first frame, so the menu
- * gets the DMI itself (a PNG of all frames) and draws one frame after another with the DMI's own delays, filling the
- * window as TG's background does (cover, centred). A title that does not animate stays TG's still picture.
- */
-function TitleAnimation({ url }: { url: string }) {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-
-  useEffect(() => {
-    let stopped = false;
-    let timer: ReturnType<typeof setTimeout> | undefined;
-    let paint = () => {};
-
-    (async () => {
-      // The sheet is megabytes and comes with the menu's other assets, so the menu is often up before it is: ask again
-      // until the whole DMI is there, as TG's fetchRetry does for its assets.
-      let data: ArrayBuffer | undefined;
-      let animation: Awaited<ReturnType<typeof readDmiAnimation>> = null;
-      for (let attempt = 0; attempt < TITLE_FETCH_ATTEMPTS && !stopped; attempt++) {
-        try {
-          const response = await fetch(url, { cache: 'no-store' });
-          if (response.ok) {
-            data = await response.arrayBuffer();
-            animation = await readDmiAnimation(data);
-            if (animation) {
-              break;
-            }
-          }
-        } catch {
-          // Not there yet.
-        }
-        await new Promise((resolve) => setTimeout(resolve, TITLE_FETCH_RETRY_MS));
-      }
-      if (!data || !animation || stopped) {
-        return;
-      }
-      // The sheet from the bytes already fetched: no second download, and the canvas stays readable.
-      const source = URL.createObjectURL(new Blob([data], { type: 'image/png' }));
-      const image = new Image();
-      image.src = source;
-      await image.decode().finally(() => URL.revokeObjectURL(source));
-      const canvas = canvasRef.current;
-      const context = canvas?.getContext('2d');
-      if (stopped || !canvas || !context) {
-        return;
-      }
-      const { width, height, cells, delays, loops } = animation;
-      const columns = Math.max(1, Math.floor(image.width / width));
-      let step = 0;
-      let played = 0;
-
-      paint = () => {
-        const ratio = window.devicePixelRatio || 1;
-        const canvasWidth = Math.round(canvas.clientWidth * ratio);
-        const canvasHeight = Math.round(canvas.clientHeight * ratio);
-        if (canvas.width !== canvasWidth || canvas.height !== canvasHeight) {
-          canvas.width = canvasWidth;
-          canvas.height = canvasHeight;
-        }
-        const scale = Math.max(canvasWidth / width, canvasHeight / height);
-        const cell = cells[step];
-        context.imageSmoothingEnabled = false;
-        context.clearRect(0, 0, canvasWidth, canvasHeight);
-        context.drawImage(
-          image,
-          (cell % columns) * width,
-          Math.floor(cell / columns) * height,
-          width,
-          height,
-          (canvasWidth - width * scale) / 2,
-          (canvasHeight - height * scale) / 2,
-          width * scale,
-          height * scale,
-        );
-      };
-
-      const advance = () => {
-        paint();
-        if (step === cells.length - 1) {
-          played++;
-          if (loops && played >= loops) {
-            return;
-          }
-        }
-        // BYOND's delays are deciseconds.
-        const delay = (delays[step] || 1) * 100;
-        step = (step + 1) % cells.length;
-        timer = setTimeout(advance, delay);
-      };
-
-      document.documentElement.classList.add(ANIMATED_CLASS);
-      window.addEventListener('resize', paint);
-      advance();
-    })().catch(() => {
-      // TG's still first frame stays under the menu.
-    });
-
-    return () => {
-      stopped = true;
-      clearTimeout(timer);
-      window.removeEventListener('resize', paint);
-      document.documentElement.classList.remove(ANIMATED_CLASS);
-    };
-  }, [url]);
-
-  return <canvas ref={canvasRef} className="rogue-lobby-title" />;
 }
 
 /** Parisienne with its stroke data, sent as the rogue_lobby_font asset; null when it cannot be loaded. */
