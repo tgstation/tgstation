@@ -85,8 +85,8 @@ SUBSYSTEM_DEF(job)
 	## As time goes on, more config options may be added to this file.\n\
 	## You can use the admin verb 'Generate Job Configuration' in-game to auto-regenerate this config as a downloadable file without having to manually edit this file if we add more jobs or more things you can edit here.\n\
 	## It will always respect prior-existing values in the config, but will appropriately add more fields when they generate.\n## It's strongly advised you create your own version of this file rather than use the one provisioned on the codebase.\n\n\
-	## The game will not read any line that is commented out with a '#', as to allow you to defer to codebase defaults.\n## If you want to override the codebase values, add the value and then uncomment that line by removing the # from the job key's name.\n\
-	## Ensure that the key is flush, do not introduce any whitespaces when you uncomment a key. For example:\n## \"# Total Positions\" should always be changed to \"Total Positions\", no additional spacing.\n\
+	## The game will not read any line that starts with a '#', as to allow you to defer to codebase defaults.\n## Every value is listed commented out, showing the current codebase default.\n\
+	## To override a codebase value, edit the number and then delete the leading '#' from that line. For example:\n## #\"Total Positions\" = 2 becomes \"Total Positions\" = 5\n\
 	## Best of luck editing!\n"
 
 /datum/controller/subsystem/job/Initialize()
