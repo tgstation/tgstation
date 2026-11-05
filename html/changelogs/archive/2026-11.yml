@@ -21,9 +21,30 @@
   - bugfix: switched off lights no longer count as light for shadow walking and other
       darkness checks, and lights that move around count where they actually are
 2026-11-04:
+  CabinetOnFire and Yobrocharlie:
+  - rscadd: You can now use a claw hammer to detonate 40mm and naval cannon shells.
+      You can also do this to someone holding one by targeting their mouth on non-combat
+      mode.
   Melbert:
   - qol: Vendors accept returned items over their product cap again
+  - code_imp: Cleaned up chip bag pop code - report anything weird with that extremely
+      niche thing I guess
+  PapaMichael:
+  - balance: Blood worm hatchlings can see mobs while ventcrawling
   cacogen:
   - qol: Adds hotkeys to the portable air scrubber and portable air pump. These allow
       you to toggle them on/off, remove their holding tanks and in the case of the
       air pump maximise its output pressure.
+  desertmote:
+  - rscadd: Changes the rat infusion into a mouse infusion, updating its appearance
+      flavor and adding two visual organs
+  - image: Adds mouse ears and a mouse tail sprite, the latter can wag
+  - code_imp: Inner-ear rendering for cat ears uses a list for layer rendering instead
+      of one specific layer
+  moocowswag:
+  - qol: Ventcrawling critters will now be able to tell if the vent they are entering
+      is uncomfortable temperature.
+2026-11-05:
+  cacogen:
+  - qol: Pride pins are now named after their skin instead of just generic "pride
+      pin"

@@ -2,7 +2,7 @@
 	category_index = CATEGORY_BITRUNNING_FLAIR
 
 /datum/orderable_item/bitrunning_flair/cornchips
-	purchase_path = /obj/item/food/cornchips
+	purchase_path = /obj/item/food/chips/corn
 	cost_per_order = 100
 
 /datum/orderable_item/bitrunning_flair/mountain_wind

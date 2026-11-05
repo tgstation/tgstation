@@ -20,8 +20,6 @@
 		generate_trash_procpath = generate_trash_proc
 	if(flags & FOOD_TRASH_OPENABLE)
 		RegisterSignal(target, COMSIG_ITEM_ATTACK_SELF, PROC_REF(open_trash))
-	if(flags & FOOD_TRASH_POPABLE)
-		RegisterSignal(target, COMSIG_FOOD_CROSSED, PROC_REF(food_crossed))
 	RegisterSignals(target, list(
 		COMSIG_ITEM_ON_GRIND,
 		COMSIG_ITEM_ON_JUICE,
@@ -36,7 +34,6 @@
 	UnregisterSignal(target, list(
 		COMSIG_FOOD_CONSUMED,
 		COMSIG_ITEM_ATTACK_SELF,
-		COMSIG_FOOD_CROSSED,
 		COMSIG_ITEM_ON_GRIND,
 		COMSIG_ITEM_ON_JUICE,
 		COMSIG_ITEM_USED_AS_INGREDIENT,
@@ -92,4 +89,3 @@
 
 	INVOKE_ASYNC(src, PROC_REF(async_generate_trash), source)
 	qdel(source)
-
