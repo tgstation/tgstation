@@ -83,8 +83,6 @@
 		return FALSE
 	var/atom/target = controller.blackboard[hiding_location_key] || controller.blackboard[target_key]
 
-	if(!isnull(controller.blackboard[BB_RANGED_CAN_SHOOT_METHOD]))
-		can_shoot_method = controller.blackboard[BB_RANGED_CAN_SHOOT_METHOD]
 	can_shoot_loscheck_passflags = controller.blackboard[BB_RANGED_PROJECTILE_MOVE_FLAGS]
 
 	if(QDELETED(target))
@@ -168,7 +166,21 @@
 	turf_list -= get_turf(target)
 	return turf_list
 
+/datum/bt_node/ai_behavior/basic_ranged_attack/los_check
+	can_shoot_method = CAN_SHOOT_METHOD_LOSCHECK
+
+/datum/bt_node/ai_behavior/basic_ranged_attack/always_shoot
+	can_shoot_method = CAN_SHOOT_METHOD_ALWAYSSHOOT
+
 /datum/bt_node/ai_behavior/basic_ranged_attack/avoid_friendly_fire
 	avoid_friendly_fire = TRUE
+
+/datum/bt_node/ai_behavior/basic_ranged_attack/avoid_friendly_fire/los_check
+	avoid_friendly_fire = TRUE
+	can_shoot_method = CAN_SHOOT_METHOD_LOSCHECK
+
+/datum/bt_node/ai_behavior/basic_ranged_attack/avoid_friendly_fire/always_shoot
+	avoid_friendly_fire = TRUE
+	can_shoot_method = CAN_SHOOT_METHOD_ALWAYSSHOOT
 
 #undef DEFAULT_ATTACK_DELAY
