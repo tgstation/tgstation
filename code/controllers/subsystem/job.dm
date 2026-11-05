@@ -69,8 +69,12 @@ SUBSYSTEM_DEF(job)
 	/// Dictionary that maps job priorities to low/medium/high. Keys have to be number-strings as assoc lists cannot be indexed by integers. Set in setup_job_lists.
 	var/list/job_priorities_to_strings
 
-	/// Is the overflow role set? If so, what datum set it?
-	var/overflow_invoker_type = null
+	/// A string related to whatever last set the overflow role through `set_overflow_role`.
+	var/overflow_invoker = null
+	/// Job datum vars that `apply_overflow_overrides` modifies on the overflow role.
+	var/static/list/overflow_overridden_vars = list("total_positions", "spawn_positions", "allow_bureaucratic_error", "job_flags")
+	/// The defaults for the current overflow role
+	var/list/overflow_baselines = list()
 
 	/// Are we using the old job config system (txt) or the new job config system (TOML)? IF we are going to use the txt file, then we are in "legacy mode", and this will flip to TRUE.
 	var/legacy_mode = FALSE
@@ -99,7 +103,7 @@ SUBSYSTEM_DEF(job)
 		setup_occupations()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		load_jobs_from_config()
-	set_overflow_role(CONFIG_GET(string/overflow_job), type) // this must always go after load_jobs_from_config() due to how the legacy systems operate.
+	set_overflow_role(CONFIG_GET(string/overflow_job), "[type] ([nameof(__PROC__)])") // this must always go after load_jobs_from_config() due to how the legacy systems operate.
 
 	// Initialize RETA system - must be after setup_occupations() so all jobs are loaded - code/modules/reta/reta_system.dm
 	log_game("RETA: Jobs subsystem Initialize() calling RETA initialization")
@@ -122,34 +126,62 @@ SUBSYSTEM_DEF(job)
 		overflow_jobs += check_job
 	return overflow_jobs
 
-/// Changes the overflow role to a new job type. We want to log/otherwise track who set it and when using a string (type) of the datum that invoked this public proc.
-/datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role, invoker_type = "unknown")
+/// Changes the overflow role to a new job type. We want to log/otherwise track who set it and when using a string that invoked this public proc.
+/datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role, invoker = null)
+	if(isnull(invoker))
+		if(IsAdminAdvancedProcCall())
+			invoker = "[usr] (admin)"
+		else
+			invoker = "!Unknown!"
+
 	var/datum/job/new_overflow = ispath(new_overflow_role) ? get_job_type(new_overflow_role) : get_job(new_overflow_role)
+	job_debug("SET_OVRFLW: Attempting to set new overflow role: [new_overflow_role] by [invoker]")
 	if(!new_overflow)
-		job_debug("SET_OVRFLW: Failed to set new overflow role: [new_overflow_role]")
+		job_debug("SET_OVRFLW: Failed to set new overflow role: [new_overflow_role] by [invoker]")
 		CRASH("set_overflow_role failed | new_overflow_role: [isnull(new_overflow_role) ? "null" : new_overflow_role]")
+
+	if(new_overflow.type != overflow_role)
+		revert_overflow_overrides(get_job_type(overflow_role))
+		overflow_role = new_overflow.type
+
+	apply_overflow_overrides(new_overflow)
+	overflow_invoker = invoker
+	job_debug("SET_OVRFLW: Overflow role set to: [new_overflow.type] by [invoker]")
+
+/// Puts the overflow restrictions on a given job. We will store the old configuration for a restoration as needed.
+/datum/controller/subsystem/job/proc/apply_overflow_overrides(datum/job/overflow_job)
+	if(!overflow_baselines[overflow_job.type]) // cache the current values as the baseline for this job type
+		var/list/baseline = list()
+		for(var/var_name in overflow_overridden_vars)
+			baseline[var_name] = overflow_job.vars[var_name]
+		overflow_baselines[overflow_job.type] = baseline
+
 	var/cap = CONFIG_GET(number/overflow_cap)
+	overflow_job.allow_bureaucratic_error = FALSE
+	overflow_job.spawn_positions = cap
+	overflow_job.total_positions = cap
+	overflow_job.job_flags |= JOB_CANNOT_OPEN_SLOTS
 
-	new_overflow.allow_bureaucratic_error = FALSE
-	new_overflow.spawn_positions = cap
-	new_overflow.total_positions = cap
-	new_overflow.job_flags |= JOB_CANNOT_OPEN_SLOTS
-
-	if(new_overflow.type == overflow_role)
+/// Undoes `apply_overflow_overrides`, restoring back whatever the job held before it became the overflow role.
+/datum/controller/subsystem/job/proc/revert_overflow_overrides(datum/job/former_overflow_job)
+	var/list/baseline = overflow_baselines[former_overflow_job.type]
+	if(!baseline)
 		return
-	var/datum/job/old_overflow = get_job_type(overflow_role)
-	old_overflow.allow_bureaucratic_error = initial(old_overflow.allow_bureaucratic_error)
-	old_overflow.spawn_positions = initial(old_overflow.spawn_positions)
-	old_overflow.total_positions = initial(old_overflow.total_positions)
-	if(!(initial(old_overflow.job_flags) & JOB_CANNOT_OPEN_SLOTS))
-		old_overflow.job_flags &= ~JOB_CANNOT_OPEN_SLOTS
-	overflow_role = new_overflow.type
-	job_debug("SET_OVRFLW: Overflow role set to: [new_overflow.type] by [invoker_type]")
-	overflow_set = invoker
+	for(var/var_name in baseline)
+		former_overflow_job.vars[var_name] = baseline[var_name]
+	overflow_baselines -= former_overflow_job.type
+
+/// Does nothing but read the stored variables of a given occupation as it should exist in either the config or the codebase.
+/datum/controller/subsystem/job/proc/get_config_baseline_value(datum/job_config_type/config_datum, datum/job/occupation)
+	var/list/baseline = overflow_baselines[occupation.type]
+	if(baseline && (config_datum.datum_var_name in baseline)) // special handling for overflow roles that otherwise obfuscate codebase settings.
+		return baseline[config_datum.datum_var_name]
+	return config_datum.get_current_value(occupation)
 
 /datum/controller/subsystem/job/proc/setup_occupations()
 	name_occupations = list()
 	type_occupations = list()
+	overflow_baselines = list()
 
 	var/list/all_jobs = subtypesof(/datum/job)
 	if(!length(all_jobs))
@@ -336,7 +368,7 @@ SUBSYSTEM_DEF(job)
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		// Any errors with the configs has already been said, we don't need to repeat them here.
 		load_jobs_from_config(silent = TRUE)
-	set_overflow_role(overflow_role, type)
+	set_overflow_role(overflow_role, "[type] ([nameof(__PROC__)])")
 	return
 
 

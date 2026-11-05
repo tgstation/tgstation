@@ -115,10 +115,6 @@
 		to_chat(user, span_notice("No jobconfig.toml found in the config folder! If this is not expected, please notify a server operator or coders. You may need to generate a new config file by running 'Generate Job Configuration' from the Server tab."))
 		return FALSE
 
-	var/is_poisoned = FALSE
-	if(overflow_invoker_type != type) // something that is not SSJob has changed the overflow role from how it exists in config, which will poison our regeneration process.
-		is_poisoned = TRUE
-
 	var/list/job_config = rustg_read_toml_file(toml_path)
 	for(var/datum/job/occupation as anything in joinable_occupations)
 		var/job_key = occupation.config_tag
@@ -146,16 +142,11 @@
 				working_list[config_datum_key] = job_config_line(config_read_value, commented = FALSE)
 				continue
 
-			working_list[config_datum_key] = job_config_line(config_datum.get_current_value(occupation), commented = TRUE)
+			working_list[config_datum_key] = job_config_line(get_config_baseline_value(config_datum, occupation), commented = TRUE)
 
 		file_data[job_key] = working_list
 
-	var/final_data = file_data
-	if(is_poisoned)
-		to_chat(user, span_notice("Overflow role has been changed from the config default of [CONFIG_GET(string/overflow_job)] by [overflow_invoker_type]! The job configuration was poisoned and we will be fixing it."))
-		final_data = fix_poisoned_data(file_data)
-
-	if(!export_toml(user, final_data))
+	if(!export_toml(user, file_data))
 		return FALSE
 
 	return TRUE
@@ -173,7 +164,7 @@
 		// Remember, every time we write the TOML from scratch, we want to have it commented out by default.
 		// This is to ensure that the server operator knows that they are overriding codebase defaults when they remove the comment.
 		// Having comments mean that we allow server operators to defer to codebase standards when they deem acceptable. They must uncomment to override the codebase default.
-		returnable_list[config_datum_key] = job_config_line(config_datum.get_current_value(new_occupation), commented = TRUE)
+		returnable_list[config_datum_key] = job_config_line(get_config_baseline_value(config_datum, new_occupation), commented = TRUE)
 
 	return returnable_list
 
@@ -189,23 +180,9 @@
 		if(!config_datum.validate_entry(new_occupation))
 			continue
 
-		returnable_list[config_datum_key] = job_config_line(config_datum.get_current_value(new_occupation), commented = TRUE)
+		returnable_list[config_datum_key] = job_config_line(get_config_baseline_value(config_datum, new_occupation), commented = TRUE)
 
 	return returnable_list
-
-
-/// A helper proc to fix poisoned job configuration data caused by changes to the overflow role. Returns the corrected data.
-/datum/controller/subsystem/job/proc/fix_poisoned_data(file_data)
-	var/list/fixed_data = file_data
-	var/true_overflow_tag = get_job_type(CONFIG_GET(string/overflow_job))::config_tag
-	var/true_overflow_singleton = job_config_datum_singletons[true_overflow_tag]
-	var/current_overflow_tag = get_job_type(overflow_role)::config_tag
-	var/current_overflow_singleton = job_config_datum_singletons[current_overflow_tag]
-
-	fixed_data[true_overflow_tag] = true_overflow_singleton.get_current_value()
-	fixed_data[current_overflow_tag] = current_overflow_singleton.get_current_value()
-
-	return fixed_data
 
 /// Builds one entry of a job's section for `export_toml`. commented is a bool for if the toml entry should have a #-prefix on the whole line.
 /datum/controller/subsystem/job/proc/job_config_line(value, commented)
