@@ -30,8 +30,8 @@
 #"Playtime Requirements" = 0
 #"Required Account Age" = 0
 #"Required Character Age" = 0
-#"Spawn Positions" = -1
-#"Total Positions" = -1
+#"Spawn Positions" = 5
+#"Total Positions" = 5
 
 [ATMOSPHERIC_TECHNICIAN]
 #"Playtime Requirements" = 60
@@ -159,8 +159,8 @@
 #"Playtime Requirements" = 300
 #"Required Account Age" = 7
 #"Required Character Age" = 0
-#"Spawn Positions" = -1
-#"Total Positions" = -1
+#"Spawn Positions" = 1
+#"Total Positions" = 1
 
 [GENETICIST]
 #"Playtime Requirements" = 60
@@ -312,3 +312,5 @@
 #"Required Character Age" = 0
 #"Spawn Positions" = 1
 #"Total Positions" = 1
+
+
