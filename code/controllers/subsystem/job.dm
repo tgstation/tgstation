@@ -69,6 +69,9 @@ SUBSYSTEM_DEF(job)
 	/// Dictionary that maps job priorities to low/medium/high. Keys have to be number-strings as assoc lists cannot be indexed by integers. Set in setup_job_lists.
 	var/list/job_priorities_to_strings
 
+	/// Is the overflow role set? If so, what datum set it?
+	var/overflow_invoker_type = null
+
 	/// Are we using the old job config system (txt) or the new job config system (TOML)? IF we are going to use the txt file, then we are in "legacy mode", and this will flip to TRUE.
 	var/legacy_mode = FALSE
 
@@ -96,7 +99,7 @@ SUBSYSTEM_DEF(job)
 		setup_occupations()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		load_jobs_from_config()
-	set_overflow_role(CONFIG_GET(string/overflow_job)) // this must always go after load_jobs_from_config() due to how the legacy systems operate, this always takes precedent.
+	set_overflow_role(CONFIG_GET(string/overflow_job), type) // this must always go after load_jobs_from_config() due to how the legacy systems operate.
 
 	// Initialize RETA system - must be after setup_occupations() so all jobs are loaded - code/modules/reta/reta_system.dm
 	log_game("RETA: Jobs subsystem Initialize() calling RETA initialization")
@@ -119,7 +122,8 @@ SUBSYSTEM_DEF(job)
 		overflow_jobs += check_job
 	return overflow_jobs
 
-/datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role)
+/// Changes the overflow role to a new job type. We want to log/otherwise track who set it and when using a string (type) of the datum that invoked this public proc.
+/datum/controller/subsystem/job/proc/set_overflow_role(new_overflow_role, invoker_type = "unknown")
 	var/datum/job/new_overflow = ispath(new_overflow_role) ? get_job_type(new_overflow_role) : get_job(new_overflow_role)
 	if(!new_overflow)
 		job_debug("SET_OVRFLW: Failed to set new overflow role: [new_overflow_role]")
@@ -140,7 +144,8 @@ SUBSYSTEM_DEF(job)
 	if(!(initial(old_overflow.job_flags) & JOB_CANNOT_OPEN_SLOTS))
 		old_overflow.job_flags &= ~JOB_CANNOT_OPEN_SLOTS
 	overflow_role = new_overflow.type
-	job_debug("SET_OVRFLW: Overflow role set to: [new_overflow.type]")
+	job_debug("SET_OVRFLW: Overflow role set to: [new_overflow.type] by [invoker_type]")
+	overflow_set = invoker
 
 /datum/controller/subsystem/job/proc/setup_occupations()
 	name_occupations = list()
@@ -331,7 +336,7 @@ SUBSYSTEM_DEF(job)
 	if(CONFIG_GET(flag/load_jobs_from_txt))
 		// Any errors with the configs has already been said, we don't need to repeat them here.
 		load_jobs_from_config(silent = TRUE)
-	set_overflow_role(overflow_role)
+	set_overflow_role(overflow_role, type)
 	return
 
 
