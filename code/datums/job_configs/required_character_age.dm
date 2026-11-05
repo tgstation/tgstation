@@ -3,11 +3,9 @@
 	name = JOB_CONFIG_REQUIRED_CHARACTER_AGE
 	datum_var_name = "required_character_age"
 
-/datum/job_config_type/required_character_age/get_current_value(datum/job/occupation)
-	. = ..()
-
-	if(isnum(.))
-		return .
+/datum/job_config_type/required_character_age/normalize_value(raw_value)
+	if(isnum(raw_value))
+		return raw_value
 
 	return 0
 
