@@ -97,6 +97,8 @@
 	name = "thick vine"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	desc = "A thick vine, painful to the touch."
+	// Reused vine segments still hurt whoever steps on them
+	allowed_reuse_flags = BEAM_REUSE_SHARED_GLOWS | BEAM_REUSE_OLD_SEGMENTS
 
 /obj/effect/ebeam/vine/Initialize(mapload)
 	. = ..()

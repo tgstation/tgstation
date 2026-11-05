@@ -131,6 +131,8 @@
 
 /obj/effect/ebeam/medical
 	name = "medical beam"
+	// Follows mobs around, so it redraws a lot
+	allowed_reuse_flags = BEAM_REUSE_SHARED_GLOWS | BEAM_REUSE_OLD_SEGMENTS
 
 //////////////////////////////Mech Version///////////////////////////////
 /obj/item/gun/medbeam/mech

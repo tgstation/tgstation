@@ -1077,6 +1077,8 @@ Striking a noncultist, however, will tear their flesh."}
 
 /obj/effect/ebeam/blood
 	name = "blood beam"
+	// Short one-shot beams, nothing to gain from reuse
+	allowed_reuse_flags = NONE
 
 /obj/item/shield/mirror
 	name = "mirror shield"

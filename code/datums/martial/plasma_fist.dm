@@ -200,6 +200,8 @@
 	name = "plasma"
 	mouse_opacity = MOUSE_OPACITY_ICON
 	desc = "Flowing energy."
+	// A one-shot beam whose visuals fade out, nothing to gain from reuse
+	allowed_reuse_flags = NONE
 
 /datum/martial_art/plasma_fist/nobomb
 	name = "Novice Plasma Fist"

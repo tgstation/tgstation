@@ -132,6 +132,8 @@
 
 /obj/effect/ebeam/cosmic
 	name = "cosmic beam"
+	// Follows mobs around, so it redraws a lot
+	allowed_reuse_flags = BEAM_REUSE_SHARED_GLOWS | BEAM_REUSE_OLD_SEGMENTS
 
 /datum/status_effect/cosmic_beam
 	id = "cosmic_beam"

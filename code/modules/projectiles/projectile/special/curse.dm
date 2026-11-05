@@ -1,5 +1,7 @@
 /obj/effect/ebeam/curse_arm
 	name = "curse arm"
+	// Follows the flying hand, so it redraws a lot
+	allowed_reuse_flags = BEAM_REUSE_SHARED_GLOWS | BEAM_REUSE_OLD_SEGMENTS
 
 /obj/projectile/curse_hand
 	name = "curse hand"

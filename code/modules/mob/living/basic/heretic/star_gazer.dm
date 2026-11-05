@@ -328,10 +328,16 @@
 
 /obj/effect/ebeam/phase_in // Beam subtype that has a "windup" phase
 	alpha = 0
+	// Each segment winds up from Initialize(), which reused segments skip
+	allowed_reuse_flags = NONE
 
 /obj/effect/ebeam/phase_in/Initialize(mapload)
 	. = ..()
 	animate(src, 2 SECONDS, alpha = 255, transform = matrix(3, 1, MATRIX_SCALE))
+
+/obj/effect/ebeam/phased_in
+	// Initialize() sets its transform, which reused segments skip
+	allowed_reuse_flags = NONE
 
 /obj/effect/ebeam/phased_in/Initialize(mapload, beam_owner)  // phased in, fully powered laser
 	. = ..()

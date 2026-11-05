@@ -385,6 +385,8 @@
 /obj/effect/ebeam/electrodes_nozap
 	name = "electrodes"
 	alpha = 192
+	// Follows the flying electrode, so it redraws a lot
+	allowed_reuse_flags = BEAM_REUSE_SHARED_GLOWS | BEAM_REUSE_OLD_SEGMENTS
 
 /obj/effect/ebeam/reacting/electrodes
 	name = "electrodes"
@@ -393,6 +395,8 @@
 	light_color = COLOR_YELLOW
 	light_power = 1
 	light_range = 1.5
+	// Glows only. Reused segments would keep their turf signals and light too, and we haven't tested that
+	allowed_reuse_flags = BEAM_REUSE_SHARED_GLOWS
 
 // movespeed mods
 /datum/movespeed_modifier/tasing_someone

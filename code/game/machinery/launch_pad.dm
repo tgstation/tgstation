@@ -152,6 +152,10 @@
 		log_message("changed the launchpad's y-offset parameter to Y: [y].", LOG_GAME, log_globally = FALSE)
 	update_indicator()
 
+/obj/effect/ebeam/launchpad
+	// Each segment fades out from Initialize(), which reused segments skip
+	allowed_reuse_flags = NONE
+
 /obj/effect/ebeam/launchpad/Initialize(mapload)
 	. = ..()
 	animate(src, alpha = 0, flags = ANIMATION_PARALLEL, time = BEAM_FADE_TIME)

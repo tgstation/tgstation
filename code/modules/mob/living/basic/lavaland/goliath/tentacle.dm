@@ -239,3 +239,5 @@
 /obj/effect/ebeam/goliath
 	name = "goliath tentacle"
 	mouse_opacity = MOUSE_OPACITY_ICON
+	// Nothing draws these with a glow
+	allowed_reuse_flags = BEAM_REUSE_OLD_SEGMENTS
