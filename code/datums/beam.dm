@@ -37,7 +37,7 @@
 	///icon state of the main segments of the beam
 	var/icon_state = ""
 	///Cache of the last segment's icon cut short to fit, "[icon]" -> icon_state -> icon per cut row (1 to 31). See get_terminal_icon_cut_at()
-	var/static/list/cached_terminal_icons
+	VAR_PRIVATE/static/list/cached_terminal_icons
 	///Our beam's alpha
 	var/alpha = 255
 	///The beam will qdel if it's longer than this many tiles.
@@ -47,9 +47,9 @@
 	///This is used as the visual_contents of beams, so you can apply one effect to this and the whole beam will look like that. never gets deleted on redrawing.
 	var/obj/effect/ebeam/visuals
 	///Key for how our beam looks, "[icon]|[icon_state]|[beam_color]|[emissive]|[beam_layer]". Only set if our visuals can go to the next beam that looks the same
-	var/visuals_look_key
+	VAR_PRIVATE/visuals_look_key
 	///Visuals left behind by finished beams, waiting for a new beam with the same look. look -> list(the look's appearance, then the spares)
-	var/static/list/spare_visuals_by_look
+	VAR_PRIVATE/static/list/spare_visuals_by_look
 	///The color of the beam we're drawing.
 	var/beam_color
 	///If we use an emissive appearance, and if so, what type?
@@ -97,19 +97,19 @@
 	///Duration of the last animation, in deciseconds (matches the time= passed to animate()).
 	var/anim_duration = 0
 	///world.time our current Draw() started, null when not drawing. Stored as a time so if Draw() runtimes we're only stuck for the rest of that tick
-	var/draw_start_time
+	VAR_PRIVATE/draw_start_time
 	///Something asked for a Draw() while we were already drawing, so we draw again once we're done
-	var/redraw_requested_mid_draw = FALSE
+	VAR_PRIVATE/redraw_requested_mid_draw = FALSE
 	///Glow overlays shared by every beam that looks like ours on our plane offset (see BEAM_FULL_SEGMENT_GLOW_INDEX for the layout)
-	var/list/shared_glows
+	VAR_PRIVATE/list/shared_glows
 	///Plane offset our glows were made for. Changes with the z-level, so we grab a new list when it does
-	var/shared_glows_plane_offset
+	VAR_PRIVATE/shared_glows_plane_offset
 	///All the shared glows lists, by "[icon]|[icon_state]|[emissive]|[alpha]|[emissive_alpha]|[plane offset]"
-	var/static/list/shared_glows_by_look
+	VAR_PRIVATE/static/list/shared_glows_by_look
 	///Which BEAM_REUSE_* flags we use, worked out in Start() from our beam type and segment type
-	var/reuse_flags = NONE
+	VAR_PRIVATE/reuse_flags = NONE
 	///Reuse flags for beam subtypes, exact type only. Anything not listed reuses nothing and works like it always did. These are not datum vars deliberately, so new subtypes/ones in downstreams are unaffected.
-	var/static/list/reuse_flags_by_beam_type = list(
+	VAR_PRIVATE/static/list/reuse_flags_by_beam_type = list(
 		// Tesla bolts come in bursts and never redraw, and every segment rolls its own icon state, so nothing's worth keeping
 		/datum/beam/varied = BEAM_REUSE_SHARED_GLOWS | BEAM_REUSE_SPARE_VISUALS,
 		// Fishing lines and borg vacuum hoses redraw whenever their holder walks or turns
@@ -117,7 +117,7 @@
 		/datum/beam/held/vacuum = BEAM_REUSE_OLD_SEGMENTS,
 	)
 	///Reuse flags for segment subtypes, exact type only. A beam only uses a flag if its beam type allows it too. These are not datum vars deliberately, so new subtypes/ones in downstreams are unaffected.
-	var/static/list/reuse_flags_by_segment_type = list(
+	VAR_PRIVATE/static/list/reuse_flags_by_segment_type = list(
 		// These follow a mob or projectile around, so they redraw a lot
 		/obj/effect/ebeam/chain = BEAM_REUSE_SHARED_GLOWS | BEAM_REUSE_OLD_SEGMENTS,
 		/obj/effect/ebeam/cosmic = BEAM_REUSE_SHARED_GLOWS | BEAM_REUSE_OLD_SEGMENTS,
@@ -634,6 +634,7 @@
  * * cut_row - the first pixel row to clear, 1 to 31. Everything below it stays
  */
 /datum/beam/proc/get_terminal_icon_cut_at(cut_row)
+	PRIVATE_PROC(TRUE)
 	var/icon_file_key = (isfile(icon) && istext(icon_state)) ? "[icon]" : null
 	var/list/terminal_icons_for_state = null
 	if(icon_file_key)
@@ -666,6 +667,7 @@
 
 /// Returns the shared glows list for our look and plane offset, or null if our icon can't be a text key (runtime icons all turn into "")
 /datum/beam/proc/get_shared_glows_for_look()
+	PRIVATE_PROC(TRUE)
 	var/icon_file_key = (isfile(icon) && istext(icon_state)) ? "[icon]" : null
 	if(!icon_file_key)
 		return null
@@ -678,6 +680,7 @@
 
 /// Saves our new visuals' appearance as our look's, so finished beams with our look can leave their visuals behind for the next one (see Destroy())
 /datum/beam/proc/add_look_for_spare_visuals()
+	PRIVATE_PROC(TRUE)
 	if(length(spare_visuals_by_look) >= BEAM_MAX_LOOKS_WITH_SPARE_VISUALS)
 		// Player-picked and random colors could make endless looks, so the oldest look and its spares get dropped
 		var/list/oldest_look_spares = spare_visuals_by_look[spare_visuals_by_look[1]]
@@ -695,6 +698,7 @@
  * * terminal_icon - the last segment's cut-short icon, null for full ones
  */
 /datum/beam/proc/build_shared_glow(obj/effect/ebeam/segment, glow_index, terminal_icon)
+	PRIVATE_PROC(TRUE)
 	var/mutable_appearance/shared_glow = emissive_appearance(terminal_icon ? terminal_icon : icon, terminal_icon ? "" : icon_state, segment, alpha = segment.alpha * emissive_alpha / 255, effect_type = emissive)
 	shared_glows[glow_index] = shared_glow
 	return shared_glow
