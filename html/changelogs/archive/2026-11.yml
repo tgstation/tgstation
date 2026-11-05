@@ -44,3 +44,7 @@
   moocowswag:
   - qol: Ventcrawling critters will now be able to tell if the vent they are entering
       is uncomfortable temperature.
+2026-11-05:
+  cacogen:
+  - qol: Pride pins are now named after their skin instead of just generic "pride
+      pin"
