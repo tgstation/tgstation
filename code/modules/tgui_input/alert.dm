@@ -35,7 +35,7 @@
 			return alert(user, message, title, buttons[1], buttons[2], buttons[3])
 	var/datum/tgui_alert/alert = new(user, message, title, buttons, timeout, autofocus, ui_state)
 	alert.ui_interact(user)
-	alert.wait()
+	alert.wait(user)
 	if (alert)
 		. = alert.choice
 		qdel(alert)
@@ -87,8 +87,8 @@
  * Waits for a user's response to the tgui_alert's prompt before returning. Returns early if
  * the window was closed by the user.
  */
-/datum/tgui_alert/proc/wait()
-	while (!choice && !closed && !QDELETED(src))
+/datum/tgui_alert/proc/wait(mob/user)
+	while (!choice && !closed && !QDELETED(src) && !QDELETED(user))
 		stoplag(1)
 
 /datum/tgui_alert/ui_interact(mob/user, datum/tgui/ui)

@@ -29,7 +29,7 @@
 		return input(user, message, title) as null|anything in items
 	var/datum/tgui_checkbox_input/input = new(user, message, title, items, min_checked, max_checked, timeout, ui_state)
 	input.ui_interact(user)
-	input.wait()
+	input.wait(user)
 	if (input)
 		. = input.choices
 		qdel(input)
@@ -76,8 +76,8 @@
 	items?.Cut()
 	return ..()
 
-/datum/tgui_checkbox_input/proc/wait()
-	while (!closed && !QDELETED(src))
+/datum/tgui_checkbox_input/proc/wait(mob/user)
+	while (!closed && !QDELETED(src) && !QDELETED(user))
 		stoplag(1)
 
 /datum/tgui_checkbox_input/ui_interact(mob/user, datum/tgui/ui)
