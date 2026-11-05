@@ -138,13 +138,15 @@ SUBSYSTEM_DEF(job)
 		job_debug("SET_OVRFLW: Failed to set new overflow role: [new_overflow_role] by [invoker]")
 		CRASH("set_overflow_role failed | new_overflow_role: [isnull(new_overflow_role) ? "null" : new_overflow_role]")
 
-	if(new_overflow.type != overflow_role)
+	var/new_overflow_type = new_overflow.type
+
+	if(!isnull(overflow_role) && (new_overflow_type != overflow_role))
 		revert_overflow_overrides(get_job_type(overflow_role))
-		overflow_role = new_overflow.type
+		overflow_role = new_overflow_type
 
 	apply_overflow_overrides(new_overflow)
 	overflow_invoker = invoker
-	job_debug("SET_OVRFLW: Overflow role set to: [new_overflow.type] by [invoker]")
+	job_debug("SET_OVRFLW: Overflow role set to: [new_overflow_type] by [invoker]")
 
 /// Puts the overflow restrictions on a given job. We will store the old configuration for a restoration as needed.
 /datum/controller/subsystem/job/proc/apply_overflow_overrides(datum/job/overflow_job)

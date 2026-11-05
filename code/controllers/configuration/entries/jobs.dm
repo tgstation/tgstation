@@ -8,6 +8,19 @@
 
 	return returnable_list
 
+/// Private proc that gets a list of all jobs with the JOB_NEW_PLAYER_JOINABLE flag, for config use only. This is just so that loading/regenerating the config still works even if some jobs don't exist in joinable occupations.
+/// Ultimately, this here to ensure that server operators will not have their config randomly drop jobs if they make a file at the wrong time (i.e. a map disabling a job)
+/datum/controller/subsystem/job/proc/get_configurable_jobs()
+	RETURN_TYPE(/list/datum/job)
+	var/static/list/configurable_jobs = null
+	if(isnull(configurable_jobs))
+		configurable_jobs = list()
+		for(var/datum/job/occupation as anything in all_occupations)
+			if(occupation.job_flags & JOB_NEW_PLAYER_JOINABLE) // some maps might disable this as being in the `joinable_occupations` list, but we still want it to be configurable. this flag means it meets criteria
+				configurable_jobs += occupation
+
+	return configurable_jobs
+
 /// Sets all of the job datum configurable values to what they've been set to in the config file, jobconfig.toml.
 /datum/controller/subsystem/job/proc/load_jobs_from_config(silent = FALSE)
 	if(!length(job_config_datum_singletons))
@@ -21,7 +34,7 @@
 	var/toml_path = "[global.config.directory]/jobconfig.toml"
 	var/list/job_config = rustg_read_toml_file(toml_path)
 
-	for(var/datum/job/occupation as anything in joinable_occupations)
+	for(var/datum/job/occupation as anything in get_configurable_jobs())
 		var/job_key = occupation.config_tag
 		if(!job_config[job_key]) // Job isn't listed, skip it.
 			// List both job_title and job_key in case they de-sync over time.
@@ -41,7 +54,7 @@
 		stack_trace("Despite SSconfig setting SSjob.legacy_mode to TRUE, jobs.txt was not found in the config directory! Something has gone terribly wrong!")
 		return
 	var/jobstext = file2text(jobsfile)
-	for(var/datum/job/occupation as anything in joinable_occupations)
+	for(var/datum/job/occupation as anything in get_configurable_jobs())
 		var/regex/parser = new("[occupation.title]=(-1|\\d+),(-1|\\d+)")
 		parser.Find(jobstext)
 		occupation.total_positions = text2num(parser.group[1])
@@ -69,7 +82,7 @@
 	// Generate the new TOML format, using codebase defaults.
 	to_chat(user, span_notice("Generating new jobconfig.toml, using codebase defaults."))
 	var/list/file_data = list()
-	for(var/datum/job/occupation as anything in joinable_occupations)
+	for(var/datum/job/occupation as anything in get_configurable_jobs())
 		file_data[occupation.config_tag] = generate_blank_job_config(occupation)
 
 	if(!export_toml(user, file_data))
@@ -84,7 +97,7 @@
 	var/list/file_data = list()
 	config_documentation += "\n\n## This TOML was migrated from jobs.txt. All variables are COMMENTED and will not load by default! Please verify to ensure that they are correct, and uncomment the key as you want, comparing it to the old config.\n\n" // small warning
 
-	for(var/datum/job/occupation as anything in joinable_occupations)
+	for(var/datum/job/occupation as anything in get_configurable_jobs())
 		var/regex/parser = new("[occupation.title]=(-1|\\d+),(-1|\\d+)") // TXT system used the occupation's name, we convert it to the new config_key system here.
 		parser.Find(unrolled_jobs_txt)
 
