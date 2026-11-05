@@ -312,7 +312,7 @@
 
 /// Sets a segment's alpha, layer and pixel offsets in Draw(), sliding it over from where the old beam had it when we animate
 // Segments start as far along the old beam (as it was mid-animation) as they end up along the new one, so redraws don't snap. Ones past its end fade in
-#define BEAM_PLACE_AND_ANIMATE_SEGMENT \
+#define BEAM_PLACE_AND_ANIMATE_SEGMENT(...) \
 	segment.alpha = alpha;\
 	segment.layer = beam_layer;\
 	var/new_pixel_x = origin_px + segment_pixel_x_on_turf;\
@@ -338,7 +338,7 @@
 	}
 
 /// Gives a segment its own emissive overlay, for when it's not using a shared glow
-#define BEAM_GIVE_SEGMENT_ITS_OWN_EMISSIVE segment.add_overlay(emissive_appearance(terminal_icon ? terminal_icon : icon, terminal_icon ? "" : icon_state, segment, alpha = segment.alpha * emissive_alpha / 255, effect_type = emissive))
+#define BEAM_GIVE_SEGMENT_ITS_OWN_EMISSIVE(...) segment.add_overlay(emissive_appearance(terminal_icon ? terminal_icon : icon, terminal_icon ? "" : icon_state, segment, alpha = segment.alpha * emissive_alpha / 255, effect_type = emissive))
 
 /**
  * Creates the beam effects and places them in a line from the origin to the target. Sets their rotation to make the beams face the target, too.
@@ -501,7 +501,7 @@
 
 			if(!is_kept_old_segment)
 				segment.forceMove(destination_turf)
-			BEAM_PLACE_AND_ANIMATE_SEGMENT
+			BEAM_PLACE_AND_ANIMATE_SEGMENT()
 			// Shared glows are made for our z-level's plane offset. If placing the segment knocked it into nullspace, it builds its own glow below instead
 			if(shared_glows && segment.loc)
 				var/glow_index = terminal_icon ? beam_length - segment_start : BEAM_FULL_SEGMENT_GLOW_INDEX
@@ -513,7 +513,7 @@
 					segment.shared_glow = shared_glow
 					segment.add_overlay(shared_glow)
 			else if(emissive)
-				BEAM_GIVE_SEGMENT_ITS_OWN_EMISSIVE
+				BEAM_GIVE_SEGMENT_ITS_OWN_EMISSIVE()
 	else
 		// Nothing to keep (first Draw(), or a beam that doesn't keep segments), so every segment is new and we skip the keeping logic
 		for(var/segment_start in 0 to beam_length - 1 step 32)
@@ -536,13 +536,13 @@
 
 			BEAM_DECLARE_SEGMENT_POSITION(segment)
 			segment.forceMove(locate(final_x, final_y, segment.z))
-			BEAM_PLACE_AND_ANIMATE_SEGMENT
+			BEAM_PLACE_AND_ANIMATE_SEGMENT()
 			if(shared_glows && segment.loc)
 				var/glow_index = terminal_icon ? beam_length - segment_start : BEAM_FULL_SEGMENT_GLOW_INDEX
 				segment.shared_glow = shared_glows[glow_index] || build_shared_glow(segment, glow_index, terminal_icon)
 				segment.add_overlay(segment.shared_glow)
 			else if(emissive)
-				BEAM_GIVE_SEGMENT_ITS_OWN_EMISSIVE
+				BEAM_GIVE_SEGMENT_ITS_OWN_EMISSIVE()
 
 	// Something our segments set off deleted the beam. Destroy() already got the old segments, so we delete the new ones
 	if(QDELETED(src))
