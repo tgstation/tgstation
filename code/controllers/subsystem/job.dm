@@ -181,10 +181,20 @@ SUBSYSTEM_DEF(job)
 
 /// Does nothing but read the stored variables of a given occupation as it should exist in either the config or the codebase.
 /datum/controller/subsystem/job/proc/get_config_baseline_value(datum/job_config_type/config_datum, datum/job/occupation)
-	var/list/baseline = overflow_baselines[occupation.type]
-	if(baseline && (config_datum.datum_var_name in baseline)) // special handling for overflow roles that otherwise obfuscate codebase settings.
-		return baseline[config_datum.datum_var_name]
-	return config_datum.get_current_value(occupation)
+	var/occupation_type = occupation.type
+	if(occupation_type != overflow_role)
+		return config_datum.get_current_value(occupation)
+
+	var/list/baseline = overflow_baselines[occupation_type]
+	if(!baseline)
+		stack_trace("Somehow didn't get a baseline for overflow role! Failing over to give the value as it exists on the config datum.")
+		return config_datum.get_current_value(occupation)
+
+	var/config_var_name = config_datum.datum_var_name
+	if(config_var_name in baseline) // special handling for overflow roles that otherwise obfuscate codebase/config settings.
+		return baseline[config_var_name]
+
+	return config_datum.get_current_value(occupation) // likely we're getting some other var unrelated to the overflow role varname creation
 
 /datum/controller/subsystem/job/proc/setup_occupations()
 	name_occupations = list()
