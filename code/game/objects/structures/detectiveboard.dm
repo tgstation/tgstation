@@ -112,7 +112,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/structure/detectiveboard, 32)
 					var/obj/item/paper/paper = evidence.item
 					data_evidence["text"] = ""
 					if(paper.raw_text_inputs && paper.raw_text_inputs.len)
-						data_evidence["text"] = paper.raw_text_inputs[1].raw_text
+						data_evidence["text"] = html_encode(paper.raw_text_inputs[1].raw_text)
 			data_evidences += list(data_evidence)
 		data_case["evidences"] = data_evidences
 		var/list/connections = list()
