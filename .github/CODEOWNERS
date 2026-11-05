@@ -168,10 +168,6 @@
 /code/controllers/subsystem/dbcore.dm @Jordie0608
 /tools/SQLAlertEmail/ @Jordie0608
 
-# loganuk
-
-/_maps/map_files/CatwalkStation/ @loganuk
-
 # NamelessFairy
 
 /code/modules/capture_the_flag/ @NamelessFairy
