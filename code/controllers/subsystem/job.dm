@@ -153,7 +153,8 @@ SUBSYSTEM_DEF(job)
 		var/list/new_baseline = list()
 		for(var/config_datum_key in job_config_datum_singletons)
 			var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
-			new_baseline[config_datum_key] = overflow_job.vars[config_datum.datum_var_name]
+			var/copiable_var_name = config_datum.datum_var_name
+			new_baseline[copiable_var_name] = overflow_job.vars[copiable_var_name]
 
 		overflow_baselines[overflow_job_type] = new_baseline
 
