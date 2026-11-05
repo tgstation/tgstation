@@ -71,8 +71,8 @@ SUBSYSTEM_DEF(job)
 
 	/// A string related to whatever last set the overflow role through `set_overflow_role`.
 	var/overflow_invoker = null
-	/// Job datum vars that `apply_overflow_overrides` modifies on the overflow role.
-	var/static/list/overflow_overridden_vars = list("total_positions", "spawn_positions", "allow_bureaucratic_error", "job_flags")
+	/// Job datum vars that `apply_overflow_overrides` modifies on the overflow role. This is only set when an overflow role is ran as a small typehint to people who extend the overflow feature to add something here too.
+	var/list/overflow_overridden_vars = null
 	/// The defaults for the current overflow role
 	var/list/overflow_baselines = list()
 
@@ -150,6 +150,14 @@ SUBSYSTEM_DEF(job)
 
 /// Puts the overflow restrictions on a given job. We will store the old configuration for a restoration as needed.
 /datum/controller/subsystem/job/proc/apply_overflow_overrides(datum/job/overflow_job)
+	if(!overflow_overridden_vars)
+		overflow_overridden_vars = list(
+			"allow_bureaucratic_error",
+			"job_flags",
+			"spawn_positions",
+			"total_positions",
+		)
+
 	if(!overflow_baselines[overflow_job.type]) // cache the current values as the baseline for this job type
 		var/list/baseline = list()
 		for(var/var_name in overflow_overridden_vars)
@@ -158,9 +166,9 @@ SUBSYSTEM_DEF(job)
 
 	var/cap = CONFIG_GET(number/overflow_cap)
 	overflow_job.allow_bureaucratic_error = FALSE
+	overflow_job.job_flags |= JOB_CANNOT_OPEN_SLOTS
 	overflow_job.spawn_positions = cap
 	overflow_job.total_positions = cap
-	overflow_job.job_flags |= JOB_CANNOT_OPEN_SLOTS
 
 /// Undoes `apply_overflow_overrides`, restoring back whatever the job held before it became the overflow role.
 /datum/controller/subsystem/job/proc/revert_overflow_overrides(datum/job/former_overflow_job)
