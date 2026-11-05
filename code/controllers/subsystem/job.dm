@@ -71,16 +71,14 @@ SUBSYSTEM_DEF(job)
 
 	/// A string related to whatever last set the overflow role through `set_overflow_role`.
 	var/overflow_invoker = null
-	/// Job datum vars that `apply_overflow_overrides` modifies on the overflow role. This is only set when an overflow role is ran as a small typehint to people who extend the overflow feature to add something here too.
-	var/list/overflow_overridden_vars = null
 	/// The defaults for the current overflow role
 	var/list/overflow_baselines = list()
 
 	/// Are we using the old job config system (txt) or the new job config system (TOML)? IF we are going to use the txt file, then we are in "legacy mode", and this will flip to TRUE.
 	var/legacy_mode = FALSE
 
-	/// List of job config datum singletons.
-	var/list/job_config_datum_singletons = list()
+	/// List of job config type datum singletons, as in you can access it via the static key "name" of the job_config_type and then be able to dynamically alter any type of value on runtime load
+	var/list/datum/job_config_type/job_config_datum_singletons = list()
 
 	/// This is just the message we prepen and put into all of the config files to ensure documentation. We use this in more than one place, so let's put it in the SS to make life a bit easier.
 	var/config_documentation = "## This is the configuration file for the job system.\n## This will only be enabled when the config flag LOAD_JOBS_FROM_TXT is enabled.\n\
@@ -98,7 +96,7 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/Initialize()
 	setup_job_lists()
-	job_config_datum_singletons = generate_config_singletons() // we set this up here regardless in case someone wants to use the verb to generate the config file.
+	job_config_datum_singletons = generate_config_singletons()
 	if(!length(all_occupations))
 		setup_occupations()
 	if(CONFIG_GET(flag/load_jobs_from_txt))
@@ -150,19 +148,13 @@ SUBSYSTEM_DEF(job)
 
 /// Puts the overflow restrictions on a given job. We will store the old configuration for a restoration as needed.
 /datum/controller/subsystem/job/proc/apply_overflow_overrides(datum/job/overflow_job)
-	if(!overflow_overridden_vars)
-		overflow_overridden_vars = list(
-			"allow_bureaucratic_error",
-			"job_flags",
-			"spawn_positions",
-			"total_positions",
-		)
+	var/overflow_job_type = overflow_job.type
+	if(!overflow_baselines[overflow_job_type]) // cache the current values as the baseline for this job type
+		var/list/new_baseline = list()
+		for(var/config_datum_key in job_config_datum_singletons)
+			new_baseline[config_datum_key] = overflow_job.vars[config_datum_key]
 
-	if(!overflow_baselines[overflow_job.type]) // cache the current values as the baseline for this job type
-		var/list/baseline = list()
-		for(var/var_name in overflow_overridden_vars)
-			baseline[var_name] = overflow_job.vars[var_name]
-		overflow_baselines[overflow_job.type] = baseline
+		overflow_baselines[overflow_job_type] = new_baseline
 
 	var/cap = CONFIG_GET(number/overflow_cap)
 	overflow_job.allow_bureaucratic_error = FALSE
@@ -190,11 +182,7 @@ SUBSYSTEM_DEF(job)
 		stack_trace("Somehow didn't get a baseline for overflow role! Failing over to give the value as it exists on the config datum.")
 		return config_datum.get_current_value(occupation)
 
-	var/config_var_name = config_datum.datum_var_name
-	if(config_var_name in baseline) // special handling for overflow roles that otherwise obfuscate codebase/config settings.
-		return baseline[config_var_name]
-
-	return config_datum.get_current_value(occupation) // likely we're getting some other var unrelated to the overflow role varname creation
+	return baseline[config_datum.datum_var_name]
 
 /datum/controller/subsystem/job/proc/setup_occupations()
 	name_occupations = list()
