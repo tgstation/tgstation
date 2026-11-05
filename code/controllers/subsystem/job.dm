@@ -152,7 +152,8 @@ SUBSYSTEM_DEF(job)
 	if(!overflow_baselines[overflow_job_type]) // cache the current values as the baseline for this job type
 		var/list/new_baseline = list()
 		for(var/config_datum_key in job_config_datum_singletons)
-			new_baseline[config_datum_key] = overflow_job.vars[config_datum_key]
+			var/datum/job_config_type/config_datum = job_config_datum_singletons[config_datum_key]
+			new_baseline[config_datum_key] = overflow_job.vars[config_datum.datum_var_name]
 
 		overflow_baselines[overflow_job_type] = new_baseline
 
