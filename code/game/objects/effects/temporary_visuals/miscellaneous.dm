@@ -618,9 +618,9 @@
 	/// The image shown to modsuit users
 	var/image/modsuit_image
 	/// The person in the modsuit at the moment, really just used to remove this from their screen
-	var/datum/weakref/mod_man
+	var/datum/autoref/mod_man
 	/// The creature we're placing this on
-	var/datum/weakref/pinged_person
+	var/datum/autoref/pinged_person
 	/// The icon state applied to the image created for this ping.
 	var/real_icon_state = "sonar_ping"
 	/// If we're following the creature as we move or not
@@ -641,8 +641,8 @@
 	SET_PLANE_EXPLICIT(modsuit_image, ABOVE_LIGHTING_PLANE, creature)
 	if(ishuman(creature))
 		modsuit_image.color = COLOR_SOFT_RED
-	mod_man = WEAKREF(looker)
-	pinged_person = WEAKREF(creature)
+	mod_man = AUTOREF(looker)
+	pinged_person = AUTOREF(creature)
 	looker?.client?.images |= modsuit_image
 	RegisterSignal(looker, COMSIG_MOVABLE_MOVED, PROC_REF(on_user_moved))
 	if(follow_creature)

@@ -93,7 +93,7 @@
 
 	if(are_we_tying)// if it's on a different z level, or further than would be reasonable, refuse to acknowledge the distance and mulligan.
 		to_chat(user, span_notice("You tie one end of \the [irrelevant_cable] around \the [src]."))
-		irrelevant_cable.connecting_post = WEAKREF(src)
+		irrelevant_cable.connecting_post = AUTOREF(src)
 		return ITEM_INTERACT_SUCCESS
 
 	if(connecting_post == src)
@@ -321,7 +321,7 @@
 	inhand_icon_state = "coil_yellow"
 	custom_materials = list(/datum/material/iron = SMALL_MATERIAL_AMOUNT * 3, /datum/material/glass = SMALL_MATERIAL_AMOUNT * 3)
 	/// The post we're trying to connect at the moment, if any.
-	var/datum/weakref/connecting_post
+	var/datum/autoref/connecting_post
 
 /obj/item/tripwire_cable/attack_self(mob/user, modifiers)
 	if(!connecting_post.resolve())

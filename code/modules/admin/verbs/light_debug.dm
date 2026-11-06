@@ -31,7 +31,7 @@
 
 /proc/undebug_light_sources()
 	GLOB.light_debug_enabled = FALSE
-	for(var/datum/weakref/button_ref as anything in GLOB.light_debugged_atoms)
+	for(var/datum/autoref/button_ref as anything in GLOB.light_debugged_atoms)
 		var/atom/button = button_ref.resolve()
 		if(!button)
 			GLOB.light_debugged_atoms -= button_ref
@@ -48,7 +48,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 	if(isturf(src) || HAS_TRAIT(src, TRAIT_LIGHTING_DEBUGGED))
 		return
 	ADD_TRAIT(src, TRAIT_LIGHTING_DEBUGGED, LIGHT_DEBUG_TRAIT)
-	GLOB.light_debugged_atoms += WEAKREF(src)
+	GLOB.light_debugged_atoms += AUTOREF(src)
 	add_filter("debug_light", 0, outline_filter(2, COLOR_CENTCOM_BLUE))
 	var/static/uid = 0
 	if(!render_target)
@@ -71,7 +71,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 	if(isturf(src) || !HAS_TRAIT(src, TRAIT_LIGHTING_DEBUGGED) || !light)
 		return
 	REMOVE_TRAIT(src, TRAIT_LIGHTING_DEBUGGED, LIGHT_DEBUG_TRAIT)
-	GLOB.light_debugged_atoms -= WEAKREF(src)
+	GLOB.light_debugged_atoms -= AUTOREF(src)
 	remove_filter("debug_light")
 	// Removes the glow overlay via stupid, sorry
 	var/atom/movable/render_step/color/above_light = new(null, src, "#ffffff23")
@@ -89,7 +89,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 	plane = BALLOON_CHAT_PLANE // We hijack runechat because we can get multiz niceness without making a new PM
 	layer = ABOVE_ALL_MOB_LAYER
 	alpha = 100
-	var/datum/weakref/last_hovored_ref
+	var/datum/autoref/last_hovored_ref
 
 /atom/movable/screen/light_button/Initialize(mapload)
 	. = ..()
@@ -115,7 +115,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 // Copypasta from action buttons
 /atom/movable/screen/light_button/MouseDrag(atom/over_object, src_location, over_location, src_control, over_control, params)
 	. = ..()
-	if(IS_WEAKREF_OF(over_object, last_hovored_ref))
+	if(IS_AUTOREF_OF(over_object, last_hovored_ref))
 		return
 	var/atom/old_object
 	if(last_hovored_ref)
@@ -126,7 +126,7 @@ GLOBAL_LIST_EMPTY(light_debugged_atoms)
 	if(old_object)
 		old_object.MouseExited(over_location, over_control, params)
 
-	last_hovored_ref = WEAKREF(over_object)
+	last_hovored_ref = AUTOREF(over_object)
 	over_object.MouseEntered(over_location, over_control, params)
 
 /atom/movable/screen/light_button/mouse_drop_dragged(atom/over, mob/user, src_location, over_location, params)

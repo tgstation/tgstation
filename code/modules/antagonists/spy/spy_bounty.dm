@@ -325,11 +325,11 @@
 	/// Can be pre-set for subtypes. If set, requires the machine to be in the location_type.
 	/// If not set, picks a random machine from all areas it can currently be found in.
 	var/area/location_type
-	/// List of weakrefs to all machines of the target type when the bounty was initialized.
-	var/list/original_options_weakrefs = list()
+	/// List of autorefs to all machines of the target type when the bounty was initialized.
+	var/list/original_options_autorefs = list()
 
 /datum/spy_bounty/machine/Destroy()
-	original_options_weakrefs.Cut() // Just in case
+	original_options_autorefs.Cut() // Just in case
 	return ..()
 
 /datum/spy_bounty/machine/get_dupe_protection_key(atom/movable/stealing)
@@ -393,10 +393,10 @@
 	var/area/machine_area = get_area(machine)
 	// Tracks the picked machine, as well as any other machines in the same area
 	// (So they can be removed from the room but still count, for clever Spies)
-	original_options_weakrefs += WEAKREF(machine)
+	original_options_autorefs += AUTOREF(machine)
 	for(var/obj/machinery/other_machine as anything in all_possible)
 		if(get_area(other_machine) == machine_area)
-			original_options_weakrefs += WEAKREF(other_machine)
+			original_options_autorefs += AUTOREF(other_machine)
 
 	location_type = machine_area.type
 	name ||= "[machine.name] Burglary"
@@ -406,7 +406,7 @@
 /datum/spy_bounty/machine/is_stealable(atom/movable/stealing)
 	if(!istype(stealing, target_type))
 		return FALSE
-	if(WEAKREF(stealing) in original_options_weakrefs)
+	if(AUTOREF(stealing) in original_options_autorefs)
 		return TRUE
 	if(istype(get_area(stealing), location_type))
 		return TRUE
@@ -498,15 +498,15 @@
 /datum/spy_bounty/targets_person
 	difficulty = SPY_DIFFICULTY_HARD
 	theft_time = 12 SECONDS
-	/// Weakref to the mob target of the bounty
-	VAR_FINAL/datum/weakref/target_ref
+	/// Autoref to the mob target of the bounty
+	VAR_FINAL/datum/autoref/target_ref
 
 /datum/spy_bounty/targets_person/get_dupe_protection_key(atom/movable/stealing)
 	// Prevents the same player from being selected twice, but if they're straight up gone, whatever
 	return REF(target_ref.resolve() || stealing)
 
 /datum/spy_bounty/targets_person/can_claim(mob/user)
-	return !IS_WEAKREF_OF(user, target_ref)
+	return !IS_AUTOREF_OF(user, target_ref)
 
 /datum/spy_bounty/targets_person/init_bounty(datum/spy_bounty_handler/handler)
 	var/list/mob/possible_targets = list()
@@ -529,7 +529,7 @@
 
 	var/mob/picked = pick(possible_targets)
 	if(target_found(picked))
-		target_ref = WEAKREF(picked)
+		target_ref = AUTOREF(picked)
 		return TRUE
 
 	return FALSE
@@ -558,16 +558,16 @@
 /datum/spy_bounty/targets_person/some_item
 	/// Typepath of the item we want from the target
 	var/obj/item/desired_type
-	/// Weakref to the item that matches our desired type within the target at the time of bounty creation
-	VAR_FINAL/datum/weakref/target_original_desired_ref
+	/// Autoref to the item that matches our desired type within the target at the time of bounty creation
+	VAR_FINAL/datum/autoref/target_original_desired_ref
 
 /datum/spy_bounty/targets_person/some_item/is_valid_crewmember(mob/living/carbon/human/crewmember)
 	return istype(crewmember) && find_desired_thing(crewmember)
 
 /datum/spy_bounty/targets_person/some_item/is_stealable(atom/movable/stealing)
-	if(IS_WEAKREF_OF(stealing, target_original_desired_ref))
+	if(IS_AUTOREF_OF(stealing, target_original_desired_ref))
 		return TRUE
-	if(IS_WEAKREF_OF(stealing, target_ref))
+	if(IS_AUTOREF_OF(stealing, target_ref))
 		var/mob/living/carbon/human/target = stealing
 		if(!INCAPACITATED_IGNORING(target, INCAPABLE_RESTRAINTS|INCAPABLE_STASIS))
 			return FALSE
@@ -576,7 +576,7 @@
 	return FALSE
 
 /datum/spy_bounty/targets_person/some_item/clean_up_stolen_item(atom/movable/stealing, mob/living/spy)
-	if(IS_WEAKREF_OF(stealing, target_original_desired_ref))
+	if(IS_AUTOREF_OF(stealing, target_original_desired_ref))
 		return ..()
 
 	ASSERT(ishuman(stealing), "[type] called clean_up_stolen_item with something that isn't a human and isn't the original item.")
@@ -590,7 +590,7 @@
 
 /datum/spy_bounty/targets_person/some_item/target_found(mob/crewmember)
 	var/obj/item/desired_thing = find_desired_thing(crewmember)
-	target_original_desired_ref = WEAKREF(desired_thing)
+	target_original_desired_ref = AUTOREF(desired_thing)
 	name = "[crewmember.real_name]'s [desired_thing.name]"
 	help = "Steal [desired_thing] from [crewmember.real_name]. \
 		You can accomplish this via brute force, or by scanning them with your uplink while they are incapacitated."
@@ -672,8 +672,8 @@
 	black_market_prob = 0
 	/// What typepath of bot we want to steal.
 	var/mob/living/bot_type
-	/// Weakref to the bot we want to steal.
-	VAR_FINAL/datum/weakref/target_bot_ref
+	/// Autoref to the bot we want to steal.
+	VAR_FINAL/datum/autoref/target_bot_ref
 
 /datum/spy_bounty/some_bot/get_dupe_protection_key(atom/movable/stealing)
 	return bot_type
@@ -705,13 +705,13 @@
 		return FALSE
 
 	var/mob/living/picked = pick(possible_bots)
-	target_bot_ref = WEAKREF(picked)
+	target_bot_ref = AUTOREF(picked)
 	name ||= "[picked.name] Abduction"
 	help ||= "Abduct the station's robot assistant [picked.name]."
 	return TRUE
 
 /datum/spy_bounty/some_bot/is_stealable(atom/movable/stealing)
-	return IS_WEAKREF_OF(stealing, target_bot_ref)
+	return IS_AUTOREF_OF(stealing, target_bot_ref)
 
 /datum/spy_bounty/some_bot/beepsky
 	difficulty = SPY_DIFFICULTY_MEDIUM // gotta get him to stand still

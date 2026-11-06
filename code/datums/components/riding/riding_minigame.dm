@@ -8,9 +8,9 @@
 //a simple minigame players must win to mount and tame a mob
 /datum/riding_minigame
 	///our host mob
-	var/datum/weakref/host
+	var/datum/autoref/host
 	///our current rider
-	var/datum/weakref/mounter
+	var/datum/autoref/mounter
 	///the total amount of tries the rider gets
 	var/maximum_attempts = 25
 	///maximum number of failures before we fail
@@ -42,8 +42,8 @@
 
 /datum/riding_minigame/New(mob/living/ridden, mob/living/rider)
 	. = ..()
-	host = WEAKREF(ridden)
-	mounter = WEAKREF(rider)
+	host = AUTOREF(ridden)
+	mounter = AUTOREF(rider)
 	set_difficulty(ridden, rider)
 	RegisterSignal(rider, COMSIG_MOB_UNBUCKLED, PROC_REF(lose_minigame))
 	RegisterSignal(ridden, COMSIG_MOVABLE_ATTEMPTED_MOVE, PROC_REF(on_ridden_moved))

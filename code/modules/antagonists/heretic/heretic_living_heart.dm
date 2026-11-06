@@ -128,7 +128,7 @@
 		blade_knowledge = heretic_datum.get_knowledge(potential_knowledge)
 		if(blade_knowledge)
 			break
-	for(var/datum/weakref/item_ref as anything in heretic_datum.tracked_items)
+	for(var/datum/autoref/item_ref as anything in heretic_datum.tracked_items)
 		var/obj/item/item = item_ref?.resolve()
 		if(QDELETED(item))
 			LAZYREMOVE(heretic_datum.tracked_items, item_ref)

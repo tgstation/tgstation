@@ -15,7 +15,7 @@
 	///new name given to the item on announce
 	var/new_name
 	///optional fantasy component, used in building the name if provided
-	var/datum/weakref/fantasy_component
+	var/datum/autoref/fantasy_component
 
 /datum/element/curse_announcement/Attach(datum/target, announcement_message, filter_color, new_name, datum/component/fantasy/fantasy_component)
 	. = ..()
@@ -25,7 +25,7 @@
 	src.announcement_message = announcement_message
 	src.filter_color = filter_color
 	src.new_name = new_name
-	src.fantasy_component = WEAKREF(fantasy_component)
+	src.fantasy_component = AUTOREF(fantasy_component)
 	if(cursed_item.slot_equipment_priority) //if it can equip somewhere, only go active when it is actually done
 		RegisterSignal(cursed_item, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equipped))
 	else

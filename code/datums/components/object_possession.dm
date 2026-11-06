@@ -4,7 +4,7 @@
 	/// Stores a reference to the obj that we are currently possessing.
 	var/obj/possessed = null
 	/// Ref to the screen object that is currently being displayed.
-	var/datum/weakref/screen_alert_ref = null
+	var/datum/autoref/screen_alert_ref = null
 	/**
 	  * back up of the real name during user possession
 	  *
@@ -23,7 +23,7 @@
 		return COMPONENT_INCOMPATIBLE
 
 	var/mob/user = parent
-	screen_alert_ref = WEAKREF(user.throw_alert(ALERT_UNPOSSESS_OBJECT, /atom/movable/screen/alert/unpossess_object))
+	screen_alert_ref = AUTOREF(user.throw_alert(ALERT_UNPOSSESS_OBJECT, /atom/movable/screen/alert/unpossess_object))
 
 	// we can expect to be possessed by either a nonliving or a living mob
 	RegisterSignals(parent, list(COMSIG_MOB_CLIENT_PRE_LIVING_MOVE, COMSIG_MOB_CLIENT_PRE_NON_LIVING_MOVE), PROC_REF(on_move))

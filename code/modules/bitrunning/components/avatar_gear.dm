@@ -3,10 +3,10 @@
 /datum/component/loads_avatar_gear
 	/// The callback called when COMSIG_BITRUNNER_STOCKING_GEAR is sent to our host human
 	var/datum/callback/load_callback
-	/// Weakref to the human we are currently carried by
-	var/datum/weakref/tracked_human_ref
-	/// Weakref to the connect_containers component that tracks the human
-	var/datum/weakref/connect_ref
+	/// Autoref to the human we are currently carried by
+	var/datum/autoref/tracked_human_ref
+	/// Autoref to the connect_containers component that tracks the human
+	var/datum/autoref/connect_ref
 
 /datum/component/loads_avatar_gear/Initialize(datum/callback/load_callback)
 	if(!isitem(parent))
@@ -20,7 +20,7 @@
 	var/static/list/loc_connections = list(
 		COMSIG_ATOM_ENTERING = PROC_REF(on_entered_loc),
 	)
-	connect_ref = WEAKREF(AddComponent(/datum/component/connect_containers, parent, loc_connections))
+	connect_ref = AUTOREF(AddComponent(/datum/component/connect_containers, parent, loc_connections))
 
 /datum/component/loads_avatar_gear/UnregisterFromParent()
 	UnregisterSignal(parent, list(
@@ -61,7 +61,7 @@
 
 	if(tracked_human)
 		UnregisterSignal(tracked_human, COMSIG_BITRUNNER_STOCKING_GEAR)
-	tracked_human_ref = WEAKREF(to_track)
+	tracked_human_ref = AUTOREF(to_track)
 	RegisterSignal(to_track, COMSIG_BITRUNNER_STOCKING_GEAR, PROC_REF(load_onto_avatar))
 
 /datum/component/loads_avatar_gear/proc/load_onto_avatar(mob/living/carbon/human/neo, mob/living/carbon/human/avatar, domain_flags)

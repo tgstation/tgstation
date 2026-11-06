@@ -77,7 +77,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 
 	var/contents_initialized = FALSE
 	/// is this closet locked by an exclusive id, i.e. your own personal locker
-	var/datum/weakref/id_card = null
+	var/datum/autoref/id_card = null
 	/// should we prevent further access change
 	var/access_locked = FALSE
 	/// is the card reader installed in this machine
@@ -765,7 +765,7 @@ GLOBAL_LIST_EMPTY(roundstart_station_closets)
 		id_card = null
 		switch(choice)
 			if("Personal") //only the player who swiped their id has access.
-				id_card = WEAKREF(card)
+				id_card = AUTOREF(card)
 				name = "[card.registered_name]'s locker"
 				desc = initial(desc) + " It has been ID locked to [card.registered_name]."
 			if("Job") //anyone who has the same access permissions as this id has access. Does NOT apply to the whole department.

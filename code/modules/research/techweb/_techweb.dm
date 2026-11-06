@@ -77,7 +77,7 @@
 	*/
 	var/list/published_papers
 	/// Assoc list of nodes queued for automatic research when there are enough points available
-	/// e.g: [/datum/techweb_node/mining --> /mob/living/carbon/human (weakref)]
+	/// e.g: [/datum/techweb_node/mining --> /mob/living/carbon/human (autoref)]
 	var/list/research_queue_nodes = list()
 
 /datum/techweb/New()
@@ -311,20 +311,20 @@
 		// Remove to be able to place first
 		research_queue_nodes -= node_path // Remove to be able to place first
 
-	var/datum/weakref/user_weakref = WEAKREF(user)
+	var/datum/autoref/user_autoref = AUTOREF(user)
 	for(var/queued_node, node_queuer in research_queue_nodes)
-		if(node_queuer == user_weakref)
+		if(node_queuer == user_autoref)
 			research_queue_nodes -= queued_node
 
 	if (queue_first)
 		research_queue_nodes.Insert(1, node_path)
-	research_queue_nodes[node_path] = user_weakref
+	research_queue_nodes[node_path] = user_autoref
 
 	return TRUE
 
 /datum/techweb/proc/dequeue_node(node_path, mob/user)
-	var/datum/weakref/queuer_weakref = research_queue_nodes[node_path]
-	var/mob/queuer = queuer_weakref?.resolve()
+	var/datum/autoref/queuer_autoref = research_queue_nodes[node_path]
+	var/mob/queuer = queuer_autoref?.resolve()
 	if(isnull(queuer) || queuer != user)
 		return FALSE
 	research_queue_nodes -= node_path
@@ -616,7 +616,7 @@
 			row_flags |= TECHWEB_UI_EXPERIMENTS_DONE
 			if(can_afford(price))
 				row_flags |= TECHWEB_UI_CAN_UNLOCK
-		var/datum/weakref/queuer_ref = research_queue_nodes[node_path]
+		var/datum/autoref/queuer_ref = research_queue_nodes[node_path]
 		if(queuer_ref?.resolve() == user)
 			row_flags |= TECHWEB_UI_QUEUED_BY_VIEWER
 		if(boosted_nodes[node_path])
@@ -627,7 +627,7 @@
 	for(var/node_path, queuer_ref in research_queue_nodes)
 		var/id = ids[node_path]
 		if(id)
-			queue += list(id, astype(queuer_ref, /datum/weakref)?.resolve())
+			queue += list(id, astype(queuer_ref, /datum/autoref)?.resolve())
 
 	var/list/experiments = list()
 	for(var/datum/experiment/experiment as anything in available_experiments)

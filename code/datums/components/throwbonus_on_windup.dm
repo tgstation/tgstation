@@ -4,7 +4,7 @@
 	///additional behavior if we exceed the maximum bonus
 	var/datum/callback/pass_maximum_callback
 	///the player currently winding up their throw
-	var/datum/weakref/holder
+	var/datum/autoref/holder
 	///the current bonus we are at
 	var/throwforce_bonus = 0
 	///the bar relaying feedback to the player
@@ -38,7 +38,7 @@
 
 	if(!(slot & ITEM_SLOT_HANDS) || holder?.resolve())
 		return
-	holder = WEAKREF(equipper)
+	holder = AUTOREF(equipper)
 	RegisterSignal(equipper, COMSIG_LIVING_THROW_MODE_TOGGLE, PROC_REF(throw_change))
 	RegisterSignal(equipper, COMSIG_MOB_SWAP_HANDS, PROC_REF(on_hands_swap))
 	if(equipper.throw_mode)

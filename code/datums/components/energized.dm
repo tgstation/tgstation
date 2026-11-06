@@ -13,8 +13,8 @@
 	var/outbound
 	/// Transport ID of the tram
 	var/specific_transport_id = TRAMSTATION_LINE_1
-	/// Weakref to the tram
-	var/datum/weakref/transport_ref
+	/// Autoref to the tram
+	var/datum/autoref/transport_ref
 
 /datum/component/energized/Initialize(plate_inbound, plate_outbound, plate_transport_id)
 	. = ..()
@@ -36,7 +36,7 @@
 /datum/component/energized/proc/find_tram()
 	for(var/datum/transport_controller/linear/transport as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 		if(transport.specific_transport_id == specific_transport_id)
-			transport_ref = WEAKREF(transport)
+			transport_ref = AUTOREF(transport)
 			break
 
 /datum/component/energized/RegisterWithParent()

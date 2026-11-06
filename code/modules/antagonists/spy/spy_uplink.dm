@@ -6,8 +6,8 @@
  * Used for spies to complete bounties.
  */
 /datum/component/spy_uplink
-	/// Weakref to the spy antag datum which owns this uplink
-	var/datum/weakref/spy_ref
+	/// Autoref to the spy antag datum which owns this uplink
+	var/datum/autoref/spy_ref
 	/// The handler which manages all bounties across all spies.
 	var/static/datum/spy_bounty_handler/handler
 
@@ -15,7 +15,7 @@
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE
 
-	spy_ref = WEAKREF(spy)
+	spy_ref = AUTOREF(spy)
 
 	if(isnull(handler))
 		handler = new()

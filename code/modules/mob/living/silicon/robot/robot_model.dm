@@ -412,8 +412,8 @@
 	model_select_icon = "engineer"
 	model_traits = list(TRAIT_NEGATES_GRAVITY)
 	hat_offset = list("north" = list(0, -4), "south" = list(0, -4), "east" = list(4, -4), "west" = list(-4, -4))
-	///Weakref to the meson vision action
-	var/datum/weakref/meson_vision_ref
+	///Autoref to the meson vision action
+	var/datum/autoref/meson_vision_ref
 
 /datum/action/cooldown/borg_meson
 	name = "Toggle Meson Vision"
@@ -446,7 +446,7 @@
 	//Grant night vision action
 	var/datum/action/cooldown/borg_meson/meson = new(loc)
 	meson.Grant(loc)
-	meson_vision_ref = WEAKREF(meson)
+	meson_vision_ref = AUTOREF(meson)
 
 /obj/item/robot_model/engineering/Destroy()
 	QDEL_NULL(meson_vision_ref)
@@ -479,8 +479,8 @@
 	cyborg_base_icon = "janitor"
 	model_select_icon = "janitor"
 	hat_offset = list("north" = list(0, -5), "south" = list(0, -5), "east" = list(4, -5), "west" = list(-4, -5))
-	/// Weakref to the wash toggle action we own
-	var/datum/weakref/wash_toggle_ref
+	/// Autoref to the wash toggle action we own
+	var/datum/autoref/wash_toggle_ref
 
 /obj/item/robot_model/janitor/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
 	. = ..()
@@ -488,7 +488,7 @@
 		return
 	var/datum/action/wash_toggle = new /datum/action/toggle_buffer(loc)
 	wash_toggle.Grant(loc)
-	wash_toggle_ref = WEAKREF(wash_toggle)
+	wash_toggle_ref = AUTOREF(wash_toggle)
 
 /obj/item/robot_model/janitor/Destroy()
 	QDEL_NULL(wash_toggle_ref)
@@ -503,7 +503,7 @@
 	var/block_buffer_change	= FALSE
 	var/buffer_on = FALSE
 	///The bucket we draw water from
-	var/datum/weakref/bucket_ref
+	var/datum/autoref/bucket_ref
 	///Our looping sound
 	var/datum/looping_sound/wash/wash_audio
 	///Toggle cooldown to prevent sound spam
@@ -540,7 +540,7 @@
 		return FALSE
 
 	var/obj/item/reagent_containers/cup/bucket/our_bucket = locate(/obj/item/reagent_containers/cup/bucket) in robot_owner.model.modules
-	bucket_ref = WEAKREF(our_bucket)
+	bucket_ref = AUTOREF(our_bucket)
 
 	if(!buffer_on)
 		if(!COOLDOWN_FINISHED(src, toggle_cooldown))
@@ -787,7 +787,7 @@
 		"Spider Miner" = list(SKIN_ICON_STATE = "spidermin", SKIN_HAT_OFFSET = list("north" = list(0, -2), "south" = list(0, -2), "east" = list(-2, -2), "west" = list(2, -2))),
 		"Lavaland Miner" = list(SKIN_ICON_STATE = "miner"),
 	)
-	var/datum/weakref/night_vision_ref
+	var/datum/autoref/night_vision_ref
 
 /obj/item/robot_model/miner/be_transformed_to(obj/item/robot_model/old_model, forced = FALSE)
 	var/datum/action/cooldown/borg_meson/night_vision = new(loc)
@@ -795,7 +795,7 @@
 	if(!.)
 		return
 	night_vision.Grant(loc)
-	night_vision_ref = WEAKREF(night_vision)
+	night_vision_ref = AUTOREF(night_vision)
 
 /obj/item/robot_model/miner/Destroy()
 	QDEL_NULL(night_vision_ref)
@@ -1005,7 +1005,7 @@
 	model_traits = list(TRAIT_PUSHIMMUNE, TRAIT_NEGATES_GRAVITY)
 	hat_offset = list("north" = list(0, -4), "south" = list(0, -4), "east" = list(4, -4), "west" = list(-4, -4))
 	canDispose = TRUE
-	var/datum/weakref/thermal_vision_ref
+	var/datum/autoref/thermal_vision_ref
 
 /obj/item/robot_model/saboteur/rebuild_modules()
 	..()
@@ -1043,7 +1043,7 @@
 	if(!.)
 		return
 	thermal_vision.Grant(loc)
-	thermal_vision_ref = WEAKREF(thermal_vision)
+	thermal_vision_ref = AUTOREF(thermal_vision)
 
 /obj/item/robot_model/saboteur/Destroy()
 	QDEL_NULL(thermal_vision_ref)

@@ -424,9 +424,9 @@ GLOBAL_LIST_INIT(spontaneous_fish_traits, populate_spontaneous_fish_traits())
 /datum/fish_trait/revival/proc/check_status(obj/item/fish/source)
 	SIGNAL_HANDLER
 	if(source.status == FISH_DEAD)
-		addtimer(CALLBACK(src, PROC_REF(revive), WEAKREF(source)), rand(1 MINUTES, 2 MINUTES))
+		addtimer(CALLBACK(src, PROC_REF(revive), AUTOREF(source)), rand(1 MINUTES, 2 MINUTES))
 
-/datum/fish_trait/revival/proc/revive(datum/weakref/fish_ref)
+/datum/fish_trait/revival/proc/revive(datum/autoref/fish_ref)
 	var/obj/item/fish/source = fish_ref.resolve()
 	if(QDELETED(source) || source.status != FISH_DEAD || !(type in source.fish_traits))
 		return

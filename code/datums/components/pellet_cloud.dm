@@ -285,7 +285,7 @@
 	pellet.original = target
 	pellet.fired_from = parent
 	pellet.firer = parent // don't hit ourself that would be really annoying
-	pellet.impacted = list(WEAKREF(parent) = TRUE) // don't hit the target we hit already with the flak
+	pellet.impacted = list(AUTOREF(parent) = TRUE) // don't hit the target we hit already with the flak
 	pellet.suppressed = SUPPRESSED_VERY // set the projectiles to make no message so we can do our own aggregate message
 	pellet.aim_projectile(target, parent)
 	RegisterSignal(pellet, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(pellet_hit))

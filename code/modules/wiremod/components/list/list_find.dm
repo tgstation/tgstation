@@ -51,7 +51,7 @@
 	var/data_to_check = to_check.value
 
 	if(isdatum(data_to_check))
-		data_to_check = WEAKREF(data_to_check)
+		data_to_check = AUTOREF(data_to_check)
 
 	var/actual_result = info.Find(data_to_check)
 	index.set_output(actual_result)

@@ -11,7 +11,7 @@
 	typepath = /datum/round_event/ghost_role/bitrunning_glitch
 	weight = 100
 	/// List of servers on the station
-	var/list/datum/weakref/active_servers = list()
+	var/list/datum/autoref/active_servers = list()
 
 /datum/round_event_control/bitrunning_glitch/can_spawn_event(players_amt, allow_magic = FALSE)
 	. = ..()
@@ -30,7 +30,7 @@
 	active_servers.Cut()
 	for(var/obj/machinery/quantum_server/server in SSmachines.get_machines_by_type(/obj/machinery/quantum_server))
 		if(server.validate_mutation_candidates() && server.generated_domain.difficulty != BITRUNNER_DIFFICULTY_NONE)
-			active_servers.Add(WEAKREF(server))
+			active_servers.Add(AUTOREF(server))
 
 	return length(active_servers) > 0
 
@@ -58,7 +58,7 @@
 	cyber_control.validate_servers()
 
 	var/total = 0
-	for(var/datum/weakref/server_ref in cyber_control.active_servers)
+	for(var/datum/autoref/server_ref in cyber_control.active_servers)
 		var/obj/machinery/quantum_server/server = server_ref?.resolve()
 		if(isnull(server) || QDELETED(server))
 			continue
@@ -79,7 +79,7 @@
 	if(!length(cyber_control.active_servers))
 		return WAITING_FOR_SOMETHING
 
-	var/datum/weakref/server_ref = pick(cyber_control.active_servers)
+	var/datum/autoref/server_ref = pick(cyber_control.active_servers)
 	var/obj/machinery/quantum_server/unlucky_server = server_ref?.resolve()
 	if(isnull(unlucky_server))
 		return WAITING_FOR_SOMETHING

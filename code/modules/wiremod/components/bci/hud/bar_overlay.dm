@@ -63,7 +63,7 @@
 	)
 	alt_appearance.show_to(owner)
 
-	active_overlays[target_atom] = WEAKREF(alt_appearance)
+	active_overlays[target_atom] = AUTOREF(alt_appearance)
 
 #undef COMP_BAR_OVERLAY_VERTICAL
 #undef COMP_BAR_OVERLAY_HORIZONTAL

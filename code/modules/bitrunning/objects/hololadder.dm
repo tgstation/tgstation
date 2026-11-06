@@ -9,14 +9,14 @@
 	/// Time req to disconnect properly
 	var/travel_time = 3 SECONDS
 	/// Uses this to teleport observers back to the origin server
-	var/datum/weakref/server_ref
+	var/datum/autoref/server_ref
 
 
 /obj/structure/hololadder/Initialize(mapload, obj/machinery/quantum_server/origin)
 	. = ..()
 
 	RegisterSignal(loc, COMSIG_ATOM_ENTERED, PROC_REF(on_enter))
-	server_ref = WEAKREF(origin)
+	server_ref = AUTOREF(origin)
 	register_context()
 
 
@@ -66,8 +66,8 @@
 
 	var/obj/machinery/quantum_server/our_server = server_ref.resolve()
 	if(!our_server.domain_complete)
-		for(var/datum/weakref/ghostrole_weakref as anything in our_server.spawned_threat_refs)
-			var/mob/living/ghostrole = ghostrole_weakref.resolve()
+		for(var/datum/autoref/ghostrole_autoref as anything in our_server.spawned_threat_refs)
+			var/mob/living/ghostrole = ghostrole_autoref.resolve()
 			if(ghostrole?.stat == STABLE && ghostrole.client && ghostrole.mind.has_antag_datum(/datum/antagonist/bitrunning_glitch))
 				to_chat(user, span_danger("A being in the simulation is preventing your retreat. You must either complete your mission or remove the obstacle before safe exit will be possible."))
 				return

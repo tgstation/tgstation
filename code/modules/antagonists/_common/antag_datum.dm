@@ -64,11 +64,11 @@ GLOBAL_LIST_EMPTY(antagonists)
 
 	///name of the UI that will try to open, right now using a generic ui
 	var/ui_name = "AntagInfoGeneric"
-	///weakref to button to access antag interface
-	var/datum/weakref/info_button_ref
+	///autoref to button to access antag interface
+	var/datum/autoref/info_button_ref
 
-	/// A weakref to the HUD shown to teammates, created by `add_team_hud`
-	var/datum/weakref/team_hud_ref
+	/// A autoref to the HUD shown to teammates, created by `add_team_hud`
+	var/datum/autoref/team_hud_ref
 
 /datum/antagonist/New()
 	GLOB.antagonists += src
@@ -253,7 +253,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 			info_button.show_to_observers = TRUE
 			info_button.allow_observer_click = TRUE
 		info_button.Grant(owner.current)
-		info_button_ref = WEAKREF(info_button)
+		info_button_ref = AUTOREF(info_button)
 	if(!silent)
 		greet()
 		if(ui_name)
@@ -531,12 +531,12 @@ GLOBAL_LIST_EMPTY(antagonists)
 /datum/antagonist/proc/add_team_hud(mob/target, antag_to_check)
 	QDEL_NULL(team_hud_ref)
 
-	team_hud_ref = WEAKREF(target.add_alt_appearance(
+	team_hud_ref = AUTOREF(target.add_alt_appearance(
 		/datum/atom_hud/alternate_appearance/basic/has_antagonist,
 		"antag_team_hud_[REF(src)]",
 		hud_image_on(target),
 		antag_to_check || type,
-		get_team() && WEAKREF(get_team()),
+		get_team() && AUTOREF(get_team()),
 	))
 
 	// Add HUDs that they couldn't see before

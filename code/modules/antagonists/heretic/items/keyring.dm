@@ -103,7 +103,7 @@
 	///The second portal in the portal pair, so we can clear it later
 	var/obj/effect/lock_portal/portal_two
 	///The first door we are linking in the pair, so we can create a portal pair
-	var/datum/weakref/link
+	var/datum/autoref/link
 	/// are our created portals inverted? (heretics get sent to a random airlock, crew get sent to the target)
 	var/inverted = FALSE
 
@@ -214,7 +214,7 @@
 		link = null
 		balloon_alert(user, "link 2/2")
 	else
-		link = WEAKREF(target)
+		link = AUTOREF(target)
 		balloon_alert(user, "link 1/2")
 	return ITEM_INTERACT_SUCCESS
 

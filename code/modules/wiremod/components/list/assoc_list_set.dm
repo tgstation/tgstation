@@ -49,6 +49,6 @@
 		return
 
 	if(isdatum(value_to_set))
-		value_to_set = WEAKREF(value_to_set)
+		value_to_set = AUTOREF(value_to_set)
 
 	info[key_to_set] = value_to_set

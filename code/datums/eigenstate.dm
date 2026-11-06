@@ -10,8 +10,8 @@ GLOBAL_DATUM_INIT(closet_teleport_controller, /datum/closet_teleport_controller,
 	var/id_counter = 1
 	///Limit the number of sparks created when teleporting multiple atoms to 1
 	var/spark_time = 0
-	/// Weakref to an admin spawned eigenlinked closet - the next one spawned will link to it
-	var/datum/weakref/admin_link
+	/// Autoref to an admin spawned eigenlinked closet - the next one spawned will link to it
+	var/datum/autoref/admin_link
 
 ///Creates a new link of targets unique to their own id
 /datum/closet_teleport_controller/proc/create_new_link(targets, subtle = TRUE)
@@ -146,7 +146,7 @@ GLOBAL_DATUM_INIT(closet_teleport_controller, /datum/closet_teleport_controller,
 
 	var/obj/structure/closet/other = GLOB.closet_teleport_controller.admin_link?.resolve()
 	if(isnull(other))
-		GLOB.closet_teleport_controller.admin_link = WEAKREF(src)
+		GLOB.closet_teleport_controller.admin_link = AUTOREF(src)
 		return
 
 	GLOB.closet_teleport_controller.create_new_link(list(src, other), subtle = src.subtle)

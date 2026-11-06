@@ -19,8 +19,8 @@
 	projectile_amount = 5
 	projectiles_per_fire = 7
 
-	/// A weakref to the mob we're currently targeting with the lockon component.
-	var/datum/weakref/current_target_weakref
+	/// A autoref to the mob we're currently targeting with the lockon component.
+	var/datum/autoref/current_target_autoref
 	/// The turn rate of the spell cards in flight. (They track onto locked on targets)
 	var/projectile_turnrate = 10
 	/// The homing spread of the spell cards in flight.
@@ -50,12 +50,12 @@
 		on_lock = CALLBACK(src, PROC_REF(on_lockon_component)), \
 	)
 
-/datum/action/cooldown/spell/pointed/projectile/spell_cards/proc/on_lockon_component(list/locked_weakrefs)
-	if(!length(locked_weakrefs))
-		current_target_weakref = null
+/datum/action/cooldown/spell/pointed/projectile/spell_cards/proc/on_lockon_component(list/locked_autorefs)
+	if(!length(locked_autorefs))
+		current_target_autoref = null
 		return
-	current_target_weakref = locked_weakrefs[1]
-	var/atom/real_target = current_target_weakref.resolve()
+	current_target_autoref = locked_autorefs[1]
+	var/atom/real_target = current_target_autoref.resolve()
 	if(real_target)
 		owner.face_atom(real_target)
 
@@ -65,8 +65,8 @@
 
 /datum/action/cooldown/spell/pointed/projectile/spell_cards/ready_projectile(obj/projectile/to_fire, atom/target, mob/user, iteration)
 	. = ..()
-	if(current_target_weakref)
-		var/atom/real_target = current_target_weakref?.resolve()
+	if(current_target_autoref)
+		var/atom/real_target = current_target_autoref?.resolve()
 		if(real_target && get_dist(real_target, user) < 7)
 			to_fire.homing_turn_speed = projectile_turnrate
 			to_fire.homing_inaccuracy_min = projectile_pixel_homing_spread

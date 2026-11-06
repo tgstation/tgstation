@@ -1588,8 +1588,8 @@
 	var/forged = FALSE
 	/// Anti-metagaming protections. If TRUE, anyone can change the ID card's details. If FALSE, only syndicate agents can.
 	var/anyone = FALSE
-	/// Weak ref to the ID card we're currently attempting to steal access from.
-	var/datum/weakref/theft_target
+	/// Auto ref to the ID card we're currently attempting to steal access from.
+	var/datum/autoref/theft_target
 
 /obj/item/card/id/advanced/chameleon/Destroy()
 	theft_target = null
@@ -1611,7 +1611,7 @@
 
 /obj/item/card/id/advanced/chameleon/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	if(isidcard(interacting_with))
-		theft_target = WEAKREF(interacting_with)
+		theft_target = AUTOREF(interacting_with)
 		ui_interact(user)
 		return ITEM_INTERACT_SUCCESS
 	return ..()
@@ -1636,7 +1636,7 @@
 
 		var/selected_id = pick(target_id_cards)
 		interacting_with.balloon_alert(user, UNLINT("IDs synced"))
-		theft_target = WEAKREF(selected_id)
+		theft_target = AUTOREF(selected_id)
 		ui_interact(user)
 		return ITEM_INTERACT_SUCCESS
 
@@ -1657,7 +1657,7 @@
 
 		var/selected_id = pick(target_id_cards)
 		interacting_with.balloon_alert(user, UNLINT("IDs synced"))
-		theft_target = WEAKREF(selected_id)
+		theft_target = AUTOREF(selected_id)
 		ui_interact(user)
 		return ITEM_INTERACT_SUCCESS
 

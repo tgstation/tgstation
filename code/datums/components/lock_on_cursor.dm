@@ -14,14 +14,14 @@
 	var/list/image/lock_images
 	/// Typecache of things we are allowed to target
 	var/list/target_typecache
-	/// Cache of weakrefs to ignore targeting formatted as `list(weakref = TRUE)`
-	var/list/immune_weakrefs
+	/// Cache of autorefs to ignore targeting formatted as `list(autoref = TRUE)`
+	var/list/immune_autorefs
 	/// Number of things we can target at once
 	var/lock_amount
 	/// Range to search for targets from the cursor position
 	var/lock_cursor_range
-	/// Weakrefs to current locked targets
-	var/list/locked_weakrefs
+	/// Autorefs to current locked targets
+	var/list/locked_autorefs
 	/// Callback to call when we have decided on our targets, is passed the list of final targets
 	var/datum/callback/on_lock
 	/// Callback to call in order to validate a potential target
@@ -50,12 +50,12 @@
 	src.lock_amount = lock_amount
 	src.on_lock = on_lock
 	src.can_target_callback = can_target_callback ? can_target_callback : CALLBACK(src, PROC_REF(can_target))
-	immune_weakrefs = list(WEAKREF(parent) = TRUE) //Manually take this out if you want..
+	immune_autorefs = list(AUTOREF(parent) = TRUE) //Manually take this out if you want..
 	for(var/immune_thing in immune)
-		if(isweakref(immune_thing))
-			immune_weakrefs[immune_thing] = TRUE
+		if(isautoref(immune_thing))
+			immune_autorefs[immune_thing] = TRUE
 		else if(isatom(immune_thing))
-			immune_weakrefs[WEAKREF(immune_thing)] = TRUE
+			immune_autorefs[AUTOREF(immune_thing)] = TRUE
 	lock_appearance = mutable_appearance(icon = icon, icon_state = icon_state, layer = FLOAT_LAYER)
 	var/mob/owner = parent
 	mouse_tracker = owner.overlay_fullscreen("lock_on", /atom/movable/screen/fullscreen/cursor_catcher/lock_on, 0)
@@ -78,7 +78,7 @@
 	var/mob/owner = parent
 	if(!owner.client)
 		return
-	for(var/datum/weakref/weak_target as anything in locked_weakrefs)
+	for(var/datum/autoref/weak_target as anything in locked_autorefs)
 		var/atom/target = weak_target.resolve()
 		if(!target)
 			continue //It'll be cleared by processing.
@@ -110,16 +110,16 @@
 	if(!mouse_tracker.given_turf)
 		return
 	clear_invalid_targets()
-	if(length(locked_weakrefs) < lock_amount)
+	if(length(locked_autorefs) < lock_amount)
 		find_targets()
 
 /// Removes targets which are out of range or don't exist any more
 /datum/component/lock_on_cursor/proc/clear_invalid_targets()
-	for(var/datum/weakref/weak_target as anything in locked_weakrefs)
+	for(var/datum/autoref/weak_target as anything in locked_autorefs)
 		var/atom/thing = weak_target.resolve()
 		if(thing && (get_dist(thing, mouse_tracker.given_turf) > lock_cursor_range))
 			continue
-		LAZYREMOVE(locked_weakrefs, weak_target)
+		LAZYREMOVE(locked_autorefs, weak_target)
 
 /// Replace our targets with new ones
 /datum/component/lock_on_cursor/proc/find_targets()
@@ -129,18 +129,18 @@
 	var/list/atom/targets = get_nearest(mouse_tracker.given_turf, target_typecache, lock_amount, lock_cursor_range)
 	if(targets == LOCKON_IGNORE_RESULT)
 		return
-	LAZYCLEARLIST(locked_weakrefs)
+	LAZYCLEARLIST(locked_autorefs)
 	for(var/atom/target as anything in targets)
-		if(immune_weakrefs[WEAKREF(target)])
+		if(immune_autorefs[AUTOREF(target)])
 			continue
-		LAZYOR(locked_weakrefs, WEAKREF(target))
+		LAZYOR(locked_autorefs, AUTOREF(target))
 	refresh_visuals()
-	on_lock.Invoke(locked_weakrefs)
+	on_lock.Invoke(locked_autorefs)
 
 /// Returns true if target is a valid target
 /datum/component/lock_on_cursor/proc/can_target(atom/target)
 	var/mob/mob_target = target
-	return is_type_in_typecache(target, target_typecache) && !(ismob(target) && IS_UNCONSCIOUS_OR_CRIT(mob_target)) && !immune_weakrefs[WEAKREF(target)]
+	return is_type_in_typecache(target, target_typecache) && !(ismob(target) && IS_UNCONSCIOUS_OR_CRIT(mob_target)) && !immune_autorefs[AUTOREF(target)]
 
 /// Returns the nearest targets to the current cursor position
 /datum/component/lock_on_cursor/proc/get_nearest()

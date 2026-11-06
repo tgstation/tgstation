@@ -82,8 +82,8 @@
 
 	//Use GET_TARGETS_FROM(mob) to access this
 	//Attempting to call GET_TARGETS_FROM(mob) when this var is null will just return mob as a base
-	///all range/attack/etc. calculations should be done from the atom this weakrefs, useful for Vehicles and such.
-	var/datum/weakref/targets_from
+	///all range/attack/etc. calculations should be done from the atom this autorefs, useful for Vehicles and such.
+	var/datum/autoref/targets_from
 	///id for a timer to call LoseTarget(), used to stop mobs fixating on a target they can't reach
 	var/lose_patience_timer_id
 	///30 seconds by default, so there's no major changes to AI behaviour, beyond actually bailing if stuck forever

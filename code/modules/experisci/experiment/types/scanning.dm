@@ -88,7 +88,7 @@
 		if(traits & EXPERIMENT_TRAIT_TYPECACHE)
 			scanned[contributing_index_value][target.type] = TRUE
 		else
-			scanned[contributing_index_value] += traits & EXPERIMENT_TRAIT_DESTRUCTIVE ? 1 : WEAKREF(target)
+			scanned[contributing_index_value] += traits & EXPERIMENT_TRAIT_DESTRUCTIVE ? 1 : AUTOREF(target)
 		if(traits & EXPERIMENT_TRAIT_DESTRUCTIVE && !isliving(target))//only qdel things when destructive scanning and they're not living (living things get gibbed)
 			qdel(target)
 		do_after_experiment(target, contributing_index_value)
@@ -115,7 +115,7 @@
 		var/list/seen = scanned[req_atom]
 		if (destructive && (req_atom in scanned) && scanned[req_atom] < required_atoms[req_atom])
 			selected = req_atom
-		else if (!destructive && seen.len < required_atoms[req_atom] && !(WEAKREF(target) in seen))
+		else if (!destructive && seen.len < required_atoms[req_atom] && !(AUTOREF(target) in seen))
 			selected = req_atom
 		// Run any additonal checks if necessary
 		if (selected && final_contributing_index_checks(experiment_handler, target, selected))

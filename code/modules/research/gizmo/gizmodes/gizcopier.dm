@@ -6,8 +6,8 @@
 		/datum/gizpulse/erase,
 	)
 
-	/// Weakref of what is marked to copy
-	var/datum/weakref/marked
+	/// Autoref of what is marked to copy
+	var/datum/autoref/marked
 	/// List of copies currently in circulation
 	var/list/copies = list()
 	/// The max amount of copies that can exist at a time
@@ -24,7 +24,7 @@
 		if(candidate.anchored || HAS_TRAIT(candidate, TRAIT_UNDERFLOOR)) // skips most undertile and hidden objects
 			continue
 
-		copier.marked = WEAKREF(candidate)
+		copier.marked = AUTOREF(candidate)
 		playsound(src, 'sound/items/weapons/flash.ogg', 80) //give some feedback that *something* happened
 		return
 

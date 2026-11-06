@@ -24,8 +24,8 @@
 	var/obj/effect/expansion_effect = /obj/effect/temp_visual/cosmic_domain
 	/// If the heretic is ascended or not
 	var/ascended = FALSE
-	/// Weakref to our summoner, only relevant if we are a stargazer. Prevents us from harming our master
-	var/datum/weakref/summoner
+	/// Autoref to our summoner, only relevant if we are a stargazer. Prevents us from harming our master
+	var/datum/autoref/summoner
 
 /datum/action/cooldown/spell/conjure/cosmic_expansion/cast(mob/living/cast_on)
 	new expansion_effect(get_turf(cast_on))

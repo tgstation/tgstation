@@ -23,11 +23,11 @@
 	/// Chance multipled by threat to spawn a glitch
 	var/glitch_chance = 0.2
 	/// Current plugged in users
-	var/list/datum/weakref/avatar_connection_refs = list()
+	var/list/datum/autoref/avatar_connection_refs = list()
 	/// Cached list of mutable mobs in zone for cybercops
-	var/list/datum/weakref/mutation_candidate_refs = list()
+	var/list/datum/autoref/mutation_candidate_refs = list()
 	/// Any ghosts that have spawned in
-	var/list/datum/weakref/spawned_threat_refs = list()
+	var/list/datum/autoref/spawned_threat_refs = list()
 	/// Scales loot with extra players
 	var/multiplayer_bonus = 1.1
 	/// Extra bonus for every player that nohits the run

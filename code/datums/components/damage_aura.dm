@@ -43,7 +43,7 @@
 	var/message_probability = 0
 
 	/// Sets a special set of conditions for the owner
-	var/datum/weakref/current_owner = null
+	var/datum/autoref/current_owner = null
 
 	/// Declares the cooldown timer for the damage aura effect to take place
 	COOLDOWN_DECLARE(last_damage_effect_time)
@@ -82,7 +82,7 @@
 	src.immune_factions = immune_factions
 	src.damage_message = damage_message
 	src.message_probability = message_probability
-	src.current_owner = WEAKREF(current_owner)
+	src.current_owner = AUTOREF(current_owner)
 
 /datum/component/damage_aura/Destroy(force)
 	STOP_PROCESSING(SSaura, src)

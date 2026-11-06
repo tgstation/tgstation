@@ -73,11 +73,11 @@
 			if(!(basic_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED))
 				return
 
-			owner.bot_ref = WEAKREF(bot)
+			owner.bot_ref = AUTOREF(bot)
 			owner.setting_waypoint = TRUE
 			to_chat(our_user, span_notice("Set your waypoint by clicking on a valid location free of obstructions."))
 		if("interface") //Remotely connect to a bot!
-			owner.bot_ref = WEAKREF(bot)
+			owner.bot_ref = AUTOREF(bot)
 			var/mob/living/basic/bot/basic_bot = bot
 			if(!(basic_bot.bot_mode_flags & BOT_MODE_REMOTE_ENABLED))
 				return

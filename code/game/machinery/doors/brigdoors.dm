@@ -25,11 +25,11 @@
 	var/timer_duration = 0
 	/// Is the timer on?
 	var/timing = FALSE
-	///List of weakrefs to nearby doors
+	///List of autorefs to nearby doors
 	var/list/doors = list()
-	///List of weakrefs to nearby flashers
+	///List of autorefs to nearby flashers
 	var/list/flashers = list()
-	///List of weakrefs to nearby closets
+	///List of autorefs to nearby closets
 	var/list/closets = list()
 	///Channel to report prisoneer's release
 	var/broadcast_channel = RADIO_CHANNEL_SECURITY
@@ -40,19 +40,19 @@
 	if(id != null)
 		for(var/obj/machinery/door/window/brigdoor/M in urange(20, src))
 			if (M.id == id)
-				doors += WEAKREF(M)
+				doors += AUTOREF(M)
 
 		for(var/obj/machinery/door/airlock/security/M in urange(20, src))
 			if (M.id == id)
-				doors += WEAKREF(M)
+				doors += AUTOREF(M)
 
 		for(var/obj/machinery/flasher/F in urange(20, src))
 			if(F.id == id)
-				flashers += WEAKREF(F)
+				flashers += AUTOREF(F)
 
 		for(var/obj/structure/closet/secure_closet/brig/C in urange(20, src))
 			if(C.id == id)
-				closets += WEAKREF(C)
+				closets += AUTOREF(C)
 
 	if(!length(doors) && !length(flashers) && length(closets))
 		atom_break()
@@ -101,7 +101,7 @@
 	timing = TRUE
 	begin_processing()
 
-	for(var/datum/weakref/door_ref as anything in doors)
+	for(var/datum/autoref/door_ref as anything in doors)
 		var/obj/machinery/door/window/brigdoor/door = door_ref.resolve()
 		if(!door)
 			doors -= door_ref
@@ -110,7 +110,7 @@
 			continue
 		INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/window/brigdoor, close))
 
-	for(var/datum/weakref/closet_ref as anything in closets)
+	for(var/datum/autoref/closet_ref as anything in closets)
 		var/obj/structure/closet/secure_closet/brig/closet = closet_ref.resolve()
 		if(!closet)
 			closets -= closet_ref
@@ -140,7 +140,7 @@
 	set_timer(0)
 	end_processing()
 
-	for(var/datum/weakref/door_ref as anything in doors)
+	for(var/datum/autoref/door_ref as anything in doors)
 		var/obj/machinery/door/window/brigdoor/door = door_ref.resolve()
 		if(!door)
 			doors -= door_ref
@@ -149,7 +149,7 @@
 			continue
 		INVOKE_ASYNC(door, TYPE_PROC_REF(/obj/machinery/door/window/brigdoor, open))
 
-	for(var/datum/weakref/closet_ref as anything in closets)
+	for(var/datum/autoref/closet_ref as anything in closets)
 		var/obj/structure/closet/secure_closet/brig/closet = closet_ref.resolve()
 		if(!closet)
 			closets -= closet_ref
@@ -200,7 +200,7 @@
 	data["minutes"] = round((time_left - data["seconds"]) / 60)
 	data["timing"] = timing
 	data["flash_charging"] = FALSE
-	for(var/datum/weakref/flash_ref as anything in flashers)
+	for(var/datum/autoref/flash_ref as anything in flashers)
 		var/obj/machinery/flasher/flasher = flash_ref.resolve()
 		if(!flasher)
 			flashers -= flash_ref
@@ -241,7 +241,7 @@
 		if("flash")
 			user.investigate_log("has flashed cell [id]", INVESTIGATE_RECORDS)
 			user.log_message("has flashed cell [id]", LOG_ATTACK)
-			for(var/datum/weakref/flash_ref as anything in flashers)
+			for(var/datum/autoref/flash_ref as anything in flashers)
 				var/obj/machinery/flasher/flasher = flash_ref.resolve()
 				if(!flasher)
 					flashers -= flash_ref

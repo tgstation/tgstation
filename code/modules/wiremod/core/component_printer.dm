@@ -234,7 +234,7 @@
 	if (isnull(circuit))
 		return NONE
 
-	circuit.linked_component_printer = WEAKREF(src)
+	circuit.linked_component_printer = AUTOREF(src)
 	circuit.update_static_data_for_all_viewers()
 	balloon_alert(user, "successfully linked to the integrated circuit")
 	return ITEM_INTERACT_SUCCESS

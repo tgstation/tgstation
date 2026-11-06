@@ -464,7 +464,7 @@
 	/// Is the rack currently drying stuff
 	var/drying = FALSE
 	/// The reference to the last user's mind. Needed for the chef made trait to be properly applied correctly to dried food.
-	var/datum/weakref/current_user
+	var/datum/autoref/current_user
 
 /obj/machinery/smartfridge/drying/Destroy()
 	current_user = null
@@ -514,7 +514,7 @@
 		return
 	update_appearance()
 	if(drying && user?.mind)
-		current_user = WEAKREF(user.mind)
+		current_user = AUTOREF(user.mind)
 
 /obj/machinery/smartfridge/drying/process(seconds_per_tick)
 	if(drying)
@@ -543,7 +543,7 @@
 	else
 		drying = TRUE
 		if(user?.mind)
-			current_user = WEAKREF(user.mind)
+			current_user = AUTOREF(user.mind)
 		update_use_power(ACTIVE_POWER_USE)
 	update_appearance()
 

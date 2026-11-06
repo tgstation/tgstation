@@ -100,7 +100,7 @@
 	/// Biotypes we removed (typically just MOB_ORGANIC)
 	VAR_PRIVATE/removed_biotypes = NONE
 	/// Tongue we removed and stored away for later restoration
-	VAR_PRIVATE/datum/weakref/removed_tongue
+	VAR_PRIVATE/datum/autoref/removed_tongue
 
 /datum/status_effect/zombie/on_apply()
 	if(!ishuman(owner) || HAS_TRAIT(owner, TRAIT_UNHUSKABLE))
@@ -137,7 +137,7 @@
 		old_tongue.Remove(new_zombie, special = TRUE)
 		if(!QDELETED(old_tongue))
 			old_tongue.moveToNullspace()
-			removed_tongue = WEAKREF(old_tongue)
+			removed_tongue = AUTOREF(old_tongue)
 
 	var/obj/item/organ/tongue/zombie/new_tongue = new()
 	new_tongue.Insert(new_zombie, special = TRUE)

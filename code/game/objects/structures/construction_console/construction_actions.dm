@@ -128,5 +128,5 @@
 		to_chat(owner, span_notice("<b>Warning:</b> Aux base controller not found. Turrets might not work properly."))
 		return
 
-	LAZYADD(turret_controller.turrets, WEAKREF(placed_structure))
+	LAZYADD(turret_controller.turrets, AUTOREF(placed_structure))
 	to_chat(owner, span_notice("You've constructed an additional turret. [remaining] turrets remaining."))
