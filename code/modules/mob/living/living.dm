@@ -467,9 +467,9 @@
 					ContactContractDisease(D)
 
 			if(iscarbon(L))
-				var/mob/living/carbon/carbon_guy = L
+				var/mob/living/carbon/C = L
 				if(HAS_TRAIT(src, TRAIT_STRONG_GRABBER))
-					INVOKE_ASYNC(carbon_guy, TYPE_PROC_REF(/mob/living/carbon, grabbedby), src) // start_pulling() can be invoked via signal handlers and grabbedby has a do_after for some reason
+					C.grabbedby(src)
 
 			update_pull_movespeed()
 
