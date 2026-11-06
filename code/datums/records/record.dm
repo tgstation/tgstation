@@ -69,6 +69,8 @@
  * Crew record datum
  */
 /datum/record/crew
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	/// List of citations
 	var/list/citations = list()
 	/// List of crimes
@@ -144,6 +146,8 @@
  * Admin locked record
  */
 /datum/record/locked
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	/// Mob's dna
 	var/datum/dna/locked_dna
 	/// Mind datum

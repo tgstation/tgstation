@@ -29,6 +29,8 @@ GAME_VERB_HIDDEN(/client, reset_held_keys_verb, "Reset Held Keys")
 	reset_held_keys()
 
 /datum/escape_menu
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	var/client/client
 	var/datum/tgui_window/window
 

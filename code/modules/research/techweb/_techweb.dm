@@ -7,6 +7,8 @@
  * on research consoles, servers, and disks. They are NOT global.
  */
 /datum/techweb
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	/// The id/name of the whole Techweb viewable to players.
 	var/id = "Generic"
 	/// Organization name, used for display

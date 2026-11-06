@@ -4,6 +4,8 @@
 GLOBAL_LIST_EMPTY(antagonists)
 
 /datum/antagonist
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	///Public name for this antagonist. Appears for player prompts and round-end reports.
 	var/name = "\improper Antagonist"
 	///Section of roundend report, datums with same category will be displayed together, also default header for the section
