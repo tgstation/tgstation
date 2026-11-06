@@ -6,6 +6,7 @@
  */
 /atom
 	abstract_type = /atom
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
 	layer = ABOVE_NORMAL_TURF_LAYER
 	plane = GAME_PLANE
 	appearance_flags = TILE_BOUND|LONG_GLIDE

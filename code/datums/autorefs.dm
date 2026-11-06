@@ -1,13 +1,14 @@
 /// Creates a autoref to the given input.
 /// See /datum/autoref's documentation for more information.
 /proc/AUTOREF(datum/input)
-	if(istype(input) && !QDELETED(input))
-		if(isautoref(input))
-			return input
+	if(!istype(input) || QDELING(input))
+		return
 
-		if(!input.auto_reference)
-			input.auto_reference = new /datum/autoref(input)
-		return input.auto_reference
+	if(isautoref(input))
+		return input
+	if(input.datum_flags & DF_WEAK_AUTOREF)
+		return input.auto_reference ||= new /datum/autoref/weak(input)
+	return input.auto_reference ||= new /datum/autoref(input)
 
 /datum/proc/create_autoref() //Forced creation for admin proccalls
 	return AUTOREF(src)
@@ -53,19 +54,23 @@
  * will always hard delete.
  */
 /datum/autoref
-	var/reference
+	/// The reference held by this autoref. Either a text reference, or an actual reference. Depends on the target's datum flags.
+	VAR_PRIVATE/reference
 
 /datum/autoref/New(datum/thing)
-	reference = REF(thing)
+	reference = thing
+	RegisterSignal(reference, COMSIG_QDELETING, PROC_REF(clear_reference))
+
+/datum/autoref/proc/clear_reference(datum/source)
+	SIGNAL_HANDLER
+	UnregisterSignal(source, COMSIG_QDELETING)
+	source.auto_reference = null
+	reference = null
 
 /datum/autoref/Destroy(force)
-	var/datum/target = resolve()
-	qdel(target)
-
-	if(!force)
-		return QDEL_HINT_LETMELIVE //Let BYOND autoGC thiswhen nothing is using it anymore.
-	target?.auto_reference = null
-	return ..()
+	qdel(resolve())
+	// Let BYOND autoGC this when nothing is using it anymore.
+	return force ? ..() : QDEL_HINT_LETMELIVE
 
 /**
  * Retrieves the datum that this autoref is referencing.
@@ -73,26 +78,7 @@
  * This will return `null` if the datum was deleted. This MUST be respected.
  */
 /datum/autoref/proc/resolve()
-	var/datum/D = locate(reference)
-	return (!QDELETED(D) && D.auto_reference == src) ? D : null
-
-/**
- * SERIOUSLY READ THE AUTODOC COMMENT FOR THIS PROC BEFORE EVEN THINKING ABOUT USING IT
- *
- * Like resolve, but doesn't care if the datum is being qdeleted but hasn't been deleted yet.
- *
- * The return value of this proc leaves hanging references if the datum is being qdeleted but hasn't been deleted yet.
- *
- * Do not do anything that would create a lasting reference to the return value, such as giving it a tag, putting it on the map,
- * adding it to an atom's contents or vis_contents, giving it a key (if it's a mob), attaching it to an atom (if it's an image),
- * or assigning it to a datum or list referenced somewhere other than a temporary value.
- *
- * Unless you're resolving a autoref to a datum in a COMSIG_QDELETING signal handler registered on that very same datum,
- * just use resolve instead.
- */
-/datum/autoref/proc/hard_resolve()
-	var/datum/D = locate(reference)
-	return (D?.auto_reference == src) ? D : null
+	return reference
 
 /datum/autoref/vv_get_dropdown()
 	. = ..()
@@ -101,7 +87,6 @@
 
 /datum/autoref/vv_do_topic(list/href_list)
 	. = ..()
-
 	if(!.)
 		return
 
@@ -109,3 +94,10 @@
 		var/datum/R = resolve()
 		if(R)
 			usr.client.debug_variables(R)
+
+/datum/autoref/weak/New(datum/thing)
+	reference = REF(thing)
+
+/datum/autoref/weak/resolve()
+	var/datum/resolved = locate(reference)
+	return (!QDELETED(resolved) && resolved.auto_reference == src) ? resolved : null

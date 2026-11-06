@@ -42,7 +42,7 @@
 	var/list/list/_signal_procs
 
 	/// Datum level flags
-	var/datum_flags = NONE
+	var/datum_flags = DF_WEAK_AUTOREF
 
 	/// A auto reference to another datum
 	var/datum/autoref/auto_reference
