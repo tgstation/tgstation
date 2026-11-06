@@ -169,12 +169,11 @@
 	var/list/lookup = _listen_lookup
 	if(lookup)
 		for(var/sig, _comps in lookup)
-			var/list/comps = _comps
-			if(length(comps))
-				for(var/datum/component/comp as anything in comps)
+			if(length(_comps))
+				for(var/datum/component/comp as anything in _comps)
 					comp.UnregisterSignal(src, sig)
 			else
-				var/datum/component/comp = comps
+				var/datum/component/comp = _comps
 				comp.UnregisterSignal(src, sig)
 		_listen_lookup = null
 
