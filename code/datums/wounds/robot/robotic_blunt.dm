@@ -163,13 +163,13 @@
 	occur_text = "visibly cracks open, metal pieces flying everywhere"
 	severity = WOUND_SEVERITY_SEVERE
 	simple_treat_text = "If on the chest, screwdriver it and then use a multitool to reboot the electronics inside."
-	homemade_treat_text = "If unable to screw, bone gel can secure inner components. \
+	homemade_treat_text = "If unable to screw, tape can secure inner components. \
 	Alternatively, crowbar the limb open to expose the internals - this will make it easier to re-secure them, but has a high risk of shocking you, \
 	so use insulated gloves. This will also disable the limb, so use it only as a last resort!"
 	treat_text_short = "Use a screwdriver and then a multitool."
 
 	wound_flags = (ACCEPTS_GAUZE|MANGLES_INTERIOR)
-	treatable_by = list(/obj/item/stack/medical/bone_gel)
+	treatable_by = list(/obj/item/stack/medical/wrap/sticky_tape)
 	status_effect_type = /datum/status_effect/wound/blunt/robotic/severe
 	interaction_efficiency_penalty = 2
 	limp_slowdown = 6
@@ -216,14 +216,14 @@
 		return FALSE
 	if(potential_treater.tool_behaviour == TOOL_CROWBAR && !crowbarred_open)
 		return TRUE
-	if (potential_treater.tool_behaviour == TOOL_SCREWDRIVER || potential_treater.tool_behaviour == TOOL_WRENCH || istype(potential_treater, /obj/item/stack/medical/bone_gel))
+	if (potential_treater.tool_behaviour == TOOL_SCREWDRIVER || potential_treater.tool_behaviour == TOOL_WRENCH || istype(potential_treater, /obj/item/stack/medical/wrap/sticky_tape))
 		return TRUE
 
 /datum/wound/blunt/robotic/severe/treat(obj/item/potential_treater, mob/user)
 	if (potential_treater.tool_behaviour == TOOL_MULTITOOL)
 		return restart(potential_treater, user)
-	if (istype(potential_treater, /obj/item/stack/medical/bone_gel))
-		return apply_gel(potential_treater, user)
+	if (istype(potential_treater, /obj/item/stack/medical/wrap/sticky_tape))
+		return apply_tape(potential_treater, user)
 	if (potential_treater.tool_behaviour == TOOL_CROWBAR)
 		return crowbar_open(potential_treater, user)
 	if (potential_treater.tool_behaviour == TOOL_SCREWDRIVER || potential_treater.tool_behaviour == TOOL_WRENCH)
@@ -334,26 +334,26 @@
 	ready_to_restart = TRUE
 	examine_desc = "twitches and sparks erratically."
 
-/// Alternative to securing the wires. Requires bone gel. Guaranteed to work.
-/datum/wound/blunt/robotic/severe/proc/apply_gel(obj/item/stack/medical/bone_gel/gel, mob/user)
+/// Alternative to securing the wires. Requires tape. Guaranteed to work.
+/datum/wound/blunt/robotic/severe/proc/apply_tape(obj/item/stack/medical/wrap/sticky_tape/tape, mob/user)
 	var/delay_mult = 1.5
 	if (victim == user)
 		delay_mult *= 1.5
 	if (HAS_TRAIT(src, TRAIT_WOUND_SCANNED))
 		delay_mult *= 0.5
 
-	user.visible_message(span_notice("[user] begins applying [gel] to [victim]'s [limb.plaintext_zone]."), span_warning("You begin applying [gel] to [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]."))
+	user.visible_message(span_notice("[user] begins applying [tape] to [victim]'s [limb.plaintext_zone]."), span_warning("You begin applying [tape] to [user == victim ? "your" : "[victim]'s"] [limb.plaintext_zone]."))
 	if (!do_after(user, (3 SECONDS * delay_mult), target = victim, extra_checks = CALLBACK(src, PROC_REF(still_exists))))
 		return TRUE
 
-	gel.use(1)
+	tape.use(1)
 	if(user != victim)
-		user.visible_message(span_notice("[user] finishes applying [gel] to [victim]'s [limb.plaintext_zone]!"), span_notice("You finish applying [gel] to [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)
-		to_chat(victim, span_userdanger("[user] finishes applying [gel] to your [limb.plaintext_zone]."))
+		user.visible_message(span_notice("[user] finishes applying [tape] to [victim]'s [limb.plaintext_zone]!"), span_notice("You finish applying [tape] to [victim]'s [limb.plaintext_zone]!"), ignored_mobs=victim)
+		to_chat(victim, span_userdanger("[user] finishes applying [tape] to your [limb.plaintext_zone]."))
 	else
-		victim.visible_message(span_notice("[victim] finishes applying [gel] to [victim.p_their()] [limb.plaintext_zone]!"), span_notice("You finish applying [gel] to your [limb.plaintext_zone]."))
+		victim.visible_message(span_notice("[victim] finishes applying [tape] to [victim.p_their()] [limb.plaintext_zone]!"), span_notice("You finish applying [tape] to your [limb.plaintext_zone]."))
 
-	to_chat(victim, span_green("The gel within your [limb.plaintext_zone] is holding down its components, allowing you to restart it!"))
+	to_chat(victim, span_green("The tape within your [limb.plaintext_zone] is holding down its components, allowing you to restart it!"))
 	make_ready_to_restart()
 
 // The second step of severe wounds. Requires a multitool. Once complete, removes the wound entirely.
@@ -382,7 +382,7 @@
 	if(ready_to_restart)
 		. = "Apply a multitool to the limb to finalize repairs."
 	else
-		. = "Use a screwdriver or bone gel to secure the internals of the limb. A diagnostic hud and/or wound scanner will help. \
+		. = "Use a screwdriver or tape to secure the internals of the limb. A diagnostic hud and/or wound scanner will help. \
 		In absence of those, a crowbar may be used."
 
 /datum/wound/blunt/robotic/severe/get_scanner_description(mob/user)
