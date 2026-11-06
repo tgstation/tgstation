@@ -861,7 +861,6 @@
 	if(AI.client)
 		set_gender(AI.client)
 	set_connected_ai(mainframe)
-	mainframe.connected_robots |= src
 	lawupdate = TRUE
 	lawsync()
 	if(radio && AI.radio) //AI keeps all channels, including Syndie if it is a Traitor
@@ -968,6 +967,9 @@
 		if(isnull(connect_to))
 			return FALSE
 
+	if(QDELETED(connect_to))
+		return FALSE
+
 	set_connected_ai(connect_to)
 	if(connected_ai)
 		sync_to_ai()
@@ -989,7 +991,9 @@
 		heal_bodypart_damage(repairs, repairs)
 	charge_cell.Invoke(cell, seconds_per_tick)
 
-/mob/living/silicon/robot/proc/set_connected_ai(new_ai)
+/mob/living/silicon/robot/proc/set_connected_ai(mob/living/silicon/ai/new_ai)
+	if(!isnull(new_ai) && QDELING(new_ai))
+		return
 	if(connected_ai == new_ai)
 		return
 	var/mob/living/silicon/ai/old_ai = connected_ai

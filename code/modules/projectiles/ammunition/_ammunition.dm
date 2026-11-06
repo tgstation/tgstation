@@ -37,12 +37,10 @@
 	/// How much force is applied when fired in zero-G
 	var/newtonian_force = 1
 
-	///If set to true or false, this ammunition can or cannot misfire, regardless the gun can_misfire setting
-	var/can_misfire = null
-	///This is how much misfire probability is added to the gun when it fires this casing.
-	var/misfire_increment = 0
-	///If set, this casing will damage any gun it's fired from by the specified amount
-	var/integrity_damage = 0
+	///Determines the pressure created by this casing. Most casings are AMMO_CASING_PRESSURE_MEDIUM. If the gun firing the casing has a lower pressure threshold, we start damaging the gun.
+	var/casing_pressure = AMMO_CASING_PRESSURE_MEDIUM
+	///This is how much misfire probability is added to the gun when it fires this casing if it is above the guns pressure threshold.
+	var/misfire_increment = 5
 
 	/// Set when this casing is fired. Only used for checking if it should burn a user's hand when caught from an ejection port.
 	var/shot_timestamp = 0
@@ -86,6 +84,15 @@
 	if(!ispath(exam_proj) || pellets == 0)
 		return
 
+	var/pressure_readout = "an indescribable"
+	switch(casing_pressure)
+		if(-INFINITY to AMMO_CASING_PRESSURE_LOW)
+			pressure_readout = "a low"
+		if(AMMO_CASING_PRESSURE_MEDIUM)
+			pressure_readout = "a standard"
+		if(AMMO_CASING_PRESSURE_EXTREME to INFINITY)
+			pressure_readout = "an extreme"
+
 	// are we in an ammo box?
 	if(isammobox(loc))
 		var/obj/item/ammo_box/our_box = loc
@@ -100,6 +107,7 @@
 		// grab the damage multiplier.
 		proj_damage_mult = our_gun.projectile_damage_multiplier
 	var/list/readout = list()
+	readout += "This round exerts [pressure_readout] amount of chamber pressure when fired."
 	if(proj_damage_mult <= 0 || (initial_damage <= 0 && initial_stamina <= 0))
 		return "Our legal team has determined the offensive nature of these [span_warning(caliber)] rounds to be esoteric."
 	// No dividing by 0

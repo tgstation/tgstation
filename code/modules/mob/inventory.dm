@@ -53,23 +53,26 @@
 /mob/proc/get_inactive_held_item() as /obj/item
 	return get_item_for_held_index(get_inactive_hand_index())
 
+/// Returns the items in your "active hand set", essentially your active hand and offhand
+/mob/proc/get_active_handset_items() as /list
+	RETURN_TYPE(/list/obj/item)
 
-/**
- * Returns the hand *opposite* to the [active hand][/mob/var/active_hand_index].
- *
- * The "opposite" hand refers to the other side of a given "set" of hands.<br>
- * The opposite of the left hand would be the right hand,
- * but it will not be an upper/lower right hand.
- */
+	var/list/ret = list(get_active_held_item(), get_inactive_held_item())
+	ret.RemoveAll(null)
+	return ret
+
 /mob/proc/get_inactive_hand_index()
-	var/other_hand = 0
-	if(IS_RIGHT_INDEX(active_hand_index))
-		other_hand = active_hand_index-1 //finding the matching "left" limb
+	return get_offhand_index(active_hand_index)
+
+//Finds the opposite index for the given hand index (eg: upper left arm will find the item in upper right arm)
+//So we're treating each "pair" of limbs as a team, so "both" refers to them
+/mob/proc/get_offhand_index(hand_index)
+	if(hand_index > held_items.len || hand_index <= 0)
+		return 0
+	if(IS_RIGHT_INDEX(hand_index))
+		return hand_index-1 //finding the matching "left" limb
 	else
-		other_hand = active_hand_index+1 //finding the matching "right" limb
-	if(other_hand < 0 || other_hand > held_items.len)
-		other_hand = 0
-	return other_hand
+		return hand_index+1 //finding the matching "right" limb
 
 /// Returns the item at the specified hand index.
 /mob/proc/get_item_for_held_index(i)
@@ -579,19 +582,57 @@
 		else if(!disable_warning)
 			to_chat(src, span_warning("You are unable to equip that!"))
 		return FALSE
-	equip_to_slot(W, slot, initial, redraw_mob, indirect_action = indirect_action) //This proc should not ever fail.
+	equip_to_slot(W, slot, initial) //This proc should not ever fail.
 	return TRUE
 
 /**
- * Actually equips an item to a slot (UNSAFE)
+ * # This is an UNSAFE proc. Do not call this unless you know you have to.
+ * Actually equips an item to a slot, bypassing checks or sanity.
  *
- * This is an UNSAFE proc. It merely handles the actual job of equipping. All the checks on
- * whether you can or can't equip need to be done before! Use mob_can_equip() for that task.
- *
- *In most cases you will want to use equip_to_slot_if_possible()
+ * In most cases you will want to use [/mob/proc/equip_to_slot_if_possible] or at the very least call [/obj/item/proc/mob_can_equip] first.
  */
-/mob/proc/equip_to_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
-	return
+/mob/proc/equip_to_slot(obj/item/equipping, slot, initial = FALSE)
+	if(!slot)
+		return
+	if(!istype(equipping))
+		return
+
+	var/update_hands = FALSE
+	var/held_index = get_held_index_of_item(equipping)
+	if(held_index)
+		held_items[held_index] = null
+		update_hands = TRUE
+
+	equipping.pulledby?.stop_pulling()
+	hud_used?.update_inventory_slot(slot)
+
+	for(var/mob/dead/observe as anything in observers)
+		observe.client?.screen -= equipping
+
+	equipping.forceMove(src) //This has to come before has_equipped is called.
+	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
+	equipping.appearance_flags |= NO_CLIENT_COLOR
+
+	// We have to handle this here because put_in_hands also calls has_equipped
+	if(slot == ITEM_SLOT_HANDS)
+		put_in_hands(equipping)
+		update_hands = FALSE // we already called this
+	else if(handle_set_item_in_slot(equipping, slot)) // Should not fail unless an error occurred
+		has_equipped(equipping, slot, initial)
+
+	if(update_hands)
+		update_held_items()
+
+
+/**
+ * # Never call this proc.
+ * ## You may think you have a good reason, but you don't. Call [/mob/proc/equip_to_slot_if_possible] instead.
+ * Handles the work of assigning an item to an item slot. Returns TRUE if an item was successfully put into a slot.
+ */
+/mob/proc/handle_set_item_in_slot(obj/item/equipping, slot)
+	SHOULD_CALL_PARENT(TRUE)
+	PROTECTED_PROC(TRUE)
+	return FALSE
 
 /// This proc is called after an item has been successfully handled and equipped to a slot.
 /mob/proc/has_equipped(obj/item/item, slot, initial = FALSE)
@@ -634,15 +675,14 @@
 	var/slot_priority = W.slot_equipment_priority
 
 	if(!slot_priority)
-		slot_priority = list( \
-			ITEM_SLOT_BACK, ITEM_SLOT_ID,\
-			ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING,\
-			ITEM_SLOT_MASK, ITEM_SLOT_HEAD, ITEM_SLOT_NECK,\
-			ITEM_SLOT_FEET, ITEM_SLOT_GLOVES,\
-			ITEM_SLOT_EARS, ITEM_SLOT_EYES,\
-			ITEM_SLOT_BELT, ITEM_SLOT_SUITSTORE,\
-			ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET,\
-			ITEM_SLOT_DEX_STORAGE\
+		slot_priority = list(
+			ITEM_SLOT_BACK, ITEM_SLOT_ID,
+			ITEM_SLOT_ICLOTHING, ITEM_SLOT_OCLOTHING,
+			ITEM_SLOT_MASK, ITEM_SLOT_HEAD, ITEM_SLOT_NECK,
+			ITEM_SLOT_FEET, ITEM_SLOT_GLOVES,
+			ITEM_SLOT_EARS, ITEM_SLOT_EYES,
+			ITEM_SLOT_BELT, ITEM_SLOT_SUITSTORE,
+			ITEM_SLOT_LPOCKET, ITEM_SLOT_RPOCKET,
 		)
 
 	for(var/slot in slot_priority)
@@ -668,7 +708,6 @@
 	var/static/list/equip_priorities = list(
 		ITEM_SLOT_BELT,
 		ITEM_SLOT_BACK,
-		ITEM_SLOT_DEX_STORAGE,
 		ITEM_SLOT_OCLOTHING,
 		ITEM_SLOT_ICLOTHING,
 	)
@@ -715,20 +754,20 @@ GAME_VERB_HIDDEN(/mob, quick_equip, "quick-equip")
 	if(!QDELETED(I))
 		I.equip_to_best_slot(src)
 
-//used in code for items usable by both carbon and drones, this gives the proper back slot for each mob.(defibrillator, backpack watertank, ...)
-/mob/proc/getBackSlot()
-	return ITEM_SLOT_BACK
-
 //Inventory.dm is -kind of- an ok place for this I guess
 
-//This is NOT for dismemberment, as the user still technically has 2 "hands"
-//This is for multi-handed mobs, such as a human with a third limb installed
-//This is a very rare proc to call (besides admin fuckery) so
-//any cost it has isn't a worry
+/// Changes the amount of hands that a mob thinks it can have.
+/// Note that this does not change the amount of hands that it actually has,
+/// Just the amount that it thinks it can hold.
 /mob/proc/change_number_of_hands(amt)
 	if(amt < held_items.len)
-		for(var/i in held_items.len to amt step -1)
+		for(var/i in held_items.len to amt + 1 step -1)
 			dropItemToGround(held_items[i])
+		// Move the active hand onto one of the remaining hands
+		if(amt && active_hand_index > amt)
+			var/fallback_index = min(IS_RIGHT_INDEX(active_hand_index) ? RIGHT_HANDS : LEFT_HANDS, amt)
+			if(!swap_hand(fallback_index, silent = TRUE))
+				active_hand_index = fallback_index
 	held_items.len = amt
 
 	if(!hud_used)

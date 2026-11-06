@@ -32,10 +32,8 @@ Nothing else in the console has ID requirements.
 	var/obj/item/disk/design_disk/d_disk
 	/// Determines if the console is locked, and consequently if actions can be performed with it
 	var/locked = FALSE
-	/// Used for compressing data sent to the UI via static_data as payload size is of concern
-	var/id_cache = list()
-	/// Sequence var for the id cache
-	var/id_cache_seq = 1
+	/// The static data key we last sent each viewer, by REF(), so we know to resend it when the catalogue or experiments change
+	var/list/sent_static_keys
 	/// Cooldown that prevents hanging the MC when tech disks are copied
 	STATIC_COOLDOWN_DECLARE(cooldowncopy)
 
@@ -207,164 +205,64 @@ Nothing else in the console has ID requirements.
 
 // heavy data from this proc should be moved to static data when possible
 /obj/machinery/computer/rdconsole/ui_data(mob/user)
-	var/list/data = list()
-
 	var/obj/item/circuitboard/computer/rdconsole/board = circuit
-
-	data["stored_research"] = !!stored_research
-	data["locked"] = board.locked
-	if(!stored_research) //lack of a research node is all we care about.
-		return data
-	var/list/queued_nodes = list()
-	for(var/node, weakref in stored_research.research_queue_nodes)
-		queued_nodes[node] = astype(weakref, /datum/weakref)?.resolve()
-	data += list(
-		"nodes" = list(),
-		"queue_nodes" = queued_nodes,
-		"experiments" = list(),
-		"researched_designs" = stored_research.researched_designs,
-		"points" = stored_research.research_points,
-		"points_last_tick" = stored_research.last_bitcoins,
-		"web_org" = stored_research.organization,
-		"sec_protocols" = !(obj_flags & EMAGGED),
-		"t_disk" = null,
-		"d_disk" = null,
+	var/list/data = list(
+		"stored_research" = !!stored_research,
+		"locked" = board.locked,
 	)
+	if(!stored_research) //lack of a research node is all we care about.
+		update_static_data_if_outdated(user)
+		return data
 
+	var/datum/asset/json/techweb_catalogue/catalogue = get_asset_datum(/datum/asset/json/techweb_catalogue)
+	data += stored_research.get_ui_data(user, catalogue)
+	update_static_data_if_outdated(user) // after get_ui_data(), which notices the experiment stage texts in our static data changing
+	data["sec_protocols"] = !(obj_flags & EMAGGED)
+	data["t_disk"] = null
+	data["d_disk"] = null
 	if (t_disk)
-		data["t_disk"] = list(
-			"stored_research" = t_disk.stored_nodes,
-		)
+		var/list/stored_ids = list()
+		for(var/node_path in t_disk.stored_nodes)
+			var/id = catalogue.ids[node_path]
+			if(id)
+				stored_ids += id
+		data["t_disk"] = stored_ids
 	if (d_disk)
-		data["d_disk"] = list(
-			"blueprints" = d_disk.blueprints,
-		)
-
-	// Serialize all nodes to display
-	for(var/node_path, node_tier in stored_research.tiers)
-		var/datum/techweb_node/node = SSresearch.techweb_nodes[node_path]
-
-		// Ensure node is supposed to be visible
-		if (stored_research.hidden_nodes[node_path])
-			continue
-
-		var/datum/weakref/queuer_weakref = stored_research.research_queue_nodes[node_path]
-		var/mob/node_queuer = queuer_weakref?.resolve()
-		var/enqueued_by_user = !isnull(node_queuer) && node_queuer == user
-
-		data["nodes"] += list(list(
-			"path" = node_path,
-			"is_free" = node.is_free(stored_research),
-			"can_unlock" = stored_research.can_unlock_node(node),
-			"have_experiments_done" = stored_research.have_experiments_for_node(node),
-			"tier" = node_tier,
-			"enqueued_by_user" = enqueued_by_user,
-			"discount_boosted" = !!stored_research.boosted_nodes[node_path],
-		))
-
-	// Get experiments and serialize them
-	var/list/exp_to_process = stored_research.available_experiments.Copy()
-	for (var/experiment_type, experiment in stored_research.completed_experiments)
-		exp_to_process += experiment
-	for (var/datum/experiment/experiment as anything in exp_to_process)
-		data["experiments"][experiment.type] = experiment.to_ui_data()
+		var/list/blueprint_ids = list()
+		for(var/design_path in d_disk.blueprints)
+			blueprint_ids += list(isnull(design_path) ? null : catalogue.ids[design_path]) // empty slots stay null
+		data["d_disk"] = blueprint_ids
 	return data
 
-/**
- * Compresses an ID to an integer representation using the id_cache, used for deduplication
- * in sent JSON payloads
- *
- * Arguments:
- * * id - the ID to compress
- */
-/obj/machinery/computer/rdconsole/proc/compress_id(id)
-	if (!id_cache[id])
-		id_cache[id] = id_cache_seq
-		id_cache_seq += 1
-	return id_cache[id]
-
 /obj/machinery/computer/rdconsole/ui_static_data(mob/user)
-	// Build node cache...
-	// Note this looks a bit ugly but its to reduce the size of the JSON payload
-	// by the greatest amount that we can, as larger JSON payloads result in
-	// hanging when the user opens the UI
-	var/list/node_cache = list()
-	for (var/node_path, _node in SSresearch.techweb_nodes)
-		var/datum/techweb_node/node = _node
-
-		var/list/node_data = list(
-			"name" = node.display_name,
-			"description" = node.description
-		)
-
-		if (LAZYLEN(node.research_costs))
-			node_data["costs"] = list()
-			for (var/point_type, point_amount in node.research_costs)
-				node_data["costs"]["[compress_id(point_type)]"] = point_amount
-		if (LAZYLEN(node.prerequisite_nodes))
-			node_data["prerequisite_nodes"] = list()
-			for (var/prerequisite_node in node.prerequisite_nodes)
-				node_data["prerequisite_nodes"] += compress_id(prerequisite_node)
-		if (LAZYLEN(node.unlocked_designs))
-			node_data["unlocked_designs"] = list()
-			for (var/unlocked_design in node.unlocked_designs)
-				node_data["unlocked_designs"] += compress_id(unlocked_design)
-		if (LAZYLEN(node.unlocked_nodes))
-			node_data["unlocked_nodes"] = list()
-			for (var/unlocked_node in node.unlocked_nodes)
-				node_data["unlocked_nodes"] += compress_id(unlocked_node)
-		if (LAZYLEN(node.required_experiments))
-			node_data["required_experiments"] = node.required_experiments
-		if (LAZYLEN(node.discount_experiments))
-			node_data["discount_experiments"] = node.discount_experiments
-		if (LAZYLEN(node.discount_boosts))
-			node_data["discount_boosts"] = node.discount_boosts
-
-		var/compressed_id = "[compress_id(node_path)]"
-		node_cache[compressed_id] = node_data
-
-	// Build design cache
-	var/list/design_cache = list()
-	var/datum/asset/spritesheet_batched/research_designs/spritesheet = get_asset_datum(/datum/asset/spritesheet_batched/research_designs)
-	var/size32x32 = "[spritesheet.name]32x32"
-	for (var/design_path, _design in SSresearch.techweb_designs)
-		var/datum/design/design = _design
-
-		var/list/cost = list()
-		for(var/datum/material/mat, amount in design.materials)
-			cost[mat.name] = OPTIMAL_COST(amount)
-
-		var/size = spritesheet.icon_size_id(design.asset_id)
-		var/compressed_id = "[compress_id(design_path)]"
-		design_cache[compressed_id] = list(
-			design.name,
-			cost,
-			design.build_type,
-			design.departmental_flags,
-			"[size == size32x32 ? "" : "[size] "][design.asset_id]"
-		)
-
-	var/list/department_flags = list()
-	for (var/datum/job_department/department as anything in subtypesof(/datum/job_department))
-		if (department::department_bitflags)
-			department_flags["[department::department_bitflags]"] = department::department_name
-
-	// Don't pass away flags as those are irrelevant to the station
-	var/list/build_types = GLOB.build_types_to_string.Copy()
-	build_types -= "[AWAY_IMPRINTER]"
-	build_types -= "[AWAY_LATHE]"
-
+	LAZYSET(sent_static_keys, REF(user), get_static_key())
+	if(!stored_research)
+		return list()
+	var/datum/asset/json/techweb_catalogue/catalogue = get_asset_datum(/datum/asset/json/techweb_catalogue)
 	return list(
-		"point_types_abbreviations" = SSresearch.point_types,
-		"static_data" = list(
-			"node_cache" = node_cache,
-			"design_cache" = design_cache,
-			"id_cache" = assoc_to_keys(id_cache),
-			"SHEET_MATERIAL_AMOUNT" = SHEET_MATERIAL_AMOUNT,
-			"build_types" = build_types,
-			"department_flags" = department_flags,
-		),
+		"techweb_catalogue" = catalogue.get_window_data(user),
+		"experiment_metadata" = stored_research.get_ui_static_data(catalogue),
 	)
+
+/obj/machinery/computer/rdconsole/ui_close(mob/user)
+	. = ..()
+	LAZYREMOVE(sent_static_keys, REF(user))
+
+/// Returns everything this console's static data depends on, see [/datum/techweb/proc/get_ui_static_key]
+/obj/machinery/computer/rdconsole/proc/get_static_key()
+	return "[stored_research?.get_ui_static_key()]"
+
+/// Sends the user a full update first if their static data is out of date (older catalogue build, other techweb or new experiments)
+/obj/machinery/computer/rdconsole/proc/update_static_data_if_outdated(mob/user)
+	var/user_ref = REF(user)
+	var/sent_key = sent_static_keys?[user_ref]
+	if(isnull(sent_key))
+		return
+	var/static_key = get_static_key()
+	if(sent_key != static_key)
+		sent_static_keys[user_ref] = static_key // set this first or the full update's ui_data() sends another one
+		var/datum/tgui/ui = SStgui.get_open_ui(user, src)
+		ui?.send_full_update(always_instant = TRUE)
 
 /obj/machinery/computer/rdconsole/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	. = ..()

@@ -127,12 +127,23 @@
 	return "[english_list(english_list_keys)] points"
 
 /datum/experiment/proc/to_ui_data()
+	return to_ui_static_data() + list(
+		"progress" = check_progress(),
+		"completed" = completed,
+	)
+
+/// Returns the parts of to_ui_data() that don't change as the experiment goes on
+/datum/experiment/proc/to_ui_static_data()
 	return list(
 		"name" = name,
 		"description" = description,
 		"tag" = exp_tag,
-		"progress" = check_progress(),
-		"completed" = completed,
 		"performance_hint" = performance_hint,
 		"ref" = REF(src)
 	)
+
+/datum/experiment/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(.)
+		for(var/datum/techweb/techweb as anything in SSresearch.techwebs)
+			techweb.experiment_edits++ // the research UIs send descriptions as static data, so let them know to resend

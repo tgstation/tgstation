@@ -2153,9 +2153,7 @@
 /area/awaymission/museum)
 "ro" = (
 /obj/structure/railing,
-/turf/open/floor/holofloor/asteroid{
-	icon_state = "asteroid3"
-	},
+/turf/open/floor/holofloor/asteroid,
 /area/awaymission/museum)
 "rp" = (
 /obj/effect/turf_decal/siding/wood{
@@ -2506,9 +2504,7 @@
 /obj/structure/railing{
 	dir = 8
 	},
-/turf/open/floor/holofloor/asteroid{
-	icon_state = "asteroid5"
-	},
+/turf/open/floor/holofloor/asteroid,
 /area/awaymission/museum)
 "tK" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -2911,14 +2907,6 @@
 	icon_state = "bluespacearray"
 	},
 /turf/open/floor/iron/smooth_large,
-/area/awaymission/museum)
-"xj" = (
-/obj/effect/turf_decal/siding{
-	dir = 1
-	},
-/turf/open/floor/holofloor/asteroid{
-	icon_state = "asteroid3"
-	},
 /area/awaymission/museum)
 "xm" = (
 /turf/open/floor/holofloor/beach/coast{
@@ -4733,12 +4721,6 @@
 /obj/structure/table,
 /obj/item/phone,
 /turf/open/floor/mineral/titanium/blue,
-/area/awaymission/museum)
-"MB" = (
-/obj/structure/railing,
-/turf/open/floor/holofloor/asteroid{
-	icon_state = "asteroid5"
-	},
 /area/awaymission/museum)
 "MC" = (
 /obj/effect/turf_decal/tile/blue/opposingcorners,
@@ -30136,7 +30118,7 @@ uY
 ZI
 hT
 FK
-xj
+UU
 PF
 tN
 Sh
@@ -30629,7 +30611,7 @@ re
 fe
 yl
 NT
-MB
+ro
 tt
 sm
 sm

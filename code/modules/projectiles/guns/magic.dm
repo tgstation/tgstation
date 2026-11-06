@@ -104,7 +104,7 @@
 	return ..()
 
 /obj/item/gun/magic/can_shoot()
-	return charges
+	return ..() && charges > 0
 
 /obj/item/gun/magic/recharge_newshot()
 	if (!charges || !chambered || chambered.loaded_projectile)

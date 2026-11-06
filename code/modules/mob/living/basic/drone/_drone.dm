@@ -119,7 +119,7 @@
 
 	if(default_storage)
 		var/obj/item/storage = new default_storage(src)
-		equip_to_slot_or_del(storage, ITEM_SLOT_DEX_STORAGE)
+		equip_to_slot_or_del(storage, ITEM_SLOT_BACK)
 
 	for(var/holiday_name in GLOB.holidays)
 		var/datum/holiday/holiday_today = GLOB.holidays[holiday_name]

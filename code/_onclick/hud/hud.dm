@@ -630,7 +630,7 @@ GLOBAL_LIST_INIT(available_ui_styles, list(
 	palette_actions = new(src)
 	floating_actions = list()
 	for(var/datum/action/action as anything in mymob.actions)
-		var/atom/movable/screen/movable/action_button/button = action.viewers[src]
+		var/atom/movable/screen/movable/action_button/button = LAZYACCESS(action.viewers, src)
 		if(!button)
 			action.ShowTo(mymob)
 		else

@@ -23,6 +23,11 @@
 		stack_trace("[type] component was created with an empty pay_to_account list!")
 		return COMPONENT_INCOMPATIBLE
 
+	add_payees(pay_to_account, profit_ratio)
+	src.delete_on_unwrap = delete_on_unwrap
+
+/// Calculates each account's share, keeping any higher share it already has.
+/datum/component/pricetag/proc/add_payees(list/pay_to_account, profit_ratio)
 	var/total_contribution = 0
 	for(var/totaler in pay_to_account)
 		if(!pay_to_account[totaler])
@@ -32,9 +37,11 @@
 
 	for(var/individual in pay_to_account)
 		var/individual_cut = profit_ratio * (pay_to_account[individual]/ total_contribution)
-		payees[individual] = individual_cut
+		// Keep the better share when inheriting another tag.
+		if(!isnull(payees[individual]) && payees[individual] >= individual_cut)
+			continue
 
-	src.delete_on_unwrap = delete_on_unwrap
+		payees[individual] = individual_cut
 
 /datum/component/pricetag/RegisterWithParent()
 	RegisterSignal(parent, COMSIG_ITEM_EXPORTED, PROC_REF(on_parent_sold))
@@ -60,12 +67,9 @@
  * We don't care about the other way around
  * (Don't go from non-deleting to deleting)
  */
-/datum/component/pricetag/InheritComponent(datum/component/pricetag/new_comp, i_am_original, pay_to_account, profit_ratio = 1, delete_on_unwrap = TRUE)
+/datum/component/pricetag/InheritComponent(datum/component/pricetag/new_comp, i_am_original, list/pay_to_account, profit_ratio = 1, delete_on_unwrap = TRUE)
 	if(length(payees) == 1)
-		if(!isnull(payees[pay_to_account]) && payees[pay_to_account] >= profit_ratio) // They're already getting a better ratio, don't scam them
-			return
-
-		payees[pay_to_account] = profit_ratio
+		add_payees(pay_to_account, profit_ratio)
 	if(!delete_on_unwrap)
 		src.delete_on_unwrap = delete_on_unwrap
 

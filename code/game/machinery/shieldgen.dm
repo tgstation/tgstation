@@ -351,7 +351,8 @@
 		return
 	. += "shieldgen_wires"
 
-/obj/machinery/power/shieldwallgen/Destroy()
+/obj/machinery/power/shieldwallgen/Destroy(force)
+	SSmachines.processing_early -= src
 	for(var/d in GLOB.cardinals)
 		cleanup_field(d)
 	return ..()

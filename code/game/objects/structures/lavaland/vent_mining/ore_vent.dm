@@ -693,11 +693,12 @@
 
 /obj/structure/ore_vent/random/Initialize(mapload)
 	. = ..()
-	if(!unique_vent && !mapload)
-		generate_mineral_breakdown(map_loading = mapload) //Default to random mineral breakdowns, unless this is a unique vent or we're still setting up default vent distribution.
+	if(mapload && !SSore_generation.vent_distribution_complete)
+		return
+	if(!unique_vent)
+		generate_mineral_breakdown(map_loading = FALSE)
 		generate_description()
-	if(!mapload)
-		vent_size_setup(random = TRUE) // We only do this here specific to random distribution ore vents, and within mapload we handle this manually within SSore_generation.
+	vent_size_setup(random = TRUE)
 
 /obj/structure/ore_vent/random/LateInitialize()
 	. = ..()

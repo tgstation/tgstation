@@ -1,7 +1,7 @@
 /obj/item/ammo_box/magazine/internal/cylinder/rev38
 	name = "detective revolver cylinder"
 	ammo_type = /obj/item/ammo_casing/c38
-	caliber = CALIBER_38
+	caliber = CALIBER_357_38
 	max_ammo = 6
 
 /obj/item/ammo_box/magazine/internal/cylinder/rev762
@@ -13,7 +13,7 @@
 /obj/item/ammo_box/magazine/internal/cylinder/rus357
 	name = "\improper Russian revolver cylinder"
 	ammo_type = /obj/item/ammo_casing/c357
-	caliber = CALIBER_357
+	caliber = CALIBER_357_38
 	max_ammo = 6
 	ammo_box_multiload = AMMO_BOX_MULTILOAD_NONE // presumably so you don't teleport in a full cylinder and end up shooting yourself immediately
 	start_empty = TRUE

@@ -278,7 +278,7 @@ GLOBAL_LIST_INIT(dye_registry, list(
 		righthand_file = initial(target_type.righthand_file)
 		worn_icon = initial(target_type.worn_icon)
 
-	icon_state = initial(target_type.post_init_icon_state) || initial(target_type.icon_state)
+	icon_state = INITIAL_ICON_STATE(target_type)
 	inhand_icon_state = initial(target_type.inhand_icon_state)
 	worn_icon_state = initial(target_type.worn_icon_state)
 	inhand_x_dimension = initial(target_type.inhand_x_dimension)

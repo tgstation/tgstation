@@ -336,7 +336,8 @@
 	var/atom/movable/original_speaker = speaker
 	if (!(runechat_flags & EMOTE_MESSAGE) && istype(speaker, /atom/movable/virtualspeaker))
 		var/atom/movable/virtualspeaker/virtual_speaker = speaker
-		speaker = virtual_speaker.source
+		var/atom/movable/runechat_anchor = LAZYACCESS(virtual_speaker.runechat_anchors, src) // radio runechat
+		speaker = runechat_anchor || virtual_speaker.source
 		classes |= "virtual-speaker"
 
 	// Ignore virtual speaker (most often radio messages) from ourselves

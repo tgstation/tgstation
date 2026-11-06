@@ -1,9 +1,6 @@
 /// Fallback time if none of the config entries are set for USE_LOW_LIVING_HOUR_INTERN
 #define INTERN_THRESHOLD_FALLBACK_HOURS 15
 
-/// Max time interval between projecting holopays
-#define HOLOPAY_PROJECTION_INTERVAL (7 SECONDS)
-
 /* Cards
  * Contains:
  * DATA CARD
@@ -76,27 +73,6 @@
 	/// Linked bank account.
 	var/datum/bank_account/registered_account
 
-	/// Linked holopay.
-	var/obj/structure/holopay/my_store
-	/// Cooldown between projecting holopays
-	COOLDOWN_DECLARE(last_holopay_projection)
-	/// List of logos available for holopay customization - via font awesome 5
-	var/static/list/available_logos = list("angry", "ankh", "bacon", "band-aid", "cannabis", "cat", "cocktail", "coins", "comments-dollar",
-	"cross", "cut", "dog", "donate", "dna", "fist-raised", "flask", "glass-cheers", "glass-martini-alt", "hamburger", "hand-holding-usd",
-	"hat-wizard", "head-side-cough-slash", "heart", "heart-broken",  "laugh-beam", "leaf", "money-check-alt", "music", "piggy-bank",
-	"pizza-slice", "prescription-bottle-alt", "radiation", "robot", "smile", "skull-crossbones", "smoking", "space-shuttle", "tram",
-	"trash", "user-ninja", "utensils", "wrench")
-	/// Replaces the "pay whatever" functionality with a set amount when non-zero.
-	var/holopay_fee = 0
-	/// The holopay icon chosen by the user
-	var/holopay_logo = "donate"
-	/// Maximum forced fee. It's unlikely for a user to encounter this type of money, much less pay it willingly.
-	var/holopay_max_fee = 5000
-	/// Minimum forced fee for holopay stations. Registers as "pay what you want."
-	var/holopay_min_fee = 0
-	/// The holopay name chosen by the user
-	var/holopay_name = "holographic pay stand"
-
 	/// Registered owner's age.
 	var/registered_age = 30
 
@@ -167,7 +143,6 @@
 
 /obj/item/card/id/Destroy()
 	clear_account()
-	QDEL_NULL(my_store)
 	if (isitem(loc))
 		UnregisterSignal(loc, list(COMSIG_ITEM_EQUIPPED, COMSIG_ITEM_DROPPED))
 	return ..()
@@ -570,31 +545,14 @@
 		user.visible_message(span_notice("[user] shows you: [icon2html(src, viewers(user))] [src.name][minor]."), span_notice("You show \the [src.name][minor]."))
 	add_fingerprint(user)
 
-/obj/item/card/id/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
-	if(!check_allowed_items(interacting_with) || !isfloorturf(interacting_with))
-		return NONE
-	try_project_paystand(user, interacting_with)
-	return ITEM_INTERACT_SUCCESS
-
-/obj/item/card/id/attack_self_secondary(mob/user, modifiers)
-	. = ..()
-	if(. == SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN)
-		return
-	try_project_paystand(user)
-	return SECONDARY_ATTACK_CANCEL_ATTACK_CHAIN
-
 /obj/item/card/id/add_context(atom/source, list/context, obj/item/held_item, mob/user)
 	. = ..()
-
-	context[SCREENTIP_CONTEXT_RMB] = "Project pay stand"
-
 	if(isnull(held_item) || (held_item == src))
 		context[SCREENTIP_CONTEXT_LMB] = "Show ID"
 	else if(iscash(held_item) || istype(held_item, /obj/item/storage/bag/money))
 		context[SCREENTIP_CONTEXT_LMB] = "Insert"
 	else if(istype(held_item, /obj/item/rupee))
 		context[SCREENTIP_CONTEXT_LMB] = "Insert?"
-
 	if(isnull(registered_account) || registered_account.replaceable) //Same check we use when we check if we can assign an account
 		context[SCREENTIP_CONTEXT_ALT_RMB] = "Assign account"
 	else if(registered_account.account_balance > 0)
@@ -602,104 +560,6 @@
 	if(trim && length(trim.honorifics))
 		context[SCREENTIP_CONTEXT_CTRL_LMB] = "Toggle honorific"
 	return CONTEXTUAL_SCREENTIP_SET
-
-/obj/item/card/id/add_item_context(obj/item/source, list/context, atom/target, mob/living/user)
-	. = ..()
-	if(iscash(target))
-		context[SCREENTIP_CONTEXT_LMB] = "Insert into card"
-		return CONTEXTUAL_SCREENTIP_SET
-
-/obj/item/card/id/proc/try_project_paystand(mob/user, turf/target)
-	if(!COOLDOWN_FINISHED(src, last_holopay_projection))
-		balloon_alert(user, "still recharging")
-		return
-	if(!can_be_used_in_payment(user))
-		balloon_alert(user, "no account!")
-		to_chat(user, span_warning("You need a valid bank account to do this."))
-		return
-	/// Determines where the holopay will be placed based on tile contents
-	var/turf/projection
-	var/turf/step_ahead = get_step(user, user.dir)
-	var/turf/user_loc = user.loc
-	if(target && can_proj_holopay(target))
-		projection = target
-	else if(can_proj_holopay(step_ahead))
-		projection = step_ahead
-	else if(can_proj_holopay(user_loc))
-		projection = user_loc
-	if(!projection)
-		balloon_alert(user, "no space")
-		to_chat(user, span_warning("You need to be standing on or near an open tile to do this."))
-		return
-	/// Success: Valid tile for holopay placement
-	if(my_store)
-		my_store.dissipate()
-	var/obj/structure/holopay/new_store = new(projection)
-	if(new_store?.assign_card(projection, src))
-		COOLDOWN_START(src, last_holopay_projection, HOLOPAY_PROJECTION_INTERVAL)
-		playsound(projection, 'sound/effects/empulse.ogg', 40, TRUE)
-		my_store = new_store
-
-/**
- * Determines whether a new holopay can be placed on the given turf.
- * Checks if there are dense contents, too many contents, or another
- * holopay already exists on the turf.
- *
- * Arguments:
- * * turf/target - The target turf to be checked for dense contents
- * Returns:
- * * TRUE if the target is a valid holopay location, FALSE otherwise.
- */
-/obj/item/card/id/proc/can_proj_holopay(turf/target)
-	if(!isfloorturf(target))
-		return FALSE
-	if(target.density)
-		return FALSE
-	if(length(target.contents) > 5)
-		return FALSE
-	for(var/obj/checked_obj in target.contents)
-		if(checked_obj.density)
-			return FALSE
-		if(istype(checked_obj, /obj/structure/holopay))
-			return FALSE
-	return TRUE
-
-/**
- * Setter for the shop logo on linked holopays
- *
- * Arguments:
- * * new_logo - The new logo to be set.
- */
-/obj/item/card/id/proc/set_holopay_logo(new_logo)
-	if(!available_logos.Find(new_logo))
-		CRASH("User input a holopay shop logo that didn't exist.")
-	holopay_logo = new_logo
-
-/**
- * Setter for changing the force fee on a holopay.
- *
- * Arguments:
- * * new_fee - The new fee to be set.
- */
-/obj/item/card/id/proc/set_holopay_fee(new_fee)
-	if(!isnum(new_fee))
-		CRASH("User input a non number into the holopay fee field.")
-	if(new_fee < holopay_min_fee || new_fee > holopay_max_fee)
-		CRASH("User input a number outside of the valid range into the holopay fee field.")
-	holopay_fee = new_fee
-
-/**
- * Setter for changing the holopay name.
- *
- * Arguments:
- * * new_name - The new name to be set.
- */
-/obj/item/card/id/proc/set_holopay_name(name)
-	if(length(name) < 3 || length(name) > MAX_NAME_LEN)
-		to_chat(usr, span_warning("Must be between 3 - 42 characters."))
-	else
-		holopay_name = html_encode(trim(name, MAX_NAME_LEN))
-
 
 /obj/item/card/id/vv_edit_var(var_name, var_value)
 	. = ..()
@@ -2056,7 +1916,6 @@
 	icon_state = "ctf_green"
 
 #undef INTERN_THRESHOLD_FALLBACK_HOURS
-#undef HOLOPAY_PROJECTION_INTERVAL
 
 #define INDEX_NAME_COLOR 1
 #define INDEX_ASSIGNMENT_COLOR 2

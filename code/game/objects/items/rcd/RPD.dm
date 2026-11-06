@@ -19,7 +19,7 @@
 #define RPD_USE_SOUND 'sound/items/deconstruct.ogg'
 
 /obj/item/pipe_dispenser
-	name = "rapid pipe dispenser"
+	name = "rapid pipe dispenser (RPD)"
 	desc = "A device used to rapidly pipe things."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rpd"

@@ -89,22 +89,17 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living)
 	return ..()
 
 /mob/living/carbon/human/species/monkey/punpun/proc/Read_Memory()
-	if(fexists("data/npc_saves/Punpun.sav")) //legacy compatability to convert old format to new
-		var/savefile/S = new /savefile("data/npc_saves/Punpun.sav")
-		S["ancestor_name"] >> ancestor_name
-		S["ancestor_chain"] >> ancestor_chain
-		S["relic_hat"] >> relic_hat
-		S["relic_mask"] >> relic_mask
-		fdel("data/npc_saves/Punpun.sav")
-	else
-		var/json_file = file("data/npc_saves/Punpun.json")
-		if(!fexists(json_file))
-			return
-		var/list/json = json_decode(file2text(json_file))
-		ancestor_name = json["ancestor_name"]
-		ancestor_chain = json["ancestor_chain"]
-		relic_hat = json["relic_hat"]
-		relic_mask = json["relic_hat"]
+	var/json_file = file("data/npc_saves/Punpun.json")
+	if(!fexists(json_file))
+		return
+	var/json_text = file2text(json_file)
+	if(!rustg_json_is_valid(json_text))
+		return
+	var/list/json = json_decode(json_text)
+	ancestor_name = json["ancestor_name"]
+	ancestor_chain = json["ancestor_chain"]
+	relic_hat = json["relic_hat"]
+	relic_mask = json["relic_mask"]
 
 /mob/living/carbon/human/species/monkey/punpun/Write_Memory(dead, gibbed)
 	. = ..()
@@ -120,8 +115,8 @@ GLOBAL_DATUM(the_one_and_only_punpun, /mob/living)
 	else
 		file_data["ancestor_name"] = ancestor_name ? ancestor_name : real_name
 		file_data["ancestor_chain"] = dead ? ancestor_chain + 1 : ancestor_chain
-		file_data["relic_hat"] = head ? head.type : null
-		file_data["relic_mask"] = wear_mask ? wear_mask.type : null
+		file_data["relic_hat"] = head?.type
+		file_data["relic_mask"] = wear_mask?.type
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(file_data))
 

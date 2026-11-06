@@ -43,6 +43,7 @@
 	name = "burning oil"
 	damage = 40
 	fire_stacks = 5
+	fireblast_radius = 2
 	suppressed = SUPPRESSED_NONE
 
 /obj/projectile/bullet/dart/ants

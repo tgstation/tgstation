@@ -161,7 +161,7 @@
 
 /obj/item/clothing/gloves/atmos
 	name = "atmospheric extrication gloves"
-	desc = "Heavy duty gloves for firefighters. These are thick, non-flammable and let you carry people faster."
+	desc = "Heavy duty gloves for firefighters. These are thick, non-flammable, and let you carry people faster."
 	icon_state = "atmos"
 	cold_protection = HANDS
 	min_cold_protection_temperature = GLOVES_MIN_TEMP_PROTECT

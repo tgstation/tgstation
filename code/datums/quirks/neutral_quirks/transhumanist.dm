@@ -31,7 +31,6 @@
 	var/slot_string
 	var/obj/item/old_part
 
-
 /datum/quirk/transhumanist/add(client/client_source)
 	RegisterSignal(quirk_holder, COMSIG_CARBON_POST_ATTACH_LIMB, PROC_REF(calculate_bodypart_score))
 	RegisterSignal(quirk_holder, COMSIG_CARBON_POST_REMOVE_LIMB, PROC_REF(calculate_bodypart_score))
@@ -130,25 +129,44 @@
 	associated_typepath = /datum/quirk/transhumanist
 	customization_options = list(/datum/preference/choiced/trans_prosthetic)
 
+/datum/quirk/transhumanist/proc/can_add_part(part_type)
+	if(ispath(part_type, /obj/item/bodypart))
+		var/obj/item/bodypart/bodypart_check = part_type
+		return !!quirk_holder.get_bodypart(bodypart_check::body_zone)
+	if(ispath(part_type, /obj/item/organ))
+		var/obj/item/organ/organ_check = part_type
+		return !!quirk_holder.get_organ_slot(organ_check::slot)
+	return FALSE
+
 /datum/quirk/transhumanist/add_unique(client/client_source)
-	var/part_type = GLOB.part_choice_transhuman[client_source?.prefs?.read_preference(/datum/preference/choiced/trans_prosthetic)]
-	if(isnull(part_type))  //Client gone or they chose a random part
-		part_type = GLOB.part_choice_transhuman[pick(GLOB.part_choice_transhuman)]
-
-	if(quirk_holder.has_quirk(/datum/quirk/prosthetic_limb))
-		var/obj/item/bodypart/shit_limb = GLOB.prosthetic_limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic)]
-		var/obj/item/bodypart/part_part = part_type
-		if(ispath(shit_limb, /obj/item/bodypart) && ispath(part_part, /obj/item/bodypart))
-			// dumbass already has a part in the same spot so let's just let the shoddy trait do its thing instead
-			if(initial(shit_limb.body_zone) == initial(part_part.body_zone))
-				return
-
 	var/mob/living/carbon/human/human_holder = quirk_holder
+	var/list/part_options = GLOB.part_choice_transhuman.Copy()
+	var/part_type = part_options[client_source?.prefs?.read_preference(/datum/preference/choiced/trans_prosthetic)]
+	if(isnull(part_type))  //Client gone or they chose a random part
+		var/picked_type = pick(part_options)
+		part_type = part_options[picked_type]
+		part_options -= picked_type
+
+	if(quirk_holder.has_quirk(/datum/quirk/prosthetic_limb) && ispath(part_type, /obj/item/bodypart))
+		var/obj/item/bodypart/bodypart_check = part_type
+		var/preferred_prosthetic_zone = GLOB.prosthetic_limb_choice[client_source?.prefs?.read_preference(/datum/preference/choiced/prosthetic)]
+		// dumbass already has a part in the same spot so let's just let the shoddy trait do its thing instead
+		if(preferred_prosthetic_zone == bodypart_check::body_zone)
+			return
+
+	while(!can_add_part(part_type))
+		if(!length(part_options))
+			return // you get NOTHING good day
+		var/picked_type = pick(part_options)
+		part_type = part_options[picked_type]
+		part_options -= picked_type
+
 	var/obj/item/new_part = new part_type()
 	if(isbodypart(new_part))
 		var/obj/item/bodypart/new_bodypart = new_part
 		slot_string = new_bodypart.plaintext_zone
 		old_part = human_holder.return_and_replace_bodypart(new_bodypart, special = TRUE)
+
 	else if(isorgan(new_part))
 		var/obj/item/organ/new_organ = new_part
 		old_part = human_holder.get_organ_slot(new_organ.slot)

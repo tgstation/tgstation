@@ -11,7 +11,7 @@
  * Supports silo link upgrade and refill with glass, plasteel & iron
  */
 /obj/item/construction/rtd
-	name = "rapid-tiling-device (RTD)"
+	name = "rapid tiling device (RTD)"
 	desc = "Used for fast placement & destruction of floor tiles."
 	icon = 'icons/obj/tools.dmi'
 	icon_state = "rtd"

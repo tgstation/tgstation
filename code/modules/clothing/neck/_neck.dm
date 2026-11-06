@@ -253,6 +253,22 @@
 
 	var/mob/living/carbon/carbon_patient = target
 	var/body_part = carbon_patient.parse_zone_with_bodypart(user.zone_selected)
+
+	if(body_part == BODY_ZONE_CHEST)
+		if(DOING_INTERACTION_WITH_TARGET(user, carbon_patient))
+			return
+		user.visible_message(span_notice("[user] begins to place [src] against [carbon_patient]'s [body_part]."), span_notice("You begin to place [src] against [carbon_patient]'s [body_part]..."), ignored_mobs = carbon_patient)
+		if(carbon_patient != user)
+			to_chat(carbon_patient, span_notice("[user] begins to place [src] against your [body_part]."))
+		if(!do_after(user, 2 SECONDS, carbon_patient))
+			return
+		user.visible_message(span_notice("[user] places [src] against [carbon_patient]'s [body_part] and listens attentively."), ignored_mobs = list(user, carbon_patient))
+		if(carbon_patient != user)
+			to_chat(carbon_patient, span_notice("You feel [src] pressed against your [body_part]."))
+		if(HAS_TRAIT(user, TRAIT_DEAF))
+			to_chat(user, span_notice("You place [src] against [carbon_patient]'s [body_part]. Fat load of good it does you though, since you can't hear."))
+			return
+
 	var/oxy_loss = carbon_patient.get_oxy_loss()
 
 	var/heart_strength
@@ -270,12 +286,7 @@
 	//determine what specific action we're taking
 	switch (body_part)
 		if(BODY_ZONE_CHEST)//Listening to the chest
-			user.visible_message(span_notice("[user] places [src] against [carbon_patient]'s [body_part] and listens attentively."), ignored_mobs = user)
-			if(HAS_TRAIT(user, TRAIT_DEAF))
-				to_chat(user, span_notice("You place [src] against [carbon_patient]'s [body_part]. Fat load of good it does you though, since you can't hear."))
-				return
-			else
-				render_list += span_info("You place [src] against [carbon_patient]'s [body_part]:\n")
+			render_list += span_info("You place [src] against [carbon_patient]'s [body_part]:\n")
 
 			//assess breathing
 			var/lung_noises = TRUE

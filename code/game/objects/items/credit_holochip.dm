@@ -18,6 +18,9 @@
 	if(credits <= 0 && !mapload)
 		stack_trace("Holochip created with 0 or less [MONEY_NAME] in [get_area_name(src)]!")
 		return INITIALIZE_HINT_QDEL
+	if(isnan(credits))
+		stack_trace("NaN holochip created in [get_area_name(src)]!")
+		return INITIALIZE_HINT_QDEL
 	add_traits(list(TRAIT_FISHING_BAIT, TRAIT_BAIT_ALLOW_FISHING_DUD), INNATE_TRAIT)
 	update_appearance()
 	register_context()

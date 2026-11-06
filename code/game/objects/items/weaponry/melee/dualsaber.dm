@@ -221,4 +221,3 @@
 	saber_color = "rainbow"
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
-

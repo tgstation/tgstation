@@ -133,7 +133,7 @@
 		for (var/filter_id in color_filter_store)
 			game_plane.remove_filter(filter_id)
 
-	color_filter_store.Cut()
+	LAZYNULL(color_filter_store)
 	var/list/applied_filters = get_client_colour_filters()
 
 	for (var/list/color_filter as anything in applied_filters)
@@ -142,7 +142,7 @@
 		for (var/atom/movable/screen/plane_master/game_plane as anything in hud_used.get_true_plane_masters(RENDER_PLANE_GAME))
 			var/filter_id = "client_colour_[filter_priority]"
 			game_plane.add_filter(filter_id, filter_priority, added_color)
-			color_filter_store |= filter_id
+			LAZYOR(color_filter_store, filter_id)
 
 /// Works similarly to 'update_client_colour', but animated.
 /mob/proc/animate_client_colour(anim_time = 1 SECONDS, anim_easing = NONE)
@@ -156,7 +156,7 @@
 		for (var/filter_id in color_filter_store)
 			game_plane.remove_filter(filter_id)
 
-	color_filter_store.Cut()
+	LAZYNULL(color_filter_store)
 	var/list/applied_filters = get_client_colour_filters()
 
 	for (var/list/color_filter as anything in applied_filters)
@@ -166,7 +166,7 @@
 			var/filter_id = "client_colour_[filter_priority]"
 			game_plane.add_filter(filter_id, filter_priority, color_matrix_filter())
 			game_plane.transition_filter(filter_id, added_color, anim_time, anim_easing)
-			color_filter_store |= filter_id
+			LAZYOR(color_filter_store, filter_id)
 
 // Color types
 

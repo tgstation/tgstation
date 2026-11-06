@@ -401,6 +401,110 @@
 	)
 	crate_name = "thermal cannons crate"
 
+/datum/supply_pack/security/armory/rnd_locked
+	abstract_type = /datum/supply_pack/security/armory/rnd_locked
+	group = "Requisitions"
+	order_flags = ORDER_SPECIAL
+
+/datum/supply_pack/security/armory/rnd_locked/New()
+	. = ..()
+	desc += " Firing pin not included."
+
+/datum/supply_pack/security/armory/rnd_locked/fill(obj/container)
+	. = ..()
+	for(var/obj/item/firing_pin/gunpin in container.get_all_contents())
+		qdel(gunpin)
+
+/datum/supply_pack/security/armory/rnd_locked/aeg
+	name = "Advanced Energy Gun Requisition"
+	desc = "Contains an Advanced Energy Gun, which fires both disabling and lethal shots like a standard energy gun. \
+		However, it also contains a miniature nuclear reactor that recharges the gun's energy cells over time."
+	cost = CARGO_CRATE_VALUE * 16
+	contains = list(/obj/item/gun/energy/e_gun/nuclear = 1)
+	crate_name = "advanced energy gun crate"
+	order_flags = parent_type::order_flags | ORDER_NOT_DEPARTMENTAL
+
+/datum/supply_pack/security/armory/rnd_locked/aeg/three_pack
+	name = "Advanced Energy Gun Requisition (x3)"
+	cost = parent_type::cost * 2.9
+	contains = list(/obj/item/gun/energy/e_gun/nuclear = 3)
+	order_flags = parent_type::order_flags & ~ORDER_NOT_DEPARTMENTAL
+
+/datum/supply_pack/security/armory/rnd_locked/xray
+	name = "Type 6 X-ray Laser Gun Requisition"
+	desc = "Contains a Type 6 X-ray Laser Gun, an atypical energy gun that fires radioactive-infused laser beams, \
+		which are capable of penetrating most forms of armor and even walls."
+	cost = CARGO_CRATE_VALUE * 20
+	contains = list(/obj/item/gun/energy/laser/xray = 1)
+	crate_name = "x-ray gun crate"
+	order_flags = parent_type::order_flags | ORDER_NOT_DEPARTMENTAL
+
+/datum/supply_pack/security/armory/rnd_locked/xray/three_pack
+	name = "Type 6 X-ray Laser Gun Requisition (x3)"
+	cost = parent_type::cost * 2.9
+	contains = list(/obj/item/gun/energy/laser/xray = 3)
+	order_flags = parent_type::order_flags & ~ORDER_NOT_DEPARTMENTAL
+
+/datum/supply_pack/security/armory/rnd_locked/tempgun
+	name = "Temperature Gun Requisition"
+	desc = "Contains a Temperature Gun, a debatably useful weapon designed to rapidly heating or cooling targets."
+	cost = CARGO_CRATE_VALUE * 4
+	contains = list(/obj/item/gun/energy/temperature = 1)
+	crate_name = "temperature gun crate"
+	order_flags = parent_type::order_flags | ORDER_NOT_DEPARTMENTAL
+
+/datum/supply_pack/security/armory/rnd_locked/tempgun/three_pack
+	name = "Temperature Gun Requisition (x3)"
+	cost = parent_type::cost * 2.75 // it's so bad it gets a better discount
+	contains = list(/obj/item/gun/energy/temperature = 3)
+	order_flags = parent_type::order_flags & ~ORDER_NOT_DEPARTMENTAL
+
+/datum/supply_pack/security/armory/rnd_locked/tesla
+	name = "Tesla Cannon Requisition"
+	desc = "Contains an anomaly powered Tesla Cannon, which fires high-voltage arc of electricity that can chain between multiple targets. \
+		Requires a flux anomaly core to power, which is not included."
+	cost = CARGO_CRATE_VALUE * 10
+	contains = list(/obj/item/gun/energy/tesla_cannon = 1)
+	crate_name = "tesla cannon crate"
+
+/datum/supply_pack/security/armory/rnd_locked/photon
+	name = "Photon Cannon Requisition"
+	desc = "Contains an anomaly powered Photon Cannon, which fires concentrated miniature suns that blind those without eye protection. \
+		Requires a flux anomaly core to power, which is not included."
+	cost = CARGO_CRATE_VALUE * 5
+	contains = list(/obj/item/gun/energy/photon = 1)
+	crate_name = "photon cannon crate"
+
+/datum/supply_pack/security/armory/rnd_locked/ion
+	name = "Ion Carbine Requisition"
+	desc = "Contains an Ion Carbine, a more portable form of the more unwieldy Ion Rifle. \
+		Fires electromagnetic pulses that can disable electronics."
+	cost = CARGO_CRATE_VALUE * 6
+	contains = list(/obj/item/gun/energy/ionrifle/carbine = 1)
+	crate_name = "ion carbine crate"
+	order_flags = parent_type::order_flags | ORDER_NOT_DEPARTMENTAL
+
+/datum/supply_pack/security/armory/rnd_locked/ion/three_pack
+	name = "Ion Carbine Requisition (x3)"
+	cost = parent_type::cost * 2.9
+	contains = list(/obj/item/gun/energy/ionrifle/carbine = 3)
+	order_flags = parent_type::order_flags & ~ORDER_NOT_DEPARTMENTAL
+
+/datum/supply_pack/security/armory/rnd_locked/ebow
+	name = "Energy Bow Requisition"
+	desc = "Contains a reverse engineered Syndicate Energy Crossbow. Though less compact that the original, \
+		the projectiles it fires are just as capable of downing targets in a single shot - if not more."
+	cost = CARGO_CRATE_VALUE * 10
+	contains = list(/obj/item/gun/energy/recharge/ebow/large = 1)
+	crate_name = "energy bow crate"
+	order_flags = parent_type::order_flags | ORDER_NOT_DEPARTMENTAL
+
+/datum/supply_pack/security/armory/rnd_locked/ebow/three_pack
+	name = "Energy Bow Requisition (x3)"
+	cost = parent_type::cost * 2.9
+	contains = list(/obj/item/gun/energy/recharge/ebow/large = 3)
+	order_flags = parent_type::order_flags & ~ORDER_NOT_DEPARTMENTAL
+
 /datum/supply_pack/security/blood_worm_testers
 	name = "Hemoparasite Testing Crate"
 	desc = "Contains four single-use hemoparasite testing tools. \

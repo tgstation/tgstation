@@ -43,6 +43,8 @@
 
 	/// Both the range around the radio in which mobs can hear what it receives and the range the radio can hear
 	var/canhear_range = 3
+	/// Runechat above the radio
+	var/runechat_on_receive = FALSE
 	/// Tracks the number of EMPs currently stacked.
 	var/emped = 0
 
@@ -725,6 +727,7 @@
 /obj/item/radio/entertainment/speakers // Used inside of the entertainment monitors, not to be used as a actual item
 	should_be_listening = TRUE
 	should_be_broadcasting = FALSE
+	runechat_on_receive = TRUE
 
 /obj/item/radio/entertainment/speakers/proc/toggle_mute()
 	should_be_listening = !should_be_listening
@@ -749,6 +752,7 @@
 	overlay_speaker_idle = "radio_s_idle"
 	overlay_mic_idle = "radio_m_idle"
 	overlay_mic_active = "radio_m_active"
+	runechat_on_receive = FALSE
 
 /obj/item/radio/entertainment/microphone // Used inside of a broadcast camera, not to be used as a actual item
 	should_be_listening = FALSE

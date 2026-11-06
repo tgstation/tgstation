@@ -8,6 +8,8 @@
 	if(!isnull(deployed_shell))
 		disconnect_shell()
 
+	cleanup_multicam_windows()
+
 	. = ..()
 
 	cut_overlays()

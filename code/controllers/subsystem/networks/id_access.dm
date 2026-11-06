@@ -277,6 +277,7 @@ SUBSYSTEM_DEF(id_access)
 	desc_by_access[ACCESS_CHAPEL_OFFICE] = "Chapel Office"
 	desc_by_access[ACCESS_TECH_STORAGE] = "Technical Storage"
 	desc_by_access[ACCESS_ATMOSPHERICS] = "Atmospherics"
+	desc_by_access[ACCESS_ATMOS_EQUIP] = "Atmospherics Equipment"
 	desc_by_access[ACCESS_CREMATORIUM] = "Crematorium"
 	desc_by_access[ACCESS_ARMORY] = "Armory"
 	desc_by_access[ACCESS_CONSTRUCTION] = "Construction"

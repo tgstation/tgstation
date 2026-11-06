@@ -178,7 +178,8 @@ GLOBAL_LIST_INIT(bibleitemstates, list(
 			insuls.name = "insuls"
 			insuls.desc = "A mere copy of the true insuls."
 			insuls.siemens_coefficient = 0.99999
-			user.equip_to_slot(insuls, ITEM_SLOT_GLOVES)
+			if(!user.equip_to_slot_if_possible(insuls, ITEM_SLOT_GLOVES) && !user.put_in_hands(insuls))
+				insuls.forceMove(user.drop_location())
 	GLOB.bible_icon_state = icon_state
 	GLOB.bible_inhand_icon_state = inhand_icon_state
 	SSblackbox.record_feedback("text", "religion_book", 1, "[choice]")

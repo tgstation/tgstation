@@ -371,7 +371,6 @@
 /obj/item/organ/lungs/fish/amphibious
 	name = "mutated semi-aquatic lungs"
 	desc = "DNA from an amphibious or semi-aquatic creature infused on a pair lungs. Enjoy breathing underwater without drowning outside water."
-	safe_oxygen_min = /obj/item/organ/lungs::safe_oxygen_min
 	has_gills = FALSE
 	/**
 	 * If false, we don't breathe air since we've got water instead.

@@ -138,24 +138,19 @@
 				continue
 			qdel(timer)
 
-	#ifdef REFERENCE_TRACKING
-	#ifdef REFERENCE_TRACKING_DEBUG
+#if defined(REFERENCE_TRACKING) && defined(REFERENCE_TRACKING_DEBUG)
 	found_refs = null
-	#endif
-	#endif
+#endif
 
 	//BEGIN: ECS SHIT
-	var/list/dc = _datum_components
-	if(dc)
-		for(var/component_key in dc)
-			var/component_or_list = dc[component_key]
+	if(_datum_components)
+		for(var/component_key, component_or_list in _datum_components)
 			if(islist(component_or_list))
 				for(var/datum/component/component as anything in component_or_list)
-					qdel(component, FALSE)
+					qdel(component)
 			else
-				var/datum/component/C = component_or_list
-				qdel(C, FALSE)
-		dc.Cut()
+				qdel(component_or_list)
+		_datum_components = null
 
 	_clear_signal_refs()
 	//END: ECS SHIT
@@ -493,11 +488,11 @@
 	var/atom/atom_cast = src // filters only work with images or atoms.
 	return atom_cast.filters[name]
 
-/// Returns filter data associated with the passed key
-/datum/proc/get_filter_data(name)
+/// Returns filter data associated with the passed key - a copy, unless copy_data is FALSE
+/datum/proc/get_filter_data(name, copy_data = TRUE)
 	for (var/list/filter_info as anything in filter_data)
 		if (filter_info["name"] == name)
-			return filter_info.Copy()
+			return copy_data ? filter_info.Copy() : filter_info
 
 /// Removes the passed filter, or multiple filters, if supplied with a list.
 /datum/proc/remove_filter(name_or_names, update = TRUE)

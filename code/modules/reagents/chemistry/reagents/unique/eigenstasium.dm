@@ -59,6 +59,7 @@
 	spirit.add_atom_colour(LIGHT_COLOR_LIGHT_CYAN, FIXED_COLOUR_PRIORITY)
 	spirit.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it
 	spirit.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
+	SET_PLANE_IMPLICIT(spirit, ABOVE_GAME_PLANE)
 	spirit.set_anchored(TRUE) //So space wind cannot drag it.
 	spirit.name = "[living_mob.name]'s Eigenstate"//If someone decides to right click.
 	spirit.set_light(2)	//hologram lighting

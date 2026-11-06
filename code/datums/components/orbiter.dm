@@ -7,6 +7,8 @@
 	var/list/orbiter_params
 	/// Movement tracker used to check when our owner moves
 	var/datum/movement_detector/tracker
+	/// The next registration completes a component transfer, rather than initial construction.
+	var/transferring = FALSE
 
 //radius: range to orbit at, radius of the circle formed by orbiting (in pixels)
 //clockwise: whether you orbit clockwise or anti clockwise
@@ -20,7 +22,7 @@
 	orbiter_list = list()
 	orbiter_params = list()
 
-	begin_orbit(orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
+	return begin_orbit(orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 
 /datum/component/orbiter/RegisterWithParent()
 	var/atom/target = parent
@@ -30,6 +32,12 @@
 		tracker = new(target, CALLBACK(src, PROC_REF(move_react)))
 
 	RegisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE, PROC_REF(orbiter_glide_size_update))
+	if(transferring)
+		transferring = FALSE
+		for(var/atom/movable/orbiter as anything in orbiter_list)
+			orbiter.orbit_target = target
+			SEND_SIGNAL(target, COMSIG_ATOM_ORBIT_BEGIN, orbiter)
+	move_react(target)
 
 /datum/component/orbiter/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOVABLE_UPDATE_GLIDE_SIZE)
@@ -39,7 +47,7 @@
 
 /datum/component/orbiter/Destroy()
 	var/atom/master = parent
-	if(master.orbiters == src)
+	if(master?.orbiters == src)
 		master.orbiters = null
 	for(var/i in orbiter_list)
 		end_orbit(i)
@@ -60,15 +68,24 @@
 		RegisterSignal(incoming_orbiter, COMSIG_MOVABLE_MOVED, PROC_REF(orbiter_move_react))
 		RegisterSignal(incoming_orbiter, COMSIG_ATOM_BEFORE_SHUTTLE_MOVE, PROC_REF(orbiter_before_shuttle_move))
 
-	orbiter_list += newcomp.orbiter_list
+	var/list/incoming_orbiters = newcomp.orbiter_list
+	orbiter_list += incoming_orbiters
 	orbiter_params += newcomp.orbiter_params
 	newcomp.orbiter_list = null
 	newcomp.orbiter_params = null
+	for(var/atom/movable/incoming_orbiter as anything in incoming_orbiters)
+		incoming_orbiter.orbit_target = parent
+		SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_BEGIN, incoming_orbiter)
+	move_react(parent)
+
+/datum/component/orbiter/PreTransfer(datum/new_parent)
+	for(var/atom/movable/orbiter as anything in orbiter_list)
+		SEND_SIGNAL(parent, COMSIG_ATOM_ORBIT_STOP, orbiter)
 
 /datum/component/orbiter/PostTransfer(datum/new_parent)
 	if(!isatom(new_parent) || isarea(new_parent) || !get_turf(new_parent))
 		return COMPONENT_INCOMPATIBLE
-	move_react(new_parent)
+	transferring = TRUE
 
 /datum/component/orbiter/proc/begin_orbit(atom/movable/orbiter, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 	if(orbiter.orbiting)
@@ -76,6 +93,9 @@
 			orbiter.orbiting.end_orbit(orbiter, TRUE)
 		else
 			orbiter.orbiting.end_orbit(orbiter)
+
+	if(QDELETED(orbiter))
+		return COMPONENT_REDUNDANT
 
 	orbiter_params[orbiter] = args.Copy(2)
 	orbiter_list[orbiter] = TRUE
@@ -191,12 +211,16 @@
 /////////////////////
 
 /atom/movable/proc/orbit(atom/A, radius = 10, clockwise = FALSE, rotation_speed = 20, rotation_segments = 36, pre_rotation = TRUE)
-	if(!istype(A) || !get_turf(A) || A == src)
+	if(QDELETED(src) || !istype(A) || !get_turf(A) || A == src)
 		return
 	if (HAS_TRAIT(A, TRAIT_ORBITING_FORBIDDEN))
 		// Stealth-mins have an empty name, don't want "You cannot orbit   at this time."
 		to_chat(src, span_notice("You cannot orbit ["[A]" || "them"] at this time."))
 		return
+	if(orbiting && orbiting.parent != A)
+		orbiting.end_orbit(src)
+		if(QDELETED(src))
+			return
 	orbit_target = A
 	return A.AddComponent(/datum/component/orbiter, src, radius, clockwise, rotation_speed, rotation_segments, pre_rotation)
 

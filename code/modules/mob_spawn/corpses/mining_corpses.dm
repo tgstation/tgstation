@@ -338,7 +338,6 @@
 		var/backpack_loot = pick(list(
 			/obj/item/food/fishmeat = 89,
 			/obj/item/food/fishmeat/carp = 10,
-			/obj/item/skeleton_key = 1,
 		))
 		backpack_contents += backpack_loot
 

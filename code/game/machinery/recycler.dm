@@ -115,7 +115,15 @@
 /obj/machinery/recycler/proc/on_entered(datum/source, atom/movable/enterer, old_loc)
 	SIGNAL_HANDLER
 
+	if(can_butcher(enterer))
+		return
 	INVOKE_ASYNC(src, PROC_REF(eat), enterer)
+
+/// Dead mobs with something to butcher are left to the butchering component instead of being eaten.
+/obj/machinery/recycler/proc/can_butcher(mob/living/victim)
+	if(!isliving(victim) || safety_mode || (machine_stat & (BROKEN|NOPOWER)))
+		return FALSE
+	return victim.stat == DEAD && (victim.butcher_results || victim.guaranteed_butcher_results)
 
 /obj/machinery/recycler/proc/eat(atom/movable/morsel, sound=TRUE)
 	if(machine_stat & (BROKEN|NOPOWER) || safety_mode)

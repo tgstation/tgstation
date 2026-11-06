@@ -1648,3 +1648,18 @@ INITIALIZE_IMMEDIATE(/obj/effect/mapping_helpers/no_atoms_ontop)
 
 /obj/effect/mapping_helpers/blessing/invisible
 	invisible = TRUE
+
+/// Cuts a cable at roundstart because the test would otherwise complain about an unlinked powernet
+/obj/effect/mapping_helpers/cable_snip
+	name = "snip cable"
+	icon = 'icons/hud/screen_gen.dmi'
+	icon_state = "x"
+	late = TRUE
+
+/obj/effect/mapping_helpers/cable_snip/LateInitialize()
+	var/obj/structure/cable/cable = locate() in loc
+	if(isnull(cable))
+		log_mapping("Cable not found for snip cable helper at [loc.x],[loc.y],[loc.z]")
+#ifndef UNIT_TESTS
+	cable.deconstruct(FALSE)
+#endif

@@ -195,7 +195,7 @@
 
 /obj/item/storage/toolbox/guncase/revolver
 	name = "revolver gun case"
-	weapon_to_spawn = /obj/item/gun/ballistic/revolver/badass/nuclear
+	weapon_to_spawn = /obj/item/gun/ballistic/revolver/syndicate/badass/nuclear
 	extra_to_spawn = /obj/item/ammo_box/speedloader/c357
 
 /obj/item/storage/toolbox/guncase/sword_and_board

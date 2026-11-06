@@ -71,42 +71,58 @@
 	var/new_deity = player_client?.prefs?.read_preference(/datum/preference/name/deity) || DEFAULT_DEITY
 	var/new_bible = player_client?.prefs?.read_preference(/datum/preference/name/bible) || DEFAULT_BIBLE
 
-	holy_bible.deity_name = new_deity
 	switch(LOWER_TEXT(new_religion))
 		if("homosexuality", "gay", "penis", "ass", "cock", "cocks")
 			new_bible = pick("Guys Gone Wild","Coming Out of The Closet","War of Cocks")
 			switch(new_bible)
 				if("War of Cocks")
-					holy_bible.deity_name = pick("Dick Powers", "King Cock")
+					new_deity = pick("Dick Powers", "King Cock")
 				else
-					holy_bible.deity_name = pick("Gay Space Jesus", "Gandalf", "Dumbledore")
+					new_deity = pick("Gay Space Jesus", "Gandalf", "Dumbledore")
 			human_spawned.adjust_organ_loss(ORGAN_SLOT_BRAIN, 100) // starts off brain damaged as fuck
 		if("lol", "wtf", "poo", "badmin", "shitmin", "deadmin", "meme", "memes", "skibidi")
 			new_bible = pick("Woody's Got Wood: The Aftermath", "Sweet Bro and Hella Jeff: Expanded Edition","F.A.T.A.L. Rulebook", "Toilet Humor")
 			switch(new_bible)
 				if("Woody's Got Wood: The Aftermath")
-					holy_bible.deity_name = pick("Woody", "Andy", "Cherry Flavored Lube")
+					new_deity = pick("Woody", "Andy", "Cherry Flavored Lube")
 				if("Sweet Bro and Hella Jeff: Expanded Edition")
-					holy_bible.deity_name = pick("Sweet Bro", "Hella Jeff", "Stairs", "AH")
+					new_deity = pick("Sweet Bro", "Hella Jeff", "Stairs", "AH")
 				if("F.A.T.A.L. Rulebook")
-					holy_bible.deity_name = "Twenty Ten-Sided Dice"
+					new_deity = "Twenty Ten-Sided Dice"
 				if("Toilet Humor")
-					holy_bible.deity_name = pick("Skibidi Toilet", "Skibidi Wizard", "Skibidi Bathtub", "John Skibidi", "Skibidi Skibidi", "G-Toilet 1.0", "John Freeman")
+					new_deity = pick("Skibidi Toilet", "Skibidi Wizard", "Skibidi Bathtub", "John Skibidi", "Skibidi Skibidi", "G-Toilet 1.0", "John Freeman")
 			human_spawned.adjust_organ_loss(ORGAN_SLOT_BRAIN, 100) // also starts off brain damaged as fuck
 		if("servicianism", "partying")
 			holy_bible.desc = "Happy, Full, Clean. Live it and give it."
 		if("weeaboo","kawaii")
 			new_bible = pick("Fanfiction Compendium","Japanese for Dummies","The Manganomicon","Establishing Your O.T.P")
-			holy_bible.deity_name = "Anime"
-		else
+			new_deity = "Anime"
+		// lizard religion
+		if("sitalesse")
+			if(new_deity == DEFAULT_DEITY)
+				new_deity = pick("Atrakor", "Tizira", "Sulya", "Viomea", "Pelara and Iskil")
 			if(new_bible == DEFAULT_BIBLE)
-				new_bible = DEFAULT_BIBLE_REPLACE(new_bible)
+				new_bible = pick("The Worship of the Heavens", "The Sitalesse Pantheon")
+			holy_bible.desc = "The Sitalesse faith - known as Sky Worship in common parlance - is the most followed religion on Tizira. \
+				The faith focuses on a pantheon of deities, each sharing a name with a celestial body in the Rizkalon system."
+		// lizard ideology? it's kinda a religion.
+		if("sumalism")
+			if(new_deity == DEFAULT_DEITY)
+				new_deity = "Tizirans" // as a secular doctrine, it's kind of weird to assign a deity.
+			if(new_bible == DEFAULT_BIBLE)
+				new_bible = "The Sumalism Doctrine"
+			holy_bible.desc = "Started by the firebrand Ana-Sumal, Sumalism rejects the traditional pantheon in favor of a jingoistic ideology. \
+				The doctrine is wholly secular, emphasizing conquest and unity over traditional religious practices."
 
+	if(new_bible == DEFAULT_BIBLE)
+		new_bible = DEFAULT_BIBLE_REPLACE(new_deity)
+
+	holy_bible.deity_name = new_deity
 	holy_bible.name = new_bible
 
 	GLOB.religion = new_religion
 	GLOB.bible_name = new_bible
-	GLOB.deity = holy_bible.deity_name
+	GLOB.deity = new_deity
 
 	human_spawned.equip_to_storage(holy_bible, ITEM_SLOT_BACK, indirect_action = TRUE, del_on_fail = TRUE)
 

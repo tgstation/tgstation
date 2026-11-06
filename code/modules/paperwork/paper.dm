@@ -515,6 +515,14 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 		return
 	ui = SStgui.try_update_ui(user, src, ui)
 	if(!ui)
+		var/list/writing_info = get_viewer_writing_implement_details(user)
+		if(writing_info)
+			add_writer(user, writing_info, update = FALSE)
+
+		ui = new(user, src, "PaperSheet", name)
+		if(!ui.open())
+			ui_close(user)
+			return
 		/**
 		 * these signals are for checking whether the ui viewer is holding a writing tool.
 		 * (whether they are holding a writing tool matters for the state of the ui)
@@ -529,12 +537,7 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 			COMSIG_MOB_SWAP_HANDS,
 			COMSIG_MOB_TRANSFORMING_ITEM, // specifically for pens
 		), PROC_REF(viewer_writing_state_change))
-		var/list/writing_info = get_viewer_writing_implement_details(user)
-		if(writing_info)
-			add_writer(user, writing_info, update = FALSE)
-
-		ui = new(user, src, "PaperSheet", name)
-		ui.open()
+		RegisterSignal(user, COMSIG_MOB_LOGOUT, TYPE_PROC_REF(/datum, ui_close))
 		// please see the above comment if you want to re-enable autoupdate
 		ui.set_autoupdate(FALSE)
 
@@ -547,6 +550,7 @@ GAME_VERB_SRC(/obj/item/paper, rename, usr, "Rename paper", null)
 		COMSIG_MOB_EQUIPPED_ITEM,
 		COMSIG_MOB_SWAP_HANDS,
 		COMSIG_MOB_TRANSFORMING_ITEM,
+		COMSIG_MOB_LOGOUT,
 	))
 
 /// Generically check if we are holding a writing tool to update our writer status

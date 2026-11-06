@@ -92,7 +92,7 @@
 		return
 	M.drop_all_held_items() // Some stuff might not be dropped here
 	for(var/empty_hand_index in M.get_empty_held_indexes())
-		var/obj/item/gun_control/control = new()
+		var/obj/item/gun_control/control = new(src)
 		if(!M.put_in_hand(control, empty_hand_index)) // fuck.
 			qdel(control)
 	M.pixel_y = 14

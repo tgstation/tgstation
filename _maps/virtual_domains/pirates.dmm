@@ -63,9 +63,7 @@
 /obj/item/gun/energy/laser{
 	pixel_y = -3
 	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/fullbright)
 "db" = (
 /obj/effect/turf_decal/weather/dirt{
@@ -139,17 +137,13 @@
 /area/virtual_domain/fullbright)
 "gx" = (
 /obj/effect/mapping_helpers/burnt_floor,
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/fullbright)
 "gB" = (
 /obj/effect/turf_decal/weather/sand{
 	dir = 9
 	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/fullbright)
 "gD" = (
 /obj/item/flashlight/flare/torch,
@@ -234,9 +228,7 @@
 	dir = 9
 	},
 /obj/effect/mob_spawn/ghost_role/human/virtual_domain/pirate,
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/fullbright)
 "nr" = (
 /mob/living/basic/trooper/pirate/melee,
@@ -365,9 +357,7 @@
 /obj/effect/turf_decal/weather/sand{
 	dir = 10
 	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/fullbright)
 "ub" = (
 /turf/template_noop,
@@ -383,9 +373,7 @@
 /obj/effect/turf_decal/weather/sand{
 	dir = 4
 	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/fullbright)
 "uH" = (
 /obj/effect/decal/cleanable/dirt/dust,
@@ -397,9 +385,7 @@
 	pixel_x = 8;
 	pixel_y = 6
 	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/fullbright)
 "vR" = (
 /obj/effect/turf_decal/siding/wood{
@@ -581,9 +567,7 @@
 "Fl" = (
 /obj/structure/barricade/sandbags,
 /obj/effect/turf_decal/weather/sand,
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/fullbright)
 "FP" = (
 /obj/effect/turf_decal/weather/sand{
@@ -591,9 +575,7 @@
 	},
 /obj/effect/decal/cleanable/cobweb/cobweb2,
 /obj/machinery/jukebox,
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/fullbright)
 "Gl" = (
 /obj/structure/flora/rock/pile/style_3,
@@ -708,9 +690,7 @@
 /area/virtual_domain/fullbright)
 "Mf" = (
 /obj/effect/decal/cleanable/dirt/dust,
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/fullbright)
 "MG" = (
 /obj/structure/barricade/sandbags,
@@ -734,9 +714,7 @@
 /obj/effect/mapping_helpers/burnt_floor,
 /mob/living/basic/trooper/pirate/ranged,
 /obj/structure/chair/wood,
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/fullbright)
 "NU" = (
 /obj/structure/flora/grass/jungle/b/style_random{
@@ -775,9 +753,7 @@
 /area/virtual_domain/protected_space)
 "Qc" = (
 /obj/effect/mapping_helpers/broken_floor,
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/fullbright)
 "QF" = (
 /obj/effect/turf_decal/weather/dirt,
@@ -797,9 +773,7 @@
 	pixel_x = -1;
 	pixel_y = 1
 	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/fullbright)
 "QU" = (
 /obj/effect/mob_spawn/corpse/human/pirate/melee,
@@ -888,9 +862,7 @@
 /obj/effect/turf_decal/weather/sand{
 	dir = 10
 	},
-/turf/open/floor/wood{
-	icon_state = "wood_large"
-	},
+/turf/open/floor/wood/large,
 /area/virtual_domain/fullbright)
 "To" = (
 /obj/structure/bookcase/random/fiction,

@@ -108,6 +108,7 @@ SUBSYSTEM_DEF(weather)
 			holder = new()
 			holder.plane = new_object.plane
 			holders_by_plane[new_object.plane] = new_object
+			SEND_SIGNAL(src, COMSIG_WEATHER_NEW_PARTICLE_HOLDER, holder)
 
 		holder.vis_contents += new_object
 

@@ -137,7 +137,8 @@
 /obj/machinery/power/emitter/should_have_node()
 	return welded
 
-/obj/machinery/power/emitter/Destroy()
+/obj/machinery/power/emitter/Destroy(force)
+	SSmachines.processing_early -= src
 	if(SSticker.IsRoundInProgress())
 		var/turf/T = get_turf(src)
 		message_admins("[src] deleted at [ADMIN_VERBOSEJMP(T)].")
@@ -545,7 +546,7 @@
 	proto_emitter.manual = TRUE
 	buckled_mob.drop_all_held_items() // Some stuff might not be dropped here
 	for(var/empty_hand_index in buckled_mob.get_empty_held_indexes())
-		var/obj/item/gun_control/control = new()
+		var/obj/item/turret_control/control = new()
 		if(!buckled_mob.put_in_hand(control, empty_hand_index)) // fuck.
 			qdel(control)
 	build_all_button_icons()

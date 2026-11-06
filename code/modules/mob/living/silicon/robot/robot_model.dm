@@ -1020,8 +1020,8 @@
 	button_icon_state = "thermal"
 
 /datum/action/cooldown/borg_thermal/Activate()
-	if(HAS_TRAIT_FROM(owner, COMSIG_LIVING_RESTORE_INITIAL_SIGHT, ACTION_TRAIT))
-		UnregisterSignal(owner, COMSIG_MOB_UPDATE_SIGHT)
+	if(HAS_TRAIT_FROM(owner, TRAIT_THERMAL_VISION, ACTION_TRAIT))
+		UnregisterSignal(owner, COMSIG_LIVING_RESTORE_INITIAL_SIGHT)
 		REMOVE_TRAIT(owner, TRAIT_THERMAL_VISION, ACTION_TRAIT)
 	else
 		RegisterSignal(owner, COMSIG_LIVING_RESTORE_INITIAL_SIGHT, PROC_REF(on_initial_sight)) //order is important as update_sight() is called when the vision trait is added/removed

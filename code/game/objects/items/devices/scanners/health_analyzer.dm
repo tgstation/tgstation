@@ -526,7 +526,7 @@
 
 	report_paper.last_healthy_scanned_mob = last_healthy_scanned
 	ADD_TRAIT(patient, TRAIT_RECENTLY_TREATED, ANALYZER_TRAIT)
-	addtimer(TRAIT_CALLBACK_REMOVE(patient, RECENTLY_HEALED_COOLDOWN, ANALYZER_TRAIT), RECENTLY_HEALED_COOLDOWN)
+	addtimer(TRAIT_CALLBACK_REMOVE(patient, TRAIT_RECENTLY_TREATED, ANALYZER_TRAIT), RECENTLY_HEALED_COOLDOWN)
 	return TRUE
 
 /obj/item/healthanalyzer/proc/clear_treatment(mob/living/target)

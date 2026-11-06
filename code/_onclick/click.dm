@@ -390,7 +390,7 @@
 	. = SEND_SIGNAL(src, COMSIG_MOB_MIDDLECLICKON, A, params)
 	if(. & COMSIG_MOB_CANCEL_CLICKON)
 		return
-	cycle_hand()
+	cycle_hand(WEST, FALSE)
 
 /**
  * Shift click
@@ -494,9 +494,8 @@
 
 /atom/movable/screen/click_catcher/Click(location, control, params)
 	var/list/modifiers = params2list(params)
-	if(LAZYACCESS(modifiers, MIDDLE_CLICK) && iscarbon(usr))
-		var/mob/living/carbon/C = usr
-		C.cycle_hand()
+	if(LAZYACCESS(modifiers, MIDDLE_CLICK) && ismob(usr))
+		usr.cycle_hand(WEST, FALSE)
 	else
 		var/turf/click_turf = parse_caught_click_modifiers(modifiers, get_turf(usr.client ? usr.client.eye : usr), usr.client)
 		if (click_turf)

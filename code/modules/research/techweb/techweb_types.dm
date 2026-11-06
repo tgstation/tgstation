@@ -6,14 +6,14 @@
 	organization = "Nanotrasen"
 	should_generate_points = TRUE
 
-/datum/techweb/science/research_node(datum/techweb_node/node, force = FALSE, auto_adjust_cost = TRUE, get_that_dosh = TRUE, atom/research_source)
-	. = ..()
-	if(!.)
-		return
-
-	if(ispath(node))
-		node = SSresearch.techweb_nodes[node]
+/datum/techweb/science/node_added(datum/techweb_node/node, atom/research_source)
 	node.on_station_research(research_source)
+
+/datum/techweb/science/design_added(datum/design/design)
+	design.on_station_research()
+
+/datum/techweb/science/design_removed(datum/design/design)
+	design.on_station_unresearch()
 
 /datum/techweb/oldstation
 	id = "CHARLIE"
@@ -55,19 +55,13 @@ GLOBAL_LIST_EMPTY(autounlock_techwebs)
 	. = ..()
 	for(var/design_path, _design in SSresearch.techweb_designs)
 		var/datum/design/design = _design
-		if(!(design.build_type & allowed_buildtypes))
-			continue
 		if(RND_CATEGORY_INITIAL in design.category)
-			add_design(design_path)
+			add_design(design)
 		if(RND_CATEGORY_HACKED in design.category)
-			add_design(design_path, add_to = hacked_designs)
+			add_design(design, add_to = hacked_designs)
 
-/datum/techweb/autounlocking/add_design(datum/design/design, custom = FALSE, list/add_to)
-	if(ispath(design))
-		design = SSresearch.techweb_designs[design]
-	if(!istype(design) || !(design.build_type & allowed_buildtypes))
-		return FALSE
-	return ..()
+/datum/techweb/autounlocking/is_valid_design(datum/design/design)
+	return (design.build_type & allowed_buildtypes)
 
 /datum/techweb/autounlocking/autolathe
 	allowed_buildtypes = AUTOLATHE

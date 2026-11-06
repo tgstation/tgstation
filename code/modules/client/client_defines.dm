@@ -231,6 +231,9 @@
 	/// Whether or not this client has the combo HUD enabled
 	var/combo_hud_enabled = FALSE
 
+	/// Whether New() has started. BYOND can call Del() before client initialization begins.
+	var/new_started = FALSE
+
 	/// If this client has been fully initialized or not
 	var/fully_created = FALSE
 

@@ -65,48 +65,31 @@
 	return TRUE
 
 /mob/living/basic/guardian/dextrous/can_equip(mob/living/M, slot, disable_warning = FALSE, bypass_equip_delay_self = FALSE, ignore_equipped = FALSE, indirect_action = FALSE)
-	if(slot != ITEM_SLOT_DEX_STORAGE)
-		return FALSE
-	return isnull(internal_storage)
+	if(slot & ITEM_SLOT_STORAGE)
+		return isnull(internal_storage)
+	return FALSE
 
 /mob/living/basic/guardian/dextrous/get_item_by_slot(slot_id)
-	if(slot_id == ITEM_SLOT_DEX_STORAGE)
+	if(slot_id & ITEM_SLOT_STORAGE)
 		return internal_storage
 	return ..()
 
 /mob/living/basic/guardian/dextrous/get_slot_by_item(obj/item/looking_for)
 	if(internal_storage == looking_for)
-		return ITEM_SLOT_DEX_STORAGE
+		return ITEM_SLOT_STORAGE
 	return ..()
 
-/mob/living/basic/guardian/dextrous/equip_to_slot(obj/item/equipping, slot, initial = FALSE, redraw_mob = FALSE, indirect_action = FALSE)
-	if (slot != ITEM_SLOT_DEX_STORAGE)
-		to_chat(src, span_danger("You are trying to equip this item to an unsupported inventory slot. Report this to a coder!"))
-		return FALSE
-
-	var/index = get_held_index_of_item(equipping)
-	if(index)
-		held_items[index] = null
-	update_held_items()
-
-	if(equipping.pulledby)
-		equipping.pulledby.stop_pulling()
-
-	hud_used?.update_inventory_slot(slot)
-	equipping.forceMove(src)
-	SET_PLANE_EXPLICIT(equipping, ABOVE_HUD_PLANE, src)
+/mob/living/basic/guardian/dextrous/handle_set_item_in_slot(obj/item/equipping, slot)
+	. = ..()
+	if(.)
+		return
 
 	internal_storage = equipping
 	update_inv_internal_storage()
-
-	has_equipped(equipping, slot)
 	return TRUE
 
-/mob/living/basic/guardian/dextrous/getBackSlot()
-	return ITEM_SLOT_DEX_STORAGE
-
 /mob/living/basic/guardian/dextrous/proc/update_inv_internal_storage()
-	hud_used?.update_inventory_slot(ITEM_SLOT_DEX_STORAGE)
+	hud_used?.update_inventory_slot(ITEM_SLOT_SUITSTORE)
 
 /mob/living/basic/guardian/dextrous/regenerate_icons()
 	update_inv_internal_storage()

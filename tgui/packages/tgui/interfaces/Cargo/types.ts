@@ -6,6 +6,7 @@ export type CargoData = {
   can_approve_requests: BooleanLike;
   can_send: BooleanLike;
   cart: CartEntry[];
+  catalogue: Catalogue;
   department: string;
   displayed_currency_full_name: string;
   displayed_currency_name: string;
@@ -20,7 +21,20 @@ export type CargoData = {
   requests: Request[];
   requestonly: BooleanLike;
   self_paid: BooleanLike;
-  supplies: Record<string, SupplyCategory>;
+};
+
+/** The catalogue data a UI gets - the file's url and version, and each group's packs as index/price pairs */
+export type Catalogue = {
+  url: string;
+  version: number;
+  show_contraband: BooleanLike;
+  groups: Record<string, number[]> | null;
+};
+
+/** The catalogue file - every listed pack's display data, minus prices */
+export type CatalogueFile = {
+  version: number;
+  packs: Omit<Supply, 'cost'>[];
 };
 
 export type SupplyCategory = {
@@ -38,7 +52,7 @@ export type Supply = {
   id: string;
   name: string;
   small_item: BooleanLike;
-  contraband: BooleanLike;
+  contraband?: BooleanLike;
   contains: SupplyItem[];
 };
 

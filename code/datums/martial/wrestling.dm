@@ -7,6 +7,7 @@ If you make a derivative work from this code, you must include this notification
 
 /datum/martial_art/wrestling
 	name = "Wrestling"
+	help_verb = "SNAP INTO A THIN TIM"
 	id = MARTIALART_WRESTLING
 	VAR_PRIVATE/datum/action/slam/slam
 	VAR_PRIVATE/datum/action/throw_wrassle/throw_wrassle

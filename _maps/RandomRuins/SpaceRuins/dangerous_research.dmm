@@ -103,9 +103,7 @@
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/medical)
 "bb" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid5"
-	},
+/turf/open/misc/asteroid/airless/variant_5,
 /area/space)
 "bl" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
@@ -226,9 +224,7 @@
 /turf/open/floor/iron/dark/diagonal,
 /area/ruin/space/has_grav/dangerous_research)
 "do" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid10"
-	},
+/turf/open/misc/asteroid/airless/variant_10,
 /area/space)
 "dw" = (
 /obj/structure/table,
@@ -775,9 +771,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research/medical)
 "jO" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid9"
-	},
+/turf/open/misc/asteroid/airless/variant_9,
 /area/space)
 "jR" = (
 /turf/closed/wall/r_wall,
@@ -1162,9 +1156,7 @@
 /turf/open/floor/plating,
 /area/ruin/space/has_grav/dangerous_research/medical)
 "pH" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid6"
-	},
+/turf/open/misc/asteroid/airless/variant_6,
 /area/space)
 "pO" = (
 /obj/effect/decal/cleanable/blood/footprints{
@@ -1855,9 +1847,7 @@
 /turf/open/floor/iron/white,
 /area/ruin/space/has_grav/dangerous_research)
 "xK" = (
-/turf/open/misc/asteroid{
-	icon_state = "asteroid6"
-	},
+/turf/open/misc/asteroid/variant_6,
 /area/ruin/space/has_grav/dangerous_research/medical)
 "xN" = (
 /obj/effect/turf_decal/tile/neutral/diagonal_edge,
@@ -1972,9 +1962,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/dangerous_research/maint)
 "zi" = (
-/turf/open/misc/asteroid{
-	icon_state = "asteroid8"
-	},
+/turf/open/misc/asteroid/variant_8,
 /area/ruin/space/has_grav/dangerous_research/medical)
 "zj" = (
 /obj/effect/turf_decal/stripes/end,
@@ -2011,9 +1999,7 @@
 /turf/open/floor/plating/rust,
 /area/ruin/space/has_grav/dangerous_research/lab)
 "zR" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid12"
-	},
+/turf/open/misc/asteroid/airless/variant_12,
 /area/space)
 "zY" = (
 /obj/structure/lattice/catwalk,
@@ -2287,9 +2273,7 @@
 /turf/open/floor/iron/dark,
 /area/ruin/space/has_grav/dangerous_research)
 "CI" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid2"
-	},
+/turf/open/misc/asteroid/airless/variant_2,
 /area/space)
 "CL" = (
 /obj/effect/turf_decal/stripes/asteroid{
@@ -3256,9 +3240,7 @@
 /turf/open/floor/iron,
 /area/ruin/space/has_grav/dangerous_research/maint)
 "QA" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid1"
-	},
+/turf/open/misc/asteroid/airless/variant_1,
 /area/space)
 "QE" = (
 /obj/item/clothing/suit/jacket/straight_jacket,
@@ -3358,9 +3340,7 @@
 	},
 /area/ruin/space/has_grav/dangerous_research/dorms)
 "RA" = (
-/turf/open/misc/asteroid/airless{
-	icon_state = "asteroid8"
-	},
+/turf/open/misc/asteroid/airless/variant_8,
 /area/space)
 "RB" = (
 /obj/machinery/computer/security/telescreen/entertainment/directional/north,

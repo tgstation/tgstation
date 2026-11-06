@@ -93,6 +93,7 @@
 	AddComponent(/datum/component/connect_perspective, home, list(COMSIG_MOVABLE_Z_CHANGED = PROC_REF(z_changed)))
 	RegisterSignal(home, COMSIG_PLANE_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
 	RegisterSignal(home, COMSIG_PLANE_GROUP_PERSPECTIVE_CHANGED, PROC_REF(perspective_changed))
+	RegisterSignal(SSweather, COMSIG_WEATHER_NEW_PARTICLE_HOLDER, PROC_REF(on_new_particle_holder))
 	update_state()
 
 /atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/z_changed(datum/source)
@@ -106,6 +107,27 @@
 /atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/perspective_changed(datum/source)
 	SIGNAL_HANDLER
 	update_state()
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/on_new_particle_holder(datum/source, obj/effect/abstract/weather_holder/z_level/holder)
+	SIGNAL_HANDLER
+
+	if(plane != holder.plane)
+		return
+
+	var/mob/mymob = home?.our_hud?.mymob
+	if(!istype(mymob) || !mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/particle_weather))
+		return
+
+	if(!SSmapping.initialized)
+		return
+
+	var/list/stack_levels = SSmapping.get_connected_levels(get_turf(home.get_perspective()))
+	var/max_z = max(stack_levels)
+	var/our_z = max_z - offset
+	if(!(our_z in stack_levels))
+		return
+
+	vis_contents += holder
 
 /// Updates ourselves based on our mob's preferences state
 /atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/update_state()

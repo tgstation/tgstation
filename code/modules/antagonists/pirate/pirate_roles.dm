@@ -245,7 +245,7 @@
 	icon_state = "pod_1"
 	fluff_spawn = /obj/effect/decal/cleanable/greenglow
 	you_are_text = "You are a wanna-be idol getting by on gigs and criminality."
-	flavour_text = "Its time to put on an impromptu show! Lets raid the station in style, steal their resources with grace, and call it a great night!"
+	flavour_text = "It's time to put on an impromptu show! Let's raid the station in style, steal their resources with grace, and call it a great night!"
 	prompt_name = "a deadbeat musician"
 	outfit = /datum/outfit/pirate/siren
 	rank = "Gitarisuto"

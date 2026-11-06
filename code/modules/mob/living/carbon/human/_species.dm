@@ -97,9 +97,6 @@ GLOBAL_LIST_EMPTY(features_by_species)
 	/// Store body marking defines. See mobs.dm for bitflags
 	var/list/body_markings = list()
 
-	/// Flat modifier on all damage taken via [apply_damage][/mob/living/proc/apply_damage] (so being punched, shot, etc.)
-	/// IE: 10 = 10% less damage taken.
-	var/damage_modifier = 0
 	///multiplier for damage from cold temperature
 	var/coldmod = 1
 	///multiplier for damage from hot temperature

@@ -1,4 +1,4 @@
-// A component for basic mobs that makes them able to slide under doors by right-clicking on them.
+// A component for mobs that makes them able to slide under doors by right-clicking on them.
 // Sliding under doors has a configurable initial delay, and allows the mob to remain under the door indefinitely.
 // If the door is opened while the mob is under it, then the mob will be ejected from their hiding spot.
 // Instantly sliding under doors should be handled by giving the mob the PASSDOORS pass flag.
@@ -17,7 +17,7 @@
 	var/obj/machinery/door/current_door = null
 
 /datum/component/slide_under_doors/Initialize(slide_in_delay = 5 SECONDS, slide_out_delay = 1 SECONDS)
-	if (!isbasicmob(parent))
+	if (!isliving(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.slide_in_delay = slide_in_delay

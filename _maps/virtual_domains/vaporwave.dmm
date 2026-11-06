@@ -38,9 +38,7 @@
 /area/virtual_domain)
 "df" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/iron/airless{
-	icon_state = "stairs-l"
-	},
+/turf/open/floor/iron/stairs/left/airless,
 /area/ruin/space/virtual_domain)
 "eF" = (
 /turf/closed/indestructible/binary,
@@ -82,9 +80,7 @@
 /area/virtual_domain/safehouse)
 "kF" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/iron/airless{
-	icon_state = "stairs-r"
-	},
+/turf/open/floor/iron/stairs/right/airless,
 /area/ruin/space/virtual_domain)
 "ll" = (
 /obj/structure/sign/poster/contraband/clown/directional/north,
@@ -160,9 +156,7 @@
 /area/virtual_domain)
 "Hf" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/iron/airless{
-	icon_state = "recharge_floor_asteroid"
-	},
+/turf/open/floor/iron/recharge_floor/asteroid/airless,
 /area/ruin/space/virtual_domain)
 "HA" = (
 /turf/open/floor/holofloor/beach/coast,
@@ -186,9 +180,7 @@
 /area/virtual_domain)
 "KY" = (
 /obj/effect/turf_decal/sand,
-/turf/open/floor/iron/airless{
-	icon_state = "stairs-m"
-	},
+/turf/open/floor/iron/stairs/medium/airless,
 /area/ruin/space/virtual_domain)
 "LG" = (
 /obj/effect/baseturf_helper/virtual_domain,

@@ -105,7 +105,7 @@ SUBSYSTEM_DEF(machines)
 			currentrun.len--
 			if(QDELETED(thing) || thing.process_early(wait * 0.1) == PROCESS_KILL)
 				processing_early -= thing
-				thing.datum_flags &= ~DF_ISPROCESSING
+				thing?.datum_flags &= ~DF_ISPROCESSING
 			if (MC_TICK_CHECK)
 				return
 		current_part = apc_steps[1]
