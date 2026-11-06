@@ -6,6 +6,8 @@
 	icon_state = "rag"
 	item_flags = NOBLUDGEON
 	resistance_flags = FLAMMABLE
+	pickup_sound = /datum/sound_effect/towel_pickup
+	drop_sound = /datum/sound_effect/towel_drop
 	/// How bloody is this rag?
 	var/blood_level = 0
 	/// How many times has this rag been wrung out since last clean?
