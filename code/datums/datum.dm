@@ -168,40 +168,39 @@
 /datum/proc/_clear_signal_refs()
 	var/list/lookup = _listen_lookup
 	if(lookup)
-		for(var/sig in lookup)
-			var/list/comps = lookup[sig]
+		for(var/sig, _comps in lookup)
+			var/list/comps = _comps
 			if(length(comps))
 				for(var/datum/component/comp as anything in comps)
 					comp.UnregisterSignal(src, sig)
 			else
 				var/datum/component/comp = comps
 				comp.UnregisterSignal(src, sig)
-		_listen_lookup = lookup = null
+		_listen_lookup = null
 
-	for(var/target in _signal_procs)
-		UnregisterSignal(target, _signal_procs[target])
+	for(var/target, signal in _signal_procs)
+		UnregisterSignal(target, signal)
 
 #ifdef DATUMVAR_DEBUGGING_MODE
 /datum/proc/save_vars()
 	cached_vars = list()
-	for(var/i in vars)
-		if(i == "cached_vars")
+	for(var/var_name, var_value in vars)
+		if(var_name == NAMEOF(src, cached_vars))
 			continue
-		cached_vars[i] = vars[i]
+		cached_vars[var_name] = var_value
 
 /datum/proc/check_changed_vars()
 	. = list()
-	for(var/i in vars)
-		if(i == "cached_vars")
+	for(var/var_name, var_value in vars)
+		if(var_name == NAMEOF(src, cached_vars))
 			continue
-		if(cached_vars[i] != vars[i])
-			.[i] = list(cached_vars[i], vars[i])
+		if(cached_vars[var_name] != var_value)
+			.[var_name] = list(cached_vars[var_name], var_value)
 
 /datum/proc/txt_changed_vars()
-	var/list/l = check_changed_vars()
 	var/t = "[src]([REF(src)]) changed vars:"
-	for(var/i in l)
-		t += "\"[i]\" \[[l[i][1]]\] --> \[[l[i][2]]\] "
+	for(var/var_name, var_data in check_changed_vars())
+		t += "\"[var_name]\" \[[var_data[1]]\] --> \[[var_data[2]]\] "
 	t += "."
 
 /datum/proc/to_chat_check_changed_vars(target = world)
