@@ -198,10 +198,10 @@
 			.[var_name] = list(cached_vars[var_name], var_value)
 
 /datum/proc/txt_changed_vars()
-	var/t = "[src]([REF(src)]) changed vars:"
+	var/list/output = list("[src]([REF(src)]) changed vars:")
 	for(var/var_name, var_data in check_changed_vars())
-		t += "\"[var_name]\" \[[var_data[1]]\] --> \[[var_data[2]]\] "
-	t += "."
+		output += "\"[var_name]\" \[[var_data[1]]\] --> \[[var_data[2]]\]"
+	return "[output.Join(" ")]."
 
 /datum/proc/to_chat_check_changed_vars(target = world)
 	to_chat(target, txt_changed_vars())
