@@ -663,5 +663,5 @@
 
 /datum/symptom/heal/genetic/Heal(mob/living/carbon/carbon_host, datum/disease/advance/our_disease, actual_power)
 	if(carbon_host.heal_overall_damage(actual_power, actual_power, required_bodytype = healable_bodytypes) && prob(5))
-		to_chat(carbon_host, span_notice("You feel your injuries [power >= 3 ? "quickly" : "slowly"] fading away."))
+		to_chat(carbon_host, span_notice("You feel your injuries [actual_power >= 3 ? "quickly" : "slowly"] fading away."))
 	return TRUE
