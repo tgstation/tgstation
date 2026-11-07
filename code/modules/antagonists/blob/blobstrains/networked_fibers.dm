@@ -13,7 +13,7 @@
 
 /datum/blobstrain/reagent/networked_fibers/expand_reaction(obj/structure/blob/spawning_blob, obj/structure/blob/new_blob, turf/chosen_turf, mob/eye/blob/overmind)
 	if(!overmind && new_blob.overmind)
-		new_blob.overmind.add_points(1)
+		new_blob.overmind.add_points(1, apply_shuttle_penalty = TRUE)
 		qdel(new_blob)
 		return
 	if(isspaceturf(chosen_turf))
@@ -24,7 +24,7 @@
 			possible_expander.forceMove(chosen_turf)
 			possible_expander.setDir(get_dir(new_blob, possible_expander))
 			return
-	overmind.add_points(4)
+	overmind.add_points(4, apply_shuttle_penalty = TRUE)
 	qdel(new_blob)
 
 //does massive brute and burn damage, but can only expand manually

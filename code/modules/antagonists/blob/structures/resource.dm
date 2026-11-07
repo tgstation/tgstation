@@ -30,8 +30,8 @@
 		return
 	flick("blob_resource_glow", src)
 	if(overmind)
-		overmind.add_points(BLOB_RESOURCE_GATHER_AMOUNT)
-		balloon_alert(overmind, "+[BLOB_RESOURCE_GATHER_AMOUNT] resource\s")
+		var/delta = overmind.add_points(BLOB_RESOURCE_GATHER_AMOUNT, apply_shuttle_penalty = TRUE)
+		balloon_alert(overmind, "+[delta] resource\s")
 		resource_delay = world.time + BLOB_RESOURCE_GATHER_DELAY + overmind.resource_blobs.len * BLOB_RESOURCE_GATHER_ADDED_DELAY //4 seconds plus a quarter second for each resource blob the overmind has
 	else
 		resource_delay = world.time + BLOB_RESOURCE_GATHER_DELAY

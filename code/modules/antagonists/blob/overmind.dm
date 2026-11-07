@@ -64,6 +64,9 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 	/// Adminbus potential - if this is set to FALSE, the blob won't end the round upon reaching critical mass.
 	var/end_round_on_victory = TRUE
 
+	/// How long in deciseconds our existence has delayed the emergency shuttle from leaving
+	VAR_FINAL/shuttle_delay_counter = 0
+
 /mob/eye/blob/Initialize(mapload, starting_points = OVERMIND_STARTING_POINTS)
 	ADD_TRAIT(src, TRAIT_BLOB_ALLY, INNATE_TRAIT)
 	validate_location()
@@ -317,9 +320,22 @@ GLOBAL_LIST_EMPTY(blob_nodes)
 		if (overmind_hud)
 			overmind_hud.maptext = new_maptext
 
-/mob/eye/blob/proc/add_points(points)
+/**
+ * Change how many blob points the overmind has.
+ *
+ * * points - The number of blob points to add (or subtract if negative).
+ * * apply_shuttle_penalty - Whether to apply the shuttle delay penalty when adding points
+ * If set to TRUE the point passed will be multiplied (reduced) if we have been delaying the shuttle for a significant amount of time.
+ *
+ * Returns the number of points actually added
+ */
+/mob/eye/blob/proc/add_points(points, apply_shuttle_penalty = FALSE)
+	var/pre_points = blob_points
+	if(points > 0 && apply_shuttle_penalty && shuttle_delay_counter > BLOB_SHUTTLE_DELAY_PENALTY_THRESHOLD)
+		points = round(points * BLOB_SHUTTLE_DELAY_PENALTY_THRESHOLD / shuttle_delay_counter, 0.5)
 	blob_points = clamp(blob_points + points, 0, max_blob_points)
 	hud_used.screen_objects[HUD_BLOB_POWER_DISPLAY].maptext = MAPTEXT("<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#e36600'>[round(blob_points)]</font></div>")
+	return blob_points - pre_points
 
 /mob/eye/blob/say(
 	message,
