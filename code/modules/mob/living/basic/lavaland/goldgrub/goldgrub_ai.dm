@@ -35,7 +35,6 @@
 		return
 	controller.set_blackboard_key(BB_PET_ACTIVE_ABILITY, spit_ability)
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/untargeted_ability)
-	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 
 /datum/pet_command/grub_spit/retrieve_command_text(atom/living_pet, atom/target)
 	return "signals [living_pet] to spit its ores!"

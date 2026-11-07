@@ -276,8 +276,10 @@
 		return FALSE
 	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(parent.ai_controller.blackboard[targeting_strategy_key])
 	if(!targeter?.is_valid_target(parent, target))
-		parent.balloon_alert_to_viewers("shakes head!")
 		return FALSE
 	return ..()
+
+/datum/pet_command/use_ability/lob_charge/refuse_target(mob/living/parent, atom/target)
+	emit_command_feedback(parent, "shakes head", is_refusal = TRUE)
 
 /datum/pet_command/use_ability/lob_charge/shrimp

@@ -97,7 +97,7 @@
 
 /datum/pet_command/follow/orbie/proc/on_summon(datum/source, mob/living/friend)
 	SIGNAL_HANDLER
-	set_command_active(source, friend)
+	try_activate_command(friend, explicit_command = FALSE)
 
 ///command to make our pet turn its lights on, we need to be level 2 to activate this ability
 /datum/pet_command/untargeted_ability/pet_lights
@@ -110,7 +110,7 @@
 
 /datum/pet_command/untargeted_ability/pet_lights/execute_action(datum/ai_controller/controller)
 	if(controller.blackboard[BB_VIRTUAL_PET_LEVEL] < 2)
-		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
+		finish_command(controller)
 		return TRUE
 	return ..()
 
@@ -133,7 +133,7 @@
 
 /datum/pet_command/use_ability/take_photo/execute_action(datum/ai_controller/controller)
 	if(controller.blackboard[BB_VIRTUAL_PET_LEVEL] < 3)
-		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
+		finish_command(controller)
 		return TRUE
 	return ..()
 
@@ -158,7 +158,7 @@
 	var/list/trick_sequence = controller.blackboard[BB_TRICK_SEQUENCE]
 	for(var/index in 1 to length(trick_sequence))
 		addtimer(CALLBACK(living_pawn, TYPE_PROC_REF(/mob, emote), trick_sequence[index], index * 0.5 SECONDS))
-	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
+	finish_command(controller)
 	return TRUE
 
 #undef PET_PLAYTIME_COOLDOWN

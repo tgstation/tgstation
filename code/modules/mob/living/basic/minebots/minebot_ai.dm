@@ -188,7 +188,7 @@
 
 /datum/pet_command/automate_mining/execute_action(datum/ai_controller/controller)
 	controller.set_blackboard_key(BB_AUTOMATED_MINING, TRUE)
-	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
+	finish_command(controller)
 
 /datum/pet_command/minebot_ability
 	command_name = "Minebot ability"
@@ -202,7 +202,7 @@
 	if(!ability?.IsAvailable())
 		return
 	INVOKE_ASYNC(ability, TYPE_PROC_REF(/datum/action, Trigger))
-	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
+	finish_command(controller)
 
 /datum/pet_command/minebot_ability/light
 	command_name = "Toggle lights"
@@ -257,4 +257,4 @@
 	if(controller.blackboard[BB_MINEBOT_AUTO_DEFEND])
 		var/mob/living/living_pawn = controller.pawn
 		living_pawn.set_combat_mode(TRUE)
-	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
+	finish_command(controller)

@@ -22,6 +22,10 @@
 	var/callout_type
 	/// Shown above the mob's head when it hears you
 	var/command_feedback
+	/// Shown when a command that needs a target has no remembered point
+	var/waiting_for_target_feedback = "waits for a target"
+	/// Shown when a command rejects a point
+	var/invalid_target_feedback = "can't do that"
 	/// How close a mob needs to be to a target to respond to a command
 	var/sense_radius = 7
 	/// does this pet command need a point to activate?
@@ -30,27 +34,30 @@
 	var/targeting_strategy_key = BB_PET_TARGETING_STRATEGY
 	///our pointed reaction we play
 	var/pointed_reaction
+	/// Friend currently selecting a target through this command's radial menu
+	var/datum/weakref/radial_commander
+	/// Mouse pointer in use before the radial target prompt
+	var/old_mouse_override_icon
 
 /datum/pet_command/New(mob/living/parent)
 	. = ..()
 	weak_parent = WEAKREF(parent)
 
+/// Clear blackboard state shared by pet commands.
+/datum/ai_controller/proc/clear_pet_command_blackboard()
+	clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
+	clear_blackboard_key(BB_CURRENT_PET_TARGET)
+	clear_blackboard_key(BB_FETCH_DELIVER_TO)
+	clear_blackboard_key(BB_PET_ACTIVE_ABILITY)
+
 /// Register a new guy we want to listen to
 /datum/pet_command/proc/add_new_friend(mob/living/tamer)
-	RegisterSignal(tamer, COMSIG_MOB_SAY, PROC_REF(respond_to_command))
-	RegisterSignal(tamer, COMSIG_MOB_AUTOMUTE_CHECK, PROC_REF(waive_automute))
-	RegisterSignal(tamer, COMSIG_MOB_CREATED_CALLOUT, PROC_REF(respond_to_callout))
-	if(requires_pointing)
-		RegisterSignal(tamer, COMSIG_MOVABLE_POINTED, PROC_REF(point_on_target))
+	return
 
 /// Stop listening to a guy
 /datum/pet_command/proc/remove_friend(mob/living/unfriended)
-	UnregisterSignal(unfriended, list(
-		COMSIG_MOB_SAY,
-		COMSIG_MOB_AUTOMUTE_CHECK,
-		COMSIG_MOB_CREATED_CALLOUT,
-		COMSIG_MOVABLE_POINTED,
-	))
+	if(radial_commander?.resolve() == unfriended)
+		clear_radial_selection()
 
 /// Stop the automute from triggering for commands (unless the spoken text is suspiciously longer than the command)
 /datum/pet_command/proc/waive_automute(mob/living/speaker, client/client, last_message, mute_type)
@@ -60,7 +67,7 @@
 	return NONE
 
 /// Respond to something that one of our friends has asked us to do
-/datum/pet_command/proc/respond_to_command(mob/living/speaker, speech_args)
+/datum/pet_command/proc/respond_to_command(mob/living/speaker, speech_args, datum/weakref/command_point, has_command_point = FALSE)
 	SIGNAL_HANDLER
 	var/mob/living/parent = weak_parent.resolve()
 	if (!parent)
@@ -71,11 +78,10 @@
 	var/spoken_text = speech_args[SPEECH_MESSAGE]
 	if (!find_command_in_text(spoken_text))
 		return
-
-	try_activate_command(commander = speaker, radial_command = FALSE)
+	try_activate_command(commander = speaker, radial_command = FALSE, command_point = command_point, has_command_point = has_command_point)
 
 /// Respond to a callout
-/datum/pet_command/proc/respond_to_callout(mob/living/speaker, datum/callout_option/callout, atom/target)
+/datum/pet_command/proc/respond_to_callout(mob/living/speaker, datum/callout_option/callout, atom/target, datum/weakref/command_point, has_command_point = FALSE)
 	SIGNAL_HANDLER
 
 	if (isnull(callout_type) || !ispath(callout, callout_type))
@@ -95,8 +101,7 @@
 		if (!found_new_target)
 			return
 
-	if (try_activate_command(commander = speaker, radial_command = FALSE))
-		look_for_target(parent, target)
+	try_activate_command(commander = speaker, radial_command = FALSE, command_point = command_point, has_command_point = has_command_point, initial_target = target)
 
 /// Does this callout with this target trigger this command?
 /datum/pet_command/proc/valid_callout_target(mob/living/speaker, datum/callout_option/callout, atom/target)
@@ -124,11 +129,11 @@
 	return TRUE
 
 /// Apply a command state if conditions are right, return command if successful
-/datum/pet_command/proc/try_activate_command(mob/living/commander, radial_command)
+/datum/pet_command/proc/try_activate_command(mob/living/commander, radial_command, datum/weakref/command_point, has_command_point = FALSE, explicit_command = TRUE, atom/initial_target)
 	if(!pet_able_to_respond())
 		return FALSE
 	var/mob/living/parent = weak_parent.resolve()
-	set_command_active(parent, commander, radial_command)
+	set_command_active(parent, commander, radial_command, command_point, has_command_point, explicit_command, initial_target)
 	return TRUE
 
 /datum/pet_command/proc/generate_emote_command(atom/target)
@@ -141,33 +146,66 @@
 /// Target the pointed atom for actions
 /datum/pet_command/proc/look_for_target(mob/living/friend, atom/potential_target)
 	var/mob/living/parent = weak_parent.resolve()
-	if(!pet_able_to_respond())
+	if(!pet_able_to_respond() || QDELETED(potential_target))
 		return FALSE
 	if (parent.ai_controller.blackboard[BB_CURRENT_PET_TARGET] == potential_target) // That's already our target
-		return FALSE
+		return TRUE
 	if (!can_see(parent, potential_target, sense_radius))
 		return FALSE
-
-	set_command_target(parent, potential_target)
-	return TRUE
+	return set_command_target(parent, potential_target)
 
 /// Activate the command, extend to add visible messages and the like
-/datum/pet_command/proc/set_command_active(mob/living/parent, mob/living/commander, radial_command = FALSE)
-	parent.ai_controller.clear_blackboard_key(BB_CURRENT_PET_TARGET)
+/datum/pet_command/proc/set_command_active(mob/living/parent, mob/living/commander, radial_command = FALSE, datum/weakref/command_point, has_command_point = FALSE, explicit_command = TRUE, atom/initial_target)
+	var/datum/ai_controller/controller = parent.ai_controller
+	var/signal_result = SEND_SIGNAL(parent, COMSIG_LIVING_PET_COMMAND_STARTING, src, commander)
+	if(!(signal_result & COMPONENT_PET_COMMAND_HANDLED))
+		var/datum/pet_command/previous = controller.blackboard[BB_ACTIVE_PET_COMMAND]
+		if(previous)
+			previous.command_ended(controller)
+		else
+			controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, null)
+		controller.clear_pet_command_blackboard()
+	controller.set_blackboard_key(BB_ACTIVE_PET_COMMAND, src)
 
-	var/datum/pet_command/previous = parent.ai_controller.blackboard[BB_ACTIVE_PET_COMMAND]
-	if(previous && previous != src)
-		previous.command_ended(parent.ai_controller)
-	parent.ai_controller.set_blackboard_key(BB_ACTIVE_PET_COMMAND, src)
-	execute_action(parent.ai_controller) // Install the BT override subtree for this command
-	if (command_feedback)
-		parent.balloon_alert_to_viewers("[command_feedback]") // If we get a nicer runechat way to do this, refactor this
-	if(!radial_command)
+	var/atom/target_to_set
+	var/has_target_to_set = FALSE
+	if(requires_pointing && has_command_point)
+		has_target_to_set = TRUE
+		target_to_set = command_point?.resolve()
+	else if(!isnull(initial_target))
+		has_target_to_set = TRUE
+		target_to_set = initial_target
+	var/target_accepted = FALSE
+	if(has_target_to_set)
+		if(isnull(target_to_set) || QDELETED(target_to_set))
+			refuse_target(parent, target_to_set)
+		else
+			target_accepted = on_target_set(commander, target_to_set)
+
+	execute_action(controller) // Install the BT override subtree after applying any remembered target.
+
+	if(explicit_command)
+		if(!(has_target_to_set && !target_accepted) && requires_pointing && !target_accepted)
+			emit_command_feedback(parent, waiting_for_target_feedback)
+		else if(!has_target_to_set || target_accepted)
+			emit_command_feedback(parent, command_feedback || "acknowledges")
+	else if(command_feedback)
+		emit_command_feedback(parent, command_feedback)
+
+	if(!radial_command || !commander)
 		return
 	if(!requires_pointing)
 		var/manual_emote_text = generate_emote_command()
-		commander.manual_emote(manual_emote_text)
+		if(manual_emote_text)
+			commander.manual_emote(manual_emote_text)
 		return
+	if(target_accepted)
+		var/target_emote_text = generate_emote_command(target_to_set)
+		if(target_emote_text)
+			commander.manual_emote(target_emote_text)
+		return
+	radial_commander = WEAKREF(commander)
+	old_mouse_override_icon = commander.client?.mouse_override_icon
 	RegisterSignal(commander, COMSIG_MOB_CLICKON, PROC_REF(click_on_target))
 	commander.client?.mouse_override_icon = 'icons/effects/mouse_pointers/pet_paw.dmi'
 	commander.update_mouse_pointer()
@@ -176,23 +214,37 @@
 /// Called when this command is replaced by another command or otherwise deactivated. Extend to add cleanup logic.
 /datum/pet_command/proc/command_ended(datum/ai_controller/controller)
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, null)
+	controller.clear_blackboard_key(BB_CURRENT_PET_TARGET)
+	clear_radial_selection()
 	return
+
+/// Report that an immediate command action has completed to the pet's command component.
+/datum/pet_command/proc/finish_command(datum/ai_controller/controller)
+	var/mob/living/parent = weak_parent.resolve()
+	var/signal_result = SEND_SIGNAL(parent, COMSIG_LIVING_PET_COMMAND_FINISHED, src)
+	if(signal_result & COMPONENT_PET_COMMAND_HANDLED)
+		return TRUE
+	command_ended(controller)
+	controller.clear_pet_command_blackboard()
+	return FALSE
+
+/datum/pet_command/proc/clear_radial_selection()
+	if(radial_commander)
+		var/mob/living/commander = radial_commander.resolve()
+		if(commander)
+			UnregisterSignal(commander, COMSIG_MOB_CLICKON)
+			commander.client?.mouse_override_icon = old_mouse_override_icon
+			commander.update_mouse_pointer()
+		radial_commander = null
+		old_mouse_override_icon = null
 
 /datum/pet_command/proc/click_on_target(mob/living/source, atom/target, list/modifiers)
 	SIGNAL_HANDLER
-	if(!can_see(source, target, 9))
-		return COMSIG_MOB_CANCEL_CLICKON
 	var/manual_emote_text = generate_emote_command(target)
 	if(on_target_set(source, target) && !isnull(manual_emote_text))
 		INVOKE_ASYNC(source, TYPE_PROC_REF(/atom, manual_emote), manual_emote_text)
-	UnregisterSignal(source, COMSIG_MOB_CLICKON)
-	source.client?.mouse_override_icon = source.client::mouse_override_icon
-	source.update_mouse_pointer()
+	clear_radial_selection()
 	return COMSIG_MOB_CANCEL_CLICKON
-
-/datum/pet_command/proc/point_on_target(mob/living/friend, atom/potential_target)
-	SIGNAL_HANDLER
-	on_target_set(friend, potential_target)
 
 /// Store the target for the AI blackboard
 /datum/pet_command/proc/set_command_target(mob/living/parent, atom/target)
@@ -220,11 +272,20 @@
 /// Target the pointed atom for actions
 /datum/pet_command/proc/on_target_set(mob/living/friend, atom/potential_target)
 	var/mob/living/parent = weak_parent.resolve()
-	if (!parent)
+	if (!parent || isnull(potential_target))
 		return FALSE
-
+	if(!look_for_target(friend, potential_target))
+		refuse_target(parent, potential_target)
+		return FALSE
 	parent.ai_controller.cancel_current_plan()
-	if(!look_for_target(friend, potential_target) || !set_command_target(parent, potential_target))
-		return FALSE
-	parent.visible_message(span_warning("[parent] follows [friend]'s gesture towards [potential_target] [pointed_reaction]!"))
+	if(pointed_reaction)
+		parent.visible_message(span_warning("[parent] follows [friend]'s gesture towards [potential_target] [pointed_reaction]!"))
 	return TRUE
+
+/// Show a single balloon when a command rejects a supplied target.
+/datum/pet_command/proc/refuse_target(mob/living/parent, atom/target)
+	emit_command_feedback(parent, invalid_target_feedback, is_refusal = TRUE)
+
+/// Emit feedback through one overridable path so all explicit commands acknowledge consistently.
+/datum/pet_command/proc/emit_command_feedback(mob/living/parent, feedback, is_refusal = FALSE)
+	parent.balloon_alert_to_viewers("[feedback]")

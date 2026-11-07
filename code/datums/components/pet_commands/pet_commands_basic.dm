@@ -29,8 +29,7 @@
 	command_feedback = "relaxes"
 
 /datum/pet_command/free/execute_action(datum/ai_controller/controller)
-	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, null)
-	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
+	finish_command(controller)
 
 /datum/pet_command/free/retrieve_command_text(atom/living_pet, atom/target)
 	return "signals [living_pet] to go free!"
@@ -50,9 +49,10 @@
 	/// BT subtree installed by execute_action; override to use a mob-specific follow tree.
 	var/follow_subtree = /datum/bt_node/subtree/pet_command/follow
 
-/datum/pet_command/follow/set_command_active(mob/living/parent, mob/living/commander)
+/datum/pet_command/follow/set_command_active(mob/living/parent, mob/living/commander, radial_command = FALSE, datum/weakref/command_point, has_command_point = FALSE, explicit_command = TRUE, atom/initial_target)
 	. = ..()
-	set_command_target(parent, commander)
+	if(isnull(initial_target))
+		set_command_target(parent, commander)
 
 /datum/pet_command/follow/retrieve_command_text(atom/living_pet, atom/target)
 	return "signals [living_pet] to follow!"
@@ -66,7 +66,7 @@
 	if (!parent)
 		return
 	if (activate_on_befriend && !parent.ai_controller.blackboard_key_exists(BB_ACTIVE_PET_COMMAND))
-		try_activate_command(tamer)
+		try_activate_command(tamer, explicit_command = FALSE)
 
 /// Like follow but start active
 /datum/pet_command/follow/start_active
@@ -110,13 +110,12 @@
 	// If we get past this point someone has finally added a non-binary dog
 
 /datum/pet_command/good_boy/execute_action(datum/ai_controller/controller)
-	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, null)
-	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
 	var/mob/living/parent = weak_parent.resolve()
 	if (!parent)
 		return
 	new /obj/effect/temp_visual/heart(parent.loc)
 	parent.emote("spin")
+	finish_command(controller)
 
 /**
  * # Pet Command: Use ability
@@ -132,7 +131,10 @@
 		return
 	controller.set_blackboard_key(BB_PET_ACTIVE_ABILITY, ability)
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/untargeted_ability)
-	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
+
+/datum/pet_command/untargeted_ability/command_ended(datum/ai_controller/controller)
+	. = ..()
+	controller.clear_blackboard_key(BB_PET_ACTIVE_ABILITY)
 
 /datum/pet_command/untargeted_ability/retrieve_command_text(atom/living_pet, atom/target)
 	return "signals [living_pet] to use an ability!"
@@ -165,7 +167,6 @@
 	if (!targeter)
 		return FALSE
 	if (!targeter.is_valid_target(living_parent, target))
-		refuse_target(parent, target)
 		return FALSE
 	return ..()
 
@@ -173,10 +174,8 @@
 	return isnull(target) ? null : "signals [living_pet] to attack [target]!"
 
 /// Display feedback about not targeting something
-/datum/pet_command/attack/proc/refuse_target(mob/living/parent, atom/target)
-	var/mob/living/living_parent = parent
-	living_parent.balloon_alert_to_viewers("[refuse_reaction]")
-	living_parent.visible_message(span_notice("[living_parent] refuses to attack [target]."))
+/datum/pet_command/attack/refuse_target(mob/living/parent, atom/target)
+	emit_command_feedback(parent, refuse_reaction || invalid_target_feedback, is_refusal = TRUE)
 
 /datum/pet_command/attack/execute_action(datum/ai_controller/controller)
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, attack_subtree)
@@ -218,6 +217,11 @@
 /datum/pet_command/use_ability
 	command_name = "Use ability"
 	command_desc = "Command your pet to use one of its special skills on something that you point out to it."
+	/// Targeted action active before this command temporarily replaces it
+	var/datum/action/cooldown/previous_targeted_action
+	/// Action installed for this command, used to avoid restoring over newer AI state
+	var/datum/action/cooldown/active_targeted_action
+	var/targeted_action_key_was_set = FALSE
 	radial_icon = 'icons/mob/actions/actions_spells.dmi'
 	radial_icon_state = "projectile"
 	requires_pointing = TRUE
@@ -234,8 +238,22 @@
 	if (QDELETED(using_action))
 		return
 	// Store the action datum in a fixed key so the targeted_ability subtree can find it
+	previous_targeted_action = controller.blackboard[BB_TARGETED_ACTION]
+	targeted_action_key_was_set = controller.blackboard_key_exists(BB_TARGETED_ACTION)
+	active_targeted_action = using_action
 	controller.override_blackboard_key(BB_TARGETED_ACTION, using_action)
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/targeted_ability)
+
+/datum/pet_command/use_ability/command_ended(datum/ai_controller/controller)
+	. = ..()
+	if(active_targeted_action && controller.blackboard[BB_TARGETED_ACTION] == active_targeted_action)
+		if(targeted_action_key_was_set)
+			controller.set_blackboard_key(BB_TARGETED_ACTION, previous_targeted_action)
+		else
+			controller.clear_blackboard_key(BB_TARGETED_ACTION)
+	previous_targeted_action = null
+	active_targeted_action = null
+	targeted_action_key_was_set = FALSE
 
 /datum/pet_command/use_ability/retrieve_command_text(atom/living_pet, atom/target)
 	return isnull(target) ? null : "signals [living_pet] to use an ability on [target]!"
@@ -262,9 +280,10 @@
 /datum/pet_command/protect_owner/execute_action(datum/ai_controller/controller)
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, protect_owner_subtree)
 
-/datum/pet_command/protect_owner/set_command_active(mob/living/parent, mob/living/victim)
+/datum/pet_command/protect_owner/set_command_active(mob/living/parent, mob/living/victim, radial_command = FALSE, datum/weakref/command_point, has_command_point = FALSE, explicit_command = TRUE, atom/initial_target)
 	. = ..()
-	set_command_target(parent, victim)
+	if(isnull(initial_target))
+		set_command_target(parent, victim)
 
 /datum/pet_command/protect_owner/valid_callout_target(mob/living/speaker, datum/callout_option/callout, atom/target)
 	return target == speaker || get_dist(speaker, target) <= 1
@@ -286,7 +305,7 @@
 	if(attacker == current_target) //we are already dealing with this target
 		return
 	if(isliving(attacker) && can_see(owner, attacker, protect_range))
-		set_command_active(owner, attacker)
+		try_activate_command(attacker, explicit_command = FALSE, initial_target = attacker)
 
 /**
  * # Fish command: command the mob to fish at the next fishing spot you point at.
@@ -299,9 +318,6 @@
 	speech_commands = list("fish")
 
 /datum/pet_command/fish/execute_action(datum/ai_controller/controller)
-	if(!controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
-		controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/stay)
-		return
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/fish)
 
 /datum/pet_command/fish/retrieve_command_text(atom/living_pet, atom/target)
@@ -315,7 +331,7 @@
 	speech_commands = list("move", "walk")
 
 /datum/pet_command/move/set_command_target(mob/living/parent, atom/target)
-	if(isnull(target) || !can_see(parent, target, 9))
+	if(isnull(target))
 		return FALSE
 	return ..()
 

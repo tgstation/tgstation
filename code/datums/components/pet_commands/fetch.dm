@@ -75,7 +75,7 @@
 	var/mob/thrower = throwingdatum?.get_thrower()
 	if(!istype(thrower))
 		return
-	try_activate_command(thrower)
+	try_activate_command(thrower, explicit_command = FALSE)
 	set_command_target(parent, thrown_thing)
 	parent.ai_controller.set_blackboard_key(BB_FETCH_DELIVER_TO, thrower)
 
@@ -95,3 +95,13 @@
 // Install the fetch BT subtree. The subtree itself handles all phases (seek > pick up > deliver).
 /datum/pet_command/fetch/execute_action(datum/ai_controller/controller)
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/fetch)
+
+/datum/pet_command/fetch/command_ended(datum/ai_controller/controller)
+	. = ..()
+	var/mob/living/parent = weak_parent.resolve()
+	var/obj/item/carried_item = controller.blackboard[BB_SIMPLE_CARRY_ITEM]
+	if(parent && !QDELETED(carried_item) && carried_item.loc == parent)
+		parent.visible_message(span_notice("[parent] drops [carried_item] as it stops fetching."))
+		carried_item.forceMove(parent.drop_location())
+	controller.clear_blackboard_key(BB_SIMPLE_CARRY_ITEM)
+	controller.clear_blackboard_key(BB_FETCH_DELIVER_TO)

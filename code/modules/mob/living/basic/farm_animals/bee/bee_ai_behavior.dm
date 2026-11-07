@@ -38,16 +38,13 @@
 	///the owner we will swarm around
 	var/key_to_swarm = BB_SWARM_TARGET
 
-/datum/pet_command/attack/swirl/try_activate_command(mob/living/commander, radial_command)
-	var/mob/living/living_pawn = weak_parent.resolve()
-	if(isnull(living_pawn))
-		return
-	var/datum/ai_controller/basic_controller/controller = living_pawn.ai_controller
-	if(isnull(controller))
-		return
-	controller.clear_blackboard_key(BB_CURRENT_PET_TARGET)
-	controller.set_blackboard_key(key_to_swarm, commander)
-	return ..()
+/datum/pet_command/attack/swirl/set_command_active(mob/living/parent, mob/living/commander, radial_command = FALSE, datum/weakref/command_point, has_command_point = FALSE, explicit_command = TRUE, atom/initial_target)
+	. = ..()
+	parent.ai_controller.set_blackboard_key(key_to_swarm, commander)
+
+/datum/pet_command/attack/swirl/command_ended(datum/ai_controller/controller)
+	. = ..()
+	controller.clear_blackboard_key(key_to_swarm)
 
 /datum/pet_command/attack/swirl/execute_action(datum/ai_controller/controller)
 	if(controller.blackboard_key_exists(BB_CURRENT_PET_TARGET))
@@ -59,7 +56,7 @@
 	radial_icon = 'icons/obj/service/hydroponics/equipment.dmi'
 	radial_icon_state = "beebox"
 
-/datum/pet_command/beehive/try_activate_command(mob/living/commander, radial_command)
+/datum/pet_command/beehive/try_activate_command(mob/living/commander, radial_command, datum/weakref/command_point, has_command_point = FALSE, explicit_command = TRUE, atom/initial_target)
 	var/mob/living/living_pawn = weak_parent.resolve()
 	if(isnull(living_pawn))
 		return
@@ -68,8 +65,12 @@
 		return
 	var/obj/hive = controller.blackboard[BB_CURRENT_HOME]
 	if(isnull(hive))
+		if(explicit_command)
+			emit_command_feedback(living_pawn, "can't find its hive", is_refusal = TRUE)
 		return
 	if(!check_beehive_conditions(living_pawn, hive))
+		if(explicit_command)
+			emit_command_feedback(living_pawn, "can't do that", is_refusal = TRUE)
 		return
 	return ..()
 
@@ -102,7 +103,7 @@
 	command_desc = "Command your pets to scatter all around you!"
 	speech_commands = list("disperse", "spread", "scatter")
 
-/datum/pet_command/scatter/set_command_active(mob/living/parent, mob/living/commander)
+/datum/pet_command/scatter/set_command_active(mob/living/parent, mob/living/commander, radial_command = FALSE, datum/weakref/command_point, has_command_point = FALSE, explicit_command = TRUE, atom/initial_target)
 	. = ..()
 	set_command_target(parent, commander)
 

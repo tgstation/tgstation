@@ -7,13 +7,11 @@
 /datum/bt_node/ai_behavior/protect_owner_check/perform(seconds_per_tick, datum/ai_controller/controller)
 	var/mob/living/victim = controller.blackboard[BB_CURRENT_PET_TARGET]
 	if(QDELETED(victim))
-		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
-		controller.clear_blackboard_key(BB_CURRENT_PET_TARGET)
+		clear_pet_command(controller)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	var/datum/targeting_strategy/targeter = GET_TARGETING_STRATEGY(controller.blackboard[BB_PET_TARGETING_STRATEGY])
 	if(!targeter?.is_valid_target(controller.pawn, victim))
-		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
-		controller.clear_blackboard_key(BB_CURRENT_PET_TARGET)
+		clear_pet_command(controller)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	var/minimum_stat = controller.blackboard[BB_TARGET_MINIMUM_STAT]
 	var/checked_stat = victim.stat
@@ -21,10 +19,20 @@
 		checked_stat = max(checked_stat, HARD_CRIT)
 
 	if((isnum(minimum_stat) && checked_stat > minimum_stat) || victim == controller.pawn)
-		controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
-		controller.clear_blackboard_key(BB_CURRENT_PET_TARGET)
+		clear_pet_command(controller)
 		return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_FAILED
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
+
+/// End the active pet command
+/datum/bt_node/ai_behavior/proc/clear_pet_command(datum/ai_controller/controller)
+	var/datum/pet_command/active_command = controller.blackboard[BB_ACTIVE_PET_COMMAND]
+	if(active_command)
+		active_command.finish_command(controller)
+		return
+	else
+		// In case the command got fkd; still clear that shit
+		controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, null)
+		controller.clear_pet_command_blackboard()
 
 /// Validates a fetch item at target_key; adds to ignore list and clears keys on failure.
 /datum/bt_node/ai_behavior/fetch_seek
@@ -66,8 +74,7 @@
 /datum/bt_node/ai_behavior/clear_pet_command
 
 /datum/bt_node/ai_behavior/clear_pet_command/perform(seconds_per_tick, datum/ai_controller/controller)
-	controller.clear_blackboard_key(BB_ACTIVE_PET_COMMAND)
-	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, null)
+	clear_pet_command(controller)
 	return AI_BEHAVIOR_INSTANT | AI_BEHAVIOR_SUCCEEDED
 
 
