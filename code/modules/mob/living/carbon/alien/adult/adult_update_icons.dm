@@ -66,7 +66,7 @@
 	if(handcuffed)
 		var/mutable_appearance/handcuff_overlay = mutable_appearance(dmi_file, cuff_icon, -HANDCUFF_LAYER)
 		if(handcuffed.blocks_emissive != EMISSIVE_BLOCK_NONE)
-			handcuff_overlay += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, src, alpha = handcuff_overlay.alpha)
+			handcuff_overlay.overlays += emissive_blocker(handcuff_overlay.icon, handcuff_overlay.icon_state, src, alpha = handcuff_overlay.alpha)
 
 		overlays_standing[HANDCUFF_LAYER] = handcuff_overlay
 		apply_overlay(HANDCUFF_LAYER)

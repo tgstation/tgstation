@@ -15,6 +15,7 @@
 	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
 	max_grab = GRAB_KILL
 	examine_thats = "This is"
+	default_inventory_slots = /datum/inventory_slot/human
 
 	//Hair colour and style
 	var/hair_color = COLOR_BLACK

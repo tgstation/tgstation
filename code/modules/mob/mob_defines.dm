@@ -220,3 +220,11 @@
 	/// Sound tokens currently playing for this mob.
 	/// Managed by /datum/sound_token and the soundtoken subsystem
 	var/list/datum/sound_token/sound_tokens
+
+	/// List of typepaths of /datum/inventory_slot which this mob utilizes
+	/// This will also be used by HUDs to automatically create inventory slot UI elements
+	/// If assigned a typepath instead of a list, it will instead use all valid subtypes of said typepath
+	var/list/datum/inventory_slot/default_inventory_slots = null
+	/// Alist of slot_id -> inventory_slot datum of our slots
+	/// These are singletons, use get_inventory_slot(slot) or get_inventory_slots() to fetch them!
+	VAR_PRIVATE/list/datum/inventory_slot/inventory_slots = null
