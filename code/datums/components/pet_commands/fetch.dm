@@ -101,7 +101,6 @@
 	var/mob/living/parent = weak_parent.resolve()
 	var/obj/item/carried_item = controller.blackboard[BB_SIMPLE_CARRY_ITEM]
 	if(parent && !QDELETED(carried_item) && carried_item.loc == parent)
-		parent.visible_message(span_notice("[parent] drops [carried_item] as it stops fetching."))
 		carried_item.forceMove(parent.drop_location())
 	controller.clear_blackboard_key(BB_SIMPLE_CARRY_ITEM)
 	controller.clear_blackboard_key(BB_FETCH_DELIVER_TO)

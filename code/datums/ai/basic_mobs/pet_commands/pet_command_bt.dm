@@ -94,6 +94,10 @@
 /datum/bt_node/subtree/pet_command/attack
 	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_attack.bt.json"
 
+/// Waits for a commander to point at BB_CURRENT_PET_TARGET before resuming the attack tree.
+/datum/bt_node/subtree/pet_command/wait_for_target
+	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_wait_for_target.bt.json"
+
 /// Protect owner: loops a validity check then melee attack. Clears command if target invalid.
 /datum/bt_node/subtree/pet_command/protect_owner
 	behavior_tree_json = "code/datums/ai/basic_mobs/pet_commands/pet_command_protect_owner.bt.json"

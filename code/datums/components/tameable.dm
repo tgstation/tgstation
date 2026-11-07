@@ -8,8 +8,10 @@
 	var/bonus_tame_chance
 	///Current chance to tame on interaction
 	var/current_tame_chance
+	///Whether a tamed mob inherits the tamer's factions and allies
+	var/inherit_tamer_factions = TRUE
 
-/datum/component/tameable/Initialize(food_types, tame_chance, bonus_tame_chance, unique = TRUE)
+/datum/component/tameable/Initialize(food_types, tame_chance, bonus_tame_chance, unique = TRUE, inherit_tamer_factions = TRUE)
 	if(!isatom(parent)) //yes, you could make a tameable toolbox.
 		return COMPONENT_INCOMPATIBLE
 
@@ -19,6 +21,7 @@
 	if(bonus_tame_chance)
 		src.bonus_tame_chance = bonus_tame_chance
 	src.unique = unique
+	src.inherit_tamer_factions = inherit_tamer_factions
 
 	if(food_types && !HAS_TRAIT(parent, TRAIT_MOB_EATER))
 		parent.AddElement(/datum/element/basic_eating, food_types = food_types)
@@ -60,6 +63,8 @@
 		var/mob/living/living_parent = parent
 		living_parent.ai_controller?.set_blackboard_key(BB_TAMED, TRUE)
 	if(isliving(parent) && isliving(tamer))
+		if(inherit_tamer_factions)
+			APPLY_FACTION_AND_ALLIES_FROM(source, tamer)
 		INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, befriend), tamer)
 		if(inform_tamer)
 			source.balloon_alert(tamer, "tamed")

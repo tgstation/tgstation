@@ -116,7 +116,7 @@
 		var/datum/pet_command/command = available_commands[command_name]
 		INVOKE_ASYNC(command, TYPE_PROC_REF(/datum/pet_command, remove_friend), old_friend)
 
-/// Select the first available command matching a friend's speech and route its request once.
+/// Select the first available command matching a friend's speech
 /datum/component/obeys_commands/proc/on_friend_say(mob/living/friend, speech_args)
 	SIGNAL_HANDLER
 	var/mob/living/living_parent = parent
@@ -142,7 +142,7 @@
 			return WAIVE_AUTOMUTE_CHECK
 	return NONE
 
-/// Route a callout to the first command registered for that callout type.
+/// send a callout to the first command registered for that callout type.
 /datum/component/obeys_commands/proc/on_friend_callout(mob/living/friend, datum/callout_option/callout, atom/target)
 	SIGNAL_HANDLER
 	for(var/command_name in available_commands)
@@ -168,7 +168,7 @@
 		end_active_command()
 	return COMPONENT_PET_COMMAND_HANDLED
 
-/// Apply a radial selection through the same target consumption path as spoken commands.
+/// Apply a radial selection through the same target consumption
 /datum/component/obeys_commands/proc/on_radial_command_selected(mob/living/source, mob/living/friend, datum/pet_command/selected_command)
 	SIGNAL_HANDLER
 	if(QDELETED(selected_command) || available_commands[selected_command.command_name] != selected_command)
@@ -177,7 +177,7 @@
 	selected_command.try_activate_command(friend, radial_command = TRUE, command_point = pointed_target, has_command_point = !isnull(pointed_target))
 	return COMPONENT_PET_COMMAND_HANDLED
 
-/// Remember points when no target command is active; otherwise route each point exclusively to that command.
+/// Remember points when no target command is active; otherwise send each point exclusively to that command.
 /datum/component/obeys_commands/proc/on_friend_pointed(mob/living/friend, atom/pointed_atom)
 	SIGNAL_HANDLER
 	var/mob/living/living_parent = parent
