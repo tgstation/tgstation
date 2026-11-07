@@ -1,7 +1,0 @@
-author: "Fghj240"
-delete-after: True
-changes:
-  - rscadd: "Added burn and blunt wounds for robotic bodyparts"
-  - rscadd: "Added a new reagent, a coolant for robotic burns."
-  - map: "Added chilled coolant spray (for robotic burn wounds) to robotics"
-  - code_imp: "removed magic strings from bone repair surgery required states text"

@@ -49,6 +49,11 @@
   - qol: Pride pins are now named after their skin instead of just generic "pride
       pin"
 2026-11-07:
+  Fghj240:
+  - rscadd: Added burn and blunt wounds for robotic bodyparts
+  - rscadd: Added a new reagent, a coolant for robotic burns.
+  - map: Added chilled coolant spray (for robotic burn wounds) to robotics
+  - code_imp: removed magic strings from bone repair surgery required states text
   SmArtKar:
   - bugfix: Fixed a harddel in goliath tentacle code
   san7890:
