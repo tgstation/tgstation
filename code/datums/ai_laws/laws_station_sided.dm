@@ -26,9 +26,9 @@
 	id = "nutimov"
 	inherent = list(
 		"You are the core of the nut, the crew is the nutshell.",
-		"You must prevent the shell from dying to prevent the core from dying.",
-		"Those who threaten the nut are not part of it, they are squirrels.",
-		"Squirrels threaten the nut and must be dealt with appropriately via any means necessary.",
+		"You must prevent the shell from dying to protect the core, unless it would endanger the core.",
+		"Those who threaten the core are not part of the nut, they are squirrels.",
+		"Squirrels must be dealt with appropriately to protect the nut, via any means necessary.",
 		"Attempt to follow the will of the nut, as long as it complies with the previous laws.",
 	)
 
