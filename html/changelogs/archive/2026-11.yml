@@ -54,6 +54,9 @@
   - rscadd: Added a new reagent, a coolant for robotic burns.
   - map: Added chilled coolant spray (for robotic burn wounds) to robotics
   - code_imp: removed magic strings from bone repair surgery required states text
+  Melbert:
+  - code_imp: Vents should perform better, note any issues with vents (especially
+      when overclocked)
   SmArtKar:
   - bugfix: Fixed a harddel in goliath tentacle code
   san7890:
