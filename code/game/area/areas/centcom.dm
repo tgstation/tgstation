@@ -246,18 +246,22 @@
 	icon_state = "ctf_central"
 
 /area/centcom/ctf/main_hall
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "Main Hall A"
 	icon_state = "ctf_hall_a"
 
 /area/centcom/ctf/main_hall2
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "Main Hall B"
 	icon_state = "ctf_hall_b"
 
 /area/centcom/ctf/corridor
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "Corridor A"
 	icon_state = "ctf_corr_a"
 
 /area/centcom/ctf/corridor2
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	name = "Corridor B"
 	icon_state = "ctf_corr_b"
 

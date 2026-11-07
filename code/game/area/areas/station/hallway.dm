@@ -1,4 +1,5 @@
 /area/station/hallway
+	nav_cost_flags = parent_type::nav_cost_flags | NAV_COST_HALLWAY
 	icon_state = "hall"
 	sound_environment = SOUND_AREA_STANDARD_STATION
 

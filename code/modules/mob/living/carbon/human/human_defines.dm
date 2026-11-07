@@ -12,7 +12,7 @@
 	mob_biotypes = NONE // The current mob biotypes of human mobs are dependent on the human species (and the organ set bonus)
 	can_be_shoved_into = TRUE
 	initial_language_holder = /datum/language_holder/empty // We get stuff from our species
-	flags_1 = PREVENT_CONTENTS_EXPLOSION_1
+	flags_1 = parent_type::flags_1 | PREVENT_CONTENTS_EXPLOSION_1
 	max_grab = GRAB_KILL
 	examine_thats = "This is"
 

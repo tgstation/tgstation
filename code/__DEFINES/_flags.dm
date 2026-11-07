@@ -60,6 +60,10 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define IGNORE_TURF_PIXEL_OFFSET_1 (1<<17)
 /// This atom does not need to generate its own preview icon for GAGS
 #define NO_NEW_GAGS_PREVIEW_1 (1<<18)
+/// This atom does not affect navmap baking.
+#define NAV_IRRELEVANT_1 (1<<19)
+/// This atom is always a live navmap blocker, regardless of density.
+#define NAV_ALWAYS_CONDITIONAL_1 (1<<20)
 
 // Update flags for [/atom/proc/update_appearance]
 /// Update the atom's name
@@ -101,6 +105,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define NO_CLEARING (1<<7)
 /// This atom is a pseudo-floor that blocks map generation's checkPlaceAtom() from placing things like trees ontop of it.
 #define TURF_BLOCKS_POPULATE_TERRAIN_FLORAFEATURES (1<<8)
+/// This turf is queued for navmap baking.
+#define NAV_QUEUED (1<<9)
 
 ////////////////Area flags\\\\\\\\\\\\\\
 /// If it's a valid territory for cult summoning or the CRAB-17 phone to spawn

@@ -43,6 +43,7 @@
 	icon_state = "mining_eva"
 
 /area/mine/maintenance
+	nav_cost_flags = NAV_COST_MAINTENANCE
 	name = "Mining Station Maintenance"
 
 /area/mine/maintenance/production
@@ -119,6 +120,7 @@
 	ambience_index = AMBIENCE_DANGER
 
 /area/mine/laborcamp/security/maintenance
+	nav_cost_flags = NAV_COST_MAINTENANCE
 	name = "Labor Camp Security Maintenance"
 	icon_state = "labor_camp_security"
 	ambience_index = AMBIENCE_DANGER
