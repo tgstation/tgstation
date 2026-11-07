@@ -17,8 +17,12 @@
 	var/allowed_buildtypes = NONE
 	/// All designs in the techweb that can be fabricated by this machine, since the last update.
 	var/list/datum/design/cached_designs
+	/// Department prefix used for respective departemnt icon overlay
+	var/department_overlay
 	/// What color is this machine's stripe? Leave null to not have a stripe.
 	var/stripe_color = null
+	/// Icon that will be used for buttons panel overlay
+	var/lit_overlay = "protolathe_lit"
 	///direction we output onto (if 0, on top of us)
 	var/drop_direction = 0
 	///looping sound for printing items
@@ -61,12 +65,18 @@
 /obj/machinery/rnd/production/update_overlays()
 	. = ..()
 
-	if(!stripe_color)
-		return
+	if(is_operational && lit_overlay)
+		. += (busy && production_animation) ? "[lit_overlay]_n" : lit_overlay
 
-	var/mutable_appearance/stripe = mutable_appearance('icons/obj/machines/research.dmi', "protolathe_stripe[panel_open ? "_t" : ""]")
-	stripe.color = stripe_color
-	. += stripe
+	if(department_overlay)
+		. += "[department_overlay]_stripe"
+	else if(stripe_color)
+		var/mutable_appearance/stripe = mutable_appearance('icons/obj/machines/research.dmi', "protolathe_stripe")
+		stripe.color = stripe_color
+		. += stripe
+
+	if(panel_open)
+		. += "protolathe_open"
 
 /obj/machinery/rnd/production/examine(mob/user)
 	. = ..()
@@ -480,5 +490,5 @@
 	. = ..()
 	if(busy && production_animation)
 		icon_state = production_animation
-	else if(!panel_open) // use what is set by parent if panel is open
+	else
 		icon_state = base_icon_state || initial(icon_state)

@@ -6,6 +6,7 @@
 	production_animation = "circuit_imprinter_ani"
 	circuit = /obj/item/circuitboard/machine/circuit_imprinter
 	allowed_buildtypes = IMPRINTER
+	lit_overlay = null
 
 /obj/machinery/rnd/production/circuit_imprinter/compute_efficiency()
 	var/rating = 0
