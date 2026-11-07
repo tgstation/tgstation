@@ -20,20 +20,12 @@
 	var/list/speech_commands = list()
 	/// Callout that triggers this command
 	var/callout_type
-	/// Shown above the mob's head when it hears you
-	var/command_feedback
-	/// Shown when a command that needs a target has no remembered point
-	var/waiting_for_target_feedback = "waits for a target"
-	/// Shown when a command rejects a point
-	var/invalid_target_feedback = "can't do that"
 	/// How close a mob needs to be to a target to respond to a command
 	var/sense_radius = 7
 	/// does this pet command need a point to activate?
 	var/requires_pointing = FALSE
 	/// Blackboard key for targeting strategy, this is likely going to need it
 	var/targeting_strategy_key = BB_PET_TARGETING_STRATEGY
-	///our pointed reaction we play
-	var/pointed_reaction
 	/// Friend currently selecting a target through this command's radial menu
 	var/datum/weakref/radial_commander
 	/// Mouse pointer in use before the radial target prompt
@@ -58,13 +50,6 @@
 /datum/pet_command/proc/remove_friend(mob/living/unfriended)
 	if(radial_commander?.resolve() == unfriended)
 		clear_radial_selection()
-
-/// Stop the automute from triggering for commands (unless the spoken text is suspiciously longer than the command)
-/datum/pet_command/proc/waive_automute(mob/living/speaker, client/client, last_message, mute_type)
-	SIGNAL_HANDLER
-	if(mute_type == MUTE_IC && find_command_in_text(last_message, check_verbosity = TRUE))
-		return WAIVE_AUTOMUTE_CHECK
-	return NONE
 
 /// Respond to something that one of our friends has asked us to do
 /datum/pet_command/proc/respond_to_command(mob/living/speaker, speech_args, datum/weakref/command_point, has_command_point = FALSE)
@@ -186,11 +171,11 @@
 
 	if(explicit_command)
 		if(!(has_target_to_set && !target_accepted) && requires_pointing && !target_accepted)
-			emit_command_feedback(parent, waiting_for_target_feedback)
+			emit_command_feedback(parent, PET_COMMAND_FEEDBACK_WAITING_FOR_TARGET, commander)
 		else if(!has_target_to_set || target_accepted)
-			emit_command_feedback(parent, command_feedback || "acknowledges")
-	else if(command_feedback)
-		emit_command_feedback(parent, command_feedback)
+			emit_command_feedback(parent, PET_COMMAND_FEEDBACK_ACTIVATED, commander, explicit_command = TRUE)
+	else
+		emit_command_feedback(parent, PET_COMMAND_FEEDBACK_ACTIVATED, commander)
 
 	if(!radial_command || !commander)
 		return
@@ -278,14 +263,37 @@
 		refuse_target(parent, potential_target)
 		return FALSE
 	parent.ai_controller.cancel_current_plan()
-	if(pointed_reaction)
-		parent.visible_message(span_warning("[parent] follows [friend]'s gesture towards [potential_target] [pointed_reaction]!"))
+	emit_command_feedback(parent, PET_COMMAND_FEEDBACK_ACCEPTED_TARGET, friend, potential_target)
 	return TRUE
 
-/// Show a single balloon when a command rejects a supplied target.
+/// Show a short balloon when a command rejects a supplied target.
 /datum/pet_command/proc/refuse_target(mob/living/parent, atom/target)
-	emit_command_feedback(parent, invalid_target_feedback, is_refusal = TRUE)
+	emit_command_feedback(parent, PET_COMMAND_FEEDBACK_REFUSED_TARGET, target = target)
 
-/// Emit feedback through one overridable path so all explicit commands acknowledge consistently.
-/datum/pet_command/proc/emit_command_feedback(mob/living/parent, feedback, is_refusal = FALSE)
-	parent.balloon_alert_to_viewers("[feedback]")
+/datum/pet_command/proc/get_feedback_message(mob/living/parent, feedback_type, mob/living/commander = null, atom/target = null, explicit_command = FALSE)
+	switch(feedback_type)
+		if(PET_COMMAND_FEEDBACK_ACTIVATED)
+			return explicit_command ? "[parent] acknowledges" : null
+		if(PET_COMMAND_FEEDBACK_WAITING_FOR_TARGET)
+			return "[parent] waits for a target"
+		if(PET_COMMAND_FEEDBACK_REFUSED_TARGET)
+			return target ? "[parent] looks at [target] in confusion" : "[parent] looks confused"
+		if(PET_COMMAND_FEEDBACK_ACCEPTED_TARGET)
+			return null
+		if(PET_COMMAND_FEEDBACK_MISSING_HIVE)
+			return "[parent] can't find [parent.p_their()] hive"
+		if(PET_COMMAND_FEEDBACK_UNAVAILABLE)
+			return "[parent] can't do that"
+		if(PET_COMMAND_FEEDBACK_NO_WALLS)
+			return "[parent] sees no walls"
+		if(PET_COMMAND_FEEDBACK_CANNOT_REPRODUCE)
+			return "[parent] can't reproduce"
+
+/datum/pet_command/proc/emit_command_feedback(mob/living/parent, feedback_type, mob/living/commander = null, atom/target = null, explicit_command = FALSE)
+	var/message = get_feedback_message(parent, feedback_type, commander, target, explicit_command)
+	if(isnull(message))
+		return
+	if(feedback_type == PET_COMMAND_FEEDBACK_ACCEPTED_TARGET)
+		parent.visible_message(span_warning(message))
+	else
+		parent.balloon_alert_to_viewers(message)

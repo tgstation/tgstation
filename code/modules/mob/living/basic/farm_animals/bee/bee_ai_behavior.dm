@@ -32,11 +32,18 @@
 	requires_pointing = TRUE
 	command_desc = "Your pets will swirl around you and attack whoever you point at!"
 	speech_commands = list("swirl", "spiral", "swarm")
-	pointed_reaction = null
-	refuse_reaction = null
-	command_feedback = null
 	///the owner we will swarm around
 	var/key_to_swarm = BB_SWARM_TARGET
+
+/datum/pet_command/attack/swirl/get_feedback_message(mob/living/parent, feedback_type, mob/living/commander = null, atom/target = null, explicit_command = FALSE)
+	switch(feedback_type)
+		if(PET_COMMAND_FEEDBACK_ACTIVATED)
+			return explicit_command ? "[parent] acknowledges" : null
+		if(PET_COMMAND_FEEDBACK_REFUSED_TARGET)
+			return "[parent] can't do that"
+		if(PET_COMMAND_FEEDBACK_ACCEPTED_TARGET)
+			return null
+	return ..()
 
 /datum/pet_command/attack/swirl/set_command_active(mob/living/parent, mob/living/commander, radial_command = FALSE, datum/weakref/command_point, has_command_point = FALSE, explicit_command = TRUE, atom/initial_target)
 	. = ..()
@@ -66,11 +73,11 @@
 	var/obj/hive = controller.blackboard[BB_CURRENT_HOME]
 	if(isnull(hive))
 		if(explicit_command)
-			emit_command_feedback(living_pawn, "can't find its hive", is_refusal = TRUE)
+			emit_command_feedback(living_pawn, PET_COMMAND_FEEDBACK_MISSING_HIVE)
 		return
 	if(!check_beehive_conditions(living_pawn, hive))
 		if(explicit_command)
-			emit_command_feedback(living_pawn, "can't do that", is_refusal = TRUE)
+			emit_command_feedback(living_pawn, PET_COMMAND_FEEDBACK_UNAVAILABLE)
 		return
 	return ..()
 

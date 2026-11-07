@@ -123,9 +123,13 @@
 	radial_icon = 'icons/obj/art/camera.dmi'
 	radial_icon_state = "camera"
 	speech_commands = list("photo", "picture", "image")
-	command_feedback = "Readys camera mode"
 	pet_ability_key = BB_PHOTO_ABILITY
 	targeting_strategy_key = BB_TARGETING_STRATEGY
+
+/datum/pet_command/use_ability/take_photo/get_feedback_message(mob/living/parent, feedback_type, mob/living/commander = null, atom/target = null, explicit_command = FALSE)
+	if(feedback_type == PET_COMMAND_FEEDBACK_ACTIVATED)
+		return "[parent] readies the camera"
+	return ..()
 
 /datum/pet_command/use_ability/take_photo/retrieve_command_text(atom/living_pet, atom/target)
 	return isnull(target) ? null : "signals [living_pet] to take a photo of [target]!"

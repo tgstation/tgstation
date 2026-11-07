@@ -9,12 +9,18 @@
 	radial_icon_state = "fetch"
 	requires_pointing = TRUE
 	speech_commands = list("fetch")
-	command_feedback = "bounces"
-	pointed_reaction = "with great interest"
 	/// If true, this command will trigger if the pet sees a friend throw any item, if they're not doing anything else
 	var/trigger_on_throw = TRUE
 	/// If true, this is a poorly trained pet who will eat food you throw instead of bringing it back
 	var/will_eat_targets = TRUE
+
+/datum/pet_command/fetch/get_feedback_message(mob/living/parent, feedback_type, mob/living/commander = null, atom/target = null, explicit_command = FALSE)
+	switch(feedback_type)
+		if(PET_COMMAND_FEEDBACK_ACTIVATED)
+			return "[parent] bounces"
+		if(PET_COMMAND_FEEDBACK_ACCEPTED_TARGET)
+			return "[parent] looks at [target] eagerly"
+	return ..()
 
 /datum/pet_command/fetch/New(mob/living/parent)
 	. = ..()

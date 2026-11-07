@@ -63,9 +63,10 @@
 		var/mob/living/living_parent = parent
 		living_parent.ai_controller?.set_blackboard_key(BB_TAMED, TRUE)
 	if(isliving(parent) && isliving(tamer))
+		var/mob/living/tamed_mob = parent
+		tamed_mob.befriend(tamer)
 		if(inherit_tamer_factions)
-			APPLY_FACTION_AND_ALLIES_FROM(source, tamer)
-		INVOKE_ASYNC(source, TYPE_PROC_REF(/mob/living, befriend), tamer)
+			APPLY_FACTION_AND_ALLIES_FROM(tamed_mob, tamer)
 		if(inform_tamer)
 			source.balloon_alert(tamer, "tamed")
 

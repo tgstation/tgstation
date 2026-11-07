@@ -49,7 +49,6 @@
 				DEACTIVATE_KEYBIND(COMSIG_KB_LIVING_VIEW_PET_COMMANDS),
 				COMSIG_MOVABLE_POINTED,
 				COMSIG_MOB_SAY,
-				COMSIG_MOB_AUTOMUTE_CHECK,
 				COMSIG_MOB_CREATED_CALLOUT,
 			))
 			for(var/command_name in available_commands)
@@ -84,7 +83,6 @@
 	RegisterSignal(new_friend, DEACTIVATE_KEYBIND(COMSIG_KB_LIVING_VIEW_PET_COMMANDS), PROC_REF(on_key_unpressed))
 	RegisterSignal(new_friend, COMSIG_MOVABLE_POINTED, PROC_REF(on_friend_pointed))
 	RegisterSignal(new_friend, COMSIG_MOB_SAY, PROC_REF(on_friend_say))
-	RegisterSignal(new_friend, COMSIG_MOB_AUTOMUTE_CHECK, PROC_REF(on_automute_check))
 	RegisterSignal(new_friend, COMSIG_MOB_CREATED_CALLOUT, PROC_REF(on_friend_callout))
 	for (var/command_name in available_commands)
 		var/datum/pet_command/command = available_commands[command_name]
@@ -106,7 +104,6 @@
 		DEACTIVATE_KEYBIND(COMSIG_KB_LIVING_VIEW_PET_COMMANDS),
 		COMSIG_MOVABLE_POINTED,
 		COMSIG_MOB_SAY,
-		COMSIG_MOB_AUTOMUTE_CHECK,
 		COMSIG_MOB_CREATED_CALLOUT,
 	))
 	pointed_targets -= REF(old_friend)
@@ -130,17 +127,6 @@
 		var/datum/weakref/pointed_target = consume_pointed_target(friend)
 		command.respond_to_command(friend, speech_args, pointed_target, !isnull(pointed_target))
 		return
-
-/// Preserve automute exemptions while checking command phrases through the central router.
-/datum/component/obeys_commands/proc/on_automute_check(mob/living/friend, client/client, last_message, mute_type)
-	SIGNAL_HANDLER
-	if(mute_type != MUTE_IC)
-		return NONE
-	for(var/command_name in available_commands)
-		var/datum/pet_command/command = available_commands[command_name]
-		if(command.find_command_in_text(last_message, check_verbosity = TRUE))
-			return WAIVE_AUTOMUTE_CHECK
-	return NONE
 
 /// send a callout to the first command registered for that callout type.
 /datum/component/obeys_commands/proc/on_friend_callout(mob/living/friend, datum/callout_option/callout, atom/target)

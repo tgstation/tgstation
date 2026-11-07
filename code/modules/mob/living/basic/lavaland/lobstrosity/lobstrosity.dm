@@ -267,9 +267,15 @@
 	radial_icon = 'icons/mob/actions/actions_items.dmi'
 	radial_icon_state = "sniper_zoom"
 	speech_commands = list("charge", "slam", "tackle")
-	command_feedback = "growl"
-	pointed_reaction = "and growls"
 	pet_ability_key = BB_TARGETED_ACTION
+
+/datum/pet_command/use_ability/lob_charge/get_feedback_message(mob/living/parent, feedback_type, mob/living/commander = null, atom/target = null, explicit_command = FALSE)
+	switch(feedback_type)
+		if(PET_COMMAND_FEEDBACK_ACTIVATED)
+			return "[parent] growls"
+		if(PET_COMMAND_FEEDBACK_ACCEPTED_TARGET)
+			return "[parent] growls at [target]"
+	return ..()
 
 /datum/pet_command/use_ability/lob_charge/set_command_target(mob/living/parent, atom/target)
 	if (!target)
@@ -278,8 +284,5 @@
 	if(!targeter?.is_valid_target(parent, target))
 		return FALSE
 	return ..()
-
-/datum/pet_command/use_ability/lob_charge/refuse_target(mob/living/parent, atom/target)
-	emit_command_feedback(parent, "shakes head", is_refusal = TRUE)
 
 /datum/pet_command/use_ability/lob_charge/shrimp

@@ -9,7 +9,11 @@
 	command_desc = "Command your pet to stay idle in this location."
 	radial_icon_state = "halt"
 	speech_commands = list("sit", "stay", "stop")
-	command_feedback = "sits"
+
+/datum/pet_command/idle/get_feedback_message(mob/living/parent, feedback_type, mob/living/commander = null, atom/target = null, explicit_command = FALSE)
+	if(feedback_type == PET_COMMAND_FEEDBACK_ACTIVATED)
+		return "[parent] sits"
+	return ..()
 
 /datum/pet_command/idle/execute_action(datum/ai_controller/controller)
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/stay)
@@ -26,7 +30,11 @@
 	command_desc = "Allow your pet to resume its natural behaviours."
 	radial_icon_state = "free"
 	speech_commands = list("free", "loose")
-	command_feedback = "relaxes"
+
+/datum/pet_command/free/get_feedback_message(mob/living/parent, feedback_type, mob/living/commander = null, atom/target = null, explicit_command = FALSE)
+	if(feedback_type == PET_COMMAND_FEEDBACK_ACTIVATED)
+		return "[parent] relaxes"
+	return ..()
 
 /datum/pet_command/free/execute_action(datum/ai_controller/controller)
 	finish_command(controller)
@@ -150,11 +158,17 @@
 	requires_pointing = TRUE
 	callout_type = /datum/callout_option/attack
 	speech_commands = list("attack", "sic", "kill")
-	command_feedback = "growl"
-	pointed_reaction = "and growls"
-	/// Balloon alert to display if providing an invalid target
-	var/refuse_reaction = "shakes head"
 	var/datum/bt_node/subtree/attack_subtree = /datum/bt_node/subtree/pet_command/attack
+
+/datum/pet_command/attack/get_feedback_message(mob/living/parent, feedback_type, mob/living/commander = null, atom/target = null, explicit_command = FALSE)
+	switch(feedback_type)
+		if(PET_COMMAND_FEEDBACK_ACTIVATED)
+			return "[parent] growls"
+		if(PET_COMMAND_FEEDBACK_REFUSED_TARGET)
+			return target ? "[parent] looks at [target] in confusion" : "[parent] looks confused"
+		if(PET_COMMAND_FEEDBACK_ACCEPTED_TARGET)
+			return "[parent] growls at [target]"
+	return ..()
 
 // Refuse to target things we can't target, chiefly other friends
 /datum/pet_command/attack/set_command_target(mob/living/parent, atom/target)
@@ -172,10 +186,6 @@
 
 /datum/pet_command/attack/retrieve_command_text(atom/living_pet, atom/target)
 	return isnull(target) ? null : "signals [living_pet] to attack [target]!"
-
-/// Display feedback about not targeting something
-/datum/pet_command/attack/refuse_target(mob/living/parent, atom/target)
-	emit_command_feedback(parent, refuse_reaction || invalid_target_feedback, is_refusal = TRUE)
 
 /datum/pet_command/attack/execute_action(datum/ai_controller/controller)
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, attack_subtree)
@@ -226,10 +236,16 @@
 	radial_icon_state = "projectile"
 	requires_pointing = TRUE
 	speech_commands = list("shoot", "blast", "cast")
-	command_feedback = "growl"
-	pointed_reaction = "and growls"
 	/// Blackboard key where a reference to some kind of mob ability is stored
 	var/pet_ability_key
+
+/datum/pet_command/use_ability/get_feedback_message(mob/living/parent, feedback_type, mob/living/commander = null, atom/target = null, explicit_command = FALSE)
+	switch(feedback_type)
+		if(PET_COMMAND_FEEDBACK_ACTIVATED)
+			return "[parent] growls"
+		if(PET_COMMAND_FEEDBACK_ACCEPTED_TARGET)
+			return "[parent] growls at [target]"
+	return ..()
 
 /datum/pet_command/use_ability/execute_action(datum/ai_controller/controller)
 	if (!pet_ability_key)
