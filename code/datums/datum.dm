@@ -128,7 +128,10 @@
 	SHOULD_NOT_SLEEP(TRUE)
 	tag = null
 	datum_flags &= ~DF_USE_TAG //In case something tries to REF us
-	auto_reference = null //ensure prompt GCing of autoref.
+
+	if(auto_reference)
+		UNLINT(auto_reference.reference = null)
+		auto_reference = null
 
 	if(_active_timers)
 		var/list/timers = _active_timers
