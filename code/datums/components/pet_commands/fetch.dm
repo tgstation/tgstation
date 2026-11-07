@@ -9,12 +9,18 @@
 	radial_icon_state = "fetch"
 	requires_pointing = TRUE
 	speech_commands = list("fetch")
-	command_feedback = "bounces"
-	pointed_reaction = "with great interest"
 	/// If true, this command will trigger if the pet sees a friend throw any item, if they're not doing anything else
 	var/trigger_on_throw = TRUE
 	/// If true, this is a poorly trained pet who will eat food you throw instead of bringing it back
 	var/will_eat_targets = TRUE
+
+/datum/pet_command/fetch/get_feedback_message(mob/living/parent, feedback_type, mob/living/commander = null, atom/target = null, explicit_command = FALSE)
+	switch(feedback_type)
+		if(PET_COMMAND_FEEDBACK_ACTIVATED)
+			return "[parent] bounces"
+		if(PET_COMMAND_FEEDBACK_ACCEPTED_TARGET)
+			return "[parent] looks at [target] eagerly"
+	return ..()
 
 /datum/pet_command/fetch/New(mob/living/parent)
 	. = ..()
@@ -75,7 +81,7 @@
 	var/mob/thrower = throwingdatum?.get_thrower()
 	if(!istype(thrower))
 		return
-	try_activate_command(thrower)
+	try_activate_command(thrower, explicit_command = FALSE)
 	set_command_target(parent, thrown_thing)
 	parent.ai_controller.set_blackboard_key(BB_FETCH_DELIVER_TO, thrower)
 
@@ -95,3 +101,12 @@
 // Install the fetch BT subtree. The subtree itself handles all phases (seek > pick up > deliver).
 /datum/pet_command/fetch/execute_action(datum/ai_controller/controller)
 	controller.set_behavior_tree_override(SUBPLAN_ID_PET_COMMAND, /datum/bt_node/subtree/pet_command/fetch)
+
+/datum/pet_command/fetch/command_ended(datum/ai_controller/controller)
+	. = ..()
+	var/mob/living/parent = weak_parent.resolve()
+	var/obj/item/carried_item = controller.blackboard[BB_SIMPLE_CARRY_ITEM]
+	if(parent && !QDELETED(carried_item) && carried_item.loc == parent)
+		carried_item.forceMove(parent.drop_location())
+	controller.clear_blackboard_key(BB_SIMPLE_CARRY_ITEM)
+	controller.clear_blackboard_key(BB_FETCH_DELIVER_TO)

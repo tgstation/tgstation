@@ -1,0 +1,1 @@
+{"type":"/datum/bt_node/decorator/bb_key_set","children":[{"type":"/datum/bt_node/ai_behavior/wait","duration":0}],"key":"BB_current_pet_target","invert":true,"observer_abort":1}

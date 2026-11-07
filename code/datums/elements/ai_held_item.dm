@@ -20,7 +20,7 @@
 
 /// Returns the item held in a mob's blackboard, if it has one
 /datum/element/ai_held_item/proc/get_held_item(mob/living/source)
-	return source.ai_controller.blackboard[BB_SIMPLE_CARRY_ITEM]
+	return source.ai_controller?.blackboard[BB_SIMPLE_CARRY_ITEM]
 
 /// Someone's interacting with us by hand, if we have an item and like them we'll hand it over
 /datum/element/ai_held_item/proc/on_click(mob/living/source, mob/living/user)
