@@ -55,7 +55,7 @@
  */
 /datum/autoref
 	/// The reference held by this autoref. Either a text reference, or an actual reference. Depends on the target's datum flags.
-	VAR_PRIVATE/reference
+	VAR_PRIVATE/datum/reference
 
 /datum/autoref/New(datum/thing)
 	reference = thing
@@ -65,7 +65,7 @@
 	SIGNAL_HANDLER
 	if(hint == QDEL_HINT_LETMELIVE)
 		return
-	source.auto_reference = null
+	reference.auto_reference = null
 	reference = null
 
 /datum/autoref/Destroy(force)
