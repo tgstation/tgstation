@@ -49,5 +49,10 @@
   - qol: Pride pins are now named after their skin instead of just generic "pride
       pin"
 2026-11-07:
+  SmArtKar:
+  - bugfix: Fixed a harddel in goliath tentacle code
+  san7890:
+  - balance: Telekinetic users can no longer open up a UI on a given object, allow
+      it to exit their site, and be able to edit it unceasingly.
   thegrb93:
   - balance: Tirizene prevents stamina regen
