@@ -349,7 +349,7 @@
 	if(isnull(tile))
 		return 0
 	// Separate cache key for vertical edges.
-	var/cache_key = "vertical_[tile]"
+	var/cache_key = "vertical_[REF(tile)]"
 	// Reuse previously resolved vertical edges.
 	var/cached = navmap_astar_edge_cache[cache_key]
 	if(!isnull(cached))
