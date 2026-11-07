@@ -1,0 +1,4 @@
+author: "sohpeach"
+delete-after: True
+changes:
+  - bugfix: "ntos file manager can no longer be used to print carp plushies (and similar things)"
