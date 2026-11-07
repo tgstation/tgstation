@@ -1,7 +1,7 @@
 //===============================HAND INTERACTION===================================
 /obj/machinery/vending/interact(mob/user)
 	if(seconds_electrified && !(machine_stat & NOPOWER))
-		if(shock(user, 100))
+		if(shock(user, 125))
 			return
 
 	if(tilted && !user.buckled)
