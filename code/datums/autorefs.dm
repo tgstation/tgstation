@@ -79,7 +79,7 @@
  * This will return `null` if the datum was deleted. This MUST be respected.
  */
 /datum/autoref/proc/resolve()
-	return reference
+	return reference?.gc_destroyed ? null : reference
 
 /datum/autoref/vv_get_dropdown()
 	. = ..()
@@ -101,4 +101,4 @@
 
 /datum/autoref/weak/resolve()
 	var/datum/resolved = locate(reference)
-	return (!QDELETED(resolved) && resolved.auto_reference == src) ? resolved : null
+	return (QDELETED(resolved) || resolved.auto_reference != src) ? null : resolved
