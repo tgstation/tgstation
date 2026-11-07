@@ -20,7 +20,7 @@
 	/// Percent chance per tick to take another step while loitering inside the standoff band.
 	var/jitter_chance = 100
 	/// time to stay planted until after a hit. Makes it a bit more fair to fight against.
-	var/wait_after_attack = 0.3 SECONDS
+	var/wait_after_attack = 0.4 SECONDS
 	/// Set by on_movement_failed() when the movement system gives up pathing.
 	VAR_FINAL/movement_failed = FALSE
 	/// Which AGILE_MELEE_MODE_ we drove movement with last tick, so we only tear the moveloop down when it flips.

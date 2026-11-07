@@ -103,6 +103,7 @@
 			"type": "decorator",
 			"decorator": "/datum/bt_node/decorator/bb_key_set",
 			"vars": {
+				"invert": true,
 				"key": "BB_monkey_tamed"
 			},
 			"child": {
