@@ -31,6 +31,10 @@
 #define BB_MONKEY_IDLE_RARE_EMOTES "BB_monkey_idle_rare_emotes"
 /// Whether the monkey believes its gun still works (20% chance it doesn't notice a dry-fire)
 #define BB_MONKEY_GUN_WORKED "BB_monkey_gun_worked"
+/// cooldown for when monkey can next throw an item at its combat target.
+#define BB_MONKEY_THROW_COOLDOWN "BB_monkey_throw_cooldown"
+/// cooldown for when the monkey can next shove its combat target.
+#define BB_MONKEY_SHOVE_COOLDOWN "BB_monkey_shove_cooldown"
 ///Whether the monkey wants to press some shit
 #define BB_MONKEY_WANNA_PRESS_SOME_SHIT "Monkeys wants to press something"
 ///Whether the monkey can look for patrons again
