@@ -950,3 +950,27 @@
 /datum/status_effect/heads_up/proc/on_death(mob/living/source)
 	SIGNAL_HANDLER
 	qdel(src)
+
+/datum/status_effect/food_crave
+	id = "food_crave"
+	processing_speed = STATUS_EFFECT_NORMAL_PROCESS
+	alert_type = /atom/movable/screen/alert/status_effect/food_crave
+	on_remove_on_mob_delete = TRUE
+	duration = 1 MINUTES
+	status_type = STATUS_EFFECT_REFRESH
+	var/list/food_list
+/// Second argument contains the food trigger
+/datum/status_effect/food_crave/on_creation(mob/living/new_owner, obj/item/food/trigger_food, ...)
+	. = ..()
+	food_list = list()
+	food_list += trigger_food
+
+/// Second argument contains the food trigger
+/datum/status_effect/food_crave/refresh(effect,obj/item/food/trigger_food, ...)
+	. = ..()
+	food_list += trigger_food
+
+/atom/movable/screen/alert/status_effect/food_crave
+	name = "Food Craving"
+	desc = "Something smells really good!"
+	icon_state = "mood_food_crave"
