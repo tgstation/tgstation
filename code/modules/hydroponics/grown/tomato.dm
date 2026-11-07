@@ -24,6 +24,8 @@
 	splat_type = /obj/effect/decal/cleanable/food/tomato_smudge
 	foodtypes = VEGETABLES
 	distill_reagent = /datum/reagent/consumable/enzyme
+	pickup_sound = /datum/sound_effect/cucumba_pickup
+	drop_sound = /datum/sound_effect/cucumba_drop
 
 /obj/item/food/grown/tomato/grind_results()
 	return list(/datum/reagent/consumable/ketchup = 0)

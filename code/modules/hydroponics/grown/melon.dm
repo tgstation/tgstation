@@ -4,6 +4,8 @@
 	icon_state = "watermelon"
 	inhand_icon_state = "watermelon"
 	abstract_type = /obj/item/food/grown/melonlike
+	pickup_sound = /datum/sound_effect/cucumba_pickup
+	drop_sound = /datum/sound_effect/cucumba_drop
 	/// chestplate made by hollowing out the melon
 	var/chestplate_type = null
 	/// fire-resistant version of above

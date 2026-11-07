@@ -27,6 +27,8 @@
 	bite_consumption_mod = 2
 	foodtypes = VEGETABLES
 	wine_power = 20
+	pickup_sound = /datum/sound_effect/cucumba_pickup
+	drop_sound = /datum/sound_effect/cucumba_drop
 
 // Ice Chili
 /obj/item/seeds/chili/ice
