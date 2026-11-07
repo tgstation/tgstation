@@ -168,16 +168,16 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 			var/datum/computer_file/image/picture = computer.find_file_by_name(params["name"])
 			if(!istype(picture))
 				return
-			try_print(picture, params["width"], params["height"], params["offsetX"], params["offsetY"], params["typepath"], usr)
+			try_print(picture, params["width"], params["height"], params["offsetX"], params["offsetY"], usr)
 		if("PRG_usbprint")
 			if(!computer.inserted_disk)
 				return
 			var/datum/computer_file/image/picture = computer.find_file_by_name(params["name"], computer.inserted_disk)
 			if(!istype(picture))
 				return
-			try_print(picture, params["width"], params["height"], params["offsetX"], params["offsetY"], params["typepath"], usr)
+			try_print(picture, params["width"], params["height"], params["offsetX"], params["offsetY"], usr)
 
-/datum/computer_file/program/filemanager/proc/try_print(datum/computer_file/image/picture, width, height, offset_x, offset_y, typepath, mob/user)
+/datum/computer_file/program/filemanager/proc/try_print(datum/computer_file/image/picture, width, height, offset_x, offset_y, mob/user)
 	var/list/print_type = GLOB.print_types["[width]x[height]"]
 	if(!length(print_type))
 		return
@@ -189,7 +189,7 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 	var/max_offset_y = max(height - image_height, 0)
 	if(!ISINRANGE(offset_x, min_offset_x, max_offset_x) || !ISINRANGE(offset_y, min_offset_y, max_offset_y))
 		return
-	typepath = text2path(typepath)
+	var/typepath = print_type["typepath"]
 	var/datum/callback/check_callback = print_type["check_callback"]
 	if(!check_callback.Invoke(typepath, picture, computer, user))
 		return
@@ -202,12 +202,10 @@ GLOBAL_LIST_INIT(print_types, init_print_types())
 /datum/computer_file/program/filemanager/ui_static_data(mob/user)
 	var/list/print_types = list()
 	for(var/dimensions, types_for_dimensions in GLOB.print_types)
-		var/list/typepath =  types_for_dimensions["typepath"]
-		if(ispath(typepath, /obj/item/canvas) && !(computer.hardware_flag & PROGRAM_CONSOLE))
+		if(ispath(types_for_dimensions["typepath"], /obj/item/canvas) && !(computer.hardware_flag & PROGRAM_CONSOLE))
 			continue
 		print_types += list(list(
 			displayText = types_for_dimensions["displayText"],
-			typepath = "[typepath]",
 			width = types_for_dimensions["width"],
 			height = types_for_dimensions["height"]
 		))
