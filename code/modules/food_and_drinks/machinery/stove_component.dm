@@ -57,6 +57,8 @@
 	var/obj/machinery/real_parent = parent
 	real_parent.flags_1 |= HAS_CONTEXTUAL_SCREENTIPS_1
 
+	parent.AddComponent(/datum/component/touch_the_stove, is_active = CALLBACK(src, PROC_REF(is_active)), temperature = SOUP_BURN_TEMP + 80)
+
 /datum/component/stove/UnregisterFromParent()
 	var/obj/machinery/real_parent = parent
 	if(container && !QDELING(parent))
@@ -76,6 +78,11 @@
 		COMSIG_ATOM_EXAMINE,
 		COMSIG_MACHINERY_REFRESH_PARTS,
 	))
+
+	qdel(parent.GetComponent(/datum/component/touch_the_stove))
+
+/datum/component/stove/proc/is_active()
+	return on
 
 /datum/component/stove/process(seconds_per_tick)
 	var/obj/machinery/real_parent = parent
