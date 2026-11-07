@@ -59,11 +59,12 @@
 
 /datum/autoref/New(datum/thing)
 	reference = thing
-	RegisterSignal(reference, COMSIG_QDELETING, PROC_REF(clear_reference))
+	RegisterSignal(reference, COMSIG_POST_QDELETED, PROC_REF(clear_reference))
 
-/datum/autoref/proc/clear_reference(datum/source)
+/datum/autoref/proc/clear_reference(datum/source, hint)
 	SIGNAL_HANDLER
-	UnregisterSignal(source, COMSIG_QDELETING)
+	if(hint == QDEL_HINT_LETMELIVE)
+		return
 	source.auto_reference = null
 	reference = null
 
