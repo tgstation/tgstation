@@ -44,7 +44,7 @@
 
 		else if(ispath(potential_trigger, /datum/dynamic_ruleset/midround))
 			var/datum/dynamic_ruleset/midround/ruleset = new potential_trigger(SSdynamic.get_config())
-			if(ruleset.can_be_selected(players_amt))
+			if(ruleset.can_be_selected())
 				picked_trigger = ruleset
 				break
 			qdel(ruleset)

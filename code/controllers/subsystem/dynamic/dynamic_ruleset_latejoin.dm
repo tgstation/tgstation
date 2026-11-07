@@ -93,13 +93,13 @@
 	if(head_check < heads_necessary - 1) // little bit of leeway
 		SSdynamic.unreported_rulesets += src
 		name += " (Canceled)"
-		log_dynamic("[config_tag]: Not enough heads of staff were present to start a revolution.")
+		log_dynamic("> [config_tag]: Not enough heads of staff were present to start a revolution.")
 		return
 
 	if(!can_be_headrev(candidate))
 		SSdynamic.unreported_rulesets += src
 		name += " (Canceled)"
-		log_dynamic("[config_tag]: [key_name(candidate)] was ineligible after the timer expired. Ruleset canceled.")
+		log_dynamic("> [config_tag]: [key_name(candidate)] was ineligible after the timer expired. Ruleset canceled.")
 		message_admins("[config_tag]: [key_name(candidate)] was ineligible after the timer expired. Ruleset canceled.")
 		return
 
@@ -110,3 +110,9 @@
 	new_head.remove_clumsy = TRUE
 	candidate.add_antag_datum(new_head, GLOB.revolution_handler.revs)
 	GLOB.revolution_handler.start_revolution()
+
+/datum/dynamic_ruleset/latejoin/revolution/dynamic_tester_init()
+	heads_necessary = 0
+
+/datum/dynamic_ruleset/latejoin/revolution/dynamic_tester_comments()
+	return "Assuming [initial(heads_necessary)] heads of staff"
