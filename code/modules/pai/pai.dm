@@ -53,7 +53,7 @@
 	/// Toggles whether universal translator has been activated. Cannot be reversed
 	var/languages_granted = FALSE
 	/// Reference of the bound master
-	var/datum/weakref/master_ref
+	var/datum/autoref/master_ref
 	/// The master's name string
 	var/master_name
 	/// DNA string for owner verification
@@ -268,7 +268,7 @@
 	return ..()
 
 /**
- * Resolves the weakref of the pai's master.
+ * Resolves the autoref of the pai's master.
  * If the master has been deleted, calls reset_software().
  *
  * @returns {mob/living || FALSE} - The master mob, or
@@ -323,7 +323,7 @@
 	balloon_alert(src, "directive override detected")
 	log_game("[key_name(attacker)] emagged [key_name(src)], wiping their master DNA and supplemental directive.")
 	emagged = TRUE
-	master_ref = WEAKREF(attacker)
+	master_ref = AUTOREF(attacker)
 	master_name = "The Syndicate"
 	master_dna = "Untraceable Signature"
 	// Sets supplemental directive to this
@@ -371,7 +371,7 @@
 		balloon_alert(user, "directive system malfunctional")
 		return FALSE
 	var/mob/living/carbon/master = user
-	master_ref = WEAKREF(master)
+	master_ref = AUTOREF(master)
 	master_name = master.real_name
 	master_dna = master.dna.unique_enzymes
 	to_chat(src, span_bolddanger("You have been bound to a new master: [user.real_name]!"))

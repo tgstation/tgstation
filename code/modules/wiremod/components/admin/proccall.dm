@@ -27,8 +27,8 @@
 	/// Returns the output from the proccall
 	var/datum/port/output/output_value
 
-	/// Whether we resolve all the weakrefs passed as arguments
-	var/resolve_weakref = TRUE
+	/// Whether we resolve all the autorefs passed as arguments
+	var/resolve_autoref = TRUE
 
 	ui_buttons = list(
 		"cog" = "configure",
@@ -82,7 +82,7 @@
 	.["expected_output"] = output_value.datatype
 	.["expected_output_color"] = output_value.color
 
-	.["resolve_weakref"] = resolve_weakref
+	.["resolve_autoref"] = resolve_autoref
 
 /obj/item/circuit_component/proccall/ui_static_data(mob/user)
 	. = list()
@@ -103,11 +103,11 @@
 		))
 	component_data["input_ports"] = input_ports
 	component_data["expected_output_type"] = output_value.datatype
-	component_data["resolve_weakref"] = resolve_weakref
+	component_data["resolve_autoref"] = resolve_autoref
 
 /obj/item/circuit_component/proccall/load_data_from_list(list/component_data)
-	if(component_data["resolve_weakref"] != null)
-		resolve_weakref = component_data["resolve_weakref"]
+	if(component_data["resolve_autoref"] != null)
+		resolve_autoref = component_data["resolve_autoref"]
 	if(component_data["expected_output_type"])
 		output_value.set_datatype(component_data["expected_output_type"])
 	for(var/list/data as anything in component_data["input_ports"])
@@ -126,8 +126,8 @@
 			if(!(new_type in GLOB.wiremod_fundamental_types))
 				return
 			output_value.set_datatype(new_type)
-		if("resolve_weakref")
-			resolve_weakref = !resolve_weakref
+		if("resolve_autoref")
+			resolve_autoref = !resolve_autoref
 		if("add_argument")
 			arguments += add_input_port("Port [length(arguments)]", PORT_TYPE_ANY)
 		if("remove_argument")
@@ -176,7 +176,7 @@
 	if(called_on != GLOBAL_PROC && !hascall(called_on, to_invoke))
 		return
 
-	if(resolve_weakref)
+	if(resolve_autoref)
 		params = recursive_list_resolve(params)
 
 	log_admin_circuit("[parent.get_creator()] proccalled '[to_invoke]' on [called_on] with params \[[params.Join(", ")]].")

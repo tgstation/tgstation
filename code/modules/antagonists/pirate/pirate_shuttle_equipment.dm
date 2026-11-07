@@ -225,7 +225,7 @@
 	///Message to display on the TGUI window.
 	var/status_report = "Ready for delivery."
 	///Reference to the specific pad that the control computer is linked up to.
-	var/datum/weakref/pad_ref
+	var/datum/autoref/pad_ref
 	///How long does it take to warmup the pad to teleport?
 	var/warmup_time = 100
 	///Is the teleport pad/computer sending something right now? TRUE/FALSE
@@ -255,7 +255,7 @@
 	. = ..()
 	if (istype(I) && istype(I.buffer,/obj/machinery/piratepad))
 		to_chat(user, span_notice("You link [src] with [I.buffer] in [I] buffer."))
-		pad_ref = WEAKREF(I.buffer)
+		pad_ref = AUTOREF(I.buffer)
 		return TRUE
 
 /obj/machinery/computer/piratepad_control/post_machine_initialize()
@@ -263,11 +263,11 @@
 	if(cargo_hold_id)
 		for(var/obj/machinery/piratepad/P as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/piratepad))
 			if(P.cargo_hold_id == cargo_hold_id)
-				pad_ref = WEAKREF(P)
+				pad_ref = AUTOREF(P)
 				return
 	else
 		var/obj/machinery/piratepad/pad = locate() in range(4, src)
-		pad_ref = WEAKREF(pad)
+		pad_ref = AUTOREF(pad)
 
 /obj/machinery/computer/piratepad_control/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()

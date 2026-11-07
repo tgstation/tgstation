@@ -8,8 +8,8 @@
 	var/tracking = FALSE
 	/// what target we're essentially owned by, and will cause this blip to cleanup if it gets deleted
 	var/atom/track_target
-	/// Weak reference to connect_containers so container movement updates this blip.
-	var/datum/weakref/connect_ref
+	/// Auto reference to connect_containers so container movement updates this blip.
+	var/datum/autoref/connect_ref
 
 /atom/movable/screen/minimap_element/blip/Initialize(mapload, datum/hud/hud_owner, atom/track_target, icon_state, icon, large = FALSE, blip_tag)
 	. = ..()
@@ -55,7 +55,7 @@
 			COMSIG_MOVABLE_MOVED = PROC_REF(on_tracked_or_container_moved),
 			COMSIG_MOVABLE_Z_CHANGED = PROC_REF(on_target_z_changed),
 		)
-		connect_ref = WEAKREF(AddComponent(/datum/component/connect_containers, track_target, container_connections))
+		connect_ref = AUTOREF(AddComponent(/datum/component/connect_containers, track_target, container_connections))
 	tracking = TRUE
 	INVOKE_ASYNC(src, PROC_REF(update_minimap))
 

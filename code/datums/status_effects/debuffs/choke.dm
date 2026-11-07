@@ -4,8 +4,8 @@
 	tick_interval = 0.2 SECONDS
 	alert_type = null
 	remove_on_fullheal = TRUE
-	/// Weakref to the thing we're choking on
-	var/datum/weakref/choking_on_ref
+	/// Autoref to the thing we're choking on
+	var/datum/autoref/choking_on_ref
 	/// If the thing we're choking on is on fire
 	var/flaming
 
@@ -19,7 +19,7 @@
 	var/delta_x = 0
 
 /datum/status_effect/choke/on_creation(mob/living/new_owner, atom/movable/choke_on, flaming = FALSE, vomit_delay = -1)
-	choking_on_ref = WEAKREF(choke_on)
+	choking_on_ref = AUTOREF(choke_on)
 	src.flaming = flaming
 	src.duration = vomit_delay
 	return ..()

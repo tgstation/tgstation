@@ -146,8 +146,8 @@
 	/* ROBOT CONTROL */
 	/// UI for robot controls
 	VAR_FINAL/datum/robot_control/robot_control
-	/// Weakref to the bot the AI is currently commanding
-	VAR_FINAL/datum/weakref/bot_ref
+	/// Autoref to the bot the AI is currently commanding
+	VAR_FINAL/datum/autoref/bot_ref
 	/// If TRUE, the AI will send it's [var/bot_ref][commanded bot] to the next clicked atom
 	VAR_FINAL/setting_waypoint = FALSE
 

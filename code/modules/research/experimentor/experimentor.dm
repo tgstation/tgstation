@@ -9,10 +9,10 @@
 	circuit = /obj/item/circuitboard/machine/experimentor
 	interaction_flags_machine = INTERACT_MACHINE_WIRES_IF_OPEN | INTERACT_MACHINE_ALLOW_SILICON | INTERACT_MACHINE_OPEN_SILICON
 
-	/// Weakref to the station Ian the corgi (or whichever we can find)
-	var/datum/weakref/tracked_ian_ref
-	/// Weakref to the station Runtime the cat (or whichever we can find)
-	var/datum/weakref/tracked_runtime_ref
+	/// Autoref to the station Ian the corgi (or whichever we can find)
+	var/datum/autoref/tracked_ian_ref
+	/// Autoref to the station Runtime the cat (or whichever we can find)
+	var/datum/autoref/tracked_runtime_ref
 	/// The current probability of a malfunction
 	var/malfunction_probability_coeff = 0
 	/// How many times we've had a critical reaction
@@ -38,8 +38,8 @@
 
 	load_handlers()
 
-	tracked_ian_ref = WEAKREF(locate(/mob/living/basic/pet/dog/corgi/ian) in GLOB.mob_living_list)
-	tracked_runtime_ref = WEAKREF(locate(/mob/living/basic/pet/cat/runtime) in GLOB.mob_living_list)
+	tracked_ian_ref = AUTOREF(locate(/mob/living/basic/pet/dog/corgi/ian) in GLOB.mob_living_list)
+	tracked_runtime_ref = AUTOREF(locate(/mob/living/basic/pet/cat/runtime) in GLOB.mob_living_list)
 
 	if(!critical_items_typecache)
 		critical_items_typecache = typecacheof(list(

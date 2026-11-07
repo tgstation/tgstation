@@ -31,7 +31,7 @@
 	UnregisterSignal(target, COMSIG_ITEM_FINISH_DRYING)
 	REMOVE_TRAIT(target, TRAIT_DRYABLE, ELEMENT_TRAIT(type))
 
-/datum/element/dryable/proc/finish_drying(atom/source, datum/weakref/drying_user)
+/datum/element/dryable/proc/finish_drying(atom/source, datum/autoref/drying_user)
 	SIGNAL_HANDLER
 	var/static/list/dried_color
 	if (isnull(dried_color))
@@ -60,7 +60,7 @@
 
 	qdel(source)
 
-/datum/element/dryable/proc/apply_dried_status(atom/target, datum/weakref/drying_user, atom/source)
+/datum/element/dryable/proc/apply_dried_status(atom/target, datum/autoref/drying_user, atom/source)
 	ADD_TRAIT(target, TRAIT_DRIED, ELEMENT_TRAIT(type))
 	var/datum/mind/user_mind = drying_user?.resolve()
 	if(drying_user && istype(target, /obj/item/food))

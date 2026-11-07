@@ -11,27 +11,27 @@
 	/// How much stamina damage will the tase deal in 1 second
 	VAR_PROTECTED/tase_stamina = 60
 	/// Electrodes that follow the projectile
-	VAR_PRIVATE/datum/weakref/beam_weakref
+	VAR_PRIVATE/datum/autoref/beam_autoref
 	/// We need to track who was the ORIGINAL firer of the projectile specifically to ensure deflects work correctly
-	VAR_PRIVATE/datum/weakref/initial_firer_weakref
+	VAR_PRIVATE/datum/autoref/initial_firer_autoref
 
 /obj/projectile/energy/electrode/is_hostile_projectile()
 	return TRUE
 
 /obj/projectile/energy/electrode/Destroy()
-	QDEL_NULL(beam_weakref)
+	QDEL_NULL(beam_autoref)
 	return ..()
 
 /obj/projectile/energy/electrode/fire(fire_angle, atom/direct_target)
 	if(firer)
-		beam_weakref = WEAKREF(firer.Beam(
+		beam_autoref = AUTOREF(firer.Beam(
 			BeamTarget = src,
 			icon = 'icons/effects/beam.dmi',
 			icon_state = "electrodes_nozap",
 			maxdistance = maximum_range + 1,
 			beam_type = /obj/effect/ebeam/electrodes_nozap,
 		))
-		initial_firer_weakref = WEAKREF(firer)
+		initial_firer_autoref = AUTOREF(firer)
 	return ..()
 
 /obj/projectile/energy/electrode/on_hit(mob/living/target, blocked = 0, pierce_hit)
@@ -53,7 +53,7 @@
 	target.apply_status_effect(
 		/*type = *//datum/status_effect/tased,
 		/*taser = */fired_from,
-		/*firer = */initial_firer_weakref?.resolve() || firer,
+		/*firer = */initial_firer_autoref?.resolve() || firer,
 		/*tase_stamina = */tase_stamina,
 		/*energy_drain = */STANDARD_CELL_CHARGE * 0.05,
 		/*electrode_name = */"\the [src]\s",

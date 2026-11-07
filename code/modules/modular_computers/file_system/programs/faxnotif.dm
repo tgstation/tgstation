@@ -10,11 +10,11 @@
 	size = 1
 	tgui_id = "NtosFaxBond"
 	program_icon = "fa-fax"
-	/// All relevant info of every connected fax, including weak ref for cleaning after ourself + name, area name and muted bool
+	/// All relevant info of every connected fax, including auto ref for cleaning after ourself + name, area name and muted bool
 	var/list/connected_faxes = list()
 
 /**
- * Proc for subscribing to faxes. Adds weakref to fax's listeners and updates fax related vars for program. Includes type checking.
+ * Proc for subscribing to faxes. Adds autoref to fax's listeners and updates fax related vars for program. Includes type checking.
  * Arguments:
  * * target - [/datum/computer_file/program/proc/tap] proc target, can be anything
  */
@@ -25,11 +25,11 @@
 	var/our_id = target.fax_id
 
 	if(!connected_faxes[our_id])
-		LAZYSET(target.fax_listeners, REF(src), WEAKREF(src))
+		LAZYSET(target.fax_listeners, REF(src), AUTOREF(src))
 
 	var/list/fax_info = list()
 	var/area/our_area = get_area(target)
-	fax_info["ref"] = WEAKREF(target)
+	fax_info["ref"] = AUTOREF(target)
 	fax_info["name"] = target.fax_name
 	fax_info["area_name"] = our_area.name
 	fax_info["muted"] = FALSE
@@ -47,7 +47,7 @@
 		return
 
 	var/list/fax_info = connected_faxes[fax_id]
-	var/datum/weakref/fax_ref = fax_info["ref"]
+	var/datum/autoref/fax_ref = fax_info["ref"]
 	var/obj/machinery/fax/our_fax = fax_ref.resolve()
 	if (our_fax)
 		LAZYREMOVE(our_fax.fax_listeners, REF(src))

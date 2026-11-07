@@ -226,7 +226,7 @@
 		field_disconnect(field)
 	//fire projectile
 	var/obj/projectile/energy/chrono_beam/chrono_beam = new /obj/projectile/energy/chrono_beam(get_turf(src))
-	chrono_beam.tem_weakref = WEAKREF(src)
+	chrono_beam.tem_autoref = AUTOREF(src)
 	chrono_beam.aim_projectile(target, mod.wearer)
 	chrono_beam.firer = mod.wearer
 	playsound(src, 'sound/items/modsuit/time_anchor_set.ogg', 50, TRUE)
@@ -297,11 +297,11 @@
 	name = "eradication beam"
 	icon_state = "chronobolt"
 	range = CHRONO_BEAM_RANGE
-	///Reference to the tem... given by the tem! weakref because back in the day we didn't know about harddels- or maybe we didn't care.
-	var/datum/weakref/tem_weakref
+	///Reference to the tem... given by the tem! autoref because back in the day we didn't know about harddels- or maybe we didn't care.
+	var/datum/autoref/tem_autoref
 
 /obj/projectile/energy/chrono_beam/on_hit(atom/target, blocked = 0, pierce_hit)
-	var/obj/item/mod/module/tem/tem = tem_weakref.resolve()
+	var/obj/item/mod/module/tem/tem = tem_autoref.resolve()
 	if(target && tem && isliving(target))
 		var/obj/structure/chrono_field/field = new(target.loc, target, tem)
 		tem.field_connect(field)
@@ -408,7 +408,7 @@
 		return ..()
 
 	var/obj/projectile/energy/chrono_beam/beam = hitting_projectile
-	var/obj/item/mod/module/tem/linked_tem = beam.tem_weakref.resolve()
+	var/obj/item/mod/module/tem/linked_tem = beam.tem_autoref.resolve()
 	if(linked_tem && istype(linked_tem))
 		linked_tem.field_connect(src)
 	return BULLET_ACT_HIT

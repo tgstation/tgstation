@@ -8,7 +8,7 @@
 	lifespan = ANOMALY_COUNTDOWN_TIMER * 2
 
 	/// Who are we moving towards?
-	var/datum/weakref/pursuit_target
+	var/datum/autoref/pursuit_target
 	/// Cooldown for every anomaly pulse
 	COOLDOWN_DECLARE(pulse_cooldown)
 	/// How many seconds between each anomaly pulses
@@ -18,7 +18,7 @@
 
 /obj/effect/anomaly/bioscrambler/Initialize(mapload, new_lifespan)
 	. = ..()
-	pursuit_target = WEAKREF(find_nearest_target())
+	pursuit_target = AUTOREF(find_nearest_target())
 
 /obj/effect/anomaly/bioscrambler/anomalyEffect(seconds_per_tick)
 	. = ..()
@@ -53,7 +53,7 @@
 	if (new_target == current_target)
 		return
 	current_target = new_target
-	pursuit_target = WEAKREF(new_target)
+	pursuit_target = AUTOREF(new_target)
 	new_target.ominous_nosebleed()
 
 /// Returns the closest conscious carbon on our z level or null if there somehow isn't one

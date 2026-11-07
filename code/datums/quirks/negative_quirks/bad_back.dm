@@ -9,7 +9,7 @@
 	medical_record_text = "Patient scans indicate severe and chronic back pain."
 	hardcore_value = 4
 	mail_goodies = list(/obj/item/cane)
-	var/datum/weakref/backpack
+	var/datum/autoref/backpack
 
 /datum/quirk/badback/add(client/client_source)
 	var/mob/living/carbon/human/human_holder = quirk_holder
@@ -38,7 +38,7 @@
 	quirk_holder.add_mood_event("back_pain", /datum/mood_event/back_pain)
 	RegisterSignal(equipped_item, COMSIG_ITEM_POST_UNEQUIP, PROC_REF(on_unequipped_backpack))
 	UnregisterSignal(quirk_holder, COMSIG_MOB_EQUIPPED_ITEM)
-	backpack = WEAKREF(equipped_item)
+	backpack = AUTOREF(equipped_item)
 
 /// Signal handler for when the quirk_holder unequips an equipped backpack. Removes the back_pain mood event.
 /datum/quirk/badback/proc/on_unequipped_backpack(obj/item/source, force, atom/newloc, no_move, invdrop, silent)

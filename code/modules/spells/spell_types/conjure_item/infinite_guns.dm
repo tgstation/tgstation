@@ -18,7 +18,7 @@
 	return ..()
 
 // Because enchanted guns self-delete and regenerate themselves,
-// override make_item here and let's not bother with tracking their weakrefs.
+// override make_item here and let's not bother with tracking their autorefs.
 /datum/action/cooldown/spell/conjure_item/infinite_guns/make_item(atom/caster)
 	return new item_type(caster.loc)
 

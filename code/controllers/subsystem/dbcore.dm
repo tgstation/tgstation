@@ -547,6 +547,8 @@ Ignore_errors instructes mysql to continue inserting rows if some of them have e
 			ASSERT(result[1], "Failed to stop DB daemon: [result[3]]")
 
 /datum/db_query
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	// Inputs
 	var/connection
 	var/sql

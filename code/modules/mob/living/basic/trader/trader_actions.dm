@@ -4,9 +4,9 @@
 	button_icon = 'icons/mob/actions/actions_trader.dmi'
 	button_icon_state = "setup_shop"
 	/// The shop spot
-	var/datum/weakref/shop_spot_ref
+	var/datum/autoref/shop_spot_ref
 	/// The server this console is connected to.
-	var/datum/weakref/sign_ref
+	var/datum/autoref/sign_ref
 	/// The type of the chair we sit on
 	var/shop_spot_type
 	/// The type of our advertising sign
@@ -42,7 +42,7 @@
 	owner.say(pick(opening_lines))
 	var/obj/shop_spot = new shop_spot_type(owner.loc)
 	shop_spot.dir = owner.dir
-	shop_spot_ref = WEAKREF(shop_spot)
+	shop_spot_ref = AUTOREF(shop_spot)
 	owner.ai_controller?.set_blackboard_key(BB_SHOP_SPOT, shop_spot)
 
 	playsound(owner, shop_sound, 50, TRUE)
@@ -59,7 +59,7 @@
 	var/obj/sign = sign_ref?.resolve()
 	if(QDELETED(sign))
 		var/obj/new_sign = new sign_type(sign_turf)
-		sign_ref = WEAKREF(sign)
+		sign_ref = AUTOREF(sign)
 		do_sparks(3, FALSE, new_sign)
 	else
 		do_teleport(sign,sign_turf)

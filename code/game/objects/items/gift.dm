@@ -107,8 +107,8 @@
 /obj/item/gift/anything
 	name = "christmas gift"
 	desc = "It could be anything!"
-	/// Weak reference to who this gift is for and who can open it, if that's nobody then anyone can
-	var/datum/weakref/recipient_ref = null
+	/// Auto reference to who this gift is for and who can open it, if that's nobody then anyone can
+	var/datum/autoref/recipient_ref = null
 
 /obj/item/gift/anything/get_gift_type()
 	var/static/list/obj/item/possible_gifts = null
@@ -139,4 +139,4 @@
 		return
 
 	name = "[initial(name)] for [recipient.name] ([recipient.assigned_role.title])"
-	recipient_ref = WEAKREF(recipient)
+	recipient_ref = AUTOREF(recipient)

@@ -16,7 +16,7 @@
 	/// Who's got their foot on the mine's pressure plate
 	/// Stepping on the mine will set this to the first mob who stepped over it
 	/// The mine will not detonate via movement unless the first mob steps off of it
-	var/datum/weakref/foot_on_mine
+	var/datum/autoref/foot_on_mine
 
 /obj/effect/mine/Initialize(mapload)
 	. = ..()
@@ -75,7 +75,7 @@
 		living_mob = on_who
 
 	if(living_mob?.incorporeal_move || (on_who.movement_type & MOVETYPES_NOT_TOUCHING_GROUND))
-		return foot_on_mine ? IS_WEAKREF_OF(on_who, foot_on_mine) : FALSE //Only go boom if their foot was on the mine PRIOR to flying/phasing. You fucked up, you live with the consequences.
+		return foot_on_mine ? IS_AUTOREF_OF(on_who, foot_on_mine) : FALSE //Only go boom if their foot was on the mine PRIOR to flying/phasing. You fucked up, you live with the consequences.
 
 	return TRUE
 
@@ -101,7 +101,7 @@
 		RegisterSignal(arrived, COMSIG_MOVABLE_MOVED, PROC_REF(triggermine)) //wait for it to finish the movement before blowing so it takes proper damage
 		return
 
-	foot_on_mine = WEAKREF(arrived)
+	foot_on_mine = AUTOREF(arrived)
 
 
 /obj/effect/mine/proc/on_exited(datum/source, atom/movable/gone, direction)
@@ -118,7 +118,7 @@
 		return //either it blew up the mine, or it didn't and we don't have to worry about anything else.
 
 	// Check that the guy who's on it is stepping off
-	if(foot_on_mine && !IS_WEAKREF_OF(gone, foot_on_mine))
+	if(foot_on_mine && !IS_AUTOREF_OF(gone, foot_on_mine))
 		return
 
 	triggermine(gone)

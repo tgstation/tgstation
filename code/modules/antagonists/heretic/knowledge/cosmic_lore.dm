@@ -136,9 +136,9 @@
 	research_tree_icon_path = 'icons/ui_icons/antags/heretic/knowledge.dmi'
 	research_tree_icon_state = "blade_upgrade_cosmos"
 	/// Storage for the second target.
-	var/datum/weakref/second_target
+	var/datum/autoref/second_target
 	/// Storage for the third target.
-	var/datum/weakref/third_target
+	var/datum/autoref/third_target
 	/// When this timer completes we reset our combo.
 	var/combo_timer
 	/// The active duration of the combo.
@@ -198,7 +198,7 @@
 					increase_combo_duration()
 					source.AddElement(cosmic_trail_based_on_passive(source), /obj/effect/forcefield/cosmic_field/fast)
 		third_target = second_target
-	second_target = WEAKREF(target)
+	second_target = AUTOREF(target)
 
 /// Resets the combo.
 /datum/heretic_knowledge/blade_upgrade/cosmic/proc/reset_combo(mob/living/source)
@@ -303,7 +303,7 @@
 
 	var/datum/action/cooldown/mob_cooldown/replace_star_gazer/replace_gazer = new(src)
 	replace_gazer.Grant(user)
-	replace_gazer.bad_dog = WEAKREF(star_gazer_mob)
+	replace_gazer.bad_dog = AUTOREF(star_gazer_mob)
 
 /// Replace an annoying griefer you were paired up to with a different but probably no less annoying player.
 /datum/action/cooldown/mob_cooldown/replace_star_gazer
@@ -318,8 +318,8 @@
 	cooldown_time = 5 SECONDS
 	melee_cooldown_time = 0
 	shared_cooldown = NONE
-	/// Weakref to the stargazer we care about
-	var/datum/weakref/bad_dog
+	/// Autoref to the stargazer we care about
+	var/datum/autoref/bad_dog
 
 /datum/action/cooldown/mob_cooldown/replace_star_gazer/Activate(atom/target)
 	StartCooldown(5 MINUTES)

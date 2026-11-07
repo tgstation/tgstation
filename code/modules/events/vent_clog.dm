@@ -113,7 +113,7 @@
  */
 
 /datum/round_event/vent_clog/proc/life_check()
-	for(var/datum/weakref/mob_ref as anything in living_mobs)
+	for(var/datum/autoref/mob_ref as anything in living_mobs)
 		var/mob/living/real_mob = mob_ref.resolve()
 		if(QDELETED(real_mob) || real_mob.stat == DEAD)
 			living_mobs -= mob_ref
@@ -152,7 +152,7 @@
 		return
 
 	var/mob/new_mob = new spawned_mob(vent_loc) // we spawn it early so we can actually use is_blocked_turf
-	living_mobs += WEAKREF(new_mob)
+	living_mobs += AUTOREF(new_mob)
 	vent.visible_message(span_warning("[new_mob] crawls out of [vent]!"))
 
 	var/list/potential_locations = list(vent_loc) // already confirmed to be accessable via the 2nd if check of the proc

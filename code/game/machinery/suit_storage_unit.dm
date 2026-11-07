@@ -63,7 +63,7 @@
 	/// is the card reader installed in this machine
 	var/card_reader_installed = FALSE
 	/// physical reference of the players id card to check for PERSONAL access level
-	var/datum/weakref/id_card = null
+	var/datum/autoref/id_card = null
 	/// should we prevent further access change
 	var/access_locked = FALSE
 
@@ -667,7 +667,7 @@
 		id_card = null
 		switch(choice)
 			if("Personal") // only the player who swiped their id has access
-				id_card = WEAKREF(id)
+				id_card = AUTOREF(id)
 				name = "[id.registered_name] suit storage unit"
 				desc = "Owned by [id.registered_name]. [initial(desc)]"
 			if("Departmental") // anyone who has the same access permissions as this id has access

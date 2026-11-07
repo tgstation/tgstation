@@ -26,8 +26,8 @@
 	cooldown_time = 10 SECONDS
 	spell_requirements = NONE
 
-	/// Weakref to the mob we're tracking
-	var/datum/weakref/tracking_ref
+	/// Autoref to the mob we're tracking
+	var/datum/autoref/tracking_ref
 	/// Our nose's sensitivity
 	var/sensitivity = 1
 
@@ -99,13 +99,13 @@
 
 	// We have a new target to track
 	to_chat(caster, span_notice("You pick up the scent of [new_target]. The hunt begins."))
-	tracking_ref = WEAKREF(new_target)
+	tracking_ref = AUTOREF(new_target)
 	on_the_trail(caster)
 
 /// Attempt to follow our current tracking target.
 /datum/action/cooldown/spell/olfaction/proc/follow_target(mob/living/caster)
 	var/mob/living/carbon/current_target = tracking_ref?.resolve()
-	// Either our weakref failed to resolve (our target's gone),
+	// Either our autoref failed to resolve (our target's gone),
 	// or we never had a target in the first place
 	if(QDELETED(current_target))
 		to_chat(caster, span_warning("You're not holding anything to smell, \

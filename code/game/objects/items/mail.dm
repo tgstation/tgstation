@@ -14,8 +14,8 @@
 	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
 	/// Destination tagging for the mail sorter.
 	var/sort_tag = 0
-	/// Weak reference to who this mail is for and who can open it.
-	var/datum/weakref/recipient_ref
+	/// Auto reference to who this mail is for and who can open it.
+	var/datum/autoref/recipient_ref
 	/// How many goodies this mail contains.
 	var/goodie_count = 1
 	/// Goodies which can be given to anyone. The base weight is 50. For there to be a 50/50 chance of getting a department item, they need 50 weight as well.
@@ -173,7 +173,7 @@
 /// Accepts a mind to initialize goodies for a piece of mail.
 /obj/item/mail/proc/initialize_for_recipient(datum/mind/recipient)
 	name = "[initial(name)] for [recipient.name] ([recipient.assigned_role.title])"
-	recipient_ref = WEAKREF(recipient)
+	recipient_ref = AUTOREF(recipient)
 
 	var/mob/living/body = recipient.current
 	var/list/goodies = generic_goodies
@@ -388,7 +388,7 @@
 
 /obj/item/mail/traitor
 	var/armed = FALSE
-	var/datum/weakref/made_by_ref
+	var/datum/autoref/made_by_ref
 	/// Cached information about who made it for logging purposes
 	var/made_by_cached_name
 	/// Cached information about who made it for logging purposes
@@ -423,7 +423,7 @@
 /obj/item/mail/traitor/multitool_act(mob/living/user, obj/item/tool)
 	if(armed == FALSE || user.get_inactive_held_item() != src)
 		return ..()
-	if(IS_WEAKREF_OF(user.mind, made_by_ref))
+	if(IS_AUTOREF_OF(user.mind, made_by_ref))
 		balloon_alert(user, "disarming trap...")
 		if(!do_after(user, 2 SECONDS, target = src))
 			return FALSE
@@ -564,7 +564,7 @@
 	user.temporarilyRemoveItemFromInventory(src, force = TRUE)
 	shady_mail.contents += contents
 	shady_mail.armed = mail_armed
-	shady_mail.made_by_ref = WEAKREF(user.mind)
+	shady_mail.made_by_ref = AUTOREF(user.mind)
 	user.put_in_hands(shady_mail)
 	qdel(src)
 

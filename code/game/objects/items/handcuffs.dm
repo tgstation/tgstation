@@ -618,7 +618,7 @@
 	///Amount of time to knock the target down for once it's hit in deciseconds.
 	var/knockdown = 0
 	///Reference of the mob we will attempt to snare
-	var/datum/weakref/ensnare_mob_ref
+	var/datum/autoref/ensnare_mob_ref
 
 /obj/item/restraints/legcuffs/bola/throw_at(atom/target, range, speed, mob/thrower, spin=1, diagonals_first = 0, datum/callback/callback, gentle = FALSE, quickstart = TRUE, throw_type_path = /datum/thrownthing)
 	if(!..())
@@ -629,7 +629,7 @@
 	if(..() || !iscarbon(hit_atom))//if it gets caught or the target can't be cuffed,
 		return//abort
 	//The mob has been hit, save the reference for ensnaring
-	ensnare_mob_ref = WEAKREF(hit_atom)
+	ensnare_mob_ref = AUTOREF(hit_atom)
 
 /obj/item/restraints/legcuffs/bola/after_throw(datum/callback/callback)
 	. = ..()

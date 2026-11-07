@@ -90,8 +90,8 @@ Difficulty: Hard
 	COOLDOWN_DECLARE(arena_cooldown)
 	/// if we're doing something that requires us to stand still and not attack
 	var/blinking = FALSE
-	/// weakref to our "home base" beacon
-	var/datum/weakref/spawned_beacon_ref
+	/// autoref to our "home base" beacon
+	var/datum/autoref/spawned_beacon_ref
 	/// If we are sitting at home base and not doing anything
 	var/sitting_at_center = TRUE
 	/// timer id for any active attempts to "go home"
@@ -101,7 +101,7 @@ Difficulty: Hard
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Initialize(mapload)
 	. = ..()
-	spawned_beacon_ref = WEAKREF(new /obj/effect/hierophant(loc))
+	spawned_beacon_ref = AUTOREF(new /obj/effect/hierophant(loc))
 	AddComponent(/datum/component/boss_music, 'sound/music/boss/hiero_boss.ogg', COMSIG_HOSTILE_FOUND_TARGET) // change to COMSIG_AI_BLACKBOARD_KEY_SET(BB_CURRENT_TARGET) in basic conversion
 
 /mob/living/simple_animal/hostile/megafauna/hierophant/Destroy()

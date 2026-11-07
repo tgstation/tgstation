@@ -14,9 +14,9 @@
 	/// see_in_dark values
 	var/see_dark
 	/// What the client is seeing "out of", client.eye
-	var/datum/weakref/client_eye
-	/// Weakref to the mob we're mirroring off
-	var/datum/weakref/mirroring_off_ref
+	var/datum/autoref/client_eye
+	/// Autoref to the mob we're mirroring off
+	var/datum/autoref/mirroring_off_ref
 
 	var/do_updates = FALSE
 
@@ -26,7 +26,7 @@
 
 /datum/visual_data/proc/shadow(mob/mirror_off)
 	do_updates = FALSE
-	mirroring_off_ref = WEAKREF(mirror_off)
+	mirroring_off_ref = AUTOREF(mirror_off)
 	RegisterSignal(mirror_off, COMSIG_MOB_SIGHT_CHANGE, PROC_REF(sight_changed))
 	sight_changed(mirror_off)
 	RegisterSignal(mirror_off, COMSIG_MOB_SEE_INVIS_CHANGE, PROC_REF(invis_changed))
@@ -89,7 +89,7 @@
 	if(new_eye)
 		// Need to update any party's client.eyes
 		RegisterSignal(new_eye, COMSIG_QDELETING, PROC_REF(eye_deleted))
-	client_eye = WEAKREF(new_eye)
+	client_eye = AUTOREF(new_eye)
 	on_update()
 
 /datum/visual_data/proc/eye_deleted(datum/source)
@@ -99,8 +99,8 @@
 /// Tracks but does not relay updates to someone's visual data
 /// Accepts a second visual data datum to use as a source of truth for the mob's values
 /datum/visual_data/tracking
-	/// Weakref to the visual data datum to reset our mob to
-	var/datum/weakref/default_to_ref
+	/// Autoref to the visual data datum to reset our mob to
+	var/datum/autoref/default_to_ref
 
 /datum/visual_data/tracking/Destroy()
 	var/mob/our_lad = mirroring_off_ref?.resolve()
@@ -110,7 +110,7 @@
 	return ..()
 
 /datum/visual_data/tracking/proc/set_truth(datum/visual_data/truth)
-	default_to_ref = WEAKREF(truth)
+	default_to_ref = AUTOREF(truth)
 	on_update()
 
 /datum/visual_data/tracking/paint_onto(mob/paint_onto)
@@ -127,14 +127,14 @@
 
 /// Tracks and updates another mob with our mob's visual data
 /datum/visual_data/mirroring
-	/// Weakref to what mob, if any, we should mirror our changes onto
-	var/datum/weakref/mirror_onto_ref
+	/// Autoref to what mob, if any, we should mirror our changes onto
+	var/datum/autoref/mirror_onto_ref
 
 /datum/visual_data/mirroring/proc/set_mirror_target(mob/target)
 	var/mob/old_target = mirror_onto_ref?.resolve()
 	if(old_target)
 		UnregisterSignal(old_target, COMSIG_MOB_HUD_REFRESHED)
-	mirror_onto_ref = WEAKREF(target)
+	mirror_onto_ref = AUTOREF(target)
 	if(target)
 		RegisterSignal(target, COMSIG_MOB_HUD_REFRESHED, PROC_REF(push_ontod_hud_refreshed))
 

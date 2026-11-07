@@ -343,13 +343,13 @@
 	var/flashcd = 20
 	var/overheat = 0
 	//Wearef to our arm
-	var/datum/weakref/arm
+	var/datum/autoref/arm
 
 /obj/item/assembly/flash/armimplant/Initialize(mapload)
 	. = ..()
 	if(!istype(loc, /obj/item/organ/cyberimp/arm/toolkit))
 		return INITIALIZE_HINT_QDEL
-	arm = WEAKREF(loc)
+	arm = AUTOREF(loc)
 
 /obj/item/assembly/flash/armimplant/equipped(mob/user, slot, initial = FALSE)
 	. = ..()

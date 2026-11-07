@@ -20,7 +20,7 @@
 	var/ailock = FALSE
 	/// Variable dictating if linked turrets will shoot cyborgs
 	var/shoot_cyborgs = FALSE
-	/// List of weakrefs to all turrets
+	/// List of autorefs to all turrets
 	var/list/turrets = list()
 
 /obj/machinery/turretid/Initialize(mapload)
@@ -43,7 +43,7 @@
 		control_area_instance = get_area(src)
 
 	for(var/obj/machinery/porta_turret/T in control_area_instance)
-		turrets |= WEAKREF(T)
+		turrets |= AUTOREF(T)
 
 /obj/machinery/turretid/Destroy()
 	turrets.Cut()
@@ -87,7 +87,7 @@
 		return
 
 	if(multi_tool.buffer && istype(multi_tool.buffer, /obj/machinery/porta_turret))
-		turrets |= WEAKREF(multi_tool.buffer)
+		turrets |= AUTOREF(multi_tool.buffer)
 		to_chat(user, span_notice("You link \the [multi_tool.buffer] with \the [src]."))
 		return ITEM_INTERACT_SUCCESS
 
@@ -222,7 +222,7 @@
 	updateTurrets()
 
 /obj/machinery/turretid/proc/updateTurrets()
-	for (var/datum/weakref/turret_ref in turrets)
+	for (var/datum/autoref/turret_ref in turrets)
 		var/obj/machinery/porta_turret/turret = turret_ref.resolve()
 		if(!turret)
 			turrets -= turret_ref

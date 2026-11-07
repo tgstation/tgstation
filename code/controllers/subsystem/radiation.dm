@@ -12,7 +12,7 @@ SUBSYSTEM_DEF(radiation)
 	while (processing.len)
 		var/datum/radiation_pulse_information/pulse_information = processing[1]
 
-		var/datum/weakref/source_ref = pulse_information.source_ref
+		var/datum/autoref/source_ref = pulse_information.source_ref
 		var/atom/source = source_ref.resolve()
 		if (isnull(source))
 			processing.Cut(1, 2)

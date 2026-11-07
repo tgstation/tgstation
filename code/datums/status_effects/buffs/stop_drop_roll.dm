@@ -94,15 +94,15 @@
 
 /// Subtype of rolling triggered when someone hallucinating fire tries to stop, drop, and roll.
 /datum/status_effect/stop_drop_roll/hallucinating
-	/// Weakref to the fire hallucination
-	var/datum/weakref/hallucination_weakref
+	/// Autoref to the fire hallucination
+	var/datum/autoref/hallucination_autoref
 
-/datum/status_effect/stop_drop_roll/hallucinating/on_creation(mob/living/new_owner, datum/weakref/hallucination_weakref)
-	src.hallucination_weakref = hallucination_weakref
+/datum/status_effect/stop_drop_roll/hallucinating/on_creation(mob/living/new_owner, datum/autoref/hallucination_autoref)
+	src.hallucination_autoref = hallucination_autoref
 	return ..()
 
 /datum/status_effect/stop_drop_roll/hallucinating/get_bar_progress()
-	var/datum/hallucination/fire/hallucination = hallucination_weakref?.resolve()
+	var/datum/hallucination/fire/hallucination = hallucination_autoref?.resolve()
 	return 20 - max(0, hallucination?.fake_firestacks)
 
 /datum/status_effect/stop_drop_roll/hallucinating/start_rolling()
@@ -113,7 +113,7 @@
 	reduce_firestacks(1) // more effective cause it's not real
 
 /datum/status_effect/stop_drop_roll/hallucinating/reduce_firestacks(amt = 1)
-	var/datum/hallucination/fire/hallucination = hallucination_weakref?.resolve()
+	var/datum/hallucination/fire/hallucination = hallucination_autoref?.resolve()
 	if(!istype(hallucination))
 		return TRUE
 
@@ -125,7 +125,7 @@
 	return FALSE
 
 /datum/status_effect/stop_drop_roll/hallucinating/stop_rolling_successful()
-	var/datum/hallucination/fire/hallucination = hallucination_weakref?.resolve()
+	var/datum/hallucination/fire/hallucination = hallucination_autoref?.resolve()
 	if(istype(hallucination))
 		hallucination.clear_fire()
 

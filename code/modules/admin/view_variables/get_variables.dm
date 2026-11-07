@@ -28,8 +28,8 @@
 	else if(istype(var_value, /client))
 		. = VV_CLIENT
 
-	else if(isweakref(var_value))
-		. = VV_WEAKREF
+	else if(isautoref(var_value))
+		. = VV_AUTOREF
 
 	else if(isdatum(var_value))
 		. = VV_DATUM_REFERENCE
@@ -81,7 +81,7 @@
 				VV_RESTORE_DEFAULT,
 				VV_TEXT_LOCATE,
 				VV_PROCCALL_RETVAL,
-				VV_WEAKREF,
+				VV_AUTOREF,
 				)
 
 		var/markstring
@@ -205,7 +205,7 @@
 				return
 			.["value"] = things[value]
 
-		if(VV_WEAKREF)
+		if(VV_AUTOREF)
 			var/type = pick_closest_path(FALSE, get_fancy_list_of_datum_types())
 			var/subtypes = vv_subtype_prompt(type)
 			if(subtypes == null)
@@ -216,7 +216,7 @@
 			if(!value)
 				.["class"] = null
 				return
-			.["value"] = WEAKREF(things[value])
+			.["value"] = AUTOREF(things[value])
 
 		if(VV_CLIENT)
 			.["value"] = input("Select reference:", "Reference", current_value) as null|anything in GLOB.clients

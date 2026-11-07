@@ -51,9 +51,9 @@
 	/// List of bank accounts to take money from, determines in start_dumping()
 	var/list/accounts_to_rob
 	/// The original user of the suspicious phone
-	var/datum/weakref/bogdanoff
+	var/datum/autoref/bogdanoff
 	/// The phone we're going to print cash from
-	var/datum/weakref/phone
+	var/datum/autoref/phone
 	/// Are we able to start moving?
 	var/canwalk = FALSE
 	/// Our own internal bank account, serves as a fallback to transfer money to if Bogdanoff doesn't have one
@@ -63,8 +63,8 @@
 	. = ..()
 	if(QDELETED(src))
 		return
-	bogdanoff = WEAKREF(user)
-	phone = WEAKREF(evil_phone)
+	bogdanoff = AUTOREF(user)
+	phone = AUTOREF(evil_phone)
 	internal_account = new /datum/bank_account/remote("CRAB-17", 0, player_account = FALSE)
 
 /obj/structure/checkoutmachine/examine(mob/living/user)

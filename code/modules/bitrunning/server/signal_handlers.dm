@@ -9,7 +9,7 @@
 /obj/machinery/quantum_server/proc/on_corpse_spawned(datum/source, mob/living/corpse)
 	SIGNAL_HANDLER
 
-	mutation_candidate_refs.Add(WEAKREF(corpse))
+	mutation_candidate_refs.Add(AUTOREF(corpse))
 
 
 /// Being qdeleted - make sure the circuit and connected mobs go with it
@@ -81,7 +81,7 @@
 				boss.make_virtual_megafauna()
 				continue
 
-			mutation_candidate_refs.Add(WEAKREF(creature))
+			mutation_candidate_refs.Add(AUTOREF(creature))
 			continue
 
 		if(istype(thing, /obj/effect/mob_spawn/ghost_role)) // so we get threat alerts

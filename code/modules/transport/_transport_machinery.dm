@@ -4,8 +4,8 @@
 	integrity_failure = 0.1
 	/// ID of the transport we're associated with for filtering commands
 	var/configured_transport_id = TRAMSTATION_LINE_1
-	/// weakref of the transport we're associated with
-	var/datum/weakref/transport_ref
+	/// autoref of the transport we're associated with
+	var/datum/autoref/transport_ref
 	var/list/methods_to_fix = list()
 	var/list/repair_signals
 	var/static/list/how_do_we_fix_it = list(
@@ -57,7 +57,7 @@
 	for(var/datum/transport_controller/linear/tram/tram as anything in SStransport.transports_by_type[TRANSPORT_TYPE_TRAM])
 		if(tram.specific_transport_id != configured_transport_id)
 			continue
-		transport_ref = WEAKREF(tram)
+		transport_ref = AUTOREF(tram)
 		log_transport("[id_tag]: Successfuly linked to transport ID [tram.specific_transport_id] [transport_ref]")
 		break
 

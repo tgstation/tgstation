@@ -341,7 +341,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 		return FALSE
 
 	if(sacrificial.mind)
-		LAZYADD(GLOB.sacrificed, WEAKREF(sacrificial.mind))
+		LAZYADD(GLOB.sacrificed, AUTOREF(sacrificial.mind))
 		for(var/datum/objective/sacrifice/sac_objective in cult_team.objectives)
 			if(sac_objective.target == sacrificial.mind)
 				sac_objective.sacced = TRUE
@@ -349,7 +349,7 @@ structure_check() searches for nearby cultist structures required for the invoca
 				sac_objective.update_explanation_text()
 				target_sac = TRUE
 	else
-		LAZYADD(GLOB.sacrificed, WEAKREF(sacrificial))
+		LAZYADD(GLOB.sacrificed, AUTOREF(sacrificial))
 
 	new /obj/effect/temp_visual/cult/sac(loc)
 
