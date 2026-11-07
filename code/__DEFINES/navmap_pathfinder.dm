@@ -43,7 +43,7 @@ GLOBAL_VAR_INIT(navmap_pathfinder_library, null)
 #define NAVMAP_PATH_STALE_TOPOLOGY "stale_topology"
 #define NAVMAP_PATH_STALE_COSTS "stale_costs"
 #define NAVMAP_PATH_STALE_PASS_FLAGS "stale_pass_flags"
-#define NAVMAP_PATHFINDER_VERSION "1.0.13"
+#define NAVMAP_PATHFINDER_VERSION "1.0.14"
 
 /proc/nav_cost_modifiers_equal(alist/first, alist/second)
 	if(length(first) != length(second))
