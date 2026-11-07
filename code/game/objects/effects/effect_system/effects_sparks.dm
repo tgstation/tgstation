@@ -37,7 +37,7 @@
 /obj/effect/particle_effect/sparks/LateInitialize()
 	RegisterSignals(src, list(COMSIG_MOVABLE_CROSS, COMSIG_MOVABLE_CROSS_OVER), PROC_REF(sparks_touched))
 	flick(icon_state, src)
-	playsound(src, SFX_SPARKS, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(src, /datum/sound_effect/sparks, 100, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	var/turf/location = loc
 	if(isturf(location))
 		affect_location(location, just_initialized = TRUE)

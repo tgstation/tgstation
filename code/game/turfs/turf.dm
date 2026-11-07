@@ -144,8 +144,8 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 	/// We do NOT use the shortcut here, because this is faster
 	if(SSmapping.max_plane_offset)
-		if(!SSmapping.plane_offset_blacklist["[plane]"])
-			plane = plane - (PLANE_RANGE * SSmapping.z_level_to_plane_offset[z])
+		if(!SSmapping.plane_offset_blacklist[plane])
+			plane -= PLANE_RANGE * SSmapping.z_level_to_plane_offset[z]
 
 		var/turf/T = GET_TURF_ABOVE(src)
 		if(T)
@@ -660,7 +660,7 @@ GLOBAL_LIST_EMPTY(station_turfs)
 
 /turf/handle_fall(mob/faller)
 	if(has_gravity(src))
-		playsound(src, SFX_BODYFALL, 50, TRUE)
+		playsound(src, /datum/sound_effect/bodyfall, 50, TRUE)
 	faller.drop_all_held_items()
 
 /turf/proc/photograph(limit=20)

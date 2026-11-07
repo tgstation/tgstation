@@ -10,8 +10,8 @@
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_HUGE
 	sound_vary = TRUE
-	pickup_sound = SFX_GENERIC_DEVICE_PICKUP
-	drop_sound = SFX_GENERIC_DEVICE_DROP
+	pickup_sound = /datum/sound_effect/generic_device_pickup
+	drop_sound = /datum/sound_effect/generic_device_drop
 	custom_materials = list(/datum/material/iron=SHEET_MATERIAL_AMOUNT *5, /datum/material/glass=SHEET_MATERIAL_AMOUNT * 1.25)
 
 	var/on = TRUE

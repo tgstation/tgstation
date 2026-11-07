@@ -113,7 +113,7 @@
 	/// Cyclelinking for airlocks that aren't on the same x or y coord as the target.
 	var/closeOtherId
 	var/obj/machinery/door/airlock/closeOther
-	var/list/obj/machinery/door/airlock/close_others = list()
+	var/list/obj/machinery/door/airlock/close_others
 	var/obj/item/electronics/airlock/electronics
 	COOLDOWN_DECLARE(shockCooldown)
 	/// Any papers pinned to the airlock
@@ -216,10 +216,8 @@
 /obj/machinery/door/airlock/proc/update_other_id()
 	for(var/obj/machinery/door/airlock/Airlock as anything in SSmachines.get_machines_by_type_and_subtypes(/obj/machinery/door/airlock))
 		if(Airlock.closeOtherId == closeOtherId && Airlock != src)
-			if(!(Airlock in close_others))
-				close_others += Airlock
-			if(!(src in Airlock.close_others))
-				Airlock.close_others += src
+			LAZYOR(close_others, Airlock)
+			LAZYOR(Airlock.close_others, src)
 
 /obj/machinery/door/airlock/proc/cyclelinkairlock()
 	if (cyclelinkedairlock)
@@ -309,8 +307,8 @@
 	if(close_others) //remove this airlock from the list of every linked airlock
 		closeOtherId = null
 		for(var/obj/machinery/door/airlock/otherlock as anything in close_others)
-			otherlock.close_others -= src
-		close_others.Cut()
+			LAZYREMOVE(otherlock.close_others, src)
+		LAZYNULL(close_others)
 	QDEL_NULL(note)
 	QDEL_NULL(seal)
 	var/datum/atom_hud/data/diagnostic/diag_hud = GLOB.huds[DATA_HUD_DIAGNOSTIC]
@@ -2494,7 +2492,7 @@
 			new /obj/effect/temp_visual/cult/sac(loc)
 			var/atom/throwtarget
 			throwtarget = get_edge_target_turf(src, get_dir(src, get_step_away(L, src)))
-			SEND_SOUND(L, sound(SFX_HALLUCINATION_TURN_AROUND,0,1,50))
+			SEND_SOUND(L, sound(/datum/sound_effect/hallucination_turn_around,0,1,50))
 			flash_color(L, flash_color=COLOR_CULT_RED, flash_time=20)
 			L.Paralyze(40)
 			L.throw_at(throwtarget, 5, 1)

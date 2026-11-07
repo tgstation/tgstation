@@ -67,7 +67,7 @@
 
 	/// The "important" UI tooltips of this circuit component. Used for important things like instant & disabled circuits, they're drawn next to the default tooltip icon.
 	/// An assoc list with the format ui_alerts["alert_icon"] = "alert_name".
-	var/ui_alerts = list()
+	var/list/ui_alerts
 
 /// Called when the option ports should be set up
 /obj/item/circuit_component/proc/populate_options()
@@ -124,13 +124,13 @@
 	if(remove_flag)
 		circuit_flags &= ~remove_flag
 	if(circuit_flags & CIRCUIT_FLAG_INSTANT)
-		ui_alerts["tachometer-alt"] = "Instant"
+		LAZYSET(ui_alerts, "tachometer-alt", "Instant")
 	else
-		ui_alerts -= "tachometer-alt"
+		LAZYREMOVE(ui_alerts, "tachometer-alt")
 	if(circuit_flags & CIRCUIT_FLAG_DISABLED)
-		ui_alerts["exclamation"] = "Non-functional"
+		LAZYSET(ui_alerts, "exclamation", "Non-functional")
 	else
-		ui_alerts -= "exclamation"
+		LAZYREMOVE(ui_alerts, "exclamation")
 
 /**
  * Called when a shell is registered from the component/the component is added to a circuit.

@@ -976,6 +976,7 @@ GLOBAL_LIST_EMPTY_TYPED(greenscreen_displays, /obj/effect/abstract/greenscreen_d
 		COMSIG_CARBON_APPLY_OVERLAY,
 		COMSIG_CARBON_REMOVE_OVERLAY,
 		COMSIG_LIVING_POST_UPDATE_TRANSFORM,
+		COMSIG_LIVING_CHAT_INDICATOR_UPDATED,
 	), PROC_REF(thing_changed))
 	RegisterSignal(thing, COMSIG_QDELETING, PROC_REF(remove_from_display))
 	vis_contents += displaying[thing]
@@ -992,6 +993,7 @@ GLOBAL_LIST_EMPTY_TYPED(greenscreen_displays, /obj/effect/abstract/greenscreen_d
 		COMSIG_CARBON_APPLY_OVERLAY,
 		COMSIG_CARBON_REMOVE_OVERLAY,
 		COMSIG_LIVING_POST_UPDATE_TRANSFORM,
+		COMSIG_LIVING_CHAT_INDICATOR_UPDATED,
 		COMSIG_QDELETING,
 	))
 	vis_contents -= displaying[thing]

@@ -59,7 +59,7 @@
 			left.dismember()
 		if(right)
 			right.dismember()
-		playsound(user, SFX_DESECRATION, 50, TRUE, -1)
+		playsound(user, /datum/sound_effect/desecration, 50, TRUE, -1)
 		return BRUTELOSS
 	else//didnt realize this suicide act existed (was in miscellaneous.dm) and didnt want to remove it, so made it a 50/50 chance. Why not!
 		user.visible_message(span_suicide("[user] is bashing [user.p_their()] own head in with [src]! Ain't that a kick in the head?"))
@@ -106,8 +106,23 @@
 	. = ..()
 	if(fastening_type != SHOES_SLIPON && tied == SHOES_UNTIED)
 		our_alert_ref = WEAKREF(user.throw_alert(ALERT_SHOES_KNOT, /atom/movable/screen/alert/shoes/untied))
-		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(check_trip), override=TRUE)
-	oh_what_a_neat_hat(user, TRUE)
+		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(check_trip), override = TRUE)
+	if(astype(user, /mob/living/carbon)?.bodyshape & BODYSHAPE_CERULEAN)
+		slot_flags |= ITEM_SLOT_HEAD
+
+/obj/item/clothing/shoes/give_clothing_traits(mob/living/wearer, slot)
+	if((astype(wearer, /mob/living/carbon)?.bodyshape & BODYSHAPE_CERULEAN) && (slot & ITEM_SLOT_HEAD))
+		return
+
+	return ..()
+
+/obj/item/clothing/shoes/get_worn_offsets(hand_index, bodyshape)
+	var/vector/offsets = ..()
+	if(!hand_index && (bodyshape & BODYSHAPE_CERULEAN))
+		// offsets up to head
+		offsets.y = 28
+
+	return offsets
 
 /obj/item/clothing/shoes/proc/restore_offsets(mob/user)
 	equipped_before_drop = FALSE
@@ -123,7 +138,8 @@
 	if(offset && equipped_before_drop)
 		restore_offsets(user)
 	. = ..()
-	oh_what_a_neat_hat(user, FALSE)
+	if(astype(user, /mob/living/carbon)?.bodyshape & BODYSHAPE_CERULEAN)
+		slot_flags &= ~ITEM_SLOT_HEAD
 
 /obj/item/clothing/shoes/update_clothes_damaged_state(damaged_state = CLOTHING_DAMAGED)
 	..()
@@ -161,7 +177,7 @@
 	else
 		if(tied == SHOES_UNTIED && our_guy && user == our_guy)
 			our_alert_ref = WEAKREF(our_guy.throw_alert(ALERT_SHOES_KNOT, /atom/movable/screen/alert/shoes/untied)) // if we're the ones unknotting our own laces, of course we know they're untied
-		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(check_trip), override=TRUE)
+		RegisterSignal(src, COMSIG_SHOES_STEP_ACTION, PROC_REF(check_trip), override = TRUE)
 
 /**
  * handle_tying deals with all the actual tying/untying/knotting, inferring your intent from who you are in relation to the state of the laces
@@ -214,7 +230,7 @@
 		if(HAS_TRAIT(user, TRAIT_CLUMSY)) // based clowns trained their whole lives for this
 			mod_time *= 0.75
 
-		if(do_after(user, mod_time, target = our_guy, extra_checks = CALLBACK(src, PROC_REF(still_shoed), our_guy), cog_icon = null))
+		if(do_after(user, mod_time, target = our_guy, extra_checks = CALLBACK(src, PROC_REF(still_shoed), our_guy), timed_action_flags = HIDE_INTERACTION))
 			to_chat(user, span_notice("You [tied ? "un[fasten_verb()]" : "knot"] the [fastening_type] on [loc]'s [src.name]."))
 			if(tied == SHOES_UNTIED)
 				adjust_laces(SHOES_KNOTTED, user)
@@ -347,11 +363,6 @@
 
 	return "doing something mysterious to"
 
-/obj/item/clothing/shoes/attach_clothing_traits(traits)
-	if(!(astype(loc, /mob)?.get_slot_by_item(src) & ITEM_SLOT_FEET))
-		return
-	return ..()
-
 /// when the shoes are worn on the headslot we have to override the overlay's icon to look for the correct file
 /obj/item/clothing/shoes/worn_overlays(mutable_appearance/standing, isinhands = FALSE, icon_file, bodyshape = NONE)
 	. = ..()
@@ -362,15 +373,3 @@
 	var/mutable_appearance/standing_overlay = current_overlays[1]
 	standing_overlay.icon = icon_to_use
 	standing.icon = icon_to_use
-	worn_y_offset = 28 //about how many px up to draw on the head
-
-/// ceruleans wear shoes as a hat. are they doing a bit or are they dumb? i guess we will never know
-/obj/item/clothing/shoes/proc/oh_what_a_neat_hat(mob/living/carbon/user, up_or_down)
-	if(user && !(user?.bodyshape & BODYSHAPE_CERULEAN))
-		return
-	if(up_or_down)
-		slot_flags |= ITEM_SLOT_HEAD
-		detach_clothing_traits(clothing_traits)
-	else
-		slot_flags = initial(slot_flags)
-		worn_y_offset = initial(worn_y_offset)

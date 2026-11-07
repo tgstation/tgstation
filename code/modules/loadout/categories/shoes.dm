@@ -31,17 +31,10 @@
 	name = "Shoes (Laceup)"
 	item_path = /obj/item/clothing/shoes/laceup
 
-/datum/loadout_item/shoes/cowboy_brown
-	name = "Boots (Cowboy, Brown)"
+/datum/loadout_item/shoes/cowboy
+	name = "Cowboy Boots"
 	item_path = /obj/item/clothing/shoes/cowboy/laced
-
-/datum/loadout_item/shoes/cowboy_white
-	name = "Boots (Cowboy, White)"
-	item_path = /obj/item/clothing/shoes/cowboy/white/laced
-
-/datum/loadout_item/shoes/cowboy_black
-	name = "Boots (Cowboy, Black)"
-	item_path = /obj/item/clothing/shoes/cowboy/black/laced
+	reskin_datum = /datum/atom_skin/cowboy_boots
 
 /datum/loadout_item/shoes/glow_shoes
 	name = "Shoes (Glowing, Colourable)"

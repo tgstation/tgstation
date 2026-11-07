@@ -50,7 +50,7 @@
 	desc = "A wooden musical instrument with four strings and a bow. \"The devil went down to space, he was looking for an assistant to grief.\""
 	icon_state = "violin"
 	inhand_icon_state = "violin"
-	hitsound = SFX_SWING_HIT
+	hitsound = /datum/sound_effect/swing_hit
 	allowed_instrument_ids = "violin"
 	custom_materials = list(/datum/material/wood = SHEET_MATERIAL_AMOUNT * 4, /datum/material/iron = SHEET_MATERIAL_AMOUNT)
 

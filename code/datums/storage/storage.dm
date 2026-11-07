@@ -49,7 +49,7 @@
 	var/do_rustle = TRUE
 	var/rustle_vary = TRUE
 	/// Path for the item's rustle sound.
-	var/rustle_sound = SFX_RUSTLE
+	var/rustle_sound = /datum/sound_effect/rustle
 	/// Path for the item's rustle sound when removing items.
 	var/remove_rustle_sound = null
 	/// The sound to play when we open/access the storage
@@ -1003,7 +1003,7 @@ GLOBAL_LIST_EMPTY(cached_storage_typecaches)
 		animate_parent()
 
 	if(do_rustle && !silent)
-		playsound(parent, (open_sound ? open_sound : SFX_RUSTLE), 50, open_sound_vary, -5)
+		playsound(parent, (open_sound ? open_sound : /datum/sound_effect/rustle), 50, open_sound_vary, -5)
 
 	return TRUE
 

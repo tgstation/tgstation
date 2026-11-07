@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - qol: "examining an unsecured welder now tells you its fuel tank is open and can be screwed shut, and trying to light one tells you to screw the tank shut first."

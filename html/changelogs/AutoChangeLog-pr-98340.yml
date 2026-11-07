@@ -1,0 +1,4 @@
+author: "vinylspiders"
+delete-after: True
+changes:
+  - bugfix: "camera coverage no longer breaks when looking down through glass at the bottom of a multilevel area"

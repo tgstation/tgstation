@@ -12,8 +12,8 @@ LINEN BINS
 	righthand_file = 'icons/mob/inhands/items/bedsheet_righthand.dmi'
 	icon_state = "sheetwhite"
 	inhand_icon_state = "sheetwhite"
-	drop_sound = SFX_CLOTH_DROP
-	pickup_sound = SFX_CLOTH_PICKUP
+	drop_sound = /datum/sound_effect/cloth_drop
+	pickup_sound = /datum/sound_effect/cloth_pickup
 	slot_flags = ITEM_SLOT_NECK
 	layer = BELOW_MOB_LAYER
 	throwforce = 0

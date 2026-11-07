@@ -93,6 +93,7 @@
 	AddComponent(/datum/component/connect_perspective, home, list(COMSIG_MOVABLE_Z_CHANGED = PROC_REF(z_changed)))
 	RegisterSignal(home, COMSIG_PLANE_GROUP_HUD_CHANGED, PROC_REF(hud_changed))
 	RegisterSignal(home, COMSIG_PLANE_GROUP_PERSPECTIVE_CHANGED, PROC_REF(perspective_changed))
+	RegisterSignal(SSweather, COMSIG_WEATHER_NEW_PARTICLE_HOLDER, PROC_REF(on_new_particle_holder))
 	update_state()
 
 /atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/z_changed(datum/source)
@@ -106,6 +107,27 @@
 /atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/perspective_changed(datum/source)
 	SIGNAL_HANDLER
 	update_state()
+
+/atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/on_new_particle_holder(datum/source, obj/effect/abstract/weather_holder/z_level/holder)
+	SIGNAL_HANDLER
+
+	if(plane != holder.plane)
+		return
+
+	var/mob/mymob = home?.our_hud?.mymob
+	if(!istype(mymob) || !mymob.canon_client?.prefs?.read_preference(/datum/preference/toggle/particle_weather))
+		return
+
+	if(!SSmapping.initialized)
+		return
+
+	var/list/stack_levels = SSmapping.get_connected_levels(get_turf(home.get_perspective()))
+	var/max_z = max(stack_levels)
+	var/our_z = max_z - offset
+	if(!(our_z in stack_levels))
+		return
+
+	vis_contents += holder
 
 /// Updates ourselves based on our mob's preferences state
 /atom/movable/screen/plane_master/rendering_plate/particle_weather/proc/update_state()
@@ -379,7 +401,7 @@
 
 /atom/movable/screen/plane_master/rendering_plate/light_mask/hide_from(mob/oldmob)
 	. = ..()
-	var/atom/movable/screen/plane_master/emissive = home.get_plane(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE, offset))
+	var/atom/movable/screen/plane_master/emissive = home.plane_masters[GET_NEW_PLANE(RENDER_PLANE_EMISSIVE, offset)]
 	emissive.remove_filter("lighting_mask")
 	remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_GAME, offset))
 	UnregisterSignal(oldmob, COMSIG_MOB_SIGHT_CHANGE)
@@ -387,7 +409,7 @@
 /atom/movable/screen/plane_master/rendering_plate/light_mask/proc/handle_sight(datum/source, new_sight, old_sight)
 	// If we can see something that shows "through" blackness, and we can't see turfs, disable our draw to the game plane
 	// And instead mask JUST the overlay lighting plane, since that will look fuckin wrong
-	var/atom/movable/screen/plane_master/emissive = home.get_plane(GET_NEW_PLANE(RENDER_PLANE_EMISSIVE, offset))
+	var/atom/movable/screen/plane_master/emissive = home.plane_masters[GET_NEW_PLANE(RENDER_PLANE_EMISSIVE, offset)]
 	if(new_sight & SEE_AVOID_TURF_BLACKNESS && !(new_sight & SEE_TURFS))
 		remove_relay_from(GET_NEW_PLANE(RENDER_PLANE_GAME, offset))
 		emissive.add_filter("lighting_mask", 1, alpha_mask_filter(render_source = OFFSET_RENDER_TARGET(LIGHT_MASK_RENDER_TARGET, offset)))

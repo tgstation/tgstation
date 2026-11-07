@@ -158,6 +158,16 @@ SUBSYSTEM_DEF(research)
 				partner.accepted_experiments += ordnance_experiment.type
 		scientific_partners += partner
 
+/datum/controller/subsystem/research/vv_edit_var(var_name, var_value)
+	. = ..()
+	if(!.)
+		return
+	switch(var_name)
+		// VV's list editor calls this after editing these in place too, so we catch those as well
+		if(NAMEOF(src, techweb_nodes), NAMEOF(src, techweb_designs), NAMEOF(src, point_types))
+			var/datum/asset/json/techweb_catalogue/catalogue = load_asset_datum(/datum/asset/json/techweb_catalogue)
+			catalogue.needs_build = TRUE
+
 /**
  * Goes through all techwebs and goes through their servers to find ones on a valid z-level
  * Returns the full list of all techweb servers.

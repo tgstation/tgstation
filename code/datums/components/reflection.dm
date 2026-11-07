@@ -58,6 +58,7 @@
 		COMSIG_CARBON_APPLY_OVERLAY,
 		COMSIG_CARBON_REMOVE_OVERLAY,
 		COMSIG_LIVING_POST_UPDATE_TRANSFORM,
+		COMSIG_LIVING_CHAT_INDICATOR_UPDATED,
 	)
 	// Always supplied to update_signals
 	var/list/default_update_signals = list(

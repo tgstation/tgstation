@@ -22,7 +22,7 @@
 		to_chat(user, span_warning("This device can only scan slimes!"))
 		return ITEM_INTERACT_BLOCKING
 	var/mob/living/basic/slime/scanned_slime = interacting_with
-	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+	playsound(src, /datum/sound_effect/industrial_scan, 20, TRUE, -2, TRUE, FALSE)
 	slime_scan(scanned_slime, user)
 	return ITEM_INTERACT_SUCCESS
 

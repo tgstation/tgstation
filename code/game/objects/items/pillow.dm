@@ -26,8 +26,8 @@
 	var/bricked = FALSE
 	///Stamina recoil from hitting
 	var/stam_recoil = 5
-	drop_sound = SFX_CLOTH_DROP
-	pickup_sound = SFX_CLOTH_PICKUP
+	drop_sound = /datum/sound_effect/cloth_drop
+	pickup_sound = /datum/sound_effect/cloth_pickup
 
 /obj/item/pillow/Initialize(mapload)
 	. = ..()

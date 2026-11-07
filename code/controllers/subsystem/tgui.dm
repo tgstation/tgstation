@@ -333,7 +333,8 @@ SUBSYSTEM_DEF(tgui)
  * required ui datum/tgui The UI to be added.
  */
 /datum/controller/subsystem/tgui/proc/on_open(datum/tgui/ui)
-	ui.user?.tgui_open_uis |= ui
+	if(ui.user)
+		LAZYOR(ui.user.tgui_open_uis, ui)
 	LAZYOR(ui.src_object.open_uis, ui)
 	all_uis |= ui
 
@@ -352,7 +353,7 @@ SUBSYSTEM_DEF(tgui)
 	current_run -= ui
 	// If the user exists, remove it from them too.
 	if(ui.user)
-		ui.user.tgui_open_uis -= ui
+		LAZYREMOVE(ui.user.tgui_open_uis, ui)
 	if(ui.src_object)
 		LAZYREMOVE(ui.src_object.open_uis, ui)
 	return TRUE
@@ -383,13 +384,11 @@ SUBSYSTEM_DEF(tgui)
 	// The old mob had no open UIs.
 	if(length(source?.tgui_open_uis) == 0)
 		return FALSE
-	if(isnull(target.tgui_open_uis) || !istype(target.tgui_open_uis, /list))
-		target.tgui_open_uis = list()
 	// Transfer all the UIs.
 	for(var/datum/tgui/ui in source.tgui_open_uis)
 		// Inform the UIs of their new owner.
 		ui.user = target
-		target.tgui_open_uis += ui
+		LAZYADD(target.tgui_open_uis, ui)
 	// Clear the old list.
-	source.tgui_open_uis.Cut()
+	LAZYNULL(source.tgui_open_uis)
 	return TRUE

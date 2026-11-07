@@ -1610,7 +1610,7 @@
 /turf/open/floor/mineral/titanium,
 /area/centcom/syndicate_mothership/control)
 "rm" = (
-/obj/structure/sign/plaques/kiddie/badger{
+/obj/structure/plaque/kiddie/badger{
 	desc = "A list of names is engraved on this plaque. 'May their heroic sacrifices inspire your bravery' is carved at the bottom.";
 	name = "\improper Operative Remembrance Plaque";
 	pixel_y = 27

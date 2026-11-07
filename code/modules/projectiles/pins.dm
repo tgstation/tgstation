@@ -380,6 +380,6 @@
 
 /obj/item/firing_pin/monkey/pin_auth(mob/living/user)
 	if(!HAS_TRAIT(user, TRAIT_SIMIAN))
-		playsound(src, SFX_SCREECH, 75, TRUE)
+		playsound(src, /datum/sound_effect/screech, 75, TRUE)
 		return FALSE
 	return TRUE

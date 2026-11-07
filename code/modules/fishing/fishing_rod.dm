@@ -252,7 +252,7 @@
 	if(DOING_INTERACTION_WITH_TARGET(user, currently_hooked))
 		return
 
-	playsound(src, SFX_REEL, 50, vary = FALSE)
+	playsound(src, /datum/sound_effect/reel, 50, vary = FALSE)
 	var/time = (0.8 - round(user.mind?.get_skill_level(/datum/skill/fishing) * 0.04, 0.1)) SECONDS * bait_speed_mult
 	if(!do_after(user, time, currently_hooked, timed_action_flags = IGNORE_USER_LOC_CHANGE|IGNORE_TARGET_LOC_CHANGE, extra_checks = CALLBACK(src, PROC_REF(fishing_line_check))))
 		return
@@ -523,13 +523,16 @@
 	var/list/data = list()
 
 	data["bait_name"] = format_text(bait?.name)
-	data["bait_icon"] = bait != null ? icon2base64(icon(bait.icon, bait.icon_state, frame = 1)) : null
+	data["bait_icon"] = bait?.icon
+	data["bait_icon_state"] = bait?.icon_state
 
 	data["line_name"] = format_text(line?.name)
-	data["line_icon"] = line != null ? icon2base64(icon(line.icon, line.icon_state, frame = 1)) : null
+	data["line_icon"] = line?.icon
+	data["line_icon_state"] = line?.icon_state
 
 	data["hook_name"] = format_text(hook?.name)
-	data["hook_icon"] = hook != null ? icon2base64(icon(hook.icon, hook.icon_state, frame = 1)) : null
+	data["hook_icon"] = hook?.icon
+	data["hook_icon_state"] = hook?.icon_state
 
 	data["busy"] = fishing_line
 

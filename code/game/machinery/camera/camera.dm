@@ -435,8 +435,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/camera/xray, 0)
 		for(var/turf/seen as anything in see)
 			if(check_lower)
 				var/turf/below = seen
-				while(below && istransparentturf(below))
-					below = GET_TURF_BELOW(below)
+				// A transparent turf can be the bottom zlevel
+				while(istransparentturf(below) && (below = GET_TURF_BELOW(below)))
 					see += RANGE_TURFS(1, below)
 			if(check_higher)
 				var/turf/above = GET_TURF_ABOVE(seen)

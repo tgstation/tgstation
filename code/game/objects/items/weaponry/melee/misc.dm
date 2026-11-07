@@ -371,7 +371,7 @@
 	block_sound = 'sound/items/weapons/genhit.ogg'
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
-	hitsound = SFX_SWING_HIT
+	hitsound = /datum/sound_effect/swing_hit
 	attack_verb_continuous = list("smashes", "slams", "whacks", "thwacks")
 	attack_verb_simple = list("smash", "slam", "whack", "thwack")
 	icon = 'icons/obj/weapons/staff.dmi'
@@ -534,7 +534,7 @@
 	resistance_flags = FLAMMABLE
 	force = 5
 	throwforce = 5
-	hitsound = SFX_SWING_HIT
+	hitsound = /datum/sound_effect/swing_hit
 	attack_verb_continuous = list("whacks", "thwacks", "wallops", "socks")
 	attack_verb_simple = list("whack", "thwack", "wallop", "sock")
 	icon = 'icons/obj/weapons/club.dmi'

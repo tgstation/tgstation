@@ -71,7 +71,7 @@
 	//this is the cyborg equivalent of dropped(), though we call that too in doUnEquip.
 	item_dropping.cyborg_unequip(src)
 	deselect_module(module_num)
-	playsound_local(src, SFX_RUSTLE, 40, TRUE)
+	playsound_local(src, /datum/sound_effect/rustle, 40, TRUE)
 
 /mob/living/silicon/robot/put_in_hand_check(obj/item/item_equipping)
 	return (item_equipping in model.modules)

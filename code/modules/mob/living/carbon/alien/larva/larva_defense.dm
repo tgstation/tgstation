@@ -6,7 +6,7 @@
 		return TRUE
 	var/damage = rand(1, 9)
 	if (prob(90))
-		playsound(loc, SFX_PUNCH, 25, TRUE, -1)
+		playsound(loc, /datum/sound_effect/punch, 25, TRUE, -1)
 		visible_message(span_danger("[user] kicks [src]!"), \
 						span_userdanger("[user] kicks you!"), span_hear("You hear a sickening sound of flesh hitting flesh!"), COMBAT_MESSAGE_RANGE, user)
 		to_chat(user, span_danger("You kick [src]!"))

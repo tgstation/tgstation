@@ -269,8 +269,9 @@ GLOBAL_LIST_INIT(preference_entries_by_key, init_preference_entries_by_key())
 
 		CRASH("Preference type `[preference_type]` is invalid! [extra_info]")
 
-	if (preference_type in value_cache)
-		return value_cache[preference_type]
+	var/cached_value = value_cache[preference_type]
+	if (!isnull(cached_value) || (preference_type in value_cache))
+		return cached_value
 
 	var/value = preference_entry.read(get_save_data_for_savefile_identifier(preference_entry.savefile_identifier), src)
 	if (isnull(value))

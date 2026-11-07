@@ -173,7 +173,7 @@
 		victim.adjust_temp_blindness_up_to(2.5 SECONDS, 3 SECONDS)
 		victim.adjust_confusion_up_to(2.5 SECONDS, 3 SECONDS)
 	victim.visible_message(span_warning("[victim] is inked by [src]!"), span_userdanger("You've been inked by [src]!"))
-	playsound(victim, SFX_DESECRATION, 50, TRUE)
+	playsound(victim, /datum/sound_effect/desecration, 50, TRUE)
 
 /obj/item/food/canned/chap
 	name = "can of CHAP"

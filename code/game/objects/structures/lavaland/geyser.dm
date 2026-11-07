@@ -64,7 +64,7 @@
 
 /obj/structure/geyser/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	if(!istype(tool, /obj/item/mining_scanner) && !istype(tool, /obj/item/t_scanner/adv_mining_scanner))
-		playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+		playsound(src, /datum/sound_effect/industrial_scan, 20, TRUE, -2, TRUE, FALSE)
 		return NONE //this runs the plunger code
 
 	if(discovered)

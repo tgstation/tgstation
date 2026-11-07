@@ -13,9 +13,9 @@
 	custom_materials = list(/datum/material/glass = SMALL_MATERIAL_AMOUNT*2.5)
 	gender = PLURAL
 	sound_vary = TRUE
-	pickup_sound = SFX_GLASSES_PICKUP
-	drop_sound = SFX_GLASSES_DROP
-	equip_sound = SFX_GLASSES_EQUIP
+	pickup_sound = /datum/sound_effect/glasses_pickup
+	drop_sound = /datum/sound_effect/glasses_drop
+	equip_sound = /datum/sound_effect/glasses_equip
 	var/invis_view = SEE_INVISIBLE_LIVING // Admin only for now
 	/// Override to allow glasses to set higher than normal see_invis
 	var/invis_override = 0
@@ -95,9 +95,9 @@
 	// Mesons get to be lightly green
 	color_cutoffs = list(5, 15, 5)
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/glasses/meson/suicide_act(mob/living/user)
@@ -144,9 +144,9 @@
 	resistance_flags = ACID_PROOF
 	armor_type = /datum/armor/glasses_science
 	clothing_traits = list(TRAIT_REAGENT_SCANNER, TRAIT_RESEARCH_SCANNER)
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 	custom_materials = list(/datum/material/iron = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/glass = HALF_SHEET_MATERIAL_AMOUNT)
 
 /datum/armor/glasses_science
@@ -183,9 +183,9 @@
 	color_cutoffs = list(10, 25, 10)
 	glass_colour_type = /datum/client_colour/glass_colour/lightgreen
 	actions_types = list(/datum/action/item_action/toggle_nv)
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 	custom_materials = list(/datum/material/iron = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/glass = SHEET_MATERIAL_AMOUNT * 0.6, /datum/material/uranium = HALF_SHEET_MATERIAL_AMOUNT, /datum/material/plasma = SMALL_MATERIAL_AMOUNT * 3.5)
 
 /obj/item/clothing/glasses/night/update_icon_state()
@@ -294,9 +294,9 @@
 	flags_cover = GLASSESCOVERSEYES
 	clothing_traits = list(TRAIT_MATERIAL_VISON)
 	glass_colour_type = /datum/client_colour/glass_colour/lightblue
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 
 /obj/item/clothing/glasses/material/mining
 	name = "optical material scanner"
@@ -514,9 +514,9 @@
 	tint = 2
 	visor_vars_to_toggle = VISOR_FLASHPROTECT | VISOR_TINT
 	glass_colour_type = /datum/client_colour/glass_colour/gray
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 
 /obj/item/clothing/glasses/welding/Initialize(mapload)
 	. = ..()
@@ -593,9 +593,9 @@
 	flash_protect = FLASH_PROTECTION_SENSITIVE
 	flags_cover = GLASSESCOVERSEYES
 	glass_colour_type = /datum/client_colour/glass_colour/red
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 
 /obj/item/clothing/glasses/thermal/emp_act(severity)
 	. = ..()
@@ -650,9 +650,9 @@
 	icon_state = "cold"
 	inhand_icon_state = null
 	flags_cover = GLASSESCOVERSEYES
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 
 /obj/item/clothing/glasses/heat
 	name = "heat goggles"
@@ -660,9 +660,9 @@
 	icon_state = "heat"
 	inhand_icon_state = null
 	flags_cover = GLASSESCOVERSEYES
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 
 /obj/item/clothing/glasses/orange
 	name = "orange glasses"
@@ -686,9 +686,9 @@
 	worn_icon_state = "geist_gazers"
 	glass_colour_type = /datum/client_colour/glass_colour/green
 	flags_cover = GLASSESCOVERSEYES
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 
 /obj/item/clothing/glasses/psych
 	name = "psych glasses"
@@ -717,9 +717,9 @@
 		TRAIT_MESON_VISION,
 	)
 	var/xray = FALSE
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 
 /obj/item/clothing/glasses/debug/Initialize(mapload)
 	. = ..()
@@ -785,9 +785,9 @@
 	flags_cover = GLASSESCOVERSEYES
 	/// Hallucination datum currently being used for seeing mares
 	var/datum/hallucination/stored_hallucination
-	pickup_sound = SFX_GOGGLES_PICKUP
-	drop_sound = SFX_GOGGLES_DROP
-	equip_sound = SFX_GOGGLES_EQUIP
+	pickup_sound = /datum/sound_effect/goggles_pickup
+	drop_sound = /datum/sound_effect/goggles_drop
+	equip_sound = /datum/sound_effect/goggles_equip
 
 /obj/item/clothing/glasses/nightmare_vision/Initialize(mapload)
 	. = ..()

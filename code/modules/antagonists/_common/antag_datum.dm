@@ -599,6 +599,7 @@ GLOBAL_LIST_EMPTY(antagonists)
 	custom_objective.owner = owner
 	custom_objective.explanation_text = custom_objective_text
 	custom_objective.completed = TRUE
+	hijack_speed = max(hijack_speed, 0.5)
 
 	if (retain_existing)
 		objectives.Insert(1, custom_objective)

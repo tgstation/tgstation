@@ -162,7 +162,7 @@
 
 	source.visible_message(span_warning("Sparks fly from [source]!"), blind_message = span_hear("You hear a faint electrical spark."))
 	source.balloon_alert(user, "lock destroyed")
-	playsound(source, SFX_SPARKS, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
+	playsound(source, /datum/sound_effect/sparks, 50, TRUE, SHORT_RANGE_SOUND_EXTRARANGE)
 	break_lock()
 	return ITEM_INTERACT_SUCCESS
 
@@ -228,7 +228,7 @@
 		return TRUE
 
 	var/atom/source = parent
-	playsound(source, SFX_TERMINAL_TYPE, 50, FALSE)
+	playsound(source, /datum/sound_effect/terminal_type, 50, FALSE)
 
 	var/digit = params["digit"]
 	switch(digit)

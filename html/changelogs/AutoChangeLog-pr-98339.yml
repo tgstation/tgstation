@@ -1,0 +1,7 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - bugfix: "Stealthy actions (like spy stealing's cog icon) are hidden again"
+  - bugfix: "(Should) fix issues where progress bars flash red or flash complete at inappropriate times"
+  - bugfix: "Fixes ninja draining power directly from a cell only working if they fail to drain power"
+  - code_imp: "Cleaned up cancel interactions hotkey to be less jank, report anything weird"

@@ -55,7 +55,7 @@
 /obj/item/forensics_spoofer/proc/do_fake_scan(atom/target, mob/user)
 	if(silent_mode)
 		return
-	playsound(src, SFX_INDUSTRIAL_SCAN, 20, TRUE, -2, TRUE, FALSE)
+	playsound(src, /datum/sound_effect/industrial_scan, 20, TRUE, -2, TRUE, FALSE)
 	user.visible_message(
 		span_notice("\The [user] points \the [src] at \the [target] and performs a forensic scan.")
 	)

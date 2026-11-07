@@ -424,7 +424,7 @@ There are several things that need to be remembered:
 		var/obj/item/worn_item = get_item_for_held_index(held_index)
 
 		var/icon_file = IS_RIGHT_INDEX(held_index) ? worn_item.righthand_file : worn_item.lefthand_file
-		var/mutable_appearance/hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE, bodyshape = bodyshape)
+		var/mutable_appearance/hand_overlay = worn_item.build_worn_icon(default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = held_index, bodyshape = bodyshape)
 		apply_height(hand_overlay, LOWER_BODY)
 		var/obj/item/bodypart/arm/held_in_hand = hand_bodyparts[held_index]
 		held_in_hand?.held_hand_offset?.apply_offset(hand_overlay)
@@ -538,31 +538,26 @@ There are several things that need to be remembered:
 			out += overlays_standing[i]
 	return out
 
-/*
-Does everything in relation to building the /mutable_appearance used in the mob's overlays list
-covers:
-Inhands and any other form of worn item
-Rentering large appearances
-Layering appearances on custom layers
-Building appearances from custom icon files
-
-By Remie Richards (yes I'm taking credit because this just removed 90% of the copypaste in update_icons())
-
-state: A string to use as the state, this is FAR too complex to solve in this proc thanks to shitty old code
-so it's specified as an argument instead.
-
-default_layer: The layer to draw this on if no other layer is specified
-
-default_icon_file: The icon file to draw states from if no other icon file is specified
-
-isinhands: If true then alternate_worn_icon is skipped so that default_icon_file is used,
-in this situation default_icon_file is expected to match either the lefthand_ or righthand_ file var
-
-female_uniform: A value matching a uniform item's female_sprite_flags var, if this is anything but NO_FEMALE_UNIFORM, we
-generate/load female uniform sprites matching all previously decided variables
-
-
-*/
+/**
+ * Does everything in relation to building the /mutable_appearance used in the mob's overlays list
+ *
+ * Covers:
+ * * Inhands and any other form of worn item
+ * * Rendering large appearances
+ * * Layering appearances on custom layers
+ * * Building appearances from custom icon files
+ *
+ * Args:
+ * * default_layer: What layer to use if the item itself doesn't specify a worn layer. Required.
+ * * default_icon_file: The icon file to draw states from if no other icon file is specified. Required.
+ * * isinhands: Either FALSE (for "is being worn") or a hand index indiciating what hand this is being held in.
+ * * female_uniform: A female uniform flag. If this is anything but NO_FEMALE_UNIFORM, we generate/load female uniform sprites matching all previously decided variables.
+ * * override_state: An optional state to override the item's default icon state / worn icon state.
+ * * override_file: An optional icon file to override the item's default icon file / worn icon file.
+ * * bodyshape: The bodyshape to use when generating the icon. Defaults to NONE, but not typically NONE in practice.
+ *
+ * Returns a mutable_appearance representing the final constructed icon for the item.
+ */
 /obj/item/proc/build_worn_icon(
 	default_layer = 0,
 	default_icon_file = null,
@@ -624,37 +619,36 @@ generate/load female uniform sprites matching all previously decided variables
 	standing = center_image(standing, isinhands ? inhand_x_dimension : worn_x_dimension, isinhands ? inhand_y_dimension : worn_y_dimension)
 
 	//Worn offsets
-	var/list/offsets = get_worn_offsets(isinhands)
-	standing.pixel_w += offsets[1]
-	standing.pixel_z += offsets[2]
+	var/vector/offsets = get_worn_offsets(isinhands, bodyshape)
+	standing.pixel_w += offsets.x
+	standing.pixel_z += offsets.y
 
 	standing.alpha = alpha
 
 	return standing
 
-/// Returns offsets used for equipped item overlays in list(px_offset,py_offset) form.
-/obj/item/proc/get_worn_offsets(isinhands)
-	. = list(0,0) //(px,py)
-	if(isinhands)
-		//Handle held offsets
-		var/mob/holder = loc
-		if(istype(holder))
-			var/list/offsets = holder.get_item_offsets_for_index(holder.get_held_index_of_item(src))
-			if(offsets)
-				.[1] = offsets["x"]
-				.[2] = offsets["y"]
+/// Returns offsets used for equipped item overlays in vector form.
+/obj/item/proc/get_worn_offsets(hand_index, bodyshape)
+	var/vector/offsets = vector(0, 0)
+	if(hand_index)
+		var/vector/hand_offsets = astype(loc, /mob)?.get_item_offsets_for_index(hand_index)
+		offsets.x = hand_offsets?.x
+		offsets.y = hand_offsets?.y
+
 	else
-		.[2] = worn_y_offset
+		offsets.y = worn_y_offset
+
+	return offsets
 
 //Can't think of a better way to do this, sadly
 /mob/proc/get_item_offsets_for_index(i)
 	switch(i)
 		if(3) //odd = left hands
-			return list("x" = 0, "y" = 16)
+			return vector(0, 16)
 		if(4) //even = right hands
-			return list("x" = 0, "y" = 16)
+			return vector(0, 16)
 		else //No offsets or Unwritten number of hands
-			return list("x" = 0, "y" = 0)//Handle held offsets
+			return vector(0, 0)//Handle held offsets
 
 /mob/living/carbon/human/update_body(is_creating = FALSE)
 	remove_overlay(BODY_LAYER)
@@ -673,22 +667,28 @@ generate/load female uniform sprites matching all previously decided variables
 	if(HAS_TRAIT(src, TRAIT_HUSK) || HAS_TRAIT(src, TRAIT_INVISIBLE_MAN) || HAS_TRAIT(src, TRAIT_NO_UNDERWEAR))
 		return .
 
+	var/body_type = MALE
+	if(dna.species.sexes)
+		var/obj/item/bodypart/chest/our_chest = get_bodypart(BODY_ZONE_CHEST)
+		if(our_chest?.is_dimorphic)
+			body_type = physique
+
 	// Underwear, Undershirts & Socks
 	if(underwear)
 		var/datum/sprite_accessory/clothing/underwear/undie_accessory = SSaccessories.underwear_list[underwear]
-		var/mutable_appearance/underwear_overlay = undie_accessory?.make_appearance(underwear_color, physique, bodyshape)
+		var/mutable_appearance/underwear_overlay = undie_accessory?.make_appearance(underwear_color, body_type, bodyshape)
 		if(underwear_overlay)
 			. += underwear_overlay
 
 	if(undershirt)
 		var/datum/sprite_accessory/clothing/undershirt/shirt_accessory = SSaccessories.undershirt_list[undershirt]
-		var/mutable_appearance/shirt_overlay = shirt_accessory?.make_appearance(null, physique, bodyshape)
+		var/mutable_appearance/shirt_overlay = shirt_accessory?.make_appearance(null, body_type, bodyshape)
 		if(shirt_overlay)
 			. += shirt_overlay
 
 	if(socks && num_legs >= 2 && !(bodyshape & BODYSHAPE_DIGITIGRADE))
 		var/datum/sprite_accessory/clothing/socks/sock_accessory = SSaccessories.socks_list[socks]
-		var/mutable_appearance/socks_overlay = sock_accessory?.make_appearance(null, physique, bodyshape)
+		var/mutable_appearance/socks_overlay = sock_accessory?.make_appearance(null, body_type, bodyshape)
 		if(socks_overlay)
 			. += socks_overlay
 

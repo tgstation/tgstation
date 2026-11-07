@@ -339,7 +339,7 @@
 		take_damage(damage_to_take)
 		return
 
-	playsound(loc, SFX_SHATTER, 75, TRUE)
+	playsound(loc, /datum/sound_effect/shatter, 75, TRUE)
 	if (loc != user)
 		take_damage(damage_to_take)
 		return

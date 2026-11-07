@@ -69,7 +69,7 @@
 
 	var/sound = 'sound/effects/footstep/crawl1.ogg'
 	if(HAS_TRAIT(source, TRAIT_FLOPPING))
-		sound = pick(SFX_FISH_PICKUP, 'sound/mobs/non-humanoids/fish/fish_drop1.ogg')
+		sound = pick(/datum/sound_effect/fish_pickup, 'sound/mobs/non-humanoids/fish/fish_drop1.ogg')
 	playsound(turf, sound, 15 * volume, falloff_distance = 1, vary = sound_vary)
 
 ///Prepares a footstep for living mobs. Determines if it should get played. Returns the turf it should get played on. Note that it is always a /turf/open

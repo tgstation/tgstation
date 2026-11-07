@@ -143,7 +143,7 @@
 				active_camera.on_stop_watching(src)
 
 			if(!spying)
-				playsound(computer, SFX_TERMINAL_TYPE, 25, FALSE)
+				playsound(computer, /datum/sound_effect/terminal_type, 25, FALSE)
 
 			var/obj/machinery/camera/selected_camera = locate(params["camera"]) in SScameras.cameras
 			if(selected_camera)

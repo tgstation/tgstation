@@ -35,7 +35,7 @@
 
 /obj/vehicle/sealed/mecha/honker/play_stepsound()
 	if(squeak)
-		playsound(src, SFX_CLOWN_STEP, 70, 1)
+		playsound(src, /datum/sound_effect/clown_step, 70, 1)
 	squeak = !squeak
 
 

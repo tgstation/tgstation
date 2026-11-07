@@ -335,7 +335,7 @@
 	if((. & COMSIG_MOB_STOP_REAGENT_TICK) || (organ_flags & ORGAN_FAILING))
 		return
 	if(istype(chem, /datum/reagent/consumable/salt))
-		playsound(organ_owner, SFX_SEAR, 30, TRUE)
+		playsound(organ_owner, /datum/sound_effect/sear, 30, TRUE)
 		organ_owner.adjust_fire_loss(1 * seconds_per_tick)
 		organ_owner.reagents.remove_reagent(chem.type, REAGENTS_METABOLISM * seconds_per_tick)
 		return COMSIG_MOB_STOP_REAGENT_TICK

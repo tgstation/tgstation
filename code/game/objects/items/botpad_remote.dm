@@ -17,12 +17,12 @@
 	return ..()
 
 /obj/item/botpad_remote/attack_self(mob/living/user)
-	playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
+	playsound(src, /datum/sound_effect/terminal_type, 25, FALSE)
 	try_launch(user)
 	return
 
 /obj/item/botpad_remote/attack_self_secondary(mob/living/user)
-	playsound(src, SFX_TERMINAL_TYPE, 25, FALSE)
+	playsound(src, /datum/sound_effect/terminal_type, 25, FALSE)
 	if(connected_botpad)
 		connected_botpad.recall(user)
 		return

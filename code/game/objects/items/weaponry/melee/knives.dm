@@ -34,9 +34,9 @@
 	var/list/alt_continuous = list("stabs", "pierces", "shanks")
 	var/list/alt_simple = list("stab", "pierce", "shank")
 	sound_vary = TRUE
-	operating_sound = SFX_KNIFE_SLICE
-	pickup_sound = SFX_KNIFE_PICKUP
-	drop_sound = SFX_KNIFE_DROP
+	operating_sound = /datum/sound_effect/knife_slice
+	pickup_sound = /datum/sound_effect/knife_pickup
+	drop_sound = /datum/sound_effect/knife_drop
 
 /datum/armor/item_knife
 	fire = 50

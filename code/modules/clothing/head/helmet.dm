@@ -38,8 +38,8 @@
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
-	visor_toggle_up_sound = SFX_VISOR_UP
-	visor_toggle_down_sound = SFX_VISOR_DOWN
+	visor_toggle_up_sound = /datum/sound_effect/visor_up
+	visor_toggle_down_sound = /datum/sound_effect/visor_down
 	hair_mask = /datum/hair_mask/standard_hat_low
 
 /obj/item/clothing/head/helmet/sec/Initialize(mapload)
@@ -90,10 +90,10 @@
 	icon_state = base_icon_state
 	if (flipped_visor)
 		flags_cover &= ~HEADCOVERSEYES
-		playsound(src, SFX_VISOR_DOWN, 20, TRUE, -1)
+		playsound(src, /datum/sound_effect/visor_down, 20, TRUE, -1)
 	else
 		flags_cover |= HEADCOVERSEYES
-		playsound(src, SFX_VISOR_UP, 20, TRUE, -1)
+		playsound(src, /datum/sound_effect/visor_up, 20, TRUE, -1)
 	update_appearance()
 	return CLICK_ACTION_SUCCESS
 
@@ -255,8 +255,8 @@
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
-	visor_toggle_up_sound = SFX_VISOR_UP
-	visor_toggle_down_sound = SFX_VISOR_DOWN
+	visor_toggle_up_sound = /datum/sound_effect/visor_up
+	visor_toggle_down_sound = /datum/sound_effect/visor_down
 
 /obj/item/clothing/head/helmet/toggleable/riot/Initialize(mapload)
 	. = ..()
@@ -308,8 +308,8 @@
 	equip_sound = 'sound/items/handling/helmet/helmet_equip1.ogg'
 	pickup_sound = 'sound/items/handling/helmet/helmet_pickup1.ogg'
 	drop_sound = 'sound/items/handling/helmet/helmet_drop1.ogg'
-	visor_toggle_up_sound = SFX_VISOR_UP
-	visor_toggle_down_sound = SFX_VISOR_DOWN
+	visor_toggle_up_sound = /datum/sound_effect/visor_up
+	visor_toggle_down_sound = /datum/sound_effect/visor_down
 
 /obj/item/clothing/head/helmet/toggleable/justice/adjust_visor(mob/living/user)
 	if(!COOLDOWN_FINISHED(src, visor_toggle_cooldown))
