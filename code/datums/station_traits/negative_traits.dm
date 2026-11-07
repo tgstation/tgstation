@@ -140,7 +140,7 @@
 	SIGNAL_HANDLER
 	var/datum/job/picked_job = pick(SSjob.get_valid_overflow_jobs())
 	chosen_job_name = LOWER_TEXT(picked_job.title) // like Chief Engineers vs like chief engineers
-	SSjob.set_overflow_role(picked_job.type)
+	SSjob.set_overflow_role(picked_job.type, "[type] ([nameof(__PROC__)])")
 	UnregisterSignal(SSjob, COMSIG_SUBSYSTEM_POST_INITIALIZE)
 
 /datum/station_trait/slow_shuttle

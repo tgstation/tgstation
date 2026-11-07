@@ -8,6 +8,19 @@
 
 	return returnable_list
 
+/// Private proc that gets a list of all jobs with the JOB_NEW_PLAYER_JOINABLE flag, for config use only. This is just so that loading/regenerating the config still works even if some jobs don't exist in joinable occupations.
+/// Ultimately, this here to ensure that server operators will not have their config randomly drop jobs if they make a file at the wrong time (i.e. a map disabling a job)
+/datum/controller/subsystem/job/proc/get_configurable_jobs()
+	RETURN_TYPE(/list/datum/job)
+	var/static/list/configurable_jobs = null
+	if(isnull(configurable_jobs))
+		configurable_jobs = list()
+		for(var/datum/job/occupation as anything in all_occupations)
+			if(occupation.job_flags & JOB_NEW_PLAYER_JOINABLE) // some maps might disable this as being in the `joinable_occupations` list, but we still want it to be configurable. this flag means it meets criteria
+				configurable_jobs += occupation
+
+	return configurable_jobs
+
 /// Sets all of the job datum configurable values to what they've been set to in the config file, jobconfig.toml.
 /datum/controller/subsystem/job/proc/load_jobs_from_config(silent = FALSE)
 	if(!length(job_config_datum_singletons))
@@ -21,7 +34,7 @@
 	var/toml_path = "[global.config.directory]/jobconfig.toml"
 	var/list/job_config = rustg_read_toml_file(toml_path)
 
-	for(var/datum/job/occupation as anything in joinable_occupations)
+	for(var/datum/job/occupation as anything in get_configurable_jobs())
 		var/job_key = occupation.config_tag
 		if(!job_config[job_key]) // Job isn't listed, skip it.
 			// List both job_title and job_key in case they de-sync over time.
@@ -41,7 +54,7 @@
 		stack_trace("Despite SSconfig setting SSjob.legacy_mode to TRUE, jobs.txt was not found in the config directory! Something has gone terribly wrong!")
 		return
 	var/jobstext = file2text(jobsfile)
-	for(var/datum/job/occupation as anything in joinable_occupations)
+	for(var/datum/job/occupation as anything in get_configurable_jobs())
 		var/regex/parser = new("[occupation.title]=(-1|\\d+),(-1|\\d+)")
 		parser.Find(jobstext)
 		occupation.total_positions = text2num(parser.group[1])
@@ -69,7 +82,7 @@
 	// Generate the new TOML format, using codebase defaults.
 	to_chat(user, span_notice("Generating new jobconfig.toml, using codebase defaults."))
 	var/list/file_data = list()
-	for(var/datum/job/occupation as anything in joinable_occupations)
+	for(var/datum/job/occupation as anything in get_configurable_jobs())
 		file_data[occupation.config_tag] = generate_blank_job_config(occupation)
 
 	if(!export_toml(user, file_data))
@@ -84,7 +97,7 @@
 	var/list/file_data = list()
 	config_documentation += "\n\n## This TOML was migrated from jobs.txt. All variables are COMMENTED and will not load by default! Please verify to ensure that they are correct, and uncomment the key as you want, comparing it to the old config.\n\n" // small warning
 
-	for(var/datum/job/occupation as anything in joinable_occupations)
+	for(var/datum/job/occupation as anything in get_configurable_jobs())
 		var/regex/parser = new("[occupation.title]=(-1|\\d+),(-1|\\d+)") // TXT system used the occupation's name, we convert it to the new config_key system here.
 		parser.Find(unrolled_jobs_txt)
 
@@ -93,10 +106,9 @@
 
 		// Playtime Requirements and Required Account Age are new and we want to see it migrated, so we will just pull codebase defaults for them.
 		// Remember, every time we write the TOML from scratch, we want to have it commented out by default to ensure that the server operator knows that they are overriding the codebase defaults when they remove the comment.
-		var/list/working_list = list(
-			"# [JOB_CONFIG_TOTAL_POSITIONS]" = default_positions,
-			"# [JOB_CONFIG_SPAWN_POSITIONS]" = starting_positions,
-		)
+		var/list/working_list = list()
+		working_list[JOB_CONFIG_TOTAL_POSITIONS] = job_config_line(default_positions, commented = TRUE)
+		working_list[JOB_CONFIG_SPAWN_POSITIONS] = job_config_line(starting_positions, commented = TRUE)
 
 		working_list += generate_job_config_excluding_legacy(occupation)
 		file_data[occupation.config_tag] = working_list
@@ -139,14 +151,11 @@
 				continue
 
 			var/config_read_value = job_config[job_key][config_datum_key]
-			if(!config_datum.validate_value(config_read_value))
-				working_list += list(
-					"# [config_datum_key]" = config_datum.get_current_value(occupation), // note that this doesn't make a real comment, it just creates a string mismatch.
-				)
-			else
-				working_list += list(
-					"[config_datum_key]" = config_read_value,
-				)
+			if(config_datum.validate_value(config_read_value))
+				working_list[config_datum_key] = job_config_line(config_read_value, commented = FALSE)
+				continue
+
+			working_list[config_datum_key] = job_config_line(get_config_baseline_value(config_datum, occupation), commented = TRUE)
 
 		file_data[job_key] = working_list
 
@@ -168,9 +177,7 @@
 		// Remember, every time we write the TOML from scratch, we want to have it commented out by default.
 		// This is to ensure that the server operator knows that they are overriding codebase defaults when they remove the comment.
 		// Having comments mean that we allow server operators to defer to codebase standards when they deem acceptable. They must uncomment to override the codebase default.
-		returnable_list += list(
-			"# [config_datum_key]" = config_datum.get_current_value(new_occupation),
-		)
+		returnable_list[config_datum_key] = job_config_line(get_config_baseline_value(config_datum, new_occupation), commented = TRUE)
 
 	return returnable_list
 
@@ -186,16 +193,45 @@
 		if(!config_datum.validate_entry(new_occupation))
 			continue
 
-		returnable_list += list(
-			"# [config_datum_key]" = config_datum.get_current_value(new_occupation),
-		)
+		returnable_list[config_datum_key] = job_config_line(get_config_baseline_value(config_datum, new_occupation), commented = TRUE)
 
 	return returnable_list
 
+/// Builds one entry of a job's section for `export_toml`. commented is a bool for if the toml entry should have a #-prefix on the whole line.
+/datum/controller/subsystem/job/proc/job_config_line(value, commented)
+	return list(value, commented)
+
+/// Helper for encoding a single TOML line with potential commenting
+/datum/controller/subsystem/job/proc/encode_job_config_line(config_key, config_value, commented)
+	var/list/pair = list()
+	pair[config_key] = config_value
+	var/line = trim(rustg_toml_encode(pair))
+	var/returnable_line = line
+	if(commented)
+		returnable_line = "#" + line
+	return returnable_line
+
 /// Proc that we call to generate a new jobconfig.toml file and send it to the requesting client. Returns TRUE if a file is successfully generated.
-/datum/controller/subsystem/job/proc/export_toml(mob/user, data)
+/// `data` is an associative list of job config key -> (associative list of config datum key -> `job_config_line()`).
+/datum/controller/subsystem/job/proc/export_toml(mob/user, list/data)
 	var/file_location = "data/jobconfig.toml" // store it in the data folder server-side so we can FTP it to the client.
-	var/payload = "[config_documentation]\n[rustg_toml_encode(data)]"
+	var/list/sections = list()
+
+	var/sorted_job_keys = sort_list(assoc_to_keys(data))
+	for(var/job_key in sorted_job_keys)
+		var/list/lines = list("\[[job_key]\]")
+		var/list/job_entries = data[job_key]
+		var/list/sorted_job_entries = sort_list(assoc_to_keys(job_entries))
+
+		for(var/config_key in sorted_job_entries)
+			var/list/entry = job_entries[config_key]
+			lines += encode_job_config_line(config_key = config_key, config_value = entry[1], commented = entry[2])
+
+		sections += jointext(lines, "\n")
+
+	var/total_joined_sections = jointext(sections, "\n\n")
+	total_joined_sections += "\n" // in case config is gittracked we should trailing line
+	var/payload = jointext(list(config_documentation, total_joined_sections), "\n")
 	rustg_file_write(payload, file_location)
 	DIRECT_OUTPUT(user, ftp(file(file_location), "jobconfig.toml"))
 	return TRUE
