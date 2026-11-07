@@ -1,9 +1,9 @@
 import { type Dispatch, type SetStateAction, useState } from 'react';
-import { sendAct as act } from 'tgui/events/act';
 import { MenuBar } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
 type NanopaintMenuBarProps = {
+  act: any;
   undoHistory: string[];
   redoHistory: string[];
   workspaceOpen: BooleanLike;
@@ -15,6 +15,7 @@ type NanopaintMenuBarProps = {
 
 export const NanopaintMenuBar = (props: NanopaintMenuBarProps) => {
   const {
+    act,
     undoHistory,
     redoHistory,
     workspaceOpen,

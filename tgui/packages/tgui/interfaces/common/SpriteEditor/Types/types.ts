@@ -120,8 +120,9 @@ export type SpriteEditorData = IncludeOrOmitEntireType<
 >;
 
 export type SpriteEditorToolContext = {
+  act: any;
   currentColor: EditorColor;
-  setCurrentColor: Dispatch<SetStateAction<EditorColor>>;
+  setCurrentColor: Dispatch<SetStateAction<[any, EditorColor]>>;
   selectedDir: Dir;
   selectedLayer: number;
   setPreviewLayer: Dispatch<SetStateAction<number | undefined>>;

@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { Button, ProgressBar, Section, Table } from 'tgui-core/components';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 import { SupermatterContent, type SupermatterData } from './Supermatter';
+import { useNtos } from './NtosCore';
 
 type NtosSupermatterData = SupermatterData & { focus_uid?: number };
 
 export const NtosSupermatter = (props) => {
-  const { act, data } = useBackend<NtosSupermatterData>();
+  const { act, data } = useNtos<NtosSupermatterData>();
   const { sm_data, gas_metadata, focus_uid } = data;
   const [activeUID, setActiveUID] = useState(0);
   const activeSM = sm_data.find((sm) => sm.uid === activeUID);

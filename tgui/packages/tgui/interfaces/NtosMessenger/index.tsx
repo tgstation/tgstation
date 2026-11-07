@@ -15,10 +15,10 @@ import {
 import type { BooleanLike } from 'tgui-core/react';
 import { createSearch } from 'tgui-core/string';
 
-import { useBackend } from '../../backend';
 import { NtosWindow } from '../../layouts';
 import { ChatScreen } from './ChatScreen';
 import type { NtChat, NtMessenger, NtPicture } from './types';
+import { useNtos } from '../NtosCore';
 
 type NtosMessengerData = {
   can_spam: BooleanLike;
@@ -40,7 +40,7 @@ type NtosMessengerData = {
 };
 
 export const NtosMessenger = (props) => {
-  const { data } = useBackend<NtosMessengerData>();
+  const { data } = useNtos<NtosMessengerData>();
   const {
     is_silicon,
     remote_silicon,
@@ -88,7 +88,7 @@ export const NtosMessenger = (props) => {
 };
 
 const AccessDeniedScreen = (props: any) => {
-  const { act, data } = useBackend<NtosMessengerData>();
+  const { act, data } = useNtos<NtosMessengerData>();
 
   return (
     <Stack fill vertical>
@@ -123,7 +123,7 @@ const AccessDeniedScreen = (props: any) => {
 };
 
 const ContactsScreen = (props: any) => {
-  const { act, data } = useBackend<NtosMessengerData>();
+  const { act, data } = useNtos<NtosMessengerData>();
   const {
     owner,
     alert_silenced,
@@ -315,7 +315,7 @@ type ChatButtonProps = {
 };
 
 const ChatButton = (props: ChatButtonProps) => {
-  const { act } = useBackend();
+  const { act } = useNtos();
   const unreadMessages = props.unreads;
   const hasUnreads = unreadMessages > 0;
   return (
@@ -337,7 +337,7 @@ const ChatButton = (props: ChatButtonProps) => {
 };
 
 const SendToAllSection = (props) => {
-  const { data, act } = useBackend<NtosMessengerData>();
+  const { data, act } = useNtos<NtosMessengerData>();
   const { on_spam_cooldown } = data;
 
   const [message, setMessage] = useState('');

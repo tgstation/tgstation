@@ -1,9 +1,9 @@
 import { Button } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
 
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
 import { GasAnalyzerContent, type GasAnalyzerData } from './GasAnalyzer';
+import { useNtos } from './NtosCore';
 
 type NtosGasAnalyzerData = GasAnalyzerData & {
   atmozphereMode: 'click' | 'env';
@@ -11,7 +11,7 @@ type NtosGasAnalyzerData = GasAnalyzerData & {
 };
 
 export const NtosGasAnalyzer = (props) => {
-  const { act, data } = useBackend<NtosGasAnalyzerData>();
+  const { act, data } = useNtos<NtosGasAnalyzerData>();
   const { atmozphereMode, clickAtmozphereCompatible } = data;
   return (
     <NtosWindow width={500} height={450}>

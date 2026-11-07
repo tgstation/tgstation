@@ -120,6 +120,7 @@ const EditableCanvas = (props: EditableCanvasProps) => {
     sidebarItems.push(
       <Stack.Item width="100%">
         <SpriteEditor.ColorPicker
+          act={act}
           width="100%"
           colorMode={colorMode}
           hslWidth="40%"
@@ -132,6 +133,7 @@ const EditableCanvas = (props: EditableCanvasProps) => {
     sidebarItems.push(
       <Stack.Item grow width="100%">
         <SpriteEditor.Palette
+          act={act}
           serverPalette={serverPalette!}
           maxServerColors={maxServerColors!}
           onAddServerColor={onAddServerColor!}
@@ -190,6 +192,7 @@ const EditableCanvas = (props: EditableCanvasProps) => {
               <Stack.Item grow width="100%" textAlign="center" overflow="auto">
                 <ZoomListener {...{ zoom, setZoom, pixelsPerUnit }}>
                   <SpriteEditor.Canvas
+                    act={act}
                     width={`${width}px`}
                     height={`${height}px`}
                     showGrid={showGrid}

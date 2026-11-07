@@ -12,8 +12,8 @@ import {
 import type { BooleanLike } from 'tgui-core/react';
 
 import { resolveAsset } from '../assets';
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 type Data = {
   BossID: string;
@@ -47,7 +47,7 @@ export function NtosArcade(props) {
 }
 
 function PlayerStats(props) {
-  const { data } = useBackend<Data>();
+  const { data } = useNtos<Data>();
   const { PauseState, PlayerHitpoints, PlayerMP, Status } = data;
 
   return (
@@ -90,7 +90,7 @@ function PlayerStats(props) {
 }
 
 function BossBar(props) {
-  const { data } = useBackend<Data>();
+  const { data } = useNtos<Data>();
   const { BossID, Hitpoints } = data;
 
   return (
@@ -117,7 +117,7 @@ function BossBar(props) {
 }
 
 function BottomButtons(props) {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const { GameActive, PauseState, TicketCount } = data;
 
   return (

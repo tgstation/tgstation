@@ -19,19 +19,32 @@ import {
 } from 'tgui-core/components';
 import { formatMoney } from 'tgui-core/format';
 
-import { useBackend, useSharedState } from '../../backend';
+import { useSharedState } from '../../backend';
 import { LoadingScreen } from '../common/LoadingScreen';
 import { SearchBar } from '../common/SearchBar';
 import { searchForSupplies, useCatalogue, useShownCatalogue } from './helpers';
 import type { CargoData, Catalogue, Supply, SupplyCategory } from './types';
 
-type Props = {
+type CargoCatalogProps = {
+  act: any;
+  data: CargoCatalogData;
   express?: boolean;
 };
 
+type CargoCatalogData = Pick<
+  CargoData,
+  | 'catalogue'
+  | 'self_paid'
+  | 'cart'
+  | 'max_order'
+  | 'self_paid'
+  | 'app_cost'
+  | 'displayed_currency_name'
+>;
+
 /** The cargo catalogue - when a new build comes in, the old one stays on screen until it's loaded */
-export function CargoCatalog(props: Props) {
-  const { data } = useBackend<CargoData>();
+export function CargoCatalog(props: CargoCatalogProps) {
+  const { data } = props;
   // NtOS can send the app's data before its static data the first time it's opened (while assets are still sending)
   if (!data.catalogue) {
     return <LoadingScreen />;
@@ -40,7 +53,7 @@ export function CargoCatalog(props: Props) {
   return <ShownCatalog {...props} catalogue={data.catalogue} />;
 }
 
-function ShownCatalog(props: Props & { catalogue: Catalogue }) {
+function ShownCatalog(props: CargoCatalogProps & { catalogue: Catalogue }) {
   const catalogue = useShownCatalogue(props.catalogue);
 
   return (
@@ -50,8 +63,8 @@ function ShownCatalog(props: Props & { catalogue: Catalogue }) {
   );
 }
 
-function CatalogContents(props: Props & { catalogue: Catalogue }) {
-  const { data } = useBackend<CargoData>();
+function CatalogContents(props: CargoCatalogProps & { catalogue: Catalogue }) {
+  const { data, act } = props;
   const { express, catalogue } = props;
 
   const supplies = useCatalogue(catalogue);
@@ -93,6 +106,8 @@ function CatalogContents(props: Props & { catalogue: Catalogue }) {
         <Stack.Item grow mr={-0.33}>
           <Section fill>
             <CatalogTabs
+              act={act}
+              data={data}
               express={express}
               activeSupplyName={activeSupplyName}
               categories={supplies}
@@ -105,7 +120,12 @@ function CatalogContents(props: Props & { catalogue: Catalogue }) {
         <Stack.Divider />
         <Stack.Item grow={express ? 2 : 3}>
           <Section fill scrollable>
-            <CatalogList packs={packs} openContents={setShowContents} />
+            <CatalogList
+              act={act}
+              {...data}
+              packs={packs}
+              openContents={setShowContents}
+            />
           </Section>
         </Stack.Item>
       </Stack>
@@ -119,18 +139,20 @@ type CatalogTabsProps = {
   searchText: string;
   setActiveSupplyName: (name: string) => void;
   setSearchText: (text: string) => void;
-};
+} & CargoCatalogProps;
 
-function CatalogTabs(props: CatalogTabsProps & Props) {
-  const { act, data } = useBackend<CargoData>();
+function CatalogTabs(props: CatalogTabsProps) {
   const {
+    act,
     activeSupplyName,
     categories,
     searchText,
     setActiveSupplyName,
     setSearchText,
     express,
+    data,
   } = props;
+
   const { self_paid } = data;
 
   const sorted = sortBy(categories, [(supply) => supply.name]);
@@ -203,14 +225,27 @@ function CatalogTabs(props: CatalogTabsProps & Props) {
 }
 
 type CatalogListProps = {
+  act: any;
   packs: SupplyCategory['packs'];
   openContents: Dispatch<SetStateAction<string>>;
-};
+} & CatalogListData;
+
+type CatalogListData = Pick<
+  CargoData,
+  'cart' | 'max_order' | 'self_paid' | 'app_cost' | 'displayed_currency_name'
+>;
 
 function CatalogList(props: CatalogListProps) {
-  const { act, data } = useBackend<CargoData>();
-  const { cart = [], max_order, self_paid, app_cost, displayed_currency_name } = data;
-  const { packs = [], openContents } = props;
+  const {
+    act,
+    cart = [],
+    max_order,
+    self_paid,
+    app_cost,
+    displayed_currency_name,
+    packs = [],
+    openContents,
+  } = props;
 
   return (
     <>
@@ -286,11 +321,13 @@ function CatalogList(props: CatalogListProps) {
                     opacity={privateBuy && 0.75}
                     style={{ textDecoration: privateBuy && 'red line-through' }}
                   >
-                    {formatMoney(pack.cost)}{displayed_currency_name}
+                    {formatMoney(pack.cost)}
+                    {displayed_currency_name}
                   </Stack.Item>
                   {!!privateBuy && (
                     <Stack.Item>
-                      {formatMoney(Math.round(pack.cost * 1.1))}{displayed_currency_name}
+                      {formatMoney(Math.round(pack.cost * 1.1))}
+                      {displayed_currency_name}
                     </Stack.Item>
                   )}
                 </Stack>

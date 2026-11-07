@@ -1,12 +1,12 @@
-import { sendAct as act } from 'tgui/events/act';
 import { Button, Dimmer, Section, Stack } from 'tgui-core/components';
 
 type NanopaintErrorDialogProps = {
+  act: any;
   message: string;
 };
 
 export const NanopaintErrorDialog = (props: NanopaintErrorDialogProps) => {
-  const { message } = props;
+  const { act, message } = props;
   return (
     <Dimmer>
       <Section>

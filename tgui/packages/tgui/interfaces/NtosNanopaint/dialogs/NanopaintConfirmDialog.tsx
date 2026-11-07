@@ -1,7 +1,7 @@
-import { sendAct as act } from 'tgui/events/act';
 import { Button, Dimmer, Section, Stack } from 'tgui-core/components';
 
 type NanopaintConfirmDialogProps = {
+  act: any;
   title: string;
   message: string;
   action: string;
@@ -9,7 +9,7 @@ type NanopaintConfirmDialogProps = {
 };
 
 export const NanopaintConfirmDialog = (props: NanopaintConfirmDialogProps) => {
-  const { title, message, action: confirmAct, params } = props;
+  const { act, title, message, action: confirmAct, params } = props;
   return (
     <Dimmer>
       <Section>

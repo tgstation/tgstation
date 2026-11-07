@@ -1,7 +1,7 @@
 import { Button, NoticeBox, Section, Stack, Table } from 'tgui-core/components';
 import type { BooleanLike } from 'tgui-core/react';
-import { useBackend } from '../backend';
 import { NtosWindow } from '../layouts';
+import { useNtos } from './NtosCore';
 
 type FaxInfoList = {
   id: string;
@@ -25,7 +25,7 @@ export const NtosFaxBond = (props) => {
 };
 
 export const NtosFaxBondContent = (props) => {
-  const { act, data } = useBackend<Data>();
+  const { act, data } = useNtos<Data>();
   const { faxes_info = [] } = data;
   return (
     <>
