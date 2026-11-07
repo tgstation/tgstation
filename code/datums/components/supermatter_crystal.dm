@@ -177,13 +177,13 @@
 			user.visible_message(span_danger("A hideous sound echoes as [item] is ashed out on contact with \the [atom_source]. That didn't seem like a good idea..."))
 			playsound(atom_source, 'sound/effects/supermatter.ogg', 150, TRUE)
 			consume(atom_source, item)
-			radiation_pulse(atom_source, max_range = 3, threshold = 0.1, chance = 50)
+			radiation_pulse(atom_source, max_range = 3, threshold = 0.1, chance = 50, can_propogate = TRUE)
 			return
 		else
 			user.visible_message(span_danger("As [user] lights \their [item] on \the [atom_source], silence fills the room..."),\
 				span_danger("Time seems to slow to a crawl as you touch \the [atom_source] with \the [item].</span>\n<span class='notice'>\The [item] flashes alight with an eerie energy as you nonchalantly lift your hand away from \the [atom_source]. Damn."))
 			playsound(atom_source, 'sound/effects/supermatter.ogg', 50, TRUE)
-			radiation_pulse(atom_source, max_range = 1, threshold = 0, chance = 100)
+			radiation_pulse(atom_source, max_range = 1, threshold = 0, chance = 100, can_propogate = TRUE)
 			return
 
 	if(user.dropItemToGround(item))
@@ -194,7 +194,7 @@
 		consume(atom_source, item)
 		playsound(get_turf(atom_source), 'sound/effects/supermatter.ogg', 50, TRUE)
 
-		radiation_pulse(atom_source, max_range = 3, threshold = 0.1, chance = 50)
+		radiation_pulse(atom_source, max_range = 3, threshold = 0.1, chance = 50, can_propogate = TRUE)
 		return
 
 	if(atom_source.Adjacent(user)) //if the item is stuck to the person, kill the person too instead of eating just the item.
@@ -349,14 +349,12 @@
 			matter_increase += min(0.5 * consumed_object.max_integrity, 1000)
 
 	//Some poor sod got eaten, go ahead and irradiate people nearby.
-	radiation_pulse(atom_source, max_range = radiation_range, threshold = 1.2 / max(object_size, 1), chance = 10 * object_size)
+	radiation_pulse(atom_source, max_range = radiation_range, threshold = 1.2 / max(object_size, 1), chance = 10 * object_size, can_propogate = TRUE)
 	for(var/mob/living/near_mob in range(10))
 		atom_source.investigate_log("has irradiated [key_name(near_mob)] after consuming [consumed_object].", INVESTIGATE_ENGINE)
-		if (HAS_TRAIT(near_mob, TRAIT_RADIMMUNE) || issilicon(near_mob))
+		if(!SSradiation.can_irradiate_human_basic(near_mob))
 			continue
-		if(ishuman(near_mob) && SSradiation.wearing_rad_protected_clothing(near_mob))
-			continue
-		if(near_mob in view())
+		if(near_mob in viewers())
 			near_mob.show_message(span_danger("As \the [atom_source] slowly stops resonating, you find your skin covered in new radiation burns."), MSG_VISUAL,
 				span_danger("The unearthly ringing subsides and you find your skin covered in new radiation burns."), MSG_AUDIBLE)
 		else

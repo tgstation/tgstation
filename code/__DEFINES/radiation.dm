@@ -4,28 +4,6 @@ Changes here can have widespread effects: make sure you test well.
 Ask Mothblocks if they're around
 */
 
-/// How much stored radiation to check for hair loss
-#define RAD_MOB_HAIRLOSS (1 MINUTES)
-/// Chance of you hair starting to fall out every second when over threshold
-#define RAD_MOB_HAIRLOSS_PROB 7.5
-
-/// How much stored radiation to check for mutation
-#define RAD_MOB_MUTATE (2 MINUTES)
-/// Chance of randomly mutating every second when over threshold
-#define RAD_MOB_MUTATE_PROB 0.5
-
-/// The time since irradiated before checking for vomitting
-#define RAD_MOB_VOMIT (2 MINUTES)
-/// Chance per second of vomitting
-#define RAD_MOB_VOMIT_PROB 0.5
-
-/// How much stored radiation to check for stunning
-#define RAD_MOB_KNOCKDOWN (2 MINUTES)
-/// Chance of knockdown per second when over threshold
-#define RAD_MOB_KNOCKDOWN_PROB 0.5
-/// Amount of knockdown when it occurs
-#define RAD_MOB_KNOCKDOWN_AMOUNT 3
-
 #define RAD_NO_INSULATION 1.0 // For things that shouldn't become irradiated for whatever reason
 #define RAD_VERY_LIGHT_INSULATION 0.9 // What girders have
 #define RAD_LIGHT_INSULATION 0.8

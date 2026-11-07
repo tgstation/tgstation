@@ -13,14 +13,17 @@
 	var/minimum_exposure_time
 
 /datum/component/radiation_countdown/Initialize(minimum_exposure_time)
-	if (!CAN_IRRADIATE(parent))
+	if (!SSradiation.can_irradiate_basic(parent))
 		return COMPONENT_INCOMPATIBLE
 
 	src.minimum_exposure_time = minimum_exposure_time
 
 	time_added = world.time
 
-	to_chat(parent, span_userdanger("The air around you feels warm...perhaps you should go somewhere else."))
+	if(HAS_TRAIT(parent, TRAIT_NO_RADIATION_EFFECTS))
+		to_chat(parent, span_notice("The air around you feels warm."))
+	else
+		to_chat(parent, span_userdanger("The air around you feels warm...perhaps you should go somewhere else."))
 
 	start_deletion_timer()
 
@@ -29,7 +32,7 @@
 
 /datum/component/radiation_countdown/proc/remove_self()
 	if (!HAS_TRAIT(parent, TRAIT_IRRADIATED))
-		to_chat(parent, span_notice("The air here feels safer."))
+		to_chat(parent, span_notice("The air here feels [HAS_TRAIT(parent, TRAIT_NO_RADIATION_EFFECTS) ? "normal" : "safer"]."))
 
 	qdel(src)
 
