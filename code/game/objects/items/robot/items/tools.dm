@@ -253,8 +253,6 @@
 	var/list/radial_menu_options = list()
 	var/list/tool_map = list()
 	for(var/obj/item/tool as anything in omni_toolkit)
-		if(initial(tool.tool_behaviour) == tool_behaviour)
-			continue
 		var/tool_name = initial(tool.name)
 		radial_menu_options[tool_name] = image(icon = initial(tool.icon), icon_state = initial(tool.icon_state))
 		tool_map[tool_name] = tool
