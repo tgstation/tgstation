@@ -12,6 +12,7 @@
 		/obj/item/reagent_containers/cup/glass/bottle/whiskey,
 		/obj/item/reagent_containers/cup/glass/bottle/wine,
 	)
+	quirk_flags = QUIRK_HIDE_FROM_SCAN
 
 	VAR_PRIVATE/datum/weakref/affected_account
 

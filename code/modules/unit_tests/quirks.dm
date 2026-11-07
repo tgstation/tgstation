@@ -26,6 +26,8 @@
 	for(var/datum/quirk/quirk_type as anything in valid_subtypesof(/datum/quirk))
 		if(quirk_type::medical_record_text)
 			continue
+		if(quirk_type::quirk_flags & QUIRK_NO_RECORD)
+			continue
 
 		//Add quirk to a patient - so we can pass quirks that add a medical record after being assigned someone
 		patient.add_quirk(quirk_type)

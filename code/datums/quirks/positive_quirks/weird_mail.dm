@@ -5,6 +5,7 @@
 	icon = FA_ICON_ENVELOPE
 	mail_weight = 50
 	medical_record_text = ""
+	quirk_flags = QUIRK_HIDE_FROM_SCAN
 	/// Completely random stuff to add to their mail pool with high unpredictability
 	var/static/list/random_mail_items = list(
 		/obj/item/assembly/relic/lavaland/revealed, // immediately usable
