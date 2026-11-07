@@ -1,5 +1,5 @@
-// nav_pass is a packed int on /turf. null means its never been baked before. Direction values
-// (cardinals 1/2/4/8, UP/DOWN 16/32) are used directly as bit groups so no lookup is needed.
+// nav_pass is a packed int on /turf. null means its never been baked before.
+// Direction values are used directly as bit groups so no lookup is needed.
 
 /// GROUND edge bits: horizontal cardinal directions are bits 0-3 and UP/DOWN are bits 4-5.
 #define NAV_GROUND(dir)  (dir)
@@ -10,9 +10,9 @@
 /// CONDITIONAL edge bits: horizontal cardinal directions are bits 12-15 and UP/DOWN are bits 16-17.
 #define NAV_COND(dir)    ((dir) << 12)
 
-/// set once a turf has been baked (bit 18).
+/// set once a turf has been baked.
 #define NAV_BAKED        (1 << 18)
-/// set when this turf is simulated (atmos) (bit 19).
+/// set when this turf is simulated (atmos)
 #define NAV_SIMULATED    (1 << 19)
 
 /// Terrain cost modifier for lava turfs.

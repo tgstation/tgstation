@@ -1,6 +1,6 @@
 #define NAVMAP_ASTAR_NODE_BEFORE(A, B) (f_score[(A)] < f_score[(B)] || (f_score[(A)] == f_score[(B)] && g_score[(A)] > g_score[(B)]))
 
-/// Converts a numeric-keyed modifier alist to alternating flag/multiplier entries for the DLL.
+/// Converts a cost modifier alist to alternating flag/multiplier entries for the DLL.
 /proc/nav_cost_modifiers_to_native(alist/nav_cost_modifiers)
 	var/list/flat_modifiers = list()
 	if(!length(nav_cost_modifiers))
@@ -13,7 +13,7 @@
 		flat_modifiers += list(flag, multiplier)
 	return flat_modifiers
 
-/// Returns a downward-rounded lower bound for any terrain multiplier used by this request.
+/// Returns a floored lower bound for any terrain multiplier used by this request.
 /proc/nav_cost_modifiers_heuristic_scale(alist/nav_cost_modifiers)
 	var/scale = 1
 	if(!length(nav_cost_modifiers))
@@ -25,7 +25,7 @@
 	// Quantize down so the scaled geometric estimate stays admissible despite floating-point noise.
 	return min(floor(scale * 1000000) / 1000000, 1)
 
-/// Native-compatible asynchronous navmap A* fallback.
+/// Navmap pathfinding, has DLL and a DM fallback support
 /datum/pathfind/navmap
 	/// The mover requesting the path.
 	var/atom/movable/requester
@@ -322,7 +322,7 @@
 	return !simulated_only || navmap_astar_simulated_cache[tile]
 
 /// Checks the cheap occupancy constraints without resolving the candidate's outgoing edges.
-/// Incoming cardinal/diagonal edges already validate the destination's passability; the full
+/// Incoming cardinal/diagonal edges already vlidate the destination's passability; the full
 /// edge set is resolved when the candidate is popped and expanded.
 /datum/pathfind/navmap/proc/navmap_astar_turf_occupiable(turf/tile)
 	if(isnull(tile) || tile == avoid || (max_distance && max(abs(start.x - tile.x), abs(start.y - tile.y)) > max_distance))
@@ -721,7 +721,7 @@
 		catch
 			return list()
 
-	// DM fallback search object.
+	// fallback version
 	var/datum/pathfind/navmap/search = new()
 	search.force_dm = TRUE
 	search.start = start_turf
