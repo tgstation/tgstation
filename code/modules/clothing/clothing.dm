@@ -159,6 +159,7 @@
 		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 		to_chat(user, span_notice("You fix the damage on [src]."))
 	update_appearance()
+	astype(loc, /mob/living/carbon)?.refresh_obscured()
 
 /**
  * take_damage_zone() is used for dealing damage to specific bodyparts on a worn piece of clothing, meant to be called from [/obj/item/bodypart/proc/check_woundings_mods]
@@ -215,7 +216,7 @@
 
 	zones_disabled++
 	if(clothing_flags & NO_ZONE_DISABLING)
-		body_parts_covered &= ~body_zone2cover_flags(def_zone)
+		remove_bodypart_coverage(body_zone2cover_flags(def_zone))
 
 	if(body_parts_covered == NONE) // if there are no more parts to break then the whole thing is kaput
 		atom_destruction((damage_type == BRUTE ? MELEE : LASER)) // melee/laser is good enough since this only procs from direct attacks anyway and not from fire/bombs
@@ -679,3 +680,23 @@ BLIND     // can't see anything
 		blood_overlay.overlays += emissive_overlay
 
 	return blood_overlay
+
+/// Adds coverage for the specified body parts to this clothing item.
+/obj/item/proc/add_bodypart_coverage(added_coverage)
+	var/old_coverage = body_parts_covered
+	body_parts_covered |= added_coverage
+	if(old_coverage == body_parts_covered)
+		return
+	if(item_flags & IN_INVENTORY)
+		// refreshes state based coverage stuff
+		astype(loc, /mob/living/carbon)?.refresh_obscured()
+
+/// Removes coverage for the specified body parts from this clothing item.
+/obj/item/proc/remove_bodypart_coverage(removed_coverage)
+	var/old_coverage = body_parts_covered
+	body_parts_covered &= ~removed_coverage
+	if(old_coverage == body_parts_covered)
+		return
+	if(item_flags & IN_INVENTORY)
+		// refreshes state based coverage stuff
+		astype(loc, /mob/living/carbon)?.refresh_obscured()

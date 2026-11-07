@@ -139,6 +139,21 @@ DEFINE_BITFIELD(no_equip_flags, list(
 #define NECK (1<<11)
 #define FULL_BODY ALL
 
+DEFINE_BITFIELD(body_parts_covered, list(
+	"CHEST" = CHEST,
+	"GROIN" = GROIN,
+	"HEAD" = HEAD,
+	"LEG_LEFT" = LEG_LEFT,
+	"LEG_RIGHT" = LEG_RIGHT,
+	"FOOT_LEFT" = FOOT_LEFT,
+	"FOOT_RIGHT" = FOOT_RIGHT,
+	"ARM_LEFT" = ARM_LEFT,
+	"ARM_RIGHT" = ARM_RIGHT,
+	"HAND_LEFT" = HAND_LEFT,
+	"HAND_RIGHT" = HAND_RIGHT,
+	"NECK" = NECK,
+))
+
 //defines for the index of hands
 #define LEFT_HANDS 1
 #define RIGHT_HANDS 2
@@ -398,3 +413,46 @@ GLOBAL_LIST_INIT(tool_items, list(
 #define LOCATION_NECK "around your neck"
 /// Items placed in the id slot
 #define LOCATION_ID "in your ID slot"
+
+// For [pressure_protected_bodyparts]
+/// Head is protected natively, i.e. there's no head to protect at all
+#define PRESSURE_HEAD_PROTECTED_NATIVELY (1<<0)
+/// Head is protected by equipment
+#define PRESSURE_HEAD_PROTECTED_BY_EQUIPMENT (1<<1)
+/// Chest is protected natively, i.e. there's no chest to protect at all
+#define PRESSURE_CHEST_PROTECTED_NATIVELY (1<<2)
+/// Chest is protected by equipment
+#define PRESSURE_CHEST_PROTECTED_BY_EQUIPMENT (1<<3)
+/// Legs are protected natively, i.e. there's no legs to protect at all
+#define PRESSURE_LEGS_PROTECTED_NATIVELY (1<<4)
+/// Legs are protected by equipment
+#define PRESSURE_LEGS_PROTECTED_BY_EQUIPMENT (1<<5)
+/// Arms are protected natively, i.e. there's no arms to protect at all
+#define PRESSURE_ARMS_PROTECTED_NATIVELY (1<<6)
+/// Arms are protected by equipment
+#define PRESSURE_ARMS_PROTECTED_BY_EQUIPMENT (1<<7)
+
+/// Combination flag of all equipment protection flags
+#define PRESSURE_EQUIPMENT_FLAGS (PRESSURE_HEAD_PROTECTED_BY_EQUIPMENT | PRESSURE_CHEST_PROTECTED_BY_EQUIPMENT | PRESSURE_LEGS_PROTECTED_BY_EQUIPMENT | PRESSURE_ARMS_PROTECTED_BY_EQUIPMENT)
+/// Combination flag of all native protection flags
+#define PRESSURE_NATIVE_FLAGS (PRESSURE_HEAD_PROTECTED_NATIVELY | PRESSURE_CHEST_PROTECTED_NATIVELY | PRESSURE_LEGS_PROTECTED_NATIVELY | PRESSURE_ARMS_PROTECTED_NATIVELY)
+
+/// Combination flag of head protection flags
+#define PRESSURE_HEAD_PROTECTED (PRESSURE_HEAD_PROTECTED_NATIVELY | PRESSURE_HEAD_PROTECTED_BY_EQUIPMENT)
+/// Combination flag of chest protection flags
+#define PRESSURE_CHEST_PROTECTED (PRESSURE_CHEST_PROTECTED_NATIVELY | PRESSURE_CHEST_PROTECTED_BY_EQUIPMENT)
+/// Combination flag of leg protection flags
+#define PRESSURE_LEGS_PROTECTED (PRESSURE_LEGS_PROTECTED_NATIVELY | PRESSURE_LEGS_PROTECTED_BY_EQUIPMENT)
+/// Combination flag of arm protection flags
+#define PRESSURE_ARMS_PROTECTED (PRESSURE_ARMS_PROTECTED_NATIVELY | PRESSURE_ARMS_PROTECTED_BY_EQUIPMENT)
+
+DEFINE_BITFIELD(pressure_protected_bodyparts, list(
+	"Head (native)" = PRESSURE_HEAD_PROTECTED_NATIVELY,
+	"Head (equipment)" = PRESSURE_HEAD_PROTECTED_BY_EQUIPMENT,
+	"Chest (native)" = PRESSURE_CHEST_PROTECTED_NATIVELY,
+	"Chest (equipment)" = PRESSURE_CHEST_PROTECTED_BY_EQUIPMENT,
+	"Legs (native)" = PRESSURE_LEGS_PROTECTED_NATIVELY,
+	"Legs (equipment)" = PRESSURE_LEGS_PROTECTED_BY_EQUIPMENT,
+	"Arms (native)" = PRESSURE_ARMS_PROTECTED_NATIVELY,
+	"Arms (equipment)" = PRESSURE_ARMS_PROTECTED_BY_EQUIPMENT,
+))
