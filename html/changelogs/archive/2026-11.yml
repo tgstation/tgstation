@@ -64,3 +64,7 @@
       it to exit their site, and be able to edit it unceasingly.
   thegrb93:
   - balance: Tirizene prevents stamina regen
+2026-11-08:
+  sohpeach:
+  - bugfix: ntos file manager can no longer be used to print carp plushies (and similar
+      things)
