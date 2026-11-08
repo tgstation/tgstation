@@ -282,6 +282,7 @@
 #include "outfit_sanity.dm"
 #include "oxyloss_suffocation.dm"
 #include "paintings.dm"
+#include "periodic_table.dm"
 #include "pills.dm"
 #include "placing_on_space.dm"
 #include "plane_double_transform.dm"
