@@ -242,10 +242,6 @@
 /mob/living/carbon/update_held_items()
 	. = ..()
 	remove_overlay(HANDS_LAYER)
-	if (handcuffed)
-		drop_all_held_items()
-		return
-
 	overlays_standing[HANDS_LAYER] = get_held_overlays()
 	apply_overlay(HANDS_LAYER)
 
