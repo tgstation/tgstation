@@ -98,7 +98,7 @@
 
 /obj/machinery/chem_dispenser/Initialize(mapload)
 	if(dispensable_reagents != null && !dispensable_reagents.len)
-		dispensable_reagents = default_dispensable_reagents
+		dispensable_reagents = default_dispensable_reagents | get_chem_dispenser_elements() // vibestation13: natural elements, see code/modules/reagents/periodic_table
 	if(dispensable_reagents)
 		dispensable_reagents = sort_list(dispensable_reagents, GLOBAL_PROC_REF(cmp_reagents_asc))
 
