@@ -1,0 +1,4 @@
+author: "Y0SH1M4S73R"
+delete-after: True
+changes:
+  - admin: "datum instantiation from lua scripts can no longer be used to bypass admin proc call protections"
