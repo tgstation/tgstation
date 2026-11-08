@@ -6,8 +6,8 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	icon = 'icons/obj/fulton.dmi'
 	icon_state = "extraction_pack"
 	w_class = WEIGHT_CLASS_NORMAL
-	/// Beacon weakref
-	var/datum/weakref/beacon_ref
+	/// Beacon autoref
+	var/datum/autoref/beacon_ref
 	/// List of networks
 	var/list/beacon_networks = list("station")
 	/// Number of uses left
@@ -36,7 +36,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/item/extraction_pack/attack_self(mob/user)
 	var/list/possible_beacons = list()
-	for(var/datum/weakref/point_ref as anything in GLOB.total_extraction_beacons)
+	for(var/datum/autoref/point_ref as anything in GLOB.total_extraction_beacons)
 		var/obj/structure/extraction_point/extraction_point = point_ref.resolve()
 		if(isnull(extraction_point))
 			GLOB.total_extraction_beacons.Remove(point_ref)
@@ -52,7 +52,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(isnull(chosen_beacon))
 		return
 
-	beacon_ref = WEAKREF(chosen_beacon)
+	beacon_ref = AUTOREF(chosen_beacon)
 	balloon_alert(user, "linked!")
 
 /obj/item/extraction_pack/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
@@ -204,7 +204,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 
 /obj/item/extraction_pack/networked/attack_self(mob/user)
 	var/list/possible_beacons = list()
-	for(var/datum/weakref/point_ref as anything in GLOB.total_extraction_beacons)
+	for(var/datum/autoref/point_ref as anything in GLOB.total_extraction_beacons)
 		var/obj/structure/extraction_point/extraction_point = point_ref.resolve()
 		if(isnull(extraction_point))
 			GLOB.total_extraction_beacons.Remove(point_ref)
@@ -236,7 +236,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	if(isnull(chosen_beacon))
 		return
 
-	beacon_ref = WEAKREF(chosen_beacon)
+	beacon_ref = AUTOREF(chosen_beacon)
 	balloon_alert(user, "linked!")
 
 /obj/item/extraction_pack/networked/get_beacon(mob/living/user)
@@ -315,7 +315,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 	. = ..()
 	name += " ([rand(100,999)]) ([get_area_name(src, TRUE)])"
 	INVOKE_ASYNC(src, PROC_REF(poll_name), creator)
-	GLOB.total_extraction_beacons.Add(WEAKREF(src))
+	GLOB.total_extraction_beacons.Add(AUTOREF(src))
 	update_appearance(UPDATE_OVERLAYS)
 
 /obj/structure/extraction_point/proc/poll_name(mob/creator)
@@ -324,7 +324,7 @@ GLOBAL_LIST_EMPTY(total_extraction_beacons)
 		name = name_input
 
 /obj/structure/extraction_point/Destroy(force)
-	GLOB.total_extraction_beacons -= WEAKREF(src)
+	GLOB.total_extraction_beacons -= AUTOREF(src)
 	return ..()
 
 /obj/structure/extraction_point/attack_hand(mob/living/user, list/modifiers)

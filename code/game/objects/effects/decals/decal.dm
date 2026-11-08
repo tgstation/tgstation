@@ -84,6 +84,9 @@
 
 /obj/effect/turf_decal/Destroy(force)
 	SHOULD_CALL_PARENT(FALSE)
+	if(auto_reference)
+		UNLINT(auto_reference.reference = null)
+		auto_reference = null
 #ifdef UNIT_TESTS
 // If we don't do this, turf decals will end up stacking up on a tile, and break the overlay limit
 // I hate it too bestie

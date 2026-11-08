@@ -189,7 +189,7 @@
 /datum/status_effect/shapechange_mob/from_spell/polymorph_belt/proc/on_type_change(mob/living/source, mob/living/new_mob)
 	SIGNAL_HANDLER
 	var/caster = caster_mob // Will be unset when the mob is unshifted
-	var/datum/action/cooldown/spell/shapeshift/transform_action = source_weakref?.resolve()
+	var/datum/action/cooldown/spell/shapeshift/transform_action = source_autoref?.resolve()
 	transform_action.possible_shapes |= new_mob.type
 	restore_caster()
 	new_mob.apply_status_effect(type, caster, transform_action)

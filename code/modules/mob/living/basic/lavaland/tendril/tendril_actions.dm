@@ -202,7 +202,7 @@
 			primary_type = /obj/effect/temp_visual/effect_trail/tendril_chaser/wide_area
 
 	var/obj/effect/temp_visual/effect_trail/tendril_chaser/chaser = new primary_type(get_turf(owner), target)
-	LAZYADD(active_chasers, WEAKREF(chaser))
+	LAZYADD(active_chasers, AUTOREF(chaser))
 	RegisterSignal(chaser, COMSIG_QDELETING, PROC_REF(on_chaser_destroyed))
 	playsound(owner, 'sound/effects/magic/demon_attack1.ogg', vol = 100, vary = TRUE, pressure_affected = FALSE)
 	SLEEP_CHECK_DEATH(0.6 SECONDS, owner)
@@ -212,7 +212,7 @@
 /// Remove a spike trail from our list of active trails
 /datum/action/cooldown/mob_cooldown/tendril_chaser/proc/on_chaser_destroyed(atom/chaser)
 	SIGNAL_HANDLER
-	LAZYREMOVE(active_chasers, WEAKREF(chaser))
+	LAZYREMOVE(active_chasers, AUTOREF(chaser))
 
 /obj/effect/temp_visual/effect_trail/tendril_chaser
 	duration = 10 SECONDS

@@ -6,6 +6,8 @@ GLOBAL_LIST_EMPTY_TYPED(persistent_clients, /datum/persistent_client)
 
 /// Tracks information about a client between log in and log outs
 /datum/persistent_client
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	/// The true client
 	var/client/client
 	/// The mob this persistent client is currently bound to.
@@ -53,7 +55,7 @@ GLOBAL_LIST_EMPTY_TYPED(persistent_clients, /datum/persistent_client)
 /datum/persistent_client/proc/set_client(client/new_client)
 	if(client == new_client)
 		return
-	
+
 	if(client)
 		client.persistent_client = null
 	client = new_client

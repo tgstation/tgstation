@@ -115,6 +115,9 @@ GLOBAL_DATUM_INIT(steal_item_handler, /datum/objective_item_handler, new())
 			return TRUE
 	return FALSE
 
+/datum/objective_item/steal
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 /datum/objective_item/steal/New()
 	. = ..()
 	if(target_exists())

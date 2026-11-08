@@ -16,9 +16,9 @@
 	var/location = SCRN_OBJ_DEFAULT
 	/// A unique bitflag, combined with the name of our linked action this lets us persistently remember any user changes to our position
 	var/id
-	/// A weakref of the last thing we hovered over
+	/// A autoref of the last thing we hovered over
 	/// God I hate how dragging works
-	var/datum/weakref/last_hovored_ref
+	var/datum/autoref/last_hovored_ref
 	/// overlay for keybind maptext
 	var/mutable_appearance/keybind_maptext
 	/// if observers can trigger this action at any time
@@ -80,7 +80,7 @@
 	. = ..()
 	if(!can_use(usr))
 		return
-	if(IS_WEAKREF_OF(over_object, last_hovored_ref))
+	if(IS_AUTOREF_OF(over_object, last_hovored_ref))
 		return
 	var/atom/old_object
 	if(last_hovored_ref)
@@ -93,7 +93,7 @@
 	if(old_object)
 		old_object.MouseExited(over_location, over_control, params)
 
-	last_hovored_ref = WEAKREF(over_object)
+	last_hovored_ref = AUTOREF(over_object)
 	over_object?.MouseEntered(over_location, over_control, params)
 
 /atom/movable/screen/movable/action_button/MouseEntered(location, control, params)

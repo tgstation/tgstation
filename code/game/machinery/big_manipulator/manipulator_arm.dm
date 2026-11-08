@@ -11,7 +11,7 @@
 	pixel_x = -32
 	pixel_y = -32
 	/// We get item from big manipulator and takes its icon to create overlay.
-	var/datum/weakref/item_in_my_claw
+	var/datum/autoref/item_in_my_claw
 	/// Var to icon that used as overlay on manipulator claw to show what item it grabs.
 	var/mutable_appearance/icon_overlay
 

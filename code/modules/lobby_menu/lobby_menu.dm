@@ -30,6 +30,8 @@ ADMIN_VERB(toggle_lobby_transparency, R_ADMIN, "Toggle Lobby Transparency", "Tog
 	log_admin("[key_name(user)] toggled lobby transparency [GLOB.lobby_background_transparent ? "on" : "off"].")
 
 /datum/lobby_menu
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	var/client/client
 	var/datum/tgui_window/window
 	/// Whether we've already registered for asset subsystem init signals

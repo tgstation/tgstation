@@ -6,8 +6,8 @@
 	circuit = /obj/item/circuitboard/machine/manucrafter
 	/// power used per process() spent crafting
 	var/power_cost = 5 KILO WATTS
-	/// list of weakrefs to crafted items still on the machine that we failed to send forward
-	var/list/datum/weakref/withheld = list()
+	/// list of autorefs to crafted items still on the machine that we failed to send forward
+	var/list/datum/autoref/withheld = list()
 	/// current recipe
 	var/datum/crafting_recipe/recipe
 	/// crafting component
@@ -86,13 +86,13 @@
 /obj/machinery/power/manufacturing/crafter/proc/send_withheld()
 	if(!length(withheld))
 		return FALSE
-	for(var/datum/weakref/weakref as anything in withheld)
-		var/atom/movable/resolved = weakref?.resolve()
+	for(var/datum/autoref/autoref as anything in withheld)
+		var/atom/movable/resolved = autoref?.resolve()
 		if(isnull(resolved))
-			withheld -= weakref
+			withheld -= autoref
 			continue
 		if(resolved.loc != loc || send_resource(resolved, dir))
-			withheld -= weakref
+			withheld -= autoref
 	return length(withheld)
 
 /obj/machinery/power/manufacturing/crafter/proc/craft(datum/crafting_recipe/recipe)
@@ -114,7 +114,7 @@
 		if(isitem(diff_result))
 			diff_result.pixel_x += rand(-4, 4)
 			diff_result.pixel_y += rand(-4, 4)
-		withheld += WEAKREF(diff_result)
+		withheld += AUTOREF(diff_result)
 	send_withheld()
 
 /obj/machinery/power/manufacturing/crafter/cooker

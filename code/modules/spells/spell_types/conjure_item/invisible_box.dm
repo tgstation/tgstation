@@ -31,11 +31,11 @@
 	made_box.alpha = 255
 	addtimer(CALLBACK(src, PROC_REF(cleanup_box), made_box), box_lifespan)
 
-/// Callback that gets rid out of box and removes the weakref from our list
+/// Callback that gets rid out of box and removes the autoref from our list
 /datum/action/cooldown/spell/conjure_item/invisible_box/proc/cleanup_box(obj/item/storage/box/box)
 	if(QDELETED(box) || !istype(box))
 		return
 
 	box.emptyStorage()
-	LAZYREMOVE(item_refs, WEAKREF(box))
+	LAZYREMOVE(item_refs, AUTOREF(box))
 	qdel(box)

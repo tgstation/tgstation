@@ -22,10 +22,10 @@
 	var/sensor_tag
 	var/sanitize_external
 
-	var/datum/weakref/interior_door_ref
-	var/datum/weakref/exterior_door_ref
-	var/datum/weakref/pump_ref
-	var/datum/weakref/sensor_ref
+	var/datum/autoref/interior_door_ref
+	var/datum/autoref/exterior_door_ref
+	var/datum/autoref/pump_ref
+	var/datum/autoref/sensor_ref
 
 	var/last_pressure = null
 
@@ -40,22 +40,22 @@
 	var/obj/machinery/door/interior_door = GLOB.objects_by_id_tag[interior_door_tag]
 	if (!isnull(interior_door_tag) && !istype(interior_door))
 		stack_trace("interior_door_tag is set to [interior_door_tag], which is not a door ([interior_door || "null"])")
-	interior_door_ref = WEAKREF(interior_door)
+	interior_door_ref = AUTOREF(interior_door)
 
 	var/obj/machinery/door/exterior_door = GLOB.objects_by_id_tag[exterior_door_tag]
 	if (!isnull(exterior_door_tag) && !istype(exterior_door))
 		stack_trace("exterior_door_tag is set to [exterior_door_tag], which is not a door ([exterior_door || "null"])")
-	exterior_door_ref = WEAKREF(exterior_door)
+	exterior_door_ref = AUTOREF(exterior_door)
 
 	var/obj/machinery/atmospherics/components/binary/dp_vent_pump/pump = GLOB.objects_by_id_tag[airpump_tag]
 	if (!isnull(airpump_tag) && !istype(pump))
 		stack_trace("airpump_tag is set to [airpump_tag], which is not a pump ([pump || "null"])")
-	pump_ref = WEAKREF(pump)
+	pump_ref = AUTOREF(pump)
 
 	var/obj/machinery/airlock_sensor/sensor = GLOB.objects_by_id_tag[sensor_tag]
 	if (!isnull(sensor_tag) && !istype(sensor))
 		stack_trace("sensor_tag is set to [sensor_tag], which is not a sensor ([sensor || "null"])")
-	sensor_ref = WEAKREF(sensor)
+	sensor_ref = AUTOREF(sensor)
 
 /obj/machinery/airlock_controller/ui_interact(mob/user, datum/tgui/ui)
 	ui = SStgui.try_update_ui(user, src, ui)

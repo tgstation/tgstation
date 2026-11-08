@@ -179,8 +179,8 @@
 /// Grabs one person and pulls them to this location, after a delay
 /datum/grand_side_effect/summon_crewmate
 	abstract = FALSE
-	/// Weak reference to someone we're going to grab and pull to our location
-	var/datum/weakref/victim
+	/// Auto reference to someone we're going to grab and pull to our location
+	var/datum/autoref/victim
 
 /// Don't run if there's nobody to summon
 /datum/grand_side_effect/summon_crewmate/can_trigger(turf/ritual_location)

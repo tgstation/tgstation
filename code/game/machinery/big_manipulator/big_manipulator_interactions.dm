@@ -257,7 +257,7 @@
 		monkey.forceMove(src)
 	if(monkey_worker?.resolve())
 		return
-	monkey_worker = WEAKREF(monkey)
+	monkey_worker = AUTOREF(monkey)
 	manipulator_arm.vis_contents += monkey
 	monkey.add_offsets(
 		type,

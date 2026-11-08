@@ -27,7 +27,7 @@
 	/// Do we register a unique rider?
 	var/unique_tamer = FALSE
 	/// The person we've been tamed by
-	var/datum/weakref/my_owner
+	var/datum/autoref/my_owner
 
 	greyscale_config = /datum/greyscale_config/pony
 	/// Greyscale color config; 1st color is body, 2nd is mane
@@ -74,7 +74,7 @@
 	ai_controller.override_blackboard_key(BB_BASIC_MOB_SPEAK_LINES, tamed_emotes)
 
 	if(unique_tamer)
-		my_owner = WEAKREF(tamer)
+		my_owner = AUTOREF(tamer)
 		RegisterSignal(src, COMSIG_MOVABLE_PREBUCKLE, PROC_REF(on_prebuckle))
 
 /mob/living/basic/pony/Destroy()

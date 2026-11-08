@@ -1,4 +1,6 @@
 /datum/pipeline
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	/// The gases contained within this pipeline
 	var/datum/gas_mixture/air
 	/// The gas_mixtures of objects directly connected to this pipeline

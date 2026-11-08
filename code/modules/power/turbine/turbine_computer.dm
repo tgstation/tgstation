@@ -5,8 +5,8 @@
 	icon_screen = "turbinecomp"
 	icon_keyboard = "tech_key"
 	circuit = /obj/item/circuitboard/computer/turbine_computer
-	///Weakref of the connected machine to this computer
-	var/datum/weakref/turbine_core
+	///Autoref of the connected machine to this computer
+	var/datum/autoref/turbine_core
 	///Easy way to connect a computer and a turbine roundstart by setting an id on both this and the core_rotor
 	var/mapping_id
 
@@ -45,7 +45,7 @@
 /obj/machinery/computer/turbine_computer/proc/register_machine(obj/machinery/power/turbine/core_rotor/machine)
 	PRIVATE_PROC(TRUE)
 
-	turbine_core = WEAKREF(machine)
+	turbine_core = AUTOREF(machine)
 
 /obj/machinery/computer/turbine_computer/ui_interact(mob/user, datum/tgui/ui)
 	. = ..()

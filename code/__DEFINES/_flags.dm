@@ -15,6 +15,8 @@ GLOBAL_LIST_INIT(bitflags, list(1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 204
 #define DF_STATIC_OBJECT (1<<3)
 /// Set on datums that should be tracked by the event logger.
 #define DF_EVLOGGING (1<<4)
+/// This datum uses a text reference for autorefs instead of a hard reference
+#define DF_WEAK_AUTOREF (1<<5)
 
 //FLAGS BITMASK
 // scroll down before changing the numbers on these

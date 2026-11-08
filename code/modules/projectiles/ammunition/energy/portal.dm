@@ -4,8 +4,8 @@
 	harmful = FALSE
 	fire_sound = 'sound/items/weapons/pulse3.ogg'
 	select_name = "blue"
-	//Weakref to the gun that shot us
-	var/datum/weakref/gun
+	//Autoref to the gun that shot us
+	var/datum/autoref/gun
 	firing_effect_type = /obj/effect/temp_visual/dir_setting/firing_effect/blue
 
 /obj/item/ammo_casing/energy/wormhole/orange
@@ -15,7 +15,7 @@
 
 /obj/item/ammo_casing/energy/wormhole/Initialize(mapload, obj/item/gun/energy/wormhole_projector/wh)
 	. = ..()
-	gun = WEAKREF(wh)
+	gun = AUTOREF(wh)
 
 /obj/item/ammo_casing/energy/wormhole/throw_proj(atom/target, turf/targloc, mob/living/user, params, spread, atom/fired_from)
 	. = ..()

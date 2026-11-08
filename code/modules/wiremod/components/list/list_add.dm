@@ -44,7 +44,7 @@
 		return
 
 	if(isdatum(data_to_add))
-		data_to_add = WEAKREF(data_to_add)
+		data_to_add = AUTOREF(data_to_add)
 
 	if(!allow_duplicate.value)
 		info |= data_to_add

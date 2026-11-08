@@ -203,7 +203,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	/// Tracks number of people crit
 	var/crit_count = 0
 	/// Tracks the last person who dealt damage to this mob
-	var/datum/weakref/last_attacker
+	var/datum/autoref/last_attacker
 	/// If our mob is free to leave, set to true
 	var/arena_victor = FALSE
 	/// The overlay for our mob, changes color to indicate that they are a victor and are free to leave
@@ -267,7 +267,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 
 	// Track being hit by a mob holding a stick
 	if(ismob(attacking_object.loc))
-		last_attacker = WEAKREF(attacking_object.loc)
+		last_attacker = AUTOREF(attacking_object.loc)
 		return
 
 	// Edge case. If our attacking_item is a gun which the owner has dropped we need to find out who shot us
@@ -275,7 +275,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 	if(isprojectile(attacking_object))
 		var/obj/projectile/attacking_projectile = attacking_object
 		if(ismob(attacking_projectile.firer))
-			last_attacker = WEAKREF(attacking_projectile.firer)
+			last_attacker = AUTOREF(attacking_projectile.firer)
 
 ///Called when impacted by something thrown at us, setting the last attacker to the person throwing the item.
 /datum/status_effect/arena_tracker/proc/on_impact_zone(atom/source, mob/living/hitby, zone, blocked, datum/thrownthing/throwingdatum)
@@ -285,7 +285,7 @@ GLOBAL_LIST_EMPTY(heretic_arenas)
 		return
 	var/thrown_by = throwingdatum?.get_thrower()
 	if(ismob(thrown_by))
-		last_attacker = WEAKREF(thrown_by)
+		last_attacker = AUTOREF(thrown_by)
 
 /datum/antagonist/heretic_arena_participant
 	name = "Arena Participant"

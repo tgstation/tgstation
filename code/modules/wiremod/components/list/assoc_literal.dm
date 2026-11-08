@@ -69,7 +69,7 @@
 			return
 		var/value_to_add = value_handler.convert_value(port, entry_ports[index].value)
 		if(isdatum(value_to_add))
-			value_to_add = WEAKREF(value_to_add)
+			value_to_add = AUTOREF(value_to_add)
 		new_literal[key_handler.convert_value(port, key_ports[index].value)] = value_to_add
 
 	list_output.set_output(new_literal)

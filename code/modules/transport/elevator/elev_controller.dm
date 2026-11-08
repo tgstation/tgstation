@@ -19,8 +19,8 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 /obj/item/assembly/control/elevator
 	name = "elevator controller"
 	desc = "A small device used to call elevators to the current floor."
-	/// A weakref to the transport_controller datum we control
-	var/datum/weakref/lift_weakref
+	/// A autoref to the transport_controller datum we control
+	var/datum/autoref/lift_autoref
 	COOLDOWN_DECLARE(elevator_cooldown)
 
 /obj/item/assembly/control/elevator/Initialize(mapload)
@@ -33,7 +33,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 	if(!lift)
 		return
 
-	lift_weakref = WEAKREF(lift)
+	lift_autoref = AUTOREF(lift)
 
 /obj/item/assembly/control/elevator/LateInitialize()
 	var/datum/transport_controller/linear/lift = get_lift()
@@ -41,7 +41,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 		log_mapping("Elevator call button at [AREACOORD(src)] found no associated elevator to link with, this may be a mapping error.")
 		return
 
-	lift_weakref = WEAKREF(lift)
+	lift_autoref = AUTOREF(lift)
 
 // Emagging elevator buttons will disable safeties
 /obj/item/assembly/control/elevator/emag_act(mob/user, obj/item/card/emag/emag_card)
@@ -49,7 +49,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 		return FALSE
 
 	obj_flags |= EMAGGED
-	var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
+	var/datum/transport_controller/linear/lift = lift_autoref?.resolve()
 	if(!lift)
 		return FALSE
 
@@ -78,7 +78,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 	if(!(obj_flags & EMAGGED))
 		return ..()
 
-	var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
+	var/datum/transport_controller/linear/lift = lift_autoref?.resolve()
 	if(isnull(lift))
 		return ..()
 
@@ -116,7 +116,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/button/elevator, 32)
 /// Returns TRUE if the move setup was a success, EVEN IF the move itself fails afterwards
 /obj/item/assembly/control/elevator/proc/call_elevator(mob/activator)
 	// We can't call an elevator that doesn't exist
-	var/datum/transport_controller/linear/lift = lift_weakref?.resolve()
+	var/datum/transport_controller/linear/lift = lift_autoref?.resolve()
 	if(!lift)
 		loc.balloon_alert(activator, "no elevator connected!")
 		return FALSE

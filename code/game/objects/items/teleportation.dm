@@ -102,7 +102,7 @@
 	 * Can be in the following states:
 	 * - null, meaning either this hand tele hasn't been used yet, or the last place it was portalled to was removed.
 	 * - PORTAL_LOCATION_DANGEROUS, meaning the last place it teleported to was the "None (Dangerous)" location.
-	 * - A weakref to a /obj/machinery/computer/teleporter, meaning the last place it teleported to was a pre-setup location.
+	 * - A autoref to a /obj/machinery/computer/teleporter, meaning the last place it teleported to was a pre-setup location.
 	*/
 	var/last_portal_location
 
@@ -131,8 +131,8 @@
 /obj/item/hand_tele/interact_with_atom_secondary(atom/interacting_with, mob/living/user, list/modifiers)
 	var/portal_location = last_portal_location
 
-	if (isweakref(portal_location))
-		var/datum/weakref/last_portal_location_ref = last_portal_location
+	if (isautoref(portal_location))
+		var/datum/autoref/last_portal_location_ref = last_portal_location
 		portal_location = last_portal_location_ref.resolve()
 
 	if (isnull(portal_location))
@@ -180,23 +180,23 @@
 	if(user.get_active_held_item() != src || user.incapacitated)
 		return
 
-	// Not always a datum, but needed for IS_WEAKREF_OF to cast properly.
+	// Not always a datum, but needed for IS_AUTOREF_OF to cast properly.
 	var/datum/teleport_location = locations[teleport_location_key]
 	if (!try_create_portal_to(user, teleport_location))
 		return
 
 	if (teleport_location == PORTAL_LOCATION_DANGEROUS)
 		last_portal_location = PORTAL_LOCATION_DANGEROUS
-	else if (!IS_WEAKREF_OF(teleport_location, last_portal_location))
-		if (isweakref(teleport_location))
-			var/datum/weakref/about_to_replace_location_ref = last_portal_location
+	else if (!IS_AUTOREF_OF(teleport_location, last_portal_location))
+		if (isautoref(teleport_location))
+			var/datum/autoref/about_to_replace_location_ref = last_portal_location
 			var/obj/machinery/computer/teleporter/about_to_replace_location = about_to_replace_location_ref.resolve()
 			if (about_to_replace_location)
 				UnregisterSignal(about_to_replace_location, COMSIG_TELEPORTER_NEW_TARGET)
 
 		RegisterSignal(teleport_location, COMSIG_TELEPORTER_NEW_TARGET, PROC_REF(on_teleporter_new_target))
 
-		last_portal_location = WEAKREF(teleport_location)
+		last_portal_location = AUTOREF(teleport_location)
 
 /// Takes either PORTAL_LOCATION_DANGEROUS or an /obj/machinery/computer/teleport/computer.
 /obj/item/hand_tele/proc/try_create_portal_to(mob/user, teleport_location)
@@ -274,7 +274,7 @@
 /obj/item/hand_tele/proc/on_teleporter_new_target(datum/source)
 	SIGNAL_HANDLER
 
-	if (IS_WEAKREF_OF(source, last_portal_location))
+	if (IS_AUTOREF_OF(source, last_portal_location))
 		last_portal_location = null
 		UnregisterSignal(source, COMSIG_TELEPORTER_NEW_TARGET)
 

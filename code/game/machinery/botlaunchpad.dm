@@ -8,7 +8,7 @@
 	// ID of the console, used for linking up
 	var/id = "botlauncher"
 	var/obj/item/botpad_remote/connected_remote
-	var/datum/weakref/launched_bot // we need this to recall the bot
+	var/datum/autoref/launched_bot // we need this to recall the bot
 
 /obj/machinery/botpad/Destroy()
 	if(connected_remote)
@@ -51,7 +51,7 @@
 	if(!use_energy(active_power_usage, force = FALSE))
 		balloon_alert(user, "not enough energy!")
 		return
-	launched_bot = WEAKREF(possible_bot)
+	launched_bot = AUTOREF(possible_bot)
 	podspawn(list(
 		"target" = get_turf(src),
 		"path" = /obj/structure/closet/supplypod/transport/botpod,

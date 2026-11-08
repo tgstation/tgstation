@@ -472,8 +472,8 @@
 	var/deployed = FALSE
 	/// Locked in position
 	var/locked = FALSE
-	/// Weakref to the tram piece we control
-	var/datum/weakref/tram_ref
+	/// Autoref to the tram piece we control
+	var/datum/autoref/tram_ref
 	/// The tram we're attached to
 	var/tram_id = TRAMSTATION_LINE_1
 

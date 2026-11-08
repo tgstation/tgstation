@@ -12,7 +12,7 @@
 	/// the port where the shuttle returns to
 	var/shuttle_home_id = "whiteship_home"
 	/// var which will hold the nav computer
-	var/datum/weakref/computer_ref
+	var/datum/autoref/computer_ref
 	/// var which will hold the mobile port
 	var/obj/docking_port/mobile/our_port
 
@@ -36,8 +36,8 @@
 	var/obj/machinery/computer/shuttle/computer = locate(/obj/machinery/computer/shuttle) in loc
 	if(!computer)
 		return
-	computer.remote_ref = WEAKREF(src)
-	computer_ref = WEAKREF(computer)
+	computer.remote_ref = AUTOREF(src)
+	computer_ref = AUTOREF(computer)
 
 /obj/item/shuttle_remote/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
 	var/obj/machinery/computer/shuttle/our_computer = computer_ref?.resolve()
@@ -50,8 +50,8 @@
 	if(new_computer.remote_ref || !new_computer.may_be_remote_controlled)
 		balloon_alert(user, "occupied signal!")
 		return ITEM_INTERACT_BLOCKING
-	new_computer.remote_ref = WEAKREF(src)
-	computer_ref = WEAKREF(new_computer)
+	new_computer.remote_ref = AUTOREF(src)
+	computer_ref = AUTOREF(new_computer)
 	our_port = SSshuttle.getShuttle(new_computer.shuttleId)
 	playsound(src, 'sound/machines/beep/beep.ogg', 30)
 	balloon_alert(user, "linked")

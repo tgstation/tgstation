@@ -8,7 +8,7 @@
 	var/obj/item/integrated_circuit/attached_circuit
 
 	/// The currently connected USB cable
-	var/datum/weakref/usb_cable_ref
+	var/datum/autoref/usb_cable_ref
 
 	/// The components inside the parent
 	var/list/obj/item/circuit_component/circuit_components
@@ -182,7 +182,7 @@
 		connecting_cable.balloon_alert(user, "shell is locked!")
 		return COMSIG_CANCEL_USB_CABLE_ATTACK
 
-	usb_cable_ref = WEAKREF(connecting_cable)
+	usb_cable_ref = AUTOREF(connecting_cable)
 	attached_circuit = connecting_cable.attached_circuit
 
 	connecting_cable.forceMove(attached_circuit)

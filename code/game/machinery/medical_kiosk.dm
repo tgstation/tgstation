@@ -32,9 +32,9 @@
 	var/paying_customer = FALSE //Ticked yes if passing inuse()
 
 	/// Who's paying?
-	var/datum/weakref/paying_ref //The person using the console in each instance. Used for paying for the kiosk.
+	var/datum/autoref/paying_ref //The person using the console in each instance. Used for paying for the kiosk.
 	/// Who's getting scanned?
-	var/datum/weakref/patient_ref //If scanning someone else, this will be the target.
+	var/datum/autoref/patient_ref //If scanning someone else, this will be the target.
 
 /obj/machinery/medical_kiosk/Initialize(mapload) //loaded subtype for mapping use
 	. = ..()
@@ -133,7 +133,7 @@
 	balloon_alert(user, "wand returned")
 	//This will be the scanner returning scanner_wand's selected_target variable and assigning it to the altPatient var
 	if(wand.selected_target)
-		var/datum/weakref/target_ref = WEAKREF(wand.return_patient())
+		var/datum/autoref/target_ref = AUTOREF(wand.return_patient())
 		if(patient_ref != target_ref)
 			clearScans()
 		patient_ref = target_ref
@@ -198,7 +198,7 @@
 	patient_distance = get_dist(src.loc, patient)
 	if(patient == null)
 		say("Scanner reset.")
-		patient_ref = WEAKREF(user)
+		patient_ref = AUTOREF(user)
 	else if(patient_distance>5)
 		patient_ref = null
 		say("Patient out of range. Resetting biometrics.")
@@ -210,7 +210,7 @@
 		ui.open()
 		icon_state = "[base_icon_state]_active"
 		var/mob/living/carbon/human/paying = user
-		paying_ref = WEAKREF(paying)
+		paying_ref = AUTOREF(paying)
 
 /obj/machinery/medical_kiosk/ui_data(mob/living/carbon/human/user)
 	var/mob/living/carbon/human/patient = patient_ref?.resolve()

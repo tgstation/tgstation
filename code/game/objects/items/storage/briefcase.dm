@@ -174,9 +174,9 @@
 	if(!istype(tool, /obj/item/launchpad_remote))
 		return ..()
 	var/obj/item/launchpad_remote/remote = tool
-	if(remote.pad == WEAKREF(src.pad))
+	if(remote.pad == AUTOREF(src.pad))
 		return ..()
-	remote.pad = WEAKREF(src.pad)
+	remote.pad = AUTOREF(src.pad)
 	to_chat(user, span_notice("You link [pad] to [remote]."))
 	return ITEM_INTERACT_BLOCKING
 

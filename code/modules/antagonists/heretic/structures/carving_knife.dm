@@ -22,8 +22,8 @@
 	var/drawing = FALSE
 	/// Max amount of runes that can be drawn
 	var/max_rune_amt = 3
-	/// A list of weakrefs to all of ourc urrent runes
-	var/list/datum/weakref/current_runes = list()
+	/// A list of autorefs to all of ourc urrent runes
+	var/list/datum/autoref/current_runes = list()
 	/// Turfs that you cannot draw carvings on
 	var/static/list/blacklisted_turfs = typecacheof(list(/turf/open/space, /turf/open/openspace, /turf/open/lava))
 	var/list/alt_continuous = list("stabs", "pierces", "impales")
@@ -76,7 +76,7 @@
 		target_turf.balloon_alert(user, "to close to another carving!")
 		return
 
-	for(var/datum/weakref/rune_ref as anything in current_runes)
+	for(var/datum/autoref/rune_ref as anything in current_runes)
 		if(!rune_ref?.resolve())
 			current_runes -= rune_ref
 
@@ -124,7 +124,7 @@
 
 	target_turf.balloon_alert(user, "[picked_choice] carved")
 	var/obj/structure/trap/eldritch/new_rune = new to_make(target_turf, user)
-	current_runes += WEAKREF(new_rune)
+	current_runes += AUTOREF(new_rune)
 
 /datum/action/item_action/rune_shatter
 	name = "Rune Break"
@@ -172,18 +172,18 @@
 	/// A tip displayed to heretics who examine the rune carver. Explains what the rune does.
 	var/carver_tip
 	/// Reference to trap owner mob
-	var/datum/weakref/owner
+	var/datum/autoref/owner
 
 /obj/structure/trap/eldritch/Initialize(mapload, new_owner)
 	. = ..()
 	if(new_owner)
-		owner = WEAKREF(new_owner)
+		owner = AUTOREF(new_owner)
 
 /obj/structure/trap/eldritch/on_entered(datum/source, atom/movable/entering_atom)
 	if(!isliving(entering_atom))
 		return
 	var/mob/living/living_mob = entering_atom
-	if(WEAKREF(living_mob) == owner)
+	if(AUTOREF(living_mob) == owner)
 		return
 	if(IS_HERETIC_OR_MONSTER(living_mob))
 		return

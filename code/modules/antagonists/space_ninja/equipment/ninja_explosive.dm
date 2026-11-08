@@ -12,8 +12,8 @@
 	icon_state = "ninja-explosive0"
 	inhand_icon_state = "ninja-explosive"
 	boom_sizes = list(4, 8, 12)
-	///Weakref to the mob that has planted the charge
-	var/datum/weakref/detonator
+	///Autoref to the mob that has planted the charge
+	var/datum/autoref/detonator
 	///The only area that the charge is allowed to be planted, and detonated in
 	var/area/detonation_area
 
@@ -55,7 +55,7 @@
 		return FALSE
 	if(!..())
 		return FALSE
-	detonator = WEAKREF(user)
+	detonator = AUTOREF(user)
 	return TRUE
 
 /obj/item/grenade/c4/ninja/detonate(mob/living/lanced_by)

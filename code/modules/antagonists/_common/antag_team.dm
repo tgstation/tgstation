@@ -2,6 +2,8 @@ GLOBAL_LIST_EMPTY(antagonist_teams)
 
 //A barebones antagonist team.
 /datum/team
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	///Name of the entire Team
 	var/name = "\improper Team"
 	///What members are considered in the roundend report (ex: 'cultists')

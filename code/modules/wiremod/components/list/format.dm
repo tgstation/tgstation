@@ -104,9 +104,9 @@
 	if(value == null)
 		return @"[BAD INDEX]"
 
-	// If this is a datum or atom, it's likely wrapped in a weakref.
-	if(isweakref(value))
-		var/datum/weakref/weak_value = value
+	// If this is a datum or atom, it's likely wrapped in a autoref.
+	if(isautoref(value))
+		var/datum/autoref/weak_value = value
 		value = weak_value.resolve()
 
 	// Working with entities is constrained by range, just as with To String.

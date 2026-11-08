@@ -5,6 +5,8 @@
  *
  */
 /datum/poll_question
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	///Reference list of the options for this poll, not used by text response polls.
 	var/list/options = list()
 	///Table id of this poll, will be null until poll has been created.
@@ -47,6 +49,8 @@
  *
  */
 /datum/poll_option
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	///Reference to the poll this option belongs to
 	var/datum/poll_question/parent_poll
 	///Table id of this option, will be null until poll has been created.

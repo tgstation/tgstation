@@ -29,7 +29,7 @@
 	if(!.)
 		return
 	if(istype(custom_port))
-		custom_port.control_console = WEAKREF(src)
+		custom_port.control_console = AUTOREF(src)
 	name = "[port.name] console"
 
 /obj/machinery/computer/shuttle/custom_shuttle/proc/linkShuttle(new_id)
@@ -84,7 +84,7 @@
 		return
 	name = "[port.name] navigation computer"
 	if(istype(custom_port))
-		custom_port.navigation_console = WEAKREF(src)
+		custom_port.navigation_console = AUTOREF(src)
 	RegisterSignal(port, COMSIG_SHUTTLE_EXPANDED, PROC_REF(on_shuttle_expanded))
 	recalculate_eye_view(port)
 

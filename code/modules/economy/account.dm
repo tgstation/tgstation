@@ -324,6 +324,7 @@
 	COOLDOWN_RESET(src, bounty_timer)
 
 /datum/bank_account/department
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
 	account_holder = "Guild Credit Agency"
 	var/department_id = "REPLACE_ME"
 	add_to_accounts = FALSE

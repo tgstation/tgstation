@@ -40,8 +40,8 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 	var/list/neighbors
 	/// are we operating in wire power mode
 	var/wire_mode = FALSE
-	/// weakref to attached cable if wire mode
-	var/datum/weakref/attached_wire_ref
+	/// autoref to attached cable if wire mode
+	var/datum/autoref/attached_wire_ref
 	/// remembers if a wire is powering us or not
 	var/powered_wire = FALSE
 
@@ -409,7 +409,7 @@ GLOBAL_LIST_EMPTY(conveyors_by_id)
 		attached_wire_ref = null
 		return
 	var/turf/our_turf = get_turf(src)
-	attached_wire_ref = WEAKREF(locate(/obj/structure/cable) in our_turf)
+	attached_wire_ref = AUTOREF(locate(/obj/structure/cable) in our_turf)
 	if(attached_wire_ref)
 		return power_change()
 

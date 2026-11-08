@@ -132,7 +132,7 @@
 	/// icon state for the overlay
 	var/effect_icon_state = "cosmic_ring"
 	/// Storage for the spell caster
-	var/datum/weakref/spell_caster
+	var/datum/autoref/spell_caster
 
 /atom/movable/screen/alert/status_effect/star_mark
 	name = "Star Mark"
@@ -142,7 +142,7 @@
 /datum/status_effect/star_mark/on_creation(mob/living/new_owner, mob/living/new_spell_caster)
 	cosmic_overlay = mutable_appearance(effect_icon, effect_icon_state, BELOW_MOB_LAYER)
 	if(new_spell_caster)
-		spell_caster = WEAKREF(new_spell_caster)
+		spell_caster = AUTOREF(new_spell_caster)
 	return ..()
 
 /datum/status_effect/star_mark/Destroy()

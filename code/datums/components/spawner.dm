@@ -18,7 +18,7 @@
 	var/max_spawn_types_per_attempt
 	/// Maximum number of atoms we can have active at one time
 	var/max_spawned
-	/// List of weak references to things we have already created
+	/// List of auto references to things we have already created
 	var/list/spawned_things = list()
 
 	/// Distance from the spawner to spawn mobs
@@ -181,7 +181,7 @@
 /**
  * Adds handling to the created mob from the spawner component,
  * such as adding to spawned_things list,
- * weakrefs to the spawned_things list, and registering relevant signals.
+ * autorefs to the spawned_things list, and registering relevant signals.
  *
  * @param: turf/picked_spot: Turf to spawn the mob onto.
  * @param: mob/chosen_mob_type: Type of mob to spawn.
@@ -203,7 +203,7 @@
  */
 /datum/component/spawner/proc/setup_spawned_mob(mob/spawned_mob, atom/spawner)
 	spawned_mob.flags_1 |= (spawner.flags_1 & ADMIN_SPAWNED_1)
-	spawned_things += WEAKREF(spawned_mob)
+	spawned_things += AUTOREF(spawned_mob)
 
 	if(isliving(spawned_mob))
 		var/mob/living/created_mob = spawned_mob
@@ -220,9 +220,9 @@
 		spawner.visible_message(span_danger("A creature [spawn_text] [spawner]."))
 
 
-/// Remove weakrefs to atoms which have been killed or deleted without us picking it up somehow
+/// Remove autorefs to atoms which have been killed or deleted without us picking it up somehow
 /datum/component/spawner/proc/validate_references()
-	for (var/datum/weakref/weak_thing as anything in spawned_things)
+	for (var/datum/autoref/weak_thing as anything in spawned_things)
 		var/atom/previously_spawned = weak_thing?.resolve()
 		if (!previously_spawned)
 			spawned_things -= weak_thing
@@ -237,10 +237,10 @@
 /// Called when an atom we spawned is deleted, remove it from the list
 /datum/component/spawner/proc/on_deleted(atom/source)
 	SIGNAL_HANDLER
-	spawned_things -= WEAKREF(source)
+	spawned_things -= AUTOREF(source)
 
 /// Called when a mob we spawned dies, remove it from the list and unregister signals
 /datum/component/spawner/proc/mob_death(mob/living/source)
-	spawned_things -= WEAKREF(source)
+	spawned_things -= AUTOREF(source)
 	source.remove_status_effect(/datum/status_effect/heads_up)
 	UnregisterSignal(source, list(COMSIG_QDELETING, COMSIG_LIVING_DEATH))

@@ -121,11 +121,11 @@
 
 /// Callback for the ghoul status effect - Tracking all of our ghouls
 /datum/heretic_knowledge/limited_amount/starting/base_flesh/proc/apply_to_ghoul(mob/living/ghoul)
-	LAZYADD(created_items, WEAKREF(ghoul))
+	LAZYADD(created_items, AUTOREF(ghoul))
 
 /// Callback for the ghoul status effect - Tracking all of our ghouls
 /datum/heretic_knowledge/limited_amount/starting/base_flesh/proc/remove_from_ghoul(mob/living/ghoul)
-	LAZYREMOVE(created_items, WEAKREF(ghoul))
+	LAZYREMOVE(created_items, AUTOREF(ghoul))
 
 /datum/heretic_knowledge/limited_amount/flesh_ghoul
 	name = "Imperfect Ritual"
@@ -204,12 +204,12 @@
 
 /// Callback for the ghoul status effect - Tracks all of our ghouls and applies effects
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/apply_to_ghoul(mob/living/ghoul)
-	LAZYADD(created_items, WEAKREF(ghoul))
+	LAZYADD(created_items, AUTOREF(ghoul))
 	ADD_TRAIT(ghoul, TRAIT_MUTE, MAGIC_TRAIT)
 
 /// Callback for the ghoul status effect - Tracks all of our ghouls and applies effects
 /datum/heretic_knowledge/limited_amount/flesh_ghoul/proc/remove_from_ghoul(mob/living/ghoul)
-	LAZYREMOVE(created_items, WEAKREF(ghoul))
+	LAZYREMOVE(created_items, AUTOREF(ghoul))
 	REMOVE_TRAIT(ghoul, TRAIT_MUTE, MAGIC_TRAIT)
 
 /datum/heretic_knowledge/spell/flesh_surgery

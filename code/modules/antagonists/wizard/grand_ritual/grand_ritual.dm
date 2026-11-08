@@ -41,8 +41,8 @@
 	var/total_cheese_sacrificed = 0
 	/// Whether we have sacrificed enough cheese or not
 	var/total_cheese_goal_met = FALSE
-	/// Weakref to a rune drawn in the current area, if there is one
-	var/datum/weakref/rune
+	/// Autoref to a rune drawn in the current area, if there is one
+	var/datum/autoref/rune
 
 	/// A blacklist of turfs we cannot scribe on.
 	var/static/list/blacklisted_rune_turfs = typecacheof(list(
@@ -196,7 +196,7 @@
 	var/obj/effect/grand_rune/new_rune = new next_rune_typepath(target_turf, times_completed)
 	if(istype(new_rune, /obj/effect/grand_rune/finale))
 		drew_finale = TRUE
-	rune = WEAKREF(new_rune)
+	rune = AUTOREF(new_rune)
 	RegisterSignal(new_rune, COMSIG_GRAND_RUNE_COMPLETE, PROC_REF(on_rune_complete))
 	drawing_rune = FALSE
 	StartCooldown(2 MINUTES) // To put a damper on wizards who have 5 ranks of Teleport

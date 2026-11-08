@@ -69,6 +69,8 @@
  * Crew record datum
  */
 /datum/record/crew
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	/// List of citations
 	var/list/citations = list()
 	/// List of crimes
@@ -144,10 +146,12 @@
  * Admin locked record
  */
 /datum/record/locked
+	datum_flags = parent_type::datum_flags & ~DF_WEAK_AUTOREF
+
 	/// Mob's dna
 	var/datum/dna/locked_dna
 	/// Mind datum
-	var/datum/weakref/mind_ref
+	var/datum/autoref/mind_ref
 	/// Typepath of species used by player, for usage in respawning via records
 	var/species_type
 
@@ -169,7 +173,7 @@
 )
 	. = ..()
 	src.locked_dna = locked_dna
-	src.mind_ref = WEAKREF(mind_ref)
+	src.mind_ref = AUTOREF(mind_ref)
 	species_type = locked_dna.species.type
 
 	GLOB.manifest.locked += src

@@ -151,7 +151,7 @@ SUBSYSTEM_DEF(lua)
 			json_data["stack"] += lua_stacks[level]
 			level++
 		json_data["stack"] += line
-	for(var/datum/weakref/state_ref as anything in GLOB.lua_state_stack)
+	for(var/datum/autoref/state_ref as anything in GLOB.lua_state_stack)
 		var/datum/lua_state/state = state_ref.resolve()
 		if(!state)
 			continue

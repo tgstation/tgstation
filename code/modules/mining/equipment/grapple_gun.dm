@@ -24,7 +24,7 @@
 	///the beam we draw
 	var/datum/beam/zipline
 	///our user currently ziplining
-	var/datum/weakref/zipliner
+	var/datum/autoref/zipliner
 	///ziplining sound
 	var/datum/looping_sound/zipline/zipline_sound
 	///our initial matrix
@@ -69,7 +69,7 @@
 	hooked = FALSE
 	RegisterSignal(bullet, COMSIG_PROJECTILE_SELF_ON_HIT, PROC_REF(on_grapple_hit))
 	RegisterSignal(bullet, COMSIG_PREQDELETED, PROC_REF(on_grapple_fail))
-	zipliner = WEAKREF(user)
+	zipliner = AUTOREF(user)
 	update_appearance()
 	return ITEM_INTERACT_SUCCESS
 

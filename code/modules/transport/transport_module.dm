@@ -31,9 +31,9 @@
 
 	///what movables on our platform that we are moving
 	var/list/atom/movable/transport_contents = list()
-	///weakrefs to the contents we have when we're first created. stored so that admins can clear the tram to its initial state
+	///autorefs to the contents we have when we're first created. stored so that admins can clear the tram to its initial state
 	///if someone put a bunch of stuff onto it.
-	var/list/datum/weakref/initial_contents = list()
+	var/list/datum/autoref/initial_contents = list()
 
 	///what glide_size we set our moving contents to.
 	var/glide_size_override = 8
@@ -159,7 +159,7 @@
 
 			if(add_item_on_transport(src, movable_contents))
 
-				var/datum/weakref/new_initial_contents = WEAKREF(movable_contents)
+				var/datum/autoref/new_initial_contents = AUTOREF(movable_contents)
 				if(!new_initial_contents)
 					continue
 
@@ -574,7 +574,7 @@
 	var/list/atom/movable/foreign_contents = list()
 
 
-	for(var/datum/weakref/initial_contents_ref as anything in initial_contents)
+	for(var/datum/autoref/initial_contents_ref as anything in initial_contents)
 		if(!initial_contents_ref)
 			continue
 

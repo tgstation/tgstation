@@ -166,10 +166,10 @@
 	symptoms = "Expresses a need for medication despite being otherwise healthy, and when in withdrawal, \
 		experiences coughing fits, hallucinations, and distorted health perceptions."
 	withdrawal_stage_messages = list("", "", "")
-	/// Weakref to the "fake alert" hallucination we're giving to the addicted
-	var/datum/weakref/fake_alert_ref
-	/// Weakref to the "health doll screwup" hallucination we're giving to the addicted
-	var/datum/weakref/health_doll_ref
+	/// Autoref to the "fake alert" hallucination we're giving to the addicted
+	var/datum/autoref/fake_alert_ref
+	/// Autoref to the "health doll screwup" hallucination we're giving to the addicted
+	var/datum/autoref/health_doll_ref
 
 /datum/addiction/medicine/withdrawal_enters_stage_1(mob/living/carbon/affected_carbon)
 	. = ..()
@@ -183,7 +183,7 @@
 	)
 	if(!health_doll)
 		return
-	health_doll_ref = WEAKREF(health_doll)
+	health_doll_ref = AUTOREF(health_doll)
 
 /datum/addiction/medicine/withdrawal_stage_1_process(mob/living/carbon/affected_carbon, seconds_per_tick)
 	. = ..()
@@ -216,7 +216,7 @@
 	)
 	if(!fake_alert)
 		return
-	fake_alert_ref = WEAKREF(fake_alert)
+	fake_alert_ref = AUTOREF(fake_alert)
 
 /datum/addiction/medicine/withdrawal_stage_2_process(mob/living/carbon/affected_carbon, seconds_per_tick)
 	. = ..()

@@ -821,7 +821,7 @@ GLOBAL_LIST_EMPTY(fishing_challenges_by_user)
 	vis_contents += list(hud_bait, hud_fish, hud_completion)
 	challenge.user.client.screen += src
 	challenge.update_visuals(0) // Set all states to their initial positions so they don't jump around when the game starts
-	master_ref = WEAKREF(challenge)
+	master_ref = AUTOREF(challenge)
 
 /atom/movable/screen/fishing_hud/Destroy()
 	var/datum/fishing_challenge/challenge = master_ref?.resolve()
