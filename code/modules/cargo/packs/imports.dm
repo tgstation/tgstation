@@ -85,13 +85,13 @@
 	name = "A....Dumpster?"
 	desc = "Why does it smell so bad...."
 	cost = CARGO_CRATE_VALUE * 5
-	contains = list(/mob/living/carbon/human)
+	contains = list(/obj/effect/mob_spawn/corpse/human/damaged)
 	crate_name = "putrid dumpster"
 	crate_type = /obj/structure/closet/crate/trashcart
 
 /datum/supply_pack/imports/dumpstercorpse/generate(atom/A, datum/bank_account/paying_account, crate_override)
 	. = ..()
-	var/mob/living/carbon/human/corpse = locate() in .
+	obj/effect/mob_spawn/corpse/human/damaged = locate() in .
 	corpse.death()
 
 /datum/supply_pack/imports/dumpsterloot
