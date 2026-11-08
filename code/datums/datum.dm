@@ -200,7 +200,7 @@
 	var/list/output = list("[src]([REF(src)]) changed vars:")
 	for(var/var_name, var_data in check_changed_vars())
 		output += "\"[var_name]\" \[[var_data[1]]\] --> \[[var_data[2]]\]"
-	return "[output.Join(" ")]."
+	return jointext(output, " ")
 
 /datum/proc/to_chat_check_changed_vars(target = world)
 	to_chat(target, txt_changed_vars())
