@@ -1,0 +1,4 @@
+author: "Melbert"
+delete-after: True
+changes:
+  - code_imp: "Cleaned up code for mobs being burned while tied to heat exhange pipes. Report anything weird if it doesn't work the next time you get the opportunity to try it in like 8 months"
