@@ -9,8 +9,6 @@
 	network = list(CAMERANET_NETWORK_THUNDERDOME)
 	density = FALSE
 	circuit = null
-	breakable_without_circuit = TRUE
-	armor_type = /obj/machinery/status_display::armor_type
 	light_power = 0
 	/// The kind of wallframe that this telescreen drops
 	var/frame_type = /obj/item/wallframe/telescreen
@@ -19,7 +17,6 @@
 
 /obj/machinery/computer/security/telescreen/Initialize(mapload)
 	. = ..()
-	AddElement(/datum/element/weld_repairable)
 	if(mapload)
 		find_and_mount_on_atom()
 
@@ -34,6 +31,12 @@
 
 /obj/machinery/computer/security/telescreen/on_deconstruction(disassembled)
 	new frame_type(loc)
+
+/obj/machinery/computer/security/telescreen/update_icon_state()
+	icon_state = initial(icon_state)
+	if(machine_stat & BROKEN)
+		icon_state += "b"
+	return ..()
 
 /obj/machinery/computer/security/telescreen/entertainment
 	name = "entertainment monitor"
@@ -149,7 +152,7 @@ MAPPING_DIRECTIONAL_HELPERS(/obj/machinery/computer/security/telescreen/entertai
 	else
 		icon_screen = icon_state_off
 	update_appearance(UPDATE_OVERLAYS)
-	if(announcement && is_operational)
+	if(announcement)
 		say(announcement)
 
 /// Adds a camera network ID to the entertainment monitor, and turns off the monitor if network list is empty
