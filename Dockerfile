@@ -27,7 +27,7 @@ RUN . ./dependencies.sh \
     && sed -i 's|install:|&\n\tmkdir -p $(MAN_DIR)/man6|' Makefile \
     && make install \
     && chmod 644 /usr/local/byond/man/man6/* \
-    && apt-get purge -y --auto-remove curl unzip make \
+    && apt-get purge -y --auto-remove curl make \
     && cd .. \
     && rm -rf byond byond.zip
 
