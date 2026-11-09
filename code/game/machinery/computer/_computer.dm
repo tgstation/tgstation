@@ -16,6 +16,8 @@
 	var/keyboard_change_icon = TRUE
 	/// Icon_state of the emissive screen overlay.
 	var/icon_screen = "generic"
+	/// Breaks with no circuit, for screens repaired another way
+	var/breakable_without_circuit = FALSE
 	/// Time it takes to deconstruct with a screwdriver.
 	var/time_to_unscrew = 2 SECONDS
 	/// Are we authenticated to use this? Used by things like comms console, security and medical data, and apc controller.
@@ -111,7 +113,7 @@
 			playsound(src.loc, 'sound/items/tools/welder.ogg', 100, TRUE)
 
 /obj/machinery/computer/atom_break(damage_flag)
-	if(!circuit) //no circuit, no breaking
+	if(!circuit && !breakable_without_circuit) //no circuit, no breaking
 		return
 	. = ..()
 	if(.)

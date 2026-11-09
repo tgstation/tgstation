@@ -457,13 +457,13 @@
 ///from the base of /obj/projectile/proc/fire(): ()
 #define COMSIG_PROJECTILE_FIRE "projectile_fire"
 ///sent to targets during the process_hit proc of projectiles
-#define COMSIG_PROJECTILE_PREHIT "com_proj_prehit"
+#define COMSIG_PROJECTILE_PREHIT "projectile_prehit"
 	#define PROJECTILE_INTERRUPT_HIT (1<<0)
 	#define PROJECTILE_INTERRUPT_HIT_PHASE (1<<1)
 ///from /obj/projectile/process_movement(): ()
 #define COMSIG_PROJECTILE_MOVE_PROCESS_STEP "projectile_move_process_step"
 ///sent to self during the process_hit proc of projectiles
-#define COMSIG_PROJECTILE_SELF_PREHIT "com_proj_prehit"
+#define COMSIG_PROJECTILE_SELF_PREHIT "projectile_self_prehit"
 ///from the base of /obj/projectile/reduce_range(): ()
 #define COMSIG_PROJECTILE_RANGE "projectile_range"
 ///from the base of /obj/projectile/on_range(): ()
@@ -473,7 +473,7 @@
 ///sent to firer at the end of /mob/living/apply_projectile_effects(): (mob/living/target, hit_limb, blocked)
 #define COMSIG_PROJECTILE_POST_HIT_LIVING "projectile_post_hit_living"
 ///sent to projectile at the end of /mob/living/apply_projectile_effects(): (mob/living/target, hit_limb, blocked)
-#define COMSIG_PROJECTILE_SELF_POST_HIT_LIVING "projectile_post_hit_living"
+#define COMSIG_PROJECTILE_SELF_POST_HIT_LIVING "projectile_self_post_hit_living"
 // FROM [/obj/item/proc/set_embed] sent when an item's embedding properties are changed : ()
 #define COMSIG_ITEM_EMBEDDING_UPDATE "item_embedding_update"
 
@@ -548,7 +548,7 @@
 ///from base of datum/embedding/proc/remove_embedding(): (mob/living/carbon/victim, obj/item/bodypart/limb)
 #define COMSIG_ITEM_UNEMBEDDED "item_unembedded"
 ///from base of datum/embedding/proc/failed_embed(): (mob/living/carbon/victim, hit_zone)
-#define COMSIG_ITEM_FAILED_EMBED "item_unembedded"
+#define COMSIG_ITEM_FAILED_EMBED "item_failed_embed"
 
 /// from base of datum/element/disarm_attack/secondary_attack(), used to prevent shoving: (victim, user, send_message)
 #define COMSIG_ITEM_CAN_DISARM_ATTACK "item_pre_disarm_attack"

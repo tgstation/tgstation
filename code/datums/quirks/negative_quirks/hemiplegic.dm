@@ -7,6 +7,7 @@
 	lose_text = null
 	medical_record_text = "Patient has an untreatable impairment in motor function on half of their body."
 	hardcore_value = 10
+	mail_weight = 1
 	mail_goodies = list(
 		/obj/item/stack/sheet/mineral/uranium/half, //half a stack of a material that has a half life
 		/obj/item/reagent_containers/cup/glass/drinkingglass/filled/half_full,
