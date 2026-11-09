@@ -23,7 +23,7 @@ map deltastation
 endmap
 
 map icebox
-	minplayers 25
+	minplayers 0
 	votable
 endmap
 
@@ -33,7 +33,8 @@ map catwalkstation
 endmap
 
 map metastation
-	minplayers 25
+	default
+	minplayers 0
 	#voteweight 0.5
 	votable
 	#feedbacklink https://www.youtube.com/watch?v=XG8b7WhANNA
