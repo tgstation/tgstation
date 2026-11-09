@@ -96,6 +96,10 @@
 /mob/living/proc/view_can_ui_interact(atom/target, range = 5)
 	return target in view(range, src)
 
+/// In-depth check for clients to evaluate if they are able to interact with the UI based on their client.
+/mob/living/proc/truly_visible_can_ui_interact(atom/target, range = 5)
+	return target in view(range, client)
+
 /**
  * public
  *
@@ -126,6 +130,16 @@
 	return UI_INTERACTIVE
 
 /mob/living/carbon/human/shared_living_ui_distance(atom/movable/src_object, viewcheck = TRUE, allow_tk = TRUE)
-	if(allow_tk && dna.check_mutation(/datum/mutation/telekinesis) && tkMaxRangeCheck(src, src_object) && (viewcheck && in_in_sight_given_planes(src, src_object)))
-		return UI_INTERACTIVE
+	if(allow_tk && dna.check_mutation(/datum/mutation/telekinesis) && tkMaxRangeCheck(src, src_object))
+		if(!viewcheck)
+			return UI_INTERACTIVE
+
+		var/viewcheck_result = FALSE
+		if(isnull(client))
+			viewcheck_result = view_can_ui_interact(src_object)
+		else
+			viewcheck_result = truly_visible_can_ui_interact(src_object)
+
+		if(viewcheck_result)
+			return UI_INTERACTIVE
 	return ..()
