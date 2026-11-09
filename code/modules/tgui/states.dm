@@ -96,9 +96,23 @@
 /mob/living/proc/view_can_ui_interact(atom/target, range = 5)
 	return target in view(range, src)
 
-/// In-depth check for clients to evaluate if they are able to interact with the UI based on their client.
-/mob/living/proc/truly_visible_can_ui_interact(atom/target, range = 5)
-	return target in view(range, client)
+/// Whether we can see the target the way the client's screen draws it.
+/mob/living/proc/sight_can_ui_interact(atom/target)
+	var/see_flag = NONE // this proc is only meant to work on two actual physical objects in the game world but I'm having this in as a failover in case funky stuff happens that sight isn't accounting for.
+
+	if(isobj(target))
+		see_flag = SEE_OBJS
+	else if(ismob(target))
+		see_flag = SEE_MOBS
+	else if(isturf(target))
+		see_flag = SEE_TURFS
+
+	if(sight & see_flag)
+		return TRUE
+	if(sight & BLIND)
+		return FALSE
+
+	return is_in_sight(src, target)
 
 /**
  * public
@@ -131,15 +145,7 @@
 
 /mob/living/carbon/human/shared_living_ui_distance(atom/movable/src_object, viewcheck = TRUE, allow_tk = TRUE)
 	if(allow_tk && dna.check_mutation(/datum/mutation/telekinesis) && tkMaxRangeCheck(src, src_object))
-		if(!viewcheck)
+		if(viewcheck && sight_can_ui_interact(src_object))
 			return UI_INTERACTIVE
 
-		var/viewcheck_result = FALSE
-		if(isnull(client))
-			viewcheck_result = view_can_ui_interact(src_object)
-		else
-			viewcheck_result = truly_visible_can_ui_interact(src_object)
-
-		if(viewcheck_result)
-			return UI_INTERACTIVE
 	return ..()
