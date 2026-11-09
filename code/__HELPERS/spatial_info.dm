@@ -297,6 +297,16 @@
 
 	return inLineOfSight(first_turf.x, first_turf.y, second_turf.x, second_turf.y, first_turf.z)
 
+/// An enhanced version of is_in_sight() that accounts for if the visible object is drawn on a plane the viewer's HUD isn't showing.
+/// Returns TRUE if the target is in sight and visible on the viewer's HUD, FALSE otherwise.
+/proc/in_in_sight_given_planes(mob/viewer, atom/target)
+	var/atom/movable/screen/plane_master/target_plane = viewer.hud_used?.get_plane_master(target.plane)
+	if(isnull(target_plane) || target_plane.force_hidden)
+		return FALSE
+
+	return is_in_sight(viewer, target)
+
+
 ///Returns all atoms present in a circle around the center
 /proc/circle_range(center = usr,radius = 3)
 
