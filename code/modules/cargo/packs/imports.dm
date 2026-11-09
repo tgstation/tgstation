@@ -89,10 +89,11 @@
 	crate_name = "putrid dumpster"
 	crate_type = /obj/structure/closet/crate/trashcart
 
-/datum/supply_pack/imports/dumpstercorpse/generate(atom/A, datum/bank_account/paying_account, crate_override)
-	. = ..()
-	obj/effect/mob_spawn/corpse/human/damaged = locate() in .
-	corpse.death()
+/datum/supply_pack/imports/dumpstercorpse/fill(obj/container)
+	var/mob/living/carbon/human/corpse = GLOB.lost_crew_manager.create_lost_crew(revivable = FALSE, forced_class = /datum/corpse_damage_class/station/morgue)
+	corpse.forceMove(container)
+	if(order_flags & ORDER_ADMIN_SPAWNED)
+		corpse.flags_1 |= ADMIN_SPAWNED_1
 
 /datum/supply_pack/imports/dumpsterloot
 	name = "A....Dumpster"
