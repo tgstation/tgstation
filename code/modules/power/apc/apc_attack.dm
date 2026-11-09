@@ -155,7 +155,7 @@
 		balloon_alert(user, "it's disabled!")
 	return .
 
-/obj/machinery/power/apc/shock(mob/living/shocking, chance, shock_source, siemens_coeff)
+/obj/machinery/power/apc/shock(mob/living/shocking, chance, shock_source, siemens_coeff, allow_modifiers)
 	if(isalien(shocking))
 		return FALSE
 	shock_source = src

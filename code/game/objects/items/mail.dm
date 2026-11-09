@@ -199,12 +199,10 @@
 		// 5% is not too high or low so that stacking multiple quirks doesn't tilt the weighted list too much
 		for(var/datum/quirk/quirk as anything in body.quirks)
 			if(LAZYLEN(quirk.mail_goodies))
-				var/quirk_goodie = pick(quirk.mail_goodies)
-				goodies[quirk_goodie] = 5
+				goodies[pick(quirk.mail_goodies)] = quirk.mail_weight
 
-		if(LAZYLEN(GLOB.holiday_mail))
-			var/holiday_goodie = pick(GLOB.holiday_mail)
-			goodies[holiday_goodie] = 5
+		if(length(GLOB.holiday_mail))
+			goodies[pick(GLOB.holiday_mail)] = 5
 
 	for(var/iterator in 1 to goodie_count)
 		var/target_good = pick_weight(goodies)
